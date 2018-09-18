@@ -1,0 +1,87 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.periodeContainer {
+  border: 1px solid #d6d4d4;
+  border-radius: @border-radius-base;
+  display: flex;
+  margin-top: 12px;
+  width: 100%;
+}
+
+.periodeType {
+  background-color: @navLysGra;
+  border-right: 1px solid @navGra20;
+  flex-basis: 24%;
+  max-width: 210px;
+  min-width: 185px;
+  padding: 15px 10px;
+}
+
+.periodeInnhold {
+  flex-grow: 1;
+  padding: 15px 10px;
+}
+
+.headerWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.oppdaterMargin {
+  margin-right: 10px;
+}
+
+.suffix {
+  align-self: center;
+  margin-left: -8px;
+  padding-top: 8px;
+}
+
+.textAlignRight {
+  text-align: right;
+  width: 82px;
+}
+
+.alignRightHorizontalBottom {
+  align-self: flex-end;
+  display: flex;
+  flex-direction: row;
+  justify-self: flex-end;
+
+  > div:first-child {
+    margin-right: 16px;
+  }
+}
+
+.textAreaStyle {
+  min-width: 300px;
+  width: 100%;
+}
+
+.typeUttakStyle {
+  @media all and (max-width: 1100px) {
+    width: 100%;
+  }
+}
+
+.arrowBox {
+  border: 1px solid #949899;
+  padding: 15px 10px;
+  position: relative;
+
+  &:after {
+    background-color: white;
+    border: 1px solid #949899;
+    border-bottom-width: 0px;
+    border-right-width: 0px;
+    content: '';
+    height: 1rem;
+    left: 0px;
+    margin-left: -1px;
+    position: absolute;
+    top: 45%;
+    transform: rotate(-45deg) translateY(-100%) translateZ(0);
+    transform-origin: 0px 0px;
+    width: 1rem;
+  }
+}

@@ -1,0 +1,16 @@
+const sivilstandType = {
+  SKILT: 'SKIL',
+  ENKE: 'ENKE',
+  GIFT: 'GIFT',
+  GJENNLEVENDEPARTNER: 'GJPA',
+  GIFTLEVERADSKILT: 'GLAD',
+  UOPPGITT: 'NULL',
+  REGISTRERTPARTNER: 'REPA',
+  SAMBOER: 'SAMB',
+  SEPARERTPARTNER: 'SEPA',
+  SEPARERT: 'SEPR',
+  SKILTPARTNER: 'SKPA',
+  UGIFT: 'UGIF',
+};
+
+export default sivilstandType;

@@ -1,0 +1,8 @@
+const uttakPeriodeVurdering = {
+  PERIODE_OK: 'PERIODE_OK',
+  PERIODE_OK_ENDRET: 'PERIODE_OK_ENDRET',
+  PERIODE_KAN_IKKE_AVKLARES: 'PERIODE_KAN_IKKE_AVKLARES',
+  PERIODE_IKKE_VURDERT: 'PERIODE_IKKE_VURDERT',
+};
+
+export default uttakPeriodeVurdering;

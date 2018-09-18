@@ -1,0 +1,87 @@
+@import '@{coreModulePath}nav-frontend-core/less/core';
+
+.row {
+  display: flex;
+  flex-flow: row nowrap;
+
+  > .col {
+    flex: 0 0 auto; // lesshint zeroUnit: false
+    margin-right: 15px;
+  }
+
+  .inlineLabel {
+    margin-top: 4px;
+  }
+}
+
+.paddingRundtTabell {
+  padding: 8px 16px 8px 8px;
+}
+
+.rightAlignText {
+  margin-right: 24px;
+  text-align: right;
+}
+
+.rightAlignInput > div > input {
+  margin-right: 0px;
+  text-align: right;
+}
+
+.rightAlignText {
+  text-align: right;
+}
+
+.adjustedSummaryReadOnly {
+  margin-right: 35px;
+  text-align: right;
+}
+
+.summaryEdit {
+  margin-right: 20px;
+}
+
+.adjustedFieldInput {
+  padding-right: 24px;
+  padding-top: 16px;
+  text-align: right;
+}
+
+.inntektTable {
+  max-width: 950px;
+}
+
+.inntektTable > tbody > tr > td {
+  position: relative;
+  top: -1px;
+  vertical-align: middle;
+}
+
+.inntektTable > thead > tr > td:first-child {
+  padding-left: 0px;
+}
+
+.inntektTable > thead > tr > td:last-child {
+  text-align: right;
+}
+
+.inntektTable > tbody > tr > td {
+  height: 61px;
+}
+
+.inntektTable > tbody > tr > td:first-child {
+  max-width: 400px;
+  padding-left: 0px;
+}
+
+.inntektTable > tbody > tr > td:last-child {
+  text-align: right;
+}
+
+.inntektTable > tbody > tr > td:not(:first-child) > div {
+  margin-bottom: 8px;
+}
+
+.inntektTable > tbody > tr > td:not(:first-child) > div > div > input {
+  text-align: right;
+}

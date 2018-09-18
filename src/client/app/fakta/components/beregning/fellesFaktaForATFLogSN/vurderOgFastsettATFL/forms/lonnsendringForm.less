@@ -1,0 +1,42 @@
+@import '@{coreModulePath}nav-frontend-core/less/core';
+
+.arrowLine {
+  composes: panel panel-relatert from 'styles/arrowLineModigDesign.less';
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  padding-top: 5px;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  flex-flow: row nowrap;
+
+  > .col {
+    flex: 0 0 auto; // lesshint zeroUnit: false
+    margin-right: 15px;
+  }
+
+  .inlineLabel {
+    margin-top: 4px;
+  }
+}
+
+.arrowLineLonnsendring {
+  composes: arrowLine;
+  max-width: 900px;
+}
+
+.arrowLineLonnsendring:before {
+  left: 0px;
+}
+
+.arrowLineIngenLonnsendring {
+  composes: arrowLine;
+  max-width: 1000px;
+}
+
+.arrowLineIngenLonnsendring:before {
+  left: 60px;
+}

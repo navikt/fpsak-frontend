@@ -1,0 +1,81 @@
+.divider {
+  border-left: 1px solid #b7b1a9;
+  border-right: 0px solid #b7b1a9;
+  display: inline;
+  float: right;
+  height: 37px;
+  margin-left: 15px;
+  position: absolute;
+  top: 5px;
+}
+
+.image {
+  height: 25px;
+  margin-top: 10px;
+  width: 25px;
+}
+
+.labelColumn {
+  margin-top: 10px;
+}
+
+.panelWrapper {
+  display: flex;
+  justify-content: flex-start;
+  margin: 20px 20px 15px 0px;
+}
+
+.varselRow {
+  margin-top: 15px;
+}
+
+.panel {
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  display: inline-block;
+  margin-right: 16px;
+  width: 40%;
+
+  > div {
+    margin-top: 5px;
+  }
+
+  &:first-of-type {
+    width: 60%;
+  }
+}
+
+.flexContainer {
+  align-items: flex-end;
+  display: flex;
+  flex-flow: wrap;
+  justify-content: flex-start;
+  margin-top: 8px;
+
+  > div {
+    flex: 0 0 60%; // lesshint zeroUnit: false
+    margin-right: 16px;
+  }
+
+  > button {
+    flex: 0 0 50%; // lesshint zeroUnit: false
+    margin-bottom: 8px;
+    max-width: 300px;
+  }
+}
+
+.warningRow {
+  max-width: 650px;
+}
+
+.arrowLine {
+  composes: panel panel-relatert from 'styles/arrowLineModigDesign.less';
+  margin-bottom: 18px;
+  margin-top: 5px;
+  padding: 15px 20px 10px 20px;
+  width: 60%;
+}
+
+.arrowLine:before {
+  left: 25px;
+}

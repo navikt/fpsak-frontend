@@ -1,0 +1,140 @@
+.container {
+  flex-wrap: wrap;
+}
+
+.fieldColumn {
+  position: relative;
+  width: 50%;
+}
+
+.textAreaStyle {
+  min-width: 300px;
+  width: 100%;
+}
+
+.addPeriodeSykdom {
+  position: absolute;
+  top: 186px;
+}
+
+.addPeriodeInnleggelse {
+  position: absolute;
+  top: 76px;
+}
+
+.endreSoknadsperiode {
+  position: absolute;
+  top: 94px;
+}
+
+@removeBtnSize: 17px;
+
+.arrowBox {
+  background: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  margin-top: 10px;
+  padding: 12px 10px 10px;
+  position: relative;
+}
+
+.arrowBox:after,
+.arrowBox:before {
+  border: solid transparent;
+  bottom: 100%;
+  content: ' ';
+  height: 0; // lesshint zeroUnit: false
+  left: 50px;
+  pointer-events: none;
+  position: absolute;
+  width: 0; // lesshint zeroUnit: false
+}
+
+.arrowBox:after {
+  border-bottom-color: #ffffff;
+  border-width: 11px;
+  margin-left: -11px;
+}
+
+.arrowBox:before {
+  border-bottom-color: #cccccc;
+  border-width: 12px;
+  margin-left: -12px;
+}
+
+.dateField {
+  margin-right: 16px;
+}
+
+.datePickerField {
+  min-width: 136px;
+}
+
+.clearfix {
+  &:after {
+    clear: both;
+    content: '';
+    display: table;
+  }
+}
+
+.buttonRemove {
+  background: #ffffff url('../../../../../images/remove.svg') no-repeat;
+  background-size: 100% 100%;
+  border: 0; // lesshint zeroUnit: false
+  cursor: pointer;
+  display: inline-block;
+  height: @removeBtnSize;
+  margin-top: 20px;
+  padding: 0px;
+  vertical-align: top;
+  width: @removeBtnSize;
+}
+
+.datesRowWithRemoveButton {
+  box-sizing: border-box;
+  display: inline-block;
+  @marginRight: 8px;
+  margin-right: @marginRight;
+  margin-top: 5px;
+  width: ~'calc(100% - '@removeBtnSize~' - '@marginRight~')';
+}
+
+.notLastRow {
+  margin-bottom: -8px;
+}
+
+.buttonAdd {
+  background: #ffffff url('../../../../../images/add-circle.svg') no-repeat;
+  background-size: contain;
+  border: 0; // lesshint zeroUnit: false
+  cursor: pointer;
+  display: inline-block;
+  height: 23px;
+  padding-left: 7px;
+  width: 100px;
+}
+
+.addCircleIcon,
+.imageText {
+  display: inline-block;
+  margin-right: 1ex;
+  vertical-align: text-bottom;
+}
+
+.addPeriode,
+.customLink,
+.removeButton {
+  cursor: pointer;
+}
+
+.oppdaterMargin {
+  margin-right: 10px;
+}
+
+.suffix {
+  align-self: center;
+  margin-left: -8px;
+  padding-top: 8px;
+}

@@ -1,0 +1,32 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.linkToBehandling,
+.toggleShowAllButton {
+  background: none;
+  border: 0px;
+  color: inherit;
+  margin: 0px;
+  padding: 0px;
+  text-align: inherit;
+  text-decoration: none;
+  width: 100%;
+}
+
+.linkToBehandling:hover,
+.toggleShowAllButton:hover {
+  cursor: pointer;
+  text-decoration: none;
+
+  & > :first-child {
+    background: @navLysGra;
+  }
+}
+
+.linkToBehandling:visited {
+  color: inherit;
+}
+
+.linkToBehandling:focus,
+.toggleShowAllButton:focus {
+  outline: none;
+}

@@ -1,0 +1,16 @@
+.fullWidth {
+  width: 100%;
+}
+
+.div {
+  font-size: large;
+  font-style: italic;
+  height: 110px;
+  padding-top: 20px;
+  text-align: left;
+}
+
+.div[placeholder]:empty:before {
+  color: #d8d8d8;
+  content: attr(placeholder);
+}

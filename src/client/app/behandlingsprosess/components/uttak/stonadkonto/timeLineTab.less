@@ -1,0 +1,39 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.tabs {
+  li {
+    border-radius: 5px;
+    margin-right: 0.5rem;
+    top: 0; // lesshint zeroUnit: false
+  }
+
+  .tabInner {
+    align-items: flex-end;
+    background: none;
+    border: 1px solid transparent;
+    display: flex;
+    padding: 0.75rem 1rem 0.3rem 1rem;
+    text-align: left;
+    text-decoration: none;
+    width: 110px;
+
+    &:hover {
+      cursor: pointer;
+
+    }
+  }
+
+  .aktiv {
+    background-color: white;
+    border-bottom-left-radius: 0; // lesshint zeroUnit: false
+    border-bottom-right-radius: 0; // lesshint zeroUnit: false
+    height: 78px;
+    position: relative;
+  }
+
+  .inaktiv {
+    border: 1px solid @navGra20;
+    margin-bottom: 15px;
+
+  }
+}

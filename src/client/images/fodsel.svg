@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="17px" height="17px" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>Fødsel</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Uttaksplan" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Mor:-aklare-fakta-uttak-2-Copy-7" transform="translate(-257.000000, -283.000000)">
+            <g id="Hele-grafen" transform="translate(83.000000, 283.000000)">
+                <g id="Fødselstidspunkt" transform="translate(174.000000, 0.000000)">
+                    <g id="Fødsel">
+                        <g>
+                            <circle id="Oval" fill="#BA3A26" cx="8.5" cy="8.5" r="8.5"></circle>
+                            <path d="M13,7.42982854 C13,4.6943479 9.31818182,3.82945917 8.5,7.15700055 C7.68181818,3.82945917 4,4.6943479 4,7.42982854 C4,9.79967167 8.5,13 8.5,13 C8.5,13 13,9.79967167 13,7.42982854 Z" id="Stroke-1066" fill="#FFFFFF"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

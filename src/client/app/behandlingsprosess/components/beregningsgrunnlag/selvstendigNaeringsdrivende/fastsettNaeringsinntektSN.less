@@ -1,0 +1,40 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.arrowLine {
+  composes: panel panel-relatert from 'styles/arrowLineModigDesign.less';
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  padding-top: 5px;
+  width: 100%;
+}
+
+.rightAlignInput > div > input {
+  text-align: right;
+}
+
+.row {
+  display: flex;
+  flex-flow: row nowrap;
+
+  > .col {
+    flex: 0 0 auto; // lesshint zeroUnit: false
+    margin-right: 15px;
+  }
+
+  .inlineLabel {
+    margin-top: 4px;
+  }
+}
+
+.arrowLineVarigEndretNaering {
+  composes: arrowLine;
+}
+
+.arrowLineVarigEndretNaering:before {
+  left: 350px;
+}
+
+.marginTop {
+  margin-top: 13px;
+}

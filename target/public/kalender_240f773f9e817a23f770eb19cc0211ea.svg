@@ -1,0 +1,9 @@
+<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+    <title>
+        Kalenderikon
+    </title>
+    <g stroke="#3E3832" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4.75 3.083H1.417v17.5h19.166v-17.5H17.25"/>
+        <path d="M7.25 4.75h-2.5V1.417h2.5zM17.25 4.75h-2.5V1.417h2.5zM7.25 3.083h7.5M1.417 7.25h19.166"/>
+    </g>
+</svg>

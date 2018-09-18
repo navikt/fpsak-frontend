@@ -1,0 +1,33 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.timeLineButton {
+  background-color: white;
+  border: 0px solid;
+  height: 26px;
+  margin-left: 36px;
+  margin-top: 5px;
+  padding: 0px;
+  width: 26px;
+
+  &:focus {
+    box-shadow: 0 0 0px 3px @orangeFocus; // lesshint zeroUnit: false
+    outline: none;
+  }
+}
+
+.timeLineButton img:last-child {
+  display: none;
+}
+
+.timeLineButton:hover img:first-child {
+  display: none;
+}
+
+.timeLineButton:hover img:last-child {
+  display: inline-block;
+}
+
+.timeLineButton:active img:last-child {
+  display: inline-block;
+}
+

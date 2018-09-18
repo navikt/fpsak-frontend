@@ -1,0 +1,21 @@
+.container {
+  animation-duration: 1s;
+  animation-name: fadein;
+  animation-timing-function: ease-out;
+  padding: 20px 20px 20px 20px;
+}
+
+.containerWithoutTopMargin {
+  composes: container;
+  padding: 0px 20px 20px 20px;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

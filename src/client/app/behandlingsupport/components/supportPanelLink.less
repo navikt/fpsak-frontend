@@ -1,0 +1,58 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.linkElement() {
+  margin-right: 24px;
+  padding-left: 2px;
+  padding-right: 2px;
+  text-decoration: none;
+}
+
+.disabled {
+  .linkElement();
+  color: @navGra40;
+  pointer-events: none;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.link {
+  .linkElement();
+  color: black;
+
+  &.isActive,
+  &:active {
+    border-bottom: 2px solid @navBla;
+    color: @navDypBla;
+    padding-bottom: 4px;
+    text-decoration: none;
+
+    &:focus {
+      color: @navLilla;
+      text-decoration: none;
+    }
+  }
+
+  &.isActive {
+    pointer-events: none;
+  }
+
+  &:focus {
+    background-color: @navOransjeLighten40;
+    border-bottom: 2px solid @navBla;
+    color: @navBla;
+    padding-bottom: 4px;
+    text-decoration: none;
+
+    &:hover {
+      color: @navBla;
+    }
+  }
+
+  &:hover {
+    border-bottom: 2px solid @navBla;
+    color: @navBla;
+    padding-bottom: 4px;
+  }
+}

@@ -1,0 +1,40 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.fullWidth {
+  width: 100%;
+}
+
+.arrowBox {
+  background: white;
+  border: 1px solid #cccccc;
+  margin-bottom: 10px;
+  margin-top: 2px;
+  max-width: 400px;
+  padding: 20px;
+  position: relative;
+}
+
+.arrowBox:after,
+.arrowBox:before {
+  border: solid transparent;
+  bottom: 100%;
+  content: ' ';
+  height: 0; // lesshint zeroUnit: false
+  left: 66px;
+  pointer-events: none;
+  position: absolute;
+  width: 0; // lesshint zeroUnit: false
+}
+
+.arrowBox:after {
+  border-bottom-color: white;
+  border-width: 11px;
+  margin-left: -11px;
+}
+
+.arrowBox:before {
+  border-bottom-color: #cccccc;
+  border-width: 12px;
+  margin-left: -12px;
+}
+

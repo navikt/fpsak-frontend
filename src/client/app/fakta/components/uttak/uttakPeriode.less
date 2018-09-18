@@ -1,0 +1,46 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.periodeContainer {
+  background-color: @navLysGra;
+  border: 1px solid #d6d4d4;
+  border-radius: @border-radius-base;
+  display: flex;
+  margin-top: 12px;
+  padding-left: 5px;
+  width: 100%;
+}
+
+.periodeIconWrapper {
+  display: flex;
+  margin-top: 10px;
+
+  :first-child {
+    padding-right: 10px;
+  }
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.spaceBetween {
+  justify-content: space-between;
+}
+
+.inputSuffix {
+  justify-self: self-start;
+}
+
+.headerWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.active {
+  border-left: solid 5px @navOransje;
+  padding-left: 0px;
+}
+
+.avvik.hasAvvik {
+  color: @navRod;
+}

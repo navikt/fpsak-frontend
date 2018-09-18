@@ -1,0 +1,33 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.dodMerke {
+  background-color: @navMorkGra;
+  color: white;
+}
+
+.panelWrapper {
+  display: flex;
+  justify-content: flex-start;
+  margin: 20px 0px 15px 0px;
+}
+
+.panel {
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  display: inline-block;
+  margin-right: 16px;
+  width: 40%;
+
+  > div {
+    margin-top: 5px;
+  }
+
+  &:first-of-type {
+    width: 50%;
+  }
+
+  &:last-of-type {
+    margin-right: 0px;
+    width: 50%;
+  }
+}

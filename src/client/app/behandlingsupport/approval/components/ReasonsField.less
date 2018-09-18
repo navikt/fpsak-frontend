@@ -1,0 +1,49 @@
+.flexContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.fullColumn {
+  flex: 0 0 100%; // lesshint zeroUnit: false
+}
+
+.halfColumn {
+  flex: 0 0 34%; // lesshint zeroUnit: false
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.arrowBox {
+  background: white;
+  border: 1px solid #cccccc;
+  margin-bottom: 20px;
+  margin-top: 2px;
+  padding: 5px 10px;
+  position: relative;
+}
+
+.arrowBox:after,
+.arrowBox:before {
+  border: solid transparent;
+  bottom: 100%;
+  content: ' ';
+  height: 0; // lesshint zeroUnit: false
+  left: 115px;
+  pointer-events: none;
+  position: absolute;
+  width: 0; // lesshint zeroUnit: false
+}
+
+.arrowBox:after {
+  border-bottom-color: white;
+  border-width: 11px;
+  margin-left: -11px;
+}
+
+.arrowBox:before {
+  border-bottom-color: #cccccc;
+  border-width: 12px;
+  margin-left: -12px;
+}
