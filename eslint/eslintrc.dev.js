@@ -7,7 +7,7 @@ const config = {
   settings: {
     "import/resolver": {
       webpack: {
-        config: "webpack/webpack.dev.js",
+        config: "./webpack/webpack.dev.js",
       },
     },
   },

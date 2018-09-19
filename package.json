@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Klient for Foreldrepenger",
   "main": "index.js",
+  "workspaces": [
+    "packages/*"
+  ],
   "dependencies": {
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",

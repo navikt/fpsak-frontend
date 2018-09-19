@@ -1,0 +1,37 @@
+.navSelect {
+  select {
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+
+  select:required:invalid {
+    color: gray;
+  }
+
+  option {
+    color: black;
+
+    &[disabled] { // lesshint qualifyingElement: false
+      color: gray;
+    }
+  }
+
+  select:disabled {
+    background: none;
+    background-color: rgb(233, 231, 231);
+    border: 0px;
+    border-color: rgb(183, 177, 169);
+    box-shadow: none;
+    color: rgb(62, 56, 50);
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}
+
+.navSelectReadOnly {
+  > div {
+    &:before,
+    &:after {
+      display: none;
+    }
+  }
+}
