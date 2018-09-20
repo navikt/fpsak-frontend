@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import moment from 'moment';
 
 import { ISO_DATE_FORMAT } from 'utils/formats';
-import { DatepickerField } from 'form/Fields';
+import { DatepickerField } from '@fpsak-frontend/form';
 import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
 import { metaMock, MockFields } from 'testHelpers/redux-form-test-helper';
 import { invalidDateMessage } from 'utils/validation/messages';

@@ -9,7 +9,7 @@ import { Row, Column } from 'nav-frontend-grid';
 
 import { ariaCheck, maxLength, hasValidText } from 'utils/validation/validators';
 import BorderBox from 'sharedComponents/BorderBox';
-import { CheckboxField, TextAreaField } from 'form/Fields';
+import { CheckboxField, TextAreaField } from '@fpsak-frontend/form';
 import LukkPapirsoknadModal from './LukkPapirsoknadModal';
 
 import styles from './lagreSoknadPanel.less';

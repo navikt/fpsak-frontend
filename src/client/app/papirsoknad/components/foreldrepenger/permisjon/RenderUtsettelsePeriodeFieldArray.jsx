@@ -7,7 +7,7 @@ import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
 import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
 import {
   DatepickerField, SelectField, InputField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import { gyldigeUttakperioder } from './RenderPermisjonPeriodeFieldArray';
 

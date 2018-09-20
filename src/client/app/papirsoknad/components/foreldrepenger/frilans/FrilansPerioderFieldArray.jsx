@@ -7,7 +7,7 @@ import { required, hasValidDate, dateAfterOrEqual } from 'utils/validation/valid
 import { ISO_DATE_FORMAT } from 'utils/formats';
 import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
 import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
-import { DatepickerField } from 'form/Fields';
+import { DatepickerField } from '@fpsak-frontend/form';
 
 import styles from './frilansPerioderFieldArray.less';
 

@@ -31,14 +31,14 @@ const config = {
           cache: true,
         },
         include: [APP_DIR],
-      },{
-        test: /\.(jsx?|js?)$/,
-        loader: 'babel-loader',
+      }, {
+        test: /\.(jsx?|js?|mjs)$/,
+        loader: require.resolve('babel-loader'),
         options: {
           presets: ['react', ['env', { modules: false }], 'stage-0'],
           cacheDirectory: true,
         },
-        include: APP_DIR,
+        include: [APP_DIR, /@fpsak-frontend/],
       }, {
         test: /\.(less|css)?$/,
         use: [
@@ -46,7 +46,7 @@ const config = {
             loader: MiniCssExtractPlugin.loader,
             options: {
               publicPath: isDevelopment ? './' : '.',
-            }
+            },
           }, {
             loader: 'css-loader',
             options: {

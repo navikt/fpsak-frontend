@@ -8,7 +8,7 @@ import { toggleBehandlingspunktOverstyring } from 'behandlingsprosess/duck';
 import { getSelectedBehandlingspunkt, getSelectedBehandlingspunktAksjonspunkter, isSelectedBehandlingspunktOverrideReadOnly }
   from 'behandlingsprosess/behandlingsprosessSelectors';
 import { getRettigheter } from 'navAnsatt/duck';
-import CheckboxField from 'form/fields/CheckboxField';
+import { CheckboxField } from '@fpsak-frontend/form';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 
 const isOverridden = (aksjonspunkter, aksjonspunktCode) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);

@@ -14,7 +14,7 @@ import Panel from 'nav-frontend-paneler';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import FadingPanel from 'sharedComponents/FadingPanel';
 import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import { DatepickerField, RadioGroupField, RadioOption } from 'form/Fields';
+import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { dateBeforeOrEqualToToday, hasValidDate, required } from 'utils/validation/validators';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { getSoknad, getBehandlingUttaksperiodegrense } from 'behandling/behandlingSelectors';

@@ -10,7 +10,7 @@ import fht from 'kodeverk/familieHendelseType';
 import BorderBox from 'sharedComponents/BorderBox';
 import {
   InputField, DatepickerField, RadioGroupField, RadioOption,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import {
   hasValidInteger, hasValidDate, isDatesEqual, required, minValue, maxValue, dateBeforeOrEqualToToday,

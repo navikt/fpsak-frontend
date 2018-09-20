@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
 
 import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
-import { DatepickerField } from 'form/Fields';
+import { DatepickerField } from '@fpsak-frontend/form';
 import {
   required, hasValidDate, dateIsAfter, dateRangesNotOverlapping,
 } from 'utils/validation/validators';

@@ -20,7 +20,7 @@ import {
   getBehandlingsresultat, getBehandlingVilkar, getSoknad, getFamiliehendelse,
 } from 'behandling/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { RadioGroupField, RadioOption } from 'form/Fields';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';

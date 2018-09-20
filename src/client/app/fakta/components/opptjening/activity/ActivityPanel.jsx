@@ -28,7 +28,7 @@ import {
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import {
   PeriodpickerField, RadioGroupField, RadioOption, TextAreaField, SelectField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import arrowLeftImageUrl from 'images/arrow_left.svg';
 import arrowLeftFilledImageUrl from 'images/arrow_left_filled.svg';

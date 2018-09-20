@@ -9,7 +9,7 @@ import moment from 'moment';
 import { getEditedStatus } from 'behandling/behandlingSelectors';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { DatepickerField } from 'form/Fields';
+import { DatepickerField } from '@fpsak-frontend/form';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { required, hasValidDate } from 'utils/validation/validators';
 import Image from 'sharedComponents/Image';

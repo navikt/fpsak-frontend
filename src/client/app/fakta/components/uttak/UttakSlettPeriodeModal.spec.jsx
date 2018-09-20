@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
-import { TextAreaField } from 'form/Fields';
+import { TextAreaField } from '@fpsak-frontend/form';
 import { Modal } from 'sharedComponents/Modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { UttakSlettPeriodeModalImpl } from './UttakSlettPeriodeModal';

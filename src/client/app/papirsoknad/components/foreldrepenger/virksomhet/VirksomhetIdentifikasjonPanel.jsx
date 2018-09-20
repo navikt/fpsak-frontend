@@ -7,7 +7,7 @@ import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import {
   RadioGroupField, RadioOption, SelectField, InputField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 
 import ArrowBox from 'sharedComponents/ArrowBox';
 import ElementWrapper from 'sharedComponents/ElementWrapper';

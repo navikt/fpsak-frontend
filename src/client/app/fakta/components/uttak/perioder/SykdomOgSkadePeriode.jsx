@@ -12,7 +12,7 @@ import overforingArsakCodes from 'kodeverk/overforingArsakCodes';
 import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandling/behandlingForm';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { RadioOption, RadioGroupField, TextAreaField } from 'form/Fields';
+import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import {
   required, maxLength, minLength, hasValidPeriod, hasValidText,
 } from 'utils/validation/validators';

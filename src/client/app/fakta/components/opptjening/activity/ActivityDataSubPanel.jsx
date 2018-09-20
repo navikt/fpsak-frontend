@@ -8,8 +8,7 @@ import {
 } from 'utils/validation/validators';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import OAType from 'kodeverk/opptjeningAktivitetType';
-import DatepickerField from 'form/fields/DatepickerField';
-import { InputField, DecimalField } from 'form/Fields';
+import { InputField, DecimalField, DatepickerField } from '@fpsak-frontend/form';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 
 import styles from './activityDataSubPanel.less';

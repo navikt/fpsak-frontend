@@ -10,7 +10,7 @@ import {
 } from 'utils/validation/validators';
 import {
   InputField, DatepickerField, SelectField, TextAreaField, CheckboxField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 

@@ -3,7 +3,7 @@ import { expect } from 'chai';
 
 import { intlMock, shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
 
-import { RadioGroupField, RadioOption } from 'form/Fields';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import FrilansPanel from './FrilansPanel';
 
 describe('<FrilansPanel>', () => {

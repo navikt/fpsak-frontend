@@ -8,7 +8,7 @@ import { required } from 'utils/validation/validators';
 import { Row, Column } from 'nav-frontend-grid';
 import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { InputField, SelectField } from 'form/Fields';
+import { InputField, SelectField } from '@fpsak-frontend/form';
 import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
 import Table from 'sharedComponents/Table';
 import TableRow from 'sharedComponents/TableRow';

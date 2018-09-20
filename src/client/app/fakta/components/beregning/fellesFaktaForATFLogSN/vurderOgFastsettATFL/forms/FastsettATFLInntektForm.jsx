@@ -7,7 +7,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { required } from 'utils/validation/validators';
 import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { InputField } from 'form/Fields';
+import { InputField } from '@fpsak-frontend/form';
 import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
 import Table from 'sharedComponents/Table';
 import TableRow from 'sharedComponents/TableRow';

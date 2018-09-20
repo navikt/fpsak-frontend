@@ -5,7 +5,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
 import {
   RadioGroupField, RadioOption, TextAreaField, SelectField, CheckboxField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import {
   minLength, maxLength, requiredIfNotPristine, hasValidText, required, notDash,
 } from 'utils/validation/validators';

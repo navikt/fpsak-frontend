@@ -13,7 +13,7 @@ import { behandlingForm } from 'behandling/behandlingForm';
 import {
   required, hasValidDate, minLength, maxLength, hasValidText,
 } from 'utils/validation/validators';
-import { TextAreaField, DatepickerField } from 'form/Fields';
+import { TextAreaField, DatepickerField } from '@fpsak-frontend/form';
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';

@@ -18,7 +18,7 @@ import ElementWrapper from 'sharedComponents/ElementWrapper';
 import BorderBox from 'sharedComponents/BorderBox';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import periodeAarsak from 'kodeverk/periodeAarsak';
-import TextAreaField from 'form/fields/TextAreaField';
+import { TextAreaField } from '@fpsak-frontend/form';
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
 import {
   hasValidText, maxLength, minLength, required,

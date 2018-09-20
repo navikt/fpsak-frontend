@@ -11,7 +11,7 @@ import { Normaltekst, Element, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import Image from 'sharedComponents/Image';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import NavFieldGroup from 'form/fields/NavFieldGroup';
+import { NavFieldGroup } from '@fpsak-frontend/form';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import addCircleIcon from 'images/add-circle.svg';
 import removeIcon from 'images/remove.svg';

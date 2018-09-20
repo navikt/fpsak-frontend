@@ -8,7 +8,7 @@ import moment from 'moment';
 
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { RadioGroupField, RadioOption } from 'form/Fields';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import DateLabel from 'sharedComponents/DateLabel';
 import Table from 'sharedComponents/Table';
 import TableRow from 'sharedComponents/TableRow';

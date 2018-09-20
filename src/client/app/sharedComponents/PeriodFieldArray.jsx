@@ -5,7 +5,7 @@ import { Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { NavFieldGroup } from 'form/Fields';
+import { NavFieldGroup } from '@fpsak-frontend/form';
 import Image from 'sharedComponents/Image';
 import addCircleIcon from 'images/add-circle.svg';
 

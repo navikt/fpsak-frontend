@@ -6,7 +6,7 @@ import { formValueSelector, FieldArray, FormSection } from 'redux-form';
 import { Undertittel } from 'nav-frontend-typografi';
 
 import ElementWrapper from 'sharedComponents/ElementWrapper';
-import { RadioGroupField, RadioOption } from 'form/Fields';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import BorderBox from 'sharedComponents/BorderBox';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { required, arrayMinLength } from 'utils/validation/validators';

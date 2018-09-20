@@ -11,7 +11,7 @@ import { FlexContainer, FlexRow, FlexColumn } from 'sharedComponents/flexGrid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from 'utils/formats';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { CheckboxField } from 'form/Fields';
+import { CheckboxField } from '@fpsak-frontend/form';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
 import {
   getBehandlingVersjon,

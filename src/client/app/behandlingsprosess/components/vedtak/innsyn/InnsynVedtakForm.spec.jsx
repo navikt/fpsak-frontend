@@ -8,7 +8,7 @@ import innsynResultatType from 'kodeverk/innsynResultatType';
 import { FormattedMessage } from 'react-intl';
 
 
-import { TextAreaField } from 'form/Fields';
+import { TextAreaField } from '@fpsak-frontend/form';
 
 
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';

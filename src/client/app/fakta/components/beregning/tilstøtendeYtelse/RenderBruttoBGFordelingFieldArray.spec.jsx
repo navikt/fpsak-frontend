@@ -3,9 +3,7 @@ import { expect } from 'chai';
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import { MockFieldsWithContent } from 'testHelpers/redux-form-test-helper';
 import { formatCurrencyNoKr } from 'utils/currencyUtils';
-import PeriodpickerField from 'form/fields/PeriodpickerField';
-import SelectField from 'form/fields/SelectField';
-import InputField from 'form/fields/InputField';
+import { PeriodpickerField, SelectField, InputField } from '@fpsak-frontend/form';
 import { createAndelnavn } from './FordelingAvBruttoBeregningsgrunnlagPanel';
 import { createArbeidsperiodeString } from '../ArbeidsforholdHelper';
 

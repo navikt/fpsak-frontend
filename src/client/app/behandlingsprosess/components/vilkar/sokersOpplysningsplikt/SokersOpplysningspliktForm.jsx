@@ -21,7 +21,7 @@ import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } 
 import { getSelectedBehandlingId } from 'behandling/duck';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import { CheckboxField, RadioGroupField, RadioOption } from 'form/Fields';
+import { CheckboxField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { isObject } from 'utils/objectUtils';
 import { required } from 'utils/validation/validators';

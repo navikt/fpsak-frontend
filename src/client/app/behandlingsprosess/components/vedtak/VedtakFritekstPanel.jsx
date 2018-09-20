@@ -6,7 +6,7 @@ import { Undertekst } from 'nav-frontend-typografi';
 
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
-import { TextAreaField } from 'form/Fields';
+import { TextAreaField } from '@fpsak-frontend/form';
 import {
   minLength, maxLength, requiredIfNotPristine, hasValidText,
 } from 'utils/validation/validators';

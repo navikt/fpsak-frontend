@@ -5,6 +5,7 @@ import {
 } from 'react-intl';
 import { reduxForm, formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
+import { InputField } from '@fpsak-frontend/form';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Row, Column } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
@@ -12,7 +13,7 @@ import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import Image from 'sharedComponents/Image';
 import advarselIcon from 'images/advarsel.svg';
 import { hasValidSaksnummerOrFodselsnummerFormat } from 'utils/validation/validators';
-import { InputField } from 'form/Fields';
+
 
 import styles from './searchForm.less';
 

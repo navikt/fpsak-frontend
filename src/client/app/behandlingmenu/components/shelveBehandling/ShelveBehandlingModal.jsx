@@ -10,7 +10,7 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import behandlingResultatType from 'kodeverk/behandlingResultatType';
-import { SelectField, TextAreaField } from 'form/Fields';
+import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import { maxLength, required, hasValidText } from 'utils/validation/validators';
 
 import styles from './shelveBehandlingModal.less';

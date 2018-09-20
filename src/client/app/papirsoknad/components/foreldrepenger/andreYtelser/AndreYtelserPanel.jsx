@@ -7,7 +7,7 @@ import { Fieldset } from 'nav-frontend-skjema';
 import { Row, Column } from 'nav-frontend-grid';
 
 import ElementWrapper from 'sharedComponents/ElementWrapper';
-import { CheckboxField } from 'form/Fields';
+import { CheckboxField } from '@fpsak-frontend/form';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import arbeidType from 'kodeverk/arbeidType';
 import BorderBox from 'sharedComponents/BorderBox';

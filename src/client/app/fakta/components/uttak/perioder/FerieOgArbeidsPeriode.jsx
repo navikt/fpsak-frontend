@@ -9,7 +9,7 @@ import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
-import { RadioOption, RadioGroupField, TextAreaField } from 'form/Fields';
+import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import {
   required, maxLength, minLength, hasValidPeriod, hasValidText,
 } from 'utils/validation/validators';

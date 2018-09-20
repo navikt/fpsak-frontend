@@ -9,7 +9,7 @@ import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import landkoder from 'kodeverk/landkoder';
 import { maxLength } from 'utils/validation/validators';
 import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
-import { InputField, DatepickerField, SelectField } from 'form/Fields';
+import { InputField, DatepickerField, SelectField } from '@fpsak-frontend/form';
 
 import styles from './renderInntektsgivendeArbeidFieldArray.less';
 

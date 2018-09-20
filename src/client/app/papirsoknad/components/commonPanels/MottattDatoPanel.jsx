@@ -5,7 +5,7 @@ import { Undertittel, Undertekst } from 'nav-frontend-typografi';
 
 import BorderBox from 'sharedComponents/BorderBox';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { DatepickerField } from 'form/Fields';
+import { DatepickerField } from '@fpsak-frontend/form';
 import { hasValidDate, dateBeforeOrEqualToToday, required } from 'utils/validation/validators';
 
 /**

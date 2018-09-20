@@ -9,8 +9,7 @@ import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import foreldreType from 'kodeverk/foreldreType';
 import soknadTypeTillegg from 'kodeverk/soknadTypeTillegg';
 
-import RadioGroupField from 'form/fields/RadioGroupField';
-import RadioOption from 'form/fields/RadioOption';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { SoknadTypePickerForm } from './SoknadTypePickerForm';
 
 describe('<SoknadTypePickerForm>', () => {

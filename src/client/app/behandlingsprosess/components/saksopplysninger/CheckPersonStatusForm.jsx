@@ -16,7 +16,7 @@ import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandli
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import personstatusType from 'kodeverk/personstatusType';
-import { RadioGroupField, RadioOption } from 'form/Fields';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { required } from 'utils/validation/validators';
 import behandlingStatus from 'kodeverk/behandlingStatus';

@@ -9,7 +9,7 @@ import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import ArrowBox from 'sharedComponents/ArrowBox';
 import BorderBox from 'sharedComponents/BorderBox';
 import { required } from 'utils/validation/validators';
-import { RadioGroupField, RadioOption } from 'form/Fields';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import FrilansPerioderFieldArray from './FrilansPerioderFieldArray';
 import FrilansOppdragForFamiliePanel from './FrilansOppdragForFamiliePanel';
 

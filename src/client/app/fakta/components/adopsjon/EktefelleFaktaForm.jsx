@@ -6,7 +6,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
 
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { RadioGroupField, RadioOption } from 'form/Fields';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import { required } from 'utils/validation/validators';

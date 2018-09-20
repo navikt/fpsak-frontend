@@ -1,6 +1,7 @@
 /.idea/
 /node/
 /node_modules/
+/packages/*/node_modules/
 /src/client/public/*
 /bin/
 /.tmp/

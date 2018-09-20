@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Column } from 'nav-frontend-grid';
-import { DatepickerField } from 'form/Fields';
+import { DatepickerField } from '@fpsak-frontend/form';
 import { required, hasValidDate } from 'utils/validation/validators';
 
 const truncateEmployerName = (empName) => {

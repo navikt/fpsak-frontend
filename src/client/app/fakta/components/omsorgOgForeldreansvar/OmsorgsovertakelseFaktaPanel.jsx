@@ -5,7 +5,7 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import { getEditedStatus } from 'behandling/behandlingSelectors';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { DatepickerField, InputField } from 'form/Fields';
+import { DatepickerField, InputField } from '@fpsak-frontend/form';
 import { hasValidDate, required } from 'utils/validation/validators';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 

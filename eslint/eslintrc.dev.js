@@ -5,15 +5,15 @@ var OFF = 0;
 
 const config = {
   settings: {
-    "import/resolver": {
+    'import/resolver': {
       webpack: {
-        config: "./webpack/webpack.dev.js",
+        config: 'webpack/webpack.dev.js',
       },
     },
   },
 
   rules: {
-    "no-debugger": OFF,
+    'no-debugger': OFF,
   },
 };
 

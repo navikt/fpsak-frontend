@@ -7,7 +7,7 @@ import DateLabel from 'sharedComponents/DateLabel';
 import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { DatepickerField, InputField } from 'form/Fields';
+import { DatepickerField, InputField } from '@fpsak-frontend/form';
 import { TermindatoFaktaForm, buildInitialValues } from './TermindatoFaktaForm';
 
 describe('<TermindatoFaktaForm>', () => {

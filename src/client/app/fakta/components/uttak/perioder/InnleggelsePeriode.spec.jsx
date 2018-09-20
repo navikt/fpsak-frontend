@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
-import { RadioGroupField } from 'form/Fields';
+import { RadioGroupField } from '@fpsak-frontend/form';
 import sinon from 'sinon';
 import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
 import { InnleggelsePeriode } from './InnleggelsePeriode';

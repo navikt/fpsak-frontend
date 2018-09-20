@@ -4,7 +4,7 @@ import moment from 'moment';
 import { expect } from 'chai';
 
 import { ISO_DATE_FORMAT } from 'utils/formats';
-import { DatepickerField, SelectField } from 'form/Fields';
+import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import { metaMock, MockFields } from 'testHelpers/redux-form-test-helper';
 import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
 import { dateRangesOverlappingMessage, invalidDateMessage } from 'utils/validation/messages';

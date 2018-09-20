@@ -12,7 +12,7 @@ import {
 } from 'behandling/behandlingSelectors';
 import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
 import { required, hasValidText } from 'utils/validation/validators';
-import { TextAreaField } from 'form/Fields';
+import { TextAreaField } from '@fpsak-frontend/form';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import {
   medholdIKlage, shouldGiveBegrunnelse, maxLength1500, minLength3,

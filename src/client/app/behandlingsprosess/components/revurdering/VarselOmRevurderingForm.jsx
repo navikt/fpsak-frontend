@@ -9,7 +9,7 @@ import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import FadingPanel from 'sharedComponents/FadingPanel';
-import { RadioGroupField, RadioOption, TextAreaField } from 'form/Fields';
+import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import PropTypes from 'prop-types';

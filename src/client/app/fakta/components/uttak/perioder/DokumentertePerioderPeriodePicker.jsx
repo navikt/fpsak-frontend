@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
 
 import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
-import { PeriodpickerField } from 'form/Fields';
+import { PeriodpickerField } from '@fpsak-frontend/form';
 import { FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
 import {
   required, hasValidDate, dateRangesNotOverlapping, dateAfterOrEqual,

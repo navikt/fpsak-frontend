@@ -9,7 +9,7 @@ import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import TableColumn from 'sharedComponents/TableColumn';
 import TableRow from 'sharedComponents/TableRow';
 import Table from 'sharedComponents/Table';
-import { SelectField, InputField, DecimalField } from 'form/Fields';
+import { SelectField, InputField, DecimalField } from '@fpsak-frontend/form';
 import uttakArbeidTypeKodeverk from 'kodeverk/uttakArbeidType';
 import {
   minValue, maxValue, hasValidInteger, maxLength, required, hasValidDecimal, notDash,

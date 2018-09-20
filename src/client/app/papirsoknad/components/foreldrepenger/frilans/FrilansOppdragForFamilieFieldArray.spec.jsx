@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 
 import { metaMock, MockFields } from 'testHelpers/redux-form-test-helper';
 
-import { DatepickerField } from 'form/Fields';
+import { DatepickerField } from '@fpsak-frontend/form';
 import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
 import FrilansOppdragForFamilieFieldArray from './FrilansOppdragForFamilieFieldArray';
 

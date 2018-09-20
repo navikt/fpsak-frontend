@@ -7,7 +7,7 @@ import {
 import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
 import classNames from 'classnames';
 import { Column, Row } from 'nav-frontend-grid';
-import { TextAreaField } from 'form/Fields';
+import { TextAreaField } from '@fpsak-frontend/form';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { Undertittel } from 'nav-frontend-typografi';
 import styles from './vedtakForm.less';

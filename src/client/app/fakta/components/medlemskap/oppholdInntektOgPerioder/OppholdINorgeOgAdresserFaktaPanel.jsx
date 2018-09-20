@@ -10,7 +10,7 @@ import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import { RadioGroupField, RadioOption } from 'form/Fields';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { required } from 'utils/validation/validators';

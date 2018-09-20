@@ -11,10 +11,8 @@ import ElementWrapper from 'sharedComponents/ElementWrapper';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { hasValidDate, hasValidInteger, required } from 'utils/validation/validators';
 import {
-  CheckboxField, InputField, RadioGroupField, RadioOption,
-} from 'form/Fields';
-import DatepickerField from 'form/fields/DatepickerField';
-import TextAreaField from 'form/fields/TextAreaField';
+  CheckboxField, InputField, RadioGroupField, RadioOption, TextAreaField, DatepickerField,
+} from '@fpsak-frontend/form';
 
 /**
  * VirksomhetStartetEndretPanel

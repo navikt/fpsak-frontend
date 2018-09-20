@@ -13,7 +13,7 @@ import ElementWrapper from 'sharedComponents/ElementWrapper';
 import DateLabel from 'sharedComponents/DateLabel';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { behandlingForm } from 'behandling/behandlingForm';
-import { DatepickerField, InputField } from 'form/Fields';
+import { DatepickerField, InputField } from '@fpsak-frontend/form';
 import {
   required, hasValidDate, minValue, maxValue, hasValidInteger,
 } from 'utils/validation/validators';

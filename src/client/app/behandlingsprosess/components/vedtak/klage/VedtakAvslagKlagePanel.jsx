@@ -11,7 +11,7 @@ import {
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
 import { required, hasValidText } from 'utils/validation/validators';
-import { TextAreaField } from 'form/Fields';
+import { TextAreaField } from '@fpsak-frontend/form';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import klageVurdering from 'kodeverk/klageVurdering';
 import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';

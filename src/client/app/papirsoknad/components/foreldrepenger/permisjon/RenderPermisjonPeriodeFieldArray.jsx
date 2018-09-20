@@ -21,7 +21,7 @@ import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import uttakPeriodeType from 'kodeverk/uttakPeriodeType';
 import {
   CheckboxField, DatepickerField, SelectField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 
 import styles from './renderPermisjonPeriodeFieldArray.less';
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import { Fieldset } from 'nav-frontend-skjema';
 
-import { RadioGroupField, RadioOption } from 'form/Fields';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import BorderBox from 'sharedComponents/BorderBox';
 import SoknadData from 'papirsoknad/SoknadData';
 import foreldreType from 'kodeverk/foreldreType';

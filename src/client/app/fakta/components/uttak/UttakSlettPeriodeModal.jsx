@@ -8,7 +8,7 @@ import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
 import Modal from 'sharedComponents/Modal';
 import moment from 'moment';
 import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import { TextAreaField } from 'form/Fields';
+import { TextAreaField } from '@fpsak-frontend/form';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import {

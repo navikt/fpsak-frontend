@@ -3,7 +3,7 @@ import { expect } from 'chai';
 
 import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
 import { MockFields } from 'testHelpers/redux-form-test-helper';
-import { DatepickerField } from 'form/Fields';
+import { DatepickerField } from '@fpsak-frontend/form';
 import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
 
 import IkkeOmsorgPeriodeField from './IkkeOmsorgPeriodeField';

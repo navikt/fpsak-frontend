@@ -7,8 +7,7 @@ import { Row, Column } from 'nav-frontend-grid';
 
 import ArrowBox from 'sharedComponents/ArrowBox';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
-import { RadioGroupField, RadioOption } from 'form/Fields';
-import InputField from 'form/fields/InputField';
+import { RadioGroupField, RadioOption, InputField } from '@fpsak-frontend/form';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { required } from 'utils/validation/validators';
 import PropTypes from 'prop-types';

@@ -19,7 +19,7 @@ import { getSelectedBehandlingId } from 'behandling/duck';
 import { isInnvilget, isAvslag } from 'kodeverk/behandlingResultatType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { getRettigheter } from 'navAnsatt/duck';
-import { CheckboxField } from 'form/Fields';
+import { CheckboxField } from '@fpsak-frontend/form';
 import behandlingStatusCode from 'kodeverk/behandlingStatus';
 import FritekstBrevPanel from 'behandlingsprosess/components/vedtak/FritekstBrevPanel';
 import classNames from 'classnames';

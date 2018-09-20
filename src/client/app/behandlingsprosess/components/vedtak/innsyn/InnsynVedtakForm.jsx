@@ -21,7 +21,7 @@ import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
-import { TextAreaField } from 'form/Fields';
+import { TextAreaField } from '@fpsak-frontend/form';
 import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
 import {
   hasValidText, maxLength, minLength, requiredIfNotPristine,

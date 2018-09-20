@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 
 import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
 import { MockFields } from 'testHelpers/redux-form-test-helper';
-import { PeriodpickerField } from 'form/Fields';
+import { PeriodpickerField } from '@fpsak-frontend/form';
 import DokumentertePerioderPeriodePicker from './DokumentertePerioderPeriodePicker';
 
 const periode = {

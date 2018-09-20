@@ -7,7 +7,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import { behandlingFormValueSelector, behandlingForm } from 'behandling/behandlingForm';
 import {
   PeriodpickerField, SelectField, CheckboxField, RadioGroupField, RadioOption, TextAreaField, DecimalField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import {
   hasValidDate,
   requiredIfNotPristine,

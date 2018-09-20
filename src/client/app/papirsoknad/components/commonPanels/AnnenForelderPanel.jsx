@@ -11,7 +11,7 @@ import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import kanIkkeOppgiAnnenForelderArsaker from 'kodeverk/kanIkkeOppgiAnnenForelderArsak';
 import {
   CheckboxField, InputField, NavFieldGroup, RadioOption, RadioGroupField, SelectField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import {
   required, hasValidFodselsnummerFormat, hasValidFodselsnummer, hasValidName,
 } from 'utils/validation/validators';

@@ -16,7 +16,7 @@ import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import { getKodeverk } from 'kodeverk/duck';
-import { DatepickerField, RadioGroupField, RadioOption } from 'form/Fields';
+import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { getRestApiData } from 'data/duck';
 import { FpsakApi } from 'data/fpsakApi';
 import {

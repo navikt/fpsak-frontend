@@ -23,7 +23,7 @@ import {
 import behandlingType from 'kodeverk/behandlingType';
 import {
   DatepickerField, InputField, RadioGroupField, RadioOption,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 

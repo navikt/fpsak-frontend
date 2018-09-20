@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { getFamiliehendelse } from 'behandling/behandlingSelectors';
 import { behandlingForm } from 'behandling/behandlingForm';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { TextAreaField, RadioGroupField, RadioOption } from 'form/Fields';
+import { TextAreaField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import {
   required, hasValidText, maxLength, minLength,
 } from 'utils/validation/validators';

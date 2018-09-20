@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { InputField } from 'form/Fields';
+import { InputField } from '@fpsak-frontend/form';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import Table from 'sharedComponents/Table';
 import TableRow from 'sharedComponents/TableRow';

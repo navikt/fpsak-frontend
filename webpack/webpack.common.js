@@ -7,6 +7,7 @@ const APP_DIR = path.join(ROOT_DIR, 'app');
 
 const config = {
   resolve: {
+    symlinks: false,
     alias: {
       styles: path.join(ROOT_DIR, 'styles'),
       images: path.join(ROOT_DIR, 'images'),
@@ -21,7 +22,6 @@ const config = {
       fagsakSearch: path.join(APP_DIR, 'fagsakSearch'),
       fagsakprofile: path.join(APP_DIR, 'fagsakprofile'),
       fakta: path.join(APP_DIR, 'fakta'),
-      form: path.join(APP_DIR, 'form'),
       person: path.join(APP_DIR, 'person'),
       papirsoknad: path.join(APP_DIR, 'papirsoknad'),
       data: path.join(APP_DIR, 'data'),

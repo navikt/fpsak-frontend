@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { RadioOption, RadioGroupField } from 'form/Fields';
+import { RadioOption, RadioGroupField } from '@fpsak-frontend/form';
 
 import { Normaltekst } from 'nav-frontend-typografi';
 import { required } from 'utils/validation/validators';

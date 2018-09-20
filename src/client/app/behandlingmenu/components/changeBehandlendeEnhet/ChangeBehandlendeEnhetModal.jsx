@@ -8,7 +8,7 @@ import Modal from 'sharedComponents/Modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { SelectField, TextAreaField } from 'form/Fields';
+import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import { maxLength, required, hasValidText } from 'utils/validation/validators';
 
 import Image from 'sharedComponents/Image';

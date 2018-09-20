@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { createSelector } from 'reselect';
 
-import { InputField } from 'form/Fields';
+import { InputField } from '@fpsak-frontend/form';
 import Table from 'sharedComponents/Table';
 import TableRow from 'sharedComponents/TableRow';
 import TableColumn from 'sharedComponents/TableColumn';

@@ -4,7 +4,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Fieldset } from 'nav-frontend-skjema';
 
 import BorderBox from 'sharedComponents/BorderBox';
-import { TextAreaField } from 'form/Fields';
+import { TextAreaField } from '@fpsak-frontend/form';
 import { maxLength as maxLengthValidator, hasValidText } from 'utils/validation/validators';
 
 import styles from './tilleggsopplysningerPanel.less';

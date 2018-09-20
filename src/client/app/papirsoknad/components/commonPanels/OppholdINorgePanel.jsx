@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Fieldset } from 'nav-frontend-skjema';
 
-import { RadioGroupField, RadioOption, NavFieldGroup } from 'form/Fields';
+import { RadioGroupField, RadioOption, NavFieldGroup } from '@fpsak-frontend/form';
 import { isRequiredMessage } from 'utils/validation/messages';
 import BorderBox from 'sharedComponents/BorderBox';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';

@@ -17,7 +17,7 @@ import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import {
   required, minValue, maxValue, hasValidInteger,
 } from 'utils/validation/validators';
-import { InputField } from 'form/Fields';
+import { InputField } from '@fpsak-frontend/form';
 import aksjonspunktCode from 'kodeverk/aksjonspunktCodes';
 import OverstyrVurderingChecker from 'behandlingsprosess/components/OverstyrVurderingChecker';
 import OverstyrConfirmationForm from 'behandlingsprosess/components/OverstyrConfirmationForm';

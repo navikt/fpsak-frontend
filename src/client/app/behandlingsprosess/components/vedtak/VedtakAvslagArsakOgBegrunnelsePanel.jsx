@@ -8,7 +8,7 @@ import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 import behandlingStatus from 'kodeverk/behandlingStatus';
-import { TextAreaField } from 'form/Fields';
+import { TextAreaField } from '@fpsak-frontend/form';
 import {
   minLength, maxLength, requiredIfNotPristine, hasValidText,
 } from 'utils/validation/validators';

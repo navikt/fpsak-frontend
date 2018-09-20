@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import FagsakIndex from 'fagsak/FagsakIndex';
 import { fagsakPath } from 'app/paths';
-import TestFormIndex from 'form/TestFormIndex';
+import TestFormIndex from '@fpsak-frontend/form/TestFormIndex';
 import Dashboard from './Dashboard';
 
 import 'styles/modigDesign.less';

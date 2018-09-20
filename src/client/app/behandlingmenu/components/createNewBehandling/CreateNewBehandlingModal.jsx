@@ -11,7 +11,7 @@ import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import Image from 'sharedComponents/Image';
 import innvilgetImageUrl from 'images/innvilget_valgt.svg';
 import Modal from 'sharedComponents/Modal';
-import { CheckboxField, SelectField } from 'form/Fields';
+import { CheckboxField, SelectField } from '@fpsak-frontend/form';
 import { required } from 'utils/validation/validators';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';

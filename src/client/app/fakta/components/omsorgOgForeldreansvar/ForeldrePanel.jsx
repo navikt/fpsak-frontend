@@ -7,7 +7,7 @@ import getAddresses from 'utils/personUtils';
 import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
 import opplysningAdresseType from 'kodeverk/opplysningAdresseType';
 import opplysningsKilde from 'kodeverk/opplysningsKilde';
-import { DatepickerField } from 'form/Fields';
+import { DatepickerField } from '@fpsak-frontend/form';
 import { hasValidDate, dateBeforeOrEqualToToday } from 'utils/validation/validators';
 import DateLabel from 'sharedComponents/DateLabel';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';

@@ -7,7 +7,7 @@ import arbeidsforholdPropType from 'behandling/proptypes/arbeidsforholdPropType'
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import ArrowBox from 'sharedComponents/ArrowBox';
 import { required } from 'utils/validation/validators';
-import { SelectField, RadioGroupField, RadioOption } from 'form/Fields';
+import { SelectField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
 const getEndCharFromId = id => id.substring(id.length - 4, id.length);
 

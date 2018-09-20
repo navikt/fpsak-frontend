@@ -12,14 +12,12 @@ const APP_DIR = path.resolve(ROOT_DIR, 'app');
 const config = {
   mode: 'development',
   devtool: 'cheap-module-eval-source-map',
-  
   entry: [
    'babel-polyfill',
    'webpack-dev-server/client?http://localhost:9000',
    'webpack/hot/only-dev-server',
     APP_DIR + '/index.jsx',
   ],
-  
   output: {
 	  filename: 'bundle.js',
     path: ROOT_DIR,

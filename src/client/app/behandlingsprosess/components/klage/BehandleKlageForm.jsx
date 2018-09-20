@@ -6,9 +6,9 @@ import classNames from 'classnames';
 
 import FadingPanel from 'sharedComponents/FadingPanel';
 import klageVurderingType from 'kodeverk/klageVurdering';
-import { RadioGroupField, RadioOption } from 'form/Fields';
-import SelectField from 'form/fields/SelectField';
-import DatepickerField from 'form/fields/DatepickerField';
+import {
+  RadioGroupField, RadioOption, SelectField, DatepickerField,
+} from '@fpsak-frontend/form';
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { required, hasValidDate } from 'utils/validation/validators';

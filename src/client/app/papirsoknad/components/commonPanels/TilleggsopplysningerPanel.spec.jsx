@@ -2,7 +2,7 @@ import React from 'react';
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import { expect } from 'chai';
 
-import TextAreaField from 'form/fields/TextAreaField';
+import { TextAreaField } from '@fpsak-frontend/form';
 import { TilleggsopplysningerPanel } from './TilleggsopplysningerPanel';
 
 describe('<TilleggsopplysningerPanel>', () => {

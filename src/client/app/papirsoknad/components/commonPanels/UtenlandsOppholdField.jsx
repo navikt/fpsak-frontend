@@ -5,7 +5,7 @@ import classnames from 'classnames/bind';
 import { Row, Column } from 'nav-frontend-grid';
 
 import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
-import { SelectField, DatepickerField } from 'form/Fields';
+import { SelectField, DatepickerField } from '@fpsak-frontend/form';
 import { required, hasValidValue, hasValidPeriodIncludingOtherErrors } from 'utils/validation/validators';
 import landkoder from 'kodeverk/landkoder';
 import { isRequiredMessage } from 'utils/validation/messages';

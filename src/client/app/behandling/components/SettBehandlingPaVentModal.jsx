@@ -10,7 +10,7 @@ import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import requireProps from 'app/data/requireProps';
 import Modal from 'sharedComponents/Modal';
-import { DatepickerField, SelectField } from 'form/Fields';
+import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import {
   ariaCheck, dateAfterOrEqualToToday, hasValidDate, required,
 } from 'utils/validation/validators';

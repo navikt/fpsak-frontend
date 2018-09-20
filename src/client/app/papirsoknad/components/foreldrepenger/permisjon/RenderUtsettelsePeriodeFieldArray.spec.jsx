@@ -4,8 +4,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
-import DatepickerField from 'form/fields/DatepickerField';
-import SelectField from 'form/fields/SelectField';
+import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import { MockFields, metaMock } from 'testHelpers/redux-form-test-helper';
 import { RenderUtsettelsePeriodeFieldArray } from './RenderUtsettelsePeriodeFieldArray';
 

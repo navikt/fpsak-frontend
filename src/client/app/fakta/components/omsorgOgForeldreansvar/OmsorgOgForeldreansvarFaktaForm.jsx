@@ -11,7 +11,7 @@ import { getEditedStatus } from 'behandling/behandlingSelectors';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import EditedIcon from 'sharedComponents/EditedIcon';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { SelectField } from 'form/Fields';
+import { SelectField } from '@fpsak-frontend/form';
 import { required, hasValidInteger } from 'utils/validation/validators';
 import VilkarType from 'kodeverk/vilkarType';
 import { isEmpty } from 'utils/objectUtils';

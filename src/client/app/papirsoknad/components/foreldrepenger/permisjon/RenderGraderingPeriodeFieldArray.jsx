@@ -11,7 +11,7 @@ import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
 import { maxValue, hasValidDecimal } from 'utils/validation/validators';
 import {
   DatepickerField, SelectField, InputField, CheckboxField, DecimalField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import { gyldigeUttakperioder } from './RenderPermisjonPeriodeFieldArray';
 

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { InputField } from 'form/Fields';
+import { InputField } from '@fpsak-frontend/form';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { required } from 'utils/validation/validators';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';

@@ -10,7 +10,7 @@ import { Fieldset } from 'nav-frontend-skjema';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import {
   DatepickerField, InputField, NavFieldGroup, RadioGroupField, RadioOption,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import {
   hasValidDate,
   dateBeforeOrEqual,

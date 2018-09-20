@@ -8,7 +8,7 @@ import ArrowBox from 'sharedComponents/ArrowBox';
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import { isRequiredMessage } from 'utils/validation/messages';
-import { SelectField, RadioGroupField, RadioOption } from 'form/Fields';
+import { SelectField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from 'utils/validation/validators';
 
 import styles from './vilkarResultPicker.less';

@@ -10,7 +10,7 @@ import {
 } from 'utils/validation/validators';
 import {
   InputField, RadioGroupField, RadioOption, TextAreaField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import { parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr } from 'utils/currencyUtils';

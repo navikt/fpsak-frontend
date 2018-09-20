@@ -6,7 +6,7 @@ import { Undertekst, Element } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 import {
   NavFieldGroup, InputField, SelectField, PeriodpickerField, DecimalField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import { required } from 'utils/validation/validators';
 import { isEmpty } from 'utils/arrayUtils';
 import { getEndringBeregningsgrunnlagPerioder } from 'behandling/behandlingSelectors';

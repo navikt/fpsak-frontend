@@ -10,7 +10,7 @@ import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { getBehandlingSkjaringstidspunkt, getBehandlingMedlemEndredeOpplysninger, getBehandlingStartDatoForPermisjon } from 'behandling/behandlingSelectors';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { DatepickerField } from 'form/Fields';
+import { DatepickerField } from '@fpsak-frontend/form';
 import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from 'utils/formats';
 import { required, hasValidDate, dateAfterOrEqual } from 'utils/validation/validators';
 

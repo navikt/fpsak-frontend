@@ -2,11 +2,10 @@ var OFF = 0, ERROR = 2;
 
 const config = {
   root: true,
- 
   env: {
     es6: true,
     browser: true,
-    mocha: true
+    mocha: true,
   },
 
   extends: "airbnb",

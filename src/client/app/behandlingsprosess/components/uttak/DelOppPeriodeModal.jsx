@@ -5,7 +5,7 @@ import {
   hasValidDate, required, dateAfterOrEqual, dateBeforeOrEqual,
 } from 'utils/validation/validators';
 
-import { DatepickerField } from 'form/Fields';
+import { DatepickerField } from '@fpsak-frontend/form';
 import Modal from 'sharedComponents/Modal';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';

@@ -6,12 +6,11 @@ import { FormSection, formValueSelector } from 'redux-form';
 import { Element } from 'nav-frontend-typografi';
 
 import { FlexColumn, FlexContainer, FlexRow } from 'sharedComponents/flexGrid';
-import DatepickerField from 'form/fields/DatepickerField';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import SoknadData from 'papirsoknad/SoknadData';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { CheckboxField, SelectField } from 'form/Fields';
+import { CheckboxField, SelectField, DatepickerField } from '@fpsak-frontend/form';
 import { dateAfterOrEqual, hasValidDate, required } from 'utils/validation/validators';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
