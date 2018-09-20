@@ -7,7 +7,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import {
   NavFieldGroup, InputField, SelectField, PeriodpickerField,
 } from '@fpsak-frontend/form';
-import { required } from 'utils/validation/validators';
+import { required } from '@fpsak-frontend/utils/validation/validators';
 import { getFaktaOmBeregning, getAksjonspunkter } from 'behandling/behandlingSelectors';
 import { getBehandlingFormSyncErrors } from 'behandling/behandlingForm';
 import Image from 'sharedComponents/Image';
@@ -18,8 +18,8 @@ import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import inntektskategorier, { isSelvstendigNæringsdrivende } from 'kodeverk/inntektskategorier';
-import { parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr } from 'utils/currencyUtils';
-import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
+import { parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
+import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
 
 import Table from 'sharedComponents/Table';
 import TableRow from 'sharedComponents/TableRow';

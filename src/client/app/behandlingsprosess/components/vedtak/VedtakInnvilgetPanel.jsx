@@ -8,7 +8,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import { getAksjonspunkter, getBehandlingResultatstruktur, getBehandlingSprak } from 'behandling/behandlingSelectors';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import { formatCurrencyWithKr } from 'utils/currencyUtils';
+import { formatCurrencyWithKr } from '@fpsak-frontend/utils/currencyUtils';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import VedtakFritekstPanel from 'behandlingsprosess/components/vedtak/VedtakFritekstPanel';

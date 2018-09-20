@@ -3,8 +3,8 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import {
   hasValidText, maxLength, minLength, required,
-} from 'utils/validation/validators';
-import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
+} from '@fpsak-frontend/utils/validation/validators';
+import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
 import classNames from 'classnames';
 import { Column, Row } from 'nav-frontend-grid';
 import { TextAreaField } from '@fpsak-frontend/form';

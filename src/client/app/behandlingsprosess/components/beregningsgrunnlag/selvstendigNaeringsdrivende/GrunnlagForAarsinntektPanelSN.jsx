@@ -8,7 +8,7 @@ import Table from 'sharedComponents/Table';
 import TableRow from 'sharedComponents/TableRow';
 import TableColumn from 'sharedComponents/TableColumn';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
 
 import styles from './grunnlagForAarsinntektPanelSN.less';
 

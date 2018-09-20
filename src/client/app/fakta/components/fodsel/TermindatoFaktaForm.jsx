@@ -16,7 +16,7 @@ import { behandlingForm } from 'behandling/behandlingForm';
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
 import {
   required, hasValidDate, minValue, maxValue, hasValidInteger,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils/validation/validators';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import {

@@ -1,7 +1,4 @@
-/.idea/
-/node/
-/node_modules/
-/packages/*/node_modules/
+packages/*/node_modules/
 /src/client/public/*
 /bin/
 /.tmp/
@@ -12,4 +9,9 @@
 /coverage/
 *.iml
 *.log*
-target/
+/target/
+/node_modules
+.idea/
+npm-debug.log
+lib/
+lerna-debug.log

@@ -9,7 +9,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import ArrowBox from 'sharedComponents/ArrowBox';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { hasValidDate, hasValidInteger, required } from 'utils/validation/validators';
+import { hasValidDate, hasValidInteger, required } from '@fpsak-frontend/utils/validation/validators';
 import {
   CheckboxField, InputField, RadioGroupField, RadioOption, TextAreaField, DatepickerField,
 } from '@fpsak-frontend/form';

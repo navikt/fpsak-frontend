@@ -19,8 +19,8 @@ import {
   hasValidInteger,
   minValue,
   maxValue,
-} from 'utils/validation/validators';
-import { ISO_DATE_FORMAT } from 'utils/formats';
+} from '@fpsak-frontend/utils/validation/validators';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import BorderBox from 'sharedComponents/BorderBox';
 
 import styles from './terminFodselDatoPanel.less';

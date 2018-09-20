@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FlexContainer, FlexRow, FlexColumn } from 'sharedComponents/flexGrid';
-import { range } from 'utils/arrayUtils';
+import { range } from '@fpsak-frontend/utils/arrayUtils';
 import EditedIcon from 'sharedComponents/EditedIcon';
 import styles from './optionGrid.less';
 

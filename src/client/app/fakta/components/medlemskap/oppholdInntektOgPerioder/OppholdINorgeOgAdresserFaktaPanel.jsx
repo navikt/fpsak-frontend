@@ -13,7 +13,7 @@ import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { required } from 'utils/validation/validators';
+import { required } from '@fpsak-frontend/utils/validation/validators';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import Image from 'sharedComponents/Image';
 import PeriodLabel from 'sharedComponents/PeriodLabel';

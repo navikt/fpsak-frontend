@@ -16,8 +16,8 @@ import {
   maxLength,
   required,
   validateProsentandel,
-} from 'utils/validation/validators';
-import { isRequiredMessage } from 'utils/validation/messages';
+} from '@fpsak-frontend/utils/validation/validators';
+import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
 import RenderGraderingPeriodeFieldArray from './RenderGraderingPeriodeFieldArray';
 
 export const graderingPeriodeFieldArrayName = 'graderingPeriode';

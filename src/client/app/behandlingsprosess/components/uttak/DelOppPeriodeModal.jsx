@@ -3,7 +3,7 @@ import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import {
   hasValidDate, required, dateAfterOrEqual, dateBeforeOrEqual,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils/validation/validators';
 
 import { DatepickerField } from '@fpsak-frontend/form';
 import Modal from 'sharedComponents/Modal';
@@ -15,7 +15,7 @@ import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import { behandlingForm } from 'behandling/behandlingForm';
 import moment from 'moment/moment';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 
 import styles from './delOppPeriodeModal.less';
 

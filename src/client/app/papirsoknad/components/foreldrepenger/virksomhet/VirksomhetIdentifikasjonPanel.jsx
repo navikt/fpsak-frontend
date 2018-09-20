@@ -12,7 +12,7 @@ import {
 import ArrowBox from 'sharedComponents/ArrowBox';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { required, hasValidInteger } from 'utils/validation/validators';
+import { required, hasValidInteger } from '@fpsak-frontend/utils/validation/validators';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 

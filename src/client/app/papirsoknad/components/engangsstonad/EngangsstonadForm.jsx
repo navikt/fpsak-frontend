@@ -3,7 +3,7 @@ import { reduxForm, formPropTypes, formValueSelector } from 'redux-form';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { isEqual } from 'utils/objectUtils';
+import { isEqual } from '@fpsak-frontend/utils/objectUtils';
 import { getRegisteredFields } from 'papirsoknad/duck';
 import MottattDatoPanel from 'papirsoknad/components/commonPanels/MottattDatoPanel';
 import SoknadData from 'papirsoknad/SoknadData';

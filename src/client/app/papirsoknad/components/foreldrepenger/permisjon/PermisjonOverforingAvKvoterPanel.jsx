@@ -11,7 +11,7 @@ import SoknadData from 'papirsoknad/SoknadData';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { CheckboxField, SelectField, DatepickerField } from '@fpsak-frontend/form';
-import { dateAfterOrEqual, hasValidDate, required } from 'utils/validation/validators';
+import { dateAfterOrEqual, hasValidDate, required } from '@fpsak-frontend/utils/validation/validators';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import foreldreType from 'kodeverk/foreldreType';

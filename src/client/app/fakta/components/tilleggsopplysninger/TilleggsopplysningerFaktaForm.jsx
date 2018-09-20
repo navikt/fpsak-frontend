@@ -9,7 +9,7 @@ import ElementWrapper from 'sharedComponents/ElementWrapper';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
 
 import styles from './tilleggsopplysningerFaktaForm.less';
 

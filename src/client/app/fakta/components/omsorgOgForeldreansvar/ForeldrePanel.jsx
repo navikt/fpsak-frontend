@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
-import getAddresses from 'utils/personUtils';
+import getAddresses from '@fpsak-frontend/utils/personUtils';
 import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
 import opplysningAdresseType from 'kodeverk/opplysningAdresseType';
 import opplysningsKilde from 'kodeverk/opplysningsKilde';
 import { DatepickerField } from '@fpsak-frontend/form';
-import { hasValidDate, dateBeforeOrEqualToToday } from 'utils/validation/validators';
+import { hasValidDate, dateBeforeOrEqualToToday } from '@fpsak-frontend/utils/validation/validators';
 import DateLabel from 'sharedComponents/DateLabel';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';

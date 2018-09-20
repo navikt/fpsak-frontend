@@ -11,8 +11,8 @@ import Table from 'sharedComponents/Table';
 import TableRow from 'sharedComponents/TableRow';
 import TableColumn from 'sharedComponents/TableColumn';
 import BorderBox from 'sharedComponents/BorderBox';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
 import periodeAarsak from 'kodeverk/periodeAarsak';
 
 import styles from './beregningsresultatTable.less';

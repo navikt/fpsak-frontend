@@ -6,10 +6,10 @@ import { RadioOption, RadioGroupField } from '@fpsak-frontend/form';
 import moment from 'moment';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
-import { required } from 'utils/validation/validators';
+import { required } from '@fpsak-frontend/utils/validation/validators';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
 import { sortArbeidsforholdList } from '../../ArbeidsforholdHelper';
 
 const kortvarigStringId = 'BeregningInfoPanel.TidsbegrensetArbFor.Arbeidsforhold';

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
-import { isObject } from 'utils/objectUtils';
+import { isObject } from '@fpsak-frontend/utils/objectUtils';
 import FadingPanel from 'sharedComponents/FadingPanel';
 import { getBehandlingsresultat, isBehandlingRevurderingFortsattMedlemskap, getBehandlingRevurderingAvFortsattMedlemskapFom }
   from 'behandling/behandlingSelectors';
@@ -17,7 +17,7 @@ import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import vilkarType from 'kodeverk/vilkarType';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import aksjonspunktCode from 'kodeverk/aksjonspunktCodes';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import {
   getSelectedBehandlingspunktTitleCode, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus,
   getSelectedBehandlingspunkt, getIsSelectedBehandlingspunktOverridden, getSelectedBehandlingspunktVilkar,

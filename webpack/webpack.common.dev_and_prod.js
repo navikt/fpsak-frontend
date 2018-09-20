@@ -30,7 +30,7 @@ const config = {
           fix: isDevelopment,
           cache: true,
         },
-        include: [APP_DIR],
+        include: [APP_DIR, /@fpsak-frontend/],
       }, {
         test: /\.(jsx?|js?|mjs)$/,
         loader: require.resolve('babel-loader'),

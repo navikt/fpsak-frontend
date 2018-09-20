@@ -22,8 +22,8 @@ import { TextAreaField } from '@fpsak-frontend/form';
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
 import {
   hasValidText, maxLength, minLength, required,
-} from 'utils/validation/validators';
-import { removeSpacesFromNumber } from 'utils/currencyUtils';
+} from '@fpsak-frontend/utils/validation/validators';
+import { removeSpacesFromNumber } from '@fpsak-frontend/utils/currencyUtils';
 import GrunnlagForAarsinntektPanelFL from '../frilanser/GrunnlagForAarsinntektPanelFL';
 import GrunnlagForAarsinntektPanelAT from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
 import GrunnlagForAarsinntektPanelSN from '../selvstendigNaeringsdrivende/GrunnlagForAarsinntektPanelSN';

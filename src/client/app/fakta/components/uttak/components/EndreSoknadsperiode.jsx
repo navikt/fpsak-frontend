@@ -9,7 +9,7 @@ import {
   hasValidDecimal,
   maxValue,
   minValue,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils/validation/validators';
 import { uttakPeriodeNavn, stonadskontoType } from 'kodeverk/uttakPeriodeType';
 
 import styles from '../perioder/periodeTyper.less';

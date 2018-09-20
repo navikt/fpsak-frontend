@@ -14,8 +14,8 @@ import {
 } from '@fpsak-frontend/form';
 import {
   required, hasValidFodselsnummerFormat, hasValidFodselsnummer, hasValidName,
-} from 'utils/validation/validators';
-import { sammeFodselsnummerSomSokerMessage } from 'utils/validation/messages';
+} from '@fpsak-frontend/utils/validation/validators';
+import { sammeFodselsnummerSomSokerMessage } from '@fpsak-frontend/utils/validation/messages';
 import BorderBox from 'sharedComponents/BorderBox';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import { getKodeverk } from 'kodeverk/duck';

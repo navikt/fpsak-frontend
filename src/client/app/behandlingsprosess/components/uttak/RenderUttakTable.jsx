@@ -13,7 +13,7 @@ import { SelectField, InputField, DecimalField } from '@fpsak-frontend/form';
 import uttakArbeidTypeKodeverk from 'kodeverk/uttakArbeidType';
 import {
   minValue, maxValue, hasValidInteger, maxLength, required, hasValidDecimal, notDash,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils/validation/validators';
 import styles from './renderUttakTable.less';
 
 /**

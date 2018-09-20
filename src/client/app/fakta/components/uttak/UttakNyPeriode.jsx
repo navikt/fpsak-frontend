@@ -15,9 +15,9 @@ import {
   hasValidDecimal,
   hasValidPeriod,
   maxValue, minLength, maxLength, hasValidText,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils/validation/validators';
 import moment from 'moment';
-import guid from 'utils/guidUtil';
+import guid from '@fpsak-frontend/utils/guidUtil';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
 import FlexRow from 'sharedComponents/flexGrid/FlexRow';
@@ -28,10 +28,10 @@ import { getPersonopplysning, getAlleAndelerIForstePeriode } from 'behandling/be
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
 import uttakPeriodeType from 'kodeverk/uttakPeriodeType';
-import { ISO_DATE_FORMAT } from 'utils/formats';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import utsettelseArsakCodes from 'kodeverk/utsettelseArsakCodes';
 import overforingArsak from 'kodeverk/overforingArsak';
-import { calcDaysAndWeeks } from 'utils/dateUtils';
+import { calcDaysAndWeeks } from '@fpsak-frontend/utils/dateUtils';
 import styles from './uttakNyPeriode.less';
 
 const maxValue100 = maxValue(100);

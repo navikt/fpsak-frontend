@@ -7,9 +7,9 @@ import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import ArrowBox from 'sharedComponents/ArrowBox';
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import { isRequiredMessage } from 'utils/validation/messages';
+import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
 import { SelectField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { required } from 'utils/validation/validators';
+import { required } from '@fpsak-frontend/utils/validation/validators';
 
 import styles from './vilkarResultPicker.less';
 

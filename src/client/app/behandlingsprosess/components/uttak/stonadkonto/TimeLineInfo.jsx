@@ -9,7 +9,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { stonadskontoerPropType } from 'behandling/proptypes/stonadskontoPropType';
 import uttakArbeidTypeKodeverk from 'kodeverk/uttakArbeidType';
 import stonadskontoType from 'kodeverk/stonadskontoType';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import moment from 'moment';
 
 import TimeLineTab from './TimeLineTab';

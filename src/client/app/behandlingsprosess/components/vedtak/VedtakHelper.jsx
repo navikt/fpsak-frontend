@@ -2,7 +2,7 @@ import behandlingResultatType from 'kodeverk/behandlingResultatType';
 import vilkarType from 'kodeverk/vilkarType';
 import klageVurdering from 'kodeverk/klageVurdering';
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import { minLength, maxLength } from 'utils/validation/validators';
+import { minLength, maxLength } from '@fpsak-frontend/utils/validation/validators';
 import behandlingStatusCode from 'kodeverk/behandlingStatus';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import { isBGAksjonspunktSomGirFritekstfelt } from 'kodeverk/aksjonspunktCodes';

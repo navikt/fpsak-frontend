@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
 import { FpsakApi } from 'data/fpsakApi';
 import { getRestApiData, getRestApiError } from 'data/duck';
-import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
+import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
 import aksjonspunktCodes, {
   isInnhentSaksopplysningerAksjonspunkt,
   isVilkarForSykdomOppfylt,

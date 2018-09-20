@@ -6,7 +6,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Undertekst, Normaltekst, Element } from 'nav-frontend-typografi';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import BorderBox from 'sharedComponents/BorderBox';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
 
 import styles from './inntektsopplysningerPanel.less';
 

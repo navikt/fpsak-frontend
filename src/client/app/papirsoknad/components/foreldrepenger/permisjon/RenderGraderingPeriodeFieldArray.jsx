@@ -8,7 +8,7 @@ import { Row, Column } from 'nav-frontend-grid';
 
 import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
 import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
-import { maxValue, hasValidDecimal } from 'utils/validation/validators';
+import { maxValue, hasValidDecimal } from '@fpsak-frontend/utils/validation/validators';
 import {
   DatepickerField, SelectField, InputField, CheckboxField, DecimalField,
 } from '@fpsak-frontend/form';

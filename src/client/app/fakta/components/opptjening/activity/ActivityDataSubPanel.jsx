@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import {
   required, minValue, maxValue, hasValidDecimal,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils/validation/validators';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import OAType from 'kodeverk/opptjeningAktivitetType';
 import { InputField, DecimalField, DatepickerField } from '@fpsak-frontend/form';

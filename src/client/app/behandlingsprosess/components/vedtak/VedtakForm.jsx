@@ -23,7 +23,7 @@ import { CheckboxField } from '@fpsak-frontend/form';
 import behandlingStatusCode from 'kodeverk/behandlingStatus';
 import FritekstBrevPanel from 'behandlingsprosess/components/vedtak/FritekstBrevPanel';
 import classNames from 'classnames';
-import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
 import VedtakAksjonspunktPanel from './VedtakAksjonspunktPanel';

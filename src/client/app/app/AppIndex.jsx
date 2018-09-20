@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 import moment from 'moment';
 
-import { parseQueryString } from 'utils/urlUtils';
+import { parseQueryString } from '@fpsak-frontend/utils/urlUtils';
 import AppConfigResolver from './AppConfigResolver';
 import {
   getCrashMessage, getErrorMessageCodeWithParams, getErrorMessages, getFunksjonellTid, getNavAnsattName,

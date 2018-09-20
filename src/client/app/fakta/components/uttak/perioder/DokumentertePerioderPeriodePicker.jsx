@@ -7,7 +7,7 @@ import { PeriodpickerField } from '@fpsak-frontend/form';
 import { FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
 import {
   required, hasValidDate, dateRangesNotOverlapping, dateAfterOrEqual,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils/validation/validators';
 
 import styles from './dokumentertePerioderPeriodePicker.less';
 

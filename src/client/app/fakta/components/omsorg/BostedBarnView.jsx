@@ -5,9 +5,9 @@ import { FormattedMessage } from 'react-intl';
 
 import personopplysningPropType from 'behandling/proptypes/personopplysningPropType';
 import PropTypes from 'prop-types';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import opplysningAdresseType from 'kodeverk/opplysningAdresseType';
-import getAddresses from 'utils/personUtils';
+import getAddresses from '@fpsak-frontend/utils/personUtils';
 
 import styles from './bostedBarnView.less';
 

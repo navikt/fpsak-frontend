@@ -16,13 +16,13 @@ import { FlexContainer, FlexRow, FlexColumn } from 'sharedComponents/flexGrid';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import {
   required, minValue, maxValue, hasValidInteger,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils/validation/validators';
 import { InputField } from '@fpsak-frontend/form';
 import aksjonspunktCode from 'kodeverk/aksjonspunktCodes';
 import OverstyrVurderingChecker from 'behandlingsprosess/components/OverstyrVurderingChecker';
 import OverstyrConfirmationForm from 'behandlingsprosess/components/OverstyrConfirmationForm';
 import OverstyrConfirmVilkarButton from 'behandlingsprosess/components/OverstyrConfirmVilkarButton';
-import { formatCurrencyWithKr } from 'utils/currencyUtils';
+import { formatCurrencyWithKr } from '@fpsak-frontend/utils/currencyUtils';
 
 import styles from './beregningsresultatEngangsstonadForm.less';
 

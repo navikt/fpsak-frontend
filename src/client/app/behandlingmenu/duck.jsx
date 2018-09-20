@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import moment from 'moment';
 
-import { ISO_DATE_FORMAT } from 'utils/formats';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import { pathToBehandling, getLocationWithDefaultBehandlingspunktAndFakta } from 'app/paths';
 import { makeRestApiRequest, setDataRestApi } from 'data/duck';
 import { FpsakApi } from 'data/fpsakApi';

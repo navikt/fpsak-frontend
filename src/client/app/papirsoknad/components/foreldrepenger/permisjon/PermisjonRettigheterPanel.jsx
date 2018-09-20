@@ -4,7 +4,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { required } from 'utils/validation/validators';
+import { required } from '@fpsak-frontend/utils/validation/validators';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 

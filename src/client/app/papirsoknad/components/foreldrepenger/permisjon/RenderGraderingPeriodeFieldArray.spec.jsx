@@ -3,7 +3,13 @@ import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import { expect } from 'chai';
 
 import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
-import { DatepickerField, SelectField, InputField, CheckboxField, DecimalField } from '@fpsak-frontend/form';
+import {
+  DatepickerField,
+  SelectField,
+  InputField,
+  CheckboxField,
+  DecimalField,
+} from '@fpsak-frontend/form';
 import { MockFields, metaMock } from 'testHelpers/redux-form-test-helper';
 import { RenderGraderingPeriodeFieldArray } from './RenderGraderingPeriodeFieldArray';
 

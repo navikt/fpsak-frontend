@@ -4,7 +4,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import moment from 'moment';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import Table from 'sharedComponents/Table';
 import TableRow from 'sharedComponents/TableRow';

@@ -8,7 +8,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
-import { omit } from 'utils/objectUtils';
+import { omit } from '@fpsak-frontend/utils/objectUtils';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import {

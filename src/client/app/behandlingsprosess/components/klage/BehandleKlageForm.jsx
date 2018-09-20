@@ -11,7 +11,7 @@ import {
 } from '@fpsak-frontend/form';
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { required, hasValidDate } from 'utils/validation/validators';
+import { required, hasValidDate } from '@fpsak-frontend/utils/validation/validators';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';

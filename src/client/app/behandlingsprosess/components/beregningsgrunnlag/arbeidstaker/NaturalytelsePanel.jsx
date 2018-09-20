@@ -8,8 +8,8 @@ import TableRow from 'sharedComponents/TableRow';
 import TableColumn from 'sharedComponents/TableColumn';
 import moment from 'moment';
 import { createSelector } from 'reselect';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
 import periodeAarsak from 'kodeverk/periodeAarsak';
 import { getBeregningsgrunnlagPerioder } from 'behandling/behandlingSelectors';
 

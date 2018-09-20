@@ -1,5 +1,5 @@
 import vut from 'kodeverk/vilkarUtfallType';
-import { notNull } from 'utils/objectUtils';
+import { notNull } from '@fpsak-frontend/utils/objectUtils';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 
 class BehandlingspunktProperties {

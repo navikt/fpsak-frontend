@@ -12,8 +12,8 @@ import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandli
 import { isKontrollerRevurderingAksjonspunkOpen } from 'behandling/behandlingSelectors';
 import {
   ariaCheck, hasValidText, maxLength, minLength, required,
-} from 'utils/validation/validators';
-import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
+} from '@fpsak-frontend/utils/validation/validators';
+import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import ugunstAarsakTyper from 'kodeverk/ugunstAarsakTyper';
 import { getKodeverk } from 'kodeverk/duck';

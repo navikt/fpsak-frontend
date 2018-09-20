@@ -5,7 +5,7 @@ import { formPropTypes, reduxForm, formValueSelector } from 'redux-form';
 import { Container, Row, Column } from 'nav-frontend-grid';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import BorderBox from 'sharedComponents/BorderBox';
-import { required } from 'utils/validation/validators';
+import { required } from '@fpsak-frontend/utils/validation/validators';
 import {
   InputField, DatepickerField, TextAreaField, CheckboxField, SelectField, RadioGroupField, RadioOption,
 } from './index';

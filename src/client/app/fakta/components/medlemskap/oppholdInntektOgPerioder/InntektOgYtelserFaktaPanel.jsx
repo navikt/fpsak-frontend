@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 
-import { ISO_DATE_FORMAT } from 'utils/formats';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
-import { formatCurrencyWithKr } from 'utils/currencyUtils';
+import { formatCurrencyWithKr } from '@fpsak-frontend/utils/currencyUtils';
 import Table from 'sharedComponents/Table';
 import TableRow from 'sharedComponents/TableRow';
 import TableColumn from 'sharedComponents/TableColumn';

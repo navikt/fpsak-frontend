@@ -9,7 +9,7 @@ import moment from 'moment';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import { getKodeverk } from 'kodeverk/duck';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
-import { ISO_DATE_FORMAT } from 'utils/formats';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import { getBehandlingVersjon } from 'behandling/behandlingSelectors';
 import arbeidsforholdPropType from 'behandling/proptypes/arbeidsforholdPropType';
 import { getSelectedBehandlingId } from 'behandling/duck';

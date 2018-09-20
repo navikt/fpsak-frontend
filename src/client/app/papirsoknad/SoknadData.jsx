@@ -1,4 +1,4 @@
-import { notNull } from 'utils/objectUtils';
+import { notNull } from '@fpsak-frontend/utils/objectUtils';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import foreldreType from 'kodeverk/foreldreType';
 import familieHendelseType from 'kodeverk/familieHendelseType';

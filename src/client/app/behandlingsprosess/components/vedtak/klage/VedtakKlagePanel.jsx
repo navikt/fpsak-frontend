@@ -10,8 +10,8 @@ import {
   getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK,
   getBehandlingSprak, getBehandlingVilkar,
 } from 'behandling/behandlingSelectors';
-import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
-import { required, hasValidText } from 'utils/validation/validators';
+import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
+import { required, hasValidText } from '@fpsak-frontend/utils/validation/validators';
 import { TextAreaField } from '@fpsak-frontend/form';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import {

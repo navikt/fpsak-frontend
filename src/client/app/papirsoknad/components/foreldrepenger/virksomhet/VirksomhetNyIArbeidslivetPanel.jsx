@@ -9,7 +9,7 @@ import ArrowBox from 'sharedComponents/ArrowBox';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { RadioGroupField, RadioOption, DatepickerField } from '@fpsak-frontend/form';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { required, hasValidDate } from 'utils/validation/validators';
+import { required, hasValidDate } from '@fpsak-frontend/utils/validation/validators';
 import PropTypes from 'prop-types';
 
 /**

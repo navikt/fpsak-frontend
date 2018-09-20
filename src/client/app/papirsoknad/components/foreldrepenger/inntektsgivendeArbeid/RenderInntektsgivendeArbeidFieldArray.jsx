@@ -7,7 +7,7 @@ import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import landkoder from 'kodeverk/landkoder';
-import { maxLength } from 'utils/validation/validators';
+import { maxLength } from '@fpsak-frontend/utils/validation/validators';
 import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
 import { InputField, DatepickerField, SelectField } from '@fpsak-frontend/form';
 

@@ -9,7 +9,7 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
-import { maxLength, required, hasValidText } from 'utils/validation/validators';
+import { maxLength, required, hasValidText } from '@fpsak-frontend/utils/validation/validators';
 
 import Image from 'sharedComponents/Image';
 

@@ -10,7 +10,7 @@ import moment from 'moment';
 
 import FadingPanel from 'sharedComponents/FadingPanel';
 import ArrowBox from 'sharedComponents/ArrowBox';
-import { ISO_DATE_FORMAT } from 'utils/formats';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
@@ -25,7 +25,7 @@ import {
 } from 'behandling/behandlingSelectors';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import { required, hasValidDate } from 'utils/validation/validators';
+import { required, hasValidDate } from '@fpsak-frontend/utils/validation/validators';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import { getFilteredReceivedDocuments } from 'behandlingsupport/behandlingsupportSelectors';

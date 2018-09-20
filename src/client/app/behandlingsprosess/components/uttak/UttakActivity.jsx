@@ -8,7 +8,7 @@ import {
 } from '@fpsak-frontend/form';
 import {
   minLength, maxLength, requiredIfNotPristine, hasValidText, required, notDash,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils/validation/validators';
 import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
@@ -18,8 +18,8 @@ import { getKodeverk } from 'kodeverk/duck';
 import { FieldArray, formPropTypes } from 'redux-form';
 import periodeResultatType from 'kodeverk/periodeResultatType';
 import { uttakPeriodeNavn } from 'kodeverk/uttakPeriodeType';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import { calcDaysAndWeeks } from 'utils/dateUtils';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { calcDaysAndWeeks } from '@fpsak-frontend/utils/dateUtils';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment/moment';
 import uttakArbeidTypeKodeverk from 'kodeverk/uttakArbeidType';

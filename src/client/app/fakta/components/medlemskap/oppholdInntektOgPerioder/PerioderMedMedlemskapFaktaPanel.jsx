@@ -18,9 +18,9 @@ import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import { required } from 'utils/validation/validators';
+import { required } from '@fpsak-frontend/utils/validation/validators';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 
 
 const headerTextCodes = [

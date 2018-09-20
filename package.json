@@ -65,7 +65,8 @@
     "reselect": "^3.0.1",
     "vis": "^4.21.0",
     "xregexp": "^4.2.0",
-    "@fpsak-frontend/form": "1.0.0"
+    "@fpsak-frontend/form": "1.0.0",
+    "@fpsak-frontend/utils": "1.0.0"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.15.0",

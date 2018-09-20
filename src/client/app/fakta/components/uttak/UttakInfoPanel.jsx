@@ -4,7 +4,7 @@ import { createSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { behandlingForm } from 'behandling/behandlingForm';
-import guid from 'utils/guidUtil';
+import guid from '@fpsak-frontend/utils/guidUtil';
 import moment from 'moment';
 import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
 import withDefaultToggling from 'fakta/withDefaultToggling';
@@ -15,7 +15,7 @@ import {
   getBehandlingYtelseFordeling,
   getBehandlingIsRevurdering,
 } from 'behandling/behandlingSelectors';
-import { dateFormat } from 'utils/dateUtils';
+import { dateFormat } from '@fpsak-frontend/utils/dateUtils';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import UttakFaktaForm from './UttakFaktaForm';
 

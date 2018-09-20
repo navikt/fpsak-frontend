@@ -4,12 +4,12 @@ import { FieldArray } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
 import inntektskategorier from 'kodeverk/inntektskategorier';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import moment from 'moment';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import RenderBruttoBGFordelingFieldArray from './RenderBruttoBGFordelingFieldArray';
 
 

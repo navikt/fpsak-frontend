@@ -11,7 +11,7 @@ import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { DatepickerField } from '@fpsak-frontend/form';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { required, hasValidDate } from 'utils/validation/validators';
+import { required, hasValidDate } from '@fpsak-frontend/utils/validation/validators';
 import Image from 'sharedComponents/Image';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';

@@ -11,7 +11,7 @@ import { Undertekst } from 'nav-frontend-typografi';
 
 import behandlingResultatType from 'kodeverk/behandlingResultatType';
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
-import { maxLength, required, hasValidText } from 'utils/validation/validators';
+import { maxLength, required, hasValidText } from '@fpsak-frontend/utils/validation/validators';
 
 import styles from './shelveBehandlingModal.less';
 

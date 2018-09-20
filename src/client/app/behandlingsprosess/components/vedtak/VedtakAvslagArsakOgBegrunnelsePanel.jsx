@@ -5,14 +5,14 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 import behandlingStatus from 'kodeverk/behandlingStatus';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
   minLength, maxLength, requiredIfNotPristine, hasValidText,
-} from 'utils/validation/validators';
-import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
+} from '@fpsak-frontend/utils/validation/validators';
+import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { hasIkkeOppfyltSoknadsfristvilkar } from './VedtakHelper';
 

@@ -14,7 +14,7 @@ import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, getBehandlingFormValues, getBehandlingFormInitialValues,
 }
   from 'behandling/behandlingForm';
-import { hasValidText, maxLength, required } from 'utils/validation/validators';
+import { hasValidText, maxLength, required } from '@fpsak-frontend/utils/validation/validators';
 import { FlexColumn, FlexContainer, FlexRow } from 'sharedComponents/flexGrid';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import {

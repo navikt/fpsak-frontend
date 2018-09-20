@@ -12,7 +12,7 @@ import { getSoknad, getInntektsmeldinger, getAksjonspunkter } from 'behandling/b
 import { behandlingForm } from 'behandling/behandlingForm';
 import {
   required, hasValidDate, minLength, maxLength, hasValidText,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils/validation/validators';
 import { TextAreaField, DatepickerField } from '@fpsak-frontend/form';
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';

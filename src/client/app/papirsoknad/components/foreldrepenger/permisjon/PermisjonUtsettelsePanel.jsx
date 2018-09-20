@@ -12,8 +12,8 @@ import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import {
   hasValidInteger, hasValidPeriodIncludingOtherErrors, maxLength, required,
-} from 'utils/validation/validators';
-import { isRequiredMessage } from 'utils/validation/messages';
+} from '@fpsak-frontend/utils/validation/validators';
+import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
 import RenderUtsettelsePeriodeFieldArray from './RenderUtsettelsePeriodeFieldArray';
 
 

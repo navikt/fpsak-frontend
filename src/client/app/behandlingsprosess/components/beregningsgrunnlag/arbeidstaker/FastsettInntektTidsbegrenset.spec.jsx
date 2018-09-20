@@ -7,7 +7,7 @@ import periodeAarsak from 'kodeverk/periodeAarsak';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
 import FastsettInntektTidsbegrenset, {
   createTableData,
   getIsAksjonspunktClosed,

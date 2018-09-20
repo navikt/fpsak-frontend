@@ -12,7 +12,7 @@ import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
 import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import {
   required, maxLength, minLength, hasValidPeriod, hasValidText,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils/validation/validators';
 import InntektsmeldingInfo from '../components/InntektsmeldingInfo';
 import EndreSoknadsperiode from '../components/EndreSoknadsperiode';
 import PerioderKnapper from './PerioderKnapper';

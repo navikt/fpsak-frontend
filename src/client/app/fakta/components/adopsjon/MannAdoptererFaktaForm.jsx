@@ -8,7 +8,7 @@ import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { getEditedStatus } from 'behandling/behandlingSelectors';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { required } from 'utils/validation/validators';
+import { required } from '@fpsak-frontend/utils/validation/validators';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';

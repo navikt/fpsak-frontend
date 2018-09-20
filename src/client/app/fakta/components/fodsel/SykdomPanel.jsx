@@ -9,7 +9,7 @@ import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { TextAreaField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import {
   required, hasValidText, maxLength, minLength,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils/validation/validators';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
 import { GrunnlagForAarsinntektPanelSN } from './GrunnlagForAarsinntektPanelSN';
 
 const beregningsgrunnlagperioder = {

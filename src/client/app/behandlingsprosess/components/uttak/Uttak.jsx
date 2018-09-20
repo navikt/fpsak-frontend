@@ -9,7 +9,7 @@ import { injectIntl, FormattedMessage, intlShape } from 'react-intl';
 
 import { FlexContainer, FlexRow, FlexColumn } from 'sharedComponents/flexGrid';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { CheckboxField } from '@fpsak-frontend/form';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';

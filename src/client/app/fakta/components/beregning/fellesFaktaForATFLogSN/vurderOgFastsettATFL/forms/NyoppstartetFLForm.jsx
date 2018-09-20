@@ -4,12 +4,12 @@ import { FormattedMessage } from 'react-intl';
 import { RadioOption, RadioGroupField } from '@fpsak-frontend/form';
 
 import { Normaltekst } from 'nav-frontend-typografi';
-import { required } from 'utils/validation/validators';
+import { required } from '@fpsak-frontend/utils/validation/validators';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { Row, Column } from 'nav-frontend-grid';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
-import { flatten } from 'utils/arrayUtils';
+import { flatten } from '@fpsak-frontend/utils/arrayUtils';
 import FastsettATFLInntektForm
   from 'fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/FastsettATFLInntektForm';
 

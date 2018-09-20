@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
 import { Column, Row } from 'nav-frontend-grid';
-import { ISO_DATE_FORMAT } from 'utils/formats';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import TimeLineControl from '../tilkjentYtelse/timeline/TimeLineControl';
 import TimeLineSoker from '../tilkjentYtelse/timeline/TimeLineSoker';
 import TimeLineSokerEnsamSoker from '../tilkjentYtelse/timeline/TimeLineSokerEnsamSoker';

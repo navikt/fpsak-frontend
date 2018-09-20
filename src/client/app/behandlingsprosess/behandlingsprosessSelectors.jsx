@@ -4,7 +4,7 @@ import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { getRettigheter } from 'navAnsatt/duck';
 import { DEFAULT_BEHANDLINGSPROSESS } from 'app/paths';
-import { arrayToObject } from 'utils/objectUtils';
+import { arrayToObject } from '@fpsak-frontend/utils/objectUtils';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 import fyt from 'kodeverk/fagsakYtelseType';

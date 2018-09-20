@@ -10,10 +10,10 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import moment from 'moment';
 
-import { findDifferenceInMonthsAndDays } from 'utils/dateUtils';
+import { findDifferenceInMonthsAndDays } from '@fpsak-frontend/utils/dateUtils';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
-import { omit, isEqual } from 'utils/objectUtils';
+import { omit, isEqual } from '@fpsak-frontend/utils/objectUtils';
 import { FlexContainer, FlexRow, FlexColumn } from 'sharedComponents/flexGrid';
 import Image from 'sharedComponents/Image';
 import { getKodeverk } from 'kodeverk/duck';
@@ -24,7 +24,7 @@ import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandli
 import {
   requiredIfCustomFunctionIsTrue, required, hasValidPeriod, minLength, maxLength, hasValidText, isWithinOpptjeningsperiode,
 }
-  from 'utils/validation/validators';
+  from '@fpsak-frontend/utils/validation/validators';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import {
   PeriodpickerField, RadioGroupField, RadioOption, TextAreaField, SelectField,

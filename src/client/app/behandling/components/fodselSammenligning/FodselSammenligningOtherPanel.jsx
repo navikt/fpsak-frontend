@@ -12,7 +12,7 @@ import {
   getBehandlingHasSoknad, getSoknadTermindato, getSoknadAntallBarn, getSoknadUtstedtdato,
   getSoknadFodselsdatoer, getFamiliehendelseTermindato,
 } from 'behandling/behandlingSelectors';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 
 const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 

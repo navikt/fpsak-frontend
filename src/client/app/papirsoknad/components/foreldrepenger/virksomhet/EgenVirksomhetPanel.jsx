@@ -9,7 +9,7 @@ import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import BorderBox from 'sharedComponents/BorderBox';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { required, arrayMinLength } from 'utils/validation/validators';
+import { required, arrayMinLength } from '@fpsak-frontend/utils/validation/validators';
 import RegistrerVirksomhetPanel from './RegistrerVirksomhetPanel';
 
 import styles from './egenVirksomhetPanel.less';

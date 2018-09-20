@@ -7,13 +7,13 @@ import FlexRow from 'sharedComponents/flexGrid/FlexRow';
 import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
 import Modal from 'sharedComponents/Modal';
 import moment from 'moment';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import { TextAreaField } from '@fpsak-frontend/form';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import {
   minLength, maxLength, required, hasValidText,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils/validation/validators';
 import { behandlingForm } from 'behandling/behandlingForm';
 import innvilgetImageUrl from 'images/innvilget_valgt.svg';
 import Image from 'sharedComponents/Image';

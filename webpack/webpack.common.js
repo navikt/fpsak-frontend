@@ -27,7 +27,6 @@ const config = {
       data: path.join(APP_DIR, 'data'),
       kodeverk: path.join(APP_DIR, 'kodeverk'),
       sharedComponents: path.join(APP_DIR, 'sharedComponents'),
-      utils: path.join(APP_DIR, 'utils'),
     },
     extensions: ['.json', '.js', '.jsx'],
   },

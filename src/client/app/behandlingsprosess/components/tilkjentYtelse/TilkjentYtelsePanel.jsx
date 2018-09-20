@@ -15,7 +15,7 @@ import {
   getFamiliehendelse,
 } from 'behandling/behandlingSelectors';
 import soknadType from 'kodeverk/soknadType';
-import { ISO_DATE_FORMAT } from 'utils/formats';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import TilkjentYtelse from './TilkjentYtelse';
 
 const perioderMedClassName = [];

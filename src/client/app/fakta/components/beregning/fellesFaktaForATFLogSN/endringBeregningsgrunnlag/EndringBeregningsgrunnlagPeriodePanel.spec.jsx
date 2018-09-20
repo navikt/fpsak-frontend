@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
 import { settFastsattBelop } from './EndringBeregningsgrunnlagPeriodePanel';
 
 

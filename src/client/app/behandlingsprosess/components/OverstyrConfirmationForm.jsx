@@ -8,8 +8,8 @@ import { isSelectedBehandlingspunktOverrideReadOnly } from 'behandlingsprosess/b
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
   minLength, maxLength, requiredIfNotPristine, hasValidText,
-} from 'utils/validation/validators';
-import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+} from '@fpsak-frontend/utils/validation/validators';
+import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
 
 import styles from './overstyrConfirmationForm.less';
 

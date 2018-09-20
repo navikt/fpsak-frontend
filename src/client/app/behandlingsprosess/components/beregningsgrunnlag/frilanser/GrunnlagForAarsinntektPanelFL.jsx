@@ -6,10 +6,10 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import { InputField } from '@fpsak-frontend/form';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { required } from 'utils/validation/validators';
+import { required } from '@fpsak-frontend/utils/validation/validators';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import { formatCurrencyNoKr, parseCurrencyInput } from 'utils/currencyUtils';
+import { formatCurrencyNoKr, parseCurrencyInput } from '@fpsak-frontend/utils/currencyUtils';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 

@@ -10,7 +10,7 @@ import Panel from 'nav-frontend-paneler';
 import { Row, Column } from 'nav-frontend-grid';
 import { Fieldset } from 'nav-frontend-skjema';
 import { Undertekst, Undertittel, Normaltekst } from 'nav-frontend-typografi';
-import { ISO_DATE_FORMAT } from 'utils/formats';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import moment from 'moment';
 
 import ElementWrapper from 'sharedComponents/ElementWrapper';
@@ -25,7 +25,7 @@ import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 import DateLabel from 'sharedComponents/DateLabel';
-import { required } from 'utils/validation/validators';
+import { required } from '@fpsak-frontend/utils/validation/validators';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import soknadType from 'kodeverk/soknadType';
 import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';

@@ -4,10 +4,10 @@ import { FormattedMessage } from 'react-intl';
 import { RadioOption, RadioGroupField } from '@fpsak-frontend/form';
 
 import { Normaltekst } from 'nav-frontend-typografi';
-import { required } from 'utils/validation/validators';
+import { required } from '@fpsak-frontend/utils/validation/validators';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import { flatten } from 'utils/arrayUtils';
+import { flatten } from '@fpsak-frontend/utils/arrayUtils';
 
 /**
  * NyIArbeidslivetSNForm

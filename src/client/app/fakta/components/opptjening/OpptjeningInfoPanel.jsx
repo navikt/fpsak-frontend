@@ -6,10 +6,10 @@ import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import { addDaysToDate } from 'utils/dateUtils';
+import { addDaysToDate } from '@fpsak-frontend/utils/dateUtils';
 import vilkarType from 'kodeverk/vilkarType';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { omit } from 'utils/objectUtils';
+import { omit } from '@fpsak-frontend/utils/objectUtils';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import { getBehandlingFastsattOpptjening, getBehandlingOpptjeningActivities } from 'behandling/behandlingSelectors';
 import { behandlingForm } from 'behandling/behandlingForm';

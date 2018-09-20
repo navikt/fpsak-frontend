@@ -14,8 +14,8 @@ import {
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import {
   hasValidInteger, hasValidDate, isDatesEqual, required, minValue, maxValue, dateBeforeOrEqualToToday,
-} from 'utils/validation/validators';
-import { isRequiredMessage } from 'utils/validation/messages';
+} from '@fpsak-frontend/utils/validation/validators';
+import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
 import { rettighet } from 'papirsoknad/components/commonPanels/rettigheter/RettigheterPanel';
 
 import styles from './omsorgOgAdopsjonPanel.less';

@@ -8,7 +8,7 @@ import moment from 'moment';
 import soknadType from 'kodeverk/soknadType';
 import opplysningsKilde from 'kodeverk/opplysningsKilde';
 import { DatepickerField } from '@fpsak-frontend/form';
-import { required, hasValidDate } from 'utils/validation/validators';
+import { required, hasValidDate } from '@fpsak-frontend/utils/validation/validators';
 import DateLabel from 'sharedComponents/DateLabel';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';

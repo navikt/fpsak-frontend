@@ -4,10 +4,10 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { isRequiredMessage } from 'utils/validation/messages';
+import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
 import { isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting } from 'behandling/behandlingForm';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
-import { ariaCheck } from 'utils/validation/validators';
+import { ariaCheck } from '@fpsak-frontend/utils/validation/validators';
 
 const isDisabled = (isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields) => {
   if ((!isDirty && !isSubmittable) || isSubmitting) {

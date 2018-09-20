@@ -14,7 +14,7 @@ import behandlingType from 'kodeverk/behandlingType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { getBehandlingType } from 'behandling/behandlingSelectors';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { ariaCheck, required } from 'utils/validation/validators';
+import { ariaCheck, required } from '@fpsak-frontend/utils/validation/validators';
 import BorderBox from 'sharedComponents/BorderBox';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import SoknadData from 'papirsoknad/SoknadData';

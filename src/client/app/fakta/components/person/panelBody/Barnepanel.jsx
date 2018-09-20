@@ -11,7 +11,7 @@ import Image from 'sharedComponents/Image';
 import urlMann from 'images/barn_gutt.svg';
 import urlKvinne from 'images/barn_jente.svg';
 import opplysningAdresseType from 'kodeverk/opplysningAdresseType';
-import getAddresses from 'utils/personUtils';
+import getAddresses from '@fpsak-frontend/utils/personUtils';
 
 import styles from './barnepanel.less';
 

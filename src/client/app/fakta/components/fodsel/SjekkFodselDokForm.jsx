@@ -19,7 +19,7 @@ import { behandlingFormValueSelector, behandlingForm } from 'behandling/behandli
 import FodselSammenligningPanel from 'behandling/components/fodselSammenligning/FodselSammenligningPanel';
 import {
   required, hasValidDate, minValue, maxValue, hasValidInteger, dateBeforeOrEqualToToday,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils/validation/validators';
 import behandlingType from 'kodeverk/behandlingType';
 import {
   DatepickerField, InputField, RadioGroupField, RadioOption,

@@ -11,10 +11,10 @@ import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
 import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
 import {
   required, hasValidDate, dateRangesNotOverlapping, dateAfterOrEqual,
-} from 'utils/validation/validators';
-import { isRequiredMessage } from 'utils/validation/messages';
-import { ISO_DATE_FORMAT } from 'utils/formats';
-import { isEmpty } from 'utils/arrayUtils';
+} from '@fpsak-frontend/utils/validation/validators';
+import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { isEmpty } from '@fpsak-frontend/utils/arrayUtils';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';

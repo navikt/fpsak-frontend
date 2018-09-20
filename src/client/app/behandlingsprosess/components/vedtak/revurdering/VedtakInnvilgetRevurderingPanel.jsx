@@ -12,7 +12,7 @@ import {
   getBehandlingsresultat,
 } from 'behandling/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandling/selectors/originalBehandlingSelectors';
-import { formatCurrencyWithKr } from 'utils/currencyUtils';
+import { formatCurrencyWithKr } from '@fpsak-frontend/utils/currencyUtils';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import vedtakResultType from 'kodeverk/vedtakResultType';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';

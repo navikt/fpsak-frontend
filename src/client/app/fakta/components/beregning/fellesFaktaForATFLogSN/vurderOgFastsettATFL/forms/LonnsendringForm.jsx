@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { RadioOption, RadioGroupField } from '@fpsak-frontend/form';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { required } from 'utils/validation/validators';
+import { required } from '@fpsak-frontend/utils/validation/validators';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
 import { Row, Column } from 'nav-frontend-grid';

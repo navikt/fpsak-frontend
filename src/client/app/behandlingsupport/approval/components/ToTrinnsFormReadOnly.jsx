@@ -9,7 +9,7 @@ import Image from 'sharedComponents/Image';
 import checkImg from 'images/check.svg';//
 import avslattImg from 'images/avslaatt.svg';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
-import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
 import { getAksjonspunktTextSelector } from './ApprovalTextUtils';
 
 import styles from './ToTrinnsFormReadOnly.less';

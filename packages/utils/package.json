@@ -1,10 +1,11 @@
 {
-  "name": "@fpsak-frontend/form",
+  "name": "@fpsak-frontend/utils",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "moment": "^2.22.2"
   },
   "devDependencies": {
   }

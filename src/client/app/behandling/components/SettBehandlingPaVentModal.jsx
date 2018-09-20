@@ -13,7 +13,7 @@ import Modal from 'sharedComponents/Modal';
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import {
   ariaCheck, dateAfterOrEqualToToday, hasValidDate, required,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils/validation/validators';
 import Image from 'sharedComponents/Image';
 import { getKodeverk, getKodeverkReceived } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';

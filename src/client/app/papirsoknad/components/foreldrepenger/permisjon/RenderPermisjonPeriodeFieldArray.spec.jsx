@@ -3,11 +3,11 @@ import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
 import moment from 'moment';
 import { expect } from 'chai';
 
-import { ISO_DATE_FORMAT } from 'utils/formats';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import { metaMock, MockFields } from 'testHelpers/redux-form-test-helper';
 import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
-import { dateRangesOverlappingMessage, invalidDateMessage } from 'utils/validation/messages';
+import { dateRangesOverlappingMessage, invalidDateMessage } from '@fpsak-frontend/utils/validation/messages';
 import uttakPeriodeType from 'kodeverk/uttakPeriodeType';
 import RenderPermisjonPeriodeFieldArray, { RenderPermisjonPeriodeFieldArray as RenderPermisjonPeriodeFieldArrayImpl } from './RenderPermisjonPeriodeFieldArray';
 

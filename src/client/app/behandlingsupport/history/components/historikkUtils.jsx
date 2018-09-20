@@ -1,4 +1,4 @@
-import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
 import historikkBegrunnelseTypeCodes from 'kodeverk/historikkBegrunnelseTypeCodes';
 import historikkResultatTypeCodes from 'kodeverk/historikkResultatTypeCodes';
 import historikkAarsakTypeCodes from 'kodeverk/historikkAarsakTypeCodes';

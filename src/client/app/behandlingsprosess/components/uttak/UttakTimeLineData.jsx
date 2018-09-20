@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import { calcDaysWithoutWeekends, splitWeeksAndDays } from 'utils/dateUtils';
+import { calcDaysWithoutWeekends, splitWeeksAndDays } from '@fpsak-frontend/utils/dateUtils';
 import Image from 'sharedComponents/Image';
 import splitPeriodImageHoverUrl from 'images/splitt_hover.svg';
 import splitPeriodImageUrl from 'images/splitt.svg';

@@ -6,8 +6,8 @@ import { expect } from 'chai';
 import {
   invalidDateMessage, dateNotBeforeOrEqualMessage, dateRangesOverlappingMessage,
   dateNotAfterOrEqualMessage, isRequiredMessage,
-} from 'utils/validation/messages';
-import { ISO_DATE_FORMAT } from 'utils/formats';
+} from '@fpsak-frontend/utils/validation/messages';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 
 import OppholdINorgePanel, { OppholdINorgePanelImpl } from './OppholdINorgePanel';
 

@@ -6,7 +6,7 @@ import { Undertittel, Undertekst } from 'nav-frontend-typografi';
 import BorderBox from 'sharedComponents/BorderBox';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { DatepickerField } from '@fpsak-frontend/form';
-import { hasValidDate, dateBeforeOrEqualToToday, required } from 'utils/validation/validators';
+import { hasValidDate, dateBeforeOrEqualToToday, required } from '@fpsak-frontend/utils/validation/validators';
 
 /**
  * MottattDatoPanel

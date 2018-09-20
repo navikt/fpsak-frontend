@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { FieldArray } from 'redux-form';
 
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { required } from 'utils/validation/validators';
+import { required } from '@fpsak-frontend/utils/validation/validators';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { getBehandlingYtelseFordeling, getSoknad } from 'behandling/behandlingSelectors';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';

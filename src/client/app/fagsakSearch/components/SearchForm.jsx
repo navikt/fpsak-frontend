@@ -12,7 +12,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import Image from 'sharedComponents/Image';
 import advarselIcon from 'images/advarsel.svg';
-import { hasValidSaksnummerOrFodselsnummerFormat } from 'utils/validation/validators';
+import { hasValidSaksnummerOrFodselsnummerFormat } from '@fpsak-frontend/utils/validation/validators';
 
 
 import styles from './searchForm.less';

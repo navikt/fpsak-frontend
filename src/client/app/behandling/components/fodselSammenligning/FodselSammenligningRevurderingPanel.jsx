@@ -10,7 +10,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { getBehandlingVedtaksDatoSomSvangerskapsuke } from 'behandling/behandlingSelectors';
 import { getSoknadFraOriginalBehandling, getFamiliehendelseFraOriginalBehandling } from 'behandling/selectors/originalBehandlingSelectors';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 
 /**
  * FodselSammenligningRevurderingPanel

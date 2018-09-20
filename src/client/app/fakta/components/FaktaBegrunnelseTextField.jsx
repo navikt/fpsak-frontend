@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
   minLength, maxLength, requiredIfNotPristine, hasValidText,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils/validation/validators';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 
 import styles from './faktaBegrunnelseTextField.less';
