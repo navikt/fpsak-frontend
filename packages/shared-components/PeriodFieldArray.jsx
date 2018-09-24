@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
-
-import VerticalSpacer from './VerticalSpacer';
 import { NavFieldGroup } from '@fpsak-frontend/form';
+import VerticalSpacer from './VerticalSpacer';
+
 import Image from './Image';
 import addCircleIcon from 'images/add-circle.svg';
 
