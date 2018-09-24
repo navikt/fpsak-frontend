@@ -66,6 +66,7 @@
     "xregexp": "^4.2.0",
     "@fpsak-frontend/form": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
+    "@fpsak-frontend/papirsoknad": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0"
   },
   "devDependencies": {

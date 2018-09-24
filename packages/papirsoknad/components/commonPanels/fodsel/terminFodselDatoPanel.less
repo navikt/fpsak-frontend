@@ -1,0 +1,51 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.flexContainer {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.row {
+  display: flex;
+  flex-flow: row nowrap;
+
+  > .col {
+    flex: 0 0 auto; // lesshint zeroUnit: false
+    margin-right: 15px;
+  }
+
+  .inlineLabel {
+    margin-top: 4px;
+  }
+}
+
+.skjemaelement > label {
+  white-space: nowrap;
+}
+
+//TODO: fikse dette når styles flyttet?
+//.arrowLine {
+//  composes: panel panel-relatert from 'styles/arrowLineModigDesign.less';
+//  margin-top: 5px;
+//  padding-bottom: 10px;
+//  padding-left: 15px;
+//  padding-top: 10px;
+//  width: 100%;
+//}
+//
+//.arrowLineFodsel {
+//  composes: arrowLine;
+//}
+
+//.arrowLineFodsel:before {
+//	left: 15px;
+//}
+//
+//.arrowLineTermin {
+//  composes: arrowLine;
+//}
+//
+//.arrowLineTermin:before {
+//	left: 55px;
+//}
+//

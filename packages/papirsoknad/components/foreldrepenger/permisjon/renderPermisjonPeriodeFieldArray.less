@@ -1,0 +1,41 @@
+@removeBtnSize: 17px;
+
+.buttonRemove {
+  margin-left: 55px;
+}
+
+.buttonRemove,
+.buttonRemoveFirst {
+  //background: #ffffff url('../../../../../src/client/images/remove.svg') no-repeat;  //TODO: fikse denne når images flyttet?
+  background-size: 100% 100%;
+  border: 0; // lesshint zeroUnit: false
+  cursor: pointer;
+  display: inline-block;
+  height: @removeBtnSize;
+  margin-top: 20px;
+  padding: 0px;
+  vertical-align: top;
+  width: @removeBtnSize;
+}
+
+.buttonRemoveFirst {
+  margin-top: 42px;
+}
+
+.notLastRow {
+  margin-bottom: -8px;
+}
+
+.addCircleIcon {
+  display: inline-block;
+  margin-right: 1ex;
+  vertical-align: text-bottom;
+}
+
+.samtidigUttak {
+  display: none;
+}
+
+.samtidigUttakFirst {
+  display: block;
+}
