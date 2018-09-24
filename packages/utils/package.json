@@ -5,8 +5,15 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "moment": "^2.22.2"
+
   },
-  "devDependencies": {
+  "peerDependencies": {
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-intl": "^2.4.0",
+    "react-redux": "^5.0.7",
+    "prop-types": "^15.6.2",
+    "classnames": "^2.2.6",
+    "moment": "^2.22.2"
   }
 }

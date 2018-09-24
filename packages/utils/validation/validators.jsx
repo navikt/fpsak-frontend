@@ -1,6 +1,6 @@
 import moment from 'moment';
-import { fodselsnummerPattern, isValidFodselsnummer } from '@fpsak-frontend/utils/fodselsnummerUtils';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { fodselsnummerPattern, isValidFodselsnummer } from '../fodselsnummerUtils';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '../formats';
 import {
   isRequiredMessage, minLengthMessage, invalidNumberMessage, maxLengthMessage, minValueMessage, maxValueMessage, invalidDateMessage,
   invalidIntegerMessage, invalidDecimalMessage, dateNotBeforeOrEqualMessage, dateNotAfterOrEqualMessage, dateRangesOverlappingMessage,

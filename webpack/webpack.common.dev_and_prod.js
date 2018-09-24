@@ -1,7 +1,7 @@
 "use strict";
 
 const CircularDependencyPlugin = require('circular-dependency-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const path = require('path');
 const merge = require('webpack-merge');
@@ -101,7 +101,7 @@ const config = {
 
   plugins: [
     new MiniCssExtractPlugin({
-      filename: isDevelopment ? "style.css" : "style_[hash].css",
+      filename: isDevelopment ? 'style.css' : 'style_[hash].css',
     }),
     new CircularDependencyPlugin({
       exclude: /node_modules/,
