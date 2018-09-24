@@ -8,13 +8,13 @@ import moment from 'moment';
 
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import { getKodeverk } from 'kodeverk/duck';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import { getBehandlingVersjon } from 'behandling/behandlingSelectors';
 import arbeidsforholdPropType from 'behandling/proptypes/arbeidsforholdPropType';
 import { getSelectedBehandlingId } from 'behandling/duck';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import PersonArbeidsforholdTable from './PersonArbeidsforholdTable';

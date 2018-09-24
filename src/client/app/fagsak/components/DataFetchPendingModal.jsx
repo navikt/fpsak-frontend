@@ -4,7 +4,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Element } from 'nav-frontend-typografi';
 
-import Modal from 'sharedComponents/Modal';
+import Modal from '@fpsak-frontend/shared-components/Modal';
 
 import styles from './dataFetchPendingModal.less';
 

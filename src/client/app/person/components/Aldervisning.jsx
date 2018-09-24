@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import DateLabel from 'sharedComponents/DateLabel';
+import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
 
 import styles from './aldervisning.less';
 

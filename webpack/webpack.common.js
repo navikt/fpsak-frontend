@@ -7,7 +7,7 @@ const APP_DIR = path.join(ROOT_DIR, 'app');
 
 const config = {
   resolve: {
-    symlinks: false,
+    symlinks: true,
     alias: {
       styles: path.join(ROOT_DIR, 'styles'),
       images: path.join(ROOT_DIR, 'images'),
@@ -26,7 +26,6 @@ const config = {
       papirsoknad: path.join(APP_DIR, 'papirsoknad'),
       data: path.join(APP_DIR, 'data'),
       kodeverk: path.join(APP_DIR, 'kodeverk'),
-      sharedComponents: path.join(APP_DIR, 'sharedComponents'),
     },
     extensions: ['.json', '.js', '.jsx'],
   },

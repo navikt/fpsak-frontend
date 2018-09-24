@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import {
   getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK,
   getBehandlingSprak, getBehandlingVilkar,
@@ -13,7 +13,7 @@ import {
 import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
 import { required, hasValidText } from '@fpsak-frontend/utils/validation/validators';
 import { TextAreaField } from '@fpsak-frontend/form';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import {
   medholdIKlage, shouldGiveBegrunnelse, maxLength1500, minLength3,
 } from '../VedtakHelper';

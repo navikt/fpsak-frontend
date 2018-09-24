@@ -4,8 +4,8 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Normaltekst, Undertittel, Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import Image from 'sharedComponents/Image';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import Image from '@fpsak-frontend/shared-components/Image';
 import { dateFormat, timeFormat } from '@fpsak-frontend/utils/dateUtils';
 
 import chevronUp from 'images/pil_opp.svg';

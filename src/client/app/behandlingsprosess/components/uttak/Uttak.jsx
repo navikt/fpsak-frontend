@@ -7,10 +7,10 @@ import { change as reduxFormChange, initialize as reduxFormInitialize } from 're
 import { bindActionCreators } from 'redux';
 import { injectIntl, FormattedMessage, intlShape } from 'react-intl';
 
-import { FlexContainer, FlexRow, FlexColumn } from 'sharedComponents/flexGrid';
+import { FlexContainer, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components/flexGrid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { CheckboxField } from '@fpsak-frontend/form';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
 import {
@@ -25,7 +25,7 @@ import { getRettigheter } from 'navAnsatt/duck';
 import { getSelectedBehandlingId } from 'behandling/duck';
 import periodeResultatType from 'kodeverk/periodeResultatType';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import soknadType from 'kodeverk/soknadType';
 import TimeLineInfo from './stonadkonto/TimeLineInfo';
 import UttakTimeLineData from './UttakTimeLineData';

@@ -5,7 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import Image from 'sharedComponents/Image';
+import Image from '@fpsak-frontend/shared-components/Image';
 import VilkarResultPanel from './VilkarResultPanel';
 
 describe('<VilkarResultPanel>', () => {

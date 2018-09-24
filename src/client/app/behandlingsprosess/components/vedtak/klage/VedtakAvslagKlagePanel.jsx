@@ -12,7 +12,7 @@ import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
 import { required, hasValidText } from '@fpsak-frontend/utils/validation/validators';
 import { TextAreaField } from '@fpsak-frontend/form';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import klageVurdering from 'kodeverk/klageVurdering';
 import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
 import {

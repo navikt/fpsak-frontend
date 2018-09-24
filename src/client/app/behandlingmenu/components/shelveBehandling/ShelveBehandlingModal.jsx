@@ -5,7 +5,7 @@ import { reduxForm, formValueSelector } from 'redux-form';
 import { Row, Column } from 'nav-frontend-grid';
 import { Fieldset } from 'nav-frontend-skjema';
 import { injectIntl, intlShape } from 'react-intl';
-import Modal from 'sharedComponents/Modal';
+import Modal from '@fpsak-frontend/shared-components/Modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Undertekst } from 'nav-frontend-typografi';
 

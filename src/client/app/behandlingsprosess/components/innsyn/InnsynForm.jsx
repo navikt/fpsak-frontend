@@ -8,8 +8,8 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { Row } from 'nav-frontend-grid';
 import moment from 'moment';
 
-import FadingPanel from 'sharedComponents/FadingPanel';
-import ArrowBox from 'sharedComponents/ArrowBox';
+import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
+import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
@@ -23,8 +23,8 @@ import {
   getBehandlingOnHoldDate, getBehandlingInnsynMottattDato, getBehandlingInnsynResultatType,
   getBehandlingInnsynVedtaksdokumentasjon, getBehandlingInnsynDokumenter,
 } from 'behandling/behandlingSelectors';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import { required, hasValidDate } from '@fpsak-frontend/utils/validation/validators';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';

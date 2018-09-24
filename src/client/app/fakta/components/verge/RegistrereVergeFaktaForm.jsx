@@ -11,7 +11,7 @@ import {
 import {
   InputField, DatepickerField, SelectField, TextAreaField, CheckboxField,
 } from '@fpsak-frontend/form';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 
 import styles from './RegistrereVergeFaktaForm.less';

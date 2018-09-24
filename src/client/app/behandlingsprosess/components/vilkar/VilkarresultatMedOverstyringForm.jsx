@@ -8,7 +8,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 import { isObject } from '@fpsak-frontend/utils/objectUtils';
-import FadingPanel from 'sharedComponents/FadingPanel';
+import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
 import { getBehandlingsresultat, isBehandlingRevurderingFortsattMedlemskap, getBehandlingRevurderingAvFortsattMedlemskapFom }
   from 'behandling/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';

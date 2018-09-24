@@ -11,8 +11,8 @@ import {
 } from 'nav-frontend-typografi';
 import Panel from 'nav-frontend-paneler';
 
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import FadingPanel from 'sharedComponents/FadingPanel';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { dateBeforeOrEqualToToday, hasValidDate, required } from '@fpsak-frontend/utils/validation/validators';
@@ -22,7 +22,7 @@ import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandli
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 
 import styles from './vurderSoknadsfristForeldrepengerForm.less';

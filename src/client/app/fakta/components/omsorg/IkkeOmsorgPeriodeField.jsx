@@ -4,7 +4,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
 
-import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
+import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
 import { DatepickerField } from '@fpsak-frontend/form';
 import {
   required, hasValidDate, dateIsAfter, dateRangesNotOverlapping,

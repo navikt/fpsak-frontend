@@ -9,9 +9,9 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import DateLabel from 'sharedComponents/DateLabel';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { behandlingForm } from 'behandling/behandlingForm';
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
 import {

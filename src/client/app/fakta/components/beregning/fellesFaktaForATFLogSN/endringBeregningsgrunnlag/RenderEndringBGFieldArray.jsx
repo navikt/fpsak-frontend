@@ -10,9 +10,9 @@ import {
 import { required } from '@fpsak-frontend/utils/validation/validators';
 import { isEmpty } from '@fpsak-frontend/utils/arrayUtils';
 import { getEndringBeregningsgrunnlagPerioder } from 'behandling/behandlingSelectors';
-import Image from 'sharedComponents/Image';
+import Image from '@fpsak-frontend/shared-components/Image';
 import addCircleIcon from 'images/add-circle.svg';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';

@@ -6,7 +6,7 @@ import { TextAreaField } from '@fpsak-frontend/form';
 import {
   minLength, maxLength, requiredIfNotPristine, hasValidText,
 } from '@fpsak-frontend/utils/validation/validators';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 
 import styles from './faktaBegrunnelseTextField.less';
 

@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Modal from 'sharedComponents/Modal';
+import Modal from '@fpsak-frontend/shared-components/Modal';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Container, Row, Column } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 
-import Image from 'sharedComponents/Image';
+import Image from '@fpsak-frontend/shared-components/Image';
 
 import innvilgetImageUrl from 'images/innvilget_valgt.svg';
 import styles from './MessagesModal.less';

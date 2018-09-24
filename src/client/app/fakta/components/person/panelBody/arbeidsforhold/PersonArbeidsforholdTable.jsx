@@ -5,12 +5,12 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
 import arbeidsforholdPropType from 'behandling/proptypes/arbeidsforholdPropType';
-import Image from 'sharedComponents/Image';
-import PeriodLabel from 'sharedComponents/PeriodLabel';
-import DateLabel from 'sharedComponents/DateLabel';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
+import Image from '@fpsak-frontend/shared-components/Image';
+import PeriodLabel from '@fpsak-frontend/shared-components/PeriodLabel';
+import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
+import Table from '@fpsak-frontend/shared-components/Table';
+import TableRow from '@fpsak-frontend/shared-components/TableRow';
+import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
 
 import erIBrukImageUrl from 'images/stjerne.svg';
 

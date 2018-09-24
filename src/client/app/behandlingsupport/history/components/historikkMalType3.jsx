@@ -6,7 +6,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 
 import { createLocationForHistorikkItems } from 'app/paths';
 import { findBegrunnelseTekst, findHendelseText, findSkjermlenkeText } from './historikkUtils';

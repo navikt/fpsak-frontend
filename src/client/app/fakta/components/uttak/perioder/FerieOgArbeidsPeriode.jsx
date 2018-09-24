@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
-import FlexRow from 'sharedComponents/flexGrid/FlexRow';
-import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
+import FlexColumn from '@fpsak-frontend/shared-components/flexGrid/FlexColumn';
+import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';
+import FlexContainer from '@fpsak-frontend/shared-components/flexGrid/FlexContainer';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
 import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import {

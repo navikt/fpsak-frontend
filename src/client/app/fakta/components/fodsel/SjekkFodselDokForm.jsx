@@ -8,9 +8,9 @@ import { Undertekst } from 'nav-frontend-typografi';
 import { Column } from 'nav-frontend-grid';
 
 import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import ArrowBox from 'sharedComponents/ArrowBox';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
 import {
   getEditedStatus, getFamiliehendelse, getBehandlingType, getBarnFraTpsRelatertTilSoknad,
   getPersonopplysning, getAksjonspunkter, getSoknadAntallBarn,

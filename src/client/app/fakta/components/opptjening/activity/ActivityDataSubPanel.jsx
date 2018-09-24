@@ -6,10 +6,10 @@ import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import {
   required, minValue, maxValue, hasValidDecimal,
 } from '@fpsak-frontend/utils/validation/validators';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import OAType from 'kodeverk/opptjeningAktivitetType';
 import { InputField, DecimalField, DatepickerField } from '@fpsak-frontend/form';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 
 import styles from './activityDataSubPanel.less';
 

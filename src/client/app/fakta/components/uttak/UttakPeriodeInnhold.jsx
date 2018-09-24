@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { getBehandlingStatus } from 'behandling/behandlingSelectors';
 import utsettelseArsakCodes from 'kodeverk/utsettelseArsakCodes';
 import overforingArsakCodes from 'kodeverk/overforingArsakCodes';

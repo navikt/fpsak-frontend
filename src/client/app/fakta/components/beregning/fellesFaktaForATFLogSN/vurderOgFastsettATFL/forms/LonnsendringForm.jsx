@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { RadioOption, RadioGroupField } from '@fpsak-frontend/form';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { required } from '@fpsak-frontend/utils/validation/validators';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
 import { Row, Column } from 'nav-frontend-grid';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';

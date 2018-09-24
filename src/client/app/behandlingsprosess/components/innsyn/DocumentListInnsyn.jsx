@@ -5,13 +5,13 @@ import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
 import { CheckboxField } from '@fpsak-frontend/form';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import DateTimeLabel from 'sharedComponents/DateTimeLabel';
-import Image from 'sharedComponents/Image';
+import Table from '@fpsak-frontend/shared-components/Table';
+import TableRow from '@fpsak-frontend/shared-components/TableRow';
+import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
+import DateTimeLabel from '@fpsak-frontend/shared-components/DateTimeLabel';
+import Image from '@fpsak-frontend/shared-components/Image';
 import kommunikasjonsretning from 'kodeverk/kommunikasjonsretning';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 
 import sendDokumentImageUrl from 'images/send_dokument.svg';
 import mottaDokumentImageUrl from 'images/motta_dokument.svg';

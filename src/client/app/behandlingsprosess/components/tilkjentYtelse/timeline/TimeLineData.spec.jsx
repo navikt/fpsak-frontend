@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { Normaltekst } from 'nav-frontend-typografi';
 import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
-import TableRow from 'sharedComponents/TableRow';
+import TableRow from '@fpsak-frontend/shared-components/TableRow';
 import periodeResultatType from 'kodeverk/periodeResultatType';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import TimeLineData from './TimeLineData';

@@ -13,7 +13,7 @@ const APP_DIR = path.join(ROOT_DIR, 'app');
 const IMG_DIR = path.join(ROOT_DIR, 'images');
 const STYLE_DIR = path.join(ROOT_DIR, 'styles');
 const CSS_DIR = path.join(ROOT_DIR, 'nomodulestyles');
-
+const PACAKGES_DIR = path.join(__dirname, '../packages/');
 const isDevelopment = JSON.stringify(process.env.NODE_ENV) === '"development"';
 
 const config = {
@@ -26,19 +26,19 @@ const config = {
         options: {
           failOnWarning: false,
           failOnError: !isDevelopment,
-          configFile: isDevelopment ? './eslint/eslintrc.dev.js' : './eslint/eslintrc.prod.js',
+          // configFile: isDevelopment ? './eslint/eslintrc.dev.js' : './eslint/eslintrc.prod.js',
           fix: isDevelopment,
-          cache: true,
+          cache: false,
         },
-        include: [APP_DIR, /@fpsak-frontend/],
+        include: [APP_DIR, PACAKGES_DIR],
       }, {
-        test: /\.(jsx?|js?|mjs)$/,
-        loader: require.resolve('babel-loader'),
+        test: /\.(jsx?|js?)$/,
+        loader: 'babel-loader',
         options: {
           presets: ['react', ['env', { modules: false }], 'stage-0'],
-          cacheDirectory: true,
+          cacheDirectory: false,
         },
-        include: [APP_DIR, /@fpsak-frontend/],
+        include: [APP_DIR, PACAKGES_DIR],
       }, {
         test: /\.(less|css)?$/,
         use: [
@@ -66,7 +66,7 @@ const config = {
             },
           },
         ],
-        include: [APP_DIR, STYLE_DIR],
+        include: [APP_DIR, STYLE_DIR, PACAKGES_DIR],
       }, {
         test: /\.(less|css)?$/,
         use: [
@@ -74,7 +74,7 @@ const config = {
             loader: MiniCssExtractPlugin.loader,
             options: {
               publicPath: isDevelopment ? './' : '.',
-            }
+            },
           }, {
             loader: 'css-loader',
           }, {
@@ -88,7 +88,7 @@ const config = {
           },
         ],
         include: [CSS_DIR, CORE_DIR],
-      },{
+      }, {
         test: /\.(jpg|png|svg)$/,
         loader: 'file-loader',
         options: {

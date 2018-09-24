@@ -9,7 +9,7 @@ import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import { getKodeverk } from 'kodeverk/duck';
 import relatertYtelseType from 'kodeverk/relatertYtelseType';
-import BorderBox from 'sharedComponents/BorderBox';
+import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
 
 import { Column, Row } from 'nav-frontend-grid';
 

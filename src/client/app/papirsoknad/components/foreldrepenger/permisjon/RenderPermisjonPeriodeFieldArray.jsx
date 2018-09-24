@@ -7,8 +7,8 @@ import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 
-import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
-import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
+import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
+import { FlexContainer, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
 import {
   required, hasValidDate, dateRangesNotOverlapping, dateAfterOrEqual,
 } from '@fpsak-frontend/utils/validation/validators';

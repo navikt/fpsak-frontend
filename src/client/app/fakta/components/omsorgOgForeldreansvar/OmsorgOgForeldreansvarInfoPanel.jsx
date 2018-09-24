@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
 import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import {
   getSoknad, getFamiliehendelse, getPersonopplysning, getInnvilgetRelatertTilgrensendeYtelserForAnnenForelder,
   getAksjonspunkter,

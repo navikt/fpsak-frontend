@@ -2,8 +2,8 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'redux-form';
 import { Undertittel, Undertekst } from 'nav-frontend-typografi';
-import BorderBox from 'sharedComponents/BorderBox';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import PropTypes from 'prop-types';
 import RenderInntektsgivendeArbeidFieldArray from './RenderInntektsgivendeArbeidFieldArray';
 

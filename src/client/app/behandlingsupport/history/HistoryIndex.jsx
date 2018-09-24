@@ -13,7 +13,7 @@ import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import requireProps from 'app/data/requireProps';
 import { getRestApiData } from 'data/duck';
 import { FpsakApi } from 'data/fpsakApi';
-import LoadingPanel from 'sharedComponents/LoadingPanel';
+import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
 
 import History from './components/History';
 

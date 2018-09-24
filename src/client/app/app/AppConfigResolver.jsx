@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { makeRestApiRequest, getRestApiFinished } from 'data/duck';
 import { FpsakApi } from 'data/fpsakApi';
-import LoadingPanel from 'sharedComponents/LoadingPanel';
+import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
 
 class AppConfigResolver extends Component {
   constructor(props) {

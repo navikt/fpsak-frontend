@@ -5,7 +5,7 @@ import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import {
   getPersonopplysning, getBehandlingYtelseFordeling, getEktefellePersonopplysning, getAksjonspunkter,

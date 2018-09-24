@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { dateFormat, calcDaysAndWeeks } from '@fpsak-frontend/utils/dateUtils';
 import utsettelseArsakCodes, { utsettelseArsakTexts } from 'kodeverk/utsettelseArsakCodes';
 import overforingArsakCodes, { overforingArsakTexts } from 'kodeverk/overforingArsakCodes';
-import Image from 'sharedComponents/Image';
+import Image from '@fpsak-frontend/shared-components/Image';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import editPeriodeIcon from 'images/endre.svg';
 import editPeriodeDisabledIcon from 'images/endre_disablet.svg';

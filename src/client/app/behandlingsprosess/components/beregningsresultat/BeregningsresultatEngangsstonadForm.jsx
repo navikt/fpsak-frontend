@@ -7,13 +7,13 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
-import FadingPanel from 'sharedComponents/FadingPanel';
+import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
 import { isSelectedBehandlingspunktOverrideReadOnly } from 'behandlingsprosess/behandlingsprosessSelectors';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import { getAksjonspunkter, getBehandlingResultatstruktur } from 'behandling/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { FlexContainer, FlexRow, FlexColumn } from 'sharedComponents/flexGrid';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { FlexContainer, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components/flexGrid';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import {
   required, minValue, maxValue, hasValidInteger,
 } from '@fpsak-frontend/utils/validation/validators';

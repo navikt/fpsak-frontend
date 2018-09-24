@@ -3,7 +3,7 @@ import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
+import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import { MockFields, metaMock } from 'testHelpers/redux-form-test-helper';
 import { RenderUtsettelsePeriodeFieldArray } from './RenderUtsettelsePeriodeFieldArray';

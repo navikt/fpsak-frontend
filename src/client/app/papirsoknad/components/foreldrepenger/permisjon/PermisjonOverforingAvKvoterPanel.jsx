@@ -5,11 +5,11 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { FormSection, formValueSelector } from 'redux-form';
 import { Element } from 'nav-frontend-typografi';
 
-import { FlexColumn, FlexContainer, FlexRow } from 'sharedComponents/flexGrid';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import SoknadData from 'papirsoknad/SoknadData';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { CheckboxField, SelectField, DatepickerField } from '@fpsak-frontend/form';
 import { dateAfterOrEqual, hasValidDate, required } from '@fpsak-frontend/utils/validation/validators';
 import { getKodeverk } from 'kodeverk/duck';

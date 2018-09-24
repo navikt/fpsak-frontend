@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
+import Table from '@fpsak-frontend/shared-components/Table';
+import TableRow from '@fpsak-frontend/shared-components/TableRow';
+import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
 import { calcDaysAndWeeks } from '@fpsak-frontend/utils/dateUtils';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
-import Image from 'sharedComponents/Image';
+import Image from '@fpsak-frontend/shared-components/Image';
 import arrowLeftImageUrl from 'images/arrow_left.svg';
 import arrowLeftFilledImageUrl from 'images/arrow_left_filled.svg';
 import arrowRightImageUrl from 'images/arrow_right.svg';

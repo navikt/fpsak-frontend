@@ -5,9 +5,9 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import {
   getBehandlingMedlem, getPersonopplysning,
@@ -18,7 +18,7 @@ import { behandlingForm } from 'behandling/behandlingForm';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
 import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
 import { getFagsakPerson } from 'fagsak/fagsakSelectors';

@@ -5,8 +5,8 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import Image from 'sharedComponents/Image';
-import Modal from 'sharedComponents/Modal';
+import Image from './Image';
+import Modal from './Modal';
 
 import innvilgetImageUrl from 'images/innvilget_valgt.svg';
 

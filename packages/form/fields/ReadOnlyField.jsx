@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import EditedIcon from 'sharedComponents/EditedIcon';
+import EditedIcon from '@fpsak-frontend/shared-components/EditedIcon';
 import Label, { labelPropType } from './Label';
 
 import styles from './readOnlyField.less';

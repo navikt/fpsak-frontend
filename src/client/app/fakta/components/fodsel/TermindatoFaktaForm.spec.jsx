@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import DateLabel from 'sharedComponents/DateLabel';
+import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
 import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';

@@ -6,13 +6,13 @@ import { createSelector } from 'reselect';
 import { Column, Row } from 'nav-frontend-grid';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import Modal from 'sharedComponents/Modal';
+import Modal from '@fpsak-frontend/shared-components/Modal';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import behandlingStatus from 'kodeverk/behandlingStatus';
 import behandlingResultatType from 'kodeverk/behandlingResultatType';
 import behandlingType from 'kodeverk/behandlingType';
-import Image from 'sharedComponents/Image';
+import Image from '@fpsak-frontend/shared-components/Image';
 import {
   getBehandlingResultatstruktur,
   getBehandlingsresultat,

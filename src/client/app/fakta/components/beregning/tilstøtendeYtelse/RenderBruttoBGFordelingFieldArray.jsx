@@ -10,7 +10,7 @@ import {
 import { required } from '@fpsak-frontend/utils/validation/validators';
 import { getFaktaOmBeregning, getAksjonspunkter } from 'behandling/behandlingSelectors';
 import { getBehandlingFormSyncErrors } from 'behandling/behandlingForm';
-import Image from 'sharedComponents/Image';
+import Image from '@fpsak-frontend/shared-components/Image';
 import addCircleIcon from 'images/add-circle.svg';
 import { getKodeverk } from 'kodeverk/duck';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
@@ -21,10 +21,10 @@ import inntektskategorier, { isSelvstendigNæringsdrivende } from 'kodeverk/innt
 import { parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
 import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
 
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import Table from '@fpsak-frontend/shared-components/Table';
+import TableRow from '@fpsak-frontend/shared-components/TableRow';
+import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import styles from './renderBruttoBGFordelingFieldArray.less';
 import { getUniqueListOfArbeidsforhold, arbeidsforholdProptype } from '../ArbeidsforholdHelper';
 

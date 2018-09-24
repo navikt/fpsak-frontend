@@ -7,7 +7,7 @@ import { getRestApiData } from 'data/duck';
 import { FpsakApi } from 'data/fpsakApi';
 import { getSelectedBehandlingId } from 'behandling/duck';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
-import LoadingPanel from 'sharedComponents/LoadingPanel';
+import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
 
 import DocumentList from './components/DocumentList';
 

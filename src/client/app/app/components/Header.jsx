@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 
-import Image from 'sharedComponents/Image';
+import Image from '@fpsak-frontend/shared-components/Image';
 
 import logoUrl from 'images/nav.svg';
 import navAnsattIkonUrl from 'images/nav_ansatt.svg';

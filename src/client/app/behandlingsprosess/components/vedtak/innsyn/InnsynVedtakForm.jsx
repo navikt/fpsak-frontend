@@ -7,7 +7,7 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import FadingPanel from 'sharedComponents/FadingPanel';
+import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import {
   getAksjonspunkter,
@@ -17,7 +17,7 @@ import {
   getBehandlingSprak,
 } from 'behandling/behandlingSelectors';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';

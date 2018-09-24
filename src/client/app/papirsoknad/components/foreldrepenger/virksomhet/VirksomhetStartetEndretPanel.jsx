@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import ArrowBox from 'sharedComponents/ArrowBox';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { hasValidDate, hasValidInteger, required } from '@fpsak-frontend/utils/validation/validators';
 import {
   CheckboxField, InputField, RadioGroupField, RadioOption, TextAreaField, DatepickerField,

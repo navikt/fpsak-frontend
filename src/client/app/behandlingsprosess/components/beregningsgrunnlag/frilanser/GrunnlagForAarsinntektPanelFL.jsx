@@ -5,7 +5,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
 import { InputField } from '@fpsak-frontend/form';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { required } from '@fpsak-frontend/utils/validation/validators';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';

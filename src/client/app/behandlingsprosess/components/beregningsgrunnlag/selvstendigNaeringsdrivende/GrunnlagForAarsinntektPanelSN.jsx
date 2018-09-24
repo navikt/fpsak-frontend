@@ -4,9 +4,9 @@ import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
+import Table from '@fpsak-frontend/shared-components/Table';
+import TableRow from '@fpsak-frontend/shared-components/TableRow';
+import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
 

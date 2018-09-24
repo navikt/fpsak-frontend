@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedHTMLMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import ArrowBox from 'sharedComponents/ArrowBox';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';

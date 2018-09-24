@@ -8,7 +8,7 @@ import { Fieldset } from 'nav-frontend-skjema';
 import { Row, Column } from 'nav-frontend-grid';
 
 import { ariaCheck, maxLength, hasValidText } from '@fpsak-frontend/utils/validation/validators';
-import BorderBox from 'sharedComponents/BorderBox';
+import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
 import { CheckboxField, TextAreaField } from '@fpsak-frontend/form';
 import LukkPapirsoknadModal from './LukkPapirsoknadModal';
 

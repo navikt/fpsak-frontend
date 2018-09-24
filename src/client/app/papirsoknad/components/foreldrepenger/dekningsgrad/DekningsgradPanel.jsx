@@ -5,7 +5,7 @@ import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
 import { required } from '@fpsak-frontend/utils/validation/validators';
 import { Fieldset } from 'nav-frontend-skjema';
-import BorderBox from 'sharedComponents/BorderBox';
+import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
 import styles from './dekningsgradPanel.less';
 
 /**

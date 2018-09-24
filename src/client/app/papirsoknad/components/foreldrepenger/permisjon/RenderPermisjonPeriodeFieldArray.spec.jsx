@@ -6,7 +6,7 @@ import { expect } from 'chai';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import { metaMock, MockFields } from 'testHelpers/redux-form-test-helper';
-import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
+import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
 import { dateRangesOverlappingMessage, invalidDateMessage } from '@fpsak-frontend/utils/validation/messages';
 import uttakPeriodeType from 'kodeverk/uttakPeriodeType';
 import RenderPermisjonPeriodeFieldArray, { RenderPermisjonPeriodeFieldArray as RenderPermisjonPeriodeFieldArrayImpl } from './RenderPermisjonPeriodeFieldArray';

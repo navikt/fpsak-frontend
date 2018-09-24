@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import {
   getBehandlingHasSoknad, getSoknadTermindato, getSoknadAntallBarn, getSoknadUtstedtdato,
   getSoknadFodselsdatoer, getFamiliehendelseTermindato,

@@ -48,7 +48,6 @@
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-collapse": "^4.0.3",
-    "react-day-picker": "^7.1.10",
     "react-dom": "^16.4.2",
     "react-hot-loader": "^4.3.4",
     "react-intl": "^2.4.0",
@@ -66,7 +65,8 @@
     "vis": "^4.21.0",
     "xregexp": "^4.2.0",
     "@fpsak-frontend/form": "1.0.0",
-    "@fpsak-frontend/utils": "1.0.0"
+    "@fpsak-frontend/utils": "1.0.0",
+    "@fpsak-frontend/shared-components": "1.0.0"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.15.0",
@@ -129,8 +129,8 @@
     "test:coverage": "nyc mocha-webpack --webpack-config webpack/webpack.test.coverage.js  \"src/client/app/*/**/*.jsx\"",
     "dev": "cross-env NODE_ENV=development node webpack/webpack.dev.server.js --config webpack/webpack.dev.js",
     "build": "cross-env NODE_ENV=production webpack --progress --colors --config webpack/webpack.prod.js",
-    "postinstall": "yarn run build && yarn test && yarn run less:lint",
-    "less:lint": "lesshint --max-warnings 0 --reporter ./_scripts/lesshint-reporter.js src/client/app -e *Source-Sans*.less",
+    "postinstall": "yarn test && yarn run less:lint",
+    "less:lint": "lesshint --max-warnings 0 --reporter ./_scripts/lesshint-reporter.js packages -e *Source-Sans*.less",
     "doc": "react-asciidoc-generator ./src/client/app/ -o ../../docs/generated/react.adoc --handlebar-template src/docs/asciidoc-template.handlebars "
   },
   "nyc": {

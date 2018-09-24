@@ -4,7 +4,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
 import { getBehandlingVilkar, getBehandlingSprak } from 'behandling/behandlingSelectors';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import {
   endringerIBeregningsgrunnlagGirFritekstfelt,

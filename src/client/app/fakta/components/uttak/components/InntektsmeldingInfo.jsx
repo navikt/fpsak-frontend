@@ -5,12 +5,12 @@ import { FormattedMessage } from 'react-intl';
 import { dateFormat, calcDaysAndWeeks, TIDENES_ENDE } from '@fpsak-frontend/utils/dateUtils';
 import { utsettelseArsakTexts } from 'kodeverk/utsettelseArsakCodes';
 import classnames from 'classnames/bind';
-import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
-import FlexRow from 'sharedComponents/flexGrid/FlexRow';
+import FlexColumn from '@fpsak-frontend/shared-components/flexGrid/FlexColumn';
+import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';
 import guid from '@fpsak-frontend/utils/guidUtil';
 import { flatten } from '@fpsak-frontend/utils/arrayUtils';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import Image from 'sharedComponents/Image';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import Image from '@fpsak-frontend/shared-components/Image';
 import advarselIkonUrl from 'images/advarsel.svg';
 
 import styles from '../uttakPeriode.less';

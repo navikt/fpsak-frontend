@@ -9,8 +9,8 @@ import { InputField } from '@fpsak-frontend/form';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Row, Column } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import Image from 'sharedComponents/Image';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import Image from '@fpsak-frontend/shared-components/Image';
 import advarselIcon from 'images/advarsel.svg';
 import { hasValidSaksnummerOrFodselsnummerFormat } from '@fpsak-frontend/utils/validation/validators';
 

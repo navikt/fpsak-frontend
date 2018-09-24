@@ -8,10 +8,10 @@ import moment from 'moment';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import FadingPanel from 'sharedComponents/FadingPanel';
+import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import PropTypes from 'prop-types';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';

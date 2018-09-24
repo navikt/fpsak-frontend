@@ -8,7 +8,7 @@ import {
   getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling, pathToBehandlinger, pathToMissingPage,
 } from 'app/paths';
 import { getBehandlingerIds } from 'behandling/selectors/behandlingerSelectors';
-import LoadingPanel from 'sharedComponents/LoadingPanel';
+import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
 import requireProps from 'app/data/requireProps';
 import { resetFagsakSearch as resetFagsakSearchActionCreator } from 'fagsakSearch/duck';
 import { removeErrorMessage } from 'app/duck';

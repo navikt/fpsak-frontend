@@ -6,7 +6,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
 import { isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting } from 'behandling/behandlingForm';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import { ariaCheck } from '@fpsak-frontend/utils/validation/validators';
 
 const isDisabled = (isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields) => {

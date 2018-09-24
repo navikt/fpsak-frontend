@@ -7,7 +7,7 @@ import { Undertekst } from 'nav-frontend-typografi';
 
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';

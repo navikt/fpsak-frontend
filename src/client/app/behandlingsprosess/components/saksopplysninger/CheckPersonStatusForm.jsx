@@ -8,7 +8,7 @@ import moment from 'moment';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
-import FadingPanel from 'sharedComponents/FadingPanel';
+import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { getBehandlingStatus, getPersonopplysning, getBehandlingRevurderingAvFortsattMedlemskapFom } from 'behandling/behandlingSelectors';
@@ -17,12 +17,12 @@ import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import personstatusType from 'kodeverk/personstatusType';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { required } from '@fpsak-frontend/utils/validation/validators';
 import behandlingStatus from 'kodeverk/behandlingStatus';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
 

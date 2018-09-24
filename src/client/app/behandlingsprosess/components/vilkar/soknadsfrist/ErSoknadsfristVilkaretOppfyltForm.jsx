@@ -13,8 +13,8 @@ import { Undertekst, Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import moment from 'moment';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import FadingPanel from 'sharedComponents/FadingPanel';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
 import { getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus } from 'behandlingsprosess/behandlingsprosessSelectors';
 import {
   getBehandlingsresultat, getBehandlingVilkar, getSoknad, getFamiliehendelse,
@@ -22,9 +22,9 @@ import {
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import DateLabel from 'sharedComponents/DateLabel';
+import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
 import { required } from '@fpsak-frontend/utils/validation/validators';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import soknadType from 'kodeverk/soknadType';

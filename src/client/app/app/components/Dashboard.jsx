@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { makeRestApiRequest } from 'data/duck';
 import { getIntegrationStatusList, getShowDetailedErrorMessages } from 'app/duck';
 import { FpsakApi } from 'data/fpsakApi';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import FagsakSearchIndex from 'fagsakSearch/FagsakSearchIndex';
 import IntegrationStatusPanel from './IntegrationStatusPanel';
 

@@ -6,9 +6,9 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import FadingPanel from 'sharedComponents/FadingPanel';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import {
   getBeregningsgrunnlag, getAktivitetStatuser, getAlleAndelerIForstePeriode, getGjeldendeBeregningAksjonspunkt,
@@ -17,7 +17,7 @@ import beregningsgrunnlagPropType from 'behandling/proptypes/beregningsgrunnlagP
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import { getSelectedBehandlingspunktVilkar } from 'behandlingsprosess/behandlingsprosessSelectors';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import aktivitetStatus, {
   isStatusFrilanserOrKombinasjon, isStatusArbeidstakerOrKombinasjon,

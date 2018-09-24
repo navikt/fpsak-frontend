@@ -7,7 +7,7 @@ import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
 import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
 import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import { OppholdInntektOgPerioderForm } from './OppholdInntektOgPerioderForm';
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
 import InntektOgYtelserFaktaPanel from './InntektOgYtelserFaktaPanel';

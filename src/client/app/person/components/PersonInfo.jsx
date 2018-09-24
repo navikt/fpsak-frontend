@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Undertittel, Undertekst } from 'nav-frontend-typografi';
 import Panel from 'nav-frontend-paneler';
 
-import Image from 'sharedComponents/Image';
+import Image from '@fpsak-frontend/shared-components/Image';
 import urlMann from 'images/mann.svg';
 import urlKvinne from 'images/kvinne.svg';
 

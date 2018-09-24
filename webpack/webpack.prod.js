@@ -8,30 +8,31 @@ const merge = require('webpack-merge');
 const commonDevAndProd = require('./webpack.common.dev_and_prod.js');
 
 const ROOT_DIR = path.resolve(__dirname, '../src/client');
+const PACKAGES_DIR = path.resolve(__dirname, '../packages');
 const APP_DIR = path.resolve(ROOT_DIR, 'app');
 
 //Fjern de to utkommenterte linjene for sourcemaps i produksjonsbygget.
 
 const config = {
   mode: 'production',
-  //devtool: 'source-maps',
+  // devtool: 'source-maps',
   performance: { hints: false },
 
   entry: [
-    'babel-polyfill', 
-    APP_DIR + '/index.jsx'
+    'babel-polyfill',
+    APP_DIR + '/index.jsx',
   ],
-  
+
   output: {
-	  filename: 'bundle-[hash].js',
-	  path: path.resolve(__dirname, '../target/public'),
-	  publicPath: 'public',
+    filename: 'bundle-[hash].js',
+    path: path.resolve(__dirname, '../target/public'),
+    publicPath: 'public',
   },
 
   plugins: [
     new HtmlWebpackPlugin({
-	    filename: '../index.html',
-	    template:path.join(ROOT_DIR, 'index.html'),
+      filename: '../index.html',
+      template: path.join(ROOT_DIR, 'index.html'),
     }),
   ],
 
@@ -43,10 +44,10 @@ const config = {
         },
         parallel: true,
         cache: true,
-        //sourceMap: true,
+        // sourceMap: true,
       }),
       new OptimizeCSSAssetsPlugin({}),
-    ]
+    ],
   },
 
   stats: {

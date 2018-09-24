@@ -23,7 +23,7 @@ import {
 }
   from 'behandling/behandlingSelectors';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
-import LoadingPanel from 'sharedComponents/LoadingPanel';
+import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
 import { getRettigheter } from 'navAnsatt/duck';
 import rettighetPropType from 'navAnsatt/rettighetPropType';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';

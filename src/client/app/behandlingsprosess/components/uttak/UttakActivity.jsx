@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
-import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
+import { FlexContainer, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
 import {
   RadioGroupField, RadioOption, TextAreaField, SelectField, CheckboxField,
 } from '@fpsak-frontend/form';
@@ -23,8 +23,8 @@ import { calcDaysAndWeeks } from '@fpsak-frontend/utils/dateUtils';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment/moment';
 import uttakArbeidTypeKodeverk from 'kodeverk/uttakArbeidType';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import ArrowBox from 'sharedComponents/ArrowBox';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
 import RenderUttakTable from './RenderUttakTable';
 import styles from './uttakActivity.less';
 

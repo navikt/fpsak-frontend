@@ -7,7 +7,7 @@ import moment from 'moment';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
 import { required } from '@fpsak-frontend/utils/validation/validators';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
 import { sortArbeidsforholdList } from '../../ArbeidsforholdHelper';

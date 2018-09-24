@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import getAddresses from '@fpsak-frontend/utils/personUtils';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import opplysningAdresseType from 'kodeverk/opplysningAdresseType';
 import opplysningsKilde from 'kodeverk/opplysningsKilde';
 import AdressePanel from './AdressePanel';

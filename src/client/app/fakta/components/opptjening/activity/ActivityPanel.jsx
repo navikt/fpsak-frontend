@@ -14,8 +14,8 @@ import { findDifferenceInMonthsAndDays } from '@fpsak-frontend/utils/dateUtils';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import { omit, isEqual } from '@fpsak-frontend/utils/objectUtils';
-import { FlexContainer, FlexRow, FlexColumn } from 'sharedComponents/flexGrid';
-import Image from 'sharedComponents/Image';
+import { FlexContainer, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components/flexGrid';
+import Image from '@fpsak-frontend/shared-components/Image';
 import { getKodeverk } from 'kodeverk/duck';
 import arbeidType from 'kodeverk/arbeidType';
 import opptjeningAktivitetType from 'kodeverk/opptjeningAktivitetType';
@@ -25,11 +25,11 @@ import {
   requiredIfCustomFunctionIsTrue, required, hasValidPeriod, minLength, maxLength, hasValidText, isWithinOpptjeningsperiode,
 }
   from '@fpsak-frontend/utils/validation/validators';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import {
   PeriodpickerField, RadioGroupField, RadioOption, TextAreaField, SelectField,
 } from '@fpsak-frontend/form';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import arrowLeftImageUrl from 'images/arrow_left.svg';
 import arrowLeftFilledImageUrl from 'images/arrow_left_filled.svg';
 import arrowRightImageUrl from 'images/arrow_right.svg';

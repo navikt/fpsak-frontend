@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import { required } from '@fpsak-frontend/utils/validation/validators';
 import { getEditedStatus } from 'behandling/behandlingSelectors';

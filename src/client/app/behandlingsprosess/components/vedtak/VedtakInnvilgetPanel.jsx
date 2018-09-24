@@ -9,8 +9,8 @@ import { getAksjonspunkter, getBehandlingResultatstruktur, getBehandlingSprak } 
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils/currencyUtils';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import VedtakFritekstPanel from 'behandlingsprosess/components/vedtak/VedtakFritekstPanel';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import { findInnvilgetResultatText, endringerIBeregningsgrunnlagGirFritekstfelt } from './VedtakHelper';

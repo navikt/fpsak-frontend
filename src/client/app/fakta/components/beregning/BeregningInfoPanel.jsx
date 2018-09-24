@@ -17,14 +17,14 @@ import {
 import withDefaultToggling from 'fakta/withDefaultToggling';
 import faktaPanelCodes from 'fakta/faktaPanelCodes';
 import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
 import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
 import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle } from 'kodeverk/faktaOmBeregningTilfelle';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import TilstotendeYtelseForm from './tilstøtendeYtelse/TilstøtendeYtelseForm';
 import FaktaForATFLOgSNPanel, {
   getHelpTextsFaktaForATFLOgSN, transformValuesFaktaForATFLOgSN,

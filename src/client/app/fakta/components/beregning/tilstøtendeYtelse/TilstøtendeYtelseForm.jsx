@@ -8,9 +8,9 @@ import { Element } from 'nav-frontend-typografi';
 import { removeSpacesFromNumber } from '@fpsak-frontend/utils/currencyUtils';
 import beregningsgrunnlagAndeltyper from 'kodeverk/beregningsgrunnlagAndeltyper';
 import { getTilstøtendeYtelse } from 'behandling/behandlingSelectors';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import BorderBox from 'sharedComponents/BorderBox';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
 
 import YtelsePanel from './YtelsePanel';
 import FordelingAvBruttoBeregningsgrunnlagPanel, { fordelingAvBruttoBGFieldArrayName } from './FordelingAvBruttoBeregningsgrunnlagPanel';

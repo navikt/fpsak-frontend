@@ -5,8 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import FadingPanel from 'sharedComponents/FadingPanel';
-import PeriodLabel from 'sharedComponents/PeriodLabel';
+import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
+import PeriodLabel from '@fpsak-frontend/shared-components/PeriodLabel';
 import VilkarResultPanel from 'behandlingsprosess/components/vilkar/VilkarResultPanel';
 import {
   getBehandlingFastsattOpptjeningFomDate, getBehandlingFastsattOpptjeningTomDate, getBehandlingFastsattOpptjeningActivities,
@@ -18,7 +18,7 @@ import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 import vilkarType from 'kodeverk/vilkarType';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus } from 'behandlingsprosess/behandlingsprosessSelectors';
 import OpptjeningTimeLineLight from './OpptjeningTimeLineLight';
 

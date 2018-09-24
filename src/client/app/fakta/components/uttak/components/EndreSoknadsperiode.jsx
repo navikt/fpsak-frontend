@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
-import FlexRow from 'sharedComponents/flexGrid/FlexRow';
+import FlexColumn from '@fpsak-frontend/shared-components/flexGrid/FlexColumn';
+import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';
 import { DecimalField, SelectField, PeriodpickerField } from '@fpsak-frontend/form';
 import {
   required,

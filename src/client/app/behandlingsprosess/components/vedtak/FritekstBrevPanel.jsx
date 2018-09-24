@@ -8,7 +8,7 @@ import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtil
 import classNames from 'classnames';
 import { Column, Row } from 'nav-frontend-grid';
 import { TextAreaField } from '@fpsak-frontend/form';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import { Undertittel } from 'nav-frontend-typografi';
 import styles from './vedtakForm.less';
 

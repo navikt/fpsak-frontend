@@ -9,10 +9,10 @@ import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils/currencyUtils';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import PeriodLabel from 'sharedComponents/PeriodLabel';
+import Table from '@fpsak-frontend/shared-components/Table';
+import TableRow from '@fpsak-frontend/shared-components/TableRow';
+import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
+import PeriodLabel from '@fpsak-frontend/shared-components/PeriodLabel';
 
 const headerTextCodes = [
   'InntektOgYtelserFaktaPanel.Person',

@@ -4,7 +4,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Fieldset } from 'nav-frontend-skjema';
 
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import BorderBox from 'sharedComponents/BorderBox';
+import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
 import SoknadData from 'papirsoknad/SoknadData';
 import foreldreType from 'kodeverk/foreldreType';
 import familieHendelseType from 'kodeverk/familieHendelseType';

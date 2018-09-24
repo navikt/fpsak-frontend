@@ -8,7 +8,7 @@ import arrowLeftImageUrl from 'images/arrow_left.svg';
 import arrowLeftFilledImageUrl from 'images/arrow_left_filled.svg';
 import arrowRightImageUrl from 'images/arrow_right.svg';
 import arrowRightFilledImageUrl from 'images/arrow_right_filled.svg';
-import Image from 'sharedComponents/Image';
+import Image from '@fpsak-frontend/shared-components/Image';
 import checkImg from 'images/check.svg';
 import advarselImg from 'images/remove.svg';
 import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';

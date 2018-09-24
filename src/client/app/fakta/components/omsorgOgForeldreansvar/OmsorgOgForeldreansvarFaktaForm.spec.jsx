@@ -7,7 +7,7 @@ import relatertYtelseType from 'kodeverk/relatertYtelseType';
 import opplysningsKilde from 'kodeverk/opplysningsKilde';
 import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
 import soknadType from 'kodeverk/soknadType';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';
 
 describe('<OmsorgOgForeldreansvarFaktaForm>', () => {

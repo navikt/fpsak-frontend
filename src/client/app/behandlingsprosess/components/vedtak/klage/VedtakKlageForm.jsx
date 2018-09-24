@@ -8,7 +8,7 @@ import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/be
 import { isBehandlingStatusReadOnly, getBehandlingStatus, getBehandlingsresultat } from 'behandling/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { isInnvilget, isAvslag } from 'kodeverk/behandlingResultatType';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import behandlingStatusCode from 'kodeverk/behandlingStatus';
 import VedtakKlageSubmitPanel from './VedtakKlageSubmitPanel';
 import VedtakAvslagKlagePanel from './VedtakAvslagKlagePanel';

@@ -4,11 +4,11 @@ import { FieldArray, FormSection } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { Element, Undertittel } from 'nav-frontend-typografi';
 
-import BorderBox from 'sharedComponents/BorderBox';
+import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
 import SoknadData from 'papirsoknad/SoknadData';
 import foreldreType from 'kodeverk/foreldreType';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import PermisjonRettigheterPanel from './PermisjonRettigheterPanel';
 import PermisjonUtsettelsePanel, { utsettelsePeriodeFieldArrayName } from './PermisjonUtsettelsePanel';
 import PermisjonGraderingPanel, { graderingPeriodeFieldArrayName } from './PermisjonGraderingPanel';

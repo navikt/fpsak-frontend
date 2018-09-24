@@ -9,7 +9,7 @@ import skjermlenkeCodes from 'kodeverk/skjermlenkeCodes';
 import { createLocationForHistorikkItems } from 'app/paths';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import behandlingStatus from 'kodeverk/behandlingStatus';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import {

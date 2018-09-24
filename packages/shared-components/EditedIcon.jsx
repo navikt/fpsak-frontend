@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
-import Image from 'sharedComponents/Image';
+import Image from './Image';
 import endretFelt from 'images/endret_felt.svg';
 
 import styles from './editedIcon.less';

@@ -5,10 +5,10 @@ import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import ArrowBox from 'sharedComponents/ArrowBox';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import { RadioGroupField, RadioOption, DatepickerField } from '@fpsak-frontend/form';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { required, hasValidDate } from '@fpsak-frontend/utils/validation/validators';
 import PropTypes from 'prop-types';
 

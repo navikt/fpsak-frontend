@@ -10,6 +10,7 @@ import styles from './table.less';
 
 const classNames = classnames.bind(styles);
 
+// TODO petter
 /**
  * Table
  *
@@ -22,7 +23,7 @@ const Table = ({
   children,
   noHover,
 }) => (
-  <table className={classNames({ [classNameTable]: classNameTable, tableNoHover: noHover, table: !noHover })}>
+  <table className={classNames('tabell', { [classNameTable]: classNameTable, tableNoHover: noHover })}>
     <thead>
       <TableRow isHeader noHover={noHover}>
         {headerTextCodes.map(headerElement => (

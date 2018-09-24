@@ -7,14 +7,14 @@ import { Row, Column } from 'nav-frontend-grid';
 import { formPropTypes, FieldArray } from 'redux-form';
 
 import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { getSoknad, getInntektsmeldinger, getAksjonspunkter } from 'behandling/behandlingSelectors';
 import { behandlingForm } from 'behandling/behandlingForm';
 import {
   required, hasValidDate, minLength, maxLength, hasValidText,
 } from '@fpsak-frontend/utils/validation/validators';
 import { TextAreaField, DatepickerField } from '@fpsak-frontend/form';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';

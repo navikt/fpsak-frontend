@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { removeSpacesFromNumber } from '@fpsak-frontend/utils/currencyUtils';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import moment from 'moment';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import {
   getAksjonspunkter,
   getEndringBeregningsgrunnlag,

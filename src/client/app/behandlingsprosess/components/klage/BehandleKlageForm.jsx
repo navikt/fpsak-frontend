@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import { Undertittel } from 'nav-frontend-typografi';
 import classNames from 'classnames';
 
-import FadingPanel from 'sharedComponents/FadingPanel';
+import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
 import klageVurderingType from 'kodeverk/klageVurdering';
 import {
   RadioGroupField, RadioOption, SelectField, DatepickerField,
 } from '@fpsak-frontend/form';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { required, hasValidDate } from '@fpsak-frontend/utils/validation/validators';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';

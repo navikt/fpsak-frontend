@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 
 import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
 import personstatusType from 'kodeverk/personstatusType';
 import sivilstandType from 'kodeverk/sivilstandType';

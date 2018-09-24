@@ -16,7 +16,7 @@ import BehandlingspunktInfoPanel from 'behandlingsprosess/components/Behandlings
 import requireProps from 'app/data/requireProps';
 import aksjonspunktType from 'kodeverk/aksjonspunktType';
 import klageVurdering from 'kodeverk/klageVurdering';
-import LoadingPanel from 'sharedComponents/LoadingPanel';
+import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';

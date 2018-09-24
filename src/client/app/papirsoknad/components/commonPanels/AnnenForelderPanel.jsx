@@ -6,8 +6,8 @@ import { FormSection, formValueSelector } from 'redux-form';
 import { Fieldset } from 'nav-frontend-skjema';
 import { Undertittel, Undertekst } from 'nav-frontend-typografi';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import kanIkkeOppgiAnnenForelderArsaker from 'kodeverk/kanIkkeOppgiAnnenForelderArsak';
 import {
   CheckboxField, InputField, NavFieldGroup, RadioOption, RadioGroupField, SelectField,
@@ -16,7 +16,7 @@ import {
   required, hasValidFodselsnummerFormat, hasValidFodselsnummer, hasValidName,
 } from '@fpsak-frontend/utils/validation/validators';
 import { sammeFodselsnummerSomSokerMessage } from '@fpsak-frontend/utils/validation/messages';
-import BorderBox from 'sharedComponents/BorderBox';
+import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';

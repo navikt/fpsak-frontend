@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import Tooltip from 'sharedComponents/Tooltip';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import DateLabel from 'sharedComponents/DateLabel';
-import Image from 'sharedComponents/Image';
+import Tooltip from '@fpsak-frontend/shared-components/Tooltip';
+import Table from '@fpsak-frontend/shared-components/Table';
+import TableRow from '@fpsak-frontend/shared-components/TableRow';
+import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
+import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
+import Image from '@fpsak-frontend/shared-components/Image';
 import kommunikasjonsretning from 'kodeverk/kommunikasjonsretning';
 
 import sendDokumentImageUrl from 'images/send_dokument.svg';

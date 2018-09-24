@@ -4,9 +4,9 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from './VerticalSpacer';
 import { NavFieldGroup } from '@fpsak-frontend/form';
-import Image from 'sharedComponents/Image';
+import Image from './Image';
 import addCircleIcon from 'images/add-circle.svg';
 
 import styles from './periodFieldArray.less';

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 
-import Image from 'sharedComponents/Image';
+import Image from '@fpsak-frontend/shared-components/Image';
 import arrowDownImageUrl from 'images/arrow_down.svg';
 import arrowDownFilledImageUrl from 'images/arrow_down_filled.svg';
 

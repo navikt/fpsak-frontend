@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import { FieldArray } from 'redux-form';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column } from 'nav-frontend-grid';
-import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
-import FlexRow from 'sharedComponents/flexGrid/FlexRow';
-import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
+import FlexColumn from '@fpsak-frontend/shared-components/flexGrid/FlexColumn';
+import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';
+import FlexContainer from '@fpsak-frontend/shared-components/flexGrid/FlexContainer';
 import { getFamiliehendelse, doesVilkarForSykdomOppfyltExist } from 'behandling/behandlingSelectors';
 import overforingArsakCodes from 'kodeverk/overforingArsakCodes';
 import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandling/behandlingForm';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import {
   required, maxLength, minLength, hasValidPeriod, hasValidText,

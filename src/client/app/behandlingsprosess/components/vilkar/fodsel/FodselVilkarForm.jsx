@@ -15,7 +15,7 @@ import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import vilkarType from 'kodeverk/vilkarType';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import VilkarResultPicker from 'behandlingsprosess/components/vilkar/VilkarResultPicker';
 import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 

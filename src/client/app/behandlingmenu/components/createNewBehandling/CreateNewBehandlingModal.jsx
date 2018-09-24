@@ -8,12 +8,12 @@ import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
-import Image from 'sharedComponents/Image';
+import Image from '@fpsak-frontend/shared-components/Image';
 import innvilgetImageUrl from 'images/innvilget_valgt.svg';
-import Modal from 'sharedComponents/Modal';
+import Modal from '@fpsak-frontend/shared-components/Modal';
 import { CheckboxField, SelectField } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils/validation/validators';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import bType from 'kodeverk/behandlingType';
 import behandlingArsakType from 'kodeverk/behandlingArsakType';

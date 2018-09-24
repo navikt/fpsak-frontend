@@ -7,8 +7,8 @@ import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
 import dokumentTypeId from 'kodeverk/dokumentTypeId';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
+import Table from '@fpsak-frontend/shared-components/Table';
+import TableRow from '@fpsak-frontend/shared-components/TableRow';
 import {
   buildInitialValues,
   getSortedManglendeVedlegg,

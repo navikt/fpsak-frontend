@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import { Fieldset } from 'nav-frontend-skjema';
 
-import BorderBox from 'sharedComponents/BorderBox';
+import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
 import { TextAreaField } from '@fpsak-frontend/form';
 import { maxLength as maxLengthValidator, hasValidText } from '@fpsak-frontend/utils/validation/validators';
 

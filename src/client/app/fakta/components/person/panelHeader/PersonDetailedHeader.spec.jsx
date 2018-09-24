@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
 import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
-import Image from 'sharedComponents/Image';
+import Image from '@fpsak-frontend/shared-components/Image';
 import urlKvinne from 'images/kvinne.svg';
 import urlMann from 'images/mann.svg';
 import urlUkjent from 'images/ukjent.svg';

@@ -19,10 +19,10 @@ import {
 import moment from 'moment';
 import guid from '@fpsak-frontend/utils/guidUtil';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
-import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
-import FlexRow from 'sharedComponents/flexGrid/FlexRow';
-import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import FlexColumn from '@fpsak-frontend/shared-components/flexGrid/FlexColumn';
+import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';
+import FlexContainer from '@fpsak-frontend/shared-components/flexGrid/FlexContainer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { getKodeverk } from 'kodeverk/duck';
 import { getPersonopplysning, getAlleAndelerIForstePeriode } from 'behandling/behandlingSelectors';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';

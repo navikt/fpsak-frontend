@@ -4,8 +4,8 @@ import { injectIntl, intlShape } from 'react-intl';
 
 import BehandlingFormFieldCleaner from 'behandling/BehandlingFormFieldCleaner';
 import arbeidsforholdPropType from 'behandling/proptypes/arbeidsforholdPropType';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import ArrowBox from 'sharedComponents/ArrowBox';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
 import { required } from '@fpsak-frontend/utils/validation/validators';
 import { SelectField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 

@@ -9,9 +9,9 @@ import {
   RadioGroupField, RadioOption, SelectField, InputField,
 } from '@fpsak-frontend/form';
 
-import ArrowBox from 'sharedComponents/ArrowBox';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { required, hasValidInteger } from '@fpsak-frontend/utils/validation/validators';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';

@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
 import { FormattedMessage } from 'react-intl';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { UttakFaktaForm } from './UttakFaktaForm';
 import UttakSlettPeriodeModal from './UttakSlettPeriodeModal';

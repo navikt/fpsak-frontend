@@ -8,8 +8,8 @@ import { Fieldset } from 'nav-frontend-skjema';
 
 import { RadioGroupField, RadioOption, NavFieldGroup } from '@fpsak-frontend/form';
 import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
-import BorderBox from 'sharedComponents/BorderBox';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';

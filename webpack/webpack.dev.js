@@ -1,5 +1,3 @@
-"use strict";
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
@@ -8,20 +6,21 @@ const commonDevAndProd = require('./webpack.common.dev_and_prod.js');
 
 const ROOT_DIR = path.resolve(__dirname, '../src/client');
 const APP_DIR = path.resolve(ROOT_DIR, 'app');
+const PACKAGES_DIR = path.resolve(__dirname, '../packages');
 
 const config = {
   mode: 'development',
   devtool: 'cheap-module-eval-source-map',
   entry: [
-   'babel-polyfill',
+    'babel-polyfill',
    'webpack-dev-server/client?http://localhost:9000',
    'webpack/hot/only-dev-server',
     APP_DIR + '/index.jsx',
   ],
   output: {
-	  filename: 'bundle.js',
+    filename: 'bundle.js',
     path: ROOT_DIR,
-    publicPath: "/",
+    publicPath: '/',
   },
 
   plugins: [

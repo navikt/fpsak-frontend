@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 
-import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
-import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
+import { FlexContainer, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
+import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
 import {
   DatepickerField, SelectField, InputField,
 } from '@fpsak-frontend/form';
