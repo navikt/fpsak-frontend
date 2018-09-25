@@ -8,9 +8,9 @@ import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import Image from '@fpsak-frontend/shared-components/Image';
 import { dateFormat, timeFormat } from '@fpsak-frontend/utils/dateUtils';
 
-import chevronUp from 'images/pil_opp.svg';
-import chevronDown from 'images/pil_ned.svg';
-import infoImageUrl from 'images/behandle.svg';
+import chevronUp from '@fpsak-frontend/images/pil_opp.svg';
+import chevronDown from '@fpsak-frontend/images/pil_ned.svg';
+import infoImageUrl from '@fpsak-frontend/images/behandle.svg';
 
 import styles from './integrationStatusPanel.less';
 

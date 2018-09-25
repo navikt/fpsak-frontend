@@ -5,10 +5,8 @@ const APP_DIR = path.join(ROOT_DIR, 'app');
 
 const config = {
   resolve: {
-    // symlinks: true,
     alias: {
       styles: path.join(ROOT_DIR, 'styles'),
-      images: path.join(ROOT_DIR, 'images'),
       testHelpers: path.join(ROOT_DIR, 'testHelpers'),
       app: path.join(APP_DIR, 'app'),
       behandling: path.join(APP_DIR, 'behandling'),

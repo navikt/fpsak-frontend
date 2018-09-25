@@ -13,9 +13,9 @@ import Image from '@fpsak-frontend/shared-components/Image';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/kommunikasjonsretning';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 
-import sendDokumentImageUrl from 'images/send_dokument.svg';
-import mottaDokumentImageUrl from 'images/motta_dokument.svg';
-import internDokumentImageUrl from 'images/intern_dokument.svg';
+import sendDokumentImageUrl from '@fpsak-frontend/images/send_dokument.svg';
+import mottaDokumentImageUrl from '@fpsak-frontend/images/motta_dokument.svg';
+import internDokumentImageUrl from '@fpsak-frontend/images/intern_dokument.svg';
 
 import styles from './documentListInnsyn.less';
 

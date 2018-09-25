@@ -11,7 +11,7 @@ import guid from '@fpsak-frontend/utils/guidUtil';
 import { flatten } from '@fpsak-frontend/utils/arrayUtils';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import Image from '@fpsak-frontend/shared-components/Image';
-import advarselIkonUrl from 'images/advarsel.svg';
+import advarselIkonUrl from '@fpsak-frontend/images/advarsel.svg';
 
 import styles from '../uttakPeriode.less';
 

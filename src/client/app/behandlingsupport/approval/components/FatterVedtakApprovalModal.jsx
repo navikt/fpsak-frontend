@@ -19,7 +19,7 @@ import {
 import { getResultatstrukturFraOriginalBehandling, getBehandlingsresultatFraOriginalBehandling } from 'behandling/selectors/originalBehandlingSelectors';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
-import innvilgetImageUrl from 'images/innvilget_valgt.svg';
+import innvilgetImageUrl from '@fpsak-frontend/images/innvilget_valgt.svg';
 import klageVurdering from '@fpsak-frontend/kodeverk/klageVurdering';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
 import requireProps from 'app/data/requireProps';

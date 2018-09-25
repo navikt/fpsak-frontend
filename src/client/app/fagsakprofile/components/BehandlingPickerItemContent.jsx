@@ -8,8 +8,8 @@ import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
 import Image from '@fpsak-frontend/shared-components/Image';
 import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
 
-import chevronUp from 'images/pil_opp.svg';
-import chevronDown from 'images/pil_ned.svg';
+import chevronUp from '@fpsak-frontend/images/pil_opp.svg';
+import chevronDown from '@fpsak-frontend/images/pil_ned.svg';
 
 import styles from './behandlingPickerItemContent.less';
 

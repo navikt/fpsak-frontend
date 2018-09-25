@@ -12,11 +12,10 @@ if (process.argv.includes('--no-fix')) {
 var options = {
   contentBase: [
     'src/client',
-    'packages/',
   ],
   proxy: {
-    "**/(sprak|api)/**": {
-      target: "http://localhost:8080",
+    '**/(sprak|api)/**': {
+      target: 'http://localhost:8080',
       secure: false,
     },
   },
@@ -34,7 +33,7 @@ var wds = new WebpackDevServer(webpack(config), options);
 
 wds.listen(9000, 'localhost', function(err) {
   if (err) {
-	  return console.log(err); //NOSONAR
+    return console.log(err); // NOSONAR
   }
 
   console.log('Listening at http://localhost:9000/');

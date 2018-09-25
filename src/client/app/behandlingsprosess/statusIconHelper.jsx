@@ -3,15 +3,15 @@ import beregningsgrunnlagImages from 'behandlingsprosess/statusIconsBeregningsgr
 import uttakImages from 'behandlingsprosess/statusIconsUttak';
 import vedtakImages from 'behandlingsprosess/statusIconsVedtak';
 
-import innvilgetHoverIkonUrl from 'images/innvilget_hover.svg';
-import avslattIkonUrl from 'images/avslaatt.svg';
-import avslattValgtIkonUrl from 'images/avslaatt_valgt.svg';
-import avslattHoverIkonUrl from 'images/avslaatt_hover.svg';
-import behandleIkonUrl from 'images/behandle.svg';
-import behandleValgtIkonUrl from 'images/behandle_valgt.svg';
-import innvilgetIkonUrl from 'images/innvilget.svg';
-import innvilgetValgtIkonUrl from 'images/innvilget_valgt.svg';
-import ikkeVurdertIkonUrl from 'images/behandle_disable.svg';
+import innvilgetHoverIkonUrl from '@fpsak-frontend/images/innvilget_hover.svg';
+import avslattIkonUrl from '@fpsak-frontend/images/avslaatt.svg';
+import avslattValgtIkonUrl from '@fpsak-frontend/images/avslaatt_valgt.svg';
+import avslattHoverIkonUrl from '@fpsak-frontend/images/avslaatt_hover.svg';
+import behandleIkonUrl from '@fpsak-frontend/images/behandle.svg';
+import behandleValgtIkonUrl from '@fpsak-frontend/images/behandle_valgt.svg';
+import innvilgetIkonUrl from '@fpsak-frontend/images/innvilget.svg';
+import innvilgetValgtIkonUrl from '@fpsak-frontend/images/innvilget_valgt.svg';
+import ikkeVurdertIkonUrl from '@fpsak-frontend/images/behandle_disable.svg';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
 

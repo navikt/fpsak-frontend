@@ -15,7 +15,7 @@ import {
   minLength, maxLength, required, hasValidText,
 } from '@fpsak-frontend/utils/validation/validators';
 import { behandlingForm } from 'behandling/behandlingForm';
-import innvilgetImageUrl from 'images/innvilget_valgt.svg';
+import innvilgetImageUrl from '@fpsak-frontend/images/innvilget_valgt.svg';
 import Image from '@fpsak-frontend/shared-components/Image';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import styles from './uttakSlettPeriodeModal.less';

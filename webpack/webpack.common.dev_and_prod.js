@@ -9,7 +9,7 @@ const common = require('./webpack.common.js');
 const CORE_DIR = path.resolve(__dirname, '../node_modules');
 const ROOT_DIR = path.resolve(__dirname, '../src/client');
 const APP_DIR = path.join(ROOT_DIR, 'app');
-const IMG_DIR = path.join(ROOT_DIR, 'images');
+
 const STYLE_DIR = path.join(ROOT_DIR, 'styles');
 const CSS_DIR = path.join(ROOT_DIR, 'nomodulestyles');
 const PACAKGES_DIR = path.join(__dirname, '../packages/');
@@ -25,7 +25,7 @@ const config = {
         options: {
           failOnWarning: false,
           failOnError: !isDevelopment,
-          // configFile: isDevelopment ? './eslint/eslintrc.dev.js' : './eslint/eslintrc.prod.js',
+          configFile: isDevelopment ? './eslint/eslintrc.dev.js' : './eslint/eslintrc.prod.js',
           fix: isDevelopment,
           cache: true,
         },
@@ -93,7 +93,7 @@ const config = {
         options: {
           name: isDevelopment ? '[name]_[hash].[ext]' : '/[name]_[hash].[ext]',
         },
-        include: [IMG_DIR],
+        include: [PACAKGES_DIR],
       },
     ],
   },

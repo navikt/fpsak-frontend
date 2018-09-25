@@ -10,7 +10,7 @@ import Modal from '@fpsak-frontend/shared-components/Modal';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 
-import infoImageUrl from 'images/behandle.svg';
+import infoImageUrl from '@fpsak-frontend/images/behandle.svg';
 
 import styles from './errorMessageDetailsModal.less';
 

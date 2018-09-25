@@ -13,7 +13,7 @@ import { maxLength, required, hasValidText } from '@fpsak-frontend/utils/validat
 
 import Image from '@fpsak-frontend/shared-components/Image';
 
-import innvilgetImageUrl from 'images/innvilget_valgt.svg';
+import innvilgetImageUrl from '@fpsak-frontend/images/innvilget_valgt.svg';
 
 import styles from './changeBehandlendeEnhetModal.less';
 

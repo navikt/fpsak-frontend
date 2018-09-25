@@ -11,8 +11,8 @@ import FlexContainer from '@fpsak-frontend/shared-components/flexGrid/FlexContai
 import Image from '@fpsak-frontend/shared-components/Image';
 import classnames from 'classnames/bind';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
-import overlapp from 'images/overlapp.svg';
-import tomPeriode from 'images/tom_periode.svg';
+import overlapp from '@fpsak-frontend/images/overlapp.svg';
+import tomPeriode from '@fpsak-frontend/images/tom_periode.svg';
 import UttakPeriodeType from './UttakPeriodeType';
 import UttakPeriodeInnhold from './UttakPeriodeInnhold';
 

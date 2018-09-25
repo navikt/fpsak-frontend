@@ -7,7 +7,7 @@ import { NavFieldGroup } from '@fpsak-frontend/form';
 import VerticalSpacer from './VerticalSpacer';
 
 import Image from './Image';
-import addCircleIcon from 'images/add-circle.svg';
+import addCircleIcon from '@fpsak-frontend/images/add-circle.svg';
 
 import styles from './periodFieldArray.less';
 

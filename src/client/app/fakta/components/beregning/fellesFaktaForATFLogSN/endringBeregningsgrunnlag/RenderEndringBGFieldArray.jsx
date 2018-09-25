@@ -11,7 +11,7 @@ import { required } from '@fpsak-frontend/utils/validation/validators';
 import { isEmpty } from '@fpsak-frontend/utils/arrayUtils';
 import { getEndringBeregningsgrunnlagPerioder } from 'behandling/behandlingSelectors';
 import Image from '@fpsak-frontend/shared-components/Image';
-import addCircleIcon from 'images/add-circle.svg';
+import addCircleIcon from '@fpsak-frontend/images/add-circle.svg';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';

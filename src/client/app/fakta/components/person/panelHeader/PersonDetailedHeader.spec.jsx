@@ -4,9 +4,9 @@ import { shallow } from 'enzyme';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/navBrukerKjonn';
 import Image from '@fpsak-frontend/shared-components/Image';
-import urlKvinne from 'images/kvinne.svg';
-import urlMann from 'images/mann.svg';
-import urlUkjent from 'images/ukjent.svg';
+import urlKvinne from '@fpsak-frontend/images/kvinne.svg';
+import urlMann from '@fpsak-frontend/images/mann.svg';
+import urlUkjent from '@fpsak-frontend/images/ukjent.svg';
 import PersonDetailedHeader from './PersonDetailedHeader';
 
 describe('<PersonDetailedHeader>', () => {

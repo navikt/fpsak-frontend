@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
 import Image from './Image';
-import endretFelt from 'images/endret_felt.svg';
+import endretFelt from '@fpsak-frontend/images/endret_felt.svg';
 
 import styles from './editedIcon.less';
 

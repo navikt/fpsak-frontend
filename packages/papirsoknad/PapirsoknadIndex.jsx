@@ -16,7 +16,7 @@ import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
 import { getRestApiFinished, getRestApiError } from '@fpsak-frontend/data/duck';
 import PersonIndex from 'person/PersonIndex';
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import SoknadData from './SoknadData';
+
 import requireProps from 'app/data/requireProps';
 import {
   getSelectedBehandlingIdentifier, getBehandlingVersjon, getBehandlingIsOnHold, getAksjonspunkter,
@@ -27,6 +27,7 @@ import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
 import { getRettigheter } from 'navAnsatt/duck';
 import rettighetPropType from 'navAnsatt/rettighetPropType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import SoknadData from './SoknadData';
 import {
   resetRegistrering, submitRegistrering, resetRegistreringSuccess, setSoknadData, getSoknadData,
 } from './duck';

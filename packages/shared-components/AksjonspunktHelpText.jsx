@@ -6,7 +6,7 @@ import { isObject } from '@fpsak-frontend/utils/objectUtils';
 import { FlexContainer, FlexColumn, FlexRow } from './flexGrid';
 
 import Image from './Image';
-import advarselIkonUrl from 'images/advarsel.svg';
+import advarselIkonUrl from '@fpsak-frontend/images/advarsel.svg';
 
 
 import styles from './aksjonspunktHelpText.less';

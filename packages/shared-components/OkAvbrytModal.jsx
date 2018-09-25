@@ -8,7 +8,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import Image from './Image';
 import Modal from './Modal';
 
-import innvilgetImageUrl from 'images/innvilget_valgt.svg';
+import innvilgetImageUrl from '@fpsak-frontend/images/innvilget_valgt.svg';
 
 import styles from './okAvbrytModal.less';
 

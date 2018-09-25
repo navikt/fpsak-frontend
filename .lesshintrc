@@ -1,0 +1,9 @@
+{
+  "fileExtensions": [".less", ".css"],
+  "zeroUnit": false,
+  "propertyOrdering": false,
+  "maxCharPerLine": { "limit": 120 },
+  "qualifyingElement": {
+    "allowWithClass": true
+  }
+}
