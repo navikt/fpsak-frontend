@@ -7,7 +7,6 @@ import { fagsakPath } from 'app/paths';
 import TestFormIndex from '@fpsak-frontend/form/TestFormIndex';
 import Dashboard from './Dashboard';
 
-import 'styles/modigDesign.less';
 import '../../../nomodulestyles/global.less';
 
 import MissingPage from './MissingPage';

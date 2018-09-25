@@ -23,29 +23,28 @@
   white-space: nowrap;
 }
 
-//TODO: fikse dette når styles flyttet?
-//.arrowLine {
-//  composes: panel panel-relatert from 'styles/arrowLineModigDesign.less';
-//  margin-top: 5px;
-//  padding-bottom: 10px;
-//  padding-left: 15px;
-//  padding-top: 10px;
-//  width: 100%;
-//}
-//
-//.arrowLineFodsel {
-//  composes: arrowLine;
-//}
+.arrowLine {
+  composes: panel panel-relatert from '@fpsak-frontend/styles/arrowLineModigDesign.less';
+  margin-top: 5px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  padding-top: 10px;
+  width: 100%;
+}
 
-//.arrowLineFodsel:before {
-//	left: 15px;
-//}
-//
-//.arrowLineTermin {
-//  composes: arrowLine;
-//}
-//
-//.arrowLineTermin:before {
-//	left: 55px;
-//}
-//
+.arrowLineFodsel {
+  composes: arrowLine;
+}
+
+.arrowLineFodsel:before {
+	left: 15px;
+}
+
+.arrowLineTermin {
+  composes: arrowLine;
+}
+
+.arrowLineTermin:before {
+	left: 55px;
+}
+
