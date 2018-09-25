@@ -3,8 +3,8 @@ import moment from 'moment';
 
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import { pathToBehandling, getLocationWithDefaultBehandlingspunktAndFakta } from 'app/paths';
-import { makeRestApiRequest, setDataRestApi } from 'data/duck';
-import { FpsakApi } from 'data/fpsakApi';
+import { makeRestApiRequest, setDataRestApi } from '@fpsak-frontend/data/duck';
+import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
 import { updateFagsakInfo, updateBehandlinger } from 'fagsak/duck';
 import { updateBehandlingsupportInfo } from 'behandlingsupport/duck';
 import { updateBehandling, resetBehandling } from 'behandling/duck';

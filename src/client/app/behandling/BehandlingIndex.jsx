@@ -4,10 +4,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { destroy } from 'redux-form';
 
-import BehandlingsprosessIndex from 'behandlingsprosess/BehandlingsprosessIndex';
-import FaktaIndex from 'fakta/FaktaIndex';
 import { getPapirsoknadEnabled } from '@fpsak-frontend/papirsoknad/duck';
 import PapirsoknadIndex from '@fpsak-frontend/papirsoknad/PapirsoknadIndex';
+
+import BehandlingsprosessIndex from 'behandlingsprosess/BehandlingsprosessIndex';
+import FaktaIndex from 'fakta/FaktaIndex';
+
 import trackRouteParam from 'app/data/trackRouteParam';
 import requireProps from 'app/data/requireProps';
 import { getHasSubmittedPaVentForm } from 'behandlingmenu/duck';

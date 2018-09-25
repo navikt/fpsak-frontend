@@ -7,7 +7,7 @@ import familieHendelseType from 'kodeverk/familieHendelseType';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import foreldreType from 'kodeverk/foreldreType';
 import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
-import SoknadData from '@fpsak-frontend/papirsoknad/SoknadData';
+import SoknadData from '../../SoknadData';
 import RegistreringFodselGrid from './RegistreringFodselGrid';
 import RegistreringAdopsjonOgOmsorgGrid from './RegistreringAdopsjonOgOmsorgGrid';
 import { EngangsstonadForm } from './EngangsstonadForm';

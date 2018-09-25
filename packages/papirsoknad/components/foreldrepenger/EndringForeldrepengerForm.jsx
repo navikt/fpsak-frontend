@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isEqual } from '@fpsak-frontend/utils/objectUtils';
 
-import { getRegisteredFields } from '@fpsak-frontend/papirsoknad/duck';
-import SoknadData from '@fpsak-frontend/papirsoknad/SoknadData';
-import LagreSoknadForm from '@fpsak-frontend/papirsoknad/components/commonPanels/LagreSoknadPanel';
-import MottattDatoPanel from '@fpsak-frontend/papirsoknad/components/commonPanels/MottattDatoPanel';
+import { getRegisteredFields } from '../../duck';
+import SoknadData from '../../SoknadData';
+import LagreSoknadForm from '../commonPanels/LagreSoknadPanel';
+import MottattDatoPanel from '../commonPanels/MottattDatoPanel';
 import PermisjonPanel, { TIDSROM_PERMISJON_FORM_NAME_PREFIX } from './permisjon/PermisjonPanel';
 
 const ENDRING_FORELDREPENGER_FORM_NAME = 'EndringForeldrepengerForm';

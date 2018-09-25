@@ -11,7 +11,7 @@ import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
 import {
   getCrashMessage, getErrorMessages, getErrorMessageCodeWithParams, getShowDetailedErrorMessages,
 } from 'app/duck';
-import { getAllAsyncErrorMessages } from 'data/duck';
+import { getAllAsyncErrorMessages } from '@fpsak-frontend/data/duck';
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
 
 import styles from './errorMessagePanel.less';

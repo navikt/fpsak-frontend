@@ -1,0 +1,21 @@
+{
+  "name": "@fpsak-frontend/data",
+  "version": "1.0.0",
+  "main": "bundle.js",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "reselect": "^3.0.1",
+    "axios": "^0.18.0",
+    "redux": "^4.0.0",
+    "@fpsak-frontend/utils": "1.0.0"
+  },
+  "peerDependencies": {
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-intl": "^2.4.0",
+    "prop-types": "^15.6.2",
+    "classnames": "^2.2.6",
+    "moment": "^2.22.2"
+  }
+}

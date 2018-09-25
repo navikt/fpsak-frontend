@@ -17,6 +17,7 @@
   "rules":{
     "linebreak-style":0,
     "jsx-a11y/no-static-element-interactions":0,
+    "import/no-extraneous-dependencies": ["error", { "peerDependencies": true }],
     "import/no-named-as-default":0,
     "max-len":[
       2,
@@ -29,12 +30,5 @@
     "react/no-unused-prop-types":0,
     "no-debugger":0,
     "no-console":"off"
-  },
-  "settings":{
-    "import/resolver":{
-      "webpack":{
-        "config":"webpack/webpack.dev.js"
-      }
-    }
   }
 }

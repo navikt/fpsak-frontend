@@ -7,7 +7,7 @@ import { Element } from 'nav-frontend-typografi';
 
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import SoknadData from '@fpsak-frontend/papirsoknad/SoknadData';
+import SoknadData from '../../../SoknadData';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { CheckboxField, SelectField, DatepickerField } from '@fpsak-frontend/form';

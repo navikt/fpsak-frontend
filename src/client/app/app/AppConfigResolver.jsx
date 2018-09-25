@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { makeRestApiRequest, getRestApiFinished } from 'data/duck';
-import { FpsakApi } from 'data/fpsakApi';
+import { makeRestApiRequest, getRestApiFinished } from '@fpsak-frontend/data/duck';
+import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
 import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
 
 class AppConfigResolver extends Component {

@@ -18,6 +18,7 @@
     "nav-frontend-paneler": "1.0.9",
     "nav-frontend-paneler-style": "0.3.10",
     "@fpsak-frontend/utils": "1.0.0",
+    "@fpsak-frontend/data": "1.0.0",
     "@fpsak-frontend/form": "1.0.0",
     "react-day-picker": "^7.1.10",
     "nav-frontend-skjema": "1.0.30",

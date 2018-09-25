@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import SoknadData from '@fpsak-frontend/papirsoknad/SoknadData';
+import SoknadData from 'SoknadData';
 import SoknadRegistrertModal from './components/SoknadRegistrertModal';
 import RegisterPapirsoknad from './components/RegistrerPapirsoknad';
 import { PapirsoknadIndex } from './PapirsoknadIndex';

@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
-import { makeRestApiRequest, setDataRestApi } from 'data/duck';
-import { FpsakApi } from 'data/fpsakApi';
+import { makeRestApiRequest, setDataRestApi } from '@fpsak-frontend/data/duck';
+import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
 import { updateFagsakInfo } from 'fagsak/duck';
 
 /* Action types */

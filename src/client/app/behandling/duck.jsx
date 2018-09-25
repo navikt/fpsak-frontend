@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import { makeRestApiRequest, resetRestApi } from 'data/duck';
+import { makeRestApiRequest, resetRestApi } from '@fpsak-frontend/data/duck';
 import { updateFagsakInfo } from 'fagsak/duck';
-import { FpsakApi } from 'data/fpsakApi';
+import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
 
 /* Action types */
 const SET_BEHANDLING_ID = 'SET_BEHANDLING_ID';

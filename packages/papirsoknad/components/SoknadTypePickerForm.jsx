@@ -17,7 +17,7 @@ import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { ariaCheck, required } from '@fpsak-frontend/utils/validation/validators';
 import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import SoknadData from '@fpsak-frontend/papirsoknad/SoknadData';
+import SoknadData from '../SoknadData';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import familieHendelseType from 'kodeverk/familieHendelseType';
 

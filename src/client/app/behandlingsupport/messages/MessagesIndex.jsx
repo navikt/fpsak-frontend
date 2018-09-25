@@ -21,8 +21,8 @@ import { setBehandlingOnHold } from 'behandlingmenu/duck';
 import venteArsakType from 'kodeverk/venteArsakType';
 import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
 import requireProps from 'app/data/requireProps';
-import { FpsakApi } from 'data/fpsakApi';
-import { getRestApiFinished, makeRestApiRequest } from 'data/duck';
+import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
+import { getRestApiFinished, makeRestApiRequest } from '@fpsak-frontend/data/duck';
 
 import resetSubmitMessageActionCreator from './duck';
 import Messages from './components/Messages';

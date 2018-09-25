@@ -17,8 +17,8 @@ import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandli
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import { getKodeverk } from 'kodeverk/duck';
 import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { getRestApiData } from 'data/duck';
-import { FpsakApi } from 'data/fpsakApi';
+import { getRestApiData } from '@fpsak-frontend/data/duck';
+import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
 import {
   getBehandlingOnHoldDate, getBehandlingInnsynMottattDato, getBehandlingInnsynResultatType,
   getBehandlingInnsynVedtaksdokumentasjon, getBehandlingInnsynDokumenter,

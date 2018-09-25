@@ -1,5 +1,5 @@
-import { makeRestApiRequest, resetRestApi } from 'data/duck';
-import { FpsakApi } from 'data/fpsakApi';
+import { makeRestApiRequest, resetRestApi } from '@fpsak-frontend/data/duck';
+import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
 import { resetBehandlingsupportInfo, updateBehandlingsupportInfo } from 'behandlingsupport/duck';
 import { updateAnnenPartBehandling } from 'fagsakprofile/duck';
 

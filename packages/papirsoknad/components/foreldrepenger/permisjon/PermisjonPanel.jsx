@@ -4,7 +4,7 @@ import { FieldArray, FormSection } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { Element, Undertittel } from 'nav-frontend-typografi';
 
-import SoknadData from '@fpsak-frontend/papirsoknad/SoknadData';
+import SoknadData from '../../../SoknadData';
 import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
 import foreldreType from 'kodeverk/foreldreType';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';

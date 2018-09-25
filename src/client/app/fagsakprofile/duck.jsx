@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
-import { getRestApiData, makeRestApiRequest, getRestApiMeta } from 'data/duck';
-import { FpsakApi } from 'data/fpsakApi';
+import { getRestApiData, makeRestApiRequest, getRestApiMeta } from '@fpsak-frontend/data/duck';
+import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 
 /* Action types */

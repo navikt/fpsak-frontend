@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import { FpsakApi } from 'data/fpsakApi';
-import { getRestApiData, getRestApiError } from 'data/duck';
+import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
+import { getRestApiData, getRestApiError } from '@fpsak-frontend/data/duck';
 import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
 import aksjonspunktCodes, {
   isInnhentSaksopplysningerAksjonspunkt,

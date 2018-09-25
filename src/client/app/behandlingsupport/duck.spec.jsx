@@ -4,7 +4,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 
-import { FpsakApi, getFpsakApiPath } from 'data/fpsakApi';
+import { FpsakApi, getFpsakApiPath } from '@fpsak-frontend/data/fpsakApi';
 import SupportPanels from './supportPanels';
 import {
   behandlingSupportReducer, setSelectedSupportPanel, getSelectedSupportPanel, resetBehandlingSupport, updateBehandlingsupportInfo,

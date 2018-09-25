@@ -7,9 +7,9 @@ import familieHendelseType from 'kodeverk/familieHendelseType';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import foreldreType from 'kodeverk/foreldreType';
 import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
-import SoknadData from '@fpsak-frontend/papirsoknad/SoknadData';
-import OmsorgOgAdopsjonPanel from '@fpsak-frontend/papirsoknad/components/commonPanels/omsorgOgAdopsjon/OmsorgOgAdopsjonPanel';
-import TerminFodselDatoPanel from '@fpsak-frontend/papirsoknad/components/commonPanels/fodsel/TerminFodselDatoPanel';
+import SoknadData from '../../SoknadData';
+import OmsorgOgAdopsjonPanel from '../commonPanels/omsorgOgAdopsjon/OmsorgOgAdopsjonPanel';
+import TerminFodselDatoPanel from '../commonPanels/fodsel/TerminFodselDatoPanel';
 import { ForeldrepengerForm } from './ForeldrepengerForm';
 
 describe('<ForeldrepengerForm>', () => {

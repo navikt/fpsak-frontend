@@ -12,11 +12,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { ErrorTypes } from 'app/ErrorTypes';
-import { FpsakApi } from 'data/fpsakApi';
-import { getRestApiFinished, getRestApiError } from 'data/duck';
+import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
+import { getRestApiFinished, getRestApiError } from '@fpsak-frontend/data/duck';
 import PersonIndex from 'person/PersonIndex';
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import SoknadData from '@fpsak-frontend/papirsoknad/SoknadData';
+import SoknadData from './SoknadData';
 import requireProps from 'app/data/requireProps';
 import {
   getSelectedBehandlingIdentifier, getBehandlingVersjon, getBehandlingIsOnHold, getAksjonspunkter,

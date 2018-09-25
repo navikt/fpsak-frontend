@@ -1,5 +1,5 @@
-import { FpsakApi } from 'data/fpsakApi';
-import { resetRestApi } from 'data/duck';
+import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
+import { resetRestApi } from '@fpsak-frontend/data/duck';
 import { updateFagsakInfo } from 'fagsak/duck';
 import { updateBehandling } from 'behandling/duck';
 

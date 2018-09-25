@@ -5,8 +5,8 @@ import { IntlProvider, addLocaleData } from 'react-intl';
 import nb from 'react-intl/locale-data/nb';
 
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import { getRestApiData } from 'data/duck';
-import { FpsakApi } from 'data/fpsakApi';
+import { getRestApiData } from '@fpsak-frontend/data/duck';
+import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
 
 addLocaleData(nb);
 

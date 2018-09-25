@@ -16,7 +16,7 @@ import {
   hasValidInteger, hasValidDate, isDatesEqual, required, minValue, maxValue, dateBeforeOrEqualToToday,
 } from '@fpsak-frontend/utils/validation/validators';
 import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
-import { rettighet } from '@fpsak-frontend/papirsoknad/components/commonPanels/rettigheter/RettigheterPanel';
+import { rettighet } from '../rettigheter/RettigheterPanel';
 
 import styles from './omsorgOgAdopsjonPanel.less';
 

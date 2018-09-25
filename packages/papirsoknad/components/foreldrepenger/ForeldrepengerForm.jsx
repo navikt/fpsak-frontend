@@ -5,18 +5,18 @@ import {
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import RettigheterPanel from '@fpsak-frontend/papirsoknad/components/commonPanels/rettigheter/RettigheterPanel';
-import { getRegisteredFields } from '@fpsak-frontend/papirsoknad/duck';
+import RettigheterPanel from '../commonPanels/rettigheter/RettigheterPanel';
+import { getRegisteredFields } from '../../duck';
 import { getFagsakPerson } from 'fagsak/fagsakSelectors';
-import MottattDatoPanel from '@fpsak-frontend/papirsoknad/components/commonPanels/MottattDatoPanel';
-import AnnenForelderPanel from '@fpsak-frontend/papirsoknad/components/commonPanels/AnnenForelderPanel';
-import OppholdINorgePanel from '@fpsak-frontend/papirsoknad/components/commonPanels/OppholdINorgePanel';
-import TilleggsopplysningerPanel from '@fpsak-frontend/papirsoknad/components/commonPanels/TilleggsopplysningerPanel';
-import SoknadData from '@fpsak-frontend/papirsoknad/SoknadData';
+import MottattDatoPanel from '../commonPanels/MottattDatoPanel';
+import AnnenForelderPanel from '../commonPanels/AnnenForelderPanel';
+import OppholdINorgePanel from '../commonPanels/OppholdINorgePanel';
+import TilleggsopplysningerPanel from '../commonPanels/TilleggsopplysningerPanel';
+import SoknadData from '../../SoknadData';
 import familieHendelseType from 'kodeverk/familieHendelseType';
-import LagreSoknadForm from '@fpsak-frontend/papirsoknad/components/commonPanels/LagreSoknadPanel';
-import OmsorgOgAdopsjonPanel from '@fpsak-frontend/papirsoknad/components/commonPanels/omsorgOgAdopsjon/OmsorgOgAdopsjonPanel';
-import TerminFodselDatoPanel from '@fpsak-frontend/papirsoknad/components/commonPanels/fodsel/TerminFodselDatoPanel';
+import LagreSoknadForm from '../commonPanels/LagreSoknadPanel';
+import OmsorgOgAdopsjonPanel from '../commonPanels/omsorgOgAdopsjon/OmsorgOgAdopsjonPanel';
+import TerminFodselDatoPanel from '../commonPanels/fodsel/TerminFodselDatoPanel';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import EgenVirksomhetPanel from './virksomhet/EgenVirksomhetPanel';

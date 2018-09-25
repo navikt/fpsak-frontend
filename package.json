@@ -67,7 +67,8 @@
     "@fpsak-frontend/form": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "@fpsak-frontend/papirsoknad": "1.0.0",
-    "@fpsak-frontend/shared-components": "1.0.0"
+    "@fpsak-frontend/shared-components": "1.0.0",
+    "@fpsak-frontend/data": "1.0.0"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.15.0",
@@ -130,7 +131,8 @@
     "test:coverage": "nyc mocha-webpack --webpack-config webpack/webpack.test.coverage.js  \"src/client/app/*/**/*.jsx\"",
     "dev": "cross-env NODE_ENV=development node webpack/webpack.dev.server.js --config webpack/webpack.dev.js",
     "build": "cross-env NODE_ENV=production webpack --progress --colors --config webpack/webpack.prod.js",
-    "postinstall": "yarn test && yarn run less:lint",
+    "postinstall": "yarn run build && yarn test && yarn run less:lint",
+    "lerna": "lerna",
     "less:lint": "lesshint --max-warnings 0 --reporter ./_scripts/lesshint-reporter.js packages -e *Source-Sans*.less",
     "doc": "react-asciidoc-generator ./src/client/app/ -o ../../docs/generated/react.adoc --handlebar-template src/docs/asciidoc-template.handlebars "
   },
@@ -154,7 +156,7 @@
       "**/*.spec.jsx"
     ]
   },
-  "author": "tor",
-  "license": "ISC",
+  "author": "NAV",
+  "license": "SEE LICENSE IN LICENSE",
   "repository": "non"
 }

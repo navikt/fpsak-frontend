@@ -6,7 +6,7 @@ import { expect } from 'chai';
 import { withoutRestActions, ignoreRestErrors } from 'testHelpers/data-test-helper';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import { FpsakApi, getFpsakApiPath } from 'data/fpsakApi';
+import { FpsakApi, getFpsakApiPath } from '@fpsak-frontend/data/fpsakApi';
 import {
   behandlingsprosessReducer, resetBehandlingspunkter, setSelectedBehandlingspunktNavn,
   resolveProsessAksjonspunkter, overrideProsessAksjonspunkter,

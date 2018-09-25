@@ -6,7 +6,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import { FpsakApi, getFpsakApiPath } from 'data/fpsakApi';
+import { FpsakApi, getFpsakApiPath } from '@fpsak-frontend/data/fpsakApi';
 import {
   behandlingMenuReducer, setHasSubmittedPaVentForm, createNewForstegangsbehandling, openBehandlingForChanges,
   resetBehandlingMenuData,

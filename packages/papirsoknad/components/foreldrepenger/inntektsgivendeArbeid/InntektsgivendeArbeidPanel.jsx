@@ -7,7 +7,6 @@ import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import PropTypes from 'prop-types';
 import RenderInntektsgivendeArbeidFieldArray from './RenderInntektsgivendeArbeidFieldArray';
 
-
 const inntektsgivendeArbeidFieldArrayName = 'arbeidsforhold';
 
 /**

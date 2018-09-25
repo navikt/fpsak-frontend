@@ -5,8 +5,8 @@ import {
   getSoknad, getAksjonspunkter, getBehandlingType, getBehandlingStatus,
   getBehandlingAnsvarligSaksbehandler,
 } from 'behandling/behandlingSelectors';
-import { getRestApiData, makeRestApiRequest } from 'data/duck';
-import { FpsakApi } from 'data/fpsakApi';
+import { getRestApiData, makeRestApiRequest } from '@fpsak-frontend/data/duck';
+import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
 
 import { allAccessRights } from './access';
 

@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
-import { getRestApiData } from 'data/duck';
-import { FpsakApi } from 'data/fpsakApi';
+import { getRestApiData } from '@fpsak-frontend/data/duck';
+import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
 import kommunikasjonsretning from 'kodeverk/kommunikasjonsretning';
 import {
   getBehandlingHasSoknad, isBehandlingInInnhentSoknadsopplysningerSteg, getBehandlingIsOnHold,

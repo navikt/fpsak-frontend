@@ -3,9 +3,9 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import SoknadData from '@fpsak-frontend/papirsoknad/SoknadData';
-import ForeldrepengerForm from '@fpsak-frontend/papirsoknad/components/foreldrepenger/ForeldrepengerForm';
-import EndringForeldrepengerForm from '@fpsak-frontend/papirsoknad/components/foreldrepenger/EndringForeldrepengerForm';
+import SoknadData from '../SoknadData';
+import ForeldrepengerForm from 'foreldrepenger/ForeldrepengerForm';
+import EndringForeldrepengerForm from 'foreldrepenger/EndringForeldrepengerForm';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import { RegistrerPapirsoknad } from './RegistrerPapirsoknad';

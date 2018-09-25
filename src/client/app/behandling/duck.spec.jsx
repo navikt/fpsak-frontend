@@ -5,7 +5,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import { FpsakApi, getFpsakApiPath } from 'data/fpsakApi';
+import { FpsakApi, getFpsakApiPath } from '@fpsak-frontend/data/fpsakApi';
 import {
   behandlingReducer, setSelectedBehandlingId, setHasShownBehandlingPaVent, updateBehandling,
 } from './duck';

@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { isEqual } from '@fpsak-frontend/utils/objectUtils';
-import { getRegisteredFields } from '@fpsak-frontend/papirsoknad/duck';
-import MottattDatoPanel from '@fpsak-frontend/papirsoknad/components/commonPanels/MottattDatoPanel';
-import SoknadData from '@fpsak-frontend/papirsoknad/SoknadData';
+import { getRegisteredFields } from '../../duck';
+
+import SoknadData from '../../SoknadData';
 import familieHendelseType from 'kodeverk/familieHendelseType';
-import LagreSoknadPanel from '@fpsak-frontend/papirsoknad/components/commonPanels/LagreSoknadPanel';
+import LagreSoknadPanel from '../commonPanels/LagreSoknadPanel';
+import MottattDatoPanel from '../commonPanels/MottattDatoPanel';
 import { getFagsakPerson } from 'fagsak/fagsakSelectors';
 import RegistreringAdopsjonOgOmsorgGrid from './RegistreringAdopsjonOgOmsorgGrid';
 import RegistreringFodselGrid from './RegistreringFodselGrid';

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 
-import { getAllAsyncPollingMessages } from 'data/duck';
+import { getAllAsyncPollingMessages } from '@fpsak-frontend/data/duck';
 import { behandlingerPath } from 'app/paths';
 import BehandlingerIndex from 'behandling/BehandlingerIndex';
 import BehandlingSupportIndex from 'behandlingsupport/BehandlingSupportIndex';

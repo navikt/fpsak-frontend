@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-import { FpsakApi, getFpsakApiPath } from 'data/fpsakApi';
+import { FpsakApi, getFpsakApiPath } from '@fpsak-frontend/data/fpsakApi';
 import {
   RESET_FAGSAKER, fagsakReducer, setSelectedSaksnummer, resetFagsakContext, doNotResetWhitelist, updateFagsakInfo,
   fetchVedtaksbrevPreview, updateBehandlinger, fetchFagsakInfo,

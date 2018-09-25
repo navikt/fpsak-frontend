@@ -2,7 +2,7 @@ import React from 'react';
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import { expect } from 'chai';
 
-import SoknadData from '@fpsak-frontend/papirsoknad/SoknadData';
+import SoknadData from '../../../SoknadData';
 import { RadioOption } from '@fpsak-frontend/form';
 import { RettigheterPanel } from './RettigheterPanel';
 
