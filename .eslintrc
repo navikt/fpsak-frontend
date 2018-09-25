@@ -34,7 +34,8 @@
   "settings":{
     "import/resolver":{
       "webpack":{
-        "config":"C:/git/fpsak-frontend/webpack/webpack.dev.js"
+        "config":"webpack/webpack.dev.js",
+        "config-index": 1
       }
     }
   }
