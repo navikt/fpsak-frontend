@@ -15,8 +15,8 @@ import {
 } from '@fpsak-frontend/utils/validation/validators';
 import { TextAreaField, DatepickerField } from '@fpsak-frontend/form';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import ArbeidsgiverInfo from './ArbeidsgiverInfo';
 

@@ -1,0 +1,14 @@
+{
+  "name": "@fpsak-frontend/kodeverk",
+  "version": "1.0.0",
+  "main": "bundle.js",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@fpsak-frontend/data": "1.0.0"
+  },
+  "peerDependencies": {
+    "reselect": "^3.0.1",
+    "prop-types": "^15.6.2"
+  }
+}

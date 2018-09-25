@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 
 import { getEditedStatus } from 'behandling/behandlingSelectors';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
 import { hasValidDate, required } from '@fpsak-frontend/utils/validation/validators';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';

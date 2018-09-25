@@ -7,8 +7,8 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 import { addDaysToDate } from '@fpsak-frontend/utils/dateUtils';
-import vilkarType from 'kodeverk/vilkarType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { omit } from '@fpsak-frontend/utils/objectUtils';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import { getBehandlingFastsattOpptjening, getBehandlingOpptjeningActivities } from 'behandling/behandlingSelectors';

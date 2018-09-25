@@ -8,9 +8,9 @@ import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
 import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { getAktivitetStatuser, getTilstøtendeYtelse, getSkjæringstidspunktBeregning } from 'behandling/behandlingSelectors';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
 
 import styles from './skjeringspunktOgStatusPanel.less';
 

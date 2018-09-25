@@ -13,7 +13,7 @@ import innvilgetIkonUrl from 'images/innvilget.svg';
 import innvilgetValgtIkonUrl from 'images/innvilget_valgt.svg';
 import ikkeVurdertIkonUrl from 'images/behandle_disable.svg';
 
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
 
 const vilkarImages = {
   imageMap: {

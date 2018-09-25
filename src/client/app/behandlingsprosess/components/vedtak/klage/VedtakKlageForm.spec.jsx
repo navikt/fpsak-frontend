@@ -4,8 +4,8 @@ import sinon from 'sinon';
 
 import { shallow } from 'enzyme';
 import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
-import behandlingStatus from 'kodeverk/behandlingStatus';
-import BehandlingResultatType from 'kodeverk/behandlingResultatType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
+import BehandlingResultatType from '@fpsak-frontend/kodeverk/behandlingResultatType';
 import { VedtakKlageFormImpl as UnwrappedForm } from './VedtakKlageForm';
 import VedtakKlageSubmitPanel from './VedtakKlageSubmitPanel';
 import VedtakAvslagKlagePanel from './VedtakAvslagKlagePanel';

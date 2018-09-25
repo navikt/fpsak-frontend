@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { OmsorgInfoPanelImpl } from './OmsorgInfoPanel';
 import OmsorgFaktaForm from './OmsorgFaktaForm';
 

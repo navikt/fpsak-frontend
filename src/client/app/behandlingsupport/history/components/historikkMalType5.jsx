@@ -8,8 +8,8 @@ import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { createLocationForHistorikkItems } from 'app/paths';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
-import historikkEndretFeltTypeCodes from 'kodeverk/historikkEndretFeltTypeCodes';
-import historikkEndretFeltTypeHeadingCodes from 'kodeverk/historikkEndretFeltTypeHeadingCodes';
+import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/historikkEndretFeltTypeCodes';
+import historikkEndretFeltTypeHeadingCodes from '@fpsak-frontend/kodeverk/historikkEndretFeltTypeHeadingCodes';
 import {
   findAarsakText,
   findBegrunnelseTekst,

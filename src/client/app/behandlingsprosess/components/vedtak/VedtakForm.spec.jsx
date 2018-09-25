@@ -5,10 +5,10 @@ import sinon from 'sinon';
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
 
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
-import BehandlingResultatType from 'kodeverk/behandlingResultatType';
-import behandlingStatus from 'kodeverk/behandlingStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import BehandlingResultatType from '@fpsak-frontend/kodeverk/behandlingResultatType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
 import { VedtakFormImpl as UnwrappedForm, buildInitialValues } from './VedtakForm';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';

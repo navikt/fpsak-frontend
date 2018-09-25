@@ -6,8 +6,8 @@ import { Fieldset } from 'nav-frontend-skjema';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
 import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
-import foreldreType from 'kodeverk/foreldreType';
-import familieHendelseType from 'kodeverk/familieHendelseType';
+import foreldreType from '@fpsak-frontend/kodeverk/foreldreType';
+import familieHendelseType from '@fpsak-frontend/kodeverk/familieHendelseType';
 import SoknadData from '../../../SoknadData';
 
 import styles from './rettigheterPanel.less';

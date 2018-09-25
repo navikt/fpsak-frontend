@@ -7,10 +7,10 @@ import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtil
 import aksjonspunktCodes, {
   isInnhentSaksopplysningerAksjonspunkt,
   isVilkarForSykdomOppfylt,
-} from 'kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import behandlingStatus from 'kodeverk/behandlingStatus';
-import behandlingType from 'kodeverk/behandlingType';
+} from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
 import { getSelectedSaksnummer, isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import isFieldEdited from './editedFields';
 import { getSelectedBehandlingId } from './duck';

@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 
-import diskresjonskodeType from 'kodeverk/diskresjonskodeType';
+import diskresjonskodeType from '@fpsak-frontend/kodeverk/diskresjonskodeType';
 import MerkePanel from './Merkepanel';
 
 describe('<MerkePanel>', () => {

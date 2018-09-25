@@ -9,8 +9,8 @@ import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import { omit } from '@fpsak-frontend/utils/objectUtils';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
 import {
   getBehandlingRelatertTilgrensendeYtelserForAnnenForelder,
   getBehandlingRelatertTilgrensendeYtelserForSoker,
@@ -18,7 +18,7 @@ import {
   getPersonopplysning,
   getBehandlingArbeidsforhold,
 } from 'behandling/behandlingSelectors';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { behandlingForm } from 'behandling/behandlingForm';
 import withDefaultToggling from 'fakta/withDefaultToggling';
 import faktaPanelCodes from 'fakta/faktaPanelCodes';

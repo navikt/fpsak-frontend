@@ -14,7 +14,7 @@ import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { required, hasValidDate } from '@fpsak-frontend/utils/validation/validators';
 import Image from '@fpsak-frontend/shared-components/Image';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import advarselImageUrl from 'images/advarsel.svg';
 
 import styles from './dokumentasjonFaktaForm.less';

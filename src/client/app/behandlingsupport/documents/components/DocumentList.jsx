@@ -9,7 +9,7 @@ import TableRow from '@fpsak-frontend/shared-components/TableRow';
 import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
 import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
 import Image from '@fpsak-frontend/shared-components/Image';
-import kommunikasjonsretning from 'kodeverk/kommunikasjonsretning';
+import kommunikasjonsretning from '@fpsak-frontend/kodeverk/kommunikasjonsretning';
 
 import sendDokumentImageUrl from 'images/send_dokument.svg';
 import mottaDokumentImageUrl from 'images/motta_dokument.svg';

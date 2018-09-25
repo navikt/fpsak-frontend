@@ -8,7 +8,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import SoknadData from '../SoknadData';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
 import EngangsstonadForm from './engangsstonad/EngangsstonadForm';
 import ForeldrepengerForm from './foreldrepenger/ForeldrepengerForm';
 import EndringForeldrepengerForm from './foreldrepenger/EndringForeldrepengerForm';

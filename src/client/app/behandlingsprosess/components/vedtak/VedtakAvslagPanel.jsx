@@ -12,9 +12,9 @@ import {
   findAvslagResultatText,
 } from 'behandlingsprosess/components/vedtak/VedtakHelper';
 import VedtakFritekstPanel from 'behandlingsprosess/components/vedtak/VedtakFritekstPanel';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import behandlingStatus from 'kodeverk/behandlingStatus';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
 
 export const getAvslagArsak = (vilkar, aksjonspunkter, behandlingsresultat) => {
   const avslatteVilkar = vilkar.filter(v => v.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);

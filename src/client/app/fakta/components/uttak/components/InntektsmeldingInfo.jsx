@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Undertekst, Normaltekst, Element } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { dateFormat, calcDaysAndWeeks, TIDENES_ENDE } from '@fpsak-frontend/utils/dateUtils';
-import { utsettelseArsakTexts } from 'kodeverk/utsettelseArsakCodes';
+import { utsettelseArsakTexts } from '@fpsak-frontend/kodeverk/utsettelseArsakCodes';
 import classnames from 'classnames/bind';
 import FlexColumn from '@fpsak-frontend/shared-components/flexGrid/FlexColumn';
 import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';

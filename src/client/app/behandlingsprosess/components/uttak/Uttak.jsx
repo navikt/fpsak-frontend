@@ -23,10 +23,10 @@ import {
 } from 'behandling/behandlingSelectors';
 import { getRettigheter } from 'navAnsatt/duck';
 import { getSelectedBehandlingId } from 'behandling/duck';
-import periodeResultatType from 'kodeverk/periodeResultatType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import periodeResultatType from '@fpsak-frontend/kodeverk/periodeResultatType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import soknadType from 'kodeverk/soknadType';
+import soknadType from '@fpsak-frontend/kodeverk/soknadType';
 import TimeLineInfo from './stonadkonto/TimeLineInfo';
 import UttakTimeLineData from './UttakTimeLineData';
 import UttakTimeLine from './UttakTimeLine';

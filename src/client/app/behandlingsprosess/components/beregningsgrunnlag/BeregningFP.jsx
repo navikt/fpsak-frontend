@@ -16,15 +16,15 @@ import {
 import beregningsgrunnlagPropType from 'behandling/proptypes/beregningsgrunnlagPropType';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import { getSelectedBehandlingspunktVilkar } from 'behandlingsprosess/behandlingsprosessSelectors';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
 import aktivitetStatus, {
   isStatusFrilanserOrKombinasjon, isStatusArbeidstakerOrKombinasjon,
   isStatusSNOrKombinasjon, isStatusKombinasjon, isStatusDagpengerOrAAP,
   isStatusTilstotendeYtelse,
-} from 'kodeverk/aktivitetStatus';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+} from '@fpsak-frontend/kodeverk/aktivitetStatus';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
 import InntektsopplysningerPanel from './fellesPaneler/InntektsopplysningerPanel';
 import SkjeringspunktOgStatusPanel from './fellesPaneler/SkjeringspunktOgStatusPanel';
 import BeregningsgrunnlagForm from './beregningsgrunnlagPanel/BeregningsgrunnlagForm';

@@ -12,18 +12,18 @@ import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
 import { getBehandlingsresultat, isBehandlingRevurderingFortsattMedlemskap, getBehandlingRevurderingAvFortsattMedlemskapFom }
   from 'behandling/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import vilkarType from 'kodeverk/vilkarType';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
-import aksjonspunktCode from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCode from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import {
   getSelectedBehandlingspunktTitleCode, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus,
   getSelectedBehandlingspunkt, getIsSelectedBehandlingspunktOverridden, getSelectedBehandlingspunktVilkar,
   isSelectedBehandlingspunktOverrideReadOnly,
 } from 'behandlingsprosess/behandlingsprosessSelectors';
-import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
 import OverstyrVurderingChecker from 'behandlingsprosess/components/OverstyrVurderingChecker';
 import OverstyrConfirmationForm from 'behandlingsprosess/components/OverstyrConfirmationForm';
 import VilkarResultPicker from 'behandlingsprosess/components/vilkar/VilkarResultPicker';

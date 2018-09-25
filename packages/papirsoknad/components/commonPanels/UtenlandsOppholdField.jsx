@@ -7,7 +7,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
 import { SelectField, DatepickerField } from '@fpsak-frontend/form';
 import { required, hasValidValue, hasValidPeriodIncludingOtherErrors } from '@fpsak-frontend/utils/validation/validators';
-import landkoder from 'kodeverk/landkoder';
+import landkoder from '@fpsak-frontend/kodeverk/landkoder';
 import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
 
 import styles from './utenlandsOppholdField.less';

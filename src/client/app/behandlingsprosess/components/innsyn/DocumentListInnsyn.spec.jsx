@@ -7,7 +7,7 @@ import DateTimeLabel from '@fpsak-frontend/shared-components/DateTimeLabel';
 import TableRow from '@fpsak-frontend/shared-components/TableRow';
 import Table from '@fpsak-frontend/shared-components/Table';
 import Image from '@fpsak-frontend/shared-components/Image';
-import kommunikasjonsretning from 'kodeverk/kommunikasjonsretning';
+import kommunikasjonsretning from '@fpsak-frontend/kodeverk/kommunikasjonsretning';
 import DocumentListInnsyn from './DocumentListInnsyn';
 
 

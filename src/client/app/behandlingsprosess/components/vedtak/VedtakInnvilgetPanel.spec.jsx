@@ -2,8 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import behandlingType from 'kodeverk/behandlingType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
+import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
 import { VedtakInnvilgetPanelImpl } from './VedtakInnvilgetPanel';
 
 const engangsstonad = fagsakYtelseType.ENGANGSSTONAD;

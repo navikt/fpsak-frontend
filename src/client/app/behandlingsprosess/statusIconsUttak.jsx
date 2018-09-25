@@ -8,7 +8,7 @@ import innvilgetValgtIkonUrl from 'images/uttak_valgt.svg';
 import ikkeVurdertIkonUrl from 'images/uttak_disable.svg';
 import innvilgetHoverIkonUrl from 'images/uttak_hover.svg';
 
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
 
 const uttakImages = {
   imageMap: {

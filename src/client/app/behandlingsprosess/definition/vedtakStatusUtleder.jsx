@@ -1,9 +1,9 @@
-import aksjonspunktStatus, { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import bt from 'kodeverk/behandlingType';
-import behandlingResultatType, { isAvslag } from 'kodeverk/behandlingResultatType';
-import innsynResultatTypeKV from 'kodeverk/innsynResultatType';
-import aksjonspunktCodes, { isKlageAksjonspunkt } from 'kodeverk/aksjonspunktCodes';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import bt from '@fpsak-frontend/kodeverk/behandlingType';
+import behandlingResultatType, { isAvslag } from '@fpsak-frontend/kodeverk/behandlingResultatType';
+import innsynResultatTypeKV from '@fpsak-frontend/kodeverk/innsynResultatType';
+import aksjonspunktCodes, { isKlageAksjonspunkt } from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
 
 // TODO (TOR) refaktorer måten ein finn status for vedtaksbehandlingspunkt
 const findVedtakStatusForKlage = (aksjonspunkter, behandlingsresultat) => {

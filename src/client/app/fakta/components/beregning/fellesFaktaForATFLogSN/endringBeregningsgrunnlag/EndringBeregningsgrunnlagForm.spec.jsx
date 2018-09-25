@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
 import { getHelpTextsEndringBG, createEndretArbeidsforholdString } from './EndringBeregningsgrunnlagForm';
 
 const forhold = [

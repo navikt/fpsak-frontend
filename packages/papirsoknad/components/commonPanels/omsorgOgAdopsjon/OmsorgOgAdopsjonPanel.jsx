@@ -6,7 +6,7 @@ import { FieldArray, formValueSelector } from 'redux-form';
 import { Fieldset } from 'nav-frontend-skjema';
 import { Container, Row, Column } from 'nav-frontend-grid';
 
-import fht from 'kodeverk/familieHendelseType';
+import fht from '@fpsak-frontend/kodeverk/familieHendelseType';
 import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
 import {
   InputField, DatepickerField, RadioGroupField, RadioOption,

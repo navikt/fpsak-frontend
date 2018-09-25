@@ -4,7 +4,7 @@ import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
 import { RadioGroupField } from '@fpsak-frontend/form';
 import sinon from 'sinon';
-import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
+import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/uttakPeriodeVurdering';
 import { InnleggelsePeriode } from './InnleggelsePeriode';
 
 const periode = {

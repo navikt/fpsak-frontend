@@ -8,10 +8,10 @@ import { connect } from 'react-redux';
 import BpPanelTemplate from 'behandlingsprosess/components/vilkar/BpPanelTemplate';
 import { getBehandlingsresultat } from 'behandling/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import vilkarType from 'kodeverk/vilkarType';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { getSelectedBehandlingspunktVilkar, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus }

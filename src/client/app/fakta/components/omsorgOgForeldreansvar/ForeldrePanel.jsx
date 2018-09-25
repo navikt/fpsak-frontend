@@ -4,15 +4,15 @@ import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 import getAddresses from '@fpsak-frontend/utils/personUtils';
-import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
-import opplysningAdresseType from 'kodeverk/opplysningAdresseType';
-import opplysningsKilde from 'kodeverk/opplysningsKilde';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/navBrukerKjonn';
+import opplysningAdresseType from '@fpsak-frontend/kodeverk/opplysningAdresseType';
+import opplysningsKilde from '@fpsak-frontend/kodeverk/opplysningsKilde';
 import { DatepickerField } from '@fpsak-frontend/form';
 import { hasValidDate, dateBeforeOrEqualToToday } from '@fpsak-frontend/utils/validation/validators';
 import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import personstatusType from 'kodeverk/personstatusType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import personstatusType from '@fpsak-frontend/kodeverk/personstatusType';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 
 const getParentHeader = erMor => (erMor ? 'ForeldrePanel.MotherDeathDate' : 'ForeldrePanel.FatherDeathDate');

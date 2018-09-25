@@ -12,7 +12,7 @@ import {
   InputField, DatepickerField, SelectField, TextAreaField, CheckboxField,
 } from '@fpsak-frontend/form';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 
 import styles from './RegistrereVergeFaktaForm.less';
 

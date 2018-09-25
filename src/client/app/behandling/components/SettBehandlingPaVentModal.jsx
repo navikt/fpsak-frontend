@@ -5,7 +5,7 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Column, Container, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import requireProps from 'app/data/requireProps';
@@ -15,8 +15,8 @@ import {
   ariaCheck, dateAfterOrEqualToToday, hasValidDate, required,
 } from '@fpsak-frontend/utils/validation/validators';
 import Image from '@fpsak-frontend/shared-components/Image';
-import { getKodeverk, getKodeverkReceived } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import { getKodeverk, getKodeverkReceived } from '@fpsak-frontend/kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
 import innvilgetImageUrl from 'images/innvilget_valgt.svg';
 
 import styles from './settBehandlingPaVentModal.less';

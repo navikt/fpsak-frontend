@@ -7,7 +7,7 @@ import { Normaltekst, Element } from 'nav-frontend-typografi';
 import Table from '@fpsak-frontend/shared-components/Table';
 import TableRow from '@fpsak-frontend/shared-components/TableRow';
 import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
 
 import styles from './grunnlagForAarsinntektPanelSN.less';

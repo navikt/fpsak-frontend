@@ -3,11 +3,11 @@ import { expect } from 'chai';
 
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import vilkarType from 'kodeverk/vilkarType';
-import behandlingType from 'kodeverk/behandlingType';
-import behandlingStatus from 'kodeverk/behandlingStatus';
-import klageVurdering from 'kodeverk/klageVurdering';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
+import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
+import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
+import klageVurdering from '@fpsak-frontend/kodeverk/klageVurdering';
 import { medholdIKlage } from '../VedtakHelper';
 import { VedtakKlagePanelImpl, getMedholdArsak } from './VedtakKlagePanel';
 

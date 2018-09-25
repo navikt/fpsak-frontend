@@ -12,12 +12,12 @@ import { getFaktaOmBeregning, getAksjonspunkter } from 'behandling/behandlingSel
 import { getBehandlingFormSyncErrors } from 'behandling/behandlingForm';
 import Image from '@fpsak-frontend/shared-components/Image';
 import addCircleIcon from 'images/add-circle.svg';
-import { getKodeverk } from 'kodeverk/duck';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import inntektskategorier, { isSelvstendigNæringsdrivende } from 'kodeverk/inntektskategorier';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-frontend/kodeverk/inntektskategorier';
 import { parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
 import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
 

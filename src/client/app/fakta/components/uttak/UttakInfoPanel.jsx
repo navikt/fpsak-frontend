@@ -9,14 +9,14 @@ import moment from 'moment';
 import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
 import withDefaultToggling from 'fakta/withDefaultToggling';
 import faktaPanelCodes from 'fakta/faktaPanelCodes';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import {
   getUttakPerioder,
   getBehandlingYtelseFordeling,
   getBehandlingIsRevurdering,
 } from 'behandling/behandlingSelectors';
 import { dateFormat } from '@fpsak-frontend/utils/dateUtils';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
 import UttakFaktaForm from './UttakFaktaForm';
 
 const uttakAksjonspunkter = [aksjonspunktCodes.AVKLAR_UTTAK, aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO];

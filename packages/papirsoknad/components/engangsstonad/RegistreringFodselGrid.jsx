@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormSection } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
 
-import foreldreType from 'kodeverk/foreldreType';
+import foreldreType from '@fpsak-frontend/kodeverk/foreldreType';
 import SoknadData from '../../SoknadData';
 import OppholdINorgePanel from '../commonPanels/OppholdINorgePanel';
 import TilleggsopplysningerPanel from '../commonPanels/TilleggsopplysningerPanel';

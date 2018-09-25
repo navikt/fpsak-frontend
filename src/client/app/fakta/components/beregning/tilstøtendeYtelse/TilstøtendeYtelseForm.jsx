@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { FormattedMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import { removeSpacesFromNumber } from '@fpsak-frontend/utils/currencyUtils';
-import beregningsgrunnlagAndeltyper from 'kodeverk/beregningsgrunnlagAndeltyper';
+import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/beregningsgrunnlagAndeltyper';
 import { getTilstøtendeYtelse } from 'behandling/behandlingSelectors';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';

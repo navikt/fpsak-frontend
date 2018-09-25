@@ -5,7 +5,7 @@ import { Undertekst, Element } from 'nav-frontend-typografi';
 import { injectIntl, intlShape } from 'react-intl';
 
 import Image from '@fpsak-frontend/shared-components/Image';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
 import { getBehandlingHenlagt } from 'behandling/behandlingSelectors';
 import findBehandlingsprosessIcon from 'behandlingsprosess/statusIconHelper';
 import { getBehandlingspunkterStatus, getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus } from 'behandlingsprosess/behandlingsprosessSelectors';

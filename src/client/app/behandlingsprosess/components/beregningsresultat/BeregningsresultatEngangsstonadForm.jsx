@@ -18,7 +18,7 @@ import {
   required, minValue, maxValue, hasValidInteger,
 } from '@fpsak-frontend/utils/validation/validators';
 import { InputField } from '@fpsak-frontend/form';
-import aksjonspunktCode from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCode from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import OverstyrVurderingChecker from 'behandlingsprosess/components/OverstyrVurderingChecker';
 import OverstyrConfirmationForm from 'behandlingsprosess/components/OverstyrConfirmationForm';
 import OverstyrConfirmVilkarButton from 'behandlingsprosess/components/OverstyrConfirmVilkarButton';

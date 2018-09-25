@@ -13,8 +13,8 @@ import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/for
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import PropTypes from 'prop-types';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
 import { getBehandlingLanguageCode, getBehandlingArsaker } from 'behandling/behandlingSelectors';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';

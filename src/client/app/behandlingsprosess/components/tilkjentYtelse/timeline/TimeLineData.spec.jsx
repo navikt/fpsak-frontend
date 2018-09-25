@@ -6,8 +6,8 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
 import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import periodeResultatType from 'kodeverk/periodeResultatType';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import periodeResultatType from '@fpsak-frontend/kodeverk/periodeResultatType';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
 import TimeLineData from './TimeLineData';
 
 const startDate = '2018-01-28';

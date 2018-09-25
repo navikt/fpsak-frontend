@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
 import { SkjeringspunktOgStatusPanelImpl } from './SkjeringspunktOgStatusPanel';
-import aktivitetStatus from '../../../../kodeverk/aktivitetStatus';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
 
 describe('<SkjeringspunktOgStatusPanel>', () => {
   it('Skal se at korrekte verdier settes i undertittlene', () => {

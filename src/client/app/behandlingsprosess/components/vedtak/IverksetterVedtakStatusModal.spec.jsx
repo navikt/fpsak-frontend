@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
-import behandlingStatus from 'kodeverk/behandlingStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
 import IverksetterVedtakStatusModal from './IverksetterVedtakStatusModal';
 
 describe('<IverksetterVedtakStatusModal>', () => {

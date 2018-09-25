@@ -6,7 +6,7 @@ import sinonChai from 'sinon-chai';
 
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import { MockFields } from 'testHelpers/redux-form-test-helper';
-import familieHendelseType from 'kodeverk/familieHendelseType';
+import familieHendelseType from '@fpsak-frontend/kodeverk/familieHendelseType';
 import { OmsorgOgAdopsjonPanelImpl, FodselsDatoFields } from './OmsorgOgAdopsjonPanel';
 
 chai.use(sinonChai);

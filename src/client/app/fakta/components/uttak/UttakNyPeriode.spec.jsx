@@ -7,7 +7,7 @@ import {
 } from '@fpsak-frontend/form';
 
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
-import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/navBrukerKjonn';
 import sinon from 'sinon';
 import { UttakNyPeriode } from './UttakNyPeriode';
 

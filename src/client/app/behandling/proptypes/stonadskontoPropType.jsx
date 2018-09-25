@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import stonadskontoType from 'kodeverk/stonadskontoType';
+import stonadskontoType from '@fpsak-frontend/kodeverk/stonadskontoType';
 
 export const stonadskontoPropType = PropTypes.shape({
   maxDager: PropTypes.number.isRequired,

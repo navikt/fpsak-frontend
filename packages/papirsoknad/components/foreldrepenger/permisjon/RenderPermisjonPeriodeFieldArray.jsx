@@ -15,10 +15,10 @@ import {
 import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import { isEmpty } from '@fpsak-frontend/utils/arrayUtils';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import uttakPeriodeType from 'kodeverk/uttakPeriodeType';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import uttakPeriodeType from '@fpsak-frontend/kodeverk/uttakPeriodeType';
 import {
   CheckboxField, DatepickerField, SelectField,
 } from '@fpsak-frontend/form';

@@ -13,9 +13,9 @@ import Table from '@fpsak-frontend/shared-components/Table';
 import TableRow from '@fpsak-frontend/shared-components/TableRow';
 import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
 import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from '@fpsak-frontend/utils/currencyUtils';
-import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle } from 'kodeverk/faktaOmBeregningTilfelle';
+import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle } from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
 
 import styles from './fastsettATFLInntektForm.less';
 

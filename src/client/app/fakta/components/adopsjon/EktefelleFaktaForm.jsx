@@ -5,7 +5,7 @@ import { Container } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
 
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';

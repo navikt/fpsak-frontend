@@ -13,7 +13,7 @@ import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
 import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
-import periodeAarsak from 'kodeverk/periodeAarsak';
+import periodeAarsak from '@fpsak-frontend/kodeverk/periodeAarsak';
 
 import styles from './beregningsresultatTable.less';
 

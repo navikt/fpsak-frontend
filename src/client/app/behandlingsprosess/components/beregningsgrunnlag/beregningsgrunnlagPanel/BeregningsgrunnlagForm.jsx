@@ -10,14 +10,14 @@ import {
 } from 'behandling/behandlingSelectors';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm } from 'behandling/behandlingForm';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import periodeAarsak from 'kodeverk/periodeAarsak';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import periodeAarsak from '@fpsak-frontend/kodeverk/periodeAarsak';
 import { TextAreaField } from '@fpsak-frontend/form';
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
 import {

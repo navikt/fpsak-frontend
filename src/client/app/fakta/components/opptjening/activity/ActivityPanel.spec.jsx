@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import { PeriodpickerField, SelectField, RadioGroupField } from '@fpsak-frontend/form';
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
-import OAType from 'kodeverk/opptjeningAktivitetType';
+import OAType from '@fpsak-frontend/kodeverk/opptjeningAktivitetType';
 import { ActivityPanel } from './ActivityPanel';
 
 describe('<ActivityPanel>', () => {

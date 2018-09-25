@@ -1,5 +1,4 @@
-"use strict";
-
+'use strict';
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
@@ -28,7 +27,7 @@ const config = {
           failOnError: !isDevelopment,
           // configFile: isDevelopment ? './eslint/eslintrc.dev.js' : './eslint/eslintrc.prod.js',
           fix: isDevelopment,
-          cache: false,
+          cache: true,
         },
         include: [APP_DIR, PACAKGES_DIR],
       }, {
@@ -36,7 +35,7 @@ const config = {
         loader: 'babel-loader',
         options: {
           presets: ['react', ['env', { modules: false }], 'stage-0'],
-          cacheDirectory: false,
+          cacheDirectory: true,
         },
         include: [APP_DIR, PACAKGES_DIR],
       }, {

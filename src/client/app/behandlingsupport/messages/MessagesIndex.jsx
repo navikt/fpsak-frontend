@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import dokumentMalType from 'kodeverk/dokumentMalType';
+import dokumentMalType from '@fpsak-frontend/kodeverk/dokumentMalType';
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
 import SettBehandlingPaVentForm from 'behandling/components/SettBehandlingPaVentForm';
 import {
@@ -18,7 +18,7 @@ import {
   getBehandlingVersjon,
 } from 'behandling/behandlingSelectors';
 import { setBehandlingOnHold } from 'behandlingmenu/duck';
-import venteArsakType from 'kodeverk/venteArsakType';
+import venteArsakType from '@fpsak-frontend/kodeverk/venteArsakType';
 import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
 import requireProps from 'app/data/requireProps';
 import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';

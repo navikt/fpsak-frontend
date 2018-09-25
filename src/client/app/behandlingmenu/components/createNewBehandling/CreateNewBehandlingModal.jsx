@@ -14,10 +14,10 @@ import Modal from '@fpsak-frontend/shared-components/Modal';
 import { CheckboxField, SelectField } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils/validation/validators';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import bType from 'kodeverk/behandlingType';
-import behandlingArsakType from 'kodeverk/behandlingArsakType';
-import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import bType from '@fpsak-frontend/kodeverk/behandlingType';
+import behandlingArsakType from '@fpsak-frontend/kodeverk/behandlingArsakType';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
 
 import styles from './createNewBehandlingModal.less';
 

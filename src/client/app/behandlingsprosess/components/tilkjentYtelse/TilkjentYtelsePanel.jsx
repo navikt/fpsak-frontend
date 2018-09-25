@@ -14,7 +14,7 @@ import {
   getSoknad,
   getFamiliehendelse,
 } from 'behandling/behandlingSelectors';
-import soknadType from 'kodeverk/soknadType';
+import soknadType from '@fpsak-frontend/kodeverk/soknadType';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import TilkjentYtelse from './TilkjentYtelse';
 

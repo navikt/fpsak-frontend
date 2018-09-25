@@ -4,10 +4,10 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import familieHendelseType from 'kodeverk/familieHendelseType';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import foreldreType from 'kodeverk/foreldreType';
-import soknadTypeTillegg from 'kodeverk/soknadTypeTillegg';
+import familieHendelseType from '@fpsak-frontend/kodeverk/familieHendelseType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
+import foreldreType from '@fpsak-frontend/kodeverk/foreldreType';
+import soknadTypeTillegg from '@fpsak-frontend/kodeverk/soknadTypeTillegg';
 
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { SoknadTypePickerForm } from './SoknadTypePickerForm';

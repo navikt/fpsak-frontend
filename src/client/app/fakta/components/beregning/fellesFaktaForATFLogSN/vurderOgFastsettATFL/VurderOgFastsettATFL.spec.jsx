@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
 import VurderOgFastsettATFL from './VurderOgFastsettATFL';
 import LonnsendringForm from './forms/LonnsendringForm';
 import NyoppstartetFLForm from './forms/NyoppstartetFLForm';

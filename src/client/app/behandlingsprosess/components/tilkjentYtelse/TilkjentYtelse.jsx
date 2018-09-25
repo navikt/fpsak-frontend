@@ -7,7 +7,7 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { stonadskontoType, uttakPeriodeNavn } from 'kodeverk/uttakPeriodeType';
+import { stonadskontoType, uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/uttakPeriodeType';
 import TimeLineData from './timeline/TimeLineData';
 import TimeLineSokerEnsamSoker from './timeline/TimeLineSokerEnsamSoker';
 import TimeLineControl from './timeline/TimeLineControl';

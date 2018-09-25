@@ -1,10 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
-import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import FastsettNaeringsinntektSN, { FastsettNaeringsinntektSNImpl } from './FastsettNaeringsinntektSN';
 
 const varigEndretNaeringBeg = 'Dette er en begrunnelse for varig endret næring';

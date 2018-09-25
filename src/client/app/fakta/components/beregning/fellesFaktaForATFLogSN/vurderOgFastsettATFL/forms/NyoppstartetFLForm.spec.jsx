@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
 
 import NyoppstartetFLForm, { erNyoppstartetFLField } from './NyoppstartetFLForm';
 import FastsettATFLInntektForm from './FastsettATFLInntektForm';

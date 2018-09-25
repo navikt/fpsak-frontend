@@ -14,8 +14,8 @@ import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
 import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { getRestApiData } from '@fpsak-frontend/data/duck';
 import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
@@ -26,12 +26,12 @@ import {
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import { required, hasValidDate } from '@fpsak-frontend/utils/validation/validators';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
 import { getFilteredReceivedDocuments } from 'behandlingsupport/behandlingsupportSelectors';
 import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
-import innsynResultatTyperKV from 'kodeverk/innsynResultatType';
+import innsynResultatTyperKV from '@fpsak-frontend/kodeverk/innsynResultatType';
 import DocumentListInnsyn from './DocumentListInnsyn';
 import VedtakDocuments from './VedtakDocuments';
 

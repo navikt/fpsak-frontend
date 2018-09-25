@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row } from 'nav-frontend-grid';
 
-import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/navBrukerKjonn';
 import Image from '@fpsak-frontend/shared-components/Image';
 import urlMann from 'images/mann.svg';
 

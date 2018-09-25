@@ -9,7 +9,7 @@ import Modal from '@fpsak-frontend/shared-components/Modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import behandlingResultatType from 'kodeverk/behandlingResultatType';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/behandlingResultatType';
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import { maxLength, required, hasValidText } from '@fpsak-frontend/utils/validation/validators';
 

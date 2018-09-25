@@ -6,7 +6,7 @@ import { clearFields, formPropTypes } from 'redux-form';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Row, Column } from 'nav-frontend-grid';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
 import {
   getAksjonspunkter, getBehandlingResultatstruktur,
   isBehandlingStatusReadOnly, getBehandlingIsOnHold, getBehandlingStatus,
@@ -16,11 +16,11 @@ import { bindActionCreators } from 'redux';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
 import { getSelectedBehandlingId } from 'behandling/duck';
-import { isInnvilget, isAvslag } from 'kodeverk/behandlingResultatType';
+import { isInnvilget, isAvslag } from '@fpsak-frontend/kodeverk/behandlingResultatType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { getRettigheter } from 'navAnsatt/duck';
 import { CheckboxField } from '@fpsak-frontend/form';
-import behandlingStatusCode from 'kodeverk/behandlingStatus';
+import behandlingStatusCode from '@fpsak-frontend/kodeverk/behandlingStatus';
 import FritekstBrevPanel from 'behandlingsprosess/components/vedtak/FritekstBrevPanel';
 import classNames from 'classnames';
 import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';

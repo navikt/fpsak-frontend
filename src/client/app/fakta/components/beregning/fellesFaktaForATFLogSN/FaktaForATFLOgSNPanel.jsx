@@ -2,17 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
 import { createSelector } from 'reselect';
 import {
   getAksjonspunkter, getBeregningsgrunnlag,
   getEndringBeregningsgrunnlagPerioder, getFaktaOmBeregningTilfellerKoder,
   getKortvarigeArbeidsforhold, getFaktaOmBeregning,
 } from 'behandling/behandlingSelectors';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import { getKodeverk } from 'kodeverk/duck';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm';

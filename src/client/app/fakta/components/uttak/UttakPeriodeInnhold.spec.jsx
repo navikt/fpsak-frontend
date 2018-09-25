@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
-import behandlingStatus from 'kodeverk/behandlingStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { UttakPeriodeInnhold } from './UttakPeriodeInnhold';
 

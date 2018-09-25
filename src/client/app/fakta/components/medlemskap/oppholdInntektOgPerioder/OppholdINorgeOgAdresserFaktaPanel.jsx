@@ -9,10 +9,10 @@ import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { required } from '@fpsak-frontend/utils/validation/validators';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import Image from '@fpsak-frontend/shared-components/Image';

@@ -6,8 +6,8 @@ import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import behandlingStatus from 'kodeverk/behandlingStatus';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
   minLength, maxLength, requiredIfNotPristine, hasValidText,

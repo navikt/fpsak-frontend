@@ -5,7 +5,7 @@ import { expect } from 'chai';
 
 import { intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import Image from '@fpsak-frontend/shared-components/Image';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import { BehandlingspunktIcon } from './BehandlingspunktIcon';
 

@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
-import OAType from 'kodeverk/opptjeningAktivitetType';
+import OAType from '@fpsak-frontend/kodeverk/opptjeningAktivitetType';
 import { OpptjeningFaktaFormImpl as OpptjeningFaktaForm } from './OpptjeningFaktaForm';
 import ActivityPanel from './activity/ActivityPanel';
 

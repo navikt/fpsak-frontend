@@ -8,7 +8,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
 
 import styles from './tilleggsopplysningerFaktaForm.less';

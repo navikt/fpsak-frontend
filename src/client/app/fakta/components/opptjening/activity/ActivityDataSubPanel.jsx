@@ -7,7 +7,7 @@ import {
   required, minValue, maxValue, hasValidDecimal,
 } from '@fpsak-frontend/utils/validation/validators';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import OAType from 'kodeverk/opptjeningAktivitetType';
+import OAType from '@fpsak-frontend/kodeverk/opptjeningAktivitetType';
 import { InputField, DecimalField, DatepickerField } from '@fpsak-frontend/form';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 

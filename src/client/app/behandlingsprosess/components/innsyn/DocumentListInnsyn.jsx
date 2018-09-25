@@ -10,7 +10,7 @@ import TableRow from '@fpsak-frontend/shared-components/TableRow';
 import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
 import DateTimeLabel from '@fpsak-frontend/shared-components/DateTimeLabel';
 import Image from '@fpsak-frontend/shared-components/Image';
-import kommunikasjonsretning from 'kodeverk/kommunikasjonsretning';
+import kommunikasjonsretning from '@fpsak-frontend/kodeverk/kommunikasjonsretning';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 
 import sendDokumentImageUrl from 'images/send_dokument.svg';

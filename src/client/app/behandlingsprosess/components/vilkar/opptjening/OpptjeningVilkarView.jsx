@@ -13,10 +13,10 @@ import {
   getBehandlingFastsattOpptjeningperiodeMnder, getBehandlingFastsattOpptjeningperiodeDager,
 } from 'behandling/behandlingSelectors';
 import { behandlingForm } from 'behandling/behandlingForm';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import vilkarType from 'kodeverk/vilkarType';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
+import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus } from 'behandlingsprosess/behandlingsprosessSelectors';

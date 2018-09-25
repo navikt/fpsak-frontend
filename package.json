@@ -68,7 +68,8 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@fpsak-frontend/papirsoknad": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
-    "@fpsak-frontend/data": "1.0.0"
+    "@fpsak-frontend/data": "1.0.0",
+    "@fpsak-frontend/kodeverk": "1.0.0"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.15.0",

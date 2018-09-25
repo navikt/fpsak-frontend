@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
 import { VedtakInnvilgetRevurderingPanelImpl } from './VedtakInnvilgetRevurderingPanel';
 
 

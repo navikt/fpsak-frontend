@@ -18,7 +18,7 @@ import {
 } from 'behandling/behandlingSelectors';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
 import { TextAreaField } from '@fpsak-frontend/form';
@@ -27,7 +27,7 @@ import {
   hasValidText, maxLength, minLength, requiredIfNotPristine,
 } from '@fpsak-frontend/utils/validation/validators';
 import { getFilteredReceivedDocuments } from 'behandlingsupport/behandlingsupportSelectors';
-import innsynResultatType from 'kodeverk/innsynResultatType';
+import innsynResultatType from '@fpsak-frontend/kodeverk/innsynResultatType';
 import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
 import DocumentListVedtakInnsyn from './DocumentListVedtakInnsyn';
 

@@ -9,10 +9,10 @@ import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils/validation/validators';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { getBehandlingYtelseFordeling, getSoknad } from 'behandling/behandlingSelectors';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
 
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import IkkeOmsorgPeriodeField from './IkkeOmsorgPeriodeField';
 import styles from './omsorgFaktaForm.less';

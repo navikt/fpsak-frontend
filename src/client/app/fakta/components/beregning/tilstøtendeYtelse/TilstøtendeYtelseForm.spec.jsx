@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import inntektskategorier from 'kodeverk/inntektskategorier';
-import beregningsgrunnlagAndeltyper from 'kodeverk/beregningsgrunnlagAndeltyper';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import inntektskategorier from '@fpsak-frontend/kodeverk/inntektskategorier';
+import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/beregningsgrunnlagAndeltyper';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { TilstotendeYtelseFormImpl, getAndelsnr } from './TilstøtendeYtelseForm';
 import { fordelingAvBruttoBGFieldArrayName } from './FordelingAvBruttoBeregningsgrunnlagPanel';
 

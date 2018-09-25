@@ -7,8 +7,8 @@ import TableRow from '@fpsak-frontend/shared-components/TableRow';
 import Table from '@fpsak-frontend/shared-components/Table';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { stonadskontoerPropType } from 'behandling/proptypes/stonadskontoPropType';
-import uttakArbeidTypeKodeverk from 'kodeverk/uttakArbeidType';
-import stonadskontoType from 'kodeverk/stonadskontoType';
+import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/uttakArbeidType';
+import stonadskontoType from '@fpsak-frontend/kodeverk/stonadskontoType';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import moment from 'moment';
 

@@ -6,7 +6,7 @@ import { RadioOption, RadioGroupField } from '@fpsak-frontend/form';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { required } from '@fpsak-frontend/utils/validation/validators';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
 import { flatten } from '@fpsak-frontend/utils/arrayUtils';
 
 /**

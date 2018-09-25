@@ -4,7 +4,7 @@ import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
 import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
-import relatertYtelseType from 'kodeverk/relatertYtelseType';
+import relatertYtelseType from '@fpsak-frontend/kodeverk/relatertYtelseType';
 import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
 import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';
 import { OmsorgOgForeldreansvarInfoPanelImpl } from './OmsorgOgForeldreansvarInfoPanel';

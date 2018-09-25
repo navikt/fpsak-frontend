@@ -4,12 +4,12 @@ import { injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { getBehandlingVerge, getAksjonspunkter } from 'behandling/behandlingSelectors';
 import { behandlingForm } from 'behandling/behandlingForm';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import withDefaultToggling from 'fakta/withDefaultToggling';

@@ -6,7 +6,7 @@ import TableRow from '@fpsak-frontend/shared-components/TableRow';
 import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
 import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
 import fagsakPropType from 'fagsak/fagsakPropType';
-import fagsakStatus from 'kodeverk/fagsakStatus';
+import fagsakStatus from '@fpsak-frontend/kodeverk/fagsakStatus';
 
 import styles from './fagsakList.less';
 

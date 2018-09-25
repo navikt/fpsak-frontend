@@ -10,9 +10,9 @@ import { RadioGroupField, RadioOption, NavFieldGroup } from '@fpsak-frontend/for
 import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
 import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
 import UtenlandsOppholdField from './UtenlandsOppholdField';
 
 import styles from './oppholdINorgePanel.less';

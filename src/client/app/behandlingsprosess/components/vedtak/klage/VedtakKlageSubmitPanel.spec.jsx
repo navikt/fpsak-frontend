@@ -4,7 +4,7 @@ import sinon from 'sinon';
 
 import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
-import klageVurdering from 'kodeverk/klageVurdering';
+import klageVurdering from '@fpsak-frontend/kodeverk/klageVurdering';
 import { VedtakKlageSubmitPanelImpl, isMedholdIKlage } from './VedtakKlageSubmitPanel';
 
 describe('<VedtakKlageSubmitPanel>', () => {

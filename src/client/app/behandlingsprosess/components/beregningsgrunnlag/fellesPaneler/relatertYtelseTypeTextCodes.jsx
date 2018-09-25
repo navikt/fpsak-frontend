@@ -1,4 +1,4 @@
-import relatertYtelseType from 'kodeverk/relatertYtelseType';
+import relatertYtelseType from '@fpsak-frontend/kodeverk/relatertYtelseType';
 
 
 const relatertYtelseTypeTextCodes = {

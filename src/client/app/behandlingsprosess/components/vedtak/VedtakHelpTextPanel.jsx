@@ -5,7 +5,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 
 import styles from './vedtakForm.less';

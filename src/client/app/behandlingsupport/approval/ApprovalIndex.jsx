@@ -5,12 +5,12 @@ import { routerActions } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
-import skjermlenkeCodes from 'kodeverk/skjermlenkeCodes';
+import skjermlenkeCodes from '@fpsak-frontend/kodeverk/skjermlenkeCodes';
 import { createLocationForHistorikkItems } from 'app/paths';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
-import behandlingStatus from 'kodeverk/behandlingStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import {
   getBehandlingVersjon, getAksjonspunkter, getBehandlingAnsvarligSaksbehandler, getTotrinnskontrollArsaker,
@@ -20,8 +20,8 @@ import navAnsattPropType from 'navAnsatt/navAnsattPropType';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import requireProps from 'app/data/requireProps';
 import { getNavAnsatt } from 'navAnsatt/duck';
-import vurderPaNyttArsakType from 'kodeverk/vurderPaNyttArsakType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/vurderPaNyttArsakType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';
 import ToTrinnsForm from './components/ToTrinnsForm';
 import ToTrinnsFormReadOnly from './components/ToTrinnsFormReadOnly';

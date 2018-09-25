@@ -1,12 +1,12 @@
 import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
-import historikkBegrunnelseTypeCodes from 'kodeverk/historikkBegrunnelseTypeCodes';
-import historikkResultatTypeCodes from 'kodeverk/historikkResultatTypeCodes';
-import historikkAarsakTypeCodes from 'kodeverk/historikkAarsakTypeCodes';
-import historikkEndretFeltVerdiTypeCodes from 'kodeverk/historikkEndretFeltVerdiTypeCodes';
-import historikkEndretFeltTypeCodes from 'kodeverk/historikkEndretFeltTypeCodes';
-import historikkOpplysningTypeCodes from 'kodeverk/historikkOpplysningTypeCodes';
-import historikkSoeknadsperiodeTypeCodes from 'kodeverk/historikkSoeknadsperiodeTypeCodes';
-import skjermlenkeCodes from 'kodeverk/skjermlenkeCodes';
+import historikkBegrunnelseTypeCodes from '@fpsak-frontend/kodeverk/historikkBegrunnelseTypeCodes';
+import historikkResultatTypeCodes from '@fpsak-frontend/kodeverk/historikkResultatTypeCodes';
+import historikkAarsakTypeCodes from '@fpsak-frontend/kodeverk/historikkAarsakTypeCodes';
+import historikkEndretFeltVerdiTypeCodes from '@fpsak-frontend/kodeverk/historikkEndretFeltVerdiTypeCodes';
+import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/historikkEndretFeltTypeCodes';
+import historikkOpplysningTypeCodes from '@fpsak-frontend/kodeverk/historikkOpplysningTypeCodes';
+import historikkSoeknadsperiodeTypeCodes from '@fpsak-frontend/kodeverk/historikkSoeknadsperiodeTypeCodes';
+import skjermlenkeCodes from '@fpsak-frontend/kodeverk/skjermlenkeCodes';
 
 export const findIdForOpplysningCode = (opplysning) => {
   if (!opplysning) {

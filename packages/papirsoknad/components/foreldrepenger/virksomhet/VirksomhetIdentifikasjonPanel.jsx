@@ -13,8 +13,8 @@ import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { required, hasValidInteger } from '@fpsak-frontend/utils/validation/validators';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
 
 const countrySelectValues = countryCodes => countryCodes
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);

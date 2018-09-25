@@ -1,9 +1,9 @@
 import { expect } from 'chai';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import klageVurdering from 'kodeverk/klageVurdering';
-import behandlingResultatType from 'kodeverk/behandlingResultatType';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import klageVurdering from '@fpsak-frontend/kodeverk/klageVurdering';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/behandlingResultatType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
 import getAksjonspunktText from './ApprovalTextUtils';
 
 

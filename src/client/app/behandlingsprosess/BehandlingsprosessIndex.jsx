@@ -14,11 +14,11 @@ import FatterVedtakStatusModal from 'behandlingsprosess/components/vedtak/Fatter
 import KlageBehandlingModal from 'behandlingsprosess/components/klage/KlageBehandlingModal';
 import BehandlingspunktInfoPanel from 'behandlingsprosess/components/BehandlingspunktInfoPanel';
 import requireProps from 'app/data/requireProps';
-import aksjonspunktType from 'kodeverk/aksjonspunktType';
-import klageVurdering from 'kodeverk/klageVurdering';
+import aksjonspunktType from '@fpsak-frontend/kodeverk/aksjonspunktType';
+import klageVurdering from '@fpsak-frontend/kodeverk/klageVurdering';
 import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import { getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta } from 'app/paths';
 import trackRouteParam from 'app/data/trackRouteParam';

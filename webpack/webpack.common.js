@@ -1,13 +1,11 @@
-"use strict";
-
+'use strict';
 const path = require('path');
-
 const ROOT_DIR = path.resolve(__dirname, '../src/client');
 const APP_DIR = path.join(ROOT_DIR, 'app');
 
 const config = {
   resolve: {
-    symlinks: true,
+    // symlinks: true,
     alias: {
       styles: path.join(ROOT_DIR, 'styles'),
       images: path.join(ROOT_DIR, 'images'),
@@ -23,7 +21,6 @@ const config = {
       fagsakprofile: path.join(APP_DIR, 'fagsakprofile'),
       fakta: path.join(APP_DIR, 'fakta'),
       person: path.join(APP_DIR, 'person'),
-      kodeverk: path.join(APP_DIR, 'kodeverk'),
     },
     extensions: ['.json', '.js', '.jsx'],
   },

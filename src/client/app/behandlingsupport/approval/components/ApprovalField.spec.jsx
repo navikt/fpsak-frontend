@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
 import { expect } from 'chai';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import ApprovalField from './ApprovalField';
 import getAksjonspunktText from './ApprovalTextUtils';
 

@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import moment from 'moment';
 import { shallow } from 'enzyme';
 
-import opplysningsKilde from 'kodeverk/opplysningsKilde';
+import opplysningsKilde from '@fpsak-frontend/kodeverk/opplysningsKilde';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import { BarnPanelImpl as BarnPanel } from './BarnPanel';
 

@@ -26,7 +26,7 @@ import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
 import { getRettigheter } from 'navAnsatt/duck';
 import rettighetPropType from 'navAnsatt/rettighetPropType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import {
   resetRegistrering, submitRegistrering, resetRegistreringSuccess, setSoknadData, getSoknadData,
 } from './duck';

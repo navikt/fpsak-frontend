@@ -8,7 +8,7 @@ import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import { metaMock, MockFields } from 'testHelpers/redux-form-test-helper';
 import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
 import { dateRangesOverlappingMessage, invalidDateMessage } from '@fpsak-frontend/utils/validation/messages';
-import uttakPeriodeType from 'kodeverk/uttakPeriodeType';
+import uttakPeriodeType from '@fpsak-frontend/kodeverk/uttakPeriodeType';
 import RenderPermisjonPeriodeFieldArray, { RenderPermisjonPeriodeFieldArray as RenderPermisjonPeriodeFieldArrayImpl } from './RenderPermisjonPeriodeFieldArray';
 
 

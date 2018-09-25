@@ -5,14 +5,14 @@ import { Undertittel } from 'nav-frontend-typografi';
 import classNames from 'classnames';
 
 import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
-import klageVurderingType from 'kodeverk/klageVurdering';
+import klageVurderingType from '@fpsak-frontend/kodeverk/klageVurdering';
 import {
   RadioGroupField, RadioOption, SelectField, DatepickerField,
 } from '@fpsak-frontend/form';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { required, hasValidDate } from '@fpsak-frontend/utils/validation/validators';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
 

@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
 import { FormattedMessage } from 'react-intl';
-import vedtaksbrevStatus from 'kodeverk/vedtakbrevStatus';
+import vedtaksbrevStatus from '@fpsak-frontend/kodeverk/vedtakbrevStatus';
 import { VedtakRevurderingSubmitPanelImpl as UnwrappedForm } from './VedtakRevurderingSubmitPanel';
 
 const forhandsvisVedtaksbrevFunc = sinon.spy();

@@ -5,7 +5,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
-import aktivitetStatus, { isStatusDagpengerOrAAP } from 'kodeverk/aktivitetStatus';
+import aktivitetStatus, { isStatusDagpengerOrAAP } from '@fpsak-frontend/kodeverk/aktivitetStatus';
 import relatertYtelseTypeTextCodes from '../fellesPaneler/relatertYtelseTypeTextCodes';
 
 

@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 
 import { createLocationForHistorikkItems } from 'app/paths';

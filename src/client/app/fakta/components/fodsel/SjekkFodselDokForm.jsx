@@ -20,12 +20,12 @@ import FodselSammenligningPanel from 'behandling/components/fodselSammenligning/
 import {
   required, hasValidDate, minValue, maxValue, hasValidInteger, dateBeforeOrEqualToToday,
 } from '@fpsak-frontend/utils/validation/validators';
-import behandlingType from 'kodeverk/behandlingType';
+import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
 import {
   DatepickerField, InputField, RadioGroupField, RadioOption,
 } from '@fpsak-frontend/form';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 
 import styles from './SjekkFodselDokForm.less';
 

@@ -13,7 +13,7 @@ import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtil
 import { required, hasValidText } from '@fpsak-frontend/utils/validation/validators';
 import { TextAreaField } from '@fpsak-frontend/form';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import klageVurdering from 'kodeverk/klageVurdering';
+import klageVurdering from '@fpsak-frontend/kodeverk/klageVurdering';
 import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
 import {
   findAvslagResultatText, shouldGiveBegrunnelse, maxLength1500, minLength3,

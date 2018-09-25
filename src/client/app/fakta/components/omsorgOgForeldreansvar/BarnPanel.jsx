@@ -5,13 +5,13 @@ import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import moment from 'moment';
 
-import soknadType from 'kodeverk/soknadType';
-import opplysningsKilde from 'kodeverk/opplysningsKilde';
+import soknadType from '@fpsak-frontend/kodeverk/soknadType';
+import opplysningsKilde from '@fpsak-frontend/kodeverk/opplysningsKilde';
 import { DatepickerField } from '@fpsak-frontend/form';
 import { required, hasValidDate } from '@fpsak-frontend/utils/validation/validators';
 import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import { getEditedStatus } from 'behandling/behandlingSelectors';
 

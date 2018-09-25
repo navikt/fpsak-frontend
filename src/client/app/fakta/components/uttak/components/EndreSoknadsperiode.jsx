@@ -10,7 +10,7 @@ import {
   maxValue,
   minValue,
 } from '@fpsak-frontend/utils/validation/validators';
-import { uttakPeriodeNavn, stonadskontoType } from 'kodeverk/uttakPeriodeType';
+import { uttakPeriodeNavn, stonadskontoType } from '@fpsak-frontend/kodeverk/uttakPeriodeType';
 
 import styles from '../perioder/periodeTyper.less';
 

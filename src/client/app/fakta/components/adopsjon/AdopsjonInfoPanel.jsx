@@ -6,12 +6,12 @@ import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 import { createSelector } from 'reselect';
 
-import { adopsjonsvilkarene } from 'kodeverk/vilkarType';
+import { adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/vilkarType';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { getSoknad, getFamiliehendelse, getAksjonspunkter } from 'behandling/behandlingSelectors';
 import { behandlingForm } from 'behandling/behandlingForm';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import withDefaultToggling from 'fakta/withDefaultToggling';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import DokumentasjonFaktaForm from 'fakta/components/adopsjon/DokumentasjonFaktaForm';

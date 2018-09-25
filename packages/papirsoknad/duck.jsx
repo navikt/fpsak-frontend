@@ -2,8 +2,8 @@ import { createSelector } from 'reselect';
 import { makeRestApiRequest, resetRestApi } from '@fpsak-frontend/data/duck';
 import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
 import { getAksjonspunkter } from 'behandling/behandlingSelectors';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
 
 /* Action types */
 export const RESET_REGISTRERING = 'RESET_REGISTRERING';

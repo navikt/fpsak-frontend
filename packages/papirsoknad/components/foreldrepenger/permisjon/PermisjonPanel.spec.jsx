@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import { FieldArray } from 'redux-form';
 import SoknadData from '../../../SoknadData';
-import soknadTypeTillegg from 'kodeverk/soknadTypeTillegg';
+import soknadTypeTillegg from '@fpsak-frontend/kodeverk/soknadTypeTillegg';
 import PermisjonPanel from './PermisjonPanel';
 import PermisjonRettigheterPanel from './PermisjonRettigheterPanel';
 import PermisjonOverforingAvKvoterPanel from './PermisjonOverforingAvKvoterPanel';

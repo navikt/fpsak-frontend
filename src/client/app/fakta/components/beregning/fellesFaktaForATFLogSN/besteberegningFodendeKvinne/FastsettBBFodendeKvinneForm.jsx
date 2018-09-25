@@ -14,10 +14,10 @@ import Table from '@fpsak-frontend/shared-components/Table';
 import TableRow from '@fpsak-frontend/shared-components/TableRow';
 import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
 import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from '@fpsak-frontend/utils/currencyUtils';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 
 import styles from './fastsettBBFodendeKvinneForm.less';

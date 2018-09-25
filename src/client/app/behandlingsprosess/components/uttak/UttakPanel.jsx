@@ -12,13 +12,13 @@ import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import uttaksresultatPropType from 'behandling/proptypes/uttaksresultatPropType';
 import { getPersonopplysning, getUttaksresultatPerioder, getStonadskontoer } from 'behandling/behandlingSelectors';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { uttakPeriodeNavn, stonadskontoType } from 'kodeverk/uttakPeriodeType';
-import periodeResultatType from 'kodeverk/periodeResultatType';
+import { uttakPeriodeNavn, stonadskontoType } from '@fpsak-frontend/kodeverk/uttakPeriodeType';
+import periodeResultatType from '@fpsak-frontend/kodeverk/periodeResultatType';
 
 import Uttak from './Uttak';
 import styles from './uttakPanel.less';

@@ -17,7 +17,7 @@ import { DatepickerField, InputField } from '@fpsak-frontend/form';
 import {
   required, hasValidDate, minValue, maxValue, hasValidInteger,
 } from '@fpsak-frontend/utils/validation/validators';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import {
   getEditedStatus, getSoknad, getFamiliehendelse, getAksjonspunkter,

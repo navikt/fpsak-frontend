@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { FaktaForATFLOgSNPanelImpl, getHelpTextsFaktaForATFLOgSN } from './FaktaForATFLOgSNPanel';
 import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm';
 import EndringBeregningsgrunnlagForm from './endringBeregningsgrunnlag/EndringBeregningsgrunnlagForm';

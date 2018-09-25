@@ -8,7 +8,7 @@ import innvilgetValgtIkonUrl from 'images/beregn_valgt.svg';
 import ikkeVurdertIkonUrl from 'images/beregn_disable.svg';
 import innvilgetHoverIkonUrl from 'images/beregn_hover.svg';
 
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
 
 const beregningsgrunnlagImages = {
   imageMap: {

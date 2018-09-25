@@ -1,7 +1,7 @@
 import RestDuck from 'data/rest/RestDuck';
 import reducers from '../app/reducers';
-import behandlingStatus from 'kodeverk/behandlingStatus';
-import behandlingType from 'kodeverk/behandlingType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
 
 export const withoutRestActions = actions => actions.filter(a => !a.type.match(/^@@REST/));
 

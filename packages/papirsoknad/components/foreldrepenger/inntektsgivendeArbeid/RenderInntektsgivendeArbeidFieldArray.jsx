@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 
 import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import landkoder from 'kodeverk/landkoder';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import landkoder from '@fpsak-frontend/kodeverk/landkoder';
 import { maxLength } from '@fpsak-frontend/utils/validation/validators';
 import { FlexContainer, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
 import { InputField, DatepickerField, SelectField } from '@fpsak-frontend/form';

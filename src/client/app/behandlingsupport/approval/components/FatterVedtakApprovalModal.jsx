@@ -10,18 +10,18 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import Modal from '@fpsak-frontend/shared-components/Modal';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import Image from '@fpsak-frontend/shared-components/Image';
-import behandlingStatus from 'kodeverk/behandlingStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
 import { getSelectedBehandlingId } from 'behandling/duck';
 import {
   getBehandlingType, getBehandlingStatus, getBehandlingsresultat, getBehandlingResultatstruktur,
   getBehandlingKlageVurderingResultatNK, getBehandlingKlageVurderingResultatNFP,
 } from 'behandling/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling, getBehandlingsresultatFraOriginalBehandling } from 'behandling/selectors/originalBehandlingSelectors';
-import behandlingResultatType from 'kodeverk/behandlingResultatType';
-import behandlingType from 'kodeverk/behandlingType';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/behandlingResultatType';
+import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
 import innvilgetImageUrl from 'images/innvilget_valgt.svg';
-import klageVurdering from 'kodeverk/klageVurdering';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import klageVurdering from '@fpsak-frontend/kodeverk/klageVurdering';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
 import requireProps from 'app/data/requireProps';
 
 import styles from './fatterVedtakApprovalModal.less';

@@ -11,15 +11,15 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import moment from 'moment';
 
 import { findDifferenceInMonthsAndDays } from '@fpsak-frontend/utils/dateUtils';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import { omit, isEqual } from '@fpsak-frontend/utils/objectUtils';
 import { FlexContainer, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components/flexGrid';
 import Image from '@fpsak-frontend/shared-components/Image';
-import { getKodeverk } from 'kodeverk/duck';
-import arbeidType from 'kodeverk/arbeidType';
-import opptjeningAktivitetType from 'kodeverk/opptjeningAktivitetType';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import arbeidType from '@fpsak-frontend/kodeverk/arbeidType';
+import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/opptjeningAktivitetType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import {
   requiredIfCustomFunctionIsTrue, required, hasValidPeriod, minLength, maxLength, hasValidText, isWithinOpptjeningsperiode,

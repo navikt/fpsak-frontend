@@ -21,13 +21,13 @@ import {
 } from 'behandling/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
 import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
 import { required } from '@fpsak-frontend/utils/validation/validators';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import soknadType from 'kodeverk/soknadType';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import soknadType from '@fpsak-frontend/kodeverk/soknadType';
 import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
 

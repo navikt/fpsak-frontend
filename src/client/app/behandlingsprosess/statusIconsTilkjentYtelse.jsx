@@ -3,7 +3,7 @@ import innvilgetValgtIkonUrl from 'images/tilkjent_ytelse_valgt.svg';
 import ikkeVurdertIkonUrl from 'images/tilkjent_ytelse_disable.svg';
 import innvilgetHoverIkonUrl from 'images/tilkjent_ytelse_hover.svg';
 
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
 
 const tilkjentYtelseImages = {
   imageMap: {

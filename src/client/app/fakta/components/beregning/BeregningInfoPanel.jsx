@@ -4,10 +4,10 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import { getKodeverk } from 'kodeverk/duck';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import {
   getAksjonspunkter,
@@ -23,7 +23,7 @@ import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
 import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
-import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle } from 'kodeverk/faktaOmBeregningTilfelle';
+import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle } from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import TilstotendeYtelseForm from './tilstøtendeYtelse/TilstøtendeYtelseForm';
 import FaktaForATFLOgSNPanel, {

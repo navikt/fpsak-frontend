@@ -5,7 +5,7 @@ import Timeline from 'react-visjs-timeline';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import { Column, Row } from 'nav-frontend-grid';
 
-import opptjeningAktivitetKlassifisering from 'kodeverk/opptjeningAktivitetKlassifisering';
+import opptjeningAktivitetKlassifisering from '@fpsak-frontend/kodeverk/opptjeningAktivitetKlassifisering';
 import DateContainer from './DateContainer';
 import styles from './opptjeningTimeLineLight.less';
 import TimeLineNavigation from './TimeLineNavigation';

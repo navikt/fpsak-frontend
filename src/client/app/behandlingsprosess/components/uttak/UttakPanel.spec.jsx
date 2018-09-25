@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
 import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { transformValues, buildInitialValues, UttakPanelImpl as UttakPanel } from './UttakPanel';
 import Uttak from './Uttak';
 

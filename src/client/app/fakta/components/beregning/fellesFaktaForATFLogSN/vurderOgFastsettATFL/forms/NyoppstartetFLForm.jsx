@@ -7,8 +7,8 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { required } from '@fpsak-frontend/utils/validation/validators';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { Row, Column } from 'nav-frontend-grid';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
 import { flatten } from '@fpsak-frontend/utils/arrayUtils';
 import FastsettATFLInntektForm
   from 'fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/FastsettATFLInntektForm';

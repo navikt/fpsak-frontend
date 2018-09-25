@@ -11,8 +11,8 @@ import {
 import {
   InputField, RadioGroupField, RadioOption, TextAreaField,
 } from '@fpsak-frontend/form';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
 import { parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';

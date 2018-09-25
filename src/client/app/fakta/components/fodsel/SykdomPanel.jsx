@@ -10,7 +10,7 @@ import { TextAreaField, RadioGroupField, RadioOption } from '@fpsak-frontend/for
 import {
   required, hasValidText, maxLength, minLength,
 } from '@fpsak-frontend/utils/validation/validators';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 
 const maxLength1500 = maxLength(1500);

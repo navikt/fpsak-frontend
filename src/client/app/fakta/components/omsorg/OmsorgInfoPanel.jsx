@@ -18,7 +18,7 @@ import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
 import BostedFaktaView from 'fakta/components/omsorg/BostedFaktaView';
 import OmsorgFaktaForm from 'fakta/components/omsorg/OmsorgFaktaForm';
 import withDefaultToggling from 'fakta/withDefaultToggling';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import IkkeOmsorgPeriodeField from './IkkeOmsorgPeriodeField';
 
 

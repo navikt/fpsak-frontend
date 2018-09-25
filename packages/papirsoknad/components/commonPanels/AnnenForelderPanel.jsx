@@ -8,7 +8,7 @@ import { Undertittel, Undertekst } from 'nav-frontend-typografi';
 
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import kanIkkeOppgiAnnenForelderArsaker from 'kodeverk/kanIkkeOppgiAnnenForelderArsak';
+import kanIkkeOppgiAnnenForelderArsaker from '@fpsak-frontend/kodeverk/kanIkkeOppgiAnnenForelderArsak';
 import {
   CheckboxField, InputField, NavFieldGroup, RadioOption, RadioGroupField, SelectField,
 } from '@fpsak-frontend/form';
@@ -17,10 +17,10 @@ import {
 } from '@fpsak-frontend/utils/validation/validators';
 import { sammeFodselsnummerSomSokerMessage } from '@fpsak-frontend/utils/validation/messages';
 import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import landkoder from 'kodeverk/landkoder';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import landkoder from '@fpsak-frontend/kodeverk/landkoder';
 
 import styles from './annenForelderPanel.less';
 

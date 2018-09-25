@@ -13,9 +13,9 @@ import {
   getEndringBeregningsgrunnlagPerioder,
   getFaktaOmBeregningTilfellerKoder,
 } from 'behandling/behandlingSelectors';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
 import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { byggListeSomStreng } from '../../tilstøtendeYtelse/YtelsePanel';
 import EndringBeregningsgrunnlagPeriodePanel from './EndringBeregningsgrunnlagPeriodePanel';
 

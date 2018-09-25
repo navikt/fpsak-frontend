@@ -16,10 +16,10 @@ import arrowLeftImageUrl from 'images/arrow_left.svg';
 import arrowLeftFilledImageUrl from 'images/arrow_left_filled.svg';
 import arrowRightImageUrl from 'images/arrow_right.svg';
 import arrowRightFilledImageUrl from 'images/arrow_right_filled.svg';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
 import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
 import { beregningsresultatPeriodePropType } from 'behandling/proptypes/beregningresultatMedUttaksplanPropType';
-import { uttakPeriodeNavn } from 'kodeverk/uttakPeriodeType';
+import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/uttakPeriodeType';
 
 import styles from './timeLineData.less';
 

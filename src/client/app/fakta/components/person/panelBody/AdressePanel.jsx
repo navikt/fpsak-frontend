@@ -7,9 +7,9 @@ import Panel from 'nav-frontend-paneler';
 import { Row, Column } from 'nav-frontend-grid';
 import { EtikettFokus } from 'nav-frontend-etiketter';
 
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
 import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
 
 import styles from './adressePanel.less';

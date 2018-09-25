@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 
 import { getAksjonspunkter, getBehandlingResultatstruktur, getBehandlingSprak } from 'behandling/behandlingSelectors';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils/currencyUtils';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';

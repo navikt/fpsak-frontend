@@ -6,8 +6,8 @@ import { Element, Undertittel } from 'nav-frontend-typografi';
 
 import SoknadData from '../../../SoknadData';
 import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
-import foreldreType from 'kodeverk/foreldreType';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import foreldreType from '@fpsak-frontend/kodeverk/foreldreType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import PermisjonRettigheterPanel from './PermisjonRettigheterPanel';
 import PermisjonUtsettelsePanel, { utsettelsePeriodeFieldArrayName } from './PermisjonUtsettelsePanel';

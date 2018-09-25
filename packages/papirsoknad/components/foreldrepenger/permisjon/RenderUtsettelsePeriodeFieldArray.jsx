@@ -8,7 +8,7 @@ import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray
 import {
   DatepickerField, SelectField, InputField,
 } from '@fpsak-frontend/form';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
 import { gyldigeUttakperioder } from './RenderPermisjonPeriodeFieldArray';
 
 import styles from './renderUtsettelsePeriodeFieldArray.less';

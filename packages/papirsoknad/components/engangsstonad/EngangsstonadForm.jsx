@@ -7,7 +7,7 @@ import { isEqual } from '@fpsak-frontend/utils/objectUtils';
 import { getRegisteredFields } from '../../duck';
 
 import SoknadData from '../../SoknadData';
-import familieHendelseType from 'kodeverk/familieHendelseType';
+import familieHendelseType from '@fpsak-frontend/kodeverk/familieHendelseType';
 import LagreSoknadPanel from '../commonPanels/LagreSoknadPanel';
 import MottattDatoPanel from '../commonPanels/MottattDatoPanel';
 import { getFagsakPerson } from 'fagsak/fagsakSelectors';

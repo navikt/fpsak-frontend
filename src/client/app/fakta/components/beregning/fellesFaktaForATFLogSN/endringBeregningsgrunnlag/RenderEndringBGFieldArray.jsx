@@ -13,11 +13,11 @@ import { getEndringBeregningsgrunnlagPerioder } from 'behandling/behandlingSelec
 import Image from '@fpsak-frontend/shared-components/Image';
 import addCircleIcon from 'images/add-circle.svg';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import inntektskategorier, { isSelvstendigNæringsdrivende } from 'kodeverk/inntektskategorier';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
+import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-frontend/kodeverk/inntektskategorier';
 import { parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
 import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
 import { getUniqueListOfArbeidsforhold, arbeidsforholdProptype } from '../../ArbeidsforholdHelper';

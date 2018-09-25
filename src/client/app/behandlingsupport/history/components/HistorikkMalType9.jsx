@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import historikkinnslagType from 'kodeverk/historikkinnslagType';
+import historikkinnslagType from '@fpsak-frontend/kodeverk/historikkinnslagType';
 import { FormattedHTMLMessage, injectIntl, intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
