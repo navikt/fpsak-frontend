@@ -4,8 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { Container } from 'nav-frontend-grid';
 import { Panel } from 'nav-frontend-paneler';
 import { Undertittel } from 'nav-frontend-typografi';
-
-import SoknadData from '../SoknadData';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
@@ -13,7 +11,7 @@ import EngangsstonadForm from './engangsstonad/EngangsstonadForm';
 import ForeldrepengerForm from './foreldrepenger/ForeldrepengerForm';
 import EndringForeldrepengerForm from './foreldrepenger/EndringForeldrepengerForm';
 import SoknadTypePickerForm from './SoknadTypePickerForm';
-
+import SoknadData from '../SoknadData';
 import styles from './registrerPapirsoknad.less';
 
 /**

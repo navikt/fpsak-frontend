@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-
-import Image from './Image';
 import endretFelt from '@fpsak-frontend/images/endret_felt.svg';
-
+import Image from './Image';
 import styles from './editedIcon.less';
 
 const classNames = classnames.bind(styles);

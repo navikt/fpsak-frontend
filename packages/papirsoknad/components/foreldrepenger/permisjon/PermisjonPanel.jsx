@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { FieldArray, FormSection } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { Element, Undertittel } from 'nav-frontend-typografi';
-
-import SoknadData from '../../../SoknadData';
 import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
 import foreldreType from '@fpsak-frontend/kodeverk/foreldreType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
@@ -14,7 +12,7 @@ import PermisjonUtsettelsePanel, { utsettelsePeriodeFieldArrayName } from './Per
 import PermisjonGraderingPanel, { graderingPeriodeFieldArrayName } from './PermisjonGraderingPanel';
 import PermisjonOverforingAvKvoterPanel from './PermisjonOverforingAvKvoterPanel';
 import RenderPermisjonPeriodeFieldArray from './RenderPermisjonPeriodeFieldArray';
-
+import SoknadData from '../../../SoknadData';
 import styles from './permisjonPanel.less';
 
 export const TIDSROM_PERMISJON_FORM_NAME_PREFIX = 'tidsromPermisjon';

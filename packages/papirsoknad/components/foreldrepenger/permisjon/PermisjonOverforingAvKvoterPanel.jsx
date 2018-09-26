@@ -4,10 +4,8 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { FormSection, formValueSelector } from 'redux-form';
 import { Element } from 'nav-frontend-typografi';
-
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import SoknadData from '../../../SoknadData';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { CheckboxField, SelectField, DatepickerField } from '@fpsak-frontend/form';
@@ -16,6 +14,7 @@ import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
 import foreldreType from '@fpsak-frontend/kodeverk/foreldreType';
 import overforingArsak from '@fpsak-frontend/kodeverk/overforingArsak';
+import SoknadData from '../../../SoknadData';
 
 const getText = (intl, kode, navn) => {
   if (kode === overforingArsak.INSTITUSJONSOPPHOLD_ANNEN_FORELDER) {

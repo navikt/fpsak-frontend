@@ -1,14 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import {
+  Element,
+  Normaltekst,
+} from 'nav-frontend-typografi';
 import { isObject } from '@fpsak-frontend/utils/objectUtils';
-import { FlexContainer, FlexColumn, FlexRow } from './flexGrid';
-
-import Image from './Image';
 import advarselIkonUrl from '@fpsak-frontend/images/advarsel.svg';
-
-
+import {
+  FlexContainer,
+  FlexColumn,
+  FlexRow,
+} from './flexGrid';
+import Image from './Image';
 import styles from './aksjonspunktHelpText.less';
 
 /**
