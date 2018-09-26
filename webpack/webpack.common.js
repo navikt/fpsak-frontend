@@ -13,7 +13,6 @@ const config = {
       behandlingsprosess: path.join(APP_DIR, 'behandlingsprosess'),
       behandlingsupport: path.join(APP_DIR, 'behandlingsupport'),
       fagsak: path.join(APP_DIR, 'fagsak'),
-      fagsakSearch: path.join(APP_DIR, 'fagsakSearch'),
       fagsakprofile: path.join(APP_DIR, 'fagsakprofile'),
       fakta: path.join(APP_DIR, 'fakta'),
     },

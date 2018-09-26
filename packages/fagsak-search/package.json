@@ -1,0 +1,29 @@
+{
+  "name": "@fpsak-frontend/fagsak-search",
+  "version": "1.0.0",
+  "main": "bundle.js",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "nav-frontend-typografi": "2.0.6",
+    "nav-frontend-knapper": "1.0.20",
+    "nav-frontend-grid": "1.0.17",
+    "redux-form": "^7.4.2"
+  },
+  "peerDependencies": {
+    "reselect": "^3.0.1",
+    "react": "^16.4.2",
+    "prop-types": "^15.6.2",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "react-intl": "^2.4.0",
+    "react-router-redux": "^5.0.0-alpha.9",
+    "@fpsak-frontend/data": "1.0.0",
+    "@fpsak-frontend/shared-components": "1.0.0",
+    "@fpsak-frontend/kodeverk": "1.0.0",
+    "@fpsak-frontend/person": "1.0.0",
+    "@fpsak-frontend/form": "1.0.0",
+    "@fpsak-frontend/utils": "1.0.0",
+    "@fpsak-frontend/images": "1.0.0"
+  }
+}

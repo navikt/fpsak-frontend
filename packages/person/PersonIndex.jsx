@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 
-import { getFagsaker } from 'fagsakSearch/fagsakSearchSelectors';
+import { getFagsaker } from '@fpsak-frontend/fagsak-search/fagsakSearchSelectors';
 import { getSelectedFagsak } from 'fagsak/fagsakSelectors';
 import PersonInfo from './components/PersonInfo';
 

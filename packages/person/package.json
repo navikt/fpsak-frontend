@@ -25,6 +25,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
-    "@fpsak-frontend/images": "1.0.0"
+    "@fpsak-frontend/images": "1.0.0",
+    "@fpsak-frontend/fagsak-search": "1.0.0"
   }
 }

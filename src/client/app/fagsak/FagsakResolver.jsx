@@ -10,7 +10,7 @@ import {
 import { getBehandlingerIds } from 'behandling/selectors/behandlingerSelectors';
 import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
 import requireProps from 'app/data/requireProps';
-import { resetFagsakSearch as resetFagsakSearchActionCreator } from 'fagsakSearch/duck';
+import { resetFagsakSearch as resetFagsakSearchActionCreator } from '@fpsak-frontend/fagsak-search/duck';
 import { removeErrorMessage } from 'app/duck';
 import { resetFagsakContext as resetFagsakContextActionCreator, fetchFagsakInfo as fetchFagsakInfoActionCreator } from './duck';
 import {
