@@ -21,7 +21,7 @@ import {
   getFamiliehendelse,
   getBehandlingIsRevurdering,
 } from 'behandling/behandlingSelectors';
-import { getRettigheter } from '@fpsak-frontend/navAnsatt/duck';
+import { getRettigheter } from '@fpsak-frontend/nav-ansatt/duck';
 import { getSelectedBehandlingId } from 'behandling/duck';
 import periodeResultatType from '@fpsak-frontend/kodeverk/periodeResultatType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';

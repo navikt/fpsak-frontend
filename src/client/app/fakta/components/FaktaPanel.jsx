@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { getRettigheter } from '@fpsak-frontend/nav-ansatt/duck';
 import PersonIndex from '@fpsak-frontend/person/PersonIndex';
-import { getRettigheter } from '@fpsak-frontend/navAnsatt/duck';
 import {
   getBehandlingVilkarCodes, getPersonopplysning, getBehandlingIsOnHold, getAksjonspunkter, hasReadOnlyBehandling,
 }
