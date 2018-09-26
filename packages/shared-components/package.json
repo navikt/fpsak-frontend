@@ -22,7 +22,8 @@
     "@fpsak-frontend/form": "1.0.0",
     "react-day-picker": "^7.1.10",
     "nav-frontend-skjema": "1.0.30",
-    "nav-frontend-skjema-style": "1.0.14"
+    "nav-frontend-skjema-style": "1.0.14",
+    "@fpsak-frontend/images": "1.0.0"
   },
   "peerDependencies": {
     "react": "^16.4.2",

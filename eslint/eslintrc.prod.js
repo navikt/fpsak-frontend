@@ -1,19 +1,19 @@
 const merge = require('webpack-merge');
 const common = require('./eslintrc.common.js');
-
+const path = require('path');
 var ERROR = 2;
 
 const config = {
   settings: {
-    "import/resolver": {
+    'import/resolver': {
       webpack: {
-        config: "webpack/webpack.prod.js",
+        config: path.resolve('./webpack/webpack.prod.js'),
       },
     },
   },
-  
+
   rules: {
-    "no-console": ERROR,
+    'no-console': ERROR,
   },
 };
 
