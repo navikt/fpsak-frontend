@@ -3,6 +3,15 @@ Monorepo for Frontend kode for vl-foreldrepenger.
 
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
+##TODO
+1. omstrukturere client/src
+2. rydde opp i struktur i de forskjellige pakkene
+3. Fikse så mye cycles i depenencies som lar seg gjøre
+4. riktig namespace, bruker scoped for nå(@fpsak-frontend)
+5. Sette opp lerna publish
+6. sette opp jenkins og tbd
+7. gjøre form pakken tilgjengelig med final-form og redux-form
+
 ###Strukter (WIP)
 <pre>
 <code>
