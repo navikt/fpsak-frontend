@@ -8,10 +8,10 @@ import { Undertekst } from 'nav-frontend-typografi';
 import Lukknapp from 'nav-frontend-lukknapp';
 
 import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
+import { getAllAsyncErrorMessages } from '@fpsak-frontend/data/duck';
 import {
   getCrashMessage, getErrorMessages, getErrorMessageCodeWithParams, getShowDetailedErrorMessages,
 } from 'app/duck';
-import { getAllAsyncErrorMessages } from '@fpsak-frontend/data/duck';
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
 
 import styles from './errorMessagePanel.less';

@@ -7,14 +7,14 @@ import { hot } from 'react-hot-loader';
 import moment from 'moment';
 
 import { parseQueryString } from '@fpsak-frontend/utils/urlUtils';
+import Header from '@fpsak-frontend/shared-components/Header';
+import Home from '@fpsak-frontend/shared-components/Home';
 import AppConfigResolver from './AppConfigResolver';
 import {
   getCrashMessage, getErrorMessageCodeWithParams, getErrorMessages, getFunksjonellTid, getNavAnsattName,
   getRettskildeUrl, getSystemrutineUrl, removeErrorMessage, showCrashMessage,
 } from './duck';
 import LanguageProvider from './LanguageProvider';
-import Header from './components/Header';
-import Home from './components/Home';
 
 import '../../nomodulestyles/global.less';
 

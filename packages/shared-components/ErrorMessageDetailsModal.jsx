@@ -5,12 +5,11 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Knapp } from 'nav-frontend-knapper';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
-import Image from '@fpsak-frontend/shared-components/Image';
-import Modal from '@fpsak-frontend/shared-components/Modal';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-
 import infoImageUrl from '@fpsak-frontend/images/behandle.svg';
+import Image from './Image';
+import Modal from './Modal';
+import ElementWrapper from './ElementWrapper';
+import VerticalSpacer from './VerticalSpacer';
 
 import styles from './errorMessageDetailsModal.less';
 
