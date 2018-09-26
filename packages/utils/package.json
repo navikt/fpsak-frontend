@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@fpsak-frontend/kodeverk": "1.0.0"
+
   },
   "peerDependencies": {
     "react": "^16.4.2",
@@ -14,6 +14,7 @@
     "react-redux": "^5.0.7",
     "prop-types": "^15.6.2",
     "classnames": "^2.2.6",
-    "moment": "^2.22.2"
+    "moment": "^2.22.2",
+    "@fpsak-frontend/kodeverk": "1.0.0"
   }
 }

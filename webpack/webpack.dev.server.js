@@ -12,7 +12,9 @@ if (process.argv.includes('--no-fix')) {
 var options = {
   contentBase: [
     'src/client',
+    'packages',
   ],
+  watchContentBase: true,
   proxy: {
     '**/(sprak|api)/**': {
       target: 'http://localhost:8080',

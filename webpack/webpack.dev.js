@@ -17,9 +17,9 @@ const config = {
     APP_DIR + '/index.jsx',
   ],
   output: {
-    filename: 'bundle.js',
     path: ROOT_DIR,
     publicPath: '/',
+    filename: 'bundle.js',
   },
 
   plugins: [

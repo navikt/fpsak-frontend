@@ -5,12 +5,12 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@fpsak-frontend/kodeverk": "1.0.0",
-    "@fpsak-frontend/utils": "1.0.0",
-    "@fpsak-frontend/data": "1.0.0"
   },
   "peerDependencies": {
     "prop-types": "^15.6.2",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "@fpsak-frontend/kodeverk": "1.0.0",
+    "@fpsak-frontend/utils": "1.0.0",
+    "@fpsak-frontend/data": "1.0.0"
   }
 }

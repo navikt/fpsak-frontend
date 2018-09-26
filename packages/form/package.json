@@ -1,7 +1,7 @@
 {
   "name": "@fpsak-frontend/form",
   "version": "1.0.0",
-  "main": "lib/index.js",
+  "main": "index.js",
   "license": "MIT",
   "private": true,
   "dependencies": {
@@ -13,9 +13,7 @@
     "nav-frontend-etiketter-style": "0.3.14",
     "redux-form": "^7.4.2",
     "nav-frontend-grid": "1.0.17",
-    "nav-frontend-grid-style": "0.2.17",
-    "@fpsak-frontend/utils": "1.0.0",
-    "@fpsak-frontend/shared-components": "1.0.0"
+    "nav-frontend-grid-style": "0.2.17"
   },
   "peerDependencies": {
     "react": "^16.4.2",
@@ -24,6 +22,8 @@
     "react-redux": "^5.0.7",
     "prop-types": "^15.6.2",
     "classnames": "^2.2.6",
-    "moment": "^2.22.2"
+    "moment": "^2.22.2",
+    "@fpsak-frontend/utils": "1.0.0",
+    "@fpsak-frontend/shared-components": "1.0.0"
   }
 }
