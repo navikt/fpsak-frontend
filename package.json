@@ -138,7 +138,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --colors --config webpack/webpack.prod.js",
     "postinstall": "yarn run build && yarn test && yarn run less:lint",
     "lerna": "lerna",
-    "less:lint": "lesshint --max-warnings 0 --reporter ./_scripts/lesshint-reporter.js packages -e *Source-Sans*.less",
+    "less:lint": "lesshint --max-warnings 0 --reporter ./_scripts/lesshint-reporter.js src/client/app packages -e *Source-Sans*.less",
     "doc": "react-asciidoc-generator ./src/client/app/ -o ../../docs/generated/react.adoc --handlebar-template src/docs/asciidoc-template.handlebars "
   },
   "nyc": {
