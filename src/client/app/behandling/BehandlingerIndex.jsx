@@ -6,7 +6,7 @@ import { Route, Switch } from 'react-router-dom';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 
 import { behandlingPath } from 'app/paths';
-import PersonIndex from 'person/PersonIndex';
+import PersonIndex from '@fpsak-frontend/person/PersonIndex';
 
 import NoSelectedBehandling from './components/NoSelectedBehandling';
 import BehandlingIndex from './BehandlingIndex';

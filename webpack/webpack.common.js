@@ -18,7 +18,6 @@ const config = {
       fagsakSearch: path.join(APP_DIR, 'fagsakSearch'),
       fagsakprofile: path.join(APP_DIR, 'fagsakprofile'),
       fakta: path.join(APP_DIR, 'fakta'),
-      person: path.join(APP_DIR, 'person'),
     },
     extensions: ['.json', '.js', '.jsx'],
   },
