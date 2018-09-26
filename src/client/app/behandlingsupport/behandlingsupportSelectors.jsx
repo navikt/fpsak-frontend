@@ -8,7 +8,7 @@ import {
   getBehandlingStatus, getBehandlingIsInnsyn, getTotrinnskontrollArsakerReadOnly,
 } from 'behandling/behandlingSelectors';
 import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
-import { getRettigheter } from 'navAnsatt/duck';
+import { getRettigheter } from '@fpsak-frontend/navAnsatt/duck';
 import SupportPanel from './supportPanels';
 
 const getSendMessageIsRelevant = createSelector(

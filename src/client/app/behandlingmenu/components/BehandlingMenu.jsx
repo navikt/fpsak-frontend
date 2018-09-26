@@ -4,8 +4,8 @@ import { Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import rettighetPropType from 'navAnsatt/rettighetPropType';
-import navAnsattPropType from 'navAnsatt/navAnsattPropType';
+import rettighetPropType from '@fpsak-frontend/navAnsatt/rettighetPropType';
+import navAnsattPropType from '@fpsak-frontend/navAnsatt/navAnsattPropType';
 import Image from '@fpsak-frontend/shared-components/Image';
 import openImage from '@fpsak-frontend/images/pil_opp.svg';
 import closedImage from '@fpsak-frontend/images/pil_ned.svg';

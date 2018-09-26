@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import { getRettigheter } from 'navAnsatt/duck';
+import { getRettigheter } from '@fpsak-frontend/navAnsatt/duck';
 import { DEFAULT_BEHANDLINGSPROSESS } from 'app/paths';
 import { arrayToObject } from '@fpsak-frontend/utils/objectUtils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';

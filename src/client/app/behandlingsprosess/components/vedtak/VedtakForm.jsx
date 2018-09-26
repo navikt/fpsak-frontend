@@ -18,7 +18,7 @@ import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } 
 import { getSelectedBehandlingId } from 'behandling/duck';
 import { isInnvilget, isAvslag } from '@fpsak-frontend/kodeverk/behandlingResultatType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import { getRettigheter } from 'navAnsatt/duck';
+import { getRettigheter } from '@fpsak-frontend/navAnsatt/duck';
 import { CheckboxField } from '@fpsak-frontend/form';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/behandlingStatus';
 import FritekstBrevPanel from 'behandlingsprosess/components/vedtak/FritekstBrevPanel';

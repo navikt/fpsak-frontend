@@ -6,11 +6,9 @@ const APP_DIR = path.join(ROOT_DIR, 'app');
 const config = {
   resolve: {
     alias: {
-      styles: path.join(ROOT_DIR, 'styles'),
       testHelpers: path.join(ROOT_DIR, 'testHelpers'),
       app: path.join(APP_DIR, 'app'),
       behandling: path.join(APP_DIR, 'behandling'),
-      navAnsatt: path.join(APP_DIR, 'navAnsatt'),
       behandlingmenu: path.join(APP_DIR, 'behandlingmenu'),
       behandlingsprosess: path.join(APP_DIR, 'behandlingsprosess'),
       behandlingsupport: path.join(APP_DIR, 'behandlingsupport'),

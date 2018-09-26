@@ -7,7 +7,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import { toggleBehandlingspunktOverstyring } from 'behandlingsprosess/duck';
 import { getSelectedBehandlingspunkt, getSelectedBehandlingspunktAksjonspunkter, isSelectedBehandlingspunktOverrideReadOnly }
   from 'behandlingsprosess/behandlingsprosessSelectors';
-import { getRettigheter } from 'navAnsatt/duck';
+import { getRettigheter } from '@fpsak-frontend/navAnsatt/duck';
 import { CheckboxField } from '@fpsak-frontend/form';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 

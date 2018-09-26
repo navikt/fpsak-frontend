@@ -24,8 +24,8 @@ import {
   from 'behandling/behandlingSelectors';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
-import { getRettigheter } from 'navAnsatt/duck';
-import rettighetPropType from 'navAnsatt/rettighetPropType';
+import { getRettigheter } from '@fpsak-frontend/navAnsatt/duck';
+import rettighetPropType from '@fpsak-frontend/navAnsatt/rettighetPropType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import SoknadData from './SoknadData';
 import {

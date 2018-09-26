@@ -16,10 +16,10 @@ import {
   getBehandlingVersjon, getAksjonspunkter, getBehandlingAnsvarligSaksbehandler, getTotrinnskontrollArsaker,
   getBehandlingStatus, getBehandlingToTrinnsBehandling, getSelectedBehandlingIdentifier, getTotrinnskontrollArsakerReadOnly,
 } from 'behandling/behandlingSelectors';
-import navAnsattPropType from 'navAnsatt/navAnsattPropType';
+import navAnsattPropType from '@fpsak-frontend/navAnsatt/navAnsattPropType';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import requireProps from 'app/data/requireProps';
-import { getNavAnsatt } from 'navAnsatt/duck';
+import { getNavAnsatt } from '@fpsak-frontend/navAnsatt/duck';
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/vurderPaNyttArsakType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';

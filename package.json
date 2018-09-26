@@ -71,8 +71,9 @@
     "@fpsak-frontend/data": "1.0.0",
     "@fpsak-frontend/styles": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
-    "@fpsak-frontend/person": "1.0.0",
-    "@fpsak-frontend/images": "1.0.0"
+    "@fpsak-frontend/images": "1.0.0",
+    "@fpsak-frontend/navAnsatt": "1.0.0",
+    "@fpsak-frontend/person": "1.0.0"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.15.0",
