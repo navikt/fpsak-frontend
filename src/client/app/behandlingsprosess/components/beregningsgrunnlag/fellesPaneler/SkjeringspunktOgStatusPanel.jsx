@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-
 import { Undertekst, Normaltekst, Element } from 'nav-frontend-typografi';
 import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
 import DateLabel from '@fpsak-frontend/shared-components/DateLabel';

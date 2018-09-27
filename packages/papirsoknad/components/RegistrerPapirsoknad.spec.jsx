@@ -2,12 +2,11 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
-
-import SoknadData from '../SoknadData';
-import ForeldrepengerForm from 'foreldrepenger/ForeldrepengerForm';
-import EndringForeldrepengerForm from 'foreldrepenger/EndringForeldrepengerForm';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
+import SoknadData from '../SoknadData';
+import ForeldrepengerForm from './foreldrepenger/ForeldrepengerForm';
+import EndringForeldrepengerForm from './foreldrepenger/EndringForeldrepengerForm';
 import { RegistrerPapirsoknad } from './RegistrerPapirsoknad';
 import SoknadTypePickerForm from './SoknadTypePickerForm';
 import EngangsstonadForm from './engangsstonad/EngangsstonadForm';
