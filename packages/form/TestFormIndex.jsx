@@ -1,13 +1,30 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { formPropTypes, reduxForm, formValueSelector } from 'redux-form';
-import { Container, Row, Column } from 'nav-frontend-grid';
-import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
+import {
+  formPropTypes,
+  reduxForm,
+  formValueSelector,
+} from 'redux-form';
+import {
+  Container,
+  Row,
+  Column,
+} from 'nav-frontend-grid';
+import {
+  Undertittel,
+  Normaltekst,
+} from 'nav-frontend-typografi';
 import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
 import { required } from '@fpsak-frontend/utils/validation/validators';
 import {
-  InputField, DatepickerField, TextAreaField, CheckboxField, SelectField, RadioGroupField, RadioOption,
+  InputField,
+  DatepickerField,
+  TextAreaField,
+  CheckboxField,
+  SelectField,
+  RadioGroupField,
+  RadioOption,
 } from './index';
 
 const getOptions = values => values.map(value => <option value={`${value}`.toUpperCase()} key={value}>{value}</option>);
@@ -29,12 +46,7 @@ const TestFormImpl = ({ handleSubmit, readOnly }) => (
       <RadioOption label="Ja" value />
       <RadioOption label="Nei" value={false} />
       <RadioOption
-        label={(
-          <Normaltekst>
-Vet
-            <b>ikke</b>
-          </Normaltekst>
-)}
+        label={(<Normaltekst>{'Vet <b>ikke</b>'}</Normaltekst>)}
         value={{ reason: 'I truly don\'t know' }}
       />
       <RadioOption label="Ukjent" value="UKJENT" disabled />

@@ -9,14 +9,14 @@ import moment from 'moment';
 import { parseQueryString } from '@fpsak-frontend/utils/urlUtils';
 import Header from '@fpsak-frontend/shared-components/Header';
 import Home from '@fpsak-frontend/shared-components/Home';
+import LanguageProvider from '@fpsak-frontend/shared-components/LanguageProvider';
 import AppConfigResolver from './AppConfigResolver';
 import {
   getCrashMessage, getErrorMessageCodeWithParams, getErrorMessages, getFunksjonellTid, getNavAnsattName,
   getRettskildeUrl, getSystemrutineUrl, removeErrorMessage, showCrashMessage,
 } from './duck';
-import LanguageProvider from './LanguageProvider';
 
-import '../../nomodulestyles/global.less';
+import '../nomodulestyles/global.less';
 
 /**
  * AppIndex

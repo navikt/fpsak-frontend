@@ -29,7 +29,7 @@ describe('<RegistrerPapirsoknad>', () => {
   });
 
   it('skal vise foreldrepenger-form', () => {
-    const wrapper = shallow(<RegistrerPapirsoknad
+    const wrapper = shallow(<RegistrerPapirsoknadPersonIndex
       onSubmitUfullstendigsoknad={sinon.spy()}
       submitPapirsoknad={sinon.spy()}
       setSoknadData={sinon.spy()}

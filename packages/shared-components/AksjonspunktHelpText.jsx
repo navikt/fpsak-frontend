@@ -38,7 +38,6 @@ const AksjonspunktHelpText = ({
           <Normaltekst key={isObject(child) ? child.key : child} className={styles.wordwrap}>
             <strong>
               <FormattedMessage id="HelpText.Aksjonspunkt.BehandletAksjonspunkt" />
-:
             </strong>
             {' '}
             {child}

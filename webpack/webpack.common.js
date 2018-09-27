@@ -7,7 +7,7 @@ const config = {
   resolve: {
     alias: {
       testHelpers: path.join(ROOT_DIR, 'testHelpers'),
-      app: path.join(APP_DIR, 'app'),
+      app: path.join(ROOT_DIR, 'app'),
       behandling: path.join(APP_DIR, 'behandling'),
       behandlingmenu: path.join(APP_DIR, 'behandlingmenu'),
       behandlingsprosess: path.join(APP_DIR, 'behandlingsprosess'),

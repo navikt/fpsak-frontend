@@ -1,16 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
-
+import TestFormIndex from '@fpsak-frontend/form/TestFormIndex';
 import FagsakIndex from 'fagsak/FagsakIndex';
 import { fagsakPath } from 'app/paths';
-import TestFormIndex from '@fpsak-frontend/form/TestFormIndex';
 import Dashboard from './Dashboard';
-
-
 import MissingPage from './MissingPage';
-
-// import '../../../nomodulestyles/global.less'; //TODO: Ser ikke ut som denne er nødvendig, lastes inn i AppIndex.jsx
 import styles from './home.less';
 
 /**

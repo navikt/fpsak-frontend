@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
-
+import { getBehandlingerIds } from 'behandling/selectors/behandlingerSelectors';
+import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
+import { resetFagsakSearch as resetFagsakSearchActionCreator } from '@fpsak-frontend/fagsak-search/duck';
 import {
   getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling, pathToBehandlinger, pathToMissingPage,
 } from 'app/paths';
-import { getBehandlingerIds } from 'behandling/selectors/behandlingerSelectors';
-import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
 import requireProps from 'app/data/requireProps';
-import { resetFagsakSearch as resetFagsakSearchActionCreator } from '@fpsak-frontend/fagsak-search/duck';
 import { removeErrorMessage } from 'app/duck';
 import { resetFagsakContext as resetFagsakContextActionCreator, fetchFagsakInfo as fetchFagsakInfoActionCreator } from './duck';
 import {
