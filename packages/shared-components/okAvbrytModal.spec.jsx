@@ -4,8 +4,8 @@ import sinon from 'sinon';
 import { FormattedMessage } from 'react-intl';
 
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
-import Modal from '@fpsak-frontend/shared-components/Modal';
-import Image from '@fpsak-frontend/shared-components/Image';
+import Modal from './Modal';
+import Image from './Image';
 
 import OkAvbrytModal from './OkAvbrytModal';
 

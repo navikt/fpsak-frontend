@@ -1,0 +1,187 @@
+@import '@{coreModulePath}nav-frontend-typografi-style/src/index';
+
+.DayPickerInput-OverlayWrapper {
+  height: 0px;
+  position: relative;
+  width: 0px;
+  top: -12px;
+}
+
+.DayPickerInput-Overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: white;
+  border: 1px solid @navGra40;
+  border-radius: 4px;
+  z-index: 1010;
+}
+
+.DayPicker {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+  padding: 1rem 0;
+  user-select: none;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px @orangeFocus;
+  }
+}
+
+.DayPicker-Months {
+  display: flex;
+}
+
+.DayPicker-Month {
+  display: table;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0 1em;
+  margin-top: 1rem;
+  user-select: none;
+}
+
+.DayPicker-NavBar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: 0 0.5em;
+}
+
+.DayPicker-NavButton {
+  position: absolute;
+  width: 2em;
+  height: 2em;
+  cursor: pointer;
+  border: 0;
+  background: transparent url('../images/pil-videre.svg') no-repeat center;
+  background-size: 1.25em 1.25em;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px @orangeFocus;
+  }
+
+  &:focus,
+  &:hover {
+    background-image: url('../images/pil-videre--hover.svg');
+  }
+
+  &--prev {
+    left: 1em;
+    transform: rotate(180deg);
+  }
+
+  &--next {
+    right: 1em;
+  }
+}
+
+.DayPicker-Caption {
+  display: table-caption;
+  .typo-undertittel();
+  height: 2em;
+  line-height: 2em;
+  text-align: center;
+  margin-bottom: 0.5em;
+}
+
+.DayPicker-Weekdays {
+  border-top: 1px solid @grayIcon;
+  display: table-header-group;
+}
+
+.DayPicker-WeekdaysRow {
+  display: table-row;
+}
+
+.DayPicker-Weekday {
+  display: table-cell;
+  padding: 0.5em;
+  text-align: center;
+  .typo-element();
+
+  abbr {
+    text-decoration: none;
+  }
+}
+
+.DayPicker-Body {
+  display: table-row-group;
+}
+
+.DayPicker-Week {
+  display: table-row;
+}
+
+.DayPicker-Day {
+  font-weight: 600;
+  display: table-cell;
+  padding: 0.5em;
+  text-align: center;
+  cursor: pointer;
+  vertical-align: middle;
+
+  &:focus {
+    outline: none;
+    background-color: @orangeFocus;
+  }
+
+  &:hover {
+    background-color: @grayBackground;
+  }
+
+  &:empty:hover {
+    background-color: transparent;
+  }
+
+  &:last-child {
+    color: @navRod;
+  }
+}
+
+.DayPicker--interactionDisabled .DayPicker-Day {
+  cursor: default;
+}
+
+/* Default modifiers */
+
+.DayPicker-Day--disabled,
+.DayPicker-Day--disabled:last-child {
+  color: @grayIcon;
+  cursor: default;
+  font-weight: normal;
+
+  &:focus {
+    color: @grayInactive;
+  }
+}
+
+.DayPicker-Day--disabled:hover {
+  background-color: transparent;
+}
+
+.DayPicker-Day--outside {
+  cursor: default;
+  color: @grayInactive;
+}
+
+.DayPicker-Day--sunday {
+  background-color: #f7f8f8;
+}
+
+.DayPicker-Day--today {
+  border: 1px solid @grayIcon;
+}
+
+.DayPicker-Day--sunday:not(.DayPicker-Day--today) {
+  color: @navRod;
+}
+
+.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+  background-color: @navDypBla;
+  color: @white;
+}

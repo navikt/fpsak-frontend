@@ -9,9 +9,10 @@ import Lukknapp from 'nav-frontend-lukknapp';
 
 import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
 import { getAllAsyncErrorMessages } from '@fpsak-frontend/data/duck';
+// TODO flytt depencies for fpsak ut
 import {
   getCrashMessage, getErrorMessages, getErrorMessageCodeWithParams, getShowDetailedErrorMessages,
-} from 'app/duck';
+} from '@fpsak-frontend/fpsak/duck';
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
 
 import styles from './errorMessagePanel.less';

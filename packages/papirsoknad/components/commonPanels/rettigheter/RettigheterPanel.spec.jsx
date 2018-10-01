@@ -1,9 +1,8 @@
 import React from 'react';
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import { expect } from 'chai';
-
-import SoknadData from '../../../SoknadData';
 import { RadioOption } from '@fpsak-frontend/form';
+import SoknadData from '../../../SoknadData';
 import { RettigheterPanel } from './RettigheterPanel';
 
 describe('<RettigheterPanel>', () => {

@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Normaltekst, Undertittel, Undertekst } from 'nav-frontend-typografi';
-import { Row, Column } from 'nav-frontend-grid';
+import {
+  Normaltekst,
+  Undertittel,
+  Undertekst,
+} from 'nav-frontend-typografi';
+import {
+  Row,
+  Column,
+} from 'nav-frontend-grid';
 
 import { dateFormat, timeFormat } from '@fpsak-frontend/utils/dateUtils';
 import chevronUp from '@fpsak-frontend/images/pil_opp.svg';

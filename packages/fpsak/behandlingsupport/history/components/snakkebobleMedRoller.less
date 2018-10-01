@@ -1,0 +1,214 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+@import '@{coreModulePath}nav-frontend-core/less/_mixins';
+@import '@{coreModulePath}nav-frontend-core/less/utilities';
+@import '@{coreModulePath}nav-frontend-core/less/hide-text';
+
+.snakkeboble {
+  display: flex;
+  margin-bottom: 16px;
+  white-space: pre-line;
+
+  &--hoyre {
+    flex-direction: row-reverse;
+    margin-right: 16px;
+  }
+
+  &--venstre {
+    flex-direction: row;
+  }
+
+  &__snakkeboble-pil-container {
+    margin-top: 1rem;
+    overflow: hidden;
+    position: relative;
+    width: 1.2rem;
+  }
+
+  &__snakkebole-pil {
+    background: @white;
+    height: 1rem;
+    position: absolute;
+    top: 1px;
+    transform: rotate(54deg) skew(17deg);
+    width: 1rem;
+  }
+
+  &__snakkebole-pil--hoyre {
+    box-shadow: 0 1px 4px 1px @navGra20; // lesshint zeroUnit: false
+    right: 72%;
+  }
+
+  &__snakkebole-pil--venstre {
+    box-shadow: 0 2px 4px -1px @navGra20; // lesshint zeroUnit: false
+    left: 72%;
+  }
+
+    &__snakkebole-pil--hoyre--saksbehandler {
+        background-color: @navLillaLighten80;
+        box-shadow: 0 1px 4px 1px @navGra20; // lesshint zeroUnit: false
+        right: 72%;
+    }
+
+    &__snakkebole-pil--hoyre--beslutter {
+     background-color: @navGronnLighten80;
+     box-shadow: 0 1px 4px 1px @navGra20; // lesshint zeroUnit: false
+      right: 72%;
+    }
+
+    &__snakkebole-pil--hoyre--losningen {
+      background-color: @grayBackground;
+      box-shadow: 0 1px 4px 1px @navGra20; // lesshint zeroUnit: false
+      right: 72%;
+    }
+
+    &__snakkebole-pil--venstre--bruker {
+    background-color: @orangeFocusLighten80;
+    box-shadow: 0 2px 4px -1px @navGra20; // lesshint zeroUnit: false
+    left: 72%;
+    }
+
+    &__snakkebole-pil--venstre--ekstern {
+    background-color: @navLysBlaLighten80;
+    box-shadow: 0 2px 4px -1px @navGra20; // lesshint zeroUnit: false
+    left: 72%;
+    }
+
+  &__ikon {
+    border-radius: 50%;
+    flex-shrink: 0; // lesshint zeroUnit: false
+    height: 45px;
+    margin-top: 2px;
+    width: 45px;
+
+    &--veileder {
+      background: @navLysBlaDarken80;
+    }
+
+    &--brukerMann {
+      background: url('../../../../images/mann.svg');
+      background-size: contain;
+    }
+
+    &--brukerKvinne {
+      background: url('../../../../images/kvinne.svg');
+      background-size: contain;
+    }
+
+    &--saksbehandler {
+      background: @navLilla url('../../../../images/nav_ansatt_historikk.svg');
+      background-position-x: 6px;
+      background-position-y: 2px;
+      background-size: contain;
+    }
+
+    &--beslutter {
+      background: url('../../../../images/beslutter.svg');
+      background-size: contain;
+    }
+
+    &--losningen {
+      background: url('../../../../images/maskin.svg');
+      background-size: contain;
+    }
+
+    &--ekstern {
+      background: url('../../../../images/arbeidsgiver.svg');
+      background-size: contain;
+    }
+  }
+}
+
+.hide {
+   display: none;
+}
+
+.show {
+   display: inline;
+}
+
+.snakkeboble-panel {
+  .blokk-s();
+  box-shadow: 0 2px 4px 0 @navGra20; // lesshint zeroUnit: false
+  display: inline-flex;
+  flex-direction: column;
+  padding: 0.5rem 1rem 1rem;
+}
+
+.hoyrejustert-tekst {
+  text-align: right;
+}
+
+.snakkeboble-width {
+  flex: 0 1 350px; // lesshint zeroUnit: false
+  width: 20rem;
+}
+
+.snakkeboble__snakkebole-panel--saksbehandler {
+  background-color: @navLillaLighten80;
+  .snakkeboble-width
+}
+
+.snakkeboble__snakkebole-panel--beslutter {
+  background-color: @navGronnLighten80;
+  .snakkeboble-width
+}
+
+.snakkeboble__snakkebole-panel--losningen {
+  background-color: @grayBackground;
+  .snakkeboble-width
+}
+
+.snakkeboble__snakkebole-panel--bruker {
+  background-color: @orangeFocusLighten80;
+  .snakkeboble-width
+}
+
+.snakkeboble__snakkebole-panel--ekstern {
+  background-color: @navLysBlaLighten80;
+  .snakkeboble-width
+}
+
+// IE-specific css to make the icon fit in place
+// IE-11 specific css to make the icon fit in place
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .snakkeboble {
+    &__ikon {
+      &--saksbehandler {
+        background-position-x: 8px;
+        background-position-y: 4px;
+        background-repeat: no-repeat;
+        background-size: 40px;
+      }
+    }
+  }
+}
+
+
+// IE Edge specifics
+@supports (-ms-ime-align:auto) {
+  .snakkeboble {
+     &__ikon {
+        &--saksbehandler {
+             background-position-x: 8px;
+             background-position-y: 4px;
+             background-repeat: no-repeat;
+             background-size: 40px;
+        }
+
+        &--brukerKvinne {
+           background-position-x: 8px;
+           background-position-y: 8px;
+           background-repeat: no-repeat;
+           background-size: 32px;
+        }
+
+        &--brukerMann {
+          background-position-x: 8px;
+          background-position-y: 8px;
+          background-repeat: no-repeat;
+          background-size: 32px;
+        }
+     }
+  }
+}

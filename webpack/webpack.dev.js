@@ -5,7 +5,8 @@ const merge = require('webpack-merge');
 const commonDevAndProd = require('./webpack.common.dev_and_prod.js');
 
 const ROOT_DIR = path.resolve(__dirname, '../src/client');
-const APP_DIR = path.resolve(ROOT_DIR, 'app');
+const PACAKGES_DIR = path.join(__dirname, '../packages');
+const APP_DIR = path.resolve(PACAKGES_DIR, 'fpsak');
 
 const config = {
   mode: 'development',

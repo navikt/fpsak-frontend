@@ -41,6 +41,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@fpsak-frontend/data": "1.0.0",
     "@fpsak-frontend/form": "1.0.0",
-    "@fpsak-frontend/fagsak-search": "1.0.0"
+    "@fpsak-frontend/fagsak-search": "1.0.0",
+    "@fpsak-frontend/fpsak": "1.0.0"
   }
 }

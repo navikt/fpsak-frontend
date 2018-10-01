@@ -1,9 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import {
+  injectIntl,
+  intlShape,
+  FormattedMessage,
+} from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Knapp } from 'nav-frontend-knapper';
-import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import {
+  Normaltekst,
+  Undertekst,
+  Undertittel,
+} from 'nav-frontend-typografi';
 
 import infoImageUrl from '@fpsak-frontend/images/behandle.svg';
 import Image from './Image';

@@ -11,7 +11,6 @@ import { RegistrerPapirsoknad } from './RegistrerPapirsoknad';
 import SoknadTypePickerForm from './SoknadTypePickerForm';
 import EngangsstonadForm from './engangsstonad/EngangsstonadForm';
 
-
 describe('<RegistrerPapirsoknad>', () => {
   it('skal vise aksjonspunkt-hjelpetekst og form for engangsstønad', () => {
     const wrapper = shallow(<RegistrerPapirsoknad
@@ -29,7 +28,7 @@ describe('<RegistrerPapirsoknad>', () => {
   });
 
   it('skal vise foreldrepenger-form', () => {
-    const wrapper = shallow(<RegistrerPapirsoknadPersonIndex
+    const wrapper = shallow(<RegistrerPapirsoknad
       onSubmitUfullstendigsoknad={sinon.spy()}
       submitPapirsoknad={sinon.spy()}
       setSoknadData={sinon.spy()}

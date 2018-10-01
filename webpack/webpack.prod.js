@@ -9,7 +9,7 @@ const commonDevAndProd = require('./webpack.common.dev_and_prod.js');
 
 const ROOT_DIR = path.resolve(__dirname, '../src/client');
 const PACKAGES_DIR = path.resolve(__dirname, '../packages');
-const APP_DIR = path.resolve(ROOT_DIR, 'app');
+const APP_DIR = path.resolve(PACKAGES_DIR, 'fpsak');
 
 //Fjern de to utkommenterte linjene for sourcemaps i produksjonsbygget.
 

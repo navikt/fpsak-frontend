@@ -8,11 +8,11 @@ const common = require('./webpack.common.js');
 
 const CORE_DIR = path.resolve(__dirname, '../node_modules');
 const ROOT_DIR = path.resolve(__dirname, '../src/client');
-const APP_DIR = path.join(ROOT_DIR, 'app');
 
 const STYLE_DIR = path.join(ROOT_DIR, 'styles');
 const CSS_DIR = path.join(ROOT_DIR, 'nomodulestyles');
-const PACAKGES_DIR = path.join(__dirname, '../packages/');
+const PACAKGES_DIR = path.join(__dirname, '../packages');
+const APP_DIR = path.join(PACAKGES_DIR, 'app');
 const isDevelopment = JSON.stringify(process.env.NODE_ENV) === '"development"';
 
 const config = {

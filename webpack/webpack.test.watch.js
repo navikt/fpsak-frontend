@@ -4,8 +4,7 @@ const path = require('path');
 const merge = require('webpack-merge');
 const commonTest = require('./webpack.common.test.js');
 
-const APP_DIR = path.resolve(__dirname, '../src/client/app');
-const PACAKGES_DIR = path.join(__dirname, '../packages/');
+const PACAKGES_DIR = path.join(__dirname, '../packages');
 const config = {
   mode: 'development',
   module: {
@@ -20,12 +19,12 @@ const config = {
         fix: true,
         cache: true,
 	  },
-      include: [APP_DIR, /@fpsak-frontend/],
+      include: [PACAKGES_DIR],
 	  exclude: ['/node_modules/'],
     }, {
 	  test: /\.jsx?$/,
 	  use: ['happypack/loader'],
-      include: [APP_DIR, PACAKGES_DIR],
+      include: [PACAKGES_DIR],
 	  exclude: ['/node_modules/'],
     }],
   },

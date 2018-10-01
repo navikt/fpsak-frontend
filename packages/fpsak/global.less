@@ -1,0 +1,494 @@
+// CSS-endringer för felleskomponenter og globaler så som fra core/og muligen import fra alla andra komponenter
+@import '@{coreModulePath}nav-frontend-core/less/core';
+@import './dayPicker';
+
+:global(.cal-wrap) {
+  width: 300px;
+}
+
+:global(.modal__overlay) {
+   background-color: rgba(61, 56, 49, 0.9);
+}
+
+// Text-area custom styling
+:global(.textarea--medMeta__teller) {
+   color: @navMorkGra;
+   font-size: 0.8rem;
+   font-style: italic;
+}
+
+:global(.lenke) {
+  color: @navBla;
+  border: 0;
+  padding: 0;
+  background: none;
+  text-decoration: none;
+  border-bottom: solid 1px @navGra40;
+  cursor: pointer;
+
+  &:hover,
+  &--hover {
+    border-bottom-color: @navBla;
+  }
+
+  &:focus,
+  &--focus {
+    outline: none;
+    background-color: @orangeFocus;
+  }
+
+  &:active,
+  &--active {
+    color: @navDypBla;
+    border-bottom-color: @navDypBla;
+  }
+
+  &--frittstaende {
+    border-bottom: 0;
+  }
+}
+
+:global(.skjemaelement > .skjemaelement) {
+  &__feilmelding {
+    margin-top: 1rem;
+  }
+}
+
+:global(.skjemaelement > .skjemaelement__input) {
+  padding: 9px;
+ }
+
+:global(.vis-timeline) {
+  border: 0;  // lesshint zeroUnit: false
+}
+
+:global(.currentDate) {
+  display: none;
+}
+
+/*
+:global(.currentDate) {
+  background-color: grey;
+  margin-top: 12px;
+  pointer-events: none;
+
+  &:after {
+    background: transparent url('/packages/images/currentDay.svg') no-repeat;
+    content: '';
+    height: 20px;
+    position: absolute;
+    top: -10px;
+    left: -5px;
+    width: 10px;
+  }
+}
+*/
+
+// move these to teslineIndex.less?
+:global(.soknad) {
+  background-color: @navBlaDarken20;
+  pointer-events: none;
+
+  &:after {
+    background: transparent url('../images/soknad.svg') no-repeat;
+    content: '';
+    height: 20px;
+    left: -8px;
+    position: absolute;
+    top: 0px;
+    width: 20px;
+  }
+}
+
+:global(.fodsel) {
+  background-color: @redErrorDarken20;
+  pointer-events: none;
+
+  &:after {
+    background: transparent url('../images/fodsel.svg') no-repeat;
+    content: '';
+    height: 20px;
+    left: -8px;
+    position: absolute;
+    top: 0px;
+    width: 20px;
+  }
+}
+
+:global(.revurdering) {
+  background-color: @navGronnDarken20;
+  pointer-events: none;
+
+  &:after {
+    background: transparent url('../images/endringstidspunkt.svg') no-repeat;
+    content: '';
+    height: 20px;
+    left: -8px;
+    position: absolute;
+    top: 0px;
+    width: 20px;
+  }
+}
+
+
+:global(.lastDateInSoknad) {
+  display: none;
+}
+
+:global(.vis-foreground .vis-group) {
+  border-bottom: none;
+}
+
+:global(.vis-text.vis-major > div) {
+  margin-top: 12px;
+}
+
+
+
+:global(.opptjening .vis-text.vis-major > div) {
+  margin-top: 0px;
+}
+
+:global(.uttakTimeline .vis-text.vis-major > div) {
+  margin-top: 0px;
+}
+
+:global(.vis-item.vis-selected) {
+  border: 1px solid #4a4a4a;
+  //  visibility: hidden;
+  // Man kan bruke dette om vi må få på plass en pixel avstånd mellan elementen
+  /*  &:after{
+      content: '';
+      background-color: inherit;
+      border: inherit;
+      border-radius: 6px;
+      box-shadow: inset 1px 1px 1px;
+      height: 30px;
+      left: 0px;
+      position: absolute;
+      top: -5px;
+      visibility: visible !important;  // lesshint important: false
+      width: 100%;
+  } */
+
+}
+
+:global(.vis-item.vis-range) {
+  border-radius: 6px;
+}
+
+:global(.vis-label .vis-inner) {
+  max-height: 50px;
+}
+
+:global(.vis-custom-time) {
+  width: 1px;
+}
+
+:global(.vis-item) {
+  transition: transform 0.2s;
+  top: 5px;
+
+  &:hover {
+    box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
+    filter: brightness(80%);
+    transform: translateY(-3px);
+    opacity: 1;
+  }
+  &:active {
+    box-shadow: 0 4px 5px rgba(0,0,0,.2);
+    filter: brightness(95%);
+    transform: translateY(-2px);
+  }
+}
+
+:global(.grey) {
+  background-color: @navGra20;
+  border-color: @navGra40;
+  border-radius: 8px;
+  opacity: 0.7;
+}
+
+:global(.grey.vis-item.vis-selected) {
+  background-color: @navGra20;
+  border-color: @navGra40;
+  border-radius: 8px;
+  opacity: 0.7;
+}
+
+:global(.gradert) {
+  background-color: @navGronn;
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 4px, @navGronnLighten40 4px, @navGronnLighten40 8px); // lesshint maxCharPerLi|ne: false
+  opacity: 0.9;
+}
+
+:global(.gradert.vis-item.vis-selected) {
+  background-color: @navGronn;
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 4px, @navGronnLighten60 4px, @navGronnLighten60 8px); // lesshint maxCharPerLi|ne: false
+  opacity: 1;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+:global(.avslatt) {
+  background-color: transparent;
+  border-color: @redError;
+  border-radius: 6px;
+  opacity: 0.5;
+
+  &:active {
+    background-color: transparent;
+  }
+}
+
+:global(.avvistPeriode) {
+  background-color: @redError;
+  border-color: @navGra20;
+  border-radius: 6px;
+  opacity: 0.5;
+
+  &:active {
+    background-color: @redError;
+    opacity: 1;
+  }
+}
+
+
+:global(.undefined) {
+  background-color: @navOransje;
+  border-color: @navOransje;
+  border-radius: 8px;
+  opacity: 0.8;
+
+  &:active {
+    background-color: @navOransjeLighten60;
+  }
+}
+
+:global(.undefined.vis-item.vis-selected) {
+  background-color: @navOransje;
+  border: 1px solid #4a4a4a;
+  opacity: 1;
+}
+
+:global(.avslatt.vis-item.vis-selected) {
+  background-color: @redError;
+  opacity: 1;
+}
+
+:global(.avvistPeriode.vis-item.vis-selected) {
+  background-color: @redError;
+  opacity: 1;
+}
+
+:global(.innvilget) {
+  background-color: @navGronn;
+  border-color: @navGronn;
+  border-radius: 8px;
+  opacity: 0.5;
+}
+
+:global(.godkjentPeriode) {
+  background-color: @navGronn;
+  border-color: @navGronn;
+  border-radius: 8px;
+  opacity: 0.5;
+
+  &:active {
+    background-color: @navGronn;
+  }
+}
+
+:global(.vis-current-time) {
+  width: 0;
+}
+
+:global(.godkjentPeriode.vis-item.vis-selected) {
+  background-color: @navGronn;
+  border-radius: 6px;
+  opacity: 1;
+}
+
+:global(.mellomliggendePeriode) {
+  background-color: @navGronn;
+  border-color: @navGronn;
+  border-radius: 8px;
+  opacity: 0.5;
+  height: 12px;
+  top: 12px !important; // lesshint important: false
+
+  &:active {
+    background-color: @navGronn;
+  }
+}
+
+:global(.mellomliggendePeriode.vis-item.vis-selected) {
+  background-color: @navGronn;
+  border-radius: 6px;
+  opacity: 0.5;
+}
+
+:global(.innvilget.vis-item.vis-selected) {
+  background-color: @navGronn;
+  border-radius: 6px;
+  opacity: 1;
+}
+
+:global(.innvilgetnullprosent) {
+  background-color: transparent;
+  border-color: @navGronn;
+  border-radius: 8px;
+  opacity: 1;
+}
+
+:global(.innvilgetnullprosent.vis-item.vis-selected) {
+  background-color: transparent;
+  border-radius: 8px;
+  //  box-shadow: 0 3px 20px rgba(0, 0, 0, 0.2);  // lesshint zeroUnit: false
+  opacity: 1;
+}
+
+:global(.opptjening .vis-center) {
+  border-right-style: none;
+  border-bottom: 1px solid grey;
+  border-left-style: none;
+}
+
+:global(.opptjening .vis-text) {
+  border-top: 1px solid darkgrey;
+  text-align: center;
+}
+
+:global(.uttakTimeline .vis-time-axis .vis-text.vis-minor) {
+  border-top: 1px solid darkgrey;
+  text-align: center;
+}
+
+:global(.opptjening .vis-label) {
+  border-bottom: 0px solid;
+  text-align: right;
+}
+
+:global(.opptjening .vis-time-axis .vis-grid.vis-vertical) {
+  //  border-left: 0px solid;
+}
+
+:global(.opptjening .vis-panel.vis-left) {
+  border-top-style: hidden;
+  max-width: 150px;
+}
+
+:global(.opptjening .vis-panel.vis-left .vis-label) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:global(.opptjening > .timeLineLight .vis-panel.vis-left) {
+  width: 0px;
+}
+
+:global(.opptjening .vis-panel.vis-top ) {
+  margin-left: -1px;
+}
+
+:global(.opptjening .timeLineLight .vis-panel.vis-top) {
+  margin-left: 0px;
+}
+
+:global(.opptjening .vis-panel > .vis-content) {
+  border-left: 0px solid;
+}
+
+:global(.opptjening .vis-panel.vis-center ) {
+  border-top-style: hidden;
+}
+
+:global(.opptjening .vis-itemset > .vis-background) {
+  border-top: 1px solid darkgray;
+}
+
+:global(.opptjening .vis-grid.vis-vertical) {
+//  display: none;
+}
+
+:global(.godkjentundefined) {
+
+}
+
+:global(.godkjentdeclined) {
+
+}
+
+:global(.vis-timeline.vis-bottom) {
+  animation-duration: 2s;
+  animation-name: fadeIn;
+}
+
+@media all and (-ms-high-contrast:none) {
+  :global(.vis-timeline.vis-bottom) {
+    animation-duration: 0s;
+    animation-name: none;
+  }
+
+  :global(.opptjening .vis-labelset .vis-label .vis-inner) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 150px;
+  }
+}
+
+@supports (-ms-ime-align: auto) {
+  :global(.opptjening .vis-labelset .vis-label .vis-inner) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 150px;
+  }
+}
+
+:global(.opptjening .vis-foreground .vis-group:last-child)  {
+  border-bottom: 1px solid darkgray;
+}
+
+:global(.timeLineLight .vis-foreground .vis-group:last-child)  {
+  border-left: 1px solid darkgray;
+}
+
+:global(.opptjening .vis-january > div ) {
+  display: none;
+}
+
+:global(.opptjening .vis-content) {
+  border-left: 1px solid darkgray;
+  border-right: 1px solid darkgray;
+}
+:global(.opptjening .currentDate) {
+  display: none;
+
+  &:after {
+    display: none;
+  }
+}
+
+:global(.opptjening .vis-text .vis-major .vis-measure) {
+//  display: none;
+}
+
+:global(.godkjent) {
+  background-color: @navGronnLighten60;
+}
+
+:global(.avvist) {
+  background-color: @redErrorLighten60;
+}
+
+:global(div .vis-tooltip) {
+  font-size: 10px;
+  max-width: 300px;
+  padding: 0 4px 0 4px;
+  white-space: normal;
+}

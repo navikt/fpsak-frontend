@@ -6,7 +6,7 @@ import moment from 'moment';
 import { Input } from 'nav-frontend-skjema';
 
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
-import CalendarToggleButton from '@fpsak-frontend/shared-components/datepicker/CalendarToggleButton';
+import CalendarToggleButton from '../datepicker/CalendarToggleButton';
 import PeriodCalendarOverlay from './PeriodCalendarOverlay';
 import Periodpicker from './Periodpicker';
 
