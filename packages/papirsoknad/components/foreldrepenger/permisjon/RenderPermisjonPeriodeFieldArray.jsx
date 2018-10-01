@@ -14,7 +14,7 @@ import {
 } from '@fpsak-frontend/utils/validation/validators';
 import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
-import { isEmpty } from '@fpsak-frontend/utils/arrayUtils';
+import { isArrayEmpty } from '@fpsak-frontend/utils';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
@@ -196,7 +196,7 @@ RenderPermisjonPeriodeFieldArray.validate = (values, utsettelseOrGraderingSelect
     return arrayErrors;
   }
 
-  if (isEmpty(values)) {
+  if (isArrayEmpty(values)) {
     return null;
   }
   const overlapError = dateRangesNotOverlapping(values.map(({ periodeFom, periodeTom }) => [periodeFom, periodeTom]));

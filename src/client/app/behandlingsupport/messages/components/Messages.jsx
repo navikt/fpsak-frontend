@@ -13,7 +13,7 @@ import { isKontrollerRevurderingAksjonspunkOpen } from 'behandling/behandlingSel
 import {
   ariaCheck, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils/validation/validators';
-import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
+import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils';
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/ugunstAarsakTyper';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';

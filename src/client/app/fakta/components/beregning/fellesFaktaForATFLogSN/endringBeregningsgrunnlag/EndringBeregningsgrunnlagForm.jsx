@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
-import { removeSpacesFromNumber } from '@fpsak-frontend/utils/currencyUtils';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import {
+  DDMMYYYY_DATE_FORMAT,
+  ISO_DATE_FORMAT,
+  removeSpacesFromNumber,
+  createVisningsnavnForAktivitet,
+} from '@fpsak-frontend/utils';
 import moment from 'moment';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import {
@@ -14,7 +18,6 @@ import {
   getFaktaOmBeregningTilfellerKoder,
 } from 'behandling/behandlingSelectors';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
-import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { byggListeSomStreng } from '../../tilstøtendeYtelse/YtelsePanel';
 import EndringBeregningsgrunnlagPeriodePanel from './EndringBeregningsgrunnlagPeriodePanel';

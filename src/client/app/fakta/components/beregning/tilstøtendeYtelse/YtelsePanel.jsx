@@ -5,7 +5,7 @@ import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
 import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
 import relatertYtelseType from '@fpsak-frontend/kodeverk/relatertYtelseType';

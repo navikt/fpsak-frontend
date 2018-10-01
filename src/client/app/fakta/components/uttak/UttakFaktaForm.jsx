@@ -19,7 +19,7 @@ import FlexContainer from '@fpsak-frontend/shared-components/flexGrid/FlexContai
 import { ariaCheck } from '@fpsak-frontend/utils/validation/validators';
 import { getInntektsmeldinger, getBehandlingVersjon } from 'behandling/behandlingSelectors';
 import { getSelectedBehandlingId } from 'behandling/duck';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/uttakPeriodeType';

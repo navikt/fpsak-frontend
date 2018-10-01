@@ -10,7 +10,7 @@ import Panel from 'nav-frontend-paneler';
 import { Row, Column } from 'nav-frontend-grid';
 import { Fieldset } from 'nav-frontend-skjema';
 import { Undertekst, Undertittel, Normaltekst } from 'nav-frontend-typografi';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import moment from 'moment';
 
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';

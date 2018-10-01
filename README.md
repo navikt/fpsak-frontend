@@ -12,7 +12,11 @@ Monorepo for Frontend kode for vl-foreldrepenger.
 6. sette opp jenkins og tbd
 7. gjøre form pakken tilgjengelig med final-form og redux-form
 
-###Strukter (WIP)
+
+##ESLINT
+- eslint/eslintrc.dev.js 
+
+##Strukter (WIP)
 <pre>
 <code>
 +---eslint

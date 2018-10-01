@@ -11,7 +11,7 @@ import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
 import personopplysningPropType from 'behandling/proptypes/personopplysningPropType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/opplysningAdresseType';
-import getAddresses from '@fpsak-frontend/utils/personUtils';
+import { getAddresses } from '@fpsak-frontend/utils';
 import personstatusType from '@fpsak-frontend/kodeverk/personstatusType';
 import Region from '@fpsak-frontend/kodeverk/region';
 

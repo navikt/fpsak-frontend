@@ -9,7 +9,7 @@ import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { FlexContainer, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components/flexGrid';
 import { getBehandlingVersjon, getBehandlingFastsattOpptjeningFomDate, getBehandlingFastsattOpptjeningTomDate } from 'behandling/behandlingSelectors';
 import { getSelectedBehandlingId } from 'behandling/duck';

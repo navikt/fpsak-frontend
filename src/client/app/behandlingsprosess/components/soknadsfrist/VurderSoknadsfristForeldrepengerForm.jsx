@@ -13,7 +13,7 @@ import Panel from 'nav-frontend-paneler';
 
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { dateBeforeOrEqualToToday, hasValidDate, required } from '@fpsak-frontend/utils/validation/validators';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';

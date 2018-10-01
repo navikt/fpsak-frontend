@@ -6,7 +6,7 @@ import { routerActions } from 'react-router-redux';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import { replaceNorwegianCharacters } from '@fpsak-frontend/utils/languageUtils';
+import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { getAksjonspunkter, getSelectedBehandlingIdentifier, getBehandlingVersjon } from 'behandling/behandlingSelectors';
 import BehandlingsprosessPanel from 'behandlingsprosess/components/BehandlingsprosessPanel';
 import IverksetterVedtakStatusModal from 'behandlingsprosess/components/vedtak/IverksetterVedtakStatusModal';

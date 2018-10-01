@@ -9,7 +9,7 @@ import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { required } from '@fpsak-frontend/utils/validation/validators';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
-import { formatCurrencyNoKr, parseCurrencyInput } from '@fpsak-frontend/utils/currencyUtils';
+import { formatCurrencyNoKr, parseCurrencyInput } from '@fpsak-frontend/utils';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 

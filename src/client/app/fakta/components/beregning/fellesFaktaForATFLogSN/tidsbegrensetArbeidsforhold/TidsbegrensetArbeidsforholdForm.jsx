@@ -8,8 +8,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
 import { required } from '@fpsak-frontend/utils/validation/validators';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
-import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
+import { createVisningsnavnForAktivitet, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { sortArbeidsforholdList } from '../../ArbeidsforholdHelper';
 
 const kortvarigStringId = 'BeregningInfoPanel.TidsbegrensetArbFor.Arbeidsforhold';

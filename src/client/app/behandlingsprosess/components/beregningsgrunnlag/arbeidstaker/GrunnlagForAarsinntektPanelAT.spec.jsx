@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import GrunnlagForAarsinntektPanelAT, { GrunnlagForAarsinntektPanelATImpl as UnwrappedForm } from './GrunnlagForAarsinntektPanelAT';
 
 const bruttoBeregningBegrunnelse = 'Dette er en begrunnelse';

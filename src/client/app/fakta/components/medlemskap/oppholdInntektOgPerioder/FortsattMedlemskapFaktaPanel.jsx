@@ -11,7 +11,7 @@ import { getBehandlingSkjaringstidspunkt, getBehandlingMedlemEndredeOpplysninger
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { DatepickerField } from '@fpsak-frontend/form';
-import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { required, hasValidDate, dateAfterOrEqual } from '@fpsak-frontend/utils/validation/validators';
 
 const getParam = opplysning => ({ dato: moment(opplysning.fom).format(DDMMYYYY_DATE_FORMAT) });

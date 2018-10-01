@@ -5,16 +5,14 @@ import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { required } from '@fpsak-frontend/utils/validation/validators';
-import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { InputField } from '@fpsak-frontend/form';
 import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
 import Table from '@fpsak-frontend/shared-components/Table';
 import TableRow from '@fpsak-frontend/shared-components/TableRow';
 import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
-import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from '@fpsak-frontend/utils/currencyUtils';
+import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, DDMMYYYY_DATE_FORMAT, createVisningsnavnForAktivitet } from '@fpsak-frontend/utils';
 import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle } from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
 
 import styles from './fastsettATFLInntektForm.less';

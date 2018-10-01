@@ -2,7 +2,7 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import getAddresses from '@fpsak-frontend/utils/personUtils';
+import { getAddresses } from '@fpsak-frontend/utils';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/opplysningAdresseType';
 import opplysningsKilde from '@fpsak-frontend/kodeverk/opplysningsKilde';

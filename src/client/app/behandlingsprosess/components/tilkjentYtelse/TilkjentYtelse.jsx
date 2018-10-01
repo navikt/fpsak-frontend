@@ -5,7 +5,7 @@ import Timeline from 'react-visjs-timeline';
 import { injectIntl, intlShape } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { stonadskontoType, uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/uttakPeriodeType';
 import TimeLineData from './timeline/TimeLineData';

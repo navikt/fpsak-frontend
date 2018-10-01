@@ -10,7 +10,7 @@ import { EtikettFokus } from 'nav-frontend-etiketter';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
+import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils';
 
 import styles from './adressePanel.less';
 

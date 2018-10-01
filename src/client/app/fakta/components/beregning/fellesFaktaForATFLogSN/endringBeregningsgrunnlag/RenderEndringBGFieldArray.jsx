@@ -8,7 +8,6 @@ import {
   NavFieldGroup, InputField, SelectField, PeriodpickerField, DecimalField,
 } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils/validation/validators';
-import { isEmpty } from '@fpsak-frontend/utils/arrayUtils';
 import { getEndringBeregningsgrunnlagPerioder } from 'behandling/behandlingSelectors';
 import Image from '@fpsak-frontend/shared-components/Image';
 import addCircleIcon from '@fpsak-frontend/images/add-circle.svg';
@@ -18,8 +17,7 @@ import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
 import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-frontend/kodeverk/inntektskategorier';
-import { parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
-import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
+import { parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr, createVisningsnavnForAktivitet, isArrayEmpty } from '@fpsak-frontend/utils';
 import { getUniqueListOfArbeidsforhold, arbeidsforholdProptype } from '../../ArbeidsforholdHelper';
 
 import styles from './renderEndringBGFieldArray.less';
@@ -425,7 +423,7 @@ RenderEndringBGFieldArray.validate = (values) => {
     return arrayErrors;
   }
 
-  if (isEmpty(values)) {
+  if (isArrayEmpty(values)) {
     return null;
   }
 

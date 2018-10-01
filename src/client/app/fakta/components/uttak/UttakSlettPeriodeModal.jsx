@@ -7,7 +7,7 @@ import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';
 import FlexContainer from '@fpsak-frontend/shared-components/flexGrid/FlexContainer';
 import Modal from '@fpsak-frontend/shared-components/Modal';
 import moment from 'moment';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { TextAreaField } from '@fpsak-frontend/form';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';

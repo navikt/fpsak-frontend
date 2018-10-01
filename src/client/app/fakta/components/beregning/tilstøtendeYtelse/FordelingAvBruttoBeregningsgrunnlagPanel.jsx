@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FieldArray } from 'redux-form';
-import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
+import { formatCurrencyNoKr, createVisningsnavnForAktivitet } from '@fpsak-frontend/utils';
 import inntektskategorier from '@fpsak-frontend/kodeverk/inntektskategorier';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
 import RenderBruttoBGFordelingFieldArray from './RenderBruttoBGFordelingFieldArray';

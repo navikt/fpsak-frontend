@@ -18,8 +18,7 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus'
 import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
 import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-frontend/kodeverk/inntektskategorier';
-import { parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
-import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
+import { parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr, createVisningsnavnForAktivitet } from '@fpsak-frontend/utils';
 
 import Table from '@fpsak-frontend/shared-components/Table';
 import TableRow from '@fpsak-frontend/shared-components/TableRow';

@@ -8,16 +8,14 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Table from '@fpsak-frontend/shared-components/Table';
 import TableRow from '@fpsak-frontend/shared-components/TableRow';
 import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
-import { calcDaysAndWeeks } from '@fpsak-frontend/utils/dateUtils';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT, createVisningsnavnForAktivitet } from '@fpsak-frontend/utils';
 import Image from '@fpsak-frontend/shared-components/Image';
 import arrowLeftImageUrl from '@fpsak-frontend/images/arrow_left.svg';
 import arrowLeftFilledImageUrl from '@fpsak-frontend/images/arrow_left_filled.svg';
 import arrowRightImageUrl from '@fpsak-frontend/images/arrow_right.svg';
 import arrowRightFilledImageUrl from '@fpsak-frontend/images/arrow_right_filled.svg';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
-import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
 import { beregningsresultatPeriodePropType } from 'behandling/proptypes/beregningresultatMedUttaksplanPropType';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/uttakPeriodeType';
 

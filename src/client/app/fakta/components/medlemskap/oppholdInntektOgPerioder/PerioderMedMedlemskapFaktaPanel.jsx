@@ -20,7 +20,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
 import { required } from '@fpsak-frontend/utils/validation/validators';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 
 const headerTextCodes = [

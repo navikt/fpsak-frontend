@@ -9,7 +9,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { getBehandlingStatus, getPersonopplysning, getBehandlingRevurderingAvFortsattMedlemskapFom } from 'behandling/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';

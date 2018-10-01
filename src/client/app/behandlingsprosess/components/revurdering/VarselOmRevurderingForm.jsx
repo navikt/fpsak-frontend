@@ -21,7 +21,7 @@ import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandli
 import FodselSammenligningPanel from 'behandling/components/fodselSammenligning/FodselSammenligningPanel';
 import SettBehandlingPaVentModal from 'behandling/components/SettBehandlingPaVentModal';
 
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { required, minLength, hasValidText } from '@fpsak-frontend/utils/validation/validators';
 
 import styles from './varselOmRevurderingForm.less';

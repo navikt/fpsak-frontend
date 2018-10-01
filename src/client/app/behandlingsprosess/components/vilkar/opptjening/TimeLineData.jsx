@@ -11,7 +11,7 @@ import arrowRightFilledImageUrl from '@fpsak-frontend/images/arrow_right_filled.
 import Image from '@fpsak-frontend/shared-components/Image';
 import checkImg from '@fpsak-frontend/images/check.svg';
 import advarselImg from '@fpsak-frontend/images/remove.svg';
-import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import opptjeningAktivitetKlassifisering from '@fpsak-frontend/kodeverk/opptjeningAktivitetKlassifisering';
 
 

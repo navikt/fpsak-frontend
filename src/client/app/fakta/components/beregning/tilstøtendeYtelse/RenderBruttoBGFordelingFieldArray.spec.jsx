@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import { MockFieldsWithContent } from 'testHelpers/redux-form-test-helper';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { PeriodpickerField, SelectField, InputField } from '@fpsak-frontend/form';
 import { createAndelnavn } from './FordelingAvBruttoBeregningsgrunnlagPanel';
 import { createArbeidsperiodeString } from '../ArbeidsforholdHelper';

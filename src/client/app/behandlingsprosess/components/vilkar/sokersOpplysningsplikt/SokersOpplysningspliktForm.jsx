@@ -23,7 +23,7 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus'
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
 import { CheckboxField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { isObject } from '@fpsak-frontend/utils/objectUtils';
+import { isObject } from '@fpsak-frontend/utils';
 import { required } from '@fpsak-frontend/utils/validation/validators';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';

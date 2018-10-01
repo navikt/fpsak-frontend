@@ -14,7 +14,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { SelectField } from '@fpsak-frontend/form';
 import { required, hasValidInteger } from '@fpsak-frontend/utils/validation/validators';
 import VilkarType from '@fpsak-frontend/kodeverk/vilkarType';
-import { isEmpty } from '@fpsak-frontend/utils/objectUtils';
+import { isObjectEmpty } from '@fpsak-frontend/utils';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import OmsorgsovertakelseFaktaPanel from './OmsorgsovertakelseFaktaPanel';
@@ -158,7 +158,7 @@ OmsorgOgForeldreansvarFaktaForm.validate = ({ originalAntallBarn, antallBarn }) 
   if (antallBarn < 1 || antallBarn > originalAntallBarn) {
     errors.antallBarn = ([{ id: 'OmsorgOgForeldreansvarFaktaForm.AntallBarnValidation' }]);
   }
-  if (isEmpty(errors)) {
+  if (isObjectEmpty(errors)) {
     const res = hasValidInteger(antallBarn);
     if (res !== null) {
       errors.antallBarn = res;

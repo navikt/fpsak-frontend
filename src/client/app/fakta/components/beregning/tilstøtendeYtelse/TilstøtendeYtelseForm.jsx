@@ -5,7 +5,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { FormattedMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
-import { removeSpacesFromNumber } from '@fpsak-frontend/utils/currencyUtils';
+import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/beregningsgrunnlagAndeltyper';
 import { getTilstøtendeYtelse } from 'behandling/behandlingSelectors';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
