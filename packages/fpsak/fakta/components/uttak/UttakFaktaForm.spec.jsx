@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
 import { FormattedMessage } from 'react-intl';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';

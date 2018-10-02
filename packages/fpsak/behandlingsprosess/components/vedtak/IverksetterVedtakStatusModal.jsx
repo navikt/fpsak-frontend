@@ -24,7 +24,7 @@ import {
   getResultatstrukturFraOriginalBehandling,
 } from 'behandling/selectors/originalBehandlingSelectors';
 
-import innvilgetImageUrl from '@fpsak-frontend/images/innvilget_valgt.svg';
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 
 import styles from './iverksetterVedtakStatusModal.less';
 

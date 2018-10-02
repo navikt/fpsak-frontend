@@ -1,5 +1,5 @@
 import React from 'react';
-import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';

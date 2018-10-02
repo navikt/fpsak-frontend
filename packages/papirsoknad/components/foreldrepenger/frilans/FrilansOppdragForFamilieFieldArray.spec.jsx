@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-import { metaMock, MockFields } from 'testHelpers/redux-form-test-helper';
+import { metaMock, MockFields } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 
 import { DatepickerField } from '@fpsak-frontend/form';
 import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';

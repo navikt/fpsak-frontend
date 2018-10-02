@@ -4,9 +4,9 @@ import { Row } from 'nav-frontend-grid';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/navBrukerKjonn';
 import Image from '@fpsak-frontend/shared-components/Image';
-import urlMann from '@fpsak-frontend/images/mann.svg';
+import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 
-import urlKvinne from '@fpsak-frontend/images/kvinne.svg';
+import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import styles from './timeLineSokerEnsamSoker.less';
 
 /**

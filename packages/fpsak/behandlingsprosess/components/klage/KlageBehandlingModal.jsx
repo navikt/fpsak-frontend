@@ -6,7 +6,7 @@ import Modal from '@fpsak-frontend/shared-components/Modal';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import innvilgetImageUrl from '@fpsak-frontend/images/innvilget_valgt.svg';
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import Image from '@fpsak-frontend/shared-components/Image';
 
 import styles from './klageBehandlingModal.less';

@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
 import Image from '@fpsak-frontend/shared-components/Image';

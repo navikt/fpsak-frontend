@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import BehandlingResultatType from '@fpsak-frontend/kodeverk/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';

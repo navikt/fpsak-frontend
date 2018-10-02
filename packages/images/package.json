@@ -1,7 +1,0 @@
-{
-  "name": "@fpsak-frontend/images",
-  "version": "1.0.0",
-  "main": "bundle.js",
-  "license": "MIT",
-  "private": true
-}

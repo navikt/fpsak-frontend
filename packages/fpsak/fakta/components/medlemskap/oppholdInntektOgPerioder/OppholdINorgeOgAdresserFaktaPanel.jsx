@@ -17,8 +17,8 @@ import { required } from '@fpsak-frontend/utils/validation/validators';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import Image from '@fpsak-frontend/shared-components/Image';
 import PeriodLabel from '@fpsak-frontend/shared-components/PeriodLabel';
-import checkImage from '@fpsak-frontend/images/check.svg';
-import avslaattImage from '@fpsak-frontend/images/avslaatt.svg';
+import checkImage from '@fpsak-frontend/assets/images/check.svg';
+import avslaattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import BostedSokerView from 'fakta/components/BostedSokerView';
 
 import styles from './oppholdINorgeOgAdresserFaktaPanel.less';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import { expect } from 'chai';
 
 import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';

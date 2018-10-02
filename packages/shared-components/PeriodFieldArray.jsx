@@ -4,7 +4,7 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 import { NavFieldGroup } from '@fpsak-frontend/form';
-import addCircleIcon from '@fpsak-frontend/images/add-circle.svg';
+import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import VerticalSpacer from './VerticalSpacer';
 import Image from './Image';
 

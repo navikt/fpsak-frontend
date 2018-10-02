@@ -11,7 +11,7 @@ import { required } from '@fpsak-frontend/utils/validation/validators';
 import { getFaktaOmBeregning, getAksjonspunkter } from 'behandling/behandlingSelectors';
 import { getBehandlingFormSyncErrors } from 'behandling/behandlingForm';
 import Image from '@fpsak-frontend/shared-components/Image';
-import addCircleIcon from '@fpsak-frontend/images/add-circle.svg';
+import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';

@@ -7,13 +7,13 @@ import {
 } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import arrowLeftImageUrl from '@fpsak-frontend/images/arrow_left.svg';
-import arrowLeftFilledImageUrl from '@fpsak-frontend/images/arrow_left_filled.svg';
-import arrowRightImageUrl from '@fpsak-frontend/images/arrow_right.svg';
-import arrowRightFilledImageUrl from '@fpsak-frontend/images/arrow_right_filled.svg';
+import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
+import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
+import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
+import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
 import Image from '@fpsak-frontend/shared-components/Image';
-import checkImg from '@fpsak-frontend/images/check.svg';
-import advarselImg from '@fpsak-frontend/images/remove.svg';
+import checkImg from '@fpsak-frontend/assets/images/check.svg';
+import advarselImg from '@fpsak-frontend/assets/images/remove.svg';
 import {
   ISO_DATE_FORMAT,
   DDMMYYYY_DATE_FORMAT,

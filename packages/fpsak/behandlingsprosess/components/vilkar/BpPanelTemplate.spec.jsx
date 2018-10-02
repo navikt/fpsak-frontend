@@ -5,7 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import VilkarResultPanel from 'behandlingsprosess/components/vilkar/VilkarResultPanel';
-import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
 import BpPanelTemplate from './BpPanelTemplate';
 

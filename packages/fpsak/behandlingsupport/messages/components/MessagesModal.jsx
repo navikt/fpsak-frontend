@@ -8,7 +8,7 @@ import { Element } from 'nav-frontend-typografi';
 
 import Image from '@fpsak-frontend/shared-components/Image';
 
-import innvilgetImageUrl from '@fpsak-frontend/images/innvilget_valgt.svg';
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import styles from './MessagesModal.less';
 /**
  * MessagesModal

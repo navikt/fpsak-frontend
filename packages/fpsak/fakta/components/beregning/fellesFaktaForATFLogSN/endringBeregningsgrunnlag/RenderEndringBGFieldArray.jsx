@@ -10,7 +10,7 @@ import {
 import { required } from '@fpsak-frontend/utils/validation/validators';
 import { getEndringBeregningsgrunnlagPerioder } from 'behandling/behandlingSelectors';
 import Image from '@fpsak-frontend/shared-components/Image';
-import addCircleIcon from '@fpsak-frontend/images/add-circle.svg';
+import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';

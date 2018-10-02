@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
-import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { DatepickerField, InputField } from '@fpsak-frontend/form';

@@ -5,7 +5,6 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-
   },
   "peerDependencies": {
     "react": "^16.4.2",

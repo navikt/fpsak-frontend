@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { FormattedMessage } from 'react-intl';
 
 import { Normaltekst } from 'nav-frontend-typografi';
-import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import TableRow from '@fpsak-frontend/shared-components/TableRow';
 import periodeResultatType from '@fpsak-frontend/kodeverk/periodeResultatType';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';

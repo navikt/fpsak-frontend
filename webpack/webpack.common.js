@@ -7,7 +7,6 @@ const APP_DIR = path.join(PACKAGE_DIR, 'fpsak');
 const config = {
   resolve: {
     alias: {
-      testHelpers: path.join(ROOT_DIR, 'testHelpers'),
       app: APP_DIR,
       behandling: path.join(APP_DIR, 'behandling'),
       behandlingmenu: path.join(APP_DIR, 'behandlingmenu'),

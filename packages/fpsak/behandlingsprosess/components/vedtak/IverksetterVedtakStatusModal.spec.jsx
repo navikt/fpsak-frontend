@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
 import IverksetterVedtakStatusModal from './IverksetterVedtakStatusModal';
 

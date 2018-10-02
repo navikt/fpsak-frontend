@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 
-import logoUrl from '@fpsak-frontend/images/nav.svg';
-import navAnsattIkonUrl from '@fpsak-frontend/images/nav_ansatt.svg';
-import rettskildeneIkonUrl from '@fpsak-frontend/images/rettskildene.svg';
-import systemrutineIkonUrl from '@fpsak-frontend/images/rutine.svg';
+import logoUrl from '@fpsak-frontend/assets/images/nav.svg';
+import navAnsattIkonUrl from '@fpsak-frontend/assets/images/nav_ansatt.svg';
+import rettskildeneIkonUrl from '@fpsak-frontend/assets/images/rettskildene.svg';
+import systemrutineIkonUrl from '@fpsak-frontend/assets/images/rutine.svg';
 
 import Image from './Image';
 import ErrorMessagePanel from './ErrorMessagePanel';

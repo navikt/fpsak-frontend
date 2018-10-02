@@ -28,6 +28,6 @@
     "@fpsak-frontend/person": "1.0.0",
     "@fpsak-frontend/form": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
-    "@fpsak-frontend/images": "1.0.0"
+    "@fpsak-frontend/assets": "1.0.0"
   }
 }

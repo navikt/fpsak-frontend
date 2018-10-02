@@ -12,9 +12,9 @@ import {
 } from 'nav-frontend-grid';
 
 import { dateFormat, timeFormat } from '@fpsak-frontend/utils/dateUtils';
-import chevronUp from '@fpsak-frontend/images/pil_opp.svg';
-import chevronDown from '@fpsak-frontend/images/pil_ned.svg';
-import infoImageUrl from '@fpsak-frontend/images/behandle.svg';
+import chevronUp from '@fpsak-frontend/assets/images/pil_opp.svg';
+import chevronDown from '@fpsak-frontend/assets/images/pil_ned.svg';
+import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
 
 import VerticalSpacer from './VerticalSpacer';
 import Image from './Image';

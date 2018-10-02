@@ -13,8 +13,9 @@ import {
   getCrashMessage, getErrorMessageCodeWithParams, getErrorMessages, getFunksjonellTid, getNavAnsattName,
   getRettskildeUrl, getSystemrutineUrl, removeErrorMessage, showCrashMessage,
 } from '@fpsak-frontend/data/error/duck';
+import '@fpsak-frontend/assets/styles/global.less';
 import AppConfigResolver from './AppConfigResolver';
-import './global.less';
+
 
 /**
  * AppIndex

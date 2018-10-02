@@ -5,7 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import personstatusType from '@fpsak-frontend/kodeverk/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/sivilstandType';
-import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 
 import { AdressePanel } from './AdressePanel';
 

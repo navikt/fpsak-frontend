@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import { intlMock } from 'testHelpers/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import { UttakImpl as Uttak } from './Uttak';
 
 describe('<Uttak>', () => {

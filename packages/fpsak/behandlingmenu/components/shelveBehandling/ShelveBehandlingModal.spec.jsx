@@ -2,7 +2,7 @@ import React from 'react';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/behandlingResultatType';
 import { ShelveBehandlingModalImpl } from './ShelveBehandlingModal';
 

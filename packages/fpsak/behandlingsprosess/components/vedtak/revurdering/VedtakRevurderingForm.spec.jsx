@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
-import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 import BehandlingResultatType from '@fpsak-frontend/kodeverk/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
 import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';

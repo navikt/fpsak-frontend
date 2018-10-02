@@ -37,11 +37,10 @@
     "sinon": "^5.0.10",
     "sinon-chai": "^3.2.0",
     "enzyme": "^3.4.1",
-    "@fpsak-frontend/images": "1.0.0",
+    "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "@fpsak-frontend/data": "1.0.0",
     "@fpsak-frontend/form": "1.0.0",
-    "@fpsak-frontend/fagsak-search": "1.0.0",
-    "@fpsak-frontend/fpsak": "1.0.0"
+    "@fpsak-frontend/fagsak-search": "1.0.0"
   }
 }

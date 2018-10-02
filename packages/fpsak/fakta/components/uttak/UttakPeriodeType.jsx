@@ -6,10 +6,10 @@ import utsettelseArsakCodes, { utsettelseArsakTexts } from '@fpsak-frontend/kode
 import overforingArsakCodes, { overforingArsakTexts } from '@fpsak-frontend/kodeverk/overforingArsakCodes';
 import Image from '@fpsak-frontend/shared-components/Image';
 import { dateFormat, calcDaysAndWeeks, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import editPeriodeIcon from '@fpsak-frontend/images/endre.svg';
-import editPeriodeDisabledIcon from '@fpsak-frontend/images/endre_disablet.svg';
-import removePeriod from '@fpsak-frontend/images/remove.svg';
-import removePeriodDisabled from '@fpsak-frontend/images/remove_disabled.svg';
+import editPeriodeIcon from '@fpsak-frontend/assets/images/endre.svg';
+import editPeriodeDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
+import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
+import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
 import styles from './uttakPeriodeType.less';
 
 const formatArbeidstidprosent = prosent => `${prosent}%`;

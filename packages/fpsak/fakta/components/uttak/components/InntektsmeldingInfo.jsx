@@ -19,7 +19,7 @@ import FlexColumn from '@fpsak-frontend/shared-components/flexGrid/FlexColumn';
 import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import Image from '@fpsak-frontend/shared-components/Image';
-import advarselIkonUrl from '@fpsak-frontend/images/advarsel.svg';
+import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 
 import styles from '../uttakPeriode.less';
 

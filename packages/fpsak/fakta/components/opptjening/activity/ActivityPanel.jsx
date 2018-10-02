@@ -30,10 +30,10 @@ import {
   PeriodpickerField, RadioGroupField, RadioOption, TextAreaField, SelectField,
 } from '@fpsak-frontend/form';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import arrowLeftImageUrl from '@fpsak-frontend/images/arrow_left.svg';
-import arrowLeftFilledImageUrl from '@fpsak-frontend/images/arrow_left_filled.svg';
-import arrowRightImageUrl from '@fpsak-frontend/images/arrow_right.svg';
-import arrowRightFilledImageUrl from '@fpsak-frontend/images/arrow_right_filled.svg';
+import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
+import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
+import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
+import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
 import ActivityDataSubPanel from './ActivityDataSubPanel';
 
 import styles from './activityPanel.less';

@@ -10,8 +10,8 @@ import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';
 import FlexContainer from '@fpsak-frontend/shared-components/flexGrid/FlexContainer';
 import Image from '@fpsak-frontend/shared-components/Image';
 import classnames from 'classnames/bind';
-import overlapp from '@fpsak-frontend/images/overlapp.svg';
-import tomPeriode from '@fpsak-frontend/images/tom_periode.svg';
+import overlapp from '@fpsak-frontend/assets/images/overlapp.svg';
+import tomPeriode from '@fpsak-frontend/assets/images/tom_periode.svg';
 import UttakPeriodeType from './UttakPeriodeType';
 import UttakPeriodeInnhold from './UttakPeriodeInnhold';
 

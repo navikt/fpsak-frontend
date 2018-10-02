@@ -13,8 +13,8 @@ import Image from '@fpsak-frontend/shared-components/Image';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { NavFieldGroup } from '@fpsak-frontend/form';
 import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import addCircleIcon from '@fpsak-frontend/images/add-circle.svg';
-import removeIcon from '@fpsak-frontend/images/remove.svg';
+import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
+import removeIcon from '@fpsak-frontend/assets/images/remove.svg';
 import RegistrerVirksomhetModalForm from './RegistrerVirksomhetModalForm';
 
 import styles from './registrerVirksomhetPanel.less';

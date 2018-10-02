@@ -1,7 +1,7 @@
-import innvilgetIkonUrl from '@fpsak-frontend/images/tilkjent_ytelse.svg';
-import innvilgetValgtIkonUrl from '@fpsak-frontend/images/tilkjent_ytelse_valgt.svg';
-import ikkeVurdertIkonUrl from '@fpsak-frontend/images/tilkjent_ytelse_disable.svg';
-import innvilgetHoverIkonUrl from '@fpsak-frontend/images/tilkjent_ytelse_hover.svg';
+import innvilgetIkonUrl from '@fpsak-frontend/assets/images/tilkjent_ytelse.svg';
+import innvilgetValgtIkonUrl from '@fpsak-frontend/assets/images/tilkjent_ytelse_valgt.svg';
+import ikkeVurdertIkonUrl from '@fpsak-frontend/assets/images/tilkjent_ytelse_disable.svg';
+import innvilgetHoverIkonUrl from '@fpsak-frontend/assets/images/tilkjent_ytelse_hover.svg';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
 

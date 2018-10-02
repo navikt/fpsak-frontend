@@ -13,7 +13,7 @@ import {
   Undertittel,
 } from 'nav-frontend-typografi';
 
-import infoImageUrl from '@fpsak-frontend/images/behandle.svg';
+import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
 import Image from './Image';
 import Modal from './Modal';
 import ElementWrapper from './ElementWrapper';

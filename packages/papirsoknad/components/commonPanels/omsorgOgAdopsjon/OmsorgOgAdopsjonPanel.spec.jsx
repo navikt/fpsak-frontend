@@ -4,8 +4,8 @@ import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 
-import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
-import { MockFields } from 'testHelpers/redux-form-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { MockFields } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 import familieHendelseType from '@fpsak-frontend/kodeverk/familieHendelseType';
 import { OmsorgOgAdopsjonPanelImpl, FodselsDatoFields } from './OmsorgOgAdopsjonPanel';
 
