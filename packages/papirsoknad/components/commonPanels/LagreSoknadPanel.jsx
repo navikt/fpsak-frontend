@@ -81,6 +81,7 @@ export class LagreSoknadPanel extends Component {
                 <Column xs="12">
                   <div>
                     <div className={styles.right}>
+                      {!ufullstendigSoeknad && (
                       <Hovedknapp
                         id="saveButton"
                         mini
@@ -91,6 +92,8 @@ export class LagreSoknadPanel extends Component {
                       >
                         {formatMessage({ id: 'Registrering.SaveApplication.SaveButton' })}
                       </Hovedknapp>
+                      )}
+                      {ufullstendigSoeknad && (
                       <Hovedknapp
                         id="endButton"
                         htmlType="button"
@@ -102,6 +105,7 @@ export class LagreSoknadPanel extends Component {
                       >
                         {formatMessage({ id: 'Registrering.SaveApplication.EndButton' })}
                       </Hovedknapp>
+                      )}
                     </div>
                   </div>
                 </Column>

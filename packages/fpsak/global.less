@@ -1,4 +1,7 @@
-// CSS-endringer för felleskomponenter og globaler så som fra core/og muligen import fra alla andra komponenter
+/*
+CSS-endringer för felleskomponenter og globaler så som fra
+core/og muligen import fra alla andra komponenter
+ */
 @import '@{coreModulePath}nav-frontend-core/less/core';
 @import './dayPicker';
 
@@ -18,13 +21,13 @@
 }
 
 :global(.lenke) {
-  color: @navBla;
-  border: 0;
-  padding: 0;
   background: none;
-  text-decoration: none;
+  border: 0;
   border-bottom: solid 1px @navGra40;
+  color: @navBla;
   cursor: pointer;
+  padding: 0;
+  text-decoration: none;
 
   &:hover,
   &--hover {
@@ -33,14 +36,14 @@
 
   &:focus,
   &--focus {
-    outline: none;
     background-color: @orangeFocus;
+    outline: none;
   }
 
   &:active,
   &--active {
-    color: @navDypBla;
     border-bottom-color: @navDypBla;
+    color: @navDypBla;
   }
 
   &--frittstaende {
@@ -59,7 +62,7 @@
  }
 
 :global(.vis-timeline) {
-  border: 0;  // lesshint zeroUnit: false
+  border: 0;
 }
 
 :global(.currentDate) {
@@ -136,14 +139,12 @@
 }
 
 :global(.vis-foreground .vis-group) {
-  border-bottom: none;
+  border-bottom: 0;
 }
 
 :global(.vis-text.vis-major > div) {
   margin-top: 12px;
 }
-
-
 
 :global(.opptjening .vis-text.vis-major > div) {
   margin-top: 0px;
@@ -170,7 +171,6 @@
       visibility: visible !important;  // lesshint important: false
       width: 100%;
   } */
-
 }
 
 :global(.vis-item.vis-range) {
@@ -186,17 +186,18 @@
 }
 
 :global(.vis-item) {
-  transition: transform 0.2s;
   top: 5px;
+  transition: transform 0.2s;
 
   &:hover {
     box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
     filter: brightness(80%);
-    transform: translateY(-3px);
     opacity: 1;
+    transform: translateY(-3px);
   }
+
   &:active {
-    box-shadow: 0 4px 5px rgba(0,0,0,.2);
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
     filter: brightness(95%);
     transform: translateY(-2px);
   }
@@ -218,13 +219,13 @@
 
 :global(.gradert) {
   background-color: @navGronn;
-  background-image: repeating-linear-gradient(45deg, transparent, transparent 4px, @navGronnLighten40 4px, @navGronnLighten40 8px); // lesshint maxCharPerLi|ne: false
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 4px, @navGronnLighten40 4px, @navGronnLighten40 8px); // lesshint-disable maxCharPerLine
   opacity: 0.9;
 }
 
 :global(.gradert.vis-item.vis-selected) {
   background-color: @navGronn;
-  background-image: repeating-linear-gradient(45deg, transparent, transparent 4px, @navGronnLighten60 4px, @navGronnLighten60 8px); // lesshint maxCharPerLi|ne: false
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 4px, @navGronnLighten60 4px, @navGronnLighten60 8px); // lesshint-disable maxCharPerLine
   opacity: 1;
 
   &:hover {
@@ -315,9 +316,9 @@
   background-color: @navGronn;
   border-color: @navGronn;
   border-radius: 8px;
-  opacity: 0.5;
   height: 12px;
-  top: 12px !important; // lesshint important: false
+  opacity: 0.5;
+  top: 12px !important; // lesshint-disable importantRule
 
   &:active {
     background-color: @navGronn;
@@ -346,14 +347,14 @@
 :global(.innvilgetnullprosent.vis-item.vis-selected) {
   background-color: transparent;
   border-radius: 8px;
-  //  box-shadow: 0 3px 20px rgba(0, 0, 0, 0.2);  // lesshint zeroUnit: false
+  //  box-shadow: 0 3px 20px rgba(0, 0, 0, 0.2);
   opacity: 1;
 }
 
 :global(.opptjening .vis-center) {
-  border-right-style: none;
   border-bottom: 1px solid grey;
   border-left-style: none;
+  border-right-style: none;
 }
 
 :global(.opptjening .vis-text) {
@@ -369,10 +370,6 @@
 :global(.opptjening .vis-label) {
   border-bottom: 0px solid;
   text-align: right;
-}
-
-:global(.opptjening .vis-time-axis .vis-grid.vis-vertical) {
-  //  border-left: 0px solid;
 }
 
 :global(.opptjening .vis-panel.vis-left) {
@@ -410,18 +407,6 @@
   border-top: 1px solid darkgray;
 }
 
-:global(.opptjening .vis-grid.vis-vertical) {
-//  display: none;
-}
-
-:global(.godkjentundefined) {
-
-}
-
-:global(.godkjentdeclined) {
-
-}
-
 :global(.vis-timeline.vis-bottom) {
   animation-duration: 2s;
   animation-name: fadeIn;
@@ -450,11 +435,11 @@
   }
 }
 
-:global(.opptjening .vis-foreground .vis-group:last-child)  {
+:global(.opptjening .vis-foreground .vis-group:last-child) {
   border-bottom: 1px solid darkgray;
 }
 
-:global(.timeLineLight .vis-foreground .vis-group:last-child)  {
+:global(.timeLineLight .vis-foreground .vis-group:last-child) {
   border-left: 1px solid darkgray;
 }
 
@@ -466,16 +451,13 @@
   border-left: 1px solid darkgray;
   border-right: 1px solid darkgray;
 }
+
 :global(.opptjening .currentDate) {
   display: none;
 
   &:after {
     display: none;
   }
-}
-
-:global(.opptjening .vis-text .vis-major .vis-measure) {
-//  display: none;
 }
 
 :global(.godkjent) {

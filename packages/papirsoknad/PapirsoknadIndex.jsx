@@ -16,7 +16,6 @@ import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
 import { getRestApiFinished, getRestApiError } from '@fpsak-frontend/data/duck';
 import PersonIndex from '@fpsak-frontend/person/PersonIndex';
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-
 import requireProps from 'app/data/requireProps';
 import {
   getSelectedBehandlingIdentifier, getBehandlingVersjon, getBehandlingIsOnHold, getAksjonspunkter,
