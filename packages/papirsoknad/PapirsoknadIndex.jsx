@@ -11,7 +11,7 @@ import { routerActions } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { ErrorTypes } from 'app/ErrorTypes';
+import { ErrorTypes } from '@fpsak-frontend/data/error/ErrorTypes';
 import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
 import { getRestApiFinished, getRestApiError } from '@fpsak-frontend/data/duck';
 import PersonIndex from '@fpsak-frontend/person/PersonIndex';

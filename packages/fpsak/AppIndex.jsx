@@ -5,17 +5,15 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 import moment from 'moment';
-
-import { parseQueryString } from '@fpsak-frontend/utils/urlUtils';
+import { parseQueryString } from '@fpsak-frontend/utils';
 import Header from '@fpsak-frontend/shared-components/Header';
 import Home from '@fpsak-frontend/shared-components/Home';
 import LanguageProvider from '@fpsak-frontend/shared-components/LanguageProvider';
-import AppConfigResolver from './AppConfigResolver';
 import {
   getCrashMessage, getErrorMessageCodeWithParams, getErrorMessages, getFunksjonellTid, getNavAnsattName,
   getRettskildeUrl, getSystemrutineUrl, removeErrorMessage, showCrashMessage,
-} from './duck';
-
+} from '@fpsak-frontend/data/error/duck';
+import AppConfigResolver from './AppConfigResolver';
 import './global.less';
 
 /**

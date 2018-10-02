@@ -1,4 +1,4 @@
-import { buildPath, formatQueryString, parseQueryString } from '@fpsak-frontend/utils/urlUtils';
+import { buildPath, formatQueryString, parseQueryString } from '@fpsak-frontend/utils';
 import skjermlenkeCodes from '@fpsak-frontend/kodeverk/skjermlenkeCodes';
 
 export const fagsakPath = '/fagsak/:saksnummer(\\d+)/';

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { errorOfType, ErrorTypes, getErrorResponseData } from 'app/ErrorTypes';
+import { errorOfType, ErrorTypes, getErrorResponseData } from '@fpsak-frontend/data/error/ErrorTypes';
 import {
   getRestApiData, getRestApiError, getRestApiFinished, getRestApiStarted,
 } from '@fpsak-frontend/data/duck';

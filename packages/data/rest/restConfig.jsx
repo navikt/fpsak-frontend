@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-import { dateFormat, timeFormat } from '@fpsak-frontend/utils/dateUtils';
-import { addErrorMessage, addErrorMessageCode } from 'app/duck';
-import { isHandledError, is401Error, is418Error } from 'app/ErrorTypes';
+import { dateFormat, timeFormat } from '@fpsak-frontend/utils';
+import { addErrorMessage, addErrorMessageCode } from '../error/duck';
+import { isHandledError, is401Error, is418Error } from '../error/ErrorTypes';
 import asyncPollingStatus from './redux/asyncPollingStatus';
 import blobParser from './blobParser';
 
@@ -27,7 +27,6 @@ const handleSuccess = (store, response) => {
   }
   return response;
 };
-
 
 const handleError = async (store, error) => {
   const response = error && error.response ? error.response : undefined;

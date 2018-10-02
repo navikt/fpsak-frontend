@@ -8,7 +8,7 @@ import { behandlingSupportReducer as behandlingSupportContext } from 'behandling
 import { faktaReducer as faktaContext } from 'fakta/duck';
 import { papirsoknadReducer as papirsoknadContext } from '@fpsak-frontend/papirsoknad/duck';
 import { dataReducer as dataContext } from '@fpsak-frontend/data/duck';
-import { errorHandlingReducer as errorHandlingContext } from './duck';
+import { errorHandlingReducer as errorHandlingContext } from '@fpsak-frontend/data/error/duck';
 
 export default combineReducers({
   errorHandlingContext,
