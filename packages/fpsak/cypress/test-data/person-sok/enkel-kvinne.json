@@ -1,0 +1,19 @@
+{
+  "kjonn": "Kvinne",
+  "alder": "Over 18",
+  "kode": "Ingen kode",
+  "statsborgerskap": "NOR",
+  "sivilstand": "Ugift",
+  "personStatus": "NA",
+  "antallBarn": [
+    {
+      "antallBarn": 0,
+      "under6mnd": false
+    }
+  ],
+  "personhistorikkstatus": "NA",
+  "egenAnsatt": "NA",
+  "gjeldendeAdressetype": "NA",
+  "redigerbar": "NA",
+  "dataSett": "TD-BESTILLING"
+}
