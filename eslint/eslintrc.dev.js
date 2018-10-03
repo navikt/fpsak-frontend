@@ -1,7 +1,8 @@
 const merge = require('webpack-merge');
-const common = require('./eslintrc.common.js');
 const path = require('path');
-var OFF = 0;
+const common = require('./eslintrc.common.js');
+
+const OFF = 0;
 
 const config = {
   settings: {
