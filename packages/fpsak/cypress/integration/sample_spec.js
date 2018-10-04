@@ -5,9 +5,9 @@ if (Cypress.env('baseUrl') === 'http://localhost:9000') {
   environment = 't10';
 }
 const testHubBase = 'http://e34apvl00250.devillo.no:8051';
-const cookieUrl = testHubBase + '/envconfig/getconfig/' + environment;
-const sokPersonUrl = testHubBase + '/person/sokperson';
-const foreldrepengesoknadUrl = testHubBase + '/foreldrepengesoknad/sendviafordeling/' + environment;
+const cookieUrl = `${testHubBase}/envconfig/getconfig/${environment}`;
+const sokPersonUrl = `${testHubBase}/person/sokperson`;
+const foreldrepengesoknadUrl = `${testHubBase}/foreldrepengesoknad/sendviafordeling/${environment}`;
 const enkelKvinneSok = require('../test-data/person-sok/enkel-kvinne');
 const enkelForeldrepengeSoknad = require('../test-data/foreldrepengesoknad-sendviafordeling/enkel-soknad');
 
@@ -19,7 +19,7 @@ const pollFagsakReady = function (fnr) {
       searchString: fnr,
     },
   })
-    .then(function (resp) {
+    .then((resp) => {
       if (resp.body.length > 0) {
         console.log(resp);
       } else {
@@ -30,12 +30,12 @@ const pollFagsakReady = function (fnr) {
     });
 };
 
-describe('My First Cypress Test', function () {
-  before(function () {
+describe('My First Cypress Test', () => {
+  before(() => {
     // logger inn
     Cypress.Cookies.debug(false);
     cy.request(cookieUrl)
-      .then(function (resp) {
+      .then((resp) => {
         cy.setCookie('ID_token', resp.body.token);
         cy.setCookie('refresh_token', resp.body.refreshToken);
       });
@@ -45,27 +45,27 @@ describe('My First Cypress Test', function () {
       method: 'POST',
       body: enkelKvinneSok,
     })
-      .then(function (sokPersonResp) {
+      .then((sokPersonResp) => {
         enkelForeldrepengeSoknad.fnr = sokPersonResp.body.fnr;
         cy.request({
           url: foreldrepengesoknadUrl,
           method: 'POST',
           body: enkelForeldrepengeSoknad,
         })
-          .then(function (result) {
+          .then((result) => {
             console.log(result);
-            //pollFagsakReady(enkelForeldrepengeSoknad.fnr)
+            // pollFagsakReady(enkelForeldrepengeSoknad.fnr)
           });
       });
   });
 
-  beforeEach(function () {
+  beforeEach(() => {
     Cypress.Cookies.preserveOnce('ID_token', 'refresh_token');
   });
 
-  it('Besøker FPSAK og gjør et søk etter en sak', function () {
+  it('Besøker FPSAK og gjør et søk etter en sak', () => {
     cy.visit('/');
     cy.get('input#searchString')
-      .type(enkelForeldrepengeSoknad.fnr + '{enter}');
+      .type(`${enkelForeldrepengeSoknad.fnr}{enter}`);
   });
 });
