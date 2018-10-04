@@ -2,6 +2,7 @@
 Monorepo for Frontend kode for vl-foreldrepenger.
 
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
+[![Cypress.io tests](https://img.shields.io/badge/cypress.io-tests-green.svg?style=flat-square)](https://cypress.io)
 
 ##TODO
 1. omstrukturere client/src
