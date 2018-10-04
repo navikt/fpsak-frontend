@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
-import PersonIndex from '@fpsak-frontend/person/PersonIndex';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import SearchForm from '@fpsak-frontend/shared-components/fagsak-search/SearchForm';
+import FagsakList from '@fpsak-frontend/shared-components/fagsak-search/FagsakList';
+import PersonIndex from 'person/PersonIndex';
 import fagsakPropType from 'fagsak/fagsakPropType';
-import SearchForm from './SearchForm';
-import FagsakList from './FagsakList';
+
 
 import styles from './fagsakSearch.less';
 

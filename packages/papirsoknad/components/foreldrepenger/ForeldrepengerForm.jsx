@@ -4,6 +4,7 @@ import {
 } from 'redux-form';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+// todo dep
 import { getFagsakPerson } from 'fagsak/fagsakSelectors';
 import familieHendelseType from '@fpsak-frontend/kodeverk/familieHendelseType';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';

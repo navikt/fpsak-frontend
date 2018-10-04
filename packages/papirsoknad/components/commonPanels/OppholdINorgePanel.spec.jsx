@@ -7,7 +7,7 @@ import {
   invalidDateMessage, dateNotBeforeOrEqualMessage, dateRangesOverlappingMessage,
   dateNotAfterOrEqualMessage, isRequiredMessage,
 } from '@fpsak-frontend/utils/validation/messages';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 import OppholdINorgePanel, { OppholdINorgePanelImpl } from './OppholdINorgePanel';
 

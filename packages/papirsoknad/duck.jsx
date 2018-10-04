@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import { makeRestApiRequest, resetRestApi } from '@fpsak-frontend/data/duck';
 import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
+// todo dep
 import { getAksjonspunkter } from 'behandling/behandlingSelectors';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
@@ -11,7 +12,6 @@ import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
 import naringsvirksomhetType from '@fpsak-frontend/kodeverk/naringsvirksomhetType';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import PropTypes from 'prop-types';
 
 const naringsvirksomhetTypeOrder = {
   [naringsvirksomhetType.DAGMAMMA]: 1,

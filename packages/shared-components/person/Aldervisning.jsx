@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
-
-import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
+import DateLabel from '../DateLabel';
 
 import styles from './aldervisning.less';
 
@@ -12,6 +11,11 @@ import styles from './aldervisning.less';
  *
  * Presentasjonskomponent. Definerer visning av personens alder. (Søker)
  */
+
+const renderDød = dodsdato => (
+  dodsdato ? <DateLabel dateString={dodsdato} /> : <FormattedMessage id="Person.ManglerDodsdato" />
+);
+
 const AlderVisning = ({
   erDod,
   alder,
@@ -20,21 +24,18 @@ const AlderVisning = ({
   if (erDod) {
     return (
       <Normaltekst className={styles.displayInline}>
-        (
-        { dodsdato
-          ? <DateLabel dateString={dodsdato} />
-          : <FormattedMessage id="Person.ManglerDodsdato" />
-      }
-)
+        {'('}
+        { renderDød(dodsdato) }
+        {')'}
       </Normaltekst>
     );
   }
 
   return (
     <span>
-(
+      {'('}
       <FormattedMessage id="Person.Age" values={{ age: alder }} />
-)
+      {')'}
     </span>
   );
 };

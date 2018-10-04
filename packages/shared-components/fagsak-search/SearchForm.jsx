@@ -9,20 +9,14 @@ import { InputField } from '@fpsak-frontend/form';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Row, Column } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import Image from '@fpsak-frontend/shared-components/Image';
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import { hasValidSaksnummerOrFodselsnummerFormat } from '@fpsak-frontend/utils/validation/validators';
-
+import VerticalSpacer from '../VerticalSpacer';
+import Image from '../Image';
 
 import styles from './searchForm.less';
 
-const isButtonDisabled = (searchStringObject, searchStartedObject) => {
-  if (searchStartedObject.searchStarted || searchStringObject.searchString.length < 1) {
-    return true;
-  }
-  return false;
-};
+const isButtonDisabled = (searchStringObject, searchStartedObject) => !!(searchStartedObject.searchStarted || searchStringObject.searchString.length < 1);
 
 /**
  * SearchForm

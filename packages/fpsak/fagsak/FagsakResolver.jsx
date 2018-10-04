@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 import { getBehandlingerIds } from 'behandling/selectors/behandlingerSelectors';
 import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
-import { resetFagsakSearch as resetFagsakSearchActionCreator } from '@fpsak-frontend/fagsak-search/duck';
+import { resetFagsakSearch as resetFagsakSearchActionCreator } from 'fagsakSearch/duck';
 import { removeErrorMessage } from '@fpsak-frontend/data/error/duck';
 import {
   getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling, pathToBehandlinger, pathToMissingPage,

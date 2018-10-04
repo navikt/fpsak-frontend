@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
 import { hasValidDate, dateAfterOrEqual, maxLength } from '@fpsak-frontend/utils/validation/validators';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { FlexContainer, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
 

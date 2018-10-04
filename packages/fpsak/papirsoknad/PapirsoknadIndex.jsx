@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 import { ErrorTypes } from '@fpsak-frontend/data/error/ErrorTypes';
 import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
 import { getRestApiFinished, getRestApiError } from '@fpsak-frontend/data/duck';
-import PersonIndex from '@fpsak-frontend/person/PersonIndex';
+import PersonIndex from 'person/PersonIndex';
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
 import requireProps from 'app/data/requireProps';
 import {
@@ -26,12 +26,12 @@ import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
 import { getRettigheter } from '@fpsak-frontend/nav-ansatt/duck';
 import rettighetPropType from '@fpsak-frontend/nav-ansatt/rettighetPropType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import SoknadData from './SoknadData';
+import SoknadData from '@fpsak-frontend/papirsoknad/SoknadData';
 import {
   resetRegistrering, submitRegistrering, resetRegistreringSuccess, setSoknadData, getSoknadData,
-} from './duck';
-import RegistrerPapirsoknad from './components/RegistrerPapirsoknad';
-import SoknadRegistrertModal from './components/SoknadRegistrertModal';
+} from '@fpsak-frontend/papirsoknad/duck';
+import RegistrerPapirsoknad from '@fpsak-frontend/papirsoknad/components/RegistrerPapirsoknad';
+import SoknadRegistrertModal from '@fpsak-frontend/papirsoknad/components/SoknadRegistrertModal';
 
 
 export class PapirsoknadIndex extends Component {

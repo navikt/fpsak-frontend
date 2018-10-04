@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
-import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
 import fagsakPropType from 'fagsak/fagsakPropType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/fagsakStatus';
+import Table from '../Table';
+import TableRow from '../TableRow';
+import TableColumn from '../TableColumn';
+import DateLabel from '../DateLabel';
 
 import styles from './fagsakList.less';
 

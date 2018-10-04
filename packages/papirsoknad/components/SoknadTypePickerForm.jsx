@@ -10,6 +10,7 @@ import { Undertittel, Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
+// todo dep
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { getBehandlingType } from 'behandling/behandlingSelectors';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';

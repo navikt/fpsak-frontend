@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedHTMLMessage } from 'react-intl';
 import classnames from 'classnames/bind';
-
 import TableRow from './TableRow';
 import TableColumn from './TableColumn';
 

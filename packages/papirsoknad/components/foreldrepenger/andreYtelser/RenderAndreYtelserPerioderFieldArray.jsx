@@ -8,7 +8,7 @@ import { FlexContainer, FlexColumn, FlexRow } from '@fpsak-frontend/shared-compo
 import { DatepickerField } from '@fpsak-frontend/form';
 import { required, hasValidDate, dateAfterOrEqual } from '@fpsak-frontend/utils/validation/validators';
 import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 import styles from './renderAndreYtelserPerioderFieldArray.less';
 

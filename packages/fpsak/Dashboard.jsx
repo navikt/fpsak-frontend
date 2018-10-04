@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 import { makeRestApiRequest } from '@fpsak-frontend/data/duck';
 import { getIntegrationStatusList, getShowDetailedErrorMessages } from '@fpsak-frontend/data/error/duck';
 import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
-import FagsakSearchIndex from '@fpsak-frontend/fagsak-search/FagsakSearchIndex';
-import IntegrationStatusPanel from './IntegrationStatusPanel';
-import ElementWrapper from './ElementWrapper';
+import FagsakSearchIndex from 'fagsakSearch/FagsakSearchIndex';
+import IntegrationStatusPanel from '@fpsak-frontend/shared-components/IntegrationStatusPanel';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 
 /**
  * Dashboard

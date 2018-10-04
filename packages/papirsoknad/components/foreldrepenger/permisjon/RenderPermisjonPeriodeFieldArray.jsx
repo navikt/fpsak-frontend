@@ -13,8 +13,7 @@ import {
   required, hasValidDate, dateRangesNotOverlapping, dateAfterOrEqual,
 } from '@fpsak-frontend/utils/validation/validators';
 import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
-import { isArrayEmpty } from '@fpsak-frontend/utils';
+import { ISO_DATE_FORMAT, isArrayEmpty } from '@fpsak-frontend/utils';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';

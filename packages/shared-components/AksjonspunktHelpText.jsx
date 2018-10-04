@@ -5,7 +5,7 @@ import {
   Element,
   Normaltekst,
 } from 'nav-frontend-typografi';
-import { isObject } from '@fpsak-frontend/utils/objectUtils';
+import { isObject } from '@fpsak-frontend/utils';
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 import {
   FlexContainer,

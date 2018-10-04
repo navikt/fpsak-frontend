@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
@@ -10,7 +11,6 @@ import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import { RadioGroupField, RadioOption, InputField } from '@fpsak-frontend/form';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { required } from '@fpsak-frontend/utils/validation/validators';
-import PropTypes from 'prop-types';
 
 /**
  * VirksomhetRegnskapPanel

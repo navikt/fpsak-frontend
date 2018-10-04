@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { destroy } from 'redux-form';
 
 import { getPapirsoknadEnabled } from '@fpsak-frontend/papirsoknad/duck';
-import PapirsoknadIndex from '@fpsak-frontend/papirsoknad/PapirsoknadIndex';
+import PapirsoknadIndex from 'papirsoknad/PapirsoknadIndex';
 
 import BehandlingsprosessIndex from 'behandlingsprosess/BehandlingsprosessIndex';
 import FaktaIndex from 'fakta/FaktaIndex';

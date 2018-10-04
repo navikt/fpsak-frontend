@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import { isEqual } from '@fpsak-frontend/utils/objectUtils';
 import familieHendelseType from '@fpsak-frontend/kodeverk/familieHendelseType';
+// todo dep
 import { getFagsakPerson } from 'fagsak/fagsakSelectors';
 import { getRegisteredFields } from '../../duck';
 import SoknadData from '../../SoknadData';

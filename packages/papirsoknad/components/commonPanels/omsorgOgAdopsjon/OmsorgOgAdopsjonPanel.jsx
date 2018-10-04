@@ -11,6 +11,7 @@ import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
 import {
   InputField, DatepickerField, RadioGroupField, RadioOption,
 } from '@fpsak-frontend/form';
+// todo dep
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import {
   hasValidInteger, hasValidDate, isDatesEqual, required, minValue, maxValue, dateBeforeOrEqualToToday,

@@ -6,7 +6,7 @@ import diskresjonskodeType from '@fpsak-frontend/kodeverk/diskresjonskodeType';
 import MerkePanel from './Merkepanel';
 
 describe('<MerkePanel>', () => {
-  it('skal sjekke at kun merking om død vises når person er død', () => {
+  it('skal sjekke at kun merking om død vises når fpsak.person er død', () => {
     const wrapper = shallowWithIntl(<MerkePanel.WrappedComponent
       erDod
       erNAVAnsatt

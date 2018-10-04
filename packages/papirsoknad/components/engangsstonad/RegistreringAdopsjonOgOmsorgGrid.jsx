@@ -10,7 +10,6 @@ import AnnenForelderPanel from '../commonPanels/AnnenForelderPanel';
 import OmsorgOgAdopsjonPanel from '../commonPanels/omsorgOgAdopsjon/OmsorgOgAdopsjonPanel';
 import SoknadData from '../../SoknadData';
 
-
 const ANNEN_FORELDER_FORM_NAME_PREFIX = 'annenForelder';
 const OMSORG_FORM_NAME_PREFIX = 'omsorg';
 

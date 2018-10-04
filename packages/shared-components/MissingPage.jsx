@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
-import { missingPageContainer } from './missingPage.less';
+import styles from './missingPage.less';
 
 /**
  * MissingPage
@@ -11,7 +11,7 @@ import { missingPageContainer } from './missingPage.less';
  * Det blir presentert en generell feilmelding og en lenke som tar NAV-ansatt tilbake til hovedsiden.
  */
 const MissingPage = () => (
-  <div className={missingPageContainer}>
+  <div className={styles.missingPageContainer}>
     <FormattedMessage id="MissingPage.PageIsMissing" />
     <br />
     <Link to="/"><FormattedMessage id="MissingPage.Home" /></Link>
