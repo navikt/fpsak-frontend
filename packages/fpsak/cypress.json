@@ -1,4 +1,8 @@
 {
-  "_baseUrl": "https://app-t10.adeo.no/fpsak/",
-  "baseUrl": "http://localhost:9000"
+  "baseUrl": "https://app-t10.adeo.no",
+  "_baseUrl": "http://localhost:9000",
+  "viewportWidth": 1200,
+  "env": {
+    "TESTHUB_BASE": "http://e34apvl00250.devillo.no:8051"
+  }
 }

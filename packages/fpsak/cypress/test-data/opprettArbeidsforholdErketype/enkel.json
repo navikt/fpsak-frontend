@@ -1,0 +1,20 @@
+{
+  "ansettelseFOM": "2016-01-01",
+  "ansettelseTOM": null,
+  "arbeidsforholdErketyper": "ARBEIDSFORHOLD_ARBEIDSGIVER_ORGANISASJON_ORDINAERT",
+  "avtaltArbeidstimerPerUke": "37",
+  "fnr": "30037517026",
+  "stillingsprosent": "67",
+  "availableEksempelArbeidsgiver": [
+    "STATOILSOKKEL",
+    "COLORLINE",
+    "UNIVERSITETET_I_OSLO",
+    "FORSVARET",
+    "STATOILFORSK",
+    "STORTINGET"
+  ],
+  "eksempelArbeidsgiver": "COLORLINE",
+  "orgnummerOverstyr": null,
+  "kronasjerHolder": "35000",
+  "kronasjer": "35000"
+}

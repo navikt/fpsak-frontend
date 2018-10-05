@@ -1,0 +1,15 @@
+{
+  "behandlingId": 1000053,
+  "saksnummer": "135695869",
+  "behandlingVersjon": 10,
+  "bekreftedeAksjonspunktDtoer": [
+    {
+      "@type": "5027",
+      "kode": "5027",
+      "fodselsdato": "2018-09-05",
+      "antallBarnFodt": 1,
+      "dokumentasjonForeligger": true,
+      "begrunnelse": "test"
+    }
+  ]
+}
