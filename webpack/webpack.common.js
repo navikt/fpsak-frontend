@@ -1,19 +1,18 @@
 'use strict';
 const path = require('path');
-const ROOT_DIR = path.resolve(__dirname, '../src/client');
+
 const PACKAGE_DIR = path.resolve(__dirname, '../packages');
 const APP_DIR = path.join(PACKAGE_DIR, 'fpsak');
 
 const config = {
   resolve: {
     alias: {
-      app: APP_DIR,
+      app: path.join(APP_DIR, 'app'),
       behandling: path.join(APP_DIR, 'behandling'),
       behandlingmenu: path.join(APP_DIR, 'behandlingmenu'),
       behandlingsprosess: path.join(APP_DIR, 'behandlingsprosess'),
       behandlingsupport: path.join(APP_DIR, 'behandlingsupport'),
       fagsak: path.join(APP_DIR, 'fagsak'),
-      papirsoknad: path.join(APP_DIR, 'papirsoknad'),
       fagsakSearch: path.join(APP_DIR, 'fagsakSearch'),
       person: path.join(APP_DIR, 'person'),
       fagsakprofile: path.join(APP_DIR, 'fagsakprofile'),

@@ -10,29 +10,31 @@ import PropTypes from 'prop-types';
 import { routerActions } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 import { ErrorTypes } from '@fpsak-frontend/data/error/ErrorTypes';
 import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
 import { getRestApiFinished, getRestApiError } from '@fpsak-frontend/data/duck';
+// todo dep
 import PersonIndex from 'person/PersonIndex';
+// todo dep
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
+// todo dep
 import requireProps from 'app/data/requireProps';
+// todo dep
 import {
   getSelectedBehandlingIdentifier, getBehandlingVersjon, getBehandlingIsOnHold, getAksjonspunkter,
-}
-  from 'behandling/behandlingSelectors';
+} from 'behandling/behandlingSelectors';
+// todo dep
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
 import { getRettigheter } from '@fpsak-frontend/nav-ansatt/duck';
 import rettighetPropType from '@fpsak-frontend/nav-ansatt/rettighetPropType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import SoknadData from '@fpsak-frontend/papirsoknad/SoknadData';
+import SoknadData from './SoknadData';
 import {
   resetRegistrering, submitRegistrering, resetRegistreringSuccess, setSoknadData, getSoknadData,
-} from '@fpsak-frontend/papirsoknad/duck';
-import RegistrerPapirsoknad from '@fpsak-frontend/papirsoknad/components/RegistrerPapirsoknad';
-import SoknadRegistrertModal from '@fpsak-frontend/papirsoknad/components/SoknadRegistrertModal';
-
+} from './duck';
+import RegistrerPapirsoknad from './components/RegistrerPapirsoknad';
+import SoknadRegistrertModal from './components/SoknadRegistrertModal';
 
 export class PapirsoknadIndex extends Component {
   constructor(props) {

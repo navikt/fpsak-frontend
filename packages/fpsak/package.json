@@ -63,8 +63,7 @@
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/person": "1.0.0",
-    "@fpsak-frontend/nav-ansatt": "1.0.0",
-    "@fpsak-frontend/fagsak-search": "1.0.0"
+    "@fpsak-frontend/nav-ansatt": "1.0.0"
   },
   "scripts": {
     "cypress:open": "cypress open"

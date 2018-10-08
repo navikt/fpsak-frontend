@@ -6,7 +6,6 @@ import BehandlingType from '@fpsak-frontend/kodeverk/behandlingType';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
 import { isObject, without } from '@fpsak-frontend/utils';
 
-
 const allFagsakStatuses = Object.values(fagsakStatusCode);
 const allBehandlingStatuses = Object.values(behandlingStatusCode);
 

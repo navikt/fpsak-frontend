@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 import { makeRestApiRequest } from '@fpsak-frontend/data/duck';
 import { getIntegrationStatusList, getShowDetailedErrorMessages } from '@fpsak-frontend/data/error/duck';
 import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';

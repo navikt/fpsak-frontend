@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// todo dep
 import fagsakPropType from 'fagsak/fagsakPropType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/fagsakStatus';
 import Table from '../Table';
@@ -28,7 +29,8 @@ const FagsakList = ({
   const sortedFagsaker = fagsaker.sort((fagsak1, fagsak2) => {
     if (fagsak1.status.kode === fagsakStatus.AVSLUTTET && fagsak2.status.kode !== fagsakStatus.AVSLUTTET) {
       return true;
-    } if (fagsak1.status.kode !== fagsakStatus.AVSLUTTET && fagsak2.status.kode === fagsakStatus.AVSLUTTET) {
+    }
+    if (fagsak1.status.kode !== fagsakStatus.AVSLUTTET && fagsak2.status.kode === fagsakStatus.AVSLUTTET) {
       return false;
     }
     const changeTimeFagsak1 = fagsak1.endret ? fagsak1.endret : fagsak1.opprettet;
