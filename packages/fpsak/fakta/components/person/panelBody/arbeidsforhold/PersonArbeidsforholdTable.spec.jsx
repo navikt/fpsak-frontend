@@ -6,9 +6,7 @@ import sinon from 'sinon';
 import Image from '@fpsak-frontend/shared-components/Image';
 import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
 import PeriodLabel from '@fpsak-frontend/shared-components/PeriodLabel';
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
 import PersonArbeidsforholdTable from './PersonArbeidsforholdTable';
 
 describe('<PersonArbeidsforholdTable>', () => {

@@ -4,10 +4,9 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import SearchForm from '@fpsak-frontend/shared-components/fagsak-search/SearchForm';
-import FagsakList from '@fpsak-frontend/shared-components/fagsak-search/FagsakList';
 import PersonIndex from 'person/PersonIndex';
 import fagsakPropType from 'fagsak/fagsakPropType';
-
+import FagsakList from './FagsakList';
 
 import styles from './fagsakSearch.less';
 

@@ -5,9 +5,7 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT, createVisningsnavnForAktivitet } from '@fpsak-frontend/utils';
 import Image from '@fpsak-frontend/shared-components/Image';

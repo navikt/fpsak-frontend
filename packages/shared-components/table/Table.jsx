@@ -9,7 +9,6 @@ import styles from './table.less';
 
 const classNames = classnames.bind(styles);
 
-// TODO petter
 /**
  * Table
  *

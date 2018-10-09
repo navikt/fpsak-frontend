@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import Table from '@fpsak-frontend/shared-components/Table';
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { stonadskontoerPropType } from 'behandling/proptypes/stonadskontoPropType';
 import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/uttakArbeidType';
 import stonadskontoType from '@fpsak-frontend/kodeverk/stonadskontoType';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
-import moment from 'moment';
 
 import TimeLineTab from './TimeLineTab';
 import styles from './timeLineInfo.less';

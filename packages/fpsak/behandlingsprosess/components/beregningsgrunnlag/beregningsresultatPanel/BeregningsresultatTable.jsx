@@ -7,9 +7,7 @@ import { createSelector } from 'reselect';
 
 import { Undertittel, Normaltekst, Element } from 'nav-frontend-typografi';
 import { getBeregningsgrunnlagLedetekster, getBeregningsgrunnlagPerioder } from 'behandling/behandlingSelectors';
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
 import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';

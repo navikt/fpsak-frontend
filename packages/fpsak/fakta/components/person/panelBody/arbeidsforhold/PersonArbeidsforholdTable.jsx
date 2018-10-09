@@ -8,10 +8,7 @@ import arbeidsforholdPropType from 'behandling/proptypes/arbeidsforholdPropType'
 import Image from '@fpsak-frontend/shared-components/Image';
 import PeriodLabel from '@fpsak-frontend/shared-components/PeriodLabel';
 import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
-
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
 import erIBrukImageUrl from '@fpsak-frontend/assets/images/stjerne.svg';
 
 const headerTextCodes = [

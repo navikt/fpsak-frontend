@@ -4,8 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { shallow } from 'enzyme';
 
 import DateTimeLabel from '@fpsak-frontend/shared-components/DateTimeLabel';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import Table from '@fpsak-frontend/shared-components/Table';
+import { Table, TableRow } from '@fpsak-frontend/shared-components/table';
 import Image from '@fpsak-frontend/shared-components/Image';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/kommunikasjonsretning';
 import DocumentListInnsyn from './DocumentListInnsyn';

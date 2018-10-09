@@ -9,9 +9,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { InputField, SelectField } from '@fpsak-frontend/form';
 import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
 import {
   formatCurrencyNoKr,

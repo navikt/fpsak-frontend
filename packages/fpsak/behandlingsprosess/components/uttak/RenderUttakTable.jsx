@@ -6,9 +6,7 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import uttakPeriodeType from '@fpsak-frontend/kodeverk/uttakPeriodeType';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import Table from '@fpsak-frontend/shared-components/Table';
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
 import { SelectField, InputField, DecimalField } from '@fpsak-frontend/form';
 import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/uttakArbeidType';
 import {

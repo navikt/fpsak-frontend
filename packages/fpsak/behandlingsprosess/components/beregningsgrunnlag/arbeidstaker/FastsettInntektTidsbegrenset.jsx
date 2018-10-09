@@ -6,10 +6,10 @@ import moment from 'moment';
 import { createSelector } from 'reselect';
 
 import { InputField } from '@fpsak-frontend/form';
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
-import { formatCurrencyNoKr, removeSpacesFromNumber, parseCurrencyInput } from '@fpsak-frontend/utils/currencyUtils';
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
+import {
+  formatCurrencyNoKr, removeSpacesFromNumber, parseCurrencyInput, createVisningsnavnForAktivitet,
+} from '@fpsak-frontend/utils';
 import { required } from '@fpsak-frontend/utils/validation/validators';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
@@ -20,7 +20,6 @@ import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
 import hourglassImg from '@fpsak-frontend/assets/images/hourglass.svg';
 import Image from '@fpsak-frontend/shared-components/Image';
 import endretUrl from '@fpsak-frontend/assets/images/endret_felt.svg';
-import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
 import { getBehandlingFormValues } from 'behandling/behandlingForm';
 import { Normaltekst } from 'nav-frontend-typografi';
 import NaturalytelsePanel from './NaturalytelsePanel';

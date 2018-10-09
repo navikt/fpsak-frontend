@@ -5,9 +5,7 @@ import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
 import { CheckboxField } from '@fpsak-frontend/form';
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
 import DateTimeLabel from '@fpsak-frontend/shared-components/DateTimeLabel';
 import Image from '@fpsak-frontend/shared-components/Image';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/kommunikasjonsretning';

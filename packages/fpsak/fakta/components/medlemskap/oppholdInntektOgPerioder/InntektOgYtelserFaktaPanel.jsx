@@ -8,9 +8,7 @@ import moment from 'moment';
 import { formatCurrencyWithKr, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
 import PeriodLabel from '@fpsak-frontend/shared-components/PeriodLabel';
 
 const headerTextCodes = [

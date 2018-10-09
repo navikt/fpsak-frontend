@@ -24,9 +24,7 @@ import {
   formatCurrencyNoKr,
   createVisningsnavnForAktivitet,
 } from '@fpsak-frontend/utils';
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import styles from './renderBruttoBGFordelingFieldArray.less';
 import { getUniqueListOfArbeidsforhold, arbeidsforholdProptype } from '../ArbeidsforholdHelper';
