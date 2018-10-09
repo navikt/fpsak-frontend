@@ -111,7 +111,7 @@
   "scripts": {
     "test": "mocha-webpack  --webpack-config webpack/webpack.test.js \"packages/**/*.spec.jsx\"",
     "test:watch": "mocha-webpack --watch --webpack-config webpack/webpack.test.watch.js \"packages/**/*.spec.jsx\"",
-    "test:coverage": "nyc mocha-webpack --webpack-config webpack/webpack.test.coverage.js  \"packages/*/**/*.jsx\"",
+    "test:coverage": "nyc mocha-webpack --webpack-config webpack/webpack.test.coverage.js  \"packages/fpsak/*/**/*.jsx\"",
     "dev": "cross-env NODE_ENV=development node webpack/webpack.dev.server.js --config webpack/webpack.dev.js",
     "build": "cross-env NODE_ENV=production webpack --progress --colors --config webpack/webpack.prod.js",
     "postinstall": "yarn run build && yarn test && yarn run less:lint",
