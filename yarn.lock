@@ -3526,6 +3526,10 @@ dot-prop@^4.2.0:
   dependencies:
     is-obj "^1.0.0"
 
+dotenv@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.npmjs.org/dotenv/-/dotenv-6.1.0.tgz#9853b6ca98292acb7dec67a95018fa40bccff42c"
+
 duplexer@^0.1.1:
   version "0.1.1"
   resolved "http://registry.npmjs.org/duplexer/-/duplexer-0.1.1.tgz#ace6ff808c1ce66b57d1ebf97977acb02334cfc1"

@@ -6,6 +6,7 @@ packages/*/node_modules/
 /.nyc_output/
 /.eslint_loader_cache/
 /.uglify_plugin_cache/
+.env
 /coverage/
 *.iml
 *.log*

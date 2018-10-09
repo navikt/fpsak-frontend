@@ -1,7 +1,8 @@
 {
-  "baseUrl": "https://app-t10.adeo.no",
-  "_baseUrl": "http://localhost:9000",
-  "viewportWidth": 1200,
+  "_baseUrl": "https://app-t10.adeo.no",
+  "baseUrl": "http://localhost:9000",
+  "viewportWidth": 1444,
+  "viewportHeight": 700,
   "env": {
     "TESTHUB_BASE": "http://e34apvl00250.devillo.no:8051"
   }

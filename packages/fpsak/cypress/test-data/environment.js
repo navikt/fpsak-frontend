@@ -1,7 +1,7 @@
 const BASEURL = Cypress.config().baseUrl;
 const localDev = 'http://localhost:9000';
 const validNames = {
-  localDev: 'Lokal utvikling-Utbyggeren',
+  [localDev]: 'Lokal utvikling-Utbyggeren',
   'https://app-t10.adeo.no': 't10',
 };
 

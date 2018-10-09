@@ -1,10 +1,10 @@
 {
   "ansettelseFOM": "2016-01-01",
-  "ansettelseTOM": null,
+  "ansettelseTOM": "2019-01-01",
   "arbeidsforholdErketyper": "ARBEIDSFORHOLD_ARBEIDSGIVER_ORGANISASJON_ORDINAERT",
-  "avtaltArbeidstimerPerUke": "37",
-  "fnr": "30037517026",
-  "stillingsprosent": "67",
+  "avtaltArbeidstimerPerUke": "38",
+  "fnr": "29079112486",
+  "stillingsprosent": "100",
   "availableEksempelArbeidsgiver": [
     "STATOILSOKKEL",
     "COLORLINE",
@@ -15,6 +15,6 @@
   ],
   "eksempelArbeidsgiver": "COLORLINE",
   "orgnummerOverstyr": null,
-  "kronasjerHolder": "35000",
-  "kronasjer": "35000"
+  "kronasjerHolder": "45000",
+  "kronasjer": "45000"
 }
