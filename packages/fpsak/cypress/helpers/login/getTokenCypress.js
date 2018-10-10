@@ -8,9 +8,9 @@ module.exports = function getToken(config) {
       const navIsso = res.body.tokenId;
       options.authorize.headers.Cookie = `nav-isso=${navIsso};`;
       return cy.request(options.authorize)
-        .then(authorizeResponse => {
-          const res = url.parse(authorizeResponse.headers.location, true);
-          options.token.qs.code = res.query.code;
+        .then((authorizeResponse) => {
+          const redirectLocation = url.parse(authorizeResponse.headers.location, true);
+          options.token.qs.code = redirectLocation.query.code;
           cy.request(options.token)
             .then(res3 => res3.body);
         });

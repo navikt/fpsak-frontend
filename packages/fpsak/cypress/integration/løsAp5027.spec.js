@@ -1,12 +1,17 @@
+const moment = require('moment');
 const testUsers = require('../test-data/testUsers');
 const env = require('../test-data/environment');
-
 const personSok = require('../test-data/person-sok/enkel-kvinne');
 const soknad = require('../test-data/foreldrepengesoknad-sendviafordeling/enkel-soknad');
 
 const state = {
   personSok,
   soknad,
+};
+
+const formatDate = function formatDate(date) {
+  return moment(date)
+    .format('DD.MM.YYYY');
 };
 
 describe('My First Cypress Test', () => {
@@ -20,16 +25,28 @@ describe('My First Cypress Test', () => {
     cy.pollFagsak(state);
     cy.pollBehandling(state);
     cy.sendInntektsmeldingViaTesthub(state);
-    cy.pollAksjonspunkter(state);
   });
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('ID_token', 'refresh_token');
   });
 
-  it('Sjekker hvordan Uttak ser ut...', () => {
-    const uttakUtl = `${env.GUIROOT}#/fagsak/${state.fagsak.saksnummer}/behandling/${state.behandling.id}/?punkt=uttak`;
+  it('Besøker FPSAK og går igjennom dokumenterings steget', () => {
     cy.visit(env.GUIROOT);
-    cy.visit(uttakUtl);
+    cy.get('input#searchString')
+      .type(`${state.soknad.fnr}{enter}`);
+    cy.wait(4000);
+    cy.url()
+      .should('include', 'fakta=foedselsvilkaaret');
+    cy.contains('Dokumentasjon foreligger')
+      .click();
+    cy.get('#antallBarnFodt')
+      .type(state.soknad.antallBarn);
+    cy.get('input[placeholder="dd.mm.åååå"]')
+      .type(formatDate(state.soknad.foedsel.foedselsdato));
+    cy.get('#begrunnelse')
+      .type('Manglet i testgrunnlaget... :-/');
+    cy.contains('Bekreft og fortsett')
+      .click();
   });
 });

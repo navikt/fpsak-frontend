@@ -7,6 +7,7 @@ packages/*/node_modules/
 /.eslint_loader_cache/
 /.uglify_plugin_cache/
 .env
+cypress.env.json
 /coverage/
 *.iml
 *.log*

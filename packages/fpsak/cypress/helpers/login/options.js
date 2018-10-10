@@ -60,14 +60,14 @@ const axiosOptions = function axiosOptions(config) {
 };
 
 module.exports = {
-  cypress: function (config) {
+  cypress(config) {
     const options = axiosOptions(config);
     options.authorize.followRedirect = false;
     options.authorize.qs = options.authorize.params;
     options.token.qs = options.token.params;
     return options;
   },
-  axios: function (config) {
+  axios(config) {
     const options = axiosOptions(config);
     options.authenticate.proxy = false;
     options.authorize.maxRedirects = 0;

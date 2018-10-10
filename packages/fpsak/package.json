@@ -69,6 +69,6 @@
     "cypress:open": "cypress open"
   },
   "devDependencies": {
-    "dotenv": "^6.1.0"
+    "eslint-plugin-cypress": "^2.0.1"
   }
 }
