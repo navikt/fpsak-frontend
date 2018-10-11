@@ -9,10 +9,7 @@ install:
 - yarn install
 
 before_script:
-- yarn run checkversions
-- yarn run test
 - yarn run lint:less
-- yarn run postinstall
 
 script:
-- yarn run build
+- yarn build
