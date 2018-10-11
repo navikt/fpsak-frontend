@@ -9,7 +9,7 @@ install:
 - yarn install
 
 before_script:
-- yarn run lint:less
+- yarn less:lint
 
 script:
 - yarn build
