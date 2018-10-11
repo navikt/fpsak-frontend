@@ -2,15 +2,6 @@ const environment = require('./environment');
 
 const TESTHUB_BASE = Cypress.env('TESTHUB_BASE');
 
-/**
- *
- * Invalidere arbeidsforhold:
- *
- * http://e34apvl00250.devillo.no:8051/swagger-ui.html#!/EksternDataController/invaliderArbeidsforholdUsingGET
- *
- *
- */
-
 module.exports = {
   FPSAK_ALLE_BEHANDLINGER: '/fpsak/api/behandlinger/alle?saksnummer=',
   FPSAK_HENT_BEHANDLING: '/fpsak/api/behandlinger?behandlingId=',
@@ -23,4 +14,5 @@ module.exports = {
   TESTHUB_SEND_INNTEKTSMELDING: `${TESTHUB_BASE}/testdata/journalforInntektsmelding/${environment.NAME}/live/true`,
   TESTHUB_SOK_PERSON: `${TESTHUB_BASE}/person/sokperson`,
   TESTHUB_HENT_ARBEIDESFORHOLD: `${TESTHUB_BASE}/arbeidsforhold/hent/{fnr}/${environment.NAME}`,
+  TESTHUB_INVALIDER_ARBEIDSFORHOLD: `${TESTHUB_BASE}/eksterne/invaliderarbeidsforhold?env=${environment.NAME}&fnr={fnr}`,
 };

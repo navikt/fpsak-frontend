@@ -1,6 +1,6 @@
 {
-  "behandlingId": 1000053,
-  "saksnummer": "135695869",
+  "behandlingId": null,
+  "saksnummer": null,
   "behandlingVersjon": 10,
   "bekreftedeAksjonspunktDtoer": [
     {
@@ -13,3 +13,4 @@
     }
   ]
 }
+

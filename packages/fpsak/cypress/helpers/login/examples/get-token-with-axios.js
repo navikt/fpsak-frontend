@@ -1,18 +1,14 @@
 const getToken = require('../getTokenAxios');
-const testUsers = require('../../../test-data/testUsers');
 const cypressEnv = require('../../../../cypress.env');
-/**
- * Config stuff
- */
-
 
 const config = {
   serviceUsername: cypressEnv.OPENIDCONNECT_USERNAME,
   servicePassword: cypressEnv.OPENIDCONNECT_PASSWORD,
-  openAmUsername: testUsers.FPSAK_SAKSBEHANDLER,
-  openAmPassword: cypressEnv.TESTUSER_PASSWORD,
+  openAmUsername: cypressEnv.TEST_SAKSBEHANDLER_USERNAME,
+  openAmPassword: cypressEnv.TEST_SAKSBEHANDLER_PASSWORD,
   redirectUri: cypressEnv.OPENIDCONNECT_REDIRECT_URL,
   issoHost: cypressEnv.OPENIDCONNECT_ISSOHOST,
+  issoCookieName: cypressEnv.OPENIDCONNECT_COOKIE_NAME,
 };
 
 getToken(config)

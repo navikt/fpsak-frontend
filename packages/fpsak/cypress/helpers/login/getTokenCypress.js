@@ -6,7 +6,7 @@ module.exports = function getToken(config) {
   return cy.request(options.authenticate)
     .then((res) => {
       const navIsso = res.body.tokenId;
-      options.authorize.headers.Cookie = `nav-isso=${navIsso};`;
+      options.authorize.headers.Cookie = `${config.issoCookieName}=${navIsso};`;
       return cy.request(options.authorize)
         .then((authorizeResponse) => {
           const redirectLocation = url.parse(authorizeResponse.headers.location, true);

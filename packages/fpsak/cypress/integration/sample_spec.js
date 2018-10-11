@@ -1,4 +1,4 @@
-const testUsers = require('../test-data/testUsers');
+
 const env = require('../test-data/environment');
 
 const personSok = require('../test-data/person-sok/enkel-kvinne');
@@ -13,7 +13,9 @@ describe('My First Cypress Test', () => {
   before(() => {
     // logger inn
     Cypress.Cookies.debug(false);
-    cy.login(testUsers.FPSAK_SAKSBEHANDLER);
+    const openAmUsername = Cypress.env('TEST_SAKSBEHANDLER_USERNAME');
+    const openAmPassword = Cypress.env('TEST_SAKSBEHANDLER_PASSWORD');
+    cy.login(openAmUsername, openAmPassword);
     cy.finnPerson(state);
     cy.sikkerstillAtArbeidsforhold(state);
     cy.sendSoknadViaTesthub(state);

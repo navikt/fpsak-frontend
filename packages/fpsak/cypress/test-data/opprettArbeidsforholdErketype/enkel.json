@@ -3,7 +3,7 @@
   "ansettelseTOM": "2019-01-01",
   "arbeidsforholdErketyper": "ARBEIDSFORHOLD_ARBEIDSGIVER_ORGANISASJON_ORDINAERT",
   "avtaltArbeidstimerPerUke": "38",
-  "fnr": "29079112486",
+  "fnr": null,
   "stillingsprosent": "100",
   "availableEksempelArbeidsgiver": [
     "STATOILSOKKEL",

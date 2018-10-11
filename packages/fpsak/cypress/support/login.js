@@ -1,10 +1,11 @@
 const getTokenCypress = require('../helpers/login/getTokenCypress');
 
-Cypress.Commands.add('login', (testUserName) => {
+Cypress.Commands.add('login', (openAmUsername, openAmPassword) => {
   const config = {
     issoHost: Cypress.env('OPENIDCONNECT_ISSOHOST'),
-    openAmPassword: Cypress.env('TESTUSER_PASSWORD'),
-    openAmUsername: testUserName,
+    issoCookieName: Cypress.env('OPENIDCONNECT_COOKIE_NAME'),
+    openAmUsername,
+    openAmPassword,
     redirectUri: Cypress.env('OPENIDCONNECT_REDIRECT_URL'),
     servicePassword: Cypress.env('OPENIDCONNECT_PASSWORD'),
     serviceUsername: Cypress.env('OPENIDCONNECT_USERNAME'),

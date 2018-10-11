@@ -7,7 +7,7 @@ module.exports = function getToken(config) {
   return axios(options.authenticate)
     .then((res) => {
       const navIsso = res.data.tokenId;
-      options.authorize.headers.Cookie = `nav-isso=${navIsso};`;
+      options.authorize.headers.Cookie = `${config.issoCookieName}=${navIsso};`;
       return axios(options.authorize)
         .then((res2) => {
           console.log(res2);
