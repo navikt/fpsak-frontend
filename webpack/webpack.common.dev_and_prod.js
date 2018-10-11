@@ -22,7 +22,7 @@ const config = {
         options: {
           failOnWarning: false,
           failOnError: !isDevelopment,
-          configFile: isDevelopment ? './eslint/eslintrc.dev.js' : './eslint/eslintrc.prod.js',
+          configFile: path.resolve(__dirname, isDevelopment ? '../eslint/eslintrc.dev.js' : '../eslint/eslintrc.prod.js'),
           fix: isDevelopment,
           cache: true,
         },

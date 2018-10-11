@@ -2,6 +2,7 @@ const path = require('path');
 const merge = require('webpack-merge');
 const commonTest = require('./webpack.common.test.js');
 const PACAKGES_DIR = path.join(__dirname, '../packages');
+const configFilePath = path.resolve(__dirname, '../eslint/eslintrc.test.watch.js')
 const config = {
   mode: 'development',
   module: {
@@ -12,7 +13,7 @@ const config = {
 	  options: {
         failOnWarning: false,
         failOnError: false,
-        configFile: './eslint/eslintrc.test.watch.js',
+        configFile: configFilePath,
         fix: true,
         cache: true,
 	  },

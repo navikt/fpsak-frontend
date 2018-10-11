@@ -13,7 +13,7 @@ const config = {
 	  options: {
         failOnWarning: false,
         failOnError: true,
-        configFile: './eslint/eslintrc.test.js',
+        configFile: path.resolve(__dirname, '../eslint/eslintrc.test.js'),
         fix: false,
         cache: true,
 	  },

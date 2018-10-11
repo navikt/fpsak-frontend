@@ -22,20 +22,17 @@ const config = {
     'babel-polyfill',
     APP_DIR + '/index.jsx',
   ],
-
   output: {
     filename: 'bundle-[hash].js',
-    path: path.resolve(__dirname, '../target/public'),
+    path: path.resolve(__dirname, '../dist/public'),
     publicPath: 'public',
   },
-
   plugins: [
     new HtmlWebpackPlugin({
       filename: '../index.html',
       template: path.join(ROOT_DIR, 'index.html'),
     }),
   ],
-
   optimization: {
     minimizer: [
       new UglifyJsPlugin({
@@ -49,7 +46,6 @@ const config = {
       new OptimizeCSSAssetsPlugin({}),
     ],
   },
-
   stats: {
     children: false,
   },

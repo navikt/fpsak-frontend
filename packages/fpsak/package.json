@@ -38,7 +38,6 @@
     "vis": "^4.21.0"
   },
   "peerDependencies": {
-    "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/data": "1.0.0",
     "@fpsak-frontend/form": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
@@ -47,6 +46,7 @@
     "@fpsak-frontend/person": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
+    "@fpsak-frontend/assets": "1.0.0",
     "chai": "^4.1.2",
     "classnames": "^2.2.6",
     "enzyme": "^3.4.1",
@@ -66,7 +66,8 @@
     "sinon-chai": "^3.2.0"
   },
   "scripts": {
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "build": "cross-env NODE_ENV=production webpack --progress --colors"
   },
   "devDependencies": {
     "eslint-plugin-cypress": "^2.0.1"

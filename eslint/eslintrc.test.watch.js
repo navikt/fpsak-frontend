@@ -8,7 +8,7 @@ const config = {
   settings: {
     'import/resolver': {
       webpack: {
-        config: path.resolve('./webpack/webpack.test.watch.js'),
+        config: path.resolve(__dirname,'../webpack/webpack.test.watch.js'),
       },
     },
   },
