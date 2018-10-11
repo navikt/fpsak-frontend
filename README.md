@@ -1,6 +1,7 @@
 # fpsak-frontend
 Monorepo for Frontend kode for vl-foreldrepenger.
 
+[![Build Status](https://travis-ci.org/navikt/fpsak-frontend.svg?branch=master)](https://travis-ci.org/navikt/fpsak-frontend)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 [![Cypress.io tests](https://img.shields.io/badge/cypress.io-tests-green.svg?style=flat-square)](https://cypress.io)
 

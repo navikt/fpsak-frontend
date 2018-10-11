@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "description": "Klient for Foreldrepenger",
   "main": "./target/index.js",
+  "author": "NAV",
   "private": true,
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/navikt/fpsak-frontend.git"
+  },
   "scripts": {
     "test": "mocha-webpack  --webpack-config webpack/webpack.test.js \"packages/**/*.spec.jsx\"",
     "test:watch": "mocha-webpack --watch --webpack-config webpack/webpack.test.watch.js \"packages/**/*.spec.jsx\"",
@@ -139,8 +145,5 @@
     "exclude": [
       "**/*.spec.jsx"
     ]
-  },
-  "author": "NAV",
-  "license": "SEE LICENSE IN LICENSE",
-  "repository": "https://github.com/navikt/fpsak-frontend"
+  }
 }
