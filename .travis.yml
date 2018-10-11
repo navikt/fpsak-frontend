@@ -13,3 +13,18 @@ before_script:
 
 script:
 - yarn build
+
+before_deploy:
+# Set up git user name and tag this commit
+- git config --local user.name "navikt"
+- git config --local user.email "YOUR GIT USER EMAIL"
+- git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+
+deploy:
+  provider: releases
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  on:
+    branch: master
+  keep-history: true
+  local-dir: "target"
