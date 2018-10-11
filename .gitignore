@@ -12,6 +12,8 @@ cypress.env.json
 *.iml
 *.log*
 /target/
+**/cypress/videos
+**/cypress/screenshots
 /node_modules
 npm-debug.log
 lib/
