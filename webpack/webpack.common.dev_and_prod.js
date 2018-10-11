@@ -100,6 +100,10 @@ const config = {
     new MiniCssExtractPlugin({
       filename: isDevelopment ? 'style.css' : 'style_[hash].css',
     }),
+    new webpack.ContextReplacementPlugin(
+      /moment[\/\\]locale$/,
+      /nb/
+    ),
     new CircularDependencyPlugin({
       exclude: /node_modules/,
       failOnError: true,
