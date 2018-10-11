@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+- "8.2.1"
+
+before_install:
+- export TZ=Europe/Oslo
+
+install:
+- yarn install
+
+before_script:
+- yarn run checkversions
+- yarn run test
+- yarn run lint:less
+- yarn run postinstall
+
+script:
+- yarn run build

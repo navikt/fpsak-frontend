@@ -4,15 +4,14 @@ Monorepo for Frontend kode for vl-foreldrepenger.
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 [![Cypress.io tests](https://img.shields.io/badge/cypress.io-tests-green.svg?style=flat-square)](https://cypress.io)
 
-##TODO
-1. omstrukturere client/src
-2. rydde opp i struktur i de forskjellige pakkene
-3. Fikse så mye cycles i depenencies som lar seg gjøre
-4. riktig namespace, bruker scoped for nå(@fpsak-frontend)
-5. Sette opp lerna publish
-6. sette opp jenkins og tbd
-7. gjøre form pakken tilgjengelig med final-form og redux-form
+##Komme i gang
 
+##TODO
+1. rydde opp i struktur i de forskjellige pakkene
+2. riktig namespace, bruker scoped for nå(@fpsak-frontend)
+3. Sette opp lerna publish
+4. sette opp travis og tbd
+5. gjøre form pakken tilgjengelig med final-form og redux-form
 
 ##ESLINT
 - eslint/eslintrc.dev.js 
@@ -158,10 +157,11 @@ Monorepo for Frontend kode for vl-foreldrepenger.
 |   \---public
 +---webpack
 \---_scripts
-
-
 </code>
 </pre>
 
 ##Licenses and attribution
 *For updated information, always see LICENSE first!*
+
+##For NAV-ansatte
+Interne henvendelser kan sendes via Slack i kanalen #p2-frontend.

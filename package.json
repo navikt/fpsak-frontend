@@ -4,6 +4,18 @@
   "description": "Klient for Foreldrepenger",
   "main": "./target/index.js",
   "private": true,
+  "scripts": {
+    "test": "mocha-webpack  --webpack-config webpack/webpack.test.js \"packages/**/*.spec.jsx\"",
+    "test:watch": "mocha-webpack --watch --webpack-config webpack/webpack.test.watch.js \"packages/**/*.spec.jsx\"",
+    "test:coverage": "nyc mocha-webpack --webpack-config webpack/webpack.test.coverage.js  \"packages/fpsak/*/**/*.jsx\"",
+    "dev": "cross-env NODE_ENV=development node webpack/webpack.dev.server.js --config webpack/webpack.dev.js",
+    "build": "cross-env NODE_ENV=production webpack --progress --colors --config webpack/webpack.prod.js",
+    "postinstall": "yarn run build && yarn test && yarn run less:lint",
+    "lerna": "lerna",
+    "lerna:publish": "(lerna updated && lerna publish --cd-version patch --yes -m \"publish [ci skip]\") || echo \"Ingen endringer avslutter OK\"",
+    "less:lint": "lesshint --max-warnings 0 --reporter ./_scripts/lesshint-reporter.js packages -e *Source-Sans*.less",
+    "doc": "react-asciidoc-generator ./packages/ -o ../../docs/generated/react.adoc --handlebar-template src/docs/asciidoc-template.handlebars "
+  },
   "workspaces": [
     "packages/*"
   ],
@@ -107,17 +119,6 @@
     "webpack-cli": "3.1.0",
     "webpack-dev-server": "^3.1.5",
     "webpack-merge": "^4.1.4"
-  },
-  "scripts": {
-    "test": "mocha-webpack  --webpack-config webpack/webpack.test.js \"packages/**/*.spec.jsx\"",
-    "test:watch": "mocha-webpack --watch --webpack-config webpack/webpack.test.watch.js \"packages/**/*.spec.jsx\"",
-    "test:coverage": "nyc mocha-webpack --webpack-config webpack/webpack.test.coverage.js  \"packages/fpsak/*/**/*.jsx\"",
-    "dev": "cross-env NODE_ENV=development node webpack/webpack.dev.server.js --config webpack/webpack.dev.js",
-    "build": "cross-env NODE_ENV=production webpack --progress --colors --config webpack/webpack.prod.js",
-    "postinstall": "yarn run build && yarn test && yarn run less:lint",
-    "lerna": "lerna",
-    "less:lint": "lesshint --max-warnings 0 --reporter ./_scripts/lesshint-reporter.js packages -e *Source-Sans*.less",
-    "doc": "react-asciidoc-generator ./packages/ -o ../../docs/generated/react.adoc --handlebar-template src/docs/asciidoc-template.handlebars "
   },
   "nyc": {
     "require": [
