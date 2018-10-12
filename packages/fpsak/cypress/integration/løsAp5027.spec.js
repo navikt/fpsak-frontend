@@ -18,7 +18,9 @@ describe('My First Cypress Test', () => {
   before(() => {
     // logger inn
     Cypress.Cookies.debug(false);
-    cy.login(testUsers.FPSAK_SAKSBEHANDLER);
+    const openAmUsername = Cypress.env('TEST_SAKSBEHANDLER_USERNAME');
+    const openAmPassword = Cypress.env('TEST_SAKSBEHANDLER_PASSWORD');
+    cy.login(openAmUsername, openAmPassword);
     cy.finnPerson(state);
     cy.sikkerstillAtArbeidsforhold(state);
     cy.sendSoknadViaTesthub(state);

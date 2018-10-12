@@ -5,7 +5,7 @@
   "brukerRolle": "MOR",
   "antallBarn": 1,
   "foedsel": {
-    "foedselsdato": "2018-09-05T10:00:00.000Z",
+    "foedselsdato": "2018-10-05T10:00:00.000Z",
     "antallBarn": 1,
     "vedlegg": [],
     "soekersRelasjonTilBarnetDtoType": "FoedselDto"
@@ -15,8 +15,8 @@
   "perioder": [
     {
       "lukketPeriodeDtoType": "UttaksperiodeDto",
-      "fom": "2018-08-15T10:00:00.000Z",
-      "tom": "2018-09-04T10:00:00.000Z",
+      "fom": "2018-09-15T10:00:00.000Z",
+      "tom": "2018-10-04T10:00:00.000Z",
       "vedlegg": [],
       "oenskerSamtidigUttak": false,
       "type": {
@@ -36,8 +36,8 @@
     },
     {
       "lukketPeriodeDtoType": "UttaksperiodeDto",
-      "fom": "2018-09-05T10:00:00.000Z",
-      "tom": "2018-11-14T11:00:00.000Z",
+      "fom": "2018-10-05T10:00:00.000Z",
+      "tom": "2018-12-14T11:00:00.000Z",
       "vedlegg": [],
       "oenskerSamtidigUttak": false,
       "type": {
@@ -57,8 +57,8 @@
     },
     {
       "lukketPeriodeDtoType": "UttaksperiodeDto",
-      "fom": "2018-11-15T11:00:00.000Z",
-      "tom": "2019-01-10T11:00:00.000Z",
+      "fom": "2018-12-15T11:00:00.000Z",
+      "tom": "2019-02-10T11:00:00.000Z",
       "vedlegg": [],
       "oenskerSamtidigUttak": false,
       "type": {

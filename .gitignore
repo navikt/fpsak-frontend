@@ -17,6 +17,7 @@ cypress.env.json
 /node_modules
 npm-debug.log
 lib/
+dist
 lerna-debug.log
 
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
