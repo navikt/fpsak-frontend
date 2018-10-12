@@ -2,7 +2,7 @@
 const path = require('path');
 
 const PACKAGE_DIR = path.resolve(__dirname, '../packages');
-const APP_DIR = path.join(PACKAGE_DIR, 'fpsak');
+const APP_DIR = path.join(PACKAGE_DIR, 'fpsak/src');
 
 const config = {
   resolve: {

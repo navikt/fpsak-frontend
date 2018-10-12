@@ -10,6 +10,7 @@ const CORE_DIR = path.resolve(__dirname, '../node_modules');
 const PACAKGES_DIR = path.join(__dirname, '../packages');
 const CSS_DIR = path.join(PACAKGES_DIR, 'assets/styles');
 const APP_DIR = path.join(PACAKGES_DIR, 'app');
+
 const isDevelopment = JSON.stringify(process.env.NODE_ENV) === '"development"';
 
 const config = {

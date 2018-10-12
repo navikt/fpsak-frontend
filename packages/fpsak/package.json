@@ -1,7 +1,7 @@
 {
   "name": "@fpsak-frontend/fpsak",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.jsx",
   "license": "MIT",
   "private": true,
   "dependencies": {

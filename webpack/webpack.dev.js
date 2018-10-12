@@ -6,7 +6,7 @@ const commonDevAndProd = require('./webpack.common.dev_and_prod.js');
 
 const ROOT_DIR = path.resolve(__dirname, '../src/client');
 const PACAKGES_DIR = path.join(__dirname, '../packages');
-const APP_DIR = path.resolve(PACAKGES_DIR, 'fpsak');
+const APP_DIR = path.resolve(PACAKGES_DIR, 'fpsak/src');
 
 const config = {
   mode: 'development',
