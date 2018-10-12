@@ -21,10 +21,10 @@ before_deploy:
 - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
 
 deploy:
-  provider: releases
-  skip-cleanup: true
-  github-token: $GITHUB_TOKEN
-  on:
-    branch: master
-  keep-history: true
-  local-dir: "target"
+  - provider: releases
+    skip-cleanup: true
+    github-token: $GITHUB_TOKEN
+    on:
+      branch: master
+    keep-history: true
+    local-dir: "target"
