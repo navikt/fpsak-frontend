@@ -29,4 +29,5 @@ deploy:
     on:
       branch: master
     keep-history: true
-    local-dir: "target"
+    file_glob: true
+    file: target/**/*
