@@ -68,8 +68,8 @@
   "scripts": {
     "cypress:open": "cypress open",
     "build": "cross-env NODE_ENV=production webpack --progress --colors",
-    "docker-build": "docker build -t fpfront . ",
-    "docker-start":"yarn docker-stop; yarn docker-build; docker run -d -e APP_API_GATEWAY='http://127.0.0.1:8080' --name fpfront -p 9000:80 fpfront",
+    "docker-build": "docker build -t fpfront . -f Dockerfile",
+    "docker-start":"yarn docker-stop; yarn docker-build; docker run -d -e APP_API_GATEWAY='http://localhost:8080' --name fpfront --net=host fpfront",
     "docker-stop":"docker stop fpfront; docker rm fpfront"
   },
   "devDependencies": {
