@@ -25,6 +25,7 @@ deploy:
   - provider: releases
     skip-cleanup: true
     github-token: $GITHUB_TOKEN
+    api_key: $GITHUB_TOKEN
     on:
       branch: master
     keep-history: true
