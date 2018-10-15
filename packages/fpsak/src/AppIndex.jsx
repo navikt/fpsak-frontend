@@ -13,7 +13,7 @@ import {
   getRettskildeUrl, getSystemrutineUrl, removeErrorMessage, showCrashMessage,
 } from '@fpsak-frontend/data/error/duck';
 import '@fpsak-frontend/assets/styles/global.less';
-import Home from './Home';
+import Home from 'app/Home';
 import AppConfigResolver from './AppConfigResolver';
 
 
