@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Tooltip from './Tooltip';
 
+// TODO WIP
 export class Svg extends Component {
   constructor() {
     super();
