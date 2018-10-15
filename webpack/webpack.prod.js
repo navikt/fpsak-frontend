@@ -1,6 +1,6 @@
 "use strict";
 
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
@@ -9,7 +9,7 @@ const commonDevAndProd = require('./webpack.common.dev_and_prod.js');
 
 const ROOT_DIR = path.resolve(__dirname, '../src/client');
 const PACKAGES_DIR = path.resolve(__dirname, '../packages');
-const APP_DIR = path.resolve(PACKAGES_DIR, 'fpsak');
+const APP_DIR = path.resolve(PACKAGES_DIR, 'fpsak/src');
 
 //Fjern de to utkommenterte linjene for sourcemaps i produksjonsbygget.
 
