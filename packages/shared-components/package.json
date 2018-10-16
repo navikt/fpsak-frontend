@@ -1,7 +1,7 @@
 {
   "name": "@fpsak-frontend/shared-components",
   "version": "1.0.0",
-  "main": "index.jsx",
+  "module": "index.jsx",
   "license": "MIT",
   "private": true,
   "dependencies": {

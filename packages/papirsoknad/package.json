@@ -1,7 +1,7 @@
 {
   "name": "@fpsak-frontend/papirsoknad",
   "version": "1.0.0",
-  "main": "bundle.js",
+  "module": "PapirsoknadIndex.js",
   "license": "MIT",
   "private": true,
   "dependencies": {

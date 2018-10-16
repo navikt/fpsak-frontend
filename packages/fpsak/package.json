@@ -1,9 +1,16 @@
 {
   "name": "@fpsak-frontend/fpsak",
   "version": "1.0.0",
-  "main": "src/index.jsx",
+  "module": "src/index.jsx",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "cypress:open": "cypress open",
+    "build": "cross-env NODE_ENV=production webpack --progress --colors",
+    "docker-build": "docker build -t fpfront . -f Dockerfile",
+    "docker-start":"yarn docker-stop; yarn docker-build; docker run -d -e APP_API_GATEWAY='http://localhost:8080' --name fpfront --net=host fpfront",
+    "docker-stop":"docker stop fpfront; docker rm fpfront"
+  },
   "dependencies": {
     "axios": "^0.18.0",
     "axios-mock-adapter": "^1.15.0",
@@ -64,13 +71,6 @@
     "reselect": "^3.0.1",
     "sinon": "^5.0.10",
     "sinon-chai": "^3.2.0"
-  },
-  "scripts": {
-    "cypress:open": "cypress open",
-    "build": "cross-env NODE_ENV=production webpack --progress --colors",
-    "docker-build": "docker build -t fpfront . -f Dockerfile",
-    "docker-start":"yarn docker-stop; yarn docker-build; docker run -d -e APP_API_GATEWAY='http://localhost:8080' --name fpfront --net=host fpfront",
-    "docker-stop":"docker stop fpfront; docker rm fpfront"
   },
   "devDependencies": {
     "eslint-plugin-cypress": "^2.0.1"
