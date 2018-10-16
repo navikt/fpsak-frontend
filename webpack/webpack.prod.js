@@ -7,7 +7,7 @@ const path = require('path');
 const merge = require('webpack-merge');
 const commonDevAndProd = require('./webpack.common.dev_and_prod.js');
 
-const ROOT_DIR = path.resolve(__dirname, '../src/client');
+const ROOT_DIR = path.resolve(__dirname, '../public/client');
 const PACKAGES_DIR = path.resolve(__dirname, '../packages');
 const APP_DIR = path.resolve(PACKAGES_DIR, 'fpsak/src');
 

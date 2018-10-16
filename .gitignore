@@ -1,5 +1,4 @@
 packages/*/node_modules/
-/src/client/public/*
 /bin/
 /.tmp/
 /.happypack/

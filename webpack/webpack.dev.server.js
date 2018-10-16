@@ -11,7 +11,7 @@ if (process.argv.includes('--no-fix')) {
 
 var options = {
   contentBase: [
-    'src/client',
+    'public/client',
     'packages',
   ],
   watchContentBase: true,
