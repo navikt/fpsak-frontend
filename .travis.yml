@@ -2,17 +2,25 @@ language: node_js
 node_js:
 - "8.12"
 
-before_install:
-- export TZ=Europe/Oslo
+env:
+  global:
+    - TZ='Europe/Oslo'
+    - DATE="$(date +%Y%m%d)"
+    - TIME="$(date +%H%M)"
+    - COMMIT_NUMBER="$((git fetch --unshallow || true ) && git rev-list --count $TRAVIS_COMMIT)"
+    - RELEASE_VERSION="$COMMIT_NUMBER.$DATE.$TIME"
+    - APPLICATION_NAME='fpsak-frontend'
+    - DOCKER_IMAGE_FULL_NAME="petterdocker/$APPLICATION_NAME:$RELEASE_VERSION"
 
 install:
 - yarn install
 
 before_script:
 - yarn less:lint
+- yarn build:fpsak
 
 script:
-- yarn build
+- docker build -t $DOCKER_IMAGE_FULL_NAME ./packages/fpsak
 
 before_deploy:
 # Set up git user name and tag this commit
@@ -20,6 +28,21 @@ before_deploy:
 - git config --local user.name "navikt"
 - git config --local user.email "petterruud@gmail.com"
 - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+
+services:
+  - docker
+
+# bytt til dockerhub systembruker 
+deploy:
+  provider: script
+  script: docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" && docker push "$DOCKER_IMAGE_FULL_NAME"
+  on:
+    branch: master
+
+after_deploy:
+  - git remote add auth-origin "https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}"
+  - git tag $RELEASE_VERSION
+  - git push auth-origin --tags
 
 #deploy:
 #  - provider: releases
