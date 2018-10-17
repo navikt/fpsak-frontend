@@ -10,7 +10,7 @@ env:
     - COMMIT_NUMBER="$((git fetch --unshallow || true ) && git rev-list --count $TRAVIS_COMMIT)"
     - RELEASE_VERSION="$COMMIT_NUMBER.$DATE.$TIME"
     - APPLICATION_NAME='fpsak-frontend'
-    - DOCKER_IMAGE_FULL_NAME="petterdocker/$APPLICATION_NAME:$RELEASE_VERSION"
+    - DOCKER_IMAGE_FULL_NAME="navikt/$APPLICATION_NAME:$RELEASE_VERSION"
 
 install:
 - yarn install
@@ -25,9 +25,9 @@ script:
 before_deploy:
 # Set up git user name and tag this commit
 # bytte epost til nav
-- git config --local user.name "navikt"
-- git config --local user.email "petterruud@gmail.com"
-- git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+#- git config --local user.name "navikt"
+#- git config --local user.email "petterruud@gmail.com"
+#- git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
 
 services:
   - docker
