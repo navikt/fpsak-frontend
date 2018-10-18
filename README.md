@@ -9,6 +9,8 @@ Monorepo for Frontend kode for vl-foreldrepenger.
 ````
 yarn install
 yarn dev
+yarn build
+yarn build:fpsak
 ````
 
 #### TODO
