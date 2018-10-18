@@ -9,7 +9,7 @@ env:
     - TIME="$(date +%H%M)"
     - RELEASE_VERSION="$TRAVIS_COMMIT"
     - APPLICATION_NAME='fpsak-frontend'
-    - DOCKER_IMAGE_FULL_NAME="petterdocker/$APPLICATION_NAME:$RELEASE_VERSION"
+    - DOCKER_IMAGE_FULL_NAME="navikt/$APPLICATION_NAME:$RELEASE_VERSION"
 
 install:
 - yarn install
