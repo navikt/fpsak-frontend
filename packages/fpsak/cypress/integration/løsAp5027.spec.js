@@ -18,8 +18,8 @@ describe('My First Cypress Test', () => {
   before(() => {
     // logger inn
     Cypress.Cookies.debug(false);
-    const openAmUsername = Cypress.env('TEST_SAKSBEHANDLER_USERNAME');
-    const openAmPassword = Cypress.env('TEST_SAKSBEHANDLER_PASSWORD');
+    const openAmUsername = Cypress.env('SAKSBEHANDLER_USERNAME');
+    const openAmPassword = Cypress.env('SAKSBEHANDLER_PASSWORD');
     cy.login(openAmUsername, openAmPassword);
     cy.finnPerson(state);
     cy.sikkerstillAtArbeidsforhold(state);

@@ -7,7 +7,7 @@ Cypress.Commands.add('pollFagsak', state => cy.request({
     Accept: 'application/json',
   },
   body: {
-    searchString: state.soknad.fnr,
+    searchString: state.hovedsoknad.fnr,
   },
 })
   .then((resp) => {

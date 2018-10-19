@@ -1,15 +1,15 @@
 
 const env = require('../test-data/environment');
 
-const hodedsokerSok = require('../test-data/person-sok/enkel-kvinne');
+const hovedsokerSok = require('../test-data/person-sok/enkel-kvinne');
 const hovedsoknad = require('../test-data/foreldrepengesoknad-sendviafordeling/enkel-soknad');
 
 const state = {
-  hodedsokerSok,
+  hovedsokerSok,
   hovedsoknad,
 };
 
-describe('My First Cypress Test', () => {
+describe('Revurdering', () => {
   before(() => {
     // logger inn
     Cypress.Cookies.debug(false);
