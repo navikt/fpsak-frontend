@@ -1,13 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
 import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
 import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
+import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import { OppholdInntektOgPerioderForm } from './OppholdInntektOgPerioderForm';
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
 import InntektOgYtelserFaktaPanel from './InntektOgYtelserFaktaPanel';

@@ -4,19 +4,28 @@ import { createSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { behandlingForm } from 'behandling/behandlingForm';
-import { guid, dateFormat } from '@fpsak-frontend/utils';
-import moment from 'moment';
+import guid from 'utils/guidUtil';
 import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
 import withDefaultToggling from 'fakta/withDefaultToggling';
 import faktaPanelCodes from 'fakta/faktaPanelCodes';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import {
   getUttakPerioder,
   getBehandlingYtelseFordeling,
-  getBehandlingIsRevurdering,
+  getBehandlingIsManuellRevurdering,
+  hasBehandlingUtredesStatus,
 } from 'behandling/behandlingSelectors';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
+import { dateFormat } from 'utils/dateUtils';
+import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import UttakFaktaForm from './UttakFaktaForm';
+import {
+  sjekkOmfaktaOmUttakAksjonspunkt,
+  sjekkArbeidsprosentOver100,
+  sjekkOverlappendePerioder,
+  sjekkEndretFørsteUttaksDato,
+  sjekkNyFørsteUttakDatoStartErEtterSkjæringpunkt,
+  sjekkNyFørsteUttakDatoStartErFørSkjæringpunkt,
+} from './components/UttakPeriodeValidering';
 
 const uttakAksjonspunkter = [aksjonspunktCodes.AVKLAR_UTTAK, aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO];
 
@@ -28,7 +37,8 @@ export const UttakInfoPanelImpl = ({
   hasOpenAksjonspunkter,
   aksjonspunkter,
   isRevurdering,
-  endringsDato,
+  hasStatusUtredes,
+  førsteUttaksDato,
   handleSubmit,
   ...formProps
 }) => (
@@ -44,11 +54,11 @@ export const UttakInfoPanelImpl = ({
     <form onSubmit={handleSubmit}>
       <UttakFaktaForm
         hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-        readOnly={readOnly}
+        readOnly={readOnly && (!isRevurdering || !hasStatusUtredes)}
         toggleInfoPanelCallback={toggleInfoPanelCallback}
         aksjonspunkter={aksjonspunkter}
-        endringsDato={endringsDato}
-        isRevurdering={isRevurdering}
+        førsteUttaksDato={førsteUttaksDato}
+        submitting={formProps.submitting}
       />
       {formProps.error
       && (
@@ -68,32 +78,22 @@ UttakInfoPanelImpl.propTypes = {
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  endringsDato: PropTypes.string,
+  førsteUttaksDato: PropTypes.string,
   isRevurdering: PropTypes.bool.isRequired,
+  hasStatusUtredes: PropTypes.bool.isRequired,
 };
 
 UttakInfoPanelImpl.defaultProps = {
-  endringsDato: undefined,
+  førsteUttaksDato: undefined,
 };
 
-const sjekkOmfaktaOmUttakAksjonspunkt = aksjonspunkter => aksjonspunkter.some(ap => uttakAksjonspunkter.includes(ap.definisjon.kode));
-
-const sjekkArbeidsprosentOver100 = periode => periode.arbeidstidsprosent > 100;
-
-const sjekkOverlappendePerioder = (index, nestePeriode, forrigePeriode) => index !== 0 && moment(nestePeriode.fom) < moment(forrigePeriode.tom);
-
-const sjekkOmEndretFørsteUttaksDato = (originalStartDato, nyStartDato, aksjonspunkter) => moment(originalStartDato).diff(moment(nyStartDato)) !== 0
-    && !aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO);
-
-const sjekkOmNyFørsteUttakDatoStartErLikSkjæringpunkt = (nyStartDato, endringsDato, aksjonspunkter) => moment(nyStartDato) > (moment(endringsDato))
-  && aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO);
-
-const validateUttakForm = (values, originalPerioder, aksjonspunkter, endringsDato) => { // NOSONAR TODO legge validateuttakform i egen component
+const validateUttakForm = (values, originalPerioder, aksjonspunkter, førsteUttaksDato) => { // NOSONAR må ha disse sjekkene
   const errors = {};
 
   if (sjekkOmfaktaOmUttakAksjonspunkt(aksjonspunkter)) {
-    const originalStartDato = originalPerioder[0].fom;
-    const nyStartDato = values.perioder[0].fom;
+    // TODO petter fakta uttak ikke synlig når re på re
+    const originalStartDato = (originalPerioder[0] || []).fom;
+    const nyStartDato = (values.perioder[0] || []).fom;
 
     if (values.perioder.length === 0) {
       errors.perioder = {
@@ -116,7 +116,7 @@ const validateUttakForm = (values, originalPerioder, aksjonspunkter, endringsDat
           };
         }
       });
-      if (sjekkOmEndretFørsteUttaksDato(originalStartDato, nyStartDato, aksjonspunkter)) {
+      if (sjekkEndretFørsteUttaksDato(originalStartDato, nyStartDato, aksjonspunkter)) {
         errors.perioder = {
           _error: <FormattedMessage
             id="UttakInfoPanel.OrginaleStartdatoKanIkkeEndres"
@@ -125,11 +125,19 @@ const validateUttakForm = (values, originalPerioder, aksjonspunkter, endringsDat
         };
       }
 
-      if (sjekkOmNyFørsteUttakDatoStartErLikSkjæringpunkt(nyStartDato, endringsDato, aksjonspunkter)) {
+      if (sjekkNyFørsteUttakDatoStartErEtterSkjæringpunkt(nyStartDato, førsteUttaksDato, aksjonspunkter)) {
         errors.perioder = {
           _error: <FormattedMessage
             id="UttakInfoPanel.manglerPeriodeEtterFørsteUttaksdag"
-            values={{ endringsDato: dateFormat(endringsDato) }}
+            values={{ førsteUttaksDato: dateFormat(førsteUttaksDato) }}
+          />,
+        };
+      }
+      if (sjekkNyFørsteUttakDatoStartErFørSkjæringpunkt(nyStartDato, førsteUttaksDato, aksjonspunkter)) {
+        errors.perioder = {
+          _error: <FormattedMessage
+            id="UttakInfoPanel.periodeFørFørsteUttaksdag"
+            values={{ førsteUttaksDato: dateFormat(førsteUttaksDato) }}
           />,
         };
       }
@@ -163,9 +171,12 @@ const getOriginalPeriodeId = (origPeriode) => {
   return null;
 };
 
-const transformValues = (values, initialValues, aksjonspunkter) => {
-  const apCodes = aksjonspunkter.filter(ap => uttakAksjonspunkter.includes(ap.definisjon.kode)).map(ap => ap.definisjon.kode);
-
+const transformValues = (values, initialValues, aksjonspunkter) => { // NOSONAR
+  const aktiveUttakAksjonspunkter = aksjonspunkter.filter(ap => uttakAksjonspunkter.includes(ap.definisjon.kode));
+  // TODO sjekke om det det er behov for å sjekke på isRevurdering
+  const apCodes = aktiveUttakAksjonspunkter.length
+    ? aktiveUttakAksjonspunkter.map(ap => ap.definisjon.kode)
+    : [aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK];
   return apCodes.map(ap => ({
     kode: ap,
     bekreftedePerioder: values.perioder.map((periode) => {
@@ -173,7 +184,6 @@ const transformValues = (values, initialValues, aksjonspunkter) => {
         id, openForm, updated, kontoType, virksomhetNavn, isFromSøknad, ...bekreftetPeriode // NOSONAR
       } = periode;
       const origPeriode = initialValues.perioder.filter(p => p.id === id);
-
       return {
         bekreftetPeriode,
         orginalFom: origPeriode[0] ? origPeriode[0].fom : null,
@@ -200,13 +210,16 @@ const transformValues = (values, initialValues, aksjonspunkter) => {
 const mapStateToProps = (state, initialProps) => {
   const initialValues = buildInitialValues(state);
   const ytelseFordeling = getBehandlingYtelseFordeling(state);
-  const endringsDato = ytelseFordeling && ytelseFordeling.endringsDato ? ytelseFordeling.endringsDato : undefined;
-  const isRevurdering = getBehandlingIsRevurdering(state);
+  const førsteUttaksDato = ytelseFordeling && ytelseFordeling.førsteUttaksDato ? ytelseFordeling.førsteUttaksDato : undefined;
+  const isRevurdering = getBehandlingIsManuellRevurdering(state);
+  const hasStatusUtredes = hasBehandlingUtredesStatus(state);
+  const perioder = getUttakPerioder(state);
   return {
     initialValues,
-    endringsDato,
+    førsteUttaksDato,
     isRevurdering,
-    validate: values => validateUttakForm(values, getUttakPerioder(state), initialProps.aksjonspunkter, endringsDato),
+    hasStatusUtredes,
+    validate: values => validateUttakForm(values, perioder, initialProps.aksjonspunkter, førsteUttaksDato),
     onSubmit: values => initialProps.submitCallback(transformValues(values, initialValues, initialProps.aksjonspunkter)),
   };
 };
@@ -214,7 +227,8 @@ const mapStateToProps = (state, initialProps) => {
 const UttakInfoPanel = connect(mapStateToProps)(behandlingForm({
   form: 'UttakInfoPanel',
   enableReinitialize: true,
-})(injectIntl(withDefaultToggling(faktaPanelCodes.UTTAK, uttakAksjonspunkter)(UttakInfoPanelImpl))));
+})(injectIntl(withDefaultToggling(faktaPanelCodes.UTTAK,
+  [aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK, ...uttakAksjonspunkter])(UttakInfoPanelImpl))));
 
 UttakInfoPanel.supports = (personopplysninger, ytelsesType) => personopplysninger !== null
     && personopplysninger !== undefined

@@ -7,23 +7,24 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import Modal from '@fpsak-frontend/shared-components/Modal';
+import Modal from 'sharedComponents/Modal';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import Image from '@fpsak-frontend/shared-components/Image';
-import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
+import Image from 'sharedComponents/Image';
+import behandlingStatus from 'kodeverk/behandlingStatus';
 import { getSelectedBehandlingId } from 'behandling/duck';
 import {
   getBehandlingType, getBehandlingStatus, getBehandlingsresultat, getBehandlingResultatstruktur,
   getBehandlingKlageVurderingResultatNK, getBehandlingKlageVurderingResultatNFP,
 } from 'behandling/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling, getBehandlingsresultatFraOriginalBehandling } from 'behandling/selectors/originalBehandlingSelectors';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/behandlingResultatType';
-import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import klageVurdering from '@fpsak-frontend/kodeverk/klageVurdering';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
+import behandlingResultatType from 'kodeverk/behandlingResultatType';
+import behandlingType from 'kodeverk/behandlingType';
+import innvilgetImageUrl from 'images/innvilget_valgt.svg';
+import klageVurdering from 'kodeverk/klageVurdering';
+import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import requireProps from 'app/data/requireProps';
 
+import konsekvensForYtelsen from 'kodeverk/konsekvensForYtelsen';
 import styles from './fatterVedtakApprovalModal.less';
 
 /**
@@ -98,8 +99,17 @@ FatterVedtakApprovalModal.defaultProps = {
   showModal: undefined,
 };
 
-const getModalDescriptionTextCode = createSelector([getFagsakYtelseType], ytelseType => (ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
-  ? 'FatterVedtakApprovalModal.ModalDescriptionESApproval' : 'FatterVedtakApprovalModal.ModalDescriptionFPApproval'));
+const isBehandlingsresultatOpphor = createSelector(
+  [getBehandlingsresultat], behandlingsresultat => behandlingsresultat.type.kode === behandlingResultatType.OPPHOR,
+);
+
+const getModalDescriptionTextCode = createSelector([isBehandlingsresultatOpphor, getFagsakYtelseType], (isOpphor, ytelseType) => {
+  if (isOpphor) {
+    return 'FatterVedtakApprovalModal.ModalDescriptionOpphort';
+  }
+  return ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
+    ? 'FatterVedtakApprovalModal.ModalDescriptionESApproval' : 'FatterVedtakApprovalModal.ModalDescriptionFPApproval';
+});
 
 const getAltImgTextCode = createSelector(
   [getFagsakYtelseType], ytelseType => (ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
@@ -112,12 +122,18 @@ const NKOmgjorEllerOppheverVedtaket = klageVurderingResultatNK => klageVurdering
 
 const NFPOmgjorVedtaket = klageVurderingResultatNFP => klageVurderingResultatNFP && klageVurderingResultatNFP.klageVurdering === klageVurdering.MEDHOLD_I_KLAGE;
 
+const skalVurdereKonsekvensForYtelsen = (behandlingsresultat, orginaltBehandlingsresultat) => behandlingsresultat
+  && behandlingsresultat.konsekvensForYtelsen && orginaltBehandlingsresultat && orginaltBehandlingsresultat.konsekvensForYtelsen;
+
 const isSameResultAsOriginalBehandling = (
   behandlingTypeKode, behandlingsresultat, beregningResultat, orginaltBehandlingsresultat,
   originaltBeregningResultat,
 ) => {
   if (behandlingTypeKode !== behandlingType.REVURDERING) {
     return false;
+  }
+  if (skalVurdereKonsekvensForYtelsen(behandlingsresultat, orginaltBehandlingsresultat)) {
+    return behandlingsresultat.konsekvensForYtelsen.kode === konsekvensForYtelsen.INGEN_ENDRING;
   }
   const sameResult = behandlingsresultat && behandlingsresultat.type.kode === orginaltBehandlingsresultat.type.kode;
   if (sameResult && behandlingsresultat.type.kode === behandlingResultatType.INNVILGET) {
@@ -129,10 +145,10 @@ const isSameResultAsOriginalBehandling = (
 const getInfoTextCode = createSelector(
   [getBehandlingType, getBehandlingsresultat, getBehandlingResultatstruktur, getBehandlingsresultatFraOriginalBehandling,
     getResultatstrukturFraOriginalBehandling, getBehandlingKlageVurderingResultatNK, getBehandlingKlageVurderingResultatNFP,
-    getFagsakYtelseType],
+    getFagsakYtelseType, isBehandlingsresultatOpphor],
   (
     behandlingtype, behandlingsresultat, beregningResultat, orginaltBehandlingsresultat, originaltBeregningResultat, klageVurderingResultatNK,
-    klageVurderingResultatNFP, ytelseType,
+    klageVurderingResultatNFP, ytelseType, isOpphor,
   ) => {
     if (NKOmgjorEllerOppheverVedtaket(klageVurderingResultatNK)) {
       return 'FatterVedtakApprovalModal.VedtakHjemsendt';
@@ -145,6 +161,9 @@ const getInfoTextCode = createSelector(
       return 'FatterVedtakApprovalModal.UendretUtfall';
     } if (behandlingsresultat.type.kode === behandlingResultatType.AVSLATT) {
       return ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD ? 'FatterVedtakApprovalModal.IkkeInnvilgetES' : 'FatterVedtakApprovalModal.IkkeInnvilgetFP';
+    }
+    if (isOpphor) {
+      return 'FatterVedtakApprovalModal.OpphortForeldrepenger';
     }
     return ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
       ? 'FatterVedtakApprovalModal.InnvilgetEngangsstonad' : 'FatterVedtakApprovalModal.InnvilgetForeldrepenger';

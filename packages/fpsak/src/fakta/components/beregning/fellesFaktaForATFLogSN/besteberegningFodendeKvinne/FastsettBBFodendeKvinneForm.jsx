@@ -4,29 +4,27 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { required } from '@fpsak-frontend/utils/validation/validators';
+import { required } from 'utils/validation/validators';
 import { Row, Column } from 'nav-frontend-grid';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { InputField, SelectField } from '@fpsak-frontend/form';
+import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { InputField, SelectField } from 'form/Fields';
 import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
-import {
-  formatCurrencyNoKr,
-  parseCurrencyInput,
-  removeSpacesFromNumber,
-  DDMMYYYY_DATE_FORMAT,
-  createVisningsnavnForAktivitet,
-} from '@fpsak-frontend/utils';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import Table from 'sharedComponents/Table';
+import TableRow from 'sharedComponents/TableRow';
+import TableColumn from 'sharedComponents/TableColumn';
+import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from 'utils/currencyUtils';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import { getKodeverk } from 'kodeverk/duck';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 
 import styles from './fastsettBBFodendeKvinneForm.less';
 
-const createInputFieldKeyForAndel = andel => `Inputfield_${andel.aktivitetStatus.kode}_${andel.andelsnr}`;
+export const createInputFieldKeyForAndel = andel => `Inputfield_${andel.aktivitetStatus.kode}_${andel.andelsnr}`;
 
-const createSelectfieldKeyForAndel = andel => `Selectfield_${andel.aktivitetStatus.kode}_${andel.andelsnr}`;
+export const createSelectfieldKeyForAndel = andel => `Selectfield_${andel.aktivitetStatus.kode}_${andel.andelsnr}`;
 
 const createVisningsnavnForAndel = (andel) => {
   if (andel.aktivitetStatus && andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER) {

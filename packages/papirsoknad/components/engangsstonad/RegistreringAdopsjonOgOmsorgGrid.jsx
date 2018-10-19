@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { FormSection } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
 
-import OppholdINorgePanel from '../commonPanels/OppholdINorgePanel';
-import RettigheterPanel from '../commonPanels/rettigheter/RettigheterPanel';
-import TilleggsopplysningerPanel from '../commonPanels/TilleggsopplysningerPanel';
-import AnnenForelderPanel from '../commonPanels/AnnenForelderPanel';
-import OmsorgOgAdopsjonPanel from '../commonPanels/omsorgOgAdopsjon/OmsorgOgAdopsjonPanel';
-import SoknadData from '../../SoknadData';
+import OppholdINorgePanel from 'papirsoknad/components/commonPanels/OppholdINorgePanel';
+import RettigheterPanel from 'papirsoknad/components/commonPanels/rettigheter/RettigheterPanel';
+import TilleggsopplysningerPanel from 'papirsoknad/components/commonPanels/TilleggsopplysningerPanel';
+import AnnenForelderPanel from 'papirsoknad/components/commonPanels/AnnenForelderPanel';
+import OmsorgOgAdopsjonPanel from 'papirsoknad/components/commonPanels/omsorgOgAdopsjon/OmsorgOgAdopsjonPanel';
+import SoknadData from 'papirsoknad/SoknadData';
+
 
 const ANNEN_FORELDER_FORM_NAME_PREFIX = 'annenForelder';
 const OMSORG_FORM_NAME_PREFIX = 'omsorg';
@@ -25,7 +26,7 @@ const RegistreringAdopsjonOgOmsorgGrid = ({
   <Row>
     <Column xs="6">
       <RettigheterPanel readOnly={readOnly} soknadData={soknadData} />
-      <OppholdINorgePanel form={form} readOnly={readOnly} />
+      <OppholdINorgePanel form={form} readOnly={readOnly} soknadData={soknadData} />
       <TilleggsopplysningerPanel readOnly={readOnly} />
     </Column>
     <Column xs="6">

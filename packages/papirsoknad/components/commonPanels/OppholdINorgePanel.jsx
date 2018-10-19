@@ -6,13 +6,15 @@ import { connect } from 'react-redux';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Fieldset } from 'nav-frontend-skjema';
 
-import { RadioGroupField, RadioOption, NavFieldGroup } from '@fpsak-frontend/form';
-import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
-import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import { RadioGroupField, RadioOption, NavFieldGroup } from 'form/Fields';
+import { isRequiredMessage } from 'utils/validation/messages';
+import SoknadData from 'papirsoknad/SoknadData';
+import BorderBox from 'sharedComponents/BorderBox';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import kodeverkPropType from 'kodeverk/kodeverkPropType';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import familieHendelseType from 'kodeverk/familieHendelseType';
 import UtenlandsOppholdField from './UtenlandsOppholdField';
 
 import styles from './oppholdINorgePanel.less';
@@ -25,7 +27,7 @@ import styles from './oppholdINorgePanel.less';
  * Komponenten har inputfelter og må derfor rendres som etterkommer av komponent dekorert med reduxForm.
  */
 export const OppholdINorgePanelImpl = ({
-  readOnly, intl, countryCodes, harFremtidigeOppholdUtenlands, harTidligereOppholdUtenlands,
+  readOnly, intl, countryCodes, harFremtidigeOppholdUtenlands, harTidligereOppholdUtenlands, soknadData,
 }) => {
   const { formatMessage } = intl;
   const sortedCountriesByName = countryCodes.slice().sort((a, b) => a.navn.localeCompare(b.navn));
@@ -34,11 +36,24 @@ export const OppholdINorgePanelImpl = ({
     <BorderBox>
       <Fieldset className={styles.fullWidth} legend={formatMessage({ id: 'Registrering.Opphold' })}>
         <NavFieldGroup>
+          {soknadData.getFamilieHendelseType() === familieHendelseType.ADOPSJON
+          && (
+          <Undertekst>
+            {' '}
+            {formatMessage({ id: 'Registrering.OppholdVedAdopsjon' })}
+            {' '}
+          </Undertekst>
+          )
+          }
+          {soknadData.getFamilieHendelseType() !== familieHendelseType.ADOPSJON
+          && (
           <Undertekst>
             {' '}
             {formatMessage({ id: 'Registrering.OppholdVedFodsel' })}
             {' '}
           </Undertekst>
+          )
+          }
           <VerticalSpacer eightPx />
           <RadioGroupField name="oppholdINorge" readOnly={readOnly}>
             <RadioOption label={formatMessage({ id: 'Registrering.Opphold.Yes' })} value />
@@ -101,6 +116,7 @@ export const OppholdINorgePanelImpl = ({
 OppholdINorgePanelImpl.propTypes = {
   intl: intlShape.isRequired,
   countryCodes: kodeverkPropType.isRequired,
+  soknadData: PropTypes.instanceOf(SoknadData).isRequired,
   harFremtidigeOppholdUtenlands: PropTypes.bool,
   harTidligereOppholdUtenlands: PropTypes.bool,
   readOnly: PropTypes.bool,

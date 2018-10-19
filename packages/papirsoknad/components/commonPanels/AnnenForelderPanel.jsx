@@ -6,21 +6,21 @@ import { FormSection, formValueSelector } from 'redux-form';
 import { Fieldset } from 'nav-frontend-skjema';
 import { Undertittel, Undertekst } from 'nav-frontend-typografi';
 
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import kanIkkeOppgiAnnenForelderArsaker from '@fpsak-frontend/kodeverk/kanIkkeOppgiAnnenForelderArsak';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import kanIkkeOppgiAnnenForelderArsaker from 'kodeverk/kanIkkeOppgiAnnenForelderArsak';
 import {
   CheckboxField, InputField, NavFieldGroup, RadioOption, RadioGroupField, SelectField,
-} from '@fpsak-frontend/form';
+} from 'form/Fields';
 import {
   required, hasValidFodselsnummerFormat, hasValidFodselsnummer, hasValidName,
-} from '@fpsak-frontend/utils/validation/validators';
-import { sammeFodselsnummerSomSokerMessage } from '@fpsak-frontend/utils/validation/messages';
-import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import landkoder from '@fpsak-frontend/kodeverk/landkoder';
+} from 'utils/validation/validators';
+import { sammeFodselsnummerSomSokerMessage } from 'utils/validation/messages';
+import BorderBox from 'sharedComponents/BorderBox';
+import kodeverkPropType from 'kodeverk/kodeverkPropType';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import landkoder from 'kodeverk/landkoder';
 
 import styles from './annenForelderPanel.less';
 

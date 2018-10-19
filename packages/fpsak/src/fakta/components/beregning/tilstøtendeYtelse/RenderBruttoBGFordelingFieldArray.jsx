@@ -5,29 +5,28 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Undertekst, Element } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 import {
-  NavFieldGroup, InputField, SelectField, PeriodpickerField,
-} from '@fpsak-frontend/form';
-import { required } from '@fpsak-frontend/utils/validation/validators';
+  NavFieldGroup, InputField, SelectField, PeriodpickerField, DecimalField,
+} from 'form/Fields';
+import { required } from 'utils/validation/validators';
 import { getFaktaOmBeregning, getAksjonspunkter } from 'behandling/behandlingSelectors';
 import { getBehandlingFormSyncErrors } from 'behandling/behandlingForm';
-import Image from '@fpsak-frontend/shared-components/Image';
-import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-frontend/kodeverk/inntektskategorier';
-import {
-  parseCurrencyInput,
-  removeSpacesFromNumber,
-  formatCurrencyNoKr,
-  createVisningsnavnForAktivitet,
-} from '@fpsak-frontend/utils';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import Image from 'sharedComponents/Image';
+import addCircleIcon from 'images/add-circle.svg';
+import { getKodeverk } from 'kodeverk/duck';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import kodeverkPropType from 'kodeverk/kodeverkPropType';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import inntektskategorier, { isSelvstendigNæringsdrivende } from 'kodeverk/inntektskategorier';
+import { parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr } from 'utils/currencyUtils';
+import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
+
+import Table from 'sharedComponents/Table';
+import TableRow from 'sharedComponents/TableRow';
+import TableColumn from 'sharedComponents/TableColumn';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import styles from './renderBruttoBGFordelingFieldArray.less';
-import { getUniqueListOfArbeidsforhold, arbeidsforholdProptype } from '../ArbeidsforholdHelper';
+import { getUniqueListOfArbeidsforhold, arbeidsforholdProptype } from '../../ArbeidsforholdHelper';
 
 const defaultBGFordeling = {
   andel: '',
@@ -124,10 +123,11 @@ const getErrorMessage = (meta, intl) => (meta.error && (meta.dirty || meta.submi
 function skalViseSletteknapp(index, fields, readOnly) {
   return (fields.get(index).nyAndel || fields.get(index).lagtTilAvSaksbehandler) && !readOnly;
 }
-const createAndelerTableRows = (fields, selectVals, isAksjonspunktClosed, readOnly, inntektskategoriKoder) => fields.map((andelElementFieldId, index) => (
-  <TableRow key={andelElementFieldId}>
-    <TableColumn>
-      {!fields.get(index).nyAndel
+const createAndelerTableRows = (fields, selectVals, isAksjonspunktClosed, readOnly,
+  inntektskategoriKoder) => fields.map((andelElementFieldId, index) => (
+    <TableRow key={andelElementFieldId}>
+      <TableColumn>
+        {!fields.get(index).nyAndel
       && (
         <InputField
           name={`${andelElementFieldId}.andel`}
@@ -136,7 +136,7 @@ const createAndelerTableRows = (fields, selectVals, isAksjonspunktClosed, readOn
         />
       )
       }
-      {fields.get(index).nyAndel
+        {fields.get(index).nyAndel
       && (
         <SelectField
           name={`${andelElementFieldId}.andel`}
@@ -148,9 +148,9 @@ const createAndelerTableRows = (fields, selectVals, isAksjonspunktClosed, readOn
         />
       )
       }
-    </TableColumn>
-    <TableColumn>
-      {!isSelvstendigOrFrilanser(fields.get(index))
+      </TableColumn>
+      <TableColumn>
+        {!isSelvstendigOrFrilanser(fields.get(index))
       && (
         <PeriodpickerField
           names={[`${andelElementFieldId}.arbeidsperiodeFom`, `${andelElementFieldId}.arbeidsperiodeTom`]}
@@ -160,47 +160,61 @@ const createAndelerTableRows = (fields, selectVals, isAksjonspunktClosed, readOn
         />
       )
       }
-    </TableColumn>
-    <TableColumn>
-      <InputField
-        name={`${andelElementFieldId}.fordelingForrigeYtelse`}
-        bredde="S"
-        readOnly
-        parse={parseCurrencyInput}
-      />
-    </TableColumn>
-    <TableColumn>
-      <InputField
-        name={`${andelElementFieldId}.refusjonskrav`}
-        bredde="S"
-        readOnly
-        parse={parseCurrencyInput}
-      />
-    </TableColumn>
-    <TableColumn className={styles.rightAlignInput}>
-      <InputField
-        name={`${andelElementFieldId}.fastsattBeløp`}
-        bredde="XS"
-        parse={parseCurrencyInput}
-        validate={[required]}
-        readOnly={readOnly}
-        isEdited={isAksjonspunktClosed}
-      />
-    </TableColumn>
-    <TableColumn>
-      <SelectField
-        label=""
-        name={`${andelElementFieldId}.inntektskategori`}
-        bredde="s"
-        selectValues={inntektskategoriSelectValues(inntektskategoriKoder)}
-        value={fields.get(index).inntektskategori}
-        validate={[required]}
-        readOnly={readOnly}
-        isEdited={isAksjonspunktClosed}
-      />
-    </TableColumn>
-    <TableColumn>
-      {skalViseSletteknapp(index, fields, readOnly)
+      </TableColumn>
+      <TableColumn>
+        <InputField
+          name={`${andelElementFieldId}.fordelingForrigeYtelse`}
+          bredde="S"
+          readOnly
+          parse={parseCurrencyInput}
+        />
+      </TableColumn>
+      <TableColumn>
+        <DecimalField
+          name={`${andelElementFieldId}.andelIArbeid`}
+          readOnly
+          bredde="S"
+          format={(value) => {
+            if (value || value === 0) {
+              return `${value} %`;
+            }
+            return '';
+          }}
+          normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+        />
+      </TableColumn>
+      <TableColumn>
+        <InputField
+          name={`${andelElementFieldId}.refusjonskrav`}
+          bredde="S"
+          readOnly
+          parse={parseCurrencyInput}
+        />
+      </TableColumn>
+      <TableColumn className={styles.rightAlignInput}>
+        <InputField
+          name={`${andelElementFieldId}.fastsattBeløp`}
+          bredde="XS"
+          parse={parseCurrencyInput}
+          validate={[required]}
+          readOnly={readOnly}
+          isEdited={isAksjonspunktClosed}
+        />
+      </TableColumn>
+      <TableColumn>
+        <SelectField
+          label=""
+          name={`${andelElementFieldId}.inntektskategori`}
+          bredde="s"
+          selectValues={inntektskategoriSelectValues(inntektskategoriKoder)}
+          value={fields.get(index).inntektskategori}
+          validate={[required]}
+          readOnly={readOnly}
+          isEdited={isAksjonspunktClosed}
+        />
+      </TableColumn>
+      <TableColumn>
+        {skalViseSletteknapp(index, fields, readOnly)
       && (
         <button
           className={styles.buttonRemove}
@@ -211,8 +225,8 @@ const createAndelerTableRows = (fields, selectVals, isAksjonspunktClosed, readOn
         />
       )
       }
-    </TableColumn>
-  </TableRow>
+      </TableColumn>
+    </TableRow>
 ));
 const createBruttoBGSummaryRow = (sumFordelingForrigeYtelse, sumFordeling) => (
   <TableRow key="bruttoBGSummaryRow">
@@ -225,6 +239,7 @@ const createBruttoBGSummaryRow = (sumFordelingForrigeYtelse, sumFordeling) => (
         {sumFordelingForrigeYtelse}
       </Undertekst>
     </TableColumn>
+    <TableColumn />
     <TableColumn />
     <TableColumn>
       <Undertekst>
@@ -244,6 +259,7 @@ const createRedusertBGSummaryRow = sumRedusertFordeling => (
     <TableColumn />
     <TableColumn />
     <TableColumn />
+    <TableColumn />
     <TableColumn>
       <Element>
         {sumRedusertFordeling}
@@ -254,13 +270,15 @@ const createRedusertBGSummaryRow = sumRedusertFordeling => (
   </TableRow>
 );
 
-const getHeaderTextCodes = () => [
+const getHeaderTextCodes = () => ([
   'BeregningInfoPanel.FordelingBG.Andel',
   'BeregningInfoPanel.FordelingBG.Arbeidsperiode',
   'BeregningInfoPanel.FordelingBG.FordelingForrigeYtelse',
+  'BeregningInfoPanel.FordelingBG.AndelIArbeid',
   'BeregningInfoPanel.FordelingBG.Refusjonskrav',
   'BeregningInfoPanel.FordelingBG.Fordeling',
-  'BeregningInfoPanel.FordelingBG.Inntektskategori'];
+  'BeregningInfoPanel.FordelingBG.Inntektskategori']
+);
 
 /**
  *  RenderBruttoBGFordelingFieldArray
@@ -366,7 +384,7 @@ const mapStateToProps = (state) => {
   const andeltyper = getKodeverk(kodeverkTyper.BEREGNINGSGRUNNLAG_ANDELTYPER)(state);
   const alleAp = getAksjonspunkter(state);
   const relevantAp = alleAp
-    .filter(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_BEREGNINGSGRUNNLAG_OG_INNTEKTSKATEGORI_FOR_BRUKER_MED_TILSTOTENDE_YTELSE);
+    .filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN);
   const isAksjonspunktClosed = relevantAp.length === 0 ? undefined : !isAksjonspunktOpen(relevantAp[0].status.kode);
   return {
     isAksjonspunktClosed,

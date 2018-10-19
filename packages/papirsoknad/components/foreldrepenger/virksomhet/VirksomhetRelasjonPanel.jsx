@@ -1,11 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { RadioGroupField, RadioOption } from 'form/Fields';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import PropTypes from 'prop-types';
 
 /**
  * VirksomhetRelasjonPanel

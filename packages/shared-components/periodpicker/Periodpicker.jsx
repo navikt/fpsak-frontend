@@ -4,10 +4,10 @@ import moment from 'moment';
 import { Input } from 'nav-frontend-skjema';
 
 import { DateUtils } from 'react-day-picker';
-import { haystack } from '@fpsak-frontend/utils/arrayUtils';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
-import ElementWrapper from '../ElementWrapper';
-import CalendarToggleButton from '../datepicker/CalendarToggleButton';
+import { haystack } from 'utils/arrayUtils';
+import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import CalendarToggleButton from 'sharedComponents/datepicker/CalendarToggleButton';
 import PeriodCalendarOverlay from './PeriodCalendarOverlay';
 
 import styles from './periodpicker.less';

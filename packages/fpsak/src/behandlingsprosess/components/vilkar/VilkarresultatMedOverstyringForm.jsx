@@ -7,22 +7,23 @@ import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
-import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
+import { isObject } from 'utils/objectUtils';
+import FadingPanel from 'sharedComponents/FadingPanel';
 import { getBehandlingsresultat, isBehandlingRevurderingFortsattMedlemskap, getBehandlingRevurderingAvFortsattMedlemskapFom }
   from 'behandling/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import vilkarType from 'kodeverk/vilkarType';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
-import aksjonspunktCode from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import { DDMMYYYY_DATE_FORMAT, isObject } from '@fpsak-frontend/utils';
+import aksjonspunktCode from 'kodeverk/aksjonspunktCodes';
+import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
 import {
   getSelectedBehandlingspunktTitleCode, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus,
   getSelectedBehandlingspunkt, getIsSelectedBehandlingspunktOverridden, getSelectedBehandlingspunktVilkar,
   isSelectedBehandlingspunktOverrideReadOnly,
 } from 'behandlingsprosess/behandlingsprosessSelectors';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
 import OverstyrVurderingChecker from 'behandlingsprosess/components/OverstyrVurderingChecker';
 import OverstyrConfirmationForm from 'behandlingsprosess/components/OverstyrConfirmationForm';
 import VilkarResultPicker from 'behandlingsprosess/components/vilkar/VilkarResultPicker';

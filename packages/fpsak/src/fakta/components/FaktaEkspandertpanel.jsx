@@ -29,7 +29,7 @@ const FaktaEkspandertpanel = ({
   disabledTextCode,
   children,
 }) => {
-  if (disabled) {
+  if (disabled && disabledTextCode) {
     return (
       <Panel className={styles.disabledPanel}>
         <Undertittel className={styles.disabledPanelText}>

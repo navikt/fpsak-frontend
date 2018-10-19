@@ -5,19 +5,19 @@ import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import { FieldArray, formValueSelector } from 'redux-form';
 
-import { CheckboxField } from '@fpsak-frontend/form';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
+import { CheckboxField } from 'form/Fields';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import {
   hasValidInteger,
   hasValidPeriodIncludingOtherErrors,
   maxLength,
   required,
   validateProsentandel,
-} from '@fpsak-frontend/utils/validation/validators';
-import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
+} from 'utils/validation/validators';
+import { isRequiredMessage } from 'utils/validation/messages';
 import RenderGraderingPeriodeFieldArray from './RenderGraderingPeriodeFieldArray';
 
 export const graderingPeriodeFieldArrayName = 'graderingPeriode';
@@ -61,12 +61,12 @@ export const PermisjonGraderingPanel = ({
   </div>
 );
 
-export const validateOtherErrors = (values, isEndringForeldrepenger) => values.map(({
+export const validateOtherErrors = values => values.map(({
   periodeForGradering, prosentandelArbeid, orgNr, erArbeidstaker,
 }) => {
   const periodeForGraderingError = required(periodeForGradering);
   const prosentandelArbeidError = validateProsentandel(prosentandelArbeid);
-  const orgNrShouldBeRequired = !isEndringForeldrepenger && erArbeidstaker === 'true';
+  const orgNrShouldBeRequired = erArbeidstaker === 'true';
   const orgNrError = (orgNrShouldBeRequired && required(orgNr)) || hasValidInteger(orgNr) || maxLength9(orgNr);
   if (prosentandelArbeidError || periodeForGraderingError || orgNrError) {
     return {
@@ -78,11 +78,11 @@ export const validateOtherErrors = (values, isEndringForeldrepenger) => values.m
   return null;
 });
 
-PermisjonGraderingPanel.validate = (values, isEndringForeldrepenger) => {
+PermisjonGraderingPanel.validate = (values) => {
   if (!values || !values.length) {
     return { _error: isRequiredMessage() };
   }
-  const otherErrors = validateOtherErrors(values, isEndringForeldrepenger);
+  const otherErrors = validateOtherErrors(values);
 
   return hasValidPeriodIncludingOtherErrors(values, otherErrors);
 };

@@ -1,6 +1,6 @@
 import React from 'react';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import { expect } from 'chai';
+import { shallow } from 'enzyme';
 import { ToTrinnsFormReadOnlyImpl } from './ToTrinnsFormReadOnly';
 import getAksjonspunktText from './ApprovalTextUtils';
 
@@ -104,14 +104,19 @@ describe('<ToTrinnsFormReadOnly>', () => {
     },
     ];
 
-    const wrapper = shallowWithIntl(<ToTrinnsFormReadOnlyImpl
+    const wrapper = shallow(<ToTrinnsFormReadOnlyImpl
       approvalList={approvalList}
-      intl={intlMock}
       getAksjonspunktText={getAksjonspunktText.resultFunc(true, null, null, null, null)}
     />);
     const navFieldGroup = wrapper.find('NavLink');
-    expect(navFieldGroup).to.have.length(3);
+    expect(navFieldGroup)
+      .to
+      .have
+      .length(3);
     const normaltekst = wrapper.find('pre');
-    expect(normaltekst).to.have.length(7);
+    expect(normaltekst)
+      .to
+      .have
+      .length(7);
   });
 });

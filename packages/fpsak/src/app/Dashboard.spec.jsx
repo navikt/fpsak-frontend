@@ -2,9 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
 import FagsakSearchIndex from 'fagsakSearch/FagsakSearchIndex';
-import IntegrationStatusPanel from '@fpsak-frontend/shared-components/IntegrationStatusPanel';
+import IntegrationStatusPanel from './IntegrationStatusPanel';
 import { Dashboard } from './Dashboard';
 
 describe('<Dashboard>', () => {

@@ -8,14 +8,11 @@ import { createLocationForHistorikkItems } from 'app/paths';
 import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
 
 import {
-  findAarsakText,
-  findBegrunnelseTekst,
   findEndretFeltNavn,
   findEndretFeltVerdi,
   findHendelseText,
   findIdForOpplysningCode,
   findResultatText,
-  findSkjermlenkeText,
 } from './historikkUtils';
 import BubbleText from './bubbleText';
 
@@ -55,28 +52,28 @@ const HistorikkMalType7 = ({
     historikkinnslagDeler
       .map((historikkinnslagDel, historikkinnslagDelIndex) => (
         <div key={`historikkinnslagDel${historikkinnslagDelIndex}` // eslint-disable-line react/no-array-index-key
-      }
+        }
         >
           <div>
             {historikkinnslagDel.skjermlenke
-          && (
-          <Element>
-            <NavLink
-              to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
-            >
-              {findSkjermlenkeText(historikkinnslagDeler[0].skjermlenke, intl)}
-            </NavLink>
-          </Element>
-          )
-      }
+            && (
+              <Element>
+                <NavLink
+                  to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
+                >
+                  {historikkinnslagDeler[0].skjermlenke.navn}
+                </NavLink>
+              </Element>
+            )
+            }
 
             {historikkinnslagDel.hendelse
-          && <Element>{findHendelseText(historikkinnslagDel.hendelse)}</Element>
-      }
+            && <Element>{findHendelseText(historikkinnslagDel.hendelse)}</Element>
+            }
 
             {historikkinnslagDel.resultat
-          && <Element>{findResultatText(historikkinnslagDel.resultat, intl)}</Element>
-      }
+            && <Element>{findResultatText(historikkinnslagDel.resultat, intl)}</Element>
+            }
 
             {historikkinnslagDel.endredeFelter && historikkinnslagDel.endredeFelter
               .map((endretFelt, i) => <div key={`endredeFelter${i + 1}`}>{formatChangedField(endretFelt)}</div>)}
@@ -85,11 +82,11 @@ const HistorikkMalType7 = ({
               .map(opplysning => (<FormattedHTMLMessage id={findIdForOpplysningCode(opplysning)} values={{ antallBarn: opplysning.tilVerdi }} />))}
 
             {historikkinnslagDel.aarsak
-          && <Normaltekst>{findAarsakText(historikkinnslagDel.aarsak, intl)}</Normaltekst>
-      }
-
-            <BubbleText bodyText={findBegrunnelseTekst(historikkinnslagDel.begrunnelse)} className="snakkeboble-panel__tekst" />
-
+            && <Normaltekst>{historikkinnslagDel.aarsak.navn}</Normaltekst>
+            }
+            {historikkinnslagDel.begrunnelse
+            && <BubbleText bodyText={historikkinnslagDel.begrunnelse.navn} className="snakkeboble-panel__tekst" />
+            }
             <div>
               {dokumentLinks && dokumentLinks.map(dokumentLink => (
                 <a
@@ -99,7 +96,7 @@ const HistorikkMalType7 = ({
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-              #
+                  #
                   {dokumentLink.tag}
                 </a>
               ))}

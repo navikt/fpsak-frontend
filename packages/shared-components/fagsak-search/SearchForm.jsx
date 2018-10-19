@@ -5,18 +5,23 @@ import {
 } from 'react-intl';
 import { reduxForm, formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
-import { InputField } from '@fpsak-frontend/form';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import { Row, Column } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
-import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
-import { hasValidSaksnummerOrFodselsnummerFormat } from '@fpsak-frontend/utils/validation/validators';
-import VerticalSpacer from '../VerticalSpacer';
-import { FlexContainer, FlexRow, FlexColumn } from '../flexGrid';
-import Image from '../Image';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import Image from 'sharedComponents/Image';
+import advarselIcon from 'images/advarsel.svg';
+import { hasValidSaksnummerOrFodselsnummerFormat } from 'utils/validation/validators';
+import { InputField } from 'form/Fields';
 
 import styles from './searchForm.less';
 
-const isButtonDisabled = (searchStringObject, searchStartedObject) => !!(searchStartedObject.searchStarted || searchStringObject.searchString.length < 1);
+const isButtonDisabled = (searchStringObject, searchStartedObject) => {
+  if (searchStartedObject.searchStarted || searchStringObject.searchString.length < 1) {
+    return true;
+  }
+  return false;
+};
 
 /**
  * SearchForm
@@ -31,45 +36,39 @@ export const SearchFormImpl = ({
   ...formProps
 }) => (
   <form className={styles.container} onSubmit={formProps.handleSubmit}>
-    <FlexContainer fluid>
-      <FlexRow>
-        <FlexColumn>
-          <Undertittel>{intl.formatMessage({ id: 'Search.SearchFagsakOrPerson' })}</Undertittel>
-          <VerticalSpacer eightPx />
-        </FlexColumn>
-      </FlexRow>
-      <FlexRow>
-        <FlexColumn>
-          <InputField
-            name="searchString"
-            parse={(s = '') => s.trim()}
-            label={intl.formatMessage({ id: 'Search.SaksnummerOrPersonId' })}
-            bredde="L"
-          />
-        </FlexColumn>
-        <FlexColumn>
-          <Hovedknapp
-            mini
-            className={styles.button}
-            spinner={searchStarted}
-            disabled={isButtonDisabled({ searchString }, { searchStarted })}
-            tabIndex="0"
-          >
-            <FormattedMessage id="Search.Search" />
-          </Hovedknapp>
-        </FlexColumn>
-      </FlexRow>
-      {searchResultAccessDenied
-      && (
-      <FlexRow>
-        <FlexColumn>
-          <Image className={styles.advarselIcon} src={advarselIcon} />
-          <FormattedHTMLMessage className={styles.feilmelding} id={searchResultAccessDenied.feilmelding} />
-        </FlexColumn>
-      </FlexRow>
-      )
-      }
-    </FlexContainer>
+    <Undertittel>{intl.formatMessage({ id: 'Search.SearchFagsakOrPerson' })}</Undertittel>
+    <VerticalSpacer eightPx />
+    <Row>
+      <Column xs="7">
+        <InputField
+          name="searchString"
+          parse={(s = '') => s.trim()}
+          label={intl.formatMessage({ id: 'Search.SaksnummerOrPersonId' })}
+          bredde="L"
+        />
+      </Column>
+      <Column xs="5">
+        <Hovedknapp
+          mini
+          className={styles.button}
+          spinner={searchStarted}
+          disabled={isButtonDisabled({ searchString }, { searchStarted })}
+          tabIndex="0"
+        >
+          <FormattedMessage id="Search.Search" />
+        </Hovedknapp>
+      </Column>
+    </Row>
+    {searchResultAccessDenied
+    && (
+    <Row>
+      <Column xs="12">
+        <Image className={styles.advarselIcon} src={advarselIcon} />
+        <FormattedHTMLMessage className={styles.feilmelding} id={searchResultAccessDenied.feilmelding} />
+      </Column>
+    </Row>
+    )
+    }
   </form>
 );
 

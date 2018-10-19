@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
-import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/uttakPeriodeVurdering';
+import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
 import { PerioderKnapper } from './PerioderKnapper';
 
 describe('<PerioderKnapper>', () => {

@@ -1,19 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import Image from '@fpsak-frontend/shared-components/Image';
-import checkImg from '@fpsak-frontend/assets/images/check.svg';//
-import avslattImg from '@fpsak-frontend/assets/images/avslaatt.svg';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import Image from 'sharedComponents/Image';
+import checkImg from 'images/check.svg';//
+import avslattImg from 'images/avslaatt.svg';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
 import { getAksjonspunktTextSelector } from './ApprovalTextUtils';
 
 import styles from './ToTrinnsFormReadOnly.less';
-
 
 /*
   * ToTrinnsFormReadOnly
@@ -87,20 +86,20 @@ const renderAksjonspunkt = (aksjonspunkt, getAksjonspunktText) => (
   </div>
 );
 
-export const ToTrinnsFormReadOnlyImpl = ({ approvalList, intl, getAksjonspunktText }) => {
+export const ToTrinnsFormReadOnlyImpl = ({ approvalList, getAksjonspunktText }) => {
   if (!approvalList || approvalList.length === 0) {
     return null;
   }
   return (
     <div>
       {approvalList.map(({
-        contextCode, skjermlenke, skjermlenkeId, aksjonspunkter,
+        contextCode, skjermlenke, skjermlenkeNavn, aksjonspunkter,
       }) => {
         if (aksjonspunkter.length > 0) {
           return (
             <ElementWrapper key={contextCode}>
               <NavLink to={skjermlenke}>
-                {intl.formatMessage({ id: skjermlenkeId })}
+                {skjermlenkeNavn}
               </NavLink>
               {aksjonspunkter.map(aksjonspunkt => renderAksjonspunkt(aksjonspunkt, getAksjonspunktText))}
             </ElementWrapper>
@@ -114,7 +113,6 @@ export const ToTrinnsFormReadOnlyImpl = ({ approvalList, intl, getAksjonspunktTe
 
 ToTrinnsFormReadOnlyImpl.propTypes = {
   approvalList: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  intl: intlShape.isRequired,
   getAksjonspunktText: PropTypes.func.isRequired,
 };
 

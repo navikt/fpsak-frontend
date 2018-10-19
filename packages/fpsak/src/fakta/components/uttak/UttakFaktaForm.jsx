@@ -13,18 +13,19 @@ import moment from 'moment';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { getBehandlingFormPrefix, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import FlexColumn from '@fpsak-frontend/shared-components/flexGrid/FlexColumn';
-import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';
-import FlexContainer from '@fpsak-frontend/shared-components/flexGrid/FlexContainer';
-import { ariaCheck } from '@fpsak-frontend/utils/validation/validators';
+import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
+import FlexRow from 'sharedComponents/flexGrid/FlexRow';
+import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
+import { ariaCheck } from 'utils/validation/validators';
 import { getInntektsmeldinger, getBehandlingVersjon } from 'behandling/behandlingSelectors';
+import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
 import { getSelectedBehandlingId } from 'behandling/duck';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/uttakPeriodeType';
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import { uttakPeriodeNavn } from 'kodeverk/uttakPeriodeType';
+import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import UttakPeriode from './UttakPeriode';
 import UttakNyPeriode from './UttakNyPeriode';
 import UttakSlettPeriodeModal from './UttakSlettPeriodeModal';
@@ -44,13 +45,19 @@ const createNewPerioder = (perioder, id, values) => {
 };
 
 const overlappingDates = (innmldPeriode, soknadsPeriode) => {
-  const fomBetween = moment(soknadsPeriode.fom)
+  const søknadFomBetween = moment(soknadsPeriode.fom)
     .isBetween(moment(innmldPeriode.fom), moment(innmldPeriode.tom), null, '[]');
-  const tomBetween = moment(soknadsPeriode.tom)
+  const søknadTomBetween = moment(soknadsPeriode.tom)
     .isBetween(moment(innmldPeriode.fom), moment(innmldPeriode.tom), null, '[]');
+  const inntekstmeldingFomBetween = moment(innmldPeriode.fom)
+    .isBetween(moment(soknadsPeriode.fom), moment(soknadsPeriode.tom), null, '[]');
+  const inntekstmeldingTomBetween = moment(innmldPeriode.tom)
+    .isBetween(moment(soknadsPeriode.fom), moment(soknadsPeriode.tom), null, '[]');
+
+
   const isGradering = innmldPeriode.arbeidsprosent !== undefined && innmldPeriode.arbeidsprosent !== null;
 
-  if (fomBetween && tomBetween) {
+  if (søknadFomBetween || søknadTomBetween) {
     if (isGradering) {
       return soknadsPeriode.arbeidstidsprosent !== innmldPeriode.arbeidsprosent;
     }
@@ -58,7 +65,7 @@ const overlappingDates = (innmldPeriode, soknadsPeriode) => {
     return innmldPeriode.utsettelseArsak && (innmldPeriode.utsettelseArsak.kode !== soknadsPeriode.utsettelseÅrsak.kode);
   }
 
-  return fomBetween || tomBetween;
+  return søknadFomBetween || søknadTomBetween || inntekstmeldingFomBetween || inntekstmeldingTomBetween;
 };
 
 const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => inntektsmeldinger.map((innmld) => {
@@ -194,7 +201,7 @@ export class UttakFaktaForm extends Component {
           };
         }
         return { ...periode };
-      }).sort((a, b) => a.fom > b.fom),
+      }).sort((a, b) => a.fom.localeCompare(b.fom)),
     );
   }
 
@@ -226,7 +233,6 @@ export class UttakFaktaForm extends Component {
     const updatedPeriodeIndex = perioder.findIndex(p => p.id === id);
     const tom = nyTom || updatedPeriode.tom;
     const fom = nyFom || updatedPeriode.fom;
-
     const newPeriodeObject = {
       id,
       tom,
@@ -234,7 +240,7 @@ export class UttakFaktaForm extends Component {
       kontoType,
       resultat: uttakPeriodeVurderingTyper.find(type => type.kode === resultat),
       begrunnelse: values.begrunnelse,
-      dokumentertePerioder: resultat ? dokumentertePerioder : null,
+      dokumentertePerioder: resultat && resultat !== uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES ? dokumentertePerioder : null,
       arbeidstidsprosent: nyArbeidstidsprosent || updatedPeriode.arbeidstidprosent,
       openForm: !updatedPeriode.openForm,
       bekreftet: updatedPeriode.bekreftet,
@@ -242,13 +248,13 @@ export class UttakFaktaForm extends Component {
       overføringÅrsak: updatedPeriode.overføringÅrsak,
       erArbeidstaker: updatedPeriode.erArbeidstaker,
       samtidigUttak: updatedPeriode.samtidigUttak,
+      flerBarnsDager: updatedPeriode.flerBarnsDager,
       morsAktivitet: updatedPeriode.morsAktivitet,
       orgnr: updatedPeriode.orgnr,
       virksomhetNavn: updatedPeriode.virksomhetNavn,
       isFromSøknad: updatedPeriode.isFromSøknad,
       updated: true,
     };
-
     if (kontoType) {
       newPeriodeObject.uttakPeriodeType = {
         kode: kontoType,
@@ -268,7 +274,7 @@ export class UttakFaktaForm extends Component {
 
     const newPerioder = createNewPerioder(perioder, id, newPeriodeObject);
 
-    formChange(`${behandlingFormPrefix}.UttakInfoPanel`, 'perioder', newPerioder.sort((a, b) => a.fom > b.fom));
+    formChange(`${behandlingFormPrefix}.UttakInfoPanel`, 'perioder', newPerioder.sort((a, b) => a.fom.localeCompare(b.fom)));
   }
 
   isAnyFormOpen() {
@@ -276,7 +282,6 @@ export class UttakFaktaForm extends Component {
 
     return perioder.some(p => p.openForm);
   }
-
 
   addNewPeriod() {
     this.newPeriodeResetCallback();
@@ -290,13 +295,13 @@ export class UttakFaktaForm extends Component {
       disableButtons,
       perioder,
       aksjonspunkter,
-      isRevurdering,
-      endringsDato,
+      førsteUttaksDato,
+      submitting,
     } = this.props;
     const {
       periodeSlett, isNyPeriodeFormOpen, inntektsmeldingInfo, showModalSlettPeriode,
     } = this.state;
-    const nyPeriodeDisabledDaysFom = endringsDato || (perioder[0] || []).fom;
+    const nyPeriodeDisabledDaysFom = førsteUttaksDato || (perioder[0] || []).fom;
     return (
       <div>
         {!readOnly
@@ -304,7 +309,7 @@ export class UttakFaktaForm extends Component {
         <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
           {aksjonspunkter.map((ap) => {
             const førsteUttak = {
-              value: moment(endringsDato).format(DDMMYYYY_DATE_FORMAT),
+              value: moment(førsteUttaksDato).format(DDMMYYYY_DATE_FORMAT),
             };
             return (
               <FormattedMessage
@@ -329,12 +334,11 @@ export class UttakFaktaForm extends Component {
           cleaningUpForm={this.cleaningUpForm}
           cancelEditPeriode={this.cancelEditPeriode}
           isAnyFormOpen={this.isAnyFormOpen}
-          isRevurdering={isRevurdering}
           isNyPeriodeFormOpen={isNyPeriodeFormOpen}
           perioder={perioder}
           readOnly={readOnly}
           inntektsmeldingInfo={inntektsmeldingInfo}
-          endringsDato={endringsDato}
+          førsteUttaksDato={førsteUttaksDato}
         />
         <VerticalSpacer twentyPx />
         <FlexContainer fluid wrap>
@@ -344,6 +348,7 @@ export class UttakFaktaForm extends Component {
                 mini
                 disabled={disableButtons || readOnly || isNyPeriodeFormOpen}
                 onClick={ariaCheck}
+                spinner={submitting}
               >
                 <FormattedMessage id="UttakInfoPanel.BekreftOgFortsett" />
               </Hovedknapp>
@@ -393,6 +398,7 @@ UttakFaktaForm.propTypes = {
   disableButtons: PropTypes.bool.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormReset: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired,
   slettedePerioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   initialValues: PropTypes.shape().isRequired,
   uttakPeriodeVurderingTyper: PropTypes.arrayOf(PropTypes.shape({
@@ -400,12 +406,11 @@ UttakFaktaForm.propTypes = {
     name: PropTypes.string,
   })).isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  endringsDato: PropTypes.string,
-  isRevurdering: PropTypes.bool.isRequired,
+  førsteUttaksDato: PropTypes.string,
 };
 
 UttakFaktaForm.defaultProps = {
-  endringsDato: undefined,
+  førsteUttaksDato: undefined,
 };
 
 const perioder = state => behandlingFormValueSelector('UttakInfoPanel')(state, 'perioder') || [];

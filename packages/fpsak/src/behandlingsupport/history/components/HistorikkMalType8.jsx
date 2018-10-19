@@ -8,14 +8,11 @@ import { createLocationForHistorikkItems } from 'app/paths';
 import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
 
 import {
-  findAarsakText,
-  findBegrunnelseTekst,
   findEndretFeltNavn,
   findEndretFeltVerdi,
   findHendelseText,
   findIdForOpplysningCode,
   findResultatText,
-  findSkjermlenkeText,
 } from './historikkUtils';
 import BubbleText from './bubbleText';
 
@@ -63,28 +60,28 @@ const HistorikkMalType8 = ({
       historikkinnslagDel, historikkinnslagDelIndex,
     ) => (
       <div key={`historikkinnslagDel${historikkinnslagDelIndex}` // eslint-disable-line react/no-array-index-key
-        }
+      }
       >
         <div>
           {historikkinnslagDel.skjermlenke
-            && (
+          && (
             <Element>
               <NavLink
                 to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
               >
-                {findSkjermlenkeText(historikkinnslagDeler[0].skjermlenke, intl)}
+                {historikkinnslagDeler[0].skjermlenke.navn}
               </NavLink>
             </Element>
-            )
-            }
+          )
+          }
 
           {historikkinnslagDel.hendelse
-            && <Element>{findHendelseText(historikkinnslagDel.hendelse)}</Element>
-            }
+          && <Element>{findHendelseText(historikkinnslagDel.hendelse)}</Element>
+          }
 
           {historikkinnslagDel.resultat
-            && <Element>{findResultatText(historikkinnslagDel.resultat, intl)}</Element>
-            }
+          && <Element>{findResultatText(historikkinnslagDel.resultat, intl)}</Element>
+          }
 
           {historikkinnslagDel.endredeFelter && historikkinnslagDel.endredeFelter
             .map((endretFelt, i) => <div key={`endredeFelter${i + 1}`}>{formatChangedField(endretFelt)}</div>)}
@@ -97,14 +94,17 @@ const HistorikkMalType8 = ({
           ))}
 
           {historikkinnslagDel.aarsak
-            && <Normaltekst>{findAarsakText(historikkinnslagDel.aarsak, intl)}</Normaltekst>
-            }
+          && <Normaltekst>{historikkinnslagDel.aarsak.navn}</Normaltekst>
+          }
 
+          {historikkinnslagDel.begrunnelse
+          && (
           <BubbleText
-            bodyText={findBegrunnelseTekst(historikkinnslagDel.begrunnelse)}
+            bodyText={historikkinnslagDel.begrunnelse.navn}
             className="snakkeboble-panel__tekst"
           />
-
+          )
+          }
           <div>
             {dokumentLinks && dokumentLinks.map(dokumentLink => (
               <a
@@ -114,7 +114,7 @@ const HistorikkMalType8 = ({
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                  #
+                #
                 {dokumentLink.tag}
               </a>
             ))}

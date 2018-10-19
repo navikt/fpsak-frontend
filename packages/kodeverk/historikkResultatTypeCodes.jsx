@@ -1,3 +1,4 @@
+// @TODO kodeverk_i_frontend
 const historikkResultatTypeCodes = {
   AVSLAG: {
     kode: 'AVSLAG',
@@ -26,6 +27,10 @@ const historikkResultatTypeCodes = {
   OPPHEVE_VEDTAK: {
     kode: 'OPPHEVE_VEDTAK',
     feltId: 'HistorikkResultat.OppheveVedtak',
+  },
+  OPPHØR: {
+    kode: 'OPPHØR',
+    feltId: 'HistorikkResultat.Opphør',
   },
   OPPRETTHOLDT_VEDTAK: {
     kode: 'OPPRETTHOLDT_VEDTAK',

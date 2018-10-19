@@ -3,11 +3,11 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import moment from 'moment';
 
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
-import { DatepickerField } from '@fpsak-frontend/form';
-import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
-import { metaMock, MockFields } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
-import { invalidDateMessage } from '@fpsak-frontend/utils/validation/messages';
+import { ISO_DATE_FORMAT } from 'utils/formats';
+import { DatepickerField } from 'form/Fields';
+import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
+import { metaMock, MockFields } from 'testHelpers/redux-form-test-helper';
+import { invalidDateMessage } from 'utils/validation/messages';
 import RenderAndreYtelserPerioderFieldArray from './RenderAndreYtelserPerioderFieldArray';
 
 const fields = new MockFields('perioder', 1);

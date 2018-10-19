@@ -31,6 +31,7 @@ export const FpsakApi = {
   ANNEN_PART_BEHANDLING: 'annenPartBehandling',
   SHOW_DETAILED_ERROR_MESSAGES: 'showDetailedErrorMessages',
   INTEGRATION_STATUS: 'integrationStatus',
+  FEATURE_TOGGLE: 'featureToggle',
 };
 
 const fpsakReduxApiBuilder = ReduxRestApi.build()
@@ -88,7 +89,10 @@ const fpsakReduxApiBuilder = ReduxRestApi.build()
   .withGet('/fpsak/api/integrasjon/status/vises', FpsakApi.SHOW_DETAILED_ERROR_MESSAGES)
 
   /* /sprak */
-  .withGet('/fpsak/sprak/nb_NO.json', FpsakApi.LANGUAGE_FILE);
+  .withGet('/fpsak/sprak/nb_NO.json', FpsakApi.LANGUAGE_FILE)
+
+  /* /api/feature-toggle */
+  .withGet('/fpsak/api/feature-toggle', FpsakApi.FEATURE_TOGGLE);
 
 export const createFpsakReduxApi = restApiSelector => fpsakReduxApiBuilder
   .withRestApiSelector(restApiSelector)

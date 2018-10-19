@@ -7,22 +7,22 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
-import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
+import FadingPanel from 'sharedComponents/FadingPanel';
 import { isSelectedBehandlingspunktOverrideReadOnly } from 'behandlingsprosess/behandlingsprosessSelectors';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import { getAksjonspunkter, getBehandlingResultatstruktur } from 'behandling/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { FlexContainer, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components/flexGrid';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import { FlexContainer, FlexRow, FlexColumn } from 'sharedComponents/flexGrid';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import {
   required, minValue, maxValue, hasValidInteger,
-} from '@fpsak-frontend/utils/validation/validators';
-import { InputField } from '@fpsak-frontend/form';
-import aksjonspunktCode from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+} from 'utils/validation/validators';
+import { InputField } from 'form/Fields';
+import aksjonspunktCode from 'kodeverk/aksjonspunktCodes';
 import OverstyrVurderingChecker from 'behandlingsprosess/components/OverstyrVurderingChecker';
 import OverstyrConfirmationForm from 'behandlingsprosess/components/OverstyrConfirmationForm';
 import OverstyrConfirmVilkarButton from 'behandlingsprosess/components/OverstyrConfirmVilkarButton';
-import { formatCurrencyWithKr } from '@fpsak-frontend/utils/currencyUtils';
+import { formatCurrencyWithKr } from 'utils/currencyUtils';
 
 import styles from './beregningsresultatEngangsstonadForm.less';
 

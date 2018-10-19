@@ -1,14 +1,12 @@
 import React from 'react';
-import { injectIntl, intlShape } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
-import { findAarsakText, findBegrunnelseTekst, findHendelseText } from './historikkUtils';
+import { findHendelseText } from './historikkUtils';
 
 import BubbleText from './bubbleText';
 
-
-const HistorikkMalType4 = ({ intl, historikkinnslagDeler }) => (
+const HistorikkMalType4 = ({ historikkinnslagDeler }) => (
   <div>
     {
       historikkinnslagDeler.map((del, delIndex) => (
@@ -16,8 +14,8 @@ const HistorikkMalType4 = ({ intl, historikkinnslagDeler }) => (
       }
         >
           <Element className="snakkeboble-panel__tekst">{findHendelseText(del.hendelse)}</Element>
-          {del.aarsak && <Normaltekst>{findAarsakText(del.aarsak, intl)}</Normaltekst>}
-          <BubbleText bodyText={findBegrunnelseTekst(del.begrunnelse, intl)} className="snakkeboble-panel__tekst" />
+          {del.aarsak && <Normaltekst>{del.aarsak.navn}</Normaltekst>}
+          {del.begrunnelse && <BubbleText bodyText={del.begrunnelse.navn} className="snakkeboble-panel__tekst" />}
         </div>
       ))
     }
@@ -26,7 +24,6 @@ const HistorikkMalType4 = ({ intl, historikkinnslagDeler }) => (
 
 HistorikkMalType4.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
-  intl: intlShape.isRequired,
 };
 
-export default injectIntl(HistorikkMalType4);
+export default HistorikkMalType4;

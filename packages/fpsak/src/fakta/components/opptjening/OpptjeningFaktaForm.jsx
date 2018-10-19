@@ -8,16 +8,16 @@ import moment from 'moment';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { FlexContainer, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components/flexGrid';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { ISO_DATE_FORMAT } from 'utils/formats';
+import { FlexContainer, FlexRow, FlexColumn } from 'sharedComponents/flexGrid';
 import { getBehandlingVersjon, getBehandlingFastsattOpptjeningFomDate, getBehandlingFastsattOpptjeningTomDate } from 'behandling/behandlingSelectors';
 import { getSelectedBehandlingId } from 'behandling/duck';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
-import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import DateLabel from 'sharedComponents/DateLabel';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
 import OpptjeningTimeLine from './timeline/OpptjeningTimeLine';
 import ActivityPanel, { activityPanelName } from './activity/ActivityPanel';
@@ -28,14 +28,14 @@ import styles from './opptjeningFaktaForm.less';
 const getAksjonspunktHelpTexts = (activities) => {
   const texts = [];
   if (activities.some(a => a.stillingsandel === 0)) {
-    texts.push(<FormattedMessage key="AktivitetenErTimeAvslonnet" id="OpptjeningFaktaForm.AktivitetenErTimeAvslonnet" />);
+    texts.push(<FormattedMessage id="OpptjeningFaktaForm.AktivitetenErTimeAvslonnet" key="AktivitetenErTimeAvslonnet" />);
   }
 
   const aktivitetTypes = activities.filter(a => (a.erGodjent === undefined || a.beskrivelse) && a.stillingsandel !== 0);
   if (aktivitetTypes.length === 1) {
-    texts.push(<FormattedMessage key="EttArbeidKanGodkjennes" id="OpptjeningFaktaForm.EttArbeidKanGodkjennes" />);
+    texts.push(<FormattedMessage id="OpptjeningFaktaForm.EttArbeidKanGodkjennes" key="EttArbeidKanGodkjennes" />);
   } else if (aktivitetTypes.length > 1) {
-    texts.push(<FormattedMessage key="FlereArbeidKanGodkjennes" id="OpptjeningFaktaForm.FlereArbeidKanGodkjennes" />);
+    texts.push(<FormattedMessage id="OpptjeningFaktaForm.FlereArbeidKanGodkjennes" key="FlereArbeidKanGodkjennes" />);
   }
   return texts;
 };

@@ -1,13 +1,14 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { intlMock, shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
+import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
 
-import dokumentTypeId from '@fpsak-frontend/kodeverk/dokumentTypeId';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
-import { Table, TableRow } from '@fpsak-frontend/shared-components/table';
+import dokumentTypeId from 'kodeverk/dokumentTypeId';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import Table from 'sharedComponents/Table';
+import TableRow from 'sharedComponents/TableRow';
 import {
   buildInitialValues,
   getSortedManglendeVedlegg,

@@ -2,9 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
 import sinon from 'sinon';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
 import { UttakActivity, initialValue } from './UttakActivity';
 
 describe('<UttakActivity>', () => {
@@ -49,6 +49,9 @@ describe('<UttakActivity>', () => {
       cancelSelectedActivity={sinon.spy()}
       avslagAarsakKoder={[{ kode: '4011', navn: 'mitt navn', kodeverk: 'MITT_KODEVERK' }]}
       innvilgelseAarsakKoder={[]}
+      graderingAvslagAarsakKoder={[]}
+      starttidspunktForeldrepenger=""
+      stonadskontoer={{}}
     />);
 
     const fieldArray = wrapper.find('FieldArray');
@@ -57,8 +60,6 @@ describe('<UttakActivity>', () => {
     expect(radioGroup).to.have.length(1);
     const selectAvslag = wrapper.find('SelectField');
     expect(selectAvslag).to.have.length(1);
-    const checkboxField = wrapper.find('CheckboxField');
-    expect(checkboxField).to.have.length(2);
     const textArea = wrapper.find('TextAreaField');
     expect(textArea).to.have.length(1);
     const updateKnapp = wrapper.find('Hovedknapp');
@@ -78,14 +79,17 @@ describe('<UttakActivity>', () => {
       cancelSelectedActivity={sinon.spy()}
       avslagAarsakKoder={[{ kode: '4011', navn: 'mitt navn', kodeverk: 'MITT_KODEVERK' }]}
       innvilgelseAarsakKoder={[]}
+      graderingAvslagAarsakKoder={[]}
+      starttidspunktForeldrepenger=""
+      stonadskontoer={{}}
     />);
 
     const row = wrapper.find('Row');
-    expect(row).to.have.length(10);
+    expect(row).to.have.length(2);
     const column = wrapper.find('Column');
-    expect(column).to.have.length(13);
+    expect(column).to.have.length(1);
     const formattedMessage = wrapper.find('FormattedMessage');
-    expect(formattedMessage).to.have.length(5);
+    expect(formattedMessage).to.have.length(2);
   });
 
   it('skal rendre uttakactivity med ikke oppfylt', () => {
@@ -98,6 +102,9 @@ describe('<UttakActivity>', () => {
       cancelSelectedActivity={sinon.spy()}
       avslagAarsakKoder={[{ kode: '4011', navn: 'mitt navn', kodeverk: 'MITT_KODEVERK' }]}
       innvilgelseAarsakKoder={[]}
+      graderingAvslagAarsakKoder={[]}
+      starttidspunktForeldrepenger=""
+      stonadskontoer={{}}
     />);
 
     const fieldArray = wrapper.find('FieldArray');
@@ -106,8 +113,6 @@ describe('<UttakActivity>', () => {
     expect(radioGroup).to.have.length(1);
     const selectAvslag = wrapper.find('SelectField');
     expect(selectAvslag).to.have.length(1);
-    const checkboxField = wrapper.find('CheckboxField');
-    expect(checkboxField).to.have.length(2);
     const textArea = wrapper.find('TextAreaField');
     expect(textArea).to.have.length(1);
     const updateKnapp = wrapper.find('Hovedknapp');
@@ -126,6 +131,9 @@ describe('<UttakActivity>', () => {
       cancelSelectedActivity={sinon.spy()}
       avslagAarsakKoder={[]}
       innvilgelseAarsakKoder={[{ kode: '4011', navn: 'mitt navn', kodeverk: 'MITT_KODEVERK' }]}
+      graderingAvslagAarsakKoder={[]}
+      starttidspunktForeldrepenger=""
+      stonadskontoer={{}}
     />);
 
     const fieldArray = wrapper.find('FieldArray');
@@ -134,8 +142,6 @@ describe('<UttakActivity>', () => {
     expect(radioGroup).to.have.length(1);
     const selectAvslag = wrapper.find('SelectField');
     expect(selectAvslag).to.have.length(1);
-    const checkboxField = wrapper.find('CheckboxField');
-    expect(checkboxField).to.have.length(2);
     const textArea = wrapper.find('TextAreaField');
     expect(textArea).to.have.length(1);
     const updateKnapp = wrapper.find('Hovedknapp');
@@ -156,6 +162,9 @@ describe('<UttakActivity>', () => {
       cancelSelectedActivity={sinon.spy()}
       avslagAarsakKoder={[{ kode: '4011', navn: 'mitt navn', kodeverk: 'MITT_KODEVERK' }]}
       innvilgelseAarsakKoder={[]}
+      graderingAvslagAarsakKoder={[]}
+      starttidspunktForeldrepenger=""
+      stonadskontoer={{}}
     />);
 
     const fieldArray = wrapper.find('FieldArray');
@@ -164,8 +173,6 @@ describe('<UttakActivity>', () => {
     expect(radioGroup).to.have.length(0);
     const selectAvslag = wrapper.find('SelectField');
     expect(selectAvslag).to.have.length(0);
-    const checkboxField = wrapper.find('CheckboxField');
-    expect(checkboxField).to.have.length(2);
     const textArea = wrapper.find('TextAreaField');
     expect(textArea).to.have.length(1);
     const updateKnapp = wrapper.find('Hovedknapp');

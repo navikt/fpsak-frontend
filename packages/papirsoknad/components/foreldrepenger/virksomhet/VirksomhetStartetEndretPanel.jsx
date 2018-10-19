@@ -6,13 +6,15 @@ import PropTypes from 'prop-types';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { hasValidDate, hasValidInteger, required } from '@fpsak-frontend/utils/validation/validators';
+import ArrowBox from 'sharedComponents/ArrowBox';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { hasValidDate, hasValidInteger, required } from 'utils/validation/validators';
 import {
-  CheckboxField, InputField, RadioGroupField, RadioOption, TextAreaField, DatepickerField,
-} from '@fpsak-frontend/form';
+  CheckboxField, InputField, RadioGroupField, RadioOption,
+} from 'form/Fields';
+import DatepickerField from 'form/fields/DatepickerField';
+import TextAreaField from 'form/fields/TextAreaField';
 
 /**
  * VirksomhetStartetEndretPanel

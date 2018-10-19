@@ -34,48 +34,48 @@
   }
 
   &__snakkebole-pil--hoyre {
-    box-shadow: 0 1px 4px 1px @navGra20;
+    box-shadow: 0 1px 4px 1px @navGra20; // lesshint zeroUnit: false
     right: 72%;
   }
 
   &__snakkebole-pil--venstre {
-    box-shadow: 0 2px 4px -1px @navGra20;
+    box-shadow: 0 2px 4px -1px @navGra20; // lesshint zeroUnit: false
     left: 72%;
   }
 
     &__snakkebole-pil--hoyre--saksbehandler {
         background-color: @navLillaLighten80;
-        box-shadow: 0 1px 4px 1px @navGra20;
+        box-shadow: 0 1px 4px 1px @navGra20; // lesshint zeroUnit: false
         right: 72%;
     }
 
     &__snakkebole-pil--hoyre--beslutter {
      background-color: @navGronnLighten80;
-     box-shadow: 0 1px 4px 1px @navGra20;
+     box-shadow: 0 1px 4px 1px @navGra20; // lesshint zeroUnit: false
       right: 72%;
     }
 
     &__snakkebole-pil--hoyre--losningen {
       background-color: @grayBackground;
-      box-shadow: 0 1px 4px 1px @navGra20;
+      box-shadow: 0 1px 4px 1px @navGra20; // lesshint zeroUnit: false
       right: 72%;
     }
 
     &__snakkebole-pil--venstre--bruker {
     background-color: @orangeFocusLighten80;
-    box-shadow: 0 2px 4px -1px @navGra20;
+    box-shadow: 0 2px 4px -1px @navGra20; // lesshint zeroUnit: false
     left: 72%;
     }
 
     &__snakkebole-pil--venstre--ekstern {
     background-color: @navLysBlaLighten80;
-    box-shadow: 0 2px 4px -1px @navGra20;
+    box-shadow: 0 2px 4px -1px @navGra20; // lesshint zeroUnit: false
     left: 72%;
     }
 
   &__ikon {
     border-radius: 50%;
-    flex-shrink: 0;
+    flex-shrink: 0; // lesshint zeroUnit: false
     height: 45px;
     margin-top: 2px;
     width: 45px;
@@ -85,34 +85,35 @@
     }
 
     &--brukerMann {
-      background: url('../../../../assets/images/mann.svg');
+      background: url('../../../../images/mann.svg');
       background-size: contain;
     }
 
     &--brukerKvinne {
-      background: url('../../../../assets/images/kvinne.svg');
+      background: url('../../../../images/kvinne.svg');
       background-size: contain;
     }
 
     &--saksbehandler {
-      background: @navLilla url('../../../../assets/images/nav_ansatt_historikk.svg');
+      background: url('../../../../images/nav_ansatt_historikk.svg');
+      background-color: @navLilla;
       background-position-x: 6px;
       background-position-y: 2px;
       background-size: contain;
     }
 
     &--beslutter {
-      background: url('../../../../assets/images/beslutter.svg');
+      background: url('../../../../images/beslutter.svg');
       background-size: contain;
     }
 
     &--losningen {
-      background: url('../../../../assets/images/maskin.svg');
+      background: url('../../../../images/maskin.svg');
       background-size: contain;
     }
 
     &--ekstern {
-      background: url('../../../../assets/images/arbeidsgiver.svg');
+      background: url('../../../../images/arbeidsgiver.svg');
       background-size: contain;
     }
   }
@@ -128,7 +129,7 @@
 
 .snakkeboble-panel {
   .blokk-s();
-  box-shadow: 0 2px 4px 0 @navGra20;
+  box-shadow: 0 2px 4px 0 @navGra20; // lesshint zeroUnit: false
   display: inline-flex;
   flex-direction: column;
   padding: 0.5rem 1rem 1rem;
@@ -139,7 +140,7 @@
 }
 
 .snakkeboble-width {
-  flex: 0 1 350px;
+  flex: 0 1 350px; // lesshint zeroUnit: false
   width: 20rem;
 }
 

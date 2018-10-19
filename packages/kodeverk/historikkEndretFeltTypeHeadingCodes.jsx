@@ -1,3 +1,4 @@
+// @TODO kodeverk_i_frontend
 const historikkEndretFeltTypeHeadingCodes = {
   FORDELING_FOR_NY_ANDEL: {
     kode: 'FORDELING_FOR_NY_ANDEL',

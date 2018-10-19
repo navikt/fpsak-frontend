@@ -1,11 +1,11 @@
-@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+@import '@{coreModulePath}nav-frontend-core/less/core';
 
 @removeBtnSize: 17px;
 
 .buttonRemove {
-  background: #ffffff url('../../../../../../assets/images/remove.svg') no-repeat;
+  background: #ffffff url('../../../../../../images/remove.svg') no-repeat;
   background-size: 100% 100%;
-  border: 0;
+  border: 0; // lesshint zeroUnit: false
   cursor: pointer;
   display: inline-block;
   height: @removeBtnSize;
@@ -20,7 +20,7 @@
   flex-flow: row nowrap;
 
   > .col {
-    flex: 0 0 auto;
+    flex: 0 0 auto; // lesshint zeroUnit: false
     margin-right: 15px;
   }
 

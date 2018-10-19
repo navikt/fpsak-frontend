@@ -1,10 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 
-import personstatusType from '@fpsak-frontend/kodeverk/personstatusType';
-import sivilstandType from '@fpsak-frontend/kodeverk/sivilstandType';
-import opplysningAdresseType from '@fpsak-frontend/kodeverk/opplysningAdresseType';
+import personstatusType from 'kodeverk/personstatusType';
+import sivilstandType from 'kodeverk/sivilstandType';
+import opplysningAdresseType from 'kodeverk/opplysningAdresseType';
 import { BostedSokerView } from './BostedSokerView';
 
 describe('<BostedsokerView>', () => {

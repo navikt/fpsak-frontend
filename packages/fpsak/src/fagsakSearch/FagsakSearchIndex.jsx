@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { routerActions } from 'react-router-redux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import { pathToFagsak } from 'app/paths';
+
 import fagsakPropType from 'fagsak/fagsakPropType';
-import FagsakSearch from './FagsakSearch';
 import { searchFagsaker, resetFagsakSearch } from './duck';
 import {
   getFagsaker,
@@ -13,7 +14,7 @@ import {
   getSearchFagsakerFinished,
   getSearchFagsakerStarted,
 } from './fagsakSearchSelectors';
-
+import FagsakSearch from './components/FagsakSearch';
 
 /**
  * FagsakSearchIndex

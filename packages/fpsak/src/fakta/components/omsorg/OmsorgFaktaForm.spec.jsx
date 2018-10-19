@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { FormattedHTMLMessage } from 'react-intl';
 import OmsorgFaktaForm from './OmsorgFaktaForm';
 

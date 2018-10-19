@@ -4,16 +4,18 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { CheckboxField } from '@fpsak-frontend/form';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
-import DateTimeLabel from '@fpsak-frontend/shared-components/DateTimeLabel';
-import Image from '@fpsak-frontend/shared-components/Image';
-import kommunikasjonsretning from '@fpsak-frontend/kodeverk/kommunikasjonsretning';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import CheckboxField from 'form/fields/CheckboxField';
+import Table from 'sharedComponents/Table';
+import TableRow from 'sharedComponents/TableRow';
+import TableColumn from 'sharedComponents/TableColumn';
+import DateTimeLabel from 'sharedComponents/DateTimeLabel';
+import Image from 'sharedComponents/Image';
+import kommunikasjonsretning from 'kodeverk/kommunikasjonsretning';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
 
-import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
-import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg';
-import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokument.svg';
+import sendDokumentImageUrl from 'images/send_dokument.svg';
+import mottaDokumentImageUrl from 'images/motta_dokument.svg';
+import internDokumentImageUrl from 'images/intern_dokument.svg';
 
 import styles from './documentListInnsyn.less';
 

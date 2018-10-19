@@ -6,20 +6,20 @@ import { Undertekst, Element } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 import {
   NavFieldGroup, InputField, SelectField, PeriodpickerField, DecimalField,
-} from '@fpsak-frontend/form';
-import { required } from '@fpsak-frontend/utils/validation/validators';
+} from 'form/Fields';
+import { required } from 'utils/validation/validators';
+import { isEmpty } from 'utils/arrayUtils';
 import { getEndringBeregningsgrunnlagPerioder } from 'behandling/behandlingSelectors';
-import Image from '@fpsak-frontend/shared-components/Image';
-import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
-import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-frontend/kodeverk/inntektskategorier';
-import {
-  parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr, createVisningsnavnForAktivitet, isArrayEmpty,
-} from '@fpsak-frontend/utils';
+import Image from 'sharedComponents/Image';
+import addCircleIcon from 'images/add-circle.svg';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkPropType from 'kodeverk/kodeverkPropType';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import inntektskategorier, { isSelvstendigNæringsdrivende } from 'kodeverk/inntektskategorier';
+import { parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr } from 'utils/currencyUtils';
+import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
 import { getUniqueListOfArbeidsforhold, arbeidsforholdProptype } from '../../ArbeidsforholdHelper';
 
 import styles from './renderEndringBGFieldArray.less';
@@ -425,7 +425,7 @@ RenderEndringBGFieldArray.validate = (values) => {
     return arrayErrors;
   }
 
-  if (isArrayEmpty(values)) {
+  if (isEmpty(values)) {
     return null;
   }
 

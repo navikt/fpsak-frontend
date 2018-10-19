@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
-import relatertYtelseTilstand from '@fpsak-frontend/kodeverk/relatertYtelseTilstand';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
+import relatertYtelseTilstand from 'kodeverk/relatertYtelseTilstand';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import DateLabel from 'sharedComponents/DateLabel';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 
 import styles from './rettighetFaktaPanel.less';

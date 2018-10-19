@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
-import Image from '@fpsak-frontend/shared-components/Image';
-import checkImage from '@fpsak-frontend/assets/images/check.svg';
+import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import Image from 'sharedComponents/Image';
+import checkImage from 'images/check.svg';
 
 import styles from './vilkarResultPanel.less';
 

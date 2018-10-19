@@ -6,7 +6,7 @@ import { routerActions } from 'react-router-redux';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
+import { replaceNorwegianCharacters } from 'utils/languageUtils';
 import { getAksjonspunkter, getSelectedBehandlingIdentifier, getBehandlingVersjon } from 'behandling/behandlingSelectors';
 import BehandlingsprosessPanel from 'behandlingsprosess/components/BehandlingsprosessPanel';
 import IverksetterVedtakStatusModal from 'behandlingsprosess/components/vedtak/IverksetterVedtakStatusModal';
@@ -14,11 +14,11 @@ import FatterVedtakStatusModal from 'behandlingsprosess/components/vedtak/Fatter
 import KlageBehandlingModal from 'behandlingsprosess/components/klage/KlageBehandlingModal';
 import BehandlingspunktInfoPanel from 'behandlingsprosess/components/BehandlingspunktInfoPanel';
 import requireProps from 'app/data/requireProps';
-import aksjonspunktType from '@fpsak-frontend/kodeverk/aksjonspunktType';
-import klageVurdering from '@fpsak-frontend/kodeverk/klageVurdering';
-import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
+import aksjonspunktType from 'kodeverk/aksjonspunktType';
+import klageVurdering from 'kodeverk/klageVurdering';
+import LoadingPanel from 'sharedComponents/LoadingPanel';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import { getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta } from 'app/paths';
 import trackRouteParam from 'app/data/trackRouteParam';

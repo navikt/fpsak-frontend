@@ -1,4 +1,4 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 
 const aksjonspunktTextCodes = {
   [aksjonspunktCodes.ADOPSJONSDOKUMENTAJON]: 'ToTrinnsForm.Adopsjon.KontrollerOpplysninger',
@@ -24,8 +24,6 @@ const aksjonspunktTextCodes = {
   [aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE]: 'ToTrinnsForm.Beregning.InntektFastsatt',
   [aksjonspunktCodes.OVERSTYR_BEREGNING]: 'ToTrinnsForm.Beregning.VilkarOverstyrt',
   [aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD]: 'ToTrinnsForm.Beregning.InntektFastsatt',
-  [aksjonspunktCodes.AVKLAR_BEREGNINGSGRUNNLAG_OG_INNTEKTSKATEGORI_FOR_BRUKER_MED_TILSTOTENDE_YTELSE]:
-    'ToTrinnsForm.Beregning.BeregningsgrunnlagOgInntektskategoriFastsatt',
   [aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET]: 'ToTrinnsForm.Beregning.InntektFastsatt',
 
   [aksjonspunktCodes.SOKNADSFRISTVILKARET]: 'ToTrinnsForm.Soknadsfrist.ManueltVurdert',
@@ -37,6 +35,7 @@ const aksjonspunktTextCodes = {
   [aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD]: 'ToTrinnsForm.Medlemskap.AvklarLovligOpphold',
   [aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT]: 'ToTrinnsForm.Medlemskap.VurderSokerBosatt',
   [aksjonspunktCodes.AVKLAR_OPPHOLDSRETT]: 'ToTrinnsForm.Medlemskap.AvklarOppholdsrett',
+  [aksjonspunktCodes.AVKLAR_PERSONSTATUS]: 'ToTrinnsForm.Medlemskap.VurderPersonStatus',
   [aksjonspunktCodes.OVERSTYR_MEDLEMSKAPSVILKAR]: 'ToTrinnsForm.Medlemskap.VilkarOverstyrt',
 
   [aksjonspunktCodes.FORESLA_VEDTAK]: 'ToTrinnsForm.Vedtak.Fritekstbrev',

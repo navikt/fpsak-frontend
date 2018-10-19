@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
+import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
 
 import FastsettATFLInntektForm from './FastsettATFLInntektForm';
 
@@ -14,6 +14,7 @@ const forholdMedAtOgFl = {
   arbeidsforhold: {
     virksomhetNavn: 'bedrift',
     virksomhetId: '123',
+    arbeidsforholdId: 'abc',
     startdato: '2018-01-01',
   },
 };
@@ -26,6 +27,7 @@ const forholdMedLonnsendringUtenIM = {
   arbeidsforhold: {
     virksomhetNavn: 'bedrift',
     virksomhetId: '123',
+    arbeidsforholdId: 'abc',
     startdato: '2018-01-01',
   },
 };
@@ -141,17 +143,17 @@ describe('<FastsettATFLInntektForm>', () => {
     // Andre rad
     const secondRow = allRows.at(1).find('TableColumn');
     expect(secondRow).to.have.length(4);
-    expect(secondRow.find('Normaltekst').at(0).childAt(0).text()).to.equal('bedrift (123)');
+    expect(secondRow.find('Normaltekst').at(0).childAt(0).text()).to.equal('bedrift (123) ...abc');
     expect(secondRow.find('FormattedMessage').prop('values').fom).to.equal('01.01.2018');
-    expect(secondRow.find('InputField').prop('name')).to.equal('fastsattInntekt_bedrift_123_2018-01-01');
+    expect(secondRow.find('InputField').prop('name')).to.equal('fastsattInntekt_bedrift_2018-01-01_abc');
     expect(secondRow.find('Normaltekst').at(2).childAt(0).text()).to.equal('Arbeidstaker');
 
     // Tredje rad
     const thirdRow = allRows.at(2).find('TableColumn');
     expect(thirdRow).to.have.length(4);
-    expect(thirdRow.find('Normaltekst').at(0).childAt(0).text()).to.equal('bedrift (123)');
+    expect(thirdRow.find('Normaltekst').at(0).childAt(0).text()).to.equal('bedrift (123) ...abc');
     expect(thirdRow.find('FormattedMessage').prop('values').fom).to.equal('01.01.2018');
-    expect(thirdRow.find('InputField').prop('name')).to.equal('fastsattInntekt_bedrift_123_2018-01-01');
+    expect(thirdRow.find('InputField').prop('name')).to.equal('fastsattInntekt_bedrift_2018-01-01_abc');
     expect(thirdRow.find('Normaltekst').at(2).childAt(0).text()).to.equal('Arbeidstaker');
 
     // Fjerde rad
@@ -166,14 +168,14 @@ describe('<FastsettATFLInntektForm>', () => {
 
   it('Skal teste at buildInitialValues lager korrekt dataobjekt for initalValues', () => {
     const initialValues = FastsettATFLInntektForm.buildInitialValues(beregningsgrunnlag);
-    const expectedATKey = 'fastsattInntekt_bedrift_123_2018-01-01';
+    const expectedATKey = 'fastsattInntekt_bedrift_2018-01-01_abc';
     const expectedFLKey = 'fastsattInntekt_FL';
     expect(initialValues[expectedATKey]).to.eql('10 000');
     expect(initialValues[expectedFLKey]).to.eql('10 000');
   });
 
   it('Skal teste at transformValues gir korrekt dataobjekt for alle tilfeller', () => {
-    const expectedATKey = 'fastsattInntekt_bedrift_123_2018-01-01';
+    const expectedATKey = 'fastsattInntekt_bedrift_2018-01-01_abc';
     const expectedFLKey = 'fastsattInntekt_FL';
     const values = {};
     values[expectedFLKey] = '10 000';

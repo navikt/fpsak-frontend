@@ -1,9 +1,10 @@
 import React from 'react';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 
 import { expect } from 'chai';
-import { SelectField } from '@fpsak-frontend/form';
-import SoknadData from '../../../SoknadData';
+import SoknadData from 'papirsoknad/SoknadData';
+
+import SelectField from 'form/fields/SelectField';
 import { PermisjonOverforingAvKvoterPanelImpl as PermisjonOverforingAvKvoterPanel } from './PermisjonOverforingAvKvoterPanel';
 
 const overforingAvKvoterArsaker = [{ navn: 'Den andre forelderen er innlagt i helseinstitusjon', kode: 'INSTITUSJONSOPPHOLD_ANNEN_FORELDER' },

@@ -13,12 +13,12 @@
 @keyframes fadein {
   0% {
     max-height: 0px;
-    opacity: 0;
+    opacity: 0; // lesshint zeroUnit: false
     top: -10px;
   }
 
   20% {
-    opacity: 0;
+    opacity: 0; // lesshint zeroUnit: false
   }
 
   60% {
@@ -46,7 +46,7 @@
   width: 26px;
 
   &:focus {
-    box-shadow: 0 0 0px 3px @orangeFocus;
+    box-shadow: 0 0 0px 3px @orangeFocus; // lesshint zeroUnit: false
     outline: none;
   }
 }

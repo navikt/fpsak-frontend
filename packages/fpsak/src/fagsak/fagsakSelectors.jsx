@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
-import { getRestApiData, getRestApiError, getRestApiFinished } from '@fpsak-frontend/data/duck';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
+import { getRestApiData, getRestApiError, getRestApiFinished } from 'data/duck';
+import { FpsakApi } from 'data/fpsakApi';
+import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 
 const getFetchFagsakResult = getRestApiData(FpsakApi.FETCH_FAGSAK);
 

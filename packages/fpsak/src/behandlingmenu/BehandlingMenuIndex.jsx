@@ -15,9 +15,9 @@ import {
   getBehandlingHasSoknad,
   getBehandlingIsInnsyn,
 } from 'behandling/behandlingSelectors';
-import { getRestApiData } from '@fpsak-frontend/data/duck';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
-import { getNavAnsatt, getRettigheter } from '@fpsak-frontend/nav-ansatt/duck';
+import { getRestApiData } from 'data/duck';
+import { FpsakApi } from 'data/fpsakApi';
+import { getNavAnsatt, getRettigheter } from 'navAnsatt/duck';
 
 import {
   previewHenleggBehandling, nyBehandlendeEnhet, resumeBehandling, shelveBehandling, createNewForstegangsbehandling,
@@ -49,6 +49,7 @@ const mapStateToProps = (state) => {
     opprettNyForstegangsBehandlingAccess,
     gjenopptaBehandlingAccess,
     opneBehandlingForEndringerAccess,
+    ikkeVisOpprettNyBehandling,
   } = getRettigheter(state);
   return {
     saksnummer: getSelectedSaksnummer(state),
@@ -69,6 +70,7 @@ const mapStateToProps = (state) => {
     opprettNyForstegangsBehandlingAccess,
     gjenopptaBehandlingAccess,
     opneBehandlingForEndringerAccess,
+    ikkeVisOpprettNyBehandling,
   };
 };
 

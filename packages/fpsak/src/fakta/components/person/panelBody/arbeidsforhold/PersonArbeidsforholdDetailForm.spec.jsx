@@ -2,9 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { TextAreaField } from '@fpsak-frontend/form';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { TextAreaField } from 'form/Fields';
+import { intlMock, shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
+import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
 import PersonNyttEllerErstattArbeidsforholdPanel from './PersonNyttEllerErstattArbeidsforholdPanel';
 import { PersonArbeidsforholdDetailForm, showBegrunnelse } from './PersonArbeidsforholdDetailForm';
 

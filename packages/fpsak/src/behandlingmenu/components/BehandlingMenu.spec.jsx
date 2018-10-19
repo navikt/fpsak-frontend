@@ -60,6 +60,7 @@ describe('<BehandlingMenu>', () => {
       opprettNyForstegangsBehandlingAccess={fullAccess}
       opneBehandlingForEndringerAccess={fullAccess}
       navAnsatt={navAnsatt}
+      ikkeVisOpprettNyBehandling={fullAccess}
       openBehandlingForChanges={sinon.spy()}
       hasSoknad
       isInnsynsbehandling={false}
@@ -103,6 +104,7 @@ describe('<BehandlingMenu>', () => {
       gjenopptaBehandlingAccess={fullAccess}
       opprettNyForstegangsBehandlingAccess={fullAccess}
       opneBehandlingForEndringerAccess={fullAccess}
+      ikkeVisOpprettNyBehandling={fullAccess}
       navAnsatt={navAnsatt}
       openBehandlingForChanges={sinon.spy()}
       hasSoknad
@@ -142,6 +144,7 @@ describe('<BehandlingMenu>', () => {
       gjenopptaBehandlingAccess={fullAccess}
       opprettNyForstegangsBehandlingAccess={fullAccess}
       opneBehandlingForEndringerAccess={fullAccess}
+      ikkeVisOpprettNyBehandling={fullAccess}
       navAnsatt={navAnsatt}
       openBehandlingForChanges={sinon.spy()}
       hasSoknad
@@ -176,6 +179,7 @@ describe('<BehandlingMenu>', () => {
       gjenopptaBehandlingAccess={fullAccess}
       opprettNyForstegangsBehandlingAccess={fullAccess}
       opneBehandlingForEndringerAccess={fullAccess}
+      ikkeVisOpprettNyBehandling={fullAccess}
       navAnsatt={navAnsatt}
       openBehandlingForChanges={sinon.spy()}
       hasSoknad

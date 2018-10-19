@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
-import { getRestApiData, getRestApiMeta } from '@fpsak-frontend/data/duck';
+import { FpsakApi } from 'data/fpsakApi';
+import { getRestApiData, getRestApiMeta } from 'data/duck';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 
 const getBehandlingerData = getRestApiData(FpsakApi.BEHANDLINGER);

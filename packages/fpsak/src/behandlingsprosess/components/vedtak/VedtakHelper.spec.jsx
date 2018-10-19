@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
-import klageVurdering from '@fpsak-frontend/kodeverk/klageVurdering';
+import vilkarType from 'kodeverk/vilkarType';
+import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import klageVurdering from 'kodeverk/klageVurdering';
 import { hasIkkeOppfyltSoknadsfristvilkar, hasKlageVurderingSomIkkeErAvvist } from './VedtakHelper';
 
 

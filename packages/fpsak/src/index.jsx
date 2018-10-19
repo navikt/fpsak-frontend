@@ -4,8 +4,8 @@ import { ConnectedRouter } from 'react-router-redux';
 import { createHashHistory } from 'history';
 import { render } from 'react-dom';
 
-import configureRestInterceptors from '@fpsak-frontend/data/rest/restConfig';
-import AppIndex from './AppIndex';
+import configureRestInterceptors from 'data/rest/restConfig';
+import AppIndex from 'app/AppIndex';
 import configureStore from './store';
 
 const history = createHashHistory();

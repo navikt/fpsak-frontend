@@ -3,14 +3,13 @@ import { reduxForm, formPropTypes, formValueSelector } from 'redux-form';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { isEqual } from '@fpsak-frontend/utils/objectUtils';
-import familieHendelseType from '@fpsak-frontend/kodeverk/familieHendelseType';
-// todo dep
+import { isEqual } from 'utils/objectUtils';
+import { getRegisteredFields } from 'papirsoknad/duck';
+import MottattDatoPanel from 'papirsoknad/components/commonPanels/MottattDatoPanel';
+import SoknadData from 'papirsoknad/SoknadData';
+import familieHendelseType from 'kodeverk/familieHendelseType';
+import LagreSoknadPanel from 'papirsoknad/components/commonPanels/LagreSoknadPanel';
 import { getFagsakPerson } from 'fagsak/fagsakSelectors';
-import { getRegisteredFields } from '../../duck';
-import SoknadData from '../../SoknadData';
-import LagreSoknadPanel from '../commonPanels/LagreSoknadPanel';
-import MottattDatoPanel from '../commonPanels/MottattDatoPanel';
 import RegistreringAdopsjonOgOmsorgGrid from './RegistreringAdopsjonOgOmsorgGrid';
 import RegistreringFodselGrid from './RegistreringFodselGrid';
 
@@ -19,8 +18,7 @@ export const ENGANGSSTONAD_FORM_NAME = 'EngangsstonadForm';
 const buildInitialValues = (soknadData) => {
   if (soknadData.getFamilieHendelseType() === familieHendelseType.FODSEL) {
     return { ...RegistreringFodselGrid.initialValues };
-  }
-  if (soknadData.getFamilieHendelseType() === familieHendelseType.ADOPSJON) {
+  } if (soknadData.getFamilieHendelseType() === familieHendelseType.ADOPSJON) {
     return { ...RegistreringAdopsjonOgOmsorgGrid.initialValues };
   }
   return {};

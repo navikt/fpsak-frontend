@@ -4,16 +4,16 @@ import { intlShape, FormattedMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
-import { TextAreaField } from '@fpsak-frontend/form';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import behandlingStatus from 'kodeverk/behandlingStatus';
+import { TextAreaField } from 'form/Fields';
 import {
   minLength, maxLength, requiredIfNotPristine, hasValidText,
-} from '@fpsak-frontend/utils/validation/validators';
-import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+} from 'utils/validation/validators';
+import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { hasIkkeOppfyltSoknadsfristvilkar } from './VedtakHelper';
 
 import styles from './vedtakAvslagPanel.less';

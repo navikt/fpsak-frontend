@@ -3,12 +3,12 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import {
   hasValidText, maxLength, minLength, required,
-} from '@fpsak-frontend/utils/validation/validators';
-import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
+} from 'utils/validation/validators';
+import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
 import classNames from 'classnames';
 import { Column, Row } from 'nav-frontend-grid';
-import { TextAreaField } from '@fpsak-frontend/form';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import { TextAreaField } from 'form/Fields';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { Undertittel } from 'nav-frontend-typografi';
 import styles from './vedtakForm.less';
 

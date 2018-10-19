@@ -2,22 +2,22 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import PropTypes from 'prop-types';
-import FlexColumn from '@fpsak-frontend/shared-components/flexGrid/FlexColumn';
-import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';
-import FlexContainer from '@fpsak-frontend/shared-components/flexGrid/FlexContainer';
-import Modal from '@fpsak-frontend/shared-components/Modal';
+import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
+import FlexRow from 'sharedComponents/flexGrid/FlexRow';
+import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
+import Modal from 'sharedComponents/Modal';
 import moment from 'moment';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { TextAreaField } from '@fpsak-frontend/form';
+import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import { TextAreaField } from 'form/Fields';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import {
   minLength, maxLength, required, hasValidText,
-} from '@fpsak-frontend/utils/validation/validators';
+} from 'utils/validation/validators';
 import { behandlingForm } from 'behandling/behandlingForm';
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import Image from '@fpsak-frontend/shared-components/Image';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import innvilgetImageUrl from 'images/innvilget_valgt.svg';
+import Image from 'sharedComponents/Image';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import styles from './uttakSlettPeriodeModal.less';
 
 

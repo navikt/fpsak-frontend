@@ -1,12 +1,8 @@
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import historikkBegrunnelseTypeCodes from '@fpsak-frontend/kodeverk/historikkBegrunnelseTypeCodes';
-import historikkResultatTypeCodes from '@fpsak-frontend/kodeverk/historikkResultatTypeCodes';
-import historikkAarsakTypeCodes from '@fpsak-frontend/kodeverk/historikkAarsakTypeCodes';
-import historikkEndretFeltVerdiTypeCodes from '@fpsak-frontend/kodeverk/historikkEndretFeltVerdiTypeCodes';
-import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/historikkEndretFeltTypeCodes';
-import historikkOpplysningTypeCodes from '@fpsak-frontend/kodeverk/historikkOpplysningTypeCodes';
-import historikkSoeknadsperiodeTypeCodes from '@fpsak-frontend/kodeverk/historikkSoeknadsperiodeTypeCodes';
-import skjermlenkeCodes from '@fpsak-frontend/kodeverk/skjermlenkeCodes';
+import historikkResultatTypeCodes from 'kodeverk/historikkResultatTypeCodes';
+import historikkEndretFeltVerdiTypeCodes from 'kodeverk/historikkEndretFeltVerdiTypeCodes';
+import historikkEndretFeltTypeCodes from 'kodeverk/historikkEndretFeltTypeCodes';
+import historikkOpplysningTypeCodes from 'kodeverk/historikkOpplysningTypeCodes';
+import historikkSoeknadsperiodeTypeCodes from 'kodeverk/historikkSoeknadsperiodeTypeCodes';
 
 export const findIdForOpplysningCode = (opplysning) => {
   if (!opplysning) {
@@ -32,18 +28,6 @@ export const findIdForSoeknadsperiodeCode = (soeknadsperiode) => {
   return soeknadsperiodeCode.feltId;
 };
 
-export const findAarsakText = (aarsak, intl) => {
-  if (!aarsak) {
-    return null;
-  }
-  const aarsakCode = historikkAarsakTypeCodes[aarsak];
-  if (!aarsakCode) {
-    return (`AarsakTypeCode ${aarsak} finnes ikke-LEGG DET INN`);
-  }
-  const fieldId = aarsakCode.feltId;
-  return intl.formatMessage({ id: fieldId });
-};
-
 export const findResultatText = (resultat, intl) => {
   if (!resultat) {
     return null;
@@ -54,14 +38,6 @@ export const findResultatText = (resultat, intl) => {
   }
   const fieldId = resultatCode.feltId;
   return intl.formatMessage({ id: fieldId });
-};
-
-export const findBegrunnelseTekst = (begrunnelse, intl) => {
-  const begrunnelseType = historikkBegrunnelseTypeCodes[begrunnelse];
-  if (!begrunnelseType) {
-    return decodeHtmlEntity(begrunnelse);
-  }
-  return intl.formatMessage({ id: begrunnelseType.feltId });
 };
 
 export const findHendelseText = (hendelse) => {
@@ -102,13 +78,4 @@ export const findEndretFeltNavn = (endretFelt, intl) => {
   }
   const fieldId = endretFeltNavnType.feltId;
   return endretFelt.navnVerdi !== null ? formatHTMLMessage({ id: fieldId }, { value: endretFelt.navnVerdi }) : formatHTMLMessage({ id: fieldId });
-};
-
-export const findSkjermlenkeText = (skjermlenke, intl) => {
-  const skermlenkeCode = skjermlenke.kode;
-  const skjermlenkeType = skjermlenkeCodes[skermlenkeCode];
-  if (!skjermlenkeType) {
-    return (`SkjermlenkeCode ${skermlenkeCode} finnes ikke-LEGG DET INN`);
-  }
-  return intl.formatMessage({ id: skjermlenkeType.skjermlenkeId });
 };

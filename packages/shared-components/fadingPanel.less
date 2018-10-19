@@ -3,10 +3,11 @@
   animation-name: fadein;
   animation-timing-function: ease-out;
   padding: 20px 20px 20px 20px;
+}
 
-  &.containerWithoutTopMargin {
-    padding: 0px 20px 20px 20px;
-  }
+.containerWithoutTopMargin {
+  composes: container;
+  padding: 0px 20px 20px 20px;
 }
 
 @keyframes fadein {

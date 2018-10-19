@@ -1,15 +1,15 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { transformValues, buildInitialValues, UttakPanelImpl as UttakPanel } from './UttakPanel';
 import Uttak from './Uttak';
 
 describe('<UttakPanel>', () => {
   const uttaksresultat = {
-    perioder: [{
+    perioderSøker: [{
       fom: '',
       tom: '',
       periodeResultatType: {
@@ -43,7 +43,6 @@ describe('<UttakPanel>', () => {
       {...reduxFormPropsMock}
       aksjonspunkter={[]}
       readOnly={false}
-      hovedsokerKjonn=""
       uttaksresultat={uttaksresultat}
       manuellOverstyring={false}
       isApOpen={false}
@@ -77,7 +76,6 @@ describe('<UttakPanel>', () => {
       {...reduxFormPropsMock}
       aksjonspunkter={aksjonspunkter}
       readOnly={false}
-      hovedsokerKjonn=""
       uttaksresultat={uttaksresultat}
       manuellOverstyring={false}
       isApOpen

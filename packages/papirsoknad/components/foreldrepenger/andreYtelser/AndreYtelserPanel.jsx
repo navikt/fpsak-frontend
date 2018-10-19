@@ -6,14 +6,14 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Fieldset } from 'nav-frontend-skjema';
 import { Row, Column } from 'nav-frontend-grid';
 
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import { CheckboxField } from '@fpsak-frontend/form';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
-import arbeidType from '@fpsak-frontend/kodeverk/arbeidType';
-import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
-import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { CheckboxField } from 'form/Fields';
+import kodeverkPropType from 'kodeverk/kodeverkPropType';
+import arbeidType from 'kodeverk/arbeidType';
+import BorderBox from 'sharedComponents/BorderBox';
+import ArrowBox from 'sharedComponents/ArrowBox';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import RenderAndreYtelserPerioderFieldArray from './RenderAndreYtelserPerioderFieldArray';
 
 import styles from './andreYtelserPanel.less';

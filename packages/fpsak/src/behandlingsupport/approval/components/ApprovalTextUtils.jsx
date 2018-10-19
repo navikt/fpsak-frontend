@@ -3,9 +3,8 @@ import moment from 'moment';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 import { getFagsakYtelseType, isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import klageVurdering from '@fpsak-frontend/kodeverk/klageVurdering';
-import aksjonspunktCodes, { isUttakAksjonspunkt } from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
+import klageVurdering from 'kodeverk/klageVurdering';
 import {
   getBehandlingKlageVurderingResultatNFP,
   getBehandlingKlageVurderingResultatNK,
@@ -14,6 +13,7 @@ import {
 
 import totrinnskontrollaksjonspunktTextCodes from '../totrinnskontrollaksjonspunktTextCodes';
 import vurderFaktaOmBeregningTotrinnText from '../VurderFaktaBeregningTotrinnText';
+import aksjonspunktCodes, { isUttakAksjonspunkt } from '../../../kodeverk/aksjonspunktCodes';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
 import { findAvslagResultatText } from '../../../behandlingsprosess/components/vedtak/VedtakHelper';
 

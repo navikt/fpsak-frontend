@@ -5,9 +5,9 @@ import Timeline from 'react-visjs-timeline';
 import { injectIntl, intlShape } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { stonadskontoType, uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/uttakPeriodeType';
+import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { stonadskontoType, uttakPeriodeNavn } from 'kodeverk/uttakPeriodeType';
 import TimeLineData from './timeline/TimeLineData';
 import TimeLineSokerEnsamSoker from './timeline/TimeLineSokerEnsamSoker';
 import TimeLineControl from './timeline/TimeLineControl';
@@ -119,6 +119,10 @@ export class TilkjentYtelse extends Component {
     this.redrawTimeLineBackup = this.redrawTimeLineBackup.bind(this);
   }
 
+  componentDidMount() {
+    this.redrawTimeLineBackup(this);
+  }
+
   openPeriodInfo() {
     const { props: { items }, state: { selectedItem } } = this;
     if (selectedItem) {
@@ -194,11 +198,11 @@ export class TilkjentYtelse extends Component {
     timeline.setWindow(newWindowTimes);
   }
 
-  redrawTimeLineBackup() {
+  redrawTimeLineBackup(that) { // eslint-disable-line class-methods-use-this
     setTimeout(() => {
       const timeLineNode = document.getElementsByClassName('vis-timeline');
-      if (this.timelineRef && timeLineNode.length > 0 && (timeLineNode[0].style.visibility && (timeLineNode[0].style.visibility !== 'visible'))) {
-        const timeline = this.timelineRef.$el;
+      if (that.timelineRef && timeLineNode.length > 0 && (timeLineNode[0].style.visibility && (timeLineNode[0].style.visibility !== 'visible'))) {
+        const timeline = that.timelineRef.$el;
         timeline.redraw();
       }
     }, 2000);

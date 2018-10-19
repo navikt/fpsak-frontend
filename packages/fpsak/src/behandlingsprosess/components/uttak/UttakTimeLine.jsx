@@ -3,29 +3,29 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
 import { Column, Row } from 'nav-frontend-grid';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { ISO_DATE_FORMAT } from 'utils/formats';
 import TimeLineControl from '../tilkjentYtelse/timeline/TimeLineControl';
 import TimeLineSoker from '../tilkjentYtelse/timeline/TimeLineSoker';
 import TimeLineSokerEnsamSoker from '../tilkjentYtelse/timeline/TimeLineSokerEnsamSoker';
 
 import styles from './uttakTimeLine.less';
 
-const getStartDateForTimeLine = customTimes => moment(customTimes.soknad < customTimes.fodsel ? customTimes.soknad : customTimes.fodsel).subtract(13, 'weeks');
+const getStartDateForTimeLine = uttakPeriod => moment(uttakPeriod.fom).subtract(4, 'weeks');
+
 const getEndDateForTimeLine = customTimes => moment(customTimes.fodsel).add(4, 'years');
 
-const getHeight = medsoker => (medsoker ? '140px' : '100px');
 
-const getOptions = (customTimes, medsoker) => ({
+const getOptions = (customTimes, uttakPeriod, medsoker) => ({
+  height: medsoker ? '140px' : '104px',
   width: '100%',
-  height: getHeight(medsoker),
   zoomMin: 1000 * 60 * 60 * 24 * 30,
   zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
   zoomable: true,
   moveable: true,
-  min: getStartDateForTimeLine(customTimes),
+  min: getStartDateForTimeLine(uttakPeriod),
   max: getEndDateForTimeLine(customTimes),
   margin: {
-    item: 10,
+    item: 14,
   },
   orientation: { axis: 'top' },
   stack: false,
@@ -40,23 +40,21 @@ const getOptions = (customTimes, medsoker) => ({
 
 const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT).toDate();
 
+function sortByDate(a, b) {
+  if (a.fom < b.fom) {
+    return -1;
+  }
+  if (a.fom > b.fom) {
+    return 1;
+  }
+  return 0;
+}
 
 const parseDates = item => ({
   ...item,
   start: parseDateString(item.fom),
-  end: parseDateString(item.tom),
+  end: parseDateString(item.tomMoment),
 });
-
-const showTimeLineBackup = () => {
-  setTimeout(() => {
-    const timeLineNode = document.getElementsByClassName('vis-timeline');
-    if (timeLineNode && timeLineNode.length > 0 && timeLineNode[0].style.visibility && (timeLineNode[0].style.visibility !== 'visible')) {
-      timeLineNode[0].style.visibility = 'visible';
-    }
-  }, 2500);
-  return true;
-};
-
 
 const formatItems = (periodItems = []) => {
   const itemsWithDates = periodItems.map(parseDates);
@@ -65,8 +63,19 @@ const formatItems = (periodItems = []) => {
   itemsWithDates.forEach((item) => {
     formattedItemsArray.push(item);
   });
-  showTimeLineBackup();
   return formattedItemsArray;
+};
+
+const formatGroups = (periodItems = []) => {
+  const duplicatesRemoved = periodItems.reduce((accPeriods, period) => {
+    const hasPeriod = accPeriods.some(p => p.group === period.group);
+    if (!hasPeriod) accPeriods.push(period);
+    return accPeriods;
+  }, []);
+  return duplicatesRemoved.map(activity => ({
+    id: activity.group,
+    content: '',
+  }));
 };
 
 /**
@@ -83,6 +92,11 @@ class UttakTimeLine extends Component {
     this.goBackward = this.goBackward.bind(this);
     this.zoomIn = this.zoomIn.bind(this);
     this.zoomOut = this.zoomOut.bind(this);
+    this.redrawTimeLineBackup = this.redrawTimeLineBackup.bind(this);
+  }
+
+  componentDidMount() {
+    this.redrawTimeLineBackup(this);
   }
 
   zoomIn() {
@@ -117,10 +131,29 @@ class UttakTimeLine extends Component {
     timeline.setWindow(newWindowTimes);
   }
 
+  redrawTimeLineBackup(that) { // eslint-disable-line class-methods-use-this
+    setTimeout(() => {
+      const timeLineNode = document.getElementsByClassName('vis-timeline');
+      if (that.timelineRef && timeLineNode.length > 0 && (timeLineNode[0].style.visibility && (timeLineNode[0].style.visibility !== 'visible'))) {
+        const timeline = that.timelineRef.$el;
+        timeline.redraw();
+      }
+    }, 2000);
+  }
+
+
   render() {
     const {
-      hovedsokerKjonnKode, customTimes, nyePerioder, selectPeriodCallback, selectedPeriod, openPeriodInfo, medsokerKjonnKode,
+      hovedsokerKjonnKode,
+      customTimes,
+      uttakPerioder,
+      selectPeriodCallback,
+      selectedPeriod,
+      openPeriodInfo,
+      medsokerKjonnKode,
     } = this.props;
+    const groups = formatGroups(uttakPerioder);
+    const items = formatItems(uttakPerioder);
     return (
       <div className={styles.timelineContainer}>
         <Row>
@@ -145,8 +178,9 @@ class UttakTimeLine extends Component {
             <div className={styles.timeLineWrapper}>
               <div className="uttakTimeline">
                 <Timeline
-                  options={getOptions(customTimes)}
-                  items={formatItems(nyePerioder)}
+                  options={getOptions(customTimes, uttakPerioder.sort(sortByDate)[0], medsokerKjonnKode)}
+                  items={items}
+                  groups={groups}
                   customTimes={customTimes}
                   selectHandler={selectPeriodCallback}
                   ref={el => (this.timelineRef = el)} // eslint-disable-line no-return-assign
@@ -175,7 +209,7 @@ class UttakTimeLine extends Component {
 UttakTimeLine.propTypes = {
   selectedPeriod: PropTypes.shape(),
   customTimes: PropTypes.shape().isRequired,
-  nyePerioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  uttakPerioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   selectPeriodCallback: PropTypes.func.isRequired,
   openPeriodInfo: PropTypes.func.isRequired,
   hovedsokerKjonnKode: PropTypes.string.isRequired,

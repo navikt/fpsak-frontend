@@ -1,9 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import FodselSammenligningPanel from 'behandling/components/fodselSammenligning/FodselSammenligningPanel';
 import { SjekkFodselDokForm, buildInitialValues } from './SjekkFodselDokForm';
 

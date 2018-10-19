@@ -5,11 +5,11 @@ import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 
 import { createLocationForHistorikkItems } from 'app/paths';
-import { findBegrunnelseTekst, findHendelseText, findSkjermlenkeText } from './historikkUtils';
+import { findHendelseText } from './historikkUtils';
 
 const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.TERMINBEKREFTELSE]: 'TermindatoFaktaForm.ApplicationInformation',
@@ -48,6 +48,7 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR]: 'Overstyr.soknadsfristvilkar',
   [aksjonspunktCodes.OVERSTYR_BEREGNING]: 'Overstyr.beregning',
   [aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER]: 'Overstyr.uttak',
+  [aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK]: 'UttakInfoPanel.FaktaUttak',
   [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG]: 'OmsorgFaktaForm.Aleneomsorg.ApplicationInformation',
   [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG]: 'OmsorgFaktaForm.Omsorg.ApplicationInformation',
   [aksjonspunktCodes.AVKLAR_UTTAK]: 'UttakInfoPanel.FaktaUttak',
@@ -95,7 +96,7 @@ const HistorikkMalType3 = ({
           {' '}
           {formatMessage({ id: 'Totrinnskontroll.ikkeGodkjent' })}
         </Element>
-        <Normaltekst>{findBegrunnelseTekst(aksjonspunkt.aksjonspunktBegrunnelse, intl)}</Normaltekst>
+        <Normaltekst>{aksjonspunkt.aksjonspunktBegrunnelse}</Normaltekst>
       </span>
     );
   };
@@ -124,7 +125,7 @@ const HistorikkMalType3 = ({
               to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
               onClick={scrollUp}
             >
-              {findSkjermlenkeText(historikkinnslagDel.skjermlenke, intl)}
+              {historikkinnslagDel.skjermlenke.navn}
             </NavLink>
           </Element>
         )

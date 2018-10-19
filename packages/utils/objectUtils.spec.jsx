@@ -2,7 +2,7 @@
 import { expect } from 'chai';
 
 import {
-  notNull, isObjectEmpty, isEqual, isObject, diff,
+  notNull, isEmpty, isEqual, isObject, diff,
 } from './objectUtils';
 
 describe('Object-utils', () => {
@@ -20,12 +20,12 @@ describe('Object-utils', () => {
 
   it('skal returnere false når objekt ikke er tomt', () => {
     const object = { test: 'test' };
-    expect(isObjectEmpty(object)).is.false;
+    expect(isEmpty(object)).is.false;
   });
 
   it('skal returnere true når objekt er tomt', () => {
     const object = {};
-    expect(isObjectEmpty(object)).is.true;
+    expect(isEmpty(object)).is.true;
   });
 
   it('skal returnere true når objekter er like', () => {

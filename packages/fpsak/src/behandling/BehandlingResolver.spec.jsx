@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
+import LoadingPanel from 'sharedComponents/LoadingPanel';
 import { BehandlingResolver } from './BehandlingResolver';
 
 describe('BehandlingResolver', () => {

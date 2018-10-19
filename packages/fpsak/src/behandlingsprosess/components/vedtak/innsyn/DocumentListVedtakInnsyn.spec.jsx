@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-import kommunikasjonsretning from '@fpsak-frontend/kodeverk/kommunikasjonsretning';
+import kommunikasjonsretning from 'kodeverk/kommunikasjonsretning';
 
 import DocumentListVedtakInnsyn from './DocumentListVedtakInnsyn';
 

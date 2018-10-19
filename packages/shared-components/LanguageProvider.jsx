@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { IntlProvider, addLocaleData } from 'react-intl';
 import nb from 'react-intl/locale-data/nb';
-import { getRestApiData } from '@fpsak-frontend/data/duck';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
-import ElementWrapper from './ElementWrapper';
+
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { getRestApiData } from 'data/duck';
+import { FpsakApi } from 'data/fpsakApi';
 
 addLocaleData(nb);
 

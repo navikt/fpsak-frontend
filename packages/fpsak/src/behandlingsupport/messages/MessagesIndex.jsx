@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import dokumentMalType from '@fpsak-frontend/kodeverk/dokumentMalType';
+import dokumentMalType from 'kodeverk/dokumentMalType';
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
 import SettBehandlingPaVentForm from 'behandling/components/SettBehandlingPaVentForm';
 import {
@@ -18,11 +18,11 @@ import {
   getBehandlingVersjon,
 } from 'behandling/behandlingSelectors';
 import { setBehandlingOnHold } from 'behandlingmenu/duck';
-import venteArsakType from '@fpsak-frontend/kodeverk/venteArsakType';
-import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
+import venteArsakType from 'kodeverk/venteArsakType';
+import LoadingPanel from 'sharedComponents/LoadingPanel';
 import requireProps from 'app/data/requireProps';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
-import { getRestApiFinished, makeRestApiRequest } from '@fpsak-frontend/data/duck';
+import { FpsakApi } from 'data/fpsakApi';
+import { getRestApiFinished, makeRestApiRequest } from 'data/duck';
 
 import resetSubmitMessageActionCreator from './duck';
 import Messages from './components/Messages';
@@ -46,7 +46,9 @@ export class MessagesIndex extends Component {
 
   submitCallback(values) {
     const { behandlingIdentifier, submitMessage, resetReduxForm: resetForm } = this.props;
-    const isInnhentDokumentasjon = values.brevmalkode === dokumentMalType.INNHENT_DOK;
+    const isInnhentDokumentasjon = values.brevmalkode === dokumentMalType.INNHENT_DOK
+     || values.brevmalkode === dokumentMalType.FORLENGET_DOK
+     || values.brevmalkode === dokumentMalType.FORLENGET_MEDL_DOK;
     this.setState({ showMessagesModal: !isInnhentDokumentasjon });
     if (isInnhentDokumentasjon) {
       this.setState({ showSettPaVentModal: true });

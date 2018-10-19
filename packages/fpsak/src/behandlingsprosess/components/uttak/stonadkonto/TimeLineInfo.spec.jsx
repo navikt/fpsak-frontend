@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
 import TimeLineInfo from './TimeLineInfo';
 
 const stonadskonto = {

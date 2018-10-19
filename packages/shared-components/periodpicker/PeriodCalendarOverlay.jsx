@@ -4,7 +4,7 @@ import { intlShape, injectIntl } from 'react-intl';
 import DayPicker from 'react-day-picker';
 import moment from 'moment';
 
-import { getRelatedTargetIE11, isIE11 } from '@fpsak-frontend/utils/browserUtils';
+import { getRelatedTargetIE11, isIE11 } from 'utils/browserUtils';
 
 const getRelatedTarget = (e) => {
   if (isIE11()) {

@@ -1,13 +1,14 @@
 import React from 'react';
 import moment from 'moment';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import { expect } from 'chai';
 
+import SoknadData from 'papirsoknad/SoknadData';
 import {
   invalidDateMessage, dateNotBeforeOrEqualMessage, dateRangesOverlappingMessage,
   dateNotAfterOrEqualMessage, isRequiredMessage,
-} from '@fpsak-frontend/utils/validation/messages';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+} from 'utils/validation/messages';
+import { ISO_DATE_FORMAT } from 'utils/formats';
 
 import OppholdINorgePanel, { OppholdINorgePanelImpl } from './OppholdINorgePanel';
 
@@ -190,6 +191,7 @@ describe('<OppholdINorgePanel>', () => {
       intl={intlMock}
       countryCodes={countryCodes}
       form="test"
+      soknadData={new SoknadData('TEST', 'TEST', 'TEST', [])}
     />);
 
     let tidligreOppholdUtenlands = wrapper.find({ name: 'tidligereOppholdUtenlands' });
@@ -207,6 +209,7 @@ describe('<OppholdINorgePanel>', () => {
       intl={intlMock}
       countryCodes={countryCodes}
       form="test"
+      soknadData={new SoknadData('TEST', 'TEST', 'TEST', [])}
     />);
 
     let fremtidigeOppholdUtenlands = wrapper.find({ name: 'fremtidigeOppholdUtenlands' });

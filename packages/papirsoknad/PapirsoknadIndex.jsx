@@ -10,31 +10,29 @@ import PropTypes from 'prop-types';
 import { routerActions } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { ErrorTypes } from '@fpsak-frontend/data/error/ErrorTypes';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
-import { getRestApiFinished, getRestApiError } from '@fpsak-frontend/data/duck';
-// todo dep
+
+import { ErrorTypes } from 'app/ErrorTypes';
+import { FpsakApi } from 'data/fpsakApi';
+import { getRestApiFinished, getRestApiError } from 'data/duck';
 import PersonIndex from 'person/PersonIndex';
-// todo dep
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-// todo dep
+import SoknadData from 'papirsoknad/SoknadData';
 import requireProps from 'app/data/requireProps';
-// todo dep
 import {
   getSelectedBehandlingIdentifier, getBehandlingVersjon, getBehandlingIsOnHold, getAksjonspunkter,
-} from 'behandling/behandlingSelectors';
-// todo dep
+}
+  from 'behandling/behandlingSelectors';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
-import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
-import { getRettigheter } from '@fpsak-frontend/nav-ansatt/duck';
-import rettighetPropType from '@fpsak-frontend/nav-ansatt/rettighetPropType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import SoknadData from './SoknadData';
+import LoadingPanel from 'sharedComponents/LoadingPanel';
+import { getRettigheter } from 'navAnsatt/duck';
+import rettighetPropType from 'navAnsatt/rettighetPropType';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import {
   resetRegistrering, submitRegistrering, resetRegistreringSuccess, setSoknadData, getSoknadData,
 } from './duck';
 import RegistrerPapirsoknad from './components/RegistrerPapirsoknad';
 import SoknadRegistrertModal from './components/SoknadRegistrertModal';
+
 
 export class PapirsoknadIndex extends Component {
   constructor(props) {

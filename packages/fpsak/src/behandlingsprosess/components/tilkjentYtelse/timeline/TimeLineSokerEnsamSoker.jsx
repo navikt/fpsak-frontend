@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row } from 'nav-frontend-grid';
 
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/navBrukerKjonn';
-import Image from '@fpsak-frontend/shared-components/Image';
-import urlMann from '@fpsak-frontend/assets/images/mann.svg';
+import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
+import Image from 'sharedComponents/Image';
+import urlMann from 'images/mann.svg';
 
-import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
+import urlKvinne from 'images/kvinne.svg';
 import styles from './timeLineSokerEnsamSoker.less';
 
 /**

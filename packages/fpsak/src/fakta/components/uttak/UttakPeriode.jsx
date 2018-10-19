@@ -4,14 +4,15 @@ import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { Normaltekst } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { calcDaysWithoutWeekends, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import FlexColumn from '@fpsak-frontend/shared-components/flexGrid/FlexColumn';
-import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';
-import FlexContainer from '@fpsak-frontend/shared-components/flexGrid/FlexContainer';
-import Image from '@fpsak-frontend/shared-components/Image';
+import { calcDaysWithoutWeekends } from 'utils/dateUtils';
+import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
+import FlexRow from 'sharedComponents/flexGrid/FlexRow';
+import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
+import Image from 'sharedComponents/Image';
 import classnames from 'classnames/bind';
-import overlapp from '@fpsak-frontend/assets/images/overlapp.svg';
-import tomPeriode from '@fpsak-frontend/assets/images/tom_periode.svg';
+import { ISO_DATE_FORMAT } from 'utils/formats';
+import overlapp from 'images/overlapp.svg';
+import tomPeriode from 'images/tom_periode.svg';
 import UttakPeriodeType from './UttakPeriodeType';
 import UttakPeriodeInnhold from './UttakPeriodeInnhold';
 
@@ -62,7 +63,7 @@ const UttakPeriode = ({
   readOnly,
   perioder,
   inntektsmeldingInfo,
-  endringsDato,
+  førsteUttaksDato,
   meta,
 }) => (
   <div>
@@ -72,7 +73,7 @@ const UttakPeriode = ({
       {fields.map((fieldId, index, field) => {
         const periode = field.get(index);
         // TODO skal denne vises hvis det ikke er noen aksjonspunkt men man. revurdering (PFP-639)
-        const harEndringsDatoSomErFørFørsteUttaksPeriode = endringsDato ? moment(periode.fom).isAfter(endringsDato) : false;
+        const harEndringsDatoSomErFørFørsteUttaksPeriode = førsteUttaksDato ? moment(periode.fom).isAfter(førsteUttaksDato) : false;
         return (
           <FlexRow key={fieldId}>
             <FlexColumn className={styles.fullWidth}>
@@ -96,7 +97,6 @@ const UttakPeriode = ({
                   editPeriode={editPeriode}
                   isAnyFormOpen={isAnyFormOpen}
                   isNyPeriodeFormOpen={isNyPeriodeFormOpen}
-
                   readOnly={readOnly}
                 />
                 <UttakPeriodeInnhold
@@ -142,11 +142,11 @@ UttakPeriode.propTypes = {
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   isNyPeriodeFormOpen: PropTypes.bool.isRequired,
   inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape())).isRequired,
-  endringsDato: PropTypes.string,
+  førsteUttaksDato: PropTypes.string,
 };
 
 UttakPeriode.defaultProps = {
-  endringsDato: undefined,
+  førsteUttaksDato: undefined,
 };
 
 export default UttakPeriode;

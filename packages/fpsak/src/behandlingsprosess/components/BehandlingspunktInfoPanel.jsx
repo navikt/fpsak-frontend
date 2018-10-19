@@ -8,6 +8,7 @@ import {
 }
   from 'behandlingsprosess/behandlingsprosessSelectors';
 import CheckPersonStatusForm from './saksopplysninger/CheckPersonStatusForm';
+import AvregningPanel from './avregning/AvregningPanel';
 import TilkjentYtelsePanel from './tilkjentYtelse/TilkjentYtelsePanel';
 import UttakPanel from './uttak/UttakPanel';
 import VedtakPanels from './vedtak/VedtakPanels';
@@ -52,7 +53,6 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
         readOnlySubmitButton={readOnlySubmitButton}
         submitCallback={submitCallback}
       />
-
       <VedtakPanels
         behandlingspunkt={selectedBehandlingspunkt}
         readOnly={readOnly}
@@ -128,6 +128,13 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
         apCodes={apCodes}
         isApOpen={openAksjonspunkt}
       />
+      )
+      }
+      {AvregningPanel.supports(selectedBehandlingspunkt)
+      && (
+        <AvregningPanel
+          readOnly={readOnly}
+        />
       )
       }
       {VurderSoknadsfristForeldrepengerForm.supports(apCodes)

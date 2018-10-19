@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { makeRestApiRequest, getRestApiFinished } from '@fpsak-frontend/data/duck';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
-import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
+import { makeRestApiRequest, getRestApiFinished } from 'data/duck';
+import { FpsakApi } from 'data/fpsakApi';
+import LoadingPanel from 'sharedComponents/LoadingPanel';
 
 class AppConfigResolver extends Component {
   constructor(props) {
@@ -23,6 +23,7 @@ class AppConfigResolver extends Component {
       fetchBehandlendeEnheter,
       fetchKodeverk,
       fetchShowDetailedErrorMessages,
+      fetchFeatureToggle,
     } = this.props;
 
     fetchNavAnsatt();
@@ -32,6 +33,7 @@ class AppConfigResolver extends Component {
     fetchBehandlendeEnheter();
     fetchKodeverk();
     fetchShowDetailedErrorMessages();
+    fetchFeatureToggle();
   }
 
   render() {
@@ -53,6 +55,7 @@ AppConfigResolver.propTypes = {
   fetchBehandlendeEnheter: PropTypes.func.isRequired,
   fetchKodeverk: PropTypes.func.isRequired,
   fetchShowDetailedErrorMessages: PropTypes.func.isRequired,
+  fetchFeatureToggle: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -62,6 +65,7 @@ const mapStateToProps = (state) => {
     getRestApiFinished(FpsakApi.RETTSKILDE_URL)(state),
     getRestApiFinished(FpsakApi.SYSTEMRUTINE_URL)(state),
     getRestApiFinished(FpsakApi.KODEVERK)(state),
+    getRestApiFinished(FpsakApi.FEATURE_TOGGLE)(state),
     getRestApiFinished(FpsakApi.SHOW_DETAILED_ERROR_MESSAGES)(state),
   ];
   return {
@@ -76,6 +80,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   fetchSystemrutine: makeRestApiRequest(FpsakApi.SYSTEMRUTINE_URL),
   fetchBehandlendeEnheter: makeRestApiRequest(FpsakApi.BEHANDLENDE_ENHETER),
   fetchKodeverk: makeRestApiRequest(FpsakApi.KODEVERK),
+  fetchFeatureToggle: makeRestApiRequest(FpsakApi.FEATURE_TOGGLE),
   fetchShowDetailedErrorMessages: makeRestApiRequest(FpsakApi.SHOW_DETAILED_ERROR_MESSAGES),
 }, dispatch);
 

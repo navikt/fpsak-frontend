@@ -10,8 +10,8 @@ import Panel from 'nav-frontend-paneler';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { getAntallDodfodteBarn, getBarnFraTpsRelatertTilSoknad, getBehandlingType } from 'behandling/behandlingSelectors';
-import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import behandlingType from 'kodeverk/behandlingType';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
 import FodselSammenligningOtherPanel from './FodselSammenligningOtherPanel';
 import FodselSammenligningRevurderingPanel from './FodselSammenligningRevurderingPanel';
 

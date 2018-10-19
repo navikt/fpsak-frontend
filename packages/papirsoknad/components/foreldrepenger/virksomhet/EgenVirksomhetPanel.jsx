@@ -5,11 +5,11 @@ import { connect } from 'react-redux';
 import { formValueSelector, FieldArray, FormSection } from 'redux-form';
 import { Undertittel } from 'nav-frontend-typografi';
 
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { required, arrayMinLength } from '@fpsak-frontend/utils/validation/validators';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { RadioGroupField, RadioOption } from 'form/Fields';
+import BorderBox from 'sharedComponents/BorderBox';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { required, arrayMinLength } from 'utils/validation/validators';
 import RegistrerVirksomhetPanel from './RegistrerVirksomhetPanel';
 
 import styles from './egenVirksomhetPanel.less';

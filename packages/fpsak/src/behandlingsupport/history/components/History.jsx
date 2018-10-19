@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { pathToBehandling } from 'app/paths';
 import historikkinnslagPropType from 'behandling/proptypes/historikkinnslagPropType';
-import historikkinnslagType from '@fpsak-frontend/kodeverk/historikkinnslagType';
+import historikkinnslagType from 'kodeverk/historikkinnslagType';
 import SnakkebobleMedRoller from './snakkebobleMedRoller';
 import HistorikkMalType1 from './historikkMalType1';
 import HistorikkMalType2 from './historikkMalType2';
@@ -108,7 +108,10 @@ const History = ({
           <HistorikkMal
             historikkinnslagDeler={item.historikkinnslagDeler}
             dokumentLinks={item.dokumentLinks}
-            behandlingLocation={{ ...location, pathname: pathToBehandling(saksNr, item.behandlingId) }}
+            behandlingLocation={{
+              ...location,
+              pathname: pathToBehandling(saksNr, item.behandlingId),
+            }}
             originType={item.type}
             saksNr={saksNr}
           />

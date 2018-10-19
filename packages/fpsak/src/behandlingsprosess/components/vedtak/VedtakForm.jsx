@@ -6,7 +6,8 @@ import { clearFields, formPropTypes } from 'redux-form';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Row, Column } from 'nav-frontend-grid';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
+import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import avslagsarsakCodes from 'kodeverk/avslagsarsakCodes';
 import {
   getAksjonspunkter, getBehandlingResultatstruktur,
   isBehandlingStatusReadOnly, getBehandlingIsOnHold, getBehandlingStatus,
@@ -16,14 +17,15 @@ import { bindActionCreators } from 'redux';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
 import { getSelectedBehandlingId } from 'behandling/duck';
-import { isInnvilget, isAvslag } from '@fpsak-frontend/kodeverk/behandlingResultatType';
+import { isInnvilget, isAvslag } from 'kodeverk/behandlingResultatType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import { getRettigheter } from '@fpsak-frontend/nav-ansatt/duck';
-import { CheckboxField } from '@fpsak-frontend/form';
-import behandlingStatusCode from '@fpsak-frontend/kodeverk/behandlingStatus';
+import { getRettigheter } from 'navAnsatt/duck';
+import { CheckboxField } from 'form/Fields';
+import behandlingStatusCode from 'kodeverk/behandlingStatus';
 import FritekstBrevPanel from 'behandlingsprosess/components/vedtak/FritekstBrevPanel';
 import classNames from 'classnames';
-import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
+import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
 import VedtakAksjonspunktPanel from './VedtakAksjonspunktPanel';
@@ -71,6 +73,23 @@ function kanSendesTilGodkjenning(behandlingStatusKode) {
   return behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES;
 }
 
+const getPreviewAutomatiskBrevCallback = formProps => (e) => {
+  const {
+    begrunnelse, brødtekst, behandlingId,
+  } = formProps;
+  const formValues = {
+    behandlingId,
+    fritekst: begrunnelse,
+    skalBrukeOverstyrendeFritekstBrev: false,
+    fritekstBrev: brødtekst,
+    finnesAllerede: false,
+    overskrift: '',
+    begrunnelse: '',
+  };
+  formProps.fetchVedtaksbrevPreview(formValues);
+  e.preventDefault();
+};
+
 export class VedtakFormImpl extends Component {
   constructor(props) {
     super(props);
@@ -110,9 +129,11 @@ export class VedtakFormImpl extends Component {
       ...formProps
     } = this.props;
     const finnesAllerede = (behandlingStatusCode.BEHANDLING_UTREDES !== behandlingStatusKode);
-    const previewBrev = getPreviewManueltBrevCallback(formProps, finnesAllerede, false, previewManueltBrevCallback);
-    const previewManueltBrev = getPreviewManueltBrevCallback(formProps, finnesAllerede, true, previewManueltBrevCallback);
+    const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(formProps);
+    const previewOverstyrtBrev = getPreviewManueltBrevCallback(formProps, finnesAllerede, true, previewManueltBrevCallback);
     const previewDefaultBrev = getPreviewManueltBrevCallback(formProps, false, false, previewManueltBrevCallback);
+    const skalViseLink = (behandlingsresultat.avslagsarsak === null)
+      || (behandlingsresultat.avslagsarsak && behandlingsresultat.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER);
     const visOverstyringKnapp = kanOverstyre || readOnly;
     return (
       <VedtakAksjonspunktPanel
@@ -165,7 +186,7 @@ export class VedtakFormImpl extends Component {
             intl={intl}
             readOnly={readOnly}
             sprakkode={sprakkode}
-            previewBrev={previewBrev}
+            previewBrev={previewAutomatiskBrev}
           />
         )
         }
@@ -187,12 +208,12 @@ export class VedtakFormImpl extends Component {
                 </Hovedknapp>
               )
               }
-              {skalBrukeOverstyrendeFritekstBrev
+              {skalBrukeOverstyrendeFritekstBrev && skalViseLink
               && (
-                <ForhaandsvisningsKnapp previewFunction={previewManueltBrev} />
+                <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
               )
               }
-              {!skalBrukeOverstyrendeFritekstBrev
+              {!skalBrukeOverstyrendeFritekstBrev && skalViseLink
               && (
                 <ForhaandsvisningsKnapp previewFunction={previewDefaultBrev} />
               )
@@ -202,14 +223,6 @@ export class VedtakFormImpl extends Component {
         )
         }
 
-        {!kanSendesTilGodkjenning(behandlingStatusKode)
-        && (
-          <Row>
-            <Column xs="12">
-              <ForhaandsvisningsKnapp previewFunction={previewDefaultBrev} />
-            </Column>
-          </Row>)
-        }
       </VedtakAksjonspunktPanel>
     );
   }
@@ -278,6 +291,7 @@ const mapStateToProps = (state, initialProps) => ({
     'overskrift',
     'brødtekst',
   ),
+  behandlingId: getSelectedBehandlingId(state),
   behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
   behandlingStatusKode: getBehandlingStatus(state).kode,
   aksjonspunkter: getAksjonspunkter(state),
@@ -292,6 +306,7 @@ const mapStateToProps = (state, initialProps) => ({
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
     clearFields,
+    fetchVedtaksbrevPreview,
   }, dispatch),
 });
 

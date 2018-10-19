@@ -2,14 +2,16 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
-import SoknadData from '../SoknadData';
-import ForeldrepengerForm from './foreldrepenger/ForeldrepengerForm';
-import EndringForeldrepengerForm from './foreldrepenger/EndringForeldrepengerForm';
+
+import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import SoknadData from 'papirsoknad/SoknadData';
+import ForeldrepengerForm from 'papirsoknad/components/foreldrepenger/ForeldrepengerForm';
+import EndringForeldrepengerForm from 'papirsoknad/components/foreldrepenger/EndringForeldrepengerForm';
+import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import { RegistrerPapirsoknad } from './RegistrerPapirsoknad';
 import SoknadTypePickerForm from './SoknadTypePickerForm';
 import EngangsstonadForm from './engangsstonad/EngangsstonadForm';
+
 
 describe('<RegistrerPapirsoknad>', () => {
   it('skal vise aksjonspunkt-hjelpetekst og form for engangsstønad', () => {

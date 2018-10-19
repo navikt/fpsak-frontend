@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
 import { Column, Row } from 'nav-frontend-grid';
 
-import opptjeningAktivitetKlassifisering from '@fpsak-frontend/kodeverk/opptjeningAktivitetKlassifisering';
+import opptjeningAktivitetKlassifisering from 'kodeverk/opptjeningAktivitetKlassifisering';
 import DateContainer from './DateContainer';
 import styles from './opptjeningTimeLineLight.less';
 import TimeLineNavigation from './TimeLineNavigation';

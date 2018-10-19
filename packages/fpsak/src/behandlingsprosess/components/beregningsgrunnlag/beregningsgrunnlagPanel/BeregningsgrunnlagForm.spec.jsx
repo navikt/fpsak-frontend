@@ -2,12 +2,12 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
+import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
-import periodeAarsak from '@fpsak-frontend/kodeverk/periodeAarsak';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import periodeAarsak from 'kodeverk/periodeAarsak';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { BeregningsgrunnlagForm as UnwrappedForm } from './BeregningsgrunnlagForm';
 import GrunnlagForAarsinntektPanelAT from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
 import GrunnlagForAarsinntektPanelFL from '../frilanser/GrunnlagForAarsinntektPanelFL';

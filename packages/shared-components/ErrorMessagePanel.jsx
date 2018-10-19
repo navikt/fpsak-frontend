@@ -7,11 +7,11 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 import Lukknapp from 'nav-frontend-lukknapp';
 
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import { getAllAsyncErrorMessages } from '@fpsak-frontend/data/duck';
+import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
 import {
   getCrashMessage, getErrorMessages, getErrorMessageCodeWithParams, getShowDetailedErrorMessages,
-} from '@fpsak-frontend/data/error/duck';
+} from 'app/duck';
+import { getAllAsyncErrorMessages } from 'data/duck';
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
 
 import styles from './errorMessagePanel.less';
@@ -125,14 +125,11 @@ export const getErrorMessageList = ownProps => createSelector(
   (errorMessages, errorMessageCodeWithParams, crashMessage, showDetailedErrorMessages, asyncErrorMessages) => {
     if (ownProps.queryStrings.errorcode) {
       return [{ message: ownProps.intl.formatMessage({ id: ownProps.queryStrings.errorcode }) }];
-    }
-    if (ownProps.queryStrings.errormessage) {
+    } if (ownProps.queryStrings.errormessage) {
       return [{ message: ownProps.queryStrings.errormessage }];
-    }
-    if (crashMessage) {
+    } if (crashMessage) {
       return [{ message: crashMessage }];
-    }
-    if (errorMessageCodeWithParams) {
+    } if (errorMessageCodeWithParams) {
       return [{
         message: ownProps.intl.formatMessage({ id: errorMessageCodeWithParams.code },
           filterMessage(errorMessageCodeWithParams.params, showDetailedErrorMessages)),
@@ -140,8 +137,7 @@ export const getErrorMessageList = ownProps => createSelector(
           ? JSON.parse(decodeHtmlEntity(errorMessageCodeWithParams.params.errorDetails))
           : undefined,
       }];
-    }
-    if (errorMessages) {
+    } if (errorMessages) {
       return errorMessages.map(em => ({ message: em }));
     }
     return asyncErrorMessages.map(em => ({ message: em }));

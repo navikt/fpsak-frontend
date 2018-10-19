@@ -10,20 +10,20 @@ import {
 } from 'behandling/behandlingSelectors';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm } from 'behandling/behandlingForm';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
-import periodeAarsak from '@fpsak-frontend/kodeverk/periodeAarsak';
-import { TextAreaField } from '@fpsak-frontend/form';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import BorderBox from 'sharedComponents/BorderBox';
+import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import periodeAarsak from 'kodeverk/periodeAarsak';
+import TextAreaField from 'form/fields/TextAreaField';
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
 import {
   hasValidText, maxLength, minLength, required,
-} from '@fpsak-frontend/utils/validation/validators';
-import { removeSpacesFromNumber } from '@fpsak-frontend/utils/currencyUtils';
+} from 'utils/validation/validators';
+import { removeSpacesFromNumber } from 'utils/currencyUtils';
 import GrunnlagForAarsinntektPanelFL from '../frilanser/GrunnlagForAarsinntektPanelFL';
 import GrunnlagForAarsinntektPanelAT from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
 import GrunnlagForAarsinntektPanelSN from '../selvstendigNaeringsdrivende/GrunnlagForAarsinntektPanelSN';
@@ -47,8 +47,9 @@ const maxLength1500 = maxLength(1500);
 
 const formName = 'BeregningsgrunnlagForm';
 
-const harPerioderMedAvsluttedeArbeidsforhold = allePerioder => allePerioder.filter(periode => periode.periodeAarsaker !== null
-  && (periode.periodeAarsaker.map(({ kode }) => kode).includes(periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET))).length > 0;
+const harPerioderMedAvsluttedeArbeidsforhold = (allePerioder, gjeldendeAksjonspunkt) => allePerioder.filter(periode => periode.periodeAarsaker !== null
+  && (periode.periodeAarsaker.map(({ kode }) => kode).includes(periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET))).length > 0
+  && (!gjeldendeAksjonspunkt || gjeldendeAksjonspunkt.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD);
 
 const skalViseBegrunnelsesBoksForAtfl = aksjonspunkt => aksjonspunkt
   && (aksjonspunkt.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS
@@ -102,7 +103,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode, gjeldendeAksjonspunkt
     { relevanteStatuser.isArbeidstaker
     && (
     <div>
-      {!harPerioderMedAvsluttedeArbeidsforhold(allePerioder)
+      {!harPerioderMedAvsluttedeArbeidsforhold(allePerioder, gjeldendeAksjonspunkt)
       && (
       <GrunnlagForAarsinntektPanelAT
         alleAndeler={alleAndelerIForstePeriode}
@@ -113,7 +114,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode, gjeldendeAksjonspunkt
       />
       )
       }
-      { harPerioderMedAvsluttedeArbeidsforhold(allePerioder)
+      { harPerioderMedAvsluttedeArbeidsforhold(allePerioder, gjeldendeAksjonspunkt)
       && (
       <FastsettInntektTidsbegrenset
         readOnly={readOnly}

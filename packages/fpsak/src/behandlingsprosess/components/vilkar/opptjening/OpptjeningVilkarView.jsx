@@ -5,20 +5,20 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
-import PeriodLabel from '@fpsak-frontend/shared-components/PeriodLabel';
+import FadingPanel from 'sharedComponents/FadingPanel';
+import PeriodLabel from 'sharedComponents/PeriodLabel';
 import VilkarResultPanel from 'behandlingsprosess/components/vilkar/VilkarResultPanel';
 import {
   getBehandlingFastsattOpptjeningFomDate, getBehandlingFastsattOpptjeningTomDate, getBehandlingFastsattOpptjeningActivities,
   getBehandlingFastsattOpptjeningperiodeMnder, getBehandlingFastsattOpptjeningperiodeDager,
 } from 'behandling/behandlingSelectors';
 import { behandlingForm } from 'behandling/behandlingForm';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
-import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import vilkarType from 'kodeverk/vilkarType';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus } from 'behandlingsprosess/behandlingsprosessSelectors';
 import OpptjeningTimeLineLight from './OpptjeningTimeLineLight';
 

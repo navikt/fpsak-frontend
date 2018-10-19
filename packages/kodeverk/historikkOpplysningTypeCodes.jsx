@@ -1,3 +1,4 @@
+// @TODO kodeverk_i_frontend
 const historikkOpplysningTypeCodes = {
   ANTALL_BARN: {
     kode: 'ANTALL_BARN',

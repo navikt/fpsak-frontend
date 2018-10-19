@@ -29,7 +29,9 @@ class CalendarToggleButton extends Component {
       disabled,
       toggleShowCalendar,
     } = this.props;
+
     const { buttonWidth } = this.state;
+
     return (
       <button
         type="button"

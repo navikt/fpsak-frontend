@@ -15,26 +15,24 @@ import SupportPanelLink from './components/SupportPanelLink';
 import HistoryIndex from './history/HistoryIndex';
 import MessagesIndex from './messages/MessagesIndex';
 import DocumentIndex from './documents/DocumentIndex';
-import styles from './behandlingSupportIndex.less';
 import ApprovalIndex from './approval/ApprovalIndex';
-
+import styles from './behandlingSupportIndex.less';
 
 const renderSupportPanel = (supportPanel) => {
   switch (supportPanel) {
     case SupportPanel.APPROVAL:
     case SupportPanel.RETURNED:
-      return <ApprovalIndex />;
+      return (<ApprovalIndex />);
     case SupportPanel.HISTORY:
-      return <HistoryIndex />;
+      return (<HistoryIndex />);
     case SupportPanel.MESSAGES:
-      return <MessagesIndex />;
+      return (<MessagesIndex />);
     case SupportPanel.DOCUMENTS:
-      return <DocumentIndex />;
+      return (<DocumentIndex />);
     default:
       return null;
   }
 };
-
 
 /**
  * BehandlingSupportIndex

@@ -5,11 +5,14 @@ import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 
-import { formatCurrencyWithKr, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { ISO_DATE_FORMAT } from 'utils/formats';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
-import PeriodLabel from '@fpsak-frontend/shared-components/PeriodLabel';
+import { formatCurrencyWithKr } from 'utils/currencyUtils';
+import Table from 'sharedComponents/Table';
+import TableRow from 'sharedComponents/TableRow';
+import TableColumn from 'sharedComponents/TableColumn';
+import PeriodLabel from 'sharedComponents/PeriodLabel';
 
 const headerTextCodes = [
   'InntektOgYtelserFaktaPanel.Person',

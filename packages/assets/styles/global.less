@@ -1,7 +1,4 @@
-/*
-CSS-endringer för felleskomponenter og globaler så som fra
-core/og muligen import fra alla andra komponenter
- */
+// CSS-endringer för felleskomponenter og globaler så som fra core/og muligen import fra alla andra komponenter
 @import '@{coreModulePath}nav-frontend-core/less/core';
 @import './dayPicker';
 
@@ -10,24 +7,24 @@ core/og muligen import fra alla andra komponenter
 }
 
 :global(.modal__overlay) {
-   background-color: rgba(61, 56, 49, 0.9);
+  background-color: rgba(61, 56, 49, 0.9);
 }
 
 // Text-area custom styling
 :global(.textarea--medMeta__teller) {
-   color: @navMorkGra;
-   font-size: 0.8rem;
-   font-style: italic;
+  color: @navMorkGra;
+  font-size: 0.8rem;
+  font-style: italic;
 }
 
 :global(.lenke) {
-  background: none;
-  border: 0;
-  border-bottom: solid 1px @navGra40;
   color: @navBla;
-  cursor: pointer;
+  border: 0;
   padding: 0;
+  background: none;
   text-decoration: none;
+  border-bottom: solid 1px @navGra40;
+  cursor: pointer;
 
   &:hover,
   &--hover {
@@ -36,14 +33,14 @@ core/og muligen import fra alla andra komponenter
 
   &:focus,
   &--focus {
-    background-color: @orangeFocus;
     outline: none;
+    background-color: @orangeFocus;
   }
 
   &:active,
   &--active {
-    border-bottom-color: @navDypBla;
     color: @navDypBla;
+    border-bottom-color: @navDypBla;
   }
 
   &--frittstaende {
@@ -59,10 +56,10 @@ core/og muligen import fra alla andra komponenter
 
 :global(.skjemaelement > .skjemaelement__input) {
   padding: 9px;
- }
+}
 
 :global(.vis-timeline) {
-  border: 0;
+  border: 0; // lesshint zeroUnit: false
 }
 
 :global(.currentDate) {
@@ -76,7 +73,7 @@ core/og muligen import fra alla andra komponenter
   pointer-events: none;
 
   &:after {
-    background: transparent url('/packages/images/currentDay.svg') no-repeat;
+    background: transparent url('./../images/currentDay.svg') no-repeat;
     content: '';
     height: 20px;
     position: absolute;
@@ -93,7 +90,7 @@ core/og muligen import fra alla andra komponenter
   pointer-events: none;
 
   &:after {
-    background: transparent url('../images/soknad.svg') no-repeat;
+    background: transparent url('./../images/soknad.svg') no-repeat;
     content: '';
     height: 20px;
     left: -8px;
@@ -108,7 +105,7 @@ core/og muligen import fra alla andra komponenter
   pointer-events: none;
 
   &:after {
-    background: transparent url('../images/fodsel.svg') no-repeat;
+    background: transparent url('./../images/fodsel.svg') no-repeat;
     content: '';
     height: 20px;
     left: -8px;
@@ -123,7 +120,7 @@ core/og muligen import fra alla andra komponenter
   pointer-events: none;
 
   &:after {
-    background: transparent url('../images/endringstidspunkt.svg') no-repeat;
+    background: transparent url('./../images/endringstidspunkt.svg') no-repeat;
     content: '';
     height: 20px;
     left: -8px;
@@ -138,7 +135,7 @@ core/og muligen import fra alla andra komponenter
 }
 
 :global(.vis-foreground .vis-group) {
-  border-bottom: 0;
+  border-bottom: none;
 }
 
 :global(.vis-text.vis-major > div) {
@@ -170,6 +167,7 @@ core/og muligen import fra alla andra komponenter
       visibility: visible !important;  // lesshint important: false
       width: 100%;
   } */
+
 }
 
 :global(.vis-item.vis-range) {
@@ -185,18 +183,17 @@ core/og muligen import fra alla andra komponenter
 }
 
 :global(.vis-item) {
-  top: 5px;
   transition: transform 0.2s;
+  top: 5px;
 
   &:hover {
     box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
     filter: brightness(80%);
-    opacity: 1;
     transform: translateY(-3px);
+    opacity: 1;
   }
-
   &:active {
-    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 5px rgba(0, 0, 0, .2);
     filter: brightness(95%);
     transform: translateY(-2px);
   }
@@ -217,16 +214,16 @@ core/og muligen import fra alla andra komponenter
 }
 
 :global(.gradert) {
+  @lClr: #FFF;
+  @brPnt: 20%;
   background-color: @navGronn;
-  background-image: repeating-linear-gradient(45deg, transparent, transparent 4px, @navGronnLighten40 4px, @navGronnLighten40 8px); // lesshint-disable maxCharPerLine
+  background-image: repeating-linear-gradient(45deg, @lClr, @lClr @brPnt, transparent @brPnt,  transparent 50%, @lClr 50%); // lesshint maxCharPerLi|ne: false
+  background-size: 12px 12px;
   opacity: 0.9;
 }
 
 :global(.gradert.vis-item.vis-selected) {
-  background-color: @navGronn;
-  background-image: repeating-linear-gradient(45deg, transparent, transparent 4px, @navGronnLighten60 4px, @navGronnLighten60 8px); // lesshint-disable maxCharPerLine
   opacity: 1;
-
   &:hover {
     transform: translateY(-1px);
   }
@@ -254,7 +251,6 @@ core/og muligen import fra alla andra komponenter
     opacity: 1;
   }
 }
-
 
 :global(.undefined) {
   background-color: @navOransje;
@@ -302,7 +298,7 @@ core/og muligen import fra alla andra komponenter
 }
 
 :global(.vis-current-time) {
-  width: 0;
+  width: 0px;
 }
 
 :global(.godkjentPeriode.vis-item.vis-selected) {
@@ -315,9 +311,9 @@ core/og muligen import fra alla andra komponenter
   background-color: @navGronn;
   border-color: @navGronn;
   border-radius: 8px;
-  height: 12px;
   opacity: 0.5;
-  top: 12px !important; // lesshint-disable importantRule
+  height: 12px;
+  top: 12px !important; // lesshint important: false
 
   &:active {
     background-color: @navGronn;
@@ -346,13 +342,15 @@ core/og muligen import fra alla andra komponenter
 :global(.innvilgetnullprosent.vis-item.vis-selected) {
   background-color: transparent;
   border-radius: 8px;
-  //  box-shadow: 0 3px 20px rgba(0, 0, 0, 0.2);
+  //  box-shadow: 0 3px 20px rgba(0, 0, 0, 0.2);  // lesshint zeroUnit: false
   opacity: 1;
 }
 
 :global(.opptjening .vis-center) {
   border-bottom: 1px solid grey;
+  border-left: none;
   border-left-style: none;
+  border-right: none;
   border-right-style: none;
 }
 
@@ -369,6 +367,10 @@ core/og muligen import fra alla andra komponenter
 :global(.opptjening .vis-label) {
   border-bottom: 0px solid;
   text-align: right;
+}
+
+:global(.opptjening .vis-time-axis .vis-grid.vis-vertical) {
+  //  border-left: 0px solid;
 }
 
 :global(.opptjening .vis-panel.vis-left) {
@@ -406,12 +408,24 @@ core/og muligen import fra alla andra komponenter
   border-top: 1px solid darkgray;
 }
 
+:global(.opptjening .vis-grid.vis-vertical) {
+  //  display: none;
+}
+
+:global(.godkjentundefined) {
+
+}
+
+:global(.godkjentdeclined) {
+
+}
+
 :global(.vis-timeline.vis-bottom) {
   animation-duration: 2s;
   animation-name: fadeIn;
 }
 
-@media all and (-ms-high-contrast:none) {
+@media all and (-ms-high-contrast: none) {
   :global(.vis-timeline.vis-bottom) {
     animation-duration: 0s;
     animation-name: none;
@@ -442,7 +456,7 @@ core/og muligen import fra alla andra komponenter
   border-left: 1px solid darkgray;
 }
 
-:global(.opptjening .vis-january > div ) {
+:global(.opptjening .vis-january  > div ) {
   display: none;
 }
 
@@ -459,6 +473,10 @@ core/og muligen import fra alla andra komponenter
   }
 }
 
+:global(.opptjening .vis-text .vis-major .vis-measure) {
+  //  display: none;
+}
+
 :global(.godkjent) {
   background-color: @navGronnLighten60;
 }
@@ -470,6 +488,6 @@ core/og muligen import fra alla andra komponenter
 :global(div .vis-tooltip) {
   font-size: 10px;
   max-width: 300px;
-  padding: 0 4px 0 4px;
+  padding: 0px 4px 0px 4px;
   white-space: normal;
 }

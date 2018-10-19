@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { getHenleggArsaker } from 'behandling/behandlingSelectors';
+import { getHenleggArsaker, getBehandlingType } from 'behandling/behandlingSelectors';
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
 import MenuButton from '../MenuButton';
 import ShelveBehandlingModal from './ShelveBehandlingModal';
@@ -61,7 +61,7 @@ class ShelveBehandlingMenuItem extends Component {
 
   render() {
     const {
-      henleggArsaker, behandlingIdentifier, henleggBehandlingEnabled, previewHenleggBehandling,
+      henleggArsaker, behandlingIdentifier, henleggBehandlingEnabled, previewHenleggBehandling, behandlingsType,
     } = this.props;
     const { showBehandlingErHenlagtModal, showModal } = this.state;
     return (
@@ -78,6 +78,7 @@ class ShelveBehandlingMenuItem extends Component {
             previewHenleggBehandling={previewHenleggBehandling}
             behandlingId={behandlingIdentifier ? behandlingIdentifier.behandlingId : undefined}
             henleggArsaker={henleggArsaker}
+            behandlingsType={behandlingsType}
           />
           )
         }
@@ -103,6 +104,10 @@ ShelveBehandlingMenuItem.propTypes = {
   henleggArsaker: PropTypes.arrayOf(PropTypes.shape({
     valg: PropTypes.string,
   })),
+  behandlingsType: PropTypes.shape({
+    kode: PropTypes.string,
+    navn: PropTypes.string,
+  }),
   push: PropTypes.func.isRequired,
   henleggBehandlingEnabled: PropTypes.bool,
 };
@@ -111,12 +116,13 @@ ShelveBehandlingMenuItem.defaultProps = {
   behandlingIdentifier: undefined,
   behandlingVersjon: undefined,
   henleggArsaker: null,
+  behandlingsType: null,
   henleggBehandlingEnabled: false,
 };
 
 const mapStateToProps = state => ({
   henleggArsaker: getHenleggArsaker(state),
+  behandlingsType: getBehandlingType(state),
 });
-
 
 export default connect(mapStateToProps)(ShelveBehandlingMenuItem);

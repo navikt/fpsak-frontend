@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { RadioOption, RadioGroupField } from '@fpsak-frontend/form';
-
+import { RadioOption, RadioGroupField } from 'form/Fields';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { required } from '@fpsak-frontend/utils/validation/validators';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
-import { flatten } from '@fpsak-frontend/utils';
+import { required } from 'utils/validation/validators';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import { flatten } from 'utils/arrayUtils';
 
 /**
  * NyIArbeidslivetSNForm
@@ -62,6 +61,5 @@ NyIArbeidslivetSNForm.buildInitialValues = (beregningsgrunnlag) => {
 NyIArbeidslivetSNForm.transformValues = values => ({
   vurderNyIArbeidslivet: { erNyIArbeidslivet: values[radioGroupFieldName] },
 });
-
 
 export default NyIArbeidslivetSNForm;

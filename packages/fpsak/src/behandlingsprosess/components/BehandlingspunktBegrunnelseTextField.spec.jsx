@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import { TextAreaField } from '@fpsak-frontend/form';
+import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
+import { TextAreaField } from 'form/Fields';
 import BehandlingspunktBegrunnelseTextField from './BehandlingspunktBegrunnelseTextField';
 
 describe('<BehandlingspunktBegrunnelseTextField>', () => {

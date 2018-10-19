@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { getBehandlingStatus } from 'behandling/behandlingSelectors';
-import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/utsettelseArsakCodes';
-import overforingArsakCodes from '@fpsak-frontend/kodeverk/overforingArsakCodes';
+import utsettelseArsakCodes from 'kodeverk/utsettelseArsakCodes';
+import overforingArsakCodes from 'kodeverk/overforingArsakCodes';
 import FerieOgArbeidsPeriode from './perioder/FerieOgArbeidsPeriode';
 import SykdomOgSkadePeriode from './perioder/SykdomOgSkadePeriode';
 import InnleggelsePeriode from './perioder/InnleggelsePeriode';

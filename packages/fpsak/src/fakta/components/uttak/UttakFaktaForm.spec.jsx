@@ -1,9 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
 import { FormattedMessage } from 'react-intl';
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
+import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { UttakFaktaForm } from './UttakFaktaForm';
 import UttakSlettPeriodeModal from './UttakSlettPeriodeModal';
@@ -30,8 +30,9 @@ describe('<UttakFaktaForm>', () => {
       initialValues={{}}
       slettedePerioder={[]}
       aksjonspunkter={[]}
-      endringsDato="2018-01-12"
+      førsteUttaksDato="2018-01-12"
       isRevurdering={false}
+      submitting={false}
     />);
 
     const fieldArray = wrapper.find('FieldArray');
@@ -71,8 +72,9 @@ describe('<UttakFaktaForm>', () => {
       initialValues={{}}
       slettedePerioder={[]}
       aksjonspunkter={[]}
-      endringsDato="2018-01-12"
+      førsteUttaksDato="2018-01-12"
       isRevurdering={false}
+      submitting={false}
     />);
 
     wrapper.setState({ isNyPeriodeFormOpen: true });
@@ -107,8 +109,9 @@ describe('<UttakFaktaForm>', () => {
       initialValues={{}}
       slettedePerioder={[]}
       aksjonspunkter={[]}
-      endringsDato="2018-01-12"
+      førsteUttaksDato="2018-01-12"
       isRevurdering={false}
+      submitting={false}
     />);
 
     wrapper.setState({ showModalSlettPeriode: true });
@@ -139,8 +142,9 @@ describe('<UttakFaktaForm>', () => {
       initialValues={{}}
       slettedePerioder={[]}
       aksjonspunkter={[]}
-      endringsDato="2018-01-12"
+      førsteUttaksDato="2018-01-12"
       isRevurdering={false}
+      submitting={false}
     />);
 
     const hovedknapp = wrapper.find(Hovedknapp);
@@ -166,8 +170,9 @@ describe('<UttakFaktaForm>', () => {
       initialValues={{}}
       slettedePerioder={[]}
       aksjonspunkter={[]}
-      endringsDato="2018-01-12"
+      førsteUttaksDato="2018-01-12"
       isRevurdering={false}
+      submitting={false}
     />);
 
     const hovedknapp = wrapper.find(Hovedknapp);
@@ -193,8 +198,9 @@ describe('<UttakFaktaForm>', () => {
       initialValues={{}}
       slettedePerioder={[]}
       aksjonspunkter={[]}
-      endringsDato="2018-01-12"
+      førsteUttaksDato="2018-01-12"
       isRevurdering={false}
+      submitting={false}
     />);
 
     const hovedknapp = wrapper.find(Hovedknapp);
@@ -246,7 +252,8 @@ describe('<UttakFaktaForm>', () => {
           vurderPaNyttArsaker: [],
         },
       ]}
-      endringsDato="2018-01-12"
+      førsteUttaksDato="2018-01-12"
+      submitting={false}
     />);
 
     const aksjonspunktHelpText = wrapper.find(AksjonspunktHelpText);
@@ -273,8 +280,9 @@ describe('<UttakFaktaForm>', () => {
       initialValues={{}}
       slettedePerioder={[]}
       aksjonspunkter={[]}
-      endringsDato="2018-01-12"
+      førsteUttaksDato="2018-01-12"
       isRevurdering={false}
+      submitting={false}
     />);
 
     const knapp = wrapper.find(Knapp);

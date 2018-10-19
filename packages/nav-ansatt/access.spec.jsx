@@ -1,9 +1,9 @@
 import { expect } from 'chai';
-import fagsakStatusCode from '@fpsak-frontend/kodeverk/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
-import behandlingStatusCode from '@fpsak-frontend/kodeverk/behandlingStatus';
-import BehandlingType from '@fpsak-frontend/kodeverk/behandlingType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import fagsakStatusCode from 'kodeverk/fagsakStatus';
+import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import behandlingStatusCode from 'kodeverk/behandlingStatus';
+import BehandlingType from 'kodeverk/behandlingType';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import {
   byttBehandlendeEnhetAccess,
   gjenopptaBehandlingAccess,
@@ -445,11 +445,14 @@ describe('access', () => {
     const validBehandlingStatuser = [behandlingStatusCode.BEHANDLING_UTREDES];
     const validBehandlingStatus = { kode: validBehandlingStatuser[0] };
 
+    const foreldrepengerFagsak = { sakstype: { kode: fagsakYtelseType.FORELDREPENGER } };
+
     it('saksbehandler skal ha tilgang til å åpne behandling for endringer når behandlingstype er revurdering', () => {
       const behandlingType = {
         kode: BehandlingType.REVURDERING,
       };
-      const accessForSaksbehandler = opneBehandlingForEndringerAccess(behandlingType, saksbehandlerAnsatt, validFagsakStatus, validBehandlingStatus);
+      const accessForSaksbehandler = opneBehandlingForEndringerAccess(behandlingType, saksbehandlerAnsatt, validFagsakStatus,
+        validBehandlingStatus, foreldrepengerFagsak);
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
       expect(accessForSaksbehandler).to.have.property('isEnabled', true);
@@ -459,7 +462,20 @@ describe('access', () => {
       const behandlingType = {
         kode: BehandlingType.KLAGE,
       };
-      const accessForSaksbehandler = opneBehandlingForEndringerAccess(behandlingType, saksbehandlerAnsatt, validFagsakStatus, validBehandlingStatus);
+      const accessForSaksbehandler = opneBehandlingForEndringerAccess(behandlingType, saksbehandlerAnsatt, validFagsakStatus,
+        validBehandlingStatus, foreldrepengerFagsak);
+
+      expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
+      expect(accessForSaksbehandler).to.have.property('isEnabled', false);
+    });
+
+    it('saksbehandler skal ikke ha tilgang til å åpne behandling for endringer når sakstype er engangsstønad', () => {
+      const engangsstonadFagsak = { sakstype: { kode: fagsakYtelseType.ENGANGSSTONAD } };
+      const behandlingType = {
+        kode: BehandlingType.REVURDERING,
+      };
+      const accessForSaksbehandler = opneBehandlingForEndringerAccess(behandlingType, saksbehandlerAnsatt, validFagsakStatus,
+        validBehandlingStatus, engangsstonadFagsak);
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
       expect(accessForSaksbehandler).to.have.property('isEnabled', false);
@@ -471,7 +487,8 @@ describe('access', () => {
       };
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
       it(getTestName('tilgang til å åpne behandling for endringer', expected, fagsakStatus, behandlingStatus), () => {
-        const access = opneBehandlingForEndringerAccess(behandlingType, saksbehandlerAnsatt, { kode: fagsakStatus }, { kode: behandlingStatus });
+        const access = opneBehandlingForEndringerAccess(behandlingType, saksbehandlerAnsatt, { kode: fagsakStatus }, { kode: behandlingStatus },
+          foreldrepengerFagsak);
 
         expect(access).to.have.property('isEnabled', expected);
       });

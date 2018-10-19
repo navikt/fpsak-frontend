@@ -2,8 +2,8 @@ import React from 'react';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/behandlingResultatType';
+import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
+import behandlingResultatType from 'kodeverk/behandlingResultatType';
 import { ShelveBehandlingModalImpl } from './ShelveBehandlingModal';
 
 describe('<ShelveBehandlingModal>', () => {
@@ -12,7 +12,14 @@ describe('<ShelveBehandlingModal>', () => {
   },
   {
     kode: 'HENLAGT_FEILOPPRETTET',
-  }];
+  }, {
+    kode: 'MANGLER_BEREGNINGSREGLER',
+  },
+  ];
+
+  const behandlingstype = {
+    kode: 'BT-002',
+  };
 
   it('skal rendre åpen modal', () => {
     const wrapper = shallowWithIntl(<ShelveBehandlingModalImpl
@@ -22,6 +29,7 @@ describe('<ShelveBehandlingModal>', () => {
       previewHenleggBehandling={sinon.spy()}
       behandlingId={0}
       henleggArsaker={henleggArsaker}
+      behandlingsType={behandlingstype}
       henleggArsakerResultReceived
       årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
       begrunnelse="Dette er en begrunnelse"
@@ -50,6 +58,7 @@ describe('<ShelveBehandlingModal>', () => {
       previewHenleggBehandling={sinon.spy()}
       behandlingId={0}
       henleggArsaker={henleggArsaker}
+      behandlingsType={behandlingstype}
       henleggArsakerResultReceived
       årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
       begrunnelse="Dette er en begrunnelse"
@@ -68,6 +77,7 @@ describe('<ShelveBehandlingModal>', () => {
       previewHenleggBehandling={sinon.spy()}
       behandlingId={0}
       henleggArsaker={henleggArsaker}
+      behandlingsType={behandlingstype}
       henleggArsakerResultReceived
       årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
       begrunnelse="Dette er en begrunnelse"
@@ -80,6 +90,32 @@ describe('<ShelveBehandlingModal>', () => {
     const values = selectField.prop('selectValues');
     expect(values[0].props.value).is.eql(behandlingResultatType.HENLAGT_SOKNAD_TRUKKET);
     expect(values[1].props.value).is.eql(behandlingResultatType.HENLAGT_FEILOPPRETTET);
+    expect(values[2].props.value).is.eql(behandlingResultatType.MANGLER_BEREGNINGSREGLER);
+    expect(values).to.have.length(3);
+  });
+
+  it('skal vise nedtrekksliste med behandlingsresultat-typer', () => {
+    const wrapper = shallowWithIntl(<ShelveBehandlingModalImpl
+      showModal
+      handleSubmit={sinon.spy()}
+      cancelEvent={sinon.spy()}
+      previewHenleggBehandling={sinon.spy()}
+      behandlingId={0}
+      henleggArsaker={henleggArsaker}
+      behandlingsType={{ kode: 'BT-004' }}
+      henleggArsakerResultReceived
+      årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
+      begrunnelse="Dette er en begrunnelse"
+      intl={intlMock}
+    />);
+
+    const selectField = wrapper.find('SelectField');
+    expect(selectField).to.have.length(1);
+    expect(selectField.prop('placeholder')).is.eql('Velg årsak til henleggelse');
+    const values = selectField.prop('selectValues');
+    expect(values[0].props.value).is.eql(behandlingResultatType.HENLAGT_SOKNAD_TRUKKET);
+    expect(values[1].props.value).is.eql(behandlingResultatType.HENLAGT_FEILOPPRETTET);
+    expect(values).to.have.length(2);
   });
 
   it('skal disable knapp for lagring når behandlingsresultat-type og begrunnnelse ikke er valgt', () => {
@@ -90,6 +126,7 @@ describe('<ShelveBehandlingModal>', () => {
       previewHenleggBehandling={sinon.spy()}
       behandlingId={0}
       henleggArsaker={henleggArsaker}
+      behandlingsType={behandlingstype}
       henleggArsakerResultReceived
       intl={intlMock}
     />);
@@ -107,6 +144,7 @@ describe('<ShelveBehandlingModal>', () => {
       previewHenleggBehandling={sinon.spy()}
       behandlingId={0}
       henleggArsaker={henleggArsaker}
+      behandlingsType={behandlingstype}
       henleggArsakerResultReceived
       årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
       begrunnelse="Dette er en begrunnelse"
@@ -127,6 +165,7 @@ describe('<ShelveBehandlingModal>', () => {
       previewHenleggBehandling={sinon.spy()}
       behandlingId={0}
       henleggArsaker={henleggArsaker}
+      behandlingsType={behandlingstype}
       henleggArsakerResultReceived
       årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
       begrunnelse="Dette er en begrunnelse"
@@ -151,6 +190,7 @@ describe('<ShelveBehandlingModal>', () => {
       previewHenleggBehandling={previewEventCallback}
       behandlingId={0}
       henleggArsaker={henleggArsaker}
+      behandlingsType={behandlingstype}
       henleggArsakerResultReceived
       årsakKode={behandlingResultatType.HENLAGT_SOKNAD_TRUKKET}
       begrunnelse="Dette er en begrunnelse"

@@ -1,14 +1,14 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
-
-import NyoppstartetFLForm, { erNyoppstartetFLField } from './NyoppstartetFLForm';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
+import { NyoppstartetFLFormImpl, erNyoppstartetFLField, utledOverskriftForNyoppstartetFLForm } from './NyoppstartetFLForm';
 import FastsettATFLInntektForm from './FastsettATFLInntektForm';
 
 describe('<NyoppstartetFLForm>', () => {
   it('skal teste at korrekt antall radioknapper vises med korrekte props', () => {
-    const wrapper = shallow(<NyoppstartetFLForm
+    const wrapper = shallow(<NyoppstartetFLFormImpl
       readOnly={false}
       isAksjonspunktClosed={false}
       erNyoppstartetFL={false}
@@ -23,7 +23,7 @@ describe('<NyoppstartetFLForm>', () => {
     expect(radios.last().prop('disabled')).is.eql(false);
   });
   it('skal teste at komponent for å fastsette inntekt vises hvis vi skal vise den', () => {
-    const wrapper = shallow(<NyoppstartetFLForm
+    const wrapper = shallow(<NyoppstartetFLFormImpl
       readOnly={false}
       isAksjonspunktClosed={false}
       erNyoppstartetFL
@@ -39,7 +39,7 @@ describe('<NyoppstartetFLForm>', () => {
     const values = { };
     values[erNyoppstartetFLField] = true;
     values.dummyField = 'tilfeldig verdi';
-    const transformedObject = NyoppstartetFLForm.transformValues(values);
+    const transformedObject = NyoppstartetFLFormImpl.transformValues(values);
     expect(transformedObject.vurderNyoppstartetFL.erNyoppstartetFL).to.equal(true);
     expect(transformedObject.vurderNyoppstartetFL.dummyField).to.equal(undefined);
   });
@@ -58,7 +58,34 @@ describe('<NyoppstartetFLForm>', () => {
         },
       ],
     };
-    const initialValues = NyoppstartetFLForm.buildInitialValues(gyldigBG);
+    const initialValues = NyoppstartetFLFormImpl.buildInitialValues(gyldigBG);
     expect(initialValues[erNyoppstartetFLField]).to.equal(true);
+  });
+
+  it('Skal teste at underkomponenter mottar korrekt prop for radioknapp overskrift når ikke det er spesialtilfelle', () => {
+    const tilfeller = [faktaOmBeregningTilfelle.VURDER_LONNSENDRING, faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
+    const overskriftNyoppstartteFL = ['BeregningInfoPanel.VurderOgFastsettATFL.ErSokerNyoppstartetFL'];
+    const nyoppstartetFormOverskrift = utledOverskriftForNyoppstartetFLForm(tilfeller, true);
+    expect(nyoppstartetFormOverskrift).to.deep.eql(overskriftNyoppstartteFL);
+  });
+
+
+  it('Skal teste at underkomponenter mottar korrekt prop for radioknapp overskrift når det er spesialtilfelle', () => {
+    const tilfeller = [faktaOmBeregningTilfelle.VURDER_LONNSENDRING,
+      faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON, faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
+    const overskriftNyoppstartteFL = [
+      'BeregningInfoPanel.VurderOgFastsettATFL.ATFLSammeOrgUtenIM',
+      'BeregningInfoPanel.VurderOgFastsettATFL.OgsaNyoppstartetFL'];
+    const nyoppstartetFormOverskrift = utledOverskriftForNyoppstartetFLForm(tilfeller, true);
+    expect(nyoppstartetFormOverskrift).to.deep.eql(overskriftNyoppstartteFL);
+  });
+
+  it('Skal ikkje submitte inntekt ved tilstøtende ytelse', () => {
+    const tilfeller = [faktaOmBeregningTilfelle.VURDER_LONNSENDRING,
+      faktaOmBeregningTilfelle.TILSTOTENDE_YTELSE, faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
+    const values = {};
+    values[erNyoppstartetFLField] = true;
+    const tv = NyoppstartetFLFormImpl.nyOppstartetFLInntekt(values, tilfeller);
+    expect(tv.fastsettMaanedsinntektFL).to.equal(null);
   });
 });

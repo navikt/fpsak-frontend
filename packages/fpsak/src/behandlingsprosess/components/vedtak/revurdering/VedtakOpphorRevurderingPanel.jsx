@@ -10,8 +10,8 @@ import {
   getBehandlingMedlem, getBehandlingsresultat,
 } from 'behandling/behandlingSelectors';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { endringerIBeregningsgrunnlagGirFritekstfelt } from 'behandlingsprosess/components/vedtak/VedtakHelper';
 import VedtakFritekstPanel from 'behandlingsprosess/components/vedtak/VedtakFritekstPanel';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';

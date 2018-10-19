@@ -8,16 +8,16 @@ import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
-import Image from '@fpsak-frontend/shared-components/Image';
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import Modal from '@fpsak-frontend/shared-components/Modal';
-import { CheckboxField, SelectField } from '@fpsak-frontend/form';
-import { required } from '@fpsak-frontend/utils/validation/validators';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import bType from '@fpsak-frontend/kodeverk/behandlingType';
-import behandlingArsakType from '@fpsak-frontend/kodeverk/behandlingArsakType';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import Image from 'sharedComponents/Image';
+import innvilgetImageUrl from 'images/innvilget_valgt.svg';
+import Modal from 'sharedComponents/Modal';
+import { CheckboxField, SelectField } from 'form/Fields';
+import { required } from 'utils/validation/validators';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import bType from 'kodeverk/behandlingType';
+import behandlingArsakType from 'kodeverk/behandlingArsakType';
+import { getKodeverk } from 'kodeverk/duck';
 
 import styles from './createNewBehandlingModal.less';
 
@@ -167,7 +167,8 @@ const manuelleRevurderingsArsakerFP = [
   behandlingArsakType.DØD,
   behandlingArsakType.SØKERS_RELASJON,
   behandlingArsakType.SØKNADSFRIST,
-  behandlingArsakType.KLAGE,
+  behandlingArsakType.KLAGE_U_INNTK,
+  behandlingArsakType.KLAGE_M_INNTK,
 ];
 
 const getBehandlingAarsaker = (state) => {

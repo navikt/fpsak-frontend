@@ -1,9 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
+import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import { formatCurrencyNoKr } from 'utils/currencyUtils';
 import GrunnlagForAarsinntektPanelAT, { GrunnlagForAarsinntektPanelATImpl as UnwrappedForm } from './GrunnlagForAarsinntektPanelAT';
 
 const bruttoBeregningBegrunnelse = 'Dette er en begrunnelse';

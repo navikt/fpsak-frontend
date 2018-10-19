@@ -1,11 +1,11 @@
 import { expect } from 'chai';
 
-import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/behandlingResultatType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
+import vilkarType from 'kodeverk/vilkarType';
+import behandlingResultatType from 'kodeverk/behandlingResultatType';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
+import behandlingType from 'kodeverk/behandlingType';
+import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import createForeldrepengerBpProps from './foreldrepengerBpDefinition';
 
@@ -297,5 +297,70 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       titleCode: 'Behandlingspunkt.TilkjentYtelse',
       vilkarene: [],
     }, defaultBehandlingspunkter[3]]);
+  });
+
+  it('skal ikke vise behandlingspunkt for søkers opplysningsplikt når behandling er revurdering og manuelt aksjonspunkt ikke er opprettet', () => {
+    const builderData = {
+      behandlingType: {
+        kode: behandlingType.REVURDERING,
+      },
+      vilkar: [sokersOpplysningspliktVilkar],
+      aksjonspunkter: [],
+      behandlingsresultat: {},
+      innsynResultatType: undefined,
+      resultatstruktur: undefined,
+      stonadskontoer: undefined,
+    };
+
+    const bpPropList = createForeldrepengerBpProps(builderData);
+
+    expect(bpPropList).to.eql([]);
+  });
+
+  it('skal vise behandlingspunkt for søkers opplysningsplikt når behandling er revurdering og en har manuelt aksjonspunkt', () => {
+    const builderData = {
+      behandlingType: {
+        kode: behandlingType.REVURDERING,
+      },
+      vilkar: [sokersOpplysningspliktVilkar],
+      aksjonspunkter: [{
+        definisjon: {
+          kode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU,
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+      }],
+      behandlingsresultat: {},
+      innsynResultatType: undefined,
+      resultatstruktur: undefined,
+      stonadskontoer: undefined,
+    };
+
+    const bpPropList = createForeldrepengerBpProps(builderData);
+
+    const newSokersOpplysningspliktBehandlingspunkt = {
+      ...sokersOpplysningspliktBehandlingspunkt,
+      apCodes: [aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU],
+    };
+    expect(bpPropList).to.eql([newSokersOpplysningspliktBehandlingspunkt, ...defaultBehandlingspunkter]);
+  });
+
+  it('skal ikke vise behandlingspunkt for søkers opplysningsplikt når behandling ikke har vilkar', () => {
+    const builderData = {
+      behandlingType: {
+        kode: behandlingType.REVURDERING,
+      },
+      vilkar: [],
+      aksjonspunkter: [],
+      behandlingsresultat: {},
+      innsynResultatType: undefined,
+      resultatstruktur: undefined,
+      stonadskontoer: undefined,
+    };
+
+    const bpPropList = createForeldrepengerBpProps(builderData);
+
+    expect(bpPropList).to.eql([]);
   });
 });

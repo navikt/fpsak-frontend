@@ -4,14 +4,17 @@ import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
-import uttakPeriodeType from '@fpsak-frontend/kodeverk/uttakPeriodeType';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
-import { SelectField, InputField, DecimalField } from '@fpsak-frontend/form';
-import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/uttakArbeidType';
+import uttakPeriodeType from 'kodeverk/uttakPeriodeType';
+import kodeverkPropType from 'kodeverk/kodeverkPropType';
+import TableColumn from 'sharedComponents/TableColumn';
+import TableRow from 'sharedComponents/TableRow';
+import Table from 'sharedComponents/Table';
+import { SelectField, InputField, DecimalField } from 'form/Fields';
+import uttakArbeidTypeKodeverk from 'kodeverk/uttakArbeidType';
+import uttakArbeidTypeTekstCodes from 'kodeverk/uttakArbeidTypeCodes';
 import {
   minValue, maxValue, hasValidInteger, maxLength, required, hasValidDecimal, notDash,
-} from '@fpsak-frontend/utils/validation/validators';
+} from 'utils/validation/validators';
 import styles from './renderUttakTable.less';
 
 /**
@@ -54,7 +57,7 @@ const createTextStrings = (fields) => {
   const stillingsProsentText = (typeof stillingsprosent !== 'undefined') ? `${stillingsprosent}%` : '';
   let arbeidsforhold = '';
   if (uttakArbeidType && uttakArbeidType.kode !== uttakArbeidTypeKodeverk.ORDINÆRT_ARBEID) {
-    arbeidsforhold = <FormattedMessage id={`RenderUttakTable.ArbeidType.${uttakArbeidType.kode}`} />;
+    arbeidsforhold = <FormattedMessage id={uttakArbeidTypeTekstCodes[uttakArbeidType.kode]} />;
   } else {
     arbeidsforhold = arbeidsforholdNavn ? `${arbeidsforholdNavn}` : arbeidsforhold;
     arbeidsforhold = arbeidsforholdOrgnr ? `${arbeidsforhold} (${arbeidsforholdOrgnr})` : arbeidsforhold;

@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { Systemtittel } from 'nav-frontend-typografi';
 
-import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
 import BehandlingMenuIndex from 'behandlingmenu/BehandlingMenuIndex';
 
 import FagsakProfile from './FagsakProfile';

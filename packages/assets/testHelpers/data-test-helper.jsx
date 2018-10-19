@@ -1,5 +1,7 @@
-import RestDuck from '@fpsak-frontend/data/rest/RestDuck';
-import reducers from '@fpsak-frontend/fpsak/src/reducers';
+import RestDuck from 'data/rest/RestDuck';
+import reducers from '../app/reducers';
+import behandlingStatus from 'kodeverk/behandlingStatus';
+import behandlingType from 'kodeverk/behandlingType';
 
 export const withoutRestActions = actions => actions.filter(a => !a.type.match(/^@@REST/));
 
@@ -30,6 +32,7 @@ export const dummyFagsak = (saksnummer = 12345) => ({
     erKvinne: true,
   },
   opprettet: '10.10.2017',
+  skalBehandlesAvInfotrygd: false,
 });
 
 export const dummyBehandling = (id = 67890) => ({

@@ -1,11 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import { MockFieldsWithContent } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import { PeriodpickerField, SelectField, InputField } from '@fpsak-frontend/form';
+import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
+import { MockFieldsWithContent } from 'testHelpers/redux-form-test-helper';
+import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import PeriodpickerField from 'form/fields/PeriodpickerField';
+import SelectField from 'form/fields/SelectField';
+import InputField from 'form/fields/InputField';
 import { createAndelnavn } from './FordelingAvBruttoBeregningsgrunnlagPanel';
-import { createArbeidsperiodeString } from '../ArbeidsforholdHelper';
+import { createArbeidsperiodeString } from '../../ArbeidsforholdHelper';
 
 import { RenderBruttoBGFordelingFieldArrayImpl } from './RenderBruttoBGFordelingFieldArray';
 

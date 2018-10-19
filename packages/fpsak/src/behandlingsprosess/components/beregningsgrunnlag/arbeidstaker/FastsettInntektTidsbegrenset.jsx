@@ -5,21 +5,22 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { createSelector } from 'reselect';
 
-import { InputField } from '@fpsak-frontend/form';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
-import {
-  formatCurrencyNoKr, removeSpacesFromNumber, parseCurrencyInput, createVisningsnavnForAktivitet,
-} from '@fpsak-frontend/utils';
-import { required } from '@fpsak-frontend/utils/validation/validators';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import periodeAarsak from '@fpsak-frontend/kodeverk/periodeAarsak';
+import { InputField } from 'form/Fields';
+import Table from 'sharedComponents/Table';
+import TableRow from 'sharedComponents/TableRow';
+import TableColumn from 'sharedComponents/TableColumn';
+import { formatCurrencyNoKr, removeSpacesFromNumber, parseCurrencyInput } from 'utils/currencyUtils';
+import { required } from 'utils/validation/validators';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import periodeAarsak from 'kodeverk/periodeAarsak';
 import { getBeregningsgrunnlagPerioder, getGjeldendeBeregningAksjonspunkt } from 'behandling/behandlingSelectors';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
-import hourglassImg from '@fpsak-frontend/assets/images/hourglass.svg';
-import Image from '@fpsak-frontend/shared-components/Image';
-import endretUrl from '@fpsak-frontend/assets/images/endret_felt.svg';
+import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import hourglassImg from 'images/hourglass.svg';
+import Image from 'sharedComponents/Image';
+import endretUrl from 'images/endret_felt.svg';
+import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
 import { getBehandlingFormValues } from 'behandling/behandlingForm';
 import { Normaltekst } from 'nav-frontend-typografi';
 import NaturalytelsePanel from './NaturalytelsePanel';
@@ -303,7 +304,9 @@ FastsettInntektTidsbegrenset.defaultProps = {
 
 const getOppsummertBruttoInntektUtenAP = (allePerioder) => {
   const bruttoPrPeriodeList = [];
-  allePerioder.forEach((periode) => {
+  const relevantePerioder = finnPerioderMedAvsluttetArbeidsforhold(allePerioder);
+
+  relevantePerioder.forEach((periode) => {
     const totalBeregnetSumATAndeler = periode.beregningsgrunnlagPrStatusOgAndel
       .filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
       .map(andel => andel.beregnetPrAar)
@@ -319,15 +322,17 @@ const getOppsummertBruttoInntektUtenAP = (allePerioder) => {
 
 const getOppsummertBruttoInntektMedAP = (allePerioder, formValues) => {
   const bruttoPrPeriodeList = [];
-  const forstePeriodeATInntekt = allePerioder[0].beregningsgrunnlagPrStatusOgAndel
+  const relevantePerioder = finnPerioderMedAvsluttetArbeidsforhold(allePerioder);
+
+  const forstePeriodeATInntekt = relevantePerioder[0].beregningsgrunnlagPrStatusOgAndel
     .filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER).map(andel => andel.beregnetPrAar);
   const forstePeriodeInntekt = forstePeriodeATInntekt.reduce((a, b) => a + b);
   bruttoPrPeriodeList.push({
     brutto: forstePeriodeInntekt,
     periode:
-      `beregnetInntekt_${allePerioder[0].beregningsgrunnlagPeriodeFom}_${allePerioder[0].beregningsgrunnlagPeriodeTom}`,
+      `beregnetInntekt_${relevantePerioder[0].beregningsgrunnlagPeriodeFom}_${relevantePerioder[0].beregningsgrunnlagPeriodeTom}`,
   });
-  allePerioder.forEach((periode) => {
+  relevantePerioder.forEach((periode) => {
     const arbeidstakerAndeler = periode.beregningsgrunnlagPrStatusOgAndel
       .filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
     const bruttoPrAndelForPeriode = arbeidstakerAndeler.map((andel) => {

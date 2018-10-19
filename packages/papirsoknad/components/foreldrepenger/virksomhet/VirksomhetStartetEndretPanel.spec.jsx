@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-import { CheckboxField } from '@fpsak-frontend/form';
+import { CheckboxField } from 'form/Fields';
 import { VirksomhetStartetEndretPanel } from './VirksomhetStartetEndretPanel';
 
 describe('<VirksomhetStartetEndretPanel>', () => {

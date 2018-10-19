@@ -2,14 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Element, Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import utsettelseArsakCodes, { utsettelseArsakTexts } from '@fpsak-frontend/kodeverk/utsettelseArsakCodes';
-import overforingArsakCodes, { overforingArsakTexts } from '@fpsak-frontend/kodeverk/overforingArsakCodes';
-import Image from '@fpsak-frontend/shared-components/Image';
-import { dateFormat, calcDaysAndWeeks, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import editPeriodeIcon from '@fpsak-frontend/assets/images/endre.svg';
-import editPeriodeDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
-import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
-import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
+import { dateFormat, calcDaysAndWeeks } from 'utils/dateUtils';
+import utsettelseArsakCodes, { utsettelseArsakTexts } from 'kodeverk/utsettelseArsakCodes';
+import overforingArsakCodes, { overforingArsakTexts } from 'kodeverk/overforingArsakCodes';
+import Image from 'sharedComponents/Image';
+import { ISO_DATE_FORMAT } from 'utils/formats';
+import editPeriodeIcon from 'images/endre.svg';
+import editPeriodeDisabledIcon from 'images/endre_disablet.svg';
+import removePeriod from 'images/remove.svg';
+import removePeriodDisabled from 'images/remove_disabled.svg';
 import styles from './uttakPeriodeType.less';
 
 const formatArbeidstidprosent = prosent => `${prosent}%`;
@@ -142,13 +143,14 @@ UttakPeriodeType.propTypes = {
   utsettelseArsak: PropTypes.shape().isRequired,
   overforingArsak: PropTypes.shape().isRequired,
   isFromSøknad: PropTypes.bool.isRequired,
-  erArbeidstaker: PropTypes.bool.isRequired,
+  erArbeidstaker: PropTypes.bool,
 };
 
 UttakPeriodeType.defaultProps = {
   arbeidstidprosent: null,
   virksomhetNavn: null,
   orgnr: null,
+  erArbeidstaker: false,
 };
 
 export default UttakPeriodeType;

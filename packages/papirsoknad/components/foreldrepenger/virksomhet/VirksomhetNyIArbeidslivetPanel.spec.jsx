@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-import { DatepickerField } from '@fpsak-frontend/form';
+import DatepickerField from 'form/fields/DatepickerField';
 import VirksomhetNyIArbeidslivetPanel from './VirksomhetNyIArbeidslivetPanel';
 
 describe('<VirksomhetNyIArbeidslivetPanel>', () => {

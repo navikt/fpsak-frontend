@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
+import { isRequiredMessage } from 'utils/validation/messages';
 import { getBehandlingFormPrefix, getBehandlingFormRegisteredFields, hasBehandlingFormErrorsOfType } from './behandlingForm';
 
 describe('behandlingForm', () => {

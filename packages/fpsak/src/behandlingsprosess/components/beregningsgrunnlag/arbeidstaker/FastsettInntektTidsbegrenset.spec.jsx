@@ -2,12 +2,12 @@ import React from 'react';
 import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
 import { shallow } from 'enzyme';
-import Image from '@fpsak-frontend/shared-components/Image';
-import periodeAarsak from '@fpsak-frontend/kodeverk/periodeAarsak';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
+import Image from 'sharedComponents/Image';
+import periodeAarsak from 'kodeverk/periodeAarsak';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import { formatCurrencyNoKr } from 'utils/currencyUtils';
 import FastsettInntektTidsbegrenset, {
   createTableData,
   getIsAksjonspunktClosed,
@@ -137,6 +137,36 @@ const beregningsgrunnlagPerioder = [
   {
     periodeAarsaker: [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }],
     beregningsgrunnlagPeriodeFom: '2018-08-01',
+    beregningsgrunnlagPrStatusOgAndel: [
+      {
+        aktivitetStatus: {
+          kode: aktivitetStatus.ARBEIDSTAKER,
+        },
+        erTidsbegrensetArbeidsforhold: true,
+        beregnetPrAar: beregnetPrAarAndelEn,
+        overstyrtPrAar: overstyrtPrAarAndelEn,
+        virksomhetNavn: 'arbeidsgiver',
+        virksomhetId: '123',
+        andelsnr: 1,
+        arbeidsforholdId: '123',
+      },
+      {
+        aktivitetStatus: {
+          kode: aktivitetStatus.ARBEIDSTAKER,
+        },
+        erTidsbegrensetArbeidsforhold: true,
+        beregnetPrAar: beregnetPrAarAndelTo,
+        overstyrtPrAar: overstyrtPrAarAndelTo,
+        virksomhetNavn: 'arbeidsgiver',
+        virksomhetId: '123',
+        andelsnr: 2,
+        arbeidsforholdId: '456',
+      },
+    ],
+  },
+  {
+    periodeAarsaker: [{ kode: periodeAarsak.REFUSJON_OPPHOERER }],
+    beregningsgrunnlagPeriodeFom: '2019-01-01',
     beregningsgrunnlagPrStatusOgAndel: [
       {
         aktivitetStatus: {

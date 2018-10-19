@@ -1,27 +1,26 @@
 import React from 'react';
-import { injectIntl, intlShape } from 'react-intl';
 import PropTypes from 'prop-types';
 import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
 import { Element } from 'nav-frontend-typografi';
 import styles from './historikkMalType.less';
 import BubbleText from './bubbleText';
-import { findBegrunnelseTekst, findHendelseText } from './historikkUtils';
+import { findHendelseText } from './historikkUtils';
 
 const HistorikkMalType1 = ({
-  historikkinnslagDeler, dokumentLinks, intl, saksNr,
+  historikkinnslagDeler, dokumentLinks, saksNr,
 }) => (
   <div>
     {historikkinnslagDeler[0] && historikkinnslagDeler[0].hendelse
       && <Element className="snakkeboble-panel__tekst">{findHendelseText(historikkinnslagDeler[0].hendelse)}</Element>
     }
 
-    {historikkinnslagDeler[0].begrunnelse ? (
+    {historikkinnslagDeler[0].begrunnelse && (
       <BubbleText
-        bodyText={findBegrunnelseTekst(historikkinnslagDeler[0].begrunnelse, intl)}
+        bodyText={historikkinnslagDeler[0].begrunnelse.navn}
         cutOffLength={70}
         className="snakkeboble-panel__tekst"
       />
-    ) : ''}
+    )}
 
     <div>
       {dokumentLinks && dokumentLinks.map(dokumentLink => (
@@ -43,11 +42,10 @@ const HistorikkMalType1 = ({
 HistorikkMalType1.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   dokumentLinks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  intl: intlShape.isRequired,
   saksNr: PropTypes.number.isRequired,
 };
 
-export default injectIntl(HistorikkMalType1);
+export default HistorikkMalType1;
 
 /*
  https://confluence.adeo.no/display/MODNAV/OMR-13+SF4+Sakshistorikk+-+UX+og+grafisk+design

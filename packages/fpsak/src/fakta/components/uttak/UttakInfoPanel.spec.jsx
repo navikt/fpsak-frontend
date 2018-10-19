@@ -1,12 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
 import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
 import { UttakInfoPanelImpl } from './UttakInfoPanel';
 import UttakFaktaForm from './UttakFaktaForm';
 
-const endringsDato = '2018-08-01';
+const førsteUttaksDato = '2018-08-01';
 
 describe('<UttakInfoPanel>', () => {
   it('skal vise UttakInfoPanel', () => {
@@ -20,10 +20,11 @@ describe('<UttakInfoPanel>', () => {
       readOnly
       hasOpenAksjonspunkter
       aksjonspunkter={[]}
-      endringsDato={endringsDato}
+      førsteUttaksDato={førsteUttaksDato}
       initialUttaksPerioder={[]}
       handleSubmit={sinon.spy()}
       isRevurdering={false}
+      hasStatusUtredes
     />);
 
     const faktaEkspandertpanel = wrapper.find(FaktaEkspandertpanel);
@@ -47,10 +48,11 @@ describe('<UttakInfoPanel>', () => {
       readOnly
       hasOpenAksjonspunkter
       aksjonspunkter={[]}
-      endringsDato={endringsDato}
+      førsteUttaksDato={førsteUttaksDato}
       initialUttaksPerioder={[]}
       handleSubmit={sinon.spy()}
       isRevurdering={false}
+      hasStatusUtredes
       {...formProps}
     />);
     const span = wrapper.find('span');
@@ -70,8 +72,9 @@ describe('<UttakInfoPanel>', () => {
       aksjonspunkter={[]}
       initialUttaksPerioder={[]}
       handleSubmit={sinon.spy()}
-      endringsDato={endringsDato}
+      førsteUttaksDato={førsteUttaksDato}
       isRevurdering={false}
+      hasStatusUtredes
     />);
     const span = wrapper.find('span');
     expect(span).to.have.length(0);

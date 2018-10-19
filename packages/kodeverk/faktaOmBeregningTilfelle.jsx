@@ -8,11 +8,14 @@ const faktaOmBeregningTilfelle = {
   FASTSETT_MAANEDSLONN_VED_LONNSENDRING: 'FASTSETT_MÅNEDSLØNN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING',
   VURDER_AT_OG_FL_I_SAMME_ORGANISASJON: 'VURDER_AT_OG_FL_I_SAMME_ORGANISASJON',
   FASTSETT_BESTEBEREGNING_FODENDE_KVINNE: 'FASTSETT_BESTEBEREGNING_FØDENDE_KVINNE',
+  TILSTOTENDE_YTELSE: 'TILSTØTENDE_YTELSE',
 };
 
-export const erATFLSpesialtilfelle = tilfeller => tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)
+const harLonnsendringNyOppstartetFLOGATFLISammeOrganisasjonUtenBesteberegning = tilfeller => tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)
   && tilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL)
   && tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)
   && !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE);
+
+export const erATFLSpesialtilfelle = tilfeller => harLonnsendringNyOppstartetFLOGATFLISammeOrganisasjonUtenBesteberegning(tilfeller);
 
 export default faktaOmBeregningTilfelle;

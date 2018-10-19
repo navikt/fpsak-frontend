@@ -4,16 +4,18 @@ import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+
 import PropTypes from 'prop-types';
-import Modal from '@fpsak-frontend/shared-components/Modal';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { getRegisteredFields } from '../../../duck';
+import Modal from 'sharedComponents/Modal';
+import { getRegisteredFields } from 'papirsoknad/duck';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import VirksomhetIdentifikasjonPanel from './VirksomhetIdentifikasjonPanel';
 import VirksomhetRegnskapPanel from './VirksomhetRegnskapPanel';
 import VirksomhetNyIArbeidslivetPanel from './VirksomhetNyIArbeidslivetPanel';
 import VirksomhetStartetEndretPanel from './VirksomhetStartetEndretPanel';
 import VirksomhetRelasjonPanel from './VirksomhetRelasjonPanel';
 import VirksomhetTypeNaringPanel from './VirksomhetTypeNaringPanel';
+
 import styles from './registrerVirksomhetModalForm.less';
 
 const REGISTRER_VIRKSOMHET_FORM_NAME = 'VirksomhetForm';

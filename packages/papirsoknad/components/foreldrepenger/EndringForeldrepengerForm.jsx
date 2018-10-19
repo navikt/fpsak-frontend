@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { reduxForm, formPropTypes, formValueSelector } from 'redux-form';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { isEqual } from '@fpsak-frontend/utils/objectUtils';
+import { isEqual } from 'utils/objectUtils';
 
-import { getRegisteredFields } from '../../duck';
-import SoknadData from '../../SoknadData';
-import LagreSoknadForm from '../commonPanels/LagreSoknadPanel';
-import MottattDatoPanel from '../commonPanels/MottattDatoPanel';
+import { getRegisteredFields } from 'papirsoknad/duck';
+import SoknadData from 'papirsoknad/SoknadData';
+import LagreSoknadForm from 'papirsoknad/components/commonPanels/LagreSoknadPanel';
+import MottattDatoPanel from 'papirsoknad/components/commonPanels/MottattDatoPanel';
 import PermisjonPanel, { TIDSROM_PERMISJON_FORM_NAME_PREFIX } from './permisjon/PermisjonPanel';
 
 const ENDRING_FORELDREPENGER_FORM_NAME = 'EndringForeldrepengerForm';

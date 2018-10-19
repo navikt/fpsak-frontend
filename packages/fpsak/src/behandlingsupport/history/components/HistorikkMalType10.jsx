@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import historikkinnslagType from '@fpsak-frontend/kodeverk/historikkinnslagType';
+import historikkinnslagType from 'kodeverk/historikkinnslagType';
 
 import { FormattedHTMLMessage, injectIntl, intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
@@ -8,13 +8,11 @@ import { Element } from 'nav-frontend-typografi';
 
 import { createLocationForHistorikkItems } from 'app/paths';
 import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
-import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/historikkEndretFeltTypeCodes';
-import historikkOpplysningTypeCodes from '@fpsak-frontend/kodeverk/historikkOpplysningTypeCodes';
+import historikkEndretFeltTypeCodes from 'kodeverk/historikkEndretFeltTypeCodes';
+import historikkOpplysningTypeCodes from 'kodeverk/historikkOpplysningTypeCodes';
 import {
-  findBegrunnelseTekst,
   findEndretFeltNavn,
   findEndretFeltVerdi,
-  findSkjermlenkeText,
 } from './historikkUtils';
 
 import BubbleText from './bubbleText';
@@ -122,7 +120,7 @@ const HistorikkMalType10 = ({
             to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
             onClick={scrollUp}
           >
-            {findSkjermlenkeText(historikkinnslagDeler[0].skjermlenke, intl)}
+            {historikkinnslagDeler[0].skjermlenke.navn}
           </NavLink>
         </Element>
         )
@@ -155,10 +153,12 @@ const HistorikkMalType10 = ({
         {historikkinnslagDel.endredeFelter && sortArray(historikkinnslagDel.endredeFelter)
           .map((endretFelt, i) => <div key={`endredeFelter${i + 1}`}>{formatChangedField(endretFelt)}</div>)}
 
+        {historikkinnslagDel.begrunnelse && (
         <BubbleText
-          bodyText={findBegrunnelseTekst(historikkinnslagDel.begrunnelse, intl)}
+          bodyText={historikkinnslagDel.begrunnelse.navn}
           className="snakkeboble-panel__tekst"
         />
+        )}
 
         <div>
           {dokumentLinks && dokumentLinks.map(dokumentLink => (

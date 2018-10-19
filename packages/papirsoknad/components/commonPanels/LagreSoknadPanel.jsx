@@ -7,9 +7,9 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { Fieldset } from 'nav-frontend-skjema';
 import { Row, Column } from 'nav-frontend-grid';
 
-import { ariaCheck, maxLength, hasValidText } from '@fpsak-frontend/utils/validation/validators';
-import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
-import { CheckboxField, TextAreaField } from '@fpsak-frontend/form';
+import { ariaCheck, maxLength, hasValidText } from 'utils/validation/validators';
+import BorderBox from 'sharedComponents/BorderBox';
+import { CheckboxField, TextAreaField } from 'form/Fields';
 import LukkPapirsoknadModal from './LukkPapirsoknadModal';
 
 import styles from './lagreSoknadPanel.less';
@@ -81,7 +81,6 @@ export class LagreSoknadPanel extends Component {
                 <Column xs="12">
                   <div>
                     <div className={styles.right}>
-                      {!ufullstendigSoeknad && (
                       <Hovedknapp
                         id="saveButton"
                         mini
@@ -92,8 +91,6 @@ export class LagreSoknadPanel extends Component {
                       >
                         {formatMessage({ id: 'Registrering.SaveApplication.SaveButton' })}
                       </Hovedknapp>
-                      )}
-                      {ufullstendigSoeknad && (
                       <Hovedknapp
                         id="endButton"
                         htmlType="button"
@@ -105,7 +102,6 @@ export class LagreSoknadPanel extends Component {
                       >
                         {formatMessage({ id: 'Registrering.SaveApplication.EndButton' })}
                       </Hovedknapp>
-                      )}
                     </div>
                   </div>
                 </Column>

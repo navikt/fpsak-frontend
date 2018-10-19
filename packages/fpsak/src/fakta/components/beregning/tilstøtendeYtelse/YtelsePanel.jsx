@@ -5,11 +5,11 @@ import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
 import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import relatertYtelseType from '@fpsak-frontend/kodeverk/relatertYtelseType';
-import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
+import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import { getKodeverk } from 'kodeverk/duck';
+import relatertYtelseType from 'kodeverk/relatertYtelseType';
+import BorderBox from 'sharedComponents/BorderBox';
 
 import { Column, Row } from 'nav-frontend-grid';
 

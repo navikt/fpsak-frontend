@@ -11,7 +11,7 @@ import { getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta, DEFAU
 import trackRouteParam from 'app/data/trackRouteParam';
 
 import {
-  resetFakta, resolveFaktaAksjonspunkter, setOpenInfoPanels, getOpenInfoPanels,
+  resetFakta, resolveFaktaAksjonspunkter, resolveFaktaOverstyrAksjonspunkter, setOpenInfoPanels, getOpenInfoPanels,
 } from './duck';
 import FaktaPanel from './components/FaktaPanel';
 
@@ -53,17 +53,38 @@ export class FaktaIndex extends Component {
   }
 
   submitFakta(aksjonspunkter) {
-    const { behandlingIdentifier, behandlingVersjon, resolveFaktaAksjonspunkter: resolveFaktaAp } = this.props;
+    const {
+      behandlingIdentifier,
+      behandlingVersjon,
+      resolveFaktaOverstyrAksjonspunkter: resolveFaktaOverstyrAp,
+      resolveFaktaAksjonspunkter: resolveFaktaAp,
+    } = this.props;
     const model = aksjonspunkter.map(ap => ({
       '@type': ap.kode,
       ...ap,
     }));
+
+    // todo if 6070 and revurdering use resolveFaktaOverstyrAksjonspunkter else use resolveFaktaAksjonspunkter
+
+    if (model && model[0].kode === '6070') {
+      const params = {
+        ...behandlingIdentifier.toJson(),
+        behandlingVersjon,
+        overstyrteAksjonspunktDtoer: model,
+      };
+
+      return resolveFaktaOverstyrAp(
+        params,
+        behandlingIdentifier,
+      ).then(() => this.goToBehandlingWithDefaultPunktAndFakta());
+    }
 
     const params = {
       ...behandlingIdentifier.toJson(),
       behandlingVersjon,
       bekreftedeAksjonspunktDtoer: model,
     };
+
     return resolveFaktaAp(
       params,
       behandlingIdentifier,
@@ -104,6 +125,7 @@ FaktaIndex.propTypes = {
   location: PropTypes.shape().isRequired,
   push: PropTypes.func.isRequired,
   resolveFaktaAksjonspunkter: PropTypes.func.isRequired,
+  resolveFaktaOverstyrAksjonspunkter: PropTypes.func.isRequired,
   shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
 };
 
@@ -118,6 +140,7 @@ const mapDispatchToProps = dispatch => ({
     ...routerActions,
     resetFakta,
     resolveFaktaAksjonspunkter,
+    resolveFaktaOverstyrAksjonspunkter,
   }, dispatch),
 });
 

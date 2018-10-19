@@ -9,8 +9,8 @@ import {
 } from 'behandling/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandling/selectors/originalBehandlingSelectors';
 import classNames from 'classnames';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
-import vedtakbrevStatus from '@fpsak-frontend/kodeverk/vedtakbrevStatus';
+import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import vedtakbrevStatus from 'kodeverk/vedtakbrevStatus';
 import styles from '../vedtakForm.less';
 
 const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback) => (e) => {

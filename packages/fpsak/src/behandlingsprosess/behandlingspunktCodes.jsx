@@ -1,6 +1,7 @@
 // Definerer alle behandlingspunktene. Desse verdien blir også vist i URL og brukt i historikk-elementene.
 const behandlingspunktCodes = {
   ADOPSJON: 'adopsjon',
+  AVREGNING: 'avregning',
   BEHANDLE_INNSYN: 'behandle_innsyn',
   BEREGNING: 'beregning',
   BEREGNINGSGRUNNLAG: 'beregningsgrunnlag',

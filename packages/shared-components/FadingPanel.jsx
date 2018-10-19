@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Panel from 'nav-frontend-paneler';
-import classnames from 'classnames/bind';
+
 import styles from './fadingPanel.less';
 
-const classNames = classnames.bind(styles);
 /*
  * FadingPanel
  *
@@ -12,7 +11,7 @@ const classNames = classnames.bind(styles);
  */
 const FadingPanel = ({ withoutTopMargin, children }) => (
   <Panel
-    className={withoutTopMargin ? classNames('container', 'containerWithoutTopMargin') : styles.container}
+    className={withoutTopMargin ? styles.containerWithoutTopMargin : styles.container}
   >
     {children}
   </Panel>

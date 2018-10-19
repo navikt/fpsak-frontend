@@ -4,16 +4,16 @@ import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
 import { Row, Column } from 'nav-frontend-grid';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import Modal from '@fpsak-frontend/shared-components/Modal';
+import Modal from 'sharedComponents/Modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { SelectField, TextAreaField } from '@fpsak-frontend/form';
-import { maxLength, required, hasValidText } from '@fpsak-frontend/utils/validation/validators';
+import { SelectField, TextAreaField } from 'form/Fields';
+import { maxLength, required, hasValidText } from 'utils/validation/validators';
 
-import Image from '@fpsak-frontend/shared-components/Image';
+import Image from 'sharedComponents/Image';
 
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import innvilgetImageUrl from 'images/innvilget_valgt.svg';
 
 import styles from './changeBehandlendeEnhetModal.less';
 
@@ -40,7 +40,7 @@ export const ChangeBehandlendeEnhetModalImpl = ({
   const selectOptions = () => behandlendeEnheter
     .filter(enhet => enhet.enhetId !== gjeldendeBehandlendeEnhetId)
     .map((enhet, index) => (
-      <option value={index} key={enhet.enhetId}>
+      <option value={`${index}`} key={enhet.enhetId}>
         {enhet.enhetId}
         {' '}
         {enhet.enhetNavn}

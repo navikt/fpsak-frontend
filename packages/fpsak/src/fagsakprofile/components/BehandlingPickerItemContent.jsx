@@ -4,12 +4,12 @@ import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
-import Image from '@fpsak-frontend/shared-components/Image';
-import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
+import DateLabel from 'sharedComponents/DateLabel';
+import Image from 'sharedComponents/Image';
+import BorderBox from 'sharedComponents/BorderBox';
 
-import chevronUp from '@fpsak-frontend/assets/images/pil_opp.svg';
-import chevronDown from '@fpsak-frontend/assets/images/pil_ned.svg';
+import chevronUp from 'images/pil_opp.svg';
+import chevronDown from 'images/pil_ned.svg';
 
 import styles from './behandlingPickerItemContent.less';
 

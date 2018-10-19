@@ -1,18 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import {
-  Element,
-  Normaltekst,
-} from 'nav-frontend-typografi';
-import { isObject } from '@fpsak-frontend/utils';
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
-import {
-  FlexContainer,
-  FlexColumn,
-  FlexRow,
-} from './flexGrid';
-import Image from './Image';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
+
+import Image from 'sharedComponents/Image';
+import advarselIkonUrl from 'images/advarsel.svg';
+import { isObject } from 'utils/objectUtils';
+
 import styles from './aksjonspunktHelpText.less';
 
 /**
@@ -38,6 +33,7 @@ const AksjonspunktHelpText = ({
           <Normaltekst key={isObject(child) ? child.key : child} className={styles.wordwrap}>
             <strong>
               <FormattedMessage id="HelpText.Aksjonspunkt.BehandletAksjonspunkt" />
+:
             </strong>
             {' '}
             {child}

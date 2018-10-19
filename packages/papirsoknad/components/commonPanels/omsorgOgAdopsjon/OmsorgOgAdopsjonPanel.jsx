@@ -6,18 +6,17 @@ import { FieldArray, formValueSelector } from 'redux-form';
 import { Fieldset } from 'nav-frontend-skjema';
 import { Container, Row, Column } from 'nav-frontend-grid';
 
-import fht from '@fpsak-frontend/kodeverk/familieHendelseType';
-import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
+import fht from 'kodeverk/familieHendelseType';
+import BorderBox from 'sharedComponents/BorderBox';
 import {
   InputField, DatepickerField, RadioGroupField, RadioOption,
-} from '@fpsak-frontend/form';
-// todo dep
+} from 'form/Fields';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import {
   hasValidInteger, hasValidDate, isDatesEqual, required, minValue, maxValue, dateBeforeOrEqualToToday,
-} from '@fpsak-frontend/utils/validation/validators';
-import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
-import { rettighet } from '../rettigheter/RettigheterPanel';
+} from 'utils/validation/validators';
+import { isRequiredMessage } from 'utils/validation/messages';
+import { rettighet } from 'papirsoknad/components/commonPanels/rettigheter/RettigheterPanel';
 
 import styles from './omsorgOgAdopsjonPanel.less';
 

@@ -1,17 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { RadioOption, RadioGroupField } from '@fpsak-frontend/form';
+import { RadioOption, RadioGroupField } from 'form/Fields';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { required } from '@fpsak-frontend/utils/validation/validators';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
+import { required } from 'utils/validation/validators';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
+import { behandlingFormValueSelector } from 'behandling/behandlingForm';
+import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle } from 'kodeverk/faktaOmBeregningTilfelle';
 import { Row, Column } from 'nav-frontend-grid';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import FastsettATFLInntektForm
   from 'fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/FastsettATFLInntektForm';
 
 import styles from './lonnsendringForm.less';
+
+
+export const utledOverskriftForLonnsendringForm = (tilfeller, manglerIM) => {
+  if (!tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON) || erATFLSpesialtilfelle(tilfeller)) {
+    return ['BeregningInfoPanel.VurderOgFastsettATFL.HarSokerEndring'];
+  }
+  return manglerIM
+    ? ['BeregningInfoPanel.VurderOgFastsettATFL.ATFLSammeOrgUtenIM',
+      'BeregningInfoPanel.VurderOgFastsettATFL.OgsaLonnsendring']
+    : ['BeregningInfoPanel.VurderOgFastsettATFL.ATFLSammeOrg',
+      'BeregningInfoPanel.VurderOgFastsettATFL.OgsaLonnsendring'];
+};
+
 
 /**
  * LonnsendringForm
@@ -24,7 +40,7 @@ import styles from './lonnsendringForm.less';
 
 export const lonnsendringField = 'lonnsendringField';
 
-const LonnsendringForm = ({
+export const LonnsendringFormImpl = ({
   readOnly,
   isAksjonspunktClosed,
   skalViseInntektstabell,
@@ -71,7 +87,7 @@ const LonnsendringForm = ({
   </div>
 );
 
-LonnsendringForm.propTypes = {
+LonnsendringFormImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   skalViseInntektstabell: PropTypes.bool,
@@ -81,12 +97,12 @@ LonnsendringForm.propTypes = {
   erLonnsendring: PropTypes.bool,
 };
 
-LonnsendringForm.defaultProps = {
+LonnsendringFormImpl.defaultProps = {
   skalViseInntektstabell: undefined,
   erLonnsendring: undefined,
 };
 
-LonnsendringForm.buildInitialValues = (beregningsgrunnlag) => {
+LonnsendringFormImpl.buildInitialValues = (beregningsgrunnlag) => {
   let initialValues = {};
   if (!beregningsgrunnlag || !beregningsgrunnlag.beregningsgrunnlagPeriode) {
     return initialValues;
@@ -106,14 +122,14 @@ LonnsendringForm.buildInitialValues = (beregningsgrunnlag) => {
   return initialValues;
 };
 
-LonnsendringForm.transformValues = values => ({
+LonnsendringFormImpl.transformValues = values => ({
   vurdertLonnsendring: { erLønnsendringIBeregningsperioden: values[lonnsendringField] },
 });
 
 const harIkkeATFLSameOrgEllerBesteberegning = tilfeller => !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)
   && !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON);
 
-LonnsendringForm.lonnendringFastsatt = (values, aktivePaneler, faktaOmBeregning) => {
+LonnsendringFormImpl.lonnendringFastsatt = (values, aktivePaneler, faktaOmBeregning) => {
   // Dersom vi har tilfellet VURDER_AT_OG_FL_I_SAMME_ORGANISASJON
   // eller FASTSETT_BESTEBEREGNING_FODENDE_KVINNE vil arbeidsinntekt tas med når det tilfellet submittes
   if (values[lonnsendringField] && harIkkeATFLSameOrgEllerBesteberegning(aktivePaneler)) {
@@ -139,4 +155,21 @@ LonnsendringForm.lonnendringFastsatt = (values, aktivePaneler, faktaOmBeregning)
   };
 };
 
-export default LonnsendringForm;
+export const lonnsendringErGyldigForKombinert = formName => (state) => {
+  const value = behandlingFormValueSelector(formName)(state, lonnsendringField);
+  return value !== undefined && value !== null;
+};
+
+const mapStateToProps = (state, initialProps) => {
+  const faktaOmBeregning = getFaktaOmBeregning(state);
+  let manglerInntektsmelding = false;
+  if (faktaOmBeregning.atogFLISammeOrganisasjonListe && faktaOmBeregning.atogFLISammeOrganisasjonListe.length > 0) {
+    manglerInntektsmelding = faktaOmBeregning.atogFLISammeOrganisasjonListe.find(forhold => !forhold.inntektPrMnd) !== undefined;
+  }
+  return {
+    erLonnsendring: behandlingFormValueSelector(initialProps.formName)(state, lonnsendringField),
+    radioknappOverskrift: utledOverskriftForLonnsendringForm(initialProps.tilfeller, manglerInntektsmelding),
+  };
+};
+
+export default connect(mapStateToProps)(LonnsendringFormImpl);

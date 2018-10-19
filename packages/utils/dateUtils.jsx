@@ -1,5 +1,5 @@
 import moment from 'moment/moment';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, HHMM_TIME_FORMAT } from './formats';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, HHMM_TIME_FORMAT } from 'utils/formats';
 
 export const TIDENES_ENDE = '9999-12-31';
 

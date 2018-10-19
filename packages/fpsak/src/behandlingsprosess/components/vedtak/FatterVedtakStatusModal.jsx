@@ -7,16 +7,16 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import Modal from '@fpsak-frontend/shared-components/Modal';
+import Modal from 'sharedComponents/Modal';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import Image from '@fpsak-frontend/shared-components/Image';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
+import Image from 'sharedComponents/Image';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import behandlingStatus from 'kodeverk/behandlingStatus';
 import { getSelectedBehandlingId } from 'behandling/duck';
 import { getBehandlingStatus, getBehandlingsresultat, getAksjonspunkter } from 'behandling/behandlingSelectors';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/behandlingResultatType';
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
+import behandlingResultatType from 'kodeverk/behandlingResultatType';
+import innvilgetImageUrl from 'images/innvilget_valgt.svg';
+import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import requireProps from 'app/data/requireProps';
 
 import styles from './fatterVedtakStatusModal.less';
@@ -128,15 +128,13 @@ const getAltImgTextCode = createSelector(
   },
 );
 
-const getInfoTextCode = createSelector([isBehandlingsresultatOpphor], isOpphor => (isOpphor
-  ? 'FatterVedtakStatusModal.ModalDescriptionFPOpphort' : 'FatterVedtakStatusModal.SendtBeslutter'));
 
 const isStatusFatterVedtak = createSelector([getBehandlingStatus], behandlingstatus => behandlingstatus.kode === behandlingStatus.FATTER_VEDTAK);
 
 const mapStateToProps = state => ({
   selectedBehandlingId: getSelectedBehandlingId(state),
   isBehandlingStatusFatterVedtak: getBehandlingStatus(state).kode === behandlingStatus.FATTER_VEDTAK ? true : undefined,
-  infoTextCode: isStatusFatterVedtak(state) ? getInfoTextCode(state) : '',
+  infoTextCode: isStatusFatterVedtak(state) ? 'FatterVedtakStatusModal.SendtBeslutter' : '',
   altImgTextCode: isStatusFatterVedtak(state) ? getAltImgTextCode(state) : '',
   modalDescriptionTextCode: isStatusFatterVedtak(state) ? getModalDescriptionTextCode(state) : 'FatterVedtakStatusModal.ModalDescription',
   resolveProsessAksjonspunkterSuccess: state.default.behandlingsprosessContext.resolveProsessAksjonspunkterSuccess,

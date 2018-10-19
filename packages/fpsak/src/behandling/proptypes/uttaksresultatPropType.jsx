@@ -28,5 +28,5 @@ export const uttaksresultatPeriodePropType = PropTypes.shape({
 });
 
 export default PropTypes.shape({
-  perioder: PropTypes.arrayOf(uttaksresultatPeriodePropType).isRequired,
+  perioderSøker: PropTypes.arrayOf(uttaksresultatPeriodePropType).isRequired,
 });

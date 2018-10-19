@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import { Fieldset } from 'nav-frontend-skjema';
 
-import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
-import { TextAreaField } from '@fpsak-frontend/form';
-import { maxLength as maxLengthValidator, hasValidText } from '@fpsak-frontend/utils/validation/validators';
+import BorderBox from 'sharedComponents/BorderBox';
+import { TextAreaField } from 'form/Fields';
+import { maxLength as maxLengthValidator, hasValidText } from 'utils/validation/validators';
 
 import styles from './tilleggsopplysningerPanel.less';
 

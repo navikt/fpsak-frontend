@@ -4,16 +4,16 @@ import { connect } from 'react-redux';
 import { FieldArray } from 'redux-form';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column } from 'nav-frontend-grid';
-import FlexColumn from '@fpsak-frontend/shared-components/flexGrid/FlexColumn';
-import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';
-import FlexContainer from '@fpsak-frontend/shared-components/flexGrid/FlexContainer';
+import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
+import FlexRow from 'sharedComponents/flexGrid/FlexRow';
+import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandling/behandlingForm';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/uttakPeriodeVurdering';
-import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
+import { RadioOption, RadioGroupField, TextAreaField } from 'form/Fields';
 import {
   required, maxLength, minLength, hasValidPeriod, hasValidText,
-} from '@fpsak-frontend/utils/validation/validators';
+} from 'utils/validation/validators';
 import PerioderKnapper from './PerioderKnapper';
 import InntektsmeldingInfo from '../components/InntektsmeldingInfo';
 import DokumentertePerioderPeriodePicker from './DokumentertePerioderPeriodePicker';
@@ -59,7 +59,6 @@ export const InnleggelsePeriode = ({
       height: inlineheight,
     },
   };
-
   return (
     <FlexContainer wrap>
       <FlexRow wrap>
@@ -104,7 +103,7 @@ export const InnleggelsePeriode = ({
             inntektsmeldingInfo={inntektsmeldingInfo}
             fraDato={fraDato}
             tilDato={tilDato}
-
+            bekreftet={bekreftet}
           />
         </FlexColumn>
       </FlexRow>

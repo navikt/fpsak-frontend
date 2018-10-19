@@ -1,10 +1,11 @@
-import behandlingStatusCode from '@fpsak-frontend/kodeverk/behandlingStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
-import fagsakStatusCode from '@fpsak-frontend/kodeverk/fagsakStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import BehandlingType from '@fpsak-frontend/kodeverk/behandlingType';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
-import { isObject, without } from '@fpsak-frontend/utils';
+import behandlingStatusCode from 'kodeverk/behandlingStatus';
+import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import fagsakStatusCode from 'kodeverk/fagsakStatus';
+import { without } from 'utils/arrayUtils';
+import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import { isObject } from 'utils/objectUtils';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import BehandlingType from 'kodeverk/behandlingType';
 
 const allFagsakStatuses = Object.values(fagsakStatusCode);
 const allBehandlingStatuses = Object.values(behandlingStatusCode);
@@ -94,6 +95,12 @@ export const opprettNyForstegangsBehandlingAccess = accessSelector(
   [fagsakStatusCode.AVSLUTTET],
   [behandlingStatusCode.AVSLUTTET],
 );
+const infotrygdSelector = selectedFagsak => ({
+  employeeHasAccess: true,
+  isEnabled: selectedFagsak && selectedFagsak.skalBehandlesAvInfotrygd,
+});
+
+export const sjekkOmSkalTilInfotrygdAccess = selectedFagsak => infotrygdSelector(selectedFagsak);
 
 export const gjenopptaBehandlingAccess = accessSelector(
   [kanSaksbehandle],
@@ -101,8 +108,10 @@ export const gjenopptaBehandlingAccess = accessSelector(
   [behandlingStatusCode.BEHANDLING_UTREDES],
 );
 
-const opneBehandlingForEndringerAccessSelector = (behandlingType) => {
-  if (!behandlingType || behandlingType.kode !== BehandlingType.REVURDERING) {
+const opneBehandlingForEndringerAccessSelector = (behandlingType, selectedFagsak) => {
+  if (!behandlingType
+    || behandlingType.kode !== BehandlingType.REVURDERING
+    || selectedFagsak.sakstype.kode === fagsakYtelseType.ENGANGSSTONAD) {
     return accessSelector([kanSaksbehandle], [], []);
   }
 
@@ -113,8 +122,8 @@ const opneBehandlingForEndringerAccessSelector = (behandlingType) => {
   );
 };
 
-export const opneBehandlingForEndringerAccess = (behandlingType, navAnsatt, fagsakStatus, behandlingStatus) => (
-  opneBehandlingForEndringerAccessSelector(behandlingType)(navAnsatt, fagsakStatus, behandlingStatus)
+export const opneBehandlingForEndringerAccess = (behandlingType, navAnsatt, fagsakStatus, behandlingStatus, selectedFagsak) => (
+  opneBehandlingForEndringerAccessSelector(behandlingType, selectedFagsak)(navAnsatt, fagsakStatus, behandlingStatus)
 );
 
 const godkjenningsFaneAccessSelector = (navAnsatt, ansvarligSaksbehandler) => {
@@ -169,8 +178,9 @@ export const allAccessRights = (navAnsatt, fagsakStatus, behandlingStatus, sokna
   opprettRevurderingAccess: opprettRevurderingAccess(navAnsatt, fagsakStatus, behandlingStatus, selectedFagsak),
   opprettNyForstegangsBehandlingAccess: opprettNyForstegangsBehandlingAccess(navAnsatt, fagsakStatus, behandlingStatus),
   gjenopptaBehandlingAccess: gjenopptaBehandlingAccess(navAnsatt, fagsakStatus, behandlingStatus),
-  opneBehandlingForEndringerAccess: opneBehandlingForEndringerAccess(type, navAnsatt, fagsakStatus, behandlingStatus),
+  opneBehandlingForEndringerAccess: opneBehandlingForEndringerAccess(type, navAnsatt, fagsakStatus, behandlingStatus, selectedFagsak),
   godkjenningsFaneAccess: godkjenningsFaneAccess(navAnsatt, fagsakStatus, behandlingStatus, ansvarligSaksbehandler),
   kanOverstyreAccess: kanOverstyreAccess(navAnsatt, fagsakStatus, behandlingStatus),
   sendMeldingAccess: sendMeldingAccess(navAnsatt, fagsakStatus, behandlingStatus),
+  ikkeVisOpprettNyBehandling: sjekkOmSkalTilInfotrygdAccess(selectedFagsak),
 });

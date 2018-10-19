@@ -1,13 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
+import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
 import {
   PeriodpickerField, SelectField, CheckboxField, DecimalField, TextAreaField,
-} from '@fpsak-frontend/form';
+} from 'form/Fields';
 
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/navBrukerKjonn';
+import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
 import sinon from 'sinon';
 import { UttakNyPeriode } from './UttakNyPeriode';
 

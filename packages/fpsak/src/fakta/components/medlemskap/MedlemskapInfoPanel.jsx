@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import withDefaultToggling from 'fakta/withDefaultToggling';
 import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';

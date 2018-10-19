@@ -1,39 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
-import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle } from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
+import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle } from 'kodeverk/faktaOmBeregningTilfelle';
 import LonnsendringForm, { lonnsendringField } from 'fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
 import NyoppstartetFLForm, { erNyoppstartetFLField } from 'fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
 import FastsettATFLInntektForm from './forms/FastsettATFLInntektForm';
+import InntektstabellPanel from '../InntektstabellPanel';
 
-import styles from './vurderOgFastsettATFL.less';
-
-const baseStringCode = 'BeregningInfoPanel.VurderOgFastsettATFL';
-
-const utledOverskriftForLonnsendringForm = (tilfeller, manglerIM) => {
-  if (!tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON) || erATFLSpesialtilfelle(tilfeller)) {
-    return [`${baseStringCode}.HarSokerEndring`];
-  }
-  return manglerIM
-    ? [`${baseStringCode}.ATFLSammeOrgUtenIM`,
-      `${baseStringCode}.OgsaLonnsendring`]
-    : [`${baseStringCode}.ATFLSammeOrg`,
-      `${baseStringCode}.OgsaLonnsendring`];
-};
-
-const utledOverskriftForNyoppstartetFLForm = (tilfeller, manglerIM) => {
-  if (!tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)) {
-    return [`${baseStringCode}.ErSokerNyoppstartetFL`];
-  }
-  return manglerIM
-    ? [`${baseStringCode}.ATFLSammeOrgUtenIM`,
-      `${baseStringCode}.OgsaNyoppstartetFL`]
-    : [`${baseStringCode}.ATFLSammeOrg`,
-      `${baseStringCode}.OgsaNyoppstartetFL`];
-};
 
 const skalViseInntektsTabellUnderRadioknapp = (tilfeller, lonnEndringEllerNyFL) => {
   // Dersom vi har tilfellet for besteberegning fødende kvinne skal alle inntekter fastsettes der.
@@ -61,50 +36,45 @@ const VurderOgFastsettATFL = ({
   isAksjonspunktClosed,
   formName,
   tilfeller,
-  skalViseATFLTabell,
   manglerInntektsmelding,
 }) => (
   <div>
-    {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)
-    && (
-    <LonnsendringForm
-      readOnly={readOnly}
-      isAksjonspunktClosed={isAksjonspunktClosed}
-      formName={formName}
-      tilfeller={tilfeller}
-      manglerIM={manglerInntektsmelding}
-      skalViseInntektstabell={skalViseInntektsTabellUnderRadioknapp(tilfeller, erLonnsendring)}
-      erLonnsendring={erLonnsendring}
-      radioknappOverskrift={utledOverskriftForLonnsendringForm(tilfeller, manglerInntektsmelding)}
-    />
-    )
-        }
-    {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL)
-    && (
-    <NyoppstartetFLForm
-      readOnly={readOnly}
-      isAksjonspunktClosed={isAksjonspunktClosed}
-      formName={formName}
-      tilfeller={tilfeller}
-      skalViseInntektstabell={skalViseInntektsTabellUnderRadioknapp(tilfeller, erNyoppstartetFL)}
-      radioknappOverskrift={utledOverskriftForNyoppstartetFLForm(tilfeller, manglerInntektsmelding)}
-      erNyoppstartetFL={erNyoppstartetFL}
-      manglerIM={manglerInntektsmelding}
-    />
-    )
-        }
-    {skalViseATFLTabell
-    && (
-    <div className={styles.fadeinTabell}>
-      <FastsettATFLInntektForm
-        readOnly={readOnly}
-        isAksjonspunktClosed={isAksjonspunktClosed}
-        tilfellerSomSkalFastsettes={tilfeller}
-        manglerInntektsmelding={manglerInntektsmelding}
-      />
-    </div>
-    )
-    }
+    <InntektstabellPanel
+      key="inntektstabell"
+      tabell={(
+        <FastsettATFLInntektForm
+          readOnly={readOnly}
+          isAksjonspunktClosed={isAksjonspunktClosed}
+          tilfellerSomSkalFastsettes={tilfeller}
+          manglerInntektsmelding={manglerInntektsmelding}
+        />
+      )}
+    >
+      {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)
+      && (
+        <LonnsendringForm
+          readOnly={readOnly}
+          isAksjonspunktClosed={isAksjonspunktClosed}
+          formName={formName}
+          tilfeller={tilfeller}
+          manglerIM={manglerInntektsmelding}
+          skalViseInntektstabell={skalViseInntektsTabellUnderRadioknapp(tilfeller, erLonnsendring)}
+        />
+      )
+      }
+      {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL)
+      && (
+        <NyoppstartetFLForm
+          readOnly={readOnly}
+          isAksjonspunktClosed={isAksjonspunktClosed}
+          formName={formName}
+          tilfeller={tilfeller}
+          skalViseInntektstabell={skalViseInntektsTabellUnderRadioknapp(tilfeller, erNyoppstartetFL)}
+          manglerIM={manglerInntektsmelding}
+        />
+      )
+      }
+    </InntektstabellPanel>
   </div>
 );
 
@@ -114,7 +84,6 @@ VurderOgFastsettATFL.propTypes = {
   formName: PropTypes.string.isRequired,
   tilfeller: PropTypes.arrayOf(PropTypes.string).isRequired,
   manglerInntektsmelding: PropTypes.bool.isRequired,
-  skalViseATFLTabell: PropTypes.bool,
   erLonnsendring: PropTypes.bool,
   erNyoppstartetFL: PropTypes.bool,
 };
@@ -122,7 +91,6 @@ VurderOgFastsettATFL.propTypes = {
 VurderOgFastsettATFL.defaultProps = {
   erLonnsendring: undefined,
   erNyoppstartetFL: undefined,
-  skalViseATFLTabell: undefined,
 };
 
 const mapStateToProps = (state, initialProps) => {

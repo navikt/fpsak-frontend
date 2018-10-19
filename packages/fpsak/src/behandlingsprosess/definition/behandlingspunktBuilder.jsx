@@ -1,6 +1,6 @@
-import vut from '@fpsak-frontend/kodeverk/vilkarUtfallType';
-import { notNull } from '@fpsak-frontend/utils/objectUtils';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import vut from 'kodeverk/vilkarUtfallType';
+import { notNull } from 'utils/objectUtils';
+import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 
 class BehandlingspunktProperties {
   constructor(code, titleCode, isVisible, status, bpVilkar, bpAksjonspunkter) {
@@ -20,6 +20,7 @@ class BehandlingspunktProperties {
        */
       constructor(bpCode, titleCode) {
         this.bpCode = notNull(bpCode);
+        // @TODO Make textCode traceable...
         this.titleCode = `Behandlingspunkt.${notNull(titleCode)}`;
       }
 
@@ -62,6 +63,16 @@ class BehandlingspunktProperties {
       }
 
       /**
+       * Kombinerer default måte å vise behandlingspunkter på med custom funksjon(er). Når funksjon returnerer false vises ikke
+       * behandlingspunktet. Returneres true blir registrerte vilkår og aksjonspunkter nyttet for å avgjøre om det skal vises.
+       */
+      withDefaultVisibilityWhenCustomFnReturnsTrue(...visibilityFunctions) {
+        this.visibilityFunctions = visibilityFunctions;
+        this.defaultVisibilityFallback = true;
+        return this;
+      }
+
+      /**
        * Vanligvis vil vilkår og aksjonspunkter avgjøre statusen til behandlingspunktet. Bruk denne metoden når
        * det er nødvendig å overstyre dette.
        */
@@ -99,8 +110,16 @@ class BehandlingspunktProperties {
       build(builderData, bpLength) {
         const bpVilkar = builderData.vilkar.filter(vilkar => this.vilkarTypes && this.vilkarTypes.includes(vilkar.vilkarType.kode));
         const bpAksjonspunkter = builderData.aksjonspunkter.filter(ap => this.apCodes && this.apCodes.includes(ap.definisjon.kode));
-        const isVisible = this.visibilityFunctions
-          ? this.visibilityFunctions.every(f => f(builderData, bpLength)) : this.$$isVisible(bpVilkar, bpAksjonspunkter);
+
+        let isVisible = false;
+        if (this.visibilityFunctions) {
+          isVisible = this.visibilityFunctions.every(f => f(builderData, bpLength));
+          if (this.defaultVisibilityFallback) {
+            isVisible = isVisible ? this.$$isVisible(bpVilkar, bpAksjonspunkter) : false;
+          }
+        } else {
+          isVisible = this.$$isVisible(bpVilkar, bpAksjonspunkter);
+        }
         if (!isVisible) {
           return new BehandlingspunktProperties(this.bpCode, this.titleCode, isVisible);
         }

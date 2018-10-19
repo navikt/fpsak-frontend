@@ -6,9 +6,9 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
 
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import FadingPanel from 'sharedComponents/FadingPanel';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import {
   getBeregningsgrunnlag, getAktivitetStatuser, getAlleAndelerIForstePeriode, getGjeldendeBeregningAksjonspunkt,
@@ -16,15 +16,15 @@ import {
 import beregningsgrunnlagPropType from 'behandling/proptypes/beregningsgrunnlagPropType';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import { getSelectedBehandlingspunktVilkar } from 'behandlingsprosess/behandlingsprosessSelectors';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import aktivitetStatus, {
   isStatusFrilanserOrKombinasjon, isStatusArbeidstakerOrKombinasjon,
   isStatusSNOrKombinasjon, isStatusKombinasjon, isStatusDagpengerOrAAP,
   isStatusTilstotendeYtelse,
-} from '@fpsak-frontend/kodeverk/aktivitetStatus';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
+} from 'kodeverk/aktivitetStatus';
+import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 import InntektsopplysningerPanel from './fellesPaneler/InntektsopplysningerPanel';
 import SkjeringspunktOgStatusPanel from './fellesPaneler/SkjeringspunktOgStatusPanel';
 import BeregningsgrunnlagForm from './beregningsgrunnlagPanel/BeregningsgrunnlagForm';
@@ -52,7 +52,7 @@ const findAksjonspunktHelpTekst = (gjeldendeAksjonspunkt) => {
     case FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET:
       return 'Beregningsgrunnlag.Helptext.NyIArbeidslivetSN';
     default:
-      return '';
+      return 'Beregningsgrunnlag.Helptext.Ukjent';
   }
 };
 
@@ -90,6 +90,26 @@ export const BeregningFPImpl = ({
   if (beregnetAvvikPromille !== undefined && beregnetAvvikPromille !== null) {
     avvikProsent = beregnetAvvikPromille / 10;
   }
+  if (!berGr) {
+    return (
+      <FadingPanel>
+        <Undertittel>
+          <FormattedMessage id="Beregningsgrunnlag.Title" />
+        </Undertittel>
+        <VerticalSpacer eightPx />
+        <Row>
+          <Column xs="6">
+            <FormattedMessage id="Beregningsgrunnlag.HarIkkeBeregningsregler" />
+          </Column>
+        </Row>
+        <Row>
+          <Column xs="6">
+            <FormattedMessage id="Beregningsgrunnlag.SakTilInfo" />
+          </Column>
+        </Row>
+      </FadingPanel>
+    );
+  }
   return (
     <FadingPanel>
       <Undertittel>
@@ -97,15 +117,15 @@ export const BeregningFPImpl = ({
       </Undertittel>
       <VerticalSpacer eightPx />
       { gjeldendeAksjonspunkt
-      && (
-      <ElementWrapper>
-        <AksjonspunktHelpText isAksjonspunktOpen={isAksjonspunktOpen(gjeldendeAksjonspunkt.status.kode)}>
-          {[<FormattedMessage key="berGr" id={findAksjonspunktHelpTekst(gjeldendeAksjonspunkt)} values={{ verdi: avvikProsent }} />]}
-        </AksjonspunktHelpText>
-        <VerticalSpacer eightPx />
-      </ElementWrapper>
-      )
-      }
+        && (
+          <ElementWrapper>
+            <AksjonspunktHelpText isAksjonspunktOpen={isAksjonspunktOpen(gjeldendeAksjonspunkt.status.kode)}>
+              {[<FormattedMessage key="berGr" id={findAksjonspunktHelpTekst(gjeldendeAksjonspunkt)} values={{ verdi: avvikProsent }} />]}
+            </AksjonspunktHelpText>
+            <VerticalSpacer eightPx />
+          </ElementWrapper>
+        )
+        }
       <Row>
         <Column xs="6">
           <InntektsopplysningerPanel
@@ -120,28 +140,28 @@ export const BeregningFPImpl = ({
         </Column>
       </Row>
       { showBeregningsgrunnlagPanel(relevanteStatuser)
-      && (
-      <BeregningsgrunnlagForm
-        relevanteStatuser={relevanteStatuser}
-        readOnly={readOnly}
-        submitCallback={submitCallback}
-        gjeldendeAksjonspunkt={gjeldendeAksjonspunkt}
-        readOnlySubmitButton={readOnlySubmitButton}
-      />
-      )
-      }
+        && (
+          <BeregningsgrunnlagForm
+            relevanteStatuser={relevanteStatuser}
+            readOnly={readOnly}
+            submitCallback={submitCallback}
+            gjeldendeAksjonspunkt={gjeldendeAksjonspunkt}
+            readOnlySubmitButton={readOnlySubmitButton}
+          />
+        )
+        }
       { gjeldendeVilkar && gjeldendeVilkar.vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT
-      && (
-      <BeregningsresultatTable
-        halvGVerdi={berGr.halvG}
-        isVilkarOppfylt={gjeldendeVilkar && gjeldendeVilkar.vilkarStatus.kode === vilkarUtfallType.OPPFYLT}
-        beregningsgrunnlagPerioder={berGr.beregningsgrunnlagPeriode}
-        ledetekstBrutto={berGr.ledetekstBrutto}
-        ledetekstAvkortet={berGr.ledetekstAvkortet}
-        ledetekstRedusert={berGr.ledetekstRedusert}
-      />
-      )
-      }
+        && (
+          <BeregningsresultatTable
+            halvGVerdi={berGr.halvG}
+            isVilkarOppfylt={gjeldendeVilkar && gjeldendeVilkar.vilkarStatus.kode === vilkarUtfallType.OPPFYLT}
+            beregningsgrunnlagPerioder={berGr.beregningsgrunnlagPeriode}
+            ledetekstBrutto={berGr.ledetekstBrutto}
+            ledetekstAvkortet={berGr.ledetekstAvkortet}
+            ledetekstRedusert={berGr.ledetekstRedusert}
+          />
+        )
+        }
     </FadingPanel>
   );
 };
@@ -212,6 +232,10 @@ const bestemGjeldendeStatuser = createSelector([getAktivitetStatuser], (aktivite
 const getBeregnetAarsinntekt = createSelector(
   [getBeregningsgrunnlag, bestemGjeldendeStatuser, getAlleAndelerIForstePeriode],
   (beregningsgrunnlag, relevanteStatuser, alleAndelerIForstePeriode) => {
+    if (!beregningsgrunnlag) {
+      return {};
+    }
+
     if (relevanteStatuser.harAndreTilstotendeYtelser) {
       return beregningsgrunnlag.beregningsgrunnlagPeriode[0].bruttoPrAar;
     }
@@ -227,6 +251,9 @@ const buildProps = createSelector(
   [getBeregningsgrunnlag, getSelectedBehandlingspunktVilkar, bestemGjeldendeStatuser,
     getGjeldendeBeregningAksjonspunkt, getBeregnetAarsinntekt],
   (berGr, gjeldendeVilkar, relevanteStatuser, gjeldendeAksjonspunkt, beregnetAarsinntekt) => {
+    if (!berGr) {
+      return {};
+    }
     const sammenligningsgrunnlag = berGr.sammenligningsgrunnlag ? berGr.sammenligningsgrunnlag.rapportertPrAar : undefined;
     const beregnetAvvikPromille = berGr.sammenligningsgrunnlag ? berGr.sammenligningsgrunnlag.avvikPromille : undefined;
 

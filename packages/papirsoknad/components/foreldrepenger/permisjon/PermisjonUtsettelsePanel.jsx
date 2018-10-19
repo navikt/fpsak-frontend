@@ -5,15 +5,15 @@ import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import { FieldArray, formValueSelector } from 'redux-form';
 
-import { CheckboxField } from '@fpsak-frontend/form';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
+import { CheckboxField } from 'form/Fields';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import {
   hasValidInteger, hasValidPeriodIncludingOtherErrors, maxLength, required,
-} from '@fpsak-frontend/utils/validation/validators';
-import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
+} from 'utils/validation/validators';
+import { isRequiredMessage } from 'utils/validation/messages';
 import RenderUtsettelsePeriodeFieldArray from './RenderUtsettelsePeriodeFieldArray';
 
 
@@ -56,7 +56,7 @@ export const PermisjonUtsettelsePanel = ({
 );
 
 
-PermisjonUtsettelsePanel.validate = (values, isEndringForeldrepenger) => {
+PermisjonUtsettelsePanel.validate = (values) => {
   if (!values || !values.length) {
     return { _error: isRequiredMessage() };
   }
@@ -65,10 +65,13 @@ PermisjonUtsettelsePanel.validate = (values, isEndringForeldrepenger) => {
   }) => {
     const periodeForUtsettelseError = required(periodeForUtsettelse);
     const arsakForUtsettelseError = required(arsakForUtsettelse);
-    const orgNrShouldBeRequired = !isEndringForeldrepenger && erArbeidstaker === 'true';
+    const typeArbeidRequired = arsakForUtsettelse === 'ARBEID';
+    const typeArbeidError = typeArbeidRequired && required(erArbeidstaker);
+    const orgNrShouldBeRequired = erArbeidstaker === 'true' && typeArbeidRequired;
     const orgNrError = (orgNrShouldBeRequired && required(orgNr)) || hasValidInteger(orgNr) || maxLength9(orgNr);
     if (arsakForUtsettelseError || periodeForUtsettelseError || orgNrError) {
       return {
+        erArbeidstaker: typeArbeidError,
         orgNr: orgNrError,
         periodeForUtsettelse: periodeForUtsettelseError,
         arsakForUtsettelse: arsakForUtsettelseError,

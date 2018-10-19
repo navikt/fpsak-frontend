@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { reduxForm, formValueSelector } from 'redux-form';
-import { Row, Column } from 'nav-frontend-grid';
+import { formValueSelector, reduxForm } from 'redux-form';
+import { Column, Row } from 'nav-frontend-grid';
 import { Fieldset } from 'nav-frontend-skjema';
 import { injectIntl, intlShape } from 'react-intl';
-import Modal from '@fpsak-frontend/shared-components/Modal';
+import Modal from 'sharedComponents/Modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import behandlingResultatType from '@fpsak-frontend/kodeverk/behandlingResultatType';
-import { SelectField, TextAreaField } from '@fpsak-frontend/form';
-import { maxLength, required, hasValidText } from '@fpsak-frontend/utils/validation/validators';
+import behandlingResultatType from 'kodeverk/behandlingResultatType';
+import { SelectField, TextAreaField } from 'form/Fields';
+import { hasValidText, maxLength, required } from 'utils/validation/validators';
 
 import styles from './shelveBehandlingModal.less';
 
@@ -30,6 +30,7 @@ export const ShelveBehandlingModalImpl = ({
   previewHenleggBehandling,
   behandlingId,
   henleggArsaker,
+  behandlingsType,
   intl,
   årsakKode,
   begrunnelse,
@@ -39,11 +40,21 @@ export const ShelveBehandlingModalImpl = ({
     e.preventDefault();
   };
 
-  const selectOptions = () => henleggArsaker
-    .filter(valg => valg.kode !== behandlingResultatType.HENLAGT_BRUKER_DOD)
-    .map((valg, cIndex) => (
-      <option value={valg.kode} key={`valg${cIndex + 1}`}>{intl.formatMessage({ id: valg.kode })}</option>
-    ));
+  const selectOptions = (type) => {
+    if (type.kode === 'BT-004') {
+      return henleggArsaker
+        .filter(valg => valg.kode !== behandlingResultatType.HENLAGT_BRUKER_DOD
+          && valg.kode !== behandlingResultatType.MANGLER_BEREGNINGSREGLER)
+        .map((valg, cIndex) => (
+          <option value={valg.kode} key={`valg${cIndex + 1}`}>{intl.formatMessage({ id: valg.kode })}</option>
+        ));
+    }
+    return henleggArsaker
+      .filter(valg => valg.kode !== behandlingResultatType.HENLAGT_BRUKER_DOD)
+      .map((valg, cIndex) => (
+        <option value={valg.kode} key={`valg${cIndex + 1}`}>{intl.formatMessage({ id: valg.kode })}</option>
+      ));
+  };
 
   return (
     <Modal
@@ -63,7 +74,7 @@ export const ShelveBehandlingModalImpl = ({
                   label={intl.formatMessage({ id: 'ShelveBehandlingModal.ArsakField' })}
                   validate={[required]}
                   placeholder={intl.formatMessage({ id: 'ShelveBehandlingModal.ArsakFieldDefaultValue' })}
-                  selectValues={selectOptions()}
+                  selectValues={selectOptions(behandlingsType)}
                 />
               </Column>
             </Row>
@@ -99,7 +110,7 @@ export const ShelveBehandlingModalImpl = ({
               <Column xs="4">
                 { [behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_KLAGE_TRUKKET,
                   behandlingResultatType.HENLAGT_INNSYN_TRUKKET].includes(årsakKode)
-                  && (
+                && (
                   <div className={styles.forhandsvis}>
                     <Undertekst>{intl.formatMessage({ id: 'ShelveBehandlingModal.SokerInformeres' })}</Undertekst>
                     <a
@@ -111,8 +122,8 @@ export const ShelveBehandlingModalImpl = ({
                       {intl.formatMessage({ id: 'ShelveBehandlingModal.ForhandsvisBrev' })}
                     </a>
                   </div>
-                  )
-                }
+                )
+              }
               </Column>
             </Row>
           </Fieldset>
@@ -129,6 +140,10 @@ ShelveBehandlingModalImpl.propTypes = {
   cancelEvent: PropTypes.func.isRequired,
   previewHenleggBehandling: PropTypes.func.isRequired,
   behandlingId: PropTypes.number.isRequired,
+  behandlingsType: PropTypes.shape({
+    kode: PropTypes.string,
+    navn: PropTypes.string,
+  }).isRequired,
   henleggArsaker: PropTypes.arrayOf(PropTypes.shape({
     valg: PropTypes.string,
   })).isRequired,

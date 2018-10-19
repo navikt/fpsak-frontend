@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { FormSection } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
 
-import foreldreType from '@fpsak-frontend/kodeverk/foreldreType';
-import SoknadData from '../../SoknadData';
-import OppholdINorgePanel from '../commonPanels/OppholdINorgePanel';
-import TilleggsopplysningerPanel from '../commonPanels/TilleggsopplysningerPanel';
-import RettigheterPanel from '../commonPanels/rettigheter/RettigheterPanel';
-import AnnenForelderPanel from '../commonPanels/AnnenForelderPanel';
-import TerminFodselDatoPanel from '../commonPanels/fodsel/TerminFodselDatoPanel';
-import OmsorgOgAdopsjonPanel from '../commonPanels/omsorgOgAdopsjon/OmsorgOgAdopsjonPanel';
+import foreldreType from 'kodeverk/foreldreType';
+import SoknadData from 'papirsoknad/SoknadData';
+import OppholdINorgePanel from 'papirsoknad/components/commonPanels/OppholdINorgePanel';
+import TilleggsopplysningerPanel from 'papirsoknad/components/commonPanels/TilleggsopplysningerPanel';
+import RettigheterPanel from 'papirsoknad/components/commonPanels/rettigheter/RettigheterPanel';
+import AnnenForelderPanel from 'papirsoknad/components/commonPanels/AnnenForelderPanel';
+import TerminFodselDatoPanel from 'papirsoknad/components/commonPanels/fodsel/TerminFodselDatoPanel';
+import OmsorgOgAdopsjonPanel from 'papirsoknad/components/commonPanels/omsorgOgAdopsjon/OmsorgOgAdopsjonPanel';
 
 /*
  * RegistreringFodselForm
@@ -31,7 +31,7 @@ const RegistreringFodselGrid = ({
       { soknadData.getForeldreType() !== foreldreType.MOR
         && <RettigheterPanel readOnly={readOnly} soknadData={soknadData} />
       }
-      <OppholdINorgePanel form={form} readOnly={readOnly} />
+      <OppholdINorgePanel form={form} readOnly={readOnly} soknadData={soknadData} />
       <TilleggsopplysningerPanel readOnly={readOnly} />
     </Column>
     <Column xs="6">

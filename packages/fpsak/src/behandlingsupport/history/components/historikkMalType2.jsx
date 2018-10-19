@@ -5,7 +5,7 @@ import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDe
 import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
 import { createLocationForHistorikkItems } from 'app/paths';
-import { findHendelseText, findResultatText, findSkjermlenkeText } from './historikkUtils';
+import { findHendelseText, findResultatText } from './historikkUtils';
 
 const scrollUp = () => {
   if (window.innerWidth < 1305) {
@@ -23,7 +23,7 @@ const HistorikkMalType2 = ({ historikkinnslagDeler, behandlingLocation, intl }) 
         to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
         onClick={scrollUp}
       >
-        {findSkjermlenkeText(historikkinnslagDeler[0].skjermlenke, intl)}
+        {historikkinnslagDeler[0].skjermlenke.navn}
       </NavLink>
     </Element>
     )

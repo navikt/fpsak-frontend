@@ -4,22 +4,19 @@ import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, injectIntl, intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { createLocationForHistorikkItems } from 'app/paths';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
 import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
-import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/historikkEndretFeltTypeCodes';
-import historikkEndretFeltTypeHeadingCodes from '@fpsak-frontend/kodeverk/historikkEndretFeltTypeHeadingCodes';
+import historikkEndretFeltTypeCodes from 'kodeverk/historikkEndretFeltTypeCodes';
+import historikkEndretFeltTypeHeadingCodes from 'kodeverk/historikkEndretFeltTypeHeadingCodes';
 import {
-  findAarsakText,
-  findBegrunnelseTekst,
   findEndretFeltNavn,
   findEndretFeltVerdi,
   findHendelseText,
   findIdForOpplysningCode,
   findIdForSoeknadsperiodeCode,
   findResultatText,
-  findSkjermlenkeText,
 } from './historikkUtils';
 
 import BubbleText from './bubbleText';
@@ -178,7 +175,7 @@ const HistorikkMalType5 = ({
             to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
             onClick={scrollUp}
           >
-            {findSkjermlenkeText(historikkinnslagDel.skjermlenke, intl)}
+            {historikkinnslagDel.skjermlenke.navn}
           </NavLink>
         </Element>
         )
@@ -212,14 +209,16 @@ const HistorikkMalType5 = ({
         ))}
 
         {historikkinnslagDel.aarsak
-        && <Normaltekst>{findAarsakText(historikkinnslagDel.aarsak, intl)}</Normaltekst>
+        && <Normaltekst>{historikkinnslagDel.aarsak.navn}</Normaltekst>
         }
-
+        {historikkinnslagDel.begrunnelse
+        && (
         <BubbleText
-          bodyText={findBegrunnelseTekst(historikkinnslagDel.begrunnelse, intl)}
+          bodyText={historikkinnslagDel.begrunnelse.navn}
           className="snakkeboble-panel__tekst"
         />
-
+        )
+        }
         <div>
           {dokumentLinks && dokumentLinks.map(dokumentLink => (
             <a

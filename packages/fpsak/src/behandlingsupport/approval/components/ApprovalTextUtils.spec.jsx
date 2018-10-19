@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import getAksjonspunktText from './ApprovalTextUtils';
 
 const lagAksjonspunkt = (
@@ -169,14 +169,6 @@ describe('<ApprovalTextUtils>', () => {
     );
     const message = getAksjonspunktText.resultFunc(true, null, null, null, null)(aksjonspunkt);
     expect(message[0].props.id).to.eql('ToTrinnsForm.Beregning.InntektFastsatt');
-  });
-  it('skal vise korrekt tekst for aksjonspunkt 5050', () => {
-    const aksjonspunkt = lagAksjonspunkt(
-      aksjonspunktCodes.AVKLAR_BEREGNINGSGRUNNLAG_OG_INNTEKTSKATEGORI_FOR_BRUKER_MED_TILSTOTENDE_YTELSE, undefined,
-      undefined, 'begrunnelse', false, undefined, 'status', undefined,
-    );
-    const message = getAksjonspunktText.resultFunc(true, null, null, null, null)(aksjonspunkt);
-    expect(message[0].props.id).to.eql('ToTrinnsForm.Beregning.BeregningsgrunnlagOgInntektskategoriFastsatt');
   });
 
 

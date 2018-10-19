@@ -18,12 +18,19 @@ const rootReducer = combineReducers({
 
 const configureStore = (browserHistory) => {
   const middleware = [thunkMiddleware, routerMiddleware(browserHistory)];
+  let enhancer;
   if (isDevelopment) {
     middleware.push(logger.createLogger());
+    /* eslint-disable no-underscore-dangle */
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    /* eslint-enable */
+    enhancer = composeEnhancers(applyMiddleware(...middleware));
+  } else {
+    enhancer = compose(applyMiddleware(...middleware));
   }
 
   const initialState = {};
-  const enhancer = compose(applyMiddleware(...middleware));
+
   return createStore(rootReducer, initialState, enhancer);
 };
 

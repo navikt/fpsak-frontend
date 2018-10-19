@@ -13,6 +13,13 @@ export const createArbeidsperiodeString = (arbeidsforhold) => {
   return `${arbeidsforhold.startdato} - `;
 };
 
+const arbeidsforholdEksistererIListen = (arbeidsforhold, arbeidsgiverList) => {
+  if (arbeidsforhold.arbeidsforholdId === null) {
+    return arbeidsgiverList.map(({ virksomhetId }) => (virksomhetId)).includes(arbeidsforhold.virksomhetId);
+  }
+  return arbeidsgiverList.map(({ arbeidsforholdId }) => (arbeidsforholdId)).includes(arbeidsforhold.arbeidsforholdId);
+};
+
 
 export const getUniqueListOfArbeidsforhold = (andeler) => {
   const arbeidsgiverList = [];
@@ -20,7 +27,7 @@ export const getUniqueListOfArbeidsforhold = (andeler) => {
     return arbeidsgiverList;
   }
   andeler.forEach((andel) => {
-    if (andel.arbeidsforhold !== null && !arbeidsgiverList.map(({ arbeidsforholdId }) => (arbeidsforholdId)).includes(andel.arbeidsforhold.arbeidsforholdId)) {
+    if (andel.arbeidsforhold !== null && !arbeidsforholdEksistererIListen(andel.arbeidsforhold, arbeidsgiverList)) {
       const arbeidsforholdObject = {
         andelsnr: andel.andelsnr,
         ...andel.arbeidsforhold,

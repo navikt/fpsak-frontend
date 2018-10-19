@@ -1,17 +1,18 @@
 import { createSelector } from 'reselect';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import { getRettigheter } from '@fpsak-frontend/nav-ansatt/duck';
+import { getRettigheter } from 'navAnsatt/duck';
 import { DEFAULT_BEHANDLINGSPROSESS } from 'app/paths';
-import { arrayToObject } from '@fpsak-frontend/utils/objectUtils';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
-import fyt from '@fpsak-frontend/kodeverk/fagsakYtelseType';
+import { arrayToObject } from 'utils/objectUtils';
+import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import fyt from 'kodeverk/fagsakYtelseType';
 import {
   getBehandlingIsOnHold, getAllMerknaderFraBeslutter, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat,
   getBehandlingInnsynResultatType, getBehandlingResultatstruktur, getStonadskontoer, hasReadOnlyBehandling, isBehandlingStatusReadOnly,
 } from 'behandling/behandlingSelectors';
+import { getFeatureToggleSimulering } from 'app/duck';
 import behandlingspunktCodes from './behandlingspunktCodes';
 import createEngangsstonadBpProps from './definition/engangsstonadBpDefinition';
 import createForeldrepengerBpProps from './definition/foreldrepengerBpDefinition';
@@ -19,15 +20,23 @@ import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from '
 
 // Kun eksportert for test. Ikke bruk andre steder!
 export const getBehandlingspunkterProps = createSelector(
-  [getFagsakYtelseType, getBehandlingType, getBehandlingVilkar, getAksjonspunkter,
-    getBehandlingsresultat, getBehandlingInnsynResultatType, getBehandlingResultatstruktur, getStonadskontoer],
-  (fagsakYtelseType, behandlingType, vilkar, aksjonspunkter, behandlingsresultat, innsynResultatType, resultatstruktur, stonadskontoer) => {
+  [getFagsakYtelseType, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat,
+    getBehandlingInnsynResultatType, getBehandlingResultatstruktur, getStonadskontoer, getFeatureToggleSimulering],
+  (fagsakYtelseType, behandlingType, vilkar, aksjonspunkter, behandlingsresultat,
+    innsynResultatType, resultatstruktur, stonadskontoer, featureToggleSimulering) => {
     if (!behandlingType) {
       return undefined;
     }
 
     const builderData = {
-      behandlingType, vilkar, aksjonspunkter, behandlingsresultat, innsynResultatType, resultatstruktur, stonadskontoer,
+      behandlingType,
+      vilkar,
+      aksjonspunkter,
+      behandlingsresultat,
+      innsynResultatType,
+      resultatstruktur,
+      stonadskontoer,
+      featureToggleSimulering,
     };
     return fagsakYtelseType.kode === fyt.ENGANGSSTONAD
       ? createEngangsstonadBpProps(builderData) : createForeldrepengerBpProps(builderData);
@@ -64,7 +73,8 @@ export const getBehandlingspunktAksjonspunkter = createSelector(
 );
 
 export const getBehandlingspunkterWithOpenAksjonspunkter = createSelector([getBehandlingspunktAksjonspunkter], (punkter = {}) => (
-  Object.keys(punkter).filter(p => punkter[p].some(ap => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses))
+  Object.keys(punkter)
+    .filter(p => punkter[p].some(ap => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses))
 ));
 
 const getVedtakBehandlingspunkt = createSelector(
@@ -149,7 +159,7 @@ export const hasNonActiveAksjonspunkterOrNonOverstyrbarVilkar = createSelector(
 export const isSelectedBehandlingspunktReadOnly = createSelector(
   [getRettigheter, getBehandlingIsOnHold, hasReadOnlyBehandling, hasNonActiveAksjonspunkterOrNonOverstyrbarVilkar],
   (rettigheter, behandlingIsOnHold, isBehandlingReadOnly, hasNonActivOrNonOverstyrbar) => !rettigheter.writeAccess.isEnabled
-  || behandlingIsOnHold || isBehandlingReadOnly || hasNonActivOrNonOverstyrbar,
+    || behandlingIsOnHold || isBehandlingReadOnly || hasNonActivOrNonOverstyrbar,
 );
 
 export const isSelectedBehandlingspunktOverrideReadOnly = createSelector(

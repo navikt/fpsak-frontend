@@ -4,11 +4,11 @@ import { Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import rettighetPropType from '@fpsak-frontend/nav-ansatt/rettighetPropType';
-import navAnsattPropType from '@fpsak-frontend/nav-ansatt/navAnsattPropType';
-import Image from '@fpsak-frontend/shared-components/Image';
-import openImage from '@fpsak-frontend/assets/images/pil_opp.svg';
-import closedImage from '@fpsak-frontend/assets/images/pil_ned.svg';
+import rettighetPropType from 'navAnsatt/rettighetPropType';
+import navAnsattPropType from 'navAnsatt/navAnsattPropType';
+import Image from 'sharedComponents/Image';
+import openImage from 'images/pil_opp.svg';
+import closedImage from 'images/pil_ned.svg';
 
 import ResumeBehandlingMenuItem from './resumeBehandling/ResumeBehandlingMenuItem';
 import PauseBehandlingMenuItem from './pauseBehandling/PauseBehandlingMenuItem';
@@ -130,11 +130,11 @@ export class BehandlingMenu extends Component {
   }
 
   isResumeBehandlingEnabled() {
-    const { isInnsynsbehandling, gjenopptaBehandlingAccess, hasSoknad } = this.props;
+    const { isInnsynsbehandling, gjenopptaBehandlingAccess } = this.props;
     if (this.isBehandlingQueued() || !gjenopptaBehandlingAccess.employeeHasAccess) {
       return false;
     }
-    return (isInnsynsbehandling && this.isBehandlingOnHold()) || (this.isBehandlingOnHold() && hasSoknad);
+    return (isInnsynsbehandling && this.isBehandlingOnHold()) || (this.isBehandlingOnHold());
   }
 
   isPauseBehandlingEnabled() {
@@ -167,12 +167,11 @@ export class BehandlingMenu extends Component {
     if (this.hasNotAccessOrKanVeilede()) {
       return null;
     }
-
     const {
       behandlingIdentifier, behandlendeEnheter, settBehandlingPaVentAccess, setBehandlingOnHold,
       gjenopptaBehandlingAccess, openBehandlingForChanges, previewHenleggBehandling, resumeBehandling, selectedBehandlingVersjon,
       shelveBehandling, push, henleggBehandlingAccess, behandlendeEnhetId, behandlendeEnhetNavn, nyBehandlendeEnhet,
-      byttBehandlendeEnhetAccess, saksnummer, createNewForstegangsbehandling,
+      byttBehandlendeEnhetAccess, saksnummer, createNewForstegangsbehandling, ikkeVisOpprettNyBehandling,
     } = this.props;
     const { menuVisible } = this.state;
 
@@ -260,6 +259,7 @@ export class BehandlingMenu extends Component {
               submitNyForstegangsBehandling={createNewForstegangsbehandling}
               opprettNyForstegangsBehandlingEnabled={this.hasEnabledNewBehandling()}
               opprettRevurderingEnabled={this.hasEnabledNewRevurdering()}
+              ikkeVisOpprettNyBehandling={ikkeVisOpprettNyBehandling.isEnabled}
             />
             )
             }
@@ -297,6 +297,7 @@ BehandlingMenu.propTypes = {
   opprettNyForstegangsBehandlingAccess: rettighetPropType.isRequired,
   gjenopptaBehandlingAccess: rettighetPropType.isRequired,
   opneBehandlingForEndringerAccess: rettighetPropType.isRequired,
+  ikkeVisOpprettNyBehandling: rettighetPropType.isRequired,
   navAnsatt: navAnsattPropType.isRequired,
   hasSoknad: PropTypes.bool.isRequired,
   isInnsynsbehandling: PropTypes.bool.isRequired,

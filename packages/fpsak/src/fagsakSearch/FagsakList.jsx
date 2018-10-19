@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import Table from 'sharedComponents/Table';
+import TableRow from 'sharedComponents/TableRow';
+import TableColumn from 'sharedComponents/TableColumn';
+import DateLabel from 'sharedComponents/DateLabel';
 import fagsakPropType from 'fagsak/fagsakPropType';
-import fagsakStatus from '@fpsak-frontend/kodeverk/fagsakStatus';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
-import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
+import fagsakStatus from 'kodeverk/fagsakStatus';
 
 import styles from './fagsakList.less';
 
@@ -26,8 +29,7 @@ const FagsakList = ({
   const sortedFagsaker = fagsaker.sort((fagsak1, fagsak2) => {
     if (fagsak1.status.kode === fagsakStatus.AVSLUTTET && fagsak2.status.kode !== fagsakStatus.AVSLUTTET) {
       return true;
-    }
-    if (fagsak1.status.kode !== fagsakStatus.AVSLUTTET && fagsak2.status.kode === fagsakStatus.AVSLUTTET) {
+    } if (fagsak1.status.kode !== fagsakStatus.AVSLUTTET && fagsak2.status.kode === fagsakStatus.AVSLUTTET) {
       return false;
     }
     const changeTimeFagsak1 = fagsak1.endret ? fagsak1.endret : fagsak1.opprettet;

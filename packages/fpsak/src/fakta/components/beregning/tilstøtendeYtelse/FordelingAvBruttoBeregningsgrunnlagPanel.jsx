@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FieldArray } from 'redux-form';
-import { formatCurrencyNoKr, createVisningsnavnForAktivitet } from '@fpsak-frontend/utils';
-import inntektskategorier from '@fpsak-frontend/kodeverk/inntektskategorier';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
+import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
+import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import inntektskategorier from 'kodeverk/inntektskategorier';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import RenderBruttoBGFordelingFieldArray from './RenderBruttoBGFordelingFieldArray';
 
 export const fordelingAvBruttoBGFieldArrayName = 'bruttoBGFordeling';
@@ -29,6 +30,7 @@ const FordelingAvBruttoBeregningsgrunnlagPanel = ({
 FordelingAvBruttoBeregningsgrunnlagPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
 };
+
 
 export const createAndelnavn = (andel, aktivitetstatuskoder) => {
   if (andel.arbeidsforhold !== undefined && andel.arbeidsforhold !== null) {
@@ -62,6 +64,7 @@ FordelingAvBruttoBeregningsgrunnlagPanel.buildInitialValues = (tilstotendeYtelse
       refusjonskrav: formatCurrencyNoKr(andel.refusjonskrav),
       inntektskategori: preutfyllInntektskategori(andel),
       nyAndel: false,
+      andelIArbeid: andel.andelIArbeid,
       lagtTilAvSaksbehandler: andel.lagtTilAvSaksbehandler,
     })),
   };

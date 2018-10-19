@@ -6,8 +6,8 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { ariaCheck } from '@fpsak-frontend/utils/validation/validators';
-import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
+import { ariaCheck } from 'utils/validation/validators';
+import { isRequiredMessage } from 'utils/validation/messages';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK } from 'behandling/behandlingSelectors';
 import { isMeholdIKlage } from './ApprovalTextUtils';
@@ -43,17 +43,16 @@ export const ToTrinnsFormImpl = ({
   if (formState.length !== totrinnskontrollContext.length) {
     return null;
   }
-
   return (
     <form name="toTrinn" onSubmit={handleSubmit}>
       {totrinnskontrollContext.map(({
-        contextCode, skjermlenke, skjermlenkeId, aksjonspunkter,
+        contextCode, skjermlenke, aksjonspunkter, skjermlenkeNavn,
       }, contextIndex) => {
         if (aksjonspunkter.length > 0) {
           return (
             <div key={contextCode}>
               <NavLink to={skjermlenke} className={styles.lenke}>
-                {intl.formatMessage({ id: skjermlenkeId })}
+                {skjermlenkeNavn}
               </NavLink>
               {aksjonspunkter.map((aksjonspunkt, approvalIndex) => (
                 <div key={aksjonspunkt.aksjonspunktKode}>

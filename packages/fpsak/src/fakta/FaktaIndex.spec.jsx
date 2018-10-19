@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import FaktaPanel from 'fakta/components/FaktaPanel';
 import { FaktaIndex } from './FaktaIndex';
 
@@ -20,6 +20,7 @@ describe('<FaktaIndex>', () => {
       location={{}}
       push={sinon.spy()}
       resolveFaktaAksjonspunkter={sinon.spy()}
+      resolveFaktaOverstyrAksjonspunkter={sinon.spy()}
       shouldOpenDefaultInfoPanels
     />);
 
@@ -36,6 +37,7 @@ describe('<FaktaIndex>', () => {
       location={{}}
       push={pushCallback}
       resolveFaktaAksjonspunkter={sinon.spy()}
+      resolveFaktaOverstyrAksjonspunkter={sinon.spy()}
       shouldOpenDefaultInfoPanels
     />);
 
@@ -58,6 +60,7 @@ describe('<FaktaIndex>', () => {
       location={{}}
       push={pushCallback}
       resolveFaktaAksjonspunkter={sinon.spy()}
+      resolveFaktaOverstyrAksjonspunkter={sinon.spy()}
       shouldOpenDefaultInfoPanels
     />);
 
@@ -80,6 +83,7 @@ describe('<FaktaIndex>', () => {
       location={{}}
       push={sinon.spy()}
       resolveFaktaAksjonspunkter={resolveCallback}
+      resolveFaktaOverstyrAksjonspunkter={sinon.spy()}
       shouldOpenDefaultInfoPanels
     />);
 

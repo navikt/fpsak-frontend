@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
-import Image from '@fpsak-frontend/shared-components/Image';
+import Image from 'sharedComponents/Image';
 import UttakTimeLineData from './UttakTimeLineData';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
 import UttakActivity from './UttakActivity';

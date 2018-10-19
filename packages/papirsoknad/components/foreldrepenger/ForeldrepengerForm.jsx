@@ -4,21 +4,21 @@ import {
 } from 'redux-form';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// todo dep
+
+import RettigheterPanel from 'papirsoknad/components/commonPanels/rettigheter/RettigheterPanel';
+import { getRegisteredFields } from 'papirsoknad/duck';
 import { getFagsakPerson } from 'fagsak/fagsakSelectors';
-import familieHendelseType from '@fpsak-frontend/kodeverk/familieHendelseType';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import RettigheterPanel from '../commonPanels/rettigheter/RettigheterPanel';
-import { getRegisteredFields } from '../../duck';
-import MottattDatoPanel from '../commonPanels/MottattDatoPanel';
-import AnnenForelderPanel from '../commonPanels/AnnenForelderPanel';
-import OppholdINorgePanel from '../commonPanels/OppholdINorgePanel';
-import TilleggsopplysningerPanel from '../commonPanels/TilleggsopplysningerPanel';
-import SoknadData from '../../SoknadData';
-import LagreSoknadForm from '../commonPanels/LagreSoknadPanel';
-import OmsorgOgAdopsjonPanel from '../commonPanels/omsorgOgAdopsjon/OmsorgOgAdopsjonPanel';
-import TerminFodselDatoPanel from '../commonPanels/fodsel/TerminFodselDatoPanel';
+import MottattDatoPanel from 'papirsoknad/components/commonPanels/MottattDatoPanel';
+import AnnenForelderPanel from 'papirsoknad/components/commonPanels/AnnenForelderPanel';
+import OppholdINorgePanel from 'papirsoknad/components/commonPanels/OppholdINorgePanel';
+import TilleggsopplysningerPanel from 'papirsoknad/components/commonPanels/TilleggsopplysningerPanel';
+import SoknadData from 'papirsoknad/SoknadData';
+import familieHendelseType from 'kodeverk/familieHendelseType';
+import LagreSoknadForm from 'papirsoknad/components/commonPanels/LagreSoknadPanel';
+import OmsorgOgAdopsjonPanel from 'papirsoknad/components/commonPanels/omsorgOgAdopsjon/OmsorgOgAdopsjonPanel';
+import TerminFodselDatoPanel from 'papirsoknad/components/commonPanels/fodsel/TerminFodselDatoPanel';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import EgenVirksomhetPanel from './virksomhet/EgenVirksomhetPanel';
 import DekningsgradPanel from './dekningsgrad/DekningsgradPanel';
 import InntektsgivendeArbeidPanel from './inntektsgivendeArbeid/InntektsgivendeArbeidPanel';
@@ -55,7 +55,7 @@ export const ForeldrepengerForm = ({
 }) => (
   <form onSubmit={handleSubmit}>
     <MottattDatoPanel readOnly={readOnly} />
-    <OppholdINorgePanel form={form} readOnly={readOnly} />
+    <OppholdINorgePanel form={form} readOnly={readOnly} soknadData={soknadData} />
     <InntektsgivendeArbeidPanel readOnly={readOnly} />
     <EgenVirksomhetPanel
       readOnly={readOnly}

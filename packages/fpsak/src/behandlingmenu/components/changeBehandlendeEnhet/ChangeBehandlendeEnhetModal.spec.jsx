@@ -2,7 +2,7 @@ import React from 'react';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import { ChangeBehandlendeEnhetModalImpl } from './ChangeBehandlendeEnhetModal';
 
 describe('<ChangeBehandlendeEnhetModal>', () => {
@@ -73,7 +73,7 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
     expect(selectField).to.have.length(1);
     expect(selectField.prop('placeholder')).is.eql('002 Oslo');
     const values = selectField.prop('selectValues');
-    expect(values[0].props.value).is.eql(0);
+    expect(values[0].props.value).is.eql('0');
   });
 
   it('skal disable knapp for lagring når ny behandlende enhet og begrunnnelse ikke er valgt', () => {

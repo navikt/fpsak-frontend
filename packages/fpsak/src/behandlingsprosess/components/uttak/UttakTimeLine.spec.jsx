@@ -28,6 +28,7 @@ describe('<UttakTimeLine>', () => {
         kode: '',
         navn: '',
         kodeverk: '',
+        fom: '',
       },
       uttakPeriodeType: {
         kode: '',
@@ -43,7 +44,7 @@ describe('<UttakTimeLine>', () => {
     const wrapper = shallow(<UttakTimeLine
       selectedPeriod={selectedItem}
       customTimes={{}}
-      nyePerioder={[]}
+      uttakPerioder={[{ fom: '2018-01-01', name: 'notEmpty period' }]}
       selectPeriodCallback={selectPeriodCallback}
       openPeriodInfo={openPeriodInfo}
       hovedsokerKjonnKode="M"
@@ -68,7 +69,7 @@ describe('<UttakTimeLine>', () => {
     const wrapper = shallow(<UttakTimeLine
       selectedPeriod={selectedItem}
       customTimes={{}}
-      nyePerioder={[]}
+      uttakPerioder={[{ fom: '2018-01-01', name: 'notEmpty period' }]}
       selectPeriodCallback={selectPeriodCallback}
       openPeriodInfo={openPeriodInfo}
       hovedsokerKjonnKode="M"

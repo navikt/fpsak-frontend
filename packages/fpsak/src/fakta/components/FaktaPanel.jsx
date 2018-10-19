@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getRettigheter } from '@fpsak-frontend/nav-ansatt/duck';
 import PersonIndex from 'person/PersonIndex';
+import { getRettigheter } from 'navAnsatt/duck';
 import {
   getBehandlingVilkarCodes, getPersonopplysning, getBehandlingIsOnHold, getAksjonspunkter, hasReadOnlyBehandling,
 }
@@ -11,7 +11,7 @@ import {
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import { getOpenInfoPanels } from 'fakta/duck';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
 import FodselInfoPanel from './fodsel/FodselInfoPanel';
 import TilleggsopplysningerInfoPanel from './tilleggsopplysninger/TilleggsopplysningerInfoPanel';
 import OpptjeningInfoPanel from './opptjening/OpptjeningInfoPanel';

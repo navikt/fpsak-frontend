@@ -3,31 +3,26 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
-import {
-  Element,
-  Normaltekst,
-} from 'nav-frontend-typografi';
-import { required } from '@fpsak-frontend/utils/validation/validators';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { InputField } from '@fpsak-frontend/form';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { required } from 'utils/validation/validators';
+import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { InputField } from 'form/Fields';
 import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
-import {
-  formatCurrencyNoKr,
-  parseCurrencyInput,
-  removeSpacesFromNumber,
-  DDMMYYYY_DATE_FORMAT,
-  createVisningsnavnForAktivitet,
-} from '@fpsak-frontend/utils';
-import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle } from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
+import Table from 'sharedComponents/Table';
+import TableRow from 'sharedComponents/TableRow';
+import TableColumn from 'sharedComponents/TableColumn';
+import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from 'utils/currencyUtils';
+import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle } from 'kodeverk/faktaOmBeregningTilfelle';
 
 import styles from './fastsettATFLInntektForm.less';
 
 const inntektInputFieldName = 'fastsattInntekt';
 
 export const createInputfieldKeyAT = (arbeidsforhold) => {
-  const key = `${inntektInputFieldName}_${arbeidsforhold.virksomhetNavn}_${arbeidsforhold.virksomhetId}_${arbeidsforhold.startdato}`;
+  const key = `${inntektInputFieldName}_${arbeidsforhold.virksomhetNavn}_${arbeidsforhold.startdato}_${arbeidsforhold.arbeidsforholdId}`;
   return key;
 };
 

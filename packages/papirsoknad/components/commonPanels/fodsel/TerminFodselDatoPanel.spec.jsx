@@ -2,8 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import moment from 'moment';
 
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { intlMock, shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
+import { ISO_DATE_FORMAT } from 'utils/formats';
 import TerminFodselDatoPanel, { TerminFodselDatoPanelImpl } from './TerminFodselDatoPanel';
 
 const now = moment();

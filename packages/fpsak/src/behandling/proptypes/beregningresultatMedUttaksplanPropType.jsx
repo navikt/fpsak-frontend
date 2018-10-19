@@ -9,7 +9,7 @@ export const uttakPropType = PropTypes.shape({
 
 export const beregningsresultatPeriodeAndelPropType = PropTypes.shape({
   arbeidsgiverNavn: PropTypes.string, // Hvis andel tilhører arbeidsgiver
-  arbeidsgiverOrgNr: PropTypes.string, // Hvis andel tilhører arbeidsgiver
+  arbeidsgiverOrgnr: PropTypes.string, // Hvis andel tilhører arbeidsgiver
   refusjon: PropTypes.number, // Hvis andel tilhører arbeidsgiver
   tilSoker: PropTypes.number, // Hvis andel tilhører søker
   sisteUtbetalingsdato: PropTypes.string,

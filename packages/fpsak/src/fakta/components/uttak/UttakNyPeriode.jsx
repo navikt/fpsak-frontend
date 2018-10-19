@@ -7,7 +7,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import { behandlingFormValueSelector, behandlingForm } from 'behandling/behandlingForm';
 import {
   PeriodpickerField, SelectField, CheckboxField, RadioGroupField, RadioOption, TextAreaField, DecimalField,
-} from '@fpsak-frontend/form';
+} from 'form/Fields';
 import {
   hasValidDate,
   requiredIfNotPristine,
@@ -15,21 +15,23 @@ import {
   hasValidDecimal,
   hasValidPeriod,
   maxValue, minLength, maxLength, hasValidText,
-} from '@fpsak-frontend/utils/validation/validators';
+} from 'utils/validation/validators';
 import moment from 'moment';
-import { guid, calcDaysAndWeeks, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import guid from 'utils/guidUtil';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
-import FlexColumn from '@fpsak-frontend/shared-components/flexGrid/FlexColumn';
-import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';
-import FlexContainer from '@fpsak-frontend/shared-components/flexGrid/FlexContainer';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
+import FlexRow from 'sharedComponents/flexGrid/FlexRow';
+import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { getKodeverk } from 'kodeverk/duck';
 import { getPersonopplysning, getAlleAndelerIForstePeriode } from 'behandling/behandlingSelectors';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/navBrukerKjonn';
-import uttakPeriodeType from '@fpsak-frontend/kodeverk/uttakPeriodeType';
-import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/utsettelseArsakCodes';
-import overforingArsak from '@fpsak-frontend/kodeverk/overforingArsak';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
+import uttakPeriodeType from 'kodeverk/uttakPeriodeType';
+import { ISO_DATE_FORMAT } from 'utils/formats';
+import utsettelseArsakCodes from 'kodeverk/utsettelseArsakCodes';
+import overforingArsak from 'kodeverk/overforingArsak';
+import { calcDaysAndWeeks } from 'utils/dateUtils';
 import styles from './uttakNyPeriode.less';
 
 const maxValue100 = maxValue(100);
@@ -156,8 +158,8 @@ export const UttakNyPeriode = ({
                             label={<FormattedMessage id="UttakInfoPanel.SamtidigUttak" />}
                           />
                           <CheckboxField
-                            name="flerBarnsDager"
-                            label={<FormattedMessage id="UttakInfoPanel.FlerBarnsDager" />}
+                            name="flerbarnsdager"
+                            label={<FormattedMessage id="UttakInfoPanel.Flerbarnsdager" />}
                           />
                         </FlexColumn>
                       </FlexRow>
@@ -310,15 +312,16 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
   } : {
     kode: overforingArsak.UDEFINERT,
   };
+
   const arbeidsForhold = values.arbeidsForhold ? values.arbeidsForhold.split('|') : null;
   return {
     id: guid(),
     arbeidstidsprosent: values.arbeidstidprosent ? +values.arbeidstidprosent : null,
-    bekreftet: true, // TODO sette false hvis det vil bli et avvik
     updated: false,
-    openForm: false,
+    bekreftet: false,
+    openForm: true,
     samtidigUttak: values.samtidigUttak,
-    flerBarnsDager: values.flerBarnsDager,
+    flerbarnsdager: values.flerbarnsdager,
     orgnr: arbeidsForhold && arbeidsForhold[0] !== '-' ? arbeidsForhold[0] : undefined,
     erArbeidstaker: arbeidsForhold && arbeidsForhold[0] !== '-',
     virksomhetNavn: arbeidsForhold && arbeidsForhold[1] ? arbeidsForhold[1] : undefined,
@@ -347,7 +350,6 @@ const validateNyPeriodeForm = (values) => {
 
   return errors;
 };
-
 
 const mapStateToProps = (state, ownProps) => {
   const periodeTyper = getKodeverk(kodeverkTyper.UTTAK_PERIODE_TYPE)(state);

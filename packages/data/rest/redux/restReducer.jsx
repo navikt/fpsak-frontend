@@ -1,4 +1,4 @@
-import { isAsyncRestMethod } from '../restMethods';
+import { isAsyncRestMethod } from 'data/rest/restMethods';
 
 const initialStateAsync = {
   data: undefined,

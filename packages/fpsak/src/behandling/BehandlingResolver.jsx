@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
+import LoadingPanel from 'sharedComponents/LoadingPanel';
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
 import { getSelectedBehandlingIdentifier, isBehandlingInSync } from './behandlingSelectors';
 import { getBehandlingerVersjonMappedById } from './selectors/behandlingerSelectors';

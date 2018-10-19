@@ -2,13 +2,15 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import { intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import { intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import { UttakImpl as Uttak } from './Uttak';
 
 describe('<Uttak>', () => {
   const uttakActivities = [{
     id: 1,
+    hovedsoker: true,
+    group: 1,
     fom: '',
     tom: '',
     periodeResultatType: {
@@ -25,6 +27,8 @@ describe('<Uttak>', () => {
     }],
   }, {
     id: 2,
+    group: 1,
+    hovedsoker: true,
     fom: '',
     tom: '',
     periodeResultatType: {
@@ -68,6 +72,7 @@ describe('<Uttak>', () => {
       allAksjonspunkter={[]}
       intl={intlMock}
       soknadsType="ST-001"
+      uttakPerioder={[]}
     />);
     wrapper.setState({ selectedItem: null });
     const rows = wrapper.find('Row');
@@ -94,6 +99,7 @@ describe('<Uttak>', () => {
       hovedsokerKjonnKode=""
       periodeTyper={[]}
       uttaksresultatActivity={uttakActivities}
+      uttakPerioder={uttakActivities}
       reduxFormChange={sinon.spy()}
       reduxFormInitialize={sinon.spy()}
       submitting={false}
@@ -133,6 +139,7 @@ describe('<Uttak>', () => {
       hovedsokerKjonnKode=""
       periodeTyper={[]}
       uttaksresultatActivity={uttakActivities}
+      uttakPerioder={[]}
       reduxFormChange={sinon.spy()}
       reduxFormInitialize={sinon.spy()}
       submitting={false}
@@ -182,6 +189,7 @@ describe('<Uttak>', () => {
       hovedsokerKjonnKode=""
       periodeTyper={[]}
       uttaksresultatActivity={uttakActivities}
+      uttakPerioder={[]}
       reduxFormChange={sinon.spy()}
       reduxFormInitialize={sinon.spy()}
       submitting={false}
@@ -235,6 +243,7 @@ describe('<Uttak>', () => {
       hovedsokerKjonnKode=""
       periodeTyper={[]}
       uttaksresultatActivity={uttakActivities}
+      uttakPerioder={uttakActivities}
       reduxFormChange={sinon.spy()}
       reduxFormInitialize={sinon.spy()}
       submitting={false}

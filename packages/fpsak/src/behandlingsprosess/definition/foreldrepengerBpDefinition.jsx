@@ -1,7 +1,7 @@
-import ac from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import vt from '@fpsak-frontend/kodeverk/vilkarType';
-import bt from '@fpsak-frontend/kodeverk/behandlingType';
-import vut from '@fpsak-frontend/kodeverk/vilkarUtfallType';
+import ac from 'kodeverk/aksjonspunktCodes';
+import vt from 'kodeverk/vilkarType';
+import bt from 'kodeverk/behandlingType';
+import vut from 'kodeverk/vilkarUtfallType';
 import bpc from 'behandlingsprosess/behandlingspunktCodes';
 import getVedtakStatus from './vedtakStatusUtleder';
 import BehandlingspunktProperties from './behandlingspunktBuilder';
@@ -22,6 +22,14 @@ const getStatusFromResultatstruktur = ({ resultatstruktur, stonadskontoer }) => 
 const behandlingTypeNotEquals = (...behandlingTypes) => ({ behandlingType }) => !behandlingTypes.some(b => b === behandlingType.kode);
 const hasNonDefaultBehandlingspunkt = (builderData, bpLength) => bpLength > 0;
 
+const isNotRevurderingAndManualOpplysningspliktAp = ({ behandlingType, aksjonspunkter }) => {
+  const isRevurdering = bt.REVURDERING === behandlingType.kode;
+  const hasAp = aksjonspunkter.some(ap => ap.definisjon.kode === ac.SOKERS_OPPLYSNINGSPLIKT_MANU);
+  return !(isRevurdering && !hasAp);
+};
+
+const hasSimuleringOn = ({ featureToggleSimulering }) => featureToggleSimulering;
+const getStatusFromSimulering = () => vut.OPPFYLT;
 /**
  * Rekkefølgen i listene under bestemmer behandlingspunkt-rekkefølgen i GUI.
  * @see BehandlingspunktProperties.Builder for mer informasjon.
@@ -37,7 +45,8 @@ const foreldrepengerBuilders = [
     .withAksjonspunktCodes(ac.BEHANDLE_KLAGE_NK),
   new BehandlingspunktProperties.Builder(bpc.OPPLYSNINGSPLIKT, 'Opplysningsplikt')
     .withVilkarTypes(vt.SOKERSOPPLYSNINGSPLIKT)
-    .withAksjonspunktCodes(ac.SOKERS_OPPLYSNINGSPLIKT_OVST, ac.SOKERS_OPPLYSNINGSPLIKT_MANU),
+    .withAksjonspunktCodes(ac.SOKERS_OPPLYSNINGSPLIKT_OVST, ac.SOKERS_OPPLYSNINGSPLIKT_MANU)
+    .withDefaultVisibilityWhenCustomFnReturnsTrue(isNotRevurderingAndManualOpplysningspliktAp),
   new BehandlingspunktProperties.Builder(bpc.FOEDSEL, 'Fodselsvilkaret')
     .withVilkarTypes(vt.FODSELSVILKARET_MOR, vt.FODSELSVILKARET_FAR)
     .withAksjonspunktCodes(
@@ -97,6 +106,9 @@ const foreldrepengerBuilders = [
   new BehandlingspunktProperties.Builder(bpc.TILKJENT_YTELSE, 'TilkjentYtelse')
     .withVisibilityWhen(hasNonDefaultBehandlingspunkt, behandlingTypeNotEquals(bt.DOKUMENTINNSYN, bt.KLAGE))
     .withStatus(getStatusFromResultatstruktur),
+  new BehandlingspunktProperties.Builder(bpc.AVREGNING, 'Avregning')
+    .withVisibilityWhen(hasNonDefaultBehandlingspunkt, behandlingTypeNotEquals(bt.KLAGE), hasSimuleringOn)
+    .withStatus(getStatusFromSimulering),
   new BehandlingspunktProperties.Builder(bpc.VEDTAK, 'Vedtak')
     .withAksjonspunktCodes(
       ac.FORESLA_VEDTAK, ac.FATTER_VEDTAK, ac.FORESLA_VEDTAK_MANUELT, ac.VEDTAK_UTEN_TOTRINNSKONTROLL, ac.VURDERE_ANNEN_YTELSE,

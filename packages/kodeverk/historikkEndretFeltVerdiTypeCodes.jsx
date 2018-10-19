@@ -1,3 +1,4 @@
+// @TODO kodeverk_i_frontend
 const historikkEndretFeltVerdiTypeCodes = {
   ABNR: {
     kode: 'ABNR',

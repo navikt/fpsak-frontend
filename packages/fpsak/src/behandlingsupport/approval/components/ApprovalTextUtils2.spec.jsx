@@ -1,9 +1,9 @@
 import { expect } from 'chai';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import klageVurdering from '@fpsak-frontend/kodeverk/klageVurdering';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/behandlingResultatType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import klageVurdering from 'kodeverk/klageVurdering';
+import behandlingResultatType from 'kodeverk/behandlingResultatType';
+import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
 import getAksjonspunktText from './ApprovalTextUtils';
 
 
@@ -145,6 +145,30 @@ describe('<ApprovalTextUtils>', () => {
     const message = getAksjonspunktText.resultFunc(true, null, null, null, null)(aksjonspunkt);
     expect(message[0].props.id).to.eql('ToTrinnsForm.Beregning.VurderATFLISammeOrg');
   });
+  it('skal vise korrekt tekst for aksjonspunkt 5058 tilstøtende ytelse', () => {
+    const beregningDto = { faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.TILSTOTENDE_YTELSE }] };
+    const aksjonspunkt = lagAksjonspunkt(
+      aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN, undefined,
+      beregningDto, 'begrunnelse', false, undefined, 'status', undefined,
+    );
+    const message = getAksjonspunktText.resultFunc(true, null, null, null, null)(aksjonspunkt);
+    expect(message[0].props.id).to.eql('ToTrinnsForm.Beregning.BeregningsgrunnlagOgInntektskategoriFastsatt');
+  });
+  it('skal vise korrekte tekster for kombinasjon av aksjonspunkt 5058', () => {
+    const beregningDto = {
+      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.TILSTOTENDE_YTELSE },
+        { kode: faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD }],
+    };
+    const aksjonspunkt = lagAksjonspunkt(
+      aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN, undefined,
+      beregningDto, 'begrunnelse', false, undefined, 'status', undefined,
+    );
+    const message = getAksjonspunktText.resultFunc(true, null, null, null, null)(aksjonspunkt);
+    expect(message[0].props.id).to.eql('ToTrinnsForm.Beregning.BeregningsgrunnlagOgInntektskategoriFastsatt');
+    expect(message[1].props.id).to.eql('ToTrinnsForm.Beregning.VurderTidsbegrensetArbeidsforhold');
+  });
+
+
   it('skal vise korrekt tekst for aksjonspunkt 5080', () => {
     const arbeidforholdDtos = [{
       navn: 'COLOR LINE CREW AS',

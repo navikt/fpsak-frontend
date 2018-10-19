@@ -2,9 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
-import { VedtakInnvilgetRevurderingPanelImpl } from './VedtakInnvilgetRevurderingPanel';
+import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
+import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import { VedtakInnvilgetRevurderingPanelImpl, lagKonsekvensForYtelsenTekst } from './VedtakInnvilgetRevurderingPanel';
 
 
 const ytelseType = fagsakYtelseType.ENGANGSSTONAD;
@@ -80,5 +80,20 @@ describe('<VedtakInnvilgetRevurderingPanel>', () => {
     const elementFields = wrapper.find(Element);
     expect(elementFields).to.have.length(1);
     expect(elementFields.first().childAt(0).text()).to.eql('1');
+  });
+
+  it('skal lage korrekt tekst for konsekvens for ytelsen', () => {
+    const konsekvenser = [
+      {
+        kode: 'BEREGNING',
+        navn: 'Endring i beregning',
+      },
+      {
+        kode: 'UTTAK',
+        navn: 'Endring i uttak',
+      },
+    ];
+    const selectorData = lagKonsekvensForYtelsenTekst(konsekvenser);
+    expect(selectorData).to.eql('Endring i beregning og Endring i uttak');
   });
 });

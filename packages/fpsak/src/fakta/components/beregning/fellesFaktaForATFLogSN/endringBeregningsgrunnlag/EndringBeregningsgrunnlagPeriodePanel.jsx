@@ -4,19 +4,17 @@ import { FieldArray } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import { EkspanderbartpanelPure } from 'nav-frontend-ekspanderbartpanel';
-import inntektskategorier from '@fpsak-frontend/kodeverk/inntektskategorier';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
+import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
+import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import inntektskategorier from 'kodeverk/inntektskategorier';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import moment from 'moment';
 import classnames from 'classnames/bind';
-import {
-  DDMMYYYY_DATE_FORMAT,
-  ISO_DATE_FORMAT,
-  createVisningsnavnForAktivitet,
-  formatCurrencyNoKr,
-} from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
 import RenderEndringBGFieldArray from './RenderEndringBGFieldArray';
 
 import styles from './endringBeregningsgrunnlagPeriodePanel.less';
+
 
 const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 
@@ -108,14 +106,14 @@ const preutfyllInntektskategori = andel => (andel.inntektskategori
 export const settFastsattBelop = (harPeriodeAarsakGraderingEllerRefusjon, beregnetPrMnd,
   fastsattForrige, fordelingForrigeBehandling, fastsattAvSaksbehandler) => {
   if (harPeriodeAarsakGraderingEllerRefusjon) {
-    if (beregnetPrMnd && fastsattAvSaksbehandler) {
+    if ((beregnetPrMnd || beregnetPrMnd === 0) && fastsattAvSaksbehandler) {
       return formatCurrencyNoKr(beregnetPrMnd);
     }
-    if (fastsattForrige) {
+    if (fastsattForrige || fastsattForrige === 0) {
       return formatCurrencyNoKr(fastsattForrige);
     }
     return '';
-  } if (fordelingForrigeBehandling) {
+  } if (fordelingForrigeBehandling || fordelingForrigeBehandling === 0) {
     return formatCurrencyNoKr(fordelingForrigeBehandling);
   }
   return 0;
@@ -152,7 +150,7 @@ EndringBeregningsgrunnlagPeriodePanel.buildInitialValues = (periode, aktivitetst
       fordelingForrigeBehandling: formatCurrencyNoKr(andel.fordelingForrigeBehandling),
       fastsattBeløp: settFastsattBelop(periode.harPeriodeAarsakGraderingEllerRefusjon,
         andel.beregnetPrMnd, andel.fastsattForrige, andel.fordelingForrigeBehandling, andel.fastsattAvSaksbehandler),
-      refusjonskrav: andel.refusjonskrav && andel.refusjonskrav !== 0 ? formatCurrencyNoKr(andel.refusjonskrav) : '',
+      refusjonskrav: andel.refusjonskrav || andel.refusjonskrav === 0 ? formatCurrencyNoKr(andel.refusjonskrav) : '',
       inntektskategori: preutfyllInntektskategori(andel),
       skalKunneEndreRefusjon: periode.skalKunneEndreRefusjon ? periode.skalKunneEndreRefusjon : false,
       belopFraInntektsmelding: andel.belopFraInntektsmelding,

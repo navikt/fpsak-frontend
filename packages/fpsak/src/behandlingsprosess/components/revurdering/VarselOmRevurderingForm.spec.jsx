@@ -2,8 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
+import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
 import FodselSammenligningPanel from 'behandling/components/fodselSammenligning/FodselSammenligningPanel';
 import { VarselOmRevurderingFormImpl as UnwrappedForm } from './VarselOmRevurderingForm';
 

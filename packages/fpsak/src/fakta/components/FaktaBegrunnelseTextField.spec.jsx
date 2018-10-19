@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-import { TextAreaField } from '@fpsak-frontend/form';
+import { TextAreaField } from 'form/Fields';
 import FaktaBegrunnelseTextField from './FaktaBegrunnelseTextField';
 
 describe('<FaktaBegrunnelseTextField>', () => {

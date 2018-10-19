@@ -3,23 +3,20 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
-import {
-  DDMMYYYY_DATE_FORMAT,
-  ISO_DATE_FORMAT,
-  removeSpacesFromNumber,
-  createVisningsnavnForAktivitet,
-} from '@fpsak-frontend/utils';
+import { removeSpacesFromNumber } from 'utils/currencyUtils';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
 import moment from 'moment';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import {
   getAksjonspunkter,
   getEndringBeregningsgrunnlag,
   getEndringBeregningsgrunnlagPerioder,
   getFaktaOmBeregningTilfellerKoder,
 } from 'behandling/behandlingSelectors';
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import { byggListeSomStreng } from '../../tilstøtendeYtelse/YtelsePanel';
+import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
+import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import { byggListeSomStreng } from '../tilstøtendeYtelse/YtelsePanel';
 import EndringBeregningsgrunnlagPeriodePanel from './EndringBeregningsgrunnlagPeriodePanel';
 
 const ElementWrapper = ({ children }) => children;
@@ -201,6 +198,9 @@ const getAndelsnr = (andelValues) => {
   }
   return andelValues.andelsnr;
 };
+
+export const harKunEndringBG = aktivertePaneler => (aktivertePaneler && aktivertePaneler.length === 1
+  && aktivertePaneler[0] === faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG);
 
 EndringBeregningsgrunnlagForm.transformValues = (values, endringBGPerioder) => {
   const endringBeregningsgrunnlagPerioder = [];

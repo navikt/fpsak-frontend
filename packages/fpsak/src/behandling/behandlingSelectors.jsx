@@ -1,16 +1,16 @@
 import { createSelector } from 'reselect';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
-import { getRestApiData, getRestApiError } from '@fpsak-frontend/data/duck';
-import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
+import { FpsakApi } from 'data/fpsakApi';
+import { getRestApiData, getRestApiError } from 'data/duck';
+import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
 import aksjonspunktCodes, {
   isInnhentSaksopplysningerAksjonspunkt,
   isVilkarForSykdomOppfylt,
-} from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
-import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
+} from 'kodeverk/aksjonspunktCodes';
+import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import behandlingStatus from 'kodeverk/behandlingStatus';
+import behandlingType from 'kodeverk/behandlingType';
 import { getSelectedSaksnummer, isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import isFieldEdited from './editedFields';
 import { getSelectedBehandlingId } from './duck';
@@ -53,11 +53,17 @@ export const getBehandlingArsakTyper = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling.behandlingArsaker
     ? selectedBehandling.behandlingArsaker.map(({ behandlingArsakType }) => behandlingArsakType) : undefined),
 );
+export const getBehandlingIsManuellRevurdering = createSelector(
+  [getBehandlingIsRevurdering, getBehandlingArsaker, getBehandlingArsakTyper],
+  (isRevurdering, ba = {}, bt = {}) => isRevurdering && (!ba.erAutomatiskRevurdering || bt.kode === 'RE-HENDELSE-FØDSEL'),
+);
 export const getBehandlingIsOnHold = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingPaaVent);
 export const getBehandlingIsQueued = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingKoet);
 export const getBehandlingOnHoldDate = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.fristBehandlingPaaVent);
 export const getBehandlingsresultat = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingsresultat);
 export const getBehandlingBeregningResultat = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.beregningResultat);
+export const getSkjaeringstidspunktForeldrepenger = createSelector([getSelectedBehandling],
+  (selectedBehandling = {}) => selectedBehandling.behandlingsresultat.skjaeringstidspunktForeldrepenger);
 export const getBehandlingHenlagt = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingHenlagt);
 export const getBehandlingUttaksperiodegrense = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling['uttak-periode-grense'],
@@ -88,6 +94,9 @@ export const getHenleggArsaker = createSelector([getSelectedBehandling], (select
 export const getHaveSentVarsel = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['sendt-varsel-om-revurdering']));
 export const getTotrinnskontrollArsaker = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['totrinnskontroll-arsaker']),
+);
+export const getTotrinnskontrollArsakerUtenUdefinert = createSelector(
+  [getTotrinnskontrollArsaker], (aarsaker = {}) => (aarsaker.filter(aarsak => aarsak.skjermlenkeType !== '-')),
 );
 export const getTotrinnskontrollArsakerReadOnly = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['totrinnskontroll-arsaker-readOnly']),
@@ -298,6 +307,10 @@ export const getOriginalBehandlingId = createSelector(
 const hasBehandlingLukketStatus = createSelector(
   [getBehandlingStatus], (status = {}) => status.kode === behandlingStatus.AVSLUTTET || status.kode === behandlingStatus.IVERKSETTER_VEDTAK
 || status.kode === behandlingStatus.FATTER_VEDTAK,
+);
+
+export const hasBehandlingUtredesStatus = createSelector(
+  [getBehandlingStatus], (status = {}) => status.kode === behandlingStatus.BEHANDLING_UTREDES,
 );
 
 export const isBehandlingStatusReadOnly = createSelector(

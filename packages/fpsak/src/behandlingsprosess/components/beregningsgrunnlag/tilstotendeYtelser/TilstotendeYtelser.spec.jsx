@@ -1,9 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
-import relatertYtelseType from '@fpsak-frontend/kodeverk/relatertYtelseType';
+import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
+import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import relatertYtelseType from 'kodeverk/relatertYtelseType';
 import relatertYtelseTypeTextCodes from 'behandlingsprosess/components/beregningsgrunnlag/fellesPaneler/relatertYtelseTypeTextCodes';
 import TilstotendeYtelser from './TilstotendeYtelser';
 

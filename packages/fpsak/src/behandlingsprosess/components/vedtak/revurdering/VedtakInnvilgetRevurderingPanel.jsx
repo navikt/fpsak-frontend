@@ -5,17 +5,17 @@ import { connect } from 'react-redux';
 import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
 import {
   getAksjonspunkter,
   getBehandlingResultatstruktur, getBehandlingSprak,
   getBehandlingsresultat,
 } from 'behandling/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandling/selectors/originalBehandlingSelectors';
-import { formatCurrencyWithKr } from '@fpsak-frontend/utils/currencyUtils';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import vedtakResultType from '@fpsak-frontend/kodeverk/vedtakResultType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
+import { formatCurrencyWithKr } from 'utils/currencyUtils';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import vedtakResultType from 'kodeverk/vedtakResultType';
+import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import { endringerIBeregningsgrunnlagGirFritekstfelt } from 'behandlingsprosess/components/vedtak/VedtakHelper';
 import VedtakFritekstPanel from 'behandlingsprosess/components/vedtak/VedtakFritekstPanel';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
@@ -42,7 +42,11 @@ const resultTextES = (beregningResultat, originaltBeregningResultat) => {
     : 'VedtakForm.Resultat.IngenEndring';
 };
 
-const resultTextFP = revurderingResultat => (revurderingResultat === undefined ? '' : revurderingResultat.navn);
+export const lagKonsekvensForYtelsenTekst = (konsekvenser) => {
+  if (!konsekvenser || konsekvenser.length < 1) {
+    return '';
+  } return konsekvenser.map(k => k.navn).join(' og ');
+};
 
 export const VedtakInnvilgetRevurderingPanelImpl = ({
   intl,
@@ -50,7 +54,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
   originaltBeregningResultat,
   beregningResultat,
   ytelseType,
-  revurderingResultat,
+  konsekvenserForYtelsen,
   revurderingsAarsakString,
   sprakKode,
   aksjonspunkter,
@@ -92,7 +96,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
       <div>
         <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
         <Normaltekst>
-          {resultTextFP(revurderingResultat)}
+          {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen)}
         </Normaltekst>
         <VerticalSpacer sixteenPx />
         <Row>
@@ -129,7 +133,7 @@ VedtakInnvilgetRevurderingPanelImpl.propTypes = {
   originaltBeregningResultat: PropTypes.shape(),
   beregningResultat: PropTypes.shape(),
   ytelseType: PropTypes.string.isRequired,
-  revurderingResultat: PropTypes.shape(),
+  konsekvenserForYtelsen: PropTypes.shape(),
   revurderingsAarsakString: PropTypes.string,
   sprakKode: PropTypes.shape(),
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType),
@@ -141,7 +145,7 @@ VedtakInnvilgetRevurderingPanelImpl.defaultProps = {
   antallBarn: undefined,
   beregningResultat: undefined,
   originaltBeregningResultat: undefined,
-  revurderingResultat: undefined,
+  konsekvenserForYtelsen: undefined,
   revurderingsAarsakString: undefined,
   sprakKode: undefined,
   aksjonspunkter: undefined,
@@ -150,8 +154,8 @@ VedtakInnvilgetRevurderingPanelImpl.defaultProps = {
 const mapStateToProps = state => ({
   beregningResultat: getBehandlingResultatstruktur(state),
   originaltBeregningResultat: getResultatstrukturFraOriginalBehandling(state),
-  revurderingResultat: getBehandlingsresultat(state) !== undefined
-    ? getBehandlingsresultat(state).konsekvensForYtelsen : undefined,
+  konsekvenserForYtelsen: getBehandlingsresultat(state) !== undefined
+    ? getBehandlingsresultat(state).konsekvenserForYtelsen : undefined,
   sprakKode: getBehandlingSprak(state),
   aksjonspunkter: getAksjonspunkter(state),
 });

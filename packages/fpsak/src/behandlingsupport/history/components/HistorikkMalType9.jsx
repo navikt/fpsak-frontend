@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import historikkinnslagType from '@fpsak-frontend/kodeverk/historikkinnslagType';
+import historikkinnslagType from 'kodeverk/historikkinnslagType';
 import { FormattedHTMLMessage, injectIntl, intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
@@ -8,14 +8,10 @@ import { Element } from 'nav-frontend-typografi';
 import { createLocationForHistorikkItems } from 'app/paths';
 import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
 
-import {
-  findBegrunnelseTekst,
-  findSkjermlenkeText,
-} from './historikkUtils';
 import BubbleText from './bubbleText';
 
 export const HistorikkMalType9 = ({
-  historikkinnslagDeler, behandlingLocation, intl, originType,
+  historikkinnslagDeler, behandlingLocation, originType,
 }) => {
   const getSplitPeriods = (endredeFelter) => {
     let text = '';
@@ -41,50 +37,43 @@ export const HistorikkMalType9 = ({
           <div>
             {historikkinnslagDel.skjermlenke
             && (
-            <Element>
-              <NavLink
-                to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
-              >
-                {findSkjermlenkeText(historikkinnslagDeler[0].skjermlenke, intl)}
-              </NavLink>
-            </Element>
-            )
-            }
-
+              <Element>
+                <NavLink to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}>
+                  {historikkinnslagDeler[0].skjermlenke.navn}
+                </NavLink>
+              </Element>
+            )}
 
             {historikkinnslagDel.endredeFelter && originType.kode === historikkinnslagType.OVST_UTTAK_SPLITT
             && (
-            <FormattedHTMLMessage
-              id="Historikk.Template.9"
-              values={{
-                opprinneligPeriode: historikkinnslagDel.endredeFelter[0].fraVerdi,
-                numberOfPeriods: historikkinnslagDel.endredeFelter.length,
-                splitPeriods: getSplitPeriods(historikkinnslagDel.endredeFelter),
-              }}
-            />
-            )
-          }
+              <FormattedHTMLMessage
+                id="Historikk.Template.9"
+                values={{
+                  opprinneligPeriode: historikkinnslagDel.endredeFelter[0].fraVerdi,
+                  numberOfPeriods: historikkinnslagDel.endredeFelter.length,
+                  splitPeriods: getSplitPeriods(historikkinnslagDel.endredeFelter),
+                }}
+              />
+            )}
 
             {historikkinnslagDel.endredeFelter && originType.kode === historikkinnslagType.FASTSATT_UTTAK_SPLITT
-          && (
-          <FormattedHTMLMessage
-            id="Historikk.Template.9.ManuellVurdering"
-            values={{
-              opprinneligPeriode: historikkinnslagDel.endredeFelter[0].fraVerdi,
-              numberOfPeriods: historikkinnslagDel.endredeFelter.length,
-              splitPeriods: getSplitPeriods(historikkinnslagDel.endredeFelter),
-            }}
-          />
-          )
-          }
-
-            <BubbleText
-              bodyText={findBegrunnelseTekst(historikkinnslagDel.begrunnelse)}
-              className="snakkeboble-panel__tekst"
-            />
+            && (
+              <FormattedHTMLMessage
+                id="Historikk.Template.9.ManuellVurdering"
+                values={{
+                  opprinneligPeriode: historikkinnslagDel.endredeFelter[0].fraVerdi,
+                  numberOfPeriods: historikkinnslagDel.endredeFelter.length,
+                  splitPeriods: getSplitPeriods(historikkinnslagDel.endredeFelter),
+                }}
+              />
+            )}
+            {historikkinnslagDel.begrunnelse && (
+              <BubbleText
+                bodyText={historikkinnslagDel.begrunnelse.navn}
+                className="snakkeboble-panel__tekst"
+              />)}
           </div>
         </div>
-
       )));
 };
 

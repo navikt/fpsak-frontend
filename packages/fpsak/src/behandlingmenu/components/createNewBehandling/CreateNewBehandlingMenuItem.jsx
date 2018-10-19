@@ -43,11 +43,11 @@ class CreateNewBehandlingMenuItem extends Component {
   }
 
   render() {
-    const { opprettNyForstegangsBehandlingEnabled, opprettRevurderingEnabled } = this.props;
+    const { opprettNyForstegangsBehandlingEnabled, opprettRevurderingEnabled, ikkeVisOpprettNyBehandling } = this.props;
     const { showModal } = this.state;
     return (
       <div>
-        <MenuButton onClick={this.showModal}>
+        <MenuButton onClick={this.showModal} disabled={ikkeVisOpprettNyBehandling}>
           <FormattedMessage id="Behandlingsmeny.NyForstegangsbehandling" />
         </MenuButton>
         {showModal
@@ -72,11 +72,13 @@ CreateNewBehandlingMenuItem.propTypes = {
   submitNyForstegangsBehandling: PropTypes.func.isRequired,
   opprettNyForstegangsBehandlingEnabled: PropTypes.bool,
   opprettRevurderingEnabled: PropTypes.bool,
+  ikkeVisOpprettNyBehandling: PropTypes.bool,
 };
 
 CreateNewBehandlingMenuItem.defaultProps = {
   opprettNyForstegangsBehandlingEnabled: false,
   opprettRevurderingEnabled: false,
+  ikkeVisOpprettNyBehandling: false,
 };
 
 export default CreateNewBehandlingMenuItem;

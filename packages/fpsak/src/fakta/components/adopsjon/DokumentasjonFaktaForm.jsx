@@ -9,13 +9,13 @@ import moment from 'moment';
 import { getEditedStatus } from 'behandling/behandlingSelectors';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { DatepickerField } from '@fpsak-frontend/form';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { required, hasValidDate } from '@fpsak-frontend/utils/validation/validators';
-import Image from '@fpsak-frontend/shared-components/Image';
+import { DatepickerField } from 'form/Fields';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { required, hasValidDate } from 'utils/validation/validators';
+import Image from 'sharedComponents/Image';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import advarselImageUrl from 'images/advarsel.svg';
 
 import styles from './dokumentasjonFaktaForm.less';
 

@@ -2,13 +2,13 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
+import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
-import BehandlingResultatType from '@fpsak-frontend/kodeverk/behandlingResultatType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
+import BehandlingResultatType from 'kodeverk/behandlingResultatType';
+import behandlingStatus from 'kodeverk/behandlingStatus';
 import { VedtakFormImpl as UnwrappedForm, buildInitialValues } from './VedtakForm';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
@@ -278,6 +278,58 @@ describe('<VedtakForm>', () => {
     expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
     const a = wrapper.find('ForhaandsvisningsKnapp');
     expect(a).to.have.length(1);
+  });
+
+  it('skal ikke vise knapper for å avslutt behandling når behandlingen er avvist med årsakkode 1099', () => {
+    const forhandsvisVedtaksbrevFunc = sinon.spy();
+    const behandlingsresultat = {
+      id: 1,
+      type: {
+        kode: BehandlingResultatType.INNVILGET,
+        navn: 'test',
+      },
+      avslagsarsak: { kode: '1099' },
+      avslagsarsakFritekst: null,
+      vedtaksbrev: {
+        kode: 'FRITEKST',
+      },
+    };
+    const aksjonspunkter = [{
+      id: 1,
+      definisjon: {
+        navn: 'annen ytelse',
+        kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+      },
+      status: {
+        navn: 'Opprettet',
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      kanLoses: true,
+      erAktivt: true,
+    }];
+    const wrapper = shallowWithIntl(<UnwrappedForm
+      {...reduxFormPropsMock}
+      intl={intlMock}
+      antallBarn={2}
+      behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+      behandlingsresultat={behandlingsresultat}
+      aksjonspunkter={aksjonspunkter}
+      behandlingPaaVent={false}
+      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
+      previewManueltBrevCallback={forhandsvisVedtaksbrevFunc}
+      aksjonspunktKoder={aksjonspunktKoder}
+      readOnly={false}
+      isBehandlingReadOnly
+      sprakkode={sprakkode}
+      skalBrukeOverstyrendeFritekstBrev={false}
+      initialValues={initialValues}
+    />);
+
+    const hovedknapp = wrapper.find('Hovedknapp');
+    expect(hovedknapp).to.have.length(1);
+    expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
+    const a = wrapper.find('ForhaandsvisningsKnapp');
+    expect(a).to.have.length(0);
   });
 
   it('skal vise knapper for å fatte vedtak og forhåndsvisning brev når foreslå avslag', () => {

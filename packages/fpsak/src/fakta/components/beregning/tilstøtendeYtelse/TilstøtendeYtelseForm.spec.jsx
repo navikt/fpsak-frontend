@@ -1,7 +1,6 @@
 import { expect } from 'chai';
-import inntektskategorier from '@fpsak-frontend/kodeverk/inntektskategorier';
-import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/beregningsgrunnlagAndeltyper';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import inntektskategorier from 'kodeverk/inntektskategorier';
+import beregningsgrunnlagAndeltyper from 'kodeverk/beregningsgrunnlagAndeltyper';
 import { TilstotendeYtelseFormImpl, getAndelsnr } from './TilstøtendeYtelseForm';
 import { fordelingAvBruttoBGFieldArrayName } from './FordelingAvBruttoBeregningsgrunnlagPanel';
 
@@ -27,26 +26,23 @@ describe('<TilstøtendeYtelseForm>', () => {
     );
     const values = buildValues([andel1, andel2]);
     const faktor = 0.8;
-    const transformedValues = TilstotendeYtelseFormImpl.transformValues(values, 'begrunnelse', faktor);
-    expect(transformedValues.begrunnelse).to.equal('begrunnelse');
-    expect(transformedValues.kode).to
-      .equal(aksjonspunktCodes.AVKLAR_BEREGNINGSGRUNNLAG_OG_INNTEKTSKATEGORI_FOR_BRUKER_MED_TILSTOTENDE_YTELSE);
-    expect(transformedValues.tilstøtendeYtelseAndeler).to.have.length(2);
-    expect(transformedValues.tilstøtendeYtelseAndeler[0].andel).to.equal('ArbeidsforholdNavn (213819)');
-    expect(transformedValues.tilstøtendeYtelseAndeler[0].andelsnr).to.equal(1);
-    expect(transformedValues.tilstøtendeYtelseAndeler[0].arbeidsforholdId).to.equal(213819);
-    expect(transformedValues.tilstøtendeYtelseAndeler[0].reduserendeFaktor).to.equal(0.8);
-    expect(transformedValues.tilstøtendeYtelseAndeler[0].fastsattBeløp).to.equal(10000);
-    expect(transformedValues.tilstøtendeYtelseAndeler[0].inntektskategori).to.equal(inntektskategorier.ARBEIDSTAKER);
-    expect(transformedValues.tilstøtendeYtelseAndeler[0].nyAndel).to.equal(false);
+    const transformedValues = TilstotendeYtelseFormImpl.transformValues(values, faktor);
+    expect(transformedValues.tilstøtendeYtelse.tilstøtendeYtelseAndeler).to.have.length(2);
+    expect(transformedValues.tilstøtendeYtelse.tilstøtendeYtelseAndeler[0].andel).to.equal('ArbeidsforholdNavn (213819)');
+    expect(transformedValues.tilstøtendeYtelse.tilstøtendeYtelseAndeler[0].andelsnr).to.equal(1);
+    expect(transformedValues.tilstøtendeYtelse.tilstøtendeYtelseAndeler[0].arbeidsforholdId).to.equal(213819);
+    expect(transformedValues.tilstøtendeYtelse.tilstøtendeYtelseAndeler[0].reduserendeFaktor).to.equal(0.8);
+    expect(transformedValues.tilstøtendeYtelse.tilstøtendeYtelseAndeler[0].fastsattBeløp).to.equal(10000);
+    expect(transformedValues.tilstøtendeYtelse.tilstøtendeYtelseAndeler[0].inntektskategori).to.equal(inntektskategorier.ARBEIDSTAKER);
+    expect(transformedValues.tilstøtendeYtelse.tilstøtendeYtelseAndeler[0].nyAndel).to.equal(false);
 
-    expect(transformedValues.tilstøtendeYtelseAndeler[1].andel).to.equal('ArbeidsforholdNavn (64564)');
-    expect(transformedValues.tilstøtendeYtelseAndeler[1].andelsnr).to.equal(2);
-    expect(transformedValues.tilstøtendeYtelseAndeler[1].arbeidsforholdId).to.equal(64564);
-    expect(transformedValues.tilstøtendeYtelseAndeler[1].reduserendeFaktor).to.equal(0.8);
-    expect(transformedValues.tilstøtendeYtelseAndeler[1].fastsattBeløp).to.equal(20000);
-    expect(transformedValues.tilstøtendeYtelseAndeler[1].inntektskategori).to.equal(inntektskategorier.ARBEIDSTAKER);
-    expect(transformedValues.tilstøtendeYtelseAndeler[1].nyAndel).to.equal(false);
+    expect(transformedValues.tilstøtendeYtelse.tilstøtendeYtelseAndeler[1].andel).to.equal('ArbeidsforholdNavn (64564)');
+    expect(transformedValues.tilstøtendeYtelse.tilstøtendeYtelseAndeler[1].andelsnr).to.equal(2);
+    expect(transformedValues.tilstøtendeYtelse.tilstøtendeYtelseAndeler[1].arbeidsforholdId).to.equal(64564);
+    expect(transformedValues.tilstøtendeYtelse.tilstøtendeYtelseAndeler[1].reduserendeFaktor).to.equal(0.8);
+    expect(transformedValues.tilstøtendeYtelse.tilstøtendeYtelseAndeler[1].fastsattBeløp).to.equal(20000);
+    expect(transformedValues.tilstøtendeYtelse.tilstøtendeYtelseAndeler[1].inntektskategori).to.equal(inntektskategorier.ARBEIDSTAKER);
+    expect(transformedValues.tilstøtendeYtelse.tilstøtendeYtelseAndeler[1].nyAndel).to.equal(false);
   });
 
 

@@ -8,9 +8,9 @@ import { Undertekst } from 'nav-frontend-typografi';
 import { Column } from 'nav-frontend-grid';
 
 import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import ArrowBox from 'sharedComponents/ArrowBox';
 import {
   getEditedStatus, getFamiliehendelse, getBehandlingType, getBarnFraTpsRelatertTilSoknad,
   getPersonopplysning, getAksjonspunkter, getSoknadAntallBarn,
@@ -19,13 +19,13 @@ import { behandlingFormValueSelector, behandlingForm } from 'behandling/behandli
 import FodselSammenligningPanel from 'behandling/components/fodselSammenligning/FodselSammenligningPanel';
 import {
   required, hasValidDate, minValue, maxValue, hasValidInteger, dateBeforeOrEqualToToday,
-} from '@fpsak-frontend/utils/validation/validators';
-import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
+} from 'utils/validation/validators';
+import behandlingType from 'kodeverk/behandlingType';
 import {
   DatepickerField, InputField, RadioGroupField, RadioOption,
-} from '@fpsak-frontend/form';
+} from 'form/Fields';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 
 import styles from './SjekkFodselDokForm.less';
 
@@ -60,7 +60,7 @@ export const SjekkFodselDokForm = ({
         </RadioGroupField>
       </div>
       {fodselInfo && !!fodselInfo.length && dokumentasjonForeligger
-        && (
+      && (
         <div className={styles.clearfix}>
           <Column xs="6">
             <ArrowBox>
@@ -79,10 +79,10 @@ export const SjekkFodselDokForm = ({
             </ArrowBox>
           </Column>
         </div>
-        )
-        }
+      )
+      }
       {(!fodselInfo || !fodselInfo.length) && dokumentasjonForeligger
-        && (
+      && (
         <div className={styles.clearfix}>
           <Column xs="5">
             <ArrowBox>
@@ -115,8 +115,8 @@ export const SjekkFodselDokForm = ({
             </ArrowBox>
           </Column>
         </div>
-        )
-        }
+      )
+      }
     </FaktaGruppe>
     <VerticalSpacer sixteenPx />
     <FaktaBegrunnelseTextField isDirty={dirty} isSubmittable={submittable} isReadOnly={readOnly} hasBegrunnelse={!!initialValues.begrunnelse} />
@@ -163,26 +163,30 @@ const getAntallBarn = (brukAntallBarnITps, antallBarnLagret, antallBarnFraSoknad
   return brukAntallBarnITps ? antallBarnFraTps : antallBarnFraSoknad;
 };
 
-const transformValues = (values, antallBarnFraSoknad, antallBarnFraTps) => ({
+const transformValues = (values, antallBarnFraSoknad, antallBarnFraTps, fodselInfo) => ({
   kode: aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL,
   fodselsdato: values.fodselsdato,
   antallBarnFodt: values.dokumentasjonForeligger
     ? getAntallBarn(values.brukAntallBarnITps, values.antallBarnFodt, antallBarnFraSoknad, antallBarnFraTps) : undefined,
   dokumentasjonForeligger: values.dokumentasjonForeligger,
-  brukAntallBarnITps: values.brukAntallBarnITps,
+  brukAntallBarnITps: fodselInfo && !!fodselInfo.length ? values.brukAntallBarnITps : false,
   ...FaktaBegrunnelseTextField.transformValues(values),
 });
 
 export const sjekkFodselDokForm = 'SjekkFodselDokForm';
 
-const mapStateToProps = (state, ownProps) => ({
-  initialValues: buildInitialValues(state),
-  onSubmit: values => ownProps.submitHandler(transformValues(values, getSoknadAntallBarn(state), getBarnFraTpsRelatertTilSoknad(state).length)),
-  fodselInfo: getPersonopplysning(state).barnFraTpsRelatertTilSoknad,
-  dokumentasjonForeliggerIsEdited: getEditedStatus(state).dokumentasjonForeligger,
-  dokumentasjonForeligger: behandlingFormValueSelector(sjekkFodselDokForm)(state, 'dokumentasjonForeligger'),
-  behandlingsType: getBehandlingType(state),
-});
+const mapStateToProps = (state, ownProps) => {
+  const fodselInfo = getPersonopplysning(state).barnFraTpsRelatertTilSoknad;
+  return {
+    initialValues: buildInitialValues(state),
+    onSubmit: values => ownProps.submitHandler(transformValues(values,
+      getSoknadAntallBarn(state), getBarnFraTpsRelatertTilSoknad(state).length, fodselInfo)),
+    fodselInfo,
+    dokumentasjonForeliggerIsEdited: getEditedStatus(state).dokumentasjonForeligger,
+    dokumentasjonForeligger: behandlingFormValueSelector(sjekkFodselDokForm)(state, 'dokumentasjonForeligger'),
+    behandlingsType: getBehandlingType(state),
+  };
+};
 
 export default connect(mapStateToProps)(behandlingForm({
   form: sjekkFodselDokForm,

@@ -1,7 +1,7 @@
 import React from 'react';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
 import { expect } from 'chai';
-import kanIkkeOppgiAnnenForelderArsaker from '@fpsak-frontend/kodeverk/kanIkkeOppgiAnnenForelderArsak';
+import kanIkkeOppgiAnnenForelderArsaker from 'kodeverk/kanIkkeOppgiAnnenForelderArsak';
 
 import AnnenForelderPanel, { AnnenForelderPanelImpl, KanIkkeOppgiBegrunnelsePanel } from './AnnenForelderPanel';
 

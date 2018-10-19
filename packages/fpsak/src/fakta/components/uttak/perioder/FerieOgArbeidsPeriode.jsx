@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import FlexColumn from '@fpsak-frontend/shared-components/flexGrid/FlexColumn';
-import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';
-import FlexContainer from '@fpsak-frontend/shared-components/flexGrid/FlexContainer';
+import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
+import FlexRow from 'sharedComponents/flexGrid/FlexRow';
+import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/uttakPeriodeVurdering';
-import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
+import { RadioOption, RadioGroupField, TextAreaField } from 'form/Fields';
 import {
   required, maxLength, minLength, hasValidPeriod, hasValidText,
-} from '@fpsak-frontend/utils/validation/validators';
+} from 'utils/validation/validators';
 import InntektsmeldingInfo from '../components/InntektsmeldingInfo';
 import EndreSoknadsperiode from '../components/EndreSoknadsperiode';
 import PerioderKnapper from './PerioderKnapper';
@@ -102,6 +102,7 @@ export const FerieOgArbeidsPeriode = ({
               tilDato={tilDato}
               uttakPeriodeType={uttakPeriodeType}
               arbeidsprosentFraSøknad={arbeidstidprosent}
+              bekreftet={bekreftet}
               virksomhetNavn={virksomhetNavn}
               orgnr={orgnr}
             />

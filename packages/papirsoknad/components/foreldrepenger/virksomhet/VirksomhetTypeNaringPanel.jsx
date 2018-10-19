@@ -1,17 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { CheckboxField } from '@fpsak-frontend/form';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
-import naringsvirksomhetType from '@fpsak-frontend/kodeverk/naringsvirksomhetType';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import CheckboxField from 'form/fields/CheckboxField';
+import kodeverkPropType from 'kodeverk/kodeverkPropType';
+import naringsvirksomhetType from 'kodeverk/naringsvirksomhetType';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import PropTypes from 'prop-types';
 
 const naringsvirksomhetTypeOrder = {
   [naringsvirksomhetType.DAGMAMMA]: 1,
