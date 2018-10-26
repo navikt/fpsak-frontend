@@ -29,7 +29,7 @@ describe('Revurdering', () => {
     Cypress.Cookies.preserveOnce('ID_token', 'refresh_token');
   });
 
-  it('Sjekker hvordan Uttak ser ut...', () => {
+  it('Lag sak klar til revurdering', () => {
     const uttakUtl = `${env.GUIROOT}#/fagsak/${state.fagsak.saksnummer}/behandling/${state.behandling.id}/?punkt=uttak`;
     cy.visit(env.GUIROOT);
     cy.visit(uttakUtl);

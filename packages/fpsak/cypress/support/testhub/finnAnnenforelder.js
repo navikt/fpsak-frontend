@@ -1,6 +1,9 @@
-const paths = require('../test-data/paths');
+const paths = require('../../test-data/paths');
 
-Cypress.Commands.add('finnAnnenforelder', state => cy.request({
+/**
+ * Dette styres via scenarioene.
+ */
+Cypress.Commands.add('finnAnnenforelderViaTesthub', state => cy.request({
   url: paths.TESTHUB_SOK_PERSON,
   method: 'POST',
   body: state.annenforelderSok,

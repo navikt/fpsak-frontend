@@ -1,12 +1,25 @@
 const moment = require('moment');
-const testUsers = require('../test-data/testUsers');
 const env = require('../test-data/environment');
-const personSok = require('../test-data/person-sok/enkel-kvinne');
-const soknad = require('../test-data/foreldrepengesoknad-sendviafordeling/enkel-soknad');
+
+const hovedsoknad = require('../test-data/foreldrepengesoknad-sendviafordeling/enkel-soknad');
 
 const state = {
-  personSok,
-  soknad,
+  hovedsoker: {
+    arbeidsforhold: null,
+    behandling: null,
+    fagsak: null,
+    inntektsmelding: null,
+    person: {},
+    soknad: hovedsoknad,
+  },
+  annensoker: {
+    arbeidsforhold: null,
+    behandling: null,
+    fagsak: null,
+    inntektsmelding: null,
+    person: {},
+    soknad: hovedsoknad,
+  },
 };
 
 const formatDate = function formatDate(date) {
@@ -20,13 +33,14 @@ describe('My First Cypress Test', () => {
     Cypress.Cookies.debug(false);
     const openAmUsername = Cypress.env('SAKSBEHANDLER_USERNAME');
     const openAmPassword = Cypress.env('SAKSBEHANDLER_PASSWORD');
+    cy.hentDollyPerson(state.hovedsoker, 'kvinner.json');
     cy.login(openAmUsername, openAmPassword);
-    cy.finnPerson(state);
-    cy.sikkerstillAtArbeidsforhold(state);
-    cy.sendSoknadViaTesthub(state);
-    cy.pollFagsak(state);
-    cy.pollBehandling(state);
-    cy.sendInntektsmeldingViaTesthub(state);
+    cy.sikkerstillArbeidsforholdViaTesthub(state.hovedsoker);
+    cy.sendSoknadViaTesthub(state.hovedsoker);
+    cy.pollFagsak(state.hovedsoker);
+    cy.konsumerDollyPerson(state.hovedsoker);
+    cy.pollBehandling(state.hovedsoker);
+    cy.sendInntektsmeldingViaTesthub(state.hovedsoker);
   });
 
   beforeEach(() => {
@@ -36,16 +50,16 @@ describe('My First Cypress Test', () => {
   it('Besøker FPSAK og går igjennom dokumenterings steget', () => {
     cy.visit(env.GUIROOT);
     cy.get('input#searchString')
-      .type(`${state.soknad.fnr}{enter}`);
+      .type(`${state.hovedsoker.soknad.fnr}{enter}`);
     cy.wait(4000);
     cy.url()
       .should('include', 'fakta=foedselsvilkaaret');
     cy.contains('Dokumentasjon foreligger')
       .click();
     cy.get('#antallBarnFodt')
-      .type(state.soknad.antallBarn);
+      .type(state.hovedsoker.soknad.antallBarn);
     cy.get('input[placeholder="dd.mm.åååå"]')
-      .type(formatDate(state.soknad.foedsel.foedselsdato));
+      .type(formatDate(state.hovedsoker.soknad.foedsel.foedselsdato));
     cy.get('#begrunnelse')
       .type('Manglet i testgrunnlaget... :-/');
     cy.contains('Bekreft og fortsett')

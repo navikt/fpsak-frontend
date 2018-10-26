@@ -1,6 +1,6 @@
-const paths = require('../test-data/paths');
+const paths = require('../../test-data/paths');
 
-Cypress.Commands.add('finnHovedsoker', state => cy.request({
+Cypress.Commands.add('finnHovedsokerViaTesthub', state => cy.request({
   url: paths.TESTHUB_SOK_PERSON,
   method: 'POST',
   body: state.hovedsokerSok,

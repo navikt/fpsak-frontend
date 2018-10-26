@@ -13,6 +13,7 @@ cypress.env.json
 /target/
 **/cypress/videos
 **/cypress/screenshots
+**/cypress/test-data/test-identer
 /node_modules
 npm-debug.log
 lib/
