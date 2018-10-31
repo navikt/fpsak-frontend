@@ -3,6 +3,7 @@ import './konsumerDollyPerson';
 import './login';
 import './oppdaterBehandling';
 import './oppfyllAksjonspunkt5027';
+import './oppfyllAksjonspunkt5001';
 import './pollAksjonspunkter';
 import './pollBehandling';
 import './pollFagsak';

@@ -1,0 +1,15 @@
+{
+  "behandlingId": null,
+  "saksnummer": null,
+  "behandlingVersjon": null,
+  "bekreftedeAksjonspunktDtoer": [
+    {
+      "@type": "5001",
+      "kode": "5001",
+      "utstedtdato": "2018-09-12",
+      "termindato": "2018-11-12",
+      "antallBarn": 1,
+      "begrunnelse": null
+    }
+  ]
+}

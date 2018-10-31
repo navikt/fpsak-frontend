@@ -1,0 +1,15 @@
+{
+  "behandlingId": null,
+  "saksnummer": null,
+  "behandlingVersjon": null,
+  "bekreftedeAksjonspunktDtoer": [
+    {
+      "@type": "5015",
+      "kode": "5015"
+    },
+    {
+      "@type": "5056",
+      "kode": "5056"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 const env = require('../test-data/environment');
 
 const hovedsokerSok = require('../test-data/person-sok/enkel-kvinne');
-const hovedsoknad = require('../test-data/foreldrepengesoknad-sendviafordeling/enkel-soknad');
+const hovedsoknad = require('../test-data/foreldrepengesoknad-sendviafordeling/enkel-soknad-termin');
 
 const state = {
   hovedsokerSok,

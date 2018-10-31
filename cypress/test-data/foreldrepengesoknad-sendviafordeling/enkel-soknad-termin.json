@@ -4,13 +4,16 @@
   "brukRenXml": false,
   "brukerRolle": "MOR",
   "antallBarn": 1,
-  "foedsel": {
-    "foedselsdato": "2018-10-05T10:00:00.000Z",
+  "foedsel": null,
+  "termin": {
     "antallBarn": 1,
-    "vedlegg": [],
-    "soekersRelasjonTilBarnetDtoType": "FoedselDto"
+    "soekersRelasjonTilBarnetDtoType": "TerminDto",
+    "termindato": "2018-10-05T10:00:00.000Z",
+    "utstedtdato": "2018-08-05T13:07:34.841Z",
+    "vedlegg": [
+      "I000041"
+    ]
   },
-  "termin": null,
   "adopsjon": null,
   "perioder": [
     {
@@ -62,7 +65,7 @@
       "vedlegg": [],
       "oenskerSamtidigUttak": false,
       "type": {
-        "kode": "MØDREKVOTE",
+        "kode": "FELLESPERIODE",
         "kodeverkDtoType": "UttaksperiodetyperDto",
         "kodeverk": "UTTAK_PERIODE_TYPE"
       },

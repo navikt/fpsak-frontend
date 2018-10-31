@@ -1,6 +1,7 @@
 const env = require('../test-data/environment');
-const hovedsoknad = require('../test-data/foreldrepengesoknad-sendviafordeling/enkel-soknad');
-
+const hovedsoknad = require('../test-data/foreldrepengesoknad-sendviafordeling/enkel-soknad-termin');
+const fixRelativeDates = require('../helpers/fixRelativeDates');
+const birthDate = require('../test-data/dates')['14_DAGER_FREM_I_TID'];
 const state = {
   hovedsoker: {
     arbeidsforhold: null,
@@ -8,7 +9,7 @@ const state = {
     fagsak: null,
     inntektsmelding: null,
     person: {},
-    soknad: hovedsoknad,
+    soknad: fixRelativeDates(hovedsoknad, birthDate),
   },
   annensoker: {
     arbeidsforhold: null,
@@ -16,7 +17,7 @@ const state = {
     fagsak: null,
     inntektsmelding: null,
     person: {},
-    soknad: hovedsoknad,
+    soknad: fixRelativeDates(hovedsoknad, birthDate),
   },
 };
 

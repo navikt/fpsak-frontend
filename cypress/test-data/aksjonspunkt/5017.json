@@ -1,0 +1,19 @@
+{
+  "behandlingId": null,
+  "saksnummer": null,
+  "behandlingVersjon": 15,
+  "bekreftedeAksjonspunktDtoer": [
+    {
+      "@type": "5016",
+      "begrunnelse": null,
+      "aksjonspunktGodkjenningDtos": [
+        {
+          "aksjonspunktKode": "5027",
+          "godkjent": true,
+          "begrunnelse": null,
+          "arsaker": []
+        }
+      ]
+    }
+  ]
+}
