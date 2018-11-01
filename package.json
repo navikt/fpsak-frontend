@@ -1,6 +1,6 @@
 {
   "name": "fpsak-frontend",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Klient for Foreldrepenger",
   "main": "./target/index.js",
   "author": "NAV",
@@ -24,7 +24,7 @@
     "doc": "react-asciidoc-generator ./packages/ -o ../../docs/generated/react.adoc --handlebar-template src/docs/asciidoc-template.handlebars",
     "cypress:open": "cypress open",
     "docker-build": "docker build -t fpfront . -f Dockerfile",
-    "docker-start": "yarn docker-stop; yarn docker-build; docker run -d -e APP_API_GATEWAY='http://localhost:8080' --name fpfront --net=host fpfront",
+    "docker-start": "yarn docker-stop; yarn docker-build; docker run -d -e APP_API_GATEWAY='https://app-t10.adeo.no' --name fpfront --net=host fpfront",
     "docker-stop": "docker stop fpfront; docker rm fpfront",
     "docker-push": "docker build . -t docker.adeo.no:5000/$npm_package_name:$npm_package_version; docker push docker.adeo.no:5000/$npm_package_name:$npm_package_version",
     "nais-upload": "nais upload -a $npm_package_name -v $npm_package_version",
