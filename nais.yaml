@@ -1,5 +1,5 @@
 name: fpsak-frontend
-image: navikt/fpsak-frontend
+image: docker.adeo.no:5000/fpsak-frontend
 team: foreldrepenger
 replicas:
   min: 1
@@ -15,5 +15,7 @@ healthcheck:
     initialDelay: 60
 fasitResources:
   used:
-  - alias: foreldrepengesoknad-api
-    resourceType: restservice
+  - alias: fpsak_backend
+    resourceType: webservicegateway
+    propertyMap:
+      url: APP_API_GATEWAY
