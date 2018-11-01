@@ -1,6 +1,6 @@
 {
   "name": "fpsak-frontend",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "Klient for Foreldrepenger",
   "main": "./target/index.js",
   "author": "NAV",
@@ -24,8 +24,12 @@
     "doc": "react-asciidoc-generator ./packages/ -o ../../docs/generated/react.adoc --handlebar-template src/docs/asciidoc-template.handlebars",
     "cypress:open": "cypress open",
     "docker-build": "docker build -t fpfront . -f Dockerfile",
-    "docker-start":"yarn docker-stop; yarn docker-build; docker run -d -e APP_API_GATEWAY='http://localhost:8080' --name fpfront --net=host fpfront",
-    "docker-stop":"docker stop fpfront; docker rm fpfront"
+    "docker-start": "yarn docker-stop; yarn docker-build; docker run -d -e APP_API_GATEWAY='http://localhost:8080' --name fpfront --net=host fpfront",
+    "docker-stop": "docker stop fpfront; docker rm fpfront",
+    "docker-push": "docker build . -t docker.adeo.no:5000/$npm_package_project:$npm_package_version; docker push docker.adeo.no:5000/$npm_package_project:$npm_package_version",
+    "nais-upload": "nais upload -a $npm_package_project -v $npm_package_version",
+    "nais-deploy": "nais deploy -a $npm_package_project -v $npm_package_version",
+    "deploy": "yarn version --patch; yarn docker-push; yarn nais-upload; yarn nais-deploy"
   },
   "workspaces": [
     "packages/*"
@@ -107,6 +111,7 @@
     "html-webpack-plugin": "^3.2.0",
     "ignore-styles": "^5.0.1",
     "istanbul-instrumenter-loader": "^3.0.1",
+    "js-base64": "*",
     "jsdom": "^11.12.0",
     "json-loader": "^0.5.7",
     "less": "^3.8.1",
@@ -126,6 +131,7 @@
     "sinon-chai": "^3.2.0",
     "style-loader": "^0.22.1",
     "uglifyjs-webpack-plugin": "^1.2.7",
+    "uuid": "*",
     "webpack": "^4.16.5",
     "webpack-cli": "3.1.0",
     "webpack-dev-server": "^3.1.5",
