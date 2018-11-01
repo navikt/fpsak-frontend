@@ -1,6 +1,6 @@
 {
   "name": "fpsak-frontend",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Klient for Foreldrepenger",
   "main": "./target/index.js",
   "author": "NAV",
@@ -26,9 +26,9 @@
     "docker-build": "docker build -t fpfront . -f Dockerfile",
     "docker-start": "yarn docker-stop; yarn docker-build; docker run -d -e APP_API_GATEWAY='http://localhost:8080' --name fpfront --net=host fpfront",
     "docker-stop": "docker stop fpfront; docker rm fpfront",
-    "docker-push": "docker build . -t docker.adeo.no:5000/$npm_package_project:$npm_package_version; docker push docker.adeo.no:5000/$npm_package_project:$npm_package_version",
-    "nais-upload": "nais upload -a $npm_package_project -v $npm_package_version",
-    "nais-deploy": "nais deploy -a $npm_package_project -v $npm_package_version",
+    "docker-push": "docker build . -t docker.adeo.no:5000/$npm_package_name:$npm_package_version; docker push docker.adeo.no:5000/$npm_package_name:$npm_package_version",
+    "nais-upload": "nais upload -a $npm_package_name -v $npm_package_version",
+    "nais-deploy": "nais deploy -a $npm_package_name -v $npm_package_version",
     "deploy": "yarn version --patch; yarn docker-push; yarn nais-upload; yarn nais-deploy"
   },
   "workspaces": [
