@@ -1,6 +1,6 @@
 {
   "name": "fpsak-frontend",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "Klient for Foreldrepenger",
   "main": "./target/index.js",
   "author": "NAV",
@@ -23,7 +23,7 @@
     "less:lint": "lesshint --max-warnings 0 --reporter ./_scripts/lesshint-reporter.js packages -e *Source-Sans*.less",
     "doc": "react-asciidoc-generator ./packages/ -o ../../docs/generated/react.adoc --handlebar-template src/docs/asciidoc-template.handlebars",
     "cypress:open": "cypress open",
-    "docker-build": "docker build -t fpfront . -f Dockerfile",
+    "docker-build": "docker build -t fpfront . -f Dockerfile --build-arg HTTPS_PROXY=$HTTPS_PROXY --build-arg HTTP_PROXY=$HTTP_PROXY",
     "docker-start": "yarn docker-stop; yarn docker-build; docker run -d -e APP_API_GATEWAY='https://app-t10.adeo.no' --name fpfront --net=host fpfront",
     "docker-stop": "docker stop fpfront; docker rm fpfront",
     "docker-push": "docker build . -t docker.adeo.no:5000/$npm_package_name:$npm_package_version; docker push docker.adeo.no:5000/$npm_package_name:$npm_package_version",
