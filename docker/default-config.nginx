@@ -1,0 +1,157 @@
+# pushState friendly!
+# The setup:
+#   * javascript app is located at `${APP_DIR}`
+
+charset utf-8;
+
+tcp_nopush on;
+tcp_nodelay off;
+client_header_timeout ${CLIENT_HEADER_TIMEOUT}s;
+client_body_timeout ${CLIENT_BODY_TIMEOUT}s;
+client_max_body_size ${CLIENT_MAX_BODY_SIZE}k;
+# reset_timedout_connection on;
+
+# Trenger ikke accesslogger på NAIS siden dette er innebygd i platformen
+access_log off;
+error_log /dev/stdout info;
+lua_package_path '~/lua/?.lua;;';
+lua_shared_dict discovery 1m;
+lua_shared_dict jwks 1m;
+resolver 10.33.43.31;
+
+gzip_types
+    text/css
+    text/javascript
+    text/xml
+    text/plain
+    application/javascript
+    application/x-javascript
+    application/json
+    application/xml
+    application/rss+xml
+    application/atom+xml
+    font/truetype
+    font/opentype
+    image/svg+xml;
+
+server {
+  listen 9000;
+  listen 8080;
+  root ${APP_DIR};
+  server_name  localhost;
+
+  error_page 404 @rewrites;
+
+
+
+  # API Proxy
+    location ~ ^/fpsak/(cb|jetty) {
+      access_by_lua_block {
+        local opts = {
+          redirect_uri = "http://localhost:8080/fpsak/cb",
+          client_id = "fpsak-localhost",
+          client_secret = "KLNebXvbi4-gSPMzWrlNK7LPT93voNjm",
+          scope = "openid",
+          ssl_verify = "no",
+          token_endpoint_auth_method = "client_secret_basic",
+          discovery = "https://isso-t.adeo.no/isso/oauth2/.well-known/openid-configuration",
+          session_contents = {enc_id_token=true},
+        }
+        
+        local res, err, target_url, session = require("resty.openidc").authenticate(opts)
+
+        if err then
+          ngx.status = 500
+          ngx.say(err)
+          ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR)
+        end
+        -- ngx.log(ngx.NOTICE, )
+        if session.data.enc_id_token then
+          ngx.header['Set-Cookie'] = 'ID_token=' .. session.data.enc_id_token .. ';path=/'
+          return ngx.redirect("/")
+        end
+      }
+    }
+
+    location /fpsak/sprak/ {
+      proxy_pass              ${APP_API_GATEWAY}/fpsak/sprak/;
+      proxy_ssl_verify        off;
+      proxy_http_version      1.1;
+    }
+
+    location  /fpsak/api/ {
+      proxy_pass              ${APP_API_GATEWAY}/fpsak/api/;
+      proxy_redirect          ${APP_API_GATEWAY}/ /;
+      proxy_ssl_verify        off;
+      proxy_http_version      1.1;
+      proxy_set_header        X-Real-IP $remote_addr;
+
+      # Husk vi er inne i containeren her. dvs at scheme alltid er http...
+      proxy_redirect          http://$proxy_host/ https://$host/;
+      proxy_set_header        Referer $http_referer;
+
+      #proxy_set_header       X-Forwarded-Host $host:$server_port;
+      #proxy_set_header       X-Forwarded-For $proxy_add_x_forwarded_for;
+      #proxy_set_header       Connection "";
+      #proxy_set_header       Referer $http_referer;
+      #proxy_intercept_errors on;
+      #error_page 401 = @handle_unauthenticated;
+      #error_page 301 302 303 307 = @handle_redirect;
+      #proxy_set_header       Host $http_host;
+      #proxy_set_header       X-NginX-Proxy    true;
+      #proxy_redirect         'http://$proxy_host:$proxy_port/' /;
+      #proxy_redirect         http://$proxy_host/ /;
+
+      ## Will be returned on the way "up"
+      add_header              X-Debug-Proxy-Host 'http://$proxy_host/ $scheme://$host/';
+    }
+
+
+
+  location @handle_redirect {
+    return 404 "Upstream tries to redirect";
+    add_header Content-Type text/plain;
+
+    #set $redir_loc '$upstream_http_location';
+    #proxy_pass $redir_loc;
+  }
+  location @handle_unauthenticated {
+    return 401 "Unauthenticated";
+    add_header Content-Type text/plain;
+  }
+  # Health check for NAIS
+  location = /health/isAlive {
+    return 200 "Application:UP";
+    add_header Content-Type text/plain;
+  }
+
+  # Readiness check for NAIS
+  location = /health/isReady {
+        return 200 "Application:READY";
+        add_header Content-Type text/plain;
+  }
+
+
+  # To make sure any assets can get through :)
+  location / {
+    try_files $uri @rewrites;
+
+    # Hvis vi tillater browser-caching vil vi ikke ha nedetidsfri deploy (!)
+    add_header Cache-Control no-cache;
+
+    set $use_white_list "${WHITE_LIST}";
+		if ($use_white_list = "off") {
+			break;
+		}
+
+		if ($proxy_add_x_forwarded_for !~ "^${WHITE_LIST_IP}$") {
+			return 403;
+		}
+
+
+  }
+  # If no asset matches, send it to your javascript app. Hopefully it's a route in the app!
+  location @rewrites {
+    rewrite ^(.+)$ /index.html last;
+  }
+}
