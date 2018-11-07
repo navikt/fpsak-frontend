@@ -1,10 +1,16 @@
 
 
 
-Starte på nytt
+## Starte på nytt
 
-git checkout fpsak-master
-git reset --hard origin/master
-node ./sync-fpsak-frontend/find-imports
-node ./sync-fpsak-frontend/overwrite-with-prod
-node ./sync-fpsak-frontend/fix-paths
+
+```
+git checkout -b migrering
+node copy-single-files
+node overwrite-with-prod
+node fix-paths
+```
+
+## Henter ut alle imports fra det nye prosjektet.
+
+`node find-imports`
