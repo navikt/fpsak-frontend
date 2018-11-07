@@ -1,21 +1,17 @@
 const paths = require('../../test-data/paths');
-const inntektsmelding = require('../../test-data/journalforInntektsmelding/enkel');
-
+const inntektsmeldingTpl = require('../../test-data/inntektsmelding');
 Cypress.Commands.add('sendInntektsmeldingViaTesthub', (soker) => {
-  // henter ut en person
-  inntektsmelding.arbeidstakerFNR = soker.person.ident;
-  inntektsmelding.arbeidsforholdId = soker.arbeidsforhold.arbeidsforholdId;
-  inntektsmelding.startDatoForeldrepengePerioden = soker.soknad.perioder[0].fom;
-  inntektsmelding.inntektsmeldingID = Math.random()
-    .toString(36)
-    .replace(/[^a-z]+/g, '')
-    .substr(0, 5);
-  inntektsmelding.organisasjonsnummer = soker.arbeidsforhold.organisasjonNummer;
-  soker.inntektsmelding = inntektsmelding;
+  soker.inntektsmelding = inntektsmeldingTpl(
+    'enkel',
+    soker.person.ident,
+    soker.arbeidsforhold.arbeidsforholdId,
+    soker.soknad.perioder[0].fom,
+    soker.arbeidsforhold.organisasjonNummer,
+  );
   return cy.request({
     url: paths.TESTHUB_SEND_INNTEKTSMELDING,
     method: 'POST',
-    body: inntektsmelding,
+    body: soker.inntektsmelding,
   })
     .then((res) => {
       console.log('Done sendInntektsmeldingViaTesthub: ', res);

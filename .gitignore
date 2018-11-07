@@ -89,3 +89,4 @@ fabric.properties
 .idea/sonarlint/
 .idea/jsLinters/
 .vscode
+.consumed-idents.json

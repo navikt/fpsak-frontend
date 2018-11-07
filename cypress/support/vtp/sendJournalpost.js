@@ -1,6 +1,6 @@
-const req = require('../helpers/journalpostRequest');
+const req = require('../../helpers/journalpostRequest');
 
-Cypress.Commands.add('journalpost', (soker) => {
+Cypress.Commands.add('journalforSoknad', (soker) => {
   cy.request(req(
     soker.soknadXML,
     soker.soknadJournalpostId,

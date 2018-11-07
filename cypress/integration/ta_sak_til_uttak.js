@@ -43,6 +43,7 @@ describe('tester sekvensiell kjøring av brukere fra dolly', () => {
   });
 
   it('Sjekker hvordan Uttak ser ut...', () => {
+    // cy.route('/fpsak/api/nav-ansatt', 'fixture:nav-ansatt.json');
     const uttakUtl = `${env.GUIROOT}#/fagsak/${state.hovedsoker.fagsak.saksnummer}/behandling/${state.hovedsoker.behandling.id}/?punkt=uttak`;
     cy.visit(uttakUtl);
     console.log(state);
