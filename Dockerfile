@@ -28,7 +28,7 @@ COPY docker/start-nginx.sh /usr/sbin/start
 
 RUN chmod u+x /usr/sbin/start
 
-EXPOSE 8080
+EXPOSE 9000
 
 WORKDIR ${APP_DIR}
 

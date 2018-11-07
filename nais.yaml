@@ -4,27 +4,25 @@ team: foreldrepenger
 replicas:
   min: 1
   max: 1
-  cpuThresholdPercentage: 50
+  cpuThresholdPercentage: 80
 port: 9000
 healthcheck:
   liveness:
     path: /health/isAlive
-    initialDelay: 60
+    initialDelay: 5
   readiness:
     path: /health/isReady
-    initialDelay: 60
+    initialDelay: 5
 fasitResources:
   used:
   - alias: fpsak-backend
     resourceType: webservicegateway
     propertyMap:
       url: APP_API_GATEWAY
-  - alias: "OpenIdConnectAgent"
-    resourceType: credential
+  - alias: fpsak-frontend-oidc
+    resourceType: OpenIdConnect
     propertyMap:
-      username: OPENID_USERNAME
-      password: OPENID_PASSWORD
-  - alias: ISSO-HOST
-    resourceType: baseUrl
-    propertyMap:
-      url: OPENID_ISSOHOST
+      hostUrl: OIDC_HOST_URL
+      agentName: OIDC_AGENTNAME
+      password: OIDC_PASSWORD
+

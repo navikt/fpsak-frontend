@@ -5,7 +5,7 @@ export RESOLVER=$(cat /etc/resolv.conf | grep -v '^#' | grep -m 1 nameserver | a
 echo "Will use resolver:" $RESOLVER
 
 # replace env for nginx conf
-envsubst '$WHITE_LIST $WHITE_LIST_IP $DEBUG $APP_DIR $APP_PATH_PREFIX $APP_API_PLACEHOLDER $APP_API_GATEWAY $CLIENT_BODY_TIMEOUT $CLIENT_HEADER_TIMEOUT $CLIENT_MAX_BODY_SIZE $OPENID_USERNAME $OPENID_PASSWORD $OPENID_ISSOHOST $RESOLVER $APP_NAME $APP_VERSION $FASIT_ENVIRONMENT_NAME' < /etc/nginx/conf.d/app.conf.template > /etc/nginx/conf.d/fpsak.conf
+envsubst '$WHITE_LIST $WHITE_LIST_IP $DEBUG $APP_DIR $APP_PATH_PREFIX $APP_API_PLACEHOLDER $APP_API_GATEWAY $CLIENT_BODY_TIMEOUT $CLIENT_HEADER_TIMEOUT $CLIENT_MAX_BODY_SIZE $OIDC_AGENTNAME $OIDC_PASSWORD $OIDC_HOST_URL $RESOLVER $APP_NAME $APP_VERSION $FASIT_ENVIRONMENT_NAME' < /etc/nginx/conf.d/app.conf.template > /etc/nginx/conf.d/fpsak.conf
 
 # find all env start with APP_
 export SUBS=$(echo $(env | cut -d= -f1 | grep "^APP_" | sed -e 's/^/\$/'))

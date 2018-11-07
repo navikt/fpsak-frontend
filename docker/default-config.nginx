@@ -1,17 +1,16 @@
-charset utf-8;
-
-tcp_nopush on;
-tcp_nodelay off;
-client_header_timeout "${CLIENT_HEADER_TIMEOUT}s";
-client_body_timeout "${CLIENT_BODY_TIMEOUT}s";
-client_max_body_size "${CLIENT_MAX_BODY_SIZE}k";
-
 access_log off;
+charset utf-8;
+client_body_timeout "${CLIENT_BODY_TIMEOUT}s";
+client_header_timeout "${CLIENT_HEADER_TIMEOUT}s";
+client_max_body_size "${CLIENT_MAX_BODY_SIZE}k";
 error_log /dev/stdout info;
 lua_package_path '~/lua/?.lua;;';
 lua_shared_dict discovery 1m;
 lua_shared_dict jwks 1m;
+proxy_buffering off;
 resolver "${RESOLVER}";
+tcp_nodelay off;
+tcp_nopush on;
 
 gzip_types
     text/css
@@ -30,10 +29,11 @@ gzip_types
 
 server {
     listen 9000;
-    listen 8080;
     root "${APP_DIR}";
     server_name  localhost;
     error_page 404 @rewrites;
+
+    add_header X-Application-Id "${APP_NAME} ${APP_VERSION} med proxy mot ${APP_API_GATEWAY}";
 
     location /fpsak/sprak/ {
         proxy_pass              "${APP_API_GATEWAY}/fpsak/sprak/";
@@ -68,30 +68,43 @@ server {
         add_header Content-Type text/plain;
     }
 
+    ## All static files will be served directly.
+    location ~* ^.+\.(?:css|cur|js|jpe?g|gif|htc|ico|png|html|xml|otf|ttf|eot|woff|svg)$ {
+        access_log off;
+        expires 365d;
+
+        ## No need to bleed constant updates. Send the all shebang in one
+        ## fell swoop.
+        tcp_nodelay off;
+
+        ## Set the OS file cache.
+        open_file_cache max=3000 inactive=120s;
+        open_file_cache_valid 45s;
+        open_file_cache_min_uses 2;
+        open_file_cache_errors off;
+    }
+
     # To make sure any assets can get through :)
     location / {
-        try_files $uri @rewrites;
-
         # Hvis vi tillater browser-caching vil vi ikke ha nedetidsfri deploy (!)
         add_header Cache-Control no-cache;
+
+        try_files $uri @rewrites;
 
         access_by_lua_block {
             local callback_path = "/fpsak/cb"
             local callback_host = "https://" .. ngx.var.host
-            local client_id = "${APP_NAME}-${FASIT_ENVIRONMENT_NAME}"
             if ngx.var.host == "localhost" then
                 callback_host = "http://localhost:" .. ngx.var.server_port
-                client_id = "${OPENID_USERNAME}"
             end
-
             local opts = {
                 redirect_uri = callback_host .. callback_path,
-                client_id = client_id,
-                client_secret = "${OPENID_PASSWORD}",
+                client_id = "${OIDC_AGENTNAME}",
+                client_secret = "${OIDC_PASSWORD}",
                 scope = "openid",
                 ssl_verify = "no",
                 token_endpoint_auth_method = "client_secret_basic",
-                discovery = "${OPENID_ISSOHOST}" .. "/.well-known/openid-configuration",
+                discovery = "${OIDC_HOST_URL}" .. "/oauth2/.well-known/openid-configuration",
                 session_contents = {
                     enc_id_token = true
                 }
@@ -112,6 +125,7 @@ server {
         }
 
         set $use_white_list "${WHITE_LIST}";
+
         if ($use_white_list = "off") {
             break;
         }
@@ -119,7 +133,6 @@ server {
         if ($proxy_add_x_forwarded_for !~ "^${WHITE_LIST_IP}$") {
             return 403;
         }
-
     }
     # If no asset matches, send it to your javascript app. Hopefully it's a route in the app!
     location @rewrites {
