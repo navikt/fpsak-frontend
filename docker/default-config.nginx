@@ -1,8 +1,5 @@
 access_log off;
 charset utf-8;
-client_body_timeout "${CLIENT_BODY_TIMEOUT}s";
-client_header_timeout "${CLIENT_HEADER_TIMEOUT}s";
-client_max_body_size "${CLIENT_MAX_BODY_SIZE}k";
 error_log /dev/stdout info;
 lua_package_path '~/lua/?.lua;;';
 lua_shared_dict discovery 1m;
@@ -28,7 +25,7 @@ gzip_types
     image/svg+xml;
 
 server {
-    listen 9000;
+    listen "${APP_PORT}";
     root "${APP_DIR}";
     server_name  localhost;
     error_page 404 @rewrites;
@@ -43,14 +40,14 @@ server {
 
     location  /fpsak/api/ {
         add_header              X-Debug-Proxy-Host 'http://$proxy_host/ $scheme://$host/';
+        add_header              X-Debug-Forwarded-For $proxy_add_x_forwarded_for;
+        add_header              X-Debug-Forwarded-Host $host:$server_port;
         proxy_http_version      1.1;
         proxy_pass              "${APP_API_GATEWAY}/fpsak/api/";
-        proxy_redirect          "${APP_API_GATEWAY}/" /;
-        proxy_redirect          http://$proxy_host/ https://$host/;
+        proxy_redirect          "${APP_API_GATEWAY}" "http://$host:${APP_PORT}";
         proxy_set_header        Connection "";
         proxy_set_header        Referer $http_referer;
         proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header        X-Forwarded-Host $host:$server_port;
         proxy_set_header        X-NginX-Proxy    true;
         proxy_set_header        X-Real-IP $remote_addr;
         proxy_ssl_verify        off;
@@ -85,20 +82,21 @@ server {
     }
 
     # To make sure any assets can get through :)
-    location / {
+    location "${APP_PATH_PREFIX}" {
         # Hvis vi tillater browser-caching vil vi ikke ha nedetidsfri deploy (!)
         add_header Cache-Control no-cache;
 
         try_files $uri @rewrites;
 
         access_by_lua_block {
-            local callback_path = "/fpsak/cb"
+            local app_callback_path = "${APP_CALLBACK_PATH}"
+            local app_login_path = "${APP_LOGIN_PATH}"
             local callback_host = "https://" .. ngx.var.host
             if ngx.var.host == "localhost" then
                 callback_host = "http://localhost:" .. ngx.var.server_port
             end
             local opts = {
-                redirect_uri = callback_host .. callback_path,
+                redirect_uri = callback_host .. app_callback_path,
                 client_id = "${OIDC_AGENTNAME}",
                 client_secret = "${OIDC_PASSWORD}",
                 scope = "openid",
@@ -118,21 +116,12 @@ server {
               ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR)
             end
 
-            if session.data.enc_id_token and (ngx.var.uri == callback_path or ngx.var.uri == "/fpsak/jetty/login") then
+            if session.data.enc_id_token and (ngx.var.uri == app_callback_path or ngx.var.uri == app_login_path) then
                 ngx.header['Set-Cookie'] = 'ID_token=' .. session.data.enc_id_token .. ';path=/'
                 return ngx.redirect("/")
             end
         }
 
-        set $use_white_list "${WHITE_LIST}";
-
-        if ($use_white_list = "off") {
-            break;
-        }
-
-        if ($proxy_add_x_forwarded_for !~ "^${WHITE_LIST_IP}$") {
-            return 403;
-        }
     }
     # If no asset matches, send it to your javascript app. Hopefully it's a route in the app!
     location @rewrites {

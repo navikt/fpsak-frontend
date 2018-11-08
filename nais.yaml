@@ -5,7 +5,9 @@ replicas:
   min: 1
   max: 1
   cpuThresholdPercentage: 80
-port: 9000
+port: 443
+ingress:
+  enabled: true
 healthcheck:
   liveness:
     path: /health/isAlive
@@ -15,10 +17,6 @@ healthcheck:
     initialDelay: 5
 fasitResources:
   used:
-  - alias: fpsak-backend
-    resourceType: webservicegateway
-    propertyMap:
-      url: APP_API_GATEWAY
   - alias: fpsak-frontend-oidc
     resourceType: OpenIdConnect
     propertyMap:
