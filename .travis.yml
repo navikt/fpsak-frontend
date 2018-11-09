@@ -16,7 +16,7 @@ install:
 
 before_script:
 - yarn less:lint
-#- yarn build:fpsak
+- yarn build
 
 script:
 #- docker build -t $DOCKER_IMAGE_FULL_NAME ./packages/fpsak
