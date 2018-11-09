@@ -4,10 +4,10 @@ import { injectIntl, intlShape } from 'react-intl';
 
 import BehandlingFormFieldCleaner from 'behandling/BehandlingFormFieldCleaner';
 import arbeidsforholdPropType from 'behandling/proptypes/arbeidsforholdPropType';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import ArrowBox from 'sharedComponents/ArrowBox';
-import { required } from 'utils/validation/validators';
-import { SelectField, RadioGroupField, RadioOption } from 'form/Fields';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
+import { required } from '@fpsak-frontend/utils/validation/validators';
+import { SelectField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
 const getEndCharFromId = id => id.substring(id.length - 4, id.length);
 

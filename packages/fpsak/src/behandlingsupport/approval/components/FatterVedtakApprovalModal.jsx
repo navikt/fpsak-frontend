@@ -7,24 +7,24 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import Modal from 'sharedComponents/Modal';
+import Modal from '@fpsak-frontend/shared-components/Modal';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import Image from 'sharedComponents/Image';
-import behandlingStatus from 'kodeverk/behandlingStatus';
+import Image from '@fpsak-frontend/shared-components/Image';
+import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
 import { getSelectedBehandlingId } from 'behandling/duck';
 import {
   getBehandlingType, getBehandlingStatus, getBehandlingsresultat, getBehandlingResultatstruktur,
   getBehandlingKlageVurderingResultatNK, getBehandlingKlageVurderingResultatNFP,
 } from 'behandling/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling, getBehandlingsresultatFraOriginalBehandling } from 'behandling/selectors/originalBehandlingSelectors';
-import behandlingResultatType from 'kodeverk/behandlingResultatType';
-import behandlingType from 'kodeverk/behandlingType';
-import innvilgetImageUrl from 'images/innvilget_valgt.svg';
-import klageVurdering from 'kodeverk/klageVurdering';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/behandlingResultatType';
+import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import klageVurdering from '@fpsak-frontend/kodeverk/klageVurdering';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
 import requireProps from 'app/data/requireProps';
 
-import konsekvensForYtelsen from 'kodeverk/konsekvensForYtelsen';
+import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/konsekvensForYtelsen';
 import styles from './fatterVedtakApprovalModal.less';
 
 /**
@@ -122,8 +122,8 @@ const NKOmgjorEllerOppheverVedtaket = klageVurderingResultatNK => klageVurdering
 
 const NFPOmgjorVedtaket = klageVurderingResultatNFP => klageVurderingResultatNFP && klageVurderingResultatNFP.klageVurdering === klageVurdering.MEDHOLD_I_KLAGE;
 
-const skalVurdereKonsekvensForYtelsen = (behandlingsresultat, orginaltBehandlingsresultat) => behandlingsresultat
-  && behandlingsresultat.konsekvensForYtelsen && orginaltBehandlingsresultat && orginaltBehandlingsresultat.konsekvensForYtelsen;
+const skalVurdereKonsekvensForYtelsen = behandlingsresultat => behandlingsresultat
+  && behandlingsresultat.konsekvenserForYtelsen;
 
 const isSameResultAsOriginalBehandling = (
   behandlingTypeKode, behandlingsresultat, beregningResultat, orginaltBehandlingsresultat,
@@ -132,8 +132,8 @@ const isSameResultAsOriginalBehandling = (
   if (behandlingTypeKode !== behandlingType.REVURDERING) {
     return false;
   }
-  if (skalVurdereKonsekvensForYtelsen(behandlingsresultat, orginaltBehandlingsresultat)) {
-    return behandlingsresultat.konsekvensForYtelsen.kode === konsekvensForYtelsen.INGEN_ENDRING;
+  if (skalVurdereKonsekvensForYtelsen(behandlingsresultat)) {
+    return behandlingsresultat.konsekvenserForYtelsen.map(({ kode }) => kode).includes(konsekvensForYtelsen.INGEN_ENDRING);
   }
   const sameResult = behandlingsresultat && behandlingsresultat.type.kode === orginaltBehandlingsresultat.type.kode;
   if (sameResult && behandlingsresultat.type.kode === behandlingResultatType.INNVILGET) {

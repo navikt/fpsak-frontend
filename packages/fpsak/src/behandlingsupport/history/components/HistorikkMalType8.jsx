@@ -93,18 +93,9 @@ const HistorikkMalType8 = ({
             />
           ))}
 
-          {historikkinnslagDel.aarsak
-          && <Normaltekst>{historikkinnslagDel.aarsak.navn}</Normaltekst>
-          }
-
-          {historikkinnslagDel.begrunnelse
-          && (
-          <BubbleText
-            bodyText={historikkinnslagDel.begrunnelse.navn}
-            className="snakkeboble-panel__tekst"
-          />
-          )
-          }
+          {historikkinnslagDel.aarsak && <Normaltekst>{historikkinnslagDel.aarsak.navn}</Normaltekst>}
+          {historikkinnslagDel.begrunnelse && <BubbleText bodyText={historikkinnslagDel.begrunnelse.navn} className="snakkeboble-panel__tekst" />}
+          {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} className="snakkeboble-panel__tekst" />}
           <div>
             {dokumentLinks && dokumentLinks.map(dokumentLink => (
               <a

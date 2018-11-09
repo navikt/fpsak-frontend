@@ -1,14 +1,14 @@
 import { createSelector } from 'reselect';
 
-import { getRestApiData } from 'data/duck';
-import { FpsakApi } from 'data/fpsakApi';
-import kommunikasjonsretning from 'kodeverk/kommunikasjonsretning';
+import { getRestApiData } from '@fpsak-frontend/data/duck';
+import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
+import kommunikasjonsretning from '@fpsak-frontend/kodeverk/kommunikasjonsretning';
 import {
   getBehandlingHasSoknad, isBehandlingInInnhentSoknadsopplysningerSteg, getBehandlingIsOnHold,
   getBehandlingStatus, getBehandlingIsInnsyn, getTotrinnskontrollArsakerReadOnly,
 } from 'behandling/behandlingSelectors';
-import behandlingStatus from 'kodeverk/behandlingStatus';
-import { getRettigheter } from 'navAnsatt/duck';
+import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
+import { getRettigheter } from '@fpsak-frontend/nav-ansatt/duck';
 import SupportPanel from './supportPanels';
 
 const getSendMessageIsRelevant = createSelector(

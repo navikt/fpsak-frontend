@@ -2,24 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
 import { createSelector } from 'reselect';
 import {
   getAksjonspunkter, getBeregningsgrunnlag,
   getEndringBeregningsgrunnlagPerioder, getFaktaOmBeregningTilfellerKoder,
   getKortvarigeArbeidsforhold, getFaktaOmBeregning, getTilstøtendeYtelse,
 } from 'behandling/behandlingSelectors';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import { getKodeverk } from 'kodeverk/duck';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import TilstotendeYtelseForm, { harKunTilstotendeYtelse, getHelpTextsTY } from './tilstøtendeYtelse/TilstøtendeYtelseForm';
-import TilstotendeYtelseIKombinasjon, { erTilstotendeYtelseIKombinasjon } from './tilstøtendeYtelse/TilstotendeYtelseIKombinasjon';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import TilstotendeYtelseForm, { harKunTilstotendeYtelse } from './tilstotendeYtelse/TilstøtendeYtelseForm';
+import TilstotendeYtelseIKombinasjon, { erTilstotendeYtelseIKombinasjon } from './tilstotendeYtelse/TilstotendeYtelseIKombinasjon';
 import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm';
 import NyoppstartetFLForm from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
-import EndringBeregningsgrunnlagForm, { getHelpTextsEndringBG, harKunEndringBG } from './endringBeregningsgrunnlag/EndringBeregningsgrunnlagForm';
+import FastsettEndretBeregningsgrunnlag from './endringBeregningsgrunnlag/FastsettEndretBeregningsgrunnlag';
+import { getHelpTextsEndringBG, harKunEndringBG } from './endringBeregningsgrunnlag/EndretBeregningsgrunnlagUtils';
 import LonnsendringForm from './vurderOgFastsettATFL/forms/LonnsendringForm';
 import NyIArbeidslivetSNForm from './nyIArbeidslivet/NyIArbeidslivetSNForm';
 import VurderOgFastsettATFL from './vurderOgFastsettATFL/VurderOgFastsettATFL';
@@ -40,8 +39,12 @@ const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.som
 export const getValidationFaktaForATFLOgSN = createSelector(
   [getFaktaOmBeregningTilfellerKoder, getEndringBeregningsgrunnlagPerioder, getAksjonspunkter],
   (aktivertePaneler, endringBGPerioder, aksjonspunkter) => (values) => {
-    if (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && aktivertePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
-      return { ...EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder) };
+    if (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)) {
+      return {
+        ...FastsettEndretBeregningsgrunnlag.validate(values, endringBGPerioder, aktivertePaneler),
+        ...TilstotendeYtelseForm.validate(values, aktivertePaneler),
+        ...TilstotendeYtelseIKombinasjon.validate(values, endringBGPerioder, aktivertePaneler),
+      };
     }
     return null;
   },
@@ -50,16 +53,16 @@ export const getValidationFaktaForATFLOgSN = createSelector(
 
 export const lagHelpTextsForFakta = (aktivertePaneler) => {
   const helpTexts = [];
-  if (!harKunEndringBG(aktivertePaneler) && !harKunTilstotendeYtelse(aktivertePaneler)) {
+  if (!harKunEndringBG(aktivertePaneler)) {
     helpTexts.push(<FormattedMessage key="VurderTidsbegrensetArbeidsforhold" id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning" />);
   }
   return helpTexts;
 };
 
 export const getHelpTextsFaktaForATFLOgSN = createSelector(
-  [getFaktaOmBeregningTilfellerKoder, getAksjonspunkter, getHelpTextsEndringBG, getHelpTextsTY],
-  (aktivertePaneler, aksjonspunkter, helpTextEndringBG, helpTextTY) => (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)
-    ? helpTextTY.concat(helpTextEndringBG.concat(lagHelpTextsForFakta(aktivertePaneler)))
+  [getFaktaOmBeregningTilfellerKoder, getAksjonspunkter, getHelpTextsEndringBG],
+  (aktivertePaneler, aksjonspunkter, helpTextEndringBG) => (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)
+    ? helpTextEndringBG.concat(lagHelpTextsForFakta(aktivertePaneler))
     : []),
 );
 
@@ -71,7 +74,7 @@ const spacer = (hasShownPanel) => {
 };
 
 
-const getFaktaPanels = (readOnly, formName, tilfeller, isAksjonspunktClosed) => {
+const getFaktaPanels = (readOnly, formName, tilfeller, isAksjonspunktClosed, showTableCallback) => {
   const faktaPanels = [];
   let hasShownPanel = false;
 
@@ -82,6 +85,7 @@ const getFaktaPanels = (readOnly, formName, tilfeller, isAksjonspunktClosed) => 
       formName={formName}
       tilfeller={tilfeller}
       isAksjonspunktClosed={isAksjonspunktClosed}
+      showTableCallback={showTableCallback}
     />];
   }
   tilfeller.forEach((tilfelle) => {
@@ -101,7 +105,7 @@ const getFaktaPanels = (readOnly, formName, tilfeller, isAksjonspunktClosed) => 
       faktaPanels.push(
         <ElementWrapper key={tilfelle}>
           {spacer(hasShownPanel)}
-          <EndringBeregningsgrunnlagForm
+          <FastsettEndretBeregningsgrunnlag
             readOnly={readOnly}
             isAksjonspunktClosed={isAksjonspunktClosed}
           />
@@ -152,6 +156,7 @@ const getFaktaPanels = (readOnly, formName, tilfeller, isAksjonspunktClosed) => 
       <ElementWrapper key="TilstotendeYtelse">
         <TilstotendeYtelseForm
           readOnly={readOnly}
+          formName={formName}
         />
       </ElementWrapper>,
     );
@@ -169,9 +174,10 @@ export const FaktaForATFLOgSNPanelImpl = ({
   formName,
   aktivePaneler,
   isAksjonspunktClosed,
+  showTableCallback,
 }) => (
   <div>
-    {getFaktaPanels(readOnly, formName, aktivePaneler, isAksjonspunktClosed).map(panelOrSpacer => panelOrSpacer)}
+    {getFaktaPanels(readOnly, formName, aktivePaneler, isAksjonspunktClosed, showTableCallback).map(panelOrSpacer => panelOrSpacer)}
   </div>
 );
 
@@ -181,14 +187,27 @@ FaktaForATFLOgSNPanelImpl.propTypes = {
   aktivePaneler: PropTypes.arrayOf(PropTypes.string).isRequired,
   formName: PropTypes.string.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
+  showTableCallback: PropTypes.func.isRequired,
 };
 
-export const setInntektValues = (values, faktaOmBeregning, aktivePaneler) => {
+const setInntektValues = (values, faktaOmBeregning, aktivePaneler, endringBGPerioder) => {
   if (aktivePaneler.includes(faktaOmBeregningTilfelle.TILSTOTENDE_YTELSE)) {
     const faktor = faktaOmBeregning.tilstøtendeYtelse.skalReduseres ? parseInt(faktaOmBeregning.tilstøtendeYtelse.dekningsgrad, 10) / 100 : 1;
+    if (aktivePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
+      return {
+        faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.TILSTOTENDE_YTELSE, faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG],
+        ...TilstotendeYtelseIKombinasjon.transformValues(values, faktor, faktaOmBeregning.tilstøtendeYtelse.erBesteberegning, endringBGPerioder, aktivePaneler),
+      };
+    }
     return {
       faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.TILSTOTENDE_YTELSE],
       ...TilstotendeYtelseForm.transformValues(values, faktor, faktaOmBeregning.tilstøtendeYtelse.erBesteberegning),
+    };
+  }
+  if (aktivePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
+    return {
+      faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG],
+      ...FastsettEndretBeregningsgrunnlag.transformValues(values, endringBGPerioder),
     };
   }
   if (aktivePaneler.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)) {
@@ -212,7 +231,7 @@ const setValuesForVurderFakta = (aktivePaneler, values, endringBGPerioder, kortv
   let vurderFaktaValues = {
     kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
     begrunnelse: beg === undefined ? null : beg,
-    ...setInntektValues(values, faktaOmBeregning, aktivePaneler),
+    ...setInntektValues(values, faktaOmBeregning, aktivePaneler, endringBGPerioder),
   };
 
   aktivePaneler.forEach((kode) => {
@@ -234,17 +253,11 @@ const setValuesForVurderFakta = (aktivePaneler, values, endringBGPerioder, kortv
       vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL);
       vurderFaktaValues = {
         ...vurderFaktaValues,
-        ...NyoppstartetFLForm.nyOppstartetFLInntekt(values, aktivePaneler),
+        ...NyoppstartetFLForm.nyOppstartetFLInntekt(values, aktivePaneler, vurderFaktaValues),
         ...NyoppstartetFLForm.transformValues(values),
       };
     }
-    if (kode === faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG) {
-      vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG);
-      vurderFaktaValues = {
-        ...vurderFaktaValues,
-        ...EndringBeregningsgrunnlagForm.transformValues(values, endringBGPerioder),
-      };
-    }
+    // Kan dette tilfellet oppstå?
     if (kode === faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL && !aktivePaneler.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL)) {
       vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL);
       vurderFaktaValues = {
@@ -256,7 +269,7 @@ const setValuesForVurderFakta = (aktivePaneler, values, endringBGPerioder, kortv
       vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_LONNSENDRING);
       vurderFaktaValues = {
         ...vurderFaktaValues,
-        ...LonnsendringForm.lonnendringFastsatt(values, aktivePaneler, faktaOmBeregning),
+        ...LonnsendringForm.lonnendringFastsatt(values, aktivePaneler, faktaOmBeregning, vurderFaktaValues),
         ...LonnsendringForm.transformValues(values),
       };
     }
@@ -278,21 +291,22 @@ export const transformValuesFaktaForATFLOgSN = createSelector(
 
 
 export const buildInitialValuesFaktaForATFLOgSN = createSelector(
-  [getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlag, getKodeverk(kodeverkTyper.AKTIVITET_STATUS),
-    getKortvarigeArbeidsforhold, getAksjonspunkter, getTilstøtendeYtelse],
-  (endringBGPerioder, beregningsgrunnlag, aktivitetstatuser, kortvarigeArbeidsforhold, aksjonspunkter, tilstotendeYtelse) => {
+  [getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlag,
+    getKortvarigeArbeidsforhold, getAksjonspunkter, getTilstøtendeYtelse, getFaktaOmBeregningTilfellerKoder],
+  (endringBGPerioder, beregningsgrunnlag, kortvarigeArbeidsforhold, aksjonspunkter, tilstotendeYtelse, tilfeller) => {
     if (!hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)) {
       return {};
     }
     return {
       ...TidsbegrensetArbeidsforholdForm.buildInitialValues(kortvarigeArbeidsforhold),
       ...NyIArbeidslivetSNForm.buildInitialValues(beregningsgrunnlag),
-      ...EndringBeregningsgrunnlagForm.buildInitialValues(endringBGPerioder, aktivitetstatuser),
+      ...FastsettEndretBeregningsgrunnlag.buildInitialValues(endringBGPerioder, tilfeller),
       ...LonnsendringForm.buildInitialValues(beregningsgrunnlag),
       ...NyoppstartetFLForm.buildInitialValues(beregningsgrunnlag),
       ...FastsettATFLInntektForm.buildInitialValues(beregningsgrunnlag),
       ...FastsettBBFodendeKvinneForm.buildInitialValues(beregningsgrunnlag),
-      ...TilstotendeYtelseForm.buildInitialValues(tilstotendeYtelse, aktivitetstatuser),
+      ...TilstotendeYtelseForm.buildInitialValues(tilstotendeYtelse, endringBGPerioder),
+      ...TilstotendeYtelseIKombinasjon.buildInitialValues(tilstotendeYtelse, endringBGPerioder, tilfeller),
     };
   },
 );

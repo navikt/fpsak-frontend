@@ -4,13 +4,13 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
 
-import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
-import { DatepickerField } from 'form/Fields';
+import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
+import { DatepickerField } from '@fpsak-frontend/form';
 import {
   required, hasValidDate, dateIsAfter, dateRangesNotOverlapping,
-} from 'utils/validation/validators';
-import { dateRangesOverlappingMessage, invalidPeriodMessage } from 'utils/validation/messages';
-import { isEmpty } from 'utils/validation/validatorsHelper';
+} from '@fpsak-frontend/utils/validation/validators';
+import { dateRangesOverlappingMessage, invalidPeriodMessage } from '@fpsak-frontend/utils/validation/messages';
+import { isEmpty } from '@fpsak-frontend/utils/validation/validatorsHelper';
 
 const showAddButton = (fields) => {
   if (fields.length > 0) {

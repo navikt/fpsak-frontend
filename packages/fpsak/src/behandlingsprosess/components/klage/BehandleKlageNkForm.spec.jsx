@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import klageVurderingType from 'kodeverk/klageVurdering';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import klageVurderingType from '@fpsak-frontend/kodeverk/klageVurdering';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { buildInitialValues, transformValues } from './BehandleKlageNkForm';
 
 describe('<BehandleKlageNkForm>', () => {

@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { formPropTypes, reduxForm, formValueSelector } from 'redux-form';
 import { Container, Row, Column } from 'nav-frontend-grid';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
-import BorderBox from 'sharedComponents/BorderBox';
-import { required } from 'utils/validation/validators';
+import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
+import { required } from '@fpsak-frontend/utils/validation/validators';
 import {
   InputField, DatepickerField, TextAreaField, CheckboxField, SelectField, RadioGroupField, RadioOption,
-} from './Fields';
+} from './index';
 
 const getOptions = values => values.map(value => <option value={`${value}`.toUpperCase()} key={value}>{value}</option>);
 

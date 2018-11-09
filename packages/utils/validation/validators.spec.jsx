@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import moment from 'moment';
 
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '../formats';
 import {
   required, requiredIfNotPristine, requiredIfCustomFunctionIsTrue, minLength, maxLength, minValue, maxValue,
   hasValidInteger, hasValidDecimal, hasValidDate, dateBeforeOrEqual, dateAfterOrEqual, dateRangesNotOverlapping,

@@ -11,11 +11,22 @@ const faktaOmBeregningTilfelle = {
   TILSTOTENDE_YTELSE: 'TILSTØTENDE_YTELSE',
 };
 
-const harLonnsendringNyOppstartetFLOGATFLISammeOrganisasjonUtenBesteberegning = tilfeller => tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)
-  && tilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL)
+const harLonnsendringOgNyoppstartet = tilfeller => tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)
+  && tilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL);
+
+export const harKunATFLISammeOrgUtenBestebergning = tilfeller => !(tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)
+  || tilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL))
   && tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)
   && !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE);
 
-export const erATFLSpesialtilfelle = tilfeller => harLonnsendringNyOppstartetFLOGATFLISammeOrganisasjonUtenBesteberegning(tilfeller);
+const harLonnsendringNyOppstartetFLOgATFLISammeOrgUtenBesteberegning = tilfeller => harLonnsendringOgNyoppstartet(tilfeller)
+  && tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)
+  && !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE);
+
+
+export const erSpesialtilfelleMedEkstraKnapp = tilfeller => tilfeller.includes(faktaOmBeregningTilfelle.TILSTOTENDE_YTELSE)
+  && tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG);
+
+export const erATFLSpesialtilfelle = tilfeller => harLonnsendringNyOppstartetFLOgATFLISammeOrgUtenBesteberegning(tilfeller);
 
 export default faktaOmBeregningTilfelle;

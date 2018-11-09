@@ -3,8 +3,8 @@ import DayPicker from 'react-day-picker';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { dateFormat } from 'utils/dateUtils';
-import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
+import { dateFormat } from '@fpsak-frontend/utils/dateUtils';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import CalendarOverlay from './CalendarOverlay';
 
 describe('<CalendarOverlay>', () => {

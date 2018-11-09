@@ -7,18 +7,18 @@ import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import { RadioGroupField, RadioOption } from 'form/Fields';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { required } from 'utils/validation/validators';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import Image from 'sharedComponents/Image';
-import PeriodLabel from 'sharedComponents/PeriodLabel';
-import checkImage from 'images/check.svg';
-import avslaattImage from 'images/avslaatt.svg';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import { required } from '@fpsak-frontend/utils/validation/validators';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import Image from '@fpsak-frontend/shared-components/Image';
+import PeriodLabel from '@fpsak-frontend/shared-components/PeriodLabel';
+import checkImage from '@fpsak-frontend/assets/images/check.svg';
+import avslaattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import BostedSokerView from 'fakta/components/BostedSokerView';
 
 import styles from './oppholdINorgeOgAdresserFaktaPanel.less';
@@ -123,12 +123,14 @@ const OppholdINorgeOgAdresserFaktaPanelImpl = ({
         </FaktaGruppe>
         {hasAksjonspunkt
           && (
-          <ElementWrapper>
-            <RadioGroupField name="bosattVurdering" validate={[required]} bredde="XXL" readOnly={readOnly} isEdited={isBosattAksjonspunktClosed}>
-              <RadioOption label={{ id: 'OppholdINorgeOgAdresserFaktaPanel.ResidingInNorway' }} value />
-              <RadioOption label={<FormattedHTMLMessage id="OppholdINorgeOgAdresserFaktaPanel.NotResidingInNorway" />} value={false} />
-            </RadioGroupField>
-          </ElementWrapper>
+            <div className={styles.ieFlex}>
+              <ElementWrapper>
+                <RadioGroupField name="bosattVurdering" validate={[required]} bredde="XXL" readOnly={readOnly} isEdited={isBosattAksjonspunktClosed}>
+                  <RadioOption label={{ id: 'OppholdINorgeOgAdresserFaktaPanel.ResidingInNorway' }} value />
+                  <RadioOption label={<FormattedHTMLMessage id="OppholdINorgeOgAdresserFaktaPanel.NotResidingInNorway" />} value={false} />
+                </RadioGroupField>
+              </ElementWrapper>
+            </div>
           )
         }
       </Column>

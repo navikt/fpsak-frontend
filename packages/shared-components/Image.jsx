@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 
-import Tooltip from 'sharedComponents/Tooltip';
+import Tooltip from './Tooltip';
 
 /**
  * Image

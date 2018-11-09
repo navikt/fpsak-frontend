@@ -4,15 +4,15 @@ import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { Normaltekst } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { calcDaysWithoutWeekends } from 'utils/dateUtils';
-import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
-import FlexRow from 'sharedComponents/flexGrid/FlexRow';
-import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
-import Image from 'sharedComponents/Image';
+import { calcDaysWithoutWeekends } from '@fpsak-frontend/utils/dateUtils';
+import FlexColumn from '@fpsak-frontend/shared-components/flexGrid/FlexColumn';
+import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';
+import FlexContainer from '@fpsak-frontend/shared-components/flexGrid/FlexContainer';
+import Image from '@fpsak-frontend/shared-components/Image';
 import classnames from 'classnames/bind';
-import { ISO_DATE_FORMAT } from 'utils/formats';
-import overlapp from 'images/overlapp.svg';
-import tomPeriode from 'images/tom_periode.svg';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
+import overlapp from '@fpsak-frontend/assets/images/overlapp.svg';
+import tomPeriode from '@fpsak-frontend/assets/images/tom_periode.svg';
 import UttakPeriodeType from './UttakPeriodeType';
 import UttakPeriodeInnhold from './UttakPeriodeInnhold';
 
@@ -98,6 +98,9 @@ const UttakPeriode = ({
                   isAnyFormOpen={isAnyFormOpen}
                   isNyPeriodeFormOpen={isNyPeriodeFormOpen}
                   readOnly={readOnly}
+                  flerbarnsdager={periode.flerbarnsdager}
+                  samtidigUttak={periode.samtidigUttak}
+                  samtidigUttaksprosent={periode.samtidigUttaksprosent}
                 />
                 <UttakPeriodeInnhold
                   fieldId={fieldId}

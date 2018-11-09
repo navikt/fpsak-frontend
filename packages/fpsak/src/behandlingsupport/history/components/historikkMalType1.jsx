@@ -21,7 +21,8 @@ const HistorikkMalType1 = ({
         className="snakkeboble-panel__tekst"
       />
     )}
-
+    {historikkinnslagDeler[0].begrunnelseFritekst
+    && <BubbleText bodyText={historikkinnslagDeler[0].begrunnelseFritekst} className="snakkeboble-panel__tekst" />}
     <div>
       {dokumentLinks && dokumentLinks.map(dokumentLink => (
         <a

@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
-
-import Image from 'sharedComponents/Image';
-import advarselIkonUrl from 'images/advarsel.svg';
-import { isObject } from 'utils/objectUtils';
+import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
+import { isObject } from '@fpsak-frontend/utils/objectUtils';
+import { FlexContainer, FlexColumn, FlexRow } from './flexGrid';
+import Image from './Image';
 
 import styles from './aksjonspunktHelpText.less';
 

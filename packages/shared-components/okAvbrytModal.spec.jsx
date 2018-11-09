@@ -3,9 +3,9 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { FormattedMessage } from 'react-intl';
 
-import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
-import Modal from 'sharedComponents/Modal';
-import Image from 'sharedComponents/Image';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import Modal from './Modal';
+import Image from './Image';
 
 import OkAvbrytModal from './OkAvbrytModal';
 

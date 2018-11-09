@@ -15,9 +15,9 @@ import {
   getBehandlingHasSoknad,
   getBehandlingIsInnsyn,
 } from 'behandling/behandlingSelectors';
-import { getRestApiData } from 'data/duck';
-import { FpsakApi } from 'data/fpsakApi';
-import { getNavAnsatt, getRettigheter } from 'navAnsatt/duck';
+import { getRestApiData } from '@fpsak-frontend/data/duck';
+import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
+import { getNavAnsatt, getRettigheter } from '@fpsak-frontend/nav-ansatt/duck';
 
 import {
   previewHenleggBehandling, nyBehandlendeEnhet, resumeBehandling, shelveBehandling, createNewForstegangsbehandling,

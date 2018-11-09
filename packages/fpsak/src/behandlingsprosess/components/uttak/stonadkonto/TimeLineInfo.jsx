@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
-import TableColumn from 'sharedComponents/TableColumn';
-import TableRow from 'sharedComponents/TableRow';
-import Table from 'sharedComponents/Table';
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { stonadskontoerPropType } from 'behandling/proptypes/stonadskontoPropType';
-import uttakArbeidTypeKodeverk from 'kodeverk/uttakArbeidType';
-import uttakArbeidTypeTekstCodes from 'kodeverk/uttakArbeidTypeCodes';
-import stonadskontoType from 'kodeverk/stonadskontoType';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/uttakArbeidType';
+import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/uttakArbeidTypeCodes';
+import stonadskontoType from '@fpsak-frontend/kodeverk/stonadskontoType';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
 import moment from 'moment';
 
 import TimeLineTab from './TimeLineTab';
@@ -37,8 +35,7 @@ const findTilgjengeligeUker = (stonadskontoer) => {
   return Math.floor(sumDager / 5);
 };
 
-const findAntallUkerOgDager = (maxDager, kontoinfo) => {
-  const saldo = maxDager - kontoinfo.fordelteDager;
+const findAntallUkerOgDager = (saldo) => {
   const modifier = saldo < 0 ? -1 : 1;
   const justertSaldo = saldo * modifier;
   return {
@@ -102,7 +99,7 @@ class TimeLineInfo extends Component {
   render() {
     const {
       stonadskonto,
-      maksDato,
+      maksDatoUttak,
     } = this.props;
     const {
       aktiv,
@@ -133,15 +130,15 @@ class TimeLineInfo extends Component {
     };
 
     const createKey = arbeidsforhold => arbeidsforhold.aktivitetIdentifikator.uttakArbeidType.kode
-        + arbeidsforhold.aktivitetIdentifikator.arbeidsforholdNavn
-        + arbeidsforhold.aktivitetIdentifikator.arbeidsforholdId
-        + arbeidsforhold.aktivitetIdentifikator.arbeidsforholdOrgnr
-        + arbeidsforhold.fordelteDager;
+      + arbeidsforhold.aktivitetIdentifikator.arbeidsforholdNavn
+      + arbeidsforhold.aktivitetIdentifikator.arbeidsforholdId
+      + arbeidsforhold.aktivitetIdentifikator.arbeidsforholdOrgnr
+      + arbeidsforhold.fordelteDager;
 
     return (
       <div>
         {gjelderFodsel // Denne vi lager i første omgang av iterasjonen
-          && (
+        && (
           <Column xs="12">
             <div className={styles.remainingUttak}>
               <Row>
@@ -158,16 +155,16 @@ class TimeLineInfo extends Component {
                     />
                   </Normaltekst>
                 </Column>
-                {maksDato
+                {maksDatoUttak
                 && (
-                <Column xs="3">
-                  <Normaltekst>
-                    <FormattedHTMLMessage
-                      id="TimeLineInfo.Stonadinfo.MaksDato"
-                      values={{ dato: moment(maksDato).format(DDMMYYYY_DATE_FORMAT) }}
-                    />
-                  </Normaltekst>
-                </Column>
+                  <Column xs="3">
+                    <Normaltekst>
+                      <FormattedHTMLMessage
+                        id="TimeLineInfo.Stonadinfo.MaksDato"
+                        values={{ dato: moment(maksDatoUttak).format(DDMMYYYY_DATE_FORMAT) }}
+                      />
+                    </Normaltekst>
+                  </Column>
                 )
                 }
               </Row>
@@ -177,35 +174,37 @@ class TimeLineInfo extends Component {
                     {sortAsArray().map((konto, index) => (
                       <TimeLineTab key={konto.kontonavn} aktiv={index === aktiv} stonadskonto={konto} onClickCallback={() => this.handleChange(konto, index)} />
                     ))
-                   }
+                    }
                   </ul>
                 </div>
               </Row>
               <Row>
                 {visKonto
-                  && (
+                && (
                   <div className={styles.visKonto}>
                     <Table headerTextCodes={headerTextCodes}>
-                      {visKonto.kontoinfo.aktivitetFordeligDtoList.map(arbforhold => (
+                      {visKonto.kontoinfo.aktivitetSaldoDtoList.map(arbforhold => (
                         <TableRow key={createKey(arbforhold)}>
                           <TableColumn>
                             <Normaltekst>{createTextStrings(arbforhold.aktivitetIdentifikator)}</Normaltekst>
                           </TableColumn>
                           <TableColumn>
                             <Normaltekst>
+                              {arbforhold.saldo
+                              && (
                               <FormattedHTMLMessage
                                 id="TimeLineInfo.Stonadinfo.UkerDager"
                                 values={{
                                   ukerVerdi: findAntallUkerOgDager(
-                                    visKonto.kontoinfo.maxDager,
-                                    arbforhold,
+                                    arbforhold.saldo,
                                   ).uker,
                                   dagerVerdi: findAntallUkerOgDager(
-                                    visKonto.kontoinfo.maxDager,
-                                    arbforhold,
+                                    arbforhold.saldo,
                                   ).dager,
                                 }}
                               />
+                              )
+                              }
                             </Normaltekst>
                           </TableColumn>
                         </TableRow>
@@ -213,12 +212,12 @@ class TimeLineInfo extends Component {
                       }
                     </Table>
                   </div>
-                  )
+                )
                 }
               </Row>
             </div>
           </Column>
-          )
+        )
         }
       </div>
     );
@@ -227,12 +226,12 @@ class TimeLineInfo extends Component {
 
 TimeLineInfo.propTypes = {
   stonadskonto: stonadskontoerPropType,
-  maksDato: PropTypes.string,
+  maksDatoUttak: PropTypes.string,
 };
 
 TimeLineInfo.defaultProps = {
   stonadskonto: undefined,
-  maksDato: '',
+  maksDatoUttak: '',
 };
 
 export default TimeLineInfo;

@@ -1,16 +1,16 @@
 import { createSelector } from 'reselect';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import { FpsakApi } from 'data/fpsakApi';
-import { getRestApiData, getRestApiError } from 'data/duck';
-import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
+import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
+import { getRestApiData, getRestApiError } from '@fpsak-frontend/data/duck';
+import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
 import aksjonspunktCodes, {
   isInnhentSaksopplysningerAksjonspunkt,
   isVilkarForSykdomOppfylt,
-} from 'kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import behandlingStatus from 'kodeverk/behandlingStatus';
-import behandlingType from 'kodeverk/behandlingType';
+} from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
 import { getSelectedSaksnummer, isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import isFieldEdited from './editedFields';
 import { getSelectedBehandlingId } from './duck';
@@ -104,6 +104,7 @@ export const getTotrinnskontrollArsakerReadOnly = createSelector(
 export const getBrevMottakere = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['brev-mottakere']));
 export const getBrevMaler = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['brev-maler']));
 
+export const getSimuleringResultat = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling.simuleringResultat));
 // AKSJONSPUNKTER
 export const getAksjonspunkter = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.aksjonspunkter);
 export const getOpenAksjonspunkter = createSelector(

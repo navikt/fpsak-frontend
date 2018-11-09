@@ -1,11 +1,11 @@
-import behandlingStatusCode from 'kodeverk/behandlingStatus';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import fagsakStatusCode from 'kodeverk/fagsakStatus';
-import { without } from 'utils/arrayUtils';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import { isObject } from 'utils/objectUtils';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import BehandlingType from 'kodeverk/behandlingType';
+import behandlingStatusCode from '@fpsak-frontend/kodeverk/behandlingStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
+import fagsakStatusCode from '@fpsak-frontend/kodeverk/fagsakStatus';
+import { without } from '@fpsak-frontend/utils/arrayUtils';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import { isObject } from '@fpsak-frontend/utils/objectUtils';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import BehandlingType from '@fpsak-frontend/kodeverk/behandlingType';
 
 const allFagsakStatuses = Object.values(fagsakStatusCode);
 const allBehandlingStatuses = Object.values(behandlingStatusCode);

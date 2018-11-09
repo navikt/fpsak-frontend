@@ -4,19 +4,19 @@ import { createSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { behandlingForm } from 'behandling/behandlingForm';
-import guid from 'utils/guidUtil';
+import guid from '@fpsak-frontend/utils/guidUtil';
 import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
 import withDefaultToggling from 'fakta/withDefaultToggling';
 import faktaPanelCodes from 'fakta/faktaPanelCodes';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import {
   getUttakPerioder,
   getBehandlingYtelseFordeling,
   getBehandlingIsManuellRevurdering,
   hasBehandlingUtredesStatus,
 } from 'behandling/behandlingSelectors';
-import { dateFormat } from 'utils/dateUtils';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import { dateFormat } from '@fpsak-frontend/utils/dateUtils';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
 import UttakFaktaForm from './UttakFaktaForm';
 import {
   sjekkOmfaktaOmUttakAksjonspunkt,
@@ -91,7 +91,6 @@ const validateUttakForm = (values, originalPerioder, aksjonspunkter, førsteUtta
   const errors = {};
 
   if (sjekkOmfaktaOmUttakAksjonspunkt(aksjonspunkter)) {
-    // TODO petter fakta uttak ikke synlig når re på re
     const originalStartDato = (originalPerioder[0] || []).fom;
     const nyStartDato = (values.perioder[0] || []).fom;
 
@@ -173,7 +172,6 @@ const getOriginalPeriodeId = (origPeriode) => {
 
 const transformValues = (values, initialValues, aksjonspunkter) => { // NOSONAR
   const aktiveUttakAksjonspunkter = aksjonspunkter.filter(ap => uttakAksjonspunkter.includes(ap.definisjon.kode));
-  // TODO sjekke om det det er behov for å sjekke på isRevurdering
   const apCodes = aktiveUttakAksjonspunkter.length
     ? aktiveUttakAksjonspunkter.map(ap => ap.definisjon.kode)
     : [aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK];
@@ -190,6 +188,7 @@ const transformValues = (values, initialValues, aksjonspunkter) => { // NOSONAR
         orginalTom: origPeriode[0] ? origPeriode[0].tom : null,
         originalArbeidstidsprosent: origPeriode[0] ? origPeriode[0].arbeidstidsprosent : null,
         originalBegrunnelse: origPeriode[0] ? origPeriode[0].begrunnelse : null,
+        originalResultat: origPeriode[0] ? origPeriode[0].result : null,
       };
     }),
     slettedePerioder: values.slettedePerioder

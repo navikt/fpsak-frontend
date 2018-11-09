@@ -4,15 +4,15 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { Column, Row } from 'nav-frontend-grid';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import Modal from 'sharedComponents/Modal';
+import Modal from '@fpsak-frontend/shared-components/Modal';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
-import behandlingStatus from 'kodeverk/behandlingStatus';
-import behandlingResultatType from 'kodeverk/behandlingResultatType';
-import behandlingType from 'kodeverk/behandlingType';
-import Image from 'sharedComponents/Image';
+import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/behandlingResultatType';
+import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
+import Image from '@fpsak-frontend/shared-components/Image';
 import {
   getBehandlingResultatstruktur,
   getBehandlingsresultat,
@@ -24,8 +24,9 @@ import {
   getResultatstrukturFraOriginalBehandling,
 } from 'behandling/selectors/originalBehandlingSelectors';
 
-import innvilgetImageUrl from 'images/innvilget_valgt.svg';
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 
+import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/konsekvensForYtelsen';
 import styles from './iverksetterVedtakStatusModal.less';
 
 
@@ -109,19 +110,38 @@ IverksetterVedtakStatusModal.defaultProps = {
   behandlingsresultat: undefined,
 };
 
+const erSammeResultatPåEngangsstønad = (behandlingsresultat,
+  originalBehandlingsresultat,
+  originaltBeregningResultat,
+  resultatstruktur) => {
+  const sameResult = behandlingsresultat && behandlingsresultat.type.kode === originalBehandlingsresultat.type.kode;
+  if (sameResult && resultatstruktur && resultatstruktur.antallBarn && behandlingsresultat.type.kode === behandlingResultatType.INNVILGET) {
+    return resultatstruktur && resultatstruktur.antallBarn === originaltBeregningResultat.antallBarn;
+  }
+  return false;
+};
+
+const erSammeResultatForForeldrepenger = (behandlingsresultat) => {
+  if (!behandlingsresultat || !behandlingsresultat.konsekvensForYtelsen) {
+    return false;
+  }
+  return behandlingsresultat.konsekvensForYtelsen.map(({ kode }) => kode).includes(konsekvensForYtelsen.INGEN_ENDRING);
+};
 
 const getIsSameResultAsOriginalBehandling = createSelector(
   [getBehandlingType, getBehandlingsresultat, getBehandlingResultatstruktur,
-    getBehandlingsresultatFraOriginalBehandling, getResultatstrukturFraOriginalBehandling],
-  (type, behandlingsresultat, resultatstruktur, originalBehandlingsresultat, originaltBeregningResultat) => {
-    let sameResult = false;
-    if (type.kode === behandlingType.REVURDERING) {
-      sameResult = behandlingsresultat && behandlingsresultat.type.kode === originalBehandlingsresultat.type.kode;
-      if (sameResult && resultatstruktur && resultatstruktur.antallBarn && behandlingsresultat.type.kode === behandlingResultatType.INNVILGET) {
-        sameResult = resultatstruktur && resultatstruktur.antallBarn === originaltBeregningResultat.antallBarn;
-      }
+    getBehandlingsresultatFraOriginalBehandling, getResultatstrukturFraOriginalBehandling, getFagsakYtelseType],
+  (type, behandlingsresultat, resultatstruktur, originalBehandlingsresultat, originaltBeregningResultat, ytelseType) => {
+    if (type !== behandlingType.REVURDERING) {
+      return false;
     }
-    return sameResult;
+    if (ytelseType === fagsakYtelseType.ENGANGSSTONAD) {
+      return erSammeResultatPåEngangsstønad(behandlingsresultat, originalBehandlingsresultat, originaltBeregningResultat, resultatstruktur);
+    }
+    if (ytelseType === fagsakYtelseType.FORELDREPENGER) {
+      return erSammeResultatForForeldrepenger(behandlingsresultat);
+    }
+    return false;
   },
 );
 
@@ -133,7 +153,7 @@ const getModalTextId = createSelector(
       return 'IverksetterVedtakStatusModal.UendretUtfall';
     }
     if (!(behandlingsresultat
-        && behandlingsresultat.type.kode === behandlingResultatType.AVSLATT)) {
+      && behandlingsresultat.type.kode === behandlingResultatType.AVSLATT)) {
       return 'IverksetterVedtakStatusModal.InnvilgetOgIverksatt';
     }
     return ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD

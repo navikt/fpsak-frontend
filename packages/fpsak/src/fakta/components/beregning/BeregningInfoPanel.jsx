@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import {
   getAksjonspunkter,
@@ -13,12 +13,13 @@ import {
 import withDefaultToggling from 'fakta/withDefaultToggling';
 import faktaPanelCodes from 'fakta/faktaPanelCodes';
 import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { behandlingForm } from 'behandling/behandlingForm';
 import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
 import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import { erSpesialtilfelleMedEkstraKnapp } from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
 import FaktaForATFLOgSNPanel, {
   getHelpTextsFaktaForATFLOgSN, transformValuesFaktaForATFLOgSN,
   buildInitialValuesFaktaForATFLOgSN, getValidationFaktaForATFLOgSN,
@@ -39,19 +40,19 @@ const findAksjonspunktMedBegrunnelse = aksjonspunkter => aksjonspunkter
 const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
 
-const createRelevantForms = (readOnly, aksjonspunkter) => (
+const createRelevantForms = (readOnly, aksjonspunkter, showTableCallback) => (
   <div>
     {hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)
     && (
       <FaktaForATFLOgSNPanel
         readOnly={readOnly}
         formName={formName}
+        showTableCallback={showTableCallback}
       />
     )
     }
   </div>
 );
-
 
 /**
  * BeregningInfoPanel
@@ -60,51 +61,86 @@ const createRelevantForms = (readOnly, aksjonspunkter) => (
  * Denne brukes også funksjonen withDefaultToggling for å håndtere automatisk åpning av panelet
  * når det finnes åpne aksjonspunkter.
  */
-export const BeregningInfoPanelImpl = ({
-  intl,
-  openInfoPanels,
-  toggleInfoPanelCallback,
-  hasOpenAksjonspunkter,
-  readOnly,
-  aksjonspunkter,
-  submittable,
-  initialValues,
-  helpText,
-  ...formProps
-}) => (
-  <FaktaEkspandertpanel
-    title={intl.formatMessage({ id: 'BeregningInfoPanel.Title' })}
-    hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-    isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.BEREGNING)}
-    toggleInfoPanelCallback={toggleInfoPanelCallback}
-    faktaId={faktaPanelCodes.BEREGNING}
-    readOnly={readOnly}
-  >
-    <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>{helpText}</AksjonspunktHelpText>
-    <VerticalSpacer sixteenPx />
-    <VerticalSpacer sixteenPx />
-    <form onSubmit={formProps.handleSubmit}>
-      {createRelevantForms(readOnly, aksjonspunkter)}
-      <ElementWrapper>
-        <VerticalSpacer eightPx />
-        <VerticalSpacer twentyPx />
-        <FaktaBegrunnelseTextField
-          isDirty={formProps.dirty}
-          isSubmittable={submittable}
-          isReadOnly={readOnly}
-          hasBegrunnelse={!!initialValues.begrunnelse}
-        />
-        <VerticalSpacer twentyPx />
-        <FaktaSubmitButton
-          formName={formProps.form}
-          isSubmittable={submittable}
-          isReadOnly={readOnly}
-          hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-        />
-      </ElementWrapper>
-    </form>
-  </FaktaEkspandertpanel>
-);
+export class BeregningInfoPanelImpl extends Component {
+  constructor() {
+    super();
+    this.state = {
+      submitEnabled: false,
+    };
+    this.showTableCallback = this.showTableCallback.bind(this);
+  }
+
+  componentDidMount() {
+    const { faktaTilfeller } = this.props;
+    const { submitEnabled } = this.state;
+    if (!erSpesialtilfelleMedEkstraKnapp(faktaTilfeller) && !submitEnabled) {
+      this.setState({
+        submitEnabled: true,
+      });
+    }
+  }
+
+  showTableCallback() {
+    this.setState({
+      submitEnabled: true,
+    });
+  }
+
+  render() {
+    const {
+      showTableCallback,
+      props: {
+        intl,
+        openInfoPanels,
+        toggleInfoPanelCallback,
+        hasOpenAksjonspunkter,
+        readOnly,
+        aksjonspunkter,
+        submittable,
+        initialValues,
+        helpText,
+        ...formProps
+      },
+      state: {
+        submitEnabled,
+      },
+    } = this;
+    return (
+      <FaktaEkspandertpanel
+        title={intl.formatMessage({ id: 'BeregningInfoPanel.Title' })}
+        hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+        isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.BEREGNING)}
+        toggleInfoPanelCallback={toggleInfoPanelCallback}
+        faktaId={faktaPanelCodes.BEREGNING}
+        readOnly={readOnly}
+      >
+        <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>{helpText}</AksjonspunktHelpText>
+        <VerticalSpacer sixteenPx />
+        <VerticalSpacer sixteenPx />
+        <form onSubmit={formProps.handleSubmit}>
+          {createRelevantForms(readOnly, aksjonspunkter, showTableCallback)}
+          <ElementWrapper>
+            <VerticalSpacer eightPx />
+            <VerticalSpacer twentyPx />
+            <FaktaBegrunnelseTextField
+              isDirty={formProps.dirty}
+              isSubmittable={submittable}
+              isReadOnly={readOnly}
+              hasBegrunnelse={!!initialValues.begrunnelse}
+            />
+            <VerticalSpacer twentyPx />
+            <FaktaSubmitButton
+              formName={formProps.form}
+              isSubmittable={submittable && submitEnabled}
+              isReadOnly={readOnly}
+              hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+            />
+          </ElementWrapper>
+        </form>
+      </FaktaEkspandertpanel>
+    );
+  }
+}
 
 BeregningInfoPanelImpl.propTypes = {
   intl: intlShape.isRequired,

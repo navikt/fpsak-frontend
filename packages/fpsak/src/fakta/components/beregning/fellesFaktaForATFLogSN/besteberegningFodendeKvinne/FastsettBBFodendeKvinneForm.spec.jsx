@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
 import FastsettBBFodendeKvinneForm from './FastsettBBFodendeKvinneForm';
 
 const beregningsgrunnlag = {
@@ -30,8 +30,8 @@ const beregningsgrunnlag = {
     besteberegningAndeler: [
       {
         arbeidsforhold: {
-          virksomhetNavn: 'bedrift',
-          virksomhetId: '123',
+          arbeidsgiverNavn: 'bedrift',
+          arbeidsgiverId: '123',
           arbeidsperiodeFom: '2018-01-01',
         },
         andelsnr: 1,
@@ -46,8 +46,8 @@ const beregningsgrunnlag = {
       },
       {
         arbeidsforhold: {
-          virksomhetNavn: 'bedrift',
-          virksomhetId: '123',
+          arbeidsgiverNavn: 'bedrift',
+          arbeidsgiverId: '123',
           arbeidsperiodeFom: '2018-01-01',
         },
         andelsnr: 2,

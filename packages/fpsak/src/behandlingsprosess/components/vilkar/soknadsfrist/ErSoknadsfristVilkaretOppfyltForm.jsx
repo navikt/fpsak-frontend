@@ -10,24 +10,24 @@ import Panel from 'nav-frontend-paneler';
 import { Row, Column } from 'nav-frontend-grid';
 import { Fieldset } from 'nav-frontend-skjema';
 import { Undertekst, Undertittel, Normaltekst } from 'nav-frontend-typografi';
-import { ISO_DATE_FORMAT } from 'utils/formats';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
 import moment from 'moment';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import FadingPanel from 'sharedComponents/FadingPanel';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
 import { getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus } from 'behandlingsprosess/behandlingsprosessSelectors';
 import {
   getBehandlingsresultat, getBehandlingVilkar, getSoknad, getFamiliehendelse,
 } from 'behandling/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { RadioGroupField, RadioOption } from 'form/Fields';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import DateLabel from 'sharedComponents/DateLabel';
-import { required } from 'utils/validation/validators';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import soknadType from 'kodeverk/soknadType';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
+import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
+import { required } from '@fpsak-frontend/utils/validation/validators';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import soknadType from '@fpsak-frontend/kodeverk/soknadType';
 import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
 

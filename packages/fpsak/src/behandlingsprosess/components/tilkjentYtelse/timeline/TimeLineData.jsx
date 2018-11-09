@@ -6,28 +6,30 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
+import { calcDaysAndWeeks } from '@fpsak-frontend/utils/dateUtils';
 import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT, createVisningsnavnForAktivitet } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
 import Image from '@fpsak-frontend/shared-components/Image';
 import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
 import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
 import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
 import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
+import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
 import { beregningsresultatPeriodePropType } from 'behandling/proptypes/beregningresultatMedUttaksplanPropType';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/uttakPeriodeType';
 
 import styles from './timeLineData.less';
 
 const createVisningNavnForUttakArbeidstaker = (andel) => {
-  if (!andel.arbeidsgiverOrgNr) {
+  if (!andel.arbeidsgiverOrgnr) {
     return <FormattedMessage id="TilkjentYtelse.PeriodeData.Arbeidstaker" />;
   }
   // Strukturerer objektet på en måte som gjør det mulig å bruke samme
   // visningsformat som resten av løsningen
   const andelsObjekt = {
-    virksomhetNavn: andel.arbeidsgiverNavn,
-    virksomhetId: andel.arbeidsgiverOrgNr,
+    arbeidsgiverNavn: andel.arbeidsgiverNavn,
+    arbeidsgiverId: andel.arbeidsgiverOrgnr,
     arbeidsforholdId: andel.arbeidsforholdId,
     arbeidsforholType: andel.arbeidsforholdType,
   };

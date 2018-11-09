@@ -13,19 +13,19 @@ import moment from 'moment';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { getBehandlingFormPrefix, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
-import FlexRow from 'sharedComponents/flexGrid/FlexRow';
-import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
-import { ariaCheck } from 'utils/validation/validators';
+import FlexColumn from '@fpsak-frontend/shared-components/flexGrid/FlexColumn';
+import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';
+import FlexContainer from '@fpsak-frontend/shared-components/flexGrid/FlexContainer';
+import { ariaCheck } from '@fpsak-frontend/utils/validation/validators';
 import { getInntektsmeldinger, getBehandlingVersjon } from 'behandling/behandlingSelectors';
-import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
+import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/uttakPeriodeVurdering';
 import { getSelectedBehandlingId } from 'behandling/duck';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import { uttakPeriodeNavn } from 'kodeverk/uttakPeriodeType';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/uttakPeriodeType';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import UttakPeriode from './UttakPeriode';
 import UttakNyPeriode from './UttakNyPeriode';
 import UttakSlettPeriodeModal from './UttakSlettPeriodeModal';
@@ -54,7 +54,6 @@ const overlappingDates = (innmldPeriode, soknadsPeriode) => {
   const inntekstmeldingTomBetween = moment(innmldPeriode.tom)
     .isBetween(moment(soknadsPeriode.fom), moment(soknadsPeriode.tom), null, '[]');
 
-
   const isGradering = innmldPeriode.arbeidsprosent !== undefined && innmldPeriode.arbeidsprosent !== null;
 
   if (søknadFomBetween || søknadTomBetween) {
@@ -65,7 +64,7 @@ const overlappingDates = (innmldPeriode, soknadsPeriode) => {
     return innmldPeriode.utsettelseArsak && (innmldPeriode.utsettelseArsak.kode !== soknadsPeriode.utsettelseÅrsak.kode);
   }
 
-  return søknadFomBetween || søknadTomBetween || inntekstmeldingFomBetween || inntekstmeldingTomBetween;
+  return inntekstmeldingFomBetween || inntekstmeldingTomBetween;
 };
 
 const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => inntektsmeldinger.map((innmld) => {
@@ -248,6 +247,7 @@ export class UttakFaktaForm extends Component {
       overføringÅrsak: updatedPeriode.overføringÅrsak,
       erArbeidstaker: updatedPeriode.erArbeidstaker,
       samtidigUttak: updatedPeriode.samtidigUttak,
+      samtidigUttaksprosent: updatedPeriode.samtidigUttaksprosent,
       flerBarnsDager: updatedPeriode.flerBarnsDager,
       morsAktivitet: updatedPeriode.morsAktivitet,
       orgnr: updatedPeriode.orgnr,

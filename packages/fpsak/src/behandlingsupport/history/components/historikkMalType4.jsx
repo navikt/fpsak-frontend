@@ -16,6 +16,7 @@ const HistorikkMalType4 = ({ historikkinnslagDeler }) => (
           <Element className="snakkeboble-panel__tekst">{findHendelseText(del.hendelse)}</Element>
           {del.aarsak && <Normaltekst>{del.aarsak.navn}</Normaltekst>}
           {del.begrunnelse && <BubbleText bodyText={del.begrunnelse.navn} className="snakkeboble-panel__tekst" />}
+          {del.begrunnelseFritekst && <BubbleText bodyText={del.begrunnelseFritekst} className="snakkeboble-panel__tekst" />}
         </div>
       ))
     }

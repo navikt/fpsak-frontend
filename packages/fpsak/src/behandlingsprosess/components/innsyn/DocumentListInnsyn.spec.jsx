@@ -3,11 +3,10 @@ import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
 import { shallow } from 'enzyme';
 
-import DateTimeLabel from 'sharedComponents/DateTimeLabel';
-import TableRow from 'sharedComponents/TableRow';
-import Table from 'sharedComponents/Table';
-import Image from 'sharedComponents/Image';
-import kommunikasjonsretning from 'kodeverk/kommunikasjonsretning';
+import DateTimeLabel from '@fpsak-frontend/shared-components/DateTimeLabel';
+import { Table, TableRow } from '@fpsak-frontend/shared-components/table';
+import Image from '@fpsak-frontend/shared-components/Image';
+import kommunikasjonsretning from '@fpsak-frontend/kodeverk/kommunikasjonsretning';
 import DocumentListInnsyn from './DocumentListInnsyn';
 
 

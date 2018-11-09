@@ -1,4 +1,8 @@
-// CSS-endringer för felleskomponenter og globaler så som fra core/og muligen import fra alla andra komponenter
+/*
+CSS-endringer för felleskomponenter og globaler så
+som fra core/og muligen import fra alla andra komponenter
+ */
+
 @import '@{coreModulePath}nav-frontend-core/less/core';
 @import './dayPicker';
 
@@ -18,13 +22,13 @@
 }
 
 :global(.lenke) {
-  color: @navBla;
-  border: 0;
-  padding: 0;
   background: none;
-  text-decoration: none;
+  border: 0;
   border-bottom: solid 1px @navGra40;
+  color: @navBla;
   cursor: pointer;
+  padding: 0;
+  text-decoration: none;
 
   &:hover,
   &--hover {
@@ -33,14 +37,14 @@
 
   &:focus,
   &--focus {
-    outline: none;
     background-color: @orangeFocus;
+    outline: none;
   }
 
   &:active,
   &--active {
-    color: @navDypBla;
     border-bottom-color: @navDypBla;
+    color: @navDypBla;
   }
 
   &--frittstaende {
@@ -95,7 +99,7 @@
     height: 20px;
     left: -8px;
     position: absolute;
-    top: 0px;
+    top: 0;
     width: 20px;
   }
 }
@@ -110,7 +114,7 @@
     height: 20px;
     left: -8px;
     position: absolute;
-    top: 0px;
+    top: 0;
     width: 20px;
   }
 }
@@ -125,7 +129,7 @@
     height: 20px;
     left: -8px;
     position: absolute;
-    top: 0px;
+    top: 0;
     width: 20px;
   }
 }
@@ -135,7 +139,7 @@
 }
 
 :global(.vis-foreground .vis-group) {
-  border-bottom: none;
+  border-bottom: 0;
 }
 
 :global(.vis-text.vis-major > div) {
@@ -143,11 +147,11 @@
 }
 
 :global(.opptjening .vis-text.vis-major > div) {
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 :global(.uttakTimeline .vis-text.vis-major > div) {
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 :global(.vis-item.vis-selected) {
@@ -183,17 +187,18 @@
 }
 
 :global(.vis-item) {
-  transition: transform 0.2s;
   top: 5px;
+  transition: transform 0.2s;
 
   &:hover {
     box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
     filter: brightness(80%);
-    transform: translateY(-3px);
     opacity: 1;
+    transform: translateY(-3px);
   }
+
   &:active {
-    box-shadow: 0 4px 5px rgba(0, 0, 0, .2);
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
     filter: brightness(95%);
     transform: translateY(-2px);
   }
@@ -214,16 +219,16 @@
 }
 
 :global(.gradert) {
-  @lClr: #FFF;
+  @lClr: @white;
   @brPnt: 20%;
-  background-color: @navGronn;
-  background-image: repeating-linear-gradient(45deg, @lClr, @lClr @brPnt, transparent @brPnt,  transparent 50%, @lClr 50%); // lesshint maxCharPerLi|ne: false
+  background: @navGronn repeating-linear-gradient(45deg, @lClr, @lClr @brPnt, transparent @brPnt, transparent 50%, @lClr 50%); // lesshint-disable maxCharPerLine
   background-size: 12px 12px;
   opacity: 0.9;
 }
 
 :global(.gradert.vis-item.vis-selected) {
   opacity: 1;
+
   &:hover {
     transform: translateY(-1px);
   }
@@ -311,9 +316,9 @@
   background-color: @navGronn;
   border-color: @navGronn;
   border-radius: 8px;
-  opacity: 0.5;
   height: 12px;
-  top: 12px !important; // lesshint important: false
+  opacity: 0.5;
+  top: 12px !important; // lesshint-disable importantRule
 
   &:active {
     background-color: @navGronn;
@@ -348,9 +353,7 @@
 
 :global(.opptjening .vis-center) {
   border-bottom: 1px solid grey;
-  border-left: none;
   border-left-style: none;
-  border-right: none;
   border-right-style: none;
 }
 
@@ -365,12 +368,8 @@
 }
 
 :global(.opptjening .vis-label) {
-  border-bottom: 0px solid;
+  border-bottom: 0 solid;
   text-align: right;
-}
-
-:global(.opptjening .vis-time-axis .vis-grid.vis-vertical) {
-  //  border-left: 0px solid;
 }
 
 :global(.opptjening .vis-panel.vis-left) {
@@ -393,11 +392,11 @@
 }
 
 :global(.opptjening .timeLineLight .vis-panel.vis-top) {
-  margin-left: 0px;
+  margin-left: 0;
 }
 
 :global(.opptjening .vis-panel > .vis-content) {
-  border-left: 0px solid;
+  border-left: 0 solid;
 }
 
 :global(.opptjening .vis-panel.vis-center ) {
@@ -406,18 +405,6 @@
 
 :global(.opptjening .vis-itemset > .vis-background) {
   border-top: 1px solid darkgray;
-}
-
-:global(.opptjening .vis-grid.vis-vertical) {
-  //  display: none;
-}
-
-:global(.godkjentundefined) {
-
-}
-
-:global(.godkjentdeclined) {
-
 }
 
 :global(.vis-timeline.vis-bottom) {
@@ -471,10 +458,6 @@
   &:after {
     display: none;
   }
-}
-
-:global(.opptjening .vis-text .vis-major .vis-measure) {
-  //  display: none;
 }
 
 :global(.godkjent) {

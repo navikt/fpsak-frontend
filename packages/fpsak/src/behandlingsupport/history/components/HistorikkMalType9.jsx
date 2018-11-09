@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import historikkinnslagType from 'kodeverk/historikkinnslagType';
+import historikkinnslagType from '@fpsak-frontend/kodeverk/historikkinnslagType';
 import { FormattedHTMLMessage, injectIntl, intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
@@ -24,7 +24,6 @@ export const HistorikkMalType9 = ({
         text += `${felt.tilVerdi}, `;
       }
     });
-
     return text;
   };
 
@@ -67,11 +66,8 @@ export const HistorikkMalType9 = ({
                 }}
               />
             )}
-            {historikkinnslagDel.begrunnelse && (
-              <BubbleText
-                bodyText={historikkinnslagDel.begrunnelse.navn}
-                className="snakkeboble-panel__tekst"
-              />)}
+            {historikkinnslagDel.begrunnelse && <BubbleText bodyText={historikkinnslagDel.begrunnelse.navn} className="snakkeboble-panel__tekst" />}
+            {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} className="snakkeboble-panel__tekst" />}
           </div>
         </div>
       )));

@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
-import stonadskontoType from 'kodeverk/stonadskontoType';
+import stonadskontoType from '@fpsak-frontend/kodeverk/stonadskontoType';
 import PropTypes from 'prop-types';
 import { stonadskontoerPropType } from 'behandling/proptypes/stonadskontoPropType';
 
@@ -27,19 +27,9 @@ const findKorrektLabelForKvote = (stonadtype) => {
   }
 };
 
-const findHoyestDispDager = (aktiviteter) => {
-  if (aktiviteter && aktiviteter.length > 0) {
-    return aktiviteter.reduce((prev, current) => (prev.fordelteDager < current.fordelteDager ? prev : current), aktiviteter[0]);
-  }
-  return { fordelteDager: 0 };
-};
-
 const findAntallUkerOgDager = (kontoinfo) => {
-  const hoyestDisp = findHoyestDispDager(kontoinfo.aktivitetFordeligDtoList);
-  const hoyestDispAnnenPart = findHoyestDispDager(kontoinfo.aktivitetFordelingAnnenPart);
-  const saldo = kontoinfo.maxDager - hoyestDisp.fordelteDager - hoyestDispAnnenPart.fordelteDager;
-  const modifier = saldo < 0 ? -1 : 1;
-  const justertSaldo = saldo * modifier;
+  const modifier = kontoinfo.saldo < 0 ? -1 : 1;
+  const justertSaldo = kontoinfo.saldo * modifier;
   return {
     uker: (Math.floor(justertSaldo / 5)) * modifier,
     dager: (justertSaldo % 5) * modifier,

@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { BehandlingspunktInfoPanel } from 'behandlingsprosess/components/BehandlingspunktInfoPanel';
 import BeregningsresultatEngangsstonadForm from 'behandlingsprosess/components/beregningsresultat/BeregningsresultatEngangsstonadForm';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';

@@ -1,0 +1,25 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.invisibleButton {
+  background: none;
+  border: none; // lesshint borderZero: false
+  color: @navBla;
+  cursor: pointer;
+  padding-left: 0px;
+
+  &:focus {
+    background-color: @navOransjeLighten40;
+    border: 0px;
+    color: @navBla;
+    padding-bottom: 4px;
+    text-decoration: none;
+
+    &:hover {
+      color: @navBla;
+    }
+  }
+
+  i {
+    margin-left: 10px;
+  }
+}

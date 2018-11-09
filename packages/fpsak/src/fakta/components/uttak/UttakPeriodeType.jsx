@@ -2,18 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Element, Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import { dateFormat, calcDaysAndWeeks } from 'utils/dateUtils';
-import utsettelseArsakCodes, { utsettelseArsakTexts } from 'kodeverk/utsettelseArsakCodes';
-import overforingArsakCodes, { overforingArsakTexts } from 'kodeverk/overforingArsakCodes';
-import Image from 'sharedComponents/Image';
-import { ISO_DATE_FORMAT } from 'utils/formats';
-import editPeriodeIcon from 'images/endre.svg';
-import editPeriodeDisabledIcon from 'images/endre_disablet.svg';
-import removePeriod from 'images/remove.svg';
-import removePeriodDisabled from 'images/remove_disabled.svg';
+import { dateFormat, calcDaysAndWeeks } from '@fpsak-frontend/utils/dateUtils';
+import utsettelseArsakCodes, { utsettelseArsakTexts } from '@fpsak-frontend/kodeverk/utsettelseArsakCodes';
+import overforingArsakCodes, { overforingArsakTexts } from '@fpsak-frontend/kodeverk/overforingArsakCodes';
+import Image from '@fpsak-frontend/shared-components/Image';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
+import editPeriodeIcon from '@fpsak-frontend/assets/images/endre.svg';
+import editPeriodeDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
+import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
+import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
 import styles from './uttakPeriodeType.less';
 
-const formatArbeidstidprosent = prosent => `${prosent}%`;
+const formatProsent = prosent => `${prosent}%`;
 
 const getUttakTypeTitle = (utsettelseArsak, overforingArsak, arbeidstidprosent) => {
   if (overforingArsak.kode !== overforingArsakCodes.UDEFINERT) {
@@ -58,6 +58,9 @@ const UttakPeriodeType = ({ // NOSONAR
   virksomhetNavn,
   orgnr,
   erArbeidstaker,
+  samtidigUttak,
+  samtidigUttaksprosent,
+  flerbarnsdager,
 }) => {
   const isAnyFormOrNyPeriodeOpen = isAnyFormOpen() || isNyPeriodeFormOpen;
   const numberOfDaysAndWeeks = calcDaysAndWeeks(fraDato, tilDato, ISO_DATE_FORMAT);
@@ -101,11 +104,27 @@ const UttakPeriodeType = ({ // NOSONAR
           />
         </Undertekst>
       </div>
+
+      {samtidigUttak && (
+        <div className={styles.textWrapper}>
+          <Undertekst><FormattedMessage id="UttakInfoPanel.SamtidigUttak" /></Undertekst>
+          {samtidigUttaksprosent && (
+            <Normaltekst>{formatProsent(samtidigUttaksprosent)}</Normaltekst>
+          )}
+        </div>
+      )}
+
+      {flerbarnsdager && (
+        <div className={styles.textWrapper}>
+          <Undertekst><FormattedMessage id="UttakInfoPanel.Flerbarnsdager" /></Undertekst>
+        </div>
+      )}
+
       {(arbeidstidprosent === 0 || arbeidstidprosent)
         && (
         <div className={styles.textWrapper}>
           <Undertekst><FormattedMessage id="UttakInfoPanel.AndelIArbeid" /></Undertekst>
-          <Normaltekst>{formatArbeidstidprosent(arbeidstidprosent)}</Normaltekst>
+          <Normaltekst>{formatProsent(arbeidstidprosent)}</Normaltekst>
         </div>
         )
       }
@@ -143,11 +162,15 @@ UttakPeriodeType.propTypes = {
   utsettelseArsak: PropTypes.shape().isRequired,
   overforingArsak: PropTypes.shape().isRequired,
   isFromSøknad: PropTypes.bool.isRequired,
+  flerbarnsdager: PropTypes.bool.isRequired,
+  samtidigUttak: PropTypes.bool.isRequired,
+  samtidigUttaksprosent: PropTypes.string,
   erArbeidstaker: PropTypes.bool,
 };
 
 UttakPeriodeType.defaultProps = {
   arbeidstidprosent: null,
+  samtidigUttaksprosent: null,
   virksomhetNavn: null,
   orgnr: null,
   erArbeidstaker: false,

@@ -1,14 +1,14 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
-import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 
 import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
-import vilkarType from 'kodeverk/vilkarType';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
+import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
 import { ErSoknadsfristVilkaretOppfyltFormImpl as UnwrappedForm, buildInitialValues } from './ErSoknadsfristVilkaretOppfyltForm';
 
 describe('<ErSoknadsfristVilkaretOppfyltForm>', () => {

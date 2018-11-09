@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
-import aktivitetStatus, { isStatusDagpengerOrAAP } from 'kodeverk/aktivitetStatus';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
+import aktivitetStatus, { isStatusDagpengerOrAAP } from '@fpsak-frontend/kodeverk/aktivitetStatus';
 import relatertYtelseTypeTextCodes from '../fellesPaneler/relatertYtelseTypeTextCodes';
 
 

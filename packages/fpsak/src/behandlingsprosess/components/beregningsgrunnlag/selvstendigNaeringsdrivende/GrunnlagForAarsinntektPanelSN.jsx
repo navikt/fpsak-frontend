@@ -4,11 +4,9 @@ import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
 
 import styles from './grunnlagForAarsinntektPanelSN.less';
 

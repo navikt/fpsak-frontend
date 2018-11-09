@@ -3,6 +3,7 @@ const path = require('path');
 
 const PACKAGE_DIR = path.resolve(__dirname, '../packages');
 const APP_DIR = path.join(PACKAGE_DIR, 'fpsak/src');
+const APP_IMAGE_DIR = path.join(PACKAGE_DIR, 'fpsak/assets');
 
 const config = {
   resolve: {
@@ -17,6 +18,8 @@ const config = {
       person: path.join(APP_DIR, 'person'),
       fagsakprofile: path.join(APP_DIR, 'fagsakprofile'),
       fakta: path.join(APP_DIR, 'fakta'),
+      papirsoknad: path.join(APP_DIR, 'papirsoknad'),
+      images: path.join(APP_IMAGE_DIR, 'images'),
     },
     extensions: ['.json', '.js', '.jsx'],
   },

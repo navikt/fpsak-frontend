@@ -4,25 +4,23 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { required } from 'utils/validation/validators';
-import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { InputField } from 'form/Fields';
+import { required } from '@fpsak-frontend/utils/validation/validators';
+import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import { InputField } from '@fpsak-frontend/form';
 import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from 'utils/currencyUtils';
-import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle } from 'kodeverk/faktaOmBeregningTilfelle';
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
+import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from '@fpsak-frontend/utils/currencyUtils';
+import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle, harKunATFLISammeOrgUtenBestebergning } from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
 
 import styles from './fastsettATFLInntektForm.less';
 
 const inntektInputFieldName = 'fastsattInntekt';
 
 export const createInputfieldKeyAT = (arbeidsforhold) => {
-  const key = `${inntektInputFieldName}_${arbeidsforhold.virksomhetNavn}_${arbeidsforhold.startdato}_${arbeidsforhold.arbeidsforholdId}`;
+  const key = `${inntektInputFieldName}_${arbeidsforhold.arbeidsgiverNavn}_${arbeidsforhold.startdato}_${arbeidsforhold.arbeidsforholdId}`;
   return key;
 };
 
@@ -70,12 +68,12 @@ const createFLTableRow = (frilansAndel, readOnly, isAksjonspunktClosed) => (
   </TableRow>
 );
 
-const createTableRows = (frilansAndel, aktiviteter, readOnly, isAksjonspunktClosed) => {
+const createTableRows = (frilansAndel, aktiviteter, readOnly, isAksjonspunktClosed, skalFastsetteFL, skalFastsetteAT) => {
   const rows = [];
-  if (frilansAndel) {
+  if (frilansAndel && skalFastsetteFL) {
     rows.push(createFLTableRow(frilansAndel, readOnly, isAksjonspunktClosed));
   }
-  if (aktiviteter) {
+  if (aktiviteter && skalFastsetteAT) {
     aktiviteter.forEach((aktivitet) => {
       rows.push(
         <TableRow key={createInputfieldKeyAT(aktivitet.arbeidsforhold)}>
@@ -131,7 +129,7 @@ const createTableRows = (frilansAndel, aktiviteter, readOnly, isAksjonspunktClos
 };
 
 
-const findInstruksjonForBruker = (tilfellerSomSkalFastsettes, manglerInntektsmelding) => {
+const findInstruksjonForBruker = (tilfellerSomSkalFastsettes, manglerInntektsmelding, skalFastsetteFL, skalFastsetteAT) => {
   if (erATFLSpesialtilfelle(tilfellerSomSkalFastsettes)) {
     return 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettATFLAlleOppdrag';
   }
@@ -140,12 +138,15 @@ const findInstruksjonForBruker = (tilfellerSomSkalFastsettes, manglerInntektsmel
       ? 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettATFLAlleOppdrag'
       : 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettFrilansAlleOppdrag';
   }
-  if (tilfellerSomSkalFastsettes.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL)) {
+  if (skalFastsetteFL) {
     return tilfellerSomSkalFastsettes.length === 1
       ? 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettFrilans'
       : 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettFrilansAlleOppdrag';
   }
-  return 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettArbeidsinntekt';
+  if (skalFastsetteAT) {
+    return 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettArbeidsinntekt';
+  }
+  return 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettATFLAlleOppdrag';
 };
 
 const lagInstruksjonForBrukerUtenVurdering = (manglerInntektsmelding) => {
@@ -189,6 +190,8 @@ const FastsettATFLInntektForm = ({
   frilansAndel,
   manglerInntektsmelding,
   tabellVisesUtenVurdering,
+  skalFastsetteFL,
+  skalFastsetteAT,
 }) => {
   const headerTextCodes = [
     'BeregningInfoPanel.FastsettInntektTabell.Aktivitet',
@@ -208,13 +211,13 @@ const FastsettATFLInntektForm = ({
       {!tabellVisesUtenVurdering
       && (
       <Element>
-        <FormattedMessage id={findInstruksjonForBruker(tilfellerSomSkalFastsettes, manglerInntektsmelding)} />
+        <FormattedMessage id={findInstruksjonForBruker(tilfellerSomSkalFastsettes, manglerInntektsmelding, skalFastsetteFL, skalFastsetteAT)} />
       </Element>
       )
       }
       <VerticalSpacer space={2} />
       <Table headerTextCodes={headerTextCodes} noHover classNameTable={styles.inntektTable}>
-        {createTableRows(frilansAndel, arbeidsforholdSomSkalFastsettes, readOnly, isAksjonspunktClosed)}
+        {createTableRows(frilansAndel, arbeidsforholdSomSkalFastsettes, readOnly, isAksjonspunktClosed, skalFastsetteFL, skalFastsetteAT)}
       </Table>
     </div>
   );
@@ -228,6 +231,8 @@ FastsettATFLInntektForm.propTypes = {
   manglerInntektsmelding: PropTypes.bool,
   frilansAndel: PropTypes.shape(),
   arbeidsforholdSomSkalFastsettes: PropTypes.arrayOf(PropTypes.shape()),
+  skalFastsetteFL: PropTypes.bool,
+  skalFastsetteAT: PropTypes.bool,
 
 };
 
@@ -235,6 +240,8 @@ FastsettATFLInntektForm.defaultProps = {
   arbeidsforholdSomSkalFastsettes: PropTypes.arrayOf(PropTypes.shape()),
   manglerInntektsmelding: undefined,
   frilansAndel: undefined,
+  skalFastsetteAT: true,
+  skalFastsetteFL: true,
 };
 
 const slaSammenATListerSomSkalVurderes = (faktaOmBeregning) => {
@@ -366,9 +373,7 @@ const mapStateToProps = (state, ownProps) => {
     return {};
   }
   const arbeidsforholdSomSkalFastsettes = slaSammenATListerSomSkalVurderes(faktaOmBeregning);
-  const tabellVisesUtenVurdering = !tilfellerSomSkalFastsettes.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL)
-    && !tilfellerSomSkalFastsettes.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_VED_LONNSENDRING);
-
+  const tabellVisesUtenVurdering = harKunATFLISammeOrgUtenBestebergning(tilfellerSomSkalFastsettes);
   return {
     tabellVisesUtenVurdering,
     arbeidsforholdSomSkalFastsettes,

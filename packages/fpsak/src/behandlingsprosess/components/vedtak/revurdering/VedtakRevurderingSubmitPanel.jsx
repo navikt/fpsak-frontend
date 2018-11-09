@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { createSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { connect } from 'react-redux';
 import {
   getBehandlingResultatstruktur, getHaveSentVarsel,
-  getBehandlingsresultat,
+  getBehandlingsresultat, getAksjonspunkter,
 } from 'behandling/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandling/selectors/originalBehandlingSelectors';
 import classNames from 'classnames';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import vedtakbrevStatus from 'kodeverk/vedtakbrevStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
+import vedtakbrevStatus from '@fpsak-frontend/kodeverk/vedtakbrevStatus';
 import styles from '../vedtakForm.less';
 
 const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback) => (e) => {
@@ -37,6 +38,12 @@ const skalViseESBrev = (revResultat, orgResultat, erSendtVarsel) => {
   } return erSendtVarsel;
 };
 
+export const getSubmitKnappTekst = createSelector(
+  [getAksjonspunkter],
+  aksjonspunkter => (aksjonspunkter && aksjonspunkter.some(ap => ap.erAktivt === true
+    && ap.toTrinnsBehandling === true) ? 'VedtakForm.TilGodkjenning' : 'VedtakForm.FattVedtak'),
+);
+
 export const VedtakRevurderingSubmitPanelImpl = ({
   intl,
   beregningResultat,
@@ -48,6 +55,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   brevStatus,
   ytelseType,
   readOnly,
+  submitKnappTextId,
 }) => {
   const previewBrev = getPreviewCallback(formProps, begrunnelse, previewVedtakCallback);
 
@@ -63,7 +71,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
           disabled={formProps.submitting}
           spinner={formProps.submitting}
         >
-          {intl.formatMessage({ id: 'VedtakForm.TilGodkjenning' })}
+          {intl.formatMessage({ id: submitKnappTextId })}
         </Hovedknapp>
       )
       }
@@ -107,6 +115,7 @@ VedtakRevurderingSubmitPanelImpl.propTypes = {
   formProps: PropTypes.shape().isRequired,
   ytelseType: PropTypes.string.isRequired,
   brevStatus: PropTypes.shape(),
+  submitKnappTextId: PropTypes.string.isRequired,
 };
 
 VedtakRevurderingSubmitPanelImpl.defaultProps = {
@@ -118,6 +127,7 @@ VedtakRevurderingSubmitPanelImpl.defaultProps = {
 };
 
 const mapStateToProps = state => ({
+  submitKnappTextId: getSubmitKnappTekst(state),
   beregningResultat: getBehandlingResultatstruktur(state),
   originaltBeregningResultat: getResultatstrukturFraOriginalBehandling(state),
   haveSentVarsel: getHaveSentVarsel(state),

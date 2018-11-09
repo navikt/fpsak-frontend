@@ -17,6 +17,7 @@ const InntektstabellPanel = ({
   tabell,
   hjelpeTekstId,
   children,
+  skalViseTabell,
 }) => (
   <ElementWrapper>
     {children}
@@ -26,7 +27,9 @@ const InntektstabellPanel = ({
       <Element>
         <FormattedMessage id={hjelpeTekstId} />
       </Element>)}
-      {tabell}
+      {skalViseTabell
+      && tabell
+      }
     </div>
   </ElementWrapper>
 );
@@ -36,11 +39,13 @@ InntektstabellPanel.propTypes = {
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]).isRequired,
   tabell: PropTypes.node.isRequired,
   hjelpeTekstId: PropTypes.string,
+  skalViseTabell: PropTypes.bool,
 };
 
 
 InntektstabellPanel.defaultProps = {
   hjelpeTekstId: undefined,
+  skalViseTabell: true,
 };
 
 

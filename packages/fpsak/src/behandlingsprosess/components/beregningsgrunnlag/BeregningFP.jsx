@@ -6,25 +6,32 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import FadingPanel from 'sharedComponents/FadingPanel';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import {
-  getBeregningsgrunnlag, getAktivitetStatuser, getAlleAndelerIForstePeriode, getGjeldendeBeregningAksjonspunkt,
+  getAktivitetStatuser,
+  getAlleAndelerIForstePeriode,
+  getBeregningsgrunnlag,
+  getGjeldendeBeregningAksjonspunkt,
 } from 'behandling/behandlingSelectors';
 import beregningsgrunnlagPropType from 'behandling/proptypes/beregningsgrunnlagPropType';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import { getSelectedBehandlingspunktVilkar } from 'behandlingsprosess/behandlingsprosessSelectors';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
 import aktivitetStatus, {
-  isStatusFrilanserOrKombinasjon, isStatusArbeidstakerOrKombinasjon,
-  isStatusSNOrKombinasjon, isStatusKombinasjon, isStatusDagpengerOrAAP,
+  isStatusArbeidstakerOrKombinasjon,
+  isStatusDagpengerOrAAP,
+  isStatusFrilanserOrKombinasjon,
+  isStatusKombinasjon,
+  isStatusSNOrKombinasjon,
   isStatusTilstotendeYtelse,
-} from 'kodeverk/aktivitetStatus';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+} from '@fpsak-frontend/kodeverk/aktivitetStatus';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
 import InntektsopplysningerPanel from './fellesPaneler/InntektsopplysningerPanel';
 import SkjeringspunktOgStatusPanel from './fellesPaneler/SkjeringspunktOgStatusPanel';
 import BeregningsgrunnlagForm from './beregningsgrunnlagPanel/BeregningsgrunnlagForm';
@@ -240,6 +247,11 @@ const getBeregnetAarsinntekt = createSelector(
       return beregningsgrunnlag.beregningsgrunnlagPeriode[0].bruttoPrAar;
     }
     if (relevanteStatuser.isSelvstendigNaeringsdrivende) {
+      const faktaOmBer = beregningsgrunnlag.faktaOmBeregning;
+      if (faktaOmBer && faktaOmBer.faktaOmBeregningTilfeller
+        .some(tilfelle => tilfelle.kode === faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)) {
+        return beregningsgrunnlag.beregningsgrunnlagPeriode[0].bruttoPrAar;
+      }
       const snAndel = alleAndelerIForstePeriode.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE)[0];
       return snAndel.erNyIArbeidslivet ? undefined : snAndel.pgiSnitt;
     }

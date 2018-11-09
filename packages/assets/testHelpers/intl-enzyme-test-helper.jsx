@@ -12,7 +12,7 @@ import { mount, shallow } from 'enzyme';
 import sinon from 'sinon';
 
 // You can pass your messages to the IntlProvider. Optional: remove if unneeded.
-export const messages = require('../../../../../i18n/src/main/resources/META-INF/resources/sprak/nb_NO.json');
+export const messages = require('./nb_NO.json');
 
 // Create the IntlProvider to retrieve context for wrapping around.
 const intlProvider = new IntlProvider({ locale: 'nb-NO', messages }, {});
@@ -22,26 +22,26 @@ const { intl } = intlProvider.getChildContext();
  * When using React-Intl `injectIntl` on components, props.intl is required.
  */
 function nodeWithIntlProp(node) {
-    return React.cloneElement(node, { intl });
+  return React.cloneElement(node, { intl });
 }
 
 export function shallowWithIntl(node, { context } = {}) {
-    return shallow(
-        nodeWithIntlProp(node),
-        {
-            context: Object.assign({}, context, {intl}),
-        }
-    );
+  return shallow(
+    nodeWithIntlProp(node),
+    {
+      context: Object.assign({}, context, { intl }),
+    },
+  );
 }
 
 export function mountWithIntl(node, { context, childContextTypes } = {}) {
-    return mount(
-        nodeWithIntlProp(node),
-        {
-            context: Object.assign({}, context, {intl}),
-            childContextTypes: Object.assign({}, { intl: intlShape }, childContextTypes)
-        }
-    );
+  return mount(
+    nodeWithIntlProp(node),
+    {
+      context: Object.assign({}, context, { intl }),
+      childContextTypes: Object.assign({}, { intl: intlShape }, childContextTypes),
+    },
+  );
 }
 
 /* Lagt til for a hindre warnings i tester */

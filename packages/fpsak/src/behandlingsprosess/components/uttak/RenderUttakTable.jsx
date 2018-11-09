@@ -4,17 +4,15 @@ import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
-import uttakPeriodeType from 'kodeverk/uttakPeriodeType';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import TableColumn from 'sharedComponents/TableColumn';
-import TableRow from 'sharedComponents/TableRow';
-import Table from 'sharedComponents/Table';
-import { SelectField, InputField, DecimalField } from 'form/Fields';
-import uttakArbeidTypeKodeverk from 'kodeverk/uttakArbeidType';
-import uttakArbeidTypeTekstCodes from 'kodeverk/uttakArbeidTypeCodes';
+import uttakPeriodeType from '@fpsak-frontend/kodeverk/uttakPeriodeType';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
+import { SelectField, InputField, DecimalField } from '@fpsak-frontend/form';
+import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/uttakArbeidType';
+import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/uttakArbeidTypeCodes';
 import {
   minValue, maxValue, hasValidInteger, maxLength, required, hasValidDecimal, notDash,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils/validation/validators';
 import styles from './renderUttakTable.less';
 
 /**

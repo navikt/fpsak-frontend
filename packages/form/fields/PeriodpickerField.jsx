@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Fields } from 'redux-form';
 import moment from 'moment';
 import { injectIntl } from 'react-intl';
-import { haystack } from 'utils/arrayUtils';
-import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT, ACCEPTED_DATE_INPUT_FORMATS } from 'utils/formats';
-import Periodpicker from 'sharedComponents/periodpicker/Periodpicker';
+import { haystack } from '@fpsak-frontend/utils/arrayUtils';
+import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT, ACCEPTED_DATE_INPUT_FORMATS } from '@fpsak-frontend/utils/formats/';
+import Periodpicker from '@fpsak-frontend/shared-components/periodpicker/Periodpicker';
 import ReadOnlyField from './ReadOnlyField';
 import Label, { labelPropType } from './Label';
 

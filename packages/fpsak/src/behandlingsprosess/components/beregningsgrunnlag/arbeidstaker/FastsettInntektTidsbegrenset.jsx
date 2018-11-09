@@ -4,23 +4,21 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { createSelector } from 'reselect';
-
-import { InputField } from 'form/Fields';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import { formatCurrencyNoKr, removeSpacesFromNumber, parseCurrencyInput } from 'utils/currencyUtils';
-import { required } from 'utils/validation/validators';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import periodeAarsak from 'kodeverk/periodeAarsak';
+import { InputField } from '@fpsak-frontend/form';
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
+import {
+  createVisningsnavnForAktivitet, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber,
+} from '@fpsak-frontend/utils';
+import { required } from '@fpsak-frontend/utils/validation/validators';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import periodeAarsak from '@fpsak-frontend/kodeverk/periodeAarsak';
 import { getBeregningsgrunnlagPerioder, getGjeldendeBeregningAksjonspunkt } from 'behandling/behandlingSelectors';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import hourglassImg from 'images/hourglass.svg';
-import Image from 'sharedComponents/Image';
-import endretUrl from 'images/endret_felt.svg';
-import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
+import hourglassImg from '@fpsak-frontend/assets/images/hourglass.svg';
+import Image from '@fpsak-frontend/shared-components/Image';
+import endretUrl from '@fpsak-frontend/assets/images/endret_felt.svg';
 import { getBehandlingFormValues } from 'behandling/behandlingForm';
 import { Normaltekst } from 'nav-frontend-typografi';
 import NaturalytelsePanel from './NaturalytelsePanel';
@@ -86,14 +84,14 @@ export const getTableHeaderData = createSelector(
 const findArbeidstakerAndeler = periode => periode.beregningsgrunnlagPrStatusOgAndel
   .filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
 
-const createArbeidsforholdMapKey = andel => `${andel.virksomhetNavn}${andel.arbeidsforholdId}`;
+const createArbeidsforholdMapKey = arbeidsforhold => `${arbeidsforhold.arbeidsgiverNavn}${arbeidsforhold.arbeidsforholdId}`;
 
 // Finner beregnetPrAar for alle andeler, basert på data fra den første perioden
 const createBeregnetInntektForAlleAndeler = (perioder) => {
   const mapMedInnteker = {};
   const arbeidstakerAndeler = perioder[0].beregningsgrunnlagPrStatusOgAndel.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
   arbeidstakerAndeler.forEach((andel) => {
-    mapMedInnteker[createArbeidsforholdMapKey(andel)] = formatCurrencyNoKr(andel.beregnetPrAar);
+    mapMedInnteker[createArbeidsforholdMapKey(andel.arbeidsforhold)] = formatCurrencyNoKr(andel.beregnetPrAar);
   });
   return mapMedInnteker;
 };
@@ -114,9 +112,9 @@ const initializeMap = (perioder) => {
   const alleAndeler = findArbeidstakerAndeler(perioder[0]);
   const mapMedAndeler = {};
   alleAndeler.forEach((andel) => {
-    const andelMapNavn = createArbeidsforholdMapKey(andel);
+    const andelMapNavn = createArbeidsforholdMapKey(andel.arbeidsforhold);
     const mapValueMedAndelNavn = createMapValueObject();
-    mapValueMedAndelNavn.tabellInnhold = createVisningsnavnForAktivitet(andel);
+    mapValueMedAndelNavn.tabellInnhold = createVisningsnavnForAktivitet(andel.arbeidsforhold);
     mapValueMedAndelNavn.erTidsbegrenset = andel.erTidsbegrensetArbeidsforhold !== undefined ? andel.erTidsbegrensetArbeidsforhold : false;
     const mapValueMedBeregnetForstePeriode = createMapValueObject();
     mapValueMedBeregnetForstePeriode.erTidsbegrenset = false;
@@ -127,8 +125,12 @@ const initializeMap = (perioder) => {
 };
 
 // Nøkkelen til et inputfield konstrueres utifra navnet på andelen og perioden den er i samt en fast prefix
-export const createInputFieldKey = (andel, periode) => `${formPrefix}_${andel.arbeidsforholdId}_${andel.andelsnr}_${periode.beregningsgrunnlagPeriodeFom}`;
-
+export const createInputFieldKey = (andel, periode) => {
+  if (!andel.arbeidsforhold) {
+    return undefined;
+  }
+  return `${formPrefix}_${andel.arbeidsforhold.arbeidsforholdId}_${andel.andelsnr}_${periode.beregningsgrunnlagPeriodeFom}`; // eslint-disable-line
+};
 // Denne mappen skal inneholde all data som trengs for å kontruere tabellen med kortvarige arbeidsforhold.
 // Vi trenger å gi hvert inputfield et unikt, reproduserbart navn som kan brukes til å sette andelen i perioden til
 // sin respektive overstyrte sum. Dette navnet navnet bør være basert på:
@@ -154,7 +156,7 @@ export const createTableData = createSelector(
     kopiAvPerioder.forEach((periode) => {
       const arbeidstakerAndeler = findArbeidstakerAndeler(periode);
       arbeidstakerAndeler.forEach((andel) => {
-        const mapKey = createArbeidsforholdMapKey(andel);
+        const mapKey = createArbeidsforholdMapKey(andel.arbeidsforhold);
         const mapValue = arbeidsforholdPeriodeMap[mapKey];
         const newMapValue = createMapValueObject();
         if (harAktueltAksjonspunkt) {

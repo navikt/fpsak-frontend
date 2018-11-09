@@ -3,8 +3,8 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+import SearchForm from '@fpsak-frontend/shared-components/searchForm/SearchForm';
 import FagsakSearch from './FagsakSearch';
-import SearchForm from './SearchForm';
 
 describe('<FagsakSearch>', () => {
   const fagsak = {

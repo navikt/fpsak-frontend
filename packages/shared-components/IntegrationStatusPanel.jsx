@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Normaltekst, Undertittel, Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
-
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import Image from 'sharedComponents/Image';
-import { dateFormat, timeFormat } from 'utils/dateUtils';
-
-import chevronUp from 'images/pil_opp.svg';
-import chevronDown from 'images/pil_ned.svg';
-import infoImageUrl from 'images/behandle.svg';
+import { dateFormat, timeFormat } from '@fpsak-frontend/utils/dateUtils';
+import chevronUp from '@fpsak-frontend/assets/images/pil_opp.svg';
+import chevronDown from '@fpsak-frontend/assets/images/pil_ned.svg';
+import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
+import VerticalSpacer from './VerticalSpacer';
+import Image from './Image';
 
 import styles from './integrationStatusPanel.less';
 

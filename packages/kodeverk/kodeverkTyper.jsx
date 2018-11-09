@@ -22,6 +22,7 @@ const kodeverkTyper = {
   FAMILIE_HENDELSE_TYPE: 'FamilieHendelseType',
   INNSYN_RESULTAT_TYPE: 'InnsynResultatType',
   BEHANDLING_TYPE: 'BehandlingType',
+  OPPHOLD_ARSAK: 'OppholdÅrsak',
   UTSETTELSE_ARSAK: 'UtsettelseÅrsak',
   UTSETTELSE_GRADERING_KVOTE: 'UttakPeriodeType',
   OPPTJENING_AKTIVITET_TYPE: 'OpptjeningAktivitetType',

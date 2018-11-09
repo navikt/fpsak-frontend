@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
-import Image from 'sharedComponents/Image';
+import Image from '@fpsak-frontend/shared-components/Image';
 import UttakPeriodeType from './UttakPeriodeType';
 
 describe('<UttakPeriodeType>', () => {
@@ -17,6 +17,8 @@ describe('<UttakPeriodeType>', () => {
   const isAnyFormOpen = sinon.spy();
   const virksomhetNavn = 'STATOIL';
   const orgnr = '1234567890';
+  const flerbarnsdager = false;
+  const samtidigUttak = false;
 
   it('skal vise redigere og slett periode hvis manuellOverstyring er true og readOnly er false', () => {
     const wrapper = shallow(<UttakPeriodeType
@@ -33,6 +35,8 @@ describe('<UttakPeriodeType>', () => {
       manuellOverstyring
       isNyPeriodeFormOpen={false}
       erArbeidstaker={false}
+      samtidigUttak={samtidigUttak}
+      flerbarnsdager={flerbarnsdager}
       isFromSøknad
     />);
 
@@ -54,6 +58,8 @@ describe('<UttakPeriodeType>', () => {
       readOnly
       manuellOverstyring={false}
       isNyPeriodeFormOpen={false}
+      samtidigUttak={samtidigUttak}
+      flerbarnsdager={flerbarnsdager}
       erArbeidstaker
       isFromSøknad
     />);
@@ -77,6 +83,8 @@ describe('<UttakPeriodeType>', () => {
       manuellOverstyring={false}
       isNyPeriodeFormOpen={false}
       erArbeidstaker={false}
+      samtidigUttak={samtidigUttak}
+      flerbarnsdager={flerbarnsdager}
       arbeidstidprosent={arbeidstidprosent}
       isFromSøknad
     />);
@@ -98,6 +106,8 @@ describe('<UttakPeriodeType>', () => {
       readOnly
       manuellOverstyring={false}
       isNyPeriodeFormOpen={false}
+      samtidigUttak={samtidigUttak}
+      flerbarnsdager={flerbarnsdager}
       erArbeidstaker
       arbeidstidprosent={arbeidstidprosent}
       virksomhetNavn={virksomhetNavn}

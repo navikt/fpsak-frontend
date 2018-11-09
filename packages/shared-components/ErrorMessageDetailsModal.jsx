@@ -4,13 +4,11 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Knapp } from 'nav-frontend-knapper';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
-
-import Image from 'sharedComponents/Image';
-import Modal from 'sharedComponents/Modal';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-
-import infoImageUrl from 'images/behandle.svg';
+import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
+import Image from './Image';
+import Modal from './Modal';
+import ElementWrapper from './ElementWrapper';
+import VerticalSpacer from './VerticalSpacer';
 
 import styles from './errorMessageDetailsModal.less';
 
