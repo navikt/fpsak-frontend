@@ -27,6 +27,8 @@ const perioder = [{
   openForm: false,
   isFromSøknad: true,
   erArbeidstaker: false,
+  samtidigUttak: false,
+  flerbarnsdager: false,
 }, {
   id: '32434-334534-222',
   tom: '2018-10-10',
@@ -38,6 +40,8 @@ const perioder = [{
   openForm: true,
   isFromSøknad: true,
   erArbeidstaker: true,
+  samtidigUttak: false,
+  flerbarnsdager: false,
 }];
 const inntektsmeldinger = [{
   arbeidsgiver: '',
@@ -70,6 +74,8 @@ describe('<UttakPeriode>', () => {
       inntektsmeldingInfo={[]}
       readOnly
       isRevurdering={false}
+      samtidigUttak={perioder[0].samtidigUttak}
+      flerbarnsdager={perioder[0].flerbarnsdager}
       endringsDato={endringsDato}
     />);
     const uttakPeriodeType = wrapper.find(UttakPeriodeType);
@@ -94,6 +100,8 @@ describe('<UttakPeriode>', () => {
       readOnly
       isFromSøknad={perioder[0].isFromSøknad}
       isRevurdering={false}
+      samtidigUttak={perioder[0].samtidigUttak}
+      flerbarnsdager={perioder[0].flerbarnsdager}
       endringsDato={endringsDato}
     />);
 
@@ -117,6 +125,8 @@ describe('<UttakPeriode>', () => {
       inntektsmeldingInfo={[]}
       readOnly={false}
       isRevurdering={false}
+      samtidigUttak={perioder[0].samtidigUttak}
+      flerbarnsdager={perioder[0].flerbarnsdager}
       endringsDato={endringsDato}
     />);
 
@@ -146,6 +156,8 @@ describe('<UttakPeriode>', () => {
       readOnly={false}
       endringsDato={endringsDato}
       isRevurdering={false}
+      samtidigUttak={perioder[0].samtidigUttak}
+      flerbarnsdager={perioder[0].flerbarnsdager}
       {...otherProps}
     />);
 

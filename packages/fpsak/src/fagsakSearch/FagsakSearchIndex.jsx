@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { pathToFagsak } from 'app/paths';
-
+import FagsakSearch from 'fagsakSearch/FagsakSearch';
 import fagsakPropType from 'fagsak/fagsakPropType';
 import { searchFagsaker, resetFagsakSearch } from './duck';
 import {
@@ -14,7 +14,6 @@ import {
   getSearchFagsakerFinished,
   getSearchFagsakerStarted,
 } from './fagsakSearchSelectors';
-import FagsakSearch from './components/FagsakSearch';
 
 /**
  * FagsakSearchIndex

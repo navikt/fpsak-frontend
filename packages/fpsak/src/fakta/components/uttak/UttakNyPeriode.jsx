@@ -7,7 +7,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import { behandlingFormValueSelector, behandlingForm } from 'behandling/behandlingForm';
 import {
   PeriodpickerField, SelectField, CheckboxField, RadioGroupField, RadioOption, TextAreaField, DecimalField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import {
   hasValidDate,
   requiredIfNotPristine,
@@ -15,26 +15,27 @@ import {
   hasValidDecimal,
   hasValidPeriod,
   maxValue, minLength, maxLength, hasValidText,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils/validation/validators';
 import moment from 'moment';
-import guid from 'utils/guidUtil';
+import guid from '@fpsak-frontend/utils/guidUtil';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
-import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
-import FlexRow from 'sharedComponents/flexGrid/FlexRow';
-import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { getKodeverk } from 'kodeverk/duck';
+import FlexColumn from '@fpsak-frontend/shared-components/flexGrid/FlexColumn';
+import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';
+import FlexContainer from '@fpsak-frontend/shared-components/flexGrid/FlexContainer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
 import { getPersonopplysning, getAlleAndelerIForstePeriode } from 'behandling/behandlingSelectors';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
-import uttakPeriodeType from 'kodeverk/uttakPeriodeType';
-import { ISO_DATE_FORMAT } from 'utils/formats';
-import utsettelseArsakCodes from 'kodeverk/utsettelseArsakCodes';
-import overforingArsak from 'kodeverk/overforingArsak';
-import { calcDaysAndWeeks } from 'utils/dateUtils';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/navBrukerKjonn';
+import uttakPeriodeType from '@fpsak-frontend/kodeverk/uttakPeriodeType';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
+import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/utsettelseArsakCodes';
+import overforingArsak from '@fpsak-frontend/kodeverk/overforingArsak';
+import { calcDaysAndWeeks } from '@fpsak-frontend/utils/dateUtils';
 import styles from './uttakNyPeriode.less';
 
 const maxValue100 = maxValue(100);
+const maxValue200 = maxValue(200);
 const minLength3 = minLength(3);
 const maxLength4000 = maxLength(4000);
 
@@ -154,13 +155,32 @@ export const UttakNyPeriode = ({
                         </FlexColumn>
                         <FlexColumn className={styles.alignRightHorizontalBottom}>
                           <CheckboxField
-                            name="samtidigUttak"
-                            label={<FormattedMessage id="UttakInfoPanel.SamtidigUttak" />}
-                          />
-                          <CheckboxField
                             name="flerbarnsdager"
                             label={<FormattedMessage id="UttakInfoPanel.Flerbarnsdager" />}
                           />
+                          <CheckboxField
+                            id="samtidigUttak_nyperiode"
+                            name="samtidigUttak"
+                            label={<FormattedMessage id="UttakInfoPanel.SamtidigUttak" />}
+                          />
+                          {nyPeriode.samtidigUttak && (
+                            <FlexColumn>
+                              <FlexRow>
+                                <FlexColumn>
+                                  <DecimalField
+                                    className={styles.fieldHorizontal}
+                                    name="samtidigUttaksprosent"
+                                    bredde="XS"
+                                    label={{ id: 'UttakInfoPanel.SamtidigUttakProsentandel' }}
+                                    validate={[required, maxValue200, hasValidDecimal]}
+                                    normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                                    inputClassName={styles.textAlignRight}
+                                  />
+                                </FlexColumn>
+                                <FlexColumn className={styles.suffixAligAuto}>%</FlexColumn>
+                              </FlexRow>
+                            </FlexColumn>
+                          )}
                         </FlexColumn>
                       </FlexRow>
                     </FlexColumn>
@@ -222,7 +242,6 @@ export const UttakNyPeriode = ({
                             </FlexColumn>
                             <FlexColumn className={styles.suffix}>%</FlexColumn>
                           </FlexRow>
-
                         </div>
                         )}
 
@@ -321,6 +340,7 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
     bekreftet: false,
     openForm: true,
     samtidigUttak: values.samtidigUttak,
+    samtidigUttaksprosent: values.samtidigUttaksprosent,
     flerbarnsdager: values.flerbarnsdager,
     orgnr: arbeidsForhold && arbeidsForhold[0] !== '-' ? arbeidsForhold[0] : undefined,
     erArbeidstaker: arbeidsForhold && arbeidsForhold[0] !== '-',
@@ -373,6 +393,9 @@ const mapStateToProps = (state, ownProps) => {
       arbeidsForhold: null,
       arbeidstidprosent: null,
       typeUttak: null,
+      flerbarnsdager: false,
+      samtidigUttak: false,
+      samtidigUttaksprosent: null,
     },
     nyPeriode: behandlingFormValueSelector('nyPeriodeForm')(
       state,
@@ -381,6 +404,7 @@ const mapStateToProps = (state, ownProps) => {
       'periodeType',
       'periodeOverforingArsak',
       'periodeArsak',
+      'samtidigUttak',
       'arbeidsForhold',
       'arbeidstidprosent',
       'typeUttak',

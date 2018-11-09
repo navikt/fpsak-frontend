@@ -162,9 +162,7 @@ describe('Fagsak-reducer', () => {
 
         // Feilmelding fordi restMethod.openPreview feilar. Har ikkje mocka ut window.open og URL.createObjectURL
         expect(forhandsvisVedtakErrorAction.type).to.contain('/fpsak/api/dokumentbestiller/forhandsvis-vedtaksbrev ERROR');
-        // Feilmelding lokalt, lokal = URL.createObjectURL is not a function, jenkins = URL is not defined
         expect(forhandsvisVedtakErrorAction.payload).is.eql('URL is not defined');
-
 
         expect(forhandsvisVedtakFinishedAction.type).to.contain('/fpsak/api/dokumentbestiller/forhandsvis-vedtaksbrev FINISHED');
         expect(forhandsvisVedtakFinishedAction.payload).is.undefined;

@@ -3,19 +3,17 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
 import moment from 'moment';
 import { createSelector } from 'reselect';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
-import periodeAarsak from 'kodeverk/periodeAarsak';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
+import periodeAarsak from '@fpsak-frontend/kodeverk/periodeAarsak';
 import { getBeregningsgrunnlagPerioder } from 'behandling/behandlingSelectors';
 
 import styles from './naturalytelsePanel.less';
 
-const createArbeidsforholdKey = andel => `${andel.virksomhetNavn}${andel.arbeidsforholdId}`;
+const createArbeidsforholdKey = andel => `${andel.arbeidsgiverNavn}${andel.arbeidsforholdId}`;
 
 const findArbeidsforholdMedFrafaltYtelse = periode => periode.beregningsgrunnlagPrStatusOgAndel.filter(andel => andel.bortfaltNaturalytelse !== undefined
     && andel.bortfaltNaturalytelse !== null
@@ -26,7 +24,7 @@ const createHeaderData = perioder => perioder.map(periode => periode.beregningsg
 const createOrEditMapValue = (andel, mapValue, antallPerioderMedFrafaltYtelse) => {
   let newMapValue = [];
   if (mapValue === undefined) {
-    newMapValue = [andel.virksomhetNavn];
+    newMapValue = [andel.arbeidsforhold.arbeidsgiverNavn];
     for (let i = 0; i < antallPerioderMedFrafaltYtelse; i += 1) {
       newMapValue.push(' ');
     }
@@ -74,7 +72,7 @@ export const createNaturalytelseTableData = createSelector([getBeregningsgrunnla
   relevantePerioder.forEach((periode) => {
     const andelerMedFrafaltYtelse = findArbeidsforholdMedFrafaltYtelse(periode);
     andelerMedFrafaltYtelse.forEach((andel) => {
-      const mapKey = createArbeidsforholdKey(andel);
+      const mapKey = createArbeidsforholdKey(andel.arbeidsforhold);
       const mapValue = tempMap[mapKey];
       tempMap[mapKey] = createOrEditMapValue(andel, mapValue, antallPerioderMedFrafaltYtelse);
     });

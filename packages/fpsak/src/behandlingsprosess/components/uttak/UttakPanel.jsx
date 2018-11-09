@@ -6,19 +6,19 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import FadingPanel from 'sharedComponents/FadingPanel';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import uttaksresultatPropType from 'behandling/proptypes/uttaksresultatPropType';
 import { getUttaksresultatPerioder, getStonadskontoer } from 'behandling/behandlingSelectors';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { uttakPeriodeNavn, stonadskontoType } from 'kodeverk/uttakPeriodeType';
-import periodeResultatType from 'kodeverk/periodeResultatType';
+import { uttakPeriodeNavn, stonadskontoType } from '@fpsak-frontend/kodeverk/uttakPeriodeType';
+import periodeResultatType from '@fpsak-frontend/kodeverk/periodeResultatType';
 
 import Uttak from './Uttak';
 import styles from './uttakPanel.less';
@@ -180,18 +180,12 @@ const getResult = (uttaksresultatActivity) => {
   return uttakResult;
 };
 
-const checkAnnenPartAktivitet = (konto) => {
-  if (konto) {
-    return konto.aktivitetFordelingAnnenPart.reduce((sum, current) => Math.max(sum, current.fordelteDager), 0);
-  }
-  return 0;
-};
 
-
-const addAnnenPart = (uttakResult, stonadskonto) => Object.values(uttakResult)
+const addAnnenPart = uttakResult => Object.values(uttakResult)
   .map((u) => {
     const uttakElement = { ...u };
-    uttakElement.trekkdager = checkAnnenPartAktivitet(stonadskonto[u.konto]) + u.trekkdager;
+    uttakElement.trekkdager = u.trekkdager;
+    uttakElement.saldo = u.saldo;
     return uttakElement;
   });
 
@@ -217,18 +211,18 @@ const getMaxDays = (stonadskontoTypeKode, stonadskontoer) => {
 const checkMaxDager = (uttaksresultatActivity, stonadskonto) => {
   let errors = null;
   const uttakResult = getResult(uttaksresultatActivity);
-  const addAnnenPartFordelteDager = addAnnenPart(uttakResult, stonadskonto.stonadskontoer);
+  const addAnnenPartFordelteDager = addAnnenPart(uttakResult);
   addAnnenPartFordelteDager.forEach((value) => {
-    const maxDays = getMaxDays(value.konto, stonadskonto.stonadskontoer);
-    if (typeof maxDays !== 'undefined' && (value.trekkdager > maxDays)) {
+    const maxDays = getMaxDays(value.konto, stonadskonto.stonadskontoer) - value.trekkdager;
+    if (typeof maxDays !== 'undefined' && (maxDays < 0)) {
       errors = {
         _error:
   <AlertStripe type="advarsel" className={styles.marginTop}>
     <FormattedMessage
-      id="ValidationMessage.InvalidTrekkAntallDagerUttakForm"
+      id="ValidationMessage.NegativeSaldo"
       values={{
         periode: uttakPeriodeNavn[value.konto],
-        maxDays,
+        days: maxDays * -1,
       }}
     />
   </AlertStripe>,
@@ -362,6 +356,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const UttakPanel = connect(mapStateToProps)(injectIntl(behandlingForm({
   form: formName,
+  enableReinitialize: true,
 })(UttakPanelImpl)));
 
 UttakPanel.supports = (bp, apCodes) => bp === behandlingspunktCodes.UTTAK || uttakAksjonspunkter.some(ap => apCodes.includes(ap));

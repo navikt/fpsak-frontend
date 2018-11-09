@@ -1,14 +1,14 @@
 import React from 'react';
-import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import { expect } from 'chai';
 
-import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 
 import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import vilkarType from 'kodeverk/vilkarType';
-import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
+import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
 import { ErForeldreansvar4LeddVilkaarOppfyltFormImpl as UnwrappedForm, buildInitialValues } from './ErForeldreansvar4LeddVilkaarOppfyltForm';
 
 describe('<ErForeldreansvar4LeddVilkaarOppfyltForm>', () => {

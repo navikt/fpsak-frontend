@@ -2,27 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
-import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
+import { FlexContainer, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
 import {
   RadioGroupField, RadioOption, TextAreaField, SelectField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import {
-  minLength, maxLength, requiredIfNotPristine, hasValidText, required, notDash,
-} from 'utils/validation/validators';
+  minLength,
+  maxLength,
+  requiredIfNotPristine,
+  hasValidText,
+  required,
+  notDash,
+  isUtbetalingsgradMerSamitidigUttaksprosent,
+} from '@fpsak-frontend/utils/validation/validators';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { getSkjaeringstidspunktForeldrepenger } from 'behandling/behandlingSelectors';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import { getKodeverk } from 'kodeverk/duck';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
 import { FieldArray, formPropTypes } from 'redux-form';
-import periodeResultatType from 'kodeverk/periodeResultatType';
-import { uttakPeriodeNavn } from 'kodeverk/uttakPeriodeType';
+import periodeResultatType from '@fpsak-frontend/kodeverk/periodeResultatType';
+import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/uttakPeriodeType';
 import { Undertekst } from 'nav-frontend-typografi';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import ArrowBox from 'sharedComponents/ArrowBox';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import RenderUttakTable from './RenderUttakTable';
 import UttakInfo from './UttakInfo';
 import styles from './uttakActivity.less';
@@ -46,9 +52,18 @@ function sortAlphabetically(a, b) {
   return 0;
 }
 
+// TODO:(aa) fix this in a correct manner
+const emptyBegrunnelse = () => {
+  const begrunnelse = document.getElementById('uttakVurdering');
+  if (!begrunnelse || begrunnelse.innerHTML.length < 1) {
+    return true;
+  }
+  return false;
+};
+
 const mapAarsak = (kodeverk, starttidspunktForeldrepenger) => {
   kodeverk.sort(sortAlphabetically);
-  const nyKodeArray = kodeverk.filter(kodeItem => kodeItem.gyldigTom > starttidspunktForeldrepenger
+  const nyKodeArray = kodeverk.filter(kodeItem => kodeItem.gyldigTom >= starttidspunktForeldrepenger
     && kodeItem.gyldigFom <= starttidspunktForeldrepenger);
   return (nyKodeArray
     .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>));
@@ -60,6 +75,7 @@ export const UttakActivity = ({
   cancelSelectedActivity,
   erOppfylt,
   graderingInnvilget,
+  erSamtidigUttak,
   avslagAarsakKoder,
   innvilgelseAarsakKoder,
   graderingAvslagAarsakKoder,
@@ -79,6 +95,7 @@ export const UttakActivity = ({
         isApOpen={isApOpen}
         readOnly={readOnly}
         graderingInnvilget={graderingInnvilget}
+        erSamtidigUttak={erSamtidigUttak}
       />
     </Row>
     <Row className={readOnly ? null : styles.marginTop}>
@@ -99,6 +116,7 @@ export const UttakActivity = ({
           validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
           maxLength={1500}
           readOnly={readOnly}
+          id="uttakVurdering"
         />
       </div>
       {!readOnly
@@ -166,7 +184,12 @@ export const UttakActivity = ({
           <FlexContainer fluid>
             <FlexRow>
               <FlexColumn>
-                <Hovedknapp mini htmlType="button" onClick={formProps.handleSubmit} disabled={formProps.pristine}>
+                <Hovedknapp
+                  mini
+                  htmlType="button"
+                  onClick={formProps.handleSubmit}
+                  disabled={formProps.pristine || emptyBegrunnelse()}
+                >
                   <FormattedMessage id="UttakActivity.Oppdater" />
                 </Hovedknapp>
               </FlexColumn>
@@ -234,6 +257,23 @@ const resultatTypeObject = (value) => {
   });
 };
 
+const validateUttakActivity = (values) => {
+  const errors = {};
+  errors.UttakFieldArray = [];
+  if (values.samtidigUttak && values.UttakFieldArray) {
+    const samletUbetalingsgrad = values.UttakFieldArray.reduce((acc, aktivit) => parseFloat(acc) + parseFloat(aktivit.utbetalingsgrad, 10), 0);
+    values.UttakFieldArray.forEach((aktivitet, index) => {
+      const invalid = isUtbetalingsgradMerSamitidigUttaksprosent(values.samtidigUttaksprosent, samletUbetalingsgrad);
+      if (invalid) {
+        errors.UttakFieldArray[index] = {
+          utbetalingsgrad: invalid,
+        };
+      }
+    });
+  }
+  return errors;
+};
+
 const transformValues = (values, selectedItemData, avslagAarsakKoder, innvilgelseAarsakKoder, graderingAvslagAarsakKoder) => {
   const { ...transformvalue } = selectedItemData;
   const [avslagAarsakObject] = avslagAarsakKoder.filter(a => a.kode === values.avslagAarsak);
@@ -247,6 +287,7 @@ const transformValues = (values, selectedItemData, avslagAarsakKoder, innvilgels
   transformvalue.begrunnelse = values.begrunnelse;
   transformvalue.flerbarnsdager = values.flerbarnsdager;
   transformvalue.samtidigUttak = values.samtidigUttak;
+  transformvalue.samtidigUttaksprosent = values.samtidigUttaksprosent;
   transformvalue.erOppfylt = values.erOppfylt;
   transformvalue.graderingInnvilget = values.graderingInnvilget;
   transformvalue.periodeResultatType = resultatTypeObject(values.erOppfylt);
@@ -272,14 +313,14 @@ const calculateCorrectWeeks = (aktivitet) => {
   if ((aktivitet.utbetalingsgrad || aktivitet.utbetalingsgrad === 0) || !aktivitet.prosentArbeid) {
     return Math.floor(aktivitet.trekkdager / 5);
   }
-  return (Math.floor((aktivitet.trekkdager * (1 - (aktivitet.prosentArbeid * 0.01))) / 5));
+  return Math.floor((aktivitet.trekkdager * parseFloat(1 - (aktivitet.prosentArbeid * 0.01)).toPrecision(2)) / 5);
 };
 
 const calculateCorrectDays = (aktivitet) => {
   if ((aktivitet.utbetalingsgrad || aktivitet.utbetalingsgrad === 0) || !aktivitet.prosentArbeid) {
     return Math.floor(aktivitet.trekkdager % 5);
   }
-  return (Math.floor((aktivitet.trekkdager * (1 - (aktivitet.prosentArbeid * 0.01))) % 5));
+  return Math.floor((aktivitet.trekkdager * parseFloat(1 - (aktivitet.prosentArbeid * 0.01)).toPrecision(2)) % 5);
 };
 
 export const initialValue = (selectedItem, kontoIkkeSatt) => {
@@ -312,6 +353,7 @@ const mapStateToProps = (state, ownProps) => {
       begrunnelse: selectedItem.begrunnelse,
       flerbarnsdager: selectedItem.flerbarnsdager,
       samtidigUttak: selectedItem.samtidigUttak,
+      samtidigUttaksprosent: selectedItem.samtidigUttaksprosent,
       avslagAarsak: selectedItem.periodeResultatÅrsak.kode,
       innvilgelseAarsak: selectedItem.periodeResultatÅrsak.kode,
       graderingInnvilget: selectedItem.graderingInnvilget,
@@ -321,8 +363,11 @@ const mapStateToProps = (state, ownProps) => {
     avslagAarsakKoder: avslagAarsaker,
     innvilgelseAarsakKoder: innvilgelseAarsaker,
     graderingInnvilget: behandlingFormValueSelector(uttakActivityForm)(state, 'graderingInnvilget'),
+    erSamtidigUttak: behandlingFormValueSelector(uttakActivityForm)(state, 'samtidigUttak'),
+    samtidigUttaksprosent: behandlingFormValueSelector(uttakActivityForm)(state, 'samtidigUttaksprosent'),
     periodeTyper: getKodeverk(kodeverkTyper.UTTAK_PERIODE_TYPE)(state),
     starttidspunktForeldrepenger: getSkjaeringstidspunktForeldrepenger(state),
+    validate: values => validateUttakActivity(values),
     onSubmit: values => ownProps.updateActivity(transformValues(values, selectedItem, avslagAarsaker, innvilgelseAarsaker, graderingAvslagAarsakKoder)),
   };
 };

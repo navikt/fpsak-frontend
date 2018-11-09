@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-import opplysningsKilde from 'kodeverk/opplysningsKilde';
+import opplysningsKilde from '@fpsak-frontend/kodeverk/opplysningsKilde';
 import ForeldrePanel from './ForeldrePanel';
 
 const getMockedFields = (fieldNames, children) => {

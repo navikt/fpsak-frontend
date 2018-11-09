@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { makeRestApiRequest } from 'data/duck';
-import { getIntegrationStatusList, getShowDetailedErrorMessages } from 'app/duck';
-import { FpsakApi } from 'data/fpsakApi';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { makeRestApiRequest } from '@fpsak-frontend/data/duck';
+import { getIntegrationStatusList, getShowDetailedErrorMessages } from '@fpsak-frontend/data/error/duck';
+import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import FagsakSearchIndex from 'fagsakSearch/FagsakSearchIndex';
-import IntegrationStatusPanel from './IntegrationStatusPanel';
+import IntegrationStatusPanel from '@fpsak-frontend/shared-components/IntegrationStatusPanel';
 
 /**
  * Dashboard

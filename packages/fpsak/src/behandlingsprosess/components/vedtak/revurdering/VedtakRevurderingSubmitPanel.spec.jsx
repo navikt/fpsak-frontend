@@ -1,11 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
-import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 import { FormattedMessage } from 'react-intl';
-import vedtaksbrevStatus from 'kodeverk/vedtakbrevStatus';
-import { VedtakRevurderingSubmitPanelImpl as UnwrappedForm } from './VedtakRevurderingSubmitPanel';
+import vedtaksbrevStatus from '@fpsak-frontend/kodeverk/vedtakbrevStatus';
+import { VedtakRevurderingSubmitPanelImpl as UnwrappedForm, getSubmitKnappTekst } from './VedtakRevurderingSubmitPanel';
 
 const forhandsvisVedtaksbrevFunc = sinon.spy();
 
@@ -29,6 +29,7 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       brevStatus={undefined}
       readOnly={false}
       ytelseType="ES"
+      submitKnappTextId="VedtakForm.TilGodkjenning"
     />);
     const formattedMessages = wrapper.find(FormattedMessage);
     expect(formattedMessages.prop('id')).is.eql('VedtakForm.ForhandvisBrev');
@@ -46,6 +47,7 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       brevStatus={undefined}
       readOnly={false}
       ytelseType="ES"
+      submitKnappTextId="VedtakForm.TilGodkjenning"
     />);
     expect(wrapper.find(FormattedMessage)).to.have.length(0);
   });
@@ -62,6 +64,7 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       brevStatus={undefined}
       readOnly={false}
       ytelseType="ES"
+      submitKnappTextId="VedtakForm.TilGodkjenning"
     />);
     const formattedMessages = wrapper.find(FormattedMessage);
     expect(formattedMessages.prop('id')).is.eql('VedtakForm.ForhandvisBrev');
@@ -79,8 +82,27 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       brevStatus={{ kode: vedtaksbrevStatus.AUTOMATISK }}
       readOnly={false}
       ytelseType="FP"
+      submitKnappTextId="VedtakForm.TilGodkjenning"
     />);
     const formattedMessages = wrapper.find(FormattedMessage);
     expect(formattedMessages.prop('id')).is.eql('VedtakForm.ForhandvisBrev');
+  });
+
+  it('knapp skal vise til godkjenning tekst når det finnes aktive aksjonspunkter som skal til totrinn', () => {
+    const aksjonspunkter = [{ kode: '5058', erAktivt: true, toTrinnsBehandling: false }, { kode: '5027', erAktivt: true, toTrinnsBehandling: true }];
+    const tekstId = getSubmitKnappTekst.resultFunc(aksjonspunkter);
+    expect(tekstId).to.equal('VedtakForm.TilGodkjenning');
+  });
+
+  it('knapp skal vise fatt vedtak tekst når det finnes inaktive aksjonspunkter som skal til totrinn', () => {
+    const aksjonspunkter = [{ kode: '5058', erAktivt: true, toTrinnsBehandling: false }, { kode: '5027', erAktivt: false, toTrinnsBehandling: true }];
+    const tekstId = getSubmitKnappTekst.resultFunc(aksjonspunkter);
+    expect(tekstId).to.equal('VedtakForm.FattVedtak');
+  });
+
+  it('knapp skal vise fatt vedtak tekst når det ikkje finnes aksjonspunkter som skal til totrinn', () => {
+    const aksjonspunkter = [{ kode: '5058', erAktivt: true, toTrinnsBehandling: false }, { kode: '5027', erAktivt: true, toTrinnsBehandling: false }];
+    const tekstId = getSubmitKnappTekst.resultFunc(aksjonspunkter);
+    expect(tekstId).to.equal('VedtakForm.FattVedtak');
   });
 });

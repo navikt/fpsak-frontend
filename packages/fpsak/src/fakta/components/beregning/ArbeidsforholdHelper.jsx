@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 export const sortArbeidsforholdList = (arbeidsforhold) => {
   const copy = arbeidsforhold.slice(0);
-  copy.sort((a, b) => new Date(a.startdato) - new Date(b.startdato));
+  copy.sort((a, b) => new Date(a.arbeidsforhold.startdato) - new Date(b.arbeidsforhold.startdato));
   return copy;
 };
 
@@ -15,7 +15,7 @@ export const createArbeidsperiodeString = (arbeidsforhold) => {
 
 const arbeidsforholdEksistererIListen = (arbeidsforhold, arbeidsgiverList) => {
   if (arbeidsforhold.arbeidsforholdId === null) {
-    return arbeidsgiverList.map(({ virksomhetId }) => (virksomhetId)).includes(arbeidsforhold.virksomhetId);
+    return arbeidsgiverList.map(({ arbeidsgiverId }) => (arbeidsgiverId)).includes(arbeidsforhold.arbeidsgiverId);
   }
   return arbeidsgiverList.map(({ arbeidsforholdId }) => (arbeidsforholdId)).includes(arbeidsforhold.arbeidsforholdId);
 };
@@ -40,8 +40,8 @@ export const getUniqueListOfArbeidsforhold = (andeler) => {
 
 
 export const arbeidsforholdProptype = PropTypes.shape({
-  virksomhetNavn: PropTypes.string,
-  virksomhetId: PropTypes.string,
+  arbeidsgiverNavn: PropTypes.string,
+  arbeidsgiverId: PropTypes.string,
   startdato: PropTypes.string,
   opphoersdato: PropTypes.string,
   arbeidsforholdId: PropTypes.string,

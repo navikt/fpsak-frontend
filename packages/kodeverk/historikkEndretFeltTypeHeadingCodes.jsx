@@ -8,10 +8,6 @@ const historikkEndretFeltTypeHeadingCodes = {
     kode: 'FORDELING_FOR_ANDEL',
     feltId: 'HistorikkEndretFeltHeading.FordelingForAndel',
   },
-  INNTEKTSKATEGORI_FOR_ANDEL: {
-    kode: 'INNTEKTSKATEGORI_FOR_ANDEL',
-    feltId: 'HistorikkEndretFeltHeading.InntektskategoriForAndel',
-  },
 };
 
 export default historikkEndretFeltTypeHeadingCodes;

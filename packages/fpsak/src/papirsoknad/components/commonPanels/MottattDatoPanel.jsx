@@ -1,0 +1,39 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+import { Undertittel, Undertekst } from 'nav-frontend-typografi';
+
+import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import { DatepickerField } from '@fpsak-frontend/form';
+import { hasValidDate, dateBeforeOrEqualToToday, required } from '@fpsak-frontend/utils/validation/validators';
+
+/**
+ * MottattDatoPanel
+ *
+ * Presentasjonskomponent. Komponenten vises som del av skjermbildet for registrering av papirsøknad.
+ * Komponenten har inputfelter og må derfor rendres som etterkommer av komponent dekorert med reduxForm.
+ */
+const MottattDatoPanel = ({
+  readOnly,
+}) => (
+  <BorderBox>
+    <Undertittel><FormattedMessage key="regDatoTittel" id="Registrering.Omsoknaden.Mottattdato" /></Undertittel>
+    <VerticalSpacer sixteenPx />
+    <Undertekst>
+      {' '}
+      <FormattedMessage key="regDatoUnder" id="Registrering.Omsoknaden.MottattDato" />
+    </Undertekst>
+    <DatepickerField
+      name="mottattDato"
+      validate={[required, hasValidDate, dateBeforeOrEqualToToday]}
+      readOnly={readOnly}
+    />
+  </BorderBox>
+);
+
+MottattDatoPanel.propTypes = {
+  readOnly: PropTypes.bool.isRequired,
+};
+
+export default MottattDatoPanel;

@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 
 const beregningsgrunnlagArbeidsforholdProptype = PropTypes.shape({
-  virksomhetNavn: PropTypes.string,
-  virksomhetId: PropTypes.string,
+  arbeidsgiverNavn: PropTypes.string,
+  arbeidsgiverId: PropTypes.string,
   startdato: PropTypes.string,
   opphoersdato: PropTypes.string,
   arbeidsforholdId: PropTypes.string,
@@ -92,8 +92,8 @@ const beregningsgrunnlagPropType = PropTypes.shape({
       erNyIArbeidslivet: PropTypes.bool,
       erTidsbegrensetArbeidsforhold: PropTypes.bool,
       erNyoppstartetEllerSammeOrganisasjon: PropTypes.bool,
-      virksomhetId: PropTypes.string,
-      virksomhetNavn: PropTypes.string,
+      arbeidsgiverId: PropTypes.string,
+      arbeidsgiverNavn: PropTypes.string,
       andelsnr: PropTypes.number,
       lonnsendringIBeregningsperioden: PropTypes.bool,
       besteberegningPrAar: PropTypes.number,

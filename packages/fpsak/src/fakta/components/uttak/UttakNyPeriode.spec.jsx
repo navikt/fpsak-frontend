@@ -1,13 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
-import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
+import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 import {
   PeriodpickerField, SelectField, CheckboxField, DecimalField, TextAreaField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
-import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/navBrukerKjonn';
 import sinon from 'sinon';
 import { UttakNyPeriode } from './UttakNyPeriode';
 
@@ -190,6 +190,28 @@ describe('<UttakNyPeriode>', () => {
     wrapper.setProps({
       nyPeriode: {
         typeUttak: 'gradert',
+      },
+    });
+    const input = wrapper.find(DecimalField);
+    expect(input).to.have.length(1);
+  });
+
+  it('skal vise prosentandel for samtidig uttak hvis samtidig uttak er valgt og validere at det er et heltall', () => {
+    const wrapper = shallowWithIntl(<UttakNyPeriode
+      newPeriodeCallback={newPeriodeCallback}
+      newPeriodeResetCallback={newPeriodeResetCallback}
+      nyPeriode={nyPeriode}
+      periodeTyper={periodeTyper}
+      utsettelseÅrsaker={utsettelseÅrsaker}
+      overføringÅrsaker={overføringÅrsaker}
+      arbeidsforhold={arbeidsforhold}
+      sokerKjonn={sokerKjonn}
+      nyPeriodeDisabledDaysFom="2018-05-20"
+      {...reduxFormPropsMock}
+    />);
+    wrapper.setProps({
+      nyPeriode: {
+        samtidigUttak: true,
       },
     });
     const input = wrapper.find(DecimalField);

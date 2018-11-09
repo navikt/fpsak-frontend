@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
 import { NyoppstartetFLFormImpl, erNyoppstartetFLField, utledOverskriftForNyoppstartetFLForm } from './NyoppstartetFLForm';
 import FastsettATFLInntektForm from './FastsettATFLInntektForm';
 
@@ -80,12 +80,23 @@ describe('<NyoppstartetFLForm>', () => {
     expect(nyoppstartetFormOverskrift).to.deep.eql(overskriftNyoppstartteFL);
   });
 
+  it('Skal ikkje submitte inntekt ved endring beregningsgrunnlag', () => {
+    const tilfeller = [faktaOmBeregningTilfelle.VURDER_LONNSENDRING,
+      faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG, faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
+    const values = {};
+    values[erNyoppstartetFLField] = true;
+    const tv = NyoppstartetFLFormImpl.nyOppstartetFLInntekt(values, tilfeller,
+      { faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL] });
+    expect(tv.fastsettMaanedsinntektFL).to.equal(null);
+  });
+
   it('Skal ikkje submitte inntekt ved tilstøtende ytelse', () => {
     const tilfeller = [faktaOmBeregningTilfelle.VURDER_LONNSENDRING,
       faktaOmBeregningTilfelle.TILSTOTENDE_YTELSE, faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
     const values = {};
     values[erNyoppstartetFLField] = true;
-    const tv = NyoppstartetFLFormImpl.nyOppstartetFLInntekt(values, tilfeller);
+    const tv = NyoppstartetFLFormImpl.nyOppstartetFLInntekt(values, tilfeller,
+      { faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL] });
     expect(tv.fastsettMaanedsinntektFL).to.equal(null);
   });
 });

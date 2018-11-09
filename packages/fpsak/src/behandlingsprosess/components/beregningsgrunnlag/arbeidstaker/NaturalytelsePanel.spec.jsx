@@ -1,9 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import periodeAarsak from 'kodeverk/periodeAarsak';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
+import periodeAarsak from '@fpsak-frontend/kodeverk/periodeAarsak';
 import NaturalytelsePanel, { createNaturalytelseTableData } from './NaturalytelsePanel';
 
 
@@ -31,25 +31,31 @@ const bgPerioder = [
         aktivitetStatus: {
           kode: aktivitetStatus.ARBEIDSTAKER,
         },
-        virksomhetNavn: 'arbeidsgiver',
-        virksomhetId: '123',
-        arbeidsforholdId: '123',
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'arbeidsgiver',
+          arbeidsgiverId: '123',
+          arbeidsforholdId: '123',
+        },
       },
       {
         aktivitetStatus: {
           kode: aktivitetStatus.ARBEIDSTAKER,
         },
-        virksomhetNavn: 'arbeidsgiver',
-        virksomhetId: '456',
-        arbeidsforholdId: '456',
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'arbeidsgiver',
+          arbeidsgiverId: '456',
+          arbeidsforholdId: '456',
+        },
       },
       {
         aktivitetStatus: {
           kode: aktivitetStatus.ARBEIDSTAKER,
         },
-        virksomhetNavn: 'arbeidsgiver',
-        virksomhetId: '789',
-        arbeidsforholdId: '789',
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'arbeidsgiver',
+          arbeidsgiverId: '789',
+          arbeidsforholdId: '789',
+        },
       },
     ],
   },
@@ -63,27 +69,33 @@ const bgPerioder = [
         aktivitetStatus: {
           kode: aktivitetStatus.ARBEIDSTAKER,
         },
-        virksomhetNavn: 'arbeidsgiver',
-        virksomhetId: '123',
-        arbeidsforholdId: '123',
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'arbeidsgiver',
+          arbeidsgiverId: '123',
+          arbeidsforholdId: '123',
+        },
       },
       {
         aktivitetStatus: {
           kode: aktivitetStatus.ARBEIDSTAKER,
         },
         bortfaltNaturalytelse: 10000,
-        virksomhetNavn: 'arbeidsgiver',
-        virksomhetId: '456',
-        arbeidsforholdId: '456',
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'arbeidsgiver',
+          arbeidsgiverId: '456',
+          arbeidsforholdId: '456',
+        },
       },
       {
         aktivitetStatus: {
           kode: aktivitetStatus.ARBEIDSTAKER,
         },
         bortfaltNaturalytelse: 70000,
-        virksomhetNavn: 'arbeidsgiver',
-        virksomhetId: '789',
-        arbeidsforholdId: '789',
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'arbeidsgiver',
+          arbeidsgiverId: '789',
+          arbeidsforholdId: '789',
+        },
       },
     ],
   },
@@ -97,27 +109,33 @@ const bgPerioder = [
         aktivitetStatus: {
           kode: aktivitetStatus.ARBEIDSTAKER,
         },
-        virksomhetNavn: 'arbeidsgiver',
-        virksomhetId: '123',
-        arbeidsforholdId: '123',
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'arbeidsgiver',
+          arbeidsgiverId: '123',
+          arbeidsforholdId: '123',
+        },
       },
       {
         aktivitetStatus: {
           kode: aktivitetStatus.ARBEIDSTAKER,
         },
         bortfaltNaturalytelse: 70000,
-        virksomhetNavn: 'arbeidsgiver',
-        virksomhetId: '456',
-        arbeidsforholdId: '456',
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'arbeidsgiver',
+          arbeidsgiverId: '456',
+          arbeidsforholdId: '456',
+        },
       },
       {
         aktivitetStatus: {
           kode: aktivitetStatus.ARBEIDSTAKER,
         },
         bortfaltNaturalytelse: 10000,
-        virksomhetNavn: 'arbeidsgiver',
-        virksomhetId: '789',
-        arbeidsforholdId: '789',
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'arbeidsgiver',
+          arbeidsgiverId: '789',
+          arbeidsforholdId: '789',
+        },
       },
     ],
   },
@@ -132,25 +150,31 @@ const bgPerioder = [
           kode: aktivitetStatus.ARBEIDSTAKER,
         },
         bortfaltNaturalytelse: 50000,
-        virksomhetNavn: 'arbeidsgiver',
-        virksomhetId: '123',
-        arbeidsforholdId: '123',
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'arbeidsgiver',
+          arbeidsgiverId: '123',
+          arbeidsforholdId: '123',
+        },
       },
       {
         aktivitetStatus: {
           kode: aktivitetStatus.ARBEIDSTAKER,
         },
-        virksomhetNavn: 'arbeidsgiver',
-        virksomhetId: '456',
-        arbeidsforholdId: '456',
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'arbeidsgiver',
+          arbeidsgiverId: '456',
+          arbeidsforholdId: '456',
+        },
       },
       {
         aktivitetStatus: {
           kode: aktivitetStatus.ARBEIDSTAKER,
         },
-        virksomhetNavn: 'arbeidsgiver',
-        virksomhetId: '789',
-        arbeidsforholdId: '789',
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'arbeidsgiver',
+          arbeidsgiverId: '789',
+          arbeidsforholdId: '789',
+        },
       },
     ],
   },

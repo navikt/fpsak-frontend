@@ -5,15 +5,15 @@ import { connect } from 'react-redux';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import {
   getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK,
   getBehandlingSprak, getBehandlingVilkar,
 } from 'behandling/behandlingSelectors';
-import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
-import { required, hasValidText } from 'utils/validation/validators';
-import { TextAreaField } from 'form/Fields';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
+import { required, hasValidText } from '@fpsak-frontend/utils/validation/validators';
+import { TextAreaField } from '@fpsak-frontend/form';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import {
   medholdIKlage, shouldGiveBegrunnelse, maxLength1500, minLength3,
 } from '../VedtakHelper';

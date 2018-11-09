@@ -1,43 +1,19 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FieldArray } from 'redux-form';
-import { FormattedMessage } from 'react-intl';
-import { Element } from 'nav-frontend-typografi';
 import { EkspanderbartpanelPure } from 'nav-frontend-ekspanderbartpanel';
-import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
-import inntektskategorier from 'kodeverk/inntektskategorier';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import moment from 'moment';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
 import classnames from 'classnames/bind';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
 import RenderEndringBGFieldArray from './RenderEndringBGFieldArray';
+import { createEndringHeadingForDate, renderDateHeading } from './EndretBeregningsgrunnlagUtils';
+import {
+  settAndelIArbeid, setGenerellAndelsinfo, setArbeidsforholdInitialValues, settFastsattBelop,
+} from '../BgFordelingUtils';
+
 
 import styles from './endringBeregningsgrunnlagPeriodePanel.less';
 
-
-const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
-
-const renderDateHeading = (fom, tom) => {
-  if (!tom) {
-    return (
-      <Element>
-        <FormattedMessage
-          id="BeregningInfoPanel.EndringBG.PeriodeFom"
-          values={{ fom: formatDate(fom) }}
-        />
-      </Element>
-    );
-  }
-  return (
-    <Element>
-      <FormattedMessage
-        id="BeregningInfoPanel.EndringBG.PeriodeFomOgTom"
-        values={{ fom: formatDate(fom), tom: formatDate(tom) }}
-      />
-    </Element>
-  );
-};
 
 const classNames = classnames.bind(styles);
 
@@ -48,19 +24,19 @@ const classNames = classnames.bind(styles);
  * Presentasjonskomponent. Viser ekspanderbart panel for perioder i nytt/endret beregningsgrunnlag
  */
 
-const EndringBeregningsgrunnlagPeriodePanel = ({
+const EndringBeregningsgrunnlagPeriodePanelImpl = ({
   readOnly,
   endringBGFieldArrayName,
   fom,
-  tom,
   harPeriodeAarsakGraderingEllerRefusjon,
   isAksjonspunktClosed,
   open,
   showPanel,
+  heading,
 }) => (
   <EkspanderbartpanelPure
     className={readOnly ? styles.statusOk : classNames(`endringBeregningsgrunnlagPeriode--${fom}`)}
-    tittel={renderDateHeading(fom, tom)}
+    tittel={heading}
     apen={open}
     onClick={() => showPanel(fom)}
   >
@@ -74,92 +50,56 @@ const EndringBeregningsgrunnlagPeriodePanel = ({
   </EkspanderbartpanelPure>
 );
 
-EndringBeregningsgrunnlagPeriodePanel.propTypes = {
+EndringBeregningsgrunnlagPeriodePanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   endringBGFieldArrayName: PropTypes.string.isRequired,
   fom: PropTypes.string.isRequired,
-  tom: PropTypes.string,
   open: PropTypes.bool,
   harPeriodeAarsakGraderingEllerRefusjon: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   showPanel: PropTypes.func.isRequired,
+  heading: PropTypes.element.isRequired,
 };
 
-EndringBeregningsgrunnlagPeriodePanel.defaultProps = {
-  tom: '',
+EndringBeregningsgrunnlagPeriodePanelImpl.defaultProps = {
   open: null,
 };
 
-export const createAndelnavn = (andel, aktivitetstatuskoder) => {
-  if (andel.arbeidsforhold !== undefined && andel.arbeidsforhold !== null) {
-    return createVisningsnavnForAktivitet(andel.arbeidsforhold);
-  }
-  if (andel.aktivitetStatus.kode === aktivitetStatus.UDEFINERT) {
-    return '';
-  }
-  return aktivitetstatuskoder.filter(ik => ik.kode === andel.aktivitetStatus.kode)[0].navn;
-};
 
-const preutfyllInntektskategori = andel => (andel.inntektskategori
-&& andel.inntektskategori.kode !== inntektskategorier.UDEFINERT ? andel.inntektskategori.kode : '');
+EndringBeregningsgrunnlagPeriodePanelImpl.validate = values => RenderEndringBGFieldArray.validate(values);
 
-export const settFastsattBelop = (harPeriodeAarsakGraderingEllerRefusjon, beregnetPrMnd,
-  fastsattForrige, fordelingForrigeBehandling, fastsattAvSaksbehandler) => {
-  if (harPeriodeAarsakGraderingEllerRefusjon) {
-    if ((beregnetPrMnd || beregnetPrMnd === 0) && fastsattAvSaksbehandler) {
-      return formatCurrencyNoKr(beregnetPrMnd);
-    }
-    if (fastsattForrige || fastsattForrige === 0) {
-      return formatCurrencyNoKr(fastsattForrige);
-    }
-    return '';
-  } if (fordelingForrigeBehandling || fordelingForrigeBehandling === 0) {
-    return formatCurrencyNoKr(fordelingForrigeBehandling);
-  }
-  return 0;
-};
-
-const settAndelIArbeid = (andelerIArbeid) => {
-  if (andelerIArbeid.length === 0) {
-    return '';
-  }
-  if (andelerIArbeid.length === 1) {
-    return `${parseFloat(andelerIArbeid[0]).toFixed(2)}`;
-  }
-  const minAndel = Math.min(...andelerIArbeid);
-  const maxAndel = Math.max(...andelerIArbeid);
-  return `${minAndel} - ${maxAndel}`;
-};
-
-EndringBeregningsgrunnlagPeriodePanel.validate = values => RenderEndringBGFieldArray.validate(values);
-
-EndringBeregningsgrunnlagPeriodePanel.buildInitialValues = (periode, aktivitetstatuskoder) => {
+EndringBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (periode) => {
   if (!periode || !periode.endringBeregningsgrunnlagAndeler) {
     return {};
   }
   return (
     periode.endringBeregningsgrunnlagAndeler.map(andel => ({
-      andel: createAndelnavn(andel, aktivitetstatuskoder),
-      andelsnr: andel.andelsnr,
-      aktivitetstatus: andel.aktivitetStatus.kode,
-      arbeidsforholdId: andel.arbeidsforhold ? andel.arbeidsforhold.arbeidsforholdId : '',
-      arbeidsperiodeFom: andel.arbeidsforhold ? andel.arbeidsforhold.startdato : '',
-      arbeidsperiodeTom: andel.arbeidsforhold && andel.arbeidsforhold.opphoersdato !== null
-        ? andel.arbeidsforhold.opphoersdato : '',
+      ...setGenerellAndelsinfo(andel),
+      ...setArbeidsforholdInitialValues(andel),
       andelIArbeid: settAndelIArbeid(andel.andelIArbeid),
-      fordelingForrigeBehandling: formatCurrencyNoKr(andel.fordelingForrigeBehandling),
+      fordelingForrigeBehandling: andel.fordelingForrigeBehandling || andel.fordelingForrigeBehandling === 0
+        ? formatCurrencyNoKr(andel.fordelingForrigeBehandling) : '',
       fastsattBeløp: settFastsattBelop(periode.harPeriodeAarsakGraderingEllerRefusjon,
         andel.beregnetPrMnd, andel.fastsattForrige, andel.fordelingForrigeBehandling, andel.fastsattAvSaksbehandler),
-      refusjonskrav: andel.refusjonskrav || andel.refusjonskrav === 0 ? formatCurrencyNoKr(andel.refusjonskrav) : '',
-      inntektskategori: preutfyllInntektskategori(andel),
+      refusjonskrav: andel.refusjonskrav ? formatCurrencyNoKr(andel.refusjonskrav) : '0',
       skalKunneEndreRefusjon: periode.skalKunneEndreRefusjon ? periode.skalKunneEndreRefusjon : false,
       belopFraInntektsmelding: andel.belopFraInntektsmelding,
-      nyAndel: false,
-      lagtTilAvSaksbehandler: andel.lagtTilAvSaksbehandler,
       harPeriodeAarsakGraderingEllerRefusjon: periode.harPeriodeAarsakGraderingEllerRefusjon,
       refusjonskravFraInntektsmelding: andel.refusjonskravFraInntektsmelding,
     }))
   );
 };
 
-export default EndringBeregningsgrunnlagPeriodePanel;
+const mapStateToProps = (state, props) => {
+  if (props.skalHaEndretInformasjonIHeader) {
+    return ({
+      heading: createEndringHeadingForDate(state, props.fom, props.tom, renderDateHeading(props.fom, props.tom),
+        props.harPeriodeAarsakGraderingEllerRefusjon),
+    });
+  }
+  return ({
+    heading: renderDateHeading(props.fom, props.tom),
+  });
+};
+
+export default connect(mapStateToProps)(EndringBeregningsgrunnlagPeriodePanelImpl);

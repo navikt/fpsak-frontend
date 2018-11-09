@@ -8,7 +8,7 @@ import { change as reduxChange } from 'redux-form';
 import { getBehandlingVersjon } from 'behandling/behandlingSelectors';
 import { getSelectedBehandlingId } from 'behandling/duck';
 import { getBehandlingFormName } from 'behandling/behandlingForm';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 
 const findAllNames = children => (children ? React.Children
   .map(children, (child) => {

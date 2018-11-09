@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import Table from 'sharedComponents/Table';
+import { Table } from '@fpsak-frontend/shared-components/table';
 import FagsakList from './FagsakList';
 
 describe('<FagsakList>', () => {

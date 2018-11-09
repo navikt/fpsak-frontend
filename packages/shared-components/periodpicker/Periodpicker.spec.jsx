@@ -5,8 +5,8 @@ import sinon from 'sinon';
 import moment from 'moment';
 import { Input } from 'nav-frontend-skjema';
 
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import CalendarToggleButton from 'sharedComponents/datepicker/CalendarToggleButton';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
+import CalendarToggleButton from '../datepicker/CalendarToggleButton';
 import PeriodCalendarOverlay from './PeriodCalendarOverlay';
 import Periodpicker from './Periodpicker';
 

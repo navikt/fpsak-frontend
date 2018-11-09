@@ -60,6 +60,7 @@ export const doNotResetWhitelist = [
   FpsakApi.BEHANDLENDE_ENHETER,
   FpsakApi.KODEVERK,
   FpsakApi.SHOW_DETAILED_ERROR_MESSAGES,
+  FpsakApi.FEATURE_TOGGLE,
 ];
 
 export const resetFagsakContext = () => (dispatch) => {

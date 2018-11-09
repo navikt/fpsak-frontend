@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { errorHandlingReducer as errorHandlingContext } from 'app/duck';
+import { errorHandlingReducer as errorHandlingContext } from '@fpsak-frontend/data/error/duck';
 import { fagsakReducer as fagsakContext } from 'fagsak/duck';
 import { fagsakProfileReducer as fagsakProfileContext } from 'fagsakprofile/duck';
 import { behandlingReducer as behandlingContext } from 'behandling/duck';
@@ -9,7 +9,7 @@ import { behandlingsprosessReducer as behandlingsprosessContext } from 'behandli
 import { behandlingSupportReducer as behandlingSupportContext } from 'behandlingsupport/duck';
 import { faktaReducer as faktaContext } from 'fakta/duck';
 import { papirsoknadReducer as papirsoknadContext } from 'papirsoknad/duck';
-import { dataReducer as dataContext } from 'data/duck';
+import { dataReducer as dataContext } from '@fpsak-frontend/data/duck';
 
 export default combineReducers({
   errorHandlingContext,

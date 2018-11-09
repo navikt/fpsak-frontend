@@ -1,5 +1,6 @@
 import moment from 'moment/moment';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, HHMM_TIME_FORMAT } from 'utils/formats';
+import 'moment/locale/nb';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, HHMM_TIME_FORMAT } from './formats';
 
 export const TIDENES_ENDE = '9999-12-31';
 
@@ -139,4 +140,26 @@ export const findDifferenceInMonthsAndDays = (fomDate, tomDate) => {
     months,
     days: tDate.diff(fDate, 'days'),
   };
+};
+
+
+export const getRangeOfMonths = (fom, tom) => {
+  moment.locale('nb');
+  const fraMåned = moment(fom, ISO_DATE_FORMAT);
+  const tilMåned = moment(tom, ISO_DATE_FORMAT);
+  let currentMonth = fraMåned;
+  const range = [{
+    month: currentMonth.format('MMMM'),
+    year: currentMonth.format('YY'),
+  }];
+
+  while (currentMonth.isBefore(tilMåned)) {
+    currentMonth = currentMonth.add(1, 'month');
+    range.push({
+      month: currentMonth.format('MMMM'),
+      year: currentMonth.format('YY'),
+    });
+  }
+
+  return range;
 };

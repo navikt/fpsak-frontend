@@ -3,9 +3,15 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { makeRestApiRequest, getRestApiFinished } from 'data/duck';
-import { FpsakApi } from 'data/fpsakApi';
-import LoadingPanel from 'sharedComponents/LoadingPanel';
+import { makeRestApiRequest, getRestApiFinished } from '@fpsak-frontend/data/duck';
+import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
+import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
+import { fetchFeatureToggleActionCreator } from '@fpsak-frontend/data/error/duck';
+import featureToggle from '@fpsak-frontend/kodeverk/featureToggle';
+
+const featureToggles = [
+  { navn: featureToggle.SIMULER_OPPDRAG },
+];
 
 class AppConfigResolver extends Component {
   constructor(props) {
@@ -33,7 +39,7 @@ class AppConfigResolver extends Component {
     fetchBehandlendeEnheter();
     fetchKodeverk();
     fetchShowDetailedErrorMessages();
-    fetchFeatureToggle();
+    fetchFeatureToggle(featureToggles);
   }
 
   render() {
@@ -80,7 +86,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   fetchSystemrutine: makeRestApiRequest(FpsakApi.SYSTEMRUTINE_URL),
   fetchBehandlendeEnheter: makeRestApiRequest(FpsakApi.BEHANDLENDE_ENHETER),
   fetchKodeverk: makeRestApiRequest(FpsakApi.KODEVERK),
-  fetchFeatureToggle: makeRestApiRequest(FpsakApi.FEATURE_TOGGLE),
+  fetchFeatureToggle: fetchFeatureToggleActionCreator,
   fetchShowDetailedErrorMessages: makeRestApiRequest(FpsakApi.SHOW_DETAILED_ERROR_MESSAGES),
 }, dispatch);
 

@@ -1,4 +1,4 @@
-import { get, getRestMethod } from 'data/rest/restMethods';
+import { get, getRestMethod } from '../restMethods';
 import asyncPollingStatus from './asyncPollingStatus';
 
 const HTTP_ACCEPTED = 202;

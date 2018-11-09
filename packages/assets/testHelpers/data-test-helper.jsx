@@ -1,7 +1,8 @@
-import RestDuck from 'data/rest/RestDuck';
-import reducers from '../app/reducers';
-import behandlingStatus from 'kodeverk/behandlingStatus';
-import behandlingType from 'kodeverk/behandlingType';
+import RestDuck from '@fpsak-frontend/data/rest/RestDuck';
+import reducers from '@fpsak-frontend/fpsak/src/reducers'; // TODO fix depency
+import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
+
 
 export const withoutRestActions = actions => actions.filter(a => !a.type.match(/^@@REST/));
 

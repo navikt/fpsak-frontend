@@ -1,6 +1,6 @@
 import {
   get, getBlob, post, postBlob, postAndOpenBlob, getAsync, postAsync, put, putAsync, isAsyncRestMethod,
-} from 'data/rest/restMethods';
+} from '../restMethods';
 
 /**
    * getMethodName

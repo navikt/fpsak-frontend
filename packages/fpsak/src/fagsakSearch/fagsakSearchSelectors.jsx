@@ -1,10 +1,10 @@
 import { createSelector } from 'reselect';
 
-import { errorOfType, ErrorTypes, getErrorResponseData } from 'app/ErrorTypes';
+import { errorOfType, ErrorTypes, getErrorResponseData } from '@fpsak-frontend/data/error/ErrorTypes';
 import {
   getRestApiData, getRestApiError, getRestApiFinished, getRestApiStarted,
-} from 'data/duck';
-import { FpsakApi } from 'data/fpsakApi';
+} from '@fpsak-frontend/data/duck';
+import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
 
 export const getFagsaker = getRestApiData(FpsakApi.SEARCH_FAGSAK);
 export const getSearchFagsakerStarted = getRestApiStarted(FpsakApi.SEARCH_FAGSAK);

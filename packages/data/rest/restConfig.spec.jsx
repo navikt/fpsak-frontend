@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { ErrorTypes } from 'app/ErrorTypes';
+import { ErrorTypes } from '../error/ErrorTypes';
 import asyncPollingStatus from './redux/asyncPollingStatus';
 import configureRestInterceptors from './restConfig';
 

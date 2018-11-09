@@ -4,11 +4,9 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
-
-import Image from 'sharedComponents/Image';
-import Modal from 'sharedComponents/Modal';
-
-import innvilgetImageUrl from 'images/innvilget_valgt.svg';
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import Image from './Image';
+import Modal from './Modal';
 
 import styles from './okAvbrytModal.less';
 

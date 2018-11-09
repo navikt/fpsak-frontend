@@ -20,4 +20,5 @@ export const arrayMinLengthMessage = length => ([{ id: 'ValidationMessage.ArrayM
 export const invalidDatesInPeriodMessage = () => ([{ id: 'ValidationMessage.InvalidDatesInPeriod' }]);
 export const invalidPeriodMessage = () => ([{ id: 'ValidationMessage.InvalidPeriod' }]);
 export const invalidPeriodRangeMessage = () => ([{ id: 'ValidationMessage.InvalidPeriodRange' }]);
+export const utbetalingsgradErMerSamtidigUttaksprosentMessage = () => ([{ id: 'ValidationMessage.utbetalingsgradErMerSamtidigUttaksprosent' }]);
 export const invalidNumberMessage = text => ([{ id: 'ValidationMessage.InvalidNumber' }, { text }]);

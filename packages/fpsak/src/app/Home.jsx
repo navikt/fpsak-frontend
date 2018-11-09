@@ -4,13 +4,11 @@ import { Route, Switch } from 'react-router-dom';
 
 import FagsakIndex from 'fagsak/FagsakIndex';
 import { fagsakPath } from 'app/paths';
-import TestFormIndex from 'form/TestFormIndex';
+import TestFormIndex from '@fpsak-frontend/form/TestFormIndex';
+import MissingPage from '@fpsak-frontend/shared-components/MissingPage';
 import Dashboard from './Dashboard';
-
-import 'styles/modigDesign.less';
-import '../../../nomodulestyles/global.less';
-
-import MissingPage from './MissingPage';
+import '@fpsak-frontend/assets/styles/modigDesign.less';
+import '@fpsak-frontend/assets/styles/global.less';
 
 import styles from './home.less';
 

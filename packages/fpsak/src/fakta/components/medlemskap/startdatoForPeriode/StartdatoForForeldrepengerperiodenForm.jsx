@@ -7,16 +7,16 @@ import { Row, Column } from 'nav-frontend-grid';
 import { formPropTypes, FieldArray } from 'redux-form';
 
 import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { getSoknad, getInntektsmeldinger, getAksjonspunkter } from 'behandling/behandlingSelectors';
 import { behandlingForm } from 'behandling/behandlingForm';
 import {
   required, hasValidDate, minLength, maxLength, hasValidText,
-} from 'utils/validation/validators';
-import { TextAreaField, DatepickerField } from 'form/Fields';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+} from '@fpsak-frontend/utils/validation/validators';
+import { TextAreaField, DatepickerField } from '@fpsak-frontend/form';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import ArbeidsgiverInfo from './ArbeidsgiverInfo';
 
@@ -65,7 +65,8 @@ export const StartdatoForForeldrepengerperiodenForm = ({
               readOnly={readOnly}
             />
           </Column>
-          <Column xs="8">
+          {/* do not touch this xs-value. react-collapse in chrome 90% update error */}
+          <Column xs="6">
             <FieldArray
               component={ArbeidsgiverInfo}
               name="arbeidsgivere"

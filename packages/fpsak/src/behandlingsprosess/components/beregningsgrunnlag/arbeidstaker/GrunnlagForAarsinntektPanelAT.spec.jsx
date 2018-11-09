@@ -1,9 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
-import { reduxFormPropsMock } from 'testHelpers/redux-form-test-helper';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import GrunnlagForAarsinntektPanelAT, { GrunnlagForAarsinntektPanelATImpl as UnwrappedForm } from './GrunnlagForAarsinntektPanelAT';
 
 const bruttoBeregningBegrunnelse = 'Dette er en begrunnelse';
@@ -80,9 +80,11 @@ const periode = {
       aktivitetStatus: {
         kode: aktivitetStatus.ARBEIDSTAKER,
       },
-      virksomhetNavn: 'arbeidsgiver 1',
-      virksomhetId: '123',
-      arbeidsforholdId: '123',
+      arbeidsforhold: {
+        arbeidsgiverNavn: 'arbeidsgiver 1',
+        arbeidsgiverId: '123',
+        arbeidsforholdId: '123',
+      },
       beregnetPrAar: 200000,
       overstyrtPrAar: 100,
     },
@@ -90,9 +92,11 @@ const periode = {
       aktivitetStatus: {
         kode: aktivitetStatus.ARBEIDSTAKER,
       },
-      virksomhetNavn: 'arbeidsgiver 2',
-      virksomhetId: '123',
-      arbeidsforholdId: '123',
+      arbeidsforhold: {
+        arbeidsgiverNavn: 'arbeidsgiver 2',
+        arbeidsgiverId: '123',
+        arbeidsforholdId: '123',
+      },
       beregnetPrAar: 100000,
       overstyrtPrAar: 200,
     },

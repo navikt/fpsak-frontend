@@ -1,0 +1,35 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.infoSummary {
+  background-color: @navLysGra;
+  height: auto;
+  max-width: 500px;
+  padding: 10px 20px 10px;
+  top: 0; // lesshint zeroUnit: false
+}
+
+.resultSum {
+  margin-top: 15px;
+
+  .number {
+    float: left;
+    font-weight: bold;
+  }
+
+  .redNumbers {
+    .number {
+      color: @navRod;
+      font-weight: bold;
+    }
+
+    .lastNumber {
+      color: @navRod;
+      font-weight: bold;
+      padding-left: 5px;
+    }
+  }
+}
+
+.resultName {
+  width: 150px;
+}

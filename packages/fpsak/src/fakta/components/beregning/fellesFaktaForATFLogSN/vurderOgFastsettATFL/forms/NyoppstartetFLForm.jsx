@@ -2,27 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { RadioOption, RadioGroupField } from 'form/Fields';
+import { RadioOption, RadioGroupField } from '@fpsak-frontend/form';
 import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { required } from 'utils/validation/validators';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { required } from '@fpsak-frontend/utils/validation/validators';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { Row, Column } from 'nav-frontend-grid';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
-import { flatten } from 'utils/arrayUtils';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
+import { flatten } from '@fpsak-frontend/utils/arrayUtils';
 import FastsettATFLInntektForm
   from 'fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/FastsettATFLInntektForm';
 
 import styles from './nyoppstartetFLForm.less';
 
-const bestemTilfellerSomSkalFastsettes = tilfeller => (tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)
-  ? [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL]
-  : [faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL]);
+const {
+  VURDER_AT_OG_FL_I_SAMME_ORGANISASJON,
+  FASTSETT_ENDRET_BEREGNINGSGRUNNLAG, FASTSETT_BESTEBEREGNING_FODENDE_KVINNE, TILSTOTENDE_YTELSE,
+} = faktaOmBeregningTilfelle;
 
 export const utledOverskriftForNyoppstartetFLForm = (tilfeller, manglerIM) => {
-  if (!tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)) {
+  if (!tilfeller.includes(VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)) {
     return ['BeregningInfoPanel.VurderOgFastsettATFL.ErSokerNyoppstartetFL'];
   }
   return manglerIM
@@ -44,7 +45,7 @@ export const utledOverskriftForNyoppstartetFLForm = (tilfeller, manglerIM) => {
 export const erNyoppstartetFLField = 'NyoppstartetFLField';
 
 const utledTabellstil = (tilfeller, erNyoppstartetFL) => {
-  if (tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)) {
+  if (tilfeller.includes(VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)) {
     return erNyoppstartetFL ? styles.arrowLineNyoppstartetFL : styles.arrowLineIkkeNyoppstartetFL;
   } return styles.arrowLineSmal;
 };
@@ -57,6 +58,7 @@ export const NyoppstartetFLFormImpl = ({
   radioknappOverskrift,
   manglerIM,
   erNyoppstartetFL,
+  skalKunFastsetteFL,
 }) => (
   <div>
     {radioknappOverskrift.map(kode => (
@@ -85,8 +87,10 @@ export const NyoppstartetFLFormImpl = ({
             <FastsettATFLInntektForm
               readOnly={readOnly}
               isAksjonspunktClosed={isAksjonspunktClosed}
-              tilfellerSomSkalFastsettes={bestemTilfellerSomSkalFastsettes(tilfeller)}
+              tilfellerSomSkalFastsettes={tilfeller}
               manglerInntektsmelding={manglerIM}
+              skalFastsetteAT={!skalKunFastsetteFL}
+              skalFastsetteFL
             />
           </div>
         </Column>
@@ -104,11 +108,13 @@ NyoppstartetFLFormImpl.propTypes = {
   skalViseInntektstabell: PropTypes.bool,
   erNyoppstartetFL: PropTypes.bool,
   manglerIM: PropTypes.bool.isRequired,
+  skalKunFastsetteFL: PropTypes.bool,
 };
 
 NyoppstartetFLFormImpl.defaultProps = {
   skalViseInntektstabell: undefined,
   erNyoppstartetFL: undefined,
+  skalKunFastsetteFL: false,
 };
 
 NyoppstartetFLFormImpl.buildInitialValues = (beregningsgrunnlag) => {
@@ -125,29 +131,31 @@ NyoppstartetFLFormImpl.buildInitialValues = (beregningsgrunnlag) => {
   return initialValues;
 };
 
-const harIkkeATFLSameOrgEllerBesteberegningEllerTY = tilfeller => !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)
-  && !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON) && !tilfeller.includes(faktaOmBeregningTilfelle.TILSTOTENDE_YTELSE);
+const tilfellerSomHandtererAllInntekt = [FASTSETT_BESTEBEREGNING_FODENDE_KVINNE, VURDER_AT_OG_FL_I_SAMME_ORGANISASJON,
+  FASTSETT_ENDRET_BEREGNINGSGRUNNLAG, TILSTOTENDE_YTELSE];
+
+const harIkkeTilfelleSomHandtererInntekt = tilfeller => !tilfeller.some(tilfelle => tilfellerSomHandtererAllInntekt.includes(tilfelle));
 
 NyoppstartetFLFormImpl.transformValues = values => ({
   vurderNyoppstartetFL: { erNyoppstartetFL: values[erNyoppstartetFLField] },
 });
 
-NyoppstartetFLFormImpl.nyOppstartetFLInntekt = (values, tilfeller) => {
+NyoppstartetFLFormImpl.nyOppstartetFLInntekt = (values, tilfeller, vurderFaktaValues) => {
   // Dersom vi har tilfellet VURDER_AT_OG_FL_I_SAMME_ORGANISASJON
-  // eller FASTSETT_BESTEBEREGNING_FODENDE_KVINNE
-  // eller TILSTOTENDE_YTELSE vil frilansinntekt tas med når det tilfellet submittes
-  if (values[erNyoppstartetFLField] && harIkkeATFLSameOrgEllerBesteberegningEllerTY(tilfeller)) {
-    if (!tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL)) {
+  // eller FASTSETT_BESTEBEREGNING_FODENDE_KVINNE vil frilansinntekt tas med når det tilfellet submittes
+  if (values[erNyoppstartetFLField] && harIkkeTilfelleSomHandtererInntekt(tilfeller)) {
+    if (!vurderFaktaValues.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL)) {
+      vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL);
       return {
         ...FastsettATFLInntektForm.transformValues(values, undefined, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL),
-        faktaOmBeregningTilfeller: tilfeller.concat([faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL]),
+        faktaOmBeregningTilfeller: vurderFaktaValues.faktaOmBeregningTilfeller,
       };
     }
     return {
       ...FastsettATFLInntektForm.transformValues(values, undefined, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL),
     };
   }
-  if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL)) {
+  if (vurderFaktaValues.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL)) {
     tilfeller.splice(tilfeller.indexOf(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL), 1);
     return {
       faktaOmBeregningTilfeller: tilfeller,
@@ -166,8 +174,8 @@ const mapStateToProps = (state, initialProps) => {
     manglerInntektsmelding = faktaOmBeregning.atogFLISammeOrganisasjonListe.find(forhold => !forhold.inntektPrMnd) !== undefined;
   }
   return {
-    erNyoppstartetFL: behandlingFormValueSelector(initialProps.formName)(state, erNyoppstartetFLField),
     manglerInntektsmelding,
+    erNyoppstartetFL: behandlingFormValueSelector(initialProps.formName)(state, erNyoppstartetFLField),
     radioknappOverskrift: utledOverskriftForNyoppstartetFLForm(initialProps.tilfeller, manglerInntektsmelding),
   };
 };

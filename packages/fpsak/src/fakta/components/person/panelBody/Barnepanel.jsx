@@ -6,12 +6,12 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 
-import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
-import Image from 'sharedComponents/Image';
-import urlMann from 'images/barn_gutt.svg';
-import urlKvinne from 'images/barn_jente.svg';
-import opplysningAdresseType from 'kodeverk/opplysningAdresseType';
-import getAddresses from 'utils/personUtils';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/navBrukerKjonn';
+import Image from '@fpsak-frontend/shared-components/Image';
+import urlMann from '@fpsak-frontend/assets/images/barn_gutt.svg';
+import urlKvinne from '@fpsak-frontend/assets/images/barn_jente.svg';
+import opplysningAdresseType from '@fpsak-frontend/kodeverk/opplysningAdresseType';
+import getAddresses from '@fpsak-frontend/utils/personUtils';
 
 import styles from './barnepanel.less';
 

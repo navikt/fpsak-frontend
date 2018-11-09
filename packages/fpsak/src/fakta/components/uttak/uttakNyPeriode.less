@@ -37,16 +37,21 @@
   padding-top: 8px;
 }
 
+.suffixAligAuto {
+  align-self: auto;
+  margin-left: -8px;
+  padding-top: 8px;
+}
+
 .textAlignRight {
   text-align: right;
   width: 82px;
 }
 
 .alignRightHorizontalBottom {
-  align-self: flex-end;
+  align-items: flex-end;
   display: flex;
   flex-direction: row;
-  justify-self: flex-end;
 
   > div:first-child {
     margin-right: 16px;
@@ -61,6 +66,21 @@
 .typeUttakStyle {
   @media all and (max-width: 1100px) {
     width: 100%;
+  }
+}
+
+.fieldHorizontal {
+  display: flex;
+  margin-left: 8px;
+
+  label {
+    align-self: flex-end;
+    margin-bottom: 1px;
+    margin-right: 16px;
+
+    span {
+      font-size: 1rem;
+    }
   }
 }
 

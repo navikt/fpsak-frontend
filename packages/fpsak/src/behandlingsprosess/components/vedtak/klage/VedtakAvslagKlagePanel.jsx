@@ -9,12 +9,12 @@ import {
   getBehandlingSprak, getBehandlingVilkar,
 } from 'behandling/behandlingSelectors';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
-import { required, hasValidText } from 'utils/validation/validators';
-import { TextAreaField } from 'form/Fields';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import klageVurdering from 'kodeverk/klageVurdering';
-import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
+import { required, hasValidText } from '@fpsak-frontend/utils/validation/validators';
+import { TextAreaField } from '@fpsak-frontend/form';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import klageVurdering from '@fpsak-frontend/kodeverk/klageVurdering';
+import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
 import {
   findAvslagResultatText, shouldGiveBegrunnelse, maxLength1500, minLength3,
 } from '../VedtakHelper';
