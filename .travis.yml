@@ -16,10 +16,10 @@ install:
 
 before_script:
 - yarn less:lint
-- yarn build:fpsak
+#- yarn build:fpsak
 
 script:
-- docker build -t $DOCKER_IMAGE_FULL_NAME ./packages/fpsak
+#- docker build -t $DOCKER_IMAGE_FULL_NAME ./packages/fpsak
 
 before_deploy:
 # Set up git user name and tag this commit
@@ -29,15 +29,15 @@ before_deploy:
 #- git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
 
 services:
-  - docker
+#  - docker
 
 # bytt til dockerhub systembruker
 deploy:
-  provider: script
-  skip_cleanup: true
-  script: docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" && docker push "$DOCKER_IMAGE_FULL_NAME"
-  on:
-    branch: master
+#  provider: script
+#  skip_cleanup: true
+#  script: docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" && docker push "$DOCKER_IMAGE_FULL_NAME"
+#  on:
+#    branch: master
 
 after_deploy:
   #- git remote add auth-origin "https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}"
