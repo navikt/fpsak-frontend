@@ -31,7 +31,7 @@ before_deploy:
 services:
   - docker
 
-# bytt til dockerhub systembruker 
+# bytt til dockerhub systembruker
 deploy:
   provider: script
   skip_cleanup: true
@@ -40,9 +40,9 @@ deploy:
     branch: master
 
 after_deploy:
-  - git remote add auth-origin "https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}"
-  - git tag $RELEASE_VERSION
-  - git push auth-origin --tags
+  #- git remote add auth-origin "https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}"
+  #- git tag $RELEASE_VERSION
+  #- git push auth-origin --tags
 
 #deploy:
 #  - provider: releases
