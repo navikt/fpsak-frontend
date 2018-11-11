@@ -13,7 +13,7 @@ pipeline {
                         def tag = sh(returnStdout: true, script: "git tag --contains | head -1").trim()
                         echo tag
                         sh 'k config use-context preprod-fss'
-                        sh "sed \'s/defult/t10/g;s/RELEASE_VERSION/$TAG_NAME\' app.yaml | k apply -f -"
+                        sh "sed \'s/default/t10/g;s/RELEASE_VERSION/$TAG_NAME\' app.yaml | k apply -f -"
                     }
                 }
             }
