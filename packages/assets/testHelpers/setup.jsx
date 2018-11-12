@@ -1,11 +1,12 @@
 const sinon = require('sinon');
 const jsdom = require('jsdom');
+
 const { JSDOM } = jsdom;
 
 const exposedProperties = ['window', 'document'];
 
 sinon.stub(console, 'error').callsFake((warning) => {
-  if (warning && (warning.indexOf('Warning: Failed prop type:') > -1 || warning.indexOf('Warning: Each child in an array or iterator should have a unique "key" prop')  > -1)) {
+  if (warning && (warning.indexOf('Warning: Failed prop type:') > -1 || warning.indexOf('Warning: Each child in an array or iterator should have a unique "key" prop') > -1)) {
     throw new Error(warning);
   } else if (warning) {
     console.warn(warning); // NOSONAR Kun testkode
@@ -13,7 +14,7 @@ sinon.stub(console, 'error').callsFake((warning) => {
 });
 
 const dom = new JSDOM('<html><body></body></html>', {
-  url: "http://localhost/",
+  url: 'http://localhost/',
 });
 global.document = dom.window.document;
 global.window = document.window;
@@ -27,7 +28,11 @@ Object.keys(document.defaultView).forEach((property) => {
 
 global.HTMLElement = dom.window.HTMLElement;
 
-//https://github.com/facebookincubator/create-react-app/issues/3199
+// https://github.com/facebookincubator/create-react-app/issues/3199
 global.requestAnimationFrame = (cb) => {
   setTimeout(cb, 0);
 };
+
+if (typeof URL !== 'undefined') {
+  delete URL;
+}
