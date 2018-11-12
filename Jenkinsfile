@@ -6,7 +6,7 @@ pipeline {
     }
     stages {
         stage('Tag') {
-            def latestTag = sh 'git tag --sort version:refname | tail -1'
+            def latestTag = sh 'git describe --abbrev=0 --tags'
             echo "$latestTag"
         }
         stage('Build image') {
