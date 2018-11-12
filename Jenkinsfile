@@ -7,6 +7,7 @@ pipeline {
     stages {
         stage('Tag') {
             def latestTag = sh 'git tag --sort version:refname | tail -1'
+            echo "$latestTag"
         }
         stage('Build image') {
             steps {
