@@ -7,22 +7,23 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
 
-import FadingPanel from 'sharedComponents/FadingPanel';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { getBehandlingStatus, getPersonopplysning, getBehandlingRevurderingAvFortsattMedlemskapFom } from 'behandling/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import personstatusType from 'kodeverk/personstatusType';
-import { RadioGroupField, RadioOption } from 'form/Fields';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { required } from 'utils/validation/validators';
-import behandlingStatus from 'kodeverk/behandlingStatus';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import personstatusType from '@fpsak-frontend/kodeverk/personstatusType';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import { required } from '@fpsak-frontend/utils/validation/validators';
+import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
 import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
 
@@ -65,7 +66,7 @@ export const CheckPersonStatusFormImpl = ({
       <VerticalSpacer twentyPx />
       <div className={styles.radioGroup}>
         <Row>
-          <Column xs="5">
+          <Column xs="12">
             <RadioGroupField name="fortsettBehandling" validate={[required]} readOnly={readOnly}>
               <RadioOption label={{ id: 'CheckPersonStatusForm.HaltBehandling' }} value={false} />
               <RadioOption label={{ id: 'CheckPersonStatusForm.ContinueBehandling' }} value />
@@ -74,15 +75,15 @@ export const CheckPersonStatusFormImpl = ({
         </Row>
         {(fortsettBehandling === true)
           && (
-          <div className={readOnly ? styles.arrowLineReadOnly : styles.arrowLine}>
+          <ArrowBox alignOffset={readOnly ? 0 : 190}>
             <Undertekst>{intl.formatMessage({ id: 'CheckPersonStatusForm.SetPersonStatus' })}</Undertekst>
             <VerticalSpacer eightPx />
             <RadioGroupField name="personstatus" validate={[required]} readOnly={readOnly}>
-              {personStatuser.sort(p1 => (p1.kode === personstatusType.DOD ? 1 : -1)).map(d => (
+              {personStatuser.map(d => (
                 <RadioOption key={d.kode} value={d.kode} label={d.navn} />
               ))}
             </RadioGroupField>
-          </div>
+          </ArrowBox>
           )
         }
       </div>

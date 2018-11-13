@@ -1,7 +1,12 @@
 import PropTypes from 'prop-types';
 
 const historikkinnslagDelPropType = PropTypes.shape({
-  begrunnelse: PropTypes.string,
+  begrunnelse: PropTypes.shape({
+    kode: PropTypes.string,
+    kodeverk: PropTypes.string,
+    navn: PropTypes.string,
+  }),
+  begrunnelseFritekst: PropTypes.string,
   hendelse: PropTypes.shape({
     navn: PropTypes.shape({
       kode: PropTypes.string,
@@ -32,7 +37,11 @@ const historikkinnslagDelPropType = PropTypes.shape({
     navn: PropTypes.string,
     verdi: PropTypes.string,
   }),
-  aarsak: PropTypes.string,
+  aarsak: PropTypes.PropTypes.shape({
+    kode: PropTypes.string,
+    kodeverk: PropTypes.string,
+    navn: PropTypes.string,
+  }),
   resultat: PropTypes.string,
   endredeFelter: PropTypes.arrayOf(PropTypes.shape({
     endretFeltNavn: PropTypes.shape({

@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import DokumentasjonFaktaForm from './DokumentasjonFaktaForm';
 
 describe('<DokumentasjonFaktaForm>', () => {

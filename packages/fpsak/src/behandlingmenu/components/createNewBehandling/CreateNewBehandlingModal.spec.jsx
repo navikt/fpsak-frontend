@@ -1,10 +1,10 @@
 import React from 'react';
-import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-import behandlingType from 'kodeverk/behandlingType';
-import behandlingArsakType from 'kodeverk/behandlingArsakType';
+import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
+import behandlingArsakType from '@fpsak-frontend/kodeverk/behandlingArsakType';
 import { CreateNewBehandlingModal } from './CreateNewBehandlingModal';
 
 describe('<CreateNewBehandlingModal>', () => {

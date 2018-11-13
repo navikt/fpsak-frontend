@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { RadioOption, RadioGroupField } from 'form/Fields';
+import { RadioOption, RadioGroupField } from '@fpsak-frontend/form';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { required } from 'utils/validation/validators';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { required } from '@fpsak-frontend/utils/validation/validators';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
-import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle } from 'kodeverk/faktaOmBeregningTilfelle';
+import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle } from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
 import { Row, Column } from 'nav-frontend-grid';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
 import FastsettATFLInntektForm
   from 'fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/FastsettATFLInntektForm';
 
@@ -48,6 +48,7 @@ export const LonnsendringFormImpl = ({
   radioknappOverskrift,
   manglerIM,
   erLonnsendring,
+  skalKunFastsetteAT,
 }) => (
   <div>
     {radioknappOverskrift.map(kode => (
@@ -78,6 +79,8 @@ export const LonnsendringFormImpl = ({
               isAksjonspunktClosed={isAksjonspunktClosed}
               tilfellerSomSkalFastsettes={tilfeller}
               manglerInntektsmelding={manglerIM}
+              skalFastsetteFL={!skalKunFastsetteAT}
+              skalFastsetteAT
             />
           </div>
         </Column>
@@ -95,11 +98,13 @@ LonnsendringFormImpl.propTypes = {
   radioknappOverskrift: PropTypes.arrayOf(PropTypes.string).isRequired,
   manglerIM: PropTypes.bool.isRequired,
   erLonnsendring: PropTypes.bool,
+  skalKunFastsetteAT: PropTypes.bool,
 };
 
 LonnsendringFormImpl.defaultProps = {
   skalViseInntektstabell: undefined,
   erLonnsendring: undefined,
+  skalKunFastsetteAT: false,
 };
 
 LonnsendringFormImpl.buildInitialValues = (beregningsgrunnlag) => {
@@ -129,35 +134,31 @@ LonnsendringFormImpl.transformValues = values => ({
 const harIkkeATFLSameOrgEllerBesteberegning = tilfeller => !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)
   && !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON);
 
-LonnsendringFormImpl.lonnendringFastsatt = (values, aktivePaneler, faktaOmBeregning) => {
+LonnsendringFormImpl.lonnendringFastsatt = (values, tilfeller, faktaOmBeregning, transformedValues) => {
   // Dersom vi har tilfellet VURDER_AT_OG_FL_I_SAMME_ORGANISASJON
   // eller FASTSETT_BESTEBEREGNING_FODENDE_KVINNE vil arbeidsinntekt tas med når det tilfellet submittes
-  if (values[lonnsendringField] && harIkkeATFLSameOrgEllerBesteberegning(aktivePaneler)) {
-    if (!aktivePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_VED_LONNSENDRING)) {
+  if (values[lonnsendringField] && harIkkeATFLSameOrgEllerBesteberegning(tilfeller)) {
+    if (!transformedValues.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_VED_LONNSENDRING)) {
+      transformedValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_VED_LONNSENDRING);
       return {
         ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_VED_LONNSENDRING),
-        faktaOmBeregningTilfeller: aktivePaneler.concat([faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_VED_LONNSENDRING]),
+        faktaOmBeregningTilfeller: transformedValues.faktaOmBeregningTilfeller,
       };
     }
     return {
       ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_VED_LONNSENDRING),
     };
   }
-  if (aktivePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_VED_LONNSENDRING)) {
-    aktivePaneler.splice(aktivePaneler.indexOf(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_VED_LONNSENDRING), 1);
+  if (transformedValues.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_VED_LONNSENDRING)) {
+    transformedValues.faktaOmBeregningTilfeller.splice(tilfeller.indexOf(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_VED_LONNSENDRING), 1);
     return {
-      faktaOmBeregningTilfeller: aktivePaneler,
+      faktaOmBeregningTilfeller: transformedValues.faktaOmBeregningTilfeller,
       vurderLønnsendringAndelListe: null,
     };
   }
   return {
     vurderLønnsendringAndelListe: null,
   };
-};
-
-export const lonnsendringErGyldigForKombinert = formName => (state) => {
-  const value = behandlingFormValueSelector(formName)(state, lonnsendringField);
-  return value !== undefined && value !== null;
 };
 
 const mapStateToProps = (state, initialProps) => {

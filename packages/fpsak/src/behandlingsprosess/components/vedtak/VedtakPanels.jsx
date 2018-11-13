@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { getBehandlingType } from 'behandling/behandlingSelectors';
-import behandlingType from 'kodeverk/behandlingType';
+import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import VedtakForm from './VedtakForm';
 import InnsynVedtakForm from './innsyn/InnsynVedtakForm';

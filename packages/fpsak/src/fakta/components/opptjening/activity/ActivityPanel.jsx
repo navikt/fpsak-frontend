@@ -10,30 +10,30 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import moment from 'moment';
 
-import { findDifferenceInMonthsAndDays } from 'utils/dateUtils';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import { findDifferenceInMonthsAndDays } from '@fpsak-frontend/utils/dateUtils';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
-import { omit, isEqual } from 'utils/objectUtils';
-import { FlexContainer, FlexRow, FlexColumn } from 'sharedComponents/flexGrid';
-import Image from 'sharedComponents/Image';
-import { getKodeverk } from 'kodeverk/duck';
-import arbeidType from 'kodeverk/arbeidType';
-import opptjeningAktivitetType from 'kodeverk/opptjeningAktivitetType';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import { omit, isEqual } from '@fpsak-frontend/utils/objectUtils';
+import { FlexContainer, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components/flexGrid';
+import Image from '@fpsak-frontend/shared-components/Image';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import arbeidType from '@fpsak-frontend/kodeverk/arbeidType';
+import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/opptjeningAktivitetType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import {
   requiredIfCustomFunctionIsTrue, required, hasValidPeriod, minLength, maxLength, hasValidText, isWithinOpptjeningsperiode,
 }
-  from 'utils/validation/validators';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+  from '@fpsak-frontend/utils/validation/validators';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import {
   PeriodpickerField, RadioGroupField, RadioOption, TextAreaField, SelectField,
-} from 'form/Fields';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import arrowLeftImageUrl from 'images/arrow_left.svg';
-import arrowLeftFilledImageUrl from 'images/arrow_left_filled.svg';
-import arrowRightImageUrl from 'images/arrow_right.svg';
-import arrowRightFilledImageUrl from 'images/arrow_right_filled.svg';
+} from '@fpsak-frontend/form';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
+import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
+import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
+import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
 import ActivityDataSubPanel from './ActivityDataSubPanel';
 
 import styles from './activityPanel.less';

@@ -1,21 +1,25 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 
 import TidsbegrensetArbeidsforholdForm from './TidsbegrensetArbeidsforholdForm';
 
-const forhold = [
+const andeler = [
   {
-    virksomhetNavn: 'arbeidsgiver 1',
-    virksomhetId: '123456789',
-    startdato: '2017-01-01',
-    opphoersdato: '2017-02-02',
+    arbeidsforhold: {
+      arbeidsgiverNavn: 'arbeidsgiver 1',
+      arbeidsgiverId: '123456789',
+      startdato: '2017-01-01',
+      opphoersdato: '2017-02-02',
+    },
   },
   {
-    virksomhetNavn: 'arbeidsgiver 2',
-    virksomhetId: '987654321',
-    startdato: '2017-02-02',
-    opphoersdato: '2017-03-03',
+    arbeidsforhold: {
+      arbeidsgiverNavn: 'arbeidsgiver 2',
+      arbeidsgiverId: '987654321',
+      startdato: '2017-02-02',
+      opphoersdato: '2017-03-03',
+    },
   },
 ];
 
@@ -23,7 +27,7 @@ describe('<TidsbegrensetArbeidsforholdForm>', () => {
   it('skal teste at korrekt antall radioknapper vises', () => {
     const wrapper = shallowWithIntl(<TidsbegrensetArbeidsforholdForm.WrappedComponent
       readOnly={false}
-      arbeidsforhold={forhold}
+      andelsliste={andeler}
       isAksjonspunktClosed={false}
     />);
     const radios = wrapper.find('RadioOption');
@@ -32,7 +36,7 @@ describe('<TidsbegrensetArbeidsforholdForm>', () => {
   it('skal teste at korrekte overskrifter vises', () => {
     const wrapper = shallowWithIntl(<TidsbegrensetArbeidsforholdForm.WrappedComponent
       readOnly={false}
-      arbeidsforhold={forhold}
+      andelsliste={andeler}
       isAksjonspunktClosed={false}
     />);
     const message = wrapper.find('FormattedMessage');

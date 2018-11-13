@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
 
 import FastsettATFLInntektForm from './FastsettATFLInntektForm';
 
@@ -12,8 +12,8 @@ const forholdMedAtOgFl = {
     navn: 'Arbeidstaker',
   },
   arbeidsforhold: {
-    virksomhetNavn: 'bedrift',
-    virksomhetId: '123',
+    arbeidsgiverNavn: 'bedrift',
+    arbeidsgiverId: '123',
     arbeidsforholdId: 'abc',
     startdato: '2018-01-01',
   },
@@ -25,8 +25,8 @@ const forholdMedLonnsendringUtenIM = {
     navn: 'Arbeidstaker',
   },
   arbeidsforhold: {
-    virksomhetNavn: 'bedrift',
-    virksomhetId: '123',
+    arbeidsgiverNavn: 'bedrift',
+    arbeidsgiverId: '123',
     arbeidsforholdId: 'abc',
     startdato: '2018-01-01',
   },

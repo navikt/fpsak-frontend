@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from './VerticalSpacer';
 
 import styles from './tooltip.less';
 

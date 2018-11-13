@@ -1,3 +1,5 @@
+import beregningsgrunnlagAndeltyper from './beregningsgrunnlagAndeltyper';
+
 const aktivitetStatus = {
   ARBEIDSTAKER: 'AT',
   FRILANSER: 'FL',
@@ -15,6 +17,12 @@ const aktivitetStatus = {
 };
 
 export default aktivitetStatus;
+
+export const aktivitetstatusTilAndeltypeMap = {};
+aktivitetstatusTilAndeltypeMap[aktivitetStatus.BRUKERS_ANDEL] = beregningsgrunnlagAndeltyper.BRUKERS_ANDEL;
+aktivitetstatusTilAndeltypeMap[aktivitetStatus.FRILANSER] = beregningsgrunnlagAndeltyper.FRILANS;
+aktivitetstatusTilAndeltypeMap[aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE] = beregningsgrunnlagAndeltyper.EGEN_NÆRING;
+
 
 const statuserSomStotterFrilanser = [aktivitetStatus.FRILANSER, aktivitetStatus.KOMBINERT_AT_FL,
   aktivitetStatus.KOMBINERT_AT_FL_SN, aktivitetStatus.KOMBINERT_FL_SN];

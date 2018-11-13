@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
 import TimeLineTab from './TimeLineTab';
@@ -8,8 +8,8 @@ import TimeLineTab from './TimeLineTab';
 const stonadskonto = {
   kontonavn: 'FORELDREPENGER_FØR_FØDSEL',
   kontoinfo: {
-    maxDager: 30,
-    aktivitetFordeligDtoList: [
+    saldo: 30,
+    aktivitetSaldoDtoList: [
       {
         fordelteDager: 30,
       },
@@ -31,7 +31,7 @@ describe('<TimeLineTab>', () => {
     expect(formattedMessage.at(0).props().id).to.equal('TimeLineTab.Stonadinfo.ForeldrepengerFF');
 
     const formattedHtmlMessage = wrapper.find('FormattedHTMLMessage');
-    expect(formattedHtmlMessage.at(0).props().values.ukerVerdi).to.equal(1);
+    expect(formattedHtmlMessage.at(0).props().values.ukerVerdi).to.equal(6);
     expect(formattedHtmlMessage.at(0).props().values.dagerVerdi).to.equal(0);
   });
 });

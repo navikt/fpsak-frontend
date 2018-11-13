@@ -48,6 +48,25 @@
   }
 }
 
+.timeLineButtonInverted {
+  background-color: white;
+  border: 0px solid;
+  height: 26px;
+  margin: 4px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  padding: 0px;
+  transform: rotate(180deg);
+  width: 26px;
+
+
+  &:focus {
+    box-shadow: 0 0 0px 3px @orangeFocus;// lesshint zeroUnit: false
+    outline: none;
+  }
+}
+
+
 .timeLineButton img:last-child {
   display: none;
 }

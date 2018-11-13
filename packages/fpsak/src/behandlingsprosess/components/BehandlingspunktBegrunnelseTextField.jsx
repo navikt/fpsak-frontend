@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 
-import { TextAreaField } from 'form/Fields';
+import { TextAreaField } from '@fpsak-frontend/form';
 import {
   minLength, maxLength, requiredIfNotPristine, hasValidText,
-} from 'utils/validation/validators';
-import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+} from '@fpsak-frontend/utils/validation/validators';
+import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
 
 import styles from './behandlingspunktBegrunnelseTextField.less';
 

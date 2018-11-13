@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import EditedIcon from 'sharedComponents/EditedIcon';
+import EditedIcon from '@fpsak-frontend/shared-components/EditedIcon';
 import Label from './Label';
 import ReadOnlyField from './ReadOnlyField';
 

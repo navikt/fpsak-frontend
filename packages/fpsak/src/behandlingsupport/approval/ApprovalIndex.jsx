@@ -8,21 +8,21 @@ import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import { createLocationForHistorikkItems } from 'app/paths';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import behandlingStatus from 'kodeverk/behandlingStatus';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
+import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import {
   getBehandlingVersjon, getAksjonspunkter, getBehandlingAnsvarligSaksbehandler, getTotrinnskontrollArsakerUtenUdefinert,
   getBehandlingStatus, getBehandlingToTrinnsBehandling, getSelectedBehandlingIdentifier, getTotrinnskontrollArsakerReadOnly,
 } from 'behandling/behandlingSelectors';
-import navAnsattPropType from 'navAnsatt/navAnsattPropType';
+import navAnsattPropType from '@fpsak-frontend/nav-ansatt/navAnsattPropType';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import requireProps from 'app/data/requireProps';
-import { getNavAnsatt } from 'navAnsatt/duck';
-import vurderPaNyttArsakType from 'kodeverk/vurderPaNyttArsakType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import { getNavAnsatt } from '@fpsak-frontend/nav-ansatt/duck';
+import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/vurderPaNyttArsakType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
 import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';
 import ToTrinnsForm from './components/ToTrinnsForm';
 import ToTrinnsFormReadOnly from './components/ToTrinnsFormReadOnly';

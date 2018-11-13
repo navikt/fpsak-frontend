@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { isAsyncRestMethod } from 'data/rest/restMethods';
+import { isAsyncRestMethod } from '../restMethods';
 import createRequestThunk from './restThunk';
 
 const getCopyDataActionTypes = actionTypes => ({

@@ -8,9 +8,9 @@ import { Undertekst } from 'nav-frontend-typografi';
 import { Column } from 'nav-frontend-grid';
 
 import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import ArrowBox from 'sharedComponents/ArrowBox';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
 import {
   getEditedStatus, getFamiliehendelse, getBehandlingType, getBarnFraTpsRelatertTilSoknad,
   getPersonopplysning, getAksjonspunkter, getSoknadAntallBarn,
@@ -19,13 +19,13 @@ import { behandlingFormValueSelector, behandlingForm } from 'behandling/behandli
 import FodselSammenligningPanel from 'behandling/components/fodselSammenligning/FodselSammenligningPanel';
 import {
   required, hasValidDate, minValue, maxValue, hasValidInteger, dateBeforeOrEqualToToday,
-} from 'utils/validation/validators';
-import behandlingType from 'kodeverk/behandlingType';
+} from '@fpsak-frontend/utils/validation/validators';
+import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
 import {
   DatepickerField, InputField, RadioGroupField, RadioOption,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 
 import styles from './SjekkFodselDokForm.less';
 
@@ -84,7 +84,7 @@ export const SjekkFodselDokForm = ({
       {(!fodselInfo || !fodselInfo.length) && dokumentasjonForeligger
       && (
         <div className={styles.clearfix}>
-          <Column xs="5">
+          <Column xs="6">
             <ArrowBox>
               {<FormattedMessage id="SjekkFodselDokForm.FyllInnDokumenterteOpplysninger" />}
               <div className={styles.fodselRow}>

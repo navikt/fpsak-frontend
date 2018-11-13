@@ -2,10 +2,10 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import getAddresses from 'utils/personUtils';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import opplysningAdresseType from 'kodeverk/opplysningAdresseType';
-import opplysningsKilde from 'kodeverk/opplysningsKilde';
+import getAddresses from '@fpsak-frontend/utils/personUtils';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
+import opplysningAdresseType from '@fpsak-frontend/kodeverk/opplysningAdresseType';
+import opplysningsKilde from '@fpsak-frontend/kodeverk/opplysningsKilde';
 import AdressePanel from './AdressePanel';
 import Barnepanel from './Barnepanel';
 import PersonYtelserTable from './PersonYtelserTable';

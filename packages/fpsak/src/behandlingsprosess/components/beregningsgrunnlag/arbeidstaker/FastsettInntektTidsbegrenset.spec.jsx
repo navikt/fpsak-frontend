@@ -2,12 +2,12 @@ import React from 'react';
 import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
 import { shallow } from 'enzyme';
-import Image from 'sharedComponents/Image';
-import periodeAarsak from 'kodeverk/periodeAarsak';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import Image from '@fpsak-frontend/shared-components/Image';
+import periodeAarsak from '@fpsak-frontend/kodeverk/periodeAarsak';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import FastsettInntektTidsbegrenset, {
   createTableData,
   getIsAksjonspunktClosed,
@@ -84,10 +84,12 @@ const beregningsgrunnlagPerioder = [
         erTidsbegrensetArbeidsforhold: true,
         beregnetPrAar: beregnetPrAarAndelEn,
         overstyrtPrAar: overstyrtPrAarAndelEn,
-        virksomhetNavn: 'arbeidsgiver',
-        virksomhetId: '123',
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'arbeidsgiver',
+          arbeidsgiverId: '123',
+          arbeidsforholdId: '123',
+        },
         andelsnr: 1,
-        arbeidsforholdId: '123',
       },
       {
         aktivitetStatus: {
@@ -96,10 +98,12 @@ const beregningsgrunnlagPerioder = [
         erTidsbegrensetArbeidsforhold: true,
         beregnetPrAar: beregnetPrAarAndelTo,
         overstyrtPrAar: overstyrtPrAarAndelTo,
-        virksomhetNavn: 'arbeidsgiver',
-        virksomhetId: '456',
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'arbeidsgiver',
+          arbeidsgiverId: '456',
+          arbeidsforholdId: '456',
+        },
         andelsnr: 2,
-        arbeidsforholdId: '456',
       },
     ],
   },
@@ -115,10 +119,12 @@ const beregningsgrunnlagPerioder = [
         erTidsbegrensetArbeidsforhold: true,
         beregnetPrAar: beregnetPrAarAndelEn,
         overstyrtPrAar: overstyrtPrAarAndelEn,
-        virksomhetNavn: 'arbeidsgiver',
-        virksomhetId: '123',
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'arbeidsgiver',
+          arbeidsgiverId: '123',
+          arbeidsforholdId: '123',
+        },
         andelsnr: 1,
-        arbeidsforholdId: '123',
       },
       {
         aktivitetStatus: {
@@ -127,10 +133,12 @@ const beregningsgrunnlagPerioder = [
         erTidsbegrensetArbeidsforhold: true,
         beregnetPrAar: beregnetPrAarAndelTo,
         overstyrtPrAar: overstyrtPrAarAndelTo,
-        virksomhetNavn: 'arbeidsgiver',
-        virksomhetId: '456',
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'arbeidsgiver',
+          arbeidsgiverId: '456',
+          arbeidsforholdId: '456',
+        },
         andelsnr: 2,
-        arbeidsforholdId: '456',
       },
     ],
   },
@@ -145,10 +153,12 @@ const beregningsgrunnlagPerioder = [
         erTidsbegrensetArbeidsforhold: true,
         beregnetPrAar: beregnetPrAarAndelEn,
         overstyrtPrAar: overstyrtPrAarAndelEn,
-        virksomhetNavn: 'arbeidsgiver',
-        virksomhetId: '123',
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'arbeidsgiver',
+          arbeidsgiverId: '123',
+          arbeidsforholdId: '123',
+        },
         andelsnr: 1,
-        arbeidsforholdId: '123',
       },
       {
         aktivitetStatus: {
@@ -157,10 +167,12 @@ const beregningsgrunnlagPerioder = [
         erTidsbegrensetArbeidsforhold: true,
         beregnetPrAar: beregnetPrAarAndelTo,
         overstyrtPrAar: overstyrtPrAarAndelTo,
-        virksomhetNavn: 'arbeidsgiver',
-        virksomhetId: '123',
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'arbeidsgiver',
+          arbeidsgiverId: '123',
+          arbeidsforholdId: '456',
+        },
         andelsnr: 2,
-        arbeidsforholdId: '456',
       },
     ],
   },
@@ -175,10 +187,12 @@ const beregningsgrunnlagPerioder = [
         erTidsbegrensetArbeidsforhold: true,
         beregnetPrAar: beregnetPrAarAndelEn,
         overstyrtPrAar: overstyrtPrAarAndelEn,
-        virksomhetNavn: 'arbeidsgiver',
-        virksomhetId: '123',
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'arbeidsgiver',
+          arbeidsgiverId: '123',
+          arbeidsforholdId: '123',
+        },
         andelsnr: 1,
-        arbeidsforholdId: '123',
       },
       {
         aktivitetStatus: {
@@ -187,10 +201,12 @@ const beregningsgrunnlagPerioder = [
         erTidsbegrensetArbeidsforhold: true,
         beregnetPrAar: beregnetPrAarAndelTo,
         overstyrtPrAar: overstyrtPrAarAndelTo,
-        virksomhetNavn: 'arbeidsgiver',
-        virksomhetId: '123',
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'arbeidsgiver',
+          arbeidsgiverId: '123',
+          arbeidsforholdId: '456',
+        },
         andelsnr: 2,
-        arbeidsforholdId: '456',
       },
     ],
   },

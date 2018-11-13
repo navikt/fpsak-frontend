@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
-import { getRestApiData } from '../duck';
+import featureToggle from '@fpsak-frontend/kodeverk/featureToggle';
+import { getRestApiData, makeRestApiRequest } from '../duck';
 import { FpsakApi } from '../fpsakApi';
 
 /* Action types */
@@ -82,6 +83,10 @@ export const errorHandlingReducer = (state = initialState, action = {}) => {
   }
 };
 
+export const fetchFeatureToggleActionCreator = toggles => dispatch => (
+  dispatch(makeRestApiRequest(FpsakApi.FEATURE_TOGGLE)({ toggles }))
+);
+
 /* Selectors */
 const getErrorHandlingContext = state => state.default.errorHandlingContext;
 export const getErrorMessages = createSelector([getErrorHandlingContext], errorHandlingContext => errorHandlingContext.errorMessages);
@@ -91,6 +96,9 @@ export const getNavAnsattName = createSelector([getRestApiData(FpsakApi.NAV_ANSA
 export const getRettskildeUrl = createSelector([getRestApiData(FpsakApi.RETTSKILDE_URL)], (rettskildeData = {}) => rettskildeData.verdi);
 export const getSystemrutineUrl = createSelector([getRestApiData(FpsakApi.SYSTEMRUTINE_URL)], (systemrutineData = {}) => systemrutineData.verdi);
 export const getFunksjonellTid = createSelector([getRestApiData(FpsakApi.NAV_ANSATT)], (navAnsatt = {}) => navAnsatt.funksjonellTid);
+export const getFeatureToggleSimulering = createSelector(
+  [getRestApiData(FpsakApi.FEATURE_TOGGLE)], (ftData = {}) => ftData.featureToggles[featureToggle.SIMULER_OPPDRAG],
+);
 export const getShowDetailedErrorMessages = createSelector(
   [getRestApiData(FpsakApi.SHOW_DETAILED_ERROR_MESSAGES)], (showDetailedErrorMessages = false) => showDetailedErrorMessages,
 );

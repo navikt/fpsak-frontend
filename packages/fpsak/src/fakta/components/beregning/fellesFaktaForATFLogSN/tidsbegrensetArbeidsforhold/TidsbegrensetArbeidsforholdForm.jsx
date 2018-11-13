@@ -2,19 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { RadioOption, RadioGroupField } from 'form/Fields';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import moment from 'moment';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
-import { required } from 'utils/validation/validators';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
+import { required } from '@fpsak-frontend/utils/validation/validators';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
+import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
 import { sortArbeidsforholdList } from '../../ArbeidsforholdHelper';
 
 const kortvarigStringId = 'BeregningInfoPanel.TidsbegrensetArbFor.Arbeidsforhold';
 
-const createArbeidsforholdRadioKey = andel => (andel ? `${andel.virksomhetNavn}(${andel.arbeidsforholdId})(${andel.andelsnr})` : '');
+const createArbeidsforholdRadioKey = andel => (andel && andel.arbeidsforhold
+  ? `${andel.arbeidsforhold.arbeidsgiverNavn}(${andel.arbeidsforhold.arbeidsforholdId})(${andel.andelsnr})`
+  : '');
 /**
  * TidsbegrensetArbeidsforholdForm
  *
@@ -24,25 +26,25 @@ const createArbeidsforholdRadioKey = andel => (andel ? `${andel.virksomhetNavn}(
 
 const TidsbegrensetArbeidsforholdForm = ({
   readOnly,
-  arbeidsforhold,
+  andelsliste,
   isAksjonspunktClosed,
 }) => (
   <div>
-    {arbeidsforhold.map(forhold => (
-      <div key={`fastsettTidsbegrensedeForhold_${createVisningsnavnForAktivitet(forhold)}`}>
+    {andelsliste.map(andel => (
+      <div key={`fastsettTidsbegrensedeForhold_${createVisningsnavnForAktivitet(andel.arbeidsforhold)}`}>
         <Normaltekst>
           <FormattedMessage
             id={kortvarigStringId}
             values={{
-              navn: createVisningsnavnForAktivitet(forhold),
-              fom: moment(forhold.startdato).format(DDMMYYYY_DATE_FORMAT),
-              tom: moment(forhold.opphoersdato).format(DDMMYYYY_DATE_FORMAT),
+              navn: createVisningsnavnForAktivitet(andel.arbeidsforhold),
+              fom: moment(andel.arbeidsforhold.startdato).format(DDMMYYYY_DATE_FORMAT),
+              tom: moment(andel.arbeidsforhold.opphoersdato).format(DDMMYYYY_DATE_FORMAT),
             }}
           />
         </Normaltekst>
         <VerticalSpacer eightPx />
         <RadioGroupField
-          name={createArbeidsforholdRadioKey(forhold)}
+          name={createArbeidsforholdRadioKey(andel)}
           validate={[required]}
           readOnly={readOnly}
           isEdited={isAksjonspunktClosed}
@@ -57,32 +59,32 @@ const TidsbegrensetArbeidsforholdForm = ({
 
 TidsbegrensetArbeidsforholdForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  arbeidsforhold: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  andelsliste: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
 };
 
-TidsbegrensetArbeidsforholdForm.buildInitialValues = (arbeidsforhold) => {
+TidsbegrensetArbeidsforholdForm.buildInitialValues = (andeler) => {
   const initialValues = {};
-  if (!arbeidsforhold) {
+  if (!andeler) {
     return initialValues;
   }
-  arbeidsforhold.forEach((forhold) => {
-    if (forhold.erTidsbegrensetArbeidsforhold !== undefined) {
-      initialValues[createArbeidsforholdRadioKey(forhold)] = forhold.erTidsbegrensetArbeidsforhold;
+  andeler.forEach((andel) => {
+    if (andel.erTidsbegrensetArbeidsforhold !== undefined) {
+      initialValues[createArbeidsforholdRadioKey(andel)] = andel.erTidsbegrensetArbeidsforhold;
     }
   });
   return initialValues;
 };
 
-TidsbegrensetArbeidsforholdForm.transformValues = (values, arbeidsforhold) => {
+TidsbegrensetArbeidsforholdForm.transformValues = (values, andeler) => {
   const newValues = [];
-  arbeidsforhold.forEach((forhold) => {
-    const fieldName = createArbeidsforholdRadioKey(forhold);
+  andeler.forEach((andel) => {
+    const fieldName = createArbeidsforholdRadioKey(andel);
     const booleanValue = values[fieldName];
     const valueObject = {
-      andelsnr: forhold.andelsnr,
+      andelsnr: andel.andelsnr,
       tidsbegrensetArbeidsforhold: booleanValue,
-      opprinneligVerdi: forhold.erTidsbegrensetArbeidsforhold,
+      opprinneligVerdi: andel.erTidsbegrensetArbeidsforhold,
     };
     newValues.push(valueObject);
   });
@@ -94,7 +96,7 @@ TidsbegrensetArbeidsforholdForm.transformValues = (values, arbeidsforhold) => {
 const mapStateToProps = (state) => {
   const faktaOmBeregning = getFaktaOmBeregning(state);
   return {
-    arbeidsforhold: sortArbeidsforholdList(faktaOmBeregning.kortvarigeArbeidsforhold),
+    andelsliste: sortArbeidsforholdList(faktaOmBeregning.kortvarigeArbeidsforhold),
   };
 };
 

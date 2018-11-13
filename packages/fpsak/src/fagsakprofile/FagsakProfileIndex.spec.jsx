@@ -3,8 +3,8 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import fagsakStatus from 'kodeverk/fagsakStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
+import fagsakStatus from '@fpsak-frontend/kodeverk/fagsakStatus';
 import FagsakProfile from './components/FagsakProfile';
 import { FagsakProfileIndex } from './FagsakProfileIndex';
 

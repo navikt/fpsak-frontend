@@ -1,9 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { shallowWithIntl, intlMock } from 'testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
 
 import VilkarResultPanel from 'behandlingsprosess/components/vilkar/VilkarResultPanel';
 import { OpptjeningVilkarViewImpl } from './OpptjeningVilkarView';

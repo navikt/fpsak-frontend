@@ -6,11 +6,11 @@ import { connect } from 'react-redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { FlexContainer, FlexRow, FlexColumn } from 'sharedComponents/flexGrid';
+import { FlexContainer, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components/flexGrid';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { CheckboxField } from 'form/Fields';
+import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import { CheckboxField } from '@fpsak-frontend/form';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
 import {
   getBehandlingVersjon,
@@ -22,12 +22,12 @@ import {
   getPersonopplysning,
   getUttaksresultatPerioder,
 } from 'behandling/behandlingSelectors';
-import { getRettigheter } from 'navAnsatt/duck';
+import { getRettigheter } from '@fpsak-frontend/nav-ansatt/duck';
 import { getSelectedBehandlingId } from 'behandling/duck';
-import periodeResultatType from 'kodeverk/periodeResultatType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import soknadType from 'kodeverk/soknadType';
+import periodeResultatType from '@fpsak-frontend/kodeverk/periodeResultatType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import soknadType from '@fpsak-frontend/kodeverk/soknadType';
 import TimeLineInfo from './stonadkonto/TimeLineInfo';
 import UttakTimeLineData from './UttakTimeLineData';
 import UttakTimeLine from './UttakTimeLine';
@@ -96,7 +96,7 @@ const addClassNameGroupIdToPerioder = (hovedsokerPerioder, annenForelderPerioder
   perioder.forEach((item, index) => {
     const stonadskontoType = getCorrectPeriodName(item);
     const status = hovedsoker ? getStatusPeriodeHoved(item) : getStatusPeriodeMed(item);
-    const gradert = item.gradertAktivitet ? 'gradert' : '';
+    const gradert = (item.gradertAktivitet && item.graderingInnvilget) ? 'gradert' : '';
     const copyOfItem = Object.assign({}, item);
 
     copyOfItem.id = index + 1 + (hovedsoker ? 0 : hovedsokerPerioder.length);
@@ -348,7 +348,7 @@ export class UttakImpl extends Component {
         <div>
           <Row>
             <TimeLineInfo
-              maksDato={stonadskonto.maksDato}
+              maksDatoUttak={stonadskonto.maksDatoUttak}
               stonadskonto={stonadskonto.stonadskontoer}
               dekningsgrad={dekningsgrad}
             />

@@ -1,7 +1,5 @@
 import React from 'react';
-import Table from '@fpsak-frontend/shared-components/table/Table';
-import TableRow from '@fpsak-frontend/shared-components/table/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/table/TableColumn';
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
 
 const headerTextCodes = ['-', 'Januar', 'Februar'];
 const tableRows = [

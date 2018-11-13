@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import OkAvbrytModal from 'sharedComponents/OkAvbrytModal';
+import OkAvbrytModal from '@fpsak-frontend/shared-components/OkAvbrytModal';
 import MenuButton from '../MenuButton';
 
 /**

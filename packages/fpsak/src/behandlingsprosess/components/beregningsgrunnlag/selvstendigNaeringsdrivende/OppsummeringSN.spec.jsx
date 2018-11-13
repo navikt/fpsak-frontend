@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from 'testHelpers/intl-enzyme-test-helper';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
 import OppsummeringSN from './OppsummeringSN';
 
 const inntekt = 200000;

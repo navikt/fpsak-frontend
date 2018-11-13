@@ -1,0 +1,53 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.table {
+  background: white;
+  border-radius: 5px;
+  margin-top: 20px;
+  overflow-x: auto;
+  padding: 10px;
+
+  table {
+    border: 0px;
+    margin-bottom: 40px;
+
+    .rodTekst {
+      color: @navRod;
+    }
+
+    .lastColumn {
+      border-left: dashed 1px @navGra40;
+      margin-left: 20px;
+      width: 60px;
+    }
+
+    thead {
+      td:last-child {
+        border-left: dashed 1px @navGra40;
+        margin-left: 20px;
+        width: 60px;
+      }
+    }
+
+    tr {
+      display: flex;
+
+      td {
+        border: 0px;
+        text-align: right;
+        width: 80px;
+      }
+
+      td:first-child {
+        text-align: left;
+        width: 300px;
+      }
+    }
+
+    tr:after {
+      content: '';
+      flex-grow: 1;
+    }
+  }
+}
+

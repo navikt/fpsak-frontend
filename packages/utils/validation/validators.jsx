@@ -1,11 +1,12 @@
 import moment from 'moment';
-import { fodselsnummerPattern, isValidFodselsnummer } from 'utils/fodselsnummerUtils';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
+import { fodselsnummerPattern, isValidFodselsnummer } from '../fodselsnummerUtils';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '../formats';
 import {
   isRequiredMessage, minLengthMessage, invalidNumberMessage, maxLengthMessage, minValueMessage, maxValueMessage, invalidDateMessage,
   invalidIntegerMessage, invalidDecimalMessage, dateNotBeforeOrEqualMessage, dateNotAfterOrEqualMessage, dateRangesOverlappingMessage,
   invalidFodselsnummerFormatMessage, invalidFodselsnummerMessage, invalidTextMessage, invalidSaksnummerOrFodselsnummerFormatMessage,
   invalidValueMessage, arrayMinLengthMessage, invalidPeriodMessage, invalidDatesInPeriodMessage, invalidPeriodRangeMessage, datesNotEqual,
+  utbetalingsgradErMerSamtidigUttaksprosentMessage,
 } from './messages';
 import {
   isoDateRegex, numberRegex, integerRegex, decimalRegex, textRegex, textGyldigRegex, isEmpty, yesterday, tomorrow,
@@ -94,7 +95,6 @@ const validateDate = (dateAsText, date, earliestDate, latestDate) => {
   return error;
 };
 
-
 export const hasValidPeriodIncludingOtherErrors = (values, otherErrors = [{}], options = {}) => {
   const today = moment().format(ISO_DATE_FORMAT);
   const earliestDate = options.todayOrAfter ? today : null;
@@ -143,6 +143,13 @@ export const isWithinOpptjeningsperiode = (fomDateLimit, tomDateLimit) => (fom, 
   const isBefore = moment(fom).isBefore(moment(fomDateLimit));
   const isAfter = moment(tom).isAfter(moment(tomDateLimit));
   return isBefore || isAfter ? invalidPeriodRangeMessage() : null;
+};
+
+export const isUtbetalingsgradMerSamitidigUttaksprosent = (samtidigUttaksProsent, utbetalingsgrad) => {
+  if (samtidigUttaksProsent < utbetalingsgrad) {
+    return utbetalingsgradErMerSamtidigUttaksprosentMessage();
+  }
+  return null;
 };
 
 export const validateProsentandel = prosentandel => required(prosentandel) || hasValidDecimal(prosentandel) || hasValidNumber(prosentandel.replace('.', ''));

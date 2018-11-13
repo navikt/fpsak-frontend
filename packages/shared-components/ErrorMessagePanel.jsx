@@ -7,11 +7,11 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 import Lukknapp from 'nav-frontend-lukknapp';
 
-import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
 import {
   getCrashMessage, getErrorMessages, getErrorMessageCodeWithParams, getShowDetailedErrorMessages,
-} from 'app/duck';
-import { getAllAsyncErrorMessages } from 'data/duck';
+} from '@fpsak-frontend/data/error/duck';
+import { getAllAsyncErrorMessages } from '@fpsak-frontend/data/duck';
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
 
 import styles from './errorMessagePanel.less';

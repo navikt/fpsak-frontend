@@ -4,9 +4,9 @@ import { FormattedMessage } from 'react-intl';
 
 import { Row, Column } from 'nav-frontend-grid';
 import { Undertekst, Normaltekst, Element } from 'nav-frontend-typografi';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import BorderBox from 'sharedComponents/BorderBox';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
 
 import styles from './inntektsopplysningerPanel.less';
 

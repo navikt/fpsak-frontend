@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { parseQueryString } from 'utils/urlUtils';
+import { parseQueryString } from '@fpsak-frontend/utils/urlUtils';
 
 const defaultConfig = {
   paramName: '',

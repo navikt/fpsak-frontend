@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
-import behandlingType from 'kodeverk/behandlingType';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import createEngangsstonadBpProps from './engangsstonadBpDefinition';
 

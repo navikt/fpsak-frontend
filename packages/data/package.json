@@ -11,7 +11,8 @@
     "redux-mock-store": "^1.5.3",
     "axios-mock-adapter": "^1.15.0",
     "redux-thunk": "^2.3.0",
-    "@fpsak-frontend/utils": "1.0.0"
+    "@fpsak-frontend/utils": "1.0.0",
+    "@fpsak-frontend/kodeverk": "1.0.0"
   },
   "peerDependencies": {
     "react": "^16.4.2",

@@ -11,12 +11,12 @@ import {
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import { isInnvilget, isAvslag, isOpphor } from 'kodeverk/behandlingResultatType';
-import behandlingStatusCode from 'kodeverk/behandlingStatus';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import behandlingArsakType from 'kodeverk/behandlingArsakType';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { isInnvilget, isAvslag, isOpphor } from '@fpsak-frontend/kodeverk/behandlingResultatType';
+import behandlingStatusCode from '@fpsak-frontend/kodeverk/behandlingStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import behandlingArsakType from '@fpsak-frontend/kodeverk/behandlingArsakType';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import VedtakAksjonspunktPanel from '../VedtakAksjonspunktPanel';
 import VedtakRevurderingSubmitPanel from './VedtakRevurderingSubmitPanel';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
@@ -126,6 +126,7 @@ const buildInitialValues = createSelector(
   (beregningResultat, behandlingstatus, aksjonspunkter, ytelseType) => {
     const aksjonspunktKoder = aksjonspunkter
       .filter(ap => ap.erAktivt)
+      .filter(ap => ap.kanLoses)
       .map(ap => ap.definisjon.kode);
 
     if (ytelseType === fagsakYtelseType.ENGANGSSTONAD) {

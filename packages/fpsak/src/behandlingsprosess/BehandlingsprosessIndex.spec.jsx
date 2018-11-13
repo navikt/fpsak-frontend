@@ -4,8 +4,8 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import aksjonspunktType from 'kodeverk/aksjonspunktType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktType from '@fpsak-frontend/kodeverk/aksjonspunktType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 import BehandlingspunktInfoPanel from 'behandlingsprosess/components/BehandlingspunktInfoPanel';
 import { BehandlingsprosessIndex } from './BehandlingsprosessIndex';
 

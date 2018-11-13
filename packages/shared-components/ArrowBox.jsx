@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from './ElementWrapper';
 
 // Css er satt opp på en spesiell måte her fordi React ikke støtter psydo-element i inline css. Her er en avhengig av å dynamisk
 // endre enkelte variabler i after/before. Bedre løsninger finnes sikkert?

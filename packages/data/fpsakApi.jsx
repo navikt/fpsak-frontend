@@ -92,7 +92,7 @@ const fpsakReduxApiBuilder = ReduxRestApi.build()
   .withGet('/fpsak/sprak/nb_NO.json', FpsakApi.LANGUAGE_FILE)
 
   /* /api/feature-toggle */
-  .withGet('/fpsak/api/feature-toggle', FpsakApi.FEATURE_TOGGLE);
+  .withPost('/fpsak/api/feature-toggle', FpsakApi.FEATURE_TOGGLE);
 
 export const createFpsakReduxApi = restApiSelector => fpsakReduxApiBuilder
   .withRestApiSelector(restApiSelector)

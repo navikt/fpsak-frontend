@@ -1,7 +1,7 @@
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import vilkarType from 'kodeverk/vilkarType';
-import skjermlenkeCodes from 'kodeverk/skjermlenkeCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
+import skjermlenkeCodes from '@fpsak-frontend/kodeverk/skjermlenkeCodes';
 
 const totrinnskontrollContextCodes = [
   {

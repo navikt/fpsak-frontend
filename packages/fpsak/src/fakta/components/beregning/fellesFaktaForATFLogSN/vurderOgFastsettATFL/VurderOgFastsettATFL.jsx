@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
-import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle } from 'kodeverk/faktaOmBeregningTilfelle';
+import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle, harKunATFLISammeOrgUtenBestebergning } from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
 import LonnsendringForm, { lonnsendringField } from 'fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
 import NyoppstartetFLForm, { erNyoppstartetFLField } from 'fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
@@ -10,14 +10,14 @@ import FastsettATFLInntektForm from './forms/FastsettATFLInntektForm';
 import InntektstabellPanel from '../InntektstabellPanel';
 
 
-const skalViseInntektsTabellUnderRadioknapp = (tilfeller, lonnEndringEllerNyFL) => {
+export const skalViseInntektsTabellUnderRadioknapp = (tilfeller, lonnEndringEllerNyFL) => {
   // Dersom vi har tilfellet for besteberegning fødende kvinne skal alle inntekter fastsettes der.
   // Skal aldri vise inntektstabell under radioknapp dersom det er et spesialtilfelle
   if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE) || erATFLSpesialtilfelle(tilfeller)) {
     return false;
   }
-  return lonnEndringEllerNyFL
-    || (lonnEndringEllerNyFL === false && tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON));
+  return (lonnEndringEllerNyFL) || (lonnEndringEllerNyFL === false
+    && tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON));
 };
 
 /**
@@ -49,6 +49,7 @@ const VurderOgFastsettATFL = ({
           manglerInntektsmelding={manglerInntektsmelding}
         />
       )}
+      skalViseTabell={erATFLSpesialtilfelle(tilfeller) || harKunATFLISammeOrgUtenBestebergning(tilfeller)}
     >
       {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)
       && (
@@ -59,6 +60,7 @@ const VurderOgFastsettATFL = ({
           tilfeller={tilfeller}
           manglerIM={manglerInntektsmelding}
           skalViseInntektstabell={skalViseInntektsTabellUnderRadioknapp(tilfeller, erLonnsendring)}
+          skalKunFastsetteAT={!tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)}
         />
       )
       }
@@ -71,6 +73,7 @@ const VurderOgFastsettATFL = ({
           tilfeller={tilfeller}
           skalViseInntektstabell={skalViseInntektsTabellUnderRadioknapp(tilfeller, erNyoppstartetFL)}
           manglerIM={manglerInntektsmelding}
+          skalKunFastsetteFL={!tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)}
         />
       )
       }

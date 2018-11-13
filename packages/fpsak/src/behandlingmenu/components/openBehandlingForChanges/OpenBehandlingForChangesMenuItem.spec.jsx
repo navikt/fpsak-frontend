@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import OkAvbrytModal from 'sharedComponents/OkAvbrytModal';
+import OkAvbrytModal from '@fpsak-frontend/shared-components/OkAvbrytModal';
 import OpenBehandlingForChangesMenuItem from './OpenBehandlingForChangesMenuItem';
 import MenuButton from '../MenuButton';
 

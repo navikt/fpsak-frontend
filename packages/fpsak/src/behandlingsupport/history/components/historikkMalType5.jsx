@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, injectIntl, intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
 import { createLocationForHistorikkItems } from 'app/paths';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
 import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
-import historikkEndretFeltTypeCodes from 'kodeverk/historikkEndretFeltTypeCodes';
-import historikkEndretFeltTypeHeadingCodes from 'kodeverk/historikkEndretFeltTypeHeadingCodes';
+import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/historikkEndretFeltTypeCodes';
+import historikkEndretFeltTypeHeadingCodes from '@fpsak-frontend/kodeverk/historikkEndretFeltTypeHeadingCodes';
 import {
   findEndretFeltNavn,
   findEndretFeltVerdi,
@@ -47,24 +47,25 @@ const lagGjeldendeFraInnslag = (historikkinnslagDel) => {
         />
         {historikkinnslagDel.gjeldendeFra.fra
         && (
-        <FormattedHTMLMessage
-          id="Historikk.Template.5.VerdiGjeldendeFra"
-          values={{ dato: historikkinnslagDel.gjeldendeFra.fra }}
-        />
+          <FormattedHTMLMessage
+            id="Historikk.Template.5.VerdiGjeldendeFra"
+            values={{ dato: historikkinnslagDel.gjeldendeFra.fra }}
+          />
         )
         }
         {isGjeldendeFraUtenEndredeFelter(historikkinnslagDel)
         && (
-        <div>
-          <FormattedHTMLMessage
-            id="Historikk.Template.5.IngenEndring"
-          />
-        </div>
+          <div>
+            <FormattedHTMLMessage
+              id="Historikk.Template.5.IngenEndring"
+            />
+          </div>
         )
         }
       </ElementWrapper>
     );
-  } if (historikkinnslagDel.gjeldendeFra && !historikkinnslagDel.gjeldendeFra.navn) {
+  }
+  if (historikkinnslagDel.gjeldendeFra && !historikkinnslagDel.gjeldendeFra.navn) {
     return (
       <ElementWrapper>
         <FormattedHTMLMessage
@@ -72,14 +73,14 @@ const lagGjeldendeFraInnslag = (historikkinnslagDel) => {
           values={{ dato: historikkinnslagDel.gjeldendeFra.fra }}
         />
         {isGjeldendeFraUtenEndredeFelter(historikkinnslagDel)
-          && (
+        && (
           <div>
             <FormattedHTMLMessage
               id="Historikk.Template.5.IngenEndring"
             />
           </div>
-          )
-          }
+        )
+        }
       </ElementWrapper>
     );
   }
@@ -137,11 +138,9 @@ const HistorikkMalType5 = ({
     const { tema } = historikkinnslagDel;
     if (tema) {
       const heading = historikkEndretFeltTypeHeadingCodes[tema.endretFeltNavn.kode];
-      if (heading) {
-        return tema.navnVerdi ? <FormattedHTMLMessage id={heading.feltId} values={{ value: tema.navnVerdi }} />
-          : undefined;
+      if (heading && tema.navnVerdi) {
+        return <FormattedHTMLMessage id={heading.feltId} values={{ value: tema.navnVerdi }} />;
       }
-      return undefined;
     }
     return undefined;
   };
@@ -170,20 +169,21 @@ const HistorikkMalType5 = ({
       >
         {historikkinnslagDel.skjermlenke
         && (
-        <Element>
-          <NavLink
-            to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
-            onClick={scrollUp}
-          >
-            {historikkinnslagDel.skjermlenke.navn}
-          </NavLink>
-        </Element>
+          <Element>
+            <NavLink
+              to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
+              onClick={scrollUp}
+            >
+              {historikkinnslagDel.skjermlenke.navn}
+            </NavLink>
+          </Element>
         )
         }
 
-        {lageElementInnhold(historikkinnslagDel).map(tekst => (
-          <div key={tekst}><Element>{tekst}</Element></div>
-        ))}
+        {lageElementInnhold(historikkinnslagDel)
+          .map(tekst => (
+            <div key={tekst}><Element>{tekst}</Element></div>
+          ))}
 
 
         {lagGjeldendeFraInnslag(historikkinnslagDel)}
@@ -208,17 +208,9 @@ const HistorikkMalType5 = ({
           />
         ))}
 
-        {historikkinnslagDel.aarsak
-        && <Normaltekst>{historikkinnslagDel.aarsak.navn}</Normaltekst>
-        }
-        {historikkinnslagDel.begrunnelse
-        && (
-        <BubbleText
-          bodyText={historikkinnslagDel.begrunnelse.navn}
-          className="snakkeboble-panel__tekst"
-        />
-        )
-        }
+        {historikkinnslagDel.aarsak && <Normaltekst>{historikkinnslagDel.aarsak.navn}</Normaltekst>}
+        {historikkinnslagDel.begrunnelse && <BubbleText bodyText={historikkinnslagDel.begrunnelse.navn} className="snakkeboble-panel__tekst" />}
+        {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} className="snakkeboble-panel__tekst" />}
         <div>
           {dokumentLinks && dokumentLinks.map(dokumentLink => (
             <a

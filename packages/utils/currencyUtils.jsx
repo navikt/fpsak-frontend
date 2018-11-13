@@ -1,5 +1,5 @@
 export const formatCurrencyWithKr = (value) => {
-  const formattedValue = Number(value).toLocaleString('nb-NO').replace(/,/g, ' ');
+  const formattedValue = Number(value).toLocaleString('nb-NO').replace(/,|\s/g, ' ');
   return (`${formattedValue} kr`);
 };
 
@@ -12,7 +12,7 @@ export const formatCurrencyNoKr = (value) => {
   if (Number.isNaN(newVal)) {
     return undefined;
   }
-  return Number(Math.round(newVal)).toLocaleString('nb-NO').replace(/,/g, ' ');
+  return Number(Math.round(newVal)).toLocaleString('nb-NO').replace(/,|\s/g, ' ');
 };
 
 export const removeSpacesFromNumber = (input) => {

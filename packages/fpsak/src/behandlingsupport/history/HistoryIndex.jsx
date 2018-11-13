@@ -11,9 +11,9 @@ import { connect } from 'react-redux';
 import { getSelectedBehandlingId } from 'behandling/duck';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import requireProps from 'app/data/requireProps';
-import { getRestApiData } from 'data/duck';
-import { FpsakApi } from 'data/fpsakApi';
-import LoadingPanel from 'sharedComponents/LoadingPanel';
+import { getRestApiData } from '@fpsak-frontend/data/duck';
+import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
+import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
 
 import History from './components/History';
 

@@ -1,111 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
-import { FormattedMessage } from 'react-intl';
-import { removeSpacesFromNumber } from 'utils/currencyUtils';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
-import moment from 'moment';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import {
-  getAksjonspunkter,
-  getEndringBeregningsgrunnlag,
-  getEndringBeregningsgrunnlagPerioder,
-  getFaktaOmBeregningTilfellerKoder,
-} from 'behandling/behandlingSelectors';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
-import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { byggListeSomStreng } from '../tilstøtendeYtelse/YtelsePanel';
+import { removeSpacesFromNumber } from '@fpsak-frontend/utils/currencyUtils';
+import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
 import EndringBeregningsgrunnlagPeriodePanel from './EndringBeregningsgrunnlagPeriodePanel';
+
+import styles from './endringBeregningsgrunnlagForm.less';
+
 
 const ElementWrapper = ({ children }) => children;
 
 const endringBGFieldArrayNamePrefix = 'endringBGPeriode';
 
-const {
-  VURDER_FAKTA_FOR_ATFL_SN,
-} = aksjonspunktCodes;
-
-const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
-
 const getFieldNameKey = index => (endringBGFieldArrayNamePrefix + index);
-
-const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
-
-const getEndredeArbeidsforhold = createSelector(
-  [getEndringBeregningsgrunnlag],
-  (endringBG) => {
-    if (endringBG) {
-      return endringBG.endredeArbeidsforhold;
-    }
-    return [];
-  },
-);
-
-const lagPeriodeStreng = (perioder) => {
-  const listeMedPeriodeStrenger = perioder.map((periode) => {
-    let periodeStreng = ` f.o.m. ${formatDate(periode.fom)}`;
-    if (periode.tom && periode.tom !== null) {
-      periodeStreng = periodeStreng.concat(` - t.o.m. ${formatDate(periode.tom)}`);
-    }
-    return periodeStreng;
-  });
-  return byggListeSomStreng(listeMedPeriodeStrenger);
-};
-
-
-export const createEndretArbeidsforholdString = (listOfArbeidsforhold, gjelderGradering) => {
-  const listOfStrings = listOfArbeidsforhold.map((arbeidsforhold) => {
-    const navnOgOrgnr = createVisningsnavnForAktivitet(arbeidsforhold);
-    const periodeStreng = gjelderGradering
-      ? lagPeriodeStreng(arbeidsforhold.perioderMedGraderingEllerRefusjon.filter(({ erGradering }) => erGradering))
-      : lagPeriodeStreng(arbeidsforhold.perioderMedGraderingEllerRefusjon.filter(({ erRefusjon }) => erRefusjon));
-    return navnOgOrgnr + periodeStreng;
-  });
-  return byggListeSomStreng(listOfStrings);
-};
-
-export const lagHelpTextsEndringBG = (endredeArbeidsforhold) => {
-  const helpTexts = [];
-  const gradering = endredeArbeidsforhold
-    .filter(arbeidsforhold => arbeidsforhold.perioderMedGraderingEllerRefusjon.map(({ erGradering }) => erGradering).includes(true));
-  const refusjon = endredeArbeidsforhold
-    .filter(arbeidsforhold => arbeidsforhold.perioderMedGraderingEllerRefusjon.map(({ erRefusjon }) => erRefusjon).includes(true));
-  if (gradering.length > 0) {
-    const arbeidsforholdString = createEndretArbeidsforholdString(gradering, true);
-    helpTexts.push(<FormattedMessage
-      key="EndringBeregningsgrunnlagGradering"
-      id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.Gradering"
-      values={{ arbeidsforhold: arbeidsforholdString }}
-    />);
-  }
-  if (refusjon.length > 0) {
-    const arbeidsforholdString = createEndretArbeidsforholdString(refusjon, false);
-    helpTexts.push(<FormattedMessage
-      key="EndringBeregningsgrunnlagRefusjon"
-      id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.Refusjon"
-      values={{ arbeidsforhold: arbeidsforholdString }}
-    />);
-  }
-  if (helpTexts.length === 2) {
-    return [
-      <ElementWrapper>
-        {helpTexts[0]}
-        <VerticalSpacer eightPx />
-        {helpTexts[1]}
-      </ElementWrapper>];
-  }
-  return helpTexts;
-};
-
-
-export const getHelpTextsEndringBG = createSelector(
-  [getFaktaOmBeregningTilfellerKoder, getEndredeArbeidsforhold, getAksjonspunkter],
-  (aktivertePaneler, endredeArbeidsforhold, aksjonspunkter) => (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter))
-    && (aktivertePaneler && aktivertePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)
-      ? lagHelpTextsEndringBG(endredeArbeidsforhold) : []),
-);
 
 
 /**
@@ -138,10 +45,11 @@ export class EndringBeregningsgrunnlagForm extends Component {
       readOnly,
       perioder,
       isAksjonspunktClosed,
+      skalHaEndretInformasjonIHeader,
     } = this.props;
     const { openPanels } = this.state;
     return (
-      <ElementWrapper>
+      <BorderBox className={styles.lessPadding}>
         {perioder.map((periode, index) => (
           <ElementWrapper key={endringBGFieldArrayNamePrefix + periode.fom}>
             <VerticalSpacer eightPx />
@@ -154,12 +62,13 @@ export class EndringBeregningsgrunnlagForm extends Component {
               harPeriodeAarsakGraderingEllerRefusjon={periode.harPeriodeAarsakGraderingEllerRefusjon}
               isAksjonspunktClosed={isAksjonspunktClosed}
               showPanel={this.showPanel}
+              skalHaEndretInformasjonIHeader={skalHaEndretInformasjonIHeader}
             />
             <VerticalSpacer eightPx />
           </ElementWrapper>
         ))
         }
-      </ElementWrapper>
+      </BorderBox>
     );
   }
 }
@@ -168,7 +77,13 @@ EndringBeregningsgrunnlagForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
+  skalHaEndretInformasjonIHeader: PropTypes.bool,
 };
+
+EndringBeregningsgrunnlagForm.defaultProps = {
+  skalHaEndretInformasjonIHeader: false,
+};
+
 
 EndringBeregningsgrunnlagForm.validate = (values, endringBGPerioder) => {
   const errors = {};
@@ -181,13 +96,13 @@ EndringBeregningsgrunnlagForm.validate = (values, endringBGPerioder) => {
 };
 
 
-EndringBeregningsgrunnlagForm.buildInitialValues = (endringBGPerioder, aktivitetstatuskoder) => {
+EndringBeregningsgrunnlagForm.buildInitialValues = (endringBGPerioder) => {
   const initialValues = {};
   if (!endringBGPerioder) {
     return initialValues;
   }
   endringBGPerioder.forEach((periode, index) => {
-    initialValues[getFieldNameKey(index)] = EndringBeregningsgrunnlagPeriodePanel.buildInitialValues(periode, aktivitetstatuskoder);
+    initialValues[getFieldNameKey(index)] = EndringBeregningsgrunnlagPeriodePanel.buildInitialValues(periode);
   });
   return initialValues;
 };
@@ -199,15 +114,13 @@ const getAndelsnr = (andelValues) => {
   return andelValues.andelsnr;
 };
 
-export const harKunEndringBG = aktivertePaneler => (aktivertePaneler && aktivertePaneler.length === 1
-  && aktivertePaneler[0] === faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG);
 
 EndringBeregningsgrunnlagForm.transformValues = (values, endringBGPerioder) => {
   const endringBeregningsgrunnlagPerioder = [];
   for (let index = 0; index < endringBGPerioder.length; index += 1) {
     if (endringBGPerioder[index].harPeriodeAarsakGraderingEllerRefusjon) {
       endringBeregningsgrunnlagPerioder.push({
-        endretAndeler: values[getFieldNameKey(index)].map(aktivitet => ({
+        andeler: values[getFieldNameKey(index)].map(aktivitet => ({
           andel: aktivitet.andel,
           andelsnr: getAndelsnr(aktivitet),
           arbeidsforholdId: aktivitet.arbeidsforholdId !== '' ? aktivitet.arbeidsforholdId : null,
@@ -229,8 +142,4 @@ EndringBeregningsgrunnlagForm.transformValues = (values, endringBGPerioder) => {
   };
 };
 
-
-const mapStateToProps = state => ({ perioder: getEndringBeregningsgrunnlagPerioder(state) ? getEndringBeregningsgrunnlagPerioder(state) : [] });
-
-
-export default connect(mapStateToProps)(EndringBeregningsgrunnlagForm);
+export default EndringBeregningsgrunnlagForm;
