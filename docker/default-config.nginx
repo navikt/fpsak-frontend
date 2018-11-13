@@ -8,7 +8,8 @@ proxy_buffering off;
 resolver "${RESOLVER}";
 tcp_nodelay off;
 tcp_nopush on;
-
+gzip on;
+gzip_proxied any;
 gzip_types
     text/css
     text/javascript

@@ -1,6 +1,6 @@
 {
   "name": "fpsak-frontend",
-  "version": "0.0.62",
+  "version": "0.0.66",
   "description": "Klient for Foreldrepenger",
   "main": "./target/index.js",
   "author": "NAV",
@@ -23,15 +23,15 @@
     "less:lint": "lesshint --max-warnings 0 --reporter ./_scripts/lesshint-reporter.js packages -e *Source-Sans*.less",
     "doc": "react-asciidoc-generator ./packages/ -o ../../docs/generated/react.adoc --handlebar-template src/docs/asciidoc-template.handlebars",
     "cypress:open": "cypress open",
-    "docker-build": "docker build -t fpfront . -f Dockerfile --build-arg HTTPS_PROXY=$HTTPS_PROXY --build-arg HTTP_PROXY=$HTTP_PROXY",
+    "docker-build": "docker build -t fpfront . -f Dockerfile --build-arg YARN_PROXY=$HTTP_PROXY --build-arg YARN_HTTPS_PROXY=$HTTP_PROXY",
     "docker-start": "yarn docker-stop; yarn docker-build; docker run -d --env-file=./docker/.env --name fpfront --net=host fpfront",
     "docker-stop": "docker stop fpfront; docker rm fpfront",
-    "docker-push": "docker build . -t docker.adeo.no:5000/$npm_package_name:$npm_package_version --build-arg HTTPS_PROXY=$HTTPS_PROXY --build-arg HTTP_PROXY=$HTTP_PROXY; docker push docker.adeo.no:5000/$npm_package_name:$npm_package_version",
+    "docker-push": "docker build . -t docker.adeo.no:5000/$npm_package_name:$npm_package_version --build-arg HTTPS_PROXY=$HTTPS_PROXY --build-arg HTTP_PROXY=$HTTP_PROXY --build-arg _HTTPS_PROXY=$HTTP_PROXY --build-arg YARN_PROXY=$HTTP_PROXY; docker push docker.adeo.no:5000/$npm_package_name:$npm_package_version",
     "nais-upload": "nais upload -a $npm_package_name -v $npm_package_version",
     "nais-deploy-q10": "nais deploy -a $npm_package_name -v $npm_package_version -e q10 -n q10",
     "nais-deploy-t10": "nais deploy -a $npm_package_name -v $npm_package_version -e t10 -n t10",
     "nais-env": "nais env -e q0 $npm_package_name",
-    "deploy": "yarn version --patch; yarn docker-push; yarn nais-upload; yarn nais-deploy-t10"
+    "deploy": "yarn version --patch --no-git-tag-version; yarn docker-push; yarn nais-upload; yarn nais-deploy-t10"
   },
   "workspaces": [
     "packages/*"

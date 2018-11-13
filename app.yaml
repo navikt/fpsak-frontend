@@ -1,0 +1,32 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: fpsak-frontend
+  namespace: default
+spec:
+  image: docker.adeo.no:5000/fpsak-frontend
+  port: 443
+  team: foreldrepenger
+  liveness:
+    path: /health/isAlive
+    initialDelay: 5
+    timeout: 1
+  readiness:
+    path: /health/isReady
+    initialDelay: 5
+    timeout: 1
+  replicas:
+    min: 1
+    max: 1
+    cpuThresholdPercentage: 80
+  prometheus:
+    enabled: false
+    path: /metrics
+  istio:
+    enabled: false
+  ingresses:
+  - "https://fpsak-frontend.nais.adeo.no/"
+  - "https://tjenester.nav.no/fpsak"
+  env:
+  - name: MY_CUSTOM_VAR
+    value: some_value
