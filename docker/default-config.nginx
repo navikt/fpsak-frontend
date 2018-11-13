@@ -33,6 +33,13 @@ server {
 
     add_header X-Application-Id "${APP_NAME} ${APP_VERSION} med proxy mot ${APP_API_GATEWAY}";
 
+    header_filter_by_lua_block {
+        local session = require("resty.session").open()
+        if ngx.header.content_type=="text/html" and session.data.enc_id_token then
+            ngx.header['Set-Cookie'] = 'ID_token=' .. session.data.enc_id_token .. ';path=/'
+        end
+    }
+
     location /fpsak/sprak/ {
         proxy_pass              "${APP_API_GATEWAY}/fpsak/sprak/";
         proxy_ssl_verify        off;
@@ -87,7 +94,6 @@ server {
         # Hvis vi tillater browser-caching vil vi ikke ha nedetidsfri deploy (!)
         add_header Cache-Control no-cache;
 
-        try_files $uri @rewrites;
 
         access_by_lua_block {
             local app_callback_path = "${APP_CALLBACK_PATH}"
@@ -117,12 +123,11 @@ server {
               ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR)
             end
 
-            if session.data.enc_id_token and (ngx.var.uri == app_callback_path or ngx.var.uri == app_login_path) then
-                ngx.header['Set-Cookie'] = 'ID_token=' .. session.data.enc_id_token .. ';path=/'
+            if ngx.var.uri == app_callback_path or ngx.var.uri == app_login_path then
                 return ngx.redirect("/")
             end
         }
-
+        try_files $uri @rewrites;
     }
     # If no asset matches, send it to your javascript app. Hopefully it's a route in the app!
     location @rewrites {

@@ -1,7 +1,8 @@
 FROM node:10-alpine as builder
 WORKDIR /home/app
 COPY ./ ./
-RUN yarn install
+
+RUN yarn install --ignore-scripts
 RUN yarn build
 
 FROM openresty/openresty:alpine-fat
