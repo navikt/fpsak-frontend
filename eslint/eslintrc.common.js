@@ -1,4 +1,5 @@
-var OFF = 0, ERROR = 2;
+const OFF = 0;
+const ERROR = 2;
 
 const config = {
   env: {
