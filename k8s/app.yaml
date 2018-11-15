@@ -55,6 +55,10 @@ spec:
     value: RELEASE_VERSION
   - name: APP_NAME
     value: fpsak-frontend
+  - name: OIDC_HOST_URL
+    value: https://isso-t.adeo.no:443/isso
+  - name: OIDC_AGENTNAME
+    value: fpsak-frontend-t10
   - name: OIDC_PASSWORD
     valueFrom:
       secretKeyRef:

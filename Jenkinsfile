@@ -10,14 +10,6 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
-            steps{
-                script {
-                    sh "docker build --pull -t docker.adeo.no:5000/fpsak-frontend:${versjonNummer} ."
-                    sh "docker push docker.adeo.no:5000/fpsak-frontend:${versjonNummer}"
-                }
-            }
-        }
         stage('Deploy til t10') {
             steps {
                 script {
