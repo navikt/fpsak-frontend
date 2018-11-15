@@ -1,4 +1,4 @@
-FROM node:10-alpine as builder
+FROM node as builder
 WORKDIR /home/app
 COPY ./ ./
 
