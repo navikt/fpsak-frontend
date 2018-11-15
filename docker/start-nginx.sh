@@ -4,6 +4,23 @@
 export RESOLVER=$(cat /etc/resolv.conf | grep -v '^#' | grep -m 1 nameserver | awk '{print $2}')
 echo "Will use resolver:" $RESOLVER
 
+ls /var
+ls /var/run
+ls /var/run/secrets
+ls /var/run/secrets/nais.io
+ls /var/run/secrets/nais.io/vault
+
+if test -d /var/run/secrets/nais.io/vault;
+then
+    for FILE in /var/run/secrets/nais.io/vault/*.env
+    do
+        for line in $(cat $FILE); do
+            echo "- exporting `echo $line | cut -d '=' -f 1`"
+            export $line
+        done
+    done
+fi
+
 export APP_PORT="${APP_PORT:-443}"
 export APP_NAME="${APP_NAME:-devimg}"
 export APP_VERSION="${APP_VERSION:-localhost}"

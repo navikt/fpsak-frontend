@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fpsak-env-configmap
+  namespace: t10
+data:
+  OIDC_HOST_URL: https://isso-t.adeo.no:443/isso
+  OIDC_AGENTNAME: fpsak-frontend-t10
