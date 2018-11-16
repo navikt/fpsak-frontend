@@ -10,6 +10,16 @@ pipeline {
     }
 
     stages {
+        stage('Build') {
+                    steps{
+                        script {
+                            sh "yarn install --ignore-scripts"
+                            sh "yarn build"
+                            sh "docker build --pull -t docker.adeo.no:5000/fpsak-frontend:${versjonNummer} ."
+                            sh "docker push docker.adeo.no:5000/fpsak-frontend:${versjonNummer}"
+                        }
+                    }
+                }
         stage('Deploy til t10') {
             steps {
                 script {
