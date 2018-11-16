@@ -4,11 +4,6 @@
 export RESOLVER=$(cat /etc/resolv.conf | grep -v '^#' | grep -m 1 nameserver | awk '{print $2}')
 echo "Will use resolver:" $RESOLVER
 
-ls /var
-ls /var/run
-ls /var/run/secrets
-ls /var/run/secrets/nais.io
-ls /var/run/secrets/nais.io/vault
 
 if test -d /var/run/secrets/nais.io/vault;
 then

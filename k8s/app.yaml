@@ -7,7 +7,7 @@ metadata:
   namespace: default
 spec:
   image: docker.adeo.no:5000/fpsak-frontend:RELEASE_VERSION # Required. Docker image.
-  port: 80 # Required. The port number which is exposed by the container and should receive HTTP traffic.
+  port: 443 # Required. The port number which is exposed by the container and should receive HTTP traffic.
   team: teamforeldrepenger # Required. Set to the team that owns this application.
   liveness: # HTTP endpoint that signals 200 OK when the application is running.
     path: /health/isAlive
@@ -42,13 +42,13 @@ spec:
       cpu: 200m
       memory: 32Mi
   ingresses: # Optional. List of ingress URLs that will route HTTP traffic to the application.
-  - "https://fpsak-frontend.preprod.local/"
+  - "https://fpsak-frontend-t10.nais.preprod.local/"
   logformat: accesslog # Optional. The format of the logs from the container if the logs should be handled differently than plain text or json
   logtransform: dns_loglevel # Optional. The transformation of the logs, if they should be handled differently than plain text or json
   webproxy: false # Optional. Expose web proxy configuration to the application using the HTTP_PROXY, HTTPS_PROXY and NO_PROXY environment variables.
   configMaps:
     files: # Optional. Specify config maps that will have their data mounted into the container as files.
-    - fpsak-env-configmap
+    - fpsak-frontend-configmap
   secrets: true # Optional. If set to true fetch secrets from Secret Service and inject into the pods. todo link to doc.
   env:
   - name: APP_VERSION
@@ -59,11 +59,3 @@ spec:
     value: https://isso-t.adeo.no:443/isso
   - name: OIDC_AGENTNAME
     value: fpsak-frontend-t10
-  - name: OIDC_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: vault-secrets
-        key: OIDC_PASSWORD1
-  envFrom:
-  - configMapRef:
-      name: fpsak-env-configmap
