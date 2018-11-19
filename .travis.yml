@@ -1,45 +1,18 @@
 language: node_js
 node_js:
 - "8.12"
-
-env:
-  global:
-    - TZ='Europe/Oslo'
-    - DATE="$(date +%Y%m%d)"
-    - TIME="$(date +%H%M)"
-    - RELEASE_VERSION="$TRAVIS_COMMIT"
-    - APPLICATION_NAME='fpsak-frontend'
-    - DOCKER_IMAGE_FULL_NAME="navikt/$APPLICATION_NAME:$RELEASE_VERSION"
+cache:
+  directories:
+    - node_modules
 
 install:
-- yarn install
-
-before_script:
-- yarn less:lint
-- yarn build
+- yarn install --ignore-scripts
 
 script:
-#- docker build -t $DOCKER_IMAGE_FULL_NAME ./packages/fpsak
+- yarn less:lint
+- yarn test
+- yarn build
 
-before_deploy:
-# Set up git user name and tag this commit
-# bytte epost til nav
-#- git config --local user.name "navikt"
-#- git config --local user.email "petterruud@gmail.com"
-#- git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
-
-services:
-#  - docker
-
-# bytt til dockerhub systembruker
-deploy:
-#  provider: script
-#  skip_cleanup: true
-#  script: docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" && docker push "$DOCKER_IMAGE_FULL_NAME"
-#  on:
-#    branch: master
-
-after_deploy:
-  #- git remote add auth-origin "https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}"
+after_script:
   - chmod a+x ./_scripts/bump.sh
   - ./_scripts/bump.sh
