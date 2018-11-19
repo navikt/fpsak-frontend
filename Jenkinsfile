@@ -29,7 +29,7 @@ pipeline {
                         echo "$ingress"
                         sh "k config use-context $context"
                         //sh "k apply -f configmap.${miljø}.variabler.yaml"
-                        sh "sed \'s/default/$namespace/g;s/RELEASE_VERSION/${versjonNummer}/g;s%INGRESS_URL%$ingress%g\' app.yaml"
+                        sh "sed \'s/default/$namespace/g;s/RELEASE_VERSION/${versjonNummer}/g;s%INGRESS_URL%$ingress%g\' app.yaml | k apply -f -"
                     }
                 }
             }
