@@ -20,7 +20,7 @@ pipeline {
                         def namespace = "${miljø}"
                         def context = "preprod-fss"
                         if("${miljø}"=="p"){
-                            ingress=ingress+"fpsak-frontend.nav.no"
+                            ingress=ingress+"tjenester.nav.no/fpsak"
                             namespace="default"
                             context="prod-fss"
                         }else{
