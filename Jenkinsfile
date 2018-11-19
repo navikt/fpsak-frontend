@@ -8,21 +8,27 @@ pipeline {
         string(defaultValue: "t10", description: 'Miljø*', name: 'miljø')
         string(defaultValue: '', description: 'Versjon Nummer*', name: 'versjonNummer')
     }
+    try {
+            def ingress = "https://"
+            if("${miljø}"=="p"){
+                ingress=$ingress+"fpsak-frontend-t10.nais.preprod.local"
+            }else{
+                ingress=$ingress+"fpsak-frontend-${miljø}.nais.preprod.local"
+            }
+            echo "$ingress"
 
+        } catch (MissingPropertyException e) {
+
+        }
     stages {
         stage('Deploy Til Miljø') {
 
             steps {
-            def ingress = "https://"
-                        if("${miljø}"=="p"){
-                            ingress=$ingress+"fpsak-frontend-t10.nais.preprod.local"
-                        }else{
-                            ingress=$ingress+"fpsak-frontend-${miljø}.nais.preprod.local"
-                        }
-                        echo "$ingress"
+
                 script {
 
                     dir ('k8s') {
+                          echo "$ingress"
                         def tag = sh(returnStdout: true, script: "git tag --contains | head -1").trim()
                         echo tag
                         sh 'k config use-context preprod-fss'
