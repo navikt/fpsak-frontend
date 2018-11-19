@@ -11,14 +11,15 @@ pipeline {
 
     stages {
         stage('Deploy Til Miljø') {
-            def ingress = "https://"
-            if("${miljø}"=="p"){
-                ingress=$ingress+"fpsak-frontend-t10.nais.preprod.local"
-            }else{
-                ingress=$ingress+"fpsak-frontend-${miljø}.nais.preprod.local"
-            }
-            echo "$ingress"
+
             steps {
+            def ingress = "https://"
+                        if("${miljø}"=="p"){
+                            ingress=$ingress+"fpsak-frontend-t10.nais.preprod.local"
+                        }else{
+                            ingress=$ingress+"fpsak-frontend-${miljø}.nais.preprod.local"
+                        }
+                        echo "$ingress"
                 script {
 
                     dir ('k8s') {
