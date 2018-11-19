@@ -18,15 +18,17 @@ pipeline {
                     dir ('k8s') {
                         def ingress = "https://"
                         def namespace = "${miljø}"
+                        def context = "preprod-fss"
                         if("${miljø}"=="p"){
                             ingress=ingress+"fpsak-frontend.nav.no"
                             namespace="default"
+                            context="prod-fss"
                         }else{
                             ingress=ingress+"fpsak-frontend-${miljø}.nais.preprod.local"
                         }
                         echo "$ingress"
-                        sh 'k config use-context preprod-fss'
-                        sh "k apply -f configmap.${miljø}.variabler.yaml"
+                        sh "k config use-context $context"
+                        //sh "k apply -f configmap.${miljø}.variabler.yaml"
                         sh "sed \'s/default/$namespace/g;s/RELEASE_VERSION/${versjonNummer}/g;s%INGRESS_URL%$ingress%g\' app.yaml"
                     }
                 }
