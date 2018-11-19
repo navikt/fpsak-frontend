@@ -18,9 +18,9 @@ pipeline {
                     dir ('k8s') {
                         def ingress = "https://"
                         if("${miljø}"=="p"){
-                            ingress=$ingress+"fpsak-frontend-t10.nais.preprod.local"
+                            ingress=ingress+"fpsak-frontend-t10.nais.preprod.local"
                         }else{
-                            ingress=$ingress+"fpsak-frontend-${miljø}.nais.preprod.local"
+                            ingress=ingress+"fpsak-frontend-${miljø}.nais.preprod.local"
                         }
                         echo "$ingress"
                         def tag = sh(returnStdout: true, script: "git tag --contains | head -1").trim()
