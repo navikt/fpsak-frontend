@@ -9,7 +9,7 @@ cache:
   yarn: true
 
 install:
-- yarn install --ignore-scripts
+- yarn install --ignore-scripts --no-progress
 
 script:
 - yarn less:lint
