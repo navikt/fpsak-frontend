@@ -42,7 +42,7 @@ spec:
       cpu: 200m
       memory: 32Mi
   ingresses: # Optional. List of ingress URLs that will route HTTP traffic to the application.
-  - "https://fpsak-frontend-t10.nais.preprod.local/"
+  - "INGRESS_URL"
   logformat: accesslog # Optional. The format of the logs from the container if the logs should be handled differently than plain text or json
   logtransform: dns_loglevel # Optional. The transformation of the logs, if they should be handled differently than plain text or json
   webproxy: false # Optional. Expose web proxy configuration to the application using the HTTP_PROXY, HTTPS_PROXY and NO_PROXY environment variables.
