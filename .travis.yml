@@ -41,16 +41,5 @@ deploy:
 
 after_deploy:
   #- git remote add auth-origin "https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}"
-  #- git tag $RELEASE_VERSION
-  #- git push auth-origin --tags
-
-#deploy:
-#  - provider: releases
-#    skip-cleanup: true
-#    github-token: $GITHUB_TOKEN
-#    api_key: $GITHUB_TOKEN
-#    on:
-#      branch: master
-#    keep-history: true
-#    file_glob: true
-#    file: dist/**/*
+  - chmod a+x ./_scripts/bump.sh
+  - ./_scripts/bump.sh
