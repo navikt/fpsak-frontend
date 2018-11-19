@@ -6,7 +6,7 @@ metadata:
   name: fpsak-frontend
   namespace: default
 spec:
-  image: docker.adeo.no:5000/fpsak-frontend:RELEASE_VERSION # Required. Docker image.
+  image: navikt/fpsak-frontend:RELEASE_VERSION # Required. Docker image.
   port: 443 # Required. The port number which is exposed by the container and should receive HTTP traffic.
   team: teamforeldrepenger # Required. Set to the team that owns this application.
   liveness: # HTTP endpoint that signals 200 OK when the application is running.

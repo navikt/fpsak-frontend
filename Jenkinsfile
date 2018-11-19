@@ -17,17 +17,17 @@ pipeline {
 
                     dir ('k8s') {
                         def ingress = "https://"
+                        def namespace = "${miljø}"
                         if("${miljø}"=="p"){
-                            ingress=ingress+"fpsak-frontend-t10.nais.preprod.local"
+                            ingress=ingress+"fpsak-frontend.nav.no"
+                            namespace="default"
                         }else{
                             ingress=ingress+"fpsak-frontend-${miljø}.nais.preprod.local"
                         }
                         echo "$ingress"
-                        def tag = sh(returnStdout: true, script: "git tag --contains | head -1").trim()
-                        echo tag
                         sh 'k config use-context preprod-fss'
                         sh "k apply -f configmap.${miljø}.variabler.yaml"
-                        sh "sed \'s/default/${miljø}/g;s/RELEASE_VERSION/${versjonNummer}/g;s%INGRESS_URL%$ingress%g\' app.yaml"
+                        sh "sed \'s/default/$namespace/g;s/RELEASE_VERSION/${versjonNummer}/g;s%INGRESS_URL%$ingress%g\' app.yaml"
                     }
                 }
             }
