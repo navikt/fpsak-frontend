@@ -1,15 +1,15 @@
-#FROM node:10-alpine as builder
-#WORKDIR /home/app
-#COPY ./ ./
+FROM node:10-alpine as builder
+WORKDIR /home/app
+COPY ./ ./
 
-#RUN yarn install --ignore-scripts
-#RUN yarn build
+RUN yarn install --ignore-scripts
+RUN yarn build
 
 FROM openresty/openresty:alpine-fat
 LABEL maintainer="teamforeldrepenger"
 
-#COPY --from=builder ./home/app/dist ./app
-COPY ./dist ./app
+COPY --from=builder ./home/app/dist ./app
+
 RUN apk add --no-cache bash gettext libintl
 
 RUN ["luarocks", "install", "lua-resty-session"]
