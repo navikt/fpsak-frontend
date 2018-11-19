@@ -26,8 +26,8 @@ pipeline {
                         def tag = sh(returnStdout: true, script: "git tag --contains | head -1").trim()
                         echo tag
                         sh 'k config use-context preprod-fss'
-                        //sh "k apply -f configmap.${miljø}.variabler.yaml"
-                        //sh "sed \'s/default/${miljø}/g;s/RELEASE_VERSION/${versjonNummer}/g\' app.yaml | k apply -f -"
+                        sh "k apply -f configmap.${miljø}.variabler.yaml"
+                        sh "sed \'s/default/${miljø}/g;s/RELEASE_VERSION/${versjonNummer}/g;s/ingress/${versjonNummer}/g\' app.yaml"
                     }
                 }
             }
