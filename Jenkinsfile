@@ -27,7 +27,7 @@ pipeline {
                         echo tag
                         sh 'k config use-context preprod-fss'
                         sh "k apply -f configmap.${miljø}.variabler.yaml"
-                        sh "sed \'s/default/${miljø}/g;s/RELEASE_VERSION/${versjonNummer}/g;s/INGRESS_URL/ingress/g\' app.yaml"
+                        sh "sed \'s/default/${miljø}/g;s/RELEASE_VERSION/${versjonNummer}/g;s/INGRESS_URL/$ingress/g\' app.yaml"
                     }
                 }
             }
