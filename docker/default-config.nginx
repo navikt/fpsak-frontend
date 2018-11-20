@@ -1,6 +1,6 @@
 access_log off;
-charset utf-8;
 error_log /dev/stdout info;
+charset utf-8;
 lua_package_path '~/lua/?.lua;;';
 lua_shared_dict discovery 1m;
 lua_shared_dict jwks 1m;
@@ -10,6 +10,7 @@ tcp_nodelay off;
 tcp_nopush on;
 gzip on;
 gzip_proxied any;
+underscores_in_headers on;
 gzip_types
     text/css
     text/javascript
@@ -30,34 +31,42 @@ server {
     root "${APP_DIR}";
     server_name  localhost;
     error_page 404 @rewrites;
-
     add_header X-Application-Id "${APP_NAME} ${APP_VERSION} med proxy mot ${APP_API_GATEWAY}";
 
-    header_filter_by_lua_block {
-        local session = require("resty.session").open()
-        if ngx.header.content_type=="text/html" and session.data.enc_id_token then
-            ngx.header['Set-Cookie'] = 'ID_token=' .. session.data.enc_id_token .. ';path=/'
-        end
-    }
-
     location /fpsak/sprak/ {
+        set $proxy_id_cookie "";
+        access_by_lua_block {
+        local session = require("resty.session").open()
+            if session.data.enc_id_token then
+                ngx.var.proxy_id_cookie = session.data.enc_id_token
+            end
+        }
         proxy_pass              "${APP_API_GATEWAY}/fpsak/sprak/";
         proxy_ssl_verify        off;
         proxy_http_version      1.1;
+        proxy_set_header        Cookie "ID_token=$proxy_id_cookie";
     }
 
     location  /fpsak/api/ {
+        set $proxy_id_cookie "";
+        access_by_lua_block {
+            local session = require("resty.session").open()
+            if session.data.enc_id_token then
+                ngx.var.proxy_id_cookie = session.data.enc_id_token
+            end
+        }
+        proxy_pass              "${APP_API_GATEWAY}/fpsak/api/";
+        proxy_redirect          "${APP_API_GATEWAY}" "http://$host:${APP_PORT}";
         add_header              X-Debug-Proxy-Host 'http://$proxy_host/ $scheme://$host/';
         add_header              X-Debug-Forwarded-For $proxy_add_x_forwarded_for;
         add_header              X-Debug-Forwarded-Host $host:$server_port;
         proxy_http_version      1.1;
-        proxy_pass              "${APP_API_GATEWAY}/fpsak/api/";
-        proxy_redirect          "${APP_API_GATEWAY}" "http://$host:${APP_PORT}";
         proxy_set_header        Connection "";
         proxy_set_header        Referer $http_referer;
         proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header        X-NginX-Proxy    true;
+        proxy_set_header        X-NginX-Proxy true;
         proxy_set_header        X-Real-IP $remote_addr;
+        proxy_set_header        Cookie "ID_token=$proxy_id_cookie";
         proxy_ssl_verify        off;
     }
 
@@ -96,14 +105,14 @@ server {
 
 
         access_by_lua_block {
-            local app_callback_path = "${APP_CALLBACK_PATH}"
+        local app_callback_path = "${APP_CALLBACK_PATH}"
             local app_login_path = "${APP_LOGIN_PATH}"
             local callback_host = "https://" .. ngx.var.host
             if ngx.var.host == "localhost" then
                 callback_host = "http://localhost:" .. ngx.var.server_port
             end
             local opts = {
-                redirect_uri = callback_host .. app_callback_path,
+        redirect_uri = callback_host .. app_callback_path,
                 client_id = "${OIDC_AGENTNAME}",
                 client_secret = "${OIDC_PASSWORD}",
                 scope = "openid",
@@ -111,11 +120,11 @@ server {
                 token_endpoint_auth_method = "client_secret_basic",
                 discovery = "${OIDC_HOST_URL}" .. "/oauth2/.well-known/openid-configuration",
                 session_contents = {
-                    enc_id_token = true
-                }
-            }
+        enc_id_token = true
+        }
+        }
 
-            local res, err, target_url, session = require("resty.openidc").authenticate(opts)
+        local res, err, target_url, session = require("resty.openidc").authenticate(opts)
 
             if err then
               ngx.status = 500
@@ -126,7 +135,7 @@ server {
             if ngx.var.uri == app_callback_path or ngx.var.uri == app_login_path then
                 return ngx.redirect("/")
             end
-        }
+    }
         try_files $uri @rewrites;
     }
     # If no asset matches, send it to your javascript app. Hopefully it's a route in the app!
