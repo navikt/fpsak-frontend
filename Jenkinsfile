@@ -10,26 +10,14 @@ pipeline {
     }
     stages {
         stage('Deploy Til Miljø') {
-
             steps {
-
                 script {
-
                     dir ('k8s') {
-                        def ingress = "https://"
-                        def namespace = "${miljø}"
-                        def context = "preprod-fss"
-                        if("${miljø}"=="p"){
-                            ingress=ingress+"tjenester.nav.no/fpsak"
-                            namespace="default"
-                            context="prod-fss"
-                        }else{
-                            ingress=ingress+"fpsak-frontend-${miljø}.nais.preprod.local"
-                        }
-                        echo "$ingress"
-                        sh "k config use-context $context"
-                        //sh "k apply -f configmap.${miljø}.variabler.yaml"
-                        sh "sed \'s/default/$namespace/g;s/RELEASE_VERSION/${versjonNummer}/g;s%INGRESS_URL%$ingress%g\' app.yaml | k apply -f -"
+                        def props = readProperties  interpolate: true, file: "application.${miljø}.variabler.properties"
+                        def value = "s/RELEASE_VERSION/${versjonNummer}/g"
+                        props.each{ k,v -> value=value+";s%$k%$v%g" }
+                        sh "k config use-context $props.CONTEXT_NAME"
+                        sh "sed \'$value\' app.yaml | k apply -f -"
                     }
                 }
             }

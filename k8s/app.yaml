@@ -4,7 +4,7 @@ metadata:
   labels:
     team: teamforeldrepenger
   name: fpsak-frontend
-  namespace: default
+  namespace: NAMESPACE_VAL
 spec:
   image: navikt/fpsak-frontend:RELEASE_VERSION # Required. Docker image.
   port: 443 # Required. The port number which is exposed by the container and should receive HTTP traffic.
@@ -46,9 +46,6 @@ spec:
   logformat: accesslog # Optional. The format of the logs from the container if the logs should be handled differently than plain text or json
   logtransform: dns_loglevel # Optional. The transformation of the logs, if they should be handled differently than plain text or json
   webproxy: false # Optional. Expose web proxy configuration to the application using the HTTP_PROXY, HTTPS_PROXY and NO_PROXY environment variables.
-  configMaps:
-    files: # Optional. Specify config maps that will have their data mounted into the container as files.
-    - fpsak-frontend-configmap
   secrets: true # Optional. If set to true fetch secrets from Secret Service and inject into the pods. todo link to doc.
   env:
   - name: APP_VERSION
@@ -56,6 +53,6 @@ spec:
   - name: APP_NAME
     value: fpsak-frontend
   - name: OIDC_HOST_URL
-    value: https://isso-t.adeo.no:443/isso
+    value: OIDC_HOST_URL_VAL # see value from properties file
   - name: OIDC_AGENTNAME
-    value: fpsak-frontend-t10
+    value: OIDC_AGENTNAME_VAL # see value from properties file
