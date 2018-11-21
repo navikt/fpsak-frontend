@@ -33,6 +33,43 @@ server {
     error_page 404 @rewrites;
     add_header X-Application-Id "${APP_NAME} ${APP_VERSION} med proxy mot ${APP_API_GATEWAY}";
 
+    # Will protect the whole server. this prevents users of beeing logged out if they stay in the app
+    # for a prolonged period of time.
+    access_by_lua_block {
+        local app_callback_path = "${APP_CALLBACK_PATH}"
+        local app_login_path = "${APP_LOGIN_PATH}"
+        local callback_host = "https://" .. ngx.var.host
+
+        if ngx.var.host == "localhost" then
+            callback_host = "http://localhost:" .. ngx.var.server_port
+        end
+
+        local opts = {
+            redirect_uri = callback_host .. app_callback_path,
+            client_id = "${OIDC_AGENTNAME}",
+            client_secret = "${OIDC_PASSWORD}",
+            scope = "openid",
+            ssl_verify = "no",
+            token_endpoint_auth_method = "client_secret_basic",
+            discovery = "${OIDC_HOST_URL}" .. "/oauth2/.well-known/openid-configuration",
+            session_contents = {
+                enc_id_token = true
+            }
+        }
+
+        local res, err, target_url, session = require("resty.openidc").authenticate(opts)
+
+        if err then
+            ngx.status = 500
+            ngx.say(err)
+            ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR)
+        end
+
+        if ngx.var.uri == app_callback_path or ngx.var.uri == app_login_path then
+            return ngx.redirect("/")
+        end
+    }
+
     location /fpsak/sprak/ {
         set $proxy_id_cookie "";
         access_by_lua_block {
@@ -102,40 +139,6 @@ server {
     location "${APP_PATH_PREFIX}" {
         # Hvis vi tillater browser-caching vil vi ikke ha nedetidsfri deploy (!)
         add_header Cache-Control no-cache;
-
-
-        access_by_lua_block {
-        local app_callback_path = "${APP_CALLBACK_PATH}"
-            local app_login_path = "${APP_LOGIN_PATH}"
-            local callback_host = "https://" .. ngx.var.host
-            if ngx.var.host == "localhost" then
-                callback_host = "http://localhost:" .. ngx.var.server_port
-            end
-            local opts = {
-        redirect_uri = callback_host .. app_callback_path,
-                client_id = "${OIDC_AGENTNAME}",
-                client_secret = "${OIDC_PASSWORD}",
-                scope = "openid",
-                ssl_verify = "no",
-                token_endpoint_auth_method = "client_secret_basic",
-                discovery = "${OIDC_HOST_URL}" .. "/oauth2/.well-known/openid-configuration",
-                session_contents = {
-        enc_id_token = true
-        }
-        }
-
-        local res, err, target_url, session = require("resty.openidc").authenticate(opts)
-
-            if err then
-              ngx.status = 500
-              ngx.say(err)
-              ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR)
-            end
-
-            if ngx.var.uri == app_callback_path or ngx.var.uri == app_login_path then
-                return ngx.redirect("/")
-            end
-    }
         try_files $uri @rewrites;
     }
     # If no asset matches, send it to your javascript app. Hopefully it's a route in the app!

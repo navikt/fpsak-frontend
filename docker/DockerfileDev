@@ -10,7 +10,7 @@ RUN ["luarocks", "install", "lua-resty-http"]
 RUN ["luarocks", "install", "lua-resty-jwt"]
 RUN ["luarocks", "install", "lua-resty-openidc"]
 
-#COPY docker/openidc.lua /usr/local/openresty/lualib/resty/
+COPY docker/openidc.lua /usr/local/openresty/lualib/resty/
 
 ENV DEBUG=on \
 	APP_DIR="/app" \
