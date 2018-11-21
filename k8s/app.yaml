@@ -52,7 +52,13 @@ spec:
     value: RELEASE_VERSION
   - name: APP_NAME
     value: fpsak-frontend
+  - name: APP_ENVIRONMENT
+    value: MILJØ_VAL
   - name: OIDC_HOST_URL
     value: OIDC_HOST_URL_VAL # see value from properties file
+  - name: FPSAK_FRONTEND_OIDC_ISSUERURL
+    value: OIDC_ISSUERURL_VAL # see value from properties file
+  - name: FPSAK_FRONTEND_OIDC_JWKSURL
+    value: OIDC_JWKSURL_VAL
   - name: OIDC_AGENTNAME
-    value: OIDC_AGENTNAME_VAL # see value from properties file
+    value: OIDC_AGENTNAME_VAL
