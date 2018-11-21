@@ -2,6 +2,8 @@ FROM openresty/openresty:alpine-fat
 LABEL maintainer="teamforeldrepenger"
 
 COPY ./dist ./app
+COPY ./public/i18n ./app/i18n
+COPY ./public/appdynamics ./app/appdynamics
 
 RUN apk add --no-cache bash gettext libintl
 

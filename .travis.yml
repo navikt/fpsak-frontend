@@ -25,8 +25,7 @@ before_install:
   -in travis/private.enc -out travis/private.pem -d
 - git clone https://github.com/navikt/github-apps-support.git
 - export PATH=`pwd`/github-apps-support/bin:$PATH
-- export INSTALLATION_TOKEN=$(generate-installation-token.sh `generate-jwt.sh ./travis/private.pem
-  $GITHUB_APP_ID`)
+- export INSTALLATION_TOKEN=$(generate-installation-token.sh `generate-jwt.sh ./travis/private.pem $GITHUB_APP_ID`)
 
 env:
   global:

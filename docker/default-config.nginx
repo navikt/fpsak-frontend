@@ -71,17 +71,7 @@ server {
     }
 
     location /fpsak/sprak/ {
-        set $proxy_id_cookie "";
-        access_by_lua_block {
-        local session = require("resty.session").open()
-            if session.data.enc_id_token then
-                ngx.var.proxy_id_cookie = session.data.enc_id_token
-            end
-        }
-        proxy_pass              "${APP_API_GATEWAY}/fpsak/sprak/";
-        proxy_ssl_verify        off;
-        proxy_http_version      1.1;
-        proxy_set_header        Cookie "ID_token=$proxy_id_cookie";
+        alias /app/i18n/;
     }
 
     location  /fpsak/api/ {
@@ -141,6 +131,7 @@ server {
         add_header Cache-Control no-cache;
         try_files $uri @rewrites;
     }
+
     # If no asset matches, send it to your javascript app. Hopefully it's a route in the app!
     location @rewrites {
         rewrite ^(.+)$ /index.html last;

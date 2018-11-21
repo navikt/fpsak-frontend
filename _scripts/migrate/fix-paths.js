@@ -3,7 +3,7 @@ const recursiveSearch = require('recursive-search');
 const fs = require('fs');
 
 const pathChanges = [];
-pathChanges['../../../../../i18n/src/main/resources/META-INF/resources/sprak/nb_NO.json'] = './nb_NO.json';
+pathChanges['../../../../../i18n/src/main/resources/META-INF/resources/sprak/nb_NO.json'] = '../../../public/i18n/nb_NO.json';
 pathChanges['../../../../kodeverk/aktivitetStatus'] = '@fpsak-frontend/kodeverk/aktivitetStatus';
 pathChanges['../../../kodeverk/aksjonspunktCodes'] = '@fpsak-frontend/kodeverk/aksjonspunktCodes';
 pathChanges['../../../nomodulestyles/global.less'] = '@fpsak-frontend/assets/styles/global.less';

@@ -10,6 +10,10 @@ LABEL maintainer="teamforeldrepenger"
 
 COPY --from=builder ./home/app/dist ./app
 
+# kopierer statiske filer
+COPY ./public/i18n ./app/i18n
+COPY ./public/appdynamics ./app/appdynamics
+
 RUN apk add --no-cache bash gettext libintl
 
 RUN ["luarocks", "install", "lua-resty-session"]
