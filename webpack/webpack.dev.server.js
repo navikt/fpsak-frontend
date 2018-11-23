@@ -16,7 +16,7 @@ var options = {
   ],
   watchContentBase: true,
   proxy: {
-    '**/(sprak|api)/**': {
+    '**/(sprak|api|jetty)/**': {
       target: 'http://localhost:8080',
       secure: false,
     },

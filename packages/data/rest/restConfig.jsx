@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { dateFormat, timeFormat } from '@fpsak-frontend/utils/dateUtils';
 import { addErrorMessage, addErrorMessageCode } from '../error/duck';
-import { isHandledError, is401Error, is418Error } from '../error/ErrorTypes';
+import { is401Error, is418Error, isHandledError } from '../error/ErrorTypes';
 import asyncPollingStatus from './redux/asyncPollingStatus';
 import blobParser from './blobParser';
 
@@ -14,9 +14,19 @@ const DELAYED_PROCESS_TASK_MESSAGE_CODE = 'Rest.ErrorMessage.DownTime';
 const handleTaskStatus = (store, taskStatus) => {
   const { message, status, eta } = taskStatus;
   if (status === asyncPollingStatus.HALTED) {
-    store.dispatch(addErrorMessageCode({ code: HALTED_PROCESS_TASK_MESSAGE_CODE, params: { errorDetails: message } }));
+    store.dispatch(addErrorMessageCode({
+      code: HALTED_PROCESS_TASK_MESSAGE_CODE,
+      params: { errorDetails: message },
+    }));
   } else if (status === asyncPollingStatus.DELAYED) {
-    store.dispatch(addErrorMessageCode({ code: DELAYED_PROCESS_TASK_MESSAGE_CODE, params: { date: dateFormat(eta), time: timeFormat(eta), message } }));
+    store.dispatch(addErrorMessageCode({
+      code: DELAYED_PROCESS_TASK_MESSAGE_CODE,
+      params: {
+        date: dateFormat(eta),
+        time: timeFormat(eta),
+        message,
+      },
+    }));
   }
 };
 
@@ -43,7 +53,7 @@ const handleError = async (store, error) => {
   }
 
   if (is401Error(formattedError.status) && !isDevelopment) {
-    window.location.reload();
+    window.location.href = '/fpsak/jetty/login';
   } else if (is418Error(formattedError.status)) {
     handleTaskStatus(store, formattedError.data);
   } else if (!error.response && error.message) {
