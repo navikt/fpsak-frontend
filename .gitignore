@@ -90,3 +90,4 @@ fabric.properties
 .idea/jsLinters/
 .vscode
 .consumed-idents.json
+.yarnrc

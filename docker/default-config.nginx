@@ -30,12 +30,13 @@ gzip_types
 server {
     listen "${APP_PORT}";
     root "${APP_DIR}";
-    server_name  localhost;
+    server_name  _;
     error_page 404 @rewrites;
 
     # Will protect the whole server. this prevents users of beeing logged out if they stay in the app
     # for a prolonged period of time.
     set $proxy_cookie "";
+    set $session_secret "${OIDC_PASSWORD}";
 
     access_by_lua_block {
         local app_callback_path = "${APP_CALLBACK_PATH}"
