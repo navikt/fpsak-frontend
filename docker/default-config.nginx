@@ -138,13 +138,13 @@ server {
     }
 
     # Health check for NAIS
-    location = /health/isAlive {
+    location = "${APP_PATH_PREFIX}health/isAlive" {
         return 200 "Application:UP";
         add_header Content-Type text/plain;
     }
 
     # Readiness check for NAIS
-    location = /health/isReady {
+    location = "${APP_PATH_PREFIX}health/isReady" {
         return 200 "Application:READY";
         add_header Content-Type text/plain;
     }
