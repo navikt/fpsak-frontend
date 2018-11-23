@@ -8,11 +8,11 @@ RUN yarn build
 FROM openresty/openresty:alpine-fat
 LABEL maintainer="teamforeldrepenger"
 
-COPY --from=builder ./home/app/dist ./app
+COPY --from=builder ./home/app/dist ./app/fpsak/
 
 # kopierer statiske filer
-COPY ./public/i18n ./app/i18n
-COPY ./public/appdynamics ./app/appdynamics
+COPY ./public/sprak ./app/fpsak/sprak
+COPY ./public/appdynamics ./app/fpsak/appdynamics
 
 RUN apk add --no-cache bash gettext libintl
 
@@ -21,15 +21,14 @@ RUN ["luarocks", "install", "lua-resty-http"]
 RUN ["luarocks", "install", "lua-resty-jwt"]
 RUN ["luarocks", "install", "lua-resty-openidc"]
 
-COPY docker/openidc.lua /usr/local/openresty/lualib/resty/
-
 ENV DEBUG=on \
 	APP_DIR="/app" \
-	APP_PATH_PREFIX="/" \
+	APP_PATH_PREFIX="/fpsak/" \
 	APP_LOGIN_PATH="/fpsak/jetty/login" \
 	APP_CALLBACK_PATH="/fpsak/cb" \
 	APP_API_GATEWAY="http://fpsak"
 
+COPY docker/openidc.lua /usr/local/openresty/lualib/resty/
 COPY docker/default-config.nginx /etc/nginx/conf.d/app.conf.template
 COPY docker/start-nginx.sh /usr/sbin/start
 

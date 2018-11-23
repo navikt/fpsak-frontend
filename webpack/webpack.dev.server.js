@@ -24,7 +24,7 @@ var options = {
   publicPath: config.output.publicPath,
   hot: true,
   noInfo: true,
-  historyApiFallback: false,
+  historyApiFallback: true,
   stats: {
     children: false,
     colors: true,

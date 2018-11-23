@@ -41,6 +41,7 @@ server {
     access_by_lua_block {
         local app_callback_path = "${APP_CALLBACK_PATH}"
         local app_login_path = "${APP_LOGIN_PATH}"
+        local app_path_prefix = "${APP_PATH_PREFIX}"
         local callback_host = "https://" .. ngx.var.host
 
         if ngx.var.host == "localhost" then
@@ -75,7 +76,7 @@ server {
         end
 
         if ngx.var.uri == app_callback_path or ngx.var.uri == app_login_path then
-            return ngx.redirect("/")
+            return ngx.redirect(app_path_prefix)
         end
 
         local proxy_cookie = {}
@@ -125,7 +126,7 @@ server {
 
     # Lanuage files are served from disk
     location /fpsak/sprak/ {
-        alias /app/i18n/;
+        alias /app/fpsak/sprak/;
     }
 
     # Simple Proxy to backend
@@ -163,6 +164,11 @@ server {
         open_file_cache_errors off;
     }
 
+    # Just slap frontend directly to the prefix
+    location = / {
+        return 301 "${APP_PATH_PREFIX}";
+    }
+
     # To make sure any assets can get through :)
     location "${APP_PATH_PREFIX}" {
         # Hvis vi tillater browser-caching vil vi ikke ha nedetidsfri deploy (!)
@@ -173,6 +179,6 @@ server {
     # If no asset matches, send it to your javascript app. Hopefully it's a route in the app!
     location @rewrites {
         #add_header Cache-Control no-cache;
-        rewrite ^(.+)$ /index.html last;
+        rewrite ^(.+)$ /fpsak/index.html last;
     }
 }
