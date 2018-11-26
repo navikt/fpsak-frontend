@@ -30,8 +30,8 @@
     "nais-upload": "nais upload -a $npm_package_name -v $npm_package_version",
     "nais-deploy-q1": "nais deploy -a $npm_package_name -v $npm_package_version -e q1 -n q1",
     "nais-deploy-t10": "nais deploy -a $npm_package_name -v $npm_package_version -e t10 -n t10",
-    "nais-env": "nais env -e t10 $npm_package_name",
-    "deploy": "yarn version --patch --no-git-tag-version; yarn docker-push; yarn nais-upload; yarn nais-deploy-t10"
+    "nais-env": "nais env -e q1 $npm_package_name",
+    "deploy": "yarn docker-push; yarn nais-upload; yarn nais-deploy-q1"
   },
   "workspaces": [
     "packages/*"

@@ -1,10 +1,3 @@
---
--- Created by IntelliJ IDEA.
--- User: J138369
--- Date: 11/23/18
--- Time: 4:58 PM
--- To change this template use File | Settings | File Templates.
---
 
 local callback_host = "https://" .. ngx.var.host
 
@@ -31,36 +24,38 @@ if ngx.var.cookie_ADRUM and ngx.var.cookie_ADRUM ~= session.data.ADRUM then
     session.data.ADRUM = ngx.var.cookie_ADRUM
 end
 
-local res, err = require("resty.openidc").authenticate(opts, nil, nil, session)
+if not ngx.req.get_headers()["Authorization"] then
+    local res, err = require("resty.openidc").authenticate(opts, nil, nil, session)
 
-if err then
-    ngx.status = 500
-    ngx.say(err)
-    ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR)
-end
+    if err then
+        ngx.status = 500
+        ngx.say(err)
+        ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR)
+    end
 
-if ngx.var.uri == ngx.var.app_callback_path or ngx.var.uri == ngx.var.app_login_path then
-    return ngx.redirect(ngx.var.app_path_prefix)
-end
+    if ngx.var.uri == ngx.var.app_callback_path or ngx.var.uri == ngx.var.app_login_path then
+        return ngx.redirect(ngx.var.app_path_prefix)
+    end
 
-local proxy_cookie = {}
--- adding ADRUM cookie if existant
-if session.data.ADRUM then
-    proxy_cookie.ADRUM = session.data.ADRUM
-end
+    local proxy_cookie = {}
+    -- adding ADRUM cookie if existant
+    if session.data.ADRUM then
+        proxy_cookie.ADRUM = session.data.ADRUM
+    end
 
-if ngx.var.cookie_ADRUM then
-    proxy_cookie.ADRUM = ngx.var.cookie_ADRUM
-end
+    if ngx.var.cookie_ADRUM then
+        proxy_cookie.ADRUM = ngx.var.cookie_ADRUM
+    end
 
--- adding ID_token if logged in
-if session.data.enc_id_token then
-    proxy_cookie.ID_token = session.data.enc_id_token
-end
+    -- adding ID_token if logged in
+    if session.data.enc_id_token then
+        proxy_cookie.ID_token = session.data.enc_id_token
+    end
 
--- pass ADRUM(EUM) cookie if present
-local proxy_cookie_string = ""
-for k, v in pairs(proxy_cookie) do
-    proxy_cookie_string = proxy_cookie_string .. k .. "=" .. v .. ";"
+    -- pass ADRUM(EUM) cookie if present
+    local proxy_cookie_string = ""
+    for k, v in pairs(proxy_cookie) do
+        proxy_cookie_string = proxy_cookie_string .. k .. "=" .. v .. ";"
+    end
+    ngx.var.proxy_cookie = proxy_cookie_string
 end
-ngx.var.proxy_cookie = proxy_cookie_string
