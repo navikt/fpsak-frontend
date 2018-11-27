@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
+import { isRequiredMessage } from 'utils/validation/messages';
 import { skalIkkjeVereHogareEnnInntektmeldingMessage, skalVereLikFordelingMessage } from '../ValidateAndelerUtils';
 import RenderEndringBGFieldArray from './RenderEndringBGFieldArray';
 

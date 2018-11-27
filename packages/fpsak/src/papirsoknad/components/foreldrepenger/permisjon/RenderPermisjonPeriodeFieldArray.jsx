@@ -8,24 +8,26 @@ import { Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 import AlertStripe from 'nav-frontend-alertstriper';
 
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
-import { FlexContainer, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
+import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
 import {
-  required, hasValidDate, dateRangesNotOverlapping, dateAfterOrEqual,
-} from '@fpsak-frontend/utils/validation/validators';
-import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
-import { isArrayEmpty } from '@fpsak-frontend/utils/arrayUtils';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import uttakPeriodeType from '@fpsak-frontend/kodeverk/uttakPeriodeType';
+  required, hasValidDate, dateRangesNotOverlapping, dateAfterOrEqual, hasValidDecimal, maxValue,
+} from 'utils/validation/validators';
+import { isRequiredMessage } from 'utils/validation/messages';
+import { ISO_DATE_FORMAT } from 'utils/formats';
+import { isEmpty } from 'utils/arrayUtils';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkPropType from 'kodeverk/kodeverkPropType';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import uttakPeriodeType from 'kodeverk/uttakPeriodeType';
 import {
-  CheckboxField, DatepickerField, SelectField,
-} from '@fpsak-frontend/form';
+  CheckboxField, DatepickerField, SelectField, DecimalField,
+} from 'form/Fields';
 
 import styles from './renderPermisjonPeriodeFieldArray.less';
+
+const maxValue100 = maxValue(100);
 
 export const gyldigeUttakperioder = [uttakPeriodeType.FELLESPERIODE,
   uttakPeriodeType.FEDREKVOTE,
@@ -76,39 +78,40 @@ export const RenderPermisjonPeriodeFieldArray = ({
     <PeriodFieldArray readOnly={readOnly} fields={fields} meta={meta} emptyPeriodTemplate={{}}>
       {(periodeElementFieldId, index) => {
         const erForsteRad = (index === 0);
-        const { periodeFom } = fields.get(index);
+        const { periodeFom, harSamtidigUttak } = fields.get(index);
         const periodeFomForTidlig = periodeFom && moment(periodeFom).isBefore(moment('2019-01-01'));
         return (
-          <Row key={periodeElementFieldId}>
-            <Column xs="12" className={index !== (fields.length - 1) ? styles.notLastRow : ''}>
-              <FlexContainer>
-                <FlexRow wrap>
-                  <FlexColumn>
-                    <SelectField
-                      readOnly={readOnly}
-                      name={`${periodeElementFieldId}.periodeType`}
-                      bredde="l"
-                      label={getLabel(erForsteRad, 'Registrering.Permisjon.periodeType')}
-                      selectValues={mapPeriodeTyper(periodeTyper)}
-                    />
-                  </FlexColumn>
-                  <FlexColumn>
-                    <DatepickerField
-                      readOnly={readOnly}
-                      name={`${periodeElementFieldId}.periodeFom`}
-                      defaultValue={null}
-                      label={getLabel(erForsteRad, 'Registrering.Permisjon.periodeFom')}
-                    />
-                  </FlexColumn>
-                  <FlexColumn>
-                    <DatepickerField
-                      readOnly={readOnly}
-                      name={`${periodeElementFieldId}.periodeTom`}
-                      defaultValue={null}
-                      label={getLabel(erForsteRad, 'Registrering.Permisjon.periodeTom')}
-                    />
-                  </FlexColumn>
-                  {!sokerErMor
+          <div key={periodeElementFieldId}>
+            <Row>
+              <Column xs="12">
+                <FlexContainer>
+                  <FlexRow wrap>
+                    <FlexColumn className={styles.selectFieldWidth}>
+                      <SelectField
+                        readOnly={readOnly}
+                        name={`${periodeElementFieldId}.periodeType`}
+                        bredde="m"
+                        label={getLabel(erForsteRad, 'Registrering.Permisjon.periodeType')}
+                        selectValues={mapPeriodeTyper(periodeTyper)}
+                      />
+                    </FlexColumn>
+                    <FlexColumn>
+                      <DatepickerField
+                        readOnly={readOnly}
+                        name={`${periodeElementFieldId}.periodeFom`}
+                        defaultValue={null}
+                        label={getLabel(erForsteRad, 'Registrering.Permisjon.periodeFom')}
+                      />
+                    </FlexColumn>
+                    <FlexColumn>
+                      <DatepickerField
+                        readOnly={readOnly}
+                        name={`${periodeElementFieldId}.periodeTom`}
+                        defaultValue={null}
+                        label={getLabel(erForsteRad, 'Registrering.Permisjon.periodeTom')}
+                      />
+                    </FlexColumn>
+                    {!sokerErMor
                     && (
                     <FlexColumn>
                       <SelectField
@@ -123,22 +126,41 @@ export const RenderPermisjonPeriodeFieldArray = ({
                     </FlexColumn>
                     )
                     }
-                  <FlexColumn>
-                    {!readOnly
-                    && (
-                      <Undertekst className={erForsteRad ? styles.samtidigUttakFirst : styles.samtidigUttak}>
+                    <FlexColumn className={styles.smalHeader}>
+                      <Undertekst className={erForsteRad ? styles.visOverskrift : styles.skjulOverskrift}>
+                        <FormattedMessage id="Registrering.Permisjon.Flerbarnsdager" />
+                      </Undertekst>
+                      <CheckboxField
+                        readOnly={readOnly}
+                        name={`${periodeElementFieldId}.flerbarnsdager`}
+                        label=" "
+                      />
+                    </FlexColumn>
+                    <FlexColumn className={styles.smalHeader}>
+                      <Undertekst className={erForsteRad ? styles.visOverskrift : styles.skjulOverskrift}>
                         <FormattedMessage id="Registrering.Permisjon.HarSamtidigUttak" />
                       </Undertekst>
+                      <CheckboxField
+                        readOnly={readOnly}
+                        name={`${periodeElementFieldId}.harSamtidigUttak`}
+                        label=" "
+                      />
+                    </FlexColumn>
+                    {harSamtidigUttak
+                    && (
+                    <FlexColumn className={erForsteRad ? '' : styles.alignSamtidigUttak}>
+                      <DecimalField
+                        name={`${periodeElementFieldId}.samtidigUttaksprosent`}
+                        bredde="S"
+                        validate={[hasValidDecimal, maxValue100]}
+                        label={{ id: 'Registrering.Permisjon.SamtidigUttaksprosent' }}
+                        normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                      />
+                    </FlexColumn>
                     )
                     }
-                    <CheckboxField
-                      readOnly={readOnly}
-                      name={`${periodeElementFieldId}.harSamtidigUttak`}
-                      label=" "
-                    />
-                  </FlexColumn>
-                  <FlexColumn>
-                    {!readOnly
+                    <FlexColumn>
+                      {!readOnly
                     && (
                       <button
                         className={erForsteRad ? styles.buttonRemoveFirst : styles.buttonRemove}
@@ -149,9 +171,9 @@ export const RenderPermisjonPeriodeFieldArray = ({
                       />
                     )
                     }
-                  </FlexColumn>
-                </FlexRow>
-                {periodeFomForTidlig
+                    </FlexColumn>
+                  </FlexRow>
+                  {periodeFomForTidlig
                   && (
                     <div>
                       <FlexRow wrap>
@@ -163,9 +185,11 @@ export const RenderPermisjonPeriodeFieldArray = ({
                     </div>
                   )
                 }
-              </FlexContainer>
-            </Column>
-          </Row>
+                </FlexContainer>
+              </Column>
+            </Row>
+            <VerticalSpacer eightPx />
+          </div>
         );
       }
       }
@@ -183,8 +207,8 @@ RenderPermisjonPeriodeFieldArray.propTypes = {
   selectedPeriodeTyper: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-RenderPermisjonPeriodeFieldArray.validate = (values, utsettelseOrGraderingSelected) => {
-  if ((!values || !values.length) && !utsettelseOrGraderingSelected) {
+RenderPermisjonPeriodeFieldArray.validate = (values) => {
+  if ((!values || !values.length)) {
     return { _error: isRequiredMessage() };
   }
 
@@ -212,7 +236,7 @@ RenderPermisjonPeriodeFieldArray.validate = (values, utsettelseOrGraderingSelect
     return arrayErrors;
   }
 
-  if (isArrayEmpty(values)) {
+  if (isEmpty(values)) {
     return null;
   }
   const overlapError = dateRangesNotOverlapping(values.map(({ periodeFom, periodeTom }) => [periodeFom, periodeTom]));
@@ -228,7 +252,9 @@ RenderPermisjonPeriodeFieldArray.transformValues = values => values.map((value) 
       periodeType: value.periodeType,
       periodeFom: value.periodeFom,
       periodeTom: value.periodeTom,
+      flerbarnsdager: value.flerbarnsdager ? value.flerbarnsdager : false,
       harSamtidigUttak: value.harSamtidigUttak ? value.harSamtidigUttak : false,
+      samtidigUttaksprosent: value.samtidigUttaksprosent,
     };
   }
   return {
@@ -236,7 +262,9 @@ RenderPermisjonPeriodeFieldArray.transformValues = values => values.map((value) 
     periodeFom: value.periodeFom,
     periodeTom: value.periodeTom,
     morsAktivitet: value.morsAktivitet,
+    flerbarnsdager: value.flerbarnsdager ? value.flerbarnsdager : false,
     harSamtidigUttak: value.harSamtidigUttak ? value.harSamtidigUttak : false,
+    samtidigUttaksprosent: value.samtidigUttaksprosent,
   };
 });
 

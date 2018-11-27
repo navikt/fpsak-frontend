@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import { UttakImpl as Uttak } from './Uttak';
 
@@ -73,6 +73,8 @@ describe('<Uttak>', () => {
       intl={intlMock}
       soknadsType="ST-001"
       uttakPerioder={[]}
+      harSoktOmFlerbarnsdager={false}
+      annenForelderSoktOmFlerbarnsdager={false}
     />);
     wrapper.setState({ selectedItem: null });
     const rows = wrapper.find('Row');
@@ -111,6 +113,8 @@ describe('<Uttak>', () => {
       allAksjonspunkter={[]}
       intl={intlMock}
       soknadsType="ST-001"
+      harSoktOmFlerbarnsdager={false}
+      annenForelderSoktOmFlerbarnsdager={false}
     />);
     wrapper.setState({ selectedItem: uttakActivities[0] });
     const checkBox = wrapper.find('CheckboxField');
@@ -128,7 +132,7 @@ describe('<Uttak>', () => {
     expect(confirmKnapp.first().prop('disabled')).to.eql(true);
   });
 
-  it('skal rendre uttak, uten overstyrerrolle', () => {
+  it('skal rendre uttak, uten overstyrerrolle, uten aksjonspunkt', () => {
     const wrapper = shallow(<Uttak
       readOnly={false}
       formName="UttakForm"
@@ -150,6 +154,8 @@ describe('<Uttak>', () => {
       allAksjonspunkter={[]}
       intl={intlMock}
       soknadsType="ST-001"
+      harSoktOmFlerbarnsdager={false}
+      annenForelderSoktOmFlerbarnsdager={false}
     />);
     wrapper.setState({ selectedItem: uttakActivities[0] });
     const checkBox = wrapper.find('CheckboxField');
@@ -160,6 +166,9 @@ describe('<Uttak>', () => {
     expect(uttakTimeLineData).to.have.length(1);
     const confirmKnapp = wrapper.find('Hovedknapp');
     expect(confirmKnapp).to.have.length(0);
+    const formattedMessage = wrapper.find('FormattedMessage');
+    expect(formattedMessage).to.have.length(1);
+    expect(formattedMessage.first().prop('id')).to.eql('Uttak.Overstyrt');
   });
 
   it('skal rendre uttak, med aksjonspunkt', () => {
@@ -170,7 +179,7 @@ describe('<Uttak>', () => {
         navn: 'ap1',
       },
       status: {
-        kode: 'UTFO',
+        kode: 'OPPR',
         navn: 's1',
       },
       toTrinnsBehandling: true,
@@ -201,19 +210,21 @@ describe('<Uttak>', () => {
       allAksjonspunkter={[]}
       intl={intlMock}
       soknadsType="ST-001"
+      harSoktOmFlerbarnsdager={false}
+      annenForelderSoktOmFlerbarnsdager={false}
     />);
     wrapper.setState({ selectedItem: uttakActivities[0] });
     const checkBox = wrapper.find('CheckboxField');
     expect(checkBox).to.have.length(0);
     const formattedMessage = wrapper.find('FormattedMessage');
     expect(formattedMessage).to.have.length(1);
-    expect(formattedMessage.first().prop('id')).to.eql('Uttak.Overstyrt');
+    expect(formattedMessage.first().prop('id')).to.eql('Uttak.Confirm');
     const uttakTimeLine = wrapper.find('UttakTimeLine');
     expect(uttakTimeLine).to.have.length(1);
     const uttakTimeLineData = wrapper.find('UttakTimeLineData');
     expect(uttakTimeLineData).to.have.length(1);
     const confirmKnapp = wrapper.find('Hovedknapp');
-    expect(confirmKnapp).to.have.length(0);
+    expect(confirmKnapp).to.have.length(1);
   });
 
   it('skal rendre uttak, med uttakTimeLineData', () => {
@@ -255,6 +266,8 @@ describe('<Uttak>', () => {
       allAksjonspunkter={[]}
       intl={intlMock}
       soknadsType="ST-001"
+      harSoktOmFlerbarnsdager={false}
+      annenForelderSoktOmFlerbarnsdager={false}
     />);
     wrapper.setState({ selectedItem: uttakActivities[0] });
     expect(wrapper.state('selectedItem')).to.eql(uttakActivities[0]);

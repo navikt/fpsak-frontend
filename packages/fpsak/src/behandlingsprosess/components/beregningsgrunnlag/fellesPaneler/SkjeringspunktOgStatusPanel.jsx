@@ -3,14 +3,18 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 
-import { Undertekst, Normaltekst, Element } from 'nav-frontend-typografi';
-import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
-import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { getAktivitetStatuser, getTilstøtendeYtelse, getSkjæringstidspunktBeregning } from 'behandling/behandlingSelectors';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import BorderBox from 'sharedComponents/BorderBox';
+import DateLabel from 'sharedComponents/DateLabel';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import {
+  getAktivitetStatuser,
+  getSkjæringstidspunktBeregning,
+  getTilstøtendeYtelse,
+} from 'behandling/behandlingSelectors';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
 
 import styles from './skjeringspunktOgStatusPanel.less';
 
@@ -26,10 +30,14 @@ const createAktivitetstatusString = (listeMedStatuser, tilstøtendeYtelseType) =
   if (listeMedKoder.includes(aktivitetStatus.TILSTOTENDE_YTELSE)) {
     tekstList.push(`Tilstøtende ytelse ${tilstøtendeYtelseType}`);
   }
-  const statuserSomIkkeErTilstotende = listeMedStatuser.filter(status => status.kode !== aktivitetStatus.ARBEIDSAVKLARINGSPENGER
+  if (listeMedKoder.includes(aktivitetStatus.MILITAER_ELLER_SIVIL)) {
+    tekstList.push('Militær eller sivilforsvarstjeneste');
+  }
+  const statuserMedEgneNavn = listeMedStatuser.filter(status => status.kode !== aktivitetStatus.ARBEIDSAVKLARINGSPENGER
     && status.kode !== aktivitetStatus.DAGPENGER
-    && status.kode !== aktivitetStatus.TILSTOTENDE_YTELSE);
-  statuserSomIkkeErTilstotende.forEach((status) => {
+    && status.kode !== aktivitetStatus.TILSTOTENDE_YTELSE
+    && status.kode !== aktivitetStatus.MILITAER_ELLER_SIVIL);
+  statuserMedEgneNavn.forEach((status) => {
     tekstList.push(status.navn);
   });
   let tekstString = '';

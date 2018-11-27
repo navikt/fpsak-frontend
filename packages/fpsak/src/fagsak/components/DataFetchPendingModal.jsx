@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
 import NavFrontendSpinner from 'nav-frontend-spinner';
+import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 
-import Modal from '@fpsak-frontend/shared-components/Modal';
+import Modal from 'sharedComponents/Modal';
 
 import styles from './dataFetchPendingModal.less';
 
@@ -61,13 +62,9 @@ export class DataFetchPendingModal extends Component {
             <div className={styles.divider} />
           </Column>
           <Column xs="10">
-            {pendingMessages.map(message => (
-              <Row key={message} className={styles.messageRow}>
-                <Element>
-                  {message}
-                </Element>
-              </Row>
-            ))}
+            <Element className={styles.modalText}>
+              <FormattedMessage id="DataFetchPendingModal.LosningenJobberMedBehandlingen" />
+            </Element>
           </Column>
         </Row>
       </Modal>

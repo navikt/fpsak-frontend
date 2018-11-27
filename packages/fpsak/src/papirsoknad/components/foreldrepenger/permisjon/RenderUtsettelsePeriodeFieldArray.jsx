@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 
-import { FlexContainer, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
-import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
+import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
+import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
 import {
-  DatepickerField, SelectField, InputField,
-} from '@fpsak-frontend/form';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
+  DatepickerField, SelectField,
+} from 'form/Fields';
+import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import { gyldigeUttakperioder } from './RenderPermisjonPeriodeFieldArray';
 
 import styles from './renderUtsettelsePeriodeFieldArray.less';
@@ -16,7 +16,6 @@ import styles from './renderUtsettelsePeriodeFieldArray.less';
 const defaultUtsettelsePeriode = {
   periodeFom: '',
   periodeTom: '',
-  periodeForUtsettelse: '',
   arsakForUtsettelse: '',
 };
 
@@ -94,17 +93,6 @@ export const RenderUtsettelsePeriodeFieldArray = ({
                     <option value="true" key="true">{intl.formatMessage({ id: 'Registrering.Permisjon.ErArbeidstaker' })}</option>,
                     <option value="false" key="false">{intl.formatMessage({ id: 'Registrering.Permisjon.ErIkkeArbeidstaker' })}</option>,
                   ]}
-                />
-              </FlexColumn>
-              <FlexColumn>
-                <InputField
-                  label={index === 0 ? { id: 'Registrering.Permisjon.Orgnr' } : ''}
-                  name={`${periodeElementFieldId}.orgNr`}
-                  bredde="S"
-                  parse={(value) => {
-                    const parsedValue = parseInt(value, 10);
-                    return Number.isNaN(parsedValue) ? value : parsedValue;
-                  }}
                 />
               </FlexColumn>
               <FlexColumn>

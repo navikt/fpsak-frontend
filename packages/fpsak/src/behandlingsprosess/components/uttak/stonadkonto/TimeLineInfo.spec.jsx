@@ -57,8 +57,10 @@ describe('<TimeLineInfo>', () => {
         aktivitetSaldoDtoList: [{
           aktivitetIdentifikator: {
             arbeidsforholdId: '123',
-            arbeidsforholdNavn: 'Statoil',
-            arbeidsforholdOrgnr: '987',
+            arbeidsgiver: {
+              navn: 'Statoil',
+              identifikator: '987',
+            },
             uttakArbeidType: {
               kode: 'FRILANS',
             },

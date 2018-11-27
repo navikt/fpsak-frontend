@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
-import { FlexContainer, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
+import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
 import {
   RadioGroupField, RadioOption, TextAreaField, SelectField,
-} from '@fpsak-frontend/form';
+} from 'form/Fields';
 import {
   minLength,
   maxLength,
@@ -14,21 +14,21 @@ import {
   required,
   notDash,
   isUtbetalingsgradMerSamitidigUttaksprosent,
-} from '@fpsak-frontend/utils/validation/validators';
+} from 'utils/validation/validators';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { getSkjaeringstidspunktForeldrepenger } from 'behandling/behandlingSelectors';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import kodeverkPropType from 'kodeverk/kodeverkPropType';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import { getKodeverk } from 'kodeverk/duck';
 import { FieldArray, formPropTypes } from 'redux-form';
-import periodeResultatType from '@fpsak-frontend/kodeverk/periodeResultatType';
-import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/uttakPeriodeType';
+import periodeResultatType from 'kodeverk/periodeResultatType';
+import { uttakPeriodeNavn } from 'kodeverk/uttakPeriodeType';
 import { Undertekst } from 'nav-frontend-typografi';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ArrowBox from 'sharedComponents/ArrowBox';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import RenderUttakTable from './RenderUttakTable';
 import UttakInfo from './UttakInfo';
 import styles from './uttakActivity.less';
@@ -52,14 +52,15 @@ function sortAlphabetically(a, b) {
   return 0;
 }
 
-// TODO:(aa) fix this in a correct manner
-const emptyBegrunnelse = () => {
+const errorsNotCautghtInValidation = () => {
   const begrunnelse = document.getElementById('uttakVurdering');
-  if (!begrunnelse || begrunnelse.innerHTML.length < 1) {
+  const aarsaknode = document.getElementById('aarsak');
+  if (!begrunnelse || begrunnelse.innerHTML.length < 1 || (aarsaknode && aarsaknode.value === '')) {
     return true;
   }
   return false;
 };
+
 
 const mapAarsak = (kodeverk, starttidspunktForeldrepenger) => {
   kodeverk.sort(sortAlphabetically);
@@ -83,19 +84,19 @@ export const UttakActivity = ({
   isApOpen,
   kontoIkkeSatt,
   starttidspunktForeldrepenger,
-  stonadskontoer,
+  harSoktOmFlerbarnsdager,
   ...formProps
 }) => (
   <div>
     <Row className={styles.uttakDataWrapper}>
       <UttakInfo
-        stonadskontoer={stonadskontoer}
         selectedItemData={selectedItemData}
         kontoIkkeSatt={kontoIkkeSatt}
         isApOpen={isApOpen}
         readOnly={readOnly}
         graderingInnvilget={graderingInnvilget}
         erSamtidigUttak={erSamtidigUttak}
+        harSoktOmFlerbarnsdager={harSoktOmFlerbarnsdager}
       />
     </Row>
     <Row className={readOnly ? null : styles.marginTop}>
@@ -127,31 +128,17 @@ export const UttakActivity = ({
               <RadioOption value label={{ id: 'UttakActivity.Oppfylt' }} />
               <RadioOption value={false} label={{ id: 'UttakActivity.IkkeOppfylt' }} />
             </RadioGroupField>
-            {erOppfylt === false
+            {erOppfylt !== undefined
             && (
               <div className={styles.marginBottom20}>
-                <ArrowBox alignOffset={90}>
+                <ArrowBox alignOffset={erOppfylt ? -6 : 90}>
                   <SelectField
-                    name="avslagAarsak"
-                    selectValues={mapAarsak(avslagAarsakKoder, starttidspunktForeldrepenger)}
+                    id="aarsak"
+                    name={erOppfylt ? 'innvilgelseAarsak' : 'avslagAarsak'}
+                    selectValues={erOppfylt ? mapAarsak(innvilgelseAarsakKoder, starttidspunktForeldrepenger)
+                      : mapAarsak(avslagAarsakKoder, starttidspunktForeldrepenger)}
                     validate={[required, notDash]}
-                    label={{ id: 'UttakActivity.AvslagAarsak' }}
-                    readOnly={readOnly}
-                    bredde="fullbredde"
-                  />
-                </ArrowBox>
-              </div>
-            )
-            }
-            {erOppfylt
-            && (
-              <div className={styles.marginBottom20}>
-                <ArrowBox alignOffset={-6}>
-                  <SelectField
-                    name="innvilgelseAarsak"
-                    selectValues={mapAarsak(innvilgelseAarsakKoder, starttidspunktForeldrepenger)}
-                    validate={[required, notDash]}
-                    label={{ id: 'UttakActivity.InnvilgelseAarsaker' }}
+                    label={erOppfylt ? { id: 'UttakActivity.InnvilgelseAarsaker' } : { id: 'UttakActivity.AvslagAarsak' }}
                     readOnly={readOnly}
                     bredde="fullbredde"
                   />
@@ -188,7 +175,7 @@ export const UttakActivity = ({
                   mini
                   htmlType="button"
                   onClick={formProps.handleSubmit}
-                  disabled={formProps.pristine || emptyBegrunnelse()}
+                  disabled={formProps.pristine || errorsNotCautghtInValidation()}
                 >
                   <FormattedMessage id="UttakActivity.Oppdater" />
                 </Hovedknapp>
@@ -210,13 +197,13 @@ export const UttakActivity = ({
 
 UttakActivity.propTypes = {
   readOnly: PropTypes.bool.isRequired,
+  harSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
   periodeTyper: kodeverkPropType.isRequired,
   cancelSelectedActivity: PropTypes.func.isRequired,
   avslagAarsakKoder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   innvilgelseAarsakKoder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   graderingAvslagAarsakKoder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   starttidspunktForeldrepenger: PropTypes.string.isRequired,
-  stonadskontoer: PropTypes.shape().isRequired,
   ...formPropTypes,
 };
 
@@ -261,9 +248,11 @@ const validateUttakActivity = (values) => {
   const errors = {};
   errors.UttakFieldArray = [];
   if (values.samtidigUttak && values.UttakFieldArray) {
-    const samletUbetalingsgrad = values.UttakFieldArray.reduce((acc, aktivit) => parseFloat(acc) + parseFloat(aktivit.utbetalingsgrad, 10), 0);
     values.UttakFieldArray.forEach((aktivitet, index) => {
-      const invalid = isUtbetalingsgradMerSamitidigUttaksprosent(values.samtidigUttaksprosent, samletUbetalingsgrad);
+      const samtidigUttaksprosent = parseFloat(values.samtidigUttaksprosent);
+      const utbetalingsgrad = parseFloat(aktivitet.utbetalingsgrad);
+      const invalid = isUtbetalingsgradMerSamitidigUttaksprosent(samtidigUttaksprosent, utbetalingsgrad);
+
       if (invalid) {
         errors.UttakFieldArray[index] = {
           utbetalingsgrad: invalid,
@@ -306,6 +295,7 @@ const transformValues = (values, selectedItemData, avslagAarsakKoder, innvilgels
   if (!values.graderingInnvilget && graderingAvslagAarsakObject) {
     transformvalue.graderingAvslagÅrsak = graderingAvslagAarsakObject;
   }
+
   return transformvalue;
 };
 

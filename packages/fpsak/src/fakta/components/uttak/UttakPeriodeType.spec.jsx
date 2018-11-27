@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
-import Image from '@fpsak-frontend/shared-components/Image';
+import Image from 'sharedComponents/Image';
 import UttakPeriodeType from './UttakPeriodeType';
 
 describe('<UttakPeriodeType>', () => {
@@ -15,10 +15,12 @@ describe('<UttakPeriodeType>', () => {
   const openSlettPeriodeModalCallback = sinon.spy();
   const editPeriode = sinon.spy();
   const isAnyFormOpen = sinon.spy();
-  const virksomhetNavn = 'STATOIL';
-  const orgnr = '1234567890';
   const flerbarnsdager = false;
   const samtidigUttak = false;
+  const arbeidsgiver = {
+    identifikator: '1234567890',
+    navn: 'Statoil',
+  };
 
   it('skal vise redigere og slett periode hvis manuellOverstyring er true og readOnly er false', () => {
     const wrapper = shallow(<UttakPeriodeType
@@ -92,7 +94,7 @@ describe('<UttakPeriodeType>', () => {
     expect(wrapper.find('FormattedMessage').last().prop('id')).to.eql('UttakInfoPanel.FrilansSelvstendignæringsdrivende');
   });
 
-  it('skal vise arbeidsgiver og orgnr hvis erArbeidstaker', () => {
+  it('skal vise arbeidsgiver og arbeidsgiverIdentifikator hvis erArbeidstaker', () => {
     const wrapper = shallow(<UttakPeriodeType
       tilDato={tilDato}
       fraDato={fraDato}
@@ -110,11 +112,10 @@ describe('<UttakPeriodeType>', () => {
       flerbarnsdager={flerbarnsdager}
       erArbeidstaker
       arbeidstidprosent={arbeidstidprosent}
-      virksomhetNavn={virksomhetNavn}
-      orgnr={orgnr}
+      arbeidsgiver={arbeidsgiver}
       isFromSøknad
     />);
 
-    expect(wrapper.find('Element').last().childAt(0).text()).to.eql(`${virksomhetNavn} ${orgnr}`);
+    expect(wrapper.find('Element').last().childAt(0).text()).to.eql(`${arbeidsgiver.navn} ${arbeidsgiver.identifikator}`);
   });
 });

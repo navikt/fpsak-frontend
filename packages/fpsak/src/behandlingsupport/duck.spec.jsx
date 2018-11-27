@@ -1,10 +1,9 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 
-import { FpsakApi, getFpsakApiPath } from '@fpsak-frontend/data/fpsakApi';
+import fpsakApi from 'data/fpsakApi';
 import SupportPanels from './supportPanels';
 import {
   behandlingSupportReducer, setSelectedSupportPanel, getSelectedSupportPanel, resetBehandlingSupport, updateBehandlingsupportInfo,
@@ -18,7 +17,7 @@ describe('Behandlingsupport-reducer', () => {
   let mockAxios;
 
   before(() => {
-    mockAxios = new MockAdapter(axios);
+    mockAxios = new MockAdapter(fpsakApi.getAxiosHttpClientApi());
   });
 
   afterEach(() => {
@@ -44,11 +43,11 @@ describe('Behandlingsupport-reducer', () => {
   it('skal hente dokumenter og historie fra server', () => {
     const documents = [];
     mockAxios
-      .onGet(getFpsakApiPath(FpsakApi.ALL_DOCUMENTS))
+      .onGet(fpsakApi.ALL_DOCUMENTS.path)
       .reply(200, documents);
     const history = {};
     mockAxios
-      .onGet(getFpsakApiPath(FpsakApi.HISTORY))
+      .onGet(fpsakApi.HISTORY.path)
       .reply(200, history);
 
     const store = mockStore();
@@ -59,19 +58,19 @@ describe('Behandlingsupport-reducer', () => {
         expect(store.getActions()).to.have.length(4);
         const [requestDocumentStarted, requestHistoryStarted, requestDocumentFinished, requestHistoryFinished] = store.getActions();
 
-        expect(requestDocumentStarted.type).to.contain('/fpsak/api/dokument/hent-dokumentliste STARTED');
+        expect(requestDocumentStarted.type).to.contain('fpsak/api/dokument/hent-dokumentliste STARTED');
         expect(requestDocumentStarted.payload.params).is.eql({ saksnummer });
         expect(requestDocumentStarted.meta).is.eql({ options: { keepData: true } });
 
-        expect(requestDocumentFinished.type).to.contain('/fpsak/api/dokument/hent-dokumentliste FINISHED');
+        expect(requestDocumentFinished.type).to.contain('fpsak/api/dokument/hent-dokumentliste FINISHED');
         expect(requestDocumentFinished.payload).is.eql([]);
         expect(requestDocumentFinished.meta).is.undefined;
 
-        expect(requestHistoryStarted.type).to.contain('/fpsak/api/historikk STARTED');
+        expect(requestHistoryStarted.type).to.contain('fpsak/api/historikk STARTED');
         expect(requestHistoryStarted.payload.params).is.eql({ saksnummer });
         expect(requestHistoryStarted.meta).is.eql({ options: { keepData: true } });
 
-        expect(requestHistoryFinished.type).to.contain('/fpsak/api/historikk FINISHED');
+        expect(requestHistoryFinished.type).to.contain('fpsak/api/historikk FINISHED');
         expect(requestHistoryFinished.payload).is.eql({});
         expect(requestHistoryFinished.meta).is.undefined;
       });

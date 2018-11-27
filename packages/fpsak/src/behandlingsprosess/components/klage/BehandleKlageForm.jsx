@@ -1,18 +1,18 @@
 import React from 'react';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Undertittel } from 'nav-frontend-typografi';
 import classNames from 'classnames';
 
-import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
-import klageVurderingType from '@fpsak-frontend/kodeverk/klageVurdering';
-import {
-  RadioGroupField, RadioOption, SelectField, DatepickerField,
-} from '@fpsak-frontend/form';
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { required, hasValidDate } from '@fpsak-frontend/utils/validation/validators';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import FadingPanel from 'sharedComponents/FadingPanel';
+import klageVurderingType from 'kodeverk/klageVurdering';
+import { RadioGroupField, RadioOption } from 'form/Fields';
+import SelectField from 'form/fields/SelectField';
+import DatepickerField from 'form/fields/DatepickerField';
+import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { hasValidDate, required } from 'utils/validation/validators';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
 
@@ -46,6 +46,10 @@ const getClassForMedholdKlage = (readOnly, aksjonspunktKode) => {
   );
 };
 
+const filterAvvistOptions = avvistOptions => (
+  avvistOptions.filter(option => option.kode === 'KLAGET_FOR_SENT' || option.kode === 'KLAGE_UGYLDIG')
+);
+
 export const BehandleKlageForm = ({
   readOnly,
   readOnlySubmitButton,
@@ -58,7 +62,7 @@ export const BehandleKlageForm = ({
   intl,
   formProps,
 }) => {
-  const avvistOptions = klageAvvistArsaker.map(ao => <option key={ao.kode} value={ao.kode}>{ao.navn}</option>);
+  const avvistOptions = filterAvvistOptions(klageAvvistArsaker).map(ao => <option key={ao.kode} value={ao.kode}>{ao.navn}</option>);
   const medholdOptions = klageMedholdArsaker.map(mo => <option key={mo.kode} value={mo.kode}>{mo.navn}</option>);
   const keepVedtakTextId = aksjonspunktCode === aksjonspunktCodes.BEHANDLE_KLAGE_NK ? 'Klage.ResolveKlage.KeepVedtakNk' : 'Klage.ResolveKlage.KeepVedtakNfp';
   const previewMessage = (e) => {

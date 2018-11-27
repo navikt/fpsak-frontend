@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import moment from 'moment';
 
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { DatepickerField, SelectField } from '@fpsak-frontend/form';
+import { DatepickerField, SelectField } from 'form/Fields';
 import { SettBehandlingPaVentModal } from './SettBehandlingPaVentModal';
 
 describe('<SettBehandlingPaVentModal>', () => {

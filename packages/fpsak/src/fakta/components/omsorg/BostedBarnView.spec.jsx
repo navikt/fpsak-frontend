@@ -2,8 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-import personstatusType from '@fpsak-frontend/kodeverk/personstatusType';
-import opplysningAdresseType from '@fpsak-frontend/kodeverk/opplysningAdresseType';
+import personstatusType from 'kodeverk/personstatusType';
+import opplysningAdresseType from 'kodeverk/opplysningAdresseType';
 import BostedBarnView from './BostedBarnView';
 
 describe('<BostedBarnView>', () => {

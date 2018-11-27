@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { formValueSelector, FieldArray, FormSection } from 'redux-form';
-import { Undertittel } from 'nav-frontend-typografi';
 
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { required, arrayMinLength } from '@fpsak-frontend/utils/validation/validators';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { RadioGroupField, RadioOption } from 'form/Fields';
+import BorderBox from 'sharedComponents/BorderBox';
+import { required, arrayMinLength } from 'utils/validation/validators';
+import { Fieldset } from 'nav-frontend-skjema';
 import RegistrerVirksomhetPanel from './RegistrerVirksomhetPanel';
 
 import styles from './egenVirksomhetPanel.less';
@@ -36,16 +35,15 @@ export const EgenVirksomhetPanel = ({
 }) => (
   <FormSection name={EGEN_VIRKSOMHET_FORM_NAME_PREFIX}>
     <BorderBox>
-      <div className={styles.flexContainer}>
-        <Undertittel><FormattedMessage id="Registrering.EgenVirksomhet.Title" /></Undertittel>
-        <VerticalSpacer sixteenPx />
-        <RadioGroupField name={harArbeidetIEgenVirksomhetName} validate={[required]} direction="vertical" readOnly={readOnly}>
-          <RadioOption label={intl.formatMessage({ id: 'Registrering.EgenVirksomhet.No' })} value={false} />
-          <RadioOption label={intl.formatMessage({ id: 'Registrering.EgenVirksomhet.Yes' })} value />
-        </RadioGroupField>
-      </div>
-      <ElementWrapper>
-        {harArbeidetIEgenVirksomhet
+      <Fieldset legend={intl.formatMessage({ id: 'Registrering.EgenVirksomhet.Title' })}>
+        <div className={styles.flexContainer}>
+          <RadioGroupField name={harArbeidetIEgenVirksomhetName} validate={[required]} direction="vertical" readOnly={readOnly}>
+            <RadioOption label={intl.formatMessage({ id: 'Registrering.EgenVirksomhet.No' })} value={false} />
+            <RadioOption label={intl.formatMessage({ id: 'Registrering.EgenVirksomhet.Yes' })} value />
+          </RadioGroupField>
+        </div>
+        <ElementWrapper>
+          {harArbeidetIEgenVirksomhet
         && (
         <FieldArray
           name={virksomhetsFieldArrayName}
@@ -58,7 +56,8 @@ export const EgenVirksomhetPanel = ({
         />
         )
     }
-      </ElementWrapper>
+        </ElementWrapper>
+      </Fieldset>
     </BorderBox>
   </FormSection>
 );

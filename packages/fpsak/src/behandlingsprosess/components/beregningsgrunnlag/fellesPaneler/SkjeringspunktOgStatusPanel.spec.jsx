@@ -2,8 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
 import { SkjeringspunktOgStatusPanelImpl } from './SkjeringspunktOgStatusPanel';
+import aktivitetStatus from '../../../../kodeverk/aktivitetStatus';
 
 describe('<SkjeringspunktOgStatusPanel>', () => {
   it('Skal se at korrekte verdier settes i undertittlene', () => {

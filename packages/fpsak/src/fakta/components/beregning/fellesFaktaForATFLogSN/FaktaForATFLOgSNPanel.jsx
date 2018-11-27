@@ -2,23 +2,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
+import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
 import { createSelector } from 'reselect';
 import {
-  getAksjonspunkter, getBeregningsgrunnlag,
-  getEndringBeregningsgrunnlagPerioder, getFaktaOmBeregningTilfellerKoder,
-  getKortvarigeArbeidsforhold, getFaktaOmBeregning, getTilstøtendeYtelse,
+  getAksjonspunkter,
+  getBeregningsgrunnlag,
+  getEndringBeregningsgrunnlagPerioder,
+  getFaktaOmBeregning,
+  getFaktaOmBeregningTilfellerKoder,
+  getKortvarigeArbeidsforhold,
+  getTilstøtendeYtelse,
 } from 'behandling/behandlingSelectors';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import TilstotendeYtelseForm, { harKunTilstotendeYtelse } from './tilstotendeYtelse/TilstøtendeYtelseForm';
-import TilstotendeYtelseIKombinasjon, { erTilstotendeYtelseIKombinasjon } from './tilstotendeYtelse/TilstotendeYtelseIKombinasjon';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import TilstotendeYtelseForm, { harKunTilstotendeYtelse } from './tilstøtendeYtelse/TilstøtendeYtelseForm';
+import TilstotendeYtelseIKombinasjon, { erTilstotendeYtelseIKombinasjon } from './tilstøtendeYtelse/TilstotendeYtelseIKombinasjon';
 import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm';
 import NyoppstartetFLForm from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import FastsettEndretBeregningsgrunnlag from './endringBeregningsgrunnlag/FastsettEndretBeregningsgrunnlag';
-import { getHelpTextsEndringBG, harKunEndringBG } from './endringBeregningsgrunnlag/EndretBeregningsgrunnlagUtils';
+import {
+  getHelpTextsEndringBG,
+  harKunTilfellerSomStøtterEndringBG,
+} from './endringBeregningsgrunnlag/EndretBeregningsgrunnlagUtils';
 import LonnsendringForm from './vurderOgFastsettATFL/forms/LonnsendringForm';
 import NyIArbeidslivetSNForm from './nyIArbeidslivet/NyIArbeidslivetSNForm';
 import VurderOgFastsettATFL from './vurderOgFastsettATFL/VurderOgFastsettATFL';
@@ -53,7 +60,7 @@ export const getValidationFaktaForATFLOgSN = createSelector(
 
 export const lagHelpTextsForFakta = (aktivertePaneler) => {
   const helpTexts = [];
-  if (!harKunEndringBG(aktivertePaneler)) {
+  if (!harKunTilfellerSomStøtterEndringBG(aktivertePaneler)) {
     helpTexts.push(<FormattedMessage key="VurderTidsbegrensetArbeidsforhold" id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning" />);
   }
   return helpTexts;

@@ -2,16 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { RadioOption, RadioGroupField } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption } from 'form/Fields';
 import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { required } from '@fpsak-frontend/utils/validation/validators';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { Row, Column } from 'nav-frontend-grid';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
-import { flatten } from '@fpsak-frontend/utils/arrayUtils';
+import { required } from 'utils/validation/validators';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { Column, Row } from 'nav-frontend-grid';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
+import { flatten } from 'utils/arrayUtils';
 import FastsettATFLInntektForm
   from 'fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/FastsettATFLInntektForm';
 
@@ -170,8 +170,8 @@ NyoppstartetFLFormImpl.nyOppstartetFLInntekt = (values, tilfeller, vurderFaktaVa
 const mapStateToProps = (state, initialProps) => {
   const faktaOmBeregning = getFaktaOmBeregning(state);
   let manglerInntektsmelding = false;
-  if (faktaOmBeregning.atogFLISammeOrganisasjonListe && faktaOmBeregning.atogFLISammeOrganisasjonListe.length > 0) {
-    manglerInntektsmelding = faktaOmBeregning.atogFLISammeOrganisasjonListe.find(forhold => !forhold.inntektPrMnd) !== undefined;
+  if (faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe && faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.length > 0) {
+    manglerInntektsmelding = faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.find(forhold => !forhold.inntektPrMnd) !== undefined;
   }
   return {
     manglerInntektsmelding,

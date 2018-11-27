@@ -1,7 +1,7 @@
-import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/beregningsgrunnlagAndeltyper';
-import { aktivitetstatusTilAndeltypeMap } from '@fpsak-frontend/kodeverk/aktivitetStatus';
-import { required } from '@fpsak-frontend/utils/validation/validators';
-import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils/currencyUtils';
+import beregningsgrunnlagAndeltyper from 'kodeverk/beregningsgrunnlagAndeltyper';
+import { aktivitetstatusTilAndeltypeMap } from 'kodeverk/aktivitetStatus';
+import { required } from 'utils/validation/validators';
+import { formatCurrencyNoKr, removeSpacesFromNumber } from 'utils/currencyUtils';
 
 
 const compareAndeler = (andel1, andel2) => {

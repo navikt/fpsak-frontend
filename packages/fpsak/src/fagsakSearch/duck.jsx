@@ -1,9 +1,8 @@
-import { makeRestApiRequest, resetRestApi } from '@fpsak-frontend/data/duck';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
+import fpsakApi from 'data/fpsakApi';
 
 /* Action creators */
-export const searchFagsaker = makeRestApiRequest(FpsakApi.SEARCH_FAGSAK);
+export const searchFagsaker = fpsakApi.SEARCH_FAGSAK.makeRestApiRequest();
 
 export const resetFagsakSearch = () => (dispatch) => {
-  dispatch(resetRestApi(FpsakApi.SEARCH_FAGSAK));
+  dispatch(fpsakApi.SEARCH_FAGSAK.resetRestApi());
 };

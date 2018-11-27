@@ -40,7 +40,7 @@ describe('<UttakInfo>', () => {
     const wrapper = shallow(<UttakInfo
       selectedItemData={selectedItem}
       readOnly={false}
-      stonadskontoer={{ FLERBARNSDAGER: {} }}
+      harSoktOmFlerbarnsdager
     />);
     const checkboxField = wrapper.find('CheckboxField');
     expect(checkboxField).to.have.length(2);
@@ -52,7 +52,7 @@ describe('<UttakInfo>', () => {
     const wrapper = shallow(<UttakInfo
       selectedItemData={selectedItem}
       readOnly
-      stonadskontoer={{ FLERBARNSDAGER: {} }}
+      harSoktOmFlerbarnsdager
     />);
     const checkboxField = wrapper.find('CheckboxField');
     expect(checkboxField).to.have.length(2);
@@ -67,7 +67,7 @@ describe('<UttakInfo>', () => {
     const wrapper = shallow(<UttakInfo
       selectedItemData={selectedItem}
       readOnly={false}
-      stonadskontoer={{}}
+      harSoktOmFlerbarnsdager={false}
     />);
     const checkboxField = wrapper.find('CheckboxField');
     expect(checkboxField).to.have.length(1);

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { getBehandlingStatus } from 'behandling/behandlingSelectors';
-import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/utsettelseArsakCodes';
-import overforingArsakCodes from '@fpsak-frontend/kodeverk/overforingArsakCodes';
+import utsettelseArsakCodes from 'kodeverk/utsettelseArsakCodes';
+import overforingArsakCodes from 'kodeverk/overforingArsakCodes';
 import FerieOgArbeidsPeriode from './perioder/FerieOgArbeidsPeriode';
 import SykdomOgSkadePeriode from './perioder/SykdomOgSkadePeriode';
 import InnleggelsePeriode from './perioder/InnleggelsePeriode';
@@ -25,8 +25,7 @@ export const renderPeriode = (
   inntektsmeldingInfo,
   bekreftet,
   uttakPeriodeType,
-  virksomhetNavn,
-  orgnr,
+  arbeidsgiver,
 ) => {
   switch (utsettelseArsak.kode) {
     case utsettelseArsakCodes.ARBEID:
@@ -45,8 +44,7 @@ export const renderPeriode = (
           inntektsmeldingInfo={inntektsmeldingInfo}
           bekreftet={bekreftet}
           uttakPeriodeType={uttakPeriodeType}
-          virksomhetNavn={virksomhetNavn}
-          orgnr={orgnr}
+          arbeidsgiver={arbeidsgiver}
         />
       );
     case utsettelseArsakCodes.SYKDOM:
@@ -63,8 +61,7 @@ export const renderPeriode = (
           utsettelseArsak={utsettelseArsak}
           overforingArsak={overforingArsak}
           bekreftet={bekreftet}
-          virksomhetNavn={virksomhetNavn}
-          orgnr={orgnr}
+          arbeidsgiver={arbeidsgiver}
         />
       );
     case utsettelseArsakCodes.INSTITUSJONSOPPHOLD_SØKER:
@@ -81,8 +78,7 @@ export const renderPeriode = (
           fraDato={fraDato}
           tilDato={tilDato}
           bekreftet={bekreftet}
-          virksomhetNavn={virksomhetNavn}
-          orgnr={orgnr}
+          arbeidsgiver={arbeidsgiver}
         />
       );
     case utsettelseArsakCodes.UDEFINERT:
@@ -100,8 +96,7 @@ export const renderPeriode = (
             utsettelseArsak={utsettelseArsak}
             overforingArsak={overforingArsak}
             bekreftet={bekreftet}
-            virksomhetNavn={virksomhetNavn}
-            orgnr={orgnr}
+            arbeidsgiver={arbeidsgiver}
           />
         );
       }
@@ -119,8 +114,7 @@ export const renderPeriode = (
             fraDato={fraDato}
             tilDato={tilDato}
             bekreftet={bekreftet}
-            virksomhetNavn={virksomhetNavn}
-            orgnr={orgnr}
+            arbeidsgiver={arbeidsgiver}
           />
         );
       }
@@ -139,8 +133,7 @@ export const renderPeriode = (
           inntektsmeldingInfo={inntektsmeldingInfo}
           bekreftet={bekreftet}
           uttakPeriodeType={uttakPeriodeType}
-          virksomhetNavn={virksomhetNavn}
-          orgnr={orgnr}
+          arbeidsgiver={arbeidsgiver}
         />
       );
     default:
@@ -163,8 +156,7 @@ export const UttakPeriodeInnhold = ({
   bekreftet,
   openForm,
   uttakPeriodeType,
-  virksomhetNavn,
-  orgnr,
+  arbeidsgiver,
 }) => {
   const editable = !(!readOnly && openForm);
 
@@ -185,8 +177,7 @@ export const UttakPeriodeInnhold = ({
         inntektsmeldingInfo,
         bekreftet,
         uttakPeriodeType,
-        virksomhetNavn,
-        orgnr,
+        arbeidsgiver,
       )}
     </div>
   );
@@ -207,16 +198,13 @@ UttakPeriodeInnhold.propTypes = {
   bekreftet: PropTypes.bool.isRequired,
   openForm: PropTypes.bool.isRequired,
   uttakPeriodeType: PropTypes.shape().isRequired,
-  virksomhetNavn: PropTypes.string,
-  orgnr: PropTypes.string,
+  arbeidsgiver: PropTypes.shape(),
 };
 
 UttakPeriodeInnhold.defaultProps = {
   arbeidstidprosent: null,
   inntektsmeldingInfo: [],
-  virksomhetNavn: null,
-  orgnr: null,
-
+  arbeidsgiver: {},
 };
 
 const mapStateToProps = state => ({

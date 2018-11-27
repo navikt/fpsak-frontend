@@ -5,10 +5,10 @@ import { expect } from 'chai';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 
 import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
-import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import vilkarType from 'kodeverk/vilkarType';
+import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
 import { FodselVilkarFormImpl as UnwrappedForm, buildInitialValues } from './FodselVilkarForm';
 
 describe('<FodselVilkarForm>', () => {

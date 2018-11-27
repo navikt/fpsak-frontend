@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
-import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle, harKunATFLISammeOrgUtenBestebergning } from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
+import faktaOmBeregningTilfelle, {
+  erATFLSpesialtilfelle,
+  harKunATFLISammeOrgUtenBestebergning,
+} from 'kodeverk/faktaOmBeregningTilfelle';
 import LonnsendringForm, { lonnsendringField } from 'fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
 import NyoppstartetFLForm, { erNyoppstartetFLField } from 'fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
@@ -100,8 +103,8 @@ const mapStateToProps = (state, initialProps) => {
   const faktaOmBeregning = getFaktaOmBeregning(state);
   const { formName } = initialProps;
   let manglerInntektsmelding = false;
-  if (faktaOmBeregning.atogFLISammeOrganisasjonListe && faktaOmBeregning.atogFLISammeOrganisasjonListe.length > 0) {
-    manglerInntektsmelding = faktaOmBeregning.atogFLISammeOrganisasjonListe.find(forhold => !forhold.inntektPrMnd) !== undefined;
+  if (faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe && faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.length > 0) {
+    manglerInntektsmelding = faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.find(forhold => !forhold.inntektPrMnd) !== undefined;
   }
   return {
     erLonnsendring: behandlingFormValueSelector(formName)(state, lonnsendringField),

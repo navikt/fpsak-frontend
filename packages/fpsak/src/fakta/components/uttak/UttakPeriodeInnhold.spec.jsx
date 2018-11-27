@@ -2,8 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
-import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import behandlingStatus from 'kodeverk/behandlingStatus';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { UttakPeriodeInnhold } from './UttakPeriodeInnhold';
 
 const behandlingStatusKode = behandlingStatus.BEHANDLING_UTREDES;
@@ -14,7 +14,6 @@ const periode = {
 };
 
 describe('<UttakPeriodeInnhold>', () => {
-  const arbeidsgiverNavn = 'Statoil';
   const utsettelseArsak = {};
   const fieldId = '';
   const id = '';
@@ -24,7 +23,6 @@ describe('<UttakPeriodeInnhold>', () => {
   it('skal vise UttakPeriodeInnhold', () => {
     const wrapper = shallowWithIntl(<UttakPeriodeInnhold
       fieldId={fieldId}
-      arbeidsgiverNavn={arbeidsgiverNavn}
       utsettelseArsak={utsettelseArsak}
       bekreftet
       uttakPeriodeType={{}}

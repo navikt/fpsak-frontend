@@ -1,12 +1,11 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 import { withoutRestActions, ignoreRestErrors } from '@fpsak-frontend/assets/testHelpers/data-test-helper';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import { FpsakApi, getFpsakApiPath } from '@fpsak-frontend/data/fpsakApi';
+import fpsakApi from 'data/fpsakApi';
 import {
   behandlingsprosessReducer, resetBehandlingspunkter, setSelectedBehandlingspunktNavn,
   resolveProsessAksjonspunkter, overrideProsessAksjonspunkter,
@@ -19,7 +18,7 @@ describe('Behandlingsprosess-reducer', () => {
   let mockAxios;
 
   before(() => {
-    mockAxios = new MockAdapter(axios);
+    mockAxios = new MockAdapter(fpsakApi.getAxiosHttpClientApi());
   });
 
   afterEach(() => {
@@ -68,7 +67,7 @@ describe('Behandlingsprosess-reducer', () => {
 
   it('skal avklare aksjonspunkter', () => {
     mockAxios
-      .onPost(getFpsakApiPath(FpsakApi.SAVE_AKSJONSPUNKT))
+      .onPost(fpsakApi.SAVE_AKSJONSPUNKT.path)
       .reply(200, [{ personstatus: 'test' }]);
 
     const store = mockStore();
@@ -100,7 +99,7 @@ describe('Behandlingsprosess-reducer', () => {
 
   it('skal overstyre aksjonspunkter', () => {
     mockAxios
-      .onPost(getFpsakApiPath(FpsakApi.SAVE_OVERSTYRT_AKSJONSPUNKT))
+      .onPost(fpsakApi.SAVE_OVERSTYRT_AKSJONSPUNKT.path)
       .reply(200, [{ personstatus: 'test' }]);
 
     const store = mockStore();
@@ -132,7 +131,7 @@ describe('Behandlingsprosess-reducer', () => {
 
   it('skal overstyre aksjonspunkter', () => {
     mockAxios
-      .onPost(getFpsakApiPath(FpsakApi.SAVE_OVERSTYRT_AKSJONSPUNKT))
+      .onPost(fpsakApi.SAVE_OVERSTYRT_AKSJONSPUNKT.path)
       .reply(200, [{ personstatus: 'test' }]);
 
     const store = mockStore();

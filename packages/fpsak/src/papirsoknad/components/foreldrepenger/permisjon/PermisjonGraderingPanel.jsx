@@ -5,24 +5,26 @@ import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import { FieldArray, formValueSelector } from 'redux-form';
 
-import { CheckboxField } from '@fpsak-frontend/form';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
+import { CheckboxField } from 'form/Fields';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import {
   hasValidInteger,
   hasValidPeriodIncludingOtherErrors,
-  maxLength,
   required,
   validateProsentandel,
-} from '@fpsak-frontend/utils/validation/validators';
-import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
+  maxLengthOrFodselsnr,
+  hasValidFodselsnummer,
+} from 'utils/validation/validators';
+import { isRequiredMessage } from 'utils/validation/messages';
 import RenderGraderingPeriodeFieldArray from './RenderGraderingPeriodeFieldArray';
+import styles from './permisjonPanel.less';
 
 export const graderingPeriodeFieldArrayName = 'graderingPeriode';
 
-const maxLength9 = maxLength(9);
+const maxLength9OrFodselsnr = maxLengthOrFodselsnr(9);
 
 /**
  *  PermisjonGraderingPanel
@@ -36,11 +38,13 @@ export const PermisjonGraderingPanel = ({
   namePrefix,
   skalGradere,
   readOnly,
+  visFeilMelding,
 }) => (
   <div>
     <Element><FormattedMessage id="Registrering.Permisjon.Gradering.Title" /></Element>
     <VerticalSpacer sixteenPx />
     <CheckboxField
+      className={visFeilMelding ? styles.showErrorBackground : ''}
       readOnly={readOnly}
       name="skalGradere"
       label={<FormattedMessage id="Registrering.Permisjon.Gradering.GraderUttaket" />}
@@ -62,17 +66,23 @@ export const PermisjonGraderingPanel = ({
 );
 
 export const validateOtherErrors = values => values.map(({
-  periodeForGradering, prosentandelArbeid, orgNr, erArbeidstaker,
+  periodeForGradering, prosentandelArbeid, arbeidsgiverIdentifikator, erArbeidstaker, samtidigUttaksprosent, harSamtidigUttak,
 }) => {
   const periodeForGraderingError = required(periodeForGradering);
   const prosentandelArbeidError = validateProsentandel(prosentandelArbeid);
-  const orgNrShouldBeRequired = erArbeidstaker === 'true';
-  const orgNrError = (orgNrShouldBeRequired && required(orgNr)) || hasValidInteger(orgNr) || maxLength9(orgNr);
-  if (prosentandelArbeidError || periodeForGraderingError || orgNrError) {
+  const arbeidsgiverShouldBeRequired = erArbeidstaker === 'true';
+  const arbeidsgiverError = (arbeidsgiverShouldBeRequired && required(arbeidsgiverIdentifikator))
+    || hasValidInteger(arbeidsgiverIdentifikator)
+    || ((arbeidsgiverIdentifikator && arbeidsgiverIdentifikator.toString().length) === 11
+      ? hasValidFodselsnummer(arbeidsgiverIdentifikator)
+      : maxLength9OrFodselsnr(arbeidsgiverIdentifikator));
+  const samtidigUttaksprosentError = harSamtidigUttak === true && required(samtidigUttaksprosent);
+  if (prosentandelArbeidError || periodeForGraderingError || arbeidsgiverError || samtidigUttaksprosentError) {
     return {
       periodeForGradering: periodeForGraderingError,
-      orgNr: orgNrError,
+      arbeidsgiverIdentifikator: arbeidsgiverError,
       prosentandelArbeid: prosentandelArbeidError,
+      samtidigUttaksprosent: samtidigUttaksprosentError,
     };
   }
   return null;
@@ -93,6 +103,7 @@ PermisjonGraderingPanel.propTypes = {
   namePrefix: PropTypes.string.isRequired,
   skalGradere: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  visFeilMelding: PropTypes.bool.isRequired,
 };
 
 PermisjonGraderingPanel.initialValues = {

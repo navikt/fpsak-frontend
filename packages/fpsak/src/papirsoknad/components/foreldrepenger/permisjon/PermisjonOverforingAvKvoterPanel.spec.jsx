@@ -4,7 +4,7 @@ import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/in
 import { expect } from 'chai';
 import SoknadData from 'papirsoknad/SoknadData';
 
-import { SelectField } from '@fpsak-frontend/form';
+import SelectField from 'form/fields/SelectField';
 import { PermisjonOverforingAvKvoterPanelImpl as PermisjonOverforingAvKvoterPanel } from './PermisjonOverforingAvKvoterPanel';
 
 const overforingAvKvoterArsaker = [{ navn: 'Den andre forelderen er innlagt i helseinstitusjon', kode: 'INSTITUSJONSOPPHOLD_ANNEN_FORELDER' },
@@ -21,6 +21,7 @@ describe('<PermisjonOverforingAvKvoterPanel>', () => {
       intl={intlMock}
       skalOvertaKvote
       readOnly={readOnly}
+      visFeilMelding={false}
     />);
 
     const selectField = wrapper.find(SelectField);
@@ -41,6 +42,7 @@ describe('<PermisjonOverforingAvKvoterPanel>', () => {
       intl={intlMock}
       skalOvertaKvote={false}
       readOnly={readOnly}
+      visFeilMelding={false}
     />);
 
     const selectField = wrapper.find(SelectField);

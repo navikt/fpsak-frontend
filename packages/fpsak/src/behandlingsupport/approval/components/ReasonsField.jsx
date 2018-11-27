@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { injectIntl, FormattedMessage, intlShape } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import { NavFieldGroup, CheckboxField, TextAreaField } from '@fpsak-frontend/form';
+import { NavFieldGroup, CheckboxField, TextAreaField } from 'form/Fields';
 import {
   required, minLength, maxLength, hasValidText,
-} from '@fpsak-frontend/utils/validation/validators';
+} from 'utils/validation/validators';
 
 import styles from './ReasonsField.less';
 

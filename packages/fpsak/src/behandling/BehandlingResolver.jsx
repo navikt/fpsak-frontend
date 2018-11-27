@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
+import BehandlingType from 'kodeverk/behandlingType';
+import fpsakApi, { getBehandlingTypeApiKeys } from 'data/fpsakApi';
+import LoadingPanel from 'sharedComponents/LoadingPanel';
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
 import { getSelectedBehandlingIdentifier, isBehandlingInSync } from './behandlingSelectors';
-import { getBehandlingerVersjonMappedById } from './selectors/behandlingerSelectors';
+import { getBehandlingerVersjonMappedById, getBehandlingerTypesMappedById } from './selectors/behandlingerSelectors';
 import { fetchBehandling as fetchBehandlingActionCreator } from './duck';
 
 export class BehandlingResolver extends Component {
@@ -19,9 +21,15 @@ export class BehandlingResolver extends Component {
 
   resolveBehandlingInfo() {
     const {
-      isInSync, fetchBehandling, behandlingIdentifier, behandlingerVersjonMappedById,
+      isInSync, fetchBehandling, behandlingIdentifier, behandlingerVersjonMappedById, behandlingerTyperMappedById,
     } = this.props;
     if (!isInSync) {
+      // TODO (TOR) Endring av contextPath her er midlertidig kode fram til ein får splitta ut tilbakekreving.
+      const contextPath = behandlingerTyperMappedById[behandlingIdentifier.behandlingId] === BehandlingType.TILBAKEKREVING ? 'fptilbake' : 'fpsak';
+      fpsakApi.getDataContextModifier()
+        .changeContextPath(contextPath, ...getBehandlingTypeApiKeys())
+        .update();
+
       fetchBehandling(behandlingIdentifier, behandlingerVersjonMappedById);
     }
   }
@@ -40,11 +48,13 @@ BehandlingResolver.propTypes = {
   behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   isInSync: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
+  behandlingerTyperMappedById: PropTypes.shape().isRequired,
 };
 
 const mapStateToProps = state => ({
   behandlingIdentifier: getSelectedBehandlingIdentifier(state),
   behandlingerVersjonMappedById: getBehandlingerVersjonMappedById(state),
+  behandlingerTyperMappedById: getBehandlingerTypesMappedById(state),
   isInSync: isBehandlingInSync(state),
 });
 

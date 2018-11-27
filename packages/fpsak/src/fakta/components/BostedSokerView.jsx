@@ -6,14 +6,14 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import Etikettfokus from 'nav-frontend-etiketter';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import kodeverkPropType from 'kodeverk/kodeverkPropType';
+import { getKodeverk } from 'kodeverk/duck';
 import personopplysningPropType from 'behandling/proptypes/personopplysningPropType';
-import opplysningAdresseType from '@fpsak-frontend/kodeverk/opplysningAdresseType';
-import getAddresses from '@fpsak-frontend/utils/personUtils';
-import personstatusType from '@fpsak-frontend/kodeverk/personstatusType';
-import Region from '@fpsak-frontend/kodeverk/region';
+import opplysningAdresseType from 'kodeverk/opplysningAdresseType';
+import getAddresses from 'utils/personUtils';
+import personstatusType from 'kodeverk/personstatusType';
+import Region from 'kodeverk/region';
 
 import styles from './bostedSokerView.less';
 

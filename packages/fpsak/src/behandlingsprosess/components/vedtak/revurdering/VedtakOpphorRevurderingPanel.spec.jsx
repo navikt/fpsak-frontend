@@ -1,9 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
-import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
+import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import vilkarType from 'kodeverk/vilkarType';
+import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import { VedtakOpphorRevurderingPanelImpl } from './VedtakOpphorRevurderingPanel';
 
 

@@ -8,9 +8,9 @@ import { Undertekst } from 'nav-frontend-typografi';
 import { Column } from 'nav-frontend-grid';
 
 import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import ArrowBox from 'sharedComponents/ArrowBox';
 import {
   getEditedStatus, getFamiliehendelse, getBehandlingType, getBarnFraTpsRelatertTilSoknad,
   getPersonopplysning, getAksjonspunkter, getSoknadAntallBarn,
@@ -19,13 +19,13 @@ import { behandlingFormValueSelector, behandlingForm } from 'behandling/behandli
 import FodselSammenligningPanel from 'behandling/components/fodselSammenligning/FodselSammenligningPanel';
 import {
   required, hasValidDate, minValue, maxValue, hasValidInteger, dateBeforeOrEqualToToday,
-} from '@fpsak-frontend/utils/validation/validators';
-import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
+} from 'utils/validation/validators';
+import behandlingType from 'kodeverk/behandlingType';
 import {
   DatepickerField, InputField, RadioGroupField, RadioOption,
-} from '@fpsak-frontend/form';
+} from 'form/Fields';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 
 import styles from './SjekkFodselDokForm.less';
 

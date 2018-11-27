@@ -11,7 +11,12 @@ const config = {
   module: {
     rules: [{
 	  test: /\.jsx?$/,
-	  use: ['istanbul-instrumenter-loader', 'happypack/loader'],
+      use: [{
+        loader: 'istanbul-instrumenter-loader',
+        options: { esModules: true }
+      }, {
+        loader: 'happypack/loader',
+      }],
 	  include: PACAKGES_DIR,
 	  exclude: /(node_modules|testHelpers)/,
     }, {
@@ -25,7 +30,6 @@ const config = {
 	  loaders: [{
         path: 'babel-loader',
         query: {
-          presets: ['react', 'env', 'stage-0'],
           cacheDirectory: true,
         },
       }],

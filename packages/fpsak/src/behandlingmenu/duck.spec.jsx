@@ -1,12 +1,11 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import { FpsakApi, getFpsakApiPath } from '@fpsak-frontend/data/fpsakApi';
+import fpsakApi from 'data/fpsakApi';
 import {
   behandlingMenuReducer, setHasSubmittedPaVentForm, createNewForstegangsbehandling, openBehandlingForChanges,
   resetBehandlingMenuData,
@@ -19,7 +18,7 @@ describe('BehandlingMenu-reducer', () => {
   let mockAxios;
 
   before(() => {
-    mockAxios = new MockAdapter(axios);
+    mockAxios = new MockAdapter(fpsakApi.getAxiosHttpClientApi());
   });
 
   afterEach(() => {
@@ -75,16 +74,16 @@ describe('BehandlingMenu-reducer', () => {
       opprettet: '2017-08-15',
     }];
     mockAxios
-      .onPut(getFpsakApiPath(FpsakApi.NEW_BEHANDLING))
+      .onPut(fpsakApi.NEW_BEHANDLING.path)
       .reply(200, fagsak);
     mockAxios
-      .onGet(getFpsakApiPath(FpsakApi.ALL_DOCUMENTS))
+      .onGet(fpsakApi.ALL_DOCUMENTS.path)
       .replyOnce(200, { dokId: 10 });
     mockAxios
-      .onGet(getFpsakApiPath(FpsakApi.HISTORY))
+      .onGet(fpsakApi.HISTORY.path)
       .replyOnce(200, { histId: 1 });
     mockAxios
-      .onGet(getFpsakApiPath(FpsakApi.BEHANDLINGER))
+      .onGet(fpsakApi.BEHANDLINGER.path)
       .replyOnce(200, behandlinger);
 
     const store = mockStore();
@@ -97,14 +96,14 @@ describe('BehandlingMenu-reducer', () => {
         expect(store.getActions()).to.have.length(12);
         const [behandlingReset, originalBehandlingReset, requestStartedAction, requestFinishedAction] = store.getActions();
 
-        expect(behandlingReset.type).to.contain('/behandling RESET');
-        expect(originalBehandlingReset.type).to.contain('/originalBehandling RESET');
+        expect(behandlingReset.type).to.contain('/BEHANDLING RESET');
+        expect(originalBehandlingReset.type).to.contain('/ORIGINAL_BEHANDLING RESET');
 
-        expect(requestStartedAction.type).to.contain('/fpsak/api/behandlinger STARTED');
+        expect(requestStartedAction.type).to.contain('fpsak/api/behandlinger STARTED');
         expect(requestStartedAction.payload.params).is.eql(params);
         expect(requestStartedAction.meta).is.eql({ options: {} });
 
-        expect(requestFinishedAction.type).to.contain('/fpsak/api/behandlinger FINISHED');
+        expect(requestFinishedAction.type).to.contain('fpsak/api/behandlinger FINISHED');
         expect(requestFinishedAction.payload).is.eql(fagsak);
 
         // Andre restkall blir ikke testet
@@ -133,22 +132,22 @@ describe('BehandlingMenu-reducer', () => {
       opprettet: '2017-08-15',
     }];
     mockAxios
-      .onPut(getFpsakApiPath(FpsakApi.NEW_BEHANDLING))
+      .onPut(fpsakApi.NEW_BEHANDLING.path)
       .reply(200, behandling);
     mockAxios
-      .onGet(getFpsakApiPath(FpsakApi.FETCH_FAGSAK))
+      .onGet(fpsakApi.FETCH_FAGSAK.path)
       .replyOnce(200, fagsak);
     mockAxios
-      .onGet(getFpsakApiPath(FpsakApi.ALL_DOCUMENTS))
+      .onGet(fpsakApi.ALL_DOCUMENTS.path)
       .replyOnce(200, { dokId: 10 });
     mockAxios
-      .onGet(getFpsakApiPath(FpsakApi.HISTORY))
+      .onGet(fpsakApi.HISTORY.path)
       .replyOnce(200, { histId: 1 });
     mockAxios
-      .onGet(getFpsakApiPath(FpsakApi.BEHANDLINGER))
+      .onGet(fpsakApi.BEHANDLINGER.path)
       .replyOnce(200, behandlinger);
     mockAxios
-      .onGet(getFpsakApiPath(FpsakApi.ANNEN_PART_BEHANDLING))
+      .onGet(fpsakApi.ANNEN_PART_BEHANDLING.path)
       .replyOnce(200, { url: '' });
 
     const store = mockStore();
@@ -161,14 +160,14 @@ describe('BehandlingMenu-reducer', () => {
         expect(store.getActions()).to.have.length(16);
         const [behandlingReset, originalBehandlingReset, requestStartedAction, requestFinishedAction] = store.getActions();
 
-        expect(behandlingReset.type).to.contain('/behandling RESET');
-        expect(originalBehandlingReset.type).to.contain('/originalBehandling RESET');
+        expect(behandlingReset.type).to.contain('/BEHANDLING RESET');
+        expect(originalBehandlingReset.type).to.contain('/ORIGINAL_BEHANDLING RESET');
 
-        expect(requestStartedAction.type).to.contain('/fpsak/api/behandlinger STARTED');
+        expect(requestStartedAction.type).to.contain('fpsak/api/behandlinger STARTED');
         expect(requestStartedAction.payload.params).is.eql(params);
         expect(requestStartedAction.meta).is.eql({ options: {} });
 
-        expect(requestFinishedAction.type).to.contain('/fpsak/api/behandlinger FINISHED');
+        expect(requestFinishedAction.type).to.contain('fpsak/api/behandlinger FINISHED');
         expect(requestFinishedAction.payload).is.eql(behandling);
 
         // Andre restkall blir ikke testet
@@ -197,22 +196,22 @@ describe('BehandlingMenu-reducer', () => {
       opprettet: '2017-08-15',
     }];
     mockAxios
-      .onPost(getFpsakApiPath(FpsakApi.OPEN_BEHANDLING_FOR_CHANGES))
+      .onPost(fpsakApi.OPEN_BEHANDLING_FOR_CHANGES.path)
       .reply(200, behandling);
     mockAxios
-      .onGet(getFpsakApiPath(FpsakApi.FETCH_FAGSAK))
+      .onGet(fpsakApi.FETCH_FAGSAK.path)
       .replyOnce(200, fagsak);
     mockAxios
-      .onGet(getFpsakApiPath(FpsakApi.ALL_DOCUMENTS))
+      .onGet(fpsakApi.ALL_DOCUMENTS.path)
       .replyOnce(200, { dokId: 10 });
     mockAxios
-      .onGet(getFpsakApiPath(FpsakApi.HISTORY))
+      .onGet(fpsakApi.HISTORY.path)
       .replyOnce(200, { histId: 1 });
     mockAxios
-      .onGet(getFpsakApiPath(FpsakApi.BEHANDLINGER))
+      .onGet(fpsakApi.BEHANDLINGER.path)
       .replyOnce(200, behandlinger);
     mockAxios
-      .onGet(getFpsakApiPath(FpsakApi.ANNEN_PART_BEHANDLING))
+      .onGet(fpsakApi.ANNEN_PART_BEHANDLING.path)
       .replyOnce(200, { url: '' });
 
     const store = mockStore();
@@ -225,15 +224,15 @@ describe('BehandlingMenu-reducer', () => {
         expect(store.getActions()).to.have.length(14);
         const [opneForEndringerStartedAction, opneForEndringerFinishedAction, copyStartedAction, copyFinishedAction] = store.getActions();
 
-        expect(opneForEndringerStartedAction.type).to.contain('/fpsak/api/behandlinger/opne-for-endringer STARTED');
+        expect(opneForEndringerStartedAction.type).to.contain('fpsak/api/behandlinger/opne-for-endringer STARTED');
         expect(opneForEndringerStartedAction.payload.params).is.eql(params);
-        expect(opneForEndringerFinishedAction.type).to.contain('/fpsak/api/behandlinger/opne-for-endringer FINISHED');
+        expect(opneForEndringerFinishedAction.type).to.contain('fpsak/api/behandlinger/opne-for-endringer FINISHED');
 
-        expect(copyStartedAction.type).to.contain('@@REST/behandling COPY_DATA_STARTED');
+        expect(copyStartedAction.type).to.contain('@@REST/BEHANDLING COPY_DATA_STARTED');
         expect(copyStartedAction.payload.params).is.eql(id.toJson());
         expect(copyStartedAction.meta).is.eql({ options: { keepData: true } });
 
-        expect(copyFinishedAction.type).to.contain('@@REST/behandling COPY_DATA_FINISHED');
+        expect(copyFinishedAction.type).to.contain('@@REST/BEHANDLING COPY_DATA_FINISHED');
         expect(copyFinishedAction.payload).is.eql(behandling);
 
         // Andre restkall blir ikke testet

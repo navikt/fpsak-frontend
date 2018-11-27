@@ -1,9 +1,15 @@
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
-import skjermlenkeCodes from '@fpsak-frontend/kodeverk/skjermlenkeCodes';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import vilkarType from 'kodeverk/vilkarType';
+import skjermlenkeCodes from 'kodeverk/skjermlenkeCodes';
 
 const totrinnskontrollContextCodes = [
+  {
+    ...skjermlenkeCodes.FORMKRAV_KLAGE_NFP,
+    vilkar: [],
+    aksjonspunkter: [aksjonspunktCodes.FORMKRAV_KLAGE_NAV_FAMILIE_OG_PENSJON],
+    behandlingspunkt: behandlingspunktCodes.FORMKRAV_KLAGE_NAV_FAMILIE_OG_PENSJON,
+  },
   {
     ...skjermlenkeCodes.KLAGE_BEH_NFP,
     vilkar: [],

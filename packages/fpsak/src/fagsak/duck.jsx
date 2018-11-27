@@ -1,5 +1,4 @@
-import { makeRestApiRequest, resetRestApi } from '@fpsak-frontend/data/duck';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
+import fpsakApi, { FpsakApiKeys } from 'data/fpsakApi';
 import { resetBehandlingsupportInfo, updateBehandlingsupportInfo } from 'behandlingsupport/duck';
 import { updateAnnenPartBehandling } from 'fagsakprofile/duck';
 
@@ -17,23 +16,23 @@ export const previewReceived = pdf => ({
   data: pdf,
 });
 
-export const fetchVedtaksbrevPreview = data => dispatch => dispatch(makeRestApiRequest(FpsakApi.FORHANDSVISNING_FORVED_BREV)(data))
+export const fetchVedtaksbrevPreview = data => dispatch => dispatch(fpsakApi.FORHANDSVISNING_FORVED_BREV.makeRestApiRequest()(data))
   .then(response => dispatch(previewReceived(response.data)));
 
 export const updateBehandlinger = saksnummer => dispatch => (
-  dispatch(makeRestApiRequest(FpsakApi.BEHANDLINGER)({ saksnummer }, { keepData: true }))
+  dispatch(fpsakApi.BEHANDLINGER.makeRestApiRequest()({ saksnummer }, { keepData: true }))
 );
 
 const resetFetchFagsakInfo = () => (dispatch) => {
-  dispatch(resetRestApi(FpsakApi.FETCH_FAGSAK)());
-  dispatch(resetRestApi(FpsakApi.BEHANDLINGER)());
-  dispatch(resetRestApi(FpsakApi.BEHANDLING)());
-  dispatch(resetRestApi(FpsakApi.ANNEN_PART_BEHANDLING)());
+  dispatch(fpsakApi.FETCH_FAGSAK.resetRestApi()());
+  dispatch(fpsakApi.BEHANDLINGER.resetRestApi()());
+  dispatch(fpsakApi.BEHANDLING.resetRestApi()());
+  dispatch(fpsakApi.ANNEN_PART_BEHANDLING.resetRestApi()());
   dispatch(resetBehandlingsupportInfo());
 };
 
 export const updateFagsakInfo = saksnummer => dispatch => (
-  dispatch(makeRestApiRequest(FpsakApi.FETCH_FAGSAK)({ saksnummer }, { keepData: true }))
+  dispatch(fpsakApi.FETCH_FAGSAK.makeRestApiRequest()({ saksnummer }, { keepData: true }))
     .then(() => Promise.all([
       dispatch(updateBehandlinger(saksnummer)),
       dispatch(updateAnnenPartBehandling(saksnummer)),
@@ -53,21 +52,21 @@ export const setSelectedSaksnummer = saksnummer => ({
 
 // Eksportert kun for test
 export const doNotResetWhitelist = [
-  FpsakApi.NAV_ANSATT,
-  FpsakApi.LANGUAGE_FILE,
-  FpsakApi.RETTSKILDE_URL,
-  FpsakApi.SYSTEMRUTINE_URL,
-  FpsakApi.BEHANDLENDE_ENHETER,
-  FpsakApi.KODEVERK,
-  FpsakApi.SHOW_DETAILED_ERROR_MESSAGES,
-  FpsakApi.FEATURE_TOGGLE,
+  FpsakApiKeys.NAV_ANSATT,
+  FpsakApiKeys.LANGUAGE_FILE,
+  FpsakApiKeys.RETTSKILDE_URL,
+  FpsakApiKeys.SYSTEMRUTINE_URL,
+  FpsakApiKeys.BEHANDLENDE_ENHETER,
+  FpsakApiKeys.KODEVERK,
+  FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES,
+  FpsakApiKeys.FEATURE_TOGGLE,
 ];
 
 export const resetFagsakContext = () => (dispatch) => {
-  Object.values(FpsakApi)
+  Object.values(FpsakApiKeys)
     .filter(value => !doNotResetWhitelist.includes(value))
     .forEach((value) => {
-      dispatch(resetRestApi(value)());
+      dispatch(fpsakApi[value].resetRestApi()());
     });
   dispatch({ type: RESET_FAGSAKER });
 };

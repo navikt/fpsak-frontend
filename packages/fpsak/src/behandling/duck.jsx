@@ -1,9 +1,8 @@
 import { createSelector } from 'reselect';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import { makeRestApiRequest, resetRestApi } from '@fpsak-frontend/data/duck';
 import { updateFagsakInfo } from 'fagsak/duck';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
+import fpsakApi from 'data/fpsakApi';
 
 /* Action types */
 const SET_BEHANDLING_ID = 'SET_BEHANDLING_ID';
@@ -21,7 +20,7 @@ export const setHasShownBehandlingPaVent = () => ({
 // TODO (TOR) Rydd opp i dette. Kan ein legge rehenting av fagsakInfo og original-behandling i resolver i staden?
 export const updateBehandling = (
   behandlingIdentifier, behandlingerVersjonMappedById,
-) => dispatch => dispatch(makeRestApiRequest(FpsakApi.BEHANDLING)(behandlingIdentifier.toJson(), { keepData: true }))
+) => dispatch => dispatch(fpsakApi.BEHANDLING.makeRestApiRequest()(behandlingIdentifier.toJson(), { keepData: true }))
   .then((response) => {
     if (behandlingerVersjonMappedById && behandlingerVersjonMappedById[response.payload.id] !== response.payload.versjon) {
       dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer));
@@ -32,14 +31,14 @@ export const updateBehandling = (
     if (response.payload && response.payload.originalBehandlingId) {
       const { originalBehandlingId } = response.payload;
       const origianalBehandlingRequestParams = new BehandlingIdentifier(behandlingIdentifier.saksnummer, originalBehandlingId);
-      return dispatch(makeRestApiRequest(FpsakApi.ORIGINAL_BEHANDLING)(origianalBehandlingRequestParams.toJson(), { keepData: true }));
+      return dispatch(fpsakApi.ORIGINAL_BEHANDLING.makeRestApiRequest()(origianalBehandlingRequestParams.toJson(), { keepData: true }));
     }
     return Promise.resolve(response);
   });
 
 export const resetBehandling = dispatch => Promise.all([
-  dispatch(resetRestApi(FpsakApi.BEHANDLING)()),
-  dispatch(resetRestApi(FpsakApi.ORIGINAL_BEHANDLING)()),
+  dispatch(fpsakApi.BEHANDLING.resetRestApi()()),
+  dispatch(fpsakApi.ORIGINAL_BEHANDLING.resetRestApi()()),
 ]);
 
 export const fetchBehandling = (behandlingIdentifier, allBehandlinger) => (dispatch) => {
@@ -50,7 +49,7 @@ export const fetchBehandling = (behandlingIdentifier, allBehandlinger) => (dispa
 const updateFagsakAndBehandling = behandlingIdentifier => dispatch => dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer))
   .then(() => dispatch(updateBehandling(behandlingIdentifier)));
 
-export const updateOnHold = (params, behandlingIdentifier) => dispatch => dispatch(makeRestApiRequest(FpsakApi.UPDATE_ON_HOLD)(params))
+export const updateOnHold = (params, behandlingIdentifier) => dispatch => dispatch(fpsakApi.UPDATE_ON_HOLD.makeRestApiRequest()(params))
   .then(() => dispatch(updateFagsakAndBehandling(behandlingIdentifier)));
 
 /* Reducer */

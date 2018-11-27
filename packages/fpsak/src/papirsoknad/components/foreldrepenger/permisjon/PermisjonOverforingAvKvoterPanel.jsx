@@ -5,17 +5,19 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { FormSection, formValueSelector } from 'redux-form';
 import { Element } from 'nav-frontend-typografi';
 
-import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import { FlexColumn, FlexContainer, FlexRow } from 'sharedComponents/flexGrid';
+import DatepickerField from 'form/fields/DatepickerField';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
 import SoknadData from 'papirsoknad/SoknadData';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { CheckboxField, SelectField, DatepickerField } from '@fpsak-frontend/form';
-import { dateAfterOrEqual, hasValidDate, required } from '@fpsak-frontend/utils/validation/validators';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import foreldreType from '@fpsak-frontend/kodeverk/foreldreType';
-import overforingArsak from '@fpsak-frontend/kodeverk/overforingArsak';
+import kodeverkPropType from 'kodeverk/kodeverkPropType';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { CheckboxField, SelectField } from 'form/Fields';
+import { dateAfterOrEqual, hasValidDate, required } from 'utils/validation/validators';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import foreldreType from 'kodeverk/foreldreType';
+import overforingArsak from 'kodeverk/overforingArsak';
+import styles from './permisjonPanel.less';
 
 const getText = (intl, kode, navn) => {
   if (kode === overforingArsak.INSTITUSJONSOPPHOLD_ANNEN_FORELDER) {
@@ -47,6 +49,7 @@ export const PermisjonOverforingAvKvoterPanelImpl = ({
   arsakForOverforingCode,
   readOnly,
   intl,
+  visFeilMelding,
 }) => {
   const selectValues = mapArsaker(overtaKvoteReasons, soknadData.getForeldreType() === foreldreType.MOR
     || soknadData.getForeldreType() === foreldreType.IKKE_RELEVANT, intl);
@@ -56,6 +59,7 @@ export const PermisjonOverforingAvKvoterPanelImpl = ({
       <Element><FormattedMessage id="Registrering.Permisjon.OverforingAvKvote.OvertaKvoten" /></Element>
       <VerticalSpacer sixteenPx />
       <CheckboxField
+        className={visFeilMelding ? styles.showErrorBackground : ''}
         readOnly={readOnly}
         name="skalOvertaKvote"
         label={intl.formatMessage({ id: 'Registrering.Permisjon.OverforingAvKvote.OvertaKvote' })}
@@ -114,6 +118,7 @@ PermisjonOverforingAvKvoterPanelImpl.propTypes = {
   arsakForOverforingCode: PropTypes.string,
   intl: intlShape.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  visFeilMelding: PropTypes.bool.isRequired,
 };
 
 PermisjonOverforingAvKvoterPanelImpl.defaultProps = {

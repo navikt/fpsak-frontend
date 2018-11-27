@@ -4,16 +4,21 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { required } from '@fpsak-frontend/utils/validation/validators';
-import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { InputField } from '@fpsak-frontend/form';
+import { required } from 'utils/validation/validators';
+import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { InputField } from 'form/Fields';
 import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
-import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from '@fpsak-frontend/utils/currencyUtils';
-import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle, harKunATFLISammeOrgUtenBestebergning } from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
+import Table from 'sharedComponents/Table';
+import TableRow from 'sharedComponents/TableRow';
+import TableColumn from 'sharedComponents/TableColumn';
+import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from 'utils/currencyUtils';
+import faktaOmBeregningTilfelle, {
+  erATFLSpesialtilfelle,
+  harKunATFLISammeOrgUtenBestebergning,
+} from 'kodeverk/faktaOmBeregningTilfelle';
 
 import styles from './fastsettATFLInntektForm.less';
 
@@ -68,6 +73,55 @@ const createFLTableRow = (frilansAndel, readOnly, isAksjonspunktClosed) => (
   </TableRow>
 );
 
+const createATTableRow = (aktivitet, readOnly, isAksjonspunktClosed) => (
+  <TableRow key={createInputfieldKeyAT(aktivitet.arbeidsforhold)}>
+    <TableColumn>
+      <Normaltekst>{createVisningsnavnForAktivitet(aktivitet.arbeidsforhold)}</Normaltekst>
+    </TableColumn>
+    <TableColumn>
+      {aktivitet.arbeidsforhold && aktivitet.arbeidsforhold.startdato
+      && (
+        <Normaltekst>
+          <FormattedMessage
+            id="BeregningInfoPanel.VurderOgFastsettATFL.Periode"
+            values={{
+              fom: moment(aktivitet.arbeidsforhold.startdato).format(DDMMYYYY_DATE_FORMAT),
+              tom: aktivitet.arbeidsforhold.opphoersdato ? moment(aktivitet.arbeidsforhold.opphoersdato).format(DDMMYYYY_DATE_FORMAT) : '',
+            }}
+          />
+        </Normaltekst>
+      )
+      }
+    </TableColumn>
+    {skalFastsetteATForholdInntekt(aktivitet)
+    && (
+      <TableColumn className={readOnly ? styles.adjustedFieldInput : styles.rightAlignInput}>
+        <InputField
+          name={createInputfieldKeyAT(aktivitet.arbeidsforhold)}
+          bredde="S"
+          validate={[required]}
+          parse={parseCurrencyInput}
+          isEdited={isAksjonspunktClosed}
+          readOnly={readOnly}
+        />
+      </TableColumn>
+    )
+    }
+    {!skalFastsetteATForholdInntekt(aktivitet)
+    && (
+      <TableColumn>
+        <div className={styles.rightAlignText}>
+          <Normaltekst>{formatCurrencyNoKr(aktivitet.inntektPrMnd)}</Normaltekst>
+        </div>
+      </TableColumn>
+    )
+    }
+    <TableColumn>
+      <Normaltekst>{aktivitet.inntektskategori ? aktivitet.inntektskategori.navn : ''}</Normaltekst>
+    </TableColumn>
+  </TableRow>
+);
+
 const createTableRows = (frilansAndel, aktiviteter, readOnly, isAksjonspunktClosed, skalFastsetteFL, skalFastsetteAT) => {
   const rows = [];
   if (frilansAndel && skalFastsetteFL) {
@@ -75,54 +129,7 @@ const createTableRows = (frilansAndel, aktiviteter, readOnly, isAksjonspunktClos
   }
   if (aktiviteter && skalFastsetteAT) {
     aktiviteter.forEach((aktivitet) => {
-      rows.push(
-        <TableRow key={createInputfieldKeyAT(aktivitet.arbeidsforhold)}>
-          <TableColumn>
-            <Normaltekst>{createVisningsnavnForAktivitet(aktivitet.arbeidsforhold)}</Normaltekst>
-          </TableColumn>
-          <TableColumn>
-            {aktivitet.arbeidsforhold && aktivitet.arbeidsforhold.startdato
-          && (
-          <Normaltekst>
-            <FormattedMessage
-              id="BeregningInfoPanel.VurderOgFastsettATFL.Periode"
-              values={{
-                fom: moment(aktivitet.arbeidsforhold.startdato).format(DDMMYYYY_DATE_FORMAT),
-                tom: aktivitet.arbeidsforhold.opphoersdato ? moment(aktivitet.arbeidsforhold.opphoersdato).format(DDMMYYYY_DATE_FORMAT) : '',
-              }}
-            />
-          </Normaltekst>
-          )
-          }
-          </TableColumn>
-          {skalFastsetteATForholdInntekt(aktivitet)
-        && (
-        <TableColumn className={readOnly ? styles.adjustedFieldInput : styles.rightAlignInput}>
-          <InputField
-            name={createInputfieldKeyAT(aktivitet.arbeidsforhold)}
-            bredde="S"
-            validate={[required]}
-            parse={parseCurrencyInput}
-            isEdited={isAksjonspunktClosed}
-            readOnly={readOnly}
-          />
-        </TableColumn>
-        )
-        }
-          {!skalFastsetteATForholdInntekt(aktivitet)
-        && (
-        <TableColumn>
-          <div className={styles.rightAlignText}>
-            <Normaltekst>{formatCurrencyNoKr(aktivitet.inntektPrMnd)}</Normaltekst>
-          </div>
-        </TableColumn>
-        )
-        }
-          <TableColumn>
-            <Normaltekst>{aktivitet.inntektskategori ? aktivitet.inntektskategori.navn : ''}</Normaltekst>
-          </TableColumn>
-        </TableRow>,
-      );
+      rows.push(createATTableRow(aktivitet, readOnly, isAksjonspunktClosed));
     });
   }
   return rows;
@@ -255,8 +262,8 @@ const slaSammenATListerSomSkalVurderes = (faktaOmBeregning) => {
       }
     });
   }
-  if (faktaOmBeregning.atogFLISammeOrganisasjonListe) {
-    faktaOmBeregning.atogFLISammeOrganisasjonListe.forEach((forhold) => {
+  if (faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe) {
+    faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.forEach((forhold) => {
       if (!andelsNrLagtIListen.includes(forhold.andelsnr)) {
         andelsNrLagtIListen.push(forhold.andelsnr);
         listeMedArbeidsforholdSomSkalFastsettes.push(forhold);
@@ -287,8 +294,8 @@ FastsettATFLInntektForm.buildInitialValues = (beregningsgrunnlag) => {
   const frilansAndel = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
     .find(andel => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
 
-  if (faktaOmBeregning.atogFLISammeOrganisasjonListe !== null) {
-    faktaOmBeregning.atogFLISammeOrganisasjonListe.forEach((aktivitet) => {
+  if (faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe) {
+    faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.forEach((aktivitet) => {
       const korrektAndel = finnKorrektBGAndelFraFaktaOmBeregningAndel(aktivitet, beregningsgrunnlag);
       if (korrektAndel && korrektAndel.beregnetPrAar !== null && korrektAndel.beregnetPrAar !== undefined) {
         const key = createInputfieldKeyAT(aktivitet.arbeidsforhold);
@@ -296,7 +303,7 @@ FastsettATFLInntektForm.buildInitialValues = (beregningsgrunnlag) => {
       }
     });
   }
-  if (faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM !== null) {
+  if (faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM) {
     faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM.forEach((aktivitet) => {
       const korrektAndel = finnKorrektBGAndelFraFaktaOmBeregningAndel(aktivitet, beregningsgrunnlag);
       if (korrektAndel !== undefined && korrektAndel.lonnsendringIBeregningsperioden === true) {

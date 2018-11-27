@@ -1,15 +1,14 @@
-import { getRestApiFinished, makeRestApiRequest, resetRestApi } from '@fpsak-frontend/data/duck';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
+import fpsakApi from 'data/fpsakApi';
 import { getTotrinnskontrollArsaker } from 'behandling/behandlingSelectors';
 
 /* Action creators */
-export const approve = makeRestApiRequest(FpsakApi.SAVE_AKSJONSPUNKT);
+export const approve = fpsakApi.SAVE_AKSJONSPUNKT.makeRestApiRequest();
 
-export const resetApproval = resetRestApi(FpsakApi.SAVE_AKSJONSPUNKT);
+export const resetApproval = fpsakApi.SAVE_AKSJONSPUNKT.resetRestApi();
 
 
 /* Selectors */
-export const getApproveFinished = getRestApiFinished(FpsakApi.SAVE_AKSJONSPUNKT);
+export const getApproveFinished = fpsakApi.SAVE_AKSJONSPUNKT.getRestApiFinished();
 
 const onlyUnique = (value, index, self) => self.indexOf(value) === index;
 

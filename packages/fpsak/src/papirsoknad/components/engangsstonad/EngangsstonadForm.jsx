@@ -3,13 +3,14 @@ import { reduxForm, formPropTypes, formValueSelector } from 'redux-form';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { isEqual } from '@fpsak-frontend/utils/objectUtils';
+import { isEqual } from 'utils/objectUtils';
 import { getRegisteredFields } from 'papirsoknad/duck';
 import MottattDatoPanel from 'papirsoknad/components/commonPanels/MottattDatoPanel';
 import SoknadData from 'papirsoknad/SoknadData';
-import familieHendelseType from '@fpsak-frontend/kodeverk/familieHendelseType';
+import familieHendelseType from 'kodeverk/familieHendelseType';
 import LagreSoknadPanel from 'papirsoknad/components/commonPanels/LagreSoknadPanel';
 import { getFagsakPerson } from 'fagsak/fagsakSelectors';
+import { rettighet } from '../commonPanels/rettigheter/RettigheterPanel';
 import RegistreringAdopsjonOgOmsorgGrid from './RegistreringAdopsjonOgOmsorgGrid';
 import RegistreringFodselGrid from './RegistreringFodselGrid';
 
@@ -93,12 +94,22 @@ const getValidation = (soknadData, sokerPersonnummer) => {
   return null;
 };
 
+const transformRootValues = (state, registeredFieldNames) => {
+  const values = formValueSelector(ENGANGSSTONAD_FORM_NAME)(state, ...registeredFieldNames);
+  if (values.rettigheter === rettighet.IKKE_RELEVANT) {
+    const { rettigheter, ...nyeVerdier } = values; // NOSONAR destruct er bedre enn delete, immutable
+    return nyeVerdier;
+  }
+  return values;
+};
+
+
 const mapStateToProps = (state, initialProps) => {
   const sokerPersonnummer = getFagsakPerson(state).personnummer;
   const registeredFields = getRegisteredFields(ENGANGSSTONAD_FORM_NAME)(state);
   const registeredFieldNames = Object.values(registeredFields).map(rf => rf.name);
   const valuesForRegisteredFieldsOnly = registeredFieldNames.length
-    ? formValueSelector(ENGANGSSTONAD_FORM_NAME)(state, ...registeredFieldNames)
+    ? transformRootValues(state, registeredFieldNames)
     : {};
   return {
     initialValues: buildInitialValues(initialProps.soknadData),

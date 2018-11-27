@@ -7,6 +7,10 @@
   overflow-x: auto;
   padding: 10px;
 
+  .tableTitle {
+    font-weight: bold;
+  }
+
   table {
     border: 0px;
     margin-bottom: 40px;
@@ -19,14 +23,6 @@
       border-left: dashed 1px @navGra40;
       margin-left: 20px;
       width: 60px;
-    }
-
-    thead {
-      td:last-child {
-        border-left: dashed 1px @navGra40;
-        margin-left: 20px;
-        width: 60px;
-      }
     }
 
     tr {
@@ -47,6 +43,32 @@
     tr:after {
       content: '';
       flex-grow: 1;
+    }
+
+    thead {
+      tr {
+        border-bottom: solid 1px @navGra40;
+      }
+
+      td:last-child {
+        margin-left: 20px;
+        padding: 0px;
+        width: 60px;
+
+        span {
+          align-items: center;
+          display: flex;
+          height: 100%;
+          justify-content: center;
+          width: 100%;
+        }
+      }
+
+      td {
+        .nextPeriod {
+          border-left: dashed 1px @navGra40;
+        }
+      }
     }
   }
 }

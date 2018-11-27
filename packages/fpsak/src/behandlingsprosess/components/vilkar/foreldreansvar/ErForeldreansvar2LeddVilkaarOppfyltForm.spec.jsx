@@ -6,11 +6,11 @@ import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-for
 
 import BpPanelTemplate from 'behandlingsprosess/components/vilkar/BpPanelTemplate';
 import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
-import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import vilkarType from 'kodeverk/vilkarType';
+import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
 import { ErForeldreansvar2LeddVilkaarOppfyltFormImpl as UnwrappedForm, buildInitialValues } from './ErForeldreansvar2LeddVilkaarOppfyltForm';
 
 

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import { Fieldset } from 'nav-frontend-skjema';
 
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
+import { RadioGroupField, RadioOption } from 'form/Fields';
+import BorderBox from 'sharedComponents/BorderBox';
 import SoknadData from 'papirsoknad/SoknadData';
-import foreldreType from '@fpsak-frontend/kodeverk/foreldreType';
-import familieHendelseType from '@fpsak-frontend/kodeverk/familieHendelseType';
+import foreldreType from 'kodeverk/foreldreType';
+import familieHendelseType from 'kodeverk/familieHendelseType';
 
 import styles from './rettigheterPanel.less';
 
@@ -15,6 +15,7 @@ export const rettighet = {
   ANNEN_FORELDER_DOED: 'ANNEN_FORELDER_DOED',
   OVERTA_FORELDREANSVARET_ALENE: 'OVERTA_FORELDREANSVARET_ALENE',
   MANN_ADOPTERER_ALENE: 'MANN_ADOPTERER_ALENE',
+  IKKE_RELEVANT: 'IKKE_RELEVANT',
 };
 
 /**
@@ -50,6 +51,11 @@ export const RettigheterPanel = ({
         />
         )
         }
+        <RadioOption
+          className={styles.breakLabelText}
+          label={{ id: 'Registrering.Rettigheter.IkkeRelevant' }}
+          value={rettighet.IKKE_RELEVANT}
+        />
       </RadioGroupField>
     </Fieldset>
   </BorderBox>

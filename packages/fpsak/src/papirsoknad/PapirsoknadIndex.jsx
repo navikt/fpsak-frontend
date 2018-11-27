@@ -7,29 +7,27 @@
  */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { routerActions } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { ErrorTypes } from '@fpsak-frontend/data/error/ErrorTypes';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
-import { getRestApiFinished, getRestApiError } from '@fpsak-frontend/data/duck';
+import { ErrorTypes } from 'app/ErrorTypes';
+import fpsakApi from 'data/fpsakApi';
 import PersonIndex from 'person/PersonIndex';
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
+import SoknadData from 'papirsoknad/SoknadData';
 import requireProps from 'app/data/requireProps';
 import {
   getSelectedBehandlingIdentifier, getBehandlingVersjon, getBehandlingIsOnHold, getAksjonspunkter,
 }
   from 'behandling/behandlingSelectors';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
-import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
-import { getRettigheter } from '@fpsak-frontend/nav-ansatt/duck';
-import rettighetPropType from '@fpsak-frontend/nav-ansatt/rettighetPropType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import LoadingPanel from 'sharedComponents/LoadingPanel';
+import { getRettigheter } from 'navAnsatt/duck';
+import rettighetPropType from 'navAnsatt/rettighetPropType';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import {
   resetRegistrering, submitRegistrering, resetRegistreringSuccess, setSoknadData, getSoknadData,
 } from './duck';
-import SoknadData from './SoknadData';
 import RegistrerPapirsoknad from './components/RegistrerPapirsoknad';
 import SoknadRegistrertModal from './components/SoknadRegistrertModal';
 
@@ -138,7 +136,8 @@ PapirsoknadIndex.defaultProps = {
 const hasAccessError = error => !!(error && error.type === ErrorTypes.MANGLER_TILGANG_FEIL);
 
 const mapStateToProps = state => ({
-  submitRegistreringSuccess: getRestApiFinished(FpsakApi.SAVE_AKSJONSPUNKT)(state) || hasAccessError(getRestApiError(FpsakApi.SAVE_AKSJONSPUNKT)(state)),
+  submitRegistreringSuccess: fpsakApi.SAVE_AKSJONSPUNKT.getRestApiFinished()(state)
+  || hasAccessError(fpsakApi.SAVE_AKSJONSPUNKT.getRestApiError()(state)),
   soknadData: getSoknadData(state),
   aksjonspunkter: getAksjonspunkter(state),
   behandlingIdentifier: getSelectedBehandlingIdentifier(state),
@@ -149,7 +148,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
-    ...routerActions,
     submitRegistrering,
     setSoknadData,
     resetRegistrering,

@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Row, Column } from 'nav-frontend-grid';
-import { Undertekst, Normaltekst, Element } from 'nav-frontend-typografi';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
+import { Column, Row } from 'nav-frontend-grid';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import BorderBox from 'sharedComponents/BorderBox';
+import { formatCurrencyNoKr } from 'utils/currencyUtils';
 
 import styles from './inntektsopplysningerPanel.less';
 
@@ -32,19 +32,19 @@ const InntektsopplysningerPanel = ({
           <FormattedMessage id="Beregningsgrunnlag.Inntektsopplysninger.BeregnetAarsinntekt" />
         </Undertekst>
       </Column>
-      { sammenligningsgrunnlag
+      { sammenligningsgrunnlag !== undefined && sammenligningsgrunnlag !== null
       && (
-      <Column xs="6">
-        {
-              sammenligningsgrunnlagTekst.map(tekst => (
-                <Undertekst key={tekst}>
-                  <FormattedMessage id={tekst} />
-                </Undertekst>
-              ))
-            }
-      </Column>
-      )
+        <Column xs="6">
+          {
+            sammenligningsgrunnlagTekst.map(tekst => (
+              <Undertekst key={tekst}>
+                <FormattedMessage id={tekst} />
+              </Undertekst>
+            ))
           }
+        </Column>
+      )
+      }
     </Row>
     <Row>
       <Column xs="6">
@@ -55,25 +55,25 @@ const InntektsopplysningerPanel = ({
       </Column>
       { sammenligningsgrunnlag
       && (
-      <Column xs="6">
-        <Element>
-          {formatCurrencyNoKr(sammenligningsgrunnlag)}
-        </Element>
-      </Column>
+        <Column xs="6">
+          <Element>
+            {formatCurrencyNoKr(sammenligningsgrunnlag)}
+          </Element>
+        </Column>
       )
-          }
+      }
     </Row>
     { avvik !== undefined
     && (
-    <Row>
-      <Column xs="12" className={styles.bottomText}>
-        <Normaltekst>
-          <FormattedMessage key="avvik" id="Beregningsgrunnlag.Inntektsopplysninger.Avvik" values={{ verdi: avvik }} />
-        </Normaltekst>
-      </Column>
-    </Row>
+      <Row>
+        <Column xs="12" className={styles.bottomText}>
+          <Normaltekst>
+            <FormattedMessage key="avvik" id="Beregningsgrunnlag.Inntektsopplysninger.Avvik" values={{ verdi: avvik }} />
+          </Normaltekst>
+        </Column>
+      </Row>
     )
-        }
+    }
   </BorderBox>
 );
 

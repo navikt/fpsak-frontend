@@ -1,23 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
-import FlexColumn from '@fpsak-frontend/shared-components/flexGrid/FlexColumn';
-import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';
-import FlexContainer from '@fpsak-frontend/shared-components/flexGrid/FlexContainer';
+import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
+import FlexRow from 'sharedComponents/flexGrid/FlexRow';
+import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
 import {
   CheckboxField, DecimalField,
-} from '@fpsak-frontend/form';
+} from 'form/Fields';
 import {
   required,
   hasValidDecimal,
   maxValue,
-} from '@fpsak-frontend/utils/validation/validators';
+} from 'utils/validation/validators';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
-import periodeResultatType from '@fpsak-frontend/kodeverk/periodeResultatType';
-import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/uttakArbeidType';
-import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/uttakArbeidTypeCodes';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
-import { calcDaysAndWeeks } from '@fpsak-frontend/utils/dateUtils';
+import periodeResultatType from 'kodeverk/periodeResultatType';
+import uttakArbeidTypeKodeverk from 'kodeverk/uttakArbeidType';
+import uttakArbeidTypeTekstCodes from 'kodeverk/uttakArbeidTypeCodes';
+import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import { calcDaysAndWeeks } from 'utils/dateUtils';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment/moment';
 import styles from './uttakActivity.less';
@@ -27,7 +27,7 @@ import styles from './uttakActivity.less';
  * Presentationskomponent. Viser opp den faktiska informasjonen om en periode i uttak
  */
 
-const maxValue200 = maxValue(200);
+const maxValue100 = maxValue(100);
 
 const periodeStatusClassName = (periode) => {
   if (periode.erOppfylt === false) {
@@ -106,7 +106,7 @@ export const UttakInfo = ({
   readOnly,
   graderingInnvilget,
   erSamtidigUttak,
-  stonadskontoer,
+  harSoktOmFlerbarnsdager,
 }) => (
   <Column xs="12">
     <div className={periodeStatusClassName(selectedItemData)}>
@@ -133,7 +133,7 @@ export const UttakInfo = ({
           }
         </Column>
         <Column xs="3">
-          {(stonadskontoer.FLERBARNSDAGER)
+          {(harSoktOmFlerbarnsdager)
           && (
           <CheckboxField
             key="flerbarnsdager"
@@ -160,7 +160,7 @@ export const UttakInfo = ({
                       readOnly={readOnly}
                       value={selectedItemData.samtidigUttaksprosent}
                       label={{ id: 'UttakInfo.SamtidigUttaksprosent' }}
-                      validate={[required, maxValue200, hasValidDecimal]}
+                      validate={[required, maxValue100, hasValidDecimal]}
                       format={(value) => {
                         if (value || value === 0) {
                           return readOnly ? `${value} %` : value;
@@ -243,10 +243,10 @@ export const UttakInfo = ({
 
 UttakInfo.propTypes = {
   selectedItemData: PropTypes.PropTypes.shape().isRequired,
-  stonadskontoer: PropTypes.shape().isRequired,
   kontoIkkeSatt: PropTypes.bool,
   isApOpen: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
+  harSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
   graderingInnvilget: PropTypes.bool,
   erSamtidigUttak: PropTypes.bool,
 };

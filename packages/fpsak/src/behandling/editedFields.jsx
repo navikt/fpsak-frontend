@@ -1,5 +1,5 @@
-import soknadType from '@fpsak-frontend/kodeverk/soknadType';
-import { diff } from '@fpsak-frontend/utils/objectUtils';
+import soknadType from 'kodeverk/soknadType';
+import { diff } from 'utils/objectUtils';
 
 const hasValue = value => value !== null && value !== undefined;
 

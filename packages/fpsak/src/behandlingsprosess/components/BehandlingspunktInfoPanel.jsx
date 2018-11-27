@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import {
-  hasBehandlingspunktAtLeastOneOpenAksjonspunkt, isSelectedBehandlingspunktReadOnly, isBehandlingspunktAksjonspunkterSolvable,
-  getBehandlingspunktAksjonspunkterCodes, isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt,
-}
-  from 'behandlingsprosess/behandlingsprosessSelectors';
+  getBehandlingspunktAksjonspunkterCodes,
+  hasBehandlingspunktAtLeastOneOpenAksjonspunkt,
+  isBehandlingspunktAksjonspunkterSolvable,
+  isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt,
+  isSelectedBehandlingspunktReadOnly,
+} from 'behandlingsprosess/behandlingsprosessSelectors';
 import CheckPersonStatusForm from './saksopplysninger/CheckPersonStatusForm';
 import AvregningPanel from './avregning/AvregningPanel';
 import TilkjentYtelsePanel from './tilkjentYtelse/TilkjentYtelsePanel';
@@ -15,6 +17,8 @@ import VedtakPanels from './vedtak/VedtakPanels';
 import VilkarPanels from './vilkar/VilkarPanels';
 import BehandleKlageNfpForm from './klage/BehandleKlageNfpForm';
 import BehandleKlageNkForm from './klage/BehandleKlageNkForm';
+import FormkravKlageFormNfp from './klage/FormkravKlageFormNfp';
+import FormkravKlageFormKa from './klage/FormkravKlageFormKa';
 import InnsynForm from './innsyn/InnsynForm';
 import BeregningFP from './beregningsgrunnlag/BeregningFP';
 import VarselOmRevurderingForm from './revurdering/VarselOmRevurderingForm';
@@ -102,6 +106,26 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
       />
       )
       }
+      {FormkravKlageFormNfp.supports(apCodes)
+      && (
+        <FormkravKlageFormNfp
+          submitCallback={submitCallback}
+          readOnly={readOnly}
+          previewCallback={previewCallback}
+          readOnlySubmitButton={readOnlySubmitButton}
+        />
+      )
+      }
+      {FormkravKlageFormKa.supports(apCodes)
+      && (
+        <FormkravKlageFormKa
+          submitCallback={submitCallback}
+          readOnly={readOnly}
+          previewCallback={previewCallback}
+          readOnlySubmitButton={readOnlySubmitButton}
+        />
+      )
+      }
       {BeregningFP.supports(selectedBehandlingspunkt)
       && (
       <BeregningFP
@@ -130,10 +154,14 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
       />
       )
       }
-      {AvregningPanel.supports(selectedBehandlingspunkt)
+      {AvregningPanel.supports(selectedBehandlingspunkt, apCodes)
       && (
         <AvregningPanel
+          submitCallback={submitCallback}
           readOnly={readOnly}
+          readOnlySubmitButton={readOnlySubmitButton}
+          apCodes={apCodes}
+          isApOpen={openAksjonspunkt}
         />
       )
       }

@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { InputField } from '@fpsak-frontend/form';
+import { InputField } from 'form/Fields';
 import { BehandlingFormFieldCleaner } from './BehandlingFormFieldCleaner';
 
 describe('BehandlingFormFieldCleaner', () => {

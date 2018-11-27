@@ -1,18 +1,20 @@
 import { createSelector } from 'reselect';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import BehandlingType from 'kodeverk/behandlingType';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import { getRettigheter } from '@fpsak-frontend/nav-ansatt/duck';
+import { getRettigheter } from 'navAnsatt/duck';
 import { DEFAULT_BEHANDLINGSPROSESS } from 'app/paths';
-import { arrayToObject } from '@fpsak-frontend/utils/objectUtils';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
-import fyt from '@fpsak-frontend/kodeverk/fagsakYtelseType';
+import { arrayToObject } from 'utils/objectUtils';
+import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import fyt from 'kodeverk/fagsakYtelseType';
 import {
   getBehandlingIsOnHold, getAllMerknaderFraBeslutter, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat,
   getBehandlingInnsynResultatType, getBehandlingResultatstruktur, getStonadskontoer, hasReadOnlyBehandling, isBehandlingStatusReadOnly,
 } from 'behandling/behandlingSelectors';
-import { getFeatureToggleSimulering } from '@fpsak-frontend/data/error/duck';
+import { getFeatureToggleSimulering, getFeatureToggleLøpendeMedlemskap } from 'app/duck';
+import createTilbakekrevingBpProps from './tilbakekreving/definition/tilbakekrevingBpDefinition';
 import behandlingspunktCodes from './behandlingspunktCodes';
 import createEngangsstonadBpProps from './definition/engangsstonadBpDefinition';
 import createForeldrepengerBpProps from './definition/foreldrepengerBpDefinition';
@@ -20,10 +22,10 @@ import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from '
 
 // Kun eksportert for test. Ikke bruk andre steder!
 export const getBehandlingspunkterProps = createSelector(
-  [getFagsakYtelseType, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat,
-    getBehandlingInnsynResultatType, getBehandlingResultatstruktur, getStonadskontoer, getFeatureToggleSimulering],
-  (fagsakYtelseType, behandlingType, vilkar, aksjonspunkter, behandlingsresultat,
-    innsynResultatType, resultatstruktur, stonadskontoer, featureToggleSimulering) => {
+  [getFagsakYtelseType, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat, getBehandlingInnsynResultatType,
+    getBehandlingResultatstruktur, getStonadskontoer, getFeatureToggleSimulering, getFeatureToggleLøpendeMedlemskap],
+  (fagsakYtelseType, behandlingType, vilkar = [], aksjonspunkter, behandlingsresultat,
+    innsynResultatType, resultatstruktur, stonadskontoer, featureToggleSimulering, featureToggleLøpendeMedlemskap) => {
     if (!behandlingType) {
       return undefined;
     }
@@ -37,7 +39,14 @@ export const getBehandlingspunkterProps = createSelector(
       resultatstruktur,
       stonadskontoer,
       featureToggleSimulering,
+      featureToggleLøpendeMedlemskap,
     };
+
+    // TODO (TOR) Temp kode til ein får splitta ut tilbakekreving
+    if (behandlingType.kode === BehandlingType.TILBAKEKREVING) {
+      return createTilbakekrevingBpProps(builderData);
+    }
+
     return fagsakYtelseType.kode === fyt.ENGANGSSTONAD
       ? createEngangsstonadBpProps(builderData) : createForeldrepengerBpProps(builderData);
   },

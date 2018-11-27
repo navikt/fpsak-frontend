@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/navBrukerKjonn';
+import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import PersonDetailedHeader from './panelHeader/PersonDetailedHeader';
 

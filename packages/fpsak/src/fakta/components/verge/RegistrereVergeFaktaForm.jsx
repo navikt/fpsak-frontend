@@ -7,12 +7,12 @@ import { Undertekst } from 'nav-frontend-typografi';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import {
   required, hasValidDate, hasValidFodselsnummer, hasValidName,
-} from '@fpsak-frontend/utils/validation/validators';
+} from 'utils/validation/validators';
 import {
   InputField, DatepickerField, SelectField, TextAreaField, CheckboxField,
-} from '@fpsak-frontend/form';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+} from 'form/Fields';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 
 import styles from './RegistrereVergeFaktaForm.less';
 

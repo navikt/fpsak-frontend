@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
+import TableColumn from 'sharedComponents/TableColumn';
+import TableRow from 'sharedComponents/TableRow';
+import Table from 'sharedComponents/Table';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { stonadskontoerPropType } from 'behandling/proptypes/stonadskontoPropType';
-import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/uttakArbeidType';
-import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/uttakArbeidTypeCodes';
-import stonadskontoType from '@fpsak-frontend/kodeverk/stonadskontoType';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
+import uttakArbeidTypeKodeverk from 'kodeverk/uttakArbeidType';
+import uttakArbeidTypeTekstCodes from 'kodeverk/uttakArbeidTypeCodes';
+import stonadskontoType from 'kodeverk/stonadskontoType';
+import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
 import moment from 'moment';
 
 import TimeLineTab from './TimeLineTab';
@@ -45,18 +47,24 @@ const findAntallUkerOgDager = (saldo) => {
 };
 
 const createTextStrings = (arbforhold) => {
+  // TODO lage en util av denne funskjonen da dette gjøres en del steder i fpsak frontend
   const {
-    arbeidsforholdNavn, arbeidsforholdOrgnr, arbeidsforholdId, uttakArbeidType,
+    arbeidsgiver, arbeidsforholdId, uttakArbeidType,
   } = arbforhold;
+  const {
+    identifikator, navn, virksomhet,
+  } = arbeidsgiver;
+
   let arbeidsforhold = '';
 
   if (uttakArbeidType && uttakArbeidType.kode !== uttakArbeidTypeKodeverk.ORDINÆRT_ARBEID) {
     arbeidsforhold = <FormattedMessage id={uttakArbeidTypeTekstCodes[uttakArbeidType.kode]} />;
   } else {
-    arbeidsforhold = arbeidsforholdNavn ? `${arbeidsforholdNavn}` : `${uttakArbeidType.navn}`;
-    arbeidsforhold = arbeidsforholdOrgnr ? `${arbeidsforhold} (${arbeidsforholdOrgnr})` : arbeidsforhold;
-    arbeidsforhold = arbeidsforholdId ? `${arbeidsforhold}...${arbeidsforholdId.substr(-4)}` : arbeidsforhold;
+    arbeidsforhold = navn ? `${navn}` : arbeidsforhold;
+    arbeidsforhold = identifikator ? `${arbeidsforhold} (${identifikator})` : arbeidsforhold;
+    arbeidsforhold = virksomhet && arbeidsforholdId ? `${arbeidsforhold}...${arbeidsforholdId.substr(-4)}` : arbeidsforhold;
   }
+
   return arbeidsforhold;
 };
 
@@ -179,7 +187,7 @@ class TimeLineInfo extends Component {
                 </div>
               </Row>
               <Row>
-                {visKonto
+                {visKonto && visKonto.kontoinfo.aktivitetSaldoDtoList.length > 0
                 && (
                   <div className={styles.visKonto}>
                     <Table headerTextCodes={headerTextCodes}>

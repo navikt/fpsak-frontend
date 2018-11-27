@@ -3,9 +3,9 @@ import { expect } from 'chai';
 
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
-import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
+import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import vilkarType from 'kodeverk/vilkarType';
+import behandlingStatus from 'kodeverk/behandlingStatus';
 import VedtakAvslagArsakOgBegrunnelsePanel from './VedtakAvslagArsakOgBegrunnelsePanel';
 
 

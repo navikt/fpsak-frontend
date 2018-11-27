@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import FlexColumn from '@fpsak-frontend/shared-components/flexGrid/FlexColumn';
-import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';
-import FlexContainer from '@fpsak-frontend/shared-components/flexGrid/FlexContainer';
+import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
+import FlexRow from 'sharedComponents/flexGrid/FlexRow';
+import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/uttakPeriodeVurdering';
-import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
+import { RadioOption, RadioGroupField, TextAreaField } from 'form/Fields';
 import {
   required, maxLength, minLength, hasValidPeriod, hasValidText,
-} from '@fpsak-frontend/utils/validation/validators';
+} from 'utils/validation/validators';
 import InntektsmeldingInfo from '../components/InntektsmeldingInfo';
 import EndreSoknadsperiode from '../components/EndreSoknadsperiode';
 import PerioderKnapper from './PerioderKnapper';
@@ -35,8 +35,7 @@ export const FerieOgArbeidsPeriode = ({
   fraDato,
   tilDato,
   fieldId,
-  virksomhetNavn,
-  orgnr,
+  arbeidsgiver,
   uttakPeriodeType,
   ...formProps
 }) => {
@@ -103,8 +102,7 @@ export const FerieOgArbeidsPeriode = ({
               uttakPeriodeType={uttakPeriodeType}
               arbeidsprosentFraSøknad={arbeidstidprosent}
               bekreftet={bekreftet}
-              virksomhetNavn={virksomhetNavn}
-              orgnr={orgnr}
+              arbeidsgiver={arbeidsgiver}
             />
           </FlexColumn>
         </FlexRow>
@@ -137,16 +135,14 @@ FerieOgArbeidsPeriode.propTypes = {
   fraDato: PropTypes.string.isRequired,
   tilDato: PropTypes.string.isRequired,
   uttakPeriodeType: PropTypes.shape().isRequired,
-  virksomhetNavn: PropTypes.string,
-  orgnr: PropTypes.string,
+  arbeidsgiver: PropTypes.shape(),
 };
 
 FerieOgArbeidsPeriode.defaultProps = {
   inntektsmeldingInfo: [],
   arbeidstidprosent: null,
   resultat: undefined,
-  virksomhetNavn: null,
-  orgnr: null,
+  arbeidsgiver: {},
 };
 
 const validateForm = ({ nyFom, nyTom }) => {
@@ -166,13 +162,14 @@ const mapToStateToProps = (state, ownProps) => {
   const resultat = behandlingFormValueSelector(formName)(state, 'resultat');
   const initialResultat = behandlingFormValueSelector('UttakInfoPanel')(state, `${ownProps.fieldId}.resultat`);
   const begrunnelse = behandlingFormValueSelector('UttakInfoPanel')(state, `${ownProps.fieldId}.begrunnelse`);
+  const saksebehandlersBegrunnelse = behandlingFormValueSelector('UttakInfoPanel')(state, `${ownProps.fieldId}.saksebehandlersBegrunnelse`);
   const { bekreftet } = ownProps;
 
   return {
     resultat,
     bekreftet,
     initialValues: {
-      begrunnelse,
+      begrunnelse: begrunnelse || saksebehandlersBegrunnelse,
       id: ownProps.id,
       resultat: initialResultat ? initialResultat.kode : undefined,
       nyTom: ownProps.tilDato,

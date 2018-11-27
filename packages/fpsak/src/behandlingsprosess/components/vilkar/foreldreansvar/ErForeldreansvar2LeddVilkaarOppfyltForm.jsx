@@ -9,13 +9,13 @@ import BpPanelTemplate from 'behandlingsprosess/components/vilkar/BpPanelTemplat
 import { getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { getBehandlingsresultat } from 'behandling/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
+import { getKodeverk } from 'kodeverk/duck';
+import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
-import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
+import vilkarType from 'kodeverk/vilkarType';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import VilkarResultPicker from 'behandlingsprosess/components/vilkar/VilkarResultPicker';
 import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';

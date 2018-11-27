@@ -3,8 +3,9 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+import BehandlingType from 'kodeverk/behandlingType';
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
+import LoadingPanel from 'sharedComponents/LoadingPanel';
 import { BehandlingResolver } from './BehandlingResolver';
 
 describe('BehandlingResolver', () => {
@@ -20,6 +21,7 @@ describe('BehandlingResolver', () => {
         fetchBehandling={fetchBehandling}
         behandlingerVersjonMappedById={{ test: 'test' }}
         isInSync={false}
+        behandlingerTyperMappedById={{ 1: BehandlingType.FORSTEGANGSSOKNAD }}
       >
         <div>test</div>
       </BehandlingResolver>,
@@ -46,6 +48,7 @@ describe('BehandlingResolver', () => {
         fetchBehandling={fetchBehandling}
         behandlingerVersjonMappedById={{ }}
         isInSync
+        behandlingerTyperMappedById={{ 1: BehandlingType.FORSTEGANGSSOKNAD }}
       >
         <div>test</div>
       </BehandlingResolver>,

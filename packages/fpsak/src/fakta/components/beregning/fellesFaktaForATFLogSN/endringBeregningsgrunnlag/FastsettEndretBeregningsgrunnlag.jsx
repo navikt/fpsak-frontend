@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-  getEndringBeregningsgrunnlagPerioder,
-  getFaktaOmBeregningTilfellerKoder,
-} from 'behandling/behandlingSelectors';
+import { getEndringBeregningsgrunnlagPerioder, getFaktaOmBeregningTilfellerKoder } from 'behandling/behandlingSelectors';
 import EndringBeregningsgrunnlagForm from './EndringBeregningsgrunnlagForm';
-import { harKunEndringBG } from './EndretBeregningsgrunnlagUtils';
+import { harKunTilfellerSomStøtterEndringBG } from './EndretBeregningsgrunnlagUtils';
 
 export const FastsettEndretBeregningsgrunnlagImpl = ({
   isAksjonspunktClosed,
@@ -23,7 +20,7 @@ export const FastsettEndretBeregningsgrunnlagImpl = ({
 );
 
 FastsettEndretBeregningsgrunnlagImpl.buildInitialValues = (endringBGPerioder, tilfeller) => {
-  if (!harKunEndringBG(tilfeller)) {
+  if (!harKunTilfellerSomStøtterEndringBG(tilfeller)) {
     return {};
   }
   return EndringBeregningsgrunnlagForm
@@ -33,7 +30,7 @@ FastsettEndretBeregningsgrunnlagImpl.buildInitialValues = (endringBGPerioder, ti
 FastsettEndretBeregningsgrunnlagImpl.transformValues = (values, endringBGPerioder) => EndringBeregningsgrunnlagForm.transformValues(values, endringBGPerioder);
 
 FastsettEndretBeregningsgrunnlagImpl.validate = (values, endringBGPerioder, tilfeller) => {
-  if (!harKunEndringBG(tilfeller)) {
+  if (!harKunTilfellerSomStøtterEndringBG(tilfeller)) {
     return {};
   }
   return EndringBeregningsgrunnlagForm
@@ -51,7 +48,7 @@ const mapStateToProps = (state) => {
   const tilfeller = getFaktaOmBeregningTilfellerKoder(state);
   const perioder = getEndringBeregningsgrunnlagPerioder(state);
   return ({
-    skalHaEndretInformasjonIHeader: !harKunEndringBG(tilfeller),
+    skalHaEndretInformasjonIHeader: !harKunTilfellerSomStøtterEndringBG(tilfeller),
     perioder: perioder || [],
   });
 };

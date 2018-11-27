@@ -1,10 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import { RadioGroupField } from '@fpsak-frontend/form';
+import { RadioGroupField } from 'form/Fields';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 import sinon from 'sinon';
 import { FerieOgArbeidsPeriode } from './FerieOgArbeidsPeriode';
+
+const arbeidsgiver = {};
 
 describe('<FerieOgArbeidsPeriode>', () => {
   it('skal vise ferie og arbeids periode', () => {
@@ -20,7 +22,7 @@ describe('<FerieOgArbeidsPeriode>', () => {
       updated
       bekreftet
       readOnly={false}
-      arbeidsgiverNavn="test"
+      arbeidsgiver={arbeidsgiver}
       utsettelseArsak={{
         kode: 'ARBEID',
       }}

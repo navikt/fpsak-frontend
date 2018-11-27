@@ -5,14 +5,14 @@ import sinon from 'sinon';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
-import BehandlingResultatType from '@fpsak-frontend/kodeverk/behandlingResultatType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
+import BehandlingResultatType from 'kodeverk/behandlingResultatType';
+import behandlingStatus from 'kodeverk/behandlingStatus';
 import { VedtakFormImpl as UnwrappedForm, buildInitialValues } from './VedtakForm';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
-
+import VedtakOverstyrendeKnapp from './VedtakOverstyrendeKnapp';
 
 describe('<VedtakForm>', () => {
   const sprakkode = {
@@ -689,16 +689,17 @@ describe('<VedtakForm>', () => {
       previewVedtakCallback={forhandsvisVedtaksbrevFunc}
       previewManueltBrevCallback={forhandsvisVedtaksbrevFunc}
       aksjonspunktKoder={aksjonspunktKoder}
-      readOnly={false}
+      readOnly
       isBehandlingReadOnly
       sprakkode={sprakkode}
       kanOverstyre
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
     />);
-    const overstyringsKnapp = wrapper.find('CheckboxField');
-    expect(overstyringsKnapp.first().prop('name')).to.eql('skalBrukeOverstyrendeFritekstBrev');
-    expect(overstyringsKnapp.first().prop('readOnly')).to.eql(false);
+    const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
+    expect(overstyringsKnapp).to.have.length(1);
+    expect(overstyringsKnapp.prop('readOnly')).to.eql(true);
+    expect(overstyringsKnapp.prop('keyName')).to.eql('skalBrukeOverstyrendeFritekstBrev');
   });
   it('skal vise avkrysningsboks i skrivemodus for rolle med overstyringstilgang', () => {
     const wrapper = shallowWithIntl(<UnwrappedForm
@@ -712,16 +713,17 @@ describe('<VedtakForm>', () => {
       previewVedtakCallback={forhandsvisVedtaksbrevFunc}
       previewManueltBrevCallback={forhandsvisVedtaksbrevFunc}
       aksjonspunktKoder={aksjonspunktKoder}
-      readOnly
+      readOnly={false}
       isBehandlingReadOnly
       sprakkode={sprakkode}
       kanOverstyre
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
     />);
-    const overstyringsKnapp = wrapper.find('CheckboxField');
-    expect(overstyringsKnapp.first().prop('name')).to.eql('skalBrukeOverstyrendeFritekstBrev');
-    expect(overstyringsKnapp.first().prop('readOnly')).to.eql(true);
+    const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
+    expect(overstyringsKnapp).to.have.length(1);
+    expect(overstyringsKnapp.prop('readOnly')).to.eql(false);
+    expect(overstyringsKnapp.prop('keyName')).to.eql('skalBrukeOverstyrendeFritekstBrev');
   });
 
   it('skal ikke vise avkrysningsboks for rolle uten overstyringstilgang', () => {
@@ -743,7 +745,7 @@ describe('<VedtakForm>', () => {
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
     />);
-    const overstyringsKnapp = wrapper.find('CheckboxField');
+    const overstyringsKnapp = wrapper.find('VedtakOverstyrendeKnapp');
     expect(overstyringsKnapp).to.have.length(0);
   });
 });

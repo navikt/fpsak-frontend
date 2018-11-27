@@ -5,7 +5,7 @@ import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { getSoknad } from 'behandling/behandlingSelectors';
 import { behandlingForm } from 'behandling/behandlingForm';
 import withDefaultToggling from 'fakta/withDefaultToggling';

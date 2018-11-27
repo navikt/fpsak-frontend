@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
-import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/uttakPeriodeVurdering';
+import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
 import styles from './periodeTyper.less';
 
 export const PerioderKnapper = ({

@@ -6,8 +6,8 @@ import { clearFields, formPropTypes } from 'redux-form';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Row, Column } from 'nav-frontend-grid';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
-import avslagsarsakCodes from '@fpsak-frontend/kodeverk/avslagsarsakCodes';
+import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import avslagsarsakCodes from 'kodeverk/avslagsarsakCodes';
 import {
   getAksjonspunkter, getBehandlingResultatstruktur,
   isBehandlingStatusReadOnly, getBehandlingIsOnHold, getBehandlingStatus,
@@ -17,19 +17,19 @@ import { bindActionCreators } from 'redux';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
 import { getSelectedBehandlingId } from 'behandling/duck';
-import { isInnvilget, isAvslag } from '@fpsak-frontend/kodeverk/behandlingResultatType';
+import { isInnvilget, isAvslag } from 'kodeverk/behandlingResultatType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import { getRettigheter } from '@fpsak-frontend/nav-ansatt/duck';
-import { CheckboxField } from '@fpsak-frontend/form';
-import behandlingStatusCode from '@fpsak-frontend/kodeverk/behandlingStatus';
+import { getRettigheter } from 'navAnsatt/duck';
+import behandlingStatusCode from 'kodeverk/behandlingStatus';
 import FritekstBrevPanel from 'behandlingsprosess/components/vedtak/FritekstBrevPanel';
 import classNames from 'classnames';
-import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
+import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
 import VedtakAksjonspunktPanel from './VedtakAksjonspunktPanel';
 import styles from './vedtakForm.less';
+import VedtakOverstyrendeKnapp from './VedtakOverstyrendeKnapp';
 
 const getPreviewManueltBrevCallback = (formProps, finnesAllerede, skalOverstyre, previewManueltBrevCallback) => (e) => {
   if (formProps.valid || formProps.pristine) {
@@ -51,7 +51,7 @@ const getPreviewManueltBrevCallback = (formProps, finnesAllerede, skalOverstyre,
   e.preventDefault();
 };
 
-const ForhaandsvisningsKnapp = (props) => {
+export const ForhaandsvisningsKnapp = (props) => {
   const { previewFunction } = props;
   return (
     <a
@@ -143,86 +143,81 @@ export class VedtakFormImpl extends Component {
         isBehandlingReadOnly={isBehandlingReadOnly}
       >
         {visOverstyringKnapp
-        && (
-          <div className={styles.manuell}>
-            <CheckboxField
-              key="skalBrukeOverstyrendeFritekstBrev"
-              name="skalBrukeOverstyrendeFritekstBrev"
-              label={{ id: 'VedtakForm.ManuellOverstyring' }}
-              onChange={this.onToggleOverstyring}
+          && (
+            <VedtakOverstyrendeKnapp
+              toggleCallback={this.onToggleOverstyring}
               readOnly={readOnly || (initialValues.skalBrukeOverstyrendeFritekstBrev === true)}
+              keyName="skalBrukeOverstyrendeFritekstBrev"
               readOnlyHideEmpty={false}
             />
-          </div>
-        )
-        }
+          )
+          }
 
         {isInnvilget(behandlingsresultat.type.kode)
-        && (
-          <VedtakInnvilgetPanel
-            intl={intl}
-            antallBarn={antallBarn}
-            behandlingsresultat={behandlingsresultat}
-            readOnly={readOnly}
-            skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
-          />
-        )
-        }
+          && (
+            <VedtakInnvilgetPanel
+              intl={intl}
+              antallBarn={antallBarn}
+              behandlingsresultat={behandlingsresultat}
+              readOnly={readOnly}
+              skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
+            />
+          )
+          }
 
         {isAvslag(behandlingsresultat.type.kode)
-        && (
-          <VedtakAvslagPanel
-            behandlingStatusKode={behandlingStatusKode}
-            aksjonspunkter={aksjonspunkter}
-            behandlingsresultat={behandlingsresultat}
-            readOnly={readOnly}
-          />
-        )
-        }
+          && (
+            <VedtakAvslagPanel
+              behandlingStatusKode={behandlingStatusKode}
+              aksjonspunkter={aksjonspunkter}
+              behandlingsresultat={behandlingsresultat}
+              readOnly={readOnly}
+            />
+          )
+          }
 
         {skalBrukeOverstyrendeFritekstBrev && !isEngangsstonad
-        && (
-          <FritekstBrevPanel
-            intl={intl}
-            readOnly={readOnly}
-            sprakkode={sprakkode}
-            previewBrev={previewAutomatiskBrev}
-          />
-        )
-        }
+          && (
+            <FritekstBrevPanel
+              intl={intl}
+              readOnly={readOnly}
+              sprakkode={sprakkode}
+              previewBrev={previewAutomatiskBrev}
+            />
+          )
+          }
 
         {kanSendesTilGodkjenning(behandlingStatusKode)
-        && (
-          <Row>
-            <Column xs="12">
-              {!readOnly
-              && (
-                <Hovedknapp
-                  mini
-                  className={styles.mainButton}
-                  onClick={formProps.handleSubmit}
-                  disabled={behandlingPaaVent || formProps.submitting}
-                  spinner={formProps.submitting}
-                >
-                  {intl.formatMessage({ id: 'VedtakForm.TilGodkjenning' })}
-                </Hovedknapp>
-              )
-              }
-              {skalBrukeOverstyrendeFritekstBrev && skalViseLink
-              && (
-                <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
-              )
-              }
-              {!skalBrukeOverstyrendeFritekstBrev && skalViseLink
-              && (
-                <ForhaandsvisningsKnapp previewFunction={previewDefaultBrev} />
-              )
-              }
-            </Column>
-          </Row>
-        )
-        }
-
+          && (
+            <Row>
+              <Column xs="12">
+                {!readOnly
+                && (
+                  <Hovedknapp
+                    mini
+                    className={styles.mainButton}
+                    onClick={formProps.handleSubmit}
+                    disabled={behandlingPaaVent || formProps.submitting}
+                    spinner={formProps.submitting}
+                  >
+                    {intl.formatMessage({ id: 'VedtakForm.TilGodkjenning' })}
+                  </Hovedknapp>
+                )
+                }
+                {skalBrukeOverstyrendeFritekstBrev && skalViseLink
+                && (
+                  <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
+                )
+                }
+                {!skalBrukeOverstyrendeFritekstBrev && skalViseLink
+                && (
+                  <ForhaandsvisningsKnapp previewFunction={previewDefaultBrev} />
+                )
+                }
+              </Column>
+            </Row>
+          )
+          }
       </VedtakAksjonspunktPanel>
     );
   }

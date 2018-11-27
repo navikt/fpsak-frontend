@@ -1,4 +1,4 @@
-import { routerReducer, routerMiddleware } from 'react-router-redux';
+import { routerMiddleware, connectRouter } from 'connected-react-router';
 import {
   createStore, combineReducers, compose, applyMiddleware,
 } from 'redux';
@@ -10,13 +10,13 @@ import * as reducers from './reducers';
 const isDevelopment = process.env.NODE_ENV === 'development';
 const logger = isDevelopment ? require('redux-logger') : null;
 
-const rootReducer = combineReducers({
-  ...reducers,
-  routing: routerReducer,
-  form: formReducer,
-});
-
 const configureStore = (browserHistory) => {
+  const rootReducer = combineReducers({
+    ...reducers,
+    router: connectRouter(browserHistory),
+    form: formReducer,
+  });
+
   const middleware = [thunkMiddleware, routerMiddleware(browserHistory)];
   let enhancer;
   if (isDevelopment) {

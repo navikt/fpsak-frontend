@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { routerActions } from 'react-router-redux';
+import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { pathToFagsak } from 'app/paths';
-import FagsakSearch from 'fagsakSearch/FagsakSearch';
+
 import fagsakPropType from 'fagsak/fagsakPropType';
 import { searchFagsaker, resetFagsakSearch } from './duck';
 import {
@@ -14,6 +14,7 @@ import {
   getSearchFagsakerFinished,
   getSearchFagsakerStarted,
 } from './fagsakSearchSelectors';
+import FagsakSearch from './components/FagsakSearch';
 
 /**
  * FagsakSearchIndex
@@ -40,8 +41,8 @@ class FagsakSearchIndex extends Component {
   }
 
   goToFagsak(saksnummer) {
-    const { push } = this.props;
-    push(pathToFagsak(saksnummer));
+    const { push: pushLocation } = this.props;
+    pushLocation(pathToFagsak(saksnummer));
   }
 
   render() {
@@ -91,7 +92,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
-    ...routerActions, searchFagsaker, resetFagsakSearch,
+    push, searchFagsaker, resetFagsakSearch,
   }, dispatch),
 });
 

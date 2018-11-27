@@ -1,13 +1,44 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import { MockFields } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { MockFieldsWithContent } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 
 import { RenderUttakTableImpl } from './RenderUttakTable';
 
+const uttakFields1 = [
+  {
+    prosentArbeid: 100,
+    stillingsprosent: 100,
+    arbeidsgiver: {
+      navn: 'Statoil',
+      identifikator: '987',
+    },
+    arbeidsforholdId: 907,
+    uttakArbeidType: '',
+    utbetalingsgrad: 0,
+    days: 23,
+  },
+];
+
+const uttakFields2 = [
+  {
+    prosentArbeid: 100,
+    stillingsprosent: 100,
+    arbeidsgiver: {
+      navn: 'Statoil',
+      identifikator: '987',
+    },
+    arbeidsforholdId: 907,
+    uttakArbeidType: '',
+    utbetalingsgrad: 0,
+    days: 23,
+  },
+  ...uttakFields1,
+];
+
 describe('<RenderUttakTable>', () => {
   it('render uttakstable 1 rad', () => {
-    const fields = new MockFields('UttakFieldArray', 1);
+    const fields = new MockFieldsWithContent('UttakFieldArray', uttakFields1);
     const wrapper = shallowWithIntl(<RenderUttakTableImpl
       readOnly={false}
       fields={fields}
@@ -26,7 +57,7 @@ describe('<RenderUttakTable>', () => {
     expect(decimalField).to.have.length(1);
   });
   it('render uttakstable 2 rader', () => {
-    const fields = new MockFields('UttakFieldArray', 2);
+    const fields = new MockFieldsWithContent('UttakFieldArray', uttakFields2);
     const wrapper = shallowWithIntl(<RenderUttakTableImpl
       readOnly={false}
       fields={fields}

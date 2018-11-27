@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
 import sinon from 'sinon';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 import { UttakActivity, initialValue } from './UttakActivity';
@@ -52,6 +52,7 @@ describe('<UttakActivity>', () => {
       graderingAvslagAarsakKoder={[]}
       starttidspunktForeldrepenger=""
       stonadskontoer={{}}
+      harSoktOmFlerbarnsdager={false}
     />);
 
     const fieldArray = wrapper.find('FieldArray');
@@ -82,6 +83,7 @@ describe('<UttakActivity>', () => {
       graderingAvslagAarsakKoder={[]}
       starttidspunktForeldrepenger=""
       stonadskontoer={{}}
+      harSoktOmFlerbarnsdager={false}
     />);
 
     const row = wrapper.find('Row');
@@ -105,6 +107,7 @@ describe('<UttakActivity>', () => {
       graderingAvslagAarsakKoder={[]}
       starttidspunktForeldrepenger=""
       stonadskontoer={{}}
+      harSoktOmFlerbarnsdager={false}
     />);
 
     const fieldArray = wrapper.find('FieldArray');
@@ -134,6 +137,7 @@ describe('<UttakActivity>', () => {
       graderingAvslagAarsakKoder={[]}
       starttidspunktForeldrepenger=""
       stonadskontoer={{}}
+      harSoktOmFlerbarnsdager={false}
     />);
 
     const fieldArray = wrapper.find('FieldArray');
@@ -165,6 +169,7 @@ describe('<UttakActivity>', () => {
       graderingAvslagAarsakKoder={[]}
       starttidspunktForeldrepenger=""
       stonadskontoer={{}}
+      harSoktOmFlerbarnsdager={false}
     />);
 
     const fieldArray = wrapper.find('FieldArray');

@@ -1,11 +1,11 @@
 import { expect } from 'chai';
 
-import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/behandlingResultatType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
+import vilkarType from 'kodeverk/vilkarType';
+import behandlingResultatType from 'kodeverk/behandlingResultatType';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
+import behandlingType from 'kodeverk/behandlingType';
+import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import createForeldrepengerBpProps from './foreldrepengerBpDefinition';
 

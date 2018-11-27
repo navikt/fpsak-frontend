@@ -5,18 +5,20 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { FieldArray, formValueSelector } from 'redux-form';
 import { Fieldset } from 'nav-frontend-skjema';
 import { Container, Row, Column } from 'nav-frontend-grid';
+import { Undertekst } from 'nav-frontend-typografi';
 
-import fht from '@fpsak-frontend/kodeverk/familieHendelseType';
-import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
+import fht from 'kodeverk/familieHendelseType';
+import BorderBox from 'sharedComponents/BorderBox';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import {
   InputField, DatepickerField, RadioGroupField, RadioOption,
-} from '@fpsak-frontend/form';
+} from 'form/Fields';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import {
   hasValidInteger, hasValidDate, isDatesEqual, required, minValue, maxValue, dateBeforeOrEqualToToday,
-} from '@fpsak-frontend/utils/validation/validators';
-import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
-import { rettighet } from 'papirsoknad/components/commonPanels/rettigheter/RettigheterPanel';
+} from 'utils/validation/validators';
+import { isRequiredMessage } from 'utils/validation/messages';
+import { rettighet } from '../rettigheter/RettigheterPanel';
 
 import styles from './omsorgOgAdopsjonPanel.less';
 
@@ -27,7 +29,7 @@ const adjustNumberOfFields = ({ fields, antallBarn }) => {
   const antallBarnVerdi = parseInt(antallBarn, 10) || 0;
   if (fields.length < Math.min(antallBarnVerdi, MAX_ANTALL_BARN)) {
     fields.push(null);
-  } else if (fields.length > Math.max(antallBarnVerdi, MIN_ANTALL_BARN)) {
+  } else if (fields.length > Math.max(antallBarnVerdi, 0)) {
     fields.pop();
   }
 };
@@ -100,8 +102,11 @@ export const OmsorgOgAdopsjonPanelImpl = ({
           && (
           <Row>
             <Column xs="6">
+              <Undertekst>
+                <FormattedMessage id="Registrering.Adopsjon.GjelderEktefellesBarn" />
+              </Undertekst>
+              <VerticalSpacer eightPx />
               <RadioGroupField
-                label={<FormattedMessage id="Registrering.Adopsjon.GjelderEktefellesBarn" />}
                 name="erEktefellesBarn"
                 readOnly={readOnly}
                 validate={required}
@@ -128,6 +133,7 @@ export const OmsorgOgAdopsjonPanelImpl = ({
                     ? 'Registrering.Adopsjon.DatoForOvertakelsenStebarn' : 'Registrering.Adopsjon.DatoForOvertakelsen',
                 }}
                 readOnly={readOnly}
+                validate={[hasValidDate]}
               />
             </Column>
           </Row>
@@ -195,7 +201,7 @@ const validateOmsorgsovertakelsesdato = (omsorgsovertakelsesdato, rettigheter) =
   : undefined);
 
 const validateFoedselsdato = (foedselsDato, rettigheter) => {
-  if (rettigheter) {
+  if (rettigheter && rettigheter !== rettighet.IKKE_RELEVANT) {
     if (!foedselsDato || !foedselsDato.length) {
       return { _errors: isRequiredMessage() };
     }
@@ -223,7 +229,7 @@ const validateExcludingRequired = (antallBarn) => {
   return hasValidInteger(antallBarn) || minValue(MIN_ANTALL_BARN)(antallBarn) || maxValue(MAX_ANTALL_BARN)(antallBarn);
 };
 
-const validateAntallBarn = (antallBarn, rettigheter) => (rettigheter
+const validateAntallBarn = (antallBarn, rettigheter) => (rettigheter && rettigheter !== rettighet.IKKE_RELEVANT
   ? validateIncludingRequired(antallBarn) : validateExcludingRequired(antallBarn));
 
 const validateFodselsdatoer = (foedselsDato, otherFodselsdato) => {

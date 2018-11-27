@@ -29,6 +29,7 @@ const perioder = [{
   erArbeidstaker: false,
   samtidigUttak: false,
   flerbarnsdager: false,
+  arbeidsgiver: {},
 }, {
   id: '32434-334534-222',
   tom: '2018-10-10',
@@ -42,6 +43,7 @@ const perioder = [{
   erArbeidstaker: true,
   samtidigUttak: false,
   flerbarnsdager: false,
+  arbeidsgiver: {},
 }];
 const inntektsmeldinger = [{
   arbeidsgiver: '',

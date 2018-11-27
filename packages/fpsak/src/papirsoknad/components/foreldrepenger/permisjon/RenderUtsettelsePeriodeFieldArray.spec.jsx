@@ -3,8 +3,9 @@ import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/in
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
-import { SelectField, DatepickerField } from '@fpsak-frontend/form';
+import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
+import DatepickerField from 'form/fields/DatepickerField';
+import SelectField from 'form/fields/SelectField';
 import { MockFields, metaMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 import { RenderUtsettelsePeriodeFieldArray } from './RenderUtsettelsePeriodeFieldArray';
 

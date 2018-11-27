@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { FormSection, FieldArray } from 'redux-form';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Fieldset } from 'nav-frontend-skjema';
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { Undertekst } from 'nav-frontend-typografi';
 
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
-import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
-import { required } from '@fpsak-frontend/utils/validation/validators';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import ArrowBox from 'sharedComponents/ArrowBox';
+import BorderBox from 'sharedComponents/BorderBox';
+import { required } from 'utils/validation/validators';
+import { RadioGroupField, RadioOption } from 'form/Fields';
 import FrilansPerioderFieldArray from './FrilansPerioderFieldArray';
 import FrilansOppdragForFamiliePanel from './FrilansOppdragForFamiliePanel';
 
@@ -28,7 +28,7 @@ const FrilansPanelImpl = ({
   <FormSection name={FRILANS_FORM_NAME_PREFIX}>
     <BorderBox>
       <Fieldset legend={intl.formatMessage({ id: 'Registrering.Frilans.Title' })}>
-        <Normaltekst><FormattedMessage id="Registrering.Frilans.HarFrilansvirksomhet" /></Normaltekst>
+        <Undertekst><FormattedMessage id="Registrering.Frilans.HarFrilansvirksomhet" /></Undertekst>
         <VerticalSpacer eightPx />
         <RadioGroupField
           name="harSokerPeriodeMedFrilans"

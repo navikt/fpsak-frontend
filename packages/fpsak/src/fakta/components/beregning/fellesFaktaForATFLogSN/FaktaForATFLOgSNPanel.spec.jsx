@@ -2,8 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import {
   FaktaForATFLOgSNPanelImpl,
   getHelpTextsFaktaForATFLOgSN,
@@ -11,7 +11,7 @@ import {
 } from './FaktaForATFLOgSNPanel';
 import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm';
 import FastsettEndretBeregningsgrunnlag from './endringBeregningsgrunnlag/FastsettEndretBeregningsgrunnlag';
-import TilstotendeYtelseIKombinasjon from './tilstotendeYtelse/TilstotendeYtelseIKombinasjon';
+import TilstotendeYtelseIKombinasjon from './tilstøtendeYtelse/TilstotendeYtelseIKombinasjon';
 import NyIArbeidslivetSNForm from './nyIArbeidslivet/NyIArbeidslivetSNForm';
 import { createInputfieldKeyAT, createInputfieldKeyFL } from './vurderOgFastsettATFL/forms/FastsettATFLInntektForm';
 import { lonnsendringField } from './vurderOgFastsettATFL/forms/LonnsendringForm';
@@ -220,7 +220,7 @@ describe('<FaktaForATFLOgSNPanel>', () => {
 
     const faktaOmBeregning = {
       arbeidsforholdMedLønnsendringUtenIM: [forholdMedLonnsendringUtenIM],
-      atogFLISammeOrganisasjonListe: [forholdMedAtOgFl],
+      arbeidstakerOgFrilanserISammeOrganisasjonListe: [forholdMedAtOgFl],
       frilansAndel: {
         inntektskategori: {
           navn: 'Frilans',

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import historikkinnslagType from '@fpsak-frontend/kodeverk/historikkinnslagType';
+import historikkinnslagType from 'kodeverk/historikkinnslagType';
 import { FormattedHTMLMessage, injectIntl, intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
@@ -9,6 +9,7 @@ import { createLocationForHistorikkItems } from 'app/paths';
 import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
 
 import BubbleText from './bubbleText';
+import styles from './historikkMalType.less';
 
 export const HistorikkMalType9 = ({
   historikkinnslagDeler, behandlingLocation, originType,
@@ -65,6 +66,18 @@ export const HistorikkMalType9 = ({
                   splitPeriods: getSplitPeriods(historikkinnslagDel.endredeFelter),
                 }}
               />
+            )}
+
+            {originType.kode === historikkinnslagType.TILBAKEKR_VIDEREBEHANDLING
+            && (
+              <div className={styles.tilbakekrevingTekst}>
+                <FormattedHTMLMessage
+                  id="Historikk.Template.9.TilbakekrViderebehandling"
+                  values={{
+                    videreBehandling: 'Gjennomfør tilbakekreving i Infotrygd',
+                  }}
+                />
+              </div>
             )}
             {historikkinnslagDel.begrunnelse && <BubbleText bodyText={historikkinnslagDel.begrunnelse.navn} className="snakkeboble-panel__tekst" />}
             {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} className="snakkeboble-panel__tekst" />}

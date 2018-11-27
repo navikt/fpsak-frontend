@@ -2,27 +2,26 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { reset as resetReduxForm } from 'redux-form';
-import { routerActions } from 'react-router-redux';
+import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import dokumentMalType from '@fpsak-frontend/kodeverk/dokumentMalType';
+import dokumentMalType from 'kodeverk/dokumentMalType';
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
 import SettBehandlingPaVentForm from 'behandling/components/SettBehandlingPaVentForm';
 import {
   getBehandlingSprak,
+  getBehandlingVersjon,
   getBrevMaler,
   getBrevMottakere,
   getSelectedBehandlingIdentifier,
-  getBehandlingVersjon,
 } from 'behandling/behandlingSelectors';
 import { setBehandlingOnHold } from 'behandlingmenu/duck';
-import venteArsakType from '@fpsak-frontend/kodeverk/venteArsakType';
-import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
+import venteArsakType from 'kodeverk/venteArsakType';
+import LoadingPanel from 'sharedComponents/LoadingPanel';
 import requireProps from 'app/data/requireProps';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
-import { getRestApiFinished, makeRestApiRequest } from '@fpsak-frontend/data/duck';
+import fpsakApi from 'data/fpsakApi';
 
 import resetSubmitMessageActionCreator from './duck';
 import Messages from './components/Messages';
@@ -46,13 +45,10 @@ export class MessagesIndex extends Component {
 
   submitCallback(values) {
     const { behandlingIdentifier, submitMessage, resetReduxForm: resetForm } = this.props;
-    const isInnhentDokumentasjon = values.brevmalkode === dokumentMalType.INNHENT_DOK
-     || values.brevmalkode === dokumentMalType.FORLENGET_DOK
-     || values.brevmalkode === dokumentMalType.FORLENGET_MEDL_DOK;
-    this.setState({ showMessagesModal: !isInnhentDokumentasjon });
-    if (isInnhentDokumentasjon) {
-      this.setState({ showSettPaVentModal: true });
-    }
+    const isInnhentEllerForlenget = values.brevmalkode === dokumentMalType.INNHENT_DOK
+      || values.brevmalkode === dokumentMalType.FORLENGET_DOK
+      || values.brevmalkode === dokumentMalType.FORLENGET_MEDL_DOK;
+    this.setState({ showMessagesModal: !isInnhentEllerForlenget });
     const data = {
       behandlingId: behandlingIdentifier.behandlingId,
       mottaker: values.mottaker,
@@ -61,6 +57,8 @@ export class MessagesIndex extends Component {
       arsakskode: values.arsakskode,
     };
     return submitMessage(data)
+      .then(() => this.resetMessage())
+      .then(() => this.setState({ showSettPaVentModal: isInnhentEllerForlenget }))
       .then(() => resetForm(Messages.formName));
   }
 
@@ -82,8 +80,8 @@ export class MessagesIndex extends Component {
   }
 
   goToSearchPage() {
-    const { push } = this.props;
-    push('/');
+    const { push: pushLocation } = this.props;
+    pushLocation('/');
   }
 
   previewCallback(mottaker, brevmalkode, fritekst, aarsakskode) {
@@ -99,10 +97,14 @@ export class MessagesIndex extends Component {
   }
 
   afterSubmit() {
-    const { behandlingIdentifier, resetSubmitMessage: resetMessage } = this.props;
     this.setState({
       showMessagesModal: false,
     });
+    return this.resetMessage();
+  }
+
+  resetMessage() {
+    const { behandlingIdentifier, resetSubmitMessage: resetMessage } = this.props;
     return resetMessage(behandlingIdentifier);
   }
 
@@ -134,14 +136,14 @@ export class MessagesIndex extends Component {
         />
         {submitFinished && showSettPaVentModal
         && (
-        <SettBehandlingPaVentForm
-          showModal={submitFinished && showSettPaVentModal}
-          cancelEvent={this.hideSettPaVentModal}
-          comment={<Normaltekst><FormattedMessage id="Messages.BrevErBestilt" /></Normaltekst>}
-          onSubmit={this.handleSubmitFromModal}
-          ventearsak={venteArsakType.AVV_DOK}
-          hasManualPaVent
-        />
+          <SettBehandlingPaVentForm
+            showModal={submitFinished && showSettPaVentModal}
+            cancelEvent={this.hideSettPaVentModal}
+            comment={<Normaltekst><FormattedMessage id="Messages.BrevErBestilt" /></Normaltekst>}
+            onSubmit={this.handleSubmitFromModal}
+            ventearsak={venteArsakType.AVV_DOK}
+            hasManualPaVent
+          />
         )
         }
       </div>
@@ -177,7 +179,7 @@ MessagesIndex.defaultProps = {
 const mapStateToProps = state => ({
   recipients: getBrevMottakere(state),
   templates: getBrevMaler(state),
-  submitFinished: getRestApiFinished(FpsakApi.SUBMIT_MESSAGE)(state),
+  submitFinished: fpsakApi.SUBMIT_MESSAGE.getRestApiFinished()(state),
   behandlingIdentifier: getSelectedBehandlingIdentifier(state),
   selectedBehandlingVersjon: getBehandlingVersjon(state),
   selectedBehandlingSprak: getBehandlingSprak(state),
@@ -185,12 +187,12 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
-    ...routerActions,
+    push,
     resetReduxForm,
-    fetchPreview: makeRestApiRequest(FpsakApi.PREVIEW_MESSAGE),
-    submitMessage: makeRestApiRequest(FpsakApi.SUBMIT_MESSAGE),
-    resetSubmitMessage: resetSubmitMessageActionCreator,
     setBehandlingOnHold,
+    fetchPreview: fpsakApi.PREVIEW_MESSAGE.makeRestApiRequest(),
+    submitMessage: fpsakApi.SUBMIT_MESSAGE.makeRestApiRequest(),
+    resetSubmitMessage: resetSubmitMessageActionCreator,
   }, dispatch),
 });
 

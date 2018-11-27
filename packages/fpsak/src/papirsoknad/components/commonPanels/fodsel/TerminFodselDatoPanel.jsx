@@ -7,10 +7,10 @@ import moment from 'moment';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Fieldset } from 'nav-frontend-skjema';
 
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import {
   DatepickerField, InputField, NavFieldGroup, RadioGroupField, RadioOption,
-} from '@fpsak-frontend/form';
+} from 'form/Fields';
 import {
   hasValidDate,
   dateBeforeOrEqual,
@@ -19,9 +19,9 @@ import {
   hasValidInteger,
   minValue,
   maxValue,
-} from '@fpsak-frontend/utils/validation/validators';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
-import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
+} from 'utils/validation/validators';
+import { ISO_DATE_FORMAT } from 'utils/formats';
+import BorderBox from 'sharedComponents/BorderBox';
 
 import styles from './terminFodselDatoPanel.less';
 

@@ -1,5 +1,4 @@
-import { makeRestApiRequest, setDataRestApi } from '@fpsak-frontend/data/duck';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
+import fpsakApi from 'data/fpsakApi';
 import { createSelector } from 'reselect';
 import { updateFagsakInfo } from 'fagsak/duck';
 
@@ -29,18 +28,18 @@ const resolveFaktaAksjonspunkterSuccess = (response, behandlingIdentifier) => (d
     type: RESOLVE_FAKTA_AKSJONSPUNKTER_SUCCESS,
   });
   return dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer))
-    .then(() => dispatch(setDataRestApi(FpsakApi.BEHANDLING)(response.payload, behandlingIdentifier.toJson(), { keepData: true })));
+    .then(() => dispatch(fpsakApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true })));
 };
 
 export const resolveFaktaAksjonspunkter = (params, behandlingIdentifier) => (dispatch) => {
   dispatch(resolveFaktaAksjonspunkterStarted());
-  return dispatch(makeRestApiRequest(FpsakApi.SAVE_AKSJONSPUNKT)(params))
+  return dispatch(fpsakApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params))
     .then(response => dispatch(resolveFaktaAksjonspunkterSuccess(response, behandlingIdentifier)));
 };
 
 export const resolveFaktaOverstyrAksjonspunkter = (params, behandlingIdentifier) => (dispatch) => {
   dispatch(resolveFaktaAksjonspunkterStarted());
-  return dispatch(makeRestApiRequest(FpsakApi.SAVE_OVERSTYRT_AKSJONSPUNKT)(params))
+  return dispatch(fpsakApi.SAVE_OVERSTYRT_AKSJONSPUNKT.makeRestApiRequest()(params))
     .then(response => dispatch(resolveFaktaAksjonspunkterSuccess(response, behandlingIdentifier)));
 };
 

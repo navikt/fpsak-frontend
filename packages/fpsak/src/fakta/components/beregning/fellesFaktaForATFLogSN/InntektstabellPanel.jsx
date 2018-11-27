@@ -1,8 +1,8 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
 import PropTypes from 'prop-types';
 
 import styles from './InntektstabellPanel.less';

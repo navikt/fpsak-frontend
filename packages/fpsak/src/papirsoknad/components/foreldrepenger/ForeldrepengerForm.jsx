@@ -5,7 +5,6 @@ import {
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import RettigheterPanel from 'papirsoknad/components/commonPanels/rettigheter/RettigheterPanel';
 import { getRegisteredFields } from 'papirsoknad/duck';
 import { getFagsakPerson } from 'fagsak/fagsakSelectors';
 import MottattDatoPanel from 'papirsoknad/components/commonPanels/MottattDatoPanel';
@@ -13,12 +12,13 @@ import AnnenForelderPanel from 'papirsoknad/components/commonPanels/AnnenForelde
 import OppholdINorgePanel from 'papirsoknad/components/commonPanels/OppholdINorgePanel';
 import TilleggsopplysningerPanel from 'papirsoknad/components/commonPanels/TilleggsopplysningerPanel';
 import SoknadData from 'papirsoknad/SoknadData';
-import familieHendelseType from '@fpsak-frontend/kodeverk/familieHendelseType';
+import familieHendelseType from 'kodeverk/familieHendelseType';
 import LagreSoknadForm from 'papirsoknad/components/commonPanels/LagreSoknadPanel';
 import OmsorgOgAdopsjonPanel from 'papirsoknad/components/commonPanels/omsorgOgAdopsjon/OmsorgOgAdopsjonPanel';
 import TerminFodselDatoPanel from 'papirsoknad/components/commonPanels/fodsel/TerminFodselDatoPanel';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import RettigheterPanel, { rettighet } from '../commonPanels/rettigheter/RettigheterPanel';
 import EgenVirksomhetPanel from './virksomhet/EgenVirksomhetPanel';
 import DekningsgradPanel from './dekningsgrad/DekningsgradPanel';
 import InntektsgivendeArbeidPanel from './inntektsgivendeArbeid/InntektsgivendeArbeidPanel';
@@ -52,6 +52,8 @@ export const ForeldrepengerForm = ({
   readOnly,
   soknadData,
   onSubmitUfullstendigsoknad,
+  error,
+  submitFailed,
 }) => (
   <form onSubmit={handleSubmit}>
     <MottattDatoPanel readOnly={readOnly} />
@@ -80,6 +82,8 @@ export const ForeldrepengerForm = ({
       soknadData={soknadData}
       form={form}
       readOnly={readOnly}
+      error={error}
+      submitFailed={submitFailed}
     />
 
     <FormSection name={ANNEN_FORELDER_FORM_NAME_PREFIX}>
@@ -107,6 +111,7 @@ const getValidation = (soknadData, andreYtelser, sokerPersonnummer) => {
   if (soknadData.getFamilieHendelseType() === familieHendelseType.FODSEL) {
     return values => ({
       ...AndreYtelserPanel.validate(values, andreYtelser),
+      ...InntektsgivendeArbeidPanel.validate(values),
       ...FrilansPanel.validate(values),
       ...OppholdINorgePanel.validate(values),
       ...TerminFodselDatoPanel.validate(values),
@@ -117,6 +122,7 @@ const getValidation = (soknadData, andreYtelser, sokerPersonnummer) => {
   } if (soknadData.getFamilieHendelseType() === familieHendelseType.ADOPSJON) {
     return values => ({
       ...AndreYtelserPanel.validate(values, andreYtelser),
+      ...InntektsgivendeArbeidPanel.validate(values),
       ...FrilansPanel.validate(values),
       ...OppholdINorgePanel.validate(values),
       [OMSORG_FORM_NAME_PREFIX]: OmsorgOgAdopsjonPanel.validate(values[OMSORG_FORM_NAME_PREFIX], values.rettigheter, values.foedselsDato),
@@ -127,20 +133,29 @@ const getValidation = (soknadData, andreYtelser, sokerPersonnummer) => {
   return null;
 };
 
+const transformRootValues = (state, registeredFieldNames) => {
+  const values = formValueSelector(FORELDREPENGER_FORM_NAME)(state, ...registeredFieldNames);
+  if (values.rettigheter === rettighet.IKKE_RELEVANT) {
+    const { rettigheter, ...nyeVerdier } = values; // NOSONAR destruct er bedre enn delete, immutable
+    return nyeVerdier;
+  }
+  return values;
+};
+
 
 const mapStateToProps = (state, initialProps) => {
   const sokerPersonnummer = getFagsakPerson(state).personnummer;
   const registeredFields = getRegisteredFields(FORELDREPENGER_FORM_NAME)(state);
   const registeredFieldNames = Object.values(registeredFields).map(rf => rf.name);
   const andreYtelser = getKodeverk(kodeverkTyper.ARBEID_TYPE)(state);
+
   const valuesForRegisteredFieldsOnly = registeredFieldNames.length
     ? {
-      ...formValueSelector(FORELDREPENGER_FORM_NAME)(state, ...registeredFieldNames),
+      ...transformRootValues(state, registeredFieldNames),
       [ANDRE_YTELSER_FORM_NAME_PREFIX]: AndreYtelserPanel
         .transformValues(formValueSelector(FORELDREPENGER_FORM_NAME)(state, ...registeredFieldNames), andreYtelser),
       [TIDSROM_PERMISJON_FORM_NAME_PREFIX]: PermisjonPanel
         .transformValues(formValueSelector(FORELDREPENGER_FORM_NAME)(state, ...registeredFieldNames)),
-
     }
     : {};
   return {

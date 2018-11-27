@@ -2,12 +2,11 @@ import { createSelector } from 'reselect';
 
 import { getOriginalBehandlingId } from 'behandling/behandlingSelectors';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
-import { getRestApiData, getRestApiMeta } from '@fpsak-frontend/data/duck';
+import fpsakApi from 'data/fpsakApi';
 
 // Denne er kun eksportert for bruk i test. Ikke bruk andre steder!!!
 export const getOriginalBehandling = createSelector(
-  [getOriginalBehandlingId, getRestApiData(FpsakApi.ORIGINAL_BEHANDLING), getRestApiMeta(FpsakApi.ORIGINAL_BEHANDLING)],
+  [getOriginalBehandlingId, fpsakApi.ORIGINAL_BEHANDLING.getRestApiData(), fpsakApi.ORIGINAL_BEHANDLING.getRestApiMeta()],
   (originalBehandlingId, originalBehandling, originalBehandlingMeta = { params: {} }) => (originalBehandling
     && originalBehandlingMeta.params.behandlingId === originalBehandlingId ? originalBehandling : undefined),
 );

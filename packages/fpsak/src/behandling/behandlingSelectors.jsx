@@ -1,17 +1,17 @@
 import { createSelector } from 'reselect';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
-import { getRestApiData, getRestApiError } from '@fpsak-frontend/data/duck';
-import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
+import fpsakApi from 'data/fpsakApi';
+import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
 import aksjonspunktCodes, {
   isInnhentSaksopplysningerAksjonspunkt,
   isVilkarForSykdomOppfylt,
-} from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
-import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
+} from 'kodeverk/aksjonspunktCodes';
+import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import behandlingStatus from 'kodeverk/behandlingStatus';
+import behandlingType from 'kodeverk/behandlingType';
 import { getSelectedSaksnummer, isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
+import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
 import isFieldEdited from './editedFields';
 import { getSelectedBehandlingId } from './duck';
 
@@ -19,7 +19,7 @@ const hasFetchedOriginalBehandlingIfItExists = (behandling, originalBehandlingId
   ? behandling.originalBehandlingId === originalBehandlingId : true);
 
 export const isBehandlingInSync = createSelector(
-  [getSelectedBehandlingId, getRestApiData(FpsakApi.BEHANDLING), getRestApiData(FpsakApi.ORIGINAL_BEHANDLING)],
+  [getSelectedBehandlingId, fpsakApi.BEHANDLING.getRestApiData(), fpsakApi.ORIGINAL_BEHANDLING.getRestApiData()],
   (behandlingId, behandling = {}, originalBehandling = {}) => behandlingId !== undefined
   && behandlingId === behandling.id && hasFetchedOriginalBehandlingIfItExists(behandling, originalBehandling.id),
 );
@@ -32,12 +32,12 @@ export const getSelectedBehandlingIdentifier = createSelector(
 
 // NB! Kun intern bruk
 const getSelectedBehandling = createSelector(
-  [isBehandlingInSync, getRestApiData(FpsakApi.BEHANDLING)],
+  [isBehandlingInSync, fpsakApi.BEHANDLING.getRestApiData()],
   (isInSync, behandling = {}) => (isInSync ? behandling : undefined),
 );
 
 export const hasReadOnlyBehandling = createSelector(
-  [getRestApiError(FpsakApi.BEHANDLING), getSelectedBehandling], (behandlingFetchError, selectedBehandling = {}) => (!!behandlingFetchError
+  [fpsakApi.BEHANDLING.getRestApiError(), getSelectedBehandling], (behandlingFetchError, selectedBehandling = {}) => (!!behandlingFetchError
     || (selectedBehandling.taskStatus && selectedBehandling.taskStatus.readOnly ? selectedBehandling.taskStatus.readOnly : false)),
 );
 
@@ -48,6 +48,7 @@ export const getBehandlingBehandlendeEnhetNavn = createSelector([getSelectedBeha
 export const getBehandlingType = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.type);
 export const getBehandlingIsRevurdering = createSelector([getBehandlingType], (bt = {}) => bt.kode === behandlingType.REVURDERING);
 export const getBehandlingIsInnsyn = createSelector([getBehandlingType], (bt = {}) => bt.kode === behandlingType.DOKUMENTINNSYN);
+export const getBehandlingIsKlage = createSelector([getBehandlingType], (bt = {}) => bt.kode === behandlingType.KLAGE);
 export const getBehandlingArsaker = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingArsaker);
 export const getBehandlingArsakTyper = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling.behandlingArsaker
@@ -88,7 +89,7 @@ export const getBehandlingVerge = createSelector(
 export const getStonadskontoer = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling['uttak-stonadskontoer']);
 export const getUttakPerioder = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['uttak-kontroller-fakta-perioder']
-    ? selectedBehandling['uttak-kontroller-fakta-perioder'].perioder : undefined),
+    ? selectedBehandling['uttak-kontroller-fakta-perioder'].perioder.sort((a, b) => a.fom.localeCompare(b.fom)) : undefined),
 );
 export const getHenleggArsaker = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['henlegg-arsaker']));
 export const getHaveSentVarsel = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['sendt-varsel-om-revurdering']));
@@ -124,6 +125,11 @@ export const hasBehandlingManualPaVent = createSelector(
 export const doesVilkarForSykdomOppfyltExist = createSelector(
   [getAksjonspunkter], (aksjonspunkter = []) => aksjonspunkter.filter(ap => isVilkarForSykdomOppfylt(ap)).length > 0,
 );
+export const isKlageBehandlingInFormkrav = createSelector(
+  [getOpenAksjonspunkter], (openAksjonspunkter = []) => openAksjonspunkter
+    .some(ap => ap.definisjon.kode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP
+      || ap.definisjon.kode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA),
+);
 
 // BEREGNINGSGRUNNLAG
 export const getBeregningsgrunnlag = createSelector(
@@ -147,6 +153,7 @@ export const getAlleAndelerIForstePeriode = createSelector(
     ? beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
     : []),
 );
+
 export const getBeregningsgrunnlagPerioder = createSelector([getBeregningsgrunnlag], (beregningsgrunnlag = {}) => beregningsgrunnlag.beregningsgrunnlagPeriode);
 export const getBeregningsgrunnlagLedetekster = createSelector([getBeregningsgrunnlag], (beregningsgrunnlag = {}) => ({
   ledetekstBrutto: beregningsgrunnlag.ledetekstBrutto,
@@ -156,6 +163,13 @@ export const getBeregningsgrunnlagLedetekster = createSelector([getBeregningsgru
 export const getFaktaOmBeregning = createSelector(
   [getBeregningsgrunnlag], (beregningsgrunnlag = {}) => (beregningsgrunnlag ? beregningsgrunnlag.faktaOmBeregning : undefined),
 );
+
+export const getBehandlingGjelderBesteberegning = createSelector(
+  [getFaktaOmBeregning], (faktaOmBeregning = {}) => (faktaOmBeregning && faktaOmBeregning.faktaOmBeregningTilfeller
+    ? faktaOmBeregning.faktaOmBeregningTilfeller.some(tilfelle => tilfelle.kode === faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)
+    : false),
+);
+
 export const getTilstøtendeYtelse = createSelector(
   [getFaktaOmBeregning], (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.tilstøtendeYtelse : undefined),
 );
@@ -228,9 +242,18 @@ export const getBehandlingKlageVurderingResultatNFP = createSelector(
 export const getBehandlingKlageVurderingResultatNK = createSelector(
   [getBehandlingKlageVurdering], (klageVurdering = {}) => klageVurdering.klageVurderingResultatNK,
 );
+export const getBehandlingKlageFormkravResultatNFP = createSelector(
+  [getBehandlingKlageVurdering], (klageVurdering = {}) => klageVurdering.klageFormkravResultatNFP,
+);
+export const getBehandlingKlageFormkravResultatKA = createSelector(
+  [getBehandlingKlageVurdering], (klageVurdering = {}) => klageVurdering.klageFormkravResultatKA,
+);
 
 // MEDLEM
+export const getBehandlingMedlemNew = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling['soeker-medlemskap-v2']);
+// TODO petter remove when feature toggle is removed
 export const getBehandlingMedlem = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling['soeker-medlemskap']);
+
 export const isBehandlingRevurderingFortsattMedlemskap = createSelector(
   [getBehandlingType, getBehandlingMedlem], (type, medlem = {}) => type.kode === behandlingType.REVURDERING && !!medlem.fom,
 );

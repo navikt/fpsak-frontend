@@ -11,9 +11,6 @@ describe('<EgenVirksomhetPanel>', () => {
       form="form"
     />);
 
-    const undertittel = wrapper.find('Undertittel');
-    expect(undertittel).to.have.length(1);
-
     const radios = wrapper.find('RadioOption');
     expect(radios).to.have.length(2);
 

@@ -3,14 +3,16 @@ import { PropTypes } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
+import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
 import arbeidsforholdPropType from 'behandling/proptypes/arbeidsforholdPropType';
-import Image from '@fpsak-frontend/shared-components/Image';
-import PeriodLabel from '@fpsak-frontend/shared-components/PeriodLabel';
-import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
+import Image from 'sharedComponents/Image';
+import PeriodLabel from 'sharedComponents/PeriodLabel';
+import DateLabel from 'sharedComponents/DateLabel';
+import Table from 'sharedComponents/Table';
+import TableRow from 'sharedComponents/TableRow';
+import TableColumn from 'sharedComponents/TableColumn';
 
-import erIBrukImageUrl from '@fpsak-frontend/assets/images/stjerne.svg';
+import erIBrukImageUrl from 'images/stjerne.svg';
 
 const headerTextCodes = [
   'PersonArbeidsforholdTable.Arbeidsforhold',

@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import requireProps from 'app/data/requireProps';
-import { getRestApiData } from '@fpsak-frontend/data/duck';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
+import fpsakApi from 'data/fpsakApi';
 import { getSelectedBehandlingId } from 'behandling/duck';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
-import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
+import LoadingPanel from 'sharedComponents/LoadingPanel';
 
 import DocumentList from './components/DocumentList';
 
@@ -52,7 +51,7 @@ DocumentIndex.defaultProps = {
 
 const mapStateToProps = state => ({
   saksNr: getSelectedSaksnummer(state),
-  documents: getRestApiData(FpsakApi.ALL_DOCUMENTS)(state),
+  documents: fpsakApi.ALL_DOCUMENTS.getRestApiData()(state),
   behandlingId: getSelectedBehandlingId(state),
 });
 

@@ -7,14 +7,14 @@ import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import {
   RadioGroupField, RadioOption, SelectField, InputField,
-} from '@fpsak-frontend/form';
+} from 'form/Fields';
 
-import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { required, hasValidInteger } from '@fpsak-frontend/utils/validation/validators';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import ArrowBox from 'sharedComponents/ArrowBox';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { required, hasValidInteger } from 'utils/validation/validators';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
 
 const countrySelectValues = countryCodes => countryCodes
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
@@ -68,6 +68,8 @@ export const VirksomhetIdentifikasjonPanel = ({
       </ElementWrapper>
       )
     }
+      { !virksomhetRegistrertINorge
+      && (
       <Row>
         <Column xs="5">
           <SelectField
@@ -78,6 +80,8 @@ export const VirksomhetIdentifikasjonPanel = ({
           />
         </Column>
       </Row>
+      )
+      }
     </ElementWrapper>
   );
 };
@@ -90,7 +94,7 @@ VirksomhetIdentifikasjonPanel.propTypes = {
 };
 
 VirksomhetIdentifikasjonPanel.defaultProps = {
-  virksomhetRegistrertINorge: false,
+  virksomhetRegistrertINorge: undefined,
   readOnly: true,
 };
 

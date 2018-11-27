@@ -3,12 +3,14 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
+import Table from 'sharedComponents/Table';
+import TableRow from 'sharedComponents/TableRow';
+import TableColumn from 'sharedComponents/TableColumn';
 import moment from 'moment';
 import { createSelector } from 'reselect';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
-import periodeAarsak from '@fpsak-frontend/kodeverk/periodeAarsak';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
+import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import periodeAarsak from 'kodeverk/periodeAarsak';
 import { getBeregningsgrunnlagPerioder } from 'behandling/behandlingSelectors';
 
 import styles from './naturalytelsePanel.less';

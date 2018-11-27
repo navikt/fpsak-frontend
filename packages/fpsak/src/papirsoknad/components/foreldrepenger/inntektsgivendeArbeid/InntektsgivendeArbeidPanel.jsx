@@ -2,13 +2,19 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'redux-form';
 import { Undertittel, Undertekst } from 'nav-frontend-typografi';
-import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import BorderBox from 'sharedComponents/BorderBox';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import PropTypes from 'prop-types';
 import RenderInntektsgivendeArbeidFieldArray from './RenderInntektsgivendeArbeidFieldArray';
+import RenderInntektsgivendeArbeidAmbassadeFieldArray from './RenderInntektsgivendeArbeidAmbassadeFieldArray';
 
+// TODO: (aa) remove once new FE is in place or
+const localFeature = false;
 
 const inntektsgivendeArbeidFieldArrayName = 'arbeidsforhold';
+const renderInntektsgivendeArbeidAmbassadeFieldArray = 'ambassadearbeidsforhold';
+
+const AMBASSADE_ARBEIDS_FORHOLD_PREFIX = 'ambassadearbeidsforhold';
 
 /**
  * InntektsgivendeArbeidPanel
@@ -33,8 +39,34 @@ const InntektsgivendeArbeidPanel = ({
       component={RenderInntektsgivendeArbeidFieldArray}
       readOnly={readOnly}
     />
+    {localFeature
+      && (
+      <div>
+        <VerticalSpacer sixteenPx />
+        <Undertittel>
+          {' '}
+          <FormattedMessage id="Registrering.InntektsgivendeArbeid.ArbeidPaAmbassade" />
+        </Undertittel>
+        <VerticalSpacer eightPx />
+        <FieldArray
+          name={renderInntektsgivendeArbeidAmbassadeFieldArray}
+          component={RenderInntektsgivendeArbeidAmbassadeFieldArray}
+          readOnly={readOnly}
+        />
+      </div>
+      )
+    }
   </BorderBox>
 );
+
+InntektsgivendeArbeidPanel.validate = (values) => {
+  const errors = {
+    [AMBASSADE_ARBEIDS_FORHOLD_PREFIX]: {
+      ...RenderInntektsgivendeArbeidAmbassadeFieldArray.validate(values[AMBASSADE_ARBEIDS_FORHOLD_PREFIX]),
+    },
+  };
+  return errors;
+};
 
 InntektsgivendeArbeidPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
@@ -42,6 +74,7 @@ InntektsgivendeArbeidPanel.propTypes = {
 
 InntektsgivendeArbeidPanel.initialValues = {
   [inntektsgivendeArbeidFieldArrayName]: [{}],
+  [renderInntektsgivendeArbeidAmbassadeFieldArray]: [{}],
 };
 
 

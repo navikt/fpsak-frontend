@@ -1,31 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
-import Image from '@fpsak-frontend/shared-components/Image';
+import Image from 'sharedComponents/Image';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
-import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
-import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
-import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
+import arrowLeftImageUrl from 'images/arrow_left.svg';
+import arrowLeftFilledImageUrl from 'images/arrow_left_filled.svg';
+import arrowRightImageUrl from 'images/arrow_right.svg';
+import arrowRightFilledImageUrl from 'images/arrow_right_filled.svg';
 
-import zoomOutImageUrl from '@fpsak-frontend/assets/images/zoom_out.svg';
-import zoomOutImageFilledUrl from '@fpsak-frontend/assets/images/zoom_out_filled.svg';
-import zoomInImageUrl from '@fpsak-frontend/assets/images/zoom_in.svg';
-import zoomInImageFilledUrl from '@fpsak-frontend/assets/images/zoom_in_filled.svg';
+import zoomOutImageUrl from 'images/zoom_out.svg';
+import zoomOutImageFilledUrl from 'images/zoom_out_filled.svg';
+import zoomInImageUrl from 'images/zoom_in.svg';
+import zoomInImageFilledUrl from 'images/zoom_in_filled.svg';
 
-import arrowDownImageUrl from '@fpsak-frontend/assets/images/arrow_down.svg';
-import arrowDownFilledImageUrl from '@fpsak-frontend/assets/images/arrow_down_filled.svg';
+import arrowDownImageUrl from 'images/arrow_down.svg';
+import arrowDownFilledImageUrl from 'images/arrow_down_filled.svg';
 
-import ikkeOppfyltUrl from '@fpsak-frontend/assets/images/ikke_oppfylt.svg';
-import oppfyltUrl from '@fpsak-frontend/assets/images/oppfylt.svg';
-import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
-import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
-import fodselUrl from '@fpsak-frontend/assets/images/fodsel.svg';
-import revurderingUrl from '@fpsak-frontend/assets/images/endringstidspunkt.svg';
-import soknadUrl from '@fpsak-frontend/assets/images/soknad.svg';
-import uavklartUrl from '@fpsak-frontend/assets/images/uavklart.svg';
+import ikkeOppfyltUrl from 'images/ikke_oppfylt.svg';
+import oppfyltUrl from 'images/oppfylt.svg';
+import questionNormalUrl from 'images/question_normal.svg';
+import questionHoverUrl from 'images/question_hover.svg';
+import fodselUrl from 'images/fodsel.svg';
+import revurderingUrl from 'images/endringstidspunkt.svg';
+import soknadUrl from 'images/soknad.svg';
+import uavklartUrl from 'images/uavklart.svg';
 
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import styles from './timeLineControl.less';
 
 /*

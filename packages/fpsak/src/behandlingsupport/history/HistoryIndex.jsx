@@ -11,9 +11,8 @@ import { connect } from 'react-redux';
 import { getSelectedBehandlingId } from 'behandling/duck';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import requireProps from 'app/data/requireProps';
-import { getRestApiData } from '@fpsak-frontend/data/duck';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
-import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
+import fpsakApi from 'data/fpsakApi';
+import LoadingPanel from 'sharedComponents/LoadingPanel';
 
 import History from './components/History';
 
@@ -47,7 +46,7 @@ HistoryIndex.defaultProps = {
 const mapStateToProps = state => ({
   selectedBehandlingId: getSelectedBehandlingId(state),
   saksnummer: getSelectedSaksnummer(state),
-  history: getRestApiData(FpsakApi.HISTORY)(state),
+  history: fpsakApi.HISTORY.getRestApiData()(state),
 });
 
 export default withRouter(connect(mapStateToProps)(requireProps(['history'], <LoadingPanel />)(HistoryIndex)));

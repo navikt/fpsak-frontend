@@ -7,15 +7,15 @@ import { connect } from 'react-redux';
 
 import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
 import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import {
   getSoknad, getFamiliehendelse, getPersonopplysning, getInnvilgetRelatertTilgrensendeYtelserForAnnenForelder,
   getAksjonspunkter,
 } from 'behandling/behandlingSelectors';
 import { behandlingForm } from 'behandling/behandlingForm';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
+import { getKodeverk } from 'kodeverk/duck';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import withDefaultToggling from 'fakta/withDefaultToggling';
 import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
 import faktaPanelCodes from 'fakta/faktaPanelCodes';

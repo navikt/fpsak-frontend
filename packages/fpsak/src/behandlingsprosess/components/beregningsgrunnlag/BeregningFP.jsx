@@ -6,32 +6,33 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
 
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import FadingPanel from 'sharedComponents/FadingPanel';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import {
   getAktivitetStatuser,
   getAlleAndelerIForstePeriode,
+  getBehandlingGjelderBesteberegning,
   getBeregningsgrunnlag,
   getGjeldendeBeregningAksjonspunkt,
 } from 'behandling/behandlingSelectors';
 import beregningsgrunnlagPropType from 'behandling/proptypes/beregningsgrunnlagPropType';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import { getSelectedBehandlingspunktVilkar } from 'behandlingsprosess/behandlingsprosessSelectors';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import aktivitetStatus, {
   isStatusArbeidstakerOrKombinasjon,
   isStatusDagpengerOrAAP,
   isStatusFrilanserOrKombinasjon,
   isStatusKombinasjon,
+  isStatusMilitaer,
   isStatusSNOrKombinasjon,
   isStatusTilstotendeYtelse,
-} from '@fpsak-frontend/kodeverk/aktivitetStatus';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
+} from 'kodeverk/aktivitetStatus';
+import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 import InntektsopplysningerPanel from './fellesPaneler/InntektsopplysningerPanel';
 import SkjeringspunktOgStatusPanel from './fellesPaneler/SkjeringspunktOgStatusPanel';
 import BeregningsgrunnlagForm from './beregningsgrunnlagPanel/BeregningsgrunnlagForm';
@@ -43,10 +44,6 @@ const {
   FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
   FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
 } = aksjonspunktCodes;
-
-
-const showBeregningsgrunnlagPanel = relevanteStatuser => relevanteStatuser.isArbeidstaker
-  || relevanteStatuser.isFrilanser || relevanteStatuser.isSelvstendigNaeringsdrivende || relevanteStatuser.harAndreTilstotendeYtelser;
 
 const findAksjonspunktHelpTekst = (gjeldendeAksjonspunkt) => {
   switch (gjeldendeAksjonspunkt.definisjon.kode) {
@@ -63,11 +60,10 @@ const findAksjonspunktHelpTekst = (gjeldendeAksjonspunkt) => {
   }
 };
 
-
 const findSammenligningsgrunnlagTekst = (relevanteStatuser) => {
   const tekster = [];
   if (relevanteStatuser.isSelvstendigNaeringsdrivende) {
-    tekster.push('Beregningsgrunnlag.Inntektsopplysninger.InntektSoknad');
+    tekster.push('Beregningsgrunnlag.Inntektsopplysninger.OppgittInntekt');
   } else {
     tekster.push('Beregningsgrunnlag.Inntektsopplysninger.Sammenligningsgrunnlag');
     tekster.push('Beregningsgrunnlag.Inntektsopplysninger.Sum12Mnd');
@@ -146,7 +142,7 @@ export const BeregningFPImpl = ({
           <SkjeringspunktOgStatusPanel />
         </Column>
       </Row>
-      { showBeregningsgrunnlagPanel(relevanteStatuser)
+      { relevanteStatuser.skalViseBeregningsgrunnlag
         && (
           <BeregningsgrunnlagForm
             relevanteStatuser={relevanteStatuser}
@@ -195,50 +191,20 @@ BeregningFPImpl.defaultProps = {
   gjeldendeAksjonspunkt: undefined,
 };
 
-const bestemGjeldendeStatuser = createSelector([getAktivitetStatuser], (aktivitetStatuser) => {
-  let isArbeidstaker = false;
-  let isFrilanser = false;
-  let isSelvstendigNaeringsdrivende = false;
-  let isKombinasjonsstatus = false;
-  let harDagpengerEllerAAP = false;
-  let harAndreTilstotendeYtelser = false;
-  const aktivitetStatusCodes = aktivitetStatuser ? aktivitetStatuser.map(status => status.kode) : [];
-  aktivitetStatusCodes.forEach((status) => {
-    if (isStatusArbeidstakerOrKombinasjon(status)) {
-      isArbeidstaker = true;
-    }
-    if (isStatusFrilanserOrKombinasjon(status)) {
-      isFrilanser = true;
-    }
-    if (isStatusSNOrKombinasjon(status)) {
-      isSelvstendigNaeringsdrivende = true;
-    }
-    if (isStatusDagpengerOrAAP(status)) {
-      harDagpengerEllerAAP = true;
-    }
-    if (isStatusTilstotendeYtelse(status)) {
-      harAndreTilstotendeYtelser = true;
-    }
-    if (isStatusKombinasjon(status)) {
-      isKombinasjonsstatus = true;
-    }
-  });
-  if (aktivitetStatusCodes.length > 1) {
-    isKombinasjonsstatus = true;
-  }
-  return {
-    isArbeidstaker,
-    isFrilanser,
-    isSelvstendigNaeringsdrivende,
-    isKombinasjonsstatus,
-    harAndreTilstotendeYtelser,
-    harDagpengerEllerAAP,
-  };
-});
+const bestemGjeldendeStatuser = createSelector([getAktivitetStatuser], aktivitetStatuser => ({
+  isArbeidstaker: aktivitetStatuser.some(({ kode }) => isStatusArbeidstakerOrKombinasjon(kode)),
+  isFrilanser: aktivitetStatuser.some(({ kode }) => isStatusFrilanserOrKombinasjon(kode)),
+  isSelvstendigNaeringsdrivende: aktivitetStatuser.some(({ kode }) => isStatusSNOrKombinasjon(kode)),
+  harAndreTilstotendeYtelser: aktivitetStatuser.some(({ kode }) => isStatusTilstotendeYtelse(kode)),
+  harDagpengerEllerAAP: aktivitetStatuser.some(({ kode }) => isStatusDagpengerOrAAP(kode)),
+  skalViseBeregningsgrunnlag: aktivitetStatuser && aktivitetStatuser.length > 0,
+  isKombinasjonsstatus: aktivitetStatuser.some(({ kode }) => isStatusKombinasjon(kode)) || aktivitetStatuser.length > 1,
+  isMilitaer: aktivitetStatuser.some(({ kode }) => isStatusMilitaer(kode)),
+}));
 
 const getBeregnetAarsinntekt = createSelector(
-  [getBeregningsgrunnlag, bestemGjeldendeStatuser, getAlleAndelerIForstePeriode],
-  (beregningsgrunnlag, relevanteStatuser, alleAndelerIForstePeriode) => {
+  [getBeregningsgrunnlag, bestemGjeldendeStatuser, getAlleAndelerIForstePeriode, getBehandlingGjelderBesteberegning],
+  (beregningsgrunnlag, relevanteStatuser, alleAndelerIForstePeriode, gjelderBesteberegning) => {
     if (!beregningsgrunnlag) {
       return {};
     }
@@ -247,9 +213,7 @@ const getBeregnetAarsinntekt = createSelector(
       return beregningsgrunnlag.beregningsgrunnlagPeriode[0].bruttoPrAar;
     }
     if (relevanteStatuser.isSelvstendigNaeringsdrivende) {
-      const faktaOmBer = beregningsgrunnlag.faktaOmBeregning;
-      if (faktaOmBer && faktaOmBer.faktaOmBeregningTilfeller
-        .some(tilfelle => tilfelle.kode === faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)) {
+      if (gjelderBesteberegning) {
         return beregningsgrunnlag.beregningsgrunnlagPeriode[0].bruttoPrAar;
       }
       const snAndel = alleAndelerIForstePeriode.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE)[0];

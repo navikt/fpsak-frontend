@@ -3,11 +3,12 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
-import { FormattedMessage } from 'react-intl';
-import vedtaksbrevStatus from '@fpsak-frontend/kodeverk/vedtakbrevStatus';
+import vedtaksbrevStatus from 'kodeverk/vedtakbrevStatus';
+import { ForhaandsvisningsKnapp } from '../VedtakForm';
 import { VedtakRevurderingSubmitPanelImpl as UnwrappedForm, getSubmitKnappTekst } from './VedtakRevurderingSubmitPanel';
 
 const forhandsvisVedtaksbrevFunc = sinon.spy();
+const forhandsvisManueltBrevFunc = sinon.spy();
 
 const beregningResultatInnvilget = {
   antallBarn: 1,
@@ -23,16 +24,18 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       intl={intlMock}
       beregningResultat={beregningResultatInnvilget}
       previewVedtakCallback={forhandsvisVedtaksbrevFunc}
+      previewManueltBrevCallback={forhandsvisManueltBrevFunc}
       begrunnelse=""
       haveSentVarsel
       originaltBeregningResultat={beregningResultatInnvilget}
       brevStatus={undefined}
       readOnly={false}
+      behandlingStatusKode="UTR"
       ytelseType="ES"
       submitKnappTextId="VedtakForm.TilGodkjenning"
     />);
-    const formattedMessages = wrapper.find(FormattedMessage);
-    expect(formattedMessages.prop('id')).is.eql('VedtakForm.ForhandvisBrev');
+    const formattedMessages = wrapper.find(ForhaandsvisningsKnapp);
+    expect(formattedMessages).to.have.length(1);
   });
 
   it('skal ikke forhåndsvise brev ved engangsstonad dersom det ikke er endring og ikke er sendt varsel om revurdering', () => {
@@ -41,15 +44,17 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       intl={intlMock}
       beregningResultat={beregningResultatInnvilget}
       previewVedtakCallback={forhandsvisVedtaksbrevFunc}
+      previewManueltBrevCallback={forhandsvisManueltBrevFunc}
       begrunnelse=""
       haveSentVarsel={false}
       originaltBeregningResultat={beregningResultatInnvilget}
       brevStatus={undefined}
       readOnly={false}
+      behandlingStatusKode="UTR"
       ytelseType="ES"
       submitKnappTextId="VedtakForm.TilGodkjenning"
     />);
-    expect(wrapper.find(FormattedMessage)).to.have.length(0);
+    expect(wrapper.find(ForhaandsvisningsKnapp)).to.have.length(0);
   });
 
   it('skal forhåndsvise brev ved engangsstonad dersom det er endring', () => {
@@ -58,16 +63,18 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       intl={intlMock}
       beregningResultat={beregningResultatInnvilget}
       previewVedtakCallback={forhandsvisVedtaksbrevFunc}
+      previewManueltBrevCallback={forhandsvisManueltBrevFunc}
       begrunnelse=""
       haveSentVarsel={false}
       originaltBeregningResultat={beregningResultatAvslatt}
+      behandlingStatusKode="UTR"
       brevStatus={undefined}
       readOnly={false}
       ytelseType="ES"
       submitKnappTextId="VedtakForm.TilGodkjenning"
     />);
-    const formattedMessages = wrapper.find(FormattedMessage);
-    expect(formattedMessages.prop('id')).is.eql('VedtakForm.ForhandvisBrev');
+    const formattedMessages = wrapper.find(ForhaandsvisningsKnapp);
+    expect(formattedMessages).to.have.length(1);
   });
 
   it('skal forhåndsvise brev ved foreldrepenger', () => {
@@ -76,16 +83,18 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       intl={intlMock}
       beregningResultat={beregningResultatInnvilget}
       previewVedtakCallback={forhandsvisVedtaksbrevFunc}
+      previewManueltBrevCallback={forhandsvisManueltBrevFunc}
       begrunnelse=""
       haveSentVarsel={false}
       originaltBeregningResultat={beregningResultatAvslatt}
       brevStatus={{ kode: vedtaksbrevStatus.AUTOMATISK }}
+      behandlingStatusKode="UTR"
       readOnly={false}
       ytelseType="FP"
       submitKnappTextId="VedtakForm.TilGodkjenning"
     />);
-    const formattedMessages = wrapper.find(FormattedMessage);
-    expect(formattedMessages.prop('id')).is.eql('VedtakForm.ForhandvisBrev');
+    const formattedMessages = wrapper.find(ForhaandsvisningsKnapp);
+    expect(formattedMessages).to.have.length(1);
   });
 
   it('knapp skal vise til godkjenning tekst når det finnes aktive aksjonspunkter som skal til totrinn', () => {

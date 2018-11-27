@@ -6,19 +6,19 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import FadingPanel from 'sharedComponents/FadingPanel';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import uttaksresultatPropType from 'behandling/proptypes/uttaksresultatPropType';
 import { getUttaksresultatPerioder, getStonadskontoer } from 'behandling/behandlingSelectors';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
+import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { uttakPeriodeNavn, stonadskontoType } from '@fpsak-frontend/kodeverk/uttakPeriodeType';
-import periodeResultatType from '@fpsak-frontend/kodeverk/periodeResultatType';
+import { uttakPeriodeNavn, stonadskontoType } from 'kodeverk/uttakPeriodeType';
+import periodeResultatType from 'kodeverk/periodeResultatType';
 
 import Uttak from './Uttak';
 import styles from './uttakPanel.less';
@@ -43,6 +43,7 @@ const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter) => {
   const helptTextAksjonspunkter = aksjonspunkter.filter(ap => ap.definisjon.kode !== aksjonspunktCodes.FASTSETT_UTTAKPERIODER
     && ap.definisjon.kode !== aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER);
 
+  const overstyrApHelpText = aksjonspunkter.length === 1 && aksjonspunkter[0].definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER;
   const uttakPanelAksjonsPunktKoder = {
     5001: 'UttakPanel.Aksjonspunkt.5001',
     5002: 'UttakPanel.Aksjonspunkt.5002',
@@ -65,6 +66,7 @@ const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter) => {
     5077: 'UttakPanel.Aksjonspunkt.5077',
     5078: 'UttakPanel.Aksjonspunkt.5078',
     5079: 'UttakPanel.Aksjonspunkt.5079',
+    5024: 'UttakPanel.Aksjonspunkt.5024',
   };
   if (helptTextAksjonspunkter) {
     helptTextAksjonspunkter.forEach((ap) => {
@@ -85,6 +87,10 @@ const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter) => {
       texts.push(<FormattedMessage key="manuellÅrsak" id={`UttakPanel.Aksjonspunkt.${helpText.manuellBehandlingÅrsak.kode}`} />);
     }
     texts.push(<FormattedMessage key="generellTekst" id="UttakPanel.Aksjonspunkt.Generell" />);
+  }
+
+  if (overstyrApHelpText) {
+    texts.push(<FormattedMessage key="aksjonspunktTekst" id="UttakPanel.Overstyrt.KontrollerPaNytt" />);
   }
 
   if (!isApOpen) {
@@ -264,7 +270,8 @@ const checkFlerbarnsMaksDager = (uttaksresultatActivity, stonadskonto) => {
 const checkValidStonadKonto = (uttakPerioder, stonadskontoer) => {
   let errors = null;
   uttakPerioder.forEach((periode) => {
-    const ikkeGyldigKonto = periode.aktiviteter.filter(a => !(Object.prototype.hasOwnProperty.call(stonadskontoer, a.stønadskontoType.kode)));
+    const ikkeGyldigKonto = periode.aktiviteter.filter(a => !(Object.prototype.hasOwnProperty.call(stonadskontoer, a.stønadskontoType.kode))
+      && (a.days > 0 || a.weeks > 0));
     if (ikkeGyldigKonto && ikkeGyldigKonto.length > 0) {
       errors = {
         _error:
@@ -312,8 +319,11 @@ export const buildInitialValues = createSelector(
   }),
 );
 
-export const transformValues = (values, apCodes) => {
-  let aksjonspunkt = apCodes;
+export const transformValues = (values, apCodes, aksjonspunkter) => {
+  const overstyrErOpprettet = aksjonspunkter.filter(ap => ap.status.kode === 'OPPR' && ap.definisjon.kode === '6008');
+  const removeOverstyrApCode = apCodes.filter(a => a !== '6008');
+  let aksjonspunkt = removeOverstyrApCode;
+
   const transformedResultat = values.uttaksresultatActivity.map((perioder) => {
     const { tilknyttetStortinget, ...uta } = perioder; // NOSONAR destruct er bedre enn delete, immutable
     const { ...transformActivity } = uta;
@@ -329,9 +339,10 @@ export const transformValues = (values, apCodes) => {
     return transformActivity;
   });
 
-  if (values.manuellOverstyring) {
+  if (values.manuellOverstyring || (aksjonspunkter.length === 1 && overstyrErOpprettet.length > 0)) {
     aksjonspunkt = [aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER];
   }
+
   return aksjonspunkt.map(ap => ({
     kode: ap,
     perioder: transformedResultat,
@@ -350,7 +361,7 @@ const mapStateToProps = (state, ownProps) => {
     initialValues: buildInitialValues(state),
     manuellOverstyring: behandlingFormValueSelector(formName)(state, 'manuellOverstyring'),
     validate: values => validateUttakPanelForm(values, stonadskonto),
-    onSubmit: values => ownProps.submitCallback(transformValues(values, ownProps.apCodes)),
+    onSubmit: values => ownProps.submitCallback(transformValues(values, ownProps.apCodes, aksjonspunkter)),
   };
 };
 

@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 
-import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import landkoder from '@fpsak-frontend/kodeverk/landkoder';
-import { maxLength } from '@fpsak-frontend/utils/validation/validators';
-import { FlexContainer, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
-import { InputField, DatepickerField, SelectField } from '@fpsak-frontend/form';
+import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import landkoder from 'kodeverk/landkoder';
+import { maxLength } from 'utils/validation/validators';
+import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
+import { InputField, DatepickerField, SelectField } from 'form/Fields';
 
 import styles from './renderInntektsgivendeArbeidFieldArray.less';
 
@@ -49,8 +49,8 @@ export const RenderInntektsgivendeArbeidFieldArray = ({
       readOnly={readOnly}
     >
       {(arbeidsforholdElementFieldId, index, getRemoveButton) => (
-        <Row key={arbeidsforholdElementFieldId}>
-          <Column xs="12" className={index !== (fields.length - 1) ? styles.notLastRow : ''}>
+        <Row key={arbeidsforholdElementFieldId} className={index !== (fields.length - 1) ? styles.notLastRow : ''}>
+          <Column xs="12">
             <FlexContainer>
               <FlexRow>
                 <FlexColumn>

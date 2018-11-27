@@ -4,8 +4,8 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 
 import { intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import Image from '@fpsak-frontend/shared-components/Image';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
+import Image from 'sharedComponents/Image';
+import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import { BehandlingspunktIcon } from './BehandlingspunktIcon';
 

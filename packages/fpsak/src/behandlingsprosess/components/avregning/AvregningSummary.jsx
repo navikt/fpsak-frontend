@@ -3,7 +3,8 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
+import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import { formatCurrencyNoKr } from 'utils/currencyUtils';
 import { FormattedMessage } from 'react-intl';
 import styles from './avregningSummary.less';
 
@@ -38,7 +39,7 @@ const AvregningSummary = ({
           </Normaltekst>
         </Column>
         <Column xs="2">
-          <span className={styles.number}>{ etterbetaling }</span>
+          <span className={styles.number}>{ formatCurrencyNoKr(etterbetaling) }</span>
         </Column>
       </Row>
       <Row className={styles.redNumbers}>
@@ -49,15 +50,19 @@ const AvregningSummary = ({
           </Normaltekst>
         </Column>
         <Column xs="2">
-          <span className={styles.number}>{ feilutbetaling }</span>
+          <span className={feilutbetaling ? styles.redNumber : styles.positivNumber}>{ formatCurrencyNoKr(feilutbetaling) }</span>
         </Column>
-        <Column xs="3">
-          <Normaltekst>
-            <FormattedMessage id="Avregning.inntrekk" />
-             :
-            <span className={styles.lastNumber}>{ inntrekk }</span>
-          </Normaltekst>
-        </Column>
+        { inntrekk !== null
+          && (
+          <Column xs="4">
+            <Normaltekst>
+              <FormattedMessage id="Avregning.inntrekk" />
+              :
+              <span className={styles.lastNumber}>{ formatCurrencyNoKr(inntrekk) }</span>
+            </Normaltekst>
+          </Column>
+          )
+        }
       </Row>
     </div>
   </div>
@@ -68,7 +73,11 @@ AvregningSummary.propTypes = {
   tom: PropTypes.string.isRequired,
   feilutbetaling: PropTypes.number.isRequired,
   etterbetaling: PropTypes.number.isRequired,
-  inntrekk: PropTypes.number.isRequired,
+  inntrekk: PropTypes.number,
+};
+
+AvregningSummary.defaultProps = {
+  inntrekk: null,
 };
 
 export default AvregningSummary;

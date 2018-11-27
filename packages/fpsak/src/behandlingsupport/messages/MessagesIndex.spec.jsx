@@ -133,7 +133,7 @@ describe('<MessagesIndex>', () => {
     });
   });
 
-  it('skal sende melding og ikke sette saken på vent hvis ikke INNHENT_DOK', () => {
+  it('skal sende melding og ikke sette saken på vent hvis ikke Innhent eller forlenget', () => {
     const submitMessageCallback = sinon.stub().returns(Promise.resolve());
     const wrapper = shallow(<MessagesIndex
       submitFinished
@@ -157,20 +157,19 @@ describe('<MessagesIndex>', () => {
       arsakskode: undefined,
     };
 
-    wrapper.find(Messages).prop('submitCallback')(message);
-
-    expect(wrapper.state().showMessagesModal).is.true;
-    expect(wrapper.state().showSettPaVentModal).is.false;
-
-    expect(submitMessageCallback).to.have.property('callCount', 1);
-    const { args } = submitMessageCallback.getCalls()[0];
-    expect(args).to.have.length(1);
-    expect(args[0]).to.eql({
-      behandlingId: 1,
-      mottaker: message.mottaker,
-      brevmalkode: message.brevmalkode,
-      fritekst: message.fritekst,
-      arsakskode: undefined,
+    return wrapper.find(Messages).prop('submitCallback')(message).then(() => {
+      expect(wrapper.state().showMessagesModal).is.true;
+      expect(wrapper.state().showSettPaVentModal).is.false;
+      expect(submitMessageCallback).to.have.property('callCount', 1);
+      const { args } = submitMessageCallback.getCalls()[0];
+      expect(args).to.have.length(1);
+      expect(args[0]).to.eql({
+        behandlingId: 1,
+        mottaker: message.mottaker,
+        brevmalkode: message.brevmalkode,
+        fritekst: message.fritekst,
+        arsakskode: undefined,
+      });
     });
   });
 
@@ -198,20 +197,99 @@ describe('<MessagesIndex>', () => {
       arsakskode: undefined,
     };
 
-    wrapper.find(Messages).prop('submitCallback')(message);
+    return wrapper.find(Messages).prop('submitCallback')(message).then(() => {
+      expect(wrapper.state().showMessagesModal).is.false;
+      expect(wrapper.state().showSettPaVentModal).is.true;
+      expect(submitMessageCallback).to.have.property('callCount', 1);
+      const { args } = submitMessageCallback.getCalls()[0];
+      expect(args).to.have.length(1);
+      expect(args[0]).to.eql({
+        behandlingId: 1,
+        mottaker: message.mottaker,
+        brevmalkode: message.brevmalkode,
+        fritekst: message.fritekst,
+        arsakskode: undefined,
+      });
+    });
+  });
 
-    expect(wrapper.state().showMessagesModal).is.false;
-    expect(wrapper.state().showSettPaVentModal).is.true;
+  it('skal sende melding og sette saken på vent hvis FORLEN', () => {
+    const submitMessageCallback = sinon.stub().returns(Promise.resolve());
+    const wrapper = shallow(<MessagesIndex
+      submitFinished
+      behandlingIdentifier={behandlingIdentifier}
+      selectedBehandlingVersjon={123}
+      selectedBehandlingSprak={{}}
+      recipients={recipients}
+      templates={templates}
+      fetchPreview={sinon.spy()}
+      submitMessage={submitMessageCallback}
+      setBehandlingOnHold={sinon.spy()}
+      resetReduxForm={sinon.spy()}
+      resetSubmitMessage={sinon.spy()}
+      push={sinon.spy()}
+    />);
 
-    expect(submitMessageCallback).to.have.property('callCount', 1);
-    const { args } = submitMessageCallback.getCalls()[0];
-    expect(args).to.have.length(1);
-    expect(args[0]).to.eql({
-      behandlingId: 1,
-      mottaker: message.mottaker,
-      brevmalkode: message.brevmalkode,
-      fritekst: message.fritekst,
+    const message = {
+      mottaker: 'Michal Utvikler',
+      brevmalkode: 'FORLEN',
+      fritekst: 'Dette er en tekst',
       arsakskode: undefined,
+    };
+
+    return wrapper.find(Messages).prop('submitCallback')(message).then(() => {
+      expect(wrapper.state().showMessagesModal).is.false;
+      expect(wrapper.state().showSettPaVentModal).is.true;
+      expect(submitMessageCallback).to.have.property('callCount', 1);
+      const { args } = submitMessageCallback.getCalls()[0];
+      expect(args).to.have.length(1);
+      expect(args[0]).to.eql({
+        behandlingId: 1,
+        mottaker: message.mottaker,
+        brevmalkode: message.brevmalkode,
+        fritekst: message.fritekst,
+        arsakskode: undefined,
+      });
+    });
+  });
+
+  it('skal sende melding og sette saken på vent hvis FORLME', () => {
+    const submitMessageCallback = sinon.stub().returns(Promise.resolve());
+    const wrapper = shallow(<MessagesIndex
+      submitFinished
+      behandlingIdentifier={behandlingIdentifier}
+      selectedBehandlingVersjon={123}
+      selectedBehandlingSprak={{}}
+      recipients={recipients}
+      templates={templates}
+      fetchPreview={sinon.spy()}
+      submitMessage={submitMessageCallback}
+      setBehandlingOnHold={sinon.spy()}
+      resetReduxForm={sinon.spy()}
+      resetSubmitMessage={sinon.spy()}
+      push={sinon.spy()}
+    />);
+
+    const message = {
+      mottaker: 'Michal Utvikler',
+      brevmalkode: 'FORLME',
+      fritekst: 'Dette er en tekst',
+      arsakskode: undefined,
+    };
+
+    return wrapper.find(Messages).prop('submitCallback')(message).then(() => {
+      expect(wrapper.state().showMessagesModal).is.false;
+      expect(wrapper.state().showSettPaVentModal).is.true;
+      expect(submitMessageCallback).to.have.property('callCount', 1);
+      const { args } = submitMessageCallback.getCalls()[0];
+      expect(args).to.have.length(1);
+      expect(args[0]).to.eql({
+        behandlingId: 1,
+        mottaker: message.mottaker,
+        brevmalkode: message.brevmalkode,
+        fritekst: message.fritekst,
+        arsakskode: undefined,
+      });
     });
   });
 
