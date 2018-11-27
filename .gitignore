@@ -29,6 +29,8 @@ lerna-debug.log
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.idea/**/Project.xml
+.idea/misc.xml
 
 # Generated files
 .idea/**/contentModel.xml
@@ -91,3 +93,6 @@ fabric.properties
 .vscode
 .consumed-idents.json
 .yarnrc
+
+
+ssh.exe.stackdump
