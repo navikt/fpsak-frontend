@@ -1,0 +1,20 @@
+node('DOCKER3') {
+    def tagName=''
+   stage('Checkout Tags') { // checkout only tags.
+      checkout([$class: 'GitSCM', branches: [[name: '*/tags/*']], 
+      doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], 
+      userRemoteConfigs: [[refspec: '+refs/tags/*:refs/remotes/origin/tags/*', 
+      url: 'https://github.com/navikt/fpsak-frontend.git']]])
+      tagName=sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').toString().trim()
+      echo "Tag to be deployed $tagName"
+   }
+   stage('Build and Push'){
+      sh 'PATH=$PATH:/usr/local/lib/node/nodejs/bin:/opt/yarn-v1.12.3/bin; yarn install --ignore-scripts'
+      sh 'PATH=$PATH:/usr/local/lib/node/nodejs/bin:/opt/yarn-v1.12.3/bin; yarn build' 
+      sh "docker build -t docker.adeo.no:5000/fpsak-frontend:$tagName -f ./docker/DockerfileDev ./ --build-arg HTTPS_PROXY=$HTTPS_PROXY --build-arg HTTP_PROXY=$HTTP_PROXY; docker push docker.adeo.no:5000/fpsak-frontend:$tagName"
+   }
+   stage('Deploy'){
+       build job: 'fpsak-frontend-BUILD', parameters: [string(name: 'miljø', value: 't10'), string(name: 'versjonNummer', value: tagName)], wait: true
+       addBadge icon: '/static/7d0f032c/images/48x48/completed.gif', id: '', link: '', text: "$tagName"
+   }
+}
