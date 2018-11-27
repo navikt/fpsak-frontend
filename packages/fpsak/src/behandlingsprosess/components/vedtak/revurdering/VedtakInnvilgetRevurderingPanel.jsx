@@ -5,17 +5,17 @@ import { connect } from 'react-redux';
 import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
 import {
   getAksjonspunkter,
   getBehandlingResultatstruktur, getBehandlingSprak,
   getBehandlingsresultat,
 } from 'behandling/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandling/selectors/originalBehandlingSelectors';
-import { formatCurrencyWithKr } from '@fpsak-frontend/utils/currencyUtils';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import vedtakResultType from '@fpsak-frontend/kodeverk/vedtakResultType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
+import { formatCurrencyWithKr } from 'utils/currencyUtils';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import vedtakResultType from 'kodeverk/vedtakResultType';
+import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import { endringerIBeregningsgrunnlagGirFritekstfelt } from 'behandlingsprosess/components/vedtak/VedtakHelper';
 import VedtakFritekstPanel from 'behandlingsprosess/components/vedtak/VedtakFritekstPanel';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';

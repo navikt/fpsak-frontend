@@ -2,10 +2,10 @@ import React from 'react';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import { expect } from 'chai';
 
-import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
-import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
+import vilkarType from 'kodeverk/vilkarType';
+import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
+import { isRequiredMessage } from 'utils/validation/messages';
 import VilkarResultPicker from './VilkarResultPicker';
 
 describe('<VilkarResultPicker>', () => {

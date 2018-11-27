@@ -4,15 +4,17 @@ import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
-import uttakPeriodeType from '@fpsak-frontend/kodeverk/uttakPeriodeType';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
-import { SelectField, InputField, DecimalField } from '@fpsak-frontend/form';
-import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/uttakArbeidType';
-import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/uttakArbeidTypeCodes';
+import uttakPeriodeType from 'kodeverk/uttakPeriodeType';
+import kodeverkPropType from 'kodeverk/kodeverkPropType';
+import TableColumn from 'sharedComponents/TableColumn';
+import TableRow from 'sharedComponents/TableRow';
+import Table from 'sharedComponents/Table';
+import { SelectField, InputField, DecimalField } from 'form/Fields';
+import uttakArbeidTypeKodeverk from 'kodeverk/uttakArbeidType';
+import uttakArbeidTypeTekstCodes from 'kodeverk/uttakArbeidTypeCodes';
 import {
   minValue, maxValue, hasValidInteger, maxLength, required, hasValidDecimal, notDash,
-} from '@fpsak-frontend/utils/validation/validators';
+} from 'utils/validation/validators';
 import styles from './renderUttakTable.less';
 
 /**
@@ -39,7 +41,8 @@ const gyldigeUttakperioder = [
   uttakPeriodeType.FEDREKVOTE,
   uttakPeriodeType.FORELDREPENGER_FOR_FODSEL,
   uttakPeriodeType.FORELDREPENGER,
-  uttakPeriodeType.MODREKVOTE];
+  uttakPeriodeType.MODREKVOTE,
+  uttakPeriodeType.UDEFINERT];
 
 const mapPeriodeTyper = typer => typer
   .filter(({ kode }) => gyldigeUttakperioder.includes(kode))
@@ -48,24 +51,33 @@ const mapPeriodeTyper = typer => typer
 
 const createTextStrings = (fields) => {
   const {
-    prosentArbeid, stillingsprosent, arbeidsforholdNavn, arbeidsforholdOrgnr, arbeidsforholdId, uttakArbeidType,
+    prosentArbeid, stillingsprosent, arbeidsgiver, arbeidsforholdId, uttakArbeidType,
   } = fields;
 
+  const {
+    identifikator, navn, virksomhet,
+  } = arbeidsgiver || {};
   const prosentArbeidText = (typeof prosentArbeid !== 'undefined') ? `${prosentArbeid}%` : '';
   const stillingsProsentText = (typeof stillingsprosent !== 'undefined') ? `${stillingsprosent}%` : '';
   let arbeidsforhold = '';
   if (uttakArbeidType && uttakArbeidType.kode !== uttakArbeidTypeKodeverk.ORDINÆRT_ARBEID) {
     arbeidsforhold = <FormattedMessage id={uttakArbeidTypeTekstCodes[uttakArbeidType.kode]} />;
   } else {
-    arbeidsforhold = arbeidsforholdNavn ? `${arbeidsforholdNavn}` : arbeidsforhold;
-    arbeidsforhold = arbeidsforholdOrgnr ? `${arbeidsforhold} (${arbeidsforholdOrgnr})` : arbeidsforhold;
-    arbeidsforhold = arbeidsforholdId ? `${arbeidsforhold}...${arbeidsforholdId.substr(-4)}` : arbeidsforhold;
+    arbeidsforhold = navn ? `${navn}` : arbeidsforhold;
+    arbeidsforhold = identifikator ? `${arbeidsforhold} (${identifikator})` : arbeidsforhold;
+    arbeidsforhold = virksomhet && arbeidsforholdId ? `${arbeidsforhold}...${arbeidsforholdId.substr(-4)}` : arbeidsforhold;
   }
   return {
     prosentArbeidText,
     stillingsProsentText,
     arbeidsforhold,
   };
+};
+
+const checkForMonthsOrDays = (fieldName) => {
+  const weeksValue = document.getElementById(`${fieldName}.weeks`) ? document.getElementById(`${fieldName}.weeks`).value : null;
+  const daysValue = document.getElementById(`${fieldName}.days`) ? document.getElementById(`${fieldName}.days`).value : null;
+  return (weeksValue !== '0' || daysValue !== '0');
 };
 
 export const RenderUttakTableImpl = ({
@@ -89,7 +101,8 @@ export const RenderUttakTableImpl = ({
                   selectValues={mapPeriodeTyper(periodeTyper)}
                   label=""
                   readOnly={readOnly}
-                  validate={[required, notDash]}
+                  validate={
+                    checkForMonthsOrDays(uttakElementFieldId) ? [required, notDash] : []}
                 />
               </div>
             </TableColumn>
@@ -100,6 +113,7 @@ export const RenderUttakTableImpl = ({
                     <span className={styles.weekPosition}>
                       <InputField
                         name={`${uttakElementFieldId}.weeks`}
+                        id={`${uttakElementFieldId}.weeks`}
                         readOnly={readOnly}
                         bredde="XS"
                         validate={[required, hasValidInteger, maxLength3]}
@@ -116,6 +130,7 @@ export const RenderUttakTableImpl = ({
                   <Column xs="3">
                     <InputField
                       name={`${uttakElementFieldId}.days`}
+                      id={`${uttakElementFieldId}.days`}
                       readOnly={readOnly}
                       bredde="XXS"
                       validate={[required, hasValidInteger, maxLength3]}

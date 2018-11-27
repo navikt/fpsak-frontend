@@ -3,11 +3,12 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
-import BehandlingResultatType from '@fpsak-frontend/kodeverk/behandlingResultatType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
-import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import { intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import BehandlingResultatType from 'kodeverk/behandlingResultatType';
+import behandlingStatus from 'kodeverk/behandlingStatus';
+import vilkarType from 'kodeverk/vilkarType';
+import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { VedtakRevurderingFormImpl as UnwrappedForm } from './VedtakRevurderingForm';
 import VedtakRevurderingSubmitPanel from './VedtakRevurderingSubmitPanel';
 import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
@@ -88,6 +89,7 @@ const createBehandlingOpphor = () => createBehandling(BehandlingResultatType.OPP
 describe('<VedtakRevurderingForm>', () => {
   it('skal vise result ved avslag, og submitpanel', () => {
     const forhandsvisVedtaksbrevFunc = sinon.spy();
+    const forhandsvisManueltBrevFunc = sinon.spy();
     const revurdering = createBehandlingAvslag();
 
     revurdering.type = {
@@ -111,10 +113,12 @@ describe('<VedtakRevurderingForm>', () => {
 
     const wrapper = shallow(<UnwrappedForm
       {...reduxFormPropsMock}
+      intl={intlMock}
       behandlingStatusKode={revurdering.status.kode}
       behandlingsresultat={revurdering.behandlingsresultat}
       aksjonspunkter={revurdering.aksjonspunkter}
       previewVedtakCallback={forhandsvisVedtaksbrevFunc}
+      previewManueltBrevCallback={forhandsvisManueltBrevFunc}
       readOnly={false}
       ytelseType="ES"
       isBehandlingReadOnly={false}
@@ -129,6 +133,7 @@ describe('<VedtakRevurderingForm>', () => {
 
   it('Revurdering, skal vise resultat ved endret belop, hovedknappen for totrinnskontroll og link for å forhåndsvise brev', () => {
     const forhandsvisVedtaksbrevFunc = sinon.spy();
+    const forhandsvisManueltBrevFunc = sinon.spy();
     const revurdering = createBehandlingAvslag();
 
     revurdering.behandlingsresultat = {
@@ -154,11 +159,13 @@ describe('<VedtakRevurderingForm>', () => {
 
     const wrapper = shallow(<UnwrappedForm
       {...reduxFormPropsMock}
+      intl={intlMock}
       antallBarn={1}
       behandlingStatusKode={revurdering.status.kode}
       behandlingsresultat={revurdering.behandlingsresultat}
       aksjonspunkter={revurdering.aksjonspunkter}
       previewVedtakCallback={forhandsvisVedtaksbrevFunc}
+      previewManueltBrevCallback={forhandsvisManueltBrevFunc}
       aksjonspunktKoder={[aksjonspunktCodes.FORESLA_VEDTAK]}
       readOnly={false}
       ytelseType="ES"
@@ -173,6 +180,7 @@ describe('<VedtakRevurderingForm>', () => {
 
   it('skal vise result ved ingen endring, hoved knappen og ikke vise link for forhandsvise brev', () => {
     const forhandsvisVedtaksbrevFunc = sinon.spy();
+    const forhandsvisManueltBrevFunc = sinon.spy();
     const revurdering = createBehandlingAvslag();
     revurdering.behandlingsresultat = {
       id: 1,
@@ -184,11 +192,13 @@ describe('<VedtakRevurderingForm>', () => {
 
     const wrapper = shallow(<UnwrappedForm
       {...reduxFormPropsMock}
+      intl={intlMock}
       antallBarn={1}
       behandlingStatusKode={revurdering.status.kode}
       behandlingsresultat={revurdering.behandlingsresultat}
       aksjonspunkter={revurdering.aksjonspunkter}
       previewVedtakCallback={forhandsvisVedtaksbrevFunc}
+      previewManueltBrevCallback={forhandsvisManueltBrevFunc}
       readOnly={false}
       ytelseType="ES"
       isBehandlingReadOnly
@@ -203,6 +213,7 @@ describe('<VedtakRevurderingForm>', () => {
 
   it('skal vise result ved ingen endring, og submitpanel', () => {
     const forhandsvisVedtaksbrevFunc = sinon.spy();
+    const forhandsvisManueltBrevFunc = sinon.spy();
     const revurdering = createBehandlingAvslag();
     revurdering.behandlingsresultat = {
       id: 1,
@@ -214,11 +225,13 @@ describe('<VedtakRevurderingForm>', () => {
 
     const wrapper = shallow(<UnwrappedForm
       {...reduxFormPropsMock}
+      intl={intlMock}
       behandlingStatusKode={revurdering.status.kode}
       behandlingsresultat={revurdering.behandlingsresultat}
       aksjonspunkter={revurdering.aksjonspunkter}
       antallBarn={1}
       previewVedtakCallback={forhandsvisVedtaksbrevFunc}
+      previewManueltBrevCallback={forhandsvisManueltBrevFunc}
       haveSentVarsel
       readOnly={false}
       ytelseType="ES"
@@ -234,15 +247,18 @@ describe('<VedtakRevurderingForm>', () => {
 
   it('skal vise opphørspanel når behandlingsresultat er opphør', () => {
     const forhandsvisVedtaksbrevFunc = sinon.spy();
+    const forhandsvisManueltBrevFunc = sinon.spy();
     const revurdering = createBehandlingOpphor();
 
     const wrapper = shallow(<UnwrappedForm
       {...reduxFormPropsMock}
+      intl={intlMock}
       behandlingStatusKode={revurdering.status.kode}
       behandlingsresultat={revurdering.behandlingsresultat}
       aksjonspunkter={revurdering.aksjonspunkter}
       antallBarn={1}
       previewVedtakCallback={forhandsvisVedtaksbrevFunc}
+      previewManueltBrevCallback={forhandsvisManueltBrevFunc}
       haveSentVarsel
       readOnly={false}
       ytelseType="ES"

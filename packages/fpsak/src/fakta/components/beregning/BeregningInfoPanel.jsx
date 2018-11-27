@@ -4,7 +4,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import {
   getAksjonspunkter,
@@ -13,13 +13,13 @@ import {
 import withDefaultToggling from 'fakta/withDefaultToggling';
 import faktaPanelCodes from 'fakta/faktaPanelCodes';
 import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { behandlingForm } from 'behandling/behandlingForm';
 import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
 import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import { erSpesialtilfelleMedEkstraKnapp } from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { erSpesialtilfelleMedEkstraKnapp } from 'kodeverk/faktaOmBeregningTilfelle';
 import FaktaForATFLOgSNPanel, {
   getHelpTextsFaktaForATFLOgSN, transformValuesFaktaForATFLOgSN,
   buildInitialValuesFaktaForATFLOgSN, getValidationFaktaForATFLOgSN,

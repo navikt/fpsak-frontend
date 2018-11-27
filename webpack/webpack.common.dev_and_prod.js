@@ -9,9 +9,10 @@ const common = require('./webpack.common.js');
 
 const CORE_DIR = path.resolve(__dirname, '../node_modules');
 const PACAKGES_DIR = path.join(__dirname, '../packages');
-const i18n_DIR = path.join(__dirname, '../public/sprak/');
+const LANG_DIR = path.join(__dirname, '../public/sprak/');
 const CSS_DIR = path.join(PACAKGES_DIR, 'assets/styles');
-const APP_DIR = path.join(PACAKGES_DIR, 'app');
+const IMAGE_DIR = path.join(PACAKGES_DIR, 'assets/images');
+const APP_DIR = path.join(PACAKGES_DIR, 'fpsak/src');
 
 const isDevelopment = JSON.stringify(process.env.NODE_ENV) === '"development"';
 
@@ -29,15 +30,14 @@ const config = {
           fix: isDevelopment,
           cache: true,
         },
-        include: [APP_DIR, PACAKGES_DIR],
+        include: [PACAKGES_DIR],
       }, {
         test: /\.(jsx?|js?)$/,
         loader: 'babel-loader',
         options: {
-          presets: ['react', ['env', { modules: false }], 'stage-0'],
           cacheDirectory: true,
         },
-        include: [APP_DIR, PACAKGES_DIR],
+        include: PACAKGES_DIR,
       }, {
         test: /\.(less|css)?$/,
         use: [
@@ -95,7 +95,7 @@ const config = {
         options: {
           name: isDevelopment ? '[name]_[hash].[ext]' : '/[name]_[hash].[ext]',
         },
-        include: [PACAKGES_DIR],
+        include: [APP_DIR, IMAGE_DIR],
       },
     ],
   },
@@ -106,7 +106,7 @@ const config = {
     }),
     new CopyWebpackPlugin([
       {
-        from: i18n_DIR,
+        from: LANG_DIR,
         to: 'sprak',
         toType: 'dir',
       },

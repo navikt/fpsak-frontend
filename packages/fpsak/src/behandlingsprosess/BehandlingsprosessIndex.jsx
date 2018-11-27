@@ -2,23 +2,27 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { routerActions } from 'react-router-redux';
+import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 
+import BehandlingType from 'kodeverk/behandlingType';
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import { replaceNorwegianCharacters } from '@fpsak-frontend/utils/languageUtils';
-import { getAksjonspunkter, getSelectedBehandlingIdentifier, getBehandlingVersjon } from 'behandling/behandlingSelectors';
+import { replaceNorwegianCharacters } from 'utils/languageUtils';
+import {
+  getAksjonspunkter, getSelectedBehandlingIdentifier, getBehandlingVersjon, getBehandlingType,
+} from 'behandling/behandlingSelectors';
 import BehandlingsprosessPanel from 'behandlingsprosess/components/BehandlingsprosessPanel';
+import TilbakekreveingBehandlingspunktInfoPanel from 'behandlingsprosess/tilbakekreving/components/TilbakekreveingBehandlingspunktInfoPanel';
 import IverksetterVedtakStatusModal from 'behandlingsprosess/components/vedtak/IverksetterVedtakStatusModal';
 import FatterVedtakStatusModal from 'behandlingsprosess/components/vedtak/FatterVedtakStatusModal';
 import KlageBehandlingModal from 'behandlingsprosess/components/klage/KlageBehandlingModal';
 import BehandlingspunktInfoPanel from 'behandlingsprosess/components/BehandlingspunktInfoPanel';
 import requireProps from 'app/data/requireProps';
-import aksjonspunktType from '@fpsak-frontend/kodeverk/aksjonspunktType';
-import klageVurdering from '@fpsak-frontend/kodeverk/klageVurdering';
-import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
+import aksjonspunktType from 'kodeverk/aksjonspunktType';
+import klageVurdering from 'kodeverk/klageVurdering';
+import LoadingPanel from 'sharedComponents/LoadingPanel';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import { getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta } from 'app/paths';
 import trackRouteParam from 'app/data/trackRouteParam';
@@ -101,22 +105,22 @@ export class BehandlingsprosessIndex extends Component {
 
   /* NOTE: Denne er en slags toggle, selv om ikke navnet tilsier det */
   goToBehandlingspunkt(punktName) {
-    const { selectedBehandlingspunkt, push, location } = this.props;
+    const { selectedBehandlingspunkt, push: pushLocation, location } = this.props;
     if (!punktName || punktName === selectedBehandlingspunkt) {
-      push(getBehandlingspunktLocation(location)(null));
+      pushLocation(getBehandlingspunktLocation(location)(null));
     } else {
-      push(getBehandlingspunktLocation(location)(formatBehandlingspunktName(punktName)));
+      pushLocation(getBehandlingspunktLocation(location)(formatBehandlingspunktName(punktName)));
     }
   }
 
   goToBehandlingWithDefaultPunktAndFakta() {
-    const { push, location } = this.props;
-    push(getLocationWithDefaultBehandlingspunktAndFakta(location));
+    const { push: pushLocation, location } = this.props;
+    pushLocation(getLocationWithDefaultBehandlingspunktAndFakta(location));
   }
 
   goToSearchPage() {
-    const { push } = this.props;
-    push('/');
+    const { push: pushLocation } = this.props;
+    pushLocation('/');
   }
 
   previewCallback(mottaker, brevmalkode, fritekst) {
@@ -135,6 +139,7 @@ export class BehandlingsprosessIndex extends Component {
     const data = {
       behandlingId: behandlingIdentifier.behandlingId,
       fritekst: fritekst || '',
+      skalBrukeOverstyrendeFritekstBrev: false,
     };
     fetchBrevPreview(data);
   }
@@ -195,7 +200,9 @@ export class BehandlingsprosessIndex extends Component {
   }
 
   render() {
-    const { behandlingspunkter, selectedBehandlingspunkt, dispatchSubmitFailed: submitFailedDispatch } = this.props;
+    const {
+      behandlingspunkter, selectedBehandlingspunkt, dispatchSubmitFailed: submitFailedDispatch, behandlingType,
+    } = this.props;
     const { showModalKlageBehandling } = this.state;
     return (
       <Wrapper>
@@ -204,14 +211,28 @@ export class BehandlingsprosessIndex extends Component {
           selectedBehandlingspunkt={selectedBehandlingspunkt}
           selectBehandlingspunktCallback={this.goToBehandlingspunkt}
         >
-          <BehandlingspunktInfoPanel
-            submitCallback={this.submitVilkar}
-            previewCallback={this.previewCallback}
-            previewVedtakCallback={this.previewVedtakCallback}
-            previewManueltBrevCallback={this.previewManueltBrevCallback}
-            dispatchSubmitFailed={submitFailedDispatch}
-            selectedBehandlingspunkt={selectedBehandlingspunkt}
-          />
+          {behandlingType.kode === BehandlingType.TILBAKEKREVING // TODO (TOR) Temp kode til ein får splitta ut tilbakekreving
+            ? (
+              <TilbakekreveingBehandlingspunktInfoPanel
+                submitCallback={this.submitVilkar}
+                previewCallback={this.previewCallback}
+                previewVedtakCallback={this.previewVedtakCallback}
+                previewManueltBrevCallback={this.previewManueltBrevCallback}
+                dispatchSubmitFailed={submitFailedDispatch}
+                selectedBehandlingspunkt={selectedBehandlingspunkt}
+              />
+            )
+            : (
+              <BehandlingspunktInfoPanel
+                submitCallback={this.submitVilkar}
+                previewCallback={this.previewCallback}
+                previewVedtakCallback={this.previewVedtakCallback}
+                previewManueltBrevCallback={this.previewManueltBrevCallback}
+                dispatchSubmitFailed={submitFailedDispatch}
+                selectedBehandlingspunkt={selectedBehandlingspunkt}
+              />
+            )
+          }
         </BehandlingsprosessPanel>
 
         <IverksetterVedtakStatusModal closeEvent={this.goToSearchPage} />
@@ -236,6 +257,10 @@ BehandlingsprosessIndex.propTypes = {
   fetchPreview: PropTypes.func.isRequired,
   fetchVedtaksbrevPreview: PropTypes.func.isRequired,
   dispatchSubmitFailed: PropTypes.func.isRequired,
+  behandlingType: PropTypes.shape({
+    kode: PropTypes.string,
+    navn: PropTypes.string,
+  }).isRequired,
 };
 
 BehandlingsprosessIndex.defaultProps = {
@@ -250,12 +275,14 @@ const mapStateToProps = state => ({
   behandlingspunkter: getBehandlingspunkter(state),
   defaultBehandlingspunkt: getDefaultBehandlingspunkt(state),
   selectedBehandlingspunkt: getSelectedBehandlingspunkt(state),
+  behandlingType: getBehandlingType(state),
   avslagReasons: state.default.behandlingsprosessContext.avslagReasons,
+  location: state.router.location,
 });
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
-    ...routerActions,
+    push,
     fetchPreview,
     resolveProsessAksjonspunkter,
     overrideProsessAksjonspunkter,

@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import EndringBereningsgrunnlagPeriodePanel from './EndringBeregningsgrunnlagPeriodePanel';
 
 const lagArbeidstakerAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandling,
@@ -11,7 +12,7 @@ const lagArbeidstakerAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrige
     startdato: '2017-01-01',
     opphoersdato: '2018-01-01',
   },
-  aktivitetStatus: { kode: 'ARBEIDSTAKER', navn: 'Arbeidstaker' },
+  aktivitetStatus: { kode: aktivitetStatus.ARBEIDSTAKER, navn: 'Arbeidstaker' },
   inntektskategori: { kode: 'ARBEIDSTAKER' },
   andelIArbeid,
   andelsnr,
@@ -42,7 +43,7 @@ describe('<EndringBereningsgrunnlagPeriodePanel>', () => {
     expect(initialValues).to.have.length(4);
     initialValues.forEach((initialValue) => {
       expect(initialValue.andel).to.equal('Virksomheten (3284788923) ...a7e2');
-      expect(initialValue.aktivitetStatus).to.equal('ARBEIDSTAKER');
+      expect(initialValue.aktivitetStatus).to.equal('AT');
       expect(initialValue.nyAndel).to.equal(false);
       expect(initialValue.lagtTilAvSaksbehandler).to.equal(false);
       expect(initialValue.inntektskategori).to.equal('ARBEIDSTAKER');

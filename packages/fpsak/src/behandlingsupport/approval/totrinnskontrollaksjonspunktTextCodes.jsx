@@ -1,4 +1,4 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 
 const aksjonspunktTextCodes = {
   [aksjonspunktCodes.ADOPSJONSDOKUMENTAJON]: 'ToTrinnsForm.Adopsjon.KontrollerOpplysninger',
@@ -41,6 +41,8 @@ const aksjonspunktTextCodes = {
   [aksjonspunktCodes.FORESLA_VEDTAK]: 'ToTrinnsForm.Vedtak.Fritekstbrev',
 
   [aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO]: 'TotrinnsForm.Uttak.AvklarManglendeUttaksperiode',
+  [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG]: 'ToTrinnsForm.Omsorg.VurderOmsorg',
+  [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG]: 'ToTrinnsForm.Aleneomsorg.VurderAleneomsorg',
 
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 
-import { SelectField } from '@fpsak-frontend/form';
+import { SelectField } from 'form/Fields';
 import PersonNyttEllerErstattArbeidsforholdPanel from './PersonNyttEllerErstattArbeidsforholdPanel';
 
 describe('<PersonNyttEllerErstattArbeidsforholdPanel>', () => {

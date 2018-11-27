@@ -4,11 +4,11 @@ import { expect } from 'chai';
 
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
-import innsynResultatType from '@fpsak-frontend/kodeverk/innsynResultatType';
+import innsynResultatType from 'kodeverk/innsynResultatType';
 import { FormattedMessage } from 'react-intl';
 
 
-import { TextAreaField } from '@fpsak-frontend/form';
+import { TextAreaField } from 'form/Fields';
 
 
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';

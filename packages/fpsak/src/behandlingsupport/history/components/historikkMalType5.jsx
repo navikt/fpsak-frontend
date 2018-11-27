@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, injectIntl, intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { createLocationForHistorikkItems } from 'app/paths';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
 import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
-import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/historikkEndretFeltTypeCodes';
-import historikkEndretFeltTypeHeadingCodes from '@fpsak-frontend/kodeverk/historikkEndretFeltTypeHeadingCodes';
+import historikkEndretFeltTypeCodes from 'kodeverk/historikkEndretFeltTypeCodes';
+import historikkEndretFeltTypeHeadingCodes from 'kodeverk/historikkEndretFeltTypeHeadingCodes';
 import {
   findEndretFeltNavn,
   findEndretFeltVerdi,

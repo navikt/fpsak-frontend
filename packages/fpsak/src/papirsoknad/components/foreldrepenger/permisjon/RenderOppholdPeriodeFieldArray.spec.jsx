@@ -2,8 +2,9 @@ import React from 'react';
 import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import { expect } from 'chai';
 
-import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
-import { DatepickerField, SelectField } from '@fpsak-frontend/form';
+import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
+import DatepickerField from 'form/fields/DatepickerField';
+import SelectField from 'form/fields/SelectField';
 import { MockFields, metaMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 import { RenderOppholdPeriodeFieldArray } from './RenderOppholdPeriodeFieldArray';
 

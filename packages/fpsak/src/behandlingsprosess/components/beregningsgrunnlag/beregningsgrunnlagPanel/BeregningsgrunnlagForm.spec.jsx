@@ -3,17 +3,20 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
-import periodeAarsak from '@fpsak-frontend/kodeverk/periodeAarsak';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import periodeAarsak from 'kodeverk/periodeAarsak';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { BeregningsgrunnlagForm as UnwrappedForm } from './BeregningsgrunnlagForm';
 import GrunnlagForAarsinntektPanelAT from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
 import GrunnlagForAarsinntektPanelFL from '../frilanser/GrunnlagForAarsinntektPanelFL';
 import GrunnlagForAarsinntektPanelSN from '../selvstendigNaeringsdrivende/GrunnlagForAarsinntektPanelSN';
 import OppsummeringSN from '../selvstendigNaeringsdrivende/OppsummeringSN';
 import FastsettGrunnlagSN from '../selvstendigNaeringsdrivende/FastsettNaeringsinntektSN';
+import TilstotendeYtelser from '../tilstotendeYtelser/TilstotendeYtelser';
+import YtelserFraInfotrygd from '../tilstotendeYtelser/YtelserFraInfotrygd';
+import MilitaerPanel from '../militær/MilitaerPanel';
 
 const arbeidstakerAndel = {
   aktivitetStatus: {
@@ -38,6 +41,41 @@ const frilanserAndel = {
   beregningsperiodeTom: '2016-01-01',
 
 };
+
+const tyAndel = {
+  aktivitetStatus: {
+    kode: aktivitetStatus.TILSTOTENDE_YTELSE,
+  },
+  beregnetPrAar: 300000,
+  beregningsperiodeFom: '2016-01-01',
+  beregningsperiodeTom: '2017-01-01',
+};
+
+const dagpengerAndel = {
+  aktivitetStatus: {
+    kode: aktivitetStatus.DAGPENGER,
+  },
+  beregnetPrAar: 300000,
+  beregningsperiodeFom: '2016-01-01',
+  beregningsperiodeTom: '2017-01-01',
+};
+
+const aapAndel = {
+  aktivitetStatus: {
+    kode: aktivitetStatus.ARBEIDSAVKLARINGSPENGER,
+  },
+  beregnetPrAar: 300000,
+  beregningsperiodeFom: '2016-01-01',
+  beregningsperiodeTom: '2017-01-01',
+};
+
+const militaerAndel = {
+  aktivitetStatus: {
+    kode: aktivitetStatus.MILITAER_ELLER_SIVIL,
+  },
+  beregnetPrAar: 300000,
+};
+
 
 const selvstedigNaeringsdrivendeAndel = {
   aktivitetStatus: {
@@ -104,12 +142,13 @@ const selvstendigNyIArbAksjonspunkt = {
 
 
 const perioder = [{
+  bruttoPrAar: 200000,
   periodeAarsaker: [{
     kode: periodeAarsak.UDEFINERT,
   }],
 }];
 
-const naeringsinntekt = 250000;
+const inntekt = 250000;
 
 describe('<BeregningsgrunnlagForm>', () => {
   it('Skal teste at korrekte komponenter vises for arbeidstaker uten aksjonspunkt', () => {
@@ -118,12 +157,13 @@ describe('<BeregningsgrunnlagForm>', () => {
       intl={intlMock}
       submitCallback={sinon.spy()}
       readOnly
-      beregnetAarsinntekt={naeringsinntekt}
+      beregnetAarsinntekt={inntekt}
       alleAndelerIForstePeriode={[arbeidstakerAndel]}
       allePerioder={perioder}
       harTidligeregrunnlag={false}
       relevanteStatuser={{ isArbeidstaker: true, isKombinasjonsstatus: true }}
       readOnlySubmitButton
+      gjelderBesteberegning={false}
     />);
 
     const atPanel = wrapper.find(GrunnlagForAarsinntektPanelAT);
@@ -145,12 +185,13 @@ describe('<BeregningsgrunnlagForm>', () => {
       intl={intlMock}
       submitCallback={sinon.spy()}
       readOnly
-      beregnetAarsinntekt={naeringsinntekt}
+      beregnetAarsinntekt={inntekt}
       alleAndelerIForstePeriode={[frilanserAndel]}
       allePerioder={perioder}
       harTidligeregrunnlag={false}
       relevanteStatuser={{ isFrilanser: true, isKombinasjonsstatus: true }}
       readOnlySubmitButton
+      gjelderBesteberegning={false}
     />);
 
     const flPanel = wrapper.find(GrunnlagForAarsinntektPanelFL);
@@ -172,12 +213,13 @@ describe('<BeregningsgrunnlagForm>', () => {
       intl={intlMock}
       submitCallback={sinon.spy()}
       readOnly
-      beregnetAarsinntekt={naeringsinntekt}
+      beregnetAarsinntekt={inntekt}
       alleAndelerIForstePeriode={[selvstedigNaeringsdrivendeAndel]}
       allePerioder={perioder}
       harTidligeregrunnlag={false}
       relevanteStatuser={{ isSelvstendigNaeringsdrivende: true }}
       readOnlySubmitButton
+      gjelderBesteberegning={false}
     />);
 
     const snPanel = wrapper.find(GrunnlagForAarsinntektPanelSN);
@@ -198,13 +240,14 @@ describe('<BeregningsgrunnlagForm>', () => {
       intl={intlMock}
       submitCallback={sinon.spy()}
       readOnly
-      beregnetAarsinntekt={naeringsinntekt}
+      beregnetAarsinntekt={inntekt}
       alleAndelerIForstePeriode={[selvstedigNaeringsdrivendeAndel]}
       allePerioder={perioder}
       gjeldendeAksjonspunkt={selvstendigNyIArbAksjonspunkt}
       harTidligeregrunnlag={false}
       relevanteStatuser={{ isSelvstendigNaeringsdrivende: true }}
       readOnlySubmitButton
+      gjelderBesteberegning={false}
     />);
 
     const snPanel = wrapper.find(GrunnlagForAarsinntektPanelSN);
@@ -227,14 +270,16 @@ describe('<BeregningsgrunnlagForm>', () => {
       submitCallback={sinon.spy()}
       readOnly
       gjeldendeAksjonspunkt={selvstendigAksjonspunkt}
-      beregnetAarsinntekt={naeringsinntekt}
+      beregnetAarsinntekt={inntekt}
       allePerioder={perioder}
       alleAndelerIForstePeriode={[selvstedigNaeringsdrivendeAndel, arbeidstakerAndel]}
       harTidligeregrunnlag={false}
       relevanteStatuser={{ isArbeidstaker: true, isSelvstendigNaeringsdrivende: true, isKombinasjonsstatus: true }}
       readOnlySubmitButton
+      gjelderBesteberegning={false}
     />);
 
+    expect(wrapper.find(MilitaerPanel)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelAT)).to.have.length(1);
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN)).to.have.length(1);
@@ -250,7 +295,7 @@ describe('<BeregningsgrunnlagForm>', () => {
       intl={intlMock}
       submitCallback={sinon.spy()}
       readOnly
-      beregnetAarsinntekt={naeringsinntekt}
+      beregnetAarsinntekt={inntekt}
       alleAndelerIForstePeriode={[selvstedigNaeringsdrivendeAndel, frilanserAndel]}
       harTidligeregrunnlag={false}
       relevanteStatuser={{
@@ -259,8 +304,10 @@ describe('<BeregningsgrunnlagForm>', () => {
         isKombinasjonsstatus: true,
       }}
       readOnlySubmitButton
+      gjelderBesteberegning={false}
     />);
 
+    expect(wrapper.find(MilitaerPanel)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelAT)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(1);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN)).to.have.length(1);
@@ -278,7 +325,7 @@ describe('<BeregningsgrunnlagForm>', () => {
       readOnly
       allePerioder={perioder}
       gjeldendeAksjonspunkt={atflAksjonspunkt}
-      beregnetAarsinntekt={naeringsinntekt}
+      beregnetAarsinntekt={inntekt}
       alleAndelerIForstePeriode={[selvstedigNaeringsdrivendeAndel, frilanserAndel]}
       harTidligeregrunnlag={false}
       relevanteStatuser={{
@@ -287,8 +334,10 @@ describe('<BeregningsgrunnlagForm>', () => {
         isKombinasjonsstatus: true,
       }}
       readOnlySubmitButton
+      gjelderBesteberegning={false}
     />);
 
+    expect(wrapper.find(MilitaerPanel)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelAT)).to.have.length(1);
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(1);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN)).to.have.length(0);
@@ -305,7 +354,7 @@ describe('<BeregningsgrunnlagForm>', () => {
       readOnly
       allePerioder={perioder}
       gjeldendeAksjonspunkt={selvstendigAksjonspunkt}
-      beregnetAarsinntekt={naeringsinntekt}
+      beregnetAarsinntekt={inntekt}
       alleAndelerIForstePeriode={[selvstedigNaeringsdrivendeAndel, frilanserAndel, arbeidstakerAndel]}
       harTidligeregrunnlag={false}
       relevanteStatuser={{
@@ -315,13 +364,97 @@ describe('<BeregningsgrunnlagForm>', () => {
         isKombinasjonsstatus: true,
       }}
       readOnlySubmitButton
+      gjelderBesteberegning={false}
     />);
 
+    expect(wrapper.find(MilitaerPanel)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelAT)).to.have.length(1);
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(1);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN)).to.have.length(1);
     expect(wrapper.find(OppsummeringSN)).to.have.length(1);
     expect(wrapper.find(FastsettGrunnlagSN)).to.have.length(1);
     expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(1);
+  });
+
+  it('Skal teste at korrekte komponenter vises for dagpenger / aap', () => {
+    const wrapper = shallowWithIntl(<UnwrappedForm
+      {...reduxFormPropsMock}
+      intl={intlMock}
+      submitCallback={sinon.spy()}
+      readOnly
+      allePerioder={perioder}
+      gjeldendeAksjonspunkt={undefined}
+      beregnetAarsinntekt={inntekt}
+      alleAndelerIForstePeriode={[aapAndel, dagpengerAndel]}
+      harTidligeregrunnlag={false}
+      relevanteStatuser={{ harDagpengerEllerAAP: true, isKombinasjonsstatus: false, isSelvstendigNaeringsdrivende: false }}
+      readOnlySubmitButton
+      gjelderBesteberegning={false}
+    />);
+    expect(wrapper.find(GrunnlagForAarsinntektPanelAT)).to.have.length(0);
+    expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(0);
+    expect(wrapper.find(GrunnlagForAarsinntektPanelSN)).to.have.length(0);
+    expect(wrapper.find(OppsummeringSN)).to.have.length(0);
+    expect(wrapper.find(FastsettGrunnlagSN)).to.have.length(0);
+    expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(0);
+    expect(wrapper.find(MilitaerPanel)).to.have.length(0);
+    expect(wrapper.find(TilstotendeYtelser)).to.have.length(1);
+
+    const ytelsePanel = wrapper.find(TilstotendeYtelser);
+    expect(ytelsePanel.props().skalViseOppjustertGrunnlag).to.equal(false);
+  });
+
+  it('Skal teste at korrekte komponenter vises for andre tilstøtende ytelser', () => {
+    const wrapper = shallowWithIntl(<UnwrappedForm
+      {...reduxFormPropsMock}
+      intl={intlMock}
+      submitCallback={sinon.spy()}
+      readOnly
+      allePerioder={perioder}
+      gjeldendeAksjonspunkt={undefined}
+      beregnetAarsinntekt={inntekt}
+      alleAndelerIForstePeriode={[tyAndel]}
+      harTidligeregrunnlag={false}
+      relevanteStatuser={{ harDagpengerEllerAAP: false, isKombinasjonsstatus: false, harAndreTilstotendeYtelser: true }}
+      readOnlySubmitButton
+      tilstøtendeYtelseType="Sykepeger"
+      gjelderBesteberegning={false}
+    />);
+    expect(wrapper.find(GrunnlagForAarsinntektPanelAT)).to.have.length(0);
+    expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(0);
+    expect(wrapper.find(GrunnlagForAarsinntektPanelSN)).to.have.length(0);
+    expect(wrapper.find(OppsummeringSN)).to.have.length(0);
+    expect(wrapper.find(FastsettGrunnlagSN)).to.have.length(0);
+    expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(0);
+    expect(wrapper.find(TilstotendeYtelser)).to.have.length(0);
+    expect(wrapper.find(YtelserFraInfotrygd)).to.have.length(1);
+    expect(wrapper.find(MilitaerPanel)).to.have.length(0);
+  });
+
+  it('Skal teste at korrekte komponenter vises for militær', () => {
+    const wrapper = shallowWithIntl(<UnwrappedForm
+      {...reduxFormPropsMock}
+      intl={intlMock}
+      submitCallback={sinon.spy()}
+      readOnly
+      allePerioder={perioder}
+      gjeldendeAksjonspunkt={undefined}
+      beregnetAarsinntekt={inntekt}
+      alleAndelerIForstePeriode={[militaerAndel]}
+      harTidligeregrunnlag={false}
+      relevanteStatuser={{ isMilitaer: true }}
+      readOnlySubmitButton
+      gjelderBesteberegning={false}
+    />);
+
+    expect(wrapper.find(GrunnlagForAarsinntektPanelAT)).to.have.length(0);
+    expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(0);
+    expect(wrapper.find(GrunnlagForAarsinntektPanelSN)).to.have.length(0);
+    expect(wrapper.find(OppsummeringSN)).to.have.length(0);
+    expect(wrapper.find(FastsettGrunnlagSN)).to.have.length(0);
+    expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(0);
+    expect(wrapper.find(TilstotendeYtelser)).to.have.length(0);
+    expect(wrapper.find(YtelserFraInfotrygd)).to.have.length(0);
+    expect(wrapper.find(MilitaerPanel)).to.have.length(1);
   });
 });

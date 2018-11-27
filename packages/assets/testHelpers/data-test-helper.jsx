@@ -1,8 +1,9 @@
-import RestDuck from '@fpsak-frontend/data/rest/RestDuck';
-import reducers from '@fpsak-frontend/fpsak/src/reducers'; // TODO fix depency
-import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
-
+import RestDuck from '@fpsak-frontend/fpsak/src/data/rest/redux/RestDuck';
+import getAxiosHttpClientApi from '@fpsak-frontend/fpsak/src/data/rest/axios/axiosHttpClientApi';
+import RequestApi from '@fpsak-frontend/fpsak/src/data/rest/requestApi/RequestApi';
+import reducers from '@fpsak-frontend/fpsak/src/reducers';
+import behandlingStatus from 'kodeverk/behandlingStatus';
+import behandlingType from 'kodeverk/behandlingType';
 
 export const withoutRestActions = actions => actions.filter(a => !a.type.match(/^@@REST/));
 
@@ -12,7 +13,11 @@ export const apiState = () => {
   const state = { default: reducers() };
 
   state.withData = (api, data) => {
-    const d = new RestDuck(api);
+    const configs = [{
+      name: api
+    }]
+    const requestApi = new RequestApi(getAxiosHttpClientApi(), "fpsak", configs);
+    const d = new RestDuck(requestApi.getRequestRunner(api));
     state.default.dataContext[api] = d.reducer(d.reducer(), d.actionCreators.requestFinished(data));
     return state;
   };

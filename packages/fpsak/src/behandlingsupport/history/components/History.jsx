@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { pathToBehandling } from 'app/paths';
 import historikkinnslagPropType from 'behandling/proptypes/historikkinnslagPropType';
-import historikkinnslagType from '@fpsak-frontend/kodeverk/historikkinnslagType';
+import historikkinnslagType from 'kodeverk/historikkinnslagType';
 import SnakkebobleMedRoller from './snakkebobleMedRoller';
 import HistorikkMalType1 from './historikkMalType1';
 import HistorikkMalType2 from './historikkMalType2';
@@ -66,6 +66,7 @@ const velgHistorikkMal = (histType) => { // NOSONAR
       return HistorikkMalType8;
     case historikkinnslagType.OVST_UTTAK_SPLITT:
     case historikkinnslagType.FASTSATT_UTTAK_SPLITT:
+    case historikkinnslagType.TILBAKEKR_VIDEREBEHANDLING:
       return HistorikkMalType9;
     case historikkinnslagType.OVST_UTTAK:
     case historikkinnslagType.FASTSATT_UTTAK:

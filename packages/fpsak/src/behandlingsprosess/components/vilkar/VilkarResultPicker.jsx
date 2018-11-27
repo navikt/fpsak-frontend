@@ -3,13 +3,16 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedHTMLMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
-import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
-import { SelectField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { required } from '@fpsak-frontend/utils/validation/validators';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import ArrowBox from 'sharedComponents/ArrowBox';
+import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
+import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import { isRequiredMessage } from 'utils/validation/messages';
+import {
+  SelectField, RadioGroupField, RadioOption, DatepickerField,
+} from 'form/Fields';
+import { hasValidDate, required } from 'utils/validation/validators';
 
 import styles from './vilkarResultPicker.less';
 
@@ -33,6 +36,7 @@ const VilkarResultPickerImpl = ({
   customVilkarIkkeOppfyltText,
   customVilkarOppfyltText,
   readOnly,
+  behandlingspunkt,
   hasAksjonspunkt,
 }) => (
   <div className={styles.container}>
@@ -76,6 +80,18 @@ const VilkarResultPickerImpl = ({
             bredde="xl"
             readOnly={readOnly}
           />
+          {behandlingspunkt === behandlingspunktCodes.FORTSATTMEDLEMSKAP
+          && (
+          <DatepickerField
+            name="avslagDato"
+            label={{ id: 'VilkarResultPicker.VilkarDato' }}
+            readOnly={readOnly}
+            // isEdited={!isApOpen}
+            validate={[required, hasValidDate]}
+          />
+          )
+          }
+
         </ArrowBox>
       </Column>
     </Row>
@@ -102,12 +118,14 @@ VilkarResultPickerImpl.propTypes = {
   erVilkarOk: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
   hasAksjonspunkt: PropTypes.bool.isRequired,
+  behandlingspunkt: PropTypes.string,
 };
 
 VilkarResultPickerImpl.defaultProps = {
   erVilkarOk: undefined,
   customVilkarIkkeOppfyltText: undefined,
   customVilkarOppfyltText: undefined,
+  behandlingspunkt: undefined,
 };
 
 const VilkarResultPicker = injectIntl(VilkarResultPickerImpl);
@@ -137,6 +155,7 @@ VilkarResultPicker.transformValues = values => (
     : {
       erVilkarOk: values.erVilkarOk,
       avslagskode: values.avslagCode,
+      avslagDato: values.avslagDato,
     }
 );
 

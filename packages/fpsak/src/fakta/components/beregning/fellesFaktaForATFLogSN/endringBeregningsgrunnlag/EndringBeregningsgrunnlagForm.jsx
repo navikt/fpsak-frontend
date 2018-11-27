@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { removeSpacesFromNumber } from '@fpsak-frontend/utils/currencyUtils';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
+import { removeSpacesFromNumber } from 'utils/currencyUtils';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import BorderBox from 'sharedComponents/BorderBox';
 import EndringBeregningsgrunnlagPeriodePanel from './EndringBeregningsgrunnlagPeriodePanel';
 
 import styles from './endringBeregningsgrunnlagForm.less';

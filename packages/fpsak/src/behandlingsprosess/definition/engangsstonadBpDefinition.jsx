@@ -1,8 +1,9 @@
-import ac from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import vt from '@fpsak-frontend/kodeverk/vilkarType';
-import bt from '@fpsak-frontend/kodeverk/behandlingType';
-import vut from '@fpsak-frontend/kodeverk/vilkarUtfallType';
+import ac from 'kodeverk/aksjonspunktCodes';
+import vt from 'kodeverk/vilkarType';
+import bt from 'kodeverk/behandlingType';
+import vut from 'kodeverk/vilkarUtfallType';
 import bpc from 'behandlingsprosess/behandlingspunktCodes';
+import { hasSimuleringOn, getStatusFromSimulering } from './simuleringStatusUtleder';
 import getVedtakStatus from './vedtakStatusUtleder';
 import BehandlingspunktProperties from './behandlingspunktBuilder';
 
@@ -22,8 +23,12 @@ const engangsstonadBuilders = [
     .withAksjonspunktCodes(ac.VARSEL_REVURDERING_MANUELL, ac.VARSEL_REVURDERING_ETTERKONTROLL),
   new BehandlingspunktProperties.Builder(bpc.SAKSOPPLYSNINGER, 'Saksopplysninger')
     .withAksjonspunktCodes(ac.AVKLAR_PERSONSTATUS),
+  new BehandlingspunktProperties.Builder(bpc.FORMKRAV_KLAGE_NAV_FAMILIE_OG_PENSJON, 'FormkravKlageNFP')
+    .withAksjonspunktCodes(ac.VURDERING_AV_FORMKRAV_KLAGE_NFP),
   new BehandlingspunktProperties.Builder(bpc.KLAGE_NAV_FAMILIE_OG_PENSJON, 'CheckKlageNFP')
     .withAksjonspunktCodes(ac.BEHANDLE_KLAGE_NFP),
+  new BehandlingspunktProperties.Builder(bpc.FORMKRAV_KLAGE_NAV_KLAGEINSTANS, 'FormkravKlageKA')
+    .withAksjonspunktCodes(ac.VURDERING_AV_FORMKRAV_KLAGE_KA),
   new BehandlingspunktProperties.Builder(bpc.KLAGE_NAV_KLAGEINSTANS, 'CheckKlageNK')
     .withAksjonspunktCodes(ac.BEHANDLE_KLAGE_NK),
   new BehandlingspunktProperties.Builder(bpc.OPPLYSNINGSPLIKT, 'Opplysningsplikt')
@@ -57,6 +62,9 @@ const engangsstonadBuilders = [
     .withAksjonspunktCodes(ac.OVERSTYR_BEREGNING)
     .withVisibilityWhen(hasNonDefaultBehandlingspunkt, behandlingTypeNotEquals(bt.DOKUMENTINNSYN, bt.KLAGE))
     .withStatus(getStatusFromBeregningsresultat),
+  new BehandlingspunktProperties.Builder(bpc.AVREGNING, 'Avregning')
+    .withVisibilityWhen(hasNonDefaultBehandlingspunkt, behandlingTypeNotEquals(bt.KLAGE), hasSimuleringOn)
+    .withStatus(getStatusFromSimulering),
   new BehandlingspunktProperties.Builder(bpc.VEDTAK, 'Vedtak')
     .withAksjonspunktCodes(
       ac.FORESLA_VEDTAK, ac.FATTER_VEDTAK, ac.FORESLA_VEDTAK_MANUELT, ac.VEDTAK_UTEN_TOTRINNSKONTROLL, ac.VURDERE_ANNEN_YTELSE,

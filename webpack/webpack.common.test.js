@@ -18,7 +18,6 @@ const config = {
 	  loaders: [{
         path: 'babel-loader',
         query: {
-          presets: [ 'react', ['env', {'modules': false}], 'stage-0' ],
           cacheDirectory: true,
         },
       }],

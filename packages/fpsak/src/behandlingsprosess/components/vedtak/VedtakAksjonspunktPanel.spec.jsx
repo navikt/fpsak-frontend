@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 
-import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
+import behandlingStatus from 'kodeverk/behandlingStatus';
 import { VedtakAksjonspunktPanelImpl } from './VedtakAksjonspunktPanel';
 
 describe('<VedtakAksjonspunktPanel>', () => {

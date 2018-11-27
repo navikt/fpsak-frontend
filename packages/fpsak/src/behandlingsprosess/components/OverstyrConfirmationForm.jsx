@@ -5,11 +5,11 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 
 import { isSelectedBehandlingspunktOverrideReadOnly } from 'behandlingsprosess/behandlingsprosessSelectors';
-import { TextAreaField } from '@fpsak-frontend/form';
+import { TextAreaField } from 'form/Fields';
 import {
   minLength, maxLength, requiredIfNotPristine, hasValidText,
-} from '@fpsak-frontend/utils/validation/validators';
-import decodeHtmlEntity from '@fpsak-frontend/utils/decodeHtmlEntityUtils';
+} from 'utils/validation/validators';
+import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
 
 import styles from './overstyrConfirmationForm.less';
 

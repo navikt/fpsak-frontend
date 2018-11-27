@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 
 const isInfoPanelOpen = aksjonspunkter => aksjonspunkter.filter(ap => isAksjonspunktOpen(ap.status.kode)).length > 0;
 

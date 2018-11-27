@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Element, Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import { dateFormat, calcDaysAndWeeks } from '@fpsak-frontend/utils/dateUtils';
-import utsettelseArsakCodes, { utsettelseArsakTexts } from '@fpsak-frontend/kodeverk/utsettelseArsakCodes';
-import overforingArsakCodes, { overforingArsakTexts } from '@fpsak-frontend/kodeverk/overforingArsakCodes';
-import Image from '@fpsak-frontend/shared-components/Image';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
-import editPeriodeIcon from '@fpsak-frontend/assets/images/endre.svg';
-import editPeriodeDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
-import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
-import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
+import { dateFormat, calcDaysAndWeeks } from 'utils/dateUtils';
+import utsettelseArsakCodes, { utsettelseArsakTexts } from 'kodeverk/utsettelseArsakCodes';
+import overforingArsakCodes, { overforingArsakTexts } from 'kodeverk/overforingArsakCodes';
+import Image from 'sharedComponents/Image';
+import { ISO_DATE_FORMAT } from 'utils/formats';
+import editPeriodeIcon from 'images/endre.svg';
+import editPeriodeDisabledIcon from 'images/endre_disablet.svg';
+import removePeriod from 'images/remove.svg';
+import removePeriodDisabled from 'images/remove_disabled.svg';
 import styles from './uttakPeriodeType.less';
 
 const formatProsent = prosent => `${prosent}%`;
@@ -55,8 +55,7 @@ const UttakPeriodeType = ({ // NOSONAR
   overforingArsak,
   uttakPeriodeType,
   isFromSøknad,
-  virksomhetNavn,
-  orgnr,
+  arbeidsgiver,
   erArbeidstaker,
   samtidigUttak,
   samtidigUttaksprosent,
@@ -135,10 +134,10 @@ const UttakPeriodeType = ({ // NOSONAR
         </div>
       )
       }
-      {isGradering && virksomhetNavn && orgnr
+      {isGradering && arbeidsgiver && arbeidsgiver.navn && arbeidsgiver.identifikator
       && (
       <div className={styles.textWrapper}>
-        <Element>{`${virksomhetNavn} ${orgnr}`}</Element>
+        <Element>{`${arbeidsgiver.navn} ${arbeidsgiver.identifikator}`}</Element>
       </div>
       )
       }
@@ -156,8 +155,7 @@ UttakPeriodeType.propTypes = {
   isAnyFormOpen: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   arbeidstidprosent: PropTypes.number,
-  virksomhetNavn: PropTypes.string,
-  orgnr: PropTypes.string,
+  arbeidsgiver: PropTypes.shape(),
   isNyPeriodeFormOpen: PropTypes.bool.isRequired,
   utsettelseArsak: PropTypes.shape().isRequired,
   overforingArsak: PropTypes.shape().isRequired,
@@ -171,8 +169,7 @@ UttakPeriodeType.propTypes = {
 UttakPeriodeType.defaultProps = {
   arbeidstidprosent: null,
   samtidigUttaksprosent: null,
-  virksomhetNavn: null,
-  orgnr: null,
+  arbeidsgiver: {},
   erArbeidstaker: false,
 };
 

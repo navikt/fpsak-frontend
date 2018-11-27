@@ -2,8 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
-import { RadioGroupField } from '@fpsak-frontend/form';
-import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/uttakPeriodeVurdering';
+import { RadioGroupField } from 'form/Fields';
+import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
 import sinon from 'sinon';
 import { SykdomOgSkadePeriode } from './SykdomOgSkadePeriode';
 

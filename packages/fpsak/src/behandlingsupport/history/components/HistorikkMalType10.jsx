@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import historikkinnslagType from '@fpsak-frontend/kodeverk/historikkinnslagType';
+import historikkinnslagType from 'kodeverk/historikkinnslagType';
 
 import { FormattedHTMLMessage, injectIntl, intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
@@ -8,8 +8,8 @@ import { Element } from 'nav-frontend-typografi';
 
 import { createLocationForHistorikkItems } from 'app/paths';
 import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
-import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/historikkEndretFeltTypeCodes';
-import historikkOpplysningTypeCodes from '@fpsak-frontend/kodeverk/historikkOpplysningTypeCodes';
+import historikkEndretFeltTypeCodes from 'kodeverk/historikkEndretFeltTypeCodes';
+import historikkOpplysningTypeCodes from 'kodeverk/historikkOpplysningTypeCodes';
 import {
   findEndretFeltNavn,
   findEndretFeltVerdi,

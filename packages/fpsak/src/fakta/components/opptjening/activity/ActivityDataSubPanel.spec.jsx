@@ -4,8 +4,9 @@ import { shallow } from 'enzyme';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { InputField, DecimalField, DatepickerField } from '@fpsak-frontend/form';
-import OAType from '@fpsak-frontend/kodeverk/opptjeningAktivitetType';
+import { InputField, DecimalField } from 'form/Fields';
+import DatepickerField from 'form/fields/DatepickerField';
+import OAType from 'kodeverk/opptjeningAktivitetType';
 import ActivityDataSubPanel from './ActivityDataSubPanel';
 
 describe('<ActivityDataSubPanel>', () => {

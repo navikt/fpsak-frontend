@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import Modal from '@fpsak-frontend/shared-components/Modal';
+import Modal from 'sharedComponents/Modal';
 import { FatterVedtakStatusModal } from './FatterVedtakStatusModal';
 
 describe('<FatterVedtakStatusModal>', () => {

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import Image from '@fpsak-frontend/shared-components/Image';
-import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
-import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
-import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
-import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
+import Image from 'sharedComponents/Image';
+import arrowLeftImageUrl from 'images/arrow_left.svg';
+import arrowLeftFilledImageUrl from 'images/arrow_left_filled.svg';
+import arrowRightImageUrl from 'images/arrow_right.svg';
+import arrowRightFilledImageUrl from 'images/arrow_right_filled.svg';
 import { uttaksresultatAktivitetPropType } from 'behandling/proptypes/uttaksresultatPropType';
 
 import styles from './uttakTimeLineData.less';
@@ -25,7 +25,7 @@ const UttakMedsokerReadOnly = ({
   callbackUpdateActivity,
   callbackCancelSelectedActivity,
   isApOpen,
-  stonadskontoer,
+  harSoktOmFlerbarnsdager,
 }) => (
   <Row>
     <Column xs="12">
@@ -64,7 +64,7 @@ const UttakMedsokerReadOnly = ({
           selectedItemData={selectedItemData}
           readOnly={readOnly}
           isApOpen={isApOpen}
-          stonadskontoer={stonadskontoer}
+          harSoktOmFlerbarnsdager={harSoktOmFlerbarnsdager}
         />
       </div>
     </Column>
@@ -79,7 +79,7 @@ UttakMedsokerReadOnly.propTypes = {
   callbackUpdateActivity: PropTypes.func.isRequired,
   callbackCancelSelectedActivity: PropTypes.func.isRequired,
   isApOpen: PropTypes.bool,
-  stonadskontoer: PropTypes.shape().isRequired,
+  harSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
 };
 
 UttakMedsokerReadOnly.defaultProps = {

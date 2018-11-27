@@ -5,11 +5,12 @@ import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 
-import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import { RadioGroupField, RadioOption, InputField } from '@fpsak-frontend/form';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { required } from '@fpsak-frontend/utils/validation/validators';
+import ArrowBox from 'sharedComponents/ArrowBox';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { RadioGroupField, RadioOption } from 'form/Fields';
+import InputField from 'form/fields/InputField';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { required } from 'utils/validation/validators';
 import PropTypes from 'prop-types';
 
 /**

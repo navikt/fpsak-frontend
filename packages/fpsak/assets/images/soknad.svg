@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="17px" viewBox="0 0 16 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>Søknad</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Uttaksplan" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Mor:-aklare-fakta-uttak-2-Copy-7" transform="translate(-159.000000, -284.000000)">
+            <g id="Hele-grafen" transform="translate(83.000000, 283.000000)">
+                <g id="Søknad" transform="translate(76.000000, 1.000000)">
+                    <g id="new-document">
+                        <g transform="translate(8.000000, 8.500000) rotate(-90.000000) translate(-8.000000, -8.500000) translate(-0.500000, 0.500000)">
+                            <g id="Shape" fill-rule="nonzero" fill="#0067C5">
+                                <path d="M16.6458333,0 L0.354166667,0 C0.158666667,0 0,0.149333333 0,0.333333333 L0,15.6666667 C0,15.8506667 0.158666667,16 0.354166667,16 L11.6875,16 C11.7817083,16 11.8716667,15.9646667 11.9375417,15.9026667 L16.895875,11.236 C16.9624583,11.174 17,11.0886667 17,11 L17,0.333333333 C17,0.149333333 16.840625,0 16.6458333,0 Z M11.3333333,15.6666667 L11.3333333,10.6666667 L16.6458333,10.6666667 L11.3333333,15.6666667 Z"></path>
+                            </g>
+                            <path d="M12.5,2.5 L12.5,7.5" id="Line-2" stroke="#FFFFFF" stroke-linecap="square"></path>
+                            <path d="M9.5,2.5 L9.5,11.5" id="Line-2-Copy" stroke="#FFFFFF" stroke-linecap="square"></path>
+                            <path d="M6.5,2.5 L6.5,11.5" id="Line-2-Copy-2" stroke="#FFFFFF" stroke-linecap="square"></path>
+                            <path d="M3.5,2.5 L3.5,11.5" id="Line-2-Copy-3" stroke="#FFFFFF" stroke-linecap="square"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

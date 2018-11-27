@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>vedtak ikon disable</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="vedtak-ikon-disable" stroke="#9B9B9B">
+            <g id="stamp">
+                <polyline id="Shape" stroke-linecap="round" stroke-linejoin="round" points="26.8333333 25.6666667 26.8333333 28 2.33333333 28 2.33333333 25.6666667"></polyline>
+                <path d="M25.4090909,19.2115 L19.5,19.2115 C13.3084545,15.1515 19.5,8.31716667 19.5,5.79483333 C19.5,-1.15033333 8.86363636,-1.15616667 8.86363636,5.79483333 C8.86363636,8.3265 15.0705455,15.141 8.86363636,19.2115 L2.95454545,19.2115 C1.64981818,19.2115 0.590909091,20.2556667 0.590909091,21.5448333 L0.590909091,25.0833333 L27.7727273,25.0833333 L27.7727273,21.5448333 C27.7727273,20.2545 26.7138182,19.2115 25.4090909,19.2115 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

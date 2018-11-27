@@ -9,15 +9,15 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import DateLabel from 'sharedComponents/DateLabel';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { behandlingForm } from 'behandling/behandlingForm';
-import { DatepickerField, InputField } from '@fpsak-frontend/form';
+import { DatepickerField, InputField } from 'form/Fields';
 import {
   required, hasValidDate, minValue, maxValue, hasValidInteger,
-} from '@fpsak-frontend/utils/validation/validators';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+} from 'utils/validation/validators';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import {
   getEditedStatus, getSoknad, getFamiliehendelse, getAksjonspunkter,

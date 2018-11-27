@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
-import stonadskontoType from '@fpsak-frontend/kodeverk/stonadskontoType';
+import stonadskontoType from 'kodeverk/stonadskontoType';
 import PropTypes from 'prop-types';
 import { stonadskontoerPropType } from 'behandling/proptypes/stonadskontoPropType';
 
@@ -44,7 +44,7 @@ const TimeLineTab = ({
   const fordelteDager = findAntallUkerOgDager(stonadskonto.kontoinfo);
   return (
     <div className={styles.tabs}>
-      <li role="presentation" className={aktiv ? styles.aktiv : styles.inaktiv}>
+      <li role="presentation" className={(aktiv && stonadskonto.kontoinfo.aktivitetSaldoDtoList.length > 0) ? styles.aktiv : styles.inaktiv}>
         <button
           role="tab"
           className={styles.tabInner}

@@ -4,11 +4,11 @@ import { Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import rettighetPropType from '@fpsak-frontend/nav-ansatt/rettighetPropType';
-import navAnsattPropType from '@fpsak-frontend/nav-ansatt/navAnsattPropType';
-import Image from '@fpsak-frontend/shared-components/Image';
-import openImage from '@fpsak-frontend/assets/images/pil_opp.svg';
-import closedImage from '@fpsak-frontend/assets/images/pil_ned.svg';
+import rettighetPropType from 'navAnsatt/rettighetPropType';
+import navAnsattPropType from 'navAnsatt/navAnsattPropType';
+import Image from 'sharedComponents/Image';
+import openImage from 'images/pil_opp.svg';
+import closedImage from 'images/pil_ned.svg';
 
 import ResumeBehandlingMenuItem from './resumeBehandling/ResumeBehandlingMenuItem';
 import PauseBehandlingMenuItem from './pauseBehandling/PauseBehandlingMenuItem';

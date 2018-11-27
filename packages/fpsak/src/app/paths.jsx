@@ -1,5 +1,5 @@
-import { buildPath, formatQueryString, parseQueryString } from '@fpsak-frontend/utils/urlUtils';
-import skjermlenkeCodes from '@fpsak-frontend/kodeverk/skjermlenkeCodes';
+import { buildPath, formatQueryString, parseQueryString } from 'utils/urlUtils';
+import skjermlenkeCodes from 'kodeverk/skjermlenkeCodes';
 
 export const fagsakPath = '/fagsak/:saksnummer(\\d+)/';
 export const behandlingerPath = `${fagsakPath}behandling/`;

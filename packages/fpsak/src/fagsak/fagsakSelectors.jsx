@@ -1,10 +1,9 @@
 import { createSelector } from 'reselect';
 
-import { getRestApiData, getRestApiError, getRestApiFinished } from '@fpsak-frontend/data/duck';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
+import fpsakApi from 'data/fpsakApi';
+import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 
-const getFetchFagsakResult = getRestApiData(FpsakApi.FETCH_FAGSAK);
+const getFetchFagsakResult = fpsakApi.FETCH_FAGSAK.getRestApiData();
 
 export const getFagsakContext = state => state.default.fagsakContext;
 export const getSelectedSaksnummer = state => getFagsakContext(state).selectedSaksnummer;
@@ -25,30 +24,30 @@ export const isForeldrepengerFagsak = createSelector(getFagsakYtelseType, (ytels
 
 export const getFetchFagsakInfoFinished = createSelector(
   [
-    getRestApiFinished(FpsakApi.FETCH_FAGSAK),
-    getRestApiFinished(FpsakApi.BEHANDLINGER),
-    getRestApiFinished(FpsakApi.ALL_DOCUMENTS),
-    getRestApiFinished(FpsakApi.HISTORY),
+    fpsakApi.FETCH_FAGSAK.getRestApiFinished(),
+    fpsakApi.BEHANDLINGER.getRestApiFinished(),
+    fpsakApi.ALL_DOCUMENTS.getRestApiFinished(),
+    fpsakApi.HISTORY.getRestApiFinished(),
   ],
   (...finished) => !finished.some(f => !f),
 );
 
 export const getFetchFagsakInfoFailed = createSelector(
   [
-    getRestApiError(FpsakApi.FETCH_FAGSAK),
-    getRestApiError(FpsakApi.BEHANDLINGER),
-    getRestApiError(FpsakApi.ALL_DOCUMENTS),
-    getRestApiError(FpsakApi.HISTORY),
+    fpsakApi.FETCH_FAGSAK.getRestApiError(),
+    fpsakApi.BEHANDLINGER.getRestApiError(),
+    fpsakApi.ALL_DOCUMENTS.getRestApiError(),
+    fpsakApi.HISTORY.getRestApiError(),
   ],
   (...error) => error.some(e => e !== undefined),
 );
 
 export const getAllFagsakInfoResolved = createSelector(
   [
-    getRestApiData(FpsakApi.FETCH_FAGSAK),
-    getRestApiData(FpsakApi.BEHANDLINGER),
-    getRestApiData(FpsakApi.ALL_DOCUMENTS),
-    getRestApiData(FpsakApi.HISTORY),
+    fpsakApi.FETCH_FAGSAK.getRestApiData(),
+    fpsakApi.BEHANDLINGER.getRestApiData(),
+    fpsakApi.ALL_DOCUMENTS.getRestApiData(),
+    fpsakApi.HISTORY.getRestApiData(),
   ],
   (...data) => !data.some(d => d === undefined),
 );

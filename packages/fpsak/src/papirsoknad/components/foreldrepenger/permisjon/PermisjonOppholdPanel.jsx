@@ -5,15 +5,15 @@ import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import { FieldArray, formValueSelector } from 'redux-form';
 
-import { CheckboxField } from '@fpsak-frontend/form';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
+import { CheckboxField } from 'form/Fields';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import {
   hasValidPeriodIncludingOtherErrors, required,
-} from '@fpsak-frontend/utils/validation/validators';
-import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
+} from 'utils/validation/validators';
+import { isRequiredMessage } from 'utils/validation/messages';
 import RenderOppholdPeriodeFieldArray from './RenderOppholdPeriodeFieldArray';
 
 

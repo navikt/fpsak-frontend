@@ -6,30 +6,37 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 
 import {
-  getBeregningsgrunnlagPerioder, getAlleAndelerIForstePeriode, getTilstøtendeYtelse, getGjeldendeBeregningAksjonspunkt,
+  getAlleAndelerIForstePeriode,
+  getBehandlingGjelderBesteberegning,
+  getBeregningsgrunnlagPerioder,
+  getGjeldendeBeregningAksjonspunkt,
+  getTilstøtendeYtelse,
 } from 'behandling/behandlingSelectors';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm } from 'behandling/behandlingForm';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
-import periodeAarsak from '@fpsak-frontend/kodeverk/periodeAarsak';
-import { TextAreaField } from '@fpsak-frontend/form';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import BorderBox from 'sharedComponents/BorderBox';
+import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import periodeAarsak from 'kodeverk/periodeAarsak';
+import TextAreaField from 'form/fields/TextAreaField';
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
 import {
   hasValidText, maxLength, minLength, required,
-} from '@fpsak-frontend/utils/validation/validators';
-import { removeSpacesFromNumber } from '@fpsak-frontend/utils/currencyUtils';
+} from 'utils/validation/validators';
+import { removeSpacesFromNumber } from 'utils/currencyUtils';
+import YtelserFraInfotrygd
+  from 'behandlingsprosess/components/beregningsgrunnlag/tilstotendeYtelser/YtelserFraInfotrygd';
 import GrunnlagForAarsinntektPanelFL from '../frilanser/GrunnlagForAarsinntektPanelFL';
 import GrunnlagForAarsinntektPanelAT from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
 import GrunnlagForAarsinntektPanelSN from '../selvstendigNaeringsdrivende/GrunnlagForAarsinntektPanelSN';
 import FastsettNaeringsinntektSN from '../selvstendigNaeringsdrivende/FastsettNaeringsinntektSN';
 import OppsummeringSN from '../selvstendigNaeringsdrivende/OppsummeringSN';
 import TilstotendeYtelser from '../tilstotendeYtelser/TilstotendeYtelser';
+import MilitaerPanel from '../militær/MilitaerPanel';
 import FastsettInntektTidsbegrenset from '../arbeidstaker/FastsettInntektTidsbegrenset';
 
 import styles from './beregningsgrunnlagForm.less';
@@ -64,29 +71,58 @@ const isSelvstendigMedKombinasjonsstatus = relevanteStatuser => relevanteStatuse
 const skalViseSNOppsummering = (relevanteStatuser, gjeldendeAksjonspunkt) => isSelvstendigMedKombinasjonsstatus(relevanteStatuser)
   && (gjeldendeAksjonspunkt ? gjeldendeAksjonspunkt.definisjon.kode !== FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET : true);
 
-const createRelevantePaneler = (alleAndelerIForstePeriode, gjeldendeAksjonspunkt, relevanteStatuser, allePerioder, readOnly, tilstøtendeYtelseType) => (
-  <div>
-    { relevanteStatuser.isSelvstendigNaeringsdrivende
+const createRelevantePaneler = (alleAndelerIForstePeriode,
+  gjeldendeAksjonspunkt,
+  relevanteStatuser,
+  allePerioder,
+  readOnly,
+  tilstøtendeYtelseType,
+  gjelderBesteberegning) => (
+    <div>
+      { relevanteStatuser.isSelvstendigNaeringsdrivende
     && (
     <GrunnlagForAarsinntektPanelSN
       alleAndeler={alleAndelerIForstePeriode}
     />
     )
     }
-    {(relevanteStatuser.harAndreTilstotendeYtelser || relevanteStatuser.harDagpengerEllerAAP)
+      {(relevanteStatuser.harDagpengerEllerAAP)
     && (
     <div>
       <TilstotendeYtelser
         alleAndeler={alleAndelerIForstePeriode}
         isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
-        tilstøtendeYtelseType={tilstøtendeYtelseType}
-        bruttoPrAar={allePerioder[0].bruttoPrAar}
+        skalViseOppjustertGrunnlag={relevanteStatuser.isSelvstendigNaeringsdrivende && !gjelderBesteberegning}
       />
       <VerticalSpacer twentyPx />
     </div>
     )
     }
-    { relevanteStatuser.isFrilanser
+      <VerticalSpacer eightPx />
+      {(relevanteStatuser.isMilitaer)
+      && (
+        <div>
+          <MilitaerPanel
+            alleAndeler={alleAndelerIForstePeriode}
+          />
+          <VerticalSpacer twentyPx />
+        </div>
+      )
+      }
+      {(relevanteStatuser.harAndreTilstotendeYtelser)
+    && (
+      <div>
+        <YtelserFraInfotrygd
+          alleAndeler={alleAndelerIForstePeriode}
+          isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
+          tilstøtendeYtelseType={tilstøtendeYtelseType}
+          bruttoPrAar={allePerioder[0].bruttoPrAar}
+        />
+        <VerticalSpacer twentyPx />
+      </div>
+    )
+    }
+      { relevanteStatuser.isFrilanser
     && (
     <div>
       <GrunnlagForAarsinntektPanelFL
@@ -99,8 +135,8 @@ const createRelevantePaneler = (alleAndelerIForstePeriode, gjeldendeAksjonspunkt
     </div>
     )
     }
-    <VerticalSpacer eightPx />
-    { relevanteStatuser.isArbeidstaker
+      <VerticalSpacer eightPx />
+      { relevanteStatuser.isArbeidstaker
     && (
     <div>
       {!harPerioderMedAvsluttedeArbeidsforhold(allePerioder, gjeldendeAksjonspunkt)
@@ -127,14 +163,14 @@ const createRelevantePaneler = (alleAndelerIForstePeriode, gjeldendeAksjonspunkt
     </div>
     )
     }
-    { skalViseSNOppsummering(relevanteStatuser, gjeldendeAksjonspunkt)
+      { skalViseSNOppsummering(relevanteStatuser, gjeldendeAksjonspunkt)
     && (
     <OppsummeringSN
       alleAndeler={alleAndelerIForstePeriode}
     />
     )
     }
-  </div>
+    </div>
 );
 
 /**
@@ -154,6 +190,7 @@ export const BeregningsgrunnlagForm = ({
   alleAndelerIForstePeriode,
   tilstøtendeYtelseType,
   readOnlySubmitButton,
+  gjelderBesteberegning,
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
@@ -174,7 +211,15 @@ export const BeregningsgrunnlagForm = ({
           <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Beregningsgrunnlag" />
         </Element>
         {
-          createRelevantePaneler(alleAndelerIForstePeriode, gjeldendeAksjonspunkt, relevanteStatuser, allePerioder, readOnly, tilstøtendeYtelseType)
+          createRelevantePaneler(
+            alleAndelerIForstePeriode,
+            gjeldendeAksjonspunkt,
+            relevanteStatuser,
+            allePerioder,
+            readOnly,
+            tilstøtendeYtelseType,
+            gjelderBesteberegning,
+          )
         }
       </BorderBox>
       { skalFastsetteSN(gjeldendeAksjonspunkt)
@@ -207,8 +252,8 @@ BeregningsgrunnlagForm.propTypes = {
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
   tilstøtendeYtelseType: PropTypes.string,
   readOnlySubmitButton: PropTypes.bool.isRequired,
+  gjelderBesteberegning: PropTypes.bool.isRequired,
 };
-
 
 BeregningsgrunnlagForm.defaultProps = {
   gjeldendeAksjonspunkt: undefined,
@@ -271,7 +316,9 @@ const mapStateToProps = (state, ownProps) => {
   const alleAndelerIForstePeriode = getAlleAndelerIForstePeriode(state);
   const isAksjonspunktClosed = gjeldendeAksjonspunkt ? !isAksjonspunktOpen(gjeldendeAksjonspunkt.status.kode) : true;
   const allePerioder = getBeregningsgrunnlagPerioder(state);
+  const gjelderBesteberegning = getBehandlingGjelderBesteberegning(state);
   return {
+    gjelderBesteberegning,
     alleAndelerIForstePeriode,
     isAksjonspunktClosed,
     allePerioder,

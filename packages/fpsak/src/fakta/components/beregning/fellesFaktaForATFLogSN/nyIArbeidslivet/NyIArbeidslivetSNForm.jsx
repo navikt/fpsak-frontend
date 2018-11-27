@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { RadioOption, RadioGroupField } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption } from 'form/Fields';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { required } from '@fpsak-frontend/utils/validation/validators';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
-import { flatten } from '@fpsak-frontend/utils/arrayUtils';
+import { required } from 'utils/validation/validators';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import { flatten } from 'utils/arrayUtils';
 
 /**
  * NyIArbeidslivetSNForm
@@ -46,7 +46,7 @@ NyIArbeidslivetSNForm.propTypes = {
 
 NyIArbeidslivetSNForm.buildInitialValues = (beregningsgrunnlag) => {
   const initialValues = {};
-  if (beregningsgrunnlag === undefined || beregningsgrunnlag.beregningsgrunnlagPeriode === undefined) {
+  if (!beregningsgrunnlag || !beregningsgrunnlag.beregningsgrunnlagPeriode) {
     return initialValues;
   }
   const alleAndeler = beregningsgrunnlag.beregningsgrunnlagPeriode

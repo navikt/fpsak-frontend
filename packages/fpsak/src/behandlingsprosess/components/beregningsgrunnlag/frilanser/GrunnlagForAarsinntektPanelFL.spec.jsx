@@ -2,8 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import { formatCurrencyNoKr } from 'utils/currencyUtils';
 import { GrunnlagForAarsinntektPanelFL as UnwrappedForm } from './GrunnlagForAarsinntektPanelFL';
 
 const periode = {

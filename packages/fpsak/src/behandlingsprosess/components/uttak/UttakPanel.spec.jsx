@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { transformValues, buildInitialValues, UttakPanelImpl as UttakPanel } from './UttakPanel';
 import Uttak from './Uttak';
 
@@ -94,6 +94,22 @@ describe('<UttakPanel>', () => {
   });
 
   it('transformValues gir korrekt trekkdager og aksjonspunkt 5071', () => {
+    const aksjonspunkter = [{
+      id: 1,
+      definisjon: {
+        kode: '',
+        navn: 'ap1',
+      },
+      status: {
+        kode: 's1',
+        navn: 's1',
+      },
+      toTrinnsBehandling: true,
+      toTrinnsBehandlingGodkjent: false,
+      kanLoses: true,
+      erAktivt: true,
+    }];
+
     const ownProps = {
       apCodes: [
         aksjonspunktCodes.FASTSETT_UTTAKPERIODER,
@@ -110,12 +126,28 @@ describe('<UttakPanel>', () => {
       }],
     };
 
-    const transformedValues = transformValues(values, ownProps.apCodes);
+    const transformedValues = transformValues(values, ownProps.apCodes, aksjonspunkter);
     expect(transformedValues.filter(ap => ap.kode === aksjonspunktCodes.FASTSETT_UTTAKPERIODER)).has.length(1);
     expect(transformedValues.filter(ap => ap.perioder[0].aktiviteter[0].trekkdager === 29)).has.length(1);
   });
 
   it('transformValues gir korrekt trekkdager og manuell overstyring', () => {
+    const aksjonspunkter = [{
+      id: 1,
+      definisjon: {
+        kode: '',
+        navn: 'ap1',
+      },
+      status: {
+        kode: 's1',
+        navn: 's1',
+      },
+      toTrinnsBehandling: true,
+      toTrinnsBehandlingGodkjent: false,
+      kanLoses: true,
+      erAktivt: true,
+    }];
+
     const ownProps = {
       apCodes: [
         aksjonspunktCodes.FASTSETT_UTTAKPERIODER,
@@ -132,7 +164,7 @@ describe('<UttakPanel>', () => {
       }],
     };
 
-    const transformedValues = transformValues(values, ownProps.apCodes);
+    const transformedValues = transformValues(values, ownProps.apCodes, aksjonspunkter);
     expect(transformedValues.filter(ap => ap.kode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER)).has.length(1);
     expect(transformedValues.filter(ap => ap.kode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER
       && ap.perioder[0].aktiviteter[0].trekkdager === 34)).has.length(1);

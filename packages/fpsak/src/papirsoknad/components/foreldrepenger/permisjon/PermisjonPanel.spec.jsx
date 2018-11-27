@@ -3,8 +3,8 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import { FieldArray } from 'redux-form';
 import SoknadData from 'papirsoknad/SoknadData';
-import soknadTypeTillegg from '@fpsak-frontend/kodeverk/soknadTypeTillegg';
-import PermisjonPanel from './PermisjonPanel';
+import soknadTypeTillegg from 'kodeverk/soknadTypeTillegg';
+import { PermisjonPanel } from './PermisjonPanel';
 import PermisjonRettigheterPanel from './PermisjonRettigheterPanel';
 import PermisjonOverforingAvKvoterPanel from './PermisjonOverforingAvKvoterPanel';
 import PermisjonUtsettelsePanel from './PermisjonUtsettelsePanel';
@@ -19,6 +19,8 @@ describe('<PermisjonPanel>', () => {
       form={form}
       soknadData={new SoknadData('', '', '', [])}
       readOnly={readOnly}
+      visFeilMelding={false}
+      fulltUttak
     />);
     const permisjonRettigheterPanel = wrapper.find(PermisjonRettigheterPanel);
     expect(permisjonRettigheterPanel).to.have.length(1);
@@ -33,6 +35,8 @@ describe('<PermisjonPanel>', () => {
       soknadData={new SoknadData('', '', '', [soknadTypeTillegg.OVERFORING_AV_KVOTER, soknadTypeTillegg.GRADERING, soknadTypeTillegg.UTSETTELSE])}
       form={form}
       readOnly={readOnly}
+      visFeilMelding={false}
+      fulltUttak
     />);
 
     const permisjonOverforingAvKvoterPanel = wrapper.find(PermisjonOverforingAvKvoterPanel);

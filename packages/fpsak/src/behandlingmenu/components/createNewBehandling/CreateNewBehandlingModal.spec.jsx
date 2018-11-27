@@ -3,8 +3,8 @@ import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/in
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-import behandlingType from '@fpsak-frontend/kodeverk/behandlingType';
-import behandlingArsakType from '@fpsak-frontend/kodeverk/behandlingArsakType';
+import behandlingType from 'kodeverk/behandlingType';
+import behandlingArsakType from 'kodeverk/behandlingArsakType';
 import { CreateNewBehandlingModal } from './CreateNewBehandlingModal';
 
 describe('<CreateNewBehandlingModal>', () => {

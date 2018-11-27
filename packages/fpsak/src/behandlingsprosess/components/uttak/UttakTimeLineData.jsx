@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import { calcDaysWithoutWeekends } from '@fpsak-frontend/utils/dateUtils';
-import Image from '@fpsak-frontend/shared-components/Image';
-import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
-import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
-import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
-import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
-import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
-import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
+import { calcDaysWithoutWeekends } from 'utils/dateUtils';
+import Image from 'sharedComponents/Image';
+import splitPeriodImageHoverUrl from 'images/splitt_hover.svg';
+import splitPeriodImageUrl from 'images/splitt.svg';
+import arrowLeftImageUrl from 'images/arrow_left.svg';
+import arrowLeftFilledImageUrl from 'images/arrow_left_filled.svg';
+import arrowRightImageUrl from 'images/arrow_right.svg';
+import arrowRightFilledImageUrl from 'images/arrow_right_filled.svg';
 import { uttaksresultatAktivitetPropType } from 'behandling/proptypes/uttaksresultatPropType';
 
 import styles from './uttakTimeLineData.less';
@@ -126,7 +126,7 @@ export class UttakTimeLineData extends Component {
       callbackUpdateActivity,
       callbackCancelSelectedActivity,
       isApOpen,
-      stonadskontoer,
+      harSoktOmFlerbarnsdager,
     } = this.props;
     const { showDelPeriodeModal } = this.state;
 
@@ -195,7 +195,7 @@ export class UttakTimeLineData extends Component {
               selectedItemData={selectedItemData}
               readOnly={readOnly}
               isApOpen={isApOpen}
-              stonadskontoer={stonadskontoer}
+              harSoktOmFlerbarnsdager={harSoktOmFlerbarnsdager}
             />
           </div>
         </Column>
@@ -218,7 +218,7 @@ UttakTimeLineData.propTypes = {
   formName: PropTypes.string.isRequired,
   activityPanelName: PropTypes.string.isRequired,
   isApOpen: PropTypes.bool,
-  stonadskontoer: PropTypes.shape().isRequired,
+  harSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
 };
 
 UttakTimeLineData.defaultProps = {

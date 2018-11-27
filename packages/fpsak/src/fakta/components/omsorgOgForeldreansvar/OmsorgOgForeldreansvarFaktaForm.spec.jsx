@@ -2,12 +2,12 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 
-import opplysningAdresseType from '@fpsak-frontend/kodeverk/opplysningAdresseType';
-import relatertYtelseType from '@fpsak-frontend/kodeverk/relatertYtelseType';
-import opplysningsKilde from '@fpsak-frontend/kodeverk/opplysningsKilde';
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/navBrukerKjonn';
-import soknadType from '@fpsak-frontend/kodeverk/soknadType';
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components/AksjonspunktHelpText';
+import opplysningAdresseType from 'kodeverk/opplysningAdresseType';
+import relatertYtelseType from 'kodeverk/relatertYtelseType';
+import opplysningsKilde from 'kodeverk/opplysningsKilde';
+import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
+import soknadType from 'kodeverk/soknadType';
+import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';
 
 describe('<OmsorgOgForeldreansvarFaktaForm>', () => {

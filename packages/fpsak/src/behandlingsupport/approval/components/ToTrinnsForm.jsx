@@ -6,8 +6,8 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { ariaCheck } from '@fpsak-frontend/utils/validation/validators';
-import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
+import { ariaCheck } from 'utils/validation/validators';
+import { isRequiredMessage } from 'utils/validation/messages';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK } from 'behandling/behandlingSelectors';
 import { isMeholdIKlage } from './ApprovalTextUtils';

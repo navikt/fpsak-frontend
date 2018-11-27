@@ -4,10 +4,10 @@ import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 import {
   PeriodpickerField, SelectField, CheckboxField, DecimalField, TextAreaField,
-} from '@fpsak-frontend/form';
+} from 'form/Fields';
 
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/navBrukerKjonn';
+import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
 import sinon from 'sinon';
 import { UttakNyPeriode } from './UttakNyPeriode';
 
@@ -46,15 +46,18 @@ const nyPeriode = {
   tom: '2018-03-05',
 };
 
-const arbeidsforhold = [
+const andeler = [
   {
-    arbeidsforholdId: '234234234-23423423-23423',
-    virksomhetNavn: 'STATOIL ASAAVD STATOIL SOKKELVIRKSOMHET',
-    arbeidsforholdType: {
-      kode: 'ARBEIDSTAKER',
-      navn: 'Arbeidstaker',
+    arbeidsforhold: {
+      arbeidsforholdId: '234234234-23423423-23423',
+      arbeidsgiverNavn: 'STATOIL ASAAVD STATOIL SOKKELVIRKSOMHET',
+      arbeidsgiverId: '1234567890',
+      arbeidsforholdType: {
+        kode: 'ARBEID',
+        kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
+        navn: 'Arbeid',
+      },
     },
-    virksomhetId: '987654321',
   },
 ];
 
@@ -72,7 +75,7 @@ describe('<UttakNyPeriode>', () => {
       periodeTyper={periodeTyper}
       utsettelseÅrsaker={utsettelseÅrsaker}
       overføringÅrsaker={overføringÅrsaker}
-      arbeidsforhold={arbeidsforhold}
+      andeler={andeler}
       sokerKjonn={sokerKjonn}
       nyPeriodeDisabledDaysFom="2018-05-20"
       {...reduxFormPropsMock}
@@ -116,7 +119,7 @@ describe('<UttakNyPeriode>', () => {
       periodeTyper={periodeTyper}
       utsettelseÅrsaker={utsettelseÅrsaker}
       overføringÅrsaker={overføringÅrsaker}
-      arbeidsforhold={arbeidsforhold}
+      andeler={andeler}
       sokerKjonn={sokerKjonn}
       nyPeriodeDisabledDaysFom="2018-05-20"
       {...reduxFormPropsMock}
@@ -138,7 +141,7 @@ describe('<UttakNyPeriode>', () => {
       periodeTyper={periodeTyper}
       utsettelseÅrsaker={utsettelseÅrsaker}
       overføringÅrsaker={overføringÅrsaker}
-      arbeidsforhold={arbeidsforhold}
+      andeler={andeler}
       sokerKjonn={sokerKjonn}
       nyPeriodeDisabledDaysFom="2018-05-20"
       {...reduxFormPropsMock}
@@ -160,7 +163,7 @@ describe('<UttakNyPeriode>', () => {
       periodeTyper={periodeTyper}
       utsettelseÅrsaker={utsettelseÅrsaker}
       overføringÅrsaker={overføringÅrsaker}
-      arbeidsforhold={arbeidsforhold}
+      andeler={andeler}
       sokerKjonn={sokerKjonn}
       nyPeriodeDisabledDaysFom="2018-05-20"
       {...reduxFormPropsMock}
@@ -182,7 +185,7 @@ describe('<UttakNyPeriode>', () => {
       periodeTyper={periodeTyper}
       utsettelseÅrsaker={utsettelseÅrsaker}
       overføringÅrsaker={overføringÅrsaker}
-      arbeidsforhold={arbeidsforhold}
+      andeler={andeler}
       sokerKjonn={sokerKjonn}
       nyPeriodeDisabledDaysFom="2018-05-20"
       {...reduxFormPropsMock}
@@ -204,7 +207,7 @@ describe('<UttakNyPeriode>', () => {
       periodeTyper={periodeTyper}
       utsettelseÅrsaker={utsettelseÅrsaker}
       overføringÅrsaker={overføringÅrsaker}
-      arbeidsforhold={arbeidsforhold}
+      andeler={andeler}
       sokerKjonn={sokerKjonn}
       nyPeriodeDisabledDaysFom="2018-05-20"
       {...reduxFormPropsMock}
@@ -226,7 +229,7 @@ describe('<UttakNyPeriode>', () => {
       periodeTyper={periodeTyper}
       utsettelseÅrsaker={utsettelseÅrsaker}
       overføringÅrsaker={overføringÅrsaker}
-      arbeidsforhold={arbeidsforhold}
+      andeler={andeler}
       sokerKjonn={sokerKjonn}
       nyPeriodeDisabledDaysFom="2018-05-20"
       {...reduxFormPropsMock}

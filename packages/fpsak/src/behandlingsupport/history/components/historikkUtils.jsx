@@ -1,8 +1,8 @@
-import historikkResultatTypeCodes from '@fpsak-frontend/kodeverk/historikkResultatTypeCodes';
-import historikkEndretFeltVerdiTypeCodes from '@fpsak-frontend/kodeverk/historikkEndretFeltVerdiTypeCodes';
-import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/historikkEndretFeltTypeCodes';
-import historikkOpplysningTypeCodes from '@fpsak-frontend/kodeverk/historikkOpplysningTypeCodes';
-import historikkSoeknadsperiodeTypeCodes from '@fpsak-frontend/kodeverk/historikkSoeknadsperiodeTypeCodes';
+import historikkResultatTypeCodes from 'kodeverk/historikkResultatTypeCodes';
+import historikkEndretFeltVerdiTypeCodes from 'kodeverk/historikkEndretFeltVerdiTypeCodes';
+import historikkEndretFeltTypeCodes from 'kodeverk/historikkEndretFeltTypeCodes';
+import historikkOpplysningTypeCodes from 'kodeverk/historikkOpplysningTypeCodes';
+import historikkSoeknadsperiodeTypeCodes from 'kodeverk/historikkSoeknadsperiodeTypeCodes';
 
 export const findIdForOpplysningCode = (opplysning) => {
   if (!opplysning) {

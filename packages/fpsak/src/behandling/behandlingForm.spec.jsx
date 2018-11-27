@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
+import { isRequiredMessage } from 'utils/validation/messages';
 import { getBehandlingFormPrefix, getBehandlingFormRegisteredFields, hasBehandlingFormErrorsOfType } from './behandlingForm';
 
 describe('behandlingForm', () => {
@@ -93,15 +93,15 @@ describe('behandlingForm', () => {
   it('skal kunne se at obligatorisk felt ikke er utfylt selv når felt-id er nestet', () => {
     const formName = 'testForm';
     const registeredFields = {
-      'manuellVurderingType.kode': {
+      'medlemskapManuellVurderingType.kode': {
         count: 1,
-        name: 'manuellVurderingType.kode',
+        name: 'medlemskapManuellVurderingType.kode',
         type: 'Field',
       },
     };
 
     const errors = {
-      manuellVurderingType: {
+      medlemskapManuellVurderingType: {
         kode: [{ id: 'ValidationMessage.NotEmpty' },
         ],
       },

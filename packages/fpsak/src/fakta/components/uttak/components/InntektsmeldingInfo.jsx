@@ -2,16 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Undertekst, Normaltekst, Element } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import { dateFormat, calcDaysAndWeeks, TIDENES_ENDE } from '@fpsak-frontend/utils/dateUtils';
-import { utsettelseArsakTexts } from '@fpsak-frontend/kodeverk/utsettelseArsakCodes';
+import { dateFormat, calcDaysAndWeeks, TIDENES_ENDE } from 'utils/dateUtils';
+import { utsettelseArsakTexts } from 'kodeverk/utsettelseArsakCodes';
 import classnames from 'classnames/bind';
-import FlexColumn from '@fpsak-frontend/shared-components/flexGrid/FlexColumn';
-import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';
-import guid from '@fpsak-frontend/utils/guidUtil';
-import { flatten } from '@fpsak-frontend/utils/arrayUtils';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import Image from '@fpsak-frontend/shared-components/Image';
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
+import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
+import FlexRow from 'sharedComponents/flexGrid/FlexRow';
+import guid from 'utils/guidUtil';
+import { flatten } from 'utils/arrayUtils';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import Image from 'sharedComponents/Image';
+import advarselIkonUrl from 'images/advarsel.svg';
 
 import styles from '../uttakPeriode.less';
 
@@ -115,7 +115,7 @@ const shouldRender = (inntektsmeldingInfo) => {
 };
 
 export const InntektsmeldingInfo = ({
-  inntektsmeldingInfo, orgnr, virksomhetNavn, arbeidsprosentFraSøknad, fraDato, tilDato, bekreftet,
+  inntektsmeldingInfo, arbeidsgiver, arbeidsprosentFraSøknad, fraDato, tilDato, bekreftet,
 }) => {
   const manglerGraderingFraInntektsmelding = arbeidsprosentFraSøknad !== undefined
     && arbeidsprosentFraSøknad !== null && !bekreftet;
@@ -128,7 +128,7 @@ export const InntektsmeldingInfo = ({
         <VerticalSpacer eightPx />
         {inntektsmeldingInfo.map((innmldInfo) => {
           const renderContent = renderAvvik(innmldInfo, arbeidsprosentFraSøknad, fraDato, tilDato).filter(rc => rc);
-          const avvikArbeidforhold = innmldInfo.arbeidsgiver !== virksomhetNavn || innmldInfo.arbeidsgiverOrgnr !== orgnr;
+          const avvikArbeidforhold = innmldInfo.arbeidsgiver !== arbeidsgiver || {}.navn || innmldInfo.arbeidsgiverOrgnr !== arbeidsgiver || {}.identifikator;
           return (
             renderContent.length > 0 && (
               <ElementWrapper key={guid()}>
@@ -147,16 +147,21 @@ export const InntektsmeldingInfo = ({
           <Undertekst><FormattedMessage id="UttakInfoPanel.AvvikiInntektsmelding" /></Undertekst>
           <VerticalSpacer eightPx />
           {inntektsmeldingInfo.map((innmldInfo) => {
-            const avvikArbeidforhold = innmldInfo.arbeidsgiver !== virksomhetNavn || innmldInfo.arbeidsgiverOrgnr !== orgnr;
-            return (
-              <ElementWrapper key={guid()}>
-                <Element className={classNames('avvik', { hasAvvik: avvikArbeidforhold })}>
-                  {`${innmldInfo.arbeidsgiver} ${innmldInfo.arbeidsgiverOrgnr}`}
-                </Element>
-                { renderAvvikContentGraderingFraSøknad() }
-                <VerticalSpacer twentyPx />
-              </ElementWrapper>
-            );
+            const avvikArbeidforhold = innmldInfo.arbeidsgiver !== (arbeidsgiver || {}).navn
+              || innmldInfo.arbeidsgiverOrgnr !== arbeidsgiver || {}.identifikator;
+            const arbeidsProsentFraInnteksmelding = innmldInfo.arbeidsProsentFraInntektsmelding !== arbeidsprosentFraSøknad;
+            if (avvikArbeidforhold || arbeidsProsentFraInnteksmelding) {
+              return (
+                <ElementWrapper key={guid()}>
+                  <Element className={classNames('avvik', { hasAvvik: avvikArbeidforhold })}>
+                    {`${innmldInfo.arbeidsgiver} ${innmldInfo.arbeidsgiverOrgnr}`}
+                  </Element>
+                  {renderAvvikContentGraderingFraSøknad()}
+                  <VerticalSpacer twentyPx />
+                </ElementWrapper>
+              );
+            }
+            return null;
           })}
         </ElementWrapper>
       )}
@@ -165,8 +170,7 @@ export const InntektsmeldingInfo = ({
 };
 
 InntektsmeldingInfo.defaultProps = {
-  virksomhetNavn: undefined,
-  orgnr: undefined,
+  arbeidsgiver: {},
   arbeidsprosentFraSøknad: undefined,
 };
 
@@ -175,8 +179,7 @@ InntektsmeldingInfo.propTypes = {
   fraDato: PropTypes.string.isRequired,
   tilDato: PropTypes.string.isRequired,
   bekreftet: PropTypes.bool.isRequired,
-  virksomhetNavn: PropTypes.string,
-  orgnr: PropTypes.string,
+  arbeidsgiver: PropTypes.shape(),
   arbeidsprosentFraSøknad: PropTypes.number,
 };
 

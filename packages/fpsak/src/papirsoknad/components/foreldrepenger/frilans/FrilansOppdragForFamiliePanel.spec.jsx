@@ -3,7 +3,7 @@ import { expect } from 'chai';
 
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 
-import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
+import ArrowBox from 'sharedComponents/ArrowBox';
 import { FrilansOppdragForFamiliePanelImpl } from './FrilansOppdragForFamiliePanel';
 
 describe('<FrilansOppdragForFamiliePanelImpl>', () => {

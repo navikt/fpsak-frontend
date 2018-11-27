@@ -4,15 +4,15 @@ import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { Normaltekst } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { calcDaysWithoutWeekends } from '@fpsak-frontend/utils/dateUtils';
-import FlexColumn from '@fpsak-frontend/shared-components/flexGrid/FlexColumn';
-import FlexRow from '@fpsak-frontend/shared-components/flexGrid/FlexRow';
-import FlexContainer from '@fpsak-frontend/shared-components/flexGrid/FlexContainer';
-import Image from '@fpsak-frontend/shared-components/Image';
+import { calcDaysWithoutWeekends } from 'utils/dateUtils';
+import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
+import FlexRow from 'sharedComponents/flexGrid/FlexRow';
+import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
+import Image from 'sharedComponents/Image';
 import classnames from 'classnames/bind';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
-import overlapp from '@fpsak-frontend/assets/images/overlapp.svg';
-import tomPeriode from '@fpsak-frontend/assets/images/tom_periode.svg';
+import { ISO_DATE_FORMAT } from 'utils/formats';
+import overlapp from 'images/overlapp.svg';
+import tomPeriode from 'images/tom_periode.svg';
 import UttakPeriodeType from './UttakPeriodeType';
 import UttakPeriodeInnhold from './UttakPeriodeInnhold';
 
@@ -87,8 +87,7 @@ const UttakPeriode = ({
                   uttakPeriodeType={periode.uttakPeriodeType}
                   id={periode.id}
                   arbeidstidprosent={periode.arbeidstidsprosent}
-                  orgnr={periode.orgnr}
-                  virksomhetNavn={periode.virksomhetNavn}
+                  arbeidsgiver={periode.arbeidsgiver}
                   utsettelseArsak={periode.utsettelseÅrsak}
                   overforingArsak={periode.overføringÅrsak}
                   isFromSøknad={periode.isFromSøknad}
@@ -114,8 +113,7 @@ const UttakPeriode = ({
                   begrunnelse={periode.begrunnelse}
                   uttakPeriodeType={periode.uttakPeriodeType}
                   overforingArsak={periode.overføringÅrsak}
-                  orgnr={periode.orgnr}
-                  virksomhetNavn={periode.virksomhetNavn}
+                  arbeidsgiver={periode.arbeidsgiver}
                   updatePeriode={updatePeriode}
                   cancelEditPeriode={cancelEditPeriode}
                   readOnly={readOnly}

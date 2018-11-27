@@ -1,0 +1,52 @@
+.container {
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  composes: panel-container-mixin from '@fpsak-frontend/assets/styles/mixins.less';
+}
+
+.arrowLine {
+  composes: panel panel-relatert from '@fpsak-frontend/assets/styles/arrowLineModigDesign.less';
+  margin-top: 5px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  padding-top: 10px;
+  width: 600px;
+}
+
+.arrowLineEos {
+  composes: arrowLine;
+}
+
+.arrowLineEos:before {
+	left: 30px;
+}
+
+.arrowLineOther {
+  composes: arrowLine;
+}
+
+.arrowLineOther:before {
+	left: 113px;
+}
+
+.error {
+  padding-left: 0px;
+  padding-right: 15px;
+}
+
+.inline {
+  display: inline;
+}
+
+.radioGroup {
+  display: inline-block;
+  width: 550px;
+}
+
+.radioGroupLeft {
+  float: left;
+}
+
+.radioGroupRight {
+  float: right;
+}

@@ -8,7 +8,7 @@ import { dummyFagsak } from '@fpsak-frontend/assets/testHelpers/data-test-helper
 import {
   getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling, pathToBehandlinger, pathToMissingPage,
 } from 'app/paths';
-import LoadingPanel from '@fpsak-frontend/shared-components/LoadingPanel';
+import LoadingPanel from 'sharedComponents/LoadingPanel';
 import { FagsakResolver } from './FagsakResolver';
 
 const fagsak = dummyFagsak();

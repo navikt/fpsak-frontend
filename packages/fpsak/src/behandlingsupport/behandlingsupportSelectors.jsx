@@ -1,14 +1,18 @@
 import { createSelector } from 'reselect';
 
-import { getRestApiData } from '@fpsak-frontend/data/duck';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
-import kommunikasjonsretning from '@fpsak-frontend/kodeverk/kommunikasjonsretning';
+import fpsakApi from 'data/fpsakApi';
+import kommunikasjonsretning from 'kodeverk/kommunikasjonsretning';
 import {
-  getBehandlingHasSoknad, isBehandlingInInnhentSoknadsopplysningerSteg, getBehandlingIsOnHold,
-  getBehandlingStatus, getBehandlingIsInnsyn, getTotrinnskontrollArsakerReadOnly,
+  getBehandlingHasSoknad,
+  getBehandlingIsInnsyn,
+  getBehandlingIsOnHold,
+  getBehandlingStatus,
+  getTotrinnskontrollArsakerReadOnly,
+  isBehandlingInInnhentSoknadsopplysningerSteg,
+  isKlageBehandlingInFormkrav,
 } from 'behandling/behandlingSelectors';
-import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
-import { getRettigheter } from '@fpsak-frontend/nav-ansatt/duck';
+import behandlingStatus from 'kodeverk/behandlingStatus';
+import { getRettigheter } from 'navAnsatt/duck';
 import SupportPanel from './supportPanels';
 
 const getSendMessageIsRelevant = createSelector(
@@ -17,9 +21,10 @@ const getSendMessageIsRelevant = createSelector(
     isBehandlingInInnhentSoknadsopplysningerSteg,
     getBehandlingIsOnHold,
     getBehandlingIsInnsyn,
+    isKlageBehandlingInFormkrav,
   ],
-  (behandlingHasSoknad, behandlingIsInnhentSoknadsopplysninger, behandlingIsOnHold, behandlingIsInnsyn) => (
-    (behandlingHasSoknad || behandlingIsInnhentSoknadsopplysninger || behandlingIsInnsyn) && !behandlingIsOnHold
+  (behandlingHasSoknad, behandlingIsInnhentSoknadsopplysninger, behandlingIsOnHold, behandlingIsInnsyn, isKlageBehandlingFormkrav) => (
+    (behandlingHasSoknad || behandlingIsInnhentSoknadsopplysninger || behandlingIsInnsyn || isKlageBehandlingFormkrav) && !behandlingIsOnHold
   ),
 );
 
@@ -76,7 +81,7 @@ export const getEnabledSupportPanels = createSelector(
 );
 
 // ALL_DOCUMENTS
-const getAllDocuments = getRestApiData(FpsakApi.ALL_DOCUMENTS);
+const getAllDocuments = fpsakApi.ALL_DOCUMENTS.getRestApiData();
 
 // Samme dokument kan ligge på flere behandlinger under samme fagsak.
 export const getFilteredReceivedDocuments = createSelector([getAllDocuments], (documents = []) => {

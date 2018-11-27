@@ -1,6 +1,7 @@
-import inntektskategorier from '@fpsak-frontend/kodeverk/inntektskategorier';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
-import { formatCurrencyNoKr, createVisningsnavnForAktivitet } from '@fpsak-frontend/utils';
+import inntektskategorier from 'kodeverk/inntektskategorier';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
 
 export const settAndelIArbeid = (andelerIArbeid) => {
   if (andelerIArbeid.length === 0) {
@@ -20,11 +21,11 @@ export const preutfyllInntektskategori = andel => (andel.inntektskategori
 
 
 export const createAndelnavn = (andel) => {
-  if (andel.arbeidsforhold !== undefined && andel.arbeidsforhold !== null) {
-    return createVisningsnavnForAktivitet(andel.arbeidsforhold);
-  }
-  if (andel.aktivitetStatus.kode === aktivitetStatus.UDEFINERT) {
+  if (!andel.aktivitetStatus || andel.aktivitetStatus.kode === aktivitetStatus.UDEFINERT) {
     return '';
+  }
+  if (andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER && andel.arbeidsforhold) {
+    return createVisningsnavnForAktivitet(andel.arbeidsforhold);
   }
   return andel.aktivitetStatus.navn;
 };

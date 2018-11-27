@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/aktivitetStatus';
+import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
 
 import FastsettATFLInntektForm from './FastsettATFLInntektForm';
 
@@ -49,7 +49,7 @@ const forholdUtenOrgNavnMedInntekt = {
 const beregningsgrunnlag = {
   faktaOmBeregning: {
     arbeidsforholdMedLønnsendringUtenIM: [forholdMedLonnsendringUtenIM],
-    atogFLISammeOrganisasjonListe: [forholdMedAtOgFl],
+    arbeidstakerOgFrilanserISammeOrganisasjonListe: [forholdMedAtOgFl],
     frilansAndel: {
       inntektskategori: {
         navn: 'Frilans',

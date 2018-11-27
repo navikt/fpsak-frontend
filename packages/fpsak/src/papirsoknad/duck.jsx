@@ -1,9 +1,8 @@
 import { createSelector } from 'reselect';
-import { makeRestApiRequest, resetRestApi } from '@fpsak-frontend/data/duck';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
+import fpsakApi from 'data/fpsakApi';
 import { getAksjonspunkter } from 'behandling/behandlingSelectors';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
 
 /* Action types */
 export const RESET_REGISTRERING = 'RESET_REGISTRERING';
@@ -19,9 +18,9 @@ export const setSoknadData = soknadData => ({
   data: soknadData,
 });
 
-export const submitRegistrering = makeRestApiRequest(FpsakApi.SAVE_AKSJONSPUNKT);
+export const submitRegistrering = fpsakApi.SAVE_AKSJONSPUNKT.makeRestApiRequest();
 
-export const resetRegistreringSuccess = resetRestApi(FpsakApi.SAVE_AKSJONSPUNKT);
+export const resetRegistreringSuccess = fpsakApi.SAVE_AKSJONSPUNKT.resetRestApi();
 
 
 /* Reducer */

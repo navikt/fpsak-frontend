@@ -1,8 +1,9 @@
-import ac from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import vt from '@fpsak-frontend/kodeverk/vilkarType';
-import bt from '@fpsak-frontend/kodeverk/behandlingType';
-import vut from '@fpsak-frontend/kodeverk/vilkarUtfallType';
+import ac from 'kodeverk/aksjonspunktCodes';
+import vt from 'kodeverk/vilkarType';
+import bt from 'kodeverk/behandlingType';
+import vut from 'kodeverk/vilkarUtfallType';
 import bpc from 'behandlingsprosess/behandlingspunktCodes';
+import { hasSimuleringOn, getStatusFromSimulering } from './simuleringStatusUtleder';
 import getVedtakStatus from './vedtakStatusUtleder';
 import BehandlingspunktProperties from './behandlingspunktBuilder';
 
@@ -28,8 +29,7 @@ const isNotRevurderingAndManualOpplysningspliktAp = ({ behandlingType, aksjonspu
   return !(isRevurdering && !hasAp);
 };
 
-const hasSimuleringOn = ({ featureToggleSimulering }) => featureToggleSimulering;
-const getStatusFromSimulering = () => vut.OPPFYLT;
+const hasLøpendeMedlemskapOn = ({ featureToggleLøpendeMedlemskap }) => featureToggleLøpendeMedlemskap;
 /**
  * Rekkefølgen i listene under bestemmer behandlingspunkt-rekkefølgen i GUI.
  * @see BehandlingspunktProperties.Builder for mer informasjon.
@@ -39,8 +39,12 @@ const foreldrepengerBuilders = [
     .withAksjonspunktCodes(ac.VURDER_INNSYN),
   new BehandlingspunktProperties.Builder(bpc.SAKSOPPLYSNINGER, 'Saksopplysninger')
     .withAksjonspunktCodes(ac.AVKLAR_PERSONSTATUS),
+  new BehandlingspunktProperties.Builder(bpc.FORMKRAV_KLAGE_NAV_FAMILIE_OG_PENSJON, 'FormkravKlageNFP')
+    .withAksjonspunktCodes(ac.VURDERING_AV_FORMKRAV_KLAGE_NFP),
   new BehandlingspunktProperties.Builder(bpc.KLAGE_NAV_FAMILIE_OG_PENSJON, 'CheckKlageNFP')
     .withAksjonspunktCodes(ac.BEHANDLE_KLAGE_NFP),
+  new BehandlingspunktProperties.Builder(bpc.FORMKRAV_KLAGE_NAV_KLAGEINSTANS, 'FormkravKlageKA')
+    .withAksjonspunktCodes(ac.VURDERING_AV_FORMKRAV_KLAGE_KA),
   new BehandlingspunktProperties.Builder(bpc.KLAGE_NAV_KLAGEINSTANS, 'CheckKlageNK')
     .withAksjonspunktCodes(ac.BEHANDLE_KLAGE_NK),
   new BehandlingspunktProperties.Builder(bpc.OPPLYSNINGSPLIKT, 'Opplysningsplikt')
@@ -88,6 +92,12 @@ const foreldrepengerBuilders = [
     .withVilkarIsOptional(),
   new BehandlingspunktProperties.Builder(bpc.SOEKNADSFRIST, 'Soknadsfristvilkaret')
     .withAksjonspunktCodes(ac.VURDER_SOKNADSFRIST_FORELDREPENGER),
+
+  new BehandlingspunktProperties.Builder(bpc.FORTSATTMEDLEMSKAP, 'FortsattMedlemskap')
+    .withVilkarTypes(vt.MEDLEMSKAPSVILKÅRET_LØPENDE)
+    .withAksjonspunktCodes(ac.OVERSTYR_MEDLEMSKAPSVILKAR)
+    .withVisibilityWhen(hasLøpendeMedlemskapOn),
+
   new BehandlingspunktProperties.Builder(bpc.UTTAK, 'Uttak')
     .withVisibilityWhen(hasNonDefaultBehandlingspunkt, behandlingTypeNotEquals(bt.KLAGE))
     .withAksjonspunktCodes(
@@ -108,6 +118,7 @@ const foreldrepengerBuilders = [
     .withStatus(getStatusFromResultatstruktur),
   new BehandlingspunktProperties.Builder(bpc.AVREGNING, 'Avregning')
     .withVisibilityWhen(hasNonDefaultBehandlingspunkt, behandlingTypeNotEquals(bt.KLAGE), hasSimuleringOn)
+    .withAksjonspunktCodes(ac.VURDER_FEILUTBETALING, ac.VURDER_INNTREKK)
     .withStatus(getStatusFromSimulering),
   new BehandlingspunktProperties.Builder(bpc.VEDTAK, 'Vedtak')
     .withAksjonspunktCodes(

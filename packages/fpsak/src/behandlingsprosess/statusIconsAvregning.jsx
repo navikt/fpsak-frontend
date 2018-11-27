@@ -1,10 +1,10 @@
-import avregningIkon from '@fpsak-frontend/assets/images/avregning.svg';
-import behandleIkonUrl from '@fpsak-frontend/assets/images/avregning_aksjonspunkt.svg';
-import behandleValgtIkonUrl from '@fpsak-frontend/assets/images/avregning_aksjonspunkt_valgt.svg';
-import innvilgetValgtIkonUrl from '@fpsak-frontend/assets/images/avregning_valgt.svg';
-import ikkeVurdertIkonUrl from '@fpsak-frontend/assets/images/avregning_disable.svg';
+import avregningIkon from 'images/avregning.svg';
+import behandleIkonUrl from 'images/avregning_aksjonspunkt.svg';
+import behandleValgtIkonUrl from 'images/avregning_aksjonspunkt_valgt.svg';
+import innvilgetValgtIkonUrl from 'images/avregning_valgt.svg';
+import ikkeVurdertIkonUrl from 'images/avregning_disable.svg';
 
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/vilkarUtfallType';
+import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 
 const avregningImages = {
   imageMap: {

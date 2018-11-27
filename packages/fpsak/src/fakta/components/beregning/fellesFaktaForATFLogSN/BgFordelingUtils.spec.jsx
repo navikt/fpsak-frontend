@@ -1,5 +1,6 @@
 import { expect } from 'chai';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
+import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import {
   setArbeidsforholdInitialValues,
   setGenerellAndelsinfo,
@@ -82,14 +83,14 @@ describe('<BgFordelingUtils>', () => {
         arbeidsgiverId: '3284788923',
         arbeidsforholdId: '321378huda7e2',
       },
-      aktivitetStatus: { kode: 'ARBEIDSTAKER', navn: 'Arbeidstaker' },
+      aktivitetStatus: { kode: aktivitetStatus.ARBEIDSTAKER, navn: 'Arbeidstaker' },
       andelsnr: 3,
       lagtTilAvSaksbehandler: false,
       inntektskategori: { kode: 'ARBEIDSTAKER' },
     };
     const andelsInfo = setGenerellAndelsinfo(andelValueFromState);
     expect(andelsInfo.andel).to.equal('Virksomheten (3284788923) ...a7e2');
-    expect(andelsInfo.aktivitetStatus).to.equal('ARBEIDSTAKER');
+    expect(andelsInfo.aktivitetStatus).to.equal('AT');
     expect(andelsInfo.andelsnr).to.equal(3);
     expect(andelsInfo.nyAndel).to.equal(false);
     expect(andelsInfo.lagtTilAvSaksbehandler).to.equal(false);
@@ -98,7 +99,7 @@ describe('<BgFordelingUtils>', () => {
 
   it('skal sette initial values for generell andelinfo uten arbeidsforhold', () => {
     const andelValueFromState = {
-      aktivitetStatus: { kode: 'SN', navn: 'Selvstendig næringsdrivende' },
+      aktivitetStatus: { kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, navn: 'Selvstendig næringsdrivende' },
       andelsnr: 2,
       lagtTilAvSaksbehandler: true,
       inntektskategori: { kode: 'SN' },
@@ -114,7 +115,7 @@ describe('<BgFordelingUtils>', () => {
 
   it('skal ikkje sette arbeidsforhold initial values for andel uten arbeidsforhold', () => {
     const andelValueFromState = {
-      aktivitetStatus: { kode: 'SN', navn: 'Selvstendig næringsdrivende' },
+      aktivitetStatus: { kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, navn: 'Selvstendig næringsdrivende' },
       andelsnr: 2,
       lagtTilAvSaksbehandler: true,
       inntektskategori: { kode: 'SN' },
@@ -134,7 +135,7 @@ describe('<BgFordelingUtils>', () => {
         startdato: '2017-01-01',
         opphoersdato: '2018-01-01',
       },
-      aktivitetStatus: { kode: 'ARBEIDSTAKER', navn: 'Arbeidstaker' },
+      aktivitetStatus: { kode: aktivitetStatus.ARBEIDSTAKER, navn: 'Arbeidstaker' },
       andelsnr: 3,
       lagtTilAvSaksbehandler: false,
       inntektskategori: { kode: 'ARBEIDSTAKER' },

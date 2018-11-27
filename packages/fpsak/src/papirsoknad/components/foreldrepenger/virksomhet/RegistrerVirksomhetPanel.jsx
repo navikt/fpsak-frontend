@@ -9,12 +9,12 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Element, Undertekst } from 'nav-frontend-typografi';
 
 import PropTypes from 'prop-types';
-import Image from '@fpsak-frontend/shared-components/Image';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { NavFieldGroup } from '@fpsak-frontend/form';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import removeIcon from '@fpsak-frontend/assets/images/remove.svg';
+import Image from 'sharedComponents/Image';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import NavFieldGroup from 'form/fields/NavFieldGroup';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import addCircleIcon from 'images/add-circle.svg';
+import removeIcon from 'images/remove.svg';
 import RegistrerVirksomhetModalForm from './RegistrerVirksomhetModalForm';
 
 import styles from './registrerVirksomhetPanel.less';
@@ -94,6 +94,8 @@ export class RegistrerVirksomhetPanel extends Component {
     } = this.props;
     const transformedValues = {
       ...valuesForRegisteredFieldsOnly,
+      landJobberFra: valuesForRegisteredFieldsOnly.virksomhetRegistrertINorge ? 'NOR' : valuesForRegisteredFieldsOnly.landJobberFra,
+      varigEndringGjeldendeFom: valuesForRegisteredFieldsOnly.nyIArbeidslivetFom || valuesForRegisteredFieldsOnly.varigEndringGjeldendeFom,
       stillingsprosent: parseFloat(valuesForRegisteredFieldsOnly.stillingsprosent),
     };
 
@@ -174,7 +176,7 @@ export class RegistrerVirksomhetPanel extends Component {
             id="addbutton"
             className={styles.addVirksomhet}
             onClick={() => this.showRegistrerVirksomhetModal()}
-            onKeyDown={() => this.showRegistrerVirksomhetModal()}
+            onKeyDown={e => (e.nativeEvent.code === 'Space' ? this.showRegistrerVirksomhetModal() : false)}
             role="button"
             tabIndex="0"
           >

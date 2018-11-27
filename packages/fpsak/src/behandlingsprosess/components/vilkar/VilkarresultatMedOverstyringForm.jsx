@@ -7,23 +7,23 @@ import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
-import { isObject } from '@fpsak-frontend/utils/objectUtils';
-import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
+import { isObject } from 'utils/objectUtils';
+import FadingPanel from 'sharedComponents/FadingPanel';
 import { getBehandlingsresultat, isBehandlingRevurderingFortsattMedlemskap, getBehandlingRevurderingAvFortsattMedlemskapFom }
   from 'behandling/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import vilkarType from '@fpsak-frontend/kodeverk/vilkarType';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import vilkarType from 'kodeverk/vilkarType';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
-import aksjonspunktCode from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
+import aksjonspunktCode from 'kodeverk/aksjonspunktCodes';
+import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
 import {
   getSelectedBehandlingspunktTitleCode, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus,
   getSelectedBehandlingspunkt, getIsSelectedBehandlingspunktOverridden, getSelectedBehandlingspunktVilkar,
   isSelectedBehandlingspunktOverrideReadOnly,
 } from 'behandlingsprosess/behandlingsprosessSelectors';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
 import OverstyrVurderingChecker from 'behandlingsprosess/components/OverstyrVurderingChecker';
 import OverstyrConfirmationForm from 'behandlingsprosess/components/OverstyrConfirmationForm';
 import VilkarResultPicker from 'behandlingsprosess/components/vilkar/VilkarResultPicker';
@@ -47,6 +47,7 @@ const behandlingspunktToAksjonspunktForeldrepenger = {
   },
   [behandlingspunktCodes.ADOPSJON]: aksjonspunktCode.OVERSTYRING_AV_ADOPSJONSVILKÅRET_FP,
   [behandlingspunktCodes.MEDLEMSKAP]: aksjonspunktCode.OVERSTYR_MEDLEMSKAPSVILKAR,
+  [behandlingspunktCodes.FORTSATTMEDLEMSKAP]: aksjonspunktCode.OVERSTYR_MEDLEMSKAPSVILKAR,
   [behandlingspunktCodes.SOEKNADSFRIST]: aksjonspunktCode.OVERSTYR_SOKNADSFRISTVILKAR,
   [behandlingspunktCodes.OPPTJENING]: aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET,
 };
@@ -93,6 +94,7 @@ export const VilkarresultatMedOverstyringFormImpl = ({
   lovReferanse,
   hasAksjonspunkt,
   isSolvable,
+  behandlingspunkt,
   ...formProps
 }) => (
   <FadingPanel>
@@ -116,6 +118,7 @@ export const VilkarresultatMedOverstyringFormImpl = ({
         erVilkarOk={erVilkarOk}
         readOnly={isReadOnly || !isOverstyrt}
         hasAksjonspunkt={hasAksjonspunkt}
+        behandlingspunkt={behandlingspunkt}
       />
       <OverstyrConfirmVilkarButton submitting={formProps.submitting} pristine={!isSolvable || formProps.pristine} />
     </form>
@@ -200,6 +203,7 @@ const mapStateToProps = (state, ownProps) => {
   const customVilkarOppfyltText = getCustomVilkarText(state, behandlingspunkt, true);
 
   return {
+    behandlingspunkt,
     apCode,
     customVilkarIkkeOppfyltText,
     customVilkarOppfyltText,

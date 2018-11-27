@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
-import { routerActions } from 'react-router-redux';
+import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 
+import BehandlingType from 'kodeverk/behandlingType';
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
 import requireProps from 'app/data/requireProps';
-import { getSelectedBehandlingIdentifier, getBehandlingVersjon } from 'behandling/behandlingSelectors';
+import { getSelectedBehandlingIdentifier, getBehandlingVersjon, getBehandlingType } from 'behandling/behandlingSelectors';
 import { getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta, DEFAULT_FAKTA } from 'app/paths';
 import trackRouteParam from 'app/data/trackRouteParam';
 
@@ -14,6 +15,7 @@ import {
   resetFakta, resolveFaktaAksjonspunkter, resolveFaktaOverstyrAksjonspunkter, setOpenInfoPanels, getOpenInfoPanels,
 } from './duck';
 import FaktaPanel from './components/FaktaPanel';
+import TilbakekrevingFaktaPanel from './tilbakekreving/components/TilbakekrevingFaktaPanel';
 
 const notEmptyParam = p => p !== null && p !== undefined && p !== '';
 const notDefaultParam = p => p !== DEFAULT_FAKTA;
@@ -43,13 +45,13 @@ export class FaktaIndex extends Component {
   }
 
   goToBehandlingWithDefaultPunktAndFakta() {
-    const { push, location } = this.props;
-    push(getLocationWithDefaultBehandlingspunktAndFakta(location));
+    const { push: pushLocation, location } = this.props;
+    pushLocation(getLocationWithDefaultBehandlingspunktAndFakta(location));
   }
 
   goToOpenInfoPanels(infoPanels) {
-    const { push, location } = this.props;
-    push(getFaktaLocation(location)(formatFaktaParam(infoPanels)));
+    const { push: pushLocation, location } = this.props;
+    pushLocation(getFaktaLocation(location)(formatFaktaParam(infoPanels)));
   }
 
   submitFakta(aksjonspunkter) {
@@ -103,14 +105,24 @@ export class FaktaIndex extends Component {
   }
 
   render() {
-    const { shouldOpenDefaultInfoPanels } = this.props;
-    return (
-      <FaktaPanel
-        submitCallback={this.submitFakta}
-        toggleInfoPanelCallback={this.toggleInfoPanel}
-        shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-      />
-    );
+    const { shouldOpenDefaultInfoPanels, behandlingType } = this.props;
+
+    // TODO (TOR) Temp kode til ein får splitta ut tilbakekreving
+    return behandlingType.kode === BehandlingType.TILBAKEKREVING
+      ? (
+        <TilbakekrevingFaktaPanel
+          submitCallback={this.submitFakta}
+          toggleInfoPanelCallback={this.toggleInfoPanel}
+          shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+        />
+      )
+      : (
+        <FaktaPanel
+          submitCallback={this.submitFakta}
+          toggleInfoPanelCallback={this.toggleInfoPanel}
+          shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+        />
+      );
   }
 }
 
@@ -127,17 +139,23 @@ FaktaIndex.propTypes = {
   resolveFaktaAksjonspunkter: PropTypes.func.isRequired,
   resolveFaktaOverstyrAksjonspunkter: PropTypes.func.isRequired,
   shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
+  behandlingType: PropTypes.shape({
+    kode: PropTypes.string,
+    navn: PropTypes.string,
+  }).isRequired,
 };
 
 const mapStateToProps = state => ({
+  location: state.router.location,
   behandlingIdentifier: getSelectedBehandlingIdentifier(state),
   behandlingVersjon: getBehandlingVersjon(state),
   openInfoPanels: getOpenInfoPanels(state),
+  behandlingType: getBehandlingType(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
-    ...routerActions,
+    push,
     resetFakta,
     resolveFaktaAksjonspunkter,
     resolveFaktaOverstyrAksjonspunkter,

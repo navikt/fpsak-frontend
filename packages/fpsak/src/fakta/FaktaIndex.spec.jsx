@@ -3,8 +3,9 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
+import BehandlingType from 'kodeverk/behandlingType';
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import FaktaPanel from 'fakta/components/FaktaPanel';
 import { FaktaIndex } from './FaktaIndex';
 
@@ -22,6 +23,10 @@ describe('<FaktaIndex>', () => {
       resolveFaktaAksjonspunkter={sinon.spy()}
       resolveFaktaOverstyrAksjonspunkter={sinon.spy()}
       shouldOpenDefaultInfoPanels
+      behandlingType={{
+        kode: BehandlingType.FORSTEGANGSSOKNAD,
+        name: 'FORSTEGANGSSOKNAD',
+      }}
     />);
 
     expect(wrapper.find(FaktaPanel)).to.have.length(1);
@@ -39,6 +44,10 @@ describe('<FaktaIndex>', () => {
       resolveFaktaAksjonspunkter={sinon.spy()}
       resolveFaktaOverstyrAksjonspunkter={sinon.spy()}
       shouldOpenDefaultInfoPanels
+      behandlingType={{
+        kode: BehandlingType.FORSTEGANGSSOKNAD,
+        name: 'FORSTEGANGSSOKNAD',
+      }}
     />);
 
     const newPanelId = 'fakta3';
@@ -62,6 +71,10 @@ describe('<FaktaIndex>', () => {
       resolveFaktaAksjonspunkter={sinon.spy()}
       resolveFaktaOverstyrAksjonspunkter={sinon.spy()}
       shouldOpenDefaultInfoPanels
+      behandlingType={{
+        kode: BehandlingType.FORSTEGANGSSOKNAD,
+        name: 'FORSTEGANGSSOKNAD',
+      }}
     />);
 
     const existingPanelId = 'fakta3';
@@ -85,6 +98,10 @@ describe('<FaktaIndex>', () => {
       resolveFaktaAksjonspunkter={resolveCallback}
       resolveFaktaOverstyrAksjonspunkter={sinon.spy()}
       shouldOpenDefaultInfoPanels
+      behandlingType={{
+        kode: BehandlingType.FORSTEGANGSSOKNAD,
+        name: 'FORSTEGANGSSOKNAD',
+      }}
     />);
 
     const aksjonspunkter = [{

@@ -1,5 +1,4 @@
-import { makeRestApiRequest, resetRestApi } from '@fpsak-frontend/data/duck';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
+import fpsakApi from 'data/fpsakApi';
 
 /* Action types */
 const actionType = name => `behandlingSupport/${name}`;
@@ -17,13 +16,13 @@ export const resetBehandlingSupport = () => ({
 });
 
 export const resetBehandlingsupportInfo = () => (dispatch) => {
-  dispatch(resetRestApi(FpsakApi.ALL_DOCUMENTS)());
-  dispatch(resetRestApi(FpsakApi.HISTORY)());
+  dispatch(fpsakApi.ALL_DOCUMENTS.resetRestApi()());
+  dispatch(fpsakApi.HISTORY.resetRestApi()());
 };
 
 export const updateBehandlingsupportInfo = saksnummer => dispatch => Promise.all([
-  dispatch(makeRestApiRequest(FpsakApi.ALL_DOCUMENTS)({ saksnummer }, { keepData: true })),
-  dispatch(makeRestApiRequest(FpsakApi.HISTORY)({ saksnummer }, { keepData: true })),
+  dispatch(fpsakApi.ALL_DOCUMENTS.makeRestApiRequest()({ saksnummer }, { keepData: true })),
+  dispatch(fpsakApi.HISTORY.makeRestApiRequest()({ saksnummer }, { keepData: true })),
 ]);
 
 /* Reducer */

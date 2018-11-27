@@ -1,20 +1,20 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
-import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
+import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
 import { Element } from 'nav-frontend-typografi';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/faktaOmBeregningTilfelle';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
 import moment from 'moment';
 import {
   getAksjonspunkter,
   getEndringBeregningsgrunnlag,
   getFaktaOmBeregningTilfellerKoder,
 } from 'behandling/behandlingSelectors';
-import { byggListeSomStreng } from '../tilstotendeYtelse/YtelsePanel';
+import { byggListeSomStreng } from '../tilstøtendeYtelse/YtelsePanel';
 
 
 const {
@@ -23,9 +23,12 @@ const {
 
 const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
+const tilfellerSomStøtterEndringBG = [faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG,
+  faktaOmBeregningTilfelle.VURDER_SN_NY_I_ARBEIDSLIVET,
+  faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD];
 
-export const harKunEndringBG = aktivertePaneler => (aktivertePaneler && aktivertePaneler.length === 1
-  && aktivertePaneler[0] === faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG);
+export const harKunTilfellerSomStøtterEndringBG = aktivertePaneler => (aktivertePaneler && aktivertePaneler.length > 0
+  && !aktivertePaneler.some(tilfelle => !tilfellerSomStøtterEndringBG.includes(tilfelle)));
 
 
 const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
@@ -104,7 +107,7 @@ export const lagHelpTextsEndringBG = (endredeArbeidsforhold) => {
 export const getHelpTextsEndringBG = createSelector(
   [getFaktaOmBeregningTilfellerKoder, getEndredeArbeidsforhold, getAksjonspunkter],
   (aktivertePaneler, endredeArbeidsforhold, aksjonspunkter) => (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter))
-    && (harKunEndringBG(aktivertePaneler)
+    && (harKunTilfellerSomStøtterEndringBG(aktivertePaneler)
       ? lagHelpTextsEndringBG(endredeArbeidsforhold) : []),
 );
 

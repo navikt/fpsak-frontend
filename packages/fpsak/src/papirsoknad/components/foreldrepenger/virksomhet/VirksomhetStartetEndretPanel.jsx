@@ -6,13 +6,15 @@ import PropTypes from 'prop-types';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { hasValidDate, hasValidInteger, required } from '@fpsak-frontend/utils/validation/validators';
+import ArrowBox from 'sharedComponents/ArrowBox';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { hasValidDate, hasValidInteger, required } from 'utils/validation/validators';
 import {
-  DatepickerField, TextAreaField, CheckboxField, InputField, RadioGroupField, RadioOption,
-} from '@fpsak-frontend/form';
+  CheckboxField, InputField, RadioGroupField, RadioOption,
+} from 'form/Fields';
+import DatepickerField from 'form/fields/DatepickerField';
+import TextAreaField from 'form/fields/TextAreaField';
 
 /**
  * VirksomhetStartetEndretPanel
@@ -24,6 +26,8 @@ import {
 export const VirksomhetStartetEndretPanel = ({
   readOnly,
   varigEndretEllerStartetSisteFireAr,
+  erNyIArbeidslivet,
+  harVarigEndring,
 }) => (
   <ElementWrapper>
     <Undertekst><FormattedMessage id="Registrering.VirksomhetStartetPanel.NewlyStartedOrChanged" /></Undertekst>
@@ -40,16 +44,35 @@ export const VirksomhetStartetEndretPanel = ({
           <Undertekst><FormattedMessage id="Registrering.VirksomhetStartetPanel.Reason" /></Undertekst>
           <VerticalSpacer fourPx />
           <CheckboxField name="harVarigEndring" label={<FormattedMessage id="Registrering.VirksomhetStartetPanel.HarVarigEndring" />} />
+          {harVarigEndring
+          && (
+          <ArrowBox alignOffset={-6}>
+            <DatepickerField
+              name="varigEndringGjeldendeFom"
+              readOnly={readOnly}
+              validate={[hasValidDate, required]}
+              label={<FormattedMessage id="Registrering.VirksomhetStartetPanel.GjeldendeFom" />}
+            />
+          </ArrowBox>
+          )
+          }
           <CheckboxField name="erNyoppstartet" label={<FormattedMessage id="Registrering.VirksomhetStartetPanel.ErNyoppstartet" />} />
+          <CheckboxField name="erNyIArbeidslivet" label={<FormattedMessage id="Registrering.VirksomhetNyIArbeidslivetPanel.ErNyIArbeidslivet" />} />
+          {erNyIArbeidslivet
+          && (
+          <ArrowBox alignOffset={-6}>
+            <DatepickerField
+              name="nyIArbeidslivetFom"
+              readOnly={readOnly}
+              validate={[hasValidDate, required]}
+              label={<FormattedMessage id="Registrering.VirksomhetStartetPanel.GjeldendeFom" />}
+            />
+          </ArrowBox>
+          )
+          }
           <TextAreaField
             name="beskrivelseAvEndring"
             label={<FormattedMessage id="Registrering.VirksomhetStartetPanel.VirksomhetEndretBeskrivelse" />}
-          />
-          <DatepickerField
-            name="varigEndringGjeldendeFom"
-            readOnly={readOnly}
-            validate={[hasValidDate, required]}
-            label={<FormattedMessage id="Registrering.VirksomhetStartetPanel.VarigEndringGjeldendeFom" />}
           />
           <InputField
             name="inntekt"
@@ -75,14 +98,20 @@ export const VirksomhetStartetEndretPanel = ({
 VirksomhetStartetEndretPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   varigEndretEllerStartetSisteFireAr: PropTypes.bool,
+  harVarigEndring: PropTypes.bool,
+  erNyIArbeidslivet: PropTypes.bool,
 };
 
 VirksomhetStartetEndretPanel.defaultProps = {
   varigEndretEllerStartetSisteFireAr: false,
+  harVarigEndring: false,
+  erNyIArbeidslivet: false,
 };
 
 const mapStateToProps = (state, initialProps) => ({
   varigEndretEllerStartetSisteFireAr: formValueSelector(initialProps.form)(state, 'varigEndretEllerStartetSisteFireAr'),
+  harVarigEndring: formValueSelector(initialProps.form)(state, 'harVarigEndring'),
+  erNyIArbeidslivet: formValueSelector(initialProps.form)(state, 'erNyIArbeidslivet'),
 });
 
 export default connect(mapStateToProps)(VirksomhetStartetEndretPanel);

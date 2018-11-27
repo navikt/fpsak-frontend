@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 
-import { getAllAsyncPollingMessages } from '@fpsak-frontend/data/duck';
+import fpsakApi from 'data/fpsakApi';
 import { behandlingerPath } from 'app/paths';
 import BehandlingerIndex from 'behandling/BehandlingerIndex';
 import BehandlingSupportIndex from 'behandlingsupport/BehandlingSupportIndex';
 import FagsakProfileIndex from 'fagsakprofile/FagsakProfileIndex';
 import trackRouteParam from 'app/data/trackRouteParam';
 import requireProps from 'app/data/requireProps';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { setSelectedSaksnummer } from './duck';
 import { getSelectedSaksnummer } from './fagsakSelectors';
 import FagsakResolver from './FagsakResolver';
@@ -42,7 +42,7 @@ FagsakIndex.propTypes = {
 
 const mapStateToProps = state => ({
   selectedSaksnummer: getSelectedSaksnummer(state),
-  requestPendingMessages: getAllAsyncPollingMessages(state),
+  requestPendingMessages: fpsakApi.getAllAsyncPollingMessages(state),
 });
 
 export default trackRouteParam({

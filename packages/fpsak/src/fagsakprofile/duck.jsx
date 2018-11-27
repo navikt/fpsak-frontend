@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
-import { getRestApiData, makeRestApiRequest, getRestApiMeta } from '@fpsak-frontend/data/duck';
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
+import fpsakApi from 'data/fpsakApi';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 
 /* Action types */
@@ -18,7 +17,7 @@ export const resetFagsakProfile = () => ({
 });
 
 export const updateAnnenPartBehandling = saksnummer => dispatch => (
-  dispatch(makeRestApiRequest(FpsakApi.ANNEN_PART_BEHANDLING)({ saksnummer }, { keepData: true }))
+  dispatch(fpsakApi.ANNEN_PART_BEHANDLING.makeRestApiRequest()({ saksnummer }, { keepData: true }))
 );
 
 /* Reducer */
@@ -44,8 +43,8 @@ export const fagsakProfileReducer = (state = initialState, action = {}) => {
 const getFagsakProfileContext = state => state.default.fagsakProfileContext;
 export const getShowAllBehandlinger = state => getFagsakProfileContext(state).showAllBehandlinger;
 
-const getAnnenPartBehandlingData = getRestApiData(FpsakApi.ANNEN_PART_BEHANDLING);
-const getAnnenPartBehandlingMeta = getRestApiMeta(FpsakApi.ANNEN_PART_BEHANDLING);
+const getAnnenPartBehandlingData = fpsakApi.ANNEN_PART_BEHANDLING.getRestApiData();
+const getAnnenPartBehandlingMeta = fpsakApi.ANNEN_PART_BEHANDLING.getRestApiMeta();
 
 export const getAnnenPartBehandling = createSelector(
   [getSelectedSaksnummer, getAnnenPartBehandlingData, getAnnenPartBehandlingMeta],

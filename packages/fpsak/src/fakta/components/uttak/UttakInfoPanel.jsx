@@ -4,19 +4,19 @@ import { createSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { behandlingForm } from 'behandling/behandlingForm';
-import guid from '@fpsak-frontend/utils/guidUtil';
+import guid from 'utils/guidUtil';
 import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
 import withDefaultToggling from 'fakta/withDefaultToggling';
 import faktaPanelCodes from 'fakta/faktaPanelCodes';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import {
   getUttakPerioder,
   getBehandlingYtelseFordeling,
   getBehandlingIsManuellRevurdering,
   hasBehandlingUtredesStatus,
 } from 'behandling/behandlingSelectors';
-import { dateFormat } from '@fpsak-frontend/utils/dateUtils';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/fagsakYtelseType';
+import { dateFormat } from 'utils/dateUtils';
+import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import UttakFaktaForm from './UttakFaktaForm';
 import {
   sjekkOmfaktaOmUttakAksjonspunkt,
@@ -179,7 +179,7 @@ const transformValues = (values, initialValues, aksjonspunkter) => { // NOSONAR
     kode: ap,
     bekreftedePerioder: values.perioder.map((periode) => {
       const {
-        id, openForm, updated, kontoType, virksomhetNavn, isFromSøknad, ...bekreftetPeriode // NOSONAR
+        id, openForm, updated, kontoType, isFromSøknad, ...bekreftetPeriode // NOSONAR
       } = periode;
       const origPeriode = initialValues.perioder.filter(p => p.id === id);
       return {
@@ -188,7 +188,7 @@ const transformValues = (values, initialValues, aksjonspunkter) => { // NOSONAR
         orginalTom: origPeriode[0] ? origPeriode[0].tom : null,
         originalArbeidstidsprosent: origPeriode[0] ? origPeriode[0].arbeidstidsprosent : null,
         originalBegrunnelse: origPeriode[0] ? origPeriode[0].begrunnelse : null,
-        originalResultat: origPeriode[0] ? origPeriode[0].result : null,
+        originalResultat: origPeriode[0] ? origPeriode[0].resultat : null,
       };
     }),
     slettedePerioder: values.slettedePerioder

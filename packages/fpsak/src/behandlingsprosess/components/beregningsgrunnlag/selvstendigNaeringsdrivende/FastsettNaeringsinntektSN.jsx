@@ -7,13 +7,13 @@ import { Element } from 'nav-frontend-typografi';
 
 import {
   required, minLength, maxLength, hasValidText,
-} from '@fpsak-frontend/utils/validation/validators';
+} from 'utils/validation/validators';
 import {
   InputField, RadioGroupField, RadioOption, TextAreaField,
-} from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
-import { parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
+} from 'form/Fields';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import { parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr } from 'utils/currencyUtils';
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 

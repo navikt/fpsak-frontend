@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import {
   papirsoknadReducer, resetRegistrering, setSoknadData, getRegisteredFields, getPapirsoknadEnabled, getSoknadData,
 } from './duck';

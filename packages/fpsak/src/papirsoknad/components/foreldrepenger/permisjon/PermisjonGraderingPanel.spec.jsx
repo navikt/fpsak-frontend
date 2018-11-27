@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import moment from 'moment';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils/formats';
+import { ISO_DATE_FORMAT } from 'utils/formats';
 
-import { dateRangesOverlappingMessage, invalidDateMessage, invalidDecimalMessage } from '@fpsak-frontend/utils/validation/messages';
+import { dateRangesOverlappingMessage, invalidDateMessage, invalidDecimalMessage } from 'utils/validation/messages';
 import { PermisjonGraderingPanel } from './PermisjonGraderingPanel';
 
 describe('<PermisjonGraderingPanel>', () => {

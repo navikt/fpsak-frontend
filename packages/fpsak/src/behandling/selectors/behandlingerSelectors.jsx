@@ -1,11 +1,10 @@
 import { createSelector } from 'reselect';
 
-import { FpsakApi } from '@fpsak-frontend/data/fpsakApi';
-import { getRestApiData, getRestApiMeta } from '@fpsak-frontend/data/duck';
+import fpsakApi from 'data/fpsakApi';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 
-const getBehandlingerData = getRestApiData(FpsakApi.BEHANDLINGER);
-const getBehandlingerMeta = getRestApiMeta(FpsakApi.BEHANDLINGER);
+const getBehandlingerData = fpsakApi.BEHANDLINGER.getRestApiData();
+const getBehandlingerMeta = fpsakApi.BEHANDLINGER.getRestApiMeta();
 
 // TODO (TOR) Denne bør ikkje eksporterast. Bryt opp i fleire selectors
 export const getBehandlinger = createSelector(
@@ -14,6 +13,9 @@ export const getBehandlinger = createSelector(
 );
 
 export const getBehandlingerIds = createSelector([getBehandlinger], (behandlinger = []) => behandlinger.map(b => b.id));
+
+export const getBehandlingerTypesMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
+  .reduce((acc, b) => ({ ...acc, [b.id]: b.type.kode }), {}));
 
 export const getBehandlingerVersjonMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
   .reduce((a, b) => ({ ...a, [b.id]: b.versjon }), {}));

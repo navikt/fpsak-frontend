@@ -2,26 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import { Undertekst, Element } from 'nav-frontend-typografi';
-import { Row, Column } from 'nav-frontend-grid';
+import { Element, Undertekst } from 'nav-frontend-typografi';
+import { Column, Row } from 'nav-frontend-grid';
 import {
-  NavFieldGroup, InputField, SelectField, PeriodpickerField, DecimalField,
-} from '@fpsak-frontend/form';
-import { isArrayEmpty } from '@fpsak-frontend/utils/arrayUtils';
+  DecimalField, InputField, NavFieldGroup, PeriodpickerField, SelectField,
+} from 'form/Fields';
+import { isEmpty } from 'utils/arrayUtils';
 import { getEndringBeregningsgrunnlagPerioder } from 'behandling/behandlingSelectors';
-import Image from '@fpsak-frontend/shared-components/Image';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
-import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-frontend/kodeverk/inntektskategorier';
-import { parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr } from '@fpsak-frontend/utils/currencyUtils';
-import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
-import { getUniqueListOfArbeidsforhold, arbeidsforholdProptype } from '../../ArbeidsforholdHelper';
-import { validateUlikeAndeler, validateAndelFields, validateSumFastsattBelop } from '../ValidateAndelerUtils';
+import Image from 'sharedComponents/Image';
+import Table from 'sharedComponents/Table';
+import TableRow from 'sharedComponents/TableRow';
+import TableColumn from 'sharedComponents/TableColumn';
+import addCircleIcon from 'images/add-circle.svg';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkPropType from 'kodeverk/kodeverkPropType';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import inntektskategorier, { isSelvstendigNæringsdrivende } from 'kodeverk/inntektskategorier';
+import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from 'utils/currencyUtils';
+import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
+import { arbeidsforholdProptype, getUniqueListOfArbeidsforhold } from '../../ArbeidsforholdHelper';
+import { validateAndelFields, validateSumFastsattBelop, validateUlikeAndeler } from '../ValidateAndelerUtils';
 import styles from './renderEndringBGFieldArray.less';
+
 
 const defaultBGFordeling = periodeUtenAarsak => ({
   nyAndel: true,
@@ -92,6 +95,11 @@ const isSelvstendigOrFrilanser = fieldVal => (isSelvstendigNæringsdrivende(fiel
 
 const getErrorMessage = (meta, intl) => (meta.error && (meta.submitFailed) ? intl.formatMessage(...meta.error) : null);
 
+const onKeyDown = (fields, periode) => ({ keyCode }) => {
+  if (keyCode === 13) {
+    fields.push(defaultBGFordeling(periode));
+  }
+};
 
 const arbeidsforholdReadOnlyOrSelect = (fields, index, elementFieldId, selectVals, isReadOnly) => (
   <ElementWrapper>
@@ -283,7 +291,7 @@ export const RenderEndringBGFieldArrayImpl = ({
             onClick={() => {
               fields.push(defaultBGFordeling(periodeUtenAarsak));
             }}
-            onKeyDown={() => fields.push(defaultBGFordeling)}
+            onKeyDown={onKeyDown(fields, periodeUtenAarsak)}
             className={styles.addPeriode}
             role="button"
             tabIndex="0"
@@ -334,7 +342,7 @@ RenderEndringBGFieldArray.validate = (values) => {
   if (arrayErrors.some(errors => errors !== null)) {
     return arrayErrors;
   }
-  if (isArrayEmpty(values)) {
+  if (isEmpty(values)) {
     return null;
   }
   const ulikeAndelerError = validateUlikeAndeler(values);

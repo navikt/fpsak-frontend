@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import diskresjonskodeType from '@fpsak-frontend/kodeverk/diskresjonskodeType';
+import diskresjonskodeType from 'kodeverk/diskresjonskodeType';
 
 import { EtikettAdvarsel, EtikettInfo, EtikettFokus } from 'nav-frontend-etiketter';
 import styles from './merkepanel.less';

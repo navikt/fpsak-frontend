@@ -3,16 +3,18 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import Tooltip from '@fpsak-frontend/shared-components/Tooltip';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components/table';
-import DateLabel from '@fpsak-frontend/shared-components/DateLabel';
-import Image from '@fpsak-frontend/shared-components/Image';
-import kommunikasjonsretning from '@fpsak-frontend/kodeverk/kommunikasjonsretning';
+import Tooltip from 'sharedComponents/Tooltip';
+import Table from 'sharedComponents/Table';
+import TableRow from 'sharedComponents/TableRow';
+import TableColumn from 'sharedComponents/TableColumn';
+import DateLabel from 'sharedComponents/DateLabel';
+import Image from 'sharedComponents/Image';
+import kommunikasjonsretning from 'kodeverk/kommunikasjonsretning';
 
-import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
-import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg';
-import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokument.svg';
-import erIBrukImageUrl from '@fpsak-frontend/assets/images/stjerne.svg';
+import sendDokumentImageUrl from 'images/send_dokument.svg';
+import mottaDokumentImageUrl from 'images/motta_dokument.svg';
+import internDokumentImageUrl from 'images/intern_dokument.svg';
+import erIBrukImageUrl from 'images/stjerne.svg';
 
 import styles from './documentList.less';
 

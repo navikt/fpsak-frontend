@@ -6,11 +6,11 @@ import { connect } from 'react-redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { FlexContainer, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components/flexGrid';
+import { FlexContainer, FlexRow, FlexColumn } from 'sharedComponents/flexGrid';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/formats/';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import { CheckboxField } from '@fpsak-frontend/form';
+import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { CheckboxField } from 'form/Fields';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
 import {
   getBehandlingVersjon,
@@ -22,12 +22,12 @@ import {
   getPersonopplysning,
   getUttaksresultatPerioder,
 } from 'behandling/behandlingSelectors';
-import { getRettigheter } from '@fpsak-frontend/nav-ansatt/duck';
+import { getRettigheter } from 'navAnsatt/duck';
 import { getSelectedBehandlingId } from 'behandling/duck';
-import periodeResultatType from '@fpsak-frontend/kodeverk/periodeResultatType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
-import ElementWrapper from '@fpsak-frontend/shared-components/ElementWrapper';
-import soknadType from '@fpsak-frontend/kodeverk/soknadType';
+import periodeResultatType from 'kodeverk/periodeResultatType';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import ElementWrapper from 'sharedComponents/ElementWrapper';
+import soknadType from 'kodeverk/soknadType';
 import TimeLineInfo from './stonadkonto/TimeLineInfo';
 import UttakTimeLineData from './UttakTimeLineData';
 import UttakTimeLine from './UttakTimeLine';
@@ -62,19 +62,13 @@ const getStatusPeriodeMed = (periode) => {
   return avvistKlassenavn;
 };
 
-const createTooltipContent = (periodeFom,
-  periodeTom,
-  periodeType,
-  intl,
-  item) => (`
+const createTooltipContent = (periodeFom, periodeTom, periodeType, intl, item) => (`
   <p>
     <strong>${intl.formatMessage({ id: 'Timeline.tooltip.start' })}:</strong> ${moment(periodeFom).format(DDMMYYYY_DATE_FORMAT)}
     <strong>${intl.formatMessage({ id: 'Timeline.tooltip.slutt' })}:</strong> ${moment(periodeTom).format(DDMMYYYY_DATE_FORMAT)}
     <strong>${intl.formatMessage({ id: 'Timeline.tooltip.periodetype' })}:</strong> ${item.utsettelseType && item.utsettelseType.kode !== '-'
-    ? intl.formatMessage({ id: 'Timeline.tooltip.utsettelsePeriode' })
-    : periodeType}
-
-  </p>
+    ? intl.formatMessage({ id: 'Timeline.tooltip.utsettelsePeriode' }) : periodeType}
+   </p>
 `);
 
 const getCorrectPeriodName = (item) => {
@@ -155,10 +149,17 @@ export class UttakImpl extends Component {
     this.selectHandler = this.selectHandler.bind(this);
     this.testForReadOnly = this.testForReadOnly.bind(this);
     this.isReadOnly = this.isReadOnly.bind(this);
+    this.skalViseCheckbox = this.skalViseCheckbox.bind(this);
+    this.setSelectedDefaultPeriod = this.setSelectedDefaultPeriod.bind(this);
 
     this.state = {
       selectedItem: null,
     };
+  }
+
+  componentWillMount() {
+    const { uttakPerioder } = this.props;
+    this.setSelectedDefaultPeriod(uttakPerioder);
   }
 
   onToggleOverstyring() {
@@ -168,6 +169,16 @@ export class UttakImpl extends Component {
       this.setState({
         selectedItem: uttakPerioder[0],
       });
+    }
+  }
+
+  setSelectedDefaultPeriod() {
+    const { selectedItem } = this.state;
+    const { uttakPerioder } = this.props;
+    const defaultSelectedElement = uttakPerioder.find(period => period.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING);
+    const defaultSelectedElementIfNoAP = uttakPerioder.find(period => period.hovedsoker);
+    if (!selectedItem) {
+      this.setState({ selectedItem: defaultSelectedElement || defaultSelectedElementIfNoAP });
     }
   }
 
@@ -258,9 +269,16 @@ export class UttakImpl extends Component {
 
   testForReadOnly(aksjonspunkter) {
     const { manuellOverstyring } = this.props;
-    const activeUttakAp = aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.FASTSETT_UTTAKPERIODER
-      || aksjonspunktCodes.TILKNYTTET_STORTINGET);
-    return (activeUttakAp.length < 1 || activeUttakAp[0].status.kode === 'UTFO') && !manuellOverstyring;
+    const kunOverStyrAp = aksjonspunkter.length === 1
+      && aksjonspunkter[0].definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER
+      && aksjonspunkter[0].status.kode === 'OPPR';
+    if (kunOverStyrAp) {
+      return !kunOverStyrAp;
+    }
+
+    const activeUttakAp = aksjonspunkter.filter(ap => ap.definisjon.kode !== aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER);
+    return (activeUttakAp.length < 1 || (activeUttakAp[0].toTrinnsBehandlingGodkjent === true && activeUttakAp[0].status.kode === 'UTFO'))
+      && !manuellOverstyring;
   }
 
   isConfirmButtonDisabled() {
@@ -292,6 +310,15 @@ export class UttakImpl extends Component {
     return readOnly || uttakIsReadOnly;
   }
 
+  skalViseCheckbox() {
+    const { aksjonspunkter } = this.props;
+    const kunOverStyrAp = aksjonspunkter.length === 1
+      && aksjonspunkter[0].definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER
+      && aksjonspunkter[0].status.kode === 'OPPR';
+    const apUtenOverstyre = aksjonspunkter.filter(a => a.definisjon.kode !== aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER);
+    return apUtenOverstyre.length > 0 || kunOverStyrAp;
+  }
+
   render() {
     const {
       soknadDate,
@@ -314,6 +341,8 @@ export class UttakImpl extends Component {
       endredFodselsDato,
       uttakPerioder,
       isRevurdering,
+      harSoktOmFlerbarnsdager,
+      annenForelderSoktOmFlerbarnsdager,
       reduxFormChange: formChange,
     } = this.props;
     const { selectedItem } = this.state;
@@ -337,7 +366,7 @@ export class UttakImpl extends Component {
                 name="manuellOverstyring"
                 label={{ id: 'Uttak.ManuellOverstyring' }}
                 onChange={this.onToggleOverstyring}
-                readOnly={readOnly || isApOpen}
+                readOnly={readOnly || this.skalViseCheckbox()}
               />
             </div>
           )}
@@ -369,42 +398,42 @@ export class UttakImpl extends Component {
           </Row>
           {selectedItem
           && (
-          <ElementWrapper>
-            {selectedItem.hovedsoker
+            <ElementWrapper>
+              {selectedItem.hovedsoker
               && (
-              <UttakTimeLineData
-                readOnly={this.isReadOnly()}
-                selectedItemData={selectedItem}
-                callbackSetSelected={this.setSelectedUttakActivity}
-                callbackForward={this.nextPeriod}
-                callbackBackward={this.prevPeriod}
-                callbackUpdateActivity={this.updateActivity}
-                callbackCancelSelectedActivity={this.cancelSelectedActivity}
-                uttaksresultatActivity={uttaksresultatActivity}
-                reduxFormChange={formChange}
-                behandlingFormPrefix={behandlingFormPrefix}
-                formName={formName}
-                activityPanelName={ACTIVITY_PANEL_NAME}
-                isApOpen={isApOpen}
-                stonadskontoer={stonadskonto.stonadskontoer}
-              />
+                <UttakTimeLineData
+                  harSoktOmFlerbarnsdager={harSoktOmFlerbarnsdager}
+                  readOnly={this.isReadOnly()}
+                  selectedItemData={selectedItem}
+                  callbackSetSelected={this.setSelectedUttakActivity}
+                  callbackForward={this.nextPeriod}
+                  callbackBackward={this.prevPeriod}
+                  callbackUpdateActivity={this.updateActivity}
+                  callbackCancelSelectedActivity={this.cancelSelectedActivity}
+                  uttaksresultatActivity={uttaksresultatActivity}
+                  reduxFormChange={formChange}
+                  behandlingFormPrefix={behandlingFormPrefix}
+                  formName={formName}
+                  activityPanelName={ACTIVITY_PANEL_NAME}
+                  isApOpen={isApOpen}
+                />
               )
-            }
-            {!selectedItem.hovedsoker
+              }
+              {!selectedItem.hovedsoker
               && (
-              <UttakMedsokerReadOnly
-                readOnly
-                selectedItemData={selectedItem}
-                callbackForward={this.nextPeriod}
-                callbackBackward={this.prevPeriod}
-                callbackUpdateActivity={this.updateActivity}
-                callbackCancelSelectedActivity={this.cancelSelectedActivity}
-                isApOpen={false}
-                stonadskontoer={stonadskonto.stonadskontoer}
-              />
+                <UttakMedsokerReadOnly
+                  readOnly
+                  selectedItemData={selectedItem}
+                  callbackForward={this.nextPeriod}
+                  callbackBackward={this.prevPeriod}
+                  callbackUpdateActivity={this.updateActivity}
+                  callbackCancelSelectedActivity={this.cancelSelectedActivity}
+                  isApOpen={false}
+                  harSoktOmFlerbarnsdager={annenForelderSoktOmFlerbarnsdager}
+                />
               )
-            }
-          </ElementWrapper>
+              }
+            </ElementWrapper>
           )}
           {(!readOnly && !(this.testForReadOnly(aksjonspunkter)))
           && (
@@ -455,6 +484,8 @@ UttakImpl.propTypes = {
   omsorgsovertakelseDato: PropTypes.string,
   endredFodselsDato: PropTypes.string,
   isRevurdering: PropTypes.bool,
+  harSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
+  annenForelderSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
 };
 
 UttakImpl.defaultProps = {
@@ -499,6 +530,9 @@ const mapStateToProps = (state, props) => {
   const hovedsokerPerioder = addClassNameGroupIdToPerioder(uttaksresultatActivity, annenForelderUttak, true, props.intl);
   const annenForelderPerioder = addClassNameGroupIdToPerioder(uttaksresultatActivity, annenForelderUttak, false, props.intl);
   const uttakPerioder = hovedsokerPerioder.concat(annenForelderPerioder);
+  const harSoktOmFlerbarnsdager = hovedsokerPerioder.filter(p => p.flerbarnsdager === true).length > 0;
+
+  const annenForelderSoktOmFlerbarnsdager = annenForelderPerioder.filter(p => p.flerbarnsdager === true).length > 0;
   return {
     soknadDate: soknad.mottattDato,
     familiehendelseDate: fodselTerminDato(soknad),
@@ -515,6 +549,8 @@ const mapStateToProps = (state, props) => {
     medsokerKjonnKode,
     isRevurdering,
     uttakPerioder,
+    harSoktOmFlerbarnsdager,
+    annenForelderSoktOmFlerbarnsdager,
   };
 };
 

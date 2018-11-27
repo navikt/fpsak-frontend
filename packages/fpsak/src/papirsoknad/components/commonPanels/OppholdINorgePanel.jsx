@@ -6,15 +6,15 @@ import { connect } from 'react-redux';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Fieldset } from 'nav-frontend-skjema';
 
-import { RadioGroupField, RadioOption, NavFieldGroup } from '@fpsak-frontend/form';
-import { isRequiredMessage } from '@fpsak-frontend/utils/validation/messages';
+import { RadioGroupField, RadioOption, NavFieldGroup } from 'form/Fields';
+import { isRequiredMessage } from 'utils/validation/messages';
 import SoknadData from 'papirsoknad/SoknadData';
-import BorderBox from '@fpsak-frontend/shared-components/BorderBox';
-import VerticalSpacer from '@fpsak-frontend/shared-components/VerticalSpacer';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/kodeverkPropType';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/kodeverkTyper';
-import familieHendelseType from '@fpsak-frontend/kodeverk/familieHendelseType';
+import BorderBox from 'sharedComponents/BorderBox';
+import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import kodeverkPropType from 'kodeverk/kodeverkPropType';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import familieHendelseType from 'kodeverk/familieHendelseType';
 import UtenlandsOppholdField from './UtenlandsOppholdField';
 
 import styles from './oppholdINorgePanel.less';

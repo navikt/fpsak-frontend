@@ -4,11 +4,10 @@ import { expect } from 'chai';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 
-import personstatusType from '@fpsak-frontend/kodeverk/personstatusType';
+import personstatusType from 'kodeverk/personstatusType';
 import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
-import behandlingStatus from '@fpsak-frontend/kodeverk/behandlingStatus';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/aksjonspunktStatus';
+import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
 import { CheckPersonStatusFormImpl as UnwrappedForm, buildInitialValues } from './CheckPersonStatusForm';
 
 describe('<CheckPersonStatusForm>', () => {
@@ -111,9 +110,7 @@ describe('<CheckPersonStatusForm>', () => {
   });
 
   it('skal sette opp initielle verdier gitt behandling og behandlingspunkt', () => {
-    const status = {
-      kode: behandlingStatus.AVSLUTTET,
-    };
+    const behandlingHenlagt = true;
     const personopplysning = {
       personstatus: {
         kode: 'UKJENT',
@@ -140,7 +137,7 @@ describe('<CheckPersonStatusForm>', () => {
       begrunnelse: 'Dette er en begrunnelse',
     }];
 
-    const initialValues = buildInitialValues.resultFunc(status, aksjonspunkter, personopplysning);
+    const initialValues = buildInitialValues.resultFunc(behandlingHenlagt, aksjonspunkter, personopplysning);
 
     expect(initialValues).to.eql({
       originalPersonstatusName: 'Ukjent',
@@ -151,9 +148,7 @@ describe('<CheckPersonStatusForm>', () => {
   });
 
   it('skal fortsette behandlingen når aksjonspunkt er lukket og behandlingsstatus er ulik avsluttet', () => {
-    const status = {
-      kode: behandlingStatus.BEHANDLING_UTREDES,
-    };
+    const behandlingHenlagt = false;
     const personopplysning = {
       personstatus: {
         kode: 'UKJENT',
@@ -180,7 +175,7 @@ describe('<CheckPersonStatusForm>', () => {
       begrunnelse: 'Dette er en begrunnelse',
     }];
 
-    const initialValues = buildInitialValues.resultFunc(status, aksjonspunkter, personopplysning);
+    const initialValues = buildInitialValues.resultFunc(behandlingHenlagt, aksjonspunkter, personopplysning);
 
     expect(initialValues).to.eql({
       originalPersonstatusName: 'Ukjent',
@@ -191,9 +186,7 @@ describe('<CheckPersonStatusForm>', () => {
   });
 
   it('skal ikke ha satt verdi for om behandlingen skal fortsette om aksjonspunktet er åpent', () => {
-    const status = {
-      kode: behandlingStatus.BEHANDLING_UTREDES,
-    };
+    const behandlingHenlagt = false;
     const personopplysning = {
       personstatus: {
         kode: 'UKJENT',
@@ -210,7 +203,7 @@ describe('<CheckPersonStatusForm>', () => {
       begrunnelse: 'Dette er en begrunnelse',
     }];
 
-    const initialValues = buildInitialValues.resultFunc(status, aksjonspunkter, personopplysning);
+    const initialValues = buildInitialValues.resultFunc(behandlingHenlagt, aksjonspunkter, personopplysning);
 
     expect(initialValues).to.eql({
       originalPersonstatusName: 'Ukjent',

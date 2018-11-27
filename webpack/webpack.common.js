@@ -3,7 +3,6 @@ const path = require('path');
 
 const PACKAGE_DIR = path.resolve(__dirname, '../packages');
 const APP_DIR = path.join(PACKAGE_DIR, 'fpsak/src');
-const APP_IMAGE_DIR = path.join(PACKAGE_DIR, 'fpsak/assets');
 
 const config = {
   resolve: {
@@ -19,7 +18,13 @@ const config = {
       fagsakprofile: path.join(APP_DIR, 'fagsakprofile'),
       fakta: path.join(APP_DIR, 'fakta'),
       papirsoknad: path.join(APP_DIR, 'papirsoknad'),
-      images: path.join(APP_IMAGE_DIR, 'images'),
+      images: path.join(APP_DIR, 'images'),
+      navAnsatt: path.join(APP_DIR, 'navAnsatt'),
+      form: path.join(APP_DIR, 'form'),
+      data: path.join(APP_DIR, 'data'),
+      kodeverk: path.join(APP_DIR, 'kodeverk'),
+      sharedComponents: path.join(APP_DIR, 'sharedComponents'),
+      utils: path.join(APP_DIR, 'utils'),
     },
     extensions: ['.json', '.js', '.jsx'],
   },

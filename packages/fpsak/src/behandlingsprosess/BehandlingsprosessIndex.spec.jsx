@@ -3,9 +3,10 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
+import BehandlingType from 'kodeverk/behandlingType';
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import aksjonspunktType from '@fpsak-frontend/kodeverk/aksjonspunktType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/aksjonspunktCodes';
+import aksjonspunktType from 'kodeverk/aksjonspunktType';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import BehandlingspunktInfoPanel from 'behandlingsprosess/components/BehandlingspunktInfoPanel';
 import { BehandlingsprosessIndex } from './BehandlingsprosessIndex';
 
@@ -49,6 +50,10 @@ describe('<BehandlingsprosessIndex>', () => {
       fetchVedtaksbrevPreview={sinon.spy()}
       dispatchSubmitFailed={sinon.spy()}
       haveSentVarsel
+      behandlingType={{
+        kode: BehandlingType.FORSTEGANGSSOKNAD,
+        name: 'FORSTEGANGSSOKNAD',
+      }}
     />);
 
     const panel = wrapper.find(BehandlingspunktInfoPanel);
@@ -131,6 +136,10 @@ describe('<BehandlingsprosessIndex>', () => {
       fetchVedtaksbrevPreview={sinon.spy()}
       dispatchSubmitFailed={sinon.spy()}
       haveSentVarsel
+      behandlingType={{
+        kode: BehandlingType.FORSTEGANGSSOKNAD,
+        name: 'FORSTEGANGSSOKNAD',
+      }}
     />);
 
     const panel = wrapper.find(BehandlingspunktInfoPanel);
