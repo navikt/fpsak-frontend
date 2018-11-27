@@ -1035,7 +1035,7 @@ local function openidc_authorization_response(opts, session)
   end
 
   local id_token, err = openidc_load_and_validate_jwt_id_token(opts, json.id_token, session);
-  
+
   if err then
     return nil, err, session.data.original_url, session
   end
@@ -1043,7 +1043,7 @@ local function openidc_authorization_response(opts, session)
   if json.id_token then
     --ngx.log(ngx.NOTICE, json.id_token)
   end
-  
+
   -- mark this sessions as authenticated
   session.data.authenticated = true
   -- clear state and nonce to protect against potential misuse
@@ -1196,16 +1196,19 @@ local function openidc_access_token(opts, session, try_to_renew)
   local err
 
   if session.data.access_token == nil then
+    log(DEBUG,"Access Token is nil")
     return nil, err
   end
   local current_time = ngx.time()
   if current_time < session.data.access_token_expiration then
+    log(DEBUG,"access_token_expiration is larger than current time.")
     return session.data.access_token, err
   end
   if not try_to_renew then
     return nil, "token expired"
   end
   if session.data.refresh_token == nil then
+    log(DEBUG,"token expired and no refresh token available")
     return nil, "token expired and no refresh token available"
   end
 
@@ -1341,7 +1344,8 @@ function openidc.authenticate(opts, target_url, unauth_action, session_opts)
     ", opts.force_reauthorize=", opts.force_reauthorize,
     ", opts.renew_access_token_on_expiry=", opts.renew_access_token_on_expiry,
     ", try_to_renew=", try_to_renew,
-    ", token_expired=", token_expired)
+    ", token_expired=", token_expired,
+    ", ngx_time=", ngx.time())
 
   -- if we are not authenticated then redirect to the OP for authentication
   -- the presence of the id_token is check for backwards compatibility

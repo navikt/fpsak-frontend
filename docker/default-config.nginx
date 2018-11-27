@@ -80,7 +80,7 @@ server {
     # Simple Proxy to backend middlertidig fix frem til bedre løsning kommer på plass.
     location  /fpsak/oppgaveredirect {
         proxy_pass       "${APP_API_GATEWAY}/fpsak/oppgaveredirect";
-        proxy_redirect  "${APP_API_GATEWAY}" "http://$host:${APP_PORT}";
+        proxy_redirect   "~*/fpsak/#/(.+)$" /fpsak/$1;
     }
 
     # Health check for NAIS
