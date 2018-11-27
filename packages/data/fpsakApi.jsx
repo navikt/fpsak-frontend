@@ -89,7 +89,7 @@ const fpsakReduxApiBuilder = ReduxRestApi.build()
   .withGet('/fpsak/api/integrasjon/status/vises', FpsakApi.SHOW_DETAILED_ERROR_MESSAGES)
 
   /* /sprak */
-  .withGet('/fpsak/sprak/nb_NO.json', FpsakApi.LANGUAGE_FILE)
+  .withGet('/sprak/nb_NO.json', FpsakApi.LANGUAGE_FILE)
 
   /* /api/feature-toggle */
   .withPost('/fpsak/api/feature-toggle', FpsakApi.FEATURE_TOGGLE);
