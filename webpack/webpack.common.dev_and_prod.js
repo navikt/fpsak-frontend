@@ -1,6 +1,7 @@
 'use strict';
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const webpack = require('webpack');
 const path = require('path');
 const merge = require('webpack-merge');
@@ -8,6 +9,7 @@ const common = require('./webpack.common.js');
 
 const CORE_DIR = path.resolve(__dirname, '../node_modules');
 const PACAKGES_DIR = path.join(__dirname, '../packages');
+const i18n_DIR = path.join(__dirname, '../public/sprak/');
 const CSS_DIR = path.join(PACAKGES_DIR, 'assets/styles');
 const APP_DIR = path.join(PACAKGES_DIR, 'app');
 
@@ -86,7 +88,8 @@ const config = {
           },
         ],
         include: [CSS_DIR, CORE_DIR],
-      }, {
+      },
+      {
         test: /\.(jpg|png|svg)$/,
         loader: 'file-loader',
         options: {
@@ -101,6 +104,13 @@ const config = {
     new MiniCssExtractPlugin({
       filename: isDevelopment ? 'style.css' : 'style_[hash].css',
     }),
+    new CopyWebpackPlugin([
+      {
+        from: i18n_DIR,
+        to: 'sprak',
+        toType: 'dir',
+      },
+    ]),
     new webpack.ContextReplacementPlugin(
       /moment[\/\\]locale$/,
       /nb/
