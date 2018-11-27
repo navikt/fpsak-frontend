@@ -37,79 +37,19 @@ server {
     # for a prolonged period of time.
     set $proxy_cookie "";
     set $session_secret "${OIDC_PASSWORD}";
+    set $app_callback_path  "${APP_CALLBACK_PATH}";
+    set $app_login_path "${APP_LOGIN_PATH}";
+    set $app_path_prefix "${APP_PATH_PREFIX}";
+    set $oidc_agentname "${OIDC_AGENTNAME}";
+    set $oidc_password "${OIDC_PASSWORD}";
+    set $oidc_host_url "${OIDC_HOST_URL}";
 
-    access_by_lua_block {
-        local app_callback_path = "${APP_CALLBACK_PATH}"
-        local app_login_path = "${APP_LOGIN_PATH}"
-        local callback_host = "https://" .. ngx.var.host
-
-        if ngx.var.host == "localhost" then
-            callback_host = "http://localhost:" .. ngx.var.server_port
-        end
-
-        local opts = {
-            redirect_uri = callback_host .. app_callback_path,
-            client_id = "${OIDC_AGENTNAME}",
-            client_secret = "${OIDC_PASSWORD}",
-            scope = "openid",
-            ssl_verify = "no",
-            token_endpoint_auth_method = "client_secret_basic",
-            discovery = "${OIDC_HOST_URL}" .. "/oauth2/.well-known/openid-configuration",
-            session_contents = {
-                enc_id_token = true
-            }
-        }
-
-        -- starting session manual to set some default cookies.
-        local session = require("resty.session").start()
-        if ngx.var.cookie_ADRUM and ngx.var.cookie_ADRUM ~= session.data.ADRUM then
-            session.data.ADRUM = ngx.var.cookie_ADRUM
-        end
-
-        local res, err = require("resty.openidc").authenticate(opts, nil, nil, session)
-
-        if err then
-            ngx.status = 500
-            ngx.say(err)
-            ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR)
-        end
-
-        if ngx.var.uri == app_callback_path or ngx.var.uri == app_login_path then
-            return ngx.redirect("/")
-        end
-
-        local proxy_cookie = {}
-        -- adding ADRUM cookie if existant
-        if session.data.ADRUM then
-            proxy_cookie.ADRUM = session.data.ADRUM
-        end
-
-        if ngx.var.cookie_ADRUM then
-            proxy_cookie.ADRUM = ngx.var.cookie_ADRUM
-        end
-
-        -- adding ID_token if logged in
-        if session.data.enc_id_token then
-            proxy_cookie.ID_token = session.data.enc_id_token
-        end
-
-        -- pass ADRUM(EUM) cookie if present
-        local proxy_cookie_string = ""
-        for k,v in pairs(proxy_cookie) do
-            proxy_cookie_string = proxy_cookie_string .. k .. "=" .. v ..";"
-        end
-        ngx.var.proxy_cookie = proxy_cookie_string
-    }
+    access_by_lua_file oidc_access.lua;
 
     # saving ADRUM(EUM) cookie for subsequent requests
     # as this is done on the first request of a session data will be correct for the rest.
-    header_filter_by_lua_block {
-        local session = require("resty.session").open()
-        if session.data.enc_id_token and ngx.var.cookie_ADRUM and ngx.var.cookie_ADRUM ~= session.data.ADRUM then
-            session.data.ADRUM = ngx.var.cookie_ADRUM
-            session:save()
-        end
-    }
+    header_filter_by_lua_file adrum_cookie_saver.lua;
+
     # Server headers. Will be overwritten if you set them in blocks.
     proxy_set_header    Connection "";
     proxy_set_header    Referer $http_referer;
@@ -117,6 +57,9 @@ server {
     proxy_set_header    X-NginX-Proxy true;
     proxy_set_header    X-Real-IP $remote_addr;
     proxy_set_header    Cookie $proxy_cookie;
+    proxy_http_version  1.1;
+    proxy_ssl_verify    off;
+
     add_header          X-Application-Id "${APP_NAME} ${APP_VERSION} med proxy mot ${APP_API_GATEWAY}";
     add_header          X-Debug-Cookie $proxy_cookie;
     add_header          X-Debug-Proxy-Host 'http://$proxy_host/ $scheme://$host/';
@@ -125,25 +68,29 @@ server {
 
     # Lanuage files are served from disk
     location /fpsak/sprak/ {
-        alias /app/i18n/;
+        alias /app/fpsak/sprak/;
     }
 
     # Simple Proxy to backend
-    location  /fpsak/api/ {
-        proxy_pass              "${APP_API_GATEWAY}/fpsak/api/";
-        proxy_redirect          "${APP_API_GATEWAY}" "http://$host:${APP_PORT}";
-        proxy_http_version      1.1;
-        proxy_ssl_verify        off;
+    location  "${APP_API_PATH}" {
+        proxy_pass       "${APP_API_GATEWAY}${APP_API_PATH}";
+        proxy_redirect   "${APP_API_GATEWAY}" "http://$host:${APP_PORT}";
+    }
+
+    # Simple Proxy to backend middlertidig fix frem til bedre løsning kommer på plass.
+    location  /fpsak/oppgaveredirect {
+        proxy_pass       "${APP_API_GATEWAY}/fpsak/oppgaveredirect";
+        proxy_redirect  "${APP_API_GATEWAY}" "http://$host:${APP_PORT}";
     }
 
     # Health check for NAIS
-    location = /health/isAlive {
+    location = "${APP_PATH_PREFIX}health/isAlive" {
         return 200 "Application:UP";
         add_header Content-Type text/plain;
     }
 
     # Readiness check for NAIS
-    location = /health/isReady {
+    location = "${APP_PATH_PREFIX}health/isReady" {
         return 200 "Application:READY";
         add_header Content-Type text/plain;
     }
@@ -163,6 +110,11 @@ server {
         open_file_cache_errors off;
     }
 
+    # Just slap frontend directly to the prefix
+    location = / {
+        return 301 "${APP_PATH_PREFIX}";
+    }
+
     # To make sure any assets can get through :)
     location "${APP_PATH_PREFIX}" {
         # Hvis vi tillater browser-caching vil vi ikke ha nedetidsfri deploy (!)
@@ -173,6 +125,6 @@ server {
     # If no asset matches, send it to your javascript app. Hopefully it's a route in the app!
     location @rewrites {
         #add_header Cache-Control no-cache;
-        rewrite ^(.+)$ /index.html last;
+        rewrite ^(.+)$ /fpsak/index.html last;
     }
 }

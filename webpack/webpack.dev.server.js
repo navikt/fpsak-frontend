@@ -16,7 +16,7 @@ var options = {
   ],
   watchContentBase: true,
   proxy: {
-    '**/(sprak|api)/**': {
+    '**/(sprak|api|jetty)/**': {
       target: 'http://localhost:8080',
       secure: false,
     },
@@ -24,7 +24,7 @@ var options = {
   publicPath: config.output.publicPath,
   hot: true,
   noInfo: true,
-  historyApiFallback: false,
+  historyApiFallback: true,
   stats: {
     children: false,
     colors: true,

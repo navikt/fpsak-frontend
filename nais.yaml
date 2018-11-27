@@ -10,10 +10,10 @@ ingress:
   enabled: true
 healthcheck:
   liveness:
-    path: /health/isAlive
+    path: /fpsak/health/isAlive
     initialDelay: 5
   readiness:
-    path: /health/isReady
+    path: /fpsak/health/isReady
     initialDelay: 5
 fasitResources:
   used:
