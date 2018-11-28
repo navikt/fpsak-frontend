@@ -1345,7 +1345,7 @@ function openidc.authenticate(opts, target_url, unauth_action, session_opts)
     ", opts.renew_access_token_on_expiry=", opts.renew_access_token_on_expiry,
     ", try_to_renew=", try_to_renew,
     ", token_expired=", token_expired,
-    ", ngx_time=", ngx.time())
+    ", refresh_token=", session.data.refresh_token)
 
   -- if we are not authenticated then redirect to the OP for authentication
   -- the presence of the id_token is check for backwards compatibility
