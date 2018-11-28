@@ -18,6 +18,7 @@ pipeline {
                         props.each{ k,v -> value=value+";s%$k%$v%g" }
                         sh "k config use-context $props.CONTEXT_NAME"
                         sh "sed \'$value\' app.yaml | k apply -f -"
+                        addBadge icon: '', id: '', link: '', text: "${miljø}-${versjonNummer}"
                     }
                 }
             }
