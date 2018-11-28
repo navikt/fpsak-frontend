@@ -37,6 +37,8 @@ server {
     # for a prolonged period of time.
     set $proxy_cookie "";
     set $session_secret "${OIDC_PASSWORD}";
+    set $session_cookie_persistent on;
+    set $session_cookie_lifetime   604800; # One week
     set $app_callback_path  "${APP_CALLBACK_PATH}";
     set $app_login_path "${APP_LOGIN_PATH}";
     set $app_path_prefix "${APP_PATH_PREFIX}";

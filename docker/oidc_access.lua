@@ -15,10 +15,10 @@ local opts = {
     ssl_verify = "no",
     token_endpoint_auth_method = "client_secret_basic",
     discovery = ngx.var.oidc_host_url .. "/oauth2/.well-known/openid-configuration",
-    access_token_expires_in = 360,
     access_token_expires_leeway = 240,
     renew_access_token_on_expiry = true,
     session_contents = {
+        id_token = true,
         access_token = true,
         enc_id_token = true
     }
@@ -26,6 +26,7 @@ local opts = {
 
 -- starting session manual to set some default cookies.
 local session = require("resty.session").start()
+
 if ngx.var.cookie_ADRUM and ngx.var.cookie_ADRUM ~= session.data.ADRUM then
     session.data.ADRUM = ngx.var.cookie_ADRUM
 end
