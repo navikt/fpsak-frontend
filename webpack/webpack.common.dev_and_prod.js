@@ -11,7 +11,9 @@ const CORE_DIR = path.resolve(__dirname, '../node_modules');
 const PACAKGES_DIR = path.join(__dirname, '../packages');
 const LANG_DIR = path.join(__dirname, '../public/sprak/');
 const CSS_DIR = path.join(PACAKGES_DIR, 'assets/styles');
+// TODO: petter samle alle bilder på et sted
 const IMAGE_DIR = path.join(PACAKGES_DIR, 'assets/images');
+const APP_IMAGE_DIR = path.join(PACAKGES_DIR, 'fpsak/src/images');
 const APP_DIR = path.join(PACAKGES_DIR, 'fpsak/src');
 
 const isDevelopment = JSON.stringify(process.env.NODE_ENV) === '"development"';
@@ -95,7 +97,7 @@ const config = {
         options: {
           name: isDevelopment ? '[name]_[hash].[ext]' : '/[name]_[hash].[ext]',
         },
-        include: [APP_DIR, IMAGE_DIR],
+        include: [APP_IMAGE_DIR, IMAGE_DIR],
       },
     ],
   },
