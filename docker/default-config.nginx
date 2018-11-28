@@ -64,10 +64,9 @@ server {
     proxy_ssl_verify    off;
 
     add_header          X-Application-Id "${APP_NAME} ${APP_VERSION} med proxy mot ${APP_API_GATEWAY}";
-    add_header          X-Debug-Cookie $proxy_cookie;
-    add_header          X-Debug-Proxy-Host 'http://$proxy_host/ $scheme://$host/';
-    add_header          X-Debug-Forwarded-For $proxy_add_x_forwarded_for;
-    add_header          X-Debug-Forwarded-Host $host:$server_port;
+    #add_header          X-Debug-Cookie $proxy_cookie;
+    add_header          X-Debug-Proxy-Host 'http://$proxy_host/ $scheme://$host:$server_port/';
+
 
     # Lanuage files are served from disk
     location /fpsak/sprak/ {
@@ -76,8 +75,7 @@ server {
 
     # Simple Proxy to backend
     location  "${APP_API_PATH}" {
-        proxy_pass       "${APP_API_GATEWAY}${APP_API_PATH}";
-        proxy_redirect   "~*${APP_API_PATH}(.+)$" "${APP_API_PATH}$1";
+        proxy_pass "${APP_API_GATEWAY}${APP_API_PATH}";
     }
 
     # Simple Proxy to backend middlertidig fix frem til bedre løsning kommer på plass.

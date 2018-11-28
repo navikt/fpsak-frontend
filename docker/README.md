@@ -9,6 +9,15 @@ access_by_lua_block {
         ngx.var.proxy_id_cookie = session.data.enc_id_token
     end        
 }
+
+# dette funger ikke...
+proxy_redirect   "~*${APP_API_PATH}(.+)$" "${APP_API_PATH}$1";
+header_filter_by_lua_block {
+    if ngx.header.location and ngx.var.host ~= "localhost" then
+        -- local location_path = string.match(ngx.header.location, ":${APP_PORT}(.*)")
+        -- ngx.header["Location"] = "https://" .. ngx.var.host .. location_path
+    end
+}
 ```
 
 
