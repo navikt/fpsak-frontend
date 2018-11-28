@@ -15,6 +15,7 @@ node('DOCKER3') {
    }
    stage('Deploy'){
        build job: 'fpsak-frontend-BUILD', parameters: [string(name: 'miljø', value: 't10'), string(name: 'versjonNummer', value: tagName)], wait: true
+       build job: 'fpsak-frontend-BUILD', parameters: [string(name: 'miljø', value: 'q1'), string(name: 'versjonNummer', value: tagName)], wait: true
        addBadge icon: '/static/7d0f032c/images/48x48/completed.gif', id: '', link: '', text: "$tagName"
    }
 }
