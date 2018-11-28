@@ -76,7 +76,7 @@ server {
     # Simple Proxy to backend
     location  "${APP_API_PATH}" {
         proxy_pass "${APP_API_GATEWAY}${APP_API_PATH}";
-        proxy_redirect "";
+        #proxy_redirect "";
     }
 
     # Simple Proxy to backend middlertidig fix frem til bedre løsning kommer på plass.
