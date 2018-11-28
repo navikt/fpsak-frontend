@@ -1,6 +1,6 @@
 
 local callback_host = "https://" .. ngx.var.host
-
+-- local backup_content_type = ngx.header.content_type;
 if ngx.var.host == "localhost" then
     callback_host = "http://localhost:" .. ngx.var.server_port
     local openidc = require("resty.openidc")
@@ -33,9 +33,11 @@ end
 
 if not ngx.req.get_headers()["Authorization"] then
     local res, err = require("resty.openidc").authenticate(opts, nil, nil, session)
-
+    -- authenticate might change content_type...
+    -- ngx.header.content_type = backup_content_type
     if err then
         ngx.status = 500
+        ngx.header.content_type = 'text/plain';
         ngx.say(err)
         ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR)
     end

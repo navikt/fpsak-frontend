@@ -5,6 +5,7 @@ lua_package_path '~/lua/?.lua;;';
 lua_shared_dict discovery 1m;
 lua_shared_dict jwks 1m;
 lua_code_cache on; # Need to be set for session storage to work.
+lua_use_default_type off;
 proxy_buffering off;
 resolver "${RESOLVER}";
 tcp_nodelay off;
