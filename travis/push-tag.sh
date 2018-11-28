@@ -7,7 +7,8 @@ PUSH_URL="https://x-access-token:$INSTALLATION_TOKEN@github.com/$TRAVIS_REPO_SLU
 if [[ "${TRAVIS_PULL_REQUEST}" = "false" ]] && [[ "${TRAVIS_BRANCH}" = "master" ]] && [[ "${AUTHOR_NAME}" != "${GIT_USERNAME}" ]]; then
     git checkout master # switch to master branch (which is the same as the current commit), so we are not in DETACHED mode
     yarn version --new-version patch --non-interactive
-    git push --tags ${PUSH_URL} HEAD:master >/dev/null 2>&1
+    git push --tags ${PUSH_URL} HEAD:master
+    #>/dev/null 2>&1
     echo "Pushing the new version to $TRAVIS_REPO_SLUG as $GIT_USERNAME"
 else
     echo "Will not bump version on branch ${TRAVIS_BRANCH} (Pull request: ${TRAVIS_PULL_REQUEST}, Tag: ${TRAVIS_TAG})"
