@@ -10,3 +10,14 @@ access_by_lua_block {
     end        
 }
 ```
+
+
+
+Konfig er skreddersydd til openam hos NAV.
+
+### TODO 
+* Ta i bruk REDIS for å lagre sessionsdata.
+* Lage dette om til et baseimage for gjenbrukbarhet.
+* Lese location config fra en mappe for customization.
+* Gjøre app-dynamics til en del av baseimage.
+* 
