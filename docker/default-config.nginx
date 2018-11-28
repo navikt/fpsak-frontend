@@ -76,15 +76,17 @@ server {
     # Simple Proxy to backend
     location  "${APP_API_PATH}" {
         proxy_pass       "${APP_API_GATEWAY}${APP_API_PATH}";
-        proxy_redirect   "${APP_API_GATEWAY}" "http://$host:${APP_PORT}";
+        proxy_redirect   "~*${APP_API_PATH}(.+)$" "${APP_API_PATH}$1";
     }
 
     # Simple Proxy to backend middlertidig fix frem til bedre løsning kommer på plass.
     location  /fpsak/oppgaveredirect {
         proxy_pass       "${APP_API_GATEWAY}/fpsak/oppgaveredirect";
         proxy_redirect   "~*/fpsak/#/(.+)$" /fpsak/$1;
+        header_filter_by_lua_block {
+            ngx.header.content_type = nil
+        }
     }
-
     # Health check for NAIS
     location = "${APP_PATH_PREFIX}health/isAlive" {
         return 200 "Application:UP";
