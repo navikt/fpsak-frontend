@@ -137,11 +137,15 @@ class TimeLineInfo extends Component {
       return stonadArray;
     };
 
-    const createKey = arbeidsforhold => arbeidsforhold.aktivitetIdentifikator.uttakArbeidType.kode
-      + arbeidsforhold.aktivitetIdentifikator.arbeidsforholdNavn
-      + arbeidsforhold.aktivitetIdentifikator.arbeidsforholdId
-      + arbeidsforhold.aktivitetIdentifikator.arbeidsforholdOrgnr
-      + arbeidsforhold.fordelteDager;
+    const createKey = (arbeidsforhold) => {
+      const { uttakArbeidType, arbeidsgiver, arbeidsforholdId } = arbeidsforhold.aktivitetIdentifikator;
+      let arbKey = uttakArbeidType.kode;
+      arbKey = arbeidsgiver ? `${arbKey} ${arbeidsgiver.navn}` : arbKey;
+      arbKey = arbeidsforholdId ? `${arbKey} ${arbeidsforholdId}` : arbKey;
+      arbKey = arbeidsgiver ? `${arbKey} ${arbeidsgiver.identifikator}` : arbKey;
+      arbKey = `${arbKey} ${arbeidsforhold.saldo}`;
+      return arbKey;
+    };
 
     return (
       <div>
