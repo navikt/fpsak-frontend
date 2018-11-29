@@ -38,11 +38,14 @@ server {
     # for a prolonged period of time.
     set $proxy_cookie "";
     set $session_secret "${OIDC_PASSWORD}";
+    set $session_storage "${SESSION_STORAGE}";
     set $session_cookie_persistent on;
     set $session_cookie_lifetime   604800; # One week
+    set $session_redis_host 0.0.0.0;
     set $app_callback_path  "${APP_CALLBACK_PATH}";
     set $app_login_path "${APP_LOGIN_PATH}";
     set $app_path_prefix "${APP_PATH_PREFIX}";
+    set $app_baseurl    https://$host;
     set $oidc_agentname "${OIDC_AGENTNAME}";
     set $oidc_password "${OIDC_PASSWORD}";
     set $oidc_host_url "${OIDC_HOST_URL}";
@@ -51,7 +54,7 @@ server {
 
     # saving ADRUM(EUM) cookie for subsequent requests
     # as this is done on the first request of a session data will be correct for the rest.
-    header_filter_by_lua_file adrum_cookie_saver.lua;
+    # header_filter_by_lua_file adrum_cookie_saver.lua;
 
     # Server headers. Will be overwritten if you set them in blocks.
     proxy_set_header    Connection "";
@@ -76,16 +79,12 @@ server {
     # Simple Proxy to backend
     location  "${APP_API_PATH}" {
         proxy_pass "${APP_API_GATEWAY}${APP_API_PATH}";
-        #proxy_redirect "";
     }
 
     # Simple Proxy to backend middlertidig fix frem til bedre løsning kommer på plass.
     location  /fpsak/oppgaveredirect {
         proxy_pass       "${APP_API_GATEWAY}/fpsak/oppgaveredirect";
-        proxy_redirect   "~*/fpsak/#/(.+)$" /fpsak/$1;
-        header_filter_by_lua_block {
-            ngx.header.content_type = nil
-        }
+        proxy_redirect   "~*/fpsak/#/(.+)$" "$app_baseurl/fpsak/$1";
     }
     # Health check for NAIS
     location = "${APP_PATH_PREFIX}health/isAlive" {

@@ -17,13 +17,14 @@ then
 fi
 
 export APP_PORT="${APP_PORT:-443}"
+export SESSION_STORAGE="${SESSION_STORAGE:-cookie}"
 export APP_NAME="${APP_NAME:-devimg}"
 export APP_VERSION="${APP_VERSION:-localhost}"
 
-echo "Using API-gateway:" $APP_API_GATEWAY ", with prefix path: " $APP_API_PATH
+echo "Using API-gateway:" $APP_API_GATEWAY ", with prefix: " $APP_API_PATH ". Session Storage: " $SESSION_STORAGE
 
 # replace env for nginx conf
-envsubst '$DEBUG $APP_DIR $APP_PATH_PREFIX $APP_API_GATEWAY $APP_API_PATH $OIDC_AGENTNAME $OIDC_PASSWORD $OIDC_HOST_URL $RESOLVER $APP_NAME $APP_VERSION $FASIT_ENVIRONMENT_NAME $APP_PORT $APP_CALLBACK_PATH $APP_LOGIN_PATH' < /etc/nginx/conf.d/app.conf.template > /etc/nginx/conf.d/default.conf
+envsubst '$DEBUG $APP_DIR $APP_PATH_PREFIX $APP_API_GATEWAY $APP_API_PATH $OIDC_AGENTNAME $OIDC_PASSWORD $OIDC_HOST_URL $RESOLVER $APP_NAME $APP_VERSION $FASIT_ENVIRONMENT_NAME $APP_PORT $APP_CALLBACK_PATH $APP_LOGIN_PATH $SESSION_STORAGE' < /etc/nginx/conf.d/app.conf.template > /etc/nginx/conf.d/default.conf
 
 # find all env start with APP_
 export SUBS=$(echo $(env | cut -d= -f1 | grep "^APP_" | sed -e 's/^/\$/'))

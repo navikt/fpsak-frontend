@@ -1,14 +1,11 @@
-
-local callback_host = "https://" .. ngx.var.host
--- local backup_content_type = ngx.header.content_type;
 if ngx.var.host == "localhost" then
-    callback_host = "http://localhost:" .. ngx.var.server_port
+    ngx.var.app_baseurl = "http://localhost:" .. ngx.var.server_port
     local openidc = require("resty.openidc")
     openidc.set_logging(nil, { DEBUG = ngx.INFO } )
 end
 
 local opts = {
-    redirect_uri = callback_host .. ngx.var.app_callback_path,
+    redirect_uri = ngx.var.app_baseurl .. ngx.var.app_callback_path,
     client_id = ngx.var.oidc_agentname,
     client_secret = ngx.var.oidc_password,
     scope = "openid",
@@ -18,23 +15,20 @@ local opts = {
     access_token_expires_leeway = 240,
     renew_access_token_on_expiry = true,
     session_contents = {
-        id_token = true,
         access_token = true,
         enc_id_token = true
     }
 }
 
--- starting session manual to set some default cookies.
-local session = require("resty.session").start()
-
-if ngx.var.cookie_ADRUM and ngx.var.cookie_ADRUM ~= session.data.ADRUM then
-    session.data.ADRUM = ngx.var.cookie_ADRUM
-end
-
 if not ngx.req.get_headers()["Authorization"] then
+    -- starting session manual to set some default cookies, etc
+    local session = require("resty.session").start()
+    if ngx.var.cookie_ADRUM and ngx.var.cookie_ADRUM ~= session.data.ADRUM then
+        session.data.ADRUM = ngx.var.cookie_ADRUM
+    end
+
     local res, err = require("resty.openidc").authenticate(opts, nil, nil, session)
-    -- authenticate might change content_type...
-    -- ngx.header.content_type = backup_content_type
+
     if err then
         ngx.status = 500
         ngx.header.content_type = 'text/plain';
