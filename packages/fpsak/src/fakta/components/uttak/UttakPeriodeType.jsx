@@ -5,17 +5,18 @@ import { FormattedMessage } from 'react-intl';
 import { dateFormat, calcDaysAndWeeks } from 'utils/dateUtils';
 import utsettelseArsakCodes, { utsettelseArsakTexts } from 'kodeverk/utsettelseArsakCodes';
 import overforingArsakCodes, { overforingArsakTexts } from 'kodeverk/overforingArsakCodes';
+import oppholdArsakType, { oppholdArsakKontoNavn } from 'kodeverk/oppholdArsakType';
 import Image from 'sharedComponents/Image';
 import { ISO_DATE_FORMAT } from 'utils/formats';
-import editPeriodeIcon from 'images/endre.svg';
-import editPeriodeDisabledIcon from 'images/endre_disablet.svg';
-import removePeriod from 'images/remove.svg';
-import removePeriodDisabled from 'images/remove_disabled.svg';
+import editPeriodeIcon from '@fpsak-frontend/assets/images/endre.svg';
+import editPeriodeDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
+import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
+import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
 import styles from './uttakPeriodeType.less';
 
 const formatProsent = prosent => `${prosent}%`;
 
-const getUttakTypeTitle = (utsettelseArsak, overforingArsak, arbeidstidprosent) => {
+const getUttakTypeTitle = (utsettelseArsak, overforingArsak, arbeidstidprosent, oppholdArsak) => {
   if (overforingArsak.kode !== overforingArsakCodes.UDEFINERT) {
     return (
       <FormattedMessage
@@ -34,11 +35,25 @@ const getUttakTypeTitle = (utsettelseArsak, overforingArsak, arbeidstidprosent) 
     );
   }
 
+  if (oppholdArsak && oppholdArsak.kode !== oppholdArsakType.UDEFINERT) {
+    return (
+      <FormattedMessage id="UttakInfoPanel.OppholdMedÅrsak" />
+    );
+  }
+
   if (arbeidstidprosent !== null && arbeidstidprosent !== undefined) {
     return <FormattedMessage id="UttakInfoPanel.UttakMedGradering" />;
   }
 
   return <FormattedMessage id="UttakInfoPanel.Uttak" />;
+};
+
+const getUttakPeriode = (uttakPeriodeType, oppholdArsak) => {
+  if (oppholdArsak && oppholdArsak.kode !== oppholdArsakType.UDEFINERT) {
+    return oppholdArsakKontoNavn[oppholdArsak.kode];
+  }
+
+  return uttakPeriodeType;
 };
 
 const UttakPeriodeType = ({ // NOSONAR
@@ -60,6 +75,7 @@ const UttakPeriodeType = ({ // NOSONAR
   samtidigUttak,
   samtidigUttaksprosent,
   flerbarnsdager,
+  oppholdArsak,
 }) => {
   const isAnyFormOrNyPeriodeOpen = isAnyFormOpen() || isNyPeriodeFormOpen;
   const numberOfDaysAndWeeks = calcDaysAndWeeks(fraDato, tilDato, ISO_DATE_FORMAT);
@@ -69,8 +85,8 @@ const UttakPeriodeType = ({ // NOSONAR
       <div className={styles.headerWrapper}>
         <div>
           {isFromSøknad && <Undertekst><FormattedMessage id="UttakInfoPanel.FraSøknad" /></Undertekst>}
-          <Element>{getUttakTypeTitle(utsettelseArsak, overforingArsak, arbeidstidprosent)}</Element>
-          <Normaltekst>{uttakPeriodeType.navn}</Normaltekst>
+          <Element>{getUttakTypeTitle(utsettelseArsak, overforingArsak, arbeidstidprosent, oppholdArsak)}</Element>
+          <Normaltekst>{getUttakPeriode(uttakPeriodeType.navn, oppholdArsak)}</Normaltekst>
         </div>
         {!readOnly
           && (
@@ -164,6 +180,7 @@ UttakPeriodeType.propTypes = {
   samtidigUttak: PropTypes.bool.isRequired,
   samtidigUttaksprosent: PropTypes.string,
   erArbeidstaker: PropTypes.bool,
+  oppholdArsak: PropTypes.shape(),
 };
 
 UttakPeriodeType.defaultProps = {
@@ -171,6 +188,7 @@ UttakPeriodeType.defaultProps = {
   samtidigUttaksprosent: null,
   arbeidsgiver: {},
   erArbeidstaker: false,
+  oppholdArsak: undefined,
 };
 
 export default UttakPeriodeType;

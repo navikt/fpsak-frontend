@@ -297,6 +297,18 @@ const historikkEndretFeltTypeCodes = {
     kode: 'TYPE_VERGE',
     feltId: 'Verge.TypeVerge',
   },
+  KLAGE_RESULTAT_NFP: {
+    kode: 'KLAGE_RESULTAT_NFP',
+    feltId: 'HistorikkEndretFelt.KlageResultatNFP',
+  },
+  KLAGE_RESULTAT_KA: {
+    kode: 'KLAGE_RESULTAT_KA',
+    feltId: 'HistorikkEndretFelt.KlageResultatKA',
+  },
+  KLAGE_OMGJØR_ÅRSAK: {
+    kode: 'KLAGE_OMGJØR_ÅRSAK',
+    feltId: 'HistorikkEndretFelt.KlageOmgjoerAarsak',
+  },
   ER_KLAGER_PART: {
     kode: 'ER_KLAGER_PART',
     feltId: 'HistorikkEndretFelt.ErKlagerPart',

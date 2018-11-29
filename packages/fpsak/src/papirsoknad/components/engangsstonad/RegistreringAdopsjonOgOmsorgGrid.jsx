@@ -39,7 +39,7 @@ const RegistreringAdopsjonOgOmsorgGrid = ({
         />
       </FormSection>
       <FormSection name={ANNEN_FORELDER_FORM_NAME_PREFIX}>
-        <AnnenForelderPanel namePrefix={ANNEN_FORELDER_FORM_NAME_PREFIX} form={form} readOnly={readOnly} />
+        <AnnenForelderPanel isForeldrepenger={false} soknadData={soknadData} namePrefix={ANNEN_FORELDER_FORM_NAME_PREFIX} form={form} readOnly={readOnly} />
       </FormSection>
     </Column>
   </Row>

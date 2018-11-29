@@ -11,7 +11,7 @@ import { getAksjonspunkter, getFaktaOmBeregning } from 'behandling/behandlingSel
 import { isBehandlingFormDirty } from 'behandling/behandlingForm';
 import { isEmpty } from 'utils/arrayUtils';
 import Image from 'sharedComponents/Image';
-import addCircleIcon from 'images/add-circle.svg';
+import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { getKodeverk } from 'kodeverk/duck';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';

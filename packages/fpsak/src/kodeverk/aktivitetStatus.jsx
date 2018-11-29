@@ -1,6 +1,7 @@
 import beregningsgrunnlagAndeltyper from 'kodeverk/beregningsgrunnlagAndeltyper';
 
 const aktivitetStatus = {
+  KUN_YTELSE: 'KUN_YTELSE',
   ARBEIDSTAKER: 'AT',
   FRILANSER: 'FL',
   TILSTOTENDE_YTELSE: 'TY',
@@ -33,7 +34,7 @@ const statuserSomStotterSelvstendigNaeringsdrivende = [aktivitetStatus.SELVSTEND
 const kombinasjonsstatuser = [aktivitetStatus.KOMBINERT_AT_FL, aktivitetStatus.KOMBINERT_AT_FL_SN,
   aktivitetStatus.KOMBINERT_FL_SN, aktivitetStatus.KOMBINERT_AT_SN];
 const statuserSomStotterDagpengerEllerAAP = [aktivitetStatus.DAGPENGER, aktivitetStatus.ARBEIDSAVKLARINGSPENGER];
-const statuserSomStotterTilstottendeYtelser = [aktivitetStatus.TILSTOTENDE_YTELSE];
+const statuserSomStotterTilstottendeYtelser = [aktivitetStatus.KUN_YTELSE];
 const statuserSomStotterMilitaer = [aktivitetStatus.MILITAER_ELLER_SIVIL];
 
 export const isStatusDagpengerOrAAP = status => (statuserSomStotterDagpengerEllerAAP.includes(status));

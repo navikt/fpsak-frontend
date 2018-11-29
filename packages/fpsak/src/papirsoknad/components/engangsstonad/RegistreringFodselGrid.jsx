@@ -49,7 +49,7 @@ const RegistreringFodselGrid = ({
       }
       <TerminFodselDatoPanel readOnly={readOnly} form={form} />
       <FormSection name={annenForelderFormNamePrefix}>
-        <AnnenForelderPanel namePrefix={annenForelderFormNamePrefix} form={form} readOnly={readOnly} />
+        <AnnenForelderPanel isForeldrepenger={false} soknadData={soknadData} namePrefix={annenForelderFormNamePrefix} form={form} readOnly={readOnly} />
       </FormSection>
     </Column>
   </Row>

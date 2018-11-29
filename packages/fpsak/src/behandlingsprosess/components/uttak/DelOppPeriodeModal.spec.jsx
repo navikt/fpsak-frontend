@@ -1,8 +1,8 @@
 import React from 'react';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
 import sinon from 'sinon';
 import { expect } from 'chai';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import { DelOppPeriodeModalImpl } from './DelOppPeriodeModal';
 
 describe('<DelOppPeriodeModal>', () => {

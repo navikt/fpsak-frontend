@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
 import personstatusType from 'kodeverk/personstatusType';

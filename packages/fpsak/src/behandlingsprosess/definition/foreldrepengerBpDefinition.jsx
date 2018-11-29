@@ -21,6 +21,7 @@ const getStatusFromResultatstruktur = ({ resultatstruktur, stonadskontoer }) => 
   resultatstruktur && resultatstruktur.perioder.length > 0 && stonadskontoer ? vut.OPPFYLT : vut.IKKE_VURDERT);
 
 const behandlingTypeNotEquals = (...behandlingTypes) => ({ behandlingType }) => !behandlingTypes.some(b => b === behandlingType.kode);
+const behandlingTypeEquals = (...behandlingTypes) => ({ behandlingType }) => behandlingTypes.some(b => b === behandlingType.kode);
 const hasNonDefaultBehandlingspunkt = (builderData, bpLength) => bpLength > 0;
 
 const isNotRevurderingAndManualOpplysningspliktAp = ({ behandlingType, aksjonspunkter }) => {
@@ -96,7 +97,7 @@ const foreldrepengerBuilders = [
   new BehandlingspunktProperties.Builder(bpc.FORTSATTMEDLEMSKAP, 'FortsattMedlemskap')
     .withVilkarTypes(vt.MEDLEMSKAPSVILKÅRET_LØPENDE)
     .withAksjonspunktCodes(ac.OVERSTYR_MEDLEMSKAPSVILKAR)
-    .withVisibilityWhen(hasLøpendeMedlemskapOn),
+    .withVisibilityWhen(behandlingTypeEquals(bt.REVURDERING), hasLøpendeMedlemskapOn),
 
   new BehandlingspunktProperties.Builder(bpc.UTTAK, 'Uttak')
     .withVisibilityWhen(hasNonDefaultBehandlingspunkt, behandlingTypeNotEquals(bt.KLAGE))
@@ -125,7 +126,13 @@ const foreldrepengerBuilders = [
       ac.FORESLA_VEDTAK, ac.FATTER_VEDTAK, ac.FORESLA_VEDTAK_MANUELT, ac.VEDTAK_UTEN_TOTRINNSKONTROLL, ac.VURDERE_ANNEN_YTELSE,
       ac.VURDERE_DOKUMENT, ac.KONTROLLER_REVURDERINGSBEHANDLING, ac.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
     )
-    .withVisibilityWhen(hasNonDefaultBehandlingspunkt)
+    .withVisibilityWhen(hasNonDefaultBehandlingspunkt, behandlingTypeNotEquals(bt.KLAGE))
+    .withStatus(getVedtakStatus),
+  new BehandlingspunktProperties.Builder(bpc.KLAGE_RESULTAT, 'ResultatKlage')
+    .withAksjonspunktCodes(
+      ac.FORESLA_VEDTAK, ac.FATTER_VEDTAK, ac.FORESLA_VEDTAK_MANUELT, ac.VEDTAK_UTEN_TOTRINNSKONTROLL,
+    )
+    .withVisibilityWhen(hasNonDefaultBehandlingspunkt, behandlingTypeEquals(bt.KLAGE))
     .withStatus(getVedtakStatus),
 ];
 

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { clearFields, formPropTypes } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
-import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { RadioOption, RadioGroupField, TextAreaField } from 'form/Fields';
 import FadingPanel from 'sharedComponents/FadingPanel';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
@@ -22,9 +22,10 @@ import {
   required,
 } from 'utils/validation/validators';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import avregningCodes from 'kodeverk/avregningCodes';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import questionNormalUrl from 'images/question_normal.svg';
-import questionHoverUrl from 'images/question_hover.svg';
+import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
+import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
 import AvregningSummary from './AvregningSummary';
 import AvregningTable from './AvregningTable';
 import styles from './avregningPanel.less';
@@ -36,47 +37,45 @@ const aksjonspunkter = [
   aksjonspunktCodes.VURDER_INNTREKK,
 ];
 const formName = 'AvregnigForm';
-
-const getApTekst = apCode => [<FormattedMessage id={`Avregning.AksjonspunktHelpText.${apCode}`} key="vurderFeilutbetaling" />];
-const findQuestionImage = isHovering => (isHovering ? questionHoverUrl : questionNormalUrl);
-const tooltipContentOppfylt = (
-  <div>
-    <Element>
-      <FormattedMessage id="Avregning.måVurderes" />
-    </Element>
-    <Element>
-      <FormattedMessage id="Avregning.feilaktigeOpplysninger" />
-    </Element>
-    <Element>
-      <FormattedMessage id="Avregning.feilutbetaling" />
-    </Element>
-    <Element>
-      <FormattedMessage id="Avregning.arbeidsStatus" />
-    </Element>
-  </div>
+const oppfyltTooltipContent = (
+  <span className={styles.tooltipContent}>
+    <FormattedMessage id="Avregning.måVurderes" />
+    <br />
+    <FormattedMessage id="Avregning.feilaktigeOpplysninger" />
+    <br />
+    <FormattedMessage id="Avregning.feilutbetaling" />
+    <br />
+    <FormattedMessage id="Avregning.arbeidsStatus" />
+    <br />
+  </span>
 );
-
 const tooltipContentReduksjon = (
-  <div>
-    <Element>
-      <FormattedMessage id="Avregning.måVurderes" />
-    </Element>
-    <Element className={styles.særligeGrunnerForklaring}>
-      <FormattedMessage id="Avregning.særligeGrunnerForklaring" />
-    </Element>
-    <Element>
-      <FormattedMessage id="Avregning.uaktsomhet" />
-    </Element>
-    <Element>
-      <FormattedMessage id="Avregning.feilen" />
-    </Element>
-    <Element>
-      <FormattedMessage id="Avregning.størrelsenAvBeløp" />
-    </Element>
-    <Element>
-      <FormattedMessage id="Avregning.tidspunktAvFeilutbetaling" />
-    </Element>
-  </div>
+  <span className={styles.tooltipContent}>
+    <FormattedMessage id="Avregning.særligeGrunnerForklaring" />
+    <br />
+    <FormattedMessage id="Avregning.uaktsomhet" />
+    <br />
+    <FormattedMessage id="Avregning.feilen" />
+    <br />
+    <FormattedMessage id="Avregning.størrelsenAvBeløp" />
+    <br />
+    <FormattedMessage id="Avregning.tidspunktAvFeilutbetaling" />
+  </span>
+);
+const getApTekst = apCode => (apCode ? [<FormattedMessage id={`Avregning.AksjonspunktHelpText.${apCode}`} key="vurderFeilutbetaling" />] : []);
+const findQuestionImage = isHovering => (isHovering ? questionHoverUrl : questionNormalUrl);
+const tooltipContent = type => (type === avregningCodes.OPPFYLT ? oppfyltTooltipContent : tooltipContentReduksjon);
+
+const radioGroupLabel = contentType => (
+  <span>
+    <FormattedMessage id={`Avregning.RadioGroup.${contentType}`} />
+    <Image
+      className={styles.helpTextImage}
+      imageSrcFunction={findQuestionImage}
+      altCode={`Avregning.RadioGroup.${contentType}`}
+      tooltip={{ header: tooltipContent(contentType) }}
+    />
+  </span>
 );
 
 export class AvregningPanelImpl extends Component {
@@ -128,7 +127,7 @@ export class AvregningPanelImpl extends Component {
       isApOpen,
       apCodes,
       readOnly,
-      erOppfylt,
+      erTilbakekrevingVilkårOppfylt,
       grunnerTilReduksjon,
       ...formProps
     } = this.props;
@@ -162,114 +161,110 @@ export class AvregningPanelImpl extends Component {
                 <VerticalSpacer twentyPx />
               </Column>
             </Row>
-            <Row>
-              <Column xs="12">
-                <form onSubmit={formProps.handleSubmit}>
-                  <Row>
-                    <Column sm="6">
-                      <TextAreaField
-                        name="begrunnelse"
-                        label={{ id: 'Avregning.vurdering' }}
-                        validate={[required, minLength3, maxLength1500, hasValidText]}
-                        maxLength={1500}
-                        readOnly={readOnly}
-                        id="avregningVurdering"
-                      />
-                    </Column>
-                    { apCodes[0] === aksjonspunktCodes.VURDER_FEILUTBETALING
+            { apCodes[0]
+            && (
+              <Row>
+                <Column xs="12">
+                  <form onSubmit={formProps.handleSubmit}>
+                    <Row>
+                      <Column sm="6">
+                        <TextAreaField
+                          name="begrunnelse"
+                          label={{ id: 'Avregning.vurdering' }}
+                          validate={[required, minLength3, maxLength1500, hasValidText]}
+                          maxLength={1500}
+                          readOnly={readOnly}
+                          id="avregningVurdering"
+                        />
+                      </Column>
+                      { apCodes[0] === aksjonspunktCodes.VURDER_FEILUTBETALING
+                        && (
+                        <Column sm="6">
+                          <Undertekst><FormattedMessage id="Avregning.videreBehandling" /></Undertekst>
+                          <VerticalSpacer eightPx />
+                          <RadioGroupField name="videreBehandling" validate={[required]} direction="vertical" readOnly={readOnly}>
+                            <RadioOption label={<FormattedMessage id="Avregning.gjennomfør" />} value={avregningCodes.TILBAKEKR_INFOTRYGD} />
+                            <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={avregningCodes.TILBAKEKR_IGNORER} />
+                          </RadioGroupField>
+                        </Column>
+                        )
+                      }
+                      { apCodes[0] === aksjonspunktCodes.VURDER_INNTREKK
                       && (
-                      <Column sm="6">
-                        <Undertekst><FormattedMessage id="Avregning.videreBehandling" /></Undertekst>
-                        <VerticalSpacer eightPx />
-                        <RadioGroupField name="videreBehandling" validate={[required]} direction="vertical">
-                          <RadioOption label={<FormattedMessage id="Avregning.gjennomfør" />} value="gjennomfør" />
-                          <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value="avvent" />
-                        </RadioGroupField>
-                      </Column>
+                        <Column sm="6">
+                          <RadioGroupField
+                            label={radioGroupLabel(avregningCodes.OPPFYLT)}
+                            name="erTilbakekrevingVilkårOppfylt"
+                            onChange={this.resetFields}
+                            readOnly={readOnly}
+                          >
+                            <RadioOption label={<FormattedMessage id="Avregning.formAlternativ.ja" />} value />
+                            <RadioOption label={<FormattedMessage id="Avregning.formAlternativ.nei" />} value={false} />
+                          </RadioGroupField>
+                          { erTilbakekrevingVilkårOppfylt
+                          && (
+                            <div className={styles.marginBottom20}>
+                              <ArrowBox alignOffset={12}>
+                                <RadioGroupField
+                                  label={radioGroupLabel(avregningCodes.REDUKSJON)}
+                                  validate={[required]}
+                                  name="grunnerTilReduksjon"
+                                  onChange={this.resetFields}
+                                  readOnly={readOnly}
+                                >
+                                  <RadioOption label={<FormattedMessage id="Avregning.formAlternativ.ja" />} value />
+                                  <RadioOption label={<FormattedMessage id="Avregning.formAlternativ.nei" />} value={false} />
+                                </RadioGroupField>
+                                { grunnerTilReduksjon
+                                && (
+                                  <div className={styles.marginBottom20}>
+                                    <ArrowBox alignOffset={12}>
+                                      <RadioGroupField validate={[required]} name="videreBehandling" direction="vertical" readOnly={readOnly}>
+                                        <RadioOption label={<FormattedMessage id="Avregning.gjennomfør" />} value={avregningCodes.TILBAKEKR_INFOTRYGD} />
+                                        <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={avregningCodes.TILBAKEKR_IGNORER} />
+                                      </RadioGroupField>
+                                    </ArrowBox>
+                                  </div>
+                                )
+                                }
+                              </ArrowBox>
+                            </div>
+                          )
+                          }
+                          { erTilbakekrevingVilkårOppfylt !== undefined && !erTilbakekrevingVilkårOppfylt
+                          && (
+                            <div className={styles.marginBottom20}>
+                              <ArrowBox alignOffset={90}>
+                                <RadioGroupField validate={[required]} name="videreBehandling" direction="vertical" readOnly={readOnly}>
+                                  <RadioOption label={<FormattedMessage id="Avregning.gjennomfør" />} value={avregningCodes.TILBAKEKR_INFOTRYGD} />
+                                  <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={avregningCodes.TILBAKEKR_IGNORER} />
+                                </RadioGroupField>
+                              </ArrowBox>
+                            </div>
+                          )
+                          }
+                        </Column>
                       )
-                    }
-                    { apCodes[0] === aksjonspunktCodes.VURDER_INNTREKK
-                    && (
-                      <Column sm="6">
-                        <Undertekst>
-                          <FormattedMessage id="Avregning.erVilkåreneOppfylt" />
-                          <Image
-                            className={styles.helpTextImage}
-                            imageSrcFunction={findQuestionImage}
-                            altCode="Avregning.erVilkåreneOppfylt"
-                            tooltip={{ header: tooltipContentOppfylt }}
-                          />
-                        </Undertekst>
-                        <VerticalSpacer eightPx />
-                        <RadioGroupField name="erOppfylt" onChange={this.resetFields}>
-                          <RadioOption label={<FormattedMessage id="Avregning.formAlternativ.ja" />} value />
-                          <RadioOption label={<FormattedMessage id="Avregning.formAlternativ.nei" />} value={false} />
-                        </RadioGroupField>
-                        { erOppfylt
-                        && (
-                          <div className={styles.marginBottom20}>
-                            <ArrowBox alignOffset={12}>
-                              <Undertekst>
-                                <FormattedMessage id="Avregning.grunnerTilReduksjon" />
-                                <Image
-                                  className={styles.helpTextImage}
-                                  imageSrcFunction={findQuestionImage}
-                                  altCode="Avregning.grunnerTilReduksjon"
-                                  tooltip={{ header: tooltipContentReduksjon }}
-                                />
-                              </Undertekst>
-                              <VerticalSpacer eightPx />
-                              <RadioGroupField validate={[required]} name="grunnerTilReduksjon" onChange={this.resetFields}>
-                                <RadioOption label={<FormattedMessage id="Avregning.formAlternativ.ja" />} value />
-                                <RadioOption label={<FormattedMessage id="Avregning.formAlternativ.nei" />} value={false} />
-                              </RadioGroupField>
-                              { grunnerTilReduksjon
-                              && (
-                                <div className={styles.marginBottom20}>
-                                  <ArrowBox alignOffset={12}>
-                                    <RadioGroupField validate={[required]} name="videreBehandling" direction="vertical">
-                                      <RadioOption label={<FormattedMessage id="Avregning.gjennomfør" />} value="gjennomfør" />
-                                      <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value="avvent" />
-                                    </RadioGroupField>
-                                  </ArrowBox>
-                                </div>
-                              )
-                              }
-                            </ArrowBox>
-                          </div>
-                        )
-                        }
-                        { erOppfylt !== undefined && !erOppfylt
-                        && (
-                          <div className={styles.marginBottom20}>
-                            <ArrowBox alignOffset={90}>
-                              <RadioGroupField validate={[required]} name="videreBehandling" direction="vertical">
-                                <RadioOption label={<FormattedMessage id="Avregning.gjennomfør" />} value="gjennomfør" />
-                                <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value="avvent" />
-                              </RadioGroupField>
-                            </ArrowBox>
-                          </div>
-                        )
-                        }
+                      }
+                    </Row>
+                    <Row>
+                      <Column xs="6">
+                        <Hovedknapp
+                          mini
+                          htmlType="button"
+                          onClick={formProps.handleSubmit}
+                          disabled={formProps.invalid}
+                          readOnly={readOnly}
+                        >
+                          <FormattedMessage id="SubmitButton.ConfirmInformation" />
+                        </Hovedknapp>
                       </Column>
-                    )
-                    }
-                  </Row>
-                  <Row>
-                    <Column xs="6">
-                      <Hovedknapp
-                        mini
-                        htmlType="button"
-                        onClick={formProps.handleSubmit}
-                        disabled={formProps.invalid}
-                      >
-                        <FormattedMessage id="SubmitButton.ConfirmInformation" />
-                      </Hovedknapp>
-                    </Column>
-                  </Row>
-                </form>
-              </Column>
-            </Row>
+                    </Row>
+                  </form>
+                </Column>
+              </Row>
+            )
+            }
           </div>
           )
         }
@@ -299,7 +294,7 @@ const transformValues = (values, ap) => [{
 
 const mapStateToProps = (state, initialProps) => ({
   simuleringResultat: getSimuleringResultat(state),
-  erOppfylt: behandlingFormValueSelector(formName)(state, 'erOppfylt'),
+  erTilbakekrevingVilkårOppfylt: behandlingFormValueSelector(formName)(state, 'erTilbakekrevingVilkårOppfylt'),
   grunnerTilReduksjon: behandlingFormValueSelector(formName)(state, 'grunnerTilReduksjon'),
   onSubmit: values => initialProps.submitCallback(transformValues(values, initialProps.apCodes[0])),
 });

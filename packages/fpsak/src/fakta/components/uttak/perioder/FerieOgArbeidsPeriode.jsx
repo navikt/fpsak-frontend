@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
+import oppholdArsakType from 'kodeverk/oppholdArsakType';
 import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
 import FlexRow from 'sharedComponents/flexGrid/FlexRow';
 import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
@@ -37,6 +38,8 @@ export const FerieOgArbeidsPeriode = ({
   fieldId,
   arbeidsgiver,
   uttakPeriodeType,
+  skalViseResultat,
+  oppholdArsak,
   ...formProps
 }) => {
   const inlineStyle = {
@@ -48,6 +51,9 @@ export const FerieOgArbeidsPeriode = ({
   const withGradering = arbeidstidprosent !== null && arbeidstidprosent !== undefined && arbeidstidprosent > 0;
 
   return (
+    <div>
+      {skalViseResultat
+    && (
     <ElementWrapper>
       <FlexContainer>
         <FlexRow wrap>
@@ -77,11 +83,11 @@ export const FerieOgArbeidsPeriode = ({
               />
             </RadioGroupField>
             {resultat === uttakPeriodeVurdering.PERIODE_OK_ENDRET && !readOnly
-              && (
+            && (
               <div className={styles.endreSoknadsperiode}>
-                <EndreSoknadsperiode withGradering={withGradering} />
+                <EndreSoknadsperiode oppholdArsak={oppholdArsak} withGradering={withGradering} />
               </div>
-              )
+            )
             }
             <VerticalSpacer twentyPx />
             <div className={styles.textAreaStyle}>
@@ -89,7 +95,11 @@ export const FerieOgArbeidsPeriode = ({
                 name="begrunnelse"
                 label={{ id: 'UttakInfoPanel.BegrunnEndringene' }}
                 readOnly={readOnly}
-                validate={[required, minLength3, maxLength4000, hasValidText]}
+                validate={[required,
+                  minLength3,
+                  maxLength4000,
+                  hasValidText,
+                ]}
                 maxLength={4000}
               />
             </div>
@@ -118,6 +128,9 @@ export const FerieOgArbeidsPeriode = ({
         readOnly={readOnly}
       />
     </ElementWrapper>
+    )
+}
+    </div>
   );
 };
 
@@ -136,6 +149,8 @@ FerieOgArbeidsPeriode.propTypes = {
   tilDato: PropTypes.string.isRequired,
   uttakPeriodeType: PropTypes.shape().isRequired,
   arbeidsgiver: PropTypes.shape(),
+  skalViseResultat: PropTypes.bool.isRequired,
+  oppholdArsak: PropTypes.shape(),
 };
 
 FerieOgArbeidsPeriode.defaultProps = {
@@ -143,6 +158,7 @@ FerieOgArbeidsPeriode.defaultProps = {
   arbeidstidprosent: null,
   resultat: undefined,
   arbeidsgiver: {},
+  oppholdArsak: undefined,
 };
 
 const validateForm = ({ nyFom, nyTom }) => {
@@ -163,19 +179,28 @@ const mapToStateToProps = (state, ownProps) => {
   const initialResultat = behandlingFormValueSelector('UttakInfoPanel')(state, `${ownProps.fieldId}.resultat`);
   const begrunnelse = behandlingFormValueSelector('UttakInfoPanel')(state, `${ownProps.fieldId}.begrunnelse`);
   const saksebehandlersBegrunnelse = behandlingFormValueSelector('UttakInfoPanel')(state, `${ownProps.fieldId}.saksebehandlersBegrunnelse`);
+  const oppholdArsak = behandlingFormValueSelector('UttakInfoPanel')(state, `${ownProps.fieldId}.oppholdÅrsak`);
+  let initialResultatValue = initialResultat ? initialResultat.kode : undefined;
+  if (oppholdArsak && oppholdArsak.kode !== oppholdArsakType.UDEFINERT && !begrunnelse) {
+    initialResultatValue = undefined;
+  }
+  const skalViseResultat = !(ownProps.readOnly && oppholdArsak && oppholdArsak.kode !== oppholdArsakType.UDEFINERT && !begrunnelse);
   const { bekreftet } = ownProps;
 
   return {
     resultat,
     bekreftet,
+    skalViseResultat,
+    oppholdArsak,
     initialValues: {
       begrunnelse: begrunnelse || saksebehandlersBegrunnelse,
       id: ownProps.id,
-      resultat: initialResultat ? initialResultat.kode : undefined,
+      resultat: initialResultatValue,
       nyTom: ownProps.tilDato,
       nyFom: ownProps.fraDato,
       nyArbeidstidsprosent: ownProps.arbeidstidprosent,
       kontoType: ownProps.uttakPeriodeType.kode,
+      oppholdArsak: oppholdArsak ? oppholdArsak.kode : '',
     },
     updated: behandlingFormValueSelector('UttakInfoPanel')(state, `${ownProps.fieldId}.updated`),
     form: formName,

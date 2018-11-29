@@ -25,6 +25,7 @@ import InntektsgivendeArbeidPanel from './inntektsgivendeArbeid/InntektsgivendeA
 import AndreYtelserPanel, { ANDRE_YTELSER_FORM_NAME_PREFIX } from './andreYtelser/AndreYtelserPanel';
 import PermisjonPanel, { TIDSROM_PERMISJON_FORM_NAME_PREFIX } from './permisjon/PermisjonPanel';
 import FrilansPanel from './frilans/FrilansPanel';
+import BekreftelsePanel from './bekreftelse/BekreftelsePanel';
 
 const FORELDREPENGER_FORM_NAME = 'ForeldrepengerForm';
 const ANNEN_FORELDER_FORM_NAME_PREFIX = 'annenForelder';
@@ -54,6 +55,8 @@ export const ForeldrepengerForm = ({
   onSubmitUfullstendigsoknad,
   error,
   submitFailed,
+  annenForelderInformertRequired,
+  sokerHarAleneomsorg,
 }) => (
   <form onSubmit={handleSubmit}>
     <MottattDatoPanel readOnly={readOnly} />
@@ -78,17 +81,25 @@ export const ForeldrepengerForm = ({
         familieHendelseType={soknadData.getFamilieHendelseType()}
       />
     </FormSection>
+    <FormSection name={ANNEN_FORELDER_FORM_NAME_PREFIX}>
+      <AnnenForelderPanel
+        isForeldrepenger
+        soknadData={soknadData}
+        sokerHarAleneomsorg={sokerHarAleneomsorg}
+        namePrefix={ANNEN_FORELDER_FORM_NAME_PREFIX}
+        form={form}
+        readOnly={readOnly}
+      />
+    </FormSection>
     <PermisjonPanel
       soknadData={soknadData}
       form={form}
       readOnly={readOnly}
       error={error}
       submitFailed={submitFailed}
+      sokerHarAleneomsorg={sokerHarAleneomsorg}
     />
-
-    <FormSection name={ANNEN_FORELDER_FORM_NAME_PREFIX}>
-      <AnnenForelderPanel isForeldrepenger namePrefix={ANNEN_FORELDER_FORM_NAME_PREFIX} form={form} readOnly={readOnly} />
-    </FormSection>
+    <BekreftelsePanel annenForelderInformertRequired={annenForelderInformertRequired} readOnly={readOnly} />
     <TilleggsopplysningerPanel readOnly={readOnly} />
     <LagreSoknadForm readOnly={readOnly} onSubmitUfullstendigsoknad={onSubmitUfullstendigsoknad} form={form} submitting={submitting} />
   </form>
@@ -158,10 +169,22 @@ const mapStateToProps = (state, initialProps) => {
         .transformValues(formValueSelector(FORELDREPENGER_FORM_NAME)(state, ...registeredFieldNames)),
     }
     : {};
+  const sokerValue = valuesForRegisteredFieldsOnly.annenForelder;
+  const sokerHarAleneomsorg = sokerValue ? sokerValue.sokerHarAleneomsorg : undefined;
+
+  let annenForelderInformertRequired = true;
+  if (sokerValue && (sokerHarAleneomsorg || sokerValue.denAndreForelderenHarRettPaForeldrepenger === false)) {
+    annenForelderInformertRequired = false;
+  } else {
+    annenForelderInformertRequired = true;
+  }
+
   return {
     initialValues: buildInitialValues(initialProps.soknadData, andreYtelser),
     validate: getValidation(initialProps.soknadData, andreYtelser, sokerPersonnummer),
     valuesForRegisteredFieldsOnly,
+    annenForelderInformertRequired,
+    sokerHarAleneomsorg,
   };
 };
 

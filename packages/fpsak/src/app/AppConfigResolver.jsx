@@ -10,6 +10,7 @@ import featureToggle from 'kodeverk/featureToggle';
 
 const featureToggles = [
   { navn: featureToggle.SIMULER_OPPDRAG },
+  { navn: featureToggle.FORMKRAV },
   { navn: featureToggle.LØPENDE_MEDLESMKAP },
 ];
 

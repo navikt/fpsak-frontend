@@ -1,12 +1,12 @@
-import avslattIkonUrl from 'images/uttak_ikke_oppfylt.svg';
-import avslattValgtIkonUrl from 'images/uttak_valgt_ikke_oppfylt.svg';
-import avslattHoverIkonUrl from 'images/uttak_valgt_ikke_oppfylt_hover.svg';
-import behandleIkonUrl from 'images/uttak_aksjonspunkt.svg';
-import behandleValgtIkonUrl from 'images/uttak_valgt_aksjon.svg';
-import innvilgetIkonUrl from 'images/uttak.svg';
-import innvilgetValgtIkonUrl from 'images/uttak_valgt.svg';
-import ikkeVurdertIkonUrl from 'images/uttak_disable.svg';
-import innvilgetHoverIkonUrl from 'images/uttak_hover.svg';
+import avslattIkonUrl from '@fpsak-frontend/assets/images/uttak_ikke_oppfylt.svg';
+import avslattValgtIkonUrl from '@fpsak-frontend/assets/images/uttak_valgt_ikke_oppfylt.svg';
+import avslattHoverIkonUrl from '@fpsak-frontend/assets/images/uttak_valgt_ikke_oppfylt_hover.svg';
+import behandleIkonUrl from '@fpsak-frontend/assets/images/uttak_aksjonspunkt.svg';
+import behandleValgtIkonUrl from '@fpsak-frontend/assets/images/uttak_valgt_aksjon.svg';
+import innvilgetIkonUrl from '@fpsak-frontend/assets/images/uttak.svg';
+import innvilgetValgtIkonUrl from '@fpsak-frontend/assets/images/uttak_valgt.svg';
+import ikkeVurdertIkonUrl from '@fpsak-frontend/assets/images/uttak_disable.svg';
+import innvilgetHoverIkonUrl from '@fpsak-frontend/assets/images/uttak_hover.svg';
 
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 

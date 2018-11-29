@@ -17,7 +17,7 @@ import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import Image from 'sharedComponents/Image';
-import endretUrl from 'images/endret_felt.svg';
+import endretUrl from '@fpsak-frontend/assets/images/endret_felt.svg';
 import periodeAarsak from 'kodeverk/periodeAarsak';
 import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
 import NaturalytelsePanel from './NaturalytelsePanel';

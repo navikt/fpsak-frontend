@@ -5,7 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 import Image from 'sharedComponents/Image';
-import checkImage from 'images/check.svg';
+import checkImage from '@fpsak-frontend/assets/images/check.svg';
 
 import styles from './vilkarResultPanel.less';
 

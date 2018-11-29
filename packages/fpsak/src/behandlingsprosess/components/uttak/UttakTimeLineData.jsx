@@ -5,12 +5,12 @@ import { Element } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { calcDaysWithoutWeekends } from 'utils/dateUtils';
 import Image from 'sharedComponents/Image';
-import splitPeriodImageHoverUrl from 'images/splitt_hover.svg';
-import splitPeriodImageUrl from 'images/splitt.svg';
-import arrowLeftImageUrl from 'images/arrow_left.svg';
-import arrowLeftFilledImageUrl from 'images/arrow_left_filled.svg';
-import arrowRightImageUrl from 'images/arrow_right.svg';
-import arrowRightFilledImageUrl from 'images/arrow_right_filled.svg';
+import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
+import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
+import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
+import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
+import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
+import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
 import { uttaksresultatAktivitetPropType } from 'behandling/proptypes/uttaksresultatPropType';
 
 import styles from './uttakTimeLineData.less';

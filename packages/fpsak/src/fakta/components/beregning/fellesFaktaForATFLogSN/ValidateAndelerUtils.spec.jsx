@@ -1,10 +1,95 @@
 import { expect } from 'chai';
 import {
-  validateUlikeAndeler, ulikeAndelerErrorMessage, validateSumFastsattBelop, skalVereLikFordelingMessage,
+  validateUlikeAndeler, ulikeAndelerErrorMessage, validateSumFastsattBelop, skalVereLikFordelingMessage, compareAndeler,
 } from './ValidateAndelerUtils';
 
 
 describe('<ValidateAndelerUtils>', () => {
+  it('skal returnere 0 for lik andelsinfo og lik inntektskategori', () => {
+    const andeler = [{
+      andelsinfo: 'Andelsinfo1', inntektskategori: 'Inntektskategori1',
+    },
+    {
+      andelsinfo: 'Andelsinfo1', inntektskategori: 'Inntektskategori1',
+    },
+    ];
+    const compare = compareAndeler(andeler[0], andeler[1]);
+    expect(compare).to.equal(0);
+  });
+
+  it('skal returnere -1 for lik andelsinfo og ulik inntektskategori', () => {
+    const andeler = [{
+      andelsinfo: 'Andelsinfo1', inntektskategori: 'Inntektskategori1',
+    },
+    {
+      andelsinfo: 'Andelsinfo1', inntektskategori: 'Inntektskategori2',
+    },
+    ];
+    const compare = compareAndeler(andeler[0], andeler[1]);
+    expect(compare).to.equal(-1);
+  });
+
+  it('skal returnere 1 for lik andelsinfo og ulik inntektskategori motsatt rekkefølge', () => {
+    const andeler = [{
+      andelsinfo: 'Andelsinfo1', inntektskategori: 'Inntektskategori1',
+    },
+    {
+      andelsinfo: 'Andelsinfo1', inntektskategori: 'Inntektskategori2',
+    },
+    ];
+    const compare = compareAndeler(andeler[1], andeler[0]);
+    expect(compare).to.equal(1);
+  });
+
+  it('skal returnere -1 for ulik andelsinfo og lik inntektskategori', () => {
+    const andeler = [{
+      andelsinfo: 'Andelsinfo1', inntektskategori: 'Inntektskategori1',
+    },
+    {
+      andelsinfo: 'Andelsinfo2', inntektskategori: 'Inntektskategori1',
+    },
+    ];
+    const compare = compareAndeler(andeler[0], andeler[1]);
+    expect(compare).to.equal(-1);
+  });
+
+  it('skal returnere 1 for ulik andelsinfo og lik inntektskategori motsatt rekkefølge', () => {
+    const andeler = [{
+      andelsinfo: 'Andelsinfo1', inntektskategori: 'Inntektskategori1',
+    },
+    {
+      andelsinfo: 'Andelsinfo2', inntektskategori: 'Inntektskategori1',
+    },
+    ];
+    const compare = compareAndeler(andeler[1], andeler[0]);
+    expect(compare).to.equal(1);
+  });
+
+  it('skal returnere -1 for ulik andelsinfo og ulik inntektskategori motsatt rekkefølge', () => {
+    const andeler = [{
+      andelsinfo: 'Andelsinfo1', inntektskategori: 'Inntektskategori1',
+    },
+    {
+      andelsinfo: 'Andelsinfo2', inntektskategori: 'Inntektskategori2',
+    },
+    ];
+    const compare = compareAndeler(andeler[0], andeler[1]);
+    expect(compare).to.equal(-1);
+  });
+
+  it('skal returnere 1 for ulik andelsinfo og ulik inntektskategori motsatt rekkefølge', () => {
+    const andeler = [{
+      andelsinfo: 'Andelsinfo1', inntektskategori: 'Inntektskategori1',
+    },
+    {
+      andelsinfo: 'Andelsinfo2', inntektskategori: 'Inntektskategori2',
+    },
+    ];
+    const compare = compareAndeler(andeler[1], andeler[0]);
+    expect(compare).to.equal(1);
+  });
+
+
   it('skal ikkje gi error om det er ingen andeler lagt til av saksbehandler og ingen har lik inntektskategori og andelsnr', () => {
     const andeler = [{
       andelsnr: 1, andel: 'Virksomheten 1', nyAndel: false, lagtTilAvSaksbehandler: false, aktivitetStatus: 'ARBEIDSTAKER', inntektskategori: 'ARBEIDSTAKER',

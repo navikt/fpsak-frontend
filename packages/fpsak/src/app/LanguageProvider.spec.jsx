@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
 
-import { mountWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { mountWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
 
 import { LanguageProvider } from './LanguageProvider';
 

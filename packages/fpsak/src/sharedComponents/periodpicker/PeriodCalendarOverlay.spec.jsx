@@ -4,7 +4,7 @@ import DayPicker from 'react-day-picker';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
 import PeriodCalendarOverlay from './PeriodCalendarOverlay';
 
 describe('<PeriodCalendarOverlay>', () => {

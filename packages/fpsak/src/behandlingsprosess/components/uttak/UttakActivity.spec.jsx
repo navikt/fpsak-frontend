@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import sinon from 'sinon';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import { UttakActivity, initialValue } from './UttakActivity';
 
 describe('<UttakActivity>', () => {
@@ -29,6 +29,9 @@ describe('<UttakActivity>', () => {
     periodeType: {
       kode: '-',
     },
+    oppholdÅrsak: {
+      kode: '-',
+    },
     aktiviteter: [{
       trekkdager: 28,
       utbetalingsgrad: 100,
@@ -46,6 +49,7 @@ describe('<UttakActivity>', () => {
       selectedItemData={selectedItem}
       readOnly={false}
       periodeTyper={[]}
+      oppholdArsakTyper={[]}
       cancelSelectedActivity={sinon.spy()}
       avslagAarsakKoder={[{ kode: '4011', navn: 'mitt navn', kodeverk: 'MITT_KODEVERK' }]}
       innvilgelseAarsakKoder={[]}
@@ -77,6 +81,7 @@ describe('<UttakActivity>', () => {
       selectedItemData={selectedItem}
       readOnly={false}
       periodeTyper={[]}
+      oppholdArsakTyper={[]}
       cancelSelectedActivity={sinon.spy()}
       avslagAarsakKoder={[{ kode: '4011', navn: 'mitt navn', kodeverk: 'MITT_KODEVERK' }]}
       innvilgelseAarsakKoder={[]}
@@ -101,6 +106,7 @@ describe('<UttakActivity>', () => {
       readOnly={false}
       selectedItemData={selectedItem}
       periodeTyper={[]}
+      oppholdArsakTyper={[]}
       cancelSelectedActivity={sinon.spy()}
       avslagAarsakKoder={[{ kode: '4011', navn: 'mitt navn', kodeverk: 'MITT_KODEVERK' }]}
       innvilgelseAarsakKoder={[]}
@@ -131,6 +137,7 @@ describe('<UttakActivity>', () => {
       readOnly={false}
       selectedItemData={selectedItem}
       periodeTyper={[]}
+      oppholdArsakTyper={[]}
       cancelSelectedActivity={sinon.spy()}
       avslagAarsakKoder={[]}
       innvilgelseAarsakKoder={[{ kode: '4011', navn: 'mitt navn', kodeverk: 'MITT_KODEVERK' }]}
@@ -163,6 +170,7 @@ describe('<UttakActivity>', () => {
       selectedItemData={selectedItem}
       readOnly
       periodeTyper={[]}
+      oppholdArsakTyper={[]}
       cancelSelectedActivity={sinon.spy()}
       avslagAarsakKoder={[{ kode: '4011', navn: 'mitt navn', kodeverk: 'MITT_KODEVERK' }]}
       innvilgelseAarsakKoder={[]}
