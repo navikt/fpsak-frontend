@@ -17,7 +17,7 @@ import {
 import Image from 'sharedComponents/Image';
 import { getKodeverk, getKodeverkReceived } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import innvilgetImageUrl from 'images/innvilget_valgt.svg';
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 
 import styles from './settBehandlingPaVentModal.less';
 

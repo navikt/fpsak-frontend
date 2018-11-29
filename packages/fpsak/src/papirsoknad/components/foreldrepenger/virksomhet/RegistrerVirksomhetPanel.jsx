@@ -13,8 +13,8 @@ import Image from 'sharedComponents/Image';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import NavFieldGroup from 'form/fields/NavFieldGroup';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
-import addCircleIcon from 'images/add-circle.svg';
-import removeIcon from 'images/remove.svg';
+import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
+import removeIcon from '@fpsak-frontend/assets/images/remove.svg';
 import RegistrerVirksomhetModalForm from './RegistrerVirksomhetModalForm';
 
 import styles from './registrerVirksomhetPanel.less';

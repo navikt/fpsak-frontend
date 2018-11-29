@@ -5,7 +5,7 @@ import { IntlProvider } from 'react-intl';
 import { reduxForm, reducer as formReducer } from 'redux-form';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
-import { messages } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { messages } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
 import RadioGroupField from './RadioGroupField';
 import RadioOption from './RadioOption';
 

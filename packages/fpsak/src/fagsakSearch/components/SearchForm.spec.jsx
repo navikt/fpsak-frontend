@@ -1,6 +1,6 @@
 import React from 'react';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import { expect } from 'chai';
 import sinon from 'sinon';
 

@@ -21,6 +21,9 @@ describe('<UttakPeriodeType>', () => {
     identifikator: '1234567890',
     navn: 'Statoil',
   };
+  const oppholdArsak = {
+    kode: '-',
+  };
 
   it('skal vise redigere og slett periode hvis manuellOverstyring er true og readOnly er false', () => {
     const wrapper = shallow(<UttakPeriodeType
@@ -39,6 +42,7 @@ describe('<UttakPeriodeType>', () => {
       erArbeidstaker={false}
       samtidigUttak={samtidigUttak}
       flerbarnsdager={flerbarnsdager}
+      oppholdArsak={oppholdArsak}
       isFromSøknad
     />);
 
@@ -62,6 +66,7 @@ describe('<UttakPeriodeType>', () => {
       isNyPeriodeFormOpen={false}
       samtidigUttak={samtidigUttak}
       flerbarnsdager={flerbarnsdager}
+      oppholdArsak={oppholdArsak}
       erArbeidstaker
       isFromSøknad
     />);
@@ -88,6 +93,7 @@ describe('<UttakPeriodeType>', () => {
       samtidigUttak={samtidigUttak}
       flerbarnsdager={flerbarnsdager}
       arbeidstidprosent={arbeidstidprosent}
+      oppholdArsak={oppholdArsak}
       isFromSøknad
     />);
 
@@ -113,6 +119,7 @@ describe('<UttakPeriodeType>', () => {
       erArbeidstaker
       arbeidstidprosent={arbeidstidprosent}
       arbeidsgiver={arbeidsgiver}
+      oppholdArsak={oppholdArsak}
       isFromSøknad
     />);
 

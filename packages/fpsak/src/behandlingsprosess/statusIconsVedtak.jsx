@@ -1,10 +1,10 @@
-import innvilgetHoverIkonUrl from 'images/vedtak_ikon_ok.svg';
-import avslattIkonUrl from 'images/vedtak_ikon_ikke_ok.svg';
-import avslattValgtIkonUrl from 'images/vedtak_ikon_ikke_ok_valgt.svg';
-import behandleIkonUrl from 'images/vedtak_ikon.svg';
-import behandleValgtIkonUrl from 'images/vedtak_ikon_valgt.svg';
-import innvilgetValgtIkonUrl from 'images/vedtak_ikon_ok_valgt.svg';
-import ikkeVurdertIkonUrl from 'images/vedtak_ikon_disable.svg';
+import innvilgetHoverIkonUrl from '@fpsak-frontend/assets/images/vedtak_ikon_ok.svg';
+import avslattIkonUrl from '@fpsak-frontend/assets/images/vedtak_ikon_ikke_ok.svg';
+import avslattValgtIkonUrl from '@fpsak-frontend/assets/images/vedtak_ikon_ikke_ok_valgt.svg';
+import behandleIkonUrl from '@fpsak-frontend/assets/images/vedtak_ikon.svg';
+import behandleValgtIkonUrl from '@fpsak-frontend/assets/images/vedtak_ikon_valgt.svg';
+import innvilgetValgtIkonUrl from '@fpsak-frontend/assets/images/vedtak_ikon_ok_valgt.svg';
+import ikkeVurdertIkonUrl from '@fpsak-frontend/assets/images/vedtak_ikon_disable.svg';
 
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 

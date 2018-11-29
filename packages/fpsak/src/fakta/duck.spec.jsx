@@ -2,7 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
-import { withoutRestActions } from '@fpsak-frontend/assets/testHelpers/data-test-helper';
+import { withoutRestActions } from '@fpsak-frontend/assets/testHelpers//data-test-helper';
 
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
 import fpsakApi from 'data/fpsakApi';

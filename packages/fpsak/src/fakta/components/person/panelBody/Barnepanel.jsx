@@ -8,8 +8,8 @@ import { FormattedMessage } from 'react-intl';
 
 import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
 import Image from 'sharedComponents/Image';
-import urlMann from 'images/barn_gutt.svg';
-import urlKvinne from 'images/barn_jente.svg';
+import urlMann from '@fpsak-frontend/assets/images/barn_gutt.svg';
+import urlKvinne from '@fpsak-frontend/assets/images/barn_jente.svg';
 import opplysningAdresseType from 'kodeverk/opplysningAdresseType';
 import getAddresses from 'utils/personUtils';
 

@@ -83,6 +83,30 @@ export const calcDaysAndWeeks = (fraDatoPeriode, tilDatoPeriode) => {
   return checkDays(weeks, days);
 };
 
+export const calcDays = (fraDatoPeriode, tilDatoPeriode) => {
+  if (tilDatoPeriode === TIDENES_ENDE) {
+    return checkDays(undefined, undefined);
+  }
+
+  const fraDato = moment(fraDatoPeriode, ISO_DATE_FORMAT);
+  const tilDato = moment(tilDatoPeriode, ISO_DATE_FORMAT);
+  let count = tilDato.diff(fraDato, 'days');
+  let date = moment(fraDatoPeriode, ISO_DATE_FORMAT);
+  let numOfDays = date.isoWeekday() !== 6 && date.isoWeekday() !== 7 ? 1 : 0;
+
+  while (count > 0) {
+    date = date.add(1, 'days');
+
+    if (date.isoWeekday() !== 6 && date.isoWeekday() !== 7) {
+      numOfDays += 1;
+    }
+
+    count -= 1;
+  }
+
+  return numOfDays;
+};
+
 export const calcDaysWithoutWeekends = (fraDatoPeriode, tilDatoPeriode) => {
   if (tilDatoPeriode === TIDENES_ENDE) {
     return checkDays(undefined, undefined);

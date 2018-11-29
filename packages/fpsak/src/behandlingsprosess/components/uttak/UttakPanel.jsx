@@ -327,6 +327,10 @@ export const transformValues = (values, apCodes, aksjonspunkter) => {
   const transformedResultat = values.uttaksresultatActivity.map((perioder) => {
     const { tilknyttetStortinget, ...uta } = perioder; // NOSONAR destruct er bedre enn delete, immutable
     const { ...transformActivity } = uta;
+    if (uta.oppholdÅrsak.kode !== '-') {
+      uta.aktiviteter = [];
+    }
+
     const transformAktiviteter = uta.aktiviteter.map((a) => {
       const { days, weeks, ...transformAktivitet } = a;
       if (typeof days !== 'undefined' && typeof weeks !== 'undefined') {

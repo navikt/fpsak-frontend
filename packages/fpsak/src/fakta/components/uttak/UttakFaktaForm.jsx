@@ -227,7 +227,7 @@ export class UttakFaktaForm extends Component {
     } = this.props;
     const { inntektsmeldingInfo } = this.state;
     const {
-      resultat, dokumentertePerioder, id, kontoType, nyFom, nyTom, nyArbeidstidsprosent,
+      resultat, dokumentertePerioder, id, kontoType, nyFom, nyTom, nyArbeidstidsprosent, oppholdArsak,
     } = values;
     const updatedPeriode = perioder.find(p => p.id === id);
     const updatedPeriodeIndex = perioder.findIndex(p => p.id === id);
@@ -260,6 +260,14 @@ export class UttakFaktaForm extends Component {
         kode: kontoType,
         navn: uttakPeriodeNavn[kontoType],
         kodeverk: 'UTTAK_PERIODE_TYPE',
+      };
+    }
+
+    if (oppholdArsak) {
+      newPeriodeObject.oppholdÅrsak = {
+        kode: oppholdArsak,
+        navn: updatedPeriode.oppholdÅrsak.navn,
+        kodeverk: updatedPeriode.oppholdÅrsak.kodeverk,
       };
     }
 

@@ -16,6 +16,7 @@ import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 export const PermisjonRettigheterPanel = ({
   intl,
   readOnly,
+  sokerHarAleneomsorg,
 }) => (
   <ElementWrapper>
     <Undertekst>
@@ -32,14 +33,19 @@ export const PermisjonRettigheterPanel = ({
         value={false}
       />
     </RadioGroupField>
-    <Undertekst>
-      {intl.formatMessage({ id: 'Registrering.Permisjon.HarRettPaForeldrepenger' })}
-    </Undertekst>
-    <VerticalSpacer eightPx />
-    <RadioGroupField name="denAndreForelderenHarRettPaForeldrepenger" validate={[required]} readOnly={readOnly}>
-      <RadioOption label={intl.formatMessage({ id: 'Registrering.Permisjon.HarRettPaForeldrepenger.Yes' })} value />
-      <RadioOption label={intl.formatMessage({ id: 'Registrering.Permisjon.HarRettPaForeldrepenger.No' })} value={false} />
-    </RadioGroupField>
+    {sokerHarAleneomsorg === false && (
+      <div>
+        <Undertekst>
+          {intl.formatMessage({ id: 'Registrering.Permisjon.HarRettPaForeldrepenger' })}
+        </Undertekst>
+        <VerticalSpacer eightPx />
+        <RadioGroupField name="denAndreForelderenHarRettPaForeldrepenger" validate={[required]} readOnly={readOnly}>
+          <RadioOption label={intl.formatMessage({ id: 'Registrering.Permisjon.HarRettPaForeldrepenger.Yes' })} value />
+          <RadioOption label={intl.formatMessage({ id: 'Registrering.Permisjon.HarRettPaForeldrepenger.No' })} value={false} />
+        </RadioGroupField>
+      </div>
+    )
+    }
   </ElementWrapper>
 );
 
@@ -47,6 +53,11 @@ export const PermisjonRettigheterPanel = ({
 PermisjonRettigheterPanel.propTypes = {
   intl: intlShape.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  sokerHarAleneomsorg: PropTypes.bool,
+};
+
+PermisjonRettigheterPanel.defaultProps = {
+  sokerHarAleneomsorg: undefined,
 };
 
 export default injectIntl(PermisjonRettigheterPanel);

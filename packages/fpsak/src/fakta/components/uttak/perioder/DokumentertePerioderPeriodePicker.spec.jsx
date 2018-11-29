@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
 import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
-import { MockFields } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { MockFields } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import { PeriodpickerField } from 'form/Fields';
 import DokumentertePerioderPeriodePicker from './DokumentertePerioderPeriodePicker';
 

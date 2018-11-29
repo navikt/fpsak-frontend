@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
 import klageVurdering from 'kodeverk/klageVurdering';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import behandlingStatus from 'kodeverk/behandlingStatus';
@@ -42,7 +42,7 @@ describe('<VedtakAvslagKlagePanel>', () => {
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(3);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat av klage');
     expect(undertekstFields.at(1).childAt(0).text()).to.eql('Årsak til avslag');
     expect(undertekstFields.last().childAt(0).text()).to.eql('Begrunnelse');
 
@@ -75,9 +75,9 @@ describe('<VedtakAvslagKlagePanel>', () => {
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(3);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat av klage');
     expect(undertekstFields.at(1).childAt(0).text()).to.eql('Begrunnelse');
-    expect(undertekstFields.last().childAt(0).text()).to.eql('Fritekst i brev til søker');
+    expect(undertekstFields.last().childAt(0).text()).to.eql('Fritekst til brev');
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(2);
@@ -109,9 +109,9 @@ describe('<VedtakAvslagKlagePanel>', () => {
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(3);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat av klage');
     expect(undertekstFields.at(1).childAt(0).text()).to.eql('Begrunnelse');
-    expect(undertekstFields.last().childAt(0).text()).to.eql('Fritekst i brev til søker');
+    expect(undertekstFields.last().childAt(0).text()).to.eql('Fritekst til brev');
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(2);

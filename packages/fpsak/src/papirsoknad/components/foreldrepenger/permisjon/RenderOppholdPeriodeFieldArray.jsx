@@ -7,6 +7,7 @@ import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
 import {
   DatepickerField, SelectField,
 } from 'form/Fields';
+import oppholdArsakType from 'kodeverk/oppholdArsakType';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 
 import styles from './renderOppholdPeriodeFieldArray.less';
@@ -17,7 +18,15 @@ const defaultOppholdPeriode = {
   årsak: '',
 };
 
+
+const gyldigeÅrsaker = [
+  oppholdArsakType.UTTAK_MØDREKVOTE_ANNEN_FORELDER,
+  oppholdArsakType.UTTAK_FEDREKVOTE_ANNEN_FORELDER,
+  oppholdArsakType.UTTAK_FELLESP_ANNEN_FORELDER,
+  oppholdArsakType.UTTAK_FORELDREPENGER_ANNEN_FORELDER];
+
 const mapTyper = typer => typer
+  .filter(({ kode }) => gyldigeÅrsaker.includes(kode))
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
 /**

@@ -9,7 +9,7 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import Image from 'sharedComponents/Image';
-import innvilgetImageUrl from 'images/innvilget_valgt.svg';
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import Modal from 'sharedComponents/Modal';
 import { CheckboxField, SelectField } from 'form/Fields';
 import { required } from 'utils/validation/validators';

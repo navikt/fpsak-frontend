@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
 import { expect } from 'chai';
 
 import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
@@ -8,7 +8,7 @@ import SelectField from 'form/fields/SelectField';
 import InputField from 'form/fields/InputField';
 import CheckboxField from 'form/fields/CheckboxField';
 import DecimalField from 'form/fields/DecimalField';
-import { MockFields, metaMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { MockFields, metaMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import { RenderGraderingPeriodeFieldArray } from './RenderGraderingPeriodeFieldArray';
 
 const graderingKvoter = [{ navn: 'Mødrekvote', kode: 'MODREKVOTE' }];

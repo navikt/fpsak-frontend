@@ -5,7 +5,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
 
 import Image from 'sharedComponents/Image';
-import advarselIkonUrl from 'images/advarsel.svg';
+import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 import { isObject } from 'utils/objectUtils';
 
 import styles from './aksjonspunktHelpText.less';

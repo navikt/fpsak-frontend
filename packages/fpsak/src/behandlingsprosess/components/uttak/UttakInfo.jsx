@@ -5,17 +5,20 @@ import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
 import FlexRow from 'sharedComponents/flexGrid/FlexRow';
 import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
 import {
-  CheckboxField, DecimalField,
+  CheckboxField, DecimalField, SelectField,
 } from 'form/Fields';
 import {
   required,
   hasValidDecimal,
   maxValue,
+  notDash,
 } from 'utils/validation/validators';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import periodeResultatType from 'kodeverk/periodeResultatType';
 import uttakArbeidTypeKodeverk from 'kodeverk/uttakArbeidType';
 import uttakArbeidTypeTekstCodes from 'kodeverk/uttakArbeidTypeCodes';
+import oppholdArsakType, { oppholdArsakKontoNavn } from 'kodeverk/oppholdArsakType';
 import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
 import { calcDaysAndWeeks } from 'utils/dateUtils';
 import { Element, Undertekst } from 'nav-frontend-typografi';
@@ -33,7 +36,8 @@ const periodeStatusClassName = (periode) => {
   if (periode.erOppfylt === false) {
     return styles.redDetailsPeriod;
   }
-  if (periode.erOppfylt || (periode.periodeResultatType.kode === periodeResultatType.INNVILGET && !periode.tilknyttetStortinget)) {
+  if (periode.erOppfylt
+    || (periode.periodeResultatType.kode === periodeResultatType.INNVILGET && !periode.tilknyttetStortinget)) {
     return styles.greenDetailsPeriod;
   }
   if (periode.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING || periode.tilknyttetStortinget) {
@@ -99,6 +103,17 @@ const stonadskonto = (selectedItem, kontoIkkeSatt) => {
   return returnText;
 };
 
+const gyldigeÅrsaker = [
+  oppholdArsakType.UTTAK_MØDREKVOTE_ANNEN_FORELDER,
+  oppholdArsakType.UTTAK_FEDREKVOTE_ANNEN_FORELDER,
+  oppholdArsakType.UTTAK_FELLESP_ANNEN_FORELDER,
+  oppholdArsakType.UTTAK_FORELDREPENGER_ANNEN_FORELDER];
+
+const mapPeriodeTyper = typer => typer
+  .filter(({ kode }) => gyldigeÅrsaker.includes(kode))
+  .map(({ kode }) => <option value={kode} key={kode}>{oppholdArsakKontoNavn[kode]}</option>);
+
+
 export const UttakInfo = ({
   selectedItemData,
   kontoIkkeSatt,
@@ -107,9 +122,12 @@ export const UttakInfo = ({
   graderingInnvilget,
   erSamtidigUttak,
   harSoktOmFlerbarnsdager,
+  oppholdArsakTyper,
 }) => (
   <Column xs="12">
     <div className={periodeStatusClassName(selectedItemData)}>
+      {selectedItemData.oppholdÅrsak.kode === '-'
+      && (
       <Row>
         <Column xs="4">
           <Row>
@@ -135,12 +153,12 @@ export const UttakInfo = ({
         <Column xs="3">
           {(harSoktOmFlerbarnsdager)
           && (
-          <CheckboxField
-            key="flerbarnsdager"
-            name="flerbarnsdager"
-            label={{ id: 'UttakActivity.Flerbarnsdager' }}
-            disabled={readOnly}
-          />
+            <CheckboxField
+              key="flerbarnsdager"
+              name="flerbarnsdager"
+              label={{ id: 'UttakActivity.Flerbarnsdager' }}
+              disabled={readOnly}
+            />
           )
           }
           <CheckboxField
@@ -177,6 +195,8 @@ export const UttakInfo = ({
           }
         </Column>
       </Row>
+      )
+      }
       <Row>
         <Column xs="4">
           <Row>
@@ -194,6 +214,8 @@ export const UttakInfo = ({
               </Element>
             </Column>
           </Row>
+          {selectedItemData.oppholdÅrsak.kode === '-'
+          && (
           <Row>
             <Column xs="12">
               <FormattedMessage
@@ -205,6 +227,7 @@ export const UttakInfo = ({
               />
             </Column>
           </Row>
+          )}
         </Column>
         <Column xs="6">
           <Row>
@@ -214,6 +237,16 @@ export const UttakInfo = ({
                 <Undertekst>
                   <FormattedMessage id="UttakActivity.Gradering" />
                 </Undertekst>
+              )}
+              {selectedItemData.oppholdÅrsak.kode !== '-'
+              && (
+                <FormattedMessage
+                  id={calcDaysAndWeeks(moment(selectedItemData.fom.toString()), moment(selectedItemData.tom.toString())).id}
+                  values={{
+                    weeks: calcDaysAndWeeks(moment(selectedItemData.fom.toString()), moment(selectedItemData.tom.toString())).weeks,
+                    days: calcDaysAndWeeks(moment(selectedItemData.fom.toString()), moment(selectedItemData.tom.toString())).days,
+                  }}
+                />
               )}
             </Column>
           </Row>
@@ -237,11 +270,36 @@ export const UttakInfo = ({
           )}
         </Column>
       </Row>
+      {selectedItemData.oppholdÅrsak.kode !== '-'
+      && (
+      <div>
+        <Row>
+          <Column xs="12">
+            <FormattedMessage id="UttakInfo.Opphold.AnnenForelder" />
+          </Column>
+        </Row>
+        <Row>
+          <Column xs="12">
+            <SelectField
+              name="oppholdArsak"
+              selectValues={mapPeriodeTyper(oppholdArsakTyper)}
+              label=""
+              bredde="m"
+              readOnly={readOnly}
+              value={selectedItemData.oppholdÅrsak.kode}
+              validate={[required, notDash]}
+            />
+          </Column>
+        </Row>
+      </div>
+      )
+      }
     </div>
   </Column>
 );
 
 UttakInfo.propTypes = {
+  oppholdArsakTyper: kodeverkPropType.isRequired,
   selectedItemData: PropTypes.PropTypes.shape().isRequired,
   kontoIkkeSatt: PropTypes.bool,
   isApOpen: PropTypes.bool,

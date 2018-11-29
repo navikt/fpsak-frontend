@@ -13,7 +13,7 @@ import Image from 'sharedComponents/Image';
 import Table from 'sharedComponents/Table';
 import TableRow from 'sharedComponents/TableRow';
 import TableColumn from 'sharedComponents/TableColumn';
-import addCircleIcon from 'images/add-circle.svg';
+import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';

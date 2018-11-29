@@ -6,8 +6,8 @@ import { NavLink } from 'react-router-dom';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import Image from 'sharedComponents/Image';
-import checkImg from 'images/check.svg';//
-import avslattImg from 'images/avslaatt.svg';
+import checkImg from '@fpsak-frontend/assets/images/check.svg';//
+import avslattImg from '@fpsak-frontend/assets/images/avslaatt.svg';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
 import { getAksjonspunktTextSelector } from './ApprovalTextUtils';

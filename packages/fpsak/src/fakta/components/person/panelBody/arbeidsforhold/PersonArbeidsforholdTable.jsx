@@ -12,7 +12,7 @@ import Table from 'sharedComponents/Table';
 import TableRow from 'sharedComponents/TableRow';
 import TableColumn from 'sharedComponents/TableColumn';
 
-import erIBrukImageUrl from 'images/stjerne.svg';
+import erIBrukImageUrl from '@fpsak-frontend/assets/images/stjerne.svg';
 
 const headerTextCodes = [
   'PersonArbeidsforholdTable.Arbeidsforhold',

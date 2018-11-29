@@ -10,7 +10,6 @@ import {
   getBehandlingGjelderBesteberegning,
   getBeregningsgrunnlagPerioder,
   getGjeldendeBeregningAksjonspunkt,
-  getTilstøtendeYtelse,
 } from 'behandling/behandlingSelectors';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm } from 'behandling/behandlingForm';
@@ -76,7 +75,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
   relevanteStatuser,
   allePerioder,
   readOnly,
-  tilstøtendeYtelseType,
   gjelderBesteberegning) => (
     <div>
       { relevanteStatuser.isSelvstendigNaeringsdrivende
@@ -115,7 +113,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
         <YtelserFraInfotrygd
           alleAndeler={alleAndelerIForstePeriode}
           isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
-          tilstøtendeYtelseType={tilstøtendeYtelseType}
           bruttoPrAar={allePerioder[0].bruttoPrAar}
         />
         <VerticalSpacer twentyPx />
@@ -188,7 +185,6 @@ export const BeregningsgrunnlagForm = ({
   gjeldendeAksjonspunkt,
   allePerioder,
   alleAndelerIForstePeriode,
-  tilstøtendeYtelseType,
   readOnlySubmitButton,
   gjelderBesteberegning,
   ...formProps
@@ -217,7 +213,6 @@ export const BeregningsgrunnlagForm = ({
             relevanteStatuser,
             allePerioder,
             readOnly,
-            tilstøtendeYtelseType,
             gjelderBesteberegning,
           )
         }
@@ -250,7 +245,6 @@ BeregningsgrunnlagForm.propTypes = {
   gjeldendeAksjonspunkt: aksjonspunktPropType,
   relevanteStatuser: PropTypes.shape().isRequired,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
-  tilstøtendeYtelseType: PropTypes.string,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   gjelderBesteberegning: PropTypes.bool.isRequired,
 };
@@ -258,7 +252,6 @@ BeregningsgrunnlagForm.propTypes = {
 BeregningsgrunnlagForm.defaultProps = {
   gjeldendeAksjonspunkt: undefined,
   allePerioder: undefined,
-  tilstøtendeYtelseType: undefined,
 };
 
 const buildInitialValues = createSelector(
@@ -310,8 +303,6 @@ const transformValues = (values, relevanteStatuser, alleAndelerIForstePeriode, g
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const tilstøtendeYtelse = getTilstøtendeYtelse(state);
-  const ytelseType = tilstøtendeYtelse ? tilstøtendeYtelse.ytelseType.kode : undefined;
   const { gjeldendeAksjonspunkt } = ownProps;
   const alleAndelerIForstePeriode = getAlleAndelerIForstePeriode(state);
   const isAksjonspunktClosed = gjeldendeAksjonspunkt ? !isAksjonspunktOpen(gjeldendeAksjonspunkt.status.kode) : true;
@@ -322,7 +313,6 @@ const mapStateToProps = (state, ownProps) => {
     alleAndelerIForstePeriode,
     isAksjonspunktClosed,
     allePerioder,
-    tilstøtendeYtelseType: ytelseType,
     onSubmit: values => ownProps.submitCallback(transformValues(
       values, ownProps.relevanteStatuser,
       alleAndelerIForstePeriode, gjeldendeAksjonspunkt, allePerioder,

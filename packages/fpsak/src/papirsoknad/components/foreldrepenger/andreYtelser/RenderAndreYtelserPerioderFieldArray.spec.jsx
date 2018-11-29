@@ -6,7 +6,7 @@ import moment from 'moment';
 import { ISO_DATE_FORMAT } from 'utils/formats';
 import { DatepickerField } from 'form/Fields';
 import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
-import { metaMock, MockFields } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { metaMock, MockFields } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import { invalidDateMessage } from 'utils/validation/messages';
 import RenderAndreYtelserPerioderFieldArray from './RenderAndreYtelserPerioderFieldArray';
 

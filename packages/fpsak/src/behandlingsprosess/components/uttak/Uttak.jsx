@@ -9,6 +9,7 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { FlexContainer, FlexRow, FlexColumn } from 'sharedComponents/flexGrid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import { calcDays } from 'utils/dateUtils';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { CheckboxField } from 'form/Fields';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
@@ -24,8 +25,10 @@ import {
 } from 'behandling/behandlingSelectors';
 import { getRettigheter } from 'navAnsatt/duck';
 import { getSelectedBehandlingId } from 'behandling/duck';
+import oppholdArsakType, { oppholdArsakMapper } from 'kodeverk/oppholdArsakType';
 import periodeResultatType from 'kodeverk/periodeResultatType';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import { uttakPeriodeNavn } from 'kodeverk/uttakPeriodeType';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import soknadType from 'kodeverk/soknadType';
 import TimeLineInfo from './stonadkonto/TimeLineInfo';
@@ -80,6 +83,11 @@ const getCorrectPeriodName = (item) => {
     return item.aktiviteter[0].stønadskontoType.navn;
   }
 
+  if (item.oppholdÅrsak !== oppholdArsakType.UDEFINERT) {
+    const stonadskonto = oppholdArsakMapper[item.oppholdÅrsak.kode];
+    return uttakPeriodeNavn[stonadskonto];
+  }
+
   return '';
 };
 
@@ -89,13 +97,14 @@ const addClassNameGroupIdToPerioder = (hovedsokerPerioder, annenForelderPerioder
 
   perioder.forEach((item, index) => {
     const stonadskontoType = getCorrectPeriodName(item);
+    const opphold = item.oppholdÅrsak.kode !== oppholdArsakType.UDEFINERT;
     const status = hovedsoker ? getStatusPeriodeHoved(item) : getStatusPeriodeMed(item);
     const gradert = (item.gradertAktivitet && item.graderingInnvilget) ? 'gradert' : '';
     const copyOfItem = Object.assign({}, item);
-
+    const oppholdStatus = status === 'undefined' ? 'opphold-manuell' : 'opphold';
     copyOfItem.id = index + 1 + (hovedsoker ? 0 : hovedsokerPerioder.length);
     copyOfItem.tomMoment = moment(item.tom).add(1, 'days');
-    copyOfItem.className = `${status} ${gradert}`;
+    copyOfItem.className = opphold ? oppholdStatus : `${status} ${gradert}`;
     copyOfItem.hovedsoker = hovedsoker;
     copyOfItem.group = annenForelderPerioder.length > 0 && hovedsoker ? 2 : 1;
     copyOfItem.title = createTooltipContent(item.fom, item.tom, stonadskontoType, intl, item);
@@ -524,11 +533,28 @@ const mapStateToProps = (state, props) => {
   const familiehendelse = getFamiliehendelse(state);
   const ytelseFordeling = getBehandlingYtelseFordeling(state);
   const uttaksresultatActivity = behandlingFormValueSelector(props.formName)(state, ACTIVITY_PANEL_NAME);
+
+  const uttakMedOpphold = uttaksresultatActivity.map((uttak) => {
+    const { ...uttakPerioder } = uttak;
+    if (uttak.oppholdÅrsak.kode !== oppholdArsakType.UDEFINERT) {
+      const stonadskonto = oppholdArsakMapper[uttak.oppholdÅrsak.kode];
+      const oppholdInfo = {
+        stønadskontoType: {
+          kode: stonadskonto,
+          kodeverk: uttak.oppholdÅrsak.kodeverk,
+          navn: uttakPeriodeNavn[stonadskonto],
+        },
+        trekkdager: calcDays(moment(uttak.fom.toString()), moment(uttak.tom.toString())),
+      };
+      uttakPerioder.aktiviteter = [oppholdInfo];
+    }
+    return uttakPerioder;
+  });
   const tilknyttetStortinget = !!props.aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.TILKNYTTET_STORTINGET && props.isApOpen);
   const isRevurdering = getBehandlingIsRevurdering(state);
 
-  const hovedsokerPerioder = addClassNameGroupIdToPerioder(uttaksresultatActivity, annenForelderUttak, true, props.intl);
-  const annenForelderPerioder = addClassNameGroupIdToPerioder(uttaksresultatActivity, annenForelderUttak, false, props.intl);
+  const hovedsokerPerioder = addClassNameGroupIdToPerioder(uttakMedOpphold, annenForelderUttak, true, props.intl);
+  const annenForelderPerioder = addClassNameGroupIdToPerioder(uttakMedOpphold, annenForelderUttak, false, props.intl);
   const uttakPerioder = hovedsokerPerioder.concat(annenForelderPerioder);
   const harSoktOmFlerbarnsdager = hovedsokerPerioder.filter(p => p.flerbarnsdager === true).length > 0;
 
@@ -540,7 +566,7 @@ const mapStateToProps = (state, props) => {
     dekningsgrad: soknad.dekningsgrad ? soknad.dekningsgrad : undefined,
     stonadskonto: getStonadskontoer(state),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
-    uttaksresultatActivity: uttaksresultatActivity.map(periode => ({ tilknyttetStortinget, ...periode })),
+    uttaksresultatActivity: uttakMedOpphold.map(periode => ({ tilknyttetStortinget, ...periode })),
     kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
     soknadsType: soknad.soknadType.kode,
     omsorgsovertakelseDato: soknad.omsorgsovertakelseDato,

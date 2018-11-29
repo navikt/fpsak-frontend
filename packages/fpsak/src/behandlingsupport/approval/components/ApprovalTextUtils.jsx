@@ -1,27 +1,24 @@
 import React from 'react';
 import moment from 'moment';
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
-import { getFagsakYtelseType, isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
+import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
-import klageVurdering from 'kodeverk/klageVurdering';
-import {
-  getBehandlingKlageVurderingResultatNFP,
-  getBehandlingKlageVurderingResultatNK,
-  getBehandlingsresultat,
-} from 'behandling/behandlingSelectors';
+import klageVurderingCodes from 'kodeverk/klageVurdering';
+import { getBehandlingKlageVurdering, getBehandlingStatus } from 'behandling/behandlingSelectors';
 
+import behandlingStatusCode from 'kodeverk/behandlingStatus';
+import klageVurderingOmgjoerCodes from 'kodeverk/klageVurderingOmgjoer';
 import totrinnskontrollaksjonspunktTextCodes from '../totrinnskontrollaksjonspunktTextCodes';
 import vurderFaktaOmBeregningTotrinnText from '../VurderFaktaBeregningTotrinnText';
 import aksjonspunktCodes, { isUttakAksjonspunkt } from '../../../kodeverk/aksjonspunktCodes';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
-import { findAvslagResultatText } from '../../../behandlingsprosess/components/vedtak/VedtakHelper';
 
 export const isMeholdIKlage = (klageVurderingResultatNFP, klageVurderingResultatNK) => {
   const meholdIKlageAvNFP = klageVurderingResultatNFP
-    && klageVurderingResultatNFP.klageVurdering === klageVurdering.MEDHOLD_I_KLAGE;
+    && klageVurderingResultatNFP.klageVurdering === klageVurderingCodes.MEDHOLD_I_KLAGE;
   const meholdIKlageAvNK = klageVurderingResultatNK
-    && klageVurderingResultatNK.klageVurdering === klageVurdering.MEDHOLD_I_KLAGE;
+    && klageVurderingResultatNK.klageVurdering === klageVurderingCodes.MEDHOLD_I_KLAGE;
 
   return meholdIKlageAvNFP || meholdIKlageAvNK;
 };
@@ -119,20 +116,62 @@ const getFaktaOmBeregningText = (beregningDto) => {
   ) : null));
 };
 
-const getTextForKlage = (klageVurderingResultatNK, klageVurderingResultatNFP, ytelseType, behandlingsresultat) => {
-  if (isMeholdIKlage(klageVurderingResultatNFP, klageVurderingResultatNK)) {
-    return <FormattedMessage id="VedtakForm.ResultatKlageMedhold" />;
+const omgjoerTekstMap = {
+  DELVIS_MEDHOLD_I_KLAGE: 'ToTrinnsForm.Klage.DelvisOmgjortTilGunst',
+  GUNST_MEDHOLD_I_KLAGE: 'ToTrinnsForm.Klage.OmgjortTilGunst',
+  UGUNST_MEDHOLD_I_KLAGE: 'ToTrinnsForm.Klage.OmgjortTilUgunst',
+};
+
+
+const getTextForKlageHelper = (klageVurderingResultat) => {
+  let aksjonspunktTextId = '';
+  switch (klageVurderingResultat.klageVurdering) {
+    case klageVurderingCodes.STADFESTE_YTELSESVEDTAK:
+      aksjonspunktTextId = 'ToTrinnsForm.Klage.StadfesteYtelsesVedtak';
+      break;
+    case klageVurderingCodes.OPPHEVE_YTELSESVEDTAK:
+      aksjonspunktTextId = 'ToTrinnsForm.Klage.OppheveYtelsesVedtak';
+      break;
+    case klageVurderingCodes.AVVIS_KLAGE:
+      aksjonspunktTextId = 'ToTrinnsForm.Klage.Avvist';
+      break;
+    case klageVurderingCodes.HJEMSENDE_UTEN_Å_OPPHEVE:
+      aksjonspunktTextId = 'ToTrinnsForm.Klage.HjemsendUtenOpphev';
+      break;
+    case klageVurderingCodes.MEDHOLD_I_KLAGE:
+      if (klageVurderingResultat.klageVurderingOmgjoer
+        && klageVurderingResultat.klageVurderingOmgjoer !== klageVurderingOmgjoerCodes.UDEFINERT) {
+        aksjonspunktTextId = omgjoerTekstMap[klageVurderingResultat.klageVurderingOmgjoer];
+        break;
+      }
+      aksjonspunktTextId = 'VedtakForm.ResultatKlageMedhold';
+      break;
+    default:
+      break;
   }
-  return <FormattedMessage id={findAvslagResultatText(behandlingsresultat.type.kode, ytelseType)} />;
+  return <FormattedMessage id={aksjonspunktTextId} />;
+};
+
+const getTextForKlage = (klagebehandlingVurdering, behandlingStaus) => {
+  if (behandlingStaus.kode === behandlingStatusCode.FATTER_VEDTAK) {
+    if (klagebehandlingVurdering.klageVurderingResultatNK) {
+      return getTextForKlageHelper(klagebehandlingVurdering.klageVurderingResultatNK, behandlingStaus);
+    }
+    if (klagebehandlingVurdering.klageVurderingResultatNFP) {
+      return getTextForKlageHelper(klagebehandlingVurdering.klageVurderingResultatNFP, behandlingStaus);
+    }
+  }
+  return null;
 };
 
 const erKlageAksjonspunkt = aksjonspunkt => aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP
-  || aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.BEHANDLE_KLAGE_NK;
-
+  || aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.BEHANDLE_KLAGE_NK
+  || aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP
+  || aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA;
 
 export const getAksjonspunktTextSelector = createSelector(
-  [isForeldrepengerFagsak, getBehandlingKlageVurderingResultatNK, getBehandlingKlageVurderingResultatNFP, getFagsakYtelseType, getBehandlingsresultat],
-  (isForeldrepenger, klageVurderingResultatNK, klageVurderingResultatNFP, ytelseType, behandlingsresultat) => (aksjonspunkt) => {
+  [isForeldrepengerFagsak, getBehandlingKlageVurdering, getBehandlingStatus],
+  (isForeldrepenger, klagebehandlingVurdering, behandlingStatus) => (aksjonspunkt) => {
     if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) {
       return buildOpptjeningText(aksjonspunkt);
     } if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE) {
@@ -144,7 +183,7 @@ export const getAksjonspunktTextSelector = createSelector(
     } if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD) {
       return getTextForForeldreansvarsvilkåretAndreLedd(isForeldrepenger);
     } if (erKlageAksjonspunkt(aksjonspunkt)) {
-      return [getTextForKlage(klageVurderingResultatNK, klageVurderingResultatNFP, ytelseType, behandlingsresultat)];
+      return [getTextForKlage(klagebehandlingVurdering, behandlingStatus)];
     } if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD) {
       return buildArbeidsforholdText(aksjonspunkt);
     }

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
 import FlexRow from 'sharedComponents/flexGrid/FlexRow';
 import { DecimalField, SelectField, PeriodpickerField } from 'form/Fields';
+import oppholdArsakType, { oppholdArsakKontoNavn } from 'kodeverk/oppholdArsakType';
 import {
   required,
   hasValidDecimal,
@@ -20,9 +21,19 @@ const minValue1 = minValue(1);
 const selectValues = () => Object.keys(stonadskontoType)
   .map(key => (<option key={key} value={key}>{uttakPeriodeNavn[key]}</option>));
 
+const gyldigeÅrsaker = [
+  oppholdArsakType.UTTAK_MØDREKVOTE_ANNEN_FORELDER,
+  oppholdArsakType.UTTAK_FEDREKVOTE_ANNEN_FORELDER,
+  oppholdArsakType.UTTAK_FELLESP_ANNEN_FORELDER,
+  oppholdArsakType.UTTAK_FORELDREPENGER_ANNEN_FORELDER];
+
+const mapPeriodeTyper = () => Object.keys(oppholdArsakType)
+  .filter(key => gyldigeÅrsaker.includes(key))
+  .map(key => (<option key={key} value={key}>{oppholdArsakKontoNavn[key]}</option>));
+
 const ElementWrapper = ({ children }) => children;
 
-export const EndreSoknadsperiode = ({ withGradering }) => (
+export const EndreSoknadsperiode = ({ withGradering, oppholdArsak }) => (
   <div className={styles.arrowBox}>
     <FlexRow>
       <FlexColumn>
@@ -34,11 +45,25 @@ export const EndreSoknadsperiode = ({ withGradering }) => (
     </FlexRow>
     <FlexRow>
       <FlexColumn>
+        {(!oppholdArsak || oppholdArsak.kode === oppholdArsakType.UDEFINERT)
+        && (
         <SelectField
           name="kontoType"
           selectValues={selectValues()}
           label={{ id: 'UttakInfoPanel.StonadsKonto' }}
         />
+        )
+        }
+        {oppholdArsak && oppholdArsak.kode !== oppholdArsakType.UDEFINERT
+        && (
+        <SelectField
+          name="oppholdArsak"
+          selectValues={mapPeriodeTyper()}
+          label={{ id: 'UttakInfoPanel.StonadsKonto' }}
+          validate={[required]}
+        />
+        )
+        }
       </FlexColumn>
       {withGradering
         && (
@@ -62,10 +87,12 @@ export const EndreSoknadsperiode = ({ withGradering }) => (
 
 EndreSoknadsperiode.propTypes = {
   withGradering: PropTypes.bool,
+  oppholdArsak: PropTypes.shape(),
 };
 
 EndreSoknadsperiode.defaultProps = {
   withGradering: false,
+  oppholdArsak: undefined,
 };
 
 export default EndreSoknadsperiode;

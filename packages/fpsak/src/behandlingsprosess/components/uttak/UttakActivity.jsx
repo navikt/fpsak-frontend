@@ -21,6 +21,7 @@ import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandli
 import { getSkjaeringstidspunktForeldrepenger } from 'behandling/behandlingSelectors';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import oppholdArsakType, { oppholdArsakMapper } from 'kodeverk/oppholdArsakType';
 import { getKodeverk } from 'kodeverk/duck';
 import { FieldArray, formPropTypes } from 'redux-form';
 import periodeResultatType from 'kodeverk/periodeResultatType';
@@ -72,6 +73,7 @@ const mapAarsak = (kodeverk, starttidspunktForeldrepenger) => {
 
 export const UttakActivity = ({
   periodeTyper,
+  oppholdArsakTyper,
   readOnly,
   cancelSelectedActivity,
   erOppfylt,
@@ -90,6 +92,7 @@ export const UttakActivity = ({
   <div>
     <Row className={styles.uttakDataWrapper}>
       <UttakInfo
+        oppholdArsakTyper={oppholdArsakTyper}
         selectedItemData={selectedItemData}
         kontoIkkeSatt={kontoIkkeSatt}
         isApOpen={isApOpen}
@@ -99,16 +102,20 @@ export const UttakActivity = ({
         harSoktOmFlerbarnsdager={harSoktOmFlerbarnsdager}
       />
     </Row>
-    <Row className={readOnly ? null : styles.marginTop}>
-      <Column xs="12">
-        <FieldArray
-          name="UttakFieldArray"
-          component={RenderUttakTable}
-          periodeTyper={periodeTyper}
-          readOnly={readOnly}
-        />
-      </Column>
-    </Row>
+    {selectedItemData.oppholdÅrsak.kode === oppholdArsakType.UDEFINERT
+      && (
+      <Row className={readOnly ? null : styles.marginTop}>
+        <Column xs="12">
+          <FieldArray
+            name="UttakFieldArray"
+            component={RenderUttakTable}
+            periodeTyper={periodeTyper}
+            readOnly={readOnly}
+          />
+        </Column>
+      </Row>
+      )
+    }
     <ElementWrapper>
       <div className={styles.marginBottom20}>
         <TextAreaField
@@ -123,6 +130,8 @@ export const UttakActivity = ({
       {!readOnly
       && (
         <div>
+          {selectedItemData.oppholdÅrsak.kode === oppholdArsakType.UDEFINERT
+          && (
           <div className={styles.marginBottom}>
             <RadioGroupField validate={[required]} name="erOppfylt" readOnly={readOnly}>
               <RadioOption value label={{ id: 'UttakActivity.Oppfylt' }} />
@@ -168,6 +177,8 @@ export const UttakActivity = ({
             )
             }
           </div>
+          )
+          }
           <FlexContainer fluid>
             <FlexRow>
               <FlexColumn>
@@ -218,19 +229,19 @@ const erPeriodeOppfylt = (periode, kontoIkkeSatt) => {
     return false;
   }
   if (periode.periodeResultatType && periode.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING) {
+    if (periode.periodeResultatÅrsak.kodeverk === INNVILGET_AARSAK || periode.oppholdArsak !== oppholdArsakType.UDEFINERT) {
+      return true;
+    }
     if (periode.periodeResultatÅrsak.kodeverk === IKKE_OPPFYLT_AARSAK) {
       return false;
-    }
-    if (periode.periodeResultatÅrsak.kodeverk === INNVILGET_AARSAK) {
-      return true;
     }
     return undefined;
   }
   return false;
 };
 
-const resultatTypeObject = (value) => {
-  if (value) {
+const resultatTypeObject = (value, oppholdArsak) => {
+  if (value || oppholdArsak !== oppholdArsakType.UDEFINERT) {
     return ({
       kode: periodeResultatType.INNVILGET,
       navn: innvilgetTekst,
@@ -265,10 +276,14 @@ const validateUttakActivity = (values) => {
 
 const transformValues = (values, selectedItemData, avslagAarsakKoder, innvilgelseAarsakKoder, graderingAvslagAarsakKoder) => {
   const { ...transformvalue } = selectedItemData;
+  const { ...nyeVerdier } = values;
   const [avslagAarsakObject] = avslagAarsakKoder.filter(a => a.kode === values.avslagAarsak);
   const [innvilgelseAarsakObject] = innvilgelseAarsakKoder.filter(a => a.kode === values.innvilgelseAarsak);
   const [graderingAvslagAarsakObject] = graderingAvslagAarsakKoder.filter(a => a.kode === values.graderingAvslagAarsak);
-  transformvalue.aktiviteter = values.UttakFieldArray.map((a) => {
+  if (values.oppholdArsak !== oppholdArsakType.UDEFINERT) {
+    nyeVerdier.UttakFieldArray[0].stønadskontoType.kode = oppholdArsakMapper[values.oppholdArsak];
+  }
+  transformvalue.aktiviteter = nyeVerdier.UttakFieldArray.map((a) => {
     const { ...bekreftetAktivitet } = a;
     bekreftetAktivitet.stønadskontoType.navn = uttakPeriodeNavn[a.stønadskontoType.kode];
     return bekreftetAktivitet;
@@ -279,7 +294,8 @@ const transformValues = (values, selectedItemData, avslagAarsakKoder, innvilgels
   transformvalue.samtidigUttaksprosent = values.samtidigUttaksprosent;
   transformvalue.erOppfylt = values.erOppfylt;
   transformvalue.graderingInnvilget = values.graderingInnvilget;
-  transformvalue.periodeResultatType = resultatTypeObject(values.erOppfylt);
+  transformvalue.oppholdÅrsak.kode = values.oppholdArsak;
+  transformvalue.periodeResultatType = resultatTypeObject(values.erOppfylt, values.oppholdArsak);
   transformvalue.periodeResultatÅrsak = {
     kode: '-',
   };
@@ -348,6 +364,7 @@ const mapStateToProps = (state, ownProps) => {
       innvilgelseAarsak: selectedItem.periodeResultatÅrsak.kode,
       graderingInnvilget: selectedItem.graderingInnvilget,
       graderingAvslagAarsak: selectedItem.graderingAvslagÅrsak ? selectedItem.graderingAvslagÅrsak.kode : '-',
+      oppholdArsak: selectedItem.oppholdÅrsak.kode,
     },
     erOppfylt: behandlingFormValueSelector(uttakActivityForm)(state, 'erOppfylt'),
     avslagAarsakKoder: avslagAarsaker,
@@ -356,6 +373,7 @@ const mapStateToProps = (state, ownProps) => {
     erSamtidigUttak: behandlingFormValueSelector(uttakActivityForm)(state, 'samtidigUttak'),
     samtidigUttaksprosent: behandlingFormValueSelector(uttakActivityForm)(state, 'samtidigUttaksprosent'),
     periodeTyper: getKodeverk(kodeverkTyper.UTTAK_PERIODE_TYPE)(state),
+    oppholdArsakTyper: getKodeverk(kodeverkTyper.OPPHOLD_ARSAK)(state),
     starttidspunktForeldrepenger: getSkjaeringstidspunktForeldrepenger(state),
     validate: values => validateUttakActivity(values),
     onSubmit: values => ownProps.updateActivity(transformValues(values, selectedItem, avslagAarsaker, innvilgelseAarsaker, graderingAvslagAarsakKoder)),

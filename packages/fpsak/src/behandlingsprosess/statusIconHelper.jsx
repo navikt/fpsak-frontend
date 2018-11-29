@@ -4,15 +4,15 @@ import uttakImages from 'behandlingsprosess/statusIconsUttak';
 import vedtakImages from 'behandlingsprosess/statusIconsVedtak';
 import avregningImages from 'behandlingsprosess/statusIconsAvregning';
 
-import innvilgetHoverIkonUrl from 'images/innvilget_hover.svg';
-import avslattIkonUrl from 'images/avslaatt.svg';
-import avslattValgtIkonUrl from 'images/avslaatt_valgt.svg';
-import avslattHoverIkonUrl from 'images/avslaatt_hover.svg';
-import behandleIkonUrl from 'images/behandle.svg';
-import behandleValgtIkonUrl from 'images/behandle_valgt.svg';
-import innvilgetIkonUrl from 'images/innvilget.svg';
-import innvilgetValgtIkonUrl from 'images/innvilget_valgt.svg';
-import ikkeVurdertIkonUrl from 'images/behandle_disable.svg';
+import innvilgetHoverIkonUrl from '@fpsak-frontend/assets/images/innvilget_hover.svg';
+import avslattIkonUrl from '@fpsak-frontend/assets/images/avslaatt.svg';
+import avslattValgtIkonUrl from '@fpsak-frontend/assets/images/avslaatt_valgt.svg';
+import avslattHoverIkonUrl from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
+import behandleIkonUrl from '@fpsak-frontend/assets/images/behandle.svg';
+import behandleValgtIkonUrl from '@fpsak-frontend/assets/images/behandle_valgt.svg';
+import innvilgetIkonUrl from '@fpsak-frontend/assets/images/innvilget.svg';
+import innvilgetValgtIkonUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import ikkeVurdertIkonUrl from '@fpsak-frontend/assets/images/behandle_disable.svg';
 
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 
@@ -36,6 +36,7 @@ const vilkarImages = {
 
 const behandlingspunktImages = {
   [behandlingspunktCodes.VEDTAK]: vedtakImages,
+  [behandlingspunktCodes.KLAGE_RESULTAT]: vedtakImages,
   [behandlingspunktCodes.BEREGNINGSGRUNNLAG]: beregningsgrunnlagImages,
   [behandlingspunktCodes.UTTAK]: uttakImages,
   [behandlingspunktCodes.AVREGNING]: avregningImages,

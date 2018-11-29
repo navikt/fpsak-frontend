@@ -19,10 +19,6 @@ var options = {
     '**/(sprak|api|jetty)/**': {
       target: 'http://localhost:8080',
     },
-    "/fpsak/**": {
-      target: "http://localhost:8080",
-      secure: false,
-    },
     "/fpsak/fpoppdrag/**": {
       target: "http://localhost:8070",
       secure: false,

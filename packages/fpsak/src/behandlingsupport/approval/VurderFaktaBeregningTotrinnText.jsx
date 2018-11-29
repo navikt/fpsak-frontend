@@ -10,6 +10,7 @@ const vurderFaktaOmBeregningTotrinnText = {
   [faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_VED_LONNSENDRING]: 'ToTrinnsForm.Beregning.FastsettLonnsendring',
   [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON]: 'ToTrinnsForm.Beregning.VurderATFLISammeOrg',
   [faktaOmBeregningTilfelle.TILSTOTENDE_YTELSE]: 'ToTrinnsForm.Beregning.BeregningsgrunnlagOgInntektskategoriFastsatt',
+  [faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE]: 'ToTrinnsForm.Beregning.FastsettBgKunYtelse',
 };
 
 export default vurderFaktaOmBeregningTotrinnText;

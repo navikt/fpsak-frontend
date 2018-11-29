@@ -1,12 +1,12 @@
 import React from 'react';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
 import familieHendelseType from 'kodeverk/familieHendelseType';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import foreldreType from 'kodeverk/foreldreType';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import SoknadData from 'papirsoknad/SoknadData';
 import RegistreringFodselGrid from './RegistreringFodselGrid';
 import RegistreringAdopsjonOgOmsorgGrid from './RegistreringAdopsjonOgOmsorgGrid';

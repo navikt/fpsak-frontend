@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Undertittel } from 'nav-frontend-typografi';
 import classNames from 'classnames';
@@ -11,7 +11,7 @@ import SelectField from 'form/fields/SelectField';
 import DatepickerField from 'form/fields/DatepickerField';
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { hasValidDate, required } from 'utils/validation/validators';
+import { required, hasValidDate } from 'utils/validation/validators';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
@@ -31,7 +31,6 @@ const getClassForAvvisKlage = (readOnly, aksjonspunktKode) => {
     return styles.selectReadOnly;
   }
   return classNames(
-    styles.arrowLine,
     aksjonspunktKode === aksjonspunktCodes.BEHANDLE_KLAGE_NK ? styles.selectNkAvvis : styles.selectAvvis,
   );
 };
@@ -41,7 +40,6 @@ const getClassForMedholdKlage = (readOnly, aksjonspunktKode) => {
     return styles.selectReadOnly;
   }
   return classNames(
-    styles.arrowLine,
     aksjonspunktKode === aksjonspunktCodes.BEHANDLE_KLAGE_NK ? styles.selectNkOmgjort : styles.selectOmgjort,
   );
 };

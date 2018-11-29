@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { shallow } from 'enzyme';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import behandlingStatus from 'kodeverk/behandlingStatus';
 import BehandlingResultatType from 'kodeverk/behandlingResultatType';
 import { VedtakKlageFormImpl as UnwrappedForm } from './VedtakKlageForm';

@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import { MockFields } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+import { MockFields } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import { DatepickerField } from 'form/Fields';
 import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
 

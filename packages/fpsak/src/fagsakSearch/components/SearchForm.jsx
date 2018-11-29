@@ -10,7 +10,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import Image from 'sharedComponents/Image';
-import advarselIcon from 'images/advarsel.svg';
+import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import { hasValidSaksnummerOrFodselsnummerFormat } from 'utils/validation/validators';
 import { InputField } from 'form/Fields';
 

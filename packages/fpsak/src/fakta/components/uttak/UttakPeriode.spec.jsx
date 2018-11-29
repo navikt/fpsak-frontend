@@ -24,6 +24,9 @@ const perioder = [{
   bekreftet: true,
   utsettelseÅrsak: {},
   overføringÅrsak: {},
+  oppholdÅrsak: {
+    kode: '-',
+  },
   openForm: false,
   isFromSøknad: true,
   erArbeidstaker: false,
@@ -38,6 +41,9 @@ const perioder = [{
   bekreftet: false,
   utsettelseÅrsak: {},
   overføringÅrsak: {},
+  oppholdÅrsak: {
+    kode: '-',
+  },
   openForm: true,
   isFromSøknad: true,
   erArbeidstaker: true,

@@ -1,11 +1,11 @@
 import React from 'react';
-import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
 import moment from 'moment';
 import { expect } from 'chai';
 
 import { ISO_DATE_FORMAT } from 'utils/formats';
 import { DatepickerField, SelectField } from 'form/Fields';
-import { metaMock, MockFields } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { metaMock, MockFields } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
 import { dateRangesOverlappingMessage, invalidDateMessage } from 'utils/validation/messages';
 import uttakPeriodeType from 'kodeverk/uttakPeriodeType';

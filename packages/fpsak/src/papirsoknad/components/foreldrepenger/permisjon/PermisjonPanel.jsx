@@ -13,7 +13,6 @@ import foreldreType from 'kodeverk/foreldreType';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { CheckboxField } from 'form/Fields';
-import PermisjonRettigheterPanel from './PermisjonRettigheterPanel';
 import PermisjonUtsettelsePanel, { utsettelsePeriodeFieldArrayName } from './PermisjonUtsettelsePanel';
 import PermisjonGraderingPanel, { graderingPeriodeFieldArrayName } from './PermisjonGraderingPanel';
 import PermisjonOverforingAvKvoterPanel from './PermisjonOverforingAvKvoterPanel';
@@ -44,9 +43,6 @@ export const PermisjonPanel = ({
       <div className={styles.flexContainer}>
         <Undertittel><FormattedMessage id="Registrering.Permisjon.Title" /></Undertittel>
         <VerticalSpacer sixteenPx />
-        {soknadData.getFagsakYtelseType() !== fagsakYtelseType.ENDRING_FORELDREPENGER
-          && <PermisjonRettigheterPanel readOnly={readOnly} />
-          }
         { visFeilMelding
           && (
           <div role="alert" aria-live="assertive">

@@ -25,7 +25,7 @@ import {
 } from 'behandling/selectors/originalBehandlingSelectors';
 import behandlingResultatType from 'kodeverk/behandlingResultatType';
 import behandlingType from 'kodeverk/behandlingType';
-import innvilgetImageUrl from 'images/innvilget_valgt.svg';
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import requireProps from 'app/data/requireProps';
 

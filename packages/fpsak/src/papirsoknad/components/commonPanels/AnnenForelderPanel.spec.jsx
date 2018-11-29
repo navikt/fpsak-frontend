@@ -1,9 +1,11 @@
 import React from 'react';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
 import { expect } from 'chai';
 import kanIkkeOppgiAnnenForelderArsaker from 'kodeverk/kanIkkeOppgiAnnenForelderArsak';
+import SoknadData from 'papirsoknad/SoknadData';
 
 import AnnenForelderPanel, { AnnenForelderPanelImpl, KanIkkeOppgiBegrunnelsePanel } from './AnnenForelderPanel';
+import PermisjonRettigheterPanel from '../foreldrepenger/permisjon/PermisjonRettigheterPanel';
 
 describe('<AnnenForelderPanel>', () => {
   describe('validate', () => {
@@ -65,11 +67,13 @@ describe('<AnnenForelderPanel>', () => {
     },
   ];
 
+
   it('skal kun vise angi begrunnelse hvis kanIkkeOppgiAnnenForelder er valgt', () => {
     const wrapper = shallowWithIntl(<AnnenForelderPanelImpl
       intl={intlMock}
       countryCodes={countryCodes}
       form="test"
+      soknadData={new SoknadData('ES', 'TEST', 'TEST', [])}
     />);
 
     let begrunnelse = wrapper.find({ name: 'kanIkkeOppgiBegrunnelse' });
@@ -80,28 +84,6 @@ describe('<AnnenForelderPanel>', () => {
 
     begrunnelse = wrapper.find({ name: 'kanIkkeOppgiBegrunnelse' });
     expect(begrunnelse).to.have.length(1);
-  });
-
-  it('skal for foreldrepenger-søknad vise radioknapper for om annen foreldre er kjent med perioder det er søkt om', () => {
-    const wrapper = shallowWithIntl(<AnnenForelderPanelImpl
-      intl={intlMock}
-      countryCodes={countryCodes}
-      form="test"
-      isForeldrepenger
-    />);
-
-    expect(wrapper.find({ name: 'annenForelderInformert' })).to.have.length(1);
-  });
-
-  it('skal for engangsstønad-søknad ikke vise radioknapper for om annen foreldre er kjent med perioder det er søkt om', () => {
-    const wrapper = shallowWithIntl(<AnnenForelderPanelImpl
-      intl={intlMock}
-      countryCodes={countryCodes}
-      form="test"
-      isForeldrepenger={false}
-    />);
-
-    expect(wrapper.find({ name: 'annenForelderInformert' })).to.have.length(0);
   });
 
   describe('<KanIkkeOppgiBegrunnelseForm>', () => {
@@ -126,5 +108,19 @@ describe('<AnnenForelderPanel>', () => {
       expect(land).to.have.length(1);
       expect(utenlandskFoedselsnummer).to.have.length(1);
     });
+  });
+
+
+  it('skal render Rettigheter når søknad er foreldrepenger og type ikkje er endring foreldrepenger', () => {
+    const wrapper = shallowWithIntl(<AnnenForelderPanelImpl
+      isForeldrepenger
+      soknadData={new SoknadData('', '', '', [])}
+      readOnly={false}
+      countryCodes={countryCodes}
+      intl={intlMock}
+    />);
+
+    const permisjonRettigheterPanel = wrapper.find(PermisjonRettigheterPanel);
+    expect(permisjonRettigheterPanel).to.have.length(1);
   });
 });
