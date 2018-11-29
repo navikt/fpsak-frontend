@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import aksjonspunktType from 'kodeverk/aksjonspunktType';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import faktaPanelCodes from 'fakta/faktaPanelCodes';

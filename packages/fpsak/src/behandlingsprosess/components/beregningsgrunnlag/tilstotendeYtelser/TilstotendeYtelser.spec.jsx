@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
 import { formatCurrencyNoKr } from 'utils/currencyUtils';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import TilstotendeYtelser, { getTekstForAndelBruktIBeregning } from './TilstotendeYtelser';

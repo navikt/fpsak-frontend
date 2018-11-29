@@ -4,9 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { formatCurrencyNoKr } from 'utils/currencyUtils';
-import relatertYtelseTypeTextCodes from '../fellesPaneler/relatertYtelseTypeTextCodes';
 
-const getAndelTextId = tilstøtendeYtelseType => relatertYtelseTypeTextCodes[tilstøtendeYtelseType];
 
 /**
  * YtelserFraInfotrygd
@@ -14,7 +12,6 @@ const getAndelTextId = tilstøtendeYtelseType => relatertYtelseTypeTextCodes[til
  * Presentasjonskomponent. Viser navn og sum på alle andeler som er tilstøttende ytelser fra infotrygd
  */
 const YtelserFraInfotrygd = ({
-  tilstøtendeYtelseType,
   bruttoPrAar,
 }) => (
   <div>
@@ -22,7 +19,7 @@ const YtelserFraInfotrygd = ({
       <Column xs="12">
         <Normaltekst>
           <FormattedMessage
-            id={getAndelTextId(tilstøtendeYtelseType)}
+            id="Beregningsgrunnlag.YtelserFraInfotrygd.Ytelse"
           />
         </Normaltekst>
       </Column>
@@ -36,7 +33,6 @@ const YtelserFraInfotrygd = ({
 );
 
 YtelserFraInfotrygd.propTypes = {
-  tilstøtendeYtelseType: PropTypes.string.isRequired,
   bruttoPrAar: PropTypes.number.isRequired,
 };
 

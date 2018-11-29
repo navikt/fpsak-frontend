@@ -108,13 +108,13 @@ const buildInitialValues = (periode, soknad, person, inntekter, medlemskapPeriod
   }
 
   return {
+    ...periode,
     ...InntektOgYtelserFaktaPanel.buildInitialValues(person, inntekter),
     ...OppholdINorgeOgAdresserFaktaPanel.buildInitialValues(soknad, periode, aksjonspunkter),
     ...PerioderMedMedlemskapFaktaPanel.buildInitialValues(periode, medlemskapPerioder, soknad, aksjonspunkter),
     ...FortsattMedlemskapFaktaPanel.buildInitialValues(gjeldendeFom),
     ...oppholdValues,
     ...confirmValues,
-    ...periode,
   };
 };
 

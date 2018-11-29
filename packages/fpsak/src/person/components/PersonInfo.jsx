@@ -5,8 +5,8 @@ import { Undertittel, Undertekst } from 'nav-frontend-typografi';
 import Panel from 'nav-frontend-paneler';
 
 import Image from 'sharedComponents/Image';
-import urlMann from 'images/mann.svg';
-import urlKvinne from 'images/kvinne.svg';
+import urlMann from '@fpsak-frontend/assets/images/mann.svg';
+import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 
 import AlderVisning from './Aldervisning';
 import MerkePanel from './Merkepanel';

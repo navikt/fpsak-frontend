@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
 import PerioderMedMedlemskapFaktaPanel, { PerioderMedMedlemskapFaktaPanelImpl as UndecoratedForm } from './PerioderMedMedlemskapFaktaPanel';

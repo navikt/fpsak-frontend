@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import klageVurdering from 'kodeverk/klageVurdering';
-import behandlingResultatType from 'kodeverk/behandlingResultatType';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import klageVurderingOmgjoerCodes from 'kodeverk/klageVurderingOmgjoer';
+import behandlingStatusCodes from 'kodeverk/behandlingStatus';
+import klageVurderingCodes from 'kodeverk/klageVurdering';
 import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
 import getAksjonspunktText from './ApprovalTextUtils';
 
@@ -23,9 +23,14 @@ const lagAksjonspunkt = (
   arbeidforholdDtos,
 });
 
-const medholdIKlage = { klageVurdering: klageVurdering.MEDHOLD_I_KLAGE };
-const oppheveYtelsesVedtak = { klageVurdering: klageVurdering.OPPHEVE_YTELSESVEDTAK };
-const avvistKlage = { klageVurdering: klageVurdering.KLAGE_AVVIST };
+const medholdIKlage = {
+  klageVurdering: klageVurderingCodes.MEDHOLD_I_KLAGE,
+  klageVurderingOmgjoer: klageVurderingOmgjoerCodes.GUNST_MEDHOLD_I_KLAGE,
+};
+const oppheveYtelsesVedtak = { klageVurdering: klageVurderingCodes.OPPHEVE_YTELSESVEDTAK };
+const avvistKlage = { klageVurdering: klageVurderingCodes.AVVIS_KLAGE };
+const behandlingStatusFVED = { kode: behandlingStatusCodes.FATTER_VEDTAK };
+const stadfesteKlage = { klageVurdering: klageVurderingCodes.STADFESTE_YTELSESVEDTAK };
 
 
 describe('<ApprovalTextUtils>', () => {
@@ -36,86 +41,92 @@ describe('<ApprovalTextUtils>', () => {
       aksjonspunktCodes.BEHANDLE_KLAGE_NFP, undefined,
       undefined, 'begrunnelse', false, undefined, 'status', undefined,
     );
-    const message = getAksjonspunktText.resultFunc(true, null, medholdIKlage, null, null)(aksjonspunkt);
-    expect(message[0].props.id).to.eql('VedtakForm.ResultatKlageMedhold');
+    const klagebehandlingVurdering = {
+      klageVurderingResultatNFP: medholdIKlage,
+    };
+    const message = getAksjonspunktText.resultFunc(true, klagebehandlingVurdering, behandlingStatusFVED)(aksjonspunkt);
+    expect(message[0].props.id).to.eql('ToTrinnsForm.Klage.OmgjortTilGunst');
   });
   it('skal vise korrekt tekst for aksjonspunkt 5036 medhold', () => {
     const aksjonspunkt = lagAksjonspunkt(
       aksjonspunktCodes.BEHANDLE_KLAGE_NK, undefined,
       undefined, 'begrunnelse', false, undefined, 'status', undefined,
     );
-    const message = getAksjonspunktText.resultFunc(true, medholdIKlage, null, null, null)(aksjonspunkt);
-    expect(message[0].props.id).to.eql('VedtakForm.ResultatKlageMedhold');
+    const klagebehandlingVurdering = {
+      klageVurderingResultatNK: medholdIKlage,
+    };
+    const message = getAksjonspunktText.resultFunc(true, klagebehandlingVurdering, behandlingStatusFVED)(aksjonspunkt);
+    expect(message[0].props.id).to.eql('ToTrinnsForm.Klage.OmgjortTilGunst');
   });
   // Klage avslag
   // Ytelsesvedtak opphevet
   it('skal vise korrekt tekst for aksjonspunkt 5035 avslag ytelsesvedtak opphevet', () => {
-    const behandlingsresultat = { type: { kode: behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET } };
-    const ytelseType = fagsakYtelseType.ENGANGSSTONAD;
-
+    const klagebehandlingVurdering = {
+      klageVurderingResultatNFP: oppheveYtelsesVedtak,
+    };
     const aksjonspunkt = lagAksjonspunkt(
       aksjonspunktCodes.BEHANDLE_KLAGE_NFP, undefined,
       undefined, 'begrunnelse', false, undefined, 'status', undefined,
     );
-    const message = getAksjonspunktText.resultFunc(true, oppheveYtelsesVedtak, null, ytelseType, behandlingsresultat)(aksjonspunkt);
-    expect(message[0].props.id).to.eql('VedtakForm.ResultatKlageYtelsesvedtakOpphevet');
+    const message = getAksjonspunktText.resultFunc(true, klagebehandlingVurdering, behandlingStatusFVED)(aksjonspunkt);
+    expect(message[0].props.id).to.eql('ToTrinnsForm.Klage.OppheveYtelsesVedtak');
   });
   it('skal vise korrekt tekst for aksjonspunkt 5036 avslag ytelsesvedtak opphevet', () => {
-    const behandlingsresultat = { type: { kode: behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET } };
-    const ytelseType = fagsakYtelseType.ENGANGSSTONAD;
-
+    const klagebehandlingVurdering = {
+      klageVurderingResultatNK: oppheveYtelsesVedtak,
+    };
     const aksjonspunkt = lagAksjonspunkt(
       aksjonspunktCodes.BEHANDLE_KLAGE_NK, undefined,
       undefined, 'begrunnelse', false, undefined, 'status', undefined,
     );
-    const message = getAksjonspunktText.resultFunc(true, null, oppheveYtelsesVedtak, ytelseType, behandlingsresultat)(aksjonspunkt);
-    expect(message[0].props.id).to.eql('VedtakForm.ResultatKlageYtelsesvedtakOpphevet');
+    const message = getAksjonspunktText.resultFunc(true, klagebehandlingVurdering, behandlingStatusFVED)(aksjonspunkt);
+    expect(message[0].props.id).to.eql('ToTrinnsForm.Klage.OppheveYtelsesVedtak');
   });
   // Klage avvist
   it('skal vise korrekt tekst for aksjonspunkt 5035 avslag klage avvist', () => {
-    const behandlingsresultat = { type: { kode: behandlingResultatType.KLAGE_AVVIST } };
-    const ytelseType = fagsakYtelseType.ENGANGSSTONAD;
-
+    const klagebehandlingVurdering = {
+      klageVurderingResultatNFP: avvistKlage,
+    };
     const aksjonspunkt = lagAksjonspunkt(
       aksjonspunktCodes.BEHANDLE_KLAGE_NFP, undefined,
       undefined, 'begrunnelse', false, undefined, 'status', undefined,
     );
-    const message = getAksjonspunktText.resultFunc(true, avvistKlage, null, ytelseType, behandlingsresultat)(aksjonspunkt);
-    expect(message[0].props.id).to.eql('VedtakForm.ResultatKlageAvvist');
+    const message = getAksjonspunktText.resultFunc(true, klagebehandlingVurdering, behandlingStatusFVED)(aksjonspunkt);
+    expect(message[0].props.id).to.eql('ToTrinnsForm.Klage.Avvist');
   });
   it('skal vise korrekt tekst for aksjonspunkt 5036 avslag klage avvist', () => {
-    const behandlingsresultat = { type: { kode: behandlingResultatType.KLAGE_AVVIST } };
-    const ytelseType = fagsakYtelseType.ENGANGSSTONAD;
-
+    const klagebehandlingVurdering = {
+      klageVurderingResultatNK: avvistKlage,
+    };
     const aksjonspunkt = lagAksjonspunkt(
       aksjonspunktCodes.BEHANDLE_KLAGE_NK, undefined,
       undefined, 'begrunnelse', false, undefined, 'status', undefined,
     );
-    const message = getAksjonspunktText.resultFunc(true, null, avvistKlage, ytelseType, behandlingsresultat)(aksjonspunkt);
-    expect(message[0].props.id).to.eql('VedtakForm.ResultatKlageAvvist');
+    const message = getAksjonspunktText.resultFunc(true, klagebehandlingVurdering, behandlingStatusFVED)(aksjonspunkt);
+    expect(message[0].props.id).to.eql('ToTrinnsForm.Klage.Avvist');
   });
   // Ikke fastsatt Engangsstønad
   it('skal vise korrekt tekst for aksjonspunkt 5036 avslag ikke fastsatt', () => {
-    const behandlingsresultat = { type: { kode: behandlingResultatType.IKKE_FASTSATT } };
-    const ytelseType = fagsakYtelseType.ENGANGSSTONAD;
-
+    const klagebehandlingVurdering = {
+      klageVurderingResultatNFP: stadfesteKlage,
+    };
     const aksjonspunkt = lagAksjonspunkt(
       aksjonspunktCodes.BEHANDLE_KLAGE_NK, undefined,
       undefined, 'begrunnelse', false, undefined, 'status', undefined,
     );
-    const message = getAksjonspunktText.resultFunc(true, avvistKlage, null, ytelseType, behandlingsresultat)(aksjonspunkt);
-    expect(message[0].props.id).to.eql('VedtakForm.EngangsstonadIkkeInnvilget');
+    const message = getAksjonspunktText.resultFunc(true, klagebehandlingVurdering, behandlingStatusFVED)(aksjonspunkt);
+    expect(message[0].props.id).to.eql('ToTrinnsForm.Klage.StadfesteYtelsesVedtak');
   });
   it('skal vise korrekt tekst for aksjonspunkt 5036 avslag ytelsesvedtak opphevet', () => {
-    const behandlingsresultat = { type: { kode: behandlingResultatType.IKKE_FASTSATT } };
-    const ytelseType = fagsakYtelseType.FORELDREPENGER;
-
+    const klagebehandlingVurdering = {
+      klageVurderingResultatNK: stadfesteKlage,
+    };
     const aksjonspunkt = lagAksjonspunkt(
       aksjonspunktCodes.BEHANDLE_KLAGE_NK, undefined,
       undefined, 'begrunnelse', false, undefined, 'status', undefined,
     );
-    const message = getAksjonspunktText.resultFunc(true, null, avvistKlage, ytelseType, behandlingsresultat)(aksjonspunkt);
-    expect(message[0].props.id).to.eql('VedtakForm.ForeldrepengerIkkeInnvilget');
+    const message = getAksjonspunktText.resultFunc(true, klagebehandlingVurdering, behandlingStatusFVED)(aksjonspunkt);
+    expect(message[0].props.id).to.eql('ToTrinnsForm.Klage.StadfesteYtelsesVedtak');
   });
 
   it('skal vise korrekt tekst for aksjonspunkt 5058 vurder tidsbegrenset', () => {

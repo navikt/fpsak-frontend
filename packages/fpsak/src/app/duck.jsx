@@ -101,6 +101,9 @@ export const getFeatureToggleSimulering = createSelector(
 export const getFeatureToggleLøpendeMedlemskap = createSelector(
   [fpsakApi.FEATURE_TOGGLE.getRestApiData()], (ftData = {}) => ftData.featureToggles[featureToggle.LØPENDE_MEDLESMKAP],
 );
+export const getFeatureToggleFormkrav = createSelector(
+  [fpsakApi.FEATURE_TOGGLE.getRestApiData()], (ftData = {}) => ftData.featureToggles[featureToggle.FORMKRAV],
+);
 export const getShowDetailedErrorMessages = createSelector(
   [fpsakApi.SHOW_DETAILED_ERROR_MESSAGES.getRestApiData()], (showDetailedErrorMessages = false) => showDetailedErrorMessages,
 );

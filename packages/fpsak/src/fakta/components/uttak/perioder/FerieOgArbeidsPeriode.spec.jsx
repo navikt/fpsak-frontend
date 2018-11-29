@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
 import { RadioGroupField } from 'form/Fields';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import sinon from 'sinon';
 import { FerieOgArbeidsPeriode } from './FerieOgArbeidsPeriode';
 
@@ -26,6 +26,8 @@ describe('<FerieOgArbeidsPeriode>', () => {
       utsettelseArsak={{
         kode: 'ARBEID',
       }}
+      skalViseResultat
+      oppholdArsak={{}}
       inntektsmeldinger={[{
         arbeidsgiver: 'test',
         arbeidsgiverStartdato: '2000-01-01',

@@ -4,11 +4,14 @@ import { required } from 'utils/validation/validators';
 import { formatCurrencyNoKr, removeSpacesFromNumber } from 'utils/currencyUtils';
 
 
-const compareAndeler = (andel1, andel2) => {
+export const compareAndeler = (andel1, andel2) => {
   if (andel1.andelsinfo === andel2.andelsinfo) {
-    return andel1.inntektskategori > andel2.inntektskategori;
+    if (andel1.inntektskategori === andel2.inntektskategori) {
+      return 0;
+    }
+    return andel1.inntektskategori > andel2.inntektskategori ? 1 : -1;
   }
-  return andel1.andelsinfo > andel2.andelsinfo;
+  return andel1.andelsinfo > andel2.andelsinfo ? 1 : -1;
 };
 
 const mapAndelToSortedObject = (value, andelList) => {
@@ -38,9 +41,8 @@ export const ulikeAndelerErrorMessage = () => ([{ id: 'BeregningInfoPanel.Endrin
 
 const erAndelerLike = (andel1, andel2) => andel2.andelsinfo === andel1.andelsinfo && andel2.inntektskategori === andel1.inntektskategori;
 
-
-export const validateUlikeAndeler = (andelList) => {
-  const mappedAndeler = andelList.map(value => (mapAndelToSortedObject(value, andelList)));
+export const validateUlikeAndelerWithMap = (andelList, mapToSort) => {
+  const mappedAndeler = andelList.map(value => (mapToSort(value, andelList)));
   const sortedAndeler = mappedAndeler.slice().sort((andel1, andel2) => compareAndeler(andel1, andel2));
   for (let i = 0; i < sortedAndeler.length - 1; i += 1) {
     if (erAndelerLike(sortedAndeler[i], sortedAndeler[i + 1])) {
@@ -49,6 +51,9 @@ export const validateUlikeAndeler = (andelList) => {
   }
   return null;
 };
+
+
+export const validateUlikeAndeler = andelList => validateUlikeAndelerWithMap(andelList, mapAndelToSortedObject);
 
 
 export const skalIkkjeVereHogareEnnInntektmeldingMessage = () => ([{ id: 'BeregningInfoPanel.EndringBG.Validation.IkkeHøyereEnnInntektsmelding' }]);

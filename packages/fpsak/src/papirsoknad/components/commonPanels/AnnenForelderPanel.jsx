@@ -4,10 +4,10 @@ import { injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { FormSection, formValueSelector } from 'redux-form';
 import { Fieldset } from 'nav-frontend-skjema';
-import { Undertittel, Undertekst } from 'nav-frontend-typografi';
 
+import SoknadData from 'papirsoknad/SoknadData';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import kanIkkeOppgiAnnenForelderArsaker from 'kodeverk/kanIkkeOppgiAnnenForelderArsak';
 import {
   CheckboxField, InputField, NavFieldGroup, RadioOption, RadioGroupField, SelectField,
@@ -22,6 +22,7 @@ import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import landkoder from 'kodeverk/landkoder';
 
+import PermisjonRettigheterPanel from '../foreldrepenger/permisjon/PermisjonRettigheterPanel';
 import styles from './annenForelderPanel.less';
 
 const countrySelectValues = countryCodes => countryCodes
@@ -82,6 +83,8 @@ export const AnnenForelderPanelImpl = ({
   countryCodes,
   kanIkkeOppgiAnnenForelder,
   kanIkkeOppgiBegrunnelse,
+  soknadData,
+  sokerHarAleneomsorg,
   isForeldrepenger,
 }) => {
   const { formatMessage } = intl;
@@ -116,20 +119,8 @@ export const AnnenForelderPanelImpl = ({
         </div>
         )
         }
-        { isForeldrepenger
-        && (
-        <ElementWrapper>
-          <VerticalSpacer twentyPx />
-          <Undertittel>{intl.formatMessage({ id: 'Registrering.TheOtherParent.Confirmation' })}</Undertittel>
-          <VerticalSpacer eightPx />
-          <Undertekst>{intl.formatMessage({ id: 'Registrering.TheOtherParent.OtherParentKnowPeriods' })}</Undertekst>
-          <VerticalSpacer eightPx />
-          <RadioGroupField name="annenForelderInformert" readOnly={readOnly} validate={[required]}>
-            <RadioOption label={{ id: 'Registrering.TheOtherParent.Yes' }} value />
-            <RadioOption label={{ id: 'Registrering.TheOtherParent.No' }} value={false} />
-          </RadioGroupField>
-        </ElementWrapper>
-        )
+        {(isForeldrepenger && soknadData.getFagsakYtelseType() !== fagsakYtelseType.ENDRING_FORELDREPENGER)
+          && <PermisjonRettigheterPanel readOnly={readOnly} sokerHarAleneomsorg={sokerHarAleneomsorg} />
         }
       </Fieldset>
     </BorderBox>
@@ -138,17 +129,20 @@ export const AnnenForelderPanelImpl = ({
 
 AnnenForelderPanelImpl.propTypes = {
   intl: intlShape.isRequired,
+  isForeldrepenger: PropTypes.bool,
   countryCodes: kodeverkPropType.isRequired,
+  soknadData: PropTypes.instanceOf(SoknadData).isRequired,
+  sokerHarAleneomsorg: PropTypes.bool,
   kanIkkeOppgiAnnenForelder: PropTypes.bool,
   kanIkkeOppgiBegrunnelse: PropTypes.shape(),
   readOnly: PropTypes.bool,
-  isForeldrepenger: PropTypes.bool,
 };
 
 AnnenForelderPanelImpl.defaultProps = {
   kanIkkeOppgiAnnenForelder: null,
   kanIkkeOppgiBegrunnelse: {},
   readOnly: true,
+  sokerHarAleneomsorg: undefined,
   isForeldrepenger: false,
 };
 

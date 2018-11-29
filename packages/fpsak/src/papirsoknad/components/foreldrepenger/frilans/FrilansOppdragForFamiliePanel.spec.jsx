@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
 
 import ArrowBox from 'sharedComponents/ArrowBox';
 import { FrilansOppdragForFamiliePanelImpl } from './FrilansOppdragForFamiliePanel';

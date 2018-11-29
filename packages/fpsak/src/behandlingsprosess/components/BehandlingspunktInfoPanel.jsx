@@ -9,6 +9,7 @@ import {
   isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt,
   isSelectedBehandlingspunktReadOnly,
 } from 'behandlingsprosess/behandlingsprosessSelectors';
+import { getFeatureToggleFormkrav } from 'app/duck';
 import CheckPersonStatusForm from './saksopplysninger/CheckPersonStatusForm';
 import AvregningPanel from './avregning/AvregningPanel';
 import TilkjentYtelsePanel from './tilkjentYtelse/TilkjentYtelsePanel';
@@ -16,7 +17,9 @@ import UttakPanel from './uttak/UttakPanel';
 import VedtakPanels from './vedtak/VedtakPanels';
 import VilkarPanels from './vilkar/VilkarPanels';
 import BehandleKlageNfpForm from './klage/BehandleKlageNfpForm';
+import BehandleKlageNfpFormNy from './klage/BehandleKlageNfpFormNy';
 import BehandleKlageNkForm from './klage/BehandleKlageNkForm';
+import BehandleKlageNkFormNy from './klage/BehandleKlageNkFormNy';
 import FormkravKlageFormNfp from './klage/FormkravKlageFormNfp';
 import FormkravKlageFormKa from './klage/FormkravKlageFormKa';
 import InnsynForm from './innsyn/InnsynForm';
@@ -46,6 +49,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
   isApSolvable,
   apCodes,
   readOnlySubmitButton,
+  featureToggleFormkrav,
 }) => (
   <div className={findStyle(openAksjonspunkt, isApSolvable, readOnly)}>
     <div>
@@ -86,7 +90,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
       )
       }
 
-      {BehandleKlageNkForm.supports(apCodes)
+      {(BehandleKlageNkForm.supports(apCodes) && !featureToggleFormkrav)
       && (
       <BehandleKlageNkForm
         submitCallback={submitCallback}
@@ -96,9 +100,29 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
       />
       )
       }
-      {BehandleKlageNfpForm.supports(apCodes)
+      {(BehandleKlageNkFormNy.supports(apCodes) && featureToggleFormkrav)
+      && (
+      <BehandleKlageNkFormNy
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+        previewCallback={previewCallback}
+        readOnlySubmitButton={readOnlySubmitButton}
+      />
+      )
+      }
+      {(BehandleKlageNfpForm.supports(apCodes) && !featureToggleFormkrav)
       && (
       <BehandleKlageNfpForm
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+        previewCallback={previewCallback}
+        readOnlySubmitButton={readOnlySubmitButton}
+      />
+      )
+      }
+      {(BehandleKlageNfpFormNy.supports(apCodes) && featureToggleFormkrav)
+      && (
+      <BehandleKlageNfpFormNy
         submitCallback={submitCallback}
         readOnly={readOnly}
         previewCallback={previewCallback}
@@ -191,6 +215,7 @@ BehandlingspunktInfoPanel.propTypes = {
   isApSolvable: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  featureToggleFormkrav: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -199,6 +224,7 @@ const mapStateToProps = state => ({
   isApSolvable: isBehandlingspunktAksjonspunkterSolvable(state),
   apCodes: getBehandlingspunktAksjonspunkterCodes(state),
   readOnlySubmitButton: isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
+  featureToggleFormkrav: getFeatureToggleFormkrav(state),
 });
 
 export default connect(mapStateToProps)(BehandlingspunktInfoPanel);

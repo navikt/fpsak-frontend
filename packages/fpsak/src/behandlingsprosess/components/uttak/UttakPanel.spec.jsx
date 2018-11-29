@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
 import sinon from 'sinon';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { transformValues, buildInitialValues, UttakPanelImpl as UttakPanel } from './UttakPanel';
 import Uttak from './Uttak';
@@ -119,6 +119,9 @@ describe('<UttakPanel>', () => {
     const values = {
       manuellOverstyring: false,
       uttaksresultatActivity: [{
+        oppholdÅrsak: {
+          kode: '-',
+        },
         aktiviteter: [{
           days: 4,
           weeks: 5,
@@ -157,6 +160,9 @@ describe('<UttakPanel>', () => {
     const values = {
       manuellOverstyring: true,
       uttaksresultatActivity: [{
+        oppholdÅrsak: {
+          kode: '-',
+        },
         aktiviteter: [{
           days: 4,
           weeks: 6,

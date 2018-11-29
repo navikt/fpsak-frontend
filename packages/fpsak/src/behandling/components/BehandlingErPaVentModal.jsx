@@ -11,7 +11,7 @@ import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
 import SettBehandlingPaVentForm from 'behandling/components/SettBehandlingPaVentForm';
 import Image from 'sharedComponents/Image';
 
-import innvilgetImageUrl from 'images/innvilget_valgt.svg';
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 
 import styles from './behandlingErPaVentModal.less';
 

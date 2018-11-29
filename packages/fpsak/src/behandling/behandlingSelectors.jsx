@@ -56,7 +56,7 @@ export const getBehandlingArsakTyper = createSelector(
 );
 export const getBehandlingIsManuellRevurdering = createSelector(
   [getBehandlingIsRevurdering, getBehandlingArsaker, getBehandlingArsakTyper],
-  (isRevurdering, ba = {}, bt = {}) => isRevurdering && (!ba.erAutomatiskRevurdering || bt.kode === 'RE-HENDELSE-FØDSEL'),
+  (isRevurdering, ba = {}, bt = {}) => isRevurdering && (ba.manueltOpprettet || bt.kode === 'RE-HENDELSE-FØDSEL'),
 );
 export const getBehandlingIsOnHold = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingPaaVent);
 export const getBehandlingIsQueued = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingKoet);
@@ -170,6 +170,10 @@ export const getBehandlingGjelderBesteberegning = createSelector(
     : false),
 );
 
+
+export const getKunYtelse = createSelector(
+  [getFaktaOmBeregning], (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.kunYtelse : undefined),
+);
 export const getTilstøtendeYtelse = createSelector(
   [getFaktaOmBeregning], (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.tilstøtendeYtelse : undefined),
 );
@@ -233,7 +237,7 @@ export const getBehandlingArbeidsforhold = createSelector(
 );
 
 // KLAGEVURDERING
-const getBehandlingKlageVurdering = createSelector(
+export const getBehandlingKlageVurdering = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['klage-vurdering'] ? selectedBehandling['klage-vurdering'] : undefined),
 );
 export const getBehandlingKlageVurderingResultatNFP = createSelector(

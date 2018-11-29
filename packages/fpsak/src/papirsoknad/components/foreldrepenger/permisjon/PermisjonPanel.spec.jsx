@@ -5,7 +5,6 @@ import { FieldArray } from 'redux-form';
 import SoknadData from 'papirsoknad/SoknadData';
 import soknadTypeTillegg from 'kodeverk/soknadTypeTillegg';
 import { PermisjonPanel } from './PermisjonPanel';
-import PermisjonRettigheterPanel from './PermisjonRettigheterPanel';
 import PermisjonOverforingAvKvoterPanel from './PermisjonOverforingAvKvoterPanel';
 import PermisjonUtsettelsePanel from './PermisjonUtsettelsePanel';
 import PermisjonGraderingPanel from './PermisjonGraderingPanel';
@@ -22,9 +21,6 @@ describe('<PermisjonPanel>', () => {
       visFeilMelding={false}
       fulltUttak
     />);
-    const permisjonRettigheterPanel = wrapper.find(PermisjonRettigheterPanel);
-    expect(permisjonRettigheterPanel).to.have.length(1);
-
     const fieldArray = wrapper.find(FieldArray);
     expect(fieldArray).has.length(1);
   });

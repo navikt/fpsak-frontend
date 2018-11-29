@@ -2,14 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 
+
 import FagsakIndex from 'fagsak/FagsakIndex';
 import { fagsakPath } from 'app/paths';
 import TestFormIndex from 'form/TestFormIndex';
-import Dashboard from './Dashboard';
 
 import '@fpsak-frontend/assets/styles/modigDesign.less';
-import '@fpsak-frontend/assets/styles/global.less';
-
+import Dashboard from './Dashboard';
 import MissingPage from './MissingPage';
 
 import styles from './home.less';

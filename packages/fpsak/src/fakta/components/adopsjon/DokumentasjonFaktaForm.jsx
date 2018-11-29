@@ -15,7 +15,7 @@ import { required, hasValidDate } from 'utils/validation/validators';
 import Image from 'sharedComponents/Image';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import advarselImageUrl from 'images/advarsel.svg';
+import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 
 import styles from './dokumentasjonFaktaForm.less';
 

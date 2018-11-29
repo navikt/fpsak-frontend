@@ -25,6 +25,9 @@ describe('<UttakInfo>', () => {
     periodeType: {
       kode: '-',
     },
+    oppholdÅrsak: {
+      kode: '-',
+    },
     aktiviteter: [{
       trekkdager: 28,
       utbetalingsgrad: 100,
@@ -41,6 +44,7 @@ describe('<UttakInfo>', () => {
       selectedItemData={selectedItem}
       readOnly={false}
       harSoktOmFlerbarnsdager
+      oppholdArsakTyper={[]}
     />);
     const checkboxField = wrapper.find('CheckboxField');
     expect(checkboxField).to.have.length(2);
@@ -52,6 +56,7 @@ describe('<UttakInfo>', () => {
     const wrapper = shallow(<UttakInfo
       selectedItemData={selectedItem}
       readOnly
+      oppholdArsakTyper={[]}
       harSoktOmFlerbarnsdager
     />);
     const checkboxField = wrapper.find('CheckboxField');
@@ -68,6 +73,7 @@ describe('<UttakInfo>', () => {
       selectedItemData={selectedItem}
       readOnly={false}
       harSoktOmFlerbarnsdager={false}
+      oppholdArsakTyper={[]}
     />);
     const checkboxField = wrapper.find('CheckboxField');
     expect(checkboxField).to.have.length(1);

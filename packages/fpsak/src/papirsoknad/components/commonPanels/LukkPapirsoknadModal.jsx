@@ -9,7 +9,7 @@ import { Normaltekst, Element } from 'nav-frontend-typografi';
 import Modal from 'sharedComponents/Modal';
 import Image from 'sharedComponents/Image';
 
-import advarselImageUrl from 'images/advarsel.svg';
+import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 
 import styles from './lukkPapirsoknadModal.less';
 

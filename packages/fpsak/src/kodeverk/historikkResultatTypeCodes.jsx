@@ -52,6 +52,18 @@ const historikkResultatTypeCodes = {
     kode: 'VEDTAK_I_INNSYNBEHANDLING',
     feltId: 'HistorikkResultat.VedtakInnsynbehandling',
   },
+  DELVIS_MEDHOLD_I_KLAGE: {
+    kode: 'DELVIS_MEDHOLD_I_KLAGE',
+    feltId: 'HistorikkResultat.DelvisMedholdIKlage',
+  },
+  KLAGE_HJEMSENDE_UTEN_OPPHEVE: {
+    kode: 'KLAGE_HJEMSENDE_UTEN_OPPHEVE',
+    feltId: 'HistorikkResultat.BehandlingErHjemsendt',
+  },
+  UGUNST_MEDHOLD_I_KLAGE: {
+    kode: 'UGUNST_MEDHOLD_I_KLAGE',
+    feltId: 'HistorikkResultat.MedholdTilUgunst',
+  },
 };
 
 export default historikkResultatTypeCodes;

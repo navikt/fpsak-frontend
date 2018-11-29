@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
 import { expect } from 'chai';
 
 import SoknadData from 'papirsoknad/SoknadData';

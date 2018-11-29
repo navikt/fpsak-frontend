@@ -23,6 +23,7 @@ describe('<BehandlingspunktInfoPanel>', () => {
       isApSolvable={false}
       apCodes={[]}
       readOnlySubmitButton={false}
+      featureToggleFormkrav
     />);
 
     expect(wrapper.find(BeregningsresultatEngangsstonadForm)).to.have.length(1);
@@ -41,6 +42,7 @@ describe('<BehandlingspunktInfoPanel>', () => {
       isApSolvable={false}
       apCodes={[aksjonspunktCodes.VURDER_SOKNADSFRIST_FORELDREPENGER]}
       readOnlySubmitButton={false}
+      featureToggleFormkrav
     />);
     expect(wrapper.find(VurderSoknadsfristForeldrepengerForm)).to.have.length(1);
   });

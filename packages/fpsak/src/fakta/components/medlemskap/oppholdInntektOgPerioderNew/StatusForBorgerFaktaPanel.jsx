@@ -67,7 +67,6 @@ const StatusForBorgerFaktaPanelImpl = ({
   </FaktaGruppe>
 );
 
-
 StatusForBorgerFaktaPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   erEosBorger: PropTypes.bool,
@@ -99,9 +98,14 @@ const getLovligOppholdVurdering = periode => (periode.lovligOppholdVurdering || 
 
 StatusForBorgerFaktaPanel.buildInitialValues = (periode, aksjonspunkter) => {
   const erEosBorger = getEosBorger(periode, aksjonspunkter);
+
   const closedAp = aksjonspunkter
     .filter(ap => periode.aksjonspunkter.includes(ap.definisjon.kode)
-      || (periode.aksjonspunkter.length > 0 && ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP))
+      || (periode.aksjonspunkter.length > 0 && [
+        aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
+        aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD,
+        aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
+      ].includes(ap.definisjon.kode)))
     .filter(ap => !isAksjonspunktOpen(ap.status.kode));
 
   return {

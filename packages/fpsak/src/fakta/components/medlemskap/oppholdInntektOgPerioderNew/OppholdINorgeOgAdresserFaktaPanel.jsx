@@ -17,8 +17,8 @@ import { required } from 'utils/validation/validators';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import Image from 'sharedComponents/Image';
 import PeriodLabel from 'sharedComponents/PeriodLabel';
-import checkImage from 'images/check.svg';
-import avslaattImage from 'images/avslaatt.svg';
+import checkImage from '@fpsak-frontend/assets/images/check.svg';
+import avslaattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import BostedSokerView from 'fakta/components/BostedSokerView';
 
 import styles from './oppholdINorgeOgAdresserFaktaPanel.less';
@@ -184,7 +184,10 @@ OppholdINorgeOgAdresserFaktaPanel.buildInitialValues = (soknad, periode, aksjons
 
   const filteredAp = aksjonspunkter
     .filter(ap => periode.aksjonspunkter.includes(ap.definisjon.kode)
-      || (periode.aksjonspunkter.length > 0 && ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP));
+      || (periode.aksjonspunkter.length > 0 && [
+        aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
+        aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
+      ].includes(ap.definisjon.kode)));
 
   return {
     opphold,

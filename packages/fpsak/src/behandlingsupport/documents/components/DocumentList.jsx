@@ -11,10 +11,10 @@ import DateLabel from 'sharedComponents/DateLabel';
 import Image from 'sharedComponents/Image';
 import kommunikasjonsretning from 'kodeverk/kommunikasjonsretning';
 
-import sendDokumentImageUrl from 'images/send_dokument.svg';
-import mottaDokumentImageUrl from 'images/motta_dokument.svg';
-import internDokumentImageUrl from 'images/intern_dokument.svg';
-import erIBrukImageUrl from 'images/stjerne.svg';
+import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
+import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg';
+import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokument.svg';
+import erIBrukImageUrl from '@fpsak-frontend/assets/images/stjerne.svg';
 
 import styles from './documentList.less';
 

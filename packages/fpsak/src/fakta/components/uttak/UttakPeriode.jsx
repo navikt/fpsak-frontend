@@ -11,8 +11,8 @@ import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
 import Image from 'sharedComponents/Image';
 import classnames from 'classnames/bind';
 import { ISO_DATE_FORMAT } from 'utils/formats';
-import overlapp from 'images/overlapp.svg';
-import tomPeriode from 'images/tom_periode.svg';
+import overlapp from '@fpsak-frontend/assets/images/overlapp.svg';
+import tomPeriode from '@fpsak-frontend/assets/images/tom_periode.svg';
 import UttakPeriodeType from './UttakPeriodeType';
 import UttakPeriodeInnhold from './UttakPeriodeInnhold';
 
@@ -52,6 +52,13 @@ const renderValidationGraphic = (perioder, index, isLastIndex) => {
   return null;
 };
 
+const getClassName = (periode, readOnly) => {
+  if (periode.oppholdÅrsak && periode.oppholdÅrsak.kode !== '-') {
+    return classNames('oppholdPeriodeContainer', { active: !periode.bekreftet && !readOnly });
+  }
+  return classNames('periodeContainer', { active: !periode.bekreftet && !readOnly });
+};
+
 const UttakPeriode = ({
   fields,
   openSlettPeriodeModalCallback,
@@ -78,7 +85,7 @@ const UttakPeriode = ({
           <FlexRow key={fieldId}>
             <FlexColumn className={styles.fullWidth}>
               {index === 0 && harEndringsDatoSomErFørFørsteUttaksPeriode && renderTomPeriode()}
-              <div className={classNames('periodeContainer', { active: !periode.bekreftet && !readOnly })}>
+              <div className={getClassName(periode, readOnly)}>
                 <UttakPeriodeType
                   bekreftet={periode.bekreftet}
                   tilDato={periode.tom}
@@ -100,6 +107,7 @@ const UttakPeriode = ({
                   flerbarnsdager={periode.flerbarnsdager}
                   samtidigUttak={periode.samtidigUttak}
                   samtidigUttaksprosent={periode.samtidigUttaksprosent}
+                  oppholdArsak={periode.oppholdÅrsak}
                 />
                 <UttakPeriodeInnhold
                   fieldId={fieldId}

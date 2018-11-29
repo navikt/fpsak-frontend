@@ -1,0 +1,8 @@
+const klageVurderingOmgjoer = {
+  DELVIS_MEDHOLD_I_KLAGE: 'DELVIS_MEDHOLD_I_KLAGE',
+  GUNST_MEDHOLD_I_KLAGE: 'GUNST_MEDHOLD_I_KLAGE',
+  UGUNST_MEDHOLD_I_KLAGE: 'UGUNST_MEDHOLD_I_KLAGE',
+  UDEFINERT: '-',
+};
+
+export default klageVurderingOmgjoer;
