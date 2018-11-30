@@ -245,6 +245,14 @@ const historikkEndretFeltTypeCodes = {
     kode: 'UTTAK_PERIODE_RESULTAT_ÅRSAK',
     feltId: 'HistorikkEndretFelt.resultatÅrsak',
   },
+  UTTAK_GRADERING_ARBEIDSFORHOLD: {
+    kode: 'UTTAK_GRADERING_ARBEIDSFORHOLD',
+    feltId: 'HistorikkEndretFelt.GraderingArbeidsforhold',
+  },
+  UTTAK_GRADERING_AVSLAG_ÅRSAK: {
+    kode: 'UTTAK_GRADERING_AVSLAG_ÅRSAK',
+    feltId: 'HistorikkEndretFelt.GraderingAvslagÅrsak',
+  },
   UTTAK_SPLITT_TIDSPERIODE: {
     kode: 'UTTAK_SPLITT_TIDSPERIODE',
     feltId: 'HistorikkEndretFelt.SplittPerioden',

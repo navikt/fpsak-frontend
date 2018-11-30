@@ -40,7 +40,8 @@ const HistorikkMalType10 = ({
     } else if ((endretFelt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.UTTAK_PERIODE_RESULTAT_TYPE.kode)
       && endretFelt.fraVerdi === 'MANUELL_BEHANDLING') {
       messageId = 'Historikk.Template.10.FieldSetTo';
-    } else if (endretFelt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.UTTAK_PERIODE_RESULTAT_ÅRSAK.kode) {
+    } else if (endretFelt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.UTTAK_PERIODE_RESULTAT_ÅRSAK.kode
+      || endretFelt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.UTTAK_GRADERING_AVSLAG_ÅRSAK.kode) {
       if (endretFelt.tilVerdi === '-') {
         return '';
       } if (endretFelt.fraVerdi === '-') {
