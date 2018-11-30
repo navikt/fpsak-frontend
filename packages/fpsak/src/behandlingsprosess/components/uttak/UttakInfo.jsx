@@ -60,14 +60,17 @@ const gradertArbforhold = (selectedItem) => {
   let arbeidsforhold = '';
   if (selectedItem.gradertAktivitet) {
     const {
-      arbeidsforholdNavn, arbeidsforholdOrgnr, uttakArbeidType,
+      arbeidsgiver, uttakArbeidType,
     } = selectedItem.gradertAktivitet;
 
     if (uttakArbeidType && uttakArbeidType.kode !== uttakArbeidTypeKodeverk.ORDINÆRT_ARBEID) {
       arbeidsforhold = <FormattedMessage id={uttakArbeidTypeTekstCodes[uttakArbeidType.kode]} />;
-    } else {
-      arbeidsforhold = arbeidsforholdNavn ? `${arbeidsforholdNavn}` : arbeidsforhold;
-      arbeidsforhold = arbeidsforholdOrgnr ? `${arbeidsforhold} (${arbeidsforholdOrgnr})` : arbeidsforhold;
+    } else if (arbeidsgiver) {
+      const {
+        navn, identifikator,
+      } = arbeidsgiver;
+      arbeidsforhold = navn ? `${navn}` : arbeidsforhold;
+      arbeidsforhold = identifikator ? `${arbeidsforhold} (${identifikator})` : arbeidsforhold;
     }
   }
   return arbeidsforhold;

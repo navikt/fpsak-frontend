@@ -6,10 +6,16 @@ export const kodeverkPropType = PropTypes.shape({
   navn: PropTypes.string.isRequired,
 });
 
+const arbeidsgiverPropType = PropTypes.shape({
+  aktørId: PropTypes.string,
+  identifikator: PropTypes.string,
+  navn: PropTypes.string,
+  virksomhet: PropTypes.bool,
+});
+
 export const uttaksresultatAktivitetPropType = PropTypes.shape({
   arbeidsforholdId: PropTypes.string, // Hvis andel tilhører arbeidsgiver
-  arbeidsforholdNavn: PropTypes.string, // Hvis andel tilhører arbeidsgiver
-  arbeidsforholdOrgnr: PropTypes.string, // Hvis andel tilhører arbeidsgiver
+  arbeidsgiver: arbeidsgiverPropType,
   gradering: PropTypes.bool,
   prosentArbeid: PropTypes.number, // Hvis andel tilhører søker
   samtidigUttak: PropTypes.bool,

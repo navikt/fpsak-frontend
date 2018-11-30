@@ -51,15 +51,15 @@ const createTextStrings = (arbforhold) => {
   const {
     arbeidsgiver, arbeidsforholdId, uttakArbeidType,
   } = arbforhold;
-  const {
-    identifikator, navn, virksomhet,
-  } = arbeidsgiver;
 
   let arbeidsforhold = '';
 
   if (uttakArbeidType && uttakArbeidType.kode !== uttakArbeidTypeKodeverk.ORDINÆRT_ARBEID) {
     arbeidsforhold = <FormattedMessage id={uttakArbeidTypeTekstCodes[uttakArbeidType.kode]} />;
   } else {
+    const {
+      identifikator, navn, virksomhet,
+    } = arbeidsgiver;
     arbeidsforhold = navn ? `${navn}` : arbeidsforhold;
     arbeidsforhold = identifikator ? `${arbeidsforhold} (${identifikator})` : arbeidsforhold;
     arbeidsforhold = virksomhet && arbeidsforholdId ? `${arbeidsforhold}...${arbeidsforholdId.substr(-4)}` : arbeidsforhold;
@@ -137,11 +137,15 @@ class TimeLineInfo extends Component {
       return stonadArray;
     };
 
-    const createKey = arbeidsforhold => arbeidsforhold.aktivitetIdentifikator.uttakArbeidType.kode
-      + arbeidsforhold.aktivitetIdentifikator.arbeidsforholdNavn
-      + arbeidsforhold.aktivitetIdentifikator.arbeidsforholdId
-      + arbeidsforhold.aktivitetIdentifikator.arbeidsforholdOrgnr
-      + arbeidsforhold.fordelteDager;
+    const createKey = (arbeidsforhold) => {
+      const { uttakArbeidType, arbeidsgiver, arbeidsforholdId } = arbeidsforhold.aktivitetIdentifikator;
+      let arbKey = uttakArbeidType.kode;
+      arbKey = arbeidsgiver ? `${arbKey} ${arbeidsgiver.navn}` : arbKey;
+      arbKey = arbeidsforholdId ? `${arbKey} ${arbeidsforholdId}` : arbKey;
+      arbKey = arbeidsgiver ? `${arbKey} ${arbeidsgiver.identifikator}` : arbKey;
+      arbKey = `${arbKey} ${arbeidsforhold.saldo}`;
+      return arbKey;
+    };
 
     return (
       <div>
