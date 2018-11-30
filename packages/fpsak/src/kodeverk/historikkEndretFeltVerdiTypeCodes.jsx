@@ -479,7 +479,7 @@ const historikkEndretFeltVerdiTypeCodes = {
   },
   4072: {
     kode: 'UTTAK_PERIODE_AVSLAG_ÅRSAK',
-    verdiId: 'HistorikkEndretFelt.AktivitetskravKVPIkkeDok',
+    verdiId: 'HistorikkEndretFelt.BarnetErDødt',
   },
   4071: {
     kode: 'UTTAK_PERIODE_AVSLAG_ÅRSAK',
