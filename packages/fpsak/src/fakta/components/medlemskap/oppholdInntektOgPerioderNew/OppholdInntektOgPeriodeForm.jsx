@@ -27,20 +27,17 @@ export const OppholdInntektOgPeriodeForm = ({
   initialValues,
   submittable,
   isRevurdering,
+  periodeResetCallback,
   ...formProps
 }) => (
   <BorderBox>
     <OppholdINorgeOgAdresserFaktaPanel readOnly={readOnly} id={valgtPeriode.id} />
-
     <InntektOgYtelserFaktaPanel id={valgtPeriode.id} />
-
     <PerioderMedMedlemskapFaktaPanel readOnly={readOnly} id={valgtPeriode.id} />
-
     { (hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, valgtPeriode.aksjonspunkter) || hasAksjonspunkt(AVKLAR_LOVLIG_OPPHOLD, valgtPeriode.aksjonspunkter))
     && <StatusForBorgerFaktaPanel readOnly={readOnly} id={valgtPeriode.id} />
     }
     <VerticalSpacer twentyPx />
-
     { valgtPeriode.aksjonspunkter && valgtPeriode.aksjonspunkter.length > 0
     && (
       <FaktaBegrunnelseTextField
@@ -66,7 +63,11 @@ export const OppholdInntektOgPeriodeForm = ({
           </Hovedknapp>
         </FlexColumn>
         <FlexColumn>
-          <Knapp mini htmlType="button">
+          <Knapp
+            htmlType="button"
+            mini
+            onClick={periodeResetCallback}
+          >
             <FormattedMessage id="OppholdInntektOgPeriode.Avbryt" />
           </Knapp>
         </FlexColumn>
@@ -83,6 +84,7 @@ OppholdInntektOgPeriodeForm.propTypes = {
   valgtPeriode: PropTypes.shape().isRequired,
   initialValues: PropTypes.shape().isRequired,
   isRevurdering: PropTypes.bool.isRequired,
+  periodeResetCallback: PropTypes.func.isRequired,
 };
 
 OppholdInntektOgPeriodeForm.defaultProps = {
@@ -104,7 +106,7 @@ const buildInitialValues = (periode, soknad, person, inntekter, medlemskapPeriod
     oppholdValues = StatusForBorgerFaktaPanel.buildInitialValues(periode, aksjonspunkter);
   }
   if (periode.aksjonspunkter.length > 0) {
-    confirmValues = FaktaBegrunnelseTextField.buildInitialValues(periode.aksjonspunkter[0]);
+    confirmValues = FaktaBegrunnelseTextField.buildInitialValues([periode]);
   }
 
   return {
@@ -130,9 +132,8 @@ const mapStateToProps = (state, ownProps) => {
     initialValues: {
       ...buildInitialValues(valgtPeriode, soknad, person, inntekter, medlemskapPerioder, gjeldendeFom, ownProps.aksjonspunkter),
     },
-    submittable: true,
+    submittable: ownProps.submittable,
     form: formName,
-    // validate: values => validateoppholdInntektPeriode(values),
     onSubmit: values => ownProps.updateOppholdInntektPeriode(transformValues(values, ownProps.aksjonspunkter, state)),
   };
 };

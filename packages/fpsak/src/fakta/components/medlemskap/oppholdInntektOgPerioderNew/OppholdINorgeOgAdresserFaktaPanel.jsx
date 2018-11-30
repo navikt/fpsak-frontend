@@ -184,10 +184,9 @@ OppholdINorgeOgAdresserFaktaPanel.buildInitialValues = (soknad, periode, aksjons
 
   const filteredAp = aksjonspunkter
     .filter(ap => periode.aksjonspunkter.includes(ap.definisjon.kode)
-      || (periode.aksjonspunkter.length > 0 && [
-        aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
-        aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
-      ].includes(ap.definisjon.kode)));
+      || (periode.aksjonspunkter.length > 0
+        && periode.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT)
+        && ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP));
 
   return {
     opphold,

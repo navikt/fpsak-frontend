@@ -101,11 +101,10 @@ StatusForBorgerFaktaPanel.buildInitialValues = (periode, aksjonspunkter) => {
 
   const closedAp = aksjonspunkter
     .filter(ap => periode.aksjonspunkter.includes(ap.definisjon.kode)
-      || (periode.aksjonspunkter.length > 0 && [
-        aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
-        aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD,
-        aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
-      ].includes(ap.definisjon.kode)))
+      || (periode.aksjonspunkter.length > 0
+        && periode.aksjonspunkter.some(pap => pap === aksjonspunktCodes.AVKLAR_OPPHOLDSRETT
+          || pap === aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD)
+        && ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP))
     .filter(ap => !isAksjonspunktOpen(ap.status.kode));
 
   return {
