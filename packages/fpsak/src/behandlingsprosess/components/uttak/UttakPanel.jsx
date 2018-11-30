@@ -58,6 +58,7 @@ const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter) => {
     5011: 'UttakPanel.Aksjonspunkt.5011',
     5012: 'UttakPanel.Aksjonspunkt.5012',
     5013: 'UttakPanel.Aksjonspunkt.5013',
+    5018: 'UttakPanel.Aksjonspunkt.5018',
     5072: 'UttakPanel.Aksjonspunkt.5072',
     5073: 'UttakPanel.Aksjonspunkt.5073',
     5074: 'UttakPanel.Aksjonspunkt.5074',

@@ -585,6 +585,26 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'UTTAK_PERIODE_AVSLAG_ÅRSAK',
     verdiId: 'HistorikkEndretFelt.IkkeGraderingForSenSoknad',
   },
+  4087: {
+    kode: 'UTTAK_PERIODE_AVSLAG_ÅRSAK',
+    verdiId: 'HistorikkEndretFelt.medlemskapvilkarOpphor',
+  },
+  4096: {
+    kode: 'UTTAK_PERIODE_AVSLAG_ÅRSAK',
+    verdiId: 'HistorikkEndretFelt.fodselsvilkarOpphor',
+  },
+  4097: {
+    kode: 'UTTAK_PERIODE_AVSLAG_ÅRSAK',
+    verdiId: 'HistorikkEndretFelt.adopsjonsvilkarOpphor',
+  },
+  4098: {
+    kode: 'UTTAK_PERIODE_AVSLAG_ÅRSAK',
+    verdiId: 'HistorikkEndretFelt.foreldreansvarvilkarOpphor',
+  },
+  4099: {
+    kode: 'UTTAK_PERIODE_AVSLAG_ÅRSAK',
+    verdiId: 'HistorikkEndretFelt.opptjeningsvilkarOpphor',
+  },
   MØDREKVOTE: {
     kode: 'MØDREKVOTE',
     verdiId: 'HistorikkEndretFeltVerdiType.Modrekvote',
