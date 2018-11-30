@@ -96,7 +96,7 @@ const foreldrepengerBuilders = [
 
   new BehandlingspunktProperties.Builder(bpc.FORTSATTMEDLEMSKAP, 'FortsattMedlemskap')
     .withVilkarTypes(vt.MEDLEMSKAPSVILKÅRET_LØPENDE)
-    .withAksjonspunktCodes(ac.OVERSTYR_MEDLEMSKAPSVILKAR)
+    .withAksjonspunktCodes(ac.OVERSTYR_LØPENDE_MEDLEMSKAPSVILKAR)
     .withVisibilityWhen(behandlingTypeEquals(bt.REVURDERING), hasLøpendeMedlemskapOn),
 
   new BehandlingspunktProperties.Builder(bpc.UTTAK, 'Uttak')

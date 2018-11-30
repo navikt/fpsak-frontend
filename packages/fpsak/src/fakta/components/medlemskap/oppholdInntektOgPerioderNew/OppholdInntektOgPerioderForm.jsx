@@ -88,6 +88,7 @@ export class OppholdInntektOgPerioderFormNew extends Component {
     this.velgPeriodeCallback = this.velgPeriodeCallback.bind(this);
     this.updateOppholdInntektPeriode = this.updateOppholdInntektPeriode.bind(this);
     this.isConfirmButtonDisabled = this.isConfirmButtonDisabled.bind(this);
+    this.periodeResetCallback = this.periodeResetCallback.bind(this);
   }
 
 
@@ -104,6 +105,14 @@ export class OppholdInntektOgPerioderFormNew extends Component {
       this.setState({ valgtPeriode: defaultPeriode });
     }
     this.setState({ valgtPeriode });
+  }
+
+  periodeResetCallback() {
+    const { behandlingFormPrefix, reduxFormReset: formReset } = this.props;
+    const { valgtPeriode } = this.state;
+    if (valgtPeriode) {
+      formReset(`${behandlingFormPrefix}.OppholdInntektOgPeriodeForm-${valgtPeriode.id}`);
+    }
   }
 
   velgPeriodeCallback(p, id, periode) {
@@ -133,19 +142,20 @@ export class OppholdInntektOgPerioderFormNew extends Component {
 
   isConfirmButtonDisabled() {
     const {
-      perioder, readOnly, submitting, isDirty,
+      perioder, readOnly, submitting, aksjonspunkter, dirty,
     } = this.props;
 
     if (perioder && perioder.length > 0) {
       const hasAksjonspunkterUtenBegrunnelse = perioder.filter(periode => periode.aksjonspunkter.length > 0
-        && !Object.prototype.hasOwnProperty.call(periode, 'begrunnelse'));
+        && periode.begrunnelse !== ''
+        && aksjonspunkter.some(ap => periode.aksjonspunkter.includes(ap.definisjon.kode)));
 
-      if (hasAksjonspunkterUtenBegrunnelse.length === 0) {
+      if (hasAksjonspunkterUtenBegrunnelse.length === 0 && dirty) {
         return false;
       }
     }
 
-    if (!isDirty) {
+    if (!dirty) {
       return true;
     }
     return submitting || readOnly;
@@ -180,7 +190,9 @@ export class OppholdInntektOgPerioderFormNew extends Component {
           readOnly={readOnly}
           valgtPeriode={valgtPeriode}
           aksjonspunkter={aksjonspunkter}
+          submittable={submittable}
           updateOppholdInntektPeriode={this.updateOppholdInntektPeriode}
+          periodeResetCallback={this.periodeResetCallback}
         />
 
         <VerticalSpacer twentyPx />
@@ -223,11 +235,21 @@ const transformValues = (values, aksjonspunkter) => {
     begrunnelse: '',
     bekreftedePerioder: values.perioder.map((periode) => {
       const {
-        id, fixedMedlemskapPerioder, foreldre, inntekter,
+        id,
+        fixedMedlemskapPerioder,
+        foreldre,
+        inntekter,
         manuellVurderingType,
-        hasBosattAksjonspunkt, hasPeriodeAksjonspunkt, isBosattAksjonspunktClosed, isPeriodAksjonspunktClosed,
-        opphold, personopplysninger, fom,
-        termindato, årsaker, ...bekreftetPeriode // todo re
+        hasBosattAksjonspunkt,
+        hasPeriodeAksjonspunkt,
+        isBosattAksjonspunktClosed,
+        isPeriodAksjonspunktClosed,
+        opphold,
+        personopplysninger,
+        fom,
+        termindato,
+        årsaker,
+        ...bekreftetPeriode
       } = periode;
       return bekreftetPeriode;
     }).filter(periode => periode.aksjonspunkter.includes(ap.definisjon.kode)

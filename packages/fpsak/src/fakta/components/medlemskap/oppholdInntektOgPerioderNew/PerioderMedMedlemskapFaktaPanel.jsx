@@ -169,7 +169,9 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (periode, medlemskapPeriode
 
   const filteredAp = aksjonspunkter
     .filter(ap => periode.aksjonspunkter.includes(ap.definisjon.kode)
-      || (periode.aksjonspunkter.length > 0 && ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP));
+      || (periode.aksjonspunkter.length > 0
+        && periode.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE)
+        && ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP));
 
   return {
     fixedMedlemskapPerioder,

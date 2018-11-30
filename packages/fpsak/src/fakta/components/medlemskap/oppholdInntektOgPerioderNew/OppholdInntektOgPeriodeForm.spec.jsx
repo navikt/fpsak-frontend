@@ -27,6 +27,7 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
       intl={intlMock}
       aksjonspunkter={[]}
       updateOppholdInntektPeriode={sinon.spy()}
+      periodeResetCallback={sinon.spy()}
       hasOpenAksjonspunkter={false}
       valgtPeriode={valgtPeriode}
       submittable
@@ -69,6 +70,7 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
       intl={intlMock}
       aksjonspunkter={[bosattAksjonspunkt]}
       updateOppholdInntektPeriode={sinon.spy()}
+      periodeResetCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -108,6 +110,7 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
       intl={intlMock}
       aksjonspunkter={[periodeAksjonspunkt]}
       updateOppholdInntektPeriode={sinon.spy()}
+      periodeResetCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -148,6 +151,7 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
       intl={intlMock}
       aksjonspunkter={[oppholdsrettAksjonspunkt]}
       updateOppholdInntektPeriode={sinon.spy()}
+      periodeResetCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -188,6 +192,7 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
       intl={intlMock}
       aksjonspunkter={[lovligOppholdAksjonspunkt]}
       updateOppholdInntektPeriode={sinon.spy()}
+      periodeResetCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -229,6 +234,7 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
       intl={intlMock}
       aksjonspunkter={[fortsattMedlemskapAksjonspunkt]}
       updateOppholdInntektPeriode={sinon.spy()}
+      periodeResetCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
