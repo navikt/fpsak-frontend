@@ -645,6 +645,70 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'INNVILGET_AARSAK',
     verdiId: 'HistorikkEndretFeltVerdiType.OverforingOppfyltAnnePartHjelp',
   },
+  2003: {
+    kode: 'INNVILGET_AARSAK',
+    verdiId: 'HistorikkEndretFeltVerdiType.InnvilgetUttakKvote',
+  },
+  2002: {
+    kode: 'INNVILGET_AARSAK',
+    verdiId: 'HistorikkEndretFeltVerdiType.InnvilgetFellesEllerFP',
+  },
+  2004: {
+    kode: 'INNVILGET_AARSAK',
+    verdiId: 'HistorikkEndretFeltVerdiType.InnvilgetFPKunFarHarRett',
+  },
+  2005: {
+    kode: 'INNVILGET_AARSAK',
+    verdiId: 'HistorikkEndretFeltVerdiType.InnvilgetFPVedAleneomsorg',
+  },
+  2006: {
+    kode: 'INNVILGET_AARSAK',
+    verdiId: 'HistorikkEndretFeltVerdiType.InnvilgetFPFF',
+  },
+  2007: {
+    kode: 'INNVILGET_AARSAK',
+    verdiId: 'HistorikkEndretFeltVerdiType.InnvilgetFPKunMorHarRett',
+  },
+  2015: {
+    kode: 'INNVILGET_AARSAK',
+    verdiId: 'HistorikkEndretFeltVerdiType.UtsetFerieKunFarHarRett',
+  },
+  2016: {
+    kode: 'INNVILGET_AARSAK',
+    verdiId: 'HistorikkEndretFeltVerdiType.UtsetArbeidKunFarHarRett',
+  },
+  2017: {
+    kode: 'INNVILGET_AARSAK',
+    verdiId: 'HistorikkEndretFeltVerdiType.UtsetSykdomSkadeKunFarHarRett',
+  },
+  2018: {
+    kode: 'INNVILGET_AARSAK',
+    verdiId: 'HistorikkEndretFeltVerdiType.UtsetInnleggelseKunFarHarRett',
+  },
+  2019: {
+    kode: 'INNVILGET_AARSAK',
+    verdiId: 'HistorikkEndretFeltVerdiType.UtsetBarnetsInnleggelseKunFarHarRett',
+  },
+  2030: {
+    kode: 'INNVILGET_AARSAK',
+    verdiId: 'HistorikkEndretFeltVerdiType.GraderingFellesEllerFP',
+  },
+  2031: {
+    kode: 'INNVILGET_AARSAK',
+    verdiId: 'HistorikkEndretFeltVerdiType.GraderingKvote',
+  },
+  2032: {
+    kode: 'INNVILGET_AARSAK',
+    verdiId: 'HistorikkEndretFeltVerdiType.GraderingFPAleneomsorg',
+  },
+  2033: {
+    kode: 'INNVILGET_AARSAK',
+    verdiId: 'HistorikkEndretFeltVerdiType.GraderingFPKunFarRett',
+  },
+  2034: {
+    kode: 'INNVILGET_AARSAK',
+    verdiId: 'HistorikkEndretFeltVerdiType.GraderingFPMorFarRett',
+  },
   VERGE: {
     kode: 'VERGE',
     verdiId: 'Verge.VergeFullmektig',
