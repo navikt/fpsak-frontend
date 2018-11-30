@@ -46,7 +46,8 @@ export const TilleggsopplysningerPanel = ({
             />
           </Fieldset>
         </Column>
-        {localfeatureToggle &&
+        {localfeatureToggle
+        && (
         <Column xs="6">
           <Fieldset legend={intl.formatMessage({ id: 'Registrering.Sprak' })}>
             <RadioGroupField
@@ -70,7 +71,7 @@ export const TilleggsopplysningerPanel = ({
             </RadioGroupField>
           </Fieldset>
         </Column>
-        }
+        )}
       </Row>
     </div>
   </BorderBox>
