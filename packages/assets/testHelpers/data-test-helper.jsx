@@ -2,8 +2,6 @@ import RestDuck from '@fpsak-frontend/fpsak/src/data/rest/redux/RestDuck';
 import getAxiosHttpClientApi from '@fpsak-frontend/fpsak/src/data/rest/axios/axiosHttpClientApi';
 import RequestApi from '@fpsak-frontend/fpsak/src/data/rest/requestApi/RequestApi';
 import reducers from '@fpsak-frontend/fpsak/src/reducers';
-import behandlingStatus from 'kodeverk/behandlingStatus';
-import behandlingType from 'kodeverk/behandlingType';
 
 export const withoutRestActions = actions => actions.filter(a => !a.type.match(/^@@REST/));
 

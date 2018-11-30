@@ -13,7 +13,7 @@ sinon.stub(console, 'error').callsFake((warning) => {
   }
 });
 
-const dom = new JSDOM('<html><body></body></html>', {
+const dom = new JSDOM('<html><body></body></html><div id="app" />', {
   url: 'http://localhost/',
 });
 global.document = dom.window.document;
@@ -33,6 +33,6 @@ global.requestAnimationFrame = (cb) => {
   setTimeout(cb, 0);
 };
 
-if (typeof URL !== 'undefined') {
-  delete URL;
-}
+global.cancelAnimationFrame = (cb) => {
+  setTimeout(cb, 0);
+};
