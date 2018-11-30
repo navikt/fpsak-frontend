@@ -46,14 +46,14 @@ const vurderOgFastsettATFLTilfeller = [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_
 const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
 export const getValidationFaktaForATFLOgSN = createSelector(
-  [getFaktaOmBeregningTilfellerKoder, getEndringBeregningsgrunnlagPerioder, getAksjonspunkter],
-  (aktivertePaneler, endringBGPerioder, aksjonspunkter) => (values) => {
+  [getFaktaOmBeregningTilfellerKoder, getEndringBeregningsgrunnlagPerioder, getAksjonspunkter, getKunYtelse],
+  (aktivertePaneler, endringBGPerioder, aksjonspunkter, kunYtelse) => (values) => {
     if (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)) {
       return {
         ...FastsettEndretBeregningsgrunnlag.validate(values, endringBGPerioder, aktivertePaneler),
         ...TilstotendeYtelseForm.validate(values, aktivertePaneler),
         ...TilstotendeYtelseIKombinasjon.validate(values, endringBGPerioder, aktivertePaneler),
-        ...KunYtelsePanel.validate(values, aktivertePaneler),
+        ...KunYtelsePanel.validate(values, aktivertePaneler, kunYtelse),
       };
     }
     return null;
@@ -142,6 +142,7 @@ const getFaktaPanels = (readOnly, formName, tilfeller, isAksjonspunktClosed, sho
           <KunYtelsePanel
             readOnly={readOnly}
             formName={formName}
+            isAksjonspunktClosed={isAksjonspunktClosed}
           />
         </ElementWrapper>,
       );
@@ -299,7 +300,7 @@ const setValuesForVurderFakta = (aktivePaneler, values, endringBGPerioder, kortv
       vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE);
       vurderFaktaValues = {
         ...vurderFaktaValues,
-        ...KunYtelsePanel.transformValues(values),
+        ...KunYtelsePanel.transformValues(values, faktaOmBeregning.kunYtelse),
       };
     }
   });
