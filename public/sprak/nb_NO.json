@@ -865,6 +865,7 @@
   "Registrering.Permisjon.Mor.Yes": "Ja",
   "Registrering.Permisjon.Mor.No": "Nei",
   "Registrering.Permisjon.HarSamtidigUttak": "Samtidig uttak",
+  "Registrering.Permisjon.Flerbarnsdager": "Flerbarnsdager",
   "Registrering.Permisjon.UttakStartdato": "Når skal uttak av foreldrepenger starte?",
   "Registrering.Permisjon.HeleModrekvotenUmiddelbart": "Skal hele mødrekvoten tas ut umiddelbart etter fødsel?",
   "Registrering.Permisjon.HeleFellesperiodenUmiddelbart": "Skal hele fellesperioden tas ut umiddelbart etter mødrekvoten?",
@@ -884,6 +885,7 @@
   "Registrering.Permisjon.Gradering.SkalGraderes": "Arbeidsforhold som skal graderes",
   "Registrering.Permisjon.Gradering.LeggTilPeriode": "Legg til periode for gradering",
   "Registrering.Permisjon.Gradering.GraderUttaket": "Søker ønsker å gradere uttaket",
+  "Registrering.Permisjon.PeriodeFomForTidlig": "Behandlinger med første uttaksdag før 01.01.2019 skal ikke behandles i vedtaksløsningen",
 
   "SoknadRegistrertModal.ContentLabel": "Søknaden er registrert. Du kommer nå til forsiden.",
   "SoknadRegistrertModal.InfoTextOne": "Søknaden er registrert og vil bli behandlet",
