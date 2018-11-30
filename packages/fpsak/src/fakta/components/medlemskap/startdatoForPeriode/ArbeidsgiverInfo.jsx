@@ -19,7 +19,7 @@ export const ArbeidsgiverInfo = ({ fields }) => (
       const arbeidsgiverNavn = fields.get(index).arbeidsgiver;
 
       return (
-        <Column xs="3" key={arbeidsgiverId}>
+        <Column xs="4" key={arbeidsgiverId}>
           <DatepickerField
             name={`${arbeidsgiverId}.arbeidsgiverStartdato`}
             label={fields.length > 2 ? truncateEmployerName(arbeidsgiverNavn) : arbeidsgiverNavn}
