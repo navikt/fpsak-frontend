@@ -1930,6 +1930,7 @@
   "HistorikkEndretFelt.UtsettelseInnleggelseIkkeDok": "Utsettelse søkers innleggelse ikke dokumentert",
   "HistorikkEndretFelt.UtsettelseBarnetsInnleggelseIkkeDok": "Utsettelse barnets innleggelse - barnets innleggelse ikke dokumentert",
   "HistorikkEndretFelt.AktivitetskravKVPIkkeDok": "Aktivitetskrav – KVP ikke dokumentert",
+  "HistorikkEndretFelt.BarnetErDødt": "Barnet er dødt",
   "HistorikkEndretFelt.AktivitetskravIntroprogramIkkeDok": "Aktivitetskrav – introprogram ikke dokumentert",
   "HistorikkEndretFelt.AktivitetskravInleggelseIkkeDok": "Aktivitetskrav – innleggelse ikke dokumentert",
   "HistorikkEndretFelt.AktivitetskravSykdomIkkeDok": "Aktivitetskrav – sykdom/skade ikke dokumentert",
