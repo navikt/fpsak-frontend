@@ -54,9 +54,15 @@ export const getBehandlingArsakTyper = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling.behandlingArsaker
     ? selectedBehandling.behandlingArsaker.map(({ behandlingArsakType }) => behandlingArsakType) : undefined),
 );
+
+export const erManueltOpprettet = createSelector([getBehandlingArsaker], (behandlingArsaker = []) => behandlingArsaker
+  .some(ba => ba.manueltOpprettet === true));
+export const erArsakTypeHendelseFodsel = createSelector([getBehandlingArsakTyper], (behandlingArsakTyper = []) => behandlingArsakTyper
+  .some(bt => bt.kode === 'RE-HENDELSE-FØDSEL'));
+
 export const getBehandlingIsManuellRevurdering = createSelector(
-  [getBehandlingIsRevurdering, getBehandlingArsaker, getBehandlingArsakTyper],
-  (isRevurdering, ba = {}, bt = {}) => isRevurdering && (ba.manueltOpprettet || bt.kode === 'RE-HENDELSE-FØDSEL'),
+  [getBehandlingIsRevurdering, erManueltOpprettet, erArsakTypeHendelseFodsel],
+  (isRevurdering, manueltOpprettet, arsakTypeHendelseFodsel) => isRevurdering && (manueltOpprettet || arsakTypeHendelseFodsel),
 );
 export const getBehandlingIsOnHold = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingPaaVent);
 export const getBehandlingIsQueued = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingKoet);
