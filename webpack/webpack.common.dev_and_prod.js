@@ -107,8 +107,11 @@ const config = {
     new CopyWebpackPlugin([
       {
         from: LANG_DIR,
-        to: 'sprak',
-        toType: 'dir',
+        to: 'fpsak/sprak/[name].[ext]',
+        force: true,
+        cache: {
+          key: '[hash]'
+        },
       },
     ]),
     new webpack.ContextReplacementPlugin(

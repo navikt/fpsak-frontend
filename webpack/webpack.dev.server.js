@@ -11,12 +11,12 @@ if (process.argv.includes('--no-fix')) {
 
 var options = {
   contentBase: [
-    'public/client',
+    'public/fpsak/sprak',
     'packages',
   ],
   watchContentBase: true,
   proxy: {
-    '**/(sprak|api|jetty)/**': {
+    '**/(api|jetty)/**': {
       target: 'http://localhost:8080',
     },
     "/fpsak/fpoppdrag/**": {
