@@ -1949,6 +1949,8 @@
   "HistorikkEndretFelt.AvslagGraderingSøkerErIkkeIArbeid": "Avslag gradering - søker er ikke i arbeid",
   "HistorikkEndretFelt.ArbeiderIUtaksperiodenMerEnn0": "Arbeider i uttaksperioden mer enn 0%",
   "HistorikkEndretFelt.resultatÅrsak": "Årsak resultat",
+  "HistorikkEndretFelt.GraderingArbeidsforhold": "Gradering av arbeidsforhold",
+  "HistorikkEndretFelt.GraderingAvslagÅrsak": "Årsak avslag gradering",
   "HistorikkEndretFelt.ManuellBehandling": "Manuell behandling",
   "HistorikkEndretFelt.ingenAvslagÅrsak": "Ingen avslagsårsak",
   "HistorikkEndretFelt.UttakPeriodeType": "Resultatet",
@@ -2071,6 +2073,8 @@
   "HistorikkEndretFeltVerdiType.VergeFBarn": "Verge for foreldreløst barn under 18 år",
   "HistorikkEndretFeltVerdiType.VergeVoksen": "Verge for voksen",
   "HistorikkEndretFeltVerdiType.DagpengerInntekt": "Dagpenger",
+  "HistorikkEndretFeltVerdiType.GraderingOppfylt": "Oppfylt",
+  "HistorikkEndretFeltVerdiType.GraderingIkkeOppfylt": "Ikke oppfylt",
 
   "HistorikkEndretFeltHeading.FordelingForNyAndel": "<b>Det er lagt til ny aktivitet:</b> <br><b>{value}</b>: Fordeling for ",
   "HistorikkEndretFeltHeading.FordelingForAndel": "Fordeling for <b>{value}</b>:",

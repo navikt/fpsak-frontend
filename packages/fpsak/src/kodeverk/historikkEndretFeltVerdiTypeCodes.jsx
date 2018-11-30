@@ -577,6 +577,14 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'UTTAK_PERIODE_AVSLAG_ÅRSAK',
     verdiId: 'HistorikkEndretFelt.AvslagGraderingsavtaleManglerIkkeDok',
   },
+  4502: {
+    kode: 'UTTAK_PERIODE_GRADERING_AVSLAG_ÅRSAK',
+    verdiId: 'HistorikkEndretFelt.AvslagGraderingsavtaleManglerIkkeDok',
+  },
+  4501: {
+    kode: 'UTTAK_PERIODE_AVSLAG_ÅRSAK',
+    verdiId: 'HistorikkEndretFelt.IkkeGraderingForSenSoknad',
+  },
   MØDREKVOTE: {
     kode: 'MØDREKVOTE',
     verdiId: 'HistorikkEndretFeltVerdiType.Modrekvote',
@@ -660,6 +668,14 @@ const historikkEndretFeltVerdiTypeCodes = {
   VOKSEN: {
     kode: 'VOKSEN',
     verdiId: 'HistorikkEndretFeltVerdiType.VergeVoksen',
+  },
+  GRADERING_OPPFYLT: {
+    kode: 'GRADERING_OPPFYLT',
+    verdiId: 'HistorikkEndretFeltVerdiType.GraderingOppfylt',
+  },
+  GRADERING_IKKE_OPPFYLT: {
+    kode: 'GRADERING_IKKE_OPPFYLT',
+    verdiId: 'HistorikkEndretFeltVerdiType.GraderingIkkeOppfylt',
   },
 };
 
