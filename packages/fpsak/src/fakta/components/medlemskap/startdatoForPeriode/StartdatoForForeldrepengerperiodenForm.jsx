@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -109,6 +110,22 @@ const mapStateToProps = (state, initialProps) => ({
   onSubmit: values => initialProps.submitCallback([transformValues(values)]),
 });
 
+const validateDates = (values) => {
+  const errors = {};
+  const { arbeidsgivere, startdatoFraSoknad } = values;
+
+  const isError = arbeidsgivere && arbeidsgivere
+    .map(a => a.arbeidsgiverStartdato)
+    .some(datoFraInntektsmelding => moment(datoFraInntektsmelding).isBefore(moment(startdatoFraSoknad)));
+
+  if (isError) {
+    errors.startdatoFraSoknad = [{ id: 'StartdatoForForeldrepengerperiodenForm.StartdatoEtterArbeidsgiverdato' }];
+  }
+
+  return errors;
+};
+
 export default connect(mapStateToProps)(behandlingForm({
   form: 'StartdatoForForeldrepengerperiodenForm',
+  validate: validateDates,
 })(StartdatoForForeldrepengerperiodenForm));
