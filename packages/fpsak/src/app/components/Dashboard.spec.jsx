@@ -22,6 +22,7 @@ describe('<Dashboard>', () => {
       showIntegrationStatus={false}
       integrationStatusList={integrationStatusList}
       fetchIntegrationStatus={fetchCallback}
+      isFplosActivated={false}
     />);
 
     expect(wrapper.find(IntegrationStatusPanel)).to.have.length(0);
@@ -35,6 +36,7 @@ describe('<Dashboard>', () => {
       showIntegrationStatus
       integrationStatusList={integrationStatusList}
       fetchIntegrationStatus={fetchCallback}
+      isFplosActivated={false}
     />);
 
     const statusPanel = wrapper.find(IntegrationStatusPanel);

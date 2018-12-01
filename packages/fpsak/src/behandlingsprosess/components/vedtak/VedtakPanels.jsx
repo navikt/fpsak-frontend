@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import featureToggle from 'app/featureToggle';
 import { getBehandlingType } from 'behandling/behandlingSelectors';
-import { getFeatureToggleFormkrav } from 'app/duck';
+import { getFeatureToggles } from 'app/duck';
 import behandlingType from 'kodeverk/behandlingType';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import VedtakForm from './VedtakForm';
@@ -93,7 +94,7 @@ VedtakPanels.propTypes = {
 
 const mapStateToProps = state => ({
   behandlingTypeKode: getBehandlingType(state).kode,
-  featureToggleFormkrav: getFeatureToggleFormkrav(state),
+  featureToggleFormkrav: getFeatureToggles(state)[featureToggle.FORMKRAV],
 });
 
 export default connect(mapStateToProps)(VedtakPanels);

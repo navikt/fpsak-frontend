@@ -13,7 +13,7 @@ import {
   getBehandlingIsOnHold, getAllMerknaderFraBeslutter, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat,
   getBehandlingInnsynResultatType, getBehandlingResultatstruktur, getStonadskontoer, hasReadOnlyBehandling, isBehandlingStatusReadOnly,
 } from 'behandling/behandlingSelectors';
-import { getFeatureToggleSimulering, getFeatureToggleLøpendeMedlemskap } from 'app/duck';
+import { getFeatureToggles } from 'app/duck';
 import createTilbakekrevingBpProps from './tilbakekreving/definition/tilbakekrevingBpDefinition';
 import behandlingspunktCodes from './behandlingspunktCodes';
 import createEngangsstonadBpProps from './definition/engangsstonadBpDefinition';
@@ -23,9 +23,9 @@ import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from '
 // Kun eksportert for test. Ikke bruk andre steder!
 export const getBehandlingspunkterProps = createSelector(
   [getFagsakYtelseType, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat, getBehandlingInnsynResultatType,
-    getBehandlingResultatstruktur, getStonadskontoer, getFeatureToggleSimulering, getFeatureToggleLøpendeMedlemskap],
+    getBehandlingResultatstruktur, getStonadskontoer, getFeatureToggles],
   (fagsakYtelseType, behandlingType, vilkar = [], aksjonspunkter, behandlingsresultat,
-    innsynResultatType, resultatstruktur, stonadskontoer, featureToggleSimulering, featureToggleLøpendeMedlemskap) => {
+    innsynResultatType, resultatstruktur, stonadskontoer, featureToggles) => {
     if (!behandlingType) {
       return undefined;
     }
@@ -38,8 +38,7 @@ export const getBehandlingspunkterProps = createSelector(
       innsynResultatType,
       resultatstruktur,
       stonadskontoer,
-      featureToggleSimulering,
-      featureToggleLøpendeMedlemskap,
+      featureToggles,
     };
 
     // TODO (TOR) Temp kode til ein får splitta ut tilbakekreving

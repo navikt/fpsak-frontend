@@ -1,5 +1,6 @@
 /* @flow */
 import { getHttpClientApi, getRestApiBuilder, initRestApi } from './rest/restApi';
+import applicationContextPath from 'app/applicationContextPath';
 
 export const FpsakApiKeys = {
   LANGUAGE_FILE: 'LANGUAGE_FILE',
@@ -99,5 +100,5 @@ const endpoints = getRestApiBuilder(httpClientApi)
   .withPost('/api/feature-toggle', FpsakApiKeys.FEATURE_TOGGLE)
   .build();
 
-const fpsakApi = initRestApi(httpClientApi, 'fpsak', endpoints);
+const fpsakApi = initRestApi(httpClientApi, applicationContextPath.FPSAK, endpoints);
 export default fpsakApi;

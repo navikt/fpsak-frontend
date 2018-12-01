@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import applicationContextPath from 'app/applicationContextPath';
 import BehandlingType from 'kodeverk/behandlingType';
 import fpsakApi, { getBehandlingTypeApiKeys } from 'data/fpsakApi';
 import LoadingPanel from 'sharedComponents/LoadingPanel';
@@ -25,7 +26,8 @@ export class BehandlingResolver extends Component {
     } = this.props;
     if (!isInSync) {
       // TODO (TOR) Endring av contextPath her er midlertidig kode fram til ein får splitta ut tilbakekreving.
-      const contextPath = behandlingerTyperMappedById[behandlingIdentifier.behandlingId] === BehandlingType.TILBAKEKREVING ? 'fptilbake' : 'fpsak';
+      const contextPath = behandlingerTyperMappedById[behandlingIdentifier.behandlingId] === BehandlingType.TILBAKEKREVING
+        ? applicationContextPath.FPTILBAKE : applicationContextPath.FPSAK;
       fpsakApi.getDataContextModifier()
         .changeContextPath(contextPath, ...getBehandlingTypeApiKeys())
         .update();

@@ -8,7 +8,8 @@ import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import withDefaultToggling from 'fakta/withDefaultToggling';
 import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
 import faktaPanelCodes from 'fakta/faktaPanelCodes';
-import { getFeatureToggleLøpendeMedlemskap } from 'app/duck';
+import { getFeatureToggles } from 'app/duck';
+import featureToggle from 'app/featureToggle';
 import connect from 'react-redux/es/connect/connect';
 import StartdatoForForeldrepengerperiodenForm from './startdatoForPeriode/StartdatoForForeldrepengerperiodenForm';
 import OppholdInntektOgPerioderFormNew from './oppholdInntektOgPerioderNew/OppholdInntektOgPerioderForm';
@@ -103,7 +104,7 @@ MedlemskapInfoPanelImpl.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  skalBrukeNyeMedlemskap: getFeatureToggleLøpendeMedlemskap(state),
+  skalBrukeNyeMedlemskap: getFeatureToggles(state)[featureToggle.LØPENDE_MEDLESMKAP],
 });
 
 const medlemAksjonspunkter = [AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, AVKLAR_OM_BRUKER_ER_BOSATT, AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,

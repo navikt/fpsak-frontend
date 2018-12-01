@@ -3,6 +3,7 @@ import vt from 'kodeverk/vilkarType';
 import bt from 'kodeverk/behandlingType';
 import vut from 'kodeverk/vilkarUtfallType';
 import bpc from 'behandlingsprosess/behandlingspunktCodes';
+import featureToggle from 'app/featureToggle';
 import { hasSimuleringOn, getStatusFromSimulering } from './simuleringStatusUtleder';
 import getVedtakStatus from './vedtakStatusUtleder';
 import BehandlingspunktProperties from './behandlingspunktBuilder';
@@ -30,7 +31,7 @@ const isNotRevurderingAndManualOpplysningspliktAp = ({ behandlingType, aksjonspu
   return !(isRevurdering && !hasAp);
 };
 
-const hasLøpendeMedlemskapOn = ({ featureToggleLøpendeMedlemskap }) => featureToggleLøpendeMedlemskap;
+const hasLøpendeMedlemskapOn = ({ featureToggles }) => featureToggles[featureToggle.LØPENDE_MEDLESMKAP];
 /**
  * Rekkefølgen i listene under bestemmer behandlingspunkt-rekkefølgen i GUI.
  * @see BehandlingspunktProperties.Builder for mer informasjon.
