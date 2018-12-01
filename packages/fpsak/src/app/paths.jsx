@@ -1,5 +1,6 @@
 import { buildPath, formatQueryString, parseQueryString } from 'utils/urlUtils';
 import skjermlenkeCodes from 'kodeverk/skjermlenkeCodes';
+import applicationContextPath from './applicationContextPath';
 
 export const fagsakPath = '/fagsak/:saksnummer(\\d+)/';
 export const behandlingerPath = `${fagsakPath}behandling/`;
@@ -36,4 +37,9 @@ export const getLocationWithDefaultBehandlingspunktAndFakta = location => (
 export const createLocationForHistorikkItems = (behandlingLocation, skjermlenkeCode) => {
   const skjermlenke = skjermlenkeCodes[skjermlenkeCode];
   return getLocationWithQueryParams(behandlingLocation, { punkt: skjermlenke.punktNavn, fakta: skjermlenke.faktaNavn });
+};
+
+export const getPathToFplos = (href) => {
+  const hostAndContextPath = href.substr(0, href.lastIndexOf(applicationContextPath.FPSAK) + applicationContextPath.FPSAK.length);
+  return hostAndContextPath.replace(new RegExp(applicationContextPath.FPSAK, 'g'), applicationContextPath.FPLOS);
 };

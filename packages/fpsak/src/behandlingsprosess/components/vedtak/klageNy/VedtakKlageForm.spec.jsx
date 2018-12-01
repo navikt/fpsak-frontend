@@ -5,6 +5,7 @@ import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//i
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import behandlingResultatType from 'kodeverk/behandlingResultatType';
+import featureToggle from 'app/featureToggle';
 import VedtakKlageSubmitPanel from './VedtakKlageSubmitPanel';
 import { getAvvisningsAarsaker, VedtakKlageFormImpl, getIsAvvist } from './VedtakKlageForm';
 
@@ -32,7 +33,6 @@ describe('<VedtakKlageForm>', () => {
       behandlingsResultatTekst={KLAGE_OMGJORT_TEKST}
       behandlingsresultatTypeKode=""
       isOpphevOgHjemsend={false}
-      featureToggle
       avvistArsaker={avvistArsaker}
       avvisningsAarsakerForFeature={[null]}
       behandlingPaaVent={false}
@@ -58,23 +58,27 @@ describe('<VedtakKlageForm>', () => {
 
     describe('getIsAvgetAvvisningsAarsakervist', () => {
       it('should return avvisningsAarsaker with length 2', () => {
-        const featureToggle = true;
+        const toggle = {
+          [featureToggle.FORMKRAV]: true,
+        };
         const klageVurdering = {
           klageFormkravResultatNFP: { avvistArsaker: [{ navn: 'arsak1' }, { navn: 'arsak2' }] },
           klageVurderingResultatNFP: { klageAvvistArsakNavn: 'Klager er ikke part' },
         };
-        const selected = getAvvisningsAarsaker.resultFunc(klageVurdering, featureToggle);
+        const selected = getAvvisningsAarsaker.resultFunc(klageVurdering, toggle);
         expect(selected).to.have.length(2);
       });
     });
     describe('getIsAvgetAvvisningsAarsakervist', () => {
       it('should return avvisningsAarsaker with length 1', () => {
-        const featureToggle = false;
+        const toggle = {
+          [featureToggle.FORMKRAV]: false,
+        };
         const klageVurdering = {
           klageFormkravResultatNFP: { avvistArsaker: [{ navn: 'arsak1' }, { navn: 'arsak2' }] },
           klageVurderingResultatNFP: { klageAvvistArsakNavn: 'Klager er ikke part' },
         };
-        const selected = getAvvisningsAarsaker.resultFunc(klageVurdering, featureToggle);
+        const selected = getAvvisningsAarsaker.resultFunc(klageVurdering, toggle);
         expect(selected).to.have.length(1);
       });
     });

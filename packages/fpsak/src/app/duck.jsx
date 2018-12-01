@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
+
 import fpsakApi from 'data/fpsakApi';
-import featureToggle from 'kodeverk/featureToggle';
+import featureToggle from './featureToggle';
 
 /* Action types */
 export const ADD_ERROR_MESSAGE = 'ADD_ERROR_MESSAGE';
@@ -28,6 +29,10 @@ export const showCrashMessage = message => ({
   type: SHOW_CRASH_MESSAGE,
   data: message,
 });
+
+export const fetchAllFeatureToggles = () => dispatch => (
+  dispatch(fpsakApi.FEATURE_TOGGLE.makeRestApiRequest()({ toggles: Object.values(featureToggle).map(ft => ({ navn: ft })) }))
+);
 
 /* Reducers */
 const extractErrorMessage = (data) => {
@@ -82,10 +87,6 @@ export const errorHandlingReducer = (state = initialState, action = {}) => {
   }
 };
 
-export const fetchFeatureToggleActionCreator = toggles => dispatch => (
-  dispatch(fpsakApi.FEATURE_TOGGLE.makeRestApiRequest()({ toggles }))
-);
-
 /* Selectors */
 const getErrorHandlingContext = state => state.default.errorHandlingContext;
 export const getErrorMessages = createSelector([getErrorHandlingContext], errorHandlingContext => errorHandlingContext.errorMessages);
@@ -95,15 +96,7 @@ export const getNavAnsattName = createSelector([fpsakApi.NAV_ANSATT.getRestApiDa
 export const getRettskildeUrl = createSelector([fpsakApi.RETTSKILDE_URL.getRestApiData()], (rettskildeData = {}) => rettskildeData.verdi);
 export const getSystemrutineUrl = createSelector([fpsakApi.SYSTEMRUTINE_URL.getRestApiData()], (systemrutineData = {}) => systemrutineData.verdi);
 export const getFunksjonellTid = createSelector([fpsakApi.NAV_ANSATT.getRestApiData()], (navAnsatt = {}) => navAnsatt.funksjonellTid);
-export const getFeatureToggleSimulering = createSelector(
-  [fpsakApi.FEATURE_TOGGLE.getRestApiData()], (ftData = {}) => ftData.featureToggles[featureToggle.SIMULER_OPPDRAG],
-);
-export const getFeatureToggleLøpendeMedlemskap = createSelector(
-  [fpsakApi.FEATURE_TOGGLE.getRestApiData()], (ftData = {}) => ftData.featureToggles[featureToggle.LØPENDE_MEDLESMKAP],
-);
-export const getFeatureToggleFormkrav = createSelector(
-  [fpsakApi.FEATURE_TOGGLE.getRestApiData()], (ftData = {}) => ftData.featureToggles[featureToggle.FORMKRAV],
-);
+export const getFeatureToggles = createSelector([fpsakApi.FEATURE_TOGGLE.getRestApiData()], (ftData = {}) => ftData.featureToggles);
 export const getShowDetailedErrorMessages = createSelector(
   [fpsakApi.SHOW_DETAILED_ERROR_MESSAGES.getRestApiData()], (showDetailedErrorMessages = false) => showDetailedErrorMessages,
 );

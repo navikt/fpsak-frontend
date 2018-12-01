@@ -17,6 +17,7 @@ import IntegrationStatusPanel from './IntegrationStatusPanel';
 export class Dashboard extends Component {
   componentDidMount() {
     const { fetchIntegrationStatus, showIntegrationStatus } = this.props;
+
     if (showIntegrationStatus) {
       fetchIntegrationStatus();
     }

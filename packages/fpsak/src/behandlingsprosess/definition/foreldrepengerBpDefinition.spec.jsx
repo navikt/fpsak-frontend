@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 
+import featureToggle from 'app/featureToggle';
 import vilkarType from 'kodeverk/vilkarType';
 import behandlingResultatType from 'kodeverk/behandlingResultatType';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
@@ -58,6 +59,11 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
     vilkarene: [sokersOpplysningspliktVilkar],
   };
 
+  const featureToggles = {
+    [featureToggle.LØPENDE_MEDLESMKAP]: false,
+    [featureToggle.SIMULER_OPPDRAG]: false,
+  };
+
   it('skal alltid vise behandlingspunktene for beregning, uttak, tilkjent-ytelse og vedtak når det finnes minst ett annet behandlingspunkt', () => {
     const builderData = {
       behandlingType: {
@@ -69,6 +75,7 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       innsynResultatType: undefined,
       resultatstruktur: undefined,
       stonadskontoer: undefined,
+      featureToggles,
     };
 
     const bpPropList = createForeldrepengerBpProps(builderData);
@@ -87,6 +94,7 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       innsynResultatType: undefined,
       resultatstruktur: undefined,
       stonadskontoer: undefined,
+      featureToggles,
     };
 
     const bpPropList = createForeldrepengerBpProps(builderData);
@@ -112,6 +120,7 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       innsynResultatType: undefined,
       resultatstruktur: undefined,
       stonadskontoer: undefined,
+      featureToggles,
     };
 
     const bpPropList = createForeldrepengerBpProps(builderData);
@@ -137,6 +146,7 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       innsynResultatType: undefined,
       resultatstruktur: undefined,
       stonadskontoer: undefined,
+      featureToggles,
     };
 
     const bpPropList = createForeldrepengerBpProps(builderData);
@@ -169,6 +179,7 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       innsynResultatType: undefined,
       resultatstruktur: undefined,
       stonadskontoer: undefined,
+      featureToggles,
     };
 
     const bpPropList = createForeldrepengerBpProps(builderData);
@@ -198,6 +209,7 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       innsynResultatType: undefined,
       resultatstruktur: undefined,
       stonadskontoer: undefined,
+      featureToggles,
     };
 
     const bpPropList = createForeldrepengerBpProps(builderData);
@@ -231,6 +243,7 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       innsynResultatType: undefined,
       resultatstruktur: undefined,
       stonadskontoer: undefined,
+      featureToggles,
     };
 
     const bpPropList = createForeldrepengerBpProps(builderData);
@@ -251,6 +264,7 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
         perioder: [{ fomDato: '2018-10-10' }],
       },
       stonadskontoer: undefined,
+      featureToggles,
     };
 
     const bpPropList = createForeldrepengerBpProps(builderData);
@@ -278,6 +292,7 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
         perioder: [{ fomDato: '2018-10-10' }],
       },
       stonadskontoer: {},
+      featureToggles,
     };
 
     const bpPropList = createForeldrepengerBpProps(builderData);
@@ -310,6 +325,7 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       innsynResultatType: undefined,
       resultatstruktur: undefined,
       stonadskontoer: undefined,
+      featureToggles,
     };
 
     const bpPropList = createForeldrepengerBpProps(builderData);
@@ -335,6 +351,7 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       innsynResultatType: undefined,
       resultatstruktur: undefined,
       stonadskontoer: undefined,
+      featureToggles,
     };
 
     const bpPropList = createForeldrepengerBpProps(builderData);
@@ -357,6 +374,7 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       innsynResultatType: undefined,
       resultatstruktur: undefined,
       stonadskontoer: undefined,
+      featureToggles,
     };
 
     const bpPropList = createForeldrepengerBpProps(builderData);

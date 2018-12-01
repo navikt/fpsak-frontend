@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 
+import featureToggle from 'app/featureToggle';
 import { DEFAULT_BEHANDLINGSPROSESS } from 'app/paths';
 import as from 'kodeverk/aksjonspunktStatus';
 import vut from 'kodeverk/vilkarUtfallType';
@@ -19,6 +20,10 @@ import {
   from './behandlingsprosessSelectors';
 
 describe('behandlingsprosessSelectors', () => {
+  const featureToggles = {
+    [featureToggle.SIMULER_OPPDRAG]: false,
+  };
+
   it('skal lage behandlingspunkter for engangsstønad', () => {
     const fagsakYtelseType = {
       kode: fyt.ENGANGSSTONAD,
@@ -47,7 +52,7 @@ describe('behandlingsprosessSelectors', () => {
 
     const props = getBehandlingspunkterProps.resultFunc(
       fagsakYtelseType, behandlingType, vilkar, aksjonspunkter,
-      behandlingsresultat, innsynResultatType, resultatstruktur, stonadskontoer,
+      behandlingsresultat, innsynResultatType, resultatstruktur, stonadskontoer, featureToggles,
     );
 
     expect(props).has.length(4);

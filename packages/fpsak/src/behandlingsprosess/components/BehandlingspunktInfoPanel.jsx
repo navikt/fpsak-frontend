@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import featureToggle from 'app/featureToggle';
 import {
   getBehandlingspunktAksjonspunkterCodes,
   hasBehandlingspunktAtLeastOneOpenAksjonspunkt,
@@ -9,7 +10,7 @@ import {
   isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt,
   isSelectedBehandlingspunktReadOnly,
 } from 'behandlingsprosess/behandlingsprosessSelectors';
-import { getFeatureToggleFormkrav } from 'app/duck';
+import { getFeatureToggles } from 'app/duck';
 import CheckPersonStatusForm from './saksopplysninger/CheckPersonStatusForm';
 import AvregningPanel from './avregning/AvregningPanel';
 import TilkjentYtelsePanel from './tilkjentYtelse/TilkjentYtelsePanel';
@@ -224,7 +225,7 @@ const mapStateToProps = state => ({
   isApSolvable: isBehandlingspunktAksjonspunkterSolvable(state),
   apCodes: getBehandlingspunktAksjonspunkterCodes(state),
   readOnlySubmitButton: isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
-  featureToggleFormkrav: getFeatureToggleFormkrav(state),
+  featureToggleFormkrav: getFeatureToggles(state)[featureToggle.FORMKRAV],
 });
 
 export default connect(mapStateToProps)(BehandlingspunktInfoPanel);

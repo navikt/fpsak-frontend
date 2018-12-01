@@ -17,7 +17,8 @@ import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import VedtakKlageSubmitPanel from 'behandlingsprosess/components/vedtak/klageNy/VedtakKlageSubmitPanel';
-import { getFeatureToggleFormkrav } from 'app/duck';
+import featureToggle from 'app/featureToggle';
+import { getFeatureToggles } from 'app/duck';
 import FadingPanel from 'sharedComponents/FadingPanel';
 
 export const VEDTAK_KLAGE_FORM_NAME = 'VEDTAK_KLAGE_FORM';
@@ -38,7 +39,6 @@ export const VedtakKlageFormImpl = ({
   isOpphevOgHjemsend,
   aksjonspunktKoder,
   avvistArsaker,
-  featureToggle,
   isBehandlingReadOnly,
   behandlingsResultatTekst,
   ...formProps
@@ -97,7 +97,6 @@ VedtakKlageFormImpl.propTypes = {
   behandlingsResultatTekst: PropTypes.string.isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
   isBehandlingReadOnly: PropTypes.bool.isRequired,
-  featureToggle: PropTypes.bool.isRequired,
   avvistArsaker: PropTypes.arrayOf(PropTypes.object),
   omgjortAarsak: PropTypes.string,
   behandlingsresultat: PropTypes.shape().isRequired,
@@ -141,9 +140,9 @@ export const getAvvisningsAarsakUtenFeature = (klageVurderingResultat) => {
 
 
 export const getAvvisningsAarsaker = createSelector(
-  [getBehandlingKlageVurdering, getFeatureToggleFormkrav],
-  (klageVurderingResultat, featureToggle) => {
-    if (featureToggle) {
+  [getBehandlingKlageVurdering, getFeatureToggles],
+  (klageVurderingResultat, featureToggles) => {
+    if (featureToggles[featureToggle.FORMKRAV]) {
       return getAvvisningsAarsakerFeature(klageVurderingResultat);
     }
     return getAvvisningsAarsakUtenFeature(klageVurderingResultat);
@@ -221,7 +220,7 @@ export const buildInitialValues = createSelector(
 );
 
 const mapStateToProps = (state, initialProps) => ({
-  featureToggle: getFeatureToggleFormkrav(state),
+  featureToggle: getFeatureToggles(state)[featureToggle.FORMKRAV],
   initialValues: buildInitialValues(state),
   isBehandlingReadOnly: isBehandlingStatusReadOnly(state),
   isAvvist: getIsAvvist(state),

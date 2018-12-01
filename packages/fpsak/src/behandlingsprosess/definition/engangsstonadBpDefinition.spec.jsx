@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 
+import featureToggle from 'app/featureToggle';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
 import behandlingType from 'kodeverk/behandlingType';
@@ -24,6 +25,10 @@ describe('Definisjon av behandlingspunkter - Engangsstønad', () => {
     vilkarene: [],
   }];
 
+  const featureToggles = {
+    [featureToggle.SIMULER_OPPDRAG]: false,
+  };
+
   it('skal alltid vise behandlingspunktene for beregning og vedtak når det finnes minst ett annet behandlingspunkt', () => {
     const builderData = {
       behandlingType: {
@@ -42,6 +47,7 @@ describe('Definisjon av behandlingspunkter - Engangsstønad', () => {
       innsynResultatType: undefined,
       resultatstruktur: undefined,
       stonadskontoer: undefined,
+      featureToggles,
     };
 
     const bpPropList = createEngangsstonadBpProps(builderData);
@@ -67,6 +73,7 @@ describe('Definisjon av behandlingspunkter - Engangsstønad', () => {
       innsynResultatType: undefined,
       resultatstruktur: undefined,
       stonadskontoer: undefined,
+      featureToggles,
     };
 
     const bpPropList = createEngangsstonadBpProps(builderData);
@@ -94,6 +101,7 @@ describe('Definisjon av behandlingspunkter - Engangsstønad', () => {
         perioder: [{ fomDato: '2018-10-10' }],
       },
       stonadskontoer: undefined,
+      featureToggles,
     };
 
     const bpPropList = createEngangsstonadBpProps(builderData);

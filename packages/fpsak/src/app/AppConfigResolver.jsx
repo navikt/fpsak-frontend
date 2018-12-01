@@ -5,23 +5,28 @@ import { connect } from 'react-redux';
 
 import fpsakApi from 'data/fpsakApi';
 import LoadingPanel from 'sharedComponents/LoadingPanel';
-import { fetchFeatureToggleActionCreator } from 'app/duck';
-import featureToggle from 'kodeverk/featureToggle';
-
-const featureToggles = [
-  { navn: featureToggle.SIMULER_OPPDRAG },
-  { navn: featureToggle.FORMKRAV },
-  { navn: featureToggle.LØPENDE_MEDLESMKAP },
-];
+import { fetchAllFeatureToggles } from 'app/duck';
 
 class AppConfigResolver extends Component {
+  static propTypes = {
+    finishedLoadingBlockers: PropTypes.bool.isRequired,
+    children: PropTypes.node.isRequired,
+    fetchNavAnsatt: PropTypes.func.isRequired,
+    fetchLanguageFile: PropTypes.func.isRequired,
+    fetchRettskilde: PropTypes.func.isRequired,
+    fetchSystemrutine: PropTypes.func.isRequired,
+    fetchBehandlendeEnheter: PropTypes.func.isRequired,
+    fetchKodeverk: PropTypes.func.isRequired,
+    fetchShowDetailedErrorMessages: PropTypes.func.isRequired,
+    fetchFeatureToggles: PropTypes.func.isRequired,
+  };
+
   constructor(props) {
     super(props);
-    this.resolveAppConfig = this.resolveAppConfig.bind(this);
     this.resolveAppConfig();
   }
 
-  resolveAppConfig() {
+  resolveAppConfig = () => {
     const {
       fetchNavAnsatt,
       fetchLanguageFile,
@@ -30,7 +35,7 @@ class AppConfigResolver extends Component {
       fetchBehandlendeEnheter,
       fetchKodeverk,
       fetchShowDetailedErrorMessages,
-      fetchFeatureToggle,
+      fetchFeatureToggles,
     } = this.props;
 
     fetchNavAnsatt();
@@ -40,10 +45,10 @@ class AppConfigResolver extends Component {
     fetchBehandlendeEnheter();
     fetchKodeverk();
     fetchShowDetailedErrorMessages();
-    fetchFeatureToggle(featureToggles);
+    fetchFeatureToggles();
   }
 
-  render() {
+  render = () => {
     const { finishedLoadingBlockers, children } = this.props;
     if (!finishedLoadingBlockers) {
       return <LoadingPanel />;
@@ -51,19 +56,6 @@ class AppConfigResolver extends Component {
     return children;
   }
 }
-
-AppConfigResolver.propTypes = {
-  finishedLoadingBlockers: PropTypes.bool.isRequired,
-  children: PropTypes.node.isRequired,
-  fetchNavAnsatt: PropTypes.func.isRequired,
-  fetchLanguageFile: PropTypes.func.isRequired,
-  fetchRettskilde: PropTypes.func.isRequired,
-  fetchSystemrutine: PropTypes.func.isRequired,
-  fetchBehandlendeEnheter: PropTypes.func.isRequired,
-  fetchKodeverk: PropTypes.func.isRequired,
-  fetchShowDetailedErrorMessages: PropTypes.func.isRequired,
-  fetchFeatureToggle: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = (state) => {
   const blockers = [
@@ -87,7 +79,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   fetchSystemrutine: fpsakApi.SYSTEMRUTINE_URL.makeRestApiRequest(),
   fetchBehandlendeEnheter: fpsakApi.BEHANDLENDE_ENHETER.makeRestApiRequest(),
   fetchKodeverk: fpsakApi.KODEVERK.makeRestApiRequest(),
-  fetchFeatureToggle: fetchFeatureToggleActionCreator,
+  fetchFeatureToggles: fetchAllFeatureToggles,
   fetchShowDetailedErrorMessages: fpsakApi.SHOW_DETAILED_ERROR_MESSAGES.makeRestApiRequest(),
 }, dispatch);
 
