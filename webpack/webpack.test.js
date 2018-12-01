@@ -2,28 +2,28 @@ const path = require('path');
 const merge = require('webpack-merge');
 const commonTest = require('./webpack.common.test.js');
 
-const PACAKGES_DIR = path.join(__dirname, '../packages');
+const PACKAGES_DIR = path.join(__dirname, '../packages');
+const ESLINT_CONFIG_DIR = path.resolve(__dirname, '../eslint/eslintrc.test.js');
+
 const config = {
   mode: 'development',
   module: {
     rules: [{
-	  test: /\.spec.jsx?$/,
-	  enforce: 'pre',
-	  loader: 'eslint-loader',
-	  options: {
-        failOnWarning: false,
+  	  test: /\.jsx?$/,
+  	  enforce: 'pre',
+  	  loader: 'eslint-loader',
+  	  options: {
+        failOnWarning: true,
         failOnError: true,
-        configFile: path.resolve(__dirname, '../eslint/eslintrc.test.js'),
+        configFile: ESLINT_CONFIG_DIR,
         fix: false,
         cache: true,
-	  },
-      include: [PACAKGES_DIR],
-	  exclude: ['/node_modules/, /assets/'],
+  	  },
+      include: [PACKAGES_DIR],
     }, {
-	  test: /\.jsx?$/,
-	  use: ['happypack/loader'],
-      include: [PACAKGES_DIR],
-	  exclude: ['/node_modules/, /assets/'],
+  	  test: /\.jsx?$/,
+  	  use: ['happypack/loader'],
+      include: [PACKAGES_DIR],
     }],
   },
 };

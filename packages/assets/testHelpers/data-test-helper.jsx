@@ -12,9 +12,9 @@ export const apiState = () => {
 
   state.withData = (api, data) => {
     const configs = [{
-      name: api
-    }]
-    const requestApi = new RequestApi(getAxiosHttpClientApi(), "fpsak", configs);
+      name: api,
+    }];
+    const requestApi = new RequestApi(getAxiosHttpClientApi(), 'fpsak', configs);
     const d = new RestDuck(requestApi.getRequestRunner(api));
     state.default.dataContext[api] = d.reducer(d.reducer(), d.actionCreators.requestFinished(data));
     return state;

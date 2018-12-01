@@ -12,7 +12,8 @@ import { mount, shallow } from 'enzyme';
 import sinon from 'sinon';
 // You can pass your messages to the IntlProvider. Optional: remove if unneeded.
 import messages from '../../../public/sprak/nb_NO.json';
-export {default as messages } from '../../../public/sprak/nb_NO.json';
+
+export { default as messages } from '../../../public/sprak/nb_NO.json';
 
 // Create the IntlProvider to retrieve context for wrapping around.
 const intlProvider = new IntlProvider({ locale: 'nb-NO', messages }, {});

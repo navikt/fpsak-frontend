@@ -10,19 +10,19 @@ const config = {
   module: {
     rules: [{
       test: /\.(less|css|jpg|png|svg)$/,
-	  loader: 'null-loader',
-	}],
+  	  loader: 'null-loader',
+  	}],
   },
   plugins: [
-	new HappyPack({
-	  loaders: [{
+    new HappyPack({
+      loaders: [{
         path: 'babel-loader',
         query: {
           cacheDirectory: true,
         },
       }],
-	  threads: 4,
-	}),
+	    threads: 4,
+	  }),
   ],
 };
 
