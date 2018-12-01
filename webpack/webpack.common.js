@@ -1,8 +1,8 @@
 'use strict';
 const path = require('path');
 
-const PACKAGE_DIR = path.resolve(__dirname, '../packages');
-const APP_DIR = path.join(PACKAGE_DIR, 'fpsak/src');
+const PACKAGES_DIR = path.resolve(__dirname, '../packages');
+const APP_DIR = path.join(PACKAGES_DIR, 'fpsak/src');
 
 const config = {
   resolve: {

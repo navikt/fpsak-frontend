@@ -1,6 +1,6 @@
 import React from 'react';
-import { mountWithIntl, intlMock } from './intl-enzyme-test-helper';
 import sinon from 'sinon';
+import { mountWithIntl, intlMock } from './intl-enzyme-test-helper';
 
 function noop() {
   return undefined;
@@ -78,7 +78,7 @@ export class MockFields {
     this.get = index => array[index];
 
     this.get = index => array[index];
-    this.remove = (index) => array.splice(index,1)
+    this.remove = index => array.splice(index, 1);
   }
 
   get length() {
@@ -96,7 +96,7 @@ export class MockFieldsWithContent {
     this.get = index => array[index];
 
     this.get = index => array[index];
-    this.remove = (index) => array.splice(index,1)
+    this.remove = index => array.splice(index, 1);
 
     this.forEach = array.forEach.bind(array);
   }
