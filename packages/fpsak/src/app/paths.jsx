@@ -42,4 +42,4 @@ export const createLocationForHistorikkItems = (behandlingLocation, skjermlenkeC
 export const getPathToFplos = (href) => {
   const hostAndContextPath = href.substr(0, href.lastIndexOf(applicationContextPath.FPSAK) + applicationContextPath.FPSAK.length);
   return hostAndContextPath.replace(new RegExp(applicationContextPath.FPSAK, 'g'), applicationContextPath.FPLOS);
-}
+};

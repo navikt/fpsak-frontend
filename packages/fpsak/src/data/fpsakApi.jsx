@@ -1,6 +1,6 @@
 /* @flow */
-import { getHttpClientApi, getRestApiBuilder, initRestApi } from './rest/restApi';
 import applicationContextPath from 'app/applicationContextPath';
+import { getHttpClientApi, getRestApiBuilder, initRestApi } from './rest/restApi';
 
 export const FpsakApiKeys = {
   LANGUAGE_FILE: 'LANGUAGE_FILE',

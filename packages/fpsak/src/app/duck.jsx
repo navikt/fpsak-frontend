@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
-import featureToggle from './featureToggle';
 import fpsakApi from 'data/fpsakApi';
+import featureToggle from './featureToggle';
 
 /* Action types */
 export const ADD_ERROR_MESSAGE = 'ADD_ERROR_MESSAGE';
@@ -31,7 +31,7 @@ export const showCrashMessage = message => ({
 });
 
 export const fetchAllFeatureToggles = () => dispatch => (
-  dispatch(fpsakApi.FEATURE_TOGGLE.makeRestApiRequest()({ toggles: Object.values(featureToggle).map(ft => ({navn: ft})) }))
+  dispatch(fpsakApi.FEATURE_TOGGLE.makeRestApiRequest()({ toggles: Object.values(featureToggle).map(ft => ({ navn: ft })) }))
 );
 
 /* Reducers */
