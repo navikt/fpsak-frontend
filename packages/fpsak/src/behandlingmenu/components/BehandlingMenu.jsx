@@ -19,18 +19,6 @@ import OpenBehandlingForChangesMenuItem from './openBehandlingForChanges/OpenBeh
 
 import styles from './behandlingMenu.less';
 
-const toggleEventListeners = (turnOnEventListeners, handleOutsideClick) => {
-  if (turnOnEventListeners) {
-    document.addEventListener('click', handleOutsideClick, false);
-    document.addEventListener('mousedown', handleOutsideClick, false);
-    document.addEventListener('keydown', handleOutsideClick, false);
-  } else {
-    document.removeEventListener('click', handleOutsideClick, false);
-    document.removeEventListener('mousedown', handleOutsideClick, false);
-    document.removeEventListener('keydown', handleOutsideClick, false);
-  }
-};
-
 const getMenuButtonStyle = menuVisible => (menuVisible ? styles.containerHeadingOpen : styles.containerHeading);
 const getMenuButtonText = menuVisible => (menuVisible ? 'Behandlingsmeny.Close' : 'Behandlingsmeny.Open');
 const getImage = menuVisible => (menuVisible ? openImage : closedImage);
@@ -42,12 +30,12 @@ const getMenuStyle = menuVisible => (menuVisible ? styles.containerMenu : styles
  * Presentasjonskomponent. Viser Behandlingsmeny.
  */
 export class BehandlingMenu extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.toggleBehandlingMenu = this.toggleBehandlingMenu.bind(this);
+    this.toggleMenu = this.toggleMenu.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.handleOutsideClick = this.handleOutsideClick.bind(this);
     this.hasNotAccess = this.hasNotAccess.bind(this);
     this.hasNotAccessOrKanVeilede = this.hasNotAccessOrKanVeilede.bind(this);
     this.isBehandlingOnHold = this.isBehandlingOnHold.bind(this);
@@ -65,8 +53,16 @@ export class BehandlingMenu extends Component {
     };
   }
 
+  componentDidMount() {
+    document.addEventListener('click', this.handleClick, false);
+    document.addEventListener('mousedown', this.handleClick, false);
+    document.addEventListener('keydown', this.handleClick, false);
+  }
+
   componentWillUnmount() {
-    toggleEventListeners(false, this.handleOutsideClick);
+    document.removeEventListener('click', this.handleClick, false);
+    document.removeEventListener('mousedown', this.handleClick, false);
+    document.removeEventListener('keydown', this.handleClick, false);
   }
 
   toggleBehandlingMenu() {
@@ -74,22 +70,19 @@ export class BehandlingMenu extends Component {
     this.setState({ menuVisible: !menuVisible });
   }
 
-  handleClick() {
-    const { menuVisible } = this.state;
-    toggleEventListeners(!menuVisible, this.handleOutsideClick);
-
-    this.setState(prevState => ({
-      menuVisible: !prevState.menuVisible,
-    }));
+  toggleMenu(visibility) {
+    this.setState({
+      menuVisible: visibility,
+    });
   }
 
-  handleOutsideClick(e) {
+  handleClick(e) {
     // ignore clicks on the component itself
     if (this.node && this.node.contains(e.target)) {
-      return;
+      this.toggleMenu(true);
+    } else {
+      this.toggleMenu(false);
     }
-
-    this.handleClick();
   }
 
   hasNotAccess() {
