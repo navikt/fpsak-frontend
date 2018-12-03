@@ -56,6 +56,7 @@ export class BehandlingMenu extends Component {
     this.isResumeBehandlingEnabled = this.isResumeBehandlingEnabled.bind(this);
     this.isPauseBehandlingEnabled = this.isPauseBehandlingEnabled.bind(this);
     this.isShelveBehandlingEnebled = this.isShelveBehandlingEnebled.bind(this);
+    this.resumeBehandling = this.resumeBehandling.bind(this);
     this.isChangeBehandlendeEnhetEnabled = this.isChangeBehandlendeEnhetEnabled.bind(this);
     this.hasEnabledOpenBehandlingForChangesAccess = this.hasEnabledOpenBehandlingForChangesAccess.bind(this);
 
@@ -163,13 +164,19 @@ export class BehandlingMenu extends Component {
     return opneBehandlingForEndringerAccess.employeeHasAccess && opneBehandlingForEndringerAccess.isEnabled && !this.isBehandlingQueued();
   }
 
+  resumeBehandling(behandlingIdentifier, params) {
+    const { resumeBehandling } = this.props;
+    this.handleClick();
+    return resumeBehandling(behandlingIdentifier, params);
+  }
+
   render() {
     if (this.hasNotAccessOrKanVeilede()) {
       return null;
     }
     const {
       behandlingIdentifier, behandlendeEnheter, settBehandlingPaVentAccess, setBehandlingOnHold,
-      gjenopptaBehandlingAccess, openBehandlingForChanges, previewHenleggBehandling, resumeBehandling, selectedBehandlingVersjon,
+      gjenopptaBehandlingAccess, openBehandlingForChanges, previewHenleggBehandling, selectedBehandlingVersjon,
       shelveBehandling, push, henleggBehandlingAccess, behandlendeEnhetId, behandlendeEnhetNavn, nyBehandlendeEnhet,
       byttBehandlendeEnhetAccess, saksnummer, createNewForstegangsbehandling, ikkeVisOpprettNyBehandling,
     } = this.props;
@@ -198,7 +205,7 @@ export class BehandlingMenu extends Component {
               toggleBehandlingsmeny={this.toggleBehandlingMenu}
               behandlingIdentifier={behandlingIdentifier}
               behandlingVersjon={selectedBehandlingVersjon}
-              resumeBehandling={resumeBehandling}
+              resumeBehandling={this.resumeBehandling}
               gjenopptaBehandlingEnabled={gjenopptaBehandlingAccess.isEnabled}
             />
             )

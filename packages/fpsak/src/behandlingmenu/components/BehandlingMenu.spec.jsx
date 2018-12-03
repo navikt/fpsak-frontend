@@ -116,7 +116,6 @@ describe('<BehandlingMenu>', () => {
     const behandlingOnHoldMenuItem = wrapper.find('ResumeBehandlingMenuItem');
     expect(behandlingOnHoldMenuItem).has.length(1);
     expect(behandlingOnHoldMenuItem.prop('behandlingIdentifier')).is.eql(behandlingIdentifier);
-    expect(behandlingOnHoldMenuItem.prop('resumeBehandling')).is.eql(resumeBehandlingCallback);
     expect(behandlingOnHoldMenuItem.prop('toggleBehandlingsmeny')).is.not.null;
 
     expect(wrapper.find('ShelveBehandlingMenuItem')).has.length(0);
