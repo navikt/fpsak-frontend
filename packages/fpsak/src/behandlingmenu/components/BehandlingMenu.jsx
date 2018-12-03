@@ -87,7 +87,7 @@ export class BehandlingMenu extends Component {
 
   handleClick(event) {
     // ignore clicks on the component itself
-    if (this.node && event && !this.node.contains(event.target)) {
+    if (this.node && !this.node.contains(event.target)) {
       this.toggleMenu(false);
     } else {
       this.toggleMenu(true);
@@ -168,7 +168,7 @@ export class BehandlingMenu extends Component {
 
   resumeBehandling(behandlingIdentifier, params) {
     const { resumeBehandling } = this.props;
-    this.handleClick();
+    this.toggleMenu(false);
     return resumeBehandling(behandlingIdentifier, params);
   }
 
