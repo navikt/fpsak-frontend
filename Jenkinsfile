@@ -28,7 +28,7 @@ pipeline {
                         def exitCode=sh returnStatus: true, script: "k rollout status -n${naisNamespace} deployment/fpsak-frontend"
                         echo "exit code is $exitCode"
 
-                        if(exitCode == "0") {
+                        if(exitCode == 0) {
                             def veraPayload = "{\"environment\": \"${miljø}\",\"application\": \"fpsak-frontend\",\"version\": \"${versjonNummer}\",\"deployedBy\": \"Jenkins\"}"
                             def response = httpRequest([
                                     url                   : "https://vera.adeo.no/api/v1/deploylog",
