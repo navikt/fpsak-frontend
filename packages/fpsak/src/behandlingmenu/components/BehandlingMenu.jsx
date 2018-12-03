@@ -89,6 +89,7 @@ export class BehandlingMenu extends Component {
     event.stopPropagation();
     // ignore clicks on the component itself
     if (this.node && !this.node.contains(event.target)) {
+    // ignore clicks on the component itself
       this.toggleMenu(false);
     } else {
       this.toggleMenu(true);
