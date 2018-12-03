@@ -47,6 +47,8 @@ const HistorikkMalType10 = ({
       } if (endretFelt.fraVerdi === '-') {
         messageId = 'Historikk.Template.10.FieldSetTo';
       }
+    } else if (endretFelt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.UTTAK_STØNADSKONTOTYPE.kode && endretFelt.fraVerdi === '-') {
+      messageId = 'Historikk.Template.10.FieldSetTo';
     }
     return (
       <div>
