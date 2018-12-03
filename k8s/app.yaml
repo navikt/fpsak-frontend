@@ -22,7 +22,7 @@ spec:
     initialDelay: 20
     timeout: 1
   replicas: # Optional. Set min = max to disable autoscaling.
-    min: 2 # minimum number of replicas.
+    min: 3 # minimum number of replicas.
     max: 4 # maximum number of replicas.
     cpuThresholdPercentage: 50 # total cpu percentage threshold on deployment, at which point it will increase number of pods if current < max
   leaderElection: false # Optional. If true, a http endpoint will be available at $ELECTOR_PATH that return the current leader
@@ -53,7 +53,7 @@ spec:
   - name: APP_NAME
     value: fpsak-frontend
   - name: APP_ENVIRONMENT
-    value: MILJØ_VAL
+    value: MILJO_VAL
   - name: OIDC_HOST_URL
     value: OIDC_HOST_URL_VAL # see value from properties file
   - name: FPSAK_FRONTEND_OIDC_ISSUERURL
