@@ -1,6 +1,7 @@
 import groovy.json.JsonSlurper
 
 def deployetVersion(String application, String miljo) {
+    echo("starter med å hente versjon")
     def response = httpRequest 'https://vera.adeo.no/api/v1/deploylog?onlyLatest=true&filterUndeployed=true'
     def deployVersion = ""
     if (response.status != 200) {
