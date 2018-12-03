@@ -33,6 +33,8 @@ import NyIArbeidslivetSNForm from './nyIArbeidslivet/NyIArbeidslivetSNForm';
 import VurderOgFastsettATFL from './vurderOgFastsettATFL/VurderOgFastsettATFL';
 import FastsettATFLInntektForm from './vurderOgFastsettATFL/forms/FastsettATFLInntektForm';
 import FastsettBBFodendeKvinneForm from './besteberegningFodendeKvinne/FastsettBBFodendeKvinneForm';
+import VurderEtterlonnSluttpakkeForm from './etterlønnSluttpakke/VurderEtterlonnSluttpakkeForm';
+import FastsettEtterlonnSluttpakkeForm from './etterlønnSluttpakke/FastsettEtterlonnSluttpakkeForm';
 
 
 const {
@@ -130,6 +132,19 @@ const getFaktaPanels = (readOnly, formName, tilfeller, isAksjonspunktClosed, sho
           <NyIArbeidslivetSNForm
             readOnly={readOnly}
             isAksjonspunktClosed={isAksjonspunktClosed}
+          />
+        </ElementWrapper>,
+      );
+    }
+    if (tilfelle === faktaOmBeregningTilfelle.VURDER_ETTERLONN_SLUTTPAKKE) {
+      hasShownPanel = true;
+      faktaPanels.push(
+        <ElementWrapper key={tilfelle}>
+          {spacer(hasShownPanel)}
+          <VurderEtterlonnSluttpakkeForm
+            readOnly={readOnly}
+            isAksjonspunktClosed={isAksjonspunktClosed}
+            formName={formName}
           />
         </ElementWrapper>,
       );
@@ -296,6 +311,14 @@ const setValuesForVurderFakta = (aktivePaneler, values, endringBGPerioder, kortv
         ...LonnsendringForm.transformValues(values),
       };
     }
+    if (kode === faktaOmBeregningTilfelle.VURDER_ETTERLONN_SLUTTPAKKE) {
+      vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_ETTERLONN_SLUTTPAKKE);
+      vurderFaktaValues = {
+        ...vurderFaktaValues,
+        ...VurderEtterlonnSluttpakkeForm.etterlonnSluttpakkeInntekt(values, aktivePaneler, vurderFaktaValues),
+        ...VurderEtterlonnSluttpakkeForm.transformValues(values),
+      };
+    }
     if (kode === faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE) {
       vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE);
       vurderFaktaValues = {
@@ -324,7 +347,8 @@ export const buildInitialValuesFaktaForATFLOgSN = createSelector(
   [getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlag,
     getKortvarigeArbeidsforhold, getAksjonspunkter, getTilstøtendeYtelse, getKunYtelse, getFaktaOmBeregningTilfellerKoder],
   (endringBGPerioder, beregningsgrunnlag, kortvarigeArbeidsforhold, aksjonspunkter, tilstotendeYtelse, kunYtelse, tilfeller) => {
-    if (!hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)) {
+    const vurderFaktaAP = aksjonspunkter ? aksjonspunkter.find(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN) : undefined;
+    if (!vurderFaktaAP) {
       return {};
     }
     return {
@@ -338,6 +362,8 @@ export const buildInitialValuesFaktaForATFLOgSN = createSelector(
       ...TilstotendeYtelseForm.buildInitialValues(tilstotendeYtelse, endringBGPerioder),
       ...TilstotendeYtelseIKombinasjon.buildInitialValues(tilstotendeYtelse, endringBGPerioder, tilfeller),
       ...KunYtelsePanel.buildInitialValues(kunYtelse),
+      ...VurderEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag, vurderFaktaAP),
+      ...FastsettEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag),
     };
   },
 );
