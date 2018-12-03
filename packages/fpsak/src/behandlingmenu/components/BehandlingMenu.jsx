@@ -53,13 +53,17 @@ export class BehandlingMenu extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
+    this.removeEventListeners();
+  }
+
+  addEventListeners() {
     document.addEventListener('click', this.handleClick, false);
     document.addEventListener('mousedown', this.handleClick, false);
     document.addEventListener('keydown', this.handleClick, false);
   }
 
-  componentWillUnmount() {
+  removeEventListeners() {
     document.removeEventListener('click', this.handleClick, false);
     document.removeEventListener('mousedown', this.handleClick, false);
     document.removeEventListener('keydown', this.handleClick, false);
@@ -74,14 +78,19 @@ export class BehandlingMenu extends Component {
     this.setState({
       menuVisible: visibility,
     });
+    if (visibility) {
+      this.addEventListeners();
+    } else {
+      this.removeEventListeners();
+    }
   }
 
   handleClick(e) {
     // ignore clicks on the component itself
-    if (this.node && this.node.contains(e.target)) {
-      this.toggleMenu(true);
-    } else {
+    if (this.node && !this.node.contains(e.target)) {
       this.toggleMenu(false);
+    } else {
+      this.toggleMenu(true);
     }
   }
 
