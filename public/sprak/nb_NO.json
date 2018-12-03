@@ -1216,6 +1216,8 @@
   "BeregningInfoPanel.FordelingBG.Ytelse": "Ytelse",
 
   "KunYtelsePanel.Overskrift": "Søker har ytelse som eneste inntekt. Fastsett månedsbeløp for fordeling av beregningsgrunnlaget.",
+  "KunYtelsePanel.HarBesteberegning": "Søker har ytelse som eneste inntekt. Skal denne fordeles etter besteberegning?",
+  "KunYtelsePanel.OverskriftBesteberegning": "Fastsett månedsbeløp for brutto beregningsgrunnlag etter besteberegning",
 
   "BeregningInfoPanel.EndringBG.PeriodeFom": "Gjeldende f.o.m. {fom}",
   "BeregningInfoPanel.EndringBG.PeriodeFomOgTom": "Gjeldende {fom} - {tom}",
@@ -1970,6 +1972,7 @@
   "HistorikkEndretFelt.Frilansvirksomhet": "Frilansvirksomhet",
   "HistorikkEndretFelt.FordelingForAndel": "{value}",
   "HistorikkEndretFelt.FordelingForNyAndel": "{value}",
+  "HistorikkEndretFelt.FordelingEtterBestebergning": "Fordeling etter besteberegning",
   "HistorikkEndretFelt.InnktektskategoriForAndel": "Inntektskategori for {value}",
   "HistorikkEndretFelt.NyFordelingFor": "Ny fordeling <b>{value}</b>",
   "HistorikkEndretFelt.NyAktivitetFor": "Det er lagt til ny aktivitet for <b>{value}</b>",

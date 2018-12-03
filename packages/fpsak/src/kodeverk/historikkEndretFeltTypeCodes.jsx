@@ -89,6 +89,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'FORDELING_FOR_NY_ANDEL',
     feltId: 'HistorikkEndretFelt.FordelingForNyAndel',
   },
+  FORDELING_ETTER_BESTEBEREGNING: {
+    kode: 'FORDELING_ETTER_BESTEBEREGNING',
+    feltId: 'HistorikkEndretFelt.FordelingEtterBestebergning',
+  },
   FRILANS_INNTEKT: {
     kode: 'FRILANS_INNTEKT',
     feltId: 'Beregningsgrunnlag.AarsinntektPanel.Frilansinntekt',
