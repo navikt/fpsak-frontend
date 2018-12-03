@@ -16,16 +16,16 @@ var options = {
   ],
   watchContentBase: true,
   proxy: {
-    "/fpsak/(api|jetty)/**": {
-      target: "http://localhost:8080",
-      secure: false,
-    },
     "/fpoppdrag/**": {
       target: "http://localhost:8070",
       secure: false,
     },
     "/fptilbake/**": {
       target: "http://localhost:8030",
+      secure: false,
+    },
+    "/fpsak/(sprak|api|jetty)/**": {
+      target: "http://localhost:8080",
       secure: false,
     },
   },
