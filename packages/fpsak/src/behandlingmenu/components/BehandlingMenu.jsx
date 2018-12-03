@@ -78,10 +78,10 @@ export class BehandlingMenu extends Component {
     this.setState({
       menuVisible: visibility,
     });
+    this.removeEventListeners();
+
     if (visibility) {
       this.addEventListeners();
-    } else {
-      this.removeEventListeners();
     }
   }
 
