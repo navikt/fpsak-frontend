@@ -1,6 +1,6 @@
 {
   "name": "fpsak-frontend",
-  "version": "0.1.52",
+  "version": "0.1.53",
   "description": "Klient for Foreldrepenger",
   "main": "./target/index.js",
   "author": "NAV",
