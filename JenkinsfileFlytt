@@ -29,7 +29,7 @@ pipeline {
                         echo "exit code is $exitCode"
 
 
-                        if(exitCode == "0") {
+                        if(exitCode == 0) {
                             def veraPayload = "{\"environment\": \"${til}\",\"application\": \"fpsak-frontend\",\"version\": \"${version}\",\"deployedBy\": \"Jenkins\"}"
                             def response = httpRequest([
                                     url                   : "https://vera.adeo.no/api/v1/deploylog",
