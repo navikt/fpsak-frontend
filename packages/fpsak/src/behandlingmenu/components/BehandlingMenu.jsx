@@ -19,6 +19,17 @@ import OpenBehandlingForChangesMenuItem from './openBehandlingForChanges/OpenBeh
 
 import styles from './behandlingMenu.less';
 
+const toggleEventListeners = (turnOnEventListeners, handleOutsideClick) => {
+  document.removeEventListener('click', handleOutsideClick, false);
+  document.removeEventListener('mousedown', handleOutsideClick, false);
+  document.removeEventListener('keydown', handleOutsideClick, false);
+  if (turnOnEventListeners) {
+    document.addEventListener('click', handleOutsideClick, false);
+    document.addEventListener('mousedown', handleOutsideClick, false);
+    document.addEventListener('keydown', handleOutsideClick, false);
+  }
+};
+
 const getMenuButtonStyle = menuVisible => (menuVisible ? styles.containerHeadingOpen : styles.containerHeading);
 const getMenuButtonText = menuVisible => (menuVisible ? 'Behandlingsmeny.Close' : 'Behandlingsmeny.Open');
 const getImage = menuVisible => (menuVisible ? openImage : closedImage);
@@ -34,8 +45,8 @@ export class BehandlingMenu extends Component {
     super(props);
 
     this.toggleBehandlingMenu = this.toggleBehandlingMenu.bind(this);
-    this.toggleMenu = this.toggleMenu.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleOutsideClick = this.handleOutsideClick.bind(this);
     this.hasNotAccess = this.hasNotAccess.bind(this);
     this.hasNotAccessOrKanVeilede = this.hasNotAccessOrKanVeilede.bind(this);
     this.isBehandlingOnHold = this.isBehandlingOnHold.bind(this);
@@ -53,20 +64,8 @@ export class BehandlingMenu extends Component {
     };
   }
 
-  componentWillMount() {
-    this.removeEventListeners();
-  }
-
-  addEventListeners() {
-    document.addEventListener('click', this.handleClick, false);
-    document.addEventListener('mousedown', this.handleClick, false);
-    document.addEventListener('keydown', this.handleClick, false);
-  }
-
-  removeEventListeners() {
-    document.removeEventListener('click', this.handleClick, false);
-    document.removeEventListener('mousedown', this.handleClick, false);
-    document.removeEventListener('keydown', this.handleClick, false);
+  componentWillUnmount() {
+    toggleEventListeners(false, this.handleOutsideClick);
   }
 
   toggleBehandlingMenu() {
@@ -74,25 +73,22 @@ export class BehandlingMenu extends Component {
     this.setState({ menuVisible: !menuVisible });
   }
 
-  toggleMenu(visibility) {
-    this.setState({
-      menuVisible: visibility,
-    });
-    this.removeEventListeners();
+  handleClick() {
+    const { menuVisible } = this.state;
+    toggleEventListeners(!menuVisible, this.handleOutsideClick);
 
-    if (visibility) {
-      this.addEventListeners();
-    }
+    this.setState(prevState => ({
+      menuVisible: !prevState.menuVisible,
+    }));
   }
 
-  handleClick(event) {
-    event.stopPropagation();
+  handleOutsideClick(e) {
     // ignore clicks on the component itself
-    if (this.node && !this.node.contains(event.target)) {
-      this.toggleMenu(false);
-    } else {
-      this.toggleMenu(true);
+    if (this.node && this.node.contains(e.target)) {
+      return;
     }
+
+    this.handleClick();
   }
 
   hasNotAccess() {
@@ -169,7 +165,7 @@ export class BehandlingMenu extends Component {
 
   resumeBehandling(behandlingIdentifier, params) {
     const { resumeBehandling } = this.props;
-    this.toggleMenu(false);
+    this.handleClick();
     return resumeBehandling(behandlingIdentifier, params);
   }
 
@@ -204,73 +200,73 @@ export class BehandlingMenu extends Component {
           <div className={styles.containerMenuRelative}>
             {this.isResumeBehandlingEnabled()
             && (
-            <ResumeBehandlingMenuItem
-              toggleBehandlingsmeny={this.toggleBehandlingMenu}
-              behandlingIdentifier={behandlingIdentifier}
-              behandlingVersjon={selectedBehandlingVersjon}
-              resumeBehandling={this.resumeBehandling}
-              gjenopptaBehandlingEnabled={gjenopptaBehandlingAccess.isEnabled}
-            />
+              <ResumeBehandlingMenuItem
+                toggleBehandlingsmeny={this.toggleBehandlingMenu}
+                behandlingIdentifier={behandlingIdentifier}
+                behandlingVersjon={selectedBehandlingVersjon}
+                resumeBehandling={this.resumeBehandling}
+                gjenopptaBehandlingEnabled={gjenopptaBehandlingAccess.isEnabled}
+              />
             )
             }
             {this.isPauseBehandlingEnabled()
             && (
-            <PauseBehandlingMenuItem
-              behandlingIdentifier={behandlingIdentifier}
-              behandlingVersjon={selectedBehandlingVersjon}
-              toggleBehandlingsmeny={this.toggleBehandlingMenu}
-              setBehandlingOnHold={setBehandlingOnHold}
-              settBehandlingPaVentEnabled={settBehandlingPaVentAccess.isEnabled}
-            />
+              <PauseBehandlingMenuItem
+                behandlingIdentifier={behandlingIdentifier}
+                behandlingVersjon={selectedBehandlingVersjon}
+                toggleBehandlingsmeny={this.toggleBehandlingMenu}
+                setBehandlingOnHold={setBehandlingOnHold}
+                settBehandlingPaVentEnabled={settBehandlingPaVentAccess.isEnabled}
+              />
             )
             }
             {this.isShelveBehandlingEnebled()
             && (
-            <ShelveBehandlingMenuItem
-              toggleBehandlingsmeny={this.toggleBehandlingMenu}
-              behandlingIdentifier={behandlingIdentifier}
-              behandlingVersjon={selectedBehandlingVersjon}
-              previewHenleggBehandling={previewHenleggBehandling}
-              shelveBehandling={shelveBehandling}
-              push={push}
-              henleggBehandlingEnabled={henleggBehandlingAccess.isEnabled}
-            />
+              <ShelveBehandlingMenuItem
+                toggleBehandlingsmeny={this.toggleBehandlingMenu}
+                behandlingIdentifier={behandlingIdentifier}
+                behandlingVersjon={selectedBehandlingVersjon}
+                previewHenleggBehandling={previewHenleggBehandling}
+                shelveBehandling={shelveBehandling}
+                push={push}
+                henleggBehandlingEnabled={henleggBehandlingAccess.isEnabled}
+              />
             )
             }
             {this.hasEnabledOpenBehandlingForChangesAccess()
-              && (
+            && (
               <OpenBehandlingForChangesMenuItem
                 toggleBehandlingsmeny={this.toggleBehandlingMenu}
                 behandlingIdentifier={behandlingIdentifier}
                 openBehandlingForChanges={openBehandlingForChanges}
                 behandlingVersjon={selectedBehandlingVersjon}
               />
-              )
+            )
             }
             {this.isChangeBehandlendeEnhetEnabled()
             && (
-            <ChangeBehandlendeEnhetMenuItem
-              toggleBehandlingsmeny={this.toggleBehandlingMenu}
-              behandlendeEnheter={behandlendeEnheter}
-              behandlingIdentifier={behandlingIdentifier}
-              behandlingVersjon={selectedBehandlingVersjon}
-              behandlendeEnhetId={behandlendeEnhetId}
-              behandlendeEnhetNavn={behandlendeEnhetNavn}
-              nyBehandlendeEnhet={nyBehandlendeEnhet}
-              byttBehandlendeEnhetEnabled={byttBehandlendeEnhetAccess.isEnabled}
-            />
+              <ChangeBehandlendeEnhetMenuItem
+                toggleBehandlingsmeny={this.toggleBehandlingMenu}
+                behandlendeEnheter={behandlendeEnheter}
+                behandlingIdentifier={behandlingIdentifier}
+                behandlingVersjon={selectedBehandlingVersjon}
+                behandlendeEnhetId={behandlendeEnhetId}
+                behandlendeEnhetNavn={behandlendeEnhetNavn}
+                nyBehandlendeEnhet={nyBehandlendeEnhet}
+                byttBehandlendeEnhetEnabled={byttBehandlendeEnhetAccess.isEnabled}
+              />
             )
             }
             {!this.isBehandlingQueued()
             && (
-            <CreateNewBehandlingMenuItem
-              saksnummer={saksnummer}
-              push={push}
-              submitNyForstegangsBehandling={createNewForstegangsbehandling}
-              opprettNyForstegangsBehandlingEnabled={this.hasEnabledNewBehandling()}
-              opprettRevurderingEnabled={this.hasEnabledNewRevurdering()}
-              ikkeVisOpprettNyBehandling={ikkeVisOpprettNyBehandling.isEnabled}
-            />
+              <CreateNewBehandlingMenuItem
+                saksnummer={saksnummer}
+                push={push}
+                submitNyForstegangsBehandling={createNewForstegangsbehandling}
+                opprettNyForstegangsBehandlingEnabled={this.hasEnabledNewBehandling()}
+                opprettRevurderingEnabled={this.hasEnabledNewRevurdering()}
+                ikkeVisOpprettNyBehandling={ikkeVisOpprettNyBehandling.isEnabled}
+              />
             )
             }
           </div>
