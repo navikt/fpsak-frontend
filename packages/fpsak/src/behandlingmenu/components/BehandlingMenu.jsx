@@ -20,13 +20,12 @@ import OpenBehandlingForChangesMenuItem from './openBehandlingForChanges/OpenBeh
 import styles from './behandlingMenu.less';
 
 const toggleEventListeners = (turnOnEventListeners, handleOutsideClick) => {
-  document.removeEventListener('click', handleOutsideClick, false);
-  document.removeEventListener('mousedown', handleOutsideClick, false);
-  document.removeEventListener('keydown', handleOutsideClick, false);
   if (turnOnEventListeners) {
     document.addEventListener('click', handleOutsideClick, false);
-    document.addEventListener('mousedown', handleOutsideClick, false);
     document.addEventListener('keydown', handleOutsideClick, false);
+  } else {
+    document.removeEventListener('click', handleOutsideClick, false);
+    document.removeEventListener('keydown', handleOutsideClick, false);
   }
 };
 
@@ -77,9 +76,9 @@ export class BehandlingMenu extends Component {
     const { menuVisible } = this.state;
     toggleEventListeners(!menuVisible, this.handleOutsideClick);
 
-    this.setState(prevState => ({
-      menuVisible: !prevState.menuVisible,
-    }));
+    this.setState({
+      menuVisible: !menuVisible,
+    });
   }
 
   handleOutsideClick(e) {
