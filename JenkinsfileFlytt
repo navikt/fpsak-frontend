@@ -18,7 +18,7 @@ pipeline {
                         def versjoner = httpRequest 'https://vera.adeo.no/api/v1/deploylog?onlyLatest=true&filterUndeployed=true'
                         def version = ""
 
-                        def data = readJSON(versjoner.content)
+                        def data = readJSON text: versjoner.content
                         data.each {
                             String app = it.application
                             String environment = it.environment
