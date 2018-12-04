@@ -12,7 +12,7 @@ tcp_nodelay off;
 tcp_nopush on;
 gzip on;
 gzip_proxied any;
-#underscores_in_headers on;
+underscores_in_headers on;
 gzip_types
     text/css
     text/javascript
