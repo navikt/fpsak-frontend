@@ -41,7 +41,7 @@ pipeline {
                             ])
                         }
 
-                        addBadge icon: '', id: '', link: '', text: "${til}-${versjonNummer}"
+                        addBadge icon: '', id: '', link: '', text: "${til}-${version}"
                     }
                 }
             }
