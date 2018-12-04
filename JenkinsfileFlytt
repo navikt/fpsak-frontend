@@ -23,7 +23,7 @@ pipeline {
                             String app = it.application
                             String environment = it.environment
 
-                            if ("fpsak-frontend" == app.toLowerCase() && environment.toLowerCase() == ${fra}) {
+                            if ("fpsak-frontend" == app.toLowerCase() && environment.toLowerCase() == fra) {
                                 version = it.version
                             }
                         }
