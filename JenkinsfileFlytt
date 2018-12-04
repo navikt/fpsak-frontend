@@ -1,27 +1,5 @@
 import groovy.json.JsonSlurper
 
-def deployetVersion(String application, String miljo) {
-    echo("starter med å hente versjon")
-    def response = httpRequest 'https://vera.adeo.no/api/v1/deploylog?onlyLatest=true&filterUndeployed=true'
-    def deployVersion = ""
-    if (response.status != 200) {
-        throw new RuntimeException("Response Code is: ${response.status}")
-    }
-
-    def jsonSlurper = new JsonSlurper()
-    def data = jsonSlurper.parseText(response.content)
-    data.each {
-        String app = it.application
-        String environment = it.environment
-
-        if (application.toLowerCase() == app.toLowerCase() && environment.toLowerCase() == miljo.toLowerCase()) {
-            println("$app $it.version $miljo")
-            deployVersion = it.version
-        }
-    }
-    return deployVersion
-}
-
 pipeline {
     agent {
         node {
@@ -71,4 +49,26 @@ pipeline {
             }
         }
     }
+}
+
+def deployetVersion(String application, String miljo) {
+    echo("starter med å hente versjon")
+    def response = httpRequest 'https://vera.adeo.no/api/v1/deploylog?onlyLatest=true&filterUndeployed=true'
+    def deployVersion = ""
+    if (response.status != 200) {
+        throw new RuntimeException("Response Code is: ${response.status}")
+    }
+
+    def jsonSlurper = new JsonSlurper()
+    def data = jsonSlurper.parseText(response.content)
+    data.each {
+        String app = it.application
+        String environment = it.environment
+
+        if (application.toLowerCase() == app.toLowerCase() && environment.toLowerCase() == miljo.toLowerCase()) {
+            println("${app} ${it.version} ${miljo}")
+            deployVersion = it.version
+        }
+    }
+    return deployVersion
 }
