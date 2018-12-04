@@ -1,0 +1,71 @@
+pipeline {
+    agent {
+        node {
+            label 'DOCKER2'
+        }
+    }
+    parameters {
+        string(defaultValue: "t10", description: 'Fra Miljø*', name: 'fra')
+        string(defaultValue: '', description: 'Til Miljø*', name: 'til')
+    }
+    stages {
+        stage('Promoter Til Miljø') {
+            steps {
+                script {
+                    dir ('k8s') {
+                        def version = deployetVersion("fpsak-frontend", fra)
+
+                        def props = readProperties  interpolate: true, file: "application.${til}.variabler.properties"
+                        def value = "s/RELEASE_VERSION/${version}/g"
+                        props.each{ k,v -> value=value+";s%$k%$v%g" }
+                        sh "k config use-context $props.CONTEXT_NAME"
+                        sh "sed \'$value\' app.yaml | k apply -f -"
+
+                        def naisNamespace = til
+                        if (til == "p") {
+                            naisNamespace = "default"
+                        }
+                        def exitCode=sh returnStatus: true, script: "k rollout status -n${naisNamespace} deployment/fpsak-frontend"
+                        echo "exit code is $exitCode"
+
+
+                        if(exitCode == 0) {
+                            def veraPayload = "{\"environment\": \"${til}\",\"application\": \"fpsak-frontend\",\"version\": \"${version}\",\"deployedBy\": \"Jenkins\"}"
+                            def response = httpRequest([
+                                    url                   : "https://vera.adeo.no/api/v1/deploylog",
+                                    consoleLogResponseBody: true,
+                                    contentType           : "APPLICATION_JSON",
+                                    httpMode              : "POST",
+                                    requestBody           : veraPayload,
+                                    ignoreSslErrors       : true
+                            ])
+                        }
+
+                        addBadge icon: '', id: '', link: '', text: "${til}-${version}"
+                    }
+                }
+            }
+        }
+    }
+}
+
+def deployetVersion(String application, String miljo) {
+    echo("starter med å hente versjon")
+    def response = httpRequest 'https://vera.adeo.no/api/v1/deploylog?onlyLatest=true&filterUndeployed=true'
+    def deployVersion = ""
+    if (response.status != 200) {
+        throw new RuntimeException("Response Code is: ${response.status}")
+    }
+
+    def data = readJSON text: response.content
+    data.each {
+        String app = it.application
+        String environment = it.environment
+
+        if (application.toLowerCase() == app.toLowerCase() && environment.toLowerCase() == miljo.toLowerCase()) {
+            println("${app} ${it.version} ${miljo}")
+            deployVersion = it.version
+        }
+    }
+    return deployVersion
+}
