@@ -1,5 +1,3 @@
-import groovy.json.JsonSlurper
-
 pipeline {
     agent {
         node {
@@ -19,18 +17,13 @@ pipeline {
 
                         def versjoner = httpRequest 'https://vera.adeo.no/api/v1/deploylog?onlyLatest=true&filterUndeployed=true'
                         def version = ""
-                        if (versjoner.status != 200) {
-                            throw new RuntimeException("Response Code is: ${versjoner.status}")
-                        }
 
-                        def jsonSlurper = new JsonSlurper()
-                        def data = jsonSlurper.parseText(versjoner.content)
+                        def data = readJSON(versjoner.content)
                         data.each {
                             String app = it.application
                             String environment = it.environment
 
                             if ("fpsak-frontend" == app.toLowerCase() && environment.toLowerCase() == ${fra}) {
-                                println("${app} ${it.version} ${miljo}")
                                 version = it.version
                             }
                         }
