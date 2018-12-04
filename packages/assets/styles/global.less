@@ -351,6 +351,42 @@ som fra core/og muligen import fra alla andra komponenter
   opacity: 1;
 }
 
+:global(.opphold-manuell) {
+  background-color: transparent;
+  border-color: @navOransje;
+  border-radius: 6px;
+}
+
+:global(.opphold-manuell.vis-item.vis-range) {
+  border-style: dashed;
+}
+
+:global(.opphold-manuell.vis-item.vis-selected) {
+  background-color: transparent;
+  border-color: @navOransje;
+  border-radius: 6px;
+  border-style: dashed;
+  border-width: 1.5px;
+}
+
+:global(.opphold) {
+  background-color: transparent;
+  border-color: @navGronn;
+  border-radius: 6px;
+}
+
+:global(.opphold.vis-item.vis-range) {
+  border-style: dashed;
+}
+
+:global(.opphold.vis-item.vis-selected) {
+  background-color: transparent;
+  border-color: @navGronn;
+  border-radius: 6px;
+  border-style: dashed;
+  border-width: 1.5px;
+}
+
 :global(.opptjening .vis-center) {
   border-bottom: 1px solid grey;
   border-left-style: none;
