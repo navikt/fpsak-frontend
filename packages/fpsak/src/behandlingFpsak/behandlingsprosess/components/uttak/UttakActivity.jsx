@@ -304,7 +304,7 @@ const transformValues = (values, selectedItemData, avslagAarsakKoder, innvilgels
   if (values.erOppfylt && innvilgelseAarsakObject) {
     transformvalue.periodeResultatÅrsak = innvilgelseAarsakObject;
   }
-  if (!values.graderingInnvilget && graderingAvslagAarsakObject) {
+  if (values.erOppfylt && !values.graderingInnvilget && graderingAvslagAarsakObject) {
     transformvalue.graderingAvslagÅrsak = graderingAvslagAarsakObject;
   }
 
