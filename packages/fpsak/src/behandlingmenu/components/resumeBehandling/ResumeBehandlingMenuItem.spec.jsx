@@ -22,18 +22,14 @@ describe('<ResumeBehandlingMenuItem>', () => {
 
   it('skal sende data til server ved trykk på ok-knapp', () => {
     const resumeBehandlingCallback = sinon.spy();
-    const toggleBehandlingsmenyCallback = sinon.spy();
     const wrapper = shallow(<ResumeBehandlingMenuItem
       behandlingIdentifier={behandlingIdentifier}
       behandlingVersjon={2}
-      toggleBehandlingsmeny={toggleBehandlingsmenyCallback}
       resumeBehandling={resumeBehandlingCallback}
       gjenopptaBehandlingEnabled
     />);
 
-    wrapper.find('MenuButton').prop('onClick')();
-
-    expect(toggleBehandlingsmenyCallback.called).is.true;
+    wrapper.find('MenuButton').prop('onMouseDown')();
     expect(resumeBehandlingCallback.called).is.true;
     expect(resumeBehandlingCallback.getCalls()[0].args).has.length(2);
     expect(resumeBehandlingCallback.getCalls()[0].args[0]).is.eql(behandlingIdentifier);

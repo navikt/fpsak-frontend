@@ -66,7 +66,7 @@ class ShelveBehandlingMenuItem extends Component {
     const { showBehandlingErHenlagtModal, showModal } = this.state;
     return (
       <div>
-        <MenuButton onClick={this.showModal} disabled={!henleggBehandlingEnabled}>
+        <MenuButton onMouseDown={this.showModal} disabled={!henleggBehandlingEnabled}>
           <FormattedMessage id="Behandlingsmeny.HenleggBehandling" />
         </MenuButton>
         {showModal

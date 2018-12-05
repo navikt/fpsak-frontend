@@ -56,7 +56,7 @@ class OpenBehandlingForChangesMenuItem extends Component {
 
     return (
       <div>
-        <MenuButton onClick={this.showModal}>
+        <MenuButton onMouseDown={this.showModal}>
           <FormattedMessage id="Behandlingsmeny.ReopenBehandling" />
         </MenuButton>
         {showModal

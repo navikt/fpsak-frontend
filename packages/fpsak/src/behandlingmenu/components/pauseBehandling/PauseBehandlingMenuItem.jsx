@@ -58,7 +58,7 @@ export class PauseBehandlingMenuItem extends Component {
 
     return (
       <div>
-        <MenuButton onClick={this.showModal} disabled={!settBehandlingPaVentEnabled}>
+        <MenuButton onMouseDown={this.showModal} disabled={!settBehandlingPaVentEnabled}>
           <FormattedMessage id="Behandlingsmeny.BehandlingOnHold" />
         </MenuButton>
         {showModal
