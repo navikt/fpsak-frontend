@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
+import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import { behandlingFormValueSelector, behandlingForm } from 'behandling/behandlingForm';
 import {
   PeriodpickerField, SelectField, CheckboxField, RadioGroupField, RadioOption, TextAreaField, DecimalField,
@@ -38,6 +39,12 @@ const maxValue100 = maxValue(100);
 const minLength3 = minLength(3);
 const maxLength4000 = maxLength(4000);
 
+const gyldigeAktivitetStatus = [
+  aktivitetStatus.ARBEIDSTAKER,
+  aktivitetStatus.FRILANSER,
+  aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+];
+
 const gyldigeUttakperioder = [
   uttakPeriodeType.FELLESPERIODE,
   uttakPeriodeType.FEDREKVOTE,
@@ -62,21 +69,27 @@ const mapUtsettelseÅrsaker = typer => typer
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
 const mapArbeidsforhold = andeler => andeler.map((andel) => {
-  const { arbeidsforhold } = andel;
-  const {
-    arbeidsgiverId, arbeidsgiverNavn, arbeidsforholdType, arbeidsforholdId, aktørId,
-  } = arbeidsforhold;
+  const { aktivitetStatus: aktivitetStatusAndel } = andel;
 
-  let periodeArbeidsforhold = arbeidsgiverNavn ? `${arbeidsgiverNavn}` : arbeidsforholdType.navn;
-  periodeArbeidsforhold = arbeidsgiverId ? `${periodeArbeidsforhold} ${arbeidsgiverId}` : periodeArbeidsforhold;
-  periodeArbeidsforhold = arbeidsforholdId ? `${periodeArbeidsforhold}...${arbeidsforholdId.substr(-4)}` : periodeArbeidsforhold;
-  const identifkator = arbeidsgiverId || '-';
-  const navn = arbeidsgiverNavn || arbeidsforholdType.navn;
-  const fixedAktørId = aktørId || '-';
+  if (aktivitetStatusAndel && gyldigeAktivitetStatus.includes(aktivitetStatusAndel.kode)) {
+    const { arbeidsforhold } = andel;
+    let periodeArbeidsforhold = (arbeidsforhold || []).arbeidsgiverNavn
+      ? `${arbeidsforhold.arbeidsgiverNavn}` : aktivitetStatusAndel.navn;
+    periodeArbeidsforhold = (arbeidsforhold || []).arbeidsgiverId
+      ? `${periodeArbeidsforhold} ${arbeidsforhold.arbeidsgiverId}` : periodeArbeidsforhold;
+    periodeArbeidsforhold = (arbeidsforhold || []).arbeidsforholdId
+      ? `${periodeArbeidsforhold}...${arbeidsforhold.arbeidsforholdId.substr(-4)}` : periodeArbeidsforhold;
 
-  return (
-    <option value={`${identifkator}|${navn}|${fixedAktørId}`} key={identifkator}>{periodeArbeidsforhold}</option>
-  );
+
+    const identifkator = (arbeidsforhold || []).arbeidsgiverId || '-';
+    const navn = (arbeidsforhold || []).arbeidsgiverNavn || aktivitetStatusAndel.navn;
+    const fixedAktørId = (arbeidsforhold || []).aktørId || '-';
+
+    return (
+      <option value={`${identifkator}|${navn}|${fixedAktørId}`} key={guid()}>{periodeArbeidsforhold}</option>
+    );
+  }
+  return null;
 });
 const periodeTypeTrengerArsak = (sokerKjonn, periodeType) => (
   (sokerKjonn === navBrukerKjonn.MANN && periodeType === 'MØDREKVOTE')
@@ -338,7 +351,7 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
 
   const arbeidsForhold = values.arbeidsForhold ? values.arbeidsForhold.split('|') : null;
 
-  const arbeidsgiver = arbeidsForhold && (arbeidsForhold[0] !== '-' && arbeidsForhold[2] !== '-') ? {
+  const arbeidsgiver = arbeidsForhold && (arbeidsForhold[0] !== '-' || arbeidsForhold[2] !== '-') ? {
     identifikator: arbeidsForhold[0] !== '-' ? arbeidsForhold[0] : undefined,
     navn: arbeidsForhold[1] ? arbeidsForhold[1] : undefined,
     aktørId: arbeidsForhold[2] !== '-' ? arbeidsForhold[2] : undefined,
