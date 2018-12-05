@@ -1,5 +1,6 @@
 import beregningsgrunnlagAndeltyper from 'kodeverk/beregningsgrunnlagAndeltyper';
 import { aktivitetstatusTilAndeltypeMap } from 'kodeverk/aktivitetStatus';
+import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
 import { required } from 'utils/validation/validators';
 import { formatCurrencyNoKr, removeSpacesFromNumber } from 'utils/currencyUtils';
 
@@ -56,6 +57,56 @@ export const validateUlikeAndelerWithMap = (andelList, mapToSort) => {
 export const validateUlikeAndeler = andelList => validateUlikeAndelerWithMap(andelList, mapAndelToSortedObject);
 
 
+const finnArbeidsforholdRefusjonsinfoListe = (andelList) => {
+  const andelerMedArbeidsforhold = andelList.filter(andel => andel.arbeidsforholdId !== '');
+  const arbeidsforholdRefusjonsbelop = [];
+  andelerMedArbeidsforhold.forEach((andel) => {
+    const infoIndex = arbeidsforholdRefusjonsbelop
+      .findIndex(({ arbeidsforholdId }) => arbeidsforholdId === andel.arbeidsforholdId);
+    if (infoIndex >= 0) {
+      const belopsInfo = arbeidsforholdRefusjonsbelop[infoIndex];
+      if (belopsInfo.refusjonskravFraInntektsmelding < andel.refusjonskravFraInntektsmelding) {
+        arbeidsforholdRefusjonsbelop[infoIndex].refusjonskravFraInntektsmelding = andel.refusjonskravFraInntektsmelding;
+      }
+      if (andel.refusjonskrav !== null && andel.refusjonskrav !== undefined) {
+        arbeidsforholdRefusjonsbelop[infoIndex].totalRefusjon = belopsInfo.totalRefusjon + Number(removeSpacesFromNumber(andel.refusjonskrav));
+      }
+    } else {
+      const {
+        refusjonskravFraInntektsmelding, arbeidsforholdId,
+        arbeidsgiverNavn, arbeidsgiverId,
+      } = andel;
+      let totalRefusjon = 0;
+      if (andel.refusjonskrav !== null && andel.refusjonskrav !== undefined) {
+        totalRefusjon = Number(removeSpacesFromNumber(andel.refusjonskrav));
+      }
+      arbeidsforholdRefusjonsbelop.push({
+        arbeidsforholdId,
+        arbeidsgiverNavn,
+        arbeidsgiverId,
+        refusjonskravFraInntektsmelding,
+        totalRefusjon,
+      });
+    }
+  });
+  return arbeidsforholdRefusjonsbelop;
+};
+
+export const skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding = arbeidsgiver => (
+  [{ id: 'BeregningInfoPanel.EndringBG.Validation.IkkjeHogereRefusjonEnnInntektsmelding' },
+    { arbeidsgiver }]);
+
+export const validateTotalRefusjonPrArbeidsforhold = (andelList) => {
+  const arbeidsforholdRefusjonsinfo = finnArbeidsforholdRefusjonsinfoListe(andelList);
+  const arbeidsforholdMedForHogRefusjon = arbeidsforholdRefusjonsinfo
+    .filter(refusjonsInfo => refusjonsInfo.totalRefusjon > refusjonsInfo.refusjonskravFraInntektsmelding);
+  if (arbeidsforholdMedForHogRefusjon.length > 0) {
+    const arbeidsgiverString = createVisningsnavnForAktivitet(arbeidsforholdMedForHogRefusjon[0]);
+    return skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverString);
+  }
+  return null;
+};
+
 export const skalIkkjeVereHogareEnnInntektmeldingMessage = () => ([{ id: 'BeregningInfoPanel.EndringBG.Validation.IkkeHøyereEnnInntektsmelding' }]);
 
 const skalIkkjeVereHogareEnnInntektmelding = (
@@ -70,13 +121,10 @@ export const likFordeling = (
   value, fordeling,
 ) => ((value !== fordeling) ? skalVereLikFordelingMessage(formatCurrencyNoKr(fordeling)) : null);
 
-export const validateRefusjonsbelop = (refusjonskrav, skalKunneEndreRefusjon, belopFraInntektsmelding) => {
+export const validateRefusjonsbelop = (refusjonskrav, skalKunneEndreRefusjon) => {
   let refusjonskravError;
   if (skalKunneEndreRefusjon) {
     refusjonskravError = required(refusjonskrav);
-    refusjonskravError = refusjonskravError
-      || skalIkkjeVereHogareEnnInntektmelding(refusjonskrav !== '' ? Number(removeSpacesFromNumber(refusjonskrav)) : 0,
-        belopFraInntektsmelding !== null ? belopFraInntektsmelding : 0);
   }
   return refusjonskravError;
 };
@@ -96,12 +144,11 @@ export const hasFieldErrors = fieldErrors => (fieldErrors.refusjonskrav || field
 export const validateAndelFields = (andelFieldValues) => {
   const {
     refusjonskrav, fastsattBeløp, belopFraInntektsmelding, skalKunneEndreRefusjon,
-    andel, inntektskategori, refusjonskravFraInntektsmelding,
+    andel, inntektskategori,
   } = andelFieldValues;
   const fieldErrors = {};
   fieldErrors.refusjonskrav = validateRefusjonsbelop(
     refusjonskrav, skalKunneEndreRefusjon,
-    refusjonskravFraInntektsmelding,
   );
   fieldErrors.fastsattBeløp = validateFastsattBelop(fastsattBeløp, belopFraInntektsmelding);
   fieldErrors.andel = required(andel);

@@ -81,8 +81,9 @@ EndringBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (periode) => {
         ? formatCurrencyNoKr(andel.fordelingForrigeBehandling) : '',
       fastsattBeløp: settFastsattBelop(periode.harPeriodeAarsakGraderingEllerRefusjon,
         andel.beregnetPrMnd, andel.fastsattForrige, andel.fordelingForrigeBehandling, andel.fastsattAvSaksbehandler),
-      refusjonskrav: andel.refusjonskrav ? formatCurrencyNoKr(andel.refusjonskrav) : '0',
-      skalKunneEndreRefusjon: periode.skalKunneEndreRefusjon ? periode.skalKunneEndreRefusjon : false,
+      refusjonskrav: andel.refusjonskrav !== null && andel.refusjonskrav !== undefined ? formatCurrencyNoKr(andel.refusjonskrav) : '',
+      skalKunneEndreRefusjon: periode.skalKunneEndreRefusjon && !andel.lagtTilAvSaksbehandler
+      && andel.refusjonskravFraInntektsmelding ? periode.skalKunneEndreRefusjon : false,
       belopFraInntektsmelding: andel.belopFraInntektsmelding,
       harPeriodeAarsakGraderingEllerRefusjon: periode.harPeriodeAarsakGraderingEllerRefusjon,
       refusjonskravFraInntektsmelding: andel.refusjonskravFraInntektsmelding,

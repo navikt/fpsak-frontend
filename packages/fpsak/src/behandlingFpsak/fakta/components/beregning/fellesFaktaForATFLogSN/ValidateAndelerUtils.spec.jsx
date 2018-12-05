@@ -1,10 +1,107 @@
 import { expect } from 'chai';
 import {
   validateUlikeAndeler, ulikeAndelerErrorMessage, validateSumFastsattBelop, skalVereLikFordelingMessage, compareAndeler,
+  validateTotalRefusjonPrArbeidsforhold, skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding,
 } from './ValidateAndelerUtils';
 
 
 describe('<ValidateAndelerUtils>', () => {
+  it('skal ikkje gi error når total refusjon er lavere enn inntektsmelding', () => {
+    const arbeidsgiverAndersen = {
+      arbeidsforholdId: '89r2hf923',
+      arbeidsgiverNavn: 'Andersen flyttebyrå',
+      arbeidsgiverId: '36363463463',
+    };
+    const andeler = [{
+      ...arbeidsgiverAndersen,
+      refusjonskrav: '10 000',
+      refusjonskravFraInntektsmelding: 20000,
+    },
+    {
+      ...arbeidsgiverAndersen,
+      refusjonskrav: '5 000',
+      refusjonskravFraInntektsmelding: 0,
+    },
+    {
+      arbeidsforholdId: '43r34h',
+      refusjonskrav: '40 000',
+      refusjonskravFraInntektsmelding: 40000,
+      arbeidsgiverNavn: 'Torgersen flyttebyrå',
+      arbeidsgiverId: '658568568',
+    },
+    {
+      arbeidsforholdId: '', refusjonskrav: null, refusjonskravFraInntektsmelding: 0,
+    },
+    ];
+    const error = validateTotalRefusjonPrArbeidsforhold(andeler);
+    expect(error).to.equal(null);
+  });
+
+  it('skal ikkje gi error når total refusjon er lik inntektsmelding', () => {
+    const arbeidsgiverAndersen = {
+      arbeidsforholdId: '89r2hf923',
+      arbeidsgiverNavn: 'Andersen flyttebyrå',
+      arbeidsgiverId: '36363463463',
+    };
+    const andeler = [{
+      ...arbeidsgiverAndersen,
+      refusjonskrav: '10 000',
+      refusjonskravFraInntektsmelding: 20000,
+    },
+    {
+      ...arbeidsgiverAndersen,
+      refusjonskrav: '10 000',
+      refusjonskravFraInntektsmelding: 0,
+    },
+    {
+      arbeidsforholdId: '43r34h',
+      refusjonskrav: '40 000',
+      refusjonskravFraInntektsmelding: 40000,
+      arbeidsgiverNavn: 'Torgersen flyttebyrå',
+      arbeidsgiverId: '658568568',
+    },
+    {
+      arbeidsforholdId: '', refusjonskrav: null, refusjonskravFraInntektsmelding: 0,
+    },
+    ];
+    const error = validateTotalRefusjonPrArbeidsforhold(andeler);
+    expect(error).to.equal(null);
+  });
+
+  it('skal gi error når total refusjon høyere enn inntektsmelding', () => {
+    const arbeidsgiverAndersen = {
+      arbeidsforholdId: '89r2hf923',
+      arbeidsgiverNavn: 'Andersen flyttebyrå',
+      arbeidsgiverId: '36363463463',
+    };
+    const andeler = [{
+      ...arbeidsgiverAndersen,
+      refusjonskrav: '10 000',
+      refusjonskravFraInntektsmelding: 20000,
+    },
+    {
+      ...arbeidsgiverAndersen,
+      refusjonskrav: '20 000',
+      refusjonskravFraInntektsmelding: 0,
+    },
+    {
+      arbeidsforholdId: '43r34h',
+      refusjonskrav: '40 000',
+      refusjonskravFraInntektsmelding: 40000,
+      arbeidsgiverNavn: 'Torgersen flyttebyrå',
+      arbeidsgiverId: '658568568',
+    },
+    {
+      arbeidsforholdId: '', refusjonskrav: null, refusjonskravFraInntektsmelding: 0,
+    },
+    ];
+    const arbeidsgiverString = 'Andersen flyttebyrå (36363463463) ...f923';
+    const error = validateTotalRefusjonPrArbeidsforhold(andeler);
+    const expected = skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverString);
+    expect(error.id).to.equal(expected.id);
+    expect(error.arbeidsgiver).to.equal(expected.arbeidsgiver);
+  });
+
   it('skal returnere 0 for lik andelsinfo og lik inntektskategori', () => {
     const andeler = [{
       andelsinfo: 'Andelsinfo1', inntektskategori: 'Inntektskategori1',
