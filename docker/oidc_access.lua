@@ -27,7 +27,13 @@ if not ngx.req.get_headers()["Authorization"] then
         session.data.ADRUM = ngx.var.cookie_ADRUM
     end
 
-    local res, err = require("resty.openidc").authenticate(opts, nil, nil, session)
+    local unauth_action
+    -- dont reautenticate on XHR
+    if ngx.var.http_x_requested_with == "XMLHttpRequest" then
+        unauth_action = 'pass'
+    end
+
+    local res, err = require("resty.openidc").authenticate(opts, nil, unauth_action, session)
 
     if err then
         ngx.status = 500
@@ -40,8 +46,10 @@ if not ngx.req.get_headers()["Authorization"] then
         return ngx.redirect(ngx.var.app_path_prefix)
     end
 
+
+    -- creating the proxy cookie string
     local proxy_cookie = {}
-    -- adding ADRUM cookie if existant
+    -- adding ADRUM cookie from session if existing
     if session.data.ADRUM then
         proxy_cookie.ADRUM = session.data.ADRUM
     end
@@ -62,3 +70,5 @@ if not ngx.req.get_headers()["Authorization"] then
     end
     ngx.var.proxy_cookie = proxy_cookie_string
 end
+
+
