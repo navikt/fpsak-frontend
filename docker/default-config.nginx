@@ -1,5 +1,5 @@
-access_log off;
-error_log /dev/stdout info;
+access_log off; # Handled by trafic
+error_log /dev/stdout debug;
 charset utf-8;
 lua_package_path '~/lua/?.lua;;';
 lua_shared_dict discovery 1m;
@@ -8,11 +8,11 @@ lua_code_cache on; # Need to be set for session storage to work.
 lua_use_default_type off;
 proxy_buffering off;
 resolver "${RESOLVER}";
-tcp_nodelay off;
-tcp_nopush on;
-gzip on;
+tcp_nodelay off; ## No need to bleed constant updates. Send the all shebang in one fell swoop.
+tcp_nopush off;
+gzip off;
 gzip_proxied any;
-underscores_in_headers on;
+
 gzip_types
     text/css
     text/javascript
@@ -51,7 +51,7 @@ server {
     set $oidc_password              "${OIDC_PASSWORD}";
     set $oidc_host_url              "${OIDC_HOST_URL}";
 
-    access_by_lua_file oidc_access.lua;
+
 
     # Server headers. Will be overwritten if you set them in blocks.
     proxy_set_header    Connection "";
@@ -63,12 +63,15 @@ server {
     proxy_http_version  1.1;
     proxy_ssl_verify    off;
 
+    add_header          X-Application-Id "${APP_NAME}:${APP_VERSION}, proxy=${APP_API_GATEWAY}, pod=${APP_HOSTNAME}";
 
-    add_header Last-Modified $date_gmt;
-    add_header Cache-Control 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
-    if_modified_since off;
-    expires off;
-    etag off;
+    # complete disable cache
+    add_header          Last-Modified $date_gmt;
+    add_header          Cache-Control 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
+    if_modified_since   off;
+    expires             off;
+    etag                off;
+    sendfile            off;
 
     # Lanuage files are served from disk
     location /fpsak/sprak/ {
@@ -77,12 +80,14 @@ server {
 
     # Simple Proxy to backend
     location  "${APP_API_PATH}" {
+        access_by_lua_file oidc_access.lua;
         proxy_pass "${APP_API_GATEWAY}${APP_API_PATH}";
 
     }
 
     # Simple Proxy to backend middlertidig fix frem til bedre løsning kommer på plass.
     location  /fpsak/oppgaveredirect {
+        access_by_lua_file oidc_access.lua;
         proxy_pass       "${APP_API_GATEWAY}/fpsak/oppgaveredirect";
         proxy_redirect   "~*/fpsak/#/(.+)$" "$app_baseurl/fpsak/$1";
     }
@@ -102,9 +107,6 @@ server {
     location ~* ^.+\.(?:css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|svg)$ {
         ## expires 365d;
 
-        ## No need to bleed constant updates. Send the all shebang in one fell swoop.
-        tcp_nodelay off;
-
         ## Set the OS file cache.
         open_file_cache max=3000 inactive=120s;
         open_file_cache_valid 45s;
@@ -119,17 +121,8 @@ server {
 
     # To make sure any assets can get through :)
     location "${APP_PATH_PREFIX}" {
+        access_by_lua_file oidc_access.lua;
         try_files $uri @rewrites;
-        # Adding some debug information
-        add_header          X-Application-Id "${APP_NAME}:${APP_VERSION}, proxy=${APP_API_GATEWAY}, pod=${APP_HOSTNAME}";
-
-        # Hvis vi tillater browser-caching vil vi ikke ha nedetidsfri deploy (!)
-        sendfile off;
-        add_header Last-Modified $date_gmt;
-        add_header Cache-Control 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
-        if_modified_since off;
-        expires off;
-        etag off;
     }
 
     # If no asset matches, send it to your javascript app. Hopefully it's a route in the app!
