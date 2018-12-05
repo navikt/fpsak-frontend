@@ -12,7 +12,7 @@ import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import ArrowBox from 'sharedComponents/ArrowBox';
 import Image from 'sharedComponents/Image';
-import { getSimuleringResultat } from 'behandling/behandlingSelectors';
+import { getSimuleringResultat, getTilbakekrevingValg } from 'behandling/behandlingSelectors';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import {
@@ -26,6 +26,7 @@ import avregningCodes from 'kodeverk/avregningCodes';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
 import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
+import { createSelector } from 'reselect';
 import AvregningSummary from './AvregningSummary';
 import AvregningTable from './AvregningTable';
 import styles from './avregningPanel.less';
@@ -292,8 +293,19 @@ const transformValues = (values, ap) => [{
   ...values,
 }];
 
+const buildInitialValues = createSelector(
+  [getTilbakekrevingValg], (tilbakekrevingValg) => {
+    const { videreBehandling, begrunnelse } = tilbakekrevingValg;
+    return {
+      videreBehandling: videreBehandling.kode,
+      begrunnelse,
+    };
+  },
+);
+
 const mapStateToProps = (state, initialProps) => ({
   simuleringResultat: getSimuleringResultat(state),
+  initialValues: buildInitialValues(state),
   erTilbakekrevingVilkårOppfylt: behandlingFormValueSelector(formName)(state, 'erTilbakekrevingVilkårOppfylt'),
   grunnerTilReduksjon: behandlingFormValueSelector(formName)(state, 'grunnerTilReduksjon'),
   onSubmit: values => initialProps.submitCallback(transformValues(values, initialProps.apCodes[0])),
