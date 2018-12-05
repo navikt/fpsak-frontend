@@ -10,7 +10,7 @@ addons:
   sonarcloud:
     organization: "petterruud-github"
     token:
-      secure: SONARCLOUD_TOKEN
+      secure: $SONARCLOUD_TOKEN
 
 
 install:
