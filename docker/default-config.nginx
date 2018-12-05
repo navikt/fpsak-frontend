@@ -44,6 +44,7 @@ server {
     set $session_redis_host         0.0.0.0;
     set $app_callback_path          "${APP_CALLBACK_PATH}";
     set $app_login_path             "${APP_LOGIN_PATH}";
+    set $app_hostname               "${APP_HOSTNAME}";
     set $app_path_prefix            "${APP_PATH_PREFIX}";
     set $app_baseurl                https://$host;
     set $oidc_agentname             "${OIDC_AGENTNAME}";
@@ -62,6 +63,13 @@ server {
     proxy_http_version  1.1;
     proxy_ssl_verify    off;
 
+
+    add_header Last-Modified $date_gmt;
+    add_header Cache-Control 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
+    if_modified_since off;
+    expires off;
+    etag off;
+
     # Lanuage files are served from disk
     location /fpsak/sprak/ {
         alias /app/fpsak/sprak/;
@@ -70,11 +78,7 @@ server {
     # Simple Proxy to backend
     location  "${APP_API_PATH}" {
         proxy_pass "${APP_API_GATEWAY}${APP_API_PATH}";
-        add_header Last-Modified $date_gmt;
-        add_header Cache-Control 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
-        if_modified_since off;
-        expires off;
-        etag off;
+
     }
 
     # Simple Proxy to backend middlertidig fix frem til bedre løsning kommer på plass.
@@ -96,7 +100,7 @@ server {
 
     ## All static files will be served directly.
     location ~* ^.+\.(?:css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|svg)$ {
-        expires 365d;
+        ## expires 365d;
 
         ## No need to bleed constant updates. Send the all shebang in one fell swoop.
         tcp_nodelay off;
@@ -117,8 +121,7 @@ server {
     location "${APP_PATH_PREFIX}" {
         try_files $uri @rewrites;
         # Adding some debug information
-        add_header          X-Application-Id "${APP_NAME}:${APP_VERSION} med proxy mot ${APP_API_GATEWAY}";
-        add_header          X-Debug-Proxy-Host '$scheme://$host:$server_port/ => http://$proxy_host/';
+        add_header          X-Application-Id "${APP_NAME}:${APP_VERSION}, proxy=${APP_API_GATEWAY}, pod=${APP_HOSTNAME}";
 
         # Hvis vi tillater browser-caching vil vi ikke ha nedetidsfri deploy (!)
         sendfile off;
