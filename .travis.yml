@@ -8,7 +8,7 @@ cache:
 
 addons:
   sonarcloud:
-    organization: "petterruud-github"
+    organization: "navikt"
     token:
       secure: $SONARCLOUD_TOKEN
 
