@@ -20,12 +20,13 @@ script:
 - yarn less:lint
 - yarn test
 - yarn build
+- "./travis/sonar.sh"
 - git config user.name team-foreldrepenger[bot]
 - git config user.email team-foreldrepenger[bot]@users.noreply.github.com
 
 
 after_script:
-- sonar-scanner
+
 - chmod a+x ./travis/push-tag.sh
 - "./travis/push-tag.sh"
 
