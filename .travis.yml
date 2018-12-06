@@ -8,9 +8,9 @@ cache:
 
 addons:
   sonarcloud:
-    organization: "navikt"
+    organization: "navit"
     token:
-      secure: $SONARCLOUD_TOKEN
+      secure: VkvpAqpIo3uo44AShIjR6aDMs05/E2glZgtqm/tW1/J5HGM1m/UZB4i5hlN7Oipz+gPXC7bNsDhJVzWto8FmYv+NhLoaSWoKKsxr/xuCG8T97p8MMbtnNPpsj1XLfYPhnqP+NLvOk4zS65k8BbWGWuFp7JQdg2C/x2B895u4k6C5WXUkT6HFLfn2IjKLQD9FJmWb1wvhA4d5uLhaRXAxT8SdKplRYt21XfdxxBgjH76r1SxOzr27RQDCL0uhe5ass8Wzo4gTp0+xXC0P/UKtC6Jce3EXmJUIWy+US7lotg+o1n89vMs2NRsaqf/UWHJiL6N+PVSmL8zozI0v5DAnaWT4HopHQB63sflAR+/XULbxi0E3uaGclfjL/j+JtlJNYnlM0CLvqiRU/5N7CGIOpTcbtqEuwyU2h6HkXPRtjGGlGkO7Qzm21cSJbGPMHQzXxEuuF1Z6JGRQ0XAp+wl9fewQOtgWCFSCZAUhAibRTkkZpnLqZSM+2c4XpsPWtrAHef6w735tJ7z+FkFmtk9boLFFbLFKX+dA6renlK8wgKia9DDBCRWSKbmb53bVMbwwIP1wVjQpYiLIkmw6VEL/InW2/+0JLP4BKAFshK+21FeSJxrGTRNukuwfKl5xHuV9bnnCyOyZgmoeepdmoSn5xIkotZtJSKJ4E7sgTLhDD2Y=
 
 
 install:
