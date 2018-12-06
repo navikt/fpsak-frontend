@@ -254,7 +254,7 @@ export class AvregningPanelImpl extends Component {
                           mini
                           htmlType="button"
                           onClick={formProps.handleSubmit}
-                          disabled={formProps.invalid}
+                          disabled={formProps.invalid || formProps.pristine}
                           readOnly={readOnly}
                         >
                           <FormattedMessage id="SubmitButton.ConfirmInformation" />
@@ -296,10 +296,23 @@ const transformValues = (values, ap) => [{
 const buildInitialValues = createSelector(
   [getTilbakekrevingValg, getAksjonspunkter], (tilbakekrevingValg, aksjonspunkter) => {
     const aksjonspunkt = aksjonspunkter.find(ap => simuleringAksjonspunkter.includes(ap.definisjon.kode));
-    return {
-      videreBehandling: tilbakekrevingValg ? tilbakekrevingValg.videreBehandling.kode : undefined,
-      begrunnelse: aksjonspunkt ? aksjonspunkt.begrunnelse : undefined,
+    if (!aksjonspunkt || !tilbakekrevingValg) {
+      return undefined;
+    }
+
+    let values = {
+      videreBehandling: tilbakekrevingValg.videreBehandling.kode,
+      begrunnelse: aksjonspunkt.begrunnelse,
     };
+
+    if (aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_INNTREKK) {
+      values = {
+        erTilbakekrevingVilkårOppfylt: tilbakekrevingValg.grunnerTilReduksjon !== null ? tilbakekrevingValg.grunnerTilReduksjon : false,
+        grunnerTilReduksjon: tilbakekrevingValg.grunnerTilReduksjon,
+        ...values,
+      };
+    }
+    return values;
   },
 );
 
