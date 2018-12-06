@@ -295,11 +295,10 @@ const transformValues = (values, ap) => [{
 
 const buildInitialValues = createSelector(
   [getTilbakekrevingValg, getAksjonspunkter], (tilbakekrevingValg, aksjonspunkter) => {
-    const { videreBehandling } = tilbakekrevingValg;
     const aksjonspunkt = aksjonspunkter.find(ap => simuleringAksjonspunkter.includes(ap.definisjon.kode));
     return {
-      videreBehandling: videreBehandling.kode,
-      begrunnelse: aksjonspunkt.begrunnelse,
+      videreBehandling: tilbakekrevingValg ? tilbakekrevingValg.videreBehandling.kode : undefined,
+      begrunnelse: aksjonspunkt ? aksjonspunkt.begrunnelse : undefined,
     };
   },
 );
