@@ -45,8 +45,6 @@ export class BehandlingMenu extends Component {
     this.resumeBehandling = this.resumeBehandling.bind(this);
     this.isChangeBehandlendeEnhetEnabled = this.isChangeBehandlendeEnhetEnabled.bind(this);
     this.hasEnabledOpenBehandlingForChangesAccess = this.hasEnabledOpenBehandlingForChangesAccess.bind(this);
-
-    this.behandlingsMenuRef = React.createRef();
     this.state = {
       menuVisible: false,
     };
