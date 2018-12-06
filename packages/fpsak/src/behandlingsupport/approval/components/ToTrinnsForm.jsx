@@ -10,8 +10,8 @@ import { ariaCheck } from 'utils/validation/validators';
 import { isRequiredMessage } from 'utils/validation/messages';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK } from 'behandling/behandlingSelectors';
-import { isMeholdIKlage } from './ApprovalTextUtils';
 import ApprovalField from './ApprovalField';
+import { isKlage } from './ApprovalTextUtils';
 
 import styles from './ToTrinnsForm.less';
 
@@ -86,7 +86,7 @@ export const ToTrinnsFormImpl = ({
         >
           <FormattedMessage id="InfoPanel.SendTilbake" />
         </Hovedknapp>
-        {!isMeholdIKlage(klageVurderingResultatNFP, klageVurderingResultatNK)
+        {!isKlage(klageVurderingResultatNFP, klageVurderingResultatNK)
         && (
         <button
           type="button"

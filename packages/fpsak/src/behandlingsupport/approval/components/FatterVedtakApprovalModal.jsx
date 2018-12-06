@@ -108,25 +108,10 @@ const isBehandlingsresultatOpphor = createSelector(
   [getBehandlingsresultat], behandlingsresultat => behandlingsresultat.type.kode === behandlingResultatType.OPPHOR,
 );
 
-const getKlageText = (behandlingsresultat) => {
-  switch (behandlingsresultat.type.kode) {
-    case behandlingResultatType.KLAGE_AVVIST:
-      return 'FatterVedtakApprovalModal.ModalDescriptionKlageAvvist';
-    case behandlingResultatType.KLAGE_MEDHOLD:
-      return 'FatterVedtakApprovalModal.ModalDescriptionKlageMedhold';
-    case behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET:
-      return 'FatterVedtakApprovalModal.ModalDescriptionKlageOpphevet';
-    case behandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET:
-      return 'FatterVedtakApprovalModal.ModalDescriptionKlageStadfestet';
-    default:
-      return null;
-  }
-};
-
-const getModalDescriptionTextCode = createSelector([isBehandlingsresultatOpphor, getFagsakYtelseType, getBehandlingIsKlage, getBehandlingsresultat],
-  (isOpphor, ytelseType, isKlage, behandlingResultat) => {
+const getModalDescriptionTextCode = createSelector([isBehandlingsresultatOpphor, getFagsakYtelseType, getBehandlingIsKlage],
+  (isOpphor, ytelseType, isKlage) => {
     if (isKlage) {
-      return getKlageText(behandlingResultat);
+      return 'FatterVedtakApprovalModal.ModalDescriptionKlage';
     }
     if (isOpphor) {
       return 'FatterVedtakApprovalModal.ModalDescriptionOpphort';
@@ -169,7 +154,7 @@ const getInfoTextCode = createSelector(
     ytelseType, isOpphor,
   ) => {
     if (behandlingIsKlage) {
-      return getKlageText(behandlingsresultat);
+      return 'FatterVedtakApprovalModal.ModalDescriptionKlage';
     } if (isSameResultAsOriginalBehandling(
       behandlingtype.kode, behandlingsresultat, beregningResultat, orginaltBehandlingsresultat,
       originaltBeregningResultat,

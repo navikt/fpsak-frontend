@@ -14,12 +14,9 @@ import vurderFaktaOmBeregningTotrinnText from '../VurderFaktaBeregningTotrinnTex
 import aksjonspunktCodes, { isUttakAksjonspunkt } from '../../../kodeverk/aksjonspunktCodes';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
 
-export const isMeholdIKlage = (klageVurderingResultatNFP, klageVurderingResultatNK) => {
-  const meholdIKlageAvNFP = klageVurderingResultatNFP
-    && klageVurderingResultatNFP.klageVurdering === klageVurderingCodes.MEDHOLD_I_KLAGE;
-  const meholdIKlageAvNK = klageVurderingResultatNK
-    && klageVurderingResultatNK.klageVurdering === klageVurderingCodes.MEDHOLD_I_KLAGE;
-
+export const isKlage = (klageVurderingResultatNFP, klageVurderingResultatNK) => {
+  const meholdIKlageAvNFP = klageVurderingResultatNFP;
+  const meholdIKlageAvNK = klageVurderingResultatNK;
   return meholdIKlageAvNFP || meholdIKlageAvNK;
 };
 
