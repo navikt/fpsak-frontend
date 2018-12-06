@@ -12,7 +12,7 @@ import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import ArrowBox from 'sharedComponents/ArrowBox';
 import Image from 'sharedComponents/Image';
-import { getSimuleringResultat, getTilbakekrevingValg } from 'behandling/behandlingSelectors';
+import { getSimuleringResultat, getTilbakekrevingValg, getAksjonspunkter } from 'behandling/behandlingSelectors';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import {
@@ -33,7 +33,7 @@ import styles from './avregningPanel.less';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
-const aksjonspunkter = [
+const simuleringAksjonspunkter = [
   aksjonspunktCodes.VURDER_FEILUTBETALING,
   aksjonspunktCodes.VURDER_INNTREKK,
 ];
@@ -294,11 +294,12 @@ const transformValues = (values, ap) => [{
 }];
 
 const buildInitialValues = createSelector(
-  [getTilbakekrevingValg], (tilbakekrevingValg) => {
-    const { videreBehandling, begrunnelse } = tilbakekrevingValg;
+  [getTilbakekrevingValg, getAksjonspunkter], (tilbakekrevingValg, aksjonspunkter) => {
+    const { videreBehandling } = tilbakekrevingValg;
+    const aksjonspunkt = aksjonspunkter.find(ap => simuleringAksjonspunkter.includes(ap.definisjon.kode));
     return {
       videreBehandling: videreBehandling.kode,
-      begrunnelse,
+      begrunnelse: aksjonspunkt.begrunnelse,
     };
   },
 );
@@ -322,6 +323,6 @@ const AvregningPanel = connect(mapStateToProps, mapDispatchToProps)(injectIntl(b
   enableReinitialize: true,
 })(AvregningPanelImpl)));
 
-AvregningPanel.supports = (bp, apCodes) => bp === behandlingspunktCodes.AVREGNING || aksjonspunkter.some(ap => apCodes.includes(ap));
+AvregningPanel.supports = (bp, apCodes) => bp === behandlingspunktCodes.AVREGNING || simuleringAksjonspunkter.some(ap => apCodes.includes(ap));
 
 export default AvregningPanel;
