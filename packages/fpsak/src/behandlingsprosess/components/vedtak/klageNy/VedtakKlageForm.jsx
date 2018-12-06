@@ -36,6 +36,7 @@ export const VedtakKlageFormImpl = ({
   previewVedtakCallback,
   isAvvist,
   isOmgjort,
+  fritekstTilBrev,
   isOpphevOgHjemsend,
   aksjonspunktKoder,
   avvistArsaker,
@@ -80,6 +81,7 @@ export const VedtakKlageFormImpl = ({
         </div>
       ) }
       <VedtakKlageSubmitPanel
+        begrunnelse={fritekstTilBrev}
         previewVedtakCallback={previewVedtakCallback}
         formProps={formProps}
         readOnly={readOnly}
@@ -99,6 +101,7 @@ VedtakKlageFormImpl.propTypes = {
   isBehandlingReadOnly: PropTypes.bool.isRequired,
   avvistArsaker: PropTypes.arrayOf(PropTypes.object),
   omgjortAarsak: PropTypes.string,
+  fritekstTilBrev: PropTypes.string,
   behandlingsresultat: PropTypes.shape().isRequired,
   ...formPropTypes,
 };
@@ -106,11 +109,12 @@ VedtakKlageFormImpl.propTypes = {
 VedtakKlageFormImpl.defaultProps = {
   omgjortAarsak: undefined,
   avvistArsaker: undefined,
+  fritekstTilBrev: undefined,
 };
 
 const transformValues = values => values.aksjonspunktKoder.map(apCode => ({
   kode: apCode,
-  begrunnelse: values.begrunnelse,
+  begrunnelse: values.fritekstTilBrev,
 }));
 
 
@@ -203,10 +207,18 @@ export const getIsAvvist = createSelector(
   behandlingsresultat => behandlingsresultat.type.kode === behandlingResultatType.KLAGE_AVVIST,
 );
 
-
 export const getIsOpphevOgHjemsend = createSelector(
   [getBehandlingsresultat],
   behandlingsresultat => behandlingsresultat.type.kode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET,
+);
+
+export const getFritekstTilBrev = createSelector(
+  [getBehandlingKlageVurdering],
+  (behandlingKlageVurdering) => {
+    const klageResultat = behandlingKlageVurdering.klageVurderingResultatNK
+      ? behandlingKlageVurdering.klageVurderingResultatNK : behandlingKlageVurdering.klageVurderingResultatNFP;
+    return klageResultat.fritekstTilBrev;
+  },
 );
 
 export const buildInitialValues = createSelector(
@@ -229,6 +241,7 @@ const mapStateToProps = (state, initialProps) => ({
   isOmgjort: getIsOmgjort(state),
   omgjortAarsak: getOmgjortAarsak(state),
   behandlingStatusKode: getBehandlingStatus(state).kode,
+  fritekstTilBrev: getFritekstTilBrev(state),
   behandlingsResultatTekst: getResultatText(state),
   behandlingsresultat: getBehandlingsresultat(state),
   aksjonspunktKoder: getSelectedBehandlingspunktAksjonspunkter(state).map(ap => ap.definisjon.kode),

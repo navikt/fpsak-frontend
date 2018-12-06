@@ -547,7 +547,7 @@
   "FatterVedtakStatusModal.IkkeInnvilgetFP": "Foreldrepenger er avslått",
   "FatterVedtakStatusModal.Sendt": "Forslag til vedtak er sendt til beslutter",
   "FatterVedtakStatusModal.SendtBeslutter": "Forslag til vedtak er sendt til beslutter",
-  "FatterVedtakStatusModal.SendtKlageResultatTilBeslutter": "Forslag til klageresultatet er sendt til beslutter",
+  "FatterVedtakStatusModal.SendtKlageResultatTilBeslutter": "Forslag til klageresultat er sendt til beslutter",
 
   "FatterVedtakApprovalModal.GoToSearchPage": "Du kommer nå til forsiden.",
   "FatterVedtakApprovalModal.Ok": "OK",
@@ -568,10 +568,7 @@
   "FatterVedtakApprovalModal.InnvilgetEngangsstonad": "Engangsstønad er innvilget og vedtaket blir iverksatt",
   "FatterVedtakApprovalModal.InnvilgetForeldrepenger": "Foreldrepenger er innvilget og vedtaket blir iverksatt",
   "FatterVedtakApprovalModal.OpphortForeldrepenger":  "Foreldrepenger er opphørt.",
-  "FatterVedtakApprovalModal.ModalDescriptionKlageAvvist": "Vedtak om klagen er avvist blir iverksatt.",
-  "FatterVedtakApprovalModal.ModalDescriptionKlageMedhold":"Vedtak om klagen er medhold blir iverksatt.",
-  "FatterVedtakApprovalModal.ModalDescriptionKlageOpphevet": "Vedtak om klagen er opphevet blir iverksatt.",
-  "FatterVedtakApprovalModal.ModalDescriptionKlageStadfestet": "Vedtak om klagen er stadfestet blir iverksatt.",
+  "FatterVedtakApprovalModal.ModalDescriptionKlage": "Resultatet av klagebehandlingen blir iverksatt",
 
   "SettBehandlingPaVentModal.ModalDescription": "Behandlingen settes på vent med frist",
   "SettBehandlingPaVentModal.PaVent": "På vent",
