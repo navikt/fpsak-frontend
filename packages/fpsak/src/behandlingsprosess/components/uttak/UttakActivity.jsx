@@ -229,7 +229,7 @@ const erPeriodeOppfylt = (periode, kontoIkkeSatt) => {
     return false;
   }
   if (periode.periodeResultatType && periode.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING) {
-    if (periode.periodeResultatÅrsak.kodeverk === INNVILGET_AARSAK || periode.oppholdArsak !== oppholdArsakType.UDEFINERT) {
+    if (periode.periodeResultatÅrsak.kodeverk === INNVILGET_AARSAK || periode.oppholdÅrsak.kode !== oppholdArsakType.UDEFINERT) {
       return true;
     }
     if (periode.periodeResultatÅrsak.kodeverk === IKKE_OPPFYLT_AARSAK) {
