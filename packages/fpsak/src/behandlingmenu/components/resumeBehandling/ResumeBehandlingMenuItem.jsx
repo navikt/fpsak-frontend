@@ -20,7 +20,7 @@ const submit = (resumeBehandling, behandlingIdentifier, selectedBehandlingVersjo
  */
 export const ResumeBehandlingMenuItem = ({
   behandlingIdentifier,
-  behandlgit singVersjon,
+  behandlingVersjon,
   resumeBehandling,
   gjenopptaBehandlingEnabled,
 }) => (
