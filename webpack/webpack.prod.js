@@ -30,6 +30,7 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       filename: '../index.html',
+      favicon: path.join(ROOT_DIR, 'favicon.ico'),
       template: path.join(ROOT_DIR, 'index.html'),
     }),
   ],

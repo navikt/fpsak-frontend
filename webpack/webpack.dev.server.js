@@ -24,7 +24,7 @@ var options = {
       target: "http://localhost:8030",
       secure: false,
     },
-    "/fpsak/(sprak|api|jetty)/**": {
+    "/fpsak/(api|jetty)/**": {
       target: "http://localhost:8080",
       secure: false,
     },
