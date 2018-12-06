@@ -65,7 +65,7 @@ describe('<BehandleKlageFormNy>', () => {
     expect(radios).to.have.length(4);
     expect(radios.at(0).prop('label').id).to.equal('Klage.ResolveKlage.KeepVedtakNk');
     expect(radios.at(1).prop('label').id).to.equal('Klage.ResolveKlage.ChangeVedtak');
-    expect(radios.at(2).prop('label').id).to.equal('Klage.Behandle.Hjemsendt');  
+    expect(radios.at(2).prop('label').id).to.equal('Klage.Behandle.Hjemsendt');
     expect(radios.at(3).prop('label').id).to.equal('Klage.ResolveKlage.NullifyVedtak');
   });
 
