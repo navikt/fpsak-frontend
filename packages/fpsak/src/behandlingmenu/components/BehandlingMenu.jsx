@@ -57,6 +57,10 @@ export class BehandlingMenu extends Component {
     this.setState({ menuVisible: !menuVisible });
   }
 
+  hideBehandlingsMenu() {
+    this.setState({ menuVisible: false });
+  }
+
   hasNotAccess() {
     const {
       gjenopptaBehandlingAccess, opprettNyForstegangsBehandlingAccess, opprettRevurderingAccess,
@@ -149,8 +153,8 @@ export class BehandlingMenu extends Component {
       <div className={styles.container}>
         <Knapp
           className={getMenuButtonStyle(menuVisible)}
-          onBlur={() => this.toggleBehandlingMenu()}
-          onFocus={() => this.toggleBehandlingMenu()}
+          onBlur={() => this.hideBehandlingsMenu()}
+          onClick={() => this.toggleBehandlingMenu()}
           tabIndex="0"
           ref={this.behandlingsMenuRef}
         >
