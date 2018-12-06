@@ -11,7 +11,7 @@ describe('<MenuButton>', () => {
 
     const wrapper = shallow(
       <MenuButton
-        onClick={onClick}
+        onMouseDown={onClick}
         disabled={false}
       >
         <div>test</div>
@@ -20,7 +20,7 @@ describe('<MenuButton>', () => {
 
     const menuButton = wrapper.find('Knapp');
     expect(menuButton).has.length(1);
-    expect(menuButton.prop('onClick')).is.eql(onClick);
+    expect(menuButton.prop('onMouseDown')).is.eql(onClick);
     expect(menuButton.prop('disabled')).is.false;
     expect(menuButton.prop('children')).is.eql(<div>test</div>);
   });

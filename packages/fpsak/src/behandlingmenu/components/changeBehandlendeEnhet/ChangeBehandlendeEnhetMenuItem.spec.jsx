@@ -40,10 +40,10 @@ describe('<ChangeBehandlendeEnhetMenuItem>', () => {
 
     const button = wrapper.find('MenuButton');
     expect(button).has.length(1);
-    expect(button.prop('onClick')).is.not.null;
+    expect(button.prop('onMouseDown')).is.not.null;
     expect(wrapper.state('showModal')).is.false;
 
-    button.simulate('click');
+    button.simulate('mousedown');
 
     expect(toggleBehandlingsmenyCallback.called).is.true;
     expect(wrapper.state('showModal')).is.true;

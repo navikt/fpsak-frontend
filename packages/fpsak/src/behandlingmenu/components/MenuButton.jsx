@@ -10,17 +10,17 @@ import styles from './menuButton.less';
  * Presentasjonskomponent. Lager lenker i behandlingsmeny
  */
 const MenuButton = ({
-  onClick,
   disabled,
   children,
+  onMouseDown,
 }) => (
-  <Knapp mini className={styles.button} onClick={onClick} tabIndex="0" disabled={disabled}>
+  <Knapp mini className={styles.button} onMouseDown={onMouseDown} tabIndex="0" disabled={disabled}>
     {children}
   </Knapp>
 );
 
 MenuButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  onMouseDown: PropTypes.func.isRequired,
   children: PropTypes.element.isRequired,
   disabled: PropTypes.bool,
 };

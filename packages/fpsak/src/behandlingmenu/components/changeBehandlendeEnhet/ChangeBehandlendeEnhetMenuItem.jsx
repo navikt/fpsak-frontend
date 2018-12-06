@@ -13,8 +13,8 @@ import MenuButton from '../MenuButton';
  * Håndterer også visning av modal.
  */
 class ChangeBehandlendeEnhetMenuItem extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.submit = this.submit.bind(this);
     this.showModal = this.showModal.bind(this);
@@ -43,8 +43,8 @@ class ChangeBehandlendeEnhetMenuItem extends Component {
   }
 
   showModal() {
-    const { toggleBehandlingsmeny } = this.props;
     this.setState({ showModal: true });
+    const { toggleBehandlingsmeny } = this.props;
     toggleBehandlingsmeny();
   }
 
@@ -54,6 +54,7 @@ class ChangeBehandlendeEnhetMenuItem extends Component {
 
   handleEnhetChange(e) {
     const { behandlendeEnheter, behandlendeEnhetId } = this.props;
+
     const filtrerteBehandlendeEnheter = behandlendeEnheter
       .filter(enhet => enhet.enhetId !== behandlendeEnhetId);
     this.setState({ nyEnhet: filtrerteBehandlendeEnheter[e.target.value] });
@@ -66,7 +67,7 @@ class ChangeBehandlendeEnhetMenuItem extends Component {
     const { showModal } = this.state;
     return (
       <div>
-        <MenuButton onClick={this.showModal} disabled={!byttBehandlendeEnhetEnabled}>
+        <MenuButton onMouseDown={this.showModal} disabled={!byttBehandlendeEnhetEnabled}>
           <FormattedMessage id="Behandlingsmeny.ByttBehandlendeEnhet" />
         </MenuButton>
         {showModal

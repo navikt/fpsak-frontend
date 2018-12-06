@@ -5,13 +5,11 @@ import { FormattedMessage } from 'react-intl';
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
 import MenuButton from '../MenuButton';
 
-const submit = (resumeBehandling, toggleBehandlingsmeny, behandlingIdentifier, selectedBehandlingVersjon) => () => {
+const submit = (resumeBehandling, behandlingIdentifier, selectedBehandlingVersjon) => () => {
   resumeBehandling(behandlingIdentifier, {
     behandlingId: behandlingIdentifier.behandlingId,
     behandlingVersjon: selectedBehandlingVersjon,
   });
-
-  toggleBehandlingsmeny();
 };
 
 /**
@@ -23,12 +21,11 @@ const submit = (resumeBehandling, toggleBehandlingsmeny, behandlingIdentifier, s
 export const ResumeBehandlingMenuItem = ({
   behandlingIdentifier,
   behandlingVersjon,
-  toggleBehandlingsmeny,
   resumeBehandling,
   gjenopptaBehandlingEnabled,
 }) => (
   <MenuButton
-    onClick={submit(resumeBehandling, toggleBehandlingsmeny, behandlingIdentifier, behandlingVersjon)}
+    onMouseDown={submit(resumeBehandling, behandlingIdentifier, behandlingVersjon)}
     disabled={!gjenopptaBehandlingEnabled}
   >
     <FormattedMessage id="Behandlingsmeny.ResumeBehandling" />
@@ -38,7 +35,6 @@ export const ResumeBehandlingMenuItem = ({
 ResumeBehandlingMenuItem.propTypes = {
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
   behandlingVersjon: PropTypes.number,
-  toggleBehandlingsmeny: PropTypes.func.isRequired,
   resumeBehandling: PropTypes.func.isRequired,
   gjenopptaBehandlingEnabled: PropTypes.bool,
 };
