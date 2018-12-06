@@ -8,6 +8,7 @@ metadata:
 spec:
   image: docker.adeo.no:5000/fpsak-frontend:RELEASE_VERSION # Required. Docker image.
   port: 443 # Required. The port number which is exposed by the container and should receive HTTP traffic.
+  sessionAffinity: ClientIP # Sticky Session for ingress contloller to prevent 404 on rollout
   team: teamforeldrepenger # Required. Set to the team that owns this application.
   liveness: # HTTP endpoint that signals 200 OK when the application is running.
     path: /fpsak/health/isAlive
@@ -22,8 +23,8 @@ spec:
     initialDelay: 20
     timeout: 1
   replicas: # Optional. Set min = max to disable autoscaling.
-    min: 3 # minimum number of replicas.
-    max: 4 # maximum number of replicas.
+    min: 2 # minimum number of replicas.
+    max: 2 # maximum number of replicas.
     cpuThresholdPercentage: 50 # total cpu percentage threshold on deployment, at which point it will increase number of pods if current < max
   leaderElection: false # Optional. If true, a http endpoint will be available at $ELECTOR_PATH that return the current leader
   # Compare this value with the $HOSTNAME to see if the current instance is the leader
