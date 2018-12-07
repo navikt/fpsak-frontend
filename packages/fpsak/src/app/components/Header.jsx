@@ -15,6 +15,9 @@ import ErrorMessagePanel from './ErrorMessagePanel';
 
 import styles from './header.less';
 
+/* eslint-disable max-len */
+const SYSTEMRUTINE_URL = 'https://navet.adeo.no/ansatt/Fag/Familie/Svangerskap%2C+fodsel%2C+adopsjon/Saksbehandlingsl%C3%B8sning+for+engangsst%C3%B8nad+og+foreldrepenger/rutiner-saksbehandlingsl%C3%B8sningen-for-foreldrepenger';
+
 /**
  * Header
  *
@@ -26,7 +29,6 @@ const Header = ({
   navAnsattName,
   removeErrorMessage,
   rettskildeUrl,
-  systemrutineUrl,
   queryStrings,
 }) => (
   <header className={styles.container}>
@@ -49,8 +51,8 @@ const Header = ({
         <Image
           className={styles.weightIkon}
           src={systemrutineIkonUrl}
-          onMouseDown={() => window.open(systemrutineUrl, '_blank')}
-          onKeyDown={() => window.open(systemrutineUrl, '_blank')}
+          onMouseDown={() => window.open(SYSTEMRUTINE_URL, '_blank')}
+          onKeyDown={() => window.open(SYSTEMRUTINE_URL, '_blank')}
           altCode="Header.Systemrutine"
           titleCode="Header.Systemrutine"
           tabIndex="0"
@@ -82,7 +84,6 @@ Header.propTypes = {
   queryStrings: PropTypes.shape().isRequired,
   navAnsattName: PropTypes.string.isRequired,
   rettskildeUrl: PropTypes.string.isRequired,
-  systemrutineUrl: PropTypes.string.isRequired,
   removeErrorMessage: PropTypes.func.isRequired,
 };
 
