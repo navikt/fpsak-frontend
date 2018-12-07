@@ -1,0 +1,86 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.selected {
+  border-bottom: 4px @navBla solid;
+}
+
+.container {
+  background: white;
+  border-radius: 4px;
+  display: flex;
+}
+
+.invisibleButton {
+  background: none;
+  border: none; // lesshint borderZero: false
+  margin-bottom: 24px;
+
+  &:focus {
+    background-color: @navOransjeLighten40;
+    border: 0px;
+    color: @navBla;
+    padding-bottom: 4px;
+    text-decoration: none;
+
+    &:hover {
+      color: @navBla;
+    }
+  }
+}
+
+.primary {
+  display: flex;
+  flex: 0 0 55%; // lesshint zeroUnit: false
+  position: relative;
+}
+
+.primaryfull {
+  display: flex;
+  flex: 0 0 100%; // lesshint zeroUnit: false
+  position: relative;
+}
+
+.secondary {
+  display: flex;
+  flex: 0 0 45%; // lesshint zeroUnit: false
+  position: relative;
+}
+
+.personprimary {
+  cursor: pointer;
+  flex: 0 0 100%; // lesshint zeroUnit: false
+}
+
+.personprimaryfull {
+  cursor: pointer;
+  flex: 0 0 100%; // lesshint zeroUnit: false
+}
+
+.personsecondary {
+  cursor: pointer;
+  flex: 0 0 100%; // lesshint zeroUnit: false
+}
+
+.personchevron {
+  cursor: pointer; // lesshint zeroUnit: false
+  padding-left: 1px;
+  padding-top: 25px;
+  position: absolute;
+  right: 8px;
+}
+
+.personchevronfull {
+  cursor: pointer;
+  padding-left: 8px;
+  padding-top: 25px;
+  position: absolute;
+  right: 8px;
+}
+
+.statusAksjonspunkt {
+  border-color: #ffa733;
+  border-left-style: solid;
+  border-radius: 5px;
+  border-width: 5px;
+  margin-top: 8px;
+}

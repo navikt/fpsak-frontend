@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { getSelectedSaksnummer, getFagsakYtelseType, getSelectedFagsakStatus } from 'fagsak/fagsakSelectors';
 import { getBehandlinger, getNoExistingBehandlinger } from 'behandling/selectors/behandlingerSelectors';
 import { getSelectedBehandlingId } from 'behandling/duck';
-import behandlingPropType from 'behandling/proptypes/behandlingPropType';
+import behandlingPropType from 'behandlingFelles/proptypes/behandlingPropType';
 import LoadingPanel from 'sharedComponents/LoadingPanel';
 import requireProps from 'app/data/requireProps';
 

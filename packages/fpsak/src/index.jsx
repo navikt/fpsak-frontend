@@ -7,6 +7,8 @@ import { render } from 'react-dom';
 
 import { getSuccessResponseHandler, getErrorResponseHandler } from 'data/restResponseHandlers';
 import fpsakApi from 'data/fpsakApi';
+import tilbakekrevingBehandlingApi from 'behandlingTilbakekreving/tilbakekrevingBehandlingApi';
+import fpsakBehandlingApi from 'behandlingFpsak/data/fpsakBehandlingApi';
 import AppIndex from 'app/AppIndex';
 import configureStore from './store';
 
@@ -15,7 +17,10 @@ const history = createBrowserHistory({
 });
 const store = configureStore(history);
 
+// TODO (TOR) dynamisk init
 fpsakApi.setRestResponseHandlers(getSuccessResponseHandler(store), getErrorResponseHandler(store));
+tilbakekrevingBehandlingApi.setRestResponseHandlers(getSuccessResponseHandler(store), getErrorResponseHandler(store));
+fpsakBehandlingApi.setRestResponseHandlers(getSuccessResponseHandler(store), getErrorResponseHandler(store));
 
 const renderFunc = (Component) => {
   const app = document.getElementById('app');

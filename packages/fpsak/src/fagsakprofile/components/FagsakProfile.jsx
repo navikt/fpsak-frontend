@@ -8,7 +8,7 @@ import { Row, Column } from 'nav-frontend-grid';
 
 import { Panel } from 'nav-frontend-paneler';
 
-import behandlingPropType from 'behandling/proptypes/behandlingPropType';
+import behandlingPropType from 'behandlingFelles/proptypes/behandlingPropType';
 import BehandlingMenuIndex from 'behandlingmenu/BehandlingMenuIndex';
 
 import BehandlingPicker from './BehandlingPicker';

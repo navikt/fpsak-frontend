@@ -14,7 +14,7 @@ import {
   getBehandlingBehandlendeEnhetNavn,
   getBehandlingHasSoknad,
   getBehandlingIsInnsyn,
-} from 'behandling/behandlingSelectors';
+} from 'behandlingFpsak/behandlingSelectors';
 import fpsakApi from 'data/fpsakApi';
 import { getNavAnsatt, getRettigheter } from 'navAnsatt/duck';
 

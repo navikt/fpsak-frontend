@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import fpsakApi from 'data/fpsakApi';
-import { getAksjonspunkter } from 'behandling/behandlingSelectors';
+import { getAksjonspunkter } from 'behandlingFpsak/behandlingSelectors';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
 

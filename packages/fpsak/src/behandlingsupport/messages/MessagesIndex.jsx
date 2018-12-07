@@ -8,15 +8,15 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import dokumentMalType from 'kodeverk/dokumentMalType';
-import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import SettBehandlingPaVentForm from 'behandling/components/SettBehandlingPaVentForm';
+import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
+import SettBehandlingPaVentForm from 'behandlingFpsak/components/SettBehandlingPaVentForm';
 import {
   getBehandlingSprak,
   getBehandlingVersjon,
   getBrevMaler,
   getBrevMottakere,
   getSelectedBehandlingIdentifier,
-} from 'behandling/behandlingSelectors';
+} from 'behandlingFpsak/behandlingSelectors';
 import { setBehandlingOnHold } from 'behandlingmenu/duck';
 import venteArsakType from 'kodeverk/venteArsakType';
 import LoadingPanel from 'sharedComponents/LoadingPanel';

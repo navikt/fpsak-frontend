@@ -18,11 +18,11 @@ import {
   getBehandlingsresultat,
   getBehandlingStatus,
   getBehandlingType,
-} from 'behandling/behandlingSelectors';
+} from 'behandlingFpsak/behandlingSelectors';
 import {
   getBehandlingsresultatFraOriginalBehandling,
   getResultatstrukturFraOriginalBehandling,
-} from 'behandling/selectors/originalBehandlingSelectors';
+} from 'behandlingFpsak/selectors/originalBehandlingSelectors';
 import behandlingResultatType from 'kodeverk/behandlingResultatType';
 import behandlingType from 'kodeverk/behandlingType';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';

@@ -22,8 +22,6 @@ const getSelectors = (restApi, endpointName) => ({
   getRestApiFinished: () => restApi.getRestApiFinished(endpointName),
 });
 
-const getDataReducer = restApi => () => restApi.dataReducer;
-
 type ApiMappedByKey = {
   [key: string]: {}
 }
@@ -38,15 +36,15 @@ const createApiForEachKey = (contextPath: string, config: RequestConfig[], restA
   },
 }), {});
 
-export const initRestApi = (httpClientApi: HttpClientApi, contextPath: string, config: RequestConfig[]) => {
+export const initRestApi = (httpClientApi: HttpClientApi, contextPath: string, config: RequestConfig[], reducerName: string) => {
   const requestApi = new RequestApi(httpClientApi, contextPath, config);
-  const reduxRestApi = createReduxRestApi(requestApi);
+  const reduxRestApi = createReduxRestApi(requestApi, reducerName);
 
   return {
     ...createApiForEachKey(contextPath, config, reduxRestApi),
     getAllAsyncPollingMessages: reduxRestApi.getAllAsyncPollingMessages,
     getAllAsyncErrorMessages: reduxRestApi.getAllAsyncErrorMessages,
-    getDataReducer: getDataReducer(reduxRestApi),
+    getDataReducer: () => reduxRestApi.dataReducer,
     getAxiosHttpClientApi: () => httpClientApi.axiosInstance,
     getDataContextModifier: () => new RestApiContextModifier(requestApi),
     setRestResponseHandlers: (successHandler, errorHandler) => httpClientApi.setResponseHandlers(successHandler, errorHandler),

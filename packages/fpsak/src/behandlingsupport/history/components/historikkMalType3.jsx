@@ -4,7 +4,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
+import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinnslagDelPropType';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 

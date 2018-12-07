@@ -1,61 +1,16 @@
 import { createSelector } from 'reselect';
 
-import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import { updateFagsakInfo } from 'fagsak/duck';
-import fpsakApi from 'data/fpsakApi';
-
 /* Action types */
 const SET_BEHANDLING_ID = 'SET_BEHANDLING_ID';
-const HAS_SHOWN_BEHANDLING_PA_VENT = 'HAS_SHOWN_BEHANDLING_PA_VENT';
 
 export const setSelectedBehandlingId = behandlingId => ({
   type: SET_BEHANDLING_ID,
   data: behandlingId,
 });
 
-export const setHasShownBehandlingPaVent = () => ({
-  type: HAS_SHOWN_BEHANDLING_PA_VENT,
-});
-
-// TODO (TOR) Rydd opp i dette. Kan ein legge rehenting av fagsakInfo og original-behandling i resolver i staden?
-export const updateBehandling = (
-  behandlingIdentifier, behandlingerVersjonMappedById,
-) => dispatch => dispatch(fpsakApi.BEHANDLING.makeRestApiRequest()(behandlingIdentifier.toJson(), { keepData: true }))
-  .then((response) => {
-    if (behandlingerVersjonMappedById && behandlingerVersjonMappedById[response.payload.id] !== response.payload.versjon) {
-      dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer));
-    }
-    return Promise.resolve(response);
-  })
-  .then((response) => {
-    if (response.payload && response.payload.originalBehandlingId) {
-      const { originalBehandlingId } = response.payload;
-      const origianalBehandlingRequestParams = new BehandlingIdentifier(behandlingIdentifier.saksnummer, originalBehandlingId);
-      return dispatch(fpsakApi.ORIGINAL_BEHANDLING.makeRestApiRequest()(origianalBehandlingRequestParams.toJson(), { keepData: true }));
-    }
-    return Promise.resolve(response);
-  });
-
-export const resetBehandling = dispatch => Promise.all([
-  dispatch(fpsakApi.BEHANDLING.resetRestApi()()),
-  dispatch(fpsakApi.ORIGINAL_BEHANDLING.resetRestApi()()),
-]);
-
-export const fetchBehandling = (behandlingIdentifier, allBehandlinger) => (dispatch) => {
-  resetBehandling(dispatch);
-  dispatch(updateBehandling(behandlingIdentifier, allBehandlinger));
-};
-
-const updateFagsakAndBehandling = behandlingIdentifier => dispatch => dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer))
-  .then(() => dispatch(updateBehandling(behandlingIdentifier)));
-
-export const updateOnHold = (params, behandlingIdentifier) => dispatch => dispatch(fpsakApi.UPDATE_ON_HOLD.makeRestApiRequest()(params))
-  .then(() => dispatch(updateFagsakAndBehandling(behandlingIdentifier)));
-
 /* Reducer */
 const initialState = {
   behandlingId: undefined,
-  hasShownBehandlingPaVent: false,
 };
 
 export const behandlingReducer = (state = initialState, action = {}) => { // NOSONAR Switch brukes som standard i reducers
@@ -65,11 +20,6 @@ export const behandlingReducer = (state = initialState, action = {}) => { // NOS
         ...initialState,
         behandlingId: action.data,
       };
-    case HAS_SHOWN_BEHANDLING_PA_VENT:
-      return {
-        ...state,
-        hasShownBehandlingPaVent: true,
-      };
     default:
       return state;
   }
@@ -77,7 +27,4 @@ export const behandlingReducer = (state = initialState, action = {}) => { // NOS
 
 // Selectors (Kun de knyttet til reducer)
 const getBehandlingContext = state => state.default.behandlingContext;
-
 export const getSelectedBehandlingId = createSelector([getBehandlingContext], behandlingContext => behandlingContext.behandlingId);
-
-export const getHasShownBehandlingPaVent = createSelector([getBehandlingContext], behandlingContext => behandlingContext.hasShownBehandlingPaVent);

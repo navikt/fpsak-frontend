@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 
-import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
+import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import { ResumeBehandlingMenuItem } from './ResumeBehandlingMenuItem';
 
 describe('<ResumeBehandlingMenuItem>', () => {

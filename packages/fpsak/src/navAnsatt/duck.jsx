@@ -4,7 +4,7 @@ import { getSelectedFagsakStatus, getSelectedFagsak } from 'fagsak/fagsakSelecto
 import {
   getSoknad, getAksjonspunkter, getBehandlingType, getBehandlingStatus,
   getBehandlingAnsvarligSaksbehandler,
-} from 'behandling/behandlingSelectors';
+} from 'behandlingFpsak/behandlingSelectors';
 import fpsakApi from 'data/fpsakApi';
 
 import { allAccessRights } from './access';

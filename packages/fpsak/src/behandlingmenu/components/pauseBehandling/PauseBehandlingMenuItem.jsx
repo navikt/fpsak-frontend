@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import SettBehandlingPaVentForm from 'behandling/components/SettBehandlingPaVentForm';
+import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
+import SettBehandlingPaVentForm from 'behandlingFpsak/components/SettBehandlingPaVentForm';
 import MenuButton from '../MenuButton';
 
 /**

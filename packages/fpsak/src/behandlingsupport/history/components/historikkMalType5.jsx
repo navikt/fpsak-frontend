@@ -7,7 +7,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { createLocationForHistorikkItems } from 'app/paths';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
-import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
+import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinnslagDelPropType';
 import historikkEndretFeltTypeCodes from 'kodeverk/historikkEndretFeltTypeCodes';
 import historikkEndretFeltTypeHeadingCodes from 'kodeverk/historikkEndretFeltTypeHeadingCodes';
 import {

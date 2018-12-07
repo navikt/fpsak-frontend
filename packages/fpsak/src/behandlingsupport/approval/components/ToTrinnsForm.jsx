@@ -9,8 +9,8 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { ariaCheck } from 'utils/validation/validators';
 import { isRequiredMessage } from 'utils/validation/messages';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK } from 'behandling/behandlingSelectors';
-import ApprovalField from './ApprovalField';
+import { getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK } from 'behandling/behandlingSelectors';import ApprovalField from './ApprovalField';
+import { isMeholdIKlage } from './ApprovalTextUtils';
 import { isKlage } from './ApprovalTextUtils';
 
 import styles from './ToTrinnsForm.less';

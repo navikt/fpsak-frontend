@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { pathToBehandling } from 'app/paths';
-import historikkinnslagPropType from 'behandling/proptypes/historikkinnslagPropType';
+import historikkinnslagPropType from 'behandlingFelles/proptypes/historikkinnslagPropType';
 import historikkinnslagType from 'kodeverk/historikkinnslagType';
 import SnakkebobleMedRoller from './snakkebobleMedRoller';
 import HistorikkMalType1 from './historikkMalType1';

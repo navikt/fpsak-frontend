@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
+import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import ChangeBehandlendeEnhetModal from './ChangeBehandlendeEnhetModal';
 import MenuButton from '../MenuButton';
 
