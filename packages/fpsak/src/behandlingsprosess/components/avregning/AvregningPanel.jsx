@@ -12,9 +12,12 @@ import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import ArrowBox from 'sharedComponents/ArrowBox';
 import Image from 'sharedComponents/Image';
-import { getSimuleringResultat, getTilbakekrevingValg, getAksjonspunkter } from 'behandling/behandlingSelectors';
+import {
+  getSimuleringResultat, getTilbakekrevingValg, getAksjonspunkter, getBehandlingVersjon,
+} from 'behandling/behandlingSelectors';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
-import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
+import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
+import { getSelectedBehandlingId } from 'behandling/duck';
 import {
   minLength,
   maxLength,
@@ -289,8 +292,10 @@ AvregningPanelImpl.defaultProps = {
 };
 
 const transformValues = (values, ap) => [{
-  kode: ap,
   ...values,
+  kode: ap,
+  grunnerTilReduksjon: values.erTilbakekrevingVilkårOppfylt ? values.grunnerTilReduksjon : undefined,
+  videreBehandling: values.erTilbakekrevingVilkårOppfylt && !values.grunnerTilReduksjon ? avregningCodes.TILBAKEKR_INNTREKK : values.videreBehandling,
 }];
 
 const buildInitialValues = createSelector(
@@ -307,7 +312,7 @@ const buildInitialValues = createSelector(
 
     if (aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_INNTREKK) {
       values = {
-        erTilbakekrevingVilkårOppfylt: tilbakekrevingValg.grunnerTilReduksjon !== null ? tilbakekrevingValg.grunnerTilReduksjon : false,
+        erTilbakekrevingVilkårOppfylt: tilbakekrevingValg.grunnerTilReduksjon !== null,
         grunnerTilReduksjon: tilbakekrevingValg.grunnerTilReduksjon,
         ...values,
       };
@@ -321,6 +326,7 @@ const mapStateToProps = (state, initialProps) => ({
   initialValues: buildInitialValues(state),
   erTilbakekrevingVilkårOppfylt: behandlingFormValueSelector(formName)(state, 'erTilbakekrevingVilkårOppfylt'),
   grunnerTilReduksjon: behandlingFormValueSelector(formName)(state, 'grunnerTilReduksjon'),
+  behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
   onSubmit: values => initialProps.submitCallback(transformValues(values, initialProps.apCodes[0])),
 });
 
