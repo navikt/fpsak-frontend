@@ -7,11 +7,11 @@ import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 
 import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
-import Image from 'sharedComponents/Image';
+import { Image } from '@fpsak-frontend/shared-components';
 import urlMann from '@fpsak-frontend/assets/images/barn_gutt.svg';
 import urlKvinne from '@fpsak-frontend/assets/images/barn_jente.svg';
 import opplysningAdresseType from 'kodeverk/opplysningAdresseType';
-import getAddresses from 'utils/personUtils';
+import getAddresses from '@fpsak-frontend/utils/personUtils';
 
 import styles from './barnepanel.less';
 

@@ -5,12 +5,12 @@ import { FormattedMessage } from 'react-intl';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import {
   required, minValue, maxValue, hasValidDecimal,
-} from 'utils/validation/validators';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+} from '@fpsak-frontend/utils';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import OAType from 'kodeverk/opptjeningAktivitetType';
 import DatepickerField from 'form/fields/DatepickerField';
-import { InputField, DecimalField } from 'form/Fields';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { InputField, DecimalField } from '@fpsak-frontend/form';
+import ElementWrapper from '@fpsak-frontend/shared-components';
 
 import styles from './activityDataSubPanel.less';
 

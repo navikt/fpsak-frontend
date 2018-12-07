@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import OppsummeringSN from './OppsummeringSN';
 

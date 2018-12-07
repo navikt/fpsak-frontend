@@ -8,11 +8,19 @@ import { Row, Column } from 'nav-frontend-grid';
 import { getAksjonspunkter, getBehandlingResultatstruktur, getBehandlingSprak } from 'behandlingFpsak/behandlingSelectors';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/VedtakInnvilgetPanel.jsx
 import { formatCurrencyWithKr } from 'utils/currencyUtils';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import VedtakFritekstPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+=======
+import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import ElementWrapper from '@fpsak-frontend/shared-components';
+import VedtakFritekstPanel from 'behandlingsprosess/components/vedtak/VedtakFritekstPanel';
+import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vedtak/VedtakInnvilgetPanel.jsx
 import { findInnvilgetResultatText, endringerIBeregningsgrunnlagGirFritekstfelt } from './VedtakHelper';
 
 export const VedtakInnvilgetPanelImpl = ({

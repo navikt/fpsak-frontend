@@ -12,8 +12,13 @@ import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import vilkarType from 'kodeverk/vilkarType';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/adopsjon/AdopsjonVilkarForm.jsx
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+=======
+import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vilkar/adopsjon/AdopsjonVilkarForm.jsx
 import { getSelectedBehandlingspunktVilkar, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus }
   from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import VilkarResultPicker from 'behandlingFpsak/behandlingsprosess/components/vilkar/VilkarResultPicker';

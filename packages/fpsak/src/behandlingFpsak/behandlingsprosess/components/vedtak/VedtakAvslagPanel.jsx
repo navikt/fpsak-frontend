@@ -3,8 +3,13 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/VedtakAvslagPanel.jsx
 import { getBehandlingVilkar, getBehandlingSprak } from 'behandlingFpsak/behandlingSelectors';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+=======
+import { getBehandlingVilkar, getBehandlingSprak } from 'behandling/behandlingSelectors';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vedtak/VedtakAvslagPanel.jsx
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import {
   endringerIBeregningsgrunnlagGirFritekstfelt,

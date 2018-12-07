@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import { Fieldset } from 'nav-frontend-skjema';
 
-import BorderBox from 'sharedComponents/BorderBox';
-import { TextAreaField, RadioGroupField, RadioOption } from 'form/Fields';
-import { maxLength as maxLengthValidator, hasValidText, required } from 'utils/validation/validators';
+import { BorderBox } from '@fpsak-frontend/shared-components';
+import { TextAreaField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { maxLength as maxLengthValidator, hasValidText, required } from '@fpsak-frontend/utils';
 import { Row, Column } from 'nav-frontend-grid';
 
 import styles from './tilleggsopplysningerPanel.less';

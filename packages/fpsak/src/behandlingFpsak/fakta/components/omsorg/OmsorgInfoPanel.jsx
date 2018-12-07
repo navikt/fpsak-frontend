@@ -5,8 +5,13 @@ import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/omsorg/OmsorgInfoPanel.jsx
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
+=======
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
+import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/omsorg/OmsorgInfoPanel.jsx
 import {
   getPersonopplysning, getBehandlingYtelseFordeling, getEktefellePersonopplysning, getAksjonspunkter,
 } from 'behandlingFpsak/behandlingSelectors';

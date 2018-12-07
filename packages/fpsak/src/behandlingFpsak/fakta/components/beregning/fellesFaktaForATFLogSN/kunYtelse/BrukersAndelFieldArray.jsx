@@ -4,11 +4,19 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/kunYtelse/BrukersAndelFieldArray.jsx
 import { InputField, NavFieldGroup, SelectField } from 'form/Fields';
 import { getAksjonspunkter } from 'behandlingFpsak/behandlingSelectors';
 import { isBehandlingFormDirty } from 'behandlingFpsak/behandlingForm';
 import { isEmpty } from 'utils/arrayUtils';
 import Image from 'sharedComponents/Image';
+=======
+import { InputField, NavFieldGroup, SelectField } from '@fpsak-frontend/form';
+import { getAksjonspunkter } from 'behandling/behandlingSelectors';
+import { isBehandlingFormDirty } from 'behandling/behandlingForm';
+import { isEmpty } from '@fpsak-frontend/utils';
+import { Image } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/kunYtelse/BrukersAndelFieldArray.jsx
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { getKodeverk } from 'kodeverk/duck';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
@@ -16,12 +24,12 @@ import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from 'utils/currencyUtils';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { required } from 'utils/validation/validators';
+import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from '@fpsak-frontend/utils';
+import Table from '@fpsak-frontend/shared-components/Table';
+import TableRow from '@fpsak-frontend/shared-components/TableRow';
+import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { required } from '@fpsak-frontend/utils';
 import styles from './brukersAndelFieldArray.less';
 import { validateUlikeAndelerWithMap } from '../ValidateAndelerUtils';
 

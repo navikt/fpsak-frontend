@@ -12,11 +12,18 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import behandlingType from 'kodeverk/behandlingType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
+<<<<<<< HEAD
 import { getBehandlingType } from 'behandlingFpsak/behandlingSelectors';
 import { RadioGroupField, RadioOption } from 'form/Fields';
 import { ariaCheck, required } from 'utils/validation/validators';
 import BorderBox from 'sharedComponents/BorderBox';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+=======
+import { getBehandlingType } from 'behandling/behandlingSelectors';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { ariaCheck, required } from '@fpsak-frontend/utils';
+import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler
 import SoknadData from 'papirsoknad/SoknadData';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import familieHendelseType from 'kodeverk/familieHendelseType';

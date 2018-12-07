@@ -4,10 +4,14 @@ import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, injectIntl, intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
 import { createLocationForHistorikkItems } from 'app/paths';
+<<<<<<< HEAD
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinnslagDelPropType';
+=======
+import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
+>>>>>>> NOJIRA moduler
 import historikkEndretFeltTypeCodes from 'kodeverk/historikkEndretFeltTypeCodes';
 import historikkEndretFeltTypeHeadingCodes from 'kodeverk/historikkEndretFeltTypeHeadingCodes';
 import {

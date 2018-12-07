@@ -11,7 +11,6 @@ if (process.argv.includes('--no-fix')) {
 
 var options = {
   contentBase: [
-    'public/fpsak/sprak',
     'packages',
   ],
   watchContentBase: true,

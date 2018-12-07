@@ -6,11 +6,19 @@ import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import {
   DecimalField, InputField, NavFieldGroup, PeriodpickerField, SelectField,
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/tilstøtendeYtelse/RenderBruttoBGFordelingFieldArray.jsx
 } from 'form/Fields';
 import { getAksjonspunkter, getFaktaOmBeregning } from 'behandlingFpsak/behandlingSelectors';
 import { isBehandlingFormDirty } from 'behandlingFpsak/behandlingForm';
 import { isEmpty } from 'utils/arrayUtils';
 import Image from 'sharedComponents/Image';
+=======
+} from '@fpsak-frontend/form';
+import { getAksjonspunkter, getFaktaOmBeregning } from 'behandling/behandlingSelectors';
+import { isBehandlingFormDirty } from 'behandling/behandlingForm';
+import { isEmpty } from '@fpsak-frontend/utils';
+import { Image } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/tilstøtendeYtelse/RenderBruttoBGFordelingFieldArray.jsx
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { getKodeverk } from 'kodeverk/duck';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
@@ -18,13 +26,13 @@ import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import inntektskategorier, { isSelvstendigNæringsdrivende } from 'kodeverk/inntektskategorier';
-import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from 'utils/currencyUtils';
-import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
+import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from '@fpsak-frontend/utils';
+import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
 
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import Table from '@fpsak-frontend/shared-components/Table';
+import TableRow from '@fpsak-frontend/shared-components/TableRow';
+import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import styles from './renderBruttoBGFordelingFieldArray.less';
 import { arbeidsforholdProptype, getUniqueListOfArbeidsforhold } from '../../ArbeidsforholdHelper';
 import { validateAndelFields, validateUlikeAndeler } from '../ValidateAndelerUtils';

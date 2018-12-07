@@ -7,13 +7,13 @@ import { Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 import AlertStripe from 'nav-frontend-alertstriper';
 
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
-import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
-import { maxValue, hasValidDecimal } from 'utils/validation/validators';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
+import { FlexContainer, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
+import { maxValue, hasValidDecimal } from '@fpsak-frontend/utils';
 import {
   DatepickerField, SelectField, InputField, CheckboxField, DecimalField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import moment from 'moment/moment';
 import { gyldigeUttakperioder } from './RenderPermisjonPeriodeFieldArray';

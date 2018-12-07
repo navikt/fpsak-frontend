@@ -6,13 +6,23 @@ import { connect } from 'react-redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { FlexContainer, FlexRow, FlexColumn } from 'sharedComponents/flexGrid';
+import {
+  VerticalSpacer, FlexContainer, FlexRow, FlexColumn, ElementWrapper,
+} from '@fpsak-frontend/shared-components';
 import { Hovedknapp } from 'nav-frontend-knapper';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/uttak/Uttak.jsx
 import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from 'utils/formats';
 import { calcDays } from 'utils/dateUtils';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { CheckboxField } from 'form/Fields';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
+=======
+import {
+  calcDays, ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT,
+} from '@fpsak-frontend/utils';
+import { CheckboxField } from '@fpsak-frontend/form';
+import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/uttak/Uttak.jsx
 import {
   getBehandlingVersjon,
   getStonadskontoer,
@@ -29,7 +39,6 @@ import oppholdArsakType, { oppholdArsakMapper } from 'kodeverk/oppholdArsakType'
 import periodeResultatType from 'kodeverk/periodeResultatType';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { uttakPeriodeNavn } from 'kodeverk/uttakPeriodeType';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
 import soknadType from 'kodeverk/soknadType';
 import TimeLineInfo from './stonadkonto/TimeLineInfo';
 import UttakTimeLineData from './UttakTimeLineData';

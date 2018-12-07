@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 
 import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
 import FlexRow from 'sharedComponents/flexGrid/FlexRow';
-import { DecimalField, SelectField, PeriodpickerField } from 'form/Fields';
+import { DecimalField, SelectField, PeriodpickerField } from '@fpsak-frontend/form';
 import oppholdArsakType, { oppholdArsakKontoNavn } from 'kodeverk/oppholdArsakType';
 import {
   required,
   hasValidDecimal,
   maxValue,
   minValue,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils';
 import { uttakPeriodeNavn, stonadskontoType } from 'kodeverk/uttakPeriodeType';
 
 import styles from '../perioder/periodeTyper.less';

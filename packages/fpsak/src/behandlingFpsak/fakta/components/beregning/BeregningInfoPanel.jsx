@@ -9,6 +9,7 @@ import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropTyp
 import {
   getAksjonspunkter,
   getFaktaOmBeregningTilfellerKoder,
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/BeregningInfoPanel.jsx
 } from 'behandlingFpsak/behandlingSelectors';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
 import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
@@ -19,6 +20,18 @@ import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
+=======
+} from 'behandling/behandlingSelectors';
+import withDefaultToggling from 'fakta/withDefaultToggling';
+import faktaPanelCodes from 'fakta/faktaPanelCodes';
+import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { behandlingForm } from 'behandling/behandlingForm';
+import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
+import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
+import ElementWrapper from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/beregning/BeregningInfoPanel.jsx
 import { erSpesialtilfelleMedEkstraKnapp } from 'kodeverk/faktaOmBeregningTilfelle';
 import FaktaForATFLOgSNPanel, {
   getHelpTextsFaktaForATFLOgSN, transformValuesFaktaForATFLOgSN,

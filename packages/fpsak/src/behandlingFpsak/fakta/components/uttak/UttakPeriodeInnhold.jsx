@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/uttak/UttakPeriodeInnhold.jsx
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { getBehandlingStatus } from 'behandlingFpsak/behandlingSelectors';
+=======
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { getBehandlingStatus } from 'behandling/behandlingSelectors';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/uttak/UttakPeriodeInnhold.jsx
 import utsettelseArsakCodes from 'kodeverk/utsettelseArsakCodes';
 import overforingArsakCodes from 'kodeverk/overforingArsakCodes';
 import FerieOgArbeidsPeriode from './perioder/FerieOgArbeidsPeriode';

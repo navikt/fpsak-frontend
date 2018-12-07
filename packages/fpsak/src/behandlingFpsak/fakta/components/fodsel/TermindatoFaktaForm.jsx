@@ -8,15 +8,24 @@ import { createSelector } from 'reselect';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/fodsel/TermindatoFaktaForm.jsx
 import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import DateLabel from 'sharedComponents/DateLabel';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import { DatepickerField, InputField } from 'form/Fields';
+=======
+import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
+import ElementWrapper from '@fpsak-frontend/shared-components';
+import DateLabel from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { behandlingForm } from 'behandling/behandlingForm';
+import { DatepickerField, InputField } from '@fpsak-frontend/form';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/fodsel/TermindatoFaktaForm.jsx
 import {
   required, hasValidDate, minValue, maxValue, hasValidInteger,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
 import {

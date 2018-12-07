@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
 
 /**

@@ -3,19 +3,32 @@ import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/uttak/UttakInfoPanel.jsx
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import guid from 'utils/guidUtil';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
 import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
+=======
+import { behandlingForm } from 'behandling/behandlingForm';
+import guid from '@fpsak-frontend/utils';
+import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
+import withDefaultToggling from 'fakta/withDefaultToggling';
+import faktaPanelCodes from 'fakta/faktaPanelCodes';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/uttak/UttakInfoPanel.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import {
   getUttakPerioder,
   getBehandlingYtelseFordeling,
   getBehandlingIsManuellRevurdering,
   hasBehandlingUtredesStatus,
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/uttak/UttakInfoPanel.jsx
 } from 'behandlingFpsak/behandlingSelectors';
 import { dateFormat } from 'utils/dateUtils';
+=======
+} from 'behandling/behandlingSelectors';
+import { dateFormat } from '@fpsak-frontend/utils';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/uttak/UttakInfoPanel.jsx
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import UttakFaktaForm from './UttakFaktaForm';
 import {

@@ -8,11 +8,11 @@ import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Row, Column } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import Image from 'sharedComponents/Image';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Image } from '@fpsak-frontend/shared-components';
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
-import { hasValidSaksnummerOrFodselsnummerFormat } from 'utils/validation/validators';
-import { InputField } from 'form/Fields';
+import { hasValidSaksnummerOrFodselsnummerFormat } from '@fpsak-frontend/utils';
+import { InputField } from '@fpsak-frontend/form';
 
 import styles from './searchForm.less';
 

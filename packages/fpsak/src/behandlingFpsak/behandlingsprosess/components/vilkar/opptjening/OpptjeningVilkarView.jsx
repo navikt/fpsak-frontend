@@ -5,9 +5,15 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/opptjening/OpptjeningVilkarView.jsx
 import FadingPanel from 'sharedComponents/FadingPanel';
 import PeriodLabel from 'sharedComponents/PeriodLabel';
 import VilkarResultPanel from 'behandlingFpsak/behandlingsprosess/components/vilkar/VilkarResultPanel';
+=======
+import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
+import PeriodLabel from '@fpsak-frontend/shared-components/PeriodLabel';
+import VilkarResultPanel from 'behandlingsprosess/components/vilkar/VilkarResultPanel';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vilkar/opptjening/OpptjeningVilkarView.jsx
 import {
   getBehandlingFastsattOpptjeningFomDate, getBehandlingFastsattOpptjeningTomDate, getBehandlingFastsattOpptjeningActivities,
   getBehandlingFastsattOpptjeningperiodeMnder, getBehandlingFastsattOpptjeningperiodeDager,
@@ -17,9 +23,15 @@ import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 import vilkarType from 'kodeverk/vilkarType';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/opptjening/OpptjeningVilkarView.jsx
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
+=======
+import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus } from 'behandlingsprosess/behandlingsprosessSelectors';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vilkar/opptjening/OpptjeningVilkarView.jsx
 import OpptjeningTimeLineLight from './OpptjeningTimeLineLight';
 
 /**

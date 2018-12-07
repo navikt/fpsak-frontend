@@ -10,6 +10,7 @@ import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/verge/RegistrereVergeInfoPanel.jsx
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
@@ -17,6 +18,15 @@ import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBe
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
 import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
+=======
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import withDefaultToggling from 'fakta/withDefaultToggling';
+import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
+import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
+import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
+import faktaPanelCodes from 'fakta/faktaPanelCodes';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/verge/RegistrereVergeInfoPanel.jsx
 import RegistrereVergeFaktaForm from './RegistrereVergeFaktaForm';
 
 /**

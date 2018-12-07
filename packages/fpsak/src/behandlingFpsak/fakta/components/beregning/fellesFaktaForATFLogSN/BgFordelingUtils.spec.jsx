@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import {
   setArbeidsforholdInitialValues,

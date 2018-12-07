@@ -12,9 +12,9 @@ import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/beh
 import { isKontrollerRevurderingAksjonspunkOpen } from 'behandlingFpsak/behandlingSelectors';
 import {
   ariaCheck, hasValidText, maxLength, minLength, required,
-} from 'utils/validation/validators';
-import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
-import { SelectField, TextAreaField } from 'form/Fields';
+} from '@fpsak-frontend/utils';
+import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
+import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import ugunstAarsakTyper from 'kodeverk/ugunstAarsakTyper';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';

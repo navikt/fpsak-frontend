@@ -2,8 +2,8 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import getAddresses from 'utils/personUtils';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import getAddresses from '@fpsak-frontend/utils/personUtils';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
 import opplysningAdresseType from 'kodeverk/opplysningAdresseType';
 import opplysningsKilde from 'kodeverk/opplysningsKilde';
 import AdressePanel from './AdressePanel';

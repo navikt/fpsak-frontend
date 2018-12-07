@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
+<<<<<<< HEAD
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import OkAvbrytModal from 'sharedComponents/OkAvbrytModal';
+=======
+import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
+import { OkAvbrytModal } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler
 import MenuButton from '../MenuButton';
 
 /**

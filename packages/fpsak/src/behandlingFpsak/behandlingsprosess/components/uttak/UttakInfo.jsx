@@ -6,21 +6,21 @@ import FlexRow from 'sharedComponents/flexGrid/FlexRow';
 import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
 import {
   CheckboxField, DecimalField, SelectField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import {
   required,
   hasValidDecimal,
   maxValue,
   notDash,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import periodeResultatType from 'kodeverk/periodeResultatType';
 import uttakArbeidTypeKodeverk from 'kodeverk/uttakArbeidType';
 import uttakArbeidTypeTekstCodes from 'kodeverk/uttakArbeidTypeCodes';
 import oppholdArsakType, { oppholdArsakKontoNavn } from 'kodeverk/oppholdArsakType';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import { calcDaysAndWeeks } from 'utils/dateUtils';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { calcDaysAndWeeks } from '@fpsak-frontend/utils';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment/moment';
 import styles from './uttakActivity.less';

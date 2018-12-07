@@ -6,6 +6,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/uttak/UttakPanel.jsx
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import FadingPanel from 'sharedComponents/FadingPanel';
@@ -16,6 +17,18 @@ import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+=======
+import ElementWrapper from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
+import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
+import uttaksresultatPropType from 'behandling/proptypes/uttaksresultatPropType';
+import { getUttaksresultatPerioder, getStonadskontoer } from 'behandling/behandlingSelectors';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
+import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/uttak/UttakPanel.jsx
 import AlertStripe from 'nav-frontend-alertstriper';
 import { uttakPeriodeNavn, stonadskontoType } from 'kodeverk/uttakPeriodeType';
 import periodeResultatType from 'kodeverk/periodeResultatType';

@@ -7,12 +7,12 @@ import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import {
   RadioGroupField, RadioOption, SelectField, InputField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 
-import ArrowBox from 'sharedComponents/ArrowBox';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { required, hasValidInteger } from 'utils/validation/validators';
+import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
+import ElementWrapper from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { required, hasValidInteger } from '@fpsak-frontend/utils';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 

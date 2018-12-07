@@ -6,11 +6,11 @@ import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
 import DatepickerField from 'form/fields/DatepickerField';
-import ArrowBox from 'sharedComponents/ArrowBox';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import { RadioGroupField, RadioOption } from 'form/Fields';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { required, hasValidDate } from 'utils/validation/validators';
+import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
+import ElementWrapper from '@fpsak-frontend/shared-components';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { required, hasValidDate } from '@fpsak-frontend/utils';
 import PropTypes from 'prop-types';
 
 /**

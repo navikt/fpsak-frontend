@@ -7,14 +7,12 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { Modal, VerticalSpacer, Image } from '@fpsak-frontend/shared-components';
 import requireProps from 'app/data/requireProps';
-import Modal from 'sharedComponents/Modal';
-import { DatepickerField, SelectField } from 'form/Fields';
+import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import {
   ariaCheck, dateAfterOrEqualToToday, hasValidDate, required,
-} from 'utils/validation/validators';
-import Image from 'sharedComponents/Image';
+} from '@fpsak-frontend/utils';
 import { getKodeverk, getKodeverkReceived } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';

@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/arbeidstaker/GrunnlagForAarsinntektPanelAT.jsx
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import { InputField } from 'form/Fields';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
@@ -12,14 +13,24 @@ import TableRow from 'sharedComponents/TableRow';
 import TableColumn from 'sharedComponents/TableColumn';
 import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from 'utils/currencyUtils';
 import { required } from 'utils/validation/validators';
+=======
+import { behandlingFormValueSelector } from 'behandling/behandlingForm';
+import { InputField } from '@fpsak-frontend/form';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import Table from '@fpsak-frontend/shared-components/Table';
+import TableRow from '@fpsak-frontend/shared-components/TableRow';
+import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
+import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from '@fpsak-frontend/utils';
+import { required } from '@fpsak-frontend/utils';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/arbeidstaker/GrunnlagForAarsinntektPanelAT.jsx
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import Image from 'sharedComponents/Image';
+import { Image } from '@fpsak-frontend/shared-components';
 import endretUrl from '@fpsak-frontend/assets/images/endret_felt.svg';
 import periodeAarsak from 'kodeverk/periodeAarsak';
-import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
+import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
 import NaturalytelsePanel from './NaturalytelsePanel';
 import styles from './grunnlagForAarsinntektPanelAT.less';
 

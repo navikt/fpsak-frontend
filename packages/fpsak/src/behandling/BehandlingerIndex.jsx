@@ -6,6 +6,10 @@ import { Route, Switch } from 'react-router-dom';
 import { behandlingPath } from 'app/paths';
 import PersonIndex from 'person/PersonIndex';
 
+<<<<<<< HEAD
+=======
+import ElementWrapper from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler
 import NoSelectedBehandling from './components/NoSelectedBehandling';
 import BehandlingIndex from './BehandlingIndex';
 import { getNumBehandlinger } from './selectors/behandlingerSelectors';

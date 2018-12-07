@@ -8,10 +8,17 @@ import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { getEditedStatus } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/adopsjon/MannAdoptererFaktaForm.jsx
 import { required } from 'utils/validation/validators';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { RadioGroupField, RadioOption } from 'form/Fields';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
+=======
+import { required } from '@fpsak-frontend/utils';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import FaktaGruppe from 'fakta/components/FaktaGruppe';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/adopsjon/MannAdoptererFaktaForm.jsx
 
 import styles from './mannAdoptererFaktaForm.less';
 

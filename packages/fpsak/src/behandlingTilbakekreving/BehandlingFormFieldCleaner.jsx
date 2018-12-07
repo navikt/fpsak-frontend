@@ -5,10 +5,17 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change as reduxChange } from 'redux-form';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingTilbakekreving/BehandlingFormFieldCleaner.jsx
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { getBehandlingFormName } from './behandlingForm';
 import { getSelectedBehandlingId } from './duck';
 import { getBehandlingVersjon } from './tilbakekrevingBehandlingSelectors';
+=======
+import { getBehandlingVersjon } from 'behandling/behandlingSelectors';
+import { getSelectedBehandlingId } from 'behandling/duck';
+import { getBehandlingFormName } from 'behandling/behandlingForm';
+import ElementWrapper from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandling/BehandlingFormFieldCleaner.jsx
 
 const findAllNames = children => (children ? React.Children
   .map(children, (child) => {

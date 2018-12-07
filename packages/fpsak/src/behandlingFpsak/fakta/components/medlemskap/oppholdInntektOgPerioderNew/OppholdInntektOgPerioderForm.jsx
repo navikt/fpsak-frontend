@@ -7,9 +7,9 @@ import {
   formPropTypes,
 } from 'redux-form';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import {
   getBehandlingMedlemNew,
@@ -17,16 +17,23 @@ import {
   getBehandlingRevurderingAvFortsattMedlemskapFom,
   getBehandlingVersjon, isBehandlingRevurderingFortsattMedlemskap,
 }
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdInntektOgPerioderForm.jsx
   from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
+=======
+  from 'behandling/behandlingSelectors';
+import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
+import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
+import ElementWrapper from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdInntektOgPerioderForm.jsx
 import { getFagsakPerson } from 'fagsak/fagsakSelectors';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { bindActionCreators } from 'redux';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
 import { createSelector } from 'reselect';
-import guid from 'utils/guidUtil';
+import guid from '@fpsak-frontend/utils';
 import OppholdInntektOgPeriodeForm from './OppholdInntektOgPeriodeForm';
 import MedlemskapEndringerTabell from './MedlemskapEndringerTabell';
 

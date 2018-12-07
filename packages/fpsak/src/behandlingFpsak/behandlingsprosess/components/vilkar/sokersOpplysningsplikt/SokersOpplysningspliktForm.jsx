@@ -13,19 +13,28 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import BpPanelTemplate from 'behandlingFpsak/behandlingsprosess/components/vilkar/BpPanelTemplate';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import { getKodeverk } from 'kodeverk/duck';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/sokersOpplysningsplikt/SokersOpplysningspliktForm.jsx
 import Table from 'sharedComponents/Table';
 import TableRow from 'sharedComponents/TableRow';
 import TableColumn from 'sharedComponents/TableColumn';
 import { getBehandlingsresultat, getSoknad, getBehandlingVersjon } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
+=======
+import Table from '@fpsak-frontend/shared-components/Table';
+import TableRow from '@fpsak-frontend/shared-components/TableRow';
+import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
+import { getBehandlingsresultat, getSoknad, getBehandlingVersjon } from 'behandling/behandlingSelectors';
+import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
+import { getSelectedBehandlingId } from 'behandling/duck';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vilkar/sokersOpplysningsplikt/SokersOpplysningspliktForm.jsx
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import { CheckboxField, RadioGroupField, RadioOption } from 'form/Fields';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { isObject } from 'utils/objectUtils';
-import { required } from 'utils/validation/validators';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { CheckboxField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { isObject } from '@fpsak-frontend/utils';
+import { required } from '@fpsak-frontend/utils';
+import ElementWrapper from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import dokumentTypeId from 'kodeverk/dokumentTypeId';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';

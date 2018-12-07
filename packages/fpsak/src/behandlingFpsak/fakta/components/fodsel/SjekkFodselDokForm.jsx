@@ -7,10 +7,17 @@ import { createSelector } from 'reselect';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column } from 'nav-frontend-grid';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/fodsel/SjekkFodselDokForm.jsx
 import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import ArrowBox from 'sharedComponents/ArrowBox';
+=======
+import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
+import ElementWrapper from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/fodsel/SjekkFodselDokForm.jsx
 import {
   getEditedStatus, getFamiliehendelse, getBehandlingType, getBarnFraTpsRelatertTilSoknad,
   getPersonopplysning, getAksjonspunkter, getSoknadAntallBarn,
@@ -19,12 +26,17 @@ import { behandlingFormValueSelector, behandlingForm } from 'behandlingFpsak/beh
 import FodselSammenligningPanel from 'behandlingFpsak/components/fodselSammenligning/FodselSammenligningPanel';
 import {
   required, hasValidDate, minValue, maxValue, hasValidInteger, dateBeforeOrEqualToToday,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils';
 import behandlingType from 'kodeverk/behandlingType';
 import {
   DatepickerField, InputField, RadioGroupField, RadioOption,
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/fodsel/SjekkFodselDokForm.jsx
 } from 'form/Fields';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
+=======
+} from '@fpsak-frontend/form';
+import FaktaGruppe from 'fakta/components/FaktaGruppe';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/fodsel/SjekkFodselDokForm.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 
 import styles from './SjekkFodselDokForm.less';

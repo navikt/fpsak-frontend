@@ -6,17 +6,30 @@ import { connect } from 'react-redux';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/omsorgOgForeldreansvar/OmsorgOgForeldreansvarFaktaForm.jsx
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { getEditedStatus } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import EditedIcon from 'sharedComponents/EditedIcon';
+=======
+import ElementWrapper from '@fpsak-frontend/shared-components';
+import { getEditedStatus } from 'behandling/behandlingSelectors';
+import { behandlingFormValueSelector } from 'behandling/behandlingForm';
+import EditedIcon from '@fpsak-frontend/shared-components/EditedIcon';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/omsorgOgForeldreansvar/OmsorgOgForeldreansvarFaktaForm.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { SelectField } from 'form/Fields';
-import { required, hasValidInteger } from 'utils/validation/validators';
+import { SelectField } from '@fpsak-frontend/form';
+import { required, hasValidInteger } from '@fpsak-frontend/utils';
 import VilkarType from 'kodeverk/vilkarType';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/omsorgOgForeldreansvar/OmsorgOgForeldreansvarFaktaForm.jsx
 import { isEmpty } from 'utils/objectUtils';
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
+=======
+import { isEmpty } from '@fpsak-frontend/utils';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
+import FaktaGruppe from 'fakta/components/FaktaGruppe';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/omsorgOgForeldreansvar/OmsorgOgForeldreansvarFaktaForm.jsx
 import OmsorgsovertakelseFaktaPanel from './OmsorgsovertakelseFaktaPanel';
 import RettighetFaktaPanel from './RettighetFaktaPanel';
 import BarnPanel from './BarnPanel';

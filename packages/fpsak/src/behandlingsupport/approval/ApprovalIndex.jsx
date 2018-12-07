@@ -7,8 +7,13 @@ import { connect } from 'react-redux';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import { createLocationForHistorikkItems } from 'app/paths';
 
+<<<<<<< HEAD
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+=======
+import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler
 import behandlingStatus from 'kodeverk/behandlingStatus';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import {

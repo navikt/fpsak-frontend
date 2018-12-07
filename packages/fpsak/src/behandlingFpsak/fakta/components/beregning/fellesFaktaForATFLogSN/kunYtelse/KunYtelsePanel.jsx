@@ -2,8 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/kunYtelse/KunYtelsePanel.jsx
 import { getKunYtelse } from 'behandlingFpsak/behandlingSelectors';
 import { formatCurrencyNoKr, removeSpacesFromNumber } from 'utils/currencyUtils';
+=======
+import { getKunYtelse } from 'behandling/behandlingSelectors';
+import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/kunYtelse/KunYtelsePanel.jsx
 import BrukersAndelFieldArray from './BrukersAndelFieldArray';
 import KunYtelseBesteberegningPanel from './KunYtelseBesteberegningPanel';
 import KunYtelseUtenBesteberegningPanel from './KunYtelseUtenBesteberegningPanel';

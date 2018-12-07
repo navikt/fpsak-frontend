@@ -2,11 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/tilstøtendeYtelse/TilstotendeYtelseOgEndretBeregningsgrunnlag.jsx
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import BorderBox from 'sharedComponents/BorderBox';
 import { removeSpacesFromNumber } from 'utils/currencyUtils';
 import { getEndringBeregningsgrunnlagPerioder } from 'behandlingFpsak/behandlingSelectors';
+=======
+import ElementWrapper from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { BorderBox } from '@fpsak-frontend/shared-components';
+import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
+import { getEndringBeregningsgrunnlagPerioder } from 'behandling/behandlingSelectors';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/tilstøtendeYtelse/TilstotendeYtelseOgEndretBeregningsgrunnlag.jsx
 import TilstotendeYtelseForm, { getAndelsnr } from './TilstøtendeYtelseForm';
 import { fordelingAvBruttoBGFieldArrayName } from './FordelingAvBruttoBeregningsgrunnlagPanel';
 import { createEndringHeadingForDate, renderDateHeadingWithPretext } from '../endringBeregningsgrunnlag/EndretBeregningsgrunnlagUtils';

@@ -16,11 +16,17 @@ import { isInnvilget, isAvslag, isOpphor } from 'kodeverk/behandlingResultatType
 import { getRettigheter } from 'navAnsatt/duck';
 import behandlingStatusCode from 'kodeverk/behandlingStatus';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import behandlingArsakType from 'kodeverk/behandlingArsakType';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/revurdering/VedtakRevurderingForm.jsx
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import FritekstBrevPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/FritekstBrevPanel';
 import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+=======
+import ElementWrapper from '@fpsak-frontend/shared-components';
+import FritekstBrevPanel from 'behandlingsprosess/components/vedtak/FritekstBrevPanel';
+import decodeHtmlEntity from '@fpsak-frontend/utils';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vedtak/revurdering/VedtakRevurderingForm.jsx
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import { bindActionCreators } from 'redux';
 import { injectIntl, intlShape } from 'react-intl';
@@ -221,7 +227,8 @@ const buildInitialValues = createSelector(
           antallBarn: beregningResultat.antallBarn,
           aksjonspunktKoder,
         };
-      } if (behandlingstatus.kode !== behandlingStatusCode.AVSLUTTET) {
+      }
+      if (behandlingstatus.kode !== behandlingStatusCode.AVSLUTTET) {
         return {
           antallBarn: null,
           aksjonspunktKoder,

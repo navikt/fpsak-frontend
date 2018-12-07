@@ -11,6 +11,7 @@ import {
 } from 'nav-frontend-typografi';
 import Panel from 'nav-frontend-paneler';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/soknadsfrist/VurderSoknadsfristForeldrepengerForm.jsx
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import FadingPanel from 'sharedComponents/FadingPanel';
 import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
@@ -23,6 +24,20 @@ import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+=======
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { dateBeforeOrEqualToToday, hasValidDate, required } from '@fpsak-frontend/utils';
+import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
+import { getSoknad, getBehandlingUttaksperiodegrense } from 'behandling/behandlingSelectors';
+import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
+import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/soknadsfrist/VurderSoknadsfristForeldrepengerForm.jsx
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 
 import styles from './vurderSoknadsfristForeldrepengerForm.less';

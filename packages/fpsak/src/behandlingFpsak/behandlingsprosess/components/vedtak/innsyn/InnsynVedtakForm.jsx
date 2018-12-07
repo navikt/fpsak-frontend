@@ -7,8 +7,13 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/innsyn/InnsynVedtakForm.jsx
 import FadingPanel from 'sharedComponents/FadingPanel';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
+=======
+import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
+import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vedtak/innsyn/InnsynVedtakForm.jsx
 import {
   getAksjonspunkter,
   getBehandlingInnsynDokumenter,
@@ -17,18 +22,24 @@ import {
   getBehandlingSprak,
 } from 'behandlingFpsak/behandlingSelectors';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/innsyn/InnsynVedtakForm.jsx
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
 import { TextAreaField } from 'form/Fields';
 import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
+=======
+import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
+import { TextAreaField } from '@fpsak-frontend/form';
+import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vedtak/innsyn/InnsynVedtakForm.jsx
 import {
   hasValidText, maxLength, minLength, requiredIfNotPristine,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils';
 import { getFilteredReceivedDocuments } from 'behandlingsupport/behandlingsupportSelectors';
 import innsynResultatType from 'kodeverk/innsynResultatType';
-import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+import decodeHtmlEntity from '@fpsak-frontend/utils';
 import DocumentListVedtakInnsyn from './DocumentListVedtakInnsyn';
 
 
@@ -50,7 +61,8 @@ const getPreviewCallback = (formProps, begrunnelse, previewCallback) => (e) => {
 const findResultTypeMessage = (resultat) => {
   if (resultat === innsynResultatType.AVVIST) {
     return 'InnsynVedtakForm.Avslatt';
-  } if (resultat === innsynResultatType.DELVISTINNVILGET) {
+  }
+  if (resultat === innsynResultatType.DELVISTINNVILGET) {
     return 'InnsynVedtakForm.Delvis';
   }
   return 'InnsynVedtakForm.Innvilget';

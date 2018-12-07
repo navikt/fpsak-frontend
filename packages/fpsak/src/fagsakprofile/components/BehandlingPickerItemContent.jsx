@@ -4,9 +4,9 @@ import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import DateLabel from 'sharedComponents/DateLabel';
-import Image from 'sharedComponents/Image';
-import BorderBox from 'sharedComponents/BorderBox';
+import DateLabel from '@fpsak-frontend/shared-components';
+import { Image } from '@fpsak-frontend/shared-components';
+import { BorderBox } from '@fpsak-frontend/shared-components';
 
 import chevronUp from '@fpsak-frontend/assets/images/pil_opp.svg';
 import chevronDown from '@fpsak-frontend/assets/images/pil_ned.svg';

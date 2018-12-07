@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { InputField, DecimalField } from 'form/Fields';
+import { InputField, DecimalField } from '@fpsak-frontend/form';
 import DatepickerField from 'form/fields/DatepickerField';
 import OAType from 'kodeverk/opptjeningAktivitetType';
 import ActivityDataSubPanel from './ActivityDataSubPanel';

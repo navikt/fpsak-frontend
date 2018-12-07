@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
-import { RadioGroupField, RadioOption } from 'form/Fields';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
-import { required } from 'utils/validation/validators';
-import BorderBox from 'sharedComponents/BorderBox';
+import { required } from '@fpsak-frontend/utils';
+import { BorderBox } from '@fpsak-frontend/shared-components';
 import { Undertittel, Undertekst } from 'nav-frontend-typografi';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import ElementWrapper from '@fpsak-frontend/shared-components';
 
 /**
  *

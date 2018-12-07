@@ -4,13 +4,18 @@ import PropTypes from 'prop-types';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { InputField } from 'form/Fields';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { required } from 'utils/validation/validators';
+import { InputField } from '@fpsak-frontend/form';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { required } from '@fpsak-frontend/utils';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/frilanser/GrunnlagForAarsinntektPanelFL.jsx
 import { formatCurrencyNoKr, parseCurrencyInput } from 'utils/currencyUtils';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+=======
+import { formatCurrencyNoKr, parseCurrencyInput } from '@fpsak-frontend/utils';
+import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/frilanser/GrunnlagForAarsinntektPanelFL.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 
 import styles from './grunnlagForAarsinntektPanelFL.less';

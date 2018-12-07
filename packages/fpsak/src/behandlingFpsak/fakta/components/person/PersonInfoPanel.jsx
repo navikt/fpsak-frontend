@@ -5,10 +5,17 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/person/PersonInfoPanel.jsx
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { omit } from 'utils/objectUtils';
+=======
+import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import ElementWrapper from '@fpsak-frontend/shared-components';
+import { omit } from '@fpsak-frontend/utils';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/person/PersonInfoPanel.jsx
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import {

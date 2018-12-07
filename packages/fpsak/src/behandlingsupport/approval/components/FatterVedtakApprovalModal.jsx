@@ -7,9 +7,8 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import Modal from 'sharedComponents/Modal';
+import { Modal, Image } from '@fpsak-frontend/shared-components';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import Image from 'sharedComponents/Image';
 import behandlingStatus from 'kodeverk/behandlingStatus';
 import { getSelectedBehandlingId } from 'behandling/duck';
 import {
