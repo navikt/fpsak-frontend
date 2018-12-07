@@ -1628,6 +1628,7 @@
   "UttakPanel.Aksjonspunkt.Generell": "Alle påfølgende perioder skal vurderes manuelt.",
   "UttakPanel.Aksjonspunkt.Behandlet": "Fastsett uttaksperioder manuelt.",
   "UttakPanel.Overstyrt.KontrollerPaNytt": "Vurder perioder på nytt på grunn av endringer i tidligere steg.",
+  "UttakPanel.Overstyrt.Utfort": "Perioder er overstyrt.",
   "RenderUttakTable.PeriodeData.Aktivitet": "Aktivitet",
   "RenderUttakTable.PeriodeData.Stonadskonto": "Stønadskonto",
   "RenderUttakTable.PeriodeData.Stillingsprosent": "Stillingsprosent",

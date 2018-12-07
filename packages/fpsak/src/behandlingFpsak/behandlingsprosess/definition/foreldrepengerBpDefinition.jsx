@@ -8,18 +8,35 @@ import { hasSimuleringOn, getStatusFromSimulering } from './simuleringStatusUtle
 import getVedtakStatus from './vedtakStatusUtleder';
 import BehandlingspunktProperties from './behandlingspunktBuilder';
 
-const getStatusFromUttakresultat = ({ resultatstruktur }) => {
-  if (!resultatstruktur) {
+const getStatusFromUttakresultat = ({ uttaksresultat }) => {
+  if (!uttaksresultat) {
     return vut.IKKE_VURDERT;
   }
-  if (resultatstruktur && resultatstruktur.perioder.length > 0) {
-    return vut.OPPFYLT;
+  if (uttaksresultat && uttaksresultat.perioderSøker.length > 0) {
+    const oppfylt = uttaksresultat.perioderSøker.some(p => (
+      p.periodeResultatType.kode !== 'AVSLÅTT'
+    ));
+    if (oppfylt) {
+      return vut.OPPFYLT;
+    }
   }
   return vut.IKKE_OPPFYLT;
 };
 
-const getStatusFromResultatstruktur = ({ resultatstruktur, stonadskontoer }) => (
-  resultatstruktur && resultatstruktur.perioder.length > 0 && stonadskontoer ? vut.OPPFYLT : vut.IKKE_VURDERT);
+const getStatusFromResultatstruktur = ({ resultatstruktur, stonadskontoer }) => {
+  if (resultatstruktur && resultatstruktur.perioder.length > 0) {
+    const oppfylt = resultatstruktur.perioder.some(p => (
+      p.dagsats > 0
+    ));
+    if (!oppfylt) {
+      return vut.IKKE_OPPFYLT;
+    }
+    if (stonadskontoer) { // er denne sjekken nødvendig?
+      return vut.OPPFYLT;
+    }
+  }
+  return vut.IKKE_VURDERT;
+};
 
 const behandlingTypeNotEquals = (...behandlingTypes) => ({ behandlingType }) => !behandlingTypes.some(b => b === behandlingType.kode);
 const behandlingTypeEquals = (...behandlingTypes) => ({ behandlingType }) => behandlingTypes.some(b => b === behandlingType.kode);
