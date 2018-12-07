@@ -4,7 +4,6 @@ import { Route, Switch } from 'react-router-dom';
 
 import FagsakIndex from 'fagsak/FagsakIndex';
 import { fagsakPath } from 'app/paths';
-import TestFormIndex from 'form/TestFormIndex';
 
 import '@fpsak-frontend/assets/styles/modigDesign.less';
 import DashboardResolver from './DashboardResolver';
@@ -24,10 +23,6 @@ const Home = ({
     <Switch>
       <Route exact path="/" component={DashboardResolver} />
       <Route strict path={fagsakPath} component={FagsakIndex} />
-      {process.env.NODE_ENV === 'development' && [
-        <Route key="/testForm" path="/testForm" component={TestFormIndex} />,
-      ]
-      }
       <Route component={MissingPage} />
     </Switch>
   </div>

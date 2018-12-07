@@ -4,9 +4,15 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/VedtakAksjonspunktPanel.jsx
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import FadingPanel from 'sharedComponents/FadingPanel';
 import { getBehandlingHenlagt } from 'behandlingFpsak/behandlingSelectors';
+=======
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
+import { getBehandlingHenlagt } from 'behandling/behandlingSelectors';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vedtak/VedtakAksjonspunktPanel.jsx
 import behandlingStatusCode from 'kodeverk/behandlingStatus';
 import VedtakHelpTextPanel from './VedtakHelpTextPanel';
 

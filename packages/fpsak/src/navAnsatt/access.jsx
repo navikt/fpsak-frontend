@@ -2,9 +2,9 @@
 import behandlingStatusCode from 'kodeverk/behandlingStatus';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import fagsakStatusCode from 'kodeverk/fagsakStatus';
-import { without } from 'utils/arrayUtils';
+import { without } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import { isObject } from 'utils/objectUtils';
+import { isObject } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import BehandlingType from 'kodeverk/behandlingType';
 import type { Kodeverk } from 'kodeverk/kodeverkFlowType';

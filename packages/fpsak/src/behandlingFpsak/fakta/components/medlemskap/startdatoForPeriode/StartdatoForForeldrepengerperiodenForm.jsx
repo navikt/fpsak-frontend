@@ -7,15 +7,22 @@ import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 import { formPropTypes, FieldArray } from 'redux-form';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/startdatoForPeriode/StartdatoForForeldrepengerperiodenForm.jsx
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { getSoknad, getInntektsmeldinger, getAksjonspunkter } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
+=======
+import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { getSoknad, getInntektsmeldinger, getAksjonspunkter } from 'behandling/behandlingSelectors';
+import { behandlingForm } from 'behandling/behandlingForm';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/medlemskap/startdatoForPeriode/StartdatoForForeldrepengerperiodenForm.jsx
 import {
   required, hasValidDate, minLength, maxLength, hasValidText,
-} from 'utils/validation/validators';
-import { TextAreaField, DatepickerField } from 'form/Fields';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+} from '@fpsak-frontend/utils';
+import { TextAreaField, DatepickerField } from '@fpsak-frontend/form';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';

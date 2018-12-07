@@ -5,20 +5,25 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import { calcDaysAndWeeks } from 'utils/dateUtils';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import Image from 'sharedComponents/Image';
+import Table from '@fpsak-frontend/shared-components/Table';
+import TableRow from '@fpsak-frontend/shared-components/TableRow';
+import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
+import { calcDaysAndWeeks } from '@fpsak-frontend/utils';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { Image } from '@fpsak-frontend/shared-components';
 import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
 import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
 import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
 import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/tilkjentYtelse/timeline/TimeLineData.jsx
 import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
 import { beregningsresultatPeriodePropType } from 'behandlingFelles/proptypes/beregningresultatMedUttaksplanPropType';
+=======
+import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
+import { beregningsresultatPeriodePropType } from 'behandling/proptypes/beregningresultatMedUttaksplanPropType';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/tilkjentYtelse/timeline/TimeLineData.jsx
 import { uttakPeriodeNavn } from 'kodeverk/uttakPeriodeType';
 
 import styles from './timeLineData.less';

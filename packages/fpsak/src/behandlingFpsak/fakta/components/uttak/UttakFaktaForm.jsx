@@ -16,16 +16,24 @@ import { getBehandlingFormPrefix, behandlingFormValueSelector } from 'behandling
 import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
 import FlexRow from 'sharedComponents/flexGrid/FlexRow';
 import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/uttak/UttakFaktaForm.jsx
 import { ariaCheck } from 'utils/validation/validators';
 import { getInntektsmeldinger, getBehandlingVersjon } from 'behandlingFpsak/behandlingSelectors';
 import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
 import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+=======
+import { ariaCheck } from '@fpsak-frontend/utils';
+import { getInntektsmeldinger, getBehandlingVersjon } from 'behandling/behandlingSelectors';
+import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
+import { getSelectedBehandlingId } from 'behandling/duck';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/uttak/UttakFaktaForm.jsx
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import { uttakPeriodeNavn } from 'kodeverk/uttakPeriodeType';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import UttakPeriode from './UttakPeriode';
 import UttakNyPeriode from './UttakNyPeriode';
 import UttakSlettPeriodeModal from './UttakSlettPeriodeModal';

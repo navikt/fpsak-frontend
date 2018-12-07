@@ -3,7 +3,7 @@ import moment from 'moment';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import klageVurderingCodes from 'kodeverk/klageVurdering';
 import { getBehandlingKlageVurdering, getBehandlingStatus } from 'behandlingFpsak/behandlingSelectors';
 

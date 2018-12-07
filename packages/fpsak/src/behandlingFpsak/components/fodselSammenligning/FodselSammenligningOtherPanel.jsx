@@ -7,12 +7,17 @@ import { FormattedMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components';
 import {
   getBehandlingHasSoknad, getSoknadTermindato, getSoknadAntallBarn, getSoknadUtstedtdato,
   getSoknadFodselsdatoer, getFamiliehendelseTermindato,
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/components/fodselSammenligning/FodselSammenligningOtherPanel.jsx
 } from 'behandlingFpsak/behandlingSelectors';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
+=======
+} from 'behandling/behandlingSelectors';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandling/components/fodselSammenligning/FodselSammenligningOtherPanel.jsx
 
 const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 

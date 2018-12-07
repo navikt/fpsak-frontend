@@ -3,8 +3,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import { formatCurrencyNoKr, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { FormattedMessage } from 'react-intl';
 import styles from './avregningSummary.less';
 

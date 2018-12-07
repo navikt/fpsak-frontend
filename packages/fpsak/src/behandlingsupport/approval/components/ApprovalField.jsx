@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavFieldGroup, RadioGroupField, RadioOption } from 'form/Fields';
+import { NavFieldGroup, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';

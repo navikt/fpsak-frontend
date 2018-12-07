@@ -7,8 +7,8 @@ import SoknadData from 'papirsoknad/SoknadData';
 import {
   invalidDateMessage, dateNotBeforeOrEqualMessage, dateRangesOverlappingMessage,
   dateNotAfterOrEqualMessage, isRequiredMessage,
-} from 'utils/validation/messages';
-import { ISO_DATE_FORMAT } from 'utils/formats';
+} from '@fpsak-frontend/utils';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 import OppholdINorgePanel, { OppholdINorgePanelImpl } from './OppholdINorgePanel';
 

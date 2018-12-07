@@ -6,15 +6,13 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import uttakPeriodeType from 'kodeverk/uttakPeriodeType';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import TableColumn from 'sharedComponents/TableColumn';
-import TableRow from 'sharedComponents/TableRow';
-import Table from 'sharedComponents/Table';
-import { SelectField, InputField, DecimalField } from 'form/Fields';
+import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { SelectField, InputField, DecimalField } from '@fpsak-frontend/form';
 import uttakArbeidTypeKodeverk from 'kodeverk/uttakArbeidType';
 import uttakArbeidTypeTekstCodes from 'kodeverk/uttakArbeidTypeCodes';
 import {
   minValue, maxValue, hasValidInteger, maxLength, required, hasValidDecimal, notDash,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils';
 import styles from './renderUttakTable.less';
 
 /**

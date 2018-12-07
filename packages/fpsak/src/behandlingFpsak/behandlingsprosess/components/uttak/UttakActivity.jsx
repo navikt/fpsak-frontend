@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
-import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
+import { FlexContainer, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
 import {
   RadioGroupField, RadioOption, TextAreaField, SelectField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import {
   minLength,
   maxLength,
@@ -14,7 +14,7 @@ import {
   required,
   notDash,
   isUtbetalingsgradMerSamitidigUttaksprosent,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
@@ -27,9 +27,9 @@ import { FieldArray, formPropTypes } from 'redux-form';
 import periodeResultatType from 'kodeverk/periodeResultatType';
 import { uttakPeriodeNavn } from 'kodeverk/uttakPeriodeType';
 import { Undertekst } from 'nav-frontend-typografi';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import ArrowBox from 'sharedComponents/ArrowBox';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import ElementWrapper from '@fpsak-frontend/shared-components';
+import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import RenderUttakTable from './RenderUttakTable';
 import UttakInfo from './UttakInfo';
 import styles from './uttakActivity.less';

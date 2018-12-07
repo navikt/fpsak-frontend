@@ -2,19 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
 
-import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
+import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
 import {
   dateAfterOrEqual,
   hasValidDate,
   maxLength,
   required,
-} from 'utils/validation/validators';
-import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
-import { InputField, DatepickerField } from 'form/Fields';
+} from '@fpsak-frontend/utils';
+import { FlexContainer, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
+import { InputField, DatepickerField } from '@fpsak-frontend/form';
 
 import moment from 'moment';
-import { ISO_DATE_FORMAT } from 'utils/formats';
-import { isEmpty } from 'utils/arrayUtils';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { isEmpty } from '@fpsak-frontend/utils';
 import styles from './renderInntektsgivendeArbeidFieldArray.less';
 
 const maxLength50 = maxLength(50);

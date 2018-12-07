@@ -4,8 +4,8 @@ import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import ElementWrapper from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import CheckboxField from 'form/fields/CheckboxField';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import naringsvirksomhetType from 'kodeverk/naringsvirksomhetType';

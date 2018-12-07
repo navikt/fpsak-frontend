@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
 
-import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
-import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
+import { FlexContainer, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
+import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
 import {
   DatepickerField, SelectField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import oppholdArsakType from 'kodeverk/oppholdArsakType';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 

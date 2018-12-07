@@ -4,14 +4,14 @@ import { intlShape, injectIntl } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
-import { TextAreaField } from 'form/Fields';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import decodeHtmlEntity from '@fpsak-frontend/utils';
+import { TextAreaField } from '@fpsak-frontend/form';
 import {
   minLength, maxLength, requiredIfNotPristine, hasValidText,
-} from 'utils/validation/validators';
-import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+} from '@fpsak-frontend/utils';
+import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
+import ElementWrapper from '@fpsak-frontend/shared-components';
 
 import styles from './vedtakAvslagPanel.less';
 

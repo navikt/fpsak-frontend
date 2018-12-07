@@ -6,11 +6,11 @@ import { connect } from 'react-redux';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Fieldset } from 'nav-frontend-skjema';
 
-import { RadioGroupField, RadioOption, NavFieldGroup } from 'form/Fields';
-import { isRequiredMessage } from 'utils/validation/messages';
+import { RadioGroupField, RadioOption, NavFieldGroup } from '@fpsak-frontend/form';
+import { isRequiredMessage } from '@fpsak-frontend/utils';
 import SoknadData from 'papirsoknad/SoknadData';
-import BorderBox from 'sharedComponents/BorderBox';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { BorderBox } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';

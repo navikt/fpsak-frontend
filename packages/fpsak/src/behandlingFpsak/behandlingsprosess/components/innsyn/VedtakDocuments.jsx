@@ -5,9 +5,9 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 import classNames from 'classnames';
 
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import DateLabel from 'sharedComponents/DateLabel';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import DateLabel from '@fpsak-frontend/shared-components';
+import ElementWrapper from '@fpsak-frontend/shared-components';
 
 /*
  * TODO Ta i bruk fpsakApi

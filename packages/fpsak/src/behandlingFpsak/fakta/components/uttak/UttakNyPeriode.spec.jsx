@@ -4,7 +4,7 @@ import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import {
   PeriodpickerField, SelectField, CheckboxField, DecimalField, TextAreaField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 import navBrukerKjonn from 'kodeverk/navBrukerKjonn';

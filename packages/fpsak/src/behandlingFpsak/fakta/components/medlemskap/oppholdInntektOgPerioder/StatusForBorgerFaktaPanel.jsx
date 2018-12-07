@@ -7,11 +7,16 @@ import { Undertekst } from 'nav-frontend-typografi';
 
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioder/StatusForBorgerFaktaPanel.jsx
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
+=======
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import FaktaGruppe from 'fakta/components/FaktaGruppe';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioder/StatusForBorgerFaktaPanel.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { RadioGroupField, RadioOption } from 'form/Fields';
-import { required } from 'utils/validation/validators';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { required } from '@fpsak-frontend/utils';
 
 import styles from './statusForBorgerFaktaPanel.less';
 

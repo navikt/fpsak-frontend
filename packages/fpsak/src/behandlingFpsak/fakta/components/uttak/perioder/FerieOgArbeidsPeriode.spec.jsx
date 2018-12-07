@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
-import { RadioGroupField } from 'form/Fields';
+import { RadioGroupField } from '@fpsak-frontend/form';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import sinon from 'sinon';
 import { FerieOgArbeidsPeriode } from './FerieOgArbeidsPeriode';

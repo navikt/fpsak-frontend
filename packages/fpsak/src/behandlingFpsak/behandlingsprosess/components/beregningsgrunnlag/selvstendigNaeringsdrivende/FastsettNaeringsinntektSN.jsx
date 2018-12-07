@@ -7,15 +7,21 @@ import { Element } from 'nav-frontend-typografi';
 
 import {
   required, minLength, maxLength, hasValidText,
-} from 'utils/validation/validators';
+  parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr,
+} from '@fpsak-frontend/utils';
 import {
   InputField, RadioGroupField, RadioOption, TextAreaField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/selvstendigNaeringsdrivende/FastsettNaeringsinntektSN.jsx
 import { parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr } from 'utils/currencyUtils';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+=======
+import { behandlingFormValueSelector } from 'behandling/behandlingForm';
+import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/selvstendigNaeringsdrivende/FastsettNaeringsinntektSN.jsx
 
 import styles from './fastsettNaeringsinntektSN.less';
 
@@ -185,7 +191,8 @@ FastsettNaeringsinntektSN.buildInitialValues = (relevanteAndeler, gjeldendeAksjo
   }
   if (erAksjonspunktVarigEndretNaering(gjeldendeAksjonspunkt)) {
     return constructVarigEndringAPValue(relevanteAndeler, gjeldendeAksjonspunkt, bruttoAP);
-  } if (erAksjonspunktSnNyIArbeidslivet(gjeldendeAksjonspunkt)) {
+  }
+  if (erAksjonspunktSnNyIArbeidslivet(gjeldendeAksjonspunkt)) {
     return constructNyIArbeidslivetAPValue(relevanteAndeler, gjeldendeAksjonspunkt);
   }
   return undefined;

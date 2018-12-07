@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import BorderBox from 'sharedComponents/BorderBox';
-import DateLabel from 'sharedComponents/DateLabel';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { BorderBox, DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   getAktivitetStatuser,
   getSkjæringstidspunktBeregning,

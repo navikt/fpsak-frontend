@@ -1,4 +1,4 @@
-import { buildPath, formatQueryString, parseQueryString } from 'utils/urlUtils';
+import { buildPath, formatQueryString, parseQueryString } from '@fpsak-frontend/utils';
 import skjermlenkeCodes from 'kodeverk/skjermlenkeCodes';
 
 const FPSAK = 'fpsak';

@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 import moment from 'moment';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioderNew/InntektOgYtelserFaktaPanel.jsx
 import { ISO_DATE_FORMAT } from 'utils/formats';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
@@ -12,6 +13,16 @@ import Table from 'sharedComponents/Table';
 import TableRow from 'sharedComponents/TableRow';
 import TableColumn from 'sharedComponents/TableColumn';
 import PeriodLabel from 'sharedComponents/PeriodLabel';
+=======
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { behandlingFormValueSelector } from 'behandling/behandlingForm';
+import FaktaGruppe from 'fakta/components/FaktaGruppe';
+import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
+import Table from '@fpsak-frontend/shared-components/Table';
+import TableRow from '@fpsak-frontend/shared-components/TableRow';
+import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
+import PeriodLabel from '@fpsak-frontend/shared-components/PeriodLabel';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioderNew/InntektOgYtelserFaktaPanel.jsx
 
 const headerTextCodes = [
   'InntektOgYtelserFaktaPanel.Person',

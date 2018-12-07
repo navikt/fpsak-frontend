@@ -19,12 +19,18 @@ import requireProps from 'app/data/requireProps';
 import {
   getBehandlingVersjon, getBehandlingIsOnHold, getAksjonspunkter,
 }
+<<<<<<< HEAD
   from 'behandlingFpsak/behandlingSelectors';
 import {
   getBehandlingIdentifier,
 } from 'behandlingFpsak/duck';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import LoadingPanel from 'sharedComponents/LoadingPanel';
+=======
+  from 'behandling/behandlingSelectors';
+import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler
 import { getRettigheter } from 'navAnsatt/duck';
 import rettighetPropType from 'navAnsatt/rettighetPropType';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';

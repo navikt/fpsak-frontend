@@ -10,9 +10,10 @@ import Panel from 'nav-frontend-paneler';
 import { Row, Column } from 'nav-frontend-grid';
 import { Fieldset } from 'nav-frontend-skjema';
 import { Undertekst, Undertittel, Normaltekst } from 'nav-frontend-typografi';
-import { ISO_DATE_FORMAT } from 'utils/formats';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import moment from 'moment';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/soknadsfrist/ErSoknadsfristVilkaretOppfyltForm.jsx
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import FadingPanel from 'sharedComponents/FadingPanel';
 import { getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
@@ -21,11 +22,21 @@ import {
 } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import { RadioGroupField, RadioOption } from 'form/Fields';
+=======
+import ElementWrapper from '@fpsak-frontend/shared-components';
+import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
+import { getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus } from 'behandlingsprosess/behandlingsprosessSelectors';
+import {
+  getBehandlingsresultat, getBehandlingVilkar, getSoknad, getFamiliehendelse,
+} from 'behandling/behandlingSelectors';
+import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vilkar/soknadsfrist/ErSoknadsfristVilkaretOppfyltForm.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import DateLabel from 'sharedComponents/DateLabel';
-import { required } from 'utils/validation/validators';
+import DateLabel from '@fpsak-frontend/shared-components';
+import { required } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import soknadType from 'kodeverk/soknadType';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';

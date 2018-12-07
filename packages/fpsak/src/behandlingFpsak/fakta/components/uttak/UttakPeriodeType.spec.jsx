@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
-import Image from 'sharedComponents/Image';
+import { Image } from '@fpsak-frontend/shared-components';
 import UttakPeriodeType from './UttakPeriodeType';
 
 describe('<UttakPeriodeType>', () => {

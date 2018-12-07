@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FieldArray } from 'redux-form';
 import { EkspanderbartpanelPure } from 'nav-frontend-ekspanderbartpanel';
-import { isEmpty } from 'utils/arrayUtils';
+import { isEmpty } from '@fpsak-frontend/utils';
 import classnames from 'classnames/bind';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import RenderBruttoBGFordelingFieldArray from './RenderBruttoBGFordelingFieldArray';
 import { createEndringHeadingForDate, renderDateHeading } from '../endringBeregningsgrunnlag/EndretBeregningsgrunnlagUtils';
 import {

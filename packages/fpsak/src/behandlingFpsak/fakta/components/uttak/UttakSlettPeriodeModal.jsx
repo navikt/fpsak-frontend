@@ -5,19 +5,24 @@ import PropTypes from 'prop-types';
 import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
 import FlexRow from 'sharedComponents/flexGrid/FlexRow';
 import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
-import Modal from 'sharedComponents/Modal';
+import Modal from '@fpsak-frontend/shared-components';
 import moment from 'moment';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import { TextAreaField } from 'form/Fields';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { TextAreaField } from '@fpsak-frontend/form';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import {
   minLength, maxLength, required, hasValidText,
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/uttak/UttakSlettPeriodeModal.jsx
 } from 'utils/validation/validators';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
+=======
+} from '@fpsak-frontend/utils';
+import { behandlingForm } from 'behandling/behandlingForm';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/uttak/UttakSlettPeriodeModal.jsx
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import Image from 'sharedComponents/Image';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { Image } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import styles from './uttakSlettPeriodeModal.less';
 
 

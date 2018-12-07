@@ -7,6 +7,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import { createSelector } from 'reselect';
 
 import { adopsjonsvilkarene } from 'kodeverk/vilkarType';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/adopsjon/AdopsjonInfoPanel.jsx
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { getSoknad, getFamiliehendelse, getAksjonspunkter } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
@@ -22,6 +23,23 @@ import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBe
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
 import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
+=======
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { getSoknad, getFamiliehendelse, getAksjonspunkter } from 'behandling/behandlingSelectors';
+import { behandlingForm } from 'behandling/behandlingForm';
+import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
+import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import withDefaultToggling from 'fakta/withDefaultToggling';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
+import DokumentasjonFaktaForm from 'fakta/components/adopsjon/DokumentasjonFaktaForm';
+import MannAdoptererFaktaForm from 'fakta/components/adopsjon/MannAdoptererFaktaForm';
+import EktefelleFaktaForm from 'fakta/components/adopsjon/EktefelleFaktaForm';
+import ElementWrapper from '@fpsak-frontend/shared-components';
+import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
+import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
+import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
+import faktaPanelCodes from 'fakta/faktaPanelCodes';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/adopsjon/AdopsjonInfoPanel.jsx
 
 const { ADOPSJONSDOKUMENTAJON, OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE, OM_ADOPSJON_GJELDER_EKTEFELLES_BARN } = aksjonspunktCodes;
 const adopsjonAksjonspunkter = [OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE, ADOPSJONSDOKUMENTAJON, OM_ADOPSJON_GJELDER_EKTEFELLES_BARN];

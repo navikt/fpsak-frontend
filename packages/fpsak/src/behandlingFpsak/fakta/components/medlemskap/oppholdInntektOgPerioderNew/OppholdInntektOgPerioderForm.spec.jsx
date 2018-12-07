@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
 import { OppholdInntektOgPerioderFormNew } from './OppholdInntektOgPerioderForm';
 
 const perioder = [];

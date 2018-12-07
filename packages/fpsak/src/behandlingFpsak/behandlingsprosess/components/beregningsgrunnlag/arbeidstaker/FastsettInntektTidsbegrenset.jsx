@@ -5,23 +5,33 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { createSelector } from 'reselect';
 
-import { InputField } from 'form/Fields';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from 'utils/currencyUtils';
-import { required } from 'utils/validation/validators';
+import { InputField } from '@fpsak-frontend/form';
+import Table from '@fpsak-frontend/shared-components/Table';
+import TableRow from '@fpsak-frontend/shared-components/TableRow';
+import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
+import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from '@fpsak-frontend/utils';
+import { required } from '@fpsak-frontend/utils';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import periodeAarsak from 'kodeverk/periodeAarsak';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/arbeidstaker/FastsettInntektTidsbegrenset.jsx
 import { getBeregningsgrunnlagPerioder, getGjeldendeBeregningAksjonspunkt } from 'behandlingFpsak/behandlingSelectors';
 import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+=======
+import { getBeregningsgrunnlagPerioder, getGjeldendeBeregningAksjonspunkt } from 'behandling/behandlingSelectors';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/arbeidstaker/FastsettInntektTidsbegrenset.jsx
 import hourglassImg from '@fpsak-frontend/assets/images/hourglass.svg';
-import Image from 'sharedComponents/Image';
+import { Image } from '@fpsak-frontend/shared-components';
 import endretUrl from '@fpsak-frontend/assets/images/endret_felt.svg';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/arbeidstaker/FastsettInntektTidsbegrenset.jsx
 import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
 import { getBehandlingFormValues } from 'behandlingFpsak/behandlingForm';
+=======
+import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
+import { getBehandlingFormValues } from 'behandling/behandlingForm';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/arbeidstaker/FastsettInntektTidsbegrenset.jsx
 import { Normaltekst } from 'nav-frontend-typografi';
 import NaturalytelsePanel from './NaturalytelsePanel';
 import styles from './FastsettInntektTidsbegrenset.less';

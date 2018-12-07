@@ -8,6 +8,7 @@ import moment from 'moment';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/opptjening/OpptjeningFaktaForm.jsx
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { ISO_DATE_FORMAT } from 'utils/formats';
 import { FlexContainer, FlexRow, FlexColumn } from 'sharedComponents/flexGrid';
@@ -19,6 +20,19 @@ import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import DateLabel from 'sharedComponents/DateLabel';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
+=======
+import ElementWrapper from '@fpsak-frontend/shared-components';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { FlexContainer, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components/flexGrid';
+import { getBehandlingVersjon, getBehandlingFastsattOpptjeningFomDate, getBehandlingFastsattOpptjeningTomDate } from 'behandling/behandlingSelectors';
+import { getSelectedBehandlingId } from 'behandling/duck';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
+import DateLabel from '@fpsak-frontend/shared-components';
+import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/opptjening/OpptjeningFaktaForm.jsx
 import OpptjeningTimeLine from './timeline/OpptjeningTimeLine';
 import ActivityPanel, { activityPanelName } from './activity/ActivityPanel';
 import TimeLineNavigation from './timeline/TimeLineNavigation';

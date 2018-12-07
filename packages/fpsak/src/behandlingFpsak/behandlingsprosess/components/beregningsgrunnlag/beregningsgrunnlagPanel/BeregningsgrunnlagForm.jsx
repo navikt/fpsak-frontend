@@ -16,17 +16,19 @@ import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import BorderBox from 'sharedComponents/BorderBox';
+import { BorderBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import periodeAarsak from 'kodeverk/periodeAarsak';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/beregningsgrunnlagPanel/BeregningsgrunnlagForm.jsx
 import TextAreaField from 'form/fields/TextAreaField';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
+=======
+import { TextAreaField } from '@fpsak-frontend/form';
+import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/beregningsgrunnlagPanel/BeregningsgrunnlagForm.jsx
 import {
-  hasValidText, maxLength, minLength, required,
-} from 'utils/validation/validators';
-import { removeSpacesFromNumber } from 'utils/currencyUtils';
+  hasValidText, maxLength, minLength, required, removeSpacesFromNumber,
+} from '@fpsak-frontend/utils';
 import YtelserFraInfotrygd
   from 'behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/tilstotendeYtelser/YtelserFraInfotrygd';
 import GrunnlagForAarsinntektPanelFL from '../frilanser/GrunnlagForAarsinntektPanelFL';

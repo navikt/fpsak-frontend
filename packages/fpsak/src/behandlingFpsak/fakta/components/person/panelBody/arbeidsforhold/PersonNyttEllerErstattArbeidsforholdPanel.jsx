@@ -2,12 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/person/panelBody/arbeidsforhold/PersonNyttEllerErstattArbeidsforholdPanel.jsx
 import BehandlingFormFieldCleaner from 'behandlingFpsak/BehandlingFormFieldCleaner';
 import arbeidsforholdPropType from 'behandlingFelles/proptypes/arbeidsforholdPropType';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import ArrowBox from 'sharedComponents/ArrowBox';
 import { required } from 'utils/validation/validators';
 import { SelectField, RadioGroupField, RadioOption } from 'form/Fields';
+=======
+import BehandlingFormFieldCleaner from 'behandling/BehandlingFormFieldCleaner';
+import arbeidsforholdPropType from 'behandling/proptypes/arbeidsforholdPropType';
+import ElementWrapper from '@fpsak-frontend/shared-components';
+import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
+import { required } from '@fpsak-frontend/utils';
+import { SelectField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/person/panelBody/arbeidsforhold/PersonNyttEllerErstattArbeidsforholdPanel.jsx
 
 const getEndCharFromId = id => id.substring(id.length - 4, id.length);
 

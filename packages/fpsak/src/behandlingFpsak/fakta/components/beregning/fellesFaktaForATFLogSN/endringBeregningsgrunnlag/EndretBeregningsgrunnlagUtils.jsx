@@ -1,13 +1,13 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
-import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
 import { Element } from 'nav-frontend-typografi';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import ElementWrapper from '@fpsak-frontend/shared-components';
 import moment from 'moment';
 import {
   getAksjonspunkter,

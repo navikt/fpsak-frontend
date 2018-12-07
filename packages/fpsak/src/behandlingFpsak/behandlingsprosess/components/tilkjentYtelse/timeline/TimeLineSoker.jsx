@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Row } from 'nav-frontend-grid';
 
 import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
-import Image from 'sharedComponents/Image';
+import { Image } from '@fpsak-frontend/shared-components';
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';

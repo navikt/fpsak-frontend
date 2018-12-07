@@ -8,9 +8,17 @@ import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropTyp
 import {
   getPersonopplysning, getBehandlingIsOnHold, getAksjonspunkter, hasReadOnlyBehandling,
 }
+<<<<<<< HEAD:packages/fpsak/src/behandlingTilbakekreving/fakta/components/TilbakekrevingFaktaPanel.jsx
   from 'behandlingTilbakekreving/tilbakekrevingBehandlingSelectors';
 import { getOpenInfoPanels } from '../duck';
 import PersonInfoPanel from './person/PersonInfoPanel';
+=======
+  from 'behandling/behandlingSelectors';
+import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
+import { getOpenInfoPanels } from 'fakta/duck';
+import ElementWrapper from '@fpsak-frontend/shared-components';
+import PersonInfoPanel from 'fakta/components/person/PersonInfoPanel';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/tilbakekreving/components/TilbakekrevingFaktaPanel.jsx
 
 import styles from './tilbakekrevingFaktaPanel.less';
 

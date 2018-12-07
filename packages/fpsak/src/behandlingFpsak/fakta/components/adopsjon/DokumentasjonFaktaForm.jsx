@@ -8,12 +8,21 @@ import moment from 'moment';
 
 import { getEditedStatus } from 'behandlingFpsak/behandlingSelectors';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/adopsjon/DokumentasjonFaktaForm.jsx
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import { DatepickerField } from 'form/Fields';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { required, hasValidDate } from 'utils/validation/validators';
 import Image from 'sharedComponents/Image';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
+=======
+import { behandlingFormValueSelector } from 'behandling/behandlingForm';
+import { DatepickerField } from '@fpsak-frontend/form';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { required, hasValidDate } from '@fpsak-frontend/utils';
+import { Image } from '@fpsak-frontend/shared-components';
+import FaktaGruppe from 'fakta/components/FaktaGruppe';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/adopsjon/DokumentasjonFaktaForm.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 

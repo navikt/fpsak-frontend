@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import InntektsopplysningerPanel from './InntektsopplysningerPanel';
 
 describe('<InntektsopplysningerPanel>', () => {

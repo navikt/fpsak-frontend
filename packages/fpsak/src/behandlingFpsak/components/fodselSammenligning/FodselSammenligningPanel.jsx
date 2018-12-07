@@ -11,7 +11,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { getAntallDodfodteBarn, getBarnFraTpsRelatertTilSoknad, getBehandlingType } from 'behandlingFpsak/behandlingSelectors';
 import behandlingType from 'kodeverk/behandlingType';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import FodselSammenligningOtherPanel from './FodselSammenligningOtherPanel';
 import FodselSammenligningRevurderingPanel from './FodselSammenligningRevurderingPanel';
 

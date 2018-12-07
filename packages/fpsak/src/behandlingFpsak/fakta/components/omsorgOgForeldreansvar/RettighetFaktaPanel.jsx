@@ -7,9 +7,15 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import relatertYtelseTilstand from 'kodeverk/relatertYtelseTilstand';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/omsorgOgForeldreansvar/RettighetFaktaPanel.jsx
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import DateLabel from 'sharedComponents/DateLabel';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
+=======
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import DateLabel from '@fpsak-frontend/shared-components';
+import FaktaGruppe from 'fakta/components/FaktaGruppe';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/omsorgOgForeldreansvar/RettighetFaktaPanel.jsx
 
 import styles from './rettighetFaktaPanel.less';
 

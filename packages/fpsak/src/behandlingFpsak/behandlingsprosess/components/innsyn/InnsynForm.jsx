@@ -7,24 +7,36 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Row } from 'nav-frontend-grid';
 import moment from 'moment';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/innsyn/InnsynForm.jsx
 
 import FadingPanel from 'sharedComponents/FadingPanel';
 import ArrowBox from 'sharedComponents/ArrowBox';
 import { ISO_DATE_FORMAT } from 'utils/formats';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
+=======
+import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/innsyn/InnsynForm.jsx
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import { getKodeverk } from 'kodeverk/duck';
-import { DatepickerField, RadioGroupField, RadioOption } from 'form/Fields';
+import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import fpsakApi from 'data/fpsakApi';
 import {
   getBehandlingOnHoldDate, getBehandlingInnsynMottattDato, getBehandlingInnsynResultatType,
   getBehandlingInnsynVedtaksdokumentasjon, getBehandlingInnsynDokumenter,
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/innsyn/InnsynForm.jsx
 } from 'behandlingFpsak/behandlingSelectors';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import { required, hasValidDate } from 'utils/validation/validators';
+=======
+} from 'behandling/behandlingSelectors';
+import {
+  FadingPanel, ArrowBox, VerticalSpacer, AksjonspunktHelpText,
+} from '@fpsak-frontend/shared-components';
+import { required, hasValidDate, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/innsyn/InnsynForm.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import { getFilteredReceivedDocuments } from 'behandlingsupport/behandlingsupportSelectors';

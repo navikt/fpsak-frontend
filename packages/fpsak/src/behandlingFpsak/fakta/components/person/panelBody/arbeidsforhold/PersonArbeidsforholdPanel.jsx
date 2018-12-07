@@ -8,6 +8,7 @@ import moment from 'moment';
 
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import { getKodeverk } from 'kodeverk/duck';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/person/panelBody/arbeidsforhold/PersonArbeidsforholdPanel.jsx
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { ISO_DATE_FORMAT } from 'utils/formats';
 import { getBehandlingVersjon } from 'behandlingFpsak/behandlingSelectors';
@@ -16,6 +17,16 @@ import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
+=======
+import ElementWrapper from '@fpsak-frontend/shared-components';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { getBehandlingVersjon } from 'behandling/behandlingSelectors';
+import arbeidsforholdPropType from 'behandling/proptypes/arbeidsforholdPropType';
+import { getSelectedBehandlingId } from 'behandling/duck';
+import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import FaktaGruppe from 'fakta/components/FaktaGruppe';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/person/panelBody/arbeidsforhold/PersonArbeidsforholdPanel.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import PersonArbeidsforholdTable from './PersonArbeidsforholdTable';
 import PersonAksjonspunktText from './PersonAksjonspunktText';

@@ -1,9 +1,7 @@
 import beregningsgrunnlagAndeltyper from 'kodeverk/beregningsgrunnlagAndeltyper';
 import { aktivitetstatusTilAndeltypeMap } from 'kodeverk/aktivitetStatus';
 import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
-import { required } from 'utils/validation/validators';
-import { formatCurrencyNoKr, removeSpacesFromNumber } from 'utils/currencyUtils';
-
+import { formatCurrencyNoKr, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
 
 export const compareAndeler = (andel1, andel2) => {
   if (andel1.andelsinfo === andel2.andelsinfo) {

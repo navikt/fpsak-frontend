@@ -1,6 +1,12 @@
 import { createSelector } from 'reselect';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingSelectors.jsx
 import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
+=======
+import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
+import fpsakApi from 'data/fpsakApi';
+import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandling/behandlingSelectors.jsx
 import aksjonspunktCodes, {
   isInnhentSaksopplysningerAksjonspunkt,
   isVilkarForSykdomOppfylt,

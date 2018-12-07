@@ -5,11 +5,17 @@ import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/tilleggsopplysninger/TilleggsopplysningerFaktaForm.jsx
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
+=======
+import ElementWrapper from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { behandlingFormValueSelector } from 'behandling/behandlingForm';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/tilleggsopplysninger/TilleggsopplysningerFaktaForm.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+import decodeHtmlEntity from '@fpsak-frontend/utils';
 
 import styles from './tilleggsopplysningerFaktaForm.less';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
 import { expect } from 'chai';
 
-import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
+import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
 import DatepickerField from 'form/fields/DatepickerField';
 import SelectField from 'form/fields/SelectField';
 import InputField from 'form/fields/InputField';

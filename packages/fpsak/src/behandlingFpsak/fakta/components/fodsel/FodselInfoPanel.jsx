@@ -4,6 +4,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { submit as reduxSubmit } from 'redux-form';
 import { connect } from 'react-redux';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/fodsel/FodselInfoPanel.jsx
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
 import { getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
 import { getBehandlingVersjon } from 'behandlingFpsak/behandlingSelectors';
@@ -13,6 +14,17 @@ import { fodselsvilkarene } from 'kodeverk/vilkarType';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+=======
+import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
+import { getBehandlingFormPrefix } from 'behandling/behandlingForm';
+import { getBehandlingVersjon } from 'behandling/behandlingSelectors';
+import { getSelectedBehandlingId } from 'behandling/duck';
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
+import { fodselsvilkarene } from 'kodeverk/vilkarType';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import ElementWrapper from '@fpsak-frontend/shared-components';
+import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/fodsel/FodselInfoPanel.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
 import FodselSammenligningPanel from 'behandlingFpsak/components/fodselSammenligning/FodselSammenligningPanel';

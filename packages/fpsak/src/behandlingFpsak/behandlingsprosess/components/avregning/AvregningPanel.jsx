@@ -6,6 +6,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { clearFields, formPropTypes } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/avregning/AvregningPanel.jsx
 import { RadioOption, RadioGroupField, TextAreaField } from 'form/Fields';
 import FadingPanel from 'sharedComponents/FadingPanel';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
@@ -19,12 +20,21 @@ import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandling
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
 import { getSelectedBehandlingId } from 'behandling/duck';
 
+=======
+import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
+import {
+  VerticalSpacer, AksjonspunktHelpText, ArrowBox, Image, FadingPanel,
+} from '@fpsak-frontend/shared-components';
+import { getSimuleringResultat, getTilbakekrevingValg } from 'behandling/behandlingSelectors';
+import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
+import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/avregning/AvregningPanel.jsx
 import {
   minLength,
   maxLength,
   hasValidText,
   required,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import avregningCodes from 'kodeverk/avregningCodes';
 import { Hovedknapp } from 'nav-frontend-knapper';

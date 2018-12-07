@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FieldArray } from 'redux-form';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import RenderBruttoBGFordelingFieldArray from './RenderBruttoBGFordelingFieldArray';
 import {
   settAndelIArbeid, preutfyllInntektskategori, setArbeidsforholdInitialValues,

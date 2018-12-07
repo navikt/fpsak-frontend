@@ -5,8 +5,13 @@ import { Row, Column } from 'nav-frontend-grid';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/OverstyrConfirmVilkarButton.jsx
 import { isSelectedBehandlingspunktOverrideReadOnly } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+=======
+import { isSelectedBehandlingspunktOverrideReadOnly } from 'behandlingsprosess/behandlingsprosessSelectors';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/OverstyrConfirmVilkarButton.jsx
 
 const OverstyrConfirmVilkarButtonImpl = ({
   submitting,

@@ -6,8 +6,13 @@ import { connect } from 'react-redux';
 import { getSelectedSaksnummer, getFagsakYtelseType, getSelectedFagsakStatus } from 'fagsak/fagsakSelectors';
 import { getBehandlinger, getNoExistingBehandlinger } from 'behandling/selectors/behandlingerSelectors';
 import { getSelectedBehandlingId } from 'behandling/duck';
+<<<<<<< HEAD
 import behandlingPropType from 'behandlingFelles/proptypes/behandlingPropType';
 import LoadingPanel from 'sharedComponents/LoadingPanel';
+=======
+import behandlingPropType from 'behandling/proptypes/behandlingPropType';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler
 import requireProps from 'app/data/requireProps';
 
 import {

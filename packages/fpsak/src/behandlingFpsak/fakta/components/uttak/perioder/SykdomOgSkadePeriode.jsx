@@ -10,12 +10,18 @@ import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
 import { getFamiliehendelse, doesVilkarForSykdomOppfyltExist } from 'behandlingFpsak/behandlingSelectors';
 import overforingArsakCodes from 'kodeverk/overforingArsakCodes';
 import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/uttak/perioder/SykdomOgSkadePeriode.jsx
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandlingFpsak/behandlingForm';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { RadioOption, RadioGroupField, TextAreaField } from 'form/Fields';
+=======
+import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandling/behandlingForm';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/uttak/perioder/SykdomOgSkadePeriode.jsx
 import {
   required, maxLength, minLength, hasValidPeriod, hasValidText,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils';
 import PerioderKnapper from './PerioderKnapper';
 import InntektsmeldingInfo from '../components/InntektsmeldingInfo';
 import DokumentertePerioderPeriodePicker from './DokumentertePerioderPeriodePicker';

@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import rettighetPropType from 'navAnsatt/rettighetPropType';
 import navAnsattPropType from 'navAnsatt/navAnsattPropType';
-import Image from 'sharedComponents/Image';
+import { Image } from '@fpsak-frontend/shared-components';
 import openImage from '@fpsak-frontend/assets/images/pil_opp.svg';
 import closedImage from '@fpsak-frontend/assets/images/pil_ned.svg';
 

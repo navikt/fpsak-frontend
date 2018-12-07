@@ -2,14 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
-import Modal from 'sharedComponents/Modal';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/components/BehandlingErPaVentModal.jsx
 import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
 import SettBehandlingPaVentForm from 'behandlingFpsak/components/SettBehandlingPaVentForm';
 import Image from 'sharedComponents/Image';
+=======
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import SettBehandlingPaVentForm from 'behandling/components/SettBehandlingPaVentForm';
+import { Modal, Image } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandling/components/BehandlingErPaVentModal.jsx
 
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 

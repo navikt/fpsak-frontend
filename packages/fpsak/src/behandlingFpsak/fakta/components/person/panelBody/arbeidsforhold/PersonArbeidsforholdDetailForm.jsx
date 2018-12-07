@@ -8,6 +8,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/person/panelBody/arbeidsforhold/PersonArbeidsforholdDetailForm.jsx
 import BehandlingFormFieldCleaner from 'behandlingFpsak/BehandlingFormFieldCleaner';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import {
@@ -17,9 +18,20 @@ import {
 import { hasValidText, maxLength, required } from 'utils/validation/validators';
 import { FlexColumn, FlexContainer, FlexRow } from 'sharedComponents/flexGrid';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+=======
+import BehandlingFormFieldCleaner from 'behandling/BehandlingFormFieldCleaner';
+import ElementWrapper from '@fpsak-frontend/shared-components';
+import {
+  behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, getBehandlingFormValues, getBehandlingFormInitialValues,
+}
+  from 'behandling/behandlingForm';
+import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
+import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/person/panelBody/arbeidsforhold/PersonArbeidsforholdDetailForm.jsx
 import {
   InputField, RadioGroupField, RadioOption, TextAreaField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import PersonNyttEllerErstattArbeidsforholdPanel from './PersonNyttEllerErstattArbeidsforholdPanel';
 
 export const PERSON_ARBEIDSFORHOLD_DETAIL_FORM = 'PersonArbeidsforholdDetailForm';

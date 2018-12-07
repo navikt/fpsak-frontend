@@ -7,9 +7,9 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { Fieldset } from 'nav-frontend-skjema';
 import { Row, Column } from 'nav-frontend-grid';
 
-import { ariaCheck, maxLength, hasValidText } from 'utils/validation/validators';
-import BorderBox from 'sharedComponents/BorderBox';
-import { CheckboxField, TextAreaField } from 'form/Fields';
+import { ariaCheck, maxLength, hasValidText } from '@fpsak-frontend/utils';
+import { BorderBox } from '@fpsak-frontend/shared-components';
+import { CheckboxField, TextAreaField } from '@fpsak-frontend/form';
 import LukkPapirsoknadModal from './LukkPapirsoknadModal';
 
 import styles from './lagreSoknadPanel.less';

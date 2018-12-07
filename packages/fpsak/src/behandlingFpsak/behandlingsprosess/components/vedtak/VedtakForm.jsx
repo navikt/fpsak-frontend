@@ -23,7 +23,7 @@ import { getRettigheter } from 'navAnsatt/duck';
 import behandlingStatusCode from 'kodeverk/behandlingStatus';
 import FritekstBrevPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/FritekstBrevPanel';
 import classNames from 'classnames';
-import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+import decodeHtmlEntity from '@fpsak-frontend/utils';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';

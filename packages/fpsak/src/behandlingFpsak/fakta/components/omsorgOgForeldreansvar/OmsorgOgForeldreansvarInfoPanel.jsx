@@ -5,9 +5,15 @@ import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/omsorgOgForeldreansvar/OmsorgOgForeldreansvarInfoPanel.jsx
 import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+=======
+import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
+import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/omsorgOgForeldreansvar/OmsorgOgForeldreansvarInfoPanel.jsx
 import {
   getSoknad, getFamiliehendelse, getPersonopplysning, getInnvilgetRelatertTilgrensendeYtelserForAnnenForelder,
   getAksjonspunkter,

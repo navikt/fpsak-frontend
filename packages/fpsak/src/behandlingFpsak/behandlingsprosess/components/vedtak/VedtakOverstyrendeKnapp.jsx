@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CheckboxField } from 'form/Fields';
+import { CheckboxField } from '@fpsak-frontend/form';
 import styles from './vedtakOverstyrendeKnapp.less';
 
 

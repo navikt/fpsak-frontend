@@ -4,17 +4,14 @@ import PropTypes from 'prop-types';
 import { Undertittel } from 'nav-frontend-typografi';
 import classNames from 'classnames';
 import { Row, Column } from 'nav-frontend-grid';
-import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
 
-import FadingPanel from 'sharedComponents/FadingPanel';
 import klageVurderingType from 'kodeverk/klageVurdering';
 import klageVurderingOmgjoerType from 'kodeverk/klageVurderingOmgjoer';
 import {
   RadioGroupField, RadioOption, SelectField, TextAreaField,
-} from 'form/Fields';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { required, hasValidText } from 'utils/validation/validators';
+} from '@fpsak-frontend/form';
+import { VerticalSpacer, AksjonspunktHelpText, FadingPanel } from '@fpsak-frontend/shared-components';
+import { required, hasValidText, getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import dokumentMalType from 'kodeverk/dokumentMalType';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';

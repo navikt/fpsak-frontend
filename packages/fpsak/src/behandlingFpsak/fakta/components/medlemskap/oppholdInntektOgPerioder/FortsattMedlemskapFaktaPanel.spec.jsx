@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { FormattedMessage } from 'react-intl';
 
-import { DatepickerField } from 'form/Fields';
+import { DatepickerField } from '@fpsak-frontend/form';
 import { FortsattMedlemskapFaktaPanelImpl as FortsattMedlemskapFaktaPanel } from './FortsattMedlemskapFaktaPanel';
 
 describe('<FortsattMedlemskapFaktaPanel>', () => {

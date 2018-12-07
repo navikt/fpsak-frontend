@@ -3,8 +3,13 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/startdatoForPeriode/StartdatoForForeldrepengerperiodenForm.spec.jsx
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
+=======
+import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
+import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/medlemskap/startdatoForPeriode/StartdatoForForeldrepengerperiodenForm.spec.jsx
 import { StartdatoForForeldrepengerperiodenForm } from './StartdatoForForeldrepengerperiodenForm';
 
 describe('<StartdatoForForeldrepengerperiodenForm>', () => {

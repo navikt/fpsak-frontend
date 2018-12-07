@@ -5,15 +5,23 @@ import { connect } from 'react-redux';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components';
 import {
   getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK,
   getBehandlingSprak, getBehandlingVilkar,
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/klage/VedtakKlagePanel.jsx
 } from 'behandlingFpsak/behandlingSelectors';
 import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
 import { required, hasValidText } from 'utils/validation/validators';
 import { TextAreaField } from 'form/Fields';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+=======
+} from 'behandling/behandlingSelectors';
+import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
+import { required, hasValidText } from '@fpsak-frontend/utils';
+import { TextAreaField } from '@fpsak-frontend/form';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vedtak/klage/VedtakKlagePanel.jsx
 import {
   medholdIKlage, shouldGiveBegrunnelse, maxLength1500, minLength3,
 } from '../VedtakHelper';
@@ -21,7 +29,8 @@ import {
 export const getMedholdArsak = (klageVurderingResultatNK, klageVurderingResultatNFP) => {
   if (medholdIKlage(klageVurderingResultatNK)) {
     return klageVurderingResultatNK.klageMedholdArsakNavn;
-  } if (medholdIKlage(klageVurderingResultatNFP)) {
+  }
+  if (medholdIKlage(klageVurderingResultatNFP)) {
     return klageVurderingResultatNFP.klageMedholdArsakNavn;
   }
   return null;

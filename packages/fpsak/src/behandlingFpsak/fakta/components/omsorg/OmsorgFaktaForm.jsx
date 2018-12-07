@@ -5,8 +5,8 @@ import { Row, Column } from 'nav-frontend-grid';
 import { connect } from 'react-redux';
 import { FieldArray } from 'redux-form';
 
-import { RadioGroupField, RadioOption } from 'form/Fields';
-import { required } from 'utils/validation/validators';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { required } from '@fpsak-frontend/utils';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { getBehandlingYtelseFordeling, getSoknad } from 'behandlingFpsak/behandlingSelectors';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';

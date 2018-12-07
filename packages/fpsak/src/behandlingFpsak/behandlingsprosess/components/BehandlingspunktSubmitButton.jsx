@@ -4,10 +4,16 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton.jsx
 import { isRequiredMessage } from 'utils/validation/messages';
 import { isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting } from 'behandlingFpsak/behandlingForm';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { ariaCheck } from 'utils/validation/validators';
+=======
+import { isRequiredMessage, ariaCheck } from '@fpsak-frontend/utils';
+import { isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting } from 'behandling/behandlingForm';
+import { ElementWrapper } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/BehandlingspunktSubmitButton.jsx
 
 const isDisabled = (isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields) => {
   if ((!isDirty && !isSubmittable) || isSubmitting) {

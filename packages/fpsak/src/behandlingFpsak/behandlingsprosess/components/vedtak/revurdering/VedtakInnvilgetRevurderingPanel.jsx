@@ -5,15 +5,22 @@ import { connect } from 'react-redux';
 import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import ElementWrapper from '@fpsak-frontend/shared-components';
 import {
   getAksjonspunkter,
   getBehandlingResultatstruktur, getBehandlingSprak,
   getBehandlingsresultat,
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/revurdering/VedtakInnvilgetRevurderingPanel.jsx
 } from 'behandlingFpsak/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandlingFpsak/selectors/originalBehandlingSelectors';
 import { formatCurrencyWithKr } from 'utils/currencyUtils';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+=======
+} from 'behandling/behandlingSelectors';
+import { getResultatstrukturFraOriginalBehandling } from 'behandling/selectors/originalBehandlingSelectors';
+import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vedtak/revurdering/VedtakInnvilgetRevurderingPanel.jsx
 import vedtakResultType from 'kodeverk/vedtakResultType';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import { endringerIBeregningsgrunnlagGirFritekstfelt } from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakHelper';

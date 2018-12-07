@@ -4,8 +4,13 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import BehandlingType from 'kodeverk/behandlingType';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/BehandlingResolver.spec.jsx
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import LoadingPanel from 'sharedComponents/LoadingPanel';
+=======
+import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/behandling/BehandlingResolver.spec.jsx
 import { BehandlingResolver } from './BehandlingResolver';
 
 describe('BehandlingResolver', () => {

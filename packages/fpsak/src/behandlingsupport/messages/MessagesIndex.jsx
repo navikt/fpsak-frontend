@@ -21,7 +21,7 @@ import {
 } from 'behandlingFpsak/duck';
 import { setBehandlingOnHold } from 'behandlingmenu/duck';
 import venteArsakType from 'kodeverk/venteArsakType';
-import LoadingPanel from 'sharedComponents/LoadingPanel';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import requireProps from 'app/data/requireProps';
 import fpsakApi from 'data/fpsakApi';
 

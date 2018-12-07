@@ -6,11 +6,19 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
 
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/adopsjon/EktefelleFaktaForm.jsx
 import { RadioGroupField, RadioOption } from 'form/Fields';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
 import { required } from 'utils/validation/validators';
 import { getEditedStatus } from 'behandlingFpsak/behandlingSelectors';
+=======
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import FaktaGruppe from 'fakta/components/FaktaGruppe';
+import { required } from '@fpsak-frontend/utils';
+import { getEditedStatus } from 'behandling/behandlingSelectors';
+>>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/adopsjon/EktefelleFaktaForm.jsx
 
 import styles from './ektefelleFaktaForm.less';
 

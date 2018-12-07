@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { reduxForm, formPropTypes, formValueSelector } from 'redux-form';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { isEqual } from 'utils/objectUtils';
+import { isEqual } from '@fpsak-frontend/utils';
 
 import { getRegisteredFields } from 'papirsoknad/duck';
 import SoknadData from 'papirsoknad/SoknadData';
