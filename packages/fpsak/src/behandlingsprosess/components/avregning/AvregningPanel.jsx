@@ -12,9 +12,12 @@ import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import ArrowBox from 'sharedComponents/ArrowBox';
 import Image from 'sharedComponents/Image';
-import { getSimuleringResultat, getTilbakekrevingValg } from 'behandling/behandlingSelectors';
+import {
+  getSimuleringResultat, getTilbakekrevingValg, getAksjonspunkter, getBehandlingVersjon,
+} from 'behandling/behandlingSelectors';
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
-import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
+import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
+import { getSelectedBehandlingId } from 'behandling/duck';
 import {
   minLength,
   maxLength,
@@ -33,7 +36,7 @@ import styles from './avregningPanel.less';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
-const aksjonspunkter = [
+const simuleringAksjonspunkter = [
   aksjonspunktCodes.VURDER_FEILUTBETALING,
   aksjonspunktCodes.VURDER_INNTREKK,
 ];
@@ -254,7 +257,7 @@ export class AvregningPanelImpl extends Component {
                           mini
                           htmlType="button"
                           onClick={formProps.handleSubmit}
-                          disabled={formProps.invalid}
+                          disabled={formProps.invalid || formProps.pristine}
                           readOnly={readOnly}
                         >
                           <FormattedMessage id="SubmitButton.ConfirmInformation" />
@@ -289,17 +292,32 @@ AvregningPanelImpl.defaultProps = {
 };
 
 const transformValues = (values, ap) => [{
-  kode: ap,
   ...values,
+  kode: ap,
+  grunnerTilReduksjon: values.erTilbakekrevingVilkårOppfylt ? values.grunnerTilReduksjon : undefined,
+  videreBehandling: values.erTilbakekrevingVilkårOppfylt && !values.grunnerTilReduksjon ? avregningCodes.TILBAKEKR_INNTREKK : values.videreBehandling,
 }];
 
 const buildInitialValues = createSelector(
-  [getTilbakekrevingValg], (tilbakekrevingValg) => {
-    const { videreBehandling, begrunnelse } = tilbakekrevingValg;
-    return {
-      videreBehandling: videreBehandling.kode,
-      begrunnelse,
+  [getTilbakekrevingValg, getAksjonspunkter], (tilbakekrevingValg, aksjonspunkter) => {
+    const aksjonspunkt = aksjonspunkter.find(ap => simuleringAksjonspunkter.includes(ap.definisjon.kode));
+    if (!aksjonspunkt || !tilbakekrevingValg) {
+      return undefined;
+    }
+
+    let values = {
+      videreBehandling: tilbakekrevingValg.videreBehandling.kode,
+      begrunnelse: aksjonspunkt.begrunnelse,
     };
+
+    if (aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_INNTREKK) {
+      values = {
+        erTilbakekrevingVilkårOppfylt: tilbakekrevingValg.grunnerTilReduksjon !== null,
+        grunnerTilReduksjon: tilbakekrevingValg.grunnerTilReduksjon,
+        ...values,
+      };
+    }
+    return values;
   },
 );
 
@@ -308,6 +326,7 @@ const mapStateToProps = (state, initialProps) => ({
   initialValues: buildInitialValues(state),
   erTilbakekrevingVilkårOppfylt: behandlingFormValueSelector(formName)(state, 'erTilbakekrevingVilkårOppfylt'),
   grunnerTilReduksjon: behandlingFormValueSelector(formName)(state, 'grunnerTilReduksjon'),
+  behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
   onSubmit: values => initialProps.submitCallback(transformValues(values, initialProps.apCodes[0])),
 });
 
@@ -322,6 +341,6 @@ const AvregningPanel = connect(mapStateToProps, mapDispatchToProps)(injectIntl(b
   enableReinitialize: true,
 })(AvregningPanelImpl)));
 
-AvregningPanel.supports = (bp, apCodes) => bp === behandlingspunktCodes.AVREGNING || aksjonspunkter.some(ap => apCodes.includes(ap));
+AvregningPanel.supports = (bp, apCodes) => bp === behandlingspunktCodes.AVREGNING || simuleringAksjonspunkter.some(ap => apCodes.includes(ap));
 
 export default AvregningPanel;
