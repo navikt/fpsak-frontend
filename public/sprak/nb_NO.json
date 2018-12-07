@@ -1231,6 +1231,9 @@
   "BeregningInfoPanel.EndringBG.Validation.LikFordeling": "Summen må være lik {fordeling}",
   "BeregningInfoPanel.EndringBG.Validation.UlikeAndeler": "Andeler for samme aktivitet må ha ulik inntektskategori",
 
+  "BeregningInfoPanel.EtterlønnSluttpakke.HarSøkerInntekt": "Har søker inntekt fra etterlønn eller sluttpakke?",
+  "BeregningInfoPanel.EtterlønnSluttpakke.Månedsinntekt": "Månedsinntekt",
+
   "VilkarResultPicker.SelectArsak": "Velg årsak",
   "VilkarResultPicker.Arsak": "Angi avslagsårsak",
   "VilkarResultPicker.VilkarOppfylt": "Vilkåret er oppfylt",
@@ -1274,6 +1277,8 @@
   "ToTrinnsForm.Beregning.FastsettLonnsendring": "Arbeidsinntekt er fastsatt",
   "ToTrinnsForm.Beregning.VurderATFLISammeOrg": "Inntekt er fastsatt for arbeidstaker/frilans i samme organisajon.",
   "ToTrinnsForm.Beregning.FastsettBgKunYtelse": "Det er fastsatt fordeling av beregningsgrunnlaget ved direkte overgang fra ytelse.",
+  "ToTrinnsForm.Beregning.VurderEtterlønnSluttpakke": "Det er vurdert om søker har inntekt fra etterlønn eller sluttpakke.",
+  "ToTrinnsForm.Beregning.FastsettEtterlønnSluttpakke": "Inntekt er fastsatt for arbeidstaker med etterlønn eller sluttpakke.",
 
   "ToTrinnsForm.Opptjening.Endring": "Perioden {aktivitetType}{arbeidsInfoText} er endret.",
   "ToTrinnsForm.Opptjening.Underkjenning": "Aktivitet {aktivitetType}{arbeidsInfoText} er <b>ikke</b> godkjent.",
@@ -1989,6 +1994,8 @@
   "HistorikkEndretFelt.ErKlageKonkret": "Klages det på konkrete elementer i vedtaket",
   "HistorikkEndretFelt.ErKlagefristOverholdt": "Er klagefristen overholdt",
   "HistorikkEndretFelt.ErKlageSignert": "Er klagen signert",
+  "HistorikkEndretFelt.VurderEtterlønnSluttpakke": "Inntekt fra etterlønn eller sluttpakke",
+  "HistorikkEndretFelt.FastsettEtterlønnSluttpakke": "Inntekten",
 
   "HistorikkEndretFeltVerdiType.AdoptererAlene": "adopterer alene",
   "HistorikkEndretFeltVerdiType.AdoptererIkkeAlene": "adopterer ikke alene",

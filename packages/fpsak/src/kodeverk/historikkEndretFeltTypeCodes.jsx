@@ -341,6 +341,15 @@ const historikkEndretFeltTypeCodes = {
     kode: 'ER_KLAGER_PART',
     feltId: 'HistorikkEndretFelt.PaKlagdBehandlingId',
   },
+  VURDER_ETTERLØNN_SLUTTPAKKE: {
+    kode: 'VURDER_ETTERLØNN_SLUTTPAKKE',
+    feltId: 'HistorikkEndretFelt.VurderEtterlønnSluttpakke',
+  },
+  FASTSETT_ETTERLØNN_SLUTTPAKKE: {
+    kode: 'FASTSETT_ETTERLØNN_SLUTTPAKKE',
+    feltId: 'HistorikkEndretFelt.FastsettEtterlønnSluttpakke',
+  },
+
 };
 
 export default historikkEndretFeltTypeCodes;
