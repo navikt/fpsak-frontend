@@ -16,6 +16,7 @@ import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { required, hasValidText } from 'utils/validation/validators';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import dokumentMalType from 'kodeverk/dokumentMalType';
 import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
 
@@ -48,6 +49,33 @@ const getClassForOpphevKlage = (readOnly, aksjonspunktKode) => {
   );
 };
 
+const getBrevKode = (klageVurdering, klageVurdertAvKa) => {
+  switch (klageVurdering) {
+    case klageVurderingType.STADFESTE_YTELSESVEDTAK:
+      return klageVurdertAvKa ? dokumentMalType.KLAGE_YTELSESVEDTAK_STADFESTET_DOK : dokumentMalType.KLAGE_OVERSENDT_KLAGEINSTANS_DOK;
+    case klageVurderingType.OPPHEVE_YTELSESVEDTAK:
+      return dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET_DOK;
+    case klageVurderingType.HJEMSENDE_UTEN_Å_OPPHEVE:
+      return dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET_DOK;
+    case klageVurderingType.MEDHOLD_I_KLAGE:
+      return dokumentMalType.VEDTAK_MEDHOLD;
+    default:
+      return null;
+  }
+};
+
+const getBrevData = (klageVurdering, aksjonspunktCode, fritekstTilBrev) => {
+  const klageVurdertAv = aksjonspunktCode === aksjonspunktCodes.BEHANDLE_KLAGE_NK ? 'NK' : 'NFP';
+  const data = {
+    fritekst: fritekstTilBrev || '',
+    mottaker: '',
+    brevmalkode: getBrevKode(klageVurdering, klageVurdertAv === 'NK'),
+    klageVurdertAv,
+    erOpphevet: klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK,
+  };
+  return data;
+};
+
 export const BehandleKlageFormNy = ({
   readOnly,
   readOnlySubmitButton,
@@ -63,7 +91,7 @@ export const BehandleKlageFormNy = ({
   const medholdOptions = klageMedholdArsaker.map(mo => <option key={mo.kode} value={mo.kode}>{mo.navn}</option>);
   const keepVedtakTextId = aksjonspunktCode === aksjonspunktCodes.BEHANDLE_KLAGE_NK ? 'Klage.ResolveKlage.KeepVedtakNk' : 'Klage.ResolveKlage.KeepVedtakNfp';
   const previewMessage = (e) => {
-    previewCallback('', 'KLAGOV', fritekstTilBrev || ' ');
+    previewCallback(getBrevData(klageVurdering, aksjonspunktCode, fritekstTilBrev));
     e.preventDefault();
   };
 
@@ -114,8 +142,8 @@ export const BehandleKlageFormNy = ({
                 className={styles.noWrap}
                 direction="vertical"
               >
-                <RadioOption value={klageVurderingType.HJEMSENDE_UTEN_Å_OPPHEVE} label={{ id: 'Klage.Behandle.Hjemsendt' }} />
                 <RadioOption value={klageVurderingType.OPPHEVE_YTELSESVEDTAK} label={{ id: 'Klage.ResolveKlage.NullifyVedtak' }} />
+                <RadioOption value={klageVurderingType.HJEMSENDE_UTEN_Å_OPPHEVE} label={{ id: 'Klage.Behandle.Hjemsendt' }} />
               </RadioGroupField>
             </Column>
           </Row>
@@ -183,7 +211,7 @@ export const BehandleKlageFormNy = ({
           </Column>
         </Row>
         <BehandlingspunktSubmitButton formName={formProps.form} isReadOnly={readOnly} isSubmittable={!readOnlySubmitButton} />
-        {!readOnly
+        {!readOnly && klageVurdering
         && (
         <a
           href=""
