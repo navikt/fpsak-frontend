@@ -23,15 +23,15 @@ const getStatusFromUttakresultat = ({ uttaksresultat }) => {
   return vut.IKKE_OPPFYLT;
 };
 
-const getStatusFromResultatstruktur = ({ resultatstruktur, stonadskontoer }) => {
+const getStatusFromResultatstruktur = ({ resultatstruktur, uttaksresultat }) => {
   if (resultatstruktur && resultatstruktur.perioder.length > 0) {
-    const oppfylt = resultatstruktur.perioder.some(p => (
-      p.dagsats > 0
-    ));
-    if (!oppfylt) {
-      return vut.IKKE_OPPFYLT;
-    }
-    if (stonadskontoer) { // er denne sjekken nødvendig?
+    if (uttaksresultat && uttaksresultat.perioderSøker.length > 0) {
+      const oppfylt = uttaksresultat.perioderSøker.some(p => (
+        p.periodeResultatType.kode !== 'AVSLÅTT'
+      ));
+      if (!oppfylt) {
+        return vut.IKKE_OPPFYLT;
+      }
       return vut.OPPFYLT;
     }
   }
