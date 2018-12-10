@@ -23,7 +23,6 @@ import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/com
 import connect from 'react-redux/es/connect/connect';
 import { getBehandlingSprak } from 'behandlingFpsak/behandlingSelectors';
 import styles from './behandleKlageForm.less';
-import { maxLength1500, minLength3 } from '../vedtak/VedtakHelper';
 
 /**
  * Behandleklageform
@@ -193,23 +192,22 @@ export const BehandleKlageFormNy = ({
           />
         )
         }
-        <Row>
-          <VerticalSpacer sixteenPx />
-          <Column xs="10">
-            <TextAreaField
-              name="fritekstTilBrev"
-              label={intl.formatMessage({ id: 'VedtakKlageForm.Fritekst' })}
-              validate={[required, minLength3, maxLength1500, hasValidText]}
-              maxLength={1500}
-              readOnly={readOnly}
-              badges={[{
-                type: 'fokus',
-                textId: getLanguageCodeFromSprakkode(sprakkode),
-                title: 'Malform.Beskrivelse',
-              }]}
-            />
-          </Column>
-        </Row>
+        <VerticalSpacer sixteenPx />
+        <div className={styles.fritekstTilBrevTextArea}>
+          <TextAreaField
+            name="fritekstTilBrev"
+            label={intl.formatMessage({ id: 'VedtakKlageForm.Fritekst' })}
+            validate={[required, hasValidText]}
+            readOnly={readOnly}
+            textareaClass={styles.explanationTextarea}
+            maxLength={100000}
+            badges={[{
+              type: 'fokus',
+              textId: getLanguageCodeFromSprakkode(sprakkode),
+              title: 'Malform.Beskrivelse',
+            }]}
+          />
+        </div>
         <BehandlingspunktSubmitButton formName={formProps.form} isReadOnly={readOnly} isSubmittable={!readOnlySubmitButton} />
         {!readOnly && klageVurdering
         && (
