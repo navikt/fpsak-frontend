@@ -4,10 +4,10 @@ import { createSelector } from 'reselect';
 import ReduxRestApi from './ReduxRestApi';
 import RequestApi from '../requestApi/RequestApi';
 
-const getDataContext = state => state.default.dataContext;
+const getDataContext = reducerName => state => state.default[reducerName];
 
-const createReduxRestApi = (requestApi: RequestApi) => {
-  const reduxRestApi = new ReduxRestApi(requestApi, getDataContext);
+const createReduxRestApi = (requestApi: RequestApi, reducerName: string) => {
+  const reduxRestApi = new ReduxRestApi(requestApi, getDataContext(reducerName));
 
   const getRestApiState = (endpointName: string) => reduxRestApi.getEndpointState(endpointName);
   const getRestApiPollingMessage = (endpointName: string) => createSelector([getRestApiState(endpointName)], apiState => apiState.pollingMessage);

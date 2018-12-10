@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
+import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinnslagDelPropType';
 import { findHendelseText } from './historikkUtils';
 
 import BubbleText from './bubbleText';

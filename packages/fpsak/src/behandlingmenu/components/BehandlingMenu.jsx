@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 
-import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
+import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import rettighetPropType from 'navAnsatt/rettighetPropType';
 import navAnsattPropType from 'navAnsatt/navAnsattPropType';
 import Image from 'sharedComponents/Image';

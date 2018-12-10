@@ -7,14 +7,17 @@ import { connect } from 'react-redux';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import { createLocationForHistorikkItems } from 'app/paths';
 
-import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
+import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import behandlingStatus from 'kodeverk/behandlingStatus';
-import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
+import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import {
   getBehandlingVersjon, getAksjonspunkter, getBehandlingAnsvarligSaksbehandler, getTotrinnskontrollArsakerUtenUdefinert,
-  getBehandlingStatus, getBehandlingToTrinnsBehandling, getSelectedBehandlingIdentifier, getTotrinnskontrollArsakerReadOnly,
-} from 'behandling/behandlingSelectors';
+  getBehandlingStatus, getBehandlingToTrinnsBehandling, getTotrinnskontrollArsakerReadOnly,
+} from 'behandlingFpsak/behandlingSelectors';
+import {
+  getBehandlingIdentifier,
+} from 'behandlingFpsak/duck';
 import navAnsattPropType from 'navAnsatt/navAnsattPropType';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import requireProps from 'app/data/requireProps';
@@ -266,7 +269,7 @@ ApprovalIndexImpl.defaultProps = {
 const mapStateToProps = state => ({
   totrinnskontrollSkjermlenkeContext: getTotrinnskontrollArsakerUtenUdefinert(state),
   totrinnskontrollReadOnlySkjermlenkeContext: getTotrinnskontrollArsakerReadOnly(state),
-  behandlingIdentifier: getSelectedBehandlingIdentifier(state),
+  behandlingIdentifier: getBehandlingIdentifier(state),
   selectedBehandlingVersjon: getBehandlingVersjon(state),
   ansvarligSaksbehandler: getBehandlingAnsvarligSaksbehandler(state),
   status: getBehandlingStatus(state),

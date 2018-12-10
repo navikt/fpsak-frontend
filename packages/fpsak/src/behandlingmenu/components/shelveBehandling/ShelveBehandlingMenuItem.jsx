@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { getHenleggArsaker, getBehandlingType } from 'behandling/behandlingSelectors';
-import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
+import { getHenleggArsaker, getBehandlingType } from 'behandlingFpsak/behandlingSelectors';
+import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import MenuButton from '../MenuButton';
 import ShelveBehandlingModal from './ShelveBehandlingModal';
 import BehandlingenShelvedModal from './BehandlingenShelvedModal';

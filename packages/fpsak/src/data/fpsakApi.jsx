@@ -1,5 +1,4 @@
 /* @flow */
-import applicationContextPath from 'app/applicationContextPath';
 import { getHttpClientApi, getRestApiBuilder, initRestApi } from './rest/restApi';
 
 export const FpsakApiKeys = {
@@ -12,32 +11,26 @@ export const FpsakApiKeys = {
   SEARCH_FAGSAK: 'SEARCH_FAGSAK',
   FETCH_FAGSAK: 'FETCH_FAGSAK',
   BEHANDLINGER: 'BEHANDLINGER',
-  BEHANDLING: 'BEHANDLING',
-  ORIGINAL_BEHANDLING: 'ORIGINAL_BEHANDLING',
   BEHANDLENDE_ENHETER: 'BEHANDLENDE_ENHETER',
   NY_BEHANDLENDE_ENHET: 'NY_BEHANDLENDE_ENHET',
   NEW_BEHANDLING: 'NEW_BEHANDLING',
+  SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
+  SAVE_OVERSTYRT_AKSJONSPUNKT: 'SAVE_OVERSTYRT_AKSJONSPUNKT',
   BEHANDLING_ON_HOLD: 'BEHANDLING_ON_HOLD',
-  UPDATE_ON_HOLD: 'UPDATE_ON_HOLD',
   RESUME_BEHANDLING: 'RESUME_BEHANDLING',
   HENLEGG_BEHANDLING: 'HENLEGG_BEHANDLING',
   OPEN_BEHANDLING_FOR_CHANGES: 'OPEN_BEHANDLING_FOR_CHANGES',
-  SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
-  SAVE_OVERSTYRT_AKSJONSPUNKT: 'SAVE_OVERSTYRT_AKSJONSPUNKT',
   ALL_DOCUMENTS: 'ALL_DOCUMENTS',
   DOCUMENT: 'DOCUMENT',
   FORHANDSVISNING_FORVED_BREV: 'FORHANDSVISNING_FORVED_BREV',
-  PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
-  PREVIEW_MESSAGE_KLAGE: 'PREVIEW_MESSAGE_KLAGE',
   SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
   HISTORY: 'HISTORY',
   ANNEN_PART_BEHANDLING: 'ANNEN_PART_BEHANDLING',
   SHOW_DETAILED_ERROR_MESSAGES: 'SHOW_DETAILED_ERROR_MESSAGES',
   INTEGRATION_STATUS: 'INTEGRATION_STATUS',
   FEATURE_TOGGLE: 'FEATURE_TOGGLE',
+  PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
 };
-
-export const getBehandlingTypeApiKeys = () => [FpsakApiKeys.BEHANDLING];
 
 const httpClientApi = getHttpClientApi();
 const endpoints = getRestApiBuilder(httpClientApi)
@@ -49,12 +42,9 @@ const endpoints = getRestApiBuilder(httpClientApi)
 
   /* /api/behandlinger */
   .withGet('/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER, { addLinkDataToArray: true })
-  .withAsyncPost('/api/behandlinger', FpsakApiKeys.BEHANDLING)
-  .withAsyncPost('/api/behandlinger', FpsakApiKeys.ORIGINAL_BEHANDLING)
   .withAsyncPut('/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING)
   .withPost('/api/behandlinger/bytt-enhet', FpsakApiKeys.NY_BEHANDLENDE_ENHET)
   .withPost('/api/behandlinger/sett-pa-vent', FpsakApiKeys.BEHANDLING_ON_HOLD)
-  .withPost('/api/behandlinger/endre-pa-vent', FpsakApiKeys.UPDATE_ON_HOLD)
   .withAsyncPost('/api/behandlinger/gjenoppta', FpsakApiKeys.RESUME_BEHANDLING)
   .withPost('/api/behandlinger/henlegg', FpsakApiKeys.HENLEGG_BEHANDLING)
   .withAsyncPost('/api/behandlinger/opne-for-endringer', FpsakApiKeys.OPEN_BEHANDLING_FOR_CHANGES)
@@ -67,7 +57,6 @@ const endpoints = getRestApiBuilder(httpClientApi)
   /* /api/brev */
   .withPost('/api/brev/bestill', FpsakApiKeys.SUBMIT_MESSAGE)
   .withPostAndOpenBlob('/api/brev/forhandsvis', FpsakApiKeys.PREVIEW_MESSAGE)
-  .withPostAndOpenBlob('/api/brev/forhandsvis-klage', FpsakApiKeys.PREVIEW_MESSAGE_KLAGE)
 
   /* /api/dokument */
   .withGet('/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS)
@@ -102,5 +91,5 @@ const endpoints = getRestApiBuilder(httpClientApi)
   .withPost('/api/feature-toggle', FpsakApiKeys.FEATURE_TOGGLE)
   .build();
 
-const fpsakApi = initRestApi(httpClientApi, applicationContextPath.FPSAK, endpoints);
+const fpsakApi = initRestApi(httpClientApi, 'fpsak', endpoints, 'dataContext');
 export default fpsakApi;

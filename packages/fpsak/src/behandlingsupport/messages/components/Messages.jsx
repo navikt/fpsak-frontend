@@ -8,8 +8,8 @@ import classNames from 'classnames';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import dokumentMalType from 'kodeverk/dokumentMalType';
-import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { isKontrollerRevurderingAksjonspunkOpen } from 'behandling/behandlingSelectors';
+import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
+import { isKontrollerRevurderingAksjonspunkOpen } from 'behandlingFpsak/behandlingSelectors';
 import {
   ariaCheck, hasValidText, maxLength, minLength, required,
 } from 'utils/validation/validators';

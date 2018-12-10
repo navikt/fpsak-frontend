@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
 
 import { createLocationForHistorikkItems } from 'app/paths';
-import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
+import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinnslagDelPropType';
 import historikkEndretFeltTypeCodes from 'kodeverk/historikkEndretFeltTypeCodes';
 import historikkOpplysningTypeCodes from 'kodeverk/historikkOpplysningTypeCodes';
 import {

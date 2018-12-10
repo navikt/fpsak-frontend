@@ -5,7 +5,7 @@ import { createSelector } from 'reselect';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
 import klageVurderingCodes from 'kodeverk/klageVurdering';
-import { getBehandlingKlageVurdering, getBehandlingStatus } from 'behandling/behandlingSelectors';
+import { getBehandlingKlageVurdering, getBehandlingStatus } from 'behandlingFpsak/behandlingSelectors';
 
 import behandlingStatusCode from 'kodeverk/behandlingStatus';
 import klageVurderingOmgjoerCodes from 'kodeverk/klageVurderingOmgjoer';

@@ -10,7 +10,7 @@ import {
   getTotrinnskontrollArsakerReadOnly,
   isBehandlingInInnhentSoknadsopplysningerSteg,
   isKlageBehandlingInFormkrav,
-} from 'behandling/behandlingSelectors';
+} from 'behandlingFpsak/behandlingSelectors';
 import behandlingStatus from 'kodeverk/behandlingStatus';
 import { getRettigheter } from 'navAnsatt/duck';
 import SupportPanel from './supportPanels';

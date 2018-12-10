@@ -8,15 +8,17 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import dokumentMalType from 'kodeverk/dokumentMalType';
-import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import SettBehandlingPaVentForm from 'behandling/components/SettBehandlingPaVentForm';
+import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
+import SettBehandlingPaVentForm from 'behandlingFpsak/components/SettBehandlingPaVentForm';
 import {
   getBehandlingSprak,
   getBehandlingVersjon,
   getBrevMaler,
   getBrevMottakere,
-  getSelectedBehandlingIdentifier,
-} from 'behandling/behandlingSelectors';
+} from 'behandlingFpsak/behandlingSelectors';
+import {
+  getBehandlingIdentifier,
+} from 'behandlingFpsak/duck';
 import { setBehandlingOnHold } from 'behandlingmenu/duck';
 import venteArsakType from 'kodeverk/venteArsakType';
 import LoadingPanel from 'sharedComponents/LoadingPanel';
@@ -180,7 +182,7 @@ const mapStateToProps = state => ({
   recipients: getBrevMottakere(state),
   templates: getBrevMaler(state),
   submitFinished: fpsakApi.SUBMIT_MESSAGE.getRestApiFinished()(state),
-  behandlingIdentifier: getSelectedBehandlingIdentifier(state),
+  behandlingIdentifier: getBehandlingIdentifier(state),
   selectedBehandlingVersjon: getBehandlingVersjon(state),
   selectedBehandlingSprak: getBehandlingSprak(state),
 });

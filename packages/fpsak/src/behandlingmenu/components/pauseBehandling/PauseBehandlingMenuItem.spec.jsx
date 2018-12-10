@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import moment from 'moment';
 
-import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
+import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import { PauseBehandlingMenuItem } from './PauseBehandlingMenuItem';
 
 describe('<PauseBehandlingMenuItem>', () => {

@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
+import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import ShelveBehandlingMenuItem from './ShelveBehandlingMenuItem';
 
 describe('<ShelveBehandlingMenuItem>', () => {

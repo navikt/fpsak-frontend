@@ -8,13 +8,15 @@ import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import {
   getBehandlingIsOnHold,
   getBehandlingIsQueued,
-  getSelectedBehandlingIdentifier,
   getBehandlingVersjon,
   getBehandlingBehandlendeEnhetId,
   getBehandlingBehandlendeEnhetNavn,
   getBehandlingHasSoknad,
   getBehandlingIsInnsyn,
-} from 'behandling/behandlingSelectors';
+} from 'behandlingFpsak/behandlingSelectors';
+import {
+  getBehandlingIdentifier,
+} from 'behandlingFpsak/duck';
 import fpsakApi from 'data/fpsakApi';
 import { getNavAnsatt, getRettigheter } from 'navAnsatt/duck';
 
@@ -52,7 +54,7 @@ const mapStateToProps = (state) => {
   } = getRettigheter(state);
   return {
     saksnummer: getSelectedSaksnummer(state),
-    behandlingIdentifier: getSelectedBehandlingIdentifier(state),
+    behandlingIdentifier: getBehandlingIdentifier(state),
     selectedBehandlingVersjon: getBehandlingVersjon(state),
     behandlingPaaVent: getBehandlingIsOnHold(state),
     behandlingKoet: getBehandlingIsQueued(state),

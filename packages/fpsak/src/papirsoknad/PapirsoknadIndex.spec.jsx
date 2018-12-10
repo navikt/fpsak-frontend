@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
+import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import SoknadData from 'papirsoknad/SoknadData';
 import SoknadRegistrertModal from './components/SoknadRegistrertModal';
 import RegisterPapirsoknad from './components/RegistrerPapirsoknad';

@@ -12,7 +12,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import behandlingType from 'kodeverk/behandlingType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import { getBehandlingType } from 'behandling/behandlingSelectors';
+import { getBehandlingType } from 'behandlingFpsak/behandlingSelectors';
 import { RadioGroupField, RadioOption } from 'form/Fields';
 import { ariaCheck, required } from 'utils/validation/validators';
 import BorderBox from 'sharedComponents/BorderBox';
