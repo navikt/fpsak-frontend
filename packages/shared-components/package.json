@@ -35,7 +35,6 @@
     "react-day-picker": "^7.2.4",
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
-    "@fpsak-frontend/data": "1.0.0",
     "@fpsak-frontend/form": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0"
   }
