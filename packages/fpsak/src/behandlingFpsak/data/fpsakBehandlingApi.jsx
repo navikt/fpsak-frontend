@@ -8,6 +8,7 @@ export const BehandlingFpsakApiKeys = {
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
   SAVE_OVERSTYRT_AKSJONSPUNKT: 'SAVE_OVERSTYRT_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
+  PREVIEW_MESSAGE_KLAGE: 'PREVIEW_MESSAGE_KLAGE',
 };
 
 const httpClientApi = getHttpClientApi();
@@ -25,6 +26,7 @@ const endpoints = getRestApiBuilder(httpClientApi)
 
   /* /api/brev */
   .withPostAndOpenBlob('/api/brev/forhandsvis', BehandlingFpsakApiKeys.PREVIEW_MESSAGE)
+  .withPostAndOpenBlob('/api/brev/forhandsvis-klage', BehandlingFpsakApiKeys.PREVIEW_MESSAGE_KLAGE)
   .build();
 
 const fpsakBehandlingApi = initRestApi(httpClientApi, 'fpsak', endpoints, 'dataFpsakBehandlingContext');
