@@ -3,10 +3,17 @@ import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import PropTypes from 'prop-types';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/klage/FormkravKlageFormKa.jsx
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { getBehandlingKlageFormkravResultatKA } from 'behandlingFpsak/behandlingSelectors';
+=======
+import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
+import { behandlingForm } from 'behandling/behandlingForm';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { getBehandlingKlageFormkravResultatKA } from 'behandling/behandlingSelectors';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/klage/FormkravKlageFormKa.jsx
 import { createSelector } from 'reselect';
 import FormkravKlageForm, { getPaKlagdVedtak, IKKE_PA_KLAGD_VEDTAK } from './FormkravKlageForm';
 

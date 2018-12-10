@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
-
-import { NavFieldGroup } from '@fpsak-frontend/form';
-import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
+import NavFieldGroup from '@fpsak-frontend/form/src/NavFieldGroup';
+import Image from './Image';
+import VerticalSpacer from './VerticalSpacer';
+
 
 import styles from './periodFieldArray.less';
 

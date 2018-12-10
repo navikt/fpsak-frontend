@@ -6,6 +6,7 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import { InputField } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/frilanser/GrunnlagForAarsinntektPanelFL.jsx
 import { required } from '@fpsak-frontend/utils';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
@@ -17,6 +18,15 @@ import { formatCurrencyNoKr, parseCurrencyInput } from '@fpsak-frontend/utils';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/frilanser/GrunnlagForAarsinntektPanelFL.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+=======
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import {
+  required, formatCurrencyNoKr, parseCurrencyInput,
+} from '@fpsak-frontend/utils';
+import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/frilanser/GrunnlagForAarsinntektPanelFL.jsx
 
 import styles from './grunnlagForAarsinntektPanelFL.less';
 

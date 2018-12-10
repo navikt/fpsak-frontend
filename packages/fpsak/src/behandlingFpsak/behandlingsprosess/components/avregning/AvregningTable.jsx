@@ -1,13 +1,10 @@
 import React from 'react';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
-import { getRangeOfMonths } from '@fpsak-frontend/utils';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import avregningCodes from 'kodeverk/avregningCodes';
-import mottakerTyper from 'kodeverk/avregningMottakerTyper';
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components';
+import { getRangeOfMonths, formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
+import mottakerTyper from '@fpsak-frontend/kodeverk/src/avregningMottakerTyper';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import moment from 'moment/moment';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import InntektstabellPanel from '../InntektstabellPanel';
 import { TilstotendeYtelseIKombinasjonImpl, erTilstotendeYtelseIKombinasjon } from './TilstotendeYtelseIKombinasjon';
 

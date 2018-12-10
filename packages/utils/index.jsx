@@ -21,6 +21,7 @@ export {
 export {
   calcDaysWithoutWeekends,
   addDaysToDate,
+  calcDays,
   calcDaysAndWeeks,
   calcDaysAndWeeksWithWeekends,
   dateFormat,
@@ -28,6 +29,7 @@ export {
   splitWeeksAndDays,
   TIDENES_ENDE,
   timeFormat,
+  getRangeOfMonths,
 } from './src/dateUtils';
 export { default as decodeHtmlEntity } from './src/decodeHtmlEntityUtils';
 export {
@@ -99,5 +101,15 @@ export {
   notDash,
   required,
   maxLengthOrFodselsnr,
-  isRequiredMessage,
 } from './src/validation/validators';
+
+export {
+  isRequiredMessage,
+  sammeFodselsnummerSomSokerMessage,
+  dateRangesOverlappingMessage,
+  invalidPeriodMessage,
+  invalidDateMessage,
+  invalidDecimalMessage,
+  dateNotBeforeOrEqualMessage,
+  dateNotAfterOrEqualMessage,
+} from './src/validation/messages';

@@ -23,12 +23,21 @@ import {
   getBehandlingGjelderBesteberegning,
   getBeregningsgrunnlag,
   getGjeldendeBeregningAksjonspunkt,
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/BeregningFP.jsx
 } from 'behandlingFpsak/behandlingSelectors';
 import beregningsgrunnlagPropType from 'behandlingFelles/proptypes/beregningsgrunnlagPropType';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
 import { getSelectedBehandlingspunktVilkar } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+=======
+} from 'behandling/behandlingSelectors';
+import beregningsgrunnlagPropType from 'behandling/proptypes/beregningsgrunnlagPropType';
+import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
+import { getSelectedBehandlingspunktVilkar } from 'behandlingsprosess/behandlingsprosessSelectors';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/BeregningFP.jsx
 import aktivitetStatus, {
   isStatusArbeidstakerOrKombinasjon,
   isStatusDagpengerOrAAP,
@@ -37,8 +46,8 @@ import aktivitetStatus, {
   isStatusMilitaer,
   isStatusSNOrKombinasjon,
   isStatusTilstotendeYtelse,
-} from 'kodeverk/aktivitetStatus';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+} from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import InntektsopplysningerPanel from './fellesPaneler/InntektsopplysningerPanel';
 import SkjeringspunktOgStatusPanel from './fellesPaneler/SkjeringspunktOgStatusPanel';
 import BeregningsgrunnlagForm from './beregningsgrunnlagPanel/BeregningsgrunnlagForm';

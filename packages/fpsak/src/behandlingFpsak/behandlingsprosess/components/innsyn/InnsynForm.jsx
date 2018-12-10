@@ -17,9 +17,15 @@ import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behan
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/innsyn/InnsynForm.jsx
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/innsyn/InnsynForm.jsx
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import { getKodeverk } from 'kodeverk/duck';
+=======
+import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/innsyn/InnsynForm.jsx
 import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import fpsakApi from 'data/fpsakApi';
 import {
@@ -36,6 +42,7 @@ import {
   FadingPanel, ArrowBox, VerticalSpacer, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
 import { required, hasValidDate, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/innsyn/InnsynForm.jsx
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/innsyn/InnsynForm.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
@@ -43,6 +50,14 @@ import { getFilteredReceivedDocuments } from 'behandlingsupport/behandlingsuppor
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
 import innsynResultatTyperKV from 'kodeverk/innsynResultatType';
+=======
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { getFilteredReceivedDocuments } from 'behandlingsupport/behandlingsupportSelectors';
+import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
+import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
+import innsynResultatTyperKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/innsyn/InnsynForm.jsx
 import DocumentListInnsyn from './DocumentListInnsyn';
 import VedtakDocuments from './VedtakDocuments';
 

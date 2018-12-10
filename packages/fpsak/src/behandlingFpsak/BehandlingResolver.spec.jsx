@@ -3,11 +3,15 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/BehandlingResolver.spec.jsx
 import BehandlingType from 'kodeverk/behandlingType';
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/BehandlingResolver.spec.jsx
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import LoadingPanel from 'sharedComponents/LoadingPanel';
 =======
+=======
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandling/BehandlingResolver.spec.jsx
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandling/BehandlingResolver.spec.jsx

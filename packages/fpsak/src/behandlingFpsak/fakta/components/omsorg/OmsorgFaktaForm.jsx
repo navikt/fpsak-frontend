@@ -8,12 +8,21 @@ import { FieldArray } from 'redux-form';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 import { Normaltekst } from 'nav-frontend-typografi';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/omsorg/OmsorgFaktaForm.jsx
 import { getBehandlingYtelseFordeling, getSoknad } from 'behandlingFpsak/behandlingSelectors';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+=======
+import { getBehandlingYtelseFordeling, getSoknad } from 'behandling/behandlingSelectors';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+
+import FaktaGruppe from 'fakta/components/FaktaGruppe';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/omsorg/OmsorgFaktaForm.jsx
 import IkkeOmsorgPeriodeField from './IkkeOmsorgPeriodeField';
 import styles from './omsorgFaktaForm.less';
 

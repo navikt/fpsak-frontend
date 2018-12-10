@@ -7,13 +7,12 @@ import { FieldArray, formValueSelector } from 'redux-form';
 
 import { CheckboxField } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
 import {
-  hasValidPeriodIncludingOtherErrors, required,
+  hasValidPeriodIncludingOtherErrors, required, isRequiredMessage,
 } from '@fpsak-frontend/utils';
-import { isRequiredMessage } from '@fpsak-frontend/utils';
 import RenderUtsettelsePeriodeFieldArray from './RenderUtsettelsePeriodeFieldArray';
 import styles from './permisjonPanel.less';
 

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
-import { FlexContainer, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
 import {
   RadioGroupField, RadioOption, TextAreaField, SelectField,
 } from '@fpsak-frontend/form';
@@ -17,21 +16,31 @@ import {
 } from '@fpsak-frontend/utils';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/uttak/UttakActivity.jsx
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import { getSkjaeringstidspunktForeldrepenger } from 'behandlingFpsak/behandlingSelectors';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import oppholdArsakType, { oppholdArsakMapper } from 'kodeverk/oppholdArsakType';
 import { getKodeverk } from 'kodeverk/duck';
+=======
+import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
+import { getSkjaeringstidspunktForeldrepenger } from 'behandling/behandlingSelectors';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/uttak/UttakActivity.jsx
 import { FieldArray, formPropTypes } from 'redux-form';
-import periodeResultatType from 'kodeverk/periodeResultatType';
-import { uttakPeriodeNavn } from 'kodeverk/uttakPeriodeType';
+import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
+import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import { Undertekst } from 'nav-frontend-typografi';
-import ElementWrapper from '@fpsak-frontend/shared-components';
-import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  ArrowBox, ElementWrapper, VerticalSpacer, FlexContainer, FlexColumn, FlexRow,
+} from '@fpsak-frontend/shared-components';
 import RenderUttakTable from './RenderUttakTable';
 import UttakInfo from './UttakInfo';
+
 import styles from './uttakActivity.less';
 
 const uttakActivityForm = 'uttaksresultatActivity';
@@ -56,12 +65,8 @@ function sortAlphabetically(a, b) {
 const errorsNotCautghtInValidation = () => {
   const begrunnelse = document.getElementById('uttakVurdering');
   const aarsaknode = document.getElementById('aarsak');
-  if (!begrunnelse || begrunnelse.innerHTML.length < 1 || (aarsaknode && aarsaknode.value === '')) {
-    return true;
-  }
-  return false;
+  return !!(!begrunnelse || begrunnelse.innerHTML.length < 1 || (aarsaknode && aarsaknode.value === ''));
 };
-
 
 const mapAarsak = (kodeverk, starttidspunktForeldrepenger) => {
   kodeverk.sort(sortAlphabetically);

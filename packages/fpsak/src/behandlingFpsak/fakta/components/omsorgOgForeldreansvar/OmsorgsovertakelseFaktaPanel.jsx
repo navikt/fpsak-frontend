@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/omsorgOgForeldreansvar/OmsorgsovertakelseFaktaPanel.jsx
 import { getEditedStatus } from 'behandlingFpsak/behandlingSelectors';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/omsorgOgForeldreansvar/OmsorgsovertakelseFaktaPanel.jsx
@@ -10,6 +11,10 @@ import { DatepickerField, InputField } from 'form/Fields';
 import { hasValidDate, required } from 'utils/validation/validators';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
 =======
+=======
+import { getEditedStatus } from 'behandling/behandlingSelectors';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/omsorgOgForeldreansvar/OmsorgsovertakelseFaktaPanel.jsx
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
 import { hasValidDate, required } from '@fpsak-frontend/utils';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';

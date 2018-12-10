@@ -5,15 +5,22 @@ import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import moment from 'moment';
 
-import soknadType from 'kodeverk/soknadType';
-import opplysningsKilde from 'kodeverk/opplysningsKilde';
+import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
+import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import { DatepickerField } from '@fpsak-frontend/form';
 import { required, hasValidDate } from '@fpsak-frontend/utils';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/omsorgOgForeldreansvar/BarnPanel.jsx
 import DateLabel from '@fpsak-frontend/shared-components';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
 import { getEditedStatus } from 'behandlingFpsak/behandlingSelectors';
+=======
+import { VerticalSpacer, DateLabel } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import FaktaGruppe from 'fakta/components/FaktaGruppe';
+import { getEditedStatus } from 'behandling/behandlingSelectors';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/omsorgOgForeldreansvar/BarnPanel.jsx
 
 import styles from './barnPanel.less';
 

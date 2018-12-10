@@ -11,12 +11,15 @@ import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
 import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
 =======
 import { behandlingForm } from 'behandling/behandlingForm';
-import guid from '@fpsak-frontend/utils';
 import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
 import withDefaultToggling from 'fakta/withDefaultToggling';
 import faktaPanelCodes from 'fakta/faktaPanelCodes';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/uttak/UttakInfoPanel.jsx
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/uttak/UttakInfoPanel.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+=======
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/uttak/UttakInfoPanel.jsx
 import {
   getUttakPerioder,
   getBehandlingYtelseFordeling,
@@ -27,9 +30,14 @@ import {
 import { dateFormat } from 'utils/dateUtils';
 =======
 } from 'behandling/behandlingSelectors';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/uttak/UttakInfoPanel.jsx
 import { dateFormat } from '@fpsak-frontend/utils';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/uttak/UttakInfoPanel.jsx
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+=======
+import { guid, dateFormat } from '@fpsak-frontend/utils';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/uttak/UttakInfoPanel.jsx
 import UttakFaktaForm from './UttakFaktaForm';
 import {
   sjekkOmfaktaOmUttakAksjonspunkt,

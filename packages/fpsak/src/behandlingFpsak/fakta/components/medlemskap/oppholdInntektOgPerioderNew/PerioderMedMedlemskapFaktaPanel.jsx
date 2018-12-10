@@ -17,8 +17,8 @@ import TableColumn from 'sharedComponents/TableColumn';
 import PeriodLabel from 'sharedComponents/PeriodLabel';
 =======
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioderNew/PerioderMedMedlemskapFaktaPanel.jsx
 import DateLabel from '@fpsak-frontend/shared-components';
 import Table from '@fpsak-frontend/shared-components/Table';
 import TableRow from '@fpsak-frontend/shared-components/TableRow';
@@ -38,6 +38,18 @@ import { required } from '@fpsak-frontend/utils';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioderNew/PerioderMedMedlemskapFaktaPanel.jsx
+=======
+import {
+  Table, TableRow, TableColumn, DateLabel, PeriodLabel, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
+
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { required, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import FaktaGruppe from 'fakta/components/FaktaGruppe';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioderNew/PerioderMedMedlemskapFaktaPanel.jsx
 
 
 const headerTextCodes = [

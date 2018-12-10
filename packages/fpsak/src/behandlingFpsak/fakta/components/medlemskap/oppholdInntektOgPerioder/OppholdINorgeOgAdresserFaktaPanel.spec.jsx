@@ -1,11 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 
-import personstatusType from 'kodeverk/personstatusType';
-import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import opplysningAdresseType from 'kodeverk/opplysningAdresseType';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
 
 describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {

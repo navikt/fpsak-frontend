@@ -3,15 +3,19 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components';
 import moment from 'moment';
 import { createSelector } from 'reselect';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/arbeidstaker/NaturalytelsePanel.jsx
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import periodeAarsak from 'kodeverk/periodeAarsak';
 import { getBeregningsgrunnlagPerioder } from 'behandlingFpsak/behandlingSelectors';
+=======
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
+import { getBeregningsgrunnlagPerioder } from 'behandling/behandlingSelectors';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/arbeidstaker/NaturalytelsePanel.jsx
 
 import styles from './naturalytelsePanel.less';
 

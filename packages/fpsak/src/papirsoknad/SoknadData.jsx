@@ -1,7 +1,7 @@
 import { notNull } from '@fpsak-frontend/utils';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import foreldreType from 'kodeverk/foreldreType';
-import familieHendelseType from 'kodeverk/familieHendelseType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import foreldreType from '@fpsak-frontend/kodeverk/src/foreldreType';
+import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 
 
 class SoknadData {

@@ -16,25 +16,29 @@ import TableRow from 'sharedComponents/TableRow';
 import TableColumn from 'sharedComponents/TableColumn';
 =======
 } from '@fpsak-frontend/form';
-import { isEmpty } from '@fpsak-frontend/utils';
+import {
+  isArrayEmpty, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, createVisningsnavnForAktivitet,
+} from '@fpsak-frontend/utils';
 import { getEndringBeregningsgrunnlagPerioder } from 'behandling/behandlingSelectors';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/endringBeregningsgrunnlag/RenderEndringBGFieldArray.jsx
 import { Image } from '@fpsak-frontend/shared-components';
 import Table from '@fpsak-frontend/shared-components/Table';
 import TableRow from '@fpsak-frontend/shared-components/TableRow';
 import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/endringBeregningsgrunnlag/RenderEndringBGFieldArray.jsx
+=======
+import {
+  Table, Image, TableRow, TableColumn, ElementWrapper,
+} from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/endringBeregningsgrunnlag/RenderEndringBGFieldArray.jsx
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import ElementWrapper from '@fpsak-frontend/shared-components';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import inntektskategorier, { isSelvstendigNæringsdrivende } from 'kodeverk/inntektskategorier';
-import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from '@fpsak-frontend/utils';
-import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import { arbeidsforholdProptype, getUniqueListOfArbeidsforhold } from '../../ArbeidsforholdHelper';
 import { validateAndelFields, validateSumFastsattBelop, validateUlikeAndeler } from '../ValidateAndelerUtils';
 import styles from './renderEndringBGFieldArray.less';
-
 
 const defaultBGFordeling = periodeUtenAarsak => ({
   nyAndel: true,
@@ -352,7 +356,7 @@ RenderEndringBGFieldArray.validate = (values) => {
   if (arrayErrors.some(errors => errors !== null)) {
     return arrayErrors;
   }
-  if (isEmpty(values)) {
+  if (isArrayEmpty(values)) {
     return null;
   }
   const ulikeAndelerError = validateUlikeAndeler(values);

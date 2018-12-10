@@ -5,8 +5,13 @@ import { connect } from 'react-redux';
 import featureToggle from 'app/featureToggle';
 import { getBehandlingType } from 'behandlingFpsak/behandlingSelectors';
 import { getFeatureToggles } from 'app/duck';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/VedtakPanels.jsx
 import behandlingType from 'kodeverk/behandlingType';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
+=======
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vedtak/VedtakPanels.jsx
 import VedtakForm from './VedtakForm';
 import InnsynVedtakForm from './innsyn/InnsynVedtakForm';
 import VedtakKlageForm from './klage/VedtakKlageForm';

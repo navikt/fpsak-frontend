@@ -8,11 +8,12 @@ import moment from 'moment';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  FadingPanel, VerticalSpacer, AksjonspunktHelpText,
+} from '@fpsak-frontend/shared-components';
 import PropTypes from 'prop-types';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/revurdering/VarselOmRevurderingForm.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import { getBehandlingLanguageCode, getBehandlingArsaker } from 'behandlingFpsak/behandlingSelectors';
@@ -23,6 +24,18 @@ import SettBehandlingPaVentModal from 'behandlingFpsak/components/SettBehandling
 
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { required, minLength, hasValidText } from '@fpsak-frontend/utils';
+=======
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { getBehandlingLanguageCode, getBehandlingArsaker } from 'behandling/behandlingSelectors';
+import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
+import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
+import FodselSammenligningPanel from 'behandling/components/fodselSammenligning/FodselSammenligningPanel';
+import SettBehandlingPaVentModal from 'behandling/components/SettBehandlingPaVentModal';
+import {
+  ISO_DATE_FORMAT, required, minLength, hasValidText,
+} from '@fpsak-frontend/utils';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/revurdering/VarselOmRevurderingForm.jsx
 
 import styles from './varselOmRevurderingForm.less';
 

@@ -4,7 +4,7 @@ import behandleValgtIkonUrl from '@fpsak-frontend/assets/images/avregning_aksjon
 import innvilgetValgtIkonUrl from '@fpsak-frontend/assets/images/avregning_valgt.svg';
 import ikkeVurdertIkonUrl from '@fpsak-frontend/assets/images/avregning_disable.svg';
 
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 const avregningImages = {
   imageMap: {

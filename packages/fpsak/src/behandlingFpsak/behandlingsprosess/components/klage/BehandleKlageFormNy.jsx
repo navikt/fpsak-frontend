@@ -5,17 +5,23 @@ import { Undertittel } from 'nav-frontend-typografi';
 import classNames from 'classnames';
 import { Row, Column } from 'nav-frontend-grid';
 
-import klageVurderingType from 'kodeverk/klageVurdering';
-import klageVurderingOmgjoerType from 'kodeverk/klageVurderingOmgjoer';
+import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import klageVurderingOmgjoerType from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
 import {
   RadioGroupField, RadioOption, SelectField, TextAreaField,
 } from '@fpsak-frontend/form';
 import { VerticalSpacer, AksjonspunktHelpText, FadingPanel } from '@fpsak-frontend/shared-components';
 import { required, hasValidText, getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/klage/BehandleKlageFormNy.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import dokumentMalType from 'kodeverk/dokumentMalType';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
+=======
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
+import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/klage/BehandleKlageFormNy.jsx
 
 import connect from 'react-redux/es/connect/connect';
 import { getBehandlingSprak } from 'behandlingFpsak/behandlingSelectors';

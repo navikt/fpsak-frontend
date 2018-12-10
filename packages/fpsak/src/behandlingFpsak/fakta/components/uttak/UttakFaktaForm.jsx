@@ -12,6 +12,7 @@ import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/uttak/UttakFaktaForm.jsx
 import { getBehandlingFormPrefix, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
 import FlexRow from 'sharedComponents/flexGrid/FlexRow';
@@ -24,9 +25,14 @@ import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
 import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
 =======
 import { ariaCheck } from '@fpsak-frontend/utils';
+=======
+import { getBehandlingFormPrefix, behandlingFormValueSelector } from 'behandling/behandlingForm';
+import { ariaCheck, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/uttak/UttakFaktaForm.jsx
 import { getInntektsmeldinger, getBehandlingVersjon } from 'behandling/behandlingSelectors';
-import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
+import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import { getSelectedBehandlingId } from 'behandling/duck';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/uttak/UttakFaktaForm.jsx
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/uttak/UttakFaktaForm.jsx
 import { getKodeverk } from 'kodeverk/duck';
@@ -34,6 +40,14 @@ import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import { uttakPeriodeNavn } from 'kodeverk/uttakPeriodeType';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+=======
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
+import {
+  VerticalSpacer, AksjonspunktHelpText, FlexContainer, FlexColumn, FlexRow,
+} from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/uttak/UttakFaktaForm.jsx
 import UttakPeriode from './UttakPeriode';
 import UttakNyPeriode from './UttakNyPeriode';
 import UttakSlettPeriodeModal from './UttakSlettPeriodeModal';

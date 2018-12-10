@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioderNew/StatusForBorgerFaktaPanel.jsx
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioderNew/StatusForBorgerFaktaPanel.jsx
@@ -15,6 +16,13 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioderNew/StatusForBorgerFaktaPanel.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+=======
+import { behandlingFormValueSelector } from 'behandling/behandlingForm';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import FaktaGruppe from 'fakta/components/FaktaGruppe';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioderNew/StatusForBorgerFaktaPanel.jsx
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 

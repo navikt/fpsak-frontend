@@ -17,6 +17,7 @@ export { default as Image } from './src/Image';
 export { default as LoadingPanel } from './src/LoadingPanel';
 // export { default as MissingPage } from './src/MissingPage';
 export { default as Modal } from './src/Modal';
+export { default as Tooltip } from './src/Tooltip';
 export { default as OkAvbrytModal } from './src/OkAvbrytModal';
 export { default as PeriodFieldArray } from './src/PeriodFieldArray';
 export { default as PeriodLabel } from './src/PeriodLabel';

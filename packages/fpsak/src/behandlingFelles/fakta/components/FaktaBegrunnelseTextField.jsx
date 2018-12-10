@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import decodeHtmlEntity from '@fpsak-frontend/utils';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
+<<<<<<< HEAD:packages/fpsak/src/behandlingFelles/fakta/components/FaktaBegrunnelseTextField.jsx
   minLength, maxLength, requiredIfNotPristine, hasValidText,
 <<<<<<< HEAD:packages/fpsak/src/behandlingFelles/fakta/components/FaktaBegrunnelseTextField.jsx
 } from 'utils/validation/validators';
@@ -11,6 +11,11 @@ import {
 } from '@fpsak-frontend/utils';
 import ElementWrapper from '@fpsak-frontend/shared-components';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/FaktaBegrunnelseTextField.jsx
+=======
+  minLength, maxLength, requiredIfNotPristine, hasValidText, decodeHtmlEntity,
+} from '@fpsak-frontend/utils';
+import { ElementWrapper } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/FaktaBegrunnelseTextField.jsx
 
 import styles from './faktaBegrunnelseTextField.less';
 

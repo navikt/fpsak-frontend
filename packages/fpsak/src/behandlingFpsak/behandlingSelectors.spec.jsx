@@ -1,12 +1,12 @@
 import { expect } from 'chai';
 
-import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
-import soknadType from 'kodeverk/soknadType';
-import behandlingStatus from 'kodeverk/behandlingStatus';
-import vilkarType from 'kodeverk/vilkarType';
-import behandlingType from 'kodeverk/behandlingType';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   isBehandlingInSync, hasReadOnlyBehandling, getOpenAksjonspunkter, getToTrinnsAksjonspunkter,
   isBehandlingInInnhentSoknadsopplysningerSteg, isKontrollerRevurderingAksjonspunkOpen, hasBehandlingManualPaVent,

@@ -2,19 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
 
-import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
 import {
   dateAfterOrEqual,
   hasValidDate,
   maxLength,
   required,
+  ISO_DATE_FORMAT,
+  isArrayEmpty,
 } from '@fpsak-frontend/utils';
-import { FlexContainer, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
+import {
+  PeriodFieldArray, FlexContainer, FlexColumn, FlexRow,
+} from '@fpsak-frontend/shared-components';
 import { InputField, DatepickerField } from '@fpsak-frontend/form';
 
 import moment from 'moment';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { isEmpty } from '@fpsak-frontend/utils';
 import styles from './renderInntektsgivendeArbeidFieldArray.less';
 
 const maxLength50 = maxLength(50);
@@ -109,7 +110,7 @@ RenderInntektsgivendeArbeidAmbassadeFieldArray.validate = (values) => {
     return arrayErrors;
   }
 
-  if (isEmpty(values)) {
+  if (isArrayEmpty(values)) {
     return null;
   }
 

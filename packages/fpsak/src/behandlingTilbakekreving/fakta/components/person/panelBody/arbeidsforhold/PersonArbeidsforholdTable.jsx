@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingTilbakekreving/fakta/components/person/panelBody/arbeidsforhold/PersonArbeidsforholdTable.jsx
 import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
 import arbeidsforholdPropType from 'behandlingFelles/proptypes/arbeidsforholdPropType';
 import Image from 'sharedComponents/Image';
@@ -11,6 +12,13 @@ import DateLabel from 'sharedComponents/DateLabel';
 import Table from 'sharedComponents/Table';
 import TableRow from 'sharedComponents/TableRow';
 import TableColumn from 'sharedComponents/TableColumn';
+=======
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import arbeidsforholdPropType from 'behandling/proptypes/arbeidsforholdPropType';
+import {
+  Table, TableRow, TableColumn, DateLabel, PeriodLabel, Image,
+} from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/person/panelBody/arbeidsforhold/PersonArbeidsforholdTable.jsx
 
 import erIBrukImageUrl from '@fpsak-frontend/assets/images/stjerne.svg';
 

@@ -6,7 +6,7 @@ import {
 } from '@fpsak-frontend/utils';
 
 import { DatepickerField } from '@fpsak-frontend/form';
-import Modal from '@fpsak-frontend/shared-components';
+import { Modal } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';

@@ -5,12 +5,21 @@ import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/tilleggsopplysninger/TilleggsopplysningerInfoPanel.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { getSoknad } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
 import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
+=======
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { getSoknad } from 'behandling/behandlingSelectors';
+import { behandlingForm } from 'behandling/behandlingForm';
+import withDefaultToggling from 'fakta/withDefaultToggling';
+import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
+import faktaPanelCodes from 'fakta/faktaPanelCodes';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/tilleggsopplysninger/TilleggsopplysningerInfoPanel.jsx
 import TilleggsopplysningerFaktaForm from './TilleggsopplysningerFaktaForm';
 
 /**

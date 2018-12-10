@@ -16,7 +16,7 @@ import PersonInfoPanel from './person/PersonInfoPanel';
   from 'behandling/behandlingSelectors';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import { getOpenInfoPanels } from 'fakta/duck';
-import ElementWrapper from '@fpsak-frontend/shared-components';
+import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import PersonInfoPanel from 'fakta/components/person/PersonInfoPanel';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/tilbakekreving/components/TilbakekrevingFaktaPanel.jsx
 

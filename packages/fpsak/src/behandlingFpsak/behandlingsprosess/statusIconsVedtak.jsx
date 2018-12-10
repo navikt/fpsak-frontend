@@ -6,7 +6,7 @@ import behandleValgtIkonUrl from '@fpsak-frontend/assets/images/vedtak_ikon_valg
 import innvilgetValgtIkonUrl from '@fpsak-frontend/assets/images/vedtak_ikon_ok_valgt.svg';
 import ikkeVurdertIkonUrl from '@fpsak-frontend/assets/images/vedtak_ikon_disable.svg';
 
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 const vedtakImages = {
   imageMap: {

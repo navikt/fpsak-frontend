@@ -4,8 +4,12 @@ import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/klageNy/VedtakKlageForm.jsx
 
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
+=======
+import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vedtak/klageNy/VedtakKlageForm.jsx
 import {
   isBehandlingStatusReadOnly, getBehandlingStatus, getBehandlingsresultat, getBehandlingKlageVurdering,
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/klageNy/VedtakKlageForm.jsx
@@ -15,6 +19,7 @@ import ElementWrapper from 'sharedComponents/ElementWrapper';
 =======
 } from 'behandling/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/klageNy/VedtakKlageForm.jsx
 import ElementWrapper from '@fpsak-frontend/shared-components';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vedtak/klageNy/VedtakKlageForm.jsx
 import behandlingResultatType from 'kodeverk/behandlingResultatType';
@@ -26,11 +31,16 @@ import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import VedtakKlageSubmitPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/klageNy/VedtakKlageSubmitPanel';
 =======
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+=======
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { FadingPanel, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vedtak/klageNy/VedtakKlageForm.jsx
 import VedtakKlageSubmitPanel from 'behandlingsprosess/components/vedtak/klageNy/VedtakKlageSubmitPanel';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vedtak/klageNy/VedtakKlageForm.jsx
 import featureToggle from 'app/featureToggle';
 import { getFeatureToggles } from 'app/duck';
-import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
 
 export const VEDTAK_KLAGE_FORM_NAME = 'VEDTAK_KLAGE_FORM';
 

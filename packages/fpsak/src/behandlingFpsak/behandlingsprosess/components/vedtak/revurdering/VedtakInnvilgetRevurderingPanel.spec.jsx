@@ -2,8 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { VedtakInnvilgetRevurderingPanelImpl, lagKonsekvensForYtelsenTekst } from './VedtakInnvilgetRevurderingPanel';
 
 

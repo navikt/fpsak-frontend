@@ -10,8 +10,9 @@ import Panel from 'nav-frontend-paneler';
 import { Row, Column } from 'nav-frontend-grid';
 import { Fieldset } from 'nav-frontend-skjema';
 import { Undertekst, Undertittel, Normaltekst } from 'nav-frontend-typografi';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import moment from 'moment';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/soknadsfrist/ErSoknadsfristVilkaretOppfyltForm.jsx
 
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/soknadsfrist/ErSoknadsfristVilkaretOppfyltForm.jsx
 import ElementWrapper from 'sharedComponents/ElementWrapper';
@@ -25,12 +26,18 @@ import { RadioGroupField, RadioOption } from 'form/Fields';
 =======
 import ElementWrapper from '@fpsak-frontend/shared-components';
 import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
+=======
+import {
+  ElementWrapper, FadingPanel, VerticalSpacer, DateLabel,
+} from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vilkar/soknadsfrist/ErSoknadsfristVilkaretOppfyltForm.jsx
 import { getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus } from 'behandlingsprosess/behandlingsprosessSelectors';
 import {
   getBehandlingsresultat, getBehandlingVilkar, getSoknad, getFamiliehendelse,
 } from 'behandling/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/soknadsfrist/ErSoknadsfristVilkaretOppfyltForm.jsx
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vilkar/soknadsfrist/ErSoknadsfristVilkaretOppfyltForm.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -41,6 +48,14 @@ import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import soknadType from 'kodeverk/soknadType';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
+=======
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
+import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
+import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vilkar/soknadsfrist/ErSoknadsfristVilkaretOppfyltForm.jsx
 
 import styles from './erSoknadsfristVilkaretOppfyltForm.less';
 

@@ -10,7 +10,7 @@ import { Undertittel, Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import behandlingType from 'kodeverk/behandlingType';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 <<<<<<< HEAD
 import { getBehandlingType } from 'behandlingFpsak/behandlingSelectors';
@@ -25,12 +25,12 @@ import { ariaCheck, required } from '@fpsak-frontend/utils';
 import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 >>>>>>> NOJIRA moduler
 import SoknadData from 'papirsoknad/SoknadData';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import familieHendelseType from 'kodeverk/familieHendelseType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import styles from './soknadTypePickerForm.less';
 

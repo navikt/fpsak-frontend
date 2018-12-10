@@ -20,8 +20,12 @@ import {
   BorderBox, Table, TableRow, TableColumn,
 } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr } from '@fpsak-frontend/utils';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/beregningsresultatPanel/BeregningsresultatTable.jsx
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/beregningsresultatPanel/BeregningsresultatTable.jsx
 import periodeAarsak from 'kodeverk/periodeAarsak';
+=======
+import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/beregningsresultatPanel/BeregningsresultatTable.jsx
 
 import styles from './beregningsresultatTable.less';
 

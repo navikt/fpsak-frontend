@@ -9,12 +9,11 @@ import { Fieldset } from 'nav-frontend-skjema';
 import { RadioGroupField, RadioOption, NavFieldGroup } from '@fpsak-frontend/form';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
 import SoknadData from 'papirsoknad/SoknadData';
-import { BorderBox } from '@fpsak-frontend/shared-components';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import familieHendelseType from 'kodeverk/familieHendelseType';
+import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 import UtenlandsOppholdField from './UtenlandsOppholdField';
 
 import styles from './oppholdINorgePanel.less';

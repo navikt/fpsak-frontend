@@ -12,10 +12,10 @@ import { Modal, Image, VerticalSpacer } from '@fpsak-frontend/shared-components'
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { CheckboxField, SelectField } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import bType from 'kodeverk/behandlingType';
-import behandlingArsakType from 'kodeverk/behandlingArsakType';
-import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
 
 import styles from './createNewBehandlingModal.less';
 

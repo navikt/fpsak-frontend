@@ -11,9 +11,14 @@ import ElementWrapper from 'sharedComponents/ElementWrapper';
 import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinnslagDelPropType';
 =======
 import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
+<<<<<<< HEAD
 >>>>>>> NOJIRA moduler
 import historikkEndretFeltTypeCodes from 'kodeverk/historikkEndretFeltTypeCodes';
 import historikkEndretFeltTypeHeadingCodes from 'kodeverk/historikkEndretFeltTypeHeadingCodes';
+=======
+import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeCodes';
+import historikkEndretFeltTypeHeadingCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeHeadingCodes';
+>>>>>>> NOJIRA nye pakker
 import {
   findEndretFeltNavn,
   findEndretFeltVerdi,

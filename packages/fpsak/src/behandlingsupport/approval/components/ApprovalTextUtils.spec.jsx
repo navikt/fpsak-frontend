@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import getAksjonspunktText from './ApprovalTextUtils';
 
 const lagAksjonspunkt = (

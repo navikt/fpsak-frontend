@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/VilkarPanels.jsx
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/VilkarPanels.jsx
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { getBehandlingVilkarCodes } from 'behandlingFpsak/behandlingSelectors';
 =======
 import ElementWrapper from '@fpsak-frontend/shared-components';
+=======
+import { ElementWrapper } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vilkar/VilkarPanels.jsx
 import { getBehandlingVilkarCodes } from 'behandling/behandlingSelectors';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vilkar/VilkarPanels.jsx
 import ErOmsorgVilkaarOppfyltForm from './omsorg/ErOmsorgVilkaarOppfyltForm';

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { FieldArray } from 'redux-form';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column } from 'nav-frontend-grid';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/uttak/perioder/InnleggelsePeriode.jsx
 import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
 import FlexRow from 'sharedComponents/flexGrid/FlexRow';
 import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
@@ -15,6 +16,13 @@ import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncError
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/uttak/perioder/InnleggelsePeriode.jsx
 import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
+=======
+import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandling/behandlingForm';
+import {
+  FlexContainer, FlexRow, FlexColumn, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
+import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/uttak/perioder/InnleggelsePeriode.jsx
 import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import {
   required, maxLength, minLength, hasValidPeriod, hasValidText,

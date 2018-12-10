@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { BorderBox } from '@fpsak-frontend/shared-components';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { connect } from 'react-redux';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdInntektOgPeriodeForm.jsx
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdInntektOgPeriodeForm.jsx
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { FlexColumn, FlexContainer, FlexRow } from 'sharedComponents/flexGrid';
@@ -13,6 +13,11 @@ import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBe
 =======
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
+=======
+import {
+  BorderBox, VerticalSpacer, FlexColumn, FlexContainer, FlexRow,
+} from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdInntektOgPeriodeForm.jsx
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdInntektOgPeriodeForm.jsx
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';

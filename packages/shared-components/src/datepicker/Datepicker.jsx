@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Input } from 'nav-frontend-skjema';
-
-import ElementWrapper from '../ElementWrapper';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import ElementWrapper from '../ElementWrapper';
 import CalendarOverlay from './CalendarOverlay';
 import CalendarToggleButton from './CalendarToggleButton';
 

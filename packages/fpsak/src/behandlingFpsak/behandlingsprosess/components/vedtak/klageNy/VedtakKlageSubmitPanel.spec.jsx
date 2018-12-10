@@ -2,9 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
-import klageVurdering from 'kodeverk/klageVurdering';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { VedtakKlageSubmitPanelImpl, isMedholdIKlage } from './VedtakKlageSubmitPanel';
 
 describe('<VedtakKlageSubmitPanel>', () => {

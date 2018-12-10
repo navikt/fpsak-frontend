@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/FaktaSubmitButton.jsx
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/FaktaSubmitButton.jsx
 import { isRequiredMessage } from 'utils/validation/messages';
 import { isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting } from 'behandlingFpsak/behandlingForm';
 import ElementWrapper from 'sharedComponents/ElementWrapper';
@@ -15,6 +16,11 @@ import { isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormS
 import ElementWrapper from '@fpsak-frontend/shared-components';
 import { ariaCheck } from '@fpsak-frontend/utils';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/FaktaSubmitButton.jsx
+=======
+import { isRequiredMessage, ariaCheck } from '@fpsak-frontend/utils';
+import { isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting } from 'behandling/behandlingForm';
+import { ElementWrapper } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/FaktaSubmitButton.jsx
 
 const isDisabled = (isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields, hasOpenAksjonspunkter) => {
   if (!isSubmittable || isSubmitting) {

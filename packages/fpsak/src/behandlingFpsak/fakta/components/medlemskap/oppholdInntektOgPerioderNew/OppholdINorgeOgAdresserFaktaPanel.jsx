@@ -8,6 +8,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdINorgeOgAdresserFaktaPanel.jsx
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdINorgeOgAdresserFaktaPanel.jsx
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
@@ -15,16 +16,22 @@ import { RadioGroupField, RadioOption } from 'form/Fields';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
 =======
 import ElementWrapper from '@fpsak-frontend/shared-components';
+=======
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdINorgeOgAdresserFaktaPanel.jsx
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdINorgeOgAdresserFaktaPanel.jsx
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdINorgeOgAdresserFaktaPanel.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+=======
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdINorgeOgAdresserFaktaPanel.jsx
 import { required } from '@fpsak-frontend/utils';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Image } from '@fpsak-frontend/shared-components';
-import PeriodLabel from '@fpsak-frontend/shared-components/PeriodLabel';
+import {
+  ElementWrapper, VerticalSpacer, Image, PeriodLabel,
+} from '@fpsak-frontend/shared-components';
 import checkImage from '@fpsak-frontend/assets/images/check.svg';
 import avslaattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import BostedSokerView from 'behandlingFpsak/fakta/components/BostedSokerView';

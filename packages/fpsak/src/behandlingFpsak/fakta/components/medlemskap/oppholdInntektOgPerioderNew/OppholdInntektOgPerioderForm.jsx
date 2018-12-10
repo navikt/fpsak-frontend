@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 import {
   change as reduxFormChange,
   reset as reduxFormReset,
   formPropTypes,
 } from 'redux-form';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import {
+  AksjonspunktHelpText, VerticalSpacer, ElementWrapper,
+} from '@fpsak-frontend/shared-components';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   getBehandlingMedlemNew,
   getSoknad,
@@ -26,6 +28,7 @@ import ElementWrapper from 'sharedComponents/ElementWrapper';
   from 'behandling/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdInntektOgPerioderForm.jsx
 import ElementWrapper from '@fpsak-frontend/shared-components';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdInntektOgPerioderForm.jsx
 import { getFagsakPerson } from 'fagsak/fagsakSelectors';
@@ -34,6 +37,13 @@ import { bindActionCreators } from 'redux';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
 import { createSelector } from 'reselect';
 import guid from '@fpsak-frontend/utils';
+=======
+import { getFagsakPerson } from 'fagsak/fagsakSelectors';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { bindActionCreators } from 'redux';
+import { getSelectedBehandlingId } from 'behandling/duck';
+import { guid } from '@fpsak-frontend/utils';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdInntektOgPerioderForm.jsx
 import OppholdInntektOgPeriodeForm from './OppholdInntektOgPeriodeForm';
 import MedlemskapEndringerTabell from './MedlemskapEndringerTabell';
 

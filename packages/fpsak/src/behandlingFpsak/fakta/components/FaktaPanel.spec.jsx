@@ -1,12 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import vilkarType from 'kodeverk/vilkarType';
-import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import MedlemskapInfoPanel from './medlemskap/MedlemskapInfoPanel';
 import TilleggsopplysningerInfoPanel from './tilleggsopplysninger/TilleggsopplysningerInfoPanel';
 import OmsorgInfoPanel from './omsorg/OmsorgInfoPanel';

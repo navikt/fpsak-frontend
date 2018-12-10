@@ -1,9 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/tilstøtendeYtelse/TilstotendeYtelseIKombinasjon.jsx
 import ElementWrapper from '@fpsak-frontend/shared-components';
 import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
 import { getFaktaOmBeregning } from 'behandlingFpsak/behandlingSelectors';
+=======
+import { ElementWrapper } from '@fpsak-frontend/shared-components';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/tilstøtendeYtelse/TilstotendeYtelseIKombinasjon.jsx
 import InntektstabellPanel from '../InntektstabellPanel';
 import NyIArbeidslivetSNForm from '../nyIArbeidslivet/NyIArbeidslivetSNForm';
 import TilstotendeYtelseForm, { harKunTilstotendeYtelse } from './TilstøtendeYtelseForm';

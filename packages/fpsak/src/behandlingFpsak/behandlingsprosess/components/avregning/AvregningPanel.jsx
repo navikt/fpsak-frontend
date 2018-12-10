@@ -35,8 +35,8 @@ import {
   hasValidText,
   required,
 } from '@fpsak-frontend/utils';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import avregningCodes from 'kodeverk/avregningCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
 import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';

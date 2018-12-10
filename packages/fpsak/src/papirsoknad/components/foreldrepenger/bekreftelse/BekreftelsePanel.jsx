@@ -4,10 +4,8 @@ import { injectIntl, intlShape } from 'react-intl';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
 import { required } from '@fpsak-frontend/utils';
-import { BorderBox } from '@fpsak-frontend/shared-components';
+import { ElementWrapper, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Undertittel, Undertekst } from 'nav-frontend-typografi';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import ElementWrapper from '@fpsak-frontend/shared-components';
 
 /**
  *

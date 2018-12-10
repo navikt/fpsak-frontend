@@ -8,12 +8,16 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/components/fodselSammenligning/FodselSammenligningRevurderingPanel.jsx
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/components/fodselSammenligning/FodselSammenligningRevurderingPanel.jsx
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { getBehandlingVedtaksDatoSomSvangerskapsuke } from 'behandlingFpsak/behandlingSelectors';
 import { getSoknadFraOriginalBehandling, getFamiliehendelseFraOriginalBehandling } from 'behandlingFpsak/selectors/originalBehandlingSelectors';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
 =======
 import ElementWrapper from '@fpsak-frontend/shared-components';
+=======
+import { ElementWrapper } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandling/components/fodselSammenligning/FodselSammenligningRevurderingPanel.jsx
 import { getBehandlingVedtaksDatoSomSvangerskapsuke } from 'behandling/behandlingSelectors';
 import { getSoknadFraOriginalBehandling, getFamiliehendelseFraOriginalBehandling } from 'behandling/selectors/originalBehandlingSelectors';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';

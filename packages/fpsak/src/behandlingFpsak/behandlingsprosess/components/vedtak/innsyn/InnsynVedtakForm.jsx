@@ -8,10 +8,13 @@ import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/innsyn/InnsynVedtakForm.jsx
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/innsyn/InnsynVedtakForm.jsx
 import FadingPanel from 'sharedComponents/FadingPanel';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 =======
 import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
+=======
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vedtak/innsyn/InnsynVedtakForm.jsx
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vedtak/innsyn/InnsynVedtakForm.jsx
 import {
@@ -22,8 +25,10 @@ import {
   getBehandlingSprak,
 } from 'behandlingFpsak/behandlingSelectors';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import {
+  FadingPanel, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/innsyn/InnsynVedtakForm.jsx
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
@@ -32,14 +37,16 @@ import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
 =======
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
 import { TextAreaField } from '@fpsak-frontend/form';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/innsyn/InnsynVedtakForm.jsx
 import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vedtak/innsyn/InnsynVedtakForm.jsx
+=======
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vedtak/innsyn/InnsynVedtakForm.jsx
 import {
-  hasValidText, maxLength, minLength, requiredIfNotPristine,
+  hasValidText, maxLength, minLength, requiredIfNotPristine, getLanguageCodeFromSprakkode, decodeHtmlEntity,
 } from '@fpsak-frontend/utils';
 import { getFilteredReceivedDocuments } from 'behandlingsupport/behandlingsupportSelectors';
-import innsynResultatType from 'kodeverk/innsynResultatType';
-import decodeHtmlEntity from '@fpsak-frontend/utils';
+import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 import DocumentListVedtakInnsyn from './DocumentListVedtakInnsyn';
 
 

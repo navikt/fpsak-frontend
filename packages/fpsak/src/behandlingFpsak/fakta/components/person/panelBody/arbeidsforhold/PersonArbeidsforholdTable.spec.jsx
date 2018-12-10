@@ -3,12 +3,9 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import { Image } from '@fpsak-frontend/shared-components';
-import DateLabel from '@fpsak-frontend/shared-components';
-import PeriodLabel from '@fpsak-frontend/shared-components/PeriodLabel';
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
+import {
+  Table, TableRow, TableColumn, Image, DateLabel, PeriodLabel,
+} from '@fpsak-frontend/shared-components';
 import PersonArbeidsforholdTable from './PersonArbeidsforholdTable';
 
 describe('<PersonArbeidsforholdTable>', () => {

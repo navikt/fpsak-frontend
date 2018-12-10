@@ -16,23 +16,26 @@ import Image from 'sharedComponents/Image';
 } from '@fpsak-frontend/form';
 import { getAksjonspunkter, getFaktaOmBeregning } from 'behandling/behandlingSelectors';
 import { isBehandlingFormDirty } from 'behandling/behandlingForm';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/tilstøtendeYtelse/RenderBruttoBGFordelingFieldArray.jsx
 import { isEmpty } from '@fpsak-frontend/utils';
 import { Image } from '@fpsak-frontend/shared-components';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/tilstøtendeYtelse/RenderBruttoBGFordelingFieldArray.jsx
+=======
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/tilstøtendeYtelse/RenderBruttoBGFordelingFieldArray.jsx
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import { getKodeverk } from 'kodeverk/duck';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import inntektskategorier, { isSelvstendigNæringsdrivende } from 'kodeverk/inntektskategorier';
-import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from '@fpsak-frontend/utils';
-import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-frontend/kodeverk/src/inntektskategorier';
+import {
+  isArrayEmpty, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, createVisningsnavnForAktivitet,
+} from '@fpsak-frontend/utils';
 
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  Table, TableRow, TableColumn, VerticalSpacer, Image,
+} from '@fpsak-frontend/shared-components';
 import styles from './renderBruttoBGFordelingFieldArray.less';
 import { arbeidsforholdProptype, getUniqueListOfArbeidsforhold } from '../../ArbeidsforholdHelper';
 import { validateAndelFields, validateUlikeAndeler } from '../ValidateAndelerUtils';
@@ -385,7 +388,7 @@ RenderBruttoBGFordelingFieldArray.validate = (values) => {
   if (arrayErrors.some(errors => errors !== null)) {
     return arrayErrors;
   }
-  if (isEmpty(values)) {
+  if (isArrayEmpty(values)) {
     return null;
   }
   const ulikeAndelerError = validateUlikeAndeler(values);

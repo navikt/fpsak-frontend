@@ -3,11 +3,19 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/BehandlingsprosessIndex.spec.jsx
 import BehandlingType from 'kodeverk/behandlingType';
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import aksjonspunktType from 'kodeverk/aksjonspunktType';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import BehandlingspunktInfoPanel from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktInfoPanel';
+=======
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
+import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import BehandlingspunktInfoPanel from 'behandlingsprosess/components/BehandlingspunktInfoPanel';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/BehandlingsprosessIndex.spec.jsx
 import { BehandlingsprosessIndex } from './BehandlingsprosessIndex';
 
 describe('<BehandlingsprosessIndex>', () => {

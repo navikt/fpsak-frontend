@@ -4,8 +4,11 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { required } from '@fpsak-frontend/utils';
+import {
+  required, createVisningsnavnForAktivitet, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, DDMMYYYY_DATE_FORMAT,
+} from '@fpsak-frontend/utils';
 import { Row, Column } from 'nav-frontend-grid';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/besteberegningFodendeKvinne/FastsettBBFodendeKvinneForm.jsx
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/besteberegningFodendeKvinne/FastsettBBFodendeKvinneForm.jsx
 import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
@@ -30,6 +33,17 @@ import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from '
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import { getKodeverk } from 'kodeverk/duck';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
+=======
+import { InputField, SelectField } from '@fpsak-frontend/form';
+import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
+import {
+  VerticalSpacer, Table, TableRow, TableColumn,
+} from '@fpsak-frontend/shared-components';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { behandlingFormValueSelector } from 'behandling/behandlingForm';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/besteberegningFodendeKvinne/FastsettBBFodendeKvinneForm.jsx
 
 import styles from './fastsettBBFodendeKvinneForm.less';
 

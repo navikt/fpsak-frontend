@@ -7,9 +7,14 @@ import { getBehandlingStatus } from 'behandlingFpsak/behandlingSelectors';
 =======
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getBehandlingStatus } from 'behandling/behandlingSelectors';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/uttak/UttakPeriodeInnhold.jsx
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/uttak/UttakPeriodeInnhold.jsx
 import utsettelseArsakCodes from 'kodeverk/utsettelseArsakCodes';
 import overforingArsakCodes from 'kodeverk/overforingArsakCodes';
+=======
+import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
+import overforingArsakCodes from '@fpsak-frontend/kodeverk/src/overforingArsakCodes';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/uttak/UttakPeriodeInnhold.jsx
 import FerieOgArbeidsPeriode from './perioder/FerieOgArbeidsPeriode';
 import SykdomOgSkadePeriode from './perioder/SykdomOgSkadePeriode';
 import InnleggelsePeriode from './perioder/InnleggelsePeriode';

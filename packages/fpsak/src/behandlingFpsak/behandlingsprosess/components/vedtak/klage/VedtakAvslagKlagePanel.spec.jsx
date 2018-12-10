@@ -1,10 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
-import klageVurdering from 'kodeverk/klageVurdering';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import behandlingStatus from 'kodeverk/behandlingStatus';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { VedtakAvslagKlagePanelImpl, getAvslagArsak } from './VedtakAvslagKlagePanel';
 
 describe('<VedtakAvslagKlagePanel>', () => {

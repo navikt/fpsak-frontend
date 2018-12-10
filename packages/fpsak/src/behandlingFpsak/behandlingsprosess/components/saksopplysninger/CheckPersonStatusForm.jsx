@@ -7,8 +7,8 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
-import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/saksopplysninger/CheckPersonStatusForm.jsx
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/saksopplysninger/CheckPersonStatusForm.jsx
 import FadingPanel from 'sharedComponents/FadingPanel';
 import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
@@ -16,10 +16,14 @@ import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behan
 =======
 import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+=======
+import { required, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/saksopplysninger/CheckPersonStatusForm.jsx
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/saksopplysninger/CheckPersonStatusForm.jsx
 import {
   getPersonopplysning, getBehandlingRevurderingAvFortsattMedlemskapFom, getBehandlingHenlagt,
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/saksopplysninger/CheckPersonStatusForm.jsx
 } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import { getKodeverk } from 'kodeverk/duck';
@@ -36,6 +40,19 @@ import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingspr
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
 =======
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
+=======
+} from 'behandling/behandlingSelectors';
+import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import {
+  ArrowBox, FadingPanel, VerticalSpacer, AksjonspunktHelpText,
+} from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/saksopplysninger/CheckPersonStatusForm.jsx
 import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/saksopplysninger/CheckPersonStatusForm.jsx

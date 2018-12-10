@@ -1,9 +1,9 @@
 import { expect } from 'chai';
-import fagsakStatusCode from 'kodeverk/fagsakStatus';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import behandlingStatusCode from 'kodeverk/behandlingStatus';
-import BehandlingType from 'kodeverk/behandlingType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import fagsakStatusCode from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   byttBehandlendeEnhetAccess,
   gjenopptaBehandlingAccess,

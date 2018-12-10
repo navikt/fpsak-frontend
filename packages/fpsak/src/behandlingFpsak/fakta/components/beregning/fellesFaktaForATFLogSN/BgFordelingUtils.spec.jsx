@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import {
   setArbeidsforholdInitialValues,
   setGenerellAndelsinfo,

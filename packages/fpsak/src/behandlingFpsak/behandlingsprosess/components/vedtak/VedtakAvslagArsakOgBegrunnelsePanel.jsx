@@ -3,17 +3,13 @@ import PropTypes from 'prop-types';
 import { intlShape, FormattedMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
-
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import decodeHtmlEntity from '@fpsak-frontend/utils';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import behandlingStatus from 'kodeverk/behandlingStatus';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
-  minLength, maxLength, requiredIfNotPristine, hasValidText,
+  minLength, maxLength, requiredIfNotPristine, hasValidText, decodeHtmlEntity, getLanguageCodeFromSprakkode,
 } from '@fpsak-frontend/utils';
-import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
-import ElementWrapper from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
 import { hasIkkeOppfyltSoknadsfristvilkar } from './VedtakHelper';
 
 import styles from './vedtakAvslagPanel.less';

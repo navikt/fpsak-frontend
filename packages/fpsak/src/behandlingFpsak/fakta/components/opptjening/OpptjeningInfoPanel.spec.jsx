@@ -2,10 +2,17 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/opptjening/OpptjeningInfoPanel.spec.jsx
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
 import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
+=======
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import faktaPanelCodes from 'fakta/faktaPanelCodes';
+import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/opptjening/OpptjeningInfoPanel.spec.jsx
 import { OpptjeningInfoPanelImpl, buildInitialValues } from './OpptjeningInfoPanel';
 import OpptjeningFaktaForm from './OpptjeningFaktaForm';
 

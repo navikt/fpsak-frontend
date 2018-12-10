@@ -1,11 +1,19 @@
 import { expect } from 'chai';
 
 import featureToggle from 'app/featureToggle';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/definition/engangsstonadBpDefinition.spec.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
 import behandlingType from 'kodeverk/behandlingType';
 import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
+=======
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/definition/engangsstonadBpDefinition.spec.jsx
 import createEngangsstonadBpProps from './engangsstonadBpDefinition';
 
 describe('Definisjon av behandlingspunkter - Engangsstønad', () => {

@@ -2,12 +2,18 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+<<<<<<< HEAD
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+=======
+import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+>>>>>>> NOJIRA nye pakker
 import ToTrinnsForm from 'behandlingsupport/approval/components/ToTrinnsForm';
 import ToTrinnsFormReadOnly from 'behandlingsupport/approval/components/ToTrinnsFormReadOnly';
-import behandlingStatus from 'kodeverk/behandlingStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';
 import { ApprovalIndexImpl, mapPropsToContext } from './ApprovalIndex';
 
