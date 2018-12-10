@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
 
-import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
 import aksjonspunktCodes, {
   isInnhentSaksopplysningerAksjonspunkt,
@@ -9,7 +8,7 @@ import aksjonspunktCodes, {
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import behandlingStatus from 'kodeverk/behandlingStatus';
 import behandlingType from 'kodeverk/behandlingType';
-import { getSelectedSaksnummer, isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
+import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
 import fpsakBehandlingApi from './data/fpsakBehandlingApi';
 import isFieldEdited from './editedFields';
@@ -22,12 +21,6 @@ export const isBehandlingInSync = createSelector(
   [getSelectedBehandlingId, fpsakBehandlingApi.BEHANDLING.getRestApiData(), fpsakBehandlingApi.ORIGINAL_BEHANDLING.getRestApiData()],
   (behandlingId, behandling = {}, originalBehandling = {}) => behandlingId !== undefined
   && behandlingId === behandling.id && hasFetchedOriginalBehandlingIfItExists(behandling, originalBehandling.id),
-);
-
-export const getSelectedBehandlingIdentifier = createSelector(
-  [getSelectedBehandlingId, getSelectedSaksnummer],
-  (behandlingId, saksnummer) => (behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined
-  ),
 );
 
 // NB! Kun intern bruk

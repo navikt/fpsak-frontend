@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 
 import LoadingPanel from 'sharedComponents/LoadingPanel';
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import { getSelectedBehandlingIdentifier, isBehandlingInSync } from './tilbakekrevingBehandlingSelectors';
-import { fetchBehandling as fetchBehandlingActionCreator } from './duck';
+import { isBehandlingInSync } from './tilbakekrevingBehandlingSelectors';
+import { fetchBehandling as fetchBehandlingActionCreator, getBehandlingIdentifier } from './duck';
 
 export class BehandlingResolver extends Component {
   constructor(props) {
@@ -42,7 +42,7 @@ BehandlingResolver.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  behandlingIdentifier: getSelectedBehandlingIdentifier(state),
+  behandlingIdentifier: getBehandlingIdentifier(state),
   isInSync: isBehandlingInSync(state),
 });
 

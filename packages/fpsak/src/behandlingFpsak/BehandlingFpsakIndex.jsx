@@ -13,10 +13,10 @@ import BehandlingGrid from 'behandlingFelles/components/BehandlingGrid';
 import BehandlingResolver from './BehandlingResolver';
 import {
   getBehandlingVersjon, getBehandlingOnHoldDate, getBehandlingVenteArsakKode, getBehandlingIsOnHold,
-  getSelectedBehandlingIdentifier, hasBehandlingManualPaVent,
+  hasBehandlingManualPaVent,
 } from './behandlingSelectors';
 import {
-  setHasShownBehandlingPaVent, setSelectedBehandlingId, updateOnHold,
+  setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier,
   getHasShownBehandlingPaVent,
 } from './duck';
 import { getBehandlingFormPrefix } from './behandlingForm';
@@ -37,11 +37,11 @@ export class BehandlingFpsakIndex extends Component {
     this.cleanUp = this.cleanUp.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const {
-      setSelectedBehandlingId: setBehandlingId, behandlingId,
+      setBehandlingInfo: setInfo, saksnummer, behandlingId,
     } = this.props;
-    setBehandlingId(behandlingId);
+    setInfo({ behandlingId, fagsakSaksnummer: saksnummer });
   }
 
   componentDidUpdate(prevProps) {
@@ -83,7 +83,7 @@ export class BehandlingFpsakIndex extends Component {
       behandlingerVersjonMappedById,
     } = this.props;
     return (
-      <BehandlingResolver key={behandlingId} behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
+      <BehandlingResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
         <BehandlingGrid
           behandlingsprosessContent={behandlingsprosessEnabled && <BehandlingsprosessIndex />}
           faktaContent={faktaEnabled && <FaktaIndex />}
@@ -108,6 +108,7 @@ export class BehandlingFpsakIndex extends Component {
 }
 
 BehandlingFpsakIndex.propTypes = {
+  saksnummer: PropTypes.number.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number,
   fristBehandlingPaaVent: PropTypes.string,
@@ -122,7 +123,7 @@ BehandlingFpsakIndex.propTypes = {
   destroyReduxForms: PropTypes.func.isRequired,
   hasSubmittedPaVentForm: PropTypes.bool.isRequired,
   hasManualPaVent: PropTypes.bool.isRequired,
-  setSelectedBehandlingId: PropTypes.func.isRequired,
+  setBehandlingInfo: PropTypes.func.isRequired,
   behandlingerVersjonMappedById: PropTypes.shape().isRequired,
 };
 
@@ -134,7 +135,7 @@ BehandlingFpsakIndex.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  behandlingIdentifier: getSelectedBehandlingIdentifier(state),
+  behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: getBehandlingVersjon(state),
   fristBehandlingPaaVent: getBehandlingOnHoldDate(state),
   behandlingPaaVent: getBehandlingIsOnHold(state),
@@ -150,7 +151,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   setHasShownBehandlingPaVent,
   updateOnHold,
-  setSelectedBehandlingId,
+  setBehandlingInfo,
   destroyReduxForms: destroy,
 }, dispatch);
 

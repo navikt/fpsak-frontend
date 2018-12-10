@@ -8,8 +8,11 @@ import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import { replaceNorwegianCharacters } from 'utils/languageUtils';
 import {
-  getAksjonspunkter, getSelectedBehandlingIdentifier, getBehandlingVersjon, getBehandlingType,
+  getAksjonspunkter, getBehandlingVersjon, getBehandlingType,
 } from 'behandlingFpsak/behandlingSelectors';
+import {
+  getBehandlingIdentifier,
+} from 'behandlingFpsak/duck';
 import BehandlingsprosessPanel from 'behandlingFpsak/behandlingsprosess/components/BehandlingsprosessPanel';
 import IverksetterVedtakStatusModal from 'behandlingFpsak/behandlingsprosess/components/vedtak/IverksetterVedtakStatusModal';
 import FatterVedtakStatusModal from 'behandlingFpsak/behandlingsprosess/components/vedtak/FatterVedtakStatusModal';
@@ -262,7 +265,7 @@ BehandlingsprosessIndex.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  behandlingIdentifier: getSelectedBehandlingIdentifier(state),
+  behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: getBehandlingVersjon(state),
   aksjonspunkter: getAksjonspunkter(state),
   behandlingspunkter: getBehandlingspunkter(state),

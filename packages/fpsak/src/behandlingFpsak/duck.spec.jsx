@@ -6,7 +6,7 @@ import { expect } from 'chai';
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import fpsakBehandlingApi from './data/fpsakBehandlingApi';
 import {
-  behandlingReducer, setSelectedBehandlingId, setHasShownBehandlingPaVent, updateBehandling,
+  fpsakBehandlingReducer, setBehandlingInfo, setHasShownBehandlingPaVent, updateBehandling, getBehandlingIdentifier,
 } from './duck';
 
 const middlewares = [thunk];
@@ -28,21 +28,27 @@ describe('Behandling-reducer', () => {
   });
 
   it('skal returnere initial state', () => {
-    expect(behandlingReducer(undefined, {})).to.eql({
+    expect(fpsakBehandlingReducer(undefined, {})).to.eql({
       behandlingId: undefined,
+      fagsakSaksnummer: undefined,
       hasShownBehandlingPaVent: false,
     });
   });
 
   it('skal markere i state at behandling er valgt', () => {
     const store = mockStore();
+    const behandlingInfo = {
+      behandlingId: 1,
+      fagsakSaksnummer: 2,
+    };
 
-    store.dispatch(setSelectedBehandlingId(1));
+    store.dispatch(setBehandlingInfo(behandlingInfo));
 
     expect(store.getActions()).to.have.length(1);
 
-    expect(behandlingReducer(undefined, store.getActions()[0])).to.eql({
+    expect(fpsakBehandlingReducer(undefined, store.getActions()[0])).to.eql({
       behandlingId: 1,
+      fagsakSaksnummer: 2,
       hasShownBehandlingPaVent: false,
     });
   });
@@ -54,8 +60,9 @@ describe('Behandling-reducer', () => {
 
     expect(store.getActions()).to.have.length(1);
 
-    expect(behandlingReducer(undefined, store.getActions()[0])).to.eql({
+    expect(fpsakBehandlingReducer(undefined, store.getActions()[0])).to.eql({
       behandlingId: undefined,
+      fagsakSaksnummer: undefined,
       hasShownBehandlingPaVent: true,
     });
   });
@@ -120,5 +127,26 @@ describe('Behandling-reducer', () => {
         expect(origBehandlingrequestFinishedAction.type).to.contain('fpsak/api/behandlinger FINISHED');
         expect(origBehandlingrequestFinishedAction.payload).is.eql(forstegangsbehandling);
       });
+  });
+
+  describe('getBehandlingIdentifier', () => {
+    it('skal hente behandlingIdentifier når behandling er valgt', () => {
+      const saksnummer = 2;
+      const behandlingId = 1;
+
+      const behandlingIdentifier = getBehandlingIdentifier.resultFunc(behandlingId, saksnummer);
+
+      expect(behandlingIdentifier.behandlingId).is.eql(behandlingId);
+      expect(behandlingIdentifier.saksnummer).is.eql(saksnummer);
+    });
+
+    it('skal ikke hente behandlingIdentifier når behandling ikke er valgt', () => {
+      const saksnummer = 2;
+      const behandlingId = undefined;
+
+      const behandlingIdentifier = getBehandlingIdentifier.resultFunc(behandlingId, saksnummer);
+
+      expect(behandlingIdentifier).is.undefined;
+    });
   });
 });

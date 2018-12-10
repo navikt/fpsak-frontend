@@ -10,7 +10,7 @@ import FaktaIndex from './fakta/FaktaIndex';
 import BehandlingResolver from './BehandlingResolver';
 import { getBehandlingFormPrefix } from './behandlingForm';
 import {
-  setSelectedFagsakSaksnummer, setSelectedBehandlingId,
+  setBehandlingInfo, getBehandlingIdentifier, resetTilbakekrevingContext,
 } from './duck';
 
 /**
@@ -28,12 +28,11 @@ export class BehandlingIndex extends Component {
     this.cleanUp = this.cleanUp.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const {
-      setSelectedFagsakSaksnummer: setFagsakSaksnummer, setSelectedBehandlingId: setBehandlingId, fagsakSaksnummer, behandlingId,
+      setBehandlingInfo: setInfo, saksnummer, behandlingId,
     } = this.props;
-    setBehandlingId(behandlingId);
-    setFagsakSaksnummer(fagsakSaksnummer);
+    setInfo({ behandlingId, fagsakSaksnummer: saksnummer });
   }
 
   componentDidUpdate(prevProps) {
@@ -53,7 +52,8 @@ export class BehandlingIndex extends Component {
   }
 
   cleanUp(behandlingId, behandlingVersjon) {
-    const { destroyReduxForms: destroyForms } = this.props;
+    const { destroyReduxForms: destroyForms, resetTilbakekrevingContext: resetContext } = this.props;
+    resetContext();
     const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
     setTimeout(() => destroyForms(behandlingFormPrefix), 1000); // Delay destruction to after potentially expensive transition
   }
@@ -62,7 +62,12 @@ export class BehandlingIndex extends Component {
     const {
       updateFagsakInfo,
       behandlingerVersjonMappedById,
+      behandlingIdentifier,
     } = this.props;
+
+    if (!behandlingIdentifier) {
+      return null;
+    }
 
     return (
       <BehandlingResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
@@ -76,22 +81,28 @@ export class BehandlingIndex extends Component {
 }
 
 BehandlingIndex.propTypes = {
-  fagsakSaksnummer: PropTypes.number.isRequired,
+  saksnummer: PropTypes.number.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   destroyReduxForms: PropTypes.func.isRequired,
-  setSelectedBehandlingId: PropTypes.func.isRequired,
-  setSelectedFagsakSaksnummer: PropTypes.func.isRequired,
+  setBehandlingInfo: PropTypes.func.isRequired,
   updateFagsakInfo: PropTypes.func.isRequired,
+  resetTilbakekrevingContext: PropTypes.func.isRequired,
   behandlingerVersjonMappedById: PropTypes.shape().isRequired,
+  behandlingIdentifier: PropTypes.shape(),
 };
 
-const mapStateToProps = () => ({
+BehandlingIndex.defaultProps = {
+  behandlingIdentifier: undefined,
+};
+
+const mapStateToProps = state => ({
+  behandlingIdentifier: getBehandlingIdentifier(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setSelectedBehandlingId,
-  setSelectedFagsakSaksnummer,
+  setBehandlingInfo,
+  resetTilbakekrevingContext,
   destroyReduxForms: destroy,
 }, dispatch);
 

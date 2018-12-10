@@ -17,9 +17,12 @@ import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import SoknadData from 'papirsoknad/SoknadData';
 import requireProps from 'app/data/requireProps';
 import {
-  getSelectedBehandlingIdentifier, getBehandlingVersjon, getBehandlingIsOnHold, getAksjonspunkter,
+  getBehandlingVersjon, getBehandlingIsOnHold, getAksjonspunkter,
 }
   from 'behandlingFpsak/behandlingSelectors';
+import {
+  getBehandlingIdentifier,
+} from 'behandlingFpsak/duck';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import LoadingPanel from 'sharedComponents/LoadingPanel';
 import { getRettigheter } from 'navAnsatt/duck';
@@ -140,7 +143,7 @@ const mapStateToProps = state => ({
   || hasAccessError(fpsakApi.SAVE_AKSJONSPUNKT.getRestApiError()(state)),
   soknadData: getSoknadData(state),
   aksjonspunkter: getAksjonspunkter(state),
-  behandlingIdentifier: getSelectedBehandlingIdentifier(state),
+  behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: getBehandlingVersjon(state),
   behandlingPaaVent: getBehandlingIsOnHold(state),
   ...getRettigheter(state),

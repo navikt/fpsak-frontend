@@ -20,8 +20,9 @@ import {
   resetBehandlingspunkter, getSelectedBehandlingspunktNavn,
 } from './duck';
 import {
-  getAksjonspunkter, getSelectedBehandlingIdentifier, getBehandlingVersjon,
+  getAksjonspunkter, getBehandlingVersjon,
 } from '../tilbakekrevingBehandlingSelectors';
+import { getBehandlingIdentifier } from '../duck';
 import { getBehandlingspunkter, getSelectedBehandlingspunkt, getDefaultBehandlingspunkt }
   from './behandlingsprosessSelectors';
 
@@ -46,10 +47,6 @@ export class BehandlingsprosessIndex extends Component {
     this.goToBehandlingspunkt = this.goToBehandlingspunkt.bind(this);
     this.goToBehandlingWithDefaultPunktAndFakta = this.goToBehandlingWithDefaultPunktAndFakta.bind(this);
     this.goToSearchPage = this.goToSearchPage.bind(this);
-    this.submitVilkar = this.submitVilkar.bind(this);
-    this.previewCallback = this.previewCallback.bind(this);
-    this.previewVedtakCallback = this.previewVedtakCallback.bind(this);
-    this.previewManueltBrevCallback = this.previewManueltBrevCallback.bind(this);
   }
 
   componentDidMount() {
@@ -142,9 +139,6 @@ export class BehandlingsprosessIndex extends Component {
         >
           <TilbakekreveingBehandlingspunktInfoPanel
             submitCallback={this.submitVilkar}
-            previewCallback={this.previewCallback}
-            previewVedtakCallback={this.previewVedtakCallback}
-            previewManueltBrevCallback={this.previewManueltBrevCallback}
             dispatchSubmitFailed={submitFailedDispatch}
             selectedBehandlingspunkt={selectedBehandlingspunkt}
           />
@@ -174,7 +168,7 @@ BehandlingsprosessIndex.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  behandlingIdentifier: getSelectedBehandlingIdentifier(state),
+  behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: getBehandlingVersjon(state),
   aksjonspunkter: getAksjonspunkter(state),
   behandlingspunkter: getBehandlingspunkter(state),

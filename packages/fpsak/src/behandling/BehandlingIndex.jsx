@@ -43,6 +43,7 @@ const BehandlingIndex = ({
 
   return (
     <BehandlingFpsakIndex
+      key={behandlingId}
       saksnummer={saksnummer}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}

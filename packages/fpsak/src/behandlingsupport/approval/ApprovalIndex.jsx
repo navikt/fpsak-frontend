@@ -13,8 +13,11 @@ import behandlingStatus from 'kodeverk/behandlingStatus';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import {
   getBehandlingVersjon, getAksjonspunkter, getBehandlingAnsvarligSaksbehandler, getTotrinnskontrollArsakerUtenUdefinert,
-  getBehandlingStatus, getBehandlingToTrinnsBehandling, getSelectedBehandlingIdentifier, getTotrinnskontrollArsakerReadOnly,
+  getBehandlingStatus, getBehandlingToTrinnsBehandling, getTotrinnskontrollArsakerReadOnly,
 } from 'behandlingFpsak/behandlingSelectors';
+import {
+  getBehandlingIdentifier,
+} from 'behandlingFpsak/duck';
 import navAnsattPropType from 'navAnsatt/navAnsattPropType';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import requireProps from 'app/data/requireProps';
@@ -266,7 +269,7 @@ ApprovalIndexImpl.defaultProps = {
 const mapStateToProps = state => ({
   totrinnskontrollSkjermlenkeContext: getTotrinnskontrollArsakerUtenUdefinert(state),
   totrinnskontrollReadOnlySkjermlenkeContext: getTotrinnskontrollArsakerReadOnly(state),
-  behandlingIdentifier: getSelectedBehandlingIdentifier(state),
+  behandlingIdentifier: getBehandlingIdentifier(state),
   selectedBehandlingVersjon: getBehandlingVersjon(state),
   ansvarligSaksbehandler: getBehandlingAnsvarligSaksbehandler(state),
   status: getBehandlingStatus(state),

@@ -15,8 +15,10 @@ import {
   getBehandlingVersjon,
   getBrevMaler,
   getBrevMottakere,
-  getSelectedBehandlingIdentifier,
 } from 'behandlingFpsak/behandlingSelectors';
+import {
+  getBehandlingIdentifier,
+} from 'behandlingFpsak/duck';
 import { setBehandlingOnHold } from 'behandlingmenu/duck';
 import venteArsakType from 'kodeverk/venteArsakType';
 import LoadingPanel from 'sharedComponents/LoadingPanel';
@@ -180,7 +182,7 @@ const mapStateToProps = state => ({
   recipients: getBrevMottakere(state),
   templates: getBrevMaler(state),
   submitFinished: fpsakApi.SUBMIT_MESSAGE.getRestApiFinished()(state),
-  behandlingIdentifier: getSelectedBehandlingIdentifier(state),
+  behandlingIdentifier: getBehandlingIdentifier(state),
   selectedBehandlingVersjon: getBehandlingVersjon(state),
   selectedBehandlingSprak: getBehandlingSprak(state),
 });

@@ -25,6 +25,7 @@ describe('BehandlingFpsakIndex', () => {
 
   it('skal vise paneler for behandlingsprosess og fakta', () => {
     const wrapper = shallow(<BehandlingFpsakIndex
+      saksnummer={2}
       behandlingId={1}
       behandlingsprosessEnabled
       faktaEnabled
@@ -35,7 +36,7 @@ describe('BehandlingFpsakIndex', () => {
       destroyReduxForms={sinon.spy()}
       hasSubmittedPaVentForm
       hasManualPaVent={false}
-      setSelectedBehandlingId={sinon.spy()}
+      setBehandlingInfo={sinon.spy()}
       behandlingerVersjonMappedById={{}}
     />);
 
@@ -49,6 +50,7 @@ describe('BehandlingFpsakIndex', () => {
 
   it('skal vise panel for papirsøknad', () => {
     const wrapper = shallow(<BehandlingFpsakIndex
+      saksnummer={2}
       behandlingId={1}
       behandlingsprosessEnabled={false}
       faktaEnabled={false}
@@ -59,7 +61,7 @@ describe('BehandlingFpsakIndex', () => {
       destroyReduxForms={sinon.spy()}
       hasSubmittedPaVentForm
       hasManualPaVent={false}
-      setSelectedBehandlingId={sinon.spy()}
+      setBehandlingInfo={sinon.spy()}
       behandlingerVersjonMappedById={{}}
     />);
 
@@ -73,6 +75,7 @@ describe('BehandlingFpsakIndex', () => {
 
   it('skal kunne vise modal så lenge en ikke allerede har satt på vent', () => {
     const wrapper = shallow(<BehandlingFpsakIndex
+      saksnummer={2}
       behandlingId={1}
       behandlingsprosessEnabled
       faktaEnabled
@@ -84,7 +87,7 @@ describe('BehandlingFpsakIndex', () => {
       hasSubmittedPaVentForm={false}
       hasManualPaVent={false}
       behandlingPaaVent
-      setSelectedBehandlingId={sinon.spy()}
+      setBehandlingInfo={sinon.spy()}
       behandlingerVersjonMappedById={{}}
     />);
 
@@ -97,6 +100,7 @@ describe('BehandlingFpsakIndex', () => {
     const destroyForms = sinon.spy();
 
     const wrapper = shallow(<BehandlingFpsakIndex
+      saksnummer={2}
       behandlingId={1}
       behandlingVersjon={2}
       behandlingsprosessEnabled
@@ -109,7 +113,7 @@ describe('BehandlingFpsakIndex', () => {
       hasSubmittedPaVentForm={false}
       hasManualPaVent={false}
       behandlingPaaVent
-      setSelectedBehandlingId={sinon.spy()}
+      setBehandlingInfo={sinon.spy()}
       behandlingerVersjonMappedById={{}}
     />);
 
@@ -127,6 +131,7 @@ describe('BehandlingFpsakIndex', () => {
     const destroyForms = sinon.spy();
 
     const wrapper = shallow(<BehandlingFpsakIndex
+      saksnummer={2}
       behandlingId={1}
       behandlingVersjon={2}
       behandlingsprosessEnabled
@@ -139,7 +144,7 @@ describe('BehandlingFpsakIndex', () => {
       hasSubmittedPaVentForm={false}
       hasManualPaVent={false}
       behandlingPaaVent
-      setSelectedBehandlingId={sinon.spy()}
+      setBehandlingInfo={sinon.spy()}
       behandlingerVersjonMappedById={{}}
     />);
 
@@ -154,6 +159,7 @@ describe('BehandlingFpsakIndex', () => {
     const destroyForms = sinon.spy();
 
     const wrapper = shallow(<BehandlingFpsakIndex
+      saksnummer={2}
       behandlingId={1}
       behandlingVersjon={2}
       behandlingsprosessEnabled
@@ -166,7 +172,7 @@ describe('BehandlingFpsakIndex', () => {
       hasSubmittedPaVentForm={false}
       hasManualPaVent={false}
       behandlingPaaVent
-      setSelectedBehandlingId={sinon.spy()}
+      setBehandlingInfo={sinon.spy()}
       behandlingerVersjonMappedById={{}}
     />);
 

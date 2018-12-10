@@ -8,7 +8,7 @@ import behandlingType from 'kodeverk/behandlingType';
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import {
-  isBehandlingInSync, getSelectedBehandlingIdentifier, hasReadOnlyBehandling, getOpenAksjonspunkter, getToTrinnsAksjonspunkter,
+  isBehandlingInSync, hasReadOnlyBehandling, getOpenAksjonspunkter, getToTrinnsAksjonspunkter,
   isBehandlingInInnhentSoknadsopplysningerSteg, isKontrollerRevurderingAksjonspunkOpen, hasBehandlingManualPaVent,
   getAktivitetStatuser, getAlleAndelerIForstePeriode, isBehandlingRevurderingFortsattMedlemskap, getBehandlingLanguageCode,
   getBehandlingVilkarCodes, isBehandlingStatusReadOnly, getEditedStatus, getAllMerknaderFraBeslutter, getMerknaderFraBeslutter,
@@ -68,27 +68,6 @@ describe('behandlingSelectors', () => {
       const isInSync = isBehandlingInSync.resultFunc(behandlingId, behandling, originalBehandling);
 
       expect(isInSync).is.false;
-    });
-  });
-
-  describe('getSelectedBehandlingIdentifier', () => {
-    it('skal hente behandlingIdentifier når behandling er valgt', () => {
-      const saksnummer = 2;
-      const behandlingId = 1;
-
-      const behandlingIdentifier = getSelectedBehandlingIdentifier.resultFunc(behandlingId, saksnummer);
-
-      expect(behandlingIdentifier.behandlingId).is.eql(behandlingId);
-      expect(behandlingIdentifier.saksnummer).is.eql(saksnummer);
-    });
-
-    it('skal ikke hente behandlingIdentifier når behandling ikke er valgt', () => {
-      const saksnummer = 2;
-      const behandlingId = undefined;
-
-      const behandlingIdentifier = getSelectedBehandlingIdentifier.resultFunc(behandlingId, saksnummer);
-
-      expect(behandlingIdentifier).is.undefined;
     });
   });
 

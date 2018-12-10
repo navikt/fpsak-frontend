@@ -1,5 +1,5 @@
 import fpsakApi, { FpsakApiKeys } from 'data/fpsakApi';
-import fpsakBehandlingApi from 'behandlingFpsak/data/fpsakBehandlingApi';
+import fpsakBehandlingApi, { BehandlingFpsakApiKeys } from 'behandlingFpsak/data/fpsakBehandlingApi';
 import { resetBehandlingsupportInfo, updateBehandlingsupportInfo } from 'behandlingsupport/duck';
 import { updateAnnenPartBehandling } from 'fagsakprofile/duck';
 
@@ -68,6 +68,10 @@ export const resetFagsakContext = () => (dispatch) => {
     .filter(value => !doNotResetWhitelist.includes(value))
     .forEach((value) => {
       dispatch(fpsakApi[value].resetRestApi()());
+    });
+  Object.values(BehandlingFpsakApiKeys)
+    .forEach((value) => {
+      dispatch(fpsakBehandlingApi[value].resetRestApi()());
     });
   dispatch({ type: RESET_FAGSAKER });
 };

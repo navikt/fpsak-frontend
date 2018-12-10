@@ -1,22 +1,16 @@
 import { createSelector } from 'reselect';
 
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import tilbakekrevingBehandlingApi from './tilbakekrevingBehandlingApi';
+import tilbakekrevingBehandlingApi, { TilbakekrevingBehandlingApiKeys } from './tilbakekrevingBehandlingApi';
 
 /* Action types */
 const actionType = name => `behandling_tilbakekreving/${name}`;
-const SET_BEHANDLING_ID = actionType('SET_BEHANDLING_ID');
-const SET_FAGSAK_SAKSNUMMER = actionType('SET_FAGSAK_SAKSNUMMER');
+const SET_BEHANDLING_INFO = actionType('SET_BEHANDLING_INFO');
 const HAS_SHOWN_BEHANDLING_PA_VENT = actionType('HAS_SHOWN_BEHANDLING_PA_VENT');
 
-export const setSelectedBehandlingId = behandlingId => ({
-  type: SET_BEHANDLING_ID,
-  data: behandlingId,
-});
-
-export const setSelectedFagsakSaksnummer = fagsakSaksnummer => ({
-  type: SET_FAGSAK_SAKSNUMMER,
-  data: fagsakSaksnummer,
+export const setBehandlingInfo = info => ({
+  type: SET_BEHANDLING_INFO,
+  data: info,
 });
 
 export const setHasShownBehandlingPaVent = () => ({
@@ -60,6 +54,13 @@ export const updateOnHold = (params, behandlingIdentifier, updateFagsakInfo) => 
 )
   .then(() => dispatch(updateFagsakAndBehandling(behandlingIdentifier, updateFagsakInfo)));
 
+export const resetTilbakekrevingContext = () => (dispatch) => {
+  Object.values(TilbakekrevingBehandlingApiKeys)
+    .forEach((value) => {
+      dispatch(tilbakekrevingBehandlingApi[value].resetRestApi()());
+    });
+};
+
 /* Reducer */
 const initialState = {
   behandlingId: undefined,
@@ -69,15 +70,10 @@ const initialState = {
 
 export const tilbakekrevingBehandlingReducer = (state = initialState, action = {}) => { // NOSONAR Switch brukes som standard i reducers
   switch (action.type) {
-    case SET_BEHANDLING_ID:
+    case SET_BEHANDLING_INFO:
       return {
         ...initialState,
-        behandlingId: action.data,
-      };
-    case SET_FAGSAK_SAKSNUMMER:
-      return {
-        ...initialState,
-        fagsakSaksnummer: action.data,
+        ...action.data,
       };
     case HAS_SHOWN_BEHANDLING_PA_VENT:
       return {
@@ -93,4 +89,8 @@ export const tilbakekrevingBehandlingReducer = (state = initialState, action = {
 const getBehandlingContext = state => state.default.tilbakekrevingBehandlingContext;
 export const getSelectedBehandlingId = createSelector([getBehandlingContext], behandlingContext => behandlingContext.behandlingId);
 export const getSelectedSaksnummer = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsakSaksnummer);
-export const getHasShownBehandlingPaVent = createSelector([getBehandlingContext], behandlingContext => behandlingContext.hasShownBehandlingPaVent);
+export const getBehandlingIdentifier = createSelector(
+  [getSelectedBehandlingId, getSelectedSaksnummer],
+  (behandlingId, saksnummer) => (saksnummer && behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined
+  ),
+);

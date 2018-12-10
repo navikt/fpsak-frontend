@@ -5,9 +5,10 @@ import { fagsakReducer as fagsakContext } from 'fagsak/duck';
 import { fagsakProfileReducer as fagsakProfileContext } from 'fagsakprofile/duck';
 import { behandlingMenuReducer as behandlingMenuContext } from 'behandlingmenu/duck';
 import { behandlingSupportReducer as behandlingSupportContext } from 'behandlingsupport/duck';
+import { behandlingReducer as behandlingContext } from 'behandling/duck';
 
 // TODO (TOR) dynamisk init og rydding av reducers
-import { behandlingReducer as behandlingContext } from 'behandlingFpsak/duck';
+import { fpsakBehandlingReducer as fpsakBehandlingContext } from 'behandlingFpsak/duck';
 import { behandlingsprosessReducer as behandlingsprosessContext } from 'behandlingFpsak/behandlingsprosess/duck';
 import { faktaReducer as faktaContext } from 'behandlingFpsak/fakta/duck';
 import { tilbakekrevingBehandlingReducer as tilbakekrevingBehandlingContext } from 'behandlingTilbakekreving/duck';
@@ -25,13 +26,14 @@ export default combineReducers({
   fagsakContext,
   fagsakProfileContext,
   behandlingContext,
+  fpsakBehandlingContext,
+  behandlingsprosessContext,
+  faktaContext,
   tilbakekrevingBehandlingContext,
   tilbakekrevingBehandlingsprosessContext,
   tilbakekrevingFaktaContext,
   behandlingMenuContext,
-  behandlingsprosessContext,
   behandlingSupportContext,
-  faktaContext,
   papirsoknadContext,
   dataContext: fpsakApi.getDataReducer(),
   dataFpsakBehandlingContext: fpsakBehandlingApi.getDataReducer(),

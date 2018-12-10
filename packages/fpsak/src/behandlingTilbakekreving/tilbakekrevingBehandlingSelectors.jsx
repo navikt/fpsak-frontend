@@ -1,10 +1,9 @@
 import { createSelector } from 'reselect';
 
-import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import behandlingStatus from 'kodeverk/behandlingStatus';
 import tilbakekrevingBehandlingApi from './tilbakekrevingBehandlingApi';
-import { getSelectedBehandlingId, getSelectedSaksnummer } from './duck';
+import { getSelectedBehandlingId } from './duck';
 
 const hasFetchedOriginalBehandlingIfItExists = (behandling, originalBehandlingId) => (behandling && behandling.originalBehandlingId
   ? behandling.originalBehandlingId === originalBehandlingId : true);
@@ -13,12 +12,6 @@ export const isBehandlingInSync = createSelector(
   [getSelectedBehandlingId, tilbakekrevingBehandlingApi.BEHANDLING.getRestApiData(), tilbakekrevingBehandlingApi.ORIGINAL_BEHANDLING.getRestApiData()],
   (behandlingId, behandling = {}, originalBehandling = {}) => behandlingId !== undefined
   && behandlingId === behandling.id && hasFetchedOriginalBehandlingIfItExists(behandling, originalBehandling.id),
-);
-
-export const getSelectedBehandlingIdentifier = createSelector(
-  [getSelectedBehandlingId, getSelectedSaksnummer],
-  (behandlingId, saksnummer) => (behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined
-  ),
 );
 
 // NB! Kun intern bruk

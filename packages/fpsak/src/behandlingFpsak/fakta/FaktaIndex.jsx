@@ -6,7 +6,10 @@ import { connect } from 'react-redux';
 
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import requireProps from 'app/data/requireProps';
-import { getSelectedBehandlingIdentifier, getBehandlingVersjon } from 'behandlingFpsak/behandlingSelectors';
+import { getBehandlingVersjon } from 'behandlingFpsak/behandlingSelectors';
+import {
+  getBehandlingIdentifier,
+} from 'behandlingFpsak/duck';
 import { getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta, DEFAULT_FAKTA } from 'app/paths';
 import trackRouteParam from 'app/data/trackRouteParam';
 
@@ -131,7 +134,7 @@ FaktaIndex.propTypes = {
 
 const mapStateToProps = state => ({
   location: state.router.location,
-  behandlingIdentifier: getSelectedBehandlingIdentifier(state),
+  behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: getBehandlingVersjon(state),
   openInfoPanels: getOpenInfoPanels(state),
 });

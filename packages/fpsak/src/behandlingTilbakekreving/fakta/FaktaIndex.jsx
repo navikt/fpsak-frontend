@@ -6,12 +6,14 @@ import { connect } from 'react-redux';
 
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import requireProps from 'app/data/requireProps';
-import { getSelectedBehandlingIdentifier, getBehandlingVersjon } from 'behandlingTilbakekreving/tilbakekrevingBehandlingSelectors';
+import { getBehandlingVersjon } from 'behandlingTilbakekreving/tilbakekrevingBehandlingSelectors';
+import { getBehandlingIdentifier } from 'behandlingTilbakekreving/duck';
 import { getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta, DEFAULT_FAKTA } from 'app/paths';
 import trackRouteParam from 'app/data/trackRouteParam';
 
 import {
-  resetFakta, resolveFaktaAksjonspunkter, resolveFaktaOverstyrAksjonspunkter, setOpenInfoPanels, getOpenInfoPanels,
+  resetFakta, resolveFaktaAksjonspunkter, resolveFaktaOverstyrAksjonspunkter, setOpenInfoPanels,
+  getOpenInfoPanels,
 } from './duck';
 import TilbakekrevingFaktaPanel from './components/TilbakekrevingFaktaPanel';
 
@@ -136,7 +138,7 @@ FaktaIndex.propTypes = {
 
 const mapStateToProps = state => ({
   location: state.router.location,
-  behandlingIdentifier: getSelectedBehandlingIdentifier(state),
+  behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: getBehandlingVersjon(state),
   openInfoPanels: getOpenInfoPanels(state),
 });

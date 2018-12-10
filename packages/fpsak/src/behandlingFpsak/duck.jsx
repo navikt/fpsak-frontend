@@ -5,12 +5,13 @@ import { updateFagsakInfo } from 'fagsak/duck';
 import fpsakBehandlingApi from './data/fpsakBehandlingApi';
 
 /* Action types */
-const SET_BEHANDLING_ID = 'SET_BEHANDLING_ID';
-const HAS_SHOWN_BEHANDLING_PA_VENT = 'HAS_SHOWN_BEHANDLING_PA_VENT';
+const actionType = name => `behandling_fpsak/${name}`;
+const SET_BEHANDLING_INFO = actionType('SET_BEHANDLING_INFO');
+const HAS_SHOWN_BEHANDLING_PA_VENT = actionType('HAS_SHOWN_BEHANDLING_PA_VENT');
 
-export const setSelectedBehandlingId = behandlingId => ({
-  type: SET_BEHANDLING_ID,
-  data: behandlingId,
+export const setBehandlingInfo = info => ({
+  type: SET_BEHANDLING_INFO,
+  data: info,
 });
 
 export const setHasShownBehandlingPaVent = () => ({
@@ -55,15 +56,16 @@ export const updateOnHold = (params, behandlingIdentifier) => dispatch => dispat
 /* Reducer */
 const initialState = {
   behandlingId: undefined,
+  fagsakSaksnummer: undefined,
   hasShownBehandlingPaVent: false,
 };
 
-export const behandlingReducer = (state = initialState, action = {}) => { // NOSONAR Switch brukes som standard i reducers
+export const fpsakBehandlingReducer = (state = initialState, action = {}) => { // NOSONAR Switch brukes som standard i reducers
   switch (action.type) {
-    case SET_BEHANDLING_ID:
+    case SET_BEHANDLING_INFO:
       return {
         ...initialState,
-        behandlingId: action.data,
+        ...action.data,
       };
     case HAS_SHOWN_BEHANDLING_PA_VENT:
       return {
@@ -76,8 +78,13 @@ export const behandlingReducer = (state = initialState, action = {}) => { // NOS
 };
 
 // Selectors (Kun de knyttet til reducer)
-const getBehandlingContext = state => state.default.behandlingContext;
-
+const getBehandlingContext = state => state.default.fpsakBehandlingContext;
 export const getSelectedBehandlingId = createSelector([getBehandlingContext], behandlingContext => behandlingContext.behandlingId);
+export const getSelectedSaksnummer = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsakSaksnummer);
+export const getBehandlingIdentifier = createSelector(
+  [getSelectedBehandlingId, getSelectedSaksnummer],
+  (behandlingId, saksnummer) => (behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined
+  ),
+);
 
 export const getHasShownBehandlingPaVent = createSelector([getBehandlingContext], behandlingContext => behandlingContext.hasShownBehandlingPaVent);
