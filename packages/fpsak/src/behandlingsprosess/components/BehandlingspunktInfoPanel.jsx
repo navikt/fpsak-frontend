@@ -210,6 +210,7 @@ BehandlingspunktInfoPanel.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   openAksjonspunkt: PropTypes.bool.isRequired,
   previewCallback: PropTypes.func.isRequired,
+  previewCallbackKlage: PropTypes.func.isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
   previewManueltBrevCallback: PropTypes.func.isRequired,
   dispatchSubmitFailed: PropTypes.func.isRequired,
