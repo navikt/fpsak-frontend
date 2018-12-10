@@ -23,7 +23,7 @@ export const ANDRE_YTELSER_FORM_NAME_PREFIX = 'andreYtelser';
 const ANDRE_YTELSER_PERIODE_SUFFIX = 'PERIODER';
 
 const removeUtenlandskArbeidsforhold = andreYtelser => andreYtelser.filter(ay => ay.kode !== arbeidType.UTENLANDSK_ARBEIDSFORHOLD
-  && ay.kode !== arbeidType.FRILANSER);
+  && ay.kode !== arbeidType.FRILANSER && ay.kode !== arbeidType.LONN_UNDER_UTDANNING);
 
 /**
  * AndreYtelserPanel
