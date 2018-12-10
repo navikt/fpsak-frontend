@@ -47,6 +47,7 @@ describe('<BehandlingsprosessIndex>', () => {
       resolveProsessAksjonspunkter={stub}
       overrideProsessAksjonspunkter={sinon.spy()}
       fetchPreview={sinon.spy()}
+      fetchPreviewKlageBrev={sinon.spy()}
       fetchVedtaksbrevPreview={sinon.spy()}
       dispatchSubmitFailed={sinon.spy()}
       haveSentVarsel
@@ -133,6 +134,7 @@ describe('<BehandlingsprosessIndex>', () => {
       resolveProsessAksjonspunkter={stub}
       overrideProsessAksjonspunkter={sinon.spy()}
       fetchPreview={sinon.spy()}
+      fetchPreviewKlageBrev={sinon.spy()}
       fetchVedtaksbrevPreview={sinon.spy()}
       dispatchSubmitFailed={sinon.spy()}
       haveSentVarsel

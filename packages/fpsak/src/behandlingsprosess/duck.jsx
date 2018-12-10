@@ -53,6 +53,8 @@ export const overrideProsessAksjonspunkter = (behandlingIdentifier, params, shou
 
 export const fetchPreviewBrev = fpsakApi.PREVIEW_MESSAGE.makeRestApiRequest();
 
+export const fetchPreviewKlageBrev = fpsakApi.PREVIEW_MESSAGE_KLAGE.makeRestApiRequest();
+
 /* Reducer */
 const initialState = {
   overrideBehandlingspunkter: [],

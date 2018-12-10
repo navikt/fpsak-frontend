@@ -28,6 +28,7 @@ export const FpsakApiKeys = {
   DOCUMENT: 'DOCUMENT',
   FORHANDSVISNING_FORVED_BREV: 'FORHANDSVISNING_FORVED_BREV',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
+  PREVIEW_MESSAGE_KLAGE: 'PREVIEW_MESSAGE_KLAGE',
   SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
   HISTORY: 'HISTORY',
   ANNEN_PART_BEHANDLING: 'ANNEN_PART_BEHANDLING',
@@ -66,6 +67,7 @@ const endpoints = getRestApiBuilder(httpClientApi)
   /* /api/brev */
   .withPost('/api/brev/bestill', FpsakApiKeys.SUBMIT_MESSAGE)
   .withPostAndOpenBlob('/api/brev/forhandsvis', FpsakApiKeys.PREVIEW_MESSAGE)
+  .withPostAndOpenBlob('/api/brev/forhandsvis-klage', FpsakApiKeys.PREVIEW_MESSAGE_KLAGE)
 
   /* /api/dokument */
   .withGet('/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS)
