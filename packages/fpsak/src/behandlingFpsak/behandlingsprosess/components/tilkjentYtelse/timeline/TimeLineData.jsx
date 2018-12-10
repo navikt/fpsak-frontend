@@ -5,17 +5,15 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
-import { calcDaysAndWeeks } from '@fpsak-frontend/utils';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { Image } from '@fpsak-frontend/shared-components';
+import {
+  Table, TableRow, TableColumn, VerticalSpacer, Image,
+} from '@fpsak-frontend/shared-components';
+import { calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT, createVisningsnavnForAktivitet } from '@fpsak-frontend/utils';
 import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
 import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
 import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
 import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/tilkjentYtelse/timeline/TimeLineData.jsx
 import aktivitetStatus from 'kodeverk/aktivitetStatus';
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/tilkjentYtelse/timeline/TimeLineData.jsx
 import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
@@ -25,6 +23,11 @@ import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforhold
 import { beregningsresultatPeriodePropType } from 'behandling/proptypes/beregningresultatMedUttaksplanPropType';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/tilkjentYtelse/timeline/TimeLineData.jsx
 import { uttakPeriodeNavn } from 'kodeverk/uttakPeriodeType';
+=======
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import { beregningsresultatPeriodePropType } from 'behandling/proptypes/beregningresultatMedUttaksplanPropType';
+import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/tilkjentYtelse/timeline/TimeLineData.jsx
 
 import styles from './timeLineData.less';
 

@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel, Undertekst } from 'nav-frontend-typografi';
 
-import { BorderBox } from '@fpsak-frontend/shared-components';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DatepickerField } from '@fpsak-frontend/form';
 import { hasValidDate, dateBeforeOrEqualToToday, required } from '@fpsak-frontend/utils';
 

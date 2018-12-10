@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/omsorgOgForeldreansvar/RettighetFaktaPanel.jsx
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import relatertYtelseTilstand from 'kodeverk/relatertYtelseTilstand';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
@@ -14,6 +15,12 @@ import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
 =======
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import DateLabel from '@fpsak-frontend/shared-components';
+=======
+import { behandlingFormValueSelector } from 'behandling/behandlingForm';
+import relatertYtelseTilstand from '@fpsak-frontend/kodeverk/src/relatertYtelseTilstand';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { VerticalSpacer, DateLabel } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/omsorgOgForeldreansvar/RettighetFaktaPanel.jsx
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/omsorgOgForeldreansvar/RettighetFaktaPanel.jsx
 

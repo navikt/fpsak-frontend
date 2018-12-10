@@ -17,6 +17,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   getSoknad, getFamiliehendelse, getPersonopplysning, getInnvilgetRelatertTilgrensendeYtelserForAnnenForelder,
   getAksjonspunkter,
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/omsorgOgForeldreansvar/OmsorgOgForeldreansvarInfoPanel.jsx
 } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import { getKodeverk } from 'kodeverk/duck';
@@ -25,6 +26,16 @@ import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
 import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
+=======
+} from 'behandling/behandlingSelectors';
+import { behandlingForm } from 'behandling/behandlingForm';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import withDefaultToggling from 'fakta/withDefaultToggling';
+import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
+import faktaPanelCodes from 'fakta/faktaPanelCodes';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/omsorgOgForeldreansvar/OmsorgOgForeldreansvarInfoPanel.jsx
 import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';
 
 

@@ -10,8 +10,8 @@ import Tooltip from './Tooltip';
  * Presentasjonskomponent. Komponent som har ansvar for visning av bilder.
  */
 export class Image extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       isHovering: false,

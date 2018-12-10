@@ -5,6 +5,7 @@ import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioderNew/FortsattMedlemskapFaktaPanel.jsx
 
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioderNew/FortsattMedlemskapFaktaPanel.jsx
 import ElementWrapper from 'sharedComponents/ElementWrapper';
@@ -17,9 +18,17 @@ import { getBehandlingSkjaringstidspunkt, getBehandlingMedlemEndredeOpplysninger
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioder/FortsattMedlemskapFaktaPanel.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+=======
+import {
+  getBehandlingSkjaringstidspunkt, getBehandlingMedlemEndredeOpplysninger, getBehandlingStartDatoForPermisjon,
+} from 'behandling/behandlingSelectors';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioderNew/FortsattMedlemskapFaktaPanel.jsx
 import { DatepickerField } from '@fpsak-frontend/form';
-import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { required, hasValidDate, dateAfterOrEqual } from '@fpsak-frontend/utils';
+import {
+  ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT, required, hasValidDate, dateAfterOrEqual,
+} from '@fpsak-frontend/utils';
 
 const getParam = opplysning => ({ dato: moment(opplysning.fom).format(DDMMYYYY_DATE_FORMAT) });
 

@@ -1,11 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
-
-import { Image } from '@fpsak-frontend/shared-components';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
-import { metaMock, MockFields } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
-
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { metaMock, MockFields } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import Image from './Image';
 import PeriodFieldArray from './PeriodFieldArray';
 
 const readOnly = false;

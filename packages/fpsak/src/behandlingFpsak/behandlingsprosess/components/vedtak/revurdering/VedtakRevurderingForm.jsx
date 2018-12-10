@@ -12,8 +12,9 @@ import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } 
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import { isInnvilget, isAvslag, isOpphor } from 'kodeverk/behandlingResultatType';
+import { isInnvilget, isAvslag, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { getRettigheter } from 'navAnsatt/duck';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/revurdering/VedtakRevurderingForm.jsx
 import behandlingStatusCode from 'kodeverk/behandlingStatus';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -27,6 +28,14 @@ import ElementWrapper from '@fpsak-frontend/shared-components';
 import FritekstBrevPanel from 'behandlingsprosess/components/vedtak/FritekstBrevPanel';
 import decodeHtmlEntity from '@fpsak-frontend/utils';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vedtak/revurdering/VedtakRevurderingForm.jsx
+=======
+import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
+import FritekstBrevPanel from 'behandlingsprosess/components/vedtak/FritekstBrevPanel';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vedtak/revurdering/VedtakRevurderingForm.jsx
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import { bindActionCreators } from 'redux';
 import { injectIntl, intlShape } from 'react-intl';

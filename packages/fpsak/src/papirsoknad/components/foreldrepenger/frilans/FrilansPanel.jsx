@@ -5,9 +5,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Fieldset } from 'nav-frontend-skjema';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
-import { BorderBox } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, ArrowBox, BorderBox } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import FrilansPerioderFieldArray from './FrilansPerioderFieldArray';

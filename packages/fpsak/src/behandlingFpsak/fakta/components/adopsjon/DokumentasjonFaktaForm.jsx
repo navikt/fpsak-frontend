@@ -18,12 +18,15 @@ import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
 =======
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { DatepickerField } from '@fpsak-frontend/form';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required, hasValidDate } from '@fpsak-frontend/utils';
-import { Image } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, Image } from '@fpsak-frontend/shared-components';
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/adopsjon/DokumentasjonFaktaForm.jsx
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/adopsjon/DokumentasjonFaktaForm.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+=======
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/adopsjon/DokumentasjonFaktaForm.jsx
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 
 import styles from './dokumentasjonFaktaForm.less';

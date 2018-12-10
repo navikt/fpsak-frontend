@@ -6,8 +6,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 
-import Modal from '@fpsak-frontend/shared-components';
-import { Image } from '@fpsak-frontend/shared-components';
+import { Image, Modal } from '@fpsak-frontend/shared-components';
 
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 

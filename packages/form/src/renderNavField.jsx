@@ -7,8 +7,8 @@ import Label, { labelPropType } from './Label';
 
 const renderNavField = (WrappedNavFieldComponent) => {
   class FieldComponent extends Component {
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
       this.formatError = this.formatError.bind(this);
     }
 

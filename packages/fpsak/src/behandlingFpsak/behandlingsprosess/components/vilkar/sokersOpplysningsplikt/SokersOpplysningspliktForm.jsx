@@ -10,6 +10,7 @@ import {
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/sokersOpplysningsplikt/SokersOpplysningspliktForm.jsx
 import BpPanelTemplate from 'behandlingFpsak/behandlingsprosess/components/vilkar/BpPanelTemplate';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import { getKodeverk } from 'kodeverk/duck';
@@ -39,6 +40,25 @@ import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import dokumentTypeId from 'kodeverk/dokumentTypeId';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
+=======
+import BpPanelTemplate from 'behandlingsprosess/components/vilkar/BpPanelTemplate';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import {
+  ElementWrapper, Table, TableRow, TableColumn, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
+import { getBehandlingsresultat, getSoknad, getBehandlingVersjon } from 'behandling/behandlingSelectors';
+import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
+import { getSelectedBehandlingId } from 'behandling/duck';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { CheckboxField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { required, isObject } from '@fpsak-frontend/utils';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
+import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
+import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vilkar/sokersOpplysningsplikt/SokersOpplysningspliktForm.jsx
 
 import {
   getSelectedBehandlingspunktAksjonspunkter,

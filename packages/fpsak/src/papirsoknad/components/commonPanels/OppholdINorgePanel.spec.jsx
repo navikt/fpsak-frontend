@@ -1,14 +1,14 @@
 import React from 'react';
 import moment from 'moment';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import { expect } from 'chai';
 
 import SoknadData from 'papirsoknad/SoknadData';
 import {
+  ISO_DATE_FORMAT,
   invalidDateMessage, dateNotBeforeOrEqualMessage, dateRangesOverlappingMessage,
   dateNotAfterOrEqualMessage, isRequiredMessage,
 } from '@fpsak-frontend/utils';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 import OppholdINorgePanel, { OppholdINorgePanelImpl } from './OppholdINorgePanel';
 

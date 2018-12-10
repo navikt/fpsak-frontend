@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 import fpsakApi from 'data/fpsakApi';
-import kommunikasjonsretning from 'kodeverk/kommunikasjonsretning';
+import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import {
   getBehandlingHasSoknad,
   getBehandlingIsInnsyn,
@@ -10,8 +10,13 @@ import {
   getTotrinnskontrollArsakerReadOnly,
   isBehandlingInInnhentSoknadsopplysningerSteg,
   isKlageBehandlingInFormkrav,
+<<<<<<< HEAD
 } from 'behandlingFpsak/behandlingSelectors';
 import behandlingStatus from 'kodeverk/behandlingStatus';
+=======
+} from 'behandling/behandlingSelectors';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+>>>>>>> NOJIRA nye pakker
 import { getRettigheter } from 'navAnsatt/duck';
 import SupportPanel from './supportPanels';
 

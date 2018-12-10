@@ -10,6 +10,7 @@ import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils';
 import aksjonspunktCodes, {
   isInnhentSaksopplysningerAksjonspunkt,
   isVilkarForSykdomOppfylt,
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingSelectors.jsx
 } from 'kodeverk/aksjonspunktCodes';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import behandlingStatus from 'kodeverk/behandlingStatus';
@@ -17,6 +18,14 @@ import behandlingType from 'kodeverk/behandlingType';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
 import fpsakBehandlingApi from './data/fpsakBehandlingApi';
+=======
+} from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { getSelectedSaksnummer, isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandling/behandlingSelectors.jsx
 import isFieldEdited from './editedFields';
 import { getSelectedBehandlingId } from './duck';
 

@@ -5,7 +5,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import aktivitetStatus, { isStatusDagpengerOrAAP } from 'kodeverk/aktivitetStatus';
+import aktivitetStatus, { isStatusDagpengerOrAAP } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
 export const getTekstForAndelBruktIBeregning = (andel, erIKombinasjonMedSN) => {
   if (erIKombinasjonMedSN === true) {

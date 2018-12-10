@@ -1,9 +1,15 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/tilkjentYtelse/TilkjentYtelse.spec.jsx
 import TimeLineSokerEnsamSoker from 'behandlingFpsak/behandlingsprosess/components/tilkjentYtelse/timeline/TimeLineSokerEnsamSoker';
 import TimeLineControl from 'behandlingFpsak/behandlingsprosess/components/tilkjentYtelse/timeline/TimeLineControl';
 import { intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+=======
+import TimeLineSokerEnsamSoker from 'behandlingsprosess/components/tilkjentYtelse/timeline/TimeLineSokerEnsamSoker';
+import TimeLineControl from 'behandlingsprosess/components/tilkjentYtelse/timeline/TimeLineControl';
+import { intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/tilkjentYtelse/TilkjentYtelse.spec.jsx
 
 import { TilkjentYtelse } from './TilkjentYtelse';
 

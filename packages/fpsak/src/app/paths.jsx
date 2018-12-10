@@ -1,8 +1,13 @@
 import { buildPath, formatQueryString, parseQueryString } from '@fpsak-frontend/utils';
+<<<<<<< HEAD
 import skjermlenkeCodes from 'kodeverk/skjermlenkeCodes';
 
 const FPSAK = 'fpsak';
 const FPLOS = 'fplos';
+=======
+import skjermlenkeCodes from '@fpsak-frontend/kodeverk/src/skjermlenkeCodes';
+import applicationContextPath from './applicationContextPath';
+>>>>>>> NOJIRA nye pakker
 
 export const fagsakPath = '/fagsak/:saksnummer(\\d+)/';
 export const behandlingerPath = `${fagsakPath}behandling/`;

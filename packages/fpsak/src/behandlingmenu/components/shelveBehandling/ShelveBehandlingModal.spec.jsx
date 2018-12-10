@@ -2,8 +2,8 @@ import React from 'react';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
-import behandlingResultatType from 'kodeverk/behandlingResultatType';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { ShelveBehandlingModalImpl } from './ShelveBehandlingModal';
 
 describe('<ShelveBehandlingModal>', () => {

@@ -3,10 +3,10 @@ import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
 import { shallow } from 'enzyme';
 import { Image } from '@fpsak-frontend/shared-components';
-import periodeAarsak from 'kodeverk/periodeAarsak';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import FastsettInntektTidsbegrenset, {
   createTableData,

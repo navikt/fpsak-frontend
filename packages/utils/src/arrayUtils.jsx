@@ -7,7 +7,7 @@ export const zip = (a, b) => {
   return range(a.length).map(i => [a[i], b[i]]);
 };
 
-export const isEmpty = array => !array || array.length === 0;
+export const isArrayEmpty = array => !array || array.length === 0;
 
 export const flatten = array => array.reduce((a, b) => [...a, ...b], []);
 

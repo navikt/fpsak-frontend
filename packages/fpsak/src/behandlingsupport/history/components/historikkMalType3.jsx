@@ -4,8 +4,13 @@ import { injectIntl, intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
+<<<<<<< HEAD
 import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinnslagDelPropType';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+=======
+import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+>>>>>>> NOJIRA nye pakker
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import { createLocationForHistorikkItems } from 'app/paths';

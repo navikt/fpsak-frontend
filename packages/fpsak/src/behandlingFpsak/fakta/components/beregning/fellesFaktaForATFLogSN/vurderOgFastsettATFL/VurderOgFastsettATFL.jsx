@@ -5,12 +5,19 @@ import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import faktaOmBeregningTilfelle, {
   erATFLSpesialtilfelle,
   harKunATFLISammeOrgUtenBestebergning,
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/VurderOgFastsettATFL.jsx
 } from 'kodeverk/faktaOmBeregningTilfelle';
 import LonnsendringForm, { lonnsendringField }
   from 'behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
 import NyoppstartetFLForm, { erNyoppstartetFLField }
   from 'behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import { getFaktaOmBeregning } from 'behandlingFpsak/behandlingSelectors';
+=======
+} from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import LonnsendringForm, { lonnsendringField } from 'fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
+import NyoppstartetFLForm, { erNyoppstartetFLField } from 'fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/NyoppstartetFLForm';
+import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/VurderOgFastsettATFL.jsx
 import FastsettATFLInntektForm from './forms/FastsettATFLInntektForm';
 import InntektstabellPanel from '../InntektstabellPanel';
 

@@ -6,6 +6,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import Etikettfokus from 'nav-frontend-etiketter';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/BostedSokerView.jsx
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import kodeverkPropType from 'kodeverk/kodeverkPropType';
 import { getKodeverk } from 'kodeverk/duck';
@@ -14,6 +15,16 @@ import opplysningAdresseType from 'kodeverk/opplysningAdresseType';
 import getAddresses from '@fpsak-frontend/utils/personUtils';
 import personstatusType from 'kodeverk/personstatusType';
 import Region from 'kodeverk/region';
+=======
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import personopplysningPropType from 'behandling/proptypes/personopplysningPropType';
+import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
+import { getAddresses } from '@fpsak-frontend/utils';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import Region from '@fpsak-frontend/kodeverk/src/region';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/BostedSokerView.jsx
 
 import styles from './bostedSokerView.less';
 

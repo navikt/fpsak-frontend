@@ -2,8 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { pathToBehandling } from 'app/paths';
+<<<<<<< HEAD
 import historikkinnslagPropType from 'behandlingFelles/proptypes/historikkinnslagPropType';
 import historikkinnslagType from 'kodeverk/historikkinnslagType';
+=======
+import historikkinnslagPropType from 'behandling/proptypes/historikkinnslagPropType';
+import historikkinnslagType from '@fpsak-frontend/kodeverk/src/historikkinnslagType';
+>>>>>>> NOJIRA nye pakker
 import SnakkebobleMedRoller from './snakkebobleMedRoller';
 import HistorikkMalType1 from './historikkMalType1';
 import HistorikkMalType2 from './historikkMalType2';

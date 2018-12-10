@@ -7,17 +7,22 @@ import { injectIntl, intlShape } from 'react-intl';
 import classNames from 'classnames';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
+<<<<<<< HEAD
 import dokumentMalType from 'kodeverk/dokumentMalType';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import { isKontrollerRevurderingAksjonspunkOpen } from 'behandlingFpsak/behandlingSelectors';
+=======
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
+import { isKontrollerRevurderingAksjonspunkOpen } from 'behandling/behandlingSelectors';
+>>>>>>> NOJIRA nye pakker
 import {
-  ariaCheck, hasValidText, maxLength, minLength, required,
+  ariaCheck, hasValidText, maxLength, minLength, required, getLanguageCodeFromSprakkode,
 } from '@fpsak-frontend/utils';
-import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
-import ugunstAarsakTyper from 'kodeverk/ugunstAarsakTyper';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import styles from './messages.less';
 

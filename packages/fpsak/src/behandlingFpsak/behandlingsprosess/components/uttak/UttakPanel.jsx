@@ -5,6 +5,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/uttak/UttakPanel.jsx
 
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/uttak/UttakPanel.jsx
 import ElementWrapper from 'sharedComponents/ElementWrapper';
@@ -21,17 +22,25 @@ import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import ElementWrapper from '@fpsak-frontend/shared-components';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
+=======
+import {
+  FadingPanel, ElementWrapper, AksjonspunktHelpText, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/uttak/UttakPanel.jsx
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import uttaksresultatPropType from 'behandling/proptypes/uttaksresultatPropType';
 import { getUttaksresultatPerioder, getStonadskontoer } from 'behandling/behandlingSelectors';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/uttak/UttakPanel.jsx
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/uttak/UttakPanel.jsx
+=======
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/uttak/UttakPanel.jsx
 import AlertStripe from 'nav-frontend-alertstriper';
-import { uttakPeriodeNavn, stonadskontoType } from 'kodeverk/uttakPeriodeType';
-import periodeResultatType from 'kodeverk/periodeResultatType';
+import { uttakPeriodeNavn, stonadskontoType } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
+import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 
 import Uttak from './Uttak';
 import styles from './uttakPanel.less';

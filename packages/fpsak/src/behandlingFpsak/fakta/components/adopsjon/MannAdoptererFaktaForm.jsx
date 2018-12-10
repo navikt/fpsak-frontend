@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Container } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/adopsjon/MannAdoptererFaktaForm.jsx
 import { getEditedStatus } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
@@ -14,6 +15,11 @@ import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { RadioGroupField, RadioOption } from 'form/Fields';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
 =======
+=======
+import { getEditedStatus } from 'behandling/behandlingSelectors';
+import { behandlingFormValueSelector } from 'behandling/behandlingForm';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/adopsjon/MannAdoptererFaktaForm.jsx
 import { required } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';

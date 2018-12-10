@@ -4,6 +4,7 @@ import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import PropTypes from 'prop-types';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/klage/BehandleKlageNkForm.jsx
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
@@ -11,6 +12,15 @@ import { getKodeverk } from 'kodeverk/duck';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import klageVurderingType from 'kodeverk/klageVurdering';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
+=======
+import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
+import { getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK } from 'behandling/behandlingSelectors';
+import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/klage/BehandleKlageNkForm.jsx
 import BehandleKlageForm from './BehandleKlageForm';
 
 /**

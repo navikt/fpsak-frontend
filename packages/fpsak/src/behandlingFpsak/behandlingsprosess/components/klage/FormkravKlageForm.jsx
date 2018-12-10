@@ -4,15 +4,14 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
-
-import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import SelectField from 'form/fields/SelectField';
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { required } from '@fpsak-frontend/utils';
+import { SelectField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import {
+  AksjonspunktHelpText, VerticalSpacer, FadingPanel,
+} from '@fpsak-frontend/shared-components';
+import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { Column, Row } from 'nav-frontend-grid';
 import { getBehandlinger } from 'behandling/selectors/behandlingerSelectors';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/klage/FormkravKlageForm.jsx
 import behandlingStatus from 'kodeverk/behandlingStatus';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
@@ -25,6 +24,14 @@ import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
 import behandlingPropType from 'behandling/proptypes/behandlingPropType';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/klage/FormkravKlageForm.jsx
+=======
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
+import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
+import behandlingPropType from 'behandling/proptypes/behandlingPropType';
+
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/klage/FormkravKlageForm.jsx
 import styles from './behandleKlageForm.less';
 
 /**

@@ -13,11 +13,14 @@ import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
 import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
 =======
 import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
-import { required } from '@fpsak-frontend/utils';
+import { required, DDMMYYYY_DATE_FORMAT, createVisningsnavnForAktivitet } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm.jsx
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm.jsx
+=======
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm.jsx
 import { sortArbeidsforholdList } from '../../ArbeidsforholdHelper';
 
 const kortvarigStringId = 'BeregningInfoPanel.TidsbegrensetArbFor.Arbeidsforhold';

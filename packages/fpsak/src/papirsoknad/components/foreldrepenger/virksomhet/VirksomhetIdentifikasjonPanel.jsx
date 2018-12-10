@@ -8,13 +8,10 @@ import { Column, Row } from 'nav-frontend-grid';
 import {
   RadioGroupField, RadioOption, SelectField, InputField,
 } from '@fpsak-frontend/form';
-
-import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
-import ElementWrapper from '@fpsak-frontend/shared-components';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { ArrowBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required, hasValidInteger } from '@fpsak-frontend/utils';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 const countrySelectValues = countryCodes => countryCodes
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);

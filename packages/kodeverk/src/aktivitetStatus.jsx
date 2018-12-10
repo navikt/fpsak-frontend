@@ -1,4 +1,4 @@
-import beregningsgrunnlagAndeltyper from 'kodeverk/beregningsgrunnlagAndeltyper';
+import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
 
 const aktivitetStatus = {
   KUN_YTELSE: 'KUN_YTELSE',

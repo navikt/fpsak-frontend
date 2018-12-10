@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 
-import { FlexContainer, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
-import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
+import {
+  PeriodFieldArray, FlexContainer, FlexColumn, FlexRow,
+} from '@fpsak-frontend/shared-components';
 import {
   DatepickerField, SelectField,
 } from '@fpsak-frontend/form';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
 import { gyldigeUttakperioder } from './RenderPermisjonPeriodeFieldArray';
 
 import styles from './renderUtsettelsePeriodeFieldArray.less';

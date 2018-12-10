@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Row, Column } from 'nav-frontend-grid';
 
-import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
-import { FlexContainer, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components/flexGrid';
+import {
+  PeriodFieldArray, FlexContainer, FlexColumn, FlexRow,
+} from '@fpsak-frontend/shared-components';
 import { DatepickerField } from '@fpsak-frontend/form';
-import { required, hasValidDate, dateAfterOrEqual } from '@fpsak-frontend/utils';
-import { isRequiredMessage } from '@fpsak-frontend/utils';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import {
+  required, hasValidDate, dateAfterOrEqual, isRequiredMessage, ISO_DATE_FORMAT,
+} from '@fpsak-frontend/utils';
 
 import styles from './renderAndreYtelserPerioderFieldArray.less';
 

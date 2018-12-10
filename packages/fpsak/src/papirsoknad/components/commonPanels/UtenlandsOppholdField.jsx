@@ -4,11 +4,12 @@ import { FieldArray } from 'redux-form';
 import classnames from 'classnames/bind';
 import { Row, Column } from 'nav-frontend-grid';
 
-import PeriodFieldArray from '@fpsak-frontend/shared-components/PeriodFieldArray';
+import { PeriodFieldArray } from '@fpsak-frontend/shared-components';
 import { SelectField, DatepickerField } from '@fpsak-frontend/form';
-import { required, hasValidValue, hasValidPeriodIncludingOtherErrors } from '@fpsak-frontend/utils';
-import landkoder from 'kodeverk/landkoder';
-import { isRequiredMessage } from '@fpsak-frontend/utils';
+import {
+  required, hasValidValue, hasValidPeriodIncludingOtherErrors, isRequiredMessage,
+} from '@fpsak-frontend/utils';
+import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
 
 import styles from './utenlandsOppholdField.less';
 

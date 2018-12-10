@@ -3,9 +3,9 @@ import { expect } from 'chai';
 import { EtikettFokus } from 'nav-frontend-etiketter';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import personstatusType from 'kodeverk/personstatusType';
-import sivilstandType from 'kodeverk/sivilstandType';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 
 import { AdressePanel } from './AdressePanel';
 

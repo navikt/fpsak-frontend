@@ -10,7 +10,7 @@ import { isBehandlingInSync } from './behandlingSelectors';
 import { fetchBehandling as fetchBehandlingActionCreator, getBehandlingIdentifier } from './duck';
 =======
 import applicationContextPath from 'app/applicationContextPath';
-import BehandlingType from 'kodeverk/behandlingType';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fpsakApi, { getBehandlingTypeApiKeys } from 'data/fpsakApi';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import BehandlingIdentifier from 'behandling/BehandlingIdentifier';

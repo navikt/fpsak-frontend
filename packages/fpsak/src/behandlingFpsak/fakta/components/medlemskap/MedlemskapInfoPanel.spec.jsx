@@ -1,12 +1,19 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/MedlemskapInfoPanel.spec.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
 import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
+=======
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import faktaPanelCodes from 'fakta/faktaPanelCodes';
+import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/medlemskap/MedlemskapInfoPanel.spec.jsx
 import { MedlemskapInfoPanelImpl } from './MedlemskapInfoPanel';
 import StartdatoForForeldrepengerperiodenForm from './startdatoForPeriode/StartdatoForForeldrepengerperiodenForm';
 import OppholdInntektOgPerioderForm from './oppholdInntektOgPerioder/OppholdInntektOgPerioderForm';

@@ -5,8 +5,13 @@ import { intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/VedtakInnvilgetPanel.jsx
 import { getAksjonspunkter, getBehandlingResultatstruktur, getBehandlingSprak } from 'behandlingFpsak/behandlingSelectors';
 import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+=======
+import { getAksjonspunkter, getBehandlingResultatstruktur, getBehandlingSprak } from 'behandling/behandlingSelectors';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vedtak/VedtakInnvilgetPanel.jsx
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/VedtakInnvilgetPanel.jsx
 import { formatCurrencyWithKr } from 'utils/currencyUtils';
@@ -16,8 +21,7 @@ import VedtakFritekstPanel from 'behandlingFpsak/behandlingsprosess/components/v
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 =======
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import ElementWrapper from '@fpsak-frontend/shared-components';
+import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import VedtakFritekstPanel from 'behandlingsprosess/components/vedtak/VedtakFritekstPanel';
 import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vedtak/VedtakInnvilgetPanel.jsx

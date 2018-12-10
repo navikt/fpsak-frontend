@@ -1,7 +1,6 @@
-import inntektskategorier from 'kodeverk/inntektskategorier';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
+import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import { formatCurrencyNoKr, createVisningsnavnForAktivitet } from '@fpsak-frontend/utils';
 
 export const settAndelIArbeid = (andelerIArbeid) => {
   if (andelerIArbeid.length === 0) {

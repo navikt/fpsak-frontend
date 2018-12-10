@@ -6,17 +6,21 @@ import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/opptjening/OpptjeningVilkarView.jsx
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/opptjening/OpptjeningVilkarView.jsx
 import FadingPanel from 'sharedComponents/FadingPanel';
 import PeriodLabel from 'sharedComponents/PeriodLabel';
 import VilkarResultPanel from 'behandlingFpsak/behandlingsprosess/components/vilkar/VilkarResultPanel';
 =======
 import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
 import PeriodLabel from '@fpsak-frontend/shared-components/PeriodLabel';
+=======
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vilkar/opptjening/OpptjeningVilkarView.jsx
 import VilkarResultPanel from 'behandlingsprosess/components/vilkar/VilkarResultPanel';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vilkar/opptjening/OpptjeningVilkarView.jsx
 import {
   getBehandlingFastsattOpptjeningFomDate, getBehandlingFastsattOpptjeningTomDate, getBehandlingFastsattOpptjeningActivities,
   getBehandlingFastsattOpptjeningperiodeMnder, getBehandlingFastsattOpptjeningperiodeDager,
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/opptjening/OpptjeningVilkarView.jsx
 } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import { getKodeverk } from 'kodeverk/duck';
@@ -28,8 +32,16 @@ import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandling
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 =======
+=======
+} from 'behandling/behandlingSelectors';
+import { behandlingForm } from 'behandling/behandlingForm';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vilkar/opptjening/OpptjeningVilkarView.jsx
 import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, FadingPanel, PeriodLabel } from '@fpsak-frontend/shared-components';
 import { getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus } from 'behandlingsprosess/behandlingsprosessSelectors';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vilkar/opptjening/OpptjeningVilkarView.jsx
 import OpptjeningTimeLineLight from './OpptjeningTimeLineLight';

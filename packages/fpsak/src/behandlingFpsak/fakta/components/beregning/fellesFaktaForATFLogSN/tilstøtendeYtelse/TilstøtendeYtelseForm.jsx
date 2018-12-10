@@ -7,15 +7,21 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { Row, Column } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
-import beregningsgrunnlagAndeltyper from 'kodeverk/beregningsgrunnlagAndeltyper';
+import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
 import {
   getTilstøtendeYtelse,
   getFaktaOmBeregningTilfellerKoder,
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/tilstøtendeYtelse/TilstøtendeYtelseForm.jsx
 } from 'behandlingFpsak/behandlingSelectors';
 import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { BorderBox } from '@fpsak-frontend/shared-components';
 import ElementWrapper from '@fpsak-frontend/shared-components';
+=======
+} from 'behandling/behandlingSelectors';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import { VerticalSpacer, BorderBox, ElementWrapper } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/tilstøtendeYtelse/TilstøtendeYtelseForm.jsx
 import YtelsePanel from './YtelsePanel';
 import FordelingAvBruttoBeregningsgrunnlagPanel, { fordelingAvBruttoBGFieldArrayName } from './FordelingAvBruttoBeregningsgrunnlagPanel';
 import styles from './tilstøtendeYtelseForm.less';

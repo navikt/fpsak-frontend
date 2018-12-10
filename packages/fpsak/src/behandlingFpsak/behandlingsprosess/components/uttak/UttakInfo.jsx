@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
-import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
-import FlexRow from 'sharedComponents/flexGrid/FlexRow';
-import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
+import {
+  FlexColumn, FlexRow, FlexContainer,
+} from '@fpsak-frontend/shared-components';
 import {
   CheckboxField, DecimalField, SelectField,
 } from '@fpsak-frontend/form';
@@ -12,15 +12,14 @@ import {
   hasValidDecimal,
   maxValue,
   notDash,
+  calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import periodeResultatType from 'kodeverk/periodeResultatType';
-import uttakArbeidTypeKodeverk from 'kodeverk/uttakArbeidType';
-import uttakArbeidTypeTekstCodes from 'kodeverk/uttakArbeidTypeCodes';
-import oppholdArsakType, { oppholdArsakKontoNavn } from 'kodeverk/oppholdArsakType';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { calcDaysAndWeeks } from '@fpsak-frontend/utils';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
+import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
+import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/src/uttakArbeidTypeCodes';
+import oppholdArsakType, { oppholdArsakKontoNavn } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment/moment';
 import styles from './uttakActivity.less';

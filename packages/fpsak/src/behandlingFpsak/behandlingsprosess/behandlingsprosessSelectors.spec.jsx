@@ -2,13 +2,13 @@ import { expect } from 'chai';
 
 import featureToggle from 'app/featureToggle';
 import { DEFAULT_BEHANDLINGSPROSESS } from 'app/paths';
-import as from 'kodeverk/aksjonspunktStatus';
-import vut from 'kodeverk/vilkarUtfallType';
-import ac from 'kodeverk/aksjonspunktCodes';
-import vt from 'kodeverk/vilkarType';
-import bt from 'kodeverk/behandlingType';
-import innsynResultatTypeKV from 'kodeverk/innsynResultatType';
-import fyt from 'kodeverk/fagsakYtelseType';
+import as from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
+import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
+import innsynResultatTypeKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';
+import fyt from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import {
   getBehandlingspunkterProps, getBehandlingspunkter, getBehandlingspunkterStatus, getBehandlingspunkterTitleCodes,

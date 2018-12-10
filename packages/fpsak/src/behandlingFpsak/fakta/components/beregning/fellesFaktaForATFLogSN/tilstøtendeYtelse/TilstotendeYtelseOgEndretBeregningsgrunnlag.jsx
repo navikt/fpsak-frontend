@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/tilstøtendeYtelse/TilstotendeYtelseOgEndretBeregningsgrunnlag.jsx
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/tilstøtendeYtelse/TilstotendeYtelseOgEndretBeregningsgrunnlag.jsx
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import BorderBox from 'sharedComponents/BorderBox';
@@ -12,6 +13,9 @@ import { getEndringBeregningsgrunnlagPerioder } from 'behandlingFpsak/behandling
 import ElementWrapper from '@fpsak-frontend/shared-components';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { BorderBox } from '@fpsak-frontend/shared-components';
+=======
+import { VerticalSpacer, ElementWrapper, BorderBox } from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/tilstøtendeYtelse/TilstotendeYtelseOgEndretBeregningsgrunnlag.jsx
 import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import { getEndringBeregningsgrunnlagPerioder } from 'behandling/behandlingSelectors';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/tilstøtendeYtelse/TilstotendeYtelseOgEndretBeregningsgrunnlag.jsx
@@ -28,7 +32,6 @@ export const getFieldNameKey = index => (fieldArrayNamePrefix + index);
 
 const getPerioderMedAarsak = endringBGPerioder => endringBGPerioder
   .filter(({ harPeriodeAarsakGraderingEllerRefusjon }) => harPeriodeAarsakGraderingEllerRefusjon === true);
-
 
 /**
  * TilstotendeYtelseOgEndretBeregningsgrunnlag

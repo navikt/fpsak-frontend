@@ -4,6 +4,7 @@ import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/omsorg/ErOmsorgVilkaarOppfyltForm.jsx
 import BpPanelTemplate from 'behandlingFpsak/behandlingsprosess/components/vilkar/BpPanelTemplate';
 import { getBehandlingsresultat } from 'behandlingFpsak/behandlingSelectors';
 import { getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
@@ -16,6 +17,20 @@ import vilkarType from 'kodeverk/vilkarType';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import VilkarResultPicker from 'behandlingFpsak/behandlingsprosess/components/vilkar/VilkarResultPicker';
+=======
+import BpPanelTemplate from 'behandlingsprosess/components/vilkar/BpPanelTemplate';
+import { getBehandlingsresultat } from 'behandling/behandlingSelectors';
+import { getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus } from 'behandlingsprosess/behandlingsprosessSelectors';
+import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
+import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
+import VilkarResultPicker from 'behandlingsprosess/components/vilkar/VilkarResultPicker';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vilkar/omsorg/ErOmsorgVilkaarOppfyltForm.jsx
 
 const createAksjonspunktHelptTexts = (aksjonspunkter) => {
   const helpTexts = [];

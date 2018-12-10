@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import inntektskategorier from 'kodeverk/inntektskategorier';
+import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import KunYtelsePanel, { brukersAndelFieldArrayName } from './KunYtelsePanel';
 import { besteberegningField } from './KunYtelseBesteberegningPanel';
 

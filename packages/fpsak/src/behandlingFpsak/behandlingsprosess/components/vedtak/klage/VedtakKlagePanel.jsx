@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 
-import ElementWrapper from '@fpsak-frontend/shared-components';
 import {
   getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK,
   getBehandlingSprak, getBehandlingVilkar,
@@ -17,11 +16,16 @@ import { TextAreaField } from 'form/Fields';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 =======
 } from 'behandling/behandlingSelectors';
-import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils/languageUtils';
-import { required, hasValidText } from '@fpsak-frontend/utils';
+import { getLanguageCodeFromSprakkode, required, hasValidText } from '@fpsak-frontend/utils';
 import { TextAreaField } from '@fpsak-frontend/form';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/klage/VedtakKlagePanel.jsx
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vedtak/klage/VedtakKlagePanel.jsx
+=======
+import {
+  ElementWrapper, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vedtak/klage/VedtakKlagePanel.jsx
 import {
   medholdIKlage, shouldGiveBegrunnelse, maxLength1500, minLength3,
 } from '../VedtakHelper';

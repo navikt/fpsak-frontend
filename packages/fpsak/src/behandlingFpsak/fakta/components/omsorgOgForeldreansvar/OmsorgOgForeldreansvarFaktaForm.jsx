@@ -7,6 +7,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/omsorgOgForeldreansvar/OmsorgOgForeldreansvarFaktaForm.jsx
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/omsorgOgForeldreansvar/OmsorgOgForeldreansvarFaktaForm.jsx
 import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { getEditedStatus } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
@@ -28,6 +29,15 @@ import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
 =======
 import { isEmpty } from '@fpsak-frontend/utils';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
+=======
+import { getEditedStatus } from 'behandling/behandlingSelectors';
+import { behandlingFormValueSelector } from 'behandling/behandlingForm';
+import { EditedIcon, ElementWrapper, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { SelectField } from '@fpsak-frontend/form';
+import { required, hasValidInteger, isObjectEmpty } from '@fpsak-frontend/utils';
+import VilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/omsorgOgForeldreansvar/OmsorgOgForeldreansvarFaktaForm.jsx
 import FaktaGruppe from 'fakta/components/FaktaGruppe';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/omsorgOgForeldreansvar/OmsorgOgForeldreansvarFaktaForm.jsx
 import OmsorgsovertakelseFaktaPanel from './OmsorgsovertakelseFaktaPanel';
@@ -171,7 +181,7 @@ OmsorgOgForeldreansvarFaktaForm.validate = ({ originalAntallBarn, antallBarn }) 
   if (antallBarn < 1 || antallBarn > originalAntallBarn) {
     errors.antallBarn = ([{ id: 'OmsorgOgForeldreansvarFaktaForm.AntallBarnValidation' }]);
   }
-  if (isEmpty(errors)) {
+  if (isObjectEmpty(errors)) {
     const res = hasValidInteger(antallBarn);
     if (res !== null) {
       errors.antallBarn = res;

@@ -5,14 +5,14 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import { VerticalSpacer, AksjonspunktHelpText, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   getBehandlingMedlem, getPersonopplysning,
   getSoknad, getAksjonspunkter, getBehandlingRevurderingAvFortsattMedlemskapFom,
 }
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioder/OppholdInntektOgPerioderForm.jsx
   from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
@@ -24,6 +24,13 @@ import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButto
 import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
 =======
 import ElementWrapper from '@fpsak-frontend/shared-components';
+=======
+  from 'behandling/behandlingSelectors';
+import { behandlingForm } from 'behandling/behandlingForm';
+import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioder/OppholdInntektOgPerioderForm.jsx
 import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
 import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioder/OppholdInntektOgPerioderForm.jsx

@@ -14,22 +14,25 @@ import Image from 'sharedComponents/Image';
 import { InputField, NavFieldGroup, SelectField } from '@fpsak-frontend/form';
 import { getAksjonspunkter } from 'behandling/behandlingSelectors';
 import { isBehandlingFormDirty } from 'behandling/behandlingForm';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/kunYtelse/BrukersAndelFieldArray.jsx
 import { isEmpty } from '@fpsak-frontend/utils';
 import { Image } from '@fpsak-frontend/shared-components';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/kunYtelse/BrukersAndelFieldArray.jsx
+=======
+import {
+  isArrayEmpty, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, required,
+} from '@fpsak-frontend/utils';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/kunYtelse/BrukersAndelFieldArray.jsx
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import { getKodeverk } from 'kodeverk/duck';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from '@fpsak-frontend/utils';
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { required } from '@fpsak-frontend/utils';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import {
+  Image, Table, TableRow, TableColumn, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 import styles from './brukersAndelFieldArray.less';
 import { validateUlikeAndelerWithMap } from '../ValidateAndelerUtils';
 
@@ -222,7 +225,7 @@ BrukersAndelFieldArray.validate = (values) => {
   if (arrayErrors.some(errors => errors !== null)) {
     return arrayErrors;
   }
-  if (isEmpty(values)) {
+  if (isArrayEmpty(values)) {
     return null;
   }
   const ulikeAndelerError = validateUlikeAndelerWithMap(values, mapBrukesAndelToSortedObject);

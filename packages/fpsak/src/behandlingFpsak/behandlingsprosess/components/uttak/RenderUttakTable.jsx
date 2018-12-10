@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
-import uttakPeriodeType from 'kodeverk/uttakPeriodeType';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
+import uttakPeriodeType from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
 import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { SelectField, InputField, DecimalField } from '@fpsak-frontend/form';
-import uttakArbeidTypeKodeverk from 'kodeverk/uttakArbeidType';
-import uttakArbeidTypeTekstCodes from 'kodeverk/uttakArbeidTypeCodes';
+import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
+import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/src/uttakArbeidTypeCodes';
 import {
   minValue, maxValue, hasValidInteger, maxLength, required, hasValidDecimal, notDash,
 } from '@fpsak-frontend/utils';

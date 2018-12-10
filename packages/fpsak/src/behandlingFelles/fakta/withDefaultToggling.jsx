@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFelles/fakta/withDefaultToggling.jsx
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+=======
+import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/withDefaultToggling.jsx
 
 const isInfoPanelOpen = aksjonspunkter => aksjonspunkter.filter(ap => isAksjonspunktOpen(ap.status.kode)).length > 0;
 

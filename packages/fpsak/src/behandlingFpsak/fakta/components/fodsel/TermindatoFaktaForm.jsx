@@ -17,17 +17,22 @@ import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import { DatepickerField, InputField } from 'form/Fields';
 =======
 import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
-import ElementWrapper from '@fpsak-frontend/shared-components';
-import DateLabel from '@fpsak-frontend/shared-components';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  DateLabel, VerticalSpacer, ElementWrapper,
+} from '@fpsak-frontend/shared-components';
 import { behandlingForm } from 'behandling/behandlingForm';
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/fodsel/TermindatoFaktaForm.jsx
 import {
   required, hasValidDate, minValue, maxValue, hasValidInteger,
 } from '@fpsak-frontend/utils';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/fodsel/TermindatoFaktaForm.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
+=======
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import FaktaGruppe from 'fakta/components/FaktaGruppe';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/fodsel/TermindatoFaktaForm.jsx
 import {
   getEditedStatus, getSoknad, getFamiliehendelse, getAksjonspunkter,
 } from 'behandlingFpsak/behandlingSelectors';

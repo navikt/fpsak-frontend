@@ -3,8 +3,13 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/VilkarPanels.spec.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
+=======
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vilkar/VilkarPanels.spec.jsx
 import { VilkarPanels } from './VilkarPanels';
 import VilkarresultatMedOverstyringForm from './VilkarresultatMedOverstyringForm';
 import SokersOpplysningspliktForm from './sokersOpplysningsplikt/SokersOpplysningspliktForm';

@@ -3,10 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
+<<<<<<< HEAD:packages/fpsak/src/behandlingTilbakekreving/fakta/components/FaktaGruppe.jsx
 
 import BorderBox from 'sharedComponents/BorderBox';
 import { getMerknaderFraBeslutter } from 'behandlingTilbakekreving/tilbakekrevingBehandlingSelectors';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+=======
+import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { getMerknaderFraBeslutter } from 'behandling/behandlingSelectors';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/FaktaGruppe.jsx
 
 const Wrapper = ({
   withoutBorder, error, children, className,

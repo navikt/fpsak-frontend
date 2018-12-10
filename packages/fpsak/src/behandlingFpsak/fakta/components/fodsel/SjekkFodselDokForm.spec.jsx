@@ -1,10 +1,15 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/fodsel/SjekkFodselDokForm.spec.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import FodselSammenligningPanel from 'behandlingFpsak/components/fodselSammenligning/FodselSammenligningPanel';
+=======
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import FodselSammenligningPanel from 'behandling/components/fodselSammenligning/FodselSammenligningPanel';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/fodsel/SjekkFodselDokForm.spec.jsx
 import { SjekkFodselDokForm, buildInitialValues } from './SjekkFodselDokForm';
 
 describe('<SjekkFodselDokForm>', () => {

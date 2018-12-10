@@ -5,22 +5,38 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingTilbakekreving/fakta/components/person/PersonInfoPanel.jsx
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { omit } from 'utils/objectUtils';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from 'kodeverk/kodeverkTyper';
+=======
+import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
+import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { omit } from '@fpsak-frontend/utils';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/person/PersonInfoPanel.jsx
 import {
   getBehandlingRelatertTilgrensendeYtelserForAnnenForelder,
   getBehandlingRelatertTilgrensendeYtelserForSoker,
   getBehandlingSprak,
   getPersonopplysning,
   getBehandlingArbeidsforhold,
+<<<<<<< HEAD:packages/fpsak/src/behandlingTilbakekreving/fakta/components/person/PersonInfoPanel.jsx
 } from 'behandlingTilbakekreving/tilbakekrevingBehandlingSelectors';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { behandlingForm } from 'behandlingTilbakekreving/behandlingForm';
 import withDefaultToggling from 'behandlingFelles/fakta/withDefaultToggling';
 import faktaPanelCodes from 'behandlingTilbakekreving/fakta/faktaPanelCodes';
+=======
+} from 'behandling/behandlingSelectors';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { behandlingForm } from 'behandling/behandlingForm';
+import withDefaultToggling from 'fakta/withDefaultToggling';
+import faktaPanelCodes from 'fakta/faktaPanelCodes';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/person/PersonInfoPanel.jsx
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import FullPersonInfo from './panelBody/FullPersonInfo';
 import PersonArbeidsforholdPanel from './panelBody/arbeidsforhold/PersonArbeidsforholdPanel';

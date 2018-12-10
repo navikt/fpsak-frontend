@@ -28,6 +28,7 @@ import {
   required, minValue, maxValue, hasValidInteger, formatCurrencyWithKr,
 } from '@fpsak-frontend/utils';
 import { InputField } from '@fpsak-frontend/form';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsresultat/BeregningsresultatEngangsstonadForm.jsx
 import aksjonspunktCode from 'kodeverk/aksjonspunktCodes';
 <<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsresultat/BeregningsresultatEngangsstonadForm.jsx
 import OverstyrVurderingChecker from 'behandlingFpsak/behandlingsprosess/components/OverstyrVurderingChecker';
@@ -35,6 +36,9 @@ import OverstyrConfirmationForm from 'behandlingFpsak/behandlingsprosess/compone
 import OverstyrConfirmVilkarButton from 'behandlingFpsak/behandlingsprosess/components/OverstyrConfirmVilkarButton';
 import { formatCurrencyWithKr } from 'utils/currencyUtils';
 =======
+=======
+import aksjonspunktCode from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/beregningsresultat/BeregningsresultatEngangsstonadForm.jsx
 import OverstyrVurderingChecker from 'behandlingsprosess/components/OverstyrVurderingChecker';
 import OverstyrConfirmationForm from 'behandlingsprosess/components/OverstyrConfirmationForm';
 import OverstyrConfirmVilkarButton from 'behandlingsprosess/components/OverstyrConfirmVilkarButton';

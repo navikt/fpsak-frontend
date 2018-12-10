@@ -17,8 +17,13 @@ import { TextAreaField, RadioGroupField, RadioOption } from '@fpsak-frontend/for
 import {
   required, hasValidText, maxLength, minLength,
 } from '@fpsak-frontend/utils';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/fodsel/SykdomPanel.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
+=======
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import FaktaGruppe from 'fakta/components/FaktaGruppe';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/fodsel/SykdomPanel.jsx
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);

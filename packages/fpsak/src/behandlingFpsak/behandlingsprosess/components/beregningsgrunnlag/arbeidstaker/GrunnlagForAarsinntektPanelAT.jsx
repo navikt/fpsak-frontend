@@ -16,6 +16,7 @@ import { required } from 'utils/validation/validators';
 =======
 import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { InputField } from '@fpsak-frontend/form';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/arbeidstaker/GrunnlagForAarsinntektPanelAT.jsx
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import Table from '@fpsak-frontend/shared-components/Table';
 import TableRow from '@fpsak-frontend/shared-components/TableRow';
@@ -28,9 +29,20 @@ import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { Image } from '@fpsak-frontend/shared-components';
+=======
+import {
+  Image, VerticalSpacer, Table, TableRow, TableColumn,
+} from '@fpsak-frontend/shared-components';
+import {
+  createVisningsnavnForAktivitet, required, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber,
+} from '@fpsak-frontend/utils';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/arbeidstaker/GrunnlagForAarsinntektPanelAT.jsx
 import endretUrl from '@fpsak-frontend/assets/images/endret_felt.svg';
-import periodeAarsak from 'kodeverk/periodeAarsak';
-import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
+import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import NaturalytelsePanel from './NaturalytelsePanel';
 import styles from './grunnlagForAarsinntektPanelAT.less';
 

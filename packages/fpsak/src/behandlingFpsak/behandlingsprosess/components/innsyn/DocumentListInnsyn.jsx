@@ -4,14 +4,11 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import CheckboxField from 'form/fields/CheckboxField';
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
-import DateTimeLabel from '@fpsak-frontend/shared-components/DateTimeLabel';
-import { Image } from '@fpsak-frontend/shared-components';
-import kommunikasjonsretning from 'kodeverk/kommunikasjonsretning';
-import ElementWrapper from '@fpsak-frontend/shared-components';
+import { CheckboxField } from '@fpsak-frontend/form';
+import {
+  Image, Table, TableRow, TableColumn, ElementWrapper, DateTimeLabel,
+} from '@fpsak-frontend/shared-components';
+import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 
 import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
 import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg';

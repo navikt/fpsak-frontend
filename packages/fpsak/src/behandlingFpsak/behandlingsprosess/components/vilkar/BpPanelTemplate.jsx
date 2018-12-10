@@ -12,12 +12,17 @@ import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 =======
 import VilkarResultPanel from 'behandlingsprosess/components/vilkar/VilkarResultPanel';
-import ElementWrapper from '@fpsak-frontend/shared-components';
 import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/BpPanelTemplate.jsx
 import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
 >>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vilkar/BpPanelTemplate.jsx
+=======
+import {
+  ElementWrapper, VerticalSpacer, AksjonspunktHelpText, FadingPanel,
+} from '@fpsak-frontend/shared-components';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vilkar/BpPanelTemplate.jsx
 
 /*
  * BpPanelTemplate

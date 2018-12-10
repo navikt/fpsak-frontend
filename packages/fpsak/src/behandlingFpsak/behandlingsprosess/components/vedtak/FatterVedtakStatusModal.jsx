@@ -7,8 +7,8 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import Modal from '@fpsak-frontend/shared-components';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/FatterVedtakStatusModal.jsx
 import { Image } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import behandlingStatus from 'kodeverk/behandlingStatus';
@@ -18,8 +18,19 @@ import {
   getBehandlingStatus, getBehandlingsresultat, getAksjonspunkter, getBehandlingType,
 } from 'behandlingFpsak/behandlingSelectors';
 import behandlingResultatType from 'kodeverk/behandlingResultatType';
+=======
+import { Modal, Image } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { getSelectedBehandlingId } from 'behandling/duck';
+import {
+  getBehandlingStatus, getBehandlingsresultat, getAksjonspunkter, getBehandlingType,
+} from 'behandling/behandlingSelectors';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vedtak/FatterVedtakStatusModal.jsx
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import requireProps from 'app/data/requireProps';
 
 import styles from './fatterVedtakStatusModal.less';

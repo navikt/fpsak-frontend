@@ -10,13 +10,12 @@ import {
   isBehandlingStatusReadOnly, getBehandlingStatus, getBehandlingsresultat, getBehandlingKlageVurdering,
 } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-} from 'behandling/behandlingSelectors';
-import  from '@fpsak-frontend/shared-components';
-import behandlingResultatType from 'kodeverk/behandlingResultatType';
-import klageVurderingCodes from 'kodeverk/klageVurdering';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import VedtakKlageSubmitPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/klageNy/VedtakKlageSubmitPanel';
-import { ElementWrapper, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { FadingPanel, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import featureToggle from 'app/featureToggle';
 import { getFeatureToggles } from 'app/duck';
 

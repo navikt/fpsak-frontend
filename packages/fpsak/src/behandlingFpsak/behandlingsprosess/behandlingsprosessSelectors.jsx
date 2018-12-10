@@ -1,13 +1,18 @@
 import { createSelector } from 'reselect';
 
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors.jsx
 import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+=======
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/behandlingsprosessSelectors.jsx
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { getRettigheter } from 'navAnsatt/duck';
 import { DEFAULT_BEHANDLINGSPROSESS } from 'app/paths';
 import { arrayToObject } from '@fpsak-frontend/utils';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import fyt from 'kodeverk/fagsakYtelseType';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import fyt from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import {
   getBehandlingIsOnHold, getAllMerknaderFraBeslutter, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat,
   getBehandlingInnsynResultatType, getBehandlingResultatstruktur, getStonadskontoer, hasReadOnlyBehandling, isBehandlingStatusReadOnly,

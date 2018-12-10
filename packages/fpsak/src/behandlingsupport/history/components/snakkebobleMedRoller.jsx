@@ -4,7 +4,7 @@ import { Panel } from 'nav-frontend-paneler';
 import { Undertekst } from 'nav-frontend-typografi';
 import classNames from 'classnames/bind';
 
-import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 
 import styles from './snakkebobleMedRoller.less';
 

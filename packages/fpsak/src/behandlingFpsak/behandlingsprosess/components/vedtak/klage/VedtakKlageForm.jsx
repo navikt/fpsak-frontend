@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
+<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/klage/VedtakKlageForm.jsx
 
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { isBehandlingStatusReadOnly, getBehandlingStatus, getBehandlingsresultat } from 'behandlingFpsak/behandlingSelectors';
@@ -10,6 +11,14 @@ import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/beh
 import { isInnvilget, isAvslag } from 'kodeverk/behandlingResultatType';
 import ElementWrapper from '@fpsak-frontend/shared-components';
 import behandlingStatusCode from 'kodeverk/behandlingStatus';
+=======
+import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
+import { isBehandlingStatusReadOnly, getBehandlingStatus, getBehandlingsresultat } from 'behandling/behandlingSelectors';
+import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
+import { isInnvilget, isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import { ElementWrapper } from '@fpsak-frontend/shared-components';
+import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+>>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vedtak/klage/VedtakKlageForm.jsx
 import VedtakKlageSubmitPanel from './VedtakKlageSubmitPanel';
 import VedtakAvslagKlagePanel from './VedtakAvslagKlagePanel';
 import VedtakKlagePanel from './VedtakKlagePanel';

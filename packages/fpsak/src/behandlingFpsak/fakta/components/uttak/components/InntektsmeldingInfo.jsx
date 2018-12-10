@@ -2,15 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Undertekst, Normaltekst, Element } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import { dateFormat, calcDaysAndWeeks, TIDENES_ENDE } from '@fpsak-frontend/utils';
-import { utsettelseArsakTexts } from 'kodeverk/utsettelseArsakCodes';
+import { utsettelseArsakTexts } from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import classnames from 'classnames/bind';
-import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
-import FlexRow from 'sharedComponents/flexGrid/FlexRow';
-import guid from '@fpsak-frontend/utils';
-import { flatten } from '@fpsak-frontend/utils';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Image } from '@fpsak-frontend/shared-components';
+import {
+  flatten, guid, dateFormat, calcDaysAndWeeks, TIDENES_ENDE,
+} from '@fpsak-frontend/utils';
+import {
+  FlexRow, FlexColumn, VerticalSpacer, Image,
+} from '@fpsak-frontend/shared-components';
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 
 import styles from '../uttakPeriode.less';
