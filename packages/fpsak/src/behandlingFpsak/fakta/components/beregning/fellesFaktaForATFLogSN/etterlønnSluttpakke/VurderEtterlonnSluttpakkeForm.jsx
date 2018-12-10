@@ -8,7 +8,7 @@ import OAType from 'kodeverk/opptjeningAktivitetType';
 import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
 import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import { connect } from 'react-redux';
-import { behandlingFormValueSelector } from 'behandling/behandlingForm';
+import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import FastsettEtterlonnSluttpakkeForm from './FastsettEtterlonnSluttpakkeForm';
 import styles from './vurderEtterlonnSluttpakkeForm.less';
 
