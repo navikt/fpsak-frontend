@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import EndringBeregningsgrunnlagPeriodePanel from './EndringBeregningsgrunnlagPeriodePanel';
 
 import styles from './endringBeregningsgrunnlagForm.less';
@@ -10,7 +12,7 @@ const ElementWrapper = ({ children }) => children;
 
 const endringBGFieldArrayNamePrefix = 'endringBGPeriode';
 
-const getFieldNameKey = index => (endringBGFieldArrayNamePrefix + index);
+export const getFieldNameKey = index => (endringBGFieldArrayNamePrefix + index);
 
 
 /**
@@ -105,22 +107,32 @@ EndringBeregningsgrunnlagForm.buildInitialValues = (endringBGPerioder) => {
   return initialValues;
 };
 
-const getAndelsnr = (andelValues) => {
-  if (andelValues.nyAndel === true) {
-    return andelValues.andel;
+const getAndelsnr = (aktivitet) => {
+  if (aktivitet.nyAndel === true) {
+    return aktivitet.andel;
   }
-  return andelValues.andelsnr;
+  return aktivitet.andelsnr;
 };
 
+const getAndelsnrForKunYtelse = (periode) => {
+  const brukersAndel = periode.endringBeregningsgrunnlagAndeler.find(andel => !andel.lagtTilAvSaksbehandler
+  && andel.aktivitetStatus.kode === aktivitetStatus.BRUKERS_ANDEL);
+  return brukersAndel.andelsnr;
+};
 
-EndringBeregningsgrunnlagForm.transformValues = (values, endringBGPerioder) => {
+const gjelderKunYtelse = (harKunYtelse, aktivitet) => (harKunYtelse
+  && aktivitet.nyAndel
+  && aktivitet.andel === beregningsgrunnlagAndeltyper.BRUKERS_ANDEL);
+
+
+EndringBeregningsgrunnlagForm.transformValues = (values, endringBGPerioder, harKunYtelse) => {
   const endringBeregningsgrunnlagPerioder = [];
   for (let index = 0; index < endringBGPerioder.length; index += 1) {
     if (endringBGPerioder[index].harPeriodeAarsakGraderingEllerRefusjon) {
       endringBeregningsgrunnlagPerioder.push({
         andeler: values[getFieldNameKey(index)].map(aktivitet => ({
           andel: aktivitet.andel,
-          andelsnr: getAndelsnr(aktivitet),
+          andelsnr: gjelderKunYtelse(harKunYtelse, aktivitet) ? getAndelsnrForKunYtelse(endringBGPerioder[index]) : getAndelsnr(aktivitet),
           arbeidsforholdId: aktivitet.arbeidsforholdId !== '' ? aktivitet.arbeidsforholdId : null,
           nyAndel: aktivitet.nyAndel,
           lagtTilAvSaksbehandler: aktivitet.lagtTilAvSaksbehandler,
