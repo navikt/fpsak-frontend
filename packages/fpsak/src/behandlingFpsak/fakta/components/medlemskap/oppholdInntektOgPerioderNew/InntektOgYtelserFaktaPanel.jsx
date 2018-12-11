@@ -6,11 +6,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
-import { behandlingFormValueSelector } from 'behandling/behandlingForm';
-import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import { ISO_DATE_FORMAT, formatCurrencyWithKr } from '@fpsak-frontend/utils';
-import { behandlingFormValueSelector } from 'behandling/behandlingForm';
-import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import {
   Table, TableRow, TableColumn, PeriodLabel,
 } from '@fpsak-frontend/shared-components';

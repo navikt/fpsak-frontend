@@ -20,6 +20,9 @@ import FodselSammenligningPanel from 'behandlingFpsak/components/fodselSammenlig
 import {
   required, hasValidDate, minValue, maxValue, hasValidInteger, dateBeforeOrEqualToToday,
 } from '@fpsak-frontend/utils';
+import {
+  RadioGroupField, RadioOption, InputField, DatepickerField,
+} from '@fpsak-frontend/form';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

@@ -8,7 +8,6 @@ import BehandlingspunktInfoPanel from 'behandlingFpsak/behandlingsprosess/compon
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import BehandlingspunktInfoPanel from 'behandlingsprosess/components/BehandlingspunktInfoPanel';
 import { BehandlingsprosessIndex } from './BehandlingsprosessIndex';
 
 describe('<BehandlingsprosessIndex>', () => {
