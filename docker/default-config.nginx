@@ -51,8 +51,6 @@ server {
     set $oidc_password              "${OIDC_PASSWORD}";
     set $oidc_host_url              "${OIDC_HOST_URL}";
 
-
-
     # Server headers. Will be overwritten if you set them in blocks.
     proxy_set_header    Connection "";
     proxy_set_header    Referer $http_referer;
@@ -64,8 +62,8 @@ server {
     proxy_ssl_verify    off;
 
     add_header          X-Application-Id "${APP_NAME}:${APP_VERSION}, proxy=${APP_API_GATEWAY}, pod=${APP_HOSTNAME}";
-
-    # complete disable cache
+    add_header          X-Cache-Status $upstream_cache_status;
+    # complete disable cache by default
     add_header          Last-Modified $date_gmt;
     add_header          Cache-Control 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
     if_modified_since   off;
@@ -105,8 +103,8 @@ server {
 
     ## All static files will be served directly.
     location ~* ^.+\.(?:css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|svg)$ {
-        ## expires 365d;
-
+        expires 365d;
+        add_header Cache-Control ;
         ## Set the OS file cache.
         open_file_cache max=3000 inactive=120s;
         open_file_cache_valid 45s;
