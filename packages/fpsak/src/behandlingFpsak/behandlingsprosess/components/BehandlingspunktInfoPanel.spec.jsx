@@ -7,7 +7,6 @@ import { BehandlingspunktInfoPanel } from 'behandlingFpsak/behandlingsprosess/co
 import BeregningsresultatEngangsstonadForm from 'behandlingFpsak/behandlingsprosess/components/beregningsresultat/BeregningsresultatEngangsstonadForm';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { BehandlingspunktInfoPanel } from 'behandlingsprosess/components/BehandlingspunktInfoPanel';
 import VurderSoknadsfristForeldrepengerForm from './soknadsfrist/VurderSoknadsfristForeldrepengerForm';
 
 describe('<BehandlingspunktInfoPanel>', () => {
