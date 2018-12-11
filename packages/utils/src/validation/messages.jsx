@@ -23,3 +23,4 @@ export const invalidPeriodMessage = () => ([{ id: 'ValidationMessage.InvalidPeri
 export const invalidPeriodRangeMessage = () => ([{ id: 'ValidationMessage.InvalidPeriodRange' }]);
 export const utbetalingsgradErMerSamtidigUttaksprosentMessage = () => ([{ id: 'ValidationMessage.utbetalingsgradErMerSamtidigUttaksprosent' }]);
 export const invalidNumberMessage = text => ([{ id: 'ValidationMessage.InvalidNumber' }, { text }]);
+export const ukerOgDagerVidNullUtbetalningsgradMessage = () => ([{ id: 'ValidationMessage.ukerOgDagerVidNullUtbetalningsgradMessage' }]);

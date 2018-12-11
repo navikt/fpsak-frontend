@@ -160,22 +160,33 @@ export const UttakInfo = ({
           }
         </Column>
         <Column xs="3">
-          {(harSoktOmFlerbarnsdager)
-          && (
-            <CheckboxField
-              key="flerbarnsdager"
-              name="flerbarnsdager"
-              label={{ id: 'UttakActivity.Flerbarnsdager' }}
-              disabled={readOnly}
-            />
-          )
-          }
-          <CheckboxField
-            key="samtidigUttak"
-            name="samtidigUttak"
-            label={{ id: 'UttakActivity.SamtidigUttak' }}
-            disabled={readOnly}
-          />
+          <FlexContainer>
+            <FlexRow className={styles.fieldHorizontal}>
+              <FlexColumn className={styles.textAlignRight}>
+                {(harSoktOmFlerbarnsdager)
+                && (
+                  <CheckboxField
+                    key="flerbarnsdager"
+                    name="flerbarnsdager"
+                    label={{ id: 'UttakActivity.Flerbarnsdager' }}
+                    disabled={readOnly}
+                  />
+                )
+                }
+              </FlexColumn>
+            </FlexRow>
+            <FlexRow className={styles.fieldHorizontal}>
+              <FlexColumn className={styles.textAlignRight}>
+                <CheckboxField
+                  key="samtidigUttak"
+                  name="samtidigUttak"
+                  label={{ id: 'UttakActivity.SamtidigUttak' }}
+                  disabled={readOnly}
+                />
+              </FlexColumn>
+
+            </FlexRow>
+          </FlexContainer>
           {erSamtidigUttak
             && (
               <FlexContainer>

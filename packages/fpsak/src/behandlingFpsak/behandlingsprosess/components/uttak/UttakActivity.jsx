@@ -13,7 +13,12 @@ import {
   required,
   notDash,
   isUtbetalingsgradMerSamitidigUttaksprosent,
+<<<<<<< HEAD
 } from '@fpsak-frontend/utils';
+=======
+  isUkerOgDagerVidNullUtbetalningsgrad,
+} from 'utils/validation/validators';
+>>>>>>> FIX: PFP-4165 punkt 1 - hard validering på uttaksprosent/trekkdager
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
@@ -254,15 +259,21 @@ const resultatTypeObject = (value, oppholdArsak) => {
 const validateUttakActivity = (values) => {
   const errors = {};
   errors.UttakFieldArray = [];
-  if (values.samtidigUttak && values.UttakFieldArray) {
+  if (values.UttakFieldArray) {
     values.UttakFieldArray.forEach((aktivitet, index) => {
       const samtidigUttaksprosent = parseFloat(values.samtidigUttaksprosent);
       const utbetalingsgrad = parseFloat(aktivitet.utbetalingsgrad);
-      const invalid = isUtbetalingsgradMerSamitidigUttaksprosent(samtidigUttaksprosent, utbetalingsgrad);
-
-      if (invalid) {
+      const invalidUtbetalingsgradMerSamitidigUttaksprosent = isUtbetalingsgradMerSamitidigUttaksprosent(samtidigUttaksprosent, utbetalingsgrad);
+      const invalidUkerOgDagerVidNullUtbetalningsgrad = isUkerOgDagerVidNullUtbetalningsgrad(aktivitet.weeks, aktivitet.days, utbetalingsgrad);
+      if (values.samtidigUttak && invalidUtbetalingsgradMerSamitidigUttaksprosent) {
         errors.UttakFieldArray[index] = {
-          utbetalingsgrad: invalid,
+          utbetalingsgrad: invalidUtbetalingsgradMerSamitidigUttaksprosent,
+        };
+      }
+
+      if (invalidUkerOgDagerVidNullUtbetalningsgrad) {
+        errors.UttakFieldArray[index] = {
+          utbetalingsgrad: invalidUkerOgDagerVidNullUtbetalningsgrad,
         };
       }
     });
