@@ -5,7 +5,7 @@ import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/in
 import AksjonspunktHelpText from './AksjonspunktHelpText';
 
 describe('<AksjonspunktHelpText>', () => {
-  xit('skal vise hjelpetekst og ikon når aksjonspunkt er åpent', () => {
+  it('skal vise hjelpetekst og ikon når aksjonspunkt er åpent', () => {
     const wrapper = shallowWithIntl(
       <AksjonspunktHelpText isAksjonspunktOpen intl={intlMock}>
         {[<FormattedMessage key="1" id="HelpText.Aksjonspunkt" />]}
@@ -15,13 +15,13 @@ describe('<AksjonspunktHelpText>', () => {
     expect(wrapper.find('Element').childAt(0).prop('id')).is.eql('HelpText.Aksjonspunkt');
   });
 
-  xit('skal kun vise hjelpetekst når aksjonspunkt er lukket', () => {
+  it('skal kun vise hjelpetekst når aksjonspunkt er lukket', () => {
     const wrapper = shallowWithIntl(
       <AksjonspunktHelpText isAksjonspunktOpen={false}>
-        {[<FormattedMessage key="1" id="HelpText.Aksjonspunk" />]}
+        {[<FormattedMessage key="1" id="HelpText.Aksjonspunkt" />]}
       </AksjonspunktHelpText>,
     );
     expect(wrapper.find('InjectIntl(Image)')).to.have.length(0);
-    expect(wrapper.find('Normaltekst').childAt(2).text()).to.eql('test');
+    expect(wrapper.find('Normaltekst').childAt(2).prop('id')).is.eql('HelpText.Aksjonspunkt');
   });
 });
