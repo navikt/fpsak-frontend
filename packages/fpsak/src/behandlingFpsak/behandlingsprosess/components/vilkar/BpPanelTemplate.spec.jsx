@@ -117,7 +117,7 @@ describe('<BpPanelTemplate>', () => {
     const ap = wrapper.find(AksjonspunktHelpText);
     expect(ap).to.have.length(1);
     expect(ap.prop('isAksjonspunktOpen')).is.true;
-    expect(ap.childAt(0).text()).is.eql('Vurder om tidligere utbetalt foreldrepenger eller engangsstønad'
+    expect(ap.childAt(0).text()).is.eql('Vurder om tidligere utbetalte foreldrepenger eller engangsstønad'
     + ' gjelder for samme barn. Dersom det gjelder for samme barn er dette vilkåret ikke oppfylt.');
   });
 });
