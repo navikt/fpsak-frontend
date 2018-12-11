@@ -27,14 +27,14 @@ const config = {
         failOnError: !isDevelopment,
         configFile: path.resolve(__dirname, isDevelopment ? '../eslint/eslintrc.dev.js' : '../eslint/eslintrc.prod.js'),
         fix: isDevelopment,
-        cache: true,
+        cache: false,
       },
       include: [PACKAGES_DIR],
     }, {
       test: /\.(jsx?|js?)$/,
       loader: 'babel-loader',
       options: {
-        cacheDirectory: true,
+        cacheDirectory: false,
       },
       include: PACKAGES_DIR,
     }, {

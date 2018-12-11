@@ -9,7 +9,7 @@ import innvilgetIkonUrl from '@fpsak-frontend/assets/images/innvilget.svg';
 import innvilgetValgtIkonUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import ikkeVurdertIkonUrl from '@fpsak-frontend/assets/images/behandle_disable.svg';
 
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vedtakImages from './statusIconsVedtak';
 import behandlingspunktCodes from './behandlingspunktCodes';
 

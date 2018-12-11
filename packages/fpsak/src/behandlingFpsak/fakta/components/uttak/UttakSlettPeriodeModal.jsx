@@ -7,9 +7,9 @@ import { TextAreaField } from '@fpsak-frontend/form';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
+import {
   minLength, maxLength, required, hasValidText, DDMMYYYY_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
-import { behandlingForm } from 'behandling/behandlingForm';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import {
   FlexColumn, FlexRow, FlexContainer, Modal, VerticalSpacer, Image,

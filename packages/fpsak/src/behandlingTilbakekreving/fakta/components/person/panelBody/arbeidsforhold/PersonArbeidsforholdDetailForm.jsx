@@ -18,7 +18,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import {
   InputField, RadioGroupField, RadioOption, TextAreaField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import PersonNyttEllerErstattArbeidsforholdPanel from './PersonNyttEllerErstattArbeidsforholdPanel';
 
 export const PERSON_ARBEIDSFORHOLD_DETAIL_FORM = 'PersonArbeidsforholdDetailForm';

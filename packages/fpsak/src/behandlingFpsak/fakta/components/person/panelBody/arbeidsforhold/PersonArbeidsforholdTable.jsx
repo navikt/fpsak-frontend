@@ -4,8 +4,10 @@ import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import arbeidsforholdPropType from 'behandlingFelles/proptypes/arbeidsforholdPropType';
-import { Image } from '@fpsak-frontend/shared-components';
-
+import {
+  Image, Table, TableColumn, TableRow, PeriodLabel, DateLabel,
+} from '@fpsak-frontend/shared-components';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import erIBrukImageUrl from '@fpsak-frontend/assets/images/stjerne.svg';
 
 const headerTextCodes = [

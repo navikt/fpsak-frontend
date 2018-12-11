@@ -23,7 +23,6 @@ import FaktaForATFLOgSNPanel, {
   buildInitialValuesFaktaForATFLOgSN, getValidationFaktaForATFLOgSN,
 } from './fellesFaktaForATFLogSN/FaktaForATFLOgSNPanel';
 
-
 export const formName = 'faktaOmBeregningForm';
 
 const {

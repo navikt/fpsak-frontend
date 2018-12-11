@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getFaktaOmBeregning } from 'behandlingFpsak/behandlingSelectors';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import InntektstabellPanel from '../InntektstabellPanel';
 import NyIArbeidslivetSNForm from '../nyIArbeidslivet/NyIArbeidslivetSNForm';
 import TilstotendeYtelseForm, { harKunTilstotendeYtelse } from './TilstøtendeYtelseForm';

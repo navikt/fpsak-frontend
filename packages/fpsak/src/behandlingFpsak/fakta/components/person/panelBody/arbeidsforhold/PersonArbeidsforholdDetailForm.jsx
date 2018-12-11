@@ -17,6 +17,9 @@ import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
 import {
   InputField, RadioGroupField, RadioOption, TextAreaField,
 } from '@fpsak-frontend/form';
+import {
+  ElementWrapper, VerticalSpacer, FlexContainer, FlexColumn, FlexRow,
+} from '@fpsak-frontend/shared-components';
 import PersonNyttEllerErstattArbeidsforholdPanel from './PersonNyttEllerErstattArbeidsforholdPanel';
 
 export const PERSON_ARBEIDSFORHOLD_DETAIL_FORM = 'PersonArbeidsforholdDetailForm';

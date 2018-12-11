@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
+import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 
 import VurderEtterlonnSluttpakkeForm from './VurderEtterlonnSluttpakkeForm';
 

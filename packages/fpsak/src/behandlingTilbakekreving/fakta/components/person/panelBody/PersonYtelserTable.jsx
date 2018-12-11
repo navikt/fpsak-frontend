@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import moment from 'moment';
 import { Normaltekst } from 'nav-frontend-typografi';
-import FaktaGruppe from '../../FaktaGruppe';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components';
+import FaktaGruppe from '../../FaktaGruppe';
 
 import styles from './personYtelserTable.less';
 
