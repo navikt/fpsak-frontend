@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TextAreaField } from '@fpsak-frontend/form';
 import {
   minLength, maxLength, requiredIfNotPristine, hasValidText, decodeHtmlEntity,
 } from '@fpsak-frontend/utils';
+import { TextAreaField } from '@fpsak-frontend/form';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 
 import styles from './faktaBegrunnelseTextField.less';
@@ -68,6 +68,5 @@ FaktaBegrunnelseTextField.buildInitialValues = aksjonspunkt => ({
 FaktaBegrunnelseTextField.transformValues = values => ({
   begrunnelse: values.begrunnelse,
 });
-
 
 export default FaktaBegrunnelseTextField;

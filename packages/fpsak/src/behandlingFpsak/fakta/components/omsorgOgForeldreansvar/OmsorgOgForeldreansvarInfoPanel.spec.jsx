@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
-import relatertYtelseType from 'kodeverk/relatertYtelseType';
+import relatertYtelseType from '@fpsak-frontend/kodeverk/src/relatertYtelseType';
 import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';

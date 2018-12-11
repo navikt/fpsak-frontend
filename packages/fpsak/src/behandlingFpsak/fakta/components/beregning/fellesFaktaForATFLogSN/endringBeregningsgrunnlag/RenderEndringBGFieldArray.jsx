@@ -11,6 +11,9 @@ import {
 import {
   Table, Image, TableRow, TableColumn, ElementWrapper,
 } from '@fpsak-frontend/shared-components';
+import {
+  InputField, DecimalField, PeriodpickerField, NavFieldGroup, SelectField,
+} from '@fpsak-frontend/form';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';

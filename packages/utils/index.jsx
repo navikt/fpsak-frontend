@@ -65,7 +65,6 @@ export {
   formatQueryString,
   parseArray,
 } from './src/urlUtils';
-
 export {
   ariaCheck,
   validateProsentandel,

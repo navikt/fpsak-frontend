@@ -15,6 +15,7 @@ import {
   getPersonopplysning,
   getBehandlingArbeidsforhold,
 } from 'behandlingFpsak/behandlingSelectors';
+import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';

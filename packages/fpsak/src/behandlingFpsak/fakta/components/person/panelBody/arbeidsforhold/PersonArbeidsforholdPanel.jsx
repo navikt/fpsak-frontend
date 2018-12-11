@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
-import { kodeverkTyper } from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getBehandlingVersjon } from 'behandlingFpsak/behandlingSelectors';
 import arbeidsforholdPropType from 'behandlingFelles/proptypes/arbeidsforholdPropType';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';

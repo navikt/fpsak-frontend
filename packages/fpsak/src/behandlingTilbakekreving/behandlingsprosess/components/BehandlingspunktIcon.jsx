@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Undertekst, Element } from 'nav-frontend-typografi';
 import { injectIntl, intlShape } from 'react-intl';
 
-import Image from 'sharedComponents/Image';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import { Image } from '@fpsak-frontend/shared-components';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { getBehandlingHenlagt } from 'behandlingTilbakekreving/tilbakekrevingBehandlingSelectors';
 import findBehandlingsprosessIcon from 'behandlingTilbakekreving/behandlingsprosess/statusIconHelper';
 import {

@@ -12,7 +12,7 @@ import {
   getTilstøtendeYtelse,
   getFaktaOmBeregningTilfellerKoder,
 } from 'behandlingFpsak/behandlingSelectors';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { VerticalSpacer, BorderBox, ElementWrapper } from '@fpsak-frontend/shared-components';
 import YtelsePanel from './YtelsePanel';
 import FordelingAvBruttoBeregningsgrunnlagPanel, { fordelingAvBruttoBGFieldArrayName } from './FordelingAvBruttoBeregningsgrunnlagPanel';

@@ -5,6 +5,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import BehandlingFormFieldCleaner from 'behandlingFpsak/BehandlingFormFieldCleaner';
 import arbeidsforholdPropType from 'behandlingFelles/proptypes/arbeidsforholdPropType';
 import { required } from '@fpsak-frontend/utils';
+import { ElementWrapper, ArrowBox } from '@fpsak-frontend/shared-components';
 import { SelectField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
 const getEndCharFromId = id => id.substring(id.length - 4, id.length);
