@@ -1,6 +1,7 @@
 const avregningCodes = {
   DIFFERANSE: 'differanse',
   INNTREKK: 'inntrekk',
+  FEILUTBETALING: 'feilutbetaling',
   INNTREKKNESTEMÅNED: 'inntrekkNesteMåned',
   TILBAKEKR_INFOTRYGD: 'TILBAKEKR_INFOTRYGD',
   TILBAKEKR_IGNORER: 'TILBAKEKR_IGNORER',

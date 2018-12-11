@@ -91,7 +91,20 @@ export class AvregningPanelImpl extends Component {
 
     this.state = {
       showDetails: [],
+      feilutbetaling: undefined,
     };
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    const { erTilbakekrevingVilkårOppfylt, apCodes } = props;
+    if (state.feilutbetaling !== erTilbakekrevingVilkårOppfylt && apCodes[0] === aksjonspunktCodes.VURDER_INNTREKK) {
+      return {
+        ...state,
+        feilutbetaling: erTilbakekrevingVilkårOppfylt,
+      };
+    }
+
+    return null;
   }
 
   toggleDetails(id) {
@@ -126,7 +139,7 @@ export class AvregningPanelImpl extends Component {
   }
 
   render() {
-    const { showDetails } = this.state;
+    const { showDetails, feilutbetaling } = this.state;
     const {
       simuleringResultat,
       isApOpen,
@@ -136,13 +149,16 @@ export class AvregningPanelImpl extends Component {
       grunnerTilReduksjon,
       ...formProps
     } = this.props;
+    const simuleringResultatOption = feilutbetaling === undefined || feilutbetaling
+      ? simuleringResultat.simuleringResultat : simuleringResultat.simuleringResultatUtenInntrekk;
+
     return (
       <FadingPanel>
         <Undertittel>
           <FormattedMessage id="Avregning.Title" />
         </Undertittel>
         <VerticalSpacer twentyPx />
-        { simuleringResultat
+        { simuleringResultatOption
           && (
           <div>
             <Row>
@@ -152,129 +168,131 @@ export class AvregningPanelImpl extends Component {
                 </AksjonspunktHelpText>
                 <VerticalSpacer twentyPx />
                 <AvregningSummary
-                  fom={simuleringResultat.periodeFom}
-                  tom={simuleringResultat.periodeTom}
-                  feilutbetaling={simuleringResultat.sumFeilutbetaling}
-                  etterbetaling={simuleringResultat.sumEtterbetaling}
-                  inntrekk={simuleringResultat.sumInntrekk}
+                  fom={simuleringResultatOption.periodeFom}
+                  tom={simuleringResultatOption.periodeTom}
+                  feilutbetaling={simuleringResultatOption.sumFeilutbetaling}
+                  etterbetaling={simuleringResultatOption.sumEtterbetaling}
+                  inntrekk={simuleringResultatOption.sumInntrekk}
                 />
                 <AvregningTable
                   showDetails={showDetails}
                   toggleDetails={this.toggleDetails}
-                  simuleringResultat={simuleringResultat}
+                  simuleringResultat={simuleringResultatOption}
                 />
                 <VerticalSpacer twentyPx />
               </Column>
             </Row>
-            { apCodes[0]
-            && (
-              <Row>
-                <Column xs="12">
-                  <form onSubmit={formProps.handleSubmit}>
-                    <Row>
-                      <Column sm="6">
-                        <TextAreaField
-                          name="begrunnelse"
-                          label={{ id: 'Avregning.vurdering' }}
-                          validate={[required, minLength3, maxLength1500, hasValidText]}
-                          maxLength={1500}
-                          readOnly={readOnly}
-                          id="avregningVurdering"
-                        />
-                      </Column>
-                      { apCodes[0] === aksjonspunktCodes.VURDER_FEILUTBETALING
-                        && (
-                        <Column sm="6">
-                          <Undertekst><FormattedMessage id="Avregning.videreBehandling" /></Undertekst>
-                          <VerticalSpacer eightPx />
-                          <RadioGroupField name="videreBehandling" validate={[required]} direction="vertical" readOnly={readOnly}>
-                            <RadioOption label={<FormattedMessage id="Avregning.gjennomfør" />} value={avregningCodes.TILBAKEKR_INFOTRYGD} />
-                            <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={avregningCodes.TILBAKEKR_IGNORER} />
-                          </RadioGroupField>
-                        </Column>
-                        )
-                      }
-                      { apCodes[0] === aksjonspunktCodes.VURDER_INNTREKK
-                      && (
-                        <Column sm="6">
-                          <RadioGroupField
-                            label={radioGroupLabel(avregningCodes.OPPFYLT)}
-                            name="erTilbakekrevingVilkårOppfylt"
-                            onChange={this.resetFields}
-                            readOnly={readOnly}
-                          >
-                            <RadioOption label={<FormattedMessage id="Avregning.formAlternativ.ja" />} value />
-                            <RadioOption label={<FormattedMessage id="Avregning.formAlternativ.nei" />} value={false} />
-                          </RadioGroupField>
-                          { erTilbakekrevingVilkårOppfylt
-                          && (
-                            <div className={styles.marginBottom20}>
-                              <ArrowBox alignOffset={12}>
-                                <RadioGroupField
-                                  label={radioGroupLabel(avregningCodes.REDUKSJON)}
-                                  validate={[required]}
-                                  name="grunnerTilReduksjon"
-                                  onChange={this.resetFields}
-                                  readOnly={readOnly}
-                                >
-                                  <RadioOption label={<FormattedMessage id="Avregning.formAlternativ.ja" />} value />
-                                  <RadioOption label={<FormattedMessage id="Avregning.formAlternativ.nei" />} value={false} />
-                                </RadioGroupField>
-                                { grunnerTilReduksjon
-                                && (
-                                  <div className={styles.marginBottom20}>
-                                    <ArrowBox alignOffset={12}>
-                                      <RadioGroupField validate={[required]} name="videreBehandling" direction="vertical" readOnly={readOnly}>
-                                        <RadioOption label={<FormattedMessage id="Avregning.gjennomfør" />} value={avregningCodes.TILBAKEKR_INFOTRYGD} />
-                                        <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={avregningCodes.TILBAKEKR_IGNORER} />
-                                      </RadioGroupField>
-                                    </ArrowBox>
-                                  </div>
-                                )
-                                }
-                              </ArrowBox>
-                            </div>
-                          )
-                          }
-                          { erTilbakekrevingVilkårOppfylt !== undefined && !erTilbakekrevingVilkårOppfylt
-                          && (
-                            <div className={styles.marginBottom20}>
-                              <ArrowBox alignOffset={90}>
-                                <RadioGroupField validate={[required]} name="videreBehandling" direction="vertical" readOnly={readOnly}>
-                                  <RadioOption label={<FormattedMessage id="Avregning.gjennomfør" />} value={avregningCodes.TILBAKEKR_INFOTRYGD} />
-                                  <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={avregningCodes.TILBAKEKR_IGNORER} />
-                                </RadioGroupField>
-                              </ArrowBox>
-                            </div>
-                          )
-                          }
-                        </Column>
-                      )
-                      }
-                    </Row>
-                    <Row>
-                      <Column xs="6">
-                        <Hovedknapp
-                          mini
-                          htmlType="button"
-                          onClick={formProps.handleSubmit}
-                          disabled={formProps.invalid || formProps.pristine}
-                          readOnly={readOnly}
-                        >
-                          <FormattedMessage id="SubmitButton.ConfirmInformation" />
-                        </Hovedknapp>
-                      </Column>
-                    </Row>
-                  </form>
-                </Column>
-              </Row>
-            )
-            }
           </div>
           )
         }
         { !simuleringResultat && (
           <FormattedMessage id="Avregning.ingenData" />
+        )
+        }
+        { apCodes[0]
+        && (
+          <div>
+            <Row>
+              <Column xs="12">
+                <form onSubmit={formProps.handleSubmit}>
+                  <Row>
+                    <Column sm="6">
+                      <TextAreaField
+                        name="begrunnelse"
+                        label={{ id: 'Avregning.vurdering' }}
+                        validate={[required, minLength3, maxLength1500, hasValidText]}
+                        maxLength={1500}
+                        readOnly={readOnly}
+                        id="avregningVurdering"
+                      />
+                    </Column>
+                    { apCodes[0] === aksjonspunktCodes.VURDER_FEILUTBETALING
+                    && (
+                      <Column sm="6">
+                        <Undertekst><FormattedMessage id="Avregning.videreBehandling" /></Undertekst>
+                        <VerticalSpacer eightPx />
+                        <RadioGroupField name="videreBehandling" validate={[required]} direction="vertical" readOnly={readOnly}>
+                          <RadioOption label={<FormattedMessage id="Avregning.gjennomfør" />} value={avregningCodes.TILBAKEKR_INFOTRYGD} />
+                          <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={avregningCodes.TILBAKEKR_IGNORER} />
+                        </RadioGroupField>
+                      </Column>
+                    )
+                    }
+                    { apCodes[0] === aksjonspunktCodes.VURDER_INNTREKK
+                    && (
+                      <Column sm="6">
+                        <RadioGroupField
+                          label={radioGroupLabel(avregningCodes.OPPFYLT)}
+                          name="erTilbakekrevingVilkårOppfylt"
+                          onChange={this.resetFields}
+                          readOnly={readOnly}
+                        >
+                          <RadioOption label={<FormattedMessage id="Avregning.formAlternativ.ja" />} value />
+                          <RadioOption label={<FormattedMessage id="Avregning.formAlternativ.nei" />} value={false} />
+                        </RadioGroupField>
+                        { erTilbakekrevingVilkårOppfylt
+                        && (
+                          <div className={styles.marginBottom20}>
+                            <ArrowBox alignOffset={12}>
+                              <RadioGroupField
+                                label={radioGroupLabel(avregningCodes.REDUKSJON)}
+                                validate={[required]}
+                                name="grunnerTilReduksjon"
+                                onChange={this.resetFields}
+                                readOnly={readOnly}
+                              >
+                                <RadioOption label={<FormattedMessage id="Avregning.formAlternativ.ja" />} value />
+                                <RadioOption label={<FormattedMessage id="Avregning.formAlternativ.nei" />} value={false} />
+                              </RadioGroupField>
+                              { grunnerTilReduksjon
+                              && (
+                                <div className={styles.marginBottom20}>
+                                  <ArrowBox alignOffset={12}>
+                                    <RadioGroupField validate={[required]} name="videreBehandling" direction="vertical" readOnly={readOnly}>
+                                      <RadioOption label={<FormattedMessage id="Avregning.gjennomfør" />} value={avregningCodes.TILBAKEKR_INFOTRYGD} />
+                                      <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={avregningCodes.TILBAKEKR_IGNORER} />
+                                    </RadioGroupField>
+                                  </ArrowBox>
+                                </div>
+                              )
+                              }
+                            </ArrowBox>
+                          </div>
+                        )
+                        }
+                        { erTilbakekrevingVilkårOppfylt !== undefined && !erTilbakekrevingVilkårOppfylt
+                        && (
+                          <div className={styles.marginBottom20}>
+                            <ArrowBox alignOffset={90}>
+                              <RadioGroupField validate={[required]} name="videreBehandling" direction="vertical" readOnly={readOnly}>
+                                <RadioOption label={<FormattedMessage id="Avregning.gjennomfør" />} value={avregningCodes.TILBAKEKR_INFOTRYGD} />
+                                <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={avregningCodes.TILBAKEKR_IGNORER} />
+                              </RadioGroupField>
+                            </ArrowBox>
+                          </div>
+                        )
+                        }
+                      </Column>
+                    )
+                    }
+                  </Row>
+                  <Row>
+                    <Column xs="6">
+                      <Hovedknapp
+                        mini
+                        htmlType="button"
+                        onClick={formProps.handleSubmit}
+                        disabled={formProps.invalid || formProps.pristine}
+                        readOnly={readOnly}
+                      >
+                        <FormattedMessage id="SubmitButton.ConfirmInformation" />
+                      </Hovedknapp>
+                    </Column>
+                  </Row>
+                </form>
+              </Column>
+            </Row>
+          </div>
         )
         }
       </FadingPanel>
