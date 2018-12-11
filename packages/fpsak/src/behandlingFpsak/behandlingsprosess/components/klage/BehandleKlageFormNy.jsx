@@ -12,16 +12,10 @@ import {
 } from '@fpsak-frontend/form';
 import { VerticalSpacer, AksjonspunktHelpText, FadingPanel } from '@fpsak-frontend/shared-components';
 import { required, hasValidText, getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/klage/BehandleKlageFormNy.jsx
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import dokumentMalType from 'kodeverk/dokumentMalType';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
-=======
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
-import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/klage/BehandleKlageFormNy.jsx
 
 import connect from 'react-redux/es/connect/connect';
 import { getBehandlingSprak } from 'behandlingFpsak/behandlingSelectors';

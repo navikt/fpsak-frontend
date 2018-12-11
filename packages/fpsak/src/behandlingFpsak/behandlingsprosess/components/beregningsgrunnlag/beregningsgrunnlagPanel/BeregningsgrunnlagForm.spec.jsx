@@ -2,21 +2,12 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/beregningsgrunnlagPanel/BeregningsgrunnlagForm.spec.jsx
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
-import periodeAarsak from 'kodeverk/periodeAarsak';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-=======
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/beregningsgrunnlagPanel/BeregningsgrunnlagForm.spec.jsx
 import { BeregningsgrunnlagForm as UnwrappedForm } from './BeregningsgrunnlagForm';
 import GrunnlagForAarsinntektPanelAT from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
 import GrunnlagForAarsinntektPanelFL from '../frilanser/GrunnlagForAarsinntektPanelFL';

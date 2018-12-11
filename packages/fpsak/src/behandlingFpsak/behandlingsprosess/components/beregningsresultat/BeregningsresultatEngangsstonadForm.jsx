@@ -7,20 +7,10 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsresultat/BeregningsresultatEngangsstonadForm.jsx
-import FadingPanel from 'sharedComponents/FadingPanel';
 import { isSelectedBehandlingspunktOverrideReadOnly } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
 import { getAksjonspunkter, getBehandlingResultatstruktur } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import { FlexContainer, FlexRow, FlexColumn } from 'sharedComponents/flexGrid';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-=======
-import { isSelectedBehandlingspunktOverrideReadOnly } from 'behandlingsprosess/behandlingsprosessSelectors';
-import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
-import { getAksjonspunkter, getBehandlingResultatstruktur } from 'behandling/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/beregningsresultat/BeregningsresultatEngangsstonadForm.jsx
 import {
   VerticalSpacer, FadingPanel, FlexContainer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
@@ -28,21 +18,10 @@ import {
   required, minValue, maxValue, hasValidInteger, formatCurrencyWithKr,
 } from '@fpsak-frontend/utils';
 import { InputField } from '@fpsak-frontend/form';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsresultat/BeregningsresultatEngangsstonadForm.jsx
-import aksjonspunktCode from 'kodeverk/aksjonspunktCodes';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsresultat/BeregningsresultatEngangsstonadForm.jsx
 import OverstyrVurderingChecker from 'behandlingFpsak/behandlingsprosess/components/OverstyrVurderingChecker';
 import OverstyrConfirmationForm from 'behandlingFpsak/behandlingsprosess/components/OverstyrConfirmationForm';
 import OverstyrConfirmVilkarButton from 'behandlingFpsak/behandlingsprosess/components/OverstyrConfirmVilkarButton';
-import { formatCurrencyWithKr } from 'utils/currencyUtils';
-=======
-=======
 import aksjonspunktCode from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/beregningsresultat/BeregningsresultatEngangsstonadForm.jsx
-import OverstyrVurderingChecker from 'behandlingsprosess/components/OverstyrVurderingChecker';
-import OverstyrConfirmationForm from 'behandlingsprosess/components/OverstyrConfirmationForm';
-import OverstyrConfirmVilkarButton from 'behandlingsprosess/components/OverstyrConfirmVilkarButton';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/beregningsresultat/BeregningsresultatEngangsstonadForm.jsx
 
 import styles from './beregningsresultatEngangsstonadForm.less';
 

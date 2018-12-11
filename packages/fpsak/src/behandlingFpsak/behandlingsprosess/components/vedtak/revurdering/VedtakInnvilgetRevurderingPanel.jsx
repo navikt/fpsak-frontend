@@ -10,30 +10,14 @@ import {
   getAksjonspunkter,
   getBehandlingResultatstruktur, getBehandlingSprak,
   getBehandlingsresultat,
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/revurdering/VedtakInnvilgetRevurderingPanel.jsx
 } from 'behandlingFpsak/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandlingFpsak/selectors/originalBehandlingSelectors';
-import { formatCurrencyWithKr } from 'utils/currencyUtils';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-=======
-} from 'behandling/behandlingSelectors';
-import { getResultatstrukturFraOriginalBehandling } from 'behandling/selectors/originalBehandlingSelectors';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/revurdering/VedtakInnvilgetRevurderingPanel.jsx
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vedtak/revurdering/VedtakInnvilgetRevurderingPanel.jsx
-import vedtakResultType from 'kodeverk/vedtakResultType';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
 import { endringerIBeregningsgrunnlagGirFritekstfelt } from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakHelper';
 import VedtakFritekstPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-=======
 import vedtakResultType from '@fpsak-frontend/kodeverk/src/vedtakResultType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { endringerIBeregningsgrunnlagGirFritekstfelt } from 'behandlingsprosess/components/vedtak/VedtakHelper';
-import VedtakFritekstPanel from 'behandlingsprosess/components/vedtak/VedtakFritekstPanel';
-import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vedtak/revurdering/VedtakInnvilgetRevurderingPanel.jsx
 
 const isNewBehandlingResult = (beregningResultat, originaltBeregningResultat) => {
   const vedtakResult = beregningResultat ? vedtakResultType.INNVILGET : vedtakResultType.AVSLAG;

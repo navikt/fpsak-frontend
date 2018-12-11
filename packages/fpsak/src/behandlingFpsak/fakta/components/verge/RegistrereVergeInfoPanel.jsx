@@ -4,39 +4,18 @@ import { injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/verge/RegistrereVergeInfoPanel.jsx
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { getBehandlingVerge, getAksjonspunkter } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/verge/RegistrereVergeInfoPanel.jsx
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
 import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
 import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
-=======
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-=======
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { getBehandlingVerge, getAksjonspunkter } from 'behandling/behandlingSelectors';
-import { behandlingForm } from 'behandling/behandlingForm';
-import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/verge/RegistrereVergeInfoPanel.jsx
-import withDefaultToggling from 'fakta/withDefaultToggling';
-import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
-import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
-import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
-import faktaPanelCodes from 'fakta/faktaPanelCodes';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/verge/RegistrereVergeInfoPanel.jsx
 import RegistrereVergeFaktaForm from './RegistrereVergeFaktaForm';
 
 /**

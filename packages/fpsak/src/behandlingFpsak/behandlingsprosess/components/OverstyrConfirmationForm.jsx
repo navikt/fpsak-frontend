@@ -4,13 +4,8 @@ import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/OverstyrConfirmationForm.jsx
 import { isSelectedBehandlingspunktOverrideReadOnly } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
-import { TextAreaField } from 'form/Fields';
-=======
-import { isSelectedBehandlingspunktOverrideReadOnly } from 'behandlingsprosess/behandlingsprosessSelectors';
 import { TextAreaField } from '@fpsak-frontend/form';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/OverstyrConfirmationForm.jsx
 import {
   minLength, maxLength, requiredIfNotPristine, hasValidText, decodeHtmlEntity,
 } from '@fpsak-frontend/utils';

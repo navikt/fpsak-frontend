@@ -4,13 +4,8 @@ import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-<<<<<<< HEAD
-import klageVurderingCodes from 'kodeverk/klageVurdering';
 import { getBehandlingKlageVurdering, getBehandlingStatus } from 'behandlingFpsak/behandlingSelectors';
-=======
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import { getBehandlingKlageVurdering, getBehandlingStatus } from 'behandling/behandlingSelectors';
->>>>>>> NOJIRA nye pakker
 
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';

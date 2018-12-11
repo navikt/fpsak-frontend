@@ -10,19 +10,11 @@ import {
   getBehandlingMedlem, getBehandlingsresultat,
 } from 'behandlingFpsak/behandlingSelectors';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/revurdering/VedtakOpphorRevurderingPanel.jsx
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { endringerIBeregningsgrunnlagGirFritekstfelt } from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakHelper';
 import VedtakFritekstPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-=======
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { endringerIBeregningsgrunnlagGirFritekstfelt } from 'behandlingsprosess/components/vedtak/VedtakHelper';
-import VedtakFritekstPanel from 'behandlingsprosess/components/vedtak/VedtakFritekstPanel';
-import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vedtak/revurdering/VedtakOpphorRevurderingPanel.jsx
 
 export const VedtakOpphorRevurderingPanelImpl = ({
   intl,

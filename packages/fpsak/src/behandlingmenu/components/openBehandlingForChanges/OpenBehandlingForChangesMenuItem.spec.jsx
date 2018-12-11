@@ -3,17 +3,8 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-<<<<<<< HEAD
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import OkAvbrytModal from 'sharedComponents/OkAvbrytModal';
-=======
-import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-<<<<<<< HEAD
-import OkAvbrytModal from '@fpsak-frontend/shared-components/OkAvbrytModal';
->>>>>>> NOJIRA moduler
-=======
 import { OkAvbrytModal } from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA nye pakker
 import OpenBehandlingForChangesMenuItem from './OpenBehandlingForChangesMenuItem';
 import MenuButton from '../MenuButton';
 

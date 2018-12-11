@@ -4,42 +4,20 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { submit as reduxSubmit } from 'redux-form';
 import { connect } from 'react-redux';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/fodsel/FodselInfoPanel.jsx
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
 import { getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
 import { getBehandlingVersjon } from 'behandlingFpsak/behandlingSelectors';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import { fodselsvilkarene } from 'kodeverk/vilkarType';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-=======
-import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
-import { getBehandlingFormPrefix } from 'behandling/behandlingForm';
-import { getBehandlingVersjon } from 'behandling/behandlingSelectors';
-import { getSelectedBehandlingId } from 'behandling/duck';
 import { fodselsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { VerticalSpacer, ElementWrapper, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
-import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/fodsel/FodselInfoPanel.jsx
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/fodsel/FodselInfoPanel.jsx
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
 import FodselSammenligningPanel from 'behandlingFpsak/components/fodselSammenligning/FodselSammenligningPanel';
 import TermindatoFaktaForm, { termindatoFaktaFormName } from 'behandlingFpsak/fakta/components/fodsel/TermindatoFaktaForm';
 import SjekkFodselDokForm, { sjekkFodselDokForm } from 'behandlingFpsak/fakta/components/fodsel/SjekkFodselDokForm';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
 import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
-=======
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import withDefaultToggling from 'fakta/withDefaultToggling';
-import FodselSammenligningPanel from 'behandling/components/fodselSammenligning/FodselSammenligningPanel';
-import TermindatoFaktaForm, { termindatoFaktaFormName } from 'fakta/components/fodsel/TermindatoFaktaForm';
-import SjekkFodselDokForm, { sjekkFodselDokForm } from 'fakta/components/fodsel/SjekkFodselDokForm';
-import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
-import faktaPanelCodes from 'fakta/faktaPanelCodes';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/fodsel/FodselInfoPanel.jsx
 import SykdomPanel, { sykdomPanelName } from './SykdomPanel';
 
 const {

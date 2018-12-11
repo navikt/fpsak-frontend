@@ -4,19 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
-
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/BehandlingsprosessIndex.jsx
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/BehandlingsprosessIndex.jsx
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import { replaceNorwegianCharacters } from 'utils/languageUtils';
-=======
-import BehandlingType from 'kodeverk/behandlingType';
-=======
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/BehandlingsprosessIndex.jsx
-import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/BehandlingsprosessIndex.jsx
 import {
   getAksjonspunkter, getBehandlingVersjon, getBehandlingType,
 } from 'behandlingFpsak/behandlingSelectors';
@@ -29,24 +18,11 @@ import FatterVedtakStatusModal from 'behandlingFpsak/behandlingsprosess/componen
 import KlageBehandlingModal from 'behandlingFpsak/behandlingsprosess/components/klage/KlageBehandlingModal';
 import BehandlingspunktInfoPanel from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktInfoPanel';
 import requireProps from 'app/data/requireProps';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/BehandlingsprosessIndex.jsx
-import aksjonspunktType from 'kodeverk/aksjonspunktType';
-import klageVurdering from 'kodeverk/klageVurdering';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/BehandlingsprosessIndex.jsx
-import LoadingPanel from 'sharedComponents/LoadingPanel';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-=======
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/BehandlingsprosessIndex.jsx
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-=======
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/BehandlingsprosessIndex.jsx
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import { getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta } from 'app/paths';
 import trackRouteParam from 'app/data/trackRouteParam';

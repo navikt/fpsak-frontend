@@ -4,35 +4,15 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import {
-  DecimalField, InputField, NavFieldGroup, PeriodpickerField, SelectField,
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/endringBeregningsgrunnlag/RenderEndringBGFieldArray.jsx
-} from 'form/Fields';
-import { isEmpty } from 'utils/arrayUtils';
 import { getEndringBeregningsgrunnlagPerioder } from 'behandlingFpsak/behandlingSelectors';
-import Image from 'sharedComponents/Image';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-=======
-} from '@fpsak-frontend/form';
 import {
   isArrayEmpty, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, createVisningsnavnForAktivitet,
 } from '@fpsak-frontend/utils';
-import { getEndringBeregningsgrunnlagPerioder } from 'behandling/behandlingSelectors';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/endringBeregningsgrunnlag/RenderEndringBGFieldArray.jsx
-import { Image } from '@fpsak-frontend/shared-components';
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/endringBeregningsgrunnlag/RenderEndringBGFieldArray.jsx
-=======
 import {
   Table, Image, TableRow, TableColumn, ElementWrapper,
 } from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/endringBeregningsgrunnlag/RenderEndringBGFieldArray.jsx
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-frontend/kodeverk/src/inntektskategorier';
@@ -41,6 +21,7 @@ import {
   validateAndelFields, validateSumFastsattBelop, validateUlikeAndeler,
   validateTotalRefusjonPrArbeidsforhold,
 } from '../ValidateAndelerUtils';
+
 import styles from './renderEndringBGFieldArray.less';
 
 const defaultBGFordeling = periodeUtenAarsak => ({

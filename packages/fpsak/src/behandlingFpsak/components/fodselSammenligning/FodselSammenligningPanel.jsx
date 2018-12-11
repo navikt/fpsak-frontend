@@ -9,13 +9,8 @@ import { Row, Column } from 'nav-frontend-grid';
 import Panel from 'nav-frontend-paneler';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/components/fodselSammenligning/FodselSammenligningPanel.jsx
 import { getAntallDodfodteBarn, getBarnFraTpsRelatertTilSoknad, getBehandlingType } from 'behandlingFpsak/behandlingSelectors';
-import behandlingType from 'kodeverk/behandlingType';
-=======
-import { getAntallDodfodteBarn, getBarnFraTpsRelatertTilSoknad, getBehandlingType } from 'behandling/behandlingSelectors';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandling/components/fodselSammenligning/FodselSammenligningPanel.jsx
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import FodselSammenligningOtherPanel from './FodselSammenligningOtherPanel';
 import FodselSammenligningRevurderingPanel from './FodselSammenligningRevurderingPanel';

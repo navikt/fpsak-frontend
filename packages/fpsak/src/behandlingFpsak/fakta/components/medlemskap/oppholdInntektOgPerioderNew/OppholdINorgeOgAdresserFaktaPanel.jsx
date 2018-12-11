@@ -7,27 +7,11 @@ import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdINorgeOgAdresserFaktaPanel.jsx
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdINorgeOgAdresserFaktaPanel.jsx
-import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import { RadioGroupField, RadioOption } from 'form/Fields';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
-=======
-import ElementWrapper from '@fpsak-frontend/shared-components';
-=======
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdINorgeOgAdresserFaktaPanel.jsx
-import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import FaktaGruppe from 'fakta/components/FaktaGruppe';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdINorgeOgAdresserFaktaPanel.jsx
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdINorgeOgAdresserFaktaPanel.jsx
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-=======
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdINorgeOgAdresserFaktaPanel.jsx
 import { required } from '@fpsak-frontend/utils';
 import {
   ElementWrapper, VerticalSpacer, Image, PeriodLabel,

@@ -9,17 +9,10 @@ import {
   getAktivitetStatuser,
   getSkjæringstidspunktBeregning,
   getTilstøtendeYtelse,
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/fellesPaneler/SkjeringspunktOgStatusPanel.jsx
 } from 'behandlingFpsak/behandlingSelectors';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-=======
-} from 'behandling/behandlingSelectors';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/fellesPaneler/SkjeringspunktOgStatusPanel.jsx
 
 import styles from './skjeringspunktOgStatusPanel.less';
 

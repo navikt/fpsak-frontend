@@ -3,27 +3,15 @@ import PropTypes from 'prop-types';
 import { FormattedHTMLMessage } from 'react-intl';
 import { connect } from 'react-redux';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/fodsel/SykdomPanel.jsx
 import { getFamiliehendelse } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { TextAreaField, RadioGroupField, RadioOption } from 'form/Fields';
-=======
-import { getFamiliehendelse } from 'behandling/behandlingSelectors';
-import { behandlingForm } from 'behandling/behandlingForm';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TextAreaField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/fodsel/SykdomPanel.jsx
 import {
   required, hasValidText, maxLength, minLength,
 } from '@fpsak-frontend/utils';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/fodsel/SykdomPanel.jsx
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
-=======
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import FaktaGruppe from 'fakta/components/FaktaGruppe';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/fodsel/SykdomPanel.jsx
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);

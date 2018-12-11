@@ -14,25 +14,14 @@ import {
   getBehandlingsresultat, getBehandlingVersjon, getBehandlingSprak,
 } from 'behandlingFpsak/behandlingSelectors';
 import { bindActionCreators } from 'redux';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/VedtakForm.jsx
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
-import { isInnvilget, isAvslag } from 'kodeverk/behandlingResultatType';
-import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import { getRettigheter } from 'navAnsatt/duck';
-import behandlingStatusCode from 'kodeverk/behandlingStatus';
-import FritekstBrevPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/FritekstBrevPanel';
-=======
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
-import { getSelectedBehandlingId } from 'behandling/duck';
 import { isInnvilget, isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { getRettigheter } from 'navAnsatt/duck';
+import FritekstBrevPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/FritekstBrevPanel';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import FritekstBrevPanel from 'behandlingsprosess/components/vedtak/FritekstBrevPanel';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vedtak/VedtakForm.jsx
 import classNames from 'classnames';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';

@@ -5,30 +5,15 @@ import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/adopsjon/AdopsjonVilkarForm.jsx
 import BpPanelTemplate from 'behandlingFpsak/behandlingsprosess/components/vilkar/BpPanelTemplate';
 import { getBehandlingsresultat } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import vilkarType from 'kodeverk/vilkarType';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/adopsjon/AdopsjonVilkarForm.jsx
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-=======
-=======
-import BpPanelTemplate from 'behandlingsprosess/components/vilkar/BpPanelTemplate';
-import { getBehandlingsresultat } from 'behandling/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vilkar/adopsjon/AdopsjonVilkarForm.jsx
-import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vilkar/adopsjon/AdopsjonVilkarForm.jsx
 import { getSelectedBehandlingspunktVilkar, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus }
   from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import VilkarResultPicker from 'behandlingFpsak/behandlingsprosess/components/vilkar/VilkarResultPicker';

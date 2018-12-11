@@ -2,15 +2,8 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/person/panelBody/arbeidsforhold/PersonAksjonspunktText.jsx
 import arbeidsforholdPropType from 'behandlingFelles/proptypes/arbeidsforholdPropType';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-=======
-import arbeidsforholdPropType from 'behandling/proptypes/arbeidsforholdPropType';
-import ElementWrapper from '@fpsak-frontend/shared-components';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/person/panelBody/arbeidsforhold/PersonAksjonspunktText.jsx
+import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
 
 const getTextCode = (arbeidsforhold) => {
   if (!arbeidsforhold || (!arbeidsforhold.tilVurdering && !arbeidsforhold.erEndret)) {

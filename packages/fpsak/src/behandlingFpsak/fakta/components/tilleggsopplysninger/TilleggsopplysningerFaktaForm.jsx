@@ -5,24 +5,10 @@ import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/tilleggsopplysninger/TilleggsopplysningerFaktaForm.jsx
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/tilleggsopplysninger/TilleggsopplysningerFaktaForm.jsx
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-=======
-import ElementWrapper from '@fpsak-frontend/shared-components';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { behandlingFormValueSelector } from 'behandling/behandlingForm';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/tilleggsopplysninger/TilleggsopplysningerFaktaForm.jsx
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import decodeHtmlEntity from '@fpsak-frontend/utils';
-=======
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/tilleggsopplysninger/TilleggsopplysningerFaktaForm.jsx
 
 import styles from './tilleggsopplysningerFaktaForm.less';
 

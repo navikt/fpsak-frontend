@@ -6,13 +6,7 @@ import {
   reduxForm, formValueSelector, getFormSyncErrors, isDirty, getFormValues, getFormInitialValues, isSubmitting,
 } from 'redux-form';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingTilbakekreving/behandlingForm.jsx
-import LoadingPanel from 'sharedComponents/LoadingPanel';
-=======
-import { getBehandlingVersjon } from 'behandling/behandlingSelectors';
-import { getSelectedBehandlingId } from 'behandling/duck';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandling/behandlingForm.jsx
 import requireProps from 'app/data/requireProps';
 import { getSelectedBehandlingId } from './duck';
 import { getBehandlingVersjon } from './tilbakekrevingBehandlingSelectors';

@@ -3,17 +3,11 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/BehandlingspunktInfoPanel.spec.jsx
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { BehandlingspunktInfoPanel } from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktInfoPanel';
 import BeregningsresultatEngangsstonadForm from 'behandlingFpsak/behandlingsprosess/components/beregningsresultat/BeregningsresultatEngangsstonadForm';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
-=======
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BehandlingspunktInfoPanel } from 'behandlingsprosess/components/BehandlingspunktInfoPanel';
-import BeregningsresultatEngangsstonadForm from 'behandlingsprosess/components/beregningsresultat/BeregningsresultatEngangsstonadForm';
-import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/BehandlingspunktInfoPanel.spec.jsx
 import VurderSoknadsfristForeldrepengerForm from './soknadsfrist/VurderSoknadsfristForeldrepengerForm';
 
 describe('<BehandlingspunktInfoPanel>', () => {

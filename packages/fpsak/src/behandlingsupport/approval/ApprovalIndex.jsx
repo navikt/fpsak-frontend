@@ -7,21 +7,10 @@ import { connect } from 'react-redux';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import { createLocationForHistorikkItems } from 'app/paths';
 
-<<<<<<< HEAD
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-=======
-import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-<<<<<<< HEAD
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA moduler
-import behandlingStatus from 'kodeverk/behandlingStatus';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-=======
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
->>>>>>> NOJIRA nye pakker
 import {
   getBehandlingVersjon, getAksjonspunkter, getBehandlingAnsvarligSaksbehandler, getTotrinnskontrollArsakerUtenUdefinert,
   getBehandlingStatus, getBehandlingToTrinnsBehandling, getTotrinnskontrollArsakerReadOnly,

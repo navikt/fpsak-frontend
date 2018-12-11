@@ -13,21 +13,9 @@ import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
 import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
 import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
 import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/tilkjentYtelse/timeline/TimeLineData.jsx
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/tilkjentYtelse/timeline/TimeLineData.jsx
-import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
 import { beregningsresultatPeriodePropType } from 'behandlingFelles/proptypes/beregningresultatMedUttaksplanPropType';
-=======
-import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
-import { beregningsresultatPeriodePropType } from 'behandling/proptypes/beregningresultatMedUttaksplanPropType';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/tilkjentYtelse/timeline/TimeLineData.jsx
-import { uttakPeriodeNavn } from 'kodeverk/uttakPeriodeType';
-=======
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import { beregningsresultatPeriodePropType } from 'behandling/proptypes/beregningresultatMedUttaksplanPropType';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/tilkjentYtelse/timeline/TimeLineData.jsx
 
 import styles from './timeLineData.less';
 

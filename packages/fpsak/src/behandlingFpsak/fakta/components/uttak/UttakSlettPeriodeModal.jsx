@@ -6,19 +6,10 @@ import moment from 'moment';
 import { TextAreaField } from '@fpsak-frontend/form';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
-import {
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/uttak/UttakSlettPeriodeModal.jsx
-  minLength, maxLength, required, hasValidText,
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/uttak/UttakSlettPeriodeModal.jsx
-} from 'utils/validation/validators';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
-=======
-=======
   minLength, maxLength, required, hasValidText, DDMMYYYY_DATE_FORMAT,
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/uttak/UttakSlettPeriodeModal.jsx
 } from '@fpsak-frontend/utils';
 import { behandlingForm } from 'behandling/behandlingForm';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/uttak/UttakSlettPeriodeModal.jsx
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import {
   FlexColumn, FlexRow, FlexContainer, Modal, VerticalSpacer, Image,

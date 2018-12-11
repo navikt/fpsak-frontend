@@ -4,13 +4,8 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/uttak/UttakNyPeriode.jsx
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import { behandlingFormValueSelector, behandlingForm } from 'behandlingFpsak/behandlingForm';
-=======
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import { behandlingFormValueSelector, behandlingForm } from 'behandling/behandlingForm';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/uttak/UttakNyPeriode.jsx
 import {
   PeriodpickerField, SelectField, CheckboxField, RadioGroupField, RadioOption, TextAreaField, DecimalField,
 } from '@fpsak-frontend/form';
@@ -26,32 +21,16 @@ import {
 } from '@fpsak-frontend/utils';
 import moment from 'moment';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/uttak/UttakNyPeriode.jsx
-import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
-import FlexRow from 'sharedComponents/flexGrid/FlexRow';
-import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getKodeverk } from 'kodeverk/duck';
 import { getPersonopplysning, getAlleAndelerIForstePeriode } from 'behandlingFpsak/behandlingSelectors';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
-import uttakPeriodeType from 'kodeverk/uttakPeriodeType';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import utsettelseArsakCodes from 'kodeverk/utsettelseArsakCodes';
-import overforingArsak from 'kodeverk/overforingArsak';
-import { calcDaysAndWeeks } from '@fpsak-frontend/utils';
-=======
 import {
   FlexContainer, FlexRow, FlexColumn, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
-import { getPersonopplysning, getAlleAndelerIForstePeriode } from 'behandling/behandlingSelectors';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import uttakPeriodeType from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import overforingArsak from '@fpsak-frontend/kodeverk/src/overforingArsak';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/uttak/UttakNyPeriode.jsx
 import styles from './uttakNyPeriode.less';
 
 const maxValue100 = maxValue(100);

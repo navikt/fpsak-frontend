@@ -5,31 +5,16 @@ import moment from 'moment/moment';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
 import { Undertittel } from 'nav-frontend-typografi';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/tilkjentYtelse/TilkjentYtelsePanel.jsx
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/tilkjentYtelse/TilkjentYtelsePanel.jsx
-import FadingPanel from 'sharedComponents/FadingPanel';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
 import beregningresultatMedUttaksplanPropType from 'behandlingFelles/proptypes/beregningresultatMedUttaksplanPropType';
-=======
-import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
-=======
 import { FadingPanel } from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/tilkjentYtelse/TilkjentYtelsePanel.jsx
-import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
-import beregningresultatMedUttaksplanPropType from 'behandling/proptypes/beregningresultatMedUttaksplanPropType';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/tilkjentYtelse/TilkjentYtelsePanel.jsx
 import {
   getPersonopplysning,
   getBehandlingResultatstruktur,
   getSoknad,
   getFamiliehendelse,
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/tilkjentYtelse/TilkjentYtelsePanel.jsx
 } from 'behandlingFpsak/behandlingSelectors';
-import soknadType from 'kodeverk/soknadType';
-=======
-} from 'behandling/behandlingSelectors';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/tilkjentYtelse/TilkjentYtelsePanel.jsx
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import TilkjentYtelse from './TilkjentYtelse';
 

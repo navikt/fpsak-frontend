@@ -4,25 +4,12 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/kunYtelse/BrukersAndelFieldArray.jsx
-import { InputField, NavFieldGroup, SelectField } from 'form/Fields';
 import { getAksjonspunkter } from 'behandlingFpsak/behandlingSelectors';
 import { isBehandlingFormDirty } from 'behandlingFpsak/behandlingForm';
-import { isEmpty } from 'utils/arrayUtils';
-import Image from 'sharedComponents/Image';
-=======
 import { InputField, NavFieldGroup, SelectField } from '@fpsak-frontend/form';
-import { getAksjonspunkter } from 'behandling/behandlingSelectors';
-import { isBehandlingFormDirty } from 'behandling/behandlingForm';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/kunYtelse/BrukersAndelFieldArray.jsx
-import { isEmpty } from '@fpsak-frontend/utils';
-import { Image } from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/kunYtelse/BrukersAndelFieldArray.jsx
-=======
 import {
   isArrayEmpty, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, required,
 } from '@fpsak-frontend/utils';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/kunYtelse/BrukersAndelFieldArray.jsx
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

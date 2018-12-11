@@ -8,7 +8,7 @@ import {
 
 import { getBehandlingVersjon } from 'behandlingFpsak/behandlingSelectors';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
-import LoadingPanel from 'sharedComponents/LoadingPanel';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import requireProps from 'app/data/requireProps';
 
 export const getBehandlingFormPrefix = (behandlingId, behandlingVersjon) => `behandling_${behandlingId}_v${behandlingVersjon}`;

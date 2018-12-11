@@ -14,7 +14,6 @@ import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import VedtakKlageSubmitPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/klageNy/VedtakKlageSubmitPanel';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { FadingPanel, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import featureToggle from 'app/featureToggle';
 import { getFeatureToggles } from 'app/duck';

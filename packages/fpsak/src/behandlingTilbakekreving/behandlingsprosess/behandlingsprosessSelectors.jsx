@@ -1,12 +1,12 @@
 import { createSelector } from 'reselect';
 
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { getRettigheter } from 'navAnsatt/duck';
 import { DEFAULT_BEHANDLINGSPROSESS } from 'app/paths';
-import { arrayToObject } from 'utils/objectUtils';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import { arrayToObject } from '@fpsak-frontend/utils';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { getFeatureToggles } from 'app/duck';
 import {
   getBehandlingIsOnHold, getAllMerknaderFraBeslutter, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat,

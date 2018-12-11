@@ -3,21 +3,10 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/BehandlingResolver.jsx
-import LoadingPanel from 'sharedComponents/LoadingPanel';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import { isBehandlingInSync } from './behandlingSelectors';
 import { fetchBehandling as fetchBehandlingActionCreator, getBehandlingIdentifier } from './duck';
-=======
-import applicationContextPath from 'app/applicationContextPath';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fpsakApi, { getBehandlingTypeApiKeys } from 'data/fpsakApi';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import { getSelectedBehandlingIdentifier, isBehandlingInSync } from './behandlingSelectors';
-import { getBehandlingerVersjonMappedById, getBehandlingerTypesMappedById } from './selectors/behandlingerSelectors';
-import { fetchBehandling as fetchBehandlingActionCreator } from './duck';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandling/BehandlingResolver.jsx
 
 export class BehandlingResolver extends Component {
   constructor(props) {

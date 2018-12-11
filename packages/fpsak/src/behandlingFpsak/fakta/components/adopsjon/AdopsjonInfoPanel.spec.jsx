@@ -3,17 +3,10 @@ import { expect } from 'chai';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/adopsjon/AdopsjonInfoPanel.spec.jsx
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
-=======
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
-import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
-import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/adopsjon/AdopsjonInfoPanel.spec.jsx
 import { AdopsjonInfoPanelImpl } from './AdopsjonInfoPanel';
 import DokumentasjonFaktaForm from './DokumentasjonFaktaForm';
 import EktefelleFaktaForm from './EktefelleFaktaForm';

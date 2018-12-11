@@ -5,15 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import { behandlingPath } from 'app/paths';
 import PersonIndex from 'person/PersonIndex';
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-import ElementWrapper from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA moduler
-=======
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA nye pakker
 import NoSelectedBehandling from './components/NoSelectedBehandling';
 import BehandlingIndex from './BehandlingIndex';
 import { getNumBehandlinger } from './selectors/behandlingerSelectors';
@@ -22,10 +14,10 @@ export const BehandlingerIndex = ({ numBehandlinger }) => (
   <Switch>
     <Route strict path={behandlingPath} component={BehandlingIndex} />
     <Route>
-      <>
+      <ElementWrapper>
         <PersonIndex medPanel />
         <NoSelectedBehandling numBehandlinger={numBehandlinger} />
-      </>
+      </ElementWrapper>
     </Route>
   </Switch>
 );

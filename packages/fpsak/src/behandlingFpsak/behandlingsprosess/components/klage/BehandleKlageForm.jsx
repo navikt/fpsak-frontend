@@ -11,15 +11,9 @@ import {
   AksjonspunktHelpText, VerticalSpacer, FadingPanel,
 } from '@fpsak-frontend/shared-components';
 import { required, hasValidDate } from '@fpsak-frontend/utils';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/klage/BehandleKlageForm.jsx
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
-=======
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
-import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/klage/BehandleKlageForm.jsx
 
 import styles from './behandleKlageForm.less';
 

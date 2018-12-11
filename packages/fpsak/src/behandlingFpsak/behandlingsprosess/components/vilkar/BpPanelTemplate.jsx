@@ -3,26 +3,11 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/BpPanelTemplate.jsx
 import VilkarResultPanel from 'behandlingFpsak/behandlingsprosess/components/vilkar/VilkarResultPanel';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
-import FadingPanel from 'sharedComponents/FadingPanel';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-=======
-import VilkarResultPanel from 'behandlingsprosess/components/vilkar/VilkarResultPanel';
-import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/BpPanelTemplate.jsx
-import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vilkar/BpPanelTemplate.jsx
-=======
 import {
   ElementWrapper, VerticalSpacer, AksjonspunktHelpText, FadingPanel,
 } from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vilkar/BpPanelTemplate.jsx
 
 /*
  * BpPanelTemplate

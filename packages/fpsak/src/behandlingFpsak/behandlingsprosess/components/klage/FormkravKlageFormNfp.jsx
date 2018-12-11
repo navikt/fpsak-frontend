@@ -4,17 +4,10 @@ import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import PropTypes from 'prop-types';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/klage/FormkravKlageFormNfp.jsx
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { getBehandlingKlageFormkravResultatNFP } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-=======
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
-import { getBehandlingKlageFormkravResultatNFP } from 'behandling/behandlingSelectors';
-import { behandlingForm } from 'behandling/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/klage/FormkravKlageFormNfp.jsx
 import FormkravKlageForm, { getPaKlagdVedtak, IKKE_PA_KLAGD_VEDTAK } from './FormkravKlageForm';
 
 /**
