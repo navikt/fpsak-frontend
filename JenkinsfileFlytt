@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     dir ('k8s') {
-                        def version = deployetVersion("fpsak-frontend", fra)
+                        def version = getDeployetVersion("fpsak-frontend", fra)
 
                         def props = readProperties  interpolate: true, file: "application.${til}.variabler.properties"
                         def value = "s/RELEASE_VERSION/${version}/g"
@@ -49,9 +49,9 @@ pipeline {
     }
 }
 
-def deployetVersion(String application, String miljo) {
+def getDeployetVersion(String application, String miljo) {
     echo("starter med å hente versjon")
-    def response = httpRequest 'https://vera.adeo.no/api/v1/deploylog?onlyLatest=true&filterUndeployed=true'
+    def response = httpRequest "https://vera.adeo.no/api/v1/deploylog?onlyLatest=true&filterUndeployed=true&application=$application&environment=$miljo"
     def deployVersion = ""
     if (response.status != 200) {
         throw new RuntimeException("Response Code is: ${response.status}")
@@ -60,12 +60,11 @@ def deployetVersion(String application, String miljo) {
     def data = readJSON text: response.content
     data.each {
         String app = it.application
-        String environment = it.environment
-
-        if (application.toLowerCase() == app.toLowerCase() && environment.toLowerCase() == miljo.toLowerCase()) {
-            println("${app} ${it.version} ${miljo}")
-            deployVersion = it.version
-        }
+        String env = it.environment
+        deployVersion = it.version
+        println("$app $deployVersion $env")
     }
     return deployVersion
 }
+
+
