@@ -528,7 +528,7 @@
   "ValidationMessage.NegativeSaldo": "Antall dager kan ikke overstige dagene som gjenstår på {periode}. Det er oppgitt {days} dager for mye.",
   "ValidationMessage.InvalidStonadskonto": "Stønadskonto {konto} er ikke tilgjengelig",
   "ValidationMessage.MinstEnPeriodeRequired": "Minst en av følgende perioder må være utfylt: fullt uttak, overføring av kvote, utsettelse eller gradering",
-  "ValidationMessage.ukerOgDagerVidNullUtbetalningsgradMessage": "Uttaksprosent kan ikke vare mer en null om antall trekkdager er null",
+  "ValidationMessage.ukerOgDagerVidNullUtbetalningsgradMessage": "Uttaksprosenten kan ikke være større enn null når antall trekkdager er null",
 
   "VilkarsresultatView.VilkarOppfylt": "Vilkåret er oppfylt",
   "VilkarsresultatView.VilkarIkkeOppfylt": "Vilkåret er ikke oppfylt",
