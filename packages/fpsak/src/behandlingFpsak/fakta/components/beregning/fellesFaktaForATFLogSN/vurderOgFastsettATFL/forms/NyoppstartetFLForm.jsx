@@ -2,15 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/NyoppstartetFLForm.jsx
-import { RadioGroupField, RadioOption } from 'form/Fields';
 import { getFaktaOmBeregning } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-=======
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
-import { behandlingFormValueSelector } from 'behandling/behandlingForm';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/NyoppstartetFLForm.jsx
 import { Normaltekst } from 'nav-frontend-typografi';
 import { flatten, required } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';

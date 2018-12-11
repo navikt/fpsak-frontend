@@ -4,19 +4,11 @@ import { expect } from 'chai';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/soknadsfrist/ErSoknadsfristVilkaretOppfyltForm.spec.jsx
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
-import vilkarType from 'kodeverk/vilkarType';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
-=======
-import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vilkar/soknadsfrist/ErSoknadsfristVilkaretOppfyltForm.spec.jsx
 import { ErSoknadsfristVilkaretOppfyltFormImpl as UnwrappedForm, buildInitialValues } from './ErSoknadsfristVilkaretOppfyltForm';
 
 describe('<ErSoknadsfristVilkaretOppfyltForm>', () => {

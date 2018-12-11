@@ -7,20 +7,11 @@ import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import { DatepickerField } from '@fpsak-frontend/form';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/omsorgOgForeldreansvar/ForeldrePanel.jsx
-import { hasValidDate, dateBeforeOrEqualToToday } from '@fpsak-frontend/utils';
-import DateLabel from '@fpsak-frontend/shared-components';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import personstatusType from 'kodeverk/personstatusType';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
-=======
 import { hasValidDate, dateBeforeOrEqualToToday, getAddresses } from '@fpsak-frontend/utils';
 import { VerticalSpacer, DateLabel } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import FaktaGruppe from 'fakta/components/FaktaGruppe';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/omsorgOgForeldreansvar/ForeldrePanel.jsx
 
 const getParentHeader = erMor => (erMor ? 'ForeldrePanel.MotherDeathDate' : 'ForeldrePanel.FatherDeathDate');
 

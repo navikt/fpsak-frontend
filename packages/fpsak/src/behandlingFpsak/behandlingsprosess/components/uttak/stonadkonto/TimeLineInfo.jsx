@@ -4,17 +4,10 @@ import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/uttak/stonadkonto/TimeLineInfo.jsx
 import { stonadskontoerPropType } from 'behandlingFelles/proptypes/stonadskontoPropType';
-import uttakArbeidTypeKodeverk from 'kodeverk/uttakArbeidType';
-import uttakArbeidTypeTekstCodes from 'kodeverk/uttakArbeidTypeCodes';
-import stonadskontoType from 'kodeverk/stonadskontoType';
-=======
-import { stonadskontoerPropType } from 'behandling/proptypes/stonadskontoPropType';
 import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
 import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/src/uttakArbeidTypeCodes';
 import stonadskontoType from '@fpsak-frontend/kodeverk/src/stonadskontoType';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/uttak/stonadkonto/TimeLineInfo.jsx
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import moment from 'moment';
 

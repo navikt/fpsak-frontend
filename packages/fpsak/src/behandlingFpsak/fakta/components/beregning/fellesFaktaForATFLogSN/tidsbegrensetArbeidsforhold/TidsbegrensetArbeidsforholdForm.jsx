@@ -5,22 +5,9 @@ import { connect } from 'react-redux';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import moment from 'moment';
 import { Normaltekst } from 'nav-frontend-typografi';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm.jsx
 import { getFaktaOmBeregning } from 'behandlingFpsak/behandlingSelectors';
-import { required } from 'utils/validation/validators';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
-=======
-import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
 import { required, DDMMYYYY_DATE_FORMAT, createVisningsnavnForAktivitet } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm.jsx
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm.jsx
-=======
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm.jsx
 import { sortArbeidsforholdList } from '../../ArbeidsforholdHelper';
 
 const kortvarigStringId = 'BeregningInfoPanel.TidsbegrensetArbFor.Arbeidsforhold';

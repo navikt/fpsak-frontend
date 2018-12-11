@@ -10,43 +10,23 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { DDMMYYYY_DATE_FORMAT, isObject } from '@fpsak-frontend/utils';
 import { FadingPanel } from '@fpsak-frontend/shared-components';
 import { getBehandlingsresultat, isBehandlingRevurderingFortsattMedlemskap, getBehandlingRevurderingAvFortsattMedlemskapFom }
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/VilkarresultatMedOverstyringForm.jsx
   from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import vilkarType from 'kodeverk/vilkarType';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
-import aksjonspunktCode from 'kodeverk/aksjonspunktCodes';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-=======
-  from 'behandling/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
 import aksjonspunktCode from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vilkar/VilkarresultatMedOverstyringForm.jsx
 import {
   getSelectedBehandlingspunktTitleCode, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus,
   getSelectedBehandlingspunkt, getIsSelectedBehandlingspunktOverridden, getSelectedBehandlingspunktVilkar,
   isSelectedBehandlingspunktOverrideReadOnly,
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vilkar/VilkarresultatMedOverstyringForm.jsx
 } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
-import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
 import OverstyrVurderingChecker from 'behandlingFpsak/behandlingsprosess/components/OverstyrVurderingChecker';
 import OverstyrConfirmationForm from 'behandlingFpsak/behandlingsprosess/components/OverstyrConfirmationForm';
 import VilkarResultPicker from 'behandlingFpsak/behandlingsprosess/components/vilkar/VilkarResultPicker';
 import OverstyrConfirmVilkarButton from 'behandlingFpsak/behandlingsprosess/components/OverstyrConfirmVilkarButton';
-=======
-} from 'behandlingsprosess/behandlingsprosessSelectors';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import OverstyrVurderingChecker from 'behandlingsprosess/components/OverstyrVurderingChecker';
-import OverstyrConfirmationForm from 'behandlingsprosess/components/OverstyrConfirmationForm';
-import VilkarResultPicker from 'behandlingsprosess/components/vilkar/VilkarResultPicker';
-import OverstyrConfirmVilkarButton from 'behandlingsprosess/components/OverstyrConfirmVilkarButton';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vilkar/VilkarresultatMedOverstyringForm.jsx
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 
 import styles from './vilkarresultatMedOverstyringForm.less';

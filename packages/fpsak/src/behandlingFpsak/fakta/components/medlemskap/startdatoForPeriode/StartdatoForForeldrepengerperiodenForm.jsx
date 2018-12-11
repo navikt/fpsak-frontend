@@ -7,31 +7,17 @@ import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 import { formPropTypes, FieldArray } from 'redux-form';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/startdatoForPeriode/StartdatoForForeldrepengerperiodenForm.jsx
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { getSoknad, getInntektsmeldinger, getAksjonspunkter } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
-=======
-import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
 import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
-import { getSoknad, getInntektsmeldinger, getAksjonspunkter } from 'behandling/behandlingSelectors';
-import { behandlingForm } from 'behandling/behandlingForm';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/medlemskap/startdatoForPeriode/StartdatoForForeldrepengerperiodenForm.jsx
 import {
   required, hasValidDate, minLength, maxLength, hasValidText,
 } from '@fpsak-frontend/utils';
 import { TextAreaField, DatepickerField } from '@fpsak-frontend/form';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/startdatoForPeriode/StartdatoForForeldrepengerperiodenForm.jsx
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
-=======
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import FaktaGruppe from 'fakta/components/FaktaGruppe';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/medlemskap/startdatoForPeriode/StartdatoForForeldrepengerperiodenForm.jsx
 import ArbeidsgiverInfo from './ArbeidsgiverInfo';
 
 

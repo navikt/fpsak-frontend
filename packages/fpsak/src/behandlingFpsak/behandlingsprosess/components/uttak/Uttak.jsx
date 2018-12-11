@@ -10,19 +10,11 @@ import {
   VerticalSpacer, FlexContainer, FlexRow, FlexColumn, ElementWrapper,
 } from '@fpsak-frontend/shared-components';
 import { Hovedknapp } from 'nav-frontend-knapper';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/uttak/Uttak.jsx
-import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import { calcDays } from 'utils/dateUtils';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { CheckboxField } from 'form/Fields';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
-=======
 import {
   calcDays, ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
 import { CheckboxField } from '@fpsak-frontend/form';
-import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/uttak/Uttak.jsx
 import {
   getBehandlingVersjon,
   getStonadskontoer,
@@ -34,21 +26,12 @@ import {
   getUttaksresultatPerioder,
 } from 'behandlingFpsak/behandlingSelectors';
 import { getRettigheter } from 'navAnsatt/duck';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/uttak/Uttak.jsx
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
-import oppholdArsakType, { oppholdArsakMapper } from 'kodeverk/oppholdArsakType';
-import periodeResultatType from 'kodeverk/periodeResultatType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { uttakPeriodeNavn } from 'kodeverk/uttakPeriodeType';
-import soknadType from 'kodeverk/soknadType';
-=======
-import { getSelectedBehandlingId } from 'behandling/duck';
 import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/uttak/Uttak.jsx
 import TimeLineInfo from './stonadkonto/TimeLineInfo';
 import UttakTimeLineData from './UttakTimeLineData';
 import UttakTimeLine from './UttakTimeLine';

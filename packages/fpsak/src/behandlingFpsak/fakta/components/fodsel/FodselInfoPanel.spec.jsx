@@ -3,15 +3,9 @@ import { expect } from 'chai';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/fodsel/FodselInfoPanel.spec.jsx
 import FodselSammenligningPanel from 'behandlingFpsak/components/fodselSammenligning/FodselSammenligningPanel';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
-=======
-import FodselSammenligningPanel from 'behandling/components/fodselSammenligning/FodselSammenligningPanel';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/fodsel/FodselInfoPanel.spec.jsx
+import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
 import { FodselInfoPanelImpl } from './FodselInfoPanel';
 import SjekkFodselDokForm from './SjekkFodselDokForm';
 import TermindatoFaktaForm from './TermindatoFaktaForm';

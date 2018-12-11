@@ -7,23 +7,10 @@ import { createSelector } from 'reselect';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column } from 'nav-frontend-grid';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/fodsel/SjekkFodselDokForm.jsx
 import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import ArrowBox from 'sharedComponents/ArrowBox';
-=======
-import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/fodsel/SjekkFodselDokForm.jsx
-import ElementWrapper from '@fpsak-frontend/shared-components';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import ArrowBox from '@fpsak-frontend/shared-components/ArrowBox';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/fodsel/SjekkFodselDokForm.jsx
-=======
 import {
   ElementWrapper, VerticalSpacer, ArrowBox,
 } from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/fodsel/SjekkFodselDokForm.jsx
 import {
   getEditedStatus, getFamiliehendelse, getBehandlingType, getBarnFraTpsRelatertTilSoknad,
   getPersonopplysning, getAksjonspunkter, getSoknadAntallBarn,
@@ -34,20 +21,8 @@ import {
   required, hasValidDate, minValue, maxValue, hasValidInteger, dateBeforeOrEqualToToday,
 } from '@fpsak-frontend/utils';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import {
-  DatepickerField, InputField, RadioGroupField, RadioOption,
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/fodsel/SjekkFodselDokForm.jsx
-} from 'form/Fields';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
-=======
-} from '@fpsak-frontend/form';
-import FaktaGruppe from 'fakta/components/FaktaGruppe';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/fodsel/SjekkFodselDokForm.jsx
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/fodsel/SjekkFodselDokForm.jsx
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-=======
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/fodsel/SjekkFodselDokForm.jsx
 
 import styles from './SjekkFodselDokForm.less';
 

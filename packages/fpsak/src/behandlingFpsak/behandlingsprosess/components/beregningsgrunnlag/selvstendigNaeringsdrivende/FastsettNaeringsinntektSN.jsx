@@ -12,21 +12,10 @@ import {
 import {
   InputField, RadioGroupField, RadioOption, TextAreaField,
 } from '@fpsak-frontend/form';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/selvstendigNaeringsdrivende/FastsettNaeringsinntektSN.jsx
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/selvstendigNaeringsdrivende/FastsettNaeringsinntektSN.jsx
-import { parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr } from 'utils/currencyUtils';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-=======
-=======
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/selvstendigNaeringsdrivende/FastsettNaeringsinntektSN.jsx
-import { behandlingFormValueSelector } from 'behandling/behandlingForm';
-import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/selvstendigNaeringsdrivende/FastsettNaeringsinntektSN.jsx
 
 import styles from './fastsettNaeringsinntektSN.less';
 

@@ -21,15 +21,9 @@ import {
 import {
   getBehandlingsresultatFraOriginalBehandling,
   getResultatstrukturFraOriginalBehandling,
-<<<<<<< HEAD
 } from 'behandlingFpsak/selectors/originalBehandlingSelectors';
-import behandlingResultatType from 'kodeverk/behandlingResultatType';
-import behandlingType from 'kodeverk/behandlingType';
-=======
-} from 'behandling/selectors/originalBehandlingSelectors';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
->>>>>>> NOJIRA nye pakker
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import requireProps from 'app/data/requireProps';

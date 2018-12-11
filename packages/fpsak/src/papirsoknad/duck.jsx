@@ -1,14 +1,8 @@
 import { createSelector } from 'reselect';
 import fpsakApi from 'data/fpsakApi';
-<<<<<<< HEAD
 import { getAksjonspunkter } from 'behandlingFpsak/behandlingSelectors';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
-=======
-import { getAksjonspunkter } from 'behandling/behandlingSelectors';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
->>>>>>> NOJIRA nye pakker
 
 /* Action types */
 export const RESET_REGISTRERING = 'RESET_REGISTRERING';

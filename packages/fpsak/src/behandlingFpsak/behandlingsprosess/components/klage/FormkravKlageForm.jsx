@@ -11,27 +11,13 @@ import {
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { Column, Row } from 'nav-frontend-grid';
 import { getBehandlinger } from 'behandling/selectors/behandlingerSelectors';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/klage/FormkravKlageForm.jsx
-import behandlingStatus from 'kodeverk/behandlingStatus';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/klage/FormkravKlageForm.jsx
 import behandlingPropType from 'behandlingFelles/proptypes/behandlingPropType';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-=======
-import behandlingPropType from 'behandling/proptypes/behandlingPropType';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/klage/FormkravKlageForm.jsx
-=======
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
-import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
-import behandlingPropType from 'behandling/proptypes/behandlingPropType';
 
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/klage/FormkravKlageForm.jsx
 import styles from './behandleKlageForm.less';
 
 /**

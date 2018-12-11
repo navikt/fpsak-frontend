@@ -6,38 +6,22 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/BeregningFP.jsx
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import FadingPanel from 'sharedComponents/FadingPanel';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-=======
 import {
   VerticalSpacer, FadingPanel, ElementWrapper, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
-import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/BeregningFP.jsx
 import {
   getAktivitetStatuser,
   getAlleAndelerIForstePeriode,
   getBehandlingGjelderBesteberegning,
   getBeregningsgrunnlag,
   getGjeldendeBeregningAksjonspunkt,
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/BeregningFP.jsx
 } from 'behandlingFpsak/behandlingSelectors';
 import beregningsgrunnlagPropType from 'behandlingFelles/proptypes/beregningsgrunnlagPropType';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
 import { getSelectedBehandlingspunktVilkar } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-=======
-} from 'behandling/behandlingSelectors';
-import beregningsgrunnlagPropType from 'behandling/proptypes/beregningsgrunnlagPropType';
-import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
-import { getSelectedBehandlingspunktVilkar } from 'behandlingsprosess/behandlingsprosessSelectors';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/BeregningFP.jsx
 import aktivitetStatus, {
   isStatusArbeidstakerOrKombinasjon,
   isStatusDagpengerOrAAP,

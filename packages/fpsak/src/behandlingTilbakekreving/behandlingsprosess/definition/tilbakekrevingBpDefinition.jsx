@@ -1,12 +1,6 @@
-<<<<<<< HEAD:packages/fpsak/src/behandlingTilbakekreving/behandlingsprosess/definition/tilbakekrevingBpDefinition.jsx
-import ac from 'kodeverk/aksjonspunktCodes';
 import BehandlingspunktProperties from 'behandlingFelles/behandlingsprosess/definition/behandlingspunktBuilder';
 import bpc from '../behandlingspunktCodes';
-=======
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import bpc from 'behandlingsprosess/behandlingspunktCodes';
-import BehandlingspunktProperties from 'behandlingsprosess/definition/behandlingspunktBuilder';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/tilbakekreving/definition/tilbakekrevingBpDefinition.jsx
 
 /**
  * Rekkefølgen i listene under bestemmer behandlingspunkt-rekkefølgen i GUI.

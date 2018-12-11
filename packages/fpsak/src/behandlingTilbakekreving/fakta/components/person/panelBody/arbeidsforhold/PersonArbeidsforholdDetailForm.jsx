@@ -7,27 +7,15 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-
-<<<<<<< HEAD:packages/fpsak/src/behandlingTilbakekreving/fakta/components/person/panelBody/arbeidsforhold/PersonArbeidsforholdDetailForm.jsx
 import BehandlingFormFieldCleaner from 'behandlingTilbakekreving/BehandlingFormFieldCleaner';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
 import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, getBehandlingFormValues, getBehandlingFormInitialValues,
 }
   from 'behandlingTilbakekreving/behandlingForm';
-import { hasValidText, maxLength, required } from 'utils/validation/validators';
-import { FlexColumn, FlexContainer, FlexRow } from 'sharedComponents/flexGrid';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-=======
-import BehandlingFormFieldCleaner from 'behandling/BehandlingFormFieldCleaner';
-import {
-  behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, getBehandlingFormValues, getBehandlingFormInitialValues,
-} from 'behandling/behandlingForm';
 import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
 import {
   FlexColumn, FlexContainer, FlexRow, ElementWrapper, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/person/panelBody/arbeidsforhold/PersonArbeidsforholdDetailForm.jsx
 import {
   InputField, RadioGroupField, RadioOption, TextAreaField,
 } from 'form/Fields';

@@ -1,16 +1,8 @@
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/definition/foreldrepengerBpDefinition.jsx
-import ac from 'kodeverk/aksjonspunktCodes';
-import vt from 'kodeverk/vilkarType';
-import bt from 'kodeverk/behandlingType';
-import vut from 'kodeverk/vilkarUtfallType';
 import bpc from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
-=======
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import bpc from 'behandlingsprosess/behandlingspunktCodes';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/definition/foreldrepengerBpDefinition.jsx
 import featureToggle from 'app/featureToggle';
 import { hasSimuleringOn, getStatusFromSimulering } from './simuleringStatusUtleder';
 import getVedtakStatus from './vedtakStatusUtleder';

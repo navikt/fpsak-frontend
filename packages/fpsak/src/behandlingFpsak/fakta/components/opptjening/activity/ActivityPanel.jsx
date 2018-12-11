@@ -10,28 +10,9 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import moment from 'moment';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/opptjening/activity/ActivityPanel.jsx
-import { findDifferenceInMonthsAndDays } from '@fpsak-frontend/utils';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/opptjening/activity/ActivityPanel.jsx
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
-import { omit, isEqual } from 'utils/objectUtils';
-import { FlexContainer, FlexRow, FlexColumn } from 'sharedComponents/flexGrid';
-import Image from 'sharedComponents/Image';
-=======
-import FaktaGruppe from 'fakta/components/FaktaGruppe';
-import { omit, isEqual } from '@fpsak-frontend/utils';
-import { FlexContainer, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components/flexGrid';
-import { Image } from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/opptjening/activity/ActivityPanel.jsx
-import { getKodeverk } from 'kodeverk/duck';
-import arbeidType from 'kodeverk/arbeidType';
-import opptjeningAktivitetType from 'kodeverk/opptjeningAktivitetType';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-=======
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import {
   Image, FlexContainer, FlexRow, FlexColumn, VerticalSpacer, ElementWrapper,
 } from '@fpsak-frontend/shared-components';
@@ -39,8 +20,6 @@ import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/opptjening/activity/ActivityPanel.jsx
 import {
   omit, isEqual, findDifferenceInMonthsAndDays,
   requiredIfCustomFunctionIsTrue, required, hasValidPeriod, minLength, maxLength, hasValidText, isWithinOpptjeningsperiode,

@@ -4,32 +4,9 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/arbeidstaker/GrunnlagForAarsinntektPanelAT.jsx
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import { InputField } from 'form/Fields';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from 'utils/currencyUtils';
-import { required } from 'utils/validation/validators';
-=======
-import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { InputField } from '@fpsak-frontend/form';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/arbeidstaker/GrunnlagForAarsinntektPanelAT.jsx
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
-import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from '@fpsak-frontend/utils';
-import { required } from '@fpsak-frontend/utils';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/arbeidstaker/GrunnlagForAarsinntektPanelAT.jsx
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { Image } from '@fpsak-frontend/shared-components';
-=======
 import {
   Image, VerticalSpacer, Table, TableRow, TableColumn,
 } from '@fpsak-frontend/shared-components';
@@ -38,12 +15,11 @@ import {
 } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/arbeidstaker/GrunnlagForAarsinntektPanelAT.jsx
 import endretUrl from '@fpsak-frontend/assets/images/endret_felt.svg';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import NaturalytelsePanel from './NaturalytelsePanel';
+
 import styles from './grunnlagForAarsinntektPanelAT.less';
 
 const createTableRows = (relevanteAndeler, harAksjonspunkt, bruttoFastsattInntekt, readOnly, isAksjonspunktClosed) => {

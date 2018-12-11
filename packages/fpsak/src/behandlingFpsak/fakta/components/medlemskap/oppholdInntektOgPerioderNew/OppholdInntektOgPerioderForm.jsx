@@ -19,31 +19,14 @@ import {
   getBehandlingRevurderingAvFortsattMedlemskapFom,
   getBehandlingVersjon, isBehandlingRevurderingFortsattMedlemskap,
 }
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdInntektOgPerioderForm.jsx
   from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-=======
-  from 'behandling/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
-import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdInntektOgPerioderForm.jsx
-import ElementWrapper from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdInntektOgPerioderForm.jsx
 import { getFagsakPerson } from 'fagsak/fagsakSelectors';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { bindActionCreators } from 'redux';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
-import { createSelector } from 'reselect';
-import guid from '@fpsak-frontend/utils';
-=======
-import { getFagsakPerson } from 'fagsak/fagsakSelectors';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { bindActionCreators } from 'redux';
-import { getSelectedBehandlingId } from 'behandling/duck';
 import { guid } from '@fpsak-frontend/utils';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioderNew/OppholdInntektOgPerioderForm.jsx
 import OppholdInntektOgPeriodeForm from './OppholdInntektOgPeriodeForm';
 import MedlemskapEndringerTabell from './MedlemskapEndringerTabell';
 

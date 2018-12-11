@@ -8,42 +8,15 @@ import {
   required, createVisningsnavnForAktivitet, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, DDMMYYYY_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
 import { Row, Column } from 'nav-frontend-grid';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/besteberegningFodendeKvinne/FastsettBBFodendeKvinneForm.jsx
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/besteberegningFodendeKvinne/FastsettBBFodendeKvinneForm.jsx
-import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { InputField, SelectField } from 'form/Fields';
 import { getFaktaOmBeregning } from 'behandlingFpsak/behandlingSelectors';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-=======
-import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { InputField, SelectField } from '@fpsak-frontend/form';
-import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/besteberegningFodendeKvinne/FastsettBBFodendeKvinneForm.jsx
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from '@fpsak-frontend/utils';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import { getKodeverk } from 'kodeverk/duck';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-=======
 import { InputField, SelectField } from '@fpsak-frontend/form';
-import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
 import {
   VerticalSpacer, Table, TableRow, TableColumn,
 } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
-import { behandlingFormValueSelector } from 'behandling/behandlingForm';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/besteberegningFodendeKvinne/FastsettBBFodendeKvinneForm.jsx
 
 import styles from './fastsettBBFodendeKvinneForm.less';
 

@@ -10,47 +10,21 @@ import {
   Element, Normaltekst, Undertekst, Undertittel,
 } from 'nav-frontend-typografi';
 import Panel from 'nav-frontend-paneler';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/soknadsfrist/VurderSoknadsfristForeldrepengerForm.jsx
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/soknadsfrist/VurderSoknadsfristForeldrepengerForm.jsx
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import FadingPanel from 'sharedComponents/FadingPanel';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import { DatepickerField, RadioGroupField, RadioOption } from 'form/Fields';
-import { dateBeforeOrEqualToToday, hasValidDate, required } from 'utils/validation/validators';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { getSoknad, getBehandlingUttaksperiodegrense } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-=======
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import FadingPanel from '@fpsak-frontend/shared-components/FadingPanel';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-=======
 import {
   AksjonspunktHelpText, FadingPanel, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/soknadsfrist/VurderSoknadsfristForeldrepengerForm.jsx
 import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import {
   DDMMYYYY_DATE_FORMAT, dateBeforeOrEqualToToday, hasValidDate, required,
 } from '@fpsak-frontend/utils';
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
-import { getSoknad, getBehandlingUttaksperiodegrense } from 'behandling/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
-import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/soknadsfrist/VurderSoknadsfristForeldrepengerForm.jsx
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/soknadsfrist/VurderSoknadsfristForeldrepengerForm.jsx
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-=======
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/soknadsfrist/VurderSoknadsfristForeldrepengerForm.jsx
 
 import styles from './vurderSoknadsfristForeldrepengerForm.less';
 

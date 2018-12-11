@@ -8,13 +8,8 @@ import { toggleBehandlingspunktOverstyring } from 'behandlingFpsak/behandlingspr
 import { getSelectedBehandlingspunkt, getSelectedBehandlingspunktAksjonspunkter, isSelectedBehandlingspunktOverrideReadOnly }
   from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { getRettigheter } from 'navAnsatt/duck';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/OverstyrVurderingChecker.jsx
-import CheckboxField from 'form/fields/CheckboxField';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-=======
 import { CheckboxField } from '@fpsak-frontend/form';
-import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/OverstyrVurderingChecker.jsx
 
 const isOverridden = (aksjonspunkter, aksjonspunktCode) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 

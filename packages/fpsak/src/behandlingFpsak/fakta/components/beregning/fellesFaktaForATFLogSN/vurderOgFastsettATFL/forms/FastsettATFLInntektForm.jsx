@@ -4,41 +4,15 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/FastsettATFLInntektForm.jsx
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/FastsettATFLInntektForm.jsx
-import { required } from 'utils/validation/validators';
-import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { InputField } from 'form/Fields';
 import { getFaktaOmBeregning } from 'behandlingFpsak/behandlingSelectors';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-=======
-import { required } from '@fpsak-frontend/utils';
-import createVisningsnavnForAktivitet from '@fpsak-frontend/utils/arbeidsforholdUtil';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { InputField } from '@fpsak-frontend/form';
-import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/FastsettATFLInntektForm.jsx
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from '@fpsak-frontend/utils';
-=======
 import {
   required, createVisningsnavnForAktivitet, DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber,
 } from '@fpsak-frontend/utils';
 import { InputField } from '@fpsak-frontend/form';
-import { getFaktaOmBeregning } from 'behandling/behandlingSelectors';
 import {
   VerticalSpacer, Table, TableRow, TableColumn,
 } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/FastsettATFLInntektForm.jsx
 import faktaOmBeregningTilfelle, {
   erATFLSpesialtilfelle,
   harKunATFLISammeOrgUtenBestebergning,

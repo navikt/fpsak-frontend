@@ -4,15 +4,9 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import { FieldArray } from 'redux-form';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/kunYtelse/KunYtelseBesteberegningPanel.jsx
-import { RadioGroupField, RadioOption } from 'form/Fields';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import { required } from 'utils/validation/validators';
-=======
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { required } from '@fpsak-frontend/utils';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/kunYtelse/KunYtelseBesteberegningPanel.jsx
 import { Column, Row } from 'nav-frontend-grid';
 import BrukersAndelFieldArray from './BrukersAndelFieldArray';
 

@@ -1,12 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/fellesPaneler/SkjeringspunktOgStatusPanel.spec.jsx
 
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-=======
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/fellesPaneler/SkjeringspunktOgStatusPanel.spec.jsx
 import { SkjeringspunktOgStatusPanelImpl } from './SkjeringspunktOgStatusPanel';
 
 describe('<SkjeringspunktOgStatusPanel>', () => {

@@ -7,15 +7,9 @@ import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
 
 import { createLocationForHistorikkItems } from 'app/paths';
-<<<<<<< HEAD
 import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinnslagDelPropType';
-import historikkEndretFeltTypeCodes from 'kodeverk/historikkEndretFeltTypeCodes';
-import historikkOpplysningTypeCodes from 'kodeverk/historikkOpplysningTypeCodes';
-=======
-import historikkinnslagDelPropType from 'behandling/proptypes/historikkinnslagDelPropType';
 import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeCodes';
 import historikkOpplysningTypeCodes from '@fpsak-frontend/kodeverk/src/historikkOpplysningTypeCodes';
->>>>>>> NOJIRA nye pakker
 import {
   findEndretFeltNavn,
   findEndretFeltVerdi,

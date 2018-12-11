@@ -2,15 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/revurdering/VarselOmRevurderingForm.spec.jsx
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import FodselSammenligningPanel from 'behandlingFpsak/components/fodselSammenligning/FodselSammenligningPanel';
-=======
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
-import FodselSammenligningPanel from 'behandling/components/fodselSammenligning/FodselSammenligningPanel';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/revurdering/VarselOmRevurderingForm.spec.jsx
 import { VarselOmRevurderingFormImpl as UnwrappedForm } from './VarselOmRevurderingForm';
 
 describe('<VarselOmRevurderingFormImpl>', () => {

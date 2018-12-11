@@ -1,31 +1,16 @@
 import { createSelector } from 'reselect';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingSelectors.jsx
-import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
-=======
-import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import fpsakApi from 'data/fpsakApi';
 import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandling/behandlingSelectors.jsx
 import aksjonspunktCodes, {
   isInnhentSaksopplysningerAksjonspunkt,
   isVilkarForSykdomOppfylt,
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingSelectors.jsx
-} from 'kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import behandlingStatus from 'kodeverk/behandlingStatus';
-import behandlingType from 'kodeverk/behandlingType';
-import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
-import fpsakBehandlingApi from './data/fpsakBehandlingApi';
-=======
 } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { getSelectedSaksnummer, isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandling/behandlingSelectors.jsx
+import fpsakBehandlingApi from './data/fpsakBehandlingApi';
 import isFieldEdited from './editedFields';
 import { getSelectedBehandlingId } from './duck';
 

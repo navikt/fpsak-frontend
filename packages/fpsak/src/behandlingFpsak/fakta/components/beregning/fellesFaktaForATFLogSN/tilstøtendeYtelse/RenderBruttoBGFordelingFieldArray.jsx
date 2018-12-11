@@ -4,24 +4,8 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import {
-  DecimalField, InputField, NavFieldGroup, PeriodpickerField, SelectField,
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/tilstøtendeYtelse/RenderBruttoBGFordelingFieldArray.jsx
-} from 'form/Fields';
 import { getAksjonspunkter, getFaktaOmBeregning } from 'behandlingFpsak/behandlingSelectors';
 import { isBehandlingFormDirty } from 'behandlingFpsak/behandlingForm';
-import { isEmpty } from 'utils/arrayUtils';
-import Image from 'sharedComponents/Image';
-=======
-} from '@fpsak-frontend/form';
-import { getAksjonspunkter, getFaktaOmBeregning } from 'behandling/behandlingSelectors';
-import { isBehandlingFormDirty } from 'behandling/behandlingForm';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/tilstøtendeYtelse/RenderBruttoBGFordelingFieldArray.jsx
-import { isEmpty } from '@fpsak-frontend/utils';
-import { Image } from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/tilstøtendeYtelse/RenderBruttoBGFordelingFieldArray.jsx
-=======
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/tilstøtendeYtelse/RenderBruttoBGFordelingFieldArray.jsx
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

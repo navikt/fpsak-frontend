@@ -7,15 +7,9 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-<<<<<<< HEAD
-import dokumentMalType from 'kodeverk/dokumentMalType';
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import SettBehandlingPaVentForm from 'behandlingFpsak/components/SettBehandlingPaVentForm';
-=======
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
-import SettBehandlingPaVentForm from 'behandling/components/SettBehandlingPaVentForm';
->>>>>>> NOJIRA nye pakker
 import {
   getBehandlingSprak,
   getBehandlingVersjon,

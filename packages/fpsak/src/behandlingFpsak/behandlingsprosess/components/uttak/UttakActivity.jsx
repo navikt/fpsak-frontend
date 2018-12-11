@@ -16,21 +16,12 @@ import {
 } from '@fpsak-frontend/utils';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/uttak/UttakActivity.jsx
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import { getSkjaeringstidspunktForeldrepenger } from 'behandlingFpsak/behandlingSelectors';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import oppholdArsakType, { oppholdArsakMapper } from 'kodeverk/oppholdArsakType';
-import { getKodeverk } from 'kodeverk/duck';
-=======
-import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { getSkjaeringstidspunktForeldrepenger } from 'behandling/behandlingSelectors';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/uttak/UttakActivity.jsx
 import { FieldArray, formPropTypes } from 'redux-form';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';

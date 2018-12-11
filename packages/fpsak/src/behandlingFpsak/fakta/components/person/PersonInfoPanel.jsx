@@ -4,20 +4,10 @@ import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
-
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/person/PersonInfoPanel.jsx
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import { omit } from 'utils/objectUtils';
-=======
-import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import ElementWrapper from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/person/PersonInfoPanel.jsx
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   getBehandlingRelatertTilgrensendeYtelserForAnnenForelder,
   getBehandlingRelatertTilgrensendeYtelserForSoker,
@@ -25,7 +15,7 @@ import {
   getPersonopplysning,
   getBehandlingArbeidsforhold,
 } from 'behandlingFpsak/behandlingSelectors';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
 import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';

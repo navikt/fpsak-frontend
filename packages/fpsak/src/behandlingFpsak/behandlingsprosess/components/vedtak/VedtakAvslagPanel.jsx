@@ -3,31 +3,18 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/VedtakAvslagPanel.jsx
 import { getBehandlingVilkar, getBehandlingSprak } from 'behandlingFpsak/behandlingSelectors';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-=======
-import { getBehandlingVilkar, getBehandlingSprak } from 'behandling/behandlingSelectors';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/vedtak/VedtakAvslagPanel.jsx
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import {
   endringerIBeregningsgrunnlagGirFritekstfelt,
   hasIkkeOppfyltSoknadsfristvilkar,
   findAvslagResultatText,
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/VedtakAvslagPanel.jsx
 } from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakHelper';
 import VedtakFritekstPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import behandlingStatus from 'kodeverk/behandlingStatus';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-=======
-} from 'behandlingsprosess/components/vedtak/VedtakHelper';
-import VedtakFritekstPanel from 'behandlingsprosess/components/vedtak/VedtakFritekstPanel';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vedtak/VedtakAvslagPanel.jsx
 
 export const getAvslagArsak = (vilkar, aksjonspunkter, behandlingsresultat) => {
   const avslatteVilkar = vilkar.filter(v => v.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);

@@ -6,7 +6,7 @@ import trackRouteParam from 'app/data/trackRouteParam';
 import requireProps from 'app/data/requireProps';
 import { updateFagsakInfo } from 'fagsak/duck';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
-import BehandlingType from 'kodeverk/behandlingType';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import BehandlingTilbakekrevingIndex from 'behandlingTilbakekreving/BehandlingTilbakekrevingIndex';
 import BehandlingFpsakIndex from 'behandlingFpsak/BehandlingFpsakIndex';
 import { setSelectedBehandlingId, getSelectedBehandlingId } from './duck';

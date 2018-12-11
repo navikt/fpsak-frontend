@@ -7,15 +7,9 @@ import { injectIntl, intlShape } from 'react-intl';
 import classNames from 'classnames';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-<<<<<<< HEAD
-import dokumentMalType from 'kodeverk/dokumentMalType';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import { isKontrollerRevurderingAksjonspunkOpen } from 'behandlingFpsak/behandlingSelectors';
-=======
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { isKontrollerRevurderingAksjonspunkOpen } from 'behandling/behandlingSelectors';
->>>>>>> NOJIRA nye pakker
 import {
   ariaCheck, hasValidText, maxLength, minLength, required, getLanguageCodeFromSprakkode,
 } from '@fpsak-frontend/utils';

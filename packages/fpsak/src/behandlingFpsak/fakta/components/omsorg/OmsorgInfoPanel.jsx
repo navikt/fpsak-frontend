@@ -5,20 +5,10 @@ import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/omsorg/OmsorgInfoPanel.jsx
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/omsorg/OmsorgInfoPanel.jsx
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-=======
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components';
-=======
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/omsorg/OmsorgInfoPanel.jsx
-import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/omsorg/OmsorgInfoPanel.jsx
 import {
   getPersonopplysning, getBehandlingYtelseFordeling, getEktefellePersonopplysning, getAksjonspunkter,
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/omsorg/OmsorgInfoPanel.jsx
 } from 'behandlingFpsak/behandlingSelectors';
 import personopplysningPropType from 'behandlingFelles/proptypes/personopplysningPropType';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
@@ -28,19 +18,7 @@ import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspand
 import BostedFaktaView from 'behandlingFpsak/fakta/components/omsorg/BostedFaktaView';
 import OmsorgFaktaForm from 'behandlingFpsak/fakta/components/omsorg/OmsorgFaktaForm';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-=======
-} from 'behandling/behandlingSelectors';
-import personopplysningPropType from 'behandling/proptypes/personopplysningPropType';
-import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
-import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
-import FaktaSubmitButton from 'fakta/components/FaktaSubmitButton';
-import FaktaEkspandertpanel from 'fakta/components/FaktaEkspandertpanel';
-import BostedFaktaView from 'fakta/components/omsorg/BostedFaktaView';
-import OmsorgFaktaForm from 'fakta/components/omsorg/OmsorgFaktaForm';
-import withDefaultToggling from 'fakta/withDefaultToggling';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/omsorg/OmsorgInfoPanel.jsx
 import IkkeOmsorgPeriodeField from './IkkeOmsorgPeriodeField';
 
 

@@ -10,34 +10,17 @@ import {
   getBehandlingGjelderBesteberegning,
   getBeregningsgrunnlagPerioder,
   getGjeldendeBeregningAksjonspunkt,
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/beregningsgrunnlagPanel/BeregningsgrunnlagForm.jsx
 } from 'behandlingFpsak/behandlingSelectors';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { BorderBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import periodeAarsak from 'kodeverk/periodeAarsak';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/beregningsgrunnlagPanel/BeregningsgrunnlagForm.jsx
-import TextAreaField from 'form/fields/TextAreaField';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
-=======
-=======
-} from 'behandling/behandlingSelectors';
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingsprosess/behandlingsprosessSelectors';
-import { behandlingForm } from 'behandling/behandlingForm';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import aksjonspunktPropType from 'behandling/proptypes/aksjonspunktPropType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BorderBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/beregningsgrunnlagPanel/BeregningsgrunnlagForm.jsx
 import { TextAreaField } from '@fpsak-frontend/form';
-import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
->>>>>>> NOJIRA moduler:packages/fpsak/src/behandlingsprosess/components/beregningsgrunnlag/beregningsgrunnlagPanel/BeregningsgrunnlagForm.jsx
 import {
   hasValidText, maxLength, minLength, required, removeSpacesFromNumber,
 } from '@fpsak-frontend/utils';

@@ -3,27 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/uttak/perioder/FerieOgArbeidsPeriode.jsx
-import oppholdArsakType from 'kodeverk/oppholdArsakType';
-import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
-import FlexRow from 'sharedComponents/flexGrid/FlexRow';
-import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/uttak/perioder/FerieOgArbeidsPeriode.jsx
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-=======
-import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/uttak/perioder/FerieOgArbeidsPeriode.jsx
-import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
-=======
 import oppholdArsakType from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
-import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
+import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
+import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import {
   FlexContainer, FlexRow, FlexColumn, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/uttak/perioder/FerieOgArbeidsPeriode.jsx
 import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import {
   required, maxLength, minLength, hasValidPeriod, hasValidText,

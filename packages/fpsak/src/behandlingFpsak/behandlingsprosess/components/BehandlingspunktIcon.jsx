@@ -5,19 +5,12 @@ import { Undertekst, Element } from 'nav-frontend-typografi';
 import { injectIntl, intlShape } from 'react-intl';
 
 import { Image } from '@fpsak-frontend/shared-components';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/BehandlingspunktIcon.jsx
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 import { getBehandlingHenlagt } from 'behandlingFpsak/behandlingSelectors';
 import findBehandlingsprosessIcon from 'behandlingFpsak/behandlingsprosess/statusIconHelper';
 import {
   getBehandlingspunkterStatus, getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus,
 } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
-=======
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { getBehandlingHenlagt } from 'behandling/behandlingSelectors';
-import findBehandlingsprosessIcon from 'behandlingsprosess/statusIconHelper';
-import { getBehandlingspunkterStatus, getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus } from 'behandlingsprosess/behandlingsprosessSelectors';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/BehandlingspunktIcon.jsx
 
 import styles from './behandlingspunktIcon.less';
 

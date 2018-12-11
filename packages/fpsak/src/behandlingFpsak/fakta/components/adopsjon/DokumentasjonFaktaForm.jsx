@@ -8,25 +8,12 @@ import moment from 'moment';
 
 import { getEditedStatus } from 'behandlingFpsak/behandlingSelectors';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/adopsjon/DokumentasjonFaktaForm.jsx
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import { DatepickerField } from 'form/Fields';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { required, hasValidDate } from 'utils/validation/validators';
-import Image from 'sharedComponents/Image';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
-=======
-import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { DatepickerField } from '@fpsak-frontend/form';
 import { required, hasValidDate } from '@fpsak-frontend/utils';
 import { VerticalSpacer, Image } from '@fpsak-frontend/shared-components';
-import FaktaGruppe from 'fakta/components/FaktaGruppe';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/adopsjon/DokumentasjonFaktaForm.jsx
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/adopsjon/DokumentasjonFaktaForm.jsx
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-=======
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/adopsjon/DokumentasjonFaktaForm.jsx
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 
 import styles from './dokumentasjonFaktaForm.less';

@@ -4,29 +4,14 @@ import { connect } from 'react-redux';
 import { FieldArray } from 'redux-form';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column } from 'nav-frontend-grid';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/uttak/perioder/SykdomOgSkadePeriode.jsx
-import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
-import FlexRow from 'sharedComponents/flexGrid/FlexRow';
-import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
 import { getFamiliehendelse, doesVilkarForSykdomOppfyltExist } from 'behandlingFpsak/behandlingSelectors';
-import overforingArsakCodes from 'kodeverk/overforingArsakCodes';
-import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/uttak/perioder/SykdomOgSkadePeriode.jsx
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandlingFpsak/behandlingForm';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { RadioOption, RadioGroupField, TextAreaField } from 'form/Fields';
-=======
-=======
-import { getFamiliehendelse, doesVilkarForSykdomOppfyltExist } from 'behandling/behandlingSelectors';
 import overforingArsakCodes from '@fpsak-frontend/kodeverk/src/overforingArsakCodes';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/uttak/perioder/SykdomOgSkadePeriode.jsx
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandling/behandlingForm';
 import {
   FlexContainer, FlexRow, FlexColumn, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/uttak/perioder/SykdomOgSkadePeriode.jsx
 import {
   required, maxLength, minLength, hasValidPeriod, hasValidText,
 } from '@fpsak-frontend/utils';

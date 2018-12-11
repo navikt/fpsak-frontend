@@ -7,17 +7,10 @@ import { connect } from 'react-redux';
 import {
   getBehandlingResultatstruktur, getHaveSentVarsel,
   getAksjonspunkter, getBehandlingStatus,
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/vedtak/revurdering/VedtakRevurderingSubmitPanel.jsx
 } from 'behandlingFpsak/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandlingFpsak/selectors/originalBehandlingSelectors';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import behandlingStatusCode from 'kodeverk/behandlingStatus';
-=======
-} from 'behandling/behandlingSelectors';
-import { getResultatstrukturFraOriginalBehandling } from 'behandling/selectors/originalBehandlingSelectors';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/vedtak/revurdering/VedtakRevurderingSubmitPanel.jsx
 import styles from '../vedtakForm.less';
 import { ForhaandsvisningsKnapp } from '../VedtakForm';
 

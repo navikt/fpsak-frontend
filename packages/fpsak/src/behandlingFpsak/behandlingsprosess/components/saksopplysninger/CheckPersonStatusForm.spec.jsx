@@ -4,17 +4,10 @@ import { expect } from 'chai';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/components/saksopplysninger/CheckPersonStatusForm.spec.jsx
-import personstatusType from 'kodeverk/personstatusType';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
-import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
-=======
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import BehandlingspunktBegrunnelseTextField from 'behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
-import BehandlingspunktSubmitButton from 'behandlingsprosess/components/BehandlingspunktSubmitButton';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/components/saksopplysninger/CheckPersonStatusForm.spec.jsx
 import { CheckPersonStatusFormImpl as UnwrappedForm, buildInitialValues } from './CheckPersonStatusForm';
 
 describe('<CheckPersonStatusForm>', () => {

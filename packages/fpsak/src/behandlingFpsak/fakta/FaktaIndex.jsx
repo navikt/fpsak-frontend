@@ -4,12 +4,7 @@ import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/FaktaIndex.jsx
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-=======
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import BehandlingIdentifier from 'behandling/BehandlingIdentifier';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/FaktaIndex.jsx
 import requireProps from 'app/data/requireProps';
 import { getBehandlingVersjon } from 'behandlingFpsak/behandlingSelectors';
 import {

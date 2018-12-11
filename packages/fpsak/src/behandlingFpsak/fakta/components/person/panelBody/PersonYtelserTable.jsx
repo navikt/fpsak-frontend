@@ -4,17 +4,9 @@ import { injectIntl, intlShape } from 'react-intl';
 import moment from 'moment';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/person/panelBody/PersonYtelserTable.jsx
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-=======
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/person/panelBody/PersonYtelserTable.jsx
 
 import styles from './personYtelserTable.less';
 

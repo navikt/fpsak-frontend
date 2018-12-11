@@ -6,30 +6,16 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingTilbakekreving/fakta/components/person/panelBody/arbeidsforhold/PersonArbeidsforholdPanel.jsx
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import { getKodeverk } from 'kodeverk/duck';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import { ISO_DATE_FORMAT } from 'utils/formats';
 import { getBehandlingVersjon } from 'behandlingTilbakekreving/tilbakekrevingBehandlingSelectors';
 import { getSelectedBehandlingId } from 'behandlingTilbakekreving/duck';
 import arbeidsforholdPropType from 'behandlingFelles/proptypes/arbeidsforholdPropType';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingTilbakekreving/behandlingForm';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import FaktaGruppe from 'behandlingTilbakekreving/fakta/components/FaktaGruppe';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-=======
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { getBehandlingVersjon } from 'behandling/behandlingSelectors';
-import arbeidsforholdPropType from 'behandling/proptypes/arbeidsforholdPropType';
-import { getSelectedBehandlingId } from 'behandling/duck';
-import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandling/behandlingForm';
 import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
-import FaktaGruppe from 'fakta/components/FaktaGruppe';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/person/panelBody/arbeidsforhold/PersonArbeidsforholdPanel.jsx
 import PersonArbeidsforholdTable from './PersonArbeidsforholdTable';
 import PersonAksjonspunktText from './PersonAksjonspunktText';
 import PersonArbeidsforholdDetailForm, { PERSON_ARBEIDSFORHOLD_DETAIL_FORM } from './PersonArbeidsforholdDetailForm';

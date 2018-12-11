@@ -6,40 +6,10 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioder/PerioderMedMedlemskapFaktaPanel.jsx
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { RadioGroupField, RadioOption } from 'form/Fields';
-import DateLabel from 'sharedComponents/DateLabel';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import PeriodLabel from 'sharedComponents/PeriodLabel';
-=======
-import { behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioder/PerioderMedMedlemskapFaktaPanel.jsx
-import DateLabel from '@fpsak-frontend/shared-components';
-import Table from '@fpsak-frontend/shared-components/Table';
-import TableRow from '@fpsak-frontend/shared-components/TableRow';
-import TableColumn from '@fpsak-frontend/shared-components/TableColumn';
-import PeriodLabel from '@fpsak-frontend/shared-components/PeriodLabel';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioder/PerioderMedMedlemskapFaktaPanel.jsx
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioder/PerioderMedMedlemskapFaktaPanel.jsx
-import { required } from 'utils/validation/validators';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-=======
-import { required } from '@fpsak-frontend/utils';
-import FaktaGruppe from 'fakta/components/FaktaGruppe';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioder/PerioderMedMedlemskapFaktaPanel.jsx
 
-=======
 import {
   Table, TableRow, TableColumn, PeriodLabel, DateLabel, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -48,8 +18,6 @@ import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
-import FaktaGruppe from 'fakta/components/FaktaGruppe';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioder/PerioderMedMedlemskapFaktaPanel.jsx
 
 const headerTextCodes = [
   'PerioderMedMedlemskapFaktaPanel.Period',

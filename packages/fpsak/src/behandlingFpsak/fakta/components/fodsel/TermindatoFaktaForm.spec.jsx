@@ -3,17 +3,10 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/fodsel/TermindatoFaktaForm.spec.jsx
-import DateLabel from '@fpsak-frontend/shared-components';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-=======
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { DateLabel } from '@fpsak-frontend/shared-components';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
-import FaktaGruppe from 'fakta/components/FaktaGruppe';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/fodsel/TermindatoFaktaForm.spec.jsx
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
 import { TermindatoFaktaForm, buildInitialValues } from './TermindatoFaktaForm';
 

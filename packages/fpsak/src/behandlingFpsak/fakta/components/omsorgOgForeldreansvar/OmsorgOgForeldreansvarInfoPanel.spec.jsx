@@ -3,15 +3,9 @@ import { expect } from 'chai';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/omsorgOgForeldreansvar/OmsorgOgForeldreansvarInfoPanel.spec.jsx
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import relatertYtelseType from 'kodeverk/relatertYtelseType';
 import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
-=======
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
-import relatertYtelseType from '@fpsak-frontend/kodeverk/src/relatertYtelseType';
-import FaktaBegrunnelseTextField from 'fakta/components/FaktaBegrunnelseTextField';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/omsorgOgForeldreansvar/OmsorgOgForeldreansvarInfoPanel.spec.jsx
 import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';
 import { OmsorgOgForeldreansvarInfoPanelImpl } from './OmsorgOgForeldreansvarInfoPanel';
 

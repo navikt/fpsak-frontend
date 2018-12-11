@@ -1,11 +1,6 @@
 import { createSelector } from 'reselect';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors.jsx
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-=======
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/behandlingsprosess/behandlingsprosessSelectors.jsx
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { getRettigheter } from 'navAnsatt/duck';
 import { DEFAULT_BEHANDLINGSPROSESS } from 'app/paths';

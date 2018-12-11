@@ -6,27 +6,15 @@ import { FormattedMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioder/FortsattMedlemskapFaktaPanel.jsx
-<<<<<<< HEAD:packages/fpsak/src/behandlingFpsak/fakta/components/medlemskap/oppholdInntektOgPerioder/FortsattMedlemskapFaktaPanel.jsx
-import ElementWrapper from 'sharedComponents/ElementWrapper';
 import {
   getBehandlingSkjaringstidspunkt,
   getBehandlingMedlemEndredeOpplysninger,
   getBehandlingStartDatoForPermisjon,
 } from 'behandlingFpsak/behandlingSelectors';
-=======
-import ElementWrapper from '@fpsak-frontend/shared-components';
-import { getBehandlingSkjaringstidspunkt, getBehandlingMedlemEndredeOpplysninger, getBehandlingStartDatoForPermisjon } from 'behandling/behandlingSelectors';
->>>>>>> NOJIRA moduler:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioderNew/FortsattMedlemskapFaktaPanel.jsx
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-=======
-import { getBehandlingSkjaringstidspunkt, getBehandlingMedlemEndredeOpplysninger, getBehandlingStartDatoForPermisjon } from 'behandling/behandlingSelectors';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   ElementWrapper, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
->>>>>>> NOJIRA nye pakker:packages/fpsak/src/fakta/components/medlemskap/oppholdInntektOgPerioder/FortsattMedlemskapFaktaPanel.jsx
 import { DatepickerField } from '@fpsak-frontend/form';
 import {
   required, hasValidDate, dateAfterOrEqual, ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT,
