@@ -91,7 +91,7 @@ const AndreYtelserPanel = injectIntl(AndreYtelserPanelImpl);
 
 AndreYtelserPanel.buildInitialValues = (andreYtelser) => {
   const ytelseInitialValues = {};
-  removeUtenlandskArbeidsforhold(andreYtelser).forEach((ay) => {
+  removeArbeidstyper(andreYtelser).forEach((ay) => {
     const ytelsePeriodeFieldName = `${ay.kode}_${ANDRE_YTELSER_PERIODE_SUFFIX}`;
     ytelseInitialValues[ytelsePeriodeFieldName] = [{}];
   });
