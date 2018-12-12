@@ -13,11 +13,9 @@ const ROOT_DIR = path.resolve(__dirname, '../public/client');
 const PACKAGES_DIR = path.resolve(__dirname, '../packages');
 const APP_DIR = path.resolve(PACKAGES_DIR, 'fpsak/src');
 
-//Fjern de to utkommenterte linjene for sourcemaps i produksjonsbygget.
-
 const config = {
   mode: 'production',
-  // devtool: 'source-maps',
+  devtool: 'source-maps',
   performance: { hints: false },
 
   entry: [
@@ -45,7 +43,7 @@ const config = {
         },
         parallel: true,
         cache: true,
-        // sourceMap: true,
+        sourceMap: true,
       }),
       new OptimizeCSSAssetsPlugin({}),
     ],
