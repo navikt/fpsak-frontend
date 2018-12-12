@@ -62,7 +62,7 @@ const config = {
           },
         },
       }],
-      include: [APP_DIR, PACKAGES_DIR],
+      include: [PACKAGES_DIR],
       exclude: [CSS_DIR],
     }, {
       test: /\.(less|css)?$/,
