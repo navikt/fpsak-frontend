@@ -5,7 +5,9 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 const getFetchFagsakResult = fpsakApi.FETCH_FAGSAK.getRestApiData();
 
-export const getFagsakContext = state => state.default.fagsakContext;
+// TODO (TOR) Flytt denne til duck. (Må fikse circular dependency først)
+export const getFagsakContext = state => state.default.fagsak;
+
 export const getSelectedSaksnummer = state => getFagsakContext(state).selectedSaksnummer;
 
 // NB! Ikke bruk denne i eksterne filer (utover dagens bruk)

@@ -1,7 +1,8 @@
 import { expect } from 'chai';
 
-import { apiState } from '@fpsak-frontend/assets/testHelpers//data-test-helper';
+import { ApiStateBuilder } from '@fpsak-frontend/assets/testHelpers/data-test-helper';
 import fpsakApi from 'data/fpsakApi';
+import fpsakBehandlingApi from 'behandlingFpsak/data/fpsakBehandlingApi';
 
 import { getRettigheter, getNavAnsatt } from './duck';
 
@@ -9,10 +10,26 @@ describe('NAV-ansatt-reducer', () => {
   it('skal hente rettigheter til NAV-ansatt fra state', () => {
     const navAnsatt = { navn: 'Ann S. Att', kanSaksbehandle: true };
 
-    const state = apiState()
-      .withData(fpsakApi.NAV_ANSATT.name, navAnsatt);
+    const dataState = new ApiStateBuilder()
+      .withData(fpsakApi.NAV_ANSATT.name, navAnsatt)
+      .withData(fpsakApi.FETCH_FAGSAK.name, {})
+      .withData(fpsakBehandlingApi.BEHANDLING.name, {}, 'dataContextFpsakBehandling')
+      .withData(fpsakBehandlingApi.ORIGINAL_BEHANDLING.name, {}, 'dataContextFpsakBehandling')
+      .build();
 
+    const state = {
+      default: {
+        ...dataState.default,
+        fagsak: {
+          selectedSaksnummer: 1,
+        },
+        fpsakBehandling: {
+          behandlingId: 1,
+        },
+      },
+    };
     const rettigheter = getRettigheter(state);
+
     expect(Object.keys(rettigheter)).to.have.lengthOf.above(0);
     Object.keys(rettigheter)
       .forEach(key => expect(rettigheter).to.have.property(key)
@@ -21,8 +38,9 @@ describe('NAV-ansatt-reducer', () => {
 
   it('skal hente NAV-ansatt fra state', () => {
     const navAnsatt = { navn: 'Ann S. Att', kanSaksbehandle: true };
-    const state = apiState()
-      .withData(fpsakApi.NAV_ANSATT.name, navAnsatt);
+    const state = new ApiStateBuilder()
+      .withData(fpsakApi.NAV_ANSATT.name, navAnsatt)
+      .build();
     expect(getNavAnsatt(state)).to.eql(navAnsatt);
   });
 });

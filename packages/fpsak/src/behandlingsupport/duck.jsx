@@ -1,7 +1,11 @@
 import fpsakApi from 'data/fpsakApi';
 
+import reducerRegistry from '../ReducerRegistry';
+
+const reducerName = 'behandlingSupport';
+
 /* Action types */
-const actionType = name => `behandlingSupport/${name}`;
+const actionType = name => `${reducerName}/${name}`;
 const SET_SELECTED_SUPPORT_PANEL = actionType('SET_SELECTED_SUPPORT_PANEL');
 const RESET_BEHANDLING_SUPPORT = actionType('RESET_BEHANDLING_SUPPORT');
 
@@ -44,5 +48,7 @@ export const behandlingSupportReducer = (state = initialState, action = {}) => {
   }
 };
 
-const getBehandlingSupportContext = state => state.default.behandlingSupportContext;
+reducerRegistry.register(reducerName, behandlingSupportReducer);
+
+const getBehandlingSupportContext = state => state.default[reducerName];
 export const getSelectedSupportPanel = state => getBehandlingSupportContext(state).selectedSupportPanel;

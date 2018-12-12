@@ -2,12 +2,16 @@ import { createSelector } from 'reselect';
 
 import fpsakApi from 'data/fpsakApi';
 import featureToggle from './featureToggle';
+import reducerRegistry from '../ReducerRegistry';
+
+const reducerName = 'errorHandling';
 
 /* Action types */
-export const ADD_ERROR_MESSAGE = 'ADD_ERROR_MESSAGE';
-export const ADD_ERROR_MESSAGE_CODE = 'ADD_ERROR_MESSAGE_CODE';
-export const REMOVE_ERROR_MESSAGE = 'REMOVE_ERROR_MESSAGE';
-const SHOW_CRASH_MESSAGE = 'SHOW_CRASH_MESSAGE';
+const actionType = name => `${reducerName}/${name}`;
+export const ADD_ERROR_MESSAGE = actionType('ADD_ERROR_MESSAGE');
+export const ADD_ERROR_MESSAGE_CODE = actionType('ADD_ERROR_MESSAGE_CODE');
+export const REMOVE_ERROR_MESSAGE = actionType('REMOVE_ERROR_MESSAGE');
+const SHOW_CRASH_MESSAGE = actionType('SHOW_CRASH_MESSAGE');
 
 /* Action creators */
 export const addErrorMessage = message => ({
@@ -87,8 +91,10 @@ export const errorHandlingReducer = (state = initialState, action = {}) => {
   }
 };
 
+reducerRegistry.register(reducerName, errorHandlingReducer);
+
 /* Selectors */
-const getErrorHandlingContext = state => state.default.errorHandlingContext;
+const getErrorHandlingContext = state => state.default[reducerName];
 export const getErrorMessages = createSelector([getErrorHandlingContext], errorHandlingContext => errorHandlingContext.errorMessages);
 export const getErrorMessageCodeWithParams = createSelector([getErrorHandlingContext], errorHandlingContext => errorHandlingContext.errorMessageCodeWithParams);
 export const getCrashMessage = createSelector([getErrorHandlingContext], errorHandlingContext => errorHandlingContext.crashMessage);

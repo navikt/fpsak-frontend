@@ -3,8 +3,12 @@ import { createSelector } from 'reselect';
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import tilbakekrevingBehandlingApi, { TilbakekrevingBehandlingApiKeys } from './tilbakekrevingBehandlingApi';
 
+import reducerRegistry from '../ReducerRegistry';
+
+const reducerName = 'tilbakekrevingBehandling';
+
 /* Action types */
-const actionType = name => `behandling_tilbakekreving/${name}`;
+const actionType = name => `${reducerName}/${name}`;
 const SET_BEHANDLING_INFO = actionType('SET_BEHANDLING_INFO');
 const HAS_SHOWN_BEHANDLING_PA_VENT = actionType('HAS_SHOWN_BEHANDLING_PA_VENT');
 
@@ -85,8 +89,10 @@ export const tilbakekrevingBehandlingReducer = (state = initialState, action = {
   }
 };
 
+reducerRegistry.register(reducerName, tilbakekrevingBehandlingReducer);
+
 // Selectors (Kun de knyttet til reducer)
-const getBehandlingContext = state => state.default.tilbakekrevingBehandlingContext;
+const getBehandlingContext = state => state.default[reducerName];
 export const getSelectedBehandlingId = createSelector([getBehandlingContext], behandlingContext => behandlingContext.behandlingId);
 export const getSelectedSaksnummer = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsakSaksnummer);
 export const getBehandlingIdentifier = createSelector(

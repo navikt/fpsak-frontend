@@ -27,6 +27,7 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import requireProps from 'app/data/requireProps';
+import { getResolveProsessAksjonspunkterSuccess } from 'behandlingFpsak/behandlingsprosess/duck';
 
 import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
 import styles from './fatterVedtakApprovalModal.less';
@@ -180,7 +181,7 @@ const mapStateToProps = (state, ownProps) => {
       modalDescriptionTextCode: isStatusFatterVedtak(state) ? getModalDescriptionTextCode(state) : 'FatterVedtakApprovalModal.ModalDescription',
       selectedBehandlingId: getSelectedBehandlingId(state),
       isBehandlingStatusFatterVedtak: getBehandlingStatus(state).kode === behandlingStatus.FATTER_VEDTAK ? true : undefined,
-      resolveProsessAksjonspunkterSuccess: state.default.behandlingsprosessContext.resolveProsessAksjonspunkterSuccess,
+      resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
     };
   }
   return {
@@ -189,7 +190,7 @@ const mapStateToProps = (state, ownProps) => {
     modalDescriptionTextCode: isStatusFatterVedtak(state) ? getModalDescriptionTextCode(state) : 'FatterVedtakApprovalModal.ModalDescription',
     selectedBehandlingId: getSelectedBehandlingId(state),
     isBehandlingStatusFatterVedtak: getBehandlingStatus(state).kode === behandlingStatus.FATTER_VEDTAK ? true : undefined,
-    resolveProsessAksjonspunkterSuccess: state.default.behandlingsprosessContext.resolveProsessAksjonspunkterSuccess,
+    resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
   };
 };
 

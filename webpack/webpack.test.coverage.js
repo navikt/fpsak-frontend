@@ -19,7 +19,7 @@ const config = {
         loader: 'happypack/loader',
       }],
   	  include: PACKAGES_DIR,
-  	  exclude: /(node_modules|testHelpers)/,
+  	  exclude: /(node_modules)/,
     }, {
   	  test: /\.(less|css|jpg|png|svg)$/,
   	  loader: 'null-loader',

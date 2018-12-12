@@ -91,7 +91,7 @@ describe('Behandlingsupport-reducer', () => {
   it('skal hente valgt panel', () => {
     const state = {
       default: {
-        behandlingSupportContext: {
+        behandlingSupport: {
           selectedSupportPanel: SupportPanels.APPROVAL,
         },
       },

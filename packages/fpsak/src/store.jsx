@@ -5,18 +5,18 @@ import {
 import thunkMiddleware from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
 
-import * as reducers from './reducers';
+import reducerRegistry from './ReducerRegistry';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 const logger = isDevelopment ? require('redux-logger') : null;
 
-const configureStore = (browserHistory) => {
-  const rootReducer = combineReducers({
-    ...reducers,
-    router: connectRouter(browserHistory),
-    form: formReducer,
-  });
+const combineAllReducers = (routerReducer, reduxFormReducer, applicationReducers) => combineReducers({
+  default: combineReducers(applicationReducers),
+  router: routerReducer,
+  form: reduxFormReducer,
+});
 
+const configureStore = (browserHistory) => {
   const middleware = [thunkMiddleware, routerMiddleware(browserHistory)];
   let enhancer;
   if (isDevelopment) {
@@ -29,9 +29,20 @@ const configureStore = (browserHistory) => {
     enhancer = compose(applyMiddleware(...middleware));
   }
 
+  const routerReducer = connectRouter(browserHistory);
+  const allReducers = combineAllReducers(routerReducer, formReducer, reducerRegistry.getReducers());
+
   const initialState = {};
 
-  return createStore(rootReducer, initialState, enhancer);
+  const store = createStore(allReducers, initialState, enhancer);
+
+  // Replace the store's reducer whenever a new reducer is registered.
+  reducerRegistry.setChangeListener((reducers) => {
+    const newReducers = combineAllReducers(routerReducer, formReducer, reducers);
+    store.replaceReducer(newReducers);
+  });
+
+  return store;
 };
 
 export default configureStore;

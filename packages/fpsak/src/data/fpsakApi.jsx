@@ -1,5 +1,6 @@
 /* @flow */
 import { getHttpClientApi, getRestApiBuilder, initRestApi } from './rest/restApi';
+import reducerRegistry from '../ReducerRegistry';
 
 export const FpsakApiKeys = {
   LANGUAGE_FILE: 'LANGUAGE_FILE',
@@ -91,5 +92,5 @@ const endpoints = getRestApiBuilder(httpClientApi)
   .withPost('/api/feature-toggle', FpsakApiKeys.FEATURE_TOGGLE)
   .build();
 
-const fpsakApi = initRestApi(httpClientApi, 'fpsak', endpoints, 'dataContext');
+const fpsakApi = initRestApi(httpClientApi, 'fpsak', endpoints, 'dataContext', reducerRegistry);
 export default fpsakApi;

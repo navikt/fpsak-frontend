@@ -1,9 +1,12 @@
 import { createSelector } from 'reselect';
 
 import tilbakekrevingBehandlingApi from 'behandlingTilbakekreving/tilbakekrevingBehandlingApi';
+import reducerRegistry from '../../ReducerRegistry';
+
+const reducerName = 'tilbakekrevingBehandlingsprosess';
 
 /* Action types */
-const actionType = name => `behandling_tilbakekreving_prosess/${name}`;
+const actionType = name => `${reducerName}/${name}`;
 export const SET_SELECTED_BEHANDLINGSPUNKT_NAVN = actionType('SET_SELECTED_BEHANDLINGSPUNKT_NAVN');
 export const RESET_BEHANDLINGSPUNKTER = actionType('RESET_BEHANDLINGSPUNKTER');
 export const RESOLVE_PROSESS_AKSJONSPUNKTER_STARTED = actionType('RESOLVE_PROSESS_AKSJONSPUNKTER_STARTED');
@@ -98,7 +101,9 @@ export const tilbakekrevingBehandlingsprosessReducer = (state = initialState, ac
   }
 };
 
+reducerRegistry.register(reducerName, tilbakekrevingBehandlingsprosessReducer);
+
 // Selectors (Kun de knyttet til reducer)
-const getBehandlingsprosessContext = state => state.default.tilbakekrevingBehandlingsprosessContext;
+const getBehandlingsprosessContext = state => state.default[reducerName];
 export const getSelectedBehandlingspunktNavn = createSelector([getBehandlingsprosessContext], bpCtx => bpCtx.selectedBehandlingspunktNavn);
 export const getOverrideBehandlingspunkter = createSelector([getBehandlingsprosessContext], bpCtx => bpCtx.overrideBehandlingspunkter);

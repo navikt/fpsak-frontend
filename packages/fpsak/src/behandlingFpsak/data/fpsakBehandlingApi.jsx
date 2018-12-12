@@ -1,5 +1,6 @@
 /* @flow */
 import { getHttpClientApi, getRestApiBuilder, initRestApi } from 'data/rest/restApi';
+import reducerRegistry from '../../ReducerRegistry';
 
 export const BehandlingFpsakApiKeys = {
   BEHANDLING: 'BEHANDLING',
@@ -29,5 +30,5 @@ const endpoints = getRestApiBuilder(httpClientApi)
   .withPostAndOpenBlob('/api/brev/forhandsvis-klage', BehandlingFpsakApiKeys.PREVIEW_MESSAGE_KLAGE)
   .build();
 
-const fpsakBehandlingApi = initRestApi(httpClientApi, 'fpsak', endpoints, 'dataFpsakBehandlingContext');
+const fpsakBehandlingApi = initRestApi(httpClientApi, 'fpsak', endpoints, 'dataContextFpsakBehandling', reducerRegistry);
 export default fpsakBehandlingApi;

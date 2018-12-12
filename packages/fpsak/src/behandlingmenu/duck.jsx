@@ -8,6 +8,7 @@ import fpsakBehandlingApi from 'behandlingFpsak/data/fpsakBehandlingApi';
 import { updateFagsakInfo, updateBehandlinger } from 'fagsak/duck';
 import { updateBehandlingsupportInfo } from 'behandlingsupport/duck';
 import { updateBehandling, resetBehandling } from 'behandlingFpsak/duck';
+import reducerRegistry from '../ReducerRegistry';
 
 const findNewBehandlingId = (behandlingerResponse) => {
   const sortedBehandlinger = behandlingerResponse.payload
@@ -15,9 +16,12 @@ const findNewBehandlingId = (behandlingerResponse) => {
   return sortedBehandlinger[0].id;
 };
 
+const reducerName = 'behandlingMenu';
+
 /* Action types */
-const HAS_SUBMITTED_PA_VENT_FORM = 'HAS_SUBMITTED_PA_VENT_FORM';
-const RESET_BEHANDLING_MENU = 'RESET_BEHANDLING_MENU';
+const actionType = name => `${reducerName}/${name}`;
+const HAS_SUBMITTED_PA_VENT_FORM = actionType('HAS_SUBMITTED_PA_VENT_FORM');
+const RESET_BEHANDLING_MENU = actionType('RESET_BEHANDLING_MENU');
 
 /* Action creators */
 export const setHasSubmittedPaVentForm = () => ({
@@ -105,7 +109,9 @@ export const behandlingMenuReducer = (state = initialState, action = {}) => {
   }
 };
 
+reducerRegistry.register(reducerName, behandlingMenuReducer);
+
 // Selectors (Kun de knyttet til reducer)
-const getBehandlingMenuContext = state => state.default.behandlingMenuContext;
+const getBehandlingMenuContext = state => state.default[reducerName];
 
 export const getHasSubmittedPaVentForm = createSelector([getBehandlingMenuContext], behandlingMenuContext => behandlingMenuContext.hasSubmittedPaVentForm);

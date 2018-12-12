@@ -2,8 +2,12 @@ import { createSelector } from 'reselect';
 import fpsakApi from 'data/fpsakApi';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 
+import reducerRegistry from '../ReducerRegistry';
+
+const reducerName = 'fagsakProfile';
+
 /* Action types */
-const actionType = name => `fagsakProfile/${name}`;
+const actionType = name => `${reducerName}/${name}`;
 const TOGGLE_DISPLAYED_BEHANDLINGER = actionType('TOGGLE_DISPLAYED_BEHANDLINGER');
 const RESET_FAGSAK_PROFILE = actionType('RESET_FAGSAK_PROFILE');
 
@@ -39,8 +43,10 @@ export const fagsakProfileReducer = (state = initialState, action = {}) => {
   }
 };
 
+reducerRegistry.register(reducerName, fagsakProfileReducer);
+
 /* Selectors */
-const getFagsakProfileContext = state => state.default.fagsakProfileContext;
+const getFagsakProfileContext = state => state.default[reducerName];
 export const getShowAllBehandlinger = state => getFagsakProfileContext(state).showAllBehandlinger;
 
 const getAnnenPartBehandlingData = fpsakApi.ANNEN_PART_BEHANDLING.getRestApiData();

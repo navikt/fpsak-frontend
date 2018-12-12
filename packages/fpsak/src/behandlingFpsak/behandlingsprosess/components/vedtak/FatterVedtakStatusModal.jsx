@@ -20,6 +20,7 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import requireProps from 'app/data/requireProps';
+import { getResolveProsessAksjonspunkterSuccess } from 'behandlingFpsak/behandlingsprosess/duck';
 
 import styles from './fatterVedtakStatusModal.less';
 
@@ -142,7 +143,7 @@ const mapStateToProps = state => ({
   infoTextCode: isStatusFatterVedtak(state) ? getInfoTextCode(state) : '',
   altImgTextCode: isStatusFatterVedtak(state) ? getAltImgTextCode(state) : '',
   modalDescriptionTextCode: isStatusFatterVedtak(state) ? getModalDescriptionTextCode(state) : 'FatterVedtakStatusModal.ModalDescription',
-  resolveProsessAksjonspunkterSuccess: state.default.behandlingsprosessContext.resolveProsessAksjonspunkterSuccess,
+  resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
 });
 
 export default connect(mapStateToProps)(injectIntl(requireProps(['selectedBehandlingId', 'isBehandlingStatusFatterVedtak'])(FatterVedtakStatusModal)));

@@ -2,13 +2,17 @@ import { createSelector } from 'reselect';
 
 import { updateFagsakInfo } from 'fagsak/duck';
 import fpsakBehandlingApi from '../data/fpsakBehandlingApi';
+import reducerRegistry from '../../ReducerRegistry';
+
+const reducerName = 'fpsakBehandlingsprosess';
 
 /* Action types */
-export const SET_SELECTED_BEHANDLINGSPUNKT_NAVN = 'SET_SELECTED_BEHANDLINGSPUNKT_NAVN';
-export const RESET_BEHANDLINGSPUNKTER = 'RESET_BEHANDLINGSPUNKTER';
-export const RESOLVE_PROSESS_AKSJONSPUNKTER_STARTED = 'RESOLVE_PROSESS_AKSJONSPUNKTER_STARTED';
-export const RESOLVE_PROSESS_AKSJONSPUNKTER_SUCCESS = 'RESOLVE_PROSESS_AKSJONSPUNKTER_SUCCESS';
-export const TOGGLE_BEHANDLINGSPUNKT_OVERSTYRING = 'TOGGLE_BEHANDLINGSPUNKT_OVERSTYRING';
+const actionType = name => `${reducerName}/${name}`;
+export const SET_SELECTED_BEHANDLINGSPUNKT_NAVN = actionType('SET_SELECTED_BEHANDLINGSPUNKT_NAVN');
+export const RESET_BEHANDLINGSPUNKTER = actionType('RESET_BEHANDLINGSPUNKTER');
+export const RESOLVE_PROSESS_AKSJONSPUNKTER_STARTED = actionType('RESOLVE_PROSESS_AKSJONSPUNKTER_STARTED');
+export const RESOLVE_PROSESS_AKSJONSPUNKTER_SUCCESS = actionType('RESOLVE_PROSESS_AKSJONSPUNKTER_SUCCESS');
+export const TOGGLE_BEHANDLINGSPUNKT_OVERSTYRING = actionType('TOGGLE_BEHANDLINGSPUNKT_OVERSTYRING');
 
 export const resetBehandlingspunkter = () => ({
   type: RESET_BEHANDLINGSPUNKTER,
@@ -102,7 +106,10 @@ export const behandlingsprosessReducer = (state = initialState, action = {}) => 
   }
 };
 
+reducerRegistry.register(reducerName, behandlingsprosessReducer);
+
 // Selectors (Kun de knyttet til reducer)
-const getBehandlingsprosessContext = state => state.default.behandlingsprosessContext;
+const getBehandlingsprosessContext = state => state.default[reducerName];
 export const getSelectedBehandlingspunktNavn = createSelector([getBehandlingsprosessContext], bpCtx => bpCtx.selectedBehandlingspunktNavn);
 export const getOverrideBehandlingspunkter = createSelector([getBehandlingsprosessContext], bpCtx => bpCtx.overrideBehandlingspunkter);
+export const getResolveProsessAksjonspunkterSuccess = createSelector([getBehandlingsprosessContext], bpCtx => bpCtx.resolveProsessAksjonspunkterSuccess);

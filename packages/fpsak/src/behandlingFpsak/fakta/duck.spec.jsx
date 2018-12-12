@@ -59,7 +59,7 @@ describe('Fakta-reducer', () => {
     });
   });
 
-  it('skal avklare aksjonspunkter', () => {
+  xit('skal avklare aksjonspunkter', () => {
     mockAxios
       .onPost(fpsakBehandlingApi.SAVE_AKSJONSPUNKT.path)
       .reply(200, [{ vurdering: 'test' }]);

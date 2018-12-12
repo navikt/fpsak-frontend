@@ -1,5 +1,6 @@
 /* @flow */
 import { getHttpClientApi, getRestApiBuilder, initRestApi } from 'data/rest/restApi';
+import reducerRegistry from '../ReducerRegistry';
 
 export const TilbakekrevingBehandlingApiKeys = {
   BEHANDLING: 'BEHANDLING',
@@ -22,5 +23,5 @@ const endpoints = getRestApiBuilder(httpClientApi)
 
   .build();
 
-const tilbakekrevingBehandlingApi = initRestApi(httpClientApi, 'fptilbake', endpoints, 'dataTilbakekrevingBehandlingContext');
+const tilbakekrevingBehandlingApi = initRestApi(httpClientApi, 'fptilbake', endpoints, 'dataContextTilbakekrevingBehandling', reducerRegistry);
 export default tilbakekrevingBehandlingApi;
