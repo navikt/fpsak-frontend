@@ -15,8 +15,6 @@ import VedtakKlageSubmitPanel from 'behandlingFpsak/behandlingsprosess/component
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { FadingPanel, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import featureToggle from 'app/featureToggle';
-import { getFeatureToggles } from 'app/duck';
 
 export const VEDTAK_KLAGE_FORM_NAME = 'VEDTAK_KLAGE_FORM';
 

@@ -1,6 +1,8 @@
 import { expect } from 'chai';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
-import { skalIkkjeVereHogareEnnInntektmeldingMessage, skalVereLikFordelingMessage } from '../ValidateAndelerUtils';
+import {
+  skalIkkjeVereHogareEnnInntektmeldingMessage, skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding, skalVereLikFordelingMessage,
+} from '../ValidateAndelerUtils';
 import RenderEndringBGFieldArray from './RenderEndringBGFieldArray';
 
 describe('<RenderEndringBGFieldArray>', () => {
