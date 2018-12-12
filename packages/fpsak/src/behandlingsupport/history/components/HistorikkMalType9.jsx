@@ -7,19 +7,14 @@ import { Element } from 'nav-frontend-typografi';
 
 import { createLocationForHistorikkItems } from 'app/paths';
 import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinnslagDelPropType';
+import avregningCodes from 'kodeverk/avregningCodes';
 
+import { findEndretFeltVerdi } from './historikkUtils';
 import BubbleText from './bubbleText';
 import styles from './historikkMalType.less';
 
-const tilbakekrevingVerdier = {
-  TILBAKEKR_INFOTRYGD: 'Behandle tilbakekreving i Infotrygd',
-  TILBAKEKR_IGNORER: 'Avvent samordning, ingen tilbakekreving',
-  JA: 'Ja',
-  NEI: 'Nei',
-};
-
 export const HistorikkMalType9 = ({
-  historikkinnslagDeler, behandlingLocation, originType,
+  historikkinnslagDeler, behandlingLocation, originType, intl,
 }) => {
   const getSplitPeriods = (endredeFelter) => {
     let text = '';
@@ -77,13 +72,13 @@ export const HistorikkMalType9 = ({
 
             {originType.kode === historikkinnslagType.TILBAKEKR_VIDEREBEHANDLING
             && (
-              historikkinnslagDel.endredeFelter.map(endredeFelt => (
-                <div className={styles.tilbakekrevingTekst}>
+              historikkinnslagDel.endredeFelter.map((endretFelt, index) => endretFelt.tilVerdi !== avregningCodes.TILBAKEKR_INNTREKK && (
+                <div className={styles.tilbakekrevingTekst} key={`endretFelt${index + 1}`}>
                   <FormattedHTMLMessage
                     id="Historikk.Template.9.TilbakekrViderebehandling"
                     values={{
-                      felt: endredeFelt.endretFeltNavn.navn,
-                      verdi: tilbakekrevingVerdier[endredeFelt.tilVerdi],
+                      felt: endretFelt.endretFeltNavn.navn,
+                      verdi: findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl),
                     }}
                   />
                 </div>
