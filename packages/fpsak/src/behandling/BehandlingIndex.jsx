@@ -46,7 +46,6 @@ const BehandlingIndex = ({
       key={behandlingId}
       saksnummer={saksnummer}
       behandlingId={behandlingId}
-      behandlingVersjon={behandlingVersjon}
       updateFagsakInfo={updateFagsakInfo}
       behandlingerVersjonMappedById={behandlingerVersjonMappedById}
       location={location}
