@@ -23,6 +23,11 @@ const getAxiosHttpClientApi = () => {
   const axiosInstance = axios.create();
   axiosInstance.CancelToken = axios.CancelToken;
   axiosInstance.isCancel = axios.isCancel;
+  axiosInstance.interceptors.request.use((c) => {
+    const config = Object.assign({}, c);
+    config.headers['Nav-Callid'] = `CallId_${(new Date()).getTime()}_${Math.floor(Math.random() * 1000000000)}`;
+    return config;
+  });
   const restMethods = initRestMethods(axiosInstance);
 
   return {
