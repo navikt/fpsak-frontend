@@ -17,8 +17,6 @@ import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import VedtakKlageSubmitPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/klageNy/VedtakKlageSubmitPanel';
-import featureToggle from 'app/featureToggle';
-import { getFeatureToggles } from 'app/duck';
 import FadingPanel from 'sharedComponents/FadingPanel';
 
 export const VEDTAK_KLAGE_FORM_NAME = 'VEDTAK_KLAGE_FORM';
@@ -117,39 +115,18 @@ const transformValues = values => values.aksjonspunktKoder.map(apCode => ({
   begrunnelse: values.fritekstTilBrev,
 }));
 
-
-export const getAvvisningsAarsakerFeature = (klageVurderingResultat) => {
-  if (klageVurderingResultat) {
-    if (klageVurderingResultat.klageFormkravResultatKA && klageVurderingResultat.klageVurderingResultatNK) {
-      return klageVurderingResultat.klageFormkravResultatKA.avvistArsaker;
-    }
-    if (klageVurderingResultat.klageFormkravResultatNFP) {
-      return klageVurderingResultat.klageFormkravResultatNFP.avvistArsaker;
-    }
-  }
-  return null;
-};
-
-export const getAvvisningsAarsakUtenFeature = (klageVurderingResultat) => {
-  if (klageVurderingResultat) {
-    if (klageVurderingResultat.klageVurderingResultatNK) {
-      return [{ navn: klageVurderingResultat.klageVurderingResultatNK.klageAvvistArsakNavn }];
-    }
-    if (klageVurderingResultat.klageVurderingResultatNFP) {
-      return [{ navn: klageVurderingResultat.klageVurderingResultatNFP.klageAvvistArsakNavn }];
-    }
-  }
-  return null;
-};
-
-
 export const getAvvisningsAarsaker = createSelector(
-  [getBehandlingKlageVurdering, getFeatureToggles],
-  (klageVurderingResultat, featureToggles) => {
-    if (featureToggles[featureToggle.FORMKRAV]) {
-      return getAvvisningsAarsakerFeature(klageVurderingResultat);
+  [getBehandlingKlageVurdering],
+  (klageVurderingResultat) => {
+    if (klageVurderingResultat) {
+      if (klageVurderingResultat.klageFormkravResultatKA && klageVurderingResultat.klageVurderingResultatNK) {
+        return klageVurderingResultat.klageFormkravResultatKA.avvistArsaker;
+      }
+      if (klageVurderingResultat.klageFormkravResultatNFP) {
+        return klageVurderingResultat.klageFormkravResultatNFP.avvistArsaker;
+      }
     }
-    return getAvvisningsAarsakUtenFeature(klageVurderingResultat);
+    return null;
   },
 );
 
@@ -232,7 +209,6 @@ export const buildInitialValues = createSelector(
 );
 
 const mapStateToProps = (state, initialProps) => ({
-  featureToggle: getFeatureToggles(state)[featureToggle.FORMKRAV],
   initialValues: buildInitialValues(state),
   isBehandlingReadOnly: isBehandlingStatusReadOnly(state),
   isAvvist: getIsAvvist(state),
