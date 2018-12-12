@@ -2,10 +2,10 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-import { metaMock, MockFields } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
+import { metaMock, MockFields } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 
-import { DatepickerField } from 'form/Fields';
-import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
+import { DatepickerField } from '@fpsak-frontend/form';
+import { PeriodFieldArray } from '@fpsak-frontend/shared-components';
 import FrilansOppdragForFamilieFieldArray from './FrilansOppdragForFamilieFieldArray';
 
 const fields = new MockFields('perioder', 1);

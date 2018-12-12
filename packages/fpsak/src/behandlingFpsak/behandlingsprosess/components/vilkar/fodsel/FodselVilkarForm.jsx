@@ -6,18 +6,19 @@ import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 
 import BpPanelTemplate from 'behandlingFpsak/behandlingsprosess/components/vilkar/BpPanelTemplate';
-import { getSelectedBehandlingspunktVilkar, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus }
-  from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
+import {
+  getSelectedBehandlingspunktVilkar, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus,
+} from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { getBehandlingsresultat } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import vilkarType from 'kodeverk/vilkarType';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import VilkarResultPicker from 'behandlingFpsak/behandlingsprosess/components/vilkar/VilkarResultPicker';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 /**
  * FodselVilkarForm

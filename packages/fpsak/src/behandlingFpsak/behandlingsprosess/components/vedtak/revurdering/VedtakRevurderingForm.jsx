@@ -12,15 +12,14 @@ import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } 
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import { isInnvilget, isAvslag, isOpphor } from 'kodeverk/behandlingResultatType';
+import { isInnvilget, isAvslag, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { getRettigheter } from 'navAnsatt/duck';
-import behandlingStatusCode from 'kodeverk/behandlingStatus';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import behandlingArsakType from 'kodeverk/behandlingArsakType';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import FritekstBrevPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/FritekstBrevPanel';
-import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import { bindActionCreators } from 'redux';
 import { injectIntl, intlShape } from 'react-intl';
@@ -221,7 +220,8 @@ const buildInitialValues = createSelector(
           antallBarn: beregningResultat.antallBarn,
           aksjonspunktKoder,
         };
-      } if (behandlingstatus.kode !== behandlingStatusCode.AVSLUTTET) {
+      }
+      if (behandlingstatus.kode !== behandlingStatusCode.AVSLUTTET) {
         return {
           antallBarn: null,
           aksjonspunktKoder,

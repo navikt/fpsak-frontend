@@ -2,20 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { RadioGroupField, RadioOption } from 'form/Fields';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { required } from 'utils/validation/validators';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { getFaktaOmBeregning } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle } from 'kodeverk/faktaOmBeregningTilfelle';
+import { required } from '@fpsak-frontend/utils';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle } from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { Column, Row } from 'nav-frontend-grid';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import FastsettATFLInntektForm
   from 'behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/FastsettATFLInntektForm';
 
 import styles from './lonnsendringForm.less';
-
 
 export const utledOverskriftForLonnsendringForm = (tilfeller, manglerIM) => {
   if (!tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON) || erATFLSpesialtilfelle(tilfeller)) {

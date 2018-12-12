@@ -7,10 +7,9 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import Modal from 'sharedComponents/Modal';
+import { Modal, Image } from '@fpsak-frontend/shared-components';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import Image from 'sharedComponents/Image';
-import behandlingStatus from 'kodeverk/behandlingStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { getSelectedBehandlingId } from 'behandling/duck';
 import {
   getBehandlingIsKlage,
@@ -23,13 +22,13 @@ import {
   getBehandlingsresultatFraOriginalBehandling,
   getResultatstrukturFraOriginalBehandling,
 } from 'behandlingFpsak/selectors/originalBehandlingSelectors';
-import behandlingResultatType from 'kodeverk/behandlingResultatType';
-import behandlingType from 'kodeverk/behandlingType';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import requireProps from 'app/data/requireProps';
 
-import konsekvensForYtelsen from 'kodeverk/konsekvensForYtelsen';
+import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
 import styles from './fatterVedtakApprovalModal.less';
 
 /**

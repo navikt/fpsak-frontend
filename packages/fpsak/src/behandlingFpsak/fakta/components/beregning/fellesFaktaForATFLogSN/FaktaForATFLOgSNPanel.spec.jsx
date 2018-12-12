@@ -2,8 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   FaktaForATFLOgSNPanelImpl,
   getHelpTextsFaktaForATFLOgSN,

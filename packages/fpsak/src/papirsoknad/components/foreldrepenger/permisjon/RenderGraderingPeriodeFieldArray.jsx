@@ -6,15 +6,14 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 import AlertStripe from 'nav-frontend-alertstriper';
-
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
-import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
-import { maxValue, hasValidDecimal } from 'utils/validation/validators';
+import {
+  PeriodFieldArray, FlexContainer, FlexColumn, FlexRow, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
+import { maxValue, hasValidDecimal } from '@fpsak-frontend/utils';
 import {
   DatepickerField, SelectField, InputField, CheckboxField, DecimalField,
-} from 'form/Fields';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
+} from '@fpsak-frontend/form';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
 import moment from 'moment/moment';
 import { gyldigeUttakperioder } from './RenderPermisjonPeriodeFieldArray';
 

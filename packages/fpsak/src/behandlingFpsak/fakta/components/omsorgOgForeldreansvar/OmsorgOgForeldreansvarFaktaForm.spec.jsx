@@ -1,13 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 
-import opplysningAdresseType from 'kodeverk/opplysningAdresseType';
-import relatertYtelseType from 'kodeverk/relatertYtelseType';
-import opplysningsKilde from 'kodeverk/opplysningsKilde';
-import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
-import soknadType from 'kodeverk/soknadType';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
+import relatertYtelseType from '@fpsak-frontend/kodeverk/src/relatertYtelseType';
+import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
+import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';
 
 describe('<OmsorgOgForeldreansvarFaktaForm>', () => {

@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { required } from 'utils/validation/validators';
-import OAType from 'kodeverk/opptjeningAktivitetType';
-import { InputField } from 'form/Fields';
-import { parseCurrencyInput, formatCurrencyNoKr, removeSpacesFromNumber } from 'utils/currencyUtils';
+import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
+import { InputField } from '@fpsak-frontend/form';
+import {
+  required, parseCurrencyInput, formatCurrencyNoKr, removeSpacesFromNumber,
+} from '@fpsak-frontend/utils';
 
 /**
  * FastsettEtterlønnSluttpakkeForm

@@ -2,14 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { RadioGroupField, RadioOption } from 'form/Fields';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import moment from 'moment';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { getFaktaOmBeregning } from 'behandlingFpsak/behandlingSelectors';
-import { required } from 'utils/validation/validators';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
+import { required, DDMMYYYY_DATE_FORMAT, createVisningsnavnForAktivitet } from '@fpsak-frontend/utils';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { sortArbeidsforholdList } from '../../ArbeidsforholdHelper';
 
 const kortvarigStringId = 'BeregningInfoPanel.TidsbegrensetArbFor.Arbeidsforhold';

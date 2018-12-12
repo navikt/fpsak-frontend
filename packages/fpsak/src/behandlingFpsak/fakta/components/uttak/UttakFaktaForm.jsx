@@ -13,19 +13,16 @@ import moment from 'moment';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { getBehandlingFormPrefix, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
-import FlexRow from 'sharedComponents/flexGrid/FlexRow';
-import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
-import { ariaCheck } from 'utils/validation/validators';
 import { getInntektsmeldinger, getBehandlingVersjon } from 'behandlingFpsak/behandlingSelectors';
-import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
+import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import { ariaCheck, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import { uttakPeriodeNavn } from 'kodeverk/uttakPeriodeType';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
+import {
+  VerticalSpacer, AksjonspunktHelpText, FlexContainer, FlexColumn, FlexRow,
+} from '@fpsak-frontend/shared-components';
 import UttakPeriode from './UttakPeriode';
 import UttakNyPeriode from './UttakNyPeriode';
 import UttakSlettPeriodeModal from './UttakSlettPeriodeModal';

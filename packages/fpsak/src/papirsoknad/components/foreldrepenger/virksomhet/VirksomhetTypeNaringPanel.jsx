@@ -4,13 +4,12 @@ import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import CheckboxField from 'form/fields/CheckboxField';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import naringsvirksomhetType from 'kodeverk/naringsvirksomhetType';
+import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { CheckboxField } from '@fpsak-frontend/form';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import naringsvirksomhetType from '@fpsak-frontend/kodeverk/src/naringsvirksomhetType';
 import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import PropTypes from 'prop-types';
 
 const naringsvirksomhetTypeOrder = {

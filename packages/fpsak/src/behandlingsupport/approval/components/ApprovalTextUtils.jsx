@@ -3,15 +3,15 @@ import moment from 'moment';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
-import klageVurderingCodes from 'kodeverk/klageVurdering';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { getBehandlingKlageVurdering, getBehandlingStatus } from 'behandlingFpsak/behandlingSelectors';
+import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
-import behandlingStatusCode from 'kodeverk/behandlingStatus';
-import klageVurderingOmgjoerCodes from 'kodeverk/klageVurderingOmgjoer';
+import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
+import aksjonspunktCodes, { isUttakAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import totrinnskontrollaksjonspunktTextCodes from '../totrinnskontrollaksjonspunktTextCodes';
 import vurderFaktaOmBeregningTotrinnText from '../VurderFaktaBeregningTotrinnText';
-import aksjonspunktCodes, { isUttakAksjonspunkt } from '../../../kodeverk/aksjonspunktCodes';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
 
 export const isKlage = (klageVurderingResultatNFP, klageVurderingResultatNK) => {

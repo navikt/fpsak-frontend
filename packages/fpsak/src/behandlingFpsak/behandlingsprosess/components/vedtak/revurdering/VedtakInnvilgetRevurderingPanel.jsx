@@ -5,20 +5,19 @@ import { connect } from 'react-redux';
 import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
 import {
   getAksjonspunkter,
   getBehandlingResultatstruktur, getBehandlingSprak,
   getBehandlingsresultat,
 } from 'behandlingFpsak/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandlingFpsak/selectors/originalBehandlingSelectors';
-import { formatCurrencyWithKr } from 'utils/currencyUtils';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import vedtakResultType from 'kodeverk/vedtakResultType';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
 import { endringerIBeregningsgrunnlagGirFritekstfelt } from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakHelper';
 import VedtakFritekstPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+import vedtakResultType from '@fpsak-frontend/kodeverk/src/vedtakResultType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 const isNewBehandlingResult = (beregningResultat, originaltBeregningResultat) => {
   const vedtakResult = beregningResultat ? vedtakResultType.INNVILGET : vedtakResultType.AVSLAG;

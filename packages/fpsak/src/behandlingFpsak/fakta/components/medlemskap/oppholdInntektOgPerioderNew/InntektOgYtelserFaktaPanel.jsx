@@ -4,14 +4,12 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 import moment from 'moment';
-import { ISO_DATE_FORMAT } from 'utils/formats';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
-import { formatCurrencyWithKr } from 'utils/currencyUtils';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import PeriodLabel from 'sharedComponents/PeriodLabel';
+import { ISO_DATE_FORMAT, formatCurrencyWithKr } from '@fpsak-frontend/utils';
+import {
+  Table, TableRow, TableColumn, PeriodLabel,
+} from '@fpsak-frontend/shared-components';
 
 const headerTextCodes = [
   'InntektOgYtelserFaktaPanel.Person',

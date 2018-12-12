@@ -7,18 +7,18 @@ import { connect } from 'react-redux';
 
 import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   getSoknad, getFamiliehendelse, getPersonopplysning, getInnvilgetRelatertTilgrensendeYtelserForAnnenForelder,
   getAksjonspunkter,
 } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
-import { getKodeverk } from 'kodeverk/duck';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
 import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
+import { getKodeverk } from 'kodeverk/duck';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';
 
 

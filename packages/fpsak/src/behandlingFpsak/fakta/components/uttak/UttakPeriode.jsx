@@ -4,13 +4,11 @@ import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { Normaltekst } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { calcDaysWithoutWeekends } from 'utils/dateUtils';
-import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
-import FlexRow from 'sharedComponents/flexGrid/FlexRow';
-import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
-import Image from 'sharedComponents/Image';
+import { ISO_DATE_FORMAT, calcDaysWithoutWeekends } from '@fpsak-frontend/utils';
+import {
+  FlexContainer, FlexRow, FlexColumn, Image,
+} from '@fpsak-frontend/shared-components';
 import classnames from 'classnames/bind';
-import { ISO_DATE_FORMAT } from 'utils/formats';
 import overlapp from '@fpsak-frontend/assets/images/overlapp.svg';
 import tomPeriode from '@fpsak-frontend/assets/images/tom_periode.svg';
 import UttakPeriodeType from './UttakPeriodeType';

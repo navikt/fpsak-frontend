@@ -5,11 +5,10 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import Image from 'sharedComponents/Image';
+import { ElementWrapper, Image } from '@fpsak-frontend/shared-components';
 import checkImg from '@fpsak-frontend/assets/images/check.svg';//
 import avslattImg from '@fpsak-frontend/assets/images/avslaatt.svg';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { getAksjonspunktTextSelector } from './ApprovalTextUtils';
 
 import styles from './ToTrinnsFormReadOnly.less';

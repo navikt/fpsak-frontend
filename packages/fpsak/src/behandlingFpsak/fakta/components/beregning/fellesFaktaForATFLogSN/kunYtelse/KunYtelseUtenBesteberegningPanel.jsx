@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import { FieldArray } from 'redux-form';
-import BorderBox from 'sharedComponents/BorderBox';
+import { BorderBox } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import BrukersAndelFieldArray from './BrukersAndelFieldArray';
 

@@ -5,11 +5,9 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-
+import {
+  Table, TableRow, TableColumn, ElementWrapper,
+} from '@fpsak-frontend/shared-components';
 import styles from './documentListVedtakInnsyn.less';
 
 const DOCUMENT_SERVER_URL = '/fpsak/api/dokument/hent-dokument';

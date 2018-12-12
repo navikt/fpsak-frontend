@@ -10,20 +10,19 @@ import { Undertittel, Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import behandlingType from 'kodeverk/behandlingType';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { getBehandlingType } from 'behandlingFpsak/behandlingSelectors';
-import { RadioGroupField, RadioOption } from 'form/Fields';
-import { ariaCheck, required } from 'utils/validation/validators';
-import BorderBox from 'sharedComponents/BorderBox';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { ariaCheck, required } from '@fpsak-frontend/utils';
+import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import SoknadData from 'papirsoknad/SoknadData';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import familieHendelseType from 'kodeverk/familieHendelseType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 
 import { getKodeverk } from 'kodeverk/duck';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import styles from './soknadTypePickerForm.less';
 

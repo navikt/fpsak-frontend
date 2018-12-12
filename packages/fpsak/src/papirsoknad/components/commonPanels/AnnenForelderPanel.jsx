@@ -4,23 +4,20 @@ import { injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { FormSection, formValueSelector } from 'redux-form';
 import { Fieldset } from 'nav-frontend-skjema';
-
 import SoknadData from 'papirsoknad/SoknadData';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import kanIkkeOppgiAnnenForelderArsaker from 'kodeverk/kanIkkeOppgiAnnenForelderArsak';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import kanIkkeOppgiAnnenForelderArsaker from '@fpsak-frontend/kodeverk/src/kanIkkeOppgiAnnenForelderArsak';
 import {
   CheckboxField, InputField, NavFieldGroup, RadioOption, RadioGroupField, SelectField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import {
-  required, hasValidFodselsnummerFormat, hasValidFodselsnummer, hasValidName,
-} from 'utils/validation/validators';
-import { sammeFodselsnummerSomSokerMessage } from 'utils/validation/messages';
-import BorderBox from 'sharedComponents/BorderBox';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
+  required, hasValidFodselsnummerFormat, hasValidFodselsnummer, hasValidName, sammeFodselsnummerSomSokerMessage,
+} from '@fpsak-frontend/utils';
+import { BorderBox, ElementWrapper } from '@fpsak-frontend/shared-components';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
 import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import landkoder from 'kodeverk/landkoder';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
 
 import PermisjonRettigheterPanel from '../foreldrepenger/permisjon/PermisjonRettigheterPanel';
 import styles from './annenForelderPanel.less';

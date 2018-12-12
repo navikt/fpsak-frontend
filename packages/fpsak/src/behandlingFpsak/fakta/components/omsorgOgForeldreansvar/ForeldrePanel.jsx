@@ -3,17 +3,15 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
-import getAddresses from 'utils/personUtils';
-import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
-import opplysningAdresseType from 'kodeverk/opplysningAdresseType';
-import opplysningsKilde from 'kodeverk/opplysningsKilde';
-import { DatepickerField } from 'form/Fields';
-import { hasValidDate, dateBeforeOrEqualToToday } from 'utils/validation/validators';
-import DateLabel from 'sharedComponents/DateLabel';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import personstatusType from 'kodeverk/personstatusType';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
+import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
+import { DatepickerField } from '@fpsak-frontend/form';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
+import { hasValidDate, dateBeforeOrEqualToToday, getAddresses } from '@fpsak-frontend/utils';
+import { VerticalSpacer, DateLabel } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 
 const getParentHeader = erMor => (erMor ? 'ForeldrePanel.MotherDeathDate' : 'ForeldrePanel.FatherDeathDate');
 

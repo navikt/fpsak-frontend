@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 import fpsakApi from 'data/fpsakApi';
-import kommunikasjonsretning from 'kodeverk/kommunikasjonsretning';
+import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import {
   getBehandlingHasSoknad,
   getBehandlingIsInnsyn,
@@ -11,7 +11,7 @@ import {
   isBehandlingInInnhentSoknadsopplysningerSteg,
   isKlageBehandlingInFormkrav,
 } from 'behandlingFpsak/behandlingSelectors';
-import behandlingStatus from 'kodeverk/behandlingStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { getRettigheter } from 'navAnsatt/duck';
 import SupportPanel from './supportPanels';
 

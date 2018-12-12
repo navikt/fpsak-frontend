@@ -3,16 +3,14 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedHTMLMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import ArrowBox from 'sharedComponents/ArrowBox';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import { isRequiredMessage } from 'utils/validation/messages';
+import { VerticalSpacer, ArrowBox } from '@fpsak-frontend/shared-components';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
   SelectField, RadioGroupField, RadioOption, DatepickerField,
-} from 'form/Fields';
-import { hasValidDate, required } from 'utils/validation/validators';
+} from '@fpsak-frontend/form';
+import { hasValidDate, required, isRequiredMessage } from '@fpsak-frontend/utils';
 
 import styles from './vilkarResultPicker.less';
 

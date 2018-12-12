@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import DateLabel from 'sharedComponents/DateLabel';
+import {
+  Table, TableRow, TableColumn, DateLabel,
+} from '@fpsak-frontend/shared-components';
 import { injectIntl } from 'react-intl';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 

@@ -1,10 +1,8 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
-
 import arbeidsforholdPropType from 'behandlingFelles/proptypes/arbeidsforholdPropType';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
 
 const getTextCode = (arbeidsforhold) => {
   if (!arbeidsforhold || (!arbeidsforhold.tilVurdering && !arbeidsforhold.erEndret)) {

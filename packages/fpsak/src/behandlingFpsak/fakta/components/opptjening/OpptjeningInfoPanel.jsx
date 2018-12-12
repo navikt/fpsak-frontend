@@ -6,16 +6,15 @@ import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import { addDaysToDate } from 'utils/dateUtils';
-import vilkarType from 'kodeverk/vilkarType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { omit } from 'utils/objectUtils';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import { getBehandlingFastsattOpptjening, getBehandlingOpptjeningActivities } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
 import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
+import { omit, addDaysToDate } from '@fpsak-frontend/utils';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import OpptjeningFaktaForm from './OpptjeningFaktaForm';
 
 export const formName = 'OpptjeningInfoPanel';

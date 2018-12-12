@@ -5,15 +5,14 @@ import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import moment from 'moment';
 
-import soknadType from 'kodeverk/soknadType';
-import opplysningsKilde from 'kodeverk/opplysningsKilde';
-import { DatepickerField } from 'form/Fields';
-import { required, hasValidDate } from 'utils/validation/validators';
-import DateLabel from 'sharedComponents/DateLabel';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
+import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
+import { DatepickerField } from '@fpsak-frontend/form';
+import { required, hasValidDate } from '@fpsak-frontend/utils';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
 import { getEditedStatus } from 'behandlingFpsak/behandlingSelectors';
+import { VerticalSpacer, DateLabel } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import styles from './barnPanel.less';
 

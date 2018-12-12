@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { LonnsendringFormImpl, lonnsendringField, utledOverskriftForLonnsendringForm } from './LonnsendringForm';
 import FastsettATFLInntektForm from './FastsettATFLInntektForm';
 

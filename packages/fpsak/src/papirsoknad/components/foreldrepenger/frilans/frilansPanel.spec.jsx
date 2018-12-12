@@ -1,9 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 
-import { RadioGroupField, RadioOption } from 'form/Fields';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import FrilansPanel from './FrilansPanel';
 
 describe('<FrilansPanel>', () => {

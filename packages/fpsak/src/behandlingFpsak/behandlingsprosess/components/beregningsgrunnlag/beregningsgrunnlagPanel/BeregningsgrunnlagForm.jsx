@@ -13,20 +13,17 @@ import {
 } from 'behandlingFpsak/behandlingSelectors';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import BorderBox from 'sharedComponents/BorderBox';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import periodeAarsak from 'kodeverk/periodeAarsak';
-import TextAreaField from 'form/fields/TextAreaField';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { BorderBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
+import { TextAreaField } from '@fpsak-frontend/form';
 import {
-  hasValidText, maxLength, minLength, required,
-} from 'utils/validation/validators';
-import { removeSpacesFromNumber } from 'utils/currencyUtils';
+  hasValidText, maxLength, minLength, required, removeSpacesFromNumber,
+} from '@fpsak-frontend/utils';
 import YtelserFraInfotrygd
   from 'behandlingFpsak/behandlingsprosess/components/beregningsgrunnlag/tilstotendeYtelser/YtelserFraInfotrygd';
 import GrunnlagForAarsinntektPanelFL from '../frilanser/GrunnlagForAarsinntektPanelFL';

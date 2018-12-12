@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import BorderBox from 'sharedComponents/BorderBox';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { connect } from 'react-redux';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { FlexColumn, FlexContainer, FlexRow } from 'sharedComponents/flexGrid';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
+import {
+  BorderBox, VerticalSpacer, FlexColumn, FlexContainer, FlexRow,
+} from '@fpsak-frontend/shared-components';
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
 import InntektOgYtelserFaktaPanel from './InntektOgYtelserFaktaPanel';
 import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';

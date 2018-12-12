@@ -6,9 +6,8 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import PropTypes from 'prop-types';
-import Modal from 'sharedComponents/Modal';
 import { getRegisteredFields } from 'papirsoknad/duck';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { Modal, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import VirksomhetIdentifikasjonPanel from './VirksomhetIdentifikasjonPanel';
 import VirksomhetRegnskapPanel from './VirksomhetRegnskapPanel';
 import VirksomhetStartetEndretPanel from './VirksomhetStartetEndretPanel';

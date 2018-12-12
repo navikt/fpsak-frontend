@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 import fpsakApi from 'data/fpsakApi';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 const getFetchFagsakResult = fpsakApi.FETCH_FAGSAK.getRestApiData();
 

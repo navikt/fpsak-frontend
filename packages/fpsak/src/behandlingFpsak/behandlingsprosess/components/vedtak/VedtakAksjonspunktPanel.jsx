@@ -4,10 +4,9 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
 
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import FadingPanel from 'sharedComponents/FadingPanel';
 import { getBehandlingHenlagt } from 'behandlingFpsak/behandlingSelectors';
-import behandlingStatusCode from 'kodeverk/behandlingStatus';
+import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import VedtakHelpTextPanel from './VedtakHelpTextPanel';
 
 export const getTextCode = behandlingStatus => (behandlingStatus === behandlingStatusCode.AVSLUTTET

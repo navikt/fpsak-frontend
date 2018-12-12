@@ -4,19 +4,18 @@ import { createSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
-import guid from 'utils/guidUtil';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
 import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   getUttakPerioder,
   getBehandlingYtelseFordeling,
   getBehandlingIsManuellRevurdering,
   hasBehandlingUtredesStatus,
 } from 'behandlingFpsak/behandlingSelectors';
-import { dateFormat } from 'utils/dateUtils';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import { guid, dateFormat } from '@fpsak-frontend/utils';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import UttakFaktaForm from './UttakFaktaForm';
 import {
   sjekkOmfaktaOmUttakAksjonspunkt,

@@ -1,8 +1,8 @@
 import React from 'react';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import { expect } from 'chai';
 
-import TextAreaField from 'form/fields/TextAreaField';
+import { TextAreaField } from '@fpsak-frontend/form';
 import { LagreSoknadPanel } from './LagreSoknadPanel';
 
 const mockProps = {

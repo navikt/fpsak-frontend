@@ -5,15 +5,15 @@ import { connect } from 'react-redux';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
 import {
   getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK,
   getBehandlingSprak, getBehandlingVilkar,
 } from 'behandlingFpsak/behandlingSelectors';
-import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
-import { required, hasValidText } from 'utils/validation/validators';
-import { TextAreaField } from 'form/Fields';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { getLanguageCodeFromSprakkode, required, hasValidText } from '@fpsak-frontend/utils';
+import { TextAreaField } from '@fpsak-frontend/form';
+import {
+  ElementWrapper, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 import {
   medholdIKlage, shouldGiveBegrunnelse, maxLength1500, minLength3,
 } from '../VedtakHelper';
@@ -21,7 +21,8 @@ import {
 export const getMedholdArsak = (klageVurderingResultatNK, klageVurderingResultatNFP) => {
   if (medholdIKlage(klageVurderingResultatNK)) {
     return klageVurderingResultatNK.klageMedholdArsakNavn;
-  } if (medholdIKlage(klageVurderingResultatNFP)) {
+  }
+  if (medholdIKlage(klageVurderingResultatNFP)) {
     return klageVurderingResultatNFP.klageMedholdArsakNavn;
   }
   return null;

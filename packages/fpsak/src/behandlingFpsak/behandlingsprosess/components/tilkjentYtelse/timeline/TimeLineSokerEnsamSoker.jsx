@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row } from 'nav-frontend-grid';
 
-import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
-import Image from 'sharedComponents/Image';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import { Image } from '@fpsak-frontend/shared-components';
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';

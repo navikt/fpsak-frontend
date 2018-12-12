@@ -7,26 +7,24 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
-import ArrowBox from 'sharedComponents/ArrowBox';
 
-import FadingPanel from 'sharedComponents/FadingPanel';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
+import { required, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import {
   getPersonopplysning, getBehandlingRevurderingAvFortsattMedlemskapFom, getBehandlingHenlagt,
 } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import personstatusType from 'kodeverk/personstatusType';
-import { RadioGroupField, RadioOption } from 'form/Fields';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { required } from 'utils/validation/validators';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import {
+  ArrowBox, FadingPanel, VerticalSpacer, AksjonspunktHelpText,
+} from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 import styles from './checkPersonStatusForm.less';
 

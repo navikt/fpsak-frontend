@@ -2,9 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import sinon from 'sinon';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 import { UttakActivity, initialValue } from './UttakActivity';
 
 describe('<UttakActivity>', () => {

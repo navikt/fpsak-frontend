@@ -4,15 +4,14 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { Column, Row } from 'nav-frontend-grid';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import Modal from 'sharedComponents/Modal';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
-import behandlingStatus from 'kodeverk/behandlingStatus';
-import behandlingResultatType from 'kodeverk/behandlingResultatType';
-import behandlingType from 'kodeverk/behandlingType';
-import Image from 'sharedComponents/Image';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { Modal, Image } from '@fpsak-frontend/shared-components';
 import {
   getBehandlingResultatstruktur,
   getBehandlingsresultat,
@@ -26,7 +25,7 @@ import {
 
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 
-import konsekvensForYtelsen from 'kodeverk/konsekvensForYtelsen';
+import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
 import styles from './iverksetterVedtakStatusModal.less';
 
 

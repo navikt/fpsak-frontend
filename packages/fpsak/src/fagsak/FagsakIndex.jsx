@@ -10,7 +10,7 @@ import BehandlingSupportIndex from 'behandlingsupport/BehandlingSupportIndex';
 import FagsakProfileIndex from 'fagsakprofile/FagsakProfileIndex';
 import trackRouteParam from 'app/data/trackRouteParam';
 import requireProps from 'app/data/requireProps';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { setSelectedSaksnummer } from './duck';
 import { getSelectedSaksnummer } from './fagsakSelectors';
 import FagsakResolver from './FagsakResolver';

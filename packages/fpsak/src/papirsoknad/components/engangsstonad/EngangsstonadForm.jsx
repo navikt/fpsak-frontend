@@ -3,11 +3,11 @@ import { reduxForm, formPropTypes, formValueSelector } from 'redux-form';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { isEqual } from 'utils/objectUtils';
+import { isEqual } from '@fpsak-frontend/utils';
 import { getRegisteredFields } from 'papirsoknad/duck';
 import MottattDatoPanel from 'papirsoknad/components/commonPanels/MottattDatoPanel';
 import SoknadData from 'papirsoknad/SoknadData';
-import familieHendelseType from 'kodeverk/familieHendelseType';
+import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 import LagreSoknadPanel from 'papirsoknad/components/commonPanels/LagreSoknadPanel';
 import { getFagsakPerson } from 'fagsak/fagsakSelectors';
 import { rettighet } from '../commonPanels/rettigheter/RettigheterPanel';

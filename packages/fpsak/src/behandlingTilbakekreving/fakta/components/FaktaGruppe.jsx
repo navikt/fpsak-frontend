@@ -3,10 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
-
-import BorderBox from 'sharedComponents/BorderBox';
 import { getMerknaderFraBeslutter } from 'behandlingTilbakekreving/tilbakekrevingBehandlingSelectors';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 const Wrapper = ({
   withoutBorder, error, children, className,

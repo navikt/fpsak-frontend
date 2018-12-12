@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
-import Image from 'sharedComponents/Image';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
 import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
@@ -25,7 +24,7 @@ import revurderingUrl from '@fpsak-frontend/assets/images/endringstidspunkt.svg'
 import soknadUrl from '@fpsak-frontend/assets/images/soknad.svg';
 import uavklartUrl from '@fpsak-frontend/assets/images/uavklart.svg';
 
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { VerticalSpacer, Image } from '@fpsak-frontend/shared-components';
 import styles from './timeLineControl.less';
 
 /*

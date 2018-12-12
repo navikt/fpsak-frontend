@@ -4,7 +4,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
 import { getBehandlingVilkar, getBehandlingSprak } from 'behandlingFpsak/behandlingSelectors';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import {
   endringerIBeregningsgrunnlagGirFritekstfelt,
@@ -12,9 +12,9 @@ import {
   findAvslagResultatText,
 } from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakHelper';
 import VedtakFritekstPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import behandlingStatus from 'kodeverk/behandlingStatus';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 export const getAvslagArsak = (vilkar, aksjonspunkter, behandlingsresultat) => {
   const avslatteVilkar = vilkar.filter(v => v.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);

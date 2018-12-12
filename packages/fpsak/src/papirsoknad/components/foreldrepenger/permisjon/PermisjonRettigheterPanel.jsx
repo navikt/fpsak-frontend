@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import { RadioGroupField, RadioOption } from 'form/Fields';
-import { required } from 'utils/validation/validators';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { required } from '@fpsak-frontend/utils';
+import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 /**
  * AndreYtelserPanel

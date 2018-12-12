@@ -8,14 +8,14 @@ import BpPanelTemplate from 'behandlingFpsak/behandlingsprosess/components/vilka
 import { getBehandlingsresultat } from 'behandlingFpsak/behandlingSelectors';
 import { getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-import vilkarType from 'kodeverk/vilkarType';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import VilkarResultPicker from 'behandlingFpsak/behandlingsprosess/components/vilkar/VilkarResultPicker';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
 const createAksjonspunktHelptTexts = (aksjonspunkter) => {
   const helpTexts = [];

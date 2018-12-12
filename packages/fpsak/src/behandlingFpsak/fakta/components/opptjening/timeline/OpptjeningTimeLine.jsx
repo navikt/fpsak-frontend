@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { isEqual } from 'utils/objectUtils';
+import { DDMMYYYY_DATE_FORMAT, isEqual } from '@fpsak-frontend/utils';
 import DateContainer from './DateContainer';
 import styles from './opptjeningTimeLine.less';
 

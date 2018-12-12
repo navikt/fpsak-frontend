@@ -6,12 +6,6 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { clearFields, formPropTypes } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
-import { RadioOption, RadioGroupField, TextAreaField } from 'form/Fields';
-import FadingPanel from 'sharedComponents/FadingPanel';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import ArrowBox from 'sharedComponents/ArrowBox';
-import Image from 'sharedComponents/Image';
 import {
   getSimuleringResultat, getTilbakekrevingValg, getAksjonspunkter, getBehandlingVersjon,
 } from 'behandlingFpsak/behandlingSelectors';
@@ -19,14 +13,18 @@ import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandling
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
 import { getSelectedBehandlingId } from 'behandling/duck';
 
+import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
+import {
+  VerticalSpacer, AksjonspunktHelpText, ArrowBox, Image, FadingPanel,
+} from '@fpsak-frontend/shared-components';
 import {
   minLength,
   maxLength,
   hasValidText,
   required,
-} from 'utils/validation/validators';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import avregningCodes from 'kodeverk/avregningCodes';
+} from '@fpsak-frontend/utils';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
 import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';

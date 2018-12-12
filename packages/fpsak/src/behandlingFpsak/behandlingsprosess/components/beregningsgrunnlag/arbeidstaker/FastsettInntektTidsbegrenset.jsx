@@ -5,22 +5,20 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { createSelector } from 'reselect';
 
-import { InputField } from 'form/Fields';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from 'utils/currencyUtils';
-import { required } from 'utils/validation/validators';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import periodeAarsak from 'kodeverk/periodeAarsak';
+import { InputField } from '@fpsak-frontend/form';
 import { getBeregningsgrunnlagPerioder, getGjeldendeBeregningAksjonspunkt } from 'behandlingFpsak/behandlingSelectors';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import {
+  Table, TableRow, TableColumn, Image,
+} from '@fpsak-frontend/shared-components';
+import {
+  required, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, DDMMYYYY_DATE_FORMAT, createVisningsnavnForAktivitet,
+} from '@fpsak-frontend/utils';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import hourglassImg from '@fpsak-frontend/assets/images/hourglass.svg';
-import Image from 'sharedComponents/Image';
 import endretUrl from '@fpsak-frontend/assets/images/endret_felt.svg';
-import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
 import { getBehandlingFormValues } from 'behandlingFpsak/behandlingForm';
 import { Normaltekst } from 'nav-frontend-typografi';
 import NaturalytelsePanel from './NaturalytelsePanel';

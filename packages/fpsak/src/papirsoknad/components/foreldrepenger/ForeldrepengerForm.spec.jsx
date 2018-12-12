@@ -1,12 +1,12 @@
 import React from 'react';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import familieHendelseType from 'kodeverk/familieHendelseType';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import foreldreType from 'kodeverk/foreldreType';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
+import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import foreldreType from '@fpsak-frontend/kodeverk/src/foreldreType';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 import SoknadData from 'papirsoknad/SoknadData';
 import OmsorgOgAdopsjonPanel from 'papirsoknad/components/commonPanels/omsorgOgAdopsjon/OmsorgOgAdopsjonPanel';
 import TerminFodselDatoPanel from 'papirsoknad/components/commonPanels/fodsel/TerminFodselDatoPanel';

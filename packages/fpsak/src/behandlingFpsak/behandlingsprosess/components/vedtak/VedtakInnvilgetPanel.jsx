@@ -6,13 +6,12 @@ import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 
 import { getAksjonspunkter, getBehandlingResultatstruktur, getBehandlingSprak } from 'behandlingFpsak/behandlingSelectors';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import { formatCurrencyWithKr } from 'utils/currencyUtils';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
 import VedtakFritekstPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
+import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { findInnvilgetResultatText, endringerIBeregningsgrunnlagGirFritekstfelt } from './VedtakHelper';
 
 export const VedtakInnvilgetPanelImpl = ({

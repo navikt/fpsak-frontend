@@ -6,8 +6,8 @@ import { clearFields, formPropTypes } from 'redux-form';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Row, Column } from 'nav-frontend-grid';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import avslagsarsakCodes from 'kodeverk/avslagsarsakCodes';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import {
   getAksjonspunkter, getBehandlingResultatstruktur,
   isBehandlingStatusReadOnly, getBehandlingIsOnHold, getBehandlingStatus,
@@ -17,13 +17,13 @@ import { bindActionCreators } from 'redux';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
-import { isInnvilget, isAvslag } from 'kodeverk/behandlingResultatType';
+import { isInnvilget, isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { getRettigheter } from 'navAnsatt/duck';
-import behandlingStatusCode from 'kodeverk/behandlingStatus';
 import FritekstBrevPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/FritekstBrevPanel';
+import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import classNames from 'classnames';
-import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';

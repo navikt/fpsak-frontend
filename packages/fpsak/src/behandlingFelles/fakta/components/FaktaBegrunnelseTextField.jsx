@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
-import { TextAreaField } from 'form/Fields';
 import {
-  minLength, maxLength, requiredIfNotPristine, hasValidText,
-} from 'utils/validation/validators';
+  minLength, maxLength, requiredIfNotPristine, hasValidText, decodeHtmlEntity,
+} from '@fpsak-frontend/utils';
+import { TextAreaField } from '@fpsak-frontend/form';
+import { ElementWrapper } from '@fpsak-frontend/shared-components';
 
 import styles from './faktaBegrunnelseTextField.less';
 
@@ -23,7 +22,7 @@ const FaktaBegrunnelseTextField = ({
   labelCode,
   hasVurderingText,
 }) => (
-  <>
+  <ElementWrapper>
     {((isSubmittable && isDirty) || hasBegrunnelse)
     && (
     <div className={styles.begrunnelseTextField}>
@@ -38,7 +37,7 @@ const FaktaBegrunnelseTextField = ({
     </div>
     )
       }
-  </>
+  </ElementWrapper>
 );
 
 FaktaBegrunnelseTextField.propTypes = {
@@ -69,6 +68,5 @@ FaktaBegrunnelseTextField.buildInitialValues = aksjonspunkt => ({
 FaktaBegrunnelseTextField.transformValues = values => ({
   begrunnelse: values.begrunnelse,
 });
-
 
 export default FaktaBegrunnelseTextField;

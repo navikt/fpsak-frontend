@@ -4,17 +4,15 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import BorderBox from 'sharedComponents/BorderBox';
-import DateLabel from 'sharedComponents/DateLabel';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { BorderBox, DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   getAktivitetStatuser,
   getSkjæringstidspunktBeregning,
   getTilstøtendeYtelse,
 } from 'behandlingFpsak/behandlingSelectors';
 import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
 import styles from './skjeringspunktOgStatusPanel.less';
 

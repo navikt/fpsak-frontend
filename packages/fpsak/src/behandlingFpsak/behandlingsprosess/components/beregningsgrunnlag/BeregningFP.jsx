@@ -6,10 +6,10 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import FadingPanel from 'sharedComponents/FadingPanel';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+import {
+  VerticalSpacer, FadingPanel, ElementWrapper, AksjonspunktHelpText,
+} from '@fpsak-frontend/shared-components';
 import {
   getAktivitetStatuser,
   getAlleAndelerIForstePeriode,
@@ -20,9 +20,8 @@ import {
 import beregningsgrunnlagPropType from 'behandlingFelles/proptypes/beregningsgrunnlagPropType';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
 import { getSelectedBehandlingspunktVilkar } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aktivitetStatus, {
   isStatusArbeidstakerOrKombinasjon,
   isStatusDagpengerOrAAP,
@@ -31,8 +30,8 @@ import aktivitetStatus, {
   isStatusMilitaer,
   isStatusSNOrKombinasjon,
   isStatusTilstotendeYtelse,
-} from 'kodeverk/aktivitetStatus';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+} from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import InntektsopplysningerPanel from './fellesPaneler/InntektsopplysningerPanel';
 import SkjeringspunktOgStatusPanel from './fellesPaneler/SkjeringspunktOgStatusPanel';
 import BeregningsgrunnlagForm from './beregningsgrunnlagPanel/BeregningsgrunnlagForm';

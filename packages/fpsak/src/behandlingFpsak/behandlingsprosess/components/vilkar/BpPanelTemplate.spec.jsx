@@ -3,10 +3,10 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import VilkarResultPanel from 'behandlingFpsak/behandlingsprosess/components/vilkar/VilkarResultPanel';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import BpPanelTemplate from './BpPanelTemplate';
 
 describe('<BpPanelTemplate>', () => {

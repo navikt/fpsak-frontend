@@ -5,12 +5,12 @@ import { Container } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
 
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { RadioGroupField, RadioOption } from 'form/Fields';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
-import { required } from 'utils/validation/validators';
 import { getEditedStatus } from 'behandlingFpsak/behandlingSelectors';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { required } from '@fpsak-frontend/utils';
 
 import styles from './ektefelleFaktaForm.less';
 

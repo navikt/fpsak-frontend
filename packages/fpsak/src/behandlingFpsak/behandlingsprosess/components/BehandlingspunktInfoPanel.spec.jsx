@@ -3,10 +3,10 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { BehandlingspunktInfoPanel } from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktInfoPanel';
 import BeregningsresultatEngangsstonadForm from 'behandlingFpsak/behandlingsprosess/components/beregningsresultat/BeregningsresultatEngangsstonadForm';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import VurderSoknadsfristForeldrepengerForm from './soknadsfrist/VurderSoknadsfristForeldrepengerForm';
 
 describe('<BehandlingspunktInfoPanel>', () => {

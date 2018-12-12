@@ -1,11 +1,10 @@
 import React from 'react';
-import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import { expect } from 'chai';
 
-import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
-import DatepickerField from 'form/fields/DatepickerField';
-import SelectField from 'form/fields/SelectField';
-import { MockFields, metaMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
+import { PeriodFieldArray } from '@fpsak-frontend/shared-components';
+import { DatepickerField, SelectField } from '@fpsak-frontend/form';
+import { MockFields, metaMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 import { RenderOppholdPeriodeFieldArray } from './RenderOppholdPeriodeFieldArray';
 
 const oppholdsReasons = [{ navn: 'Grunn1', kode: 'Grunn1' }];

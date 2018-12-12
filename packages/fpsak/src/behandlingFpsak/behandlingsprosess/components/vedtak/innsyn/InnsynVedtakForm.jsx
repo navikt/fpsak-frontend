@@ -7,7 +7,6 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import FadingPanel from 'sharedComponents/FadingPanel';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import {
   getAksjonspunkter,
@@ -17,18 +16,18 @@ import {
   getBehandlingSprak,
 } from 'behandlingFpsak/behandlingSelectors';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import {
+  FadingPanel, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
-import { TextAreaField } from 'form/Fields';
-import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
+import { TextAreaField } from '@fpsak-frontend/form';
 import {
-  hasValidText, maxLength, minLength, requiredIfNotPristine,
-} from 'utils/validation/validators';
+  hasValidText, maxLength, minLength, requiredIfNotPristine, getLanguageCodeFromSprakkode, decodeHtmlEntity,
+} from '@fpsak-frontend/utils';
 import { getFilteredReceivedDocuments } from 'behandlingsupport/behandlingsupportSelectors';
-import innsynResultatType from 'kodeverk/innsynResultatType';
-import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 import DocumentListVedtakInnsyn from './DocumentListVedtakInnsyn';
 
 
@@ -50,7 +49,8 @@ const getPreviewCallback = (formProps, begrunnelse, previewCallback) => (e) => {
 const findResultTypeMessage = (resultat) => {
   if (resultat === innsynResultatType.AVVIST) {
     return 'InnsynVedtakForm.Avslatt';
-  } if (resultat === innsynResultatType.DELVISTINNVILGET) {
+  }
+  if (resultat === innsynResultatType.DELVISTINNVILGET) {
     return 'InnsynVedtakForm.Delvis';
   }
   return 'InnsynVedtakForm.Innvilget';

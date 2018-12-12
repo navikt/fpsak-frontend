@@ -4,16 +4,15 @@ import { connect } from 'react-redux';
 import { FieldArray } from 'redux-form';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column } from 'nav-frontend-grid';
-import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
-import FlexRow from 'sharedComponents/flexGrid/FlexRow';
-import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandlingFpsak/behandlingForm';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
-import { RadioOption, RadioGroupField, TextAreaField } from 'form/Fields';
+import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
+import {
+  FlexContainer, FlexRow, FlexColumn, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
+import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import {
   required, maxLength, minLength, hasValidPeriod, hasValidText,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils';
 import PerioderKnapper from './PerioderKnapper';
 import InntektsmeldingInfo from '../components/InntektsmeldingInfo';
 import DokumentertePerioderPeriodePicker from './DokumentertePerioderPeriodePicker';

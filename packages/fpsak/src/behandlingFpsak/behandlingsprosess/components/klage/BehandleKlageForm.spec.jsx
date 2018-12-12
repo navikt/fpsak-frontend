@@ -1,10 +1,10 @@
 import React from 'react';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import klageVurdering from 'kodeverk/klageVurdering';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { BehandleKlageFormNy } from './BehandleKlageFormNy';
 
 describe('<BehandleKlageFormNy>', () => {

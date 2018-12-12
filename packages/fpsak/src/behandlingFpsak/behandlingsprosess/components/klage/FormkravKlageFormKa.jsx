@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { getBehandlingKlageFormkravResultatKA } from 'behandlingFpsak/behandlingSelectors';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { createSelector } from 'reselect';
 import FormkravKlageForm, { getPaKlagdVedtak, IKKE_PA_KLAGD_VEDTAK } from './FormkravKlageForm';
 

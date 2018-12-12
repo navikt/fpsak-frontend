@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
 import { getFaktaOmBeregning } from 'behandlingFpsak/behandlingSelectors';
+import { ElementWrapper } from '@fpsak-frontend/shared-components';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import InntektstabellPanel from '../InntektstabellPanel';
 import NyIArbeidslivetSNForm from '../nyIArbeidslivet/NyIArbeidslivetSNForm';
 import TilstotendeYtelseForm, { harKunTilstotendeYtelse } from './TilstøtendeYtelseForm';

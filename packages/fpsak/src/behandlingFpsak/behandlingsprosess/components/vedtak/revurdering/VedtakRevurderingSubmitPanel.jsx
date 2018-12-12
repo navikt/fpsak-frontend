@@ -9,8 +9,8 @@ import {
   getAksjonspunkter, getBehandlingStatus,
 } from 'behandlingFpsak/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandlingFpsak/selectors/originalBehandlingSelectors';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import behandlingStatusCode from 'kodeverk/behandlingStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import styles from '../vedtakForm.less';
 import { ForhaandsvisningsKnapp } from '../VedtakForm';
 

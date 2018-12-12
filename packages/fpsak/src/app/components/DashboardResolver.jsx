@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { getFeatureToggles } from 'app/duck';
-import LoadingPanel from 'sharedComponents/LoadingPanel';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import Dashboard from './Dashboard';
 import featureToggle from '../featureToggle';
 import { getPathToFplos } from '../paths';

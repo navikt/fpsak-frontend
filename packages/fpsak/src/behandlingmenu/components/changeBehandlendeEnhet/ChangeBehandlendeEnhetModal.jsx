@@ -4,14 +4,13 @@ import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
 import { Row, Column } from 'nav-frontend-grid';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import Modal from 'sharedComponents/Modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { SelectField, TextAreaField } from 'form/Fields';
-import { maxLength, required, hasValidText } from 'utils/validation/validators';
+import { SelectField, TextAreaField } from '@fpsak-frontend/form';
+import { maxLength, required, hasValidText } from '@fpsak-frontend/utils';
 
-import Image from 'sharedComponents/Image';
+import { Modal, Image } from '@fpsak-frontend/shared-components';
 
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 

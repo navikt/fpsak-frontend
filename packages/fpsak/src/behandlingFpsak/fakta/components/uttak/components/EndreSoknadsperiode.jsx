@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
-import FlexRow from 'sharedComponents/flexGrid/FlexRow';
-import { DecimalField, SelectField, PeriodpickerField } from 'form/Fields';
-import oppholdArsakType, { oppholdArsakKontoNavn } from 'kodeverk/oppholdArsakType';
+import { FlexColumn, FlexRow } from '@fpsak-frontend/shared-components';
+import { DecimalField, SelectField, PeriodpickerField } from '@fpsak-frontend/form';
+import oppholdArsakType, { oppholdArsakKontoNavn } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import {
   required,
   hasValidDecimal,
   maxValue,
   minValue,
-} from 'utils/validation/validators';
-import { uttakPeriodeNavn, stonadskontoType } from 'kodeverk/uttakPeriodeType';
+} from '@fpsak-frontend/utils';
+import { uttakPeriodeNavn, stonadskontoType } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 
 import styles from '../perioder/periodeTyper.less';
 

@@ -4,35 +4,33 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
 import { behandlingFormValueSelector, behandlingForm } from 'behandlingFpsak/behandlingForm';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import {
   PeriodpickerField, SelectField, CheckboxField, RadioGroupField, RadioOption, TextAreaField, DecimalField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import {
   hasValidDate,
   requiredIfNotPristine,
   required,
   hasValidDecimal,
   hasValidPeriod,
-  maxValue, minLength, maxLength, hasValidText,
-} from 'utils/validation/validators';
+  maxValue, minLength, maxLength, hasValidText, guid,
+  ISO_DATE_FORMAT,
+  calcDaysAndWeeks,
+} from '@fpsak-frontend/utils';
 import moment from 'moment';
-import guid from 'utils/guidUtil';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
-import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
-import FlexRow from 'sharedComponents/flexGrid/FlexRow';
-import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { getKodeverk } from 'kodeverk/duck';
 import { getPersonopplysning, getAlleAndelerIForstePeriode } from 'behandlingFpsak/behandlingSelectors';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
-import uttakPeriodeType from 'kodeverk/uttakPeriodeType';
-import { ISO_DATE_FORMAT } from 'utils/formats';
-import utsettelseArsakCodes from 'kodeverk/utsettelseArsakCodes';
-import overforingArsak from 'kodeverk/overforingArsak';
-import { calcDaysAndWeeks } from 'utils/dateUtils';
+import {
+  FlexContainer, FlexRow, FlexColumn, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import uttakPeriodeType from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
+import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
+import overforingArsak from '@fpsak-frontend/kodeverk/src/overforingArsak';
 import styles from './uttakNyPeriode.less';
 
 const maxValue100 = maxValue(100);

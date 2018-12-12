@@ -1,11 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import vilkarType from 'kodeverk/vilkarType';
-import behandlingStatus from 'kodeverk/behandlingStatus';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import VedtakAvslagArsakOgBegrunnelsePanel from './VedtakAvslagArsakOgBegrunnelsePanel';
 
 

@@ -3,11 +3,11 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import SoknadData from 'papirsoknad/SoknadData';
 import ForeldrepengerForm from 'papirsoknad/components/foreldrepenger/ForeldrepengerForm';
 import EndringForeldrepengerForm from 'papirsoknad/components/foreldrepenger/EndringForeldrepengerForm';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { RegistrerPapirsoknad } from './RegistrerPapirsoknad';
 import SoknadTypePickerForm from './SoknadTypePickerForm';
 import EngangsstonadForm from './engangsstonad/EngangsstonadForm';

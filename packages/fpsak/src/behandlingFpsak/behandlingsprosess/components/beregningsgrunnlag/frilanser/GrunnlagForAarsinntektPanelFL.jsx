@@ -4,14 +4,15 @@ import PropTypes from 'prop-types';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { InputField } from 'form/Fields';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { required } from 'utils/validation/validators';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import { formatCurrencyNoKr, parseCurrencyInput } from 'utils/currencyUtils';
+import { InputField } from '@fpsak-frontend/form';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import {
+  required, formatCurrencyNoKr, parseCurrencyInput,
+} from '@fpsak-frontend/utils';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import styles from './grunnlagForAarsinntektPanelFL.less';
 

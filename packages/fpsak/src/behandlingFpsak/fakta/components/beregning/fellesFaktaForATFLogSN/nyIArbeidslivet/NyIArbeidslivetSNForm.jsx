@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { RadioGroupField, RadioOption } from 'form/Fields';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { required } from 'utils/validation/validators';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import { flatten } from 'utils/arrayUtils';
+import { flatten, required } from '@fpsak-frontend/utils';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
 /**
  * NyIArbeidslivetSNForm

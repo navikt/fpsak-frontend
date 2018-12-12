@@ -4,11 +4,10 @@ import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change as reduxChange } from 'redux-form';
-
 import { getBehandlingVersjon } from 'behandlingFpsak/behandlingSelectors';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
 import { getBehandlingFormName } from 'behandlingFpsak/behandlingForm';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { ElementWrapper } from '@fpsak-frontend/shared-components';
 
 const findAllNames = children => (children ? React.Children
   .map(children, (child) => {

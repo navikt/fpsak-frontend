@@ -4,30 +4,28 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import {
-  DecimalField, InputField, NavFieldGroup, PeriodpickerField, SelectField,
-} from 'form/Fields';
-import { isEmpty } from 'utils/arrayUtils';
 import { getEndringBeregningsgrunnlagPerioder } from 'behandlingFpsak/behandlingSelectors';
-import Image from 'sharedComponents/Image';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
+import {
+  isArrayEmpty, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, createVisningsnavnForAktivitet,
+} from '@fpsak-frontend/utils';
+import {
+  Table, Image, TableRow, TableColumn, ElementWrapper,
+} from '@fpsak-frontend/shared-components';
+import {
+  InputField, DecimalField, PeriodpickerField, NavFieldGroup, SelectField,
+} from '@fpsak-frontend/form';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { getKodeverk } from 'kodeverk/duck';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import inntektskategorier, { isSelvstendigNæringsdrivende } from 'kodeverk/inntektskategorier';
-import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from 'utils/currencyUtils';
-import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import { arbeidsforholdProptype, getUniqueListOfArbeidsforhold } from '../../ArbeidsforholdHelper';
 import {
   validateAndelFields, validateSumFastsattBelop, validateUlikeAndeler,
   validateTotalRefusjonPrArbeidsforhold,
 } from '../ValidateAndelerUtils';
-import styles from './renderEndringBGFieldArray.less';
 
+import styles from './renderEndringBGFieldArray.less';
 
 const defaultBGFordeling = periodeUtenAarsak => ({
   nyAndel: true,
@@ -367,7 +365,7 @@ RenderEndringBGFieldArray.validate = (values) => {
   if (arrayErrors.some(errors => errors !== null)) {
     return arrayErrors;
   }
-  if (isEmpty(values)) {
+  if (isArrayEmpty(values)) {
     return null;
   }
   const ulikeAndelerError = validateUlikeAndeler(values);

@@ -1,8 +1,7 @@
 import { expect } from 'chai';
 import moment from 'moment';
 
-import { ISO_DATE_FORMAT } from 'utils/formats';
-import { dateRangesOverlappingMessage, invalidDateMessage } from 'utils/validation/messages';
+import { ISO_DATE_FORMAT, dateRangesOverlappingMessage, invalidDateMessage } from '@fpsak-frontend/utils';
 import { PermisjonOppholdPanel } from './PermisjonOppholdPanel';
 
 describe('<PermisjonOppholdPanel>', () => {

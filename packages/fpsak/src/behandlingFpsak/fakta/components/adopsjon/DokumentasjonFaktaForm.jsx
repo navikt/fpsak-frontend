@@ -9,12 +9,11 @@ import moment from 'moment';
 import { getEditedStatus } from 'behandlingFpsak/behandlingSelectors';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import { DatepickerField } from 'form/Fields';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { required, hasValidDate } from 'utils/validation/validators';
-import Image from 'sharedComponents/Image';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import { DatepickerField } from '@fpsak-frontend/form';
+import { required, hasValidDate } from '@fpsak-frontend/utils';
+import { VerticalSpacer, Image } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 
 import styles from './dokumentasjonFaktaForm.less';

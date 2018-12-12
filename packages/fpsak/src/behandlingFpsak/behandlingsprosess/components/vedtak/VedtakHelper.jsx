@@ -1,12 +1,12 @@
-import behandlingResultatType from 'kodeverk/behandlingResultatType';
-import vilkarType from 'kodeverk/vilkarType';
-import klageVurdering from 'kodeverk/klageVurdering';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import { minLength, maxLength } from 'utils/validation/validators';
-import behandlingStatusCode from 'kodeverk/behandlingStatus';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import { isBGAksjonspunktSomGirFritekstfelt } from 'kodeverk/aksjonspunktCodes';
-import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { minLength, maxLength } from '@fpsak-frontend/utils';
+import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { isBGAksjonspunktSomGirFritekstfelt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType) => {
   if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET) {

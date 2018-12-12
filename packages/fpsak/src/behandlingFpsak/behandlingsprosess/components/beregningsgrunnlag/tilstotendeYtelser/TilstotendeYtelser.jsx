@@ -3,21 +3,23 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
-import aktivitetStatus, { isStatusDagpengerOrAAP } from 'kodeverk/aktivitetStatus';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import aktivitetStatus, { isStatusDagpengerOrAAP } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
 export const getTekstForAndelBruktIBeregning = (andel, erIKombinasjonMedSN) => {
   if (erIKombinasjonMedSN === true) {
     if (andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER) {
       return 'Beregningsgrunnlag.TilstottendeYtelse.DagpengerOppjustert';
-    } if (andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER) {
+    }
+    if (andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER) {
       return 'Beregningsgrunnlag.TilstottendeYtelse.AAPOppjustert';
     }
   } else {
     if (andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER) {
       return 'Beregningsgrunnlag.TilstottendeYtelse.Dagpenger';
-    } if (andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER) {
+    }
+    if (andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER) {
       return 'Beregningsgrunnlag.TilstottendeYtelse.AAP';
     }
   }
@@ -27,7 +29,8 @@ export const getTekstForAndelBruktIBeregning = (andel, erIKombinasjonMedSN) => {
 const getTekstForAndelensGrunnlag = (andel) => {
   if (andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER) {
     return 'Beregningsgrunnlag.TilstottendeYtelse.DagpengerGrunnlag';
-  } if (andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER) {
+  }
+  if (andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER) {
     return 'Beregningsgrunnlag.TilstottendeYtelse.AAPGrunnlag';
   }
   return '';
@@ -58,7 +61,8 @@ const regnUtOppjustertDagpenger = (grunnlag) => {
 const finnOppjustertGrunnlag = (andel) => {
   if (andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER) {
     return regnUtOppjustertAAP(andel.beregnetPrAar);
-  } if (andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER) {
+  }
+  if (andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER) {
     return regnUtOppjustertDagpenger(andel.beregnetPrAar);
   }
   return undefined;

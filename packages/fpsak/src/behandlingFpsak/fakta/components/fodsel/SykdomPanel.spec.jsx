@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 
-import { TextAreaField } from 'form/Fields';
+import { TextAreaField } from '@fpsak-frontend/form';
 import { SykdomPanel } from './SykdomPanel';
 
 describe('<SykdomPanel>', () => {

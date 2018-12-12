@@ -11,19 +11,20 @@ import {
 } from 'nav-frontend-typografi';
 import Panel from 'nav-frontend-paneler';
 
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import FadingPanel from 'sharedComponents/FadingPanel';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import { DatepickerField, RadioGroupField, RadioOption } from 'form/Fields';
-import { dateBeforeOrEqualToToday, hasValidDate, required } from 'utils/validation/validators';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { getSoknad, getBehandlingUttaksperiodegrense } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import {
+  AksjonspunktHelpText, FadingPanel, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
+import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import {
+  DDMMYYYY_DATE_FORMAT, dateBeforeOrEqualToToday, hasValidDate, required,
+} from '@fpsak-frontend/utils';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 import styles from './vurderSoknadsfristForeldrepengerForm.less';
 

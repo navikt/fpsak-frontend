@@ -7,21 +7,17 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { RadioGroupField, RadioOption } from 'form/Fields';
-import DateLabel from 'sharedComponents/DateLabel';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import PeriodLabel from 'sharedComponents/PeriodLabel';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import { required } from 'utils/validation/validators';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import {
+  Table, TableRow, TableColumn, DateLabel, PeriodLabel, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { required, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 const headerTextCodes = [
   'PerioderMedMedlemskapFaktaPanel.Period',

@@ -1,15 +1,15 @@
 import { createSelector } from 'reselect';
 
-import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
+import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils';
 import aksjonspunktCodes, {
   isInnhentSaksopplysningerAksjonspunkt,
   isVilkarForSykdomOppfylt,
-} from 'kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import behandlingStatus from 'kodeverk/behandlingStatus';
-import behandlingType from 'kodeverk/behandlingType';
+} from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import fpsakBehandlingApi from './data/fpsakBehandlingApi';
 import isFieldEdited from './editedFields';
 import { getSelectedBehandlingId } from './duck';

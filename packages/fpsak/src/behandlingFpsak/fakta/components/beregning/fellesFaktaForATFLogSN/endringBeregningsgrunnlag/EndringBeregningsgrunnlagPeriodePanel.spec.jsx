@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import EndringBereningsgrunnlagPeriodePanel from './EndringBeregningsgrunnlagPeriodePanel';
 
 const lagArbeidstakerAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandling,

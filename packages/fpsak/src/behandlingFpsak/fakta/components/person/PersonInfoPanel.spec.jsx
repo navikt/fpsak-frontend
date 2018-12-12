@@ -4,11 +4,11 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
-import aksjonspunktType from 'kodeverk/aksjonspunktType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
-import navBrukerKjonn from 'kodeverk/navBrukerKjonn';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import FullPersonInfo from './panelBody/FullPersonInfo';
 import { PersonInfoPanelImpl as PersonInfoPanel } from './PersonInfoPanel';

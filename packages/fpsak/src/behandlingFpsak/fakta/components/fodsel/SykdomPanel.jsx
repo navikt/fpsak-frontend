@@ -5,13 +5,13 @@ import { connect } from 'react-redux';
 
 import { getFamiliehendelse } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { TextAreaField, RadioGroupField, RadioOption } from 'form/Fields';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { TextAreaField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import {
   required, hasValidText, maxLength, minLength,
-} from 'utils/validation/validators';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+} from '@fpsak-frontend/utils';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);

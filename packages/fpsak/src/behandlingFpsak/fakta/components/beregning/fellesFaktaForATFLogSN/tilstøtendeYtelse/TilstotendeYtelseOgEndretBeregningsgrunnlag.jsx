@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import BorderBox from 'sharedComponents/BorderBox';
-import { removeSpacesFromNumber } from 'utils/currencyUtils';
 import { getEndringBeregningsgrunnlagPerioder } from 'behandlingFpsak/behandlingSelectors';
+import { VerticalSpacer, ElementWrapper, BorderBox } from '@fpsak-frontend/shared-components';
+import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import TilstotendeYtelseForm, { getAndelsnr } from './TilstøtendeYtelseForm';
 import { fordelingAvBruttoBGFieldArrayName } from './FordelingAvBruttoBeregningsgrunnlagPanel';
 import { createEndringHeadingForDate, renderDateHeadingWithPretext } from '../endringBeregningsgrunnlag/EndretBeregningsgrunnlagUtils';
@@ -20,7 +18,6 @@ export const getFieldNameKey = index => (fieldArrayNamePrefix + index);
 
 const getPerioderMedAarsak = endringBGPerioder => endringBGPerioder
   .filter(({ harPeriodeAarsakGraderingEllerRefusjon }) => harPeriodeAarsakGraderingEllerRefusjon === true);
-
 
 /**
  * TilstotendeYtelseOgEndretBeregningsgrunnlag

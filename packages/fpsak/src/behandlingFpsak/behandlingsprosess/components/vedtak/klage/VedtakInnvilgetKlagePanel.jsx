@@ -4,9 +4,8 @@ import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { findInnvilgetResultatText } from '../VedtakHelper';
 
 export const VedtakInnvilgetKlagePanelImpl = ({

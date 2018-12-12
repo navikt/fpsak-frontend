@@ -1,13 +1,12 @@
 /* @flow */
-import behandlingStatusCode from 'kodeverk/behandlingStatus';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import fagsakStatusCode from 'kodeverk/fagsakStatus';
-import { without } from 'utils/arrayUtils';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import { isObject } from 'utils/objectUtils';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import BehandlingType from 'kodeverk/behandlingType';
-import type { Kodeverk } from 'kodeverk/kodeverkFlowType';
+import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import fagsakStatusCode from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import { without, isObject } from '@fpsak-frontend/utils';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import type { Kodeverk } from '@fpsak-frontend/kodeverk/src/kodeverkFlowType';
 import type { NavAnsatt } from './navAnsattFlowType';
 
 const allFagsakStatuses = Object.values(fagsakStatusCode);

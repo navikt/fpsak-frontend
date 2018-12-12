@@ -5,10 +5,10 @@ import { FieldArray, formValueSelector } from 'redux-form';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import ArrowBox from 'sharedComponents/ArrowBox';
-import { RadioGroupField, RadioOption } from 'form/Fields';
+import {
+  ElementWrapper, VerticalSpacer, ArrowBox,
+} from '@fpsak-frontend/shared-components';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import FrilansOppdragForFamilieFieldArray, { defaultFrilansPeriode } from './FrilansOppdragForFamilieFieldArray';
 
 /**

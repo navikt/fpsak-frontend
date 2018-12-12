@@ -1,11 +1,11 @@
 import React from 'react';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
 import { expect } from 'chai';
 import moment from 'moment';
 
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { DatepickerField, SelectField } from 'form/Fields';
+import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import { SettBehandlingPaVentModal } from './SettBehandlingPaVentModal';
 
 describe('<SettBehandlingPaVentModal>', () => {

@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import kommunikasjonsretning from 'kodeverk/kommunikasjonsretning';
+import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import { getAccessibleSupportPanels, getEnabledSupportPanels, getFilteredReceivedDocuments } from './behandlingsupportSelectors';
 
 describe('behandlingsupportSelectors', () => {

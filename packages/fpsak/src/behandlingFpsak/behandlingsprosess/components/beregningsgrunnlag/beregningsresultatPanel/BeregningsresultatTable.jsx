@@ -7,13 +7,11 @@ import { createSelector } from 'reselect';
 
 import { Undertittel, Normaltekst, Element } from 'nav-frontend-typografi';
 import { getBeregningsgrunnlagLedetekster, getBeregningsgrunnlagPerioder } from 'behandlingFpsak/behandlingSelectors';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import BorderBox from 'sharedComponents/BorderBox';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
-import periodeAarsak from 'kodeverk/periodeAarsak';
+import {
+  BorderBox, Table, TableRow, TableColumn,
+} from '@fpsak-frontend/shared-components';
+import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 
 import styles from './beregningsresultatTable.less';
 

@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 import {
   change as reduxFormChange,
   reset as reduxFormReset,
   formPropTypes,
 } from 'redux-form';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import {
+  AksjonspunktHelpText, VerticalSpacer, ElementWrapper,
+} from '@fpsak-frontend/shared-components';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   getBehandlingMedlemNew,
   getSoknad,
@@ -20,13 +22,11 @@ import {
   from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { getFagsakPerson } from 'fagsak/fagsakSelectors';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { bindActionCreators } from 'redux';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
-import { createSelector } from 'reselect';
-import guid from 'utils/guidUtil';
+import { guid } from '@fpsak-frontend/utils';
 import OppholdInntektOgPeriodeForm from './OppholdInntektOgPeriodeForm';
 import MedlemskapEndringerTabell from './MedlemskapEndringerTabell';
 

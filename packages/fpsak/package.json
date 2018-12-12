@@ -9,10 +9,7 @@
     "react-redux": "^5.1.1",
     "connected-react-router": "^5.0.1",
     "react-dom": "^16.6.3",
-    "history": "^4.6.3"
-
-  },
-  "peerDependencies": {
+    "history": "^4.6.3",
     "nav-frontend-alertstriper": "1.0.27",
     "nav-frontend-alertstriper-style": "0.2.48",
     "nav-frontend-chevron": "1.0.6",
@@ -44,6 +41,7 @@
     "nav-frontend-typografi": "2.0.6",
     "nav-frontend-typografi-style": "1.0.10",
     "classnames": "^2.2.6",
+    "react-hot-loader": "^4.3.12",
     "react-day-picker": "^7.2.4",
     "react-intl": "^2.7.2",
     "react-modal": "^3.6.1",
@@ -51,25 +49,29 @@
     "prop-types": "^15.6.2",
     "redux": "^4.0.1",
     "react-router-dom": "^4.3.1",
-    "react-hot-loader": "^4.3.12",
     "moment": "^2.22.2",
     "reselect": "^4.0.0",
     "axios": "^0.18.0",
     "redux-form": "^7.4.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
+    "vis": "^4.21.0",
     "react-visjs-timeline": "^1.5.0",
     "react-collapse": "^4.0.3",
+    "@fpsak-frontend/assets": "1.0.0",
+    "@fpsak-frontend/form": "1.0.0",
+    "@fpsak-frontend/utils": "1.0.0",
+    "@fpsak-frontend/shared-components": "1.0.0",
+    "@fpsak-frontend/kodeverk": "1.0.0"
+  },
+  "devDependencies": {
+    "eslint-plugin-cypress": "^2.0.1",
     "chai": "^4.2.0",
     "sinon": "^5.0.10",
     "sinon-chai": "^3.2.0",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",
     "redux-mock-store": "^1.5.3",
-    "axios-mock-adapter": "^1.15.0",
-    "@fpsak-frontend/assets": "1.0.0"
-  },
-  "devDependencies": {
-    "eslint-plugin-cypress": "^2.0.1"
+    "axios-mock-adapter": "^1.15.0"
   }
 }

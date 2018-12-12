@@ -9,12 +9,12 @@ import {
   getBehandlingSprak, getBehandlingVilkar,
 } from 'behandlingFpsak/behandlingSelectors';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import { getLanguageCodeFromSprakkode } from 'utils/languageUtils';
-import { required, hasValidText } from 'utils/validation/validators';
-import { TextAreaField } from 'form/Fields';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import klageVurdering from 'kodeverk/klageVurdering';
-import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+import {
+  required, hasValidText, decodeHtmlEntity, getLanguageCodeFromSprakkode,
+} from '@fpsak-frontend/utils';
+import { TextAreaField } from '@fpsak-frontend/form';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import {
   findAvslagResultatText, shouldGiveBegrunnelse, maxLength1500, minLength3,
 } from '../VedtakHelper';
@@ -27,7 +27,8 @@ const klageVurderingErAvvist = klageVurderingResultat => (klageVurderingResultat
 export const getAvslagArsak = (klageVurderingResultatNK, klageVurderingResultatNFP) => {
   if (klageVurderingErAvvist(klageVurderingResultatNK)) {
     return klageVurderingResultatNK.klageAvvistArsakNavn;
-  } if (klageVurderingErAvvist(klageVurderingResultatNFP)) {
+  }
+  if (klageVurderingErAvvist(klageVurderingResultatNFP)) {
     return klageVurderingResultatNFP.klageAvvistArsakNavn;
   }
   return null;

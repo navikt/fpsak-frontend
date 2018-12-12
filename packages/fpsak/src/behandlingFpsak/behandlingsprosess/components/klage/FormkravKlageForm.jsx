@@ -4,22 +4,20 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
-
-import FadingPanel from 'sharedComponents/FadingPanel';
-import { RadioGroupField, RadioOption } from 'form/Fields';
-import SelectField from 'form/fields/SelectField';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { required } from 'utils/validation/validators';
+import { SelectField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import {
+  AksjonspunktHelpText, VerticalSpacer, FadingPanel,
+} from '@fpsak-frontend/shared-components';
+import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { Column, Row } from 'nav-frontend-grid';
 import { getBehandlinger } from 'behandling/selectors/behandlingerSelectors';
-import behandlingStatus from 'kodeverk/behandlingStatus';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
 
 import behandlingPropType from 'behandlingFelles/proptypes/behandlingPropType';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
 import styles from './behandleKlageForm.less';
 
 /**

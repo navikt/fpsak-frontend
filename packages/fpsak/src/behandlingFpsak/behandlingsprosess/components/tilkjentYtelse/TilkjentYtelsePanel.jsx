@@ -5,17 +5,17 @@ import moment from 'moment/moment';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
 import { Undertittel } from 'nav-frontend-typografi';
-import FadingPanel from 'sharedComponents/FadingPanel';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
 import beregningresultatMedUttaksplanPropType from 'behandlingFelles/proptypes/beregningresultatMedUttaksplanPropType';
+import { FadingPanel } from '@fpsak-frontend/shared-components';
 import {
   getPersonopplysning,
   getBehandlingResultatstruktur,
   getSoknad,
   getFamiliehendelse,
 } from 'behandlingFpsak/behandlingSelectors';
-import soknadType from 'kodeverk/soknadType';
-import { ISO_DATE_FORMAT } from 'utils/formats';
+import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import TilkjentYtelse from './TilkjentYtelse';
 
 const perioderMedClassName = [];
@@ -78,9 +78,11 @@ const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT).toDate
 const getFamiliehendelsedatoFraSoknad = (soknad) => {
   if (soknad.fodselsdatoer && Object.keys(soknad.fodselsdatoer).length > 0) {
     return Object.values(soknad.fodselsdatoer)[0];
-  } if (soknad.termindato) {
+  }
+  if (soknad.termindato) {
     return soknad.termindato;
-  } if (soknad.adopsjonFodelsedatoer && Object.keys(soknad.adopsjonFodelsedatoer).length > 0) {
+  }
+  if (soknad.adopsjonFodelsedatoer && Object.keys(soknad.adopsjonFodelsedatoer).length > 0) {
     return Object.values(soknad.adopsjonFodelsedatoer)[0];
   }
   return undefined;

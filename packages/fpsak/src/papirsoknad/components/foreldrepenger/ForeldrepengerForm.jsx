@@ -12,12 +12,12 @@ import AnnenForelderPanel from 'papirsoknad/components/commonPanels/AnnenForelde
 import OppholdINorgePanel from 'papirsoknad/components/commonPanels/OppholdINorgePanel';
 import TilleggsopplysningerPanel from 'papirsoknad/components/commonPanels/TilleggsopplysningerPanel';
 import SoknadData from 'papirsoknad/SoknadData';
-import familieHendelseType from 'kodeverk/familieHendelseType';
+import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 import LagreSoknadForm from 'papirsoknad/components/commonPanels/LagreSoknadPanel';
 import OmsorgOgAdopsjonPanel from 'papirsoknad/components/commonPanels/omsorgOgAdopsjon/OmsorgOgAdopsjonPanel';
 import TerminFodselDatoPanel from 'papirsoknad/components/commonPanels/fodsel/TerminFodselDatoPanel';
 import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import RettigheterPanel, { rettighet } from '../commonPanels/rettigheter/RettigheterPanel';
 import EgenVirksomhetPanel from './virksomhet/EgenVirksomhetPanel';
 import DekningsgradPanel from './dekningsgrad/DekningsgradPanel';

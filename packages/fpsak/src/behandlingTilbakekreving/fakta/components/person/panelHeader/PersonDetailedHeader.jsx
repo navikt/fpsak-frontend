@@ -5,10 +5,9 @@ import moment from 'moment';
 import { Element, Undertittel, Undertekst } from 'nav-frontend-typografi';
 import Panel from 'nav-frontend-paneler';
 
-import personstatusType from 'kodeverk/personstatusType';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import nbKjonn from 'kodeverk/navBrukerKjonn';
-import Image from 'sharedComponents/Image';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import nbKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import { Image, ElementWrapper } from '@fpsak-frontend/shared-components';
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import urlUkjent from '@fpsak-frontend/assets/images/ukjent.svg';

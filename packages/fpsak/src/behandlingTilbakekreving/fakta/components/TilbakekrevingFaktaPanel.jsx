@@ -7,8 +7,8 @@ import { getRettigheter } from 'navAnsatt/duck';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import {
   getPersonopplysning, getBehandlingIsOnHold, getAksjonspunkter, hasReadOnlyBehandling,
-}
-  from 'behandlingTilbakekreving/tilbakekrevingBehandlingSelectors';
+} from 'behandlingTilbakekreving/tilbakekrevingBehandlingSelectors';
+import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { getOpenInfoPanels } from '../duck';
 import PersonInfoPanel from './person/PersonInfoPanel';
 
@@ -20,6 +20,7 @@ import styles from './tilbakekrevingFaktaPanel.less';
  * Presentasjonskomponent. Har ansvar for visningen av de ulike faktapanelene. Dette gjøres
  * ved å gå gjennom aksjonspunktene og en gjør så en mapping mellom aksjonspunktene og panelene.
  */
+
 export const TilbakekrevingFaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel lesbart
   aksjonspunkter,
   personopplysninger,
@@ -29,7 +30,7 @@ export const TilbakekrevingFaktaPanel = ({ // NOSONAR Kompleksitet er høg, men 
   shouldOpenDefaultInfoPanels,
   readOnly,
 }) => (
-  <>
+  <ElementWrapper>
     <div className={styles.personContainer}>
       {personopplysninger
       && (
@@ -48,7 +49,7 @@ export const TilbakekrevingFaktaPanel = ({ // NOSONAR Kompleksitet er høg, men 
       }
     </div>
     <div className={styles.container} />
-  </>
+  </ElementWrapper>
 );
 
 TilbakekrevingFaktaPanel.propTypes = {

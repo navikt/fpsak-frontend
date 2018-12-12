@@ -7,10 +7,10 @@ import { FormattedMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { getBehandlingVedtaksDatoSomSvangerskapsuke } from 'behandlingFpsak/behandlingSelectors';
 import { getSoknadFraOriginalBehandling, getFamiliehendelseFraOriginalBehandling } from 'behandlingFpsak/selectors/originalBehandlingSelectors';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from 'utils/formats';
+import { ElementWrapper } from '@fpsak-frontend/shared-components';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 /**
  * FodselSammenligningRevurderingPanel

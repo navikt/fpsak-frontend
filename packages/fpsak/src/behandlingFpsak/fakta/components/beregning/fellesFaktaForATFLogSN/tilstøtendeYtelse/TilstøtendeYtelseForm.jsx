@@ -6,16 +6,14 @@ import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Row, Column } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
-import { removeSpacesFromNumber } from 'utils/currencyUtils';
-import beregningsgrunnlagAndeltyper from 'kodeverk/beregningsgrunnlagAndeltyper';
+import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
+import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
 import {
   getTilstøtendeYtelse,
   getFaktaOmBeregningTilfellerKoder,
 } from 'behandlingFpsak/behandlingSelectors';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import BorderBox from 'sharedComponents/BorderBox';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import { VerticalSpacer, BorderBox, ElementWrapper } from '@fpsak-frontend/shared-components';
 import YtelsePanel from './YtelsePanel';
 import FordelingAvBruttoBeregningsgrunnlagPanel, { fordelingAvBruttoBGFieldArrayName } from './FordelingAvBruttoBeregningsgrunnlagPanel';
 import styles from './tilstøtendeYtelseForm.less';

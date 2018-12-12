@@ -11,25 +11,22 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import BpPanelTemplate from 'behandlingFpsak/behandlingsprosess/components/vilkar/BpPanelTemplate';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import { getKodeverk } from 'kodeverk/duck';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
 import { getBehandlingsresultat, getSoknad, getBehandlingVersjon } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import { CheckboxField, RadioGroupField, RadioOption } from 'form/Fields';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { isObject } from 'utils/objectUtils';
-import { required } from 'utils/validation/validators';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import dokumentTypeId from 'kodeverk/dokumentTypeId';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { getKodeverk } from 'kodeverk/duck';
+import {
+  ElementWrapper, Table, TableRow, TableColumn, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { CheckboxField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { required, isObject } from '@fpsak-frontend/utils';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
 
 import {
   getSelectedBehandlingspunktAksjonspunkter,

@@ -1,5 +1,5 @@
-import ac from 'kodeverk/aksjonspunktCodes';
 import BehandlingspunktProperties from 'behandlingFelles/behandlingsprosess/definition/behandlingspunktBuilder';
+import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import bpc from '../behandlingspunktCodes';
 
 /**

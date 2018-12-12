@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
 
-import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
-import { PeriodpickerField } from 'form/Fields';
-import { FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
+import { PeriodpickerField } from '@fpsak-frontend/form';
+import { PeriodFieldArray, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components';
 import {
   required, hasValidDate, dateRangesNotOverlapping, dateAfterOrEqual,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils';
 
 import styles from './dokumentertePerioderPeriodePicker.less';
 

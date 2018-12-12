@@ -8,22 +8,20 @@ import { Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 import AlertStripe from 'nav-frontend-alertstriper';
 
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
-import { FlexContainer, FlexColumn, FlexRow } from 'sharedComponents/flexGrid';
+import {
+  FlexContainer, FlexColumn, FlexRow, VerticalSpacer, PeriodFieldArray,
+} from '@fpsak-frontend/shared-components';
 import {
   required, hasValidDate, dateRangesNotOverlapping, dateAfterOrEqual, hasValidDecimal, maxValue,
-} from 'utils/validation/validators';
-import { isRequiredMessage } from 'utils/validation/messages';
-import { ISO_DATE_FORMAT } from 'utils/formats';
-import { isEmpty } from 'utils/arrayUtils';
+  ISO_DATE_FORMAT, isRequiredMessage, isArrayEmpty,
+} from '@fpsak-frontend/utils';
 import { getKodeverk } from 'kodeverk/duck';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import uttakPeriodeType from 'kodeverk/uttakPeriodeType';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import uttakPeriodeType from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import {
   CheckboxField, DatepickerField, SelectField, DecimalField,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 
 import styles from './renderPermisjonPeriodeFieldArray.less';
 
@@ -236,7 +234,7 @@ RenderPermisjonPeriodeFieldArray.validate = (values) => {
     return arrayErrors;
   }
 
-  if (isEmpty(values)) {
+  if (isArrayEmpty(values)) {
     return null;
   }
   const overlapError = dateRangesNotOverlapping(values.map(({ periodeFom, periodeTom }) => [periodeFom, periodeTom]));

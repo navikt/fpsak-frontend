@@ -4,16 +4,14 @@ import { FormattedHTMLMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { connect } from 'react-redux';
 import { FieldArray } from 'redux-form';
-
-import { RadioGroupField, RadioOption } from 'form/Fields';
-import { required } from 'utils/validation/validators';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { required } from '@fpsak-frontend/utils';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { getBehandlingYtelseFordeling, getSoknad } from 'behandlingFpsak/behandlingSelectors';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import IkkeOmsorgPeriodeField from './IkkeOmsorgPeriodeField';
 import styles from './omsorgFaktaForm.less';
 

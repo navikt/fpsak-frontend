@@ -4,13 +4,11 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
 
-import PeriodFieldArray from 'sharedComponents/PeriodFieldArray';
-import { DatepickerField } from 'form/Fields';
+import { PeriodFieldArray } from '@fpsak-frontend/shared-components';
+import { DatepickerField } from '@fpsak-frontend/form';
 import {
-  required, hasValidDate, dateIsAfter, dateRangesNotOverlapping,
-} from 'utils/validation/validators';
-import { dateRangesOverlappingMessage, invalidPeriodMessage } from 'utils/validation/messages';
-import { isEmpty } from 'utils/validation/validatorsHelper';
+  required, hasValidDate, dateIsAfter, dateRangesNotOverlapping, isObjectEmpty, dateRangesOverlappingMessage, invalidPeriodMessage,
+} from '@fpsak-frontend/utils';
 
 const showAddButton = (fields) => {
   if (fields.length > 0) {
@@ -74,7 +72,7 @@ IkkeOmsorgPeriodeField.propTypes = {
 const hasValue = values => (values && values.length && values.length < 2 && !values[0].periodeTom);
 
 const checkArrayErrors = values => values.map(({ periodeFom, periodeTom }, index) => {
-  if (isEmpty(periodeFom) && isEmpty(periodeTom)) {
+  if (isObjectEmpty(periodeFom) && isObjectEmpty(periodeTom)) {
     return null;
   }
   let periodeFomError = required(periodeFom);

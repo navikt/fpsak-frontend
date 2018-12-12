@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { removeSpacesFromNumber } from 'utils/currencyUtils';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import BorderBox from 'sharedComponents/BorderBox';
+import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
+import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import EndringBeregningsgrunnlagPeriodePanel from './EndringBeregningsgrunnlagPeriodePanel';
 
 import styles from './endringBeregningsgrunnlagForm.less';
-
 
 const ElementWrapper = ({ children }) => children;
 

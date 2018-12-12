@@ -6,7 +6,7 @@ import {
   reduxForm, formValueSelector, getFormSyncErrors, isDirty, getFormValues, getFormInitialValues, isSubmitting,
 } from 'redux-form';
 
-import LoadingPanel from 'sharedComponents/LoadingPanel';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import requireProps from 'app/data/requireProps';
 import { getSelectedBehandlingId } from './duck';
 import { getBehandlingVersjon } from './tilbakekrevingBehandlingSelectors';

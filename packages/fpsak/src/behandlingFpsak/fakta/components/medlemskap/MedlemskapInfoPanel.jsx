@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
 import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { getFeatureToggles } from 'app/duck';
 import featureToggle from 'app/featureToggle';
 import connect from 'react-redux/es/connect/connect';

@@ -2,16 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { RadioGroupField, RadioOption } from 'form/Fields';
 import { getFaktaOmBeregning } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { required } from 'utils/validation/validators';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { flatten, required } from '@fpsak-frontend/utils';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
-import { flatten } from 'utils/arrayUtils';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import FastsettATFLInntektForm
   from 'behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/FastsettATFLInntektForm';
 

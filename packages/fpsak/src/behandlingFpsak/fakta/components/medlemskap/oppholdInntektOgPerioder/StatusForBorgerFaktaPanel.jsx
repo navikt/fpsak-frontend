@@ -6,12 +6,12 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { RadioGroupField, RadioOption } from 'form/Fields';
-import { required } from 'utils/validation/validators';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { required } from '@fpsak-frontend/utils';
 
 import styles from './statusForBorgerFaktaPanel.less';
 

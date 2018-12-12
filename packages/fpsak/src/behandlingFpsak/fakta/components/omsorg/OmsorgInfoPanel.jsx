@@ -5,8 +5,8 @@ import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
+import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import {
   getPersonopplysning, getBehandlingYtelseFordeling, getEktefellePersonopplysning, getAksjonspunkter,
 } from 'behandlingFpsak/behandlingSelectors';
@@ -18,7 +18,7 @@ import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspand
 import BostedFaktaView from 'behandlingFpsak/fakta/components/omsorg/BostedFaktaView';
 import OmsorgFaktaForm from 'behandlingFpsak/fakta/components/omsorg/OmsorgFaktaForm';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import IkkeOmsorgPeriodeField from './IkkeOmsorgPeriodeField';
 
 

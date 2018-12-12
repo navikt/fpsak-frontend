@@ -7,17 +7,15 @@ import { Fieldset } from 'nav-frontend-skjema';
 import { Container, Row, Column } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import fht from 'kodeverk/familieHendelseType';
-import BorderBox from 'sharedComponents/BorderBox';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import fht from '@fpsak-frontend/kodeverk/src/familieHendelseType';
+import { VerticalSpacer, BorderBox } from '@fpsak-frontend/shared-components';
 import {
   InputField, DatepickerField, RadioGroupField, RadioOption,
-} from 'form/Fields';
+} from '@fpsak-frontend/form';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import {
-  hasValidInteger, hasValidDate, isDatesEqual, required, minValue, maxValue, dateBeforeOrEqualToToday,
-} from 'utils/validation/validators';
-import { isRequiredMessage } from 'utils/validation/messages';
+  hasValidInteger, hasValidDate, isDatesEqual, required, minValue, maxValue, dateBeforeOrEqualToToday, isRequiredMessage,
+} from '@fpsak-frontend/utils';
 import { rettighet } from '../rettigheter/RettigheterPanel';
 
 import styles from './omsorgOgAdopsjonPanel.less';

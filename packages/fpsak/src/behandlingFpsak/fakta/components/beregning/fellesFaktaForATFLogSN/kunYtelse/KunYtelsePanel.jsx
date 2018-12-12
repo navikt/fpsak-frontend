@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
 import { getKunYtelse } from 'behandlingFpsak/behandlingSelectors';
-import { formatCurrencyNoKr, removeSpacesFromNumber } from 'utils/currencyUtils';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import BrukersAndelFieldArray from './BrukersAndelFieldArray';
 import KunYtelseBesteberegningPanel from './KunYtelseBesteberegningPanel';
 import KunYtelseUtenBesteberegningPanel from './KunYtelseUtenBesteberegningPanel';

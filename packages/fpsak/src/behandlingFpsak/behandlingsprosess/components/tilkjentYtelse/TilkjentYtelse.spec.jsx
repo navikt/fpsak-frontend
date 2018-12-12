@@ -3,10 +3,9 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import TimeLineSokerEnsamSoker from 'behandlingFpsak/behandlingsprosess/components/tilkjentYtelse/timeline/TimeLineSokerEnsamSoker';
 import TimeLineControl from 'behandlingFpsak/behandlingsprosess/components/tilkjentYtelse/timeline/TimeLineControl';
-import { intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 
 import { TilkjentYtelse } from './TilkjentYtelse';
-
 
 describe('<TilkjentYtelse>', () => {
   it('skall innehålla korrekt antal felter', () => {

@@ -5,10 +5,9 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Knapp } from 'nav-frontend-knapper';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
-import Image from 'sharedComponents/Image';
-import Modal from 'sharedComponents/Modal';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import {
+  Modal, Image, VerticalSpacer, ElementWrapper,
+} from '@fpsak-frontend/shared-components';
 
 import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
 

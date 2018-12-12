@@ -5,11 +5,10 @@ import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import decodeHtmlEntity from 'utils/decodeHtmlEntityUtils';
+import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 
 import styles from './tilleggsopplysningerFaktaForm.less';
 

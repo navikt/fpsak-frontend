@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel, Undertekst } from 'nav-frontend-typografi';
 
-import BorderBox from 'sharedComponents/BorderBox';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { DatepickerField } from 'form/Fields';
-import { hasValidDate, dateBeforeOrEqualToToday, required } from 'utils/validation/validators';
+import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { DatepickerField } from '@fpsak-frontend/form';
+import { hasValidDate, dateBeforeOrEqualToToday, required } from '@fpsak-frontend/utils';
 
 /**
  * MottattDatoPanel

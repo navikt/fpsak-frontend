@@ -1,5 +1,5 @@
-import { buildPath, formatQueryString, parseQueryString } from 'utils/urlUtils';
-import skjermlenkeCodes from 'kodeverk/skjermlenkeCodes';
+import { buildPath, formatQueryString, parseQueryString } from '@fpsak-frontend/utils';
+import skjermlenkeCodes from '@fpsak-frontend/kodeverk/src/skjermlenkeCodes';
 
 const FPSAK = 'fpsak';
 const FPLOS = 'fplos';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import StatusForBorgerFaktaPanel from './StatusForBorgerFaktaPanel';
 
 describe('<StatusForBorgerFaktaPanel>', () => {

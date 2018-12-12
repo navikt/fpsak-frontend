@@ -8,17 +8,15 @@ import moment from 'moment';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import { ISO_DATE_FORMAT } from 'utils/formats';
-import { FlexContainer, FlexRow, FlexColumn } from 'sharedComponents/flexGrid';
 import { getBehandlingVersjon, getBehandlingFastsattOpptjeningFomDate, getBehandlingFastsattOpptjeningTomDate } from 'behandlingFpsak/behandlingSelectors';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import DateLabel from 'sharedComponents/DateLabel';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import {
+  VerticalSpacer, ElementWrapper, AksjonspunktHelpText, DateLabel, FlexContainer, FlexRow, FlexColumn,
+} from '@fpsak-frontend/shared-components';
 import OpptjeningTimeLine from './timeline/OpptjeningTimeLine';
 import ActivityPanel, { activityPanelName } from './activity/ActivityPanel';
 import TimeLineNavigation from './timeline/TimeLineNavigation';

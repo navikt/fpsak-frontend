@@ -5,21 +5,17 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import { calcDaysAndWeeks } from 'utils/dateUtils';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import Image from 'sharedComponents/Image';
+import {
+  Table, TableRow, TableColumn, VerticalSpacer, Image,
+} from '@fpsak-frontend/shared-components';
+import { calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT, createVisningsnavnForAktivitet } from '@fpsak-frontend/utils';
 import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
 import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
 import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
 import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
 import { beregningsresultatPeriodePropType } from 'behandlingFelles/proptypes/beregningresultatMedUttaksplanPropType';
-import { uttakPeriodeNavn } from 'kodeverk/uttakPeriodeType';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 
 import styles from './timeLineData.less';
 

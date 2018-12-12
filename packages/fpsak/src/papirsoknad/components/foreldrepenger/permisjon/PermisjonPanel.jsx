@@ -7,12 +7,11 @@ import { FormattedMessage } from 'react-intl';
 import { Element, Undertittel } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
 
-import BorderBox from 'sharedComponents/BorderBox';
+import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import SoknadData from 'papirsoknad/SoknadData';
-import foreldreType from 'kodeverk/foreldreType';
-import fagsakYtelseType from 'kodeverk/fagsakYtelseType';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { CheckboxField } from 'form/Fields';
+import foreldreType from '@fpsak-frontend/kodeverk/src/foreldreType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { CheckboxField } from '@fpsak-frontend/form';
 import PermisjonUtsettelsePanel, { utsettelsePeriodeFieldArrayName } from './PermisjonUtsettelsePanel';
 import PermisjonGraderingPanel, { graderingPeriodeFieldArrayName } from './PermisjonGraderingPanel';
 import PermisjonOverforingAvKvoterPanel from './PermisjonOverforingAvKvoterPanel';

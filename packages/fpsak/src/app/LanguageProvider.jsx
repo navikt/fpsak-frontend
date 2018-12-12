@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { IntlProvider, addLocaleData } from 'react-intl';
 import nb from 'react-intl/locale-data/nb';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import fpsakApi from 'data/fpsakApi';
 
 addLocaleData(nb);

@@ -6,15 +6,15 @@ import { FormattedMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
 import {
   getBehandlingSkjaringstidspunkt, getBehandlingMedlemEndredeOpplysninger, getBehandlingStartDatoForPermisjon,
 } from 'behandlingFpsak/behandlingSelectors';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { DatepickerField } from 'form/Fields';
-import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import { required, hasValidDate, dateAfterOrEqual } from 'utils/validation/validators';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { DatepickerField } from '@fpsak-frontend/form';
+import {
+  ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT, required, hasValidDate, dateAfterOrEqual,
+} from '@fpsak-frontend/utils';
 
 const getParam = opplysning => ({ dato: moment(opplysning.fom).format(DDMMYYYY_DATE_FORMAT) });
 

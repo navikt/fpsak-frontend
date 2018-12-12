@@ -8,15 +8,13 @@ import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
-import Image from 'sharedComponents/Image';
+import { Modal, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import Modal from 'sharedComponents/Modal';
-import { CheckboxField, SelectField } from 'form/Fields';
-import { required } from 'utils/validation/validators';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import bType from 'kodeverk/behandlingType';
-import behandlingArsakType from 'kodeverk/behandlingArsakType';
+import { CheckboxField, SelectField } from '@fpsak-frontend/form';
+import { required } from '@fpsak-frontend/utils';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { getKodeverk } from 'kodeverk/duck';
 
 import styles from './createNewBehandlingModal.less';

@@ -3,11 +3,11 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import ToTrinnsForm from 'behandlingsupport/approval/components/ToTrinnsForm';
 import ToTrinnsFormReadOnly from 'behandlingsupport/approval/components/ToTrinnsFormReadOnly';
-import behandlingStatus from 'kodeverk/behandlingStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';
 import { ApprovalIndexImpl, mapPropsToContext } from './ApprovalIndex';
 

@@ -5,13 +5,13 @@ import { formValueSelector, reduxForm } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
 import { Fieldset } from 'nav-frontend-skjema';
 import { injectIntl, intlShape } from 'react-intl';
-import Modal from 'sharedComponents/Modal';
+import { Modal } from '@fpsak-frontend/shared-components';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import behandlingResultatType from 'kodeverk/behandlingResultatType';
-import { SelectField, TextAreaField } from 'form/Fields';
-import { hasValidText, maxLength, required } from 'utils/validation/validators';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import { SelectField, TextAreaField } from '@fpsak-frontend/form';
+import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
 
 import styles from './shelveBehandlingModal.less';
 

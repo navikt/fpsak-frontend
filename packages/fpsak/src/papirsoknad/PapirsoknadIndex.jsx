@@ -24,10 +24,10 @@ import {
   getBehandlingIdentifier,
 } from 'behandlingFpsak/duck';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-import LoadingPanel from 'sharedComponents/LoadingPanel';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { getRettigheter } from 'navAnsatt/duck';
 import rettighetPropType from 'navAnsatt/rettighetPropType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   resetRegistrering, submitRegistrering, resetRegistreringSuccess, setSoknadData, getSoknadData,
 } from './duck';

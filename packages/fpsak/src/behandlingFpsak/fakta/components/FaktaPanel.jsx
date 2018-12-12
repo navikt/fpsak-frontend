@@ -11,7 +11,7 @@ import {
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import { getOpenInfoPanels } from 'behandlingFpsak/fakta/duck';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import FodselInfoPanel from './fodsel/FodselInfoPanel';
 import TilleggsopplysningerInfoPanel from './tilleggsopplysninger/TilleggsopplysningerInfoPanel';
 import OpptjeningInfoPanel from './opptjening/OpptjeningInfoPanel';

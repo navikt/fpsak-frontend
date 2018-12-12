@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import fpsakApi from 'data/fpsakApi';
-import LoadingPanel from 'sharedComponents/LoadingPanel';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { fetchAllFeatureToggles } from 'app/duck';
 
 class AppConfigResolver extends Component {

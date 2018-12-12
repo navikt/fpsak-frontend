@@ -4,11 +4,10 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 
 import VilkarResultPanel from 'behandlingFpsak/behandlingsprosess/components/vilkar/VilkarResultPanel';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
-import FadingPanel from 'sharedComponents/FadingPanel';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import {
+  ElementWrapper, VerticalSpacer, AksjonspunktHelpText, FadingPanel,
+} from '@fpsak-frontend/shared-components';
 
 /*
  * BpPanelTemplate

@@ -6,13 +6,15 @@ import { connect } from 'react-redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { FlexContainer, FlexRow, FlexColumn } from 'sharedComponents/flexGrid';
+import {
+  VerticalSpacer, FlexContainer, FlexRow, FlexColumn, ElementWrapper,
+} from '@fpsak-frontend/shared-components';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import { calcDays } from 'utils/dateUtils';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { CheckboxField } from 'form/Fields';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
+import {
+  calcDays, ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT,
+} from '@fpsak-frontend/utils';
+import { CheckboxField } from '@fpsak-frontend/form';
 import {
   getBehandlingVersjon,
   getStonadskontoer,
@@ -25,12 +27,11 @@ import {
 } from 'behandlingFpsak/behandlingSelectors';
 import { getRettigheter } from 'navAnsatt/duck';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
-import oppholdArsakType, { oppholdArsakMapper } from 'kodeverk/oppholdArsakType';
-import periodeResultatType from 'kodeverk/periodeResultatType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { uttakPeriodeNavn } from 'kodeverk/uttakPeriodeType';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import soknadType from 'kodeverk/soknadType';
+import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
+import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
+import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import TimeLineInfo from './stonadkonto/TimeLineInfo';
 import UttakTimeLineData from './UttakTimeLineData';
 import UttakTimeLine from './UttakTimeLine';

@@ -5,15 +5,14 @@ import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import Etikettfokus from 'nav-frontend-etiketter';
-
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import { getKodeverk } from 'kodeverk/duck';
 import personopplysningPropType from 'behandlingFelles/proptypes/personopplysningPropType';
-import opplysningAdresseType from 'kodeverk/opplysningAdresseType';
-import getAddresses from 'utils/personUtils';
-import personstatusType from 'kodeverk/personstatusType';
-import Region from 'kodeverk/region';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import { getKodeverk } from 'kodeverk/duck';
+import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
+import { getAddresses } from '@fpsak-frontend/utils';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import Region from '@fpsak-frontend/kodeverk/src/region';
 
 import styles from './bostedSokerView.less';
 

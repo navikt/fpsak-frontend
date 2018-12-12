@@ -3,11 +3,11 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import DateLabel from 'sharedComponents/DateLabel';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { DatepickerField, InputField } from 'form/Fields';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { DateLabel } from '@fpsak-frontend/shared-components';
+import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { DatepickerField, InputField } from '@fpsak-frontend/form';
 import { TermindatoFaktaForm, buildInitialValues } from './TermindatoFaktaForm';
 
 describe('<TermindatoFaktaForm>', () => {

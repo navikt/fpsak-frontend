@@ -8,21 +8,22 @@ import moment from 'moment';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import FadingPanel from 'sharedComponents/FadingPanel';
-import { RadioGroupField, RadioOption, TextAreaField } from 'form/Fields';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import {
+  FadingPanel, VerticalSpacer, AksjonspunktHelpText,
+} from '@fpsak-frontend/shared-components';
 import PropTypes from 'prop-types';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
 import { getBehandlingLanguageCode, getBehandlingArsaker } from 'behandlingFpsak/behandlingSelectors';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import FodselSammenligningPanel from 'behandlingFpsak/components/fodselSammenligning/FodselSammenligningPanel';
 import SettBehandlingPaVentModal from 'behandlingFpsak/components/SettBehandlingPaVentModal';
 
-import { ISO_DATE_FORMAT } from 'utils/formats';
-import { required, minLength, hasValidText } from 'utils/validation/validators';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import {
+  ISO_DATE_FORMAT, required, minLength, hasValidText,
+} from '@fpsak-frontend/utils';
 
 import styles from './varselOmRevurderingForm.less';
 

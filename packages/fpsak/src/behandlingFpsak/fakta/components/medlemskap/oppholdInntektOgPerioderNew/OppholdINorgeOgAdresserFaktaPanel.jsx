@@ -7,16 +7,15 @@ import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import { RadioGroupField, RadioOption } from 'form/Fields';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { required } from 'utils/validation/validators';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import Image from 'sharedComponents/Image';
-import PeriodLabel from 'sharedComponents/PeriodLabel';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { required } from '@fpsak-frontend/utils';
+import {
+  ElementWrapper, VerticalSpacer, Image, PeriodLabel,
+} from '@fpsak-frontend/shared-components';
 import checkImage from '@fpsak-frontend/assets/images/check.svg';
 import avslaattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import BostedSokerView from 'behandlingFpsak/fakta/components/BostedSokerView';

@@ -1,9 +1,9 @@
 import React from 'react';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import { expect } from 'chai';
 
 import SoknadData from 'papirsoknad/SoknadData';
-import RadioOption from 'form/fields/RadioOption';
+import { RadioOption } from '@fpsak-frontend/form';
 import { RettigheterPanel } from './RettigheterPanel';
 
 describe('<RettigheterPanel>', () => {

@@ -7,11 +7,11 @@ import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
 import { getEditedStatus } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { required } from 'utils/validation/validators';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { RadioGroupField, RadioOption } from 'form/Fields';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { required } from '@fpsak-frontend/utils';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
 import styles from './mannAdoptererFaktaForm.less';
 

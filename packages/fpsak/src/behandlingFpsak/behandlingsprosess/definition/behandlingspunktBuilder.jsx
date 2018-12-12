@@ -1,6 +1,6 @@
-import vut from 'kodeverk/vilkarUtfallType';
-import { notNull } from 'utils/objectUtils';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { notNull } from '@fpsak-frontend/utils';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 class BehandlingspunktProperties {
   constructor(code, titleCode, isVisible, status, bpVilkar, bpAksjonspunkter) {

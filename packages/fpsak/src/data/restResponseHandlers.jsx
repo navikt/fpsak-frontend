@@ -1,5 +1,5 @@
 /* @flow */
-import { dateFormat, timeFormat } from 'utils/dateUtils';
+import { dateFormat, timeFormat } from '@fpsak-frontend/utils';
 import { addErrorMessage, addErrorMessageCode } from 'app/duck';
 import { isHandledError, is401Error, is418Error } from 'app/ErrorTypes';
 import asyncPollingStatus from './rest/requestApi/asyncPollingStatus';

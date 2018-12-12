@@ -2,11 +2,11 @@ import React from 'react';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import {
-  hasValidDate, required, dateAfterOrEqual, dateBeforeOrEqual,
-} from 'utils/validation/validators';
+  DDMMYYYY_DATE_FORMAT, hasValidDate, required, dateAfterOrEqual, dateBeforeOrEqual,
+} from '@fpsak-frontend/utils';
 
-import { DatepickerField } from 'form/Fields';
-import Modal from 'sharedComponents/Modal';
+import { DatepickerField } from '@fpsak-frontend/form';
+import { Modal } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
@@ -15,7 +15,6 @@ import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import moment from 'moment/moment';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
 
 import styles from './delOppPeriodeModal.less';
 

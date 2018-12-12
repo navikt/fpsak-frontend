@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { isRequiredMessage } from 'utils/validation/messages';
+import { isRequiredMessage } from '@fpsak-frontend/utils';
 import { fordelingAvBruttoBGFieldArrayName } from './FordelingAvBruttoBeregningsgrunnlagPanel';
 import TilstotendeYtelseOgEndretBeregningsgrunnlag, {
   getFieldNameKey,

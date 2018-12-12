@@ -5,7 +5,7 @@ import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import faktaOmBeregningTilfelle, {
   erATFLSpesialtilfelle,
   harKunATFLISammeOrgUtenBestebergning,
-} from 'kodeverk/faktaOmBeregningTilfelle';
+} from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import LonnsendringForm, { lonnsendringField }
   from 'behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
 import NyoppstartetFLForm, { erNyoppstartetFLField }

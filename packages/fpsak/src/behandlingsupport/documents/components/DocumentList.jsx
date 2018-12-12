@@ -3,14 +3,10 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import Tooltip from 'sharedComponents/Tooltip';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import DateLabel from 'sharedComponents/DateLabel';
-import Image from 'sharedComponents/Image';
-import kommunikasjonsretning from 'kodeverk/kommunikasjonsretning';
-
+import {
+  Table, TableRow, TableColumn, DateLabel, Image, Tooltip,
+} from '@fpsak-frontend/shared-components';
+import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
 import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg';
 import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokument.svg';
@@ -31,7 +27,8 @@ const trimText = text => `${text.substring(0, 24)}...`;
 const getDirectionImage = (document) => {
   if (document.kommunikasjonsretning === kommunikasjonsretning.INN) {
     return mottaDokumentImageUrl;
-  } if (document.kommunikasjonsretning === kommunikasjonsretning.UT) {
+  }
+  if (document.kommunikasjonsretning === kommunikasjonsretning.UT) {
     return sendDokumentImageUrl;
   }
   return internDokumentImageUrl;
@@ -39,7 +36,8 @@ const getDirectionImage = (document) => {
 const getDirectionText = (document) => {
   if (document.kommunikasjonsretning === kommunikasjonsretning.INN) {
     return 'DocumentList.Motta';
-  } if (document.kommunikasjonsretning === kommunikasjonsretning.UT) {
+  }
+  if (document.kommunikasjonsretning === kommunikasjonsretning.UT) {
     return 'DocumentList.Send';
   }
   return 'DocumentList.Intern';

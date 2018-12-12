@@ -6,22 +6,20 @@ import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 import { createSelector } from 'reselect';
 
-import { adopsjonsvilkarene } from 'kodeverk/vilkarType';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { getSoknad, getFamiliehendelse, getAksjonspunkter } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import DokumentasjonFaktaForm from 'behandlingFpsak/fakta/components/adopsjon/DokumentasjonFaktaForm';
 import MannAdoptererFaktaForm from 'behandlingFpsak/fakta/components/adopsjon/MannAdoptererFaktaForm';
 import EktefelleFaktaForm from 'behandlingFpsak/fakta/components/adopsjon/EktefelleFaktaForm';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
 import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
 import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
+import { adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { AksjonspunktHelpText, VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 const { ADOPSJONSDOKUMENTAJON, OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE, OM_ADOPSJON_GJELDER_EKTEFELLES_BARN } = aksjonspunktCodes;
 const adopsjonAksjonspunkter = [OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE, ADOPSJONSDOKUMENTAJON, OM_ADOPSJON_GJELDER_EKTEFELLES_BARN];
@@ -32,6 +30,7 @@ const getHelpTexts = (aksjonspunkter) => {
   const helpTexts = [
     <FormattedMessage key="KontrollerMotDok" id="AdopsjonInfoPanel.KontrollerMotDok" />,
   ];
+
   if (hasAksjonspunkt(OM_ADOPSJON_GJELDER_EKTEFELLES_BARN, aksjonspunkter)) {
     helpTexts.push(<FormattedMessage key="VurderOmEktefellesBarn" id="AdopsjonInfoPanel.VurderOmEktefellesBarn" />);
   }

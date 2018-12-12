@@ -6,17 +6,14 @@ import { connect } from 'react-redux';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
 import { getEditedStatus } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import EditedIcon from 'sharedComponents/EditedIcon';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { SelectField } from 'form/Fields';
-import { required, hasValidInteger } from 'utils/validation/validators';
-import VilkarType from 'kodeverk/vilkarType';
-import { isEmpty } from 'utils/objectUtils';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
+import { EditedIcon, ElementWrapper, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { SelectField } from '@fpsak-frontend/form';
+import { required, hasValidInteger, isObjectEmpty } from '@fpsak-frontend/utils';
+import VilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import OmsorgsovertakelseFaktaPanel from './OmsorgsovertakelseFaktaPanel';
 import RettighetFaktaPanel from './RettighetFaktaPanel';
 import BarnPanel from './BarnPanel';
@@ -158,7 +155,7 @@ OmsorgOgForeldreansvarFaktaForm.validate = ({ originalAntallBarn, antallBarn }) 
   if (antallBarn < 1 || antallBarn > originalAntallBarn) {
     errors.antallBarn = ([{ id: 'OmsorgOgForeldreansvarFaktaForm.AntallBarnValidation' }]);
   }
-  if (isEmpty(errors)) {
+  if (isObjectEmpty(errors)) {
     const res = hasValidInteger(antallBarn);
     if (res !== null) {
       errors.antallBarn = res;

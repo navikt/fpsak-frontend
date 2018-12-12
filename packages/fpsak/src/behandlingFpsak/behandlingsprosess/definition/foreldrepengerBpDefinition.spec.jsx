@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 
 import featureToggle from 'app/featureToggle';
-import vilkarType from 'kodeverk/vilkarType';
-import behandlingResultatType from 'kodeverk/behandlingResultatType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
-import behandlingType from 'kodeverk/behandlingType';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import createForeldrepengerBpProps from './foreldrepengerBpDefinition';
 
 describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {

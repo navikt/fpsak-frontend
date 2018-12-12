@@ -10,26 +10,24 @@ import Panel from 'nav-frontend-paneler';
 import { Row, Column } from 'nav-frontend-grid';
 import { Fieldset } from 'nav-frontend-skjema';
 import { Undertekst, Undertittel, Normaltekst } from 'nav-frontend-typografi';
-import { ISO_DATE_FORMAT } from 'utils/formats';
+import { ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import moment from 'moment';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import FadingPanel from 'sharedComponents/FadingPanel';
 import { getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import {
   getBehandlingsresultat, getBehandlingVilkar, getSoknad, getFamiliehendelse,
 } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import { RadioGroupField, RadioOption } from 'form/Fields';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
-import DateLabel from 'sharedComponents/DateLabel';
-import { required } from 'utils/validation/validators';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import soknadType from 'kodeverk/soknadType';
+import {
+  ElementWrapper, FadingPanel, VerticalSpacer, DateLabel,
+} from '@fpsak-frontend/shared-components';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 
 import styles from './erSoknadsfristVilkaretOppfyltForm.less';
 

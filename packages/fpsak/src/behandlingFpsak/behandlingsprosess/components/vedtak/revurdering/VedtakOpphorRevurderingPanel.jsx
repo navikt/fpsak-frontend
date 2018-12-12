@@ -10,11 +10,11 @@ import {
   getBehandlingMedlem, getBehandlingsresultat,
 } from 'behandlingFpsak/behandlingSelectors';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { endringerIBeregningsgrunnlagGirFritekstfelt } from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakHelper';
 import VedtakFritekstPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 export const VedtakOpphorRevurderingPanelImpl = ({
   intl,
@@ -80,7 +80,8 @@ const getOpphorsdato = createSelector(
   (datoFraUttak, medlemskap, behandlingsresultat) => {
     if (datoFraUttak) {
       return datoFraUttak;
-    } if (medlemskap && medlemskap.fom) {
+    }
+    if (medlemskap && medlemskap.fom) {
       return medlemskap.fom;
     }
     return behandlingsresultat.skjaeringstidspunktForeldrepenger

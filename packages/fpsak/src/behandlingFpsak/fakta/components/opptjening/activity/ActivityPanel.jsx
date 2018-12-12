@@ -10,26 +10,24 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import moment from 'moment';
 
-import { findDifferenceInMonthsAndDays } from 'utils/dateUtils';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
-import { omit, isEqual } from 'utils/objectUtils';
-import { FlexContainer, FlexRow, FlexColumn } from 'sharedComponents/flexGrid';
-import Image from 'sharedComponents/Image';
-import { getKodeverk } from 'kodeverk/duck';
-import arbeidType from 'kodeverk/arbeidType';
-import opptjeningAktivitetType from 'kodeverk/opptjeningAktivitetType';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
+  Image, FlexContainer, FlexRow, FlexColumn, VerticalSpacer, ElementWrapper,
+} from '@fpsak-frontend/shared-components';
+import { getKodeverk } from 'kodeverk/duck';
+import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
+import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import {
+  omit, isEqual, findDifferenceInMonthsAndDays,
   requiredIfCustomFunctionIsTrue, required, hasValidPeriod, minLength, maxLength, hasValidText, isWithinOpptjeningsperiode,
 }
-  from 'utils/validation/validators';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+  from '@fpsak-frontend/utils';
 import {
   PeriodpickerField, RadioGroupField, RadioOption, TextAreaField, SelectField,
-} from 'form/Fields';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+} from '@fpsak-frontend/form';
 import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
 import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
 import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';

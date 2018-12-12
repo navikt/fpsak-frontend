@@ -3,18 +3,17 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Undertittel } from 'nav-frontend-typografi';
 import classNames from 'classnames';
-
-import FadingPanel from 'sharedComponents/FadingPanel';
-import klageVurderingType from 'kodeverk/klageVurdering';
-import { RadioGroupField, RadioOption } from 'form/Fields';
-import SelectField from 'form/fields/SelectField';
-import DatepickerField from 'form/fields/DatepickerField';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { required, hasValidDate } from 'utils/validation/validators';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import {
+  DatepickerField, SelectField, RadioGroupField, RadioOption,
+} from '@fpsak-frontend/form';
+import {
+  AksjonspunktHelpText, VerticalSpacer, FadingPanel,
+} from '@fpsak-frontend/shared-components';
+import { required, hasValidDate } from '@fpsak-frontend/utils';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import styles from './behandleKlageForm.less';
 

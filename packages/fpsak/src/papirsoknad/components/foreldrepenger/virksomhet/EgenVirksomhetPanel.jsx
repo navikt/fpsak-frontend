@@ -4,10 +4,9 @@ import { injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { formValueSelector, FieldArray, FormSection } from 'redux-form';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import { RadioGroupField, RadioOption } from 'form/Fields';
-import BorderBox from 'sharedComponents/BorderBox';
-import { required, arrayMinLength } from 'utils/validation/validators';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { BorderBox, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { required, arrayMinLength } from '@fpsak-frontend/utils';
 import { Fieldset } from 'nav-frontend-skjema';
 import RegistrerVirksomhetPanel from './RegistrerVirksomhetPanel';
 

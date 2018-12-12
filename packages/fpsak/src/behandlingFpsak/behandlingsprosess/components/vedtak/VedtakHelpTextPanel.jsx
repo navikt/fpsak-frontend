@@ -2,14 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import { ElementWrapper, AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import styles from './vedtakForm.less';
-
 
 const findHelpTexts = (intl, aksjonspunktKoder) => {
   const helpTexts = [];

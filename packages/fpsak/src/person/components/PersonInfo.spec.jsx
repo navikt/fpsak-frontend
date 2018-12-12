@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import { Undertittel, Undertekst } from 'nav-frontend-typografi';
 
-import Image from 'sharedComponents/Image';
+import { Image } from '@fpsak-frontend/shared-components';
 import PersonInfo from './PersonInfo';
 import AlderVisning from './Aldervisning';
 import MerkePanel from './Merkepanel';

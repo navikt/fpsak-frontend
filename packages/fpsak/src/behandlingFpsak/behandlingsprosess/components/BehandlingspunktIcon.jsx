@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import { Undertekst, Element } from 'nav-frontend-typografi';
 import { injectIntl, intlShape } from 'react-intl';
 
-import Image from 'sharedComponents/Image';
-import vilkarUtfallType from 'kodeverk/vilkarUtfallType';
+import { Image } from '@fpsak-frontend/shared-components';
 import { getBehandlingHenlagt } from 'behandlingFpsak/behandlingSelectors';
 import findBehandlingsprosessIcon from 'behandlingFpsak/behandlingsprosess/statusIconHelper';
 import {
   getBehandlingspunkterStatus, getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus,
 } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import styles from './behandlingspunktIcon.less';
 

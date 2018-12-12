@@ -9,8 +9,8 @@ import {
 } from 'behandlingFpsak/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandlingFpsak/selectors/originalBehandlingSelectors';
 
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import vedtakResultType from 'kodeverk/vedtakResultType';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import vedtakResultType from '@fpsak-frontend/kodeverk/src/vedtakResultType';
 import VedtakAvslagArsakOgBegrunnelsePanel from '../VedtakAvslagArsakOgBegrunnelsePanel';
 
 export const isNewBehandlingResult = (beregningResultat, originaltBeregningResultat) => {

@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
 import { getBehandlingType } from 'behandlingFpsak/behandlingSelectors';
-import behandlingType from 'kodeverk/behandlingType';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import VedtakForm from './VedtakForm';
 import InnsynVedtakForm from './innsyn/InnsynVedtakForm';
 import VedtakKlageForm from './klage/VedtakKlageForm';
 import VedtakKlageFormNy from './klageNy/VedtakKlageForm';
 import VedtakRevurderingForm from './revurdering/VedtakRevurderingForm';
-
 
 /*
  * VedtakPanels

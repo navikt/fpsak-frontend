@@ -3,17 +3,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import oppholdArsakType from 'kodeverk/oppholdArsakType';
-import FlexColumn from 'sharedComponents/flexGrid/FlexColumn';
-import FlexRow from 'sharedComponents/flexGrid/FlexRow';
-import FlexContainer from 'sharedComponents/flexGrid/FlexContainer';
+import oppholdArsakType from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import uttakPeriodeVurdering from 'kodeverk/uttakPeriodeVurdering';
-import { RadioOption, RadioGroupField, TextAreaField } from 'form/Fields';
+import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
+import {
+  FlexContainer, FlexRow, FlexColumn, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
+import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import {
   required, maxLength, minLength, hasValidPeriod, hasValidText,
-} from 'utils/validation/validators';
+} from '@fpsak-frontend/utils';
 import InntektsmeldingInfo from '../components/InntektsmeldingInfo';
 import EndreSoknadsperiode from '../components/EndreSoknadsperiode';
 import PerioderKnapper from './PerioderKnapper';

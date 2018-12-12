@@ -3,10 +3,10 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-import BehandlingType from 'kodeverk/behandlingType';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import FaktaPanel from 'behandlingFpsak/fakta/components/FaktaPanel';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaIndex } from './FaktaIndex';
 
 describe('<FaktaIndex>', () => {

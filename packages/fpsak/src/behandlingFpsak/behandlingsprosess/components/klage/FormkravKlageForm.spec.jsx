@@ -1,9 +1,9 @@
 import React from 'react';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import { expect } from 'chai';
 
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import behandlingStatus from 'kodeverk/behandlingStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { FormkravKlageForm } from './FormkravKlageForm';
 
 describe('<FormkravKlageForm>', () => {

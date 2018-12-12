@@ -9,10 +9,8 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Element, Undertekst } from 'nav-frontend-typografi';
 
 import PropTypes from 'prop-types';
-import Image from 'sharedComponents/Image';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import NavFieldGroup from 'form/fields/NavFieldGroup';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { Image, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { NavFieldGroup } from '@fpsak-frontend/form';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import removeIcon from '@fpsak-frontend/assets/images/remove.svg';
 import RegistrerVirksomhetModalForm from './RegistrerVirksomhetModalForm';

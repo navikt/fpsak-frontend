@@ -4,19 +4,17 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { FormSection, formValueSelector } from 'redux-form';
 import { Element } from 'nav-frontend-typografi';
-
-import { FlexColumn, FlexContainer, FlexRow } from 'sharedComponents/flexGrid';
-import DatepickerField from 'form/fields/DatepickerField';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
 import SoknadData from 'papirsoknad/SoknadData';
-import kodeverkPropType from 'kodeverk/kodeverkPropType';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { CheckboxField, SelectField } from 'form/Fields';
-import { dateAfterOrEqual, hasValidDate, required } from 'utils/validation/validators';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import {
+  FlexColumn, FlexContainer, FlexRow, ElementWrapper, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
+import { DatepickerField, CheckboxField, SelectField } from '@fpsak-frontend/form';
+import { dateAfterOrEqual, hasValidDate, required } from '@fpsak-frontend/utils';
 import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import foreldreType from 'kodeverk/foreldreType';
-import overforingArsak from 'kodeverk/overforingArsak';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import foreldreType from '@fpsak-frontend/kodeverk/src/foreldreType';
+import overforingArsak from '@fpsak-frontend/kodeverk/src/overforingArsak';
 import styles from './permisjonPanel.less';
 
 const getText = (intl, kode, navn) => {

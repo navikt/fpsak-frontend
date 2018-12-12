@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 
 import { getEditedStatus } from 'behandlingFpsak/behandlingSelectors';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { DatepickerField, InputField } from 'form/Fields';
-import { hasValidDate, required } from 'utils/validation/validators';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { DatepickerField, InputField } from '@fpsak-frontend/form';
+import { hasValidDate, required } from '@fpsak-frontend/utils';
 
 /**
  * OmsorgsovertakelseFaktaPanel

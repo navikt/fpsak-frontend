@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FieldArray } from 'redux-form';
 import { EkspanderbartpanelPure } from 'nav-frontend-ekspanderbartpanel';
-import { isEmpty } from 'utils/arrayUtils';
 import classnames from 'classnames/bind';
-import { formatCurrencyNoKr } from 'utils/currencyUtils';
+import { isArrayEmpty, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import RenderBruttoBGFordelingFieldArray from './RenderBruttoBGFordelingFieldArray';
 import { createEndringHeadingForDate, renderDateHeading } from '../endringBeregningsgrunnlag/EndretBeregningsgrunnlagUtils';
 import {
@@ -84,7 +83,7 @@ FordelingAvBruttoBgIKombinasjonImpl.validate = (values, sumFordelingForstePeriod
   if (arrayErrors.some(errors => errors !== null)) {
     return arrayErrors;
   }
-  if (isEmpty(values)) {
+  if (isArrayEmpty(values)) {
     return null;
   }
   const ulikeAndelerError = validateUlikeAndeler(values);

@@ -8,9 +8,9 @@ import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import { createLocationForHistorikkItems } from 'app/paths';
 
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import behandlingStatus from 'kodeverk/behandlingStatus';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import {
   getBehandlingVersjon, getAksjonspunkter, getBehandlingAnsvarligSaksbehandler, getTotrinnskontrollArsakerUtenUdefinert,
   getBehandlingStatus, getBehandlingToTrinnsBehandling, getTotrinnskontrollArsakerReadOnly,
@@ -22,10 +22,10 @@ import navAnsattPropType from 'navAnsatt/navAnsattPropType';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import requireProps from 'app/data/requireProps';
 import { getNavAnsatt } from 'navAnsatt/duck';
-import vurderPaNyttArsakType from 'kodeverk/vurderPaNyttArsakType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
+import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';
 import ToTrinnsForm from './components/ToTrinnsForm';
 import ToTrinnsFormReadOnly from './components/ToTrinnsFormReadOnly';

@@ -3,9 +3,9 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import BehandlingType from 'kodeverk/behandlingType';
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import LoadingPanel from 'sharedComponents/LoadingPanel';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { BehandlingResolver } from './BehandlingResolver';
 
 describe('BehandlingResolver', () => {

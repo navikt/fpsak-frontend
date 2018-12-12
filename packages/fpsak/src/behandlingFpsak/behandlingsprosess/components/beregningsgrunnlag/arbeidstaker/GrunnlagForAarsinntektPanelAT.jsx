@@ -5,22 +5,21 @@ import PropTypes from 'prop-types';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import { InputField } from 'form/Fields';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber } from 'utils/currencyUtils';
-import { required } from 'utils/validation/validators';
-import aktivitetStatus from 'kodeverk/aktivitetStatus';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import { InputField } from '@fpsak-frontend/form';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import Image from 'sharedComponents/Image';
+import {
+  Image, VerticalSpacer, Table, TableRow, TableColumn,
+} from '@fpsak-frontend/shared-components';
+import {
+  createVisningsnavnForAktivitet, required, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber,
+} from '@fpsak-frontend/utils';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import endretUrl from '@fpsak-frontend/assets/images/endret_felt.svg';
-import periodeAarsak from 'kodeverk/periodeAarsak';
-import createVisningsnavnForAktivitet from 'utils/arbeidsforholdUtil';
+import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import NaturalytelsePanel from './NaturalytelsePanel';
+
 import styles from './grunnlagForAarsinntektPanelAT.less';
 
 const createTableRows = (relevanteAndeler, harAksjonspunkt, bruttoFastsattInntekt, readOnly, isAksjonspunktClosed) => {

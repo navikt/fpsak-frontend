@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
-import Modal from 'sharedComponents/Modal';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 
-import Image from 'sharedComponents/Image';
+import { Modal, Image } from '@fpsak-frontend/shared-components';
 
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 

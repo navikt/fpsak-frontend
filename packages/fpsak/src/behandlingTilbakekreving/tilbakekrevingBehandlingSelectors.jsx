@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
-import behandlingStatus from 'kodeverk/behandlingStatus';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import tilbakekrevingBehandlingApi from './tilbakekrevingBehandlingApi';
 import { getSelectedBehandlingId } from './duck';
 

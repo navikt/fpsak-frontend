@@ -4,14 +4,11 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import CheckboxField from 'form/fields/CheckboxField';
-import Table from 'sharedComponents/Table';
-import TableRow from 'sharedComponents/TableRow';
-import TableColumn from 'sharedComponents/TableColumn';
-import DateTimeLabel from 'sharedComponents/DateTimeLabel';
-import Image from 'sharedComponents/Image';
-import kommunikasjonsretning from 'kodeverk/kommunikasjonsretning';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
+import { CheckboxField } from '@fpsak-frontend/form';
+import {
+  Image, Table, TableRow, TableColumn, ElementWrapper, DateTimeLabel,
+} from '@fpsak-frontend/shared-components';
+import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 
 import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
 import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg';
@@ -25,7 +22,8 @@ const getLink = (document, saksNr) => `${DOCUMENT_SERVER_URL}?saksnummer=${saksN
 const getDirectionImage = (document) => {
   if (document.kommunikasjonsretning === kommunikasjonsretning.INN) {
     return (<Image className={styles.image} src={mottaDokumentImageUrl} titleCode="DocumentListInnsyn.Motta" altCode="DocumentListInnsyn.Motta" />);
-  } if (document.kommunikasjonsretning === kommunikasjonsretning.UT) {
+  }
+  if (document.kommunikasjonsretning === kommunikasjonsretning.UT) {
     return (<Image className={styles.image} src={sendDokumentImageUrl} titleCode="DocumentListInnsyn.Send" altCode="DocumentListInnsyn.Send" />);
   }
   return (<Image className={styles.image} src={internDokumentImageUrl} titleCode="DocumentListInnsyn.Intern" altCode="DocumentListInnsyn.Intern" />);

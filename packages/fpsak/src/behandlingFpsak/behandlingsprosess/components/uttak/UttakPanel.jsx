@@ -6,19 +6,18 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import FadingPanel from 'sharedComponents/FadingPanel';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
 import uttaksresultatPropType from 'behandlingFelles/proptypes/uttaksresultatPropType';
 import { getUttaksresultatPerioder, getStonadskontoer } from 'behandlingFpsak/behandlingSelectors';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
+import {
+  FadingPanel, ElementWrapper, AksjonspunktHelpText, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { uttakPeriodeNavn, stonadskontoType } from 'kodeverk/uttakPeriodeType';
-import periodeResultatType from 'kodeverk/periodeResultatType';
+import { uttakPeriodeNavn, stonadskontoType } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
+import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 
 import Uttak from './Uttak';
 import styles from './uttakPanel.less';

@@ -5,8 +5,8 @@ import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinnslagDelPropType';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import { createLocationForHistorikkItems } from 'app/paths';
 import { findHendelseText } from './historikkUtils';

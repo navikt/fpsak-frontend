@@ -10,14 +10,11 @@ import {
   isBehandlingStatusReadOnly, getBehandlingStatus, getBehandlingsresultat, getBehandlingKlageVurdering,
 } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import ElementWrapper from 'sharedComponents/ElementWrapper';
-import behandlingResultatType from 'kodeverk/behandlingResultatType';
-import klageVurderingCodes from 'kodeverk/klageVurdering';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
-
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import VedtakKlageSubmitPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/klageNy/VedtakKlageSubmitPanel';
-import FadingPanel from 'sharedComponents/FadingPanel';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import { FadingPanel, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 export const VEDTAK_KLAGE_FORM_NAME = 'VEDTAK_KLAGE_FORM';
 

@@ -6,10 +6,10 @@ import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import { omit } from 'utils/objectUtils';
+import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { omit } from '@fpsak-frontend/utils';
 import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   getBehandlingRelatertTilgrensendeYtelserForAnnenForelder,
   getBehandlingRelatertTilgrensendeYtelserForSoker,
@@ -17,10 +17,10 @@ import {
   getPersonopplysning,
   getBehandlingArbeidsforhold,
 } from 'behandlingTilbakekreving/tilbakekrevingBehandlingSelectors';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
 import { behandlingForm } from 'behandlingTilbakekreving/behandlingForm';
 import withDefaultToggling from 'behandlingFelles/fakta/withDefaultToggling';
 import faktaPanelCodes from 'behandlingTilbakekreving/fakta/faktaPanelCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import FullPersonInfo from './panelBody/FullPersonInfo';
 import PersonArbeidsforholdPanel from './panelBody/arbeidsforhold/PersonArbeidsforholdPanel';
@@ -106,12 +106,12 @@ export class PersonInfoPanelImpl extends Component {
           />
           {isPrimaryParent && aksjonspunkter.length > 0
             && (
-            <>
+            <ElementWrapper>
               <VerticalSpacer twentyPx />
               <Hovedknapp mini spinner={formProps.submitting} disabled={readOnly || isBekreftButtonReadOnly || formProps.submitting}>
                 <FormattedMessage id="FullPersonInfo.Confirm" />
               </Hovedknapp>
-            </>
+            </ElementWrapper>
             )
           }
           <VerticalSpacer eightPx />

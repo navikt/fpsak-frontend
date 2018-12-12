@@ -8,17 +8,16 @@ import { Row, Column } from 'nav-frontend-grid';
 import { formPropTypes, FieldArray } from 'redux-form';
 
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
 import { getSoknad, getInntektsmeldinger, getAksjonspunkter } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
+import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import {
   required, hasValidDate, minLength, maxLength, hasValidText,
-} from 'utils/validation/validators';
-import { TextAreaField, DatepickerField } from 'form/Fields';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+} from '@fpsak-frontend/utils';
+import { TextAreaField, DatepickerField } from '@fpsak-frontend/form';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import ArbeidsgiverInfo from './ArbeidsgiverInfo';
 
 

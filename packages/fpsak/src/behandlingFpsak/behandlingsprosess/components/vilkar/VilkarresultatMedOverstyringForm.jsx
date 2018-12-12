@@ -7,27 +7,26 @@ import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
-import { isObject } from 'utils/objectUtils';
-import FadingPanel from 'sharedComponents/FadingPanel';
+import { DDMMYYYY_DATE_FORMAT, isObject } from '@fpsak-frontend/utils';
+import { FadingPanel } from '@fpsak-frontend/shared-components';
 import { getBehandlingsresultat, isBehandlingRevurderingFortsattMedlemskap, getBehandlingRevurderingAvFortsattMedlemskapFom }
   from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
-import vilkarType from 'kodeverk/vilkarType';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
-import aksjonspunktCode from 'kodeverk/aksjonspunktCodes';
-import { DDMMYYYY_DATE_FORMAT } from 'utils/formats';
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import aksjonspunktCode from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   getSelectedBehandlingspunktTitleCode, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus,
   getSelectedBehandlingspunkt, getIsSelectedBehandlingspunktOverridden, getSelectedBehandlingspunktVilkar,
   isSelectedBehandlingspunktOverrideReadOnly,
 } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
-import aksjonspunktStatus from 'kodeverk/aksjonspunktStatus';
 import OverstyrVurderingChecker from 'behandlingFpsak/behandlingsprosess/components/OverstyrVurderingChecker';
 import OverstyrConfirmationForm from 'behandlingFpsak/behandlingsprosess/components/OverstyrConfirmationForm';
 import VilkarResultPicker from 'behandlingFpsak/behandlingsprosess/components/vilkar/VilkarResultPicker';
 import OverstyrConfirmVilkarButton from 'behandlingFpsak/behandlingsprosess/components/OverstyrConfirmVilkarButton';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 
 import styles from './vilkarresultatMedOverstyringForm.less';

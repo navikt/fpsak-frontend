@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { RadioGroupField, RadioOption } from 'form/Fields';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { Column, Row } from 'nav-frontend-grid';
-import { required } from 'utils/validation/validators';
-import OAType from 'kodeverk/opptjeningAktivitetType';
-import faktaOmBeregningTilfelle from 'kodeverk/faktaOmBeregningTilfelle';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import { required } from '@fpsak-frontend/utils';
+import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { connect } from 'react-redux';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import FastsettEtterlonnSluttpakkeForm from './FastsettEtterlonnSluttpakkeForm';

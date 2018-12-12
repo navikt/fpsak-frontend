@@ -8,29 +8,27 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { Row } from 'nav-frontend-grid';
 import moment from 'moment';
 
-import FadingPanel from 'sharedComponents/FadingPanel';
-import ArrowBox from 'sharedComponents/ArrowBox';
-import { ISO_DATE_FORMAT } from 'utils/formats';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import kodeverkTyper from 'kodeverk/kodeverkTyper';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverk } from 'kodeverk/duck';
-import { DatepickerField, RadioGroupField, RadioOption } from 'form/Fields';
+import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import fpsakApi from 'data/fpsakApi';
 import {
   getBehandlingOnHoldDate, getBehandlingInnsynMottattDato, getBehandlingInnsynResultatType,
   getBehandlingInnsynVedtaksdokumentasjon, getBehandlingInnsynDokumenter,
 } from 'behandlingFpsak/behandlingSelectors';
-import VerticalSpacer from 'sharedComponents/VerticalSpacer';
-import AksjonspunktHelpText from 'sharedComponents/AksjonspunktHelpText';
-import { required, hasValidDate } from 'utils/validation/validators';
-import aksjonspunktCodes from 'kodeverk/aksjonspunktCodes';
-import { isAksjonspunktOpen } from 'kodeverk/aksjonspunktStatus';
+import {
+  FadingPanel, ArrowBox, VerticalSpacer, AksjonspunktHelpText,
+} from '@fpsak-frontend/shared-components';
+import { required, hasValidDate, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { getFilteredReceivedDocuments } from 'behandlingsupport/behandlingsupportSelectors';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
-import innsynResultatTyperKV from 'kodeverk/innsynResultatType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import innsynResultatTyperKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 import DocumentListInnsyn from './DocumentListInnsyn';
 import VedtakDocuments from './VedtakDocuments';
 

@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import behandlingPropType from 'behandlingFelles/proptypes/behandlingPropType';
-import { ISO_DATE_FORMAT } from 'utils/formats';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 import BehandlingPickerItem from './BehandlingPickerItem';
 
