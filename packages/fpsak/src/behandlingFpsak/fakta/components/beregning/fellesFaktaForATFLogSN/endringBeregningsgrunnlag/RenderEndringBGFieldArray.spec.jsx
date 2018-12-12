@@ -1,6 +1,9 @@
 import { expect } from 'chai';
 import { isRequiredMessage } from 'utils/validation/messages';
-import { skalIkkjeVereHogareEnnInntektmeldingMessage, skalVereLikFordelingMessage } from '../ValidateAndelerUtils';
+import {
+  skalIkkjeVereHogareEnnInntektmeldingMessage, skalVereLikFordelingMessage,
+  skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding,
+} from '../ValidateAndelerUtils';
 import RenderEndringBGFieldArray from './RenderEndringBGFieldArray';
 
 describe('<RenderEndringBGFieldArray>', () => {
@@ -97,9 +100,19 @@ describe('<RenderEndringBGFieldArray>', () => {
     expect(errors[0].refusjonskrav[0].id).to.equal(isRequiredMessage()[0].id);
   });
 
+  const arbeidsgiverInfo = {
+    arbeidsgiverNavn: 'Test',
+    arbeidsgiverId: '14235235235',
+    arbeidsforholdId: '82389r32fe9343tr',
+  };
+
+  const arbeidsgiverstring = 'Test (14235235235) ...43tr';
+
+
   it('skal returnerer errors for refusjonskrav når det ikkje er mottatt refusjonskrav i inntektsmelding', () => {
     const values = [];
     const andel1 = {
+      ...arbeidsgiverInfo,
       refusjonskrav: '10 000',
       fastsattBeløp: '100 000',
       belopFraInntektsmelding: 100000,
@@ -112,13 +125,16 @@ describe('<RenderEndringBGFieldArray>', () => {
     };
     values.push(andel1);
     const errors = RenderEndringBGFieldArray.validate(values);
-    expect(errors[0].refusjonskrav).to.have.length(1);
-    expect(errors[0].refusjonskrav[0].id).to.equal(skalIkkjeVereHogareEnnInntektmeldingMessage()[0].id);
+    const expected = skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverstring);
+    /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
+    expect(errors._error[0].id).to.equal(expected[0].id);
+    expect(errors._error[1].arbeidsgiver).to.equal(arbeidsgiverstring);
   });
 
   it('skal returnerer errors for refusjonskrav når refusjonskrav er 0 i inntektsmelding', () => {
     const values = [];
     const andel1 = {
+      ...arbeidsgiverInfo,
       refusjonskrav: '10 000',
       fastsattBeløp: '100 000',
       belopFraInntektsmelding: 100000,
@@ -131,8 +147,10 @@ describe('<RenderEndringBGFieldArray>', () => {
     };
     values.push(andel1);
     const errors = RenderEndringBGFieldArray.validate(values);
-    expect(errors[0].refusjonskrav).to.have.length(1);
-    expect(errors[0].refusjonskrav[0].id).to.equal(skalIkkjeVereHogareEnnInntektmeldingMessage()[0].id);
+    const expected = skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverstring);
+    /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
+    expect(errors._error[0].id).to.equal(expected[0].id);
+    expect(errors._error[1].arbeidsgiver).to.equal(arbeidsgiverstring);
   });
 
   it('skal returnerer errors for fastsattbeløp når ikkje oppgitt', () => {

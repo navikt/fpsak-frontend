@@ -50,7 +50,6 @@ describe('<EndringBereningsgrunnlagPeriodePanel>', () => {
       expect(initialValue.arbeidsforholdId).to.equal('321378huda7e2');
       expect(initialValue.arbeidsperiodeFom).to.equal('2017-01-01');
       expect(initialValue.arbeidsperiodeTom).to.equal('2018-01-01');
-      expect(initialValue.skalKunneEndreRefusjon).to.equal(true);
       expect(initialValue.harPeriodeAarsakGraderingEllerRefusjon).to.equal(true);
     });
 
@@ -61,6 +60,8 @@ describe('<EndringBereningsgrunnlagPeriodePanel>', () => {
     expect(initialValues[0].refusjonskrav).to.equal('10 000');
     expect(initialValues[0].belopFraInntektsmelding).to.equal(10000);
     expect(initialValues[0].refusjonskravFraInntektsmelding).to.equal(10000);
+    expect(initialValues[0].skalKunneEndreRefusjon).to.equal(true);
+
 
     expect(initialValues[1].andelsnr).to.equal(2);
     expect(initialValues[1].andelIArbeid).to.equal('0.00');
@@ -69,6 +70,7 @@ describe('<EndringBereningsgrunnlagPeriodePanel>', () => {
     expect(initialValues[1].refusjonskrav).to.equal('10 000');
     expect(initialValues[1].belopFraInntektsmelding).to.equal(20000);
     expect(initialValues[1].refusjonskravFraInntektsmelding).to.equal(10000);
+    expect(initialValues[1].skalKunneEndreRefusjon).to.equal(true);
 
     expect(initialValues[2].andelsnr).to.equal(3);
     expect(initialValues[2].andelIArbeid).to.equal('0 - 80');
@@ -77,6 +79,7 @@ describe('<EndringBereningsgrunnlagPeriodePanel>', () => {
     expect(initialValues[2].refusjonskrav).to.equal('0');
     expect(initialValues[2].belopFraInntektsmelding).to.equal(30000);
     expect(initialValues[2].refusjonskravFraInntektsmelding).to.equal(0);
+    expect(initialValues[2].skalKunneEndreRefusjon).to.equal(false);
 
     expect(initialValues[3].andelsnr).to.equal(4);
     expect(initialValues[3].andelIArbeid).to.equal('0 - 20');
@@ -85,5 +88,6 @@ describe('<EndringBereningsgrunnlagPeriodePanel>', () => {
     expect(initialValues[3].refusjonskrav).to.equal('0');
     expect(initialValues[3].belopFraInntektsmelding).to.equal(null);
     expect(initialValues[3].refusjonskravFraInntektsmelding).to.equal(null);
+    expect(initialValues[3].skalKunneEndreRefusjon).to.equal(false);
   });
 });
