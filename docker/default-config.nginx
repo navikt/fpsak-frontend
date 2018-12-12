@@ -1,6 +1,7 @@
 access_log off; # Handled by trafic
 error_log /dev/stdout debug;
 charset utf-8;
+client_body_buffer_size 10M; # Default er satt veldig lavt.
 lua_package_path '~/lua/?.lua;;';
 lua_shared_dict discovery 1m;
 lua_shared_dict jwks 1m;
@@ -63,13 +64,8 @@ server {
 
     add_header          X-Application-Id "${APP_NAME}:${APP_VERSION}, proxy=${APP_API_GATEWAY}, pod=${APP_HOSTNAME}";
     add_header          X-Cache-Status $upstream_cache_status;
-    # complete disable cache by default
-    add_header          Last-Modified $date_gmt;
-    add_header          Cache-Control 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
-    if_modified_since   off;
-    expires             off;
-    etag                off;
-    sendfile            off;
+
+
 
     # Lanuage files are served from disk
     location /fpsak/sprak/ {
@@ -80,14 +76,27 @@ server {
     location  "${APP_API_PATH}" {
         access_by_lua_file oidc_access.lua;
         proxy_pass "${APP_API_GATEWAY}${APP_API_PATH}";
-
+        # complete disable cache
+        add_header          Last-Modified $date_gmt;
+        add_header          Cache-Control 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
+        if_modified_since   off;
+        expires             off;
+        etag                off;
+        sendfile            off;
     }
 
     # Simple Proxy to backend middlertidig fix frem til bedre løsning kommer på plass.
     location  /fpsak/oppgaveredirect {
         access_by_lua_file oidc_access.lua;
-        proxy_pass       "${APP_API_GATEWAY}/fpsak/oppgaveredirect";
-        proxy_redirect   "~*/fpsak/#/(.+)$" "$app_baseurl/fpsak/$1";
+        proxy_pass          "${APP_API_GATEWAY}/fpsak/oppgaveredirect";
+        proxy_redirect      "~*/fpsak/#/(.+)$" "$app_baseurl/fpsak/$1";
+        # complete disable cache
+        add_header          Last-Modified $date_gmt;
+        add_header          Cache-Control 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
+        if_modified_since   off;
+        expires             off;
+        etag                off;
+        sendfile            off;
     }
     # Health check for NAIS
     location = "${APP_PATH_PREFIX}health/isAlive" {
@@ -104,7 +113,6 @@ server {
     ## All static files will be served directly.
     location ~* ^.+\.(?:css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|svg)$ {
         expires 365d;
-        add_header Cache-Control ;
         ## Set the OS file cache.
         open_file_cache max=3000 inactive=120s;
         open_file_cache_valid 45s;
@@ -120,6 +128,13 @@ server {
     # To make sure any assets can get through :)
     location "${APP_PATH_PREFIX}" {
         access_by_lua_file oidc_access.lua;
+        # complete disable cache
+        add_header          Last-Modified $date_gmt;
+        add_header          Cache-Control 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
+        if_modified_since   off;
+        expires             off;
+        etag                off;
+        sendfile            off;
         try_files $uri @rewrites;
     }
 
