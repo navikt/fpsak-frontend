@@ -3,6 +3,7 @@ import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import prt from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import featureToggle from 'app/featureToggle';
 import { hasSimuleringOn, getStatusFromSimulering } from './simuleringStatusUtleder';
 import getVedtakStatus from './vedtakStatusUtleder';
@@ -14,7 +15,7 @@ const getStatusFromUttakresultat = ({ uttaksresultat }) => {
   }
   if (uttaksresultat && uttaksresultat.perioderSøker.length > 0) {
     const oppfylt = uttaksresultat.perioderSøker.some(p => (
-      p.periodeResultatType.kode !== 'AVSLÅTT'
+      p.periodeResultatType.kode !== prt.AVSLATT
     ));
     if (oppfylt) {
       return vut.OPPFYLT;
@@ -27,7 +28,7 @@ const getStatusFromResultatstruktur = ({ resultatstruktur, uttaksresultat }) => 
   if (resultatstruktur && resultatstruktur.perioder.length > 0) {
     if (uttaksresultat && uttaksresultat.perioderSøker.length > 0) {
       const oppfylt = uttaksresultat.perioderSøker.some(p => (
-        p.periodeResultatType.kode !== 'AVSLÅTT'
+        p.periodeResultatType.kode !== prt.AVSLATT
       ));
       if (!oppfylt) {
         return vut.IKKE_OPPFYLT;
