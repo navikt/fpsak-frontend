@@ -18,7 +18,6 @@ RUN ["luarocks", "install", "lua-resty-openidc"]
 COPY docker/openidc.lua /usr/local/openresty/lualib/resty/
 COPY docker/default-config.nginx /etc/nginx/conf.d/app.conf.template
 COPY docker/oidc_access.lua /usr/local/openresty/nginx/
-COPY docker/adrum_cookie_saver.lua /usr/local/openresty/nginx/
 COPY docker/start-nginx.sh /usr/sbin/start
 RUN chmod u+x /usr/sbin/start
 
