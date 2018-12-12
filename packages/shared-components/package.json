@@ -26,6 +26,8 @@
     "nav-frontend-knapper-style": "0.3.19",
     "nav-frontend-modal": "1.0.19",
     "nav-frontend-modal-style": "0.3.23",
+    "nav-frontend-etiketter": "1.0.16",
+    "nav-frontend-etiketter-style": "0.3.14",
     "react-day-picker": "^7.2.4",
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
