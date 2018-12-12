@@ -9,7 +9,7 @@ import {
   getBehandlingStatus,
   getTotrinnskontrollArsakerReadOnly,
   isBehandlingInInnhentSoknadsopplysningerSteg,
-  isKlageBehandlingInFormkrav,
+  getBehandlingIsKlage,
 } from 'behandlingFpsak/behandlingSelectors';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { getRettigheter } from 'navAnsatt/duck';
@@ -21,10 +21,10 @@ const getSendMessageIsRelevant = createSelector(
     isBehandlingInInnhentSoknadsopplysningerSteg,
     getBehandlingIsOnHold,
     getBehandlingIsInnsyn,
-    isKlageBehandlingInFormkrav,
+    getBehandlingIsKlage,
   ],
-  (behandlingHasSoknad, behandlingIsInnhentSoknadsopplysninger, behandlingIsOnHold, behandlingIsInnsyn, isKlageBehandlingFormkrav) => (
-    (behandlingHasSoknad || behandlingIsInnhentSoknadsopplysninger || behandlingIsInnsyn || isKlageBehandlingFormkrav) && !behandlingIsOnHold
+  (behandlingHasSoknad, behandlingIsInnhentSoknadsopplysninger, behandlingIsOnHold, behandlingIsInnsyn, behandlingIsKlage) => (
+    (behandlingHasSoknad || behandlingIsInnhentSoknadsopplysninger || behandlingIsInnsyn || behandlingIsKlage) && !behandlingIsOnHold
   ),
 );
 
