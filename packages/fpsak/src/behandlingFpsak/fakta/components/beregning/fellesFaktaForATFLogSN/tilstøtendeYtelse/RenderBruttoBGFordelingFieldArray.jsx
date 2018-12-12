@@ -7,7 +7,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { getAksjonspunkter, getFaktaOmBeregning } from 'behandlingFpsak/behandlingSelectors';
 import { isBehandlingFormDirty } from 'behandlingFpsak/behandlingForm';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';

@@ -16,7 +16,7 @@ import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseTyp
 import LagreSoknadForm from 'papirsoknad/components/commonPanels/LagreSoknadPanel';
 import OmsorgOgAdopsjonPanel from 'papirsoknad/components/commonPanels/omsorgOgAdopsjon/OmsorgOgAdopsjonPanel';
 import TerminFodselDatoPanel from 'papirsoknad/components/commonPanels/fodsel/TerminFodselDatoPanel';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import RettigheterPanel, { rettighet } from '../commonPanels/rettigheter/RettigheterPanel';
 import EgenVirksomhetPanel from './virksomhet/EgenVirksomhetPanel';

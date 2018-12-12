@@ -10,7 +10,7 @@ import {
 } from '@fpsak-frontend/form';
 import { ArrowBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required, hasValidInteger } from '@fpsak-frontend/utils';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 const countrySelectValues = countryCodes => countryCodes

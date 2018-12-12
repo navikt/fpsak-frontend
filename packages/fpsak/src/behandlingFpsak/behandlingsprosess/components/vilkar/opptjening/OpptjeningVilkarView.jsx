@@ -13,7 +13,7 @@ import {
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
 import { getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';

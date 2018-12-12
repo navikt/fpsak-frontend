@@ -14,7 +14,7 @@ import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropTyp
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
 import VilkarResultPicker from 'behandlingFpsak/behandlingsprosess/components/vilkar/VilkarResultPicker';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

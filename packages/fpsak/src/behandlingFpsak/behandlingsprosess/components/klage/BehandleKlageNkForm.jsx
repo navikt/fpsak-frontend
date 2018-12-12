@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';

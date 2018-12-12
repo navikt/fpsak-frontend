@@ -13,7 +13,7 @@ import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBe
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
 import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import RegistrereVergeFaktaForm from './RegistrereVergeFaktaForm';

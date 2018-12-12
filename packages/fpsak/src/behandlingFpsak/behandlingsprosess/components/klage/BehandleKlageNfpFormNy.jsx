@@ -8,7 +8,7 @@ import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behan
 import { getBehandlingKlageVurderingResultatNFP } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import BehandleKlageFormNy from './BehandleKlageFormNy';

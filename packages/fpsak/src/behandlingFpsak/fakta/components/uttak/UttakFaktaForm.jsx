@@ -17,7 +17,7 @@ import { getInntektsmeldinger, getBehandlingVersjon } from 'behandlingFpsak/beha
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
 import { ariaCheck, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import {

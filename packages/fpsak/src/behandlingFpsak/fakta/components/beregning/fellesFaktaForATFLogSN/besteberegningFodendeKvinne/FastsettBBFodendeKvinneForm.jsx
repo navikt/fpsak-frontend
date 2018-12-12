@@ -16,7 +16,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 
 import styles from './fastsettBBFodendeKvinneForm.less';
 

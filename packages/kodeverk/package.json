@@ -6,6 +6,6 @@
   "private": true,
   "dependencies": {
   },
-  "peerDependencies": {
+  "devDependencies": {
   }
 }

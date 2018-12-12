@@ -21,7 +21,7 @@ import { getSkjaeringstidspunktForeldrepenger } from 'behandlingFpsak/behandling
 import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import { FieldArray, formPropTypes } from 'redux-form';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';

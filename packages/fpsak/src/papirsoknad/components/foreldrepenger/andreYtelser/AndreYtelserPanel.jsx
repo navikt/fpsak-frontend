@@ -10,7 +10,7 @@ import { CheckboxField } from '@fpsak-frontend/form';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
 import { ElementWrapper, BorderBox, ArrowBox } from '@fpsak-frontend/shared-components';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import RenderAndreYtelserPerioderFieldArray from './RenderAndreYtelserPerioderFieldArray';
 

@@ -12,7 +12,7 @@ import { getBehandlingVersjon, getBehandlingFastsattOpptjeningFomDate, getBehand
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   VerticalSpacer, ElementWrapper, AksjonspunktHelpText, DateLabel, FlexContainer, FlexRow, FlexColumn,

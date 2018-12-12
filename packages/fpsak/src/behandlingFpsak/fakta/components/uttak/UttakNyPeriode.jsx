@@ -25,7 +25,7 @@ import { getPersonopplysning, getAlleAndelerIForstePeriode } from 'behandlingFps
 import {
   FlexContainer, FlexRow, FlexColumn, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import uttakPeriodeType from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';

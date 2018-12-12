@@ -1675,6 +1675,7 @@ axios-mock-adapter@^1.15.0:
 axios@^0.18.0:
   version "0.18.0"
   resolved "http://registry.npmjs.org/axios/-/axios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"
+  integrity sha1-MtU+SFHv3AoRmTts0AB4nXDAUQI=
   dependencies:
     follow-redirects "^1.3.0"
     is-buffer "^1.1.5"
@@ -2324,6 +2325,7 @@ class-utils@^0.3.5:
 classnames@^2.2.6:
   version "2.2.6"
   resolved "https://registry.npmjs.org/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
+  integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
 
 clean-css@4.2.x:
   version "4.2.1"
@@ -2989,6 +2991,7 @@ dedent@^0.7.0:
 deep-diff@^0.3.5:
   version "0.3.8"
   resolved "https://registry.npmjs.org/deep-diff/-/deep-diff-0.3.8.tgz#c01de63efb0eec9798801d40c7e0dae25b582c84"
+  integrity sha1-wB3mPvsO7JeYgB1Ax+Da4ltYLIQ=
 
 deep-eql@^3.0.1:
   version "3.0.1"
@@ -3184,6 +3187,7 @@ dom-serializer@0, dom-serializer@~0.1.0:
 dom-walk@^0.1.0:
   version "0.1.1"
   resolved "https://registry.npmjs.org/dom-walk/-/dom-walk-0.1.1.tgz#672226dc74c8f799ad35307df936aba11acd6018"
+  integrity sha1-ZyIm3HTI95mtNTB9+TaroRrNYBg=
 
 domain-browser@^1.1.1:
   version "1.2.0"
@@ -3304,6 +3308,7 @@ elliptic@^6.0.0:
 emitter-component@^1.1.1:
   version "1.1.1"
   resolved "https://registry.npmjs.org/emitter-component/-/emitter-component-1.1.1.tgz#065e2dbed6959bf470679edabeaf7981d1003ab6"
+  integrity sha1-Bl4tvtaVm/RwZ57avq95gdEAOrY=
 
 emoji-regex@^6.5.1:
   version "6.5.1"
@@ -3431,6 +3436,7 @@ es-to-primitive@^1.1.1:
 es6-error@^4.0.1, es6-error@^4.1.1:
   version "4.1.1"
   resolved "https://registry.npmjs.org/es6-error/-/es6-error-4.1.1.tgz#9e3af407459deed47e9a91f9b885a84eb05c561d"
+  integrity sha512-Um/+FxMr9CISWh0bi5Zv0iOD+4cFh5qLeks1qhAopKVAJw3drgKbKySikp7wGhDL0HPeaja0P5ULZrxLkniUVg==
 
 es6-promise@^4.0.3:
   version "4.2.5"
@@ -3743,6 +3749,7 @@ execa@^1.0.0:
 exenv@^1.2.0:
   version "1.2.2"
   resolved "https://registry.npmjs.org/exenv/-/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
+  integrity sha1-KueOhdmJQVhnCwPUe+wfA72Ru50=
 
 expand-brackets@^2.1.4:
   version "2.1.4"
@@ -3863,6 +3870,7 @@ fast-json-stable-stringify@^2.0.0:
 fast-levenshtein@^2.0.6, fast-levenshtein@~2.0.4:
   version "2.0.6"
   resolved "https://registry.npmjs.org/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
+  integrity sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
 
 fastparse@^1.1.1:
   version "1.1.2"
@@ -4019,6 +4027,7 @@ flush-write-stream@^1.0.0:
 follow-redirects@^1.0.0, follow-redirects@^1.3.0:
   version "1.5.10"
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.5.10.tgz#7b7a9f9aea2fdff36786a94ff643ed07f4ff5e2a"
+  integrity sha512-0V5l4Cizzvqt5D44aTXbFZz+FtyXV1vrDN6qrelxtfYQKW0KO0W2T/hkE8xvGa/540LkZlkaUjO4ailYTFtHVQ==
   dependencies:
     debug "=3.1.0"
 
@@ -4266,6 +4275,7 @@ global-modules-path@^2.3.0:
 global@^4.3.0:
   version "4.3.2"
   resolved "https://registry.npmjs.org/global/-/global-4.3.2.tgz#e76989268a6c74c38908b1305b10fc0e394e9d0f"
+  integrity sha1-52mJJopsdMOJCLEwWxD8DjlOnQ8=
   dependencies:
     min-document "^2.19.0"
     process "~0.5.1"
@@ -4341,6 +4351,7 @@ growl@1.10.5:
 hammerjs@^2.0.6, hammerjs@^2.0.8:
   version "2.0.8"
   resolved "https://registry.npmjs.org/hammerjs/-/hammerjs-2.0.8.tgz#04ef77862cff2bb79d30f7692095930222bf60f1"
+  integrity sha1-BO93hiz/K7edMPdpIJWTAiK/YPE=
 
 handle-thing@^1.2.5:
   version "1.2.5"
@@ -5337,6 +5348,7 @@ just-extend@^3.0.0:
 keycharm@^0.2.0:
   version "0.2.0"
   resolved "https://registry.npmjs.org/keycharm/-/keycharm-0.2.0.tgz#fa6ea2e43b90a68028843d27f2075d35a8c3e6f9"
+  integrity sha1-+m6i5DuQpoAohD0n8gddNajD5vk=
 
 killable@^1.0.0:
   version "1.0.1"
@@ -5540,6 +5552,7 @@ locate-path@^3.0.0:
 lodash-es@^4.17.10:
   version "4.17.11"
   resolved "https://registry.npmjs.org/lodash-es/-/lodash-es-4.17.11.tgz#145ab4a7ac5c5e52a3531fb4f310255a152b4be0"
+  integrity sha512-DHb1ub+rMjjrxqlB3H56/6MXtm1lSksDp2rA2cNWjG8mlDUYFhUj3Di2Zn5IwSU87xLv8tNIQ7sSwE/YOX/D/Q==
 
 lodash._reinterpolate@~3.0.0:
   version "3.0.0"
@@ -5609,6 +5622,7 @@ lodash.templatesettings@^4.0.0:
 lodash.throttle@^4.1.1:
   version "4.1.1"
   resolved "https://registry.npmjs.org/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
+  integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
 
 lodash.uniq@^4.5.0:
   version "4.5.0"
@@ -5868,6 +5882,7 @@ mimic-response@^1.0.0:
 min-document@^2.19.0:
   version "2.19.0"
   resolved "https://registry.npmjs.org/min-document/-/min-document-2.19.0.tgz#7bd282e3f5842ed295bb748cdd9f1ffa2c824685"
+  integrity sha1-e9KC4/WELtKVu3SM3Z8f+iyCRoU=
   dependencies:
     dom-walk "^0.1.0"
 
@@ -6013,6 +6028,7 @@ modify-values@^1.0.0:
 moment@^2.18.1, moment@^2.22.2:
   version "2.22.2"
   resolved "https://registry.npmjs.org/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
+  integrity sha1-PCV/mDn8DpP/UxSWMiOeuQeD/2Y=
 
 moo@^0.4.3:
   version "0.4.3"
@@ -6088,124 +6104,154 @@ natural-compare@^1.4.0:
 nav-frontend-alertstriper-style@0.2.48:
   version "0.2.48"
   resolved "https://registry.npmjs.org/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-0.2.48.tgz#6db3ad71836c4745f06f7b397979eaa050e51060"
+  integrity sha512-UyfPJyr67Hf1JoY8nXjd6CQBdiFUM0AOaDFxJUp95a62kcoa/ChSHNYJDTFKy6Oc4jKVDA3HdlUASP+hHW8P6w==
 
 nav-frontend-alertstriper@1.0.27:
   version "1.0.27"
   resolved "https://registry.npmjs.org/nav-frontend-alertstriper/-/nav-frontend-alertstriper-1.0.27.tgz#6733bece93edc52c753ed1a7e44492a38695bbf4"
+  integrity sha512-LQhHGXa5dd+zhaz9+PG4cCi4Aa/r1EFCCwoCObq9gGFadgnCvqujcQsguRcfayR+5oZ0a1nqO5TokWAzJZJDKg==
 
 nav-frontend-chevron-style@0.3.4:
   version "0.3.4"
   resolved "https://registry.npmjs.org/nav-frontend-chevron-style/-/nav-frontend-chevron-style-0.3.4.tgz#e6b0d5e9ddd87af988e4e1a44fc7fcb1fbb70994"
+  integrity sha512-pAWxabxXujZhwgYUvkWyuuLEDbyYP52VmA0jeXicJT6vfxHewkycMIgP4TqPPrHtPyNx2SVEa+RPK+OiPMcRPw==
 
 nav-frontend-chevron@1.0.6:
   version "1.0.6"
   resolved "https://registry.npmjs.org/nav-frontend-chevron/-/nav-frontend-chevron-1.0.6.tgz#e83825609b8b2f0729b4ea2e8df27f8dc2c66147"
+  integrity sha512-arSXmBHMApMAe1+uO89EDeKlEOChCMHK0FRSQuiIHeDqmOwFnW3UEOn+Gye7XK24+Q2c4EHpujw34JiIA9G18A==
 
 nav-frontend-core@4.0.5, nav-frontend-core@^4.0.2:
   version "4.0.5"
   resolved "https://registry.npmjs.org/nav-frontend-core/-/nav-frontend-core-4.0.5.tgz#309c9de6a5146e8e93b3f52d4fc42cc309acdca1"
+  integrity sha1-MJyd5qUUbo6Ts/UtT8Qswwms3KE=
 
 nav-frontend-ekspanderbartpanel-style@0.3.15:
   version "0.3.15"
   resolved "https://registry.npmjs.org/nav-frontend-ekspanderbartpanel-style/-/nav-frontend-ekspanderbartpanel-style-0.3.15.tgz#571f40d97c2321a2611f19f23dd415e27bcd64c9"
+  integrity sha512-ndW069xdraAjDwphDBMJ3W5YjQu2G6DcnbtEifkLYR82eK5gCADQ0jpEV1r3oPlhF9b38TPi3Fq2SgUdHDb9Hg==
 
 nav-frontend-ekspanderbartpanel@1.0.17:
   version "1.0.17"
   resolved "https://registry.npmjs.org/nav-frontend-ekspanderbartpanel/-/nav-frontend-ekspanderbartpanel-1.0.17.tgz#d2a7c8a30045e70f1b817ba4a86e24776c154363"
+  integrity sha512-hlv2oUtaX8ver/klmJzrRTHvJlUpD+Cq/5uIpdbt7pZl8CHUZn5Y4lOaN0DbCfoY5X+uAF2vsv4S9w6F3WUdhw==
 
 nav-frontend-etiketter-style@0.3.14:
   version "0.3.14"
   resolved "https://registry.npmjs.org/nav-frontend-etiketter-style/-/nav-frontend-etiketter-style-0.3.14.tgz#d02538c7e171ccdb8a0df9842e3ea46ba8ae69f8"
+  integrity sha512-aZ66ZfcZ3iW58+px9W6UDLfHRbF+fxa01U4LrvzfNJhzf+qnjTrlbvYWVRTEMyI9QizWD/zc4AoXUJuVQS2MUw==
 
 nav-frontend-etiketter@1.0.16:
   version "1.0.16"
   resolved "https://registry.npmjs.org/nav-frontend-etiketter/-/nav-frontend-etiketter-1.0.16.tgz#337d099649debd5c5d35d07da16beed1f40b4814"
+  integrity sha512-8GyDfnty1ebNzXk1vws//l4HInDvEfu/brFKDXtfZemmJSHp7a+J1owjEpm/KbQEg7xMN8nqrbQi8FHE1QESYA==
 
 nav-frontend-grid-style@0.2.17:
   version "0.2.17"
   resolved "https://registry.npmjs.org/nav-frontend-grid-style/-/nav-frontend-grid-style-0.2.17.tgz#ac57c31133caec313463e4f2b710b3157ba2600d"
+  integrity sha512-QBsNV9Jf5dyCai0eHRDvJr8ynKwLyxzU/Dgs0TaXyTLTf64L0PAiwMsFQUpMul/1AcwlkOsM5UJOt/KMRJduiQ==
 
 nav-frontend-grid@1.0.17:
   version "1.0.17"
   resolved "https://registry.npmjs.org/nav-frontend-grid/-/nav-frontend-grid-1.0.17.tgz#d8c4b2a4dda54bea3c705e01f0ae0137a7680c99"
+  integrity sha512-Sv8qAUepbDm99GzxC4hxUnOCmH31K2nvQS7OJ5KplYAqjP7CKYtt6rR0DWKfrfk2URdz8M90I6Jkq1DPwdhgSw==
 
 nav-frontend-ikoner-assets@0.2.29:
   version "0.2.29"
   resolved "https://registry.npmjs.org/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-0.2.29.tgz#32435457f8a51086de7d426212c60d0e7ba36934"
+  integrity sha512-7NSzLzirisdzm8iMhFEM2zZ5HVMsrG+HP4FFnTRkX73xFS08IFCTHSTPl2BsWd2X66JUXYZNfTRzQchFox2eBw==
 
 nav-frontend-js-utils@1.0.6:
   version "1.0.6"
   resolved "https://registry.npmjs.org/nav-frontend-js-utils/-/nav-frontend-js-utils-1.0.6.tgz#e3320dffd377239ccfaf22da7f4886d3b79303df"
+  integrity sha512-d9aOUnIREijWV1454WwHLnz4bz3qD1qAPKrH2xQDruBFkKJRoyidzW+aLTMABKe9OeCpEIq2HOkMPbB2v6mpEw==
 
 nav-frontend-knapper-style@0.3.19:
   version "0.3.19"
   resolved "https://registry.npmjs.org/nav-frontend-knapper-style/-/nav-frontend-knapper-style-0.3.19.tgz#d1ae0ff6e7cfec339dc794ec0e193ca3c3a3d2f6"
+  integrity sha512-S1yQb/Bb57vu6amyoaRxjosqAGAisoxzURhBXKO31PnG4CoV2i4YTQ4b+lJRGrhCwvPFrtUt0fGuEoWLng8BvQ==
 
 nav-frontend-knapper@1.0.21:
   version "1.0.21"
   resolved "https://registry.npmjs.org/nav-frontend-knapper/-/nav-frontend-knapper-1.0.21.tgz#71fe041ec27b758cf91e7c6b10a0c6f93346d518"
+  integrity sha512-fe4YAYTCufZ7C7O71XcbjymKi1Cr5Z4oJguklFKBEPfXMorMd7G/mMjnCDRi2/2hO1u7jdB/e6OKlSC8PTcmTg==
 
 nav-frontend-lenker-style@0.2.16:
   version "0.2.16"
   resolved "https://registry.npmjs.org/nav-frontend-lenker-style/-/nav-frontend-lenker-style-0.2.16.tgz#130e233529dabcaccd5f8ca6265fd1386b67f8fa"
+  integrity sha512-XrlQXOJv1U81EQ1azD33TuHUNr4xsMgAffvs//LzgachMxYjMZv0F+dtPMlCQfJjOZhL93r4PyaaWAHCcDo4Yw==
 
 nav-frontend-lukknapp-style@0.2.16:
   version "0.2.16"
   resolved "https://registry.npmjs.org/nav-frontend-lukknapp-style/-/nav-frontend-lukknapp-style-0.2.16.tgz#d7057337f085f100a1781351185dcd8c77507fea"
+  integrity sha512-PE19k8/mHXerthw0+1UJxyQnfWF1yxfDDkbt4qbD4P+J0vwJl6o14xBqKD4kX4mtpf0a4KSh+919UHtaAVqGww==
 
 nav-frontend-lukknapp@1.0.16:
   version "1.0.16"
   resolved "https://registry.npmjs.org/nav-frontend-lukknapp/-/nav-frontend-lukknapp-1.0.16.tgz#0c7668254d972a48cc4d98deee6e781b719d4a72"
+  integrity sha512-KUgA0QgG5NQ1ZpeZlTbimgcCNJXr6CHEaT8xVDBSJMW4jAo3otHGCLTuii2EKceERFZS//Gdu62/HR3mr7ypRQ==
 
 nav-frontend-modal-style@0.3.23:
   version "0.3.23"
   resolved "https://registry.npmjs.org/nav-frontend-modal-style/-/nav-frontend-modal-style-0.3.23.tgz#913184fe7e94540414cad91e052308a934afbaac"
+  integrity sha512-swn2YHBlcOEvdoV/M4MEGZVAgoErQAg6m+2hFQkDlVJc63nGu4Mh55iFCpJl7kR8vKEQofRM29sW3fOWEce3dg==
 
 nav-frontend-modal@1.0.19:
   version "1.0.19"
   resolved "https://registry.npmjs.org/nav-frontend-modal/-/nav-frontend-modal-1.0.19.tgz#672fbd8bf056935172dcce5bc148e7afa451ef10"
+  integrity sha512-b5zn2tomYsvPw25akgzl8v42Lqjq1uJ8iEVcdjF8DOZMJ2fq6cFAGm9i7aLABco8cOwB/kuIDPCeYx/BuLIEOA==
 
 nav-frontend-paneler-style@0.3.11:
   version "0.3.11"
   resolved "https://registry.npmjs.org/nav-frontend-paneler-style/-/nav-frontend-paneler-style-0.3.11.tgz#bec1af552cfa921ca0bf4898dbaf1c377ab4b31a"
+  integrity sha512-GXvUieEe2wTPRscnQyMOOumNEHv17+Uoc0wlL9qnVrGdbGMZNADwvPE39oX5y5ddEW69Zxu7knU6RK6yvY2Irg==
 
 nav-frontend-paneler@1.0.10:
   version "1.0.10"
   resolved "https://registry.npmjs.org/nav-frontend-paneler/-/nav-frontend-paneler-1.0.10.tgz#dadcb256c2e98b7935b1ae8c325843c73bec44dc"
+  integrity sha512-rwYjaEYTQwhOF24/WjuqGSRQh9svEaUgKB7Sp0y2/RGefjXlauGRjcyKmrjXXIlqq+mQn9JVdEIElxIy/JCQeA==
 
 nav-frontend-skjema-style@1.0.23:
   version "1.0.23"
   resolved "https://registry.npmjs.org/nav-frontend-skjema-style/-/nav-frontend-skjema-style-1.0.23.tgz#8549d97a091247d56411433b6fe1ca66976c2f20"
+  integrity sha512-Wxe4qvAmCiPizVodiqF3xCi7CTFIbA6jyOwc472+gUNQIN/1ScIgnMPE67CFGt8m+LuXlLK978jEw1HqZSzVgA==
 
 nav-frontend-skjema@1.0.42:
   version "1.0.42"
   resolved "https://registry.npmjs.org/nav-frontend-skjema/-/nav-frontend-skjema-1.0.42.tgz#ce5d892220801ce961beeb84a0e07293595629b5"
+  integrity sha512-I9/BjND772KESZO9AI0GaMOWzjF+Vfq9DQ0TKcxJfZULIkMJsFkwcdfXkCfnOXT74oPwDGPEyOTunWw49OWz1A==
 
 nav-frontend-snakkeboble-style@0.2.15:
   version "0.2.15"
   resolved "https://registry.npmjs.org/nav-frontend-snakkeboble-style/-/nav-frontend-snakkeboble-style-0.2.15.tgz#431e5b19493e4240cf34c01e792678aaaa8d2505"
+  integrity sha512-RVq7u2IKy1RtYmmE6pP5m071UrnWH9zuOJ3wxgBhkILjNleZRbcSVN2R0PNQE+hHaYluxNo3qvHlxIBr4z1sqg==
 
 nav-frontend-snakkeboble@1.0.21:
   version "1.0.21"
   resolved "https://registry.npmjs.org/nav-frontend-snakkeboble/-/nav-frontend-snakkeboble-1.0.21.tgz#014c811621d92b1fe4daa92fce8ea2be29f90f82"
+  integrity sha512-lluok7i8U83efVEtze5Teb+s3nJ0spk44QfijPjxyLc2xTZFBD3eCFuF8GNoADB0QeLrU4RSDWSRzZyTW9dSZQ==
 
 nav-frontend-spinner-style@0.2.5:
   version "0.2.5"
   resolved "https://registry.npmjs.org/nav-frontend-spinner-style/-/nav-frontend-spinner-style-0.2.5.tgz#c782c63589776e768a45d6049047b1a60b6805be"
+  integrity sha512-PWSfscmNMbrnXRcXQUgBquU5479bNmO/sw3IwML6s6K/qyEYggRvJdGCbBEYyxXmoeDDjXGd2tkIVy5gja387A==
 
 nav-frontend-spinner@1.0.12:
   version "1.0.12"
   resolved "https://registry.npmjs.org/nav-frontend-spinner/-/nav-frontend-spinner-1.0.12.tgz#9e0e51069a06730ac9e95491894866ca3937260b"
+  integrity sha512-r2q7HCZlCuyVfOlJjOxlA3A1QpsFmq3r3U2Zxu/rHTVhgE0oS1rtr5btTmdRVuIugQwYkZv2Wg/VCvBLOvL1Lw==
 
 nav-frontend-typografi-style@1.0.10:
   version "1.0.10"
   resolved "https://registry.npmjs.org/nav-frontend-typografi-style/-/nav-frontend-typografi-style-1.0.10.tgz#bc67c16c8956198726844c1d53c5af3a0954af89"
+  integrity sha512-A3QUFJmyHEATKfr1wnsHLcQu/haa3j07ILoBcX0EmqQgvF0ey7ipMjFKal8ckOSMYWJuzqK7nlTBdFPqZvE6Vw==
   dependencies:
     nav-frontend-core "^4.0.2"
 
 nav-frontend-typografi@2.0.6:
   version "2.0.6"
   resolved "https://registry.npmjs.org/nav-frontend-typografi/-/nav-frontend-typografi-2.0.6.tgz#1dff22b7a6e75aff33b22408fb0a2cbc015a56df"
+  integrity sha512-xaPUqbcpi25Tpomw6TBXnj3Z+sSQetNTMtCQWeIdtHMU6kQxNnNRpmjL+uZqSo29e+aXRSVUquYLyZqcOUbYvA==
 
 nearley@^2.7.10:
   version "2.15.1"
@@ -6962,6 +7008,7 @@ pbkdf2@^3.0.3:
 performance-now@^0.2.0:
   version "0.2.0"
   resolved "https://registry.npmjs.org/performance-now/-/performance-now-0.2.0.tgz#33ef30c5c77d4ea21c5a53869d91b56d8f2555e5"
+  integrity sha1-M+8wxcd9TqIcWlOGnZG1bY8lVeU=
 
 performance-now@^2.1.0:
   version "2.1.0"
@@ -7338,6 +7385,7 @@ process@^0.11.10:
 process@~0.5.1:
   version "0.5.2"
   resolved "https://registry.npmjs.org/process/-/process-0.5.2.tgz#1638d8a8e34c2f440a91db95ab9aeb677fc185cf"
+  integrity sha1-FjjYqONML0QKkduVq5rrZ3/Bhc8=
 
 progress@^2.0.0:
   version "2.0.1"
@@ -7376,6 +7424,7 @@ prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.1, prop-types@^15.6.2:
 propagating-hammerjs@^1.4.6:
   version "1.4.6"
   resolved "https://registry.npmjs.org/propagating-hammerjs/-/propagating-hammerjs-1.4.6.tgz#fed00e9b00767ffd42d14f5b531bc493eb672e37"
+  integrity sha1-/tAOmwB2f/1C0U9bUxvEk+tnLjc=
   dependencies:
     hammerjs "^2.0.6"
 
@@ -7539,12 +7588,14 @@ rc@^1.2.7:
 react-collapse@^4.0.3:
   version "4.0.3"
   resolved "https://registry.npmjs.org/react-collapse/-/react-collapse-4.0.3.tgz#b96de959ed0092a43534630b599a4753dd76d543"
+  integrity sha512-OO4NhtEqFtz+1ma31J1B7+ezdRnzHCZiTGSSd/Pxoks9hxrZYhzFEddeYt05A/1477xTtdrwo7xEa2FLJyWGCQ==
   dependencies:
     prop-types "^15.5.8"
 
 react-day-picker@^7.2.4:
   version "7.2.4"
   resolved "https://registry.npmjs.org/react-day-picker/-/react-day-picker-7.2.4.tgz#3c3bea7aa1910bef7bad17f25ff15cd26a7d1848"
+  integrity sha512-LaePKijvAdXTrQhTyU7XfxxD5NQIFb4FH4vr1T862xNtmncoS8jZLliyHieMHNhZZ8RJU1pruqoQzkZQ05646w==
   dependencies:
     prop-types "^15.6.2"
 
@@ -7564,6 +7615,7 @@ react-dom@^16.6.3:
 react-hot-loader@^4.3.12:
   version "4.3.12"
   resolved "https://registry.npmjs.org/react-hot-loader/-/react-hot-loader-4.3.12.tgz#0d56688884e7330c63a00a17217866280616b07a"
+  integrity sha512-GMM4TsqUVss2QPe+Y33NlgydA5/+7tAVQxR0rZqWvBpapM8JhD7p6ymMwSZzr5yxjoXXlK/6P6qNQBOqm1dqdg==
   dependencies:
     fast-levenshtein "^2.0.6"
     global "^4.3.0"
@@ -7591,8 +7643,9 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
 react-modal@^3.6.1:
-  version "3.6.1"
-  resolved "https://registry.npmjs.org/react-modal/-/react-modal-3.6.1.tgz#54d27a1ec2b493bbc451c7efaa3557b6af82332d"
+  version "3.7.1"
+  resolved "https://registry.npmjs.org/react-modal/-/react-modal-3.7.1.tgz#342ed170133d0557e6c3e6fc40195bc45c8f09c3"
+  integrity sha512-eSgotXkqOCXi0b27AwLCoJ8yqLepKnbZdMp/zfUmZPnMNoe39pDT0mbAPq9rp+TToqM5GUTv8C36Cuja+ThbhA==
   dependencies:
     exenv "^1.2.0"
     prop-types "^15.5.10"
@@ -7602,6 +7655,7 @@ react-modal@^3.6.1:
 react-motion@^0.5.2:
   version "0.5.2"
   resolved "https://registry.npmjs.org/react-motion/-/react-motion-0.5.2.tgz#0dd3a69e411316567927917c6626551ba0607316"
+  integrity sha512-9q3YAvHoUiWlP3cK0v+w1N5Z23HXMj4IF4YuvjvWegWqNPfLXsOBE/V7UvQGpXxHFKRQQcNcVQE31g9SB/6qgQ==
   dependencies:
     performance-now "^0.2.0"
     prop-types "^15.5.8"
@@ -7622,6 +7676,7 @@ react-redux@^5.1.1:
 react-router-dom@^4.3.1:
   version "4.3.1"
   resolved "https://registry.npmjs.org/react-router-dom/-/react-router-dom-4.3.1.tgz#4c2619fc24c4fa87c9fd18f4fb4a43fe63fbd5c6"
+  integrity sha512-c/MlywfxDdCp7EnB7YfPMOfMD3tOtIjrQlj/CKfNMBxdmpJP8xcz5P/UAFn3JbnQCNUxsHyVVqllF9LhgVyFCA==
   dependencies:
     history "^4.7.2"
     invariant "^2.2.4"
@@ -7633,6 +7688,7 @@ react-router-dom@^4.3.1:
 react-router@^4.3.1:
   version "4.3.1"
   resolved "https://registry.npmjs.org/react-router/-/react-router-4.3.1.tgz#aada4aef14c809cb2e686b05cee4742234506c4e"
+  integrity sha512-yrvL8AogDh2X42Dt9iknk4wF4V8bWREPirFfS9gLU1huk6qK41sg7Z/1S81jjTrGHxa3B8R3J6xIkDAA6CVarg==
   dependencies:
     history "^4.7.2"
     hoist-non-react-statics "^2.5.0"
@@ -7654,6 +7710,7 @@ react-test-renderer@^16.0.0-0, react-test-renderer@^16.6.3:
 react-visjs-timeline@^1.5.0:
   version "1.5.0"
   resolved "https://registry.npmjs.org/react-visjs-timeline/-/react-visjs-timeline-1.5.0.tgz#4f6769edc90c29494a2561791be7576d11e6eb00"
+  integrity sha1-T2dp7ckMKUlKJWF5G+dXbRHm6wA=
   dependencies:
     lodash "^4.17.4"
 
@@ -7840,6 +7897,7 @@ reduce-function-call@^1.0.1:
 redux-form@^7.4.2:
   version "7.4.2"
   resolved "https://registry.npmjs.org/redux-form/-/redux-form-7.4.2.tgz#d6061088fb682eb9fc5fb9749bd8b102f03154b0"
+  integrity sha512-QxC36s4Lelx5Cr8dbpxqvl23dwYOydeAX8c6YPmgkz/Dhj053C16S2qoyZN6LO6HJ2oUF00rKsAyE94GwOUhFA==
   dependencies:
     es6-error "^4.1.1"
     hoist-non-react-statics "^2.5.4"
@@ -7853,6 +7911,7 @@ redux-form@^7.4.2:
 redux-logger@^3.0.6:
   version "3.0.6"
   resolved "https://registry.npmjs.org/redux-logger/-/redux-logger-3.0.6.tgz#f7555966f3098f3c88604c449cf0baf5778274bf"
+  integrity sha1-91VZZvMJjzyIYExEnPC69XeCdL8=
   dependencies:
     deep-diff "^0.3.5"
 
@@ -7865,10 +7924,12 @@ redux-mock-store@^1.5.3:
 redux-thunk@^2.3.0:
   version "2.3.0"
   resolved "https://registry.npmjs.org/redux-thunk/-/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
+  integrity sha512-km6dclyFnmcvxhAcrQV2AkZmPQjzPDjgVlQtR0EQjxZPyJ0BnMf3in1ryuR8A2qU0HldVRfxYXbFSKlI3N7Slw==
 
 redux@^4.0.1:
   version "4.0.1"
   resolved "https://registry.npmjs.org/redux/-/redux-4.0.1.tgz#436cae6cc40fbe4727689d7c8fae44808f1bfef5"
+  integrity sha512-R7bAtSkk7nY6O/OYMVR9RiBI+XghjF9rlbl5806HJbQph0LJVHZrU5oaO4q70eUKiqMRqm4y07KLTlMZ2BlVmg==
   dependencies:
     loose-envify "^1.4.0"
     symbol-observable "^1.2.0"
@@ -8050,6 +8111,7 @@ requires-port@^1.0.0:
 reselect@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/reselect/-/reselect-4.0.0.tgz#f2529830e5d3d0e021408b246a206ef4ea4437f7"
+  integrity sha512-qUgANli03jjAyGlnbYVAV5vvnOmJnODyABz51RdBN7M4WaVu8mecZWgyQNkG8Yqe3KRGRt0l4K4B3XVEULC4CA==
 
 resolve-cwd@^2.0.0:
   version "2.0.0"
@@ -8301,6 +8363,7 @@ sha.js@^2.4.0, sha.js@^2.4.8:
 shallowequal@^1.0.2:
   version "1.1.0"
   resolved "https://registry.npmjs.org/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
+  integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
 
 shebang-command@^1.2.0:
   version "1.2.0"
@@ -8741,6 +8804,7 @@ svgo@^0.7.0:
 symbol-observable@^1.2.0:
   version "1.2.0"
   resolved "https://registry.npmjs.org/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
+  integrity sha512-e900nM8RRtGhlV36KGEU9k65K3mPb1WV70OdjfxlG2EAuM1noi/E/BaW/uMhL7bPEssK8QV57vN3esixjUvcXQ==
 
 symbol-tree@^3.2.2:
   version "3.2.2"
@@ -9239,6 +9303,7 @@ verror@1.10.0:
 vis@^4.21.0:
   version "4.21.0"
   resolved "https://registry.npmjs.org/vis/-/vis-4.21.0.tgz#dd71638bff7f6495d00bc9f40c253526133ded6b"
+  integrity sha1-3XFji/9/ZJXQC8n0DCU1JhM97Ws=
   dependencies:
     emitter-component "^1.1.1"
     hammerjs "^2.0.8"
@@ -9275,6 +9340,7 @@ warning@^3.0.0:
 warning@^4.0.1:
   version "4.0.2"
   resolved "https://registry.npmjs.org/warning/-/warning-4.0.2.tgz#aa6876480872116fa3e11d434b0d0d8d91e44607"
+  integrity sha512-wbTp09q/9C+jJn4KKJfJfoS6VleK/Dti0yqWSm6KMvJ4MRCXFQNapHuJXutJIrWV0Cf4AhTdeIe4qdKHR1+Hug==
   dependencies:
     loose-envify "^1.0.0"
 
@@ -9545,10 +9611,6 @@ xmlchars@^1.3.1:
 xregexp@4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/xregexp/-/xregexp-4.0.0.tgz#e698189de49dd2a18cc5687b05e17c8e43943020"
-
-xregexp@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.npmjs.org/xregexp/-/xregexp-4.2.0.tgz#33f09542b0d7cabed46728eeacac4d5bd764ccf5"
 
 xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.1"

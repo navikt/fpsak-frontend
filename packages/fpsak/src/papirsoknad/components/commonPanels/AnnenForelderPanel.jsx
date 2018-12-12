@@ -15,7 +15,7 @@ import {
 } from '@fpsak-frontend/utils';
 import { BorderBox, ElementWrapper } from '@fpsak-frontend/shared-components';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
 

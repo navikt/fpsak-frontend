@@ -12,7 +12,7 @@ import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behan
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import fpsakApi from 'data/fpsakApi';
 import {

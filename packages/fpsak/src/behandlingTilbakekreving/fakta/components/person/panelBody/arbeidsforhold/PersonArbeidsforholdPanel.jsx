@@ -12,7 +12,7 @@ import arbeidsforholdPropType from 'behandlingFelles/proptypes/arbeidsforholdPro
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingTilbakekreving/behandlingForm';
 import FaktaGruppe from 'behandlingTilbakekreving/fakta/components/FaktaGruppe';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

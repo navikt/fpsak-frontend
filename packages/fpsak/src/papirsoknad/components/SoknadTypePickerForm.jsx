@@ -20,7 +20,7 @@ import SoknadData from 'papirsoknad/SoknadData';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 

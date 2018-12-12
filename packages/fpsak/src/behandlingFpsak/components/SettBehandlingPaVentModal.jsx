@@ -13,7 +13,7 @@ import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import {
   ariaCheck, dateAfterOrEqualToToday, hasValidDate, required,
 } from '@fpsak-frontend/utils';
-import { getKodeverk, getKodeverkReceived } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk, getKodeverkReceived } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 

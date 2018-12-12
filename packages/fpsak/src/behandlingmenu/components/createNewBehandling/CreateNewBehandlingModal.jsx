@@ -15,7 +15,7 @@ import { required } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 
 import styles from './createNewBehandlingModal.less';
 

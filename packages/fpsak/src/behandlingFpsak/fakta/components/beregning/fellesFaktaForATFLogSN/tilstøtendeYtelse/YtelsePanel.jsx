@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import relatertYtelseType from '@fpsak-frontend/kodeverk/src/relatertYtelseType';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 

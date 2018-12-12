@@ -14,7 +14,7 @@ import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/beh
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
 import VilkarResultPicker from 'behandlingFpsak/behandlingsprosess/components/vilkar/VilkarResultPicker';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';

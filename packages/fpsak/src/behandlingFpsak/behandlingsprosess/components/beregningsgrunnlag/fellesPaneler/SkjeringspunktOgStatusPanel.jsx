@@ -10,7 +10,7 @@ import {
   getSkjæringstidspunktBeregning,
   getTilstøtendeYtelse,
 } from 'behandlingFpsak/behandlingSelectors';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 

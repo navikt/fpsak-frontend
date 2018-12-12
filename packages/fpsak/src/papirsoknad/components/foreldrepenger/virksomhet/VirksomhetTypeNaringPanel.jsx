@@ -8,7 +8,7 @@ import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-component
 import { CheckboxField } from '@fpsak-frontend/form';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
 import naringsvirksomhetType from '@fpsak-frontend/kodeverk/src/naringsvirksomhetType';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import PropTypes from 'prop-types';
 

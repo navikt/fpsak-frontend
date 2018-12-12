@@ -24,7 +24,7 @@ import requireProps from 'app/data/requireProps';
 import { getNavAnsatt } from 'navAnsatt/duck';
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';
 import ToTrinnsForm from './components/ToTrinnsForm';

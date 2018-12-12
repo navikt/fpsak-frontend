@@ -17,7 +17,7 @@ import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import {
   ElementWrapper, Table, TableRow, TableColumn, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';

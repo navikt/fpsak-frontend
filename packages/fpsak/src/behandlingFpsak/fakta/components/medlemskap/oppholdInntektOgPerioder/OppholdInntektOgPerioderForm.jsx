@@ -16,7 +16,7 @@ import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
 import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getFagsakPerson } from 'fagsak/fagsakSelectors';
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';

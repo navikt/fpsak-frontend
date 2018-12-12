@@ -11,7 +11,7 @@ import { isRequiredMessage } from '@fpsak-frontend/utils';
 import SoknadData from 'papirsoknad/SoknadData';
 import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 import UtenlandsOppholdField from './UtenlandsOppholdField';

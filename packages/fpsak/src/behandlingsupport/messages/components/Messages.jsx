@@ -15,7 +15,7 @@ import {
 } from '@fpsak-frontend/utils';
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
-import { getKodeverk } from '@fpsak-frontend/kodeverk/src/duck';
+import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import styles from './messages.less';
