@@ -15,9 +15,10 @@ yarn build
 #### TODO
 
 * velge namespace, bruker scoped nå(@fpsak-frontend)
-* sette opp dockerhub
-* Sette opp lerna publish
+* Sette opp lerna publish for de pakkene som skal være åpne
 * gjøre form pakken tilgjengelig med final-form og redux-form
+* Legge inn readme for de forksjellige pakkene
+* Dele opp pakkene i flere pakker
 
 ### Licenses and attribution
 *For updated information, always see LICENSE first!*
