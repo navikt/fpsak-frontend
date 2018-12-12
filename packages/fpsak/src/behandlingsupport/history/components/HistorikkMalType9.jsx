@@ -11,6 +11,13 @@ import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinn
 import BubbleText from './bubbleText';
 import styles from './historikkMalType.less';
 
+const tilbakekrevingVerdier = {
+  TILBAKEKR_INFOTRYGD: 'Behandle tilbakekreving i Infotrygd',
+  TILBAKEKR_IGNORER: 'Avvent samordning, ingen tilbakekreving',
+  JA: 'Ja',
+  NEI: 'Nei',
+};
+
 export const HistorikkMalType9 = ({
   historikkinnslagDeler, behandlingLocation, originType,
 }) => {
@@ -70,14 +77,17 @@ export const HistorikkMalType9 = ({
 
             {originType.kode === historikkinnslagType.TILBAKEKR_VIDEREBEHANDLING
             && (
-              <div className={styles.tilbakekrevingTekst}>
-                <FormattedHTMLMessage
-                  id="Historikk.Template.9.TilbakekrViderebehandling"
-                  values={{
-                    videreBehandling: 'Gjennomfør tilbakekreving i Infotrygd',
-                  }}
-                />
-              </div>
+              historikkinnslagDel.endredeFelter.map(endredeFelt => (
+                <div className={styles.tilbakekrevingTekst}>
+                  <FormattedHTMLMessage
+                    id="Historikk.Template.9.TilbakekrViderebehandling"
+                    values={{
+                      felt: endredeFelt.endretFeltNavn.navn,
+                      verdi: tilbakekrevingVerdier[endredeFelt.tilVerdi],
+                    }}
+                  />
+                </div>
+              ))
             )}
             {historikkinnslagDel.begrunnelse && <BubbleText bodyText={historikkinnslagDel.begrunnelse.navn} className="snakkeboble-panel__tekst" />}
             {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} className="snakkeboble-panel__tekst" />}
