@@ -69,18 +69,5 @@ describe('<VedtakKlageForm>', () => {
         expect(selected).to.have.length(2);
       });
     });
-    describe('getIsAvgetAvvisningsAarsakervist', () => {
-      it('should return avvisningsAarsaker with length 1', () => {
-        const toggle = {
-          [featureToggle.FORMKRAV]: false,
-        };
-        const klageVurdering = {
-          klageFormkravResultatNFP: { avvistArsaker: [{ navn: 'arsak1' }, { navn: 'arsak2' }] },
-          klageVurderingResultatNFP: { klageAvvistArsakNavn: 'Klager er ikke part' },
-        };
-        const selected = getAvvisningsAarsaker.resultFunc(klageVurdering, toggle);
-        expect(selected).to.have.length(1);
-      });
-    });
   });
 });
