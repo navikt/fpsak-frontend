@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { getFagsaker } from 'fagsakSearch/fagsakSearchSelectors';
 import { getSelectedFagsak } from 'fagsak/fagsakSelectors';
-import PersonInfo from './components/PersonInfo';
+import { PersonInfo } from '@fpsak-frontend/person-info';
 
 /**
  * Container component. Viser grunnleggende personinformasjon. Dette panelet blir
