@@ -20,6 +20,7 @@ const VedtakPanels = ({
   readOnly,
   previewVedtakCallback,
   previewManueltBrevCallback,
+  previewKlageBrevCallback,
   previewCallback,
   submitCallback,
   behandlingTypeKode,
@@ -59,7 +60,7 @@ const VedtakPanels = ({
       return (
         <VedtakKlageFormNy
           submitCallback={submitCallback}
-          previewVedtakCallback={previewVedtakCallback}
+          previewVedtakCallback={previewKlageBrevCallback}
           readOnly={readOnly}
         />
       );
@@ -82,6 +83,7 @@ VedtakPanels.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
   previewManueltBrevCallback: PropTypes.func.isRequired,
+  previewKlageBrevCallback: PropTypes.func.isRequired,
   previewCallback: PropTypes.func.isRequired,
   submitCallback: PropTypes.func.isRequired,
   behandlingTypeKode: PropTypes.string.isRequired,
