@@ -8,21 +8,21 @@
 /* our custom classes overrule the styles for selected events,
    so lets define a new style for the selected events */
 .vis-item.vis-selected {
-  background-color: white;
+  background-color: @white;
   border-color: black;
-  box-shadow: 0 0 10px gray; // lesshint zeroUnit: false
+  box-shadow: 0 0 10px gray;
   color: black;
 }
 
 .vis-timeline {
-  border: 0px;
+  border: 0;
 }
 
 .timelineContainer {
   animation-duration: 2s;
   animation-name: fadein;
   animation-timing-function: ease-out;
-  background-color: white;
+  background-color: @white;
   max-height: 1600px;
   position: relative;
   transition: all 2s;
@@ -45,11 +45,11 @@
   border-left: 1px solid lightgrey;
   border-right: 1px solid lightgrey;
   margin-left: -17px;
-  padding-right: 0px;
+  padding-right: 0;
 
   &:before {
     border-bottom: 1px solid lightgrey;
-    bottom: 0px;
+    bottom: 0;
     content: '';
     left: -70px;
     position: absolute;

@@ -1,14 +1,16 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
 .flexContainer {
   display: flex;
   flex-wrap: wrap;
 }
 
 .fullColumn {
-  flex: 0 0 100%; // lesshint zeroUnit: false
+  flex: 0 0 100%;
 }
 
 .halfColumn {
-  flex: 0 0 34%; // lesshint zeroUnit: false
+  flex: 0 0 34%;
 }
 
 .fullWidth {
@@ -16,7 +18,7 @@
 }
 
 .arrowBox {
-  background: white;
+  background: @white;
   border: 1px solid #cccccc;
   margin-bottom: 20px;
   margin-top: 2px;
@@ -29,15 +31,15 @@
   border: solid transparent;
   bottom: 100%;
   content: ' ';
-  height: 0; // lesshint zeroUnit: false
+  height: 0;
   left: 115px;
   pointer-events: none;
   position: absolute;
-  width: 0; // lesshint zeroUnit: false
+  width: 0;
 }
 
 .arrowBox:after {
-  border-bottom-color: white;
+  border-bottom-color: @white;
   border-width: 11px;
   margin-left: -11px;
 }

@@ -198,8 +198,8 @@
     },
 
     "zeroUnit": {
-        "enabled": false,
-        "style": "keep_unit"
+        "enabled": true,
+        "style": "no_unit"
     },
 
     "variableValue": {
