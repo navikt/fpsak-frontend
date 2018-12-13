@@ -15,6 +15,7 @@ import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/for
 import {
   required, maxLength, minLength, hasValidPeriod, hasValidText,
 } from '@fpsak-frontend/utils';
+import { FormattedMessage } from 'react-intl';
 import PerioderKnapper from './PerioderKnapper';
 import InntektsmeldingInfo from '../components/InntektsmeldingInfo';
 import DokumentertePerioderPeriodePicker from './DokumentertePerioderPeriodePicker';
@@ -50,6 +51,9 @@ export const SykdomOgSkadePeriode = ({
     });
   }
 
+  const isEdited = resultat === uttakPeriodeVurdering.PERIODE_OK_ENDRET
+  && readOnly;
+
   const inlineheight = dokumentertePerioder
     && resultat === uttakPeriodeVurdering.PERIODE_OK
     && !readOnly
@@ -73,9 +77,16 @@ export const SykdomOgSkadePeriode = ({
             textareaClass={styles.textAreaStyle}
             maxLength={4000}
           />
-          <Undertekst>Fastsett resultat for perioden</Undertekst>
+          <Undertekst><FormattedMessage id="UttakInfoPanel.FastsettResultat" /></Undertekst>
           <VerticalSpacer fourPx />
-          <RadioGroupField direction="vertical" name="resultat" bredde="M" validate={[required]} readOnly={readOnly}>
+          <RadioGroupField
+            direction="vertical"
+            name="resultat"
+            bredde="M"
+            validate={[required]}
+            readOnly={readOnly}
+            isEdited={isEdited}
+          >
             <RadioOption
               label={{ id: 'UttakInfoPanel.SykdomSkadenDokumentertAngiAvklartPeriode' }}
               value={uttakPeriodeVurdering.PERIODE_OK}

@@ -41,6 +41,9 @@ export const FerieOgArbeidsPeriode = ({
   oppholdArsak,
   ...formProps
 }) => {
+  const isEdited = resultat === uttakPeriodeVurdering.PERIODE_OK_ENDRET
+  && readOnly;
+
   const inlineStyle = {
     radioOption: {
       height: resultat === uttakPeriodeVurdering.PERIODE_OK_ENDRET && !readOnly ? 250 : 'auto',
@@ -64,6 +67,7 @@ export const FerieOgArbeidsPeriode = ({
               name="resultat"
               DOMName={`resultat_${id}`}
               bredde="M"
+              isEdited={isEdited}
               validate={[required]}
               readOnly={readOnly}
             >

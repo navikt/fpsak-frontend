@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { FieldArray } from 'redux-form';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column } from 'nav-frontend-grid';
+import { FormattedMessage } from 'react-intl';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandlingFpsak/behandlingForm';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import {
@@ -46,6 +47,8 @@ export const InnleggelsePeriode = ({
       errorHeight += error !== undefined && error.fom[0].id === 'ValidationMessage.NotEmpty' ? 30 : 52;
     });
   }
+  const isEdited = resultat === uttakPeriodeVurdering.PERIODE_OK_ENDRET
+  && readOnly;
 
   const inlineheight = dokumentertePerioder
     && resultat === uttakPeriodeVurdering.PERIODE_OK
@@ -61,9 +64,17 @@ export const InnleggelsePeriode = ({
     <FlexContainer wrap>
       <FlexRow wrap>
         <FlexColumn className={styles.fieldColumn}>
-          <Undertekst>Fastsett resultat for perioden</Undertekst>
+          <Undertekst><FormattedMessage id="UttakInfoPanel.FastsettResultat" /></Undertekst>
           <VerticalSpacer fourPx />
-          <RadioGroupField direction="vertical" name="resultat" DOMName={`resultat_${id}`} bredde="M" validate={[required]} readOnly={readOnly}>
+          <RadioGroupField
+            direction="vertical"
+            name="resultat"
+            DOMName={`resultat_${id}`}
+            bredde="M"
+            isEdited={isEdited}
+            validate={[required]}
+            readOnly={readOnly}
+          >
             <RadioOption
               label={{ id: 'UttakInfoPanel.InnleggelsenErDokumentertAngiAvklartPeriode' }}
               value={uttakPeriodeVurdering.PERIODE_OK}
