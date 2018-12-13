@@ -15,55 +15,68 @@ import styles from './avregningSummary.less';
 
 
 const AvregningSummary = ({
-  fom, tom, feilutbetaling, etterbetaling, inntrekk,
+  fom, tom, feilutbetaling, etterbetaling, inntrekk, ingenPerioderMedAvvik,
 }) => (
   <div className={styles.infoSummary}>
-    <Row>
-      <Column xs="12">
-        <Element>
-          { moment(fom).format(DDMMYYYY_DATE_FORMAT)}
-          {' '}
--
-          {' '}
-          { moment(tom).format(DDMMYYYY_DATE_FORMAT)}
-        </Element>
-      </Column>
-    </Row>
-    <div className={styles.resultSum}>
-      <Row>
-        <Column xs="3">
-          <Normaltekst className={styles.resultName}>
-            <FormattedMessage id="Avregning.etterbetaling" />
-            :
-          </Normaltekst>
-        </Column>
-        <Column xs="2">
-          <span className={styles.number}>{ formatCurrencyNoKr(etterbetaling) }</span>
-        </Column>
-      </Row>
-      <Row className={styles.redNumbers}>
-        <Column xs="3">
-          <Normaltekst className={styles.resultName}>
-            <FormattedMessage id="Avregning.tilbakekreving" />
-            :
-          </Normaltekst>
-        </Column>
-        <Column xs="2">
-          <span className={feilutbetaling ? styles.redNumber : styles.positivNumber}>{ formatCurrencyNoKr(feilutbetaling) }</span>
-        </Column>
-        { inntrekk !== null
-          && (
-          <Column xs="4">
-            <Normaltekst>
-              <FormattedMessage id="Avregning.inntrekk" />
-              :
-              <span className={styles.lastNumber}>{ formatCurrencyNoKr(inntrekk) }</span>
-            </Normaltekst>
-          </Column>
-          )
-        }
-      </Row>
-    </div>
+    {
+      ingenPerioderMedAvvik && (
+        <div className={styles.ingenPerioder}>
+          <FormattedMessage id="Avregning.ingenPerioder" />
+        </div>
+      )
+    }
+    {
+      !ingenPerioderMedAvvik && (
+        <>
+          <Row>
+            <Column xs="12">
+              <Element>
+                { moment(fom).format(DDMMYYYY_DATE_FORMAT)}
+                {' '}
+                -
+                {' '}
+                { moment(tom).format(DDMMYYYY_DATE_FORMAT)}
+              </Element>
+            </Column>
+          </Row>
+          <div className={styles.resultSum}>
+            <Row>
+              <Column xs="3">
+                <Normaltekst className={styles.resultName}>
+                  <FormattedMessage id="Avregning.etterbetaling" />
+                  :
+                </Normaltekst>
+              </Column>
+              <Column xs="2">
+                <span className={styles.number}>{ formatCurrencyNoKr(etterbetaling) }</span>
+              </Column>
+            </Row>
+            <Row className={styles.redNumbers}>
+              <Column xs="3">
+                <Normaltekst className={styles.resultName}>
+                  <FormattedMessage id="Avregning.tilbakekreving" />
+                  :
+                </Normaltekst>
+              </Column>
+              <Column xs="2">
+                <span className={feilutbetaling ? styles.redNumber : styles.positivNumber}>{ formatCurrencyNoKr(feilutbetaling) }</span>
+              </Column>
+              { inntrekk !== null
+              && (
+                <Column xs="4">
+                  <Normaltekst>
+                    <FormattedMessage id="Avregning.inntrekk" />
+                    :
+                    <span className={styles.lastNumber}>{ formatCurrencyNoKr(inntrekk) }</span>
+                  </Normaltekst>
+                </Column>
+              )
+              }
+            </Row>
+          </div>
+        </>
+      )
+    }
   </div>
 );
 
@@ -73,6 +86,7 @@ AvregningSummary.propTypes = {
   feilutbetaling: PropTypes.number.isRequired,
   etterbetaling: PropTypes.number.isRequired,
   inntrekk: PropTypes.number,
+  ingenPerioderMedAvvik: PropTypes.bool.isRequired,
 };
 
 AvregningSummary.defaultProps = {
