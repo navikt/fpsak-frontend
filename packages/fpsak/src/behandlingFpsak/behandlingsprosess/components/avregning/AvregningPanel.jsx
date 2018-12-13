@@ -80,6 +80,12 @@ const radioGroupLabel = contentType => (
     />
   </span>
 );
+const getSimuleringResult = (simuleringResultat, feilutbetaling) => {
+  if (!simuleringResultat) {
+    return simuleringResultat;
+  }
+  return feilutbetaling === undefined || feilutbetaling ? simuleringResultat.simuleringResultat : simuleringResultat.simuleringResultatUtenInntrekk;
+};
 
 export class AvregningPanelImpl extends Component {
   constructor() {
@@ -147,8 +153,7 @@ export class AvregningPanelImpl extends Component {
       grunnerTilReduksjon,
       ...formProps
     } = this.props;
-    const simuleringResultatOption = feilutbetaling === undefined || feilutbetaling
-      ? simuleringResultat.simuleringResultat : simuleringResultat.simuleringResultatUtenInntrekk;
+    const simuleringResultatOption = getSimuleringResult(simuleringResultat, feilutbetaling);
 
     return (
       <FadingPanel>
@@ -171,11 +176,13 @@ export class AvregningPanelImpl extends Component {
                   feilutbetaling={simuleringResultatOption.sumFeilutbetaling}
                   etterbetaling={simuleringResultatOption.sumEtterbetaling}
                   inntrekk={simuleringResultatOption.sumInntrekk}
+                  ingenPerioderMedAvvik={simuleringResultatOption.ingenPerioderMedAvvik}
                 />
                 <AvregningTable
                   showDetails={showDetails}
                   toggleDetails={this.toggleDetails}
                   simuleringResultat={simuleringResultatOption}
+                  ingenPerioderMedAvvik={simuleringResultatOption.ingenPerioderMedAvvik}
                 />
                 <VerticalSpacer twentyPx />
               </Column>

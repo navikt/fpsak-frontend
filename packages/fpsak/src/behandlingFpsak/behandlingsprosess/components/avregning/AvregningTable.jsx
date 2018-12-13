@@ -71,9 +71,11 @@ const tableTitle = mottaker => (mottaker.mottakerType.kode === mottakerTyper.ARB
   : null
 );
 
-const AvregningTable = ({ simuleringResultat, toggleDetails, showDetails }) => {
+const AvregningTable = ({
+  simuleringResultat, toggleDetails, showDetails, ingenPerioderMedAvvik,
+}) => {
   const rangeOfMonths = getRangeOfMonths(
-    simuleringResultat.periodeFom,
+    ingenPerioderMedAvvik ? moment(simuleringResultat.nestUtbPeriodeTom).subtract(1, 'months') : simuleringResultat.periodeFom,
     simuleringResultat.nestUtbPeriodeTom ? simuleringResultat.nestUtbPeriodeTom : simuleringResultat.periodeTom,
   );
   return (
@@ -136,6 +138,7 @@ AvregningTable.propTypes = {
   toggleDetails: PropTypes.func.isRequired,
   showDetails: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   simuleringResultat: PropTypes.shape().isRequired,
+  ingenPerioderMedAvvik: PropTypes.bool.isRequired,
 };
 
 export default AvregningTable;
