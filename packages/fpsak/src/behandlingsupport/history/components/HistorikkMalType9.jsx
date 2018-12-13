@@ -7,7 +7,7 @@ import { Element } from 'nav-frontend-typografi';
 
 import { createLocationForHistorikkItems } from 'app/paths';
 import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinnslagDelPropType';
-import avregningCodes from 'kodeverk/avregningCodes';
+import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
 
 import { findEndretFeltVerdi } from './historikkUtils';
 import BubbleText from './bubbleText';
