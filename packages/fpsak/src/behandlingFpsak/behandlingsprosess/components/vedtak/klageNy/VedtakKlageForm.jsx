@@ -37,6 +37,8 @@ export const VedtakKlageFormImpl = ({
   avvistArsaker,
   isBehandlingReadOnly,
   behandlingsResultatTekst,
+  klageVurdering,
+  aksjonspunktKode,
   ...formProps
 }) => (
   <FadingPanel>
@@ -77,6 +79,8 @@ export const VedtakKlageFormImpl = ({
       ) }
       <VedtakKlageSubmitPanel
         begrunnelse={fritekstTilBrev}
+        klageVurdering={klageVurdering}
+        aksjonspunktCode={aksjonspunktKode}
         previewVedtakCallback={previewVedtakCallback}
         formProps={formProps}
         readOnly={readOnly}
@@ -92,6 +96,8 @@ VedtakKlageFormImpl.propTypes = {
   isOpphevOgHjemsend: PropTypes.bool.isRequired,
   behandlingStatusKode: PropTypes.string.isRequired,
   behandlingsResultatTekst: PropTypes.string.isRequired,
+  klageVurdering: PropTypes.string.isRequired,
+  aksjonspunktKode: PropTypes.string.isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
   isBehandlingReadOnly: PropTypes.bool.isRequired,
   avvistArsaker: PropTypes.arrayOf(PropTypes.object),
@@ -133,6 +139,14 @@ const omgjoerTekstMap = {
   DELVIS_MEDHOLD_I_KLAGE: 'VedtakKlageForm.KlageOmgjortDelvis',
 };
 
+const getKlageResultat = createSelector(
+  [getBehandlingKlageVurdering],
+  (behandlingKlageVurdering) => {
+    const klageResultat = behandlingKlageVurdering.klageVurderingResultatNK
+      ? behandlingKlageVurdering.klageVurderingResultatNK : behandlingKlageVurdering.klageVurderingResultatNFP;
+    return klageResultat.klageVurdering;
+  },
+);
 
 const getResultatText = createSelector(
   [getBehandlingKlageVurdering],
@@ -216,6 +230,8 @@ const mapStateToProps = (state, initialProps) => ({
   behandlingStatusKode: getBehandlingStatus(state).kode,
   fritekstTilBrev: getFritekstTilBrev(state),
   behandlingsResultatTekst: getResultatText(state),
+  klageVurdering: getKlageResultat(state),
+  aksjonspunktKode: getSelectedBehandlingspunktAksjonspunkter(state)[0].definisjon.kode,
   behandlingsresultat: getBehandlingsresultat(state),
   aksjonspunktKoder: getSelectedBehandlingspunktAksjonspunkter(state).map(ap => ap.definisjon.kode),
   onSubmit: values => initialProps.submitCallback(transformValues(values)),
