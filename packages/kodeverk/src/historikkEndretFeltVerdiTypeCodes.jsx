@@ -144,6 +144,14 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'SJØMANN',
     verdiId: 'HistorikkEndretFeltVerdiType.Sjømann',
   },
+  TILBAKEKR_INFOTRYGD: {
+    kode: 'TILBAKEKR_INFOTRYGD',
+    verdiId: 'HistorikkEndretFeltVerdiType.tilbakekrInfotrygd',
+  },
+  TILBAKEKR_IGNORER: {
+    kode: 'TILBAKEKR_IGNORER',
+    verdiId: 'HistorikkEndretFeltVerdiType.tilbakekrIgnorer',
+  },
   ARBEIDSTAKER_UTEN_FERIEPENGER: {
     kode: 'ARBEIDSTAKER_UTEN_FERIEPENGER',
     verdiId: 'HistorikkEndretFeltVerdiType.ArbeidstakerUtenFeriepenger',

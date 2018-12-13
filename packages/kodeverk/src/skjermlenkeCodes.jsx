@@ -143,6 +143,11 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.VERGE,
     punktNavn: '',
   },
+  FAKTA_OM_SIMULERING: {
+    kode: 'SIMULERING',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: behandlingspunktCodes.SIMULERING,
+  },
 };
 
 export default skjermlenkeCodes;

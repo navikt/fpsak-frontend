@@ -24,6 +24,7 @@ const behandlingspunktCodes = {
   VARSEL: 'varsel',
   VEDTAK: 'vedtak',
   UTTAK: 'uttak',
+  SIMULERING: 'simulering',
   KLAGE_RESULTAT: 'resultat',
 };
 

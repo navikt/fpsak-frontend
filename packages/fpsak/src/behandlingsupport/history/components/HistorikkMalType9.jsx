@@ -7,12 +7,14 @@ import { Element } from 'nav-frontend-typografi';
 
 import { createLocationForHistorikkItems } from 'app/paths';
 import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinnslagDelPropType';
+import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
 
+import { findEndretFeltVerdi } from './historikkUtils';
 import BubbleText from './bubbleText';
 import styles from './historikkMalType.less';
 
 export const HistorikkMalType9 = ({
-  historikkinnslagDeler, behandlingLocation, originType,
+  historikkinnslagDeler, behandlingLocation, originType, intl,
 }) => {
   const getSplitPeriods = (endredeFelter) => {
     let text = '';
@@ -70,14 +72,17 @@ export const HistorikkMalType9 = ({
 
             {originType.kode === historikkinnslagType.TILBAKEKR_VIDEREBEHANDLING
             && (
-              <div className={styles.tilbakekrevingTekst}>
-                <FormattedHTMLMessage
-                  id="Historikk.Template.9.TilbakekrViderebehandling"
-                  values={{
-                    videreBehandling: 'Gjennomfør tilbakekreving i Infotrygd',
-                  }}
-                />
-              </div>
+              historikkinnslagDel.endredeFelter.map((endretFelt, index) => endretFelt.tilVerdi !== avregningCodes.TILBAKEKR_INNTREKK && (
+                <div className={styles.tilbakekrevingTekst} key={`endretFelt${index + 1}`}>
+                  <FormattedHTMLMessage
+                    id="Historikk.Template.9.TilbakekrViderebehandling"
+                    values={{
+                      felt: endretFelt.endretFeltNavn.navn,
+                      verdi: findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl),
+                    }}
+                  />
+                </div>
+              ))
             )}
             {historikkinnslagDel.begrunnelse && <BubbleText bodyText={historikkinnslagDel.begrunnelse.navn} className="snakkeboble-panel__tekst" />}
             {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} className="snakkeboble-panel__tekst" />}
