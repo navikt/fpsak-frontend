@@ -1,8 +1,12 @@
 import tilbakekrevingBehandlingApi from 'behandlingTilbakekreving/tilbakekrevingBehandlingApi';
 import { createSelector } from 'reselect';
 
+import reducerRegistry from '../../ReducerRegistry';
+
+const reducerName = 'tilbakekrevingFakta';
+
 /* Action types */
-const actionType = name => `behandling_tilbakekreving_fakta/${name}`;
+const actionType = name => `${reducerName}/${name}`;
 export const SET_OPEN_INFO_PANELS = actionType('SET_OPEN_INFO_PANELS');
 export const RESET_FAKTA = actionType('RESET_FAKTA');
 export const RESOLVE_FAKTA_AKSJONSPUNKTER_STARTED = actionType('RESOLVE_FAKTA_AKSJONSPUNKTER_STARTED');
@@ -76,6 +80,8 @@ export const tilbakekrevingFaktaReducer = (state = initialState, action = {}) =>
   }
 };
 
+reducerRegistry.register(reducerName, tilbakekrevingFaktaReducer);
+
 /* Selectors */
-const getFaktaContext = state => state.default.tilbakekrevingFaktaContext;
+const getFaktaContext = state => state.default[reducerName];
 export const getOpenInfoPanels = createSelector([getFaktaContext], ctx => ctx.openInfoPanels);

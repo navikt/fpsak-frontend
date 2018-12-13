@@ -36,9 +36,12 @@ const createApiForEachKey = (contextPath: string, config: RequestConfig[], restA
   },
 }), {});
 
-export const initRestApi = (httpClientApi: HttpClientApi, contextPath: string, config: RequestConfig[], reducerName: string) => {
+// TODO (TOR) Rydd i Api'et til denne.
+export const initRestApi = (httpClientApi: HttpClientApi, contextPath: string, config: RequestConfig[], reducerName: string, reducerRegistry) => {
   const requestApi = new RequestApi(httpClientApi, contextPath, config);
   const reduxRestApi = createReduxRestApi(requestApi, reducerName);
+
+  reducerRegistry.register(reducerName, reduxRestApi.dataReducer);
 
   return {
     ...createApiForEachKey(contextPath, config, reduxRestApi),

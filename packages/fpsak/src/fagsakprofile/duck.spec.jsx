@@ -46,7 +46,7 @@ describe('Fagsak-reducer', () => {
   it('skal hente status for visning av alle behandlinger', () => {
     const state = {
       default: {
-        fagsakProfileContext: {
+        fagsakProfile: {
           showAllBehandlinger: true,
         },
       },

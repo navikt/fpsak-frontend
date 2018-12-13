@@ -3,9 +3,12 @@ import { createSelector } from 'reselect';
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import { updateFagsakInfo } from 'fagsak/duck';
 import fpsakBehandlingApi from './data/fpsakBehandlingApi';
+import reducerRegistry from '../ReducerRegistry';
+
+const reducerName = 'fpsakBehandling';
 
 /* Action types */
-const actionType = name => `behandling_fpsak/${name}`;
+const actionType = name => `${reducerName}/${name}`;
 const SET_BEHANDLING_INFO = actionType('SET_BEHANDLING_INFO');
 const HAS_SHOWN_BEHANDLING_PA_VENT = actionType('HAS_SHOWN_BEHANDLING_PA_VENT');
 
@@ -77,8 +80,10 @@ export const fpsakBehandlingReducer = (state = initialState, action = {}) => { /
   }
 };
 
+reducerRegistry.register(reducerName, fpsakBehandlingReducer);
+
 // Selectors (Kun de knyttet til reducer)
-const getBehandlingContext = state => state.default.fpsakBehandlingContext;
+const getBehandlingContext = state => state.default[reducerName];
 export const getSelectedBehandlingId = createSelector([getBehandlingContext], behandlingContext => behandlingContext.behandlingId);
 export const getSelectedSaksnummer = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsakSaksnummer);
 export const getBehandlingIdentifier = createSelector(

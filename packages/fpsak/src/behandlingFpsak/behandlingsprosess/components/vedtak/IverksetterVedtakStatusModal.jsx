@@ -4,14 +4,18 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { Column, Row } from 'nav-frontend-grid';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
+
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { Modal, Image } from '@fpsak-frontend/shared-components';
+
+import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
+import { getResolveProsessAksjonspunkterSuccess } from 'behandlingFpsak/behandlingsprosess/duck';
+import { getResolveFaktaAksjonspunkterSuccess } from 'behandlingFpsak/fakta/duck';
 import {
   getBehandlingResultatstruktur,
   getBehandlingsresultat,
@@ -27,7 +31,6 @@ import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg
 
 import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
 import styles from './iverksetterVedtakStatusModal.less';
-
 
 /**
  * IverksetterVedtakStatusModal
@@ -163,8 +166,8 @@ const getModalTextId = createSelector(
 const mapStateToProps = state => ({
   behandlingsresultat: getBehandlingsresultat(state),
   behandlingStatusKode: getBehandlingStatus(state).kode,
-  resolveProsessAksjonspunkterSuccess: state.default.behandlingsprosessContext.resolveProsessAksjonspunkterSuccess,
-  resolveFaktaAksjonspunkterSuccess: state.default.faktaContext.resolveFaktaAksjonspunkterSuccess,
+  resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
+  resolveFaktaAksjonspunkterSuccess: getResolveFaktaAksjonspunkterSuccess(state),
   modalTextId: getModalTextId(state),
 
 });

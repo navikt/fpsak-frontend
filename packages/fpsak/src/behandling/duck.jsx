@@ -1,7 +1,12 @@
 import { createSelector } from 'reselect';
 
+import reducerRegistry from '../ReducerRegistry';
+
+const reducerName = 'behandling';
+
 /* Action types */
-const SET_BEHANDLING_ID = 'SET_BEHANDLING_ID';
+const actionType = name => `${reducerName}/${name}`;
+const SET_BEHANDLING_ID = actionType('SET_BEHANDLING_ID');
 
 export const setSelectedBehandlingId = behandlingId => ({
   type: SET_BEHANDLING_ID,
@@ -25,6 +30,8 @@ export const behandlingReducer = (state = initialState, action = {}) => { // NOS
   }
 };
 
+reducerRegistry.register(reducerName, behandlingReducer);
+
 // Selectors (Kun de knyttet til reducer)
-const getBehandlingContext = state => state.default.behandlingContext;
+const getBehandlingContext = state => state.default[reducerName];
 export const getSelectedBehandlingId = createSelector([getBehandlingContext], behandlingContext => behandlingContext.behandlingId);

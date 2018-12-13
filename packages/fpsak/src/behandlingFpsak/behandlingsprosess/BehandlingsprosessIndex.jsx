@@ -271,7 +271,6 @@ const mapStateToProps = state => ({
   defaultBehandlingspunkt: getDefaultBehandlingspunkt(state),
   selectedBehandlingspunkt: getSelectedBehandlingspunkt(state),
   behandlingType: getBehandlingType(state),
-  avslagReasons: state.default.behandlingsprosessContext.avslagReasons,
   location: state.router.location,
 });
 

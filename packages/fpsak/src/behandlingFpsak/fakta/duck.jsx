@@ -1,12 +1,16 @@
 import { createSelector } from 'reselect';
 import { updateFagsakInfo } from 'fagsak/duck';
 import fpsakBehandlingApi from '../data/fpsakBehandlingApi';
+import reducerRegistry from '../../ReducerRegistry';
+
+const reducerName = 'fpsakFakta';
 
 /* Action types */
-export const SET_OPEN_INFO_PANELS = 'SET_OPEN_INFO_PANELS';
-export const RESET_FAKTA = 'RESET_FAKTA';
-export const RESOLVE_FAKTA_AKSJONSPUNKTER_STARTED = 'RESOLVE_FAKTA_AKSJONSPUNKTER_STARTED';
-export const RESOLVE_FAKTA_AKSJONSPUNKTER_SUCCESS = 'RESOLVE_FAKTA_AKSJONSPUNKTER_SUCCESS';
+const actionType = name => `${reducerName}/${name}`;
+export const SET_OPEN_INFO_PANELS = actionType('SET_OPEN_INFO_PANELS');
+export const RESET_FAKTA = actionType('RESET_FAKTA');
+export const RESOLVE_FAKTA_AKSJONSPUNKTER_STARTED = actionType('RESOLVE_FAKTA_AKSJONSPUNKTER_STARTED');
+export const RESOLVE_FAKTA_AKSJONSPUNKTER_SUCCESS = actionType('RESOLVE_FAKTA_AKSJONSPUNKTER_SUCCESS');
 
 
 /* Action creators */
@@ -76,6 +80,9 @@ export const faktaReducer = (state = initialState, action = {}) => {
   }
 };
 
+reducerRegistry.register(reducerName, faktaReducer);
+
 /* Selectors */
-const getFaktaContext = state => state.default.faktaContext;
+const getFaktaContext = state => state.default[reducerName];
 export const getOpenInfoPanels = createSelector([getFaktaContext], ctx => ctx.openInfoPanels);
+export const getResolveFaktaAksjonspunkterSuccess = createSelector([getFaktaContext], ctx => ctx.resolveFaktaAksjonspunkterSuccess);

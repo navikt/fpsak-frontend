@@ -3,10 +3,14 @@ import fpsakApi from 'data/fpsakApi';
 import { getAksjonspunkter } from 'behandlingFpsak/behandlingSelectors';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import reducerRegistry from '../ReducerRegistry';
+
+const reducerName = 'papirsoknad';
 
 /* Action types */
-export const RESET_REGISTRERING = 'RESET_REGISTRERING';
-export const SET_SOKNAD_DATA = 'SET_SOKNAD_DATA';
+const actionType = name => `${reducerName}/${name}`;
+export const RESET_REGISTRERING = actionType('RESET_REGISTRERING');
+export const SET_SOKNAD_DATA = actionType('SET_SOKNAD_DATA');
 
 /* Action creators */
 export const resetRegistrering = () => ({
@@ -42,8 +46,10 @@ export const papirsoknadReducer = (state = initialState, action = {}) => {
   }
 };
 
+reducerRegistry.register(reducerName, papirsoknadReducer);
+
 /* Selectors */
-const getPapirsoknadContext = state => state.default.papirsoknadContext;
+const getPapirsoknadContext = state => state.default[reducerName];
 
 export const getSoknadData = createSelector(
   [getPapirsoknadContext],

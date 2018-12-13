@@ -2,9 +2,12 @@ import fpsakApi, { FpsakApiKeys } from 'data/fpsakApi';
 import fpsakBehandlingApi, { BehandlingFpsakApiKeys } from 'behandlingFpsak/data/fpsakBehandlingApi';
 import { resetBehandlingsupportInfo, updateBehandlingsupportInfo } from 'behandlingsupport/duck';
 import { updateAnnenPartBehandling } from 'fagsakprofile/duck';
+import reducerRegistry from '../ReducerRegistry';
+
+export const reducerName = 'fagsak';
 
 /* Action types */
-const actionType = name => `fagsak/${name}`;
+const actionType = name => `${reducerName}/${name}`;
 export const PREVIEW_RECEIVED = actionType('PREVIEW_RECEIVED');
 export const SELECT_FAGSAK = actionType('SELECT_FAGSAK');
 export const RESET_FAGSAKER = actionType('RESET_FAGSAKER');
@@ -106,3 +109,5 @@ export const fagsakReducer = (state = initialState, action = {}) => { // NOSONAR
       return state;
   }
 };
+
+reducerRegistry.register(reducerName, fagsakReducer);
