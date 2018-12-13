@@ -1,3 +1,5 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
 .container {
   margin-left: -8px;
   margin-right: -8px;
@@ -6,14 +8,14 @@
 @removeBtnSize: 17px;
 
 .buttonRemove {
-  background: #ffffff url('../../../../../../../../assets/images/remove.svg') no-repeat;
+  background: @white url('../../../../../../../../assets/images/remove.svg') no-repeat;
   background-size: 100% 100%;
-  border: 0; // lesshint zeroUnit: false
+  border: 0;
   cursor: pointer;
   display: inline-block;
   height: @removeBtnSize;
   margin-top: 20px;
-  padding: 0px;
+  padding: 0;
   vertical-align: top;
   width: @removeBtnSize;
 }
@@ -45,12 +47,12 @@
 }
 
 .notLastRow {
-  border-bottom: 1px solid #b7b1a9;
+  border-bottom: 1px solid @navGra40;
   margin-top: 10px;
 }
 
 .divider {
-  border-bottom: 1px solid #b7b1a9;
+  border-bottom: 1px solid @navGra40;
 }
 
 .sumRow {
@@ -84,9 +86,9 @@
 }
 
 .buttonAdd {
-  background: #ffffff url('../../../../../../../../assets/images/add-circle.svg') no-repeat;
+  background: @white url('../../../../../../../../assets/images/add-circle.svg') no-repeat;
   background-size: contain;
-  border: 0; // lesshint zeroUnit: false
+  border: 0;
   cursor: pointer;
   display: inline-block;
   height: 23px;
@@ -109,13 +111,13 @@
 
 
 .inntektTable {
-  border-bottom: 0px;
+  border-bottom: 0;
   margin-bottom: 8px;
   max-width: 950px;
 }
 
 .inntektTable > thead > tr > td:first-child {
-  padding-left: 0px;
+  padding-left: 0;
 }
 
 .inntektTable > thead > tr > td:last-child {
@@ -128,7 +130,7 @@
 
 .inntektTable > tbody > tr > td:first-child {
   max-width: 400px;
-  padding-left: 0px;
+  padding-left: 0;
 }
 
 .inntektTable > tbody > tr > td:last-child {
@@ -144,10 +146,10 @@
 }
 
 .inntektTable > tbody > tr:last-child {
-  padding-bottom: 0px;
-  padding-top: 0px;
+  padding-bottom: 0;
+  padding-top: 0;
 }
 
 .inntektTable > tbody > tr:last-child > td {
-  border-top: 0px;
+  border-top: 0;
 }

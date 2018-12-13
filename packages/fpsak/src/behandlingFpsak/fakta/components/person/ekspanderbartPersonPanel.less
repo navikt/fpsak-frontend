@@ -5,7 +5,7 @@
 }
 
 .container {
-  background: white;
+  background: @white;
   border-radius: 4px;
   display: flex;
 }
@@ -17,7 +17,7 @@
 
   &:focus {
     background-color: @navOransjeLighten40;
-    border: 0px;
+    border: 0;
     color: @navBla;
     padding-bottom: 4px;
     text-decoration: none;
@@ -30,39 +30,39 @@
 
 .primary {
   display: flex;
-  flex: 0 0 55%; // lesshint zeroUnit: false
+  flex: 0 0 55%;
   position: relative;
 }
 
 .primaryfull {
   display: flex;
-  flex: 0 0 100%; // lesshint zeroUnit: false
+  flex: 0 0 100%;
   position: relative;
 }
 
 .secondary {
   display: flex;
-  flex: 0 0 45%; // lesshint zeroUnit: false
+  flex: 0 0 45%;
   position: relative;
 }
 
 .personprimary {
   cursor: pointer;
-  flex: 0 0 100%; // lesshint zeroUnit: false
+  flex: 0 0 100%;
 }
 
 .personprimaryfull {
   cursor: pointer;
-  flex: 0 0 100%; // lesshint zeroUnit: false
+  flex: 0 0 100%;
 }
 
 .personsecondary {
   cursor: pointer;
-  flex: 0 0 100%; // lesshint zeroUnit: false
+  flex: 0 0 100%;
 }
 
 .personchevron {
-  cursor: pointer; // lesshint zeroUnit: false
+  cursor: pointer;
   padding-left: 1px;
   padding-top: 25px;
   position: absolute;
@@ -78,7 +78,7 @@
 }
 
 .statusAksjonspunkt {
-  border-color: #ffa733;
+  border-color: @navOransjeLighten20;
   border-left-style: solid;
   border-radius: 5px;
   border-width: 5px;

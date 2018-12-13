@@ -1,16 +1,16 @@
-@import '@{coreModulePath}nav-frontend-core/less/core';
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
 @removeBtnSize: 17px;
 
 .buttonRemove {
-  background: #ffffff url('../../../../../../../../assets/images/remove.svg') no-repeat;
+  background: @white url('../../../../../../../../assets/images/remove.svg') no-repeat;
   background-size: 100% 100%;
-  border: 0; // lesshint zeroUnit: false
+  border: 0;
   cursor: pointer;
   display: inline-block;
   height: @removeBtnSize;
   margin-top: 3px;
-  padding: 0px;
+  padding: 0;
   vertical-align: top;
   width: @removeBtnSize;
 }
@@ -20,7 +20,7 @@
   flex-flow: row nowrap;
 
   > .col {
-    flex: 0 0 auto; // lesshint zeroUnit: false
+    flex: 0 0 auto;
     margin-right: 15px;
   }
 
@@ -34,7 +34,7 @@
 }
 
 .rightAlignInput > div > input {
-  margin-right: 0px;
+  margin-right: 0;
   text-align: right;
 }
 
@@ -56,19 +56,19 @@
 }
 
 .adjustedFieldInput > div > p {
-  margin-bottom: 0px;
-  padding-bottom: 0px;
+  margin-bottom: 0;
+  padding-bottom: 0;
   padding-top: 9px;
 }
 
 .inntektTable {
-  border-bottom: 0px;
+  border-bottom: 0;
   margin-bottom: 8px;
   max-width: 950px;
 }
 
 .inntektTable > thead > tr > td:first-child {
-  padding-left: 0px;
+  padding-left: 0;
 }
 
 .inntektTable > thead > tr > td:last-child {
@@ -81,7 +81,7 @@
 
 .inntektTable > tbody > tr > td:first-child {
   max-width: 400px;
-  padding-left: 0px;
+  padding-left: 0;
 }
 
 .inntektTable > tbody > tr > td:last-child {
@@ -97,16 +97,16 @@
 }
 
 .inntektTable > tbody > tr:last-child {
-  padding-bottom: 0px;
-  padding-top: 0px;
+  padding-bottom: 0;
+  padding-top: 0;
 }
 
 .inntektTable > tbody > tr:last-child > td {
-  border-top: 0px;
+  border-top: 0;
 }
 
 .buttonRow {
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 .addPeriode,

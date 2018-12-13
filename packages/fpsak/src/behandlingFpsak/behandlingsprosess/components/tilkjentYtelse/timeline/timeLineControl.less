@@ -33,35 +33,35 @@
 }
 
 .timeLineButton {
-  background-color: white;
-  border: 0px solid;
+  background-color: @white;
+  border: 0 solid;
   height: 26px;
   margin: 4px;
-  margin-bottom: 0px;
-  margin-top: 0px;
-  padding: 0px;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding: 0;
   width: 26px;
 
   &:focus {
-    box-shadow: 0 0 0px 3px @orangeFocus;// lesshint zeroUnit: false
+    box-shadow: 0 0 0 3px @orangeFocus;// lesshint zeroUnit: false
     outline: none;
   }
 }
 
 .timeLineButtonInverted {
-  background-color: white;
-  border: 0px solid;
+  background-color: @white;
+  border: 0 solid;
   height: 26px;
   margin: 4px;
-  margin-bottom: 0px;
-  margin-top: 0px;
-  padding: 0px;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding: 0;
   transform: rotate(180deg);
   width: 26px;
 
 
   &:focus {
-    box-shadow: 0 0 0px 3px @orangeFocus;// lesshint zeroUnit: false
+    box-shadow: 0 0 0 3px @orangeFocus;// lesshint zeroUnit: false
     outline: none;
   }
 }
@@ -94,21 +94,21 @@
 }
 
 .popUnderContent {
-  background-color: white;
+  background-color: @white;
   border: 1px solid lightgrey;
   left: -40px;
   min-width: 560px;
   padding: 12px;
   position: absolute;
   top: 54px;
-  transform: translate(0, 10px); // lesshint zeroUnit: false
+  transform: translate(0, 10px);
   visibility: hidden;
   width: auto;
 
   &:before {
     border-color: transparent transparent lightgrey;
     border-style: solid;
-    border-width: 0 19px 9px 19px; // lesshint zeroUnit: false
+    border-width: 0 19px 9px 19px;
     content: '';
     left: 37px;
     position: absolute;
@@ -119,9 +119,9 @@
   }
 
   &:after {
-    border-color: transparent transparent white;
+    border-color: transparent transparent @white;
     border-style: solid;
-    border-width: 0 19px 9px 19px; // lesshint zeroUnit: false
+    border-width: 0 19px 9px 19px;
     content: '';
     left: 37px;
     position: absolute;
