@@ -17,12 +17,13 @@ install:
 
 script:
 - yarn less:lint
-- yarn test:coverage
+- yarn test
 - yarn build
-- SONAR_SKIP=$(if [ "$TRAVIS_PULL_REQUEST" = "false"]; then echo "false"; else echo "true"; fi)
+- SONAR_SKIP=$(if [ "$TRAVIS_EVENT_TYPE" = "cron"]; then echo "false"; else echo "true"; fi)
+- if [ $SONAR_SKIP = "false" ]; then yarn test:coverage; fi
 - if [ $SONAR_SKIP = "false" ]; then git fetch --unshallow --quiet; fi
-- chmod a+x ./travis/sonar.sh
-- "./travis/sonar.sh"
+- if [ $SONAR_SKIP = "false" ]; then chmod a+x ./travis/sonar.sh; fi
+- if [ $SONAR_SKIP = "false" ]; then "./travis/sonar.sh"; fi
 - git config user.name team-foreldrepenger[bot]
 - git config user.email team-foreldrepenger[bot]@users.noreply.github.com
 
