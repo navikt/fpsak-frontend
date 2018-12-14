@@ -1,4 +1,4 @@
-import behandlingspunktCodes from 'behandlingsprosess/behandlingspunktCodes';
+import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import skjermlenkeCodes from '@fpsak-frontend/kodeverk/src/skjermlenkeCodes';
