@@ -71,6 +71,7 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET]: 'Beregning.BeregningsgrunnlagManueltSNNYIArbeidslivet',
   [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: 'Beregning.VurderFaktaATFLSN',
   [aksjonspunktCodes.FORESLA_VEDTAK]: 'Vedtak.Fritekstbrev',
+  [aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO]: 'UttakInfoPanel.FaktaUttak.ForsteUttakDato',
 
 };
 

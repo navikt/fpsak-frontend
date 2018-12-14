@@ -1716,6 +1716,7 @@
   "PeriodeResultatType.UGYLDIG_UTSETTELSE": "Ugyldig utsettelse",
 
   "UttakInfoPanel.FaktaUttak": "Fakta om uttak",
+  "UttakInfoPanel.FaktaUttak.ForsteUttakDato": "Kontroller manglende uttaksperiode",
   "UttakInfoPanel.Aksjonspunkt.5070": "Kontakt søker ved behov. Fastsett korrekt og dokumentert søknadsperiode og andel i arbeid.",
   "UttakInfoPanel.Aksjonspunkt.5081": "Første dato for uttak er {value}. Legg inn manglende søknadsperiode. Kontakt søker ved behov.",
   "UttakInfoPanel.Aksjonspunkt.6070": "Saksbehandler initierer kontroll av søknadsperiodene",
@@ -2014,6 +2015,7 @@
   "HistorikkEndretFelt.ErKlageSignert": "Er klagen signert",
   "HistorikkEndretFelt.VurderEtterlønnSluttpakke": "Inntekt fra etterlønn eller sluttpakke",
   "HistorikkEndretFelt.FastsettEtterlønnSluttpakke": "Inntekten",
+  "HistorikkEndretFelt.AvslagMorTarIkkeAlleUker": "Mor tar ikke alle 3 ukene før termin",
 
   "HistorikkEndretFeltVerdiType.AdoptererAlene": "adopterer alene",
   "HistorikkEndretFeltVerdiType.AdoptererIkkeAlene": "adopterer ikke alene",
