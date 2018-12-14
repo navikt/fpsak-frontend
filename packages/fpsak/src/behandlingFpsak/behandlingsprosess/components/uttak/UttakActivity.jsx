@@ -147,7 +147,7 @@ export const UttakActivity = ({
                     readOnly={readOnly}
                     bredde="fullbredde"
                   />
-                  {selectedItemData.gradertAktivitet && (
+                  {(selectedItemData.gradertAktivitet && erOppfylt) && (
                     <div className={styles.marginTop30}>
                       <Undertekst>
                         <FormattedMessage id="UttakActivity.Gradering" />
@@ -289,7 +289,7 @@ const transformValues = (values, selectedItemData, avslagAarsakKoder, innvilgels
   transformvalue.samtidigUttak = values.samtidigUttak;
   transformvalue.samtidigUttaksprosent = values.samtidigUttaksprosent;
   transformvalue.erOppfylt = values.erOppfylt;
-  transformvalue.graderingInnvilget = values.graderingInnvilget;
+  transformvalue.graderingInnvilget = values.erOppfylt ? values.graderingInnvilget : false;
   transformvalue.oppholdÅrsak.kode = values.oppholdArsak;
   transformvalue.periodeResultatType = resultatTypeObject(values.erOppfylt, values.oppholdArsak);
   transformvalue.periodeResultatÅrsak = {
@@ -304,7 +304,7 @@ const transformValues = (values, selectedItemData, avslagAarsakKoder, innvilgels
   if (values.erOppfylt && innvilgelseAarsakObject) {
     transformvalue.periodeResultatÅrsak = innvilgelseAarsakObject;
   }
-  if (!values.graderingInnvilget && graderingAvslagAarsakObject) {
+  if (values.erOppfylt && !values.graderingInnvilget && graderingAvslagAarsakObject) {
     transformvalue.graderingAvslagÅrsak = graderingAvslagAarsakObject;
   }
 

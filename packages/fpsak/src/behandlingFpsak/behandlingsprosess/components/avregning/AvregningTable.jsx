@@ -71,9 +71,18 @@ const tableTitle = mottaker => (mottaker.mottakerType.kode === mottakerTyper.ARB
   : null
 );
 
-const AvregningTable = ({ simuleringResultat, toggleDetails, showDetails }) => {
+const getResultatRadene = (ingenPerioderMedAvvik, resultatPerFagområde, resultatOgMotregningRader) => {
+  if (!ingenPerioderMedAvvik) {
+    return resultatOgMotregningRader;
+  }
+  return resultatPerFagområde.length > 1 ? resultatOgMotregningRader.filter(resultat => resultat.feltnavn !== avregningCodes.INNTREKKNESTEMÅNED) : [];
+};
+
+const AvregningTable = ({
+  simuleringResultat, toggleDetails, showDetails, ingenPerioderMedAvvik,
+}) => {
   const rangeOfMonths = getRangeOfMonths(
-    simuleringResultat.periodeFom,
+    ingenPerioderMedAvvik ? moment(simuleringResultat.nestUtbPeriodeTom).subtract(1, 'months') : simuleringResultat.periodeFom,
     simuleringResultat.nestUtbPeriodeTom ? simuleringResultat.nestUtbPeriodeTom : simuleringResultat.periodeTom,
   );
   return (
@@ -101,7 +110,7 @@ const AvregningTable = ({ simuleringResultat, toggleDetails, showDetails }) => {
               const isRowToggable = rowToggable(fagOmråde, isFeilUtbetalt);
               return (
                 <TableRow
-                  isBold={isFeilUtbetalt}
+                  isBold={isFeilUtbetalt || ingenPerioderMedAvvik}
                   isDashedBottomBorder={isRowToggable}
                   isSolidBottomBorder={!isRowToggable}
                   key={`rowIndex${fagIndex + 1}${rowIndex + 1}`}
@@ -113,18 +122,19 @@ const AvregningTable = ({ simuleringResultat, toggleDetails, showDetails }) => {
                 </TableRow>
               );
             })).flat()
-            .concat(mottaker.resultatOgMotregningRader.map((resultat, resultatIndex) => (
-              <TableRow
-                isBold={resultat.feltnavn !== avregningCodes.INNTREKKNESTEMÅNED}
-                isSolidBottomBorder
-                key={`rowIndex${resultatIndex + 1}`}
-              >
-                <TableColumn>
-                  <FormattedMessage id={`Avregning.${resultat.feltnavn}`} />
-                </TableColumn>
-                {createColumns(resultat.resultaterPerMåned, rangeOfMonths, simuleringResultat.nestUtbPeriodeTom)}
-              </TableRow>
-            )))
+            .concat(getResultatRadene(ingenPerioderMedAvvik, mottaker.resultatPerFagområde, mottaker.resultatOgMotregningRader)
+              .map((resultat, resultatIndex) => (
+                <TableRow
+                  isBold={resultat.feltnavn !== avregningCodes.INNTREKKNESTEMÅNED}
+                  isSolidBottomBorder
+                  key={`rowIndex${resultatIndex + 1}`}
+                >
+                  <TableColumn>
+                    <FormattedMessage id={`Avregning.${resultat.feltnavn}`} />
+                  </TableColumn>
+                  {createColumns(resultat.resultaterPerMåned, rangeOfMonths, simuleringResultat.nestUtbPeriodeTom)}
+                </TableRow>
+              )))
         }
         </Table>
       </div>
@@ -136,6 +146,7 @@ AvregningTable.propTypes = {
   toggleDetails: PropTypes.func.isRequired,
   showDetails: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   simuleringResultat: PropTypes.shape().isRequired,
+  ingenPerioderMedAvvik: PropTypes.bool.isRequired,
 };
 
 export default AvregningTable;
