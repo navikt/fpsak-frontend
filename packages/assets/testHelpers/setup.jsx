@@ -14,7 +14,7 @@ sinon.stub(console, 'error').callsFake((warning) => {
 });
 
 const dom = new JSDOM('<html><body></body></html><div id="app" />', {
-  url: 'http://localhost/',
+  url: 'http://localhost/fpsak',
 });
 global.document = dom.window.document;
 global.window = document.window;
