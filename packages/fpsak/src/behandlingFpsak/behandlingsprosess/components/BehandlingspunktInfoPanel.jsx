@@ -15,12 +15,10 @@ import TilkjentYtelsePanel from './tilkjentYtelse/TilkjentYtelsePanel';
 import UttakPanel from './uttak/UttakPanel';
 import VedtakPanels from './vedtak/VedtakPanels';
 import VilkarPanels from './vilkar/VilkarPanels';
-import BehandleKlageNfpForm from './klage/BehandleKlageNfpForm';
-import BehandleKlageNfpFormNy from './klage/BehandleKlageNfpFormNy';
-import BehandleKlageNkForm from './klage/BehandleKlageNkForm';
-import BehandleKlageNkFormNy from './klage/BehandleKlageNkFormNy';
-import FormkravKlageFormNfp from './klage/FormkravKlageFormNfp';
-import FormkravKlageFormKa from './klage/FormkravKlageFormKa';
+import BehandleKlageFormNfp from './klage/Klagevurdering/Nfp/BehandleKlageFormNfp';
+import BehandleKlageFormKa from './klage/Klagevurdering/KA/BehandleKlageFormKa';
+import FormkravKlageFormNfp from './klage/Formkrav/FormkravKlageFormNfp';
+import FormkravKlageFormKa from './klage/Formkrav/FormkravKlageFormKa';
 import InnsynForm from './innsyn/InnsynForm';
 import BeregningFP from './beregningsgrunnlag/BeregningFP';
 import VarselOmRevurderingForm from './revurdering/VarselOmRevurderingForm';
@@ -49,7 +47,6 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
   isApSolvable,
   apCodes,
   readOnlySubmitButton,
-  featureToggleFormkrav,
 }) => (
   <div className={findStyle(openAksjonspunkt, isApSolvable, readOnly)}>
     <div>
@@ -90,20 +87,9 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
       />
       )
       }
-
-      {(BehandleKlageNkForm.supports(apCodes) && !featureToggleFormkrav)
+      {BehandleKlageFormKa.supports(apCodes)
       && (
-      <BehandleKlageNkForm
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        previewCallback={previewCallback}
-        readOnlySubmitButton={readOnlySubmitButton}
-      />
-      )
-      }
-      {(BehandleKlageNkFormNy.supports(apCodes) && featureToggleFormkrav)
-      && (
-      <BehandleKlageNkFormNy
+      <BehandleKlageFormKa
         submitCallback={submitCallback}
         readOnly={readOnly}
         previewCallback={previewCallbackKlage}
@@ -111,19 +97,9 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
       />
       )
       }
-      {(BehandleKlageNfpForm.supports(apCodes) && !featureToggleFormkrav)
+      {BehandleKlageFormNfp.supports(apCodes)
       && (
-      <BehandleKlageNfpForm
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        previewCallback={previewCallback}
-        readOnlySubmitButton={readOnlySubmitButton}
-      />
-      )
-      }
-      {(BehandleKlageNfpFormNy.supports(apCodes) && featureToggleFormkrav)
-      && (
-      <BehandleKlageNfpFormNy
+      <BehandleKlageFormNfp
         submitCallback={submitCallback}
         readOnly={readOnly}
         previewCallback={previewCallbackKlage}
@@ -217,7 +193,6 @@ BehandlingspunktInfoPanel.propTypes = {
   isApSolvable: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
-  featureToggleFormkrav: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -226,7 +201,6 @@ const mapStateToProps = state => ({
   isApSolvable: isBehandlingspunktAksjonspunkterSolvable(state),
   apCodes: getBehandlingspunktAksjonspunkterCodes(state),
   readOnlySubmitButton: isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
-  featureToggleFormkrav: true,
 });
 
 export default connect(mapStateToProps)(BehandlingspunktInfoPanel);
