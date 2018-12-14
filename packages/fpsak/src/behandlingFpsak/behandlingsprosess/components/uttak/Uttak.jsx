@@ -12,7 +12,7 @@ import {
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
 import {
-  calcDays, ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT,
+  calcDays, ISO_DATE_FORMAT, DDMMYY_DATE_FORMAT, calcDaysAndWeeks,
 } from '@fpsak-frontend/utils';
 import { CheckboxField } from '@fpsak-frontend/form';
 import {
@@ -68,9 +68,15 @@ const getStatusPeriodeMed = (periode) => {
 
 const createTooltipContent = (periodeFom, periodeTom, periodeType, intl, item) => (`
   <p>
-    <strong>${intl.formatMessage({ id: 'Timeline.tooltip.start' })}:</strong> ${moment(periodeFom).format(DDMMYYYY_DATE_FORMAT)}
-    <strong>${intl.formatMessage({ id: 'Timeline.tooltip.slutt' })}:</strong> ${moment(periodeTom).format(DDMMYYYY_DATE_FORMAT)}
-    <strong>${intl.formatMessage({ id: 'Timeline.tooltip.periodetype' })}:</strong> ${item.utsettelseType && item.utsettelseType.kode !== '-'
+    ${moment(periodeFom).format(DDMMYY_DATE_FORMAT)} - ${moment(periodeTom).format(DDMMYY_DATE_FORMAT)}
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     ${intl.formatMessage({ id: calcDaysAndWeeks(moment(periodeFom), moment(periodeTom)).id },
+    {
+      weeks: calcDaysAndWeeks(moment(periodeFom), moment(periodeTom)).weeks,
+      days: calcDaysAndWeeks(moment(periodeFom), moment(periodeTom)).days,
+    })}
+    </br>
+    ${item.utsettelseType && item.utsettelseType.kode !== '-'
     ? intl.formatMessage({ id: 'Timeline.tooltip.utsettelsePeriode' }) : periodeType}
    </p>
 `);
