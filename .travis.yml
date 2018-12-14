@@ -17,9 +17,10 @@ install:
 
 script:
 - yarn less:lint
-- yarn test
-- yarn build
 - yarn test:coverage
+- yarn build
+- SONAR_SKIP=$(if [ "$TRAVIS_PULL_REQUEST" = "false"]; then echo "false"; else echo "true"; fi)
+- if [ $SONAR_SKIP = "false" ]; then git fetch --unshallow --quiet; fi
 - chmod a+x ./travis/sonar.sh
 - "./travis/sonar.sh"
 - git config user.name team-foreldrepenger[bot]
