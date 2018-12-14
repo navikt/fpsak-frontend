@@ -5,7 +5,9 @@ import { intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 
-import { getAksjonspunkter, getBehandlingResultatstruktur, getBehandlingSprak } from 'behandlingFpsak/behandlingSelectors';
+import {
+  getAksjonspunkter, getBehandlingResultatstruktur, getBehandlingSprak, getTilbakekrevingValg,
+} from 'behandlingFpsak/behandlingSelectors';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import VedtakFritekstPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
@@ -24,11 +26,12 @@ export const VedtakInnvilgetPanelImpl = ({
   sprakKode,
   readOnly,
   skalBrukeOverstyrendeFritekstBrev,
+  tilbakekrevingType,
 }) => (
   <ElementWrapper>
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
     <Normaltekst>
-      {intl.formatMessage({ id: findInnvilgetResultatText(behandlingsresultat.type.kode, ytelseType) })}
+      {intl.formatMessage({ id: findInnvilgetResultatText(behandlingsresultat.type.kode, ytelseType, tilbakekrevingType) })}
     </Normaltekst>
     <VerticalSpacer eightPx />
     { endringerIBeregningsgrunnlagGirFritekstfelt(aksjonspunkter, ytelseType) && !skalBrukeOverstyrendeFritekstBrev
@@ -76,6 +79,7 @@ VedtakInnvilgetPanelImpl.propTypes = {
   sprakKode: PropTypes.shape(),
   readOnly: PropTypes.bool.isRequired,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool.isRequired,
+  tilbakekrevingType: PropTypes.string,
 };
 
 VedtakInnvilgetPanelImpl.defaultProps = {
@@ -83,6 +87,7 @@ VedtakInnvilgetPanelImpl.defaultProps = {
   antallBarn: undefined,
   aksjonspunkter: undefined,
   sprakKode: undefined,
+  tilbakekrevingType: undefined,
 };
 
 
@@ -91,6 +96,7 @@ const mapStateToProps = state => ({
   beregningResultat: getBehandlingResultatstruktur(state),
   aksjonspunkter: getAksjonspunkter(state),
   sprakKode: getBehandlingSprak(state),
+  tilbakekrevingType: getTilbakekrevingValg(state).videreBehandling.kode,
 });
 
 export default connect(mapStateToProps)(VedtakInnvilgetPanelImpl);
