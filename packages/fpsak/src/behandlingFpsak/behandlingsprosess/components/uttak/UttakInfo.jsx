@@ -115,6 +115,13 @@ const mapPeriodeTyper = typer => typer
   .filter(({ kode }) => gyldigeÅrsaker.includes(kode))
   .map(({ kode }) => <option value={kode} key={kode}>{oppholdArsakKontoNavn[kode]}</option>);
 
+const visGraderingIkkeInnvilget = (selectedItem, readOnly, graderingInnvilget) => {
+  const visGradering = selectedItem.periodeResultatType.kode === periodeResultatType.INNVILGET
+    && selectedItem.gradertAktivitet
+    && graderingInnvilget === false
+    && readOnly;
+  return visGradering;
+};
 
 export const UttakInfo = ({
   selectedItemData,
@@ -259,7 +266,7 @@ export const UttakInfo = ({
             </Column>
 
           </Row>
-          {selectedItemData.gradertAktivitet && graderingInnvilget === false && readOnly && (
+          {visGraderingIkkeInnvilget(selectedItemData, readOnly, graderingInnvilget) && (
           <Row>
             <Column xs="12">
               <b>
