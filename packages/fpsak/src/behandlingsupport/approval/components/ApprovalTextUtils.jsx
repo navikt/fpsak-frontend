@@ -175,7 +175,7 @@ export const getAksjonspunktTextSelector = createSelector(
       return [buildVarigEndringBeregningText(aksjonspunkt.beregningDto)];
     } if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN) {
       return getFaktaOmBeregningText(aksjonspunkt.beregningDto);
-    } if (isUttakAksjonspunkt(aksjonspunkt.aksjonspunktKode)) {
+    } if (isUttakAksjonspunkt(aksjonspunkt.aksjonspunktKode) && aksjonspunkt.uttakPerioder && aksjonspunkt.uttakPerioder.length > 0) {
       return buildUttakText(aksjonspunkt);
     } if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD) {
       return getTextForForeldreansvarsvilkåretAndreLedd(isForeldrepenger);

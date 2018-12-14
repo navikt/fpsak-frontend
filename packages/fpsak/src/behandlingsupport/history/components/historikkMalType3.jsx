@@ -55,6 +55,14 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG]: 'OmsorgFaktaForm.Omsorg.ApplicationInformation',
   [aksjonspunktCodes.AVKLAR_UTTAK]: 'UttakInfoPanel.FaktaUttak',
   [aksjonspunktCodes.FASTSETT_UTTAKPERIODER]: 'Fastsett.Manuelt',
+  [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_DØD]: 'Uttak.OpplysningerOmDod',
+  [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST]: 'Uttak.OpplysningerOmSoknadsfrist',
+  [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_MEDLEMSKAP]: 'Uttak.OpplysningerOmMedlemskap',
+  [aksjonspunktCodes.KONTROLLER_REALITETSBEHANDLING_ELLER_KLAGE]: 'Uttak.OpplysningerOmKlage',
+  [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_FORDELING_AV_STØNADSPERIODEN]: 'Uttak.OpplysningerOmFordelingStonadsperiode',
+  [aksjonspunktCodes.KONTROLLER_TILSTØTENDE_YTELSER_INNVILGET]: 'Uttak.OpplysningerOmTilstotendeYtelser.Innvilget',
+  [aksjonspunktCodes.KONTROLLER_TILSTØTENDE_YTELSER_OPPHØRT]: 'Uttak.OpplysningerOmTilstotendeYtelser.Opphort',
+  [aksjonspunktCodes.TILKNYTTET_STORTINGET]: 'Uttak.TilknyttetStortinget',
   [aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS]: 'Beregning.BeregningsgrunnlagManueltATFL',
   [aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE]: 'Beregning.VurderVarigEndring',
   [aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE]: 'Beregning.BeregningsgrunnlagManueltSN',
@@ -63,6 +71,7 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET]: 'Beregning.BeregningsgrunnlagManueltSNNYIArbeidslivet',
   [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: 'Beregning.VurderFaktaATFLSN',
   [aksjonspunktCodes.FORESLA_VEDTAK]: 'Vedtak.Fritekstbrev',
+  [aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO]: 'UttakInfoPanel.FaktaUttak.ForsteUttakDato',
 
 };
 

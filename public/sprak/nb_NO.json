@@ -1338,7 +1338,15 @@
   "ToTrinnsForm.AvklarUttak.PeriodeEndret": "Perioden {a} til {b} er endret.",
   "ToTrinnsForm.OverstyrUttak.PeriodeEndret": "Perioden {a} til {b} er overstyrt.",
   "ToTrinnsForm.ManueltFastsattUttak.PeriodeEndret": "Perioden {a} til {b} er fastsatt manuelt.",
-  "TotrinnsForm.Uttak.AvklarManglendeUttaksperiode": "Manglende uttaksperiode er fastsatt manuelt",
+  "TotrinnsForm.Uttak.AvklarManglendeUttaksperiode": "Manglende uttaksperiode er fastsatt manuelt.",
+  "ToTrinnsForm.Uttak.Dod": "Opplysninger om død er kontrollert.",
+  "ToTrinnsForm.Uttak.Soknadsfrist": "Opplysninger om søknadsfrist er kontrollert.",
+  "ToTrinnsForm.Uttak.Medlemskap": "Opplysninger om medlemskap er kontrollert.",
+  "ToTrinnsForm.Uttak.Klage": "Opplysninger om realitetsbehandling/klage er kontrollert.",
+  "ToTrinnsForm.Uttak.FordelingStonadsperioder": "Opplysninger om fordeling av stønadsperioden er kontrollert.",
+  "ToTrinnsForm.Uttak.TilstotendeYtelser.Innvilget": "Opplysninger om tilstøtende ytelser innvilget er kontrollert.",
+  "ToTrinnsForm.Uttak.TilstotendeYtelser.Opphort": "Opplysninger om tilstøtende ytelser opphørt er kontrollert.",
+  "ToTrinnsForm.Uttak.Stortinget": "Søker er stortingsrepresentant/administrativt ansatt i Stortinget. Uttak er kontrollert.",
 
   "ToTrinnsForm.Klage.OmgjortTilGunst": "Omgjort til gunst",
   "ToTrinnsForm.Klage.StadfesteYtelsesVedtak": "Stadfest ytelsesvedtak",
@@ -1628,6 +1636,15 @@
   "RenderUttakTable.ArbeidType.SELVSTENDIG_NÆRINGSDRIVENDE": "Selvstendig næringsdrivende",
   "RenderUttakTable.ArbeidType.ANNET": "Annet",
 
+  "Uttak.OpplysningerOmDod": "Kontroller opplysninger om død",
+  "Uttak.OpplysningerOmSoknadsfrist": "Kontroller opplysninger om søknadsfrist",
+  "Uttak.OpplysningerOmMedlemskap": "Kontroller opplysninger om medlemskap",
+  "Uttak.OpplysningerOmKlage": "Kontroller opplysninger om realitetsbehandling/klage",
+  "Uttak.OpplysningerOmFordelingStonadsperiode": "Kontroller opplysninger om fordeling av stønadsperioden",
+  "Uttak.OpplysningerOmTilstotendeYtelser.Innvilget": "Kontroller opplysninger om tilstøtende ytelser innvilget",
+  "Uttak.OpplysningerOmTilstotendeYtelser.Opphort": "Kontroller opplysninger om tilstøtende ytelser opphørt",
+  "Uttak.TilknyttetStortinget": "Søker er stortingsrepresentant/administrativt ansatt i Stortinget. Uttak",
+
   "Uttak.Confirm": "Bekreft og fortsett",
   "Uttak.ManuellOverstyring": "Manuell overstyring",
   "Uttak.Overstyrt" : "Kun overstyrer kan endre på periodene",
@@ -1700,6 +1717,7 @@
   "PeriodeResultatType.UGYLDIG_UTSETTELSE": "Ugyldig utsettelse",
 
   "UttakInfoPanel.FaktaUttak": "Fakta om uttak",
+  "UttakInfoPanel.FaktaUttak.ForsteUttakDato": "Kontroller manglende uttaksperiode",
   "UttakInfoPanel.Aksjonspunkt.5070": "Kontakt søker ved behov. Fastsett korrekt og dokumentert søknadsperiode og andel i arbeid.",
   "UttakInfoPanel.Aksjonspunkt.5081": "Første dato for uttak er {value}. Legg inn manglende søknadsperiode. Kontakt søker ved behov.",
   "UttakInfoPanel.Aksjonspunkt.6070": "Saksbehandler initierer kontroll av søknadsperiodene",
@@ -1998,6 +2016,7 @@
   "HistorikkEndretFelt.ErKlageSignert": "Er klagen signert",
   "HistorikkEndretFelt.VurderEtterlønnSluttpakke": "Inntekt fra etterlønn eller sluttpakke",
   "HistorikkEndretFelt.FastsettEtterlønnSluttpakke": "Inntekten",
+  "HistorikkEndretFelt.AvslagMorTarIkkeAlleUker": "Mor tar ikke alle 3 ukene før termin",
 
   "HistorikkEndretFeltVerdiType.AdoptererAlene": "adopterer alene",
   "HistorikkEndretFeltVerdiType.AdoptererIkkeAlene": "adopterer ikke alene",

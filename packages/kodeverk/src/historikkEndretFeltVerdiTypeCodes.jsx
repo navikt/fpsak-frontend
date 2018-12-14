@@ -585,6 +585,10 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'UTTAK_PERIODE_AVSLAG_ÅRSAK',
     verdiId: 'HistorikkEndretFelt.AvslagGraderingsavtaleManglerIkkeDok',
   },
+  4095: {
+    kode: 'UTTAK_PERIODE_AVSLAG_ÅRSAK',
+    verdiId: 'HistorikkEndretFelt.AvslagMorTarIkkeAlleUker',
+  },
   4502: {
     kode: 'UTTAK_PERIODE_GRADERING_AVSLAG_ÅRSAK',
     verdiId: 'HistorikkEndretFelt.AvslagGraderingsavtaleManglerIkkeDok',
