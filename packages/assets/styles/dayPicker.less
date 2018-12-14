@@ -1,4 +1,4 @@
-@import '@{coreModulePath}nav-frontend-typografi-style/src/index';
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
 .DayPickerInput-OverlayWrapper {
   height: 0;
@@ -82,8 +82,9 @@
 
 .DayPicker-Caption {
   display: table-caption;
-  .typo-undertittel();
   height: 2em;
+  font-size: 1.25rem;
+  font-weight: 600;
   line-height: 2em;
   margin-bottom: 0.5em;
   text-align: center;
@@ -102,7 +103,11 @@
   display: table-cell;
   padding: 0.5em;
   text-align: center;
-  .typo-element();
+  margin: 0;
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.375rem;
+  font-weight: 600;
 
   abbr {
     text-decoration: none;
