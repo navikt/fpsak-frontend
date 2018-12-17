@@ -9,14 +9,15 @@ import { isBGAksjonspunktSomGirFritekstfelt } from '@fpsak-frontend/kodeverk/src
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
 
-export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType, tilbakekrevingType) => {
+export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType, tilbakekrevingValg) => {
   if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET) {
     return 'VedtakForm.ResultatOpprettholdVedtak';
   } if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_MEDHOLD) {
     return 'VedtakForm.ResultatKlageMedhold';
   }
 
-  const tilbakekrevingTypeText = tilbakekrevingType && tilbakekrevingType !== avregningCodes.TILBAKEKR_IGNORER ? `.${tilbakekrevingType}` : '';
+  const tilbakekrevingTypeText = tilbakekrevingValg && tilbakekrevingValg.videreBehandling.kode !== avregningCodes.TILBAKEKR_IGNORER
+    ? `.${tilbakekrevingValg.videreBehandling.kode}` : '';
 
   if (ytelseType === fagsakYtelseType.ENGANGSSTONAD) {
     return `VedtakForm.VilkarStatusInnvilgetEngangsstonad${tilbakekrevingTypeText}`;
