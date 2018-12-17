@@ -2022,6 +2022,7 @@
   "HistorikkEndretFelt.VurderEtterlønnSluttpakke": "Inntekt fra etterlønn eller sluttpakke",
   "HistorikkEndretFelt.FastsettEtterlønnSluttpakke": "Inntekten",
   "HistorikkEndretFelt.AvslagMorTarIkkeAlleUker": "Mor tar ikke alle 3 ukene før termin",
+  "HistorikkEndretFelt.RettTilForeldrepenger": "Rett til foreldrepenger",
 
   "HistorikkEndretFeltVerdiType.AdoptererAlene": "adopterer alene",
   "HistorikkEndretFeltVerdiType.AdoptererIkkeAlene": "adopterer ikke alene",
@@ -2132,6 +2133,8 @@
   "HistorikkEndretFeltVerdiType.GraderingIkkeOppfylt": "Ikke oppfylt",
   "HistorikkEndretFeltVerdiType.tilbakekrInfotrygd": "Behandle tilbakekreving i infotrygd",
   "HistorikkEndretFeltVerdiType.tilbakekrIgnorer": "Avvent samordning, ingen tilbakekreving",
+  "HistorikkEndretFeltVerdiType.AnnenforelderHarRett": "Annen forelder har rett",
+  "HistorikkEndretFeltVerdiType.AnnenforelderHarIkkeRett": "Annen forelder har ikke rett",
 
   "HistorikkEndretFeltHeading.FordelingForNyAndel": "<b>Det er lagt til ny aktivitet:</b> <br><b>{value}</b>: Fordeling for ",
   "HistorikkEndretFeltHeading.FordelingForAndel": "Fordeling for <b>{value}</b>:",

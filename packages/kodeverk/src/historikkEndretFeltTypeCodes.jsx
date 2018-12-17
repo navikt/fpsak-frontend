@@ -349,6 +349,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'FASTSETT_ETTERLØNN_SLUTTPAKKE',
     feltId: 'HistorikkEndretFelt.FastsettEtterlønnSluttpakke',
   },
+  RETT_TIL_FORELDREPENGER: {
+    kode: 'RETT_TIL_FORELDREPENGER',
+    feltId: 'HistorikkEndretFelt.RettTilForeldrepenger',
+  },
 
 };
 

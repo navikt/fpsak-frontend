@@ -773,6 +773,14 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'GRADERING_IKKE_OPPFYLT',
     verdiId: 'HistorikkEndretFeltVerdiType.GraderingIkkeOppfylt',
   },
+  ANNEN_FORELDER_HAR_IKKE_RETT: {
+    kode: 'ANNEN_FORELDER_HAR_IKKE_RETT',
+    verdiId: 'HistorikkEndretFeltVerdiType.AnnenforelderHarIkkeRett',
+  },
+  ANNEN_FORELDER_HAR_RETT: {
+    kode: 'ANNEN_FORELDER_HAR_RETT',
+    verdiId: 'HistorikkEndretFeltVerdiType.AnnenforelderHarRett',
+  },
 };
 
 export default historikkEndretFeltVerdiTypeCodes;
