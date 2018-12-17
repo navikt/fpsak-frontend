@@ -66,14 +66,14 @@ const getStatusPeriodeMed = (periode) => {
   return avvistKlassenavn;
 };
 
-const createTooltipContent = (periodeFom, periodeTom, periodeType, intl, item) => (`
+const createTooltipContent = (periodeType, intl, item) => (`
   <p>
-    ${moment(periodeFom).format(DDMMYY_DATE_FORMAT)} - ${moment(periodeTom).format(DDMMYY_DATE_FORMAT)}
+    ${moment(item.fom).format(DDMMYY_DATE_FORMAT)} - ${moment(item.tom).format(DDMMYY_DATE_FORMAT)}
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     ${intl.formatMessage({ id: calcDaysAndWeeks(moment(periodeFom), moment(periodeTom)).id },
+     ${intl.formatMessage({ id: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).id },
     {
-      weeks: calcDaysAndWeeks(moment(periodeFom), moment(periodeTom)).weeks,
-      days: calcDaysAndWeeks(moment(periodeFom), moment(periodeTom)).days,
+      weeks: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).weeks,
+      days: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).days,
     })}
     </br>
     ${item.utsettelseType && item.utsettelseType.kode !== '-'
@@ -114,7 +114,7 @@ const addClassNameGroupIdToPerioder = (hovedsokerPerioder, annenForelderPerioder
     copyOfItem.className = opphold ? oppholdStatus : `${status} ${gradert}`;
     copyOfItem.hovedsoker = hovedsoker;
     copyOfItem.group = annenForelderPerioder.length > 0 && hovedsoker ? 2 : 1;
-    copyOfItem.title = createTooltipContent(item.fom, item.tom, stonadskontoType, intl, item);
+    copyOfItem.title = createTooltipContent(stonadskontoType, intl, item);
     perioderMedClassName.push(copyOfItem);
   });
   return perioderMedClassName;
