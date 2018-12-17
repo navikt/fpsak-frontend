@@ -26,12 +26,12 @@ export const VedtakInnvilgetPanelImpl = ({
   sprakKode,
   readOnly,
   skalBrukeOverstyrendeFritekstBrev,
-  tilbakekrevingType,
+  tilbakekrevingValg,
 }) => (
   <ElementWrapper>
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
     <Normaltekst>
-      {intl.formatMessage({ id: findInnvilgetResultatText(behandlingsresultat.type.kode, ytelseType, tilbakekrevingType) })}
+      {intl.formatMessage({ id: findInnvilgetResultatText(behandlingsresultat.type.kode, ytelseType, tilbakekrevingValg) })}
     </Normaltekst>
     <VerticalSpacer eightPx />
     { endringerIBeregningsgrunnlagGirFritekstfelt(aksjonspunkter, ytelseType) && !skalBrukeOverstyrendeFritekstBrev
@@ -79,7 +79,7 @@ VedtakInnvilgetPanelImpl.propTypes = {
   sprakKode: PropTypes.shape(),
   readOnly: PropTypes.bool.isRequired,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool.isRequired,
-  tilbakekrevingType: PropTypes.string,
+  tilbakekrevingValg: PropTypes.shape(),
 };
 
 VedtakInnvilgetPanelImpl.defaultProps = {
@@ -87,7 +87,7 @@ VedtakInnvilgetPanelImpl.defaultProps = {
   antallBarn: undefined,
   aksjonspunkter: undefined,
   sprakKode: undefined,
-  tilbakekrevingType: undefined,
+  tilbakekrevingValg: undefined,
 };
 
 
@@ -96,7 +96,7 @@ const mapStateToProps = state => ({
   beregningResultat: getBehandlingResultatstruktur(state),
   aksjonspunkter: getAksjonspunkter(state),
   sprakKode: getBehandlingSprak(state),
-  tilbakekrevingType: getTilbakekrevingValg(state).videreBehandling.kode,
+  tilbakekrevingValg: getTilbakekrevingValg(state),
 });
 
 export default connect(mapStateToProps)(VedtakInnvilgetPanelImpl);
