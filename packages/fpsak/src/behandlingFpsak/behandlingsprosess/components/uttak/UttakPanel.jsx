@@ -42,7 +42,13 @@ const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter) => {
   const helptTextAksjonspunkter = aksjonspunkter.filter(ap => ap.definisjon.kode !== aksjonspunktCodes.FASTSETT_UTTAKPERIODER
     && ap.definisjon.kode !== aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER);
 
-  const overstyrApHelpText = aksjonspunkter.length === 1 && aksjonspunkter[0].definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER;
+  const overstyrApHelpTextOpen = aksjonspunkter.length === 1
+    && aksjonspunkter[0].definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER
+    && aksjonspunkter[0].status.kode !== 'UTFO';
+
+  const overstyrApHelpTextUtfort = aksjonspunkter.length === 1
+    && aksjonspunkter[0].definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER
+    && aksjonspunkter[0].status.kode === 'UTFO';
   const uttakPanelAksjonsPunktKoder = {
     5001: 'UttakPanel.Aksjonspunkt.5001',
     5002: 'UttakPanel.Aksjonspunkt.5002',
@@ -89,8 +95,11 @@ const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter) => {
     texts.push(<FormattedMessage key="generellTekst" id="UttakPanel.Aksjonspunkt.Generell" />);
   }
 
-  if (overstyrApHelpText) {
+  if (overstyrApHelpTextOpen) {
     texts.push(<FormattedMessage key="aksjonspunktTekst" id="UttakPanel.Overstyrt.KontrollerPaNytt" />);
+  }
+  if (overstyrApHelpTextUtfort) {
+    texts.push(<FormattedMessage key="aksjonspunktTekst" id="UttakPanel.Overstyrt.Utfort" />);
   }
 
   if (!isApOpen) {

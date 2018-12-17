@@ -3,23 +3,41 @@ import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import prt from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import featureToggle from 'app/featureToggle';
 import { hasSimuleringOn, getStatusFromSimulering } from './simuleringStatusUtleder';
 import getVedtakStatus from './vedtakStatusUtleder';
 import BehandlingspunktProperties from './behandlingspunktBuilder';
 
-const getStatusFromUttakresultat = ({ resultatstruktur }) => {
-  if (!resultatstruktur) {
+const getStatusFromUttakresultat = ({ uttaksresultat }) => {
+  if (!uttaksresultat) {
     return vut.IKKE_VURDERT;
   }
-  if (resultatstruktur && resultatstruktur.perioder.length > 0) {
-    return vut.OPPFYLT;
+  if (uttaksresultat && uttaksresultat.perioderSøker.length > 0) {
+    const oppfylt = uttaksresultat.perioderSøker.some(p => (
+      p.periodeResultatType.kode !== prt.AVSLATT
+    ));
+    if (oppfylt) {
+      return vut.OPPFYLT;
+    }
   }
   return vut.IKKE_OPPFYLT;
 };
 
-const getStatusFromResultatstruktur = ({ resultatstruktur, stonadskontoer }) => (
-  resultatstruktur && resultatstruktur.perioder.length > 0 && stonadskontoer ? vut.OPPFYLT : vut.IKKE_VURDERT);
+const getStatusFromResultatstruktur = ({ resultatstruktur, uttaksresultat }) => {
+  if (resultatstruktur && resultatstruktur.perioder.length > 0) {
+    if (uttaksresultat && uttaksresultat.perioderSøker.length > 0) {
+      const oppfylt = uttaksresultat.perioderSøker.some(p => (
+        p.periodeResultatType.kode !== prt.AVSLATT
+      ));
+      if (!oppfylt) {
+        return vut.IKKE_OPPFYLT;
+      }
+      return vut.OPPFYLT;
+    }
+  }
+  return vut.IKKE_VURDERT;
+};
 
 const behandlingTypeNotEquals = (...behandlingTypes) => ({ behandlingType }) => !behandlingTypes.some(b => b === behandlingType.kode);
 const behandlingTypeEquals = (...behandlingTypes) => ({ behandlingType }) => behandlingTypes.some(b => b === behandlingType.kode);

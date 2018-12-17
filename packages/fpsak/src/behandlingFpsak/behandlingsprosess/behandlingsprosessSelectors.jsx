@@ -11,6 +11,7 @@ import fyt from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import {
   getBehandlingIsOnHold, getAllMerknaderFraBeslutter, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat,
   getBehandlingInnsynResultatType, getBehandlingResultatstruktur, getStonadskontoer, hasReadOnlyBehandling, isBehandlingStatusReadOnly,
+  getUttaksresultatPerioder,
 } from 'behandlingFpsak/behandlingSelectors';
 import { getFeatureToggles } from 'app/duck';
 import behandlingspunktCodes from './behandlingspunktCodes';
@@ -21,9 +22,9 @@ import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from '
 // Kun eksportert for test. Ikke bruk andre steder!
 export const getBehandlingspunkterProps = createSelector(
   [getFagsakYtelseType, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat, getBehandlingInnsynResultatType,
-    getBehandlingResultatstruktur, getStonadskontoer, getFeatureToggles],
+    getBehandlingResultatstruktur, getStonadskontoer, getFeatureToggles, getUttaksresultatPerioder],
   (fagsakYtelseType, behandlingType, vilkar = [], aksjonspunkter, behandlingsresultat,
-    innsynResultatType, resultatstruktur, stonadskontoer, featureToggles) => {
+    innsynResultatType, resultatstruktur, stonadskontoer, featureToggles, uttaksresultat) => {
     if (!behandlingType) {
       return undefined;
     }
@@ -37,6 +38,7 @@ export const getBehandlingspunkterProps = createSelector(
       resultatstruktur,
       stonadskontoer,
       featureToggles,
+      uttaksresultat,
     };
 
     return fagsakYtelseType.kode === fyt.ENGANGSSTONAD
