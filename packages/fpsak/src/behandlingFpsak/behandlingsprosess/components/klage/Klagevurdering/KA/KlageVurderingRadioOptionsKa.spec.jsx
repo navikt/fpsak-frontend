@@ -36,8 +36,8 @@ describe('<KlageVurderingRadioOptionsKaImpl>', () => {
     expect(radios).to.have.length(4);
     expect(radios.at(0).prop('label').id).to.equal('Klage.ResolveKlage.KeepVedtakNk');
     expect(radios.at(1).prop('label').id).to.equal('Klage.ResolveKlage.ChangeVedtak');
-    expect(radios.at(2).prop('label').id).to.equal('Klage.ResolveKlage.NullifyVedtak');
-    expect(radios.at(3).prop('label').id).to.equal('Klage.Behandle.Hjemsendt');
+    expect(radios.at(2).prop('label').id).to.equal('Klage.Behandle.Hjemsendt');
+    expect(radios.at(3).prop('label').id).to.equal('Klage.ResolveKlage.NullifyVedtak');
   });
 
   it('skal vise syv options når aksjonspunkt er NK og klage medhold', () => {
@@ -57,8 +57,8 @@ describe('<KlageVurderingRadioOptionsKaImpl>', () => {
     expect(radios).to.have.length(7);
     expect(radios.at(0).prop('label').id).to.equal('Klage.ResolveKlage.KeepVedtakNk');
     expect(radios.at(1).prop('label').id).to.equal('Klage.ResolveKlage.ChangeVedtak');
-    expect(radios.at(2).prop('label').id).to.equal('Klage.ResolveKlage.NullifyVedtak');
-    expect(radios.at(3).prop('label').id).to.equal('Klage.Behandle.Hjemsendt');
+    expect(radios.at(2).prop('label').id).to.equal('Klage.Behandle.Hjemsendt');
+    expect(radios.at(3).prop('label').id).to.equal('Klage.ResolveKlage.NullifyVedtak');
     expect(radios.at(4).prop('label').id).to.equal('Klage.Behandle.Omgjort');
     expect(radios.at(5).prop('label').id).to.equal('Klage.Behandle.Ugunst');
     expect(radios.at(6).prop('label').id).to.equal('Klage.Behandle.DelvisOmgjort');
