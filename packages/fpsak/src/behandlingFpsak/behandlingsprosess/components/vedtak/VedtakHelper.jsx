@@ -7,20 +7,22 @@ import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus'
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { isBGAksjonspunktSomGirFritekstfelt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
 
-export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType) => {
+export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType, tilbakekrevingType) => {
   if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET) {
     return 'VedtakForm.ResultatOpprettholdVedtak';
   } if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_MEDHOLD) {
     return 'VedtakForm.ResultatKlageMedhold';
   }
 
+  const tilbakekrevingTypeText = tilbakekrevingType && tilbakekrevingType !== avregningCodes.TILBAKEKR_IGNORER ? `.${tilbakekrevingType}` : '';
 
   if (ytelseType === fagsakYtelseType.ENGANGSSTONAD) {
-    return 'VedtakForm.VilkarStatusInnvilgetEngangsstonad';
+    return `VedtakForm.VilkarStatusInnvilgetEngangsstonad${tilbakekrevingTypeText}`;
   }
 
-  return 'VedtakForm.VilkarStatusInnvilgetForeldrepenger';
+  return `VedtakForm.VilkarStatusInnvilgetForeldrepenger${tilbakekrevingTypeText}`;
 };
 
 export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) => {
