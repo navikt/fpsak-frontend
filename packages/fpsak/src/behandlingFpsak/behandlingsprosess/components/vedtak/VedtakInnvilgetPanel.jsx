@@ -14,7 +14,7 @@ import VedtakFritekstPanel from 'behandlingFpsak/behandlingsprosess/components/v
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { findInnvilgetResultatText, endringerIBeregningsgrunnlagGirFritekstfelt, tilbakekrevingText } from './VedtakHelper';
+import { findInnvilgetResultatText, endringerIBeregningsgrunnlagGirFritekstfelt } from './VedtakHelper';
 
 export const VedtakInnvilgetPanelImpl = ({
   intl,
@@ -33,7 +33,7 @@ export const VedtakInnvilgetPanelImpl = ({
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
     <Normaltekst>
       {intl.formatMessage({
-        id: findInnvilgetResultatText(behandlingsresultat.type.kode, ytelseType, tilbakekrevingText(simuleringResultat, tilbakekrevingValg)),
+        id: findInnvilgetResultatText(behandlingsresultat.type.kode, ytelseType, simuleringResultat, tilbakekrevingValg),
       })}
     </Normaltekst>
     <VerticalSpacer eightPx />
