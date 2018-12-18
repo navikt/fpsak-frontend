@@ -229,7 +229,8 @@ const getAllApCodes = (behandlingspunkt) => {
   const fpAps = behandlingspunktToAksjonspunktForeldrepenger[behandlingspunkt];
   if (isObject(fpAps)) {
     return apCodes.concat(Object.values(fpAps));
-  } if (fpAps) {
+  }
+  if (fpAps) {
     return apCodes.concat([fpAps]);
   }
   return apCodes;

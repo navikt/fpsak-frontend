@@ -155,12 +155,14 @@ const getInfoTextCode = createSelector(
   ) => {
     if (behandlingIsKlage) {
       return 'FatterVedtakApprovalModal.ModalDescriptionKlage';
-    } if (isSameResultAsOriginalBehandling(
+    }
+    if (isSameResultAsOriginalBehandling(
       behandlingtype.kode, behandlingsresultat, beregningResultat, orginaltBehandlingsresultat,
       originaltBeregningResultat,
     )) {
       return 'FatterVedtakApprovalModal.UendretUtfall';
-    } if (behandlingsresultat.type.kode === behandlingResultatType.AVSLATT) {
+    }
+    if (behandlingsresultat.type.kode === behandlingResultatType.AVSLATT) {
       return ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD ? 'FatterVedtakApprovalModal.IkkeInnvilgetES' : 'FatterVedtakApprovalModal.IkkeInnvilgetFP';
     }
     if (isOpphor) {

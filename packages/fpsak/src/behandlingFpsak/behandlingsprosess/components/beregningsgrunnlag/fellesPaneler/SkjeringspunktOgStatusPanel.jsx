@@ -48,10 +48,12 @@ const createAktivitetstatusString = (listeMedStatuser, tilstøtendeYtelseType) =
 
   if (tekstList.length === 1) {
     return tekstList[0];
-  } if (tekstList.length === 2) {
+  }
+  if (tekstList.length === 2) {
     tekstString = `${tekstList[0]} og ${tekstList[1].toLowerCase()}`;
     return tekstString;
-  } if (tekstList.length > 2) {
+  }
+  if (tekstList.length > 2) {
     const sisteElement = tekstList.splice(tekstList.length - 1, 1);
     tekstString = tekstList.join(',');
     tekstString = `${tekstString} og ${sisteElement[0].toLowerCase()}`;

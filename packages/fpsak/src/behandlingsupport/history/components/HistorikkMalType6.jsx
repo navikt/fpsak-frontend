@@ -11,16 +11,15 @@ const HistorikkMalType6 = ({ historikkinnslagDeler, intl }) => {
   const { formatMessage } = intl;
 
   const formaterOpplysning = (opplysning, index) => (
-    (
-      <div key={`opplysning${index}`}>
-        <Normaltekst className={styles.keyValuePair}>
-          {formatMessage({ id: opplysning.opplysningType.navn })}
+    <div key={`opplysning${index}`}>
+      <Normaltekst className={styles.keyValuePair}>
+        {formatMessage({ id: opplysning.opplysningType.navn })}
 :
-        </Normaltekst>
+      </Normaltekst>
         &ensp;
-        <Element className={styles.keyValuePair}>{opplysning.tilVerdi}</Element>
-      </div>
-    )
+      <Element className={styles.keyValuePair}>{opplysning.tilVerdi}</Element>
+    </div>
+
   );
 
   return (

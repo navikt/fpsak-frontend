@@ -19,7 +19,8 @@ export const ENGANGSSTONAD_FORM_NAME = 'EngangsstonadForm';
 const buildInitialValues = (soknadData) => {
   if (soknadData.getFamilieHendelseType() === familieHendelseType.FODSEL) {
     return { ...RegistreringFodselGrid.initialValues };
-  } if (soknadData.getFamilieHendelseType() === familieHendelseType.ADOPSJON) {
+  }
+  if (soknadData.getFamilieHendelseType() === familieHendelseType.ADOPSJON) {
     return { ...RegistreringAdopsjonOgOmsorgGrid.initialValues };
   }
   return {};
@@ -88,7 +89,8 @@ EngangsstonadForm.defaultProps = {
 const getValidation = (soknadData, sokerPersonnummer) => {
   if (soknadData.getFamilieHendelseType() === familieHendelseType.FODSEL) {
     return values => RegistreringFodselGrid.validate(values, sokerPersonnummer);
-  } if (soknadData.getFamilieHendelseType() === familieHendelseType.ADOPSJON) {
+  }
+  if (soknadData.getFamilieHendelseType() === familieHendelseType.ADOPSJON) {
     return values => RegistreringAdopsjonOgOmsorgGrid.validate(values, sokerPersonnummer);
   }
   return null;

@@ -109,7 +109,8 @@ const getModalDescriptionTextCode = createSelector(
   (isOpphor, hasOpenAksjonspunkter, ytelseType, behType) => {
     if (isOpphor) {
       return 'FatterVedtakStatusModal.ModalDescriptionFPOpphort';
-    } if (hasOpenAksjonspunkter) {
+    }
+    if (hasOpenAksjonspunkter) {
       return ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
         ? 'FatterVedtakStatusModal.ModalDescriptionES'
         : 'FatterVedtakStatusModal.ModalDescriptionFP';

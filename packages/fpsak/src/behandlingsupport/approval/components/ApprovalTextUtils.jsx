@@ -152,10 +152,10 @@ const getTextForKlageHelper = (klageVurderingResultat) => {
 const getTextForKlage = (klagebehandlingVurdering, behandlingStaus) => {
   if (behandlingStaus.kode === behandlingStatusCode.FATTER_VEDTAK) {
     if (klagebehandlingVurdering.klageVurderingResultatNK) {
-      return getTextForKlageHelper(klagebehandlingVurdering.klageVurderingResultatNK, behandlingStaus);
+      return getTextForKlageHelper(klagebehandlingVurdering.klageVurderingResultatNK);
     }
     if (klagebehandlingVurdering.klageVurderingResultatNFP) {
-      return getTextForKlageHelper(klagebehandlingVurdering.klageVurderingResultatNFP, behandlingStaus);
+      return getTextForKlageHelper(klagebehandlingVurdering.klageVurderingResultatNFP);
     }
   }
   return null;
@@ -171,17 +171,23 @@ export const getAksjonspunktTextSelector = createSelector(
   (isForeldrepenger, klagebehandlingVurdering, behandlingStatus) => (aksjonspunkt) => {
     if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) {
       return buildOpptjeningText(aksjonspunkt);
-    } if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE) {
+    }
+    if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE) {
       return [buildVarigEndringBeregningText(aksjonspunkt.beregningDto)];
-    } if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN) {
+    }
+    if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN) {
       return getFaktaOmBeregningText(aksjonspunkt.beregningDto);
-    } if (isUttakAksjonspunkt(aksjonspunkt.aksjonspunktKode) && aksjonspunkt.uttakPerioder && aksjonspunkt.uttakPerioder.length > 0) {
+    }
+    if (isUttakAksjonspunkt(aksjonspunkt.aksjonspunktKode) && aksjonspunkt.uttakPerioder && aksjonspunkt.uttakPerioder.length > 0) {
       return buildUttakText(aksjonspunkt);
-    } if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD) {
+    }
+    if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD) {
       return getTextForForeldreansvarsvilkåretAndreLedd(isForeldrepenger);
-    } if (erKlageAksjonspunkt(aksjonspunkt)) {
+    }
+    if (erKlageAksjonspunkt(aksjonspunkt)) {
       return [getTextForKlage(klagebehandlingVurdering, behandlingStatus)];
-    } if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD) {
+    }
+    if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD) {
       return buildArbeidsforholdText(aksjonspunkt);
     }
     return [getTextFromAksjonspunktkode(aksjonspunkt)];

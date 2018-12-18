@@ -130,7 +130,8 @@ const getValidation = (soknadData, andreYtelser, sokerPersonnummer) => {
       ...PermisjonPanel.validate(values, soknadData),
       [ANNEN_FORELDER_FORM_NAME_PREFIX]: AnnenForelderPanel.validate(sokerPersonnummer, values[ANNEN_FORELDER_FORM_NAME_PREFIX]),
     });
-  } if (soknadData.getFamilieHendelseType() === familieHendelseType.ADOPSJON) {
+  }
+  if (soknadData.getFamilieHendelseType() === familieHendelseType.ADOPSJON) {
     return values => ({
       ...AndreYtelserPanel.validate(values, andreYtelser),
       ...InntektsgivendeArbeidPanel.validate(values),
@@ -175,8 +176,6 @@ const mapStateToProps = (state, initialProps) => {
   let annenForelderInformertRequired = true;
   if (sokerValue && (sokerHarAleneomsorg || sokerValue.denAndreForelderenHarRettPaForeldrepenger === false)) {
     annenForelderInformertRequired = false;
-  } else {
-    annenForelderInformertRequired = true;
   }
 
   return {

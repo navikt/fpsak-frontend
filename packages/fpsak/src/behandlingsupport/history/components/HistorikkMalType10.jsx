@@ -44,7 +44,8 @@ const HistorikkMalType10 = ({
       || endretFelt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.UTTAK_GRADERING_AVSLAG_ÅRSAK.kode) {
       if (endretFelt.tilVerdi === '-') {
         return '';
-      } if (endretFelt.fraVerdi === '-') {
+      }
+      if (endretFelt.fraVerdi === '-') {
         messageId = 'Historikk.Template.10.FieldSetTo';
       }
     } else if (endretFelt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.UTTAK_STØNADSKONTOTYPE.kode && endretFelt.fraVerdi === '-') {
