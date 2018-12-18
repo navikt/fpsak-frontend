@@ -237,9 +237,8 @@ som fra core/og muligen import fra alla andra komponenter
 
 :global(.avslatt) {
   background-color: transparent;
-  border-color: @redError;
+  border-color: rgba(@redError, 0.5);
   border-radius: 6px;
-  opacity: 0.5;
 
   &:active {
     background-color: transparent;
@@ -247,59 +246,54 @@ som fra core/og muligen import fra alla andra komponenter
 }
 
 :global(.avvistPeriode) {
-  background-color: @redError;
-  border-color: @navGra20;
+  background-color: rgba(@redError, 0.5);
+  border-color: rgba(@navGra20, 0.5);
   border-radius: 6px;
-  opacity: 0.5;
 
   &:active {
     background-color: @redError;
-    opacity: 1;
+    border-color: @navGra20;
   }
 }
 
 :global(.undefined) {
-  background-color: @navOransje;
-  border-color: @navOransje;
+  background-color: rgba(@navOransje, 0.8);
+  border-color: rgba(@navOransje, 0.8);
   border-radius: 8px;
-  opacity: 0.8;
 
   &:active {
     background-color: @navOransjeLighten60;
+    border-color: @navOransje;
   }
 }
 
 :global(.undefined.vis-item.vis-selected) {
   background-color: @navOransje;
   border: 1px solid #4a4a4a;
-  opacity: 1;
 }
 
 :global(.avslatt.vis-item.vis-selected) {
   background-color: @redError;
-  opacity: 1;
 }
 
 :global(.avvistPeriode.vis-item.vis-selected) {
   background-color: @redError;
-  opacity: 1;
 }
 
 :global(.innvilget) {
-  background-color: @navGronn;
-  border-color: @navGronn;
+  background-color: rgba(@navGronn, 0.5);
+  border-color: rgba(@navGronn, 0.5);
   border-radius: 8px;
-  opacity: 0.5;
 }
 
 :global(.godkjentPeriode) {
-  background-color: @navGronn;
-  border-color: @navGronn;
+  background-color: rgba(@navGronn, 0.5);
+  border-color: rgba(@navGronn, 0.5);
   border-radius: 8px;
-  opacity: 0.5;
 
   &:active {
     background-color: @navGronn;
+    border-color: @navGronn;
   }
 }
 
@@ -310,46 +304,41 @@ som fra core/og muligen import fra alla andra komponenter
 :global(.godkjentPeriode.vis-item.vis-selected) {
   background-color: @navGronn;
   border-radius: 6px;
-  opacity: 1;
 }
 
 :global(.mellomliggendePeriode) {
-  background-color: @navGronn;
-  border-color: @navGronn;
+  background-color: rgba(@navGronn, 0.5);
+  border-color: rgba(@navGronn, 0.5);
   border-radius: 8px;
   height: 12px;
-  opacity: 0.5;
   top: 12px !important; // lesshint-disable importantRule
 
   &:active {
     background-color: @navGronn;
+    border-color: @navGronn;
   }
 }
 
 :global(.mellomliggendePeriode.vis-item.vis-selected) {
   background-color: @navGronn;
   border-radius: 6px;
-  opacity: 0.5;
 }
 
 :global(.innvilget.vis-item.vis-selected) {
   background-color: @navGronn;
   border-radius: 6px;
-  opacity: 1;
 }
 
 :global(.innvilgetnullprosent) {
   background-color: transparent;
   border-color: @navGronn;
   border-radius: 8px;
-  opacity: 1;
 }
 
 :global(.innvilgetnullprosent.vis-item.vis-selected) {
   background-color: transparent;
   border-radius: 8px;
   //  box-shadow: 0 3px 20px rgba(0, 0, 0, 0.2);
-  opacity: 1;
 }
 
 :global(.opphold-manuell) {
@@ -386,6 +375,11 @@ som fra core/og muligen import fra alla andra komponenter
   border-radius: 6px;
   border-style: dashed;
   border-width: 1.5px;
+}
+
+:global(.vis-item.endretPeriode) {
+  border-top-color: @navOransjeLighten20;
+  border-top-width: 5px;
 }
 
 :global(.opptjening .vis-center) {

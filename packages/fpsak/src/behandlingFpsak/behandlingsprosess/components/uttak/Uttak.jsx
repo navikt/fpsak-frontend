@@ -42,6 +42,7 @@ const ACTIVITY_PANEL_NAME = 'uttaksresultatActivity';
 const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT).toDate();
 const godkjentKlassenavn = 'godkjentPeriode';
 const avvistKlassenavn = 'avvistPeriode';
+const endretClassnavn = 'endretPeriode';
 
 const getStatusPeriodeHoved = (periode) => {
   if (periode.erOppfylt === false) {
@@ -102,10 +103,11 @@ const addClassNameGroupIdToPerioder = (hovedsokerPerioder, annenForelderPerioder
     const status = hovedsoker ? getStatusPeriodeHoved(item) : getStatusPeriodeMed(item);
     const gradert = (item.gradertAktivitet && item.graderingInnvilget) ? 'gradert' : '';
     const copyOfItem = Object.assign({}, item);
+    const isEndret = item.begrunnelse ? endretClassnavn : '';
     const oppholdStatus = status === 'undefined' ? 'opphold-manuell' : 'opphold';
     copyOfItem.id = index + 1 + (hovedsoker ? 0 : hovedsokerPerioder.length);
     copyOfItem.tomMoment = moment(item.tom).add(1, 'days');
-    copyOfItem.className = opphold ? oppholdStatus : `${status} ${gradert}`;
+    copyOfItem.className = opphold ? oppholdStatus : `${status} ${isEndret} ${gradert}`;
     copyOfItem.hovedsoker = hovedsoker;
     copyOfItem.group = annenForelderPerioder.length > 0 && hovedsoker ? 2 : 1;
     copyOfItem.title = createTooltipContent(item.fom, item.tom, stonadskontoType, intl, item);
