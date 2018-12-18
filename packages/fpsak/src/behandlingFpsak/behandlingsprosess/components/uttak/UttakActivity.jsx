@@ -23,6 +23,7 @@ import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/beh
 import { getSkjaeringstidspunktForeldrepenger } from 'behandlingFpsak/behandlingSelectors';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import { getKodeverk } from 'kodeverk/duck';
 import { FieldArray, formPropTypes } from 'redux-form';
@@ -276,7 +277,7 @@ const validateUttakActivity = (values, utsettelseAarsak) => {
       }
     });
     const invalidArbeidsProsentVidUsettelse = isArbeidsProsentVidUtsettelse100(values, values.UttakFieldArray);
-    if (invalidArbeidsProsentVidUsettelse && values.utsettelseType.kode === utsettelseAarsak[2].kode) {
+    if (invalidArbeidsProsentVidUsettelse && values.utsettelseType.kode === utsettelseArsakCodes.ARBEID) {
       errors = {
         _error:
   <AlertStripe type="advarsel" className={styles.advarsel}>
