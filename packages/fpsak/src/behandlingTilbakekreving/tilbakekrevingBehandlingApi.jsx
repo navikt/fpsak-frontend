@@ -1,5 +1,5 @@
 /* @flow */
-import { getHttpClientApi, getRestApiBuilder, initRestApi } from 'data/rest/restApi';
+import { getHttpClientApi, getRestApiBuilder, initReduxRestApi } from '@fpsak-frontend/rest-api-redux';
 import reducerRegistry from '../ReducerRegistry';
 
 export const TilbakekrevingBehandlingApiKeys = {
@@ -23,5 +23,9 @@ const endpoints = getRestApiBuilder(httpClientApi)
 
   .build();
 
-const tilbakekrevingBehandlingApi = initRestApi(httpClientApi, 'fptilbake', endpoints, 'dataContextTilbakekrevingBehandling', reducerRegistry);
+
+const reducerName = 'dataContextTilbakekrevingBehandling';
+const tilbakekrevingBehandlingApi = initReduxRestApi(httpClientApi, 'fptilbake', endpoints, reducerName);
+reducerRegistry.register(reducerName, tilbakekrevingBehandlingApi.getDataReducer());
+
 export default tilbakekrevingBehandlingApi;

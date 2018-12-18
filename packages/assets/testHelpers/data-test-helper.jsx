@@ -1,6 +1,6 @@
-import RestDuck from '@fpsak-frontend/fpsak/src/data/rest/redux/RestDuck';
-import getAxiosHttpClientApi from '@fpsak-frontend/fpsak/src/data/rest/axios/axiosHttpClientApi';
-import RequestApi from '@fpsak-frontend/fpsak/src/data/rest/requestApi/RequestApi';
+import RestDuck from '@fpsak-frontend/rest-api-redux/src/redux/RestDuck';
+import getAxiosHttpClientApi from '@fpsak-frontend/rest-api/src/axios/axiosHttpClientApi';
+import RequestApi from '@fpsak-frontend/rest-api/src/requestApi/RequestApi';
 
 export const withoutRestActions = actions => actions.filter(a => !a.type.match(/^@@REST/));
 

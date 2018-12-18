@@ -1,0 +1,20 @@
+{
+  "name": "@fpsak-frontend/rest-api-redux",
+  "version": "1.0.0",
+  "module": "index.jsx",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "moment": "^2.22.2",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
+    "@fpsak-frontend/rest-api": "1.0.0"
+  },
+  "devDependencies": {
+    "axios-mock-adapter": "^1.15.0",
+    "chai": "^4.2.0",
+    "redux-mock-store": "^1.5.3",
+    "sinon": "^5.0.10"
+  }
+}

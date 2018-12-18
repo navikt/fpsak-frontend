@@ -1,7 +1,8 @@
 /* @flow */
 import { combineReducers } from 'redux';
+import { RequestApi } from '@fpsak-frontend/rest-api';
+
 import RestDuck from './RestDuck';
-import RequestApi from '../requestApi/RequestApi';
 
 class ReduxRestApi {
   ducks: RestDuck[]

@@ -2,7 +2,6 @@
 import { dateFormat, timeFormat } from '@fpsak-frontend/utils';
 import { addErrorMessage, addErrorMessageCode } from 'app/duck';
 import { isHandledError, is401Error, is418Error } from 'app/ErrorTypes';
-import asyncPollingStatus from './rest/requestApi/asyncPollingStatus';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -30,9 +29,9 @@ const blobParser = (blob: any) => {
 
 const handleTaskStatus = (store, taskStatus) => {
   const { message, status, eta } = taskStatus;
-  if (status === asyncPollingStatus.HALTED) {
+  if (status === 'HALTED') {
     store.dispatch(addErrorMessageCode({ code: HALTED_PROCESS_TASK_MESSAGE_CODE, params: { errorDetails: message } }));
-  } else if (status === asyncPollingStatus.DELAYED) {
+  } else if (status === 'DELAYED') {
     store.dispatch(addErrorMessageCode({ code: DELAYED_PROCESS_TASK_MESSAGE_CODE, params: { date: dateFormat(eta), time: timeFormat(eta), message } }));
   }
 };

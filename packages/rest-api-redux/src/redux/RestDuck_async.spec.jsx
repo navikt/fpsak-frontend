@@ -5,9 +5,8 @@ import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import getAxiosHttpClientApi from '../axios/axiosHttpClientApi';
-import RequestApi from '../requestApi/RequestApi';
-import asyncPollingStatus from '../requestApi/asyncPollingStatus';
+import { getAxiosHttpClientApi, RequestApi, asyncPollingStatus } from '@fpsak-frontend/rest-api';
+
 import RestDuck from './RestDuck';
 
 const middlewares = [thunk];
