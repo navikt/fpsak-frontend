@@ -170,7 +170,7 @@ export const isArbeidsProsentVidUtsettelse100 = (values, aktivitetArray) => {
       andelIArbeid.push(aktivitet.prosentArbeid);
     });
     const prosentIArbeid = andelIArbeid.reduce(getSum);
-    if (prosentIArbeid === 100) {
+    if (prosentIArbeid < 100) {
       return arbeidsprosentMåVare100VidUtsettelseAvArbeidMessage();
     }
     return null;
