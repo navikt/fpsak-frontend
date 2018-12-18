@@ -39,6 +39,7 @@ export {
 export {
   ISO_DATE_FORMAT,
   DDMMYYYY_DATE_FORMAT,
+  DDMMYY_DATE_FORMAT,
   HHMM_TIME_FORMAT,
   ACCEPTED_DATE_INPUT_FORMATS,
 } from './src/formats';

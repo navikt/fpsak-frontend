@@ -12,7 +12,7 @@ import {
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
 import {
-  calcDays, ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT,
+  calcDays, ISO_DATE_FORMAT, DDMMYY_DATE_FORMAT, calcDaysAndWeeks,
 } from '@fpsak-frontend/utils';
 import { CheckboxField } from '@fpsak-frontend/form';
 import {
@@ -67,11 +67,17 @@ const getStatusPeriodeMed = (periode) => {
   return avvistKlassenavn;
 };
 
-const createTooltipContent = (periodeFom, periodeTom, periodeType, intl, item) => (`
+const createTooltipContent = (periodeType, intl, item) => (`
   <p>
-    <strong>${intl.formatMessage({ id: 'Timeline.tooltip.start' })}:</strong> ${moment(periodeFom).format(DDMMYYYY_DATE_FORMAT)}
-    <strong>${intl.formatMessage({ id: 'Timeline.tooltip.slutt' })}:</strong> ${moment(periodeTom).format(DDMMYYYY_DATE_FORMAT)}
-    <strong>${intl.formatMessage({ id: 'Timeline.tooltip.periodetype' })}:</strong> ${item.utsettelseType && item.utsettelseType.kode !== '-'
+    ${moment(item.fom).format(DDMMYY_DATE_FORMAT)} - ${moment(item.tom).format(DDMMYY_DATE_FORMAT)}
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     ${intl.formatMessage({ id: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).id },
+    {
+      weeks: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).weeks,
+      days: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).days,
+    })}
+    </br>
+    ${item.utsettelseType && item.utsettelseType.kode !== '-'
     ? intl.formatMessage({ id: 'Timeline.tooltip.utsettelsePeriode' }) : periodeType}
    </p>
 `);
@@ -110,7 +116,7 @@ const addClassNameGroupIdToPerioder = (hovedsokerPerioder, annenForelderPerioder
     copyOfItem.className = opphold ? oppholdStatus : `${status} ${isEndret} ${gradert}`;
     copyOfItem.hovedsoker = hovedsoker;
     copyOfItem.group = annenForelderPerioder.length > 0 && hovedsoker ? 2 : 1;
-    copyOfItem.title = createTooltipContent(item.fom, item.tom, stonadskontoType, intl, item);
+    copyOfItem.title = createTooltipContent(stonadskontoType, intl, item);
     perioderMedClassName.push(copyOfItem);
   });
   return perioderMedClassName;

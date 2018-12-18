@@ -1561,7 +1561,7 @@
   "Timeline.closeData": "Lukke info om periode",
   "Timeline.nextPeriod": "Neste periode",
   "Timeline.prevPeriod": "Forrige periode",
-  "Timeline.tooltip.dagsats": "Dagsats",
+  "Timeline.tooltip.dagsats": "Dagsats: {dagsats}kr",
   "Timeline.tooltip.start": "Start",
   "Timeline.tooltip.slutt": "Slutt",
   "Timeline.tooltip.periodetype": "Periodetype",

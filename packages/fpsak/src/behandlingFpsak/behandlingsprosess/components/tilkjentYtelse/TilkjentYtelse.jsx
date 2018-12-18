@@ -5,7 +5,7 @@ import Timeline from 'react-visjs-timeline';
 import { injectIntl, intlShape } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { ISO_DATE_FORMAT, DDMMYY_DATE_FORMAT, calcDaysAndWeeks } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { stonadskontoType, uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import TimeLineData from './timeline/TimeLineData';
@@ -44,13 +44,24 @@ const getStatusForPeriode = (periode) => {
   return gradertKlassenavn;
 };
 
-const createTooltipContent = (dagsats, periodeFom, periodeTom, periodeType, intl) => (`
+const createTooltipContent = (periodeType, intl, item) => (`
   <p>
-    <strong>${intl.formatMessage({ id: 'Timeline.tooltip.dagsats' })}:</strong> ${dagsats}
-    <strong>${intl.formatMessage({ id: 'Timeline.tooltip.start' })}:</strong> ${moment(periodeFom).format(DDMMYYYY_DATE_FORMAT)}
-    <strong>${intl.formatMessage({ id: 'Timeline.tooltip.slutt' })}:</strong> ${moment(periodeTom).format(DDMMYYYY_DATE_FORMAT)}
-    <strong>${intl.formatMessage({ id: 'Timeline.tooltip.periodetype' })}:</strong> ${periodeType}
-  </p>
+    ${moment(item.fom).format(DDMMYY_DATE_FORMAT)} - ${moment(item.tom).format(DDMMYY_DATE_FORMAT)}
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     ${intl.formatMessage({ id: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).id },
+    {
+      weeks: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).weeks,
+      days: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).days,
+    })}
+    </br>
+    ${item.utsettelseType && item.utsettelseType.kode !== '-'
+    ? intl.formatMessage({ id: 'Timeline.tooltip.utsettelsePeriode' }) : periodeType}
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    ${intl.formatMessage({ id: 'Timeline.tooltip.dagsats' },
+    {
+      dagsats: item.dagsats,
+    })}
+   </p>
 `);
 
 const findKorrektLabelForKvote = (stonadtype) => {
@@ -82,7 +93,7 @@ const addClassNameGroupIdToPerioder = (perioder, intl) => {
     copyOfItem.group = 1;
     copyOfItem.start = parseDateString(item.fom);
     copyOfItem.end = moment(item.tom).add(1, 'days');
-    copyOfItem.title = createTooltipContent(item.dagsats, item.fom, item.tom, findKorrektLabelForKvote(item.andeler[0].uttak.stonadskontoType), intl);
+    copyOfItem.title = createTooltipContent(findKorrektLabelForKvote(item.andeler[0].uttak.stonadskontoType), intl, item);
     perioderMedClassName.push(copyOfItem);
   });
   return perioderMedClassName;
