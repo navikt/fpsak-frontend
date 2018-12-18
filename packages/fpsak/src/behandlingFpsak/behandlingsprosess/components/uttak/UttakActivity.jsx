@@ -255,7 +255,7 @@ const resultatTypeObject = (value, oppholdArsak) => {
   });
 };
 
-const validateUttakActivity = (values) => {
+const validateUttakActivity = (values, utsettelseAarsak) => {
   let errors = {};
   errors.UttakFieldArray = [];
   if (values.UttakFieldArray) {
@@ -276,7 +276,7 @@ const validateUttakActivity = (values) => {
       }
     });
     const invalidArbeidsProsentVidUsettelse = isArbeidsProsentVidUtsettelse100(values, values.UttakFieldArray);
-    if (invalidArbeidsProsentVidUsettelse) {
+    if (invalidArbeidsProsentVidUsettelse && values.utsettelseType.kode === utsettelseAarsak[2].kode) {
       errors = {
         _error:
   <AlertStripe type="advarsel" className={styles.advarsel}>
@@ -354,7 +354,7 @@ export const initialValue = (selectedItem, kontoIkkeSatt) => {
     aktivitet.tom = selectedItem.tom;
     aktivitet.weeks = typeof a.weeks !== 'undefined' ? a.weeks : calculateCorrectWeeks(aktivitet);
     aktivitet.days = typeof a.weeks !== 'undefined' ? a.days : calculateCorrectDays(aktivitet);
-    if (aktivitet.weeks === 0 && aktivitet.days === 0 && selectedItem.className === 'undefined ') {
+    if (aktivitet.weeks === 0 && aktivitet.days === 0 && selectedItem.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING) {
       aktivitet.weeks = '';
       aktivitet.days = '';
     }
@@ -367,12 +367,14 @@ const mapStateToProps = (state, ownProps) => {
   const avslagAarsaker = getKodeverk(kodeverkTyper.UTTAK_AVSLAG_ARSAK)(state);
   const innvilgelseAarsaker = getKodeverk(kodeverkTyper.INNVILGET_AARSAK)(state);
   const graderingAvslagAarsakKoder = getKodeverk(kodeverkTyper.GRADERING_AVSLAG_AARSAK)(state);
+  const utsettelseAarsak = getKodeverk(kodeverkTyper.UTSETTELSE_ARSAK)(state);
   const kontoIkkeSatt = !selectedItem.periodeType
     && (selectedItem.aktiviteter[0].stønadskontoType.kode === '-');
 
   return {
     kontoIkkeSatt,
     graderingAvslagAarsakKoder,
+    utsettelseAarsak,
     initialValues: {
       UttakFieldArray: initialValue(selectedItem, kontoIkkeSatt),
       erOppfylt: erPeriodeOppfylt(selectedItem, kontoIkkeSatt),
@@ -395,7 +397,7 @@ const mapStateToProps = (state, ownProps) => {
     periodeTyper: getKodeverk(kodeverkTyper.UTTAK_PERIODE_TYPE)(state),
     oppholdArsakTyper: getKodeverk(kodeverkTyper.OPPHOLD_ARSAK)(state),
     starttidspunktForeldrepenger: getSkjaeringstidspunktForeldrepenger(state),
-    validate: values => validateUttakActivity(values),
+    validate: values => validateUttakActivity(values, utsettelseAarsak),
     onSubmit: values => ownProps.updateActivity(transformValues(values, selectedItem, avslagAarsaker, innvilgelseAarsaker, graderingAvslagAarsakKoder)),
   };
 };
