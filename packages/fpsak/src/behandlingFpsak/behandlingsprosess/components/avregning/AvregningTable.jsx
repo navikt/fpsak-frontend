@@ -104,42 +104,43 @@ const AvregningTable = ({
             allowFormattedHeader
             key={`tableIndex${mottakerIndex + 1}`}
           >
-            {
-          mottaker.resultatPerFagområde.map((fagOmråde, fagIndex) => fagOmråde.rader.filter((rad) => {
-            const isFeilUtbetalt = rad.feltnavn === avregningCodes.DIFFERANSE;
-            const isRowToggable = rowToggable(fagOmråde, isFeilUtbetalt);
-            return !rowIsHidden(isRowToggable, showDetails[mottakerIndex] ? showDetails[mottakerIndex].show : false);
-          })
-            .map((rad, rowIndex) => {
-              const isFeilUtbetalt = rad.feltnavn === avregningCodes.DIFFERANSE;
-              const isRowToggable = rowToggable(fagOmråde, isFeilUtbetalt);
-              return (
-                <TableRow
-                  isBold={isFeilUtbetalt || ingenPerioderMedAvvik}
-                  isDashedBottomBorder={isRowToggable}
-                  isSolidBottomBorder={!isRowToggable}
-                  key={`rowIndex${fagIndex + 1}${rowIndex + 1}`}
-                >
-                  <TableColumn>
-                    <FormattedMessage id={`Avregning.${fagOmråde.fagOmrådeKode.kode}.${rad.feltnavn}`} />
-                  </TableColumn>
-                  {createColumns(rad.resultaterPerMåned, rangeOfMonths, nesteMåned)}
-                </TableRow>
-              );
-            })).flat()
-            .concat(getResultatRadene(ingenPerioderMedAvvik, mottaker.resultatPerFagområde, mottaker.resultatOgMotregningRader)
-              .map((resultat, resultatIndex) => (
-                <TableRow
-                  isBold={resultat.feltnavn !== avregningCodes.INNTREKKNESTEMÅNED}
-                  isSolidBottomBorder
-                  key={`rowIndex${resultatIndex + 1}`}
-                >
-                  <TableColumn>
-                    <FormattedMessage id={`Avregning.${resultat.feltnavn}`} />
-                  </TableColumn>
-                  {createColumns(resultat.resultaterPerMåned, rangeOfMonths, nesteMåned)}
-                </TableRow>
-              )))
+            {[].concat(
+              ...mottaker.resultatPerFagområde.map((fagOmråde, fagIndex) => fagOmråde.rader.filter((rad) => {
+                const isFeilUtbetalt = rad.feltnavn === avregningCodes.DIFFERANSE;
+                const isRowToggable = rowToggable(fagOmråde, isFeilUtbetalt);
+                return !rowIsHidden(isRowToggable, showDetails[mottakerIndex] ? showDetails[mottakerIndex].show : false);
+              })
+                .map((rad, rowIndex) => {
+                  const isFeilUtbetalt = rad.feltnavn === avregningCodes.DIFFERANSE;
+                  const isRowToggable = rowToggable(fagOmråde, isFeilUtbetalt);
+                  return (
+                    <TableRow
+                      isBold={isFeilUtbetalt || ingenPerioderMedAvvik}
+                      isDashedBottomBorder={isRowToggable}
+                      isSolidBottomBorder={!isRowToggable}
+                      key={`rowIndex${fagIndex + 1}${rowIndex + 1}`}
+                    >
+                      <TableColumn>
+                        <FormattedMessage id={`Avregning.${fagOmråde.fagOmrådeKode.kode}.${rad.feltnavn}`} />
+                      </TableColumn>
+                      {createColumns(rad.resultaterPerMåned, rangeOfMonths, nesteMåned)}
+                    </TableRow>
+                  );
+                })),
+            )
+              .concat(getResultatRadene(ingenPerioderMedAvvik, mottaker.resultatPerFagområde, mottaker.resultatOgMotregningRader)
+                .map((resultat, resultatIndex) => (
+                  <TableRow
+                    isBold={resultat.feltnavn !== avregningCodes.INNTREKKNESTEMÅNED}
+                    isSolidBottomBorder
+                    key={`rowIndex${resultatIndex + 1}`}
+                  >
+                    <TableColumn>
+                      <FormattedMessage id={`Avregning.${resultat.feltnavn}`} />
+                    </TableColumn>
+                    {createColumns(resultat.resultaterPerMåned, rangeOfMonths, nesteMåned)}
+                  </TableRow>
+                )))
         }
           </Table>
         </div>
