@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { FieldArray } from 'redux-form';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column } from 'nav-frontend-grid';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { getFamiliehendelse, doesVilkarForSykdomOppfyltExist } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandlingFpsak/behandlingForm';
 import overforingArsakCodes from '@fpsak-frontend/kodeverk/src/overforingArsakCodes';
@@ -36,6 +37,7 @@ export const SykdomOgSkadePeriode = ({
   dokumentertePerioder,
   formSyncErrors,
   inntektsmeldingInfo,
+  behandlingStatusKode,
   arbeidsgiver,
   fieldId,
   ...formProps
@@ -52,7 +54,7 @@ export const SykdomOgSkadePeriode = ({
   }
 
   const isEdited = resultat === uttakPeriodeVurdering.PERIODE_OK_ENDRET
-  && readOnly;
+  && readOnly && behandlingStatusKode === behandlingStatus.FATTER_VEDTAK;
 
   const inlineheight = dokumentertePerioder
     && resultat === uttakPeriodeVurdering.PERIODE_OK
@@ -158,6 +160,7 @@ SykdomOgSkadePeriode.propTypes = {
   formSyncErrors: PropTypes.shape(),
   inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.shape()),
   arbeidsgiver: PropTypes.shape(),
+  behandlingStatusKode: PropTypes.string.isRequired,
 };
 
 SykdomOgSkadePeriode.defaultProps = {
