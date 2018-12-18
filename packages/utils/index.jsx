@@ -70,6 +70,7 @@ export {
   ariaCheck,
   validateProsentandel,
   isUtbetalingsgradMerSamitidigUttaksprosent,
+  isUkerOgDagerVidNullUtbetalningsgrad,
   isWithinOpptjeningsperiode,
   hasValidPeriod,
   hasValidPeriodIncludingOtherErrors,
@@ -101,6 +102,7 @@ export {
   notDash,
   required,
   maxLengthOrFodselsnr,
+  isArbeidsProsentVidUtsettelse100,
 } from './src/validation/validators';
 
 export {

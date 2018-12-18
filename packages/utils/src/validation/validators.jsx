@@ -7,6 +7,7 @@ import {
   invalidFodselsnummerFormatMessage, invalidFodselsnummerMessage, invalidTextMessage, invalidSaksnummerOrFodselsnummerFormatMessage,
   invalidValueMessage, arrayMinLengthMessage, invalidPeriodMessage, invalidDatesInPeriodMessage, invalidPeriodRangeMessage, datesNotEqual,
   maxLengthOrFodselsnrMessage, utbetalingsgradErMerSamtidigUttaksprosentMessage, ukerOgDagerVidNullUtbetalningsgradMessage,
+  arbeidsprosentMåVare100VidUtsettelseAvArbeidMessage,
 } from './messages';
 import {
   isoDateRegex, numberRegex, integerRegex, decimalRegex, textRegex, textGyldigRegex, isEmpty, yesterday, tomorrow,
@@ -156,6 +157,23 @@ export const isUtbetalingsgradMerSamitidigUttaksprosent = (samtidigUttaksProsent
 export const isUkerOgDagerVidNullUtbetalningsgrad = (weeks, days, utbetalingsgrad) => {
   if (weeks === 0 && days === 0 && utbetalingsgrad > 0) {
     return ukerOgDagerVidNullUtbetalningsgradMessage();
+  }
+  return null;
+};
+
+const getSum = (total, num) => total + num;
+
+export const isArbeidsProsentVidUtsettelse100 = (values, aktivitetArray) => {
+  const andelIArbeid = [0];
+  if (values.utsettelseType && values.erOppfylt && values.utsettelseType.kode === 'ARBEID') {
+    aktivitetArray.forEach((aktivitet) => {
+      andelIArbeid.push(aktivitet.prosentArbeid);
+    });
+    const prosentIArbeid = andelIArbeid.reduce(getSum);
+    if (prosentIArbeid < 100) {
+      return arbeidsprosentMåVare100VidUtsettelseAvArbeidMessage();
+    }
+    return null;
   }
   return null;
 };

@@ -529,6 +529,7 @@
   "ValidationMessage.InvalidStonadskonto": "Stønadskonto {konto} er ikke tilgjengelig",
   "ValidationMessage.MinstEnPeriodeRequired": "Minst en av følgende perioder må være utfylt: fullt uttak, overføring av kvote, utsettelse eller gradering",
   "ValidationMessage.ukerOgDagerVidNullUtbetalningsgradMessage": "Uttaksprosenten kan ikke være større enn null når antall trekkdager er null",
+  "ValidationMessage.UtsettelseUtenFullArbeid": "Bruker jobber mindre enn 100%, vilkår for utsettelse er derfor ikke tilstede.",
 
   "VilkarsresultatView.VilkarOppfylt": "Vilkåret er oppfylt",
   "VilkarsresultatView.VilkarIkkeOppfylt": "Vilkåret er ikke oppfylt",

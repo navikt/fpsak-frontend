@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
+import AlertStripe from 'nav-frontend-alertstriper';
 import {
   RadioGroupField, RadioOption, TextAreaField, SelectField,
 } from '@fpsak-frontend/form';
@@ -13,12 +14,9 @@ import {
   required,
   notDash,
   isUtbetalingsgradMerSamitidigUttaksprosent,
-<<<<<<< HEAD
-} from '@fpsak-frontend/utils';
-=======
   isUkerOgDagerVidNullUtbetalningsgrad,
-} from 'utils/validation/validators';
->>>>>>> FIX: PFP-4165 punkt 1 - hard validering på uttaksprosent/trekkdager
+  isArbeidsProsentVidUtsettelse100,
+} from '@fpsak-frontend/utils';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
@@ -180,6 +178,7 @@ export const UttakActivity = ({
           </div>
           )
           }
+          {formProps.error}
           <FlexContainer fluid>
             <FlexRow>
               <FlexColumn>
@@ -257,7 +256,7 @@ const resultatTypeObject = (value, oppholdArsak) => {
 };
 
 const validateUttakActivity = (values) => {
-  const errors = {};
+  let errors = {};
   errors.UttakFieldArray = [];
   if (values.UttakFieldArray) {
     values.UttakFieldArray.forEach((aktivitet, index) => {
@@ -270,13 +269,23 @@ const validateUttakActivity = (values) => {
           utbetalingsgrad: invalidUtbetalingsgradMerSamitidigUttaksprosent,
         };
       }
-
       if (invalidUkerOgDagerVidNullUtbetalningsgrad) {
         errors.UttakFieldArray[index] = {
           utbetalingsgrad: invalidUkerOgDagerVidNullUtbetalningsgrad,
         };
       }
     });
+    const invalidArbeidsProsentVidUsettelse = isArbeidsProsentVidUtsettelse100(values, values.UttakFieldArray);
+    if (invalidArbeidsProsentVidUsettelse) {
+      errors = {
+        _error:
+  <AlertStripe type="advarsel" className={styles.advarsel}>
+    <FormattedMessage
+      id="ValidationMessage.UtsettelseUtenFullArbeid"
+    />
+  </AlertStripe>,
+      };
+    }
   }
   return errors;
 };
@@ -345,6 +354,10 @@ export const initialValue = (selectedItem, kontoIkkeSatt) => {
     aktivitet.tom = selectedItem.tom;
     aktivitet.weeks = typeof a.weeks !== 'undefined' ? a.weeks : calculateCorrectWeeks(aktivitet);
     aktivitet.days = typeof a.weeks !== 'undefined' ? a.days : calculateCorrectDays(aktivitet);
+    if (aktivitet.weeks === 0 && aktivitet.days === 0 && selectedItem.className === 'undefined ') {
+      aktivitet.weeks = '';
+      aktivitet.days = '';
+    }
     return aktivitet;
   });
 };
