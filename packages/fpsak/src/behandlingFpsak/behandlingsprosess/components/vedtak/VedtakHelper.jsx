@@ -12,7 +12,8 @@ import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
 export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType, tilbakekrevingValg) => {
   if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET) {
     return 'VedtakForm.ResultatOpprettholdVedtak';
-  } if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_MEDHOLD) {
+  }
+  if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_MEDHOLD) {
     return 'VedtakForm.ResultatKlageMedhold';
   }
 
@@ -29,7 +30,8 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType
 export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) => {
   if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET) {
     return 'VedtakForm.ResultatKlageYtelsesvedtakOpphevet';
-  } if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_AVVIST) {
+  }
+  if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_AVVIST) {
     return 'VedtakForm.ResultatKlageAvvist';
   }
 

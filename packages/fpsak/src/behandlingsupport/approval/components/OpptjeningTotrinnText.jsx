@@ -11,7 +11,8 @@ const mapAktivitetTextEndring = (arbeidsgiverNavn, orgnr, aktivitetType) => {
         values={{ a: aktivitetType, b: arbeidsgiverNavn, c: orgnr }}
       />
     );
-  } if (orgnr) {
+  }
+  if (orgnr) {
     return (
       <FormattedMessage
         id="ToTrinnsForm.Opptjening.EndringArbeidUtenNavn"
@@ -35,7 +36,8 @@ const mapAktivitetTextUnderkjenning = (arbeidsgiverNavn, orgnr, aktivitetType) =
         values={{ a: aktivitetType, b: arbeidsgiverNavn, c: orgnr }}
       />
     );
-  } if (orgnr) {
+  }
+  if (orgnr) {
     return (
       <FormattedHTMLMessage
         id="ToTrinnsForm.Opptjening.UnderkjenningArbeidUtenNavn"
@@ -59,7 +61,8 @@ const mapAktivitetTextGodkjenning = (arbeidsgiverNavn, orgnr, aktivitetType) => 
         values={{ a: aktivitetType, b: arbeidsgiverNavn, c: orgnr }}
       />
     );
-  } if (orgnr) {
+  }
+  if (orgnr) {
     return (
       <FormattedMessage
         id="ToTrinnsForm.Opptjening.GodkjenningArbeidUtenNavn"

@@ -125,11 +125,14 @@ export const getErrorMessageList = ownProps => createSelector(
   (errorMessages, errorMessageCodeWithParams, crashMessage, showDetailedErrorMessages, asyncErrorMessages) => {
     if (ownProps.queryStrings.errorcode) {
       return [{ message: ownProps.intl.formatMessage({ id: ownProps.queryStrings.errorcode }) }];
-    } if (ownProps.queryStrings.errormessage) {
+    }
+    if (ownProps.queryStrings.errormessage) {
       return [{ message: ownProps.queryStrings.errormessage }];
-    } if (crashMessage) {
+    }
+    if (crashMessage) {
       return [{ message: crashMessage }];
-    } if (errorMessageCodeWithParams) {
+    }
+    if (errorMessageCodeWithParams) {
       return [{
         message: ownProps.intl.formatMessage({ id: errorMessageCodeWithParams.code },
           filterMessage(errorMessageCodeWithParams.params, showDetailedErrorMessages)),
@@ -137,7 +140,8 @@ export const getErrorMessageList = ownProps => createSelector(
           ? JSON.parse(decodeHtmlEntity(errorMessageCodeWithParams.params.errorDetails))
           : undefined,
       }];
-    } if (errorMessages) {
+    }
+    if (errorMessages) {
       return errorMessages.map(em => ({ message: em }));
     }
     return asyncErrorMessages.map(em => ({ message: em }));

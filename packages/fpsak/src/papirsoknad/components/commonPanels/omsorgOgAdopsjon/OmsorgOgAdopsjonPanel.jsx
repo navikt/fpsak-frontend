@@ -208,7 +208,8 @@ const validateFoedselsdato = (foedselsDato, rettigheter) => {
       return foedselsDatoError;
     }
     return undefined;
-  } if (foedselsDato) {
+  }
+  if (foedselsDato) {
     const foedselsDatoError = foedselsDato.map(dato => hasValidDate(dato) || dateBeforeOrEqualToToday(dato));
     if (foedselsDatoError.some(error => error !== null)) {
       return foedselsDatoError;

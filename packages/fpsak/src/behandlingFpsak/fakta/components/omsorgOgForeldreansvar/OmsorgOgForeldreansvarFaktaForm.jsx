@@ -24,9 +24,11 @@ import styles from './omsorgOgForeldreansvarFaktaForm.less';
 const getDescriptionText = (vilkarCode) => {
   if (vilkarCode === VilkarType.OMSORGSVILKARET) {
     return <FormattedMessage id="OmsorgOgForeldreansvarFaktaForm.HelpTextOmsorgTredjeLedd" />;
-  } if (vilkarCode === VilkarType.FORELDREANSVARSVILKARET_2_LEDD) {
+  }
+  if (vilkarCode === VilkarType.FORELDREANSVARSVILKARET_2_LEDD) {
     return <FormattedMessage id="OmsorgOgForeldreansvarFaktaForm.HelpTextForeldreAndreLedd" />;
-  } if (vilkarCode === VilkarType.FORELDREANSVARSVILKARET_4_LEDD) {
+  }
+  if (vilkarCode === VilkarType.FORELDREANSVARSVILKARET_4_LEDD) {
     return <FormattedMessage id="OmsorgOgForeldreansvarFaktaForm.HelpTextForeldreFjerdeLedd" />;
   }
   return <FormattedMessage id="OmsorgOgForeldreansvarFaktaForm.ChooseVilkarToSeeDescription" />;

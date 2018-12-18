@@ -134,7 +134,7 @@ const mapStateToProps = (state, ownProps) => {
     },
     submittable: ownProps.submittable,
     form: formName,
-    onSubmit: values => ownProps.updateOppholdInntektPeriode(transformValues(values, ownProps.aksjonspunkter, state)),
+    onSubmit: values => ownProps.updateOppholdInntektPeriode(transformValues(values)),
   };
 };
 
