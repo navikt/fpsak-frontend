@@ -5,7 +5,7 @@ import { formPropTypes } from 'redux-form';
 import PropTypes from 'prop-types';
 
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
-import { getBehandlingKlageFormkravResultatNFP } from 'behandlingFpsak/behandlingSelectors';
+import { getBehandlingKlageFormkravResultatNFP, isKlageBehandlingInKA } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import FormkravKlageForm, { getPaKlagdVedtak, IKKE_PA_KLAGD_VEDTAK } from './FormkravKlageForm';
@@ -76,6 +76,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
+    readOnly: ownProps.readOnly || isKlageBehandlingInKA(state),
     onSubmit: values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]),
   };
 };

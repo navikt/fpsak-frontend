@@ -28,6 +28,8 @@ const getBrevKode = (klageVurdering, klageVurdertAvKa) => {
       return dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET_DOK;
     case klageVurderingType.MEDHOLD_I_KLAGE:
       return dokumentMalType.VEDTAK_MEDHOLD;
+    case klageVurderingType.AVVIS_KLAGE:
+      return dokumentMalType.KLAGE_AVVIST_DOK;
     default:
       return null;
   }

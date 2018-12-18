@@ -127,10 +127,18 @@ export const doesVilkarForSykdomOppfyltExist = createSelector(
   [getAksjonspunkter], (aksjonspunkter = []) => aksjonspunkter.filter(ap => isVilkarForSykdomOppfylt(ap)).length > 0,
 );
 export const isKlageBehandlingInFormkrav = createSelector(
-  [getOpenAksjonspunkter], (openAksjonspunkter = []) => openAksjonspunkter
+  [getAksjonspunkter], (openAksjonspunkter = []) => openAksjonspunkter
     .some(ap => ap.definisjon.kode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP
       || ap.definisjon.kode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA),
 );
+
+
+export const isKlageBehandlingInKA = createSelector(
+  [getAksjonspunkter], (openAksjonspunkter = []) => openAksjonspunkter
+    .some(ap => ap.definisjon.kode === aksjonspunktCodes.FORMKRAV_KLAGE_NK
+      || ap.definisjon.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NK),
+);
+
 
 // BEREGNINGSGRUNNLAG
 export const getBeregningsgrunnlag = createSelector(

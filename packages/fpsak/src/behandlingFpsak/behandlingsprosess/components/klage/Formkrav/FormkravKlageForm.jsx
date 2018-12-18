@@ -18,7 +18,7 @@ import behandlingPropType from 'behandlingFelles/proptypes/behandlingPropType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import styles from './behandleKlageForm.less';
+import styles from '../Klagevurdering/SharedUtills/behandleKlageForm.less';
 
 /**
  * Behandleklageform
