@@ -60,6 +60,7 @@ export const StartdatoForForeldrepengerperiodenForm = ({
           <Column xs="4">
             <DatepickerField
               name="startdatoFraSoknad"
+              isEdited={!hasOpenAksjonspunkt}
               label={{ id: 'StartdatoForForeldrepengerperiodenForm.Startdato' }}
               validate={[required, hasValidDate]}
               readOnly={readOnly}

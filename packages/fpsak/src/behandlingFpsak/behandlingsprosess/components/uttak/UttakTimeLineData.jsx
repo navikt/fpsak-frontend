@@ -4,7 +4,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { calcDaysWithoutWeekends } from '@fpsak-frontend/utils';
-import { Image } from '@fpsak-frontend/shared-components';
+import { Image, EditedIcon } from '@fpsak-frontend/shared-components';
 import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
 import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
 import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
@@ -129,7 +129,7 @@ export class UttakTimeLineData extends Component {
       harSoktOmFlerbarnsdager,
     } = this.props;
     const { showDelPeriodeModal } = this.state;
-
+    const isEdited = !!selectedItemData.begrunnelse;
     return (
       <Row>
         <Column xs="12">
@@ -138,6 +138,7 @@ export class UttakTimeLineData extends Component {
               <Column xs="3">
                 <Element>
                   <FormattedMessage id="UttakTimeLineData.PeriodeData.Detaljer" />
+                  {isEdited && <EditedIcon />}
                 </Element>
               </Column>
               <Column xs="7">
