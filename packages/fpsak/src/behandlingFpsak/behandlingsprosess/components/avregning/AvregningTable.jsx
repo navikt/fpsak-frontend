@@ -78,28 +78,33 @@ const getResultatRadene = (ingenPerioderMedAvvik, resultatPerFagområde, resulta
   return resultatPerFagområde.length > 1 ? resultatOgMotregningRader.filter(resultat => resultat.feltnavn !== avregningCodes.INNTREKKNESTEMÅNED) : [];
 };
 
+const getPeriod = (ingenPerioderMedAvvik, simuleringResultat) => getRangeOfMonths(
+  ingenPerioderMedAvvik ? moment(simuleringResultat.nestUtbPeriodeTom).subtract(1, 'months') : simuleringResultat.periodeFom,
+  simuleringResultat.nestUtbPeriodeTom ? simuleringResultat.nestUtbPeriodeTom : simuleringResultat.periodeTom,
+);
+
 const AvregningTable = ({
   simuleringResultat, toggleDetails, showDetails, ingenPerioderMedAvvik,
 }) => {
-  const rangeOfMonths = getRangeOfMonths(
-    ingenPerioderMedAvvik ? moment(simuleringResultat.nestUtbPeriodeTom).subtract(1, 'months') : simuleringResultat.periodeFom,
-    simuleringResultat.nestUtbPeriodeTom ? simuleringResultat.nestUtbPeriodeTom : simuleringResultat.periodeTom,
-  );
+  const rangeOfMonthsMedAvvik = ingenPerioderMedAvvik || getPeriod(ingenPerioderMedAvvik, simuleringResultat);
   return (
-    simuleringResultat.perioderPerMottaker.map((mottaker, mottakerIndex) => (
-      <div className={styles.table} key={`tableIndex${mottakerIndex + 1}`}>
-        { tableTitle(mottaker) }
-        <Table
-          headerTextCodes={getHeaderCodes(
-            showCollapseButton(mottaker.resultatPerFagområde),
-            { toggleDetails, showDetails: showDetails[mottakerIndex] ? showDetails[mottakerIndex].show : false, mottakerIndex },
-            rangeOfMonths,
-            simuleringResultat.nestUtbPeriodeTom,
-          )}
-          allowFormattedHeader
-          key={`tableIndex${mottakerIndex + 1}`}
-        >
-          {
+    simuleringResultat.perioderPerMottaker.map((mottaker, mottakerIndex) => {
+      const rangeOfMonths = ingenPerioderMedAvvik ? getPeriod(ingenPerioderMedAvvik, mottaker) : rangeOfMonthsMedAvvik;
+      const nesteMåned = ingenPerioderMedAvvik ? mottaker.nestUtbPeriodeTom : simuleringResultat.nestUtbPeriodeTom;
+      return (
+        <div className={styles.table} key={`tableIndex${mottakerIndex + 1}`}>
+          { tableTitle(mottaker) }
+          <Table
+            headerTextCodes={getHeaderCodes(
+              showCollapseButton(mottaker.resultatPerFagområde),
+              { toggleDetails, showDetails: showDetails[mottakerIndex] ? showDetails[mottakerIndex].show : false, mottakerIndex },
+              rangeOfMonths,
+              nesteMåned,
+            )}
+            allowFormattedHeader
+            key={`tableIndex${mottakerIndex + 1}`}
+          >
+            {
           mottaker.resultatPerFagområde.map((fagOmråde, fagIndex) => fagOmråde.rader.filter((rad) => {
             const isFeilUtbetalt = rad.feltnavn === avregningCodes.DIFFERANSE;
             const isRowToggable = rowToggable(fagOmråde, isFeilUtbetalt);
@@ -118,7 +123,7 @@ const AvregningTable = ({
                   <TableColumn>
                     <FormattedMessage id={`Avregning.${fagOmråde.fagOmrådeKode.kode}.${rad.feltnavn}`} />
                   </TableColumn>
-                  {createColumns(rad.resultaterPerMåned, rangeOfMonths, simuleringResultat.nestUtbPeriodeTom)}
+                  {createColumns(rad.resultaterPerMåned, rangeOfMonths, nesteMåned)}
                 </TableRow>
               );
             })).flat()
@@ -132,13 +137,14 @@ const AvregningTable = ({
                   <TableColumn>
                     <FormattedMessage id={`Avregning.${resultat.feltnavn}`} />
                   </TableColumn>
-                  {createColumns(resultat.resultaterPerMåned, rangeOfMonths, simuleringResultat.nestUtbPeriodeTom)}
+                  {createColumns(resultat.resultaterPerMåned, rangeOfMonths, nesteMåned)}
                 </TableRow>
               )))
         }
-        </Table>
-      </div>
-    ))
+          </Table>
+        </div>
+      );
+    })
   );
 };
 
