@@ -7,6 +7,7 @@ import sinon from 'sinon';
 import { FerieOgArbeidsPeriode } from './FerieOgArbeidsPeriode';
 
 const arbeidsgiver = {};
+const behandlingStatusKode = '';
 
 describe('<FerieOgArbeidsPeriode>', () => {
   it('skal vise ferie og arbeids periode', () => {
@@ -22,6 +23,7 @@ describe('<FerieOgArbeidsPeriode>', () => {
       updated
       bekreftet
       readOnly={false}
+      behandlingStatusKode={behandlingStatusKode}
       arbeidsgiver={arbeidsgiver}
       utsettelseArsak={{
         kode: 'ARBEID',

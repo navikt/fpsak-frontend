@@ -26,6 +26,7 @@ export const renderPeriode = (
   bekreftet,
   uttakPeriodeType,
   arbeidsgiver,
+  behandlingStatusKode,
 ) => {
   switch (utsettelseArsak.kode) {
     case utsettelseArsakCodes.ARBEID:
@@ -45,6 +46,7 @@ export const renderPeriode = (
           bekreftet={bekreftet}
           uttakPeriodeType={uttakPeriodeType}
           arbeidsgiver={arbeidsgiver}
+          behandlingStatusKode={behandlingStatusKode}
         />
       );
     case utsettelseArsakCodes.SYKDOM:
@@ -62,6 +64,7 @@ export const renderPeriode = (
           overforingArsak={overforingArsak}
           bekreftet={bekreftet}
           arbeidsgiver={arbeidsgiver}
+          behandlingStatusKode={behandlingStatusKode}
         />
       );
     case utsettelseArsakCodes.INSTITUSJONSOPPHOLD_SØKER:
@@ -79,6 +82,7 @@ export const renderPeriode = (
           tilDato={tilDato}
           bekreftet={bekreftet}
           arbeidsgiver={arbeidsgiver}
+          behandlingStatusKode={behandlingStatusKode}
         />
       );
     case utsettelseArsakCodes.UDEFINERT:
@@ -97,6 +101,7 @@ export const renderPeriode = (
             overforingArsak={overforingArsak}
             bekreftet={bekreftet}
             arbeidsgiver={arbeidsgiver}
+            behandlingStatusKode={behandlingStatusKode}
           />
         );
       }
@@ -115,6 +120,7 @@ export const renderPeriode = (
             tilDato={tilDato}
             bekreftet={bekreftet}
             arbeidsgiver={arbeidsgiver}
+            behandlingStatusKode={behandlingStatusKode}
           />
         );
       }
@@ -134,6 +140,7 @@ export const renderPeriode = (
           bekreftet={bekreftet}
           uttakPeriodeType={uttakPeriodeType}
           arbeidsgiver={arbeidsgiver}
+          behandlingStatusKode={behandlingStatusKode}
         />
       );
     default:

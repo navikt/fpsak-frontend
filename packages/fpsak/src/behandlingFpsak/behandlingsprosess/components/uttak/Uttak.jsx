@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import {
   VerticalSpacer, FlexContainer, FlexRow, FlexColumn, ElementWrapper,
 } from '@fpsak-frontend/shared-components';
@@ -24,6 +25,7 @@ import {
   getBehandlingIsRevurdering,
   getPersonopplysning,
   getUttaksresultatPerioder,
+  getBehandlingStatus,
 } from 'behandlingFpsak/behandlingSelectors';
 import { getRettigheter } from 'navAnsatt/duck';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
@@ -99,7 +101,7 @@ const getCorrectPeriodName = (item) => {
   return '';
 };
 
-const addClassNameGroupIdToPerioder = (hovedsokerPerioder, annenForelderPerioder, hovedsoker, intl) => {
+const addClassNameGroupIdToPerioder = (hovedsokerPerioder, annenForelderPerioder, hovedsoker, intl, behandlingStatusKode) => {
   const perioderMedClassName = [];
   const perioder = hovedsoker ? hovedsokerPerioder : annenForelderPerioder;
 
@@ -109,7 +111,8 @@ const addClassNameGroupIdToPerioder = (hovedsokerPerioder, annenForelderPerioder
     const status = hovedsoker ? getStatusPeriodeHoved(item) : getStatusPeriodeMed(item);
     const gradert = (item.gradertAktivitet && item.graderingInnvilget) ? 'gradert' : '';
     const copyOfItem = Object.assign({}, item);
-    const isEndret = item.begrunnelse ? endretClassnavn : '';
+    const isEndret = item.begrunnelse
+    && behandlingStatusKode === behandlingStatus.FATTER_VEDTAK ? endretClassnavn : '';
     const oppholdStatus = status === 'undefined' ? 'opphold-manuell' : 'opphold';
     copyOfItem.id = index + 1 + (hovedsoker ? 0 : hovedsokerPerioder.length);
     copyOfItem.tomMoment = moment(item.tom).add(1, 'days');
@@ -561,9 +564,9 @@ const mapStateToProps = (state, props) => {
   });
   const tilknyttetStortinget = !!props.aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.TILKNYTTET_STORTINGET && props.isApOpen);
   const isRevurdering = getBehandlingIsRevurdering(state);
-
-  const hovedsokerPerioder = addClassNameGroupIdToPerioder(uttakMedOpphold, annenForelderUttak, true, props.intl);
-  const annenForelderPerioder = addClassNameGroupIdToPerioder(uttakMedOpphold, annenForelderUttak, false, props.intl);
+  const behandlingStatusKode = getBehandlingStatus(state).kode;
+  const hovedsokerPerioder = addClassNameGroupIdToPerioder(uttakMedOpphold, annenForelderUttak, true, props.intl, behandlingStatusKode);
+  const annenForelderPerioder = addClassNameGroupIdToPerioder(uttakMedOpphold, annenForelderUttak, false, props.intl, behandlingStatusKode);
   const uttakPerioder = hovedsokerPerioder.concat(annenForelderPerioder);
   const harSoktOmFlerbarnsdager = hovedsokerPerioder.filter(p => p.flerbarnsdager === true).length > 0;
 

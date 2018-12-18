@@ -13,6 +13,7 @@ const periode = {
   tom: '10-10-2017',
   fom: '01-10-2017',
 };
+const behandlingStatusKode = '';
 
 describe('<SykdomOgSkadePeriode>', () => {
   it('skal vise sykdom og skade periode', () => {
@@ -31,6 +32,7 @@ describe('<SykdomOgSkadePeriode>', () => {
       overforingArsak={{}}
       {...reduxFormPropsMock}
       readOnly={false}
+      behandlingStatusKode={behandlingStatusKode}
       formSyncErrors={formSyncErrors}
     />);
 
@@ -54,6 +56,7 @@ describe('<SykdomOgSkadePeriode>', () => {
       dokumentertePerioder={dokumentertePerioder}
       updated
       bekreftet
+      behandlingStatusKode={behandlingStatusKode}
       utsettelseArsak={{}}
       overforingArsak={{}}
       {...reduxFormPropsMock}

@@ -11,6 +11,7 @@ const periode = {
   tom: '10-10-2017',
   fom: '01-10-2017',
 };
+const behandlingStatusKode = '';
 
 const dokumentertePerioder = [{}];
 const formSyncErrors = {};
@@ -24,6 +25,7 @@ describe('<InnleggelsePeriode>', () => {
       resultat={undefined}
       updatePeriode={sinon.spy()}
       cancelEditPeriode={sinon.spy()}
+      behandlingStatusKode={behandlingStatusKode}
       id="2018-06-02|2018-06-25"
       dokumentertePerioder={dokumentertePerioder}
       updated
@@ -49,6 +51,7 @@ describe('<InnleggelsePeriode>', () => {
       resultat={uttakPeriodeVurdering.PERIODE_OK}
       updatePeriode={sinon.spy()}
       cancelEditPeriode={sinon.spy()}
+      behandlingStatusKode={behandlingStatusKode}
       id="2018-06-02|2018-06-25"
       dokumentertePerioder={dokumentertePerioder}
       updated

@@ -5,6 +5,7 @@ import { FieldArray } from 'redux-form';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column } from 'nav-frontend-grid';
 import { FormattedMessage } from 'react-intl';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandlingFpsak/behandlingForm';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import {
@@ -34,6 +35,7 @@ export const InnleggelsePeriode = ({
   readOnly,
   formSyncErrors,
   inntektsmeldingInfo,
+  behandlingStatusKode,
   arbeidsgiver,
   ...formProps
 }) => {
@@ -48,7 +50,7 @@ export const InnleggelsePeriode = ({
     });
   }
   const isEdited = resultat === uttakPeriodeVurdering.PERIODE_OK_ENDRET
-  && readOnly;
+  && readOnly && behandlingStatusKode === behandlingStatus.FATTER_VEDTAK;
 
   const inlineheight = dokumentertePerioder
     && resultat === uttakPeriodeVurdering.PERIODE_OK
@@ -149,6 +151,7 @@ InnleggelsePeriode.propTypes = {
   formSyncErrors: PropTypes.shape(),
   inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.shape()),
   arbeidsgiver: PropTypes.shape(),
+  behandlingStatusKode: PropTypes.string.isRequired,
 };
 
 InnleggelsePeriode.defaultProps = {
