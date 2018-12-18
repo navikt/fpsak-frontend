@@ -6,8 +6,8 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import moment from 'moment';
 
-import getAxiosHttpClientApi from '../axios/axiosHttpClientApi';
-import RequestApi from '../requestApi/RequestApi';
+import { getAxiosHttpClientApi, RequestApi } from '@fpsak-frontend/rest-api';
+
 import RestDuck from './RestDuck';
 
 const middlewares = [thunk];

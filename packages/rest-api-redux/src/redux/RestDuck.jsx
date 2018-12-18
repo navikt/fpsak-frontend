@@ -1,7 +1,8 @@
 /* @flow */
 import { createSelector } from 'reselect';
 
-import RequestRunner from '../requestApi/RequestRunner';
+import { RequestRunner } from '@fpsak-frontend/rest-api';
+
 import createRequestReducer from './restReducer';
 import createRequestActionTypes from './restActionTypes';
 import createRequestActionCreators from './restActionCreators';

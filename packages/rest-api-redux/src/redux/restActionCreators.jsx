@@ -1,10 +1,9 @@
 /* @flow */
 import moment from 'moment';
 import type { Dispatch } from 'redux';
+import { RequestRunner, NotificationMapper } from '@fpsak-frontend/rest-api';
 
 import type { ActionTypes } from './ActionTypesFlowType';
-import RequestRunner from '../requestApi/RequestRunner';
-import NotificationMapper from '../requestApi/NotificationMapper';
 
 type Options = {
   keepData?: boolean,

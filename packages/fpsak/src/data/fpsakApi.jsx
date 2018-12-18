@@ -1,5 +1,5 @@
 /* @flow */
-import { getHttpClientApi, getRestApiBuilder, initRestApi } from './rest/restApi';
+import { getHttpClientApi, getRestApiBuilder, initReduxRestApi } from '@fpsak-frontend/rest-api-redux';
 import reducerRegistry from '../ReducerRegistry';
 
 export const FpsakApiKeys = {
@@ -92,5 +92,8 @@ const endpoints = getRestApiBuilder(httpClientApi)
   .withPost('/api/feature-toggle', FpsakApiKeys.FEATURE_TOGGLE)
   .build();
 
-const fpsakApi = initRestApi(httpClientApi, 'fpsak', endpoints, 'dataContext', reducerRegistry);
+const reducerName = 'dataContext';
+const fpsakApi = initReduxRestApi(httpClientApi, 'fpsak', endpoints, reducerName);
+reducerRegistry.register(reducerName, fpsakApi.getDataReducer());
+
 export default fpsakApi;

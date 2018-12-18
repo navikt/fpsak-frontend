@@ -1,8 +1,8 @@
 /* @flow */
 import { createSelector } from 'reselect';
+import { RequestApi } from '@fpsak-frontend/rest-api';
 
 import ReduxRestApi from './ReduxRestApi';
-import RequestApi from '../requestApi/RequestApi';
 
 const getDataContext = reducerName => state => state.default[reducerName];
 

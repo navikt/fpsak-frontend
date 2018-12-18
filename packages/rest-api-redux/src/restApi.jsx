@@ -1,11 +1,11 @@
 /* @flow */
+import {
+  getAxiosHttpClientApi, RequestApi, RestApiContextModifier, RestApiConfigBuilder,
+} from '@fpsak-frontend/rest-api';
+import type { RequestConfig } from '@fpsak-frontend/rest-api/src/RequestConfigFlowType';
+import type { HttpClientApi } from '@fpsak-frontend/rest-api/src/HttpClientApiFlowType';
+
 import createReduxRestApi from './redux/duck';
-import getAxiosHttpClientApi from './axios/axiosHttpClientApi';
-import RequestApi from './requestApi/RequestApi';
-import RestApiContextModifier from './requestApi/RestApiContextModifier';
-import RestApiConfigBuilder from './RestApiConfigBuilder';
-import type { RequestConfig } from './RequestConfigFlowType';
-import type { HttpClientApi } from './HttpClientApiFlowType';
 
 const getActions = (restApi, endpointName) => ({
   makeRestApiRequest: () => restApi.makeRestApiRequest(endpointName),
@@ -37,11 +37,9 @@ const createApiForEachKey = (contextPath: string, config: RequestConfig[], restA
 }), {});
 
 // TODO (TOR) Rydd i Api'et til denne.
-export const initRestApi = (httpClientApi: HttpClientApi, contextPath: string, config: RequestConfig[], reducerName: string, reducerRegistry) => {
+export const initReduxRestApi = (httpClientApi: HttpClientApi, contextPath: string, config: RequestConfig[], reducerName: string) => {
   const requestApi = new RequestApi(httpClientApi, contextPath, config);
   const reduxRestApi = createReduxRestApi(requestApi, reducerName);
-
-  reducerRegistry.register(reducerName, reduxRestApi.dataReducer);
 
   return {
     ...createApiForEachKey(contextPath, config, reduxRestApi),
