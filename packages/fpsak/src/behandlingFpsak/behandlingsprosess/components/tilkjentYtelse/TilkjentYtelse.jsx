@@ -57,7 +57,10 @@ const createTooltipContent = (periodeType, intl, item) => (`
     ${item.utsettelseType && item.utsettelseType.kode !== '-'
     ? intl.formatMessage({ id: 'Timeline.tooltip.utsettelsePeriode' }) : periodeType}
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <strong>${intl.formatMessage({ id: 'Timeline.tooltip.dagsats' })}:</strong> ${item.dagsats}
+    ${intl.formatMessage({ id: 'Timeline.tooltip.dagsats' },
+    {
+      dagsats: item.dagsats,
+    })}
    </p>
 `);
 
