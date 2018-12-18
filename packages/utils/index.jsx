@@ -104,6 +104,8 @@ export {
   maxLengthOrFodselsnr,
   isArbeidsProsentVidUtsettelse100,
   isutbetalingPlusArbeidsprosentMerEn100,
+  isTrekkdagerMerEnnNullUtsettelse,
+  isUtbetalingMerEnnNullUtsettelse,
 } from './src/validation/validators';
 
 export {

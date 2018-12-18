@@ -6,6 +6,7 @@ import {
   invalidIntegerMessage, invalidDecimalMessage, dateNotBeforeOrEqualMessage, dateNotAfterOrEqualMessage, dateRangesOverlappingMessage,
   invalidFodselsnummerFormatMessage, invalidFodselsnummerMessage, invalidTextMessage, invalidSaksnummerOrFodselsnummerFormatMessage,
   invalidValueMessage, arrayMinLengthMessage, invalidPeriodMessage, invalidDatesInPeriodMessage, invalidPeriodRangeMessage, datesNotEqual,
+  maxLengthOrFodselsnrMessage, utbetalingsgradErMerSamtidigUttaksprosentMessage, trekkdagerErMerEnnNullUtsettelse, utbetalingMerEnnNullUtsettelse,
   maxLengthOrFodselsnrMessage, utbetalingsgradErMerSamtidigUttaksprosentMessage, ukerOgDagerVidNullUtbetalningsgradMessage,
   arbeidsprosentMåVare100VidUtsettelseAvArbeidMessage, merEn100ProsentMessage,
 } from './messages';
@@ -205,3 +206,7 @@ export const ariaCheck = () => {
     }
   }, 300);
 };
+
+export const isTrekkdagerMerEnnNullUtsettelse = value => (value > 0 ? trekkdagerErMerEnnNullUtsettelse() : null);
+
+export const isUtbetalingMerEnnNullUtsettelse = value => (value > 0 ? utbetalingMerEnnNullUtsettelse() : null);
