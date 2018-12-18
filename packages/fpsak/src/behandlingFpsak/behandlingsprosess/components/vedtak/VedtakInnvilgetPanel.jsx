@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 
 import {
-  getAksjonspunkter, getBehandlingResultatstruktur, getBehandlingSprak, getTilbakekrevingValg,
+  getAksjonspunkter, getBehandlingResultatstruktur, getBehandlingSprak, getTilbakekrevingValg, getSimuleringResultat,
 } from 'behandlingFpsak/behandlingSelectors';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
@@ -27,11 +27,14 @@ export const VedtakInnvilgetPanelImpl = ({
   readOnly,
   skalBrukeOverstyrendeFritekstBrev,
   tilbakekrevingValg,
+  simuleringResultat,
 }) => (
   <ElementWrapper>
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
     <Normaltekst>
-      {intl.formatMessage({ id: findInnvilgetResultatText(behandlingsresultat.type.kode, ytelseType, tilbakekrevingValg) })}
+      {intl.formatMessage({
+        id: findInnvilgetResultatText(behandlingsresultat.type.kode, ytelseType, simuleringResultat, tilbakekrevingValg),
+      })}
     </Normaltekst>
     <VerticalSpacer eightPx />
     { endringerIBeregningsgrunnlagGirFritekstfelt(aksjonspunkter, ytelseType) && !skalBrukeOverstyrendeFritekstBrev
@@ -80,6 +83,7 @@ VedtakInnvilgetPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool.isRequired,
   tilbakekrevingValg: PropTypes.shape(),
+  simuleringResultat: PropTypes.shape(),
 };
 
 VedtakInnvilgetPanelImpl.defaultProps = {
@@ -88,6 +92,7 @@ VedtakInnvilgetPanelImpl.defaultProps = {
   aksjonspunkter: undefined,
   sprakKode: undefined,
   tilbakekrevingValg: undefined,
+  simuleringResultat: undefined,
 };
 
 
@@ -97,6 +102,7 @@ const mapStateToProps = state => ({
   aksjonspunkter: getAksjonspunkter(state),
   sprakKode: getBehandlingSprak(state),
   tilbakekrevingValg: getTilbakekrevingValg(state),
+  simuleringResultat: getSimuleringResultat(state),
 });
 
 export default connect(mapStateToProps)(VedtakInnvilgetPanelImpl);

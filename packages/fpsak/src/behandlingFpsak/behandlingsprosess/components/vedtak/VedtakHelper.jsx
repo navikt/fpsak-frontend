@@ -9,7 +9,19 @@ import { isBGAksjonspunktSomGirFritekstfelt } from '@fpsak-frontend/kodeverk/src
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
 
-export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType, tilbakekrevingValg) => {
+export const tilbakekrevingText = (simuleringResultat, tilbakekrevingValg) => {
+  if (tilbakekrevingValg) {
+    return tilbakekrevingValg.videreBehandling.kode !== avregningCodes.TILBAKEKR_IGNORER ? `.${tilbakekrevingValg.videreBehandling.kode}` : '';
+  }
+  if (simuleringResultat) {
+    if (simuleringResultat.simuleringResultat && simuleringResultat.simuleringResultatUtenInntrekk) return `.${avregningCodes.TILBAKEKR_INFOTRYGD_OG_INNTREKK}`;
+    if (simuleringResultat.simuleringResultat) return `.${avregningCodes.TILBAKEKR_INFOTRYGD}`;
+    if (simuleringResultat.simuleringResultatUtenInntrekk) return `.${avregningCodes.TILBAKEKR_INNTREKK}`;
+  }
+  return '';
+};
+
+export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType, simuleringResultat, tilbakekrevingValg) => {
   if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET) {
     return 'VedtakForm.ResultatOpprettholdVedtak';
   }
@@ -17,14 +29,11 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType
     return 'VedtakForm.ResultatKlageMedhold';
   }
 
-  const tilbakekrevingTypeText = tilbakekrevingValg && tilbakekrevingValg.videreBehandling.kode !== avregningCodes.TILBAKEKR_IGNORER
-    ? `.${tilbakekrevingValg.videreBehandling.kode}` : '';
-
   if (ytelseType === fagsakYtelseType.ENGANGSSTONAD) {
-    return `VedtakForm.VilkarStatusInnvilgetEngangsstonad${tilbakekrevingTypeText}`;
+    return `VedtakForm.VilkarStatusInnvilgetEngangsstonad${tilbakekrevingText(simuleringResultat, tilbakekrevingValg)}`;
   }
 
-  return `VedtakForm.VilkarStatusInnvilgetForeldrepenger${tilbakekrevingTypeText}`;
+  return `VedtakForm.VilkarStatusInnvilgetForeldrepenger${tilbakekrevingText(simuleringResultat, tilbakekrevingValg)}`;
 };
 
 export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) => {
