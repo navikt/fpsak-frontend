@@ -147,7 +147,7 @@ export const RenderUttakTableImpl = ({
                 <Column xs="7">
                   <DecimalField
                     name={`${uttakElementFieldId}.utbetalingsgrad`}
-                    validate={[minValue0, maxProsentValue100, hasValidDecimal]}
+                    validate={[required, minValue0, maxProsentValue100, hasValidDecimal]}
                     readOnly={readOnly}
                     bredde="XS"
                     format={(value) => {

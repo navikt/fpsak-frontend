@@ -331,22 +331,16 @@ const validateUttakActivity = (values) => {
     }
   }
 
-  if (values.UttakFieldArray) {
+  if (values.UttakFieldArray && values.utsettelseType && values.utsettelseType.kode !== '-' && values.erOppfylt) {
     values.UttakFieldArray.forEach((a, index) => {
-      if (values.utsettelseType && values.utsettelseType.kode !== '-' && values.erOppfylt) {
-        const daysInvalid = isTrekkdagerMerEnnNullUtsettelse(a.days);
-        const weeksInvalid = isTrekkdagerMerEnnNullUtsettelse(a.weeks);
-        const utbetalingsgradInvalid = isUtbetalingMerEnnNullUtsettelse(a.utbetalingsgrad); // required for ikke utsettelse, tomt eller 0 for utsettelse
-        errors.UttakFieldArray[index] = {
-          days: daysInvalid,
-          weeks: weeksInvalid,
-          utbetalingsgrad: utbetalingsgradInvalid,
-        };
-      } else {
-        errors.UttakFieldArray[index] = {
-          utbetalingsgrad: required(a.utbetalingsgrad),
-        };
-      }
+      const daysInvalid = isTrekkdagerMerEnnNullUtsettelse(a.days);
+      const weeksInvalid = isTrekkdagerMerEnnNullUtsettelse(a.weeks);
+      const utbetalingsgradInvalid = isUtbetalingMerEnnNullUtsettelse(a.utbetalingsgrad); // required for ikke utsettelse, tomt eller 0 for utsettelse
+      errors.UttakFieldArray[index] = {
+        days: daysInvalid,
+        weeks: weeksInvalid,
+        utbetalingsgrad: utbetalingsgradInvalid,
+      };
     });
   }
   return errors;
