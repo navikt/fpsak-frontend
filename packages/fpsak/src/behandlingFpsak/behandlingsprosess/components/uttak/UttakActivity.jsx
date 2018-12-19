@@ -181,7 +181,9 @@ export const UttakActivity = ({
           )
           }
           {formProps.error}
-          {formProps.warning}
+          {/*  {formProps.warning}
+          // if soft validation 4165
+        */}
           <FlexContainer fluid>
             <FlexRow>
               <FlexColumn>
@@ -275,7 +277,8 @@ const warningUttakActivity = (values) => {
         rowArray.push(index);
       }
     });
-    if (rowArray.length > 0) {
+    // set to 0 if soft validation - 4165
+    if (rowArray.length > 1000) {
       const aktiviteter = document.querySelectorAll('[class^=renderUttakTable] tr');
       rowArray.forEach((item) => {
         aktiviteter[item + 1].classList.add('tableRowHighlight');
