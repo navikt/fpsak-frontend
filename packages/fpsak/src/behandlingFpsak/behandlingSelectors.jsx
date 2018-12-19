@@ -10,9 +10,25 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
 import fpsakBehandlingApi from './data/fpsakBehandlingApi';
 import isFieldEdited from './editedFields';
 import { getSelectedBehandlingId } from './duck';
+
+const findTilbakekrevingText = (simuleringResultat, tilbakekrevingValg) => {
+  if (tilbakekrevingValg) {
+    if (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk) {
+      return `VedtakForm.${avregningCodes.TILBAKEKR_INFOTRYGD_OG_INNTREKK}`;
+    }
+    return `VedtakForm.${tilbakekrevingValg.videreBehandling.kode}`;
+  }
+  if (simuleringResultat) {
+    if (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk) {
+      return `VedtakForm.${avregningCodes.TILBAKEKR_INNTREKK}`;
+    }
+  }
+  return null;
+};
 
 const hasFetchedOriginalBehandlingIfItExists = (behandling, originalBehandlingId) => (behandling && behandling.originalBehandlingId
   ? behandling.originalBehandlingId === originalBehandlingId : true);
@@ -106,6 +122,10 @@ export const getBrevMaler = createSelector([getSelectedBehandling], (selectedBeh
 
 export const getSimuleringResultat = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling.simuleringResultat));
 export const getTilbakekrevingValg = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling.tilbakekrevingvalg));
+export const getTilbakekrevingText = createSelector(
+  [getSimuleringResultat, getTilbakekrevingValg],
+  (simuleringResultat, tilbakekrevingValg) => findTilbakekrevingText(simuleringResultat, tilbakekrevingValg),
+);
 
 // AKSJONSPUNKTER
 export const getAksjonspunkter = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.aksjonspunkter);

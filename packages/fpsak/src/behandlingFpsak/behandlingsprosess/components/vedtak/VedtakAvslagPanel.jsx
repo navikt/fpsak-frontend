@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
-import { getBehandlingVilkar, getBehandlingSprak } from 'behandlingFpsak/behandlingSelectors';
+import {
+  getBehandlingVilkar, getBehandlingSprak, getTilbakekrevingText,
+} from 'behandlingFpsak/behandlingSelectors';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import {
@@ -34,6 +36,7 @@ export const VedtakAvslagPanelImpl = ({
   sprakkode,
   readOnly,
   ytelseType,
+  tilbakekrevingText,
 }) => {
   const fritekstfeltForSoknadsfrist = behandlingStatusKode === behandlingStatus.BEHANDLING_UTREDES
     && hasIkkeOppfyltSoknadsfristvilkar(vilkar) && ytelseType === fagsakYtelseType.ENGANGSSTONAD;
@@ -44,6 +47,9 @@ export const VedtakAvslagPanelImpl = ({
       <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
       <Normaltekst>
         {intl.formatMessage({ id: findAvslagResultatText(behandlingsresultat.type.kode, ytelseType) })}
+        {tilbakekrevingText && `. ${intl.formatMessage({
+          id: tilbakekrevingText,
+        })}`}
       </Normaltekst>
       <VerticalSpacer sixteenPx />
       { getAvslagArsak(vilkar, aksjonspunkter, behandlingsresultat)
@@ -80,13 +86,18 @@ VedtakAvslagPanelImpl.propTypes = {
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   ytelseType: PropTypes.string.isRequired,
+  tilbakekrevingText: PropTypes.string,
 };
 
+VedtakAvslagPanelImpl.defaultProps = {
+  tilbakekrevingText: null,
+};
 
 const mapStateToProps = state => ({
   ytelseType: getFagsakYtelseType(state).kode,
   vilkar: getBehandlingVilkar(state),
   sprakkode: getBehandlingSprak(state),
+  tilbakekrevingText: getTilbakekrevingText(state),
 });
 
 export default connect(mapStateToProps)(injectIntl(VedtakAvslagPanelImpl));

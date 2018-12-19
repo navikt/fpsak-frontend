@@ -9,7 +9,7 @@ import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-component
 import {
   getAksjonspunkter,
   getBehandlingResultatstruktur, getBehandlingSprak,
-  getBehandlingsresultat,
+  getBehandlingsresultat, getTilbakekrevingText,
 } from 'behandlingFpsak/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandlingFpsak/selectors/originalBehandlingSelectors';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
@@ -59,6 +59,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
   aksjonspunkter,
   readOnly,
   behandlingsresultat,
+  tilbakekrevingText,
 }) => (
   <ElementWrapper>
     {ytelseType === fagsakYtelseType.ENGANGSSTONAD
@@ -67,6 +68,9 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
       <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
       <Normaltekst>
         {intl.formatMessage({ id: resultTextES(beregningResultat, originaltBeregningResultat) })}
+        {tilbakekrevingText && `. ${intl.formatMessage({
+          id: tilbakekrevingText,
+        })}`}
       </Normaltekst>
       <VerticalSpacer sixteenPx />
       <Row>
@@ -96,6 +100,10 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
         <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
         <Normaltekst>
           {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen)}
+          {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen) !== '' && tilbakekrevingText && '. '}
+          {tilbakekrevingText && intl.formatMessage({
+            id: tilbakekrevingText,
+          })}
         </Normaltekst>
         <VerticalSpacer sixteenPx />
         <Row>
@@ -138,6 +146,7 @@ VedtakInnvilgetRevurderingPanelImpl.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType),
   readOnly: PropTypes.bool.isRequired,
   behandlingsresultat: PropTypes.shape().isRequired,
+  tilbakekrevingText: PropTypes.string,
 };
 
 VedtakInnvilgetRevurderingPanelImpl.defaultProps = {
@@ -148,6 +157,7 @@ VedtakInnvilgetRevurderingPanelImpl.defaultProps = {
   revurderingsAarsakString: undefined,
   sprakKode: undefined,
   aksjonspunkter: undefined,
+  tilbakekrevingText: null,
 };
 
 const mapStateToProps = state => ({
@@ -157,6 +167,7 @@ const mapStateToProps = state => ({
     ? getBehandlingsresultat(state).konsekvenserForYtelsen : undefined,
   sprakKode: getBehandlingSprak(state),
   aksjonspunkter: getAksjonspunkter(state),
+  tilbakekrevingText: getTilbakekrevingText(state),
 });
 
 export default connect(mapStateToProps)(injectIntl(VedtakInnvilgetRevurderingPanelImpl));
