@@ -16,6 +16,7 @@ import {
   isUtbetalingsgradMerSamitidigUttaksprosent,
   isUkerOgDagerVidNullUtbetalningsgrad,
   isArbeidsProsentVidUtsettelse100,
+  isutbetalingPlusArbeidsprosentMerEn100,
 } from '@fpsak-frontend/utils';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -180,6 +181,7 @@ export const UttakActivity = ({
           )
           }
           {formProps.error}
+          {formProps.warning}
           <FlexContainer fluid>
             <FlexRow>
               <FlexColumn>
@@ -256,7 +258,42 @@ const resultatTypeObject = (value, oppholdArsak) => {
   });
 };
 
-const validateUttakActivity = (values, utsettelseAarsak) => {
+const warningUttakActivity = (values) => {
+  let warnings = {};
+  const rowArray = [];
+  const touchedaktiviteter = document.getElementsByClassName('tableRowHighlight');
+  if (touchedaktiviteter) {
+    for (let i = 0; i < touchedaktiviteter.length; i += 1) {
+      touchedaktiviteter[i].classList.remove('tableRowHighlight');
+    }
+  }
+  if (values.UttakFieldArray) {
+    values.UttakFieldArray.forEach((aktivitet, index) => {
+      const utbetalingsgrad = parseFloat(aktivitet.utbetalingsgrad);
+      const utbetalingPlusArbeidsprosentMerEn100 = isutbetalingPlusArbeidsprosentMerEn100(utbetalingsgrad, aktivitet.prosentArbeid);
+      if (utbetalingPlusArbeidsprosentMerEn100) {
+        rowArray.push(index);
+      }
+    });
+    if (rowArray.length > 0) {
+      const aktiviteter = document.querySelectorAll('[class^=renderUttakTable] tr');
+      rowArray.forEach((item) => {
+        aktiviteter[item + 1].classList.add('tableRowHighlight');
+      });
+      warnings = {
+        _warning:
+  <AlertStripe type="info" className={styles.advarsel}>
+    <FormattedMessage
+      id="ValidationMessage.MerEn100Prosent"
+    />
+  </AlertStripe>,
+      };
+    }
+  }
+  return warnings;
+};
+
+const validateUttakActivity = (values) => {
   let errors = {};
   errors.UttakFieldArray = [];
   if (values.UttakFieldArray) {
@@ -398,7 +435,8 @@ const mapStateToProps = (state, ownProps) => {
     periodeTyper: getKodeverk(kodeverkTyper.UTTAK_PERIODE_TYPE)(state),
     oppholdArsakTyper: getKodeverk(kodeverkTyper.OPPHOLD_ARSAK)(state),
     starttidspunktForeldrepenger: getSkjaeringstidspunktForeldrepenger(state),
-    validate: values => validateUttakActivity(values, utsettelseAarsak),
+    validate: values => validateUttakActivity(values),
+    warn: values => warningUttakActivity(values),
     onSubmit: values => ownProps.updateActivity(transformValues(values, selectedItem, avslagAarsaker, innvilgelseAarsaker, graderingAvslagAarsakKoder)),
   };
 };

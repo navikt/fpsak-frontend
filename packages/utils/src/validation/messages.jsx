@@ -25,3 +25,4 @@ export const utbetalingsgradErMerSamtidigUttaksprosentMessage = () => ([{ id: 'V
 export const invalidNumberMessage = text => ([{ id: 'ValidationMessage.InvalidNumber' }, { text }]);
 export const ukerOgDagerVidNullUtbetalningsgradMessage = () => ([{ id: 'ValidationMessage.ukerOgDagerVidNullUtbetalningsgradMessage' }]);
 export const arbeidsprosentMåVare100VidUtsettelseAvArbeidMessage = () => ([{ id: 'ValidationMessage.UtsettelseUtenFullArbeid' }]);
+export const merEn100ProsentMessage = () => ([{ id: 'ValidationMessage.MerEn100Prosent' }]);

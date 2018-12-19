@@ -103,6 +103,7 @@ export {
   required,
   maxLengthOrFodselsnr,
   isArbeidsProsentVidUtsettelse100,
+  isutbetalingPlusArbeidsprosentMerEn100,
 } from './src/validation/validators';
 
 export {

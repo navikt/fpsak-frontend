@@ -7,7 +7,7 @@ import {
   invalidFodselsnummerFormatMessage, invalidFodselsnummerMessage, invalidTextMessage, invalidSaksnummerOrFodselsnummerFormatMessage,
   invalidValueMessage, arrayMinLengthMessage, invalidPeriodMessage, invalidDatesInPeriodMessage, invalidPeriodRangeMessage, datesNotEqual,
   maxLengthOrFodselsnrMessage, utbetalingsgradErMerSamtidigUttaksprosentMessage, ukerOgDagerVidNullUtbetalningsgradMessage,
-  arbeidsprosentMåVare100VidUtsettelseAvArbeidMessage,
+  arbeidsprosentMåVare100VidUtsettelseAvArbeidMessage, merEn100ProsentMessage,
 } from './messages';
 import {
   isoDateRegex, numberRegex, integerRegex, decimalRegex, textRegex, textGyldigRegex, isEmpty, yesterday, tomorrow,
@@ -157,6 +157,13 @@ export const isUtbetalingsgradMerSamitidigUttaksprosent = (samtidigUttaksProsent
 export const isUkerOgDagerVidNullUtbetalningsgrad = (weeks, days, utbetalingsgrad) => {
   if (weeks === 0 && days === 0 && utbetalingsgrad > 0) {
     return ukerOgDagerVidNullUtbetalningsgradMessage();
+  }
+  return null;
+};
+
+export const isutbetalingPlusArbeidsprosentMerEn100 = (utbetalingsgrad, prosentArbeid) => {
+  if (utbetalingsgrad + prosentArbeid > 100) {
+    return merEn100ProsentMessage();
   }
   return null;
 };
