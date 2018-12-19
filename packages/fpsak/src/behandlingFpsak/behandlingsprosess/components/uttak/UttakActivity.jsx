@@ -335,7 +335,7 @@ const validateUttakActivity = (values) => {
     values.UttakFieldArray.forEach((a, index) => {
       const daysInvalid = isTrekkdagerMerEnnNullUtsettelse(a.days);
       const weeksInvalid = isTrekkdagerMerEnnNullUtsettelse(a.weeks);
-      const utbetalingsgradInvalid = isUtbetalingMerEnnNullUtsettelse(a.utbetalingsgrad); // required for ikke utsettelse, tomt eller 0 for utsettelse
+      const utbetalingsgradInvalid = isUtbetalingMerEnnNullUtsettelse(a.utbetalingsgrad);
       errors.UttakFieldArray[index] = {
         days: daysInvalid,
         weeks: weeksInvalid,
