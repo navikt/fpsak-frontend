@@ -6,7 +6,8 @@ import {
   invalidIntegerMessage, invalidDecimalMessage, dateNotBeforeOrEqualMessage, dateNotAfterOrEqualMessage, dateRangesOverlappingMessage,
   invalidFodselsnummerFormatMessage, invalidFodselsnummerMessage, invalidTextMessage, invalidSaksnummerOrFodselsnummerFormatMessage,
   invalidValueMessage, arrayMinLengthMessage, invalidPeriodMessage, invalidDatesInPeriodMessage, invalidPeriodRangeMessage, datesNotEqual,
-  maxLengthOrFodselsnrMessage, utbetalingsgradErMerSamtidigUttaksprosentMessage,
+  maxLengthOrFodselsnrMessage, utbetalingsgradErMerSamtidigUttaksprosentMessage, ukerOgDagerVidNullUtbetalningsgradMessage,
+  arbeidsprosentMåVare100VidUtsettelseAvArbeidMessage, merEn100ProsentMessage,
 } from './messages';
 import {
   isoDateRegex, numberRegex, integerRegex, decimalRegex, textRegex, textGyldigRegex, isEmpty, yesterday, tomorrow,
@@ -149,6 +150,37 @@ export const isWithinOpptjeningsperiode = (fomDateLimit, tomDateLimit) => (fom, 
 export const isUtbetalingsgradMerSamitidigUttaksprosent = (samtidigUttaksProsent, utbetalingsgrad) => {
   if (samtidigUttaksProsent < utbetalingsgrad) {
     return utbetalingsgradErMerSamtidigUttaksprosentMessage();
+  }
+  return null;
+};
+
+export const isUkerOgDagerVidNullUtbetalningsgrad = (weeks, days, utbetalingsgrad) => {
+  if (weeks === 0 && days === 0 && utbetalingsgrad > 0) {
+    return ukerOgDagerVidNullUtbetalningsgradMessage();
+  }
+  return null;
+};
+
+export const isutbetalingPlusArbeidsprosentMerEn100 = (utbetalingsgrad, prosentArbeid) => {
+  if (utbetalingsgrad + prosentArbeid > 100) {
+    return merEn100ProsentMessage();
+  }
+  return null;
+};
+
+const getSum = (total, num) => total + num;
+
+export const isArbeidsProsentVidUtsettelse100 = (values, aktivitetArray) => {
+  const andelIArbeid = [0];
+  if (values.utsettelseType && values.erOppfylt) {
+    aktivitetArray.forEach((aktivitet) => {
+      andelIArbeid.push(aktivitet.prosentArbeid);
+    });
+    const prosentIArbeid = andelIArbeid.reduce(getSum);
+    if (prosentIArbeid < 100) {
+      return arbeidsprosentMåVare100VidUtsettelseAvArbeidMessage();
+    }
+    return null;
   }
   return null;
 };

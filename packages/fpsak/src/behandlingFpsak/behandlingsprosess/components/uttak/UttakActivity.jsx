@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
+import AlertStripe from 'nav-frontend-alertstriper';
 import {
   RadioGroupField, RadioOption, TextAreaField, SelectField,
 } from '@fpsak-frontend/form';
@@ -13,6 +14,9 @@ import {
   required,
   notDash,
   isUtbetalingsgradMerSamitidigUttaksprosent,
+  isUkerOgDagerVidNullUtbetalningsgrad,
+  isArbeidsProsentVidUtsettelse100,
+  isutbetalingPlusArbeidsprosentMerEn100,
 } from '@fpsak-frontend/utils';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -20,6 +24,7 @@ import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/beh
 import { getSkjaeringstidspunktForeldrepenger } from 'behandlingFpsak/behandlingSelectors';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import { getKodeverk } from 'kodeverk/duck';
 import { FieldArray, formPropTypes } from 'redux-form';
@@ -175,6 +180,10 @@ export const UttakActivity = ({
           </div>
           )
           }
+          {formProps.error}
+          {/*  {formProps.warning}
+          // if soft validation 4165
+        */}
           <FlexContainer fluid>
             <FlexRow>
               <FlexColumn>
@@ -251,21 +260,73 @@ const resultatTypeObject = (value, oppholdArsak) => {
   });
 };
 
+const warningUttakActivity = (values) => {
+  let warnings = {};
+  const rowArray = [];
+  const touchedaktiviteter = document.getElementsByClassName('tableRowHighlight');
+  if (touchedaktiviteter) {
+    for (let i = 0; i < touchedaktiviteter.length; i += 1) {
+      touchedaktiviteter[i].classList.remove('tableRowHighlight');
+    }
+  }
+  if (values.UttakFieldArray) {
+    values.UttakFieldArray.forEach((aktivitet, index) => {
+      const utbetalingsgrad = parseFloat(aktivitet.utbetalingsgrad);
+      const utbetalingPlusArbeidsprosentMerEn100 = isutbetalingPlusArbeidsprosentMerEn100(utbetalingsgrad, aktivitet.prosentArbeid);
+      if (utbetalingPlusArbeidsprosentMerEn100) {
+        rowArray.push(index);
+      }
+    });
+    // set to 0 if soft validation - 4165
+    if (rowArray.length > 1000) {
+      const aktiviteter = document.querySelectorAll('[class^=renderUttakTable] tr');
+      rowArray.forEach((item) => {
+        aktiviteter[item + 1].classList.add('tableRowHighlight');
+      });
+      warnings = {
+        _warning:
+  <AlertStripe type="info" className={styles.advarsel}>
+    <FormattedMessage
+      id="ValidationMessage.MerEn100Prosent"
+    />
+  </AlertStripe>,
+      };
+    }
+  }
+  return warnings;
+};
+
 const validateUttakActivity = (values) => {
-  const errors = {};
+  let errors = {};
   errors.UttakFieldArray = [];
-  if (values.samtidigUttak && values.UttakFieldArray) {
+  if (values.UttakFieldArray) {
     values.UttakFieldArray.forEach((aktivitet, index) => {
       const samtidigUttaksprosent = parseFloat(values.samtidigUttaksprosent);
       const utbetalingsgrad = parseFloat(aktivitet.utbetalingsgrad);
-      const invalid = isUtbetalingsgradMerSamitidigUttaksprosent(samtidigUttaksprosent, utbetalingsgrad);
-
-      if (invalid) {
+      const invalidUtbetalingsgradMerSamitidigUttaksprosent = isUtbetalingsgradMerSamitidigUttaksprosent(samtidigUttaksprosent, utbetalingsgrad);
+      const invalidUkerOgDagerVidNullUtbetalningsgrad = isUkerOgDagerVidNullUtbetalningsgrad(aktivitet.weeks, aktivitet.days, utbetalingsgrad);
+      if (values.samtidigUttak && invalidUtbetalingsgradMerSamitidigUttaksprosent) {
         errors.UttakFieldArray[index] = {
-          utbetalingsgrad: invalid,
+          utbetalingsgrad: invalidUtbetalingsgradMerSamitidigUttaksprosent,
+        };
+      }
+      if (invalidUkerOgDagerVidNullUtbetalningsgrad) {
+        errors.UttakFieldArray[index] = {
+          utbetalingsgrad: invalidUkerOgDagerVidNullUtbetalningsgrad,
         };
       }
     });
+    const invalidArbeidsProsentVidUsettelse = isArbeidsProsentVidUtsettelse100(values, values.UttakFieldArray);
+    if (invalidArbeidsProsentVidUsettelse && values.utsettelseType.kode === utsettelseArsakCodes.ARBEID) {
+      errors = {
+        _error:
+  <AlertStripe type="advarsel" className={styles.advarsel}>
+    <FormattedMessage
+      id="ValidationMessage.UtsettelseUtenFullArbeid"
+    />
+  </AlertStripe>,
+      };
+    }
   }
   return errors;
 };
@@ -334,6 +395,10 @@ export const initialValue = (selectedItem, kontoIkkeSatt) => {
     aktivitet.tom = selectedItem.tom;
     aktivitet.weeks = typeof a.weeks !== 'undefined' ? a.weeks : calculateCorrectWeeks(aktivitet);
     aktivitet.days = typeof a.weeks !== 'undefined' ? a.days : calculateCorrectDays(aktivitet);
+    if (aktivitet.weeks === 0 && aktivitet.days === 0 && selectedItem.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING) {
+      aktivitet.weeks = '';
+      aktivitet.days = '';
+    }
     return aktivitet;
   });
 };
@@ -343,12 +408,14 @@ const mapStateToProps = (state, ownProps) => {
   const avslagAarsaker = getKodeverk(kodeverkTyper.UTTAK_AVSLAG_ARSAK)(state);
   const innvilgelseAarsaker = getKodeverk(kodeverkTyper.INNVILGET_AARSAK)(state);
   const graderingAvslagAarsakKoder = getKodeverk(kodeverkTyper.GRADERING_AVSLAG_AARSAK)(state);
+  const utsettelseAarsak = getKodeverk(kodeverkTyper.UTSETTELSE_ARSAK)(state);
   const kontoIkkeSatt = !selectedItem.periodeType
     && (selectedItem.aktiviteter[0].stønadskontoType.kode === '-');
 
   return {
     kontoIkkeSatt,
     graderingAvslagAarsakKoder,
+    utsettelseAarsak,
     initialValues: {
       UttakFieldArray: initialValue(selectedItem, kontoIkkeSatt),
       erOppfylt: erPeriodeOppfylt(selectedItem, kontoIkkeSatt),
@@ -372,6 +439,7 @@ const mapStateToProps = (state, ownProps) => {
     oppholdArsakTyper: getKodeverk(kodeverkTyper.OPPHOLD_ARSAK)(state),
     starttidspunktForeldrepenger: getSkjaeringstidspunktForeldrepenger(state),
     validate: values => validateUttakActivity(values),
+    warn: values => warningUttakActivity(values),
     onSubmit: values => ownProps.updateActivity(transformValues(values, selectedItem, avslagAarsaker, innvilgelseAarsaker, graderingAvslagAarsakKoder)),
   };
 };
