@@ -50,11 +50,11 @@ const createTextStrings = (arbforhold) => {
     arbeidsgiver, arbeidsforholdId, uttakArbeidType,
   } = arbforhold;
 
-  let arbeidsforhold = '';
+  let arbeidsforhold = <FormattedMessage id="RenderUttakTable.ArbeidType.ANNET" />;
 
   if (uttakArbeidType && uttakArbeidType.kode !== uttakArbeidTypeKodeverk.ORDINÆRT_ARBEID) {
     arbeidsforhold = <FormattedMessage id={uttakArbeidTypeTekstCodes[uttakArbeidType.kode]} />;
-  } else {
+  } else if (arbeidsgiver) {
     const {
       identifikator, navn, virksomhet,
     } = arbeidsgiver;
