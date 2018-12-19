@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import { getEndringBeregningsgrunnlagPerioder } from 'behandlingFpsak/behandlingSelectors';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import {
   isArrayEmpty, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, createVisningsnavnForAktivitet,
 } from '@fpsak-frontend/utils';
@@ -14,10 +14,12 @@ import {
 import {
   InputField, DecimalField, PeriodpickerField, NavFieldGroup, SelectField,
 } from '@fpsak-frontend/form';
+import { getEndringBeregningsgrunnlagPerioder, getFaktaOmBeregningTilfellerKoder } from 'behandlingFpsak/behandlingSelectors';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
 import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import { arbeidsforholdProptype, getUniqueListOfArbeidsforhold } from '../../ArbeidsforholdHelper';
 import {
@@ -52,6 +54,20 @@ const arbeidsgiverSelectValues = arbeidsforholdList => (arbeidsforholdList
     </option>
   )));
 
+const arbeidsgiverSelectValuesForKunYtelse = (arbeidsforholdList, intl) => {
+  const nedtrekksvalgListe = arbeidsforholdList
+    .map(arbeidsforhold => (
+      <option value={arbeidsforhold.andelsnr.toString()} key={arbeidsforhold.andelsnr}>
+        {createVisningsnavnForAktivitet(arbeidsforhold)}
+      </option>
+    ));
+  nedtrekksvalgListe.push(
+    <option value={beregningsgrunnlagAndeltyper.BRUKERS_ANDEL} key={beregningsgrunnlagAndeltyper.BRUKERS_ANDEL}>
+      {intl.formatMessage({ id: 'BeregningInfoPanel.FordelingBG.Ytelse' })}
+    </option>,
+  );
+  return nedtrekksvalgListe;
+};
 
 const inntektskategoriSelectValues = kategorier => kategorier.map(ik => (
   <option value={ik.kode} key={ik.kode}>
@@ -59,35 +75,21 @@ const inntektskategoriSelectValues = kategorier => kategorier.map(ik => (
   </option>
 ));
 
-const hentArbeidsperiode = (field, arbeidsforholdList) => {
-  if (field.nyAndel === false) {
-    return null;
-  }
-  let arbeidsperiode = null;
-  arbeidsforholdList.forEach((af) => {
-    if (af.andelsnr.toString() === field.andel) {
-      arbeidsperiode = {
-        arbeidsperiodeFom: af.startdato,
-        arbeidsperiodeTom: af.opphoersdato,
-      };
-    }
-  });
-  return arbeidsperiode;
-};
-
 const summerFordelingForrigeBehandlingFraFields = (fields) => {
   let sum = 0;
-  fields.forEach((andelElementFieldId, index) => {
+  let index = 0;
+  for (index; index < fields.length; index += 1) {
     sum += fields.get(index).fordelingForrigeBehandling ? Number(removeSpacesFromNumber(fields.get(index).fordelingForrigeBehandling)) : 0;
-  });
+  }
   return sum > 0 ? formatCurrencyNoKr(sum) : '';
 };
 
 const summerFordeling = (fields) => {
   let sum = 0;
-  fields.forEach((andelElementFieldId, index) => {
+  let index = 0;
+  for (index; index < fields.length; index += 1) {
     sum += fields.get(index).fastsattBeløp ? Number(removeSpacesFromNumber(fields.get(index).fastsattBeløp)) : 0;
-  });
+  }
   return sum > 0 ? formatCurrencyNoKr(sum) : '';
 };
 
@@ -145,21 +147,18 @@ const arbeidsforholdReadOnlyOrSelect = (fields, index, elementFieldId, selectVal
   </ElementWrapper>
 );
 
-function skalViseSletteknapp(index, fields, readOnly) {
-  return (fields.get(index).nyAndel || fields.get(index).lagtTilAvSaksbehandler) && !readOnly;
-}
+const skalViseSletteknapp = (index, fields, readOnly) => ((fields.get(index).nyAndel
+|| fields.get(index).lagtTilAvSaksbehandler) && !readOnly);
 
 const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
-  inntektskategoriKoder, periodeUtenAarsak, arbeidsforholdList) => {
-  const selectVals = arbeidsgiverSelectValues(arbeidsforholdList);
-  return (
-    fields.map((andelElementFieldId, index) => (
-      <TableRow key={andelElementFieldId}>
-        <TableColumn>
-          {arbeidsforholdReadOnlyOrSelect(fields, index, andelElementFieldId, selectVals, readOnly, arbeidsforholdList)}
-        </TableColumn>
-        <TableColumn>
-          {!isSelvstendigOrFrilanser(fields.get(index))
+  inntektskategoriKoder, periodeUtenAarsak, arbeidsforholdList, selectVals) => (
+  fields.map((andelElementFieldId, index) => (
+    <TableRow key={andelElementFieldId}>
+      <TableColumn>
+        {arbeidsforholdReadOnlyOrSelect(fields, index, andelElementFieldId, selectVals, readOnly, arbeidsforholdList)}
+      </TableColumn>
+      <TableColumn>
+        {!isSelvstendigOrFrilanser(fields.get(index))
         && (
           <PeriodpickerField
             names={[`${andelElementFieldId}.arbeidsperiodeFom`, `${andelElementFieldId}.arbeidsperiodeTom`]}
@@ -169,59 +168,59 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
           />
         )
         }
-        </TableColumn>
-        <TableColumn>
-          <InputField
-            name={`${andelElementFieldId}.fordelingForrigeBehandling`}
-            bredde="S"
-            readOnly
-            parse={parseCurrencyInput}
-          />
-        </TableColumn>
-        <TableColumn>
-          <DecimalField
-            name={`${andelElementFieldId}.andelIArbeid`}
-            readOnly
-            bredde="S"
-            format={(value) => {
-              if (value || value === 0) {
-                return `${value} %`;
-              }
-              return '';
-            }}
-            normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
-          />
-        </TableColumn>
-        <TableColumn className={readOnly || !fields.get(index).skalKunneEndreRefusjon ? undefined : styles.rightAlignInput}>
-          <InputField
-            name={`${andelElementFieldId}.refusjonskrav`}
-            bredde="XS"
-            readOnly={readOnly || !fields.get(index).skalKunneEndreRefusjon}
-            parse={parseCurrencyInput}
-          />
-        </TableColumn>
-        <TableColumn className={readOnly ? undefined : styles.rightAlignInput}>
-          <InputField
-            name={`${andelElementFieldId}.fastsattBeløp`}
-            bredde="XS"
-            parse={parseCurrencyInput}
-            readOnly={readOnly}
-            isEdited={isAksjonspunktClosed && !periodeUtenAarsak}
-          />
-        </TableColumn>
-        <TableColumn>
-          <SelectField
-            label=""
-            name={`${andelElementFieldId}.inntektskategori`}
-            bredde="s"
-            selectValues={inntektskategoriSelectValues(inntektskategoriKoder)}
-            value={fields.get(index).inntektskategori}
-            readOnly={readOnly}
-            isEdited={isAksjonspunktClosed && !periodeUtenAarsak}
-          />
-        </TableColumn>
-        <TableColumn>
-          {skalViseSletteknapp(index, fields, readOnly)
+      </TableColumn>
+      <TableColumn>
+        <InputField
+          name={`${andelElementFieldId}.fordelingForrigeBehandling`}
+          bredde="S"
+          readOnly
+          parse={parseCurrencyInput}
+        />
+      </TableColumn>
+      <TableColumn>
+        <DecimalField
+          name={`${andelElementFieldId}.andelIArbeid`}
+          readOnly
+          bredde="S"
+          format={(value) => {
+            if (value || value === 0) {
+              return `${value} %`;
+            }
+            return '';
+          }}
+          normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+        />
+      </TableColumn>
+      <TableColumn className={readOnly || !fields.get(index).skalKunneEndreRefusjon ? undefined : styles.rightAlignInput}>
+        <InputField
+          name={`${andelElementFieldId}.refusjonskrav`}
+          bredde="XS"
+          readOnly={readOnly || !fields.get(index).skalKunneEndreRefusjon}
+          parse={parseCurrencyInput}
+        />
+      </TableColumn>
+      <TableColumn className={readOnly ? undefined : styles.rightAlignInput}>
+        <InputField
+          name={`${andelElementFieldId}.fastsattBeløp`}
+          bredde="XS"
+          parse={parseCurrencyInput}
+          readOnly={readOnly}
+          isEdited={isAksjonspunktClosed && !periodeUtenAarsak}
+        />
+      </TableColumn>
+      <TableColumn>
+        <SelectField
+          label=""
+          name={`${andelElementFieldId}.inntektskategori`}
+          bredde="s"
+          selectValues={inntektskategoriSelectValues(inntektskategoriKoder)}
+          value={fields.get(index).inntektskategori}
+          readOnly={readOnly}
+          isEdited={isAksjonspunktClosed && !periodeUtenAarsak}
+        />
+      </TableColumn>
+      <TableColumn>
+        {skalViseSletteknapp(index, fields, readOnly)
         && (
           <button
             className={styles.buttonRemove}
@@ -232,11 +231,10 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
           />
         )
         }
-        </TableColumn>
-      </TableRow>
-    ))
-  );
-};
+      </TableColumn>
+    </TableRow>
+  ))
+);
 const createBruttoBGSummaryRow = (sumFordelingForrigeBehandling, sumFordeling) => (
   <TableRow key="bruttoBGSummaryRow">
     <TableColumn>
@@ -285,18 +283,14 @@ export const RenderEndringBGFieldArrayImpl = ({
   readOnly,
   periodeUtenAarsak,
   isAksjonspunktClosed,
+  harKunYtelse,
 }) => {
   const sumFordelingForrigeBehandling = summerFordelingForrigeBehandlingFraFields(fields);
   const sumFordeling = summerFordeling(fields);
-  fields.forEach((andelElementFieldId, index) => {
-    const field = fields.get(index);
-    const arbeidsperiode = hentArbeidsperiode(field, arbeidsforholdList);
-    if (arbeidsperiode !== null) {
-      field.arbeidsperiodeFom = arbeidsperiode.arbeidsperiodeFom;
-      field.arbeidsperiodeTom = arbeidsperiode.arbeidsperiodeTom;
-    }
-  });
-  const tablerows = createAndelerTableRows(fields, isAksjonspunktClosed, readOnly, inntektskategoriKoder, periodeUtenAarsak, arbeidsforholdList);
+  const selectVals = harKunYtelse
+    ? arbeidsgiverSelectValuesForKunYtelse(arbeidsforholdList, intl)
+    : arbeidsgiverSelectValues(arbeidsforholdList);
+  const tablerows = createAndelerTableRows(fields, isAksjonspunktClosed, readOnly, inntektskategoriKoder, periodeUtenAarsak, arbeidsforholdList, selectVals);
   tablerows.push(createBruttoBGSummaryRow(sumFordelingForrigeBehandling, sumFordeling));
   return (
     <NavFieldGroup errorMessage={getErrorMessage(meta, intl)}>
@@ -347,6 +341,7 @@ RenderEndringBGFieldArrayImpl.propTypes = {
   inntektskategoriKoder: kodeverkPropType.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   periodeUtenAarsak: PropTypes.bool.isRequired,
+  harKunYtelse: PropTypes.bool.isRequired,
 };
 
 const RenderEndringBGFieldArray = injectIntl(RenderEndringBGFieldArrayImpl);
@@ -385,11 +380,13 @@ RenderEndringBGFieldArray.validate = (values) => {
 };
 
 const mapStateToProps = (state) => {
+  const tilfeller = getFaktaOmBeregningTilfellerKoder(state);
   const arbeidsforholdList = getUniqueListOfArbeidsforhold(getEndringBeregningsgrunnlagPerioder(state)
     ? getEndringBeregningsgrunnlagPerioder(state).flatMap(p => p.endringBeregningsgrunnlagAndeler) : undefined);
   return {
     arbeidsforholdList,
     inntektskategoriKoder: getKodeverk(kodeverkTyper.INNTEKTSKATEGORI)(state),
+    harKunYtelse: tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE),
   };
 };
 

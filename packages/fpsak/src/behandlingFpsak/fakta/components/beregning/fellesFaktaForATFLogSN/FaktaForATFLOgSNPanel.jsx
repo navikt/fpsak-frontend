@@ -13,6 +13,7 @@ import {
   getKortvarigeArbeidsforhold,
   getTilstøtendeYtelse,
   getKunYtelse,
+  getBehandlingIsRevurdering,
 } from 'behandlingFpsak/behandlingSelectors';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -21,7 +22,12 @@ import TilstotendeYtelseForm, { harKunTilstotendeYtelse } from './tilstøtendeYt
 import TilstotendeYtelseIKombinasjon, { erTilstotendeYtelseIKombinasjon } from './tilstøtendeYtelse/TilstotendeYtelseIKombinasjon';
 import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm';
 import NyoppstartetFLForm from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
-import KunYtelsePanel from './kunYtelse/KunYtelsePanel';
+import {
+  setFaktaPanelForKunYtelse,
+  transformValuesForKunYtelse,
+  getKunYtelseValidation,
+  buildInitialValuesKunYtelse,
+} from './kunYtelse/FastsettBgKunYtelse';
 import FastsettEndretBeregningsgrunnlag from './endringBeregningsgrunnlag/FastsettEndretBeregningsgrunnlag';
 import {
   getHelpTextsEndringBG,
@@ -54,7 +60,7 @@ export const getValidationFaktaForATFLOgSN = createSelector(
         ...FastsettEndretBeregningsgrunnlag.validate(values, endringBGPerioder, aktivertePaneler),
         ...TilstotendeYtelseForm.validate(values, aktivertePaneler),
         ...TilstotendeYtelseIKombinasjon.validate(values, endringBGPerioder, aktivertePaneler),
-        ...KunYtelsePanel.validate(values, aktivertePaneler, kunYtelse),
+        ...getKunYtelseValidation(values, kunYtelse, endringBGPerioder, aktivertePaneler),
       };
     }
     return null;
@@ -111,18 +117,6 @@ const getFaktaPanels = (readOnly, formName, tilfeller, isAksjonspunktClosed, sho
         </ElementWrapper>,
       );
     }
-    if (tilfelle === faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG) {
-      hasShownPanel = true;
-      faktaPanels.push(
-        <ElementWrapper key={tilfelle}>
-          {spacer(hasShownPanel)}
-          <FastsettEndretBeregningsgrunnlag
-            readOnly={readOnly}
-            isAksjonspunktClosed={isAksjonspunktClosed}
-          />
-        </ElementWrapper>,
-      );
-    }
     if (tilfelle === faktaOmBeregningTilfelle.VURDER_SN_NY_I_ARBEIDSLIVET) {
       hasShownPanel = true;
       faktaPanels.push(
@@ -144,19 +138,6 @@ const getFaktaPanels = (readOnly, formName, tilfeller, isAksjonspunktClosed, sho
             readOnly={readOnly}
             isAksjonspunktClosed={isAksjonspunktClosed}
             formName={formName}
-          />
-        </ElementWrapper>,
-      );
-    }
-    if (tilfelle === faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE) {
-      hasShownPanel = true;
-      faktaPanels.push(
-        <ElementWrapper key={tilfelle}>
-          {spacer(hasShownPanel)}
-          <KunYtelsePanel
-            readOnly={readOnly}
-            formName={formName}
-            isAksjonspunktClosed={isAksjonspunktClosed}
           />
         </ElementWrapper>,
       );
@@ -188,6 +169,20 @@ const getFaktaPanels = (readOnly, formName, tilfeller, isAksjonspunktClosed, sho
       </ElementWrapper>,
     );
   }
+  if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG) && !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE)) {
+    hasShownPanel = true;
+    faktaPanels.push(
+      <ElementWrapper key={faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG}>
+        {spacer(hasShownPanel)}
+        <FastsettEndretBeregningsgrunnlag
+          readOnly={readOnly}
+          isAksjonspunktClosed={isAksjonspunktClosed}
+        />
+      </ElementWrapper>,
+    );
+  }
+  setFaktaPanelForKunYtelse(faktaPanels, tilfeller, readOnly, formName, isAksjonspunktClosed);
+
   if (harKunTilstotendeYtelse(tilfeller)) {
     faktaPanels.push(
       <ElementWrapper key="TilstotendeYtelse">
@@ -240,6 +235,9 @@ const setInntektValues = (values, faktaOmBeregning, aktivePaneler, endringBGPeri
       faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.TILSTOTENDE_YTELSE],
       ...TilstotendeYtelseForm.transformValues(values, faktor, faktaOmBeregning.tilstøtendeYtelse.erBesteberegning),
     };
+  }
+  if (aktivePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE)) {
+    return transformValuesForKunYtelse(values, faktaOmBeregning.kunYtelse, endringBGPerioder, aktivePaneler);
   }
   if (aktivePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
     return {
@@ -318,13 +316,6 @@ const setValuesForVurderFakta = (aktivePaneler, values, endringBGPerioder, kortv
         ...VurderEtterlonnSluttpakkeForm.transformValues(values),
       };
     }
-    if (kode === faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE) {
-      vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE);
-      vurderFaktaValues = {
-        ...vurderFaktaValues,
-        ...KunYtelsePanel.transformValues(values, faktaOmBeregning.kunYtelse),
-      };
-    }
   });
   return [vurderFaktaValues];
 };
@@ -344,8 +335,10 @@ export const transformValuesFaktaForATFLOgSN = createSelector(
 
 export const buildInitialValuesFaktaForATFLOgSN = createSelector(
   [getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlag,
-    getKortvarigeArbeidsforhold, getAksjonspunkter, getTilstøtendeYtelse, getKunYtelse, getFaktaOmBeregningTilfellerKoder],
-  (endringBGPerioder, beregningsgrunnlag, kortvarigeArbeidsforhold, aksjonspunkter, tilstotendeYtelse, kunYtelse, tilfeller) => {
+    getKortvarigeArbeidsforhold, getAksjonspunkter, getTilstøtendeYtelse, getKunYtelse,
+    getFaktaOmBeregningTilfellerKoder, getBehandlingIsRevurdering],
+  (endringBGPerioder, beregningsgrunnlag, kortvarigeArbeidsforhold, aksjonspunkter, tilstotendeYtelse, kunYtelse,
+    tilfeller, isRevurdering) => {
     const vurderFaktaAP = aksjonspunkter ? aksjonspunkter.find(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN) : undefined;
     if (!vurderFaktaAP) {
       return {};
@@ -360,7 +353,7 @@ export const buildInitialValuesFaktaForATFLOgSN = createSelector(
       ...FastsettBBFodendeKvinneForm.buildInitialValues(beregningsgrunnlag),
       ...TilstotendeYtelseForm.buildInitialValues(tilstotendeYtelse, endringBGPerioder),
       ...TilstotendeYtelseIKombinasjon.buildInitialValues(tilstotendeYtelse, endringBGPerioder, tilfeller),
-      ...KunYtelsePanel.buildInitialValues(kunYtelse),
+      ...buildInitialValuesKunYtelse(kunYtelse, endringBGPerioder, isRevurdering, tilfeller),
       ...VurderEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag, vurderFaktaAP),
       ...FastsettEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag),
     };

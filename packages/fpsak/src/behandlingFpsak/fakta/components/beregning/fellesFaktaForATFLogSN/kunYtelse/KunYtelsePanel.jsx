@@ -11,6 +11,7 @@ import { setGenerellAndelsinfo } from '../BgFordelingUtils';
 
 export const brukersAndelFieldArrayName = 'brukersAndelBG';
 
+
 /**
  * KunYtelsePanel
  *
@@ -73,6 +74,9 @@ KunYtelsePanel.buildInitialValues = (kunYtelse) => {
   return initialValues;
 };
 
+KunYtelsePanel.summerFordeling = values => (values[brukersAndelFieldArrayName]
+  .map(({ fastsattBeløp }) => (fastsattBeløp ? removeSpacesFromNumber(fastsattBeløp) : 0))
+  .reduce((sum, fastsattBeløp) => sum + fastsattBeløp, 0));
 
 KunYtelsePanel.transformValues = (values, kunYtelse) => ({
   kunYtelseFordeling: {

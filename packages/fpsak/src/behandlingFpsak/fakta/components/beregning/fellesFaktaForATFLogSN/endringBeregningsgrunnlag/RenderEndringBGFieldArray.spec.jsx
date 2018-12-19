@@ -1,11 +1,98 @@
+import React from 'react';
 import { expect } from 'chai';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+import { MockFieldsWithContent } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
+import { SelectField } from '@fpsak-frontend/form';
+import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
 import {
   skalIkkjeVereHogareEnnInntektmeldingMessage, skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding, skalVereLikFordelingMessage,
 } from '../ValidateAndelerUtils';
-import RenderEndringBGFieldArray from './RenderEndringBGFieldArray';
+import RenderEndringBGFieldArray, { RenderEndringBGFieldArrayImpl } from './RenderEndringBGFieldArray';
+
+const inntektskategorier = [
+  {
+    kode: 'ARBEIDSTAKER',
+    navn: 'Arbeidstaker',
+  },
+  {
+    kode: 'SELVSTENDIG_NÆRINGSDRIVENDE',
+    navn: 'Selvstendig næringsdrivende',
+  },
+];
+
+const andel = {
+  nyAndel: true,
+  fordelingForrigeBehandling: 0,
+  fastsattBeløp: '0',
+  lagtTilAvSaksbehandler: true,
+  refusjonskravFraInntektsmelding: 0,
+  belopFraInntektsmelding: null,
+  harPeriodeAarsakGraderingEllerRefusjon: true,
+};
+const fields = new MockFieldsWithContent('endringPeriode0', [andel]);
+const arbeidstakerNavn = 'Hansens bil og brems AS';
+const siste4SifferIArbeidsforholdId = '4352';
+const arbeidstakerAndelsnr = 1;
+const arbeidsgiverId = '12338';
+const arbeidsforholdList = [
+  {
+    arbeidsgiverNavn: arbeidstakerNavn,
+    arbeidsgiverId,
+    startDato: '2016-01-01',
+    opphoersdato: '2018-04-01',
+    arbeidsforholdId: `12142${siste4SifferIArbeidsforholdId}`,
+    andelsnr: arbeidstakerAndelsnr,
+  },
+];
 
 describe('<RenderEndringBGFieldArray>', () => {
+  it('skal ha selectvalues med Ytelse når kun ytelse', () => {
+    const forventetArbeidstakerString = `${arbeidstakerNavn} (${arbeidsgiverId}) ...${siste4SifferIArbeidsforholdId}`;
+    const wrapper = shallowWithIntl(<RenderEndringBGFieldArrayImpl
+      fields={fields}
+      intl={intlMock}
+      meta={{}}
+      inntektskategoriKoder={inntektskategorier}
+      arbeidsforholdList={arbeidsforholdList}
+      readOnly={false}
+      isAksjonspunktClosed={false}
+      periodeUtenAarsak={false}
+      harKunYtelse
+    />);
+
+    const selectFields = wrapper.find(SelectField);
+    expect(selectFields).has.length(2);
+    const selectValuesArbeidsforhold = selectFields.first().prop('selectValues');
+    expect(selectValuesArbeidsforhold).has.length(2);
+    expect(selectValuesArbeidsforhold[0].props.value).to.equal(arbeidstakerAndelsnr.toString());
+    expect(selectValuesArbeidsforhold[0].props.children).to.equal(forventetArbeidstakerString);
+    expect(selectValuesArbeidsforhold[1].props.value).to.equal(beregningsgrunnlagAndeltyper.BRUKERS_ANDEL);
+    expect(selectValuesArbeidsforhold[1].props.children).to.equal('Ytelse');
+  });
+
+  it('skal ikkje selectvalues med Ytelse når ikkje kun ytelse', () => {
+    const forventetArbeidstakerString = `${arbeidstakerNavn} (${arbeidsgiverId}) ...${siste4SifferIArbeidsforholdId}`;
+    const wrapper = shallowWithIntl(<RenderEndringBGFieldArrayImpl
+      fields={fields}
+      intl={intlMock}
+      meta={{}}
+      inntektskategoriKoder={inntektskategorier}
+      arbeidsforholdList={arbeidsforholdList}
+      readOnly={false}
+      isAksjonspunktClosed={false}
+      harKunYtelse={false}
+      periodeUtenAarsak={false}
+    />);
+
+    const selectFields = wrapper.find(SelectField);
+    expect(selectFields).has.length(2);
+    const selectValuesArbeidsforhold = selectFields.first().prop('selectValues');
+    expect(selectValuesArbeidsforhold).has.length(1);
+    expect(selectValuesArbeidsforhold[0].props.value).to.equal(arbeidstakerAndelsnr.toString());
+    expect(selectValuesArbeidsforhold[0].props.children).to.equal(forventetArbeidstakerString);
+  });
+
   it('skal validere eksisterende andeler uten errors', () => {
     const values = [];
     const andel1 = {
