@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 import {
   getBehandlingResultatstruktur,
   getBehandlingVilkar, getBehandlingSprak,
+  getTilbakekrevingText,
 } from 'behandlingFpsak/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandlingFpsak/selectors/originalBehandlingSelectors';
-
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import vedtakResultType from '@fpsak-frontend/kodeverk/src/vedtakResultType';
 import VedtakAvslagArsakOgBegrunnelsePanel from '../VedtakAvslagArsakOgBegrunnelsePanel';
@@ -47,11 +47,15 @@ export const VedtakAvslagRevurderingPanelImpl = ({
   sprakkode,
   readOnly,
   originaltBeregningResultat,
+  tilbakekrevingText,
 }) => (
   <div>
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
     <Normaltekst>
       {intl.formatMessage({ id: resultText(beregningResultat, originaltBeregningResultat) })}
+      {tilbakekrevingText && `. ${intl.formatMessage({
+        id: tilbakekrevingText,
+      })}`}
     </Normaltekst>
     <VerticalSpacer sixteenPx />
     <VedtakAvslagArsakOgBegrunnelsePanel
@@ -76,11 +80,13 @@ VedtakAvslagRevurderingPanelImpl.propTypes = {
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   originaltBeregningResultat: PropTypes.shape(),
+  tilbakekrevingText: PropTypes.string,
 };
 
 VedtakAvslagRevurderingPanelImpl.defaultProps = {
   originaltBeregningResultat: undefined,
   beregningResultat: undefined,
+  tilbakekrevingText: null,
 };
 
 
@@ -89,6 +95,7 @@ const mapStateToProps = state => ({
   originaltBeregningResultat: getResultatstrukturFraOriginalBehandling(state),
   vilkar: getBehandlingVilkar(state),
   sprakkode: getBehandlingSprak(state),
+  tilbakekrevingText: getTilbakekrevingText(state),
 });
 
 export default connect(mapStateToProps)(injectIntl(VedtakAvslagRevurderingPanelImpl));

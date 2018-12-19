@@ -7,21 +7,8 @@ import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus'
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { isBGAksjonspunktSomGirFritekstfelt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
 
-export const tilbakekrevingText = (simuleringResultat, tilbakekrevingValg) => {
-  if (tilbakekrevingValg) {
-    return tilbakekrevingValg.videreBehandling.kode !== avregningCodes.TILBAKEKR_IGNORER ? `.${tilbakekrevingValg.videreBehandling.kode}` : '';
-  }
-  if (simuleringResultat) {
-    if (simuleringResultat.simuleringResultat && simuleringResultat.simuleringResultatUtenInntrekk) return `.${avregningCodes.TILBAKEKR_INFOTRYGD_OG_INNTREKK}`;
-    if (simuleringResultat.simuleringResultat) return `.${avregningCodes.TILBAKEKR_INFOTRYGD}`;
-    if (simuleringResultat.simuleringResultatUtenInntrekk) return `.${avregningCodes.TILBAKEKR_INNTREKK}`;
-  }
-  return '';
-};
-
-export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType, simuleringResultat, tilbakekrevingValg) => {
+export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType) => {
   if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET) {
     return 'VedtakForm.ResultatOpprettholdVedtak';
   }
@@ -30,10 +17,10 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType
   }
 
   if (ytelseType === fagsakYtelseType.ENGANGSSTONAD) {
-    return `VedtakForm.VilkarStatusInnvilgetEngangsstonad${tilbakekrevingText(simuleringResultat, tilbakekrevingValg)}`;
+    return 'VedtakForm.VilkarStatusInnvilgetEngangsstonad';
   }
 
-  return `VedtakForm.VilkarStatusInnvilgetForeldrepenger${tilbakekrevingText(simuleringResultat, tilbakekrevingValg)}`;
+  return 'VedtakForm.VilkarStatusInnvilgetForeldrepenger';
 };
 
 export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) => {
