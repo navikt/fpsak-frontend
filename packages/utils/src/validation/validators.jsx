@@ -6,9 +6,8 @@ import {
   invalidIntegerMessage, invalidDecimalMessage, dateNotBeforeOrEqualMessage, dateNotAfterOrEqualMessage, dateRangesOverlappingMessage,
   invalidFodselsnummerFormatMessage, invalidFodselsnummerMessage, invalidTextMessage, invalidSaksnummerOrFodselsnummerFormatMessage,
   invalidValueMessage, arrayMinLengthMessage, invalidPeriodMessage, invalidDatesInPeriodMessage, invalidPeriodRangeMessage, datesNotEqual,
-  maxLengthOrFodselsnrMessage, utbetalingsgradErMerSamtidigUttaksprosentMessage, trekkdagerErMerEnnNullUtsettelse, utbetalingMerEnnNullUtsettelse,
-  maxLengthOrFodselsnrMessage, utbetalingsgradErMerSamtidigUttaksprosentMessage, ukerOgDagerVidNullUtbetalningsgradMessage,
-  arbeidsprosentMåVare100VidUtsettelseAvArbeidMessage, merEn100ProsentMessage,
+  maxLengthOrFodselsnrMessage, trekkdagerErMerEnnNullUtsettelse, utbetalingMerEnnNullUtsettelse, utbetalingsgradErMerSamtidigUttaksprosentMessage,
+  ukerOgDagerVidNullUtbetalningsgradMessage, arbeidsprosentMåVare100VidUtsettelseAvArbeidMessage, merEn100ProsentMessage,
 } from './messages';
 import {
   isoDateRegex, numberRegex, integerRegex, decimalRegex, textRegex, textGyldigRegex, isEmpty, yesterday, tomorrow,
