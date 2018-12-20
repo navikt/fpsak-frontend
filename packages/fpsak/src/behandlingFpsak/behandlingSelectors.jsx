@@ -15,17 +15,14 @@ import fpsakBehandlingApi from './data/fpsakBehandlingApi';
 import isFieldEdited from './editedFields';
 import { getSelectedBehandlingId } from './duck';
 
+const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) => tilbakekrevingKode === avregningCodes.TILBAKEKR_INFOTRYGD
+    && (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
 const findTilbakekrevingText = (simuleringResultat, tilbakekrevingValg) => {
   if (tilbakekrevingValg) {
-    if (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk) {
+    if (tilbakekrevingMedInntrekk(tilbakekrevingValg.videreBehandling.kode, simuleringResultat)) {
       return `VedtakForm.${avregningCodes.TILBAKEKR_INFOTRYGD_OG_INNTREKK}`;
     }
     return `VedtakForm.${tilbakekrevingValg.videreBehandling.kode}`;
-  }
-  if (simuleringResultat) {
-    if (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk) {
-      return `VedtakForm.${avregningCodes.TILBAKEKR_INNTREKK}`;
-    }
   }
   return null;
 };
