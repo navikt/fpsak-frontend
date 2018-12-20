@@ -36,6 +36,7 @@ const findStyle = (isApOpen, isApSolvable, readOnly) => (isApOpen && isApSolvabl
  */
 export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel lesbart
   selectedBehandlingspunkt,
+  saveTempKlage,
   submitCallback,
   previewCallback,
   previewCallbackKlage,
@@ -90,6 +91,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
       {BehandleKlageFormKa.supports(apCodes)
       && (
       <BehandleKlageFormKa
+        saveKlage={saveTempKlage}
         submitCallback={submitCallback}
         readOnly={readOnly}
         previewCallback={previewCallbackKlage}
@@ -100,6 +102,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
       {BehandleKlageFormNfp.supports(apCodes)
       && (
       <BehandleKlageFormNfp
+        saveKlage={saveTempKlage}
         submitCallback={submitCallback}
         readOnly={readOnly}
         previewCallback={previewCallbackKlage}
@@ -181,6 +184,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
 );
 
 BehandlingspunktInfoPanel.propTypes = {
+  saveTempKlage: PropTypes.func.isRequired,
   selectedBehandlingspunkt: PropTypes.string.isRequired,
   submitCallback: PropTypes.func.isRequired,
   openAksjonspunkt: PropTypes.bool.isRequired,

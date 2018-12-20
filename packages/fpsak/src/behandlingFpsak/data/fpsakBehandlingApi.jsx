@@ -10,6 +10,8 @@ export const BehandlingFpsakApiKeys = {
   SAVE_OVERSTYRT_AKSJONSPUNKT: 'SAVE_OVERSTYRT_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
   PREVIEW_MESSAGE_KLAGE: 'PREVIEW_MESSAGE_KLAGE',
+  SAVE_KLAGE_VURDERING: 'SAVE_KLAGE_VURDERING',
+  SAVE_REOPEN_KLAGE_VURDERING: 'SAVE_REOPEN_KLAGE_VURDERING',
 };
 
 const httpClientApi = getHttpClientApi();
@@ -24,6 +26,10 @@ const endpoints = getRestApiBuilder(httpClientApi)
   /* /api/behandling */
   .withAsyncPost('/api/behandling/aksjonspunkt', BehandlingFpsakApiKeys.SAVE_AKSJONSPUNKT)
   .withAsyncPost('/api/behandling/aksjonspunkt/overstyr', BehandlingFpsakApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT)
+
+  /* /api/klage */
+  .withAsyncPost('/api/behandling/klage/mellomlagre-klage', BehandlingFpsakApiKeys.SAVE_KLAGE_VURDERING)
+  .withAsyncPost('/api/behandling/klage/mellomlagre-gjennapne-klage', BehandlingFpsakApiKeys.SAVE_REOPEN_KLAGE_VURDERING)
 
   /* /api/brev */
   .withPostAndOpenBlob('/api/brev/forhandsvis', BehandlingFpsakApiKeys.PREVIEW_MESSAGE)

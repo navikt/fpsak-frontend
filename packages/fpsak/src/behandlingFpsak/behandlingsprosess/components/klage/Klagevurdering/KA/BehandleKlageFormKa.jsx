@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import PropTypes from 'prop-types';
+import { Row, Column } from 'nav-frontend-grid';
 
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { getBehandlingKlageVurderingResultatNK, getBehandlingSprak } from 'behandlingFpsak/behandlingSelectors';
@@ -19,6 +20,7 @@ import KlageVurderingRadioOptionsKa from './KlageVurderingRadioOptionsKa';
 import FritekstBrevTextField from '../SharedUtills/FritekstKlageBrevTextField';
 import PreviewKlageLink from '../SharedUtills/PreviewKlageLink';
 import styles from '../SharedUtills/behandleKlageForm.less';
+import TempsaveKlageButton from '../SharedUtills/TempsaveKlageButton';
 
 
 /**
@@ -29,6 +31,7 @@ import styles from '../SharedUtills/behandleKlageForm.less';
 export const BehandleKlageFormKaImpl = ({
   readOnly,
   handleSubmit,
+  saveKlage,
   previewCallback,
   readOnlySubmitButton,
   aksjonspunktCode,
@@ -58,17 +61,28 @@ export const BehandleKlageFormKaImpl = ({
           readOnly={readOnly}
           intl={intl}
         />
-        <BehandlingspunktSubmitButton formName={formProps.form} isReadOnly={readOnly} isSubmittable={!readOnlySubmitButton} />
-        {!readOnly && formValues.klageVurdering && formValues.fritekstTilBrev && (formValues.fritekstTilBrev.length > 2)
-        && (
-          <PreviewKlageLink
-            previewCallback={previewCallback}
-            fritekstTilBrev={formValues.fritekstTilBrev}
-            klageVurdering={formValues.klageVurdering}
-            aksjonspunktCode={aksjonspunktCode}
-          />
-        )
-        }
+        <Row>
+          <Column xs="8">
+            <BehandlingspunktSubmitButton formName={formProps.form} isReadOnly={readOnly} isSubmittable={!readOnlySubmitButton} />
+            {!readOnly && formValues.klageVurdering && formValues.fritekstTilBrev && (formValues.fritekstTilBrev.length > 2)
+            && (
+              <PreviewKlageLink
+                previewCallback={previewCallback}
+                fritekstTilBrev={formValues.fritekstTilBrev}
+                klageVurdering={formValues.klageVurdering}
+                aksjonspunktCode={aksjonspunktCode}
+              />
+            )
+            }
+          </Column>
+          <Column xs="2">
+            <TempsaveKlageButton
+              formValues={formValues}
+              saveKlage={saveKlage}
+              readOnly={readOnly}
+            />
+          </Column>
+        </Row>
       </div>
     </FadingPanel>
   </form>
@@ -76,6 +90,7 @@ export const BehandleKlageFormKaImpl = ({
 
 BehandleKlageFormKaImpl.propTypes = {
   previewCallback: PropTypes.func.isRequired,
+  saveKlage: PropTypes.func.isRequired,
   aksjonspunktCode: PropTypes.string.isRequired,
   formValues: PropTypes.shape(),
   readOnly: PropTypes.bool,
@@ -115,7 +130,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
-    formValues: behandlingFormValueSelector(formName)(state, 'klageVurdering', 'begrunnelse', 'fritekstTilBrev'),
+    formValues: behandlingFormValueSelector(formName)(state, 'begrunnelse', 'fritekstTilBrev', 'klageVurdering', 'klageVurderingOmgjoer', 'klageMedholdArsak'),
     onSubmit: values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]),
     sprakkode: getBehandlingSprak(state),
   };
