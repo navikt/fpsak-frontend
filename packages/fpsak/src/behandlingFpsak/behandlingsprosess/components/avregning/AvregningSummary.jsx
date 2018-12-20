@@ -67,7 +67,7 @@ const AvregningSummary = ({
                   <Normaltekst>
                     <FormattedMessage id="Avregning.inntrekk" />
                     :
-                    <span className={styles.lastNumber}>{ formatCurrencyNoKr(inntrekk) }</span>
+                    <span className={inntrekk ? styles.lastNumberRed : styles.lastNumberPositiv}>{ formatCurrencyNoKr(inntrekk) }</span>
                   </Normaltekst>
                 </Column>
               )
