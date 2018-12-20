@@ -26,6 +26,7 @@ import {
   getPersonopplysning,
   getUttaksresultatPerioder,
   getBehandlingStatus,
+  getBehandlingUttaksperiodegrense,
 } from 'behandlingFpsak/behandlingSelectors';
 import { getRettigheter } from 'navAnsatt/duck';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
@@ -521,6 +522,13 @@ UttakImpl.defaultProps = {
   medsokerKjonnKode: undefined,
 };
 
+const determineMottatDato = (soknadsDato, mottatDato) => {
+  if (moment(mottatDato) < moment(soknadsDato)) {
+    return mottatDato;
+  }
+  return soknadsDato;
+};
+
 const fodselTerminDato = (soknad) => {
   if (soknad.fodselsdatoer && Object.keys(soknad.fodselsdatoer).length > 0) {
     return Object.values(soknad.fodselsdatoer)[0];
@@ -537,6 +545,7 @@ const fodselTerminDato = (soknad) => {
 const mapStateToProps = (state, props) => {
   const soknad = getSoknad(state);
   const person = getPersonopplysning(state);
+  const periodeGrenseMottatDato = getBehandlingUttaksperiodegrense(state).mottattDato;
   const hovedsokerKjonnKode = person ? person.navBrukerKjonn.kode : undefined;
   const annenForelderUttak = getUttaksresultatPerioder(state).perioderAnnenpart;
   const viseUttakMedsoker = annenForelderUttak.length > 0;
@@ -572,7 +581,7 @@ const mapStateToProps = (state, props) => {
 
   const annenForelderSoktOmFlerbarnsdager = annenForelderPerioder.filter(p => p.flerbarnsdager === true).length > 0;
   return {
-    soknadDate: soknad.mottattDato,
+    soknadDate: determineMottatDato(periodeGrenseMottatDato, soknad.mottattDato),
     familiehendelseDate: fodselTerminDato(soknad),
     endringsDate: ytelseFordeling.endringsDato ? ytelseFordeling.endringsDato : undefined,
     dekningsgrad: soknad.dekningsgrad ? soknad.dekningsgrad : undefined,
