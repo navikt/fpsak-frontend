@@ -947,7 +947,7 @@
   "VedtakForm.VilkarStatusInnvilgetEngangsstonad": "Engangsstønad er innvilget",
   "VedtakForm.VilkarStatusInnvilgetForeldrepenger": "Foreldrepenger er innvilget",
   "VedtakForm.TILBAKEKR_INFOTRYGD": "Feilutbetaling med tilbakekreving",
-  "VedtakForm.TILBAKEKR_INNTREKK": "Feilutbetaling med inntrekk",
+  "VedtakForm.TILBAKEKR_INNTREKK": "Feilutbetaling hvor inntrekk dekker hele beløpet",
   "VedtakForm.TILBAKEKR_INFOTRYGD_OG_INNTREKK": "Feilutbetaling med tilbakekreving hvor beløp er redusert med inntrekk",
   "VedtakForm.TILBAKEKR_IGNORER": "Feilutbetaling, avvent samordning",
   "VedtakForm.TilGodkjenning": "Til godkjenning",
