@@ -530,7 +530,7 @@
   "ValidationMessage.MinstEnPeriodeRequired": "Minst en av følgende perioder må være utfylt: fullt uttak, overføring av kvote, utsettelse eller gradering",
   "ValidationMessage.ukerOgDagerVidNullUtbetalningsgradMessage": "Trekk minst en dag når utbetalingsgraden er høyre enn 0%",
   "ValidationMessage.UtsettelseUtenFullArbeid": "Søker jobber mindre enn 100%, perioden kan ikke utsettes.",
-  "ValidationMessage.MerEn100Prosent": "Summen av andel i arbeid og utbetalningsgrad er over 100%. Fortsett om dette er riktig.",
+  "ValidationMessage.MerEn100Prosent": "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%.",
 
   "VilkarsresultatView.VilkarOppfylt": "Vilkåret er oppfylt",
   "VilkarsresultatView.VilkarIkkeOppfylt": "Vilkåret er ikke oppfylt",
