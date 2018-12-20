@@ -32,6 +32,7 @@ import {
   getSelectedBehandlingspunktAksjonspunkter,
   getSelectedBehandlingspunktStatus,
 } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
+import styles from './sokersOpplysningspliktForm.less';
 
 const formName = 'SokersOpplysningspliktForm';
 
@@ -150,12 +151,14 @@ export const SokersOpplysningspliktFormImpl = ({
     {readOnly
       && (
       <ElementWrapper>
-        <RadioGroupField name="dummy" readOnly={readOnly} isEdited={hasAksjonspunkt && (erVilkarOk !== undefined)}>
-          {[<RadioOption key="dummy" label={<FormattedHTMLMessage id={findRadioButtonTextCode(erVilkarOk)} />} value="" />]}
-        </RadioGroupField>
-        {erVilkarOk === false && behandlingsresultat.avslagsarsak
-        && <Normaltekst>{behandlingsresultat.avslagsarsak.navn}</Normaltekst>
+        <div className={styles.radioIE}>
+          <RadioGroupField name="dummy" readOnly={readOnly} isEdited={hasAksjonspunkt && (erVilkarOk !== undefined)}>
+            {[<RadioOption key="dummy" label={<FormattedHTMLMessage id={findRadioButtonTextCode(erVilkarOk)} />} value="" />]}
+          </RadioGroupField>
+          {erVilkarOk === false && behandlingsresultat.avslagsarsak
+        && <Normaltekst className={styles.radioIE}>{behandlingsresultat.avslagsarsak.navn}</Normaltekst>
       }
+        </div>
       </ElementWrapper>
       )
     }
