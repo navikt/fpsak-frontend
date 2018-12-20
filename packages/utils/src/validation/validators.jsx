@@ -6,8 +6,8 @@ import {
   invalidIntegerMessage, invalidDecimalMessage, dateNotBeforeOrEqualMessage, dateNotAfterOrEqualMessage, dateRangesOverlappingMessage,
   invalidFodselsnummerFormatMessage, invalidFodselsnummerMessage, invalidTextMessage, invalidSaksnummerOrFodselsnummerFormatMessage,
   invalidValueMessage, arrayMinLengthMessage, invalidPeriodMessage, invalidDatesInPeriodMessage, invalidPeriodRangeMessage, datesNotEqual,
-  maxLengthOrFodselsnrMessage, trekkdagerErMerEnnNullUtsettelse, utbetalingMerEnnNullUtsettelse, utbetalingsgradErMerSamtidigUttaksprosentMessage,
-  ukerOgDagerVidNullUtbetalningsgradMessage, arbeidsprosentMåVare100VidUtsettelseAvArbeidMessage, merEn100ProsentMessage,
+  maxLengthOrFodselsnrMessage, utbetalingsgradErMerSamtidigUttaksprosentMessage, ukerOgDagerVidNullUtbetalningsgradMessage,
+  arbeidsprosentMåVare100VidUtsettelseAvArbeidMessage, merEn100ProsentMessage, trekkdagerErMerEnnNullUtsettelseMessage, utbetalingMerEnnNullUtsettelseMessage,
 } from './messages';
 import {
   isoDateRegex, numberRegex, integerRegex, decimalRegex, textRegex, textGyldigRegex, isEmpty, yesterday, tomorrow,
@@ -206,6 +206,6 @@ export const ariaCheck = () => {
   }, 300);
 };
 
-export const isTrekkdagerMerEnnNullUtsettelse = value => (value > 0 ? trekkdagerErMerEnnNullUtsettelse() : null);
+export const isTrekkdagerMerEnnNullUtsettelse = value => (value > 0 ? trekkdagerErMerEnnNullUtsettelseMessage() : null);
 
-export const isUtbetalingMerEnnNullUtsettelse = value => (value > 0 ? utbetalingMerEnnNullUtsettelse() : null);
+export const isUtbetalingMerEnnNullUtsettelse = value => (value > 0 ? utbetalingMerEnnNullUtsettelseMessage() : null);
