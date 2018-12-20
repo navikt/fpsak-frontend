@@ -2,6 +2,7 @@ import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import { Row, Column } from 'nav-frontend-grid';
 import { formPropTypes } from 'redux-form';
 import PropTypes from 'prop-types';
 
@@ -20,6 +21,7 @@ import KlageVurderingRadioOptionsNfp from './KlageVurderingRadioOptionsNfp';
 import FritekstBrevTextField from '../SharedUtills/FritekstKlageBrevTextField';
 import PreviewKlageLink from '../SharedUtills/PreviewKlageLink';
 import styles from '../SharedUtills/behandleKlageForm.less';
+import TempsaveKlageButton from '../SharedUtills/TempsaveKlageButton';
 
 
 /**
@@ -31,6 +33,7 @@ export const BehandleKlageFormNfpImpl = ({
   readOnly,
   handleSubmit,
   previewCallback,
+  saveKlage,
   readOnlySubmitButton,
   aksjonspunktCode,
   sprakkode,
@@ -63,17 +66,28 @@ export const BehandleKlageFormNfpImpl = ({
           readOnly={readOnly}
           intl={intl}
         />
-        <BehandlingspunktSubmitButton formName={formProps.form} isReadOnly={readOnly} isSubmittable={!readOnlySubmitButton} />
-        {!readOnly && formValues.klageVurdering && formValues.fritekstTilBrev && (formValues.fritekstTilBrev.length > 2)
-          && (
-            <PreviewKlageLink
-              previewCallback={previewCallback}
-              fritekstTilBrev={formValues.fritekstTilBrev}
-              klageVurdering={formValues.klageVurdering}
-              aksjonspunktCode={aksjonspunktCode}
+        <Row>
+          <Column xs="8">
+            <BehandlingspunktSubmitButton formName={formProps.form} isReadOnly={readOnly} isSubmittable={!readOnlySubmitButton} />
+            {!readOnly && formValues.klageVurdering && formValues.fritekstTilBrev && (formValues.fritekstTilBrev.length > 2)
+              && (
+                <PreviewKlageLink
+                  previewCallback={previewCallback}
+                  fritekstTilBrev={formValues.fritekstTilBrev}
+                  klageVurdering={formValues.klageVurdering}
+                  aksjonspunktCode={aksjonspunktCode}
+                />
+              )
+              }
+          </Column>
+          <Column xs="2">
+            <TempsaveKlageButton
+              formValues={formValues}
+              saveKlage={saveKlage}
+              readOnly={readOnly}
             />
-          )
-          }
+          </Column>
+        </Row>
       </div>
     </FadingPanel>
   </form>
@@ -81,6 +95,7 @@ export const BehandleKlageFormNfpImpl = ({
 
 BehandleKlageFormNfpImpl.propTypes = {
   previewCallback: PropTypes.func.isRequired,
+  saveKlage: PropTypes.func.isRequired,
   aksjonspunktCode: PropTypes.string.isRequired,
   formValues: PropTypes.shape(),
   readOnly: PropTypes.bool,
@@ -120,7 +135,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
-    formValues: behandlingFormValueSelector(formName)(state, 'klageVurdering', 'begrunnelse', 'fritekstTilBrev'),
+    formValues: behandlingFormValueSelector(formName)(state, 'klageVurdering', 'begrunnelse', 'fritekstTilBrev', 'klageMedholdArsak', 'klageVurderingOmgjoer'),
     onSubmit: values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]),
     readOnly: isKlageBehandlingInKA(state) || ownProps.readOnly,
     sprakkode: getBehandlingSprak(state),

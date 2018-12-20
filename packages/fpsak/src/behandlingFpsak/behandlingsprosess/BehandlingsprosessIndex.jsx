@@ -27,9 +27,15 @@ import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import { getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta } from 'app/paths';
 import trackRouteParam from 'app/data/trackRouteParam';
 import {
-  setSelectedBehandlingspunktNavn, resolveProsessAksjonspunkter, overrideProsessAksjonspunkter,
-  resetBehandlingspunkter, fetchPreviewBrev as fetchPreview, getSelectedBehandlingspunktNavn,
+  setSelectedBehandlingspunktNavn,
+  resolveProsessAksjonspunkter,
+  overrideProsessAksjonspunkter,
+  resetBehandlingspunkter,
+  fetchPreviewBrev as fetchPreview,
+  getSelectedBehandlingspunktNavn,
   fetchPreviewKlageBrev,
+  resolveKlageTemp,
+  saveKlage,
 } from './duck';
 import { getBehandlingspunkter, getSelectedBehandlingspunkt, getDefaultBehandlingspunkt }
   from './behandlingsprosessSelectors';
@@ -73,6 +79,7 @@ export class BehandlingsprosessIndex extends Component {
     this.previewCallbackKlage = this.previewCallbackKlage.bind(this);
     this.previewManueltBrevCallback = this.previewManueltBrevCallback.bind(this);
     this.setShowModalKlageBehandling = this.setShowModalKlageBehandling.bind(this);
+    this.saveKlageText = this.saveKlageText.bind(this);
 
     this.state = {
       showModalKlageBehandling: false,
@@ -144,6 +151,20 @@ export class BehandlingsprosessIndex extends Component {
     };
     fetchBrevPreview(data);
   }
+
+  saveKlageText(aksjonspunktModel, shouldReopenAp) {
+    const { behandlingIdentifier, saveKlage: saveTempKlage, resolveKlageTemp: resolveKlage } = this.props;
+    const data = {
+      behandlingId: behandlingIdentifier.behandlingId,
+      ...aksjonspunktModel,
+    };
+    if (shouldReopenAp) {
+      resolveKlage(behandlingIdentifier, data);
+    } else {
+      saveTempKlage(data);
+    }
+  }
+
 
   previewVedtakCallback(fritekst) {
     const { behandlingIdentifier, fetchVedtaksbrevPreview: fetchBrevPreview } = this.props;
@@ -225,6 +246,7 @@ export class BehandlingsprosessIndex extends Component {
           <BehandlingspunktInfoPanel
             submitCallback={this.submitVilkar}
             previewCallback={this.previewCallback}
+            saveTempKlage={this.saveKlageText}
             previewVedtakCallback={this.previewVedtakCallback}
             previewCallbackKlage={this.previewCallbackKlage}
             previewManueltBrevCallback={this.previewManueltBrevCallback}
@@ -243,6 +265,8 @@ export class BehandlingsprosessIndex extends Component {
 
 BehandlingsprosessIndex.propTypes = {
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
+  saveKlage: PropTypes.func.isRequired,
+  resolveKlageTemp: PropTypes.func.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   behandlingspunkter: PropTypes.arrayOf(PropTypes.string),
@@ -283,6 +307,8 @@ const mapDispatchToProps = dispatch => ({
     overrideProsessAksjonspunkter,
     fetchVedtaksbrevPreview,
     resetBehandlingspunkter,
+    saveKlage,
+    resolveKlageTemp,
     dispatchSubmitFailed,
   }, dispatch),
 });

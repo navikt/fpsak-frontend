@@ -1441,6 +1441,8 @@
   "Klage.KlageKA.Fastsett": "Fastsett resultatet av klagebehandlingen",
   "Klage.KlageNFP.Formkrav": "Vurder om klagen oppfyller formkravene",
   "Klage.KlageKA.Formkrav": "Vurder om klagen oppfyller formkravene",
+  "Klage.ResolveKlage.TempSaveButton": "Lagre",
+  "Klage.ResolveKlage.TempSaveButtonGjennopne": "Gjennåpne aksjonspunkt",
 
 
   "KlageVurderingModal.VedtakOversendt": "Innstilling er sendt til NAV Klageinstans.",

@@ -49,6 +49,15 @@ export const hasReadOnlyBehandling = createSelector(
   [fpsakBehandlingApi.BEHANDLING.getRestApiError(), getSelectedBehandling], (behandlingFetchError, selectedBehandling = {}) => (!!behandlingFetchError
     || (selectedBehandling.taskStatus && selectedBehandling.taskStatus.readOnly ? selectedBehandling.taskStatus.readOnly : false)),
 );
+export const getMellomlagringData = createSelector(
+  [fpsakBehandlingApi.SAVE_KLAGE_VURDERING.getRestApiMeta()],
+  data => (data ? data.params : {}),
+);
+
+export const getMellomlagringSpinner = createSelector(
+  [fpsakBehandlingApi.SAVE_REOPEN_KLAGE_VURDERING.getRestApiStarted(), fpsakBehandlingApi.SAVE_KLAGE_VURDERING.getRestApiStarted()],
+  (reOpenStarted, saveStarted) => (reOpenStarted || saveStarted),
+);
 
 export const getBehandlingVersjon = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.versjon);
 export const getBehandlingStatus = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.status);
