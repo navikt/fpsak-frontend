@@ -22,6 +22,8 @@ export const invalidDatesInPeriodMessage = () => ([{ id: 'ValidationMessage.Inva
 export const invalidPeriodMessage = () => ([{ id: 'ValidationMessage.InvalidPeriod' }]);
 export const invalidPeriodRangeMessage = () => ([{ id: 'ValidationMessage.InvalidPeriodRange' }]);
 export const utbetalingsgradErMerSamtidigUttaksprosentMessage = () => ([{ id: 'ValidationMessage.utbetalingsgradErMerSamtidigUttaksprosent' }]);
+export const trekkdagerErMerEnnNullUtsettelseMessage = () => ([{ id: 'ValidationMessage.trekkdagerErMerEnnNullUtsettelse' }]);
+export const utbetalingMerEnnNullUtsettelseMessage = () => ([{ id: 'ValidationMessage.utbetalingMerEnnNullUtsettelse' }]);
 export const invalidNumberMessage = text => ([{ id: 'ValidationMessage.InvalidNumber' }, { text }]);
 export const ukerOgDagerVidNullUtbetalningsgradMessage = () => ([{ id: 'ValidationMessage.ukerOgDagerVidNullUtbetalningsgradMessage' }]);
 export const arbeidsprosentMåVare100VidUtsettelseAvArbeidMessage = () => ([{ id: 'ValidationMessage.UtsettelseUtenFullArbeid' }]);

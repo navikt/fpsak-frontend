@@ -528,6 +528,8 @@
   "ValidationMessage.NegativeSaldo": "Antall dager kan ikke overstige dagene som gjenstår på {periode}. Det er oppgitt {days} dager for mye.",
   "ValidationMessage.InvalidStonadskonto": "Stønadskonto {konto} er ikke tilgjengelig",
   "ValidationMessage.MinstEnPeriodeRequired": "Minst en av følgende perioder må være utfylt: fullt uttak, overføring av kvote, utsettelse eller gradering",
+  "ValidationMessage.trekkdagerErMerEnnNullUtsettelse": "Ingen trekkdager for utsettelse",
+  "ValidationMessage.utbetalingMerEnnNullUtsettelse": "Ingen utbetalingsgrad for utsettelse",
   "ValidationMessage.ukerOgDagerVidNullUtbetalningsgradMessage": "Trekk minst en dag når utbetalingsgraden er høyre enn 0%",
   "ValidationMessage.UtsettelseUtenFullArbeid": "Søker jobber mindre enn 100%, perioden kan ikke utsettes.",
   "ValidationMessage.MerEn100Prosent": "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%.",

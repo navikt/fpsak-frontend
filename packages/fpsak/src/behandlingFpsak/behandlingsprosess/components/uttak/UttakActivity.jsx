@@ -17,6 +17,8 @@ import {
   isUkerOgDagerVidNullUtbetalningsgrad,
   isArbeidsProsentVidUtsettelse100,
   isutbetalingPlusArbeidsprosentMerEn100,
+  isTrekkdagerMerEnnNullUtsettelse,
+  isUtbetalingMerEnnNullUtsettelse,
 } from '@fpsak-frontend/utils';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -324,6 +326,19 @@ const validateUttakActivity = (values) => {
   </AlertStripe>,
       };
     }
+  }
+
+  if (values.UttakFieldArray && values.utsettelseType && values.utsettelseType.kode !== '-' && values.erOppfylt) {
+    values.UttakFieldArray.forEach((a, index) => {
+      const daysInvalid = isTrekkdagerMerEnnNullUtsettelse(a.days);
+      const weeksInvalid = isTrekkdagerMerEnnNullUtsettelse(a.weeks);
+      const utbetalingsgradInvalid = isUtbetalingMerEnnNullUtsettelse(a.utbetalingsgrad);
+      errors.UttakFieldArray[index] = {
+        days: daysInvalid,
+        weeks: weeksInvalid,
+        utbetalingsgrad: utbetalingsgradInvalid,
+      };
+    });
   }
   return errors;
 };
