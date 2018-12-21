@@ -13,6 +13,8 @@ const vurderFaktaOmBeregningTotrinnText = {
   [faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE]: 'ToTrinnsForm.Beregning.FastsettBgKunYtelse',
   [faktaOmBeregningTilfelle.VURDER_ETTERLONN_SLUTTPAKKE]: 'ToTrinnsForm.Beregning.VurderEtterlønnSluttpakke',
   [faktaOmBeregningTilfelle.FASTSETT_ETTERLONN_SLUTTPAKKE]: 'ToTrinnsForm.Beregning.FastsettEtterlønnSluttpakke',
+  [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE]: 'ToTrinnsForm.Beregning.VurderMottarYtelse',
+
 };
 
 export default vurderFaktaOmBeregningTotrinnText;
