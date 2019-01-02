@@ -1182,6 +1182,11 @@
   "BeregningInfoPanel.VurderOgFastsettATFL.HarSokerEndring": "Har søker hatt en lønnsendring i løpet av de siste tre månedene?",
   "BeregningInfoPanel.VurderOgFastsettATFL.Periode": "{fom} - {tom}",
 
+  "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForFrilansUtenFrilans": "Mottar søker sykepenger, foreldrepenger, pleiepenger eller svangerskapspenger for frilansaktiviteten?",
+  "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForFrilans": "Søker er frilanser. Mottar søker sykepenger, foreldrepenger, pleiepenger eller svangerskapspenger for frilansaktiviteten?",
+  "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForArbeid" : "Søker er arbeidstaker og det er ikke mottatt inntektsmelding. Mottar søker sykepenger, foreldrepenger, pleiepenger eller svangerskapspenger for arbeid {arbeid}?",
+  "BeregningInfoPanel.VurderMottarYtelse.KanIkkeGaaVidere" : "Funksjonalitet for aktivitet med ytelse er ikke implementert enda.",
+
   "BeregningInfoPanel.FastsettInntektTabell.Aktivitet": "Aktivitet",
   "BeregningInfoPanel.FastsettInntektTabell.Arbeidsperiode": "Arbeidsperiode",
   "BeregningInfoPanel.FastsettInntektTabell.Refusjonskrav": "Refusjonskrav",
@@ -1290,6 +1295,7 @@
   "ToTrinnsForm.Beregning.FastsettBgKunYtelse": "Det er fastsatt fordeling av beregningsgrunnlaget ved direkte overgang fra ytelse.",
   "ToTrinnsForm.Beregning.VurderEtterlønnSluttpakke": "Det er vurdert om søker har inntekt fra etterlønn eller sluttpakke.",
   "ToTrinnsForm.Beregning.FastsettEtterlønnSluttpakke": "Inntekt er fastsatt for arbeidstaker med etterlønn eller sluttpakke.",
+  "ToTrinnsForm.Beregning.VurderMottarYtelse": "Det er vurdert om søker har mottatt ytelse",
 
   "ToTrinnsForm.Opptjening.Endring": "Perioden {aktivitetType}{arbeidsInfoText} er endret.",
   "ToTrinnsForm.Opptjening.Underkjenning": "Aktivitet {aktivitetType}{arbeidsInfoText} er <b>ikke</b> godkjent.",

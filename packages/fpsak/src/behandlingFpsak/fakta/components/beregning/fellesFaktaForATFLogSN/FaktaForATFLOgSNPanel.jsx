@@ -14,6 +14,7 @@ import {
   getTilstøtendeYtelse,
   getKunYtelse,
   getBehandlingIsRevurdering,
+  getVurderMottarYtelse,
 } from 'behandlingFpsak/behandlingSelectors';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -40,6 +41,7 @@ import FastsettATFLInntektForm from './vurderOgFastsettATFL/forms/FastsettATFLIn
 import FastsettBBFodendeKvinneForm from './besteberegningFodendeKvinne/FastsettBBFodendeKvinneForm';
 import VurderEtterlonnSluttpakkeForm from './etterlønnSluttpakke/VurderEtterlonnSluttpakkeForm';
 import FastsettEtterlonnSluttpakkeForm from './etterlønnSluttpakke/FastsettEtterlonnSluttpakkeForm';
+import VurderMottarYtelseForm from './vurderOgFastsettATFL/forms/VurderMottarYtelseForm';
 
 
 const {
@@ -53,14 +55,15 @@ const vurderOgFastsettATFLTilfeller = [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_
 const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
 export const getValidationFaktaForATFLOgSN = createSelector(
-  [getFaktaOmBeregningTilfellerKoder, getEndringBeregningsgrunnlagPerioder, getAksjonspunkter, getKunYtelse],
-  (aktivertePaneler, endringBGPerioder, aksjonspunkter, kunYtelse) => (values) => {
+  [getFaktaOmBeregningTilfellerKoder, getEndringBeregningsgrunnlagPerioder, getAksjonspunkter, getKunYtelse, getVurderMottarYtelse],
+  (aktivertePaneler, endringBGPerioder, aksjonspunkter, kunYtelse, vurderMottarYtelse) => (values) => {
     if (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)) {
       return {
         ...FastsettEndretBeregningsgrunnlag.validate(values, endringBGPerioder, aktivertePaneler),
         ...TilstotendeYtelseForm.validate(values, aktivertePaneler),
         ...TilstotendeYtelseIKombinasjon.validate(values, endringBGPerioder, aktivertePaneler),
         ...getKunYtelseValidation(values, kunYtelse, endringBGPerioder, aktivertePaneler),
+        ...VurderMottarYtelseForm.validate(values, vurderMottarYtelse),
       };
     }
     return null;
@@ -138,6 +141,19 @@ const getFaktaPanels = (readOnly, formName, tilfeller, isAksjonspunktClosed, sho
             readOnly={readOnly}
             isAksjonspunktClosed={isAksjonspunktClosed}
             formName={formName}
+          />
+        </ElementWrapper>,
+      );
+    }
+    if (tilfelle === faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE) {
+      hasShownPanel = true;
+      faktaPanels.push(
+        <ElementWrapper key={tilfelle}>
+          {spacer(hasShownPanel)}
+          <VurderMottarYtelseForm
+            readOnly={readOnly}
+            isAksjonspunktClosed={isAksjonspunktClosed}
+            tilfeller={tilfeller}
           />
         </ElementWrapper>,
       );
@@ -316,6 +332,13 @@ const setValuesForVurderFakta = (aktivePaneler, values, endringBGPerioder, kortv
         ...VurderEtterlonnSluttpakkeForm.transformValues(values),
       };
     }
+    if (kode === faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE) {
+      vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE);
+      vurderFaktaValues = {
+        ...vurderFaktaValues,
+        ...VurderMottarYtelseForm.transformValues(values, faktaOmBeregning.vurderMottarYtelse),
+      };
+    }
   });
   return [vurderFaktaValues];
 };
@@ -336,9 +359,9 @@ export const transformValuesFaktaForATFLOgSN = createSelector(
 export const buildInitialValuesFaktaForATFLOgSN = createSelector(
   [getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlag,
     getKortvarigeArbeidsforhold, getAksjonspunkter, getTilstøtendeYtelse, getKunYtelse,
-    getFaktaOmBeregningTilfellerKoder, getBehandlingIsRevurdering],
+    getFaktaOmBeregningTilfellerKoder, getBehandlingIsRevurdering, getVurderMottarYtelse],
   (endringBGPerioder, beregningsgrunnlag, kortvarigeArbeidsforhold, aksjonspunkter, tilstotendeYtelse, kunYtelse,
-    tilfeller, isRevurdering) => {
+    tilfeller, isRevurdering, vurderMottarYtelse) => {
     const vurderFaktaAP = aksjonspunkter ? aksjonspunkter.find(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN) : undefined;
     if (!vurderFaktaAP) {
       return {};
@@ -356,6 +379,7 @@ export const buildInitialValuesFaktaForATFLOgSN = createSelector(
       ...buildInitialValuesKunYtelse(kunYtelse, endringBGPerioder, isRevurdering, tilfeller),
       ...VurderEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag, vurderFaktaAP),
       ...FastsettEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag),
+      ...VurderMottarYtelseForm.buildInitialValues(vurderMottarYtelse),
     };
   },
 );
