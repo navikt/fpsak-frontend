@@ -315,7 +315,7 @@ AvregningPanelImpl.defaultProps = {
   simuleringResultat: null,
 };
 
-const transformValues = (values, ap) => [{
+export const transformValues = (values, ap) => [{
   ...values,
   kode: ap,
   grunnerTilReduksjon: values.erTilbakekrevingVilkårOppfylt ? values.grunnerTilReduksjon : undefined,
