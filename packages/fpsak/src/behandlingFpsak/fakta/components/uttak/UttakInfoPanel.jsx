@@ -207,7 +207,7 @@ const transformValues = (values, initialValues, aksjonspunkter) => { // NOSONAR
       : [],
 
     annenforelderHarRett: values.annenPartHarRett,
-    begrunnelse: values.begrunnelse,
+    begrunnelse: values.begrunnelse || '',
   }));
 };
 
