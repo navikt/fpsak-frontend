@@ -45,7 +45,7 @@ describe('<UttakFaktaForm>', () => {
     const uttakNyPeriode = wrapper.find('UttakNyPeriode');
     const uttakSlettPeriodeModal = wrapper.find('UttakSlettPeriodeModal');
     expect(fieldArray).to.have.length(1);
-    expect(verticalSpacer).to.have.length(3);
+    expect(verticalSpacer).to.have.length(2);
     expect(flexContainer).to.have.length(1);
     expect(flexRow).to.have.length(1);
     expect(flexColumn).to.have.length(2);

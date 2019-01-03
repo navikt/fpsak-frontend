@@ -26,7 +26,11 @@ import {
   sjekkNyFørsteUttakDatoStartErFørSkjæringpunkt,
 } from './components/UttakPeriodeValidering';
 
-const uttakAksjonspunkter = [aksjonspunktCodes.AVKLAR_UTTAK, aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO];
+const uttakAksjonspunkter = [
+  aksjonspunktCodes.AVKLAR_UTTAK,
+  aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO,
+  aksjonspunktCodes.AVKLAR_ANNEN_PART_RETT,
+];
 
 export const UttakInfoPanelImpl = ({
   intl,
@@ -201,7 +205,9 @@ const transformValues = (values, initialValues, aksjonspunkter) => { // NOSONAR
         };
       })
       : [],
-    begrunnelse: '',
+
+    annenforelderHarRett: values.annenPartHarRett,
+    begrunnelse: values.begrunnelse,
   }));
 };
 

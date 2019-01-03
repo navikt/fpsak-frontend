@@ -12,6 +12,7 @@ const headerTextCodes = [
   'MedlemskapEndringerTabell.Opplysning',
 ];
 
+// TODO sortere perioder på dato
 const MedlemskapEndringerTabellImpl = ({
   perioder,
   velgPeriodeCallback,
