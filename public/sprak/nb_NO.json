@@ -1184,7 +1184,7 @@
 
   "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForFrilansUtenFrilans": "Mottar søker sykepenger, foreldrepenger, pleiepenger eller svangerskapspenger for frilansaktiviteten?",
   "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForFrilans": "Søker er frilanser. Mottar søker sykepenger, foreldrepenger, pleiepenger eller svangerskapspenger for frilansaktiviteten?",
-  "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForArbeid" : "Søker er arbeidstaker og det er ikke mottatt inntektsmelding. Mottar søker sykepenger, foreldrepenger, pleiepenger eller svangerskapspenger for arbeid {arbeid}?",
+  "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForArbeid" : "Søker er arbeidstaker og det er ikke mottatt inntektsmelding. Mottar søker sykepenger, foreldrepenger, pleiepenger eller svangerskapspenger for arbeid i {arbeid}?",
   "BeregningInfoPanel.VurderMottarYtelse.KanIkkeGaaVidere" : "Funksjonalitet for aktivitet med ytelse er ikke implementert enda.",
 
   "BeregningInfoPanel.FastsettInntektTabell.Aktivitet": "Aktivitet",
@@ -2014,6 +2014,8 @@
   "HistorikkEndretFelt.FordelingForNyAndel": "{value}",
   "HistorikkEndretFelt.FordelingEtterBestebergning": "Fordeling etter besteberegning",
   "HistorikkEndretFelt.InnktektskategoriForAndel": "Inntektskategori for {value}",
+  "HistorikkEndretFelt.MottarYtelseForArbeid": "Mottar søker ytelse for arbeid i {value}",
+  "HistorikkEndretFelt.MottarYtelseForFrilans": "Mottar søker ytelse for frilansaktiviteten",
   "HistorikkEndretFelt.NyFordelingFor": "Ny fordeling <b>{value}</b>",
   "HistorikkEndretFelt.NyAktivitetFor": "Det er lagt til ny aktivitet for <b>{value}</b>",
   "HistorikkEndretFelt.Inntektskategori": "Inntektskategori",

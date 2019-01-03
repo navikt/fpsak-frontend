@@ -37,6 +37,27 @@ const arbeidsforhold3 = {
   opphoersdato: '2018-01-01',
 };
 
+const andel = {
+  andelsnr: 1,
+  arbeidsforhold,
+};
+
+const andel2 = {
+  andelsnr: 2,
+  arbeidsforhold: arbeidsforhold2,
+};
+
+const andel3 = {
+  andelsnr: 3,
+  arbeidsforhold: arbeidsforhold3,
+};
+
+const arbeidstakerAndelerUtenIM = [
+  { ...andel, mottarYtelse: null },
+  { ...andel2, mottarYtelse: false },
+  { ...andel3, mottarYtelse: true },
+];
+
 describe('<VurderMottarYtelseForm>', () => {
   it('skal teste at initial values bygges korrekt uten dto til stede', () => {
     const initialValues = VurderMottarYtelseFormImpl.buildInitialValues(undefined);
@@ -75,17 +96,13 @@ describe('<VurderMottarYtelseForm>', () => {
     const mottarYtelse = {
       erFrilans: true,
       frilansMottarYtelse: false,
-      arbeidstakerAndelerUtenIM: [
-        { ...arbeidsforhold, mottarYtelse: null },
-        { ...arbeidsforhold2, mottarYtelse: false },
-        { ...arbeidsforhold3, mottarYtelse: true },
-      ],
+      arbeidstakerAndelerUtenIM,
     };
     const initialValues = VurderMottarYtelseFormImpl.buildInitialValues(mottarYtelse);
     expect(initialValues[finnFrilansFieldName()]).to.equal(false);
-    expect(initialValues[utledArbeidsforholdFieldName(arbeidsforhold)]).to.equal(null);
-    expect(initialValues[utledArbeidsforholdFieldName(arbeidsforhold2)]).to.equal(false);
-    expect(initialValues[utledArbeidsforholdFieldName(arbeidsforhold3)]).to.equal(true);
+    expect(initialValues[utledArbeidsforholdFieldName(andel)]).to.equal(null);
+    expect(initialValues[utledArbeidsforholdFieldName(andel2)]).to.equal(false);
+    expect(initialValues[utledArbeidsforholdFieldName(andel3)]).to.equal(true);
   });
 
 
@@ -93,66 +110,54 @@ describe('<VurderMottarYtelseForm>', () => {
     const mottarYtelse = {
       erFrilans: true,
       frilansMottarYtelse: false,
-      arbeidstakerAndelerUtenIM: [
-        { ...arbeidsforhold, mottarYtelse: null },
-        { ...arbeidsforhold2, mottarYtelse: false },
-        { ...arbeidsforhold3, mottarYtelse: true },
-      ],
+      arbeidstakerAndelerUtenIM,
     };
     const values = {};
     values[finnFrilansFieldName()] = false;
-    values[utledArbeidsforholdFieldName(arbeidsforhold)] = false;
-    values[utledArbeidsforholdFieldName(arbeidsforhold2)] = false;
-    values[utledArbeidsforholdFieldName(arbeidsforhold3)] = false;
+    values[utledArbeidsforholdFieldName(andel)] = false;
+    values[utledArbeidsforholdFieldName(andel2)] = false;
+    values[utledArbeidsforholdFieldName(andel3)] = false;
     const errors = VurderMottarYtelseFormImpl.validate(values, mottarYtelse);
     expect(errors[finnFrilansFieldName()]).to.equal(null);
-    expect(errors[utledArbeidsforholdFieldName(arbeidsforhold)]).to.equal(null);
-    expect(errors[utledArbeidsforholdFieldName(arbeidsforhold2)]).to.equal(null);
-    expect(errors[utledArbeidsforholdFieldName(arbeidsforhold3)]).to.equal(null);
+    expect(errors[utledArbeidsforholdFieldName(andel)]).to.equal(null);
+    expect(errors[utledArbeidsforholdFieldName(andel2)]).to.equal(null);
+    expect(errors[utledArbeidsforholdFieldName(andel3)]).to.equal(null);
   });
 
   it('skal returnere required errors', () => {
     const mottarYtelse = {
       erFrilans: true,
       frilansMottarYtelse: false,
-      arbeidstakerAndelerUtenIM: [
-        { ...arbeidsforhold, mottarYtelse: null },
-        { ...arbeidsforhold2, mottarYtelse: false },
-        { ...arbeidsforhold3, mottarYtelse: true },
-      ],
+      arbeidstakerAndelerUtenIM,
     };
     const values = {};
     values[finnFrilansFieldName()] = null;
-    values[utledArbeidsforholdFieldName(arbeidsforhold)] = null;
-    values[utledArbeidsforholdFieldName(arbeidsforhold2)] = null;
-    values[utledArbeidsforholdFieldName(arbeidsforhold3)] = null;
+    values[utledArbeidsforholdFieldName(andel)] = null;
+    values[utledArbeidsforholdFieldName(andel2)] = null;
+    values[utledArbeidsforholdFieldName(andel3)] = null;
     const errors = VurderMottarYtelseFormImpl.validate(values, mottarYtelse);
     expect(errors[finnFrilansFieldName()][0].id).to.equal(requiredMessageId);
-    expect(errors[utledArbeidsforholdFieldName(arbeidsforhold)][0].id).to.equal(requiredMessageId);
-    expect(errors[utledArbeidsforholdFieldName(arbeidsforhold2)][0].id).to.equal(requiredMessageId);
-    expect(errors[utledArbeidsforholdFieldName(arbeidsforhold3)][0].id).to.equal(requiredMessageId);
+    expect(errors[utledArbeidsforholdFieldName(andel)][0].id).to.equal(requiredMessageId);
+    expect(errors[utledArbeidsforholdFieldName(andel2)][0].id).to.equal(requiredMessageId);
+    expect(errors[utledArbeidsforholdFieldName(andel3)][0].id).to.equal(requiredMessageId);
   });
 
   it('skal returnere errors om valgt ja', () => {
     const mottarYtelse = {
       erFrilans: true,
       frilansMottarYtelse: false,
-      arbeidstakerAndelerUtenIM: [
-        { ...arbeidsforhold, mottarYtelse: null },
-        { ...arbeidsforhold2, mottarYtelse: false },
-        { ...arbeidsforhold3, mottarYtelse: true },
-      ],
+      arbeidstakerAndelerUtenIM,
     };
     const values = {};
     values[finnFrilansFieldName()] = true;
-    values[utledArbeidsforholdFieldName(arbeidsforhold)] = true;
-    values[utledArbeidsforholdFieldName(arbeidsforhold2)] = true;
-    values[utledArbeidsforholdFieldName(arbeidsforhold3)] = true;
+    values[utledArbeidsforholdFieldName(andel)] = true;
+    values[utledArbeidsforholdFieldName(andel2)] = true;
+    values[utledArbeidsforholdFieldName(andel3)] = true;
     const errors = VurderMottarYtelseFormImpl.validate(values, mottarYtelse);
     expect(errors[finnFrilansFieldName()][0].id).to.equal(kanIkkeGaaVidereMessageId);
-    expect(errors[utledArbeidsforholdFieldName(arbeidsforhold)][0].id).to.equal(kanIkkeGaaVidereMessageId);
-    expect(errors[utledArbeidsforholdFieldName(arbeidsforhold2)][0].id).to.equal(kanIkkeGaaVidereMessageId);
-    expect(errors[utledArbeidsforholdFieldName(arbeidsforhold3)][0].id).to.equal(kanIkkeGaaVidereMessageId);
+    expect(errors[utledArbeidsforholdFieldName(andel)][0].id).to.equal(kanIkkeGaaVidereMessageId);
+    expect(errors[utledArbeidsforholdFieldName(andel2)][0].id).to.equal(kanIkkeGaaVidereMessageId);
+    expect(errors[utledArbeidsforholdFieldName(andel3)][0].id).to.equal(kanIkkeGaaVidereMessageId);
   });
 
 
@@ -190,11 +195,6 @@ describe('<VurderMottarYtelseForm>', () => {
 
 
   it('skal vise radioknapper for AT uten inntektsmelding', () => {
-    const arbeidstakerAndelerUtenIM = [
-      { ...arbeidsforhold, mottarYtelse: null },
-      { ...arbeidsforhold2, mottarYtelse: false },
-      { ...arbeidsforhold3, mottarYtelse: true },
-    ];
     const wrapper = shallow(<VurderMottarYtelseFormImpl
       readOnly={false}
       isAksjonspunktClosed={false}
@@ -209,7 +209,7 @@ describe('<VurderMottarYtelseForm>', () => {
     expect(formattedMsg).to.have.length(3);
     formattedMsg.forEach((msg, index) => {
       expect(msg.prop('id')).to.equal(mottarYtelseForArbeidMsg());
-      expect(msg.prop('arbeid')).to.equal(createVisningsnavnForAktivitet(arbeidstakerAndelerUtenIM[index]));
+      expect(msg.prop('values').arbeid).to.equal(createVisningsnavnForAktivitet(arbeidstakerAndelerUtenIM[index].arbeidsforhold));
     });
   });
 });

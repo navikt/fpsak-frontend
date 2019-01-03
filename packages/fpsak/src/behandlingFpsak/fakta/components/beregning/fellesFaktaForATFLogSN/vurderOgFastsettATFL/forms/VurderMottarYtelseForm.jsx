@@ -17,26 +17,21 @@ const andreFrilansTilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, 
 export const mottarYtelseForArbeidMsg = () => ('BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForArbeid');
 
 const utledArbeidsforholdUtenIMRadioTekst = arbeidsforhold => (
-  <FormattedMessage id={mottarYtelseForArbeidMsg()} arbeid={createVisningsnavnForAktivitet(arbeidsforhold)} />
+  <FormattedMessage id={mottarYtelseForArbeidMsg()} values={{ arbeid: createVisningsnavnForAktivitet(arbeidsforhold) }} />
 );
 
-export const utledArbeidsforholdFieldName = (arbeidsforhold) => {
-  if (arbeidsforhold.arbeidsforholdId) {
-    return mottarYtelseFieldPrefix + arbeidsforhold.arbeidsforholdId;
-  }
-  return mottarYtelseFieldPrefix + arbeidsforhold.virksomhetsId;
-};
+export const utledArbeidsforholdFieldName = andel => mottarYtelseFieldPrefix + andel.andelsnr;
 
-const mottarYtelseArbeidsforholdRadio = (arbeidsforhold, readOnly, isAksjonspunktClosed) => (
-  <div key={utledArbeidsforholdFieldName(arbeidsforhold)}>
+const mottarYtelseArbeidsforholdRadio = (andel, readOnly, isAksjonspunktClosed) => (
+  <div key={utledArbeidsforholdFieldName(andel)}>
     <div>
       <Normaltekst>
-        {utledArbeidsforholdUtenIMRadioTekst(arbeidsforhold)}
+        {utledArbeidsforholdUtenIMRadioTekst(andel.arbeidsforhold)}
       </Normaltekst>
     </div>
     <VerticalSpacer eightPx />
     <RadioGroupField
-      name={utledArbeidsforholdFieldName(arbeidsforhold)}
+      name={utledArbeidsforholdFieldName(andel)}
       readOnly={readOnly}
       isEdited={isAksjonspunktClosed}
     >
@@ -92,8 +87,8 @@ export const VurderMottarYtelseFormImpl = ({
       </div>
       )
     }
-    {arbeidsforholdUtenIM.map(arbeidsforhold => (
-      mottarYtelseArbeidsforholdRadio(arbeidsforhold, readOnly, isAksjonspunktClosed)
+    {arbeidsforholdUtenIM.map(andel => (
+      mottarYtelseArbeidsforholdRadio(andel, readOnly, isAksjonspunktClosed)
     ))}
   </div>
 );
@@ -170,9 +165,9 @@ VurderMottarYtelseFormImpl.validate = (values, vurderMottarYtelse) => {
 };
 
 const mapStateToProps = (state) => {
-  const vurderDto = getVurderMottarYtelse(state);
-  const erFrilans = vurderDto && vurderDto.erFrilans;
-  const arbeidsforholdUtenIM = vurderDto && vurderDto.arbeidstakerAndelerUtenIm ? vurderDto.arbeidstakerAndelerUtenIm.map(andel => andel.arbeidsforhold) : [];
+  const vurderInfo = getVurderMottarYtelse(state);
+  const erFrilans = vurderInfo && vurderInfo.erFrilans;
+  const arbeidsforholdUtenIM = vurderInfo && vurderInfo.arbeidstakerAndelerUtenIM ? vurderInfo.arbeidstakerAndelerUtenIM : [];
   return {
     arbeidsforholdUtenIM,
     erFrilans,
