@@ -325,11 +325,17 @@ export class UttakFaktaForm extends Component {
           <AnnenPartHarRett
             readOnly={readOnly}
             hasOpenAksjonspunkter={annenPartHarRettApOpen}
-            aksjonspunkter={annenPartHarRettAp[0]}
+            aksjonspunkter={annenPartHarRettAp}
           />
         )}
         {(annenPartHarRettAp.length === 0 || annenPartHarRettErLøst !== undefined) && (
+
+
           <React.Fragment>
+
+            {annenPartHarRettAp.length > 0
+          && <VerticalSpacer twentyPx dashed />
+        }
             {!readOnly && (
             <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkterFixed}>
               {aksjonspunkterFixed.map((ap) => {
@@ -347,9 +353,7 @@ export class UttakFaktaForm extends Component {
             </AksjonspunktHelpText>
             )
         }
-            {annenPartHarRettAp.length > 0
-          && <VerticalSpacer twentyPx dashed />
-        }
+            <VerticalSpacer twentyPx />
 
             <Element><FormattedMessage id="UttakInfoPanel.SoknadsPeriode" /></Element>
 
