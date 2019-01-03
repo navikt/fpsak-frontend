@@ -10,8 +10,8 @@ import TimeLineSokerEnsamSoker from '../tilkjentYtelse/timeline/TimeLineSokerEns
 
 import styles from './uttakTimeLine.less';
 
-const getStartDateForTimeLine = uttakPeriod => moment(uttakPeriod.fom).subtract(4, 'weeks');
-
+const getStartDateForTimeLine = (uttakPeriod, customTimes) => (moment(customTimes.fodsel) < moment(uttakPeriod.fom)
+  ? moment(customTimes.fodsel).subtract(4, 'weeks') : moment(uttakPeriod.fom).subtract(4, 'weeks'));
 const getEndDateForTimeLine = customTimes => moment(customTimes.fodsel).add(4, 'years');
 
 
@@ -22,7 +22,7 @@ const getOptions = (customTimes, uttakPeriod, medsoker) => ({
   zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
   zoomable: true,
   moveable: true,
-  min: getStartDateForTimeLine(uttakPeriod),
+  min: getStartDateForTimeLine(uttakPeriod, customTimes),
   max: getEndDateForTimeLine(customTimes),
   margin: {
     item: 14,
