@@ -60,8 +60,7 @@ server {
     proxy_set_header        X-Real-IP $remote_addr;
     proxy_set_header        Cookie $proxy_cookie;
     proxy_pass_header       Nav-Callid;
-    # kommentert ut pga fpoppdrag og fptilbake trenger denne eller at de går igjennom proxy.
-    #proxy_ignore_headers    Set-Cookie; # We don't want the backend to set cookies.
+    proxy_ignore_headers    Set-Cookie; # We don't want the backend to set cookies.
     proxy_http_version      1.1;
     proxy_ssl_verify        off;
 
