@@ -13,7 +13,7 @@ import moment from 'moment';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { getBehandlingFormPrefix, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import { getInntektsmeldinger, getBehandlingVersjon } from 'behandlingFpsak/behandlingSelectors';
+import { getInntektsmeldinger, getBehandlingVersjon, getBehandlingIsOnHold } from 'behandlingFpsak/behandlingSelectors';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
 import { ariaCheck, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
@@ -302,6 +302,7 @@ export class UttakFaktaForm extends Component {
       aksjonspunkter,
       førsteUttaksDato,
       submitting,
+      behandlingPaaVent,
     } = this.props;
     const {
       periodeSlett, isNyPeriodeFormOpen, inntektsmeldingInfo, showModalSlettPeriode,
@@ -351,7 +352,7 @@ export class UttakFaktaForm extends Component {
             <FlexColumn>
               <Hovedknapp
                 mini
-                disabled={disableButtons || readOnly || isNyPeriodeFormOpen}
+                disabled={disableButtons || readOnly || isNyPeriodeFormOpen || behandlingPaaVent}
                 onClick={ariaCheck}
                 spinner={submitting}
               >
@@ -363,7 +364,7 @@ export class UttakFaktaForm extends Component {
                 mini
                 htmlType="button"
                 onClick={this.addNewPeriod}
-                disabled={disableButtons || readOnly || isNyPeriodeFormOpen}
+                disabled={disableButtons || readOnly || isNyPeriodeFormOpen || behandlingPaaVent}
               >
                 <FormattedMessage id="UttakInfoPanel.LeggTilPeriode" />
               </Knapp>
@@ -412,10 +413,12 @@ UttakFaktaForm.propTypes = {
   })).isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   førsteUttaksDato: PropTypes.string,
+  behandlingPaaVent: PropTypes.bool,
 };
 
 UttakFaktaForm.defaultProps = {
   førsteUttaksDato: undefined,
+  behandlingPaaVent: false,
 };
 
 const perioder = state => behandlingFormValueSelector('UttakInfoPanel')(state, 'perioder') || [];
@@ -431,6 +434,7 @@ const mapStateToProps = (state) => {
     slettedePerioder: slettedePerioder(state),
     perioder: perioder(state),
     disableButtons: perioder(state).find(periode => periode.openForm === true) !== undefined,
+    behandlingPaaVent: getBehandlingIsOnHold(state),
   };
 };
 
