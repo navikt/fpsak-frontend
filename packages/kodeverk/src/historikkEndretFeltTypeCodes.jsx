@@ -129,6 +129,14 @@ const historikkEndretFeltTypeCodes = {
     kode: 'MANN_ADOPTERER',
     feltId: 'MannAdoptererAleneFaktaForm.ApplicationInformation',
   },
+  MOTTAR_YTELSE_ARBEID: {
+    kode: 'MOTTAR_YTELSE_ARBEID',
+    feltId: 'HistorikkEndretFelt.MottarYtelseForArbeid',
+  },
+  MOTTAR_YTELSE_FRILANS: {
+    kode: 'MOTTAR_YTELSE_FRILANS',
+    feltId: 'HistorikkEndretFelt.MottarYtelseForFrilans',
+  },
   NY_AKTIVITET: {
     kode: 'NY_AKTIVITET',
     feltId: 'HistorikkEndretFelt.NyAktivitetFor',
