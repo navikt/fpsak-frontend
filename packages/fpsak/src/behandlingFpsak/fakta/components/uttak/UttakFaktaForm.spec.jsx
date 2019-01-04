@@ -32,6 +32,8 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
+      annenPartHarRettAp={[]}
+      annenPartHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -45,7 +47,7 @@ describe('<UttakFaktaForm>', () => {
     const uttakNyPeriode = wrapper.find('UttakNyPeriode');
     const uttakSlettPeriodeModal = wrapper.find('UttakSlettPeriodeModal');
     expect(fieldArray).to.have.length(1);
-    expect(verticalSpacer).to.have.length(2);
+    expect(verticalSpacer).to.have.length(3);
     expect(flexContainer).to.have.length(1);
     expect(flexRow).to.have.length(1);
     expect(flexColumn).to.have.length(2);
@@ -74,6 +76,8 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
+      annenPartHarRettAp={[]}
+      annenPartHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -111,6 +115,8 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
+      annenPartHarRettAp={[]}
+      annenPartHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -144,6 +150,8 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
+      annenPartHarRettAp={[]}
+      annenPartHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -172,6 +180,8 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
+      annenPartHarRettAp={[]}
+      annenPartHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -200,7 +210,8 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
-      annenPartHarRettAp=[  ]
+      annenPartHarRettAp={[]}
+      annenPartHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -227,6 +238,8 @@ describe('<UttakFaktaForm>', () => {
       initialValues={{}}
       isRevurdering={false}
       slettedePerioder={[]}
+      annenPartHarRettAp={[]}
+      annenPartHarRettApOpen={false}
       aksjonspunkter={[
         {
           aksjonspunktType: {
@@ -283,6 +296,8 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
+      annenPartHarRettAp={[]}
+      annenPartHarRettApOpen={false}
       submitting={false}
     />);
 
