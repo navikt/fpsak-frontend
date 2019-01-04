@@ -11,6 +11,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
   getUttakPerioder,
+  getAksjonspunkter,
   getBehandlingYtelseFordeling,
   getBehandlingIsManuellRevurdering,
   hasBehandlingUtredesStatus,
@@ -162,21 +163,27 @@ const validateUttakForm = (values, originalPerioder, aksjonspunkter, førsteUtta
   return errors;
 };
 
-const buildInitialValues = createSelector([getUttakPerioder], (perioder) => {
-  if (perioder) {
-    return ({
-      perioder: perioder.map(periode => ({
-        ...periode,
-        id: guid(),
-        openForm: periode.bekreftet === false,
-        updated: false,
-        isFromSøknad: true,
-      })),
-    });
-  }
+const buildInitialValues = createSelector([getUttakPerioder, getBehandlingYtelseFordeling, getAksjonspunkter],
+  (perioder, ytelseFordeling, aksjonspunkter) => {
+    const annenPartHarRett = !!(ytelseFordeling && (ytelseFordeling.annenforelderHarRettPerioder || []).length > 0);
+    const { begrunnelse } = aksjonspunkter.filter(ap => ap.definisjon.kode
+      === aksjonspunktCodes.AVKLAR_ANNEN_PART_RETT)[0] || [];
+    if (perioder) {
+      return ({
+        annenPartHarRett,
+        begrunnelse,
+        perioder: perioder.map(periode => ({
+          ...periode,
+          id: guid(),
+          openForm: periode.bekreftet === false,
+          updated: false,
+          isFromSøknad: true,
+        })),
+      });
+    }
 
-  return undefined;
-});
+    return undefined;
+  });
 
 const getOriginalPeriodeId = (origPeriode) => {
   if (origPeriode) {
@@ -191,43 +198,46 @@ const transformValues = (values, initialValues, aksjonspunkter) => { // NOSONAR
   const apCodes = aktiveUttakAksjonspunkter.length
     ? aktiveUttakAksjonspunkter.map(ap => ap.definisjon.kode)
     : [aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK];
-  return apCodes.map(ap => ({
-    kode: ap,
-    bekreftedePerioder: values.perioder.map((periode) => {
-      const {
-        id, openForm, updated, kontoType, isFromSøknad, ...bekreftetPeriode // NOSONAR
-      } = periode;
-      const origPeriode = initialValues.perioder.filter(p => p.id === id);
-      return {
-        bekreftetPeriode,
-        orginalFom: origPeriode[0] ? origPeriode[0].fom : null,
-        orginalTom: origPeriode[0] ? origPeriode[0].tom : null,
-        originalArbeidstidsprosent: origPeriode[0] ? origPeriode[0].arbeidstidsprosent : null,
-        originalBegrunnelse: origPeriode[0] ? origPeriode[0].begrunnelse : null,
-        originalResultat: origPeriode[0] ? origPeriode[0].resultat : null,
-      };
-    }),
-    slettedePerioder: values.slettedePerioder
-      ? values.slettedePerioder.map((periode) => {
-        const { id, begrunnelse, ...slettetPeriode } = periode;
+  return apCodes.map((ap) => {
+    const annenforelderHarRett = ap === aksjonspunktCodes.AVKLAR_ANNEN_PART_RETT ? values.annenPartHarRett : null;
+
+    return ({
+      kode: ap,
+      bekreftedePerioder: values.perioder.map((periode) => {
+        const {
+          id, openForm, updated, kontoType, isFromSøknad, ...bekreftetPeriode // NOSONAR
+        } = periode;
         const origPeriode = initialValues.perioder.filter(p => p.id === id);
-
         return {
-          ...slettetPeriode,
-          begrunnelse: id === getOriginalPeriodeId(origPeriode[0]) ? begrunnelse : null,
+          bekreftetPeriode,
+          orginalFom: origPeriode[0] ? origPeriode[0].fom : null,
+          orginalTom: origPeriode[0] ? origPeriode[0].tom : null,
+          originalArbeidstidsprosent: origPeriode[0] ? origPeriode[0].arbeidstidsprosent : null,
+          originalBegrunnelse: origPeriode[0] ? origPeriode[0].begrunnelse : null,
+          originalResultat: origPeriode[0] ? origPeriode[0].resultat : null,
         };
-      })
-      : [],
+      }),
+      slettedePerioder: values.slettedePerioder
+        ? values.slettedePerioder.map((periode) => {
+          const { id, begrunnelse, ...slettetPeriode } = periode;
+          const origPeriode = initialValues.perioder.filter(p => p.id === id);
 
-    annenforelderHarRett: values.annenPartHarRett,
-    begrunnelse: values.begrunnelse || '',
-  }));
+          return {
+            ...slettetPeriode,
+            begrunnelse: id === getOriginalPeriodeId(origPeriode[0]) ? begrunnelse : null,
+          };
+        })
+        : [],
+      annenforelderHarRett,
+      begrunnelse: values.begrunnelse || '',
+    });
+  });
 };
 
 const mapStateToProps = (state, initialProps) => {
-  const initialValues = buildInitialValues(state);
   const ytelseFordeling = getBehandlingYtelseFordeling(state);
   const førsteUttaksDato = ytelseFordeling && ytelseFordeling.førsteUttaksDato ? ytelseFordeling.førsteUttaksDato : undefined;
+  const initialValues = buildInitialValues(state);
   const isRevurdering = getBehandlingIsManuellRevurdering(state);
   const hasStatusUtredes = hasBehandlingUtredesStatus(state);
   const annenPartHarRettAp = initialProps.aksjonspunkter.filter(ap => ap.definisjon.kode

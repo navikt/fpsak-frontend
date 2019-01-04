@@ -317,7 +317,7 @@ export class UttakFaktaForm extends Component {
     // TODO fikse logikken her slik at det blir mer ryddig
     const aksjonspunkterFixed = aksjonspunkter.filter(ap => ap.definisjon.kode
       !== aksjonspunktCodes.AVKLAR_ANNEN_PART_RETT);
-    const hasOpenAksjonspunkterFixed = !!aksjonspunkterFixed.filter(ap => isAksjonspunktOpen(ap.status.kode)) || [].length > 0;
+    const hasOpenAksjonspunkterFixed = !!aksjonspunkterFixed.filter(ap => isAksjonspunktOpen(ap.status.kode)).length;
     return (
       <div>
         {annenPartHarRettAp.length > 0 && (
@@ -328,7 +328,6 @@ export class UttakFaktaForm extends Component {
           />
         )}
         {(annenPartHarRettAp.length === 0 || annenPartHarRettErLøst !== undefined) && (
-
 
           <React.Fragment>
 
