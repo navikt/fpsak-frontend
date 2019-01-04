@@ -200,6 +200,7 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
+      annenPartHarRettAp=[  ]
       submitting={false}
     />);
 

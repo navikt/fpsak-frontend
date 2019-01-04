@@ -304,6 +304,8 @@ export class UttakFaktaForm extends Component {
       aksjonspunkter,
       førsteUttaksDato,
       annenPartHarRettErLøst,
+      annenPartHarRettAp,
+      annenPartHarRettApOpen,
       submitting,
       behandlingPaaVent,
     } = this.props;
@@ -315,9 +317,6 @@ export class UttakFaktaForm extends Component {
     // TODO fikse logikken her slik at det blir mer ryddig
     const aksjonspunkterFixed = aksjonspunkter.filter(ap => ap.definisjon.kode
       !== aksjonspunktCodes.AVKLAR_ANNEN_PART_RETT);
-    const annenPartHarRettAp = aksjonspunkter.filter(ap => ap.definisjon.kode
-      === aksjonspunktCodes.AVKLAR_ANNEN_PART_RETT);
-    const annenPartHarRettApOpen = !!annenPartHarRettAp.filter(ap => isAksjonspunktOpen(ap.status.kode)) || [].length > 0;
     const hasOpenAksjonspunkterFixed = !!aksjonspunkterFixed.filter(ap => isAksjonspunktOpen(ap.status.kode)) || [].length > 0;
     return (
       <div>
@@ -441,6 +440,8 @@ UttakFaktaForm.propTypes = {
   førsteUttaksDato: PropTypes.string,
   behandlingPaaVent: PropTypes.bool,
   annenPartHarRettErLøst: PropTypes.bool,
+  annenPartHarRettAp: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  annenPartHarRettApOpen: PropTypes.bool.isRequired,
 };
 
 UttakFaktaForm.defaultProps = {

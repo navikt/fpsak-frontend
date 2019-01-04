@@ -8,6 +8,7 @@ import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspand
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
 import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
   getUttakPerioder,
   getBehandlingYtelseFordeling,
@@ -32,6 +33,8 @@ const uttakAksjonspunkter = [
   aksjonspunktCodes.AVKLAR_ANNEN_PART_RETT,
 ];
 
+const leggTilKlasseHvisAp = annenPartHarRettApOpen => (annenPartHarRettApOpen ? 'aksjonspunkt--5086' : undefined);
+
 export const UttakInfoPanelImpl = ({
   intl,
   toggleInfoPanelCallback,
@@ -42,36 +45,44 @@ export const UttakInfoPanelImpl = ({
   isRevurdering,
   hasStatusUtredes,
   førsteUttaksDato,
+  annenPartHarRettAp,
+  annenPartHarRettApOpen,
   handleSubmit,
   ...formProps
-}) => (
-  <FaktaEkspandertpanel
-    title={intl.formatMessage({ id: 'UttakInfoPanel.FaktaUttak' })}
-    hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-    isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.UTTAK)}
-    toggleInfoPanelCallback={toggleInfoPanelCallback}
-    faktaId={faktaPanelCodes.UTTAK}
-    readOnly={readOnly}
-    disabledTextCode="UttakInfoPanel.Uttak"
-  >
-    <form onSubmit={handleSubmit}>
-      <UttakFaktaForm
-        hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-        readOnly={readOnly && (!isRevurdering || !hasStatusUtredes)}
-        toggleInfoPanelCallback={toggleInfoPanelCallback}
-        aksjonspunkter={aksjonspunkter}
-        førsteUttaksDato={førsteUttaksDato}
-        submitting={formProps.submitting}
-      />
-      {formProps.error
+}) => {
+  const ekstraClass = leggTilKlasseHvisAp(annenPartHarRettApOpen);
+  return (
+    <FaktaEkspandertpanel
+      title={intl.formatMessage({ id: 'UttakInfoPanel.FaktaUttak' })}
+      hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+      isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.UTTAK)}
+      toggleInfoPanelCallback={toggleInfoPanelCallback}
+      faktaId={faktaPanelCodes.UTTAK}
+      readOnly={readOnly}
+      disabledTextCode="UttakInfoPanel.Uttak"
+      ekstraClass={ekstraClass}
+    >
+      <form onSubmit={handleSubmit}>
+        <UttakFaktaForm
+          hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+          readOnly={readOnly && (!isRevurdering || !hasStatusUtredes)}
+          toggleInfoPanelCallback={toggleInfoPanelCallback}
+          aksjonspunkter={aksjonspunkter}
+          førsteUttaksDato={førsteUttaksDato}
+          annenPartHarRettAp={annenPartHarRettAp}
+          annenPartHarRettApOpen={annenPartHarRettApOpen}
+          submitting={formProps.submitting}
+        />
+        {formProps.error
       && (
       <span>
         {formProps.error}
       </span>
       )}
-    </form>
-  </FaktaEkspandertpanel>
-);
+      </form>
+    </FaktaEkspandertpanel>
+  );
+};
 
 UttakInfoPanelImpl.propTypes = {
   intl: intlShape.isRequired,
@@ -84,6 +95,8 @@ UttakInfoPanelImpl.propTypes = {
   førsteUttaksDato: PropTypes.string,
   isRevurdering: PropTypes.bool.isRequired,
   hasStatusUtredes: PropTypes.bool.isRequired,
+  annenPartHarRettAp: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  annenPartHarRettApOpen: PropTypes.bool.isRequired,
 };
 
 UttakInfoPanelImpl.defaultProps = {
@@ -217,12 +230,17 @@ const mapStateToProps = (state, initialProps) => {
   const førsteUttaksDato = ytelseFordeling && ytelseFordeling.førsteUttaksDato ? ytelseFordeling.førsteUttaksDato : undefined;
   const isRevurdering = getBehandlingIsManuellRevurdering(state);
   const hasStatusUtredes = hasBehandlingUtredesStatus(state);
+  const annenPartHarRettAp = initialProps.aksjonspunkter.filter(ap => ap.definisjon.kode
+    === aksjonspunktCodes.AVKLAR_ANNEN_PART_RETT);
+  const annenPartHarRettApOpen = (annenPartHarRettAp.filter(ap => isAksjonspunktOpen(ap.status.kode)) || []).length > 0;
   const perioder = getUttakPerioder(state);
   return {
     initialValues,
     førsteUttaksDato,
     isRevurdering,
     hasStatusUtredes,
+    annenPartHarRettAp,
+    annenPartHarRettApOpen,
     validate: values => validateUttakForm(values, perioder, initialProps.aksjonspunkter, førsteUttaksDato),
     onSubmit: values => initialProps.submitCallback(transformValues(values, initialValues, initialProps.aksjonspunkter)),
   };

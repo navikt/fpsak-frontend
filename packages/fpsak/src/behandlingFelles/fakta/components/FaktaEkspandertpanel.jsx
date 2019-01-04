@@ -27,6 +27,7 @@ const FaktaEkspandertpanel = ({
   readOnly,
   disabled,
   disabledTextCode,
+  ekstraClass,
   children,
 }) => {
   if (disabled && disabledTextCode) {
@@ -41,7 +42,7 @@ const FaktaEkspandertpanel = ({
 
   return (
     <EkspanderbartpanelPure
-      className={hasOpenAksjonspunkter && !readOnly ? classNames('statusAksjonspunkt', `aksjonspunkt--${faktaId}`) : styles.statusOk}
+      className={hasOpenAksjonspunkter && !readOnly ? classNames('statusAksjonspunkt', `aksjonspunkt--${faktaId}`, ekstraClass) : styles.statusOk}
       tittel={title}
       apen={isInfoPanelOpen}
       onClick={() => toggleInfoPanelCallback(faktaId)}
@@ -67,12 +68,14 @@ FaktaEkspandertpanel.propTypes = {
   disabled: PropTypes.bool,
   disabledTextCode: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+  ekstraClass: PropTypes.string,
 };
 
 FaktaEkspandertpanel.defaultProps = {
   isInfoPanelOpen: false,
   disabled: false,
   disabledTextCode: undefined,
+  ekstraClass: undefined,
 };
 
 export default FaktaEkspandertpanel;
