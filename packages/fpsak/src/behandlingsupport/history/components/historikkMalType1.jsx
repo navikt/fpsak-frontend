@@ -2,14 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinnslagDelPropType';
 import { Element } from 'nav-frontend-typografi';
-import { Image } from '@fpsak-frontend/shared-components';
-import dokumentIkonUrl from '@fpsak-frontend/assets/images/dokument_outline.svg';
-import dokumentFilledIkonUrl from '@fpsak-frontend/assets/images/dokument_filled.svg';
 import styles from './historikkMalType.less';
 import BubbleText from './bubbleText';
 import { findHendelseText } from './historikkUtils';
 
-const dokumentImg = isHovering => (isHovering ? dokumentIkonUrl : dokumentFilledIkonUrl);
 const HistorikkMalType1 = ({
   historikkinnslagDeler, dokumentLinks, saksNr,
 }) => (
@@ -36,11 +32,7 @@ const HistorikkMalType1 = ({
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image
-            imageSrcFunction={dokumentImg}
-            altCode={dokumentLink.tag}
-            titleCode={dokumentLink.tag}
-          />
+          <i className={styles.dokument} title={dokumentLink.tag} alt={dokumentLink.tag} />
           {dokumentLink.tag}
         </a>
       ))}

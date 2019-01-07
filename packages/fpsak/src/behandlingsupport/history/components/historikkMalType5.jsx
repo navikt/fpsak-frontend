@@ -10,10 +10,6 @@ import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinn
 import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeCodes';
 import historikkEndretFeltTypeHeadingCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeHeadingCodes';
 
-import { Image } from '@fpsak-frontend/shared-components';
-import dokumentIkonUrl from '@fpsak-frontend/assets/images/dokument_outline.svg';
-import dokumentFilledIkonUrl from '@fpsak-frontend/assets/images/dokument_filled.svg';
-
 import {
   findEndretFeltNavn,
   findEndretFeltVerdi,
@@ -24,10 +20,7 @@ import {
 } from './historikkUtils';
 
 import BubbleText from './bubbleText';
-
 import styles from './historikkMalType.less';
-
-const dokumentImg = isHovering => (isHovering ? dokumentIkonUrl : dokumentFilledIkonUrl);
 
 const scrollUp = () => {
   if (window.innerWidth < 1305) {
@@ -226,11 +219,7 @@ const HistorikkMalType5 = ({
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Image
-                imageSrcFunction={dokumentImg}
-                altCode={dokumentLink.tag}
-                titleCode={dokumentLink.tag}
-              />
+              <i className={styles.dokument} title={dokumentLink.tag} alt={dokumentLink.tag} />
               {dokumentLink.tag}
             </a>
           ))}
