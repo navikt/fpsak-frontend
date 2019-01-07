@@ -9,7 +9,6 @@ import { createLocationForHistorikkItems } from 'app/paths';
 import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinnslagDelPropType';
 import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeCodes';
 import historikkEndretFeltTypeHeadingCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeHeadingCodes';
-
 import {
   findEndretFeltNavn,
   findEndretFeltVerdi,
@@ -20,6 +19,7 @@ import {
 } from './historikkUtils';
 
 import BubbleText from './bubbleText';
+
 import styles from './historikkMalType.less';
 
 const scrollUp = () => {

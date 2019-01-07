@@ -2183,8 +2183,6 @@
   "HistorikkSoeknadsperiode.Uttak": "<b>Uttak</b> <br>{value}",
   "HistorikkSoeknadsperiode.Opphold": "<b>Opphold: annen foreldres uttak</b> <br>{value}",
 
-  "Historikk.Dokument": "Dokument",
-
   "OkAvbrytModal.Ok": "OK",
   "OkAvbrytModal.Avbryt": "Avbryt",
 

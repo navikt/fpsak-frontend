@@ -3,10 +3,6 @@ import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, injectIntl, intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { Image } from '@fpsak-frontend/shared-components';
-import dokumentIkonUrl from '@fpsak-frontend/assets/images/dokument_outline.svg';
-import dokumentFilledIkonUrl from '@fpsak-frontend/assets/images/dokument_filled.svg';
-
 import { createLocationForHistorikkItems } from 'app/paths';
 import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinnslagDelPropType';
 
@@ -22,8 +18,6 @@ import BubbleText from './bubbleText';
 import styles from './historikkMalType.less';
 
 const DOCUMENT_SERVER_URL = '/fpsak/api/dokument/hent-dokument';
-
-const dokumentImg = isHovering => (isHovering ? dokumentIkonUrl : dokumentFilledIkonUrl);
 
 const HistorikkMalType8 = ({
   historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, saksNr,
@@ -110,11 +104,7 @@ const HistorikkMalType8 = ({
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Image
-                  imageSrcFunction={dokumentImg}
-                  altCode={dokumentLink.tag}
-                  titleCode={dokumentLink.tag}
-                />
+                <i className={styles.dokument} title={dokumentLink.tag} alt={dokumentLink.tag} />
                 {dokumentLink.tag}
               </a>
             ))}
