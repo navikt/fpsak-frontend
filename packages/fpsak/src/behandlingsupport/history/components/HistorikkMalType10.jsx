@@ -6,6 +6,10 @@ import { FormattedHTMLMessage, injectIntl, intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
 
+import { Image } from '@fpsak-frontend/shared-components';
+import dokumentIkonUrl from '@fpsak-frontend/assets/images/dokument_outline.svg';
+import dokumentFilledIkonUrl from '@fpsak-frontend/assets/images/dokument_filled.svg';
+
 import { createLocationForHistorikkItems } from 'app/paths';
 import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinnslagDelPropType';
 import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeCodes';
@@ -18,6 +22,8 @@ import {
 import BubbleText from './bubbleText';
 
 import styles from './historikkMalType.less';
+
+const dokumentImg = isHovering => (isHovering ? dokumentIkonUrl : dokumentFilledIkonUrl);
 
 const scrollUp = () => {
   if (window.innerWidth < 13010) {
@@ -173,7 +179,11 @@ const HistorikkMalType10 = ({
               target="_blank"
               rel="noopener noreferrer"
             >
-              @
+              <Image
+                imageSrcFunction={dokumentImg}
+                altCode={dokumentLink.tag}
+                titleCode={dokumentLink.tag}
+              />
               {dokumentLink.tag}
             </a>
           ))}
