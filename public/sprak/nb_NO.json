@@ -1827,8 +1827,8 @@
   "UttakInfoPanel.TidenesEnde": "Antall uker og dager -",
   "UttakInfoPanel.PeriodenSlettes": "Perioden {fom} - {tom} {uttakPeriodeType} slettes",
   "UttakInfoPanel.FrilansSelvstendignæringsdrivende": "Frilanser/Selvstendig næringsdrivende",
-  "UttakInfoPanel.AnnenPartHarRett": "Annen forelder har rett",
-  "UttakInfoPanel.AnnenPartHarIkkeRett": "Annen forelder har ikke rett",
+  "UttakInfoPanel.AnnenForelderHarRett": "Annen forelder har rett",
+  "UttakInfoPanel.AnnenForelderHarIkkeRett": "Annen forelder har ikke rett",
 
 
   "StartdatoForForeldrepengerperiodenForm.StartdatoEtterArbeidsgiverdato": "Startdato kan ikke være etter datoen som arbeidsgiver opplyser",

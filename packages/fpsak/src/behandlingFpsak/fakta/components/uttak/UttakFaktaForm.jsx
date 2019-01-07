@@ -25,7 +25,7 @@ import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType'
 import {
   VerticalSpacer, AksjonspunktHelpText, FlexContainer, FlexColumn, FlexRow,
 } from '@fpsak-frontend/shared-components';
-import AnnenPartHarRett from './components/AnnenPartHarRett';
+import AnnenForelderHarRett from './components/AnnenForelderHarRett';
 import UttakPeriode from './UttakPeriode';
 import UttakNyPeriode from './UttakNyPeriode';
 import UttakSlettPeriodeModal from './UttakSlettPeriodeModal';
@@ -303,9 +303,9 @@ export class UttakFaktaForm extends Component {
       perioder,
       aksjonspunkter,
       førsteUttaksDato,
-      annenPartHarRettErLøst,
-      annenPartHarRettAp,
-      annenPartHarRettApOpen,
+      annenForelderHarRettErLøst,
+      annenForelderHarRettAp,
+      annenForelderHarRettApOpen,
       submitting,
       behandlingPaaVent,
     } = this.props;
@@ -316,22 +316,22 @@ export class UttakFaktaForm extends Component {
 
     // TODO fikse logikken her slik at det blir mer ryddig
     const aksjonspunkterFixed = aksjonspunkter.filter(ap => ap.definisjon.kode
-      !== aksjonspunktCodes.AVKLAR_ANNEN_PART_RETT);
+      !== aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT);
     const hasOpenAksjonspunkterFixed = !!aksjonspunkterFixed.filter(ap => isAksjonspunktOpen(ap.status.kode)).length;
     return (
       <div>
-        {annenPartHarRettAp.length > 0 && (
-          <AnnenPartHarRett
+        {annenForelderHarRettAp.length > 0 && (
+          <AnnenForelderHarRett
             readOnly={readOnly}
-            hasOpenAksjonspunkter={annenPartHarRettApOpen}
-            aksjonspunkter={annenPartHarRettAp}
+            hasOpenAksjonspunkter={annenForelderHarRettApOpen}
+            aksjonspunkter={annenForelderHarRettAp}
           />
         )}
-        {(annenPartHarRettAp.length === 0 || annenPartHarRettErLøst !== undefined) && (
+        {(annenForelderHarRettAp.length === 0 || annenForelderHarRettErLøst !== null) && (
 
           <React.Fragment>
 
-            {annenPartHarRettAp.length > 0
+            {annenForelderHarRettAp.length > 0
           && <VerticalSpacer twentyPx dashed />
         }
             {!readOnly && (
@@ -376,7 +376,7 @@ export class UttakFaktaForm extends Component {
                 <FlexColumn>
                   <Hovedknapp
                     mini
-                    disabled={disableButtons || readOnly || isNyPeriodeFormOpen}
+                    disabled={disableButtons || readOnly || isNyPeriodeFormOpen || behandlingPaaVent}
                     onClick={ariaCheck}
                     spinner={submitting}
                   >
@@ -388,7 +388,7 @@ export class UttakFaktaForm extends Component {
                     mini
                     htmlType="button"
                     onClick={this.addNewPeriod}
-                    disabled={disableButtons || readOnly || isNyPeriodeFormOpen}
+                    disabled={disableButtons || readOnly || isNyPeriodeFormOpen || behandlingPaaVent}
                   >
                     <FormattedMessage id="UttakInfoPanel.LeggTilPeriode" />
                   </Knapp>
@@ -438,20 +438,21 @@ UttakFaktaForm.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   førsteUttaksDato: PropTypes.string,
   behandlingPaaVent: PropTypes.bool,
-  annenPartHarRettErLøst: PropTypes.bool,
-  annenPartHarRettAp: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  annenPartHarRettApOpen: PropTypes.bool.isRequired,
+  annenForelderHarRettErLøst: PropTypes.bool,
+  annenForelderHarRettAp: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  annenForelderHarRettApOpen: PropTypes.bool.isRequired,
 };
 
 UttakFaktaForm.defaultProps = {
   førsteUttaksDato: undefined,
   behandlingPaaVent: false,
-  annenPartHarRettErLøst: undefined,
+  annenForelderHarRettErLøst: null,
 };
 
 const perioder = state => behandlingFormValueSelector('UttakInfoPanel')(state, 'perioder') || [];
+const førsteUttaksDato = state => behandlingFormValueSelector('UttakInfoPanel')(state, 'førsteUttaksDato') || undefined;
 const slettedePerioder = state => behandlingFormValueSelector('UttakInfoPanel')(state, 'slettedePerioder') || [];
-const annenPartHarRett = state => behandlingFormValueSelector('UttakInfoPanel')(state, 'annenPartHarRett');
+const annenForelderHarRett = state => behandlingFormValueSelector('UttakInfoPanel')(state, 'annenForelderHarRett');
 
 const mapStateToProps = (state) => {
   const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state));
@@ -462,7 +463,8 @@ const mapStateToProps = (state) => {
     initialValues: getFormInitialValues(`${behandlingFormPrefix}.UttakInfoPanel`)(state),
     slettedePerioder: slettedePerioder(state),
     perioder: perioder(state),
-    annenPartHarRettErLøst: annenPartHarRett(state),
+    førsteUttaksDato: førsteUttaksDato(state),
+    annenForelderHarRettErLøst: annenForelderHarRett(state),
     disableButtons: perioder(state).find(periode => periode.openForm === true) !== undefined,
     behandlingPaaVent: getBehandlingIsOnHold(state),
   };

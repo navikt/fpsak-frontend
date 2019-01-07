@@ -11,12 +11,12 @@ import {
   RadioGroupField, RadioOption, TextAreaField,
 } from '@fpsak-frontend/form';
 
-import styles from './annenPartHarRett.less';
+import styles from './annenForelderHarRett.less';
 
 const minLength3 = minLength(3);
 const maxLength4000 = maxLength(4000);
 
-export const AnnenPartHarRett = ({
+export const AnnenForelderHarRett = ({
   hasOpenAksjonspunkter,
   aksjonspunkter,
   readOnly,
@@ -44,9 +44,9 @@ export const AnnenPartHarRett = ({
         <VerticalSpacer twentyPx />
         <FlexRow>
           <FlexColumn>
-            <RadioGroupField name="annenPartHarRett" validate={[required]} readOnly={readOnly}>
-              <RadioOption value label={{ id: 'UttakInfoPanel.AnnenPartHarRett' }} />
-              <RadioOption value={false} label={{ id: 'UttakInfoPanel.AnnenPartHarIkkeRett' }} />
+            <RadioGroupField name="annenForelderHarRett" validate={[required]} readOnly={readOnly}>
+              <RadioOption value label={{ id: 'UttakInfoPanel.AnnenForelderHarRett' }} />
+              <RadioOption value={false} label={{ id: 'UttakInfoPanel.AnnenForelderHarIkkeRett' }} />
             </RadioGroupField>
           </FlexColumn>
         </FlexRow>
@@ -57,6 +57,7 @@ export const AnnenPartHarRett = ({
             <div className={styles.textAreaStyle}>
               <TextAreaField
                 name="begrunnelse"
+                readOnly={readOnly}
                 label={{ id: 'UttakInfoPanel.BegrunnEndringene' }}
                 validate={[required, minLength3, maxLength4000, hasValidText]}
                 maxLength={4000}
@@ -69,10 +70,10 @@ export const AnnenPartHarRett = ({
   </FlexContainer>
 );
 
-AnnenPartHarRett.propTypes = {
+AnnenForelderHarRett.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.shape().isRequired,
 };
 
-export default AnnenPartHarRett;
+export default AnnenForelderHarRett;

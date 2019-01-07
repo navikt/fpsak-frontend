@@ -32,8 +32,8 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
-      annenPartHarRettAp={[]}
-      annenPartHarRettApOpen={false}
+      annenForelderHarRettAp={[]}
+      annenForelderHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -76,8 +76,8 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
-      annenPartHarRettAp={[]}
-      annenPartHarRettApOpen={false}
+      annenForelderHarRettAp={[]}
+      annenForelderHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -115,8 +115,8 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
-      annenPartHarRettAp={[]}
-      annenPartHarRettApOpen={false}
+      annenForelderHarRettAp={[]}
+      annenForelderHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -150,8 +150,8 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
-      annenPartHarRettAp={[]}
-      annenPartHarRettApOpen={false}
+      annenForelderHarRettAp={[]}
+      annenForelderHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -180,8 +180,8 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
-      annenPartHarRettAp={[]}
-      annenPartHarRettApOpen={false}
+      annenForelderHarRettAp={[]}
+      annenForelderHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -210,8 +210,8 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
-      annenPartHarRettAp={[]}
-      annenPartHarRettApOpen={false}
+      annenForelderHarRettAp={[]}
+      annenForelderHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -238,8 +238,8 @@ describe('<UttakFaktaForm>', () => {
       initialValues={{}}
       isRevurdering={false}
       slettedePerioder={[]}
-      annenPartHarRettAp={[]}
-      annenPartHarRettApOpen={false}
+      annenForelderHarRettAp={[]}
+      annenForelderHarRettApOpen={false}
       aksjonspunkter={[
         {
           aksjonspunktType: {
@@ -296,8 +296,8 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
-      annenPartHarRettAp={[]}
-      annenPartHarRettApOpen={false}
+      annenForelderHarRettAp={[]}
+      annenForelderHarRettApOpen={false}
       submitting={false}
     />);
 

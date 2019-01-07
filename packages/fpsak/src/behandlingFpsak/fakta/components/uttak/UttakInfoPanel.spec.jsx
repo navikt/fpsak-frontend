@@ -24,8 +24,8 @@ describe('<UttakInfoPanel>', () => {
       initialUttaksPerioder={[]}
       handleSubmit={sinon.spy()}
       isRevurdering={false}
-      annenPartHarRettAp={[]}
-      annenPartHarRettApOpen={false}
+      annenForelderHarRettAp={[]}
+      annenForelderHarRettApOpen={false}
       hasStatusUtredes
     />);
 
@@ -54,8 +54,8 @@ describe('<UttakInfoPanel>', () => {
       initialUttaksPerioder={[]}
       handleSubmit={sinon.spy()}
       isRevurdering={false}
-      annenPartHarRettAp={[]}
-      annenPartHarRettApOpen={false}
+      annenForelderHarRettAp={[]}
+      annenForelderHarRettApOpen={false}
       hasStatusUtredes
       {...formProps}
     />);
@@ -78,8 +78,8 @@ describe('<UttakInfoPanel>', () => {
       handleSubmit={sinon.spy()}
       førsteUttaksDato={førsteUttaksDato}
       isRevurdering={false}
-      annenPartHarRettAp={[]}
-      annenPartHarRettApOpen={false}
+      annenForelderHarRettAp={[]}
+      annenForelderHarRettApOpen={false}
       hasStatusUtredes
     />);
     const span = wrapper.find('span');

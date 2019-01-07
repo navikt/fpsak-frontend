@@ -11,7 +11,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
   getUttakPerioder,
-  getAksjonspunkter,
   getBehandlingYtelseFordeling,
   getBehandlingIsManuellRevurdering,
   hasBehandlingUtredesStatus,
@@ -31,10 +30,10 @@ import {
 const uttakAksjonspunkter = [
   aksjonspunktCodes.AVKLAR_UTTAK,
   aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO,
-  aksjonspunktCodes.AVKLAR_ANNEN_PART_RETT,
+  aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT,
 ];
 
-const leggTilKlasseHvisAp = annenPartHarRettApOpen => (annenPartHarRettApOpen ? 'aksjonspunkt--5086' : undefined);
+const leggTilKlasseHvisAp = annenForelderHarRettApOpen => (annenForelderHarRettApOpen ? 'aksjonspunkt--5086' : undefined);
 
 export const UttakInfoPanelImpl = ({
   intl,
@@ -45,13 +44,13 @@ export const UttakInfoPanelImpl = ({
   aksjonspunkter,
   isRevurdering,
   hasStatusUtredes,
-  førsteUttaksDato,
-  annenPartHarRettAp,
-  annenPartHarRettApOpen,
+  // førsteUttaksDato,
+  annenForelderHarRettAp,
+  annenForelderHarRettApOpen,
   handleSubmit,
   ...formProps
 }) => {
-  const ekstraClass = leggTilKlasseHvisAp(annenPartHarRettApOpen);
+  const ekstraClass = leggTilKlasseHvisAp(annenForelderHarRettApOpen);
   return (
     <FaktaEkspandertpanel
       title={intl.formatMessage({ id: 'UttakInfoPanel.FaktaUttak' })}
@@ -69,9 +68,9 @@ export const UttakInfoPanelImpl = ({
           readOnly={readOnly && (!isRevurdering || !hasStatusUtredes)}
           toggleInfoPanelCallback={toggleInfoPanelCallback}
           aksjonspunkter={aksjonspunkter}
-          førsteUttaksDato={førsteUttaksDato}
-          annenPartHarRettAp={annenPartHarRettAp}
-          annenPartHarRettApOpen={annenPartHarRettApOpen}
+          // førsteUttaksDato={førsteUttaksDato}
+          annenForelderHarRettAp={annenForelderHarRettAp}
+          annenForelderHarRettApOpen={annenForelderHarRettApOpen}
           submitting={formProps.submitting}
         />
         {formProps.error
@@ -93,23 +92,24 @@ UttakInfoPanelImpl.propTypes = {
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  førsteUttaksDato: PropTypes.string,
+  // førsteUttaksDato: PropTypes.string,
   isRevurdering: PropTypes.bool.isRequired,
   hasStatusUtredes: PropTypes.bool.isRequired,
-  annenPartHarRettAp: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  annenPartHarRettApOpen: PropTypes.bool.isRequired,
+  annenForelderHarRettAp: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  annenForelderHarRettApOpen: PropTypes.bool.isRequired,
 };
 
 UttakInfoPanelImpl.defaultProps = {
-  førsteUttaksDato: undefined,
+  // førsteUttaksDato: undefined,
 };
 
-const validateUttakForm = (values, originalPerioder, aksjonspunkter, førsteUttaksDato) => { // NOSONAR må ha disse sjekkene
+const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOSONAR må ha disse sjekkene
   const errors = {};
 
   if (sjekkOmfaktaOmUttakAksjonspunkt(aksjonspunkter)) {
     const originalStartDato = (originalPerioder[0] || []).fom;
     const nyStartDato = (values.perioder[0] || []).fom;
+    const { førsteUttaksDato } = values;
 
     if (values.perioder.length === 0) {
       errors.perioder = {
@@ -163,15 +163,15 @@ const validateUttakForm = (values, originalPerioder, aksjonspunkter, førsteUtta
   return errors;
 };
 
-const buildInitialValues = createSelector([getUttakPerioder, getBehandlingYtelseFordeling, getAksjonspunkter],
-  (perioder, ytelseFordeling, aksjonspunkter) => {
-    const annenPartHarRett = !!(ytelseFordeling && (ytelseFordeling.annenforelderHarRettPerioder || []).length > 0);
-    const { begrunnelse } = aksjonspunkter.filter(ap => ap.definisjon.kode
-      === aksjonspunktCodes.AVKLAR_ANNEN_PART_RETT)[0] || [];
+const buildInitialValues = createSelector([getUttakPerioder, getBehandlingYtelseFordeling],
+  (perioder, ytelseFordeling) => {
+    const annenForelderHarRett = ytelseFordeling && ytelseFordeling.annenforelderHarRettDto;
+    const førsteUttaksDato = ytelseFordeling && ytelseFordeling.førsteUttaksDato ? ytelseFordeling.førsteUttaksDato : undefined;
     if (perioder) {
       return ({
-        annenPartHarRett,
-        begrunnelse,
+        førsteUttaksDato,
+        annenForelderHarRett: annenForelderHarRett.annenforelderHarRett,
+        begrunnelse: annenForelderHarRett.begrunnelse,
         perioder: perioder.map(periode => ({
           ...periode,
           id: guid(),
@@ -199,7 +199,7 @@ const transformValues = (values, initialValues, aksjonspunkter) => { // NOSONAR
     ? aktiveUttakAksjonspunkter.map(ap => ap.definisjon.kode)
     : [aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK];
   return apCodes.map((ap) => {
-    const annenforelderHarRett = ap === aksjonspunktCodes.AVKLAR_ANNEN_PART_RETT ? values.annenPartHarRett : null;
+    const annenforelderHarRett = ap === aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT ? values.annenForelderHarRett : null;
 
     return ({
       kode: ap,
@@ -235,23 +235,20 @@ const transformValues = (values, initialValues, aksjonspunkter) => { // NOSONAR
 };
 
 const mapStateToProps = (state, initialProps) => {
-  const ytelseFordeling = getBehandlingYtelseFordeling(state);
-  const førsteUttaksDato = ytelseFordeling && ytelseFordeling.førsteUttaksDato ? ytelseFordeling.førsteUttaksDato : undefined;
   const initialValues = buildInitialValues(state);
   const isRevurdering = getBehandlingIsManuellRevurdering(state);
   const hasStatusUtredes = hasBehandlingUtredesStatus(state);
-  const annenPartHarRettAp = initialProps.aksjonspunkter.filter(ap => ap.definisjon.kode
-    === aksjonspunktCodes.AVKLAR_ANNEN_PART_RETT);
-  const annenPartHarRettApOpen = (annenPartHarRettAp.filter(ap => isAksjonspunktOpen(ap.status.kode)) || []).length > 0;
+  const annenForelderHarRettAp = initialProps.aksjonspunkter.filter(ap => ap.definisjon.kode
+    === aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT) || [];
+  const annenForelderHarRettApOpen = (annenForelderHarRettAp.filter(ap => isAksjonspunktOpen(ap.status.kode)) || []).length > 0;
   const perioder = getUttakPerioder(state);
   return {
     initialValues,
-    førsteUttaksDato,
     isRevurdering,
     hasStatusUtredes,
-    annenPartHarRettAp,
-    annenPartHarRettApOpen,
-    validate: values => validateUttakForm(values, perioder, initialProps.aksjonspunkter, førsteUttaksDato),
+    annenForelderHarRettAp,
+    annenForelderHarRettApOpen,
+    validate: values => validateUttakForm(values, perioder, initialProps.aksjonspunkter),
     onSubmit: values => initialProps.submitCallback(transformValues(values, initialValues, initialProps.aksjonspunkter)),
   };
 };
