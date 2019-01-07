@@ -1833,6 +1833,7 @@
   "UttakInfoPanel.TidenesEnde": "Antall uker og dager -",
   "UttakInfoPanel.PeriodenSlettes": "Perioden {fom} - {tom} {uttakPeriodeType} slettes",
   "UttakInfoPanel.FrilansSelvstendignæringsdrivende": "Frilanser/Selvstendig næringsdrivende",
+  "UttakPeriode.AvvikGradering": "Inntektsmeldingen angir ikke noe info om gradering",
   "UttakInfoPanel.AnnenForelderHarRett": "Annen forelder har rett",
   "UttakInfoPanel.AnnenForelderHarIkkeRett": "Annen forelder har ikke rett",
 
