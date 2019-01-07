@@ -320,7 +320,7 @@ export class UttakFaktaForm extends Component {
     const hasOpenAksjonspunkterFixed = !!aksjonspunkterFixed.filter(ap => isAksjonspunktOpen(ap.status.kode)).length;
     return (
       <div>
-        {annenForelderHarRettAp.length > 0 && (
+        {annenForelderHarRettAp && (
           <AnnenForelderHarRett
             readOnly={readOnly}
             hasOpenAksjonspunkter={annenForelderHarRettApOpen}

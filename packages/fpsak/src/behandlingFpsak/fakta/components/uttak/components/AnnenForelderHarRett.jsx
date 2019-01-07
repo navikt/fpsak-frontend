@@ -10,6 +10,7 @@ import {
 import {
   RadioGroupField, RadioOption, TextAreaField,
 } from '@fpsak-frontend/form';
+import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 
 import styles from './annenForelderHarRett.less';
 
@@ -44,7 +45,7 @@ export const AnnenForelderHarRett = ({
         <VerticalSpacer twentyPx />
         <FlexRow>
           <FlexColumn>
-            <RadioGroupField name="annenForelderHarRett" validate={[required]} readOnly={readOnly}>
+            <RadioGroupField name="annenForelderHarRett" validate={[required]} readOnly={readOnly} isEdited={!hasOpenAksjonspunkter}>
               <RadioOption value label={{ id: 'UttakInfoPanel.AnnenForelderHarRett' }} />
               <RadioOption value={false} label={{ id: 'UttakInfoPanel.AnnenForelderHarIkkeRett' }} />
             </RadioGroupField>
@@ -73,7 +74,11 @@ export const AnnenForelderHarRett = ({
 AnnenForelderHarRett.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
-  aksjonspunkter: PropTypes.shape().isRequired,
+  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired),
+};
+
+AnnenForelderHarRett.defaultProps = {
+  aksjonspunkter: [],
 };
 
 export default AnnenForelderHarRett;

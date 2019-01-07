@@ -240,7 +240,8 @@ const mapStateToProps = (state, initialProps) => {
   const hasStatusUtredes = hasBehandlingUtredesStatus(state);
   const annenForelderHarRettAp = initialProps.aksjonspunkter.filter(ap => ap.definisjon.kode
     === aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT) || [];
-  const annenForelderHarRettApOpen = (annenForelderHarRettAp.filter(ap => isAksjonspunktOpen(ap.status.kode)) || []).length > 0;
+  const annenForelderHarRettApOpen = annenForelderHarRettAp.length > 0
+    ? isAksjonspunktOpen(annenForelderHarRettAp[0].status.kode) : null;
   const perioder = getUttakPerioder(state);
   return {
     initialValues,
