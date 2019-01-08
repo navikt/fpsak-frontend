@@ -279,9 +279,11 @@ const warningUttakActivity = (values) => {
     });
     if (rowArray.length > 0) {
       const aktiviteter = document.querySelectorAll('[class^=renderUttakTable] tr');
-      rowArray.forEach((item) => {
-        aktiviteter[item + 1].classList.add('tableRowHighlight');
-      });
+      if (aktiviteter.length > 0) {
+        rowArray.forEach((item) => {
+          aktiviteter[item + 1].classList.add('tableRowHighlight');
+        });
+      }
       warnings = {
         _warning:
   <AlertStripe type="info" className={styles.advarsel}>
