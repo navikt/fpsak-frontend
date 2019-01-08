@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { formPropTypes } from 'redux-form';
+import { formPropTypes, FieldArray } from 'redux-form';
 import { createSelector } from 'reselect';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column } from 'nav-frontend-grid';
@@ -18,19 +18,21 @@ import {
 import { behandlingFormValueSelector, behandlingForm } from 'behandlingFpsak/behandlingForm';
 import FodselSammenligningPanel from 'behandlingFpsak/components/fodselSammenligning/FodselSammenligningPanel';
 import {
-  required, hasValidDate, minValue, maxValue, hasValidInteger, dateBeforeOrEqualToToday,
+  required,
 } from '@fpsak-frontend/utils';
 import {
-  RadioGroupField, RadioOption, InputField, DatepickerField,
+  RadioGroupField, RadioOption,
 } from '@fpsak-frontend/form';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import antalBarnFieldArray from './AntallBarnFieldArray';
 
 import styles from './SjekkFodselDokForm.less';
 
-const minValue1 = minValue(1);
-const maxValue9 = maxValue(9);
+export const AVKLARTE_BARN_FORM_NAME_PREFIX = 'avklartBarn';
+
+export const avklarteBarnFieldArrayName = 'avklartBarn';
 
 /**
  * FodselInfoPanel
@@ -46,6 +48,7 @@ export const SjekkFodselDokForm = ({
   dirty,
   initialValues,
   submittable,
+  avklartBarn,
 }) => (
   <ElementWrapper>
     <FodselSammenligningPanel />
@@ -87,31 +90,19 @@ export const SjekkFodselDokForm = ({
           <Column xs="6">
             <ArrowBox>
               {<FormattedMessage id="SjekkFodselDokForm.FyllInnDokumenterteOpplysninger" />}
-              <div className={styles.fodselRow}>
-                <Column xs="5" className={styles.datePickerField}>
-                  <DatepickerField
-                    name="fodselsdato"
-                    label={<FormattedMessage id="SjekkFodselDokForm.Fodselsdato" />}
-                    validate={[required, hasValidDate, dateBeforeOrEqualToToday]}
-                    readOnly={readOnly}
-                  />
-                </Column>
-                <Column xs="1" />
-                <Column xs="6">
-                  <InputField
-                    name="antallBarnFodt"
-                    label={<FormattedMessage id="SjekkFodselDokForm.AntallBarnFodt" />}
-                    parse={(value) => {
-                      const parsedValue = parseInt(value, 10);
-                      return Number.isNaN(parsedValue) ? value : parsedValue;
-                    }}
-                    validate={[required, hasValidInteger, minValue1, maxValue9]}
-                    readOnly={readOnly}
-                    bredde="XS"
-                    className={styles.revurderingInput}
-                  />
-                </Column>
-              </div>
+              <FieldArray
+                name={avklarteBarnFieldArrayName}
+                component={antalBarnFieldArray}
+                namePrefix={AVKLARTE_BARN_FORM_NAME_PREFIX}
+                fields={avklartBarn}
+              />
+              <button
+                type="button"
+                label="plus"
+                onClick={() => avklartBarn.push({ fodselsdato: '2001-01-01' })}
+              >
+Button +
+              </button>
             </ArrowBox>
           </Column>
         </div>
@@ -131,6 +122,7 @@ SjekkFodselDokForm.propTypes = {
     kode: PropTypes.string,
     navn: PropTypes.string,
   }),
+  avklartBarn: PropTypes.arrayOf(PropTypes.shape()),
   dokumentasjonForeliggerIsEdited: PropTypes.bool,
   submittable: PropTypes.bool.isRequired,
   ...formPropTypes,
@@ -144,6 +136,7 @@ SjekkFodselDokForm.defaultProps = {
     kode: '',
     navn: '',
   },
+  avklartBarn: [{ fodselsdato: '2001-01-01' }],
 };
 
 export const buildInitialValues = createSelector([getFamiliehendelse, getAksjonspunkter], (familiehendelse, aksjonspunkter) => ({
@@ -153,6 +146,7 @@ export const buildInitialValues = createSelector([getFamiliehendelse, getAksjons
     ? familiehendelse.dokumentasjonForeligger : undefined,
   brukAntallBarnITps: familiehendelse.brukAntallBarnFraTps !== null
     ? familiehendelse.brukAntallBarnFraTps : undefined,
+  avklartBarn: familiehendelse.avklartBarn ? familiehendelse.avklartBarn : [{ fodselsdato: '2001-01-01' }],
   ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL)),
 }));
 
@@ -169,6 +163,7 @@ const transformValues = (values, antallBarnFraSoknad, antallBarnFraTps, fodselIn
   antallBarnFodt: values.dokumentasjonForeligger
     ? getAntallBarn(values.brukAntallBarnITps, values.antallBarnFodt, antallBarnFraSoknad, antallBarnFraTps) : undefined,
   dokumentasjonForeligger: values.dokumentasjonForeligger,
+  uidentifiserteBarn: [{ fodselsdato: '2018-11-29' }, { fodselsdato: '2018-11-29' }],
   brukAntallBarnITps: fodselInfo && !!fodselInfo.length ? values.brukAntallBarnITps : false,
   ...FaktaBegrunnelseTextField.transformValues(values),
 });
