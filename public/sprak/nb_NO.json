@@ -1169,7 +1169,11 @@
   "Beregningsgrunnlag.YtelserFraInfotrygd.Ytelse": "Ytelse",
   "Beregningsgrunnlag.BeregningTable.Dagsats": "Dagsats",
   "Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt": "Vilkåret er <b>ikke</b> oppfylt. Brutto beregningsgrunnlag er under en halv G ({halvG}).",
-
+  "Beregningsgrunnlag.Modal.Tittel": "Søker arbeider delvis i {arbeidsgivere} og fordeling er satt til 0. Vurder om fordelingen er riktig.",
+  "Beregningsgrunnlag.Modal.FordelingErRiktig": "Ja, fordelingen er riktig. Fortsett behandlingen",
+  "Beregningsgrunnlag.Modal.FordelingMåVurderes": "Nei, fordelingen må vurderes på nytt. Behandlingen settes på vent",
+  "Beregningsgrunnlag.Modal.Ok": "Ok",
+  
   "BeregningInfoPanel.Title": "Fakta om beregning",
   "BeregningInfoPanel.VisTabell": "Vis tabell",
   "BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning": "Vurder fakta for beregningen",

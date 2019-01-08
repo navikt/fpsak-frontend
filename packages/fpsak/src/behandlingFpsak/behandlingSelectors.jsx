@@ -178,6 +178,12 @@ export const getGjeldendeBeregningAksjonspunkt = createSelector(
       || ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD
       || ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET),
 );
+
+export const getBeregningGraderingAksjonspunkt = createSelector(
+  [getAksjonspunkter], aksjonspunkter => aksjonspunkter
+    .find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG && isAksjonspunktOpen(ap.status.kode)),
+);
+
 export const getAktivitetStatuser = createSelector(
   [getBeregningsgrunnlag], (beregningsgrunnlag = {}) => (beregningsgrunnlag
     && beregningsgrunnlag.aktivitetStatus ? beregningsgrunnlag.aktivitetStatus : undefined),

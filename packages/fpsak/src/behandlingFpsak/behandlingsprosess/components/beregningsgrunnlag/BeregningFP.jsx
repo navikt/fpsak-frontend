@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
@@ -16,6 +16,7 @@ import {
   getBehandlingGjelderBesteberegning,
   getBeregningsgrunnlag,
   getGjeldendeBeregningAksjonspunkt,
+  getBeregningGraderingAksjonspunkt,
 } from 'behandlingFpsak/behandlingSelectors';
 import beregningsgrunnlagPropType from 'behandlingFelles/proptypes/beregningsgrunnlagPropType';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
@@ -36,6 +37,7 @@ import InntektsopplysningerPanel from './fellesPaneler/InntektsopplysningerPanel
 import SkjeringspunktOgStatusPanel from './fellesPaneler/SkjeringspunktOgStatusPanel';
 import BeregningsgrunnlagForm from './beregningsgrunnlagPanel/BeregningsgrunnlagForm';
 import BeregningsresultatTable from './beregningsresultatPanel/BeregningsresultatTable';
+import GraderingUtenBGModal from './modal/GraderingUtenBGModal';
 
 const {
   FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
@@ -70,55 +72,99 @@ const findSammenligningsgrunnlagTekst = (relevanteStatuser) => {
   return tekster;
 };
 
+const arbfor = [
+  {
+    navn: 'Andeby Bank',
+  },
+  {
+    navn: 'Andeby Kino',
+  },
+];
+
+const visningForManglendeBG = () => (
+  <FadingPanel>
+    <Undertittel>
+      <FormattedMessage id="Beregningsgrunnlag.Title" />
+    </Undertittel>
+    <VerticalSpacer eightPx />
+    <Row>
+      <Column xs="6">
+        <FormattedMessage id="Beregningsgrunnlag.HarIkkeBeregningsregler" />
+      </Column>
+    </Row>
+    <Row>
+      <Column xs="6">
+        <FormattedMessage id="Beregningsgrunnlag.SakTilInfo" />
+      </Column>
+    </Row>
+  </FadingPanel>
+);
+
 /**
  * BeregningFP
  *
  * Presentasjonskomponent. Holder på alle komponenter relatert til beregning av foreldrepenger.
  * Finner det gjeldende aksjonspunktet hvis vi har et.
  */
-export const BeregningFPImpl = ({
-  readOnly,
-  submitCallback,
-  berGr,
-  beregnetAarsinntekt,
-  sammenligningsgrunnlag,
-  beregnetAvvikPromille,
-  gjeldendeVilkar,
-  gjeldendeAksjonspunkt,
-  relevanteStatuser,
-  readOnlySubmitButton,
-}) => {
-  let avvikProsent;
-  if (beregnetAvvikPromille !== undefined && beregnetAvvikPromille !== null) {
-    avvikProsent = beregnetAvvikPromille / 10;
+export class BeregningFPImpl extends Component {
+  constructor() {
+    super();
+    this.handleModalCallback = this.handleModalCallback.bind(this);
+    this.state = {
+      showModal: false,
+    };
   }
-  if (!berGr) {
+
+  componentDidMount() {
+    const { sokerHarGraderingPaaAndelUtenBG } = this.props;
+    if (sokerHarGraderingPaaAndelUtenBG) {
+      this.setState({
+        showModal: true,
+      });
+    }
+  }
+
+  handleModalCallback(values) {
+    const { submitCallback } = this.props;
+    submitCallback([GraderingUtenBGModal.transformValues(values)]).then(() => {
+      this.setState({
+        showModal: false,
+      });
+    });
+  }
+
+  render() {
+    const {
+      props: {
+        readOnly,
+        submitCallback,
+        berGr,
+        beregnetAarsinntekt,
+        sammenligningsgrunnlag,
+        beregnetAvvikPromille,
+        gjeldendeVilkar,
+        gjeldendeAksjonspunkt,
+        relevanteStatuser,
+        readOnlySubmitButton,
+      },
+      state: {
+        showModal,
+      },
+    } = this;
+    let avvikProsent;
+    if (beregnetAvvikPromille !== undefined && beregnetAvvikPromille !== null) {
+      avvikProsent = beregnetAvvikPromille / 10;
+    }
+    if (!berGr) {
+      return visningForManglendeBG();
+    }
     return (
       <FadingPanel>
         <Undertittel>
           <FormattedMessage id="Beregningsgrunnlag.Title" />
         </Undertittel>
         <VerticalSpacer eightPx />
-        <Row>
-          <Column xs="6">
-            <FormattedMessage id="Beregningsgrunnlag.HarIkkeBeregningsregler" />
-          </Column>
-        </Row>
-        <Row>
-          <Column xs="6">
-            <FormattedMessage id="Beregningsgrunnlag.SakTilInfo" />
-          </Column>
-        </Row>
-      </FadingPanel>
-    );
-  }
-  return (
-    <FadingPanel>
-      <Undertittel>
-        <FormattedMessage id="Beregningsgrunnlag.Title" />
-      </Undertittel>
-      <VerticalSpacer eightPx />
-      { gjeldendeAksjonspunkt
+        { gjeldendeAksjonspunkt
         && (
           <ElementWrapper>
             <AksjonspunktHelpText isAksjonspunktOpen={isAksjonspunktOpen(gjeldendeAksjonspunkt.status.kode)}>
@@ -128,20 +174,20 @@ export const BeregningFPImpl = ({
           </ElementWrapper>
         )
         }
-      <Row>
-        <Column xs="6">
-          <InntektsopplysningerPanel
-            beregnetAarsinntekt={beregnetAarsinntekt}
-            sammenligningsgrunnlag={sammenligningsgrunnlag}
-            sammenligningsgrunnlagTekst={findSammenligningsgrunnlagTekst(relevanteStatuser)}
-            avvik={avvikProsent}
-          />
-        </Column>
-        <Column xs="6">
-          <SkjeringspunktOgStatusPanel />
-        </Column>
-      </Row>
-      { relevanteStatuser.skalViseBeregningsgrunnlag
+        <Row>
+          <Column xs="6">
+            <InntektsopplysningerPanel
+              beregnetAarsinntekt={beregnetAarsinntekt}
+              sammenligningsgrunnlag={sammenligningsgrunnlag}
+              sammenligningsgrunnlagTekst={findSammenligningsgrunnlagTekst(relevanteStatuser)}
+              avvik={avvikProsent}
+            />
+          </Column>
+          <Column xs="6">
+            <SkjeringspunktOgStatusPanel />
+          </Column>
+        </Row>
+        { relevanteStatuser.skalViseBeregningsgrunnlag
         && (
           <BeregningsgrunnlagForm
             relevanteStatuser={relevanteStatuser}
@@ -152,7 +198,7 @@ export const BeregningFPImpl = ({
           />
         )
         }
-      { gjeldendeVilkar && gjeldendeVilkar.vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT
+        { gjeldendeVilkar && gjeldendeVilkar.vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT
         && (
           <BeregningsresultatTable
             halvGVerdi={berGr.halvG}
@@ -164,9 +210,16 @@ export const BeregningFPImpl = ({
           />
         )
         }
-    </FadingPanel>
-  );
-};
+        <GraderingUtenBGModal
+          showModal={showModal}
+          closeEvent={undefined}
+          arbeidsforhold={arbfor}
+          handleSubmit={this.state.handleModalCallback}
+        />
+      </FadingPanel>
+    );
+  }
+}
 
 BeregningFPImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
@@ -179,6 +232,7 @@ BeregningFPImpl.propTypes = {
   gjeldendeVilkar: PropTypes.shape(),
   relevanteStatuser: PropTypes.shape().isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
+  sokerHarGraderingPaaAndelUtenBG: PropTypes.bool,
 };
 
 BeregningFPImpl.defaultProps = {
@@ -188,6 +242,7 @@ BeregningFPImpl.defaultProps = {
   sammenligningsgrunnlag: undefined,
   beregnetAvvikPromille: undefined,
   gjeldendeAksjonspunkt: undefined,
+  sokerHarGraderingPaaAndelUtenBG: false,
 };
 
 const bestemGjeldendeStatuser = createSelector([getAktivitetStatuser], aktivitetStatuser => ({
@@ -224,14 +279,14 @@ const getBeregnetAarsinntekt = createSelector(
 
 const buildProps = createSelector(
   [getBeregningsgrunnlag, getSelectedBehandlingspunktVilkar, bestemGjeldendeStatuser,
-    getGjeldendeBeregningAksjonspunkt, getBeregnetAarsinntekt],
-  (berGr, gjeldendeVilkar, relevanteStatuser, gjeldendeAksjonspunkt, beregnetAarsinntekt) => {
+    getGjeldendeBeregningAksjonspunkt, getBeregnetAarsinntekt, getBeregningGraderingAksjonspunkt],
+  (berGr, gjeldendeVilkar, relevanteStatuser, gjeldendeAksjonspunkt, beregnetAarsinntekt, graderingAP) => {
     if (!berGr) {
       return {};
     }
     const sammenligningsgrunnlag = berGr.sammenligningsgrunnlag ? berGr.sammenligningsgrunnlag.rapportertPrAar : undefined;
     const beregnetAvvikPromille = berGr.sammenligningsgrunnlag ? berGr.sammenligningsgrunnlag.avvikPromille : undefined;
-
+    const sokerHarGraderingPaaAndelUtenBG = !!graderingAP;
     return {
       gjeldendeVilkar: gjeldendeVilkar.length > 0 ? gjeldendeVilkar[0] : undefined,
       gjeldendeAksjonspunkt,
@@ -240,6 +295,7 @@ const buildProps = createSelector(
       sammenligningsgrunnlag,
       beregnetAvvikPromille,
       relevanteStatuser,
+      sokerHarGraderingPaaAndelUtenBG,
     };
   },
 );
@@ -248,8 +304,7 @@ const mapStateToProps = state => ({
   ...buildProps(state),
 });
 
+BeregningFPImpl.supports = bp => bp === behandlingspunktCodes.BEREGNINGSGRUNNLAG;
+
 const BeregningFP = connect(mapStateToProps)(injectIntl(BeregningFPImpl));
-
-BeregningFP.supports = bp => bp === behandlingspunktCodes.BEREGNINGSGRUNNLAG;
-
 export default BeregningFP;
