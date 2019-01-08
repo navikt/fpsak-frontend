@@ -1838,6 +1838,8 @@
   "UttakInfoPanel.AnnenForelderHarIkkeRett": "Annen forelder har ikke rett",
 
 
+  "UttakPeriode.ManglerInfoUtsettelse": "Inntektsmeldingen mangler info om utsettelse",
+  "UttakPeriode.AvvikUtsettelse": "Info om utsettelse avviker fra inntektsmelding",
   "StartdatoForForeldrepengerperiodenForm.StartdatoEtterArbeidsgiverdato": "Startdato kan ikke være etter datoen som arbeidsgiver opplyser",
   "StartdatoForForeldrepengerperiodenForm.PeriodenAvviker": "Startdato for foreldrepengeperioden avviker. Fastsett korrekt startdato",
   "StartdatoForForeldrepengerperiodenForm.StartdatoForPerioden": "Startdato for foreldrepengeperioden",

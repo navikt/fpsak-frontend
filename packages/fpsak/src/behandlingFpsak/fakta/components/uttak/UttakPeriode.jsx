@@ -60,6 +60,31 @@ const getClassName = (periode, readOnly) => {
 const avvikGradering = periode => periode.arbeidstidsprosent !== undefined
   && periode.arbeidstidsprosent !== null && !periode.bekreftet;
 
+const renderAvvikTekst = (periode, inntektsmeldingInfo) => {
+  let avvikTekst = '';
+  if (periode.bekreftet) {
+    return avvikTekst;
+  }
+  inntektsmeldingInfo.forEach((innmldInfo) => {
+    const manglerInfoInntektsmelding = periode.utsettelseÅrsak.kode !== '-' && innmldInfo.utsettelsePerioder.length === 0;
+    if (manglerInfoInntektsmelding) {
+      avvikTekst = <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.ManglerInfoUtsettelse" /></Element>;
+    }
+    if (innmldInfo.utsettelsePerioder.length > 0) {
+      innmldInfo.utsettelsePerioder.forEach((inntektP) => {
+        const periodeHarUtsettelse = periode.utsettelseÅrsak.kode !== '-';
+        const avvikPeriode = inntektP.fom !== periode.fraDato || inntektP.tom !== periode.tilDato;
+        const avvikUtsettelseKode = inntektP.utsettelseArsak.kode !== periode.utsettelseÅrsak.kode;
+        if ((avvikUtsettelseKode || avvikPeriode) && periodeHarUtsettelse) {
+          avvikTekst = <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikUtsettelse" /></Element>;
+        }
+      });
+    }
+  });
+
+  return avvikTekst;
+};
+
 const UttakPeriode = ({
   fields,
   openSlettPeriodeModalCallback,
@@ -85,6 +110,7 @@ const UttakPeriode = ({
         return (
           <div key={fieldId}>
             {avvikGradering(periode) && <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikGradering" /></Element>}
+            {renderAvvikTekst(periode, inntektsmeldingInfo[index])}
             <FlexRow key={fieldId}>
               <FlexColumn className={styles.fullWidth}>
                 {index === 0 && harEndringsDatoSomErFørFørsteUttaksPeriode && renderTomPeriode()}
