@@ -11,6 +11,7 @@ import {
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { getOpenInfoPanels } from '../duck';
 import PersonInfoPanel from './person/PersonInfoPanel';
+import FeilutbetalingInfoPanel from './feilutbetaling/FeilutbetalingInfoPanel';
 
 import styles from './tilbakekrevingFaktaPanel.less';
 
@@ -47,6 +48,14 @@ export const TilbakekrevingFaktaPanel = ({ // NOSONAR Kompleksitet er høg, men 
       {!personopplysninger
       && <PersonIndex medPanel />
       }
+      <FeilutbetalingInfoPanel
+        aksjonspunkter={aksjonspunkter}
+        submitCallback={submitCallback}
+        openInfoPanels={openInfoPanels}
+        toggleInfoPanelCallback={toggleInfoPanelCallback}
+        shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+        readOnly={readOnly}
+      />
     </div>
     <div className={styles.container} />
   </ElementWrapper>

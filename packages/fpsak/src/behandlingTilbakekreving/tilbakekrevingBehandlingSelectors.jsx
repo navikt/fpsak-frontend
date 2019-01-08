@@ -56,6 +56,9 @@ export const getBehandlingArbeidsforhold = createSelector(
   [getBehandlingInntektArbeidYtelse], (inntektArbeidYtelse = {}) => inntektArbeidYtelse.arbeidsforhold,
 );
 
+// FEILUTBETALING
+export const getFeilutbetalingFakta = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.feilutbetalingFakta);
+
 // SPRÅK
 export const getBehandlingSprak = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.sprakkode);
 
