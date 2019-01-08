@@ -112,6 +112,10 @@ export const getUttakPerioder = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['uttak-kontroller-fakta-perioder']
     ? selectedBehandling['uttak-kontroller-fakta-perioder'].perioder.sort((a, b) => a.fom.localeCompare(b.fom)) : undefined),
 );
+export const getFaktaArbeidsforhold = createSelector(
+  [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['fakta-arbeidsforhold']
+    ? selectedBehandling['fakta-arbeidsforhold'] : undefined),
+);
 export const getHenleggArsaker = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['henlegg-arsaker']));
 export const getHaveSentVarsel = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['sendt-varsel-om-revurdering']));
 export const getTotrinnskontrollArsaker = createSelector(
