@@ -16,10 +16,8 @@ import styles from '../uttakPeriode.less';
 
 const classNames = classnames.bind(styles);
 
-const ElementWrapper = ({ children }) => children;
-
 const renderAvvikContentGraderingFraSøknad = () => (
-  <ElementWrapper key={guid()}>
+  <React.Fragment key={guid()}>
     <VerticalSpacer eightPx />
     <FlexRow>
       <FlexColumn>
@@ -34,14 +32,14 @@ const renderAvvikContentGraderingFraSøknad = () => (
         </Normaltekst>
       </FlexColumn>
     </FlexRow>
-  </ElementWrapper>
+  </React.Fragment>
 );
 
 const renderAvvikContent = (periode, fom, tom, isGradering, avvikArbeidsprosent, avvikPeriode) => {
   const numberOfDaysAndWeeks = calcDaysAndWeeks(fom, tom, 'YYYY-MM-DD');
   const tidenesEnde = tom === TIDENES_ENDE;
   return (
-    <ElementWrapper key={guid()}>
+    <React.Fragment key={guid()}>
       <VerticalSpacer eightPx />
       <FlexRow>
         <FlexColumn>
@@ -76,19 +74,19 @@ const renderAvvikContent = (periode, fom, tom, isGradering, avvikArbeidsprosent,
           </Undertekst>
           {isGradering
           && (
-          <ElementWrapper>
+          <React.Fragment>
             <VerticalSpacer eightPx />
             <Normaltekst><FormattedMessage id="UttakInfoPanel.AndelIArbeid" /></Normaltekst>
             <Undertekst className={classNames('avvik', { hasAvvik: avvikArbeidsprosent })}>
               {periode.arbeidsprosent}
 %
             </Undertekst>
-          </ElementWrapper>
+          </React.Fragment>
           )
         }
         </FlexColumn>
       </FlexRow>
-    </ElementWrapper>
+    </React.Fragment>
   );
 };
 
@@ -122,7 +120,7 @@ export const InntektsmeldingInfo = ({
   return (
     <div>
       {shouldRenderAvvik && (
-      <ElementWrapper>
+      <React.Fragment>
         <Undertekst><FormattedMessage id="UttakInfoPanel.AvvikiInntektsmelding" /></Undertekst>
         <VerticalSpacer eightPx />
         {inntektsmeldingInfo.map((innmldInfo) => {
@@ -130,39 +128,39 @@ export const InntektsmeldingInfo = ({
           const avvikArbeidforhold = innmldInfo.arbeidsgiver !== arbeidsgiver || {}.navn || innmldInfo.arbeidsgiverOrgnr !== arbeidsgiver || {}.identifikator;
           return (
             renderContent.length > 0 && (
-              <ElementWrapper key={guid()}>
+              <React.Fragment key={guid()}>
                 <Element className={classNames('avvik', { hasAvvik: avvikArbeidforhold })}>
                   {`${innmldInfo.arbeidsgiver} ${innmldInfo.arbeidsgiverOrgnr}`}
                 </Element>
                 {renderContent}
                 <VerticalSpacer twentyPx />
-              </ElementWrapper>
+              </React.Fragment>
             ));
         })}
-      </ElementWrapper>
+      </React.Fragment>
       )}
       {!shouldRenderAvvik && manglerGraderingFraInntektsmelding && (
-        <ElementWrapper>
+        <React.Fragment>
           <Undertekst><FormattedMessage id="UttakInfoPanel.AvvikiInntektsmelding" /></Undertekst>
           <VerticalSpacer eightPx />
           {inntektsmeldingInfo.map((innmldInfo) => {
             const avvikArbeidforhold = innmldInfo.arbeidsgiver !== (arbeidsgiver || {}).navn
-              || innmldInfo.arbeidsgiverOrgnr !== arbeidsgiver || {}.identifikator;
+              || innmldInfo.arbeidsgiverOrgnr !== (arbeidsgiver || {}).identifikator;
             const arbeidsProsentFraInnteksmelding = innmldInfo.arbeidsProsentFraInntektsmelding !== arbeidsprosentFraSøknad;
             if (avvikArbeidforhold || arbeidsProsentFraInnteksmelding) {
               return (
-                <ElementWrapper key={guid()}>
+                <React.Fragment key={guid()}>
                   <Element className={classNames('avvik', { hasAvvik: avvikArbeidforhold })}>
                     {`${innmldInfo.arbeidsgiver} ${innmldInfo.arbeidsgiverOrgnr}`}
                   </Element>
                   {renderAvvikContentGraderingFraSøknad()}
                   <VerticalSpacer twentyPx />
-                </ElementWrapper>
+                </React.Fragment>
               );
             }
             return null;
           })}
-        </ElementWrapper>
+        </React.Fragment>
       )}
     </div>
   );
