@@ -65,22 +65,24 @@ const renderAvvikTekst = (periode, inntektsmeldingInfo) => {
   if (periode.bekreftet) {
     return avvikTekst;
   }
-  inntektsmeldingInfo.forEach((innmldInfo) => {
-    const manglerInfoInntektsmelding = periode.utsettelseÅrsak.kode !== '-' && innmldInfo.utsettelsePerioder.length === 0;
-    if (manglerInfoInntektsmelding) {
-      avvikTekst = <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.ManglerInfoUtsettelse" /></Element>;
-    }
-    if (innmldInfo.utsettelsePerioder.length > 0) {
-      innmldInfo.utsettelsePerioder.forEach((inntektP) => {
-        const periodeHarUtsettelse = periode.utsettelseÅrsak.kode !== '-';
-        const avvikPeriode = inntektP.fom !== periode.fraDato || inntektP.tom !== periode.tilDato;
-        const avvikUtsettelseKode = inntektP.utsettelseArsak.kode !== periode.utsettelseÅrsak.kode;
-        if ((avvikUtsettelseKode || avvikPeriode) && periodeHarUtsettelse) {
-          avvikTekst = <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikUtsettelse" /></Element>;
-        }
-      });
-    }
-  });
+  if (inntektsmeldingInfo && inntektsmeldingInfo.length > 0) {
+    inntektsmeldingInfo.forEach((innmldInfo) => {
+      const manglerInfoInntektsmelding = periode.utsettelseÅrsak.kode !== '-' && innmldInfo.utsettelsePerioder.length === 0;
+      if (manglerInfoInntektsmelding) {
+        avvikTekst = <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.ManglerInfoUtsettelse" /></Element>;
+      }
+      if (innmldInfo.utsettelsePerioder.length > 0) {
+        innmldInfo.utsettelsePerioder.forEach((inntektP) => {
+          const periodeHarUtsettelse = periode.utsettelseÅrsak.kode !== '-';
+          const avvikPeriode = inntektP.fom !== periode.fraDato || inntektP.tom !== periode.tilDato;
+          const avvikUtsettelseKode = inntektP.utsettelseArsak.kode !== periode.utsettelseÅrsak.kode;
+          if ((avvikUtsettelseKode || avvikPeriode) && periodeHarUtsettelse) {
+            avvikTekst = <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikUtsettelse" /></Element>;
+          }
+        });
+      }
+    });
+  }
 
   return avvikTekst;
 };
