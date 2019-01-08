@@ -99,7 +99,7 @@ const config = {
     }),
     new CopyWebpackPlugin([{
       from: LANG_DIR,
-      to: 'fpsak/sprak/[name].[ext]',
+      to: 'sprak/[name].[ext]',
       force: true,
       cache: {
         key: '[hash]'

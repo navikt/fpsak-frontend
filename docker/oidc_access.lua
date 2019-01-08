@@ -1,7 +1,12 @@
+local cookie_secure = "secure; "
 if ngx.var.host == "localhost" then
     ngx.var.app_baseurl = "http://localhost:" .. ngx.var.server_port
     local openidc = require("resty.openidc")
-    openidc.set_logging(nil, { DEBUG = ngx.INFO } )
+    openidc.set_logging(nil, { DEBUG = ngx.INFO })
+    ngx.var.session_cookie_secure = "off"
+    cookie_secure = ""
+else
+    ngx.var.session_cookie_secure = "on"
 end
 
 local opts = {
@@ -14,9 +19,12 @@ local opts = {
     discovery = ngx.var.oidc_host_url .. "/oauth2/.well-known/openid-configuration",
     access_token_expires_leeway = 240,
     renew_access_token_on_expiry = true,
+    auth_accept_token_as = "cookie:ID_token",
     session_contents = {
-        access_token = true,
-        enc_id_token = true
+        id_token = true,
+        enc_id_token = true,
+        user = true,
+        access_token = true
     }
 }
 
@@ -25,6 +33,11 @@ if not ngx.req.get_headers()["Authorization"] then
     local session = require("resty.session").start()
     if ngx.var.cookie_ADRUM and ngx.var.cookie_ADRUM ~= session.data.ADRUM then
         session.data.ADRUM = ngx.var.cookie_ADRUM
+    end
+
+    -- syncing cookie from request
+    if ngx.var.cookie_ID_token and ngx.var.cookie_ID_token ~= session.data.enc_id_token then
+        session.data.enc_id_token = ngx.var.cookie_ID_token
     end
 
     local unauth_action
@@ -46,8 +59,12 @@ if not ngx.req.get_headers()["Authorization"] then
         return ngx.redirect(ngx.var.app_path_prefix)
     end
 
+    -- syncing cookie from auth.
+    if session.data.enc_id_token and ngx.var.cookie_ID_token ~= session.data.enc_id_token then
+        ngx.header['Set-Cookie'] = 'ID_token=' .. session.data.enc_id_token .. '; ' .. cookie_secure .. 'path=/; SameSite=Lax; HttpOnly'
+    end
 
-    -- creating the proxy cookie string
+        -- creating the proxy cookie string
     local proxy_cookie = {}
     -- adding ADRUM cookie from session if existing
     if session.data.ADRUM then
