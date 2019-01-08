@@ -161,6 +161,8 @@ const getTextForKlage = (klagebehandlingVurdering, behandlingStaus) => {
   return null;
 };
 
+const buildAvklarAnnenForelderText = () => <FormattedMessage id="ToTrinnsForm.AvklarUttak.AnnenForelderHarRett" />;
+
 const erKlageAksjonspunkt = aksjonspunkt => aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP
   || aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.BEHANDLE_KLAGE_NK
   || aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP
@@ -180,6 +182,10 @@ export const getAksjonspunktTextSelector = createSelector(
     }
     if (isUttakAksjonspunkt(aksjonspunkt.aksjonspunktKode) && aksjonspunkt.uttakPerioder && aksjonspunkt.uttakPerioder.length > 0) {
       return buildUttakText(aksjonspunkt);
+    }
+
+    if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT) {
+      return [buildAvklarAnnenForelderText()];
     }
     if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD) {
       return getTextForForeldreansvarsvilkåretAndreLedd(isForeldrepenger);

@@ -1358,7 +1358,7 @@
   "ToTrinnsForm.Medlemskap.VurderGyldigMedlemskap": "Det er vurdert om søker har gyldig medlemskap i perioden.",
   "ToTrinnsForm.Medlemskap.FastsettStartdato": "Startdato er endret.",
   "ToTrinnsForm.Medlemskap.VilkarOverstyrt": "Medlemskapsvilkåret er overstyrt.",
-
+  "ToTrinnsForm.AvklarUttak.AnnenForelderHarRett": "Det er vurdert om annen forelder har rett til foreldrepenger",
   "ToTrinnsForm.AvklarUttak.PeriodeLagtTil": "Perioden {a} til {b} er lagt til.",
   "ToTrinnsForm.AvklarUttak.PeriodeSlettet": "Perioden {a} til {b} er slettet.",
   "ToTrinnsForm.AvklarUttak.PeriodeAvklart": "Perioden {a} til {b} er avklart.",
