@@ -58,22 +58,26 @@ const getClassName = (periode, readOnly) => {
   return classNames('periodeContainer', { active: !periode.bekreftet && !readOnly });
 };
 
-const avvikGradering = periode => periode.arbeidstidsprosent !== undefined
-  && periode.arbeidstidsprosent !== null && !periode.bekreftet;
-
-const avvikUtsettelse = (periode, inntektsmeldingInfo) => {
+const avvikInntekstmeldInfo = (periode, inntektsmeldingInfo) => {
   let avvikTekst = '';
   if (periode.bekreftet) {
     return avvikTekst;
   }
   if (inntektsmeldingInfo && inntektsmeldingInfo.length > 0) {
     inntektsmeldingInfo.forEach((innmldInfo) => {
-      const manglerInfoInntektsmelding = periode.utsettelseÅrsak.kode !== '-' && innmldInfo.utsettelsePerioder.length === 0;
-      if (manglerInfoInntektsmelding) {
+      const manglerUtsettelseInntektsmelding = periode.utsettelseÅrsak.kode !== '-' && innmldInfo.utsettelsePerioder.length === 0;
+      const harGraderingPeriode = periode.arbeidstidsprosent !== undefined && periode.arbeidstidsprosent !== null;
+      const manglerGraderingInntektsmelding = harGraderingPeriode && innmldInfo.graderingPerioder.length === 0;
+      if (manglerUtsettelseInntektsmelding) {
         avvikTekst = (
           <Element className={styles.avvikInfoMargin}>
             <FormattedMessage id="UttakPeriode.ManglerInfoUtsettelse" values={{ årsak: utsettelseArsakTexts[periode.utsettelseÅrsak.kode].toLowerCase() }} />
           </Element>
+        );
+      }
+      if (manglerGraderingInntektsmelding) {
+        avvikTekst = (
+          <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikGradering" /></Element>
         );
       }
       if (innmldInfo.utsettelsePerioder.length > 0) {
@@ -85,6 +89,11 @@ const avvikUtsettelse = (periode, inntektsmeldingInfo) => {
             avvikTekst = <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikUtsettelse" /></Element>;
           }
         });
+      }
+      if (innmldInfo.graderingPerioder.length > 0) {
+        if (harGraderingPeriode && innmldInfo.arbeidsProsentFraInntektsmelding !== periode.arbeidstidsprosent) {
+          avvikTekst = <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikGraderingProsent" /></Element>;
+        }
       }
     });
   }
@@ -116,8 +125,7 @@ const UttakPeriode = ({
         const harEndringsDatoSomErFørFørsteUttaksPeriode = førsteUttaksDato ? moment(periode.fom).isAfter(førsteUttaksDato) : false;
         return (
           <div key={fieldId}>
-            {avvikGradering(periode) && <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikGradering" /></Element>}
-            {avvikUtsettelse(periode, inntektsmeldingInfo[index])}
+            {avvikInntekstmeldInfo(periode, inntektsmeldingInfo[index])}
             <FlexRow key={fieldId}>
               <FlexColumn className={styles.fullWidth}>
                 {index === 0 && harEndringsDatoSomErFørFørsteUttaksPeriode && renderTomPeriode()}
