@@ -4,6 +4,7 @@ import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils';
 import aksjonspunktCodes, {
   isInnhentSaksopplysningerAksjonspunkt,
   isVilkarForSykdomOppfylt,
+  isBeregningAksjonspunkt,
 } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -91,6 +92,7 @@ export const getBehandlingUttaksperiodegrense = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling['uttak-periode-grense'],
 );
 export const getBehandlingYtelseFordeling = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.ytelsefordeling);
+export const getGjeldendeDekningsgrad = createSelector([getBehandlingYtelseFordeling], (ytelsesfordeling = {}) => ytelsesfordeling.gjeldendeDekningsgrad);
 export const getBehandlingToTrinnsBehandling = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.toTrinnsBehandling);
 export const getBehandlingResultatstruktur = createSelector(
   [isForeldrepengerFagsak, getSelectedBehandling], (isForeldrepenger, selectedBehandling = {}) => (isForeldrepenger
@@ -174,13 +176,8 @@ export const isKlageBehandlingInKA = createSelector(
 export const getBeregningsgrunnlag = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling.beregningsgrunnlag ? selectedBehandling.beregningsgrunnlag : undefined),
 );
-// Vi vil alltid ha max ÉN av disse aksjonspunktene samtidig
-export const getGjeldendeBeregningAksjonspunkt = createSelector(
-  [getAksjonspunkter], aksjonspunkter => aksjonspunkter
-    .find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE
-      || ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS
-      || ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD
-      || ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET),
+export const getGjeldendeBeregningAksjonspunkter = createSelector(
+  [getAksjonspunkter], aksjonspunkter => aksjonspunkter.filter(ap => isBeregningAksjonspunkt(ap.definisjon.kode)),
 );
 
 export const getBeregningGraderingAksjonspunkt = createSelector(

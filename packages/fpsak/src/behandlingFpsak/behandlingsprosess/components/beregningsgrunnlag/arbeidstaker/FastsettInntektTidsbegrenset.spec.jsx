@@ -426,37 +426,37 @@ describe('<FastsettInntektTidsbegrenset>', () => {
   });
 
   it('Skal teste at selector henter ut om aksjonspunktet er lukket eller ikke', () => {
-    const korrektApLukket = {
+    const korrektApLukket = [{
       definisjon: {
         kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
       },
       status: {
         kode: aksjonspunktStatus.UTFORT,
       },
-    };
-    const korrektApApent = {
+    }];
+    const korrektApApent = [{
       definisjon: {
         kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
       },
       status: {
         kode: aksjonspunktStatus.OPPRETTET,
       },
-    };
+    }];
     const selectorDataLukket = getIsAksjonspunktClosed.resultFunc(korrektApLukket);
     expect(selectorDataLukket).to.equal(true);
     const selectorDataApent = getIsAksjonspunktClosed.resultFunc(korrektApApent);
     expect(selectorDataApent).to.equal(false);
   });
 
-  it('Skal teste at selector lager korrekte tableheaders', () => {
-    const korrektApApent = {
+  it('Skal teste at selector lager korrekte tableheaders med fastsett bg AP', () => {
+    const korrektApApent = [{
       definisjon: {
         kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
       },
       status: {
         kode: aksjonspunktStatus.OPPRETTET,
       },
-    };
+    }];
     const selectorHeaders = getTableHeaderData.resultFunc(beregningsgrunnlagPerioder, korrektApApent);
     expect(selectorHeaders).to.have.length(5);
     expect(selectorHeaders[0].props.id).to.eql('Beregningsgrunnlag.AarsinntektPanel.Arbeidsgiver');
@@ -467,20 +467,53 @@ describe('<FastsettInntektTidsbegrenset>', () => {
     expect(selectorHeaders[4].props.values).to.eql({ fom: '01.08.2018', tom: '' });
   });
 
+  it('Skal teste at selector lager korrekte tableheaders uten fastsett bg AP ', () => {
+    const korrektApApent = [{
+      definisjon: {
+        kode: aksjonspunktCodes.VURDER_DEKNINGSGRAD,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+    }];
+    const selectorHeaders = getTableHeaderData.resultFunc(beregningsgrunnlagPerioder, korrektApApent);
+    expect(selectorHeaders).to.have.length(4);
+    expect(selectorHeaders[0].props.id).to.eql('Beregningsgrunnlag.AarsinntektPanel.Arbeidsgiver');
+    expect(selectorHeaders[1].props.id).to.eql('Beregningsgrunnlag.AarsinntektPanel.FastsattInntektPeriode');
+    expect(selectorHeaders[2].props.id).to.eql('Beregningsgrunnlag.AarsinntektPanel.FastsattInntektPeriode');
+    expect(selectorHeaders[3].props.id).to.eql('Beregningsgrunnlag.AarsinntektPanel.FastsattInntektPeriode');
+    expect(selectorHeaders[1].props.values).to.eql({ fom: '01.06.2018', tom: '30.06.2018' });
+    expect(selectorHeaders[2].props.values).to.eql({ fom: '01.07.2018', tom: '31.07.2018' });
+    expect(selectorHeaders[3].props.values).to.eql({ fom: '01.08.2018', tom: '' });
+  });
+
+  it('Skal teste at selector lager korrekte tableheaders når AP er undefined ', () => {
+    const korrektApApent = undefined;
+    const selectorHeaders = getTableHeaderData.resultFunc(beregningsgrunnlagPerioder, korrektApApent);
+    expect(selectorHeaders).to.have.length(4);
+    expect(selectorHeaders[0].props.id).to.eql('Beregningsgrunnlag.AarsinntektPanel.Arbeidsgiver');
+    expect(selectorHeaders[1].props.id).to.eql('Beregningsgrunnlag.AarsinntektPanel.FastsattInntektPeriode');
+    expect(selectorHeaders[2].props.id).to.eql('Beregningsgrunnlag.AarsinntektPanel.FastsattInntektPeriode');
+    expect(selectorHeaders[3].props.id).to.eql('Beregningsgrunnlag.AarsinntektPanel.FastsattInntektPeriode');
+    expect(selectorHeaders[1].props.values).to.eql({ fom: '01.06.2018', tom: '30.06.2018' });
+    expect(selectorHeaders[2].props.values).to.eql({ fom: '01.07.2018', tom: '31.07.2018' });
+    expect(selectorHeaders[3].props.values).to.eql({ fom: '01.08.2018', tom: '' });
+  });
+
   const keyForPeriodeOgAndel = (periodeNr, andelNr) => createInputFieldKey(
     beregningsgrunnlagPerioder[periodeNr].beregningsgrunnlagPrStatusOgAndel[andelNr],
     beregningsgrunnlagPerioder[periodeNr],
   );
 
   it('Skal teste at selector finner oppsummert inntekt for hver periode når vi har AP', () => {
-    const korrektApApent = {
+    const korrektApApent = [{
       definisjon: {
         kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
       },
       status: {
         kode: aksjonspunktStatus.OPPRETTET,
       },
-    };
+    }];
     const formValues = {};
 
     // Første periode

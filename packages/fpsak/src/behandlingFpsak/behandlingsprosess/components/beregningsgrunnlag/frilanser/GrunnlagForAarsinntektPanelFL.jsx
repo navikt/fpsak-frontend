@@ -16,13 +16,15 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import styles from './grunnlagForAarsinntektPanelFL.less';
 
-const hasFrilansAksjonspunkt = aksjonspunkt => (aksjonspunkt
-    && (aksjonspunkt.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS
-    || aksjonspunkt.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD));
+const finnFrilansAksjonspunkt = aksjonspunkter => !!aksjonspunkter && aksjonspunkter.find(
+  ap => ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS
+  || ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+);
 
-const isFrilansAksjonspunktClosed = aksjonspunkt => (hasFrilansAksjonspunkt(aksjonspunkt)
-  ? !isAksjonspunktOpen(aksjonspunkt.status.kode)
-  : false);
+const isFrilansAksjonspunktClosed = (aksjonspunkter) => {
+  const aksjonspunkt = finnFrilansAksjonspunkt(aksjonspunkter);
+  return aksjonspunkt ? !isAksjonspunktOpen(aksjonspunkt.status.kode) : false;
+};
 
 /**
  * GrunnlagForAarsinntektPanelFL
@@ -34,7 +36,7 @@ const isFrilansAksjonspunktClosed = aksjonspunkt => (hasFrilansAksjonspunkt(aksj
 export const GrunnlagForAarsinntektPanelFL = ({
   readOnly,
   alleAndeler,
-  aksjonspunkt,
+  aksjonspunkter,
   isKombinasjonsstatus,
 }) => {
   const relevanteAndeler = alleAndeler.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
@@ -53,7 +55,7 @@ export const GrunnlagForAarsinntektPanelFL = ({
         <Column xs="4">
           <Normaltekst><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Frilansinntekt" /></Normaltekst>
         </Column>
-        { hasFrilansAksjonspunkt(aksjonspunkt)
+        { finnFrilansAksjonspunkt(aksjonspunkter)
         && (
         <Column xs="4">
           <Normaltekst><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.FastsattFrilans" /></Normaltekst>
@@ -65,13 +67,13 @@ export const GrunnlagForAarsinntektPanelFL = ({
         <Column xs="4">
           <Element>{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
         </Column>
-        { hasFrilansAksjonspunkt(aksjonspunkt)
+        { finnFrilansAksjonspunkt(aksjonspunkter)
         && (
         <Column xs="4" className={styles.rightAlignInput}>
           <InputField
             name="inntektFrilanser"
             bredde="S"
-            isEdited={isFrilansAksjonspunktClosed(aksjonspunkt)}
+            isEdited={isFrilansAksjonspunktClosed(aksjonspunkter)}
             validate={[required]}
             parse={parseCurrencyInput}
             readOnly={readOnly}
@@ -85,13 +87,13 @@ export const GrunnlagForAarsinntektPanelFL = ({
 };
 GrunnlagForAarsinntektPanelFL.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  aksjonspunkt: aksjonspunktPropType,
+  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   alleAndeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   isKombinasjonsstatus: PropTypes.bool.isRequired,
 };
 
 GrunnlagForAarsinntektPanelFL.defaultProps = {
-  aksjonspunkt: undefined,
+
 };
 
 GrunnlagForAarsinntektPanelFL.buildInitialValues = (relevanteAndeler) => {

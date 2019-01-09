@@ -2,27 +2,23 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
 
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-import {
-  VerticalSpacer, FadingPanel, ElementWrapper, AksjonspunktHelpText,
-} from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, FadingPanel } from '@fpsak-frontend/shared-components';
 import {
   getAktivitetStatuser,
   getAlleAndelerIForstePeriode,
   getBehandlingGjelderBesteberegning,
   getBeregningsgrunnlag,
-  getGjeldendeBeregningAksjonspunkt,
+  getGjeldendeBeregningAksjonspunkter,
   getBeregningGraderingAksjonspunkt,
 } from 'behandlingFpsak/behandlingSelectors';
 import beregningsgrunnlagPropType from 'behandlingFelles/proptypes/beregningsgrunnlagPropType';
 import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
 import { getSelectedBehandlingspunktVilkar } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aktivitetStatus, {
   isStatusArbeidstakerOrKombinasjon,
   isStatusDagpengerOrAAP,
@@ -33,44 +29,9 @@ import aktivitetStatus, {
   isStatusTilstotendeYtelse,
 } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import InntektsopplysningerPanel from './fellesPaneler/InntektsopplysningerPanel';
-import SkjeringspunktOgStatusPanel from './fellesPaneler/SkjeringspunktOgStatusPanel';
-import BeregningsgrunnlagForm from './beregningsgrunnlagPanel/BeregningsgrunnlagForm';
 import BeregningsresultatTable from './beregningsresultatPanel/BeregningsresultatTable';
+import BeregningForm from './beregningForm/BeregningForm';
 import GraderingUtenBG from './gradering/GraderingUtenBG';
-
-const {
-  FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
-  VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-  FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-  FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-} = aksjonspunktCodes;
-
-const findAksjonspunktHelpTekst = (gjeldendeAksjonspunkt) => {
-  switch (gjeldendeAksjonspunkt.definisjon.kode) {
-    case FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS:
-      return 'Beregningsgrunnlag.Helptext.Arbeidstaker';
-    case VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE:
-      return 'Beregningsgrunnlag.Helptext.SelvstendigNaeringsdrivende';
-    case FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD:
-      return 'Beregningsgrunnlag.Helptext.TidsbegrensetArbeidsforhold';
-    case FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET:
-      return 'Beregningsgrunnlag.Helptext.NyIArbeidslivetSN';
-    default:
-      return 'Beregningsgrunnlag.Helptext.Ukjent';
-  }
-};
-
-const findSammenligningsgrunnlagTekst = (relevanteStatuser) => {
-  const tekster = [];
-  if (relevanteStatuser.isSelvstendigNaeringsdrivende) {
-    tekster.push('Beregningsgrunnlag.Inntektsopplysninger.OppgittInntekt');
-  } else {
-    tekster.push('Beregningsgrunnlag.Inntektsopplysninger.Sammenligningsgrunnlag');
-    tekster.push('Beregningsgrunnlag.Inntektsopplysninger.Sum12Mnd');
-  }
-  return tekster;
-};
 
 const visningForManglendeBG = () => (
   <FadingPanel>
@@ -105,7 +66,7 @@ export const BeregningFPImpl = ({
   sammenligningsgrunnlag,
   beregnetAvvikPromille,
   gjeldendeVilkar,
-  gjeldendeAksjonspunkt,
+  gjeldendeAksjonspunkter,
   relevanteStatuser,
   readOnlySubmitButton,
   sokerHarGraderingPaaAndelUtenBG,
@@ -119,44 +80,16 @@ export const BeregningFPImpl = ({
   }
   return (
     <FadingPanel>
-      <Undertittel>
-        <FormattedMessage id="Beregningsgrunnlag.Title" />
-      </Undertittel>
-      <VerticalSpacer eightPx />
-      { gjeldendeAksjonspunkt
-        && (
-          <ElementWrapper>
-            <AksjonspunktHelpText isAksjonspunktOpen={isAksjonspunktOpen(gjeldendeAksjonspunkt.status.kode)}>
-              {[<FormattedMessage key="berGr" id={findAksjonspunktHelpTekst(gjeldendeAksjonspunkt)} values={{ verdi: avvikProsent }} />]}
-            </AksjonspunktHelpText>
-            <VerticalSpacer eightPx />
-          </ElementWrapper>
-        )
-        }
-      <Row>
-        <Column xs="6">
-          <InntektsopplysningerPanel
-            beregnetAarsinntekt={beregnetAarsinntekt}
-            sammenligningsgrunnlag={sammenligningsgrunnlag}
-            sammenligningsgrunnlagTekst={findSammenligningsgrunnlagTekst(relevanteStatuser)}
-            avvik={avvikProsent}
-          />
-        </Column>
-        <Column xs="6">
-          <SkjeringspunktOgStatusPanel />
-        </Column>
-      </Row>
-      { relevanteStatuser.skalViseBeregningsgrunnlag
-        && (
-          <BeregningsgrunnlagForm
-            relevanteStatuser={relevanteStatuser}
-            readOnly={readOnly}
-            submitCallback={submitCallback}
-            gjeldendeAksjonspunkt={gjeldendeAksjonspunkt}
-            readOnlySubmitButton={readOnlySubmitButton}
-          />
-        )
-        }
+      <BeregningForm
+        readOnly={readOnly}
+        gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+        avvikProsent={avvikProsent}
+        beregnetAarsinntekt={beregnetAarsinntekt}
+        sammenligningsgrunnlag={sammenligningsgrunnlag}
+        relevanteStatuser={relevanteStatuser}
+        submitCallback={submitCallback}
+        readOnlySubmitButton={readOnlySubmitButton}
+      />
       { gjeldendeVilkar && gjeldendeVilkar.vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT
         && (
           <BeregningsresultatTable
@@ -188,7 +121,7 @@ BeregningFPImpl.propTypes = {
   beregnetAarsinntekt: PropTypes.number,
   sammenligningsgrunnlag: PropTypes.number,
   beregnetAvvikPromille: PropTypes.number,
-  gjeldendeAksjonspunkt: aksjonspunktPropType,
+  gjeldendeAksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   gjeldendeVilkar: PropTypes.shape(),
   relevanteStatuser: PropTypes.shape().isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
@@ -201,7 +134,6 @@ BeregningFPImpl.defaultProps = {
   gjeldendeVilkar: undefined,
   sammenligningsgrunnlag: undefined,
   beregnetAvvikPromille: undefined,
-  gjeldendeAksjonspunkt: undefined,
   sokerHarGraderingPaaAndelUtenBG: false,
 };
 
@@ -222,7 +154,6 @@ const getBeregnetAarsinntekt = createSelector(
     if (!beregningsgrunnlag) {
       return {};
     }
-
     if (relevanteStatuser.harAndreTilstotendeYtelser) {
       return beregningsgrunnlag.beregningsgrunnlagPeriode[0].bruttoPrAar;
     }
@@ -239,8 +170,8 @@ const getBeregnetAarsinntekt = createSelector(
 
 const buildProps = createSelector(
   [getBeregningsgrunnlag, getSelectedBehandlingspunktVilkar, bestemGjeldendeStatuser,
-    getGjeldendeBeregningAksjonspunkt, getBeregnetAarsinntekt, getBeregningGraderingAksjonspunkt],
-  (berGr, gjeldendeVilkar, relevanteStatuser, gjeldendeAksjonspunkt, beregnetAarsinntekt, graderingAP) => {
+    getGjeldendeBeregningAksjonspunkter, getBeregnetAarsinntekt, getBeregningGraderingAksjonspunkt],
+  (berGr, gjeldendeVilkar, relevanteStatuser, gjeldendeAksjonspunkter, beregnetAarsinntekt, graderingAP) => {
     if (!berGr) {
       return {};
     }
@@ -249,7 +180,7 @@ const buildProps = createSelector(
     const sokerHarGraderingPaaAndelUtenBG = !!graderingAP;
     return {
       gjeldendeVilkar: gjeldendeVilkar.length > 0 ? gjeldendeVilkar[0] : undefined,
-      gjeldendeAksjonspunkt,
+      gjeldendeAksjonspunkter,
       berGr,
       beregnetAarsinntekt,
       sammenligningsgrunnlag,
@@ -264,7 +195,6 @@ const mapStateToProps = state => ({
   ...buildProps(state),
 });
 
-BeregningFPImpl.supports = bp => bp === behandlingspunktCodes.BEREGNINGSGRUNNLAG;
-
-const BeregningFP = connect(mapStateToProps)(injectIntl(BeregningFPImpl));
+const BeregningFP = connect(mapStateToProps)(BeregningFPImpl);
+BeregningFP.supports = bp => bp === behandlingspunktCodes.BEREGNINGSGRUNNLAG;
 export default BeregningFP;

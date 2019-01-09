@@ -112,6 +112,7 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
       isAksjonspunktClosed
       isKombinasjonsstatus={false}
       harAksjonspunkt={false}
+      aksjonspunkter={[]}
       allePerioder={perioder}
     />);
     const rows = wrapper.find('TableRow');
@@ -127,6 +128,7 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
       isAksjonspunktClosed
       allePerioder={perioder}
       alleAndeler={periode.beregningsgrunnlagPrStatusOgAndel}
+      aksjonspunkter={[]}
     />);
     const rows = wrapper.find('TableRow');
     expect(rows.find('Normaltekst').at(0).childAt(0).text()).to.equal('arbeidsgiver 1 (123) ...123');
@@ -135,7 +137,7 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
     expect(rows.find('Normaltekst').at(3).childAt(0).text()).to.equal(formatCurrencyNoKr(100000));
   });
 
-  it('Skal se at ingen input felter oppstor når vi ikke har aksjonspunkt', () => {
+  it('Skal teste rendering av komponent når vi ikke har aksjonspunkter', () => {
     const wrapper = shallowWithIntl(<UnwrappedForm
       {...reduxFormPropsMock}
       intl={intlMock}
@@ -144,22 +146,32 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
       isAksjonspunktClosed
       allePerioder={perioder}
       alleAndeler={periode.beregningsgrunnlagPrStatusOgAndel}
+      aksjonspunkter={[]}
     />);
+    const table = wrapper.find('Table');
+    expect(table.props().headerTextCodes).to.have.length(2);
+    expect(table.props().headerTextCodes[0]).to.equal('Beregningsgrunnlag.AarsinntektPanel.Arbeidsgiver');
+    expect(table.props().headerTextCodes[1]).to.equal('Beregningsgrunnlag.AarsinntektPanel.Inntekt');
     const inputField = wrapper.find('InputField');
     expect(inputField).to.have.length(0);
   });
 
-  it('Skal teste at et input felt per inntekt oppstor når vi har aksjonspunkt', () => {
+  it('Skal teste rendering av komponent når vi har aksjonspunkter', () => {
     const wrapper = shallowWithIntl(<UnwrappedForm
       {...reduxFormPropsMock}
       intl={intlMock}
       isAksjonspunktClosed={false}
       readOnly={false}
       isKombinasjonsstatus={false}
-      aksjonspunkt={getBehandling().aksjonspunkter[0]}
+      aksjonspunkter={getBehandling().aksjonspunkter}
       alleAndeler={periode.beregningsgrunnlagPrStatusOgAndel}
       allePerioder={perioder}
     />);
+    const table = wrapper.find('Table');
+    expect(table.props().headerTextCodes).to.have.length(3);
+    expect(table.props().headerTextCodes[0]).to.equal('Beregningsgrunnlag.AarsinntektPanel.Arbeidsgiver');
+    expect(table.props().headerTextCodes[1]).to.equal('Beregningsgrunnlag.AarsinntektPanel.Inntekt');
+    expect(table.props().headerTextCodes[2]).to.equal('Beregningsgrunnlag.AarsinntektPanel.FastsattInntekt');
     const inputField = wrapper.find('InputField');
     expect(inputField).to.have.length(2);
   });
@@ -167,7 +179,7 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
   it('Skal teste at initial values bygges korrekt', () => {
     const initialValues = GrunnlagForAarsinntektPanelAT.buildInitialValues(
       periode.beregningsgrunnlagPrStatusOgAndel,
-      getBehandling().aksjonspunkter[0],
+      getBehandling().aksjonspunkter,
     );
     expect(initialValues).to.eql({
       inntekt0: '100',

@@ -365,8 +365,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'VURDER_GRADERING_PÅ_ANDEL_UTEN_BG',
     feltId: 'HistorikkEndretFelt.VurderGraderingPåAndelUtenBG',
   },
-
-
+  DEKNINGSGRAD: {
+    kode: 'VURDER_DEKNINGSGRAD',
+    feltId: 'HistorikkEndretFelt.Dekningsgrad',
+  },
 };
 
 export default historikkEndretFeltTypeCodes;
