@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 (function (config, eumgw, jsag) {
   window['adrum-start-time'] = new Date().getTime();
   if (window.location.href.indexOf('fpsak.nais.adeo.no') > -1 || window.location.href.indexOf('app.adeo.no') > -1) {

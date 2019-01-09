@@ -4,7 +4,7 @@ metadata:
   labels:
     team: teamforeldrepenger
   name: fpsak-frontend
-  namespace: t0
+  namespace: default
 spec:
   image: docker.adeo.no:5000/fpsak-frontend-test:RELEASE_VERSION # Required. Docker image.
   port: 443 # Required. The port number which is exposed by the container and should receive HTTP traffic.
@@ -42,8 +42,8 @@ spec:
     requests: # App is guaranteed the requested resources and  will be scheduled on nodes with at least this amount of resources available
       cpu: 200m
       memory: 32Mi
-  #ingresses: # Optional. List of ingress URLs that will route HTTP traffic to the application.
-  #- "https://app-t1.adeo.no/fpsak"
+  ingresses: # Optional. List of ingress URLs that will route HTTP traffic to the application.
+  - "https://app-t0.adeo.no/fpsak"
   logformat: accesslog # Optional. The format of the logs from the container if the logs should be handled differently than plain text or json
   logtransform: dns_loglevel # Optional. The transformation of the logs, if they should be handled differently than plain text or json
   webproxy: false # Optional. Expose web proxy configuration to the application using the HTTP_PROXY, HTTPS_PROXY and NO_PROXY environment variables.
@@ -54,13 +54,9 @@ spec:
   - name: APP_NAME
     value: fpsak-frontend
   - name: APP_ENVIRONMENT
-    value: default
+    value: t0
   - name: OIDC_HOST_URL
     value: https://isso-t.adeo.no:443/isso
-  - name: FPSAK_FRONTEND_OIDC_ISSUERURL
-    value: https://isso-t.adeo.no:443/isso/oauth2 # see value from properties file
-  - name: FPSAK_FRONTEND_OIDC_JWKSURL
-    value: https://isso-t.adeo.no:443/isso/oauth2/connect/jwk_uri
   - name: OIDC_AGENTNAME
     value: fpsak-frontend-t0
   - name: APP_URL_FPSAK
@@ -69,3 +65,7 @@ spec:
     value: http://fptilbake.t10
   - name: APP_URL_FPOPPDRAG
     value: http://fpoppdrag.t10
+  - name: REDIS_HOST
+    value: fpsak-redis.default.svc.nais.local
+  - name: REDIS_PORT
+    value: "80"

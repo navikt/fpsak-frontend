@@ -30,7 +30,15 @@ local opts = {
 
 if not ngx.req.get_headers()["Authorization"] then
     -- starting session manual to set some default cookies, etc
-    local session = require("resty.session").start()
+    local session, err_session = require("resty.session").start()
+
+    if not session and err_session then
+        ngx.status = 500
+        ngx.header.content_type = 'text/plain';
+        ngx.say(err_session)
+        ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR)
+    end
+
     if ngx.var.cookie_ADRUM and ngx.var.cookie_ADRUM ~= session.data.ADRUM then
         session.data.ADRUM = ngx.var.cookie_ADRUM
     end
@@ -55,7 +63,7 @@ if not ngx.req.get_headers()["Authorization"] then
         ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR)
     end
 
-    if ngx.var.uri == ngx.var.app_callback_path or ngx.var.uri == ngx.var.app_login_path then
+    if ngx.var.uri == ngx.var.app_callback_path then
         return ngx.redirect(ngx.var.app_path_prefix)
     end
 

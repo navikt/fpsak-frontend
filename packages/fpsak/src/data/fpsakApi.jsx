@@ -86,7 +86,7 @@ const endpoints = getRestApiBuilder(httpClientApi)
   .withGet('/api/integrasjon/status/vises', FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES)
 
   /* /sprak */
-  .withGet('/sprak/nb_NO.json', FpsakApiKeys.LANGUAGE_FILE)
+  .withGet('/public/sprak/nb_NO.json', FpsakApiKeys.LANGUAGE_FILE)
 
   /* /api/feature-toggle */
   .withPost('/api/feature-toggle', FpsakApiKeys.FEATURE_TOGGLE)

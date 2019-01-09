@@ -18,26 +18,22 @@ RUN ["luarocks", "install", "lua-resty-openidc"]
 COPY docker/openidc.lua /usr/local/openresty/lualib/resty/
 COPY docker/default-config.nginx /etc/nginx/conf.d/app.conf.template
 COPY docker/oidc_access.lua /usr/local/openresty/nginx/
-COPY docker/start-nginx.sh /usr/sbin/start
-RUN chmod u+x /usr/sbin/start
+COPY docker/start-nginx.sh /usr/sbin/start-nginx
+RUN chmod u+x /usr/sbin/start-nginx
 
-## FPSAK spesifikk
-ENV DEBUG=on \
-	APP_DIR="/app" \
+#FPSAK spesifikk
+ENV APP_DIR="/app" \
 	APP_PATH_PREFIX="/fpsak/" \
-	APP_LOGIN_PATH="/fpsak/jetty/login" \
 	APP_CALLBACK_PATH="/fpsak/cb" \
-	APP_API_PATH="/fpsak/api/" \
-	APP_API_GATEWAY="http://fpsak"
+	APP_URL_FPTILBAKE="http://fptilbake" \
+	APP_URL_FPOPPDRAG="http://fpoppdrag" \
+	APP_URL_FPSAK="http://fpsak"
 
 COPY --from=builder ./home/app/dist ./app/fpsak/
-
-# kopierer statiske filer
-COPY ./public/sprak ./app/fpsak/sprak
-COPY ./public/appdynamics ./app/fpsak/appdynamics
+COPY docker/locations.nginx      /nginx/locations.nginx
 
 EXPOSE 9000 443
 
 WORKDIR ${APP_DIR}
 
-CMD ["start"]
+CMD ["start-nginx"]

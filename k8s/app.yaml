@@ -57,9 +57,9 @@ spec:
     value: MILJO_VAL
   - name: OIDC_HOST_URL
     value: OIDC_HOST_URL_VAL # see value from properties file
-  - name: FPSAK_FRONTEND_OIDC_ISSUERURL
-    value: OIDC_ISSUERURL_VAL # see value from properties file
-  - name: FPSAK_FRONTEND_OIDC_JWKSURL
-    value: OIDC_JWKSURL_VAL
   - name: OIDC_AGENTNAME
     value: OIDC_AGENTNAME_VAL
+  - name: REDIS_HOST
+    value: REDIS_HOST_VAL
+  - name: REDIS_PORT
+    value: "REDIS_PORT_VAL"
