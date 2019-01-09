@@ -11,6 +11,7 @@ import {
 import classnames from 'classnames/bind';
 import overlapp from '@fpsak-frontend/assets/images/overlapp.svg';
 import tomPeriode from '@fpsak-frontend/assets/images/tom_periode.svg';
+import { utsettelseArsakTexts } from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import UttakPeriodeType from './UttakPeriodeType';
 import UttakPeriodeInnhold from './UttakPeriodeInnhold';
 
@@ -60,7 +61,7 @@ const getClassName = (periode, readOnly) => {
 const avvikGradering = periode => periode.arbeidstidsprosent !== undefined
   && periode.arbeidstidsprosent !== null && !periode.bekreftet;
 
-const renderAvvikTekst = (periode, inntektsmeldingInfo) => {
+const avvikUtsettelse = (periode, inntektsmeldingInfo) => {
   let avvikTekst = '';
   if (periode.bekreftet) {
     return avvikTekst;
@@ -69,7 +70,11 @@ const renderAvvikTekst = (periode, inntektsmeldingInfo) => {
     inntektsmeldingInfo.forEach((innmldInfo) => {
       const manglerInfoInntektsmelding = periode.utsettelseÅrsak.kode !== '-' && innmldInfo.utsettelsePerioder.length === 0;
       if (manglerInfoInntektsmelding) {
-        avvikTekst = <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.ManglerInfoUtsettelse" /></Element>;
+        avvikTekst = (
+          <Element className={styles.avvikInfoMargin}>
+            <FormattedMessage id="UttakPeriode.ManglerInfoUtsettelse" values={{ årsak: utsettelseArsakTexts[periode.utsettelseÅrsak.kode].toLowerCase() }} />
+          </Element>
+        );
       }
       if (innmldInfo.utsettelsePerioder.length > 0) {
         innmldInfo.utsettelsePerioder.forEach((inntektP) => {
@@ -112,7 +117,7 @@ const UttakPeriode = ({
         return (
           <div key={fieldId}>
             {avvikGradering(periode) && <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikGradering" /></Element>}
-            {renderAvvikTekst(periode, inntektsmeldingInfo[index])}
+            {avvikUtsettelse(periode, inntektsmeldingInfo[index])}
             <FlexRow key={fieldId}>
               <FlexColumn className={styles.fullWidth}>
                 {index === 0 && harEndringsDatoSomErFørFørsteUttaksPeriode && renderTomPeriode()}
