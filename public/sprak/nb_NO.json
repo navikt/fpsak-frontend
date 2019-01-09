@@ -233,6 +233,7 @@
   "FeilutbetalingInfoPanel.PeriodeMedFeilutbetaling": "Periode med feilutbetaling",
   "FeilutbetalingInfoPanel.FeilutbetaltBeløp": "Feilutbetalt beløp totalt",
   "FeilutbetalingInfoPanel.TidligereVarsel": "Tidligere sendt varsel om tilbakekreving",
+  "FeilutbetalingInfoPanel.Resultat": "Resultat",
 
   "DokumentasjonFaktaForm.ApplicationInformation": "Adopsjonsopplysninger fra søknad",
   "DokumentasjonFaktaForm.Omsorgsovertakelsesdato": "Dato for omsorgsovertakelse",

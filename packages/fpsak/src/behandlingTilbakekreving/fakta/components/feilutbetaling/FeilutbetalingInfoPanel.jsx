@@ -3,11 +3,25 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
-import { Element } from 'nav-frontend-typografi';
+import { Element, Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { getFeilutbetalingFakta } from 'behandlingTilbakekreving/tilbakekrevingBehandlingSelectors';
+import { formatCurrencyNoKr, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import moment from 'moment';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
 import faktaPanelCodes from 'behandlingTilbakekreving/fakta/faktaPanelCodes';
 import styles from './feilutbetalingInfoPanel.less';
+
+const perioderDatoer = periode => `${moment(periode.fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(periode.fom).format(DDMMYYYY_DATE_FORMAT)}`;
+const perioderBeloper = periode => formatCurrencyNoKr(periode.belop);
+const getPerioder = (perioder, children) => perioder.map(periode => (
+  <Row>
+    <Column xs="12">
+      <Normaltekst className={styles.smallPaddingRight}>
+        {children(periode)}
+      </Normaltekst>
+    </Column>
+  </Row>
+));
 
 export const FeilutbetalingInfoPanelImpl = ({
   toggleInfoPanelCallback,
@@ -23,55 +37,96 @@ export const FeilutbetalingInfoPanelImpl = ({
     toggleInfoPanelCallback={toggleInfoPanelCallback}
     faktaId={faktaPanelCodes.FEILUTBETALING}
   >
-    {
-      feilutbetaling && (
-        <>
-          <Row className={styles.smallMarginBottom}>
-            <Column xs="12" md="6">
-              <Row className={styles.smallMarginBottom}>
-                <Column xs="12">
-                  <Element>
-                    <FormattedMessage id="FeilutbetalingInfoPanel.Revurdering" />
-                  </Element>
-                </Column>
-              </Row>
-              <Row>
-                <Column xs="12" md="6">
+    <Row className={styles.smallMarginBottom}>
+      <Column xs="12" md="6">
+        <Row className={styles.smallMarginBottom}>
+          <Column xs="12">
+            <Element>
+              <FormattedMessage id="FeilutbetalingInfoPanel.Revurdering" />
+            </Element>
+          </Column>
+        </Row>
+        <Row>
+          <Column xs="12" md="6">
+            <Row className={styles.undertekstMarginBottom}>
+              <Column xs="12">
+                <Undertekst>
                   <FormattedMessage id="FeilutbetalingInfoPanel.Årsaker" />
-                </Column>
-                <Column xs="12" md="6">
+                </Undertekst>
+              </Column>
+            </Row>
+            <Row>
+              <Column xs="12">
+                <Normaltekst className={styles.smallPaddingRight}>
+                  {feilutbetaling.årsakRevurdering}
+                </Normaltekst>
+              </Column>
+            </Row>
+          </Column>
+          <Column xs="12" md="6">
+            <Row className={styles.undertekstMarginBottom}>
+              <Column xs="12">
+                <Undertekst>
                   <FormattedMessage id="FeilutbetalingInfoPanel.DatoForRevurdering" />
-                </Column>
-              </Row>
-            </Column>
-            <Column xs="12" md="6">
-              <Row className={styles.smallMarginBottom}>
-                <Column xs="12">
-                  <Element>
-                    <FormattedMessage id="FeilutbetalingInfoPanel.Feilutbetaling" />
-                  </Element>
-                </Column>
-              </Row>
-              <Row>
-                <Column xs="12" md="6">
+                </Undertekst>
+              </Column>
+            </Row>
+            <Row className={styles.undertekstMarginBottom}>
+              <Column xs="12">
+                <Undertekst>
+                  <FormattedMessage id="FeilutbetalingInfoPanel.Resultat" />
+                </Undertekst>
+              </Column>
+            </Row>
+            <Row>
+              <Column xs="12">
+                <Normaltekst className={styles.smallPaddingRight}>
+                  {feilutbetaling.resultatFeilutbetaling}
+                </Normaltekst>
+              </Column>
+            </Row>
+          </Column>
+        </Row>
+      </Column>
+      <Column xs="12" md="6">
+        <Row className={styles.smallMarginBottom}>
+          <Column xs="12">
+            <Element>
+              <FormattedMessage id="FeilutbetalingInfoPanel.Feilutbetaling" />
+            </Element>
+          </Column>
+        </Row>
+        <Row>
+          <Column xs="12" md="6">
+            <Row className={styles.undertekstMarginBottom}>
+              <Column xs="12">
+                <Undertekst>
                   <FormattedMessage id="FeilutbetalingInfoPanel.PeriodeMedFeilutbetaling" />
-                </Column>
-                <Column xs="12" md="6">
+                </Undertekst>
+              </Column>
+            </Row>
+            {getPerioder(feilutbetaling.perioder, perioderDatoer)}
+          </Column>
+          <Column xs="12" md="6">
+            <Row className={styles.undertekstMarginBottom}>
+              <Column xs="12">
+                <Undertekst>
                   <FormattedMessage id="FeilutbetalingInfoPanel.FeilutbetaltBeløp" />
-                </Column>
-              </Row>
-            </Column>
-          </Row>
-          <Row className={styles.smallMarginBottom}>
-            <Column xs="12" md="6">
-              <Element>
-                <FormattedMessage id="FeilutbetalingInfoPanel.TidligereVarsel" />
-              </Element>
-            </Column>
-          </Row>
-        </>
-      )
-    }
+                </Undertekst>
+              </Column>
+            </Row>
+            {getPerioder(feilutbetaling.perioder, perioderBeloper)}
+          </Column>
+        </Row>
+      </Column>
+    </Row>
+    <Row className={styles.smallMarginBottom}>
+      <Column xs="12" md="6">
+        <Element>
+          <FormattedMessage id="FeilutbetalingInfoPanel.TidligereVarsel" />
+        </Element>
+      </Column>
+    </Row>
   </FaktaEkspandertpanel>
 );
 
@@ -84,7 +139,7 @@ FeilutbetalingInfoPanelImpl.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  feilutbetaling: getFeilutbetalingFakta(state),
+  feilutbetaling: getFeilutbetalingFakta(state).behandlingFakta[0],
 });
 
 const FeilutbetalingInfoPanel = connect(mapStateToProps)(injectIntl(FeilutbetalingInfoPanelImpl));
