@@ -22,7 +22,6 @@
     .lastColumn {
       border-left: dashed 1px @navGra40;
       margin-left: 20px;
-      width: 60px;
     }
 
     tr {
@@ -31,12 +30,12 @@
       td {
         border: 0;
         display: flex;
-        text-align: right;
+        justify-content: flex-end;
         width: 80px;
       }
 
       td:first-child {
-        text-align: left;
+        justify-content: flex-start;
         width: 300px;
       }
     }
@@ -51,16 +50,16 @@
         border-bottom: solid 1px @navGra40;
       }
 
-      td:last-child {
-        margin-left: 20px;
+      td {
         padding: 0;
-        width: 60px;
+      }
 
+      td:last-child {
         span {
           align-items: center;
           display: flex;
           height: 100%;
-          justify-content: center;
+          justify-content: flex-end;
           width: 100%;
         }
       }
@@ -68,6 +67,12 @@
       td {
         .nextPeriod {
           border-left: dashed 1px @navGra40;
+          margin-right: -20px;
+          padding: 8px;
+        }
+
+        .normalPeriod {
+          padding: 8px;
         }
       }
     }

@@ -12,14 +12,17 @@ import CollapseButton from './CollapseButton';
 import styles from './avregningTable.less';
 
 const classNames = classnames.bind(styles);
-
+const isNextPeriod = (month, nextPeriod) => `${month.month}${month.year}` === (nextPeriod ? moment(nextPeriod).format('MMMMYY') : false);
 const getHeaderCodes = (showCollapseButton, collapseProps, rangeOfMonths, nextPeriod) => {
   const firstElement = showCollapseButton ? <CollapseButton {...collapseProps} key={`collapseButton-${rangeOfMonths.length}`} /> : <div />;
   return [
     firstElement,
     ...rangeOfMonths.map(month => (
       <span
-        className={classNames({ nextPeriod: `${month.month}${month.year}` === (nextPeriod ? moment(nextPeriod).format('MMMMYY') : false) })}
+        className={classNames({
+          nextPeriod: isNextPeriod(month, nextPeriod),
+          normalPeriod: !isNextPeriod(month, nextPeriod),
+        })}
         key={`${month.month}-${month.year}`}
       >
         <FormattedHTMLMessage id={`Avregning.headerText.${month.month}`} />
