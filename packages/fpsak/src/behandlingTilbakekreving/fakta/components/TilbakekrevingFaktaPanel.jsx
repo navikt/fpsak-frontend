@@ -6,7 +6,7 @@ import PersonIndex from 'person/PersonIndex';
 import { getRettigheter } from 'navAnsatt/duck';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import {
-  getPersonopplysning, getBehandlingIsOnHold, getAksjonspunkter, hasReadOnlyBehandling,
+  getPersonopplysning, getBehandlingIsOnHold, getAksjonspunkter, hasReadOnlyBehandling, getFeilutbetalingFakta,
 } from 'behandlingTilbakekreving/tilbakekrevingBehandlingSelectors';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { getOpenInfoPanels } from '../duck';
@@ -30,6 +30,7 @@ export const TilbakekrevingFaktaPanel = ({ // NOSONAR Kompleksitet er høg, men 
   toggleInfoPanelCallback,
   shouldOpenDefaultInfoPanels,
   readOnly,
+  feilutbetaling,
 }) => (
   <ElementWrapper>
     <div className={styles.personContainer}>
@@ -48,14 +49,18 @@ export const TilbakekrevingFaktaPanel = ({ // NOSONAR Kompleksitet er høg, men 
       {!personopplysninger
       && <PersonIndex medPanel />
       }
-      <FeilutbetalingInfoPanel
-        aksjonspunkter={aksjonspunkter}
-        submitCallback={submitCallback}
-        openInfoPanels={openInfoPanels}
-        toggleInfoPanelCallback={toggleInfoPanelCallback}
-        shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-        readOnly={readOnly}
-      />
+      {feilutbetaling
+      && (
+        <FeilutbetalingInfoPanel
+          aksjonspunkter={aksjonspunkter}
+          submitCallback={submitCallback}
+          openInfoPanels={openInfoPanels}
+          toggleInfoPanelCallback={toggleInfoPanelCallback}
+          shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+          readOnly={readOnly}
+        />
+      )
+      }
     </div>
     <div className={styles.container} />
   </ElementWrapper>
@@ -64,6 +69,7 @@ export const TilbakekrevingFaktaPanel = ({ // NOSONAR Kompleksitet er høg, men 
 TilbakekrevingFaktaPanel.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   personopplysninger: PropTypes.shape(),
+  feilutbetaling: PropTypes.shape(),
   submitCallback: PropTypes.func.isRequired,
   /**
    * Oversikt over hvilke faktapaneler som er åpne
@@ -76,6 +82,7 @@ TilbakekrevingFaktaPanel.propTypes = {
 
 TilbakekrevingFaktaPanel.defaultProps = {
   personopplysninger: undefined,
+  feilutbetaling: null,
 };
 
 const mapStateToProps = state => ({
@@ -83,6 +90,7 @@ const mapStateToProps = state => ({
   openInfoPanels: getOpenInfoPanels(state),
   readOnly: !getRettigheter(state).writeAccess.isEnabled || getBehandlingIsOnHold(state) || hasReadOnlyBehandling(state),
   personopplysninger: getPersonopplysning(state) || null,
+  feilutbetaling: getFeilutbetalingFakta(state),
 });
 
 export default connect(mapStateToProps)(TilbakekrevingFaktaPanel);
