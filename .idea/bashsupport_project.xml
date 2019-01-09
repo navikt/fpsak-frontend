@@ -4,6 +4,7 @@
     <option name="globalVariables">
       <set>
         <option value="APP_API_GATEWAY" />
+        <option value="HTTP_PROXY" />
       </set>
     </option>
   </component>

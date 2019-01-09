@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 
-export RELEASE_VERSION="v$(date +%Y%m%d%H%I)"
-
-#echo
-#yarn build
+export RELEASE_VERSION="v$(date +%Y%m%d%H%M)"
 
 docker build . -t docker.adeo.no:5000/fpsak-frontend-test:${RELEASE_VERSION} -f ./docker/DockerfileDev --build-arg HTTP_PROXY=${HTTP_PROXY} --build-arg HTTPS_PROXY=${HTTP_PROXY}
 docker push docker.adeo.no:5000/fpsak-frontend-test:${RELEASE_VERSION}
 echo "Pushed docker.adeo.no:5000/fpsak-frontend-test:${RELEASE_VERSION}"
-sed "s/RELEASE_VERSION/${RELEASE_VERSION}/g" docker/app-t1.yaml | kubectl apply -f -
+sed "s/RELEASE_VERSION/${RELEASE_VERSION}/g" docker/app-t0.yaml | kubectl apply -f -
