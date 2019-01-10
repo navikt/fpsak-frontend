@@ -53,7 +53,7 @@ const createTextStrings = (fields) => {
   } = fields;
 
   const {
-    identifikator, navn, virksomhet,
+    identifikator, navn, virksomhet, fødselsdato,
   } = arbeidsgiver || {};
   const prosentArbeidText = (typeof prosentArbeid !== 'undefined') ? `${prosentArbeid}%` : '';
   const stillingsProsentText = (typeof stillingsprosent !== 'undefined') ? `${stillingsprosent}%` : '';
@@ -62,8 +62,12 @@ const createTextStrings = (fields) => {
     arbeidsforhold = <FormattedMessage id={uttakArbeidTypeTekstCodes[uttakArbeidType.kode]} />;
   } else {
     arbeidsforhold = navn ? `${navn}` : arbeidsforhold;
-    arbeidsforhold = identifikator ? `${arbeidsforhold} (${identifikator})` : arbeidsforhold;
-    arbeidsforhold = virksomhet && arbeidsforholdId ? `${arbeidsforhold}...${arbeidsforholdId.substr(-4)}` : arbeidsforhold;
+    if (virksomhet) {
+      arbeidsforhold = identifikator ? `${arbeidsforhold} (${identifikator})` : arbeidsforhold;
+      arbeidsforhold = arbeidsforholdId ? `${arbeidsforhold}...${arbeidsforholdId.substr(-4)}` : arbeidsforhold;
+    } else {
+      arbeidsforhold = fødselsdato ? `${arbeidsforhold} (${fødselsdato})` : arbeidsforhold;
+    }
   }
   return {
     prosentArbeidText,

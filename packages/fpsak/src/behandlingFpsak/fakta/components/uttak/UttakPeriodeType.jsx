@@ -55,6 +55,9 @@ const getUttakPeriode = (uttakPeriodeType, oppholdArsak) => {
   return uttakPeriodeType;
 };
 
+const visFødselsdatoHvisIkkeVirksomhet = arbeidsgiver => (arbeidsgiver.virksomhet
+  ? arbeidsgiver.identifikator : arbeidsgiver.fødselsdato);
+
 const UttakPeriodeType = ({ // NOSONAR
   tilDato,
   fraDato,
@@ -152,7 +155,7 @@ const UttakPeriodeType = ({ // NOSONAR
       {isGradering && arbeidsgiver && arbeidsgiver.navn && arbeidsgiver.identifikator
       && (
       <div className={styles.textWrapper}>
-        <Element>{`${arbeidsgiver.navn} ${arbeidsgiver.identifikator}`}</Element>
+        <Element>{`${arbeidsgiver.navn} ${visFødselsdatoHvisIkkeVirksomhet(arbeidsgiver)}`}</Element>
       </div>
       )
       }
