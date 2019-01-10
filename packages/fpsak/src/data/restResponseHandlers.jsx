@@ -62,7 +62,7 @@ const handleError = async (store, error) => {
   }
 
   if (is401Error(formattedError.status) && !isDevelopment) {
-    window.location.reload();
+    store.dispatch(addErrorMessage({ message: error.message }));
   } else if (is418Error(formattedError.status)) {
     handleTaskStatus(store, formattedError.data);
   } else if (!error.response && error.message) {

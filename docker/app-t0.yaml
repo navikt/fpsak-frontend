@@ -4,9 +4,9 @@ metadata:
   labels:
     team: teamforeldrepenger
   name: fpsak-frontend
-  namespace: NAMESPACE_VAL
+  namespace: default
 spec:
-  image: docker.adeo.no:5000/fpsak-frontend:RELEASE_VERSION # Required. Docker image.
+  image: docker.adeo.no:5000/fpsak-frontend-test:RELEASE_VERSION # Required. Docker image.
   port: 443 # Required. The port number which is exposed by the container and should receive HTTP traffic.
   sessionAffinity: ClientIP # Sticky Session for ingress contloller to prevent 404 on rollout
   team: teamforeldrepenger # Required. Set to the team that owns this application.
@@ -43,23 +43,29 @@ spec:
       cpu: 200m
       memory: 32Mi
   ingresses: # Optional. List of ingress URLs that will route HTTP traffic to the application.
-  - "INGRESS_URL"
+   - "https://app-t0.adeo.no/fpsak"
   logformat: accesslog # Optional. The format of the logs from the container if the logs should be handled differently than plain text or json
   logtransform: dns_loglevel # Optional. The transformation of the logs, if they should be handled differently than plain text or json
   webproxy: false # Optional. Expose web proxy configuration to the application using the HTTP_PROXY, HTTPS_PROXY and NO_PROXY environment variables.
   secrets: true # Optional. If set to true fetch secrets from Secret Service and inject into the pods. todo link to doc.
   env:
   - name: APP_VERSION
-    value: RELEASE_VERSION
+    value: "RELEASE_VERSION"
   - name: APP_NAME
     value: fpsak-frontend
   - name: APP_ENVIRONMENT
-    value: MILJO_VAL
+    value: t0
   - name: OIDC_HOST_URL
-    value: OIDC_HOST_URL_VAL # see value from properties file
+    value: https://isso-t.adeo.no:443/isso
   - name: OIDC_AGENTNAME
-    value: OIDC_AGENTNAME_VAL
+    value: fpsak-frontend-t0
+  - name: APP_URL_FPSAK
+    value: http://fpsak.t10
+  - name: APP_URL_FPTILBAKE
+    value: http://fptilbake.t10
+  - name: APP_URL_FPOPPDRAG
+    value: http://fpoppdrag.t10
   - name: REDIS_HOST
-    value: REDIS_HOST_VAL
+    value: fpsak-redis.default.svc.nais.local
   - name: REDIS_PORT
-    value: "REDIS_PORT_VAL"
+    value: "80"

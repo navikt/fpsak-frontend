@@ -16,98 +16,111 @@ const APP_DIR = path.join(PACKAGES_DIR, 'fpsak/src');
 
 const isDevelopment = JSON.stringify(process.env.NODE_ENV) === '"development"';
 
+const PUBLIC_PATH = isDevelopment ? 'fpsak/public/' : '';
+
 const config = {
   module: {
-    rules: [{
-      test: /\.jsx?$/,
-      enforce: 'pre',
-      loader: 'eslint-loader',
-      options: {
-        failOnWarning: false,
-        failOnError: !isDevelopment,
-        configFile: path.resolve(__dirname, isDevelopment ? '../eslint/eslintrc.dev.js' : '../eslint/eslintrc.prod.js'),
-        fix: isDevelopment,
-        cache: true,
-      },
-      include: [PACKAGES_DIR],
-    }, {
-      test: /\.(jsx?|js?)$/,
-      loader: 'babel-loader',
-      options: {
-        cacheDirectory: true,
-      },
-      include: PACKAGES_DIR,
-    }, {
-      test: /\.(less|css)?$/,
-      use: [{
-        loader: MiniCssExtractPlugin.loader,
+    rules: [
+      {
+        test: /\.jsx?$/,
+        enforce: 'pre',
+        loader: 'eslint-loader',
         options: {
-          publicPath: isDevelopment ? './' : '.',
+          failOnWarning: false,
+          failOnError: !isDevelopment,
+          configFile: path.resolve(__dirname, isDevelopment ? '../eslint/eslintrc.dev.js' : '../eslint/eslintrc.prod.js'),
+          fix: isDevelopment,
+          cache: true,
         },
+        include: [PACKAGES_DIR],
       }, {
-        loader: 'css-loader',
+        test: /\.(jsx?|js?)$/,
+        loader: 'babel-loader',
         options: {
-          importLoaders: 1,
-          modules: true,
-          localIdentName: '[name]_[local]_[hash:base64:5]',
+          cacheDirectory: true,
         },
+        include: PACKAGES_DIR,
       }, {
-        loader: 'less-loader',
+        test: /\.(less|css)?$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: isDevelopment ? './' : '.',
+            },
+          }, {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              modules: true,
+              localIdentName: '[name]_[local]_[hash:base64:5]',
+            },
+          }, {
+            loader: 'less-loader',
+            options: {
+              modules: true,
+              localIdentName: '[name]_[local]_[hash:base64:5]',
+              modifyVars: {
+                nodeModulesPath: '~',
+                coreModulePath: '~',
+              },
+            },
+          }],
+        include: [PACKAGES_DIR],
+        exclude: [CSS_DIR],
+      }, {
+        test: /\.(less|css)?$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: isDevelopment ? './' : '.',
+            },
+          }, {
+            loader: 'css-loader',
+          }, {
+            loader: 'less-loader',
+            options: {
+              modifyVars: {
+                nodeModulesPath: '~',
+                coreModulePath: '~',
+              },
+            },
+          }],
+        include: [CSS_DIR, CORE_DIR],
+      }, {
+        test: /\.(jpg|png|svg)$/,
+        loader: 'file-loader',
         options: {
-          modules: true,
-          localIdentName: '[name]_[local]_[hash:base64:5]',
-          modifyVars: {
-            nodeModulesPath: '~',
-            coreModulePath: '~',
-          },
+          name: isDevelopment ? '[name]_[hash].[ext]' : '/[name]_[hash].[ext]',
         },
+        include: [IMAGE_DIR],
       }],
-      include: [PACKAGES_DIR],
-      exclude: [CSS_DIR],
-    }, {
-      test: /\.(less|css)?$/,
-      use: [{
-        loader: MiniCssExtractPlugin.loader,
-        options: {
-          publicPath: isDevelopment ? './' : '.',
-        },
-      }, {
-        loader: 'css-loader',
-      }, {
-        loader: 'less-loader',
-        options: {
-          modifyVars: {
-            nodeModulesPath: '~',
-            coreModulePath: '~',
-          },
-        },
-      }],
-      include: [CSS_DIR, CORE_DIR],
-    }, {
-      test: /\.(jpg|png|svg)$/,
-      loader: 'file-loader',
-      options: {
-        name: isDevelopment ? '[name]_[hash].[ext]' : '/[name]_[hash].[ext]',
-      },
-      include: [IMAGE_DIR],
-    }],
   },
 
   plugins: [
     new MiniCssExtractPlugin({
       filename: isDevelopment ? 'style.css' : 'style_[hash].css',
     }),
-    new CopyWebpackPlugin([{
-      from: LANG_DIR,
-      to: 'fpsak/sprak/[name].[ext]',
-      force: true,
-      cache: {
-        key: '[hash]'
-      },
-    }]),
+    new CopyWebpackPlugin([
+      {
+        from: LANG_DIR,
+        to: PUBLIC_PATH + 'sprak/[name].[ext]',
+        force: true,
+        cache: {
+          key: '[hash]',
+        },
+      }, {
+        from: path.join(__dirname, '../public/appdynamics/eum.min.js'),
+        to: PUBLIC_PATH + 'eum.min.js',
+        force: true,
+        cache: {
+          key: '[hash]',
+        },
+      }]),
     new webpack.ContextReplacementPlugin(
       /moment[\/\\]locale$/,
-      /nb/
+      /nb/,
     ),
     new CircularDependencyPlugin({
       exclude: /node_modules/,
