@@ -1201,7 +1201,7 @@ local function openidc_access_token(opts, session, try_to_renew)
   end
   local current_time = ngx.time()
   if current_time < session.data.access_token_expiration then
-    log(DEBUG,"access_token_expiration is larger than current time.")
+    log(DEBUG,"access_token_expiration is larger than current time no need to refresh")
     return session.data.access_token, err
   end
   if not try_to_renew then
