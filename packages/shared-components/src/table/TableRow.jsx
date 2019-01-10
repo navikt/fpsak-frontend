@@ -23,6 +23,7 @@ const TableRow = ({
   isBold,
   isDashedBottomBorder,
   isSolidBottomBorder,
+  isApLeftBorder,
 }) => {
   const keyDownHandler = (e) => {
     if (e.key === 'ArrowDown') {
@@ -50,6 +51,7 @@ const TableRow = ({
         bold: isBold,
         dashedBottomBorder: isDashedBottomBorder,
         solidBottomBorder: isSolidBottomBorder,
+        apLeftBorder: isApLeftBorder,
       })}
       onMouseDown={e => onMouseDown && onMouseDown(e, id, model)}
       onKeyDown={e => keyDownHandler(e)}
@@ -75,6 +77,7 @@ TableRow.propTypes = {
   isBold: PropTypes.bool,
   isDashedBottomBorder: PropTypes.bool,
   isSolidBottomBorder: PropTypes.bool,
+  isApLeftBorder: PropTypes.bool,
 };
 
 TableRow.defaultProps = {
@@ -88,6 +91,7 @@ TableRow.defaultProps = {
   isBold: false,
   isDashedBottomBorder: false,
   isSolidBottomBorder: false,
+  isApLeftBorder: false,
 };
 
 export default TableRow;
