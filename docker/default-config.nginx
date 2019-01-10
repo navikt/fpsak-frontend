@@ -35,6 +35,7 @@ server {
     root "${APP_DIR}";
     server_name  _;
 
+    # Set some varable for usage in OpenResty modules.
     set $app_baseurl                https://$host;
     set $app_callback_path          "${APP_CALLBACK_PATH}";
     set $app_hostname               "${APP_HOSTNAME}";
@@ -43,6 +44,8 @@ server {
     set $oidc_host_url              "${OIDC_HOST_URL}";
     set $oidc_password              "${OIDC_PASSWORD}";
     set $proxy_cookie               "";
+    set $session_check_scheme       off;
+    set $session_check_ua           off;
     set $session_cookie_lifetime    43200; # 12t
     set $session_cookie_persistent  off;
     set $session_cookie_secure      on;
