@@ -32,6 +32,7 @@ export const OppholdInntektOgPeriodeForm = ({
 }) => (
   <BorderBox>
     <OppholdINorgeOgAdresserFaktaPanel readOnly={readOnly} id={valgtPeriode.id} />
+    <VerticalSpacer twentyPx />
     <InntektOgYtelserFaktaPanel id={valgtPeriode.id} />
     <PerioderMedMedlemskapFaktaPanel readOnly={readOnly} id={valgtPeriode.id} />
     { (hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, valgtPeriode.aksjonspunkter) || hasAksjonspunkt(AVKLAR_LOVLIG_OPPHOLD, valgtPeriode.aksjonspunkter))
