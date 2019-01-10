@@ -142,22 +142,21 @@ export class OppholdInntektOgPerioderFormNew extends Component {
 
   isConfirmButtonDisabled() {
     const {
-      perioder, readOnly, submitting, aksjonspunkter, dirty,
+      perioder, readOnly, submitting, dirty,
     } = this.props;
-
-    if (perioder && perioder.length > 0) {
-      const hasAksjonspunkterUtenBegrunnelse = perioder.filter(periode => periode.aksjonspunkter.length > 0
-        && periode.begrunnelse !== ''
-        && aksjonspunkter.some(ap => periode.aksjonspunkter.includes(ap.definisjon.kode)));
-
-      if (hasAksjonspunkterUtenBegrunnelse.length === 0 && dirty) {
-        return false;
-      }
-    }
 
     if (!dirty) {
       return true;
     }
+
+    if (perioder && perioder.length > 0) {
+      const ubekreftPerioder = perioder.filter(periode => periode.aksjonspunkter.length > 0 && periode.begrunnelse === null);
+
+      if (ubekreftPerioder.length > 0) {
+        return true;
+      }
+    }
+
     return submitting || readOnly;
   }
 
@@ -281,7 +280,7 @@ const mapStateToProps = (state, initialProps) => {
     perioder: perioder(state),
     isRevurdering: isBehandlingRevurderingFortsattMedlemskap(state),
     hasOpenAksjonspunkter: initialProps.aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode)),
-    onSubmit: values => initialProps.submitCallback(transformValues(values, initialProps.aksjonspunkter, state)),
+    onSubmit: values => initialProps.submitCallback(transformValues(values, initialProps.aksjonspunkter)),
   };
 };
 

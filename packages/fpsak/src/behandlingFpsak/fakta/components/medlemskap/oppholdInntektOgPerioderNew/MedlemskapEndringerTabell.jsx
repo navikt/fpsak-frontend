@@ -9,7 +9,6 @@ import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 
 const headerTextCodes = [
   'MedlemskapEndringerTabell.GjeldeneFom',
-  'MedlemskapEndringerTabell.Register',
   'MedlemskapEndringerTabell.Opplysning',
 ];
 
@@ -27,12 +26,10 @@ const MedlemskapEndringerTabellImpl = ({
         onKeyDown={velgPeriodeCallback}
         isSelected={periode.id === selectedId}
         model={periode}
+        isApLeftBorder={periode.begrunnelse === null}
       >
         <TableColumn>
           <DateLabel dateString={periode.vurderingsdato} />
-        </TableColumn>
-        <TableColumn>
-          {periode.personopplysninger.opplysningsKilde.navn}
         </TableColumn>
         <TableColumn>
           {periode.årsaker.join()}
@@ -46,7 +43,8 @@ const MedlemskapEndringerTabellImpl = ({
 
 const MedlemskapEndringerTabell = connect(state => (
   {
-    perioder: behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'perioder'),
+    perioder: (behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'perioder') || [])
+      .sort((a, b) => a.vurderingsdato.localeCompare(b.vurderingsdato)),
   }))(injectIntl(MedlemskapEndringerTabellImpl));
 
 MedlemskapEndringerTabellImpl.propTypes = {

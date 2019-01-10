@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 
@@ -10,7 +9,7 @@ import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
 import {
-  Table, TableRow, TableColumn, DateLabel, PeriodLabel, VerticalSpacer,
+  Table, TableRow, TableColumn, DateLabel, PeriodLabel, VerticalSpacer, FlexContainer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -75,22 +74,22 @@ export const PerioderMedMedlemskapFaktaPanelImpl = ({
         })
         }
       </Table>
-      {hasPeriodeAksjonspunkt
+      <FlexContainer>
+        {hasPeriodeAksjonspunkt
       && (
-      <Row>
-        <Column xs="12">
+      <FlexRow>
+        <FlexColumn>
           <RadioGroupField name="medlemskapManuellVurderingType.kode" validate={[required]} readOnly={readOnly} isEdited={isPeriodAksjonspunktClosed}>
             {vurderingTypes.map(type => <RadioOption key={type.kode} value={type.kode} label={type.navn} />)}
           </RadioGroupField>
-        </Column>
-      </Row>
+        </FlexColumn>
+      </FlexRow>
       )
       }
-      <VerticalSpacer sixteenPx />
-      <Row>
-        <Column xs="8" />
-        <Column xs="4">
-          {fodselsdato
+        <VerticalSpacer sixteenPx />
+        <FlexRow className="justifyItemsToFlexEnd">
+          <FlexColumn>
+            {fodselsdato
           && (
           <FormattedMessage
             id="PerioderMedMedlemskapFaktaPanel.Fodselsdato"
@@ -98,7 +97,7 @@ export const PerioderMedMedlemskapFaktaPanelImpl = ({
           />
           )
           }
-          {termindato
+            {termindato
           && (
           <FormattedMessage
             id="PerioderMedMedlemskapFaktaPanel.Termindato"
@@ -106,7 +105,7 @@ export const PerioderMedMedlemskapFaktaPanelImpl = ({
           />
           )
           }
-          {omsorgsovertakelseDato
+            {omsorgsovertakelseDato
           && (
           <FormattedMessage
             id="PerioderMedMedlemskapFaktaPanel.Omsorgsovertakelse"
@@ -114,8 +113,9 @@ export const PerioderMedMedlemskapFaktaPanelImpl = ({
           />
           )
           }
-        </Column>
-      </Row>
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
     </FaktaGruppe>
   );
 };
