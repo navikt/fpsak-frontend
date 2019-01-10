@@ -108,6 +108,7 @@ som fra core/og muligen import fra alla andra komponenter
 :global(.fodsel) {
   background-color: @redErrorDarken20;
   pointer-events: none;
+  top: 0px !important;  // lesshint-disable importantRule
 
   &:after {
     background: transparent url('./../../assets/images/fodsel.svg') no-repeat;
@@ -115,7 +116,7 @@ som fra core/og muligen import fra alla andra komponenter
     height: 20px;
     left: -8px;
     position: absolute;
-    top: 0;
+    top: 0px;
     width: 20px;
   }
 }
