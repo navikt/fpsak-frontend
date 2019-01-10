@@ -243,7 +243,7 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     const transformValues = transformValuesFaktaForATFLOgSN.resultFunc(aktivePaneler, [], undefined, aksjonspunkter, faktaOmBeregning)(values);
     expect(transformValues[0].faktaOmBeregningTilfeller).to.have.length(4);
     expect(transformValues[0].faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)).is.eql(true);
-    expect(transformValues[0].faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_VED_LONNSENDRING)).is.eql(true);
+    expect(transformValues[0].faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)).is.eql(true);
     expect(transformValues[0].faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL)).is.eql(true);
     expect(transformValues[0].faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL)).is.eql(true);
     expect(transformValues[0].fastsatteLonnsendringer.vurderLønnsendringAndelListe).to.have.length(1);

@@ -19,10 +19,11 @@ import styles from './nyoppstartetFLForm.less';
 const {
   VURDER_AT_OG_FL_I_SAMME_ORGANISASJON,
   FASTSETT_ENDRET_BEREGNINGSGRUNNLAG, FASTSETT_BESTEBEREGNING_FODENDE_KVINNE, TILSTOTENDE_YTELSE,
+  VURDER_MOTTAR_YTELSE,
 } = faktaOmBeregningTilfelle;
 
 export const utledOverskriftForNyoppstartetFLForm = (tilfeller, manglerIM) => {
-  if (!tilfeller.includes(VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)) {
+  if (!tilfeller.includes(VURDER_AT_OG_FL_I_SAMME_ORGANISASJON) || tilfeller.includes(VURDER_MOTTAR_YTELSE)) {
     return ['BeregningInfoPanel.VurderOgFastsettATFL.ErSokerNyoppstartetFL'];
   }
   return manglerIM
@@ -58,6 +59,7 @@ export const NyoppstartetFLFormImpl = ({
   manglerIM,
   erNyoppstartetFL,
   skalKunFastsetteFL,
+  formName,
 }) => (
   <div>
     {radioknappOverskrift.map(kode => (
@@ -88,8 +90,9 @@ export const NyoppstartetFLFormImpl = ({
               isAksjonspunktClosed={isAksjonspunktClosed}
               tilfellerSomSkalFastsettes={tilfeller}
               manglerInntektsmelding={manglerIM}
-              skalFastsetteAT={!skalKunFastsetteFL}
-              skalFastsetteFL
+              skalViseAT={!skalKunFastsetteFL}
+              skalViseFL
+              formName={formName}
             />
           </div>
         </Column>
@@ -108,6 +111,7 @@ NyoppstartetFLFormImpl.propTypes = {
   erNyoppstartetFL: PropTypes.bool,
   manglerIM: PropTypes.bool.isRequired,
   skalKunFastsetteFL: PropTypes.bool,
+  formName: PropTypes.string.isRequired,
 };
 
 NyoppstartetFLFormImpl.defaultProps = {
@@ -125,7 +129,7 @@ NyoppstartetFLFormImpl.buildInitialValues = (beregningsgrunnlag) => {
     .map(periode => periode.beregningsgrunnlagPrStatusOgAndel);
   const flAndeler = flatten(alleAndeler).filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
   if (flAndeler.length > 0) {
-    initialValues[erNyoppstartetFLField] = flAndeler[0].erNyoppstartetEllerSammeOrganisasjon;
+    initialValues[erNyoppstartetFLField] = flAndeler[0].erNyoppstartetEllerSammeOrganisasjon || flAndeler[0].erNyoppstartet;
   }
   return initialValues;
 };
@@ -150,21 +154,16 @@ NyoppstartetFLFormImpl.nyOppstartetFLInntekt = (values, tilfeller, vurderFaktaVa
         faktaOmBeregningTilfeller: vurderFaktaValues.faktaOmBeregningTilfeller,
       };
     }
-    return {
-      ...FastsettATFLInntektForm.transformValues(values, undefined, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL),
-    };
+    if (!vurderFaktaValues.fastsettMaanedsinntektFL) {
+      return {
+        ...FastsettATFLInntektForm.transformValues(values, undefined, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL),
+      };
+    }
   }
-  if (vurderFaktaValues.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL)) {
-    tilfeller.splice(tilfeller.indexOf(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL), 1);
-    return {
-      faktaOmBeregningTilfeller: tilfeller,
-      ...FastsettATFLInntektForm.eraseValuesFL(),
-    };
-  }
-  return {
-    ...FastsettATFLInntektForm.eraseValuesFL(),
-  };
+  return {};
 };
+
+const erNyoppstartetFL = (state, formName) => behandlingFormValueSelector(formName)(state, erNyoppstartetFLField);
 
 const mapStateToProps = (state, initialProps) => {
   const faktaOmBeregning = getFaktaOmBeregning(state);
@@ -174,7 +173,7 @@ const mapStateToProps = (state, initialProps) => {
   }
   return {
     manglerInntektsmelding,
-    erNyoppstartetFL: behandlingFormValueSelector(initialProps.formName)(state, erNyoppstartetFLField),
+    erNyoppstartetFL: erNyoppstartetFL(state, initialProps.formName),
     radioknappOverskrift: utledOverskriftForNyoppstartetFLForm(initialProps.tilfeller, manglerInntektsmelding),
   };
 };

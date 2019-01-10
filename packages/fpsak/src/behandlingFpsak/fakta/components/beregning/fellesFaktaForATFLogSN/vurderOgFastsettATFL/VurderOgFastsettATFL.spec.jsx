@@ -30,14 +30,18 @@ const assertInntektstabell = (wrapper, skalViseTabell) => {
 
 const assertFormNyoppstartetFL = (wrapper, skalViseTabellUnderKnapp, skalKunFastsetteFL) => {
   const formWrapper = wrapper.find(NyoppstartetFLForm);
-  expect(formWrapper.prop('skalKunFastsetteFL')).to.eql(skalKunFastsetteFL);
   expect(formWrapper.prop('skalViseInntektstabell')).to.eql(skalViseTabellUnderKnapp);
+  if (skalViseTabellUnderKnapp) {
+    expect(formWrapper.prop('skalKunFastsetteFL')).to.eql(skalKunFastsetteFL);
+  }
 };
 
 const assertFormLonnsendring = (wrapper, skalViseTabellUnderKnapp, skalKunFastsetteAT) => {
   const formWrapper = wrapper.find(LonnsendringForm);
-  expect(formWrapper.prop('skalKunFastsetteAT')).to.eql(skalKunFastsetteAT);
   expect(formWrapper.prop('skalViseInntektstabell')).to.eql(skalViseTabellUnderKnapp);
+  if (skalViseTabellUnderKnapp) {
+    expect(formWrapper.prop('skalKunFastsetteAT')).to.eql(skalKunFastsetteAT);
+  }
 };
 
 describe('<VurderOgFastsettATFL>', () => {
@@ -235,6 +239,40 @@ describe('<VurderOgFastsettATFL>', () => {
     const wrapper = lagWrapper(tilfeller, false, true);
     assertFormNyoppstartetFL(wrapper, false, false);
     assertFormLonnsendring(wrapper, false, false);
+    assertInntektstabell(wrapper, true);
+  });
+
+  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er kun vurder mottar ytelse', () => {
+    const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE];
+    const wrapper = lagWrapper(tilfeller, undefined, undefined);
+    assertInntektstabell(wrapper, true);
+  });
+
+  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er mottar ytelse og fastsatt lønnsendring', () => {
+    const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE, faktaOmBeregningTilfelle.VURDER_LONNSENDRING];
+    const wrapper = lagWrapper(tilfeller, true, undefined);
+    assertFormLonnsendring(wrapper, false, false);
+    assertInntektstabell(wrapper, true);
+  });
+
+  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er mottar ytelse og ikkje fastsatt lønnsendring', () => {
+    const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE, faktaOmBeregningTilfelle.VURDER_LONNSENDRING];
+    const wrapper = lagWrapper(tilfeller, false, undefined);
+    assertFormLonnsendring(wrapper, false, false);
+    assertInntektstabell(wrapper, true);
+  });
+
+  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er mottar ytelse og fastsatt nyoppstartet frilans', () => {
+    const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE, faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
+    const wrapper = lagWrapper(tilfeller, undefined, true);
+    assertFormNyoppstartetFL(wrapper, false, false);
+    assertInntektstabell(wrapper, true);
+  });
+
+  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er mottar ytelse og ikkje fastsatt nyoppstartet frilans', () => {
+    const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE, faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
+    const wrapper = lagWrapper(tilfeller, undefined, false);
+    assertFormNyoppstartetFL(wrapper, false, false);
     assertInntektstabell(wrapper, true);
   });
 });

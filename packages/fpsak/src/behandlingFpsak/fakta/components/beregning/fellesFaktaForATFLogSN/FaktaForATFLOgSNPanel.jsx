@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import faktaOmBeregningTilfelle, { vurderOgFastsettATFLTilfeller } from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { createSelector } from 'reselect';
 import {
   getAksjonspunkter,
@@ -47,10 +47,6 @@ import VurderMottarYtelseForm from './vurderOgFastsettATFL/forms/VurderMottarYte
 const {
   VURDER_FAKTA_FOR_ATFL_SN,
 } = aksjonspunktCodes;
-
-const vurderOgFastsettATFLTilfeller = [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON,
-  faktaOmBeregningTilfelle.VURDER_LONNSENDRING,
-  faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
 
 const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
@@ -141,19 +137,6 @@ const getFaktaPanels = (readOnly, formName, tilfeller, isAksjonspunktClosed, sho
             readOnly={readOnly}
             isAksjonspunktClosed={isAksjonspunktClosed}
             formName={formName}
-          />
-        </ElementWrapper>,
-      );
-    }
-    if (tilfelle === faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE) {
-      hasShownPanel = true;
-      faktaPanels.push(
-        <ElementWrapper key={tilfelle}>
-          {spacer(hasShownPanel)}
-          <VurderMottarYtelseForm
-            readOnly={readOnly}
-            isAksjonspunktClosed={isAksjonspunktClosed}
-            tilfeller={tilfeller}
           />
         </ElementWrapper>,
       );
@@ -308,14 +291,6 @@ const setValuesForVurderFakta = (aktivePaneler, values, endringBGPerioder, kortv
         ...NyoppstartetFLForm.transformValues(values),
       };
     }
-    // Kan dette tilfellet oppstå?
-    if (kode === faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL && !aktivePaneler.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL)) {
-      vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL);
-      vurderFaktaValues = {
-        ...vurderFaktaValues,
-        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, kode),
-      };
-    }
     if (kode === faktaOmBeregningTilfelle.VURDER_LONNSENDRING) {
       vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_LONNSENDRING);
       vurderFaktaValues = {
@@ -336,7 +311,7 @@ const setValuesForVurderFakta = (aktivePaneler, values, endringBGPerioder, kortv
       vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE);
       vurderFaktaValues = {
         ...vurderFaktaValues,
-        ...VurderMottarYtelseForm.transformValues(values, faktaOmBeregning.vurderMottarYtelse),
+        ...VurderMottarYtelseForm.transformValues(values, faktaOmBeregning, aktivePaneler, vurderFaktaValues),
       };
     }
   });

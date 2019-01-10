@@ -8,7 +8,10 @@ import { getFaktaOmBeregning } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import { required } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import faktaOmBeregningTilfelle, { erATFLSpesialtilfelle } from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import faktaOmBeregningTilfelle, {
+  erATFLSpesialtilfelleEllerVurderMottarYtelseUtenBesteberegning,
+  harIkkeATFLSameOrgEllerBesteberegning,
+} from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { Column, Row } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import FastsettATFLInntektForm
@@ -17,7 +20,8 @@ import FastsettATFLInntektForm
 import styles from './lonnsendringForm.less';
 
 export const utledOverskriftForLonnsendringForm = (tilfeller, manglerIM) => {
-  if (!tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON) || erATFLSpesialtilfelle(tilfeller)) {
+  if (!tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)
+  || erATFLSpesialtilfelleEllerVurderMottarYtelseUtenBesteberegning(tilfeller)) {
     return ['BeregningInfoPanel.VurderOgFastsettATFL.HarSokerEndring'];
   }
   return manglerIM
@@ -33,7 +37,7 @@ export const utledOverskriftForLonnsendringForm = (tilfeller, manglerIM) => {
  *
  * Presentasjonskomponent. Setter opp aksjonspunktet VURDER_FAKTA_FOR_ATFL_SN for tilfelle VURDER_LØNNSENDRING som ber
  * bruker fastsette lønnsendring for en liste med arbeidsforhold.
- * Tilhørende tilfelle for å fastsette FL inntekt er FASTSETT_MAANEDSLONN_VED_LONNSENDRING.
+ * Tilhørende tilfelle for å fastsette FL inntekt er FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING.
  * Denne komponenten kan vise intektstabell under radioknappene dersom skalViseInntektstabell er satt
  */
 
@@ -48,6 +52,7 @@ export const LonnsendringFormImpl = ({
   manglerIM,
   erLonnsendring,
   skalKunFastsetteAT,
+  formName,
 }) => (
   <div>
     {radioknappOverskrift.map(kode => (
@@ -78,8 +83,9 @@ export const LonnsendringFormImpl = ({
               isAksjonspunktClosed={isAksjonspunktClosed}
               tilfellerSomSkalFastsettes={tilfeller}
               manglerInntektsmelding={manglerIM}
-              skalFastsetteFL={!skalKunFastsetteAT}
-              skalFastsetteAT
+              skalViseFL={!skalKunFastsetteAT}
+              skalViseAT
+              formName={formName}
             />
           </div>
         </Column>
@@ -98,6 +104,7 @@ LonnsendringFormImpl.propTypes = {
   manglerIM: PropTypes.bool.isRequired,
   erLonnsendring: PropTypes.bool,
   skalKunFastsetteAT: PropTypes.bool,
+  formName: PropTypes.string.isRequired,
 };
 
 LonnsendringFormImpl.defaultProps = {
@@ -130,34 +137,24 @@ LonnsendringFormImpl.transformValues = values => ({
   vurdertLonnsendring: { erLønnsendringIBeregningsperioden: values[lonnsendringField] },
 });
 
-const harIkkeATFLSameOrgEllerBesteberegning = tilfeller => !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)
-  && !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON);
-
 LonnsendringFormImpl.lonnendringFastsatt = (values, tilfeller, faktaOmBeregning, transformedValues) => {
   // Dersom vi har tilfellet VURDER_AT_OG_FL_I_SAMME_ORGANISASJON
   // eller FASTSETT_BESTEBEREGNING_FODENDE_KVINNE vil arbeidsinntekt tas med når det tilfellet submittes
   if (values[lonnsendringField] && harIkkeATFLSameOrgEllerBesteberegning(tilfeller)) {
-    if (!transformedValues.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_VED_LONNSENDRING)) {
-      transformedValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_VED_LONNSENDRING);
+    if (!transformedValues.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)) {
+      transformedValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING);
       return {
-        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_VED_LONNSENDRING),
+        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING),
         faktaOmBeregningTilfeller: transformedValues.faktaOmBeregningTilfeller,
       };
     }
-    return {
-      ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_VED_LONNSENDRING),
-    };
+    if (!transformedValues.fastsatteLonnsendringer) {
+      return {
+        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING),
+      };
+    }
   }
-  if (transformedValues.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_VED_LONNSENDRING)) {
-    transformedValues.faktaOmBeregningTilfeller.splice(tilfeller.indexOf(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_VED_LONNSENDRING), 1);
-    return {
-      faktaOmBeregningTilfeller: transformedValues.faktaOmBeregningTilfeller,
-      vurderLønnsendringAndelListe: null,
-    };
-  }
-  return {
-    vurderLønnsendringAndelListe: null,
-  };
+  return {};
 };
 
 const mapStateToProps = (state, initialProps) => {

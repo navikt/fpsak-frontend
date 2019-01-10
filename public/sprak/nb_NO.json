@@ -1296,6 +1296,8 @@
   "ToTrinnsForm.Beregning.VurderEtterlønnSluttpakke": "Det er vurdert om søker har inntekt fra etterlønn eller sluttpakke.",
   "ToTrinnsForm.Beregning.FastsettEtterlønnSluttpakke": "Inntekt er fastsatt for arbeidstaker med etterlønn eller sluttpakke.",
   "ToTrinnsForm.Beregning.VurderMottarYtelse": "Det er vurdert om søker har mottatt ytelse",
+  "ToTrinnsForm.Beregning.FrilansinntektFastsatt": "Frilansinntekt er fastsatt",
+
 
   "ToTrinnsForm.Opptjening.Endring": "Perioden {aktivitetType}{arbeidsInfoText} er endret.",
   "ToTrinnsForm.Opptjening.Underkjenning": "Aktivitet {aktivitetType}{arbeidsInfoText} er <b>ikke</b> godkjent.",

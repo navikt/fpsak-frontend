@@ -92,6 +92,8 @@ const beregningsgrunnlagPropType = PropTypes.shape({
       erNyIArbeidslivet: PropTypes.bool,
       erTidsbegrensetArbeidsforhold: PropTypes.bool,
       erNyoppstartetEllerSammeOrganisasjon: PropTypes.bool,
+      erNyoppstartet: PropTypes.bool,
+      fastsattAvSaksbehandler: PropTypes.bool,
       arbeidsgiverId: PropTypes.string,
       arbeidsgiverNavn: PropTypes.string,
       andelsnr: PropTypes.number,

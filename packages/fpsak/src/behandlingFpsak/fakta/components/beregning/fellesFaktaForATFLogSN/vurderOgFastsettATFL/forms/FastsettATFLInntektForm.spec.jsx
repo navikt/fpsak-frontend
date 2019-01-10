@@ -63,6 +63,16 @@ const beregningsgrunnlag = {
         navn: 'Frilans',
       },
     },
+    faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON },
+      { kode: faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE },
+      { kode: faktaOmBeregningTilfelle.VURDER_LONNSENDRING },
+      { kode: faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL }],
+    vurderMottarYtelse: {
+      erFrilans: true,
+      frilansMottarYtelse: null,
+      frilansInntektPrMnd: 15500,
+      arbeidstakerAndelerUtenIM: [{ ...forholdMedLonnsendringUtenIM, mottarYtelse: null, inntektPrMnd: 20000 }],
+    },
   },
   beregningsgrunnlagPeriode: [
     {
@@ -85,6 +95,11 @@ const beregningsgrunnlag = {
     },
   ],
 };
+
+const lagRedigerbarFrilans = faktaOmBeregning => ({
+  ...faktaOmBeregning.frilansAndel,
+  redigerbar: true,
+});
 
 describe('<FastsettATFLInntektForm>', () => {
   it('Skal vise ekstra intruksjon dersom tabell vises uten vurdering på forhånd når det mangler inntektsmelding', () => {
@@ -126,7 +141,7 @@ describe('<FastsettATFLInntektForm>', () => {
       tabellVisesUtenVurdering
       manglerInntektsmelding={false}
       arbeidsforholdSomSkalFastsettes={arbeidsforhold}
-      frilansAndel={beregningsgrunnlag.faktaOmBeregning.frilansAndel}
+      frilansAndel={lagRedigerbarFrilans(beregningsgrunnlag.faktaOmBeregning)}
     />);
     const allRows = wrapper.find('TableRow');
     expect(allRows).to.have.length(4);
@@ -174,6 +189,14 @@ describe('<FastsettATFLInntektForm>', () => {
     expect(initialValues[expectedFLKey]).to.eql('10 000');
   });
 
+  it('Skal teste at buildInitialValues lager korrekt dataobjekt for når beregnet ikke er satt', () => {
+    const initialValues = FastsettATFLInntektForm.buildInitialValues(beregningsgrunnlag);
+    const expectedATKey = 'fastsattInntekt_bedrift_2018-01-01_abc';
+    const expectedFLKey = 'fastsattInntekt_FL';
+    expect(initialValues[expectedATKey]).to.eql('10 000');
+    expect(initialValues[expectedFLKey]).to.eql('10 000');
+  });
+
   it('Skal teste at transformValues gir korrekt dataobjekt for alle tilfeller', () => {
     const expectedATKey = 'fastsattInntekt_bedrift_2018-01-01_abc';
     const expectedFLKey = 'fastsattInntekt_FL';
@@ -188,7 +211,7 @@ describe('<FastsettATFLInntektForm>', () => {
     const transformedValuesLonnsendring = FastsettATFLInntektForm.transformValues(
       values,
       beregningsgrunnlag.faktaOmBeregning,
-      faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_VED_LONNSENDRING,
+      faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING,
     );
     const transformedValuesFL = FastsettATFLInntektForm.transformValues(
       values,
