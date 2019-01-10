@@ -170,7 +170,7 @@ export const InntektsmeldingInfo = ({
             const avvikArbeidforhold = innmldInfo.arbeidsgiver !== (arbeidsgiver || {}).navn
               || innmldInfo.arbeidsgiverOrgnr !== (arbeidsgiver || {}).identifikator;
             const arbeidsProsentFraInnteksmelding = innmldInfo.arbeidsProsentFraInntektsmelding !== arbeidsprosentFraSøknad;
-            if (avvikArbeidforhold || arbeidsProsentFraInnteksmelding) {
+            if (avvikArbeidforhold || arbeidsProsentFraInnteksmelding || manglerUtsettelseFraInntektsmelding) {
               return (
                 <React.Fragment key={guid()}>
                   <Element className={classNames('avvik', { hasAvvik: avvikArbeidforhold })}>
