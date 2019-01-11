@@ -1,3 +1,4 @@
+/* @flow */
 import type { ActionTypes } from './ActionTypesFlowType';
 
 /* @flow */
@@ -10,6 +11,7 @@ const initialStateAsync = {
   statusRequestStarted: false,
   statusRequestFinished: false,
   pollingMessage: undefined,
+  pollingTimeout: false,
 };
 
 const initialStateSync = {
@@ -50,7 +52,7 @@ type Action = {
    *   actionTypes.requestFinished
    *   actionTypes.requestError
    */
-const createRequestReducer = (isAsync: boolean, restMethod: () => void, resourceName: string, actionTypes: ActionTypes) => {
+const createRequestReducer = (isAsync: boolean, actionTypes: ActionTypes) => {
   const initialState = isAsync ? initialStateAsync : initialStateSync;
 
   return (state: State = initialState, action: Action = { type: '' }) => { // NOSONAR Switch brukes som standard i reducers
@@ -74,6 +76,11 @@ const createRequestReducer = (isAsync: boolean, restMethod: () => void, resource
         return {
           ...state,
           pollingMessage: action.payload,
+        };
+      case actionTypes.pollingTimeout:
+        return {
+          ...state,
+          pollingTimeout: true,
         };
       case actionTypes.statusRequestFinished:
         return {

@@ -1,6 +1,7 @@
 /* @flow */
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import type { Dispatch } from 'redux';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 import sinon from 'sinon';
@@ -8,11 +9,30 @@ import moment from 'moment';
 
 import { getAxiosHttpClientApi, RequestApi } from '@fpsak-frontend/rest-api';
 
+import ReduxEvents from './ReduxEvents';
 import RestDuck from './RestDuck';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
+const reduxEvents = new ReduxEvents();
+
+type Action = {
+  type: string,
+  meta?: {
+    options: {
+      keepData: boolean,
+    },
+  },
+  payload?: any,
+}
+
+type Store = {
+  dispatch: (dispatch: Dispatch<any>) => Promise<{payload: any}>,
+  getActions: () => Action[],
+}
+
+const createStore = (): Store => mockStore();
 
 describe('RestDuck (sync)', () => {
   const timestamp = moment().valueOf();
@@ -47,7 +67,7 @@ describe('RestDuck (sync)', () => {
       .reply(200, {
         resource: 'resource',
       });
-    const store = mockStore();
+    const store = createStore();
 
     const requestConfig = {
       path: ressursEndpoint,
@@ -57,7 +77,7 @@ describe('RestDuck (sync)', () => {
     };
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy());
+    const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
 
     const params = { id: 'id' };
     return store.dispatch(getRessursDuck.actionCreators.execRequest(params))
@@ -91,10 +111,8 @@ describe('RestDuck (sync)', () => {
   it('skal sette flagg for started og og legge feil i state', () => {
     mockAxios
       .onGet(ressursEndpointIncludingContextPath)
-      .reply(404, {
-        message: 'Resource not found',
-      });
-    const store = mockStore();
+      .reply(404, 'Resource not found');
+    const store = createStore();
 
     const requestConfig = {
       path: ressursEndpoint,
@@ -104,7 +122,7 @@ describe('RestDuck (sync)', () => {
     };
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy());
+    const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
 
     const params = { id: 'id' };
     return store.dispatch(getRessursDuck.actionCreators.execRequest(params))
@@ -142,7 +160,7 @@ describe('RestDuck (sync)', () => {
       .reply(200, {
         resource: 'resource',
       });
-    const store = mockStore();
+    const store = createStore();
 
     const requestConfig = {
       path: ressursEndpoint,
@@ -152,7 +170,7 @@ describe('RestDuck (sync)', () => {
     };
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy());
+    const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
 
     const params = { id: 'id' };
     return store.dispatch(getRessursDuck.actionCreators.execRequest(params))
@@ -162,6 +180,9 @@ describe('RestDuck (sync)', () => {
 
         const stateBeforeRequest = {
           data: 'noe_data',
+          meta: {},
+          started: false,
+          finished: false,
         };
 
         const stateAfterRequestStarted = getRessursDuck.reducer(stateBeforeRequest, requestStartedAction);
@@ -175,7 +196,7 @@ describe('RestDuck (sync)', () => {
       .reply(200, {
         resource: 'resource',
       });
-    const store = mockStore();
+    const store = createStore();
 
     const requestConfig = {
       path: ressursEndpoint,
@@ -185,7 +206,7 @@ describe('RestDuck (sync)', () => {
     };
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy());
+    const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
 
     const params = { id: 'id' };
     return store.dispatch(getRessursDuck.actionCreators.execRequest(params, { keepData: true }))
@@ -195,6 +216,9 @@ describe('RestDuck (sync)', () => {
 
         const stateBeforeRequest = {
           data: 'noe_data',
+          meta: {},
+          started: false,
+          finished: false,
         };
 
         const stateAfterRequestStarted = getRessursDuck.reducer(stateBeforeRequest, requestStartedAction);
@@ -208,7 +232,7 @@ describe('RestDuck (sync)', () => {
       .reply(200, {
         resource: 'resource',
       });
-    const store = mockStore();
+    const store = createStore();
 
     const getApiContext = state => state.dataContext;
     const requestConfig = {
@@ -219,7 +243,7 @@ describe('RestDuck (sync)', () => {
     };
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), getApiContext);
+    const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), getApiContext, reduxEvents);
 
     // Unpack to named selectors
     const getRessursData = state => getRessursDuck.stateSelector(state).data;

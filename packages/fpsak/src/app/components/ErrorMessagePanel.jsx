@@ -7,11 +7,10 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 import Lukknapp from 'nav-frontend-lukknapp';
 
+import errorHandler from '@fpsak-frontend/error-api-redux';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import {
-  getCrashMessage, getErrorMessages, getErrorMessageCodeWithParams, getShowDetailedErrorMessages,
-} from 'app/duck';
-import fpsakApi from 'data/fpsakApi';
+
+import { getShowDetailedErrorMessages } from 'app/duck';
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
 
 import styles from './errorMessagePanel.less';
@@ -112,44 +111,34 @@ ErrorMessagePanel.propTypes = {
   removeErrorMessage: PropTypes.func.isRequired,
 };
 
-const filterMessage = (params, showDetailedErrorMessages) => (params.message && !showDetailedErrorMessages
-  ? {
-    ...params,
-    message: '',
-  }
-  : params);
+export const getErrorMessageList = createSelector([(state, ownProps) => ownProps, errorHandler.getAllErrorMessages], (ownProps, allErrorMessages = []) => {
+  const { queryStrings, intl } = ownProps;
+  const errorMessages = [];
 
-// TODO (TOR) Dette er rotete og lite forståeleg. Refaktorer...
-export const getErrorMessageList = ownProps => createSelector(
-  [getErrorMessages, getErrorMessageCodeWithParams, getCrashMessage, getShowDetailedErrorMessages, fpsakApi.getAllAsyncErrorMessages],
-  (errorMessages, errorMessageCodeWithParams, crashMessage, showDetailedErrorMessages, asyncErrorMessages) => {
-    if (ownProps.queryStrings.errorcode) {
-      return [{ message: ownProps.intl.formatMessage({ id: ownProps.queryStrings.errorcode }) }];
+  if (queryStrings.errorcode) {
+    errorMessages.push({ message: intl.formatMessage({ id: queryStrings.errorcode }) });
+  }
+  if (queryStrings.errormessage) {
+    errorMessages.push({ message: queryStrings.errormessage });
+  }
+
+  allErrorMessages.forEach((message) => {
+    let msg = { message: (message.code ? intl.formatMessage({ id: message.code }, message.params) : message.text) };
+    if (message.params && message.params.errorDetails) {
+      msg = {
+        ...msg,
+        additionalInfo: JSON.parse(decodeHtmlEntity(message.params.errorDetails)),
+      };
     }
-    if (ownProps.queryStrings.errormessage) {
-      return [{ message: ownProps.queryStrings.errormessage }];
-    }
-    if (crashMessage) {
-      return [{ message: crashMessage }];
-    }
-    if (errorMessageCodeWithParams) {
-      return [{
-        message: ownProps.intl.formatMessage({ id: errorMessageCodeWithParams.code },
-          filterMessage(errorMessageCodeWithParams.params, showDetailedErrorMessages)),
-        additionalInfo: errorMessageCodeWithParams.params.errorDetails
-          ? JSON.parse(decodeHtmlEntity(errorMessageCodeWithParams.params.errorDetails))
-          : undefined,
-      }];
-    }
-    if (errorMessages) {
-      return errorMessages.map(em => ({ message: em }));
-    }
-    return asyncErrorMessages.map(em => ({ message: em }));
-  },
-);
+    errorMessages.push(msg);
+  });
+
+  return errorMessages;
+});
+
 
 const mapStateToProps = (state, ownProps) => ({
-  errorMessages: getErrorMessageList(ownProps)(state),
+  errorMessages: getErrorMessageList(state, ownProps),
   showDetailedErrorMessages: getShowDetailedErrorMessages(state),
 });
 

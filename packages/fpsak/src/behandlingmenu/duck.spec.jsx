@@ -93,7 +93,7 @@ describe('BehandlingMenu-reducer', () => {
 
     return store.dispatch(createNewForstegangsbehandling(push, fagsak.saksnummer, params))
       .then(() => {
-        expect(store.getActions()).to.have.length(12);
+        expect(store.getActions()).to.have.length(13);
         const [behandlingReset, originalBehandlingReset, requestStartedAction, requestFinishedAction] = store.getActions();
 
         expect(behandlingReset.type).to.contain('/BEHANDLING RESET');
@@ -157,7 +157,7 @@ describe('BehandlingMenu-reducer', () => {
 
     return store.dispatch(createNewForstegangsbehandling(push, 1, params))
       .then(() => {
-        expect(store.getActions()).to.have.length(16);
+        expect(store.getActions()).to.have.length(17);
         const [behandlingReset, originalBehandlingReset, requestStartedAction, requestFinishedAction] = store.getActions();
 
         expect(behandlingReset.type).to.contain('/BEHANDLING RESET');
@@ -221,12 +221,16 @@ describe('BehandlingMenu-reducer', () => {
 
     return store.dispatch(openBehandlingForChanges(params, id))
       .then(() => {
-        expect(store.getActions()).to.have.length(14);
-        const [opneForEndringerStartedAction, opneForEndringerFinishedAction, copyStartedAction, copyFinishedAction] = store.getActions();
+        expect(store.getActions()).to.have.length(15);
+        const [opneForEndringerStartedAction, opneForEndringerFinishedAction, pollingAction, copyStartedAction,
+          copyFinishedAction] = store.getActions();
 
         expect(opneForEndringerStartedAction.type).to.contain('fpsak/api/behandlinger/opne-for-endringer STARTED');
         expect(opneForEndringerStartedAction.payload.params).is.eql(params);
         expect(opneForEndringerFinishedAction.type).to.contain('fpsak/api/behandlinger/opne-for-endringer FINISHED');
+
+        expect(pollingAction.type).to.contain('pollingMessage/SET_REQUEST_POLLING_MESSAGE');
+        expect(pollingAction.payload).is.undefined;
 
         expect(copyStartedAction.type).to.contain('@@REST/BEHANDLING COPY_DATA_STARTED');
         expect(copyStartedAction.payload.params).is.eql(id.toJson());

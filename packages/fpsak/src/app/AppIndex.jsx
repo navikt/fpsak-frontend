@@ -6,11 +6,12 @@ import { withRouter } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 import moment from 'moment';
 
+import errorHandler from '@fpsak-frontend/error-api-redux';
 import { parseQueryString } from '@fpsak-frontend/utils';
+
 import AppConfigResolver from './AppConfigResolver';
 import {
-  getCrashMessage, getErrorMessageCodeWithParams, getErrorMessages, getFunksjonellTid, getNavAnsattName,
-  getRettskildeUrl, getSystemrutineUrl, removeErrorMessage, showCrashMessage,
+  getFunksjonellTid, getNavAnsattName, getRettskildeUrl, getSystemrutineUrl,
 } from './duck';
 import LanguageProvider from './LanguageProvider';
 import Header from './components/Header';
@@ -27,6 +28,28 @@ import '@fpsak-frontend/assets/styles/global.less';
  * og kodeverk fra server og lagre desse i klientens state.
  */
 class AppIndex extends Component {
+  static propTypes = {
+    errorMessagesLength: PropTypes.number.isRequired,
+    removeErrorMessage: PropTypes.func.isRequired,
+    crashMessage: PropTypes.string,
+    showCrashMessage: PropTypes.func.isRequired,
+    navAnsattName: PropTypes.string,
+    rettskildeUrl: PropTypes.string,
+    systemrutineUrl: PropTypes.string,
+    funksjonellTid: PropTypes.string,
+    location: PropTypes.shape({
+      search: PropTypes.string,
+    }).isRequired,
+  };
+
+  static defaultProps = {
+    crashMessage: '',
+    navAnsattName: '',
+    rettskildeUrl: '',
+    systemrutineUrl: '',
+    funksjonellTid: undefined,
+  };
+
   componentDidUpdate(prevProps) {
     const { funksjonellTid } = this.props;
     if (prevProps.funksjonellTid !== funksjonellTid) {
@@ -78,37 +101,18 @@ class AppIndex extends Component {
   }
 }
 
-AppIndex.propTypes = {
-  errorMessagesLength: PropTypes.number.isRequired,
-  removeErrorMessage: PropTypes.func.isRequired,
-  crashMessage: PropTypes.string,
-  showCrashMessage: PropTypes.func.isRequired,
-  navAnsattName: PropTypes.string,
-  rettskildeUrl: PropTypes.string,
-  systemrutineUrl: PropTypes.string,
-  funksjonellTid: PropTypes.string,
-  location: PropTypes.shape({
-    search: PropTypes.string,
-  }).isRequired,
-};
-
-AppIndex.defaultProps = {
-  crashMessage: '',
-  navAnsattName: '',
-  rettskildeUrl: '',
-  systemrutineUrl: '',
-  funksjonellTid: undefined,
-};
-
 const mapStateToProps = state => ({
-  errorMessagesLength: getErrorMessages(state).length + (getErrorMessageCodeWithParams(state) ? 1 : 0),
-  crashMessage: getCrashMessage(state),
+  errorMessagesLength: errorHandler.getAllErrorMessages(state).length,
+  crashMessage: errorHandler.getCrashMessage(state),
   navAnsattName: getNavAnsattName(state),
   rettskildeUrl: getRettskildeUrl(state),
   systemrutineUrl: getSystemrutineUrl(state),
   funksjonellTid: getFunksjonellTid(state),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ showCrashMessage, removeErrorMessage }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  showCrashMessage: errorHandler.showCrashMessage,
+  removeErrorMessage: errorHandler.removeErrorMessage,
+}, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(hot(module)(AppIndex)));

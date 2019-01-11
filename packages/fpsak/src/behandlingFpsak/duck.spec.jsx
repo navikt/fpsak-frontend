@@ -76,7 +76,7 @@ describe('Behandling-reducer', () => {
     const behandlingIdentifier = new BehandlingIdentifier('123', '456');
     return store.dispatch(updateBehandling(behandlingIdentifier))
       .then(() => {
-        expect(store.getActions()).to.have.length(2);
+        expect(store.getActions()).to.have.length(3);
         const [requestStartedAction, requestFinishedAction] = store.getActions();
 
         expect(requestStartedAction.type).to.contain('fpsak/api/behandlinger STARTED');
@@ -110,8 +110,9 @@ describe('Behandling-reducer', () => {
 
     return store.dispatch(updateBehandling(behandlingIdentifier))
       .then(() => {
-        expect(store.getActions()).to.have.length(4);
-        const [requestStartedAction, requestFinishedAction, origBehandlingrequestStartedAction, origBehandlingrequestFinishedAction] = store.getActions();
+        expect(store.getActions()).to.have.length(6);
+        const [requestStartedAction, requestFinishedAction, pollingMessageAction,
+          origBehandlingrequestStartedAction, origBehandlingrequestFinishedAction] = store.getActions();
 
         expect(requestStartedAction.type).to.contain('fpsak/api/behandlinger STARTED');
         expect(requestStartedAction.payload.params).is.eql({ behandlingId: 456, saksnummer: '1' });
@@ -119,6 +120,9 @@ describe('Behandling-reducer', () => {
 
         expect(requestFinishedAction.type).to.contain('fpsak/api/behandlinger FINISHED');
         expect(requestFinishedAction.payload).is.eql(revurderingBehandling);
+
+        expect(pollingMessageAction.type).to.contain('pollingMessage/SET_REQUEST_POLLING_MESSAGE');
+        expect(pollingMessageAction.payload).is.undefined;
 
         expect(origBehandlingrequestStartedAction.type).to.contain('fpsak/api/behandlinger STARTED');
         expect(origBehandlingrequestStartedAction.payload.params).is.eql({ behandlingId: 23, saksnummer: '1' });

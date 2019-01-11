@@ -10,7 +10,7 @@ describe('RequestApi', () => {
 
   it('skal sette opp korrekt request-runner', () => {
     const httpClientMock = {
-      get: () => 'data',
+      get: (): Promise<Response> => Promise.resolve(new Response('data')),
     };
 
     const requestConfig = {
@@ -29,7 +29,7 @@ describe('RequestApi', () => {
 
   it('skal kunne oppdatere server-url i request-runner', () => {
     const httpClientMock = {
-      get: () => 'data',
+      get: (): Promise<Response> => Promise.resolve(new Response('data')),
     };
 
     const requestConfig = {
@@ -53,7 +53,7 @@ describe('RequestApi', () => {
 
   it('skal ikke kunne lage/oppdatere endepunkt som ikke finnes', () => {
     const httpClientMock = {
-      get: () => 'data',
+      get: (): Promise<Response> => Promise.resolve(new Response('data')),
     };
 
     const requestConfig = {

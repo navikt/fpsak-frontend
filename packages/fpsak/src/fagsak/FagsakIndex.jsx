@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 
-import fpsakApi from 'data/fpsakApi';
 import { behandlingerPath } from 'app/paths';
 import BehandlingerIndex from 'behandling/BehandlingerIndex';
 import BehandlingSupportIndex from 'behandlingsupport/BehandlingSupportIndex';
 import FagsakProfileIndex from 'fagsakprofile/FagsakProfileIndex';
 import trackRouteParam from 'app/data/trackRouteParam';
 import requireProps from 'app/data/requireProps';
+import { getRequestPollingMessage } from 'app/pollingMessageDuck';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { setSelectedSaksnummer } from './duck';
 import { getSelectedSaksnummer } from './fagsakSelectors';
@@ -22,7 +22,7 @@ import FagsakGrid from './components/FagsakGrid';
  *
  * Container komponent. Er rot for for fagsakdelen av hovedvinduet, og har ansvar å legge valgt saksnummer fra URL-en i staten.
  */
-export const FagsakIndex = ({ selectedSaksnummer, requestPendingMessages }) => (
+export const FagsakIndex = ({ selectedSaksnummer, requestPendingMessage }) => (
   <ElementWrapper>
     <FagsakResolver key={selectedSaksnummer}>
       <FagsakGrid
@@ -31,18 +31,22 @@ export const FagsakIndex = ({ selectedSaksnummer, requestPendingMessages }) => (
         supportContent={<BehandlingSupportIndex />}
       />
     </FagsakResolver>
-    {requestPendingMessages.length > 0 && <DataFetchPendingModal pendingMessages={requestPendingMessages} />}
+    {requestPendingMessage && <DataFetchPendingModal pendingMessage={requestPendingMessage} />}
   </ElementWrapper>
 );
 
 FagsakIndex.propTypes = {
   selectedSaksnummer: PropTypes.number.isRequired,
-  requestPendingMessages: PropTypes.arrayOf(PropTypes.string).isRequired,
+  requestPendingMessage: PropTypes.string,
+};
+
+FagsakIndex.defaultProps = {
+  requestPendingMessage: undefined,
 };
 
 const mapStateToProps = state => ({
   selectedSaksnummer: getSelectedSaksnummer(state),
-  requestPendingMessages: fpsakApi.getAllAsyncPollingMessages(state),
+  requestPendingMessage: getRequestPollingMessage(state),
 });
 
 export default trackRouteParam({

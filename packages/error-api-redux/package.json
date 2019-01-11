@@ -1,0 +1,15 @@
+{
+  "name": "@fpsak-frontend/error-api-redux",
+  "version": "1.0.0",
+  "module": "index.jsx",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "reselect": "^4.0.0",
+    "@fpsak-frontend/utils": "1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "sinon": "^5.0.10"
+  }
+}

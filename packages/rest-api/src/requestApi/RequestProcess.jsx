@@ -1,18 +1,18 @@
 /* @flow */
 import EventType from './eventType';
 import asyncPollingStatus from './asyncPollingStatus';
-import type { HttpClientApi } from '../HttpClientApiFlowType';
+import type { HttpClientApi, Response } from '../HttpClientApiFlowType';
 import type { RequestAdditionalConfig } from '../RequestAdditionalConfigFlowType';
+import TimeoutError from './error/TimeoutError';
+import RequestErrorEventHandler from './error/RequestErrorEventHandler';
 
 const HTTP_ACCEPTED = 202;
 const MAX_POLLING_ATTEMPTS = 150;
-const CANCELLED = 'CANCELLED';
+const CANCELLED = 'INTERNAL_CANCELLATION';
 
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-const getMaxPollingAttemptsMessage = (location, pollingMessage) => `Maximum polling attempts exceeded. URL: ${location}. Message: ${pollingMessage}`;
-
-const getRestMethod = (httpClientApi, restMethodString) => {
+const getRestMethod = (httpClientApi: HttpClientApi, restMethodString: string) => {
   switch (restMethodString) {
     case 'POST':
       return httpClientApi.post;
@@ -23,7 +23,18 @@ const getRestMethod = (httpClientApi, restMethodString) => {
   }
 };
 
+const hasStatusDelayedOrHalted = responseData => responseData && (responseData.status === asyncPollingStatus.DELAYED
+  || responseData.status === asyncPollingStatus.HALTED);
+
 type Notify = (eventType: $Keys<typeof EventType>, data?: any) => void
+type NotificationEmitter = (eventType: $Keys<typeof EventType>, data?: any) => void
+
+type ResponseDataLink = {
+  href: string,
+  type: string,
+  requestPayload: any,
+  rel: string,
+}
 
 /**
  * RequestProcess
@@ -36,9 +47,9 @@ type Notify = (eventType: $Keys<typeof EventType>, data?: any) => void
 class RequestProcess {
   httpClientApi: HttpClientApi;
 
-  restMethod: () => void;
+  restMethod: (url: string, params: any, responseType?: string) => Promise<Response>;
 
-  url: string;
+  path: string;
 
   config: RequestAdditionalConfig;
 
@@ -48,27 +59,28 @@ class RequestProcess {
 
   isCancelled: boolean = false;
 
-  constructor(httpClientApi: HttpClientApi, restMethod: () => any, path: string, config: RequestAdditionalConfig) {
+  constructor(httpClientApi: HttpClientApi,
+    restMethod: (url: string, params: any, responseType?: string) => Promise<Response>, path: string, config: RequestAdditionalConfig) {
     this.httpClientApi = httpClientApi;
     this.restMethod = restMethod;
-    this.url = path;
+    this.path = path;
     this.config = config;
     this.maxPollingLimit = config.maxPollingLimit || this.maxPollingLimit;
   }
 
-  setNotificationEmitter = (notify: Notify) => {
-    this.notify = notify;
+  setNotificationEmitter = (notificationEmitter: NotificationEmitter) => {
+    this.notify = notificationEmitter;
   }
 
-  execLongPolling = async (location: string, pollingInterval: number = 0, pollingCounter: number = 0, previousMessage: string = '') => {
+  execLongPolling = async (location: string, pollingInterval?: number = 0, pollingCounter?: number = 0): Promise<Response> => {
     if (pollingCounter === this.maxPollingLimit) {
-      throw new Error(getMaxPollingAttemptsMessage(location, previousMessage));
+      throw new TimeoutError(location);
     }
 
     await wait(pollingInterval);
 
     if (this.isCancelled) {
-      return CANCELLED;
+      return null;
     }
 
     this.notify(EventType.STATUS_REQUEST_STARTED);
@@ -79,13 +91,13 @@ class RequestProcess {
     if (responseData && responseData.status === asyncPollingStatus.PENDING) {
       const { pollIntervalMillis, message } = responseData;
       this.notify(EventType.UPDATE_POLLING_MESSAGE, message);
-      return this.execLongPolling(location, pollIntervalMillis, pollingCounter + 1, message);
+      return this.execLongPolling(location, pollIntervalMillis, pollingCounter + 1);
     }
 
     return statusOrResultResponse;
   };
 
-  execLinkRequests = async (responseData) => {
+  execLinkRequests = async (responseData: {links: ResponseDataLink[]}) => {
     const requestList = responseData.links
       .map(link => () => this.execute(// eslint-disable-line no-use-before-define
         link.href, getRestMethod(this.httpClientApi, link.type), link.requestPayload,
@@ -99,22 +111,24 @@ class RequestProcess {
         : allResponses.reduce((acc, rData) => ({ ...acc, ...rData }), {})));
   }
 
-  execute = async (url: string, restMethod: (url: string, params?: any) => void, params: any) => {
-    let response = await restMethod(url, params);
+  execute = async (path: string, restMethod: (path: string, params?: any) => Response, params: any): Promise<Response> => {
+    let response = await restMethod(path, params);
     if (response.status === HTTP_ACCEPTED) {
       try {
         response = await this.execLongPolling(response.headers.location);
       } catch (error) {
         const responseData = error.response ? error.response.data : undefined;
-        if (responseData && (responseData.status === asyncPollingStatus.DELAYED || responseData.status === asyncPollingStatus.HALTED)) {
+        if (hasStatusDelayedOrHalted(responseData)) {
           response = await this.httpClientApi.get(responseData.location);
+          this.notify(EventType.POLLING_HALTED_OR_DELAYED, response.data.taskStatus);
         } else {
           throw error;
         }
       }
     }
-    const responseData = response.data;
+    const responseData = response && response.data;
     if (this.config.fetchLinkDataAutomatically && responseData && responseData.links && responseData.links.length > 0) {
+      // TODO (TOR) execLinkRequests returnerar no responseData.
       response = await this.execLinkRequests(responseData);
     }
     return response;
@@ -124,27 +138,22 @@ class RequestProcess {
     this.isCancelled = true;
   }
 
-  run = async (params: any) => {
+  run = async (params: any): Promise<{payload: any}> => {
     this.notify(EventType.REQUEST_STARTED);
 
     try {
-      const response = await this.execute(this.url, this.restMethod, params);
-      if (response === CANCELLED) {
-        return response;
+      const response = await this.execute(this.path, this.restMethod, params);
+      if (this.isCancelled) {
+        return { payload: CANCELLED };
       }
 
-      // FIXME
-      const responseData = response.data !== null && response.data !== undefined ? response.data : response;
+      // TODO (TOR) Bør unngå denne testen ved å sikre at ein alltid får det same tilbake fra execute
+      const responseData = response.data !== undefined ? response.data : response;
 
       this.notify(EventType.REQUEST_FINISHED, responseData);
       return responseData ? { payload: responseData } : { payload: [] };
     } catch (error) {
-      if (!error.response) { // Håndter feil som er kastet manuelt
-        this.notify(EventType.REQUEST_ERROR, error.message);
-        throw error;
-      }
-      const data = error.response.data ? error.response.data : error;
-      this.notify(EventType.REQUEST_ERROR, data);
+      new RequestErrorEventHandler(this.notify).handleError(error);
       throw error;
     }
   }

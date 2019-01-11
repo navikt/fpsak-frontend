@@ -99,10 +99,10 @@ describe('RequestRunner', () => {
     const runner = new RequestRunner(httpClientMock, context);
     const mapper = new NotificationMapper();
     // Etter en runde med polling vil en stoppe prosessen via event
-    mapper.addUpdatePollingMessageEventHandler(() => runner.stopProcess());
+    mapper.addUpdatePollingMessageEventHandler(() => { runner.stopProcess(); return Promise.resolve(''); });
 
     const response = await runner.startProcess(params, mapper);
 
-    expect(response).to.eql('CANCELLED');
+    expect(response).to.eql({ payload: 'INTERNAL_CANCELLATION' });
   });
 });

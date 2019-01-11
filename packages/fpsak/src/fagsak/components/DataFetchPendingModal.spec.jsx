@@ -6,7 +6,7 @@ import DataFetchPendingModal from './DataFetchPendingModal';
 
 describe('<DataFetchPendingModal>', () => {
   it('skal rendre modal når timer er gått ut', () => {
-    const wrapper = shallow(<DataFetchPendingModal pendingMessages={['test']} />);
+    const wrapper = shallow(<DataFetchPendingModal pendingMessage="test" />);
 
     wrapper.setState({ displayMessage: true });
 
@@ -20,7 +20,7 @@ describe('<DataFetchPendingModal>', () => {
   });
 
   it('skal ikke rendre modal før timer har gått ut', () => {
-    const wrapper = shallow(<DataFetchPendingModal pendingMessages={['test']} />);
+    const wrapper = shallow(<DataFetchPendingModal pendingMessage="test" />);
     expect(wrapper.find('Modal')).to.have.length(0);
   });
 });

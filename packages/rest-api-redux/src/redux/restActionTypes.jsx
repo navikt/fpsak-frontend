@@ -1,4 +1,6 @@
 /* @flow */
+import type { ActionTypes } from './ActionTypesFlowType';
+
 /**
    * createRequestActionType
    * Hjelpefunksjon for å generere actionType for actions relatert til AJAX-kall
@@ -26,6 +28,7 @@ const getAsyncActionTypes = (name, restMethod, path) => ({
   updatePollingMessage: createRequestActionType(name, 'POLLING_MESSAGE_RECEIVED', restMethod, path),
   statusRequestStarted: createRequestActionType(name, 'STATUS_STARTED', restMethod, path),
   statusRequestFinished: createRequestActionType(name, 'STATUS_FINISHED', restMethod, path),
+  pollingTimeout: createRequestActionType(name, 'POLLING_TIMEOUT', restMethod, path),
 });
 
 /**
@@ -39,7 +42,7 @@ const getAsyncActionTypes = (name, restMethod, path) => ({
    *   requestFinished: '@@REST GET /fpsak/api/behandlinger FINISHED',
    * }
    */
-const createRequestActionTypes = (isAsync: boolean, name: string, restMethod: string, path: string) => (isAsync
+const createRequestActionTypes = (isAsync: boolean, name: string, restMethod: string, path: string): ActionTypes => (isAsync
   ? { ...getDefaultActionTypes(name, restMethod, path), ...getAsyncActionTypes(name, restMethod, path) }
   : getDefaultActionTypes(name, restMethod, path));
 

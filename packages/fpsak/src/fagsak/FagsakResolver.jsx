@@ -4,14 +4,15 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 
+import errorHandler from '@fpsak-frontend/error-api-redux';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
+
 import {
   getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling, pathToBehandlinger, pathToMissingPage,
 } from 'app/paths';
 import { getBehandlingerIds } from 'behandling/selectors/behandlingerSelectors';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import requireProps from 'app/data/requireProps';
 import { resetFagsakSearch as resetFagsakSearchActionCreator } from 'fagsakSearch/duck';
-import { removeErrorMessage } from 'app/duck';
 import { resetFagsakContext as resetFagsakContextActionCreator, fetchFagsakInfo as fetchFagsakInfoActionCreator } from './duck';
 import {
   getSelectedSaksnummer, getFetchFagsakInfoFinished, getFetchFagsakInfoFailed, getAllFagsakInfoResolved, getSelectedFagsak,
@@ -107,7 +108,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   fetchFagsakInfo: fetchFagsakInfoActionCreator,
   resetFagsakContext: resetFagsakContextActionCreator,
   resetFagsakSearch: resetFagsakSearchActionCreator,
-  removeErrorMessage,
+  removeErrorMessage: errorHandler.removeErrorMessage,
 }, dispatch);
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({

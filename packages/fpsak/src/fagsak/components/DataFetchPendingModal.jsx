@@ -45,14 +45,14 @@ export class DataFetchPendingModal extends Component {
       return null;
     }
 
-    const { pendingMessages } = this.props;
+    const { pendingMessage } = this.props;
 
     return (
       <Modal
         className={styles.modal}
         isOpen
         closeButton={false}
-        contentLabel={pendingMessages[0]}
+        contentLabel={pendingMessage}
         onRequestClose={doNothing}
       >
         <Row>
@@ -72,7 +72,7 @@ export class DataFetchPendingModal extends Component {
 }
 
 DataFetchPendingModal.propTypes = {
-  pendingMessages: PropTypes.arrayOf(PropTypes.string).isRequired,
+  pendingMessage: PropTypes.string.isRequired,
 };
 
 export default DataFetchPendingModal;
