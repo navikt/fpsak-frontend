@@ -361,6 +361,11 @@ const historikkEndretFeltTypeCodes = {
     kode: 'FASTSETT_ETTERLØNN_SLUTTPAKKE',
     feltId: 'HistorikkEndretFelt.FastsettEtterlønnSluttpakke',
   },
+  VURDER_GRADERING_PÅ_ANDEL_UTEN_BG: {
+    kode: 'VURDER_GRADERING_PÅ_ANDEL_UTEN_BG',
+    feltId: 'HistorikkEndretFelt.VurderGraderingPåAndelUtenBG',
+  },
+
 
 };
 

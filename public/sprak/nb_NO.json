@@ -1169,10 +1169,11 @@
   "Beregningsgrunnlag.YtelserFraInfotrygd.Ytelse": "Ytelse",
   "Beregningsgrunnlag.BeregningTable.Dagsats": "Dagsats",
   "Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt": "Vilkåret er <b>ikke</b> oppfylt. Brutto beregningsgrunnlag er under en halv G ({halvG}).",
-  "Beregningsgrunnlag.Modal.Tittel": "Søker arbeider delvis i {arbeidsgivere} og fordeling er satt til 0. Vurder om fordelingen er riktig.",
-  "Beregningsgrunnlag.Modal.FordelingErRiktig": "Ja, fordelingen er riktig. Fortsett behandlingen",
-  "Beregningsgrunnlag.Modal.FordelingMåVurderes": "Nei, fordelingen må vurderes på nytt. Behandlingen settes på vent",
-  "Beregningsgrunnlag.Modal.Ok": "Ok",
+  "Beregningsgrunnlag.Gradering.Tittel": "Kontroller fordeling av inntekt ved gradering",  
+  "Beregningsgrunnlag.Gradering.AksjonspunkttekstEtForhold": "Søker skal gradere hos {arbeidsforholdTekst} og det vil ikke bli utbetaling for denne aktiviteten. Vurder om fordeling av beregningsgrunnlag er riktig.",
+  "Beregningsgrunnlag.Gradering.AksjonspunkttekstFlereForhold": "Søker skal gradere hos {arbeidsforholdTekst} og det vil ikke bli utbetaling for disse aktivitetene. Vurder om fordeling av beregningsgrunnlag er riktig.",
+  "Beregningsgrunnlag.Gradering.FordelingErRiktig": "Ja, fordelingen av inntekt er riktig. Fortsett behandlingen",
+  "Beregningsgrunnlag.Gradering.FordelingMåVurderes": "Nei, fordelingen av inntekt må vurderes på nytt. Behandlingen settes på vent",
   
   "BeregningInfoPanel.Title": "Fakta om beregning",
   "BeregningInfoPanel.VisTabell": "Vis tabell",
@@ -1309,10 +1310,10 @@
   "ToTrinnsForm.Beregning.FastsettBgKunYtelse": "Det er fastsatt fordeling av beregningsgrunnlaget ved direkte overgang fra ytelse.",
   "ToTrinnsForm.Beregning.VurderEtterlønnSluttpakke": "Det er vurdert om søker har inntekt fra etterlønn eller sluttpakke.",
   "ToTrinnsForm.Beregning.FastsettEtterlønnSluttpakke": "Inntekt er fastsatt for arbeidstaker med etterlønn eller sluttpakke.",
-  "ToTrinnsForm.Beregning.VurderMottarYtelse": "Det er vurdert om søker har mottatt ytelse",
+  "ToTrinnsForm.Beregning.VurderMottarYtelse": "Det er vurdert om søker har mottatt ytelse",  
   "ToTrinnsForm.Beregning.FrilansinntektFastsatt": "Frilansinntekt er fastsatt",
-
-
+  "ToTrinnsForm.Beregning.GraderingUtenBG": "Det er vurdert at fordeling av inntektsgrunnlag ved gradering er riktig",
+  
   "ToTrinnsForm.Opptjening.Endring": "Perioden {aktivitetType}{arbeidsInfoText} er endret.",
   "ToTrinnsForm.Opptjening.Underkjenning": "Aktivitet {aktivitetType}{arbeidsInfoText} er <b>ikke</b> godkjent.",
   "ToTrinnsForm.Opptjening.EndringArbeidMedNavn": "Perioden {a} for {b} ({c}) er endret.",
@@ -2059,7 +2060,8 @@
   "HistorikkEndretFelt.FastsettEtterlønnSluttpakke": "Inntekten",
   "HistorikkEndretFelt.AvslagMorTarIkkeAlleUker": "Mor tar ikke alle 3 ukene før termin",
   "HistorikkEndretFelt.RettTilForeldrepenger": "Rett til foreldrepenger",
-
+  "HistorikkEndretFelt.VurderGraderingPåAndelUtenBG": "Inntektsgrunnlag ved gradering",
+  
   "HistorikkEndretFeltVerdiType.AdoptererAlene": "adopterer alene",
   "HistorikkEndretFeltVerdiType.AdoptererIkkeAlene": "adopterer ikke alene",
   "HistorikkEndretFeltVerdiType.Aleneomsorg": "Søker har aleneomsorg for barnet",
@@ -2171,6 +2173,8 @@
   "HistorikkEndretFeltVerdiType.tilbakekrIgnorer": "Avvent samordning, ingen tilbakekreving",
   "HistorikkEndretFeltVerdiType.AnnenforelderHarRett": "Annen forelder har rett",
   "HistorikkEndretFeltVerdiType.AnnenforelderHarIkkeRett": "Annen forelder har ikke rett",
+  "HistorikkEndretFeltVerdiType.GraderingPåAndelUtenBGIkkeSattPåVent": "Riktig",
+
   "HistorikkEndretFeltHeading.FordelingForNyAndel": "<b>Det er lagt til ny aktivitet:</b> <br><b>{value}</b>: Fordeling for ",
   "HistorikkEndretFeltHeading.FordelingForAndel": "Fordeling for <b>{value}</b>:",
 

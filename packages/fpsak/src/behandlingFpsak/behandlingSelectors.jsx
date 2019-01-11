@@ -181,7 +181,7 @@ export const getGjeldendeBeregningAksjonspunkt = createSelector(
 
 export const getBeregningGraderingAksjonspunkt = createSelector(
   [getAksjonspunkter], aksjonspunkter => aksjonspunkter
-    .find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG && isAksjonspunktOpen(ap.status.kode)),
+    .find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG),
 );
 
 export const getAktivitetStatuser = createSelector(
@@ -237,6 +237,9 @@ export const getFaktaOmBeregningTilfeller = createSelector(
 );
 export const getFaktaOmBeregningTilfellerKoder = createSelector(
   [getFaktaOmBeregningTilfeller], (tilfeller = []) => (tilfeller ? tilfeller.map(({ kode }) => kode) : undefined),
+);
+export const getAndelerMedGraderingUtenBG = createSelector(
+  [getBeregningsgrunnlag], (beregningsgrunnlag = {}) => (beregningsgrunnlag ? beregningsgrunnlag.andelerMedGraderingUtenBG : undefined),
 );
 
 

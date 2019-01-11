@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
@@ -37,7 +37,7 @@ import InntektsopplysningerPanel from './fellesPaneler/InntektsopplysningerPanel
 import SkjeringspunktOgStatusPanel from './fellesPaneler/SkjeringspunktOgStatusPanel';
 import BeregningsgrunnlagForm from './beregningsgrunnlagPanel/BeregningsgrunnlagForm';
 import BeregningsresultatTable from './beregningsresultatPanel/BeregningsresultatTable';
-import GraderingUtenBGModal from './modal/GraderingUtenBGModal';
+import GraderingUtenBG from './gradering/GraderingUtenBG';
 
 const {
   FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
@@ -72,15 +72,6 @@ const findSammenligningsgrunnlagTekst = (relevanteStatuser) => {
   return tekster;
 };
 
-const arbfor = [
-  {
-    navn: 'Andeby Bank',
-  },
-  {
-    navn: 'Andeby Kino',
-  },
-];
-
 const visningForManglendeBG = () => (
   <FadingPanel>
     <Undertittel>
@@ -106,65 +97,33 @@ const visningForManglendeBG = () => (
  * Presentasjonskomponent. Holder på alle komponenter relatert til beregning av foreldrepenger.
  * Finner det gjeldende aksjonspunktet hvis vi har et.
  */
-export class BeregningFPImpl extends Component {
-  constructor() {
-    super();
-    this.handleModalCallback = this.handleModalCallback.bind(this);
-    this.state = {
-      showModal: false,
-    };
+export const BeregningFPImpl = ({
+  readOnly,
+  submitCallback,
+  berGr,
+  beregnetAarsinntekt,
+  sammenligningsgrunnlag,
+  beregnetAvvikPromille,
+  gjeldendeVilkar,
+  gjeldendeAksjonspunkt,
+  relevanteStatuser,
+  readOnlySubmitButton,
+  sokerHarGraderingPaaAndelUtenBG,
+}) => {
+  let avvikProsent;
+  if (beregnetAvvikPromille !== undefined && beregnetAvvikPromille !== null) {
+    avvikProsent = beregnetAvvikPromille / 10;
   }
-
-  componentDidMount() {
-    const { sokerHarGraderingPaaAndelUtenBG } = this.props;
-    if (sokerHarGraderingPaaAndelUtenBG) {
-      this.setState({
-        showModal: true,
-      });
-    }
+  if (!berGr) {
+    return visningForManglendeBG();
   }
-
-  handleModalCallback(values) {
-    const { submitCallback } = this.props;
-    submitCallback([GraderingUtenBGModal.transformValues(values)]).then(() => {
-      this.setState({
-        showModal: false,
-      });
-    });
-  }
-
-  render() {
-    const {
-      props: {
-        readOnly,
-        submitCallback,
-        berGr,
-        beregnetAarsinntekt,
-        sammenligningsgrunnlag,
-        beregnetAvvikPromille,
-        gjeldendeVilkar,
-        gjeldendeAksjonspunkt,
-        relevanteStatuser,
-        readOnlySubmitButton,
-      },
-      state: {
-        showModal,
-      },
-    } = this;
-    let avvikProsent;
-    if (beregnetAvvikPromille !== undefined && beregnetAvvikPromille !== null) {
-      avvikProsent = beregnetAvvikPromille / 10;
-    }
-    if (!berGr) {
-      return visningForManglendeBG();
-    }
-    return (
-      <FadingPanel>
-        <Undertittel>
-          <FormattedMessage id="Beregningsgrunnlag.Title" />
-        </Undertittel>
-        <VerticalSpacer eightPx />
-        { gjeldendeAksjonspunkt
+  return (
+    <FadingPanel>
+      <Undertittel>
+        <FormattedMessage id="Beregningsgrunnlag.Title" />
+      </Undertittel>
+      <VerticalSpacer eightPx />
+      { gjeldendeAksjonspunkt
         && (
           <ElementWrapper>
             <AksjonspunktHelpText isAksjonspunktOpen={isAksjonspunktOpen(gjeldendeAksjonspunkt.status.kode)}>
@@ -174,20 +133,20 @@ export class BeregningFPImpl extends Component {
           </ElementWrapper>
         )
         }
-        <Row>
-          <Column xs="6">
-            <InntektsopplysningerPanel
-              beregnetAarsinntekt={beregnetAarsinntekt}
-              sammenligningsgrunnlag={sammenligningsgrunnlag}
-              sammenligningsgrunnlagTekst={findSammenligningsgrunnlagTekst(relevanteStatuser)}
-              avvik={avvikProsent}
-            />
-          </Column>
-          <Column xs="6">
-            <SkjeringspunktOgStatusPanel />
-          </Column>
-        </Row>
-        { relevanteStatuser.skalViseBeregningsgrunnlag
+      <Row>
+        <Column xs="6">
+          <InntektsopplysningerPanel
+            beregnetAarsinntekt={beregnetAarsinntekt}
+            sammenligningsgrunnlag={sammenligningsgrunnlag}
+            sammenligningsgrunnlagTekst={findSammenligningsgrunnlagTekst(relevanteStatuser)}
+            avvik={avvikProsent}
+          />
+        </Column>
+        <Column xs="6">
+          <SkjeringspunktOgStatusPanel />
+        </Column>
+      </Row>
+      { relevanteStatuser.skalViseBeregningsgrunnlag
         && (
           <BeregningsgrunnlagForm
             relevanteStatuser={relevanteStatuser}
@@ -198,7 +157,7 @@ export class BeregningFPImpl extends Component {
           />
         )
         }
-        { gjeldendeVilkar && gjeldendeVilkar.vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT
+      { gjeldendeVilkar && gjeldendeVilkar.vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT
         && (
           <BeregningsresultatTable
             halvGVerdi={berGr.halvG}
@@ -210,16 +169,17 @@ export class BeregningFPImpl extends Component {
           />
         )
         }
-        <GraderingUtenBGModal
-          showModal={showModal}
-          closeEvent={undefined}
-          arbeidsforhold={arbfor}
-          handleSubmit={this.state.handleModalCallback}
-        />
-      </FadingPanel>
-    );
-  }
-}
+      {sokerHarGraderingPaaAndelUtenBG
+          && (
+          <GraderingUtenBG
+            submitCallback={submitCallback}
+            readOnly={readOnly}
+          />
+          )
+        }
+    </FadingPanel>
+  );
+};
 
 BeregningFPImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
