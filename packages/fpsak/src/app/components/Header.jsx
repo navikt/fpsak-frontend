@@ -79,7 +79,7 @@ const Header = ({
                 altCode="Header.NavAnsatt"
                 titleCode="Header.NavAnsatt"
               />
-              {navAnsattName}
+              <span>{navAnsattName}</span>
             </FlexColumn>
           </FlexRow>
         </FlexColumn>
