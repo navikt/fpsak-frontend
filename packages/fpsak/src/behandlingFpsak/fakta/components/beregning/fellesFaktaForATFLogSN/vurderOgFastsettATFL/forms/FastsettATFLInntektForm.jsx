@@ -58,7 +58,7 @@ const skalFastsetteFrilansinntekt = (frilans) => {
 const createFLTableRow = (frilansAndel, readOnly, isAksjonspunktClosed) => (
   <TableRow key="FLRow">
     <TableColumn>
-      <Normaltekst>{frilansAndel.inntektskategori.navn}</Normaltekst>
+      <Normaltekst>{frilansAndel.inntektskategori ? frilansAndel.inntektskategori.navn : ''}</Normaltekst>
     </TableColumn>
     <TableColumn>
       {frilansAndel.arbeidsforhold && frilansAndel.arbeidsforhold.startdato
@@ -365,7 +365,6 @@ const finnKorrektBGAndelFraFaktaOmBeregningAndel = (faktaOmBeregningAndel, bereg
 
 FastsettATFLInntektForm.buildInitialValues = (beregningsgrunnlag) => {
   const initialValues = {};
-  const tilfeller = beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode);
   const faktaOmBeregning = beregningsgrunnlag ? beregningsgrunnlag.faktaOmBeregning : undefined;
   if (!beregningsgrunnlag || !faktaOmBeregning || !beregningsgrunnlag.beregningsgrunnlagPeriode
     || beregningsgrunnlag.beregningsgrunnlagPeriode.length < 1) {
@@ -400,8 +399,6 @@ FastsettATFLInntektForm.buildInitialValues = (beregningsgrunnlag) => {
         const key = createInputfieldKeyAT(aktivitet.arbeidsforhold);
         if (korrektAndel.beregnetPrAar !== null && korrektAndel.beregnetPrAar !== undefined) {
           initialValues[key] = formatCurrencyNoKr(korrektAndel.beregnetPrAar / 12);
-        } else if (!tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)) {
-          initialValues[key] = formatCurrencyNoKr(aktivitet.inntektPrMnd);
         }
       }
     });
@@ -410,11 +407,6 @@ FastsettATFLInntektForm.buildInitialValues = (beregningsgrunnlag) => {
   const frilansKey = createInputfieldKeyFL();
   if (harFrilansinntektBlittFastsattTidligere(frilansAndel)) {
     initialValues[frilansKey] = formatCurrencyNoKr(frilansAndel.beregnetPrAar / 12);
-  } else if (faktaOmBeregning.vurderMottarYtelse) {
-    const { frilansInntektPrMnd } = faktaOmBeregning.vurderMottarYtelse;
-    if (frilansInntektPrMnd >= 0 && !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)) {
-      initialValues[frilansKey] = formatCurrencyNoKr(frilansInntektPrMnd);
-    }
   }
   return initialValues;
 };
@@ -485,10 +477,13 @@ const lagFrilansAndel = (values, faktaOmBeregning, erNyoppstartetFL) => {
       };
     }
   }
-  return {
-    ...faktaOmBeregning.frilansAndel,
-    redigerbar: true,
-  };
+  if (faktaOmBeregning.frilansAndel) {
+    return {
+      ...faktaOmBeregning.frilansAndel,
+      redigerbar: true,
+    };
+  }
+  return undefined;
 };
 
 const mapStateToProps = (state, ownProps) => {
