@@ -12,12 +12,15 @@ import { InputField } from '@fpsak-frontend/form';
 import {
   VerticalSpacer, Table, TableRow, TableColumn,
 } from '@fpsak-frontend/shared-components';
+import { getBehandlingFormValues } from 'behandlingFpsak/behandlingForm';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import faktaOmBeregningTilfelle, {
   erATFLSpesialtilfelle,
   harKunATFLISammeOrgUtenBestebergning,
+  harVurderMottarYtelseUtenBesteberegning,
+  fastsettATLIntersection,
 } from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-
+import { andelsnrMottarYtelseMap, frilansMottarYtelse } from './VurderMottarYtelseUtils';
 import styles from './fastsettATFLInntektForm.less';
 
 const inntektInputFieldName = 'fastsattInntekt';
@@ -29,8 +32,28 @@ export const createInputfieldKeyAT = (arbeidsforhold) => {
 
 export const createInputfieldKeyFL = () => `${inntektInputFieldName}_FL`;
 
-const skalFastsetteATForholdInntekt = forhold => forhold !== undefined
-  && (forhold.inntektPrMnd === null || forhold.inntektPrMnd === undefined);
+const skalFastsetteATForholdInntekt = (forhold) => {
+  if (forhold !== undefined) {
+    if (forhold.redigerbar) {
+      return true;
+    }
+    return (forhold.inntektPrMnd === null || forhold.inntektPrMnd === undefined);
+  }
+  return false;
+};
+
+const skalFastsetteMinstEttATForhold = arbeidsforholdListe => (arbeidsforholdListe !== null
+  && arbeidsforholdListe.find(forhold => skalFastsetteATForholdInntekt(forhold)) !== undefined);
+
+const skalFastsetteFrilansinntekt = (frilans) => {
+  if (frilans !== undefined) {
+    if (!frilans.redigerbar) {
+      return false;
+    }
+    return true;
+  }
+  return false;
+};
 
 const createFLTableRow = (frilansAndel, readOnly, isAksjonspunktClosed) => (
   <TableRow key="FLRow">
@@ -53,20 +76,38 @@ const createFLTableRow = (frilansAndel, readOnly, isAksjonspunktClosed) => (
       )
       }
     </TableColumn>
+    {skalFastsetteFrilansinntekt(frilansAndel)
+    && (
+      <TableColumn>
+        <div className={readOnly ? styles.adjustedFieldInput : styles.rightAlignInput}>
+          <InputField
+            name={createInputfieldKeyFL()}
+            bredde="S"
+            validate={[required]}
+            parse={parseCurrencyInput}
+            isEdited={isAksjonspunktClosed}
+            readOnly={readOnly}
+          />
+        </div>
+      </TableColumn>
+    )
+    }
+    {!skalFastsetteFrilansinntekt(frilansAndel)
+    && (
+      <TableColumn>
+        <div className={styles.shortLeftAligned}>
+          <div className={styles.rightAlignText}>
+            <Normaltekst>{formatCurrencyNoKr(frilansAndel.inntektPrMnd)}</Normaltekst>
+          </div>
+        </div>
+
+      </TableColumn>
+    )
+    }
     <TableColumn>
-      <div className={readOnly ? styles.adjustedFieldInput : styles.rightAlignInput}>
-        <InputField
-          name={createInputfieldKeyFL()}
-          bredde="S"
-          validate={[required]}
-          parse={parseCurrencyInput}
-          isEdited={isAksjonspunktClosed}
-          readOnly={readOnly}
-        />
+      <div className={styles.paddingRight}>
+        <Normaltekst>{frilansAndel.inntektskategori ? frilansAndel.inntektskategori.navn : ''}</Normaltekst>
       </div>
-    </TableColumn>
-    <TableColumn>
-      <Normaltekst>{frilansAndel.inntektskategori ? frilansAndel.inntektskategori.navn : ''}</Normaltekst>
     </TableColumn>
   </TableRow>
 );
@@ -120,12 +161,12 @@ const createATTableRow = (aktivitet, readOnly, isAksjonspunktClosed) => (
   </TableRow>
 );
 
-const createTableRows = (frilansAndel, aktiviteter, readOnly, isAksjonspunktClosed, skalFastsetteFL, skalFastsetteAT) => {
+const createTableRows = (frilansAndel, aktiviteter, readOnly, isAksjonspunktClosed, skalViseFL, skalViseAT) => {
   const rows = [];
-  if (frilansAndel && skalFastsetteFL) {
+  if (frilansAndel && skalViseFL) {
     rows.push(createFLTableRow(frilansAndel, readOnly, isAksjonspunktClosed));
   }
-  if (aktiviteter && skalFastsetteAT) {
+  if (aktiviteter && skalViseAT) {
     aktiviteter.forEach((aktivitet) => {
       rows.push(createATTableRow(aktivitet, readOnly, isAksjonspunktClosed));
     });
@@ -137,6 +178,23 @@ const createTableRows = (frilansAndel, aktiviteter, readOnly, isAksjonspunktClos
 const findInstruksjonForBruker = (tilfellerSomSkalFastsettes, manglerInntektsmelding, skalFastsetteFL, skalFastsetteAT) => {
   if (erATFLSpesialtilfelle(tilfellerSomSkalFastsettes)) {
     return 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettATFLAlleOppdrag';
+  }
+  if (harVurderMottarYtelseUtenBesteberegning(tilfellerSomSkalFastsettes)) {
+    const fastsetteATFLIntersection = fastsettATLIntersection(tilfellerSomSkalFastsettes);
+    if (skalFastsetteFL && !skalFastsetteAT) {
+      return fastsetteATFLIntersection.length === 1
+        ? 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettFrilans'
+        : 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettFrilansAlleOppdrag';
+    }
+    if (skalFastsetteFL && skalFastsetteAT) {
+      return 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettATFLAlleOppdrag';
+    }
+    if (skalFastsetteAT && !skalFastsetteFL) {
+      return 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettArbeidsinntekt';
+    }
+    if (!skalFastsetteAT && !skalFastsetteFL) {
+      return ' ';
+    }
   }
   if (tilfellerSomSkalFastsettes.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)) {
     return manglerInntektsmelding === true
@@ -195,8 +253,8 @@ const FastsettATFLInntektForm = ({
   frilansAndel,
   manglerInntektsmelding,
   tabellVisesUtenVurdering,
-  skalFastsetteFL,
-  skalFastsetteAT,
+  skalViseFL,
+  skalViseAT,
 }) => {
   const headerTextCodes = [
     'BeregningInfoPanel.FastsettInntektTabell.Aktivitet',
@@ -216,13 +274,15 @@ const FastsettATFLInntektForm = ({
       {!tabellVisesUtenVurdering
       && (
       <Element>
-        <FormattedMessage id={findInstruksjonForBruker(tilfellerSomSkalFastsettes, manglerInntektsmelding, skalFastsetteFL, skalFastsetteAT)} />
+        <FormattedMessage id={findInstruksjonForBruker(tilfellerSomSkalFastsettes, manglerInntektsmelding,
+          skalFastsetteFrilansinntekt(frilansAndel), skalFastsetteMinstEttATForhold(arbeidsforholdSomSkalFastsettes))}
+        />
       </Element>
       )
       }
       <VerticalSpacer space={2} />
       <Table headerTextCodes={headerTextCodes} noHover classNameTable={styles.inntektTable}>
-        {createTableRows(frilansAndel, arbeidsforholdSomSkalFastsettes, readOnly, isAksjonspunktClosed, skalFastsetteFL, skalFastsetteAT)}
+        {createTableRows(frilansAndel, arbeidsforholdSomSkalFastsettes, readOnly, isAksjonspunktClosed, skalViseFL, skalViseAT)}
       </Table>
     </div>
   );
@@ -236,43 +296,64 @@ FastsettATFLInntektForm.propTypes = {
   manglerInntektsmelding: PropTypes.bool,
   frilansAndel: PropTypes.shape(),
   arbeidsforholdSomSkalFastsettes: PropTypes.arrayOf(PropTypes.shape()),
-  skalFastsetteFL: PropTypes.bool,
-  skalFastsetteAT: PropTypes.bool,
-
+  skalViseFL: PropTypes.bool,
+  skalViseAT: PropTypes.bool,
 };
 
 FastsettATFLInntektForm.defaultProps = {
   arbeidsforholdSomSkalFastsettes: PropTypes.arrayOf(PropTypes.shape()),
   manglerInntektsmelding: undefined,
   frilansAndel: undefined,
-  skalFastsetteAT: true,
-  skalFastsetteFL: true,
+  skalViseFL: true,
+  skalViseAT: true,
 };
 
-const slaSammenATListerSomSkalVurderes = (faktaOmBeregning) => {
+const slaSammenATListerSomSkalVurderes = (values, faktaOmBeregning) => {
   const andelsNrLagtIListen = [];
   const listeMedArbeidsforholdSomSkalFastsettes = [];
+  const mottarYtelseMap = andelsnrMottarYtelseMap(values, faktaOmBeregning.vurderMottarYtelse);
   if (faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM) {
     faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM.forEach((forhold) => {
       if (!andelsNrLagtIListen.includes(forhold.andelsnr)) {
+        const arbforhold = {
+          ...forhold,
+          redigerbar: mottarYtelseMap[forhold.andelsnr],
+        };
         andelsNrLagtIListen.push(forhold.andelsnr);
-        listeMedArbeidsforholdSomSkalFastsettes.push(forhold);
+        listeMedArbeidsforholdSomSkalFastsettes.push(arbforhold);
       }
     });
   }
   if (faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe) {
     faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.forEach((forhold) => {
       if (!andelsNrLagtIListen.includes(forhold.andelsnr)) {
+        const arbforhold = {
+          ...forhold,
+          redigerbar: mottarYtelseMap[forhold.andelsnr],
+        };
         andelsNrLagtIListen.push(forhold.andelsnr);
+        listeMedArbeidsforholdSomSkalFastsettes.push(arbforhold);
+      }
+    });
+  }
+  if (faktaOmBeregning.vurderMottarYtelse) {
+    faktaOmBeregning.vurderMottarYtelse.arbeidstakerAndelerUtenIM.forEach((andel) => {
+      if (!andelsNrLagtIListen.includes(andel.andelsnr)) {
+        const forhold = {
+          ...andel,
+          redigerbar: mottarYtelseMap[andel.andelsnr],
+        };
+        andelsNrLagtIListen.push(andel.andelsnr);
         listeMedArbeidsforholdSomSkalFastsettes.push(forhold);
       }
     });
   }
+
   return listeMedArbeidsforholdSomSkalFastsettes.length === 0 ? null : listeMedArbeidsforholdSomSkalFastsettes;
 };
 
 const harFrilansinntektBlittFastsattTidligere = frilansAndel => frilansAndel
-&& (frilansAndel.erNyoppstartetEllerSammeOrganisasjon === true || frilansAndel.beregnetPrAar);
+&& (frilansAndel.fastsattAvSaksbehandler || frilansAndel.erNyoppstartetEllerSammeOrganisasjon === true || frilansAndel.beregnetPrAar);
 
 const finnKorrektBGAndelFraFaktaOmBeregningAndel = (faktaOmBeregningAndel, beregningsgrunnlag) => {
   const forstePeriode = beregningsgrunnlag.beregningsgrunnlagPeriode
@@ -281,8 +362,10 @@ const finnKorrektBGAndelFraFaktaOmBeregningAndel = (faktaOmBeregningAndel, bereg
     ? forstePeriode.beregningsgrunnlagPrStatusOgAndel.find(andel => andel.andelsnr === faktaOmBeregningAndel.andelsnr) : undefined;
 };
 
+
 FastsettATFLInntektForm.buildInitialValues = (beregningsgrunnlag) => {
   const initialValues = {};
+  const tilfeller = beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode);
   const faktaOmBeregning = beregningsgrunnlag ? beregningsgrunnlag.faktaOmBeregning : undefined;
   if (!beregningsgrunnlag || !faktaOmBeregning || !beregningsgrunnlag.beregningsgrunnlagPeriode
     || beregningsgrunnlag.beregningsgrunnlagPeriode.length < 1) {
@@ -310,10 +393,28 @@ FastsettATFLInntektForm.buildInitialValues = (beregningsgrunnlag) => {
       }
     });
   }
+  if (faktaOmBeregning.vurderMottarYtelse) {
+    faktaOmBeregning.vurderMottarYtelse.arbeidstakerAndelerUtenIM.forEach((aktivitet) => {
+      const korrektAndel = finnKorrektBGAndelFraFaktaOmBeregningAndel(aktivitet, beregningsgrunnlag);
+      if (korrektAndel) {
+        const key = createInputfieldKeyAT(aktivitet.arbeidsforhold);
+        if (korrektAndel.beregnetPrAar !== null && korrektAndel.beregnetPrAar !== undefined) {
+          initialValues[key] = formatCurrencyNoKr(korrektAndel.beregnetPrAar / 12);
+        } else if (!tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)) {
+          initialValues[key] = formatCurrencyNoKr(aktivitet.inntektPrMnd);
+        }
+      }
+    });
+  }
 
+  const frilansKey = createInputfieldKeyFL();
   if (harFrilansinntektBlittFastsattTidligere(frilansAndel)) {
-    const key = createInputfieldKeyFL();
-    initialValues[key] = formatCurrencyNoKr(frilansAndel.beregnetPrAar / 12);
+    initialValues[frilansKey] = formatCurrencyNoKr(frilansAndel.beregnetPrAar / 12);
+  } else if (faktaOmBeregning.vurderMottarYtelse) {
+    const { frilansInntektPrMnd } = faktaOmBeregning.vurderMottarYtelse;
+    if (frilansInntektPrMnd >= 0 && !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)) {
+      initialValues[frilansKey] = formatCurrencyNoKr(frilansInntektPrMnd);
+    }
   }
   return initialValues;
 };
@@ -324,10 +425,10 @@ const transformValuesFL = (values) => {
 };
 
 const transformValuesAT = (values, faktaOmBeregning) => {
-  const arbeidsforholdSomSkalSubmittes = slaSammenATListerSomSkalVurderes(faktaOmBeregning);
+  const arbeidsforholdSomSkalSubmittes = slaSammenATListerSomSkalVurderes(values, faktaOmBeregning);
   const listeMedFastsatteMaanedsinntekter = [];
   arbeidsforholdSomSkalSubmittes.forEach((aktivitet) => {
-    if (!aktivitet.inntektPrMnd) {
+    if (!aktivitet.inntektPrMnd || aktivitet.redigerbar) {
       const inputField = createInputfieldKeyAT(aktivitet.arbeidsforhold);
       const inntektUtenFormat = values[inputField];
       listeMedFastsatteMaanedsinntekter.push({
@@ -353,7 +454,7 @@ FastsettATFLInntektForm.transformValues = (values, faktaOmBeregning, aktueltTilf
       fastsettMaanedsinntektFL: { maanedsinntekt: transformValuesFL(values) },
     };
   }
-  if (aktueltTilfelle === faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_VED_LONNSENDRING) {
+  if (aktueltTilfelle === faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING) {
     return {
       fastsatteLonnsendringer: { vurderLønnsendringAndelListe: transformValuesAT(values, faktaOmBeregning) },
     };
@@ -371,18 +472,38 @@ FastsettATFLInntektForm.transformValues = (values, faktaOmBeregning, aktueltTilf
   return {};
 };
 
+const lagFrilansAndel = (values, faktaOmBeregning, erNyoppstartetFL) => {
+  if (faktaOmBeregning.vurderMottarYtelse) {
+    if (faktaOmBeregning.vurderMottarYtelse.erFrilans) {
+      const tilfeller = faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode);
+      return {
+        ...faktaOmBeregning.frilansAndel,
+        inntektPrMnd: tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)
+          ? null : faktaOmBeregning.vurderMottarYtelse.frilansInntektPrMnd,
+        redigerbar: frilansMottarYtelse(values) === true || tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)
+        || erNyoppstartetFL === true,
+      };
+    }
+  }
+  return {
+    ...faktaOmBeregning.frilansAndel,
+    redigerbar: true,
+  };
+};
+
 const mapStateToProps = (state, ownProps) => {
   const faktaOmBeregning = getFaktaOmBeregning(state);
   const { tilfellerSomSkalFastsettes } = ownProps;
   if (!faktaOmBeregning || tilfellerSomSkalFastsettes === undefined || tilfellerSomSkalFastsettes.length < 1) {
     return {};
   }
-  const arbeidsforholdSomSkalFastsettes = slaSammenATListerSomSkalVurderes(faktaOmBeregning);
+  const values = getBehandlingFormValues(ownProps.formName)(state);
+  const arbeidsforholdSomSkalFastsettes = slaSammenATListerSomSkalVurderes(values, faktaOmBeregning);
   const tabellVisesUtenVurdering = harKunATFLISammeOrgUtenBestebergning(tilfellerSomSkalFastsettes);
   return {
     tabellVisesUtenVurdering,
     arbeidsforholdSomSkalFastsettes,
-    frilansAndel: faktaOmBeregning.frilansAndel,
+    frilansAndel: lagFrilansAndel(values, faktaOmBeregning, ownProps.erNyoppstartetFL),
   };
 };
 

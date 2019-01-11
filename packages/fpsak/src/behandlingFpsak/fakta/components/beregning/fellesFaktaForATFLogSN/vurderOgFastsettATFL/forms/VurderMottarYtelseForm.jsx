@@ -7,10 +7,9 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { createVisningsnavnForAktivitet, required } from '@fpsak-frontend/utils';
 import { getVurderMottarYtelse } from 'behandlingFpsak/behandlingSelectors';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-
-export const mottarYtelseFieldPrefix = 'mottarYtelseField';
-export const frilansSuffix = '_frilans';
+import faktaOmBeregningTilfelle, { harIkkeATFLSameOrgEllerBesteberegning } from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import FastsettATFLInntektForm from './FastsettATFLInntektForm';
+import { utledArbeidsforholdFieldName, finnFrilansFieldName, skalFastsetteInntektATUtenInntektsmelding } from './VurderMottarYtelseUtils';
 
 const andreFrilansTilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON];
 
@@ -20,7 +19,6 @@ const utledArbeidsforholdUtenIMRadioTekst = arbeidsforhold => (
   <FormattedMessage id={mottarYtelseForArbeidMsg()} values={{ arbeid: createVisningsnavnForAktivitet(arbeidsforhold) }} />
 );
 
-export const utledArbeidsforholdFieldName = andel => mottarYtelseFieldPrefix + andel.andelsnr;
 
 const mottarYtelseArbeidsforholdRadio = (andel, readOnly, isAksjonspunktClosed) => (
   <div key={utledArbeidsforholdFieldName(andel)}>
@@ -51,7 +49,6 @@ const finnFrilansTekstKode = (tilfeller) => {
   return frilansUtenAndreFrilanstilfeller();
 };
 
-export const finnFrilansFieldName = () => (mottarYtelseFieldPrefix + frilansSuffix);
 
 /**
  * VurderMottarYtelseForm
@@ -126,8 +123,51 @@ VurderMottarYtelseFormImpl.buildInitialValues = (vurderMottarYtelse) => {
   return initialValues;
 };
 
-VurderMottarYtelseFormImpl.transformValues = (values, vurderMottarYtelse) => {
-  const ATAndelerUtenIM = vurderMottarYtelse.arbeidstakerAndelerUtenIM ? vurderMottarYtelse.arbeidstakerAndelerUtenIM : [];
+const transformValuesArbeidstakerUtenIM = (values, tilfeller, faktaOmBeregning, transformedValues) => {
+  const skalFastsetteAT = skalFastsetteInntektATUtenInntektsmelding(values, faktaOmBeregning.vurderMottarYtelse);
+  if (skalFastsetteAT && harIkkeATFLSameOrgEllerBesteberegning(tilfeller)) {
+    if (!transformedValues.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)) {
+      transformedValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING);
+      return {
+        ...transformedValues,
+        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING),
+        faktaOmBeregningTilfeller: transformedValues.faktaOmBeregningTilfeller,
+      };
+    }
+    if (!transformedValues.fastsatteLonnsendringer) {
+      return {
+        ...transformedValues,
+        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING),
+      };
+    }
+  }
+  return {};
+};
+
+
+const transformValuesFrilans = (values, tilfeller, faktaOmBeregning, transformedValues) => {
+  const skalFastsetteInntektFrilans = values[finnFrilansFieldName()];
+  if (skalFastsetteInntektFrilans && harIkkeATFLSameOrgEllerBesteberegning(tilfeller)) {
+    if (!transformedValues.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL)) {
+      transformedValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL);
+      return {
+        ...transformedValues,
+        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL),
+        faktaOmBeregningTilfeller: transformedValues.faktaOmBeregningTilfeller,
+      };
+    }
+    if (!transformedValues.fastsettMaanedsinntektFL) {
+      return {
+        ...transformedValues,
+        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL),
+      };
+    }
+  }
+  return {};
+};
+
+const transformValuesMottarYtelse = (values, faktaOmBeregning) => {
+  const ATAndelerUtenIM = faktaOmBeregning.vurderMottarYtelse.arbeidstakerAndelerUtenIM ? faktaOmBeregning.vurderMottarYtelse.arbeidstakerAndelerUtenIM : [];
   return {
     mottarYtelse: {
       frilansMottarYtelse: values[finnFrilansFieldName()],
@@ -139,7 +179,11 @@ VurderMottarYtelseFormImpl.transformValues = (values, vurderMottarYtelse) => {
   };
 };
 
-export const kanIkkeGaaVidereErrorMessage = () => ([{ id: 'BeregningInfoPanel.VurderMottarYtelse.KanIkkeGaaVidere' }]);
+VurderMottarYtelseFormImpl.transformValues = (values, faktaOmBeregning, tilfeller, transformedValues) => ({
+  ...transformValuesMottarYtelse(values, faktaOmBeregning),
+  ...transformValuesArbeidstakerUtenIM(values, tilfeller, faktaOmBeregning, transformedValues),
+  ...transformValuesFrilans(values, tilfeller, faktaOmBeregning, transformedValues),
+});
 
 VurderMottarYtelseFormImpl.validate = (values, vurderMottarYtelse) => {
   const errors = {};
@@ -148,18 +192,10 @@ VurderMottarYtelseFormImpl.validate = (values, vurderMottarYtelse) => {
   }
   if (vurderMottarYtelse.erFrilans) {
     errors[finnFrilansFieldName()] = required(values[finnFrilansFieldName()]);
-    if (!errors[finnFrilansFieldName()]) {
-      errors[finnFrilansFieldName()] = values[finnFrilansFieldName()]
-        ? kanIkkeGaaVidereErrorMessage() : null;
-    }
   }
   const ATAndelerUtenIM = vurderMottarYtelse.arbeidstakerAndelerUtenIM ? vurderMottarYtelse.arbeidstakerAndelerUtenIM : [];
   ATAndelerUtenIM.forEach((andel) => {
     errors[utledArbeidsforholdFieldName(andel)] = required(values[utledArbeidsforholdFieldName(andel)]);
-    if (!errors[utledArbeidsforholdFieldName(andel)]) {
-      errors[utledArbeidsforholdFieldName(andel)] = values[utledArbeidsforholdFieldName(andel)]
-        ? kanIkkeGaaVidereErrorMessage() : null;
-    }
   });
   return errors;
 };

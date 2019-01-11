@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import faktaOmBeregningTilfelle, {
-  erATFLSpesialtilfelle,
   harKunATFLISammeOrgUtenBestebergning,
+  erATFLSpesialtilfelleEllerVurderMottarYtelseUtenBesteberegning,
 } from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import LonnsendringForm, { lonnsendringField }
   from 'behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
@@ -13,12 +13,14 @@ import NyoppstartetFLForm, { erNyoppstartetFLField }
 import { getFaktaOmBeregning } from 'behandlingFpsak/behandlingSelectors';
 import FastsettATFLInntektForm from './forms/FastsettATFLInntektForm';
 import InntektstabellPanel from '../InntektstabellPanel';
+import VurderMottarYtelseForm from './forms/VurderMottarYtelseForm';
 
 
 export const skalViseInntektsTabellUnderRadioknapp = (tilfeller, lonnEndringEllerNyFL) => {
   // Dersom vi har tilfellet for besteberegning fødende kvinne skal alle inntekter fastsettes der.
   // Skal aldri vise inntektstabell under radioknapp dersom det er et spesialtilfelle
-  if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE) || erATFLSpesialtilfelle(tilfeller)) {
+  if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)
+  || erATFLSpesialtilfelleEllerVurderMottarYtelseUtenBesteberegning(tilfeller)) {
     return false;
   }
   return (lonnEndringEllerNyFL) || (lonnEndringEllerNyFL === false
@@ -52,9 +54,11 @@ const VurderOgFastsettATFL = ({
           isAksjonspunktClosed={isAksjonspunktClosed}
           tilfellerSomSkalFastsettes={tilfeller}
           manglerInntektsmelding={manglerInntektsmelding}
+          formName={formName}
+          erNyoppstartetFL={erNyoppstartetFL}
         />
       )}
-      skalViseTabell={erATFLSpesialtilfelle(tilfeller) || harKunATFLISammeOrgUtenBestebergning(tilfeller)}
+      skalViseTabell={erATFLSpesialtilfelleEllerVurderMottarYtelseUtenBesteberegning(tilfeller) || harKunATFLISammeOrgUtenBestebergning(tilfeller)}
     >
       {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)
       && (
@@ -79,6 +83,15 @@ const VurderOgFastsettATFL = ({
           skalViseInntektstabell={skalViseInntektsTabellUnderRadioknapp(tilfeller, erNyoppstartetFL)}
           manglerIM={manglerInntektsmelding}
           skalKunFastsetteFL={!tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)}
+        />
+      )
+      }
+      {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE)
+      && (
+        <VurderMottarYtelseForm
+          readOnly={readOnly}
+          isAksjonspunktClosed={isAksjonspunktClosed}
+          tilfeller={tilfeller}
         />
       )
       }

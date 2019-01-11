@@ -15,6 +15,7 @@ describe('<NyoppstartetFLForm>', () => {
       tilfeller={[]}
       radioknappOverskrift={['test1', 'test2']}
       manglerIM={false}
+      formName="test"
     />);
     const radios = wrapper.find('RadioOption');
     const flInntkt = wrapper.find(FastsettATFLInntektForm);
@@ -31,6 +32,7 @@ describe('<NyoppstartetFLForm>', () => {
       radioknappOverskrift={['test1', 'test2']}
       manglerIM={false}
       skalViseInntektstabell
+      formName="test"
     />);
     const flInntkt = wrapper.find(FastsettATFLInntektForm);
     expect(flInntkt).to.have.length(1);
@@ -87,7 +89,7 @@ describe('<NyoppstartetFLForm>', () => {
     values[erNyoppstartetFLField] = true;
     const tv = NyoppstartetFLFormImpl.nyOppstartetFLInntekt(values, tilfeller,
       { faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL] });
-    expect(tv.fastsettMaanedsinntektFL).to.equal(null);
+    expect(tv.fastsettMaanedsinntektFL).to.equal(undefined);
   });
 
   it('Skal ikkje submitte inntekt ved tilstøtende ytelse', () => {
@@ -97,6 +99,6 @@ describe('<NyoppstartetFLForm>', () => {
     values[erNyoppstartetFLField] = true;
     const tv = NyoppstartetFLFormImpl.nyOppstartetFLInntekt(values, tilfeller,
       { faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL] });
-    expect(tv.fastsettMaanedsinntektFL).to.equal(null);
+    expect(tv.fastsettMaanedsinntektFL).to.equal(undefined);
   });
 });

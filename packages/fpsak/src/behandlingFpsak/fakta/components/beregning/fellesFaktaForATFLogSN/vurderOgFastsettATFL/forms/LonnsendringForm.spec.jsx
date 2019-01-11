@@ -15,6 +15,7 @@ describe('<LonnsendringForm>', () => {
       tilfeller={[]}
       radioknappOverskrift={['test1', 'test2']}
       manglerIM={false}
+      formName="test"
     />);
     const radios = wrapper.find('RadioOption');
     const atInntekt = wrapper.find(FastsettATFLInntektForm);
@@ -32,6 +33,7 @@ describe('<LonnsendringForm>', () => {
       radioknappOverskrift={['test1', 'test2']}
       manglerIM={false}
       skalViseInntektstabell
+      formName="test"
     />);
     const atInntekt = wrapper.find(FastsettATFLInntektForm);
     expect(atInntekt).to.have.length(1);
