@@ -47,7 +47,7 @@ const Header = ({
           </Link>
         </FlexColumn>
 
-        <Systemtittel className={styles.text}><FormattedMessage id="Header.Foreldrepenger" /></Systemtittel>
+        <Systemtittel><FormattedMessage id="Header.Foreldrepenger" /></Systemtittel>
         <FlexColumn className="justifyItemsToFlexEnd">
           <FlexRow className="justifyItemsToFlexEnd">
             <FlexColumn>
