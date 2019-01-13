@@ -353,7 +353,7 @@ const slaSammenATListerSomSkalVurderes = (values, faktaOmBeregning) => {
 };
 
 const harFrilansinntektBlittFastsattTidligere = frilansAndel => frilansAndel
-&& (frilansAndel.fastsattAvSaksbehandler || frilansAndel.erNyoppstartetEllerSammeOrganisasjon === true || frilansAndel.beregnetPrAar);
+&& ((frilansAndel.fastsattAvSaksbehandler && frilansAndel.beregnetPrAar >= 0) || frilansAndel.erNyoppstartetEllerSammeOrganisasjon === true);
 
 const finnKorrektBGAndelFraFaktaOmBeregningAndel = (faktaOmBeregningAndel, beregningsgrunnlag) => {
   const forstePeriode = beregningsgrunnlag.beregningsgrunnlagPeriode
@@ -377,7 +377,7 @@ FastsettATFLInntektForm.buildInitialValues = (beregningsgrunnlag) => {
   if (faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe) {
     faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.forEach((aktivitet) => {
       const korrektAndel = finnKorrektBGAndelFraFaktaOmBeregningAndel(aktivitet, beregningsgrunnlag);
-      if (korrektAndel && korrektAndel.beregnetPrAar !== null && korrektAndel.beregnetPrAar !== undefined) {
+      if (korrektAndel && korrektAndel.beregnetPrAar !== null && korrektAndel.beregnetPrAar !== undefined && korrektAndel.fastsattAvSaksbehandler) {
         const key = createInputfieldKeyAT(aktivitet.arbeidsforhold);
         initialValues[key] = formatCurrencyNoKr(korrektAndel.beregnetPrAar / 12);
       }
@@ -386,7 +386,7 @@ FastsettATFLInntektForm.buildInitialValues = (beregningsgrunnlag) => {
   if (faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM) {
     faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM.forEach((aktivitet) => {
       const korrektAndel = finnKorrektBGAndelFraFaktaOmBeregningAndel(aktivitet, beregningsgrunnlag);
-      if (korrektAndel !== undefined && korrektAndel.lonnsendringIBeregningsperioden === true) {
+      if (korrektAndel !== undefined && korrektAndel.lonnsendringIBeregningsperioden === true && korrektAndel.fastsattAvSaksbehandler) {
         const key = createInputfieldKeyAT(aktivitet.arbeidsforhold);
         initialValues[key] = formatCurrencyNoKr(korrektAndel.beregnetPrAar / 12);
       }
@@ -397,7 +397,7 @@ FastsettATFLInntektForm.buildInitialValues = (beregningsgrunnlag) => {
       const korrektAndel = finnKorrektBGAndelFraFaktaOmBeregningAndel(aktivitet, beregningsgrunnlag);
       if (korrektAndel) {
         const key = createInputfieldKeyAT(aktivitet.arbeidsforhold);
-        if (korrektAndel.beregnetPrAar !== null && korrektAndel.beregnetPrAar !== undefined) {
+        if (korrektAndel.fastsattAvSaksbehandler && korrektAndel.beregnetPrAar !== null && korrektAndel.beregnetPrAar !== undefined) {
           initialValues[key] = formatCurrencyNoKr(korrektAndel.beregnetPrAar / 12);
         }
       }

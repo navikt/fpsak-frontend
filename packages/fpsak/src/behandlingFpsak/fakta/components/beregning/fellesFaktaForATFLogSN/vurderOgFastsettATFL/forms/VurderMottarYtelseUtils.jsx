@@ -13,8 +13,8 @@ export const andelsnrMottarYtelseMap = (values, vurderMottarYtelse) => {
     return {};
   }
   const mottarYtelseMap = {};
-  const ATAndelerUtenIM = vurderMottarYtelse.arbeidstakerAndelerUtenIM ? vurderMottarYtelse.arbeidstakerAndelerUtenIM : [];
-  ATAndelerUtenIM.forEach((andel) => {
+  const atAndelerUtenIM = vurderMottarYtelse.arbeidstakerAndelerUtenIM ? vurderMottarYtelse.arbeidstakerAndelerUtenIM : [];
+  atAndelerUtenIM.forEach((andel) => {
     const mottarYtelse = values[utledArbeidsforholdFieldName(andel)];
     mottarYtelseMap[andel.andelsnr] = mottarYtelse;
   });
@@ -22,8 +22,8 @@ export const andelsnrMottarYtelseMap = (values, vurderMottarYtelse) => {
 };
 
 export const skalFastsetteInntektATUtenInntektsmelding = (values, vurderMottarYtelse) => {
-  const ATAndelerUtenIM = vurderMottarYtelse && vurderMottarYtelse.arbeidstakerAndelerUtenIM ? vurderMottarYtelse.arbeidstakerAndelerUtenIM : [];
-  return ATAndelerUtenIM.map(andel => values[utledArbeidsforholdFieldName(andel)])
+  const atAndelerUtenIM = vurderMottarYtelse && vurderMottarYtelse.arbeidstakerAndelerUtenIM ? vurderMottarYtelse.arbeidstakerAndelerUtenIM : [];
+  return atAndelerUtenIM.map(andel => values[utledArbeidsforholdFieldName(andel)])
     .find(mottarYtelse => mottarYtelse) !== undefined;
 };
 
@@ -38,4 +38,22 @@ export const frilansMottarYtelse = values => (values[finnFrilansFieldName()]);
 export const mapStateToSkalFastsetteFL = (state, formName) => {
   const values = getBehandlingFormValues(formName)(state);
   return frilansMottarYtelse(values);
+};
+
+export const harVurdertMottarYtelse = (values, vurderMottarYtelse) => {
+  if (vurderMottarYtelse.erFrilans) {
+    const flMottarYtelse = frilansMottarYtelse(values);
+    if (flMottarYtelse === undefined || flMottarYtelse === null) {
+      return false;
+    }
+  }
+  const atAndelerUtenIM = vurderMottarYtelse.arbeidstakerAndelerUtenIM ? vurderMottarYtelse.arbeidstakerAndelerUtenIM : [];
+  if (atAndelerUtenIM.length > 0) {
+    const harAndelSomIkkeErVurdert = atAndelerUtenIM.map(andel => values[utledArbeidsforholdFieldName(andel)])
+      .some(mottarYtelse => mottarYtelse === undefined || mottarYtelse === null);
+    if (harAndelSomIkkeErVurdert) {
+      return false;
+    }
+  }
+  return true;
 };

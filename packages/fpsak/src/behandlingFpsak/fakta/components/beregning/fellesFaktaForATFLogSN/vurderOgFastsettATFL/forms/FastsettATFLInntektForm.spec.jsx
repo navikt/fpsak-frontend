@@ -83,6 +83,7 @@ const beregningsgrunnlag = {
             kode: aktivitetStatus.FRILANSER,
           },
           beregnetPrAar: 120000,
+          fastsattAvSaksbehandler: true,
         },
         {
           andelsnr: 2,
@@ -90,6 +91,7 @@ const beregningsgrunnlag = {
             kode: aktivitetStatus.ARBEIDSTAKER,
           },
           beregnetPrAar: 120000,
+          fastsattAvSaksbehandler: true,
         },
       ],
     },
@@ -189,12 +191,14 @@ describe('<FastsettATFLInntektForm>', () => {
     expect(initialValues[expectedFLKey]).to.eql('10 000');
   });
 
-  it('Skal teste at buildInitialValues lager korrekt dataobjekt for når beregnet ikke er satt', () => {
+  it('Skal teste at buildInitialValues lager korrekt dataobjekt for når andel ikkje er fastsatt av saksbehandler', () => {
+    beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel[0].fastsattAvSaksbehandler = false;
+    beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel[1].fastsattAvSaksbehandler = false;
     const initialValues = FastsettATFLInntektForm.buildInitialValues(beregningsgrunnlag);
     const expectedATKey = 'fastsattInntekt_bedrift_2018-01-01_abc';
     const expectedFLKey = 'fastsattInntekt_FL';
-    expect(initialValues[expectedATKey]).to.eql('10 000');
-    expect(initialValues[expectedFLKey]).to.eql('10 000');
+    expect(initialValues[expectedATKey]).to.eql(undefined);
+    expect(initialValues[expectedFLKey]).to.eql(undefined);
   });
 
   it('Skal teste at transformValues gir korrekt dataobjekt for alle tilfeller', () => {
