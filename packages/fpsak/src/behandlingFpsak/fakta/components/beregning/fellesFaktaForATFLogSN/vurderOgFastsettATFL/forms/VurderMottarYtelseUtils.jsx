@@ -39,3 +39,21 @@ export const mapStateToSkalFastsetteFL = (state, formName) => {
   const values = getBehandlingFormValues(formName)(state);
   return frilansMottarYtelse(values);
 };
+
+export const harVurdertMottarYtelse = (values, vurderMottarYtelse) => {
+  if (vurderMottarYtelse.erFrilans) {
+    const flMottarYtelse = frilansMottarYtelse(values);
+    if (flMottarYtelse === undefined || flMottarYtelse === null) {
+      return false;
+    }
+  }
+  const ATAndelerUtenIM = vurderMottarYtelse.arbeidstakerAndelerUtenIM ? vurderMottarYtelse.arbeidstakerAndelerUtenIM : [];
+  if (ATAndelerUtenIM.length > 0) {
+    const harAndelSomIkkeErVurdert = ATAndelerUtenIM.map(andel => values[utledArbeidsforholdFieldName(andel)])
+      .some(mottarYtelse => mottarYtelse === undefined || mottarYtelse === null);
+    if (harAndelSomIkkeErVurdert) {
+      return false;
+    }
+  }
+  return true;
+};

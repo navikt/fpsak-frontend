@@ -3,15 +3,24 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import VurderOgFastsettATFL, { skalViseInntektsTabellUnderRadioknapp } from './VurderOgFastsettATFL';
-import LonnsendringForm from './forms/LonnsendringForm';
-import NyoppstartetFLForm from './forms/NyoppstartetFLForm';
+import VurderOgFastsettATFL, { skalViseInntektsTabellUnderRadioknapp, skalViseInntektstabell } from './VurderOgFastsettATFL';
+import LonnsendringForm, { lonnsendringField } from './forms/LonnsendringForm';
+import NyoppstartetFLForm, { erNyoppstartetFLField } from './forms/NyoppstartetFLForm';
 import FastsettATFLInntektForm from './forms/FastsettATFLInntektForm';
 import InntektstabellPanel from '../InntektstabellPanel';
+import { finnFrilansFieldName, utledArbeidsforholdFieldName } from './forms/VurderMottarYtelseUtils';
 
 const showTableCallback = sinon.spy();
 
-const lagWrapper = (tilfeller, erLonnsendring, erNyoppstartetFL) => (shallow(<VurderOgFastsettATFL.WrappedComponent
+const atUtenIM = { arbeidstakerAndelerUtenIM: [{ andelsnr: 1, mottarYtelse: undefined, inntektPrMnd: 10000 }] };
+const frilanser = {
+  erFrilans: true,
+  frilansMottarYtelse: null,
+  frilansInntektPrMnd: 10000,
+};
+
+
+const lagWrapper = (tilfeller, erLonnsendring, erNyoppstartetFL, values, faktaOmBeregning) => (shallow(<VurderOgFastsettATFL.WrappedComponent
   readOnly={false}
   isAksjonspunktClosed={false}
   tilfeller={tilfeller}
@@ -20,6 +29,7 @@ const lagWrapper = (tilfeller, erLonnsendring, erNyoppstartetFL) => (shallow(<Vu
   showTableCallback={showTableCallback}
   erLonnsendring={erLonnsendring}
   erNyoppstartetFL={erNyoppstartetFL}
+  skalViseTabell={skalViseInntektstabell(tilfeller, values, faktaOmBeregning)}
 />));
 
 const assertInntektstabell = (wrapper, skalViseTabell) => {
@@ -242,37 +252,134 @@ describe('<VurderOgFastsettATFL>', () => {
     assertInntektstabell(wrapper, true);
   });
 
-  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er kun vurder mottar ytelse', () => {
+  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er kun vurder mottar ytelse og verdi er satt', () => {
     const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE];
-    const wrapper = lagWrapper(tilfeller, undefined, undefined);
+    const faktaOmBeregning = {
+      vurderMottarYtelse: {
+        ...frilanser,
+        arbeidstakerAndelerUtenIM: [],
+      },
+    };
+    const values = {};
+    values[finnFrilansFieldName()] = true;
+    const wrapper = lagWrapper(tilfeller, undefined, undefined, values, faktaOmBeregning);
     assertInntektstabell(wrapper, true);
   });
 
-  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er mottar ytelse og fastsatt lønnsendring', () => {
+  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er kun vurder mottar ytelse og verdi ikkje er satt', () => {
+    const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE];
+    const faktaOmBeregning = {
+      vurderMottarYtelse: {
+        erFrilans: false,
+        ...atUtenIM,
+      },
+    };
+    const values = {};
+    values[utledArbeidsforholdFieldName(atUtenIM.arbeidstakerAndelerUtenIM[0])] = undefined;
+    const wrapper = lagWrapper(tilfeller, undefined, undefined, values, faktaOmBeregning);
+    assertInntektstabell(wrapper, false);
+  });
+
+  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er mottar ytelse og fastsatt lønnsendring og verdier er satt', () => {
     const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE, faktaOmBeregningTilfelle.VURDER_LONNSENDRING];
-    const wrapper = lagWrapper(tilfeller, true, undefined);
+    const faktaOmBeregning = {
+      vurderMottarYtelse: {
+        erFrilans: false,
+        ...atUtenIM,
+      },
+    };
+    const values = {};
+    values[utledArbeidsforholdFieldName(atUtenIM.arbeidstakerAndelerUtenIM[0])] = true;
+    values[lonnsendringField] = false;
+    const wrapper = lagWrapper(tilfeller, true, undefined, values, faktaOmBeregning);
     assertFormLonnsendring(wrapper, false, false);
     assertInntektstabell(wrapper, true);
   });
 
+  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er mottar ytelse'
+  + 'og fastsatt lønnsendring og minst ein verdi ikkje er satt', () => {
+    const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE, faktaOmBeregningTilfelle.VURDER_LONNSENDRING];
+    const faktaOmBeregning = {
+      vurderMottarYtelse: {
+        ...frilanser,
+        ...atUtenIM,
+      },
+    };
+    const values = {};
+    values[finnFrilansFieldName()] = undefined;
+    values[utledArbeidsforholdFieldName(atUtenIM.arbeidstakerAndelerUtenIM[0])] = true;
+    values[lonnsendringField] = true;
+    const wrapper = lagWrapper(tilfeller, true, undefined, values, faktaOmBeregning);
+    assertFormLonnsendring(wrapper, false, false);
+    assertInntektstabell(wrapper, false);
+  });
+
   it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er mottar ytelse og ikkje fastsatt lønnsendring', () => {
     const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE, faktaOmBeregningTilfelle.VURDER_LONNSENDRING];
-    const wrapper = lagWrapper(tilfeller, false, undefined);
+    const faktaOmBeregning = {
+      vurderMottarYtelse: {
+        ...frilanser,
+        ...atUtenIM,
+      },
+    };
+    const values = {};
+    values[finnFrilansFieldName()] = false;
+    values[utledArbeidsforholdFieldName(atUtenIM.arbeidstakerAndelerUtenIM[0])] = true;
+    values[lonnsendringField] = false;
+    const wrapper = lagWrapper(tilfeller, false, undefined, values, faktaOmBeregning);
     assertFormLonnsendring(wrapper, false, false);
     assertInntektstabell(wrapper, true);
   });
 
   it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er mottar ytelse og fastsatt nyoppstartet frilans', () => {
     const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE, faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
-    const wrapper = lagWrapper(tilfeller, undefined, true);
+    const faktaOmBeregning = {
+      vurderMottarYtelse: {
+        ...frilanser,
+        ...atUtenIM,
+      },
+    };
+    const values = {};
+    values[finnFrilansFieldName()] = false;
+    values[utledArbeidsforholdFieldName(atUtenIM.arbeidstakerAndelerUtenIM[0])] = true;
+    values[erNyoppstartetFLField] = false;
+    const wrapper = lagWrapper(tilfeller, undefined, true, values, faktaOmBeregning);
     assertFormNyoppstartetFL(wrapper, false, false);
     assertInntektstabell(wrapper, true);
   });
 
   it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er mottar ytelse og ikkje fastsatt nyoppstartet frilans', () => {
     const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE, faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
-    const wrapper = lagWrapper(tilfeller, undefined, false);
+    const faktaOmBeregning = {
+      vurderMottarYtelse: {
+        ...frilanser,
+        ...atUtenIM,
+      },
+    };
+    const values = {};
+    values[finnFrilansFieldName()] = false;
+    values[utledArbeidsforholdFieldName(atUtenIM.arbeidstakerAndelerUtenIM[0])] = true;
+    values[erNyoppstartetFLField] = false;
+    const wrapper = lagWrapper(tilfeller, undefined, false, values, faktaOmBeregning);
     assertFormNyoppstartetFL(wrapper, false, false);
     assertInntektstabell(wrapper, true);
+  });
+
+  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er mottar ytelse og ikkje fastsatt nyoppstartet frilans'
+  + ' og vurder mottar ytelse ikkje er fastsatt', () => {
+    const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE, faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
+    const faktaOmBeregning = {
+      vurderMottarYtelse: {
+        ...frilanser,
+        ...atUtenIM,
+      },
+    };
+    const values = {};
+    values[finnFrilansFieldName()] = undefined;
+    values[utledArbeidsforholdFieldName(atUtenIM.arbeidstakerAndelerUtenIM[0])] = true;
+    values[erNyoppstartetFLField] = false;
+    const wrapper = lagWrapper(tilfeller, undefined, false, values, faktaOmBeregning);
+    assertFormNyoppstartetFL(wrapper, false, false);
+    assertInntektstabell(wrapper, false);
   });
 });

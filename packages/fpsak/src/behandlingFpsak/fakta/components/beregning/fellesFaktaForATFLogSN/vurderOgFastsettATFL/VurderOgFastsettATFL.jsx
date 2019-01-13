@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
+import { getBehandlingFormValues } from 'behandlingFpsak/behandlingForm';
 import faktaOmBeregningTilfelle, {
   harKunATFLISammeOrgUtenBestebergning,
+  erATFLSpesialtilfelle,
+  harVurderMottarYtelseUtenBesteberegning,
   erATFLSpesialtilfelleEllerVurderMottarYtelseUtenBesteberegning,
 } from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import LonnsendringForm, { lonnsendringField }
@@ -11,6 +13,7 @@ import LonnsendringForm, { lonnsendringField }
 import NyoppstartetFLForm, { erNyoppstartetFLField }
   from 'behandlingFpsak/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import { getFaktaOmBeregning } from 'behandlingFpsak/behandlingSelectors';
+import { harVurdertMottarYtelse } from './forms/VurderMottarYtelseUtils';
 import FastsettATFLInntektForm from './forms/FastsettATFLInntektForm';
 import InntektstabellPanel from '../InntektstabellPanel';
 import VurderMottarYtelseForm from './forms/VurderMottarYtelseForm';
@@ -44,6 +47,7 @@ const VurderOgFastsettATFL = ({
   formName,
   tilfeller,
   manglerInntektsmelding,
+  skalViseTabell,
 }) => (
   <div>
     <InntektstabellPanel
@@ -58,7 +62,7 @@ const VurderOgFastsettATFL = ({
           erNyoppstartetFL={erNyoppstartetFL}
         />
       )}
-      skalViseTabell={erATFLSpesialtilfelleEllerVurderMottarYtelseUtenBesteberegning(tilfeller) || harKunATFLISammeOrgUtenBestebergning(tilfeller)}
+      skalViseTabell={skalViseTabell}
     >
       {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)
       && (
@@ -107,11 +111,34 @@ VurderOgFastsettATFL.propTypes = {
   manglerInntektsmelding: PropTypes.bool.isRequired,
   erLonnsendring: PropTypes.bool,
   erNyoppstartetFL: PropTypes.bool,
+  skalViseTabell: PropTypes.bool.isRequired,
 };
 
 VurderOgFastsettATFL.defaultProps = {
   erLonnsendring: undefined,
   erNyoppstartetFL: undefined,
+};
+
+export const skalViseInntektstabell = (tilfeller, values, faktaOmBeregning) => {
+  if (harKunATFLISammeOrgUtenBestebergning(tilfeller) || erATFLSpesialtilfelle(tilfeller)) {
+    return true;
+  }
+  if (harVurderMottarYtelseUtenBesteberegning(tilfeller)) {
+    if (tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)) {
+      const harLonnsendring = values[lonnsendringField];
+      if (harLonnsendring === undefined || harLonnsendring === null) {
+        return false;
+      }
+    }
+    if (tilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL)) {
+      const erNyoppstartetFL = values[erNyoppstartetFLField];
+      if (erNyoppstartetFL === undefined || erNyoppstartetFL === null) {
+        return false;
+      }
+    }
+    return harVurdertMottarYtelse(values, faktaOmBeregning.vurderMottarYtelse);
+  }
+  return false;
 };
 
 const mapStateToProps = (state, initialProps) => {
@@ -121,9 +148,11 @@ const mapStateToProps = (state, initialProps) => {
   if (faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe && faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.length > 0) {
     manglerInntektsmelding = faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.find(forhold => !forhold.inntektPrMnd) !== undefined;
   }
+  const values = getBehandlingFormValues(formName)(state);
   return {
-    erLonnsendring: behandlingFormValueSelector(formName)(state, lonnsendringField),
-    erNyoppstartetFL: behandlingFormValueSelector(formName)(state, erNyoppstartetFLField),
+    erLonnsendring: values[lonnsendringField],
+    erNyoppstartetFL: values[erNyoppstartetFLField],
+    skalViseTabell: skalViseInntektstabell(initialProps.tilfeller, values, faktaOmBeregning),
     manglerInntektsmelding,
   };
 };
