@@ -265,7 +265,7 @@ export class UttakImpl extends Component {
         return uttakElement;
       });
     asArray.forEach((t) => {
-      stonadskontoKopi.stonadskontoer[t.konto].saldo = t.trekkdager;
+      stonadskontoKopi.stonadskontoer[t.konto].saldo = stonadskontoKopi.stonadskontoer[t.konto].maxDager - t.trekkdager;
     });
 
     this.setState({ stonadskontoKopi });
