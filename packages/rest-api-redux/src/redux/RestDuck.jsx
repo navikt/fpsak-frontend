@@ -3,6 +3,7 @@ import { createSelector } from 'reselect';
 
 import { RequestRunner } from '@fpsak-frontend/rest-api';
 
+import ReduxEvents from './ReduxEvents';
 import createRequestReducer from './restReducer';
 import createRequestActionTypes from './restActionTypes';
 import createRequestActionCreators from './restActionCreators';
@@ -33,16 +34,19 @@ class RestDuck {
 
   getApiContext: (state: any) => any;
 
+  reduxEvents: ReduxEvents;
+
   $$duck: {
     actionTypes?: any,
     actionCreators?: any,
     reducer?: any,
   };
 
-  constructor(requestRunner: RequestRunner, getApiContext: (state: any) => any) {
+  constructor(requestRunner: RequestRunner, getApiContext: (state: any) => any, reduxEvents: ReduxEvents) {
     this.requestRunner = requestRunner;
     this.name = requestRunner.getName();
     this.getApiContext = getApiContext;
+    this.reduxEvents = reduxEvents;
     this.$$duck = {}; // for class internal use
   }
 
@@ -60,19 +64,14 @@ class RestDuck {
 
   get actionCreators() {
     if (!this.$$duck.actionCreators) {
-      this.$$duck.actionCreators = createRequestActionCreators(this.requestRunner, this.actionTypes);
+      this.$$duck.actionCreators = createRequestActionCreators(this.requestRunner, this.actionTypes, this.reduxEvents);
     }
     return this.$$duck.actionCreators;
   }
 
   get reducer() {
     if (!this.$$duck.reducer) {
-      this.$$duck.reducer = createRequestReducer(
-        this.requestRunner.isAsyncRestMethod(),
-        this.requestRunner.getRestMethod(),
-        this.name,
-        this.actionTypes,
-      );
+      this.$$duck.reducer = createRequestReducer(this.requestRunner.isAsyncRestMethod(), this.actionTypes);
     }
     return this.$$duck.reducer;
   }

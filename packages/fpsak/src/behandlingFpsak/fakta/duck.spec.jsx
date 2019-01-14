@@ -71,9 +71,10 @@ describe('Fakta-reducer', () => {
       .catch(e => e) // Don't care if other APIs fail
       .then(() => {
         const actions = withoutRestActions(store.getActions());
-        expect(actions).to.have.length(2);
-        const [resolveFaktaStartedAction, resolveFaktaSuccessAction] = actions;
+        expect(actions).to.have.length(4);
+        const [resolveFaktaStartedAction, pollingMessageAction, resolveFaktaSuccessAction] = actions;
         expect(resolveFaktaStartedAction).to.have.property('type', RESOLVE_FAKTA_AKSJONSPUNKTER_STARTED);
+        expect(pollingMessageAction).to.have.property('type', 'pollingMessage/SET_REQUEST_POLLING_MESSAGE');
         expect(resolveFaktaSuccessAction).to.have.property('type', RESOLVE_FAKTA_AKSJONSPUNKTER_SUCCESS);
 
         const stateAfterFetchStarted = faktaReducer(undefined, resolveFaktaStartedAction);

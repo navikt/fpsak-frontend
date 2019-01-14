@@ -190,7 +190,7 @@ describe('axiosHttpClientApi', () => {
         resource: true,
       });
 
-    let successHandlerInput;
+    let successHandlerInput = { status: '' };
     const onSuccessHandler = (response) => { successHandlerInput = response; };
     httpClientApi.setResponseHandlers(onSuccessHandler, () => undefined);
 
@@ -208,7 +208,7 @@ describe('axiosHttpClientApi', () => {
       .onGet(url)
       .reply(404);
 
-    let errorHandlerInput;
+    let errorHandlerInput = { name: '', message: '', response: { status: '' } };
     const onErrorHandler = (response) => { errorHandlerInput = response; };
     httpClientApi.setResponseHandlers(() => undefined, onErrorHandler);
 

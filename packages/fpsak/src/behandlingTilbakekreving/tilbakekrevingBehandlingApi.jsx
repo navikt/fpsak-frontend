@@ -1,5 +1,9 @@
-/* @flow */
-import { getHttpClientApi, getRestApiBuilder, initReduxRestApi } from '@fpsak-frontend/rest-api-redux';
+import {
+  getHttpClientApi, getRestApiBuilder, initReduxRestApi, ReduxEvents,
+} from '@fpsak-frontend/rest-api-redux';
+import errorHandler from '@fpsak-frontend/error-api-redux';
+
+import { setRequestPollingMessage } from 'app/pollingMessageDuck';
 import reducerRegistry from '../ReducerRegistry';
 
 export const TilbakekrevingBehandlingApiKeys = {
@@ -23,9 +27,14 @@ const endpoints = getRestApiBuilder(httpClientApi)
 
   .build();
 
+reducerRegistry.register(errorHandler.getErrorReducerName(), errorHandler.getErrorReducer());
+
+const reduxEvents = new ReduxEvents()
+  .withErrorActionCreator(errorHandler.getErrorActionCreator())
+  .withPollingMessageActionCreator(setRequestPollingMessage);
 
 const reducerName = 'dataContextTilbakekrevingBehandling';
-const tilbakekrevingBehandlingApi = initReduxRestApi(httpClientApi, 'fptilbake', endpoints, reducerName);
+const tilbakekrevingBehandlingApi = initReduxRestApi(httpClientApi, 'fptilbake', endpoints, reducerName, reduxEvents);
 reducerRegistry.register(reducerName, tilbakekrevingBehandlingApi.getDataReducer());
 
 export default tilbakekrevingBehandlingApi;

@@ -34,7 +34,7 @@ class RequestRunner {
 
   getName = (): string => this.getConfig().name
 
-  getRestMethod = (): () => void => this.getConfig().restMethod
+  getRestMethod = () => this.getConfig().restMethod
 
   getPath = (): string => `${this.context.getHostname()}/${this.context.getContextPath()}${this.getConfig().path}`
 

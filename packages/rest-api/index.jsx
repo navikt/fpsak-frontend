@@ -1,3 +1,4 @@
+/* @flow */
 export { default as getAxiosHttpClientApi } from './src/axios/axiosHttpClientApi';
 export { default as RequestApi } from './src/requestApi/RequestApi';
 export { default as RestApiContextModifier } from './src/requestApi/RestApiContextModifier';

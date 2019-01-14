@@ -1,5 +1,6 @@
-export type RequestAdditionalConfigFlowType = {
+/* @flow */
+export type RequestAdditionalConfig = {
   maxPollingLimit?: number,
-  fetchLinkDataAutomatically: boolean,
-  addLinkDataToArray: boolean,
+  fetchLinkDataAutomatically?: boolean,
+  addLinkDataToArray?: boolean,
 }

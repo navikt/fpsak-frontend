@@ -1,5 +1,9 @@
-/* @flow */
-import { getHttpClientApi, getRestApiBuilder, initReduxRestApi } from '@fpsak-frontend/rest-api-redux';
+import {
+  getHttpClientApi, getRestApiBuilder, initReduxRestApi, ReduxEvents,
+} from '@fpsak-frontend/rest-api-redux';
+import errorHandler from '@fpsak-frontend/error-api-redux';
+import { setRequestPollingMessage } from 'app/pollingMessageDuck';
+
 import reducerRegistry from '../ReducerRegistry';
 
 export const FpsakApiKeys = {
@@ -92,8 +96,12 @@ const endpoints = getRestApiBuilder(httpClientApi)
   .withPost('/api/feature-toggle', FpsakApiKeys.FEATURE_TOGGLE)
   .build();
 
+const reduxEvents = new ReduxEvents()
+  .withErrorActionCreator(errorHandler.getErrorActionCreator())
+  .withPollingMessageActionCreator(setRequestPollingMessage);
+
 const reducerName = 'dataContext';
-const fpsakApi = initReduxRestApi(httpClientApi, 'fpsak', endpoints, reducerName);
+const fpsakApi = initReduxRestApi(httpClientApi, 'fpsak', endpoints, reducerName, reduxEvents);
 reducerRegistry.register(reducerName, fpsakApi.getDataReducer());
 
 export default fpsakApi;

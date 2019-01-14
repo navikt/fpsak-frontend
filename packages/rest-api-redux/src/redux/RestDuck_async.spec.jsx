@@ -1,16 +1,37 @@
 /* @flow */
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import type { Dispatch } from 'redux';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { getAxiosHttpClientApi, RequestApi, asyncPollingStatus } from '@fpsak-frontend/rest-api';
 
+import ReduxEvents from './ReduxEvents';
 import RestDuck from './RestDuck';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
+
+const reduxEvents = new ReduxEvents();
+
+type Action = {
+  type: string,
+  meta?: {
+    options: {
+      keepData: boolean,
+    },
+  },
+  payload?: any,
+}
+
+type Store = {
+  dispatch: (dispatch: Dispatch<any>) => Promise<{payload: any}>,
+  getActions: () => Action[],
+}
+
+const createStore = (): Store => mockStore();
 
 describe('RestDuck (async)', () => {
   let sandbox;
@@ -35,13 +56,14 @@ describe('RestDuck (async)', () => {
   const ressursEndpoint = '/api/ressurs';
   const ressursEndpointIncludingContextPath = `/fpsak${ressursEndpoint}`;
 
+
   it('skal returnere resultatet direkte og så sette flagg for started og finished og legge ressurs i state', () => {
     mockAxios
       .onGet(ressursEndpointIncludingContextPath)
       .reply(200, {
         resource: 'resource',
       });
-    const store = mockStore();
+    const store = createStore();
 
     const requestConfig = {
       path: ressursEndpoint,
@@ -51,7 +73,7 @@ describe('RestDuck (async)', () => {
     };
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy());
+    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
 
     const params = { id: 'id' };
     return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
@@ -70,6 +92,7 @@ describe('RestDuck (async)', () => {
           statusRequestStarted: false,
           statusRequestFinished: false,
           pollingMessage: undefined,
+          pollingTimeout: false,
         });
 
         const stateAfterRequestFinished = asyncGetRessursDuck.reducer(stateAfterRequestStarted, requestFinishedAction);
@@ -84,6 +107,7 @@ describe('RestDuck (async)', () => {
           statusRequestStarted: false,
           statusRequestFinished: false,
           pollingMessage: undefined,
+          pollingTimeout: false,
         });
       });
   });
@@ -101,7 +125,7 @@ describe('RestDuck (async)', () => {
     mockAxios
       .onGet(headers.location)
       .reply(200, data);
-    const store = mockStore();
+    const store = createStore();
 
     const requestConfig = {
       path: ressursEndpoint,
@@ -111,7 +135,7 @@ describe('RestDuck (async)', () => {
     };
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy());
+    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
 
     const params = { id: 'id' };
     return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
@@ -132,6 +156,7 @@ describe('RestDuck (async)', () => {
           pollingMessage: undefined,
           statusRequestFinished: false,
           statusRequestStarted: false,
+          pollingTimeout: false,
         });
 
         const stateAfterRequestStatusStarted = asyncGetRessursDuck.reducer(stateAfterRequestStarted, requestStatusStartedAction);
@@ -144,6 +169,7 @@ describe('RestDuck (async)', () => {
           pollingMessage: undefined,
           statusRequestFinished: false,
           statusRequestStarted: true,
+          pollingTimeout: false,
         });
         const stateAfterRequestStatusFinished = asyncGetRessursDuck.reducer(stateAfterRequestStatusStarted, requestStatusFinishedAction);
         expect(stateAfterRequestStatusFinished).to.eql({
@@ -155,6 +181,7 @@ describe('RestDuck (async)', () => {
           pollingMessage: undefined,
           statusRequestFinished: true,
           statusRequestStarted: false,
+          pollingTimeout: false,
         });
 
         const stateAfterRequestFinished = asyncGetRessursDuck.reducer(stateAfterRequestStatusFinished, requestFinishedAction);
@@ -169,6 +196,7 @@ describe('RestDuck (async)', () => {
           pollingMessage: undefined,
           statusRequestFinished: true,
           statusRequestStarted: false,
+          pollingTimeout: false,
         });
       });
   });
@@ -187,7 +215,7 @@ describe('RestDuck (async)', () => {
       .onGet('status-url')
       .replyOnce(200, { resource: 'resource' });
 
-    const store = mockStore();
+    const store = createStore();
 
     const requestConfig = {
       path: ressursEndpoint,
@@ -199,7 +227,7 @@ describe('RestDuck (async)', () => {
     };
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy());
+    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
 
     const params = { id: 'id' };
     return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
@@ -229,6 +257,7 @@ describe('RestDuck (async)', () => {
           pollingMessage: undefined,
           statusRequestFinished: false,
           statusRequestStarted: false,
+          pollingTimeout: false,
         });
 
         const stateAfterRequestStatusStarted = asyncGetRessursDuck.reducer(stateAfterRequestStarted, firstStatusRequestStartedAction);
@@ -241,6 +270,7 @@ describe('RestDuck (async)', () => {
           pollingMessage: undefined,
           statusRequestFinished: false,
           statusRequestStarted: true,
+          pollingTimeout: false,
         });
         const stateAfterRequestStatusFinished = asyncGetRessursDuck.reducer(stateAfterRequestStatusStarted, firstStatusRequestFinishedAction);
         expect(stateAfterRequestStatusFinished).to.eql({
@@ -252,6 +282,7 @@ describe('RestDuck (async)', () => {
           pollingMessage: undefined,
           statusRequestFinished: true,
           statusRequestStarted: false,
+          pollingTimeout: false,
         });
 
         const stateAfterUpdatePollingMessageAction = asyncGetRessursDuck.reducer(stateAfterRequestStatusFinished, updatePollingMessageAction);
@@ -264,6 +295,7 @@ describe('RestDuck (async)', () => {
           pollingMessage: 'Polling pågår',
           statusRequestFinished: true,
           statusRequestStarted: false,
+          pollingTimeout: false,
         });
 
         const stateAfterSecondStatusRequestStartedAction = asyncGetRessursDuck
@@ -277,6 +309,7 @@ describe('RestDuck (async)', () => {
           pollingMessage: 'Polling pågår',
           statusRequestFinished: false,
           statusRequestStarted: true,
+          pollingTimeout: false,
         });
         const stateAfterSecondStatusRequestFinishedAction = asyncGetRessursDuck
           .reducer(stateAfterSecondStatusRequestStartedAction, secondStatusRequestFinishedAction);
@@ -289,6 +322,7 @@ describe('RestDuck (async)', () => {
           pollingMessage: 'Polling pågår',
           statusRequestFinished: true,
           statusRequestStarted: false,
+          pollingTimeout: false,
         });
 
         const stateAfterRequestFinished = asyncGetRessursDuck.reducer(stateAfterSecondStatusRequestFinishedAction, requestFinishedAction);
@@ -303,6 +337,7 @@ describe('RestDuck (async)', () => {
           pollingMessage: undefined,
           statusRequestFinished: true,
           statusRequestStarted: false,
+          pollingTimeout: false,
         });
       });
   });
@@ -331,7 +366,7 @@ describe('RestDuck (async)', () => {
       .reply(200, {
         harMedlemskap: true,
       });
-    const store = mockStore();
+    const store = createStore();
 
     const requestConfig = {
       path: ressursEndpoint,
@@ -341,7 +376,7 @@ describe('RestDuck (async)', () => {
     };
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy());
+    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
 
     const params = { id: 'id' };
     return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
@@ -360,6 +395,7 @@ describe('RestDuck (async)', () => {
           statusRequestStarted: false,
           statusRequestFinished: false,
           pollingMessage: undefined,
+          pollingTimeout: false,
         });
         const stateAfterRequestFinished = asyncGetRessursDuck.reducer(stateAfterRequestStarted, requestFinishedAction);
 
@@ -378,6 +414,7 @@ describe('RestDuck (async)', () => {
           statusRequestStarted: false,
           statusRequestFinished: false,
           pollingMessage: undefined,
+          pollingTimeout: false,
         });
       });
   });
@@ -397,7 +434,7 @@ describe('RestDuck (async)', () => {
       [links[1].rel]: { harMedlemskap: true },
     };
 
-    const store = mockStore();
+    const store = createStore();
 
     const requestConfig = {
       path: ressursEndpoint,
@@ -407,7 +444,7 @@ describe('RestDuck (async)', () => {
     };
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy());
+    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
 
     const params = { id: 'id' };
 
@@ -419,8 +456,8 @@ describe('RestDuck (async)', () => {
   it('skal håndtere feil ved initielt rest-kall', () => {
     mockAxios
       .onGet(ressursEndpointIncludingContextPath)
-      .reply(500);
-    const store = mockStore();
+      .reply(500, 'Request failed with status code 500');
+    const store = createStore();
 
     const requestConfig = {
       path: ressursEndpoint,
@@ -430,7 +467,7 @@ describe('RestDuck (async)', () => {
     };
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name));
+    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
 
     const params = { id: 'id' };
     return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
@@ -449,6 +486,7 @@ describe('RestDuck (async)', () => {
           statusRequestStarted: false,
           statusRequestFinished: false,
           pollingMessage: undefined,
+          pollingTimeout: false,
         });
 
         const stateAfterRequestError = asyncGetRessursDuck.reducer(stateAfterRequestStarted, requestErrorAction);
@@ -461,12 +499,14 @@ describe('RestDuck (async)', () => {
           statusRequestStarted: false,
           statusRequestFinished: false,
           pollingMessage: undefined,
+          pollingTimeout: false,
         });
-        expect(stateAfterRequestError.error.message).is.eql('Request failed with status code 500');
+
+        expect(stateAfterRequestError.error ? stateAfterRequestError.error.message : '').is.eql('Request failed with status code 500');
       });
   });
 
-  it('skal håndtere feil ved status-kall', () => {
+  it('skal håndtere status 418 som blir brukt ved HALTED/DELAYED i long-pollinga', () => {
     const data = {
       resource: 'resource',
     };
@@ -478,8 +518,8 @@ describe('RestDuck (async)', () => {
       .reply(202, data, headers);
     mockAxios
       .onGet(headers.location)
-      .reply(418);
-    const store = mockStore();
+      .reply(418, 'Request failed with status code 418');
+    const store = createStore();
 
     const requestConfig = {
       path: ressursEndpoint,
@@ -489,7 +529,7 @@ describe('RestDuck (async)', () => {
     };
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy());
+    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
 
     const params = { id: 'id' };
     return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
@@ -509,6 +549,7 @@ describe('RestDuck (async)', () => {
           statusRequestStarted: false,
           statusRequestFinished: false,
           pollingMessage: undefined,
+          pollingTimeout: false,
         });
 
         const stateAfterStatusRequestStarted = asyncGetRessursDuck.reducer(stateAfterRequestStarted, requestStatusStartedAction);
@@ -521,6 +562,7 @@ describe('RestDuck (async)', () => {
           statusRequestStarted: true,
           statusRequestFinished: false,
           pollingMessage: undefined,
+          pollingTimeout: false,
         });
 
         const stateAfterRequestError = asyncGetRessursDuck.reducer(stateAfterStatusRequestStarted, requestErrorAction);
@@ -533,8 +575,10 @@ describe('RestDuck (async)', () => {
           statusRequestStarted: true,
           statusRequestFinished: false,
           pollingMessage: undefined,
+          pollingTimeout: false,
         });
-        expect(stateAfterRequestError.error.message).is.eql('Request failed with status code 418');
+
+        expect(stateAfterRequestError.error).is.eql('Request failed with status code 418');
       });
   });
 
@@ -560,7 +604,7 @@ describe('RestDuck (async)', () => {
       .reply(200, {
         harMedlemskap: true,
       });
-    const store = mockStore();
+    const store = createStore();
 
     const requestConfig = {
       path: ressursEndpoint,
@@ -570,7 +614,7 @@ describe('RestDuck (async)', () => {
     };
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy());
+    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
 
     const params = { id: 'id' };
     return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
@@ -602,7 +646,7 @@ describe('RestDuck (async)', () => {
           statusRequestFinished: false,
           pollingMessage: undefined,
         });
-        expect(stateAfterRequestError.error.message).is.eql('Request failed with status code 418');
+        expect(stateAfterRequestError.error ? stateAfterRequestError.error.message : '').is.eql('Request failed with status code 418');
       });
   });
 });

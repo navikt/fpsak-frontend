@@ -2,14 +2,15 @@
 import { combineReducers } from 'redux';
 import { RequestApi } from '@fpsak-frontend/rest-api';
 
+import ReduxEvents from './ReduxEvents';
 import RestDuck from './RestDuck';
 
 class ReduxRestApi {
   ducks: RestDuck[]
 
-  constructor(requestApi: RequestApi, getRestApiState: (state: any) => any) {
+  constructor(requestApi: RequestApi, getRestApiState: (state: any) => any, reduxEvents: ReduxEvents) {
     const endpointNames = requestApi.getEndpointNames();
-    this.ducks = endpointNames.map(endpointName => new RestDuck(requestApi.getRequestRunner(endpointName), getRestApiState));
+    this.ducks = endpointNames.map(endpointName => new RestDuck(requestApi.getRequestRunner(endpointName), getRestApiState, reduxEvents));
   }
 
   createReducer = () => {
@@ -29,7 +30,7 @@ class ReduxRestApi {
 
   makeResetActionCreator = (endpointName: string) => this.getEndpoint(endpointName).actionCreators.reset
 
-  // FIXME (TOR) Skriv om dette. Kanseller lenger ut. Og legg til actionreducer for bedre sporing
+  // TODO (TOR) Skriv om dette. Kanseller lenger ut. Og legg til actionreducer for bedre sporing
   cancelRequest = (endpointName: string) => this.getEndpoint(endpointName).requestRunner.stopProcess()
 
   getEndpointState = (endpointName: string) => this.getEndpoint(endpointName).stateSelector

@@ -77,7 +77,7 @@ describe('Behandlingsprosess-reducer', () => {
       .catch(ignoreRestErrors)
       .then(() => {
         const actions = withoutRestActions(store.getActions());
-        expect(actions).to.have.length(2);
+        expect(actions).to.have.length(3);
 
         const stateAfterFetchStarted = behandlingsprosessReducer(undefined, actions[0]);
         expect(stateAfterFetchStarted).to.eql({
@@ -87,7 +87,7 @@ describe('Behandlingsprosess-reducer', () => {
           resolveProsessAksjonspunkterSuccess: false,
         });
 
-        const stateAfterFetchFinished = behandlingsprosessReducer(undefined, actions[1]);
+        const stateAfterFetchFinished = behandlingsprosessReducer(undefined, actions[2]);
         expect(stateAfterFetchFinished).to.eql({
           overrideBehandlingspunkter: [],
           selectedBehandlingspunktNavn: undefined,
@@ -109,7 +109,7 @@ describe('Behandlingsprosess-reducer', () => {
       .catch(ignoreRestErrors)
       .then(() => {
         const actions = withoutRestActions(store.getActions());
-        expect(actions).to.have.length(2);
+        expect(actions).to.have.length(3);
 
         const stateAfterFetchStarted = behandlingsprosessReducer(undefined, actions[0]);
         expect(stateAfterFetchStarted).to.eql({
@@ -119,7 +119,7 @@ describe('Behandlingsprosess-reducer', () => {
           resolveProsessAksjonspunkterSuccess: false,
         });
 
-        const stateAfterFetchFinished = behandlingsprosessReducer(undefined, actions[1]);
+        const stateAfterFetchFinished = behandlingsprosessReducer(undefined, actions[2]);
         expect(stateAfterFetchFinished).to.eql({
           overrideBehandlingspunkter: [],
           selectedBehandlingspunktNavn: undefined,
@@ -141,7 +141,7 @@ describe('Behandlingsprosess-reducer', () => {
       .catch(ignoreRestErrors)
       .then(() => {
         const actions = withoutRestActions(store.getActions());
-        expect(actions).to.have.length(2);
+        expect(actions).to.have.length(3);
 
         const stateAfterFetchStarted = behandlingsprosessReducer(undefined, actions[0]);
         expect(stateAfterFetchStarted).to.eql({
@@ -151,7 +151,7 @@ describe('Behandlingsprosess-reducer', () => {
           resolveProsessAksjonspunkterSuccess: false,
         });
 
-        const stateAfterFetchFinished = behandlingsprosessReducer(undefined, actions[1]);
+        const stateAfterFetchFinished = behandlingsprosessReducer(undefined, actions[2]);
         expect(stateAfterFetchFinished).to.eql({
           overrideBehandlingspunkter: [],
           selectedBehandlingspunktNavn: undefined,

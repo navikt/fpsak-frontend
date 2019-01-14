@@ -21,6 +21,8 @@ class NotificationHelper {
 
   updatePollingMessageCallback = sinon.spy();
 
+  addPollingTimeoutEventHandler = sinon.spy();
+
   constructor() {
     const mapper = new NotificationMapper();
     mapper.addRequestStartedEventHandler(this.requestStartedCallback);
@@ -29,6 +31,7 @@ class NotificationHelper {
     mapper.addStatusRequestStartedEventHandler(this.statusRequestStartedCallback);
     mapper.addStatusRequestFinishedEventHandler(this.statusRequestFinishedCallback);
     mapper.addUpdatePollingMessageEventHandler(this.updatePollingMessageCallback);
+    mapper.addPollingTimeoutEventHandler(this.addPollingTimeoutEventHandler);
     this.mapper = mapper;
   }
 }
@@ -285,15 +288,14 @@ describe('RequestProcess', () => {
     try {
       await process.run(params);
     } catch (error) {
-      expect(error.message).to.eql('Maximum polling attempts exceeded. URL: http://polling.url. Message: Polling continues');
+      expect(error.message).to.eql('Maximum polling attempts exceeded');
       expect(notificationHelper.requestStartedCallback.calledOnce).to.true;
       expect(notificationHelper.statusRequestStartedCallback.calledOnce).to.true;
       expect(notificationHelper.statusRequestFinishedCallback.calledOnce).to.true;
       expect(notificationHelper.updatePollingMessageCallback.calledOnce).to.true;
       expect(notificationHelper.updatePollingMessageCallback.getCalls()[0].args[0]).is.eql('Polling continues');
-      expect(notificationHelper.requestErrorCallback.calledOnce).to.true;
-      expect(notificationHelper.requestErrorCallback.getCalls()[0].args[0])
-        .is.eql('Maximum polling attempts exceeded. URL: http://polling.url. Message: Polling continues');
+      expect(notificationHelper.addPollingTimeoutEventHandler.calledOnce).to.true;
+      expect(notificationHelper.addPollingTimeoutEventHandler.getCalls()[0].args[0]).is.eql({ location: 'http://polling.url' });
     }
   });
 
@@ -321,11 +323,29 @@ describe('RequestProcess', () => {
     const process = new RequestProcess(httpClientMock, httpClientMock.getAsync, 'behandling', defaultConfig);
     const mapper = new NotificationMapper();
     // Etter en runde med polling vil en stoppe prosessen via event
-    mapper.addUpdatePollingMessageEventHandler(() => process.cancel());
+    mapper.addUpdatePollingMessageEventHandler(() => { process.cancel(); return Promise.resolve(''); });
     process.setNotificationEmitter(mapper.getNotificationEmitter());
 
     const response = await process.run(params);
 
-    expect(response).to.eql('CANCELLED');
+    expect(response).to.eql({ payload: 'INTERNAL_CANCELLATION' });
+  });
+
+  it('skal hente data med nullverdi', async () => {
+    const httpClientMock = {
+      get: () => ({ data: null }),
+    };
+
+    const process = new RequestProcess(httpClientMock, httpClientMock.get, 'behandling', defaultConfig);
+    const notificationHelper = new NotificationHelper();
+    process.setNotificationEmitter(notificationHelper.mapper.getNotificationEmitter());
+    const params = {
+      behandlingId: 1,
+    };
+
+    const result = await process.run(params);
+
+    expect(result).is.eql({ payload: [] });
+    expect(notificationHelper.requestFinishedCallback.getCalls()[0].args[0]).is.null;
   });
 });

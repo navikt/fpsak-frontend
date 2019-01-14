@@ -1,6 +1,7 @@
 /* @flow */
 import type { RequestAdditionalConfig } from './RequestAdditionalConfigFlowType';
 import type { HttpClientApi } from './HttpClientApiFlowType';
+import type { RequestConfig } from './RequestConfigFlowType';
 
 /**
  * maxPollingLimit: Maksimum antall ganger en skal forsøke å polle når en venter på ressurs (long polling). Kun aktuell ved metodene som inkluderer "Async".
@@ -82,7 +83,7 @@ class RestApiConfigBuilder {
     return this;
   }
 
-  build() {
+  build(): RequestConfig[] {
     return this.endpoints;
   }
 }

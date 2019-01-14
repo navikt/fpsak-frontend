@@ -6,23 +6,25 @@ type EventCallback = (data?: any) => Promise<string>
 /**
  * NotificationMapper
  *
- * Denne klassen brukes for å koble interne hendelser til eksterne hendelser.
+ * Denne klassen brukes for å koble interne rest-api hendelser til eksterne hendelser.
  * For eksempel kan en koble REQUEST_STARTED mot en Redux actionCreator.
  */
 class NotificationMapper {
   eventTypes = {
-    [EventType.REQUEST_STARTED]: undefined,
-    [EventType.REQUEST_FINISHED]: undefined,
-    [EventType.REQUEST_ERROR]: undefined,
-    [EventType.STATUS_REQUEST_STARTED]: undefined,
-    [EventType.STATUS_REQUEST_FINISHED]: undefined,
-    [EventType.UPDATE_POLLING_MESSAGE]: undefined,
+    [EventType.REQUEST_STARTED]: [],
+    [EventType.REQUEST_FINISHED]: [],
+    [EventType.REQUEST_ERROR]: [],
+    [EventType.STATUS_REQUEST_STARTED]: [],
+    [EventType.STATUS_REQUEST_FINISHED]: [],
+    [EventType.UPDATE_POLLING_MESSAGE]: [],
+    [EventType.POLLING_TIMEOUT]: [],
+    [EventType.POLLING_HALTED_OR_DELAYED]: [],
   };
 
   addEventHandler = (eventType: string, callback: EventCallback) => {
     this.eventTypes = {
       ...this.eventTypes,
-      [eventType]: callback,
+      [eventType]: this.eventTypes[eventType].concat(callback),
     };
   }
 
@@ -38,11 +40,13 @@ class NotificationMapper {
 
   addUpdatePollingMessageEventHandler = (callback: EventCallback) => this.addEventHandler(EventType.UPDATE_POLLING_MESSAGE, callback);
 
+  addPollingTimeoutEventHandler = (callback: EventCallback) => this.addEventHandler(EventType.POLLING_TIMEOUT, callback);
+
+  addHaltedOrDelayedEventHandler = (callback: EventCallback) => this.addEventHandler(EventType.POLLING_HALTED_OR_DELAYED, callback);
+
   getNotificationEmitter = () => (eventType: $Keys<typeof EventType>, data?: any) => {
-    const event = this.eventTypes[eventType];
-    if (event) {
-      event(data);
-    }
+    const eventHandlers = this.eventTypes[eventType];
+    eventHandlers.forEach(handler => handler(data, eventType));
   }
 }
 

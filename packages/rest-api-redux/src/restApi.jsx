@@ -6,21 +6,8 @@ import type { RequestConfig } from '@fpsak-frontend/rest-api/src/RequestConfigFl
 import type { HttpClientApi } from '@fpsak-frontend/rest-api/src/HttpClientApiFlowType';
 
 import createReduxRestApi from './redux/duck';
-
-const getActions = (restApi, endpointName) => ({
-  makeRestApiRequest: () => restApi.makeRestApiRequest(endpointName),
-  cancelRestApiRequest: () => restApi.cancelRestApiRequest(endpointName),
-  resetRestApi: () => restApi.resetRestApi(endpointName),
-  setDataRestApi: () => restApi.setDataRestApi(endpointName),
-});
-
-const getSelectors = (restApi, endpointName) => ({
-  getRestApiData: () => restApi.getRestApiData(endpointName),
-  getRestApiMeta: () => restApi.getRestApiMeta(endpointName),
-  getRestApiError: () => restApi.getRestApiError(endpointName),
-  getRestApiStarted: () => restApi.getRestApiStarted(endpointName),
-  getRestApiFinished: () => restApi.getRestApiFinished(endpointName),
-});
+import EndpointOperations from './redux/EndpointOperations';
+import ReduxEvents from './redux/ReduxEvents';
 
 type ApiMappedByKey = {
   [key: string]: {}
@@ -28,23 +15,16 @@ type ApiMappedByKey = {
 
 const createApiForEachKey = (contextPath: string, config: RequestConfig[], restApi): ApiMappedByKey => config.reduce((acc, c) => ({
   ...acc,
-  [c.name]: {
-    ...getActions(restApi, c.name),
-    ...getSelectors(restApi, c.name),
-    path: `/${contextPath}${c.path}`,
-    name: c.name,
-  },
+  [c.name]: new EndpointOperations(restApi, contextPath, c),
 }), {});
 
-// TODO (TOR) Rydd i Api'et til denne.
-export const initReduxRestApi = (httpClientApi: HttpClientApi, contextPath: string, config: RequestConfig[], reducerName: string) => {
+export const initReduxRestApi = (httpClientApi: HttpClientApi, contextPath: string, config: RequestConfig[], reducerName: string,
+  reduxEvents: ReduxEvents) => {
   const requestApi = new RequestApi(httpClientApi, contextPath, config);
-  const reduxRestApi = createReduxRestApi(requestApi, reducerName);
+  const reduxRestApi = createReduxRestApi(requestApi, reducerName, reduxEvents);
 
   return {
     ...createApiForEachKey(contextPath, config, reduxRestApi),
-    getAllAsyncPollingMessages: reduxRestApi.getAllAsyncPollingMessages,
-    getAllAsyncErrorMessages: reduxRestApi.getAllAsyncErrorMessages,
     getDataReducer: () => reduxRestApi.dataReducer,
     getAxiosHttpClientApi: () => httpClientApi.axiosInstance,
     getDataContextModifier: () => new RestApiContextModifier(requestApi),
