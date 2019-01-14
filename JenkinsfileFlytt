@@ -1,3 +1,5 @@
+import no.nav.jenkins.*
+
 pipeline {
     agent {
         node {
@@ -13,6 +15,8 @@ pipeline {
             steps {
                 script {
                     dir ('k8s') {
+
+                        String msgColor = "#077040"
                         def version = getDeployetVersion("fpsak-frontend", fra)
 
                         def props = readProperties  interpolate: true, file: "application.${til}.variabler.properties"
@@ -25,6 +29,7 @@ pipeline {
                         if (til == "p") {
                             naisNamespace = "default"
                         }
+                        slackInfo("Deploy av *fpsak-frontend*:" + version + " til *" + til + '*')
                         def exitCode=sh returnStatus: true, script: "k rollout status -n${naisNamespace} deployment/fpsak-frontend"
                         echo "exit code is $exitCode"
 
@@ -39,8 +44,12 @@ pipeline {
                                     requestBody           : veraPayload,
                                     ignoreSslErrors       : true
                             ])
+                            slackInfo(msgColor, "_Deploy av fpsak-frontend:$version til $til var suksessfult._")
+                        } else {
+                           
+                            slackError("Dette gjelder ${artifactId} til: ${miljo}")
+                            throw error
                         }
-
                         addBadge icon: '', id: '', link: '', text: "${til}-${version}"
                     }
                 }
@@ -67,4 +76,14 @@ def getDeployetVersion(String application, String miljo) {
     return deployVersion
 }
 
+def slackError(String tilleggsinfo) {
+    slackSend color: "danger", message: "${env.JOB_NAME} [${env.BUILD_NUMBER}] feilet: ${env.BUILD_URL} ${tilleggsinfo}"
+}
 
+def slackInfo(String msg) {
+    slackInfo("#595959", msg)
+}
+
+def slackInfo(String color, String msg) {
+    slackSend color: color, message: msg
+}
