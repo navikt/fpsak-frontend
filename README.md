@@ -19,7 +19,7 @@ yarn build
 * velge namespace, bruker scoped nå(@fpsak-frontend)
 * Sette opp lerna publish for de pakkene som skal være åpne
 * gjøre form pakken tilgjengelig med final-form og redux-form
-* Legge inn readme for de forksjellige pakkene
+* Legge inn readme for pakkene
 * Dele opp pakkene i flere pakker
 
 ### Licenses and attribution
