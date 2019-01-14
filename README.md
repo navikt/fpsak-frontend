@@ -5,6 +5,7 @@ Monorepo for Frontend kode for vl-foreldrepenger.
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 [![Cypress.io tests](https://img.shields.io/badge/cypress.io-tests-green.svg?style=flat-square)](https://cypress.io)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=navikt_fpsak-frontend&metric=coverage)](https://sonarcloud.io/api/project_badges/measure?project=navikt_fpsak-frontend&metric=coverage)
+ [![Known Vulnerabilities](https://snyk.io/test/github/navikt/fpsak-frontend/badge.svg)](https://snyk.io/test/github/navikt/fpsak-frontend) 
 
 
 ## Komme i gang
