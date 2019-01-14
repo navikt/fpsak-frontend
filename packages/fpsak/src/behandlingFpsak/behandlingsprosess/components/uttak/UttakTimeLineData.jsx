@@ -129,7 +129,7 @@ export class UttakTimeLineData extends Component {
       harSoktOmFlerbarnsdager,
     } = this.props;
     const { showDelPeriodeModal } = this.state;
-    const isEdited = !!selectedItemData.begrunnelse;
+    const isEdited = !!selectedItemData.begrunnelse && !isApOpen;
     return (
       <Row>
         <Column xs="12">

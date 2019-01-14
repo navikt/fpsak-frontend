@@ -17,7 +17,28 @@
 }
 
 .aksjonspunkt--uttak {
-  border-color: @white;
+  border: 0;
+  position: relative;
+
+  &.aksjonspunkt--5086 {
+
+    &:after {
+      border-left: 5px solid @navOransjeLighten20;
+      border-radius: 5px 0 0 5px;
+      content: '';
+      height: 306px;
+      left: 0;
+      position: absolute;
+      top: 0;
+    }
+
+    &:global(.ekspanderbartPanel--lukket) {
+
+      &:after {
+        height: 57px;
+      }
+    }
+  }
 }
 
 .statusOk {

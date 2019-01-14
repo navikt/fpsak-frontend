@@ -237,6 +237,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'ENDRING_TIDSBEGRENSET_ARBEIDSFORHOLD',
     feltId: 'HistorikkEndretFelt.TidsbegrensetArbeidsforhold',
   },
+  RETT_TIL_FORELDREPENGER: {
+    kode: 'RETT_TIL_FORELDREPENGER',
+    feltId: 'HistorikkEndretFelt.RettTilForeldrepenger',
+  },
   UTTAK_TREKKDAGER: {
     kode: 'UTTAK_TREKKDAGER',
     feltId: 'HistorikkEndretFelt.UttakTrekkdager',

@@ -32,6 +32,8 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
+      annenForelderHarRettAp={[]}
+      annenForelderHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -74,6 +76,8 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
+      annenForelderHarRettAp={[]}
+      annenForelderHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -111,6 +115,8 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
+      annenForelderHarRettAp={[]}
+      annenForelderHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -144,6 +150,8 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
+      annenForelderHarRettAp={[]}
+      annenForelderHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -172,6 +180,8 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
+      annenForelderHarRettAp={[]}
+      annenForelderHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -200,6 +210,8 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
+      annenForelderHarRettAp={[]}
+      annenForelderHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -226,6 +238,8 @@ describe('<UttakFaktaForm>', () => {
       initialValues={{}}
       isRevurdering={false}
       slettedePerioder={[]}
+      annenForelderHarRettAp={[]}
+      annenForelderHarRettApOpen={false}
       aksjonspunkter={[
         {
           aksjonspunktType: {
@@ -282,6 +296,8 @@ describe('<UttakFaktaForm>', () => {
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
       isRevurdering={false}
+      annenForelderHarRettAp={[]}
+      annenForelderHarRettApOpen={false}
       submitting={false}
     />);
 

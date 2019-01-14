@@ -8,6 +8,7 @@ import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspand
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
 import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
   getUttakPerioder,
   getBehandlingYtelseFordeling,
@@ -26,7 +27,13 @@ import {
   sjekkNyFørsteUttakDatoStartErFørSkjæringpunkt,
 } from './components/UttakPeriodeValidering';
 
-const uttakAksjonspunkter = [aksjonspunktCodes.AVKLAR_UTTAK, aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO];
+const uttakAksjonspunkter = [
+  aksjonspunktCodes.AVKLAR_UTTAK,
+  aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO,
+  aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT,
+];
+
+const leggTilKlasseHvisAp = annenForelderHarRettApOpen => (annenForelderHarRettApOpen ? 'aksjonspunkt--5086' : undefined);
 
 export const UttakInfoPanelImpl = ({
   intl,
@@ -37,37 +44,45 @@ export const UttakInfoPanelImpl = ({
   aksjonspunkter,
   isRevurdering,
   hasStatusUtredes,
-  førsteUttaksDato,
+  // førsteUttaksDato,
+  annenForelderHarRettAp,
+  annenForelderHarRettApOpen,
   handleSubmit,
   ...formProps
-}) => (
-  <FaktaEkspandertpanel
-    title={intl.formatMessage({ id: 'UttakInfoPanel.FaktaUttak' })}
-    hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-    isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.UTTAK)}
-    toggleInfoPanelCallback={toggleInfoPanelCallback}
-    faktaId={faktaPanelCodes.UTTAK}
-    readOnly={readOnly}
-    disabledTextCode="UttakInfoPanel.Uttak"
-  >
-    <form onSubmit={handleSubmit}>
-      <UttakFaktaForm
-        hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-        readOnly={readOnly && (!isRevurdering || !hasStatusUtredes)}
-        toggleInfoPanelCallback={toggleInfoPanelCallback}
-        aksjonspunkter={aksjonspunkter}
-        førsteUttaksDato={førsteUttaksDato}
-        submitting={formProps.submitting}
-      />
-      {formProps.error
+}) => {
+  const ekstraClass = leggTilKlasseHvisAp(annenForelderHarRettApOpen);
+  return (
+    <FaktaEkspandertpanel
+      title={intl.formatMessage({ id: 'UttakInfoPanel.FaktaUttak' })}
+      hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+      isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.UTTAK)}
+      toggleInfoPanelCallback={toggleInfoPanelCallback}
+      faktaId={faktaPanelCodes.UTTAK}
+      readOnly={readOnly}
+      disabledTextCode="UttakInfoPanel.Uttak"
+      ekstraClass={ekstraClass}
+    >
+      <form onSubmit={handleSubmit}>
+        <UttakFaktaForm
+          hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+          readOnly={readOnly && (!isRevurdering || !hasStatusUtredes)}
+          toggleInfoPanelCallback={toggleInfoPanelCallback}
+          aksjonspunkter={aksjonspunkter}
+          // førsteUttaksDato={førsteUttaksDato}
+          annenForelderHarRettAp={annenForelderHarRettAp}
+          annenForelderHarRettApOpen={annenForelderHarRettApOpen}
+          submitting={formProps.submitting}
+        />
+        {formProps.error
       && (
       <span>
         {formProps.error}
       </span>
       )}
-    </form>
-  </FaktaEkspandertpanel>
-);
+      </form>
+    </FaktaEkspandertpanel>
+  );
+};
 
 UttakInfoPanelImpl.propTypes = {
   intl: intlShape.isRequired,
@@ -77,21 +92,24 @@ UttakInfoPanelImpl.propTypes = {
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  førsteUttaksDato: PropTypes.string,
+  // førsteUttaksDato: PropTypes.string,
   isRevurdering: PropTypes.bool.isRequired,
   hasStatusUtredes: PropTypes.bool.isRequired,
+  annenForelderHarRettAp: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  annenForelderHarRettApOpen: PropTypes.bool,
 };
 
 UttakInfoPanelImpl.defaultProps = {
-  førsteUttaksDato: undefined,
+  annenForelderHarRettApOpen: undefined,
 };
 
-const validateUttakForm = (values, originalPerioder, aksjonspunkter, førsteUttaksDato) => { // NOSONAR må ha disse sjekkene
+const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOSONAR må ha disse sjekkene
   const errors = {};
 
   if (sjekkOmfaktaOmUttakAksjonspunkt(aksjonspunkter)) {
     const originalStartDato = (originalPerioder[0] || []).fom;
     const nyStartDato = (values.perioder[0] || []).fom;
+    const { førsteUttaksDato } = values;
 
     if (values.perioder.length === 0) {
       errors.perioder = {
@@ -145,21 +163,27 @@ const validateUttakForm = (values, originalPerioder, aksjonspunkter, førsteUtta
   return errors;
 };
 
-const buildInitialValues = createSelector([getUttakPerioder], (perioder) => {
-  if (perioder) {
-    return ({
-      perioder: perioder.map(periode => ({
-        ...periode,
-        id: guid(),
-        openForm: periode.bekreftet === false,
-        updated: false,
-        isFromSøknad: true,
-      })),
-    });
-  }
+const buildInitialValues = createSelector([getUttakPerioder, getBehandlingYtelseFordeling],
+  (perioder, ytelseFordeling) => {
+    const annenForelderHarRett = ytelseFordeling && ytelseFordeling.annenforelderHarRettDto;
+    const førsteUttaksDato = ytelseFordeling && ytelseFordeling.førsteUttaksDato ? ytelseFordeling.førsteUttaksDato : undefined;
+    if (perioder) {
+      return ({
+        førsteUttaksDato,
+        annenForelderHarRett: annenForelderHarRett ? annenForelderHarRett.annenforelderHarRett : undefined,
+        begrunnelse: annenForelderHarRett ? annenForelderHarRett.begrunnelse : undefined,
+        perioder: perioder.map(periode => ({
+          ...periode,
+          id: guid(),
+          openForm: periode.bekreftet === false,
+          updated: false,
+          isFromSøknad: true,
+        })),
+      });
+    }
 
-  return undefined;
-});
+    return undefined;
+  });
 
 const getOriginalPeriodeId = (origPeriode) => {
   if (origPeriode) {
@@ -201,23 +225,27 @@ const transformValues = (values, initialValues, aksjonspunkter) => { // NOSONAR
         };
       })
       : [],
-    begrunnelse: '',
+    annenforelderHarRett: values.annenForelderHarRett,
+    begrunnelse: values.begrunnelse || '',
   }));
 };
 
 const mapStateToProps = (state, initialProps) => {
   const initialValues = buildInitialValues(state);
-  const ytelseFordeling = getBehandlingYtelseFordeling(state);
-  const førsteUttaksDato = ytelseFordeling && ytelseFordeling.førsteUttaksDato ? ytelseFordeling.førsteUttaksDato : undefined;
   const isRevurdering = getBehandlingIsManuellRevurdering(state);
   const hasStatusUtredes = hasBehandlingUtredesStatus(state);
+  const annenForelderHarRettAp = initialProps.aksjonspunkter.filter(ap => ap.definisjon.kode
+    === aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT) || [];
+  const annenForelderHarRettApOpen = annenForelderHarRettAp.length > 0
+    ? isAksjonspunktOpen(annenForelderHarRettAp[0].status.kode) : null;
   const perioder = getUttakPerioder(state);
   return {
     initialValues,
-    førsteUttaksDato,
     isRevurdering,
     hasStatusUtredes,
-    validate: values => validateUttakForm(values, perioder, initialProps.aksjonspunkter, førsteUttaksDato),
+    annenForelderHarRettAp,
+    annenForelderHarRettApOpen,
+    validate: values => validateUttakForm(values, perioder, initialProps.aksjonspunkter),
     onSubmit: values => initialProps.submitCallback(transformValues(values, initialValues, initialProps.aksjonspunkter)),
   };
 };

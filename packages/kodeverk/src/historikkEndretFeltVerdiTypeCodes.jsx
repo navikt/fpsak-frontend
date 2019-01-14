@@ -152,6 +152,14 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'TILBAKEKR_IGNORER',
     verdiId: 'HistorikkEndretFeltVerdiType.tilbakekrIgnorer',
   },
+  ANNEN_FORELDER_HAR_IKKE_RETT: {
+    kode: 'ANNEN_FORELDER_HAR_IKKE_RETT',
+    verdiId: 'HistorikkEndretFeltVerdiType.AnnenforelderHarIkkeRett',
+  },
+  ANNEN_FORELDER_HAR_RETT: {
+    kode: 'ANNEN_FORELDER_HAR_RETT',
+    verdiId: 'HistorikkEndretFeltVerdiType.AnnenforelderHarRett',
+  },
   ARBEIDSTAKER_UTEN_FERIEPENGER: {
     kode: 'ARBEIDSTAKER_UTEN_FERIEPENGER',
     verdiId: 'HistorikkEndretFeltVerdiType.ArbeidstakerUtenFeriepenger',

@@ -516,3 +516,12 @@ som fra core/og muligen import fra alla andra komponenter
     background-color: @navOransjeLighten80 !important;
   }
 }
+
+input[type='number'] { // lesshint-disable qualifyingElement
+  -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}

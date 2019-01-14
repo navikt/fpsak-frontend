@@ -16,12 +16,14 @@ const VerticalSpacer = ({
   eightPx,
   sixteenPx,
   twentyPx,
+  dashed,
 }) => (
   <div className={classNames({
     fourPx,
     eightPx,
     sixteenPx,
     twentyPx,
+    dashed,
   })}
   />
 );
@@ -31,6 +33,7 @@ VerticalSpacer.propTypes = {
   eightPx: PropTypes.bool,
   sixteenPx: PropTypes.bool,
   twentyPx: PropTypes.bool,
+  dashed: PropTypes.bool,
 };
 
 VerticalSpacer.defaultProps = {
@@ -38,6 +41,7 @@ VerticalSpacer.defaultProps = {
   eightPx: false,
   sixteenPx: false,
   twentyPx: false,
+  dashed: false,
 };
 
 export default VerticalSpacer;

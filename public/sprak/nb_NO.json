@@ -1358,7 +1358,7 @@
   "ToTrinnsForm.Medlemskap.VurderGyldigMedlemskap": "Det er vurdert om søker har gyldig medlemskap i perioden.",
   "ToTrinnsForm.Medlemskap.FastsettStartdato": "Startdato er endret.",
   "ToTrinnsForm.Medlemskap.VilkarOverstyrt": "Medlemskapsvilkåret er overstyrt.",
-
+  "ToTrinnsForm.AvklarUttak.AnnenForelderHarRett": "Det er vurdert om annen forelder har rett til foreldrepenger",
   "ToTrinnsForm.AvklarUttak.PeriodeLagtTil": "Perioden {a} til {b} er lagt til.",
   "ToTrinnsForm.AvklarUttak.PeriodeSlettet": "Perioden {a} til {b} er slettet.",
   "ToTrinnsForm.AvklarUttak.PeriodeAvklart": "Perioden {a} til {b} er avklart.",
@@ -1751,6 +1751,7 @@
   "UttakInfoPanel.Aksjonspunkt.5070": "Kontakt søker ved behov. Fastsett korrekt og dokumentert søknadsperiode og andel i arbeid.",
   "UttakInfoPanel.Aksjonspunkt.5081": "Første dato for uttak er {value}. Legg inn manglende søknadsperiode. Kontakt søker ved behov.",
   "UttakInfoPanel.Aksjonspunkt.6070": "Saksbehandler initierer kontroll av søknadsperiodene",
+  "UttakInfoPanel.Aksjonspunkt.5086": "Vurder om den andre forelderen har rett til foreldrepenger. Slå opp i relevant fagsystem for å finne informasjon om inntekt. Dersom den andre forelderen har rett må du endre til riktige kvoter i alle søknadsperiodene.",
   "UttakInfoPanel.TilpassSoknadsperiode": "Tilpass søknadsperiode til inntektsmeldingen",
   "UttakInfoPanel.SykdomSkadenDokumentertAngiAvklartPeriode": "Sykdommen/skaden er dokumentert, angi periode",
   "UttakInfoPanel.SykdomSkadenIkkeDokumentert": "Sykdommen/skaden er ikke dokumentert",
@@ -1826,6 +1827,10 @@
   "UttakInfoPanel.TidenesEnde": "Antall uker og dager -",
   "UttakInfoPanel.PeriodenSlettes": "Perioden {fom} - {tom} {uttakPeriodeType} slettes",
   "UttakInfoPanel.FrilansSelvstendignæringsdrivende": "Frilanser/Selvstendig næringsdrivende",
+  "UttakInfoPanel.AnnenForelderHarRett": "Annen forelder har rett",
+  "UttakInfoPanel.AnnenForelderHarIkkeRett": "Annen forelder har ikke rett",
+
+
   "StartdatoForForeldrepengerperiodenForm.StartdatoEtterArbeidsgiverdato": "Startdato kan ikke være etter datoen som arbeidsgiver opplyser",
   "StartdatoForForeldrepengerperiodenForm.PeriodenAvviker": "Startdato for foreldrepengerperioden avviker. Fastsett korrekt startdato",
   "StartdatoForForeldrepengerperiodenForm.StartdatoForPerioden": "Startdato for foreldrepengerperioden",
@@ -2049,6 +2054,7 @@
   "HistorikkEndretFelt.VurderEtterlønnSluttpakke": "Inntekt fra etterlønn eller sluttpakke",
   "HistorikkEndretFelt.FastsettEtterlønnSluttpakke": "Inntekten",
   "HistorikkEndretFelt.AvslagMorTarIkkeAlleUker": "Mor tar ikke alle 3 ukene før termin",
+  "HistorikkEndretFelt.RettTilForeldrepenger": "Rett til foreldrepenger",
 
   "HistorikkEndretFeltVerdiType.AdoptererAlene": "adopterer alene",
   "HistorikkEndretFeltVerdiType.AdoptererIkkeAlene": "adopterer ikke alene",
@@ -2159,7 +2165,8 @@
   "HistorikkEndretFeltVerdiType.GraderingIkkeOppfylt": "Ikke oppfylt",
   "HistorikkEndretFeltVerdiType.tilbakekrInfotrygd": "Behandle tilbakekreving i infotrygd",
   "HistorikkEndretFeltVerdiType.tilbakekrIgnorer": "Avvent samordning, ingen tilbakekreving",
-
+  "HistorikkEndretFeltVerdiType.AnnenforelderHarRett": "Annen forelder har rett",
+  "HistorikkEndretFeltVerdiType.AnnenforelderHarIkkeRett": "Annen forelder har ikke rett",
   "HistorikkEndretFeltHeading.FordelingForNyAndel": "<b>Det er lagt til ny aktivitet:</b> <br><b>{value}</b>: Fordeling for ",
   "HistorikkEndretFeltHeading.FordelingForAndel": "Fordeling for <b>{value}</b>:",
 
