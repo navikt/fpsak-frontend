@@ -11,7 +11,7 @@ import { SelectField, InputField, DecimalField } from '@fpsak-frontend/form';
 import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
 import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/src/uttakArbeidTypeCodes';
 import {
-  minValue, maxValue, hasValidInteger, maxLength, required, hasValidDecimal, notDash,
+  minValue, maxValue, hasValidInteger, maxLength, required, hasValidDecimal, notDash, lagVisningsNavn,
 } from '@fpsak-frontend/utils';
 import styles from './renderUttakTable.less';
 
@@ -61,13 +61,7 @@ const createTextStrings = (fields) => {
   if (uttakArbeidType && uttakArbeidType.kode !== uttakArbeidTypeKodeverk.ORDINÆRT_ARBEID) {
     arbeidsforhold = <FormattedMessage id={uttakArbeidTypeTekstCodes[uttakArbeidType.kode]} />;
   } else {
-    arbeidsforhold = navn ? `${navn}` : arbeidsforhold;
-    if (virksomhet) {
-      arbeidsforhold = identifikator ? `${arbeidsforhold} (${identifikator})` : arbeidsforhold;
-      arbeidsforhold = arbeidsforholdId ? `${arbeidsforhold}...${arbeidsforholdId.substr(-4)}` : arbeidsforhold;
-    } else {
-      arbeidsforhold = fødselsdato ? `${arbeidsforhold} (${fødselsdato})` : arbeidsforhold;
-    }
+    arbeidsforhold = lagVisningsNavn(arbeidsgiver);
   }
   return {
     prosentArbeidText,
