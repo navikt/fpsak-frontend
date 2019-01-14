@@ -274,9 +274,8 @@ export class UttakImpl extends Component {
     asArray.forEach((t) => {
       const minCallback = (acc, cur) => Math.min(acc.trekkdager, cur.trekkdager);
       stonadskontoKopi.stonadskontoer[t.konto].saldo = stonadskontoKopi.stonadskontoer[t.konto].maxDager - t.arbforhold.reduce(minCallback);
-      stonadskontoKopi.stonadskontoer[t.konto].aktivitetSaldoDtoList.map((test, index) => {
-        const arbforhold = { ...test };
-
+      stonadskontoKopi.stonadskontoer[t.konto].aktivitetSaldoDtoList = stonadskontoKopi.stonadskontoer[t.konto].aktivitetSaldoDtoList.map((a, index) => {
+        const arbforhold = { ...a };
         arbforhold.saldo = stonadskontoKopi.stonadskontoer[t.konto].maxDager - t.arbforhold[index].trekkdager;
         return arbforhold;
       });
