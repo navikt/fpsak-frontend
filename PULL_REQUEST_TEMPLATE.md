@@ -10,7 +10,7 @@ JIRA-lenke(r)
 - [ ] Ikke funskjonsbryter
 - [ ] Funksjonsbryter
 
-beskriv funkssjonsbryterstrategi
+beskriv funksjonsbryterstrategi
 
 ## Beskrivelse
 
@@ -18,13 +18,12 @@ Beskriv hva som er gjort og hvordan det er testet
 
 ## Hvordan treffer det lansert funksjonalitet?
 
+-
 
+## Hvilket område berører endringen?
 
-## Hvilket område behører endringen?
-
-
+- 
 
 ## Regresjonstest
-
 - [ ] Ja
 - [ ] Nei
