@@ -96,11 +96,11 @@ UttakInfoPanelImpl.propTypes = {
   isRevurdering: PropTypes.bool.isRequired,
   hasStatusUtredes: PropTypes.bool.isRequired,
   annenForelderHarRettAp: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  annenForelderHarRettApOpen: PropTypes.bool.isRequired,
+  annenForelderHarRettApOpen: PropTypes.bool,
 };
 
 UttakInfoPanelImpl.defaultProps = {
-  // førsteUttaksDato: undefined,
+  annenForelderHarRettApOpen: undefined,
 };
 
 const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOSONAR må ha disse sjekkene
@@ -170,8 +170,8 @@ const buildInitialValues = createSelector([getUttakPerioder, getBehandlingYtelse
     if (perioder) {
       return ({
         førsteUttaksDato,
-        annenForelderHarRett: annenForelderHarRett.annenforelderHarRett,
-        begrunnelse: annenForelderHarRett.begrunnelse,
+        annenForelderHarRett: annenForelderHarRett ? annenForelderHarRett.annenforelderHarRett : undefined,
+        begrunnelse: annenForelderHarRett ? annenForelderHarRett.begrunnelse : undefined,
         perioder: perioder.map(periode => ({
           ...periode,
           id: guid(),

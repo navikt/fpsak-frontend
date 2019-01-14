@@ -320,7 +320,7 @@ export class UttakFaktaForm extends Component {
     const hasOpenAksjonspunkterFixed = !!aksjonspunkterFixed.filter(ap => isAksjonspunktOpen(ap.status.kode)).length;
     return (
       <div>
-        {annenForelderHarRettAp && (
+        {annenForelderHarRettAp.length > 0 && (
           <AnnenForelderHarRett
             readOnly={readOnly}
             hasOpenAksjonspunkter={annenForelderHarRettApOpen}
@@ -440,13 +440,14 @@ UttakFaktaForm.propTypes = {
   behandlingPaaVent: PropTypes.bool,
   annenForelderHarRettErLøst: PropTypes.bool,
   annenForelderHarRettAp: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  annenForelderHarRettApOpen: PropTypes.bool.isRequired,
+  annenForelderHarRettApOpen: PropTypes.bool,
 };
 
 UttakFaktaForm.defaultProps = {
   førsteUttaksDato: undefined,
   behandlingPaaVent: false,
   annenForelderHarRettErLøst: null,
+  annenForelderHarRettApOpen: undefined,
 };
 
 const perioder = state => behandlingFormValueSelector('UttakInfoPanel')(state, 'perioder') || [];
