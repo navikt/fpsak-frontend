@@ -265,13 +265,7 @@ export class UttakImpl extends Component {
       });
     });
 
-    const asArray = Object.values(uttakResult)
-      .map((u) => {
-        const uttakElement = { ...u };
-        uttakElement.trekkdager = u.trekkdager;
-        return uttakElement;
-      });
-    asArray.forEach((t) => {
+    Object.values(uttakResult).forEach((t) => {
       const minCallback = (acc, cur) => Math.min(acc.trekkdager, cur.trekkdager);
       stonadskontoKopi.stonadskontoer[t.konto].saldo = stonadskontoKopi.stonadskontoer[t.konto].maxDager - t.arbforhold.reduce(minCallback);
       stonadskontoKopi.stonadskontoer[t.konto].aktivitetSaldoDtoList = stonadskontoKopi.stonadskontoer[t.konto].aktivitetSaldoDtoList.map((a, index) => {
