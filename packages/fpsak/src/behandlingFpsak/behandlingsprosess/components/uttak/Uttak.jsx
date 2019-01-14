@@ -243,16 +243,23 @@ export class UttakImpl extends Component {
           ? ((a.weeks * 5) + a.days)
           : a.trekkdager;
 
-        if ((`${a.stønadskontoType.kode}_${index}`) in uttakResult) {
-          const trekkdager = uttakResult[`${a.stønadskontoType.kode}_${index}`].trekkdager + aktivitetDays;
-          uttakResult[`${a.stønadskontoType.kode}_${index}`] = {
-            trekkdager,
+        if ((`${a.stønadskontoType.kode}`) in uttakResult) {
+          uttakResult[`${a.stønadskontoType.kode}`] = {
             konto: a.stønadskontoType.kode,
+            arbforhold: uttakResult[`${a.stønadskontoType.kode}`].arbforhold,
+          };
+          uttakResult[`${a.stønadskontoType.kode}`].arbforhold[index] = {
+            trekkdager: (uttakResult[`${a.stønadskontoType.kode}`].arbforhold[index]
+              ? uttakResult[`${a.stønadskontoType.kode}`].arbforhold[index].trekkdager
+              : 0) + aktivitetDays,
           };
         } else {
-          uttakResult[`${a.stønadskontoType.kode}_${index}`] = {
-            trekkdager: aktivitetDays,
+          uttakResult[`${a.stønadskontoType.kode}`] = {
             konto: a.stønadskontoType.kode,
+            arbforhold: [{}],
+          };
+          uttakResult[`${a.stønadskontoType.kode}`].arbforhold[index] = {
+            trekkdager: aktivitetDays,
           };
         }
       });
@@ -265,7 +272,15 @@ export class UttakImpl extends Component {
         return uttakElement;
       });
     asArray.forEach((t) => {
-      stonadskontoKopi.stonadskontoer[t.konto].saldo = stonadskontoKopi.stonadskontoer[t.konto].maxDager - t.trekkdager;
+      const minCallback = (acc, cur) => Math.min(acc.trekkdager, cur.trekkdager);
+      stonadskontoKopi.stonadskontoer[t.konto].saldo = stonadskontoKopi.stonadskontoer[t.konto].maxDager - t.arbforhold.reduce(minCallback);
+      stonadskontoKopi.stonadskontoer[t.konto].aktivitetSaldoDtoList.map((test, index) => {
+        const arbforhold = { ...test };
+
+        arbforhold.saldo = stonadskontoKopi.stonadskontoer[t.konto].maxDager - t.arbforhold[index].trekkdager;
+        return arbforhold;
+      });
+      return stonadskontoKopi;
     });
 
     this.setState({ stonadskontoKopi });
