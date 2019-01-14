@@ -198,40 +198,36 @@ const transformValues = (values, initialValues, aksjonspunkter) => { // NOSONAR
   const apCodes = aktiveUttakAksjonspunkter.length
     ? aktiveUttakAksjonspunkter.map(ap => ap.definisjon.kode)
     : [aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK];
-  return apCodes.map((ap) => {
-    const annenforelderHarRett = ap === aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT ? values.annenForelderHarRett : null;
-
-    return ({
-      kode: ap,
-      bekreftedePerioder: values.perioder.map((periode) => {
-        const {
-          id, openForm, updated, kontoType, isFromSøknad, ...bekreftetPeriode // NOSONAR
-        } = periode;
+  return apCodes.map(ap => ({
+    kode: ap,
+    bekreftedePerioder: values.perioder.map((periode) => {
+      const {
+        id, openForm, updated, kontoType, isFromSøknad, ...bekreftetPeriode // NOSONAR
+      } = periode;
+      const origPeriode = initialValues.perioder.filter(p => p.id === id);
+      return {
+        bekreftetPeriode,
+        orginalFom: origPeriode[0] ? origPeriode[0].fom : null,
+        orginalTom: origPeriode[0] ? origPeriode[0].tom : null,
+        originalArbeidstidsprosent: origPeriode[0] ? origPeriode[0].arbeidstidsprosent : null,
+        originalBegrunnelse: origPeriode[0] ? origPeriode[0].begrunnelse : null,
+        originalResultat: origPeriode[0] ? origPeriode[0].resultat : null,
+      };
+    }),
+    slettedePerioder: values.slettedePerioder
+      ? values.slettedePerioder.map((periode) => {
+        const { id, begrunnelse, ...slettetPeriode } = periode;
         const origPeriode = initialValues.perioder.filter(p => p.id === id);
-        return {
-          bekreftetPeriode,
-          orginalFom: origPeriode[0] ? origPeriode[0].fom : null,
-          orginalTom: origPeriode[0] ? origPeriode[0].tom : null,
-          originalArbeidstidsprosent: origPeriode[0] ? origPeriode[0].arbeidstidsprosent : null,
-          originalBegrunnelse: origPeriode[0] ? origPeriode[0].begrunnelse : null,
-          originalResultat: origPeriode[0] ? origPeriode[0].resultat : null,
-        };
-      }),
-      slettedePerioder: values.slettedePerioder
-        ? values.slettedePerioder.map((periode) => {
-          const { id, begrunnelse, ...slettetPeriode } = periode;
-          const origPeriode = initialValues.perioder.filter(p => p.id === id);
 
-          return {
-            ...slettetPeriode,
-            begrunnelse: id === getOriginalPeriodeId(origPeriode[0]) ? begrunnelse : null,
-          };
-        })
-        : [],
-      annenforelderHarRett,
-      begrunnelse: values.begrunnelse || '',
-    });
-  });
+        return {
+          ...slettetPeriode,
+          begrunnelse: id === getOriginalPeriodeId(origPeriode[0]) ? begrunnelse : null,
+        };
+      })
+      : [],
+    annenforelderHarRett: values.annenForelderHarRett,
+    begrunnelse: values.begrunnelse || '',
+  }));
 };
 
 const mapStateToProps = (state, initialProps) => {
