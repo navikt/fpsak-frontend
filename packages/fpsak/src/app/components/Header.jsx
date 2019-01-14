@@ -52,7 +52,7 @@ const Header = ({
           <FlexRow className="justifyItemsToFlexEnd">
             <FlexColumn>
               <Image
-                className={styles.weightIkon}
+                className={styles.headerIkon}
                 src={systemrutineIkonUrl}
                 onMouseDown={() => window.open(SYSTEMRUTINE_URL, '_blank')}
                 onKeyDown={() => window.open(SYSTEMRUTINE_URL, '_blank')}
@@ -63,7 +63,7 @@ const Header = ({
             </FlexColumn>
             <FlexColumn>
               <Image
-                className={styles.weightIkon}
+                className={styles.headerIkon}
                 src={rettskildeneIkonUrl}
                 onMouseDown={() => window.open(rettskildeUrl, '_blank')}
                 onKeyDown={() => window.open(rettskildeUrl, '_blank')}
@@ -74,7 +74,7 @@ const Header = ({
             </FlexColumn>
             <FlexColumn className={styles.navAnsatt}>
               <Image
-                className={styles.navAnsattIkon}
+                className={styles.headerIkon}
                 src={navAnsattIkonUrl}
                 altCode="Header.NavAnsatt"
                 titleCode="Header.NavAnsatt"
