@@ -75,16 +75,16 @@ class TimeLineInfo extends Component {
       visKonto: undefined,
     };
     this.handleChange = this.handleChange.bind(this);
-    this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
+    // this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    const { aktiv } = this.state;
-    if (nextState.aktiv !== aktiv) {
-      return true;
-    }
-    return false;
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   const { aktiv } = this.state;
+  //   if (nextState.aktiv !== aktiv {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
 
   handleChange(konto, index) {

@@ -157,8 +157,8 @@ const isInnvilget = uttaksresultatActivity => uttaksresultatActivity.periodeResu
  */
 
 export class UttakImpl extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.initializeActivityForm = this.initializeActivityForm.bind(this);
     this.openPeriodInfo = this.openPeriodInfo.bind(this);
     this.nextPeriod = this.nextPeriod.bind(this);
@@ -176,6 +176,7 @@ export class UttakImpl extends Component {
 
     this.state = {
       selectedItem: null,
+      stonadskontoKopi: props.stonadskonto,
     };
   }
 
@@ -223,6 +224,7 @@ export class UttakImpl extends Component {
 
   updateActivity(values) {
     const { uttakPerioder } = this.props;
+    const { stonadskontoKopi } = this.state;
     const { ...verdier } = values;
     verdier.aktiviteter = verdier.aktiviteter.map((a) => {
       const { ...aktivitet } = a;
@@ -233,6 +235,40 @@ export class UttakImpl extends Component {
     const otherThanUpdated = uttakPerioder.filter(o => o.id !== verdier.id && o.hovedsoker);
     const sortedActivities = otherThanUpdated.concat(verdier);
     sortedActivities.sort((a, b) => a.id - b.id);
+
+    const uttakResult = {};
+    sortedActivities.forEach((uttak) => {
+      uttak.aktiviteter.forEach((a, index) => {
+        const aktivitetDays = (typeof a.days !== 'undefined' && typeof a.weeks !== 'undefined')
+          ? ((a.weeks * 5) + a.days)
+          : a.trekkdager;
+
+        if ((`${a.stønadskontoType.kode}_${index}`) in uttakResult) {
+          const trekkdager = uttakResult[`${a.stønadskontoType.kode}_${index}`].trekkdager + aktivitetDays;
+          uttakResult[`${a.stønadskontoType.kode}_${index}`] = {
+            trekkdager,
+            konto: a.stønadskontoType.kode,
+          };
+        } else {
+          uttakResult[`${a.stønadskontoType.kode}_${index}`] = {
+            trekkdager: aktivitetDays,
+            konto: a.stønadskontoType.kode,
+          };
+        }
+      });
+    });
+
+    const asArray = Object.values(uttakResult)
+      .map((u) => {
+        const uttakElement = { ...u };
+        uttakElement.trekkdager = u.trekkdager;
+        return uttakElement;
+      });
+    asArray.forEach((t) => {
+      stonadskontoKopi.stonadskontoer[t.konto].saldo = t.trekkdager;
+    });
+
+    this.setState({ stonadskontoKopi });
     this.setFormField(ACTIVITY_PANEL_NAME, sortedActivities);
     const uttakActivity = otherThanUpdated.find(o => o.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING
       || (o.tilknyttetStortinget && !Object.prototype.hasOwnProperty.call(o, 'erOppfylt')));
@@ -367,7 +403,7 @@ export class UttakImpl extends Component {
       annenForelderSoktOmFlerbarnsdager,
       reduxFormChange: formChange,
     } = this.props;
-    const { selectedItem } = this.state;
+    const { selectedItem, stonadskontoKopi } = this.state;
     const customTimes = getCustomTimes(
       soknadDate,
       familiehendelseDate,
@@ -399,8 +435,8 @@ export class UttakImpl extends Component {
         <div>
           <Row>
             <TimeLineInfo
-              maksDatoUttak={stonadskonto.maksDatoUttak}
-              stonadskonto={stonadskonto.stonadskontoer}
+              maksDatoUttak={stonadskontoKopi.maksDatoUttak}
+              stonadskonto={stonadskontoKopi.stonadskontoer}
               dekningsgrad={dekningsgrad}
             />
           </Row>
