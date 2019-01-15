@@ -781,8 +781,8 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'GRADERING_IKKE_OPPFYLT',
     verdiId: 'HistorikkEndretFeltVerdiType.GraderingIkkeOppfylt',
   },
-  GRADERING_PÅ_ANDEL_UTEN_BG_SATT_PÅ_VENT: {
-    kode: 'GRADERING_PÅ_ANDEL_UTEN_BG_SATT_PÅ_VENT',
+  GRADERING_PÅ_ANDEL_UTEN_BG_IKKE_SATT_PÅ_VENT: {
+    kode: 'GRADERING_PÅ_ANDEL_UTEN_BG_IKKE_SATT_PÅ_VENT',
     verdiId: 'HistorikkEndretFeltVerdiType.GraderingPåAndelUtenBGIkkeSattPåVent',
   },
 };

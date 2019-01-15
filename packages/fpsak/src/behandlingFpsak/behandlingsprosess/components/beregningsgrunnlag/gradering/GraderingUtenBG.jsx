@@ -16,7 +16,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer, Image, BorderBox } from '@fpsak-frontend/shared-components';
 import behandleImageURL from '@fpsak-frontend/assets/images/advarsel.svg';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { getAksjonspunkter, getBehandlingVenteArsakKode, getAndelerMedGraderingUtenBG } from 'behandlingFpsak/behandlingSelectors';
 import styles from './graderingUtenBG.less';
 
@@ -79,8 +79,8 @@ export const GraderingUtenBG = ({
               name={radioFieldName}
               validate={[required]}
               direction="vertical"
-              readOnly={false}
-              isEdited={false}
+              readOnly={readOnly}
+              isEdited={!isAksjonspunktOpen(aksjonspunkt.status.kode)}
             >
               <RadioOption
                 label={<FormattedMessage id="Beregningsgrunnlag.Gradering.FordelingErRiktig" />}
@@ -170,7 +170,7 @@ export const buildInitialValues = createSelector(
 
 const mapStateToProps = (state, ownProps) => ({
   andelerMedGraderingUtenBG: getAndelerMedGraderingUtenBG(state),
-  aksjonspunkt: getAksjonspunkter(state).filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG),
+  aksjonspunkt: getAksjonspunkter(state).find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG),
   onSubmit: values => ownProps.submitCallback([transformValues(values)]),
   initialValues: buildInitialValues(state),
 });
