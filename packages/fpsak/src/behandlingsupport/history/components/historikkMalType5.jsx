@@ -219,7 +219,7 @@ const HistorikkMalType5 = ({
               target="_blank"
               rel="noopener noreferrer"
             >
-              @
+              <i className={styles.dokument} title={dokumentLink.tag} alt={dokumentLink.tag} />
               {dokumentLink.tag}
             </a>
           ))}
