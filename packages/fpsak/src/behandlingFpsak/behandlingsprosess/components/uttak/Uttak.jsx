@@ -325,10 +325,11 @@ export class UttakImpl extends Component {
 
   isReadOnly() {
     const {
-      readOnly, aksjonspunkter, endringsDate, isRevurdering,
+      readOnly, aksjonspunkter, endringsDate, isRevurdering, manuellOverstyring,
     } = this.props;
     const { selectedItem } = this.state;
-    const uttakIsReadOnly = this.testForReadOnly(aksjonspunkter) || (endringsDate && isRevurdering && selectedItem.tom < endringsDate);
+    const uttakIsReadOnly = this.testForReadOnly(aksjonspunkter) || (endringsDate && isRevurdering && selectedItem.tom < endringsDate)
+      || (selectedItem.periodeResultatType.kode !== periodeResultatType.MANUELL_BEHANDLING && !manuellOverstyring);
     return readOnly || uttakIsReadOnly;
   }
 
