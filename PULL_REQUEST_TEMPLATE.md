@@ -3,12 +3,12 @@
 JIRA-lenke(r)
 
 ## Vises for saksbehandler
-- [ ] Ja
-- [ ] Nei
+- [] Ja
+- [] Nei
 
 ## Strategi for funksjonsbryter
-- [ ] Ikke funskjonsbryter
-- [ ] Funksjonsbryter
+- [] Ikke funskjonsbryter
+- [] Funksjonsbryter
 
 beskriv funksjonsbryterstrategi
 
@@ -25,5 +25,5 @@ Beskriv hva som er gjort og hvordan det er testet
 - 
 
 ## Regresjonstest
-- [ ] Ja
-- [ ] Nei
+- [] Ja
+- [] Nei
