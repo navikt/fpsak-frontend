@@ -8,6 +8,7 @@ const config = {
   resolve: {
     alias: {
       app: path.join(APP_DIR, 'app'),
+      aktoer: path.join(APP_DIR, 'aktoer'),
       behandling: path.join(APP_DIR, 'behandling'),
       behandlingFelles: path.join(APP_DIR, 'behandlingFelles'),
       behandlingFpsak: path.join(APP_DIR, 'behandlingFpsak'),

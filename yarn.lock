@@ -6176,6 +6176,16 @@ nav-frontend-knapper@1.0.21:
   resolved "https://registry.npmjs.org/nav-frontend-knapper/-/nav-frontend-knapper-1.0.21.tgz#71fe041ec27b758cf91e7c6b10a0c6f93346d518"
   integrity sha512-fe4YAYTCufZ7C7O71XcbjymKi1Cr5Z4oJguklFKBEPfXMorMd7G/mMjnCDRi2/2hO1u7jdB/e6OKlSC8PTcmTg==
 
+nav-frontend-lenkepanel-style@^0.3.20:
+  version "0.3.20"
+  resolved "https://registry.npmjs.org/nav-frontend-lenkepanel-style/-/nav-frontend-lenkepanel-style-0.3.20.tgz#18947dde0edbc36087dc0894b5ab2ece6994db1d"
+  integrity sha512-+d+NP4l5fE1WWAFopIg5/0Z/Np7WDxgLlGcp2u4KQDcz6b3i26C9OQNpZ8ztHsoCPJEW+W7VcWL9wLhAly7pQA==
+
+nav-frontend-lenkepanel@^1.0.19:
+  version "1.0.19"
+  resolved "https://registry.npmjs.org/nav-frontend-lenkepanel/-/nav-frontend-lenkepanel-1.0.19.tgz#d93b487f917c88a011f39c57dd68a1899e77b39e"
+  integrity sha512-MgjW8XSfrvZ5b5ggOFPPDpz1X3MlwlcGgfGbSWAPI/FvYM1irmu0kUbOj5WePI3/Smv4QPNzz5PoBuwthv7GMA==
+
 nav-frontend-lenker-style@0.2.16:
   version "0.2.16"
   resolved "https://registry.npmjs.org/nav-frontend-lenker-style/-/nav-frontend-lenker-style-0.2.16.tgz#130e233529dabcaccd5f8ca6265fd1386b67f8fa"

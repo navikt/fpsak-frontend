@@ -35,6 +35,7 @@ export const FpsakApiKeys = {
   INTEGRATION_STATUS: 'INTEGRATION_STATUS',
   FEATURE_TOGGLE: 'FEATURE_TOGGLE',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
+  AKTOER_INFO: 'AKTOER_INFO',
 };
 
 const httpClientApi = getHttpClientApi();
@@ -88,6 +89,9 @@ const endpoints = getRestApiBuilder(httpClientApi)
   /* /api/integrasjon */
   .withGet('/api/integrasjon/status', FpsakApiKeys.INTEGRATION_STATUS)
   .withGet('/api/integrasjon/status/vises', FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES)
+
+  /* /api/aktoer */
+  .withGet('/api/aktoer-info', FpsakApiKeys.AKTOER_INFO)
 
   /* /sprak */
   .withGet('/public/sprak/nb_NO.json', FpsakApiKeys.LANGUAGE_FILE)

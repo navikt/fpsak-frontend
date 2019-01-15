@@ -5,6 +5,7 @@ const FPSAK = 'fpsak';
 const FPLOS = 'fplos';
 
 export const fagsakPath = '/fagsak/:saksnummer(\\d+)/';
+export const aktoerPath = '/aktoer/:aktoerId(\\d+)';
 export const behandlingerPath = `${fagsakPath}behandling/`;
 export const behandlingPath = `${behandlingerPath}:behandlingId(\\d+)/`;
 
