@@ -13,7 +13,7 @@ describe('<Header>', () => {
       removeErrorMessage={() => undefined}
       queryStrings={{}}
     />);
-    const lastDiv = wrapper.find('div').last();
-    expect(lastDiv.text()).to.eql('Per');
+    const lastDiv = wrapper.find('span').last();
+    expect(lastDiv.text()).to.eq('Per');
   });
 });

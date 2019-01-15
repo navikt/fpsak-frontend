@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 
-import { Image } from '@fpsak-frontend/shared-components';
+import {
+  Image, FlexContainer, FlexRow, FlexColumn,
+} from '@fpsak-frontend/shared-components';
 
 import logoUrl from '@fpsak-frontend/assets/images/nav.svg';
 import navAnsattIkonUrl from '@fpsak-frontend/assets/images/nav_ansatt.svg';
@@ -32,9 +34,9 @@ const Header = ({
   queryStrings,
 }) => (
   <header className={styles.container}>
-    <div className={styles.topplinje}>
-      <div>
-        <div className={styles.logo}>
+    <FlexContainer>
+      <FlexRow className={styles.dekorator} role="banner">
+        <FlexColumn className={styles.logo}>
           <Link to="/">
             <Image
               className={styles.headerIkon}
@@ -43,39 +45,46 @@ const Header = ({
               titleCode="Header.LinkToMainPage"
             />
           </Link>
-        </div>
-        <div className={styles.headerDivider} />
-      </div>
-      <Systemtittel className={styles.text}><FormattedMessage id="Header.Foreldrepenger" /></Systemtittel>
-      <div className={styles.navAnsatt}>
-        <Image
-          className={styles.weightIkon}
-          src={systemrutineIkonUrl}
-          onMouseDown={() => window.open(SYSTEMRUTINE_URL, '_blank')}
-          onKeyDown={() => window.open(SYSTEMRUTINE_URL, '_blank')}
-          altCode="Header.Systemrutine"
-          titleCode="Header.Systemrutine"
-          tabIndex="0"
-        />
-        <Image
-          className={styles.weightIkon}
-          src={rettskildeneIkonUrl}
-          onMouseDown={() => window.open(rettskildeUrl, '_blank')}
-          onKeyDown={() => window.open(rettskildeUrl, '_blank')}
-          altCode="Header.Rettskilde"
-          titleCode="Header.Rettskilde"
-          tabIndex="0"
-        />
-        <div className={styles.weightAndUserDivider} />
-        <Image
-          className={styles.navAnsattIkon}
-          src={navAnsattIkonUrl}
-          altCode="Header.NavAnsatt"
-          titleCode="Header.NavAnsatt"
-        />
-        <div className={styles.navAnsattTekst}>{navAnsattName}</div>
-      </div>
-    </div>
+        </FlexColumn>
+
+        <Systemtittel><FormattedMessage id="Header.Foreldrepenger" /></Systemtittel>
+        <FlexColumn className="justifyItemsToFlexEnd">
+          <FlexRow className="justifyItemsToFlexEnd">
+            <FlexColumn>
+              <Image
+                className={styles.headerIkon}
+                src={systemrutineIkonUrl}
+                onMouseDown={() => window.open(SYSTEMRUTINE_URL, '_blank')}
+                onKeyDown={() => window.open(SYSTEMRUTINE_URL, '_blank')}
+                altCode="Header.Systemrutine"
+                titleCode="Header.Systemrutine"
+                tabIndex="0"
+              />
+            </FlexColumn>
+            <FlexColumn>
+              <Image
+                className={styles.headerIkon}
+                src={rettskildeneIkonUrl}
+                onMouseDown={() => window.open(rettskildeUrl, '_blank')}
+                onKeyDown={() => window.open(rettskildeUrl, '_blank')}
+                altCode="Header.Rettskilde"
+                titleCode="Header.Rettskilde"
+                tabIndex="0"
+              />
+            </FlexColumn>
+            <FlexColumn className={styles.navAnsatt}>
+              <Image
+                className={styles.headerIkon}
+                src={navAnsattIkonUrl}
+                altCode="Header.NavAnsatt"
+                titleCode="Header.NavAnsatt"
+              />
+              <span>{navAnsattName}</span>
+            </FlexColumn>
+          </FlexRow>
+        </FlexColumn>
+      </FlexRow>
+    </FlexContainer>
     <ErrorMessagePanel queryStrings={queryStrings} removeErrorMessage={removeErrorMessage} />
   </header>
 );

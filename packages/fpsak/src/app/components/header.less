@@ -1,81 +1,35 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
 .container {
+  background-color: @navMorkGra;
+  color: @white;
+  font-size: 20px;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 101;
 }
 
-.topplinje {
-  background-color: @navMorkGra;
-  color: @white;
-  font-size: 20px;
-  height: 50px;
-  padding-top: 10px;
+.dekorator {
+  padding: 10px 20px;
 }
 
 .logo {
-  display: inline;
-  float: left;
-  padding-left: 20px;
-  padding-right: 15px;
+  border-right: 1px solid @navGra20;
+  margin-right: 10px;
+  padding: 0 10px;
 }
 
 .headerIkon {
+  cursor: pointer;
   height: 30px;
-  width: 45px;
-}
-
-.headerDivider {
-  border-left: 1px solid @white;
-  border-right: 0 solid @white;
-  display: inline;
-  float: right;
-  height: 30px;
-  position: absolute;
-  top: 10px;
-}
-
-.text {
-  display: inline;
-  float: left;
-  padding-left: 15px;
-}
-
-.navAnsattIkon {
-  display: inline;
-  float: left;
-  height: 30px;
-  margin-left: 10px;
-  width: 45px;
-}
-
-.navAnsattTekst {
-  display: inline;
-  float: right;
+  padding: 0 6px;
 }
 
 .navAnsatt {
-  display: inline;
-  float: right;
+  border-left: 1px solid @navGra20;
+  margin-left: 7px;
   padding-right: 20px;
 }
 
-.weightIkon {
-  cursor: pointer;
-  display: inline;
-  float: left;
-  height: 25px;
-  margin-right: 10px;
-  width: 40px;
-}
 
-.weightAndUserDivider {
-  border-left: 1px solid @navGra60;
-  border-right: 0 solid @navGra60;
-  display: inline;
-  height: 30px;
-  position: absolute;
-  top: 10px;
-}
