@@ -268,14 +268,24 @@ export class UttakImpl extends Component {
       });
     });
 
-    Object.values(uttakResult).forEach((t) => {
+    Object.values(stonadskontoKopi.stonadskontoer).forEach((konto) => {
       const minCallback = (acc, cur) => Math.min(acc.trekkdager, cur.trekkdager);
-      if (t.konto !== '-') {
-        stonadskontoKopi.stonadskontoer[t.konto].saldo = t.arbforhold.length > 1
-          ? stonadskontoKopi.stonadskontoer[t.konto].maxDager - t.arbforhold.reduce(minCallback) : stonadskontoKopi.stonadskontoer[t.konto].maxDager - t.arbforhold[0].trekkdager;
-        stonadskontoKopi.stonadskontoer[t.konto].aktivitetSaldoDtoList = stonadskontoKopi.stonadskontoer[t.konto].aktivitetSaldoDtoList.map((a, index) => {
+      if (uttakResult[konto.stonadskontotype]) {
+        stonadskontoKopi.stonadskontoer[konto.stonadskontotype].saldo = uttakResult[konto.stonadskontotype].arbforhold.length > 1
+          ? konto.maxDager - uttakResult[konto.stonadskontotype].arbforhold.reduce(minCallback)
+          : konto.maxDager - uttakResult[konto.stonadskontotype].arbforhold[0].trekkdager;
+        stonadskontoKopi.stonadskontoer[konto.stonadskontotype].aktivitetSaldoDtoList = konto.aktivitetSaldoDtoList.map((a, index) => {
           const arbforhold = { ...a };
-          arbforhold.saldo = stonadskontoKopi.stonadskontoer[t.konto].maxDager - t.arbforhold[index].trekkdager;
+          arbforhold.saldo = konto.maxDager - (uttakResult[konto.stonadskontotype].arbforhold[index]
+            ? uttakResult[konto.stonadskontotype].arbforhold[index].trekkdager
+            : 0);
+          return arbforhold;
+        });
+      } else {
+        stonadskontoKopi.stonadskontoer[konto.stonadskontotype].saldo = konto.maxDager;
+        stonadskontoKopi.stonadskontoer[konto.stonadskontotype].aktivitetSaldoDtoList = konto.aktivitetSaldoDtoList.map((a) => {
+          const arbforhold = { ...a };
+          arbforhold.saldo = konto.maxDager;
           return arbforhold;
         });
       }
