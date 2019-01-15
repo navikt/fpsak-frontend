@@ -3,9 +3,9 @@ import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import PropTypes from 'prop-types';
 import { PersonInfo } from '@fpsak-frontend/person-info';
 import Lenkepanel from 'nav-frontend-lenkepanel';
+import { pathToFagsak } from 'app/paths';
+import { Link } from 'react-router-dom';
 import styles from './aktoerGrid.less';
-import { pathToFagsak } from '../../app/paths';
-
 
 export const AktoerGrid = ({ data }) => (
   <ElementWrapper>
@@ -16,7 +16,10 @@ export const AktoerGrid = ({ data }) => (
         </div>
         <div className={styles.column}>
           {data.fagsaker.length ? data.fagsaker.map(fagsak => (
-            <Lenkepanel href={pathToFagsak(fagsak.saksnummer)} key={fagsak.saksnummer}>
+            <Lenkepanel
+              linkCreator={props => (<Link to={pathToFagsak(fagsak.saksnummer)} {...props} />)}
+              key={fagsak.saksnummer}
+            >
               {fagsak.sakstype.navn}
               {' ('}
               {fagsak.saksnummer}
