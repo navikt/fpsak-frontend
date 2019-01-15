@@ -57,7 +57,7 @@ export default HistorikkMalType1;
  | Type 1                     |
  | BEH_VENT                   |
  | BEH_GJEN                   |
- | KØET_BEH_GJEN                   |
+ | KØET_BEH_GJEN              |
  | BEH_STARTET                |
  | VEDLEGG_MOTTATT            |
  | BREV_SENT                  |

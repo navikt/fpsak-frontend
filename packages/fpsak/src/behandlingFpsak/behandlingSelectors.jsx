@@ -178,6 +178,12 @@ export const getGjeldendeBeregningAksjonspunkt = createSelector(
       || ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD
       || ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET),
 );
+
+export const getBeregningGraderingAksjonspunkt = createSelector(
+  [getAksjonspunkter], aksjonspunkter => aksjonspunkter
+    .find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG),
+);
+
 export const getAktivitetStatuser = createSelector(
   [getBeregningsgrunnlag], (beregningsgrunnlag = {}) => (beregningsgrunnlag
     && beregningsgrunnlag.aktivitetStatus ? beregningsgrunnlag.aktivitetStatus : undefined),
@@ -231,6 +237,9 @@ export const getFaktaOmBeregningTilfeller = createSelector(
 );
 export const getFaktaOmBeregningTilfellerKoder = createSelector(
   [getFaktaOmBeregningTilfeller], (tilfeller = []) => (tilfeller ? tilfeller.map(({ kode }) => kode) : undefined),
+);
+export const getAndelerMedGraderingUtenBG = createSelector(
+  [getBeregningsgrunnlag], (beregningsgrunnlag = {}) => (beregningsgrunnlag ? beregningsgrunnlag.andelerMedGraderingUtenBG : undefined),
 );
 
 
