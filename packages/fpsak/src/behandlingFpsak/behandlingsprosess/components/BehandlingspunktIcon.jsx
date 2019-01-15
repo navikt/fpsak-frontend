@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Undertekst, Element } from 'nav-frontend-typografi';
 import { injectIntl, intlShape } from 'react-intl';
-
+import classnames from 'classnames/bind';
 import { Image } from '@fpsak-frontend/shared-components';
 import { getBehandlingHenlagt } from 'behandlingFpsak/behandlingSelectors';
 import findBehandlingsprosessIcon from 'behandlingFpsak/behandlingsprosess/statusIconHelper';
@@ -13,6 +13,8 @@ import {
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import styles from './behandlingspunktIcon.less';
+
+const classNames = classnames.bind(styles);
 
 const getCallback = (
   isIkkeVurdert, behandlingspunkt, selectBehandlingspunktCallback,
@@ -37,10 +39,10 @@ export const BehandlingspunktIcon = ({
   const title = intl.formatMessage({ id: titleCode });
 
   return (
-    <span className={styles.wrapperVilkar} key={title}>
-      <div className={styles.posi}>
+    <div className={classNames(styles.behandlingspunkt, { active: isSelectedBehandlingspunkt })} key={title}>
+      <span className="line">
         <Image
-          className={isIkkeVurdert ? styles.behandlingspunktGray : styles.behandlingspunkt}
+          className={isIkkeVurdert ? styles.behandlingspunktIkonDisabled : styles.behandlingspunktIkon}
           alt={title}
           tabIndex={isIkkeVurdert ? '-1' : '0'}
           imageSrcFunction={findBehandlingsprosessIcon(behandlingspunkt, status, isSelectedBehandlingspunkt, isSelectedBehandlingHenlagt, hasOpenAksjonspunkt)}
@@ -48,9 +50,9 @@ export const BehandlingspunktIcon = ({
           onMouseDown={getCallback(isIkkeVurdert, behandlingspunkt, selectBehandlingspunktCallback)}
           tooltip={{ header: <Element>{title}</Element> }}
         />
-        <span className={styles.lowerText}><Undertekst className={styles.vilkarText}>{title}</Undertekst></span>
-      </div>
-    </span>
+      </span>
+      <Undertekst className={styles.label}>{title}</Undertekst>
+    </div>
   );
 };
 

@@ -40,8 +40,6 @@ import {
 import { getBehandlingspunkter, getSelectedBehandlingspunkt, getDefaultBehandlingspunkt }
   from './behandlingsprosessSelectors';
 
-const Wrapper = ({ children }) => children;
-
 const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
 
 const hasKlageAp = apModels => (
@@ -237,7 +235,7 @@ export class BehandlingsprosessIndex extends Component {
     } = this.props;
     const { showModalKlageBehandling } = this.state;
     return (
-      <Wrapper>
+      <React.Fragment>
         <BehandlingsprosessPanel
           behandlingspunkter={behandlingspunkter}
           selectedBehandlingspunkt={selectedBehandlingspunkt}
@@ -258,7 +256,7 @@ export class BehandlingsprosessIndex extends Component {
         <IverksetterVedtakStatusModal closeEvent={this.goToSearchPage} />
         <FatterVedtakStatusModal closeEvent={this.goToSearchPage} />
         <KlageBehandlingModal showModal={showModalKlageBehandling} closeEvent={this.goToSearchPage} />
-      </Wrapper>
+      </React.Fragment>
     );
   }
 }

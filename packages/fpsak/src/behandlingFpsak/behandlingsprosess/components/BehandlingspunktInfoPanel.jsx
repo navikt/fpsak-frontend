@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
+import classnames from 'classnames/bind';
 import {
   getBehandlingspunktAksjonspunkterCodes,
   hasBehandlingspunktAtLeastOneOpenAksjonspunkt,
   isBehandlingspunktAksjonspunkterSolvable,
   isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt,
   isSelectedBehandlingspunktReadOnly,
+  getNotAcceptedByBeslutter,
 } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import CheckPersonStatusForm from './saksopplysninger/CheckPersonStatusForm';
 import AvregningPanel from './avregning/AvregningPanel';
@@ -27,7 +28,8 @@ import VurderSoknadsfristForeldrepengerForm from './soknadsfrist/VurderSoknadsfr
 
 import styles from './behandlingspunktInfoPanel.less';
 
-const findStyle = (isApOpen, isApSolvable, readOnly) => (isApOpen && isApSolvable && !readOnly ? styles.statusAksjonspunkt : undefined);
+const classNames = classnames.bind(styles);
+
 /*
  * PunktInfoPanel
  *
@@ -48,8 +50,9 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
   isApSolvable,
   apCodes,
   readOnlySubmitButton,
+  notAcceptedByBeslutter,
 }) => (
-  <div className={findStyle(openAksjonspunkt, isApSolvable, readOnly)}>
+  <div className={classNames('behandlingsPunkt', { notAcceptedByBeslutter, statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
     <div>
       <VilkarPanels
         aksjonspunktCodes={apCodes}
@@ -197,6 +200,11 @@ BehandlingspunktInfoPanel.propTypes = {
   isApSolvable: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  notAcceptedByBeslutter: PropTypes.bool,
+};
+
+BehandlingspunktInfoPanel.defaultProps = {
+  notAcceptedByBeslutter: false,
 };
 
 const mapStateToProps = state => ({
@@ -205,6 +213,7 @@ const mapStateToProps = state => ({
   isApSolvable: isBehandlingspunktAksjonspunkterSolvable(state),
   apCodes: getBehandlingspunktAksjonspunkterCodes(state),
   readOnlySubmitButton: isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
+  notAcceptedByBeslutter: getNotAcceptedByBeslutter(state),
 });
 
 export default connect(mapStateToProps)(BehandlingspunktInfoPanel);
