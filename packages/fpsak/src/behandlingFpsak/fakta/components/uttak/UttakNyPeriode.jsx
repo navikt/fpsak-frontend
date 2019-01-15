@@ -21,7 +21,7 @@ import {
 } from '@fpsak-frontend/utils';
 import moment from 'moment';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
-import { getPersonopplysning, getAlleAndelerIForstePeriode } from 'behandlingFpsak/behandlingSelectors';
+import { getPersonopplysning, getFaktaArbeidsforhold } from 'behandlingFpsak/behandlingSelectors';
 import {
   FlexContainer, FlexRow, FlexColumn, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -103,7 +103,7 @@ export const UttakNyPeriode = ({
   nyPeriode,
   sokerKjonn,
   nyPeriodeDisabledDaysFom,
-  andeler,
+  arbeidsforhold,
   ...formProps
 }) => {
   const inlineStyle = {
@@ -237,7 +237,7 @@ export const UttakNyPeriode = ({
                               bredde="xl"
                               name="arbeidsForhold"
                               validate={[requiredIfNotPristine, required]}
-                              selectValues={mapArbeidsforhold(andeler)}
+                              selectValues={mapArbeidsforhold(arbeidsforhold)}
                             />
                           </div>
                           <FlexRow>
@@ -314,7 +314,7 @@ UttakNyPeriode.propTypes = {
   periodeTyper: PropTypes.arrayOf(PropTypes.shape()),
   utsettelseÅrsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   overføringÅrsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  andeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  arbeidsforhold: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   nyPeriode: PropTypes.shape().isRequired,
   sokerKjonn: PropTypes.string.isRequired,
   nyPeriodeDisabledDaysFom: PropTypes.string.isRequired,
@@ -397,13 +397,13 @@ const mapStateToProps = (state, ownProps) => {
   const utsettelseÅrsaker = getKodeverk(kodeverkTyper.UTSETTELSE_ARSAK)(state);
   const overføringÅrsaker = getKodeverk(kodeverkTyper.OVERFOERING_AARSAK_TYPE)(state);
   const personopplysninger = getPersonopplysning(state);
-  const andeler = getAlleAndelerIForstePeriode(state);
+  const arbeidsforhold = getFaktaArbeidsforhold(state) || [];
 
   return {
     periodeTyper,
     utsettelseÅrsaker,
     overføringÅrsaker,
-    andeler,
+    arbeidsforhold,
     sokerKjonn: personopplysninger.navBrukerKjonn.kode,
     initialValues: {
       fom: null,
