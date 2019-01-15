@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 
 import FagsakIndex from 'fagsak/FagsakIndex';
-import { fagsakPath } from 'app/paths';
+import { aktoerPath, fagsakPath } from 'app/paths';
 
 import '@fpsak-frontend/assets/styles/modigDesign.less';
 import DashboardResolver from './DashboardResolver';
 import MissingPage from './MissingPage';
 
 import styles from './home.less';
+import AktoerIndex from '../../aktoer/AktoerIndex';
+
 
 /**
  * Home
@@ -23,6 +25,7 @@ const Home = ({
     <Switch>
       <Route exact path="/" component={DashboardResolver} />
       <Route strict path={fagsakPath} component={FagsakIndex} />
+      <Route strict path={aktoerPath} component={AktoerIndex} />
       <Route component={MissingPage} />
     </Switch>
   </div>

@@ -1,0 +1,39 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.aktoerContainer {
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+}
+
+.column {
+  float: left;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+
+@media all and (max-width: 1450px) {
+
+    .gridContainer {
+      display: flex;
+      flex-flow: row wrap;
+      max-height: 100%;
+      max-width: 100%;
+    }
+
+    .profileAndNavigationContent {
+     display: none;
+    }
+
+    .behandlingContent {
+      order: 3;
+    }
+
+}
+
+@media all and (max-width: 800px) {
+    .gridContainer {
+        max-width: 640px;
+    }
+}
