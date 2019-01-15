@@ -239,26 +239,29 @@ export class UttakImpl extends Component {
     const uttakResult = {};
     sortedActivities.forEach((uttak) => {
       uttak.aktiviteter.forEach((a, index) => {
+        const stonadskonto = a.stønadskontoType.kode;
         const aktivitetDays = (typeof a.days !== 'undefined' && typeof a.weeks !== 'undefined')
           ? ((a.weeks * 5) + a.days)
           : a.trekkdager;
 
-        if ((`${a.stønadskontoType.kode}`) in uttakResult) {
-          uttakResult[`${a.stønadskontoType.kode}`] = {
-            konto: a.stønadskontoType.kode,
-            arbforhold: uttakResult[`${a.stønadskontoType.kode}`].arbforhold,
+        if ((`${stonadskonto}`) in uttakResult) {
+          uttakResult[`${stonadskonto}`] = {
+            konto: stonadskonto,
+            arbforhold: uttakResult[`${stonadskonto}`].arbforhold,
           };
-          uttakResult[`${a.stønadskontoType.kode}`].arbforhold[index] = {
-            trekkdager: (uttakResult[`${a.stønadskontoType.kode}`].arbforhold[index]
-              ? uttakResult[`${a.stønadskontoType.kode}`].arbforhold[index].trekkdager
+          uttakResult[`${stonadskonto}`].arbforhold[index] = {
+            trekkdager: (uttakResult[`${stonadskonto}`].arbforhold[index]
+              ? uttakResult[`${stonadskonto}`].arbforhold[index].trekkdager
               : 0) + aktivitetDays,
           };
         } else {
-          uttakResult[`${a.stønadskontoType.kode}`] = {
-            konto: a.stønadskontoType.kode,
-            arbforhold: [{}],
+          uttakResult[`${stonadskonto}`] = {
+            konto: stonadskonto,
+            arbforhold: [{
+              trekkdager: 0,
+            }],
           };
-          uttakResult[`${a.stønadskontoType.kode}`].arbforhold[index] = {
+          uttakResult[`${stonadskonto}`].arbforhold[index] = {
             trekkdager: aktivitetDays,
           };
         }
