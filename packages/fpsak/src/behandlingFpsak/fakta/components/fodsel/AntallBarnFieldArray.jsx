@@ -9,6 +9,7 @@ import {
   PeriodFieldArray, FlexContainer, FlexColumn, FlexRow,
 } from '@fpsak-frontend/shared-components';
 import { DatepickerField, CheckboxField } from '@fpsak-frontend/form';
+import styles from './antallBarnFieldArray.less';
 
 export const defaultAntallBarn = {
   fodselsdato: '',
@@ -32,14 +33,17 @@ export const AvklartBarnFieldArray = ({
                 <DatepickerField
                   name={`${periodeElementFieldId}.fodselsdato`}
                   defaultValue={null}
-                  label={{ id: 'Registrering.FrilansOppdrag.FieldArray.periodeFom' }}
+                  label={{ id: 'Registrering.Fodsel.Title' }}
                   validate={[hasValidDate, required]}
+                  readOnly={readOnly}
                 />
               </FlexColumn>
               <FlexColumn>
                 <CheckboxField
+                  className={styles.registerBarnCheckbox}
                   name={`${periodeElementFieldId}.barnDod`}
-                  label="dod"
+                  label={{ id: 'Registrering.ErBarnetDott' }}
+                  disabled={readOnly}
                 />
               </FlexColumn>
               {avklartBarn[index].barnDod
@@ -49,8 +53,9 @@ export const AvklartBarnFieldArray = ({
                 <DatepickerField
                   name={`${periodeElementFieldId}.dodsdato`}
                   defaultValue={null}
-                  label={{ id: 'Registrering.FrilansOppdrag.FieldArray.periodeTom' }}
+                  label={{ id: 'Registrering.Dodsdato' }}
                   validate={[hasValidDate]}
+                  readOnly={readOnly}
                 />
               </FlexColumn>
               )
@@ -70,6 +75,7 @@ AvklartBarnFieldArray.propTypes = {
   fields: PropTypes.shape().isRequired,
   meta: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
+  avklartBarn: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 export default AvklartBarnFieldArray;

@@ -811,6 +811,8 @@
   "Registrering.UtstedtDato": "Utstedt dato fra terminbekreftelsen",
   "Registrering.Termindato": "Termindato",
   "Registrering.AntallBarn": "Antall barn",
+  "Registrering.ErBarnetDott": "barnet er dødt",
+  "Registrering.Dodsdato": "Dødsdato",
   "Registrering.Fodselsdato": "Når ble barnet født?",
   "Registrering.SaveApplication.Title": "Ferdigstill registrering",
   "Registrering.SaveApplication.Description": "Ved endring av opplysningene er begrunnelse obligatorisk",

@@ -132,14 +132,25 @@ SjekkFodselDokForm.defaultProps = {
   avklartBarn: undefined,
 };
 
-export const buildInitialValues = createSelector([getFamiliehendelse, getAksjonspunkter], (familiehendelse, aksjonspunkter) => ({
+const createNewChildren = (antallBarnFraSoknad) => {
+  let antallBarn = antallBarnFraSoknad;
+  const childrenArray = [];
+  while (antallBarn > 0) {
+    childrenArray.push({ fodselsdato: '', barnDod: false, dodsDato: '' });
+    antallBarn -= 1;
+  }
+  return childrenArray;
+};
+
+
+export const buildInitialValues = createSelector([getFamiliehendelse, getAksjonspunkter, getSoknadAntallBarn], (familiehendelse, aksjonspunkter, soknadAntallBarn) => ({
   fodselsdato: familiehendelse.fodselsdato ? familiehendelse.fodselsdato : null,
   antallBarnFodt: familiehendelse.antallBarnFodsel ? familiehendelse.antallBarnFodsel : null,
   dokumentasjonForeligger: familiehendelse.dokumentasjonForeligger !== null
     ? familiehendelse.dokumentasjonForeligger : undefined,
   brukAntallBarnITps: familiehendelse.brukAntallBarnFraTps !== null
     ? familiehendelse.brukAntallBarnFraTps : undefined,
-  avklartBarn: familiehendelse.avklartBarn ? familiehendelse.avklartBarn : undefined,
+  avklartBarn: familiehendelse.avklartBarn ? familiehendelse.avklartBarn : createNewChildren(soknadAntallBarn),
   ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL)),
 }));
 
