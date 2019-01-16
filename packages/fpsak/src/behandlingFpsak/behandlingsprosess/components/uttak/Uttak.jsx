@@ -304,7 +304,6 @@ export class UttakImpl extends Component {
           return arbforhold;
         });
       }
-      return stonadskontoKopi;
     });
 
     this.setState({ stonadskontoKopi });
