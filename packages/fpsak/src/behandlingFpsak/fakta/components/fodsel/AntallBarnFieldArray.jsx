@@ -23,7 +23,7 @@ export const AvklartBarnFieldArray = ({
   readOnly,
   avklartBarn,
 }) => (
-  <PeriodFieldArray fields={fields} meta={meta} emptyPeriodTemplate={defaultAntallBarn} readOnly={readOnly}>
+  <PeriodFieldArray fields={fields} meta={meta} emptyPeriodTemplate={defaultAntallBarn} readOnly={readOnly} textCode="PeriodFieldArray.LeggTilBarn">
     {(periodeElementFieldId, index, getRemoveButton) => (
       <Row key={periodeElementFieldId}>
         <Column xs="12">
