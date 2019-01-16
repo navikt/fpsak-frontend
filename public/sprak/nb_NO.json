@@ -1169,12 +1169,12 @@
   "Beregningsgrunnlag.YtelserFraInfotrygd.Ytelse": "Ytelse",
   "Beregningsgrunnlag.BeregningTable.Dagsats": "Dagsats",
   "Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt": "Vilkåret er <b>ikke</b> oppfylt. Brutto beregningsgrunnlag er under en halv G ({halvG}).",
-  "Beregningsgrunnlag.Gradering.Tittel": "Kontroller fordeling av inntekt ved gradering",  
+  "Beregningsgrunnlag.Gradering.Tittel": "Kontroller fordeling av inntekt ved gradering",
   "Beregningsgrunnlag.Gradering.AksjonspunkttekstEtForhold": "Søker skal gradere hos {arbeidsforholdTekst} og det vil ikke bli utbetaling for denne aktiviteten. Vurder om fordeling av beregningsgrunnlag er riktig.",
   "Beregningsgrunnlag.Gradering.AksjonspunkttekstFlereForhold": "Søker skal gradere hos {arbeidsforholdTekst} og det vil ikke bli utbetaling for disse aktivitetene. Vurder om fordeling av beregningsgrunnlag er riktig.",
   "Beregningsgrunnlag.Gradering.FordelingErRiktig": "Ja, fordelingen av inntekt er riktig. Fortsett behandlingen",
   "Beregningsgrunnlag.Gradering.FordelingMåVurderes": "Nei, fordelingen av inntekt må vurderes på nytt. Behandlingen settes på vent",
-  
+
   "BeregningInfoPanel.Title": "Fakta om beregning",
   "BeregningInfoPanel.VisTabell": "Vis tabell",
   "BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning": "Vurder fakta for beregningen",
@@ -1310,10 +1310,10 @@
   "ToTrinnsForm.Beregning.FastsettBgKunYtelse": "Det er fastsatt fordeling av beregningsgrunnlaget ved direkte overgang fra ytelse.",
   "ToTrinnsForm.Beregning.VurderEtterlønnSluttpakke": "Det er vurdert om søker har inntekt fra etterlønn eller sluttpakke.",
   "ToTrinnsForm.Beregning.FastsettEtterlønnSluttpakke": "Inntekt er fastsatt for arbeidstaker med etterlønn eller sluttpakke.",
-  "ToTrinnsForm.Beregning.VurderMottarYtelse": "Det er vurdert om søker har mottatt ytelse",  
+  "ToTrinnsForm.Beregning.VurderMottarYtelse": "Det er vurdert om søker har mottatt ytelse",
   "ToTrinnsForm.Beregning.FrilansinntektFastsatt": "Frilansinntekt er fastsatt",
   "ToTrinnsForm.Beregning.GraderingUtenBG": "Det er vurdert at fordeling av inntektsgrunnlag ved gradering er riktig",
-  
+
   "ToTrinnsForm.Opptjening.Endring": "Perioden {aktivitetType}{arbeidsInfoText} er endret.",
   "ToTrinnsForm.Opptjening.Underkjenning": "Aktivitet {aktivitetType}{arbeidsInfoText} er <b>ikke</b> godkjent.",
   "ToTrinnsForm.Opptjening.EndringArbeidMedNavn": "Perioden {a} for {b} ({c}) er endret.",
@@ -1567,7 +1567,7 @@
   "OpptjeningVilkarView.Months": "måneder",
   "OpptjeningVilkarView.Weeks": "uker",
   "OpptjeningVilkarView.Days": "dager",
-  "OpptjeningVilkarView.MonthsAndDays": "{months} måneder og {days} dager aktivitet i opptjeningperioden",
+  "OpptjeningVilkarView.MonthsAndDays": "{months} måneder og {days} dager aktivitet i opptjeningsperioden",
   "OpptjeningVilkarView.DetailsForSelectedPeriod": "Detaljer for valgt periode",
 
   "UtbetalningTimeLine.Title": "Detaljer for valgt periode",
@@ -1837,8 +1837,8 @@
 
 
   "StartdatoForForeldrepengerperiodenForm.StartdatoEtterArbeidsgiverdato": "Startdato kan ikke være etter datoen som arbeidsgiver opplyser",
-  "StartdatoForForeldrepengerperiodenForm.PeriodenAvviker": "Startdato for foreldrepengerperioden avviker. Fastsett korrekt startdato",
-  "StartdatoForForeldrepengerperiodenForm.StartdatoForPerioden": "Startdato for foreldrepengerperioden",
+  "StartdatoForForeldrepengerperiodenForm.PeriodenAvviker": "Startdato for foreldrepengeperioden avviker. Fastsett korrekt startdato",
+  "StartdatoForForeldrepengerperiodenForm.StartdatoForPerioden": "Startdato for foreldrepengeperioden",
   "StartdatoForForeldrepengerperiodenForm.Vurdering": "Vurdering",
   "StartdatoForForeldrepengerperiodenForm.Startdato": "Startdato som skal benyttes (fra søknad)",
 
@@ -2061,7 +2061,7 @@
   "HistorikkEndretFelt.AvslagMorTarIkkeAlleUker": "Mor tar ikke alle 3 ukene før termin",
   "HistorikkEndretFelt.RettTilForeldrepenger": "Rett til foreldrepenger",
   "HistorikkEndretFelt.VurderGraderingPåAndelUtenBG": "Inntektsgrunnlag ved gradering",
-  
+
   "HistorikkEndretFeltVerdiType.AdoptererAlene": "adopterer alene",
   "HistorikkEndretFeltVerdiType.AdoptererIkkeAlene": "adopterer ikke alene",
   "HistorikkEndretFeltVerdiType.Aleneomsorg": "Søker har aleneomsorg for barnet",
@@ -2101,7 +2101,7 @@
   "HistorikkEndretFeltVerdiType.PersonstatusBOSA": "Bosatt",
   "HistorikkEndretFeltVerdiType.PersonstatusDØD": "Død",
   "HistorikkEndretFeltVerdiType.PersonstatusFOSV": "Forsvunnet/savnet",
-  "HistorikkEndretFeltVerdiType.PersonstatusFØDR": "Fødselregistrert",
+  "HistorikkEndretFeltVerdiType.PersonstatusFØDR": "Fødselsregistrert",
   "HistorikkEndretFeltVerdiType.PersonstatusUFUL": "Ufullstendig fødselsnr",
   "HistorikkEndretFeltVerdiType.PersonstatusUREG": "Uregistrert person",
   "HistorikkEndretFeltVerdiType.PersonstatusUTAN": "Utgått person annullert tilgang Fnr",
@@ -2143,7 +2143,7 @@
   "HistorikkEndretFeltVerdiType.UtsetFerieKunFarHarRett" : "Utsettelse pga. ferie, kun far har rett",
   "HistorikkEndretFeltVerdiType.UtsetArbeidKunFarHarRett" : "Utsettelse pga. 100% arbeid, kun far har rett",
   "HistorikkEndretFeltVerdiType.UtsetSykdomSkadeKunFarHarRett" : "Utsettelse pga. sykdom, skade, kun far har rett",
-  "HistorikkEndretFeltVerdiType.UtsetInnleggelseKunFarHarRett" : "Utsettelse pga. egen innleggelse på helseinstiusjon, kun far har rett",
+  "HistorikkEndretFeltVerdiType.UtsetInnleggelseKunFarHarRett" : "Utsettelse pga. egen innleggelse på helseinstitusjon, kun far har rett",
   "HistorikkEndretFeltVerdiType.UtsetBarnetsInnleggelseKunFarHarRett" : "Utsettelse pga. barnets innleggelse på helseinstitusjon, kun far har rett",
   "HistorikkEndretFeltVerdiType.GraderingFellesEllerFP" : "Gradering av fellesperiode/foreldrepenger",
   "HistorikkEndretFeltVerdiType.GraderingKvote" : "Gradering av kvote/overført kvote",
