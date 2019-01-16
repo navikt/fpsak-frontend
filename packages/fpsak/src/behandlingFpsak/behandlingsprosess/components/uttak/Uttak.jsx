@@ -236,37 +236,52 @@ export class UttakImpl extends Component {
     const sortedActivities = otherThanUpdated.concat(verdier);
     sortedActivities.sort((a, b) => a.id - b.id);
 
-    const uttakResult = {};
-    sortedActivities.forEach((uttak) => {
-      uttak.aktiviteter.forEach((a, index) => {
+    const uttakResult = sortedActivities.reduce((acc, periode) => {
+      periode.aktiviteter.forEach((a, index) => {
         const stonadskonto = a.stønadskontoType.kode;
         const aktivitetDays = (typeof a.days !== 'undefined' && typeof a.weeks !== 'undefined')
           ? ((a.weeks * 5) + a.days)
           : a.trekkdager;
 
-        if ((`${stonadskonto}`) in uttakResult) {
-          uttakResult[`${stonadskonto}`] = {
-            konto: stonadskonto,
-            arbforhold: uttakResult[`${stonadskonto}`].arbforhold,
-          };
-          uttakResult[`${stonadskonto}`].arbforhold[index] = {
-            trekkdager: (uttakResult[`${stonadskonto}`].arbforhold[index]
-              ? uttakResult[`${stonadskonto}`].arbforhold[index].trekkdager
-              : 0) + aktivitetDays,
-          };
-        } else {
-          uttakResult[`${stonadskonto}`] = {
+        if (periode.flerbarnsdager) {
+          if (!acc.FLERBARNSDAGER) {
+            acc.FLERBARNSDAGER = {
+              konto: 'FLERBARNSDAGER',
+              arbforhold: [{
+                trekkdager: 0,
+              }],
+            };
+            acc.FLERBARNSDAGER.arbforhold[index] = {
+              trekkdager: aktivitetDays,
+            };
+          } else {
+            acc.FLERBARNSDAGER.arbforhold[index] = {
+              trekkdager: (acc.FLERBARNSDAGER.arbforhold[index]
+                ? acc.FLERBARNSDAGER.arbforhold[index].trekkdager
+                : 0) + aktivitetDays,
+            };
+          }
+        }
+        if (!acc[stonadskonto]) {
+          acc[stonadskonto] = {
             konto: stonadskonto,
             arbforhold: [{
               trekkdager: 0,
             }],
           };
-          uttakResult[`${stonadskonto}`].arbforhold[index] = {
+          acc[stonadskonto].arbforhold[index] = {
             trekkdager: aktivitetDays,
+          };
+        } else {
+          acc[stonadskonto].arbforhold[index] = {
+            trekkdager: (acc[stonadskonto].arbforhold[index]
+              ? acc[stonadskonto].arbforhold[index].trekkdager
+              : 0) + aktivitetDays,
           };
         }
       });
-    });
+      return acc;
+    }, {});
 
     Object.values(stonadskontoKopi.stonadskontoer).forEach((konto) => {
       const minCallback = (acc, cur) => Math.min(acc.trekkdager, cur.trekkdager);
