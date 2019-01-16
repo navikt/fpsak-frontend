@@ -87,22 +87,15 @@ export const SjekkFodselDokForm = ({
       {(!fodselInfo || !fodselInfo.length) && dokumentasjonForeligger
       && (
         <div className={styles.clearfix}>
-          <Column xs="6">
+          <Column xs="12">
             <ArrowBox>
               {<FormattedMessage id="SjekkFodselDokForm.FyllInnDokumenterteOpplysninger" />}
               <FieldArray
                 name={avklarteBarnFieldArrayName}
                 component={antalBarnFieldArray}
-                namePrefix={AVKLARTE_BARN_FORM_NAME_PREFIX}
-                fields={avklartBarn}
+                readOnly={readOnly}
+                avklartBarn={avklartBarn}
               />
-              <button
-                type="button"
-                label="plus"
-                onClick={() => avklartBarn.push({ fodselsdato: '2001-01-01' })}
-              >
-Button +
-              </button>
             </ArrowBox>
           </Column>
         </div>
@@ -136,7 +129,7 @@ SjekkFodselDokForm.defaultProps = {
     kode: '',
     navn: '',
   },
-  avklartBarn: [{ fodselsdato: '2001-01-01' }],
+  avklartBarn: undefined,
 };
 
 export const buildInitialValues = createSelector([getFamiliehendelse, getAksjonspunkter], (familiehendelse, aksjonspunkter) => ({
@@ -146,7 +139,7 @@ export const buildInitialValues = createSelector([getFamiliehendelse, getAksjons
     ? familiehendelse.dokumentasjonForeligger : undefined,
   brukAntallBarnITps: familiehendelse.brukAntallBarnFraTps !== null
     ? familiehendelse.brukAntallBarnFraTps : undefined,
-  avklartBarn: familiehendelse.avklartBarn ? familiehendelse.avklartBarn : [{ fodselsdato: '2001-01-01' }],
+  avklartBarn: familiehendelse.avklartBarn ? familiehendelse.avklartBarn : undefined,
   ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL)),
 }));
 
@@ -163,7 +156,7 @@ const transformValues = (values, antallBarnFraSoknad, antallBarnFraTps, fodselIn
   antallBarnFodt: values.dokumentasjonForeligger
     ? getAntallBarn(values.brukAntallBarnITps, values.antallBarnFodt, antallBarnFraSoknad, antallBarnFraTps) : undefined,
   dokumentasjonForeligger: values.dokumentasjonForeligger,
-  uidentifiserteBarn: [{ fodselsdato: '2018-11-29' }, { fodselsdato: '2018-11-29' }],
+  uidentifiserteBarn: values.avklartBarn,
   brukAntallBarnITps: fodselInfo && !!fodselInfo.length ? values.brukAntallBarnITps : false,
   ...FaktaBegrunnelseTextField.transformValues(values),
 });
@@ -179,6 +172,7 @@ const mapStateToProps = (state, ownProps) => {
     fodselInfo,
     dokumentasjonForeliggerIsEdited: getEditedStatus(state).dokumentasjonForeligger,
     dokumentasjonForeligger: behandlingFormValueSelector(sjekkFodselDokForm)(state, 'dokumentasjonForeligger'),
+    avklartBarn: behandlingFormValueSelector(sjekkFodselDokForm)(state, 'avklartBarn'),
     behandlingsType: getBehandlingType(state),
   };
 };

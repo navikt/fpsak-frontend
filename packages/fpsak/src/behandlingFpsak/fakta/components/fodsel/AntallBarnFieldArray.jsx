@@ -1,50 +1,75 @@
-
-
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
 
-import { DatepickerField, InputField } from '@fpsak-frontend/form';
 import {
-  required, hasValidDate, dateBeforeOrEqualToToday,
+  hasValidDate, required,
 } from '@fpsak-frontend/utils';
+import {
+  PeriodFieldArray, FlexContainer, FlexColumn, FlexRow,
+} from '@fpsak-frontend/shared-components';
+import { DatepickerField, CheckboxField } from '@fpsak-frontend/form';
 
-import styles from './SjekkFodselDokForm.less';
+export const defaultAntallBarn = {
+  fodselsdato: '',
+  barnDod: false,
+  dodsDato: '',
+};
 
-const AvklartBarnFieldArray = ({
+export const AvklartBarnFieldArray = ({
   fields,
   meta,
   readOnly,
+  avklartBarn,
 }) => (
-  <div>
-    {fields.map((AvklartBarnFieldArrayId, index) => (
-      <div className={styles.fodselRow}>
-        <Row>
-          <Column xs="6" className={styles.datePickerField}>
-            {fields[index].fodselsdato}
-          </Column>
-          <Column xs="1" />
-          <Column xs="2">
-            <button type="button" onClick={() => fields.push({})} title="add" />
-          </Column>
-        </Row>
-      </div>
-    ))}
-  </div>
+  <PeriodFieldArray fields={fields} meta={meta} emptyPeriodTemplate={defaultAntallBarn} readOnly={readOnly}>
+    {(periodeElementFieldId, index, getRemoveButton) => (
+      <Row key={periodeElementFieldId}>
+        <Column xs="12">
+          <FlexContainer>
+            <FlexRow>
+              <FlexColumn>
+                <DatepickerField
+                  name={`${periodeElementFieldId}.fodselsdato`}
+                  defaultValue={null}
+                  label={{ id: 'Registrering.FrilansOppdrag.FieldArray.periodeFom' }}
+                  validate={[hasValidDate, required]}
+                />
+              </FlexColumn>
+              <FlexColumn>
+                <CheckboxField
+                  name={`${periodeElementFieldId}.barnDod`}
+                  label="dod"
+                />
+              </FlexColumn>
+              {avklartBarn[index].barnDod
+              && (
+              <FlexColumn>
+                <span>{periodeElementFieldId.dod}</span>
+                <DatepickerField
+                  name={`${periodeElementFieldId}.dodsdato`}
+                  defaultValue={null}
+                  label={{ id: 'Registrering.FrilansOppdrag.FieldArray.periodeTom' }}
+                  validate={[hasValidDate]}
+                />
+              </FlexColumn>
+              )
+              }
+              <FlexColumn>
+                {getRemoveButton()}
+              </FlexColumn>
+            </FlexRow>
+          </FlexContainer>
+        </Column>
+      </Row>
+    )}
+  </PeriodFieldArray>
 );
 
-
 AvklartBarnFieldArray.propTypes = {
+  fields: PropTypes.shape().isRequired,
+  meta: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
-  meta: PropTypes.shape(),
-  fields: PropTypes.shape(),
 };
-
-AvklartBarnFieldArray.defaultProps = {
-  readOnly: true,
-  meta: undefined,
-};
-
 
 export default AvklartBarnFieldArray;
