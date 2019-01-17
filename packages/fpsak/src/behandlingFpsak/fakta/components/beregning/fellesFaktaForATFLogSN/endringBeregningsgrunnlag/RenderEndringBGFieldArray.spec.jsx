@@ -8,7 +8,8 @@ import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregning
 import {
   skalIkkjeVereHogareEnnInntektmeldingMessage, skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding, skalVereLikFordelingMessage,
 } from '../ValidateAndelerUtils';
-import RenderEndringBGFieldArray, { RenderEndringBGFieldArrayImpl } from './RenderEndringBGFieldArray';
+import RenderEndringBGFieldArray, { RenderEndringBGFieldArrayImpl, lagBelopKolonne } from './RenderEndringBGFieldArray';
+import { skalRedigereInntektForAndel } from '../BgFordelingUtils';
 
 const inntektskategorier = [
   {
@@ -20,6 +21,8 @@ const inntektskategorier = [
     navn: 'Selvstendig næringsdrivende',
   },
 ];
+
+const kanRedigereInntekt = andel => skalRedigereInntektForAndel({}, {}, {})(andel);
 
 const andel = {
   nyAndel: true,
@@ -107,7 +110,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 10000,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt);
     expect(errors).to.equal(null);
   });
 
@@ -126,7 +129,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 10000,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt);
     expect(errors).to.equal(null);
   });
 
@@ -144,7 +147,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 10000,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt);
     expect(errors).to.equal(null);
   });
 
@@ -162,7 +165,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 10000,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt);
     expect(errors[0].refusjonskrav).to.have.length(1);
     expect(errors[0].refusjonskrav[0].id).to.equal(isRequiredMessage()[0].id);
   });
@@ -181,7 +184,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: null,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt);
     expect(errors[0].refusjonskrav).to.have.length(1);
     expect(errors[0].refusjonskrav[0].id).to.equal(isRequiredMessage()[0].id);
   });
@@ -210,7 +213,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: null,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt);
     const expected = skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverstring);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
     expect(errors._error[0].id).to.equal(expected[0].id);
@@ -232,7 +235,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 0,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt);
     const expected = skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverstring);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
     expect(errors._error[0].id).to.equal(expected[0].id);
@@ -253,7 +256,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 10000,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt);
     expect(errors[0].fastsattBeløp).to.have.length(1);
     expect(errors[0].fastsattBeløp[0].id).to.equal(isRequiredMessage()[0].id);
   });
@@ -272,7 +275,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 10000,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt);
     expect(errors[0].fastsattBeløp).to.have.length(1);
     expect(errors[0].fastsattBeløp[0].id).to.equal(skalIkkjeVereHogareEnnInntektmeldingMessage()[0].id);
   });
@@ -291,7 +294,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 10000,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values);
+    const errors = RenderEndringBGFieldArray.validate(values, 100001, kanRedigereInntekt);
     expect(errors).to.equal(null);
   });
 
@@ -309,7 +312,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 10000,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values);
+    const errors = RenderEndringBGFieldArray.validate(values, 100001, kanRedigereInntekt);
     expect(errors).to.equal(null);
   });
 
@@ -327,7 +330,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 10000,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt);
     expect(errors[0].inntektskategori).to.have.length(1);
     expect(errors[0].inntektskategori[0].id).to.equal(isRequiredMessage()[0].id);
   });
@@ -347,7 +350,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       nyAndel: true,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt);
     expect(errors[0].andel).to.have.length(1);
     expect(errors[0].andel[0].id).to.equal(isRequiredMessage()[0].id);
   });
@@ -367,7 +370,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       nyAndel: true,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, () => false);
     expect(errors).to.equal(null);
   });
 
@@ -436,7 +439,7 @@ describe('<RenderEndringBGFieldArray>', () => {
 
     const fordelingForstePeriode = 400000;
 
-    const errors = RenderEndringBGFieldArray.validate(values, fordelingForstePeriode);
+    const errors = RenderEndringBGFieldArray.validate(values, fordelingForstePeriode, kanRedigereInntekt);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
     expect(errors._error[0].id).to.equal(skalVereLikFordelingMessage()[0].id);
     expect(errors._error[1].fordeling).to.equal('50 000');
@@ -505,7 +508,122 @@ describe('<RenderEndringBGFieldArray>', () => {
     }];
 
     const fordelingForstePeriode = 400000;
-    const errors = RenderEndringBGFieldArray.validate(values, fordelingForstePeriode);
+    const errors = RenderEndringBGFieldArray.validate(values, fordelingForstePeriode, kanRedigereInntekt);
     expect(errors).to.equal(null);
+  });
+
+  const kanRedigereInntektSpesifisert = (fieldVal) => {
+    if (fieldVal.andelsnr === 1 || fieldVal.andelsnr === 3) {
+      return true;
+    }
+    return false;
+  };
+
+  const blandetRedigerbarOgIkkeRedigerbareValues = [{
+    andelsnr: 1,
+    lagtTilAvSaksbehandler: false,
+    refusjonskrav: '5 000',
+    belopFraInntektsmelding: null,
+    snittIBeregningsperiodenPrMnd: 10000,
+    skalKunneEndreRefusjon: true,
+    aktivitetstatus: 'ARBEIDSTAKER',
+    andel: 'Visningsnavn 1',
+    harPeriodeAarsakGraderingEllerRefusjon: false,
+    inntektskategori: 'ARBEIDSTAKER',
+    refusjonskravFraInntektsmelding: null,
+    fastsattBeløp: '5 000',
+    readOnlyBelop: '10 000',
+    nyAndel: false,
+    fordelingForrigeBehandling: '',
+  },
+  {
+    andelsnr: 2,
+    fordelingForrigeBehandling: 20000,
+    lagtTilAvSaksbehandler: false,
+    refusjonskrav: '2 000',
+    snittIBeregningsperiodenPrMnd: null,
+    belopFraInntektsmelding: 15000,
+    skalKunneEndreRefusjon: true,
+    aktivitetstatus: 'ARBEIDSTAKER',
+    andel: 'Visningsnavn 2',
+    harPeriodeAarsakGraderingEllerRefusjon: false,
+    inntektskategori: 'ARBEIDSTAKER',
+    refusjonskravFraInntektsmelding: 20000,
+    fastsattBeløp: 0,
+    readOnlyBelop: '20 000',
+    nyAndel: false,
+  },
+  {
+    andelsnr: 3,
+    fordelingForrigeBehandling: '',
+    lagtTilAvSaksbehandler: false,
+    refusjonskrav: '10 000',
+    belopFraInntektsmelding: null,
+    snittIBeregningsperiodenPrMnd: 20000,
+    skalKunneEndreRefusjon: true,
+    aktivitetstatus: 'ARBEIDSTAKER',
+    andel: 'Visningsnavn 3',
+    harPeriodeAarsakGraderingEllerRefusjon: false,
+    inntektskategori: 'ARBEIDSTAKER',
+    refusjonskravFraInntektsmelding: null,
+    fastsattBeløp: '15 000',
+    readOnlyBelop: '20 000',
+    nyAndel: false,
+  },
+  ];
+
+  it('skal gi error når sum av fastsatt er ulik fordeling første periode for periode med andeler uten inntektsmelding', () => {
+    const fordelingForstePeriode = 30000;
+    const errors = RenderEndringBGFieldArray.validate(blandetRedigerbarOgIkkeRedigerbareValues, fordelingForstePeriode, kanRedigereInntektSpesifisert);
+    /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
+    expect(errors._error[0].id).to.equal(skalVereLikFordelingMessage()[0].id);
+    expect(errors._error[1].fordeling).to.equal('30 000');
+  });
+
+  it('skal ikkje gi error når sum av fastsatt er ulik fordeling første periode for periode med andeler uten inntektsmelding', () => {
+    const fordelingForstePeriode = 40000;
+    const errors = RenderEndringBGFieldArray.validate(blandetRedigerbarOgIkkeRedigerbareValues, fordelingForstePeriode, kanRedigereInntektSpesifisert);
+    expect(errors).to.equal(null);
+  });
+
+  it('lagBelopKolonne skal gi readOnly versjon om andel ikke skal redigere inntekt', () => {
+    const belopKolonne = lagBelopKolonne('test', false, false, false);
+    expect(belopKolonne.props.className).to.equal(undefined);
+    expect(belopKolonne.props.children.props.name).to.equal('test.readOnlyBelop');
+    expect(belopKolonne.props.children.props.isEdited).to.equal(false);
+  });
+
+  it('lagBelopKolonne skal gi readOnly versjon om andel skal redigere inntekt i readOnly', () => {
+    const belopKolonne = lagBelopKolonne('test', true, true, false);
+    expect(belopKolonne.props.className).to.equal(undefined);
+    expect(belopKolonne.props.children.props.name).to.equal('test.readOnlyBelop');
+    expect(belopKolonne.props.children.props.isEdited).to.equal(false);
+  });
+
+  it('lagBelopKolonne skal gi readOnly versjon med isEdited true om andel skal redigere inntekt i readOnly med aksjonspunkt lukket', () => {
+    const belopKolonne = lagBelopKolonne('test', true, true, true);
+    expect(belopKolonne.props.className).to.equal(undefined);
+    expect(belopKolonne.props.children.props.name).to.equal('test.readOnlyBelop');
+    expect(belopKolonne.props.children.props.isEdited).to.equal(true);
+  });
+
+  it('lagBelopKolonne skal gi readOnly versjon med isEdited false om andel ikkje skal redigere inntekt i readOnly med aksjonspunkt lukket', () => {
+    const belopKolonne = lagBelopKolonne('test', true, false, true);
+    expect(belopKolonne.props.className).to.equal(undefined);
+    expect(belopKolonne.props.children.props.name).to.equal('test.readOnlyBelop');
+    expect(belopKolonne.props.children.props.isEdited).to.equal(false);
+  });
+
+
+  it('lagBelopKolonne skal gi redigerbar versjon med isEdited true om andel skal redigere inntekt med aksjonspunkt lukket', () => {
+    const belopKolonne = lagBelopKolonne('test', false, true, true);
+    expect(belopKolonne.props.children.props.name).to.equal('test.fastsattBeløp');
+    expect(belopKolonne.props.children.props.isEdited).to.equal(true);
+  });
+
+  it('lagBelopKolonne skal gi redigerbar versjon med isEdited false om andel skal redigere inntekt med aksjonspunkt åpent', () => {
+    const belopKolonne = lagBelopKolonne('test', false, true, false);
+    expect(belopKolonne.props.children.props.name).to.equal('test.fastsattBeløp');
+    expect(belopKolonne.props.children.props.isEdited).to.equal(false);
   });
 });

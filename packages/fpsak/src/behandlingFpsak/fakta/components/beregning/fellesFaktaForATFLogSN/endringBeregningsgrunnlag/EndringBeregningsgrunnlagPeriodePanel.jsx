@@ -8,7 +8,7 @@ import classnames from 'classnames/bind';
 import RenderEndringBGFieldArray from './RenderEndringBGFieldArray';
 import { createEndringHeadingForDate, renderDateHeading } from './EndretBeregningsgrunnlagUtils';
 import {
-  settAndelIArbeid, setGenerellAndelsinfo, setArbeidsforholdInitialValues, settFastsattBelop,
+  settAndelIArbeid, setGenerellAndelsinfo, setArbeidsforholdInitialValues, settFastsattBelop, settReadOnlyBelop,
 } from '../BgFordelingUtils';
 
 
@@ -33,6 +33,7 @@ const EndringBeregningsgrunnlagPeriodePanelImpl = ({
   open,
   showPanel,
   heading,
+  formName,
 }) => (
   <EkspanderbartpanelPure
     className={readOnly ? styles.statusOk : classNames(`endringBeregningsgrunnlagPeriode--${fom}`)}
@@ -43,9 +44,10 @@ const EndringBeregningsgrunnlagPeriodePanelImpl = ({
     <FieldArray
       name={endringBGFieldArrayName}
       component={RenderEndringBGFieldArray}
-      readOnly={readOnly || !harPeriodeAarsakGraderingEllerRefusjon}
+      readOnly={readOnly}
       periodeUtenAarsak={!harPeriodeAarsakGraderingEllerRefusjon}
       isAksjonspunktClosed={isAksjonspunktClosed}
+      formName={formName}
     />
   </EkspanderbartpanelPure>
 );
@@ -59,16 +61,19 @@ EndringBeregningsgrunnlagPeriodePanelImpl.propTypes = {
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   showPanel: PropTypes.func.isRequired,
   heading: PropTypes.element.isRequired,
+  formName: PropTypes.string,
 };
 
 EndringBeregningsgrunnlagPeriodePanelImpl.defaultProps = {
   open: null,
+  formName: undefined,
 };
 
 
-EndringBeregningsgrunnlagPeriodePanelImpl.validate = values => RenderEndringBGFieldArray.validate(values);
+EndringBeregningsgrunnlagPeriodePanelImpl.validate = (values, fastsattIForstePeriode,
+  skalRedigereInntekt) => RenderEndringBGFieldArray.validate(values, fastsattIForstePeriode, skalRedigereInntekt);
 
-EndringBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (periode) => {
+EndringBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (periode, readOnly) => {
   if (!periode || !periode.endringBeregningsgrunnlagAndeler) {
     return {};
   }
@@ -79,8 +84,11 @@ EndringBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (periode) => {
       andelIArbeid: settAndelIArbeid(andel.andelIArbeid),
       fordelingForrigeBehandling: andel.fordelingForrigeBehandling || andel.fordelingForrigeBehandling === 0
         ? formatCurrencyNoKr(andel.fordelingForrigeBehandling) : '',
-      fastsattBeløp: settFastsattBelop(periode.harPeriodeAarsakGraderingEllerRefusjon,
-        andel.beregnetPrMnd, andel.fastsattForrige, andel.fordelingForrigeBehandling, andel.fastsattAvSaksbehandler),
+      fastsattBeløp: settFastsattBelop(andel.beregnetPrMnd, andel.fastsattForrige, andel.fastsattAvSaksbehandler),
+      readOnlyBelop: settReadOnlyBelop(readOnly, andel.fordelingForrigeBehandling,
+        andel.beregnetPrMnd, andel.snittIBeregningsperiodenPrMnd),
+      skalRedigereInntekt: periode.harPeriodeAarsakGraderingEllerRefusjon,
+      snittIBeregningsperiodenPrMnd: andel.snittIBeregningsperiodenPrMnd,
       refusjonskrav: andel.refusjonskrav !== null && andel.refusjonskrav !== undefined ? formatCurrencyNoKr(andel.refusjonskrav) : '',
       skalKunneEndreRefusjon: periode.skalKunneEndreRefusjon && !andel.lagtTilAvSaksbehandler
       && andel.refusjonskravFraInntektsmelding ? periode.skalKunneEndreRefusjon : false,
@@ -95,7 +103,7 @@ const mapStateToProps = (state, props) => {
   if (props.skalHaEndretInformasjonIHeader) {
     return ({
       heading: createEndringHeadingForDate(state, props.fom, props.tom, renderDateHeading(props.fom, props.tom),
-        props.harPeriodeAarsakGraderingEllerRefusjon),
+        props.harPeriodeAarsakGraderingEllerRefusjon, props.formName),
     });
   }
   return ({

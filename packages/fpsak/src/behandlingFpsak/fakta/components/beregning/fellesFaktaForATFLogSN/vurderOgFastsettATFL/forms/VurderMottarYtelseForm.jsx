@@ -123,21 +123,23 @@ VurderMottarYtelseFormImpl.buildInitialValues = (vurderMottarYtelse) => {
   return initialValues;
 };
 
-const transformValuesArbeidstakerUtenIM = (values, tilfeller, faktaOmBeregning, transformedValues) => {
+const transformValuesArbeidstakerUtenIM = (values, tilfeller, faktaOmBeregning, transformedValues, beregningsgrunnlag) => {
   const skalFastsetteAT = skalFastsetteInntektATUtenInntektsmelding(values, faktaOmBeregning.vurderMottarYtelse);
   if (skalFastsetteAT && harIkkeATFLSameOrgEllerBesteberegning(tilfeller)) {
     if (!transformedValues.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)) {
       transformedValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING);
       return {
         ...transformedValues,
-        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING),
+        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning,
+          faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING, beregningsgrunnlag),
         faktaOmBeregningTilfeller: transformedValues.faktaOmBeregningTilfeller,
       };
     }
-    if (!transformedValues.fastsatteLonnsendringer) {
+    if (!transformedValues.fastsattUtenInntektsmelding) {
       return {
         ...transformedValues,
-        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING),
+        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning,
+          faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING, beregningsgrunnlag),
       };
     }
   }
@@ -145,21 +147,21 @@ const transformValuesArbeidstakerUtenIM = (values, tilfeller, faktaOmBeregning, 
 };
 
 
-const transformValuesFrilans = (values, tilfeller, faktaOmBeregning, transformedValues) => {
+const transformValuesFrilans = (values, tilfeller, faktaOmBeregning, transformedValues, beregningsgrunnlag) => {
   const skalFastsetteInntektFrilans = values[finnFrilansFieldName()];
   if (skalFastsetteInntektFrilans && harIkkeATFLSameOrgEllerBesteberegning(tilfeller)) {
     if (!transformedValues.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL)) {
       transformedValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL);
       return {
         ...transformedValues,
-        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL),
+        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL, beregningsgrunnlag),
         faktaOmBeregningTilfeller: transformedValues.faktaOmBeregningTilfeller,
       };
     }
     if (!transformedValues.fastsettMaanedsinntektFL) {
       return {
         ...transformedValues,
-        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL),
+        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL, beregningsgrunnlag),
       };
     }
   }
@@ -179,9 +181,9 @@ const transformValuesMottarYtelse = (values, faktaOmBeregning) => {
   };
 };
 
-VurderMottarYtelseFormImpl.transformValues = (values, faktaOmBeregning, tilfeller, transformedValues) => ({
+VurderMottarYtelseFormImpl.transformValues = (values, faktaOmBeregning, tilfeller, transformedValues, beregningsgrunnlag) => ({
   ...transformValuesMottarYtelse(values, faktaOmBeregning),
-  ...transformValuesArbeidstakerUtenIM(values, tilfeller, faktaOmBeregning, transformedValues),
+  ...transformValuesArbeidstakerUtenIM(values, tilfeller, faktaOmBeregning, transformedValues, beregningsgrunnlag),
   ...transformValuesFrilans(values, tilfeller, faktaOmBeregning, transformedValues),
 });
 

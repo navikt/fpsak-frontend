@@ -15,6 +15,17 @@ import { createInputfieldKeyAT, createInputfieldKeyFL } from './FastsettATFLInnt
 
 const requiredMessageId = isRequiredMessage()[0].id;
 
+const beregningsgrunnlag = {
+  beregningsgrunnlagPeriode: [{
+    beregningsgrunnlagPrStatusOgAndel: [
+      { andelsnr: 1, aktivitetStatus: { kode: 'AT' } },
+      { andelsnr: 2, aktivitetStatus: { kode: 'AT' } },
+      { andelsnr: 3, aktivitetStatus: { kode: 'AT' } },
+      { andelsnr: 4, aktivitetStatus: { kode: 'FL' } },
+    ],
+  }],
+};
+
 const arbeidsforhold = {
   arbeidsgiverNavn: 'Virksomheten',
   arbeidsgiverId: '3284788923',
@@ -218,8 +229,8 @@ describe('<VurderMottarYtelseForm>', () => {
     values[createInputfieldKeyAT(andel.arbeidsforhold)] = '10 000';
     values[createInputfieldKeyAT(andel3.arbeidsforhold)] = '20 000';
 
-    const transformed = VurderMottarYtelseFormImpl.transformValues(values, faktaOmBeregning, tilfeller, transformedValues);
-    const fastsatteInntekter = transformed.fastsatteLonnsendringer.vurderLønnsendringAndelListe;
+    const transformed = VurderMottarYtelseFormImpl.transformValues(values, faktaOmBeregning, tilfeller, transformedValues, beregningsgrunnlag);
+    const fastsatteInntekter = transformed.fastsattUtenInntektsmelding.andelListe;
     expect(fastsatteInntekter.length).to.equal(2);
     expect(fastsatteInntekter[0].andelsnr).to.equal(1);
     expect(fastsatteInntekter[0].arbeidsinntekt).to.equal(10000);
@@ -249,7 +260,7 @@ describe('<VurderMottarYtelseForm>', () => {
     values[finnFrilansFieldName()] = true;
     values[createInputfieldKeyFL()] = '10 000';
 
-    const transformed = VurderMottarYtelseFormImpl.transformValues(values, faktaOmBeregning, tilfeller, transformedValues);
+    const transformed = VurderMottarYtelseFormImpl.transformValues(values, faktaOmBeregning, tilfeller, transformedValues, beregningsgrunnlag);
     const fastsattInntekt = transformed.fastsettMaanedsinntektFL.maanedsinntekt;
     expect(fastsattInntekt).to.equal(10000);
     const fastsatteTilfeller = transformed.faktaOmBeregningTilfeller;
@@ -284,11 +295,11 @@ describe('<VurderMottarYtelseForm>', () => {
     values[createInputfieldKeyAT(andel3.arbeidsforhold)] = '20 000';
 
 
-    const transformed = VurderMottarYtelseFormImpl.transformValues(values, faktaOmBeregning, tilfeller, transformedValues);
+    const transformed = VurderMottarYtelseFormImpl.transformValues(values, faktaOmBeregning, tilfeller, transformedValues, beregningsgrunnlag);
     const fastsattFrilansinntekt = transformed.fastsettMaanedsinntektFL.maanedsinntekt;
     expect(fastsattFrilansinntekt).to.equal(10000);
 
-    const fastsatteArbeidsinntekter = transformed.fastsatteLonnsendringer.vurderLønnsendringAndelListe;
+    const fastsatteArbeidsinntekter = transformed.fastsattUtenInntektsmelding.andelListe;
     expect(fastsatteArbeidsinntekter.length).to.equal(2);
     expect(fastsatteArbeidsinntekter[0].andelsnr).to.equal(1);
     expect(fastsatteArbeidsinntekter[0].arbeidsinntekt).to.equal(10000);
@@ -308,7 +319,7 @@ describe('<VurderMottarYtelseForm>', () => {
       faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE];
     const transformedValues = {
       vurdertLonnsendring: { erLønnsendringIBeregningsperioden: true },
-      fastsatteLonnsendringer: { vurderLønnsendringAndelListe: [{ andelsnr: 1, arbeidsinntekt: 10000 }, { andelsnr: 2, arbeidsinntekt: 20000 }] },
+      fastsattUtenInntektsmelding: { andelListe: [{ andelsnr: 1, arbeidsinntekt: 10000 }, { andelsnr: 2, arbeidsinntekt: 20000 }] },
       faktaOmBeregningTilfeller: tilfeller,
     };
     const faktaOmBeregning = {
@@ -325,7 +336,7 @@ describe('<VurderMottarYtelseForm>', () => {
     values[createInputfieldKeyAT(andel3.arbeidsforhold)] = '20 000';
 
     const transformed = VurderMottarYtelseFormImpl.transformValues(values, faktaOmBeregning, tilfeller, transformedValues);
-    expect(transformed.fastsatteLonnsendringer).to.be.equal(undefined);
+    expect(transformed.fastsattUtenInntektsmelding).to.be.equal(undefined);
   });
 
 

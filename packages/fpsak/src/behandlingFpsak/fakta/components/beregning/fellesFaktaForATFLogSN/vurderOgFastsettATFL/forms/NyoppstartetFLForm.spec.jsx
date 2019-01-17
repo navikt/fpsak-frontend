@@ -88,7 +88,7 @@ describe('<NyoppstartetFLForm>', () => {
     const values = {};
     values[erNyoppstartetFLField] = true;
     const tv = NyoppstartetFLFormImpl.nyOppstartetFLInntekt(values, tilfeller,
-      { faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL] });
+      { faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL] }, {});
     expect(tv.fastsettMaanedsinntektFL).to.equal(undefined);
   });
 
@@ -98,7 +98,7 @@ describe('<NyoppstartetFLForm>', () => {
     const values = {};
     values[erNyoppstartetFLField] = true;
     const tv = NyoppstartetFLFormImpl.nyOppstartetFLInntekt(values, tilfeller,
-      { faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL] });
+      { faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL] }, {});
     expect(tv.fastsettMaanedsinntektFL).to.equal(undefined);
   });
 });

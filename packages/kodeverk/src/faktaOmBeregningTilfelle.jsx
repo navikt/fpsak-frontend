@@ -52,4 +52,6 @@ export const erATFLSpesialtilfelleEllerVurderMottarYtelseUtenBesteberegning = ti
 export const harIkkeATFLSameOrgEllerBesteberegning = tilfeller => !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)
   && !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON);
 
+export const harFastsettATFLInntektTilfelle = tilfeller => tilfeller.some(tilfelle => vurderOgFastsettATFLTilfeller.includes(tilfelle));
+
 export default faktaOmBeregningTilfelle;

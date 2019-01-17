@@ -211,16 +211,19 @@ describe('<FastsettATFLInntektForm>', () => {
       values,
       beregningsgrunnlag.faktaOmBeregning,
       faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON,
+      beregningsgrunnlag,
     );
     const transformedValuesLonnsendring = FastsettATFLInntektForm.transformValues(
       values,
       beregningsgrunnlag.faktaOmBeregning,
       faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING,
+      beregningsgrunnlag,
     );
     const transformedValuesFL = FastsettATFLInntektForm.transformValues(
       values,
       beregningsgrunnlag.faktaOmBeregning,
       faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL,
+      beregningsgrunnlag,
     );
     const expectedTransformedValuesATFLSammeOrg = {
       vurderATogFLiSammeOrganisasjon: {
@@ -237,8 +240,8 @@ describe('<FastsettATFLInntektForm>', () => {
       },
     };
     const expectedTransformedValuesLonnsendring = {
-      fastsatteLonnsendringer: {
-        vurderLønnsendringAndelListe: [
+      fastsattUtenInntektsmelding: {
+        andelListe: [
           {
             andelsnr: 2,
             arbeidsinntekt: 15000,

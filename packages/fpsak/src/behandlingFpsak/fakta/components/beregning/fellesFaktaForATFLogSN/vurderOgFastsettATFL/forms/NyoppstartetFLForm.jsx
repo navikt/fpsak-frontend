@@ -143,20 +143,20 @@ NyoppstartetFLFormImpl.transformValues = values => ({
   vurderNyoppstartetFL: { erNyoppstartetFL: values[erNyoppstartetFLField] },
 });
 
-NyoppstartetFLFormImpl.nyOppstartetFLInntekt = (values, tilfeller, vurderFaktaValues) => {
+NyoppstartetFLFormImpl.nyOppstartetFLInntekt = (values, tilfeller, vurderFaktaValues, beregningsgrunnlag) => {
   // Dersom vi har tilfellet VURDER_AT_OG_FL_I_SAMME_ORGANISASJON
   // eller FASTSETT_BESTEBEREGNING_FODENDE_KVINNE vil frilansinntekt tas med når det tilfellet submittes
   if (values[erNyoppstartetFLField] && harIkkeTilfelleSomHandtererInntekt(tilfeller)) {
     if (!vurderFaktaValues.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL)) {
       vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL);
       return {
-        ...FastsettATFLInntektForm.transformValues(values, undefined, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL),
+        ...FastsettATFLInntektForm.transformValues(values, undefined, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL, beregningsgrunnlag),
         faktaOmBeregningTilfeller: vurderFaktaValues.faktaOmBeregningTilfeller,
       };
     }
     if (!vurderFaktaValues.fastsettMaanedsinntektFL) {
       return {
-        ...FastsettATFLInntektForm.transformValues(values, undefined, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL),
+        ...FastsettATFLInntektForm.transformValues(values, undefined, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL, beregningsgrunnlag),
       };
     }
   }

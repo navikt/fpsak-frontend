@@ -1,5 +1,4 @@
-import { getBehandlingFormValues } from 'behandlingFpsak/behandlingForm';
-import { getFaktaOmBeregning } from 'behandlingFpsak/behandlingSelectors';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
 
 export const mottarYtelseFieldPrefix = 'mottarYtelseField';
@@ -8,7 +7,15 @@ export const utledArbeidsforholdFieldName = andel => mottarYtelseFieldPrefix + a
 export const finnFrilansFieldName = () => (mottarYtelseFieldPrefix + frilansSuffix);
 
 
-export const andelsnrMottarYtelseMap = (values, vurderMottarYtelse) => {
+export const skalFastsetteInntektATUtenInntektsmelding = (values, vurderMottarYtelse) => {
+  const atAndelerUtenIM = vurderMottarYtelse && vurderMottarYtelse.arbeidstakerAndelerUtenIM ? vurderMottarYtelse.arbeidstakerAndelerUtenIM : [];
+  return atAndelerUtenIM.map(andel => values[utledArbeidsforholdFieldName(andel)])
+    .find(mottarYtelse => mottarYtelse) !== undefined;
+};
+
+export const frilansMottarYtelse = values => (values[finnFrilansFieldName()]);
+
+export const andelsnrMottarYtelseMap = (values, vurderMottarYtelse, beregningsgrunnlag) => {
   if (!vurderMottarYtelse) {
     return {};
   }
@@ -18,26 +25,16 @@ export const andelsnrMottarYtelseMap = (values, vurderMottarYtelse) => {
     const mottarYtelse = values[utledArbeidsforholdFieldName(andel)];
     mottarYtelseMap[andel.andelsnr] = mottarYtelse;
   });
+  if (!beregningsgrunnlag) {
+    return mottarYtelseMap;
+  }
+  const frilansAndel = beregningsgrunnlag.beregningsgrunnlagPeriode[0]
+    .beregningsgrunnlagPrStatusOgAndel
+    .find(andel => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
+  if (frilansAndel) {
+    mottarYtelseMap[frilansAndel.andelsnr] = frilansMottarYtelse(values);
+  }
   return mottarYtelseMap;
-};
-
-export const skalFastsetteInntektATUtenInntektsmelding = (values, vurderMottarYtelse) => {
-  const atAndelerUtenIM = vurderMottarYtelse && vurderMottarYtelse.arbeidstakerAndelerUtenIM ? vurderMottarYtelse.arbeidstakerAndelerUtenIM : [];
-  return atAndelerUtenIM.map(andel => values[utledArbeidsforholdFieldName(andel)])
-    .find(mottarYtelse => mottarYtelse) !== undefined;
-};
-
-export const mapStateToSkalFastsetteAT = (state, formName) => {
-  const values = getBehandlingFormValues(formName)(state);
-  const faktaOmBeregning = getFaktaOmBeregning(state);
-  return faktaOmBeregning ? skalFastsetteInntektATUtenInntektsmelding(values, faktaOmBeregning.vurderMottarYtelse) : false;
-};
-
-export const frilansMottarYtelse = values => (values[finnFrilansFieldName()]);
-
-export const mapStateToSkalFastsetteFL = (state, formName) => {
-  const values = getBehandlingFormValues(formName)(state);
-  return frilansMottarYtelse(values);
 };
 
 export const harVurdertMottarYtelse = (values, vurderMottarYtelse) => {

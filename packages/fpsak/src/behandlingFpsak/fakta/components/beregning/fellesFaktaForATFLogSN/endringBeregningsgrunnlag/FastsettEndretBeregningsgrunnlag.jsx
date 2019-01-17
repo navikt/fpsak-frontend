@@ -3,38 +3,50 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getEndringBeregningsgrunnlagPerioder, getFaktaOmBeregningTilfellerKoder } from 'behandlingFpsak/behandlingSelectors';
 import EndringBeregningsgrunnlagForm from './EndringBeregningsgrunnlagForm';
-import { harKunTilfellerSomStøtterEndringBG } from './EndretBeregningsgrunnlagUtils';
+import { harKunTilfellerSomStøtterEndringBG, skalViseHelptextForEndretBg } from './EndretBeregningsgrunnlagUtils';
 
 export const FastsettEndretBeregningsgrunnlagImpl = ({
   isAksjonspunktClosed,
   readOnly,
   perioder,
   skalHaEndretInformasjonIHeader,
+  formName,
 }) => (
   <EndringBeregningsgrunnlagForm
     perioder={perioder}
     readOnly={readOnly}
     isAksjonspunktClosed={isAksjonspunktClosed}
     skalHaEndretInformasjonIHeader={skalHaEndretInformasjonIHeader}
+    formName={formName}
   />
 );
 
-FastsettEndretBeregningsgrunnlagImpl.buildInitialValues = (endringBGPerioder, tilfeller) => {
+export const buildValues = (tilfeller, build) => {
   if (!harKunTilfellerSomStøtterEndringBG(tilfeller)) {
     return {};
   }
-  return EndringBeregningsgrunnlagForm
-    .buildInitialValues(endringBGPerioder);
+  return build();
+};
+
+FastsettEndretBeregningsgrunnlagImpl.buildInitialValues = (endringBGPerioder, tilfeller, readOnly) => {
+  const build = () => EndringBeregningsgrunnlagForm
+    .buildInitialValues(endringBGPerioder, readOnly);
+  return buildValues(tilfeller, build);
 };
 
 FastsettEndretBeregningsgrunnlagImpl.transformValues = (values, endringBGPerioder) => EndringBeregningsgrunnlagForm.transformValues(values, endringBGPerioder);
 
-FastsettEndretBeregningsgrunnlagImpl.validate = (values, endringBGPerioder, tilfeller) => {
+export const validateValues = (tilfeller, validateBg) => {
   if (!harKunTilfellerSomStøtterEndringBG(tilfeller)) {
     return {};
   }
-  return EndringBeregningsgrunnlagForm
-    .validate(values, endringBGPerioder);
+  return validateBg();
+};
+
+FastsettEndretBeregningsgrunnlagImpl.validate = (values, endringBGPerioder, tilfeller, faktaOmBeregning, beregningsgrunnlag) => {
+  const validateBg = () => EndringBeregningsgrunnlagForm
+    .validate(values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag);
+  return validateValues(tilfeller, validateBg);
 };
 
 FastsettEndretBeregningsgrunnlagImpl.propTypes = {
@@ -42,13 +54,18 @@ FastsettEndretBeregningsgrunnlagImpl.propTypes = {
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   skalHaEndretInformasjonIHeader: PropTypes.bool.isRequired,
+  formName: PropTypes.string,
+};
+
+FastsettEndretBeregningsgrunnlagImpl.defaultProps = {
+  formName: undefined,
 };
 
 const mapStateToProps = (state) => {
   const tilfeller = getFaktaOmBeregningTilfellerKoder(state);
   const perioder = getEndringBeregningsgrunnlagPerioder(state);
   return ({
-    skalHaEndretInformasjonIHeader: !harKunTilfellerSomStøtterEndringBG(tilfeller),
+    skalHaEndretInformasjonIHeader: !skalViseHelptextForEndretBg(tilfeller),
     perioder: perioder || [],
   });
 };

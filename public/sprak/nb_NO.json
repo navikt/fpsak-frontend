@@ -1190,6 +1190,7 @@
   "BeregningInfoPanel.VurderOgFastsettATFL.ErSokerNyoppstartetFL": "Har søker startet som frilanser i løpet av de siste tre månedene?",
   "BeregningInfoPanel.VurderOgFastsettATFL.ATFLSammeOrgUtenIM": "Søker er arbeidstaker og frilanser i samme organisasjon og det er ikke mottatt inntektsmelding(er).",
   "BeregningInfoPanel.VurderOgFastsettATFL.ATFLSammeOrg": "Søker er arbeidstaker og frilanser i samme organisasjon.",
+  "BeregningInfoPanel.VurderOgFastsettATFL.ATFLSammeOrgFastsettATFLAlleOppdrag": "Søker er arbeidstaker og frilanser i samme organisasjon. Fastsett arbeidsinntekt og samlet frilansinntekt for alle oppdrag.",
   "BeregningInfoPanel.VurderOgFastsettATFL.FastsettFrilansAlleOppdrag": "Fastsett samlet frilansinntekt for alle oppdrag.",
   "BeregningInfoPanel.VurderOgFastsettATFL.FastsettFrilans": "Fastsett frilansinntekt",
   "BeregningInfoPanel.VurderOgFastsettATFL.OgsaNyoppstartetFL": "Har søker også startet som frilanser i løpet av de siste tre månedene?",
