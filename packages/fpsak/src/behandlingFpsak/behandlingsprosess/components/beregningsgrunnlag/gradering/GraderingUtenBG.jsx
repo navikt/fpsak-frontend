@@ -15,6 +15,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer, Image, BorderBox } from '@fpsak-frontend/shared-components';
 import behandleImageURL from '@fpsak-frontend/assets/images/advarsel.svg';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { getAksjonspunkter, getBehandlingVenteArsakKode, getAndelerMedGraderingUtenBG } from 'behandlingFpsak/behandlingSelectors';
@@ -27,15 +28,21 @@ const formName = 'graderingUtenBGForm';
 const begrunnelseFieldName = 'begrunnelse';
 const radioFieldName = 'graderingUtenBGSettPaaVent';
 
+const bestemVisning = (andel) => {
+  if (andel.arbeidsforhold && andel.aktivitetStatus && andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER) {
+    return createVisningsnavnForAktivitet(andel.arbeidsforhold);
+  }
+  return andel.aktivitetStatus && andel.aktivitetStatus.navn ? andel.aktivitetStatus.navn.toLowerCase() : '';
+};
+
 const lagArbeidsgiverString = (andelerMedGraderingUtenBG) => {
   if (!andelerMedGraderingUtenBG || andelerMedGraderingUtenBG.length < 1) {
     return '';
   }
   if (andelerMedGraderingUtenBG.length === 1) {
-    return createVisningsnavnForAktivitet(andelerMedGraderingUtenBG[0].arbeidsforhold);
+    return bestemVisning(andelerMedGraderingUtenBG[0]);
   }
-  const arbeidsgiverVisningsnavn = andelerMedGraderingUtenBG.map(andel => (andel.arbeidsforhold
-    ? createVisningsnavnForAktivitet(andel.arbeidsforhold) : andel.aktivitetStatus.kode));
+  const arbeidsgiverVisningsnavn = andelerMedGraderingUtenBG.map(andel => bestemVisning(andel));
   const sisteNavn = arbeidsgiverVisningsnavn.splice(andelerMedGraderingUtenBG.length - 1);
   const tekst = arbeidsgiverVisningsnavn.join(', ');
   return `${tekst} og ${sisteNavn}`;

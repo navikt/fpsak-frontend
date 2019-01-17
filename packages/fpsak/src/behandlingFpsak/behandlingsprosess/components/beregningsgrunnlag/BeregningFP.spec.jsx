@@ -73,4 +73,21 @@ describe('<BeregningFP>', () => {
     expect(inntektpanel.props().sammenligningsgrunnlag).to.have.equal(100000);
     expect(inntektpanel.props().sammenligningsgrunnlagTekst).to.have.length(2);
   });
+
+  it('skal teste at avvikprosent ikke regnes ut ved avvikpromille null', () => {
+    const wrapper = shallowWithIntl(<UnwrappedForm
+      apCodes={aksjonpukter}
+      readOnly={false}
+      submitCallback={sinon.spy}
+      beregnetAarsinntekt={100000}
+      berGr={beregningsgrunnlag}
+      gjeldendeVilkar={vilkar}
+      relevanteStatuser={{}}
+      avvikpromille={null}
+      aktivitetStatusCodes={[]}
+      readOnlySubmitButton
+    />);
+    const inntektpanel = wrapper.find(InntektsopplysningerPanel);
+    expect(inntektpanel.props().avvik).to.have.equal(undefined);
+  });
 });

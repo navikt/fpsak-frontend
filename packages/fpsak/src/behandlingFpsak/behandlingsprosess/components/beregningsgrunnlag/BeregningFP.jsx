@@ -111,7 +111,7 @@ export const BeregningFPImpl = ({
   sokerHarGraderingPaaAndelUtenBG,
 }) => {
   let avvikProsent;
-  if (beregnetAvvikPromille >= 0) {
+  if (beregnetAvvikPromille !== null && beregnetAvvikPromille !== undefined) {
     avvikProsent = beregnetAvvikPromille / 10;
   }
   if (!berGr) {
