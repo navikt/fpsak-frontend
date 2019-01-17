@@ -1,26 +1,30 @@
 .documentLink {
-   display: flex;
+  display: flex;
 }
 
-
 .keyValuePair {
-   display: inline-block;
+  display: inline-block;
 }
 
 .tilbakekrevingTekst {
-   margin: 5px 0;
+  margin: 5px 0;
 }
 
-.documentLink .dokument {
+.dokumentLenke {
+
+  .dokumentIkon {
     background-image: url('@fpsak-frontend/assets/images/dokument_filled.svg');
     display: inline-block;
     height: 24px;
+    margin-right: 6px;
+    vertical-align: middle;
     width: 24px;
-}
+  }
 
-.documentLink:hover .dokument {
-    background-image: url('@fpsak-frontend/assets/images/dokument_outline.svg');
-    display: inline-block;
-    height: 24px;
-    width: 24px;
+  &:hover {
+
+    .dokumentIkon {
+      background-image: url('@fpsak-frontend/assets/images/dokument_outline.svg');
+    }
+  }
 }

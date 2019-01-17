@@ -15,10 +15,7 @@ import {
   findResultatText,
 } from './historikkUtils';
 import BubbleText from './bubbleText';
-
-import styles from './historikkMalType.less';
-
-const DOCUMENT_SERVER_URL = '/fpsak/api/dokument/hent-dokument';
+import HistorikkDokumentLenke from './HistorikkDokumentLenke';
 
 const HistorikkMalType7 = ({
   historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, saksNr,
@@ -85,17 +82,12 @@ const HistorikkMalType7 = ({
             {historikkinnslagDel.begrunnelse && <BubbleText bodyText={historikkinnslagDel.begrunnelse.navn} className="snakkeboble-panel__tekst" />}
             {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} className="snakkeboble-panel__tekst" />}
             <div>
-              {dokumentLinks && dokumentLinks.map(dokumentLink => (
-                <a
-                  key={dokumentLink.url}
-                  className={styles.documentLink}
-                  href={`${DOCUMENT_SERVER_URL}?saksnummer=${saksNr}&journalpostId=${dokumentLink.journalpostId}&dokumentId=${dokumentLink.dokumentId}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i className={styles.dokument} title={dokumentLink.tag} alt={dokumentLink.tag} />
-                  {dokumentLink.tag}
-                </a>
+              {dokumentLinks && dokumentLinks.map(dokumentLenke => (
+                <HistorikkDokumentLenke
+                  key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
+                  dokumentLenke={dokumentLenke}
+                  saksNr={saksNr}
+                />
               ))}
             </div>
           </div>

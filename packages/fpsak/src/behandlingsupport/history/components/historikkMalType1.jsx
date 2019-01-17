@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinnslagDelPropType';
 import { Element } from 'nav-frontend-typografi';
-import styles from './historikkMalType.less';
+
 import BubbleText from './bubbleText';
 import { findHendelseText } from './historikkUtils';
+import HistorikkDokumentLenke from './HistorikkDokumentLenke';
 
 const HistorikkMalType1 = ({
   historikkinnslagDeler, dokumentLinks, saksNr,
@@ -24,17 +25,12 @@ const HistorikkMalType1 = ({
     {historikkinnslagDeler[0].begrunnelseFritekst
     && <BubbleText bodyText={historikkinnslagDeler[0].begrunnelseFritekst} className="snakkeboble-panel__tekst" />}
     <div>
-      {dokumentLinks && dokumentLinks.map(dokumentLink => (
-        <a
-          key={`${dokumentLink.tag}@${dokumentLink.url}`}
-          className={styles.documentLink}
-          href={`/fpsak/api/dokument/hent-dokument?saksnummer=${saksNr}&journalpostId=${dokumentLink.journalpostId}&dokumentId=${dokumentLink.dokumentId}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <i className={styles.dokument} title={dokumentLink.tag} alt={dokumentLink.tag} />
-          {dokumentLink.tag}
-        </a>
+      {dokumentLinks && dokumentLinks.map(dokumentLenke => (
+        <HistorikkDokumentLenke
+          key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
+          dokumentLenke={dokumentLenke}
+          saksNr={saksNr}
+        />
       ))}
     </div>
   </div>

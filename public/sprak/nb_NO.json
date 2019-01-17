@@ -917,6 +917,7 @@
   "StatusForBorgerFaktaPanel.HarLovligOpphold": "Søker har lovlig opphold",
   "StatusForBorgerFaktaPanel.HarIkkeLovligOpphold": "Søker har <b>ikke</b> lovlig opphold",
 
+  "Historikk.Utgått": "{tag} (utgått)",
   "Historikk.Template.5.ChangedFromTo": "<b>{fieldName}</b> endret fra {fromValue} til <b>{toValue}</b>",
   "Historikk.Template.5.FieldSetTo": "<b>{fieldName}</b> er satt til <b>{value}</b>.",
   "Historikk.Template.5.AntallBarn": "<b>Antall barn</b> som brukes i behandlingen: <b>{antallBarn}</b>",
