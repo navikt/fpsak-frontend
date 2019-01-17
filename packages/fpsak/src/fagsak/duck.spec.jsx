@@ -3,7 +3,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 
-import fpsakApi, { FpsakApiKeys } from 'data/fpsakApi';
+import fpsakApi, { FpsakApiKeys, reduxRestApi } from 'data/fpsakApi';
 import {
   RESET_FAGSAKER, fagsakReducer, setSelectedSaksnummer, resetFagsakContext, doNotResetWhitelist, updateFagsakInfo,
   fetchVedtaksbrevPreview, updateBehandlinger, fetchFagsakInfo,
@@ -17,7 +17,7 @@ describe('Fagsak-reducer', () => {
   let mockAxios;
 
   before(() => {
-    mockAxios = new MockAdapter(fpsakApi.getAxiosHttpClientApi());
+    mockAxios = new MockAdapter(reduxRestApi.getHttpClientApi().axiosInstance);
   });
 
   afterEach(() => {

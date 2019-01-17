@@ -1,11 +1,12 @@
 /* @flow */
 import { combineReducers } from 'redux';
+
 import { RequestApi } from '@fpsak-frontend/rest-api';
 
 import ReduxEvents from './ReduxEvents';
 import RestDuck from './RestDuck';
 
-class ReduxRestApi {
+class ReduxApiCreator {
   ducks: RestDuck[]
 
   constructor(requestApi: RequestApi, getRestApiState: (state: any) => any, reduxEvents: ReduxEvents) {
@@ -13,7 +14,7 @@ class ReduxRestApi {
     this.ducks = endpointNames.map(endpointName => new RestDuck(requestApi.getRequestRunner(endpointName), getRestApiState, reduxEvents));
   }
 
-  createReducer = () => {
+  createReducer = (): any => {
     const reducers = this.ducks
       .map(duck => ({ [duck.name]: duck.reducer }))
       .reduce((a, b) => ({ ...a, ...b }), {});
@@ -36,4 +37,4 @@ class ReduxRestApi {
   getEndpointState = (endpointName: string) => this.getEndpoint(endpointName).stateSelector
 }
 
-export default ReduxRestApi;
+export default ReduxApiCreator;

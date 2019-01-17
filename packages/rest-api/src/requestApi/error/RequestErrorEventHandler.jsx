@@ -41,7 +41,7 @@ class RequestErrorEventHandler {
     this.notify = notificationEmitter;
   }
 
-  handleError = async (error: ErrorFlowType) => {
+  handleError = async (error: ErrorFlowType | TimeoutError) => {
     if (error instanceof TimeoutError) {
       this.notify(EventType.POLLING_TIMEOUT, { location: error.location });
       return;
@@ -66,7 +66,7 @@ class RequestErrorEventHandler {
     }
   };
 
-  getFormattedData = data => (isString(data) ? { message: data } : data);
+  getFormattedData = (data: string | Object) => (isString(data) ? { message: data } : data);
 
   findErrorData = (response: ErrorResponse) => (response.data ? response.data : response.statusText);
 

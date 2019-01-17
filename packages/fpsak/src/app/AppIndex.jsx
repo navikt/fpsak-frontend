@@ -111,8 +111,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  showCrashMessage: errorHandler.showCrashMessage,
-  removeErrorMessage: errorHandler.removeErrorMessage,
+  showCrashMessage: errorHandler.getCrashMessageActionCreator(),
+  removeErrorMessage: errorHandler.getRemoveErrorMessageActionCreator(),
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(hot(module)(AppIndex)));

@@ -79,25 +79,6 @@ const getAsync = axiosInstance => (url: string, params: any) => get(axiosInstanc
 const postAsync = axiosInstance => (url: string, params: any) => post(axiosInstance)(url, params);
 const putAsync = axiosInstance => (url: string, params: any) => put(axiosInstance)(url, params);
 
-const getMethodName = allRestMethods => (restMethod: any) => {
-  switch (restMethod) {
-    case allRestMethods.get:
-    case allRestMethods.getBlob:
-    case allRestMethods.getAsync:
-      return 'GET';
-    case allRestMethods.post:
-    case allRestMethods.postBlob:
-    case allRestMethods.postAndOpenBlob:
-    case allRestMethods.postAsync:
-      return 'POST';
-    case allRestMethods.put:
-    case allRestMethods.putAsync:
-      return 'PUT';
-    default:
-      return '';
-  }
-};
-
 const isAsyncRestMethod = allRestMethods => (restMethod: any) => restMethod === allRestMethods.getAsync
 || restMethod === allRestMethods.postAsync || restMethod === allRestMethods.putAsync;
 
@@ -116,7 +97,6 @@ const initRestMethods = (axiosInstance: any) => {
 
   return {
     ...restMethods,
-    getMethodName: getMethodName(restMethods),
     isAsyncRestMethod: isAsyncRestMethod(restMethods),
   };
 };

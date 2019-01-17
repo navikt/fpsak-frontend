@@ -1,5 +1,5 @@
 /* @flow */
-import type { RequestConfig } from '../RequestConfigFlowType';
+import RequestConfig from '../RequestConfig';
 
 class RestApiRequestContext {
   endpointName: string

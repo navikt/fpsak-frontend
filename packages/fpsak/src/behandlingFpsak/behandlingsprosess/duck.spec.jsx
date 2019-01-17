@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import { withoutRestActions, ignoreRestErrors } from '@fpsak-frontend/assets/testHelpers//data-test-helper';
 
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import fpsakBehandlingApi from '../data/fpsakBehandlingApi';
+import fpsakBehandlingApi, { reduxRestApi } from '../data/fpsakBehandlingApi';
 import {
   behandlingsprosessReducer, resetBehandlingspunkter, setSelectedBehandlingspunktNavn,
   resolveProsessAksjonspunkter, overrideProsessAksjonspunkter,
@@ -18,7 +18,7 @@ describe('Behandlingsprosess-reducer', () => {
   let mockAxios;
 
   before(() => {
-    mockAxios = new MockAdapter(fpsakBehandlingApi.getAxiosHttpClientApi());
+    mockAxios = new MockAdapter(reduxRestApi.getHttpClientApi().axiosInstance);
   });
 
   afterEach(() => {

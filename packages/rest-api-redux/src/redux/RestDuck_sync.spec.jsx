@@ -7,7 +7,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import moment from 'moment';
 
-import { getAxiosHttpClientApi, RequestApi } from '@fpsak-frontend/rest-api';
+import { getAxiosHttpClientApi, RequestApi, RequestConfig } from '@fpsak-frontend/rest-api';
 
 import ReduxEvents from './ReduxEvents';
 import RestDuck from './RestDuck';
@@ -32,6 +32,7 @@ type Store = {
   getActions: () => Action[],
 }
 
+// $FlowFixMe
 const createStore = (): Store => mockStore();
 
 describe('RestDuck (sync)', () => {
@@ -69,12 +70,7 @@ describe('RestDuck (sync)', () => {
       });
     const store = createStore();
 
-    const requestConfig = {
-      path: ressursEndpoint,
-      name: 'ressurs',
-      restMethod: httpClientApi.get,
-      config: {},
-    };
+    const requestConfig = new RequestConfig('ressurs', ressursEndpoint);
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
     const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
@@ -114,12 +110,7 @@ describe('RestDuck (sync)', () => {
       .reply(404, 'Resource not found');
     const store = createStore();
 
-    const requestConfig = {
-      path: ressursEndpoint,
-      name: 'ressurs',
-      restMethod: httpClientApi.get,
-      config: {},
-    };
+    const requestConfig = new RequestConfig('ressurs', ressursEndpoint);
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
     const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
@@ -162,12 +153,7 @@ describe('RestDuck (sync)', () => {
       });
     const store = createStore();
 
-    const requestConfig = {
-      path: ressursEndpoint,
-      name: 'ressurs',
-      restMethod: httpClientApi.get,
-      config: {},
-    };
+    const requestConfig = new RequestConfig('ressurs', ressursEndpoint);
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
     const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
@@ -198,12 +184,7 @@ describe('RestDuck (sync)', () => {
       });
     const store = createStore();
 
-    const requestConfig = {
-      path: ressursEndpoint,
-      name: 'ressurs',
-      restMethod: httpClientApi.get,
-      config: {},
-    };
+    const requestConfig = new RequestConfig('ressurs', ressursEndpoint);
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
     const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
@@ -226,7 +207,7 @@ describe('RestDuck (sync)', () => {
       });
   });
 
-  it('selctors skal hente ut state', () => {
+  it('selectors skal hente ut state', () => {
     mockAxios
       .onGet(ressursEndpointIncludingContextPath)
       .reply(200, {
@@ -235,12 +216,7 @@ describe('RestDuck (sync)', () => {
     const store = createStore();
 
     const getApiContext = state => state.dataContext;
-    const requestConfig = {
-      path: ressursEndpoint,
-      name: 'ressurs',
-      restMethod: httpClientApi.get,
-      config: {},
-    };
+    const requestConfig = new RequestConfig('ressurs', ressursEndpoint);
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
     const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), getApiContext, reduxEvents);

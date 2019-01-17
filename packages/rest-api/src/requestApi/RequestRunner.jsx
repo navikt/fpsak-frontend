@@ -2,7 +2,30 @@
 import RequestProcess from './RequestProcess';
 import NotificationMapper from './NotificationMapper';
 import RestApiRequestContext from './RestApiRequestContext';
+import { RequestType } from '../RequestConfig';
 import type { HttpClientApi } from '../HttpClientApiFlowType';
+
+const getMethod = (httpClientApi: HttpClientApi, restMethod: string) => {
+  if (restMethod === RequestType.GET) {
+    return httpClientApi.get;
+  }
+  if (restMethod === RequestType.GET_ASYNC) {
+    return httpClientApi.getAsync;
+  }
+  if (restMethod === RequestType.POST) {
+    return httpClientApi.post;
+  }
+  if (restMethod === RequestType.POST_ASYNC) {
+    return httpClientApi.postAsync;
+  }
+  if (restMethod === RequestType.PUT) {
+    return httpClientApi.put;
+  }
+  if (restMethod === RequestType.PUT_ASYNC) {
+    return httpClientApi.putAsync;
+  }
+  return httpClientApi.postAndOpenBlob;
+};
 
 /**
  * RequestRunner
@@ -24,23 +47,17 @@ class RequestRunner {
     this.context = context;
   }
 
-  replaceContext = (context: RestApiRequestContext) => {
-    this.context = context;
-  }
-
-  getContext = () => this.context;
-
-  getConfig = () => this.getContext().getConfig();
+  getConfig = () => this.context.getConfig();
 
   getName = (): string => this.getConfig().name
 
-  getRestMethod = () => this.getConfig().restMethod
+  getRestMethod = () => getMethod(this.httpClientApi, this.getConfig().restMethod)
 
   getPath = (): string => `${this.context.getHostname()}/${this.context.getContextPath()}${this.getConfig().path}`
 
-  getRestMethodName = (): string => this.httpClientApi.getMethodName(this.getConfig().restMethod)
+  getRestMethodName = (): string => this.getConfig().restMethod
 
-  isAsyncRestMethod = (): boolean => this.httpClientApi.isAsyncRestMethod(this.getConfig().restMethod)
+  isAsyncRestMethod = (): boolean => this.httpClientApi.isAsyncRestMethod(this.getRestMethod())
 
   stopProcess = () => {
     if (this.process) {

@@ -1,5 +1,5 @@
 import {
-  getHttpClientApi, getRestApiBuilder, initReduxRestApi, ReduxEvents,
+  RestApiConfigBuilder, ReduxRestApiBuilder, ReduxEvents,
 } from '@fpsak-frontend/rest-api-redux';
 import errorHandler from '@fpsak-frontend/error-api-redux';
 
@@ -18,8 +18,7 @@ export const BehandlingFpsakApiKeys = {
   SAVE_REOPEN_KLAGE_VURDERING: 'SAVE_REOPEN_KLAGE_VURDERING',
 };
 
-const httpClientApi = getHttpClientApi();
-const endpoints = getRestApiBuilder(httpClientApi)
+const endpoints = new RestApiConfigBuilder()
 /* /api */
 
   /* /api/behandlinger */
@@ -40,12 +39,16 @@ const endpoints = getRestApiBuilder(httpClientApi)
   .withPostAndOpenBlob('/api/brev/forhandsvis-klage', BehandlingFpsakApiKeys.PREVIEW_MESSAGE_KLAGE)
   .build();
 
-const reduxEvents = new ReduxEvents()
-  .withErrorActionCreator(errorHandler.getErrorActionCreator())
-  .withPollingMessageActionCreator(setRequestPollingMessage);
-
 const reducerName = 'dataContextFpsakBehandling';
-const fpsakBehandlingApi = initReduxRestApi(httpClientApi, 'fpsak', endpoints, reducerName, reduxEvents);
-reducerRegistry.register(reducerName, fpsakBehandlingApi.getDataReducer());
 
+export const reduxRestApi = new ReduxRestApiBuilder(endpoints, reducerName)
+  .withContextPath('fpsak')
+  .withReduxEvents(new ReduxEvents()
+    .withErrorActionCreator(errorHandler.getErrorActionCreator())
+    .withPollingMessageActionCreator(setRequestPollingMessage))
+  .build();
+
+reducerRegistry.register(reducerName, reduxRestApi.getDataReducer());
+
+const fpsakBehandlingApi = reduxRestApi.getEndpointApi();
 export default fpsakBehandlingApi;

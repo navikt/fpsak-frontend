@@ -6,6 +6,7 @@ import RestApiRequestContext from './RestApiRequestContext';
 import NotificationMapper from './NotificationMapper';
 import asyncPollingStatus from './asyncPollingStatus';
 import RequestRunner from './RequestRunner';
+import RequestConfig from '../RequestConfig';
 
 describe('RequestRunner', () => {
   it('skal sette opp korrekt request-runner', () => {
@@ -15,12 +16,7 @@ describe('RequestRunner', () => {
       isAsyncRestMethod: () => false,
     };
 
-    const requestConfig = {
-      path: '/behandling',
-      name: 'BEHANDLING',
-      restMethod: httpClientMock.get,
-      config: {},
-    };
+    const requestConfig = new RequestConfig('BEHANDLING', '/behandling');
 
     const context = new RestApiRequestContext('fpsak', requestConfig);
     const runner = new RequestRunner(httpClientMock, context);
@@ -28,7 +24,6 @@ describe('RequestRunner', () => {
     expect(runner.httpClientApi).to.eql(httpClientMock);
     expect(runner.context.config).to.eql(requestConfig);
     expect(runner.getName()).to.eql(requestConfig.name);
-    expect(runner.getRestMethod()).to.eql(requestConfig.restMethod);
     expect(runner.getPath()).to.eql(`/fpsak${requestConfig.path}`);
     expect(runner.getRestMethodName()).to.eql('GET');
     expect(runner.isAsyncRestMethod()).is.false;
@@ -39,12 +34,7 @@ describe('RequestRunner', () => {
       get: () => 'data',
     };
 
-    const requestConfig = {
-      path: 'behandling',
-      name: 'BEHANDLING',
-      restMethod: httpClientMock.get,
-      config: {},
-    };
+    const requestConfig = new RequestConfig('BEHANDLING', '/behandling');
     const params = {
       behandlingId: 1,
     };
@@ -83,14 +73,10 @@ describe('RequestRunner', () => {
       }),
     };
 
-    const requestConfig = {
-      path: 'behandling',
-      name: 'BEHANDLING',
-      restMethod: httpClientMock.getAsync,
-      config: {
-        fetchLinkDataAutomatically: true,
-      },
-    };
+    const requestConfig = new RequestConfig('BEHANDLING', '/behandling', {
+      fetchLinkDataAutomatically: true,
+    }).withGetAsyncMethod();
+
     const params = {
       behandlingId: 1,
     };

@@ -1,8 +1,12 @@
 /* @flow */
-import type { RequestConfig } from '@fpsak-frontend/rest-api/src/RequestConfigFlowType';
+import { createSelector } from 'reselect';
+
+import RequestConfig from '@fpsak-frontend/rest-api';
+
+import ReduxApiCreator from './ReduxApiCreator';
 
 class EndpointOperations {
-  restApi: any;
+  reduxApiCreator: ReduxApiCreator;
 
   contextPath: string
 
@@ -10,32 +14,34 @@ class EndpointOperations {
 
   path: string
 
-  constructor(restApi: any, contextPath: string, config: RequestConfig) {
-    this.restApi = restApi;
+  constructor(reduxApiCreator: ReduxApiCreator, contextPath: string, config: RequestConfig) {
+    this.reduxApiCreator = reduxApiCreator;
     this.contextPath = contextPath;
     this.name = config.name;
     this.path = config.path ? `/${contextPath}${config.path}` : '';
   }
 
-  makeRestApiRequest = () => this.restApi.makeRestApiRequest(this.name);
+  makeRestApiRequest = () => this.reduxApiCreator.makeRequestActionCreator(this.name);
 
-  cancelRestApiRequest = () => this.restApi.cancelRestApiRequest(this.name);
+  cancelRestApiRequest = () => this.reduxApiCreator.cancelRequest(this.name);
 
-  resetRestApi = () => this.restApi.resetRestApi(this.name);
+  resetRestApi = () => this.reduxApiCreator.makeResetActionCreator(this.name);
 
-  setDataRestApi = () => this.restApi.setDataRestApi(this.name);
+  setDataRestApi = () => this.reduxApiCreator.setDataActionCreator(this.name);
 
-  getRestApiData = () => this.restApi.getRestApiData(this.name);
+  getRestApiState = (): any => this.reduxApiCreator.getEndpointState(this.name);
 
-  getRestApiMeta =() => this.restApi.getRestApiMeta(this.name);
+  getRestApiData = (): any => createSelector([this.getRestApiState()], apiState => apiState.data);
 
-  getRestApiError = () => this.restApi.getRestApiError(this.name);
+  getRestApiMeta = (): any => createSelector([this.getRestApiState()], apiState => apiState.meta);
 
-  getRestApiStarted = () => this.restApi.getRestApiStarted(this.name);
+  getRestApiError = (): any => createSelector([this.getRestApiState()], apiState => apiState.error)
 
-  getRestApiFinished = () => this.restApi.getRestApiFinished(this.name);
+  getRestApiStarted = (): any => createSelector([this.getRestApiState()], apiState => apiState.started);
 
-  getRestApiPollingTimeout = () => this.restApi.getRestApiPollingTimeout(this.name);
+  getRestApiFinished = (): any => createSelector([this.getRestApiState()], apiState => apiState.finished);
+
+  getRestApiPollingTimeout = (): any => createSelector([this.getRestApiState()], apiState => apiState.pollingTimeout);
 }
 
 export default EndpointOperations;

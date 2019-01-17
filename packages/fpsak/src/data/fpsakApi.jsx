@@ -1,5 +1,5 @@
 import {
-  getHttpClientApi, getRestApiBuilder, initReduxRestApi, ReduxEvents,
+  RestApiConfigBuilder, ReduxRestApiBuilder, ReduxEvents,
 } from '@fpsak-frontend/rest-api-redux';
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import { setRequestPollingMessage } from 'app/pollingMessageDuck';
@@ -38,8 +38,7 @@ export const FpsakApiKeys = {
   AKTOER_INFO: 'AKTOER_INFO',
 };
 
-const httpClientApi = getHttpClientApi();
-const endpoints = getRestApiBuilder(httpClientApi)
+const endpoints = new RestApiConfigBuilder()
 /* /api */
 
   /* /api/fagsak */
@@ -100,12 +99,16 @@ const endpoints = getRestApiBuilder(httpClientApi)
   .withPost('/api/feature-toggle', FpsakApiKeys.FEATURE_TOGGLE)
   .build();
 
-const reduxEvents = new ReduxEvents()
-  .withErrorActionCreator(errorHandler.getErrorActionCreator())
-  .withPollingMessageActionCreator(setRequestPollingMessage);
-
 const reducerName = 'dataContext';
-const fpsakApi = initReduxRestApi(httpClientApi, 'fpsak', endpoints, reducerName, reduxEvents);
-reducerRegistry.register(reducerName, fpsakApi.getDataReducer());
 
+export const reduxRestApi = new ReduxRestApiBuilder(endpoints, reducerName)
+  .withContextPath('fpsak')
+  .withReduxEvents(new ReduxEvents()
+    .withErrorActionCreator(errorHandler.getErrorActionCreator())
+    .withPollingMessageActionCreator(setRequestPollingMessage))
+  .build();
+
+reducerRegistry.register(reducerName, reduxRestApi.getDataReducer());
+
+const fpsakApi = reduxRestApi.getEndpointApi();
 export default fpsakApi;

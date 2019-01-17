@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import fpsakApi from 'data/fpsakApi';
+import fpsakApi, { reduxRestApi } from 'data/fpsakApi';
 import {
   behandlingMenuReducer, setHasSubmittedPaVentForm, createNewForstegangsbehandling, openBehandlingForChanges,
   resetBehandlingMenuData,
@@ -18,7 +18,7 @@ describe('BehandlingMenu-reducer', () => {
   let mockAxios;
 
   before(() => {
-    mockAxios = new MockAdapter(fpsakApi.getAxiosHttpClientApi());
+    mockAxios = new MockAdapter(reduxRestApi.getHttpClientApi().axiosInstance);
   });
 
   afterEach(() => {

@@ -1,85 +1,49 @@
 /* @flow */
 import type { RequestAdditionalConfig } from './RequestAdditionalConfigFlowType';
-import type { HttpClientApi } from './HttpClientApiFlowType';
-import type { RequestConfig } from './RequestConfigFlowType';
+import RequestConfig from './RequestConfig';
+
+const createConfigWithPathAndConfig = (name, path, config) => new RequestConfig(name, path, config);
 
 /**
- * maxPollingLimit: Maksimum antall ganger en skal forsøke å polle når en venter på ressurs (long polling). Kun aktuell ved metodene som inkluderer "Async".
- * fetchLinkDataAutomatically: Når satt til true blir "links" i en respons utført automatisk og resultatene fra desse kallene blir aggregert til en respons.
- * addLinkDataToArray: Når satt til true blir data hentet fra "links" lagt til i samme array (i responsen). Er kun aktuell når fetchLinkDataAutomatically=true.
+ * RestApiConfigBuilder
+ *
+ * Brukes for å sette opp server-endepunkter.
  */
-const defaultConfig = {
-  maxPollingLimit: undefined,
-  fetchLinkDataAutomatically: true,
-  addLinkDataToArray: false,
-};
-const getConfig = (config = {}) => ({
-  ...defaultConfig,
-  ...config,
-});
-
 class RestApiConfigBuilder {
-  endpoints = [];
-
-  httpClientApi: HttpClientApi;
-
-  constructor(httpClientApi: HttpClientApi) {
-    this.httpClientApi = httpClientApi;
-  }
+  endpoints: RequestConfig[] = [];
 
   withGet(path: string, name: string, config?: RequestAdditionalConfig) {
-    this.endpoints.push({
-      path, name, restMethod: this.httpClientApi.get, config: getConfig(config),
-    });
+    this.endpoints.push(createConfigWithPathAndConfig(name, path, config).withGetMethod());
     return this;
   }
 
   withAsyncGet(path: string, name: string, config?: RequestAdditionalConfig) {
-    this.endpoints.push({
-      path, name, restMethod: this.httpClientApi.getAsync, config: getConfig(config),
-    });
+    this.endpoints.push(createConfigWithPathAndConfig(name, path, config).withGetAsyncMethod());
     return this;
   }
 
   withPost(path: string, name: string, config?: RequestAdditionalConfig) {
-    this.endpoints.push({
-      path, name, restMethod: this.httpClientApi.post, config: getConfig(config),
-    });
+    this.endpoints.push(createConfigWithPathAndConfig(name, path, config).withPostMethod());
     return this;
   }
 
   withAsyncPost(path: string, name: string, config?: RequestAdditionalConfig) {
-    this.endpoints.push({
-      path, name, restMethod: this.httpClientApi.postAsync, config: getConfig(config),
-    });
+    this.endpoints.push(createConfigWithPathAndConfig(name, path, config).withPostAsyncMethod());
     return this;
   }
 
   withPut(path: string, name: string, config?: RequestAdditionalConfig) {
-    this.endpoints.push({
-      path, name, restMethod: this.httpClientApi.put, config: getConfig(config),
-    });
+    this.endpoints.push(createConfigWithPathAndConfig(name, path, config).withPutMethod());
     return this;
   }
 
   withAsyncPut(path: string, name: string, config?: RequestAdditionalConfig) {
-    this.endpoints.push({
-      path, name, restMethod: this.httpClientApi.putAsync, config: getConfig(config),
-    });
+    this.endpoints.push(createConfigWithPathAndConfig(name, path, config).withPutAsyncMethod());
     return this;
   }
 
   withPostAndOpenBlob(path: string, name: string, config?: RequestAdditionalConfig) {
-    this.endpoints.push({
-      path, name, restMethod: this.httpClientApi.postAndOpenBlob, config: getConfig(config),
-    });
-    return this;
-  }
-
-  withKeyName(name: string, config?: RequestAdditionalConfig) {
-    this.endpoints.push({
-      name, config: getConfig(config),
-    });
+    this.endpoints.push(createConfigWithPathAndConfig(name, path, config).withPostAndOpenBlob());
     return this;
   }
 
