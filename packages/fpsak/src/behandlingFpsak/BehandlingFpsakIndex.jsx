@@ -160,7 +160,8 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
   ...dispatchProps,
   ...ownProps,
   handleOnHoldSubmit: (formData) => {
-    const { behandlingIdentifier, behandlingId, behandlingVersjon } = stateProps;
+    const { behandlingId } = ownProps;
+    const { behandlingIdentifier, behandlingVersjon } = stateProps;
     return dispatchProps.updateOnHold({ ...formData, behandlingId, behandlingVersjon }, behandlingIdentifier)
       .then(() => {
         dispatchProps.setHasShownBehandlingPaVent();
