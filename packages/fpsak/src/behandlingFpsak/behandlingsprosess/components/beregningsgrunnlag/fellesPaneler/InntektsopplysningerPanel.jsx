@@ -62,7 +62,7 @@ const InntektsopplysningerPanel = ({
       )
       }
     </Row>
-    { avvik !== undefined
+    { avvik !== undefined && avvik !== null
     && (
       <Row>
         <Column xs="12" className={styles.bottomText}>

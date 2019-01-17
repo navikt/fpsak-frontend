@@ -22,35 +22,51 @@ const mockAksjonspunktMedKodeOgStatus = (apKode, status) => ({
 
 });
 
+const atAndelEn = {
+  aktivitetStatus: {
+    kode: aktivitetStatus.ARBEIDSTAKER,
+    navn: 'Arbeidstaker',
+  },
+  arbeidsforhold: {
+    arbeidsgiverNavn: 'arbeidsgiver',
+    arbeidsgiverId: '123',
+  },
+  andelsnr: 1,
+};
 
-const arbeidsforhold = [
-  {
-    aktivitetStatus: {
-      kode: aktivitetStatus.ARBEIDSTAKER,
-    },
-    arbeidsforhold: {
-      arbeidsgiverNavn: 'arbeidsgiver',
-      arbeidsgiverId: '123',
-    },
-    andelsnr: 1,
+const atAndelTo = {
+  aktivitetStatus: {
+    kode: aktivitetStatus.ARBEIDSTAKER,
+    navn: 'Arbeidstaker',
   },
-  {
-    aktivitetStatus: {
-      kode: aktivitetStatus.ARBEIDSTAKER,
-    },
-    arbeidsforhold: {
-      arbeidsgiverNavn: 'arbeidsgiver',
-      arbeidsgiverId: '456',
-    },
-    andelsnr: 2,
+  arbeidsforhold: {
+    arbeidsgiverNavn: 'arbeidsgiver',
+    arbeidsgiverId: '456',
   },
-];
+  andelsnr: 2,
+};
+
+const snAndel = {
+  aktivitetStatus: {
+    kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+    navn: 'Selvstendig næringsdrivende',
+  },
+  andelsnr: 3,
+};
+
+const flAndel = {
+  aktivitetStatus: {
+    kode: aktivitetStatus.FRILANSER,
+    navn: 'Frilanser',
+  },
+  andelsnr: 4,
+};
 
 describe('<GraderingUtenBG>', () => {
   it('skal teste at komponent vises riktig gitt en liste arbeidsforhold', () => {
     const wrapper = shallowWithIntl(<UnwrappedForm
       readOnly={false}
-      andelerMedGraderingUtenBG={arbeidsforhold}
+      andelerMedGraderingUtenBG={[atAndelEn, atAndelTo]}
       submitCallback={sinon.spy()}
       aksjonspunkt={mockAksjonspunktMedKodeOgStatus('5050', 'OPPR')}
       {...reduxFormPropsMock}
@@ -69,6 +85,30 @@ describe('<GraderingUtenBG>', () => {
     const element = wrapper.find(Element);
     expect(element).to.have.length(1);
   });
+
+  it('skal teste at komponent vises riktig gitt en liste arbeidsforhold der et eller flere er sn / fl', () => {
+    const wrapper = shallowWithIntl(<UnwrappedForm
+      readOnly={false}
+      andelerMedGraderingUtenBG={[atAndelEn, snAndel, flAndel]}
+      submitCallback={sinon.spy()}
+      aksjonspunkt={mockAksjonspunktMedKodeOgStatus('5050', 'OPPR')}
+      {...reduxFormPropsMock}
+    />);
+    const radioOption = wrapper.find(RadioOption);
+    expect(radioOption).to.have.length(2);
+    const textfield = wrapper.find(TextAreaField);
+    expect(textfield).to.have.length(1);
+    const button = wrapper.find(BehandlingspunktSubmitButton);
+    expect(button).to.have.length(1);
+    const normaltekst = wrapper.find(Normaltekst);
+    expect(normaltekst).to.have.length(1);
+    const formattedmsg = wrapper.find(FormattedMessage);
+    expect(formattedmsg).to.have.length(2);
+    expect(wrapper.find(FormattedMessage).at(1).prop('values')).to.eql({ arbeidsforholdTekst: 'arbeidsgiver (123), selvstendig næringsdrivende og frilanser' });
+    const element = wrapper.find(Element);
+    expect(element).to.have.length(1);
+  });
+
 
   it('skal teste at komponent bygger korrekte initial values dersom aksjonspunktet ikke finnes', () => {
     const expectedInitialValues = undefined;
