@@ -9,6 +9,25 @@ import PersonNyttEllerErstattArbeidsforholdPanel from './PersonNyttEllerErstattA
 import { PersonArbeidsforholdDetailForm, showBegrunnelse } from './PersonArbeidsforholdDetailForm';
 
 describe('<PersonArbeidsforholdDetailForm>', () => {
+  const arbeidsforhold = {
+    id: '1',
+    arbeidsforholdId: '1231-2345',
+    navn: 'Svendsen Eksos',
+    arbeidsgiverIdentifikator: '1234567',
+    arbeidsgiverIdentifiktorGUI: '1234567',
+    fomDato: '2018-01-01',
+    tomDato: '2018-10-10',
+    kilde: {
+      kode: 'INNTEKT',
+      navn: '',
+    },
+    mottattDatoInntektsmelding: undefined,
+    brukArbeidsforholdet: true,
+    erNyttArbeidsforhold: undefined,
+    erstatterArbeidsforholdId: undefined,
+    tilVurdering: true,
+  };
+
   it('skal vise radioknapper for om en vil fortsette behandling eller ikke når behandling er i bruk og inntektmelding ikke er mottatt', () => {
     const wrapper = shallowWithIntl(<PersonArbeidsforholdDetailForm
       {...reduxFormPropsMock}
@@ -20,6 +39,8 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       harErstattetEttEllerFlere
       readOnly={false}
       vurderOmSkalErstattes={false}
+      isAllowedToContinueWithoutInntekstmelding={false}
+      arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -41,6 +62,8 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       harErstattetEttEllerFlere
       readOnly={false}
       vurderOmSkalErstattes={false}
+      isAllowedToContinueWithoutInntekstmelding={false}
+      arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -62,6 +85,8 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       harErstattetEttEllerFlere
       readOnly={false}
       vurderOmSkalErstattes={false}
+      isAllowedToContinueWithoutInntekstmelding={false}
+      arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -83,6 +108,8 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       harErstattetEttEllerFlere
       readOnly={false}
       vurderOmSkalErstattes={false}
+      isAllowedToContinueWithoutInntekstmelding={false}
+      arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -104,6 +131,8 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       harErstattetEttEllerFlere
       readOnly={false}
       vurderOmSkalErstattes={false}
+      isAllowedToContinueWithoutInntekstmelding={false}
+      arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -124,6 +153,8 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       harErstattetEttEllerFlere={false}
       readOnly={false}
       vurderOmSkalErstattes
+      isAllowedToContinueWithoutInntekstmelding={false}
+      arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [{ id: 2 }],
@@ -145,6 +176,8 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       harErstattetEttEllerFlere
       readOnly={false}
       vurderOmSkalErstattes={false}
+      isAllowedToContinueWithoutInntekstmelding={false}
+      arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [{ id: 2 }],
@@ -166,6 +199,8 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       harErstattetEttEllerFlere
       readOnly={false}
       vurderOmSkalErstattes={false}
+      isAllowedToContinueWithoutInntekstmelding={false}
+      arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -187,6 +222,8 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       harErstattetEttEllerFlere
       readOnly={false}
       vurderOmSkalErstattes={false}
+      isAllowedToContinueWithoutInntekstmelding={false}
+      arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -207,6 +244,8 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       harErstattetEttEllerFlere
       readOnly={false}
       vurderOmSkalErstattes={false}
+      isAllowedToContinueWithoutInntekstmelding={false}
+      arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -227,6 +266,8 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       harErstattetEttEllerFlere={false}
       readOnly={false}
       vurderOmSkalErstattes={false}
+      isAllowedToContinueWithoutInntekstmelding={false}
+      arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],

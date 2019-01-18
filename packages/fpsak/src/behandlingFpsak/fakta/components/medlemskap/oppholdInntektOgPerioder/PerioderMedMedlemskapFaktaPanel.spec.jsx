@@ -38,8 +38,8 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
     expect(tableRows).to.have.length(1);
     const tableColumns = table.find('TableColumn');
     expect(tableColumns).to.have.length(4);
-    expect(tableColumns.at(1).html()).to.eql('<td>testdekning</td>');
-    expect(tableColumns.at(2).html()).to.eql('<td>testStatus</td>');
+    expect(tableColumns.at(1).html()).to.eql('<td class="">testdekning</td>');
+    expect(tableColumns.at(2).html()).to.eql('<td class="">testStatus</td>');
 
     const radiofields = wrapper.find('RadioOption');
     expect(radiofields).to.have.length(2);

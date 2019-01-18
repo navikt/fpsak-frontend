@@ -10,12 +10,15 @@ import {
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import erIBrukImageUrl from '@fpsak-frontend/assets/images/stjerne.svg';
 
+import styles from './personArbeidsforholdTable.less';
+
 const headerTextCodes = [
   'PersonArbeidsforholdTable.Arbeidsforhold',
   'PersonArbeidsforholdTable.Periode',
   'PersonArbeidsforholdTable.Kilde',
   'PersonArbeidsforholdTable.Stillingsprosent',
   'PersonArbeidsforholdTable.MottattDato',
+  'EMPTY_2',
 ];
 
 const getEndCharFromId = id => id.substring(id.length - 4, id.length);
@@ -41,6 +44,7 @@ const PersonArbeidsforholdTable = ({
             onMouseDown={selectArbeidsforholdCallback}
             onKeyDown={selectArbeidsforholdCallback}
             isSelected={a.id === selectedId}
+            isApLeftBorder={a.tilVurdering}
           >
             <TableColumn><Normaltekst>{decodeHtmlEntity(navn)}</Normaltekst></TableColumn>
             <TableColumn><Normaltekst><PeriodLabel dateStringFom={a.fomDato} dateStringTom={a.tomDato} /></Normaltekst></TableColumn>
@@ -55,9 +59,11 @@ const PersonArbeidsforholdTable = ({
               { a.brukArbeidsforholdet
             && (
             <Image
+              className={styles.image}
               src={erIBrukImageUrl}
               altCode="PersonArbeidsforholdTable.ErIBruk"
               tooltip={{ header: <Element><FormattedMessage id="PersonArbeidsforholdTable.ErIBruk" /></Element> }}
+              tabIndex="0"
             />
             )
             }

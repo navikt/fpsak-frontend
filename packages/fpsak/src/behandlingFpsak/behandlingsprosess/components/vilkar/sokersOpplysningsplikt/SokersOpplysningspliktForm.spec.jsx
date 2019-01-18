@@ -64,16 +64,14 @@ describe('<SokersOpplysningspliktForm>', () => {
     expect(rows).to.have.length(2);
 
     const columnsAtRow1 = rows.first().children();
-    expect(columnsAtRow1).to.have.length(3);
+    expect(columnsAtRow1).to.have.length(2);
     expect(columnsAtRow1.first().childAt(0).text()).to.eql('Inntektsmelding');
     expect(columnsAtRow1.at(1).childAt(0).text()).to.eql('Statoil Asaavd Statoil Sokkelvirksomhet (973861778)');
-    expect(columnsAtRow1.last().childAt(0).prop('label')).to.eql('Søker opplyser at dokumentasjon ikke kommer');
 
     const columnsAtRow2 = rows.last().children();
-    expect(columnsAtRow2).to.have.length(3);
+    expect(columnsAtRow2).to.have.length(2);
     expect(columnsAtRow2.first().childAt(0).text()).to.eql('terminbekreftelse');
     expect(columnsAtRow2.at(1).childAt(0)).is.empty;
-    expect(columnsAtRow2.last().childAt(0)).is.empty;
   });
 
   it('skal ikke vise tabell når ingen vedlegg mangler', () => {
