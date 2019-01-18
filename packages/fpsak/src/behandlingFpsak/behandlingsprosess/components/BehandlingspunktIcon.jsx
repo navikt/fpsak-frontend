@@ -40,17 +40,15 @@ export const BehandlingspunktIcon = ({
 
   return (
     <div className={classNames(styles.behandlingspunkt, { active: isSelectedBehandlingspunkt })} key={title}>
-      <span className="line">
-        <Image
-          className={isIkkeVurdert ? styles.behandlingspunktIkonDisabled : styles.behandlingspunktIkon}
-          alt={title}
-          tabIndex={isIkkeVurdert ? '-1' : '0'}
-          imageSrcFunction={findBehandlingsprosessIcon(behandlingspunkt, status, isSelectedBehandlingspunkt, isSelectedBehandlingHenlagt, hasOpenAksjonspunkt)}
-          onKeyDown={getCallback(isIkkeVurdert, behandlingspunkt, selectBehandlingspunktCallback)}
-          onMouseDown={getCallback(isIkkeVurdert, behandlingspunkt, selectBehandlingspunktCallback)}
-          tooltip={{ header: <Element>{title}</Element> }}
-        />
-      </span>
+      <Image
+        className={isIkkeVurdert ? styles.behandlingspunktIkonDisabled : styles.behandlingspunktIkon}
+        alt={title}
+        tabIndex={isIkkeVurdert ? '-1' : '0'}
+        imageSrcFunction={findBehandlingsprosessIcon(behandlingspunkt, status, isSelectedBehandlingspunkt, isSelectedBehandlingHenlagt, hasOpenAksjonspunkt)}
+        onKeyDown={getCallback(isIkkeVurdert, behandlingspunkt, selectBehandlingspunktCallback)}
+        onMouseDown={getCallback(isIkkeVurdert, behandlingspunkt, selectBehandlingspunktCallback)}
+        tooltip={{ header: <Element>{title}</Element> }}
+      />
       <Undertekst className={styles.label}>{title}</Undertekst>
     </div>
   );
