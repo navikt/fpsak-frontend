@@ -145,8 +145,6 @@ const createNewChildren = (antallBarnFraSoknad) => {
 
 export const buildInitialValues = createSelector([getFamiliehendelse, getAksjonspunkter, getSoknadAntallBarn],
   (familiehendelse, aksjonspunkter, soknadAntallBarn) => ({
-    fodselsdato: familiehendelse.fodselsdato ? familiehendelse.fodselsdato : null,
-    antallBarnFodt: familiehendelse.antallBarnFodsel ? familiehendelse.antallBarnFodsel : null,
     dokumentasjonForeligger: familiehendelse.dokumentasjonForeligger !== null
       ? familiehendelse.dokumentasjonForeligger : undefined,
     brukAntallBarnITps: familiehendelse.brukAntallBarnFraTps !== null
