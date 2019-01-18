@@ -13,7 +13,7 @@ import styles from './antallBarnFieldArray.less';
 
 export const defaultAntallBarn = {
   fodselsdato: '',
-  barnDod: false,
+  isBarnDodt: false,
   dodsDato: '',
 };
 
@@ -23,7 +23,14 @@ export const AvklartBarnFieldArray = ({
   readOnly,
   avklartBarn,
 }) => (
-  <PeriodFieldArray fields={fields} meta={meta} emptyPeriodTemplate={defaultAntallBarn} readOnly={readOnly} textCode="PeriodFieldArray.LeggTilBarn">
+  <PeriodFieldArray
+    fields={fields}
+    meta={meta}
+    emptyPeriodTemplate={defaultAntallBarn}
+    readOnly={readOnly}
+    textCode="PeriodFieldArray.LeggTilBarn"
+    shouldShowAddButton={avklartBarn.length < 9}
+  >
     {(periodeElementFieldId, index, getRemoveButton) => (
       <Row key={periodeElementFieldId}>
         <Column xs="12">
@@ -41,12 +48,13 @@ export const AvklartBarnFieldArray = ({
               <FlexColumn>
                 <CheckboxField
                   className={styles.registerBarnCheckbox}
-                  name={`${periodeElementFieldId}.barnDod`}
+                  name={`${periodeElementFieldId}.isBarnDodt`}
+
                   label={{ id: 'Registrering.ErBarnetDott' }}
                   disabled={readOnly}
                 />
               </FlexColumn>
-              {avklartBarn[index].barnDod
+              {avklartBarn[index].isBarnDodt
               && (
               <FlexColumn>
                 <span>{periodeElementFieldId.dod}</span>

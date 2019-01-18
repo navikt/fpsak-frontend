@@ -143,16 +143,17 @@ const createNewChildren = (antallBarnFraSoknad) => {
 };
 
 
-export const buildInitialValues = createSelector([getFamiliehendelse, getAksjonspunkter, getSoknadAntallBarn], (familiehendelse, aksjonspunkter, soknadAntallBarn) => ({
-  fodselsdato: familiehendelse.fodselsdato ? familiehendelse.fodselsdato : null,
-  antallBarnFodt: familiehendelse.antallBarnFodsel ? familiehendelse.antallBarnFodsel : null,
-  dokumentasjonForeligger: familiehendelse.dokumentasjonForeligger !== null
-    ? familiehendelse.dokumentasjonForeligger : undefined,
-  brukAntallBarnITps: familiehendelse.brukAntallBarnFraTps !== null
-    ? familiehendelse.brukAntallBarnFraTps : undefined,
-  avklartBarn: familiehendelse.avklartBarn ? familiehendelse.avklartBarn : createNewChildren(soknadAntallBarn),
-  ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL)),
-}));
+export const buildInitialValues = createSelector([getFamiliehendelse, getAksjonspunkter, getSoknadAntallBarn],
+  (familiehendelse, aksjonspunkter, soknadAntallBarn) => ({
+    fodselsdato: familiehendelse.fodselsdato ? familiehendelse.fodselsdato : null,
+    antallBarnFodt: familiehendelse.antallBarnFodsel ? familiehendelse.antallBarnFodsel : null,
+    dokumentasjonForeligger: familiehendelse.dokumentasjonForeligger !== null
+      ? familiehendelse.dokumentasjonForeligger : undefined,
+    brukAntallBarnITps: familiehendelse.brukAntallBarnFraTps !== null
+      ? familiehendelse.brukAntallBarnFraTps : undefined,
+    avklartBarn: familiehendelse.avklartBarn ? familiehendelse.avklartBarn : createNewChildren(soknadAntallBarn),
+    ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL)),
+  }));
 
 const getAntallBarn = (brukAntallBarnITps, antallBarnLagret, antallBarnFraSoknad, antallBarnFraTps) => {
   if (antallBarnFraTps === 0) {
