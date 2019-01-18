@@ -5,7 +5,6 @@ import { FormattedMessage } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 import { behandlingFormValueSelector, behandlingForm } from 'behandlingFpsak/behandlingForm';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import {
   PeriodpickerField, SelectField, CheckboxField, RadioGroupField, RadioOption, TextAreaField, DecimalField,
 } from '@fpsak-frontend/form';
@@ -37,12 +36,6 @@ import styles from './uttakNyPeriode.less';
 const maxValue100 = maxValue(100);
 const minLength3 = minLength(3);
 const maxLength4000 = maxLength(4000);
-
-const gyldigeAktivitetStatus = [
-  aktivitetStatus.ARBEIDSTAKER,
-  aktivitetStatus.FRILANSER,
-  aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-];
 
 const gyldigeUttakperioder = [
   uttakPeriodeType.FELLESPERIODE,
