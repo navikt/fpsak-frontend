@@ -1,12 +1,14 @@
 /* Based on https://www.w3schools.com/css/css_tooltip.asp */
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
 .tooltip {
     display: inline-block;
     position: relative;
 }
 
 .tooltiptext {
-    background-color: #3e3832;
-    border: 1px solid #3e3832;
+    background-color: @navMorkGra;
+    border: 1px solid @navMorkGra;
     border-radius: 4px;
     box-shadow: 5px 2px 10px #888888;
     color: white;
@@ -40,7 +42,7 @@
 }
 
 .tooltiptextLeft::before {
-    border-color: transparent #3e3832 transparent transparent;
+    border-color: transparent @navMorkGra transparent transparent;
     border-style: solid;
     content: ' ';
     filter: drop-shadow(2px 5px 8px #888888);
@@ -50,7 +52,7 @@
 }
 
 .tooltiptextLeft::after {
-    border-color: transparent #3e3832 transparent transparent;
+    border-color: transparent @navMorkGra transparent transparent;
     border-style: solid;
     border-width: 12px;
     content: ' ';
@@ -60,7 +62,7 @@
 }
 
 .tooltiptextBottom::before {
-    border-color: #3e3832 transparent transparent transparent;
+    border-color: @navMorkGra transparent transparent transparent;
     border-style: solid;
     content: ' ';
     filter: drop-shadow(2px 5px 8px #888888);
@@ -70,7 +72,7 @@
 }
 
 .tooltiptextBottom::after {
-    border-color: #3e3832 transparent transparent transparent;
+    border-color: @navMorkGra transparent transparent transparent;
     border-style: solid;
     border-width: 12px;
     content: ' ';
