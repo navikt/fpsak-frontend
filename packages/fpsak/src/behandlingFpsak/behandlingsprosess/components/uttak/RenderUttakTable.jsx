@@ -52,16 +52,13 @@ const createTextStrings = (fields) => {
     prosentArbeid, stillingsprosent, arbeidsgiver, arbeidsforholdId, uttakArbeidType,
   } = fields;
 
-  const {
-    identifikator, navn, virksomhet, fødselsdato,
-  } = arbeidsgiver || {};
   const prosentArbeidText = (typeof prosentArbeid !== 'undefined') ? `${prosentArbeid}%` : '';
   const stillingsProsentText = (typeof stillingsprosent !== 'undefined') ? `${stillingsprosent}%` : '';
   let arbeidsforhold = '';
   if (uttakArbeidType && uttakArbeidType.kode !== uttakArbeidTypeKodeverk.ORDINÆRT_ARBEID) {
     arbeidsforhold = <FormattedMessage id={uttakArbeidTypeTekstCodes[uttakArbeidType.kode]} />;
   } else {
-    arbeidsforhold = lagVisningsNavn(arbeidsgiver);
+    arbeidsforhold = lagVisningsNavn(arbeidsgiver, arbeidsforholdId);
   }
   return {
     prosentArbeidText,

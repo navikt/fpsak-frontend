@@ -18,6 +18,7 @@ import {
   maxValue, minLength, maxLength, hasValidText, guid,
   ISO_DATE_FORMAT,
   calcDaysAndWeeks,
+  lagVisningsNavn,
 } from '@fpsak-frontend/utils';
 import moment from 'moment';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
@@ -66,29 +67,24 @@ const mapOverføringÅrsaker = typer => typer
 const mapUtsettelseÅrsaker = typer => typer
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
-const mapArbeidsforhold = andeler => andeler.map((andel) => {
-  const { aktivitetStatus: aktivitetStatusAndel } = andel;
+const mapArbeidsforhold = arbeidsforhold => arbeidsforhold.map((af) => {
+  const { arbeidType, arbeidsgiver } = af;
+  let periodeArbeidsforhold = (arbeidsgiver || []).navn
+    ? `${arbeidsgiver.navn}` : arbeidType.navn;
+  periodeArbeidsforhold = (arbeidsgiver || []).identifikator
+    ? `${periodeArbeidsforhold} (${arbeidsgiver.identifikator})` : periodeArbeidsforhold;
+  periodeArbeidsforhold = (arbeidsgiver || []).identifikator
+    ? `${periodeArbeidsforhold}...${arbeidsgiver.identifikator.substr(-4)}` : periodeArbeidsforhold;
 
-  if (aktivitetStatusAndel && gyldigeAktivitetStatus.includes(aktivitetStatusAndel.kode)) {
-    const { arbeidsforhold } = andel;
-    let periodeArbeidsforhold = (arbeidsforhold || []).arbeidsgiverNavn
-      ? `${arbeidsforhold.arbeidsgiverNavn}` : aktivitetStatusAndel.navn;
-    periodeArbeidsforhold = (arbeidsforhold || []).arbeidsgiverId
-      ? `${periodeArbeidsforhold} ${arbeidsforhold.arbeidsgiverId}` : periodeArbeidsforhold;
-    periodeArbeidsforhold = (arbeidsforhold || []).arbeidsforholdId
-      ? `${periodeArbeidsforhold}...${arbeidsforhold.arbeidsforholdId.substr(-4)}` : periodeArbeidsforhold;
+  const identifkator = (arbeidsforhold || []).arbeidsgiverId || '-';
+  const navn = (arbeidsforhold || []).arbeidsgiverNavn;
+  const fixedAktørId = (arbeidsforhold || []).aktørId || '-';
 
-
-    const identifkator = (arbeidsforhold || []).arbeidsgiverId || '-';
-    const navn = (arbeidsforhold || []).arbeidsgiverNavn || aktivitetStatusAndel.navn;
-    const fixedAktørId = (arbeidsforhold || []).aktørId || '-';
-
-    return (
-      <option value={`${identifkator}|${navn}|${fixedAktørId}`} key={guid()}>{periodeArbeidsforhold}</option>
-    );
-  }
-  return null;
+  return (
+    <option value={`${identifkator}|${navn}|${fixedAktørId}`} key={guid()}>{periodeArbeidsforhold}</option>
+  );
 });
+
 const periodeTypeTrengerArsak = (sokerKjonn, periodeType) => (
   (sokerKjonn === navBrukerKjonn.MANN && periodeType === 'MØDREKVOTE')
   || (sokerKjonn === navBrukerKjonn.KVINNE && periodeType === 'FEDREKVOTE')
