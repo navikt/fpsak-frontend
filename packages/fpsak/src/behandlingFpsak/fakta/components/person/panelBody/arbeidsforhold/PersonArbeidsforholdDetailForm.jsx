@@ -8,6 +8,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
+import arbeidsforholdPropType from 'behandlingFelles/proptypes/arbeidsforholdPropType';
 import BehandlingFormFieldCleaner from 'behandlingFpsak/BehandlingFormFieldCleaner';
 import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, getBehandlingFormValues, getBehandlingFormInitialValues,
@@ -20,6 +21,7 @@ import {
 import {
   ElementWrapper, VerticalSpacer, FlexContainer, FlexColumn, FlexRow,
 } from '@fpsak-frontend/shared-components';
+import PersonAksjonspunktText from './PersonAksjonspunktText';
 import PersonNyttEllerErstattArbeidsforholdPanel from './PersonNyttEllerErstattArbeidsforholdPanel';
 
 export const PERSON_ARBEIDSFORHOLD_DETAIL_FORM = 'PersonArbeidsforholdDetailForm';
@@ -43,10 +45,13 @@ export const PersonArbeidsforholdDetailForm = ({
   readOnly,
   showBegrunnelse,
   vurderOmSkalErstattes,
+  isAllowedToContinueWithoutInntekstmelding,
+  arbeidsforhold,
   ...formProps
 }) => (
   <ElementWrapper>
     <Element><FormattedMessage id="PersonArbeidsforholdDetailForm.Header" /></Element>
+    <PersonAksjonspunktText arbeidsforhold={arbeidsforhold} />
     <VerticalSpacer eightPx />
     <Row>
       <Column xs="5">
@@ -86,6 +91,7 @@ export const PersonArbeidsforholdDetailForm = ({
                     <RadioOption
                       label={intl.formatMessage({ id: 'PersonArbeidsforholdDetailForm.FortsettBehandling' })}
                       value
+                      disabled={!isAllowedToContinueWithoutInntekstmelding}
                     />
                   </RadioGroupField>
                 </Column>
@@ -161,6 +167,8 @@ PersonArbeidsforholdDetailForm.propTypes = {
   vurderOmSkalErstattes: PropTypes.bool.isRequired,
   harErstattetEttEllerFlere: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
+  isAllowedToContinueWithoutInntekstmelding: PropTypes.bool.isRequired,
+  arbeidsforhold: arbeidsforholdPropType.isRequired,
   ...formPropTypes,
 };
 

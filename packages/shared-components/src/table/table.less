@@ -1,7 +1,58 @@
 .table {
-  composes: tabell tabell-hover from '@fpsak-frontend/assets/styles/tabellModigDesign.less';
+  background-color: transparent;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 1rem;
+  max-width: 100%;
+  width: 100%;
+}
+
+.table tbody tr:hover {
+	background-color: #f5f5f5;
+}
+
+.tabell tbody tr:first-child th,
+.tabell tbody tr:first-child td {
+	border-top: 1px solid #b7b1a9;
+	border-top-width: 2px;
+}
+
+.tabell thead {
+	display: table-header-group;
+}
+
+.table caption {
+  color: #7f756c;
+  left: -3000px;
+  padding-bottom: 8px;
+	padding-top: 8px;
+  position: absolute;
+	text-align: left;
 }
 
 .tableNoHover {
-  composes: tabell from '@fpsak-frontend/assets/styles/tabellModigDesign.less';
+  background-color: transparent;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 1rem;
+  max-width: 100%;
+  width: 100%;
+}
+
+.tableNoHover tbody tr:first-child td {
+	border-top: 1px solid #b7b1a9;
+	border-top-width: 2px;
+}
+
+.tableNoHover thead {
+	display: table-header-group;
+}
+
+.tableNoHover caption {
+  color: #7f756c;
+  left: -3000px;
+  padding-bottom: 8px;
+	padding-top: 8px;
+  position: absolute;
+  text-align: left;
 }

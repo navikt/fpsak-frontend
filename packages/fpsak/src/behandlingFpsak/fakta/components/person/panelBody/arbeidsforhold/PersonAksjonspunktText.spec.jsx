@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import { FormattedMessage } from 'react-intl';
+import { FormattedHTMLMessage } from 'react-intl';
 
 import PersonAksjonspunktText from './PersonAksjonspunktText';
 
@@ -39,7 +39,7 @@ describe('<PersonAksjonspunktText>', () => {
         mottattDatoInntektsmelding: undefined,
       }}
     />);
-    expect(wrapper.find(FormattedMessage).prop('id')).is.eql('PersonAksjonspunktText.AvklarManglendeInntektsmelding');
+    expect(wrapper.find(FormattedHTMLMessage).prop('id')).is.eql('PersonAksjonspunktText.AvklarManglendeInntektsmelding');
   });
 
   it('skal vise hjelpetekst når en kan erstatte gamle arbeidsforhold eller markere arbeidsforholdet som nytt', () => {
@@ -53,7 +53,7 @@ describe('<PersonAksjonspunktText>', () => {
         replaceOptions: gamleArbeidsforhold,
       }}
     />);
-    expect(wrapper.find(FormattedMessage).prop('id')).is.eql('PersonAksjonspunktText.AvklarErstatteTidligere');
+    expect(wrapper.find(FormattedHTMLMessage).prop('id')).is.eql('PersonAksjonspunktText.AvklarErstatteTidligere');
   });
 
   it('skal vise hjelpetekst når flagget harErstattetEttEllerFlere er satt', () => {
@@ -65,7 +65,7 @@ describe('<PersonAksjonspunktText>', () => {
         harErstattetEttEllerFlere: true,
       }}
     />);
-    expect(wrapper.find(FormattedMessage).prop('id')).is.eql('PersonAksjonspunktText.AvklarErstatteAlle');
+    expect(wrapper.find(FormattedHTMLMessage).prop('id')).is.eql('PersonAksjonspunktText.AvklarErstatteAlle');
   });
 
   it('skal vise hjelpetekst når flagget ikkeRegistrertIAaRegister er satt', () => {
@@ -79,7 +79,7 @@ describe('<PersonAksjonspunktText>', () => {
         ikkeRegistrertIAaRegister: true,
       }}
     />);
-    expect(wrapper.find(FormattedMessage).prop('id')).is.eql('PersonAksjonspunktText.AvklarIkkeRegistrertIAa');
+    expect(wrapper.find(FormattedHTMLMessage).prop('id')).is.eql('PersonAksjonspunktText.AvklarIkkeRegistrertIAa');
   });
 
   it('skal ikke vise hjelpetekst når inntektsmelding er mottatt og det ikke er gamle arbeidsforhold og flagg ikke er satt', () => {

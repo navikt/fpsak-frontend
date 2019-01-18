@@ -23,7 +23,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { CheckboxField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required, isObject } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
@@ -49,12 +49,6 @@ const formatArbeidsgiver = arbeidsgiver => (arbeidsgiver
   ? `${capitalizeFirstLetters(arbeidsgiver.navn)} (${arbeidsgiver.organisasjonsnummer})`
   : '');
 const isVilkarOppfyltDisabled = (hasSoknad, inntektsmeldingerSomIkkeKommer) => !hasSoknad || Object.values(inntektsmeldingerSomIkkeKommer).some(vd => !vd);
-
-const getCheckboxChangeHandler = (erVilkarOk, reduxFormChange, behandlingFormPrefix) => (e, isSelected) => {
-  if (erVilkarOk && !isSelected) {
-    reduxFormChange(`${behandlingFormPrefix}.${formName}`, 'erVilkarOk', null);
-  }
-};
 
 /**
  * SokersOpplysningspliktForm
@@ -104,18 +98,6 @@ export const SokersOpplysningspliktFormImpl = ({
                   <TableColumn>
                     {vedlegg.dokumentType.kode === dokumentTypeId.INNTEKTSMELDING
                     && formatArbeidsgiver(vedlegg.arbeidsgiver)
-                  }
-                  </TableColumn>
-                  <TableColumn>
-                    {vedlegg.dokumentType.kode === dokumentTypeId.INNTEKTSMELDING
-                    && (
-                    <CheckboxField
-                      label={intl.formatMessage({ id: 'SokersOpplysningspliktForm.DokumentasjonKommerIkke' })}
-                      name={`inntektsmeldingerSomIkkeKommer.${orgPrefix}${vedlegg.arbeidsgiver.organisasjonsnummer}`}
-                      disabled={readOnly}
-                      onChange={getCheckboxChangeHandler(erVilkarOk, reduxFormChange, behandlingFormPrefix)}
-                    />
-                    )
                   }
                   </TableColumn>
                 </TableRow>

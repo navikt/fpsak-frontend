@@ -1282,7 +1282,6 @@
   "SokersOpplysningspliktForm.VilkarIkkeOppfyltValgt": "Vilkår er ikke oppfylt",
   "SokersOpplysningspliktForm.Begrunnelse": "Begrunnelse",
   "SokersOpplysningspliktForm.ManglendeDokumentasjon": "Manglende dokumentasjon",
-  "SokersOpplysningspliktForm.DokumentasjonKommerIkke": "Søker opplyser at dokumentasjon ikke kommer",
 
   "Totrinnskontroll.godkjent": "er godkjent",
   "Totrinnskontroll.ikkeGodkjent": "må vurderes på nytt",
@@ -2213,7 +2212,7 @@
   "OkAvbrytModal.Ok": "OK",
   "OkAvbrytModal.Avbryt": "Avbryt",
 
-  "PersonArbeidsforholdPanel.ArbeidsforholdHeader": "Arbeidsforhold",
+  "PersonArbeidsforholdPanel.ArbeidsforholdHeader": "Arbeidsforhold som er aktive ved permisjonsstart",
   "PersonArbeidsforholdTable.Arbeidsforhold": "<br />Arbeidsforhold",
   "PersonArbeidsforholdTable.Periode": "<br />Periode",
   "PersonArbeidsforholdTable.Kilde": "<br />Kilde",
@@ -2222,13 +2221,13 @@
   "PersonArbeidsforholdTable.ErIBruk": "Arbeidsforhold skal brukes",
   "PersonArbeidsforholdTable.IngenArbeidsforhold": "Det finnes ingen arbeidsforhold",
 
-  "FullPersonInfo.AvklarArbeidsforhold": "Fastsett hvilke arbeidsforhold som skal benyttes i behandlingen",
+  "FullPersonInfo.AvklarArbeidsforhold": "Avklar aksjonspunkt på arbeidsforhold som skal benyttes i behandlingen",
   "FullPersonInfo.Confirm": "Bekreft og fortsett",
 
   "PersonArbeidsforholdDetailForm.Header": "Detaljer",
   "PersonArbeidsforholdDetailForm.Arbeidsgiver": "Beskrivelse",
   "PersonArbeidsforholdDetailForm.BrukArbeidsforholdet": "Arbeidsforholdet er relevant for denne behandlingen",
-  "PersonArbeidsforholdDetailForm.ArbeidsforholdIkkeRelevant": "Arbeidsforholdet er ikke relevant for denne behandlingen",
+  "PersonArbeidsforholdDetailForm.ArbeidsforholdIkkeRelevant": "Fjern arbeidsforholdet for denne behandlingen",
   "PersonArbeidsforholdDetailForm.IkkeMottatt": "Nødvendig inntektsmelding er ikke mottatt",
   "PersonArbeidsforholdDetailForm.FortsettBehandling": "Fortsett behandling uten inntekstmelding",
   "PersonArbeidsforholdDetailForm.Oppdater": "Oppdater",
@@ -2241,7 +2240,7 @@
   "PersonNyttEllerErstattArbeidsforholdPanel.SelectArbeidsforhold": "Erstatter arbeidsforhold",
   "PersonNyttEllerErstattArbeidsforholdPanel.ChooseArbeidsforhold": "Velg arbeidsforhold",
 
-  "PersonAksjonspunktText.AvklarManglendeInntektsmelding":"Fastsett om arbeidsforhold det mangler inntektsmelding for skal brukes i behandlingen",
+  "PersonAksjonspunktText.AvklarManglendeInntektsmelding":"Ta kontakt med arbeidsgiver for å få inntektsmelding for alle arbeidsforhold. <BR />Sett deretter behandlingen manuelt på vent, ved å bruke Behandlingsmenyen",
   "PersonAksjonspunktText.AvklarErstatteTidligere" : "Fastsett om arbeidsforhold skal erstatte tidligere benyttet arbeidsforhold eller om dette er et nytt",
   "PersonAksjonspunktText.AvklarErstatteAlle" :"Fastsett om arbeidsforhold skal erstatte alle tidligere benyttet arbeidsforhold i virksomheten",
   "PersonAksjonspunktText.AvklarIkkeRegistrertIAa": "Fastsett om arbeidsforhold som ikke er registrert i Aa-registeret skal brukes",

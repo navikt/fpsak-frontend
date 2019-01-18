@@ -10,8 +10,8 @@ import Tooltip from './Tooltip';
  * Presentasjonskomponent. Komponent som har ansvar for visning av bilder.
  */
 export class Image extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
       isHovering: false,
@@ -33,7 +33,9 @@ export class Image extends Component {
   onKeyDown(e) {
     if (e.key === 'Enter' || e.key === ' ') {
       const { onKeyDown } = this.props;
-      onKeyDown(e);
+      if (onKeyDown) {
+        onKeyDown(e);
+      }
       e.preventDefault();
     }
   }
@@ -41,6 +43,7 @@ export class Image extends Component {
   render() {
     const {
       tooltip, altCode, onClick, onMouseDown, tabIndex, titleCode, title, intl, className, src, imageSrcFunction, alt,
+      alignTooltipArrowLeft,
     } = this.props;
     const { isHovering } = this.state;
     const image = (
@@ -56,7 +59,7 @@ export class Image extends Component {
         onBlur={this.onBlur}
         onKeyDown={this.onKeyDown}
         onMouseDown={onMouseDown}
-        onClick={() => onClick()}
+        onClick={onClick}
       />
     );
 
@@ -65,7 +68,7 @@ export class Image extends Component {
     }
 
     return (
-      <Tooltip header={tooltip.header} body={tooltip.body}>
+      <Tooltip header={tooltip.header} body={tooltip.body} show={isHovering} alignArrowLeft={alignTooltipArrowLeft}>
         {image}
       </Tooltip>
     );
@@ -97,6 +100,7 @@ Image.propTypes = {
     header: PropTypes.node.isRequired,
     body: PropTypes.node,
   }),
+  alignTooltipArrowLeft: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 
@@ -107,8 +111,9 @@ Image.defaultProps = {
   onMouseDown: null,
   onKeyDown: null,
   onClick: () => undefined,
-  tabIndex: null,
+  tabIndex: '-1',
   tooltip: null,
+  alignTooltipArrowLeft: false,
   alt: null,
   altCode: null,
   title: null,

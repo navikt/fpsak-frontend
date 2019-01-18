@@ -16,7 +16,6 @@ import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import PersonArbeidsforholdTable from './PersonArbeidsforholdTable';
-import PersonAksjonspunktText from './PersonAksjonspunktText';
 import PersonArbeidsforholdDetailForm, { PERSON_ARBEIDSFORHOLD_DETAIL_FORM } from './PersonArbeidsforholdDetailForm';
 
 const removeDeleted = arbeidsforhold => arbeidsforhold.filter(a => !a.erSlettet);
@@ -116,13 +115,12 @@ export class PersonArbeidsforholdPanelImpl extends Component {
 
   render() {
     const {
-      readOnly, hasAksjonspunkter, hasOpenAksjonspunkter, arbeidsforhold, fagsystemer,
+      readOnly, hasAksjonspunkter, hasOpenAksjonspunkter, arbeidsforhold, fagsystemer, isAllowedToContinueWithoutInntekstmelding,
     } = this.props;
     const { selectedArbeidsforhold } = this.state;
     return (
       <ElementWrapper>
         <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD} titleCode="PersonArbeidsforholdPanel.ArbeidsforholdHeader">
-          <PersonAksjonspunktText arbeidsforhold={selectedArbeidsforhold} />
           <PersonArbeidsforholdTable
             selectedId={selectedArbeidsforhold ? selectedArbeidsforhold.id : undefined}
             alleArbeidsforhold={removeDeleted(arbeidsforhold)}
@@ -138,6 +136,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
             hasOpenAksjonspunkter={hasOpenAksjonspunkter}
             updateArbeidsforhold={this.updateArbeidsforhold}
             cancelArbeidsforhold={this.cancelArbeidsforhold}
+            isAllowedToContinueWithoutInntekstmelding={isAllowedToContinueWithoutInntekstmelding}
           />
           )
         }
@@ -157,6 +156,7 @@ PersonArbeidsforholdPanelImpl.propTypes = {
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
   fagsystemer: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  isAllowedToContinueWithoutInntekstmelding: PropTypes.bool.isRequired,
 };
 
 export const sortArbeidsforhold = arbeidsforhold => arbeidsforhold
@@ -178,12 +178,28 @@ export const sortArbeidsforhold = arbeidsforhold => arbeidsforhold
     return a1.id.localeCompare(a2.id);
   });
 
+export const isAllowedToContinueWithoutInntekstmelding = (arbeidsforhold) => {
+  let isAllowed = true;
+  const arbeidsforholdUtenInntektsmeldingTilVurdering = arbeidsforhold.filter(a => (a.tilVurdering || a.erEndret) && !a.mottattDatoInntektsmelding);
+
+  arbeidsforholdUtenInntektsmeldingTilVurdering.forEach((a) => {
+    const arbeidsforholdFraSammeArbeidsgriverMedInntekstmelding = arbeidsforhold
+      .filter(b => a.id !== b.id && a.arbeidsgiverIdentifikator === b.arbeidsgiverIdentifikator && b.mottattDatoInntektsmelding);
+
+    if (arbeidsforholdFraSammeArbeidsgriverMedInntekstmelding.length > 0) {
+      isAllowed = false;
+    }
+  });
+  return isAllowed;
+};
+
 const mapStateToProps = (state) => {
   const arbeidsforhold = sortArbeidsforhold(behandlingFormValueSelector('PersonInfoPanel')(state, 'arbeidsforhold'));
   return {
     arbeidsforhold,
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
     fagsystemer: getKodeverk(kodeverkTyper.FAGSYSTEM)(state),
+    isAllowedToContinueWithoutInntekstmelding: isAllowedToContinueWithoutInntekstmelding(arbeidsforhold),
   };
 };
 

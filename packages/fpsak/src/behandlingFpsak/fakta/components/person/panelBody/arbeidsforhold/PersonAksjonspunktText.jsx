@@ -1,9 +1,8 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { Normaltekst } from 'nav-frontend-typografi';
+import React, { Fragment } from 'react';
+import { FormattedHTMLMessage } from 'react-intl';
 
 import arbeidsforholdPropType from 'behandlingFelles/proptypes/arbeidsforholdPropType';
-import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 
 const getTextCode = (arbeidsforhold) => {
   if (!arbeidsforhold || (!arbeidsforhold.tilVurdering && !arbeidsforhold.erEndret)) {
@@ -31,10 +30,13 @@ const PersonAksjonspunktText = ({
     return null;
   }
   return (
-    <ElementWrapper>
+    <Fragment>
       <VerticalSpacer eightPx />
-      <Normaltekst><FormattedMessage id={textCode} /></Normaltekst>
-    </ElementWrapper>
+      <AksjonspunktHelpText isAksjonspunktOpen={arbeidsforhold.tilVurdering}>
+        {[<FormattedHTMLMessage id={textCode} key={textCode} />]}
+      </AksjonspunktHelpText>
+      <VerticalSpacer sixteenPx />
+    </Fragment>
   );
 };
 

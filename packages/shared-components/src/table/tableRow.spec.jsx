@@ -44,7 +44,7 @@ describe('<TableRow>', () => {
     expect(mouseEventFunction).to.have.property('callCount', 1);
     expect(keyEventFunction).to.have.property('callCount', 0);
 
-    row.simulate('keyDown', { key: 'Enter', preventDefault: sinon.spy() });
+    row.simulate('keyDown', { target: { tagName: 'TR' }, key: 'Enter', preventDefault: sinon.spy() });
     expect(keyEventFunction).to.have.property('callCount', 1);
     expect(mouseEventFunction).to.have.property('callCount', 1);
   });

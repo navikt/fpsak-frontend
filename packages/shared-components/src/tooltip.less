@@ -6,29 +6,62 @@
     position: relative;
 }
 
-.tooltip .tooltiptext {
+.tooltiptext {
     background-color: @navMorkGra;
     border: 1px solid @navMorkGra;
     border-radius: 4px;
-    bottom: 100%;
     box-shadow: 5px 2px 10px #888888;
-    color: @white;
-    left: 50%;
+    color: white;
     margin-bottom: 20px;
-    margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
-    padding-left: 10px;
+    min-width: 200px;
+    padding-bottom: 20px;
+    padding-left: 20px;
     padding-right: 10px;
+    padding-top: 10px;
     position: absolute;
-    visibility: hidden;
-    width: 250px;
     z-index: 101;
 }
 
-.tooltip:hover .tooltiptext {
-    visibility: visible;
+.tooltiptextLeft {
+  margin-left: 45px;
+  top: -30px;
 }
 
-.tooltip .tooltiptext::before {
+.tooltiptextBottom {
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+}
+
+.show {
+  visibility: visible;
+}
+
+.hide {
+  visibility: hidden;
+}
+
+.tooltiptextLeft::before {
+    border-color: transparent @navMorkGra transparent transparent;
+    border-style: solid;
+    content: ' ';
+    filter: drop-shadow(2px 5px 8px #888888);
+    position: absolute;
+    right: 100%; /* To the left of the tooltip */
+    top: 30px;
+}
+
+.tooltiptextLeft::after {
+    border-color: transparent @navMorkGra transparent transparent;
+    border-style: solid;
+    border-width: 12px;
+    content: ' ';
+    position: absolute;
+    right: 100%; /* To the left of the tooltip */
+    top: 30px;
+}
+
+.tooltiptextBottom::before {
     border-color: @navMorkGra transparent transparent transparent;
     border-style: solid;
     content: ' ';
@@ -38,7 +71,7 @@
     top: 100%; /* At the bottom of the tooltip */
 }
 
-.tooltip .tooltiptext::after {
+.tooltiptextBottom::after {
     border-color: @navMorkGra transparent transparent transparent;
     border-style: solid;
     border-width: 12px;

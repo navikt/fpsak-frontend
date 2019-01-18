@@ -79,6 +79,7 @@ const DocumentList = ({
                 src={directionImage}
                 titleCode={directionTextCode}
                 altCode={directionTextCode}
+                tabIndex="0"
               />
             </TableColumn>
             <TableColumn>
@@ -89,6 +90,7 @@ const DocumentList = ({
                 className={styles.image}
                 src={erIBrukImageUrl}
                 tooltip={{ header: <Normaltekst><FormattedMessage id="DocumentList.IBruk" /></Normaltekst> }}
+                tabIndex="0"
               />
               )
             }

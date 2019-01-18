@@ -4,9 +4,9 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
 import PersonArbeidsforholdTable from './PersonArbeidsforholdTable';
-import PersonAksjonspunktText from './PersonAksjonspunktText';
 import PersonArbeidsforholdDetailForm from './PersonArbeidsforholdDetailForm';
-import PersonArbeidsforholdPanel, { PersonArbeidsforholdPanelImpl, sortArbeidsforhold } from './PersonArbeidsforholdPanel';
+import PersonArbeidsforholdPanel, { PersonArbeidsforholdPanelImpl, sortArbeidsforhold, isAllowedToContinueWithoutInntekstmelding }
+  from './PersonArbeidsforholdPanel';
 
 describe('<PersonArbeidsforholdPanel>', () => {
   const arbeidsforhold = {
@@ -46,9 +46,9 @@ describe('<PersonArbeidsforholdPanel>', () => {
       reduxFormChange={sinon.spy()}
       reduxFormInitialize={sinon.spy()}
       fagsystemer={fagsystemer}
+      isAllowedToContinueWithoutInntekstmelding
     />);
     expect(wrapper.find(PersonArbeidsforholdTable)).has.length(1);
-    expect(wrapper.find(PersonAksjonspunktText)).has.length(1);
     expect(wrapper.find(PersonArbeidsforholdDetailForm)).has.length(1);
   });
 
@@ -67,6 +67,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       reduxFormChange={sinon.spy()}
       reduxFormInitialize={sinon.spy()}
       fagsystemer={fagsystemer}
+      isAllowedToContinueWithoutInntekstmelding
     />);
 
     const table = wrapper.find(PersonArbeidsforholdTable);
@@ -83,6 +84,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       reduxFormChange={sinon.spy()}
       reduxFormInitialize={sinon.spy()}
       fagsystemer={fagsystemer}
+      isAllowedToContinueWithoutInntekstmelding
     />);
 
     wrapper.setState({ selectedArbeidsforhold: undefined });
@@ -100,6 +102,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       reduxFormChange={sinon.spy()}
       reduxFormInitialize={sinon.spy()}
       fagsystemer={fagsystemer}
+      isAllowedToContinueWithoutInntekstmelding
     />);
 
     expect(wrapper.find(PersonArbeidsforholdDetailForm)).has.length(1);
@@ -119,6 +122,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       reduxFormChange={sinon.spy()}
       reduxFormInitialize={sinon.spy()}
       fagsystemer={fagsystemer}
+      isAllowedToContinueWithoutInntekstmelding
     />);
 
     expect(wrapper.find(PersonArbeidsforholdDetailForm)).has.length(0);
@@ -137,6 +141,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       reduxFormChange={sinon.spy()}
       reduxFormInitialize={sinon.spy()}
       fagsystemer={fagsystemer}
+      isAllowedToContinueWithoutInntekstmelding
     />);
 
     expect(wrapper.find(PersonArbeidsforholdDetailForm)).has.length(0);
@@ -152,6 +157,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       reduxFormChange={sinon.spy()}
       reduxFormInitialize={sinon.spy()}
       fagsystemer={fagsystemer}
+      isAllowedToContinueWithoutInntekstmelding
     />);
 
 
@@ -181,6 +187,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       reduxFormChange={formChangeCallback}
       reduxFormInitialize={sinon.spy()}
       fagsystemer={fagsystemer}
+      isAllowedToContinueWithoutInntekstmelding
     />);
 
     const editedArbeidsforhold = {
@@ -231,6 +238,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       reduxFormChange={formChangeCallback}
       reduxFormInitialize={sinon.spy()}
       fagsystemer={fagsystemer}
+      isAllowedToContinueWithoutInntekstmelding
     />);
 
     const editedArbeidsforhold = {
@@ -316,5 +324,87 @@ describe('<PersonArbeidsforholdPanel>', () => {
         replaceOptions: [],
       }],
     });
+  });
+
+  it('skal ikke kunne fortsette uten inntekstmelding når en har to arbeidsforhold fra samme arbeidsgiver der en ikke har inntektsmelding for den ene', () => {
+    const toArbeidsforhold = [{
+      id: '1',
+      arbeidsforholdId: '1231-2345',
+      navn: 'Svendsen Eksos',
+      arbeidsgiverIdentifikator: '1234567',
+      arbeidsgiverIdentifiktorGUI: '1234567',
+      fomDato: '2018-01-01',
+      tomDato: '2018-10-10',
+      kilde: {
+        kode: 'INNTEKT',
+        navn: '',
+      },
+      mottattDatoInntektsmelding: false,
+      brukArbeidsforholdet: true,
+      erNyttArbeidsforhold: undefined,
+      erstatterArbeidsforholdId: undefined,
+      tilVurdering: true,
+    }, {
+      id: '2',
+      arbeidsforholdId: '1231-2345',
+      navn: 'Svendsen Eksos',
+      arbeidsgiverIdentifikator: '1234567',
+      arbeidsgiverIdentifiktorGUI: '1234567',
+      fomDato: '2018-01-01',
+      tomDato: '2018-10-10',
+      kilde: {
+        kode: 'INNTEKT',
+        navn: '',
+      },
+      mottattDatoInntektsmelding: true,
+      brukArbeidsforholdet: true,
+      erNyttArbeidsforhold: undefined,
+      erstatterArbeidsforholdId: undefined,
+      tilVurdering: false,
+    }];
+    const isAllowed = isAllowedToContinueWithoutInntekstmelding(toArbeidsforhold);
+
+    expect(isAllowed).is.false;
+  });
+
+  it('skal kunne fortsette uten inntekstmelding når en har to arbeidsforhold fra samme arbeidsgiver der begge har inntektsmelding', () => {
+    const toArbeidsforhold = [{
+      id: '1',
+      arbeidsforholdId: '1231-2345',
+      navn: 'Svendsen Eksos',
+      arbeidsgiverIdentifikator: '1234567',
+      arbeidsgiverIdentifiktorGUI: '1234567',
+      fomDato: '2018-01-01',
+      tomDato: '2018-10-10',
+      kilde: {
+        kode: 'INNTEKT',
+        navn: '',
+      },
+      mottattDatoInntektsmelding: true,
+      brukArbeidsforholdet: true,
+      erNyttArbeidsforhold: undefined,
+      erstatterArbeidsforholdId: undefined,
+      tilVurdering: true,
+    }, {
+      id: '2',
+      arbeidsforholdId: '1231-2345',
+      navn: 'Svendsen Eksos',
+      arbeidsgiverIdentifikator: '1234567',
+      arbeidsgiverIdentifiktorGUI: '1234567',
+      fomDato: '2018-01-01',
+      tomDato: '2018-10-10',
+      kilde: {
+        kode: 'INNTEKT',
+        navn: '',
+      },
+      mottattDatoInntektsmelding: true,
+      brukArbeidsforholdet: true,
+      erNyttArbeidsforhold: undefined,
+      erstatterArbeidsforholdId: undefined,
+      tilVurdering: false,
+    }];
+    const isAllowed = isAllowedToContinueWithoutInntekstmelding(toArbeidsforhold);
+
+    expect(isAllowed).is.true;
   });
 });

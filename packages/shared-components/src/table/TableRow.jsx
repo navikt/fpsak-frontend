@@ -6,6 +6,32 @@ import styles from './tableRow.less';
 
 const classNames = classnames.bind(styles);
 
+const createMouseDownHandler = (onMouseDown, id, model) => e => onMouseDown && onMouseDown(e, id, model);
+
+const findNearestRow = element => (element.tagName === 'TR' ? element : findNearestRow(element.parentElement));
+
+const setFocus = (e, isNext) => {
+  const row = findNearestRow(e.target);
+  const otherRow = isNext ? row.nextSibling : row.previousSibling;
+  const element = otherRow || row;
+
+  if (element) {
+    element.focus();
+    e.preventDefault();
+  }
+};
+
+const createKeyHandler = (onKeyDown, id, model) => (e) => {
+  if (e.key === 'ArrowDown') {
+    setFocus(e, true);
+  } else if (e.key === 'ArrowUp') {
+    setFocus(e, false);
+  } else if (onKeyDown && e.target.tagName !== 'TD' && (e.key === 'Enter' || e.key === ' ')) {
+    onKeyDown(e, id, model);
+    e.preventDefault();
+  }
+};
+
 /**
  * TableRow
  *
@@ -24,43 +50,25 @@ const TableRow = ({
   isDashedBottomBorder,
   isSolidBottomBorder,
   isApLeftBorder,
-}) => {
-  const keyDownHandler = (e) => {
-    if (e.key === 'ArrowDown') {
-      if (e.target.nextSibling) {
-        e.target.nextSibling.focus();
-        e.preventDefault();
-      }
-    } else if (e.key === 'ArrowUp') {
-      if (e.target.previousSibling) {
-        e.target.previousSibling.focus();
-        e.preventDefault();
-      }
-    } else if (onKeyDown && (e.key === 'Enter' || e.key === ' ')) {
-      onKeyDown(e, id, model);
-      e.preventDefault();
-    }
-  };
-
-  return (
-    <tr
-      className={classNames({
-        rowHeader: isHeader,
-        rowContent: (!isHeader && !noHover),
-        selected: isSelected,
-        bold: isBold,
-        dashedBottomBorder: isDashedBottomBorder,
-        solidBottomBorder: isSolidBottomBorder,
-        apLeftBorder: isApLeftBorder,
-      })}
-      onMouseDown={e => onMouseDown && onMouseDown(e, id, model)}
-      onKeyDown={e => keyDownHandler(e)}
-      tabIndex="0"
-    >
-      {children}
-    </tr>
-  );
-};
+  className,
+}) => (
+  <tr
+    className={classNames(className, {
+      rowHeader: isHeader,
+      rowContent: (!isHeader && !noHover),
+      selected: isSelected,
+      bold: isBold,
+      dashedBottomBorder: isDashedBottomBorder,
+      solidBottomBorder: isSolidBottomBorder,
+      apLeftBorder: isApLeftBorder,
+    })}
+    onMouseDown={createMouseDownHandler(onMouseDown, id, model)}
+    onKeyDown={createKeyHandler(onKeyDown, id, model)}
+    tabIndex="0"
+  >
+    {children}
+  </tr>
+);
 
 TableRow.propTypes = {
   id: PropTypes.oneOfType([
@@ -78,6 +86,7 @@ TableRow.propTypes = {
   isDashedBottomBorder: PropTypes.bool,
   isSolidBottomBorder: PropTypes.bool,
   isApLeftBorder: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 TableRow.defaultProps = {
@@ -92,6 +101,7 @@ TableRow.defaultProps = {
   isDashedBottomBorder: false,
   isSolidBottomBorder: false,
   isApLeftBorder: false,
+  className: undefined,
 };
 
 export default TableRow;

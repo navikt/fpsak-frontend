@@ -1,5 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames/bind';
+
+import styles from './tableColumn.less';
+
+const classNames = classnames.bind(styles);
 
 /**
  * TableColumn
@@ -10,7 +15,16 @@ const TableColumn = ({
   children,
   className,
   hidden,
-}) => (hidden ? null : <td className={className}>{children}</td>);
+}) => {
+  if (hidden) {
+    return null;
+  }
+  return (
+    <td className={classNames(styles.columnStyle, className)}>
+      {children}
+    </td>
+  );
+};
 
 TableColumn.propTypes = {
   children: PropTypes.oneOfType([
