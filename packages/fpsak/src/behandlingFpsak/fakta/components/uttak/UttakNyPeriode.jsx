@@ -62,19 +62,21 @@ const mapUtsettelseÅrsaker = typer => typer
 
 const mapArbeidsforhold = arbeidsforhold => arbeidsforhold.map((af) => {
   const { arbeidType, arbeidsgiver } = af;
-  let periodeArbeidsforhold = (arbeidsgiver || []).navn
-    ? `${arbeidsgiver.navn}` : arbeidType.navn;
-  periodeArbeidsforhold = (arbeidsgiver || []).identifikator
-    ? `${periodeArbeidsforhold} (${arbeidsgiver.identifikator})` : periodeArbeidsforhold;
-  periodeArbeidsforhold = (arbeidsgiver || []).identifikator
-    ? `${periodeArbeidsforhold}...${arbeidsgiver.identifikator.substr(-4)}` : periodeArbeidsforhold;
 
-  const identifkator = (arbeidsforhold || []).arbeidsgiverId || '-';
-  const navn = (arbeidsforhold || []).arbeidsgiverNavn;
-  const fixedAktørId = (arbeidsforhold || []).aktørId || '-';
+  let periodeArbeidsforhold = '';
+  if (arbeidType && arbeidType.kode !== uttakArbeidTypeKodeverk.ORDINÆRT_ARBEID) {
+    periodeArbeidsforhold = arbeidType.navn;
+  } else {
+    periodeArbeidsforhold = lagVisningsNavn(arbeidsgiver);
+  }
+
+  const identifkator = (arbeidsgiver || []).identifikator || '-';
+  const navn = (arbeidsgiver || []).navn || arbeidType.navn;
+  const fixedAktørId = (arbeidsgiver || []).aktørId || '-';
+  const virksomhet = (arbeidsgiver || []).virksomhet || '-';
 
   return (
-    <option value={`${identifkator}|${navn}|${fixedAktørId}`} key={guid()}>{periodeArbeidsforhold}</option>
+    <option value={`${identifkator}|${navn}|${fixedAktørId}|${virksomhet}`} key={guid()}>{periodeArbeidsforhold}</option>
   );
 });
 
@@ -342,6 +344,7 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
     identifikator: arbeidsForhold[0] !== '-' ? arbeidsForhold[0] : undefined,
     navn: arbeidsForhold[1] ? arbeidsForhold[1] : undefined,
     aktørId: arbeidsForhold[2] !== '-' ? arbeidsForhold[2] : undefined,
+    virksomhet: arbeidsForhold[3] !== '-' ? arbeidsForhold[3] : undefined,
   } : null;
 
   return {

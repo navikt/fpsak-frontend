@@ -7,7 +7,7 @@ import { DDMMYYYY_DATE_FORMAT } from './formats';
 
 const formatDate = dato => moment(dato).format(DDMMYYYY_DATE_FORMAT);
 
-const lagVisningsNavn = (arbeidsgiver = {}, arbeidsforholdId = null) => {
+const lagVisningsNavn = (arbeidsgiver = {}, arbeidsforholdId = undefined) => {
   const {
     navn, fødselsdato, virksomhet, identifikator,
   } = arbeidsgiver;
