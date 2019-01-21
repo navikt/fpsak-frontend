@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
-
+import classnames from 'classnames/bind';
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import rettighetPropType from 'navAnsatt/rettighetPropType';
 import navAnsattPropType from 'navAnsatt/navAnsattPropType';
@@ -19,10 +19,10 @@ import OpenBehandlingForChangesMenuItem from './openBehandlingForChanges/OpenBeh
 
 import styles from './behandlingMenu.less';
 
-const getMenuButtonStyle = menuVisible => (menuVisible ? styles.containerHeadingOpen : styles.containerHeading);
+const classNames = classnames.bind(styles);
+
 const getMenuButtonText = menuVisible => (menuVisible ? 'Behandlingsmeny.Close' : 'Behandlingsmeny.Open');
 const getImage = menuVisible => (menuVisible ? openImage : closedImage);
-const getMenuStyle = menuVisible => (menuVisible ? styles.containerMenu : styles.hide);
 
 /**
  * BehandlingMenu
@@ -150,7 +150,7 @@ export class BehandlingMenu extends Component {
     return (
       <div className={styles.container}>
         <Knapp
-          className={getMenuButtonStyle(menuVisible)}
+          className={classNames('containerHeading', { menuVisible })}
           onBlur={() => this.hideBehandlingsMenu()}
           onClick={() => this.toggleBehandlingMenu()}
           tabIndex="0"
@@ -168,7 +168,7 @@ export class BehandlingMenu extends Component {
             }
           </FormattedMessage>
         </Knapp>
-        <div className={getMenuStyle(menuVisible)}>
+        <div className={classNames('containerMenu', { hide: !menuVisible })}>
           <div className={styles.containerMenuRelative}>
             {this.isResumeBehandlingEnabled()
             && (
