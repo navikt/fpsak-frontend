@@ -2,9 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
 import {
-  FlexColumn, FlexRow, FlexContainer,
-} from '@fpsak-frontend/shared-components';
-import {
   CheckboxField, DecimalField, SelectField,
 } from '@fpsak-frontend/form';
 import {
