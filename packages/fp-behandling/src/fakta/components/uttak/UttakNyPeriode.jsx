@@ -353,8 +353,8 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
     id: guid(),
     arbeidstidsprosent: values.arbeidstidprosent ? +values.arbeidstidprosent : null,
     updated: false,
-    bekreftet: false,
-    openForm: true,
+    bekreftet: true,
+    openForm: false,
     samtidigUttak: values.samtidigUttak,
     samtidigUttaksprosent: values.samtidigUttaksprosent,
     flerbarnsdager: values.flerbarnsdager,
@@ -362,6 +362,9 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
     fom: values.fom,
     tom: values.tom,
     isFromSøknad: false,
+    resultat: {
+      kode: uttakPeriodeVurdering.PERIODE_OK,
+    },
     saksebehandlersBegrunnelse: values.begrunnelse,
     uttakPeriodeType: periodeObjekt ? {
       kode: periodeObjekt.kode,
