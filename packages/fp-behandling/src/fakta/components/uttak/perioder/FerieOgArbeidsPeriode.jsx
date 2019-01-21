@@ -54,6 +54,8 @@ export const FerieOgArbeidsPeriode = ({
   };
 
   const withGradering = arbeidstidprosent !== null && arbeidstidprosent !== undefined && arbeidstidprosent > 0;
+  const periodeOkDisabled = withGradering && !bekreftet;
+
 
   return (
     <div>
@@ -77,6 +79,7 @@ export const FerieOgArbeidsPeriode = ({
               <RadioOption
                 label={{ id: 'UttakInfoPanel.PeriodenErOk' }}
                 value={uttakPeriodeVurdering.PERIODE_OK}
+                disabled={periodeOkDisabled}
               />
               <RadioOption
                 label={{ id: 'UttakInfoPanel.EndreSoknadsperioden' }}
