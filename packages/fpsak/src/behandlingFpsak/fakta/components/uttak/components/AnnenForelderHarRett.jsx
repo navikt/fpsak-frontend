@@ -5,7 +5,7 @@ import {
   required, minLength, maxLength, hasValidText,
 } from '@fpsak-frontend/utils';
 import {
-  AksjonspunktHelpText, VerticalSpacer, FlexContainer, FlexRow, FlexColumn,
+  AksjonspunktHelpText, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import {
   RadioGroupField, RadioOption, TextAreaField,
@@ -22,53 +22,37 @@ export const AnnenForelderHarRett = ({
   aksjonspunkter,
   readOnly,
 }) => (
-  <FlexContainer>
+  <React.Fragment>
     {!readOnly && (
-    <FlexRow>
-      <FlexColumn>
-        <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
-          {aksjonspunkter.map(ap => (
-            <FormattedMessage
-              key={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
-              id={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
-            />
-          ))}
+    <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
+      {aksjonspunkter.map(ap => (
+        <FormattedMessage
+          key={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
+          id={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
+        />
+      ))}
 
-        </AksjonspunktHelpText>
-      </FlexColumn>
-    </FlexRow>
+    </AksjonspunktHelpText>
     )
     }
+    <VerticalSpacer twentyPx />
+    <div className={styles.fauxColumn}>
+      <RadioGroupField name="annenForelderHarRett" validate={[required]} readOnly={readOnly} isEdited={!hasOpenAksjonspunkter}>
+        <RadioOption value label={{ id: 'UttakInfoPanel.AnnenForelderHarRett' }} />
+        <RadioOption value={false} label={{ id: 'UttakInfoPanel.AnnenForelderHarIkkeRett' }} />
+      </RadioGroupField>
 
-    <FlexRow>
-      <FlexColumn className={styles.fauxColumn}>
-        <VerticalSpacer twentyPx />
-        <FlexRow>
-          <FlexColumn>
-            <RadioGroupField name="annenForelderHarRett" validate={[required]} readOnly={readOnly} isEdited={!hasOpenAksjonspunkter}>
-              <RadioOption value label={{ id: 'UttakInfoPanel.AnnenForelderHarRett' }} />
-              <RadioOption value={false} label={{ id: 'UttakInfoPanel.AnnenForelderHarIkkeRett' }} />
-            </RadioGroupField>
-          </FlexColumn>
-        </FlexRow>
-
-        <FlexRow>
-          <FlexColumn>
-
-            <div className={styles.textAreaStyle}>
-              <TextAreaField
-                name="begrunnelse"
-                readOnly={readOnly}
-                label={{ id: 'UttakInfoPanel.BegrunnEndringene' }}
-                validate={[required, minLength3, maxLength4000, hasValidText]}
-                maxLength={4000}
-              />
-            </div>
-          </FlexColumn>
-        </FlexRow>
-      </FlexColumn>
-    </FlexRow>
-  </FlexContainer>
+      <div className={styles.textAreaStyle}>
+        <TextAreaField
+          name="begrunnelse"
+          readOnly={readOnly}
+          label={{ id: 'UttakInfoPanel.BegrunnEndringene' }}
+          validate={[required, minLength3, maxLength4000, hasValidText]}
+          maxLength={4000}
+        />
+      </div>
+    </div>
+  </React.Fragment>
 );
 
 AnnenForelderHarRett.propTypes = {

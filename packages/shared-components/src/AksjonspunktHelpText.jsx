@@ -27,7 +27,7 @@ const AksjonspunktHelpText = ({
 }) => {
   if (!isAksjonspunktOpen) {
     return (
-      <div>
+      <React.Fragment>
         {children.map(child => (
           <Normaltekst key={isObject(child) ? child.key : child} className={styles.wordwrap}>
             <strong>
@@ -38,7 +38,7 @@ const AksjonspunktHelpText = ({
             {child}
           </Normaltekst>
         ))}
-      </div>
+      </React.Fragment>
     );
   }
 
