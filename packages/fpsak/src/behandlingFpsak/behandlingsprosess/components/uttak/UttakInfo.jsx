@@ -160,38 +160,36 @@ export const UttakInfo = ({
           }
         </Column>
         <Column xs="3">
-          <FlexContainer>
-            <FlexRow className={styles.fieldHorizontal}>
-              <FlexColumn className={styles.textAlignRight}>
+          <>
+            <Row className={styles.fieldHorizontal}>
+              <Column className={styles.textAlignRight}>
                 {(harSoktOmFlerbarnsdager)
                 && (
-                  <CheckboxField
-                    key="flerbarnsdager"
-                    name="flerbarnsdager"
-                    label={{ id: 'UttakActivity.Flerbarnsdager' }}
-                    disabled={readOnly}
-                  />
-                )
-                }
-              </FlexColumn>
-            </FlexRow>
-            <FlexRow className={styles.fieldHorizontal}>
-              <FlexColumn className={styles.textAlignRight}>
+                <CheckboxField
+                  key="flerbarnsdager"
+                  name="flerbarnsdager"
+                  label={{ id: 'UttakActivity.Flerbarnsdager' }}
+                  disabled={readOnly}
+                />
+                )}
+              </Column>
+            </Row>
+            <Row className={styles.fieldHorizontal}>
+              <Column className={styles.textAlignRight}>
                 <CheckboxField
                   key="samtidigUttak"
                   name="samtidigUttak"
                   label={{ id: 'UttakActivity.SamtidigUttak' }}
                   disabled={readOnly}
                 />
-              </FlexColumn>
-
-            </FlexRow>
-          </FlexContainer>
+              </Column>
+            </Row>
+          </>
           {erSamtidigUttak
             && (
-              <FlexContainer>
-                <FlexRow className={styles.fieldHorizontal}>
-                  <FlexColumn className={styles.textAlignRight}>
+              <>
+                <Row className={styles.fieldHorizontal}>
+                  <Column className={styles.textAlignRight}>
                     <DecimalField
                       name="samtidigUttaksprosent"
                       bredde="XS"
@@ -207,10 +205,10 @@ export const UttakInfo = ({
                       }}
                       normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
                     />
-                  </FlexColumn>
-                  {!readOnly && <FlexColumn className={styles.suffix}>%</FlexColumn>}
-                </FlexRow>
-              </FlexContainer>
+                  </Column>
+                  {!readOnly && <Column className={styles.suffix}>%</Column>}
+                </Row>
+              </>
             )
           }
         </Column>
