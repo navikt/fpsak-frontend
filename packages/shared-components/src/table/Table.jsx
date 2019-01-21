@@ -12,6 +12,9 @@ const classNames = classnames.bind(styles);
 
 const EMPTY_STRING = 'EMPTY';
 
+const isString = value => typeof value === 'string';
+
+
 /**
  * Table
  *
@@ -28,7 +31,7 @@ const Table = ({
     <thead>
       <TableRow isHeader noHover={noHover}>
         {headerTextCodes.map((headerElement) => {
-          if (headerElement.startsWith(EMPTY_STRING)) {
+          if (isString(headerElement) && headerElement.startsWith(EMPTY_STRING)) {
             return <TableColumn key={headerElement}>&nbsp;</TableColumn>;
           }
           return (
