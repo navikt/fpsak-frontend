@@ -253,12 +253,14 @@ export class UttakImpl extends Component {
             };
             acc.FLERBARNSDAGER.arbforhold[index] = {
               trekkdager: aktivitetDays,
+              arbeidsforholdId: a.arbeidsforholdId,
             };
           } else {
             acc.FLERBARNSDAGER.arbforhold[index] = {
               trekkdager: (acc.FLERBARNSDAGER.arbforhold[index]
                 ? acc.FLERBARNSDAGER.arbforhold[index].trekkdager
                 : 0) + aktivitetDays,
+              arbeidsforholdId: a.arbeidsforholdId,
             };
           }
         }
@@ -271,12 +273,14 @@ export class UttakImpl extends Component {
           };
           acc[stonadskonto].arbforhold[index] = {
             trekkdager: aktivitetDays,
+            arbeidsforholdId: a.arbeidsforholdId,
           };
         } else {
           acc[stonadskonto].arbforhold[index] = {
             trekkdager: (acc[stonadskonto].arbforhold[index]
               ? acc[stonadskonto].arbforhold[index].trekkdager
               : 0) + aktivitetDays,
+            arbeidsforholdId: a.arbeidsforholdId,
           };
         }
       });
@@ -284,15 +288,27 @@ export class UttakImpl extends Component {
     }, {});
 
     Object.values(stonadskontoKopi.stonadskontoer).forEach((konto) => {
-      const minCallback = (acc, cur) => Math.min(acc.trekkdager, cur.trekkdager);
+      const minCallback = (acc, cur) => (acc.trekkdager ? Math.min(acc.trekkdager, cur.trekkdager) : cur.trekkdager);
       if (uttakResult[konto.stonadskontotype]) {
+        const stonadArbforhold = stonadskontoKopi.stonadskontoer[konto.stonadskontotype].aktivitetSaldoDtoList;
+        const uttakArbforhold = uttakResult[konto.stonadskontotype].arbforhold;
+        stonadArbforhold.forEach((sa) => {
+          const arbforholdObject = uttakArbforhold.find(ua => ua.arbeidsforholdId === sa.aktivitetIdentifikator.arbeidsforholdId);
+          if (!arbforholdObject) {
+            uttakArbforhold.push({ trekkdager: 0, arbeidsforholdId: sa.aktivitetIdentifikator.arbeidsforholdId });
+          }
+        });
+
         stonadskontoKopi.stonadskontoer[konto.stonadskontotype].saldo = uttakResult[konto.stonadskontotype].arbforhold.length > 1
           ? konto.maxDager - uttakResult[konto.stonadskontotype].arbforhold.reduce(minCallback)
           : konto.maxDager - uttakResult[konto.stonadskontotype].arbforhold[0].trekkdager;
-        stonadskontoKopi.stonadskontoer[konto.stonadskontotype].aktivitetSaldoDtoList = konto.aktivitetSaldoDtoList.map((a, index) => {
+        stonadskontoKopi.stonadskontoer[konto.stonadskontotype].aktivitetSaldoDtoList = konto.aktivitetSaldoDtoList.map((a) => {
           const arbforhold = { ...a };
-          arbforhold.saldo = konto.maxDager - (uttakResult[konto.stonadskontotype].arbforhold[index]
-            ? uttakResult[konto.stonadskontotype].arbforhold[index].trekkdager
+          const currentArbforhold = uttakResult[konto.stonadskontotype].arbforhold.find(
+            uttakR => uttakR.arbeidsforholdId === a.aktivitetIdentifikator.arbeidsforholdId,
+          );
+          arbforhold.saldo = konto.maxDager - (currentArbforhold
+            ? currentArbforhold.trekkdager
             : 0);
           return arbforhold;
         });
