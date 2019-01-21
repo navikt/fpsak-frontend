@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
+import { FormattedMessage } from 'react-intl';
 
 import Table from './Table';
 import TableColumn from './TableColumn';
@@ -12,6 +13,12 @@ describe('<Table>', () => {
     'FagsakList.Saksnummer',
     'FagsakList.Sakstype',
   ];
+
+  const formattedHeaderTextCodes = [
+    <FormattedMessage id="FagsakList.Saksnummer" />,
+    <FormattedMessage id="FagsakList.Sakstype" />,
+  ];
+
 
   it('skal vise korrekt antall kolonneheadere med korrekt tekst', () => {
     const callbackFunction = sinon.spy();
@@ -33,6 +40,28 @@ describe('<Table>', () => {
     expect(tableHeaderCols.first().childAt(0).prop('id')).to.eql('FagsakList.Saksnummer');
     expect(tableHeaderCols.last().childAt(0).prop('id')).to.eql('FagsakList.Sakstype');
   });
+
+  it('skal vise korrekt antall kolonneheadere med korrekt tekst for formatterte headere', () => {
+    const callbackFunction = sinon.spy();
+    const wrapper = shallow(
+      <Table headerTextCodes={formattedHeaderTextCodes} allowFormattedHeader>
+        <TableRow id="1" onMouseDownRow={callbackFunction} onKeyDownRow={callbackFunction}>
+          <TableColumn key={1}>{12345}</TableColumn>
+          <TableColumn key={2}>{23446}</TableColumn>
+        </TableRow>
+      </Table>,
+    );
+
+    expect(wrapper.find('table')).to.have.length(1);
+    const tableHeaderRow = wrapper.find('thead').children();
+    expect(tableHeaderRow).to.have.length(1);
+
+    const tableHeaderCols = tableHeaderRow.children();
+    expect(tableHeaderCols).to.have.length(2);
+    expect(tableHeaderCols.first().childAt(0).prop('id')).to.eql('FagsakList.Saksnummer');
+    expect(tableHeaderCols.last().childAt(0).prop('id')).to.eql('FagsakList.Sakstype');
+  });
+
 
   it('skal vise korrekt antall rader og kolonner', () => {
     const callbackFunction = sinon.spy();
