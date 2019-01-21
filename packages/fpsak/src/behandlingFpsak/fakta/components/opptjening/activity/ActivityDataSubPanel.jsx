@@ -19,7 +19,7 @@ const ytelseTypes = [OAType.SYKEPENGER, OAType.FORELDREPENGER, OAType.PLEIEPENGE
 const isOfType = (selectedActivityType, ...opptjeningAktivitetType) => selectedActivityType && opptjeningAktivitetType.includes(selectedActivityType.kode);
 
 const minValue0 = minValue(0);
-const maxValue100 = maxValue(100);
+const maxValue200 = maxValue(200);
 
 const getOppdragsgiverMessageId = selectedActivityType => (isOfType(selectedActivityType, OAType.FRILANS)
   ? 'ActivityPanel.Oppdragsgiver' : 'ActivityPanel.Arbeidsgiver');
@@ -97,7 +97,7 @@ const ActivityDataSubPanel = ({
           <DecimalField
             name="stillingsandel"
             label={{ id: 'ActivityPanel.Stillingsandel' }}
-            validate={[required, minValue0, maxValue100, hasValidDecimal]}
+            validate={[required, minValue0, maxValue200, hasValidDecimal]}
             readOnly={readOnly || !isManuallyAdded}
             bredde="S"
             format={value => (readOnly || !isManuallyAdded ? `${value} %` : value)}
