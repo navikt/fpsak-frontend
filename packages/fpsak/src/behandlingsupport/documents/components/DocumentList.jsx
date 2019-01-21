@@ -98,9 +98,9 @@ const DocumentList = ({
             <TableColumn>
               {isTextMoreThan25char(document.gjelderFor)
               && (
-              <Tooltip header={<Normaltekst>{document.gjelderFor}</Normaltekst>}>
-                {trimText(document.gjelderFor)}
-              </Tooltip>
+                <Tooltip onFocus={{ show: true }} header={<Normaltekst>{document.gjelderFor}</Normaltekst>}>
+                  {trimText(document.gjelderFor)}
+                </Tooltip>
               )
             }
               {!isTextMoreThan25char(document.gjelderFor)
