@@ -148,7 +148,7 @@ OppholdINorgePanel.validate = (values) => {
   if (values.harFremtidigeOppholdUtenlands === undefined) {
     errors.harFremtidigeOppholdUtenlands = isRequiredMessage();
   } else if (values.harFremtidigeOppholdUtenlands) {
-    errors.fremtidigeOppholdUtenlands = UtenlandsOppholdField.validate(values.fremtidigeOppholdUtenlands, { todayOrAfter: true });
+    errors.fremtidigeOppholdUtenlands = UtenlandsOppholdField.validate(values.fremtidigeOppholdUtenlands);
   }
   return errors;
 };

@@ -6,7 +6,7 @@ import { expect } from 'chai';
 import {
   ISO_DATE_FORMAT,
   invalidDateMessage, dateNotBeforeOrEqualMessage, dateRangesOverlappingMessage,
-  dateNotAfterOrEqualMessage, isRequiredMessage,
+  isRequiredMessage,
 } from '@fpsak-frontend/utils';
 
 import SoknadData from '../../SoknadData';
@@ -142,27 +142,6 @@ describe('<OppholdINorgePanel>', () => {
         expect(errorsWithInvalidDates.fremtidigeOppholdUtenlands[0].periodeFom).to.be.an('array').that.eql(invalidDateMessage());
         expect(errorsWithInvalidDates.fremtidigeOppholdUtenlands[0].periodeTom).to.be.an('array').that.eql(invalidDateMessage());
         expect(errorsWithInvalidDates.fremtidigeOppholdUtenlands[1]).to.not.exist;
-
-        expect(errorsWithValidDates.fremtidigeOppholdUtenlands).to.not.exist;
-      });
-
-      it('skal validere at alle datoer er lik eller etter dagens dato', () => {
-        const errorsWithInvalidDates = OppholdINorgePanel.validate({
-          harFremtidigeOppholdUtenlands: true,
-          fremtidigeOppholdUtenlands: [getPeriodDaysFromToday(15, 20), getPeriodDaysFromToday(-1, +1)],
-        });
-        const errorsWithValidDates = OppholdINorgePanel.validate({
-          harFremtidigeOppholdUtenlands: true,
-          fremtidigeOppholdUtenlands: [
-            getPeriodDaysFromToday(5, 10),
-            getPeriodDaysFromToday(15, 20),
-          ],
-        });
-
-        expect(errorsWithInvalidDates.fremtidigeOppholdUtenlands).to.be.an('array');
-        expect(errorsWithInvalidDates.fremtidigeOppholdUtenlands[1].periodeTom).to.not.exist;
-        expect(errorsWithInvalidDates.fremtidigeOppholdUtenlands[1].periodeFom).to.be.an('array');
-        expect(errorsWithInvalidDates.fremtidigeOppholdUtenlands[1].periodeFom[0].id).to.eql(dateNotAfterOrEqualMessage()[0].id);
 
         expect(errorsWithValidDates.fremtidigeOppholdUtenlands).to.not.exist;
       });
