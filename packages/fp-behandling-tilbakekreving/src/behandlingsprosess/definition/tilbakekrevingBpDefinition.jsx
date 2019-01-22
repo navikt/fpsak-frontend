@@ -1,5 +1,12 @@
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+<<<<<<< HEAD:packages/fp-behandling-tilbakekreving/src/behandlingsprosess/definition/tilbakekrevingBpDefinition.jsx
 import { behandlingspunktCodes as bpc, BehandlingspunktProperties } from '@fpsak-frontend/fp-behandling-felles';
+=======
+import bpc from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
+import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+
+export const getTilbakekrevingStatus = () => vut.OPPFYLT;
+>>>>>>> NOJIRA struktur for tilbakekreving behandlingsprosses:packages/fpsak/src/behandlingTilbakekreving/behandlingsprosess/definition/tilbakekrevingBpDefinition.jsx
 
 /**
  * Rekkefølgen i listene under bestemmer behandlingspunkt-rekkefølgen i GUI.
@@ -8,7 +15,8 @@ import { behandlingspunktCodes as bpc, BehandlingspunktProperties } from '@fpsak
 const tilbakekrevingBuilders = [
   new BehandlingspunktProperties.Builder(bpc.TILBAKEKREVING, 'Tilbakekreving')
     .withAksjonspunktCodes(ac.TILBAKEKREVING)
-    .withVisibilityWhen(() => true),
+    .withVisibilityWhen(() => true)
+    .withStatus(getTilbakekrevingStatus),
   new BehandlingspunktProperties.Builder(bpc.VEDTAK, 'Vedtak')
     .withAksjonspunktCodes(ac.FORESLA_VEDTAK)
     .withVisibilityWhen(() => true),
