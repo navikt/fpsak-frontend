@@ -1105,6 +1105,7 @@
   "Avregning.feilen": "Om feilen helt eller delvis kan tilskrives NAV",
   "Avregning.størrelsenAvBeløp": "Størrelsen på feilutbetalt beløp",
   "Avregning.tidspunktAvFeilutbetaling": "Hvor lang tid siden feilutbetaling fant sted",
+  "Avregning.bruker": "Bruker",
 
   "Beregningsgrunnlag.Info": "Fakta for beregningsgrunnlag",
   "Beregningsgrunnlag.Title": "Beregning",

@@ -1,8 +1,6 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
-.table {
-  background: @white;
-  border-radius: 5px;
+.tableWrapper {
   margin-top: 20px;
   overflow-x: auto;
   padding: 10px;
@@ -10,70 +8,78 @@
   .tableTitle {
     font-weight: bold;
   }
+}
 
-  table {
-    border: 0;
-    margin-bottom: 40px;
+.simuleringTable {
+  border: 0;
+  margin-bottom: 40px;
 
-    .rodTekst {
-      color: @navRod;
-    }
+  .rodTekst {
+    color: @navRod;
+  }
 
-    .lastColumn {
-      border-left: dashed 1px @navGra40;
-      margin-left: 20px;
-    }
+  .lastColumn {
+    border-left: dashed 1px @navGra40;
+    margin-left: 20px;
+  }
 
-    tr {
+  tr {
+    display: flex;
+
+    td {
+      border: 0;
       display: flex;
+      justify-content: flex-end;
+      width: 80px;
+    }
 
-      td {
-        border: 0;
+    td:first-child {
+      justify-content: flex-start;
+      width: 300px;
+    }
+  }
+
+  tr:after {
+    content: '';
+    flex-grow: 1;
+  }
+
+  thead {
+    tr {
+      border-bottom: solid 1px @navGra40;
+    }
+
+    td {
+      padding: 0;
+    }
+
+    td:last-child {
+      span {
+        align-items: center;
         display: flex;
+        height: 100%;
         justify-content: flex-end;
-        width: 80px;
-      }
-
-      td:first-child {
-        justify-content: flex-start;
-        width: 300px;
+        width: 100%;
       }
     }
 
-    tr:after {
-      content: '';
-      flex-grow: 1;
+    td {
+      .nextPeriod {
+        border-left: dashed 1px @navGra40;
+        margin-right: -20px;
+        padding: 8px;
+      }
+
+      .normalPeriod {
+        padding: 8px;
+      }
     }
+  }
 
-    thead {
-      tr {
-        border-bottom: solid 1px @navGra40;
-      }
-
-      td {
-        padding: 0;
-      }
-
-      td:last-child {
-        span {
-          align-items: center;
-          display: flex;
-          height: 100%;
-          justify-content: flex-end;
-          width: 100%;
-        }
-      }
-
-      td {
-        .nextPeriod {
-          border-left: dashed 1px @navGra40;
-          margin-right: -20px;
-          padding: 8px;
-        }
-
-        .normalPeriod {
-          padding: 8px;
-        }
+  tbody {
+    tr {
+      &:first-child td {
+        border-top: 0;
       }
     }
   }
