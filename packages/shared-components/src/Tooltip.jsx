@@ -46,7 +46,7 @@ Tooltip.propTypes = {
 
 Tooltip.defaultProps = {
   body: undefined,
-  show: true,
+  show: false,
   alignArrowLeft: false,
 };
 

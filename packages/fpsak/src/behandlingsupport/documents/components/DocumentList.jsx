@@ -98,7 +98,7 @@ const DocumentList = ({
             <TableColumn>
               {isTextMoreThan25char(document.gjelderFor)
               && (
-                <Tooltip onFocus={{ show: true }} header={<Normaltekst>{document.gjelderFor}</Normaltekst>}>
+                <Tooltip header={<Normaltekst>{document.gjelderFor}</Normaltekst>}>
                   {trimText(document.gjelderFor)}
                 </Tooltip>
               )
