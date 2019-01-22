@@ -253,14 +253,14 @@ export class UttakImpl extends Component {
             };
             acc.FLERBARNSDAGER.arbforhold[index] = {
               trekkdager: aktivitetDays,
-              arbeidsforholdId: a.arbeidsforholdId,
+              arbeidsforholdId: a.arbeidsgiver.identifikator + a.arbeidsgiver.navn,
             };
           } else {
             acc.FLERBARNSDAGER.arbforhold[index] = {
               trekkdager: (acc.FLERBARNSDAGER.arbforhold[index]
                 ? acc.FLERBARNSDAGER.arbforhold[index].trekkdager
                 : 0) + aktivitetDays,
-              arbeidsforholdId: a.arbeidsforholdId,
+              arbeidsforholdId: a.arbeidsgiver.identifikator + a.arbeidsgiver.navn,
             };
           }
         }
@@ -273,14 +273,14 @@ export class UttakImpl extends Component {
           };
           acc[stonadskonto].arbforhold[index] = {
             trekkdager: aktivitetDays,
-            arbeidsforholdId: a.arbeidsforholdId,
+            arbeidsforholdId: a.arbeidsgiver.identifikator + a.arbeidsgiver.navn,
           };
         } else {
           acc[stonadskonto].arbforhold[index] = {
             trekkdager: (acc[stonadskonto].arbforhold[index]
               ? acc[stonadskonto].arbforhold[index].trekkdager
               : 0) + aktivitetDays,
-            arbeidsforholdId: a.arbeidsforholdId,
+            arbeidsforholdId: a.arbeidsgiver.identifikator + a.arbeidsgiver.navn,
           };
         }
       });
@@ -293,7 +293,10 @@ export class UttakImpl extends Component {
         const stonadArbforhold = stonadskontoKopi.stonadskontoer[konto.stonadskontotype].aktivitetSaldoDtoList;
         const uttakArbforhold = uttakResult[konto.stonadskontotype].arbforhold;
         stonadArbforhold.forEach((sa) => {
-          const arbforholdObject = uttakArbforhold.find(ua => ua.arbeidsforholdId === sa.aktivitetIdentifikator.arbeidsforholdId);
+          const arbforholdObject = uttakArbforhold.find(
+            ua => ua.arbeidsforholdId === sa.aktivitetIdentifikator.arbeidsgiver.identifikator
+            + sa.aktivitetIdentifikator.arbeidsgiver.navn,
+          );
           if (!arbforholdObject) {
             uttakArbforhold.push({ trekkdager: 0, arbeidsforholdId: sa.aktivitetIdentifikator.arbeidsforholdId });
           }
@@ -305,7 +308,8 @@ export class UttakImpl extends Component {
         stonadskontoKopi.stonadskontoer[konto.stonadskontotype].aktivitetSaldoDtoList = konto.aktivitetSaldoDtoList.map((a) => {
           const arbforhold = { ...a };
           const currentArbforhold = uttakResult[konto.stonadskontotype].arbforhold.find(
-            uttakR => uttakR.arbeidsforholdId === a.aktivitetIdentifikator.arbeidsforholdId,
+            uttakR => uttakR.arbeidsforholdId === a.aktivitetIdentifikator.arbeidsgiver.identifikator
+            + a.aktivitetIdentifikator.arbeidsgiver.navn,
           );
           arbforhold.saldo = konto.maxDager - (currentArbforhold
             ? currentArbforhold.trekkdager
