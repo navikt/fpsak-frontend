@@ -2,66 +2,55 @@
 
 .behandlingspunkt {
   cursor: pointer;
-  height: 28px;
-  width: 28px;
-}
-
-.behandlingspunkt:focus {
-  outline: none;
-}
-
-.behandlingspunktGray {
-  cursor: default;
-  height: 28px;
-  width: 28px;
-}
-
-.behandlingspunktGray:focus {
-  outline: none;
-}
-
-.lowerText {
   display: flex;
-  justify-content: center;
-  min-width: 100px;
-  top: 25px;
-}
-
-.space {
-  min-width: 240px;
+  flex-direction: column;
+  position: relative;
+  text-align: center;
 
   &:after {
+    background: @navGra60;
     content: '';
-    min-width: 400px;
+    display: block;
+    height: 1px;
+    position: absolute;
+    right: 66px;
+    top: 12px;
+    width: 44px;
+  }
+
+  &:first-child:after {
+    display: none;
+  }
+
+  img {
+    height: 26px;
+    outline: none;
+    width: 26px;
+  }
+
+  &.active {
+
+    &:before {
+      background-color: @white;
+      border: 1px solid @navGra60;
+      border-bottom-width: 0;
+      border-right-width: 0;
+      bottom: -32px;
+      content: '';
+      height: 1rem;
+      left: 50%;
+      margin-left: -12px;
+      position: absolute;
+      transform: rotate(45deg) translateY(-100%) translateZ(0);
+      transform-origin: 0 0;
+      width: 1rem;
+      z-index: 2;
+    }
   }
 }
 
-.posi {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.wrapperVilkar {
-  display: inline-block;
-  position: relative;
-  width: 100px;
-}
-
-.innerContainer {
-  width: 100%;
-}
-
-.horizontalLine {
-  border: 0;
-  border-top: 1px solid #cccccc;
-  display: block;
-  height: 1px;
-  margin: 1em 0;
-  padding: 0;
-}
-
-span > .vilkarText {
+.label {
   font-size: 0.775rem;
-  margin-top: 4px;
+  margin-top: 6px;
+  min-width: 90px;
 }

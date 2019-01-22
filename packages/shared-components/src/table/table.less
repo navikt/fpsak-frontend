@@ -1,3 +1,5 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
 .table {
   background-color: transparent;
   border-collapse: collapse;
@@ -5,54 +7,45 @@
   margin-bottom: 1rem;
   max-width: 100%;
   width: 100%;
-}
 
-.table tbody tr:hover {
-	background-color: #f5f5f5;
-}
+  thead {
+    display: table-header-group;
+  }
 
-.tabell tbody tr:first-child th,
-.tabell tbody tr:first-child td {
-	border-top: 1px solid #b7b1a9;
-	border-top-width: 2px;
-}
+  caption {
+    color: @navGra60;
+    left: -3000px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    position: absolute;
+    text-align: left;
+  }
 
-.tabell thead {
-	display: table-header-group;
-}
+  tbody {
 
-.table caption {
-  color: #7f756c;
-  left: -3000px;
-  padding-bottom: 8px;
-	padding-top: 8px;
-  position: absolute;
-	text-align: left;
-}
+    tr {
 
-.tableNoHover {
-  background-color: transparent;
-  border-collapse: collapse;
-  border-spacing: 0;
-  margin-bottom: 1rem;
-  max-width: 100%;
-  width: 100%;
-}
+      &:first-child th,
+      &:first-child td {
+        border-top: 1px solid @navGra40;
+        border-top-width: 2px;
+      }
 
-.tableNoHover tbody tr:first-child td {
-	border-top: 1px solid #b7b1a9;
-	border-top-width: 2px;
-}
+      &:hover {
+        background-color: @navLysGra;
+      }
+    }
+  }
 
-.tableNoHover thead {
-	display: table-header-group;
-}
+  &.noHover {
+    tbody {
 
-.tableNoHover caption {
-  color: #7f756c;
-  left: -3000px;
-  padding-bottom: 8px;
-	padding-top: 8px;
-  position: absolute;
-  text-align: left;
+      tr {
+
+        &:hover {
+          background-color: transparent;
+        }
+      }
+    }
+  }
 }

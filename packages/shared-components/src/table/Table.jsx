@@ -27,7 +27,7 @@ const Table = ({
   children,
   noHover,
 }) => (
-  <table className={classNames({ [classNameTable]: classNameTable, tableNoHover: noHover, table: !noHover })}>
+  <table className={classNames('table', { [classNameTable]: classNameTable, noHover })}>
     <thead>
       <TableRow isHeader noHover={noHover}>
         {headerTextCodes.map((headerElement) => {

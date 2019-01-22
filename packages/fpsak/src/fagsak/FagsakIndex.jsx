@@ -10,7 +10,6 @@ import FagsakProfileIndex from 'fagsakprofile/FagsakProfileIndex';
 import trackRouteParam from 'app/data/trackRouteParam';
 import requireProps from 'app/data/requireProps';
 import { getRequestPollingMessage } from 'app/pollingMessageDuck';
-import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { setSelectedSaksnummer } from './duck';
 import { getSelectedSaksnummer } from './fagsakSelectors';
 import FagsakResolver from './FagsakResolver';
@@ -23,7 +22,7 @@ import FagsakGrid from './components/FagsakGrid';
  * Container komponent. Er rot for for fagsakdelen av hovedvinduet, og har ansvar å legge valgt saksnummer fra URL-en i staten.
  */
 export const FagsakIndex = ({ selectedSaksnummer, requestPendingMessage }) => (
-  <ElementWrapper>
+  <React.Fragment>
     <FagsakResolver key={selectedSaksnummer}>
       <FagsakGrid
         behandlingContent={<Route strict path={behandlingerPath} component={BehandlingerIndex} />}
@@ -32,7 +31,7 @@ export const FagsakIndex = ({ selectedSaksnummer, requestPendingMessage }) => (
       />
     </FagsakResolver>
     {requestPendingMessage && <DataFetchPendingModal pendingMessage={requestPendingMessage} />}
-  </ElementWrapper>
+  </React.Fragment>
 );
 
 FagsakIndex.propTypes = {

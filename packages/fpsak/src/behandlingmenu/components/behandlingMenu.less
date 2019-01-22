@@ -3,65 +3,56 @@
 .container {
   width: 200px;
   z-index: 2;
-}
 
-.containerHeading {
-  border: solid #0074df;
-  border-radius: 5px;
-  color: #0074df;
-  cursor: pointer;
-  font-weight: bold;
-  letter-spacing: 0;
-  padding: 7px 5px 7px 10px;
-  text-align: center;
-  text-transform: none;
-  width: 200px;
-}
+  .containerHeading {
+    border: solid @navBla;
+    border-radius: 5px;
+    color: @navBla;
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 0;
+    padding: 7px 5px 7px 10px;
+    text-align: center;
+    text-transform: none;
+    width: 200px;
 
-.containerHeading:hover {
-  background-color: #0074df;
-  border-color: @navBla;
-  color: @white;
-}
+    &.menuVisible {
+      background-color: @navBla;
+      color: @white;
+    }
 
-.containerHeadingOpen {
-  background-color: #0074df;
-  border: solid @navBla;
-  border-radius: 5px;
-  color: @white;
-  cursor: pointer;
-  font-weight: bold;
-  letter-spacing: 0;
-  padding: 7px 5px 7px 10px;
-  text-align: center;
-  text-transform: none;
-  width: 200px;
-}
+    .image {
+      float: right;
+      margin-top: 4px;
+      width: 20px;
+    }
 
-.image {
-  cursor: pointer;
-  float: right;
-  margin-top: 5px;
-}
+    &:hover {
+      background-color: @navBla;
+      border-color: @navBla;
+      color: @white;
+    }
+  }
 
-.containerMenu {
-  position: absolute;
-  z-index: 300;
-}
+  .containerMenu {
+    position: absolute;
+    z-index: 300;
 
-.containerMenuRelative {
-  background-color: @white;
-  border: 1px solid #949899;
-  border-radius: 5px;
-  color: @navBla;
-  cursor: pointer;
-  left: -60px;
-  padding: 10px 10px 10px 10px;
-  position: relative;
-  width: 260px;
-  z-index: 1;
-}
+    &.hide {
+      display: none;
+    }
 
-.hide {
-  display: none;
+    .containerMenuRelative {
+      background-color: @white;
+      border: 1px solid @navGra20;
+      border-radius: 5px;
+      color: @navBla;
+      cursor: pointer;
+      left: -60px;
+      padding: 10px 10px 10px 10px;
+      position: relative;
+      width: 260px;
+      z-index: 1;
+    }
+  }
 }
