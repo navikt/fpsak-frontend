@@ -6,7 +6,7 @@
 }
 
 // arrowlines
-.arrowLine {
+.arrowLine() {
   composes: panel panel-relatert from '@fpsak-frontend/assets/styles/arrowLineModigDesign.less';
   margin-top: 16px;
 }
@@ -23,7 +23,7 @@
 
 .arrowLines (@i: length(@arrows) + 1) when (@i > 0) {
   .arrowLine_@{i} {
-    composes: arrowLine;
+    .arrowLine;
   }
 
   .arrowLine_@{i}:before {

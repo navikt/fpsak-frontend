@@ -18,6 +18,8 @@ const classNames = classnames.bind(styles);
  * Presentasjonskomponent. Viser behandlingspunkt-ikonene som lar den NAV-ansatte velge behandingspunkt.
  * I tillegg vises navn og merknad knyttet til behandlingspunktet.
  */
+
+// TODO bruke samme behandlingsprosesspanel som i fpsak
 export const BehandlingsprosessPanel = ({
   behandlingspunkter,
   selectedBehandlingspunkt,
