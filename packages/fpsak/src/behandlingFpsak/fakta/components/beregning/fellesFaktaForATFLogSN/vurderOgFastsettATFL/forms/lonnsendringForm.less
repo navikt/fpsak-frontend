@@ -1,6 +1,6 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
-.arrowLine {
+.arrowLine() {
   composes: panel panel-relatert from '@fpsak-frontend/assets/styles/arrowLineModigDesign.less';
   margin-bottom: 10px;
   padding-bottom: 10px;
@@ -23,7 +23,7 @@
   }
 }
 
-.arrowLineLonnsendring {
+.arrowLineLonnsendring() {
   composes: arrowLine;
   max-width: 900px;
 }
@@ -32,7 +32,7 @@
   left: 0;
 }
 
-.arrowLineIngenLonnsendring {
+.arrowLineIngenLonnsendring() {
   composes: arrowLine;
   max-width: 1000px;
 }
