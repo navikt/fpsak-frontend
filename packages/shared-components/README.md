@@ -1,7 +1,7 @@
 # shared-compontens
 
 ```
-yarn install @fpsak-frontend/shared-compontens
+yarn add @fpsak-frontend/shared-compontens
 ```
 
 ### AksjonspunktHelpText
