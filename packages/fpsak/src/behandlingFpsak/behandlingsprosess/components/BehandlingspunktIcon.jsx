@@ -39,7 +39,7 @@ export const BehandlingspunktIcon = ({
   const title = intl.formatMessage({ id: titleCode });
 
   return (
-    <div className={classNames(styles.behandlingspunkt, { active: isSelectedBehandlingspunkt })} key={title}>
+    <div className={classNames('behandlingspunkt', { active: isSelectedBehandlingspunkt })} key={title}>
       <Image
         className={isIkkeVurdert ? styles.behandlingspunktIkonDisabled : styles.behandlingspunktIkon}
         alt={title}
