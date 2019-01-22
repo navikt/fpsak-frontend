@@ -280,7 +280,7 @@ const checkValidStonadKonto = (uttakPerioder, stonadskontoer) => {
   let errors = null;
   uttakPerioder.forEach((periode) => {
     const ikkeGyldigKonto = periode.aktiviteter.filter(a => !(Object.prototype.hasOwnProperty.call(stonadskontoer, a.stønadskontoType.kode))
-      && (a.days > 0 || a.weeks > 0));
+      && (a.days >= 0 || a.weeks >= 0));
     if (ikkeGyldigKonto && ikkeGyldigKonto.length > 0) {
       errors = {
         _error:
