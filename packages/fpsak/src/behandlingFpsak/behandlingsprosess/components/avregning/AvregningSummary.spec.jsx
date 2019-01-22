@@ -25,7 +25,7 @@ describe('<AvregningSummary>', () => {
     const element = wrapper.find('Element');
     expect(element).to.have.length(1);
     const normaltekst = wrapper.find('Normaltekst');
-    expect(normaltekst).to.have.length(3);
+    expect(normaltekst).to.have.length(4);
     const row = wrapper.find('Row');
     expect(row).has.length(3);
     const column = wrapper.find('Column');
@@ -42,6 +42,7 @@ describe('<AvregningSummary>', () => {
     />);
 
     const message = wrapper.find('FormattedMessage');
-    expect(message.at(0).prop('id')).is.eql('Avregning.ingenPerioder');
+    expect(message.at(0).prop('id')).is.eql('Avregning.bruker');
+    expect(message.at(1).prop('id')).is.eql('Avregning.ingenPerioder');
   });
 });

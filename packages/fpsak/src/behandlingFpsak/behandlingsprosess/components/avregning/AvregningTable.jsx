@@ -93,7 +93,7 @@ const AvregningTable = ({
     const rangeOfMonths = getPeriod(ingenPerioderMedAvvik, simuleringResultat.periodeFom, mottaker);
     const nesteMåned = mottaker.nestUtbPeriodeTom;
     return (
-      <div className={styles.table} key={`tableIndex${mottakerIndex + 1}`}>
+      <div className={styles.tableWrapper} key={`tableIndex${mottakerIndex + 1}`}>
         { tableTitle(mottaker) }
         <Table
           headerTextCodes={getHeaderCodes(
@@ -104,6 +104,7 @@ const AvregningTable = ({
           )}
           allowFormattedHeader
           key={`tableIndex${mottakerIndex + 1}`}
+          classNameTable={styles.simuleringTable}
         >
           {[].concat(
             ...mottaker.resultatPerFagområde.map((fagOmråde, fagIndex) => fagOmråde.rader.filter((rad) => {
