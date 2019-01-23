@@ -11,14 +11,14 @@ class ReduxEvents {
     return this;
   }
 
-  withPollingMessageActionCreator = (pollingMessageActionCreator: () => void) => {
+  withPollingMessageActionCreator = (pollingMessageActionCreator: (data: any) => void) => {
     this.pollingMessageActionCreator = pollingMessageActionCreator;
     return this;
   }
 
-  getErrorMessageActionCreator = () => this.errorActionCreator;
+  getErrorMessageActionCreator = (): (data: any) => void => this.errorActionCreator;
 
-  getPollingMessageActionCreator = () => this.pollingMessageActionCreator;
+  getPollingMessageActionCreator = (): (data: any) => void => this.pollingMessageActionCreator;
 }
 
 export default ReduxEvents;

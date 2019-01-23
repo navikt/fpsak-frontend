@@ -70,7 +70,7 @@ describe('RequestErrorEventHandler', () => {
         data: {
           type: ErrorTypes.TOMT_RESULTAT_FEIL,
         },
-        status: 200,
+        status: 400,
       },
     };
     errorEventHandler.handleError(error);
@@ -88,7 +88,7 @@ describe('RequestErrorEventHandler', () => {
     const error = {
       response: {
         statusText: 'Dette er en feil',
-        status: 200,
+        status: 400,
       },
     };
     errorEventHandler.handleError(error);

@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 
-import fpsakApi from 'data/fpsakApi';
+import { reduxRestApi } from 'data/fpsakApi';
 import {
   behandlingReducer, setSelectedBehandlingId,
 } from './duck';
@@ -15,7 +15,7 @@ describe('Behandling-reducer', () => {
   let mockAxios;
 
   before(() => {
-    mockAxios = new MockAdapter(fpsakApi.getAxiosHttpClientApi());
+    mockAxios = new MockAdapter(reduxRestApi.getHttpClientApi().axiosInstance);
   });
 
   afterEach(() => {

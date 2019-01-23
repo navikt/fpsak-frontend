@@ -45,8 +45,11 @@ describe('RequestProcess', () => {
   };
 
   it('skal hente data via get-kall', async () => {
+    const response = {
+      data: 'data',
+    };
     const httpClientMock = {
-      get: () => ({ data: 'data' }),
+      get: () => Promise.resolve(response),
     };
 
     const process = new RequestProcess(httpClientMock, httpClientMock.get, 'behandling', defaultConfig);
@@ -91,7 +94,7 @@ describe('RequestProcess', () => {
     }];
 
     const httpClientMock = {
-      get: () => allResponses.shift(),
+      get: () => Promise.resolve(allResponses.shift()),
     };
 
     const process = new RequestProcess(httpClientMock, httpClientMock.get, 'behandling', defaultConfig);
@@ -149,7 +152,7 @@ describe('RequestProcess', () => {
     }];
 
     const httpClientMock = {
-      get: () => allResponses.shift(),
+      get: () => Promise.resolve(allResponses.shift()),
     };
 
     const config = {
@@ -185,9 +188,7 @@ describe('RequestProcess', () => {
       }],
     };
     const httpClientMock = {
-      get: () => ({
-        data: responseData,
-      }),
+      get: () => Promise.resolve({ data: responseData }),
     };
 
     const config = {
@@ -218,13 +219,13 @@ describe('RequestProcess', () => {
     }];
 
     const httpClientMock = {
-      getAsync: () => ({
+      getAsync: () => Promise.resolve({
         status: HTTP_ACCEPTED,
         headers: {
           location: 'http://polling.url',
         },
       }),
-      get: () => allGetResults.shift(),
+      get: () => Promise.resolve(allGetResults.shift()),
     };
 
     const params = {
@@ -263,13 +264,13 @@ describe('RequestProcess', () => {
     }];
 
     const httpClientMock = {
-      getAsync: () => ({
+      getAsync: () => Promise.resolve({
         status: HTTP_ACCEPTED,
         headers: {
           location: 'http://polling.url',
         },
       }),
-      get: () => allGetResults.shift(),
+      get: () => Promise.resolve(allGetResults.shift()),
     };
 
     const params = {
@@ -301,13 +302,13 @@ describe('RequestProcess', () => {
 
   it('skal utføre long-polling request som en så avbryter manuelt', async () => {
     const httpClientMock = {
-      getAsync: () => ({
+      getAsync: () => Promise.resolve({
         status: HTTP_ACCEPTED,
         headers: {
           location: 'test',
         },
       }),
-      get: () => ({
+      get: () => Promise.resolve({
         data: {
           status: asyncPollingStatus.PENDING,
           message: 'Polling continues',
@@ -333,7 +334,7 @@ describe('RequestProcess', () => {
 
   it('skal hente data med nullverdi', async () => {
     const httpClientMock = {
-      get: () => ({ data: null }),
+      get: () => Promise.resolve({ data: null }),
     };
 
     const process = new RequestProcess(httpClientMock, httpClientMock.get, 'behandling', defaultConfig);

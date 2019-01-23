@@ -19,9 +19,9 @@ class ErrorHandler {
 
   getErrorActionCreator = () => addErrorMessage;
 
-  showCrashMessage = showCrashMessage;
+  getCrashMessageActionCreator = () => showCrashMessage;
 
-  removeErrorMessage = removeErrorMessage;
+  getRemoveErrorMessageActionCreator = () => removeErrorMessage;
 
   getAllErrorMessages = createSelector([getErrorMessages, getCrashMessage],
     (errorMessages, crashMessage) => this.errorFormatter

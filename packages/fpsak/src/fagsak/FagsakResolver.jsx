@@ -108,7 +108,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   fetchFagsakInfo: fetchFagsakInfoActionCreator,
   resetFagsakContext: resetFagsakContextActionCreator,
   resetFagsakSearch: resetFagsakSearchActionCreator,
-  removeErrorMessage: errorHandler.removeErrorMessage,
+  removeErrorMessage: errorHandler.getRemoveErrorMessageActionCreator(),
 }, dispatch);
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({

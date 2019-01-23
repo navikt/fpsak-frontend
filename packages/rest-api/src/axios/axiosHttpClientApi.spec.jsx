@@ -176,49 +176,4 @@ describe('axiosHttpClientApi', () => {
     const isAsync = httpClientApi.isAsyncRestMethod(httpClientApi.putAsync);
     expect(isAsync).to.true;
   });
-
-  it('skal finne tekst-representasjonen av rest-kallet', () => {
-    const result = httpClientApi.getMethodName(httpClientApi.putAsync);
-    expect(result).to.eql('PUT');
-  });
-
-  it('skal legge til felles håndtering av alle suksessfulle kall', async () => {
-    const url = 'www.test.no';
-    mockAxios
-      .onGet(url)
-      .reply(200, {
-        resource: true,
-      });
-
-    let successHandlerInput = { status: '' };
-    const onSuccessHandler = (response) => { successHandlerInput = response; };
-    httpClientApi.setResponseHandlers(onSuccessHandler, () => undefined);
-
-    const data = {
-      id: 1,
-    };
-    await httpClientApi.get(url, data);
-
-    expect(successHandlerInput.status).to.eql(200);
-  });
-
-  it('skal legge til felles håndtering av alle feilende kall', async () => {
-    const url = 'www.test.no';
-    mockAxios
-      .onGet(url)
-      .reply(404);
-
-    let errorHandlerInput = { name: '', message: '', response: { status: '' } };
-    const onErrorHandler = (response) => { errorHandlerInput = response; };
-    httpClientApi.setResponseHandlers(() => undefined, onErrorHandler);
-
-    const data = {
-      id: 1,
-    };
-    await httpClientApi.get(url, data);
-
-    expect(errorHandlerInput.name).is.eql('Error');
-    expect(errorHandlerInput.message).is.eql('Request failed with status code 404');
-    expect(errorHandlerInput.response.status).to.eql(404);
-  });
 });

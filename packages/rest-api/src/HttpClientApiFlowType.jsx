@@ -1,4 +1,4 @@
-import type { Response, SuccessResponse, ErrorResponse } from './requestApi/ResponseFlowType';
+import type { Response } from './requestApi/ResponseFlowType';
 
 export type HttpClientApi = {
   get: (url: string, params: any, responseType?: string) => Promise<Response>,
@@ -11,6 +11,4 @@ export type HttpClientApi = {
   postAsync: (url: string, params: any) => Promise<Response>,
   putAsync: (url: string, params: any) => Promise<Response>,
   isAsyncRestMethod: (restMethod: any) => boolean,
-  getMethodName: (restMethod: any) => string,
-  setResponseHandlers: (successHandler: (response: SuccessResponse) => SuccessResponse, errorHandler: (error: ErrorResponse) => ErrorResponse) => void,
 }

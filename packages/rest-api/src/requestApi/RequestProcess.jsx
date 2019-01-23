@@ -23,7 +23,7 @@ const getRestMethod = (httpClientApi: HttpClientApi, restMethodString: string) =
   }
 };
 
-const hasStatusDelayedOrHalted = responseData => responseData && (responseData.status === asyncPollingStatus.DELAYED
+const hasLocationAndStatusDelayedOrHalted = responseData => responseData.location && (responseData.status === asyncPollingStatus.DELAYED
   || responseData.status === asyncPollingStatus.HALTED);
 
 type Notify = (eventType: $Keys<typeof EventType>, data?: any) => void
@@ -59,8 +59,8 @@ class RequestProcess {
 
   isCancelled: boolean = false;
 
-  constructor(httpClientApi: HttpClientApi,
-    restMethod: (url: string, params: any, responseType?: string) => Promise<Response>, path: string, config: RequestAdditionalConfig) {
+  constructor(httpClientApi: HttpClientApi, restMethod: (url: string, params: any, responseType?: string) => Promise<Response>,
+    path: string, config: RequestAdditionalConfig) {
     this.httpClientApi = httpClientApi;
     this.restMethod = restMethod;
     this.path = path;
@@ -107,6 +107,7 @@ class RequestProcess {
     // TODO (TOR) Må kunna konfigurera om ein skal feila om eitt av kalla feilar. Og kva med logging?
     return Promise.all([Promise.resolve(responseData), ...requestList.map(request => request())])
       .then(allResponses => (this.config.addLinkDataToArray
+      // $FlowFixMe
         ? allResponses.reduce((acc, rData) => (rData.links ? acc : acc.concat(Object.values(rData)[0])), [])
         : allResponses.reduce((acc, rData) => ({ ...acc, ...rData }), {})));
   }
@@ -118,7 +119,7 @@ class RequestProcess {
         response = await this.execLongPolling(response.headers.location);
       } catch (error) {
         const responseData = error.response ? error.response.data : undefined;
-        if (hasStatusDelayedOrHalted(responseData)) {
+        if (responseData && hasLocationAndStatusDelayedOrHalted(responseData)) {
           response = await this.httpClientApi.get(responseData.location);
           this.notify(EventType.POLLING_HALTED_OR_DELAYED, response.data.taskStatus);
         } else {

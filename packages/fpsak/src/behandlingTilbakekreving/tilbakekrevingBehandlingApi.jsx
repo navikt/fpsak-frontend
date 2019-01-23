@@ -1,5 +1,5 @@
 import {
-  getHttpClientApi, getRestApiBuilder, initReduxRestApi, ReduxEvents,
+  RestApiConfigBuilder, ReduxRestApiBuilder, ReduxEvents,
 } from '@fpsak-frontend/rest-api-redux';
 import errorHandler from '@fpsak-frontend/error-api-redux';
 
@@ -14,9 +14,7 @@ export const TilbakekrevingBehandlingApiKeys = {
   SAVE_OVERSTYRT_AKSJONSPUNKT: 'SAVE_OVERSTYRT_AKSJONSPUNKT',
 };
 
-const httpClientApi = getHttpClientApi();
-
-const endpoints = getRestApiBuilder(httpClientApi)
+const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/api/behandlinger', TilbakekrevingBehandlingApiKeys.BEHANDLING)
   .withAsyncPost('/api/behandlinger', TilbakekrevingBehandlingApiKeys.ORIGINAL_BEHANDLING)
   .withPost('/api/behandlinger/endre-pa-vent', TilbakekrevingBehandlingApiKeys.UPDATE_ON_HOLD)
@@ -27,14 +25,16 @@ const endpoints = getRestApiBuilder(httpClientApi)
 
   .build();
 
-reducerRegistry.register(errorHandler.getErrorReducerName(), errorHandler.getErrorReducer());
-
-const reduxEvents = new ReduxEvents()
-  .withErrorActionCreator(errorHandler.getErrorActionCreator())
-  .withPollingMessageActionCreator(setRequestPollingMessage);
-
 const reducerName = 'dataContextTilbakekrevingBehandling';
-const tilbakekrevingBehandlingApi = initReduxRestApi(httpClientApi, 'fptilbake', endpoints, reducerName, reduxEvents);
-reducerRegistry.register(reducerName, tilbakekrevingBehandlingApi.getDataReducer());
 
+const reduxRestApi = new ReduxRestApiBuilder(endpoints, reducerName)
+  .withContextPath('fptilbake')
+  .withReduxEvents(new ReduxEvents()
+    .withErrorActionCreator(errorHandler.getErrorActionCreator())
+    .withPollingMessageActionCreator(setRequestPollingMessage))
+  .build();
+
+reducerRegistry.register(reducerName, reduxRestApi.getDataReducer());
+
+const tilbakekrevingBehandlingApi = reduxRestApi.getEndpointApi();
 export default tilbakekrevingBehandlingApi;
