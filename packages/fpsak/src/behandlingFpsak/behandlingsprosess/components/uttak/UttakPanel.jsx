@@ -40,7 +40,7 @@ const uttakAksjonspunkter = [
 const getCorrectEmptyArbeidsForhold = (kode, arbeidsForhold) => {
   const arbeidsForholdMedNullDagerIgjenArray = [];
   let arbeidsforholdMedPositivSaldo = 0;
-  if (arbeidsForhold.stonadskontoer[kode].aktivitetSaldoDtoList) {
+  if (arbeidsForhold.stonadskontoer[kode] && arbeidsForhold.stonadskontoer[kode].aktivitetSaldoDtoList) {
     arbeidsForhold.stonadskontoer[kode].aktivitetSaldoDtoList.forEach((item) => {
       if (item.saldo === 0) {
         arbeidsForholdMedNullDagerIgjenArray.push(item.aktivitetIdentifikator.arbeidsgiver.navn);
@@ -103,7 +103,7 @@ const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter, stonadskonto) => 
     });
   }
   if (helpText) {
-    if (helpText.periodeResultatÅrsak.kode === '4002') {
+    if (helpText.periodeResultatÅrsak && helpText.periodeResultatÅrsak.kode === '4002') {
       const arbeidsForhold = getCorrectEmptyArbeidsForhold(helpText.periodeType.kode, stonadskonto);
       const arbeidsForholdMedNullDagerIgjen = arbeidsForhold.join();
       if (arbeidsForhold.length > 1) {
@@ -201,7 +201,7 @@ UttakPanelImpl.propTypes = {
   manuellOverstyring: PropTypes.bool,
   apCodes: PropTypes.arrayOf(PropTypes.string),
   isApOpen: PropTypes.bool,
-  stonadskonto: PropTypes.shape().isRequired,
+  stonadskonto: PropTypes.shape(),
   ...formPropTypes,
 };
 
@@ -210,6 +210,7 @@ UttakPanelImpl.defaultProps = {
   apCodes: undefined,
   isApOpen: false,
   manuellOverstyring: undefined,
+  stonadskonto: {},
 };
 
 const getResult = (uttaksresultatActivity) => {
