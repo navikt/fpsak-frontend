@@ -8,22 +8,22 @@ import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Row, Column } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
+import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import { hasValidSaksnummerOrFodselsnummerFormat } from '@fpsak-frontend/utils';
 import { InputField } from '@fpsak-frontend/form';
-import VerticalSpacer from '../VerticalSpacer';
-import Image from '../Image';
 
 import styles from './searchForm.less';
 
-const isButtonDisabled = (searchStringObject, searchStartedObject) => !!(searchStartedObject.searchStarted || searchStringObject.searchString.length < 1);
+const isButtonDisabled = (searchStringObject, searchStartedObject) => !!(searchStartedObject.searchStarted
+  || searchStringObject.searchString.length < 1);
 
 /**
  * SearchForm
  *
  * Presentasjonskomponent. Definerer søkefelt og tilhørende søkeknapp.
  */
-export const SearchFormImpl = ({
+const SearchFormImpl = ({
   intl,
   searchString,
   searchStarted,
@@ -96,4 +96,4 @@ const SearchForm = connect(state => ({
   searchString: selector(state, 'searchString'),
 }))(reduxForm({ form: 'SearchForm', validate })(injectIntl(SearchFormImpl)));
 
-export default SearchForm;
+export { SearchForm as default, SearchFormImpl };

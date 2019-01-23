@@ -6,7 +6,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import PersonIndex from 'person/PersonIndex';
 import fagsakPropType from 'fagsak/fagsakPropType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import SearchForm from './SearchForm';
+import { SearchForm } from '@fpsak-frontend/search-form';
 import FagsakList from './FagsakList';
 
 import styles from './fagsakSearch.less';

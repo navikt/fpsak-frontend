@@ -1,7 +1,7 @@
 # form
 
 ```
-yarn install @fpsak-frontend/form
+yarn add @fpsak-frontend/form
 ```
 
 ### CheckboxField

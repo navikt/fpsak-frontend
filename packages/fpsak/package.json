@@ -12,6 +12,7 @@
     "@fpsak-frontend/person-info": "1.0.0",
     "@fpsak-frontend/rest-api-redux": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
+    "@fpsak-frontend/search-form": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",

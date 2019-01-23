@@ -2,7 +2,7 @@
 
 ### Install
 ```
-yarn install @fpsak-frontend/person-info
+yarn add @fpsak-frontend/person-info
 ```
 
 ### PersonInfo
