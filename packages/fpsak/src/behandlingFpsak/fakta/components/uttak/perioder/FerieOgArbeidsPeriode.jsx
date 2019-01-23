@@ -41,6 +41,7 @@ export const FerieOgArbeidsPeriode = ({
   behandlingStatusKode,
   skalViseResultat,
   oppholdArsak,
+  utsettelseArsak,
   ...formProps
 }) => {
   const isEdited = resultat === uttakPeriodeVurdering.PERIODE_OK_ENDRET
@@ -118,6 +119,7 @@ export const FerieOgArbeidsPeriode = ({
               arbeidsprosentFraSøknad={arbeidstidprosent}
               bekreftet={bekreftet}
               arbeidsgiver={arbeidsgiver}
+              utsettelseArsak={utsettelseArsak}
             />
           </FlexColumn>
         </FlexRow>
@@ -157,6 +159,7 @@ FerieOgArbeidsPeriode.propTypes = {
   skalViseResultat: PropTypes.bool.isRequired,
   oppholdArsak: PropTypes.shape(),
   behandlingStatusKode: PropTypes.string.isRequired,
+  utsettelseArsak: PropTypes.shape(),
 };
 
 FerieOgArbeidsPeriode.defaultProps = {
@@ -165,6 +168,7 @@ FerieOgArbeidsPeriode.defaultProps = {
   resultat: undefined,
   arbeidsgiver: {},
   oppholdArsak: undefined,
+  utsettelseArsak: undefined,
 };
 
 const validateForm = ({ nyFom, nyTom }) => {

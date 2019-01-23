@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Element } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { ISO_DATE_FORMAT, calcDaysWithoutWeekends } from '@fpsak-frontend/utils';
 import {
@@ -11,6 +11,7 @@ import {
 import classnames from 'classnames/bind';
 import overlapp from '@fpsak-frontend/assets/images/overlapp.svg';
 import tomPeriode from '@fpsak-frontend/assets/images/tom_periode.svg';
+import { utsettelseArsakTexts } from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import UttakPeriodeType from './UttakPeriodeType';
 import UttakPeriodeInnhold from './UttakPeriodeInnhold';
 
@@ -57,6 +58,49 @@ const getClassName = (periode, readOnly) => {
   return classNames('periodeContainer', { active: !periode.bekreftet && !readOnly });
 };
 
+const avvikInntekstmeldInfo = (periode, inntektsmeldingInfo) => {
+  let avvikTekst = '';
+  if (periode.bekreftet) {
+    return avvikTekst;
+  }
+  if (inntektsmeldingInfo && inntektsmeldingInfo.length > 0) {
+    inntektsmeldingInfo.forEach((innmldInfo) => {
+      const manglerUtsettelseInntektsmelding = periode.utsettelseÅrsak.kode !== '-' && innmldInfo.utsettelsePerioder.length === 0;
+      const harGraderingPeriode = periode.arbeidstidsprosent !== undefined && periode.arbeidstidsprosent !== null;
+      const manglerGraderingInntektsmelding = harGraderingPeriode && innmldInfo.graderingPerioder.length === 0;
+      if (manglerUtsettelseInntektsmelding) {
+        avvikTekst = (
+          <Element className={styles.avvikInfoMargin}>
+            <FormattedMessage id="UttakPeriode.ManglerInfoUtsettelse" values={{ årsak: utsettelseArsakTexts[periode.utsettelseÅrsak.kode].toLowerCase() }} />
+          </Element>
+        );
+      }
+      if (manglerGraderingInntektsmelding) {
+        avvikTekst = (
+          <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikGradering" /></Element>
+        );
+      }
+      if (innmldInfo.utsettelsePerioder.length > 0) {
+        innmldInfo.utsettelsePerioder.forEach((inntektP) => {
+          const periodeHarUtsettelse = periode.utsettelseÅrsak.kode !== '-';
+          const avvikPeriode = inntektP.fom !== periode.fraDato || inntektP.tom !== periode.tilDato;
+          const avvikUtsettelseKode = inntektP.utsettelseArsak.kode !== periode.utsettelseÅrsak.kode;
+          if ((avvikUtsettelseKode || avvikPeriode) && periodeHarUtsettelse) {
+            avvikTekst = <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikUtsettelse" /></Element>;
+          }
+        });
+      }
+      if (innmldInfo.graderingPerioder.length > 0) {
+        if (harGraderingPeriode && innmldInfo.arbeidsProsentFraInntektsmelding !== periode.arbeidstidsprosent) {
+          avvikTekst = <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikGraderingProsent" /></Element>;
+        }
+      }
+    });
+  }
+
+  return avvikTekst;
+};
+
 const UttakPeriode = ({
   fields,
   openSlettPeriodeModalCallback,
@@ -80,57 +124,60 @@ const UttakPeriode = ({
         // TODO skal denne vises hvis det ikke er noen aksjonspunkt men man. revurdering (PFP-639)
         const harEndringsDatoSomErFørFørsteUttaksPeriode = førsteUttaksDato ? moment(periode.fom).isAfter(førsteUttaksDato) : false;
         return (
-          <FlexRow key={fieldId}>
-            <FlexColumn className={styles.fullWidth}>
-              {index === 0 && harEndringsDatoSomErFørFørsteUttaksPeriode && renderTomPeriode()}
-              <div className={getClassName(periode, readOnly)}>
-                <UttakPeriodeType
-                  bekreftet={periode.bekreftet}
-                  tilDato={periode.tom}
-                  fraDato={periode.fom}
-                  openForm={periode.openForm}
-                  uttakPeriodeType={periode.uttakPeriodeType}
-                  id={periode.id}
-                  arbeidstidprosent={periode.arbeidstidsprosent}
-                  arbeidsgiver={periode.arbeidsgiver}
-                  utsettelseArsak={periode.utsettelseÅrsak}
-                  overforingArsak={periode.overføringÅrsak}
-                  isFromSøknad={periode.isFromSøknad}
-                  erArbeidstaker={periode.erArbeidstaker}
-                  openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}
-                  editPeriode={editPeriode}
-                  isAnyFormOpen={isAnyFormOpen}
-                  isNyPeriodeFormOpen={isNyPeriodeFormOpen}
-                  readOnly={readOnly}
-                  flerbarnsdager={periode.flerbarnsdager}
-                  samtidigUttak={periode.samtidigUttak}
-                  samtidigUttaksprosent={periode.samtidigUttaksprosent}
-                  oppholdArsak={periode.oppholdÅrsak}
-                />
-                <UttakPeriodeInnhold
-                  fieldId={fieldId}
-                  bekreftet={periode.bekreftet}
-                  utsettelseArsak={periode.utsettelseÅrsak}
-                  openForm={periode.openForm}
-                  arbeidstidprosent={periode.arbeidstidsprosent}
-                  id={periode.id}
-                  tilDato={periode.tom}
-                  fraDato={periode.fom}
-                  begrunnelse={periode.begrunnelse}
-                  uttakPeriodeType={periode.uttakPeriodeType}
-                  overforingArsak={periode.overføringÅrsak}
-                  arbeidsgiver={periode.arbeidsgiver}
-                  updatePeriode={updatePeriode}
-                  cancelEditPeriode={cancelEditPeriode}
-                  readOnly={readOnly}
-                  inntektsmeldingInfo={inntektsmeldingInfo[index]}
-                />
-              </div>
-              {perioder.length === fields.length
-                && renderValidationGraphic(perioder, index, index === (fields.length - 1))
-              }
-            </FlexColumn>
-          </FlexRow>
+          <div key={fieldId}>
+            {avvikInntekstmeldInfo(periode, inntektsmeldingInfo[index])}
+            <FlexRow key={fieldId}>
+              <FlexColumn className={styles.fullWidth}>
+                {index === 0 && harEndringsDatoSomErFørFørsteUttaksPeriode && renderTomPeriode()}
+                <div className={getClassName(periode, readOnly)}>
+                  <UttakPeriodeType
+                    bekreftet={periode.bekreftet}
+                    tilDato={periode.tom}
+                    fraDato={periode.fom}
+                    openForm={periode.openForm}
+                    uttakPeriodeType={periode.uttakPeriodeType}
+                    id={periode.id}
+                    arbeidstidprosent={periode.arbeidstidsprosent}
+                    arbeidsgiver={periode.arbeidsgiver}
+                    utsettelseArsak={periode.utsettelseÅrsak}
+                    overforingArsak={periode.overføringÅrsak}
+                    isFromSøknad={periode.isFromSøknad}
+                    erArbeidstaker={periode.erArbeidstaker}
+                    openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}
+                    editPeriode={editPeriode}
+                    isAnyFormOpen={isAnyFormOpen}
+                    isNyPeriodeFormOpen={isNyPeriodeFormOpen}
+                    readOnly={readOnly}
+                    flerbarnsdager={periode.flerbarnsdager}
+                    samtidigUttak={periode.samtidigUttak}
+                    samtidigUttaksprosent={periode.samtidigUttaksprosent}
+                    oppholdArsak={periode.oppholdÅrsak}
+                  />
+                  <UttakPeriodeInnhold
+                    fieldId={fieldId}
+                    bekreftet={periode.bekreftet}
+                    utsettelseArsak={periode.utsettelseÅrsak}
+                    openForm={periode.openForm}
+                    arbeidstidprosent={periode.arbeidstidsprosent}
+                    id={periode.id}
+                    tilDato={periode.tom}
+                    fraDato={periode.fom}
+                    begrunnelse={periode.begrunnelse}
+                    uttakPeriodeType={periode.uttakPeriodeType}
+                    overforingArsak={periode.overføringÅrsak}
+                    arbeidsgiver={periode.arbeidsgiver}
+                    updatePeriode={updatePeriode}
+                    cancelEditPeriode={cancelEditPeriode}
+                    readOnly={readOnly}
+                    inntektsmeldingInfo={inntektsmeldingInfo[index]}
+                  />
+                </div>
+                {perioder.length === fields.length
+                  && renderValidationGraphic(perioder, index, index === (fields.length - 1))
+                }
+              </FlexColumn>
+            </FlexRow>
+          </div>
         );
       })}
     </FlexContainer>

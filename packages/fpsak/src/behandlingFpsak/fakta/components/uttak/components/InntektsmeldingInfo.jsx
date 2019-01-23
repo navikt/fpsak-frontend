@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Undertekst, Normaltekst, Element } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import { utsettelseArsakTexts } from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import classnames from 'classnames/bind';
 import {
@@ -29,6 +29,28 @@ const renderAvvikContentGraderingFraSøknad = () => (
           :
           {' '}
           <FormattedMessage id="UttakInfoPanel.IkkeOppgittGradering" />
+        </Normaltekst>
+      </FlexColumn>
+    </FlexRow>
+  </React.Fragment>
+);
+
+const renderAvvikContentUtsettelseFraSøknad = utsettelseArsak => (
+  <React.Fragment key={guid()}>
+    <VerticalSpacer eightPx />
+    <FlexRow>
+      <FlexColumn>
+        <Image src={advarselIkonUrl} altCode="HelpText.Aksjonspunkt" />
+      </FlexColumn>
+      <FlexColumn>
+        <Normaltekst className={classNames('avvik', 'hasAvvik')}>
+          <FormattedHTMLMessage
+            id="UttakInfoPanel.IkkeOppgittUtsettelse"
+            values={{
+              årsak: utsettelseArsakTexts[utsettelseArsak.kode],
+              årsakLowerCase: utsettelseArsakTexts[utsettelseArsak.kode].toLowerCase(),
+            }}
+          />
         </Normaltekst>
       </FlexColumn>
     </FlexRow>
@@ -112,10 +134,11 @@ const shouldRender = (inntektsmeldingInfo) => {
 };
 
 export const InntektsmeldingInfo = ({
-  inntektsmeldingInfo, arbeidsgiver, arbeidsprosentFraSøknad, fraDato, tilDato, bekreftet,
+  inntektsmeldingInfo, arbeidsgiver, arbeidsprosentFraSøknad, fraDato, tilDato, bekreftet, utsettelseArsak,
 }) => {
   const manglerGraderingFraInntektsmelding = arbeidsprosentFraSøknad !== undefined
     && arbeidsprosentFraSøknad !== null && !bekreftet;
+  const manglerUtsettelseFraInntektsmelding = utsettelseArsak && utsettelseArsak.kode !== '-' && !bekreftet;
   const shouldRenderAvvik = shouldRender(inntektsmeldingInfo);
   return (
     <div>
@@ -139,7 +162,7 @@ export const InntektsmeldingInfo = ({
         })}
       </React.Fragment>
       )}
-      {!shouldRenderAvvik && manglerGraderingFraInntektsmelding && (
+      {!shouldRenderAvvik && (manglerGraderingFraInntektsmelding || manglerUtsettelseFraInntektsmelding) && (
         <React.Fragment>
           <Undertekst><FormattedMessage id="UttakInfoPanel.AvvikiInntektsmelding" /></Undertekst>
           <VerticalSpacer eightPx />
@@ -147,13 +170,14 @@ export const InntektsmeldingInfo = ({
             const avvikArbeidforhold = innmldInfo.arbeidsgiver !== (arbeidsgiver || {}).navn
               || innmldInfo.arbeidsgiverOrgnr !== (arbeidsgiver || {}).identifikator;
             const arbeidsProsentFraInnteksmelding = innmldInfo.arbeidsProsentFraInntektsmelding !== arbeidsprosentFraSøknad;
-            if (avvikArbeidforhold || arbeidsProsentFraInnteksmelding) {
+            if (avvikArbeidforhold || arbeidsProsentFraInnteksmelding || manglerUtsettelseFraInntektsmelding) {
               return (
                 <React.Fragment key={guid()}>
                   <Element className={classNames('avvik', { hasAvvik: avvikArbeidforhold })}>
                     {`${innmldInfo.arbeidsgiver} ${innmldInfo.arbeidsgiverOrgnr}`}
                   </Element>
-                  {renderAvvikContentGraderingFraSøknad()}
+                  {manglerGraderingFraInntektsmelding && renderAvvikContentGraderingFraSøknad()}
+                  {manglerUtsettelseFraInntektsmelding && renderAvvikContentUtsettelseFraSøknad(utsettelseArsak)}
                   <VerticalSpacer twentyPx />
                 </React.Fragment>
               );
@@ -169,6 +193,7 @@ export const InntektsmeldingInfo = ({
 InntektsmeldingInfo.defaultProps = {
   arbeidsgiver: {},
   arbeidsprosentFraSøknad: undefined,
+  utsettelseArsak: undefined,
 };
 
 InntektsmeldingInfo.propTypes = {
@@ -178,6 +203,7 @@ InntektsmeldingInfo.propTypes = {
   bekreftet: PropTypes.bool.isRequired,
   arbeidsgiver: PropTypes.shape(),
   arbeidsprosentFraSøknad: PropTypes.number,
+  utsettelseArsak: PropTypes.shape(),
 };
 
 export default InntektsmeldingInfo;

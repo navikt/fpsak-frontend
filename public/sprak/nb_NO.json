@@ -1833,10 +1833,16 @@
   "UttakInfoPanel.TidenesEnde": "Antall uker og dager -",
   "UttakInfoPanel.PeriodenSlettes": "Perioden {fom} - {tom} {uttakPeriodeType} slettes",
   "UttakInfoPanel.FrilansSelvstendignæringsdrivende": "Frilanser/Selvstendig næringsdrivende",
+  "UttakInfoPanel.IkkeOppgittUtsettelse": "<b>{årsak}:</b> Ikke oppgitt {årsakLowerCase}",
+  "UttakPeriode.AvvikGradering": "Inntektsmeldingen angir ikke noe info om gradering",
   "UttakInfoPanel.AnnenForelderHarRett": "Annen forelder har rett",
   "UttakInfoPanel.AnnenForelderHarIkkeRett": "Annen forelder har ikke rett",
 
 
+  "UttakPeriode.ManglerInfoUtsettelse": "Inntektsmeldingen mangler info om utsettelse",
+  "UttakPeriode.ManglerInfoUtsettelse": "Inntektsmeldingen mangler info om {årsak}",
+  "UttakPeriode.AvvikUtsettelse": "Info om utsettelse avviker fra inntektsmelding",
+  "UttakPeriode.AvvikGraderingProsent": "Graderingsprosent avviker fra inntekstmelding",
   "StartdatoForForeldrepengerperiodenForm.StartdatoEtterArbeidsgiverdato": "Startdato kan ikke være etter datoen som arbeidsgiver opplyser",
   "StartdatoForForeldrepengerperiodenForm.PeriodenAvviker": "Startdato for foreldrepengeperioden avviker. Fastsett korrekt startdato",
   "StartdatoForForeldrepengerperiodenForm.StartdatoForPerioden": "Startdato for foreldrepengeperioden",
