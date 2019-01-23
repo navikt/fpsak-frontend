@@ -17,6 +17,9 @@ describe('<UttakPanel>', () => {
         kodeverk: '',
         navn: '',
       },
+      periodeResultatÅrsak :{
+        kode: '4002',
+      },
       manuellBehandlingÅrsak: {
         navn: 'test',
       },
