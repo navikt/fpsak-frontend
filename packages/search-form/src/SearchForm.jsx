@@ -15,14 +15,15 @@ import { InputField } from '@fpsak-frontend/form';
 
 import styles from './searchForm.less';
 
-const isButtonDisabled = (searchStringObject, searchStartedObject) => !!(searchStartedObject.searchStarted || searchStringObject.searchString.length < 1);
+const isButtonDisabled = (searchStringObject, searchStartedObject) => !!(searchStartedObject.searchStarted
+  || searchStringObject.searchString.length < 1);
 
 /**
  * SearchForm
  *
  * Presentasjonskomponent. Definerer søkefelt og tilhørende søkeknapp.
  */
-export const SearchFormImpl = ({
+const SearchFormImpl = ({
   intl,
   searchString,
   searchStarted,
@@ -95,4 +96,4 @@ const SearchForm = connect(state => ({
   searchString: selector(state, 'searchString'),
 }))(reduxForm({ form: 'SearchForm', validate })(injectIntl(SearchFormImpl)));
 
-export default SearchForm;
+export { SearchForm as default, SearchFormImpl };

@@ -1,1 +1,1 @@
-export { SearchForm as default } from './src/SearchForm';
+export { default as SearchForm, SearchFormImpl } from './src/SearchForm';

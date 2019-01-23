@@ -11,8 +11,6 @@
       "react-intl": "^2.7.2",
       "redux-form": "^7.4.2",
       "react-redux": "^5.1.1",
-      "nav-frontend-skjema": "1.0.42",
-      "nav-frontend-skjema-style": "1.0.23",
       "nav-frontend-grid": "1.0.17",
       "nav-frontend-grid-style": "0.2.17",
       "nav-frontend-typografi": "2.0.6",
@@ -22,7 +20,6 @@
       "@fpsak-frontend/assets": "1.0.0",
       "@fpsak-frontend/utils": "1.0.0",
       "@fpsak-frontend/form": "1.0.0",
-      "@fpsak-frontend/kodeverk": "1.0.0",
       "@fpsak-frontend/shared-components": "1.0.0"
     },
     "devDependencies": {
