@@ -96,12 +96,18 @@ export const VedtakRevurderingSubmitPanelImpl = ({
           disabled={formProps.submitting}
           spinner={formProps.submitting}
         >
-          {intl.formatMessage({ id: submitKnappTextId })}
+          {intl.formatMessage({ id: skalBrukeOverstyrendeFritekstBrev ? 'VedtakForm.TilGodkjenning' : submitKnappTextId })}
         </Hovedknapp>
       )
       }
       {ytelseType === fagsakYtelseType.ENGANGSSTONAD
-      && skalViseESBrev(beregningResultat, originaltBeregningResultat, haveSentVarsel)
+           && skalViseESBrev(beregningResultat, originaltBeregningResultat, haveSentVarsel) && skalBrukeOverstyrendeFritekstBrev
+                   && (
+                   <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
+                   )
+                 }
+      {ytelseType === fagsakYtelseType.ENGANGSSTONAD
+                 && skalViseESBrev(beregningResultat, originaltBeregningResultat, haveSentVarsel) && !skalBrukeOverstyrendeFritekstBrev
         && (
         <ForhaandsvisningsKnapp previewFunction={previewBrev} />
         )
