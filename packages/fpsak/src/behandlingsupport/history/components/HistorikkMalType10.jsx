@@ -14,10 +14,8 @@ import {
   findEndretFeltNavn,
   findEndretFeltVerdi,
 } from './historikkUtils';
-
+import HistorikkDokumentLenke from './HistorikkDokumentLenke';
 import BubbleText from './bubbleText';
-
-import styles from './historikkMalType.less';
 
 const scrollUp = () => {
   if (window.innerWidth < 13010) {
@@ -165,17 +163,12 @@ const HistorikkMalType10 = ({
         )}
 
         <div>
-          {dokumentLinks && dokumentLinks.map(dokumentLink => (
-            <a
-              key={dokumentLink.url}
-              className={styles.documentLink}
-              href={`/fpsak/api/dokument/hent-dokument?saksnummer=${saksNr}&journalpostId=${dokumentLink.journalpostId}&dokumentId=${dokumentLink.dokumentId}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i className={styles.dokument} title={dokumentLink.tag} alt={dokumentLink.tag} />
-              {dokumentLink.tag}
-            </a>
+          {dokumentLinks && dokumentLinks.map(dokumentLenke => (
+            <HistorikkDokumentLenke
+              key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
+              dokumentLenke={dokumentLenke}
+              saksNr={saksNr}
+            />
           ))}
         </div>
       </div>

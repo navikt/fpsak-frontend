@@ -17,10 +17,9 @@ import {
   findIdForSoeknadsperiodeCode,
   findResultatText,
 } from './historikkUtils';
+import HistorikkDokumentLenke from './HistorikkDokumentLenke';
 
 import BubbleText from './bubbleText';
-
-import styles from './historikkMalType.less';
 
 const scrollUp = () => {
   if (window.innerWidth < 1305) {
@@ -211,17 +210,12 @@ const HistorikkMalType5 = ({
         {historikkinnslagDel.begrunnelse && <BubbleText bodyText={historikkinnslagDel.begrunnelse.navn} className="snakkeboble-panel__tekst" />}
         {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} className="snakkeboble-panel__tekst" />}
         <div>
-          {dokumentLinks && dokumentLinks.map(dokumentLink => (
-            <a
-              key={dokumentLink.url}
-              className={styles.documentLink}
-              href={`/fpsak/api/dokument/hent-dokument?saksnummer=${saksNr}&journalpostId=${dokumentLink.journalpostId}&dokumentId=${dokumentLink.dokumentId}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i className={styles.dokument} title={dokumentLink.tag} alt={dokumentLink.tag} />
-              {dokumentLink.tag}
-            </a>
+          {dokumentLinks && dokumentLinks.map(dokumentLenke => (
+            <HistorikkDokumentLenke
+              key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
+              dokumentLenke={dokumentLenke}
+              saksNr={saksNr}
+            />
           ))}
         </div>
 
