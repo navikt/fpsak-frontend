@@ -37,19 +37,19 @@ const uttakAksjonspunkter = [
 ];
 
 
-const getCorrectEmptyArbeidsForhold = (kode, arbeidsForhold) => {
+const getCorrectEmptyArbeidsForhold = (preiodeTypeKode, arbeidsForhold) => {
   const arbeidsForholdMedNullDagerIgjenArray = [];
-  let arbeidsforholdMedPositivSaldo = 0;
-  if (arbeidsForhold.stonadskontoer[kode] && arbeidsForhold.stonadskontoer[kode].aktivitetSaldoDtoList) {
-    arbeidsForhold.stonadskontoer[kode].aktivitetSaldoDtoList.forEach((item) => {
+  let arbeidsforholdMedPositivSaldo = false;
+  if (arbeidsForhold.stonadskontoer[preiodeTypeKode] && arbeidsForhold.stonadskontoer[preiodeTypeKode].aktivitetSaldoDtoList) {
+    arbeidsForhold.stonadskontoer[preiodeTypeKode].aktivitetSaldoDtoList.forEach((item) => {
       if (item.saldo === 0) {
         arbeidsForholdMedNullDagerIgjenArray.push(item.aktivitetIdentifikator.arbeidsgiver.navn);
       } else {
-        arbeidsforholdMedPositivSaldo = 1;
+        arbeidsforholdMedPositivSaldo = true;
       }
     });
   }
-  if (arbeidsforholdMedPositivSaldo > 0) {
+  if (arbeidsforholdMedPositivSaldo) {
     return arbeidsForholdMedNullDagerIgjenArray;
   }
   return [];
@@ -103,7 +103,7 @@ const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter, stonadskonto) => 
     });
   }
   if (helpText) {
-    if (helpText.periodeResultatÅrsak && helpText.periodeResultatÅrsak.kode === '4002') {
+    if (helpText.periodeResultatÅrsak && helpText.periodeType && helpText.periodeResultatÅrsak.kode === '4002') {
       const arbeidsForhold = getCorrectEmptyArbeidsForhold(helpText.periodeType.kode, stonadskonto);
       const arbeidsForholdMedNullDagerIgjen = arbeidsForhold.join();
       if (arbeidsForhold.length > 1) {
