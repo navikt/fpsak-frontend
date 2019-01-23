@@ -173,7 +173,6 @@ export class UttakImpl extends Component {
     this.isReadOnly = this.isReadOnly.bind(this);
     this.skalViseCheckbox = this.skalViseCheckbox.bind(this);
     this.setSelectedDefaultPeriod = this.setSelectedDefaultPeriod.bind(this);
-    this.buildArbforholdId = this.buildArbforholdId.bind(this);
 
     this.state = {
       selectedItem: null,
@@ -223,12 +222,6 @@ export class UttakImpl extends Component {
     formInitialize(`${behandlingFormPrefix}.${ACTIVITY_PANEL_NAME}`, uttakActivity);
   }
 
-  buildArbforholdId(arbforhold) {
-    let arbforholdId = arbforhold.uttakArbeidType ? arbforhold.uttakArbeidType.kode : '';
-    arbforholdId += arbforhold.arbeidsgiver ? `_${arbforhold.arbeidsgiver.identifikator}_${arbforhold.arbeidsgiver.navn}` : '';
-    return arbforholdId;
-  }
-
   updateActivity(values) {
     const { uttakPerioder } = this.props;
     const { stonadskontoKopi } = this.state;
@@ -238,6 +231,12 @@ export class UttakImpl extends Component {
       aktivitet.utbetalingsgrad = a.utbetalingsgrad || a.utbetalingsgrad === 0 ? parseFloat(a.utbetalingsgrad) : null;
       return aktivitet;
     });
+
+    const buildArbforholdId = (arbforhold) => {
+      let arbforholdId = arbforhold.uttakArbeidType ? arbforhold.uttakArbeidType.kode : '';
+      arbforholdId += arbforhold.arbeidsgiver ? `_${arbforhold.arbeidsgiver.identifikator}_${arbforhold.arbeidsgiver.navn}` : '';
+      return arbforholdId;
+    };
 
     const otherThanUpdated = uttakPerioder.filter(o => o.id !== verdier.id && o.hovedsoker);
     const sortedActivities = otherThanUpdated.concat(verdier);
@@ -250,7 +249,7 @@ export class UttakImpl extends Component {
         const aktivitetDays = (typeof a.days !== 'undefined' && typeof a.weeks !== 'undefined')
           ? ((a.weeks * 5) + a.days)
           : a.trekkdager;
-        const arbforholdId = this.buildArbforholdId(a);
+        const arbforholdId = buildArbforholdId(a);
 
         if (periode.flerbarnsdager) {
           if (!acc.FLERBARNSDAGER) {
@@ -302,7 +301,7 @@ export class UttakImpl extends Component {
         const stonadArbforhold = stonadskontoKopi.stonadskontoer[konto.stonadskontotype].aktivitetSaldoDtoList;
         const uttakArbforhold = uttakResult[konto.stonadskontotype].arbforhold;
         stonadArbforhold.forEach((sa) => {
-          const arbforholdId = this.buildArbforholdId(sa.aktivitetIdentifikator);
+          const arbforholdId = buildArbforholdId(sa.aktivitetIdentifikator);
           const arbforholdObject = uttakArbforhold.find(
             ua => ua.arbeidsforholdId === arbforholdId,
           );
@@ -316,7 +315,7 @@ export class UttakImpl extends Component {
           : konto.maxDager - uttakResult[konto.stonadskontotype].arbforhold[0].trekkdager;
         stonadskontoKopi.stonadskontoer[konto.stonadskontotype].aktivitetSaldoDtoList = konto.aktivitetSaldoDtoList.map((a) => {
           const arbforhold = { ...a };
-          const arbforholdId = this.buildArbforholdId(a.aktivitetIdentifikator);
+          const arbforholdId = buildArbforholdId(a.aktivitetIdentifikator);
           const currentArbforhold = uttakResult[konto.stonadskontotype].arbforhold.find(
             uttakR => uttakR.arbeidsforholdId === arbforholdId,
           );
