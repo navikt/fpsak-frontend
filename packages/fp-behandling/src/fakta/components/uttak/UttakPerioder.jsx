@@ -120,6 +120,13 @@ export class UttakPerioder extends Component {
     }
   }
 
+  overrideResultat = (resultat) => {
+    if (resultat === uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES) {
+      return resultat;
+    }
+    return uttakPeriodeVurdering.PERIODE_IKKE_VURDERT;
+  }
+
   newPeriodeResetCallback() {
     const { behandlingFormPrefix, reduxFormReset: formReset } = this.props;
     const { isNyPeriodeFormOpen } = this.state;
@@ -240,7 +247,7 @@ export class UttakPerioder extends Component {
       tom,
       fom,
       kontoType,
-      resultat: uttakPeriodeVurderingTyper.find(type => type.kode === resultat),
+      resultat: uttakPeriodeVurderingTyper.find(type => type.kode === this.overrideResultat(resultat)),
       begrunnelse: values.begrunnelse,
       dokumentertePerioder: resultat && resultat !== uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES ? dokumentertePerioder : null,
       arbeidstidsprosent: nyArbeidstidsprosent || updatedPeriode.arbeidstidprosent,
@@ -257,6 +264,7 @@ export class UttakPerioder extends Component {
       isFromSøknad: updatedPeriode.isFromSøknad,
       updated: true,
     };
+
     if (kontoType) {
       newPeriodeObject.uttakPeriodeType = {
         kode: kontoType,
