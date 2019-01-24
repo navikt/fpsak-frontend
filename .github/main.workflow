@@ -4,24 +4,24 @@ workflow "Test, build, publish" {
 }
 
 action "Install" {
-  uses = "actions/npm@de7a3705a9510ee12702e124482fad6af249991b"
+  uses = "nuxt/actions-yarn@master"
   args = "install"
 }
 
 action "Test Less" {
-  uses = "actions/npm@de7a3705a9510ee12702e124482fad6af249991b"
+  uses = "nuxt/actions-yarn@master"
   needs = ["Install"]
-  args = "run less:lint"
+  args = "less:lint"
 }
 
 action "Test JS" {
-  uses = "actions/npm@de7a3705a9510ee12702e124482fad6af249991b"
+  uses = "nuxt/actions-yarn@master"
   needs = ["Test Less"]
-  args = "run test"
+  args = "test"
 }
 
 action "Build" {
-  uses = "actions/npm@de7a3705a9510ee12702e124482fad6af249991b"
+  uses = "nuxt/actions-yarn@master"
   needs = ["Test JS"]
-  args = "run build"
+  args = "build"
 }
