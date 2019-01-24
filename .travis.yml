@@ -16,16 +16,16 @@ script:
 - git config user.name team-foreldrepenger[bot]
 - git config user.email team-foreldrepenger[bot]@users.noreply.github.com
 
-after_script:
-- chmod a+x ./travis/push-tag.sh
-- "./travis/push-tag.sh"
-
 before_install:
 - openssl aes-256-cbc -K $encrypted_95f19733e3f4_key -iv $encrypted_95f19733e3f4_iv
   -in travis/private.enc -out travis/private.pem -d
 - git clone https://github.com/navikt/github-apps-support.git
 - export PATH=`pwd`/github-apps-support/bin:$PATH
 - export INSTALLATION_TOKEN=$(generate-installation-token.sh `generate-jwt.sh ./travis/private.pem $GITHUB_APP_ID`)
+
+after_success:
+- chmod a+x ./travis/push-tag.sh
+- "./travis/push-tag.sh"
 
 env:
   global:
