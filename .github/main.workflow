@@ -5,7 +5,7 @@ workflow "Test, build, publish" {
 
 action "Install" {
   uses = "nuxt/actions-yarn@master"
-  args = "install"
+  args = "install --ignore-scripts --no-progress"
 }
 
 action "Test Less" {
