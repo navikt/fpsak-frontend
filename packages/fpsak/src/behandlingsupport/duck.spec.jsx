@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 
+import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
 import fpsakApi, { reduxRestApi } from 'data/fpsakApi';
 import SupportPanels from './supportPanels';
 import {
@@ -17,6 +18,7 @@ describe('Behandlingsupport-reducer', () => {
   let mockAxios;
 
   before(() => {
+    behandlingOrchestrator.disableTilbakekreving();
     mockAxios = new MockAdapter(reduxRestApi.getHttpClientApi().axiosInstance);
   });
 
@@ -26,6 +28,7 @@ describe('Behandlingsupport-reducer', () => {
 
   after(() => {
     mockAxios.restore();
+    behandlingOrchestrator.reset();
   });
 
   it('skal markere i state at godkjenningsfanen er valgt', () => {
@@ -43,11 +46,11 @@ describe('Behandlingsupport-reducer', () => {
   it('skal hente dokumenter og historie fra server', () => {
     const documents = [];
     mockAxios
-      .onGet(fpsakApi.ALL_DOCUMENTS.path)
+      .onGet(fpsakApi.ALL_DOCUMENTS_FPSAK.path)
       .reply(200, documents);
     const history = {};
     mockAxios
-      .onGet(fpsakApi.HISTORY.path)
+      .onGet(fpsakApi.HISTORY_FPSAK.path)
       .reply(200, history);
 
     const store = mockStore();
@@ -56,7 +59,7 @@ describe('Behandlingsupport-reducer', () => {
     return store.dispatch(updateBehandlingsupportInfo(saksnummer))
       .then(() => {
         expect(store.getActions()).to.have.length(4);
-        const [requestDocumentStarted, requestHistoryStarted, requestDocumentFinished, requestHistoryFinished] = store.getActions();
+        const [requestDocumentStarted, requestDocumentFinished, requestHistoryStarted, requestHistoryFinished] = store.getActions();
 
         expect(requestDocumentStarted.type).to.contain('fpsak/api/dokument/hent-dokumentliste STARTED');
         expect(requestDocumentStarted.payload.params).is.eql({ saksnummer });

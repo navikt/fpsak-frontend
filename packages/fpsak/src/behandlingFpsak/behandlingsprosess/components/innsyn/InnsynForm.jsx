@@ -204,7 +204,7 @@ const mapStateToProps = (state, ownProps) => ({
   innsynResultatType: behandlingFormValueSelector(formName)(state, 'innsynResultatType'),
   sattPaVent: behandlingFormValueSelector(formName)(state, 'sattPaVent'),
   initialValues: buildInitialValues(state),
-  onSubmit: values => ownProps.submitCallback([transformValues(values, fpsakApi.ALL_DOCUMENTS.getRestApiData()(state))]),
+  onSubmit: values => ownProps.submitCallback([transformValues(values, fpsakApi.ALL_DOCUMENTS_FPSAK.getRestApiData()(state))]),
 });
 
 

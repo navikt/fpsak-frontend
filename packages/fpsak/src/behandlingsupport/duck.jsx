@@ -1,4 +1,4 @@
-import fpsakApi from 'data/fpsakApi';
+import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
 
 import reducerRegistry from '../ReducerRegistry';
 
@@ -19,15 +19,7 @@ export const resetBehandlingSupport = () => ({
   type: RESET_BEHANDLING_SUPPORT,
 });
 
-export const resetBehandlingsupportInfo = () => (dispatch) => {
-  dispatch(fpsakApi.ALL_DOCUMENTS.resetRestApi()());
-  dispatch(fpsakApi.HISTORY.resetRestApi()());
-};
-
-export const updateBehandlingsupportInfo = saksnummer => dispatch => Promise.all([
-  dispatch(fpsakApi.ALL_DOCUMENTS.makeRestApiRequest()({ saksnummer }, { keepData: true })),
-  dispatch(fpsakApi.HISTORY.makeRestApiRequest()({ saksnummer }, { keepData: true })),
-]);
+export const updateBehandlingsupportInfo = saksnummer => dispatch => (behandlingOrchestrator.fetchBehandlingSupportInfo(saksnummer, dispatch));
 
 /* Reducer */
 const initialState = {

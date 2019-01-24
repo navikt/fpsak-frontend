@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import requireProps from 'app/data/requireProps';
-import fpsakApi from 'data/fpsakApi';
 import { getSelectedBehandlingId } from 'behandling/duck';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import DocumentList from './components/DocumentList';
+import { getAllDocuments } from '../behandlingsupportSelectors';
 
 // TODO (hb) lag linker, ikke callback
 // TODO (hb) Kan implementeres med spesialisert selector som genererer hrefs til bruk i mapStateToProps
@@ -51,7 +51,7 @@ DocumentIndex.defaultProps = {
 
 const mapStateToProps = state => ({
   saksNr: getSelectedSaksnummer(state),
-  documents: fpsakApi.ALL_DOCUMENTS.getRestApiData()(state),
+  documents: getAllDocuments(state),
   behandlingId: getSelectedBehandlingId(state),
 });
 

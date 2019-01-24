@@ -26,6 +26,7 @@ const getRequiredProps = () => ({
   fetchFagsakInfoPending: false,
   allFagsakInfoResolved: false,
   shouldRedirectToBehandlinger: false,
+  disableTilbakekreving: true,
   location,
 });
 

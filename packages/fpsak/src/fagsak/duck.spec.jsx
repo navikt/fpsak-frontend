@@ -3,6 +3,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 
+import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
 import fpsakApi, { FpsakApiKeys, reduxRestApi } from 'data/fpsakApi';
 import {
   RESET_FAGSAKER, fagsakReducer, setSelectedSaksnummer, resetFagsakContext, doNotResetWhitelist, updateFagsakInfo,
@@ -17,6 +18,7 @@ describe('Fagsak-reducer', () => {
   let mockAxios;
 
   before(() => {
+    behandlingOrchestrator.disableTilbakekreving();
     mockAxios = new MockAdapter(reduxRestApi.getHttpClientApi().axiosInstance);
   });
 
@@ -26,6 +28,7 @@ describe('Fagsak-reducer', () => {
 
   after(() => {
     mockAxios.restore();
+    behandlingOrchestrator.reset();
   });
 
   it('skal returnere initial state', () => {
@@ -63,13 +66,13 @@ describe('Fagsak-reducer', () => {
       .onGet(fpsakApi.FETCH_FAGSAK.path)
       .replyOnce(200, fagsak);
     mockAxios
-      .onGet(fpsakApi.BEHANDLINGER.path)
+      .onGet(fpsakApi.BEHANDLINGER_FPSAK.path)
       .replyOnce(200, behandlinger);
     mockAxios
-      .onGet(fpsakApi.ALL_DOCUMENTS.path)
+      .onGet(fpsakApi.ALL_DOCUMENTS_FPSAK.path)
       .replyOnce(200, { dokId: 1 });
     mockAxios
-      .onGet(fpsakApi.HISTORY.path)
+      .onGet(fpsakApi.HISTORY_FPSAK.path)
       .replyOnce(200, { histId: 3 });
     mockAxios
       .onGet(fpsakApi.ANNEN_PART_BEHANDLING.path)
@@ -80,16 +83,15 @@ describe('Fagsak-reducer', () => {
     return store.dispatch(updateFagsakInfo(1))
       .then(() => {
         expect(store.getActions()).to.have.length(10);
-
         expect(store.getActions()[0].type).to.contain('fpsak/api/fagsak STARTED');
         expect(store.getActions()[1].type).to.contain('fpsak/api/fagsak FINISHED');
-        expect(store.getActions()[2].type).to.contain('fpsak/api/behandlinger/alle STARTED');
+        expect(store.getActions()[2].type).to.contain('fpsak/api/behandlinger/alle-fpsak STARTED');
         expect(store.getActions()[3].type).to.contain('fpsak/api/behandlinger/annen-part-behandling STARTED');
-        expect(store.getActions()[4].type).to.contain('fpsak/api/dokument/hent-dokumentliste STARTED');
-        expect(store.getActions()[5].type).to.contain('fpsak/api/historikk STARTED');
-        expect(store.getActions()[6].type).to.contain('fpsak/api/behandlinger/alle FINISHED');
-        expect(store.getActions()[7].type).to.contain('fpsak/api/behandlinger/annen-part-behandling FINISHED');
-        expect(store.getActions()[8].type).to.contain('fpsak/api/dokument/hent-dokumentliste FINISHED');
+        expect(store.getActions()[4].type).to.contain('fpsak/api/behandlinger/alle-fpsak FINISHED');
+        expect(store.getActions()[5].type).to.contain('fpsak/api/behandlinger/annen-part-behandling FINISHED');
+        expect(store.getActions()[6].type).to.contain('fpsak/api/dokument/hent-dokumentliste STARTED');
+        expect(store.getActions()[7].type).to.contain('fpsak/api/dokument/hent-dokumentliste FINISHED');
+        expect(store.getActions()[8].type).to.contain('fpsak/api/historikk STARTED');
         expect(store.getActions()[9].type).to.contain('fpsak/api/historikk FINISHED');
       });
   });
@@ -101,13 +103,13 @@ describe('Fagsak-reducer', () => {
       .onGet(fpsakApi.FETCH_FAGSAK.path)
       .replyOnce(200, fagsak);
     mockAxios
-      .onGet(fpsakApi.BEHANDLINGER.path)
+      .onGet(fpsakApi.BEHANDLINGER_FPSAK.path)
       .replyOnce(200, behandlinger);
     mockAxios
-      .onGet(fpsakApi.ALL_DOCUMENTS.path)
+      .onGet(fpsakApi.ALL_DOCUMENTS_FPSAK.path)
       .replyOnce(200, { dokId: 1 });
     mockAxios
-      .onGet(fpsakApi.HISTORY.path)
+      .onGet(fpsakApi.HISTORY_FPSAK.path)
       .replyOnce(200, { histId: 3 });
     mockAxios
       .onGet(fpsakApi.ANNEN_PART_BEHANDLING.path)
@@ -119,20 +121,20 @@ describe('Fagsak-reducer', () => {
       .then(() => {
         expect(store.getActions()).to.have.length(16);
         expect(store.getActions()[0].type).to.contain('/FETCH_FAGSAK RESET');
-        expect(store.getActions()[1].type).to.contain('/BEHANDLINGER RESET');
-        expect(store.getActions()[2].type).to.contain('/BEHANDLING RESET');
-        expect(store.getActions()[3].type).to.contain('/ANNEN_PART_BEHANDLING RESET');
-        expect(store.getActions()[4].type).to.contain('/ALL_DOCUMENTS RESET');
-        expect(store.getActions()[5].type).to.contain('/HISTORY RESET');
+        expect(store.getActions()[1].type).to.contain('/BEHANDLINGER_FPSAK RESET');
+        expect(store.getActions()[2].type).to.contain('/ALL_DOCUMENTS_FPSAK RESET');
+        expect(store.getActions()[3].type).to.contain('/HISTORY_FPSAK RESET');
+        expect(store.getActions()[4].type).to.contain('/BEHANDLING RESET');
+        expect(store.getActions()[5].type).to.contain('/ANNEN_PART_BEHANDLING RESET');
         expect(store.getActions()[6].type).to.contain('fpsak/api/fagsak STARTED');
         expect(store.getActions()[7].type).to.contain('fpsak/api/fagsak FINISHED');
-        expect(store.getActions()[8].type).to.contain('fpsak/api/behandlinger/alle STARTED');
+        expect(store.getActions()[8].type).to.contain('fpsak/api/behandlinger/alle-fpsak STARTED');
         expect(store.getActions()[9].type).to.contain('fpsak/api/behandlinger/annen-part-behandling STARTED');
-        expect(store.getActions()[10].type).to.contain('fpsak/api/dokument/hent-dokumentliste STARTED');
-        expect(store.getActions()[11].type).to.contain('fpsak/api/historikk STARTED');
-        expect(store.getActions()[12].type).to.contain('fpsak/api/behandlinger/alle FINISHED');
-        expect(store.getActions()[13].type).to.contain('fpsak/api/behandlinger/annen-part-behandling FINISHED');
-        expect(store.getActions()[14].type).to.contain('fpsak/api/dokument/hent-dokumentliste FINISHED');
+        expect(store.getActions()[10].type).to.contain('fpsak/api/behandlinger/alle-fpsak FINISHED');
+        expect(store.getActions()[11].type).to.contain('fpsak/api/behandlinger/annen-part-behandling FINISHED');
+        expect(store.getActions()[12].type).to.contain('fpsak/api/dokument/hent-dokumentliste STARTED');
+        expect(store.getActions()[13].type).to.contain('fpsak/api/dokument/hent-dokumentliste FINISHED');
+        expect(store.getActions()[14].type).to.contain('fpsak/api/historikk STARTED');
         expect(store.getActions()[15].type).to.contain('fpsak/api/historikk FINISHED');
       });
   });
@@ -170,7 +172,7 @@ describe('Fagsak-reducer', () => {
   it('skal hente behandlinger', () => {
     const behandlinger = [{ id: 1 }];
     mockAxios
-      .onGet(fpsakApi.BEHANDLINGER.path)
+      .onGet(fpsakApi.BEHANDLINGER_FPSAK.path)
       .reply(200, behandlinger);
 
     const store = mockStore();
@@ -182,11 +184,11 @@ describe('Fagsak-reducer', () => {
         expect(store.getActions()).to.have.length(2);
         const [hentBehandlingerStartedAction, hentBehandlingerFinishedAction] = store.getActions();
 
-        expect(hentBehandlingerStartedAction.type).to.contain('fpsak/api/behandlinger/alle STARTED');
+        expect(hentBehandlingerStartedAction.type).to.contain('fpsak/api/behandlinger/alle-fpsak STARTED');
         expect(hentBehandlingerStartedAction.payload.params).is.eql({ saksnummer });
         expect(hentBehandlingerStartedAction.meta).is.eql({ options: { keepData: true } });
 
-        expect(hentBehandlingerFinishedAction.type).to.contain('fpsak/api/behandlinger/alle FINISHED');
+        expect(hentBehandlingerFinishedAction.type).to.contain('fpsak/api/behandlinger/alle-fpsak FINISHED');
         expect(hentBehandlingerFinishedAction.payload).is.eql(behandlinger);
       });
   });

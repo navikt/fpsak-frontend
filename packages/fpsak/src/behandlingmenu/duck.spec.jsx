@@ -4,6 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import fpsakApi, { reduxRestApi } from 'data/fpsakApi';
 import {
@@ -19,6 +20,7 @@ describe('BehandlingMenu-reducer', () => {
 
   before(() => {
     mockAxios = new MockAdapter(reduxRestApi.getHttpClientApi().axiosInstance);
+    behandlingOrchestrator.disableTilbakekreving();
   });
 
   afterEach(() => {
@@ -27,6 +29,7 @@ describe('BehandlingMenu-reducer', () => {
 
   after(() => {
     mockAxios.restore();
+    behandlingOrchestrator.reset();
   });
 
   it('skal returnere initial state', () => {
@@ -77,13 +80,13 @@ describe('BehandlingMenu-reducer', () => {
       .onPut(fpsakApi.NEW_BEHANDLING.path)
       .reply(200, fagsak);
     mockAxios
-      .onGet(fpsakApi.ALL_DOCUMENTS.path)
+      .onGet(fpsakApi.ALL_DOCUMENTS_FPSAK.path)
       .replyOnce(200, { dokId: 10 });
     mockAxios
-      .onGet(fpsakApi.HISTORY.path)
+      .onGet(fpsakApi.HISTORY_FPSAK.path)
       .replyOnce(200, { histId: 1 });
     mockAxios
-      .onGet(fpsakApi.BEHANDLINGER.path)
+      .onGet(fpsakApi.BEHANDLINGER_FPSAK.path)
       .replyOnce(200, behandlinger);
 
     const store = mockStore();
@@ -138,13 +141,13 @@ describe('BehandlingMenu-reducer', () => {
       .onGet(fpsakApi.FETCH_FAGSAK.path)
       .replyOnce(200, fagsak);
     mockAxios
-      .onGet(fpsakApi.ALL_DOCUMENTS.path)
+      .onGet(fpsakApi.ALL_DOCUMENTS_FPSAK.path)
       .replyOnce(200, { dokId: 10 });
     mockAxios
-      .onGet(fpsakApi.HISTORY.path)
+      .onGet(fpsakApi.HISTORY_FPSAK.path)
       .replyOnce(200, { histId: 1 });
     mockAxios
-      .onGet(fpsakApi.BEHANDLINGER.path)
+      .onGet(fpsakApi.BEHANDLINGER_FPSAK.path)
       .replyOnce(200, behandlinger);
     mockAxios
       .onGet(fpsakApi.ANNEN_PART_BEHANDLING.path)
@@ -202,13 +205,13 @@ describe('BehandlingMenu-reducer', () => {
       .onGet(fpsakApi.FETCH_FAGSAK.path)
       .replyOnce(200, fagsak);
     mockAxios
-      .onGet(fpsakApi.ALL_DOCUMENTS.path)
+      .onGet(fpsakApi.ALL_DOCUMENTS_FPSAK.path)
       .replyOnce(200, { dokId: 10 });
     mockAxios
-      .onGet(fpsakApi.HISTORY.path)
+      .onGet(fpsakApi.HISTORY_FPSAK.path)
       .replyOnce(200, { histId: 1 });
     mockAxios
-      .onGet(fpsakApi.BEHANDLINGER.path)
+      .onGet(fpsakApi.BEHANDLINGER_FPSAK.path)
       .replyOnce(200, behandlinger);
     mockAxios
       .onGet(fpsakApi.ANNEN_PART_BEHANDLING.path)
