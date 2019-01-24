@@ -660,15 +660,19 @@ const mapStateToProps = (state, props) => {
     const { ...uttakPerioder } = uttak;
     if (uttak.oppholdÅrsak.kode !== oppholdArsakType.UDEFINERT) {
       const stonadskonto = oppholdArsakMapper[uttak.oppholdÅrsak.kode];
-      const oppholdInfo = {
-        stønadskontoType: {
+      const kopierAktiviteter = uttaksresultatActivity.find(u => u.aktiviteter.length > 0);
+      const oppholdAktiviteter = kopierAktiviteter.aktiviteter.map((a) => {
+        const { ...aktivitet } = a;
+        const updateStonadskontoType = {
           kode: stonadskonto,
           kodeverk: uttak.oppholdÅrsak.kodeverk,
           navn: uttakPeriodeNavn[stonadskonto],
-        },
-        trekkdager: calcDays(moment(uttak.fom.toString()), moment(uttak.tom.toString())),
-      };
-      uttakPerioder.aktiviteter = [oppholdInfo];
+        };
+        aktivitet.stønadskontoType = updateStonadskontoType;
+        aktivitet.trekkdager = calcDays(moment(uttak.fom.toString()), moment(uttak.tom.toString()));
+        return aktivitet;
+      });
+      uttakPerioder.aktiviteter = oppholdAktiviteter;
     }
     return uttakPerioder;
   });
