@@ -5,17 +5,17 @@ workflow "Test, build, publish" {
 
 action "Test Less" {
   uses = "actions/npm@de7a3705a9510ee12702e124482fad6af249991b"
-  args = "less:lint"
+  args = "run less:lint"
 }
 
 action "Test JS" {
   uses = "actions/npm@de7a3705a9510ee12702e124482fad6af249991b"
   needs = ["Test Less"]
-  args = "test"
+  args = "run test"
 }
 
 action "Build" {
   uses = "actions/npm@de7a3705a9510ee12702e124482fad6af249991b"
   needs = ["Test JS"]
-  args = "build"
+  args = "run build"
 }
