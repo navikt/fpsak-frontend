@@ -1,7 +1,9 @@
 import { createSelector } from 'reselect';
 
-import fpsakApi from 'data/fpsakApi';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+
+import fpsakApi from 'data/fpsakApi';
+import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
 
 const getFetchFagsakResult = fpsakApi.FETCH_FAGSAK.getRestApiData();
 
@@ -24,32 +26,18 @@ export const getFagsakYtelseType = createSelector(getSelectedFagsak, fagsak => (
 
 export const isForeldrepengerFagsak = createSelector(getFagsakYtelseType, (ytelseType = {}) => (ytelseType.kode === fagsakYtelseType.FORELDREPENGER));
 
-export const getFetchFagsakInfoFinished = createSelector(
-  [
-    fpsakApi.FETCH_FAGSAK.getRestApiFinished(),
-    fpsakApi.BEHANDLINGER.getRestApiFinished(),
-    fpsakApi.ALL_DOCUMENTS.getRestApiFinished(),
-    fpsakApi.HISTORY.getRestApiFinished(),
-  ],
-  (...finished) => !finished.some(f => !f),
-);
+// TODO (TOR) Endre tre funksjonane under til selectors
+export const getFetchFagsakInfoFinished = (state) => {
+  const finished = [fpsakApi.FETCH_FAGSAK.getRestApiFinished()(state), ...behandlingOrchestrator.getRestApisFinished(state)];
+  return !finished.some(f => !f);
+};
 
-export const getFetchFagsakInfoFailed = createSelector(
-  [
-    fpsakApi.FETCH_FAGSAK.getRestApiError(),
-    fpsakApi.BEHANDLINGER.getRestApiError(),
-    fpsakApi.ALL_DOCUMENTS.getRestApiError(),
-    fpsakApi.HISTORY.getRestApiError(),
-  ],
-  (...error) => error.some(e => e !== undefined),
-);
+export const getFetchFagsakInfoFailed = (state) => {
+  const error = [fpsakApi.FETCH_FAGSAK.getRestApiError()(state), ...behandlingOrchestrator.getRestApisErrors(state)];
+  return error.some(e => e !== undefined);
+};
 
-export const getAllFagsakInfoResolved = createSelector(
-  [
-    fpsakApi.FETCH_FAGSAK.getRestApiData(),
-    fpsakApi.BEHANDLINGER.getRestApiData(),
-    fpsakApi.ALL_DOCUMENTS.getRestApiData(),
-    fpsakApi.HISTORY.getRestApiData(),
-  ],
-  (...data) => !data.some(d => d === undefined),
-);
+export const getAllFagsakInfoResolved = (state) => {
+  const data = [fpsakApi.FETCH_FAGSAK.getRestApiData()(state), ...behandlingOrchestrator.getRestApisData(state)];
+  return !data.some(d => d === undefined);
+};

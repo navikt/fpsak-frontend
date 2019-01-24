@@ -1,7 +1,8 @@
 import fpsakApi, { FpsakApiKeys } from 'data/fpsakApi';
 import fpsakBehandlingApi, { BehandlingFpsakApiKeys } from 'behandlingFpsak/data/fpsakBehandlingApi';
-import { resetBehandlingsupportInfo, updateBehandlingsupportInfo } from 'behandlingsupport/duck';
+import { updateBehandlingsupportInfo } from 'behandlingsupport/duck';
 import { updateAnnenPartBehandling } from 'fagsakprofile/duck';
+import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
 import reducerRegistry from '../ReducerRegistry';
 
 export const reducerName = 'fagsak';
@@ -23,16 +24,15 @@ export const previewReceived = pdf => ({
 export const fetchVedtaksbrevPreview = data => dispatch => dispatch(fpsakApi.FORHANDSVISNING_FORVED_BREV.makeRestApiRequest()(data))
   .then(response => dispatch(previewReceived(response.data)));
 
-export const updateBehandlinger = saksnummer => dispatch => (
-  dispatch(fpsakApi.BEHANDLINGER.makeRestApiRequest()({ saksnummer }, { keepData: true }))
-);
+export const updateBehandlinger = saksnummer => dispatch => (behandlingOrchestrator.fetchBehandlinger(saksnummer, dispatch));
 
 const resetFetchFagsakInfo = () => (dispatch) => {
   dispatch(fpsakApi.FETCH_FAGSAK.resetRestApi()());
-  dispatch(fpsakApi.BEHANDLINGER.resetRestApi()());
+  behandlingOrchestrator.resetRestApis(dispatch);
   dispatch(fpsakBehandlingApi.BEHANDLING.resetRestApi()());
+
+  // TODO (TOR) Denne er litt pussig. Ser ut som den er spesifik for behandling, men hentar opp gitt saksnummer
   dispatch(fpsakApi.ANNEN_PART_BEHANDLING.resetRestApi()());
-  dispatch(resetBehandlingsupportInfo());
 };
 
 export const updateFagsakInfo = saksnummer => dispatch => (
@@ -40,8 +40,8 @@ export const updateFagsakInfo = saksnummer => dispatch => (
     .then(() => Promise.all([
       dispatch(updateBehandlinger(saksnummer)),
       dispatch(updateAnnenPartBehandling(saksnummer)),
-      dispatch(updateBehandlingsupportInfo(saksnummer)),
     ]))
+    .then(() => dispatch(updateBehandlingsupportInfo(saksnummer)))
 );
 
 export const fetchFagsakInfo = saksnummer => (dispatch) => {

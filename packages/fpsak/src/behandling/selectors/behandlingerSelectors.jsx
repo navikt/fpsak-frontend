@@ -3,13 +3,23 @@ import { createSelector } from 'reselect';
 import fpsakApi from 'data/fpsakApi';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 
-const getBehandlingerData = fpsakApi.BEHANDLINGER.getRestApiData();
-const getBehandlingerMeta = fpsakApi.BEHANDLINGER.getRestApiMeta();
+const getBehandlingerData = createSelector(
+  [fpsakApi.BEHANDLINGER_FPSAK.getRestApiData(), fpsakApi.BEHANDLINGER_FPTILBAKE.getRestApiData()],
+  (behandlingerFpsak = [], behandlingerTilbake = []) => behandlingerFpsak.concat(behandlingerTilbake),
+);
+
+const getBehandlingerFpsakMeta = fpsakApi.BEHANDLINGER_FPSAK.getRestApiMeta();
+const getBehandlingerTilbakeMeta = fpsakApi.BEHANDLINGER_FPTILBAKE.getRestApiMeta();
 
 // TODO (TOR) Denne bør ikkje eksporterast. Bryt opp i fleire selectors
 export const getBehandlinger = createSelector(
-  [getSelectedSaksnummer, getBehandlingerData, getBehandlingerMeta],
-  (saksnummer, behandlingerData, behandlingerMeta = { params: {} }) => (behandlingerMeta.params.saksnummer === saksnummer ? behandlingerData : undefined),
+  [getSelectedSaksnummer, getBehandlingerData, getBehandlingerFpsakMeta, getBehandlingerTilbakeMeta],
+  (saksnummer, behandlingerData, behandlingerFpsakMeta = { params: {} }, behandlingerTilbakeMeta = { params: {} }) => {
+    const hasRequestedBehandling = behandlingerFpsakMeta.params.saksnummer || behandlingerTilbakeMeta.params.saksnummer;
+    const isFpsakOk = !behandlingerFpsakMeta.params.saksnummer || behandlingerFpsakMeta.params.saksnummer === saksnummer;
+    const isTilbakeOk = !behandlingerTilbakeMeta.params.saksnummer || behandlingerTilbakeMeta.params.saksnummer === saksnummer;
+    return hasRequestedBehandling && isFpsakOk && isTilbakeOk ? behandlingerData : undefined;
+  },
 );
 
 export const getBehandlingerIds = createSelector([getBehandlinger], (behandlinger = []) => behandlinger.map(b => b.id));

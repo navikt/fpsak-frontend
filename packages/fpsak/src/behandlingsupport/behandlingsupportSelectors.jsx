@@ -80,8 +80,11 @@ export const getEnabledSupportPanels = createSelector(
     }),
 );
 
-// ALL_DOCUMENTS
-const getAllDocuments = fpsakApi.ALL_DOCUMENTS.getRestApiData();
+export const getAllHistory = createSelector([fpsakApi.HISTORY_FPSAK.getRestApiData(), fpsakApi.HISTORY_FPTILBAKE.getRestApiData()],
+  (historyFpsak = [], historyTilbake = []) => (historyFpsak.concat(historyTilbake)));
+
+export const getAllDocuments = createSelector([fpsakApi.ALL_DOCUMENTS_FPSAK.getRestApiData(), fpsakApi.ALL_DOCUMENTS_FPTILBAKE.getRestApiData()],
+  (documentsFpsak = [], documentsTilbake = []) => (documentsFpsak.concat(documentsTilbake)));
 
 // Samme dokument kan ligge på flere behandlinger under samme fagsak.
 export const getFilteredReceivedDocuments = createSelector([getAllDocuments], (documents = []) => {

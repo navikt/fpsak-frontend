@@ -4,6 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 
+import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
+import { getFeatureToggles } from 'app/duck';
+import featureToggle from 'app/featureToggle';
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
@@ -43,7 +46,11 @@ export class FagsakResolver extends Component {
   }
 
   resolveFagsakInfo() {
-    const { selectedSaksnummer, fetchFagsakInfo } = this.props;
+    const { selectedSaksnummer, fetchFagsakInfo, disableTilbakekreving } = this.props;
+
+    if (disableTilbakekreving) {
+      behandlingOrchestrator.disableTilbakekreving();
+    }
     fetchFagsakInfo(selectedSaksnummer);
   }
 
@@ -88,6 +95,7 @@ FagsakResolver.propTypes = {
   location: PropTypes.shape().isRequired,
   shouldRedirectToBehandlinger: PropTypes.bool.isRequired,
   children: PropTypes.node,
+  disableTilbakekreving: PropTypes.bool.isRequired,
 };
 
 FagsakResolver.defaultProps = {
@@ -102,6 +110,7 @@ const mapStateToProps = state => ({
   behandlingerIds: getBehandlingerIds(state),
   fetchFagsakInfoPending: !getFetchFagsakInfoFinished(state) || !getFetchFagsakInfoFailed(state),
   allFagsakInfoResolved: getAllFagsakInfoResolved(state),
+  disableTilbakekreving: !getFeatureToggles(state)[featureToggle.AKTIVER_TILBAKEKREVINGBEHANDLING],
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
