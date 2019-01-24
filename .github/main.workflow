@@ -3,8 +3,14 @@ workflow "Test, build, publish" {
   resolves = ["Build"]
 }
 
+action "Install" {
+  uses = "actions/npm@de7a3705a9510ee12702e124482fad6af249991b"
+  args = "run install"
+}
+
 action "Test Less" {
   uses = "actions/npm@de7a3705a9510ee12702e124482fad6af249991b"
+  needs = ["Install"]
   args = "run less:lint"
 }
 
