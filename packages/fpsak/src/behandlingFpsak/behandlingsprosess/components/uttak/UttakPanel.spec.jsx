@@ -38,6 +38,62 @@ describe('<UttakPanel>', () => {
     }],
   };
 
+  const uttaksresultat2 = {
+    perioderSøker: [{
+      fom: '',
+      tom: '',
+      periodeResultatType: {
+        kode: 'MANUELL_BEHANDLING',
+        kodeverk: '',
+        navn: '',
+      },
+      periodeResultatÅrsak: {
+        kode: '4002',
+      },
+      manuellBehandlingÅrsak: {
+        navn: 'test',
+        kode: 'OTHER',
+      },
+      periodeType: {
+        kode: 'MØDREKVOTE',
+      },
+      aktiviteter: [{
+      }],
+    }, {
+      fom: '',
+      tom: '',
+      periodeResultatType: {
+        kode: 'MANUELL_BEHANDLING',
+        kodeverk: '',
+        navn: '',
+      },
+      manuellBehandlingÅrsak: {
+        navn: 'test',
+      },
+      aktiviteter: [{
+      }],
+    }],
+  };
+
+  const stonadskonto = {
+    stonadskontoer: {
+      MØDREKVOTE: {
+        aktivitetSaldoDtoList: [{ aktivitetIdentifikator: { arbeidsgiver: { navn: 'UNIVERSITETET I OSLO' } }, saldo: 0 },
+          { aktivitetIdentifikator: { arbeidsgiver: { navn: 'STATOIL' } }, saldo: 4 }],
+      },
+    },
+  };
+
+  const stonadskontoFlerGarTom = {
+    stonadskontoer: {
+      MØDREKVOTE: {
+        aktivitetSaldoDtoList: [{ aktivitetIdentifikator: { arbeidsgiver: { navn: 'UNIVERSITETET I OSLO' } }, saldo: 0 },
+          { aktivitetIdentifikator: { arbeidsgiver: { navn: 'STATOIL' } }, saldo: 4 },
+          { aktivitetIdentifikator: { arbeidsgiver: { navn: 'MYS' } }, saldo: 0 }],
+      },
+    },
+  };
+
   it('skal rendre uttakpanel uten aksjonspunkt', () => {
     const wrapper = shallowWithIntl(<UttakPanel
       {...reduxFormPropsMock}
@@ -91,6 +147,72 @@ describe('<UttakPanel>', () => {
     const form = wrapper.find('form');
     form.simulate('submit', { preventDefault() {} });
     expect(reduxFormPropsMock.handleSubmit).to.have.property('callCount', 1);
+  });
+
+  it('skal rendre uttakpanel med aksjonspunkt og korrekt tekst om man går tom för en aktivitets dager', () => {
+    const aksjonspunkter = [{
+      id: 1,
+      definisjon: {
+        kode: '',
+        navn: 'ap1',
+      },
+      status: {
+        kode: 's1',
+        navn: 's1',
+      },
+      toTrinnsBehandling: true,
+      toTrinnsBehandlingGodkjent: false,
+      kanLoses: true,
+      erAktivt: true,
+    }];
+    const wrapper = shallowWithIntl(<UttakPanel
+      {...reduxFormPropsMock}
+      aksjonspunkter={aksjonspunkter}
+      readOnly={false}
+      uttaksresultat={uttaksresultat2}
+      manuellOverstyring={false}
+      isApOpen
+      submitCallback={sinon.spy()}
+      stonadskonto={stonadskonto}
+    />);
+    const uttak = wrapper.find(Uttak);
+    expect(uttak).has.length(1);
+    const formattedMessage = wrapper.find('FormattedMessage');
+    expect(formattedMessage.at(2).prop('id')).to.eql('UttakPanel.manuellBehandlingÅrsakEnskiltArbeidsforhold');
+    expect(formattedMessage).has.length(4);
+  });
+
+  it('skal rendre uttakpanel med aksjonspunkt og korrekt tekst om man går tom för flere aktiviteters dager', () => {
+    const aksjonspunkter = [{
+      id: 1,
+      definisjon: {
+        kode: '',
+        navn: 'ap1',
+      },
+      status: {
+        kode: 's1',
+        navn: 's1',
+      },
+      toTrinnsBehandling: true,
+      toTrinnsBehandlingGodkjent: false,
+      kanLoses: true,
+      erAktivt: true,
+    }];
+    const wrapper = shallowWithIntl(<UttakPanel
+      {...reduxFormPropsMock}
+      aksjonspunkter={aksjonspunkter}
+      readOnly={false}
+      uttaksresultat={uttaksresultat2}
+      manuellOverstyring={false}
+      isApOpen
+      submitCallback={sinon.spy()}
+      stonadskonto={stonadskontoFlerGarTom}
+    />);
+    const uttak = wrapper.find(Uttak);
+    expect(uttak).has.length(1);
+    const formattedMessage = wrapper.find('FormattedMessage');
+    expect(formattedMessage.at(2).prop('id')).to.eql('UttakPanel.manuellBehandlingÅrsakArbeidsforhold');
+    expect(formattedMessage).has.length(4);
   });
 
   it('transformValues gir korrekt trekkdager og aksjonspunkt 5071', () => {

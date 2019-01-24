@@ -1660,6 +1660,8 @@
   "UttakPanel.Aksjonspunkt.Behandlet": "Fastsett uttaksperioder manuelt.",
   "UttakPanel.Overstyrt.KontrollerPaNytt": "Vurder perioder på nytt på grunn av endringer i tidligere steg.",
   "UttakPanel.Overstyrt.Utfort": "Perioder er overstyrt.",
+  "UttakPanel.manuellBehandlingÅrsakEnskiltArbeidsforhold" : "{arbeidsforhold} er tom for stønadsdager. Vurder å endre stønadskonto eller sette trekkdager og utbetalingsgrad til null. Kontakt søker ved behov.",
+  "UttakPanel.manuellBehandlingÅrsakArbeidsforhold" : "{arbeidsforhold} er tomme for stønadsdager. Vurder å endre stønadskonto eller sette trekkdager og utbetalingsgrad til null. Kontakt søker ved behov.",
   "RenderUttakTable.PeriodeData.Aktivitet": "Aktivitet",
   "RenderUttakTable.PeriodeData.Stonadskonto": "Stønadskonto",
   "RenderUttakTable.PeriodeData.Stillingsprosent": "Stillingsprosent",

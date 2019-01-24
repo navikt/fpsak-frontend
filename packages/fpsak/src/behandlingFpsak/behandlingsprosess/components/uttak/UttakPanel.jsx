@@ -36,7 +36,26 @@ const uttakAksjonspunkter = [
   aksjonspunktCodes.FASTSETT_UTTAKPERIODER,
 ];
 
-const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter) => {
+
+const getCorrectEmptyArbeidsForhold = (preiodeTypeKode, arbeidsForhold) => {
+  const arbeidsForholdMedNullDagerIgjenArray = [];
+  let arbeidsforholdMedPositivSaldo = false;
+  if (arbeidsForhold.stonadskontoer[preiodeTypeKode] && arbeidsForhold.stonadskontoer[preiodeTypeKode].aktivitetSaldoDtoList) {
+    arbeidsForhold.stonadskontoer[preiodeTypeKode].aktivitetSaldoDtoList.forEach((item) => {
+      if (item.saldo === 0) {
+        arbeidsForholdMedNullDagerIgjenArray.push(item.aktivitetIdentifikator.arbeidsgiver.navn);
+      } else {
+        arbeidsforholdMedPositivSaldo = true;
+      }
+    });
+  }
+  if (arbeidsforholdMedPositivSaldo) {
+    return arbeidsForholdMedNullDagerIgjenArray;
+  }
+  return [];
+};
+
+const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter, stonadskonto) => {
   const texts = [];
   const [helpText] = uttaksresultat.perioderSøker.filter(p => (p.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING));
   const helptTextAksjonspunkter = aksjonspunkter.filter(ap => ap.definisjon.kode !== aksjonspunktCodes.FASTSETT_UTTAKPERIODER
@@ -84,7 +103,28 @@ const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter) => {
     });
   }
   if (helpText) {
-    if (uttakPanelAksjonsPunktKoder[helpText.manuellBehandlingÅrsak.kode]) {
+    if (helpText.periodeResultatÅrsak && helpText.periodeType && helpText.periodeResultatÅrsak.kode === '4002') {
+      const arbeidsForhold = getCorrectEmptyArbeidsForhold(helpText.periodeType.kode, stonadskonto);
+      const arbeidsForholdMedNullDagerIgjen = arbeidsForhold.join();
+      if (arbeidsForhold.length > 1) {
+        texts.push(<FormattedMessage
+          key="manuellÅrsak"
+          id="UttakPanel.manuellBehandlingÅrsakArbeidsforhold"
+          values={{ arbeidsforhold: arbeidsForholdMedNullDagerIgjen }}
+        />);
+      } else if (arbeidsForhold.length === 1) {
+        texts.push(<FormattedMessage
+          key="manuellÅrsak"
+          id="UttakPanel.manuellBehandlingÅrsakEnskiltArbeidsforhold"
+          values={{ arbeidsforhold: arbeidsForhold }}
+        />);
+      } else if (uttakPanelAksjonsPunktKoder[helpText.manuellBehandlingÅrsak.kode]) {
+        texts.push(<FormattedMessage
+          key="manuellÅrsak"
+          id={uttakPanelAksjonsPunktKoder[helpText.manuellBehandlingÅrsak.kode]}
+        />);
+      }
+    } else if (uttakPanelAksjonsPunktKoder[helpText.manuellBehandlingÅrsak.kode]) {
       texts.push(<FormattedMessage
         key="manuellÅrsak"
         id={uttakPanelAksjonsPunktKoder[helpText.manuellBehandlingÅrsak.kode]}
@@ -114,6 +154,7 @@ export const UttakPanelImpl = ({
   readOnly,
   manuellOverstyring,
   isApOpen,
+  stonadskonto,
   intl,
   ...formProps
 }) => (
@@ -126,7 +167,7 @@ export const UttakPanelImpl = ({
     && (
       <ElementWrapper>
         <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
-          {hentApTekst(uttaksresultat, isApOpen, aksjonspunkter)}
+          {hentApTekst(uttaksresultat, isApOpen, aksjonspunkter, stonadskonto)}
         </AksjonspunktHelpText>
         <VerticalSpacer twentyPx />
       </ElementWrapper>
@@ -160,6 +201,7 @@ UttakPanelImpl.propTypes = {
   manuellOverstyring: PropTypes.bool,
   apCodes: PropTypes.arrayOf(PropTypes.string),
   isApOpen: PropTypes.bool,
+  stonadskonto: PropTypes.shape(),
   ...formPropTypes,
 };
 
@@ -168,6 +210,7 @@ UttakPanelImpl.defaultProps = {
   apCodes: undefined,
   isApOpen: false,
   manuellOverstyring: undefined,
+  stonadskonto: {},
 };
 
 const getResult = (uttaksresultatActivity) => {
