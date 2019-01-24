@@ -6,15 +6,18 @@ import {
 } from '@fpsak-frontend/utils';
 import { Element } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import faktaOmBeregningTilfelle, { harFastsettATFLInntektTilfelle } from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import { getBehandlingFormValues } from 'behandlingFpsak/behandlingForm';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import moment from 'moment';
 import {
   getAksjonspunkter,
   getEndringBeregningsgrunnlag,
   getFaktaOmBeregningTilfellerKoder,
+  getFaktaOmBeregning,
 } from 'behandlingFpsak/behandlingSelectors';
 import { byggListeSomStreng } from '../tilstøtendeYtelse/YtelsePanel';
+import { skalFastsetteForATUavhengigAvATFLSammeOrg, skalFastsetteForFLUavhengigAvATFLSammeOrg } from '../BgFordelingUtils';
 
 
 const {
@@ -25,11 +28,18 @@ const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.som
 
 const tilfellerSomStøtterEndringBG = [faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG,
   faktaOmBeregningTilfelle.VURDER_SN_NY_I_ARBEIDSLIVET,
-  faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD];
+  faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD,
+  faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE,
+  faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL,
+  faktaOmBeregningTilfelle.VURDER_LONNSENDRING,
+  faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON,
+  faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING,
+  faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL];
 
 export const harKunTilfellerSomStøtterEndringBG = aktivertePaneler => (aktivertePaneler && aktivertePaneler.length > 0
   && !aktivertePaneler.some(tilfelle => !tilfellerSomStøtterEndringBG.includes(tilfelle)));
 
+export const skalViseHelptextForEndretBg = tilfeller => !(!harKunTilfellerSomStøtterEndringBG(tilfeller) || harFastsettATFLInntektTilfelle(tilfeller));
 
 const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 
@@ -107,7 +117,7 @@ export const lagHelpTextsEndringBG = (endredeArbeidsforhold) => {
 export const getHelpTextsEndringBG = createSelector(
   [getFaktaOmBeregningTilfellerKoder, getEndredeArbeidsforhold, getAksjonspunkter],
   (aktivertePaneler, endredeArbeidsforhold, aksjonspunkter) => (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter))
-    && (harKunTilfellerSomStøtterEndringBG(aktivertePaneler)
+    && (skalViseHelptextForEndretBg(aktivertePaneler)
       ? lagHelpTextsEndringBG(endredeArbeidsforhold) : []),
 );
 
@@ -127,8 +137,50 @@ const findGraderingOrRefusjonHeading = (state, periodeFom, periodeTom) => {
   return createGraderingOrRefusjonString(gradering, refusjon);
 };
 
-export const createEndringHeadingForDate = (state, periodeFom, periodeTom, dateHeading, harPeriodeaarsak) => {
+const skalViseFastsettATFLInntektHeader = (heading, harPeriodeaarsak) => ((heading.length === 0) && !harPeriodeaarsak);
+
+const skalViseATFLISammeOrgIHeader = tilfeller => tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON);
+
+export const lagFastsetteATFLInntektHeader = (values, faktaOmBeregning) => {
+  const tilfeller = faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode);
+  if (skalViseATFLISammeOrgIHeader(tilfeller)) {
+    return (
+      <FormattedMessage
+        id="BeregningInfoPanel.VurderOgFastsettATFL.ATFLSammeOrgFastsettATFLAlleOppdrag"
+      />
+    );
+  }
+  const skalFastsetteFL = skalFastsetteForFLUavhengigAvATFLSammeOrg(values);
+  const skalFastsetteAT = skalFastsetteForATUavhengigAvATFLSammeOrg(values, faktaOmBeregning);
+  if (skalFastsetteAT && skalFastsetteFL) {
+    return (
+      <FormattedMessage
+        id="BeregningInfoPanel.VurderOgFastsettATFL.FastsettATFLAlleOppdrag"
+      />
+    );
+  }
+  if (skalFastsetteAT) {
+    return (
+      <FormattedMessage
+        id="BeregningInfoPanel.VurderOgFastsettATFL.FastsettArbeidsinntekt"
+      />
+    );
+  }
+  if (skalFastsetteFL) {
+    return (
+      <FormattedMessage
+        id="BeregningInfoPanel.VurderOgFastsettATFL.FastsettFrilansAlleOppdrag"
+      />
+    );
+  }
+  return null;
+};
+
+
+export const createEndringHeadingForDate = (state, periodeFom, periodeTom, dateHeading, harPeriodeaarsak, formName) => {
   const heading = findGraderingOrRefusjonHeading(state, periodeFom, periodeTom);
+  const values = formName ? getBehandlingFormValues(formName)(state) : undefined;
+  const faktaOmBeregning = getFaktaOmBeregning(state);
   return (
     <ElementWrapper>
       <Element>
@@ -137,6 +189,7 @@ export const createEndringHeadingForDate = (state, periodeFom, periodeTom, dateH
             {text}
           </ElementWrapper>
         ))}
+        {skalViseFastsettATFLInntektHeader(heading, harPeriodeaarsak) && values && lagFastsetteATFLInntektHeader(values, faktaOmBeregning)}
         {harPeriodeaarsak
       && (
         <FormattedMessage

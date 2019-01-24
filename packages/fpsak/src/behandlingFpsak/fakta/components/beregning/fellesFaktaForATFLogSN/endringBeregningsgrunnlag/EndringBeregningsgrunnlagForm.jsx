@@ -5,6 +5,7 @@ import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import EndringBeregningsgrunnlagPeriodePanel from './EndringBeregningsgrunnlagPeriodePanel';
+import { mapToBelop, skalRedigereInntektForAndel } from '../BgFordelingUtils';
 
 import styles from './endringBeregningsgrunnlagForm.less';
 
@@ -46,6 +47,7 @@ export class EndringBeregningsgrunnlagForm extends Component {
       perioder,
       isAksjonspunktClosed,
       skalHaEndretInformasjonIHeader,
+      formName,
     } = this.props;
     const { openPanels } = this.state;
     return (
@@ -63,6 +65,7 @@ export class EndringBeregningsgrunnlagForm extends Component {
               isAksjonspunktClosed={isAksjonspunktClosed}
               showPanel={this.showPanel}
               skalHaEndretInformasjonIHeader={skalHaEndretInformasjonIHeader}
+              formName={formName}
             />
             <VerticalSpacer eightPx />
           </ElementWrapper>
@@ -78,31 +81,41 @@ EndringBeregningsgrunnlagForm.propTypes = {
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   skalHaEndretInformasjonIHeader: PropTypes.bool,
+  formName: PropTypes.string,
 };
 
 EndringBeregningsgrunnlagForm.defaultProps = {
   skalHaEndretInformasjonIHeader: false,
+  formName: undefined,
 };
 
+export const finnFastsattIForstePeriode = (values, skalRedigereInntekt) => {
+  const forstePeriode = values[getFieldNameKey(0)];
+  return forstePeriode
+    .map(mapToBelop(skalRedigereInntekt))
+    .reduce((sum, fastsattBeløp) => sum + fastsattBeløp, 0);
+};
 
-EndringBeregningsgrunnlagForm.validate = (values, endringBGPerioder) => {
+EndringBeregningsgrunnlagForm.validate = (values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag) => {
   const errors = {};
-  if (endringBGPerioder) {
+  if (endringBGPerioder && endringBGPerioder.length > 0) {
+    const skalRedigereInntekt = skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag);
+    const fastsattIForstePeriode = finnFastsattIForstePeriode(values, skalRedigereInntekt);
     for (let i = 0; i < endringBGPerioder.length; i += 1) {
-      errors[getFieldNameKey(i)] = EndringBeregningsgrunnlagPeriodePanel.validate(values[getFieldNameKey(i)]);
+      const periode = values[getFieldNameKey(i)];
+      errors[getFieldNameKey(i)] = EndringBeregningsgrunnlagPeriodePanel.validate(periode, fastsattIForstePeriode, skalRedigereInntekt);
     }
   }
   return errors;
 };
 
-
-EndringBeregningsgrunnlagForm.buildInitialValues = (endringBGPerioder) => {
+EndringBeregningsgrunnlagForm.buildInitialValues = (endringBGPerioder, readOnly) => {
   const initialValues = {};
   if (!endringBGPerioder) {
     return initialValues;
   }
   endringBGPerioder.forEach((periode, index) => {
-    initialValues[getFieldNameKey(index)] = EndringBeregningsgrunnlagPeriodePanel.buildInitialValues(periode);
+    initialValues[getFieldNameKey(index)] = EndringBeregningsgrunnlagPeriodePanel.buildInitialValues(periode, readOnly);
   });
   return initialValues;
 };
@@ -124,32 +137,51 @@ const gjelderKunYtelse = (harKunYtelse, aktivitet) => (harKunYtelse
   && aktivitet.nyAndel
   && aktivitet.andel === beregningsgrunnlagAndeltyper.BRUKERS_ANDEL);
 
+const harAndelMedRedigerbarInntekt = andeler => (andeler.some(andel => andel.skalRedigereInntekt));
 
-EndringBeregningsgrunnlagForm.transformValues = (values, endringBGPerioder, harKunYtelse) => {
+export const shouldBeSubmitted = (harPeriodeAarsakGraderingEllerRefusjon, values, index) => (harPeriodeAarsakGraderingEllerRefusjon
+    || harAndelMedRedigerbarInntekt(values[getFieldNameKey(index)]));
+
+export const finnRedigerteAndeler = (values, index, harPeriodeAarsakGraderingEllerRefusjon) => (values[getFieldNameKey(index)]
+  .filter(({ skalRedigereInntekt }) => harPeriodeAarsakGraderingEllerRefusjon || skalRedigereInntekt));
+
+export const mapTilFastsatteVerdier = aktivitet => ({
+  refusjon: aktivitet.skalKunneEndreRefusjon ? removeSpacesFromNumber(aktivitet.refusjonskrav) : null,
+  fastsattBeløp: removeSpacesFromNumber(aktivitet.fastsattBeløp),
+  inntektskategori: aktivitet.inntektskategori,
+});
+
+export const mapAndel = (harKunYtelse, endringBGPerioder, index) => aktivitet => ({
+  andel: aktivitet.andel,
+  andelsnr: gjelderKunYtelse(harKunYtelse, aktivitet) ? getAndelsnrForKunYtelse(endringBGPerioder[index]) : getAndelsnr(aktivitet),
+  arbeidsforholdId: aktivitet.arbeidsforholdId !== '' ? aktivitet.arbeidsforholdId : null,
+  nyAndel: aktivitet.nyAndel,
+  lagtTilAvSaksbehandler: aktivitet.lagtTilAvSaksbehandler,
+  fastsatteVerdier: mapTilFastsatteVerdier(aktivitet),
+});
+
+export const lagPeriodeForSubmit = (values, index, harPeriodeAarsakGraderingEllerRefusjon, harKunYtelse, endringBGPerioder) => ({
+  andeler: finnRedigerteAndeler(values, index, harPeriodeAarsakGraderingEllerRefusjon)
+    .map(mapAndel(harKunYtelse, endringBGPerioder, index)),
+  fom: endringBGPerioder[index].fom,
+  tom: endringBGPerioder[index].tom,
+});
+
+export const transformPerioder = (endringBGPerioder, values, harKunYtelse) => {
   const endringBeregningsgrunnlagPerioder = [];
   for (let index = 0; index < endringBGPerioder.length; index += 1) {
-    if (endringBGPerioder[index].harPeriodeAarsakGraderingEllerRefusjon) {
-      endringBeregningsgrunnlagPerioder.push({
-        andeler: values[getFieldNameKey(index)].map(aktivitet => ({
-          andel: aktivitet.andel,
-          andelsnr: gjelderKunYtelse(harKunYtelse, aktivitet) ? getAndelsnrForKunYtelse(endringBGPerioder[index]) : getAndelsnr(aktivitet),
-          arbeidsforholdId: aktivitet.arbeidsforholdId !== '' ? aktivitet.arbeidsforholdId : null,
-          nyAndel: aktivitet.nyAndel,
-          lagtTilAvSaksbehandler: aktivitet.lagtTilAvSaksbehandler,
-          fastsatteVerdier: {
-            refusjon: aktivitet.skalKunneEndreRefusjon ? removeSpacesFromNumber(aktivitet.refusjonskrav) : null,
-            fastsattBeløp: removeSpacesFromNumber(aktivitet.fastsattBeløp),
-            inntektskategori: aktivitet.inntektskategori,
-          },
-        })),
-        fom: endringBGPerioder[index].fom,
-        tom: endringBGPerioder[index].tom,
-      });
+    const { harPeriodeAarsakGraderingEllerRefusjon } = endringBGPerioder[index];
+    if (shouldBeSubmitted(harPeriodeAarsakGraderingEllerRefusjon, values, index)) {
+      endringBeregningsgrunnlagPerioder.push(lagPeriodeForSubmit(values, index, harPeriodeAarsakGraderingEllerRefusjon, harKunYtelse, endringBGPerioder));
     }
   }
-  return {
-    fastsettEndringBeregningsgrunnlag: { endretBeregningsgrunnlagPerioder: endringBeregningsgrunnlagPerioder },
-  };
+  return endringBeregningsgrunnlagPerioder;
 };
+
+EndringBeregningsgrunnlagForm.transformValues = (values, endringBGPerioder, harKunYtelse) => ({
+  fastsettEndringBeregningsgrunnlag: {
+    endretBeregningsgrunnlagPerioder: transformPerioder(endringBGPerioder, values, harKunYtelse),
+  },
+});
 
 export default EndringBeregningsgrunnlagForm;

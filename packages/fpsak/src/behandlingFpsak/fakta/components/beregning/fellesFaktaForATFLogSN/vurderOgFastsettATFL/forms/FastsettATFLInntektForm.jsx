@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { getFaktaOmBeregning } from 'behandlingFpsak/behandlingSelectors';
+import { getFaktaOmBeregning, getBeregningsgrunnlag } from 'behandlingFpsak/behandlingSelectors';
 import {
   required, createVisningsnavnForAktivitet, DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber,
 } from '@fpsak-frontend/utils';
@@ -308,10 +308,10 @@ FastsettATFLInntektForm.defaultProps = {
   skalViseAT: true,
 };
 
-const slaSammenATListerSomSkalVurderes = (values, faktaOmBeregning) => {
+const slaSammenATListerSomSkalVurderes = (values, faktaOmBeregning, beregningsgrunnlag) => {
   const andelsNrLagtIListen = [];
   const listeMedArbeidsforholdSomSkalFastsettes = [];
-  const mottarYtelseMap = andelsnrMottarYtelseMap(values, faktaOmBeregning.vurderMottarYtelse);
+  const mottarYtelseMap = andelsnrMottarYtelseMap(values, faktaOmBeregning.vurderMottarYtelse, beregningsgrunnlag);
   if (faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM) {
     faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM.forEach((forhold) => {
       if (!andelsNrLagtIListen.includes(forhold.andelsnr)) {
@@ -353,7 +353,8 @@ const slaSammenATListerSomSkalVurderes = (values, faktaOmBeregning) => {
 };
 
 const harFrilansinntektBlittFastsattTidligere = frilansAndel => frilansAndel
-&& ((frilansAndel.fastsattAvSaksbehandler && frilansAndel.beregnetPrAar >= 0) || frilansAndel.erNyoppstartetEllerSammeOrganisasjon === true);
+&& ((frilansAndel.fastsattAvSaksbehandler && frilansAndel.beregnetPrAar !== undefined && frilansAndel.beregnetPrAar !== null)
+ || frilansAndel.erNyoppstartetEllerSammeOrganisasjon === true);
 
 const finnKorrektBGAndelFraFaktaOmBeregningAndel = (faktaOmBeregningAndel, beregningsgrunnlag) => {
   const forstePeriode = beregningsgrunnlag.beregningsgrunnlagPeriode
@@ -413,11 +414,12 @@ FastsettATFLInntektForm.buildInitialValues = (beregningsgrunnlag) => {
 
 const transformValuesFL = (values) => {
   const key = createInputfieldKeyFL();
-  return removeSpacesFromNumber(values[key]);
+  const inntektUtenFormat = values[key];
+  return inntektUtenFormat ? removeSpacesFromNumber(inntektUtenFormat) : undefined;
 };
 
-const transformValuesAT = (values, faktaOmBeregning) => {
-  const arbeidsforholdSomSkalSubmittes = slaSammenATListerSomSkalVurderes(values, faktaOmBeregning);
+const transformValuesAT = (values, faktaOmBeregning, beregningsgrunnlag) => {
+  const arbeidsforholdSomSkalSubmittes = slaSammenATListerSomSkalVurderes(values, faktaOmBeregning, beregningsgrunnlag);
   const listeMedFastsatteMaanedsinntekter = [];
   arbeidsforholdSomSkalSubmittes.forEach((aktivitet) => {
     if (!aktivitet.inntektPrMnd || aktivitet.redigerbar) {
@@ -440,7 +442,7 @@ FastsettATFLInntektForm.eraseValuesAT = () => ({
   fastsettMaanedsinntektFL: null,
 });
 
-FastsettATFLInntektForm.transformValues = (values, faktaOmBeregning, aktueltTilfelle) => {
+FastsettATFLInntektForm.transformValues = (values, faktaOmBeregning, aktueltTilfelle, beregningsgrunnlag) => {
   if (aktueltTilfelle === faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL) {
     return {
       fastsettMaanedsinntektFL: { maanedsinntekt: transformValuesFL(values) },
@@ -448,11 +450,11 @@ FastsettATFLInntektForm.transformValues = (values, faktaOmBeregning, aktueltTilf
   }
   if (aktueltTilfelle === faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING) {
     return {
-      fastsatteLonnsendringer: { vurderLønnsendringAndelListe: transformValuesAT(values, faktaOmBeregning) },
+      fastsattUtenInntektsmelding: { andelListe: transformValuesAT(values, faktaOmBeregning, beregningsgrunnlag) },
     };
   }
   if (aktueltTilfelle === faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON) {
-    const andelsliste = transformValuesAT(values, faktaOmBeregning);
+    const andelsliste = transformValuesAT(values, faktaOmBeregning, beregningsgrunnlag);
     andelsliste.push({
       andelsnr: faktaOmBeregning.frilansAndel.andelsnr,
       arbeidsinntekt: transformValuesFL(values),
@@ -493,7 +495,8 @@ const mapStateToProps = (state, ownProps) => {
     return {};
   }
   const values = getBehandlingFormValues(ownProps.formName)(state);
-  const arbeidsforholdSomSkalFastsettes = slaSammenATListerSomSkalVurderes(values, faktaOmBeregning);
+  const beregningsgrunnlag = getBeregningsgrunnlag(state);
+  const arbeidsforholdSomSkalFastsettes = slaSammenATListerSomSkalVurderes(values, faktaOmBeregning, beregningsgrunnlag);
   const tabellVisesUtenVurdering = harKunATFLISammeOrgUtenBestebergning(tilfellerSomSkalFastsettes);
   return {
     tabellVisesUtenVurdering,

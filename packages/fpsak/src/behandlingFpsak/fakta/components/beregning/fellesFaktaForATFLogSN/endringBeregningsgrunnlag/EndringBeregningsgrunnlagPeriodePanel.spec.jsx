@@ -39,7 +39,7 @@ describe('<EndringBereningsgrunnlagPeriodePanel>', () => {
         lagArbeidstakerAndel(4, false, null, null, null, false, 0, null, null, [0, 20])],
     };
 
-    const initialValues = EndringBereningsgrunnlagPeriodePanel.buildInitialValues(periode);
+    const initialValues = EndringBereningsgrunnlagPeriodePanel.buildInitialValues(periode, false);
     expect(initialValues).to.have.length(4);
     initialValues.forEach((initialValue) => {
       expect(initialValue.andel).to.equal('Virksomheten (3284788923) ...a7e2');

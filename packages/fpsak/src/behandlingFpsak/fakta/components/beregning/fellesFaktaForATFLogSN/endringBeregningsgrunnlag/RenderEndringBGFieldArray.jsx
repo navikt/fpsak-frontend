@@ -14,7 +14,10 @@ import {
 import {
   InputField, DecimalField, PeriodpickerField, NavFieldGroup, SelectField,
 } from '@fpsak-frontend/form';
-import { getEndringBeregningsgrunnlagPerioder, getFaktaOmBeregningTilfellerKoder } from 'behandlingFpsak/behandlingSelectors';
+import {
+  getEndringBeregningsgrunnlagPerioder,
+  getFaktaOmBeregningTilfellerKoder,
+} from 'behandlingFpsak/behandlingSelectors';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
@@ -26,6 +29,7 @@ import {
   validateAndelFields, validateSumFastsattBelop, validateUlikeAndeler,
   validateTotalRefusjonPrArbeidsforhold,
 } from '../ValidateAndelerUtils';
+import { setSkalRedigereInntektForATFL } from '../BgFordelingUtils';
 
 import styles from './renderEndringBGFieldArray.less';
 
@@ -36,6 +40,7 @@ const defaultBGFordeling = periodeUtenAarsak => ({
   lagtTilAvSaksbehandler: true,
   refusjonskravFraInntektsmelding: 0,
   belopFraInntektsmelding: null,
+  kanRedigereInntekt: true,
   harPeriodeAarsakGraderingEllerRefusjon: !periodeUtenAarsak,
 });
 
@@ -79,7 +84,11 @@ const summerFordelingForrigeBehandlingFraFields = (fields) => {
   let sum = 0;
   let index = 0;
   for (index; index < fields.length; index += 1) {
-    sum += fields.get(index).fordelingForrigeBehandling ? Number(removeSpacesFromNumber(fields.get(index).fordelingForrigeBehandling)) : 0;
+    const { fordelingForrigeBehandling } = fields.get(index);
+    if (fordelingForrigeBehandling === undefined || fordelingForrigeBehandling === null || fordelingForrigeBehandling === '') {
+      return '';
+    }
+    sum += Number(removeSpacesFromNumber(fordelingForrigeBehandling));
   }
   return sum > 0 ? formatCurrencyNoKr(sum) : '';
 };
@@ -88,7 +97,12 @@ const summerFordeling = (fields) => {
   let sum = 0;
   let index = 0;
   for (index; index < fields.length; index += 1) {
-    sum += fields.get(index).fastsattBeløp ? Number(removeSpacesFromNumber(fields.get(index).fastsattBeløp)) : 0;
+    const field = fields.get(index);
+    if (field.skalRedigereInntekt) {
+      sum += field.fastsattBeløp ? Number(removeSpacesFromNumber(field.fastsattBeløp)) : 0;
+    } else {
+      sum += field.readOnlyBelop ? Number(removeSpacesFromNumber(field.readOnlyBelop)) : 0;
+    }
   }
   return sum > 0 ? formatCurrencyNoKr(sum) : '';
 };
@@ -118,6 +132,7 @@ const setArbeidsforholdInfo = (fields, index, arbeidsforholdList, val) => {
     field.arbeidsgiverId = arbeidsforhold.arbeidsgiverId;
     field.arbeidsperiodeFom = arbeidsforhold.startdato;
     field.arbeidsperiodeTom = arbeidsforhold.opphoersdato;
+    field.andelsnrRef = arbeidsforhold.andelsnr;
   }
 };
 
@@ -147,6 +162,33 @@ const arbeidsforholdReadOnlyOrSelect = (fields, index, elementFieldId, selectVal
   </ElementWrapper>
 );
 
+export const lagBelopKolonne = (andelElementFieldId, readOnly, skalRedigereInntekt, isAksjonspunktClosed) => {
+  if (readOnly || !skalRedigereInntekt) {
+    return (
+      <TableColumn>
+        <InputField
+          name={`${andelElementFieldId}.readOnlyBelop`}
+          bredde="S"
+          parse={parseCurrencyInput}
+          readOnly
+          isEdited={isAksjonspunktClosed && skalRedigereInntekt}
+        />
+      </TableColumn>
+    );
+  }
+  return (
+    <TableColumn className={styles.rightAlignInput}>
+      <InputField
+        name={`${andelElementFieldId}.fastsattBeløp`}
+        bredde="XS"
+        parse={parseCurrencyInput}
+        readOnly={false}
+        isEdited={isAksjonspunktClosed && skalRedigereInntekt}
+      />
+    </TableColumn>
+  );
+};
+
 const skalViseSletteknapp = (index, fields, readOnly) => ((fields.get(index).nyAndel
 || fields.get(index).lagtTilAvSaksbehandler) && !readOnly);
 
@@ -155,7 +197,7 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
   fields.map((andelElementFieldId, index) => (
     <TableRow key={andelElementFieldId}>
       <TableColumn>
-        {arbeidsforholdReadOnlyOrSelect(fields, index, andelElementFieldId, selectVals, readOnly, arbeidsforholdList)}
+        {arbeidsforholdReadOnlyOrSelect(fields, index, andelElementFieldId, selectVals, (readOnly || periodeUtenAarsak), arbeidsforholdList)}
       </TableColumn>
       <TableColumn>
         {!isSelvstendigOrFrilanser(fields.get(index))
@@ -191,36 +233,28 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
           normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
         />
       </TableColumn>
-      <TableColumn className={readOnly || !fields.get(index).skalKunneEndreRefusjon ? undefined : styles.rightAlignInput}>
+      <TableColumn className={(readOnly || periodeUtenAarsak) || !fields.get(index).skalKunneEndreRefusjon ? undefined : styles.rightAlignInput}>
         <InputField
           name={`${andelElementFieldId}.refusjonskrav`}
           bredde="XS"
-          readOnly={readOnly || !fields.get(index).skalKunneEndreRefusjon}
+          readOnly={(readOnly || periodeUtenAarsak) || !fields.get(index).skalKunneEndreRefusjon}
           parse={parseCurrencyInput}
         />
       </TableColumn>
-      <TableColumn className={readOnly ? undefined : styles.rightAlignInput}>
-        <InputField
-          name={`${andelElementFieldId}.fastsattBeløp`}
-          bredde="XS"
-          parse={parseCurrencyInput}
-          readOnly={readOnly}
-          isEdited={isAksjonspunktClosed && !periodeUtenAarsak}
-        />
-      </TableColumn>
-      <TableColumn>
+      {lagBelopKolonne(andelElementFieldId, readOnly, fields.get(index).skalRedigereInntekt, isAksjonspunktClosed)}
+      <TableColumn className={(readOnly || periodeUtenAarsak) ? styles.shortLeftAligned : undefined}>
         <SelectField
           label=""
           name={`${andelElementFieldId}.inntektskategori`}
           bredde="s"
           selectValues={inntektskategoriSelectValues(inntektskategoriKoder)}
           value={fields.get(index).inntektskategori}
-          readOnly={readOnly}
+          readOnly={(readOnly || periodeUtenAarsak)}
           isEdited={isAksjonspunktClosed && !periodeUtenAarsak}
         />
       </TableColumn>
       <TableColumn>
-        {skalViseSletteknapp(index, fields, readOnly)
+        {skalViseSletteknapp(index, fields, (readOnly || periodeUtenAarsak))
         && (
           <button
             className={styles.buttonRemove}
@@ -293,11 +327,11 @@ export const RenderEndringBGFieldArrayImpl = ({
   const tablerows = createAndelerTableRows(fields, isAksjonspunktClosed, readOnly, inntektskategoriKoder, periodeUtenAarsak, arbeidsforholdList, selectVals);
   tablerows.push(createBruttoBGSummaryRow(sumFordelingForrigeBehandling, sumFordeling));
   return (
-    <NavFieldGroup errorMessage={getErrorMessage(meta, intl)}>
+    <NavFieldGroup errorMessage={getErrorMessage(meta, intl)} className={styles.dividerTop}>
       <Table headerTextCodes={getHeaderTextCodes()} noHover classNameTable={styles.inntektTable}>
         {tablerows}
       </Table>
-      {!readOnly
+      {!readOnly && !periodeUtenAarsak
       && (
       <Row className={styles.buttonRow}>
         <Column xs="3">
@@ -350,9 +384,13 @@ const summerFordelingForrigeBehandlingFraValues = values => (values
   .map(({ fordelingForrigeBehandling }) => (fordelingForrigeBehandling ? removeSpacesFromNumber(fordelingForrigeBehandling) : 0))
   .reduce((sum, fordeling) => sum + fordeling, 0));
 
-RenderEndringBGFieldArray.validate = (values) => {
+const harAndelUtenInntektsmeldingIForstegangsbehandling = values => values
+  .some(({ fordelingForrigeBehandling }) => (fordelingForrigeBehandling === '' || fordelingForrigeBehandling === null
+  || fordelingForrigeBehandling === undefined));
+
+RenderEndringBGFieldArray.validate = (values, fastsattIForstePeriode, skalRedigereInntekt) => {
   const arrayErrors = values.map((andelFieldValues) => {
-    if (!andelFieldValues.harPeriodeAarsakGraderingEllerRefusjon) {
+    if (!skalRedigereInntekt(andelFieldValues)) {
       return null;
     }
     return validateAndelFields(andelFieldValues);
@@ -371,18 +409,32 @@ RenderEndringBGFieldArray.validate = (values) => {
   if (refusjonPrArbeidsforholdError) {
     return { _error: refusjonPrArbeidsforholdError };
   }
+  const kanRedigereInntekt = values.some(andel => skalRedigereInntekt(andel));
+  if (!kanRedigereInntekt) {
+    return null;
+  }
+  if (harAndelUtenInntektsmeldingIForstegangsbehandling(values)) {
+    if (fastsattIForstePeriode !== undefined && fastsattIForstePeriode !== null) {
+      const fastsattBelopError = validateSumFastsattBelop(values, fastsattIForstePeriode, skalRedigereInntekt);
+      if (fastsattBelopError) {
+        return { _error: fastsattBelopError };
+      }
+    }
+    return null;
+  }
   const sumFordelingForrigeBehandling = summerFordelingForrigeBehandlingFraValues(values);
-  const fastsattBelopError = validateSumFastsattBelop(values, sumFordelingForrigeBehandling);
+  const fastsattBelopError = validateSumFastsattBelop(values, sumFordelingForrigeBehandling, skalRedigereInntekt);
   if (fastsattBelopError) {
     return { _error: fastsattBelopError };
   }
   return null;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   const tilfeller = getFaktaOmBeregningTilfellerKoder(state);
   const arbeidsforholdList = getUniqueListOfArbeidsforhold(getEndringBeregningsgrunnlagPerioder(state)
     ? getEndringBeregningsgrunnlagPerioder(state).flatMap(p => p.endringBeregningsgrunnlagAndeler) : undefined);
+  setSkalRedigereInntektForATFL(state, ownProps.fields, ownProps.formName);
   return {
     arbeidsforholdList,
     inntektskategoriKoder: getKodeverk(kodeverkTyper.INNTEKTSKATEGORI)(state),

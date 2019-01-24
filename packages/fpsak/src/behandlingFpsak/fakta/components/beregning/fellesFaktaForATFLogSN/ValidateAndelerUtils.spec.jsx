@@ -418,4 +418,72 @@ describe('<ValidateAndelerUtils>', () => {
     const fastsattError = validateSumFastsattBelop(values, 50000);
     expect(fastsattError).to.equal(null);
   });
+
+  it('skal ikkje gi error om fastsatt beløp og read only beløp er lik sum', () => {
+    const skalRedigereInntekt = (andel) => {
+      if (andel.andelsnr <= 2) {
+        return true;
+      }
+      return false;
+    };
+
+    const values = [{
+      andelsnr: 1,
+      fastsattBeløp: '10 000',
+      readOnlyBelop: '50 000',
+    },
+    {
+      andelsnr: 2,
+      fastsattBeløp: '20 000',
+      readOnlyBelop: '100 000',
+    },
+    {
+      andelsnr: 3,
+      fastsattBeløp: '40 000',
+      readOnlyBelop: '10 000',
+    },
+    {
+      andelsnr: 4,
+      fastsattBeløp: '15 000',
+      readOnlyBelop: '10 000',
+    },
+    ];
+    const fastsattError = validateSumFastsattBelop(values, 50000, skalRedigereInntekt);
+    expect(fastsattError).to.equal(null);
+  });
+
+  it('skal gi error om fastsatt beløp og read only beløp er ulik sum', () => {
+    const skalRedigereInntekt = (andel) => {
+      if (andel.andelsnr <= 2) {
+        return true;
+      }
+      return false;
+    };
+
+    const values = [{
+      andelsnr: 1,
+      fastsattBeløp: '50 000',
+      readOnlyBelop: '10 000',
+    },
+    {
+      andelsnr: 2,
+      fastsattBeløp: '100 000',
+      readOnlyBelop: '20 000',
+    },
+    {
+      andelsnr: 3,
+      fastsattBeløp: '10 000',
+      readOnlyBelop: '40 000',
+    },
+    {
+      andelsnr: 4,
+      fastsattBeløp: '10 000',
+      readOnlyBelop: '15 000',
+    },
+    ];
+    const fastsattError = validateSumFastsattBelop(values, 50000, skalRedigereInntekt);
+    expect(fastsattError).to.have.length(2);
+    expect(fastsattError[0].id).to.equal(skalVereLikFordelingMessage()[0].id);
+    expect(fastsattError[1].fordeling).to.equal('50 000');
+  });
 });

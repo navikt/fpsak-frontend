@@ -17,18 +17,44 @@ import { harVurdertMottarYtelse } from './forms/VurderMottarYtelseUtils';
 import FastsettATFLInntektForm from './forms/FastsettATFLInntektForm';
 import InntektstabellPanel from '../InntektstabellPanel';
 import VurderMottarYtelseForm from './forms/VurderMottarYtelseForm';
+import FastsettEndretBeregningsgrunnlag from '../endringBeregningsgrunnlag/FastsettEndretBeregningsgrunnlag';
 
 
 export const skalViseInntektsTabellUnderRadioknapp = (tilfeller, lonnEndringEllerNyFL) => {
   // Dersom vi har tilfellet for besteberegning fødende kvinne skal alle inntekter fastsettes der.
   // Skal aldri vise inntektstabell under radioknapp dersom det er et spesialtilfelle
   if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)
-  || erATFLSpesialtilfelleEllerVurderMottarYtelseUtenBesteberegning(tilfeller)) {
+  || erATFLSpesialtilfelleEllerVurderMottarYtelseUtenBesteberegning(tilfeller)
+  || tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
     return false;
   }
   return (lonnEndringEllerNyFL) || (lonnEndringEllerNyFL === false
     && tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON));
 };
+
+
+const finnInntektstabell = (tilfeller, readOnly, isAksjonspunktClosed, manglerInntektsmelding, formName, erNyoppstartetFL) => {
+  if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
+    return (
+      <FastsettEndretBeregningsgrunnlag
+        readOnly={readOnly}
+        isAksjonspunktClosed={isAksjonspunktClosed}
+        formName={formName}
+      />
+    );
+  }
+  return (
+    <FastsettATFLInntektForm
+      readOnly={readOnly}
+      isAksjonspunktClosed={isAksjonspunktClosed}
+      tilfellerSomSkalFastsettes={tilfeller}
+      manglerInntektsmelding={manglerInntektsmelding}
+      formName={formName}
+      erNyoppstartetFL={erNyoppstartetFL}
+    />
+  );
+};
+
 
 /**
  * VurderOgFastsettATFL
@@ -52,16 +78,7 @@ const VurderOgFastsettATFL = ({
   <div>
     <InntektstabellPanel
       key="inntektstabell"
-      tabell={(
-        <FastsettATFLInntektForm
-          readOnly={readOnly}
-          isAksjonspunktClosed={isAksjonspunktClosed}
-          tilfellerSomSkalFastsettes={tilfeller}
-          manglerInntektsmelding={manglerInntektsmelding}
-          formName={formName}
-          erNyoppstartetFL={erNyoppstartetFL}
-        />
-      )}
+      tabell={finnInntektstabell(tilfeller, readOnly, isAksjonspunktClosed, manglerInntektsmelding, formName, erNyoppstartetFL)}
       skalViseTabell={skalViseTabell}
     >
       {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)
@@ -120,7 +137,8 @@ VurderOgFastsettATFL.defaultProps = {
 };
 
 export const skalViseInntektstabell = (tilfeller, values, faktaOmBeregning) => {
-  if (harKunATFLISammeOrgUtenBestebergning(tilfeller) || erATFLSpesialtilfelle(tilfeller)) {
+  if ((harKunATFLISammeOrgUtenBestebergning(tilfeller) || erATFLSpesialtilfelle(tilfeller))
+  && !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
     return true;
   }
   if (harVurderMottarYtelseUtenBesteberegning(tilfeller)) {

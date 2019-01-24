@@ -3,6 +3,7 @@ import { aktivitetstatusTilAndeltypeMap } from '@fpsak-frontend/kodeverk/src/akt
 import {
   required, formatCurrencyNoKr, createVisningsnavnForAktivitet, removeSpacesFromNumber,
 } from '@fpsak-frontend/utils';
+import { mapToBelop } from './BgFordelingUtils';
 
 export const compareAndeler = (andel1, andel2) => {
   if (andel1.andelsinfo === andel2.andelsinfo) {
@@ -155,9 +156,8 @@ export const validateAndelFields = (andelFieldValues) => {
   return hasFieldErrors(fieldErrors) ? fieldErrors : null;
 };
 
-
-export const validateSumFastsattBelop = (values, fordeling) => {
-  const sumFastsattBelop = values.map(({ fastsattBeløp }) => (fastsattBeløp ? removeSpacesFromNumber(fastsattBeløp) : 0))
+export const validateSumFastsattBelop = (values, fordeling, skalRedigereInntekt) => {
+  const sumFastsattBelop = values.map(mapToBelop(skalRedigereInntekt))
     .reduce((sum, fastsattBeløp) => sum + fastsattBeløp, 0);
-  return fordeling !== 0 ? likFordeling(sumFastsattBelop, fordeling) : null;
+  return fordeling !== undefined && fordeling !== null ? likFordeling(sumFastsattBelop, fordeling) : null;
 };

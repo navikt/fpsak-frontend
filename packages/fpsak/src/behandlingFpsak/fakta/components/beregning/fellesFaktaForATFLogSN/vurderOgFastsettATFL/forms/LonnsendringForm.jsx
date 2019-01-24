@@ -137,20 +137,22 @@ LonnsendringFormImpl.transformValues = values => ({
   vurdertLonnsendring: { erLønnsendringIBeregningsperioden: values[lonnsendringField] },
 });
 
-LonnsendringFormImpl.lonnendringFastsatt = (values, tilfeller, faktaOmBeregning, transformedValues) => {
+LonnsendringFormImpl.lonnendringFastsatt = (values, tilfeller, faktaOmBeregning, transformedValues, beregningsgrunnlag) => {
   // Dersom vi har tilfellet VURDER_AT_OG_FL_I_SAMME_ORGANISASJON
   // eller FASTSETT_BESTEBEREGNING_FODENDE_KVINNE vil arbeidsinntekt tas med når det tilfellet submittes
   if (values[lonnsendringField] && harIkkeATFLSameOrgEllerBesteberegning(tilfeller)) {
     if (!transformedValues.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)) {
       transformedValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING);
       return {
-        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING),
+        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning,
+          faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING, beregningsgrunnlag),
         faktaOmBeregningTilfeller: transformedValues.faktaOmBeregningTilfeller,
       };
     }
-    if (!transformedValues.fastsatteLonnsendringer) {
+    if (!transformedValues.fastsattUtenInntektsmelding) {
       return {
-        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING),
+        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning,
+          faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING, beregningsgrunnlag),
       };
     }
   }
