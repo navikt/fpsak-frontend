@@ -352,7 +352,12 @@ const transformValues = (values, selectedItemData, avslagAarsakKoder, innvilgels
   const [innvilgelseAarsakObject] = innvilgelseAarsakKoder.filter(a => a.kode === values.innvilgelseAarsak);
   const [graderingAvslagAarsakObject] = graderingAvslagAarsakKoder.filter(a => a.kode === values.graderingAvslagAarsak);
   if (values.oppholdArsak !== oppholdArsakType.UDEFINERT) {
-    nyeVerdier.UttakFieldArray[0].stønadskontoType.kode = oppholdArsakMapper[values.oppholdArsak];
+    const oppdatereOppholdÅrsak = nyeVerdier.UttakFieldArray.map((u) => {
+      const { ...opphold } = u;
+      opphold.stønadskontoType.kode = oppholdArsakMapper[values.oppholdArsak];
+      return opphold;
+    });
+    nyeVerdier.UttakFieldArray = oppdatereOppholdÅrsak;
   }
   transformvalue.aktiviteter = nyeVerdier.UttakFieldArray.map((a) => {
     const { ...bekreftetAktivitet } = a;
