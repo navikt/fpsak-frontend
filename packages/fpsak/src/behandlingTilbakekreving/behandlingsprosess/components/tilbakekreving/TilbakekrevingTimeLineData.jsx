@@ -94,6 +94,8 @@ export class TilbakekrevingTimeLineData extends Component {
       reduxFormChange,
       formName,
       activityPanelName,
+      callbackCancelSelectedActivity,
+      callbackUpdateActivity,
     } = this.props;
     const { showDelPeriodeModal } = this.state;
     return (
@@ -162,6 +164,8 @@ export class TilbakekrevingTimeLineData extends Component {
               reduxFormChange={reduxFormChange}
               formName={formName}
               activityPanelName={activityPanelName}
+              cancelSelectedActivity={callbackCancelSelectedActivity}
+              updateActivity={callbackUpdateActivity}
             />
           </div>
         </Column>
@@ -178,6 +182,8 @@ TilbakekrevingTimeLineData.propTypes = {
   callbackForward: PropTypes.func.isRequired,
   callbackBackward: PropTypes.func.isRequired,
   callbackSetSelected: PropTypes.func.isRequired,
+  callbackCancelSelectedActivity: PropTypes.func.isRequired,
+  callbackUpdateActivity: PropTypes.func.isRequired,
   formName: PropTypes.string.isRequired,
   activityPanelName: PropTypes.string.isRequired,
 };

@@ -51,6 +51,11 @@ export class TilbakekrevingPanelImpl extends Component {
     }
   }
 
+  setFormField(fieldName, fieldValue) {
+    const { reduxFormChange: formChange, behandlingFormPrefix } = this.props;
+    formChange(`${behandlingFormPrefix}.${formName}`, fieldName, fieldValue);
+  }
+
   setSelectedTilbakekrevingActivity(tilbakekrevingPeriod, isMounting) {
     if (!isMounting) {
       this.initializePeriodForm(tilbakekrevingPeriod);
@@ -64,12 +69,19 @@ export class TilbakekrevingPanelImpl extends Component {
   }
 
   updateActivity(values) {
-    const sortedActivities = values.sort((a, b) => a.id - b.id);
+    const { tilbakekrevingsresultatActivity } = this.props;
+    const { ...verdier } = values;
+
+    const otherThanUpdated = tilbakekrevingsresultatActivity.filter(o => o.id !== verdier.id);
+    const sortedActivities = otherThanUpdated.concat(verdier);
+    sortedActivities.sort((a, b) => a.id - b.id);
     this.setFormField(ACTIVITY_PANEL_NAME, sortedActivities);
+    const tilbakekrevingPeriod = otherThanUpdated.find(o => o.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING);
+    this.setSelectedTilbakekrevingActivity(tilbakekrevingPeriod || undefined);
   }
 
   cancelSelectedActivity() {
-    this.initializeActivityForm({});
+    this.initializePeriodForm({});
     this.setState({ selectedItem: undefined });
   }
 

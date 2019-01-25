@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingTilbakekreving/behandlingForm';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import {
   RadioOption, RadioGroupField, TextAreaField, CheckboxField, SelectField,
 } from '@fpsak-frontend/form';
@@ -13,8 +15,9 @@ import {
   hasValidText,
   required,
 } from '@fpsak-frontend/utils';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Undertekst } from 'nav-frontend-typografi';
+import {
+  VerticalSpacer, ArrowBox, FlexRow, FlexColumn,
+} from '@fpsak-frontend/shared-components';
 import tilbakekrevingCodes from './tilbakekrevingCodes';
 import TilbakekrevingPeriodSummary from './TilbakekrevingPeriodSummary';
 import styles from './tilbakekrevingTimeLineForm.less';
@@ -24,20 +27,16 @@ const maxLength1500 = maxLength(1500);
 
 const readOnly = false;
 const handleSubmit = () => null;
-const feilutbetalingÅrsakOptions = ['Tilbakekreving.Arbeid'];
+const andeler = ['10', '20', '30', '40', '50', '60', '70', '80', '90', '100'];
 
 export const TilbakekrevingTimeLineFormImpl = ({
-  periodenForeldet,
-  arbeid,
-  sykdom,
-  institusjonsopphold,
-  uttakEndring,
-  opptjeningEndring,
-  medlemskapEndring,
-  morsAktivitet,
-  død,
-  utbetalingFeil,
+  oppfylt,
   selectedItemData,
+  handletUaktsomhetGrad,
+  grunnerTilReduksjon,
+  cancelSelectedActivity,
+  updateActivity,
+  ...formProps
 }) => (
   <>
     <form onSubmit={handleSubmit}>
@@ -49,203 +48,8 @@ export const TilbakekrevingTimeLineFormImpl = ({
             tom={selectedItemData.tom}
           />
         </Column>
-        <Column md="6">
-          <Undertekst><FormattedMessage id="Tilbakekreving.PeriodenForeldet" /></Undertekst>
-          <VerticalSpacer eightPx />
-          <RadioGroupField
-            validate={[required]}
-            name="periodenForeldet"
-            direction="vertical"
-            readOnly={readOnly}
-          >
-            <RadioOption label={<FormattedMessage id="Tilbakekreving.Foreldet" />} value={tilbakekrevingCodes.FORELDET} />
-            <RadioOption label={<FormattedMessage id="Tilbakekreving.IkkeForeldet" />} value={tilbakekrevingCodes.IKKE_FORELDET} />
-            <RadioOption label={<FormattedMessage id="Tilbakekreving.IkkeForeldetTilleggsfrist" />} value={tilbakekrevingCodes.IKKE_FORELDET_TILLEGGSFRIST} />
-          </RadioGroupField>
-        </Column>
       </Row>
-      {periodenForeldet === tilbakekrevingCodes.IKKE_FORELDET && (
-        <>
-          <Row>
-            <Column md="6">
-              <Undertekst><FormattedMessage id="Tilbakekreving.FeilutbetalingÅrsak" /></Undertekst>
-              <VerticalSpacer eightPx />
-            </Column>
-          </Row>
-          <Row>
-            <Column md="4" sm="6" xs="12">
-              <CheckboxField
-                name="arbeid"
-                label={<FormattedMessage id="Tilbakekreving.Arbeid" />}
-              />
-              {arbeid && (
-                <div className={styles.selectField}>
-                  <SelectField
-                    name="arbeidUttsetelseÅrsak"
-                    validate={[required]}
-                    selectValues={feilutbetalingÅrsakOptions.map(option => <option key={option} value={option}>{option}</option>)}
-                    bredde="xxl"
-                  />
-                </div>
-              )
-              }
-              <CheckboxField
-                name="gradering"
-                label={<FormattedMessage id="Tilbakekreving.Gradering" />}
-              />
-              <CheckboxField
-                name="ferie"
-                label={<FormattedMessage id="Tilbakekreving.Ferie" />}
-              />
-              <CheckboxField
-                name="sykdom"
-                label={<FormattedMessage id="Tilbakekreving.Sykdom" />}
-              />
-              {sykdom && (
-                <div className={styles.selectField}>
-                  <SelectField
-                    name="sykdomUttsetelseÅrsak"
-                    validate={[required]}
-                    selectValues={feilutbetalingÅrsakOptions.map(option => <option key={option} value={option}>{option}</option>)}
-                    bredde="xxl"
-                  />
-                </div>
-              )
-              }
-              <CheckboxField
-                name="institusjonsopphold"
-                label={<FormattedMessage id="Tilbakekreving.Institusjonsopphold" />}
-              />
-              {institusjonsopphold && (
-                <div className={styles.selectField}>
-                  <SelectField
-                    name="institusjonsoppholdUttsetelseÅrsak"
-                    validate={[required]}
-                    selectValues={feilutbetalingÅrsakOptions.map(option => <option key={option} value={option}>{option}</option>)}
-                    bredde="xxl"
-                  />
-                </div>
-              )
-              }
-            </Column>
-            <Column md="4" sm="6" xs="12">
-              <CheckboxField
-                name="uttakEndring"
-                label={<FormattedMessage id="Tilbakekreving.UttakEndring" />}
-              />
-              {uttakEndring && (
-                <div className={styles.selectField}>
-                  <SelectField
-                    name="uttakEndringÅrsak"
-                    validate={[required]}
-                    selectValues={feilutbetalingÅrsakOptions.map(option => <option key={option} value={option}>{option}</option>)}
-                    bredde="xxl"
-                  />
-                </div>
-              )
-              }
-              <CheckboxField
-                name="beregningEndring"
-                label={<FormattedMessage id="Tilbakekreving.BeregningEndring" />}
-              />
-              <CheckboxField
-                name="opptjeningEndring"
-                label={<FormattedMessage id="Tilbakekreving.OpptjeningEndring" />}
-              />
-              {opptjeningEndring && (
-                <div className={styles.selectField}>
-                  <SelectField
-                    name="opptjeningEndringÅrsak"
-                    validate={[required]}
-                    selectValues={feilutbetalingÅrsakOptions.map(option => <option key={option} value={option}>{option}</option>)}
-                    bredde="xxl"
-                  />
-                </div>
-              )
-              }
-              <CheckboxField
-                name="medlemskapEndring"
-                label={<FormattedMessage id="Tilbakekreving.MedlemskapEndring" />}
-              />
-              {medlemskapEndring && (
-                <div className={styles.selectField}>
-                  <SelectField
-                    name="medlemskapEndringÅrsak"
-                    validate={[required]}
-                    selectValues={feilutbetalingÅrsakOptions.map(option => <option key={option} value={option}>{option}</option>)}
-                    bredde="xxl"
-                  />
-                </div>
-              )
-              }
-              <CheckboxField
-                name="dekningsgradEndring"
-                label={<FormattedMessage id="Tilbakekreving.DekningsgradEndring" />}
-              />
-            </Column>
-            <Column md="4" sm="6" xs="12">
-              <CheckboxField
-                name="morsAktivitet"
-                label={<FormattedMessage id="Tilbakekreving.MorsAktivitet" />}
-              />
-              {morsAktivitet && (
-                <div className={styles.selectField}>
-                  <SelectField
-                    name="morsAktivitetÅrsak"
-                    validate={[required]}
-                    selectValues={feilutbetalingÅrsakOptions.map(option => <option key={option} value={option}>{option}</option>)}
-                    bredde="xxl"
-                  />
-                </div>
-              )
-              }
-              <CheckboxField
-                name="ikkeAleneomsorg"
-                label={<FormattedMessage id="Tilbakekreving.IkkeAleneomsorg" />}
-              />
-              <CheckboxField
-                name="ikkeBarnetomsorg"
-                label={<FormattedMessage id="Tilbakekreving.IkkeBarnetomsorg" />}
-              />
-              <CheckboxField
-                name="død"
-                label={<FormattedMessage id="Tilbakekreving.Død" />}
-              />
-              {død && (
-                <div className={styles.selectField}>
-                  <SelectField
-                    name="dødÅrsak"
-                    validate={[required]}
-                    selectValues={feilutbetalingÅrsakOptions.map(option => <option key={option} value={option}>{option}</option>)}
-                    bredde="xxl"
-                  />
-                </div>
-              )
-              }
-              <CheckboxField
-                name="utbetalingFeil"
-                label={<FormattedMessage id="Tilbakekreving.UtbetalingFeil" />}
-              />
-              {utbetalingFeil && (
-                <div className={styles.selectField}>
-                  <SelectField
-                    name="utbetalingFeilÅrsak"
-                    validate={[required]}
-                    selectValues={feilutbetalingÅrsakOptions.map(option => <option key={option} value={option}>{option}</option>)}
-                    bredde="xxl"
-                  />
-                </div>
-              )
-              }
-              <CheckboxField
-                name="annet"
-                label={<FormattedMessage id="Tilbakekreving.Annet" />}
-              />
-            </Column>
-          </Row>
-        </>
-      )
-      }
+      <VerticalSpacer twentyPx />
       <Row>
         <Column md="6">
           <TextAreaField
@@ -258,34 +62,196 @@ export const TilbakekrevingTimeLineFormImpl = ({
           />
         </Column>
       </Row>
+      <VerticalSpacer twentyPx />
+      <Row>
+        <Column md="6">
+          <Undertekst><FormattedMessage id="Tilbakekreving.RadioGroup.oppfylt" /></Undertekst>
+          <VerticalSpacer eightPx />
+          <RadioGroupField
+            validate={[required]}
+            name="oppfylt"
+            direction="vertical"
+            readOnly={readOnly}
+          >
+            <RadioOption
+              label={<FormattedMessage id="Tilbakekreving.RadioGroup.Forstått" />}
+              value={tilbakekrevingCodes.FORSTÅTT}
+            />
+            <RadioOption
+              label={<FormattedMessage id="Tilbakekreving.RadioGroup.FeilaktigeOpplysninger" />}
+              value={tilbakekrevingCodes.FEILAKTIGEOPPLYSNINGER}
+            />
+            <RadioOption
+              label={<FormattedMessage id="Tilbakekreving.RadioGroup.MangelfulleOpplysniner" />}
+              value={tilbakekrevingCodes.MANGELFULLEOPPLYSNINGER}
+            />
+            <RadioOption
+              label={<FormattedMessage id="Tilbakekreving.RadioGroup.GodTro" />}
+              value={tilbakekrevingCodes.GODTRO}
+            />
+          </RadioGroupField>
+        </Column>
+        <Column md="6">
+          {oppfylt !== tilbakekrevingCodes.GODTRO && (
+            <>
+              <Undertekst><FormattedMessage id="Tilbakekreving.RadioGroup.HandletUaktsomhetGrad" /></Undertekst>
+              <VerticalSpacer eightPx />
+              <RadioGroupField
+                validate={[required]}
+                name="handletUaktsomhetGrad"
+                readOnly={readOnly}
+              >
+                <RadioOption label={<FormattedMessage id="Tilbakekreving.RadioGroup.Forsett" />} value={tilbakekrevingCodes.FORSETT} />
+                <RadioOption label={<FormattedMessage id="Tilbakekreving.RadioGroup.GrovUaktsomhet" />} value={tilbakekrevingCodes.GROVUAKTSOMHET} />
+                <RadioOption label={<FormattedMessage id="Tilbakekreving.RadioGroup.SimpelUaktsomhet" />} value={tilbakekrevingCodes.MANGELFULLEOPPLYSNINGER} />
+              </RadioGroupField>
+              { handletUaktsomhetGrad === tilbakekrevingCodes.FORSETT
+              && (
+                <div className={styles.marginBottom20}>
+                  <ArrowBox alignOffset={12}>
+                    <Normaltekst>
+                      <FormattedMessage id="Tilbakekreving.RadioGroup.Andel" />
+                    </Normaltekst>
+                    <Normaltekst>100%</Normaltekst>
+                    <Normaltekst>
+                      <FormattedMessage id="Tilbakekreving.RadioGroup.Renter" />
+                    </Normaltekst>
+                  </ArrowBox>
+                </div>
+              )
+              }
+              { handletUaktsomhetGrad === tilbakekrevingCodes.GROVUAKTSOMHET
+              && (
+                <div className={styles.marginBottom20}>
+                  <ArrowBox alignOffset={112}>
+                    <Undertekst><FormattedMessage id="Tilbakekreving.RadioGroup.GrunnerTilReduksjon" /></Undertekst>
+                    <VerticalSpacer eightPx />
+                    <RadioGroupField
+                      validate={[required]}
+                      name="grunnerTilReduksjon"
+                      readOnly={readOnly}
+                    >
+                      <RadioOption label={<FormattedMessage id="Tilbakekreving.Ja" />} value />
+                      <RadioOption label={<FormattedMessage id="Tilbakekreving.Nei" />} value={false} />
+                    </RadioGroupField>
+                    {grunnerTilReduksjon && (
+                      <div>
+                        <Row>
+                          <Column md="12">
+                            <ArrowBox alignOffset={12}>
+                              <CheckboxField
+                                name="uaktsomhetRetterSeg"
+                                label={<FormattedMessage id="Tilbakekreving.Checkbox.UaktsomhetRetterSeg" />}
+                              />
+                              <CheckboxField
+                                name="feilTilskrivesTilNav"
+                                label={<FormattedMessage id="Tilbakekreving.Checkbox.FeilTilskrivesTilNav" />}
+                              />
+                              <CheckboxField
+                                name="feilutbetalingStørrelsen"
+                                label={<FormattedMessage id="Tilbakekreving.Checkbox.FeilutbetalingStørrelsen" />}
+                              />
+                              <CheckboxField
+                                name="tideSidenFeilutbetaling"
+                                label={<FormattedMessage id="Tilbakekreving.Checkbox.TideSidenFeilutbetaling" />}
+                              />
+                              <CheckboxField
+                                name="annet"
+                                label={<FormattedMessage id="Tilbakekreving.Checkbox.Annet" />}
+                              />
+                            </ArrowBox>
+                          </Column>
+                        </Row>
+                        <VerticalSpacer eightPx />
+                        <Row>
+                          <Column md="6">
+                            <Undertekst><FormattedMessage id="Tilbakekreving.andelSomTilbakekreves" /></Undertekst>
+                            <FlexRow>
+                              <FlexColumn>
+                                <SelectField
+                                  name="andelSomTilbakekreves"
+                                  validate={[required]}
+                                  selectValues={andeler.map(andel => <option key={andel} value={andel}>{andel}</option>)}
+                                  bredde="md"
+                                />
+                              </FlexColumn>
+                              <FlexColumn className={styles.suffix}>%</FlexColumn>
+                            </FlexRow>
+                          </Column>
+                          <Column md="6">
+                            <Normaltekst>
+                              <FormattedMessage id="Tilbakekreving.RenterTillegges" />
+                            </Normaltekst>
+                            <VerticalSpacer twentyPx />
+                            <Normaltekst><FormattedMessage id="Tilbakekreving.Nei" /></Normaltekst>
+                          </Column>
+                        </Row>
+                      </div>
+                    )
+                    }
+                  </ArrowBox>
+                </div>
+              )
+              }
+            </>
+          )
+          }
+          {oppfylt === tilbakekrevingCodes.GODTRO && (
+            <>
+              <Undertekst><FormattedMessage id="Tilbakekreving.RadioGroup.BeløpetIBehold" /></Undertekst>
+              <VerticalSpacer eightPx />
+              <RadioGroupField
+                validate={[required]}
+                name="beløpetIBehold"
+                readOnly={readOnly}
+              >
+                <RadioOption label={<FormattedMessage id="Tilbakekreving.Ja" />} value />
+                <RadioOption label={<FormattedMessage id="Tilbakekreving.Nei" />} value={false} />
+              </RadioGroupField>
+            </>
+          )
+          }
+        </Column>
+      </Row>
+      <VerticalSpacer twentyPx />
+      <FlexRow>
+        <FlexColumn>
+          <Hovedknapp
+            mini
+            htmlType="button"
+            onClick={formProps.handleSubmit}
+            disabled={formProps.pristine}
+          >
+            <FormattedMessage id="UttakActivity.Oppdater" />
+          </Hovedknapp>
+        </FlexColumn>
+        <FlexColumn>
+          <Knapp mini htmlType="button" onClick={cancelSelectedActivity}>
+            <FormattedMessage id="UttakActivity.Avbryt" />
+          </Knapp>
+        </FlexColumn>
+      </FlexRow>
     </form>
   </>
 );
-
-export const transformValues = values => [{
-  ...values,
-}];
 
 TilbakekrevingTimeLineFormImpl.propTypes = {
   selectedItemData: PropTypes.shape().isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
+  cancelSelectedActivity: PropTypes.func.isRequired,
   formName: PropTypes.string.isRequired,
   activityPanelName: PropTypes.string.isRequired,
+  updateActivity: PropTypes.func.isRequired,
 };
 
+const transformValues = (selectedItemData, values) => ({ ...selectedItemData, ...values });
+
 const mapStateToProps = (state, initialProps) => ({
-  arbeid: behandlingFormValueSelector(initialProps.activityPanelName)(state, 'arbeid'),
-  utbetalingFeil: behandlingFormValueSelector(initialProps.activityPanelName)(state, 'utbetalingFeil'),
-  død: behandlingFormValueSelector(initialProps.activityPanelName)(state, 'død'),
-  morsAktivitet: behandlingFormValueSelector(initialProps.activityPanelName)(state, 'morsAktivitet'),
-  medlemskapEndring: behandlingFormValueSelector(initialProps.activityPanelName)(state, 'medlemskapEndring'),
-  opptjeningEndring: behandlingFormValueSelector(initialProps.activityPanelName)(state, 'opptjeningEndring'),
-  uttakEndring: behandlingFormValueSelector(initialProps.activityPanelName)(state, 'uttakEndring'),
-  institusjonsopphold: behandlingFormValueSelector(initialProps.activityPanelName)(state, 'institusjonsopphold'),
-  sykdom: behandlingFormValueSelector(initialProps.activityPanelName)(state, 'sykdom'),
-  periodenForeldet: behandlingFormValueSelector(initialProps.activityPanelName)(state, 'periodenForeldet'),
-  onSubmit: values => initialProps.submitCallback(transformValues(values)),
+  oppfylt: behandlingFormValueSelector(initialProps.activityPanelName)(state, 'oppfylt'),
+  handletUaktsomhetGrad: behandlingFormValueSelector(initialProps.activityPanelName)(state, 'handletUaktsomhetGrad'),
+  grunnerTilReduksjon: behandlingFormValueSelector(initialProps.activityPanelName)(state, 'grunnerTilReduksjon'),
+  onSubmit: values => initialProps.updateActivity(transformValues(initialProps.selectedItemData, values)),
 });
 
 const TilbakekrevingTimeLineForm = connect(mapStateToProps)(injectIntl(behandlingForm({
