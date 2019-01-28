@@ -125,9 +125,10 @@ const UttakPeriode = ({
         const harEndringsDatoSomErFørFørsteUttaksPeriode = førsteUttaksDato ? moment(periode.fom).isAfter(førsteUttaksDato) : false;
         return (
           <div key={fieldId}>
-            {avvikInntekstmeldInfo(periode, inntektsmeldingInfo[index])}
-            <FlexRow key={fieldId}>
+          <React.Fragment key={fieldId}>
+            <FlexRow>
               <FlexColumn className={styles.fullWidth}>
+                {avvikInntekstmeldInfo(periode, inntektsmeldingInfo[index])}
                 {index === 0 && harEndringsDatoSomErFørFørsteUttaksPeriode && renderTomPeriode()}
                 <div className={getClassName(periode, readOnly)}>
                   <UttakPeriodeType
@@ -177,7 +178,7 @@ const UttakPeriode = ({
                 }
               </FlexColumn>
             </FlexRow>
-          </div>
+          </React.Fragment>
         );
       })}
     </FlexContainer>
