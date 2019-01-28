@@ -39,6 +39,7 @@ describe('BehandlingFpsakIndex', () => {
       setBehandlingInfo={sinon.spy()}
       behandlingerVersjonMappedById={{}}
       setBehandlingInfoHolder={sinon.spy()}
+      behandlingUpdater={{ setUpdater: sinon.spy() }}
     />);
 
     const grid = wrapper.find(BehandlingGrid);
@@ -65,6 +66,7 @@ describe('BehandlingFpsakIndex', () => {
       setBehandlingInfo={sinon.spy()}
       behandlingerVersjonMappedById={{}}
       setBehandlingInfoHolder={sinon.spy()}
+      behandlingUpdater={{ setUpdater: sinon.spy() }}
     />);
 
     const grid = wrapper.find(BehandlingGrid);
@@ -92,6 +94,7 @@ describe('BehandlingFpsakIndex', () => {
       setBehandlingInfo={sinon.spy()}
       behandlingerVersjonMappedById={{}}
       setBehandlingInfoHolder={sinon.spy()}
+      behandlingUpdater={{ setUpdater: sinon.spy() }}
     />);
 
     const modal = wrapper.find(BehandlingErPaVentModal);
@@ -119,6 +122,7 @@ describe('BehandlingFpsakIndex', () => {
       setBehandlingInfo={sinon.spy()}
       behandlingerVersjonMappedById={{}}
       setBehandlingInfoHolder={sinon.spy()}
+      behandlingUpdater={{ setUpdater: sinon.spy() }}
     />);
 
     wrapper.setProps({ behandlingVersjon: 3 });
@@ -151,6 +155,7 @@ describe('BehandlingFpsakIndex', () => {
       setBehandlingInfo={sinon.spy()}
       behandlingerVersjonMappedById={{}}
       setBehandlingInfoHolder={sinon.spy()}
+      behandlingUpdater={{ setUpdater: sinon.spy() }}
     />);
 
     wrapper.setProps({ behandlingsprosessEnabled: false });
@@ -180,6 +185,7 @@ describe('BehandlingFpsakIndex', () => {
       setBehandlingInfo={sinon.spy()}
       behandlingerVersjonMappedById={{}}
       setBehandlingInfoHolder={sinon.spy()}
+      behandlingUpdater={{ setUpdater: sinon.spy() }}
     />);
 
     wrapper.unmount();

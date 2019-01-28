@@ -12,6 +12,7 @@ import BehandlingTilbakekrevingIndex from 'behandlingTilbakekreving/BehandlingTi
 import BehandlingFpsakIndex from 'behandlingFpsak/BehandlingFpsakIndex';
 import { setSelectedBehandlingId, getSelectedBehandlingId, setBehandlingInfoHolder } from './duck';
 import { getBehandlingerVersjonMappedById, getBehandlingerTypesMappedById } from './selectors/behandlingerSelectors';
+import behandlingUpdater from './BehandlingUpdater';
 
 /**
  * BehandlingIndex
@@ -52,6 +53,7 @@ const BehandlingIndex = ({
       behandlingerVersjonMappedById={behandlingerVersjonMappedById}
       location={location}
       setBehandlingInfoHolder={setHolder}
+      behandlingUpdater={behandlingUpdater}
     />
   );
 };

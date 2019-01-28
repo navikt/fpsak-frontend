@@ -4,14 +4,14 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { destroy } from 'redux-form';
 
-import BehandlingsprosessIndex from 'behandlingFpsak/behandlingsprosess/BehandlingsprosessIndex';
-import FaktaIndex from 'behandlingFpsak/fakta/FaktaIndex';
 import { getPapirsoknadEnabled } from 'papirsoknad/duck';
 import PapirsoknadIndex from 'papirsoknad/PapirsoknadIndex';
 import { getHasSubmittedPaVentForm } from 'behandlingmenu/duck';
 import BehandlingGrid from 'behandlingFelles/components/BehandlingGrid';
 import BehandlingerInfoSetter from './BehandlingerInfoSetter';
 import BehandlingResolver from './BehandlingResolver';
+import BehandlingsprosessIndex from './behandlingsprosess/BehandlingsprosessIndex';
+import FaktaIndex from './fakta/FaktaIndex';
 import {
   getBehandlingVersjon, getBehandlingOnHoldDate, getBehandlingVenteArsakKode, getBehandlingIsOnHold,
   hasBehandlingManualPaVent,
@@ -22,6 +22,7 @@ import {
 } from './duck';
 import { getBehandlingFormPrefix } from './behandlingForm';
 import BehandlingErPaVentModal from './components/BehandlingErPaVentModal';
+import behandlingUpdaterFpsak from './BehandlingUpdaterFpsak';
 
 /**
  * BehandlingFpsakIndex
@@ -40,9 +41,11 @@ export class BehandlingFpsakIndex extends Component {
 
   componentWillMount() {
     const {
-      setBehandlingInfo: setInfo, saksnummer, behandlingId,
+      setBehandlingInfo: setInfo, saksnummer, behandlingId, behandlingUpdater,
     } = this.props;
     setInfo({ behandlingId, fagsakSaksnummer: saksnummer });
+
+    behandlingUpdater.setUpdater(behandlingUpdaterFpsak);
   }
 
   componentDidUpdate(prevProps) {
@@ -129,6 +132,7 @@ BehandlingFpsakIndex.propTypes = {
   setBehandlingInfo: PropTypes.func.isRequired,
   setBehandlingInfoHolder: PropTypes.func.isRequired,
   behandlingerVersjonMappedById: PropTypes.shape().isRequired,
+  behandlingUpdater: PropTypes.shape().isRequired,
 };
 
 BehandlingFpsakIndex.defaultProps = {

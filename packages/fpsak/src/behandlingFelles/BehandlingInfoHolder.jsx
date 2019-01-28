@@ -57,6 +57,8 @@ class BehandlingInfoHolder {
 
     soknad;
 
+    behandlingIdentifier;
+
     withIsKontrollerRevurderingAksjonspunkOpen = (isKontrollerRevurderingAksjonspunkOpen) => {
       this.isKontrollerRevurderingAksjonspunkOpen = isKontrollerRevurderingAksjonspunkOpen;
       return this;
@@ -194,6 +196,11 @@ class BehandlingInfoHolder {
 
     withSoknad= (soknad) => {
       this.soknad = soknad;
+      return this;
+    }
+
+    withBehandlingIdentifier = (behandlingIdentifier) => {
+      this.behandlingIdentifier = behandlingIdentifier;
       return this;
     }
 }

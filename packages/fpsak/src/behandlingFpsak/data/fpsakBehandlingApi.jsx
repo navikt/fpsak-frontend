@@ -10,6 +10,11 @@ export const BehandlingFpsakApiKeys = {
   BEHANDLING: 'BEHANDLING',
   ORIGINAL_BEHANDLING: 'ORIGINAL_BEHANDLING',
   UPDATE_ON_HOLD: 'UPDATE_ON_HOLD',
+  BEHANDLING_ON_HOLD: 'BEHANDLING_ON_HOLD',
+  RESUME_BEHANDLING: 'RESUME_BEHANDLING',
+  OPEN_BEHANDLING_FOR_CHANGES: 'OPEN_BEHANDLING_FOR_CHANGES',
+  HENLEGG_BEHANDLING: 'HENLEGG_BEHANDLING',
+  NY_BEHANDLENDE_ENHET: 'NY_BEHANDLENDE_ENHET',
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
   SAVE_OVERSTYRT_AKSJONSPUNKT: 'SAVE_OVERSTYRT_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
@@ -25,6 +30,11 @@ const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/api/behandlinger', BehandlingFpsakApiKeys.BEHANDLING)
   .withAsyncPost('/api/behandlinger', BehandlingFpsakApiKeys.ORIGINAL_BEHANDLING)
   .withPost('/api/behandlinger/endre-pa-vent', BehandlingFpsakApiKeys.UPDATE_ON_HOLD)
+  .withPost('/api/behandlinger/sett-pa-vent', BehandlingFpsakApiKeys.BEHANDLING_ON_HOLD)
+  .withPost('/api/behandlinger/bytt-enhet', BehandlingFpsakApiKeys.NY_BEHANDLENDE_ENHET)
+  .withAsyncPost('/api/behandlinger/gjenoppta', BehandlingFpsakApiKeys.RESUME_BEHANDLING)
+  .withPost('/api/behandlinger/henlegg', BehandlingFpsakApiKeys.HENLEGG_BEHANDLING)
+  .withAsyncPost('/api/behandlinger/opne-for-endringer', BehandlingFpsakApiKeys.OPEN_BEHANDLING_FOR_CHANGES)
 
   /* /api/behandling */
   .withAsyncPost('/api/behandling/aksjonspunkt', BehandlingFpsakApiKeys.SAVE_AKSJONSPUNKT)

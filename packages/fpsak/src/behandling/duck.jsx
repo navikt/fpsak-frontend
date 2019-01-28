@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect';
 
+import { getSelectedSaksnummer } from 'fagsak/duck';
+import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import reducerRegistry from '../ReducerRegistry';
 
 const reducerName = 'behandling';
@@ -47,6 +49,11 @@ reducerRegistry.register(reducerName, behandlingReducer);
 // Selectors (Kun de knyttet til reducer)
 const getBehandlingContext = state => state.default[reducerName];
 export const getSelectedBehandlingId = createSelector([getBehandlingContext], behandlingContext => behandlingContext.behandlingId);
+export const getBehandlingIdentifier = createSelector(
+  [getSelectedBehandlingId, getSelectedSaksnummer],
+  (behandlingId, saksnummer) => (behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined
+  ),
+);
 
 // TODO (TOR) Alt under skal fjernast. Ikkje legg til fleire selectorar her. Komponentane utanfor behandlingskonteksten skal sjølv ha ansvar for å henta data
 export const getBehandlingInfoHolder = createSelector([getBehandlingContext], behandlingContext => behandlingContext.behandlingInfoHolder);

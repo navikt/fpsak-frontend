@@ -1,3 +1,5 @@
+import { createSelector } from 'reselect';
+
 import fpsakApi, { FpsakApiKeys } from 'data/fpsakApi';
 import fpsakBehandlingApi, { BehandlingFpsakApiKeys } from 'behandlingFpsak/data/fpsakBehandlingApi';
 import { updateBehandlingsupportInfo } from 'behandlingsupport/duck';
@@ -109,3 +111,7 @@ export const fagsakReducer = (state = initialState, action = {}) => { // NOSONAR
 };
 
 reducerRegistry.register(reducerName, fagsakReducer);
+
+// Selectors (Kun de knyttet til reducer)
+const getFagsakContext = state => state.default[reducerName];
+export const getSelectedSaksnummer = createSelector([getFagsakContext], fagsakContext => fagsakContext.selectedSaksnummer);

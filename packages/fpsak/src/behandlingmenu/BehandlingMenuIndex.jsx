@@ -13,10 +13,8 @@ import {
   getBehandlingBehandlendeEnhetNavn,
   getBehandlingHasSoknad,
   getBehandlingIsInnsyn,
-} from 'behandling/duck';
-import {
   getBehandlingIdentifier,
-} from 'behandlingFpsak/duck';
+} from 'behandling/duck';
 import fpsakApi from 'data/fpsakApi';
 import { getNavAnsatt, getRettigheter } from 'navAnsatt/duck';
 
