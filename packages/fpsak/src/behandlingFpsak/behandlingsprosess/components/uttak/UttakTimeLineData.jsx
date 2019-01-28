@@ -44,7 +44,6 @@ const getCorrectEmptyArbeidsForhold = (preiodeTypeKode, arbeidsForhold) => {
 
 const hentApTekst = (kode, stonadskonto, aktiviteter) => {
   const texts = [];
-  //  const [helpText] = uttaksresultat.perioderSøker.filter(p => (p.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING));
 
   const uttakPanelAksjonsPunktKoder = {
     5001: 'UttakPanel.Aksjonspunkt.5001',
