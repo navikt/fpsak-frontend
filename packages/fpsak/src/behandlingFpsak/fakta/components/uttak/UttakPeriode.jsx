@@ -124,7 +124,6 @@ const UttakPeriode = ({
         // TODO skal denne vises hvis det ikke er noen aksjonspunkt men man. revurdering (PFP-639)
         const harEndringsDatoSomErFørFørsteUttaksPeriode = førsteUttaksDato ? moment(periode.fom).isAfter(førsteUttaksDato) : false;
         return (
-          <div key={fieldId}>
           <React.Fragment key={fieldId}>
             <FlexRow>
               <FlexColumn className={styles.fullWidth}>
