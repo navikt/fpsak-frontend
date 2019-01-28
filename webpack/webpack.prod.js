@@ -15,7 +15,7 @@ const APP_DIR = path.resolve(PACKAGES_DIR, 'fpsak/src');
 
 const config = {
   mode: 'production',
-  devtool: 'source-maps',
+  devtool: 'source-map',
   performance: { hints: false },
 
   entry: [
