@@ -56,6 +56,8 @@ export const SykdomOgSkadePeriode = ({
   const isEdited = resultat === uttakPeriodeVurdering.PERIODE_OK_ENDRET
   && readOnly && behandlingStatusKode === behandlingStatus.FATTER_VEDTAK;
 
+  // const periodeOkDisabled = !bekreftet;
+
   const inlineheight = dokumentertePerioder
     && resultat === uttakPeriodeVurdering.PERIODE_OK
     && !readOnly

@@ -54,8 +54,7 @@ export const FerieOgArbeidsPeriode = ({
   };
 
   const withGradering = arbeidstidprosent !== null && arbeidstidprosent !== undefined && arbeidstidprosent > 0;
-  const periodeOkDisabled = withGradering && !bekreftet;
-
+  const periodeOkDisabled = !bekreftet;
 
   return (
     <div>
