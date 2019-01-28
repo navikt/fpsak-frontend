@@ -32,7 +32,7 @@ export const resetBehandlingMenuData = () => ({
   type: RESET_BEHANDLING_MENU,
 });
 
-export const shelveBehandling = () => dispatch => behandlingUpdater.shelveBehandling(dispatch);
+export const shelveBehandling = params => dispatch => behandlingUpdater.shelveBehandling(dispatch, params);
 
 export const createNewForstegangsbehandling = (push, saksnummer, params) => dispatch => behandlingUpdater.resetBehandling(dispatch)
   .then(() => dispatch(fpsakApi.NEW_BEHANDLING.makeRestApiRequest()(params)))

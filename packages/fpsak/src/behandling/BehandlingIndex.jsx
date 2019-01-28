@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import BehandlingPapirsoknadIndex from 'papirsoknad/BehandlingPapirsoknadIndex';
 import trackRouteParam from 'app/data/trackRouteParam';
 import requireProps from 'app/data/requireProps';
 import { updateFagsakInfo } from 'fagsak/duck';
@@ -11,7 +12,9 @@ import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import BehandlingTilbakekrevingIndex from 'behandlingTilbakekreving/BehandlingTilbakekrevingIndex';
 import BehandlingFpsakIndex from 'behandlingFpsak/BehandlingFpsakIndex';
 import { setSelectedBehandlingId, getSelectedBehandlingId, setBehandlingInfoHolder } from './duck';
-import { getBehandlingerVersjonMappedById, getBehandlingerTypesMappedById } from './selectors/behandlingerSelectors';
+import {
+  getBehandlingerVersjonMappedById, getBehandlingerTypesMappedById, getBehandlingerAktivPapirsoknadMappedById,
+} from './selectors/behandlingerSelectors';
 import behandlingUpdater from './BehandlingUpdater';
 
 /**
@@ -30,7 +33,23 @@ const BehandlingIndex = ({
   behandlingerVersjonMappedById,
   location,
   setHolder,
+  erAktivPapirsoknad,
 }) => {
+  if (erAktivPapirsoknad) {
+    return (
+      <BehandlingPapirsoknadIndex
+        key={behandlingId}
+        saksnummer={saksnummer}
+        behandlingId={behandlingId}
+        updateFagsakInfo={updateFagsakInfo}
+        behandlingerVersjonMappedById={behandlingerVersjonMappedById}
+        location={location}
+        setBehandlingInfoHolder={setHolder}
+        behandlingUpdater={behandlingUpdater}
+      />
+    );
+  }
+
   if (behandlingType === BehandlingType.TILBAKEKREVING) {
     return (
       <BehandlingTilbakekrevingIndex
@@ -66,6 +85,7 @@ BehandlingIndex.propTypes = {
   behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   location: PropTypes.shape().isRequired,
   setHolder: PropTypes.func.isRequired,
+  erAktivPapirsoknad: PropTypes.bool.isRequired,
 };
 
 BehandlingIndex.defaultProps = {
@@ -81,6 +101,7 @@ const mapStateToProps = (state) => {
     behandlingVersjon: getBehandlingerVersjonMappedById(state)[behandlingId],
     behandlingType: getBehandlingerTypesMappedById(state)[behandlingId],
     location: state.router.location,
+    erAktivPapirsoknad: getBehandlingerAktivPapirsoknadMappedById(state)[behandlingId],
   };
 };
 

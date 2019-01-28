@@ -17,7 +17,7 @@ class BehandlingUpdater {
 
     resumeBehandling = (dispatch, params) => dispatch(this.updater.resumeBehandling()(params))
 
-    shelveBehandling = dispatch => dispatch(this.updater.shelveBehandling())
+    shelveBehandling = (dispatch, params) => dispatch(this.updater.shelveBehandling()(params))
 
     openBehandlingForChanges = (dispatch, params) => dispatch(this.updater.openBehandlingForChanges()(params))
 }

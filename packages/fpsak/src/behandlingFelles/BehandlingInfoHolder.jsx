@@ -1,7 +1,7 @@
 // TODO (TOR) Dette er ein midlertidig klasse som held behandlingsdata. Skal fjernast når alle komponentar utanfor
 // behandlingskonteksten hentar sin eigen data.
 class BehandlingInfoHolder {
-    isKontrollerRevurderingAksjonspunkOpen;
+    isKontrollerRevurderingAksjonspunkOpen = false;
 
     behandlingSprak;
 
@@ -17,7 +17,7 @@ class BehandlingInfoHolder {
 
     behandlingStatus;
 
-    behandlingToTrinnsBehandling;
+    behandlingToTrinnsBehandling = false;
 
     totrinnskontrollArsakerUtenUdefinert;
 
@@ -27,7 +27,7 @@ class BehandlingInfoHolder {
 
     behandlingKlageVurdering;
 
-    behandlingIsKlage;
+    behandlingIsKlage = false;
 
     behandlingResultatstruktur;
 
@@ -41,11 +41,11 @@ class BehandlingInfoHolder {
 
     behandlingHasSoknad;
 
-    behandlingIsInnsyn;
+    behandlingIsInnsyn = false;
 
     behandlingIsOnHold;
 
-    isBehandlingInInnhentSoknadsopplysningerSteg;
+    isBehandlingInInnhentSoknadsopplysningerSteg = false;
 
     behandlingIsQueued;
 

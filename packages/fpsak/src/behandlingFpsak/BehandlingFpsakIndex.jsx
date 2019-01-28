@@ -4,10 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { destroy } from 'redux-form';
 
-import { getPapirsoknadEnabled } from 'papirsoknad/duck';
-import PapirsoknadIndex from 'papirsoknad/PapirsoknadIndex';
 import { getHasSubmittedPaVentForm } from 'behandlingmenu/duck';
 import BehandlingGrid from 'behandlingFelles/components/BehandlingGrid';
+import BehandlingErPaVentModal from 'behandlingFelles/components/BehandlingErPaVentModal';
 import BehandlingerInfoSetter from './BehandlingerInfoSetter';
 import BehandlingResolver from './BehandlingResolver';
 import BehandlingsprosessIndex from './behandlingsprosess/BehandlingsprosessIndex';
@@ -21,7 +20,6 @@ import {
   getHasShownBehandlingPaVent,
 } from './duck';
 import { getBehandlingFormPrefix } from './behandlingForm';
-import BehandlingErPaVentModal from './components/BehandlingErPaVentModal';
 import behandlingUpdaterFpsak from './BehandlingUpdaterFpsak';
 
 /**
@@ -72,9 +70,6 @@ export class BehandlingFpsakIndex extends Component {
 
   render() {
     const {
-      behandlingsprosessEnabled,
-      faktaEnabled,
-      papirsoknadEnabled,
       hasShownBehandlingPaVent,
       behandlingId,
       behandlingPaaVent,
@@ -91,9 +86,8 @@ export class BehandlingFpsakIndex extends Component {
       <BehandlingResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
         <BehandlingerInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
         <BehandlingGrid
-          behandlingsprosessContent={behandlingsprosessEnabled && <BehandlingsprosessIndex />}
-          faktaContent={faktaEnabled && <FaktaIndex />}
-          papirsoknadContent={papirsoknadEnabled && <PapirsoknadIndex />}
+          behandlingsprosessContent={<BehandlingsprosessIndex />}
+          faktaContent={<FaktaIndex />}
         />
         {!hasSubmittedPaVentForm
           && (
@@ -120,9 +114,6 @@ BehandlingFpsakIndex.propTypes = {
   fristBehandlingPaaVent: PropTypes.string,
   behandlingPaaVent: PropTypes.bool,
   venteArsakKode: PropTypes.string,
-  behandlingsprosessEnabled: PropTypes.bool.isRequired,
-  faktaEnabled: PropTypes.bool.isRequired,
-  papirsoknadEnabled: PropTypes.bool.isRequired,
   hasShownBehandlingPaVent: PropTypes.bool.isRequired,
   closeBehandlingOnHoldModal: PropTypes.func.isRequired,
   handleOnHoldSubmit: PropTypes.func.isRequired,
@@ -148,9 +139,6 @@ const mapStateToProps = state => ({
   fristBehandlingPaaVent: getBehandlingOnHoldDate(state),
   behandlingPaaVent: getBehandlingIsOnHold(state),
   venteArsakKode: getBehandlingVenteArsakKode(state),
-  behandlingsprosessEnabled: !getPapirsoknadEnabled(state),
-  faktaEnabled: !getPapirsoknadEnabled(state),
-  papirsoknadEnabled: getPapirsoknadEnabled(state),
   hasShownBehandlingPaVent: getHasShownBehandlingPaVent(state),
   hasSubmittedPaVentForm: getHasSubmittedPaVentForm(state),
   hasManualPaVent: hasBehandlingManualPaVent(state),
