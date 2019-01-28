@@ -234,16 +234,12 @@ export class UttakImpl extends Component {
 
     const buildArbforholdId = (arbforhold) => {
       let arbforholdId = arbforhold.uttakArbeidType ? arbforhold.uttakArbeidType.kode : '';
+      arbforholdId += arbforhold.arbeidsforholdId ? `_${arbforhold.arbeidsforholdId}` : '';
       arbforholdId += arbforhold.arbeidsgiver ? `_${arbforhold.arbeidsgiver.identifikator}_${arbforhold.arbeidsgiver.navn}` : '';
       return arbforholdId;
     };
 
-    const otherThanUpdated = uttakPerioder.filter(o => o.id !== verdier.id && o.hovedsoker);
-    const sortedActivities = otherThanUpdated.concat(verdier);
-    sortedActivities.sort((a, b) => a.id - b.id);
-
-
-    const uttakResult = sortedActivities.reduce((acc, periode) => {
+    const sumTrekkdagerStonadskontoer = (acc, periode) => {
       periode.aktiviteter.forEach((a, index) => {
         const stonadskonto = a.stønadskontoType.kode;
         const aktivitetDays = (typeof a.days !== 'undefined' && typeof a.weeks !== 'undefined')
@@ -293,13 +289,31 @@ export class UttakImpl extends Component {
         }
       });
       return acc;
-    }, {});
+    };
+
+    const annenPart = uttakPerioder.filter(o => !o.hovedsoker);
+    const otherThanUpdated = uttakPerioder.filter(o => o.id !== verdier.id && o.hovedsoker);
+    const sortedActivities = otherThanUpdated.concat(verdier);
+
+    sortedActivities.sort((a, b) => a.id - b.id);
+    const uttakHovedsoker = sortedActivities.reduce((acc, periode) => sumTrekkdagerStonadskontoer(acc, periode), {});
+
+    const uttakAnnenPart = annenPart.reduce((acc, periode) => sumTrekkdagerStonadskontoer(acc, periode), {});
 
     Object.values(stonadskontoKopi.stonadskontoer).forEach((konto) => {
       const minCallback = (acc, cur) => (acc.trekkdager ? Math.min(acc.trekkdager, cur.trekkdager) : cur.trekkdager);
-      if (uttakResult[konto.stonadskontotype]) {
+      const maxCallback = (acc, cur) => (acc.trekkdager ? Math.max(acc.trekkdager, cur.trekkdager) : cur.trekkdager);
+
+      let trekkdagerAnnenPart = 0;
+      if (uttakAnnenPart[konto.stonadskontotype]) {
+        trekkdagerAnnenPart = uttakAnnenPart[konto.stonadskontotype].arbforhold.length > 1
+          ? uttakAnnenPart[konto.stonadskontotype].arbforhold.reduce(maxCallback)
+          : uttakAnnenPart[konto.stonadskontotype].arbforhold[0].trekkdager;
+      }
+
+      if (uttakHovedsoker[konto.stonadskontotype]) {
         const stonadArbforhold = stonadskontoKopi.stonadskontoer[konto.stonadskontotype].aktivitetSaldoDtoList;
-        const uttakArbforhold = uttakResult[konto.stonadskontotype].arbforhold;
+        const uttakArbforhold = uttakHovedsoker[konto.stonadskontotype].arbforhold;
         stonadArbforhold.forEach((sa) => {
           const arbforholdId = buildArbforholdId(sa.aktivitetIdentifikator);
           const arbforholdObject = uttakArbforhold.find(
@@ -310,25 +324,25 @@ export class UttakImpl extends Component {
           }
         });
 
-        stonadskontoKopi.stonadskontoer[konto.stonadskontotype].saldo = uttakResult[konto.stonadskontotype].arbforhold.length > 1
-          ? konto.maxDager - uttakResult[konto.stonadskontotype].arbforhold.reduce(minCallback)
-          : konto.maxDager - uttakResult[konto.stonadskontotype].arbforhold[0].trekkdager;
+        stonadskontoKopi.stonadskontoer[konto.stonadskontotype].saldo = (uttakHovedsoker[konto.stonadskontotype].arbforhold.length > 1
+          ? konto.maxDager - uttakHovedsoker[konto.stonadskontotype].arbforhold.reduce(minCallback)
+          : konto.maxDager - uttakHovedsoker[konto.stonadskontotype].arbforhold[0].trekkdager) - trekkdagerAnnenPart;
         stonadskontoKopi.stonadskontoer[konto.stonadskontotype].aktivitetSaldoDtoList = konto.aktivitetSaldoDtoList.map((a) => {
           const arbforhold = { ...a };
           const arbforholdId = buildArbforholdId(a.aktivitetIdentifikator);
-          const currentArbforhold = uttakResult[konto.stonadskontotype].arbforhold.find(
+          const currentArbforhold = uttakHovedsoker[konto.stonadskontotype].arbforhold.find(
             uttakR => uttakR.arbeidsforholdId === arbforholdId,
           );
           arbforhold.saldo = konto.maxDager - (currentArbforhold
             ? currentArbforhold.trekkdager
-            : 0);
+            : 0) - trekkdagerAnnenPart;
           return arbforhold;
         });
       } else {
-        stonadskontoKopi.stonadskontoer[konto.stonadskontotype].saldo = konto.maxDager;
+        stonadskontoKopi.stonadskontoer[konto.stonadskontotype].saldo = konto.maxDager - trekkdagerAnnenPart;
         stonadskontoKopi.stonadskontoer[konto.stonadskontotype].aktivitetSaldoDtoList = konto.aktivitetSaldoDtoList.map((a) => {
           const arbforhold = { ...a };
-          arbforhold.saldo = konto.maxDager;
+          arbforhold.saldo = konto.maxDager - trekkdagerAnnenPart;
           return arbforhold;
         });
       }
