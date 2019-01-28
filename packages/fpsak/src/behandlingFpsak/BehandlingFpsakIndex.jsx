@@ -10,6 +10,7 @@ import { getPapirsoknadEnabled } from 'papirsoknad/duck';
 import PapirsoknadIndex from 'papirsoknad/PapirsoknadIndex';
 import { getHasSubmittedPaVentForm } from 'behandlingmenu/duck';
 import BehandlingGrid from 'behandlingFelles/components/BehandlingGrid';
+import BehandlingerInfoSetter from './BehandlingerInfoSetter';
 import BehandlingResolver from './BehandlingResolver';
 import {
   getBehandlingVersjon, getBehandlingOnHoldDate, getBehandlingVenteArsakKode, getBehandlingIsOnHold,
@@ -81,9 +82,11 @@ export class BehandlingFpsakIndex extends Component {
       hasSubmittedPaVentForm,
       hasManualPaVent,
       behandlingerVersjonMappedById,
+      setBehandlingInfoHolder,
     } = this.props;
     return (
       <BehandlingResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
+        <BehandlingerInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
         <BehandlingGrid
           behandlingsprosessContent={behandlingsprosessEnabled && <BehandlingsprosessIndex />}
           faktaContent={faktaEnabled && <FaktaIndex />}
@@ -124,6 +127,7 @@ BehandlingFpsakIndex.propTypes = {
   hasSubmittedPaVentForm: PropTypes.bool.isRequired,
   hasManualPaVent: PropTypes.bool.isRequired,
   setBehandlingInfo: PropTypes.func.isRequired,
+  setBehandlingInfoHolder: PropTypes.func.isRequired,
   behandlingerVersjonMappedById: PropTypes.shape().isRequired,
 };
 

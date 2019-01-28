@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import fpsakApi from 'data/fpsakApi';
-import { getAksjonspunkter } from 'behandlingFpsak/behandlingSelectors';
+import { getAksjonspunkter } from 'behandling/duck';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import reducerRegistry from '../ReducerRegistry';

@@ -1,5 +1,5 @@
 import fpsakApi from 'data/fpsakApi';
-import { getTotrinnskontrollArsaker } from 'behandlingFpsak/behandlingSelectors';
+import { getTotrinnskontrollArsaker } from 'behandling/duck';
 
 /* Action creators */
 export const approve = fpsakApi.SAVE_AKSJONSPUNKT.makeRestApiRequest();

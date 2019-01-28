@@ -4,7 +4,7 @@ import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { getBehandlingKlageVurdering, getBehandlingStatus } from 'behandlingFpsak/behandlingSelectors';
+import { getBehandlingKlageVurdering, getBehandlingStatus } from 'behandling/duck';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';

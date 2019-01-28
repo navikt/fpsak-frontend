@@ -7,24 +7,24 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
+
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import SettBehandlingPaVentForm from 'behandlingFpsak/components/SettBehandlingPaVentForm';
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import {
   getBehandlingSprak,
   getBehandlingVersjon,
   getBrevMaler,
   getBrevMottakere,
-} from 'behandlingFpsak/behandlingSelectors';
+} from 'behandling/duck';
 import {
   getBehandlingIdentifier,
 } from 'behandlingFpsak/duck';
 import { setBehandlingOnHold } from 'behandlingmenu/duck';
-import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import requireProps from 'app/data/requireProps';
 import fpsakApi from 'data/fpsakApi';
-
 import resetSubmitMessageActionCreator from './duck';
 import Messages from './components/Messages';
 import MessagesModal from './components/MessagesModal';

@@ -26,6 +26,9 @@ describe('NAV-ansatt-reducer', () => {
         fpsakBehandling: {
           behandlingId: 1,
         },
+        behandling: {
+          behandlingInfoHolder: {},
+        },
       },
     };
     const rettigheter = getRettigheter(state);

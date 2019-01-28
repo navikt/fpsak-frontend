@@ -14,7 +14,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import {
   getBehandlingVersjon, getAksjonspunkter, getBehandlingAnsvarligSaksbehandler, getTotrinnskontrollArsakerUtenUdefinert,
   getBehandlingStatus, getBehandlingToTrinnsBehandling, getTotrinnskontrollArsakerReadOnly,
-} from 'behandlingFpsak/behandlingSelectors';
+} from 'behandling/duck';
 import {
   getBehandlingIdentifier,
 } from 'behandlingFpsak/duck';

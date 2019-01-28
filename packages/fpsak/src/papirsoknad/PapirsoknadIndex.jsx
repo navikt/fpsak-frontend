@@ -19,7 +19,7 @@ import requireProps from 'app/data/requireProps';
 import {
   getBehandlingVersjon, getBehandlingIsOnHold, getAksjonspunkter,
 }
-  from 'behandlingFpsak/behandlingSelectors';
+  from 'behandling/duck';
 import {
   getBehandlingIdentifier,
 } from 'behandlingFpsak/duck';

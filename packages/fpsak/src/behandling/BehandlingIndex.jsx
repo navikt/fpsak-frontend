@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import trackRouteParam from 'app/data/trackRouteParam';
 import requireProps from 'app/data/requireProps';
@@ -9,7 +10,7 @@ import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import BehandlingTilbakekrevingIndex from 'behandlingTilbakekreving/BehandlingTilbakekrevingIndex';
 import BehandlingFpsakIndex from 'behandlingFpsak/BehandlingFpsakIndex';
-import { setSelectedBehandlingId, getSelectedBehandlingId } from './duck';
+import { setSelectedBehandlingId, getSelectedBehandlingId, setBehandlingInfoHolder } from './duck';
 import { getBehandlingerVersjonMappedById, getBehandlingerTypesMappedById } from './selectors/behandlingerSelectors';
 
 /**
@@ -27,6 +28,7 @@ const BehandlingIndex = ({
   behandlingType,
   behandlingerVersjonMappedById,
   location,
+  setHolder,
 }) => {
   if (behandlingType === BehandlingType.TILBAKEKREVING) {
     return (
@@ -49,6 +51,7 @@ const BehandlingIndex = ({
       updateFagsakInfo={updateFagsakInfo}
       behandlingerVersjonMappedById={behandlingerVersjonMappedById}
       location={location}
+      setBehandlingInfoHolder={setHolder}
     />
   );
 };
@@ -60,6 +63,7 @@ BehandlingIndex.propTypes = {
   behandlingType: PropTypes.string.isRequired,
   behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   location: PropTypes.shape().isRequired,
+  setHolder: PropTypes.func.isRequired,
 };
 
 BehandlingIndex.defaultProps = {
@@ -78,10 +82,14 @@ const mapStateToProps = (state) => {
   };
 };
 
+const mapDispatchToProps = dispatch => bindActionCreators({
+  setHolder: setBehandlingInfoHolder,
+}, dispatch);
+
 export default trackRouteParam({
   paramName: 'behandlingId',
   parse: saksnummerFromUrl => Number.parseInt(saksnummerFromUrl, 10),
   paramPropType: PropTypes.number,
   storeParam: setSelectedBehandlingId,
   getParamFromStore: getSelectedBehandlingId,
-})(connect(mapStateToProps)(requireProps(['behandlingId'])(BehandlingIndex)));
+})(connect(mapStateToProps, mapDispatchToProps)(requireProps(['behandlingId'])(BehandlingIndex)));

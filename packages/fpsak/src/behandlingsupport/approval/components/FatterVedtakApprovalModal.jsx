@@ -10,14 +10,14 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { Modal, Image } from '@fpsak-frontend/shared-components';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { getSelectedBehandlingId } from 'behandling/duck';
 import {
+  getSelectedBehandlingId,
   getBehandlingIsKlage,
   getBehandlingResultatstruktur,
   getBehandlingsresultat,
   getBehandlingStatus,
   getBehandlingType,
-} from 'behandlingFpsak/behandlingSelectors';
+} from 'behandling/duck';
 import {
   getBehandlingsresultatFraOriginalBehandling,
   getResultatstrukturFraOriginalBehandling,
