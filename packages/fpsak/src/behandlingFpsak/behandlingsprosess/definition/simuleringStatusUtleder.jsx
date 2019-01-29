@@ -4,11 +4,10 @@ import featureToggle from 'app/featureToggle';
 
 export const hasSimuleringOn = ({ featureToggles }) => featureToggles[featureToggle.SIMULER_OPPDRAG];
 export const getStatusFromSimulering = ({ resultatstruktur, behandlingsresultat }) => {
-  const behandlingsprosessErGjennomført = isInnvilget(behandlingsresultat.type.kode) || isAvslag(behandlingsresultat.type.kode);
-  if (behandlingsprosessErGjennomført) {
+  if (isInnvilget(behandlingsresultat.type.kode) || isAvslag(behandlingsresultat.type.kode)) {
     return vut.OPPFYLT;
   }
-  if (resultatstruktur && !behandlingsprosessErGjennomført) {
+  if (resultatstruktur) {
     return vut.OPPFYLT;
   }
   return vut.IKKE_VURDERT;
