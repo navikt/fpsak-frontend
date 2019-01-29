@@ -57,10 +57,10 @@ export const GraderingUtenBG = ({
   if (!aksjonspunkt || !andelerMedGraderingUtenBG || andelerMedGraderingUtenBG.length === 0) {
     return null;
   }
-  let aksjonspunktTekstId = 'Beregningsgrunnlag.Gradering.AksjonspunkttekstEtForhold';
-  if (andelerMedGraderingUtenBG && andelerMedGraderingUtenBG.length > 1) {
-    aksjonspunktTekstId = 'Beregningsgrunnlag.Gradering.AksjonspunkttekstFlereForhold';
-  }
+  const aksjonspunktTekstId = andelerMedGraderingUtenBG.length > 1
+    ? 'Beregningsgrunnlag.Gradering.AksjonspunkttekstFlereForhold'
+    : 'Beregningsgrunnlag.Gradering.AksjonspunkttekstEtForhold';
+
   return (
     <BorderBox>
       <form onSubmit={formProps.handleSubmit}>

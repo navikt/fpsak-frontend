@@ -78,7 +78,8 @@ const findInYearsMonthsAndDays = (opptjeningFom, opptjeningTom) => {
 const isBegrunnelseRequired = (allValues, props) => {
   if (props.pristine) {
     return false;
-  } if (allValues.erGodkjent === false) {
+  }
+  if (allValues.erGodkjent === false) {
     return true;
   }
   return !isEqual(omit(props.initialValues, 'erGodkjent'), omit(allValues, 'erGodkjent'));
