@@ -53,13 +53,13 @@ const hentApTekst = (kode, stonadskonto, aktiviteter) => {
     5005: 'UttakPanel.Aksjonspunkt.5005',
     5006: 'UttakPanel.Aksjonspunkt.5006',
     5007: 'UttakPanel.Aksjonspunkt.5007',
-    5008: 'UttakPanel.Aksjonspunkt.5008',
     5009: 'UttakPanel.Aksjonspunkt.5009',
     5010: 'UttakPanel.Aksjonspunkt.5010',
     5011: 'UttakPanel.Aksjonspunkt.5011',
     5012: 'UttakPanel.Aksjonspunkt.5012',
-    5013: 'UttakPanel.Aksjonspunkt.5013',
-    5018: 'UttakPanel.Aksjonspunkt.5018',
+    5014: 'UttakPanel.Aksjonspunkt.5014',
+    5016: 'UttakPanel.Aksjonspunkt.5016',
+    5024: 'UttakPanel.Aksjonspunkt.5024',
     5072: 'UttakPanel.Aksjonspunkt.5072',
     5073: 'UttakPanel.Aksjonspunkt.5073',
     5074: 'UttakPanel.Aksjonspunkt.5074',
@@ -68,7 +68,7 @@ const hentApTekst = (kode, stonadskonto, aktiviteter) => {
     5077: 'UttakPanel.Aksjonspunkt.5077',
     5078: 'UttakPanel.Aksjonspunkt.5078',
     5079: 'UttakPanel.Aksjonspunkt.5079',
-    5024: 'UttakPanel.Aksjonspunkt.5024',
+    5098: 'UttakPanel.Aksjonspunkt.5098',
   };
 
   if (kode === '5001') {
