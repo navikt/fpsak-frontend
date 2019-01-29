@@ -28,6 +28,10 @@ export const PERSON_ARBEIDSFORHOLD_DETAIL_FORM = 'PersonArbeidsforholdDetailForm
 
 const maxLength400 = maxLength(400);
 
+// TODO (TOR) Bør heller senda med boolsk indikator fra backend enn å ha hardkoda streng her
+const AA_REGISTERET = 'aa-registeret';
+const isKildeAaRegisteret = arbeidsforhold => arbeidsforhold.kilde && arbeidsforhold.kilde.navn.toLowerCase() === AA_REGISTERET;
+
 const showNyttOrErstattPanel = (
   shouldUseBehandling, vurderOmSkalErstattes, harErstattetEttEllerFlere,
 ) => shouldUseBehandling && vurderOmSkalErstattes && !harErstattetEttEllerFlere;
@@ -103,6 +107,7 @@ export const PersonArbeidsforholdDetailForm = ({
           <RadioOption
             label={intl.formatMessage({ id: 'PersonArbeidsforholdDetailForm.ArbeidsforholdIkkeRelevant' })}
             value={false}
+            disabled={isKildeAaRegisteret(arbeidsforhold)}
           />
         </RadioGroupField>
         <VerticalSpacer twentyPx />
