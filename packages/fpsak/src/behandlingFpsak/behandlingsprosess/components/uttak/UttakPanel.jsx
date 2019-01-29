@@ -84,7 +84,7 @@ export const UttakPanelImpl = ({
     && (
       <ElementWrapper>
         <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
-          {hentApTekst(uttaksresultat, isApOpen, aksjonspunkter, stonadskonto)}
+          {hentApTekst(uttaksresultat, isApOpen, aksjonspunkter)}
         </AksjonspunktHelpText>
         <VerticalSpacer twentyPx />
       </ElementWrapper>
