@@ -16,7 +16,7 @@ import FodselSammenligningPanel from 'behandlingFpsak/components/fodselSammenlig
 import TermindatoFaktaForm, { termindatoFaktaFormName } from 'behandlingFpsak/fakta/components/fodsel/TermindatoFaktaForm';
 import SjekkFodselDokForm, { sjekkFodselDokForm } from 'behandlingFpsak/fakta/components/fodsel/SjekkFodselDokForm';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
-import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
+import faktaPanelCodes from 'behandlingFelles/fakta/faktaPanelCodes';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import SykdomPanel, { sykdomPanelName } from './SykdomPanel';
 

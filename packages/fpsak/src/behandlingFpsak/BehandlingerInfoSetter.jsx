@@ -12,6 +12,7 @@ import {
   getBehandlingIsInnsyn, getBehandlingIsOnHold, isBehandlingInInnhentSoknadsopplysningerSteg, getBehandlingIsQueued, getBehandlingBehandlendeEnhetId,
   getBehandlingBehandlendeEnhetNavn, getHenleggArsaker, getSoknad,
 } from './behandlingSelectors';
+import { getBehandlingsresultatFraOriginalBehandling, getResultatstrukturFraOriginalBehandling } from './selectors/originalBehandlingSelectors';
 
 
 // TODO (TOR) Midlertidig komponent. Ikkje legg meir her!! Komponentane utanfor behandlingskonteksten skal sjølv ha ansvar for å henta data
@@ -23,7 +24,7 @@ export class BehandlingerInfoSetter extends Component {
       totrinnskontrollArsakerReadOnly, totrinnskontrollArsaker, behandlingKlageVurdering, behandlingIsKlage, behandlingResultatstruktur,
       behandlingsresultat, behandlingType, behandlingKlageVurderingResultatNFP, behandlingKlageVurderingResultatNK, behandlingHasSoknad,
       behandlingIsInnsyn, behandlingIsOnHold, isBehandlingInInnhentSoknadsinfoSteg, behandlingIsQueued, behandlingBehandlendeEnhetId,
-      behandlendeEnhetNavn, henleggArsaker, soknad,
+      behandlendeEnhetNavn, henleggArsaker, soknad, behandlingsresultatFraOriginalBehandling, resultatstrukturFraOriginalBehandling,
     } = this.props;
 
     setBehandlingInfoHolder(new BehandlingInfoHolder()
@@ -54,7 +55,9 @@ export class BehandlingerInfoSetter extends Component {
       .withBehandlingBehandlendeEnhetId(behandlingBehandlendeEnhetId)
       .withBehandlendeEnhetNavn(behandlendeEnhetNavn)
       .withHenleggArsaker(henleggArsaker)
-      .withSoknad(soknad));
+      .withSoknad(soknad)
+      .withBehandlingsresultatFraOriginalBehandling(behandlingsresultatFraOriginalBehandling)
+      .withResultatstrukturFraOriginalBehandling(resultatstrukturFraOriginalBehandling));
   }
 
   componentWillMount = () => {
@@ -108,6 +111,8 @@ BehandlingerInfoSetter.propTypes = {
     valg: PropTypes.string,
   })),
   soknad: PropTypes.shape(),
+  behandlingsresultatFraOriginalBehandling: PropTypes.shape(),
+  resultatstrukturFraOriginalBehandling: PropTypes.shape(),
 };
 
 BehandlingerInfoSetter.defaultProps = {
@@ -131,6 +136,8 @@ BehandlingerInfoSetter.defaultProps = {
   behandlendeEnhetNavn: undefined,
   henleggArsaker: null,
   soknad: undefined,
+  behandlingsresultatFraOriginalBehandling: undefined,
+  resultatstrukturFraOriginalBehandling: undefined,
 };
 
 const mapStateToProps = state => ({
@@ -162,6 +169,8 @@ const mapStateToProps = state => ({
   behandlingBehandlendeEnhetNavn: getBehandlingBehandlendeEnhetNavn(state),
   henleggArsaker: getHenleggArsaker(state),
   soknad: getSoknad(state),
+  behandlingsresultatFraOriginalBehandling: getBehandlingsresultatFraOriginalBehandling(state),
+  resultatstrukturFraOriginalBehandling: getResultatstrukturFraOriginalBehandling(state),
 });
 
 export default connect(mapStateToProps)(BehandlingerInfoSetter);

@@ -11,7 +11,7 @@ import { getBehandlingsresultat } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
+import behandlingspunktCodes from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
 import VilkarResultPicker from 'behandlingFpsak/behandlingsprosess/components/vilkar/VilkarResultPicker';
 import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import { getKodeverk } from 'kodeverk/duck';

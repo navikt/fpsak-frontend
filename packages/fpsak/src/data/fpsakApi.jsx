@@ -18,19 +18,16 @@ export const FpsakApiKeys = {
   ANNEN_PART_BEHANDLING: 'ANNEN_PART_BEHANDLING',
   BEHANDLENDE_ENHETER: 'BEHANDLENDE_ENHETER',
   NEW_BEHANDLING: 'NEW_BEHANDLING',
-  SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
-  SAVE_OVERSTYRT_AKSJONSPUNKT: 'SAVE_OVERSTYRT_AKSJONSPUNKT',
+  SAVE_TOTRINNSAKSJONSPUNKT: 'SAVE_TOTRINNSAKSJONSPUNKT',
   ALL_DOCUMENTS_FPSAK: 'ALL_DOCUMENTS_FPSAK',
   ALL_DOCUMENTS_FPTILBAKE: 'ALL_DOCUMENTS_FPTILBAKE',
   DOCUMENT: 'DOCUMENT',
   FORHANDSVISNING_FORVED_BREV: 'FORHANDSVISNING_FORVED_BREV',
-  SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
   HISTORY_FPSAK: 'HISTORY_FPSAK',
   HISTORY_FPTILBAKE: 'HISTORY_FPTILBAKE',
   SHOW_DETAILED_ERROR_MESSAGES: 'SHOW_DETAILED_ERROR_MESSAGES',
   INTEGRATION_STATUS: 'INTEGRATION_STATUS',
   FEATURE_TOGGLE: 'FEATURE_TOGGLE',
-  PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
   AKTOER_INFO: 'AKTOER_INFO',
 };
 
@@ -48,12 +45,7 @@ const endpoints = new RestApiConfigBuilder()
   .withGet('fpsak/api/behandlinger/annen-part-behandling', FpsakApiKeys.ANNEN_PART_BEHANDLING)
 
   /* /api/behandling */
-  .withAsyncPost('fpsak/api/behandling/aksjonspunkt', FpsakApiKeys.SAVE_AKSJONSPUNKT)
-  .withAsyncPost('fpsak/api/behandling/aksjonspunkt/overstyr', FpsakApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT)
-
-  /* /api/brev */
-  .withPost('fpsak/api/brev/bestill', FpsakApiKeys.SUBMIT_MESSAGE)
-  .withPostAndOpenBlob('fpsak/api/brev/forhandsvis', FpsakApiKeys.PREVIEW_MESSAGE)
+  .withAsyncPost('fpsak/api/behandling/aksjonspunkt', FpsakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT)
 
   /* /api/dokument */
   .withGet('fpsak/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS_FPSAK)

@@ -59,6 +59,10 @@ class BehandlingInfoHolder {
 
     behandlingIdentifier;
 
+    behandlingsresultatFraOriginalBehandling;
+
+    resultatstrukturFraOriginalBehandling;
+
     withIsKontrollerRevurderingAksjonspunkOpen = (isKontrollerRevurderingAksjonspunkOpen) => {
       this.isKontrollerRevurderingAksjonspunkOpen = isKontrollerRevurderingAksjonspunkOpen;
       return this;
@@ -203,6 +207,16 @@ class BehandlingInfoHolder {
       this.behandlingIdentifier = behandlingIdentifier;
       return this;
     }
+
+    withBehandlingsresultatFraOriginalBehandling = (behandlingsresultatFraOriginalBehandling) => {
+      this.behandlingsresultatFraOriginalBehandling = behandlingsresultatFraOriginalBehandling;
+      return this;
+    }
+
+     withResultatstrukturFraOriginalBehandling = (resultatstrukturFraOriginalBehandling) => {
+       this.resultatstrukturFraOriginalBehandling = resultatstrukturFraOriginalBehandling;
+       return this;
+     }
 }
 
 export default BehandlingInfoHolder;

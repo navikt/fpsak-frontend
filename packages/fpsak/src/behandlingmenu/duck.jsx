@@ -4,7 +4,6 @@ import moment from 'moment';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { pathToBehandling, getLocationWithDefaultBehandlingspunktAndFakta } from 'app/paths';
 import fpsakApi from 'data/fpsakApi';
-import fpsakBehandlingApi from 'behandlingFpsak/data/fpsakBehandlingApi';
 import { updateFagsakInfo, updateBehandlinger } from 'fagsak/duck';
 import { updateBehandlingsupportInfo } from 'behandlingsupport/duck';
 import behandlingUpdater from 'behandling/BehandlingUpdater';
@@ -49,10 +48,8 @@ export const createNewForstegangsbehandling = (push, saksnummer, params) => disp
     }
     // NEW_BEHANDLING har returnert behandling
     return dispatch(updateFagsakInfo(saksnummer))
-      .then(() => dispatch(fpsakBehandlingApi.BEHANDLING.setDataRestApi()(
-        response.payload,
-        { behandlingId: response.payload.id, saksnummer }, { keepData: true },
-      )))
+      .then(() => behandlingUpdater.setBehandlingResult(dispatch, response.payload,
+        { behandlingId: response.payload.id, saksnummer }, { keepData: true }))
       .then(() => {
         push(getLocationWithDefaultBehandlingspunktAndFakta({ pathname: pathToBehandling(saksnummer, response.payload.id) }));
         return Promise.resolve(response.payload);
@@ -69,19 +66,17 @@ export const setBehandlingOnHold = (params, behandlingIdentifier) => dispatch =>
 export const resumeBehandling = (behandlingIdentifier, params) => dispatch => behandlingUpdater.resumeBehandling(dispatch, params)
   .then(response => Promise.all([
     dispatch(updateBehandlingsupportInfo(behandlingIdentifier.saksnummer)),
-    dispatch(fpsakBehandlingApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true })),
+    behandlingUpdater.setBehandlingResult(dispatch, response.payload, behandlingIdentifier.toJson(), { keepData: true }),
   ]));
-
-export const fetchPreview = fpsakBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();
 
 export const nyBehandlendeEnhet = (params, behandlingIdentifier) => dispatch => behandlingUpdater.changeBehandlendeEnhet(dispatch, params)
   .then(() => dispatch(updateFagsakAndBehandlingInfo(behandlingIdentifier)));
 
 export const openBehandlingForChanges = (params, behandlingIdentifier) => dispatch => behandlingUpdater.openBehandlingForChanges(dispatch, params)
-  .then(response => dispatch(fpsakBehandlingApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true })))
+  .then(response => behandlingUpdater.setBehandlingResult(dispatch, response.payload, behandlingIdentifier.toJson(), { keepData: true }))
   .then(() => dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer)));
 
-export const previewHenleggBehandling = (behandlingId, brevmalkode) => fetchPreview({
+export const previewHenleggBehandling = (behandlingId, brevmalkode) => dispatch => behandlingUpdater.previewMessage(dispatch, {
   behandlingId,
   brevmalkode,
   fritekst: ' ',

@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import { updateFagsakInfo } from 'fagsak/duck';
-import papirsoknadApi from './data/papirsoknadApi';
+import papirsoknadApi, { PapirsoknadApiKeys } from './data/papirsoknadApi';
 import reducerRegistry from '../ReducerRegistry';
 
 const reducerName = 'papirsoknad';
@@ -62,6 +62,14 @@ const updateFagsakAndBehandling = behandlingIdentifier => dispatch => dispatch(u
 
 export const updateOnHold = (params, behandlingIdentifier) => dispatch => dispatch(papirsoknadApi.UPDATE_ON_HOLD.makeRestApiRequest()(params))
   .then(() => dispatch(updateFagsakAndBehandling(behandlingIdentifier)));
+
+export const resetPapirsoknadContext = () => (dispatch) => {
+  Object.values(PapirsoknadApiKeys)
+    .forEach((value) => {
+      dispatch(papirsoknadApi[value].resetRestApi()());
+    });
+};
+
 
 /* Reducer */
 const initialState = {

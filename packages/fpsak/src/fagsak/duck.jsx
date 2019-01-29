@@ -1,10 +1,10 @@
 import { createSelector } from 'reselect';
 
 import fpsakApi, { FpsakApiKeys } from 'data/fpsakApi';
-import fpsakBehandlingApi, { BehandlingFpsakApiKeys } from 'behandlingFpsak/data/fpsakBehandlingApi';
 import { updateBehandlingsupportInfo } from 'behandlingsupport/duck';
 import { updateAnnenPartBehandling } from 'fagsakprofile/duck';
 import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
+import behandlingUpdater from 'behandling/BehandlingUpdater';
 import reducerRegistry from '../ReducerRegistry';
 
 export const reducerName = 'fagsak';
@@ -31,9 +31,7 @@ export const updateBehandlinger = saksnummer => dispatch => (behandlingOrchestra
 const resetFetchFagsakInfo = () => (dispatch) => {
   dispatch(fpsakApi.FETCH_FAGSAK.resetRestApi()());
   behandlingOrchestrator.resetRestApis(dispatch);
-  dispatch(fpsakBehandlingApi.BEHANDLING.resetRestApi()());
-
-  // TODO (TOR) Denne er litt pussig. Ser ut som den er spesifik for behandling, men hentar opp gitt saksnummer
+  behandlingUpdater.resetBehandling(dispatch);
   dispatch(fpsakApi.ANNEN_PART_BEHANDLING.resetRestApi()());
 };
 
@@ -71,10 +69,6 @@ export const resetFagsakContext = () => (dispatch) => {
     .filter(value => !doNotResetWhitelist.includes(value))
     .forEach((value) => {
       dispatch(fpsakApi[value].resetRestApi()());
-    });
-  Object.values(BehandlingFpsakApiKeys)
-    .forEach((value) => {
-      dispatch(fpsakBehandlingApi[value].resetRestApi()());
     });
   dispatch({ type: RESET_FAGSAKER });
 };

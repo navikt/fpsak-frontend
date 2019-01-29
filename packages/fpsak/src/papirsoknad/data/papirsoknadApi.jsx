@@ -15,7 +15,6 @@ export const PapirsoknadApiKeys = {
   NY_BEHANDLENDE_ENHET: 'NY_BEHANDLENDE_ENHET',
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
-  PREVIEW_MESSAGE_KLAGE: 'PREVIEW_MESSAGE_KLAGE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -29,9 +28,8 @@ const endpoints = new RestApiConfigBuilder()
   /* /api/behandling */
   .withAsyncPost('/api/behandling/aksjonspunkt', PapirsoknadApiKeys.SAVE_AKSJONSPUNKT)
 
-/* /api/brev */
+  /* /api/brev */
   .withPostAndOpenBlob('/api/brev/forhandsvis', PapirsoknadApiKeys.PREVIEW_MESSAGE)
-  .withPostAndOpenBlob('/api/brev/forhandsvis-klage', PapirsoknadApiKeys.PREVIEW_MESSAGE_KLAGE)
 
   .build();
 

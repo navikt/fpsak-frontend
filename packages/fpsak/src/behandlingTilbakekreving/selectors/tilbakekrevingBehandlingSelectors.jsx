@@ -2,8 +2,8 @@ import { createSelector } from 'reselect';
 
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import tilbakekrevingBehandlingApi from './tilbakekrevingBehandlingApi';
-import { getSelectedBehandlingId } from './duck';
+import tilbakekrevingBehandlingApi from '../data/tilbakekrevingBehandlingApi';
+import { getSelectedBehandlingId } from '../duck';
 
 const hasFetchedOriginalBehandlingIfItExists = (behandling, originalBehandlingId) => (behandling && behandling.originalBehandlingId
   ? behandling.originalBehandlingId === originalBehandlingId : true);

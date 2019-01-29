@@ -86,3 +86,5 @@ export const getBehandlingBehandlendeEnhetId = createSelector([getBehandlingInfo
 export const getBehandlingBehandlendeEnhetNavn = createSelector([getBehandlingInfoHolder], data => data.behandlingBehandlendeEnhetNavn);
 export const getHenleggArsaker = createSelector([getBehandlingInfoHolder], data => data.henleggArsaker);
 export const getSoknad = createSelector([getBehandlingInfoHolder], data => data.soknad);
+export const getBehandlingsresultatFraOriginalBehandling = createSelector([getBehandlingInfoHolder], data => data.behandlingsresultatFraOriginalBehandling);
+export const getResultatstrukturFraOriginalBehandling = createSelector([getBehandlingInfoHolder], data => data.resultatstrukturFraOriginalBehandling);

@@ -9,16 +9,15 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ErrorTypes } from 'app/ErrorTypes';
 import PersonIndex from 'person/PersonIndex';
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import SoknadData from 'papirsoknad/SoknadData';
 import requireProps from 'app/data/requireProps';
-import {
-  getBehandlingVersjon, getBehandlingIsOnHold, getAksjonspunkter,
-}
-  from 'behandling/duck';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import { getRettigheter } from 'navAnsatt/duck';
 import rettighetPropType from 'navAnsatt/rettighetPropType';
 import papirsoknadApi from './data/papirsoknadApi';
+import SoknadData from './SoknadData';
+import {
+  getBehandlingVersjon, getBehandlingIsOnHold, getAksjonspunkter,
+} from './selectors/papirsoknadSelectors';
 import {
   resetRegistrering, submitRegistrering, resetRegistreringSuccess, setSoknadData, getSoknadData, getBehandlingIdentifier,
 } from './duck';

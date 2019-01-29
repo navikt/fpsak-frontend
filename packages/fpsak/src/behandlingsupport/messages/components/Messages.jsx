@@ -15,7 +15,7 @@ import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
+import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { isKontrollerRevurderingAksjonspunkOpen } from 'behandling/duck';
 import { getKodeverk } from 'kodeverk/duck';
 

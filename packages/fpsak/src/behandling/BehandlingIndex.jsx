@@ -43,6 +43,7 @@ const BehandlingIndex = ({
         behandlingId={behandlingId}
         updateFagsakInfo={updateFagsakInfo}
         behandlingerVersjonMappedById={behandlingerVersjonMappedById}
+        behandlingVersjon={behandlingVersjon}
         location={location}
         setBehandlingInfoHolder={setHolder}
         behandlingUpdater={behandlingUpdater}
@@ -56,8 +57,8 @@ const BehandlingIndex = ({
         saksnummer={saksnummer}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
-        updateFagsakInfo={updateFagsakInfo}
         behandlingerVersjonMappedById={behandlingerVersjonMappedById}
+        updateFagsakInfo={updateFagsakInfo}
         location={location}
       />
     );
@@ -70,6 +71,7 @@ const BehandlingIndex = ({
       behandlingId={behandlingId}
       updateFagsakInfo={updateFagsakInfo}
       behandlingerVersjonMappedById={behandlingerVersjonMappedById}
+      behandlingVersjon={behandlingVersjon}
       location={location}
       setBehandlingInfoHolder={setHolder}
       behandlingUpdater={behandlingUpdater}

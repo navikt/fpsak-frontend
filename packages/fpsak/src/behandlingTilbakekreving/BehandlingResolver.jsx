@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import { isBehandlingInSync } from './tilbakekrevingBehandlingSelectors';
+import { isBehandlingInSync } from './selectors/tilbakekrevingBehandlingSelectors';
 import { fetchBehandling as fetchBehandlingActionCreator, getBehandlingIdentifier } from './duck';
 
 export class BehandlingResolver extends Component {

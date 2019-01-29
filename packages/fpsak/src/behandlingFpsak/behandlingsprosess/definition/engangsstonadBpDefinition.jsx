@@ -1,4 +1,4 @@
-import bpc from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
+import bpc from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';

@@ -17,7 +17,7 @@ import {
 } from './behandlingSelectors';
 import {
   setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier,
-  getHasShownBehandlingPaVent,
+  getHasShownBehandlingPaVent, resetBehandlingFpsakContext,
 } from './duck';
 import { getBehandlingFormPrefix } from './behandlingForm';
 import behandlingUpdaterFpsak from './BehandlingUpdaterFpsak';
@@ -63,7 +63,8 @@ export class BehandlingFpsakIndex extends Component {
   }
 
   cleanUp(behandlingId, behandlingVersjon) {
-    const { destroyReduxForms: destroyForms } = this.props;
+    const { destroyReduxForms: destroyForms, resetBehandlingFpsakContext: resetBehandling } = this.props;
+    resetBehandling();
     const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
     setTimeout(() => destroyForms(behandlingFormPrefix), 1000); // Delay destruction to after potentially expensive transition
   }
@@ -124,6 +125,7 @@ BehandlingFpsakIndex.propTypes = {
   setBehandlingInfoHolder: PropTypes.func.isRequired,
   behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   behandlingUpdater: PropTypes.shape().isRequired,
+  resetBehandlingFpsakContext: PropTypes.func.isRequired,
 };
 
 BehandlingFpsakIndex.defaultProps = {
@@ -133,9 +135,9 @@ BehandlingFpsakIndex.defaultProps = {
   venteArsakKode: undefined,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
-  behandlingVersjon: getBehandlingVersjon(state),
+  behandlingVersjon: getBehandlingVersjon(state) || ownProps.behandlingVersjon,
   fristBehandlingPaaVent: getBehandlingOnHoldDate(state),
   behandlingPaaVent: getBehandlingIsOnHold(state),
   venteArsakKode: getBehandlingVenteArsakKode(state),
@@ -148,6 +150,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setHasShownBehandlingPaVent,
   updateOnHold,
   setBehandlingInfo,
+  resetBehandlingFpsakContext,
   destroyReduxForms: destroy,
 }, dispatch);
 

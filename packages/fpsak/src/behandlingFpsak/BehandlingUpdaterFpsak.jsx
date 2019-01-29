@@ -15,6 +15,16 @@ class BehandlingUpdaterFpsak {
     shelveBehandling = () => fpsakBehandlingApi.HENLEGG_BEHANDLING.makeRestApiRequest();
 
     openBehandlingForChanges = () => fpsakBehandlingApi.OPEN_BEHANDLING_FOR_CHANGES.makeRestApiRequest();
+
+    setBehandlingResult = () => fpsakBehandlingApi.BEHANDLING.setDataRestApi();
+
+    previewMessage = () => fpsakBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();
+
+    resetSubmitMessage = () => fpsakBehandlingApi.SUBMIT_MESSAGE.resetRestApi();
+
+    submitMessage = () => fpsakBehandlingApi.SUBMIT_MESSAGE.makeRestApiRequest();
+
+    isSubmitMessageFinished = fpsakBehandlingApi.SUBMIT_MESSAGE.getRestApiFinished();
 }
 
 export default new BehandlingUpdaterFpsak();

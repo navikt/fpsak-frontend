@@ -14,7 +14,7 @@ import {
   getUttaksresultatPerioder,
 } from 'behandlingFpsak/behandlingSelectors';
 import { getFeatureToggles } from 'app/duck';
-import behandlingspunktCodes from './behandlingspunktCodes';
+import behandlingspunktCodes from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
 import createEngangsstonadBpProps from './definition/engangsstonadBpDefinition';
 import createForeldrepengerBpProps from './definition/foreldrepengerBpDefinition';
 import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from './duck';

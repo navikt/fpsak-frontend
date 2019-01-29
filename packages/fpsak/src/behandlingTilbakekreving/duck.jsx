@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import tilbakekrevingBehandlingApi, { TilbakekrevingBehandlingApiKeys } from './tilbakekrevingBehandlingApi';
+import tilbakekrevingBehandlingApi, { TilbakekrevingBehandlingApiKeys } from './data/tilbakekrevingBehandlingApi';
 
 import reducerRegistry from '../ReducerRegistry';
 

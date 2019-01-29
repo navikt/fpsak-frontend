@@ -16,7 +16,7 @@ import {
 } from './selectors/papirsoknadSelectors';
 import {
   setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier,
-  getHasShownBehandlingPaVent,
+  getHasShownBehandlingPaVent, resetPapirsoknadContext,
 } from './duck';
 import { getBehandlingFormPrefix } from './behandlingForm';
 import papirsoknadUpdater from './PapirsoknadUpdater';
@@ -62,7 +62,8 @@ export class BehandlingPapirsoknadIndex extends Component {
   }
 
   cleanUp(behandlingId, behandlingVersjon) {
-    const { destroyReduxForms: destroyForms } = this.props;
+    const { destroyReduxForms: destroyForms, resetPapirsoknadContext: resetPapirsoknad } = this.props;
+    resetPapirsoknad();
     const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
     setTimeout(() => destroyForms(behandlingFormPrefix), 1000); // Delay destruction to after potentially expensive transition
   }
@@ -120,6 +121,7 @@ BehandlingPapirsoknadIndex.propTypes = {
   setBehandlingInfoHolder: PropTypes.func.isRequired,
   behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   behandlingUpdater: PropTypes.shape().isRequired,
+  resetPapirsoknadContext: PropTypes.func.isRequired,
 };
 
 BehandlingPapirsoknadIndex.defaultProps = {
@@ -144,6 +146,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setHasShownBehandlingPaVent,
   updateOnHold,
   setBehandlingInfo,
+  resetPapirsoknadContext,
   destroyReduxForms: destroy,
 }, dispatch);
 

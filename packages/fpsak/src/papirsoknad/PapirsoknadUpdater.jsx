@@ -13,6 +13,10 @@ class PapirsoknadUpdater {
     resumeBehandling = () => papirsoknadApi.RESUME_BEHANDLING.makeRestApiRequest();
 
     shelveBehandling = () => papirsoknadApi.HENLEGG_BEHANDLING.makeRestApiRequest();
+
+    setBehandlingResult = () => papirsoknadApi.BEHANDLING.setDataRestApi();
+
+    previewMessage = () => papirsoknadApi.PREVIEW_MESSAGE.makeRestApiRequest();
 }
 
 export default new PapirsoknadUpdater();

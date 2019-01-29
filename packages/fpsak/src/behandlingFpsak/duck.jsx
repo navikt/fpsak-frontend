@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import { updateFagsakInfo } from 'fagsak/duck';
-import fpsakBehandlingApi from './data/fpsakBehandlingApi';
+import fpsakBehandlingApi, { BehandlingFpsakApiKeys } from './data/fpsakBehandlingApi';
 import reducerRegistry from '../ReducerRegistry';
 
 const reducerName = 'fpsakBehandling';
@@ -55,6 +55,14 @@ const updateFagsakAndBehandling = behandlingIdentifier => dispatch => dispatch(u
 
 export const updateOnHold = (params, behandlingIdentifier) => dispatch => dispatch(fpsakBehandlingApi.UPDATE_ON_HOLD.makeRestApiRequest()(params))
   .then(() => dispatch(updateFagsakAndBehandling(behandlingIdentifier)));
+
+export const resetBehandlingFpsakContext = () => (dispatch) => {
+  Object.values(BehandlingFpsakApiKeys)
+    .forEach((value) => {
+      dispatch(fpsakBehandlingApi[value].resetRestApi()());
+    });
+};
+
 
 /* Reducer */
 const initialState = {
