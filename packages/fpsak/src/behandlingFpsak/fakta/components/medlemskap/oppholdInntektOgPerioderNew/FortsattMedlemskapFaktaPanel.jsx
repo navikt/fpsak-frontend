@@ -49,13 +49,15 @@ export const FortsattMedlemskapFaktaPanelImpl = ({
         {changedOpplysninger.map((opplysning) => {
           if (opplysning.endretAttributt === 'Personstatus') {
             return <Normaltekst key={1}><FormattedMessage id="FortsattMedlemskapFaktaPanel.EndretPersonstatus" values={getParam(opplysning)} /></Normaltekst>;
-          } if (opplysning.endretAttributt === 'StatsborgerskapRegion') {
+          }
+          if (opplysning.endretAttributt === 'StatsborgerskapRegion') {
             return (
               <Normaltekst key={2}>
                 <FormattedMessage id="FortsattMedlemskapFaktaPanel.EndretStatsborgerskap" values={getParam(opplysning)} />
               </Normaltekst>
             );
-          } if (opplysning.endretAttributt === 'Adresse') {
+          }
+          if (opplysning.endretAttributt === 'Adresse') {
             return <Normaltekst key={3}><FormattedMessage id="FortsattMedlemskapFaktaPanel.NyUtlandsadresse" values={getParam(opplysning)} /></Normaltekst>;
           }
           return null;

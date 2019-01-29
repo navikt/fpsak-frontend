@@ -30,7 +30,8 @@ const cleanUpArbeidsforhold = (newValues, originalValues) => {
       erstatterArbeidsforholdId: undefined,
       tomDato: originalValues.tomDato,
     };
-  } if (newValues.erNyttArbeidsforhold) {
+  }
+  if (newValues.erNyttArbeidsforhold) {
     return {
       ...newValues,
       erstatterArbeidsforholdId: undefined,
@@ -168,9 +169,11 @@ export const sortArbeidsforhold = arbeidsforhold => arbeidsforhold
 
     if (a1.mottattDatoInntektsmelding && a2.mottattDatoInntektsmelding) {
       return moment(a2.mottattDatoInntektsmelding, ISO_DATE_FORMAT).diff(moment(a1.mottattDatoInntektsmelding, ISO_DATE_FORMAT));
-    } if (a1.mottattDatoInntektsmelding) {
+    }
+    if (a1.mottattDatoInntektsmelding) {
       return -1;
-    } if (a2.mottattDatoInntektsmelding) {
+    }
+    if (a2.mottattDatoInntektsmelding) {
       return 1;
     }
     return a1.id.localeCompare(a2.id);
