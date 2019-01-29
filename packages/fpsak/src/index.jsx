@@ -11,8 +11,16 @@ import AppIndex from 'app/AppIndex';
 import configureStore from './store';
 import reducerRegistry from './ReducerRegistry';
 
+
+/* global VERSION:true */
+/* eslint no-undef: "error" */
+const release = VERSION;
+const environment = window.location.hostname;
+
 init({
   dsn: 'https://b7a25f545630433aac46282548140778@sentry.nais.preprod.local/2',
+  release,
+  environment,
 });
 
 

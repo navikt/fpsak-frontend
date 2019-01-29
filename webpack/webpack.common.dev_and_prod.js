@@ -1,12 +1,16 @@
 'use strict';
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
+const PACKAGE = require('./../package.json');
+const VERSION = PACKAGE.version;
 
+const ROOT_DIR = path.resolve(__dirname, '../public/client');
 const CORE_DIR = path.resolve(__dirname, '../node_modules');
 const PACKAGES_DIR = path.join(__dirname, '../packages');
 const LANG_DIR = path.join(__dirname, '../public/sprak/');
@@ -101,6 +105,15 @@ const config = {
   plugins: [
     new MiniCssExtractPlugin({
       filename: isDevelopment ? 'style.css' : 'style_[hash].css',
+    }),
+    new HtmlWebpackPlugin({
+      filename: isDevelopment ? 'index.html' : '../index.html',
+      favicon: path.join(ROOT_DIR, 'favicon.ico'),
+      template: path.join(ROOT_DIR, 'index.html'),
+      version: VERSION,
+    }),
+    new webpack.DefinePlugin({
+      VERSION: JSON.stringify(VERSION),
     }),
     new CopyWebpackPlugin([
       {
