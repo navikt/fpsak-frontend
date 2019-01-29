@@ -1,10 +1,6 @@
 export const hovedsokerKjonnKode = 'K';
 export const tilbakekrevingPerioderResultat = [
   {
-    group: 1,
-    hovedsoker: true,
-    id: 1,
-    className: 'godkjentPeriode',
     fom: '2018-11-15',
     tom: '2018-11-30',
     feilutbetaling: 1537,
@@ -13,10 +9,6 @@ export const tilbakekrevingPerioderResultat = [
     },
   },
   {
-    group: 1,
-    hovedsoker: true,
-    id: 2,
-    className: 'godkjentPeriode',
     fom: '2018-12-01',
     tom: '2018-12-31',
     feilutbetaling: 4258,
@@ -25,10 +17,6 @@ export const tilbakekrevingPerioderResultat = [
     },
   },
   {
-    group: 1,
-    hovedsoker: true,
-    id: 3,
-    className: 'godkjentPeriode',
     fom: '2019-01-01',
     tom: '2019-01-11',
     feilutbetaling: 7581,

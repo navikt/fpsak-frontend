@@ -19,6 +19,22 @@ import TilbakekrevingTimeLineData from './TilbakekrevingTimeLineData';
 const ACTIVITY_PANEL_NAME = 'tilbakekrevingsresultatActivity';
 const formName = 'TilbakekrevingForm';
 
+const addClassNameGroupIdToPerioder = (tilbakekrevingPerioder) => {
+  const perioderMedClassName = [];
+
+  tilbakekrevingPerioder.forEach((item, index) => {
+    const periodMedClassName = {
+      ...item,
+      id: index + 1,
+      className: 'godkjentPeriode',
+      hovedsoker: true,
+      group: 1,
+    };
+    perioderMedClassName.push(periodMedClassName);
+  });
+  return perioderMedClassName;
+};
+
 export class TilbakekrevingPanelImpl extends Component {
   constructor() {
     super();
@@ -135,6 +151,7 @@ export class TilbakekrevingPanelImpl extends Component {
       tilbakekrevingsresultatActivity,
       behandlingFormPrefix,
       reduxFormChange: formChange,
+      tilbakekrevingPerioder,
     } = this.props;
     const { selectedItem } = this.state;
     return (
@@ -147,7 +164,7 @@ export class TilbakekrevingPanelImpl extends Component {
           <TilbakekrevingTimeLine
             selectedPeriod={selectedItem}
             customTimes={customTimes}
-            tilbakekrevingPerioder={tilbakekrevingsresultatActivity}
+            tilbakekrevingPerioder={tilbakekrevingPerioder}
             selectPeriodCallback={this.selectHandler}
             openPeriodInfo={this.openPeriodInfo}
             hovedsokerKjonnKode={hovedsokerKjonnKode}
@@ -175,13 +192,16 @@ export class TilbakekrevingPanelImpl extends Component {
   }
 }
 
-
 TilbakekrevingPanelImpl.propTypes = {
-  tilbakekrevingsresultatActivity: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  tilbakekrevingsresultatActivity: PropTypes.arrayOf(PropTypes.shape()),
   tilbakekrevingPerioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
+};
+
+TilbakekrevingPanelImpl.defaultProps = {
+  tilbakekrevingsresultatActivity: [],
 };
 
 export const buildInitialValues = () => ({
@@ -193,7 +213,7 @@ export const buildInitialValues = () => ({
 
 const mapStateToProps = state => ({
   initialValues: buildInitialValues(),
-  tilbakekrevingPerioder: tilbakekrevingPerioderResultat,
+  tilbakekrevingPerioder: addClassNameGroupIdToPerioder(tilbakekrevingPerioderResultat),
   tilbakekrevingsresultatActivity: behandlingFormValueSelector(formName)(state, ACTIVITY_PANEL_NAME),
   behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
 });
