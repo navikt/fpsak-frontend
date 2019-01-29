@@ -12,7 +12,6 @@ install:
 script:
 - yarn less:lint
 - yarn test
-- yarn build
 - git config user.name team-foreldrepenger[bot]
 - git config user.email team-foreldrepenger[bot]@users.noreply.github.com
 
