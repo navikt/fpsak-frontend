@@ -4,7 +4,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
 import {
-  getBehandlingVilkar, getBehandlingSprak, getTilbakekrevingText,
+  getBehandlingVilkar, getBehandlingSprak, getSimuleringResultat, getTilbakekrevingValg,
 } from 'behandlingFpsak/behandlingSelectors';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
@@ -12,6 +12,7 @@ import {
   endringerIBeregningsgrunnlagGirFritekstfelt,
   hasIkkeOppfyltSoknadsfristvilkar,
   findAvslagResultatText,
+  findTilbakekrevingText,
 } from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakHelper';
 import VedtakFritekstPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -97,7 +98,7 @@ const mapStateToProps = state => ({
   ytelseType: getFagsakYtelseType(state).kode,
   vilkar: getBehandlingVilkar(state),
   sprakkode: getBehandlingSprak(state),
-  tilbakekrevingText: getTilbakekrevingText(state),
+  tilbakekrevingText: findTilbakekrevingText(getSimuleringResultat(state), getTilbakekrevingValg(state)),
 });
 
 export default connect(mapStateToProps)(injectIntl(VedtakAvslagPanelImpl));
