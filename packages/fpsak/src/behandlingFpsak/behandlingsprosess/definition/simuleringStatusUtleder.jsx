@@ -8,8 +8,7 @@ export const getStatusFromSimulering = ({ resultatstruktur, behandlingsresultat 
   if (behandlingsprosessErGjennomført) {
     return vut.OPPFYLT;
   }
-
-  if (!behandlingsprosessErGjennomført && resultatstruktur) {
+  if (resultatstruktur && !behandlingsprosessErGjennomført) {
     return vut.OPPFYLT;
   }
   return vut.IKKE_VURDERT;
