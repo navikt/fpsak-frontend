@@ -11,7 +11,7 @@ import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
 
 const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) => tilbakekrevingKode === avregningCodes.TILBAKEKR_INFOTRYGD
   && (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
-export const findTilbakekrevingText = (simuleringResultat, tilbakekrevingValg) => {
+export const findTilbakekrevingText = ({ simuleringResultat, tilbakekrevingValg }) => {
   if (tilbakekrevingValg) {
     if (tilbakekrevingMedInntrekk(tilbakekrevingValg.videreBehandling.kode, simuleringResultat)) {
       return `VedtakForm.${avregningCodes.TILBAKEKR_INFOTRYGD_OG_INNTREKK}`;

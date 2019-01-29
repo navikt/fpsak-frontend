@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import {
   getBehandlingResultatstruktur,
   getBehandlingVilkar, getBehandlingSprak,
-  getSimuleringResultat, getTilbakekrevingValg,
+  getTilbakekrevingText,
 } from 'behandlingFpsak/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandlingFpsak/selectors/originalBehandlingSelectors';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -96,7 +96,7 @@ const mapStateToProps = state => ({
   originaltBeregningResultat: getResultatstrukturFraOriginalBehandling(state),
   vilkar: getBehandlingVilkar(state),
   sprakkode: getBehandlingSprak(state),
-  tilbakekrevingText: findTilbakekrevingText(getSimuleringResultat(state), getTilbakekrevingValg(state)),
+  tilbakekrevingText: findTilbakekrevingText(getTilbakekrevingText(state)),
 });
 
 export default connect(mapStateToProps)(injectIntl(VedtakAvslagRevurderingPanelImpl));
