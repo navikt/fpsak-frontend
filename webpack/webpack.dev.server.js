@@ -18,17 +18,14 @@ var options = {
     "/fpoppdrag/**": {
       target: process.env.APP_URL_FPOPPDRAG || "http://localhost:8070",
       secure: false,
-      changeOrigin: true,
     },
     "/fptilbake/**": {
       target: process.env.APP_URL_FPTILBAKE || "http://localhost:8030",
       secure: false,
-      changeOrigin: true,
     },
     "/fpsak/(api|jetty)/**": {
       target: process.env.APP_URL_FPSAK || "http://localhost:8080",
       secure: false,
-      changeOrigin: true,
     },
   },
   publicPath: config.output.publicPath,
