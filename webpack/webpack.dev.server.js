@@ -1,5 +1,5 @@
 "use strict";
-
+require('dotenv').config()
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var config = require('./webpack.dev');
@@ -16,16 +16,19 @@ var options = {
   watchContentBase: true,
   proxy: {
     "/fpoppdrag/**": {
-      target: "http://localhost:8070",
+      target: process.env.APP_URL_FPOPPDRAG || "http://localhost:8070",
       secure: false,
+      changeOrigin: true,
     },
     "/fptilbake/**": {
-      target: "http://localhost:8030",
+      target: process.env.APP_URL_FPTILBAKE || "http://localhost:8030",
       secure: false,
+      changeOrigin: true,
     },
     "/fpsak/(api|jetty)/**": {
-      target: "http://localhost:8080",
+      target: process.env.APP_URL_FPSAK || "http://localhost:8080",
       secure: false,
+      changeOrigin: true,
     },
   },
   publicPath: config.output.publicPath,
