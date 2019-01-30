@@ -54,7 +54,7 @@ spec:
   - name: APP_NAME
     value: fpsak-frontend
   - name: APP_ENVIRONMENT
-    value: t0
+    value: default
   - name: OIDC_HOST_URL
     value: https://isso-t.adeo.no:443/isso
   - name: OIDC_AGENTNAME

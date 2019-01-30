@@ -58,7 +58,6 @@ if ngx.var.cookie_sut_ID_token then
     end
 end
 
-
 -- if not autorized then we start that flow.
 -- no session is needed if we don't need to get an ID_token.
 if not is_authorized then
@@ -74,17 +73,6 @@ if not is_authorized then
 
     if ngx.var.cookie_ADRUM and ngx.var.cookie_ADRUM ~= session.data.ADRUM then
         session.data.ADRUM = ngx.var.cookie_ADRUM
-    end
-
-    -- syncing cookie from request
-    if ngx.var.cookie_ID_token then
-        local json, err = require("resty.openidc").jwt_verify(ngx.var.cookie_ID_token, opts)
-        -- manually setting access_token_expiration so that an old token get expired
-        if json then
-            session.data.access_token_expiration = json.exp
-        else
-            session.data.access_token_expiration = 0
-        end
     end
 
     local unauth_action
