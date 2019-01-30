@@ -13,8 +13,6 @@ class AppConfigResolver extends Component {
     children: PropTypes.node.isRequired,
     fetchNavAnsatt: PropTypes.func.isRequired,
     fetchLanguageFile: PropTypes.func.isRequired,
-    fetchRettskilde: PropTypes.func.isRequired,
-    fetchSystemrutine: PropTypes.func.isRequired,
     fetchBehandlendeEnheter: PropTypes.func.isRequired,
     fetchKodeverk: PropTypes.func.isRequired,
     fetchShowDetailedErrorMessages: PropTypes.func.isRequired,
@@ -30,8 +28,6 @@ class AppConfigResolver extends Component {
     const {
       fetchNavAnsatt,
       fetchLanguageFile,
-      fetchRettskilde,
-      fetchSystemrutine,
       fetchBehandlendeEnheter,
       fetchKodeverk,
       fetchShowDetailedErrorMessages,
@@ -40,8 +36,6 @@ class AppConfigResolver extends Component {
 
     fetchNavAnsatt();
     fetchLanguageFile();
-    fetchRettskilde();
-    fetchSystemrutine();
     fetchBehandlendeEnheter();
     fetchKodeverk();
     fetchShowDetailedErrorMessages();
@@ -61,8 +55,6 @@ const mapStateToProps = (state) => {
   const blockers = [
     fpsakApi.NAV_ANSATT.getRestApiFinished()(state),
     fpsakApi.LANGUAGE_FILE.getRestApiFinished()(state),
-    fpsakApi.RETTSKILDE_URL.getRestApiFinished()(state),
-    fpsakApi.SYSTEMRUTINE_URL.getRestApiFinished()(state),
     fpsakApi.KODEVERK.getRestApiFinished()(state),
     fpsakApi.FEATURE_TOGGLE.getRestApiFinished()(state),
     fpsakApi.SHOW_DETAILED_ERROR_MESSAGES.getRestApiFinished()(state),
@@ -75,8 +67,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => bindActionCreators({
   fetchNavAnsatt: fpsakApi.NAV_ANSATT.makeRestApiRequest(),
   fetchLanguageFile: fpsakApi.LANGUAGE_FILE.makeRestApiRequest(),
-  fetchRettskilde: fpsakApi.RETTSKILDE_URL.makeRestApiRequest(),
-  fetchSystemrutine: fpsakApi.SYSTEMRUTINE_URL.makeRestApiRequest(),
   fetchBehandlendeEnheter: fpsakApi.BEHANDLENDE_ENHETER.makeRestApiRequest(),
   fetchKodeverk: fpsakApi.KODEVERK.makeRestApiRequest(),
   fetchFeatureToggles: fetchAllFeatureToggles,

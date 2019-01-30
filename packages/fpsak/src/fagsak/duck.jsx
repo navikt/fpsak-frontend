@@ -58,8 +58,6 @@ export const setSelectedSaksnummer = saksnummer => ({
 export const doNotResetWhitelist = [
   FpsakApiKeys.NAV_ANSATT,
   FpsakApiKeys.LANGUAGE_FILE,
-  FpsakApiKeys.RETTSKILDE_URL,
-  FpsakApiKeys.SYSTEMRUTINE_URL,
   FpsakApiKeys.BEHANDLENDE_ENHETER,
   FpsakApiKeys.KODEVERK,
   FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES,
