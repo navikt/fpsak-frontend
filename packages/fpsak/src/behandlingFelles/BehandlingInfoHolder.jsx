@@ -21,7 +21,7 @@ class BehandlingInfoHolder {
 
     totrinnskontrollArsakerUtenUdefinert;
 
-    withTotrinnskontrollArsakerReadOnly;
+    totrinnskontrollArsakerReadOnly;
 
     totrinnskontrollArsaker;
 
