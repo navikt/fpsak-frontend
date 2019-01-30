@@ -7,7 +7,7 @@ import moment from 'moment';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Fieldset } from 'nav-frontend-skjema';
 
-import { VerticalSpacer, BorderBox } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, BorderBox, ArrowBox } from '@fpsak-frontend/shared-components';
 import {
   DatepickerField, InputField, NavFieldGroup, RadioGroupField, RadioOption,
 } from '@fpsak-frontend/form';
@@ -48,52 +48,52 @@ export const TerminFodselDatoPanelImpl = ({
           </RadioGroupField>
           {erBarnetFodt === false
           && (
-          <div className={styles.arrowLineTermin}>
-            <div className={styles.row}>
-              <div className={styles.col}>
+            <ArrowBox alignOffset={55}>
+              <div className={styles.row}>
+                <div className={styles.col}>
+                  <DatepickerField
+                    name="termindato"
+                    label={{ id: 'Registrering.Termindato' }}
+                    readOnly={readOnly}
+                  />
+                </div>
+                <div className={styles.col}>
+                  <InputField
+                    name="antallBarnFraTerminbekreftelse"
+                    label={{ id: 'Registrering.AntallBarn' }}
+                    bredde="XS"
+                    readOnly={readOnly}
+                  />
+                </div>
+              </div>
+              <div className={styles.skjemaelement}>
                 <DatepickerField
-                  name="termindato"
-                  label={{ id: 'Registrering.Termindato' }}
+                  name="terminbekreftelseDato"
+                  label={{ id: 'Registrering.UtstedtDato' }}
                   readOnly={readOnly}
                 />
               </div>
-              <div className={styles.col}>
-                <InputField
-                  name="antallBarnFraTerminbekreftelse"
-                  label={{ id: 'Registrering.AntallBarn' }}
-                  bredde="XS"
-                  readOnly={readOnly}
-                />
-              </div>
-            </div>
-            <div className={styles.skjemaelement}>
-              <DatepickerField
-                name="terminbekreftelseDato"
-                label={{ id: 'Registrering.UtstedtDato' }}
-                readOnly={readOnly}
-              />
-            </div>
-          </div>
+            </ArrowBox>
           )
           }
           { erBarnetFodt
           && (
-          <div className={styles.arrowLineFodsel}>
-            <DatepickerField
-              name="foedselsDato"
-              label={{ id: 'Registrering.Fodselsdato' }}
+            <ArrowBox alignOffset={0}>
+              <DatepickerField
+                name="foedselsDato"
+                label={{ id: 'Registrering.Fodselsdato' }}
               /* foedselsDato is array in DTO data model, so we transform the value to/from the store/input */
-              format={valueFromStore => (valueFromStore && valueFromStore.length ? valueFromStore[0] : valueFromStore)}
-              parse={valueFromInput => (valueFromInput ? [valueFromInput] : valueFromInput)}
-              readOnly={readOnly}
-            />
-            <InputField
-              name="antallBarn"
-              label={{ id: 'Registrering.AntallBarn' }}
-              bredde="XS"
-              readOnly={readOnly}
-            />
-          </div>
+                format={valueFromStore => (valueFromStore && valueFromStore.length ? valueFromStore[0] : valueFromStore)}
+                parse={valueFromInput => (valueFromInput ? [valueFromInput] : valueFromInput)}
+                readOnly={readOnly}
+              />
+              <InputField
+                name="antallBarn"
+                label={{ id: 'Registrering.AntallBarn' }}
+                bredde="XS"
+                readOnly={readOnly}
+              />
+            </ArrowBox>
           )
           }
         </Fieldset>

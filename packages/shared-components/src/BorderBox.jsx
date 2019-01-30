@@ -17,7 +17,7 @@ const BorderBox = ({
   error,
   className,
   children,
-}) => <div className={classNames('default', { error }, className)}>{children}</div>;
+}) => <div className={classNames('borderbox', { error }, className)}>{children}</div>;
 
 BorderBox.propTypes = {
   error: PropTypes.bool,
