@@ -9,7 +9,6 @@ import { Row, Column } from 'nav-frontend-grid';
 
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { medholdIKlage } from '../VedtakHelper';
 
 import styles from '../vedtakForm.less';
@@ -35,14 +34,14 @@ const getBrevKode = (klageVurdering, klageVurdertAvKa) => {
   }
 };
 
-const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback, klageVurdering, aksjonspunktCode) => (e) => {
-  const klageVurdertAv = aksjonspunktCode === aksjonspunktCodes.BEHANDLE_KLAGE_NK ? 'NK' : 'NFP';
+const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback, klageResultat) => (e) => {
+  const klageVurdertAvNK = klageResultat.klageVurdertAv === 'NK';
   const data = {
     fritekst: begrunnelse || '',
     mottaker: '',
-    brevmalkode: getBrevKode(klageVurdering, klageVurdertAv === 'NK'),
-    klageVurdertAv,
-    erOpphevet: klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK,
+    brevmalkode: getBrevKode(klageResultat.klageVurdering, klageVurdertAvNK),
+    klageVurdertAv: klageVurdertAvNK,
+    erOpphevet: klageResultat.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK,
   };
   if (formProps.valid || formProps.pristine) {
     previewVedtakCallback(data);
@@ -57,12 +56,11 @@ export const VedtakKlageSubmitPanelImpl = ({
   behandlingPaaVent,
   previewVedtakCallback,
   begrunnelse,
-  klageVurdering,
-  aksjonspunktCode,
+  klageResultat,
   formProps,
   readOnly,
 }) => {
-  const previewBrev = getPreviewCallback(formProps, begrunnelse, previewVedtakCallback, klageVurdering, aksjonspunktCode);
+  const previewBrev = getPreviewCallback(formProps, begrunnelse, previewVedtakCallback, klageResultat);
 
   return (
     <Row>
@@ -98,16 +96,14 @@ VedtakKlageSubmitPanelImpl.propTypes = {
   previewVedtakCallback: PropTypes.func.isRequired,
   behandlingPaaVent: PropTypes.bool.isRequired,
   begrunnelse: PropTypes.string,
-  klageVurdering: PropTypes.string,
-  aksjonspunktCode: PropTypes.string,
+  klageResultat: PropTypes.shape(),
   readOnly: PropTypes.bool.isRequired,
   formProps: PropTypes.shape().isRequired,
 };
 
 VedtakKlageSubmitPanelImpl.defaultProps = {
   begrunnelse: undefined,
-  klageVurdering: undefined,
-  aksjonspunktCode: undefined,
+  klageResultat: undefined,
 };
 
 

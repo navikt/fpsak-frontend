@@ -40,8 +40,7 @@ describe('<VedtakKlageForm>', () => {
       behandlingsresultat={br}
       previewVedtakCallback={forhandsvisVedtaksbrevFunc}
       aksjonspunktKoder={[]}
-      klageVurdering=""
-      aksjonspunktKode=""
+      klageVurdering={{}}
       isBehandlingReadOnly
     />);
     expect(wrapper.find(Undertekst).at(1).childAt(0).text()).equal('Årsak til avvisning');
