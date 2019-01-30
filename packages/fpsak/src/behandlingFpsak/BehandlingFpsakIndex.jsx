@@ -7,8 +7,9 @@ import { destroy } from 'redux-form';
 import { getHasSubmittedPaVentForm } from 'behandlingmenu/duck';
 import BehandlingGrid from 'behandlingFelles/components/BehandlingGrid';
 import BehandlingErPaVentModal from 'behandlingFelles/components/BehandlingErPaVentModal';
-import BehandlingerInfoSetter from './BehandlingerInfoSetter';
-import BehandlingResolver from './BehandlingResolver';
+import sakOperations from 'behandlingFelles/SakOperations';
+import FpSakBehandlingInfoSetter from './FpSakBehandlingInfoSetter';
+import FpSakBehandlingResolver from './FpSakBehandlingResolver';
 import BehandlingsprosessIndex from './behandlingsprosess/BehandlingsprosessIndex';
 import FaktaIndex from './fakta/FaktaIndex';
 import {
@@ -20,7 +21,7 @@ import {
   getHasShownBehandlingPaVent, resetBehandlingFpsakContext,
 } from './duck';
 import { getBehandlingFormPrefix } from './behandlingForm';
-import behandlingUpdaterFpsak from './BehandlingUpdaterFpsak';
+import fpSakBehandlingUpdater from './FpSakBehandlingUpdater';
 
 /**
  * BehandlingFpsakIndex
@@ -37,13 +38,14 @@ export class BehandlingFpsakIndex extends Component {
     this.cleanUp = this.cleanUp.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const {
-      setBehandlingInfo: setInfo, saksnummer, behandlingId, behandlingUpdater,
+      setBehandlingInfo: setInfo, saksnummer, behandlingId, behandlingUpdater, updateFagsakInfo,
     } = this.props;
     setInfo({ behandlingId, fagsakSaksnummer: saksnummer });
 
-    behandlingUpdater.setUpdater(behandlingUpdaterFpsak);
+    behandlingUpdater.setUpdater(fpSakBehandlingUpdater);
+    sakOperations.withUpdateFagsakInfo(updateFagsakInfo);
   }
 
   componentDidUpdate(prevProps) {
@@ -53,7 +55,8 @@ export class BehandlingFpsakIndex extends Component {
   }
 
   componentWillUnmount() {
-    const { behandlingId, behandlingVersjon } = this.props;
+    const { behandlingId, behandlingVersjon, resetBehandlingFpsakContext: resetBehandling } = this.props;
+    resetBehandling();
     this.cleanUp(behandlingId, behandlingVersjon);
   }
 
@@ -63,8 +66,7 @@ export class BehandlingFpsakIndex extends Component {
   }
 
   cleanUp(behandlingId, behandlingVersjon) {
-    const { destroyReduxForms: destroyForms, resetBehandlingFpsakContext: resetBehandling } = this.props;
-    resetBehandling();
+    const { destroyReduxForms: destroyForms } = this.props;
     const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
     setTimeout(() => destroyForms(behandlingFormPrefix), 1000); // Delay destruction to after potentially expensive transition
   }
@@ -84,8 +86,8 @@ export class BehandlingFpsakIndex extends Component {
       setBehandlingInfoHolder,
     } = this.props;
     return (
-      <BehandlingResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
-        <BehandlingerInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
+      <FpSakBehandlingResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
+        <FpSakBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
         <BehandlingGrid
           behandlingsprosessContent={<BehandlingsprosessIndex />}
           faktaContent={<FaktaIndex />}
@@ -103,7 +105,7 @@ export class BehandlingFpsakIndex extends Component {
           />
           )
         }
-      </BehandlingResolver>
+      </FpSakBehandlingResolver>
     );
   }
 }
@@ -126,6 +128,7 @@ BehandlingFpsakIndex.propTypes = {
   behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   behandlingUpdater: PropTypes.shape().isRequired,
   resetBehandlingFpsakContext: PropTypes.func.isRequired,
+  updateFagsakInfo: PropTypes.func.isRequired,
 };
 
 BehandlingFpsakIndex.defaultProps = {
@@ -135,9 +138,9 @@ BehandlingFpsakIndex.defaultProps = {
   venteArsakKode: undefined,
 };
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
-  behandlingVersjon: getBehandlingVersjon(state) || ownProps.behandlingVersjon,
+  behandlingVersjon: getBehandlingVersjon(state),
   fristBehandlingPaaVent: getBehandlingOnHoldDate(state),
   behandlingPaaVent: getBehandlingIsOnHold(state),
   venteArsakKode: getBehandlingVenteArsakKode(state),

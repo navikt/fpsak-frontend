@@ -16,7 +16,7 @@ import { getBehandlingsresultatFraOriginalBehandling, getResultatstrukturFraOrig
 
 
 // TODO (TOR) Midlertidig komponent. Ikkje legg meir her!! Komponentane utanfor behandlingskonteksten skal sjølv ha ansvar for å henta data
-export class BehandlingerInfoSetter extends Component {
+export class FpSakBehandlingInfoSetter extends Component {
   setBehandlingInfo = () => {
     const {
       setBehandlingInfoHolder, isKontrollerRevurderingApOpen, behandlingSprak, behandlingVersjon, brevMaler, brevMottakere, aksjonspunkter,
@@ -75,7 +75,7 @@ export class BehandlingerInfoSetter extends Component {
   render =() => null
 }
 
-BehandlingerInfoSetter.propTypes = {
+FpSakBehandlingInfoSetter.propTypes = {
   isKontrollerRevurderingApOpen: PropTypes.bool.isRequired,
   setBehandlingInfoHolder: PropTypes.func.isRequired,
   behandlingSprak: PropTypes.shape(),
@@ -115,7 +115,7 @@ BehandlingerInfoSetter.propTypes = {
   resultatstrukturFraOriginalBehandling: PropTypes.shape(),
 };
 
-BehandlingerInfoSetter.defaultProps = {
+FpSakBehandlingInfoSetter.defaultProps = {
   behandlingSprak: undefined,
   behandlingVersjon: undefined,
   aksjonspunkter: [],
@@ -173,4 +173,4 @@ const mapStateToProps = state => ({
   resultatstrukturFraOriginalBehandling: getResultatstrukturFraOriginalBehandling(state),
 });
 
-export default connect(mapStateToProps)(BehandlingerInfoSetter);
+export default connect(mapStateToProps)(FpSakBehandlingInfoSetter);

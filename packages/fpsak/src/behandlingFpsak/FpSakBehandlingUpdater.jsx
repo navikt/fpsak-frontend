@@ -1,7 +1,7 @@
 import fpsakBehandlingApi from './data/fpsakBehandlingApi';
 import { updateBehandling, resetBehandling } from './duck';
 
-class BehandlingUpdaterFpsak {
+class FpSakBehandlingUpdater {
     changeBehandlendeEnhet = () => fpsakBehandlingApi.NY_BEHANDLENDE_ENHET.makeRestApiRequest();
 
     updateBehandling = () => updateBehandling;
@@ -27,4 +27,4 @@ class BehandlingUpdaterFpsak {
     isSubmitMessageFinished = fpsakBehandlingApi.SUBMIT_MESSAGE.getRestApiFinished();
 }
 
-export default new BehandlingUpdaterFpsak();
+export default new FpSakBehandlingUpdater();

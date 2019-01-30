@@ -10,6 +10,7 @@ const reducerName = 'behandling';
 const actionType = name => `${reducerName}/${name}`;
 const SET_BEHANDLING_ID = actionType('SET_BEHANDLING_ID');
 const SET_BEHANDLING_INFO_HOLDER = actionType('SET_BEHANDLING_INFO_HOLDER');
+const RESET_BEHANDLING_CONTEXT = actionType('RESET_BEHANDLING_CONTEXT');
 
 export const setSelectedBehandlingId = behandlingId => ({
   type: SET_BEHANDLING_ID,
@@ -19,6 +20,10 @@ export const setSelectedBehandlingId = behandlingId => ({
 export const setBehandlingInfoHolder = behandlingInfoHolder => ({
   type: SET_BEHANDLING_INFO_HOLDER,
   data: behandlingInfoHolder,
+});
+
+export const resetBehandlingContext = () => ({
+  type: RESET_BEHANDLING_CONTEXT,
 });
 
 /* Reducer */
@@ -39,6 +44,8 @@ export const behandlingReducer = (state = initialState, action = {}) => { // NOS
         ...state,
         behandlingInfoHolder: action.data,
       };
+    case RESET_BEHANDLING_CONTEXT:
+      return initialState;
     default:
       return state;
   }

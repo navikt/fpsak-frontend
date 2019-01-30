@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import { updateFagsakInfo } from 'fagsak/duck';
+import sakOperations from 'behandlingFelles/SakOperations';
 import papirsoknadApi, { PapirsoknadApiKeys } from './data/papirsoknadApi';
 import reducerRegistry from '../ReducerRegistry';
 
@@ -43,7 +43,7 @@ export const updateBehandling = (
 ) => dispatch => dispatch(papirsoknadApi.BEHANDLING.makeRestApiRequest()(behandlingIdentifier.toJson(), { keepData: true }))
   .then((response) => {
     if (behandlingerVersjonMappedById && behandlingerVersjonMappedById[response.payload.id] !== response.payload.versjon) {
-      dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer));
+      dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer));
     }
     return Promise.resolve(response);
   });
@@ -57,7 +57,7 @@ export const fetchBehandling = (behandlingIdentifier, allBehandlinger) => (dispa
   dispatch(updateBehandling(behandlingIdentifier, allBehandlinger));
 };
 
-const updateFagsakAndBehandling = behandlingIdentifier => dispatch => dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer))
+const updateFagsakAndBehandling = behandlingIdentifier => dispatch => dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer))
   .then(() => dispatch(updateBehandling(behandlingIdentifier)));
 
 export const updateOnHold = (params, behandlingIdentifier) => dispatch => dispatch(papirsoknadApi.UPDATE_ON_HOLD.makeRestApiRequest()(params))

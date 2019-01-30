@@ -14,7 +14,7 @@ import {
 
 
 // TODO (TOR) Midlertidig komponent. Ikkje legg meir her!! Komponentane utanfor behandlingskonteksten skal sjølv ha ansvar for å henta data
-export class BehandlingerInfoSetter extends Component {
+export class PapirsoknadInfoSetter extends Component {
   setBehandlingInfo = () => {
     const {
       setBehandlingInfoHolder, behandlingSprak, behandlingVersjon, brevMaler, brevMottakere, aksjonspunkter,
@@ -59,7 +59,7 @@ export class BehandlingerInfoSetter extends Component {
   render =() => null
 }
 
-BehandlingerInfoSetter.propTypes = {
+PapirsoknadInfoSetter.propTypes = {
   setBehandlingInfoHolder: PropTypes.func.isRequired,
   behandlingSprak: PropTypes.shape(),
   behandlingVersjon: PropTypes.number,
@@ -86,7 +86,7 @@ BehandlingerInfoSetter.propTypes = {
   soknad: PropTypes.shape(),
 };
 
-BehandlingerInfoSetter.defaultProps = {
+PapirsoknadInfoSetter.defaultProps = {
   behandlingSprak: undefined,
   behandlingVersjon: undefined,
   aksjonspunkter: [],
@@ -122,4 +122,4 @@ const mapStateToProps = state => ({
   soknad: getSoknad(state),
 });
 
-export default connect(mapStateToProps)(BehandlingerInfoSetter);
+export default connect(mapStateToProps)(PapirsoknadInfoSetter);

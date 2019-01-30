@@ -4,10 +4,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { destroy } from 'redux-form';
 
+import sakOperations from 'behandlingFelles/SakOperations';
 import { getHasSubmittedPaVentForm } from 'behandlingmenu/duck';
 import BehandlingGrid from 'behandlingFelles/components/BehandlingGrid';
 import BehandlingErPaVentModal from 'behandlingFelles/components/BehandlingErPaVentModal';
-import BehandlingerInfoSetter from './BehandlingerInfoSetter';
+import PapirsoknadInfoSetter from './PapirsoknadInfoSetter';
 import PapirsoknadResolver from './PapirsoknadResolver';
 import PapirsoknadIndex from './PapirsoknadIndex';
 import {
@@ -36,13 +37,14 @@ export class BehandlingPapirsoknadIndex extends Component {
     this.cleanUp = this.cleanUp.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const {
-      setBehandlingInfo: setInfo, saksnummer, behandlingId, behandlingUpdater,
+      setBehandlingInfo: setInfo, saksnummer, behandlingId, behandlingUpdater, updateFagsakInfo,
     } = this.props;
     setInfo({ behandlingId, fagsakSaksnummer: saksnummer });
 
     behandlingUpdater.setUpdater(papirsoknadUpdater);
+    sakOperations.withUpdateFagsakInfo(updateFagsakInfo);
   }
 
   componentDidUpdate(prevProps) {
@@ -52,7 +54,8 @@ export class BehandlingPapirsoknadIndex extends Component {
   }
 
   componentWillUnmount() {
-    const { behandlingId, behandlingVersjon } = this.props;
+    const { behandlingId, behandlingVersjon, resetPapirsoknadContext: resetPapirsoknad } = this.props;
+    resetPapirsoknad();
     this.cleanUp(behandlingId, behandlingVersjon);
   }
 
@@ -62,8 +65,7 @@ export class BehandlingPapirsoknadIndex extends Component {
   }
 
   cleanUp(behandlingId, behandlingVersjon) {
-    const { destroyReduxForms: destroyForms, resetPapirsoknadContext: resetPapirsoknad } = this.props;
-    resetPapirsoknad();
+    const { destroyReduxForms: destroyForms } = this.props;
     const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
     setTimeout(() => destroyForms(behandlingFormPrefix), 1000); // Delay destruction to after potentially expensive transition
   }
@@ -84,7 +86,7 @@ export class BehandlingPapirsoknadIndex extends Component {
     } = this.props;
     return (
       <PapirsoknadResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
-        <BehandlingerInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
+        <PapirsoknadInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
         <BehandlingGrid papirsoknadContent={<PapirsoknadIndex />} />
         {!hasSubmittedPaVentForm
           && (
@@ -122,6 +124,7 @@ BehandlingPapirsoknadIndex.propTypes = {
   behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   behandlingUpdater: PropTypes.shape().isRequired,
   resetPapirsoknadContext: PropTypes.func.isRequired,
+  updateFagsakInfo: PropTypes.func.isRequired,
 };
 
 BehandlingPapirsoknadIndex.defaultProps = {

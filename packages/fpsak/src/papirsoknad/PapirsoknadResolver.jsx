@@ -9,19 +9,26 @@ import { isBehandlingInSync } from './selectors/papirsoknadSelectors';
 import { fetchBehandling as fetchBehandlingActionCreator, getBehandlingIdentifier } from './duck';
 
 export class PapirsoknadResolver extends Component {
-  constructor(props) {
-    super(props);
-    this.resolveBehandlingInfo();
-  }
+   static propTypes = {
+     behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
+     fetchBehandling: PropTypes.func.isRequired,
+     behandlingerVersjonMappedById: PropTypes.shape().isRequired,
+     isInSync: PropTypes.bool.isRequired,
+     children: PropTypes.node.isRequired,
+   };
 
-  resolveBehandlingInfo = () => {
-    const {
-      isInSync, fetchBehandling, behandlingIdentifier, behandlingerVersjonMappedById,
-    } = this.props;
-    if (behandlingIdentifier && !isInSync) {
-      fetchBehandling(behandlingIdentifier, behandlingerVersjonMappedById);
-    }
-  }
+   static defaultProps = {
+     behandlingIdentifier: undefined,
+   };
+
+   componentDidUpdate() {
+     const {
+       isInSync, fetchBehandling, behandlingIdentifier, behandlingerVersjonMappedById,
+     } = this.props;
+     if (!isInSync && behandlingIdentifier) {
+       fetchBehandling(behandlingIdentifier, behandlingerVersjonMappedById);
+     }
+   }
 
   render = () => {
     const { isInSync, children } = this.props;
@@ -30,18 +37,6 @@ export class PapirsoknadResolver extends Component {
       : <LoadingPanel />;
   }
 }
-
-PapirsoknadResolver.propTypes = {
-  behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
-  fetchBehandling: PropTypes.func.isRequired,
-  behandlingerVersjonMappedById: PropTypes.shape().isRequired,
-  isInSync: PropTypes.bool.isRequired,
-  children: PropTypes.node.isRequired,
-};
-
-PapirsoknadResolver.defaultProps = {
-  behandlingIdentifier: undefined,
-};
 
 const mapStateToProps = state => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
