@@ -104,7 +104,7 @@ server {
 
     # Just slap frontend directly to the prefix
     location = / {
-        return 301 "${APP_PATH_PREFIX}/";
+        return 301 "${APP_PATH_PREFIX}";
     }
 
     # To make sure any assets can get through :)
