@@ -8,14 +8,11 @@ import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 import { Column, Row } from 'nav-frontend-grid';
+import { LINK_TIL_BESTE_BEREGNING_REGNEARK } from 'data/eksterneLenker';
 import BrukersAndelFieldArray from './BrukersAndelFieldArray';
-
 import styles from './kunYtelseBesteberegningPanel.less';
 
 export const besteberegningField = 'besteberegningField';
-
-const linkTilBesteberegningRegneark = 'https://navet.adeo.no/ansatt/Fag/Familie/Svangerskap%2C+fodsel%2C+adopsjon';
-
 
 /**
  * KunYtelseBesteberegningPanel
@@ -55,7 +52,7 @@ const KunYtelseBesteberegningImpl = ({
             <Column xs="3">
               <a
                 className={styles.navetLink}
-                href={linkTilBesteberegningRegneark}
+                href={LINK_TIL_BESTE_BEREGNING_REGNEARK}
                 target="_blank"
                 rel="noopener noreferrer"
               >

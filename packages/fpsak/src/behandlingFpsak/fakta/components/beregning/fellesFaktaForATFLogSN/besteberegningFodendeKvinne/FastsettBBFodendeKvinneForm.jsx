@@ -18,6 +18,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverk } from 'kodeverk/duck';
 
+import { LINK_TIL_REGNEARK } from 'data/eksterneLenker';
 import styles from './fastsettBBFodendeKvinneForm.less';
 
 export const createInputFieldKeyForAndel = andel => `Inputfield_${andel.aktivitetStatus.kode}_${andel.andelsnr}`;
@@ -104,8 +105,6 @@ const createTableRows = (besteberegningAndeler, readOnly, isAksjonspunktClosed, 
   return rows;
 };
 
-const linkTilRegneark = 'https://navet.adeo.no/ansatt/Fag/Familie/Svangerskap%2C+fodsel%2C+adopsjon';
-
 /**
  * FastsettBBFodendeKvinneForm
  *
@@ -135,7 +134,7 @@ const FastsettBBFodendeKvinneForm = ({
         <Column xs="3">
           <a
             className={styles.navetLink}
-            href={linkTilRegneark}
+            href={LINK_TIL_REGNEARK}
             target="_blank"
             rel="noopener noreferrer"
           >

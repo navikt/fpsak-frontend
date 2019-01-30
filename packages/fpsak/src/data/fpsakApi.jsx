@@ -8,8 +8,6 @@ import reducerRegistry from '../ReducerRegistry';
 
 export const FpsakApiKeys = {
   LANGUAGE_FILE: 'LANGUAGE_FILE',
-  SYSTEMRUTINE_URL: 'SYSTEMRUTINE_URL',
-  RETTSKILDE_URL: 'RETTSKILDE_URL',
   KODEVERK: 'KODEVERK',
   AVSLAG_REASONS: 'AVSLAG_REASONS',
   NAV_ANSATT: 'NAV_ANSATT',
@@ -78,10 +76,6 @@ const endpoints = new RestApiConfigBuilder()
 
   /* /api/dokumentbestiller */
   .withPostAndOpenBlob('fpsak/api/dokumentbestiller/forhandsvis-vedtaksbrev', FpsakApiKeys.FORHANDSVISNING_FORVED_BREV)
-
-  /* /api/konfig */
-  .withGet('fpsak/api/konfig/systemrutine', FpsakApiKeys.SYSTEMRUTINE_URL)
-  .withGet('fpsak/api/konfig/rettskilde', FpsakApiKeys.RETTSKILDE_URL)
 
   /* /api/kodeverk */
   .withGet('fpsak/api/kodeverk', FpsakApiKeys.KODEVERK)

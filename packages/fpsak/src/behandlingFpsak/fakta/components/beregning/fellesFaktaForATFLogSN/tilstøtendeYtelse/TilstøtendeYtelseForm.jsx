@@ -14,12 +14,11 @@ import {
 } from 'behandlingFpsak/behandlingSelectors';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { VerticalSpacer, BorderBox, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { LINK_TIL_BESTE_BEREGNING_REGNEARK } from 'data/eksterneLenker';
 import YtelsePanel from './YtelsePanel';
 import FordelingAvBruttoBeregningsgrunnlagPanel, { fordelingAvBruttoBGFieldArrayName } from './FordelingAvBruttoBeregningsgrunnlagPanel';
 import styles from './tilstøtendeYtelseForm.less';
 
-
-const linkTilBesteberegningRegneark = 'https://navet.adeo.no/ansatt/Fag/Familie/Svangerskap%2C+fodsel%2C+adopsjon';
 
 export const lagHelpTextsTilstotendeYtelse = (tilstotendeYtelse, notBesteberegningHeader) => {
   if (tilstotendeYtelse.erBesteberegning) {
@@ -83,7 +82,7 @@ export const TilstotendeYtelseFormImpl = ({
         <Column xs="3">
           <a
             className={styles.navetLink}
-            href={linkTilBesteberegningRegneark}
+            href={LINK_TIL_BESTE_BEREGNING_REGNEARK}
             target="_blank"
             rel="noopener noreferrer"
           >

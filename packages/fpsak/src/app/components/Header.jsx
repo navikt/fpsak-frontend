@@ -5,20 +5,17 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 
 import {
-  Image, FlexContainer, FlexRow, FlexColumn,
+  FlexColumn, FlexContainer, FlexRow, Image,
 } from '@fpsak-frontend/shared-components';
 
 import logoUrl from '@fpsak-frontend/assets/images/nav.svg';
 import navAnsattIkonUrl from '@fpsak-frontend/assets/images/nav_ansatt.svg';
 import rettskildeneIkonUrl from '@fpsak-frontend/assets/images/rettskildene.svg';
 import systemrutineIkonUrl from '@fpsak-frontend/assets/images/rutine.svg';
+import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from 'data/eksterneLenker';
 
 import ErrorMessagePanel from './ErrorMessagePanel';
-
 import styles from './header.less';
-
-/* eslint-disable max-len */
-const SYSTEMRUTINE_URL = 'https://navet.adeo.no/ansatt/Fag/Familie/Svangerskap%2C+fodsel%2C+adopsjon/Saksbehandlingsl%C3%B8sning+for+engangsst%C3%B8nad+og+foreldrepenger/rutiner-saksbehandlingsl%C3%B8sningen-for-foreldrepenger';
 
 /**
  * Header
@@ -30,7 +27,6 @@ const SYSTEMRUTINE_URL = 'https://navet.adeo.no/ansatt/Fag/Familie/Svangerskap%2
 const Header = ({
   navAnsattName,
   removeErrorMessage,
-  rettskildeUrl,
   queryStrings,
 }) => (
   <header className={styles.container}>
@@ -65,8 +61,8 @@ const Header = ({
               <Image
                 className={styles.headerIkon}
                 src={rettskildeneIkonUrl}
-                onMouseDown={() => window.open(rettskildeUrl, '_blank')}
-                onKeyDown={() => window.open(rettskildeUrl, '_blank')}
+                onMouseDown={() => window.open(RETTSKILDE_URL, '_blank')}
+                onKeyDown={() => window.open(RETTSKILDE_URL, '_blank')}
                 altCode="Header.Rettskilde"
                 titleCode="Header.Rettskilde"
                 tabIndex="0"
@@ -92,7 +88,6 @@ const Header = ({
 Header.propTypes = {
   queryStrings: PropTypes.shape().isRequired,
   navAnsattName: PropTypes.string.isRequired,
-  rettskildeUrl: PropTypes.string.isRequired,
   removeErrorMessage: PropTypes.func.isRequired,
 };
 
