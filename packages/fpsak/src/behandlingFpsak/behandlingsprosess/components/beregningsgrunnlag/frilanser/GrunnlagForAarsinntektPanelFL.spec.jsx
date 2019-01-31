@@ -19,7 +19,7 @@ const periode = {
     },
   ],
 };
-const aksjonspunkt = {
+const aktiveAksjonspunkter = [{
   id: 55,
   erAktivt: true,
   definisjon: {
@@ -34,7 +34,24 @@ const aksjonspunkt = {
   begrunnelse: '',
   vilkarType: null,
   kanLoses: true,
-};
+}];
+const lukkedeAksjonspunkter = [{
+  id: 55,
+  erAktivt: false,
+  definisjon: {
+    kode: '5038',
+    navn: 'Fastsett varig brutto beregning',
+  },
+  toTrinnsBehandling: false,
+  status: {
+    kode: 'UTFO',
+    navn: 'Utført',
+  },
+  begrunnelse: '',
+  vilkarType: null,
+  kanLoses: true,
+}];
+
 describe('<GrunnlagForAarsinntektPanelFL>', () => {
   it('skal teste at korrekt brutto vises for frilanser', () => {
     const wrapper = shallowWithIntl(<UnwrappedForm
@@ -43,21 +60,20 @@ describe('<GrunnlagForAarsinntektPanelFL>', () => {
       readOnly={false}
       alleAndeler={periode.beregningsgrunnlagPrStatusOgAndel}
       isAksjonspunktClosed
-      aksjonspunkt={aksjonspunkt}
+      aksjonspunkter={aktiveAksjonspunkter}
       isKombinasjonsstatus={false}
-
     />);
     const elements = wrapper.find('Element');
     expect(elements).to.have.length(1);
     expect(elements.at(0).children().text()).to.equal(formatCurrencyNoKr(200000));
   });
-
   it('skal teste at input felt ikke vises uten aksjonspunkt', () => {
     const wrapper = shallowWithIntl(<UnwrappedForm
       {...reduxFormPropsMock}
       intl={intlMock}
       readOnly={false}
       alleAndeler={periode.beregningsgrunnlagPrStatusOgAndel}
+      aksjonspunkter={[]}
       isAksjonspunktClosed
       isKombinasjonsstatus={false}
     />);
@@ -66,18 +82,32 @@ describe('<GrunnlagForAarsinntektPanelFL>', () => {
     expect(textarea).to.have.length(0);
     expect(inputfield).to.have.length(0);
   });
-
-  it('skal teste at input felt vises med aksjonspunkt', () => {
+  it('skal teste at input felt vises med aktivt aksjonspunkt', () => {
     const wrapper = shallowWithIntl(<UnwrappedForm
       {...reduxFormPropsMock}
       intl={intlMock}
       readOnly={false}
-      aksjonspunkt={aksjonspunkt}
+      aksjonspunkter={aktiveAksjonspunkter}
       alleAndeler={periode.beregningsgrunnlagPrStatusOgAndel}
       isAksjonspunktClosed={false}
       isKombinasjonsstatus={false}
     />);
     const inputfield = wrapper.find('InputField');
     expect(inputfield).to.have.length(1);
+    expect(inputfield.props().isEdited).to.have.equal(false);
+  });
+  it('skal teste at input felt vises med lukket aksjonspunkt', () => {
+    const wrapper = shallowWithIntl(<UnwrappedForm
+      {...reduxFormPropsMock}
+      intl={intlMock}
+      readOnly={false}
+      aksjonspunkter={lukkedeAksjonspunkter}
+      alleAndeler={periode.beregningsgrunnlagPrStatusOgAndel}
+      isAksjonspunktClosed
+      isKombinasjonsstatus={false}
+    />);
+    const inputfield = wrapper.find('InputField');
+    expect(inputfield).to.have.length(1);
+    expect(inputfield.props().isEdited).to.have.equal(true);
   });
 });

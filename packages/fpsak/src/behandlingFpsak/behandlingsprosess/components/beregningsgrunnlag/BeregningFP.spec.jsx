@@ -1,12 +1,15 @@
 import React from 'react';
-import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
+import { expect } from 'chai';
+import { FormattedMessage } from 'react-intl';
+import { shallow } from 'enzyme/build';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { BeregningFPImpl as UnwrappedForm } from './BeregningFP';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { BeregningFPImpl } from './BeregningFP';
 import BeregningTable from './beregningsresultatPanel/BeregningsresultatTable';
-import InntektsopplysningerPanel from './fellesPaneler/InntektsopplysningerPanel';
+import BeregningForm from './beregningForm/BeregningForm';
+import GraderingUtenBG from './gradering/GraderingUtenBG';
 
 const beregningsgrunnlag = {
   halvG: 30000,
@@ -22,72 +25,180 @@ const beregningsgrunnlag = {
     },
   }],
 };
-
 const vilkar = {
   vilkarStatus: {
     kode: vilkarUtfallType.OPPFYLT,
   },
 };
+const gjeldendeAksjonspunkter = [{
+  id: 55,
+  erAktivt: true,
+  definisjon: {
+    kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+    navn: 'Fastsett varig brutto beregning ATFL',
+  },
+  toTrinnsBehandling: false,
+  status: {
+    kode: 'OPPR',
+    navn: 'Opprettet',
+  },
+  begrunnelse: 'begrunnelse arbeidstaker/frilans',
+  vilkarType: null,
+  kanLoses: true,
+}];
+const relevanteStatuser = {
+  isArbeidstaker: true,
+  isKombinasjonsstatus: true,
+};
 
-const aksjonpukter = ['test'];
 describe('<BeregningFP>', () => {
-  it('skal teste at BeregningTable får korrekte props fra BeregningFP', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
-      apCodes={aksjonpukter}
+  it('skal teste at BeregningTable og BeregningForm får korrekte props fra BeregningFP', () => {
+    const wrapper = shallow(<BeregningFPImpl
       readOnly={false}
       submitCallback={sinon.spy}
-      beregnetAarsinntekt={100000}
       berGr={beregningsgrunnlag}
-      gjeldendeVilkar={vilkar}
-      relevanteStatuser={{}}
-      aktivitetStatusCodes={[]}
-      readOnlySubmitButton
-    />);
-    const beregning = wrapper.find(BeregningTable);
-    expect(beregning.props().halvGVerdi).to.have.equal(30000);
-    expect(beregning.props().ledetekstBrutto).to.have.equal('Brutto tekst');
-    expect(beregning.props().ledetekstAvkortet).to.have.equal('Avkortet tekst');
-    expect(beregning.props().ledetekstRedusert).to.have.equal('Redusert tekst');
-  });
-
-  it('skal teste at InntektsopplysningerPanel får korrekte props fra BeregningFP', () => {
-    const statuser = {
-      isArbeidstaker: true,
-    };
-
-    const wrapper = shallowWithIntl(<UnwrappedForm
-      apCodes={aksjonpukter}
-      readOnly={false}
-      submitCallback={sinon.spy}
       beregnetAarsinntekt={100000}
       sammenligningsgrunnlag={100000}
-      berGr={beregningsgrunnlag}
-      isVilkarVurdert
-      isArbeidstaker
-      relevanteStatuser={statuser}
-      aktivitetStatusCodes={[]}
+      beregnetAvvikPromille={50}
+      gjeldendeVilkar={vilkar}
+      gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+      relevanteStatuser={relevanteStatuser}
       readOnlySubmitButton
+      sokerHarGraderingPaaAndelUtenBG={false}
     />);
-    const inntektpanel = wrapper.find(InntektsopplysningerPanel);
-    expect(inntektpanel.props().beregnetAarsinntekt).to.have.equal(100000);
-    expect(inntektpanel.props().sammenligningsgrunnlag).to.have.equal(100000);
-    expect(inntektpanel.props().sammenligningsgrunnlagTekst).to.have.length(2);
+    const beregningTable = wrapper.find(BeregningTable);
+    expect(beregningTable.props().halvGVerdi).to.have.equal(30000);
+    expect(beregningTable.props().ledetekstBrutto).to.have.equal('Brutto tekst');
+    expect(beregningTable.props().ledetekstAvkortet).to.have.equal('Avkortet tekst');
+    expect(beregningTable.props().ledetekstRedusert).to.have.equal('Redusert tekst');
+    const beregningForm = wrapper.find(BeregningForm);
+    expect(beregningForm.props().readOnly).to.have.equal(false);
+    expect(beregningForm.props().beregnetAarsinntekt).to.have.equal(100000);
+    expect(beregningForm.props().sammenligningsgrunnlag).to.have.equal(100000);
+    expect(beregningForm.props().gjeldendeAksjonspunkter).to.have.equal(gjeldendeAksjonspunkter);
+    expect(beregningForm.props().relevanteStatuser).to.have.equal(relevanteStatuser);
+    expect(beregningForm.props().submitCallback).to.have.equal(sinon.spy);
+    expect(beregningForm.props().avvikProsent).to.equal(5);
   });
-
-  it('skal teste at avvikprosent ikke regnes ut ved avvikpromille null', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
-      apCodes={aksjonpukter}
+  it('skal teste at BeregningForm får korrekte props fra BeregningFP med beregnetAvvikPromille lik NULL', () => {
+    const wrapper = shallow(<BeregningFPImpl
       readOnly={false}
       submitCallback={sinon.spy}
-      beregnetAarsinntekt={100000}
       berGr={beregningsgrunnlag}
+      beregnetAarsinntekt={100000}
+      sammenligningsgrunnlag={100000}
+      beregnetAvvikPromille={null}
       gjeldendeVilkar={vilkar}
-      relevanteStatuser={{}}
-      avvikpromille={null}
-      aktivitetStatusCodes={[]}
+      gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+      relevanteStatuser={relevanteStatuser}
       readOnlySubmitButton
+      sokerHarGraderingPaaAndelUtenBG={false}
     />);
-    const inntektpanel = wrapper.find(InntektsopplysningerPanel);
-    expect(inntektpanel.props().avvik).to.have.equal(undefined);
+    const beregningForm = wrapper.find(BeregningForm);
+    expect(beregningForm.props().readOnly).to.have.equal(false);
+    expect(beregningForm.props().beregnetAarsinntekt).to.have.equal(100000);
+    expect(beregningForm.props().sammenligningsgrunnlag).to.have.equal(100000);
+    expect(beregningForm.props().gjeldendeAksjonspunkter).to.have.equal(gjeldendeAksjonspunkter);
+    expect(beregningForm.props().relevanteStatuser).to.have.equal(relevanteStatuser);
+    expect(beregningForm.props().submitCallback).to.have.equal(sinon.spy);
+    expect(beregningForm.props().avvikProsent).to.equal(undefined);
+  });
+  it('skal teste at BeregningForm får korrekte props fra BeregningFP med beregnetAvvikPromille lik undefined', () => {
+    const wrapper = shallow(<BeregningFPImpl
+      readOnly={false}
+      submitCallback={sinon.spy}
+      berGr={beregningsgrunnlag}
+      beregnetAarsinntekt={250000}
+      sammenligningsgrunnlag={250000}
+      beregnetAvvikPromille={undefined}
+      gjeldendeVilkar={vilkar}
+      gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+      relevanteStatuser={relevanteStatuser}
+      readOnlySubmitButton
+      sokerHarGraderingPaaAndelUtenBG={false}
+    />);
+    const beregningForm = wrapper.find(BeregningForm);
+    expect(beregningForm.props().readOnly).to.have.equal(false);
+    expect(beregningForm.props().beregnetAarsinntekt).to.have.equal(250000);
+    expect(beregningForm.props().sammenligningsgrunnlag).to.have.equal(250000);
+    expect(beregningForm.props().gjeldendeAksjonspunkter).to.have.equal(gjeldendeAksjonspunkter);
+    expect(beregningForm.props().relevanteStatuser).to.have.equal(relevanteStatuser);
+    expect(beregningForm.props().submitCallback).to.have.equal(sinon.spy);
+    expect(beregningForm.props().avvikProsent).to.equal(undefined);
+  });
+  it('skal teste visning av komponenter når beregningsgrunnlag er lik null', () => {
+    const wrapper = shallow(<BeregningFPImpl
+      readOnly={false}
+      submitCallback={sinon.spy}
+      berGr={undefined}
+      beregnetAarsinntekt={250000}
+      sammenligningsgrunnlag={250000}
+      beregnetAvvikPromille={undefined}
+      gjeldendeVilkar={vilkar}
+      gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+      relevanteStatuser={relevanteStatuser}
+      readOnlySubmitButton
+      sokerHarGraderingPaaAndelUtenBG={false}
+    />);
+    const beregningForm = wrapper.find(BeregningForm);
+    expect(beregningForm).to.be.lengthOf(0);
+    const messages = wrapper.find(FormattedMessage);
+    expect(messages).to.be.lengthOf(3);
+    expect(messages.get(0).props.id).to.equal('Beregningsgrunnlag.Title');
+    expect(messages.get(1).props.id).to.equal('Beregningsgrunnlag.HarIkkeBeregningsregler');
+    expect(messages.get(2).props.id).to.equal('Beregningsgrunnlag.SakTilInfo');
+  });
+  it('skal teste visning av komponenter når beregningsgrunnlag ikke er null', () => {
+    const wrapper = shallow(<BeregningFPImpl
+      readOnly={false}
+      submitCallback={sinon.spy}
+      berGr={beregningsgrunnlag}
+      beregnetAarsinntekt={250000}
+      sammenligningsgrunnlag={250000}
+      beregnetAvvikPromille={undefined}
+      gjeldendeVilkar={vilkar}
+      gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+      relevanteStatuser={relevanteStatuser}
+      readOnlySubmitButton
+      sokerHarGraderingPaaAndelUtenBG={false}
+    />);
+    const beregningForm = wrapper.find(BeregningForm);
+    expect(beregningForm).to.be.lengthOf(1);
+    const messages = wrapper.find(FormattedMessage);
+    expect(messages).to.be.lengthOf(0);
+  });
+  it('skal teste at GraderingUtenBG vises når sokerHarGraderingPaaAndelUtenBG er true', () => {
+    const wrapper = shallow(<BeregningFPImpl
+      readOnly={false}
+      submitCallback={sinon.spy}
+      berGr={beregningsgrunnlag}
+      beregnetAarsinntekt={250000}
+      sammenligningsgrunnlag={250000}
+      beregnetAvvikPromille={undefined}
+      gjeldendeVilkar={vilkar}
+      gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+      relevanteStatuser={relevanteStatuser}
+      readOnlySubmitButton
+      sokerHarGraderingPaaAndelUtenBG
+    />);
+    const graderingUtenBG = wrapper.find(GraderingUtenBG);
+    expect(graderingUtenBG).to.be.lengthOf(1);
+  });
+  it('skal teste at GraderingUtenBG vises når sokerHarGraderingPaaAndelUtenBG er false', () => {
+    const wrapper = shallow(<BeregningFPImpl
+      readOnly={false}
+      submitCallback={sinon.spy}
+      berGr={beregningsgrunnlag}
+      beregnetAarsinntekt={250000}
+      sammenligningsgrunnlag={250000}
+      beregnetAvvikPromille={undefined}
+      gjeldendeVilkar={vilkar}
+      gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+      relevanteStatuser={relevanteStatuser}
+      readOnlySubmitButton
+      sokerHarGraderingPaaAndelUtenBG={false}
+    />);
+    const graderingUtenBG = wrapper.find(GraderingUtenBG);
+    expect(graderingUtenBG).to.be.lengthOf(0);
   });
 });

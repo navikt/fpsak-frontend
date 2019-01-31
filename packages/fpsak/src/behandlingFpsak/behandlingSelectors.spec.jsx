@@ -12,7 +12,7 @@ import {
   isBehandlingInInnhentSoknadsopplysningerSteg, isKontrollerRevurderingAksjonspunkOpen, hasBehandlingManualPaVent,
   getAktivitetStatuser, getAlleAndelerIForstePeriode, isBehandlingRevurderingFortsattMedlemskap, getBehandlingLanguageCode,
   getBehandlingVilkarCodes, isBehandlingStatusReadOnly, getEditedStatus, getAllMerknaderFraBeslutter, getMerknaderFraBeslutter,
-  getAntallDodfodteBarn,
+  getAntallDodfodteBarn, getGjeldendeBeregningAksjonspunkter,
 }
   from './behandlingSelectors';
 
@@ -275,6 +275,42 @@ describe('behandlingSelectors', () => {
       const statusOgAndeler = getAlleAndelerIForstePeriode.resultFunc(beregningsgrunnlag);
 
       expect(statusOgAndeler).is.eql(beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel);
+    });
+
+    it('skal hente aksjonspunkter relevant for beregning og filtrere uten de som ikke er relevant', () => {
+      const aksjonspunkter = [
+        {
+          definisjon: {
+            kode: aksjonspunktCodes.VURDER_DEKNINGSGRAD,
+          },
+        },
+        {
+          definisjon: {
+            kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+          },
+        },
+        {
+          definisjon: {
+            kode: aksjonspunktCodes.AVKLAR_UTTAK,
+          },
+        },
+      ];
+      const beregningAksjonspunkter = getGjeldendeBeregningAksjonspunkter.resultFunc(aksjonspunkter);
+      expect(beregningAksjonspunkter).to.be.lengthOf(2);
+      expect(beregningAksjonspunkter[0].definisjon.kode).to.equal('5087');
+      expect(beregningAksjonspunkter[1].definisjon.kode).to.equal('5038');
+    });
+
+    it('Skal teste at ingen aksjonspunkter blir hentet ut når ingen er relevant for beregning', () => {
+      const aksjonspunkter = [
+        {
+          definisjon: {
+            kode: aksjonspunktCodes.AVKLAR_UTTAK,
+          },
+        },
+      ];
+      const beregningAksjonspunkter = getGjeldendeBeregningAksjonspunkter.resultFunc(aksjonspunkter);
+      expect(beregningAksjonspunkter).to.be.lengthOf(0);
     });
   });
 

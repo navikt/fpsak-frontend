@@ -26,6 +26,7 @@ const aksjonspunktTextCodes = {
   [aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD]: 'ToTrinnsForm.Beregning.InntektFastsatt',
   [aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET]: 'ToTrinnsForm.Beregning.InntektFastsatt',
   [aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG]: 'ToTrinnsForm.Beregning.GraderingUtenBG',
+  [aksjonspunktCodes.VURDER_DEKNINGSGRAD]: 'ToTrinnsForm.Beregning.DekningsgradEndret',
 
   [aksjonspunktCodes.SOKNADSFRISTVILKARET]: 'ToTrinnsForm.Soknadsfrist.ManueltVurdert',
   [aksjonspunktCodes.VURDER_SOKNADSFRIST_FORELDREPENGER]: 'ToTrinnsForm.Soknadsfrist.ManueltVurdert',

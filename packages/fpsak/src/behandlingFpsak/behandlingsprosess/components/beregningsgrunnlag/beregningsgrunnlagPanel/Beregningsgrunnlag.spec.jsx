@@ -8,7 +8,7 @@ import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/in
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { BeregningsgrunnlagForm as UnwrappedForm } from './BeregningsgrunnlagForm';
+import Beregningsgrunnlag, { BeregningsgrunnlagImpl, TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING } from './Beregningsgrunnlag';
 import GrunnlagForAarsinntektPanelAT from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
 import GrunnlagForAarsinntektPanelFL from '../frilanser/GrunnlagForAarsinntektPanelFL';
 import GrunnlagForAarsinntektPanelSN from '../selvstendigNaeringsdrivende/GrunnlagForAarsinntektPanelSN';
@@ -29,7 +29,6 @@ const arbeidstakerAndel = {
   beregningsperiodeTom: '2015-01-01',
 
 };
-
 const frilanserAndel = {
   aktivitetStatus: {
     kode: aktivitetStatus.FRILANSER,
@@ -41,7 +40,6 @@ const frilanserAndel = {
   beregningsperiodeTom: '2016-01-01',
 
 };
-
 const tyAndel = {
   aktivitetStatus: {
     kode: aktivitetStatus.TILSTOTENDE_YTELSE,
@@ -50,7 +48,6 @@ const tyAndel = {
   beregningsperiodeFom: '2016-01-01',
   beregningsperiodeTom: '2017-01-01',
 };
-
 const dagpengerAndel = {
   aktivitetStatus: {
     kode: aktivitetStatus.DAGPENGER,
@@ -59,7 +56,6 @@ const dagpengerAndel = {
   beregningsperiodeFom: '2016-01-01',
   beregningsperiodeTom: '2017-01-01',
 };
-
 const aapAndel = {
   aktivitetStatus: {
     kode: aktivitetStatus.ARBEIDSAVKLARINGSPENGER,
@@ -68,7 +64,6 @@ const aapAndel = {
   beregningsperiodeFom: '2016-01-01',
   beregningsperiodeTom: '2017-01-01',
 };
-
 const militaerAndel = {
   aktivitetStatus: {
     kode: aktivitetStatus.MILITAER_ELLER_SIVIL,
@@ -76,6 +71,12 @@ const militaerAndel = {
   beregnetPrAar: 300000,
 };
 
+const perioder = [{
+  bruttoPrAar: 200000,
+  periodeAarsaker: [{
+    kode: periodeAarsak.UDEFINERT,
+  }],
+}];
 
 const selvstedigNaeringsdrivendeAndel = {
   aktivitetStatus: {
@@ -86,9 +87,7 @@ const selvstedigNaeringsdrivendeAndel = {
   overstyrtPrAar: 350000,
   beregningsperiodeFom: '2016-01-01',
   beregningsperiodeTom: '2017-01-01',
-
 };
-
 const atflAksjonspunkt = {
   id: 55,
   erAktivt: true,
@@ -105,7 +104,6 @@ const atflAksjonspunkt = {
   vilkarType: null,
   kanLoses: true,
 };
-
 const selvstendigAksjonspunkt = {
   id: 55,
   erAktivt: true,
@@ -122,7 +120,6 @@ const selvstendigAksjonspunkt = {
   vilkarType: null,
   kanLoses: true,
 };
-
 const selvstendigNyIArbAksjonspunkt = {
   id: 55,
   erAktivt: true,
@@ -139,20 +136,29 @@ const selvstendigNyIArbAksjonspunkt = {
   vilkarType: null,
   kanLoses: true,
 };
-
-
-const perioder = [{
-  bruttoPrAar: 200000,
-  periodeAarsaker: [{
-    kode: periodeAarsak.UDEFINERT,
-  }],
-}];
+const vurderAksjonspunktDekningsgrad = {
+  id: 56,
+  erAktivt: true,
+  definisjon: {
+    kode: aksjonspunktCodes.VURDER_DEKNINGSGRAD,
+    navn: 'Vurder Dekningsgrad',
+  },
+  toTrinnsBehandling: false,
+  status: {
+    kode: 'OPPR',
+    navn: 'Opprettet',
+  },
+  begrunnelse: 'begrunnelse dekningsgrad',
+  vilkarType: null,
+  kanLoses: true,
+};
 
 const inntekt = 250000;
+const formName = 'BeregningForm';
 
-describe('<BeregningsgrunnlagForm>', () => {
+describe('<Beregningsgrunnlag>', () => {
   it('Skal teste at korrekte komponenter vises for arbeidstaker uten aksjonspunkt', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
+    const wrapper = shallowWithIntl(<BeregningsgrunnlagImpl
       {...reduxFormPropsMock}
       intl={intlMock}
       submitCallback={sinon.spy()}
@@ -162,25 +168,23 @@ describe('<BeregningsgrunnlagForm>', () => {
       allePerioder={perioder}
       harTidligeregrunnlag={false}
       relevanteStatuser={{ isArbeidstaker: true, isKombinasjonsstatus: true }}
+      gjeldendeAksjonspunkter={[]}
       readOnlySubmitButton
       gjelderBesteberegning={false}
+      formName={formName}
     />);
-
     const atPanel = wrapper.find(GrunnlagForAarsinntektPanelAT);
-
     expect(atPanel).to.have.length(1);
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN)).to.have.length(0);
     expect(wrapper.find(OppsummeringSN)).to.have.length(0);
     expect(wrapper.find(FastsettGrunnlagSN)).to.have.length(0);
     expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(0);
-
     expect(atPanel.props().alleAndeler[0]).to.equal(arbeidstakerAndel);
     expect(atPanel.props().aksjonspunkt).to.equal(undefined);
   });
-
   it('Skal teste at korrekte komponenter vises for frilanser uten aksjonspunkt', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
+    const wrapper = shallowWithIntl(<BeregningsgrunnlagImpl
       {...reduxFormPropsMock}
       intl={intlMock}
       submitCallback={sinon.spy()}
@@ -190,25 +194,23 @@ describe('<BeregningsgrunnlagForm>', () => {
       allePerioder={perioder}
       harTidligeregrunnlag={false}
       relevanteStatuser={{ isFrilanser: true, isKombinasjonsstatus: true }}
+      gjeldendeAksjonspunkter={[]}
       readOnlySubmitButton
       gjelderBesteberegning={false}
+      formName={formName}
     />);
-
     const flPanel = wrapper.find(GrunnlagForAarsinntektPanelFL);
-
     expect(wrapper.find(GrunnlagForAarsinntektPanelAT)).to.have.length(0);
     expect(flPanel).to.have.length(1);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN)).to.have.length(0);
     expect(wrapper.find(OppsummeringSN)).to.have.length(0);
     expect(wrapper.find(FastsettGrunnlagSN)).to.have.length(0);
     expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(0);
-
     expect(flPanel.props().alleAndeler[0]).to.equal(frilanserAndel);
     expect(flPanel.props().aksjonspunkt).to.equal(undefined);
   });
-
   it('Skal teste at korrekte komponenter vises for selvstendig næringsdrivende uten aksjonspunkt', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
+    const wrapper = shallowWithIntl(<BeregningsgrunnlagImpl
       {...reduxFormPropsMock}
       intl={intlMock}
       submitCallback={sinon.spy()}
@@ -218,10 +220,11 @@ describe('<BeregningsgrunnlagForm>', () => {
       allePerioder={perioder}
       harTidligeregrunnlag={false}
       relevanteStatuser={{ isSelvstendigNaeringsdrivende: true }}
+      gjeldendeAksjonspunkter={[]}
       readOnlySubmitButton
       gjelderBesteberegning={false}
+      formName={formName}
     />);
-
     const snPanel = wrapper.find(GrunnlagForAarsinntektPanelSN);
     expect(wrapper.find(GrunnlagForAarsinntektPanelAT)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(0);
@@ -229,13 +232,12 @@ describe('<BeregningsgrunnlagForm>', () => {
     expect(wrapper.find(OppsummeringSN)).to.have.length(0);
     expect(wrapper.find(FastsettGrunnlagSN)).to.have.length(0);
     expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(0);
-
     expect(snPanel.props().alleAndeler[0]).to.equal(selvstedigNaeringsdrivendeAndel);
     expect(snPanel.props().aksjonspunkt).to.equal(undefined);
   });
-
   it('Skal teste at korrekte komponenter vises for selvstendig næringsdrivende med NyIArbeidslivet aksjonspunkt', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
+    const ap = [selvstendigNyIArbAksjonspunkt];
+    const wrapper = shallowWithIntl(<BeregningsgrunnlagImpl
       {...reduxFormPropsMock}
       intl={intlMock}
       submitCallback={sinon.spy()}
@@ -243,13 +245,13 @@ describe('<BeregningsgrunnlagForm>', () => {
       beregnetAarsinntekt={inntekt}
       alleAndelerIForstePeriode={[selvstedigNaeringsdrivendeAndel]}
       allePerioder={perioder}
-      gjeldendeAksjonspunkt={selvstendigNyIArbAksjonspunkt}
+      gjeldendeAksjonspunkter={ap}
       harTidligeregrunnlag={false}
       relevanteStatuser={{ isSelvstendigNaeringsdrivende: true }}
       readOnlySubmitButton
       gjelderBesteberegning={false}
+      formName={formName}
     />);
-
     const snPanel = wrapper.find(GrunnlagForAarsinntektPanelSN);
     expect(wrapper.find(GrunnlagForAarsinntektPanelAT)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(0);
@@ -257,19 +259,17 @@ describe('<BeregningsgrunnlagForm>', () => {
     expect(wrapper.find(OppsummeringSN)).to.have.length(0);
     expect(wrapper.find(FastsettGrunnlagSN)).to.have.length(1);
     expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(1);
-
     expect(snPanel.props().alleAndeler[0]).to.equal(selvstedigNaeringsdrivendeAndel);
     expect(snPanel.props().aksjonspunkt).to.equal(undefined);
   });
-
-
   it('Skal teste at korrekte komponenter vises for selvstendig næringsdrivende / arbeidstaker med aksjonspunkt', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
+    const ap = [selvstendigAksjonspunkt];
+    const wrapper = shallowWithIntl(<BeregningsgrunnlagImpl
       {...reduxFormPropsMock}
       intl={intlMock}
       submitCallback={sinon.spy()}
       readOnly
-      gjeldendeAksjonspunkt={selvstendigAksjonspunkt}
+      gjeldendeAksjonspunkter={ap}
       beregnetAarsinntekt={inntekt}
       allePerioder={perioder}
       alleAndelerIForstePeriode={[selvstedigNaeringsdrivendeAndel, arbeidstakerAndel]}
@@ -277,8 +277,8 @@ describe('<BeregningsgrunnlagForm>', () => {
       relevanteStatuser={{ isArbeidstaker: true, isSelvstendigNaeringsdrivende: true, isKombinasjonsstatus: true }}
       readOnlySubmitButton
       gjelderBesteberegning={false}
+      formName={formName}
     />);
-
     expect(wrapper.find(MilitaerPanel)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelAT)).to.have.length(1);
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(0);
@@ -288,9 +288,8 @@ describe('<BeregningsgrunnlagForm>', () => {
     expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(1);
     expect(wrapper.find(OppsummeringSN).props().alleAndeler).to.have.length(2);
   });
-
   it('Skal teste at korrekte komponenter vises for selvstendig næringsdrivende / frilanser uten aksjonspunkt', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
+    const wrapper = shallowWithIntl(<BeregningsgrunnlagImpl
       {...reduxFormPropsMock}
       intl={intlMock}
       submitCallback={sinon.spy()}
@@ -303,10 +302,11 @@ describe('<BeregningsgrunnlagForm>', () => {
         isSelvstendigNaeringsdrivende: true,
         isKombinasjonsstatus: true,
       }}
+      gjeldendeAksjonspunkter={[]}
       readOnlySubmitButton
       gjelderBesteberegning={false}
+      formName={formName}
     />);
-
     expect(wrapper.find(MilitaerPanel)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelAT)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(1);
@@ -316,15 +316,15 @@ describe('<BeregningsgrunnlagForm>', () => {
     expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(0);
     expect(wrapper.find(OppsummeringSN).props().alleAndeler).to.have.length(2);
   });
-
   it('Skal teste at korrekte komponenter vises for arbeidstaker / frilanser med aksjonspunkt', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
+    const ap = [atflAksjonspunkt];
+    const wrapper = shallowWithIntl(<BeregningsgrunnlagImpl
       {...reduxFormPropsMock}
       intl={intlMock}
       submitCallback={sinon.spy()}
       readOnly
       allePerioder={perioder}
-      gjeldendeAksjonspunkt={atflAksjonspunkt}
+      gjeldendeAksjonspunkter={ap}
       beregnetAarsinntekt={inntekt}
       alleAndelerIForstePeriode={[selvstedigNaeringsdrivendeAndel, frilanserAndel]}
       harTidligeregrunnlag={false}
@@ -335,8 +335,8 @@ describe('<BeregningsgrunnlagForm>', () => {
       }}
       readOnlySubmitButton
       gjelderBesteberegning={false}
+      formName={formName}
     />);
-
     expect(wrapper.find(MilitaerPanel)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelAT)).to.have.length(1);
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(1);
@@ -345,15 +345,15 @@ describe('<BeregningsgrunnlagForm>', () => {
     expect(wrapper.find(FastsettGrunnlagSN)).to.have.length(0);
     expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(1);
   });
-
   it('Skal teste at korrekte komponenter vises for arbeidstaker / frilanser / selvstendig næringsdrivende med aksjonspunkt', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
+    const ap = [selvstendigAksjonspunkt];
+    const wrapper = shallowWithIntl(<BeregningsgrunnlagImpl
       {...reduxFormPropsMock}
       intl={intlMock}
       submitCallback={sinon.spy()}
       readOnly
       allePerioder={perioder}
-      gjeldendeAksjonspunkt={selvstendigAksjonspunkt}
+      gjeldendeAksjonspunkter={ap}
       beregnetAarsinntekt={inntekt}
       alleAndelerIForstePeriode={[selvstedigNaeringsdrivendeAndel, frilanserAndel, arbeidstakerAndel]}
       harTidligeregrunnlag={false}
@@ -365,8 +365,8 @@ describe('<BeregningsgrunnlagForm>', () => {
       }}
       readOnlySubmitButton
       gjelderBesteberegning={false}
+      formName={formName}
     />);
-
     expect(wrapper.find(MilitaerPanel)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelAT)).to.have.length(1);
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(1);
@@ -375,21 +375,21 @@ describe('<BeregningsgrunnlagForm>', () => {
     expect(wrapper.find(FastsettGrunnlagSN)).to.have.length(1);
     expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(1);
   });
-
-  it('Skal teste at korrekte komponenter vises for dagpenger / aap', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
+  it('Skal teste at korrekte komponenter vises for dagpenger / aap uten aksjonspunkt', () => {
+    const wrapper = shallowWithIntl(<BeregningsgrunnlagImpl
       {...reduxFormPropsMock}
       intl={intlMock}
       submitCallback={sinon.spy()}
       readOnly
       allePerioder={perioder}
-      gjeldendeAksjonspunkt={undefined}
+      gjeldendeAksjonspunkter={[]}
       beregnetAarsinntekt={inntekt}
       alleAndelerIForstePeriode={[aapAndel, dagpengerAndel]}
       harTidligeregrunnlag={false}
       relevanteStatuser={{ harDagpengerEllerAAP: true, isKombinasjonsstatus: false, isSelvstendigNaeringsdrivende: false }}
       readOnlySubmitButton
       gjelderBesteberegning={false}
+      formName={formName}
     />);
     expect(wrapper.find(GrunnlagForAarsinntektPanelAT)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(0);
@@ -403,22 +403,22 @@ describe('<BeregningsgrunnlagForm>', () => {
     const ytelsePanel = wrapper.find(TilstotendeYtelser);
     expect(ytelsePanel.props().skalViseOppjustertGrunnlag).to.equal(false);
   });
-
-  it('Skal teste at korrekte komponenter vises for andre tilstøtende ytelser', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
+  it('Skal teste at korrekte komponenter vises for andre tilstøtende ytelser uten aksjonspunkt', () => {
+    const wrapper = shallowWithIntl(<BeregningsgrunnlagImpl
       {...reduxFormPropsMock}
       intl={intlMock}
       submitCallback={sinon.spy()}
       readOnly
       allePerioder={perioder}
-      gjeldendeAksjonspunkt={undefined}
       beregnetAarsinntekt={inntekt}
       alleAndelerIForstePeriode={[tyAndel]}
       harTidligeregrunnlag={false}
       relevanteStatuser={{ harDagpengerEllerAAP: false, isKombinasjonsstatus: false, harAndreTilstotendeYtelser: true }}
+      gjeldendeAksjonspunkter={[]}
       readOnlySubmitButton
       tilstøtendeYtelseType="Sykepeger"
       gjelderBesteberegning={false}
+      formName={formName}
     />);
     expect(wrapper.find(GrunnlagForAarsinntektPanelAT)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(0);
@@ -430,23 +430,22 @@ describe('<BeregningsgrunnlagForm>', () => {
     expect(wrapper.find(YtelserFraInfotrygd)).to.have.length(1);
     expect(wrapper.find(MilitaerPanel)).to.have.length(0);
   });
-
-  it('Skal teste at korrekte komponenter vises for militær', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
+  it('Skal teste at korrekte komponenter vises for militær uten aksjonspunkt', () => {
+    const wrapper = shallowWithIntl(<BeregningsgrunnlagImpl
       {...reduxFormPropsMock}
       intl={intlMock}
       submitCallback={sinon.spy()}
       readOnly
       allePerioder={perioder}
-      gjeldendeAksjonspunkt={undefined}
       beregnetAarsinntekt={inntekt}
       alleAndelerIForstePeriode={[militaerAndel]}
       harTidligeregrunnlag={false}
       relevanteStatuser={{ isMilitaer: true }}
+      gjeldendeAksjonspunkter={[]}
       readOnlySubmitButton
       gjelderBesteberegning={false}
+      formName={formName}
     />);
-
     expect(wrapper.find(GrunnlagForAarsinntektPanelAT)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN)).to.have.length(0);
@@ -456,5 +455,71 @@ describe('<BeregningsgrunnlagForm>', () => {
     expect(wrapper.find(TilstotendeYtelser)).to.have.length(0);
     expect(wrapper.find(YtelserFraInfotrygd)).to.have.length(0);
     expect(wrapper.find(MilitaerPanel)).to.have.length(1);
+  });
+  it('Skal teste at begrunnelsesfeltet viser når flere aksjonspunkt hvor ett er vurder dekningsgrad', () => {
+    const aksjonspunkter = [vurderAksjonspunktDekningsgrad, atflAksjonspunkt];
+    const wrapper = shallowWithIntl(<BeregningsgrunnlagImpl
+      {...reduxFormPropsMock}
+      intl={intlMock}
+      submitCallback={sinon.spy()}
+      readOnly
+      allePerioder={perioder}
+      gjeldendeAksjonspunkter={aksjonspunkter}
+      beregnetAarsinntekt={inntekt}
+      alleAndelerIForstePeriode={[militaerAndel]}
+      harTidligeregrunnlag={false}
+      relevanteStatuser={{ isMilitaer: true }}
+      readOnlySubmitButton
+      gjelderBesteberegning={false}
+      formName={formName}
+    />);
+    const tekstFelter = wrapper.find('TextAreaField');
+    expect(tekstFelter).to.have.length(2);
+    expect(tekstFelter.get(0).props.name).to.equal('begrunnDekningsgradEndring');
+    expect(tekstFelter.get(1).props.name).to.equal('ATFLVurdering');
+  });
+  it('Skal teste at begrunnelsesfeltet viser når kun vurder dekningsgrad aksjonspunkt', () => {
+    const aksjonspunkter = [vurderAksjonspunktDekningsgrad];
+    const wrapper = shallowWithIntl(<BeregningsgrunnlagImpl
+      {...reduxFormPropsMock}
+      intl={intlMock}
+      submitCallback={sinon.spy()}
+      readOnly
+      allePerioder={perioder}
+      gjeldendeAksjonspunkter={aksjonspunkter}
+      beregnetAarsinntekt={inntekt}
+      alleAndelerIForstePeriode={[militaerAndel]}
+      harTidligeregrunnlag={false}
+      relevanteStatuser={{ isMilitaer: true }}
+      readOnlySubmitButton
+      gjelderBesteberegning={false}
+      formName={formName}
+    />);
+    const tekstFelter = wrapper.find('TextAreaField');
+    expect(tekstFelter).to.have.length(1);
+    expect(tekstFelter.get(0).props.name).to.equal('begrunnDekningsgradEndring');
+  });
+  it('Skal teste buildInitialValues med ATFL og vurderDekningsgrad aksjonspunkt', () => {
+    const aksjonspunkter = [vurderAksjonspunktDekningsgrad, atflAksjonspunkt];
+    const values = Beregningsgrunnlag.buildInitialValues(aksjonspunkter);
+    expect(values[TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING]).to.equal('begrunnelse dekningsgrad');
+    expect(values.ATFLVurdering).to.equal('begrunnelse arbeidstaker/frilans');
+  });
+  it('Skal teste buildInitialValues uten aksjonspunkter', () => {
+    const aksjonspunkter = [];
+    const values = Beregningsgrunnlag.buildInitialValues(aksjonspunkter);
+    expect(values[TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING]).to.equal('');
+    expect(values.ATFLVurdering).to.equal('');
+  });
+  it('Skal teste at transformValues gir forventet resultat  ', () => {
+    const values = {
+      ATFLVurdering: 'aaa',
+      inntektFrilanser: 100,
+    };
+    const transformedValues = Beregningsgrunnlag.transformValues(values, []);
+    expect(transformedValues.kode).to.equal('5047');
+    expect(transformedValues.begrunnelse).to.equal('aaa');
+    expect(transformedValues.fastsatteTidsbegrensedePerioder).to.lengthOf(0);
+    expect(transformedValues.frilansInntekt).to.equal(100);
   });
 });

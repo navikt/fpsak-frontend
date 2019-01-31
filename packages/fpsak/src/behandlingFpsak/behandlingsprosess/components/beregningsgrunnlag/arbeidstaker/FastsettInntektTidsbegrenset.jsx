@@ -6,7 +6,7 @@ import moment from 'moment';
 import { createSelector } from 'reselect';
 
 import { InputField } from '@fpsak-frontend/form';
-import { getBeregningsgrunnlagPerioder, getGjeldendeBeregningAksjonspunkt } from 'behandlingFpsak/behandlingSelectors';
+import { getBeregningsgrunnlagPerioder, getGjeldendeBeregningAksjonspunkter } from 'behandlingFpsak/behandlingSelectors';
 import {
   Table, TableRow, TableColumn, Image,
 } from '@fpsak-frontend/shared-components';
@@ -24,13 +24,21 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import NaturalytelsePanel from './NaturalytelsePanel';
 import styles from './FastsettInntektTidsbegrenset.less';
 
+const formName = 'BeregningForm';
 const formPrefix = 'inntektField';
-
-const FORM_NAME = 'BeregningsgrunnlagForm';
+const {
+  FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+} = aksjonspunktCodes;
 
 function harPeriodeArbeidsforholdAvsluttet(periode) {
   return periode.periodeAarsaker !== null && periode.periodeAarsaker.map(({ kode }) => kode).includes(periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET);
 }
+
+const harAksjonspunktForFastsettBgTidsbegrensetAT = gjeldendeAksjonspunkter => gjeldendeAksjonspunkter !== undefined && gjeldendeAksjonspunkter !== null
+  && gjeldendeAksjonspunkter.some(ap => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD);
+
+const finnAksjonspunktForFastsettBgTidsbegrensetAT = gjeldendeAksjonspunkter => gjeldendeAksjonspunkter
+  && gjeldendeAksjonspunkter.find(ap => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD);
 
 // Kombinerer perioder mellom avsluttede arbeidsforhold
 const finnPerioderMedAvsluttetArbeidsforhold = (allePerioder) => {
@@ -50,16 +58,15 @@ const finnPerioderMedAvsluttetArbeidsforhold = (allePerioder) => {
 
 // Lager en liste med FormattedMessages som skal brukes som overskrifter i tabellen
 export const getTableHeaderData = createSelector(
-  [getBeregningsgrunnlagPerioder, getGjeldendeBeregningAksjonspunkt],
-  (allePerioder, gjeldendeAksjonspunkt) => {
+  [getBeregningsgrunnlagPerioder, getGjeldendeBeregningAksjonspunkter],
+  (allePerioder, gjeldendeAksjonspunkter) => {
     const relevantePerioder = finnPerioderMedAvsluttetArbeidsforhold(allePerioder);
     const headers = [];
     headers.push(<FormattedMessage
       id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsgiver"
       key="ArbeidsgiverTitle"
     />);
-    if (gjeldendeAksjonspunkt !== undefined
-      && gjeldendeAksjonspunkt.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD) {
+    if (harAksjonspunktForFastsettBgTidsbegrensetAT(gjeldendeAksjonspunkter)) {
       // Vi ønsker å gi saksbehandler mulighet til å endre på første inntekt og må legge til denne overskriften
       headers.push(<FormattedMessage
         id="Beregningsgrunnlag.AarsinntektPanel.Inntekt"
@@ -140,9 +147,9 @@ export const createInputFieldKey = (andel, periode) => {
 // Vi må også ta vare på om arbeidsforholdet er tidsbegrenset eller ikke for å kunne vise dette i GUI.
 
 export const createTableData = createSelector(
-  [getBeregningsgrunnlagPerioder, getGjeldendeBeregningAksjonspunkt],
-  (allePerioder, aksjonspunkt) => {
-    const harAktueltAksjonspunkt = aksjonspunkt !== undefined && aksjonspunkt !== null;
+  [getBeregningsgrunnlagPerioder, getGjeldendeBeregningAksjonspunkter],
+  (allePerioder, aksjonspunkter) => {
+    const harAktueltAksjonspunkt = harAksjonspunktForFastsettBgTidsbegrensetAT(aksjonspunkter);
     // Vi er ikke interessert i perioder som oppstår grunnet naturalytelse
     const relevantePerioder = finnPerioderMedAvsluttetArbeidsforhold(allePerioder);
     const kopiAvPerioder = relevantePerioder.slice(0);
@@ -352,10 +359,9 @@ const getOppsummertBruttoInntektMedAP = (allePerioder, formValues) => {
 };
 
 export const getOppsummertBruttoInntektForTidsbegrensedePerioder = createSelector(
-  [getBeregningsgrunnlagPerioder, getGjeldendeBeregningAksjonspunkt, getBehandlingFormValues(FORM_NAME)],
-  (allePerioder, gjeldendeAksjonspunkt, formValues) => {
-    if (gjeldendeAksjonspunkt === undefined
-      || gjeldendeAksjonspunkt.definisjon.kode !== aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD) {
+  [getBeregningsgrunnlagPerioder, getGjeldendeBeregningAksjonspunkter, getBehandlingFormValues(formName)],
+  (allePerioder, gjeldendeAksjonspunkter, formValues) => {
+    if (!harAksjonspunktForFastsettBgTidsbegrensetAT(gjeldendeAksjonspunkter)) {
       return getOppsummertBruttoInntektUtenAP(allePerioder);
     }
     return getOppsummertBruttoInntektMedAP(allePerioder, formValues);
@@ -363,10 +369,11 @@ export const getOppsummertBruttoInntektForTidsbegrensedePerioder = createSelecto
 );
 
 export const getIsAksjonspunktClosed = createSelector(
-  [getGjeldendeBeregningAksjonspunkt], gjeldendeAksjonspunkt => ((gjeldendeAksjonspunkt
-    && gjeldendeAksjonspunkt.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD)
-    ? !isAksjonspunktOpen(gjeldendeAksjonspunkt.status.kode)
-    : false),
+  [getGjeldendeBeregningAksjonspunkter],
+  (gjeldendeAksjonspunkter) => {
+    const aksjonspunkt = finnAksjonspunktForFastsettBgTidsbegrensetAT(gjeldendeAksjonspunkter);
+    return aksjonspunkt ? !isAksjonspunktOpen(aksjonspunkt.status.kode) : false;
+  },
 );
 
 const mapStateToProps = (state) => {
@@ -392,7 +399,6 @@ FastsettInntektTidsbegrenset.buildInitialValues = (allePerioder) => {
   });
   return initialValues;
 };
-
 
 FastsettInntektTidsbegrenset.transformValues = (values, perioder) => {
   const fastsattePerioder = [];

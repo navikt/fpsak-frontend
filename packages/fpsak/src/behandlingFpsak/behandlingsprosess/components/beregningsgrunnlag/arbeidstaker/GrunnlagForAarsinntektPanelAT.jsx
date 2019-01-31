@@ -19,8 +19,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import endretUrl from '@fpsak-frontend/assets/images/endret_felt.svg';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import NaturalytelsePanel from './NaturalytelsePanel';
-
 import styles from './grunnlagForAarsinntektPanelAT.less';
+
+const formName = 'BeregningForm';
 
 const createTableRows = (relevanteAndeler, harAksjonspunkt, bruttoFastsattInntekt, readOnly, isAksjonspunktClosed) => {
   const beregnetAarsinntekt = relevanteAndeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
@@ -82,6 +83,9 @@ const createTableRows = (relevanteAndeler, harAksjonspunkt, bruttoFastsattInntek
   return rows;
 };
 
+const harFastsettBgAtFlAksjonspunkt = aksjonspunkter => aksjonspunkter !== undefined && aksjonspunkter !== null
+  && aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS);
+
 /**
  * GrunnlagForAarsinntektPanelAT
  *
@@ -93,7 +97,7 @@ export const GrunnlagForAarsinntektPanelATImpl = ({
   readOnly,
   alleAndeler,
   allePerioder,
-  aksjonspunkt,
+  aksjonspunkter,
   bruttoFastsattInntekt,
   isAksjonspunktClosed,
   isKombinasjonsstatus,
@@ -103,9 +107,7 @@ export const GrunnlagForAarsinntektPanelATImpl = ({
   const perioderMedBortfaltNaturalytelse = allePerioder
     .filter(periode => periode.periodeAarsaker !== null && (periode.periodeAarsaker
       .map(({ kode }) => kode).includes(periodeAarsak.NATURALYTELSE_BORTFALT)));
-  const harAksjonspunkt = aksjonspunkt
-    ? aksjonspunkt.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS
-    : false;
+  const harAksjonspunkt = harFastsettBgAtFlAksjonspunkt(aksjonspunkter);
   if (harAksjonspunkt) {
     headers.push('Beregningsgrunnlag.AarsinntektPanel.FastsattInntekt');
   }
@@ -135,50 +137,24 @@ GrunnlagForAarsinntektPanelATImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   alleAndeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   bruttoFastsattInntekt: PropTypes.number,
-  aksjonspunkt: aksjonspunktPropType,
+  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   isKombinasjonsstatus: PropTypes.bool.isRequired,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 GrunnlagForAarsinntektPanelATImpl.defaultProps = {
-  aksjonspunkt: undefined,
   bruttoFastsattInntekt: 0,
   allePerioder: undefined,
 };
 
-GrunnlagForAarsinntektPanelATImpl.transformValues = (values, relevanteStatuser, alleAndelerIForstePeriode) => {
-  let inntektPrAndelList = null;
-  let frilansInntekt = null;
-  if (relevanteStatuser.isArbeidstaker) {
-    inntektPrAndelList = alleAndelerIForstePeriode.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
-      .map(({ andelsnr }, index) => {
-        const overstyrtInntekt = values[`inntekt${index}`];
-        return {
-          inntekt: (overstyrtInntekt === undefined || overstyrtInntekt === '') ? 0 : removeSpacesFromNumber(overstyrtInntekt),
-          andelsnr,
-        };
-      });
-  }
-  if (relevanteStatuser.isFrilanser) {
-    frilansInntekt = removeSpacesFromNumber(values.inntektFrilanser);
-  }
-  return [{
-    kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
-    begrunnelse: values.ATFLVurdering,
-    inntektFrilanser: frilansInntekt,
-    inntektPrAndelList,
-  }];
-};
-
 const mapStateToProps = (state, initialProps) => {
-  const { alleAndeler, aksjonspunkt } = initialProps;
+  const { alleAndeler, aksjonspunkter } = initialProps;
+  const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS);
+  const closedAps = aksjonspunkt ? !isAksjonspunktOpen(aksjonspunkt.status.kode) : false;
   const relevanteAndeler = alleAndeler.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
-  const closedAps = (aksjonspunkt && aksjonspunkt.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS)
-    ? !isAksjonspunktOpen(aksjonspunkt.status.kode)
-    : false;
   const overstyrteInntekter = relevanteAndeler.map((inntekt, index) => {
-    const overstyrtInntekt = behandlingFormValueSelector('BeregningsgrunnlagForm')(state, `inntekt${index}`);
+    const overstyrtInntekt = behandlingFormValueSelector(formName)(state, `inntekt${index}`);
     return (overstyrtInntekt === undefined || overstyrtInntekt === '') ? 0 : removeSpacesFromNumber(overstyrtInntekt);
   });
   const bruttoFastsattInntekt = overstyrteInntekter.reduce((a, b) => a + b);
@@ -196,6 +172,30 @@ GrunnlagForAarsinntektPanelAT.buildInitialValues = (relevanteAndeler) => {
     initialValues[`inntekt${index}`] = formatCurrencyNoKr(inntekt.overstyrtPrAar);
   });
   return initialValues;
+};
+
+GrunnlagForAarsinntektPanelAT.transformValues = (values, relevanteStatuser, alleAndelerIForstePeriode) => {
+  let inntektPrAndelList = null;
+  let frilansInntekt = null;
+  if (relevanteStatuser.isArbeidstaker) {
+    inntektPrAndelList = alleAndelerIForstePeriode.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
+      .map(({ andelsnr }, index) => {
+        const overstyrtInntekt = values[`inntekt${index}`];
+        return {
+          inntekt: (overstyrtInntekt === undefined || overstyrtInntekt === '') ? 0 : removeSpacesFromNumber(overstyrtInntekt),
+          andelsnr,
+        };
+      });
+  }
+  if (relevanteStatuser.isFrilanser) {
+    frilansInntekt = removeSpacesFromNumber(values.inntektFrilanser);
+  }
+  return {
+    kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+    begrunnelse: values.ATFLVurdering,
+    inntektFrilanser: frilansInntekt,
+    inntektPrAndelList,
+  };
 };
 
 export default GrunnlagForAarsinntektPanelAT;

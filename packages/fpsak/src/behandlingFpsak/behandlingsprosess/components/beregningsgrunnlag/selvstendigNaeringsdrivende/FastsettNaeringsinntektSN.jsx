@@ -16,23 +16,66 @@ import { behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-
 import styles from './fastsettNaeringsinntektSN.less';
 
+// ------------------------------------------------------------------------------------------ //
+// Variables
+// ------------------------------------------------------------------------------------------ //
+
+const FORM_NAME = 'BeregningForm';
+const maxLength1500 = maxLength(1500);
+const minLength3 = minLength(3);
 const {
   VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
   FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
 } = aksjonspunktCodes;
 
-const maxLength1500 = maxLength(1500);
-const minLength3 = minLength(3);
+// ------------------------------------------------------------------------------------------ //
+// Methods
+// ------------------------------------------------------------------------------------------ //
 
-const erAksjonspunktVarigEndretNaering = ap => ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE;
+const finnAksjonspunktBruttoFastsatt = aksjonspunkter => aksjonspunkter && aksjonspunkter.find(
+  ap => ap.definisjon.kode === FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
+);
 
-const erAksjonspunktSnNyIArbeidslivet = ap => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET;
+const finnAksjonspunktVarigEndretNaering = aksjonspunkter => aksjonspunkter && aksjonspunkter.find(
+  ap => ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+);
 
+const finnAksjonspunktSnNyIArbeidslivet = aksjonspunkter => aksjonspunkter && aksjonspunkter.find(
+  ap => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+);
 
+const finnSnAksjonspunkt = aksjonspunkter => aksjonspunkter && aksjonspunkter.find(
+  ap => ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE
+  || ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+);
+
+const constructVarigEndringAPValue = (relevanteAndeler, aksjonspunkt, bruttoAP) => ({
+  erVarigEndretNaering: isAksjonspunktOpen(aksjonspunkt.status.kode) ? undefined : relevanteAndeler[0].overstyrtPrAar !== null,
+  fellesVurdering: aksjonspunkt.begrunnelse ? aksjonspunkt.begrunnelse : '',
+  bruttoBeregningsgrunnlag: relevanteAndeler[0].overstyrtPrAar ? formatCurrencyNoKr(relevanteAndeler[0].overstyrtPrAar) : '',
+  vurderFastsettBruttoBeregningsgrunnlag: bruttoAP ? bruttoAP.begrunnelse : '',
+});
+
+const constructNyIArbeidslivetAPValue = (relevanteAndeler, aksjonspunkt) => ({
+  fellesVurdering: aksjonspunkt.begrunnelse ? aksjonspunkt.begrunnelse : '',
+  bruttoBeregningsgrunnlag: relevanteAndeler[0].overstyrtPrAar ? formatCurrencyNoKr(relevanteAndeler[0].overstyrtPrAar) : '',
+});
+
+const harFlereAksjonspunkter = gjeldendeAksjonspunkter => !!gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 1;
+
+const finnVurderingLabel = (gjeldendeAksjonspunkter) => {
+  if (harFlereAksjonspunkter(gjeldendeAksjonspunkter)) {
+    return <FormattedMessage id="Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag" />;
+  }
+  return <FormattedMessage id="Beregningsgrunnlag.Forms.Vurdering" />;
+};
+
+// ------------------------------------------------------------------------------------------ //
+// Component : FastsettNaeringsinntektSNImpl
+// ------------------------------------------------------------------------------------------ //
 /**
  * FastsettGrunnlagSN
  *
@@ -45,21 +88,21 @@ export const FastsettNaeringsinntektSNImpl = ({
   readOnly,
   erVarigEndretNaering,
   isAksjonspunktClosed,
-  gjeldendeAksjonspunkt,
+  gjeldendeAksjonspunkter,
 }) => (
   <div>
     <Row>
       <Column xs="12">
         <TextAreaField
           name="fellesVurdering"
-          label={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.Vurdering' })}
+          label={finnVurderingLabel(gjeldendeAksjonspunkter)}
           validate={[required, maxLength1500, minLength3, hasValidText]}
           maxLength={1500}
           readOnly={readOnly}
         />
       </Column>
     </Row>
-    { erAksjonspunktSnNyIArbeidslivet(gjeldendeAksjonspunkt)
+    { finnAksjonspunktSnNyIArbeidslivet(gjeldendeAksjonspunkter)
     && (
     <Row>
       <Column xs="12" className={styles.rightAlignInput}>
@@ -76,7 +119,7 @@ export const FastsettNaeringsinntektSNImpl = ({
     </Row>
     )
     }
-    { erAksjonspunktVarigEndretNaering(gjeldendeAksjonspunkt)
+    { finnAksjonspunktVarigEndretNaering(gjeldendeAksjonspunkter)
       && (
       <div>
         <Row>
@@ -115,7 +158,7 @@ export const FastsettNaeringsinntektSNImpl = ({
                 <Column xs="11" className={styles.marginTop}>
                   <TextAreaField
                     name="vurderFastsettBruttoBeregningsgrunnlag"
-                    label={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.Vurdering' })}
+                    label={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag' })}
                     validate={[required, maxLength1500, minLength3, hasValidText]}
                     maxLength={1500}
                     readOnly={readOnly}
@@ -151,49 +194,41 @@ FastsettNaeringsinntektSNImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   erVarigEndretNaering: PropTypes.bool,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
-  gjeldendeAksjonspunkt: aksjonspunktPropType,
+  gjeldendeAksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
 };
 
 FastsettNaeringsinntektSNImpl.defaultProps = {
   erVarigEndretNaering: undefined,
-  gjeldendeAksjonspunkt: undefined,
 };
 
-const mapStateToProps = (state, { gjeldendeAksjonspunkt }) => ({
-  isAksjonspunktClosed: !isAksjonspunktOpen(gjeldendeAksjonspunkt.status.kode),
-  erVarigEndretNaering: behandlingFormValueSelector('BeregningsgrunnlagForm')(state, 'erVarigEndretNaering'),
-});
+const mapStateToProps = (state, { gjeldendeAksjonspunkter }) => {
+  const aksjonspunkt = finnSnAksjonspunkt(gjeldendeAksjonspunkter);
+  return {
+    isAksjonspunktClosed: !isAksjonspunktOpen(aksjonspunkt.status.kode),
+    erVarigEndretNaering: behandlingFormValueSelector(FORM_NAME)(state, 'erVarigEndretNaering'),
+  };
+};
 
 const FastsettNaeringsinntektSN = connect(mapStateToProps)(injectIntl(FastsettNaeringsinntektSNImpl));
 
-const constructVarigEndringAPValue = (relevanteAndeler, gjeldendeAksjonspunkt, bruttoAP) => ({
-  erVarigEndretNaering: isAksjonspunktOpen(gjeldendeAksjonspunkt.status.kode)
-    ? undefined : relevanteAndeler[0].overstyrtPrAar !== null,
-  fellesVurdering: gjeldendeAksjonspunkt.begrunnelse ? gjeldendeAksjonspunkt.begrunnelse : '',
-  bruttoBeregningsgrunnlag: relevanteAndeler[0].overstyrtPrAar ? formatCurrencyNoKr(relevanteAndeler[0].overstyrtPrAar) : '',
-  vurderFastsettBruttoBeregningsgrunnlag: bruttoAP ? bruttoAP.begrunnelse : '',
-});
-
-const constructNyIArbeidslivetAPValue = (relevanteAndeler, gjeldendeAksjonspunkt) => ({
-  fellesVurdering: gjeldendeAksjonspunkt.begrunnelse ? gjeldendeAksjonspunkt.begrunnelse : '',
-  bruttoBeregningsgrunnlag: relevanteAndeler[0].overstyrtPrAar ? formatCurrencyNoKr(relevanteAndeler[0].overstyrtPrAar) : '',
-});
-
-FastsettNaeringsinntektSN.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunkt, bruttoAP) => {
-  if (relevanteAndeler.length === 0 || !gjeldendeAksjonspunkt) {
+FastsettNaeringsinntektSN.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunkter) => {
+  if (relevanteAndeler.length === 0 || !gjeldendeAksjonspunkter) {
     return undefined;
   }
-  if (erAksjonspunktVarigEndretNaering(gjeldendeAksjonspunkt)) {
-    return constructVarigEndringAPValue(relevanteAndeler, gjeldendeAksjonspunkt, bruttoAP);
+  const varigEndretNaeringAP = finnAksjonspunktVarigEndretNaering(gjeldendeAksjonspunkter);
+  const fastsattBruttoAP = finnAksjonspunktBruttoFastsatt(gjeldendeAksjonspunkter);
+  if (varigEndretNaeringAP) {
+    return constructVarigEndringAPValue(relevanteAndeler, varigEndretNaeringAP, fastsattBruttoAP);
   }
-  if (erAksjonspunktSnNyIArbeidslivet(gjeldendeAksjonspunkt)) {
-    return constructNyIArbeidslivetAPValue(relevanteAndeler, gjeldendeAksjonspunkt);
+  const SnNyIArbeidslivet = finnAksjonspunktSnNyIArbeidslivet(gjeldendeAksjonspunkter);
+  if (SnNyIArbeidslivet) {
+    return constructNyIArbeidslivetAPValue(relevanteAndeler, SnNyIArbeidslivet);
   }
   return undefined;
 };
 
-FastsettNaeringsinntektSN.transformValues = (values, gjeldendeAksjonspunkt) => {
-  if (erAksjonspunktSnNyIArbeidslivet(gjeldendeAksjonspunkt)) {
+FastsettNaeringsinntektSN.transformValues = (values, gjeldendeAksjonspunkter) => {
+  if (finnAksjonspunktSnNyIArbeidslivet(gjeldendeAksjonspunkter)) {
     return [{
       kode: FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
       begrunnelse: values.fellesVurdering,
