@@ -61,8 +61,8 @@ const mapOverføringÅrsaker = typer => typer
 const mapUtsettelseÅrsaker = typer => typer
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
-const mapArbeidsforhold = arbeidsforhold => arbeidsforhold.map((af) => {
-  const { arbeidType, arbeidsgiver } = af;
+const mapArbeidsforhold = andeler => andeler.map((andel) => {
+  const { arbeidType, arbeidsgiver } = andel;
 
   let periodeArbeidsforhold = '';
   if (arbeidType && arbeidType.kode !== uttakArbeidTypeKodeverk.ORDINÆRT_ARBEID) {
@@ -95,7 +95,7 @@ export const UttakNyPeriode = ({
   nyPeriode,
   sokerKjonn,
   nyPeriodeDisabledDaysFom,
-  arbeidsforhold,
+  andeler,
   ...formProps
 }) => {
   const inlineStyle = {
@@ -229,7 +229,7 @@ export const UttakNyPeriode = ({
                               bredde="xl"
                               name="arbeidsForhold"
                               validate={[requiredIfNotPristine, required]}
-                              selectValues={mapArbeidsforhold(arbeidsforhold)}
+                              selectValues={mapArbeidsforhold(andeler)}
                             />
                           </div>
                           <FlexRow>
@@ -306,7 +306,7 @@ UttakNyPeriode.propTypes = {
   periodeTyper: PropTypes.arrayOf(PropTypes.shape()),
   utsettelseÅrsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   overføringÅrsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  arbeidsforhold: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  andeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   nyPeriode: PropTypes.shape().isRequired,
   sokerKjonn: PropTypes.string.isRequired,
   nyPeriodeDisabledDaysFom: PropTypes.string.isRequired,
@@ -390,13 +390,13 @@ const mapStateToProps = (state, ownProps) => {
   const utsettelseÅrsaker = getKodeverk(kodeverkTyper.UTSETTELSE_ARSAK)(state);
   const overføringÅrsaker = getKodeverk(kodeverkTyper.OVERFOERING_AARSAK_TYPE)(state);
   const personopplysninger = getPersonopplysning(state);
-  const arbeidsforhold = getFaktaArbeidsforhold(state) || [];
+  const andeler = getFaktaArbeidsforhold(state) || [];
 
   return {
     periodeTyper,
     utsettelseÅrsaker,
     overføringÅrsaker,
-    arbeidsforhold,
+    andeler,
     sokerKjonn: personopplysninger.navBrukerKjonn.kode,
     initialValues: {
       fom: null,
