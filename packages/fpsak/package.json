@@ -53,6 +53,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-collapse": "^4.0.3",
+    "react-motion": "^0.5.2",
     "react-dom": "^16.6.3",
     "react-hot-loader": "^4.3.12",
     "react-intl": "^2.7.2",
