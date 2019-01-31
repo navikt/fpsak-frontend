@@ -18,7 +18,7 @@ const release = VERSION;
 const environment = window.location.hostname;
 
 init({
-  dsn: 'https://b7a25f545630433aac46282548140778@sentry.nais.preprod.local/2',
+  dsn: 'https://f1df84f98e254eea93e20afb33c0de19@sentry.nais.adeo.no/2',
   release,
   environment,
 });
