@@ -11,8 +11,9 @@ import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_fi
 import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
 import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
-import styles from './tilbakekrevingTimeLineData.less';
-import TilbakekrevingTimeLineForm from './TilbakekrevingTimeLineForm';
+import styles from './tilbakekrevingData.less';
+import TilbakekrevingForm from './TilbakekrevingForm';
+import TilbakekrevingPeriodSummary from './TilbakekrevingPeriodSummary';
 
 const findArrowLeftImg = isHovering => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
 const findArrowRightImg = isHovering => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
@@ -21,7 +22,7 @@ const splitPeriodImg = isHovering => (isHovering ? splitPeriodImageHoverUrl : sp
 const readOnly = false;
 const isEdited = false;
 
-export class TilbakekrevingTimeLineData extends Component {
+export class TilbakekrevingData extends Component {
   constructor() {
     super();
     this.showModal = this.showModal.bind(this);
@@ -158,7 +159,16 @@ export class TilbakekrevingTimeLineData extends Component {
                 </span>
               </Column>
             </Row>
-            <TilbakekrevingTimeLineForm
+            <Row>
+              <Column md="6">
+                <TilbakekrevingPeriodSummary
+                  feilutbetaling={selectedItemData.feilutbetaling}
+                  fom={selectedItemData.fom}
+                  tom={selectedItemData.tom}
+                />
+              </Column>
+            </Row>
+            <TilbakekrevingForm
               selectedItemData={selectedItemData}
               behandlingFormPrefix={behandlingFormPrefix}
               reduxFormChange={reduxFormChange}
@@ -174,7 +184,7 @@ export class TilbakekrevingTimeLineData extends Component {
   }
 }
 
-TilbakekrevingTimeLineData.propTypes = {
+TilbakekrevingData.propTypes = {
   selectedItemData: PropTypes.shape().isRequired,
   tilbakekrevingsresultatActivity: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
@@ -188,4 +198,4 @@ TilbakekrevingTimeLineData.propTypes = {
   activityPanelName: PropTypes.string.isRequired,
 };
 
-export default TilbakekrevingTimeLineData;
+export default TilbakekrevingData;

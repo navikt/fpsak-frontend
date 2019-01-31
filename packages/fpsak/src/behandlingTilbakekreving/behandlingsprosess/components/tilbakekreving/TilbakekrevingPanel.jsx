@@ -14,10 +14,22 @@ import {
   hovedsokerKjonnKode, tilbakekrevingPerioderResultat, customTimes,
 } from './mockData';
 import TilbakekrevingTimeLine from './TilbakekrevingTimeLine';
-import TilbakekrevingTimeLineData from './TilbakekrevingTimeLineData';
+import TilbakekrevingData from './TilbakekrevingData';
 
 const ACTIVITY_PANEL_NAME = 'tilbakekrevingsresultatActivity';
 const formName = 'TilbakekrevingForm';
+const godkjentKlassenavn = 'godkjentPeriode';
+const avvistKlassenavn = 'avvistPeriode';
+
+export const getStatusPeriode = (resultatType) => {
+  if (resultatType.kode === periodeResultatType.INNVILGET) {
+    return godkjentKlassenavn;
+  }
+  if (resultatType.kode === periodeResultatType.MANUELL_BEHANDLING) {
+    return 'undefined';
+  }
+  return avvistKlassenavn;
+};
 
 const addClassNameGroupIdToPerioder = (tilbakekrevingPerioder) => {
   const perioderMedClassName = [];
@@ -26,7 +38,7 @@ const addClassNameGroupIdToPerioder = (tilbakekrevingPerioder) => {
     const periodMedClassName = {
       ...item,
       id: index + 1,
-      className: 'godkjentPeriode',
+      className: getStatusPeriode(item.periodeResultatType),
       hovedsoker: true,
       group: 1,
     };
@@ -151,7 +163,6 @@ export class TilbakekrevingPanelImpl extends Component {
       tilbakekrevingsresultatActivity,
       behandlingFormPrefix,
       reduxFormChange: formChange,
-      tilbakekrevingPerioder,
     } = this.props;
     const { selectedItem } = this.state;
     return (
@@ -164,7 +175,7 @@ export class TilbakekrevingPanelImpl extends Component {
           <TilbakekrevingTimeLine
             selectedPeriod={selectedItem}
             customTimes={customTimes}
-            tilbakekrevingPerioder={tilbakekrevingPerioder}
+            tilbakekrevingPerioder={tilbakekrevingsresultatActivity}
             selectPeriodCallback={this.selectHandler}
             openPeriodInfo={this.openPeriodInfo}
             hovedsokerKjonnKode={hovedsokerKjonnKode}
@@ -172,7 +183,7 @@ export class TilbakekrevingPanelImpl extends Component {
         )
         }
         {selectedItem && (
-          <TilbakekrevingTimeLineData
+          <TilbakekrevingData
             selectedItemData={selectedItem}
             callbackSetSelected={this.setSelectedTilbakekrevingActivity}
             callbackForward={this.nextPeriod}
@@ -193,30 +204,29 @@ export class TilbakekrevingPanelImpl extends Component {
 }
 
 TilbakekrevingPanelImpl.propTypes = {
-  tilbakekrevingsresultatActivity: PropTypes.arrayOf(PropTypes.shape()),
+  tilbakekrevingsresultatActivity: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   tilbakekrevingPerioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
 };
 
-TilbakekrevingPanelImpl.defaultProps = {
-  tilbakekrevingsresultatActivity: [],
-};
-
-export const buildInitialValues = () => ({
-  tilbakekrevingsresultatActivity: tilbakekrevingPerioderResultat.map((tb, index) => ({
+export const buildInitialValues = tilbakekrevingPerioder => ({
+  tilbakekrevingsresultatActivity: tilbakekrevingPerioder.map((tb, index) => ({
     ...tb,
     id: index + 1,
   })),
 });
 
-const mapStateToProps = state => ({
-  initialValues: buildInitialValues(),
-  tilbakekrevingPerioder: addClassNameGroupIdToPerioder(tilbakekrevingPerioderResultat),
-  tilbakekrevingsresultatActivity: behandlingFormValueSelector(formName)(state, ACTIVITY_PANEL_NAME),
-  behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
-});
+const mapStateToProps = (state) => {
+  const tilbakekrevingPerioder = addClassNameGroupIdToPerioder(tilbakekrevingPerioderResultat);
+  return {
+    tilbakekrevingPerioder,
+    initialValues: buildInitialValues(tilbakekrevingPerioder),
+    tilbakekrevingsresultatActivity: behandlingFormValueSelector(formName)(state, ACTIVITY_PANEL_NAME),
+    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
