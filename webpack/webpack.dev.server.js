@@ -18,14 +18,23 @@ var options = {
     "/fpoppdrag/**": {
       target: process.env.APP_URL_FPOPPDRAG || "http://localhost:8070",
       secure: false,
+      changeOrigin: (!!process.env.APP_URL_FPOPPDRAG),
     },
     "/fptilbake/**": {
       target: process.env.APP_URL_FPTILBAKE || "http://localhost:8030",
       secure: false,
+      changeOrigin: (!!process.env.APP_URL_FPTILBAKE),
     },
     "/fpsak/(api|jetty)/**": {
       target: process.env.APP_URL_FPSAK || "http://localhost:8080",
       secure: false,
+      changeOrigin: (!!process.env.APP_URL_FPSAK),
+      onProxyRes: function onProxyRes(proxyRes, req, res) {
+        // For å håndtere redirects på 202 Accepted responser med location headers...
+        if(proxyRes.headers.location && proxyRes.headers.location.startsWith(process.env.APP_URL_FPSAK)){
+          proxyRes.headers.location = proxyRes.headers.location.split(process.env.APP_URL_FPSAK)[1];
+        }
+      }
     },
   },
   publicPath: config.output.publicPath,

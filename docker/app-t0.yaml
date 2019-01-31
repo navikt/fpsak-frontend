@@ -25,7 +25,7 @@ spec:
   replicas: # Optional. Set min = max to disable autoscaling.
     min: 2 # minimum number of replicas.
     max: 2 # maximum number of replicas.
-    cpuThresholdPercentage: 50 # total cpu percentage threshold on deployment, at which point it will increase number of pods if current < max
+    cpuThresholdPercentage: 100 # total cpu percentage threshold on deployment, at which point it will increase number of pods if current < max
   leaderElection: false # Optional. If true, a http endpoint will be available at $ELECTOR_PATH that return the current leader
   # Compare this value with the $HOSTNAME to see if the current instance is the leader
   preStopHookPath: "" # Optional. A HTTP GET will be issued to this endpoint at least once before the pod is terminated.
@@ -54,7 +54,7 @@ spec:
   - name: APP_NAME
     value: fpsak-frontend
   - name: APP_ENVIRONMENT
-    value: t0
+    value: default
   - name: OIDC_HOST_URL
     value: https://isso-t.adeo.no:443/isso
   - name: OIDC_AGENTNAME

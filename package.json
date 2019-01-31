@@ -27,11 +27,7 @@
     "docker-start": "yarn docker-stop; docker run -d --env-file=./docker/.env --name fpfront --net=host navikt/fpsak-frontend",
     "docker-stop": "docker stop fpfront; docker rm fpfront",
     "docker-push": "docker build . -t docker.adeo.no:5000/$npm_package_name:$npm_package_version -f ./docker/DockerfileDev --build-arg HTTPS_PROXY=$HTTPS_PROXY --build-arg HTTP_PROXY=$HTTP_PROXY; docker push docker.adeo.no:5000/$npm_package_name:$npm_package_version",
-    "redis:start": "docker stop redis; docker rm redis; docker run --name redis -p 6379:6379 -d redis",
-    "nais-upload": "nais upload -a $npm_package_name -v $npm_package_version",
-    "nais-deploy-test": "nais deploy -a $npm_package_name -v $npm_package_version -e q10 -n q10",
-    "nais-env": "nais env -e q10 $npm_package_name",
-    "deploy": "yarn docker-push; yarn nais-upload; yarn nais-deploy-q10"
+    "redis:start": "docker stop redis; docker rm redis; docker run --name redis -p 6379:6379 -d redis"
   },
   "workspaces": [
     "packages/*"

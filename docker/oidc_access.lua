@@ -24,6 +24,7 @@ local opts = {
     token_endpoint_auth_method = "client_secret_basic",
     discovery = ngx.var.oidc_host_url .. "/oauth2/.well-known/openid-configuration",
     access_token_expires_leeway = 240,
+    iat_slack = 480,
     renew_access_token_on_expiry = true,
     auth_accept_token_as = "cookie:ID_token",
     session_contents = {
@@ -39,12 +40,21 @@ if ngx.req.get_headers()["Authorization"] then
     is_authorized = true
 end
 
+local function set_id_token_cookie(id_token)
+    if id_token ~= ngx.var.cookie_ID_token then
+        ngx.header['Set-Cookie'] = 'ID_token=' .. id_token .. '; ' .. cookie_secure .. cookie_domain .. 'path=/; SameSite=Lax; HttpOnly'
+        return true
+    end
+end
+
 -- Allow for session less authentication. For instance for running cypress tests.
-if ngx.var.cookie_ID_token then
+-- Use new cookie name "sut_ID_token".
+if ngx.var.cookie_sut_ID_token then
     local json, err = require("resty.openidc").jwt_verify(ngx.var.cookie_ID_token, opts)
     if json and not err then
-        proxy_cookie.ID_token = ngx.var.cookie_ID_token
+        proxy_cookie.ID_token = ngx.var.cookie_sut_ID_token
         is_authorized = true
+        set_id_token_cookie(ngx.var.cookie_sut_ID_token)
     end
 end
 
@@ -63,17 +73,6 @@ if not is_authorized then
 
     if ngx.var.cookie_ADRUM and ngx.var.cookie_ADRUM ~= session.data.ADRUM then
         session.data.ADRUM = ngx.var.cookie_ADRUM
-    end
-
-    -- syncing cookie from request
-    if ngx.var.cookie_ID_token then
-        local json, err = require("resty.openidc").jwt_verify(ngx.var.cookie_ID_token, opts)
-        -- manually setting access_token_expiration so that an old token get expired
-        if json then
-            session.data.access_token_expiration = json.exp
-        else
-            session.data.access_token_expiration = 0
-        end
     end
 
     local unauth_action
@@ -96,10 +95,9 @@ if not is_authorized then
     end
 
     -- syncing cookie from auth result
-    if session.data.enc_id_token and ngx.var.cookie_ID_token ~= session.data.enc_id_token then
+    if session.data.enc_id_token and set_id_token_cookie(session.data.enc_id_token)then
         -- manually setting access_token_expiration so that it will refresh correctly
         session.data.access_token_expiration = session.data.id_token.exp;
-        ngx.header['Set-Cookie'] = 'ID_token=' .. session.data.enc_id_token .. '; ' .. cookie_secure .. cookie_domain .. 'path=/; SameSite=Lax; HttpOnly'
     end
 
     -- adding ADRUM cookie from session if existing
