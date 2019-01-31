@@ -20,7 +20,6 @@ export {
   removeSpacesFromNumber,
 } from './src/currencyUtils';
 export {
-  calcDaysWithoutWeekends,
   addDaysToDate,
   calcDays,
   calcDaysAndWeeks,

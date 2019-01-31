@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { ISO_DATE_FORMAT, calcDaysWithoutWeekends } from '@fpsak-frontend/utils';
+import { ISO_DATE_FORMAT, calcDays } from '@fpsak-frontend/utils';
 import {
   FlexContainer, FlexRow, FlexColumn, Image,
 } from '@fpsak-frontend/shared-components';
@@ -37,7 +37,7 @@ const renderValidationGraphic = (perioder, index, isLastIndex) => {
   if (!isLastIndex) {
     const periode = perioder[index];
     const nextPeriode = perioder[index + 1];
-    const diff = calcDaysWithoutWeekends(periode.tom, nextPeriode.fom, ISO_DATE_FORMAT);
+    const diff = calcDays(periode.tom, nextPeriode.fom, ISO_DATE_FORMAT);
 
     if (moment(periode.tom) >= moment(nextPeriode.fom)) {
       return renderOverlappendePeriode();
