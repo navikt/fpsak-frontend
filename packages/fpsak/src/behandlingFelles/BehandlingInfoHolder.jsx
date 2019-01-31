@@ -51,7 +51,7 @@ class BehandlingInfoHolder {
 
     behandlingBehandlendeEnhetId;
 
-    behandlendeEnhetNavn;
+    behandlingBehandlendeEnhetNavn;
 
     henleggArsaker;
 
@@ -188,8 +188,8 @@ class BehandlingInfoHolder {
       return this;
     }
 
-    withBehandlendeEnhetNavn = (behandlendeEnhetNavn) => {
-      this.behandlendeEnhetNavn = behandlendeEnhetNavn;
+    withBehandlendeEnhetNavn = (behandlingBehandlendeEnhetNavn) => {
+      this.behandlingBehandlendeEnhetNavn = behandlingBehandlendeEnhetNavn;
       return this;
     }
 

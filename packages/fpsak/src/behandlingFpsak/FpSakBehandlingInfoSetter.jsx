@@ -24,7 +24,7 @@ export class FpSakBehandlingInfoSetter extends Component {
       totrinnskontrollArsakerReadOnly, totrinnskontrollArsaker, behandlingKlageVurdering, behandlingIsKlage, behandlingResultatstruktur,
       behandlingsresultat, behandlingType, behandlingKlageVurderingResultatNFP, behandlingKlageVurderingResultatNK, behandlingHasSoknad,
       behandlingIsInnsyn, behandlingIsOnHold, isBehandlingInInnhentSoknadsinfoSteg, behandlingIsQueued, behandlingBehandlendeEnhetId,
-      behandlendeEnhetNavn, henleggArsaker, soknad, behandlingsresultatFraOriginalBehandling, resultatstrukturFraOriginalBehandling,
+      behandlingBehandlendeEnhetNavn, henleggArsaker, soknad, behandlingsresultatFraOriginalBehandling, resultatstrukturFraOriginalBehandling,
     } = this.props;
 
     setBehandlingInfoHolder(new BehandlingInfoHolder()
@@ -53,7 +53,7 @@ export class FpSakBehandlingInfoSetter extends Component {
       .withIsBehandlingInInnhentSoknadsopplysningerSteg(isBehandlingInInnhentSoknadsinfoSteg)
       .withBehandlingIsQueued(behandlingIsQueued)
       .withBehandlingBehandlendeEnhetId(behandlingBehandlendeEnhetId)
-      .withBehandlendeEnhetNavn(behandlendeEnhetNavn)
+      .withBehandlendeEnhetNavn(behandlingBehandlendeEnhetNavn)
       .withHenleggArsaker(henleggArsaker)
       .withSoknad(soknad)
       .withBehandlingsresultatFraOriginalBehandling(behandlingsresultatFraOriginalBehandling)
@@ -106,7 +106,7 @@ FpSakBehandlingInfoSetter.propTypes = {
   isBehandlingInInnhentSoknadsinfoSteg: PropTypes.bool.isRequired,
   behandlingIsQueued: PropTypes.bool,
   behandlingBehandlendeEnhetId: PropTypes.string,
-  behandlendeEnhetNavn: PropTypes.string,
+  behandlingBehandlendeEnhetNavn: PropTypes.string,
   henleggArsaker: PropTypes.arrayOf(PropTypes.shape({
     valg: PropTypes.string,
   })),
@@ -133,7 +133,7 @@ FpSakBehandlingInfoSetter.defaultProps = {
   brevMottakere: undefined,
   behandlingIsQueued: false,
   behandlingBehandlendeEnhetId: undefined,
-  behandlendeEnhetNavn: undefined,
+  behandlingBehandlendeEnhetNavn: undefined,
   henleggArsaker: null,
   soknad: undefined,
   behandlingsresultatFraOriginalBehandling: undefined,

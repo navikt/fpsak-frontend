@@ -18,7 +18,7 @@ export class FpTilbakeBehandlingInfoSetter extends Component {
     const {
       setBehandlingInfoHolder, behandlingSprak, behandlingVersjon, aksjonspunkter, behandlingAnsvarligSaksbehandler, behandlingStatus,
       behandlingsresultat, behandlingType, behandlingHasSoknad, behandlingIsOnHold, behandlingBehandlendeEnhetId,
-      behandlendeEnhetNavn, henleggArsaker, soknad,
+      behandlingBehandlendeEnhetNavn, henleggArsaker, soknad,
     } = this.props;
 
     setBehandlingInfoHolder(new BehandlingInfoHolder()
@@ -32,7 +32,7 @@ export class FpTilbakeBehandlingInfoSetter extends Component {
       .withBehandlingHasSoknad(behandlingHasSoknad)
       .withBehandlingIsOnHold(behandlingIsOnHold)
       .withBehandlingBehandlendeEnhetId(behandlingBehandlendeEnhetId)
-      .withBehandlendeEnhetNavn(behandlendeEnhetNavn)
+      .withBehandlendeEnhetNavn(behandlingBehandlendeEnhetNavn)
       .withHenleggArsaker(henleggArsaker)
       .withSoknad(soknad));
   }
@@ -64,7 +64,7 @@ FpTilbakeBehandlingInfoSetter.propTypes = {
   behandlingHasSoknad: PropTypes.bool.isRequired,
   behandlingIsOnHold: PropTypes.bool.isRequired,
   behandlingBehandlendeEnhetId: PropTypes.string,
-  behandlendeEnhetNavn: PropTypes.string,
+  behandlingBehandlendeEnhetNavn: PropTypes.string,
   henleggArsaker: PropTypes.arrayOf(PropTypes.shape({
     valg: PropTypes.string,
   })),
@@ -78,7 +78,7 @@ FpTilbakeBehandlingInfoSetter.defaultProps = {
   behandlingAnsvarligSaksbehandler: undefined,
   behandlingsresultat: undefined,
   behandlingBehandlendeEnhetId: undefined,
-  behandlendeEnhetNavn: undefined,
+  behandlingBehandlendeEnhetNavn: undefined,
   henleggArsaker: null,
   soknad: undefined,
 };

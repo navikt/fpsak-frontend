@@ -39,7 +39,7 @@ const endpoints = new RestApiConfigBuilder()
   .withGet('fpsak/api/fagsak', FpsakApiKeys.FETCH_FAGSAK)
 
   /* /api/behandlinger */
-  .withGet('fpsak/api/behandlinger/alle-fpsak', FpsakApiKeys.BEHANDLINGER_FPSAK)
+  .withGet('fpsak/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPSAK)
   .withGet('fptilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE)
   .withAsyncPut('fpsak/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING)
   .withGet('fpsak/api/behandlinger/annen-part-behandling', FpsakApiKeys.ANNEN_PART_BEHANDLING)
