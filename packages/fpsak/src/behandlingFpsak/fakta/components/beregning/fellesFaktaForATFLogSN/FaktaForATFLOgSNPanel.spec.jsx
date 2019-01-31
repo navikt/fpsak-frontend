@@ -10,7 +10,6 @@ import {
   FaktaForATFLOgSNPanelImpl,
   getHelpTextsFaktaForATFLOgSN,
   transformValuesFaktaForATFLOgSN,
-  getValidationFaktaForATFLOgSN,
   mapStateToValidationProps,
   setInntektValues,
   transformValues,
@@ -37,6 +36,7 @@ const aksjonspunkter = [{
   definisjon:
   { kode: VURDER_FAKTA_FOR_ATFL_SN },
 }];
+
 
 const showTableCallback = sinon.spy();
 
@@ -130,18 +130,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     const readOnlyBehandling = true;
     const readOnly = isReadOnly.resultFunc(rettigheter, isOnHold, readOnlyBehandling);
     expect(readOnly).to.equal(true);
-  });
-
-  it('skal ikkje validere om man ikkje har aksjonspunkt', () => {
-    const validate = () => ('validate');
-    const validation = getValidationFaktaForATFLOgSN.resultFunc([], validate)(undefined);
-    expect(validation).to.equal(null);
-  });
-
-  it('skal validere om man har aksjonspunkt', () => {
-    const validate = () => ('validate');
-    const validation = getValidationFaktaForATFLOgSN.resultFunc(aksjonspunkter, validate)(undefined);
-    expect(validation).to.equal('validate');
   });
 
   it('skal lage helptext', () => {
@@ -321,9 +309,9 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     values[createInputfieldKeyAT(arbeidsforhold1)] = '10 000';
     values[createInputfieldKeyAT(arbeidsforhold2)] = '10 000';
     values[createInputfieldKeyFL()] = '20 000';
-    const transformedValues = transformValuesFaktaForATFLOgSN.resultFunc(aktivePaneler, [], undefined, aksjonspunkter, faktaOmBeregning, {})(values);
-    expect(transformedValues[0].faktaOmBeregningTilfeller).to.have.length(1);
-    expect(transformedValues[0].faktaOmBeregningTilfeller[0]).is.eql(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON);
+    const transformedValues = transformValuesFaktaForATFLOgSN.resultFunc(aktivePaneler, [], undefined, faktaOmBeregning, {})(values);
+    expect(transformedValues.faktaOmBeregningTilfeller).to.have.length(1);
+    expect(transformedValues.faktaOmBeregningTilfeller[0]).is.eql(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON);
   });
 
   it('skal kunne transform values for kun besteberegning', () => {
@@ -338,16 +326,16 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     values[createSelectfieldKeyForAndel(andel1)] = 'ARBEIDSTAKER';
     values[createInputFieldKeyForAndel(andel2)] = '20 000';
     values[createSelectfieldKeyForAndel(andel2)] = 'SELVSTENDIG_NÆRINGSDRIVENDE';
-    const transformedValues = transformValuesFaktaForATFLOgSN.resultFunc(aktivePaneler, [], undefined, aksjonspunkter, faktaOmBeregning, {})(values);
-    expect(transformedValues[0].faktaOmBeregningTilfeller).to.have.length(1);
-    expect(transformedValues[0].faktaOmBeregningTilfeller[0]).is.eql(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE);
-    expect(transformedValues[0].besteberegningAndeler.besteberegningAndelListe).to.have.length(2);
-    expect(transformedValues[0].besteberegningAndeler.besteberegningAndelListe[0].andelsnr).is.eql(andel1.andelsnr);
-    expect(transformedValues[0].besteberegningAndeler.besteberegningAndelListe[0].inntektPrMnd).is.eql(10000);
-    expect(transformedValues[0].besteberegningAndeler.besteberegningAndelListe[0].inntektskategori).is.eql('ARBEIDSTAKER');
-    expect(transformedValues[0].besteberegningAndeler.besteberegningAndelListe[1].andelsnr).is.eql(andel2.andelsnr);
-    expect(transformedValues[0].besteberegningAndeler.besteberegningAndelListe[1].inntektPrMnd).is.eql(20000);
-    expect(transformedValues[0].besteberegningAndeler.besteberegningAndelListe[1].inntektskategori).is.eql('SELVSTENDIG_NÆRINGSDRIVENDE');
+    const transformedValues = transformValuesFaktaForATFLOgSN.resultFunc(aktivePaneler, [], undefined, faktaOmBeregning, {})(values);
+    expect(transformedValues.faktaOmBeregningTilfeller).to.have.length(1);
+    expect(transformedValues.faktaOmBeregningTilfeller[0]).is.eql(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE);
+    expect(transformedValues.besteberegningAndeler.besteberegningAndelListe).to.have.length(2);
+    expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[0].andelsnr).is.eql(andel1.andelsnr);
+    expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[0].inntektPrMnd).is.eql(10000);
+    expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[0].inntektskategori).is.eql('ARBEIDSTAKER');
+    expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[1].andelsnr).is.eql(andel2.andelsnr);
+    expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[1].inntektPrMnd).is.eql(20000);
+    expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[1].inntektskategori).is.eql('SELVSTENDIG_NÆRINGSDRIVENDE');
   });
 
 
@@ -401,17 +389,17 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     values[erNyoppstartetFLField] = true;
     values[createInputfieldKeyAT(forholdMedLonnsendringUtenIM.arbeidsforhold)] = '10 000';
     values[createInputfieldKeyFL()] = '20 000';
-    const transformedValues = transformValuesFaktaForATFLOgSN.resultFunc(aktivePaneler, [], undefined, aksjonspunkter, faktaOmBeregning, {})(values);
-    expect(transformedValues[0].faktaOmBeregningTilfeller).to.have.length(4);
-    expect(transformedValues[0].faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)).is.eql(true);
-    expect(transformedValues[0].faktaOmBeregningTilfeller
+    const transformedValues = transformValuesFaktaForATFLOgSN.resultFunc(aktivePaneler, [], undefined, faktaOmBeregning, {})(values);
+    expect(transformedValues.faktaOmBeregningTilfeller).to.have.length(4);
+    expect(transformedValues.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)).is.eql(true);
+    expect(transformedValues.faktaOmBeregningTilfeller
       .includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)).is.eql(true);
-    expect(transformedValues[0].faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL)).is.eql(true);
-    expect(transformedValues[0].faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL)).is.eql(true);
-    expect(transformedValues[0].fastsattUtenInntektsmelding.andelListe).to.have.length(1);
-    expect(transformedValues[0].fastsattUtenInntektsmelding.andelListe[0].andelsnr).to.eql(2);
-    expect(transformedValues[0].fastsattUtenInntektsmelding.andelListe[0].arbeidsinntekt).to.eql(10000);
-    expect(transformedValues[0].fastsettMaanedsinntektFL.maanedsinntekt).to.eql(20000);
+    expect(transformedValues.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL)).is.eql(true);
+    expect(transformedValues.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL)).is.eql(true);
+    expect(transformedValues.fastsattUtenInntektsmelding.andelListe).to.have.length(1);
+    expect(transformedValues.fastsattUtenInntektsmelding.andelListe[0].andelsnr).to.eql(2);
+    expect(transformedValues.fastsattUtenInntektsmelding.andelListe[0].arbeidsinntekt).to.eql(10000);
+    expect(transformedValues.fastsettMaanedsinntektFL.maanedsinntekt).to.eql(20000);
   });
 
 

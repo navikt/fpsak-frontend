@@ -10,7 +10,7 @@ import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspand
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { BeregningInfoPanelImpl, transformValues } from './BeregningInfoPanel';
-import FaktaForATFLOgSNPanel from './fellesFaktaForATFLogSN/FaktaForATFLOgSNPanel';
+import VurderFaktaBeregningPanel from './fellesFaktaForATFLogSN/VurderFaktaBeregningPanel';
 import AvklareAktiviteterPanel from './avklareAktiviteter/AvklareAktiviteterPanel';
 
 const helpTexts = [<FormattedMessage key="AvklarBGTilstøtendeYtelse" id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.TilstøtendeYtelse" />];
@@ -30,7 +30,7 @@ describe('<BeregningInfoPanel>', () => {
       submitCallback={sinon.spy()}
       helpText={helpTexts}
       knappForInntektstabellSkalKunneKlikkes={false}
-      verdiForAvklarAktivitetErSattOgIkkeEndret={false}
+      verdiForAvklarAktivitetErEndret={false}
       faktaTilfeller={[]}
     />);
     const panel = wrapper.find(FaktaEkspandertpanel);
@@ -40,7 +40,7 @@ describe('<BeregningInfoPanel>', () => {
     expect(panel.prop('faktaId')).to.eql(faktaPanelCodes.BEREGNING);
     expect(panel.prop('readOnly')).is.true;
   });
-  it('skal vise FaktaForATFLOgSN panel', () => {
+  it('skal vise VurderFaktaBeregning panel', () => {
     const tidsbegrensetAP = {
       id: 1,
       definisjon: {
@@ -70,14 +70,14 @@ describe('<BeregningInfoPanel>', () => {
       helpText={helpTexts}
       knappForInntektstabellSkalKunneKlikkes={false}
       faktaTilfeller={[]}
-      verdiForAvklarAktivitetErSattOgIkkeEndret={false}
+      verdiForAvklarAktivitetErEndret={false}
     />);
-    const panel = wrapper.find(FaktaForATFLOgSNPanel);
+    const panel = wrapper.find(VurderFaktaBeregningPanel);
     expect(panel).has.length(1);
   });
 
 
-  it('skal ikkje vise FaktaForATFLOgSN panel, kun avklar aktivitet', () => {
+  it('skal ikkje vise VurderFaktaBeregningPanel, kun avklar aktivitet', () => {
     const tidsbegrensetAP = {
       id: 1,
       definisjon: {
@@ -124,9 +124,9 @@ describe('<BeregningInfoPanel>', () => {
       helpText={helpTexts}
       knappForInntektstabellSkalKunneKlikkes={false}
       faktaTilfeller={[]}
-      verdiForAvklarAktivitetErSattOgIkkeEndret={false}
+      verdiForAvklarAktivitetErEndret
     />);
-    const faktaPanel = wrapper.find(FaktaForATFLOgSNPanel);
+    const faktaPanel = wrapper.find(VurderFaktaBeregningPanel);
     expect(faktaPanel).has.length(0);
 
     const avklarPanel = wrapper.find(AvklareAktiviteterPanel);

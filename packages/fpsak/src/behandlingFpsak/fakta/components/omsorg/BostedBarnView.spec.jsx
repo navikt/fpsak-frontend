@@ -89,7 +89,7 @@ describe('<BostedBarnView>', () => {
     const fodselsWrapper = normalTekst.first();
     expect(fodselsWrapper.find('FormattedMessage').prop('id')).to.eql('BostedBarnView.Age');
     expect(fodselsWrapper.find('FormattedMessage').prop('values').fodselsdato).to.eql('03.02.2016');
-    expect(fodselsWrapper.find('FormattedMessage').prop('values').age).to.eql(2);
+    expect(fodselsWrapper.find('FormattedMessage').prop('values').age).to.eql(3);
   });
 
   it('skal vise adresse', () => {

@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { getBehandlingFormValues } from 'behandlingFpsak/behandlingForm';
+import { FormattedMessage } from 'react-intl';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
+import { getBehandlingFormValues, getBehandlingFormInitialValues } from 'behandlingFpsak/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
@@ -10,28 +13,39 @@ import {
   getAksjonspunkter,
   getAvklarAktiviteter,
 } from 'behandlingFpsak/behandlingSelectors';
-import VentelonnVartpengerPanel,
-{ erVerdiForVentelonnVartpengerEndret, erInkludertverdiForVentelonnVartpengerSatt, harVerdiBlittSattTidligere } from './VentelonnVartpengerPanel';
+import { FormSection } from 'redux-form';
+import VentelonnVartpengerPanel from './VentelonnVartpengerPanel';
 
 const {
   AVKLAR_AKTIVITETER,
 } = aksjonspunktCodes;
 
+export const AVKLAR_AKTIVITETER_FORM_NAME = 'avklarAktiviteter';
+
 const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
+const findAksjonspunktMedBegrunnelse = aksjonspunkter => aksjonspunkter
+  .filter(ap => (ap.definisjon.kode === AVKLAR_AKTIVITETER || ap.definisjon.kode === AVKLAR_AKTIVITETER) && ap.begrunnelse !== null)[0];
 
-export const erAktivitetAvklartOgIkkeEndret = formName => createSelector(
-  [getAksjonspunkter, getAvklarAktiviteter, getBehandlingFormValues(formName)],
-  (aksjonspunkter, avklarAktiviteter, values) => {
+
+export const erAvklartAktivitetEndret = formName => createSelector(
+  [getAksjonspunkter, getAvklarAktiviteter, getBehandlingFormValues(formName), getBehandlingFormInitialValues(formName)],
+  (aksjonspunkter, avklarAktiviteter, values, initialValues) => {
     if (!hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)) {
       return false;
     }
-    if (avklarAktiviteter && avklarAktiviteter.ventelonnVartpenger) {
-      return erInkludertverdiForVentelonnVartpengerSatt(values)
-      && (!harVerdiBlittSattTidligere(avklarAktiviteter) || !erVerdiForVentelonnVartpengerEndret(values, avklarAktiviteter));
+    if (values && avklarAktiviteter && avklarAktiviteter.ventelonnVartpenger) {
+      return VentelonnVartpengerPanel.hasValueChangedFromInitial(values[AVKLAR_AKTIVITETER_FORM_NAME], initialValues[AVKLAR_AKTIVITETER_FORM_NAME]);
     }
     return false;
   },
+);
+
+export const getHelpTextsAvklarAktiviteter = createSelector(
+  [getAksjonspunkter],
+  aksjonspunkter => (hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)
+    ? [<FormattedMessage key="VurderFaktaForBeregningen" id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning" />]
+    : []),
 );
 
 /**
@@ -43,8 +57,11 @@ export const AvklareAktiviteterPanelImpl = ({
   readOnly,
   avklarAktiviteter,
   isAksjonspunktClosed,
+  submittable,
+  hasBegrunnelse,
+  isDirty,
 }) => (
-  <div>
+  <FormSection name={AVKLAR_AKTIVITETER_FORM_NAME}>
     {avklarAktiviteter.ventelonnVartpenger
       && (
       <VentelonnVartpengerPanel
@@ -53,7 +70,15 @@ export const AvklareAktiviteterPanelImpl = ({
       />
       )
     }
-  </div>
+    <VerticalSpacer eightPx />
+    <VerticalSpacer twentyPx />
+    <FaktaBegrunnelseTextField
+      isDirty={isDirty}
+      isSubmittable={submittable}
+      isReadOnly={readOnly}
+      hasBegrunnelse={hasBegrunnelse}
+    />
+  </FormSection>
 );
 
 
@@ -61,6 +86,9 @@ AvklareAktiviteterPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   avklarAktiviteter: PropTypes.shape().isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isDirty: PropTypes.bool.isRequired,
+  hasBegrunnelse: PropTypes.bool.isRequired,
+  submittable: PropTypes.bool.isRequired,
 };
 
 // /// TRANSFORM VALUES METHODS ///////
@@ -70,14 +98,15 @@ export const transformValuesAvklarAktiviteter = createSelector(
   (aksjonspunkter, avklarAktiviteter) => (values) => {
     if (hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)) {
       if (avklarAktiviteter && avklarAktiviteter.ventelonnVartpenger) {
-        const ventelonnVartpengerTransformed = VentelonnVartpengerPanel.transformValues(values, avklarAktiviteter);
+        const avklarValues = values[AVKLAR_AKTIVITETER_FORM_NAME];
+        const ventelonnVartpengerTransformed = VentelonnVartpengerPanel.transformValues(avklarValues, avklarAktiviteter);
         if (ventelonnVartpengerTransformed) {
-          const beg = values.begrunnelse;
-          return {
+          const beg = avklarValues.begrunnelse;
+          return [{
             kode: AVKLAR_AKTIVITETER,
             begrunnelse: beg === undefined ? null : beg,
             ...ventelonnVartpengerTransformed,
-          };
+          }];
         }
       }
     }
@@ -93,10 +122,16 @@ export const buildInitialValuesAvklarAktiviteter = createSelector(
     if (!hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)) {
       return {};
     }
+    let initialValues = {};
     if (avklarAktiviteter && avklarAktiviteter.ventelonnVartpenger) {
-      return VentelonnVartpengerPanel.buildInitialValues(avklarAktiviteter);
+      initialValues = VentelonnVartpengerPanel.buildInitialValues(avklarAktiviteter);
     }
-    return null;
+    return {
+      [AVKLAR_AKTIVITETER_FORM_NAME]: {
+        ...initialValues,
+        ...FaktaBegrunnelseTextField.buildInitialValues(findAksjonspunktMedBegrunnelse(aksjonspunkter)),
+      },
+    };
   },
 );
 
@@ -104,9 +139,11 @@ export const buildInitialValuesAvklarAktiviteter = createSelector(
 
 export const getValidationAvklarAktiviteter = createSelector([getAksjonspunkter, getAvklarAktiviteter], (aksjonspunkter, avklarAktiviteter) => (values) => {
   if (hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)) {
+    const errors = {};
     if (avklarAktiviteter && avklarAktiviteter.ventelonnVartpenger) {
-      return VentelonnVartpengerPanel.validate(values);
+      errors[AVKLAR_AKTIVITETER_FORM_NAME] = VentelonnVartpengerPanel.validate(values[AVKLAR_AKTIVITETER_FORM_NAME]);
     }
+    return errors;
   }
   return null;
 });
@@ -114,14 +151,18 @@ export const getValidationAvklarAktiviteter = createSelector([getAksjonspunkter,
 
 // // MAP STATE TO PROPS METHODS //////
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   const avklarAktiviteter = getAvklarAktiviteter(state);
   const alleAp = getAksjonspunkter(state);
-  const relevantAp = alleAp.filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN);
+  const relevantAp = alleAp.filter(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_AKTIVITETER);
   const isAksjonspunktClosed = relevantAp.length === 0 ? undefined : !isAksjonspunktOpen(relevantAp[0].status.kode);
+  const initialValues = getBehandlingFormInitialValues(ownProps.formName)(state);
+  const hasBegrunnelse = initialValues && initialValues[AVKLAR_AKTIVITETER_FORM_NAME]
+  && !!initialValues[AVKLAR_AKTIVITETER_FORM_NAME].begrunnelse;
   return {
     isAksjonspunktClosed,
     avklarAktiviteter,
+    hasBegrunnelse,
   };
 };
 

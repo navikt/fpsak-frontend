@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { required } from '@fpsak-frontend/utils';
+import { Normaltekst } from 'nav-frontend-typografi';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import {
-  required,
-} from '@fpsak-frontend/utils';
+import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 export const AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME = 'avklarAktivitetVentelonnVartpenger';
 
@@ -17,15 +17,20 @@ export const VentelonnVartpengerPanel = ({
   readOnly,
   isAksjonspunktClosed,
 }) => (
-  <RadioGroupField
-    label={<FormattedMessage id="AvklareAktiviteter.AvklarVentelonnVartpenger" />}
-    name={AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME}
-    readOnly={readOnly}
-    isEdited={isAksjonspunktClosed}
-  >
-    <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Ja" />} value />
-    <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Nei" />} value={false} />
-  </RadioGroupField>
+  <ElementWrapper>
+    <Normaltekst>
+      <FormattedMessage id="AvklareAktiviteter.AvklarVentelonnVartpenger" />
+    </Normaltekst>
+    <VerticalSpacer eightPx />
+    <RadioGroupField
+      name={AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME}
+      readOnly={readOnly}
+      isEdited={isAksjonspunktClosed}
+    >
+      <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Ja" />} value />
+      <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Nei" />} value={false} />
+    </RadioGroupField>
+  </ElementWrapper>
 );
 
 
@@ -67,6 +72,12 @@ VentelonnVartpengerPanel.buildInitialValues = (avklarAktiviteter) => {
   initial[AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME] = avklarAktiviteter.ventelonnVartpenger.inkludert;
   return initial;
 };
+
+
+// DIFF SJEKKER ///
+VentelonnVartpengerPanel.hasValueChangedFromInitial = (values, initialValues) => (
+  values[AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME] !== initialValues[AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME]
+);
 
 // /// VALIDATION METHODS ///////
 
