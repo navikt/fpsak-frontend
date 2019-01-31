@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { TextareaControlled as NavTextareaControlled } from 'nav-frontend-skjema';
+import { Textarea as NavTextarea } from 'nav-frontend-skjema';
 import EtikettFokus from 'nav-frontend-etiketter';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
@@ -29,7 +29,7 @@ const TextAreaWithBadge = ({
     </div>
     )
     }
-    <NavTextareaControlled {...otherProps} />
+    <NavTextarea {...otherProps} />
   </div>
 );
 
