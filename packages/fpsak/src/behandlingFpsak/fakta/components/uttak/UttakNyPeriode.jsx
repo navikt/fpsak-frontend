@@ -19,6 +19,7 @@ import {
   calcDaysAndWeeks,
   lagVisningsNavn,
 } from '@fpsak-frontend/utils';
+import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
 import moment from 'moment';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 import { getPersonopplysning, getFaktaArbeidsforhold } from 'behandlingFpsak/behandlingSelectors';

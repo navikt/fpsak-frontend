@@ -159,6 +159,7 @@ FerieOgArbeidsPeriode.propTypes = {
   skalViseResultat: PropTypes.bool.isRequired,
   oppholdArsak: PropTypes.shape(),
   behandlingStatusKode: PropTypes.string,
+  utsettelseArsak: PropTypes.shape(),
 };
 
 FerieOgArbeidsPeriode.defaultProps = {
@@ -167,6 +168,7 @@ FerieOgArbeidsPeriode.defaultProps = {
   resultat: undefined,
   arbeidsgiver: {},
   oppholdArsak: undefined,
+  utsettelseArsak: undefined,
   behandlingStatusKode: undefined,
 };
 
