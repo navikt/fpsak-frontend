@@ -151,7 +151,7 @@ InnleggelsePeriode.propTypes = {
   formSyncErrors: PropTypes.shape(),
   inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.shape()),
   arbeidsgiver: PropTypes.shape(),
-  behandlingStatusKode: PropTypes.string.isRequired,
+  behandlingStatusKode: PropTypes.string,
 };
 
 InnleggelsePeriode.defaultProps = {
@@ -159,6 +159,7 @@ InnleggelsePeriode.defaultProps = {
   formSyncErrors: {},
   inntektsmeldingInfo: [],
   resultat: undefined,
+  behandlingStatusKode: undefined,
   arbeidsgiver: {},
 
 };

@@ -5,7 +5,6 @@ import { FormattedMessage } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 import { behandlingFormValueSelector, behandlingForm } from 'behandlingFpsak/behandlingForm';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import {
   PeriodpickerField, SelectField, CheckboxField, RadioGroupField, RadioOption, TextAreaField, DecimalField,
 } from '@fpsak-frontend/form';
@@ -18,10 +17,12 @@ import {
   maxValue, minLength, maxLength, hasValidText, guid,
   ISO_DATE_FORMAT,
   calcDaysAndWeeks,
+  lagVisningsNavn,
 } from '@fpsak-frontend/utils';
+import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
 import moment from 'moment';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
-import { getPersonopplysning, getAlleAndelerIForstePeriode } from 'behandlingFpsak/behandlingSelectors';
+import { getPersonopplysning, getFaktaArbeidsforhold } from 'behandlingFpsak/behandlingSelectors';
 import {
   FlexContainer, FlexRow, FlexColumn, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -36,12 +37,6 @@ import styles from './uttakNyPeriode.less';
 const maxValue100 = maxValue(100);
 const minLength3 = minLength(3);
 const maxLength4000 = maxLength(4000);
-
-const gyldigeAktivitetStatus = [
-  aktivitetStatus.ARBEIDSTAKER,
-  aktivitetStatus.FRILANSER,
-  aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-];
 
 const gyldigeUttakperioder = [
   uttakPeriodeType.FELLESPERIODE,
@@ -67,28 +62,25 @@ const mapUtsettelseÅrsaker = typer => typer
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
 const mapArbeidsforhold = andeler => andeler.map((andel) => {
-  const { aktivitetStatus: aktivitetStatusAndel } = andel;
+  const { arbeidType, arbeidsgiver } = andel;
 
-  if (aktivitetStatusAndel && gyldigeAktivitetStatus.includes(aktivitetStatusAndel.kode)) {
-    const { arbeidsforhold } = andel;
-    let periodeArbeidsforhold = (arbeidsforhold || []).arbeidsgiverNavn
-      ? `${arbeidsforhold.arbeidsgiverNavn}` : aktivitetStatusAndel.navn;
-    periodeArbeidsforhold = (arbeidsforhold || []).arbeidsgiverId
-      ? `${periodeArbeidsforhold} ${arbeidsforhold.arbeidsgiverId}` : periodeArbeidsforhold;
-    periodeArbeidsforhold = (arbeidsforhold || []).arbeidsforholdId
-      ? `${periodeArbeidsforhold}...${arbeidsforhold.arbeidsforholdId.substr(-4)}` : periodeArbeidsforhold;
-
-
-    const identifkator = (arbeidsforhold || []).arbeidsgiverId || '-';
-    const navn = (arbeidsforhold || []).arbeidsgiverNavn || aktivitetStatusAndel.navn;
-    const fixedAktørId = (arbeidsforhold || []).aktørId || '-';
-
-    return (
-      <option value={`${identifkator}|${navn}|${fixedAktørId}`} key={guid()}>{periodeArbeidsforhold}</option>
-    );
+  let periodeArbeidsforhold = '';
+  if (arbeidType && arbeidType.kode !== uttakArbeidTypeKodeverk.ORDINÆRT_ARBEID) {
+    periodeArbeidsforhold = arbeidType.navn;
+  } else {
+    periodeArbeidsforhold = lagVisningsNavn(arbeidsgiver);
   }
-  return null;
+
+  const identifkator = (arbeidsgiver || []).identifikator || '-';
+  const navn = (arbeidsgiver || []).navn || arbeidType.navn;
+  const fixedAktørId = (arbeidsgiver || []).aktørId || '-';
+  const virksomhet = (arbeidsgiver || []).virksomhet || '-';
+
+  return (
+    <option value={`${identifkator}|${navn}|${fixedAktørId}|${virksomhet}`} key={guid()}>{periodeArbeidsforhold}</option>
+  );
 });
+
 const periodeTypeTrengerArsak = (sokerKjonn, periodeType) => (
   (sokerKjonn === navBrukerKjonn.MANN && periodeType === 'MØDREKVOTE')
   || (sokerKjonn === navBrukerKjonn.KVINNE && periodeType === 'FEDREKVOTE')
@@ -353,6 +345,7 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
     identifikator: arbeidsForhold[0] !== '-' ? arbeidsForhold[0] : undefined,
     navn: arbeidsForhold[1] ? arbeidsForhold[1] : undefined,
     aktørId: arbeidsForhold[2] !== '-' ? arbeidsForhold[2] : undefined,
+    virksomhet: arbeidsForhold[3] !== '-' ? arbeidsForhold[3] : undefined,
   } : null;
 
   return {
@@ -397,7 +390,7 @@ const mapStateToProps = (state, ownProps) => {
   const utsettelseÅrsaker = getKodeverk(kodeverkTyper.UTSETTELSE_ARSAK)(state);
   const overføringÅrsaker = getKodeverk(kodeverkTyper.OVERFOERING_AARSAK_TYPE)(state);
   const personopplysninger = getPersonopplysning(state);
-  const andeler = getAlleAndelerIForstePeriode(state);
+  const andeler = getFaktaArbeidsforhold(state) || [];
 
   return {
     periodeTyper,
