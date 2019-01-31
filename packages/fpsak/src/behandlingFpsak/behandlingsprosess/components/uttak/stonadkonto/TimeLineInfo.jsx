@@ -8,7 +8,7 @@ import { stonadskontoerPropType } from 'behandlingFelles/proptypes/stonadskontoP
 import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
 import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/src/uttakArbeidTypeCodes';
 import stonadskontoType from '@fpsak-frontend/kodeverk/src/stonadskontoType';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, lagVisningsNavn } from '@fpsak-frontend/utils';
 import moment from 'moment';
 
 import TimeLineTab from './TimeLineTab';
@@ -45,7 +45,6 @@ const findAntallUkerOgDager = (saldo) => {
 };
 
 const createTextStrings = (arbforhold) => {
-  // TODO lage en util av denne funskjonen da dette gjøres en del steder i fpsak frontend
   const {
     arbeidsgiver, arbeidsforholdId, uttakArbeidType,
   } = arbforhold;
@@ -55,12 +54,7 @@ const createTextStrings = (arbforhold) => {
   if (uttakArbeidType && uttakArbeidType.kode !== uttakArbeidTypeKodeverk.ORDINÆRT_ARBEID) {
     arbeidsforhold = <FormattedMessage id={uttakArbeidTypeTekstCodes[uttakArbeidType.kode]} />;
   } else if (arbeidsgiver) {
-    const {
-      identifikator, navn, virksomhet,
-    } = arbeidsgiver;
-    arbeidsforhold = navn ? `${navn}` : arbeidsforhold;
-    arbeidsforhold = identifikator ? `${arbeidsforhold} (${identifikator})` : arbeidsforhold;
-    arbeidsforhold = virksomhet && arbeidsforholdId ? `${arbeidsforhold}...${arbeidsforholdId.substr(-4)}` : arbeidsforhold;
+    arbeidsforhold = lagVisningsNavn(arbeidsgiver, arbeidsforholdId);
   }
 
   return arbeidsforhold;
