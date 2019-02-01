@@ -1,10 +1,19 @@
+@import '@{coreModulePath}nav-frontend-core/less/core';
+@import './dayPicker';
+
+body {
+	background-color: #efefef;
+	color: @navMorkGra;
+	height: 100%;
+	line-height: 1.42857143;
+	margin: 0;
+}
+
+
 /*
 CSS-endringer för felleskomponenter og globaler så
 som fra core/og muligen import fra alla andra komponenter
  */
-
-@import '@{coreModulePath}nav-frontend-core/less/core';
-@import './dayPicker';
 
 :global(.cal-wrap) {
   width: 300px;
