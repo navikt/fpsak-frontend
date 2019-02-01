@@ -4,9 +4,9 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Knapp } from 'nav-frontend-knapper';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
-
+import Modal from 'nav-frontend-modal';
 import {
-  Modal, Image, VerticalSpacer, ElementWrapper,
+  Image, VerticalSpacer, ElementWrapper,
 } from '@fpsak-frontend/shared-components';
 
 import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';

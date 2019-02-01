@@ -4,10 +4,9 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Column, Container, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import { Modal, VerticalSpacer, Image } from '@fpsak-frontend/shared-components';
+import Modal from 'nav-frontend-modal';
+import { VerticalSpacer, Image } from '@fpsak-frontend/shared-components';
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import {
   ariaCheck, dateAfterOrEqualToToday, hasValidDate, required,

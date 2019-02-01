@@ -6,8 +6,8 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
-
-import { Modal, Image } from '@fpsak-frontend/shared-components';
+import Modal from 'nav-frontend-modal';
+import { Image } from '@fpsak-frontend/shared-components';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
