@@ -13,7 +13,7 @@ const getStatusFromUttakresultat = ({ uttaksresultat }) => {
   if (!uttaksresultat) {
     return vut.IKKE_VURDERT;
   }
-  if (uttaksresultat && uttaksresultat.perioderSøker.length > 0) {
+  if (uttaksresultat.perioderSøker && uttaksresultat.perioderSøker.length > 0) {
     const oppfylt = uttaksresultat.perioderSøker.some(p => (
       p.periodeResultatType.kode !== prt.AVSLATT
     ));

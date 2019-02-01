@@ -78,10 +78,7 @@ export const hasValidName = (text) => {
 };
 
 export const hasValidValue = value => invalidValue => (value === invalidValue ? invalidValueMessage(value) : null);
-export const arrayMinLength = length => (value) => {
-  const a = true;
-  return (value && a && value.length >= length ? null : arrayMinLengthMessage(length));
-};
+export const arrayMinLength = length => value => (value && value.length >= length ? null : arrayMinLengthMessage(length));
 
 export const dateIsAfter = (date, checkAgainsDate) => moment(date).isAfter(checkAgainsDate);
 export const isDatesEqual = (date1, date2) => (date1 !== date2 ? datesNotEqual(moment(date2).format(DDMMYYYY_DATE_FORMAT)) : null);
