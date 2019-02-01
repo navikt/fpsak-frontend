@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
-
-import { Image, Modal } from '@fpsak-frontend/shared-components';
+import Modal from 'nav-frontend-modal';
+import { Image } from '@fpsak-frontend/shared-components';
 
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 
