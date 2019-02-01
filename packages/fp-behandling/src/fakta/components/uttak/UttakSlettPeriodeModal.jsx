@@ -38,7 +38,8 @@ export const UttakSlettPeriodeModalImpl = ({
       contentLabel="Perioden slettes"
       onRequestClose={closeEvent}
       closeButton={false}
-      shouldCloseOnOverlayClick
+      shouldCloseOnOverlayClick={false}
+      ariaHideApp={false}
     >
       <FlexContainer wrap>
         <FlexRow>

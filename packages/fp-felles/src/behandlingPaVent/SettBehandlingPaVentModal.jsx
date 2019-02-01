@@ -7,6 +7,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import Modal from 'nav-frontend-modal';
 import { VerticalSpacer, Image } from '@fpsak-frontend/shared-components';
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import {
   ariaCheck, dateAfterOrEqualToToday, hasValidDate, required,
