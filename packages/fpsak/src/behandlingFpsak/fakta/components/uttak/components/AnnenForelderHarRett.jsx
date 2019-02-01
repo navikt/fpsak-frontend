@@ -10,7 +10,7 @@ import {
 import {
   RadioGroupField, RadioOption, TextAreaField,
 } from '@fpsak-frontend/form';
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
 
 import styles from './annenForelderHarRett.less';
 

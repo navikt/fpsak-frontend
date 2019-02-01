@@ -11,7 +11,7 @@ import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
 import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
 import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
 import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
-import { uttaksresultatAktivitetPropType } from 'behandlingFelles/proptypes/uttaksresultatPropType';
+import { uttaksresultatAktivitetPropType } from '@fpsak-frontend/fp-behandling-felles';
 
 import styles from './uttakTimeLineData.less';
 import UttakActivity from './UttakActivity';

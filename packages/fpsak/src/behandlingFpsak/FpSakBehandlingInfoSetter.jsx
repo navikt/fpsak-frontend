@@ -2,8 +2,7 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-import BehandlingInfoHolder from 'behandlingFelles/BehandlingInfoHolder';
+import { aksjonspunktPropType, BehandlingInfoHolder } from '@fpsak-frontend/fp-behandling-felles';
 import {
   isKontrollerRevurderingAksjonspunkOpen, getBehandlingSprak, getBehandlingVersjon, getBrevMaler, getBrevMottakere, getAksjonspunkter,
   getBehandlingAnsvarligSaksbehandler, getBehandlingStatus, getBehandlingToTrinnsBehandling, getTotrinnskontrollArsakerUtenUdefinert,

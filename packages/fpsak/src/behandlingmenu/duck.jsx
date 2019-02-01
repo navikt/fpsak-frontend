@@ -7,7 +7,7 @@ import fpsakApi from 'data/fpsakApi';
 import { updateFagsakInfo, updateBehandlinger } from 'fagsak/duck';
 import { updateBehandlingsupportInfo } from 'behandlingsupport/duck';
 import behandlingUpdater from 'behandling/BehandlingUpdater';
-import reducerRegistry from '../ReducerRegistry';
+import reducerRegistry from '@fpsak-frontend/fp-felles';
 
 const findNewBehandlingId = (behandlingerResponse) => {
   const sortedBehandlinger = behandlingerResponse.payload

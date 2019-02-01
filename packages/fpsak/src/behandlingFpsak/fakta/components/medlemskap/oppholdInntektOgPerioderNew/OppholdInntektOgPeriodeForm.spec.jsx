@@ -6,7 +6,7 @@ import sinon from 'sinon';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
+import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import { OppholdInntektOgPeriodeForm } from './OppholdInntektOgPeriodeForm';
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
 import InntektOgYtelserFaktaPanel from './InntektOgYtelserFaktaPanel';

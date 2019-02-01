@@ -2,13 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { Row, Column } from 'nav-frontend-grid';
 import { Element, Undertekst, Normaltekst } from 'nav-frontend-typografi';
-import { getFeilutbetalingFakta } from 'behandlingTilbakekreving/selectors/tilbakekrevingBehandlingSelectors';
+
 import { formatCurrencyNoKr, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import moment from 'moment';
-import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
-import faktaPanelCodes from 'behandlingFelles/fakta/faktaPanelCodes';
+import { FaktaEkspandertpanel, faktaPanelCodes } from '@fpsak-frontend/fp-behandling-felles';
+
+import { getFeilutbetalingFakta } from 'behandlingTilbakekreving/selectors/tilbakekrevingBehandlingSelectors';
+
 import styles from './feilutbetalingInfoPanel.less';
 
 const perioderDatoer = periode => `${moment(periode.fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(periode.fom).format(DDMMYYYY_DATE_FORMAT)}`;

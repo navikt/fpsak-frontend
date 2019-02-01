@@ -8,7 +8,7 @@ import moment from 'moment';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getBehandlingVersjon } from 'behandlingFpsak/behandlingSelectors';
-import arbeidsforholdPropType from 'behandlingFelles/proptypes/arbeidsforholdPropType';
+import { arbeidsforholdPropType } from '@fpsak-frontend/fp-behandling-felles';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';

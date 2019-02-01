@@ -8,7 +8,7 @@ import { createSelector } from 'reselect';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
+import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import {
   DateLabel, VerticalSpacer, ElementWrapper,

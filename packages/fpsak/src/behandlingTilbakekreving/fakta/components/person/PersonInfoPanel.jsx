@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+import { aksjonspunktPropType, withDefaultToggling, faktaPanelCodes } from '@fpsak-frontend/fp-behandling-felles';
 import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
 import { getKodeverk } from 'kodeverk/duck';
@@ -18,8 +18,6 @@ import {
   getBehandlingArbeidsforhold,
 } from 'behandlingTilbakekreving/selectors/tilbakekrevingBehandlingSelectors';
 import { behandlingForm } from 'behandlingTilbakekreving/behandlingForm';
-import withDefaultToggling from 'behandlingFelles/fakta/withDefaultToggling';
-import faktaPanelCodes from 'behandlingFelles/fakta/faktaPanelCodes';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import FullPersonInfo from './panelBody/FullPersonInfo';

@@ -14,7 +14,7 @@ import Panel from 'nav-frontend-paneler';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { getSoknad, getBehandlingUttaksperiodegrense } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
+import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
 import {
   AksjonspunktHelpText, FadingPanel, VerticalSpacer,

@@ -10,10 +10,8 @@ import { getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktS
 import { getBehandlingsresultat } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-import behandlingspunktCodes from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
+import { aksjonspunktPropType, behandlingspunktCodes, BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import VilkarResultPicker from 'behandlingFpsak/behandlingsprosess/components/vilkar/VilkarResultPicker';
-import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 import { getKodeverk } from 'kodeverk/duck';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';

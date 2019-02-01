@@ -9,7 +9,7 @@ import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 import {
   getSimuleringResultat, getTilbakekrevingValg, getAksjonspunkter, getBehandlingVersjon,
 } from 'behandlingFpsak/behandlingSelectors';
-import behandlingspunktCodes from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
 import { getSelectedBehandlingId } from 'behandling/duck';
 

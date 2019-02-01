@@ -4,8 +4,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import moment from 'moment';
 
-import BehandlingGrid from 'behandlingFelles/components/BehandlingGrid';
-import BehandlingErPaVentModal from 'behandlingFelles/components/BehandlingErPaVentModal';
+import { BehandlingGrid, BehandlingErPaVentModal } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingFpsakIndex } from './BehandlingFpsakIndex';
 
 describe('BehandlingFpsakIndex', () => {

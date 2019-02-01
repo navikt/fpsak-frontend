@@ -4,7 +4,7 @@ import {
 import errorHandler from '@fpsak-frontend/error-api-redux';
 
 import { setRequestPollingMessage } from 'app/pollingMessageDuck';
-import reducerRegistry from '../../ReducerRegistry';
+import reducerRegistry from '@fpsak-frontend/fp-felles';
 
 export const BehandlingFpsakApiKeys = {
   BEHANDLING: 'BEHANDLING',

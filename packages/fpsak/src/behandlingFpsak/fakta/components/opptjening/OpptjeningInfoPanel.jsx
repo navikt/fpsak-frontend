@@ -6,12 +6,10 @@ import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import { getBehandlingFastsattOpptjening, getBehandlingOpptjeningActivities } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
-import faktaPanelCodes from 'behandlingFelles/fakta/faktaPanelCodes';
-import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
+import { faktaPanelCodes, aksjonspunktPropType, FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
 import { omit, addDaysToDate } from '@fpsak-frontend/utils';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

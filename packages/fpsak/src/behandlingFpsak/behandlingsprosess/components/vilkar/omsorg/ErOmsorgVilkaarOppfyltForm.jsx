@@ -8,9 +8,7 @@ import BpPanelTemplate from 'behandlingFpsak/behandlingsprosess/components/vilka
 import { getBehandlingsresultat } from 'behandlingFpsak/behandlingSelectors';
 import { getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-import behandlingspunktCodes from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
-import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
+import { aksjonspunktPropType, behandlingspunktCodes, BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import VilkarResultPicker from 'behandlingFpsak/behandlingsprosess/components/vilkar/VilkarResultPicker';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';

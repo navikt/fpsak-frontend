@@ -13,8 +13,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import { createLocationForHistorikkItems } from 'app/paths';
-import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+import { BehandlingIdentifier, aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
 import {
   getBehandlingVersjon, getAksjonspunkter, getBehandlingAnsvarligSaksbehandler, getTotrinnskontrollArsakerUtenUdefinert,
   getBehandlingStatus, getBehandlingToTrinnsBehandling, getTotrinnskontrollArsakerReadOnly, getBehandlingIdentifier,

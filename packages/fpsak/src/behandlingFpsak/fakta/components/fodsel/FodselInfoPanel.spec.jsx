@@ -5,7 +5,7 @@ import sinon from 'sinon';
 
 import FodselSammenligningPanel from 'behandlingFpsak/components/fodselSammenligning/FodselSammenligningPanel';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
+import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
 import { FodselInfoPanelImpl } from './FodselInfoPanel';
 import SjekkFodselDokForm from './SjekkFodselDokForm';
 import TermindatoFaktaForm from './TermindatoFaktaForm';

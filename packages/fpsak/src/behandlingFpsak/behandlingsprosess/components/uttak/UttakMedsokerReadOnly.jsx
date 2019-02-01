@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
+
 import { Image } from '@fpsak-frontend/shared-components';
 import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
 import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
 import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
 import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
-import { uttaksresultatAktivitetPropType } from 'behandlingFelles/proptypes/uttaksresultatPropType';
+import { uttaksresultatAktivitetPropType } from '@fpsak-frontend/fp-behandling-felles';
 
 import styles from './uttakTimeLineData.less';
 import UttakActivity from './UttakActivity';

@@ -11,10 +11,9 @@ import {
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { Column, Row } from 'nav-frontend-grid';
 import { getBehandlinger } from 'behandling/selectors/behandlingerSelectors';
-import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
+import { BehandlingspunktBegrunnelseTextField, behandlingPropType } from '@fpsak-frontend/fp-behandling-felles';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
 
-import behandlingPropType from 'behandlingFelles/proptypes/behandlingPropType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
-import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
+import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
 import { UttakInfoPanelImpl } from './UttakInfoPanel';
 import UttakFaktaForm from './UttakFaktaForm';
 

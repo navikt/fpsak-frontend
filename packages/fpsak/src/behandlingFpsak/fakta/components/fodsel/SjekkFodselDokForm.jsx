@@ -7,7 +7,7 @@ import { createSelector } from 'reselect';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column } from 'nav-frontend-grid';
 
-import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
+import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import {
   ElementWrapper, VerticalSpacer, ArrowBox,
 } from '@fpsak-frontend/shared-components';

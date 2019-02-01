@@ -11,7 +11,7 @@ import {
 import PropTypes from 'prop-types';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
+import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import klageVurderingOmgjoerType from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
 import { getClassForMedholdKlage, getClassForOpphevKlage } from '../SharedUtills/getClassHelper';
 import styles from '../SharedUtills/behandleKlageForm.less';

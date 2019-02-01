@@ -9,7 +9,7 @@ import {
   getBehandlingGjelderBesteberegning,
   getBeregningsgrunnlagPerioder,
 } from 'behandlingFpsak/behandlingSelectors';
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BorderBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';

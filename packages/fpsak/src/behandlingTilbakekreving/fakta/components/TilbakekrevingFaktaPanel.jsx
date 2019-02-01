@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import PersonIndex from 'person/PersonIndex';
 import { getRettigheter } from 'navAnsatt/duck';
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
 import {
   getPersonopplysning, getBehandlingIsOnHold, getAksjonspunkter, hasReadOnlyBehandling, getFeilutbetalingFakta,
 } from 'behandlingTilbakekreving/selectors/tilbakekrevingBehandlingSelectors';

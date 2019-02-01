@@ -11,8 +11,7 @@ import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
-import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import SettBehandlingPaVentForm from 'behandlingFelles/components/SettBehandlingPaVentForm';
+import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-behandling-felles';
 import {
   getBehandlingSprak,
   getBehandlingVersjon,

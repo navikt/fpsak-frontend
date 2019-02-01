@@ -4,7 +4,7 @@ import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/in
 import sinon from 'sinon';
 
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
-import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
+import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';

@@ -14,7 +14,7 @@ import {
   getUttaksresultatPerioder, getSimuleringResultat,
 } from 'behandlingFpsak/behandlingSelectors';
 import { getFeatureToggles } from 'app/duck';
-import behandlingspunktCodes from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
 import createEngangsstonadBpProps from './definition/engangsstonadBpDefinition';
 import createForeldrepengerBpProps from './definition/foreldrepengerBpDefinition';
 import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from './duck';

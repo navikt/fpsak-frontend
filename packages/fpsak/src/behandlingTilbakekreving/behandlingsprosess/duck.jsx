@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 import tilbakekrevingBehandlingApi from 'behandlingTilbakekreving/data/tilbakekrevingBehandlingApi';
-import reducerRegistry from '../../ReducerRegistry';
+import reducerRegistry from '@fpsak-frontend/fp-felles';
 
 const reducerName = 'tilbakekrevingBehandlingsprosess';
 

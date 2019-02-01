@@ -8,8 +8,7 @@ import { connect } from 'react-redux';
 import { getSoknad } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
-import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
-import faktaPanelCodes from 'behandlingFelles/fakta/faktaPanelCodes';
+import { FaktaEkspandertpanel, faktaPanelCodes } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import TilleggsopplysningerFaktaForm from './TilleggsopplysningerFaktaForm';
 

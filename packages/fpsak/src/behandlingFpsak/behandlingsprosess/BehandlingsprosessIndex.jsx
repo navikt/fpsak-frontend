@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
-import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
+import { BehandlingIdentifier, aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import {
   getAksjonspunkter, getBehandlingVersjon, getBehandlingType,
@@ -18,7 +18,6 @@ import FatterVedtakStatusModal from 'behandlingFpsak/behandlingsprosess/componen
 import KlageBehandlingModal from 'behandlingFpsak/behandlingsprosess/components/klage/KlageBehandlingModal';
 import BehandlingspunktInfoPanel from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktInfoPanel';
 import requireProps from 'app/data/requireProps';
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';

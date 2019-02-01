@@ -13,9 +13,8 @@ import {
   getSoknad, getAksjonspunkter, getBehandlingRevurderingAvFortsattMedlemskapFom,
 } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
-import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
+import { FaktaBegrunnelseTextField, aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getFagsakPerson } from 'fagsak/fagsakSelectors';

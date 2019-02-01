@@ -8,15 +8,13 @@ import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButto
 import { getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
 import { getBehandlingVersjon } from 'behandlingFpsak/behandlingSelectors';
 import { getSelectedBehandlingId } from 'behandlingFpsak/duck';
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import { fodselsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { VerticalSpacer, ElementWrapper, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
 import FodselSammenligningPanel from 'behandlingFpsak/components/fodselSammenligning/FodselSammenligningPanel';
 import TermindatoFaktaForm, { termindatoFaktaFormName } from 'behandlingFpsak/fakta/components/fodsel/TermindatoFaktaForm';
 import SjekkFodselDokForm, { sjekkFodselDokForm } from 'behandlingFpsak/fakta/components/fodsel/SjekkFodselDokForm';
-import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
-import faktaPanelCodes from 'behandlingFelles/fakta/faktaPanelCodes';
+import { FaktaEkspandertpanel, aksjonspunktPropType, faktaPanelCodes } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import SykdomPanel, { sykdomPanelName } from './SykdomPanel';
 

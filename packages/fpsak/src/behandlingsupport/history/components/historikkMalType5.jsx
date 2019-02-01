@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
 import { createLocationForHistorikkItems } from 'app/paths';
-import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinnslagDelPropType';
+import { historikkinnslagDelPropType } from '@fpsak-frontend/fp-behandling-felles';
 import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeCodes';
 import historikkEndretFeltTypeHeadingCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeHeadingCodes';
 import {

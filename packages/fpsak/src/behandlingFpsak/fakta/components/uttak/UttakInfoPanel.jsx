@@ -4,9 +4,8 @@ import { createSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
-import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
+import { FaktaEkspandertpanel, faktaPanelCodes } from '@fpsak-frontend/fp-behandling-felles';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
-import faktaPanelCodes from 'behandlingFelles/fakta/faktaPanelCodes';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {

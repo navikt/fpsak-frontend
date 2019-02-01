@@ -8,7 +8,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
-import arbeidsforholdPropType from 'behandlingFelles/proptypes/arbeidsforholdPropType';
+import { arbeidsforholdPropType } from '@fpsak-frontend/fp-behandling-felles';
 import BehandlingFormFieldCleaner from 'behandlingFpsak/BehandlingFormFieldCleaner';
 import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, getBehandlingFormValues, getBehandlingFormInitialValues,

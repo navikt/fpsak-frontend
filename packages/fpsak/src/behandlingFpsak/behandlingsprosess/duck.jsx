@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
-import sakOperations from 'behandlingFelles/SakOperations';
+import { sakOperations } from '@fpsak-frontend/fp-behandling-felles';
+import reducerRegistry from '@fpsak-frontend/fp-felles';
 import fpsakBehandlingApi from '../data/fpsakBehandlingApi';
-import reducerRegistry from '../../ReducerRegistry';
 
 const reducerName = 'fpsakBehandlingsprosess';
 

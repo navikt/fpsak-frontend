@@ -1,6 +1,5 @@
-import BehandlingspunktProperties from 'behandlingFelles/behandlingsprosess/definition/behandlingspunktBuilder';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import bpc from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
+import { behandlingspunktCodes as bpc, BehandlingspunktProperties } from '@fpsak-frontend/fp-behandling-felles';
 
 /**
  * Rekkefølgen i listene under bestemmer behandlingspunkt-rekkefølgen i GUI.

@@ -4,14 +4,14 @@ import { injectIntl, intlShape } from 'react-intl';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+import {
+  aksjonspunktPropType, faktaPanelCodes, FaktaEkspandertpanel, FaktaBegrunnelseTextField,
+} from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   getFaktaOmBeregningTilfellerKoder,
 } from 'behandlingFpsak/behandlingSelectors';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
-import faktaPanelCodes from 'behandlingFelles/fakta/faktaPanelCodes';
-import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
 import { AksjonspunktHelpText, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';

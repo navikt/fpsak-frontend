@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
 
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+import { aksjonspunktPropType, beregningsgrunnlagPropType, behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
 import { VerticalSpacer, FadingPanel } from '@fpsak-frontend/shared-components';
 import {
   getAktivitetStatuser,
@@ -16,8 +16,6 @@ import {
   getGjeldendeBeregningAksjonspunkter,
   getBeregningGraderingAksjonspunkt,
 } from 'behandlingFpsak/behandlingSelectors';
-import beregningsgrunnlagPropType from 'behandlingFelles/proptypes/beregningsgrunnlagPropType';
-import behandlingspunktCodes from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
 import { getSelectedBehandlingspunktVilkar } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import aktivitetStatus, {
   isStatusArbeidstakerOrKombinasjon,

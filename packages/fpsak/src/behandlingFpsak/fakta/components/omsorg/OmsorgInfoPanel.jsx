@@ -8,13 +8,12 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import {
+  personopplysningPropType, aksjonspunktPropType, FaktaBegrunnelseTextField, FaktaEkspandertpanel,
+} from '@fpsak-frontend/fp-behandling-felles';
+import {
   getPersonopplysning, getBehandlingYtelseFordeling, getEktefellePersonopplysning, getAksjonspunkter,
 } from 'behandlingFpsak/behandlingSelectors';
-import personopplysningPropType from 'behandlingFelles/proptypes/personopplysningPropType';
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
-import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
 import BostedFaktaView from 'behandlingFpsak/fakta/components/omsorg/BostedFaktaView';
 import OmsorgFaktaForm from 'behandlingFpsak/fakta/components/omsorg/OmsorgFaktaForm';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';

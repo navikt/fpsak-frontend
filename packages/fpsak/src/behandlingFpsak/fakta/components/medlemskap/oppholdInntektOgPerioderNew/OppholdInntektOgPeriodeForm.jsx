@@ -5,7 +5,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { connect } from 'react-redux';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
+import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import {
   BorderBox, VerticalSpacer, FlexColumn, FlexContainer, FlexRow,
 } from '@fpsak-frontend/shared-components';

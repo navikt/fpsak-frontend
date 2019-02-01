@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import BpPanelTemplate from 'behandlingFpsak/behandlingsprosess/components/vilkar/BpPanelTemplate';
 import { getBehandlingsresultat } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import behandlingspunktCodes from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
+import { behandlingspunktCodes, BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -17,7 +17,6 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getSelectedBehandlingspunktVilkar, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus }
   from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import VilkarResultPicker from 'behandlingFpsak/behandlingsprosess/components/vilkar/VilkarResultPicker';
-import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
 
 /**
  * AdopsjonVilkarForm

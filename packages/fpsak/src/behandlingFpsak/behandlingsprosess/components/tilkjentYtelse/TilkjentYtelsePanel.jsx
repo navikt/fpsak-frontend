@@ -5,8 +5,7 @@ import moment from 'moment/moment';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
 import { Undertittel } from 'nav-frontend-typografi';
-import behandlingspunktCodes from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
-import beregningresultatMedUttaksplanPropType from 'behandlingFelles/proptypes/beregningresultatMedUttaksplanPropType';
+import { behandlingspunktCodes, beregningresultatMedUttaksplanPropType } from '@fpsak-frontend/fp-behandling-felles';
 import { FadingPanel } from '@fpsak-frontend/shared-components';
 import {
   getPersonopplysning,

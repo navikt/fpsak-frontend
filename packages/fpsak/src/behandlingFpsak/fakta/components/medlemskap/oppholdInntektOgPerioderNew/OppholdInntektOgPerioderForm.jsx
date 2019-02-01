@@ -21,7 +21,7 @@ import {
 }
   from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/behandlingForm';
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
 import { getFagsakPerson } from 'fagsak/fagsakSelectors';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { bindActionCreators } from 'redux';

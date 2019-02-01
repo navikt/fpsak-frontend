@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { FormattedHTMLMessage } from 'react-intl';
 
-import arbeidsforholdPropType from 'behandlingFelles/proptypes/arbeidsforholdPropType';
+import { arbeidsforholdPropType } from '@fpsak-frontend/fp-behandling-felles';
 import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 
 const getTextCode = (arbeidsforhold) => {

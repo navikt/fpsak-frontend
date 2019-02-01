@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { getHenleggArsaker, getBehandlingType } from 'behandling/duck';
-import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
+import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
 import MenuButton from '../MenuButton';
 import ShelveBehandlingModal from './ShelveBehandlingModal';
 import BehandlingenShelvedModal from './BehandlingenShelvedModal';

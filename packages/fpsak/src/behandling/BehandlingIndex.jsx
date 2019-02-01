@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import BehandlingPapirsoknadIndex from 'papirsoknad/BehandlingPapirsoknadIndex';
+import BehandlingPapirsoknadIndex from '@fpsak-frontend/fp-behandling-papirsoknad';
+
 import trackRouteParam from 'app/data/trackRouteParam';
 import requireProps from 'app/data/requireProps';
 import { updateFagsakInfo } from 'fagsak/duck';

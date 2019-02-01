@@ -24,7 +24,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { required, hasValidDate, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { getFilteredReceivedDocuments } from 'behandlingsupport/behandlingsupportSelectors';
-import BehandlingspunktBegrunnelseTextField from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
+import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/behandlingsprosess/components/BehandlingspunktSubmitButton';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';

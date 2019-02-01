@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Column } from 'nav-frontend-grid';
-import personopplysningPropType from 'behandlingFelles/proptypes/personopplysningPropType';
+import { personopplysningPropType } from '@fpsak-frontend/fp-behandling-felles';
 import FaktaGruppe from 'behandlingFpsak/fakta/components/FaktaGruppe';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';

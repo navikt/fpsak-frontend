@@ -4,7 +4,7 @@ import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import behandlingPropType from 'behandlingFelles/proptypes/behandlingPropType';
+import { behandlingPropType } from '@fpsak-frontend/fp-behandling-felles';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 import BehandlingPickerItem from './BehandlingPickerItem';

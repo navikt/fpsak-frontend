@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import Etikettfokus from 'nav-frontend-etiketter';
-import personopplysningPropType from 'behandlingFelles/proptypes/personopplysningPropType';
+import { personopplysningPropType } from '@fpsak-frontend/fp-behandling-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
 import { getKodeverk } from 'kodeverk/duck';

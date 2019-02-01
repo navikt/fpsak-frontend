@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
+import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
 import FaktaPanel from 'behandlingFpsak/fakta/components/FaktaPanel';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaIndex } from './FaktaIndex';

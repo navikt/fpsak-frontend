@@ -4,7 +4,7 @@ import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/in
 import sinon from 'sinon';
 
 import relatertYtelseType from '@fpsak-frontend/kodeverk/src/relatertYtelseType';
-import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
+import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';
 import { OmsorgOgForeldreansvarInfoPanelImpl } from './OmsorgOgForeldreansvarInfoPanel';

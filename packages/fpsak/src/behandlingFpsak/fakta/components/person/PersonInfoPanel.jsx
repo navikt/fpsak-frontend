@@ -4,7 +4,7 @@ import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+import { aksjonspunktPropType, faktaPanelCodes } from '@fpsak-frontend/fp-behandling-felles';
 import { omit } from '@fpsak-frontend/utils';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -19,7 +19,6 @@ import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-component
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
-import faktaPanelCodes from 'behandlingFelles/fakta/faktaPanelCodes';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import FullPersonInfo from './panelBody/FullPersonInfo';
 import PersonArbeidsforholdPanel from './panelBody/arbeidsforhold/PersonArbeidsforholdPanel';

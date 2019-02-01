@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 
-import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
+import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
 import requireProps from 'app/data/requireProps';
 import { getBehandlingVersjon } from 'behandlingTilbakekreving/selectors/tilbakekrevingBehandlingSelectors';
 import { getBehandlingIdentifier } from 'behandlingTilbakekreving/duck';

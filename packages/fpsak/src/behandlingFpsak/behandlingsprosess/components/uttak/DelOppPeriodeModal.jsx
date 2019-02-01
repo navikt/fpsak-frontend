@@ -10,7 +10,7 @@ import { Modal } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
-import { uttaksresultatAktivitetPropType } from 'behandlingFelles/proptypes/uttaksresultatPropType';
+import { uttaksresultatAktivitetPropType } from '@fpsak-frontend/fp-behandling-felles';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';

@@ -5,9 +5,7 @@ import { connect } from 'react-redux';
 import { destroy } from 'redux-form';
 
 import { getHasSubmittedPaVentForm } from 'behandlingmenu/duck';
-import BehandlingGrid from 'behandlingFelles/components/BehandlingGrid';
-import BehandlingErPaVentModal from 'behandlingFelles/components/BehandlingErPaVentModal';
-import sakOperations from 'behandlingFelles/SakOperations';
+import { BehandlingGrid, BehandlingErPaVentModal, sakOperations } from '@fpsak-frontend/fp-behandling-felles';
 import FpSakBehandlingInfoSetter from './FpSakBehandlingInfoSetter';
 import FpSakBehandlingResolver from './FpSakBehandlingResolver';
 import BehandlingsprosessIndex from './behandlingsprosess/BehandlingsprosessIndex';

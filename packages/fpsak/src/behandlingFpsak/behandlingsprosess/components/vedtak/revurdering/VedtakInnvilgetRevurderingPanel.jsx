@@ -15,7 +15,7 @@ import { getResultatstrukturFraOriginalBehandling } from 'behandlingFpsak/select
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
 import { endringerIBeregningsgrunnlagGirFritekstfelt, findTilbakekrevingText } from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakHelper';
 import VedtakFritekstPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
 import vedtakResultType from '@fpsak-frontend/kodeverk/src/vedtakResultType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 

@@ -8,15 +8,14 @@ import { createSelector } from 'reselect';
 
 import { getSoknad, getFamiliehendelse, getAksjonspunkter } from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
 import DokumentasjonFaktaForm from 'behandlingFpsak/fakta/components/adopsjon/DokumentasjonFaktaForm';
 import MannAdoptererFaktaForm from 'behandlingFpsak/fakta/components/adopsjon/MannAdoptererFaktaForm';
 import EktefelleFaktaForm from 'behandlingFpsak/fakta/components/adopsjon/EktefelleFaktaForm';
-import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
+import {
+  aksjonspunktPropType, faktaPanelCodes, FaktaBegrunnelseTextField, FaktaEkspandertpanel,
+} from '@fpsak-frontend/fp-behandling-felles';
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
-import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
-import faktaPanelCodes from 'behandlingFelles/fakta/faktaPanelCodes';
 import { adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { AksjonspunktHelpText, VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

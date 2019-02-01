@@ -5,12 +5,11 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 
-import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
+import { BehandlingIdentifier, aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import requireProps from 'app/data/requireProps';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import { getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta } from 'app/paths';
 import trackRouteParam from 'app/data/trackRouteParam';
 import BehandlingsprosessPanel from './components/BehandlingsprosessPanel';
