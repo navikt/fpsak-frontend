@@ -272,7 +272,7 @@ const checkMaxDager = (uttaksresultatActivity, stonadskonto) => {
   const addAnnenPartFordelteDager = addAnnenPart(uttakResult);
   addAnnenPartFordelteDager.forEach((value) => {
     const maxDays = getMaxDays(value.konto, stonadskonto.stonadskontoer) - value.trekkdager;
-    if (typeof maxDays !== 'undefined' && (maxDays < 0)) {
+    if (maxDays && (maxDays < 0)) {
       errors = {
         _error:
   <AlertStripe type="advarsel" className={styles.marginTop}>
