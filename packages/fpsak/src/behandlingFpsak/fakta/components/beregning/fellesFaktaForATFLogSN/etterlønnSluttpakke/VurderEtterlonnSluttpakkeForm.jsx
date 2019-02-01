@@ -36,7 +36,7 @@ const VurderEtterlonnSluttpakkeForm = ({
       <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Ja" />} value />
       <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Nei" />} value={false} />
     </RadioGroupField>
-    {harEtterlonnSluttpakke && harEtterlonnSluttpakke
+    {harEtterlonnSluttpakke
     && (
       <Row>
         <Column xs="12">

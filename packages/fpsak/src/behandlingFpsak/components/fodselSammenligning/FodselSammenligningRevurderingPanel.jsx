@@ -76,7 +76,8 @@ export const getTerminDateOrFodselDate = createSelector(
   (isTermin, originalSoknad, orginalFamiliehendelse) => {
     if (!originalSoknad && !orginalFamiliehendelse) {
       return '';
-    } if (isTermin) {
+    }
+    if (isTermin) {
       return formatDate(orginalFamiliehendelse.termindato ? orginalFamiliehendelse.termindato : originalSoknad.termindato);
     }
     return formatDate(orginalFamiliehendelse.fodselsdato ? orginalFamiliehendelse.fodselsdato : Object.values(originalSoknad.fodselsdatoer)[0]);
