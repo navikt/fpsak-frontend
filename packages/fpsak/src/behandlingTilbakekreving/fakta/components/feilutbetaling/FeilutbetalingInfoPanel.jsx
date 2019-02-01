@@ -4,11 +4,11 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 import { Element, Undertekst, Normaltekst } from 'nav-frontend-typografi';
-import { getFeilutbetalingFakta } from 'behandlingTilbakekreving/tilbakekrevingBehandlingSelectors';
+import { getFeilutbetalingFakta } from 'behandlingTilbakekreving/selectors/tilbakekrevingBehandlingSelectors';
 import { formatCurrencyNoKr, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import moment from 'moment';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
-import faktaPanelCodes from 'behandlingTilbakekreving/fakta/faktaPanelCodes';
+import faktaPanelCodes from 'behandlingFelles/fakta/faktaPanelCodes';
 import styles from './feilutbetalingInfoPanel.less';
 
 const perioderDatoer = periode => `${moment(periode.fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(periode.fom).format(DDMMYYYY_DATE_FORMAT)}`;

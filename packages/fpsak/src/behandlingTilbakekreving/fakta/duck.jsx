@@ -1,4 +1,4 @@
-import tilbakekrevingBehandlingApi from 'behandlingTilbakekreving/tilbakekrevingBehandlingApi';
+import tilbakekrevingBehandlingApi from 'behandlingTilbakekreving/data/tilbakekrevingBehandlingApi';
 import { createSelector } from 'reselect';
 
 import reducerRegistry from '../../ReducerRegistry';

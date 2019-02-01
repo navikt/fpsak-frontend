@@ -278,8 +278,8 @@ BehandlingMenu.propTypes = {
   opneBehandlingForEndringerAccess: rettighetPropType.isRequired,
   ikkeVisOpprettNyBehandling: rettighetPropType.isRequired,
   navAnsatt: navAnsattPropType.isRequired,
-  hasSoknad: PropTypes.bool.isRequired,
-  isInnsynsbehandling: PropTypes.bool.isRequired,
+  hasSoknad: PropTypes.bool,
+  isInnsynsbehandling: PropTypes.bool,
 };
 
 BehandlingMenu.defaultProps = {
@@ -290,6 +290,8 @@ BehandlingMenu.defaultProps = {
   behandlingPaaVent: undefined,
   behandlingKoet: false,
   behandlendeEnheter: null,
+  hasSoknad: false,
+  isInnsynsbehandling: false,
 };
 
 export default BehandlingMenu;

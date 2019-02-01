@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import { updateFagsakInfo } from 'fagsak/duck';
-import fpsakBehandlingApi from './data/fpsakBehandlingApi';
+import sakOperations from 'behandlingFelles/SakOperations';
+import fpsakBehandlingApi, { BehandlingFpsakApiKeys } from './data/fpsakBehandlingApi';
 import reducerRegistry from '../ReducerRegistry';
 
 const reducerName = 'fpsakBehandling';
@@ -11,6 +11,7 @@ const reducerName = 'fpsakBehandling';
 const actionType = name => `${reducerName}/${name}`;
 const SET_BEHANDLING_INFO = actionType('SET_BEHANDLING_INFO');
 const HAS_SHOWN_BEHANDLING_PA_VENT = actionType('HAS_SHOWN_BEHANDLING_PA_VENT');
+const RESET_FPSAK_BEHANDLING = actionType('RESET_FPSAK_BEHANDLING');
 
 export const setBehandlingInfo = info => ({
   type: SET_BEHANDLING_INFO,
@@ -21,13 +22,17 @@ export const setHasShownBehandlingPaVent = () => ({
   type: HAS_SHOWN_BEHANDLING_PA_VENT,
 });
 
+const resetBehandlingContext = () => ({
+  type: RESET_FPSAK_BEHANDLING,
+});
+
 // TODO (TOR) Rydd opp i dette. Kan ein legge rehenting av fagsakInfo og original-behandling i resolver i staden?
 export const updateBehandling = (
   behandlingIdentifier, behandlingerVersjonMappedById,
 ) => dispatch => dispatch(fpsakBehandlingApi.BEHANDLING.makeRestApiRequest()(behandlingIdentifier.toJson(), { keepData: true }))
   .then((response) => {
     if (behandlingerVersjonMappedById && behandlingerVersjonMappedById[response.payload.id] !== response.payload.versjon) {
-      dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer));
+      dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer));
     }
     return Promise.resolve(response);
   })
@@ -43,18 +48,29 @@ export const updateBehandling = (
 export const resetBehandling = dispatch => Promise.all([
   dispatch(fpsakBehandlingApi.BEHANDLING.resetRestApi()()),
   dispatch(fpsakBehandlingApi.ORIGINAL_BEHANDLING.resetRestApi()()),
+  dispatch(resetBehandlingContext()),
 ]);
 
 export const fetchBehandling = (behandlingIdentifier, allBehandlinger) => (dispatch) => {
-  resetBehandling(dispatch);
+  dispatch(fpsakBehandlingApi.BEHANDLING.resetRestApi()());
+  dispatch(fpsakBehandlingApi.ORIGINAL_BEHANDLING.resetRestApi()());
   dispatch(updateBehandling(behandlingIdentifier, allBehandlinger));
 };
 
-const updateFagsakAndBehandling = behandlingIdentifier => dispatch => dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer))
+const updateFagsakAndBehandling = behandlingIdentifier => dispatch => dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer))
   .then(() => dispatch(updateBehandling(behandlingIdentifier)));
 
 export const updateOnHold = (params, behandlingIdentifier) => dispatch => dispatch(fpsakBehandlingApi.UPDATE_ON_HOLD.makeRestApiRequest()(params))
   .then(() => dispatch(updateFagsakAndBehandling(behandlingIdentifier)));
+
+export const resetBehandlingFpsakContext = () => (dispatch) => {
+  Object.values(BehandlingFpsakApiKeys)
+    .forEach((value) => {
+      dispatch(fpsakBehandlingApi[value].resetRestApi()());
+    });
+  dispatch(resetBehandlingContext());
+};
+
 
 /* Reducer */
 const initialState = {
@@ -75,6 +91,8 @@ export const fpsakBehandlingReducer = (state = initialState, action = {}) => { /
         ...state,
         hasShownBehandlingPaVent: true,
       };
+    case RESET_FPSAK_BEHANDLING:
+      return initialState;
     default:
       return state;
   }

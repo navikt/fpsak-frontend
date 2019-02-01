@@ -4,14 +4,23 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { destroy } from 'redux-form';
 
+import { getHasSubmittedPaVentForm } from 'behandlingmenu/duck';
+import BehandlingErPaVentModal from 'behandlingFelles/components/BehandlingErPaVentModal';
 import BehandlingGrid from 'behandlingFelles/components/BehandlingGrid';
 import BehandlingsprosessIndex from './behandlingsprosess/BehandlingsprosessIndex';
 import FaktaIndex from './fakta/FaktaIndex';
-import BehandlingResolver from './BehandlingResolver';
+import FpTilbakeBehandlingResolver from './FpTilbakeBehandlingResolver';
+import FpTilbakeBehandlingInfoSetter from './FpTilbakeBehandlingInfoSetter';
 import { getBehandlingFormPrefix } from './behandlingForm';
 import {
-  setBehandlingInfo, getBehandlingIdentifier, resetTilbakekrevingContext,
+  setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier, resetTilbakekrevingContext,
+  getHasShownBehandlingPaVent,
 } from './duck';
+import {
+  getBehandlingVersjon, getBehandlingOnHoldDate, getBehandlingVenteArsakKode, getBehandlingIsOnHold,
+  hasBehandlingManualPaVent,
+} from './selectors/tilbakekrevingBehandlingSelectors';
+import fpTilbakeBehandlingUpdater from './FpTilbakeBehandlingUpdater';
 
 /**
  * BehandlingIndex
@@ -21,7 +30,7 @@ import {
  *
  * Komponenten har ansvar å legge valgt behandlingId fra URL-en i staten.
  */
-export class BehandlingIndex extends Component {
+export class BehandlingFpTilbakeIndex extends Component {
   constructor() {
     super();
     this.didGetNewBehandlingVersion = this.didGetNewBehandlingVersion.bind(this);
@@ -30,9 +39,11 @@ export class BehandlingIndex extends Component {
 
   componentWillMount() {
     const {
-      setBehandlingInfo: setInfo, saksnummer, behandlingId,
+      setBehandlingInfo: setInfo, saksnummer, behandlingId, behandlingUpdater,
     } = this.props;
     setInfo({ behandlingId, fagsakSaksnummer: saksnummer });
+
+    behandlingUpdater.setUpdater(fpTilbakeBehandlingUpdater);
   }
 
   componentDidUpdate(prevProps) {
@@ -42,7 +53,8 @@ export class BehandlingIndex extends Component {
   }
 
   componentWillUnmount() {
-    const { behandlingId, behandlingVersjon } = this.props;
+    const { behandlingId, behandlingVersjon, resetTilbakekrevingContext: resetContext } = this.props;
+    resetContext();
     this.cleanUp(behandlingId, behandlingVersjon);
   }
 
@@ -52,58 +64,113 @@ export class BehandlingIndex extends Component {
   }
 
   cleanUp(behandlingId, behandlingVersjon) {
-    const { destroyReduxForms: destroyForms, resetTilbakekrevingContext: resetContext } = this.props;
-    resetContext();
+    const { destroyReduxForms: destroyForms } = this.props;
     const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
     setTimeout(() => destroyForms(behandlingFormPrefix), 1000); // Delay destruction to after potentially expensive transition
   }
 
   render() {
     const {
-      updateFagsakInfo,
+      hasShownBehandlingPaVent,
+      behandlingId,
+      behandlingPaaVent,
+      fristBehandlingPaaVent,
+      venteArsakKode,
+      closeBehandlingOnHoldModal,
+      handleOnHoldSubmit,
+      hasSubmittedPaVentForm,
+      hasManualPaVent,
       behandlingerVersjonMappedById,
-      behandlingIdentifier,
+      setBehandlingInfoHolder,
+      updateFagsakInfo,
     } = this.props;
 
-    if (!behandlingIdentifier) {
-      return null;
-    }
-
     return (
-      <BehandlingResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
+      <FpTilbakeBehandlingResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
+        <FpTilbakeBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
         <BehandlingGrid
           behandlingsprosessContent={<BehandlingsprosessIndex updateFagsakInfo={updateFagsakInfo} />}
           faktaContent={<FaktaIndex updateFagsakInfo={updateFagsakInfo} />}
         />
-      </BehandlingResolver>
+        {!hasSubmittedPaVentForm
+          && (
+          <BehandlingErPaVentModal
+            showModal={!hasShownBehandlingPaVent && behandlingPaaVent}
+            closeEvent={closeBehandlingOnHoldModal}
+            behandlingId={behandlingId}
+            fristBehandlingPaaVent={fristBehandlingPaaVent}
+            venteArsakKode={venteArsakKode}
+            handleOnHoldSubmit={handleOnHoldSubmit}
+            hasManualPaVent={hasManualPaVent}
+          />
+          )
+        }
+      </FpTilbakeBehandlingResolver>
     );
   }
 }
 
-BehandlingIndex.propTypes = {
+BehandlingFpTilbakeIndex.propTypes = {
   saksnummer: PropTypes.number.isRequired,
   behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number,
+  fristBehandlingPaaVent: PropTypes.string,
+  behandlingPaaVent: PropTypes.bool,
+  venteArsakKode: PropTypes.string,
+  hasShownBehandlingPaVent: PropTypes.bool.isRequired,
+  closeBehandlingOnHoldModal: PropTypes.func.isRequired,
+  handleOnHoldSubmit: PropTypes.func.isRequired,
   destroyReduxForms: PropTypes.func.isRequired,
+  hasSubmittedPaVentForm: PropTypes.bool.isRequired,
+  hasManualPaVent: PropTypes.bool.isRequired,
   setBehandlingInfo: PropTypes.func.isRequired,
-  updateFagsakInfo: PropTypes.func.isRequired,
-  resetTilbakekrevingContext: PropTypes.func.isRequired,
+  setBehandlingInfoHolder: PropTypes.func.isRequired,
   behandlingerVersjonMappedById: PropTypes.shape().isRequired,
-  behandlingIdentifier: PropTypes.shape(),
+  behandlingUpdater: PropTypes.shape().isRequired,
+  resetTilbakekrevingContext: PropTypes.func.isRequired,
+  updateFagsakInfo: PropTypes.func.isRequired,
 };
 
-BehandlingIndex.defaultProps = {
-  behandlingIdentifier: undefined,
+BehandlingFpTilbakeIndex.defaultProps = {
+  fristBehandlingPaaVent: undefined,
+  behandlingPaaVent: false,
+  behandlingVersjon: undefined,
+  venteArsakKode: undefined,
 };
 
 const mapStateToProps = state => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
+  behandlingVersjon: getBehandlingVersjon(state),
+  fristBehandlingPaaVent: getBehandlingOnHoldDate(state),
+  behandlingPaaVent: getBehandlingIsOnHold(state),
+  venteArsakKode: getBehandlingVenteArsakKode(state),
+  hasShownBehandlingPaVent: getHasShownBehandlingPaVent(state),
+  hasSubmittedPaVentForm: getHasSubmittedPaVentForm(state),
+  hasManualPaVent: hasBehandlingManualPaVent(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  setHasShownBehandlingPaVent,
+  updateOnHold,
   setBehandlingInfo,
   resetTilbakekrevingContext,
   destroyReduxForms: destroy,
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(BehandlingIndex);
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+  ...stateProps,
+  ...dispatchProps,
+  ...ownProps,
+  handleOnHoldSubmit: (formData) => {
+    const { behandlingId } = ownProps;
+    const { behandlingIdentifier, behandlingVersjon } = stateProps;
+    return dispatchProps.updateOnHold({ ...formData, behandlingId, behandlingVersjon }, behandlingIdentifier)
+      .then(() => {
+        dispatchProps.setHasShownBehandlingPaVent();
+      });
+  },
+  closeBehandlingOnHoldModal: () => dispatchProps.setHasShownBehandlingPaVent(),
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(BehandlingFpTilbakeIndex);

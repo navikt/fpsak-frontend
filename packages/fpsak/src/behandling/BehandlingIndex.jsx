@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
+import BehandlingPapirsoknadIndex from 'papirsoknad/BehandlingPapirsoknadIndex';
 import trackRouteParam from 'app/data/trackRouteParam';
 import requireProps from 'app/data/requireProps';
 import { updateFagsakInfo } from 'fagsak/duck';
@@ -9,8 +11,13 @@ import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import BehandlingTilbakekrevingIndex from 'behandlingTilbakekreving/BehandlingTilbakekrevingIndex';
 import BehandlingFpsakIndex from 'behandlingFpsak/BehandlingFpsakIndex';
-import { setSelectedBehandlingId, getSelectedBehandlingId } from './duck';
-import { getBehandlingerVersjonMappedById, getBehandlingerTypesMappedById } from './selectors/behandlingerSelectors';
+import {
+  setSelectedBehandlingId, getSelectedBehandlingId, setBehandlingInfoHolder, resetBehandlingContext as resetBehandlingContextActionCreator,
+} from './duck';
+import {
+  getBehandlingerVersjonMappedById, getBehandlingerTypesMappedById, getBehandlingerAktivPapirsoknadMappedById,
+} from './selectors/behandlingerSelectors';
+import behandlingUpdater from './BehandlingUpdater';
 
 /**
  * BehandlingIndex
@@ -20,51 +27,77 @@ import { getBehandlingerVersjonMappedById, getBehandlingerTypesMappedById } from
  *
  * Komponenten har ansvar å legge valgt behandlingId fra URL-en i staten.
  */
-const BehandlingIndex = ({
-  saksnummer,
-  behandlingId,
-  behandlingVersjon,
-  behandlingType,
-  behandlingerVersjonMappedById,
-  location,
-}) => {
-  if (behandlingType === BehandlingType.TILBAKEKREVING) {
+export class BehandlingIndex extends Component {
+  static propTypes = {
+    saksnummer: PropTypes.number.isRequired,
+    behandlingId: PropTypes.number.isRequired,
+    behandlingType: PropTypes.string.isRequired,
+    behandlingerVersjonMappedById: PropTypes.shape().isRequired,
+    location: PropTypes.shape().isRequired,
+    setHolder: PropTypes.func.isRequired,
+    erAktivPapirsoknad: PropTypes.bool.isRequired,
+    resetBehandlingContext: PropTypes.func.isRequired,
+  };
+
+  componentWillUnmount() {
+    const { resetBehandlingContext } = this.props;
+    resetBehandlingContext();
+  }
+
+  render() {
+    const {
+      saksnummer,
+      behandlingId,
+      behandlingType,
+      behandlingerVersjonMappedById,
+      location,
+      setHolder,
+      erAktivPapirsoknad,
+    } = this.props;
+    if (erAktivPapirsoknad) {
+      return (
+        <BehandlingPapirsoknadIndex
+          key={behandlingId}
+          saksnummer={saksnummer}
+          behandlingId={behandlingId}
+          updateFagsakInfo={updateFagsakInfo}
+          behandlingerVersjonMappedById={behandlingerVersjonMappedById}
+          location={location}
+          setBehandlingInfoHolder={setHolder}
+          behandlingUpdater={behandlingUpdater}
+        />
+      );
+    }
+
+    if (behandlingType === BehandlingType.TILBAKEKREVING) {
+      return (
+        <BehandlingTilbakekrevingIndex
+          key={behandlingId}
+          saksnummer={saksnummer}
+          behandlingId={behandlingId}
+          updateFagsakInfo={updateFagsakInfo}
+          behandlingerVersjonMappedById={behandlingerVersjonMappedById}
+          location={location}
+          setBehandlingInfoHolder={setHolder}
+          behandlingUpdater={behandlingUpdater}
+        />
+      );
+    }
+
     return (
-      <BehandlingTilbakekrevingIndex
+      <BehandlingFpsakIndex
+        key={behandlingId}
         saksnummer={saksnummer}
         behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
         updateFagsakInfo={updateFagsakInfo}
         behandlingerVersjonMappedById={behandlingerVersjonMappedById}
         location={location}
+        setBehandlingInfoHolder={setHolder}
+        behandlingUpdater={behandlingUpdater}
       />
     );
   }
-
-  return (
-    <BehandlingFpsakIndex
-      key={behandlingId}
-      saksnummer={saksnummer}
-      behandlingId={behandlingId}
-      updateFagsakInfo={updateFagsakInfo}
-      behandlingerVersjonMappedById={behandlingerVersjonMappedById}
-      location={location}
-    />
-  );
-};
-
-BehandlingIndex.propTypes = {
-  saksnummer: PropTypes.number.isRequired,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number,
-  behandlingType: PropTypes.string.isRequired,
-  behandlingerVersjonMappedById: PropTypes.shape().isRequired,
-  location: PropTypes.shape().isRequired,
-};
-
-BehandlingIndex.defaultProps = {
-  behandlingVersjon: undefined,
-};
+}
 
 const mapStateToProps = (state) => {
   const behandlingId = getSelectedBehandlingId(state);
@@ -72,11 +105,16 @@ const mapStateToProps = (state) => {
     behandlingId,
     saksnummer: getSelectedSaksnummer(state),
     behandlingerVersjonMappedById: getBehandlingerVersjonMappedById(state),
-    behandlingVersjon: getBehandlingerVersjonMappedById(state)[behandlingId],
     behandlingType: getBehandlingerTypesMappedById(state)[behandlingId],
     location: state.router.location,
+    erAktivPapirsoknad: getBehandlingerAktivPapirsoknadMappedById(state)[behandlingId],
   };
 };
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  setHolder: setBehandlingInfoHolder,
+  resetBehandlingContext: resetBehandlingContextActionCreator,
+}, dispatch);
 
 export default trackRouteParam({
   paramName: 'behandlingId',
@@ -84,4 +122,4 @@ export default trackRouteParam({
   paramPropType: PropTypes.number,
   storeParam: setSelectedBehandlingId,
   getParamFromStore: getSelectedBehandlingId,
-})(connect(mapStateToProps)(requireProps(['behandlingId'])(BehandlingIndex)));
+})(connect(mapStateToProps, mapDispatchToProps)(requireProps(['behandlingId'])(BehandlingIndex)));

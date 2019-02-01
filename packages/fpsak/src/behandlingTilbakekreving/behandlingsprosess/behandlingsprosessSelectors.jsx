@@ -8,12 +8,12 @@ import { arrayToObject } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { getFeatureToggles } from 'app/duck';
+import behandlingspunktCodes from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
 import {
   getBehandlingIsOnHold, getAllMerknaderFraBeslutter, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat,
   getStonadskontoer, hasReadOnlyBehandling, isBehandlingStatusReadOnly,
-} from '../tilbakekrevingBehandlingSelectors';
+} from '../selectors/tilbakekrevingBehandlingSelectors';
 import createTilbakekrevingBpProps from './definition/tilbakekrevingBpDefinition';
-import behandlingspunktCodes from './behandlingspunktCodes';
 import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from './duck';
 
 // Kun eksportert for test. Ikke bruk andre steder!

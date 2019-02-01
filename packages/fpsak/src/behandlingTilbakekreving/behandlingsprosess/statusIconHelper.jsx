@@ -8,10 +8,11 @@ import behandleValgtIkonUrl from '@fpsak-frontend/assets/images/behandle_valgt.s
 import innvilgetIkonUrl from '@fpsak-frontend/assets/images/innvilget.svg';
 import innvilgetValgtIkonUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import ikkeVurdertIkonUrl from '@fpsak-frontend/assets/images/behandle_disable.svg';
-
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+
+import behandlingspunktCodes from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
+
 import vedtakImages from './statusIconsVedtak';
-import behandlingspunktCodes from './behandlingspunktCodes';
 
 const vilkarImages = {
   imageMap: {

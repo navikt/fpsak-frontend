@@ -6,11 +6,11 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 
-import SettBehandlingPaVentForm from 'behandlingFpsak/components/SettBehandlingPaVentForm';
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Modal, Image } from '@fpsak-frontend/shared-components';
 
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import SettBehandlingPaVentForm from './SettBehandlingPaVentForm';
 
 import styles from './behandlingErPaVentModal.less';
 

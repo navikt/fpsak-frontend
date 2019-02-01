@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
-import { updateFagsakInfo } from 'fagsak/duck';
+
+import sakOperations from 'behandlingFelles/SakOperations';
 import fpsakBehandlingApi from '../data/fpsakBehandlingApi';
 import reducerRegistry from '../../ReducerRegistry';
 
@@ -31,7 +32,7 @@ const resolveFaktaAksjonspunkterSuccess = (response, behandlingIdentifier) => (d
   dispatch({
     type: RESOLVE_FAKTA_AKSJONSPUNKTER_SUCCESS,
   });
-  return dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer))
+  return dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer))
     .then(() => dispatch(fpsakBehandlingApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true })));
 };
 

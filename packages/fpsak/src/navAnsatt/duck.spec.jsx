@@ -2,7 +2,6 @@ import { expect } from 'chai';
 
 import { ApiStateBuilder } from '@fpsak-frontend/assets/testHelpers/data-test-helper';
 import fpsakApi from 'data/fpsakApi';
-import fpsakBehandlingApi from 'behandlingFpsak/data/fpsakBehandlingApi';
 
 import { getRettigheter, getNavAnsatt } from './duck';
 
@@ -13,8 +12,8 @@ describe('NAV-ansatt-reducer', () => {
     const dataState = new ApiStateBuilder()
       .withData(fpsakApi.NAV_ANSATT.name, navAnsatt)
       .withData(fpsakApi.FETCH_FAGSAK.name, {})
-      .withData(fpsakBehandlingApi.BEHANDLING.name, {}, 'dataContextFpsakBehandling')
-      .withData(fpsakBehandlingApi.ORIGINAL_BEHANDLING.name, {}, 'dataContextFpsakBehandling')
+      .withData('BEHANDLING', {}, 'dataContextFpsakBehandling')
+      .withData('ORIGINAL_BEHANDLING', {}, 'dataContextFpsakBehandling')
       .build();
 
     const state = {
@@ -25,6 +24,9 @@ describe('NAV-ansatt-reducer', () => {
         },
         fpsakBehandling: {
           behandlingId: 1,
+        },
+        behandling: {
+          behandlingInfoHolder: {},
         },
       },
     };

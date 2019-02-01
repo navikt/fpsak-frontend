@@ -4,23 +4,24 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { destroy } from 'redux-form';
 
-import BehandlingsprosessIndex from 'behandlingFpsak/behandlingsprosess/BehandlingsprosessIndex';
-import FaktaIndex from 'behandlingFpsak/fakta/FaktaIndex';
-import { getPapirsoknadEnabled } from 'papirsoknad/duck';
-import PapirsoknadIndex from 'papirsoknad/PapirsoknadIndex';
 import { getHasSubmittedPaVentForm } from 'behandlingmenu/duck';
 import BehandlingGrid from 'behandlingFelles/components/BehandlingGrid';
-import BehandlingResolver from './BehandlingResolver';
+import BehandlingErPaVentModal from 'behandlingFelles/components/BehandlingErPaVentModal';
+import sakOperations from 'behandlingFelles/SakOperations';
+import FpSakBehandlingInfoSetter from './FpSakBehandlingInfoSetter';
+import FpSakBehandlingResolver from './FpSakBehandlingResolver';
+import BehandlingsprosessIndex from './behandlingsprosess/BehandlingsprosessIndex';
+import FaktaIndex from './fakta/FaktaIndex';
 import {
   getBehandlingVersjon, getBehandlingOnHoldDate, getBehandlingVenteArsakKode, getBehandlingIsOnHold,
   hasBehandlingManualPaVent,
 } from './behandlingSelectors';
 import {
   setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier,
-  getHasShownBehandlingPaVent,
+  getHasShownBehandlingPaVent, resetBehandlingFpsakContext,
 } from './duck';
 import { getBehandlingFormPrefix } from './behandlingForm';
-import BehandlingErPaVentModal from './components/BehandlingErPaVentModal';
+import fpSakBehandlingUpdater from './FpSakBehandlingUpdater';
 
 /**
  * BehandlingFpsakIndex
@@ -37,11 +38,14 @@ export class BehandlingFpsakIndex extends Component {
     this.cleanUp = this.cleanUp.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const {
-      setBehandlingInfo: setInfo, saksnummer, behandlingId,
+      setBehandlingInfo: setInfo, saksnummer, behandlingId, behandlingUpdater, updateFagsakInfo,
     } = this.props;
     setInfo({ behandlingId, fagsakSaksnummer: saksnummer });
+
+    behandlingUpdater.setUpdater(fpSakBehandlingUpdater);
+    sakOperations.withUpdateFagsakInfo(updateFagsakInfo);
   }
 
   componentDidUpdate(prevProps) {
@@ -51,7 +55,8 @@ export class BehandlingFpsakIndex extends Component {
   }
 
   componentWillUnmount() {
-    const { behandlingId, behandlingVersjon } = this.props;
+    const { behandlingId, behandlingVersjon, resetBehandlingFpsakContext: resetBehandling } = this.props;
+    resetBehandling();
     this.cleanUp(behandlingId, behandlingVersjon);
   }
 
@@ -68,9 +73,6 @@ export class BehandlingFpsakIndex extends Component {
 
   render() {
     const {
-      behandlingsprosessEnabled,
-      faktaEnabled,
-      papirsoknadEnabled,
       hasShownBehandlingPaVent,
       behandlingId,
       behandlingPaaVent,
@@ -81,13 +83,14 @@ export class BehandlingFpsakIndex extends Component {
       hasSubmittedPaVentForm,
       hasManualPaVent,
       behandlingerVersjonMappedById,
+      setBehandlingInfoHolder,
     } = this.props;
     return (
-      <BehandlingResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
+      <FpSakBehandlingResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
+        <FpSakBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
         <BehandlingGrid
-          behandlingsprosessContent={behandlingsprosessEnabled && <BehandlingsprosessIndex />}
-          faktaContent={faktaEnabled && <FaktaIndex />}
-          papirsoknadContent={papirsoknadEnabled && <PapirsoknadIndex />}
+          behandlingsprosessContent={<BehandlingsprosessIndex />}
+          faktaContent={<FaktaIndex />}
         />
         {!hasSubmittedPaVentForm
           && (
@@ -102,7 +105,7 @@ export class BehandlingFpsakIndex extends Component {
           />
           )
         }
-      </BehandlingResolver>
+      </FpSakBehandlingResolver>
     );
   }
 }
@@ -114,9 +117,6 @@ BehandlingFpsakIndex.propTypes = {
   fristBehandlingPaaVent: PropTypes.string,
   behandlingPaaVent: PropTypes.bool,
   venteArsakKode: PropTypes.string,
-  behandlingsprosessEnabled: PropTypes.bool.isRequired,
-  faktaEnabled: PropTypes.bool.isRequired,
-  papirsoknadEnabled: PropTypes.bool.isRequired,
   hasShownBehandlingPaVent: PropTypes.bool.isRequired,
   closeBehandlingOnHoldModal: PropTypes.func.isRequired,
   handleOnHoldSubmit: PropTypes.func.isRequired,
@@ -124,7 +124,11 @@ BehandlingFpsakIndex.propTypes = {
   hasSubmittedPaVentForm: PropTypes.bool.isRequired,
   hasManualPaVent: PropTypes.bool.isRequired,
   setBehandlingInfo: PropTypes.func.isRequired,
+  setBehandlingInfoHolder: PropTypes.func.isRequired,
   behandlingerVersjonMappedById: PropTypes.shape().isRequired,
+  behandlingUpdater: PropTypes.shape().isRequired,
+  resetBehandlingFpsakContext: PropTypes.func.isRequired,
+  updateFagsakInfo: PropTypes.func.isRequired,
 };
 
 BehandlingFpsakIndex.defaultProps = {
@@ -140,9 +144,6 @@ const mapStateToProps = state => ({
   fristBehandlingPaaVent: getBehandlingOnHoldDate(state),
   behandlingPaaVent: getBehandlingIsOnHold(state),
   venteArsakKode: getBehandlingVenteArsakKode(state),
-  behandlingsprosessEnabled: !getPapirsoknadEnabled(state),
-  faktaEnabled: !getPapirsoknadEnabled(state),
-  papirsoknadEnabled: getPapirsoknadEnabled(state),
   hasShownBehandlingPaVent: getHasShownBehandlingPaVent(state),
   hasSubmittedPaVentForm: getHasSubmittedPaVentForm(state),
   hasManualPaVent: hasBehandlingManualPaVent(state),
@@ -152,6 +153,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setHasShownBehandlingPaVent,
   updateOnHold,
   setBehandlingInfo,
+  resetBehandlingFpsakContext,
   destroyReduxForms: destroy,
 }, dispatch);
 

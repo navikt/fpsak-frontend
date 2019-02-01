@@ -1,5 +1,5 @@
-import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
-import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
+import behandlingspunktCodes from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
+import faktaPanelCodes from 'behandlingFelles/fakta/faktaPanelCodes';
 
 const skjermlenkeCodes = {
   BEREGNING_ENGANGSSTOENAD: {

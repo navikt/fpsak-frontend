@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import moment from 'moment';
 
 import BehandlingGrid from 'behandlingFelles/components/BehandlingGrid';
-import BehandlingErPaVentModal from './components/BehandlingErPaVentModal';
+import BehandlingErPaVentModal from 'behandlingFelles/components/BehandlingErPaVentModal';
 import { BehandlingFpsakIndex } from './BehandlingFpsakIndex';
 
 describe('BehandlingFpsakIndex', () => {
@@ -27,9 +27,6 @@ describe('BehandlingFpsakIndex', () => {
     const wrapper = shallow(<BehandlingFpsakIndex
       saksnummer={2}
       behandlingId={1}
-      behandlingsprosessEnabled
-      faktaEnabled
-      papirsoknadEnabled={false}
       hasShownBehandlingPaVent={false}
       closeBehandlingOnHoldModal={sinon.spy()}
       handleOnHoldSubmit={sinon.spy()}
@@ -38,37 +35,15 @@ describe('BehandlingFpsakIndex', () => {
       hasManualPaVent={false}
       setBehandlingInfo={sinon.spy()}
       behandlingerVersjonMappedById={{}}
+      setBehandlingInfoHolder={sinon.spy()}
+      behandlingUpdater={{ setUpdater: sinon.spy() }}
+      resetBehandlingFpsakContext={sinon.spy()}
+      updateFagsakInfo={sinon.spy()}
     />);
 
     const grid = wrapper.find(BehandlingGrid);
     expect(grid.prop('behandlingsprosessContent').type.displayName).to.contain('BehandlingsprosessIndex');
     expect(grid.prop('faktaContent').type.displayName).to.contain('FaktaIndex');
-    expect(grid.prop('papirsoknadContent')).is.false;
-
-    expect(grid.find(BehandlingErPaVentModal)).to.have.length(0);
-  });
-
-  it('skal vise panel for papirsøknad', () => {
-    const wrapper = shallow(<BehandlingFpsakIndex
-      saksnummer={2}
-      behandlingId={1}
-      behandlingsprosessEnabled={false}
-      faktaEnabled={false}
-      papirsoknadEnabled
-      hasShownBehandlingPaVent={false}
-      closeBehandlingOnHoldModal={sinon.spy()}
-      handleOnHoldSubmit={sinon.spy()}
-      destroyReduxForms={sinon.spy()}
-      hasSubmittedPaVentForm
-      hasManualPaVent={false}
-      setBehandlingInfo={sinon.spy()}
-      behandlingerVersjonMappedById={{}}
-    />);
-
-    const grid = wrapper.find(BehandlingGrid);
-    expect(grid.prop('behandlingsprosessContent')).is.false;
-    expect(grid.prop('faktaContent')).is.false;
-    expect(grid.prop('papirsoknadContent').type.displayName).to.contain('PapirsoknadIndex');
 
     expect(grid.find(BehandlingErPaVentModal)).to.have.length(0);
   });
@@ -77,9 +52,6 @@ describe('BehandlingFpsakIndex', () => {
     const wrapper = shallow(<BehandlingFpsakIndex
       saksnummer={2}
       behandlingId={1}
-      behandlingsprosessEnabled
-      faktaEnabled
-      papirsoknadEnabled={false}
       hasShownBehandlingPaVent={false}
       closeBehandlingOnHoldModal={sinon.spy()}
       handleOnHoldSubmit={sinon.spy()}
@@ -89,6 +61,10 @@ describe('BehandlingFpsakIndex', () => {
       behandlingPaaVent
       setBehandlingInfo={sinon.spy()}
       behandlingerVersjonMappedById={{}}
+      setBehandlingInfoHolder={sinon.spy()}
+      behandlingUpdater={{ setUpdater: sinon.spy() }}
+      resetBehandlingFpsakContext={sinon.spy()}
+      updateFagsakInfo={sinon.spy()}
     />);
 
     const modal = wrapper.find(BehandlingErPaVentModal);
@@ -103,9 +79,6 @@ describe('BehandlingFpsakIndex', () => {
       saksnummer={2}
       behandlingId={1}
       behandlingVersjon={2}
-      behandlingsprosessEnabled
-      faktaEnabled
-      papirsoknadEnabled={false}
       hasShownBehandlingPaVent={false}
       closeBehandlingOnHoldModal={sinon.spy()}
       handleOnHoldSubmit={sinon.spy()}
@@ -115,6 +88,10 @@ describe('BehandlingFpsakIndex', () => {
       behandlingPaaVent
       setBehandlingInfo={sinon.spy()}
       behandlingerVersjonMappedById={{}}
+      setBehandlingInfoHolder={sinon.spy()}
+      behandlingUpdater={{ setUpdater: sinon.spy() }}
+      resetBehandlingFpsakContext={sinon.spy()}
+      updateFagsakInfo={sinon.spy()}
     />);
 
     wrapper.setProps({ behandlingVersjon: 3 });
@@ -134,9 +111,6 @@ describe('BehandlingFpsakIndex', () => {
       saksnummer={2}
       behandlingId={1}
       behandlingVersjon={2}
-      behandlingsprosessEnabled
-      faktaEnabled
-      papirsoknadEnabled={false}
       hasShownBehandlingPaVent={false}
       closeBehandlingOnHoldModal={sinon.spy()}
       handleOnHoldSubmit={sinon.spy()}
@@ -146,6 +120,10 @@ describe('BehandlingFpsakIndex', () => {
       behandlingPaaVent
       setBehandlingInfo={sinon.spy()}
       behandlingerVersjonMappedById={{}}
+      setBehandlingInfoHolder={sinon.spy()}
+      behandlingUpdater={{ setUpdater: sinon.spy() }}
+      resetBehandlingFpsakContext={sinon.spy()}
+      updateFagsakInfo={sinon.spy()}
     />);
 
     wrapper.setProps({ behandlingsprosessEnabled: false });
@@ -162,9 +140,6 @@ describe('BehandlingFpsakIndex', () => {
       saksnummer={2}
       behandlingId={1}
       behandlingVersjon={2}
-      behandlingsprosessEnabled
-      faktaEnabled
-      papirsoknadEnabled={false}
       hasShownBehandlingPaVent={false}
       closeBehandlingOnHoldModal={sinon.spy()}
       handleOnHoldSubmit={sinon.spy()}
@@ -174,6 +149,10 @@ describe('BehandlingFpsakIndex', () => {
       behandlingPaaVent
       setBehandlingInfo={sinon.spy()}
       behandlingerVersjonMappedById={{}}
+      setBehandlingInfoHolder={sinon.spy()}
+      behandlingUpdater={{ setUpdater: sinon.spy() }}
+      resetBehandlingFpsakContext={sinon.spy()}
+      updateFagsakInfo={sinon.spy()}
     />);
 
     wrapper.unmount();

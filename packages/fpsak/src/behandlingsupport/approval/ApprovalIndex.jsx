@@ -5,27 +5,25 @@ import { push } from 'connected-react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
-import { createLocationForHistorikkItems } from 'app/paths';
 
-import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+
+import { createLocationForHistorikkItems } from 'app/paths';
+import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
+import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import {
   getBehandlingVersjon, getAksjonspunkter, getBehandlingAnsvarligSaksbehandler, getTotrinnskontrollArsakerUtenUdefinert,
-  getBehandlingStatus, getBehandlingToTrinnsBehandling, getTotrinnskontrollArsakerReadOnly,
-} from 'behandlingFpsak/behandlingSelectors';
-import {
-  getBehandlingIdentifier,
-} from 'behandlingFpsak/duck';
+  getBehandlingStatus, getBehandlingToTrinnsBehandling, getTotrinnskontrollArsakerReadOnly, getBehandlingIdentifier,
+} from 'behandling/duck';
 import navAnsattPropType from 'navAnsatt/navAnsattPropType';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import requireProps from 'app/data/requireProps';
 import { getNavAnsatt } from 'navAnsatt/duck';
-import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { getKodeverk } from 'kodeverk/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';
 import ToTrinnsForm from './components/ToTrinnsForm';
 import ToTrinnsFormReadOnly from './components/ToTrinnsFormReadOnly';

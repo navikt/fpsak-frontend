@@ -10,7 +10,7 @@ import {
   getTotrinnskontrollArsakerReadOnly,
   isBehandlingInInnhentSoknadsopplysningerSteg,
   getBehandlingIsKlage,
-} from 'behandlingFpsak/behandlingSelectors';
+} from 'behandling/duck';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { getRettigheter } from 'navAnsatt/duck';
 import SupportPanel from './supportPanels';

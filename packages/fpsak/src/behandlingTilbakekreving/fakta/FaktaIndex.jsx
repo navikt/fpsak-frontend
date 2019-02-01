@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import requireProps from 'app/data/requireProps';
-import { getBehandlingVersjon } from 'behandlingTilbakekreving/tilbakekrevingBehandlingSelectors';
+import { getBehandlingVersjon } from 'behandlingTilbakekreving/selectors/tilbakekrevingBehandlingSelectors';
 import { getBehandlingIdentifier } from 'behandlingTilbakekreving/duck';
 import { getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta, DEFAULT_FAKTA } from 'app/paths';
 import trackRouteParam from 'app/data/trackRouteParam';

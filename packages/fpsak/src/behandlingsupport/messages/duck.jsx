@@ -1,11 +1,13 @@
-import fpsakApi from 'data/fpsakApi';
 import { updateFagsakInfo } from 'fagsak/duck';
-import { updateBehandling } from 'behandlingFpsak/duck';
+import behandlingUpdater from 'behandling/BehandlingUpdater';
 
-const resetSubmitMessage = behandlingIdentifier => (dispatch) => {
-  dispatch(fpsakApi.SUBMIT_MESSAGE.resetRestApi());
+export const resetSubmitMessageActionCreator = behandlingIdentifier => (dispatch) => {
+  behandlingUpdater.resetSubmitMessage(dispatch);
   return dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer))
-    .then(() => dispatch(updateBehandling(behandlingIdentifier)));
+    .then(() => behandlingUpdater.updateBehandling(dispatch, behandlingIdentifier));
 };
 
-export default resetSubmitMessage;
+export const previewMessageActionCreator = params => dispatch => behandlingUpdater.previewMessage(dispatch, params);
+export const submitMessageActionCreator = params => dispatch => behandlingUpdater.submitMessage(dispatch, params);
+
+export const isSubmitMessageFinished = state => behandlingUpdater.isSubmitMessageFinished(state);

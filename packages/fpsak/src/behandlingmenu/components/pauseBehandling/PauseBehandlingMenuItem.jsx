@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import SettBehandlingPaVentForm from 'behandlingFpsak/components/SettBehandlingPaVentForm';
+import SettBehandlingPaVentForm from 'behandlingFelles/components/SettBehandlingPaVentForm';
 import MenuButton from '../MenuButton';
 
 /**

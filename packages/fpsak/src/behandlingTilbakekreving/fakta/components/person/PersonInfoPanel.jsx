@@ -16,10 +16,10 @@ import {
   getBehandlingSprak,
   getPersonopplysning,
   getBehandlingArbeidsforhold,
-} from 'behandlingTilbakekreving/tilbakekrevingBehandlingSelectors';
+} from 'behandlingTilbakekreving/selectors/tilbakekrevingBehandlingSelectors';
 import { behandlingForm } from 'behandlingTilbakekreving/behandlingForm';
 import withDefaultToggling from 'behandlingFelles/fakta/withDefaultToggling';
-import faktaPanelCodes from 'behandlingTilbakekreving/fakta/faktaPanelCodes';
+import faktaPanelCodes from 'behandlingFelles/fakta/faktaPanelCodes';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import FullPersonInfo from './panelBody/FullPersonInfo';

@@ -12,7 +12,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import { getBehandlingType } from 'behandlingFpsak/behandlingSelectors';
+import { getBehandlingType } from 'behandling/duck';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { ariaCheck, required } from '@fpsak-frontend/utils';
 import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';

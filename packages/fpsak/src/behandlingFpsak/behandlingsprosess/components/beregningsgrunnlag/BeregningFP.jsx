@@ -17,7 +17,7 @@ import {
   getBeregningGraderingAksjonspunkt,
 } from 'behandlingFpsak/behandlingSelectors';
 import beregningsgrunnlagPropType from 'behandlingFelles/proptypes/beregningsgrunnlagPropType';
-import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
+import behandlingspunktCodes from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
 import { getSelectedBehandlingspunktVilkar } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import aktivitetStatus, {
   isStatusArbeidstakerOrKombinasjon,

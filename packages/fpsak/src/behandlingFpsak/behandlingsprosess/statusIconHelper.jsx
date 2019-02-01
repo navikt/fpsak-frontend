@@ -1,4 +1,4 @@
-import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
+import behandlingspunktCodes from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
 import beregningsgrunnlagImages from 'behandlingFpsak/behandlingsprosess/statusIconsBeregningsgrunnlag';
 import uttakImages from 'behandlingFpsak/behandlingsprosess/statusIconsUttak';
 import vedtakImages from 'behandlingFpsak/behandlingsprosess/statusIconsVedtak';

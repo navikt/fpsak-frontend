@@ -21,7 +21,7 @@ import {
 } from './duck';
 import {
   getAksjonspunkter, getBehandlingVersjon,
-} from '../tilbakekrevingBehandlingSelectors';
+} from '../selectors/tilbakekrevingBehandlingSelectors';
 import { getBehandlingIdentifier } from '../duck';
 import { getBehandlingspunkter, getSelectedBehandlingspunkt, getDefaultBehandlingspunkt }
   from './behandlingsprosessSelectors';

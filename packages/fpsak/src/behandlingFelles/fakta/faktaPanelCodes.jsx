@@ -12,6 +12,7 @@ const faktaPanelCodes = {
   TILLEGGSOPPLYSNINGER: 'tilleggsopplysninger',
   VERGE: 'verge',
   UTTAK: 'uttak',
+  FEILUTBETALING: 'feilutbetaling',
 };
 
 export default faktaPanelCodes;

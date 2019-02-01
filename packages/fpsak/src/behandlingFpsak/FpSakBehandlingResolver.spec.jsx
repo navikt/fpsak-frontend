@@ -6,17 +6,17 @@ import sinon from 'sinon';
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { BehandlingResolver } from './BehandlingResolver';
+import { FpSakBehandlingResolver } from './FpSakBehandlingResolver';
 
-describe('BehandlingResolver', () => {
-  it('skal hente behandling og så vise laste-panel når data ikke er hentet ferdig', () => {
+describe('FpSakBehandlingResolver', () => {
+  it('skal vise laste-panel når data ikke er hentet ferdig', () => {
     const saksnummer = 1234;
     const behandlingId = 1;
     const identifier = new BehandlingIdentifier(saksnummer, behandlingId);
     const fetchBehandling = sinon.spy();
 
     const wrapper = shallow(
-      <BehandlingResolver
+      <FpSakBehandlingResolver
         behandlingIdentifier={identifier}
         fetchBehandling={fetchBehandling}
         behandlingerVersjonMappedById={{ test: 'test' }}
@@ -24,8 +24,31 @@ describe('BehandlingResolver', () => {
         behandlingerTyperMappedById={{ 1: BehandlingType.FORSTEGANGSSOKNAD }}
       >
         <div>test</div>
-      </BehandlingResolver>,
+      </FpSakBehandlingResolver>,
     );
+
+    expect(wrapper.find(LoadingPanel)).to.have.length(1);
+  });
+
+  it('skal hente behandling når behandling-identifikator blir satt', () => {
+    const saksnummer = 1234;
+    const behandlingId = 1;
+    const identifier = new BehandlingIdentifier(saksnummer, behandlingId);
+    const fetchBehandling = sinon.spy();
+
+    const wrapper = shallow(
+      <FpSakBehandlingResolver
+        behandlingIdentifier={identifier}
+        fetchBehandling={fetchBehandling}
+        behandlingerVersjonMappedById={{ test: 'test' }}
+        isInSync={false}
+        behandlingerTyperMappedById={{ 1: BehandlingType.FORSTEGANGSSOKNAD }}
+      >
+        <div>test</div>
+      </FpSakBehandlingResolver>,
+    );
+
+    wrapper.setProps({ behandlingIdentifier: identifier });
 
     expect(fetchBehandling.getCalls()).has.length(1);
     const { args } = fetchBehandling.getCalls()[0];
@@ -43,7 +66,7 @@ describe('BehandlingResolver', () => {
     const fetchBehandling = sinon.spy();
 
     const wrapper = shallow(
-      <BehandlingResolver
+      <FpSakBehandlingResolver
         behandlingIdentifier={identifier}
         fetchBehandling={fetchBehandling}
         behandlingerVersjonMappedById={{ }}
@@ -51,7 +74,7 @@ describe('BehandlingResolver', () => {
         behandlingerTyperMappedById={{ 1: BehandlingType.FORSTEGANGSSOKNAD }}
       >
         <div>test</div>
-      </BehandlingResolver>,
+      </FpSakBehandlingResolver>,
     );
 
     expect(fetchBehandling.getCalls()).has.length(0);

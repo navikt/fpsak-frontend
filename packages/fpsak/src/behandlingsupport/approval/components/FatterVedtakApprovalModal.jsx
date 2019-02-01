@@ -8,28 +8,27 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { Modal, Image } from '@fpsak-frontend/shared-components';
-import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { getSelectedBehandlingId } from 'behandling/duck';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
+
+import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import {
+  getSelectedBehandlingId,
   getBehandlingIsKlage,
   getBehandlingResultatstruktur,
   getBehandlingsresultat,
   getBehandlingStatus,
   getBehandlingType,
-} from 'behandlingFpsak/behandlingSelectors';
-import {
   getBehandlingsresultatFraOriginalBehandling,
   getResultatstrukturFraOriginalBehandling,
-} from 'behandlingFpsak/selectors/originalBehandlingSelectors';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+} from 'behandling/duck';
 import requireProps from 'app/data/requireProps';
-import { getResolveProsessAksjonspunkterSuccess } from 'behandlingFpsak/behandlingsprosess/duck';
+import { getApproveFinished } from '../duck';
 
-import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
 import styles from './fatterVedtakApprovalModal.less';
 
 /**
@@ -183,7 +182,7 @@ const mapStateToProps = (state, ownProps) => {
       modalDescriptionTextCode: isStatusFatterVedtak(state) ? getModalDescriptionTextCode(state) : 'FatterVedtakApprovalModal.ModalDescription',
       selectedBehandlingId: getSelectedBehandlingId(state),
       isBehandlingStatusFatterVedtak: getBehandlingStatus(state).kode === behandlingStatus.FATTER_VEDTAK ? true : undefined,
-      resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
+      resolveProsessAksjonspunkterSuccess: getApproveFinished(state),
     };
   }
   return {
@@ -192,7 +191,7 @@ const mapStateToProps = (state, ownProps) => {
     modalDescriptionTextCode: isStatusFatterVedtak(state) ? getModalDescriptionTextCode(state) : 'FatterVedtakApprovalModal.ModalDescription',
     selectedBehandlingId: getSelectedBehandlingId(state),
     isBehandlingStatusFatterVedtak: getBehandlingStatus(state).kode === behandlingStatus.FATTER_VEDTAK ? true : undefined,
-    resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
+    resolveProsessAksjonspunkterSuccess: getApproveFinished(state),
   };
 };
 

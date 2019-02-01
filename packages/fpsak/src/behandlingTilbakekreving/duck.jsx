@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import tilbakekrevingBehandlingApi, { TilbakekrevingBehandlingApiKeys } from './tilbakekrevingBehandlingApi';
+import tilbakekrevingBehandlingApi, { TilbakekrevingBehandlingApiKeys } from './data/tilbakekrevingBehandlingApi';
 
 import reducerRegistry from '../ReducerRegistry';
 
@@ -11,6 +11,7 @@ const reducerName = 'tilbakekrevingBehandling';
 const actionType = name => `${reducerName}/${name}`;
 const SET_BEHANDLING_INFO = actionType('SET_BEHANDLING_INFO');
 const HAS_SHOWN_BEHANDLING_PA_VENT = actionType('HAS_SHOWN_BEHANDLING_PA_VENT');
+const RESET_FPTILBAKE_BEHANDLING = actionType('RESET_FPTILBAKE_BEHANDLING');
 
 export const setBehandlingInfo = info => ({
   type: SET_BEHANDLING_INFO,
@@ -20,6 +21,11 @@ export const setBehandlingInfo = info => ({
 export const setHasShownBehandlingPaVent = () => ({
   type: HAS_SHOWN_BEHANDLING_PA_VENT,
 });
+
+const resetBehandlingContext = () => ({
+  type: RESET_FPTILBAKE_BEHANDLING,
+});
+
 
 // TODO (TOR) Rydd opp i dette. Kan ein legge rehenting av fagsakInfo og original-behandling i resolver i staden?
 export const updateBehandling = (
@@ -43,10 +49,12 @@ export const updateBehandling = (
 export const resetBehandling = dispatch => Promise.all([
   dispatch(tilbakekrevingBehandlingApi.BEHANDLING.resetRestApi()()),
   dispatch(tilbakekrevingBehandlingApi.ORIGINAL_BEHANDLING.resetRestApi()()),
+  dispatch(resetBehandlingContext()),
 ]);
 
 export const fetchBehandling = (behandlingIdentifier, allBehandlinger, updateFagsakInfo) => (dispatch) => {
-  resetBehandling(dispatch);
+  dispatch(tilbakekrevingBehandlingApi.BEHANDLING.resetRestApi()());
+  dispatch(tilbakekrevingBehandlingApi.ORIGINAL_BEHANDLING.resetRestApi()());
   dispatch(updateBehandling(behandlingIdentifier, allBehandlinger, updateFagsakInfo));
 };
 
@@ -63,6 +71,8 @@ export const resetTilbakekrevingContext = () => (dispatch) => {
     .forEach((value) => {
       dispatch(tilbakekrevingBehandlingApi[value].resetRestApi()());
     });
+
+  dispatch(resetBehandlingContext());
 };
 
 /* Reducer */
@@ -84,6 +94,8 @@ export const tilbakekrevingBehandlingReducer = (state = initialState, action = {
         ...state,
         hasShownBehandlingPaVent: true,
       };
+    case RESET_FPTILBAKE_BEHANDLING:
+      return initialState;
     default:
       return state;
   }
@@ -100,3 +112,6 @@ export const getBehandlingIdentifier = createSelector(
   (behandlingId, saksnummer) => (saksnummer && behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined
   ),
 );
+
+
+export const getHasShownBehandlingPaVent = createSelector([getBehandlingContext], behandlingContext => behandlingContext.hasShownBehandlingPaVent);

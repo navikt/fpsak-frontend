@@ -5,7 +5,7 @@ import { Panel } from 'nav-frontend-paneler';
 
 import { getSupportPanelLocationCreator } from 'app/paths';
 import trackRouteParam from 'app/data/trackRouteParam';
-import { isKontrollerRevurderingAksjonspunkOpen } from 'behandlingFpsak/behandlingSelectors';
+import { isKontrollerRevurderingAksjonspunkOpen } from 'behandling/duck';
 import { getAccessibleSupportPanels, getEnabledSupportPanels } from './behandlingsupportSelectors';
 import { getSelectedSupportPanel, setSelectedSupportPanel } from './duck';
 

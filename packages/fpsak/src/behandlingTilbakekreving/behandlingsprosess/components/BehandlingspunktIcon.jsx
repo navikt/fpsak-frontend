@@ -6,7 +6,7 @@ import { injectIntl, intlShape } from 'react-intl';
 
 import { Image } from '@fpsak-frontend/shared-components';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { getBehandlingHenlagt } from 'behandlingTilbakekreving/tilbakekrevingBehandlingSelectors';
+import { getBehandlingHenlagt } from 'behandlingTilbakekreving/selectors/tilbakekrevingBehandlingSelectors';
 import findBehandlingsprosessIcon from 'behandlingTilbakekreving/behandlingsprosess/statusIconHelper';
 import {
   getBehandlingspunkterStatus, getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus,

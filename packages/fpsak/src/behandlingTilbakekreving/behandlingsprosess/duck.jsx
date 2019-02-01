@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import tilbakekrevingBehandlingApi from 'behandlingTilbakekreving/tilbakekrevingBehandlingApi';
+import tilbakekrevingBehandlingApi from 'behandlingTilbakekreving/data/tilbakekrevingBehandlingApi';
 import reducerRegistry from '../../ReducerRegistry';
 
 const reducerName = 'tilbakekrevingBehandlingsprosess';
