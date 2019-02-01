@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
-import {
-  getBehandlingVilkar, getBehandlingSprak, getTilbakekrevingText,
-} from 'behandlingFpsak/behandlingSelectors';
+import { getBehandlingVilkar, getBehandlingSprak } from 'behandlingFpsak/behandlingSelectors';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import {
@@ -98,7 +96,7 @@ const mapStateToProps = state => ({
   ytelseType: getFagsakYtelseType(state).kode,
   vilkar: getBehandlingVilkar(state),
   sprakkode: getBehandlingSprak(state),
-  tilbakekrevingText: findTilbakekrevingText(getTilbakekrevingText(state)),
+  tilbakekrevingText: findTilbakekrevingText(state),
 });
 
 export default connect(mapStateToProps)(injectIntl(VedtakAvslagPanelImpl));

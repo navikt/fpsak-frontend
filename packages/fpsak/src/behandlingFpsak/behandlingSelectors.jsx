@@ -115,10 +115,6 @@ export const getBrevMaler = createSelector([getSelectedBehandling], (selectedBeh
 
 export const getSimuleringResultat = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling.simuleringResultat));
 export const getTilbakekrevingValg = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling.tilbakekrevingvalg));
-export const getTilbakekrevingText = createSelector(
-  [getSimuleringResultat, getTilbakekrevingValg],
-  (simuleringResultat, tilbakekrevingValg) => ({ simuleringResultat, tilbakekrevingValg }),
-);
 
 // AKSJONSPUNKTER
 export const getAksjonspunkter = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.aksjonspunkter);

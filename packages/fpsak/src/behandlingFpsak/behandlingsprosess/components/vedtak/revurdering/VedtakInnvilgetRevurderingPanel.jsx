@@ -9,7 +9,7 @@ import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-component
 import {
   getAksjonspunkter,
   getBehandlingResultatstruktur, getBehandlingSprak,
-  getBehandlingsresultat, getTilbakekrevingText,
+  getBehandlingsresultat,
 } from 'behandlingFpsak/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandlingFpsak/selectors/originalBehandlingSelectors';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
@@ -167,7 +167,7 @@ const mapStateToProps = state => ({
     ? getBehandlingsresultat(state).konsekvenserForYtelsen : undefined,
   sprakKode: getBehandlingSprak(state),
   aksjonspunkter: getAksjonspunkter(state),
-  tilbakekrevingText: findTilbakekrevingText(getTilbakekrevingText(state)),
+  tilbakekrevingText: findTilbakekrevingText(state),
 });
 
 export default connect(mapStateToProps)(injectIntl(VedtakInnvilgetRevurderingPanelImpl));

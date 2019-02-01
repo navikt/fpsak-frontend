@@ -5,7 +5,7 @@ import { intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 import {
-  getAksjonspunkter, getBehandlingResultatstruktur, getBehandlingSprak, getTilbakekrevingText,
+  getAksjonspunkter, getBehandlingResultatstruktur, getBehandlingSprak,
 } from 'behandlingFpsak/behandlingSelectors';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
@@ -100,7 +100,7 @@ const mapStateToProps = state => ({
   beregningResultat: getBehandlingResultatstruktur(state),
   aksjonspunkter: getAksjonspunkter(state),
   sprakKode: getBehandlingSprak(state),
-  tilbakekrevingText: findTilbakekrevingText(getTilbakekrevingText(state)),
+  tilbakekrevingText: findTilbakekrevingText(state),
 });
 
 export default connect(mapStateToProps)(VedtakInnvilgetPanelImpl);
