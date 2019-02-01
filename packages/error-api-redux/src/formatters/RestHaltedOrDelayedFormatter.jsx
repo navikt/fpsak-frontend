@@ -25,7 +25,8 @@ class RestHaltedOrDelayedFormatter implements Formatter<ErrorData> {
     const { message, status, eta } = errorData;
     if (status === 'HALTED') {
       return ErrorMessage.withMessageCode(HALTED_PROCESS_TASK_MESSAGE_CODE, { errorDetails: message });
-    } if (status === 'DELAYED') {
+    }
+    if (status === 'DELAYED') {
       return ErrorMessage.withMessageCode(DELAYED_PROCESS_TASK_MESSAGE_CODE, { date: dateFormat(eta), time: timeFormat(eta), message });
     }
     return undefined;
