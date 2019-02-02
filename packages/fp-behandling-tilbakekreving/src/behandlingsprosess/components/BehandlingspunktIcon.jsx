@@ -6,11 +6,11 @@ import { injectIntl, intlShape } from 'react-intl';
 
 import { Image } from '@fpsak-frontend/shared-components';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { getBehandlingHenlagt } from 'behandlingTilbakekreving/selectors/tilbakekrevingBehandlingSelectors';
-import findBehandlingsprosessIcon from 'behandlingTilbakekreving/behandlingsprosess/statusIconHelper';
+import { getBehandlingHenlagt } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+import findBehandlingsprosessIcon from 'behandlingTilbakekreving/src/behandlingsprosess/statusIconHelper';
 import {
   getBehandlingspunkterStatus, getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus,
-} from 'behandlingTilbakekreving/behandlingsprosess/behandlingsprosessSelectors';
+} from 'behandlingTilbakekreving/src/behandlingsprosess/behandlingsprosessSelectors';
 
 import styles from './behandlingspunktIcon.less';
 

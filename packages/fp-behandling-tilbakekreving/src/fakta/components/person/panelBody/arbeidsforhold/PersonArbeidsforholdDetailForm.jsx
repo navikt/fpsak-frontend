@@ -7,11 +7,11 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import BehandlingFormFieldCleaner from 'behandlingTilbakekreving/BehandlingFormFieldCleaner';
+import BehandlingFormFieldCleaner from 'behandlingTilbakekreving/src/BehandlingFormFieldCleaner';
 import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, getBehandlingFormValues, getBehandlingFormInitialValues,
 }
-  from 'behandlingTilbakekreving/behandlingForm';
+  from 'behandlingTilbakekreving/src/behandlingForm';
 import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
 import {
   FlexColumn, FlexContainer, FlexRow, ElementWrapper, VerticalSpacer,

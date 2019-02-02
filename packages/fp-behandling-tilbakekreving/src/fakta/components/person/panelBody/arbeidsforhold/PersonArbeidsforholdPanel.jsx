@@ -6,11 +6,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import { getBehandlingVersjon } from 'behandlingTilbakekreving/selectors/tilbakekrevingBehandlingSelectors';
-import { getSelectedBehandlingId } from 'behandlingTilbakekreving/duck';
+import { getBehandlingVersjon } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+import { getSelectedBehandlingId } from 'behandlingTilbakekreving/src/duck';
 import { arbeidsforholdPropType } from '@fpsak-frontend/fp-behandling-felles';
-import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingTilbakekreving/behandlingForm';
-import FaktaGruppe from 'behandlingTilbakekreving/fakta/components/FaktaGruppe';
+import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingTilbakekreving/src/behandlingForm';
+import FaktaGruppe from 'behandlingTilbakekreving/src/fakta/components/FaktaGruppe';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverk } from 'kodeverk/duck';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';

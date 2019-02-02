@@ -7,7 +7,7 @@ import { getRettigheter } from 'navAnsatt/duck';
 import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
 import {
   getPersonopplysning, getBehandlingIsOnHold, getAksjonspunkter, hasReadOnlyBehandling, getFeilutbetalingFakta,
-} from 'behandlingTilbakekreving/selectors/tilbakekrevingBehandlingSelectors';
+} from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { getOpenInfoPanels } from '../duck';
 import PersonInfoPanel from './person/PersonInfoPanel';

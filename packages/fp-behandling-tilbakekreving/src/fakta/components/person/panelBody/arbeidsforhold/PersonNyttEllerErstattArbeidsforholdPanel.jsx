@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 
-import BehandlingFormFieldCleaner from 'behandlingTilbakekreving/BehandlingFormFieldCleaner';
+import BehandlingFormFieldCleaner from 'behandlingTilbakekreving/src/BehandlingFormFieldCleaner';
 import { arbeidsforholdPropType } from '@fpsak-frontend/fp-behandling-felles';
 import { ElementWrapper, ArrowBox } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';

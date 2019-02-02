@@ -1,4 +1,4 @@
-import tilbakekrevingBehandlingApi from 'behandlingTilbakekreving/data/tilbakekrevingBehandlingApi';
+import tilbakekrevingBehandlingApi from 'behandlingTilbakekreving/src/data/tilbakekrevingBehandlingApi';
 import { createSelector } from 'reselect';
 
 import reducerRegistry from '@fpsak-frontend/fp-felles';

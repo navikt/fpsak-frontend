@@ -16,8 +16,8 @@ import {
   getBehandlingSprak,
   getPersonopplysning,
   getBehandlingArbeidsforhold,
-} from 'behandlingTilbakekreving/selectors/tilbakekrevingBehandlingSelectors';
-import { behandlingForm } from 'behandlingTilbakekreving/behandlingForm';
+} from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+import { behandlingForm } from 'behandlingTilbakekreving/src/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import FullPersonInfo from './panelBody/FullPersonInfo';
