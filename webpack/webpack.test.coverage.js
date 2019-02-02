@@ -1,8 +1,11 @@
 const HappyPack = require('happypack');
 const path = require('path');
 const merge = require('webpack-merge');
+const webpack = require('webpack');
 const common = require('./webpack.common.js');
+const PACKAGE = require('./../package.json');
 
+const VERSION = PACKAGE.version;
 const PACKAGES_DIR = path.join(__dirname, '../packages');
 
 const config = {
@@ -34,6 +37,9 @@ const config = {
         },
       }],
       threads: 4,
+    }),
+     new webpack.DefinePlugin({
+      VERSION: JSON.stringify(VERSION),
     }),
   ],
 };

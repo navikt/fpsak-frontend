@@ -5,13 +5,13 @@ import { bindActionCreators } from 'redux';
 
 import BehandlingPapirsoknadIndex from '@fpsak-frontend/fp-behandling-papirsoknad';
 import BehandlingTilbakekrevingIndex from '@fpsak-frontend/fp-behandling-tilbakekreving';
+import BehandlingFpsakIndex from '@fpsak-frontend/fp-behandling';
 
 import trackRouteParam from 'app/data/trackRouteParam';
 import requireProps from 'app/data/requireProps';
 import { updateFagsakInfo } from 'fagsak/duck';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import BehandlingFpsakIndex from 'behandlingFpsak/BehandlingFpsakIndex';
 import {
   setSelectedBehandlingId, getSelectedBehandlingId, setBehandlingInfoHolder, resetBehandlingContext as resetBehandlingContextActionCreator,
 } from './duck';

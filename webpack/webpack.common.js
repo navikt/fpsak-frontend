@@ -12,7 +12,6 @@ const config = {
       app: path.join(APP_DIR, 'app'),
       aktoer: path.join(APP_DIR, 'aktoer'),
       behandling: path.join(APP_DIR, 'behandling'),
-      behandlingFpsak: path.join(APP_DIR, 'behandlingFpsak'),
       behandlingmenu: path.join(APP_DIR, 'behandlingmenu'),
       behandlingsupport: path.join(APP_DIR, 'behandlingsupport'),
       fagsak: path.join(APP_DIR, 'fagsak'),
@@ -24,8 +23,9 @@ const config = {
       data: path.join(APP_DIR, 'data'),
 
       //Andre pakker
-      papirsoknad: path.join(PACKAGES_DIR, 'fp-behandling-papirsoknad'),
+      behandlingFpsak: path.join(PACKAGES_DIR, 'fp-behandling'),
       behandlingTilbakekreving: path.join(PACKAGES_DIR, 'fp-behandling-tilbakekreving'),
+      papirsoknad: path.join(PACKAGES_DIR, 'fp-behandling-papirsoknad'),
     },
     extensions: ['.json', '.js', '.jsx'],
   },
