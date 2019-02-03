@@ -22,10 +22,9 @@ import {
   from 'behandlingFpsak/src/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/src/behandlingForm';
 import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
-import { getFagsakPerson } from 'fagsak/fagsakSelectors';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { bindActionCreators } from 'redux';
-import { getSelectedBehandlingId } from 'behandlingFpsak/src/duck';
+import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingFpsak/src/duck';
 import { guid } from '@fpsak-frontend/utils';
 import OppholdInntektOgPeriodeForm from './OppholdInntektOgPeriodeForm';
 import MedlemskapEndringerTabell from './MedlemskapEndringerTabell';

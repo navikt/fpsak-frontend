@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import featureToggle from 'app/featureToggle';
+import { featureToggle } from '@fpsak-frontend/fp-felles';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';

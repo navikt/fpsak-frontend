@@ -4,8 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { destroy } from 'redux-form';
 
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { sakOperations, BehandlingErPaVentModal, BehandlingGrid } from '@fpsak-frontend/fp-behandling-felles';
-import { getHasSubmittedPaVentForm } from 'behandlingmenu/duck';
 import PapirsoknadInfoSetter from './PapirsoknadInfoSetter';
 import PapirsoknadResolver from './PapirsoknadResolver';
 import PapirsoknadIndex from './PapirsoknadIndex';
@@ -15,7 +15,7 @@ import {
 } from './selectors/papirsoknadSelectors';
 import {
   setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier,
-  getHasShownBehandlingPaVent, resetPapirsoknadContext,
+  getHasShownBehandlingPaVent, resetPapirsoknadContext, getKodeverk,
 } from './duck';
 import { getBehandlingFormPrefix } from './behandlingForm';
 import papirsoknadUpdater from './PapirsoknadUpdater';
@@ -37,12 +37,15 @@ export class BehandlingPapirsoknadIndex extends Component {
 
   componentDidMount() {
     const {
-      setBehandlingInfo: setInfo, saksnummer, behandlingId, behandlingUpdater, updateFagsakInfo,
+      setBehandlingInfo: setInfo, saksnummer, behandlingId, behandlingUpdater, appContextUpdater, kodeverk, fagsak,
     } = this.props;
-    setInfo({ behandlingId, fagsakSaksnummer: saksnummer });
+    setInfo({
+      behandlingId, fagsakSaksnummer: saksnummer, kodeverk, fagsak,
+    });
 
     behandlingUpdater.setUpdater(papirsoknadUpdater);
-    sakOperations.withUpdateFagsakInfo(updateFagsakInfo);
+    sakOperations.withUpdateFagsakInfo(appContextUpdater.updateFagsakInfo);
+    sakOperations.withSetRequestPollingMessage(appContextUpdater.setRequestPollingMessage);
   }
 
   componentDidUpdate(prevProps) {
@@ -81,6 +84,7 @@ export class BehandlingPapirsoknadIndex extends Component {
       hasManualPaVent,
       behandlingerVersjonMappedById,
       setBehandlingInfoHolder,
+      ventearsaker,
     } = this.props;
     return (
       <PapirsoknadResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
@@ -96,6 +100,7 @@ export class BehandlingPapirsoknadIndex extends Component {
             venteArsakKode={venteArsakKode}
             handleOnHoldSubmit={handleOnHoldSubmit}
             hasManualPaVent={hasManualPaVent}
+            ventearsaker={ventearsaker}
           />
           )
         }
@@ -122,7 +127,18 @@ BehandlingPapirsoknadIndex.propTypes = {
   behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   behandlingUpdater: PropTypes.shape().isRequired,
   resetPapirsoknadContext: PropTypes.func.isRequired,
-  updateFagsakInfo: PropTypes.func.isRequired,
+  appContextUpdater: PropTypes.shape().isRequired,
+  kodeverk: PropTypes.shape().isRequired,
+  fagsak: PropTypes.shape({
+    fagsakStatus: PropTypes.shape().isRequired,
+    fagsakPerson: PropTypes.shape().isRequired,
+    fagsakYtelseType: PropTypes.shape().isRequired,
+    isForeldrepengerFagsak: PropTypes.bool.isRequired,
+  }).isRequired,
+  ventearsaker: PropTypes.arrayOf(PropTypes.shape({
+    kode: PropTypes.string,
+    navn: PropTypes.string,
+  })),
 };
 
 BehandlingPapirsoknadIndex.defaultProps = {
@@ -130,6 +146,7 @@ BehandlingPapirsoknadIndex.defaultProps = {
   behandlingPaaVent: false,
   behandlingVersjon: undefined,
   venteArsakKode: undefined,
+  ventearsaker: [],
 };
 
 const mapStateToProps = state => ({
@@ -139,8 +156,8 @@ const mapStateToProps = state => ({
   behandlingPaaVent: getBehandlingIsOnHold(state),
   venteArsakKode: getBehandlingVenteArsakKode(state),
   hasShownBehandlingPaVent: getHasShownBehandlingPaVent(state),
-  hasSubmittedPaVentForm: getHasSubmittedPaVentForm(state),
   hasManualPaVent: hasBehandlingManualPaVent(state),
+  ventearsaker: getKodeverk(kodeverkTyper.VENTEARSAK)(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

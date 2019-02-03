@@ -8,7 +8,7 @@ import { historikkinnslagDelPropType } from '@fpsak-frontend/fp-behandling-felle
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
-import { createLocationForHistorikkItems } from 'app/paths';
+import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import { findHendelseText } from './historikkUtils';
 
 const aksjonspunktCodesToTextCode = {

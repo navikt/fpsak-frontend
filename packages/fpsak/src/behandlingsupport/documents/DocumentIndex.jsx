@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import requireProps from 'app/data/requireProps';
+import { requireProps } from '@fpsak-frontend/fp-felles';
 import { getSelectedBehandlingId } from 'behandling/duck';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';

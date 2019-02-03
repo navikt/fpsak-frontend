@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { aksjonspunktPropType, faktaPanelCodes } from '@fpsak-frontend/fp-behandling-felles';
 import { omit } from '@fpsak-frontend/utils';
-import { getKodeverk } from 'kodeverk/duck';
+import { getKodeverk } from 'behandlingFpsak/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   getBehandlingRelatertTilgrensendeYtelserForAnnenForelder,

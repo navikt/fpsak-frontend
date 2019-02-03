@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 
-import featureToggle from 'app/featureToggle';
-import { DEFAULT_BEHANDLINGSPROSESS } from 'app/paths';
+import { DEFAULT_BEHANDLINGSPROSESS, featureToggle } from '@fpsak-frontend/fp-felles';
 import as from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

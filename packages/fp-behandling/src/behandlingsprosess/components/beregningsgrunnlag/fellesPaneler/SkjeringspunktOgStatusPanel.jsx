@@ -11,7 +11,7 @@ import {
   getTilstøtendeYtelse,
   getGjeldendeDekningsgrad,
 } from 'behandlingFpsak/src/behandlingSelectors';
-import { getKodeverk } from 'kodeverk/duck';
+import { getKodeverk } from 'behandlingFpsak/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import dekningsgrad from '@fpsak-frontend/kodeverk/src/dekningsgrad';

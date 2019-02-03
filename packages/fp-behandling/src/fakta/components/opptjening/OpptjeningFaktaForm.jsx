@@ -9,10 +9,9 @@ import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import { getBehandlingVersjon, getBehandlingFastsattOpptjeningFomDate, getBehandlingFastsattOpptjeningTomDate } from 'behandlingFpsak/src/behandlingSelectors';
-import { getSelectedBehandlingId } from 'behandlingFpsak/src/duck';
+import { getSelectedBehandlingId, getKodeverk } from 'behandlingFpsak/src/duck';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/src/behandlingForm';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   VerticalSpacer, ElementWrapper, AksjonspunktHelpText, DateLabel, FlexContainer, FlexRow, FlexColumn,

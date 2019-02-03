@@ -12,7 +12,7 @@ import {
 } from '@fpsak-frontend/fp-behandling-felles';
 import withDefaultToggling from 'behandlingFpsak/src/fakta/withDefaultToggling';
 import FaktaSubmitButton from 'behandlingFpsak/src/fakta/components/FaktaSubmitButton';
-import { getKodeverk } from 'kodeverk/duck';
+import { getKodeverk } from 'behandlingFpsak/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import RegistrereVergeFaktaForm from './RegistrereVergeFaktaForm';

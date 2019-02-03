@@ -1,5 +1,5 @@
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import featureToggle from 'app/featureToggle';
+import { featureToggle } from '@fpsak-frontend/fp-felles';
 
 export const hasSimuleringOn = ({ featureToggles }) => featureToggles[featureToggle.SIMULER_OPPDRAG];
 export const getStatusFromSimulering = ({ simuleringResultat }) => {

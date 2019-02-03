@@ -7,12 +7,11 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 import { getBehandlingVersjon } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
-import { getSelectedBehandlingId } from 'behandlingTilbakekreving/src/duck';
+import { getSelectedBehandlingId, getKodeverk } from 'behandlingTilbakekreving/src/duck';
 import { arbeidsforholdPropType } from '@fpsak-frontend/fp-behandling-felles';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingTilbakekreving/src/behandlingForm';
 import FaktaGruppe from 'behandlingTilbakekreving/src/fakta/components/FaktaGruppe';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverk } from 'kodeverk/duck';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

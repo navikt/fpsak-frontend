@@ -16,7 +16,7 @@ import {
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
-import { getKodeverk } from 'kodeverk/duck';
+import { getKodeverk } from 'behandlingFpsak/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';

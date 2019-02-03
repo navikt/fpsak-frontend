@@ -19,7 +19,7 @@ import {
   getFaktaOmBeregningTilfellerKoder,
 } from 'behandlingFpsak/src/behandlingSelectors';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import { getKodeverk } from 'kodeverk/duck';
+import { getKodeverk } from 'behandlingFpsak/src/duck';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';

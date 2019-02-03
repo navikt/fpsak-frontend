@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import PersonIndex from 'person/PersonIndex';
 import { getRettigheter } from 'navAnsatt/duck';
 import {
   getBehandlingVilkarCodes, getPersonopplysning, getBehandlingIsOnHold, getAksjonspunkter, hasReadOnlyBehandling,
 }
   from 'behandlingFpsak/src/behandlingSelectors';
 import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { PersonIndex } from '@fpsak-frontend/fp-felles';
 import { getOpenInfoPanels } from 'behandlingFpsak/src/fakta/duck';
-import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
+import { getFagsakYtelseType, getFagsakPerson } from 'behandlingFpsak/src/duck';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import FodselInfoPanel from './fodsel/FodselInfoPanel';
 import TilleggsopplysningerInfoPanel from './tilleggsopplysninger/TilleggsopplysningerInfoPanel';
@@ -42,6 +42,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
   shouldOpenDefaultInfoPanels,
   readOnly,
   ytelsesType,
+  fagsakPerson,
 }) => (
   <ElementWrapper>
     <div className={styles.personContainer}>
@@ -58,7 +59,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
       )
       }
       {!personopplysninger
-      && <PersonIndex medPanel />
+      && <PersonIndex medPanel person={fagsakPerson} />
       }
     </div>
     <div className={styles.container}>
@@ -200,6 +201,7 @@ FaktaPanel.propTypes = {
   shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   ytelsesType: PropTypes.shape().isRequired,
+  fagsakPerson: PropTypes.shape().isRequired,
 };
 
 FaktaPanel.defaultProps = {
@@ -213,6 +215,7 @@ const mapStateToProps = state => ({
   openInfoPanels: getOpenInfoPanels(state),
   readOnly: !getRettigheter(state).writeAccess.isEnabled || getBehandlingIsOnHold(state) || hasReadOnlyBehandling(state),
   personopplysninger: getPersonopplysning(state) || null,
+  fagsakPerson: getFagsakPerson(state),
 });
 
 export default connect(mapStateToProps)(FaktaPanel);

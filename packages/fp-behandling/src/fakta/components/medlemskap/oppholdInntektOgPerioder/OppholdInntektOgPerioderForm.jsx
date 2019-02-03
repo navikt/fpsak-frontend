@@ -15,9 +15,8 @@ import {
 import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
 import FaktaSubmitButton from 'behandlingFpsak/src/fakta/components/FaktaSubmitButton';
 import { FaktaBegrunnelseTextField, aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
-import { getKodeverk } from 'kodeverk/duck';
+import { getKodeverk, getFagsakPerson } from 'behandlingFpsak/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getFagsakPerson } from 'fagsak/fagsakSelectors';
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
 import InntektOgYtelserFaktaPanel from './InntektOgYtelserFaktaPanel';
 import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';

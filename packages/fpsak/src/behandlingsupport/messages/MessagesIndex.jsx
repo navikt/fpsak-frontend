@@ -20,7 +20,7 @@ import {
   getBehandlingIdentifier,
 } from 'behandling/duck';
 import { setBehandlingOnHold } from 'behandlingmenu/duck';
-import requireProps from 'app/data/requireProps';
+import { requireProps } from '@fpsak-frontend/fp-felles';
 import {
   resetSubmitMessageActionCreator, previewMessageActionCreator, submitMessageActionCreator, isSubmitMessageFinished,
 } from './duck';

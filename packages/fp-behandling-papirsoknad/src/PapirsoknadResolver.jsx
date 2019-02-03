@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
+import papirsoknadApi from './data/papirsoknadApi';
 import { isBehandlingInSync } from './selectors/papirsoknadSelectors';
 import { fetchBehandling as fetchBehandlingActionCreator, getBehandlingIdentifier } from './duck';
 
@@ -16,6 +17,7 @@ export class PapirsoknadResolver extends Component {
      behandlingerVersjonMappedById: PropTypes.shape().isRequired,
      isInSync: PropTypes.bool.isRequired,
      children: PropTypes.node.isRequired,
+     hasFetchStarted: PropTypes.bool.isRequired,
    };
 
    static defaultProps = {
@@ -24,9 +26,9 @@ export class PapirsoknadResolver extends Component {
 
    componentDidUpdate() {
      const {
-       isInSync, fetchBehandling, behandlingIdentifier, behandlingerVersjonMappedById,
+       isInSync, fetchBehandling, behandlingIdentifier, behandlingerVersjonMappedById, hasFetchStarted,
      } = this.props;
-     if (!isInSync && behandlingIdentifier) {
+     if (!hasFetchStarted && !isInSync && behandlingIdentifier) {
        fetchBehandling(behandlingIdentifier, behandlingerVersjonMappedById);
      }
    }
@@ -42,6 +44,7 @@ export class PapirsoknadResolver extends Component {
 const mapStateToProps = state => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
   isInSync: isBehandlingInSync(state),
+  hasFetchStarted: papirsoknadApi.BEHANDLING.getRestApiStarted()(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

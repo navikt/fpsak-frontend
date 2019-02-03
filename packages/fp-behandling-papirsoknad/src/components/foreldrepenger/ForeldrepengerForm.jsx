@@ -5,8 +5,7 @@ import {
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getRegisteredFields } from 'papirsoknad/src/duck';
-import { getFagsakPerson } from 'fagsak/fagsakSelectors';
+import { getRegisteredFields, getKodeverk, getFagsakPerson } from 'papirsoknad/src/duck';
 import MottattDatoPanel from 'papirsoknad/src/components/commonPanels/MottattDatoPanel';
 import AnnenForelderPanel from 'papirsoknad/src/components/commonPanels/AnnenForelderPanel';
 import OppholdINorgePanel from 'papirsoknad/src/components/commonPanels/OppholdINorgePanel';
@@ -16,7 +15,6 @@ import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseTyp
 import LagreSoknadForm from 'papirsoknad/src/components/commonPanels/LagreSoknadPanel';
 import OmsorgOgAdopsjonPanel from 'papirsoknad/src/components/commonPanels/omsorgOgAdopsjon/OmsorgOgAdopsjonPanel';
 import TerminFodselDatoPanel from 'papirsoknad/src/components/commonPanels/fodsel/TerminFodselDatoPanel';
-import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import RettigheterPanel, { rettighet } from '../commonPanels/rettigheter/RettigheterPanel';
 import EgenVirksomhetPanel from './virksomhet/EgenVirksomhetPanel';

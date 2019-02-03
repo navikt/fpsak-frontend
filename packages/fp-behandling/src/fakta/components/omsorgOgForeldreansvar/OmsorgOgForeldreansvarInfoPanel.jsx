@@ -14,7 +14,7 @@ import {
 } from 'behandlingFpsak/src/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
 import withDefaultToggling from 'behandlingFpsak/src/fakta/withDefaultToggling';
-import { getKodeverk } from 'kodeverk/duck';
+import { getKodeverk } from 'behandlingFpsak/src/duck';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';

@@ -11,7 +11,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { DatepickerField, CheckboxField, SelectField } from '@fpsak-frontend/form';
 import { dateAfterOrEqual, hasValidDate, required } from '@fpsak-frontend/utils';
-import { getKodeverk } from 'kodeverk/duck';
+import { getKodeverk } from 'papirsoknad/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import foreldreType from '@fpsak-frontend/kodeverk/src/foreldreType';
 import overforingArsak from '@fpsak-frontend/kodeverk/src/overforingArsak';

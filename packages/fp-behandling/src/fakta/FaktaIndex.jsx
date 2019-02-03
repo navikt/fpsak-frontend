@@ -5,13 +5,13 @@ import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
-import requireProps from 'app/data/requireProps';
 import { getBehandlingVersjon } from 'behandlingFpsak/src/behandlingSelectors';
 import {
   getBehandlingIdentifier,
 } from 'behandlingFpsak/src/duck';
-import { getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta, DEFAULT_FAKTA } from 'app/paths';
-import trackRouteParam from 'app/data/trackRouteParam';
+import {
+  trackRouteParam, requireProps, getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta, DEFAULT_FAKTA,
+} from '@fpsak-frontend/fp-felles';
 
 import {
   resetFakta, resolveFaktaAksjonspunkter, resolveFaktaOverstyrAksjonspunkter, setOpenInfoPanels, getOpenInfoPanels,

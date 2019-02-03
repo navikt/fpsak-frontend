@@ -16,9 +16,8 @@ import {
 import { bindActionCreators } from 'redux';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/src/behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/src/behandlingForm';
-import { getSelectedBehandlingId } from 'behandlingFpsak/src/duck';
+import { getSelectedBehandlingId, getFagsakYtelseType } from 'behandlingFpsak/src/duck';
 import { isInnvilget, isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { getRettigheter } from 'navAnsatt/duck';
 import FritekstBrevPanel from 'behandlingFpsak/src/behandlingsprosess/components/vedtak/FritekstBrevPanel';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';

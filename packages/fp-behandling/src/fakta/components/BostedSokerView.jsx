@@ -8,7 +8,7 @@ import Etikettfokus from 'nav-frontend-etiketter';
 import { personopplysningPropType } from '@fpsak-frontend/fp-behandling-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
-import { getKodeverk } from 'kodeverk/duck';
+import { getKodeverk } from 'behandlingFpsak/src/duck';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import { getAddresses } from '@fpsak-frontend/utils';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';

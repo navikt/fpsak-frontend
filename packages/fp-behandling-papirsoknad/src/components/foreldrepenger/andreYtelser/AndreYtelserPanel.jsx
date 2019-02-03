@@ -10,8 +10,8 @@ import { CheckboxField } from '@fpsak-frontend/form';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
 import { ElementWrapper, BorderBox, ArrowBox } from '@fpsak-frontend/shared-components';
-import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { getKodeverk } from 'papirsoknad/src/duck';
 import RenderAndreYtelserPerioderFieldArray from './RenderAndreYtelserPerioderFieldArray';
 
 import styles from './andreYtelserPanel.less';

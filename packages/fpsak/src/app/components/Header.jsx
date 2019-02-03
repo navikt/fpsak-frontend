@@ -12,7 +12,7 @@ import logoUrl from '@fpsak-frontend/assets/images/nav.svg';
 import navAnsattIkonUrl from '@fpsak-frontend/assets/images/nav_ansatt.svg';
 import rettskildeneIkonUrl from '@fpsak-frontend/assets/images/rettskildene.svg';
 import systemrutineIkonUrl from '@fpsak-frontend/assets/images/rutine.svg';
-import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from 'data/eksterneLenker';
+import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@fpsak-frontend/fp-felles';
 
 import ErrorMessagePanel from './ErrorMessagePanel';
 import styles from './header.less';

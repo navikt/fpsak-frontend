@@ -13,7 +13,7 @@ import { getBehandlingsresultat, isBehandlingRevurderingFortsattMedlemskap, getB
   from 'behandlingFpsak/src/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
-import { getKodeverk } from 'kodeverk/duck';
+import { getKodeverk, isForeldrepengerFagsak } from 'behandlingFpsak/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCode from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -27,7 +27,6 @@ import OverstyrConfirmationForm from 'behandlingFpsak/src/behandlingsprosess/com
 import VilkarResultPicker from 'behandlingFpsak/src/behandlingsprosess/components/vilkar/VilkarResultPicker';
 import OverstyrConfirmVilkarButton from 'behandlingFpsak/src/behandlingsprosess/components/OverstyrConfirmVilkarButton';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 
 import styles from './vilkarresultatMedOverstyringForm.less';
 

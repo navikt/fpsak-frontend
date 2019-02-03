@@ -3,7 +3,7 @@ import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import PropTypes from 'prop-types';
 import { PersonInfo } from '@fpsak-frontend/person-info';
 import Lenkepanel from 'nav-frontend-lenkepanel';
-import { pathToFagsak } from 'app/paths';
+import { pathToFagsak } from '@fpsak-frontend/fp-felles';
 import { Link } from 'react-router-dom';
 import styles from './aktoerGrid.less';
 

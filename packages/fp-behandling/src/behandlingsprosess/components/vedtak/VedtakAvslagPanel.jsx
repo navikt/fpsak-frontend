@@ -5,7 +5,7 @@ import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
 import { getBehandlingVilkar, getBehandlingSprak } from 'behandlingFpsak/src/behandlingSelectors';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
+import { getFagsakYtelseType } from 'behandlingFpsak/src/duck';
 import {
   endringerIBeregningsgrunnlagGirFritekstfelt,
   hasIkkeOppfyltSoknadsfristvilkar,

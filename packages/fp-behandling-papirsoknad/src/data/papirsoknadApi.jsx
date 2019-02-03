@@ -3,8 +3,8 @@ import {
 } from '@fpsak-frontend/rest-api-redux';
 import errorHandler from '@fpsak-frontend/error-api-redux';
 
-import reducerRegistry from '@fpsak-frontend/fp-felles';
-import { setRequestPollingMessage } from 'app/pollingMessageDuck';
+import { reducerRegistry } from '@fpsak-frontend/fp-felles';
+import { sakOperations } from '@fpsak-frontend/fp-behandling-felles';
 
 export const PapirsoknadApiKeys = {
   BEHANDLING: 'BEHANDLING',
@@ -39,7 +39,7 @@ const reduxRestApi = new ReduxRestApiBuilder(endpoints, reducerName)
   .withContextPath('fpsak')
   .withReduxEvents(new ReduxEvents()
     .withErrorActionCreator(errorHandler.getErrorActionCreator())
-    .withPollingMessageActionCreator(setRequestPollingMessage))
+    .withPollingMessageActionCreator(sakOperations.setRequestPollingMessage))
   .build();
 
 reducerRegistry.register(reducerName, reduxRestApi.getDataReducer());

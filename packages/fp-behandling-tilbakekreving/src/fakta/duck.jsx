@@ -1,7 +1,8 @@
 import tilbakekrevingBehandlingApi from 'behandlingTilbakekreving/src/data/tilbakekrevingBehandlingApi';
 import { createSelector } from 'reselect';
 
-import reducerRegistry from '@fpsak-frontend/fp-felles';
+import { sakOperations } from '@fpsak-frontend/fp-behandling-felles';
+import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 
 const reducerName = 'tilbakekrevingFakta';
 
@@ -27,24 +28,24 @@ const resolveFaktaAksjonspunkterStarted = () => ({
   type: RESOLVE_FAKTA_AKSJONSPUNKTER_STARTED,
 });
 
-const resolveFaktaAksjonspunkterSuccess = (response, behandlingIdentifier, updateFagsakInfo) => (dispatch) => {
+const resolveFaktaAksjonspunkterSuccess = (response, behandlingIdentifier) => (dispatch) => {
   dispatch({
     type: RESOLVE_FAKTA_AKSJONSPUNKTER_SUCCESS,
   });
-  return dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer))
+  return dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer))
     .then(() => dispatch(tilbakekrevingBehandlingApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true })));
 };
 
-export const resolveFaktaAksjonspunkter = (params, behandlingIdentifier, updateFagsakInfo) => (dispatch) => {
+export const resolveFaktaAksjonspunkter = (params, behandlingIdentifier) => (dispatch) => {
   dispatch(resolveFaktaAksjonspunkterStarted());
   return dispatch(tilbakekrevingBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params))
-    .then(response => dispatch(resolveFaktaAksjonspunkterSuccess(response, behandlingIdentifier, updateFagsakInfo)));
+    .then(response => dispatch(resolveFaktaAksjonspunkterSuccess(response, behandlingIdentifier)));
 };
 
-export const resolveFaktaOverstyrAksjonspunkter = (params, behandlingIdentifier, updateFagsakInfo) => (dispatch) => {
+export const resolveFaktaOverstyrAksjonspunkter = (params, behandlingIdentifier) => (dispatch) => {
   dispatch(resolveFaktaAksjonspunkterStarted());
   return dispatch(tilbakekrevingBehandlingApi.SAVE_OVERSTYRT_AKSJONSPUNKT.makeRestApiRequest()(params))
-    .then(response => dispatch(resolveFaktaAksjonspunkterSuccess(response, behandlingIdentifier, updateFagsakInfo)));
+    .then(response => dispatch(resolveFaktaAksjonspunkterSuccess(response, behandlingIdentifier)));
 };
 
 /* Reducer */

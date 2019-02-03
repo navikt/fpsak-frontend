@@ -3,8 +3,7 @@ import { createSelector } from 'reselect';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
-import { getSelectedBehandlingId } from '../duck';
+import { getSelectedBehandlingId, isForeldrepengerFagsak } from '../duck';
 import papirsoknadApi from '../data/papirsoknadApi';
 
 export const isBehandlingInSync = createSelector(

@@ -7,7 +7,7 @@ import { FieldArray, formValueSelector } from 'redux-form';
 
 import { CheckboxField } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getKodeverk } from 'kodeverk/duck';
+import { getKodeverk } from 'papirsoknad/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
 import {

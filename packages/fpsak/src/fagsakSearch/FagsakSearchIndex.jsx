@@ -4,7 +4,7 @@ import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { pathToFagsak } from 'app/paths';
+import { pathToFagsak } from '@fpsak-frontend/fp-felles';
 
 import fagsakPropType from 'fagsak/fagsakPropType';
 import { searchFagsaker, resetFagsakSearch } from './duck';

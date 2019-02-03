@@ -28,7 +28,7 @@ import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
-import { getKodeverk } from 'kodeverk/duck';
+import { getKodeverk } from 'behandlingFpsak/src/duck';
 import { FieldArray, formPropTypes } from 'redux-form';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';

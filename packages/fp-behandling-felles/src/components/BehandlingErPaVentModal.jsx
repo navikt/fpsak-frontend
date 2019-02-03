@@ -29,6 +29,7 @@ export const BehandlingErPaVentModal = ({
   venteArsakKode,
   handleOnHoldSubmit,
   hasManualPaVent,
+  ventearsaker,
 }) => {
   if (behandlingId) {
     return (
@@ -41,6 +42,7 @@ export const BehandlingErPaVentModal = ({
         comment={<Normaltekst>{intl.formatMessage({ id: 'BehandlingErPaVentModal.EndreFrist' })}</Normaltekst>}
         isUpdateOnHold
         hasManualPaVent={hasManualPaVent}
+        ventearsaker={ventearsaker}
       />
     );
   }
@@ -90,6 +92,10 @@ BehandlingErPaVentModal.propTypes = {
   fristBehandlingPaaVent: PropTypes.string,
   venteArsakKode: PropTypes.string,
   hasManualPaVent: PropTypes.bool.isRequired,
+  ventearsaker: PropTypes.arrayOf(PropTypes.shape({
+    kode: PropTypes.string,
+    navn: PropTypes.string,
+  })).isRequired,
 };
 
 BehandlingErPaVentModal.defaultProps = {

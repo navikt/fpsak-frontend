@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 import { BehandlingIdentifier, sakOperations } from '@fpsak-frontend/fp-behandling-felles';
-import reducerRegistry from '@fpsak-frontend/fp-felles';
+import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 import fpsakBehandlingApi, { BehandlingFpsakApiKeys } from './data/fpsakBehandlingApi';
 
 const reducerName = 'fpsakBehandling';
@@ -75,6 +75,10 @@ export const resetBehandlingFpsakContext = () => (dispatch) => {
 const initialState = {
   behandlingId: undefined,
   fagsakSaksnummer: undefined,
+  featureToggles: {},
+  kodeverk: {},
+  fagsak: {},
+  filteredReceivedDocuments: [],
   hasShownBehandlingPaVent: false,
 };
 
@@ -108,5 +112,17 @@ export const getBehandlingIdentifier = createSelector(
   (behandlingId, saksnummer) => (behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined
   ),
 );
+
+export const getFagsakStatus = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.fagsakStatus);
+export const getFagsakPerson = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.fagsakPerson);
+export const getFagsakYtelseType = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.fagsakYtelseType);
+export const isForeldrepengerFagsak = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.isForeldrepengerFagsak);
+
+
+export const getKodeverk = kodeverkType => createSelector(
+  [getBehandlingContext], behandlingContext => behandlingContext.kodeverk[kodeverkType],
+);
+export const getFeatureToggles = createSelector([getBehandlingContext], behandlingContext => behandlingContext.featureToggles);
+export const getFilteredReceivedDocuments = createSelector([getBehandlingContext], behandlingContext => behandlingContext.filteredReceivedDocuments);
 
 export const getHasShownBehandlingPaVent = createSelector([getBehandlingContext], behandlingContext => behandlingContext.hasShownBehandlingPaVent);

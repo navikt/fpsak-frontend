@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
-import reducerRegistry from '@fpsak-frontend/fp-felles';
+import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 import tilbakekrevingBehandlingApi, { TilbakekrevingBehandlingApiKeys } from './data/tilbakekrevingBehandlingApi';
 
 const reducerName = 'tilbakekrevingBehandling';
@@ -78,7 +78,10 @@ export const resetTilbakekrevingContext = () => (dispatch) => {
 const initialState = {
   behandlingId: undefined,
   fagsakSaksnummer: undefined,
+  featureToggles: {},
   hasShownBehandlingPaVent: false,
+  kodeverk: {},
+  fagsak: {},
 };
 
 export const tilbakekrevingBehandlingReducer = (state = initialState, action = {}) => { // NOSONAR Switch brukes som standard i reducers
@@ -112,5 +115,14 @@ export const getBehandlingIdentifier = createSelector(
   ),
 );
 
+export const getFeatureToggles = createSelector([getBehandlingContext], behandlingContext => behandlingContext.featureToggles);
+export const getKodeverk = kodeverkType => createSelector(
+  [getBehandlingContext], behandlingContext => behandlingContext.kodeverk[kodeverkType],
+);
+
+export const getFagsakStatus = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.fagsakStatus);
+export const getFagsakPerson = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.fagsakPerson);
+export const getFagsakYtelseType = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.fagsakYtelseType);
+export const isForeldrepengerFagsak = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.isForeldrepengerFagsak);
 
 export const getHasShownBehandlingPaVent = createSelector([getBehandlingContext], behandlingContext => behandlingContext.hasShownBehandlingPaVent);

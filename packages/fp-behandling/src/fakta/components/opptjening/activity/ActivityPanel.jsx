@@ -16,7 +16,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   Image, FlexContainer, FlexRow, FlexColumn, VerticalSpacer, ElementWrapper,
 } from '@fpsak-frontend/shared-components';
-import { getKodeverk } from 'kodeverk/duck';
+import { getKodeverk } from 'behandlingFpsak/src/duck';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';

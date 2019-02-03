@@ -7,7 +7,7 @@ import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 
 import { getEditedStatus } from 'behandlingFpsak/src/behandlingSelectors';
-import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
+import { isForeldrepengerFagsak } from 'behandlingFpsak/src/duck';
 import { behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import FaktaGruppe from 'behandlingFpsak/src/fakta/components/FaktaGruppe';
 import { DatepickerField } from '@fpsak-frontend/form';

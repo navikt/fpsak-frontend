@@ -1,5 +1,4 @@
 import { buildPath, formatQueryString, parseQueryString } from '@fpsak-frontend/utils';
-import skjermlenkeCodes from 'kodeverk/skjermlenkeCodes';
 
 const FPSAK = 'fpsak';
 const FPLOS = 'fplos';
@@ -24,7 +23,7 @@ const updateQueryParams = (queryString, nextParams) => {
   });
 };
 
-const getLocationWithQueryParams = (location, queryParams) => ({ ...location, search: updateQueryParams(location.search, queryParams) });
+export const getLocationWithQueryParams = (location, queryParams) => ({ ...location, search: updateQueryParams(location.search, queryParams) });
 
 export const getSupportPanelLocationCreator = location => supportPanel => getLocationWithQueryParams(location, { stotte: supportPanel });
 export const getBehandlingspunktLocation = location => behandlingspunkt => getLocationWithQueryParams(location, { punkt: behandlingspunkt });
@@ -36,11 +35,6 @@ export const DEFAULT_BEHANDLINGSPROSESS = 'default';
 export const getLocationWithDefaultBehandlingspunktAndFakta = location => (
   getLocationWithQueryParams(location, { punkt: DEFAULT_BEHANDLINGSPROSESS, fakta: DEFAULT_FAKTA })
 );
-
-export const createLocationForHistorikkItems = (behandlingLocation, skjermlenkeCode) => {
-  const skjermlenke = skjermlenkeCodes[skjermlenkeCode];
-  return getLocationWithQueryParams(behandlingLocation, { punkt: skjermlenke.punktNavn, fakta: skjermlenke.faktaNavn });
-};
 
 export const getPathToFplos = (href) => {
   const hostAndContextPath = href.substr(0, href.lastIndexOf(FPSAK) + FPSAK.length);

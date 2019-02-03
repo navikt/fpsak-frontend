@@ -4,18 +4,19 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { Column, Row } from 'nav-frontend-grid';
+
 import { SelectField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import {
   AksjonspunktHelpText, VerticalSpacer, FadingPanel,
 } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
-import { Column, Row } from 'nav-frontend-grid';
-import { getBehandlinger } from 'behandling/selectors/behandlingerSelectors';
 import { BehandlingspunktBegrunnelseTextField, behandlingPropType } from '@fpsak-frontend/fp-behandling-felles';
-import BehandlingspunktSubmitButton from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
-
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
+import { getBehandlinger } from 'behandling/selectors/behandlingerSelectors';
+import BehandlingspunktSubmitButton from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
 
 import styles from '../Klagevurdering/SharedUtills/behandleKlageForm.less';
 

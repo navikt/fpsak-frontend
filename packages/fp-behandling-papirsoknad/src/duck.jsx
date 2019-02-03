@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 import { BehandlingIdentifier, sakOperations } from '@fpsak-frontend/fp-behandling-felles';
-import reducerRegistry from '@fpsak-frontend/fp-felles';
+import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 import papirsoknadApi, { PapirsoknadApiKeys } from './data/papirsoknadApi';
 
 const reducerName = 'papirsoknad';
@@ -75,6 +75,8 @@ const initialState = {
   behandlingId: undefined,
   fagsakSaksnummer: undefined,
   hasShownBehandlingPaVent: false,
+  kodeverk: {},
+  fagsak: {},
   soknadData: null,
 };
 
@@ -115,7 +117,16 @@ export const getBehandlingIdentifier = createSelector(
   ),
 );
 
+export const getKodeverk = kodeverkType => createSelector(
+  [getPapirsoknadContext], behandlingContext => behandlingContext.kodeverk[kodeverkType],
+);
 export const getHasShownBehandlingPaVent = createSelector([getPapirsoknadContext], behandlingContext => behandlingContext.hasShownBehandlingPaVent);
+
+export const getFagsakStatus = createSelector([getPapirsoknadContext], behandlingContext => behandlingContext.fagsak.fagsakStatus);
+export const getFagsakPerson = createSelector([getPapirsoknadContext], behandlingContext => behandlingContext.fagsak.fagsakPerson);
+export const getFagsakYtelseType = createSelector([getPapirsoknadContext], behandlingContext => behandlingContext.fagsak.fagsakYtelseType);
+export const isForeldrepengerFagsak = createSelector([getPapirsoknadContext], behandlingContext => behandlingContext.fagsak.isForeldrepengerFagsak);
+
 
 export const getSoknadData = createSelector(
   [getPapirsoknadContext],

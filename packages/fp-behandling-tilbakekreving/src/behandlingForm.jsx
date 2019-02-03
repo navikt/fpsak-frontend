@@ -7,7 +7,7 @@ import {
 } from 'redux-form';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import requireProps from 'app/data/requireProps';
+import { requireProps } from '@fpsak-frontend/fp-felles';
 import { getSelectedBehandlingId } from './duck';
 import { getBehandlingVersjon } from './selectors/tilbakekrevingBehandlingSelectors';
 

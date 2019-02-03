@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { errorOfType, ErrorTypes, getErrorResponseData } from 'app/ErrorTypes';
+import { errorOfType, ErrorTypes, getErrorResponseData } from '@fpsak-frontend/fp-felles';
 import fpsakApi from 'data/fpsakApi';
 
 export const getFagsaker = fpsakApi.SEARCH_FAGSAK.getRestApiData();

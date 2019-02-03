@@ -4,21 +4,23 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import {
-  required, createVisningsnavnForAktivitet, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, DDMMYYYY_DATE_FORMAT,
-} from '@fpsak-frontend/utils';
 import { Row, Column } from 'nav-frontend-grid';
-import { getFaktaOmBeregning } from 'behandlingFpsak/src/behandlingSelectors';
-import { behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
+
 import { InputField, SelectField } from '@fpsak-frontend/form';
 import {
   VerticalSpacer, Table, TableRow, TableColumn,
 } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import {
+  required, createVisningsnavnForAktivitet, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, DDMMYYYY_DATE_FORMAT,
+} from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverk } from 'kodeverk/duck';
+import { LINK_TIL_REGNEARK } from '@fpsak-frontend/fp-felles';
 
-import { LINK_TIL_REGNEARK } from 'data/eksterneLenker';
+import { behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
+import { getFaktaOmBeregning } from 'behandlingFpsak/src/behandlingSelectors';
+import { getKodeverk } from 'behandlingFpsak/src/duck';
+
 import styles from './fastsettBBFodendeKvinneForm.less';
 
 export const createInputFieldKeyForAndel = andel => `Inputfield_${andel.aktivitetStatus.kode}_${andel.andelsnr}`;

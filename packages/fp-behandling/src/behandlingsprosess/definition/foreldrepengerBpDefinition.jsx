@@ -4,7 +4,7 @@ import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import prt from '@fpsak-frontend/kodeverk/src/periodeResultatType';
-import featureToggle from 'app/featureToggle';
+import { featureToggle } from '@fpsak-frontend/fp-felles';
 import { hasSimuleringOn, getStatusFromSimulering } from './simuleringStatusUtleder';
 import getVedtakStatus from './vedtakStatusUtleder';
 import BehandlingspunktProperties from './behandlingspunktBuilder';

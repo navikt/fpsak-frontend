@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { ErrorTypes } from 'app/ErrorTypes';
+import { ErrorTypes } from '@fpsak-frontend/fp-felles';
 import { getSearchFagsakerAccessDenied } from './fagsakSearchSelectors';
 
 describe('fagsakSearchSelectors', () => {

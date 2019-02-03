@@ -15,7 +15,7 @@ import {
   required, hasValidDate, dateRangesNotOverlapping, dateAfterOrEqual, hasValidDecimal, maxValue,
   ISO_DATE_FORMAT, isRequiredMessage, isArrayEmpty,
 } from '@fpsak-frontend/utils';
-import { getKodeverk } from 'kodeverk/duck';
+import { getKodeverk } from 'papirsoknad/src/duck';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import uttakPeriodeType from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';

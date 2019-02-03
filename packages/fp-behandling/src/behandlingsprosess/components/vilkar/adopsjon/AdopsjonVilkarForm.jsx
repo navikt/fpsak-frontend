@@ -9,7 +9,7 @@ import BpPanelTemplate from 'behandlingFpsak/src/behandlingsprosess/components/v
 import { getBehandlingsresultat } from 'behandlingFpsak/src/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import { behandlingspunktCodes, BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
-import { getKodeverk } from 'kodeverk/duck';
+import { getKodeverk } from 'behandlingFpsak/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';

@@ -11,7 +11,7 @@ import {
 } from 'behandlingFpsak/src/behandlingSelectors';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/src/behandlingForm';
-import { getSelectedBehandlingId } from 'behandling/duck';
+import { getSelectedBehandlingId } from 'behandlingFpsak/src/duck';
 
 import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import {

@@ -6,10 +6,8 @@ import { connect } from 'react-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import { ErrorTypes } from 'app/ErrorTypes';
-import PersonIndex from 'person/PersonIndex';
 import { BehandlingIdentifier, aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
-import requireProps from 'app/data/requireProps';
+import { PersonIndex, requireProps, ErrorTypes } from '@fpsak-frontend/fp-felles';
 import { getRettigheter } from 'navAnsatt/duck';
 import rettighetPropType from 'navAnsatt/rettighetPropType';
 import papirsoknadApi from './data/papirsoknadApi';
@@ -19,6 +17,7 @@ import {
 } from './selectors/papirsoknadSelectors';
 import {
   resetRegistrering, submitRegistrering, resetRegistreringSuccess, setSoknadData, getSoknadData, getBehandlingIdentifier,
+  getFagsakPerson,
 } from './duck';
 import RegistrerPapirsoknad from './components/RegistrerPapirsoknad';
 import SoknadRegistrertModal from './components/SoknadRegistrertModal';
@@ -90,11 +89,11 @@ export class PapirsoknadIndex extends Component {
 
   render() {
     const {
-      setSoknadData: setData, writeAccess, behandlingPaaVent, soknadData, submitRegistreringSuccess,
+      setSoknadData: setData, writeAccess, behandlingPaaVent, soknadData, submitRegistreringSuccess, fagsakPerson,
     } = this.props;
     return (
       <div>
-        <PersonIndex medPanel />
+        <PersonIndex medPanel person={fagsakPerson} />
         <RegistrerPapirsoknad
           submitPapirsoknad={this.onSubmit}
           setSoknadData={setData}
@@ -120,6 +119,7 @@ PapirsoknadIndex.propTypes = {
   setSoknadData: PropTypes.func.isRequired,
   soknadData: PropTypes.instanceOf(SoknadData),
   resetRegistreringSuccess: PropTypes.func.isRequired,
+  fagsakPerson: PropTypes.shape().isRequired,
 };
 
 PapirsoknadIndex.defaultProps = {
@@ -141,6 +141,7 @@ const mapStateToProps = state => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: getBehandlingVersjon(state),
   behandlingPaaVent: getBehandlingIsOnHold(state),
+  fagsakPerson: getFagsakPerson(state),
   ...getRettigheter(state),
 });
 

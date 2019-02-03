@@ -26,7 +26,7 @@ import {
   getBehandlingsresultatFraOriginalBehandling,
   getResultatstrukturFraOriginalBehandling,
 } from 'behandling/duck';
-import requireProps from 'app/data/requireProps';
+import { requireProps } from '@fpsak-frontend/fp-felles';
 import { getApproveFinished } from '../duck';
 
 import styles from './fatterVedtakApprovalModal.less';

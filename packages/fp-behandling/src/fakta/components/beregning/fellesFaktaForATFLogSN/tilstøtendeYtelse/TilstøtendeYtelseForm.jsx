@@ -14,7 +14,7 @@ import {
 } from 'behandlingFpsak/src/behandlingSelectors';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { VerticalSpacer, BorderBox, ElementWrapper } from '@fpsak-frontend/shared-components';
-import { LINK_TIL_BESTE_BEREGNING_REGNEARK } from 'data/eksterneLenker';
+import { LINK_TIL_BESTE_BEREGNING_REGNEARK } from '@fpsak-frontend/fp-felles';
 import YtelsePanel from './YtelsePanel';
 import FordelingAvBruttoBeregningsgrunnlagPanel, { fordelingAvBruttoBGFieldArrayName } from './FordelingAvBruttoBeregningsgrunnlagPanel';
 import styles from './tilstøtendeYtelseForm.less';

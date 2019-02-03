@@ -1,23 +1,23 @@
 import { createSelector } from 'reselect';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import { getRettigheter } from 'navAnsatt/duck';
-import { DEFAULT_BEHANDLINGSPROSESS } from 'app/paths';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
 import { arrayToObject } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import fyt from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+
+import { getRettigheter } from 'navAnsatt/duck';
+import { DEFAULT_BEHANDLINGSPROSESS } from '@fpsak-frontend/fp-felles';
 import {
   getBehandlingIsOnHold, getAllMerknaderFraBeslutter, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat,
   getBehandlingInnsynResultatType, getBehandlingResultatstruktur, getStonadskontoer, hasReadOnlyBehandling, isBehandlingStatusReadOnly,
   getUttaksresultatPerioder, getSimuleringResultat,
 } from 'behandlingFpsak/src/behandlingSelectors';
-import { getFeatureToggles } from 'app/duck';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
 import createEngangsstonadBpProps from './definition/engangsstonadBpDefinition';
 import createForeldrepengerBpProps from './definition/foreldrepengerBpDefinition';
 import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from './duck';
+import { getFeatureToggles, getFagsakYtelseType } from '../duck';
 
 // Kun eksportert for test. Ikke bruk andre steder!
 export const getBehandlingspunkterProps = createSelector(

@@ -12,7 +12,7 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import { getSelectedBehandlingId } from 'behandling/duck';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
-import requireProps from 'app/data/requireProps';
+import { requireProps } from '@fpsak-frontend/fp-felles';
 
 import History from './components/History';
 import { getAllHistory } from '../behandlingsupportSelectors';

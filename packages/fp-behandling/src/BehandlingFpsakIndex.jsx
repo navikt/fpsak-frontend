@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { destroy } from 'redux-form';
 
-import { getHasSubmittedPaVentForm } from 'behandlingmenu/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { BehandlingGrid, BehandlingErPaVentModal, sakOperations } from '@fpsak-frontend/fp-behandling-felles';
 import FpSakBehandlingInfoSetter from './FpSakBehandlingInfoSetter';
 import FpSakBehandlingResolver from './FpSakBehandlingResolver';
@@ -16,7 +16,7 @@ import {
 } from './behandlingSelectors';
 import {
   setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier,
-  getHasShownBehandlingPaVent, resetBehandlingFpsakContext,
+  getHasShownBehandlingPaVent, resetBehandlingFpsakContext, getKodeverk,
 } from './duck';
 import { getBehandlingFormPrefix } from './behandlingForm';
 import fpSakBehandlingUpdater from './FpSakBehandlingUpdater';
@@ -38,12 +38,16 @@ export class BehandlingFpsakIndex extends Component {
 
   componentDidMount() {
     const {
-      setBehandlingInfo: setInfo, saksnummer, behandlingId, behandlingUpdater, updateFagsakInfo,
+      setBehandlingInfo: setInfo, saksnummer, behandlingId, behandlingUpdater, appContextUpdater,
+      featureToggles, filteredReceivedDocuments, kodeverk, fagsak,
     } = this.props;
-    setInfo({ behandlingId, fagsakSaksnummer: saksnummer });
+    setInfo({
+      behandlingId, fagsakSaksnummer: saksnummer, featureToggles, filteredReceivedDocuments, kodeverk, fagsak,
+    });
 
     behandlingUpdater.setUpdater(fpSakBehandlingUpdater);
-    sakOperations.withUpdateFagsakInfo(updateFagsakInfo);
+    sakOperations.withUpdateFagsakInfo(appContextUpdater.updateFagsakInfo);
+    sakOperations.withSetRequestPollingMessage(appContextUpdater.setRequestPollingMessage);
   }
 
   componentDidUpdate(prevProps) {
@@ -82,6 +86,7 @@ export class BehandlingFpsakIndex extends Component {
       hasManualPaVent,
       behandlingerVersjonMappedById,
       setBehandlingInfoHolder,
+      ventearsaker,
     } = this.props;
     return (
       <FpSakBehandlingResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
@@ -100,6 +105,7 @@ export class BehandlingFpsakIndex extends Component {
             venteArsakKode={venteArsakKode}
             handleOnHoldSubmit={handleOnHoldSubmit}
             hasManualPaVent={hasManualPaVent}
+            ventearsaker={ventearsaker}
           />
           )
         }
@@ -126,7 +132,26 @@ BehandlingFpsakIndex.propTypes = {
   behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   behandlingUpdater: PropTypes.shape().isRequired,
   resetBehandlingFpsakContext: PropTypes.func.isRequired,
-  updateFagsakInfo: PropTypes.func.isRequired,
+  appContextUpdater: PropTypes.shape().isRequired,
+  featureToggles: PropTypes.shape().isRequired,
+  filteredReceivedDocuments: PropTypes.arrayOf(PropTypes.shape({
+    journalpostId: PropTypes.string.isRequired,
+    dokumentId: PropTypes.string.isRequired,
+    tittel: PropTypes.string.isRequired,
+    tidspunkt: PropTypes.string,
+    kommunikasjonsretning: PropTypes.string.isRequired,
+  })).isRequired,
+  kodeverk: PropTypes.shape().isRequired,
+  fagsak: PropTypes.shape({
+    fagsakStatus: PropTypes.shape().isRequired,
+    fagsakPerson: PropTypes.shape().isRequired,
+    fagsakYtelseType: PropTypes.shape().isRequired,
+    isForeldrepengerFagsak: PropTypes.bool.isRequired,
+  }).isRequired,
+  ventearsaker: PropTypes.arrayOf(PropTypes.shape({
+    kode: PropTypes.string,
+    navn: PropTypes.string,
+  })),
 };
 
 BehandlingFpsakIndex.defaultProps = {
@@ -134,6 +159,7 @@ BehandlingFpsakIndex.defaultProps = {
   behandlingPaaVent: false,
   behandlingVersjon: undefined,
   venteArsakKode: undefined,
+  ventearsaker: [],
 };
 
 const mapStateToProps = state => ({
@@ -143,8 +169,8 @@ const mapStateToProps = state => ({
   behandlingPaaVent: getBehandlingIsOnHold(state),
   venteArsakKode: getBehandlingVenteArsakKode(state),
   hasShownBehandlingPaVent: getHasShownBehandlingPaVent(state),
-  hasSubmittedPaVentForm: getHasSubmittedPaVentForm(state),
   hasManualPaVent: hasBehandlingManualPaVent(state),
+  ventearsaker: getKodeverk(kodeverkTyper.VENTEARSAK)(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

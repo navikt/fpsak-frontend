@@ -2,14 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import PersonIndex from 'person/PersonIndex';
 import { getRettigheter } from 'navAnsatt/duck';
 import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { PersonIndex } from '@fpsak-frontend/fp-felles';
 import {
   getPersonopplysning, getBehandlingIsOnHold, getAksjonspunkter, hasReadOnlyBehandling, getFeilutbetalingFakta,
 } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { getOpenInfoPanels } from '../duck';
+import { getFagsakPerson } from '../../duck';
 import PersonInfoPanel from './person/PersonInfoPanel';
 import FeilutbetalingInfoPanel from './feilutbetaling/FeilutbetalingInfoPanel';
 
@@ -31,6 +32,7 @@ export const TilbakekrevingFaktaPanel = ({ // NOSONAR Kompleksitet er høg, men 
   shouldOpenDefaultInfoPanels,
   readOnly,
   feilutbetaling,
+  fagsakPerson,
 }) => (
   <ElementWrapper>
     <div className={styles.personContainer}>
@@ -47,7 +49,7 @@ export const TilbakekrevingFaktaPanel = ({ // NOSONAR Kompleksitet er høg, men 
       )
       }
       {!personopplysninger
-      && <PersonIndex medPanel />
+      && <PersonIndex medPanel person={fagsakPerson} />
       }
       {feilutbetaling
       && (
@@ -78,6 +80,7 @@ TilbakekrevingFaktaPanel.propTypes = {
   toggleInfoPanelCallback: PropTypes.func.isRequired,
   shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  fagsakPerson: PropTypes.shape().isRequired,
 };
 
 TilbakekrevingFaktaPanel.defaultProps = {
@@ -91,6 +94,7 @@ const mapStateToProps = state => ({
   readOnly: !getRettigheter(state).writeAccess.isEnabled || getBehandlingIsOnHold(state) || hasReadOnlyBehandling(state),
   personopplysninger: getPersonopplysning(state) || null,
   feilutbetaling: getFeilutbetalingFakta(state),
+  fagsakPerson: getFagsakPerson(state),
 });
 
 export default connect(mapStateToProps)(TilbakekrevingFaktaPanel);

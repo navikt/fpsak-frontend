@@ -5,11 +5,12 @@ import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
-import requireProps from 'app/data/requireProps';
 import { getBehandlingVersjon } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { getBehandlingIdentifier } from 'behandlingTilbakekreving/src/duck';
-import { getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta, DEFAULT_FAKTA } from 'app/paths';
-import trackRouteParam from 'app/data/trackRouteParam';
+import {
+  trackRouteParam, requireProps, getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta,
+  DEFAULT_FAKTA,
+} from '@fpsak-frontend/fp-felles';
 
 import {
   resetFakta, resolveFaktaAksjonspunkter, resolveFaktaOverstyrAksjonspunkter, setOpenInfoPanels,
@@ -60,7 +61,6 @@ export class FaktaIndex extends Component {
       behandlingVersjon,
       resolveFaktaOverstyrAksjonspunkter: resolveFaktaOverstyrAp,
       resolveFaktaAksjonspunkter: resolveFaktaAp,
-      updateFagsakInfo,
     } = this.props;
     const model = aksjonspunkter.map(ap => ({
       '@type': ap.kode,
@@ -79,7 +79,6 @@ export class FaktaIndex extends Component {
       return resolveFaktaOverstyrAp(
         params,
         behandlingIdentifier,
-        updateFagsakInfo,
       ).then(() => this.goToBehandlingWithDefaultPunktAndFakta());
     }
 
@@ -92,7 +91,6 @@ export class FaktaIndex extends Component {
     return resolveFaktaAp(
       params,
       behandlingIdentifier,
-      updateFagsakInfo,
     ).then(() => this.goToBehandlingWithDefaultPunktAndFakta());
   }
 
@@ -133,7 +131,6 @@ FaktaIndex.propTypes = {
   resolveFaktaAksjonspunkter: PropTypes.func.isRequired,
   resolveFaktaOverstyrAksjonspunkter: PropTypes.func.isRequired,
   shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
-  updateFagsakInfo: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({

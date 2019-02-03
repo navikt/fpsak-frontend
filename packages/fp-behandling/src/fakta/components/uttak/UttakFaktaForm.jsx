@@ -16,9 +16,8 @@ import { getBehandlingFormPrefix, behandlingFormValueSelector } from 'behandling
 import { getInntektsmeldinger, getBehandlingVersjon, getBehandlingIsOnHold } from 'behandlingFpsak/src/behandlingSelectors';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
-import { getSelectedBehandlingId } from 'behandlingFpsak/src/duck';
+import { getSelectedBehandlingId, getKodeverk } from 'behandlingFpsak/src/duck';
 import { ariaCheck, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { getKodeverk } from 'kodeverk/duck';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';

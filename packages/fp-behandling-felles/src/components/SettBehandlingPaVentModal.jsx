@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Column, Container, Row } from 'nav-frontend-grid';
@@ -13,10 +12,6 @@ import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import {
   ariaCheck, dateAfterOrEqualToToday, hasValidDate, required,
 } from '@fpsak-frontend/utils';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-
-import requireProps from 'app/data/requireProps';
-import { getKodeverk, getKodeverkReceived } from 'kodeverk/duck';
 
 import styles from './settBehandlingPaVentModal.less';
 
@@ -160,7 +155,7 @@ SettBehandlingPaVentModal.propTypes = {
   ventearsaker: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string,
     navn: PropTypes.string,
-  })),
+  })).isRequired,
   intl: intlShape.isRequired,
   venteArsakHasChanged: PropTypes.bool.isRequired,
   fristHasChanged: PropTypes.bool.isRequired,
@@ -172,13 +167,7 @@ SettBehandlingPaVentModal.defaultProps = {
   isUpdateOnHold: false,
   showAvbryt: true,
   comment: null,
-  ventearsaker: [],
   aksjonspunktKode: null,
 };
 
-const mapStateToProps = state => ({
-  ventearsaker: getKodeverk(kodeverkTyper.VENTEARSAK)(state),
-  kodeverkReceived: getKodeverkReceived(state),
-});
-
-export default connect(mapStateToProps)(injectIntl(requireProps(['kodeverkReceived'])(SettBehandlingPaVentModal)));
+export default injectIntl(SettBehandlingPaVentModal);

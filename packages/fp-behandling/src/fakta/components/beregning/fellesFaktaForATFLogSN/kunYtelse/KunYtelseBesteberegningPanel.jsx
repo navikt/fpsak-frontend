@@ -2,14 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Element } from 'nav-frontend-typografi';
 import { FieldArray } from 'redux-form';
-import { behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
+import { Element } from 'nav-frontend-typografi';
+import { Column, Row } from 'nav-frontend-grid';
+
+import { LINK_TIL_BESTE_BEREGNING_REGNEARK } from '@fpsak-frontend/fp-felles';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-import { Column, Row } from 'nav-frontend-grid';
-import { LINK_TIL_BESTE_BEREGNING_REGNEARK } from 'data/eksterneLenker';
+
+import { behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import BrukersAndelFieldArray from './BrukersAndelFieldArray';
+
 import styles from './kunYtelseBesteberegningPanel.less';
 
 export const besteberegningField = 'besteberegningField';

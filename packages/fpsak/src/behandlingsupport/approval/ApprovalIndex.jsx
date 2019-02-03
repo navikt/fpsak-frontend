@@ -12,7 +12,7 @@ import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsa
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
-import { createLocationForHistorikkItems } from 'app/paths';
+import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import { BehandlingIdentifier, aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
 import {
   getBehandlingVersjon, getAksjonspunkter, getBehandlingAnsvarligSaksbehandler, getTotrinnskontrollArsakerUtenUdefinert,
@@ -20,7 +20,7 @@ import {
 } from 'behandling/duck';
 import navAnsattPropType from 'navAnsatt/navAnsattPropType';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
-import requireProps from 'app/data/requireProps';
+import { requireProps } from '@fpsak-frontend/fp-felles';
 import { getNavAnsatt } from 'navAnsatt/duck';
 import { getKodeverk } from 'kodeverk/duck';
 import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';

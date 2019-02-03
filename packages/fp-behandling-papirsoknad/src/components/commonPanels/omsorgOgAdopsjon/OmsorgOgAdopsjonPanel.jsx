@@ -12,7 +12,7 @@ import { VerticalSpacer, BorderBox } from '@fpsak-frontend/shared-components';
 import {
   InputField, DatepickerField, RadioGroupField, RadioOption,
 } from '@fpsak-frontend/form';
-import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
+import { isForeldrepengerFagsak } from 'papirsoknad/src/duck';
 import {
   hasValidInteger, hasValidDate, isDatesEqual, required, minValue, maxValue, dateBeforeOrEqualToToday, isRequiredMessage,
 } from '@fpsak-frontend/utils';

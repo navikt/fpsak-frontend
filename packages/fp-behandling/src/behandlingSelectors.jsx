@@ -6,14 +6,13 @@ import aksjonspunktCodes, {
   isVilkarForSykdomOppfylt,
   isBeregningAksjonspunkt,
 } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import fpsakBehandlingApi from './data/fpsakBehandlingApi';
 import isFieldEdited from './editedFields';
-import { getSelectedBehandlingId } from './duck';
+import { getSelectedBehandlingId, isForeldrepengerFagsak } from './duck';
 
 const hasFetchedOriginalBehandlingIfItExists = (behandling, originalBehandlingId) => (behandling && behandling.originalBehandlingId
   ? behandling.originalBehandlingId === originalBehandlingId : true);

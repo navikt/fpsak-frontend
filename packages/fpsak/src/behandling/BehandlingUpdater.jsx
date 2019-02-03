@@ -1,3 +1,7 @@
+// TODO Endre navn og rydd
+/**
+ * Denne brukers til å utføre operasjoner på behandling utenfor behandlingskonteksten.
+ */
 class BehandlingUpdater {
     setUpdater = (updater) => {
       this.updater = updater;

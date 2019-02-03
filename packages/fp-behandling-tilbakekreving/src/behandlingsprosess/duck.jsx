@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect';
 
+import { sakOperations } from '@fpsak-frontend/fp-behandling-felles';
 import tilbakekrevingBehandlingApi from 'behandlingTilbakekreving/src/data/tilbakekrevingBehandlingApi';
-import reducerRegistry from '@fpsak-frontend/fp-felles';
+import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 
 const reducerName = 'tilbakekrevingBehandlingsprosess';
 
@@ -31,21 +32,21 @@ const resolveProsessAksjonspunkterStarted = () => ({
   type: RESOLVE_PROSESS_AKSJONSPUNKTER_STARTED,
 });
 
-const resolveProsessAksjonspunkterSuccess = (response, behandlingIdentifier, shouldUpdateInfo, updateFagsakInfo) => (dispatch) => {
+const resolveProsessAksjonspunkterSuccess = (response, behandlingIdentifier, shouldUpdateInfo) => (dispatch) => {
   dispatch({
     type: RESOLVE_PROSESS_AKSJONSPUNKTER_SUCCESS,
   });
   if (shouldUpdateInfo) {
-    return dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer))
+    return dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer))
       .then(() => dispatch(tilbakekrevingBehandlingApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true })));
   }
   return true;
 };
 
-export const resolveProsessAksjonspunkter = (behandlingIdentifier, params, shouldUpdateInfo, updateFagsakInfo) => (dispatch) => {
+export const resolveProsessAksjonspunkter = (behandlingIdentifier, params, shouldUpdateInfo) => (dispatch) => {
   dispatch(resolveProsessAksjonspunkterStarted());
   return dispatch(tilbakekrevingBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params))
-    .then(response => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo, updateFagsakInfo)));
+    .then(response => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo)));
 };
 
 export const overrideProsessAksjonspunkter = (behandlingIdentifier, params, shouldUpdateInfo, updateFagsakInfo) => (dispatch) => {

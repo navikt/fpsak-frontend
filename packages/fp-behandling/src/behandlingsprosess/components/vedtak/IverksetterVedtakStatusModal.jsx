@@ -13,7 +13,7 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { Modal, Image } from '@fpsak-frontend/shared-components';
 
-import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
+import { getFagsakYtelseType } from 'behandlingFpsak/src/duck';
 import { getResolveProsessAksjonspunkterSuccess } from 'behandlingFpsak/src/behandlingsprosess/duck';
 import { getResolveFaktaAksjonspunkterSuccess } from 'behandlingFpsak/src/fakta/duck';
 import {

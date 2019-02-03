@@ -12,19 +12,19 @@ import {
 import {
   getBehandlingIdentifier,
 } from 'behandlingFpsak/src/duck';
+import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import BehandlingsprosessPanel from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingsprosessPanel';
 import IverksetterVedtakStatusModal from 'behandlingFpsak/src/behandlingsprosess/components/vedtak/IverksetterVedtakStatusModal';
 import FatterVedtakStatusModal from 'behandlingFpsak/src/behandlingsprosess/components/vedtak/FatterVedtakStatusModal';
 import KlageBehandlingModal from 'behandlingFpsak/src/behandlingsprosess/components/klage/KlageBehandlingModal';
 import BehandlingspunktInfoPanel from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktInfoPanel';
-import requireProps from 'app/data/requireProps';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { fetchVedtaksbrevPreview } from 'fagsak/duck';
-import { getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta } from 'app/paths';
-import trackRouteParam from 'app/data/trackRouteParam';
+import {
+  trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta,
+} from '@fpsak-frontend/fp-felles';
 import {
   setSelectedBehandlingspunktNavn,
   resolveProsessAksjonspunkter,

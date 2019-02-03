@@ -10,8 +10,7 @@ import {
 } from 'behandlingFpsak/src/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/src/behandlingForm';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/src/behandlingsprosess/behandlingsprosessSelectors';
-import { getSelectedBehandlingId } from 'behandlingFpsak/src/duck';
-import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
+import { getFagsakYtelseType, getSelectedBehandlingId } from 'behandlingFpsak/src/duck';
 import { isInnvilget, isAvslag, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { getRettigheter } from 'navAnsatt/duck';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';

@@ -1,10 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createSelector } from 'reselect';
-import { connect } from 'react-redux';
 
-import { getFagsaker } from 'fagsakSearch/fagsakSearchSelectors';
-import { getSelectedFagsak } from 'fagsak/fagsakSelectors';
 import { PersonInfo } from '@fpsak-frontend/person-info';
 
 /**
@@ -28,13 +24,4 @@ PersonIndex.defaultProps = {
   medPanel: false,
 };
 
-export const getPersonFromFagsak = createSelector([getFagsaker, getSelectedFagsak], (fagsaker, selectedFagsak) => {
-  const fagsak = selectedFagsak || fagsaker[0];
-  return fagsak ? fagsak.person : undefined;
-});
-
-const mapStateToProps = state => ({
-  person: getPersonFromFagsak(state),
-});
-
-export default connect(mapStateToProps)(PersonIndex);
+export default PersonIndex;

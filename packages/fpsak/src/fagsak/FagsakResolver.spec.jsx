@@ -7,7 +7,7 @@ import { Redirect } from 'react-router-dom';
 import { dummyFagsak } from '@fpsak-frontend/assets/testHelpers//data-test-helper';
 import {
   getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling, pathToBehandlinger, pathToMissingPage,
-} from 'app/paths';
+} from '@fpsak-frontend/fp-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { FagsakResolver } from './FagsakResolver';
 

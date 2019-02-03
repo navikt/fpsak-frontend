@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 
 import withDefaultToggling from 'behandlingFpsak/src/fakta/withDefaultToggling';
-import { FaktaEkspandertpanel, aksjonspunktPropType, faktaPanelCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { getFeatureToggles } from 'behandlingFpsak/src/duck';
+import {
+  FaktaEkspandertpanel, aksjonspunktPropType, faktaPanelCodes,
+} from '@fpsak-frontend/fp-behandling-felles';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { getFeatureToggles } from 'app/duck';
-import featureToggle from 'app/featureToggle';
+import { featureToggle } from '@fpsak-frontend/fp-felles';
 import connect from 'react-redux/es/connect/connect';
 import StartdatoForForeldrepengerperiodenForm from './startdatoForPeriode/StartdatoForForeldrepengerperiodenForm';
 import OppholdInntektOgPerioderFormNew from './oppholdInntektOgPerioderNew/OppholdInntektOgPerioderForm';

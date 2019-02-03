@@ -7,4 +7,9 @@ export const getKodeverk = kodeverkType => createSelector(
   (kodeverk = {}) => kodeverk[kodeverkType],
 );
 
+export const getAlleKodeverk = createSelector(
+  [fpsakApi.KODEVERK.getRestApiData()],
+  (kodeverk = {}) => kodeverk,
+);
+
 export const getKodeverkReceived = fpsakApi.KODEVERK.getRestApiFinished();

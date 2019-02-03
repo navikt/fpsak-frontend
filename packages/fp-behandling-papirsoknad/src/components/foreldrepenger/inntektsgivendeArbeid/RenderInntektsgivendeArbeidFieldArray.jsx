@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 
-import { getKodeverk } from 'kodeverk/duck';
+import { getKodeverk } from 'papirsoknad/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
 import { maxLength } from '@fpsak-frontend/utils';

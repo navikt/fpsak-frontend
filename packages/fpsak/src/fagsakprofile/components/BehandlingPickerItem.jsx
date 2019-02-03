@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
-import { pathToBehandling, getLocationWithDefaultBehandlingspunktAndFakta } from 'app/paths';
+import { pathToBehandling, getLocationWithDefaultBehandlingspunktAndFakta } from '@fpsak-frontend/fp-felles';
 import { behandlingPropType } from '@fpsak-frontend/fp-behandling-felles';
 
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';

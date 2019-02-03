@@ -13,10 +13,9 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import BpPanelTemplate from 'behandlingFpsak/src/behandlingsprosess/components/vilkar/BpPanelTemplate';
 import { getBehandlingsresultat, getSoknad, getBehandlingVersjon } from 'behandlingFpsak/src/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/src/behandlingForm';
-import { getSelectedBehandlingId } from 'behandlingFpsak/src/duck';
+import { getSelectedBehandlingId, getKodeverk } from 'behandlingFpsak/src/duck';
 import { behandlingspunktCodes, BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverk } from 'kodeverk/duck';
 import {
   ElementWrapper, Table, TableRow, TableColumn, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';

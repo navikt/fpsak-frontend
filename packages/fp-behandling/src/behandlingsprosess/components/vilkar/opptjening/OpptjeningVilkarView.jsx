@@ -15,7 +15,7 @@ import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
 import {
   getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus,
 } from 'behandlingFpsak/src/behandlingsprosess/behandlingsprosessSelectors';
-import { getKodeverk } from 'kodeverk/duck';
+import { getKodeverk } from 'behandlingFpsak/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';

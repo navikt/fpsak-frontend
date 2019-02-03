@@ -29,6 +29,7 @@ export const SettBehandlingPaVentFormImpl = ({
   comment,
   isUpdateOnHold,
   hasManualPaVent,
+  ventearsaker,
 }) => {
   const venteArsakHasChanged = !(originalVentearsak === ventearsak || (!ventearsak && !originalVentearsak));
   const fristHasChanged = !(originalFrist === frist || (!frist && !originalFrist));
@@ -46,6 +47,7 @@ export const SettBehandlingPaVentFormImpl = ({
         venteArsakHasChanged={venteArsakHasChanged}
         fristHasChanged={fristHasChanged}
         hasManualPaVent={hasManualPaVent}
+        ventearsaker={ventearsaker}
       />
     </form>
   );
@@ -61,6 +63,10 @@ SettBehandlingPaVentFormImpl.propTypes = {
   isUpdateOnHold: PropTypes.bool,
   comment: PropTypes.element,
   hasManualPaVent: PropTypes.bool.isRequired,
+  ventearsaker: PropTypes.arrayOf(PropTypes.shape({
+    kode: PropTypes.string,
+    navn: PropTypes.string,
+  })).isRequired,
 };
 
 SettBehandlingPaVentFormImpl.defaultProps = {

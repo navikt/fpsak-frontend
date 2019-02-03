@@ -9,10 +9,8 @@ import { Row } from 'nav-frontend-grid';
 import moment from 'moment';
 
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/src/behandlingsprosess/behandlingsprosessSelectors';
-import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverk } from 'kodeverk/duck';
 import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import fpsakApi from 'data/fpsakApi';
 import {
@@ -23,7 +21,7 @@ import {
   FadingPanel, ArrowBox, VerticalSpacer, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
 import { required, hasValidDate, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { getFilteredReceivedDocuments } from 'behandlingsupport/behandlingsupportSelectors';
+import { getFilteredReceivedDocuments, getKodeverk, getSelectedSaksnummer } from 'behandlingFpsak/src/duck';
 import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

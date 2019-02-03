@@ -15,7 +15,6 @@ import {
   getBehandlingInnsynResultatType,
   getBehandlingSprak,
 } from 'behandlingFpsak/src/behandlingSelectors';
-import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import {
   FadingPanel, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -26,7 +25,7 @@ import { TextAreaField } from '@fpsak-frontend/form';
 import {
   hasValidText, maxLength, minLength, requiredIfNotPristine, getLanguageCodeFromSprakkode, decodeHtmlEntity,
 } from '@fpsak-frontend/utils';
-import { getFilteredReceivedDocuments } from 'behandlingsupport/behandlingsupportSelectors';
+import { getFilteredReceivedDocuments, getSelectedSaksnummer } from 'behandlingFpsak/src/duck';
 import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 import DocumentListVedtakInnsyn from './DocumentListVedtakInnsyn';
 
