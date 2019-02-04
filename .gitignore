@@ -1,5 +1,7 @@
 **/node_modules/
-.idea/*
+/.idea
+!/.idea/runConfigurations
+!/.idea/codeStyles
 /bin/
 /.tmp/
 /.happypack/

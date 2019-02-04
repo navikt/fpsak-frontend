@@ -50,7 +50,7 @@ end
 -- Allow for session less authentication. For instance for running cypress tests.
 -- Use new cookie name "sut_ID_token".
 if ngx.var.cookie_sut_ID_token then
-    local json, err = require("resty.openidc").jwt_verify(ngx.var.cookie_ID_token, opts)
+    local json, err = require("resty.openidc").jwt_verify(ngx.var.cookie_sut_ID_token, opts)
     if json and not err then
         proxy_cookie.ID_token = ngx.var.cookie_sut_ID_token
         is_authorized = true
