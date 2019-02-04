@@ -29,3 +29,8 @@ export {
   LINK_TIL_BESTE_BEREGNING_REGNEARK,
   SYSTEMRUTINE_URL,
 } from './src/eksterneLenker';
+
+export {
+  setRequestPollingMessage,
+  getRequestPollingMessage,
+} from './src/pollingMessageDuck';

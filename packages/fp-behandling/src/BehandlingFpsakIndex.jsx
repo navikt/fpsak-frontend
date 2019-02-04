@@ -47,7 +47,6 @@ export class BehandlingFpsakIndex extends Component {
 
     behandlingUpdater.setUpdater(fpSakBehandlingUpdater);
     sakOperations.withUpdateFagsakInfo(appContextUpdater.updateFagsakInfo);
-    sakOperations.withSetRequestPollingMessage(appContextUpdater.setRequestPollingMessage);
   }
 
   componentDidUpdate(prevProps) {

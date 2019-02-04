@@ -22,6 +22,7 @@ describe('FpSakBehandlingResolver', () => {
         behandlingerVersjonMappedById={{ test: 'test' }}
         isInSync={false}
         behandlingerTyperMappedById={{ 1: BehandlingType.FORSTEGANGSSOKNAD }}
+        hasFetchStarted
       >
         <div>test</div>
       </FpSakBehandlingResolver>,
@@ -43,6 +44,7 @@ describe('FpSakBehandlingResolver', () => {
         behandlingerVersjonMappedById={{ test: 'test' }}
         isInSync={false}
         behandlingerTyperMappedById={{ 1: BehandlingType.FORSTEGANGSSOKNAD }}
+        hasFetchStarted={false}
       >
         <div>test</div>
       </FpSakBehandlingResolver>,
@@ -72,6 +74,7 @@ describe('FpSakBehandlingResolver', () => {
         behandlingerVersjonMappedById={{ }}
         isInSync
         behandlingerTyperMappedById={{ 1: BehandlingType.FORSTEGANGSSOKNAD }}
+        hasFetchStarted
       >
         <div>test</div>
       </FpSakBehandlingResolver>,

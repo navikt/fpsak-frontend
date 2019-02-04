@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { reducerRegistry } from '@fpsak-frontend/fp-felles';
+import reducerRegistry from './ReducerRegistry';
 
 // DETTE ER KUN MIDLERTIDIG. IKKJE LEGG NOKO MEIR HER!
 // TODO (TOR) Flytt denne

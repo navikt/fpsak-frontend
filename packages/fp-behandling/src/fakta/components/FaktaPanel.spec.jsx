@@ -73,6 +73,18 @@ describe('<FaktaPanel>', () => {
     kode: fagsakYtelseType.FORELDREPENGER,
   };
 
+  const person = {
+    navn: 'Espen Utvikler',
+    alder: 40,
+    personnummer: '1234546',
+    erKvinne: false,
+    personstatusType: {
+      kode: 'test',
+      navn: 'test',
+    },
+  };
+
+
   it('skal vise faktapanel for tilleggsopplysninger og medlemskap når en har aksjonspunkt for disse', () => {
     const tilleggsopplysningerAksjonspunkt = {
       id: 1,
@@ -98,6 +110,7 @@ describe('<FaktaPanel>', () => {
       shouldOpenDefaultInfoPanels
       ytelsesType={ytelsestype}
       readOnly={false}
+      fagsakPerson={person}
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(1);
@@ -133,6 +146,7 @@ describe('<FaktaPanel>', () => {
       shouldOpenDefaultInfoPanels
       ytelsesType={ytelsestype}
       readOnly={false}
+      fagsakPerson={person}
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -168,6 +182,7 @@ describe('<FaktaPanel>', () => {
       shouldOpenDefaultInfoPanels
       ytelsesType={ytelsestype}
       readOnly={false}
+      fagsakPerson={person}
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -203,6 +218,7 @@ describe('<FaktaPanel>', () => {
       shouldOpenDefaultInfoPanels
       ytelsesType={ytelsestype}
       readOnly={false}
+      fagsakPerson={person}
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -239,6 +255,7 @@ describe('<FaktaPanel>', () => {
       shouldOpenDefaultInfoPanels
       ytelsesType={ytelsestype}
       readOnly={false}
+      fagsakPerson={person}
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -278,6 +295,7 @@ describe('<FaktaPanel>', () => {
       shouldOpenDefaultInfoPanels
       ytelsesType={ytelsestype}
       readOnly={false}
+      fagsakPerson={person}
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -317,6 +335,7 @@ describe('<FaktaPanel>', () => {
       shouldOpenDefaultInfoPanels
       ytelsesType={ytelsestype}
       readOnly={false}
+      fagsakPerson={person}
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);

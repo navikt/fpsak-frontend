@@ -47,7 +47,6 @@ export class BehandlingFpTilbakeIndex extends Component {
 
     behandlingUpdater.setUpdater(fpTilbakeBehandlingUpdater);
     sakOperations.withUpdateFagsakInfo(appContextUpdater.updateFagsakInfo);
-    sakOperations.withSetRequestPollingMessage(appContextUpdater.setRequestPollingMessage);
   }
 
   componentDidUpdate(prevProps) {

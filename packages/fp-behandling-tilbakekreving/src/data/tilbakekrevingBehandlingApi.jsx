@@ -2,8 +2,7 @@ import {
   RestApiConfigBuilder, ReduxRestApiBuilder, ReduxEvents,
 } from '@fpsak-frontend/rest-api-redux';
 import errorHandler from '@fpsak-frontend/error-api-redux';
-import { sakOperations } from '@fpsak-frontend/fp-behandling-felles';
-import { reducerRegistry } from '@fpsak-frontend/fp-felles';
+import { reducerRegistry, setRequestPollingMessage } from '@fpsak-frontend/fp-felles';
 
 export const TilbakekrevingBehandlingApiKeys = {
   BEHANDLING: 'BEHANDLING',
@@ -46,7 +45,7 @@ const reduxRestApi = new ReduxRestApiBuilder(endpoints, reducerName)
   .withContextPath('fptilbake')
   .withReduxEvents(new ReduxEvents()
     .withErrorActionCreator(errorHandler.getErrorActionCreator())
-    .withPollingMessageActionCreator(sakOperations.setRequestPollingMessage))
+    .withPollingMessageActionCreator(setRequestPollingMessage))
   .build();
 
 reducerRegistry.register(reducerName, reduxRestApi.getDataReducer());

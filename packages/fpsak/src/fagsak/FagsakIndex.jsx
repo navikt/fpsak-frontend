@@ -6,8 +6,9 @@ import { Route } from 'react-router-dom';
 import BehandlingerIndex from 'behandling/BehandlingerIndex';
 import BehandlingSupportIndex from 'behandlingsupport/BehandlingSupportIndex';
 import FagsakProfileIndex from 'fagsakprofile/FagsakProfileIndex';
-import { behandlingerPath, trackRouteParam, requireProps } from '@fpsak-frontend/fp-felles';
-import { getRequestPollingMessage } from 'app/pollingMessageDuck';
+import {
+  behandlingerPath, trackRouteParam, requireProps, getRequestPollingMessage,
+} from '@fpsak-frontend/fp-felles';
 import { setSelectedSaksnummer } from './duck';
 import { getSelectedSaksnummer } from './fagsakSelectors';
 import FagsakResolver from './FagsakResolver';

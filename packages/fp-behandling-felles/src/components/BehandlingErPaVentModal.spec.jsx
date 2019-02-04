@@ -14,6 +14,7 @@ describe('<BehandlingErPaVentModal>', () => {
       intl={intlMock}
       handleOnHoldSubmit={sinon.spy()}
       hasManualPaVent
+      ventearsaker={[]}
     />);
 
     const ventForm = wrapper.find('Connect(ReduxForm)');

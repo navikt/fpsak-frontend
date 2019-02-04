@@ -18,6 +18,7 @@ describe('<SettBehandlingPaVentForm>', () => {
       originalVentearsak="ventearsak"
       isUpdateOnHold
       hasManualPaVent
+      ventearsaker={[]}
     />);
 
     const ventModal = wrapper.find(SettBehandlingPaVentModal);
@@ -35,6 +36,7 @@ describe('<SettBehandlingPaVentForm>', () => {
       originalVentearsak="ventearsak"
       isUpdateOnHold={false}
       hasManualPaVent
+      ventearsaker={[]}
     />);
 
     const ventModal = wrapper.find(SettBehandlingPaVentModal);
@@ -52,6 +54,7 @@ describe('<SettBehandlingPaVentForm>', () => {
       originalVentearsak="ventearsak"
       isUpdateOnHold={false}
       hasManualPaVent
+      ventearsaker={[]}
     />);
 
     const ventModal = wrapper.find(SettBehandlingPaVentModal);

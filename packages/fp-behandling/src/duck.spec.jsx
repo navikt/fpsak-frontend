@@ -32,6 +32,10 @@ describe('Behandling-reducer', () => {
       behandlingId: undefined,
       fagsakSaksnummer: undefined,
       hasShownBehandlingPaVent: false,
+      featureToggles: {},
+      kodeverk: {},
+      fagsak: {},
+      filteredReceivedDocuments: [],
     });
   });
 
@@ -50,6 +54,10 @@ describe('Behandling-reducer', () => {
       behandlingId: 1,
       fagsakSaksnummer: 2,
       hasShownBehandlingPaVent: false,
+      featureToggles: {},
+      kodeverk: {},
+      fagsak: {},
+      filteredReceivedDocuments: [],
     });
   });
 
@@ -64,6 +72,10 @@ describe('Behandling-reducer', () => {
       behandlingId: undefined,
       fagsakSaksnummer: undefined,
       hasShownBehandlingPaVent: true,
+      featureToggles: {},
+      kodeverk: {},
+      fagsak: {},
+      filteredReceivedDocuments: [],
     });
   });
 

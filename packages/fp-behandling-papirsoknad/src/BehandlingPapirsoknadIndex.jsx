@@ -45,7 +45,6 @@ export class BehandlingPapirsoknadIndex extends Component {
 
     behandlingUpdater.setUpdater(papirsoknadUpdater);
     sakOperations.withUpdateFagsakInfo(appContextUpdater.updateFagsakInfo);
-    sakOperations.withSetRequestPollingMessage(appContextUpdater.setRequestPollingMessage);
   }
 
   componentDidUpdate(prevProps) {

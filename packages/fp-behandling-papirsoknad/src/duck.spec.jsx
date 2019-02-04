@@ -10,6 +10,8 @@ describe('Papirsoknad-reducer', () => {
     behandlingId: undefined,
     fagsakSaksnummer: undefined,
     hasShownBehandlingPaVent: false,
+    kodeverk: {},
+    fagsak: {},
   };
 
   const mockSoknadData = {
@@ -39,6 +41,8 @@ describe('Papirsoknad-reducer', () => {
       behandlingId: undefined,
       fagsakSaksnummer: undefined,
       hasShownBehandlingPaVent: false,
+      kodeverk: {},
+      fagsak: {},
     });
   });
 

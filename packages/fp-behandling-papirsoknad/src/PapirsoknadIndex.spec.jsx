@@ -18,6 +18,18 @@ describe('<PapirsoknadIndex>', () => {
 
   const behandlingIdentifier = new BehandlingIdentifier(1, 1234);
 
+  const person = {
+    navn: 'Espen Utvikler',
+    alder: 40,
+    personnummer: '1234546',
+    erKvinne: false,
+    personstatusType: {
+      kode: 'test',
+      navn: 'test',
+    },
+  };
+
+
   it('skal vise SoknadRegistrertModal og RegisterPapirsoknad', () => {
     const aksjonspunkter = [
       {
@@ -103,6 +115,7 @@ describe('<PapirsoknadIndex>', () => {
       resetRegistreringSuccess={sinon.spy()}
       getFormValuesFromFormName={sinon.spy()}
       aksjonspunkter={aksjonspunkter}
+      fagsakPerson={person}
     />);
 
     const registerPapirsoknad = wrapper.find(RegisterPapirsoknad);
@@ -125,6 +138,7 @@ describe('<PapirsoknadIndex>', () => {
       soknadData={new SoknadData('ES', 'TEST', 'TEST', [])}
       resetRegistreringSuccess={resetRegistreringSuccessFunction}
       getFormValuesFromFormName={sinon.spy()}
+      fagsakPerson={person}
     />);
 
     wrapper.unmount();
@@ -153,6 +167,7 @@ describe('<PapirsoknadIndex>', () => {
       soknadData={new SoknadData('ES', 'TEST', 'TEST', [])}
       resetRegistreringSuccess={sinon.spy()}
       getFormValuesFromFormName={sinon.spy()}
+      fagsakPerson={person}
     />);
 
 

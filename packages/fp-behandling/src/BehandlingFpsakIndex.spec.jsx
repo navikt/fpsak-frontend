@@ -12,6 +12,28 @@ describe('BehandlingFpsakIndex', () => {
   let sandbox;
   let clock;
 
+  const fagsak = {
+    fagsakStatus: {
+      kode: 'test',
+      navn: 'test',
+    },
+    fagsakPerson: {
+      navn: 'Espen Utvikler',
+      alder: 40,
+      personnummer: '1234546',
+      erKvinne: false,
+      personstatusType: {
+        kode: 'test',
+        navn: 'test',
+      },
+    },
+    fagsakYtelseType: {
+      kode: 'test',
+      navn: 'test',
+    },
+    isForeldrepengerFagsak: true,
+  };
+
   before(() => {
     sandbox = sinon.createSandbox();
     clock = sinon.useFakeTimers(timestamp);
@@ -38,6 +60,11 @@ describe('BehandlingFpsakIndex', () => {
       behandlingUpdater={{ setUpdater: sinon.spy() }}
       resetBehandlingFpsakContext={sinon.spy()}
       updateFagsakInfo={sinon.spy()}
+      fagsak={fagsak}
+      appContextUpdater={{}}
+      featureToggles={{}}
+      filteredReceivedDocuments={[]}
+      kodeverk={{}}
     />);
 
     const grid = wrapper.find(BehandlingGrid);
@@ -64,6 +91,11 @@ describe('BehandlingFpsakIndex', () => {
       behandlingUpdater={{ setUpdater: sinon.spy() }}
       resetBehandlingFpsakContext={sinon.spy()}
       updateFagsakInfo={sinon.spy()}
+      fagsak={fagsak}
+      appContextUpdater={{}}
+      featureToggles={{}}
+      filteredReceivedDocuments={[]}
+      kodeverk={{}}
     />);
 
     const modal = wrapper.find(BehandlingErPaVentModal);
@@ -91,6 +123,11 @@ describe('BehandlingFpsakIndex', () => {
       behandlingUpdater={{ setUpdater: sinon.spy() }}
       resetBehandlingFpsakContext={sinon.spy()}
       updateFagsakInfo={sinon.spy()}
+      fagsak={fagsak}
+      appContextUpdater={{}}
+      featureToggles={{}}
+      filteredReceivedDocuments={[]}
+      kodeverk={{}}
     />);
 
     wrapper.setProps({ behandlingVersjon: 3 });
@@ -123,6 +160,11 @@ describe('BehandlingFpsakIndex', () => {
       behandlingUpdater={{ setUpdater: sinon.spy() }}
       resetBehandlingFpsakContext={sinon.spy()}
       updateFagsakInfo={sinon.spy()}
+      fagsak={fagsak}
+      appContextUpdater={{}}
+      featureToggles={{}}
+      filteredReceivedDocuments={[]}
+      kodeverk={{}}
     />);
 
     wrapper.setProps({ behandlingsprosessEnabled: false });
@@ -152,6 +194,11 @@ describe('BehandlingFpsakIndex', () => {
       behandlingUpdater={{ setUpdater: sinon.spy() }}
       resetBehandlingFpsakContext={sinon.spy()}
       updateFagsakInfo={sinon.spy()}
+      fagsak={fagsak}
+      appContextUpdater={{}}
+      featureToggles={{}}
+      filteredReceivedDocuments={[]}
+      kodeverk={{}}
     />);
 
     wrapper.unmount();
