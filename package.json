@@ -21,7 +21,6 @@
     "lerna:publish": "(lerna updated && lerna publish --cd-version patch --yes -m \"publish [ci skip]\") || echo \"Ingen endringer avslutter OK\"",
     "less:lint": "lesshint --max-warnings 0 --reporter ./_scripts/lesshint-reporter.js packages -e *Source-Sans*.less",
     "doc": "react-asciidoc-generator ./packages/ -o ../../docs/generated/react.adoc --handlebar-template src/docs/asciidoc-template.handlebars",
-    "cypress:open": "cypress open",
     "docker-build:dev": "docker build -t fpfront . -f ./docker/DockerfileDev --build-arg HTTP_PROXY=$HTTP_PROXY --build-arg HTTPS_PROXY=$HTTP_PROXY",
     "docker-start:dev": "yarn docker-stop; yarn docker-build:dev; docker run -d --env-file=./docker/.env --name fpfront --net=host fpfront",
     "docker-start": "yarn docker-stop; docker run -d --env-file=./docker/.env --name fpfront --net=host navikt/fpsak-frontend",
