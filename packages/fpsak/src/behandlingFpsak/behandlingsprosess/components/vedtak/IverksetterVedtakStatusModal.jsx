@@ -118,7 +118,7 @@ const erSammeResultatPåEngangsstønad = (behandlingsresultat,
   resultatstruktur) => {
   const sameResult = behandlingsresultat && behandlingsresultat.type.kode === originalBehandlingsresultat.type.kode;
   if (sameResult && resultatstruktur && resultatstruktur.antallBarn && behandlingsresultat.type.kode === behandlingResultatType.INNVILGET) {
-    return resultatstruktur && resultatstruktur.antallBarn === originaltBeregningResultat.antallBarn;
+    return resultatstruktur.antallBarn === originaltBeregningResultat.antallBarn;
   }
   return false;
 };
