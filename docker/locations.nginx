@@ -4,9 +4,9 @@ location  /fpsak/api/ {
     proxy_pass "${APP_URL_FPSAK}/fpsak/api/";
 
     ## error handling
-    error_page 401 @401_json;
-    error_page 404 @404_json;
-    error_page 504 @504_json;
+    #error_page 401 @401_json;
+    #error_page 404 @404_json;
+    #error_page 504 @504_json;
 }
 
 

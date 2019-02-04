@@ -20,6 +20,7 @@ describe('<UttakPeriodeType>', () => {
   const arbeidsgiver = {
     identifikator: '1234567890',
     navn: 'Statoil',
+    virksomhet: true,
   };
   const oppholdArsak = {
     kode: '-',
@@ -123,6 +124,6 @@ describe('<UttakPeriodeType>', () => {
       isFromSøknad
     />);
 
-    expect(wrapper.find('Element').last().childAt(0).text()).to.eql(`${arbeidsgiver.navn} ${arbeidsgiver.identifikator}`);
+    expect(wrapper.find('Element').last().childAt(0).text()).to.eql(`${arbeidsgiver.navn} (${arbeidsgiver.identifikator})`);
   });
 });

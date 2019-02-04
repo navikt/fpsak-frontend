@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import { calcDaysWithoutWeekends } from '@fpsak-frontend/utils';
+import { calcDays } from '@fpsak-frontend/utils';
 import { Image, EditedIcon } from '@fpsak-frontend/shared-components';
 import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
 import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
@@ -60,8 +60,8 @@ export class UttakTimeLineData extends Component {
     const periodToUpdate = uttaksresultatActivity.filter(o => o.id === formValues.periodeId);
     const forstePeriode = JSON.parse(JSON.stringify(...periodToUpdate));
     const andrePeriode = JSON.parse(JSON.stringify(...periodToUpdate));
-    const newTrekkDagerForstePeriode = calcDaysWithoutWeekends(formValues.forstePeriode.fom, formValues.forstePeriode.tom);
-    const newTrekkDagerAndrePeriode = calcDaysWithoutWeekends(formValues.andrePeriode.fom, formValues.andrePeriode.tom);
+    const newTrekkDagerForstePeriode = calcDays(formValues.forstePeriode.fom, formValues.forstePeriode.tom);
+    const newTrekkDagerAndrePeriode = calcDays(formValues.andrePeriode.fom, formValues.andrePeriode.tom);
     const currentId = formValues.periodeId;
     if (!periodToUpdate[0].begrunnelse) {
       forstePeriode.begrunnelse = ' ';

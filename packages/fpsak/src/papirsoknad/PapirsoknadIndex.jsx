@@ -1,3 +1,29 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
+import { ErrorTypes } from 'app/ErrorTypes';
+import PersonIndex from 'person/PersonIndex';
+import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
+import requireProps from 'app/data/requireProps';
+import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
+import { getRettigheter } from 'navAnsatt/duck';
+import rettighetPropType from 'navAnsatt/rettighetPropType';
+import papirsoknadApi from './data/papirsoknadApi';
+import SoknadData from './SoknadData';
+import {
+  getBehandlingVersjon, getBehandlingIsOnHold, getAksjonspunkter,
+} from './selectors/papirsoknadSelectors';
+import {
+  resetRegistrering, submitRegistrering, resetRegistreringSuccess, setSoknadData, getSoknadData, getBehandlingIdentifier,
+} from './duck';
+import RegistrerPapirsoknad from './components/RegistrerPapirsoknad';
+import SoknadRegistrertModal from './components/SoknadRegistrertModal';
+
 /**
  * RegistreringIndex
  *
@@ -5,36 +31,6 @@
  * fagsak og behandling for å generere korrekt registreringsskjema.
  *
  */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
-import { ErrorTypes } from 'app/ErrorTypes';
-import fpsakApi from 'data/fpsakApi';
-import PersonIndex from 'person/PersonIndex';
-import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import SoknadData from 'papirsoknad/SoknadData';
-import requireProps from 'app/data/requireProps';
-import {
-  getBehandlingVersjon, getBehandlingIsOnHold, getAksjonspunkter,
-}
-  from 'behandlingFpsak/behandlingSelectors';
-import {
-  getBehandlingIdentifier,
-} from 'behandlingFpsak/duck';
-import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { getRettigheter } from 'navAnsatt/duck';
-import rettighetPropType from 'navAnsatt/rettighetPropType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import {
-  resetRegistrering, submitRegistrering, resetRegistreringSuccess, setSoknadData, getSoknadData,
-} from './duck';
-import RegistrerPapirsoknad from './components/RegistrerPapirsoknad';
-import SoknadRegistrertModal from './components/SoknadRegistrertModal';
-
-
 export class PapirsoknadIndex extends Component {
   constructor(props) {
     super(props);
@@ -139,8 +135,8 @@ PapirsoknadIndex.defaultProps = {
 const hasAccessError = error => !!(error && error.type === ErrorTypes.MANGLER_TILGANG_FEIL);
 
 const mapStateToProps = state => ({
-  submitRegistreringSuccess: fpsakApi.SAVE_AKSJONSPUNKT.getRestApiFinished()(state)
-  || hasAccessError(fpsakApi.SAVE_AKSJONSPUNKT.getRestApiError()(state)),
+  submitRegistreringSuccess: papirsoknadApi.SAVE_AKSJONSPUNKT.getRestApiFinished()(state)
+  || hasAccessError(papirsoknadApi.SAVE_AKSJONSPUNKT.getRestApiError()(state)),
   soknadData: getSoknadData(state),
   aksjonspunkter: getAksjonspunkter(state),
   behandlingIdentifier: getBehandlingIdentifier(state),

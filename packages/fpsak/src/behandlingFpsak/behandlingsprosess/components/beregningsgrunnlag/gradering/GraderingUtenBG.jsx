@@ -152,13 +152,13 @@ export const buildInitialValues = createSelector(
     if (!vurderGraderingUtenBGAP || vurderGraderingUtenBGAP.status.kode !== aksjonspunktStatus.UTFORT) {
       return undefined;
     }
-    if (vurderGraderingUtenBGAP && !settPaaVentAap) {
+    if (!settPaaVentAap) {
       return {
         graderingUtenBGSettPaaVent: false,
         begrunnelse: vurderGraderingUtenBGAP.begrunnelse,
       };
     }
-    if (vurderGraderingUtenBGAP && settPaaVentAap && settPaaVentAap.status.kode === aksjonspunktStatus.UTFORT) {
+    if (settPaaVentAap.status.kode === aksjonspunktStatus.UTFORT) {
       return {
         graderingUtenBGSettPaaVent: false,
         begrunnelse: vurderGraderingUtenBGAP.begrunnelse,

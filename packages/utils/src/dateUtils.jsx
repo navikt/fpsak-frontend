@@ -40,42 +40,39 @@ const checkDays = (weeks, days) => {
   };
 };
 
-export const calcDaysAndWeeksWithWeekends = (fraDatoPeriode, tilDatoPeriode) => {
+export const calcDays = (fraDatoPeriode, tilDatoPeriode, notWeekends = true) => {
   if (tilDatoPeriode === TIDENES_ENDE) {
     return checkDays(undefined, undefined);
   }
+
   const fraDato = moment(fraDatoPeriode, ISO_DATE_FORMAT);
   const tilDato = moment(tilDatoPeriode, ISO_DATE_FORMAT);
+  let numOfDays;
 
-  // Vi legger til én dag for å få med startdato i perioden
-  const duration = tilDato.diff(fraDato, 'days') + 1;
+  if (notWeekends) {
+    let count = tilDato.diff(fraDato, 'days');
+    let date = moment(fraDatoPeriode, ISO_DATE_FORMAT);
+    numOfDays = date.isoWeekday() !== 6 && date.isoWeekday() !== 7 ? 1 : 0;
 
-  const weeks = Math.floor(duration / 7);
-  const days = duration % 7;
+    while (count > 0) {
+      date = date.add(1, 'days');
 
-  return checkDays(weeks, days);
+      if (date.isoWeekday() !== 6 && date.isoWeekday() !== 7) {
+        numOfDays += 1;
+      }
+
+      count -= 1;
+    }
+  } else {
+    // Vi legger til én dag for å få med startdato i perioden
+    numOfDays = tilDato.diff(fraDato, 'days') + 1;
+  }
+
+  return numOfDays;
 };
 
 export const calcDaysAndWeeks = (fraDatoPeriode, tilDatoPeriode) => {
-  if (tilDatoPeriode === TIDENES_ENDE) {
-    return checkDays(undefined, undefined);
-  }
-
-  const fraDato = moment(fraDatoPeriode, ISO_DATE_FORMAT);
-  const tilDato = moment(tilDatoPeriode, ISO_DATE_FORMAT);
-  let count = tilDato.diff(fraDato, 'days');
-  let date = moment(fraDatoPeriode, ISO_DATE_FORMAT);
-  let numOfDays = date.isoWeekday() !== 6 && date.isoWeekday() !== 7 ? 1 : 0;
-
-  while (count > 0) {
-    date = date.add(1, 'days');
-
-    if (date.isoWeekday() !== 6 && date.isoWeekday() !== 7) {
-      numOfDays += 1;
-    }
-
-    count -= 1;
-  }
+  const numOfDays = calcDays(fraDatoPeriode, tilDatoPeriode);
 
   const weeks = Math.floor(numOfDays / 5);
   const days = numOfDays % 5;
@@ -83,52 +80,15 @@ export const calcDaysAndWeeks = (fraDatoPeriode, tilDatoPeriode) => {
   return checkDays(weeks, days);
 };
 
-export const calcDays = (fraDatoPeriode, tilDatoPeriode) => {
-  if (tilDatoPeriode === TIDENES_ENDE) {
-    return checkDays(undefined, undefined);
-  }
+export const calcDaysAndWeeksWithWeekends = (fraDatoPeriode, tilDatoPeriode) => {
+  const notWeekends = false;
 
-  const fraDato = moment(fraDatoPeriode, ISO_DATE_FORMAT);
-  const tilDato = moment(tilDatoPeriode, ISO_DATE_FORMAT);
-  let count = tilDato.diff(fraDato, 'days');
-  let date = moment(fraDatoPeriode, ISO_DATE_FORMAT);
-  let numOfDays = date.isoWeekday() !== 6 && date.isoWeekday() !== 7 ? 1 : 0;
+  const numOfDays = calcDays(fraDatoPeriode, tilDatoPeriode, notWeekends);
 
-  while (count > 0) {
-    date = date.add(1, 'days');
+  const weeks = Math.floor(numOfDays / 7);
+  const days = numOfDays % 7;
 
-    if (date.isoWeekday() !== 6 && date.isoWeekday() !== 7) {
-      numOfDays += 1;
-    }
-
-    count -= 1;
-  }
-
-  return numOfDays;
-};
-
-export const calcDaysWithoutWeekends = (fraDatoPeriode, tilDatoPeriode) => {
-  if (tilDatoPeriode === TIDENES_ENDE) {
-    return checkDays(undefined, undefined);
-  }
-  const fraDato = moment(fraDatoPeriode, ISO_DATE_FORMAT);
-  const tilDato = moment(tilDatoPeriode, ISO_DATE_FORMAT);
-
-  let count = tilDato.diff(fraDato, 'days');
-  let date = moment(fraDatoPeriode, ISO_DATE_FORMAT);
-  let numOfDays = date.isoWeekday() !== 6 && date.isoWeekday() !== 7 ? 1 : 0;
-
-  while (count > 0) {
-    date = date.add(1, 'days');
-
-    if (date.isoWeekday() !== 6 && date.isoWeekday() !== 7) {
-      numOfDays += 1;
-    }
-
-    count -= 1;
-  }
-
-  return numOfDays;
+  return checkDays(weeks, days);
 };
 
 export const splitWeeksAndDays = (weeks, days) => {

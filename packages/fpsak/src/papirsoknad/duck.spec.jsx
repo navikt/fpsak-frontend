@@ -1,14 +1,15 @@
 import { expect } from 'chai';
 
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  papirsoknadReducer, resetRegistrering, setSoknadData, getRegisteredFields, getPapirsoknadEnabled, getSoknadData,
+  papirsoknadReducer, resetRegistrering, setSoknadData, getRegisteredFields, getSoknadData,
 } from './duck';
 
 describe('Papirsoknad-reducer', () => {
   const expectedInitialState = {
     soknadData: null,
+    behandlingId: undefined,
+    fagsakSaksnummer: undefined,
+    hasShownBehandlingPaVent: false,
   };
 
   const mockSoknadData = {
@@ -35,6 +36,9 @@ describe('Papirsoknad-reducer', () => {
   it('skal resette registreringsdata', () => {
     expect(papirsoknadReducer(mockSoknadData, resetRegistrering())).to.eql({
       soknadData: null,
+      behandlingId: undefined,
+      fagsakSaksnummer: undefined,
+      hasShownBehandlingPaVent: false,
     });
   });
 
@@ -60,48 +64,6 @@ describe('Papirsoknad-reducer', () => {
     const registeredFields = getRegisteredFields(formName).resultFunc(formState);
 
     expect(registeredFields).is.eql({});
-  });
-
-  it('skal vise papirsøknaden når en har et åpent papirsøknad-aksjonspunkt', () => {
-    const aksjonspunkter = [{
-      definisjon: {
-        kode: aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD,
-      },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-    }];
-    const isEnabled = getPapirsoknadEnabled.resultFunc(aksjonspunkter);
-
-    expect(isEnabled).is.true;
-  });
-
-  it('skal ikke vise papirsøknaden når en har et lukket papirsøknad-aksjonspunkt', () => {
-    const aksjonspunkter = [{
-      definisjon: {
-        kode: aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD,
-      },
-      status: {
-        kode: aksjonspunktStatus.UTFORT,
-      },
-    }];
-    const isEnabled = getPapirsoknadEnabled.resultFunc(aksjonspunkter);
-
-    expect(isEnabled).is.false;
-  });
-
-  it('skal ikke vise papirsøknaden når en har et annet aksjonspunkt', () => {
-    const aksjonspunkter = [{
-      definisjon: {
-        kode: aksjonspunktCodes.VURDERE_DOKUMENT,
-      },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-    }];
-    const isEnabled = getPapirsoknadEnabled.resultFunc(aksjonspunkter);
-
-    expect(isEnabled).is.false;
   });
 
   it('skal hente søknadsdata fra state', () => {

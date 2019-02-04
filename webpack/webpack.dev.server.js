@@ -1,5 +1,5 @@
 "use strict";
-
+require('dotenv').config()
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var config = require('./webpack.dev');
@@ -16,16 +16,25 @@ var options = {
   watchContentBase: true,
   proxy: {
     "/fpoppdrag/**": {
-      target: "http://localhost:8070",
+      target: process.env.APP_URL_FPOPPDRAG || "http://localhost:8070",
       secure: false,
+      changeOrigin: (!!process.env.APP_URL_FPOPPDRAG),
     },
     "/fptilbake/**": {
-      target: "http://localhost:8030",
+      target: process.env.APP_URL_FPTILBAKE || "http://localhost:8030",
       secure: false,
+      changeOrigin: (!!process.env.APP_URL_FPTILBAKE),
     },
     "/fpsak/(api|jetty)/**": {
-      target: "http://localhost:8080",
+      target: process.env.APP_URL_FPSAK || "http://localhost:8080",
       secure: false,
+      changeOrigin: (!!process.env.APP_URL_FPSAK),
+      onProxyRes: function onProxyRes(proxyRes, req, res) {
+        // For å håndtere redirects på 202 Accepted responser med location headers...
+        if(proxyRes.headers.location && proxyRes.headers.location.startsWith(process.env.APP_URL_FPSAK)){
+          proxyRes.headers.location = proxyRes.headers.location.split(process.env.APP_URL_FPSAK)[1];
+        }
+      }
     },
   },
   publicPath: config.output.publicPath,

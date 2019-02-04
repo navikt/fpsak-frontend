@@ -19,7 +19,7 @@ import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-component
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
-import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
+import faktaPanelCodes from 'behandlingFelles/fakta/faktaPanelCodes';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import FullPersonInfo from './panelBody/FullPersonInfo';
 import PersonArbeidsforholdPanel from './panelBody/arbeidsforhold/PersonArbeidsforholdPanel';

@@ -52,11 +52,13 @@ export const lagStateMedAksjonspunkterOgFaktaOmBeregning = (aksjonspunkter, fakt
       fpsakBehandling: {
         behandlingId: 1000051,
       },
+      behandling: {
+        behandlingInfoHolder: {},
+      },
     },
     form: {},
   };
   state.form[behandlingFormName] = {};
-  state.form[behandlingFormName][formName] = {};
   state.form[behandlingFormName][formName] = {
     values: {
       [formSection]: { ...values },

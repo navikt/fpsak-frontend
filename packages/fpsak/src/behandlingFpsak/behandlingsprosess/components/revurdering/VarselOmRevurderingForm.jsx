@@ -17,7 +17,7 @@ import { getBehandlingLanguageCode, getBehandlingArsaker } from 'behandlingFpsak
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
 import FodselSammenligningPanel from 'behandlingFpsak/components/fodselSammenligning/FodselSammenligningPanel';
-import SettBehandlingPaVentModal from 'behandlingFpsak/components/SettBehandlingPaVentModal';
+import SettBehandlingPaVentModal from 'behandlingFelles/components/SettBehandlingPaVentModal';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';

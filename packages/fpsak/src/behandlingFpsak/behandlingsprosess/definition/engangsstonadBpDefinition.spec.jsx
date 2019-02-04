@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
 import featureToggle from 'app/featureToggle';
-import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
+import behandlingspunktCodes from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';

@@ -6,7 +6,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 
-import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
+import behandlingspunktCodes from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
 import uttaksresultatPropType from 'behandlingFelles/proptypes/uttaksresultatPropType';
 import { getUttaksresultatPerioder, getStonadskontoer } from 'behandlingFpsak/behandlingSelectors';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/behandlingsprosess/behandlingsprosessSelectors';
@@ -272,7 +272,7 @@ const checkMaxDager = (uttaksresultatActivity, stonadskonto) => {
   const addAnnenPartFordelteDager = addAnnenPart(uttakResult);
   addAnnenPartFordelteDager.forEach((value) => {
     const maxDays = getMaxDays(value.konto, stonadskonto.stonadskontoer) - value.trekkdager;
-    if (typeof maxDays !== 'undefined' && (maxDays < 0)) {
+    if (maxDays && (maxDays < 0)) {
       errors = {
         _error:
   <AlertStripe type="advarsel" className={styles.marginTop}>

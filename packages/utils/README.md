@@ -18,7 +18,6 @@ yarn add @fpsak-frontend/utils
 ### formatCurrencyNoKr
 ### parseCurrencyInput
 ### removeSpacesFromNumber
-### calcDaysWithoutWeekends
 ### addDaysToDate
 ### calcDays
 ### calcDaysAndWeeks

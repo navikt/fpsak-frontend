@@ -7,16 +7,14 @@ import { push } from 'connected-react-router';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import {
   getBehandlingIsOnHold,
-  getBehandlingIsQueued,
   getBehandlingVersjon,
+  getBehandlingIsQueued,
   getBehandlingBehandlendeEnhetId,
   getBehandlingBehandlendeEnhetNavn,
   getBehandlingHasSoknad,
   getBehandlingIsInnsyn,
-} from 'behandlingFpsak/behandlingSelectors';
-import {
   getBehandlingIdentifier,
-} from 'behandlingFpsak/duck';
+} from 'behandling/duck';
 import fpsakApi from 'data/fpsakApi';
 import { getNavAnsatt, getRettigheter } from 'navAnsatt/duck';
 

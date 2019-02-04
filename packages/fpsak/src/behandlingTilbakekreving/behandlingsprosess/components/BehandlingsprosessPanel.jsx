@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import classnames from 'classnames/bind';
 import Panel from 'nav-frontend-paneler';
 
-import { getBehandlingHenlagt } from 'behandlingTilbakekreving/tilbakekrevingBehandlingSelectors';
+import { getBehandlingHenlagt } from 'behandlingTilbakekreving/selectors/tilbakekrevingBehandlingSelectors';
 import { getNotAcceptedByBeslutter } from 'behandlingTilbakekreving/behandlingsprosess/behandlingsprosessSelectors';
 import BehandlingspunktIcon from './BehandlingspunktIcon';
 

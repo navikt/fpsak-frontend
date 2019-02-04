@@ -5,7 +5,6 @@ import { Route, Switch } from 'react-router-dom';
 import FagsakIndex from 'fagsak/FagsakIndex';
 import { aktoerPath, fagsakPath } from 'app/paths';
 
-import '@fpsak-frontend/assets/styles/modigDesign.less';
 import DashboardResolver from './DashboardResolver';
 import MissingPage from './MissingPage';
 

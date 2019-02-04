@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
-import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
+import faktaPanelCodes from 'behandlingFelles/fakta/faktaPanelCodes';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {

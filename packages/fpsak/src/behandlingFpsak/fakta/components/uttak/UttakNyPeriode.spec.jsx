@@ -48,15 +48,17 @@ const nyPeriode = {
 
 const andeler = [
   {
-    arbeidsforhold: {
-      arbeidsforholdId: '234234234-23423423-23423',
-      arbeidsgiverNavn: 'STATOIL ASAAVD STATOIL SOKKELVIRKSOMHET',
-      arbeidsgiverId: '1234567890',
-      arbeidsforholdType: {
-        kode: 'ARBEID',
-        kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-        navn: 'Arbeid',
-      },
+    arbeidsgiver: {
+      aktørId: null,
+      fødselsdato: null,
+      identifikator: '973861778',
+      navn: 'STATOIL ASA AVD STATOIL SOKKELVIRKSOMHET',
+      virksomhet: true,
+    },
+    arbeidType: {
+      kode: 'ORDINÆRT_ARBEID',
+      kodeverk: 'UTTAK_ARBEID_TYPE',
+      navn: 'null',
     },
   },
 ];

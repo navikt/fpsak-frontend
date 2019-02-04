@@ -7,16 +7,17 @@ import { injectIntl, intlShape } from 'react-intl';
 import classNames from 'classnames';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import { isKontrollerRevurderingAksjonspunkOpen } from 'behandlingFpsak/behandlingSelectors';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import {
   ariaCheck, hasValidText, maxLength, minLength, required, getLanguageCodeFromSprakkode,
 } from '@fpsak-frontend/utils';
-import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
-import { getKodeverk } from 'kodeverk/duck';
+import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+
+import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
+import { isKontrollerRevurderingAksjonspunkOpen } from 'behandling/duck';
+import { getKodeverk } from 'kodeverk/duck';
 
 import styles from './messages.less';
 

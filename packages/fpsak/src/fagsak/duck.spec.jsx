@@ -85,9 +85,9 @@ describe('Fagsak-reducer', () => {
         expect(store.getActions()).to.have.length(10);
         expect(store.getActions()[0].type).to.contain('fpsak/api/fagsak STARTED');
         expect(store.getActions()[1].type).to.contain('fpsak/api/fagsak FINISHED');
-        expect(store.getActions()[2].type).to.contain('fpsak/api/behandlinger/alle-fpsak STARTED');
+        expect(store.getActions()[2].type).to.contain('fpsak/api/behandlinger/alle STARTED');
         expect(store.getActions()[3].type).to.contain('fpsak/api/behandlinger/annen-part-behandling STARTED');
-        expect(store.getActions()[4].type).to.contain('fpsak/api/behandlinger/alle-fpsak FINISHED');
+        expect(store.getActions()[4].type).to.contain('fpsak/api/behandlinger/alle FINISHED');
         expect(store.getActions()[5].type).to.contain('fpsak/api/behandlinger/annen-part-behandling FINISHED');
         expect(store.getActions()[6].type).to.contain('fpsak/api/dokument/hent-dokumentliste STARTED');
         expect(store.getActions()[7].type).to.contain('fpsak/api/dokument/hent-dokumentliste FINISHED');
@@ -119,23 +119,22 @@ describe('Fagsak-reducer', () => {
 
     return store.dispatch(fetchFagsakInfo(1))
       .then(() => {
-        expect(store.getActions()).to.have.length(16);
+        expect(store.getActions()).to.have.length(15);
         expect(store.getActions()[0].type).to.contain('/FETCH_FAGSAK RESET');
         expect(store.getActions()[1].type).to.contain('/BEHANDLINGER_FPSAK RESET');
         expect(store.getActions()[2].type).to.contain('/ALL_DOCUMENTS_FPSAK RESET');
         expect(store.getActions()[3].type).to.contain('/HISTORY_FPSAK RESET');
-        expect(store.getActions()[4].type).to.contain('/BEHANDLING RESET');
-        expect(store.getActions()[5].type).to.contain('/ANNEN_PART_BEHANDLING RESET');
-        expect(store.getActions()[6].type).to.contain('fpsak/api/fagsak STARTED');
-        expect(store.getActions()[7].type).to.contain('fpsak/api/fagsak FINISHED');
-        expect(store.getActions()[8].type).to.contain('fpsak/api/behandlinger/alle-fpsak STARTED');
-        expect(store.getActions()[9].type).to.contain('fpsak/api/behandlinger/annen-part-behandling STARTED');
-        expect(store.getActions()[10].type).to.contain('fpsak/api/behandlinger/alle-fpsak FINISHED');
-        expect(store.getActions()[11].type).to.contain('fpsak/api/behandlinger/annen-part-behandling FINISHED');
-        expect(store.getActions()[12].type).to.contain('fpsak/api/dokument/hent-dokumentliste STARTED');
-        expect(store.getActions()[13].type).to.contain('fpsak/api/dokument/hent-dokumentliste FINISHED');
-        expect(store.getActions()[14].type).to.contain('fpsak/api/historikk STARTED');
-        expect(store.getActions()[15].type).to.contain('fpsak/api/historikk FINISHED');
+        expect(store.getActions()[4].type).to.contain('/ANNEN_PART_BEHANDLING RESET');
+        expect(store.getActions()[5].type).to.contain('fpsak/api/fagsak STARTED');
+        expect(store.getActions()[6].type).to.contain('fpsak/api/fagsak FINISHED');
+        expect(store.getActions()[7].type).to.contain('fpsak/api/behandlinger/alle STARTED');
+        expect(store.getActions()[8].type).to.contain('fpsak/api/behandlinger/annen-part-behandling STARTED');
+        expect(store.getActions()[9].type).to.contain('fpsak/api/behandlinger/alle FINISHED');
+        expect(store.getActions()[10].type).to.contain('fpsak/api/behandlinger/annen-part-behandling FINISHED');
+        expect(store.getActions()[11].type).to.contain('fpsak/api/dokument/hent-dokumentliste STARTED');
+        expect(store.getActions()[12].type).to.contain('fpsak/api/dokument/hent-dokumentliste FINISHED');
+        expect(store.getActions()[13].type).to.contain('fpsak/api/historikk STARTED');
+        expect(store.getActions()[14].type).to.contain('fpsak/api/historikk FINISHED');
       });
   });
 
@@ -184,11 +183,11 @@ describe('Fagsak-reducer', () => {
         expect(store.getActions()).to.have.length(2);
         const [hentBehandlingerStartedAction, hentBehandlingerFinishedAction] = store.getActions();
 
-        expect(hentBehandlingerStartedAction.type).to.contain('fpsak/api/behandlinger/alle-fpsak STARTED');
+        expect(hentBehandlingerStartedAction.type).to.contain('fpsak/api/behandlinger/alle STARTED');
         expect(hentBehandlingerStartedAction.payload.params).is.eql({ saksnummer });
         expect(hentBehandlingerStartedAction.meta).is.eql({ options: { keepData: true } });
 
-        expect(hentBehandlingerFinishedAction.type).to.contain('fpsak/api/behandlinger/alle-fpsak FINISHED');
+        expect(hentBehandlingerFinishedAction.type).to.contain('fpsak/api/behandlinger/alle FINISHED');
         expect(hentBehandlingerFinishedAction.payload).is.eql(behandlinger);
       });
   });

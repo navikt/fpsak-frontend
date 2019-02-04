@@ -71,6 +71,7 @@ const aksjonspunktCodes = {
   VURDER_FEILUTBETALING: '5084',
   VURDER_INNTREKK: '5085',
   AVKLAR_ANNEN_FORELDER_RETT: '5086',
+  VURDER_DEKNINGSGRAD: '5087',
   VURDERING_AV_FORMKRAV_KLAGE_KA: '5083',
   TILBAKEKREVING: '5084',
   SOKERS_OPPLYSNINGSPLIKT_OVST: '6002',
@@ -130,6 +131,14 @@ const isVilkarForSykdomOppfyltAksjonspunkter = [
   aksjonspunktCodes.VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT,
 ];
 
+const beregningAksjonspunkter = [
+  aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+  aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+  aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+  aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+  aksjonspunktCodes.VURDER_DEKNINGSGRAD,
+];
+
 const aksjonspunktIsOfType = validAksjonspunktCodes => aksjonspunktCode => validAksjonspunktCodes.includes(aksjonspunktCode);
 
 export const isKlageAksjonspunkt = aksjonspunktIsOfType(klageAksjonspunkter);
@@ -137,5 +146,6 @@ export const isInnhentSaksopplysningerAksjonspunkt = aksjonspunktIsOfType(innhen
 export const isBGAksjonspunktSomGirFritekstfelt = aksjonspunktIsOfType(beregningsgrunnlagFritekstfeltIVedtakAksjonspunkt);
 export const isVilkarForSykdomOppfylt = aksjonspunktIsOfType(isVilkarForSykdomOppfyltAksjonspunkter);
 export const isUttakAksjonspunkt = aksjonspunktIsOfType(uttakAksjonspunkter);
+export const isBeregningAksjonspunkt = aksjonspunktIsOfType(beregningAksjonspunkter);
 
 export default aksjonspunktCodes;

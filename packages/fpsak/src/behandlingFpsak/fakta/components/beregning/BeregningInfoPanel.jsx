@@ -10,7 +10,7 @@ import {
   getFaktaOmBeregningTilfellerKoder,
 } from 'behandlingFpsak/behandlingSelectors';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
-import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
+import faktaPanelCodes from 'behandlingFelles/fakta/faktaPanelCodes';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
 import { behandlingForm } from 'behandlingFpsak/behandlingForm';
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';

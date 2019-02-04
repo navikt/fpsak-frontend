@@ -12,7 +12,7 @@ import { FadingPanel } from '@fpsak-frontend/shared-components';
 import { getBehandlingsresultat, isBehandlingRevurderingFortsattMedlemskap, getBehandlingRevurderingAvFortsattMedlemskapFom }
   from 'behandlingFpsak/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/behandlingForm';
-import behandlingspunktCodes from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
+import behandlingspunktCodes from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';

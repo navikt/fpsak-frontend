@@ -1,8 +1,0 @@
-{
-  "baseUrl": "http://localhost:9000",
-  "viewportWidth": 1500,
-  "viewportHeight": 700,
-  "env": {
-
-  }
-}

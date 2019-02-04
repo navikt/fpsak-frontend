@@ -7,25 +7,24 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import SettBehandlingPaVentForm from 'behandlingFpsak/components/SettBehandlingPaVentForm';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
+
+import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
+import SettBehandlingPaVentForm from 'behandlingFelles/components/SettBehandlingPaVentForm';
 import {
   getBehandlingSprak,
   getBehandlingVersjon,
   getBrevMaler,
   getBrevMottakere,
-} from 'behandlingFpsak/behandlingSelectors';
-import {
   getBehandlingIdentifier,
-} from 'behandlingFpsak/duck';
+} from 'behandling/duck';
 import { setBehandlingOnHold } from 'behandlingmenu/duck';
-import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import requireProps from 'app/data/requireProps';
-import fpsakApi from 'data/fpsakApi';
-
-import resetSubmitMessageActionCreator from './duck';
+import {
+  resetSubmitMessageActionCreator, previewMessageActionCreator, submitMessageActionCreator, isSubmitMessageFinished,
+} from './duck';
 import Messages from './components/Messages';
 import MessagesModal from './components/MessagesModal';
 
@@ -181,7 +180,7 @@ MessagesIndex.defaultProps = {
 const mapStateToProps = state => ({
   recipients: getBrevMottakere(state),
   templates: getBrevMaler(state),
-  submitFinished: fpsakApi.SUBMIT_MESSAGE.getRestApiFinished()(state),
+  submitFinished: isSubmitMessageFinished(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
   selectedBehandlingVersjon: getBehandlingVersjon(state),
   selectedBehandlingSprak: getBehandlingSprak(state),
@@ -192,8 +191,8 @@ const mapDispatchToProps = dispatch => ({
     push,
     resetReduxForm,
     setBehandlingOnHold,
-    fetchPreview: fpsakApi.PREVIEW_MESSAGE.makeRestApiRequest(),
-    submitMessage: fpsakApi.SUBMIT_MESSAGE.makeRestApiRequest(),
+    fetchPreview: previewMessageActionCreator,
+    submitMessage: submitMessageActionCreator,
     resetSubmitMessage: resetSubmitMessageActionCreator,
   }, dispatch),
 });

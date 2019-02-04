@@ -12,7 +12,7 @@ import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
 import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
 import FaktaSubmitButton from 'behandlingFpsak/fakta/components/FaktaSubmitButton';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
-import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
+import faktaPanelCodes from 'behandlingFelles/fakta/faktaPanelCodes';
 import { getKodeverk } from 'kodeverk/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';

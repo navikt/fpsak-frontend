@@ -1,4 +1,4 @@
-import bpc from 'behandlingFpsak/behandlingsprosess/behandlingspunktCodes';
+import bpc from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -13,7 +13,7 @@ const getStatusFromUttakresultat = ({ uttaksresultat }) => {
   if (!uttaksresultat) {
     return vut.IKKE_VURDERT;
   }
-  if (uttaksresultat && uttaksresultat.perioderSøker.length > 0) {
+  if (uttaksresultat.perioderSøker && uttaksresultat.perioderSøker.length > 0) {
     const oppfylt = uttaksresultat.perioderSøker.some(p => (
       p.periodeResultatType.kode !== prt.AVSLATT
     ));
@@ -106,7 +106,7 @@ const foreldrepengerBuilders = [
     .withAksjonspunktCodes(
       ac.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS, ac.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
       ac.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE, ac.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-      ac.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, ac.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG,
+      ac.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, ac.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG, ac.VURDER_DEKNINGSGRAD,
     )
     .withVisibilityWhen(hasNonDefaultBehandlingspunkt, behandlingTypeNotEquals(bt.DOKUMENTINNSYN, bt.KLAGE))
     .withVilkarIsOptional(),

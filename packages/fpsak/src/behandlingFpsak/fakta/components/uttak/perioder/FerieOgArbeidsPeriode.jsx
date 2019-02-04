@@ -158,7 +158,7 @@ FerieOgArbeidsPeriode.propTypes = {
   arbeidsgiver: PropTypes.shape(),
   skalViseResultat: PropTypes.bool.isRequired,
   oppholdArsak: PropTypes.shape(),
-  behandlingStatusKode: PropTypes.string.isRequired,
+  behandlingStatusKode: PropTypes.string,
   utsettelseArsak: PropTypes.shape(),
 };
 
@@ -169,6 +169,7 @@ FerieOgArbeidsPeriode.defaultProps = {
   arbeidsgiver: {},
   oppholdArsak: undefined,
   utsettelseArsak: undefined,
+  behandlingStatusKode: undefined,
 };
 
 const validateForm = ({ nyFom, nyTom }) => {

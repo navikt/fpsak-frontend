@@ -5,7 +5,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import withDefaultToggling from 'behandlingFpsak/fakta/withDefaultToggling';
 import FaktaEkspandertpanel from 'behandlingFelles/fakta/components/FaktaEkspandertpanel';
-import faktaPanelCodes from 'behandlingFpsak/fakta/faktaPanelCodes';
+import faktaPanelCodes from 'behandlingFelles/fakta/faktaPanelCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { getFeatureToggles } from 'app/duck';

@@ -1,14 +1,11 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
+@import '@{coreModulePath}nav-frontend-paneler-style/src/mixins';
 
-.container() {
-  border: 1px solid @navGra20;
-  border-radius: 5px;
-  composes: panel-container-mixin from '@fpsak-frontend/assets/styles/mixins.less';
+.borderbox {
+  .panel-mixin();
+  .panel-border-mixin();
+  margin-top: 16px;
   width: 100%;
-}
-
-.default {
-  .container();
 }
 
 .error {

@@ -6,7 +6,9 @@ import utsettelseArsakCodes, { utsettelseArsakTexts } from '@fpsak-frontend/kode
 import overforingArsakCodes, { overforingArsakTexts } from '@fpsak-frontend/kodeverk/src/overforingArsakCodes';
 import oppholdArsakType, { oppholdArsakKontoNavn } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import { Image } from '@fpsak-frontend/shared-components';
-import { ISO_DATE_FORMAT, dateFormat, calcDaysAndWeeks } from '@fpsak-frontend/utils';
+import {
+  ISO_DATE_FORMAT, dateFormat, calcDaysAndWeeks, lagVisningsNavn,
+} from '@fpsak-frontend/utils';
 import editPeriodeIcon from '@fpsak-frontend/assets/images/endre.svg';
 import editPeriodeDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
 import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
@@ -152,7 +154,7 @@ const UttakPeriodeType = ({ // NOSONAR
       {isGradering && arbeidsgiver && arbeidsgiver.navn && arbeidsgiver.identifikator
       && (
       <div className={styles.textWrapper}>
-        <Element>{`${arbeidsgiver.navn} ${arbeidsgiver.identifikator}`}</Element>
+        <Element>{lagVisningsNavn(arbeidsgiver)}</Element>
       </div>
       )
       }

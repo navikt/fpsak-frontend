@@ -27,7 +27,7 @@ export const VURDER_FAKTA_BEREGNING_FORM_NAME = 'tilfellerFormSection';
 const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
 const findAksjonspunktMedBegrunnelse = aksjonspunkter => aksjonspunkter
-  .filter(ap => (ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN || ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN) && ap.begrunnelse !== null)[0];
+  .filter(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN && ap.begrunnelse !== null)[0];
 
 /**
  * VurderFaktaBeregningPanel

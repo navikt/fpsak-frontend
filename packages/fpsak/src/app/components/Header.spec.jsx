@@ -8,8 +8,6 @@ describe('<Header>', () => {
   it('skal sjekke at navn blir vist', () => {
     const wrapper = shallow(<Header
       navAnsattName="Per"
-      rettskildeUrl="url"
-      systemrutineUrl="url2"
       removeErrorMessage={() => undefined}
       queryStrings={{}}
     />);

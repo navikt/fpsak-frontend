@@ -25,7 +25,7 @@ export const AVKLAR_AKTIVITETER_FORM_NAME = 'avklarAktiviteter';
 const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
 const findAksjonspunktMedBegrunnelse = aksjonspunkter => aksjonspunkter
-  .filter(ap => (ap.definisjon.kode === AVKLAR_AKTIVITETER || ap.definisjon.kode === AVKLAR_AKTIVITETER) && ap.begrunnelse !== null)[0];
+  .filter(ap => ap.definisjon.kode === AVKLAR_AKTIVITETER && ap.begrunnelse !== null)[0];
 
 
 export const erAvklartAktivitetEndret = formName => createSelector(

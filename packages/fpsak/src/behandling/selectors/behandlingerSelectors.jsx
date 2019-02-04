@@ -30,6 +30,9 @@ export const getBehandlingerTypesMappedById = createSelector([getBehandlinger], 
 export const getBehandlingerVersjonMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
   .reduce((a, b) => ({ ...a, [b.id]: b.versjon }), {}));
 
+export const getBehandlingerAktivPapirsoknadMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
+  .reduce((a, b) => ({ ...a, [b.id]: b.erAktivPapirsoknad }), {}));
+
 export const getNumBehandlinger = createSelector([getBehandlinger], (behandlinger = []) => behandlinger.length);
 
 export const getNoExistingBehandlinger = createSelector([getBehandlinger], (behandlinger = []) => behandlinger.length === 0);
