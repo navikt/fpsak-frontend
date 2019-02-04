@@ -80,7 +80,7 @@ describe('<BostedBarnView>', () => {
     expect(wrapper.find('Element').childAt(0).text()).to.eql('Espen Barn');
   });
 
-  it('skal vise fodselsdato og alder', () => {
+  it('skal vise fodselsdato', () => {
     const wrapper = shallow(<BostedBarnView
       barn={barn}
       barnNr={3}
@@ -90,7 +90,6 @@ describe('<BostedBarnView>', () => {
     const fodselsWrapper = normalTekst.first();
     expect(fodselsWrapper.find('FormattedMessage').prop('id')).to.eql('BostedBarnView.Age');
     expect(fodselsWrapper.find('FormattedMessage').prop('values').fodselsdato).to.eql('03.02.2016');
-    expect(fodselsWrapper.find('FormattedMessage').prop('values').age).to.eql(3);
   });
 
   it('skal vise adresse', () => {
