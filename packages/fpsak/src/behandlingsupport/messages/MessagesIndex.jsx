@@ -10,8 +10,10 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-
 import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-behandling-felles';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+
+import { getKodeverk } from 'kodeverk/duck';
 import {
   getBehandlingSprak,
   getBehandlingVersjon,
@@ -114,6 +116,7 @@ export class MessagesIndex extends Component {
       templates,
       submitFinished,
       selectedBehandlingSprak,
+      ventearsaker,
     } = this.props;
     const { showMessagesModal, showSettPaVentModal } = this.state;
     const model = {
@@ -143,6 +146,7 @@ export class MessagesIndex extends Component {
             onSubmit={this.handleSubmitFromModal}
             ventearsak={venteArsakType.AVV_DOK}
             hasManualPaVent
+            ventearsaker={ventearsaker}
           />
         )
         }
@@ -168,12 +172,17 @@ MessagesIndex.propTypes = {
   resetReduxForm: PropTypes.func.isRequired,
   resetSubmitMessage: PropTypes.func.isRequired,
   push: PropTypes.func.isRequired,
+  ventearsaker: PropTypes.arrayOf(PropTypes.shape({
+    kode: PropTypes.string,
+    navn: PropTypes.string,
+  })),
 };
 
 MessagesIndex.defaultProps = {
   behandlingIdentifier: undefined,
   selectedBehandlingVersjon: undefined,
   selectedBehandlingSprak: undefined,
+  ventearsaker: [],
 };
 
 const mapStateToProps = state => ({
@@ -183,6 +192,7 @@ const mapStateToProps = state => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
   selectedBehandlingVersjon: getBehandlingVersjon(state),
   selectedBehandlingSprak: getBehandlingSprak(state),
+  ventearsaker: getKodeverk(kodeverkTyper.VENTEARSAK)(state),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -195,5 +205,6 @@ const mapDispatchToProps = dispatch => ({
     resetSubmitMessage: resetSubmitMessageActionCreator,
   }, dispatch),
 });
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(requireProps(['recipients', 'templates'], <LoadingPanel />)(MessagesIndex));
