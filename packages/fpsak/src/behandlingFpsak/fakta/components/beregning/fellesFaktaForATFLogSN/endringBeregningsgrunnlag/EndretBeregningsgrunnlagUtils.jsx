@@ -193,7 +193,7 @@ export const createEndringHeadingForDate = (state, periodeFom, periodeTom, dateH
         {harPeriodeaarsak
       && (
         <FormattedMessage
-          id="BeregningInfoPanel.FordelingBG.FastsettÅrsbeløp"
+          id="BeregningInfoPanel.FordelingBG.FastsettMånedsbeløp"
         />
       )}
       </Element>
