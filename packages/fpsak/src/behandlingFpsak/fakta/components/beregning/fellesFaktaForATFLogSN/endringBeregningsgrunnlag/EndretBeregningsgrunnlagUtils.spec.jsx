@@ -207,7 +207,7 @@ describe('<EndretBeregningsgrunnlagUtils>', () => {
     expect(endringHeading.props.children[0].props.children.length).to.equal(3);
     expect(endringHeading.props.children[0].props.children[0].length).to.equal(0);
     expect(endringHeading.props.children[0].props.children[1]).to.equal(false);
-    expect(endringHeading.props.children[0].props.children[2].props.id).to.equal('BeregningInfoPanel.FordelingBG.FastsettÅrsbeløp');
+    expect(endringHeading.props.children[0].props.children[2].props.id).to.equal('BeregningInfoPanel.FordelingBG.FastsettMånedsbeløp');
   });
 
 

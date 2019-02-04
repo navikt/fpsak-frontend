@@ -1239,7 +1239,7 @@
   "BeregningInfoPanel.FordelingBG.FordelingAvBruttoBG": "Fordeling av brutto beregningsgrunnlag",
   "BeregningInfoPanel.FordelingBG.FordelingAvBruttoBGGjeldendeFom": "Fordeling av brutto beregningsgrunnlag gjeldende {fom}",
   "BeregningInfoPanel.FordelingBG.FordelingAvBruttoBGGjeldendeFomOgTom": "Fordeling av brutto beregningsgrunnlag gjeldende {fom} - {tom}",
-  "BeregningInfoPanel.FordelingBG.FastsettÅrsbeløp": "Fastsett årsbeløp for ny fordeling av beregningsgrunnlaget.",
+  "BeregningInfoPanel.FordelingBG.FastsettMånedsbeløp": "Fastsett månedsbeløp for ny fordeling av beregningsgrunnlaget.",
   "BeregningInfoPanel.FordelingBG.Andel": "Aktivitet",
   "BeregningInfoPanel.FordelingBG.Arbeidsperiode": "Arbeidsperiode",
   "BeregningInfoPanel.FordelingBG.FordelingForrigeYtelse": "Fordeling forrige ytelse",

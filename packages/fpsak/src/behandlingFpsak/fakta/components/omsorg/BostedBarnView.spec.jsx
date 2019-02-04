@@ -2,6 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
+
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import BostedBarnView from './BostedBarnView';
@@ -89,7 +90,7 @@ describe('<BostedBarnView>', () => {
     const fodselsWrapper = normalTekst.first();
     expect(fodselsWrapper.find('FormattedMessage').prop('id')).to.eql('BostedBarnView.Age');
     expect(fodselsWrapper.find('FormattedMessage').prop('values').fodselsdato).to.eql('03.02.2016');
-    expect(fodselsWrapper.find('FormattedMessage').prop('values').age).to.eql(2);
+    expect(fodselsWrapper.find('FormattedMessage').prop('values').age).to.eql(3);
   });
 
   it('skal vise adresse', () => {
