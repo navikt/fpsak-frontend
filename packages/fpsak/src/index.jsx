@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
 import { render } from 'react-dom';
-import { init } from '@sentry/browser';
+import { init, Integrations } from '@sentry/browser';
 
 import errorHandler from '@fpsak-frontend/error-api-redux';
 
@@ -21,6 +21,7 @@ init({
   dsn: 'https://f1df84f98e254eea93e20afb33c0de19@sentry.nais.adeo.no/2',
   release,
   environment,
+  integrations: [new Integrations.Breadcrumbs({ console: false })],
 });
 
 
