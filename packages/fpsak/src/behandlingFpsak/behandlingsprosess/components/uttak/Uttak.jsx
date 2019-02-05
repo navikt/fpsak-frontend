@@ -180,8 +180,7 @@ export class UttakImpl extends Component {
   }
 
   componentWillMount() {
-    const { uttakPerioder } = this.props;
-    this.setSelectedDefaultPeriod(uttakPerioder);
+    this.setSelectedDefaultPeriod();
   }
 
   onToggleOverstyring() {

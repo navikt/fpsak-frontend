@@ -6,7 +6,7 @@ import classNames from 'classnames/bind';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 
-import styles from './snakkebobleMedRoller.less';
+import styles from './snakkeboble.less';
 
 const cx = classNames.bind(styles);
 

@@ -4,10 +4,10 @@ import { expect } from 'chai';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Panel } from 'nav-frontend-paneler';
 
-import SnakkebobleMedRoller from './snakkebobleMedRoller';
+import Snakkeboble from './snakkeboble';
 
 // TODO: AA - refactor to before()? Har provat men fungerer ikke så bra
-describe('SnakkebobleMedRoller', () => {
+describe('Snakkeboble', () => {
   it('skal vise opp boble med korrekt class', () => {
     const tekst = 'Min tekst';
     const opprettetTidspunkt = '2017-12-10';
@@ -19,7 +19,7 @@ describe('SnakkebobleMedRoller', () => {
     const location = { pathname: 'myPath' };
 
     const wrapper = shallow(
-      <SnakkebobleMedRoller
+      <Snakkeboble
         key={opprettetTidspunkt}
         tekst={tekst}
         rolle={aktoer.kode}
@@ -32,7 +32,7 @@ describe('SnakkebobleMedRoller', () => {
         location={location}
       >
         <div />
-      </SnakkebobleMedRoller>,
+      </Snakkeboble>,
     );
 
     const panel = wrapper.find(Panel);
@@ -50,7 +50,7 @@ describe('SnakkebobleMedRoller', () => {
     const location = { pathname: 'myPath' };
 
     const wrapper = shallow(
-      <SnakkebobleMedRoller
+      <Snakkeboble
         key={opprettetTidspunkt}
         tekst={tekst}
         rolle={aktoer.kode}
@@ -63,7 +63,7 @@ describe('SnakkebobleMedRoller', () => {
         location={location}
       >
         <div />
-      </SnakkebobleMedRoller>,
+      </Snakkeboble>,
     );
 
     const undertekst = wrapper.find(Undertekst);

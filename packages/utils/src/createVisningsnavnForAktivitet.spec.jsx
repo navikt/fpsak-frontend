@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import createVisningsnavnForAktivitet from './arbeidsforholdUtil';
+import createVisningsnavnForAktivitet from './createVisningsnavnForAktivitet';
 
 const andelUtenNavn = {
   arbeidsforholdType: {

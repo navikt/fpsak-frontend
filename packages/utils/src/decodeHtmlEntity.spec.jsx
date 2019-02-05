@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import decodeHtmlEntity from './decodeHtmlEntityUtils';
+import decodeHtmlEntity from './decodeHtmlEntity';
 
 describe('decode-Html-Entity', () => {
   it('skal sjekke at html entity med navn og kode er decodert', () => {

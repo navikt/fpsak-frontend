@@ -4,7 +4,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components';
 import { getRangeOfMonths, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
-import mottakerTyper from '@fpsak-frontend/kodeverk/src/avregningMottakerTyper';
+import mottakerTyper from '@fpsak-frontend/kodeverk/src/mottakerTyper';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import moment from 'moment/moment';

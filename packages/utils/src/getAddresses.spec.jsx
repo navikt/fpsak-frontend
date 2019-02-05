@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 
-import getAddresses from './personUtils';
+import getAddresses from './getAddresses';
 
-describe('personUtils', () => {
+describe('getAddresses', () => {
   it('skal sjekke at bostedsadresse blir korrekt bygget', () => {
     const adresseListe = [{
       adresseType: { kode: 'BOAD' },

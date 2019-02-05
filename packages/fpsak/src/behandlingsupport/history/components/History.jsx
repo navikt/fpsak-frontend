@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { pathToBehandling } from 'app/paths';
 import historikkinnslagPropType from 'behandlingFelles/proptypes/historikkinnslagPropType';
 import historikkinnslagType from '@fpsak-frontend/kodeverk/src/historikkinnslagType';
-import SnakkebobleMedRoller from './snakkebobleMedRoller';
+import Snakkeboble from './snakkeboble';
 import HistorikkMalType1 from './historikkMalType1';
 import HistorikkMalType2 from './historikkMalType2';
 import HistorikkMalType3 from './historikkMalType3';
@@ -94,7 +94,7 @@ const History = ({
       const aktorIsSOKER = item.aktoer.kode === 'SOKER';
       const aktorIsArbeidsgiver = item.aktoer.kode === 'ARBEIDSGIVER';
       return (
-        <SnakkebobleMedRoller
+        <Snakkeboble
           key={`${item.opprettetTidspunkt}${index}`} // eslint-disable-line react/no-array-index-key
           historikkinnslagDeler={item.historikkinnslagDeler}
           rolle={item.aktoer.kode}
@@ -116,7 +116,7 @@ const History = ({
             originType={item.type}
             saksNr={saksNr}
           />
-        </SnakkebobleMedRoller>);
+        </Snakkeboble>);
     })
     }
   </div>
