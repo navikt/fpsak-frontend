@@ -1,4 +1,4 @@
-export { default as createVisningsnavnForAktivitet } from './src/arbeidsforholdUtil';
+export { default as createVisningsnavnForAktivitet } from './src/createVisningsnavnForAktivitet';
 export { default as lagVisningsNavn } from './src/lagVisningsNavn';
 export {
   range,
@@ -31,7 +31,7 @@ export {
   timeFormat,
   getRangeOfMonths,
 } from './src/dateUtils';
-export { default as decodeHtmlEntity } from './src/decodeHtmlEntityUtils';
+export { default as decodeHtmlEntity } from './src/decodeHtmlEntity';
 export {
   fodselsnummerPattern,
   isValidFodselsnummer,
@@ -43,7 +43,7 @@ export {
   HHMM_TIME_FORMAT,
   ACCEPTED_DATE_INPUT_FORMATS,
 } from './src/formats';
-export { default as guid } from './src/guidUtil';
+export { default as guid } from './src/guid';
 export {
   replaceNorwegianCharacters,
   getLanguageCodeFromSprakkode,
@@ -58,7 +58,7 @@ export {
   isObject,
   omit,
 } from './src/objectUtils';
-export { default as getAddresses } from './src/personUtils';
+export { default as getAddresses } from './src/getAddresses';
 export {
   parseQueryString,
   buildPath,
