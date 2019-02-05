@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { destroy } from 'redux-form';
 
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   sakOperations, BehandlingErPaVentModal, BehandlingGrid, BehandlingIdentifier,
@@ -92,7 +93,7 @@ export class BehandlingFpTilbakeIndex extends Component {
     } = this.props;
 
     if (!behandlingIdentifier || behandlingIdentifier.behandlingId !== behandlingId) {
-      return null;
+      return <LoadingPanel />;
     }
 
     return (
