@@ -6,7 +6,7 @@ import { expect } from 'chai';
 import {
   ISO_DATE_FORMAT,
   invalidDateMessage, dateNotBeforeOrEqualMessage, dateRangesOverlappingMessage,
-  isRequiredMessage,
+  isRequiredMessage, dateNotAfterOrEqualMessage,
 } from '@fpsak-frontend/utils';
 
 import SoknadData from '../../SoknadData';
@@ -145,6 +145,32 @@ describe('<OppholdINorgePanel>', () => {
 
         expect(errorsWithValidDates.fremtidigeOppholdUtenlands).to.not.exist;
       });
+
+      it('skal validere at alle datoer er lik eller etter mottatt dato', () => {
+        const periode = {
+          land: countryCodes[1].kode,
+          periodeFom: '2019-01-01',
+          periodeTom: '2019-05-01',
+        };
+        const errorsWithInvalidDates = OppholdINorgePanel.validate({
+          harFremtidigeOppholdUtenlands: true,
+          fremtidigeOppholdUtenlands: [periode],
+          mottattDato: '2019-02-01',
+        });
+        const errorsWithValidDates = OppholdINorgePanel.validate({
+          harFremtidigeOppholdUtenlands: true,
+          fremtidigeOppholdUtenlands: [periode],
+          mottattDato: '2019-01-01',
+        });
+
+        expect(errorsWithInvalidDates.fremtidigeOppholdUtenlands).to.be.an('array');
+        expect(errorsWithInvalidDates.fremtidigeOppholdUtenlands[0].periodeTom).to.not.exist;
+        expect(errorsWithInvalidDates.fremtidigeOppholdUtenlands[0].periodeFom).to.be.an('array');
+        expect(errorsWithInvalidDates.fremtidigeOppholdUtenlands[0].periodeFom[0].id).to.eql(dateNotAfterOrEqualMessage()[0].id);
+
+        expect(errorsWithValidDates.fremtidigeOppholdUtenlands).to.not.exist;
+      });
+
 
       it('skal validere at ingen perioder overlapper', () => {
         const errorsWithInvalidDates = OppholdINorgePanel.validate({
