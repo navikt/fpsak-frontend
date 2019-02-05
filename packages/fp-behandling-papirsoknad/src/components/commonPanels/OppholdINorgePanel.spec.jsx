@@ -6,7 +6,7 @@ import { expect } from 'chai';
 import {
   ISO_DATE_FORMAT,
   invalidDateMessage, dateNotBeforeOrEqualMessage, dateRangesOverlappingMessage,
-  isRequiredMessage, dateNotAfterOrEqualMessage,
+  dateNotAfterOrEqualMessage, isRequiredMessage,
 } from '@fpsak-frontend/utils';
 
 import SoknadData from '../../SoknadData';
@@ -170,7 +170,6 @@ describe('<OppholdINorgePanel>', () => {
 
         expect(errorsWithValidDates.fremtidigeOppholdUtenlands).to.not.exist;
       });
-
 
       it('skal validere at ingen perioder overlapper', () => {
         const errorsWithInvalidDates = OppholdINorgePanel.validate({
