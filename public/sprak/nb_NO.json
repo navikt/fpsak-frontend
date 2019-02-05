@@ -1253,6 +1253,9 @@
   "BeregningInfoPanel.FordelingBG.RedusertBeregningsgrunnlagSum": "Sum (redusert beregningsgrunnlag)",
   "BeregningInfoPanel.FordelingBG.Ytelse": "Ytelse",
 
+  "AvklareAktiviteter.AvklarVentelonnVartpenger": "Har søker inntekt fra ventelønn eller vartpenger?",
+  "AvklareAktiviteter.IkkeImplementert": "Denne funksjonaliteten er ikke implementert enda.",
+
   "KunYtelsePanel.Overskrift": "Søker har ytelse som eneste inntekt. Fastsett månedsbeløp for fordeling av beregningsgrunnlaget.",
   "KunYtelsePanel.HarBesteberegning": "Søker har ytelse som eneste inntekt. Skal denne fordeles etter besteberegning?",
   "KunYtelsePanel.OverskriftBesteberegning": "Fastsett månedsbeløp for brutto beregningsgrunnlag etter besteberegning",

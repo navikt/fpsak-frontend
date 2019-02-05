@@ -16,6 +16,7 @@ describe('NAV-ansatt-reducer', () => {
       .withData('ORIGINAL_BEHANDLING', {}, 'dataContextFpsakBehandling')
       .build();
 
+
     const state = {
       default: {
         ...dataState.default,

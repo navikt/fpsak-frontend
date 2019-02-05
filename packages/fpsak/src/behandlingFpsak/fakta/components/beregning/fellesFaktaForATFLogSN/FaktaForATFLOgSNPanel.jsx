@@ -24,7 +24,6 @@ import {
   hasReadOnlyBehandling,
 } from 'behandlingFpsak/behandlingSelectors';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import TilstotendeYtelseForm, { harKunTilstotendeYtelse } from './tilstøtendeYtelse/TilstøtendeYtelseForm';
 import TilstotendeYtelseIKombinasjon, { erTilstotendeYtelseIKombinasjon } from './tilstøtendeYtelse/TilstotendeYtelseIKombinasjon';
@@ -66,21 +65,13 @@ export const mapStateToValidationProps = createStructuredSelector({
   beregningsgrunnlag: getBeregningsgrunnlag,
 });
 
-const getValidation = createSelector([mapStateToValidationProps], props => values => ({
+export const getValidationFaktaForATFLOgSN = createSelector([mapStateToValidationProps], props => values => ({
   ...FastsettEndretBeregningsgrunnlag.validate(values, props.endringBGPerioder, props.aktivertePaneler, props.faktaOmBeregning, props.beregningsgrunnlag),
   ...TilstotendeYtelseForm.validate(values, props.aktivertePaneler),
   ...TilstotendeYtelseIKombinasjon.validate(values, props.endringBGPerioder, props.aktivertePaneler),
   ...getKunYtelseValidation(values, props.kunYtelse, props.endringBGPerioder, props.aktivertePaneler),
   ...VurderMottarYtelseForm.validate(values, props.vurderMottarYtelse),
 }));
-
-export const getValidationFaktaForATFLOgSN = createSelector([getAksjonspunkter, getValidation], (aksjonspunkter, validate) => (values) => {
-  if (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)) {
-    return validate(values);
-  }
-  return null;
-});
-
 
 export const lagHelpTextsForFakta = (aktivertePaneler) => {
   const helpTexts = [];
@@ -360,83 +351,72 @@ export const setInntektValues = (aktivePaneler, fatsettKunYtelseTransform, fasts
 };
 
 const setValuesForVurderFakta = (aktivePaneler, values, endringBGPerioder, kortvarigeArbeidsforhold, faktaOmBeregning, beregningsgrunnlag) => {
-  const beg = values.begrunnelse;
-
-  const vurderFaktaValues = {
-    kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
-    begrunnelse: beg === undefined ? null : beg,
-    ...setInntektValues(
-      aktivePaneler,
-      kunYtelseTransform(faktaOmBeregning, endringBGPerioder, aktivePaneler),
-      endretBGTransform(endringBGPerioder),
-      atflSammeOrgTransform(faktaOmBeregning, beregningsgrunnlag),
-      besteberegningTransform(faktaOmBeregning),
-    )(values),
-  };
-
-  return [transformValues(aktivePaneler,
+  const vurderFaktaValues = setInntektValues(
+    aktivePaneler,
+    kunYtelseTransform(faktaOmBeregning, endringBGPerioder, aktivePaneler),
+    endretBGTransform(endringBGPerioder),
+    atflSammeOrgTransform(faktaOmBeregning, beregningsgrunnlag),
+    besteberegningTransform(faktaOmBeregning),
+  )(values);
+  return transformValues(aktivePaneler,
     nyIArbeidslivetTransform,
     kortvarigeArbeidsforholdTransform(kortvarigeArbeidsforhold),
     nyoppstartetFLTransform(aktivePaneler, beregningsgrunnlag),
     fastsattLonnsendringTransform(aktivePaneler, beregningsgrunnlag, faktaOmBeregning),
     etterlonnSluttpakkeTransform(aktivePaneler),
-    vurderMottarYtelseTransform(aktivePaneler, beregningsgrunnlag, faktaOmBeregning))(vurderFaktaValues, values)];
+    vurderMottarYtelseTransform(aktivePaneler, beregningsgrunnlag, faktaOmBeregning))(vurderFaktaValues, values);
 };
 
 
 export const transformValuesFaktaForATFLOgSN = createSelector(
-  [getFaktaOmBeregningTilfellerKoder, getEndringBeregningsgrunnlagPerioder, getKortvarigeArbeidsforhold, getAksjonspunkter, getFaktaOmBeregning,
+  [getFaktaOmBeregningTilfellerKoder,
+    getEndringBeregningsgrunnlagPerioder,
+    getKortvarigeArbeidsforhold,
+    getFaktaOmBeregning,
     getBeregningsgrunnlag],
-  (aktivePaneler, endringBGPerioder, kortvarigeArbeidsforhold, aksjonspunkter, faktaOmBeregning, beregningsgrunnlag) => (values) => {
-    let aksjonspunkterMedValues = [];
-    if (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)) {
-      aksjonspunkterMedValues = setValuesForVurderFakta(aktivePaneler, values, endringBGPerioder, kortvarigeArbeidsforhold,
-        faktaOmBeregning, beregningsgrunnlag);
-    }
-    return aksjonspunkterMedValues;
-  },
+  (aktivePaneler,
+    endringBGPerioder,
+    kortvarigeArbeidsforhold,
+    faktaOmBeregning,
+    beregningsgrunnlag) => values => (
+    setValuesForVurderFakta(aktivePaneler, values, endringBGPerioder, kortvarigeArbeidsforhold,
+      faktaOmBeregning, beregningsgrunnlag)
+  ),
 );
 
 export const isReadOnly = createSelector([getRettigheter, getBehandlingIsOnHold, hasReadOnlyBehandling],
   (rettigheter, isOnHold, hasReadOnly) => !rettigheter.writeAccess.isEnabled || isOnHold || hasReadOnly);
 
-export const buildInitialValuesFaktaForATFLOgSN = createSelector(
+const getVurderFaktaAksjonspunkt = createSelector([getAksjonspunkter], aksjonspunkter => (aksjonspunkter
+  ? aksjonspunkter.find(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN) : undefined));
+
+export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
   [getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlag,
-    getKortvarigeArbeidsforhold, getAksjonspunkter, getTilstøtendeYtelse, getKunYtelse,
+    getKortvarigeArbeidsforhold, getVurderFaktaAksjonspunkt, getTilstøtendeYtelse, getKunYtelse,
     getFaktaOmBeregningTilfellerKoder, getBehandlingIsRevurdering, getVurderMottarYtelse,
     isReadOnly],
-  (endringBGPerioder, beregningsgrunnlag, kortvarigeArbeidsforhold, aksjonspunkter, tilstotendeYtelse, kunYtelse,
-    tilfeller, isRevurdering, vurderMottarYtelse, readOnly) => {
-    const vurderFaktaAP = aksjonspunkter ? aksjonspunkter.find(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN) : undefined;
-    if (!vurderFaktaAP) {
-      return {};
-    }
-    return {
-      ...TidsbegrensetArbeidsforholdForm.buildInitialValues(kortvarigeArbeidsforhold),
-      ...NyIArbeidslivetSNForm.buildInitialValues(beregningsgrunnlag),
-      ...FastsettEndretBeregningsgrunnlag.buildInitialValues(endringBGPerioder, tilfeller, readOnly),
-      ...LonnsendringForm.buildInitialValues(beregningsgrunnlag),
-      ...NyoppstartetFLForm.buildInitialValues(beregningsgrunnlag),
-      ...FastsettATFLInntektForm.buildInitialValues(beregningsgrunnlag),
-      ...FastsettBBFodendeKvinneForm.buildInitialValues(beregningsgrunnlag),
-      ...TilstotendeYtelseForm.buildInitialValues(tilstotendeYtelse, endringBGPerioder),
-      ...TilstotendeYtelseIKombinasjon.buildInitialValues(tilstotendeYtelse, endringBGPerioder, tilfeller),
-      ...buildInitialValuesKunYtelse(kunYtelse, endringBGPerioder, isRevurdering, tilfeller),
-      ...VurderEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag, vurderFaktaAP),
-      ...FastsettEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag),
-      ...VurderMottarYtelseForm.buildInitialValues(vurderMottarYtelse),
-    };
-  },
+  (endringBGPerioder, beregningsgrunnlag, kortvarigeArbeidsforhold, vurderFaktaAP, tilstotendeYtelse, kunYtelse,
+    tilfeller, isRevurdering, vurderMottarYtelse, readOnly) => () => ({
+    ...TidsbegrensetArbeidsforholdForm.buildInitialValues(kortvarigeArbeidsforhold),
+    ...NyIArbeidslivetSNForm.buildInitialValues(beregningsgrunnlag),
+    ...FastsettEndretBeregningsgrunnlag.buildInitialValues(endringBGPerioder, tilfeller, readOnly),
+    ...LonnsendringForm.buildInitialValues(beregningsgrunnlag),
+    ...NyoppstartetFLForm.buildInitialValues(beregningsgrunnlag),
+    ...FastsettATFLInntektForm.buildInitialValues(beregningsgrunnlag),
+    ...FastsettBBFodendeKvinneForm.buildInitialValues(beregningsgrunnlag),
+    ...TilstotendeYtelseForm.buildInitialValues(tilstotendeYtelse, endringBGPerioder),
+    ...TilstotendeYtelseIKombinasjon.buildInitialValues(tilstotendeYtelse, endringBGPerioder, tilfeller),
+    ...buildInitialValuesKunYtelse(kunYtelse, endringBGPerioder, isRevurdering, tilfeller),
+    ...VurderEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag, vurderFaktaAP),
+    ...FastsettEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag),
+    ...VurderMottarYtelseForm.buildInitialValues(vurderMottarYtelse),
+  }),
 );
 
 
 const mapStateToProps = (state) => {
   const aktivePaneler = getFaktaOmBeregningTilfellerKoder(state) ? getFaktaOmBeregningTilfellerKoder(state) : [];
-  const alleAp = getAksjonspunkter(state);
-  const relevantAp = alleAp.filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN);
-  const isAksjonspunktClosed = relevantAp.length === 0 ? undefined : !isAksjonspunktOpen(relevantAp[0].status.kode);
   return {
-    isAksjonspunktClosed,
     aktivePaneler,
   };
 };

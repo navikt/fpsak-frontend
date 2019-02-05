@@ -222,6 +222,10 @@ export const getFaktaOmBeregningTilfeller = createSelector(
 export const getFaktaOmBeregningTilfellerKoder = createSelector(
   [getFaktaOmBeregningTilfeller], (tilfeller = []) => (tilfeller ? tilfeller.map(({ kode }) => kode) : undefined),
 );
+export const getAvklarAktiviteter = createSelector(
+  [getFaktaOmBeregning], (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.avklarAktiviteter : undefined),
+);
+
 export const getAndelerMedGraderingUtenBG = createSelector(
   [getBeregningsgrunnlag], (beregningsgrunnlag = {}) => (beregningsgrunnlag ? beregningsgrunnlag.andelerMedGraderingUtenBG : undefined),
 );
