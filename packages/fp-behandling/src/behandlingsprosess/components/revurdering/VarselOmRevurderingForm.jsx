@@ -8,12 +8,14 @@ import moment from 'moment';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
   FadingPanel, VerticalSpacer, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
 import PropTypes from 'prop-types';
 import { getBehandlingLanguageCode, getBehandlingArsaker } from 'behandlingFpsak/src/behandlingSelectors';
+import { getKodeverk } from 'behandlingFpsak/src/duck';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/src/behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import FodselSammenligningPanel from 'behandlingFpsak/src/components/fodselSammenligning/FodselSammenligningPanel';
@@ -99,6 +101,7 @@ export class VarselOmRevurderingFormImpl extends React.Component {
       ventearsak,
       originalVentearsak,
       originalFrist,
+      ventearsaker,
       ...formProps
     } = this.props;
     const { showSettPaVentModal } = this.state;
@@ -188,6 +191,7 @@ export class VarselOmRevurderingFormImpl extends React.Component {
             showAvbryt
             handleSubmit={this.handleSubmitFromModal}
             hasManualPaVent
+            ventearsaker={ventearsaker}
           />
         </form>
       </FadingPanel>
@@ -210,6 +214,10 @@ VarselOmRevurderingFormImpl.propTypes = {
   frist: PropTypes.string,
   originalVentearsak: PropTypes.string,
   ventearsak: PropTypes.string,
+  ventearsaker: PropTypes.arrayOf(PropTypes.shape({
+    kode: PropTypes.string,
+    navn: PropTypes.string,
+  })),
   ...formPropTypes,
 };
 
@@ -222,6 +230,7 @@ VarselOmRevurderingFormImpl.defaultProps = {
   erAutomatiskRevurdering: false,
   originalVentearsak: null,
   ventearsak: null,
+  ventearsaker: [],
 };
 
 export const buildInitialValues = createSelector([getSelectedBehandlingspunktAksjonspunkter], aksjonspunkter => ({
@@ -246,6 +255,7 @@ const mapStateToProps = (state, ownProps) => {
     onSubmit: values => ownProps.submitCallback([values]),
     originalVentearsak: ownProps.ventearsak,
     originalFrist: ownProps.frist,
+    ventearsaker: getKodeverk(kodeverkTyper.VENTEARSAK)(state),
   };
 };
 
