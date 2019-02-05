@@ -27,10 +27,10 @@ export class BpTimelinePanel extends Component {
   }
 
   setSelectedDefaultPeriod() {
-    const { tilbakekrevingPerioder } = this.props;
+    const { tilbakekrevingsresultatActivity } = this.props;
     const { selectedItem } = this.state;
-    const defaultSelectedElement = tilbakekrevingPerioder.find(period => period.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING);
-    const defaultSelectedElementIfNoAP = tilbakekrevingPerioder.find(period => period.hovedsoker);
+    const defaultSelectedElement = tilbakekrevingsresultatActivity.find(period => period.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING);
+    const defaultSelectedElementIfNoAP = tilbakekrevingsresultatActivity.find(period => period.hovedsoker);
     if (!selectedItem) {
       this.setState({ selectedItem: defaultSelectedElement || defaultSelectedElementIfNoAP });
     }
@@ -168,7 +168,6 @@ export class BpTimelinePanel extends Component {
 
 BpTimelinePanel.propTypes = {
   tilbakekrevingsresultatActivity: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  tilbakekrevingPerioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
   formName: PropTypes.string.isRequired,
   activityPanelName: PropTypes.string.isRequired,

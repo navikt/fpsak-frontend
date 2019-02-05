@@ -9,11 +9,11 @@ import {
   FadingPanel, VerticalSpacer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { getBehandlingVersjon } from 'behandlingTilbakekreving/tilbakekrevingBehandlingSelectors';
+import { getBehandlingVersjon } from 'behandlingTilbakekreving/selectors/tilbakekrevingBehandlingSelectors';
 import { getSelectedBehandlingId } from 'behandlingTilbakekreving/duck';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingTilbakekreving/behandlingForm';
 import BpTimelinePanel from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktTimelineSkjema/BpTimelinePanel';
-import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
+import { addClassNameGroupIdToPerioder } from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktTimelineSkjema/BpTimelineHelper';
 import {
   hovedsokerKjonnKode, tilbakekrevingPerioderResultat, customTimes,
 } from './mockData';
@@ -21,34 +21,6 @@ import TilbakekrevingForm from './TilbakekrevingForm';
 
 const ACTIVITY_PANEL_NAME = 'tilbakekrevingsresultatActivity';
 const formName = 'TilbakekrevingForm';
-const godkjentKlassenavn = 'godkjentPeriode';
-const avvistKlassenavn = 'avvistPeriode';
-
-export const getStatusPeriode = (resultatType) => {
-  if (resultatType.kode === periodeResultatType.INNVILGET) {
-    return godkjentKlassenavn;
-  }
-  if (resultatType.kode === periodeResultatType.MANUELL_BEHANDLING) {
-    return 'undefined';
-  }
-  return avvistKlassenavn;
-};
-
-const addClassNameGroupIdToPerioder = (tilbakekrevingPerioder) => {
-  const perioderMedClassName = [];
-
-  tilbakekrevingPerioder.forEach((item, index) => {
-    const periodMedClassName = {
-      ...item,
-      id: index + 1,
-      className: getStatusPeriode(item.periodeResultatType),
-      hovedsoker: true,
-      group: 1,
-    };
-    perioderMedClassName.push(periodMedClassName);
-  });
-  return perioderMedClassName;
-};
 
 const TilbakekrevingPanelImpl = ({
   tilbakekrevingsresultatActivity,
@@ -67,7 +39,7 @@ const TilbakekrevingPanelImpl = ({
         <BpTimelinePanel
           customTimes={customTimes}
           hovedsokerKjonnKode={hovedsokerKjonnKode}
-          tilbakekrevingPerioder={tilbakekrevingsresultatActivity}
+          tilbakekrevingsresultatActivity={tilbakekrevingsresultatActivity}
           activityPanelName={ACTIVITY_PANEL_NAME}
           behandlingFormPrefix={behandlingFormPrefix}
           reduxFormChange={formChange}
