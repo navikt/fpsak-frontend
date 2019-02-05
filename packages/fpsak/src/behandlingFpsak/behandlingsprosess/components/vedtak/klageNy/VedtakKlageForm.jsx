@@ -38,7 +38,6 @@ export const VedtakKlageFormImpl = ({
   isBehandlingReadOnly,
   behandlingsResultatTekst,
   klageVurdering,
-  aksjonspunktKode,
   ...formProps
 }) => (
   <FadingPanel>
@@ -79,8 +78,7 @@ export const VedtakKlageFormImpl = ({
       ) }
       <VedtakKlageSubmitPanel
         begrunnelse={fritekstTilBrev}
-        klageVurdering={klageVurdering}
-        aksjonspunktCode={aksjonspunktKode}
+        klageResultat={klageVurdering}
         previewVedtakCallback={previewVedtakCallback}
         formProps={formProps}
         readOnly={readOnly}
@@ -96,8 +94,7 @@ VedtakKlageFormImpl.propTypes = {
   isOpphevOgHjemsend: PropTypes.bool.isRequired,
   behandlingStatusKode: PropTypes.string.isRequired,
   behandlingsResultatTekst: PropTypes.string.isRequired,
-  klageVurdering: PropTypes.string.isRequired,
-  aksjonspunktKode: PropTypes.string.isRequired,
+  klageVurdering: PropTypes.shape().isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
   isBehandlingReadOnly: PropTypes.bool.isRequired,
   avvistArsaker: PropTypes.arrayOf(PropTypes.object),
@@ -141,11 +138,8 @@ const omgjoerTekstMap = {
 
 const getKlageResultat = createSelector(
   [getBehandlingKlageVurdering],
-  (behandlingKlageVurdering) => {
-    const klageResultat = behandlingKlageVurdering.klageVurderingResultatNK
-      ? behandlingKlageVurdering.klageVurderingResultatNK : behandlingKlageVurdering.klageVurderingResultatNFP;
-    return klageResultat.klageVurdering;
-  },
+  behandlingKlageVurdering => (behandlingKlageVurdering.klageVurderingResultatNK
+    ? behandlingKlageVurdering.klageVurderingResultatNK : behandlingKlageVurdering.klageVurderingResultatNFP),
 );
 
 const getResultatText = createSelector(
@@ -231,7 +225,6 @@ const mapStateToProps = (state, initialProps) => ({
   fritekstTilBrev: getFritekstTilBrev(state),
   behandlingsResultatTekst: getResultatText(state),
   klageVurdering: getKlageResultat(state),
-  aksjonspunktKode: getSelectedBehandlingspunktAksjonspunkter(state)[0].definisjon.kode,
   behandlingsresultat: getBehandlingsresultat(state),
   aksjonspunktKoder: getSelectedBehandlingspunktAksjonspunkter(state).map(ap => ap.definisjon.kode),
   onSubmit: values => initialProps.submitCallback(transformValues(values)),
