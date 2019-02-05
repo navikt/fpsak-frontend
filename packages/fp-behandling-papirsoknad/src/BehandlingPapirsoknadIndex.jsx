@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import { destroy } from 'redux-form';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { sakOperations, BehandlingErPaVentModal, BehandlingGrid } from '@fpsak-frontend/fp-behandling-felles';
+import {
+  sakOperations, BehandlingErPaVentModal, BehandlingGrid, BehandlingIdentifier,
+} from '@fpsak-frontend/fp-behandling-felles';
 import PapirsoknadInfoSetter from './PapirsoknadInfoSetter';
 import PapirsoknadResolver from './PapirsoknadResolver';
 import PapirsoknadIndex from './PapirsoknadIndex';
@@ -84,7 +86,12 @@ export class BehandlingPapirsoknadIndex extends Component {
       behandlingerVersjonMappedById,
       setBehandlingInfoHolder,
       ventearsaker,
+      behandlingIdentifier,
     } = this.props;
+    if (!behandlingIdentifier || behandlingIdentifier.behandlingId !== behandlingId) {
+      return null;
+    }
+
     return (
       <PapirsoknadResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
         <PapirsoknadInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
@@ -138,6 +145,7 @@ BehandlingPapirsoknadIndex.propTypes = {
     kode: PropTypes.string,
     navn: PropTypes.string,
   })),
+  behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
 };
 
 BehandlingPapirsoknadIndex.defaultProps = {
@@ -146,6 +154,7 @@ BehandlingPapirsoknadIndex.defaultProps = {
   behandlingVersjon: undefined,
   venteArsakKode: undefined,
   ventearsaker: [],
+  behandlingIdentifier: undefined,
 };
 
 const mapStateToProps = state => ({

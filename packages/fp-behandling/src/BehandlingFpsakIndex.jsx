@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import { destroy } from 'redux-form';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { BehandlingGrid, BehandlingErPaVentModal, sakOperations } from '@fpsak-frontend/fp-behandling-felles';
+import {
+  BehandlingGrid, BehandlingErPaVentModal, sakOperations, BehandlingIdentifier,
+} from '@fpsak-frontend/fp-behandling-felles';
 import FpSakBehandlingInfoSetter from './FpSakBehandlingInfoSetter';
 import FpSakBehandlingResolver from './FpSakBehandlingResolver';
 import BehandlingsprosessIndex from './behandlingsprosess/BehandlingsprosessIndex';
@@ -86,7 +88,12 @@ export class BehandlingFpsakIndex extends Component {
       behandlingerVersjonMappedById,
       setBehandlingInfoHolder,
       ventearsaker,
+      behandlingIdentifier,
     } = this.props;
+    if (!behandlingIdentifier || behandlingIdentifier.behandlingId !== behandlingId) {
+      return null;
+    }
+
     return (
       <FpSakBehandlingResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
         <FpSakBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
@@ -151,6 +158,7 @@ BehandlingFpsakIndex.propTypes = {
     kode: PropTypes.string,
     navn: PropTypes.string,
   })),
+  behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
 };
 
 BehandlingFpsakIndex.defaultProps = {
@@ -159,6 +167,7 @@ BehandlingFpsakIndex.defaultProps = {
   behandlingVersjon: undefined,
   venteArsakKode: undefined,
   ventearsaker: [],
+  behandlingIdentifier: undefined,
 };
 
 const mapStateToProps = state => ({

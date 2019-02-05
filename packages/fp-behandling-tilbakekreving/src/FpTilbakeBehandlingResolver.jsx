@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
-import tilbakekrevingBehandlingApi from './data/tilbakekrevingBehandlingApi';
 import { isBehandlingInSync } from './selectors/tilbakekrevingBehandlingSelectors';
 import { fetchBehandling as fetchBehandlingActionCreator, getBehandlingIdentifier } from './duck';
 
@@ -16,18 +15,22 @@ export class FpTilbakeBehandlingResolver extends Component {
     behandlingerVersjonMappedById: PropTypes.shape().isRequired,
     isInSync: PropTypes.bool.isRequired,
     children: PropTypes.node.isRequired,
-    hasFetchStarted: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
     behandlingIdentifier: undefined,
   };
 
-  componentDidUpdate() {
+  constructor(props) {
+    super(props);
+    this.resolveBehandlingInfo();
+  }
+
+  resolveBehandlingInfo = () => {
     const {
-      isInSync, fetchBehandling, behandlingIdentifier, behandlingerVersjonMappedById, hasFetchStarted,
+      isInSync, fetchBehandling, behandlingerVersjonMappedById, behandlingIdentifier,
     } = this.props;
-    if (!hasFetchStarted && !isInSync && behandlingIdentifier) {
+    if (!isInSync) {
       fetchBehandling(behandlingIdentifier, behandlingerVersjonMappedById);
     }
   }
@@ -43,7 +46,6 @@ export class FpTilbakeBehandlingResolver extends Component {
 const mapStateToProps = state => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
   isInSync: isBehandlingInSync(state),
-  hasFetchStarted: tilbakekrevingBehandlingApi.BEHANDLING.getRestApiStarted()(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

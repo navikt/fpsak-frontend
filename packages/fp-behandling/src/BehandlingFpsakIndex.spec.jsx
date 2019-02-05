@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import moment from 'moment';
 
-import { BehandlingGrid, BehandlingErPaVentModal } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingGrid, BehandlingErPaVentModal, BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingFpsakIndex } from './BehandlingFpsakIndex';
 
 describe('BehandlingFpsakIndex', () => {
@@ -65,6 +65,7 @@ describe('BehandlingFpsakIndex', () => {
       featureToggles={{}}
       filteredReceivedDocuments={[]}
       kodeverk={{}}
+      behandlingIdentifier={new BehandlingIdentifier(2, 1)}
     />);
 
     const grid = wrapper.find(BehandlingGrid);
@@ -96,6 +97,7 @@ describe('BehandlingFpsakIndex', () => {
       featureToggles={{}}
       filteredReceivedDocuments={[]}
       kodeverk={{}}
+      behandlingIdentifier={new BehandlingIdentifier(2, 1)}
     />);
 
     const modal = wrapper.find(BehandlingErPaVentModal);
@@ -128,6 +130,7 @@ describe('BehandlingFpsakIndex', () => {
       featureToggles={{}}
       filteredReceivedDocuments={[]}
       kodeverk={{}}
+      behandlingIdentifier={new BehandlingIdentifier(2, 1)}
     />);
 
     wrapper.setProps({ behandlingVersjon: 3 });
@@ -165,6 +168,7 @@ describe('BehandlingFpsakIndex', () => {
       featureToggles={{}}
       filteredReceivedDocuments={[]}
       kodeverk={{}}
+      behandlingIdentifier={new BehandlingIdentifier(2, 1)}
     />);
 
     wrapper.setProps({ behandlingsprosessEnabled: false });
@@ -199,6 +203,7 @@ describe('BehandlingFpsakIndex', () => {
       featureToggles={{}}
       filteredReceivedDocuments={[]}
       kodeverk={{}}
+      behandlingIdentifier={new BehandlingIdentifier(2, 1)}
     />);
 
     wrapper.unmount();

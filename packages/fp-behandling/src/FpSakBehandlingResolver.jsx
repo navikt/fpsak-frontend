@@ -5,29 +5,28 @@ import { connect } from 'react-redux';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
-import fpsakBehandlingApi from './data/fpsakBehandlingApi';
 import { isBehandlingInSync } from './behandlingSelectors';
 import { fetchBehandling as fetchBehandlingActionCreator, getBehandlingIdentifier } from './duck';
 
 export class FpSakBehandlingResolver extends Component {
   static propTypes = {
-    behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
+    behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
     fetchBehandling: PropTypes.func.isRequired,
     behandlingerVersjonMappedById: PropTypes.shape().isRequired,
     isInSync: PropTypes.bool.isRequired,
     children: PropTypes.node.isRequired,
-    hasFetchStarted: PropTypes.bool.isRequired,
   };
 
-  static defaultProps = {
-    behandlingIdentifier: undefined,
-  };
+  constructor(props) {
+    super(props);
+    this.resolveBehandlingInfo();
+  }
 
-  componentDidUpdate() {
+  resolveBehandlingInfo = () => {
     const {
-      isInSync, fetchBehandling, behandlingIdentifier, behandlingerVersjonMappedById, hasFetchStarted,
+      isInSync, fetchBehandling, behandlingerVersjonMappedById, behandlingIdentifier,
     } = this.props;
-    if (!hasFetchStarted && !isInSync && behandlingIdentifier) {
+    if (!isInSync) {
       fetchBehandling(behandlingIdentifier, behandlingerVersjonMappedById);
     }
   }
@@ -41,9 +40,8 @@ export class FpSakBehandlingResolver extends Component {
 }
 
 const mapStateToProps = state => ({
-  behandlingIdentifier: getBehandlingIdentifier(state),
   isInSync: isBehandlingInSync(state),
-  hasFetchStarted: fpsakBehandlingApi.BEHANDLING.getRestApiStarted()(state),
+  behandlingIdentifier: getBehandlingIdentifier(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
