@@ -9,11 +9,11 @@ import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-component
 import {
   getAksjonspunkter,
   getBehandlingResultatstruktur, getBehandlingSprak,
-  getBehandlingsresultat, getTilbakekrevingText,
+  getBehandlingsresultat,
 } from 'behandlingFpsak/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandlingFpsak/selectors/originalBehandlingSelectors';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
-import { endringerIBeregningsgrunnlagGirFritekstfelt } from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakHelper';
+import { endringerIBeregningsgrunnlagGirFritekstfelt, findTilbakekrevingText } from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakHelper';
 import VedtakFritekstPanel from 'behandlingFpsak/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import vedtakResultType from '@fpsak-frontend/kodeverk/src/vedtakResultType';
@@ -167,7 +167,7 @@ const mapStateToProps = state => ({
     ? getBehandlingsresultat(state).konsekvenserForYtelsen : undefined,
   sprakKode: getBehandlingSprak(state),
   aksjonspunkter: getAksjonspunkter(state),
-  tilbakekrevingText: getTilbakekrevingText(state),
+  tilbakekrevingText: findTilbakekrevingText(state),
 });
 
 export default connect(mapStateToProps)(injectIntl(VedtakInnvilgetRevurderingPanelImpl));

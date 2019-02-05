@@ -6,12 +6,12 @@ import { connect } from 'react-redux';
 import {
   getBehandlingResultatstruktur,
   getBehandlingVilkar, getBehandlingSprak,
-  getTilbakekrevingText,
 } from 'behandlingFpsak/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandlingFpsak/selectors/originalBehandlingSelectors';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import vedtakResultType from '@fpsak-frontend/kodeverk/src/vedtakResultType';
 import VedtakAvslagArsakOgBegrunnelsePanel from '../VedtakAvslagArsakOgBegrunnelsePanel';
+import { findTilbakekrevingText } from '../VedtakHelper';
 
 export const isNewBehandlingResult = (beregningResultat, originaltBeregningResultat) => {
   const vedtakResult = beregningResultat ? vedtakResultType.INNVILGET : vedtakResultType.AVSLAG;
@@ -95,7 +95,7 @@ const mapStateToProps = state => ({
   originaltBeregningResultat: getResultatstrukturFraOriginalBehandling(state),
   vilkar: getBehandlingVilkar(state),
   sprakkode: getBehandlingSprak(state),
-  tilbakekrevingText: getTilbakekrevingText(state),
+  tilbakekrevingText: findTilbakekrevingText(state),
 });
 
 export default connect(mapStateToProps)(injectIntl(VedtakAvslagRevurderingPanelImpl));

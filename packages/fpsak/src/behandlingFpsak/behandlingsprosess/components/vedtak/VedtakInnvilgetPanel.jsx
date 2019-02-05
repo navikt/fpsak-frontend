@@ -5,7 +5,7 @@ import { intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 import {
-  getAksjonspunkter, getBehandlingResultatstruktur, getBehandlingSprak, getTilbakekrevingText,
+  getAksjonspunkter, getBehandlingResultatstruktur, getBehandlingSprak,
 } from 'behandlingFpsak/behandlingSelectors';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
@@ -13,7 +13,7 @@ import VedtakFritekstPanel from 'behandlingFpsak/behandlingsprosess/components/v
 import aksjonspunktPropType from 'behandlingFelles/proptypes/aksjonspunktPropType';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { findInnvilgetResultatText, endringerIBeregningsgrunnlagGirFritekstfelt } from './VedtakHelper';
+import { findInnvilgetResultatText, endringerIBeregningsgrunnlagGirFritekstfelt, findTilbakekrevingText } from './VedtakHelper';
 
 export const VedtakInnvilgetPanelImpl = ({
   intl,
@@ -100,7 +100,7 @@ const mapStateToProps = state => ({
   beregningResultat: getBehandlingResultatstruktur(state),
   aksjonspunkter: getAksjonspunkter(state),
   sprakKode: getBehandlingSprak(state),
-  tilbakekrevingText: getTilbakekrevingText(state),
+  tilbakekrevingText: findTilbakekrevingText(state),
 });
 
 export default connect(mapStateToProps)(VedtakInnvilgetPanelImpl);
