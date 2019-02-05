@@ -423,7 +423,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const UttakPanel = connect(mapStateToProps)(injectIntl(behandlingForm({
   form: formName,
-  enableReinitialize: true,
+  enableReinitialize: false,
 })(UttakPanelImpl)));
 
 UttakPanel.supports = (bp, apCodes) => bp === behandlingspunktCodes.UTTAK || uttakAksjonspunkter.some(ap => apCodes.includes(ap));
