@@ -91,7 +91,7 @@ FpSakBehandlingInfoSetter.propTypes = {
   behandlingToTrinnsBehandling: PropTypes.bool.isRequired,
   totrinnskontrollArsakerUtenUdefinert: PropTypes.arrayOf(PropTypes.shape()),
   totrinnskontrollArsakerReadOnly: PropTypes.arrayOf(PropTypes.shape()),
-  totrinnskontrollArsaker: PropTypes.arrayOf(aksjonspunktPropType.isRequired),
+  totrinnskontrollArsaker: PropTypes.arrayOf(PropTypes.shape()),
   behandlingKlageVurdering: PropTypes.shape(),
   behandlingIsKlage: PropTypes.bool,
   behandlingResultatstruktur: PropTypes.shape(),
