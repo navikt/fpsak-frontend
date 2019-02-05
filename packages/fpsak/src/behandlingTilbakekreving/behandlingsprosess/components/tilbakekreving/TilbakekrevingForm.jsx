@@ -18,7 +18,7 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import {
-  VerticalSpacer, ArrowBox, FlexRow, FlexColumn,
+  VerticalSpacer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import tilbakekrevingCodes from './tilbakekrevingCodes';
@@ -62,7 +62,7 @@ export class TilbakekrevingFormImpl extends Component {
     } = this.props;
 
     return (
-      <form onSubmit={formProps.handleSubmit}>
+      <>
         <VerticalSpacer twentyPx />
         <Row>
           <Column md="6">
@@ -166,7 +166,7 @@ export class TilbakekrevingFormImpl extends Component {
             </Knapp>
           </FlexColumn>
         </FlexRow>
-      </form>
+      </>
     );
   }
 }
@@ -174,7 +174,6 @@ export class TilbakekrevingFormImpl extends Component {
 TilbakekrevingFormImpl.propTypes = {
   selectedItemData: PropTypes.shape().isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
-  reduxFormChange: PropTypes.func.isRequired,
   cancelSelectedActivity: PropTypes.func.isRequired,
   formName: PropTypes.string.isRequired,
   activityPanelName: PropTypes.string.isRequired,

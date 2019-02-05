@@ -17,32 +17,36 @@ import styles from './tilbakekrevingPeriodSummary.less';
 const TilbakekrevingPeriodSummary = ({
   fom, tom, feilutbetaling,
 }) => (
-  <div className={styles.infoSummary}>
-    <Row>
-      <Column xs="12">
-        <Element>
-          { moment(fom).format(DDMMYYYY_DATE_FORMAT)}
-          {' '}
-          -
-          {' '}
-          { moment(tom).format(DDMMYYYY_DATE_FORMAT)}
-        </Element>
-      </Column>
-    </Row>
-    <div className={styles.resultSum}>
-      <Row className={styles.redNumbers}>
-        <Column xs="3">
-          <Normaltekst className={styles.resultName}>
-            <FormattedMessage id="Avregning.tilbakekreving" />
-            :
-          </Normaltekst>
-        </Column>
-        <Column xs="2">
-          <span className={feilutbetaling ? styles.redNumber : styles.positivNumber}>{ formatCurrencyNoKr(feilutbetaling) }</span>
-        </Column>
-      </Row>
-    </div>
-  </div>
+  <Row>
+    <Column md="6">
+      <div className={styles.infoSummary}>
+        <Row>
+          <Column xs="12">
+            <Element>
+              { moment(fom).format(DDMMYYYY_DATE_FORMAT)}
+              {' '}
+              -
+              {' '}
+              { moment(tom).format(DDMMYYYY_DATE_FORMAT)}
+            </Element>
+          </Column>
+        </Row>
+        <div className={styles.resultSum}>
+          <Row className={styles.redNumbers}>
+            <Column xs="3">
+              <Normaltekst className={styles.resultName}>
+                <FormattedMessage id="Avregning.tilbakekreving" />
+                :
+              </Normaltekst>
+            </Column>
+            <Column xs="2">
+              <span className={feilutbetaling ? styles.redNumber : styles.positivNumber}>{ formatCurrencyNoKr(feilutbetaling) }</span>
+            </Column>
+          </Row>
+        </div>
+      </div>
+    </Column>
+  </Row>
 );
 
 TilbakekrevingPeriodSummary.propTypes = {

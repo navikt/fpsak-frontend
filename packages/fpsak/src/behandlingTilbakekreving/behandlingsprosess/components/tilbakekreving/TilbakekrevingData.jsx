@@ -1,26 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
-import { Element } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
-import { Image, EditedIcon } from '@fpsak-frontend/shared-components';
-import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
-import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
-import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
-import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
-import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
-import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
-import DelOppPeriodeModal from './DelOppPeriodeModal';
 import styles from './tilbakekrevingData.less';
-import TilbakekrevingForm from './TilbakekrevingForm';
+import PerioderControler from './PerioderControler';
 import TilbakekrevingPeriodSummary from './TilbakekrevingPeriodSummary';
 
-const findArrowLeftImg = isHovering => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
-const findArrowRightImg = isHovering => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
-const splitPeriodImg = isHovering => (isHovering ? splitPeriodImageHoverUrl : splitPeriodImageUrl);
-
-const readOnly = false;
-const isEdited = false;
 
 export class TilbakekrevingData extends Component {
   constructor() {
@@ -91,92 +75,28 @@ export class TilbakekrevingData extends Component {
       callbackForward,
       callbackBackward,
       selectedItemData,
-      behandlingFormPrefix,
-      reduxFormChange,
-      formName,
-      activityPanelName,
-      callbackCancelSelectedActivity,
-      callbackUpdateActivity,
+      children,
     } = this.props;
     const { showDelPeriodeModal } = this.state;
     return (
       <Row>
         <Column xs="12">
           <div className={styles.showDataContainer}>
-            <Row>
-              <Column xs="3">
-                <Element>
-                  <FormattedMessage id="UttakTimeLineData.PeriodeData.Detaljer" />
-                  {isEdited && <EditedIcon />}
-                </Element>
-              </Column>
-              <Column xs="7">
-                {!readOnly
-                && (
-                  <span className={styles.splitPeriodPosition}>
-                    <Image
-                      tabIndex="0"
-                      className={styles.splitPeriodImage}
-                      imageSrcFunction={splitPeriodImg}
-                      altCode="UttakTimeLineData.PeriodeData.DelOppPerioden"
-                      onMouseDown={this.showModal}
-                      onKeyDown={e => (e.keyCode === 13 ? this.showModal(e) : null)}
-                    />
-
-                    <FormattedMessage id="UttakTimeLineData.PeriodeData.DelOppPerioden" />
-                  </span>
-                )
-                }
-                {showDelPeriodeModal
-                && (
-                  <DelOppPeriodeModal
-                    cancelEvent={this.hideModal}
-                    showModal={showDelPeriodeModal}
-                    periodeData={selectedItemData}
-                    splitPeriod={this.splitPeriod}
-                  />
-                )
-                }
-              </Column>
-              <Column xs="2">
-                <span className={styles.navigationPosition}>
-                  <Image
-                    tabIndex="0"
-                    className={styles.timeLineButton}
-                    imageSrcFunction={findArrowLeftImg}
-                    altCode="Timeline.prevPeriod"
-                    onMouseDown={callbackBackward}
-                    onKeyDown={callbackBackward}
-                  />
-                  <Image
-                    tabIndex="0"
-                    className={styles.timeLineButton}
-                    imageSrcFunction={findArrowRightImg}
-                    altCode="Timeline.nextPeriod"
-                    onMouseDown={callbackForward}
-                    onKeyDown={callbackForward}
-                  />
-                </span>
-              </Column>
-            </Row>
-            <Row>
-              <Column md="6">
-                <TilbakekrevingPeriodSummary
-                  feilutbetaling={selectedItemData.feilutbetaling}
-                  fom={selectedItemData.fom}
-                  tom={selectedItemData.tom}
-                />
-              </Column>
-            </Row>
-            <TilbakekrevingForm
+            <PerioderControler
+              callbackForward={callbackForward}
+              callbackBackward={callbackBackward}
+              showDelPeriodeModal={showDelPeriodeModal}
+              splitPeriod={this.splitPeriod}
+              hideModal={this.hideModal}
+              showModal={this.showModal}
               selectedItemData={selectedItemData}
-              behandlingFormPrefix={behandlingFormPrefix}
-              reduxFormChange={reduxFormChange}
-              formName={formName}
-              activityPanelName={activityPanelName}
-              cancelSelectedActivity={callbackCancelSelectedActivity}
-              updateActivity={callbackUpdateActivity}
             />
+            <TilbakekrevingPeriodSummary
+              feilutbetaling={selectedItemData.feilutbetaling}
+              fom={selectedItemData.fom}
+              tom={selectedItemData.tom}
+            />
+            { children }
           </div>
         </Column>
       </Row>
@@ -196,6 +116,7 @@ TilbakekrevingData.propTypes = {
   callbackUpdateActivity: PropTypes.func.isRequired,
   formName: PropTypes.string.isRequired,
   activityPanelName: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default TilbakekrevingData;

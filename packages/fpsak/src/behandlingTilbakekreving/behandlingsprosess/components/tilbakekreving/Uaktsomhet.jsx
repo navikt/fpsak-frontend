@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { required } from '@fpsak-frontend/utils';
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import { VerticalSpacer, ArrowBox } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioOption, RadioGroupField } from '@fpsak-frontend/form';
 import tilbakekrevingCodes from './tilbakekrevingCodes';
 
 const Uaktsomhet = ({
-  grunnerTilReduksjon,
   readOnly,
-  handletUaktsomhetGrad,
   resetFields,
 }) => (
   <>

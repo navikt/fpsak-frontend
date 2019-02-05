@@ -21,9 +21,14 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({ // NOSONAR Kompleksite
   openAksjonspunkt,
   readOnly,
   isApSolvable,
+  submitCallback,
 }) => (
   <div className={findStyle(openAksjonspunkt, isApSolvable, readOnly)}>
-    <TilbakekrevingPanel />
+    <TilbakekrevingPanel
+      submitCallback={submitCallback}
+      readOnly={readOnly}
+      isApOpen={openAksjonspunkt}
+    />
   </div>
 );
 
@@ -31,6 +36,7 @@ TilbakekrevingBehandlingspunktInfoPanel.propTypes = {
   openAksjonspunkt: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   isApSolvable: PropTypes.bool.isRequired,
+  submitCallback: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
