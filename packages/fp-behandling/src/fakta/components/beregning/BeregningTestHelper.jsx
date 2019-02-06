@@ -1,7 +1,7 @@
 import fpsakApi from 'data/fpsakApi';
 import { ApiStateBuilder } from '@fpsak-frontend/assets/testHelpers/data-test-helper';
 import fpsakBehandlingApi from 'behandlingFpsak/src/data/fpsakBehandlingApi';
-import { formName } from './BeregningInfoPanel';
+import { formName } from './BeregningFormUtils';
 
 
 const navAnsatt = { navn: 'Ann S. Att', kanSaksbehandle: true };
@@ -29,7 +29,7 @@ const behandlingFormName = 'behandling_1000051_v1';
 export const getBehandlingFormName = () => behandlingFormName;
 
 
-export const lagStateMedAksjonspunkterOgFaktaOmBeregning = (aksjonspunkter, faktaOmBeregning, formSection = 'formsection', values = {}, initial = {}) => {
+export const lagStateMedAksjonspunkterOgFaktaOmBeregning = (aksjonspunkter, faktaOmBeregning, values = {}, initial = {}) => {
   const data = {
     id: 1000051,
     versjon: 1,
@@ -60,12 +60,8 @@ export const lagStateMedAksjonspunkterOgFaktaOmBeregning = (aksjonspunkter, fakt
   };
   state.form[behandlingFormName] = {};
   state.form[behandlingFormName][formName] = {
-    values: {
-      [formSection]: { ...values },
-    },
-    initial: {
-      [formSection]: { ...initial },
-    },
+    values,
+    initial,
   };
   return state;
 };

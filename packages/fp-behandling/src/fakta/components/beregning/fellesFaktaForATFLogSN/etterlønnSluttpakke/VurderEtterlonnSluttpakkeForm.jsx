@@ -8,9 +8,9 @@ import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { connect } from 'react-redux';
-import { behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import FastsettEtterlonnSluttpakkeForm from './FastsettEtterlonnSluttpakkeForm';
 import styles from './vurderEtterlonnSluttpakkeForm.less';
+import { getFormValuesForBeregning } from '../../BeregningFormUtils';
 
 /**
  * VurderEtterlønnSluttpakkeForm
@@ -113,8 +113,8 @@ VurderEtterlonnSluttpakkeForm.transformValues = values => ({
   vurderEtterlønnSluttpakke: { erEtterlønnSluttpakke: values[harEtterlonnSluttpakkeField] },
 });
 
-const mapStateToProps = (state, initialProps) => ({
-  harEtterlonnSluttpakke: behandlingFormValueSelector(initialProps.formName)(state, harEtterlonnSluttpakkeField),
+const mapStateToProps = state => ({
+  harEtterlonnSluttpakke: getFormValuesForBeregning(state)[harEtterlonnSluttpakkeField],
 });
 
 export default connect(mapStateToProps)(VurderEtterlonnSluttpakkeForm);

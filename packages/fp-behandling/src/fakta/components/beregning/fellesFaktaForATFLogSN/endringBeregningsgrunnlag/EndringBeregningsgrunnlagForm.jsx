@@ -47,7 +47,6 @@ export class EndringBeregningsgrunnlagForm extends Component {
       perioder,
       isAksjonspunktClosed,
       skalHaEndretInformasjonIHeader,
-      formName,
     } = this.props;
     const { openPanels } = this.state;
     return (
@@ -65,7 +64,6 @@ export class EndringBeregningsgrunnlagForm extends Component {
               isAksjonspunktClosed={isAksjonspunktClosed}
               showPanel={this.showPanel}
               skalHaEndretInformasjonIHeader={skalHaEndretInformasjonIHeader}
-              formName={formName}
             />
             <VerticalSpacer eightPx />
           </ElementWrapper>
@@ -81,14 +79,12 @@ EndringBeregningsgrunnlagForm.propTypes = {
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   skalHaEndretInformasjonIHeader: PropTypes.bool,
-  formName: PropTypes.string,
 };
 
 EndringBeregningsgrunnlagForm.defaultProps = {
   skalHaEndretInformasjonIHeader: false,
-  formName: undefined,
-};
 
+};
 export const finnFastsattIForstePeriode = (values, skalRedigereInntekt) => {
   const forstePeriode = values[getFieldNameKey(0)];
   return forstePeriode

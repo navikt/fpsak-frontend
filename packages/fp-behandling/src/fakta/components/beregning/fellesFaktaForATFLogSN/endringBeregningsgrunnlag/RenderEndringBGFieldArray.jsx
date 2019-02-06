@@ -30,7 +30,6 @@ import {
   validateTotalRefusjonPrArbeidsforhold,
 } from '../ValidateAndelerUtils';
 import { setSkalRedigereInntektForATFL } from '../BgFordelingUtils';
-
 import styles from './renderEndringBGFieldArray.less';
 
 const defaultBGFordeling = periodeUtenAarsak => ({
@@ -434,7 +433,7 @@ const mapStateToProps = (state, ownProps) => {
   const tilfeller = getFaktaOmBeregningTilfellerKoder(state);
   const arbeidsforholdList = getUniqueListOfArbeidsforhold(getEndringBeregningsgrunnlagPerioder(state)
     ? getEndringBeregningsgrunnlagPerioder(state).flatMap(p => p.endringBeregningsgrunnlagAndeler) : undefined);
-  setSkalRedigereInntektForATFL(state, ownProps.fields, ownProps.formName);
+  setSkalRedigereInntektForATFL(state, ownProps.fields);
   return {
     arbeidsforholdList,
     inntektskategoriKoder: getKodeverk(kodeverkTyper.INNTEKTSKATEGORI)(state),

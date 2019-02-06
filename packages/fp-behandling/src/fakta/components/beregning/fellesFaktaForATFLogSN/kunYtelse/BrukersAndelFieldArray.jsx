@@ -5,7 +5,6 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { getAksjonspunkter } from 'behandlingFpsak/src/behandlingSelectors';
-import { isBehandlingFormDirty } from 'behandlingFpsak/src/behandlingForm';
 import { InputField, NavFieldGroup, SelectField } from '@fpsak-frontend/form';
 import {
   isArrayEmpty, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, required,
@@ -22,6 +21,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import styles from './brukersAndelFieldArray.less';
 import { validateUlikeAndelerWithMap } from '../ValidateAndelerUtils';
+import { isBeregningFormDirty as isFormDirty } from '../../BeregningFormUtils';
 
 const defaultBGFordeling = aktivitetStatuser => ({
   andel: aktivitetStatuser.filter(({ kode }) => kode === aktivitetStatus.BRUKERS_ANDEL)[0].navn,
@@ -225,8 +225,8 @@ BrukersAndelFieldArray.validate = (values) => {
 const sorterKodeverkAlfabetisk = kodeverkListe => kodeverkListe.slice().sort((a, b) => a.navn.localeCompare(b.navn));
 
 
-const mapStateToProps = (state, props) => {
-  const isBeregningFormDirty = isBehandlingFormDirty(props.formName)(state);
+const mapStateToProps = (state) => {
+  const isBeregningFormDirty = isFormDirty(state);
   const aktivitetStatuser = getKodeverk(kodeverkTyper.AKTIVITET_STATUS)(state);
   const alleAp = getAksjonspunkter(state);
   const relevantAp = alleAp

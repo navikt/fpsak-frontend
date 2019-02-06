@@ -3,24 +3,23 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
 import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
-import { getBehandlingFormValues, getBehandlingFormInitialValues } from 'behandlingFpsak/src/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-
 import {
   getAksjonspunkter,
   getAvklarAktiviteter,
 } from 'behandlingFpsak/src/behandlingSelectors';
-import { FormSection } from 'redux-form';
+import { getFormValuesForBeregning, getFormInitialValuesForBeregning } from '../BeregningFormUtils';
 import VentelonnVartpengerPanel from './VentelonnVartpengerPanel';
 
 const {
   AVKLAR_AKTIVITETER,
 } = aksjonspunktCodes;
 
-export const AVKLAR_AKTIVITETER_FORM_NAME = 'avklarAktiviteter';
+export const BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME = 'begrunnelseAvklareAktiviteter';
+
 
 const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
@@ -28,14 +27,14 @@ const findAksjonspunktMedBegrunnelse = aksjonspunkter => aksjonspunkter
   .filter(ap => ap.definisjon.kode === AVKLAR_AKTIVITETER && ap.begrunnelse !== null)[0];
 
 
-export const erAvklartAktivitetEndret = formName => createSelector(
-  [getAksjonspunkter, getAvklarAktiviteter, getBehandlingFormValues(formName), getBehandlingFormInitialValues(formName)],
+export const erAvklartAktivitetEndret = createSelector(
+  [getAksjonspunkter, getAvklarAktiviteter, getFormValuesForBeregning, getFormInitialValuesForBeregning],
   (aksjonspunkter, avklarAktiviteter, values, initialValues) => {
     if (!hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)) {
       return false;
     }
     if (values && avklarAktiviteter && avklarAktiviteter.ventelonnVartpenger) {
-      return VentelonnVartpengerPanel.hasValueChangedFromInitial(values[AVKLAR_AKTIVITETER_FORM_NAME], initialValues[AVKLAR_AKTIVITETER_FORM_NAME]);
+      return VentelonnVartpengerPanel.hasValueChangedFromInitial(values, initialValues);
     }
     return false;
   },
@@ -61,7 +60,7 @@ export const AvklareAktiviteterPanelImpl = ({
   hasBegrunnelse,
   isDirty,
 }) => (
-  <FormSection name={AVKLAR_AKTIVITETER_FORM_NAME}>
+  <ElementWrapper>
     {avklarAktiviteter.ventelonnVartpenger
       && (
       <VentelonnVartpengerPanel
@@ -73,12 +72,13 @@ export const AvklareAktiviteterPanelImpl = ({
     <VerticalSpacer eightPx />
     <VerticalSpacer twentyPx />
     <FaktaBegrunnelseTextField
+      name={BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME}
       isDirty={isDirty}
       isSubmittable={submittable}
       isReadOnly={readOnly}
       hasBegrunnelse={hasBegrunnelse}
     />
-  </FormSection>
+  </ElementWrapper>
 );
 
 
@@ -98,10 +98,9 @@ export const transformValuesAvklarAktiviteter = createSelector(
   (aksjonspunkter, avklarAktiviteter) => (values) => {
     if (hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)) {
       if (avklarAktiviteter && avklarAktiviteter.ventelonnVartpenger) {
-        const avklarValues = values[AVKLAR_AKTIVITETER_FORM_NAME];
-        const ventelonnVartpengerTransformed = VentelonnVartpengerPanel.transformValues(avklarValues, avklarAktiviteter);
+        const ventelonnVartpengerTransformed = VentelonnVartpengerPanel.transformValues(values, avklarAktiviteter);
         if (ventelonnVartpengerTransformed) {
-          const beg = avklarValues.begrunnelse;
+          const beg = values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME];
           return [{
             kode: AVKLAR_AKTIVITETER,
             begrunnelse: beg === undefined ? null : beg,
@@ -127,10 +126,8 @@ export const buildInitialValuesAvklarAktiviteter = createSelector(
       initialValues = VentelonnVartpengerPanel.buildInitialValues(avklarAktiviteter);
     }
     return {
-      [AVKLAR_AKTIVITETER_FORM_NAME]: {
-        ...initialValues,
-        ...FaktaBegrunnelseTextField.buildInitialValues(findAksjonspunktMedBegrunnelse(aksjonspunkter)),
-      },
+      ...initialValues,
+      ...FaktaBegrunnelseTextField.buildInitialValues(findAksjonspunktMedBegrunnelse(aksjonspunkter), BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME),
     };
   },
 );
@@ -139,9 +136,9 @@ export const buildInitialValuesAvklarAktiviteter = createSelector(
 
 export const getValidationAvklarAktiviteter = createSelector([getAksjonspunkter, getAvklarAktiviteter], (aksjonspunkter, avklarAktiviteter) => (values) => {
   if (hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)) {
-    const errors = {};
+    let errors = {};
     if (avklarAktiviteter && avklarAktiviteter.ventelonnVartpenger) {
-      errors[AVKLAR_AKTIVITETER_FORM_NAME] = VentelonnVartpengerPanel.validate(values[AVKLAR_AKTIVITETER_FORM_NAME]);
+      errors = VentelonnVartpengerPanel.validate(values);
     }
     return errors;
   }
@@ -151,14 +148,14 @@ export const getValidationAvklarAktiviteter = createSelector([getAksjonspunkter,
 
 // // MAP STATE TO PROPS METHODS //////
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   const avklarAktiviteter = getAvklarAktiviteter(state);
   const alleAp = getAksjonspunkter(state);
   const relevantAp = alleAp.filter(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_AKTIVITETER);
   const isAksjonspunktClosed = relevantAp.length === 0 ? undefined : !isAksjonspunktOpen(relevantAp[0].status.kode);
-  const initialValues = getBehandlingFormInitialValues(ownProps.formName)(state);
-  const hasBegrunnelse = initialValues && initialValues[AVKLAR_AKTIVITETER_FORM_NAME]
-  && !!initialValues[AVKLAR_AKTIVITETER_FORM_NAME].begrunnelse;
+  const initialValues = getFormInitialValuesForBeregning(state);
+  const hasBegrunnelse = initialValues
+  && !!initialValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME];
   return {
     isAksjonspunktClosed,
     avklarAktiviteter,

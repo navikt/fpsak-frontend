@@ -17,9 +17,9 @@ import {
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { LINK_TIL_REGNEARK } from '@fpsak-frontend/fp-felles';
 
-import { behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import { getFaktaOmBeregning } from 'behandlingFpsak/src/behandlingSelectors';
 import { getKodeverk } from 'behandlingFpsak/src/duck';
+import { getFormValuesForBeregning } from '../../BeregningFormUtils';
 
 import styles from './fastsettBBFodendeKvinneForm.less';
 
@@ -234,16 +234,15 @@ FastsettBBFodendeKvinneForm.transformValues = (values, faktaOmBeregning) => {
 
 const sorterKodeverkAlfabetisk = kodeverkListe => kodeverkListe.slice().sort((a, b) => a.navn.localeCompare(b.navn));
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   const faktaOmBeregning = getFaktaOmBeregning(state);
-  const { formName } = ownProps;
   if (!faktaOmBeregning) {
     return {};
   }
   const inntekter = [];
   faktaOmBeregning.besteberegningAndeler.forEach((andel) => {
     const inputfieldKey = createInputFieldKeyForAndel(andel);
-    const stringSum = behandlingFormValueSelector(formName)(state, inputfieldKey);
+    const stringSum = getFormValuesForBeregning(state)[inputfieldKey];
     if (stringSum) {
       inntekter.push(removeSpacesFromNumber(stringSum));
     }

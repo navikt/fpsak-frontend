@@ -5,7 +5,6 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { getAksjonspunkter, getFaktaOmBeregning } from 'behandlingFpsak/src/behandlingSelectors';
-import { isBehandlingFormDirty } from 'behandlingFpsak/src/behandlingForm';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { getKodeverk } from 'behandlingFpsak/src/duck';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -26,6 +25,8 @@ import {
 import styles from './renderBruttoBGFordelingFieldArray.less';
 import { arbeidsforholdProptype, getUniqueListOfArbeidsforhold } from '../../ArbeidsforholdHelper';
 import { validateAndelFields, validateUlikeAndeler } from '../ValidateAndelerUtils';
+import { isBeregningFormDirty as isFormDirty } from '../../BeregningFormUtils';
+
 
 const defaultBGFordeling = {
   andel: '',
@@ -390,7 +391,7 @@ const sorterKodeverkAlfabetisk = kodeverkListe => kodeverkListe.slice().sort((a,
 
 const mapStateToProps = (state, props) => {
   const faktaOmBeregning = getFaktaOmBeregning(state);
-  const isBeregningFormDirty = isBehandlingFormDirty(props.formName)(state);
+  const isBeregningFormDirty = isFormDirty(state);
   let arbeidsforholdList;
   if (props.endringBGPeriode) {
     arbeidsforholdList = getUniqueListOfArbeidsforhold(props.endringBGPeriode.endringBeregningsgrunnlagAndeler);

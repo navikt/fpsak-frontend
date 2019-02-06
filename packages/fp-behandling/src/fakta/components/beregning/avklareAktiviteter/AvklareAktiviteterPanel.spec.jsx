@@ -6,13 +6,12 @@ import { isRequiredMessage } from '@fpsak-frontend/utils';
 import { getBehandlingFormValues } from 'behandlingFpsak/src/behandlingForm';
 import {
   AvklareAktiviteterPanelImpl, buildInitialValuesAvklarAktiviteter,
-  transformValuesAvklarAktiviteter, getValidationAvklarAktiviteter, erAvklartAktivitetEndret,
-  AVKLAR_AKTIVITETER_FORM_NAME,
+  transformValuesAvklarAktiviteter, getValidationAvklarAktiviteter, erAvklartAktivitetEndret, BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME,
 } from './AvklareAktiviteterPanel';
 import VentelonnVartpengerPanel, {
   AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME,
 } from './VentelonnVartpengerPanel';
-import { formName } from '../BeregningInfoPanel';
+import { formName } from '../BeregningFormUtils';
 import { lagStateMedAksjonspunkterOgFaktaOmBeregning } from '../BeregningTestHelper';
 
 const {
@@ -25,7 +24,7 @@ const lagStateMedAvklarAktitiveter = (avklarAktiviteter, values = {}, initial = 
   const faktaOmBeregning = {
     avklarAktiviteter,
   };
-  return lagStateMedAksjonspunkterOgFaktaOmBeregning(aksjonspunkter, faktaOmBeregning, AVKLAR_AKTIVITETER_FORM_NAME, values, initial);
+  return lagStateMedAksjonspunkterOgFaktaOmBeregning(aksjonspunkter, faktaOmBeregning, values, initial);
 };
 
 describe('<AvklareAktiviteterPanel>', () => {
@@ -71,7 +70,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     };
 
     const initialValues = buildInitialValuesAvklarAktiviteter(lagStateMedAvklarAktitiveter(avklarAktiviteter));
-    expect(initialValues[AVKLAR_AKTIVITETER_FORM_NAME][AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME]).to.equal(null);
+    expect(initialValues[AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME]).to.equal(null);
   });
 
   it('skal teste at initial values blir bygget for ventelønn/vartpenger med verdi satt til true', () => {
@@ -82,7 +81,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     };
 
     const initialValues = buildInitialValuesAvklarAktiviteter(lagStateMedAvklarAktitiveter(avklarAktiviteter));
-    expect(initialValues[AVKLAR_AKTIVITETER_FORM_NAME][AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME]).to.equal(true);
+    expect(initialValues[AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME]).to.equal(true);
   });
 
   it('skal teste at initial values blir bygget for ventelønn/vartpenger med verdi satt til false', () => {
@@ -93,7 +92,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     };
 
     const initialValues = buildInitialValuesAvklarAktiviteter(lagStateMedAvklarAktitiveter(avklarAktiviteter));
-    expect(initialValues[AVKLAR_AKTIVITETER_FORM_NAME][AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME]).to.equal(false);
+    expect(initialValues[AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME]).to.equal(false);
   });
 
   it('skal transform values om satt til true og ikkje submittet før', () => {
@@ -186,7 +185,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     values[AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME] = null;
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values);
     const errors = getValidationAvklarAktiviteter(state)(getBehandlingFormValues(formName)(state));
-    expect(errors[AVKLAR_AKTIVITETER_FORM_NAME][AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME][0].id).to.equal(isRequiredMessage()[0].id);
+    expect(errors[AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME][0].id).to.equal(isRequiredMessage()[0].id);
   });
 
 
@@ -200,7 +199,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     values[AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME] = true;
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values);
     const errors = getValidationAvklarAktiviteter(state)(getBehandlingFormValues(formName)(state));
-    expect(errors[AVKLAR_AKTIVITETER_FORM_NAME][AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME][0].id).to.equal('AvklareAktiviteter.IkkeImplementert');
+    expect(errors[AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME][0].id).to.equal('AvklareAktiviteter.IkkeImplementert');
   });
 
 
@@ -214,7 +213,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     values[AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME] = false;
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values);
     const errors = getValidationAvklarAktiviteter(state)(getBehandlingFormValues(formName)(state));
-    expect(errors[AVKLAR_AKTIVITETER_FORM_NAME][AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME]).to.equal(undefined);
+    expect(errors[AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME]).to.equal(undefined);
   });
 
 
@@ -229,7 +228,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const initial = {};
     initial[AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME] = null;
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, initial);
-    const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(formName)(state);
+    const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state);
     expect(erAvklartOgIkkeEndret).to.equal(true);
   });
 
@@ -244,7 +243,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const initial = {};
     initial[AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME] = avklarAktiviteter.ventelonnVartpenger.inkludert;
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, initial);
-    const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(formName)(state);
+    const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state);
     expect(erAvklartOgIkkeEndret).to.equal(false);
   });
 
@@ -260,7 +259,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const initial = {};
     initial[AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME] = avklarAktiviteter.ventelonnVartpenger.inkludert;
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, initial);
-    const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(formName)(state);
+    const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state);
     expect(erAvklartOgIkkeEndret).to.equal(true);
   });
 
@@ -275,7 +274,21 @@ describe('<AvklareAktiviteterPanel>', () => {
     const initial = {};
     initial[AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME] = avklarAktiviteter.ventelonnVartpenger.inkludert;
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, initial);
-    const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(formName)(state);
+    const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state);
     expect(erAvklartOgIkkeEndret).to.equal(false);
+  });
+
+  it('skal transformValues med aksjonspunkt', () => {
+    const avklarAktiviteter = {
+      ventelonnVartpenger: {
+        inkludert: null,
+      },
+    };
+    const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER } }];
+    const values = { [BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME]: 'begrunnelse' };
+    values[AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME] = false;
+    const transformed = transformValuesAvklarAktiviteter.resultFunc(aksjonspunkter, avklarAktiviteter)(values);
+    expect(transformed[0].begrunnelse).to.equal('begrunnelse');
+    expect(transformed[0].kode).to.equal(AVKLAR_AKTIVITETER);
   });
 });

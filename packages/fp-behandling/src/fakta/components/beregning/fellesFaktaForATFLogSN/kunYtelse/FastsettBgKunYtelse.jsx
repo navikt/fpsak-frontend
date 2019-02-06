@@ -10,13 +10,12 @@ const harKunYtelseOgEndretBeregningsgrunnlag = aktivertePaneler => (aktivertePan
   && aktivertePaneler.includes(FASTSETT_BG_KUN_YTELSE)
   && aktivertePaneler.includes(FASTSETT_ENDRET_BEREGNINGSGRUNNLAG));
 
-export const setFaktaPanelForKunYtelse = (faktaPanels, tilfeller, readOnly, formName, isAksjonspunktClosed) => {
+export const setFaktaPanelForKunYtelse = (faktaPanels, tilfeller, readOnly, isAksjonspunktClosed) => {
   if (tilfeller.includes(FASTSETT_BG_KUN_YTELSE) && !tilfeller.includes(FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
     faktaPanels.push(
       <ElementWrapper key="FASTSETT_BG_KUN_YTELSE">
         <KunYtelsePanel
           readOnly={readOnly}
-          formName={formName}
           isAksjonspunktClosed={isAksjonspunktClosed}
         />
       </ElementWrapper>,
@@ -26,7 +25,6 @@ export const setFaktaPanelForKunYtelse = (faktaPanels, tilfeller, readOnly, form
       <ElementWrapper key="FASTSETT_BG_KUN_YTELSE">
         <KunYtelseTilkommetArbeidPanel
           readOnly={readOnly}
-          formName={formName}
           isAksjonspunktClosed={isAksjonspunktClosed}
         />
       </ElementWrapper>,

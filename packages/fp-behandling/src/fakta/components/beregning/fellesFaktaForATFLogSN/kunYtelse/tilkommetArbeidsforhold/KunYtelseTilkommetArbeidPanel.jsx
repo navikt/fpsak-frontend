@@ -5,7 +5,6 @@ import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregn
 import { isArrayEmpty, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { getKunYtelse, getEndringBeregningsgrunnlagPerioder } from 'behandlingFpsak/src/behandlingSelectors';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import { behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import { besteberegningField } from '../KunYtelseBesteberegningPanel';
 import KunYtelsePanel from '../KunYtelsePanel';
 import EndringBeregningsgrunnlagForm, { getFieldNameKey }
@@ -14,6 +13,7 @@ import {
   settAndelIArbeid, setGenerellAndelsinfo, setArbeidsforholdInitialValues, settFastsattBelop,
 } from '../../BgFordelingUtils';
 import { validateAndelFields, validateSumFastsattBelop, validateUlikeAndeler } from '../../ValidateAndelerUtils';
+import { getFormValuesForBeregning } from '../../../BeregningFormUtils';
 
 const harKunYtelseOgEndretBeregningsgrunnlag = aktivertePaneler => (aktivertePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE)
 && aktivertePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG));
@@ -26,7 +26,6 @@ const harKunYtelseOgEndretBeregningsgrunnlag = aktivertePaneler => (aktivertePan
 
 export const KunYtelseTilkommetArbeidPanel = ({
   readOnly,
-  formName,
   skalSjekkeBesteberegning,
   isAksjonspunktClosed,
   perioder,
@@ -35,7 +34,6 @@ export const KunYtelseTilkommetArbeidPanel = ({
   <div>
     <KunYtelsePanel
       readOnly={readOnly}
-      formName={formName}
       isAksjonspunktClosed={isAksjonspunktClosed}
       skalSjekkeBesteberegning={skalSjekkeBesteberegning}
     />
@@ -54,7 +52,6 @@ export const KunYtelseTilkommetArbeidPanel = ({
 
 KunYtelseTilkommetArbeidPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  formName: PropTypes.string.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   skalSjekkeBesteberegning: PropTypes.bool.isRequired,
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
@@ -165,14 +162,14 @@ KunYtelseTilkommetArbeidPanel.validate = (values, aktivertePaneler, kunYtelse, e
   };
 };
 
-const mapStateToProps = (state, initialProps) => {
+const mapStateToProps = (state) => {
   const kunYtelse = getKunYtelse(state);
   const perioder = getEndringBeregningsgrunnlagPerioder(state);
   return {
     skalSjekkeBesteberegning: kunYtelse.fodendeKvinneMedDP,
     perioder: perioder.slice(1, perioder.length),
     skalViseTilkommetTabell: !kunYtelse.fodendeKvinneMedDP
-    || behandlingFormValueSelector(initialProps.formName)(state, besteberegningField) !== undefined,
+    || getFormValuesForBeregning(state)[besteberegningField] !== undefined,
   };
 };
 

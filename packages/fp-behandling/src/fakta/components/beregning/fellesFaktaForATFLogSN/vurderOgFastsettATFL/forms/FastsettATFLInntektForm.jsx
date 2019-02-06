@@ -12,7 +12,6 @@ import { InputField } from '@fpsak-frontend/form';
 import {
   VerticalSpacer, Table, TableRow, TableColumn,
 } from '@fpsak-frontend/shared-components';
-import { getBehandlingFormValues } from 'behandlingFpsak/src/behandlingForm';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import faktaOmBeregningTilfelle, {
   erATFLSpesialtilfelle,
@@ -22,6 +21,7 @@ import faktaOmBeregningTilfelle, {
 } from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { andelsnrMottarYtelseMap, frilansMottarYtelse } from './VurderMottarYtelseUtils';
 import styles from './fastsettATFLInntektForm.less';
+import { getFormValuesForBeregning } from '../../../BeregningFormUtils';
 
 const inntektInputFieldName = 'fastsattInntekt';
 
@@ -494,7 +494,7 @@ const mapStateToProps = (state, ownProps) => {
   if (!faktaOmBeregning || tilfellerSomSkalFastsettes === undefined || tilfellerSomSkalFastsettes.length < 1) {
     return {};
   }
-  const values = getBehandlingFormValues(ownProps.formName)(state);
+  const values = getFormValuesForBeregning(state);
   const beregningsgrunnlag = getBeregningsgrunnlag(state);
   const arbeidsforholdSomSkalFastsettes = slaSammenATListerSomSkalVurderes(values, faktaOmBeregning, beregningsgrunnlag);
   const tabellVisesUtenVurdering = harKunATFLISammeOrgUtenBestebergning(tilfellerSomSkalFastsettes);

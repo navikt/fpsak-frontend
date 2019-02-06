@@ -21,13 +21,14 @@ const FaktaBegrunnelseTextField = ({
   hasBegrunnelse,
   labelCode,
   hasVurderingText,
+  name,
 }) => (
   <ElementWrapper>
     {((isSubmittable && isDirty) || hasBegrunnelse)
     && (
     <div className={styles.begrunnelseTextField}>
       <TextAreaField
-        name="begrunnelse"
+        name={name}
         label={isReadOnly ? '' : { id: hasVurderingText ? 'FaktaBegrunnelseTextField.Vurdering' : labelCode }}
         validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
         textareaClass={isReadOnly ? styles.explanationTextareaReadOnly : styles.explanationTextarea}
@@ -47,9 +48,11 @@ FaktaBegrunnelseTextField.propTypes = {
   hasBegrunnelse: PropTypes.bool.isRequired,
   labelCode: PropTypes.string,
   hasVurderingText: PropTypes.bool,
+  name: PropTypes.string,
 };
 
 FaktaBegrunnelseTextField.defaultProps = {
+  name: 'begrunnelse',
   labelCode: 'FaktaBegrunnelseTextField.BegrunnEndringene',
   hasVurderingText: false,
 };
@@ -61,12 +64,12 @@ const getBegrunnelse = (aksjonspunkt) => {
   return aksjonspunkt ? aksjonspunkt.begrunnelse : '';
 };
 
-FaktaBegrunnelseTextField.buildInitialValues = aksjonspunkt => ({
-  begrunnelse: decodeHtmlEntity(getBegrunnelse(aksjonspunkt)),
+FaktaBegrunnelseTextField.buildInitialValues = (aksjonspunkt, begrunnelseFieldName = 'begrunnelse') => ({
+  [begrunnelseFieldName]: decodeHtmlEntity(getBegrunnelse(aksjonspunkt)),
 });
 
-FaktaBegrunnelseTextField.transformValues = values => ({
-  begrunnelse: values.begrunnelse,
+FaktaBegrunnelseTextField.transformValues = (values, name = 'begrunnelse') => ({
+  begrunnelse: values[name],
 });
 
 export default FaktaBegrunnelseTextField;

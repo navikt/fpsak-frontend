@@ -30,8 +30,7 @@ import AvklareAktiviteterForm, {
   erAvklartAktivitetEndret,
 }
   from './avklareAktiviteter/AvklareAktiviteterPanel';
-
-export const formName = 'faktaOmBeregningForm';
+import { formName } from './BeregningFormUtils';
 
 const {
   VURDER_FAKTA_FOR_ATFL_SN,
@@ -214,7 +213,7 @@ const mapStateToProps = (state, initialProps) => {
     helpText: getHelpText(state),
     initialValues: buildInitialValues(state),
     validate: getValidate(state),
-    verdiForAvklarAktivitetErEndret: erAvklartAktivitetEndret(formName)(state),
+    verdiForAvklarAktivitetErEndret: erAvklartAktivitetEndret(state),
     onSubmit: values => initialProps.submitCallback(transformValues(state)(values)),
   };
 };

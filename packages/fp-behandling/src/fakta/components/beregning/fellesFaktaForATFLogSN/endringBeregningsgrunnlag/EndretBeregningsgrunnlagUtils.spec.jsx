@@ -1,8 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import { ApiStateBuilder } from '@fpsak-frontend/assets/testHelpers/data-test-helper';
-import fpsakBehandlingApi from 'behandlingFpsak/src/data/fpsakBehandlingApi';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { lonnsendringField }
   from 'behandlingFpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
 import { erNyoppstartetFLField }
@@ -15,6 +14,11 @@ import {
   finnFrilansFieldName,
   utledArbeidsforholdFieldName,
 } from '../vurderOgFastsettATFL/forms/VurderMottarYtelseUtils';
+import { lagStateMedAksjonspunkterOgFaktaOmBeregning } from '../../BeregningTestHelper';
+
+const {
+  VURDER_FAKTA_FOR_ATFL_SN,
+} = aksjonspunktCodes;
 
 const forhold = [
   {
@@ -79,36 +83,9 @@ const forventetRefusjonString = 'arbeidsgiver 2 (987654321) f.o.m. 20.01.2017 og
 + ' arbeidsgiver 4 (987654321) f.o.m. 20.01.2017 - t.o.m. 15.06.2017';
 
 
-const formName = 'formname';
-const behandlingFormName = 'behandling_1000051_v1';
-
-
 const lagStateMedFaktaOmBeregningOgValues = (faktaOmBeregning, values = {}) => {
-  const data = {
-    id: 1000051,
-    versjon: 1,
-    beregningsgrunnlag: {
-      faktaOmBeregning,
-    },
-  };
-  const dataState = new ApiStateBuilder()
-    .withData(fpsakBehandlingApi.BEHANDLING.name, data, 'dataContextFpsakBehandling')
-    .withData(fpsakBehandlingApi.ORIGINAL_BEHANDLING.name, {}, 'dataContextFpsakBehandling')
-    .build();
-  const state = {
-    default: {
-      ...dataState.default,
-      fpsakBehandling: {
-        behandlingId: 1000051,
-      },
-    },
-    form: {},
-  };
-  state.form[behandlingFormName] = {};
-  state.form[behandlingFormName][formName] = {
-    values,
-  };
-  return state;
+  const ap = { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN } };
+  return lagStateMedAksjonspunkterOgFaktaOmBeregning([ap], faktaOmBeregning, values);
 };
 
 describe('<EndretBeregningsgrunnlagUtils>', () => {
@@ -126,7 +103,7 @@ describe('<EndretBeregningsgrunnlagUtils>', () => {
     };
     const state = lagStateMedFaktaOmBeregningOgValues(faktaOmBeregning);
     const dateHeading = <div id="DateHeading" />;
-    const endringHeading = createEndringHeadingForDate(state, periodeFom, periodeTom, dateHeading, false, formName);
+    const endringHeading = createEndringHeadingForDate(state, periodeFom, periodeTom, dateHeading, false);
     expect(endringHeading.props.children.length).to.equal(3);
     expect(endringHeading.props.children[2].props.id).to.equal('DateHeading');
     expect(endringHeading.props.children[0].props.children.length).to.equal(3);
@@ -149,7 +126,7 @@ describe('<EndretBeregningsgrunnlagUtils>', () => {
     };
     const state = lagStateMedFaktaOmBeregningOgValues(faktaOmBeregning);
     const dateHeading = <div id="DateHeading" />;
-    const endringHeading = createEndringHeadingForDate(state, periodeFom, periodeTom, dateHeading, false, formName);
+    const endringHeading = createEndringHeadingForDate(state, periodeFom, periodeTom, dateHeading, false);
     expect(endringHeading.props.children.length).to.equal(3);
     expect(endringHeading.props.children[2].props.id).to.equal('DateHeading');
     expect(endringHeading.props.children[0].props.children.length).to.equal(3);
@@ -176,7 +153,7 @@ describe('<EndretBeregningsgrunnlagUtils>', () => {
     };
     const state = lagStateMedFaktaOmBeregningOgValues(faktaOmBeregning);
     const dateHeading = <div id="DateHeading" />;
-    const endringHeading = createEndringHeadingForDate(state, periodeFom, periodeTom, dateHeading, false, formName);
+    const endringHeading = createEndringHeadingForDate(state, periodeFom, periodeTom, dateHeading, false);
     expect(endringHeading.props.children.length).to.equal(3);
     expect(endringHeading.props.children[2].props.id).to.equal('DateHeading');
     expect(endringHeading.props.children[0].props.children.length).to.equal(3);
@@ -201,7 +178,7 @@ describe('<EndretBeregningsgrunnlagUtils>', () => {
     };
     const state = lagStateMedFaktaOmBeregningOgValues(faktaOmBeregning);
     const dateHeading = <div id="DateHeading" />;
-    const endringHeading = createEndringHeadingForDate(state, periodeFom, periodeTom, dateHeading, true, formName);
+    const endringHeading = createEndringHeadingForDate(state, periodeFom, periodeTom, dateHeading, true);
     expect(endringHeading.props.children.length).to.equal(3);
     expect(endringHeading.props.children[2].props.id).to.equal('DateHeading');
     expect(endringHeading.props.children[0].props.children.length).to.equal(3);

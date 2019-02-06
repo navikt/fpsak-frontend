@@ -51,7 +51,6 @@ export const TilstotendeYtelseFormImpl = ({
   periodeHeader,
   skalViseKnapp,
   btnClickCallback,
-  formName,
 }) => (
   <BorderBox>
     <Row>
@@ -94,7 +93,7 @@ export const TilstotendeYtelseFormImpl = ({
     </Row>
     <Row>
       <Column xs="12">
-        <FordelingAvBruttoBeregningsgrunnlagPanel readOnly={readOnly} formName={formName} />
+        <FordelingAvBruttoBeregningsgrunnlagPanel readOnly={readOnly} />
       </Column>
     </Row>
     {skalViseKnapp
@@ -125,7 +124,6 @@ TilstotendeYtelseFormImpl.propTypes = {
   periodeHeader: PropTypes.element,
   skalViseKnapp: PropTypes.bool,
   btnClickCallback: PropTypes.func,
-  formName: PropTypes.string.isRequired,
 };
 
 TilstotendeYtelseFormImpl.defaultProps = {

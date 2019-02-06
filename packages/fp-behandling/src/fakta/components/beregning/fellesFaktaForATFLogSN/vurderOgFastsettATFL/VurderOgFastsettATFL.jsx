@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getBehandlingFormValues } from 'behandlingFpsak/src/behandlingForm';
 import faktaOmBeregningTilfelle, {
   harKunATFLISammeOrgUtenBestebergning,
   erATFLSpesialtilfelle,
@@ -18,6 +17,7 @@ import FastsettATFLInntektForm from './forms/FastsettATFLInntektForm';
 import InntektstabellPanel from '../InntektstabellPanel';
 import VurderMottarYtelseForm from './forms/VurderMottarYtelseForm';
 import FastsettEndretBeregningsgrunnlag from '../endringBeregningsgrunnlag/FastsettEndretBeregningsgrunnlag';
+import { getFormValuesForBeregning } from '../../BeregningFormUtils';
 
 
 export const skalViseInntektsTabellUnderRadioknapp = (tilfeller, lonnEndringEllerNyFL) => {
@@ -33,13 +33,12 @@ export const skalViseInntektsTabellUnderRadioknapp = (tilfeller, lonnEndringElle
 };
 
 
-const finnInntektstabell = (tilfeller, readOnly, isAksjonspunktClosed, manglerInntektsmelding, formName, erNyoppstartetFL) => {
+const finnInntektstabell = (tilfeller, readOnly, isAksjonspunktClosed, manglerInntektsmelding, erNyoppstartetFL) => {
   if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
     return (
       <FastsettEndretBeregningsgrunnlag
         readOnly={readOnly}
         isAksjonspunktClosed={isAksjonspunktClosed}
-        formName={formName}
       />
     );
   }
@@ -49,7 +48,6 @@ const finnInntektstabell = (tilfeller, readOnly, isAksjonspunktClosed, manglerIn
       isAksjonspunktClosed={isAksjonspunktClosed}
       tilfellerSomSkalFastsettes={tilfeller}
       manglerInntektsmelding={manglerInntektsmelding}
-      formName={formName}
       erNyoppstartetFL={erNyoppstartetFL}
     />
   );
@@ -70,7 +68,6 @@ const VurderOgFastsettATFL = ({
   erLonnsendring,
   erNyoppstartetFL,
   isAksjonspunktClosed,
-  formName,
   tilfeller,
   manglerInntektsmelding,
   skalViseTabell,
@@ -78,7 +75,7 @@ const VurderOgFastsettATFL = ({
   <div>
     <InntektstabellPanel
       key="inntektstabell"
-      tabell={finnInntektstabell(tilfeller, readOnly, isAksjonspunktClosed, manglerInntektsmelding, formName, erNyoppstartetFL)}
+      tabell={finnInntektstabell(tilfeller, readOnly, isAksjonspunktClosed, manglerInntektsmelding, erNyoppstartetFL)}
       skalViseTabell={skalViseTabell}
     >
       {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)
@@ -86,7 +83,6 @@ const VurderOgFastsettATFL = ({
         <LonnsendringForm
           readOnly={readOnly}
           isAksjonspunktClosed={isAksjonspunktClosed}
-          formName={formName}
           tilfeller={tilfeller}
           manglerIM={manglerInntektsmelding}
           skalViseInntektstabell={skalViseInntektsTabellUnderRadioknapp(tilfeller, erLonnsendring)}
@@ -99,7 +95,6 @@ const VurderOgFastsettATFL = ({
         <NyoppstartetFLForm
           readOnly={readOnly}
           isAksjonspunktClosed={isAksjonspunktClosed}
-          formName={formName}
           tilfeller={tilfeller}
           skalViseInntektstabell={skalViseInntektsTabellUnderRadioknapp(tilfeller, erNyoppstartetFL)}
           manglerIM={manglerInntektsmelding}
@@ -123,7 +118,6 @@ const VurderOgFastsettATFL = ({
 VurderOgFastsettATFL.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
-  formName: PropTypes.string.isRequired,
   tilfeller: PropTypes.arrayOf(PropTypes.string).isRequired,
   manglerInntektsmelding: PropTypes.bool.isRequired,
   erLonnsendring: PropTypes.bool,
@@ -161,12 +155,11 @@ export const skalViseInntektstabell = (tilfeller, values, faktaOmBeregning) => {
 
 const mapStateToProps = (state, initialProps) => {
   const faktaOmBeregning = getFaktaOmBeregning(state);
-  const { formName } = initialProps;
   let manglerInntektsmelding = false;
   if (faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe && faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.length > 0) {
     manglerInntektsmelding = faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.find(forhold => !forhold.inntektPrMnd) !== undefined;
   }
-  const values = getBehandlingFormValues(formName)(state);
+  const values = getFormValuesForBeregning(state);
   return {
     erLonnsendring: values[lonnsendringField],
     erNyoppstartetFL: values[erNyoppstartetFLField],

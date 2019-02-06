@@ -18,21 +18,18 @@ export const fordelingAvBruttoBGFieldArrayName = 'bruttoBGFordeling';
 
 const FordelingAvBruttoBeregningsgrunnlagPanel = ({
   readOnly,
-  formName,
 }) => (
   <div>
     <FieldArray
       name={fordelingAvBruttoBGFieldArrayName}
       component={RenderBruttoBGFordelingFieldArray}
       readOnly={readOnly}
-      formName={formName}
     />
   </div>
 );
 
 FordelingAvBruttoBeregningsgrunnlagPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  formName: PropTypes.string.isRequired,
 };
 
 const settBelopFraInntektsmelding = (andel, endretBGPeriode) => {

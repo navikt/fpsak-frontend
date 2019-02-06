@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormSection } from 'redux-form';
 import { createSelector } from 'reselect';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { getBehandlingFormInitialValues } from 'behandlingFpsak/src/behandlingForm';
 
 import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -16,18 +14,18 @@ import FaktaForATFLOgSNPanel, {
   transformValuesFaktaForATFLOgSN,
   getBuildInitialValuesFaktaForATFLOgSN, getValidationFaktaForATFLOgSN,
 } from './FaktaForATFLOgSNPanel';
-
+import { getFormInitialValuesForBeregning } from '../BeregningFormUtils';
 
 const {
   VURDER_FAKTA_FOR_ATFL_SN,
 } = aksjonspunktCodes;
 
-export const VURDER_FAKTA_BEREGNING_FORM_NAME = 'tilfellerFormSection';
-
 const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
 const findAksjonspunktMedBegrunnelse = aksjonspunkter => aksjonspunkter
   .filter(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN && ap.begrunnelse !== null)[0];
+
+export const BEGRUNNELSE_FAKTA_TILFELLER_NAME = 'begrunnelseFaktaTilfeller';
 
 /**
  * VurderFaktaBeregningPanel
@@ -40,23 +38,24 @@ export const VurderFaktaBeregningPanelImpl = ({
   submittable,
   hasBegrunnelse,
   isDirty,
-  formName,
+  showTableCallback,
 }) => (
-  <FormSection name={VURDER_FAKTA_BEREGNING_FORM_NAME}>
+  <ElementWrapper>
     <FaktaForATFLOgSNPanel
       readOnly={readOnly}
       isAksjonspunktClosed={isAksjonspunktClosed}
-      formName={formName}
+      showTableCallback={showTableCallback}
     />
     <VerticalSpacer eightPx />
     <VerticalSpacer twentyPx />
     <FaktaBegrunnelseTextField
+      name={BEGRUNNELSE_FAKTA_TILFELLER_NAME}
       isDirty={isDirty}
       isSubmittable={submittable}
       isReadOnly={readOnly}
       hasBegrunnelse={hasBegrunnelse}
     />
-  </FormSection>
+  </ElementWrapper>
 );
 
 VurderFaktaBeregningPanelImpl.propTypes = {
@@ -65,7 +64,7 @@ VurderFaktaBeregningPanelImpl.propTypes = {
   isDirty: PropTypes.bool.isRequired,
   hasBegrunnelse: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
-  formName: PropTypes.string.isRequired,
+  showTableCallback: PropTypes.func.isRequired,
 };
 
 // /// TRANSFORM VALUES METHODS ///////
@@ -74,8 +73,8 @@ export const transformValuesVurderFaktaBeregning = createSelector(
   [getAksjonspunkter, transformValuesFaktaForATFLOgSN],
   (aksjonspunkter, transformFaktaATFL) => (values) => {
     if (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)) {
-      const faktaBeregningValues = values[VURDER_FAKTA_BEREGNING_FORM_NAME];
-      const beg = faktaBeregningValues.begrunnelse;
+      const faktaBeregningValues = values;
+      const beg = faktaBeregningValues[BEGRUNNELSE_FAKTA_TILFELLER_NAME];
       return [{
         kode: VURDER_FAKTA_FOR_ATFL_SN,
         begrunnelse: beg === undefined ? null : beg,
@@ -95,10 +94,8 @@ export const buildInitialValuesVurderFaktaBeregning = createSelector(
       return {};
     }
     return ({
-      [VURDER_FAKTA_BEREGNING_FORM_NAME]: {
-        ...FaktaBegrunnelseTextField.buildInitialValues(findAksjonspunktMedBegrunnelse(aksjonspunkter)),
-        ...buildInitialValuesTilfeller(),
-      },
+      ...FaktaBegrunnelseTextField.buildInitialValues(findAksjonspunktMedBegrunnelse(aksjonspunkter), BEGRUNNELSE_FAKTA_TILFELLER_NAME),
+      ...buildInitialValuesTilfeller(),
     });
   },
 );
@@ -110,9 +107,7 @@ export const getValidationVurderFaktaBeregning = createSelector(
   (aksjonspunkter, validationForVurderFakta) => (values) => {
     if (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)) {
       return {
-        [VURDER_FAKTA_BEREGNING_FORM_NAME]: {
-          ...validationForVurderFakta(values[VURDER_FAKTA_BEREGNING_FORM_NAME]),
-        },
+        ...validationForVurderFakta(values),
       };
     }
     return null;
@@ -121,13 +116,13 @@ export const getValidationVurderFaktaBeregning = createSelector(
 
 // // MAP STATE TO PROPS METHODS //////
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   const alleAp = getAksjonspunkter(state);
-  const relevantAp = alleAp.filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN);
+  const relevantAp = alleAp.filter(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN);
   const isAksjonspunktClosed = relevantAp.length === 0 ? undefined : !isAksjonspunktOpen(relevantAp[0].status.kode);
-  const initialValues = getBehandlingFormInitialValues(ownProps.formName)(state);
-  const hasBegrunnelse = initialValues && initialValues[VURDER_FAKTA_BEREGNING_FORM_NAME]
-  && !!initialValues[VURDER_FAKTA_BEREGNING_FORM_NAME].begrunnelse;
+  const initialValues = getFormInitialValuesForBeregning(state);
+  const hasBegrunnelse = initialValues
+  && !!initialValues[BEGRUNNELSE_FAKTA_TILFELLER_NAME];
   return {
     isAksjonspunktClosed,
     hasBegrunnelse,

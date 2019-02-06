@@ -7,7 +7,6 @@ import {
 import { Element } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import faktaOmBeregningTilfelle, { harFastsettATFLInntektTilfelle } from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import { getBehandlingFormValues } from 'behandlingFpsak/src/behandlingForm';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import moment from 'moment';
 import {
@@ -18,7 +17,7 @@ import {
 } from 'behandlingFpsak/src/behandlingSelectors';
 import { byggListeSomStreng } from '../tilstøtendeYtelse/YtelsePanel';
 import { skalFastsetteForATUavhengigAvATFLSammeOrg, skalFastsetteForFLUavhengigAvATFLSammeOrg } from '../BgFordelingUtils';
-
+import { getFormValuesForBeregning } from '../../BeregningFormUtils';
 
 const {
   VURDER_FAKTA_FOR_ATFL_SN,
@@ -39,7 +38,8 @@ const tilfellerSomStøtterEndringBG = [faktaOmBeregningTilfelle.FASTSETT_ENDRET_
 export const harKunTilfellerSomStøtterEndringBG = aktivertePaneler => (aktivertePaneler && aktivertePaneler.length > 0
   && !aktivertePaneler.some(tilfelle => !tilfellerSomStøtterEndringBG.includes(tilfelle)));
 
-export const skalViseHelptextForEndretBg = tilfeller => !(!harKunTilfellerSomStøtterEndringBG(tilfeller) || harFastsettATFLInntektTilfelle(tilfeller));
+export const skalViseHelptextForEndretBg = tilfeller => tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)
+&& !(!harKunTilfellerSomStøtterEndringBG(tilfeller) || harFastsettATFLInntektTilfelle(tilfeller));
 
 const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 
@@ -177,9 +177,9 @@ export const lagFastsetteATFLInntektHeader = (values, faktaOmBeregning) => {
 };
 
 
-export const createEndringHeadingForDate = (state, periodeFom, periodeTom, dateHeading, harPeriodeaarsak, formName) => {
+export const createEndringHeadingForDate = (state, periodeFom, periodeTom, dateHeading, harPeriodeaarsak) => {
   const heading = findGraderingOrRefusjonHeading(state, periodeFom, periodeTom);
-  const values = formName ? getBehandlingFormValues(formName)(state) : undefined;
+  const values = getFormValuesForBeregning(state);
   const faktaOmBeregning = getFaktaOmBeregning(state);
   return (
     <ElementWrapper>

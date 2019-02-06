@@ -10,8 +10,8 @@ import { LINK_TIL_BESTE_BEREGNING_REGNEARK } from '@fpsak-frontend/fp-felles';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 
-import { behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import BrukersAndelFieldArray from './BrukersAndelFieldArray';
+import { getFormValuesForBeregning } from '../../BeregningFormUtils';
 
 import styles from './kunYtelseBesteberegningPanel.less';
 
@@ -26,7 +26,6 @@ export const besteberegningField = 'besteberegningField';
 
 const KunYtelseBesteberegningImpl = ({
   readOnly,
-  formName,
   isAksjonspunktClosed,
   erBesteberegning,
   brukersAndelFieldArrayName,
@@ -71,7 +70,6 @@ const KunYtelseBesteberegningImpl = ({
               name={brukersAndelFieldArrayName}
               component={BrukersAndelFieldArray}
               readOnly={readOnly}
-              formName={formName}
             />
           </Column>
         </Row>
@@ -83,7 +81,6 @@ const KunYtelseBesteberegningImpl = ({
 
 KunYtelseBesteberegningImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  formName: PropTypes.string.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   brukersAndelFieldArrayName: PropTypes.string.isRequired,
   erBesteberegning: PropTypes.bool,
@@ -103,8 +100,8 @@ KunYtelseBesteberegningImpl.validate = (values) => {
 
 KunYtelseBesteberegningImpl.transformValues = values => (values[besteberegningField]);
 
-const mapStateToProps = (state, initialProps) => ({
-  erBesteberegning: behandlingFormValueSelector(initialProps.formName)(state, besteberegningField),
+const mapStateToProps = state => ({
+  erBesteberegning: getFormValuesForBeregning(state)[besteberegningField],
 });
 
 export default connect(mapStateToProps)(KunYtelseBesteberegningImpl);

@@ -10,14 +10,12 @@ export const FastsettEndretBeregningsgrunnlagImpl = ({
   readOnly,
   perioder,
   skalHaEndretInformasjonIHeader,
-  formName,
 }) => (
   <EndringBeregningsgrunnlagForm
     perioder={perioder}
     readOnly={readOnly}
     isAksjonspunktClosed={isAksjonspunktClosed}
     skalHaEndretInformasjonIHeader={skalHaEndretInformasjonIHeader}
-    formName={formName}
   />
 );
 
@@ -54,11 +52,6 @@ FastsettEndretBeregningsgrunnlagImpl.propTypes = {
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   skalHaEndretInformasjonIHeader: PropTypes.bool.isRequired,
-  formName: PropTypes.string,
-};
-
-FastsettEndretBeregningsgrunnlagImpl.defaultProps = {
-  formName: undefined,
 };
 
 const mapStateToProps = (state) => {
