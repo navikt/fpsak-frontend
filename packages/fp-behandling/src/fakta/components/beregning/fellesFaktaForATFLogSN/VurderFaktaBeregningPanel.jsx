@@ -40,11 +40,13 @@ export const VurderFaktaBeregningPanelImpl = ({
   submittable,
   hasBegrunnelse,
   isDirty,
+  formName,
 }) => (
   <FormSection name={VURDER_FAKTA_BEREGNING_FORM_NAME}>
     <FaktaForATFLOgSNPanel
       readOnly={readOnly}
       isAksjonspunktClosed={isAksjonspunktClosed}
+      formName={formName}
     />
     <VerticalSpacer eightPx />
     <VerticalSpacer twentyPx />
@@ -63,6 +65,7 @@ VurderFaktaBeregningPanelImpl.propTypes = {
   isDirty: PropTypes.bool.isRequired,
   hasBegrunnelse: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
+  formName: PropTypes.string.isRequired,
 };
 
 // /// TRANSFORM VALUES METHODS ///////
