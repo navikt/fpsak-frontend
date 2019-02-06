@@ -24,7 +24,6 @@ init({
   integrations: [new Integrations.Breadcrumbs({ console: false })],
 });
 
-
 const history = createBrowserHistory({
   basename: '/fpsak/',
 });
