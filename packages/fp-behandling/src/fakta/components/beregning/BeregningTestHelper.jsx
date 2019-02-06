@@ -1,6 +1,6 @@
 import fpsakApi from 'data/fpsakApi';
 import { ApiStateBuilder } from '@fpsak-frontend/assets/testHelpers/data-test-helper';
-import fpsakBehandlingApi from 'behandlingFpsak/data/fpsakBehandlingApi';
+import fpsakBehandlingApi from 'behandlingFpsak/src/data/fpsakBehandlingApi';
 import { formName } from './BeregningInfoPanel';
 
 

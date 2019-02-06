@@ -5,7 +5,7 @@ import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import {
-  aksjonspunktPropType, faktaPanelCodes, FaktaEkspandertpanel, FaktaBegrunnelseTextField,
+  aksjonspunktPropType, faktaPanelCodes, FaktaEkspandertpanel,
 } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {

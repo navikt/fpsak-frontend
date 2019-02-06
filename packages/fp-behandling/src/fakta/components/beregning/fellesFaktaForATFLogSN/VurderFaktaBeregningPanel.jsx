@@ -5,13 +5,13 @@ import { FormSection } from 'redux-form';
 import { createSelector } from 'reselect';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { getBehandlingFormInitialValues } from 'behandlingFpsak/behandlingForm';
+import { getBehandlingFormInitialValues } from 'behandlingFpsak/src/behandlingForm';
 
-import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
+import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   getAksjonspunkter,
-} from 'behandlingFpsak/behandlingSelectors';
+} from 'behandlingFpsak/src/behandlingSelectors';
 import FaktaForATFLOgSNPanel, {
   transformValuesFaktaForATFLOgSN,
   getBuildInitialValuesFaktaForATFLOgSN, getValidationFaktaForATFLOgSN,

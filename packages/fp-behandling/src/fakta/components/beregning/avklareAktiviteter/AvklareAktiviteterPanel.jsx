@@ -4,15 +4,15 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import FaktaBegrunnelseTextField from 'behandlingFelles/fakta/components/FaktaBegrunnelseTextField';
-import { getBehandlingFormValues, getBehandlingFormInitialValues } from 'behandlingFpsak/behandlingForm';
+import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
+import { getBehandlingFormValues, getBehandlingFormInitialValues } from 'behandlingFpsak/src/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 import {
   getAksjonspunkter,
   getAvklarAktiviteter,
-} from 'behandlingFpsak/behandlingSelectors';
+} from 'behandlingFpsak/src/behandlingSelectors';
 import { FormSection } from 'redux-form';
 import VentelonnVartpengerPanel from './VentelonnVartpengerPanel';
 

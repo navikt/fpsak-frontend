@@ -9,7 +9,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { isBGAksjonspunktSomGirFritekstfelt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
-import { getSimuleringResultat, getTilbakekrevingValg } from 'behandlingFpsak/behandlingSelectors';
+import { getSimuleringResultat, getTilbakekrevingValg } from 'behandlingFpsak/src/behandlingSelectors';
 
 const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) => tilbakekrevingKode === avregningCodes.TILBAKEKR_INFOTRYGD
   && (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
