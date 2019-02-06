@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 import moment from 'moment';
-import { captureException, withScope } from '@sentry/browser';
+import { captureException, withScope, configureScope } from '@sentry/browser';
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import { parseQueryString } from '@fpsak-frontend/utils';
 import AppConfigResolver from './AppConfigResolver';
@@ -60,6 +60,7 @@ class AppIndex extends Component {
 
   componentDidCatch(error, info) {
     const { showCrashMessage: showCrashMsg } = this.props;
+
     withScope((scope) => {
       Object.keys(info).forEach((key) => {
         scope.setExtra(key, info[key]);
@@ -79,6 +80,12 @@ class AppIndex extends Component {
     const {
       location, crashMessage, errorMessagesLength, navAnsattName, funksjonellTid, removeErrorMessage: removeErrorMsg,
     } = this.props;
+
+    // todo sjekke om dette er beste stedet å sette dette for sentry
+    configureScope((scope) => {
+      scope.setUser({ username: navAnsattName });
+    });
+
     const queryStrings = parseQueryString(location.search);
 
     return (
