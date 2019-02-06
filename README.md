@@ -5,7 +5,7 @@ Monorepo for Frontend kode for vl-foreldrepenger.
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=navikt_fpsak-frontend&metric=alert_status)](https://sonarcloud.io/dashboard?id=navikt_fpsak-frontend)
 [![Known Vulnerabilities](https://snyk.io/test/github/navikt/fpsak-frontend/badge.svg)](https://snyk.io/test/github/navikt/fpsak-frontend) 
-
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 ## Komme i gang
 ````
@@ -20,7 +20,6 @@ yarn build
 * Sette opp lerna publish for de pakkene som skal være åpne
 * gjøre form pakken tilgjengelig med final-form og redux-form
 * Legge inn readme for pakkene
-* Dele opp pakkene i flere pakker
 
 ### Licenses and attribution
 *For updated information, always see LICENSE first!*
