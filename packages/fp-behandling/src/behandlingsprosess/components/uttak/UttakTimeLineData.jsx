@@ -4,7 +4,9 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { calcDays } from '@fpsak-frontend/utils';
-import { Image, EditedIcon } from '@fpsak-frontend/shared-components';
+import {
+  Image, EditedIcon, ElementWrapper, AksjonspunktHelpText, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
 import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
 import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
@@ -21,6 +23,83 @@ const findArrowLeftImg = isHovering => (isHovering ? arrowLeftFilledImageUrl : a
 const findArrowRightImg = isHovering => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
 const splitPeriodImg = isHovering => (isHovering ? splitPeriodImageHoverUrl : splitPeriodImageUrl);
 
+const getCorrectEmptyArbeidsForhold = (preiodeTypeKode, arbeidsForhold) => {
+  const arbeidsForholdMedNullDagerIgjenArray = [];
+  let arbeidsforholdMedPositivSaldoFinnes = false;
+  if (arbeidsForhold.stonadskontoer[preiodeTypeKode] && arbeidsForhold.stonadskontoer[preiodeTypeKode].aktivitetSaldoDtoList) {
+    arbeidsForhold.stonadskontoer[preiodeTypeKode].aktivitetSaldoDtoList.forEach((item) => {
+      if (item.saldo === 0) {
+        arbeidsForholdMedNullDagerIgjenArray.push(item.aktivitetIdentifikator.arbeidsgiver.navn);
+      } else {
+        arbeidsforholdMedPositivSaldoFinnes = true;
+      }
+    });
+  }
+  if (arbeidsforholdMedPositivSaldoFinnes) {
+    return arbeidsForholdMedNullDagerIgjenArray;
+  }
+  return [];
+};
+
+const hentApTekst = (kode, stonadskonto, aktiviteter) => {
+  const texts = [];
+
+  const uttakPanelAksjonsPunktKoder = {
+    5001: 'UttakPanel.Aksjonspunkt.5001',
+    5002: 'UttakPanel.Aksjonspunkt.5002',
+    5003: 'UttakPanel.Aksjonspunkt.5003',
+    5004: 'UttakPanel.Aksjonspunkt.5004',
+    5005: 'UttakPanel.Aksjonspunkt.5005',
+    5006: 'UttakPanel.Aksjonspunkt.5006',
+    5007: 'UttakPanel.Aksjonspunkt.5007',
+    5009: 'UttakPanel.Aksjonspunkt.5009',
+    5010: 'UttakPanel.Aksjonspunkt.5010',
+    5011: 'UttakPanel.Aksjonspunkt.5011',
+    5012: 'UttakPanel.Aksjonspunkt.5012',
+    5014: 'UttakPanel.Aksjonspunkt.5014',
+    5016: 'UttakPanel.Aksjonspunkt.5016',
+    5024: 'UttakPanel.Aksjonspunkt.5024',
+    5072: 'UttakPanel.Aksjonspunkt.5072',
+    5073: 'UttakPanel.Aksjonspunkt.5073',
+    5074: 'UttakPanel.Aksjonspunkt.5074',
+    5075: 'UttakPanel.Aksjonspunkt.5075',
+    5076: 'UttakPanel.Aksjonspunkt.5076',
+    5077: 'UttakPanel.Aksjonspunkt.5077',
+    5078: 'UttakPanel.Aksjonspunkt.5078',
+    5079: 'UttakPanel.Aksjonspunkt.5079',
+    5098: 'UttakPanel.Aksjonspunkt.5098',
+  };
+
+  if (kode === '5001') {
+    const arbeidsForhold = getCorrectEmptyArbeidsForhold(aktiviteter, stonadskonto);
+    const arbeidsForholdMedNullDagerIgjen = arbeidsForhold.join();
+    if (arbeidsForhold.length > 1) {
+      texts.push(<FormattedMessage
+        key="manuellÅrsak"
+        id="UttakPanel.manuellBehandlingÅrsakArbeidsforhold"
+        values={{ arbeidsforhold: arbeidsForholdMedNullDagerIgjen }}
+      />);
+    } else if (arbeidsForhold.length === 1) {
+      texts.push(<FormattedMessage
+        key="manuellÅrsak"
+        id="UttakPanel.manuellBehandlingÅrsakEnskiltArbeidsforhold"
+        values={{ arbeidsforhold: arbeidsForhold }}
+      />);
+    } else {
+      texts.push(<FormattedMessage
+        key="manuellÅrsak"
+        id={uttakPanelAksjonsPunktKoder[kode]}
+      />);
+    }
+  } else {
+    texts.push(<FormattedMessage
+      key="manuellÅrsak"
+      id={uttakPanelAksjonsPunktKoder[kode]}
+    />);
+  }
+
+  return texts;
+};
 
 export class UttakTimeLineData extends Component {
   constructor() {
@@ -126,6 +205,7 @@ export class UttakTimeLineData extends Component {
       callbackUpdateActivity,
       callbackCancelSelectedActivity,
       isApOpen,
+      stonadskonto,
       harSoktOmFlerbarnsdager,
     } = this.props;
     const { showDelPeriodeModal } = this.state;
@@ -190,6 +270,17 @@ export class UttakTimeLineData extends Component {
                 </span>
               </Column>
             </Row>
+            {selectedItemData.manuellBehandlingÅrsak && selectedItemData.manuellBehandlingÅrsak.kode !== '-' && (
+            <ElementWrapper>
+              <AksjonspunktHelpText isAksjonspunktOpen={selectedItemData.manuellBehandlingÅrsak !== null}>
+                {selectedItemData.periodeType
+                  ? hentApTekst(selectedItemData.manuellBehandlingÅrsak.kode, stonadskonto, selectedItemData.periodeType.kode)
+                  : hentApTekst(selectedItemData.manuellBehandlingÅrsak.kode, stonadskonto)}
+              </AksjonspunktHelpText>
+              <VerticalSpacer twentyPx />
+            </ElementWrapper>
+            )
+    }
             <UttakActivity
               cancelSelectedActivity={callbackCancelSelectedActivity}
               updateActivity={callbackUpdateActivity}
@@ -219,12 +310,14 @@ UttakTimeLineData.propTypes = {
   formName: PropTypes.string.isRequired,
   activityPanelName: PropTypes.string.isRequired,
   isApOpen: PropTypes.bool,
+  stonadskonto: PropTypes.shape(),
   harSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
 };
 
 UttakTimeLineData.defaultProps = {
   selectedItemData: undefined,
   isApOpen: false,
+  stonadskonto: {},
 };
 
 export default UttakTimeLineData;

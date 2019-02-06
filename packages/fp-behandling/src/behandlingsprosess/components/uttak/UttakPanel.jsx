@@ -35,30 +35,9 @@ const uttakAksjonspunkter = [
   aksjonspunktCodes.FASTSETT_UTTAKPERIODER,
 ];
 
-
-const getCorrectEmptyArbeidsForhold = (preiodeTypeKode, arbeidsForhold) => {
-  const arbeidsForholdMedNullDagerIgjenArray = [];
-  let arbeidsforholdMedPositivSaldo = false;
-  if (arbeidsForhold.stonadskontoer[preiodeTypeKode] && arbeidsForhold.stonadskontoer[preiodeTypeKode].aktivitetSaldoDtoList) {
-    arbeidsForhold.stonadskontoer[preiodeTypeKode].aktivitetSaldoDtoList.forEach((item) => {
-      if (item.saldo === 0) {
-        arbeidsForholdMedNullDagerIgjenArray.push(item.aktivitetIdentifikator.arbeidsgiver.navn);
-      } else {
-        arbeidsforholdMedPositivSaldo = true;
-      }
-    });
-  }
-  if (arbeidsforholdMedPositivSaldo) {
-    return arbeidsForholdMedNullDagerIgjenArray;
-  }
-  return [];
-};
-
-const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter, stonadskonto) => {
+const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter) => {
   const texts = [];
   const [helpText] = uttaksresultat.perioderSøker.filter(p => (p.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING));
-  const helptTextAksjonspunkter = aksjonspunkter.filter(ap => ap.definisjon.kode !== aksjonspunktCodes.FASTSETT_UTTAKPERIODER
-    && ap.definisjon.kode !== aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER);
 
   const overstyrApHelpTextOpen = aksjonspunkter.length === 1
     && aksjonspunkter[0].definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER
@@ -67,70 +46,8 @@ const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter, stonadskonto) => 
   const overstyrApHelpTextUtfort = aksjonspunkter.length === 1
     && aksjonspunkter[0].definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER
     && aksjonspunkter[0].status.kode === 'UTFO';
-  const uttakPanelAksjonsPunktKoder = {
-    5001: 'UttakPanel.Aksjonspunkt.5001',
-    5002: 'UttakPanel.Aksjonspunkt.5002',
-    5003: 'UttakPanel.Aksjonspunkt.5003',
-    5004: 'UttakPanel.Aksjonspunkt.5004',
-    5005: 'UttakPanel.Aksjonspunkt.5005',
-    5006: 'UttakPanel.Aksjonspunkt.5006',
-    5007: 'UttakPanel.Aksjonspunkt.5007',
-    5008: 'UttakPanel.Aksjonspunkt.5008',
-    5009: 'UttakPanel.Aksjonspunkt.5009',
-    5010: 'UttakPanel.Aksjonspunkt.5010',
-    5011: 'UttakPanel.Aksjonspunkt.5011',
-    5012: 'UttakPanel.Aksjonspunkt.5012',
-    5013: 'UttakPanel.Aksjonspunkt.5013',
-    5018: 'UttakPanel.Aksjonspunkt.5018',
-    5072: 'UttakPanel.Aksjonspunkt.5072',
-    5073: 'UttakPanel.Aksjonspunkt.5073',
-    5074: 'UttakPanel.Aksjonspunkt.5074',
-    5075: 'UttakPanel.Aksjonspunkt.5075',
-    5076: 'UttakPanel.Aksjonspunkt.5076',
-    5077: 'UttakPanel.Aksjonspunkt.5077',
-    5078: 'UttakPanel.Aksjonspunkt.5078',
-    5079: 'UttakPanel.Aksjonspunkt.5079',
-    5024: 'UttakPanel.Aksjonspunkt.5024',
-  };
-  if (helptTextAksjonspunkter) {
-    helptTextAksjonspunkter.forEach((ap) => {
-      if (uttakPanelAksjonsPunktKoder[ap.definisjon.kode]) {
-        texts.push(<FormattedMessage key="aksjonspunktTekst" id={uttakPanelAksjonsPunktKoder[ap.definisjon.kode]} />);
-      } else {
-        texts.push(<FormattedMessage key="aksjonspunktTekst" id={`UttakPanel.Aksjonspunkt.${ap.definisjon.kode}`} />);
-      }
-    });
-  }
+
   if (helpText) {
-    if (helpText.periodeResultatÅrsak && helpText.periodeType && helpText.periodeResultatÅrsak.kode === '4002') {
-      const arbeidsForhold = getCorrectEmptyArbeidsForhold(helpText.periodeType.kode, stonadskonto);
-      const arbeidsForholdMedNullDagerIgjen = arbeidsForhold.join();
-      if (arbeidsForhold.length > 1) {
-        texts.push(<FormattedMessage
-          key="manuellÅrsak"
-          id="UttakPanel.manuellBehandlingÅrsakArbeidsforhold"
-          values={{ arbeidsforhold: arbeidsForholdMedNullDagerIgjen }}
-        />);
-      } else if (arbeidsForhold.length === 1) {
-        texts.push(<FormattedMessage
-          key="manuellÅrsak"
-          id="UttakPanel.manuellBehandlingÅrsakEnskiltArbeidsforhold"
-          values={{ arbeidsforhold: arbeidsForhold }}
-        />);
-      } else if (uttakPanelAksjonsPunktKoder[helpText.manuellBehandlingÅrsak.kode]) {
-        texts.push(<FormattedMessage
-          key="manuellÅrsak"
-          id={uttakPanelAksjonsPunktKoder[helpText.manuellBehandlingÅrsak.kode]}
-        />);
-      }
-    } else if (uttakPanelAksjonsPunktKoder[helpText.manuellBehandlingÅrsak.kode]) {
-      texts.push(<FormattedMessage
-        key="manuellÅrsak"
-        id={uttakPanelAksjonsPunktKoder[helpText.manuellBehandlingÅrsak.kode]}
-      />);
-    } else {
-      texts.push(<FormattedMessage key="manuellÅrsak" id={`UttakPanel.Aksjonspunkt.${helpText.manuellBehandlingÅrsak.kode}`} />);
-    }
     texts.push(<FormattedMessage key="generellTekst" id="UttakPanel.Aksjonspunkt.Generell" />);
   }
 
@@ -166,7 +83,7 @@ export const UttakPanelImpl = ({
     && (
       <ElementWrapper>
         <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
-          {hentApTekst(uttaksresultat, isApOpen, aksjonspunkter, stonadskonto)}
+          {hentApTekst(uttaksresultat, isApOpen, aksjonspunkter)}
         </AksjonspunktHelpText>
         <VerticalSpacer twentyPx />
       </ElementWrapper>
