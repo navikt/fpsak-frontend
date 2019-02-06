@@ -2282,6 +2282,9 @@
 
   "DataFetchPendingModal.LosningenJobberMedBehandlingen": "Løsningen jobber med behandlingen...",
 
+  "DashboardResolver.FpLosErNede": "Forsiden har nedetid",
+
   "Rest.ErrorMessage.General": "Det har oppstått en feil som påvirker saksbehandlingsløsningen. Vi jobber med saken, så du trenger ikke melde den inn. Prøv igjen senere.",
-  "Rest.ErrorMessage.DownTime": "Saksbehandlingsløsningen venter på et annet system som har nedetid nå. Du trenger ikke melde inn en feil, men prøv igjen {date} kl. {time}.\n{message}"
+  "Rest.ErrorMessage.DownTime": "Saksbehandlingsløsningen venter på et annet system som har nedetid nå. Du trenger ikke melde inn en feil, men prøv igjen {date} kl. {time}.\n{message}",
+  "Rest.ErrorMessage.Timeout": "Serverkall har gått ut på tid: {location}"
 }

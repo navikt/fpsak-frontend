@@ -1,40 +1,56 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { injectIntl, intlShape } from 'react-intl';
 
-import { getFeatureToggles } from 'app/duck';
+import errorHandler from '@fpsak-frontend/error-api-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { getPathToFplos, featureToggle } from '@fpsak-frontend/fp-felles';
+import { getPathToFplos } from '@fpsak-frontend/fp-felles';
 import Dashboard from './Dashboard';
 
-const notDevelopment = () => process.env.NODE_ENV !== 'development';
+const isDevelopment = () => process.env.NODE_ENV === 'development';
 
 /**
  * DashboardResolver
  *
- * Komponent som redirecter til Fplos eller går til fremsiden til Fpsak
+ * Komponent som redirecter til Fplos eller går til fremsiden til Fpsak. Går alltid til Fpsak på utviklingsmiljø eller når Fplos ikke kan nåes
  */
 export class DashboardResolver extends Component {
-  static propTypes = {
-    shouldOpenFplos: PropTypes.bool.isRequired,
-  };
+  state = { isLoading: true };
 
-  componentDidMount() {
-    const { shouldOpenFplos } = this.props;
-    if (shouldOpenFplos) {
-      window.location.assign(getPathToFplos(window.location.href));
+  componentDidMount = async () => {
+    if (isDevelopment()) {
+      return;
+    }
+    try {
+      const url = getPathToFplos(window.location.href);
+      await axios.get(url); // Sjekk om LOS er oppe
+      window.location.assign(url);
+    } catch (e) {
+      const { addErrorMessage, intl } = this.props;
+      this.setState(prevState => ({ ...prevState, isLoading: false }));
+      addErrorMessage(intl.formatMessage({ id: 'DashboardResolver.FpLosErNede' }));
     }
   }
 
   render() {
-    const { shouldOpenFplos } = this.props;
-    return shouldOpenFplos ? <LoadingPanel /> : <Dashboard />;
+    const { isLoading } = this.state;
+    return !isDevelopment() && isLoading ? <LoadingPanel /> : <Dashboard />;
   }
 }
 
-const mapStateToProps = state => ({
-  shouldOpenFplos: getFeatureToggles(state)[featureToggle.LINK_TIL_FPLOS_AKTIVERT]
-    && notDevelopment(),
+DashboardResolver.propTypes = {
+  intl: intlShape.isRequired,
+  addErrorMessage: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = () => ({
 });
 
-export default connect(mapStateToProps)(DashboardResolver);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  addErrorMessage: errorHandler.getErrorActionCreator(),
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(DashboardResolver));
