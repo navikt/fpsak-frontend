@@ -2,9 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { FormattedMessage } from 'react-intl';
-
+import Modal from 'nav-frontend-modal';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import Modal from './Modal';
 import Image from './Image';
 
 import OkAvbrytModal from './OkAvbrytModal';
