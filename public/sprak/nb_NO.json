@@ -58,6 +58,7 @@
   "Behandlingspunkt.ResultatKlage": "Resultat",
   "Behandlingspunkt.Avregning": "Simulering",
   "Behandlingspunkt.Tilbakekreving": "Tilbakekreving",
+  "Behandlingspunkt.Foreldelse": "Foreldelse",
 
   "Beregning.BeregningsgrunnlagManueltATFL": "Fastsatt beregningsgrunnlag for arbeidstaker/frilanser",
   "Beregning.VurderVarigEndring": "Vurdering av varig endret eller nyoppstartet næring",
@@ -89,6 +90,12 @@
 
   "FaktaBegrunnelseTextField.BegrunnEndringene": "Begrunn endringene",
   "FaktaBegrunnelseTextField.Vurdering": "Vurdering",
+
+  "Foreldelse.Vurdering": "Vurdering",
+  "Foreldelse.RadioGroup.Foreldet": "Vurder om perioden er foreldet",
+  "Foreldelse.RadioOption.Foreldet": "Perioden er foreldet",
+  "Foreldelse.RadioOption.IkkeForeldet": "Perioden er ikke foreldet",
+  "Foreldelse.RadioOption.IkkeForeldetTilleggsfrist": "Perioden er ikke foreldet, regel om tilleggsfrist (10år) benyttes",
 
   "BehandlingspunktBegrunnelseTextField.ExplanationRequired": "Vurdering",
   "BehandlingspunktBegrunnelseTextField.ExplanationRequiredReadOnly": "Begrunnelse",

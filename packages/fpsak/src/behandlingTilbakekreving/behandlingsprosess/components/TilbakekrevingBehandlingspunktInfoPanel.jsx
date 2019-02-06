@@ -6,7 +6,9 @@ import {
   hasBehandlingspunktAtLeastOneOpenAksjonspunkt,
   isBehandlingspunktAksjonspunkterSolvable,
   isSelectedBehandlingspunktReadOnly,
+  getBehandlingspunktAksjonspunkterCodes,
 } from '../behandlingsprosessSelectors';
+import ForeldelsePanel from './foreldelse/ForeldelsePanel';
 import TilbakekrevingPanel from './tilbakekreving/TilbakekrevingPanel';
 import styles from './tilbakekrevingBehandlingspunktInfoPanel.less';
 
@@ -22,13 +24,28 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({ // NOSONAR Kompleksite
   readOnly,
   isApSolvable,
   submitCallback,
+  selectedBehandlingspunkt,
+  apCodes,
 }) => (
   <div className={findStyle(openAksjonspunkt, isApSolvable, readOnly)}>
-    <TilbakekrevingPanel
-      submitCallback={submitCallback}
-      readOnly={readOnly}
-      isApOpen={openAksjonspunkt}
-    />
+    {ForeldelsePanel.supports(selectedBehandlingspunkt, apCodes)
+    && (
+      <ForeldelsePanel
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+        isApOpen={openAksjonspunkt}
+      />
+    )
+    }
+    {TilbakekrevingPanel.supports(selectedBehandlingspunkt, apCodes)
+    && (
+      <TilbakekrevingPanel
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+        isApOpen={openAksjonspunkt}
+      />
+    )
+    }
   </div>
 );
 
@@ -37,12 +54,15 @@ TilbakekrevingBehandlingspunktInfoPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isApSolvable: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
+  selectedBehandlingspunkt: PropTypes.string.isRequired,
+  apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 const mapStateToProps = state => ({
   openAksjonspunkt: hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
   readOnly: isSelectedBehandlingspunktReadOnly(state),
   isApSolvable: isBehandlingspunktAksjonspunkterSolvable(state),
+  apCodes: getBehandlingspunktAksjonspunkterCodes(state),
 });
 
 export default connect(mapStateToProps)(TilbakekrevingBehandlingspunktInfoPanel);

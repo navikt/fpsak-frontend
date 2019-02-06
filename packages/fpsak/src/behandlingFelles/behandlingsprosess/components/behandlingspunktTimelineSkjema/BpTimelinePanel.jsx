@@ -27,10 +27,10 @@ export class BpTimelinePanel extends Component {
   }
 
   setSelectedDefaultPeriod() {
-    const { tilbakekrevingsresultatActivity } = this.props;
+    const { resultatActivity } = this.props;
     const { selectedItem } = this.state;
-    const defaultSelectedElement = tilbakekrevingsresultatActivity.find(period => period.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING);
-    const defaultSelectedElementIfNoAP = tilbakekrevingsresultatActivity.find(period => period.hovedsoker);
+    const defaultSelectedElement = resultatActivity.find(period => period.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING);
+    const defaultSelectedElementIfNoAP = resultatActivity.find(period => period.hovedsoker);
     if (!selectedItem) {
       this.setState({ selectedItem: defaultSelectedElement || defaultSelectedElementIfNoAP });
     }
@@ -54,10 +54,10 @@ export class BpTimelinePanel extends Component {
   }
 
   updateActivity(values) {
-    const { tilbakekrevingsresultatActivity, activityPanelName } = this.props;
+    const { resultatActivity, activityPanelName } = this.props;
     const { ...verdier } = values;
 
-    const otherThanUpdated = tilbakekrevingsresultatActivity.filter(o => o.id !== verdier.id);
+    const otherThanUpdated = resultatActivity.filter(o => o.id !== verdier.id);
     const sortedActivities = otherThanUpdated.concat(verdier);
     sortedActivities.sort((a, b) => a.id - b.id);
     this.setFormField(activityPanelName, sortedActivities);
@@ -71,21 +71,21 @@ export class BpTimelinePanel extends Component {
   }
 
   openPeriodInfo(event) {
-    const { tilbakekrevingsresultatActivity } = this.props;
+    const { resultatActivity } = this.props;
     const { selectedItem: currentSelectedItem } = this.state;
     if (currentSelectedItem) {
       this.setSelectedTilbakekrevingActivity(undefined);
     } else {
-      const period = tilbakekrevingsresultatActivity.find(item => item.id === 1);
+      const period = resultatActivity.find(item => item.id === 1);
       this.setSelectedTilbakekrevingActivity(period);
     }
     event.preventDefault();
   }
 
   selectHandler(eventProps) {
-    const { tilbakekrevingsresultatActivity } = this.props;
+    const { resultatActivity } = this.props;
     const { selectedItem: currentSelectedItem } = this.state;
-    const selectedItem = tilbakekrevingsresultatActivity.find(item => item.id === eventProps.items[0]);
+    const selectedItem = resultatActivity.find(item => item.id === eventProps.items[0]);
     if (currentSelectedItem) {
       this.setState({ selectedItem: undefined });
       this.setSelectedTilbakekrevingActivity(selectedItem);
@@ -96,28 +96,28 @@ export class BpTimelinePanel extends Component {
   }
 
   nextPeriod(event) {
-    const { tilbakekrevingsresultatActivity } = this.props;
+    const { resultatActivity } = this.props;
     const { selectedItem } = this.state;
-    const newIndex = tilbakekrevingsresultatActivity.findIndex(item => item.id === selectedItem.id) + 1;
-    if (newIndex < tilbakekrevingsresultatActivity.length) {
-      this.setSelectedTilbakekrevingActivity(tilbakekrevingsresultatActivity[newIndex]);
+    const newIndex = resultatActivity.findIndex(item => item.id === selectedItem.id) + 1;
+    if (newIndex < resultatActivity.length) {
+      this.setSelectedTilbakekrevingActivity(resultatActivity[newIndex]);
     }
     event.preventDefault();
   }
 
   prevPeriod(event) {
-    const { tilbakekrevingsresultatActivity } = this.props;
+    const { resultatActivity } = this.props;
     const { selectedItem } = this.state;
-    const newIndex = tilbakekrevingsresultatActivity.findIndex(item => item.id === selectedItem.id) - 1;
+    const newIndex = resultatActivity.findIndex(item => item.id === selectedItem.id) - 1;
     if (newIndex >= 0) {
-      this.setSelectedTilbakekrevingActivity(tilbakekrevingsresultatActivity[newIndex]);
+      this.setSelectedTilbakekrevingActivity(resultatActivity[newIndex]);
     }
     event.preventDefault();
   }
 
   render() {
     const {
-      tilbakekrevingsresultatActivity,
+      resultatActivity,
       behandlingFormPrefix,
       reduxFormChange: formChange,
       children,
@@ -138,7 +138,7 @@ export class BpTimelinePanel extends Component {
         <BpTimeline
           selectedPeriod={selectedItem}
           customTimes={customTimes}
-          tilbakekrevingPerioder={tilbakekrevingsresultatActivity}
+          tilbakekrevingPerioder={resultatActivity}
           selectPeriodCallback={this.selectHandler}
           openPeriodInfo={this.openPeriodInfo}
           hovedsokerKjonnKode={hovedsokerKjonnKode}
@@ -151,7 +151,7 @@ export class BpTimelinePanel extends Component {
             callbackBackward={this.prevPeriod}
             callbackUpdateActivity={this.updateActivity}
             callbackCancelSelectedActivity={this.cancelSelectedActivity}
-            tilbakekrevingsresultatActivity={tilbakekrevingsresultatActivity}
+            resultatActivity={resultatActivity}
             reduxFormChange={formChange}
             behandlingFormPrefix={behandlingFormPrefix}
             formName={formName}
@@ -167,7 +167,7 @@ export class BpTimelinePanel extends Component {
 }
 
 BpTimelinePanel.propTypes = {
-  tilbakekrevingsresultatActivity: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  resultatActivity: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
   formName: PropTypes.string.isRequired,
   activityPanelName: PropTypes.string.isRequired,

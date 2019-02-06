@@ -12,8 +12,10 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { getBehandlingVersjon } from 'behandlingTilbakekreving/selectors/tilbakekrevingBehandlingSelectors';
 import { getSelectedBehandlingId } from 'behandlingTilbakekreving/duck';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingTilbakekreving/behandlingForm';
-import BpTimelinePanel from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktTimelineSkjema/BpTimelinePanel';
-import { addClassNameGroupIdToPerioder } from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktTimelineSkjema/BpTimelineHelper';
+import BpTimelinePanel from 'behandlingFelles/behandlingsprosess/components/behandlingspunktTimelineSkjema/BpTimelinePanel';
+import behandlingspunktCodes from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { addClassNameGroupIdToPerioder } from 'behandlingFelles/behandlingsprosess/components/behandlingspunktTimelineSkjema/BpTimelineHelper';
 import {
   hovedsokerKjonnKode, tilbakekrevingPerioderResultat, customTimes,
 } from './mockData';
@@ -21,6 +23,9 @@ import TilbakekrevingForm from './TilbakekrevingForm';
 
 const ACTIVITY_PANEL_NAME = 'tilbakekrevingsresultatActivity';
 const formName = 'TilbakekrevingForm';
+const tilbakekrevingAksjonspunkter = [
+  aksjonspunktCodes.VURDER_TILBAKEKREVING,
+];
 
 const TilbakekrevingPanelImpl = ({
   tilbakekrevingsresultatActivity,
@@ -39,7 +44,7 @@ const TilbakekrevingPanelImpl = ({
         <BpTimelinePanel
           customTimes={customTimes}
           hovedsokerKjonnKode={hovedsokerKjonnKode}
-          tilbakekrevingsresultatActivity={tilbakekrevingsresultatActivity}
+          resultatActivity={tilbakekrevingsresultatActivity}
           activityPanelName={ACTIVITY_PANEL_NAME}
           behandlingFormPrefix={behandlingFormPrefix}
           reduxFormChange={formChange}
@@ -112,5 +117,7 @@ const TilbakekrevingPanel = connect(mapStateToProps, mapDispatchToProps)(injectI
   form: formName,
   enableReinitialize: true,
 })(TilbakekrevingPanelImpl)));
+
+TilbakekrevingPanel.supports = (bp, apCodes) => bp === behandlingspunktCodes.TILBAKEKREVING || tilbakekrevingAksjonspunkter.some(ap => apCodes.includes(ap));
 
 export default TilbakekrevingPanel;

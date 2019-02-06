@@ -21,7 +21,7 @@ import {
   VerticalSpacer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
-import { getStatusPeriode } from 'behandlingFelles/behandlingsprosess/components/BehandlingspunktTimelineSkjema/BpTimelineHelper';
+import { getStatusPeriode } from 'behandlingFelles/behandlingsprosess/components/behandlingspunktTimelineSkjema/BpTimelineHelper';
 import tilbakekrevingCodes from './tilbakekrevingCodes';
 import Uaktsomhet from './Uaktsomhet';
 import HandletUaktsomhetGrad from './HandletUaktsomhetGrad';

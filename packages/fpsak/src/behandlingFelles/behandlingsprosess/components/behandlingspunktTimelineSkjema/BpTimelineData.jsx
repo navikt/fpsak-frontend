@@ -40,9 +40,9 @@ export class BpTimelineData extends Component {
   }
 
   splitPeriod(formValues) {
-    const { tilbakekrevingsresultatActivity, activityPanelName, callbackSetSelected: setSelected } = this.props;
-    const otherThanUpdated = tilbakekrevingsresultatActivity.filter(o => o.id !== formValues.periodeId);
-    const periodToUpdate = tilbakekrevingsresultatActivity.filter(o => o.id === formValues.periodeId);
+    const { resultatActivity, activityPanelName, callbackSetSelected: setSelected } = this.props;
+    const otherThanUpdated = resultatActivity.filter(o => o.id !== formValues.periodeId);
+    const periodToUpdate = resultatActivity.filter(o => o.id === formValues.periodeId);
     const forstePeriode = JSON.parse(JSON.stringify(...periodToUpdate));
     const andrePeriode = JSON.parse(JSON.stringify(...periodToUpdate));
     const currentId = formValues.periodeId;
@@ -106,7 +106,7 @@ export class BpTimelineData extends Component {
 
 BpTimelineData.propTypes = {
   selectedItemData: PropTypes.shape().isRequired,
-  tilbakekrevingsresultatActivity: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  resultatActivity: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   callbackForward: PropTypes.func.isRequired,

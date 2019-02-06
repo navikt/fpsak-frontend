@@ -20,6 +20,7 @@ const behandlingspunktCodes = {
   SAKSOPPLYSNINGER: 'saksopplysninger',
   SOEKNADSFRIST: 'soeknadsfrist',
   TILBAKEKREVING: 'tilbakekreving',
+  FORELDELSE: 'foreldelse',
   TILKJENT_YTELSE: 'tilkjent_ytelse',
   VARSEL: 'varsel',
   VEDTAK: 'vedtak',
