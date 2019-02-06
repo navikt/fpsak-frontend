@@ -1,6 +1,6 @@
 /* @flow */
 import axios from 'axios';
-
+import { configureScope } from '@sentry/browser';
 import initRestMethods from './axiosRestMethods';
 
 /**
@@ -16,8 +16,13 @@ const getAxiosHttpClientApi = () => {
   axiosInstance.isCancel = axios.isCancel;
 
   axiosInstance.interceptors.request.use((c): Object => {
+    const navCallId = `CallId_${(new Date()).getTime()}_${Math.floor(Math.random() * 1000000000)}`;
     const config = Object.assign({}, c);
-    config.headers['Nav-Callid'] = `CallId_${(new Date()).getTime()}_${Math.floor(Math.random() * 1000000000)}`;
+    configureScope((scope) => {
+      scope.setTag('Nav-CallId', navCallId);
+    });
+    config.headers['Nav-Callid'] = navCallId;
+
     return config;
   });
 
