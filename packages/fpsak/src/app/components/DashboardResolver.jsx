@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 
 import { getFeatureToggles } from 'app/duck';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { getPathToFplos, featureToggle } from '@fpsak-frontend/fp-felles';
 import Dashboard from './Dashboard';
-import featureToggle from '../featureToggle';
-import { getPathToFplos } from '../paths';
 
 const notDevelopment = () => process.env.NODE_ENV !== 'development';
 

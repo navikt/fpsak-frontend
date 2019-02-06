@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 import { getSelectedSaksnummer, getFagsakYtelseType, getSelectedFagsakStatus } from 'fagsak/fagsakSelectors';
 import { getBehandlinger, getNoExistingBehandlinger } from 'behandling/selectors/behandlingerSelectors';
 import { getSelectedBehandlingId } from 'behandling/duck';
-import behandlingPropType from 'behandlingFelles/proptypes/behandlingPropType';
+import { behandlingPropType } from '@fpsak-frontend/fp-behandling-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import requireProps from 'app/data/requireProps';
+import { requireProps } from '@fpsak-frontend/fp-felles';
 
 import {
   getShowAllBehandlinger, toggleShowAllBehandlinger, resetFagsakProfile, getAnnenPartBehandling,

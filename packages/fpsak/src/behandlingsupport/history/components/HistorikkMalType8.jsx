@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, injectIntl, intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { createLocationForHistorikkItems } from 'app/paths';
-import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinnslagDelPropType';
+import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
+import { historikkinnslagDelPropType } from '@fpsak-frontend/fp-behandling-felles';
 
 import {
   findEndretFeltNavn,

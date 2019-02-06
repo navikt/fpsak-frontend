@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 
 import FagsakIndex from 'fagsak/FagsakIndex';
-import { aktoerPath, fagsakPath } from 'app/paths';
+import { aktoerPath, fagsakPath } from '@fpsak-frontend/fp-felles';
 
 import DashboardResolver from './DashboardResolver';
 import MissingPage from './MissingPage';

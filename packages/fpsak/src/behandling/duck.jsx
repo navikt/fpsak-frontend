@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
 import { getSelectedSaksnummer } from 'fagsak/duck';
-import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import reducerRegistry from '../ReducerRegistry';
+import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
+import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 
 const reducerName = 'behandling';
 

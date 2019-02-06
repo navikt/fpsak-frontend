@@ -1,6 +1,6 @@
 import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
 
-import reducerRegistry from '../ReducerRegistry';
+import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 
 const reducerName = 'behandlingSupport';
 

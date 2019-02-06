@@ -5,11 +5,11 @@ import { createBrowserHistory } from 'history';
 import { render } from 'react-dom';
 import { init, Integrations } from '@sentry/browser';
 
+import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 import errorHandler from '@fpsak-frontend/error-api-redux';
 
 import AppIndex from 'app/AppIndex';
 import configureStore from './store';
-import reducerRegistry from './ReducerRegistry';
 
 
 /* global VERSION:true */

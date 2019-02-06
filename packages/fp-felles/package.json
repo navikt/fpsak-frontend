@@ -1,0 +1,21 @@
+{
+  "name": "@fpsak-frontend/fp-felles",
+  "version": "1.0.0",
+  "module": "index.jsx",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@fpsak-frontend/person-info": "1.0.0",
+    "@fpsak-frontend/utils": "1.0.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.6.3",
+    "react-redux": "^5.1.1",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.1",
+    "reselect": "^4.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "sinon": "^5.0.10"
+  }
+}

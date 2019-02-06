@@ -1,5 +1,5 @@
+import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 import fpsakApi from '../data/fpsakApi';
-import reducerRegistry from '../ReducerRegistry';
 
 
 export const reducerName = 'aktoer';

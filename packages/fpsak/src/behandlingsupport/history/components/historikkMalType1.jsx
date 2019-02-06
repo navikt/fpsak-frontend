@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinnslagDelPropType';
+import { historikkinnslagDelPropType } from '@fpsak-frontend/fp-behandling-felles';
 import { Element } from 'nav-frontend-typografi';
 
 import BubbleText from './bubbleText';

@@ -4,15 +4,14 @@ const path = require('path');
 const PACKAGES_DIR = path.resolve(__dirname, '../packages');
 const APP_DIR = path.join(PACKAGES_DIR, 'fpsak/src');
 
+//TODO (TOR) Dette må delast opp og flyttast inn i kvar pakke.
 const config = {
   resolve: {
     alias: {
+      //Burde kun brukast av pakke fpsak
       app: path.join(APP_DIR, 'app'),
       aktoer: path.join(APP_DIR, 'aktoer'),
       behandling: path.join(APP_DIR, 'behandling'),
-      behandlingFelles: path.join(APP_DIR, 'behandlingFelles'),
-      behandlingFpsak: path.join(APP_DIR, 'behandlingFpsak'),
-      behandlingTilbakekreving: path.join(APP_DIR, 'behandlingTilbakekreving'),
       behandlingmenu: path.join(APP_DIR, 'behandlingmenu'),
       behandlingsupport: path.join(APP_DIR, 'behandlingsupport'),
       fagsak: path.join(APP_DIR, 'fagsak'),
@@ -20,9 +19,13 @@ const config = {
       person: path.join(APP_DIR, 'person'),
       fagsakprofile: path.join(APP_DIR, 'fagsakprofile'),
       kodeverk: path.join(APP_DIR, 'kodeverk'),
-      papirsoknad: path.join(APP_DIR, 'papirsoknad'),
       navAnsatt: path.join(APP_DIR, 'navAnsatt'),
       data: path.join(APP_DIR, 'data'),
+
+      //Andre pakker
+      behandlingFpsak: path.join(PACKAGES_DIR, 'fp-behandling'),
+      behandlingTilbakekreving: path.join(PACKAGES_DIR, 'fp-behandling-tilbakekreving'),
+      papirsoknad: path.join(PACKAGES_DIR, 'fp-behandling-papirsoknad'),
     },
     extensions: ['.json', '.js', '.jsx'],
   },

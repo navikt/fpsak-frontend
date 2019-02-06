@@ -3,8 +3,10 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
+import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingMenu } from './BehandlingMenu';
+import PauseBehandlingMenuItem from './pauseBehandling/PauseBehandlingMenuItem';
+import ShelveBehandlingMenuItem from './shelveBehandling/ShelveBehandlingMenuItem';
 
 describe('<BehandlingMenu>', () => {
   const behandlendeEnheter = [{
@@ -66,13 +68,13 @@ describe('<BehandlingMenu>', () => {
       isInnsynsbehandling={false}
     />);
 
-    const behandlingOnHoldMenuItem = wrapper.find('PauseBehandlingMenuItem');
+    const behandlingOnHoldMenuItem = wrapper.find(PauseBehandlingMenuItem);
     expect(behandlingOnHoldMenuItem).has.length(1);
     expect(behandlingOnHoldMenuItem.prop('behandlingIdentifier')).is.eql(behandlingIdentifier);
     expect(behandlingOnHoldMenuItem.prop('setBehandlingOnHold')).is.eql(behandlingOnHoldCallback);
     expect(behandlingOnHoldMenuItem.prop('toggleBehandlingsmeny')).is.not.null;
 
-    const kanHenleggesMenuItem = wrapper.find('Connect(ShelveBehandlingMenuItem)');
+    const kanHenleggesMenuItem = wrapper.find(ShelveBehandlingMenuItem);
     expect(kanHenleggesMenuItem).has.length(1);
     expect(kanHenleggesMenuItem.prop('behandlingIdentifier')).is.eql(behandlingIdentifier);
     expect(kanHenleggesMenuItem.prop('previewHenleggBehandling')).is.eql(previewCallback);

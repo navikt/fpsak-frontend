@@ -5,7 +5,7 @@ import { updateBehandlingsupportInfo } from 'behandlingsupport/duck';
 import { updateAnnenPartBehandling } from 'fagsakprofile/duck';
 import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
 import behandlingUpdater from 'behandling/BehandlingUpdater';
-import reducerRegistry from '../ReducerRegistry';
+import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 
 export const reducerName = 'fagsak';
 

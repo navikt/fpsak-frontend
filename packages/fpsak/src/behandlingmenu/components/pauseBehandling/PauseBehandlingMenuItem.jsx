@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
 
-import BehandlingIdentifier from 'behandlingFelles/BehandlingIdentifier';
-import SettBehandlingPaVentForm from 'behandlingFelles/components/SettBehandlingPaVentForm';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-behandling-felles';
+import { getKodeverk } from 'kodeverk/duck';
 import MenuButton from '../MenuButton';
 
 /**
@@ -49,7 +51,7 @@ export class PauseBehandlingMenuItem extends Component {
   }
 
   render() {
-    const { settBehandlingPaVentEnabled, behandlingIdentifier } = this.props;
+    const { settBehandlingPaVentEnabled, behandlingIdentifier, ventearsaker } = this.props;
     const { showModal } = this.state;
 
     if (!behandlingIdentifier) {
@@ -68,6 +70,7 @@ export class PauseBehandlingMenuItem extends Component {
             onSubmit={this.submit}
             cancelEvent={this.hideModal}
             hasManualPaVent
+            ventearsaker={ventearsaker}
           />
           )
         }
@@ -82,12 +85,21 @@ PauseBehandlingMenuItem.propTypes = {
   toggleBehandlingsmeny: PropTypes.func.isRequired,
   setBehandlingOnHold: PropTypes.func.isRequired,
   settBehandlingPaVentEnabled: PropTypes.bool,
+  ventearsaker: PropTypes.arrayOf(PropTypes.shape({
+    kode: PropTypes.string,
+    navn: PropTypes.string,
+  })),
 };
 
 PauseBehandlingMenuItem.defaultProps = {
   settBehandlingPaVentEnabled: false,
   behandlingIdentifier: undefined,
   behandlingVersjon: undefined,
+  ventearsaker: [],
 };
 
-export default PauseBehandlingMenuItem;
+const mapStateToProps = state => ({
+  ventearsaker: getKodeverk(kodeverkTyper.VENTEARSAK)(state),
+});
+
+export default connect(mapStateToProps)(PauseBehandlingMenuItem);

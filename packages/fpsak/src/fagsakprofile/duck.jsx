@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import fpsakApi from 'data/fpsakApi';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 
-import reducerRegistry from '../ReducerRegistry';
+import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 
 const reducerName = 'fagsakProfile';
 

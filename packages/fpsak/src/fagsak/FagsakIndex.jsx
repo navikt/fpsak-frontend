@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 
-import { behandlingerPath } from 'app/paths';
 import BehandlingerIndex from 'behandling/BehandlingerIndex';
 import BehandlingSupportIndex from 'behandlingsupport/BehandlingSupportIndex';
 import FagsakProfileIndex from 'fagsakprofile/FagsakProfileIndex';
-import trackRouteParam from 'app/data/trackRouteParam';
-import requireProps from 'app/data/requireProps';
-import { getRequestPollingMessage } from 'app/pollingMessageDuck';
+import {
+  behandlingerPath, trackRouteParam, requireProps, getRequestPollingMessage,
+} from '@fpsak-frontend/fp-felles';
 import { setSelectedSaksnummer } from './duck';
 import { getSelectedSaksnummer } from './fagsakSelectors';
 import FagsakResolver from './FagsakResolver';

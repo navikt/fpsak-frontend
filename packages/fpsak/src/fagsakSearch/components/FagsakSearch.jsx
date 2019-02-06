@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import PersonIndex from 'person/PersonIndex';
+import { PersonIndex } from '@fpsak-frontend/fp-felles';
 import fagsakPropType from 'fagsak/fagsakPropType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { SearchForm } from '@fpsak-frontend/search-form';
@@ -37,7 +37,7 @@ const FagsakSearch = ({
     }
 
     {fagsaker.length > 1
-    && <PersonIndex />
+    && <PersonIndex person={fagsaker[0].person} />
     }
 
     <VerticalSpacer eightPx />

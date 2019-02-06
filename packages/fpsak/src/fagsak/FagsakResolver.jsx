@@ -6,15 +6,13 @@ import { Redirect, withRouter } from 'react-router-dom';
 
 import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
 import { getFeatureToggles } from 'app/duck';
-import featureToggle from 'app/featureToggle';
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import {
-  getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling, pathToBehandlinger, pathToMissingPage,
-} from 'app/paths';
+  featureToggle, requireProps, getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling, pathToBehandlinger, pathToMissingPage,
+} from '@fpsak-frontend/fp-felles';
 import { getBehandlingerIds } from 'behandling/selectors/behandlingerSelectors';
-import requireProps from 'app/data/requireProps';
 import { resetFagsakSearch as resetFagsakSearchActionCreator } from 'fagsakSearch/duck';
 import { resetFagsakContext as resetFagsakContextActionCreator, fetchFagsakInfo as fetchFagsakInfoActionCreator } from './duck';
 import {

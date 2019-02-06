@@ -1,10 +1,10 @@
 import React from 'react';
 import { injectIntl, intlShape } from 'react-intl';
 import PropTypes from 'prop-types';
-import historikkinnslagDelPropType from 'behandlingFelles/proptypes/historikkinnslagDelPropType';
+import { historikkinnslagDelPropType } from '@fpsak-frontend/fp-behandling-felles';
 import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
-import { createLocationForHistorikkItems } from 'app/paths';
+import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import { findHendelseText, findResultatText } from './historikkUtils';
 
 const scrollUp = () => {

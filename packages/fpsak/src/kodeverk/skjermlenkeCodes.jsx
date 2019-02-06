@@ -1,5 +1,5 @@
-import behandlingspunktCodes from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
-import faktaPanelCodes from 'behandlingFelles/fakta/faktaPanelCodes';
+import { faktaPanelCodes, behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { getLocationWithQueryParams } from '@fpsak-frontend/fp-felles';
 
 const skjermlenkeCodes = {
   BEREGNING_ENGANGSSTOENAD: {
@@ -148,6 +148,11 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.DEFAULT,
     punktNavn: behandlingspunktCodes.SIMULERING,
   },
+};
+
+export const createLocationForHistorikkItems = (behandlingLocation, skjermlenkeCode) => {
+  const skjermlenke = skjermlenkeCodes[skjermlenkeCode];
+  return getLocationWithQueryParams(behandlingLocation, { punkt: skjermlenke.punktNavn, fakta: skjermlenke.faktaNavn });
 };
 
 export default skjermlenkeCodes;

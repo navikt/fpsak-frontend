@@ -2,9 +2,7 @@ import {
   RestApiConfigBuilder, ReduxRestApiBuilder, ReduxEvents,
 } from '@fpsak-frontend/rest-api-redux';
 import errorHandler from '@fpsak-frontend/error-api-redux';
-import { setRequestPollingMessage } from 'app/pollingMessageDuck';
-
-import reducerRegistry from '../ReducerRegistry';
+import { reducerRegistry, setRequestPollingMessage } from '@fpsak-frontend/fp-felles';
 
 export const FpsakApiKeys = {
   LANGUAGE_FILE: 'LANGUAGE_FILE',

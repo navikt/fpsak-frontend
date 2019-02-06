@@ -2,12 +2,11 @@ import { createSelector } from 'reselect';
 import moment from 'moment';
 
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { pathToBehandling, getLocationWithDefaultBehandlingspunktAndFakta } from 'app/paths';
+import { reducerRegistry, pathToBehandling, getLocationWithDefaultBehandlingspunktAndFakta } from '@fpsak-frontend/fp-felles';
 import fpsakApi from 'data/fpsakApi';
 import { updateFagsakInfo, updateBehandlinger } from 'fagsak/duck';
 import { updateBehandlingsupportInfo } from 'behandlingsupport/duck';
 import behandlingUpdater from 'behandling/BehandlingUpdater';
-import reducerRegistry from '../ReducerRegistry';
 
 const findNewBehandlingId = (behandlingerResponse) => {
   const sortedBehandlinger = behandlingerResponse.payload
