@@ -33,7 +33,6 @@ export const FordelingAvBruttoBgIKombinasjonImpl = ({
   open,
   heading,
   endringBGPeriode,
-  formName,
 }) => (
   <div>
     <EkspanderbartpanelPure
@@ -47,7 +46,6 @@ export const FordelingAvBruttoBgIKombinasjonImpl = ({
         component={RenderBruttoBGFordelingFieldArray}
         readOnly={readOnly}
         endringBGPeriode={endringBGPeriode}
-        formName={formName}
       />
     </EkspanderbartpanelPure>
   </div>
@@ -61,7 +59,6 @@ FordelingAvBruttoBgIKombinasjonImpl.propTypes = {
   open: PropTypes.bool,
   heading: PropTypes.element.isRequired,
   endringBGPeriode: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  formName: PropTypes.string.isRequired,
 };
 
 FordelingAvBruttoBgIKombinasjonImpl.defaultProps = {

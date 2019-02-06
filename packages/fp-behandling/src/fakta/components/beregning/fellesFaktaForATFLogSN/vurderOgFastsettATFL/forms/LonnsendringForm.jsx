@@ -5,7 +5,6 @@ import { FormattedMessage } from 'react-intl';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { getFaktaOmBeregning } from 'behandlingFpsak/src/behandlingSelectors';
-import { behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import { required } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import faktaOmBeregningTilfelle, {
@@ -16,6 +15,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import FastsettATFLInntektForm
   from 'behandlingFpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/FastsettATFLInntektForm';
+import { getFormValuesForBeregning } from '../../../BeregningFormUtils';
 
 import styles from './lonnsendringForm.less';
 
@@ -52,7 +52,6 @@ export const LonnsendringFormImpl = ({
   manglerIM,
   erLonnsendring,
   skalKunFastsetteAT,
-  formName,
 }) => (
   <div>
     {radioknappOverskrift.map(kode => (
@@ -85,7 +84,6 @@ export const LonnsendringFormImpl = ({
               manglerInntektsmelding={manglerIM}
               skalViseFL={!skalKunFastsetteAT}
               skalViseAT
-              formName={formName}
             />
           </div>
         </Column>
@@ -104,7 +102,6 @@ LonnsendringFormImpl.propTypes = {
   manglerIM: PropTypes.bool.isRequired,
   erLonnsendring: PropTypes.bool,
   skalKunFastsetteAT: PropTypes.bool,
-  formName: PropTypes.string.isRequired,
 };
 
 LonnsendringFormImpl.defaultProps = {
@@ -166,7 +163,7 @@ const mapStateToProps = (state, initialProps) => {
     manglerInntektsmelding = faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.find(forhold => !forhold.inntektPrMnd) !== undefined;
   }
   return {
-    erLonnsendring: behandlingFormValueSelector(initialProps.formName)(state, lonnsendringField),
+    erLonnsendring: getFormValuesForBeregning(state)[lonnsendringField],
     radioknappOverskrift: utledOverskriftForLonnsendringForm(initialProps.tilfeller, manglerInntektsmelding),
   };
 };

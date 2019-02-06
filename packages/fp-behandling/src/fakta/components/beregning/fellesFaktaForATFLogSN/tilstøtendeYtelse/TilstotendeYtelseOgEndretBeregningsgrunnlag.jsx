@@ -90,7 +90,6 @@ export class TilstotendeYtelseOgEndretBeregningsgrunnlagImpl extends Component {
         readOnly,
         perioder,
         tilstotendeYtelsePeriodeHeader,
-        formName,
       },
       state: {
         skalViseEndretBeregningsgrunnlag,
@@ -104,7 +103,6 @@ export class TilstotendeYtelseOgEndretBeregningsgrunnlagImpl extends Component {
           periodeHeader={tilstotendeYtelsePeriodeHeader}
           skalViseKnapp={perioder.length > 0 && !skalViseEndretBeregningsgrunnlag}
           btnClickCallback={oppdaterCallback}
-          formName={formName}
         />
         {skalViseEndretBeregningsgrunnlag
         && perioder.map((periode, index) => (
@@ -116,7 +114,6 @@ export class TilstotendeYtelseOgEndretBeregningsgrunnlagImpl extends Component {
               endringBGPeriode={periode}
               open={openPanels ? openPanels.filter(panel => panel === periode.fom).length > 0 : false}
               showPanel={this.showPanel}
-              formName={formName}
             />
             <VerticalSpacer eightPx />
           </BorderBox>
@@ -134,7 +131,6 @@ TilstotendeYtelseOgEndretBeregningsgrunnlagImpl.propTypes = {
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   tilstotendeYtelsePeriodeHeader: PropTypes.element,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
-  formName: PropTypes.string.isRequired,
 };
 
 TilstotendeYtelseOgEndretBeregningsgrunnlagImpl.defaultProps = {

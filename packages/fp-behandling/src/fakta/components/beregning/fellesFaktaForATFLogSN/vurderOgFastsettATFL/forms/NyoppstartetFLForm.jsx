@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { getFaktaOmBeregning } from 'behandlingFpsak/src/behandlingSelectors';
-import { behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { flatten, required } from '@fpsak-frontend/utils';
@@ -13,6 +12,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import FastsettATFLInntektForm
   from 'behandlingFpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/FastsettATFLInntektForm';
+import { getFormValuesForBeregning } from '../../../BeregningFormUtils';
 
 import styles from './nyoppstartetFLForm.less';
 
@@ -59,7 +59,6 @@ export const NyoppstartetFLFormImpl = ({
   manglerIM,
   erNyoppstartetFL,
   skalKunFastsetteFL,
-  formName,
 }) => (
   <div>
     {radioknappOverskrift.map(kode => (
@@ -92,7 +91,6 @@ export const NyoppstartetFLFormImpl = ({
               manglerInntektsmelding={manglerIM}
               skalViseAT={!skalKunFastsetteFL}
               skalViseFL
-              formName={formName}
             />
           </div>
         </Column>
@@ -111,7 +109,6 @@ NyoppstartetFLFormImpl.propTypes = {
   erNyoppstartetFL: PropTypes.bool,
   manglerIM: PropTypes.bool.isRequired,
   skalKunFastsetteFL: PropTypes.bool,
-  formName: PropTypes.string.isRequired,
 };
 
 NyoppstartetFLFormImpl.defaultProps = {
@@ -163,7 +160,7 @@ NyoppstartetFLFormImpl.nyOppstartetFLInntekt = (values, tilfeller, vurderFaktaVa
   return {};
 };
 
-const erNyoppstartetFL = (state, formName) => behandlingFormValueSelector(formName)(state, erNyoppstartetFLField);
+const erNyoppstartetFL = state => getFormValuesForBeregning(state)[erNyoppstartetFLField];
 
 const mapStateToProps = (state, initialProps) => {
   const faktaOmBeregning = getFaktaOmBeregning(state);
@@ -173,7 +170,7 @@ const mapStateToProps = (state, initialProps) => {
   }
   return {
     manglerInntektsmelding,
-    erNyoppstartetFL: erNyoppstartetFL(state, initialProps.formName),
+    erNyoppstartetFL: erNyoppstartetFL(state),
     radioknappOverskrift: utledOverskriftForNyoppstartetFLForm(initialProps.tilfeller, manglerInntektsmelding),
   };
 };

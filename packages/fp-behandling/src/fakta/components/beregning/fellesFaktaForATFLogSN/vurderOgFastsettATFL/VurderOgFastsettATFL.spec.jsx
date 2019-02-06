@@ -24,7 +24,6 @@ const lagWrapper = (tilfeller, erLonnsendring, erNyoppstartetFL, values, faktaOm
   readOnly={false}
   isAksjonspunktClosed={false}
   tilfeller={tilfeller}
-  formName="ikkeSåViktig"
   manglerInntektsmelding={false}
   showTableCallback={showTableCallback}
   erLonnsendring={erLonnsendring}

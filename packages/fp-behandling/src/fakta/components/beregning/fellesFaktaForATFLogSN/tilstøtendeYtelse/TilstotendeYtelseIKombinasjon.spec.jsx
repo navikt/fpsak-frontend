@@ -11,7 +11,6 @@ describe('<TilstøtendeYtelseForm>', () => {
     const wrapper = shallow(<TilstotendeYtelseIKombinasjonImpl
       readOnly={false}
       tilfeller={tilfeller}
-      formName="test"
       isAksjonspunktClosed={false}
     />);
     const tyKombinasjon = wrapper.find(InntektstabellPanel);
@@ -23,7 +22,6 @@ describe('<TilstøtendeYtelseForm>', () => {
     const wrapper = shallow(<TilstotendeYtelseIKombinasjonImpl
       readOnly={false}
       tilfeller={tilfeller}
-      formName="test"
       isAksjonspunktClosed={false}
     />);
     const tyKombinasjon = wrapper.find(InntektstabellPanel);

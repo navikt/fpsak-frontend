@@ -96,7 +96,7 @@ const spacer = (hasShownPanel) => {
 };
 
 
-const getFaktaPanels = (readOnly, formName, tilfeller, isAksjonspunktClosed, showTableCallback) => {
+const getFaktaPanels = (readOnly, tilfeller, isAksjonspunktClosed, showTableCallback) => {
   const faktaPanels = [];
   let hasShownPanel = false;
 
@@ -104,7 +104,6 @@ const getFaktaPanels = (readOnly, formName, tilfeller, isAksjonspunktClosed, sho
     return [<TilstotendeYtelseIKombinasjon
       key="kombinasjonTY"
       readOnly={readOnly}
-      formName={formName}
       tilfeller={tilfeller}
       isAksjonspunktClosed={isAksjonspunktClosed}
       showTableCallback={showTableCallback}
@@ -142,7 +141,6 @@ const getFaktaPanels = (readOnly, formName, tilfeller, isAksjonspunktClosed, sho
           <VurderEtterlonnSluttpakkeForm
             readOnly={readOnly}
             isAksjonspunktClosed={isAksjonspunktClosed}
-            formName={formName}
           />
         </ElementWrapper>,
       );
@@ -154,7 +152,6 @@ const getFaktaPanels = (readOnly, formName, tilfeller, isAksjonspunktClosed, sho
         {spacer(true)}
         <VurderOgFastsettATFL
           readOnly={readOnly}
-          formName={formName}
           isAksjonspunktClosed={isAksjonspunktClosed}
           tilfeller={tilfeller}
         />
@@ -169,7 +166,6 @@ const getFaktaPanels = (readOnly, formName, tilfeller, isAksjonspunktClosed, sho
           readOnly={readOnly}
           isAksjonspunktClosed={isAksjonspunktClosed}
           tilfeller={tilfeller}
-          formName={formName}
         />
       </ElementWrapper>,
     );
@@ -188,14 +184,13 @@ const getFaktaPanels = (readOnly, formName, tilfeller, isAksjonspunktClosed, sho
       </ElementWrapper>,
     );
   }
-  setFaktaPanelForKunYtelse(faktaPanels, tilfeller, readOnly, formName, isAksjonspunktClosed);
+  setFaktaPanelForKunYtelse(faktaPanels, tilfeller, readOnly, isAksjonspunktClosed);
 
   if (harKunTilstotendeYtelse(tilfeller)) {
     faktaPanels.push(
       <ElementWrapper key="TilstotendeYtelse">
         <TilstotendeYtelseForm
           readOnly={readOnly}
-          formName={formName}
         />
       </ElementWrapper>,
     );
@@ -210,13 +205,12 @@ const getFaktaPanels = (readOnly, formName, tilfeller, isAksjonspunktClosed, sho
  */
 export const FaktaForATFLOgSNPanelImpl = ({
   readOnly,
-  formName,
   aktivePaneler,
   isAksjonspunktClosed,
   showTableCallback,
 }) => (
   <div>
-    {getFaktaPanels(readOnly, formName, aktivePaneler, isAksjonspunktClosed, showTableCallback).map(panelOrSpacer => panelOrSpacer)}
+    {getFaktaPanels(readOnly, aktivePaneler, isAksjonspunktClosed, showTableCallback).map(panelOrSpacer => panelOrSpacer)}
   </div>
 );
 
@@ -224,7 +218,6 @@ export const FaktaForATFLOgSNPanelImpl = ({
 FaktaForATFLOgSNPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   aktivePaneler: PropTypes.arrayOf(PropTypes.string).isRequired,
-  formName: PropTypes.string.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   showTableCallback: PropTypes.func.isRequired,
 };

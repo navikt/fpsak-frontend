@@ -33,7 +33,6 @@ const EndringBeregningsgrunnlagPeriodePanelImpl = ({
   open,
   showPanel,
   heading,
-  formName,
 }) => (
   <EkspanderbartpanelPure
     className={readOnly ? styles.statusOk : classNames(`endringBeregningsgrunnlagPeriode--${fom}`)}
@@ -47,7 +46,6 @@ const EndringBeregningsgrunnlagPeriodePanelImpl = ({
       readOnly={readOnly}
       periodeUtenAarsak={!harPeriodeAarsakGraderingEllerRefusjon}
       isAksjonspunktClosed={isAksjonspunktClosed}
-      formName={formName}
     />
   </EkspanderbartpanelPure>
 );
@@ -61,12 +59,10 @@ EndringBeregningsgrunnlagPeriodePanelImpl.propTypes = {
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   showPanel: PropTypes.func.isRequired,
   heading: PropTypes.element.isRequired,
-  formName: PropTypes.string,
 };
 
 EndringBeregningsgrunnlagPeriodePanelImpl.defaultProps = {
   open: null,
-  formName: undefined,
 };
 
 
@@ -103,7 +99,7 @@ const mapStateToProps = (state, props) => {
   if (props.skalHaEndretInformasjonIHeader) {
     return ({
       heading: createEndringHeadingForDate(state, props.fom, props.tom, renderDateHeading(props.fom, props.tom),
-        props.harPeriodeAarsakGraderingEllerRefusjon, props.formName),
+        props.harPeriodeAarsakGraderingEllerRefusjon),
     });
   }
   return ({

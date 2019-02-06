@@ -16,7 +16,7 @@ export const erTilstotendeYtelseIKombinasjon = tilfeller => tilfeller.includes(f
   && !harKunTilstotendeYtelse(tilfeller);
 
 
-const getChildren = (tilfeller, readOnly, isAksjonspunktClosed, manglerInntektsmelding, formName) => {
+const getChildren = (tilfeller, readOnly, isAksjonspunktClosed, manglerInntektsmelding) => {
   const children = [];
   if (tilfeller.includes(faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD)) {
     children.push(<TidsbegrensetArbeidsforholdForm readOnly={readOnly} isAksjonspunktClosed={isAksjonspunktClosed} key="kortvarig" />);
@@ -28,7 +28,6 @@ const getChildren = (tilfeller, readOnly, isAksjonspunktClosed, manglerInntektsm
     children.push(<LonnsendringForm
       readOnly={readOnly}
       isAksjonspunktClosed={isAksjonspunktClosed}
-      formName={formName}
       tilfeller={tilfeller}
       manglerIM={manglerInntektsmelding}
       skalViseInntektstabell={false}
@@ -39,7 +38,6 @@ const getChildren = (tilfeller, readOnly, isAksjonspunktClosed, manglerInntektsm
     children.push(<NyoppstartetFLForm
       readOnly={readOnly}
       isAksjonspunktClosed={isAksjonspunktClosed}
-      formName={formName}
       tilfeller={tilfeller}
       skalViseInntektstabell={false}
       manglerIM={manglerInntektsmelding}
@@ -49,27 +47,26 @@ const getChildren = (tilfeller, readOnly, isAksjonspunktClosed, manglerInntektsm
   return children;
 };
 
-const getTilstotendeYtelseForm = (tilfeller, readOnly, formName, showTableCallback, isAksjonspunktClosed) => {
+const getTilstotendeYtelseForm = (tilfeller, readOnly, showTableCallback, isAksjonspunktClosed) => {
   if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
     return (
       <TilstotendeYtelseOgEndretBeregningsgrunnlag
         key="TilstotendeYtelseOgEndretBG"
         readOnly={readOnly}
-        formName={formName}
         showTableCallback={showTableCallback}
         isAksjonspunktClosed={isAksjonspunktClosed}
       />
     );
   }
-  return <TilstotendeYtelseForm readOnly={readOnly} formName={formName} key="tilstotendeYtelse" />;
+  return <TilstotendeYtelseForm readOnly={readOnly} key="tilstotendeYtelse" />;
 };
 
-const tilstotendeYtelseIKombinasjon = (readOnly, formName, tilfeller, isAksjonspunktClosed, manglerInntektsmelding, showTableCallback) => (
+const tilstotendeYtelseIKombinasjon = (readOnly, tilfeller, isAksjonspunktClosed, manglerInntektsmelding, showTableCallback) => (
   <InntektstabellPanel
     key="inntektstabell"
-    tabell={getTilstotendeYtelseForm(tilfeller, readOnly, formName, showTableCallback, isAksjonspunktClosed)}
+    tabell={getTilstotendeYtelseForm(tilfeller, readOnly, showTableCallback, isAksjonspunktClosed)}
   >
-    {getChildren(tilfeller, readOnly, isAksjonspunktClosed, manglerInntektsmelding, formName)}
+    {getChildren(tilfeller, readOnly, isAksjonspunktClosed, manglerInntektsmelding)}
   </InntektstabellPanel>
 );
 
@@ -81,14 +78,13 @@ const tilstotendeYtelseIKombinasjon = (readOnly, formName, tilfeller, isAksjonsp
  */
 export const TilstotendeYtelseIKombinasjonImpl = ({
   readOnly,
-  formName,
   tilfeller,
   isAksjonspunktClosed,
   manglerInntektsmelding,
   showTableCallback,
 }) => (
   <ElementWrapper>
-    {tilstotendeYtelseIKombinasjon(readOnly, formName, tilfeller, isAksjonspunktClosed, manglerInntektsmelding, showTableCallback)}
+    {tilstotendeYtelseIKombinasjon(readOnly, tilfeller, isAksjonspunktClosed, manglerInntektsmelding, showTableCallback)}
   </ElementWrapper>
 );
 
@@ -96,7 +92,6 @@ export const TilstotendeYtelseIKombinasjonImpl = ({
 TilstotendeYtelseIKombinasjonImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   tilfeller: PropTypes.arrayOf(PropTypes.string).isRequired,
-  formName: PropTypes.string.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   manglerInntektsmelding: PropTypes.bool,
   showTableCallback: PropTypes.func,

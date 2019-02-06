@@ -20,7 +20,6 @@ export const brukersAndelFieldArrayName = 'brukersAndelBG';
 
 const KunYtelsePanel = ({
   readOnly,
-  formName,
   skalSjekkeBesteberegning,
   isAksjonspunktClosed,
 }) => (
@@ -29,7 +28,6 @@ const KunYtelsePanel = ({
     && (
       <KunYtelseBesteberegningPanel
         readOnly={readOnly}
-        formName={formName}
         isAksjonspunktClosed={isAksjonspunktClosed}
         brukersAndelFieldArrayName={brukersAndelFieldArrayName}
       />
@@ -39,7 +37,6 @@ const KunYtelsePanel = ({
     && (
       <KunYtelseUtenBesteberegningPanel
         readOnly={readOnly}
-        formName={formName}
         brukersAndelFieldArrayName={brukersAndelFieldArrayName}
       />
     )
@@ -49,7 +46,6 @@ const KunYtelsePanel = ({
 
 KunYtelsePanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  formName: PropTypes.string.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   skalSjekkeBesteberegning: PropTypes.bool.isRequired,
 };

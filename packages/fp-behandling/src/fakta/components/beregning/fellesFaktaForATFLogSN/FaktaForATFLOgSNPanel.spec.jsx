@@ -165,7 +165,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     const wrapper = shallow(<FaktaForATFLOgSNPanelImpl
       readOnly={false}
       aktivePaneler={aktivertePaneler}
-      formName="test"
       isAksjonspunktClosed={false}
       showTableCallback={showTableCallback}
     />);
@@ -178,7 +177,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     const wrapper = shallow(<FaktaForATFLOgSNPanelImpl
       readOnly={false}
       aktivePaneler={aktivertePaneler}
-      formName="test"
       isAksjonspunktClosed={false}
       showTableCallback={showTableCallback}
     />);
@@ -191,7 +189,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     const wrapper = shallow(<FaktaForATFLOgSNPanelImpl
       readOnly={false}
       aktivePaneler={aktivertePaneler}
-      formName="test"
       isAksjonspunktClosed={false}
       showTableCallback={showTableCallback}
     />);
@@ -204,7 +201,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     const wrapper = shallow(<FaktaForATFLOgSNPanelImpl
       readOnly={false}
       aktivePaneler={aktivertePaneler}
-      formName="test"
       isAksjonspunktClosed={false}
       showTableCallback={showTableCallback}
     />);
@@ -217,7 +213,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     const wrapper = shallow(<FaktaForATFLOgSNPanelImpl
       readOnly={false}
       aktivePaneler={aktivertePaneler}
-      formName="test"
       isAksjonspunktClosed={false}
       showTableCallback={showTableCallback}
     />);
@@ -230,7 +225,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     const wrapper = shallow(<FaktaForATFLOgSNPanelImpl
       readOnly={false}
       aktivePaneler={aktivertePaneler}
-      formName="test"
       isAksjonspunktClosed={false}
       showTableCallback={showTableCallback}
     />);
@@ -243,7 +237,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     const wrapper = shallow(<FaktaForATFLOgSNPanelImpl
       readOnly={false}
       aktivePaneler={aktivertePaneler}
-      formName="test"
       isAksjonspunktClosed={false}
       showTableCallback={showTableCallback}
     />);
@@ -256,7 +249,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     const wrapper = shallow(<FaktaForATFLOgSNPanelImpl
       readOnly={false}
       aktivePaneler={aktivertePaneler}
-      formName="test"
       isAksjonspunktClosed={false}
       showTableCallback={showTableCallback}
     />);
@@ -269,7 +261,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     const wrapper = shallow(<FaktaForATFLOgSNPanelImpl
       readOnly={false}
       aktivePaneler={aktivertePaneler}
-      formName="test"
       isAksjonspunktClosed={false}
       showTableCallback={showTableCallback}
     />);
@@ -282,7 +273,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     const wrapper = shallow(<FaktaForATFLOgSNPanelImpl
       readOnly={false}
       aktivePaneler={aktivertePaneler}
-      formName="test"
       isAksjonspunktClosed={false}
       showTableCallback={showTableCallback}
     />);

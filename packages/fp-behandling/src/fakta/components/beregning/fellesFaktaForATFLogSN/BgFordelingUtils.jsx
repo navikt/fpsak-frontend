@@ -9,8 +9,8 @@ import {
   getFaktaOmBeregning,
   getBeregningsgrunnlag,
 } from 'behandlingFpsak/src/behandlingSelectors';
-import { getBehandlingFormValues } from 'behandlingFpsak/src/behandlingForm';
 import { andelsnrMottarYtelseMap, frilansMottarYtelse, skalFastsetteInntektATUtenInntektsmelding } from './vurderOgFastsettATFL/forms/VurderMottarYtelseUtils';
+import { getFormValuesForBeregning } from '../BeregningFormUtils';
 
 const nullOrUndefined = value => value === null || value === undefined;
 
@@ -138,8 +138,8 @@ export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregnings
   return andel.harPeriodeAarsakGraderingEllerRefusjon;
 };
 
-export const setSkalRedigereInntektForATFL = (state, fields, formName) => {
-  const values = getBehandlingFormValues(formName)(state);
+export const setSkalRedigereInntektForATFL = (state, fields) => {
+  const values = getFormValuesForBeregning(state);
   const beregningsgrunnlag = getBeregningsgrunnlag(state);
   const faktaOmBeregning = getFaktaOmBeregning(state);
   let index = 0;

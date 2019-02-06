@@ -78,7 +78,6 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
   it('skal ikkje vise tilkommetpanel', () => {
     const wrapper = shallowWithIntl(<Panel.WrappedComponent
       readOnly={false}
-      formName="test"
       skalSjekkeBesteberegning
       isAksjonspunktClosed={false}
       perioder={[]}
@@ -91,7 +90,6 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
   it('skal vise tilkommetpanel', () => {
     const wrapper = shallowWithIntl(<Panel.WrappedComponent
       readOnly={false}
-      formName="test"
       skalSjekkeBesteberegning
       isAksjonspunktClosed={false}
       perioder={[]}

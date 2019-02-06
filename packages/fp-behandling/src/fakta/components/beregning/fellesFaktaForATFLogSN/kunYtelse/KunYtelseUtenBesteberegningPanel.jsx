@@ -17,7 +17,6 @@ import BrukersAndelFieldArray from './BrukersAndelFieldArray';
 
 const KunYtelseUtenBesteberegningPanel = ({
   readOnly,
-  formName,
   brukersAndelFieldArrayName,
 }) => (
   <BorderBox>
@@ -32,14 +31,12 @@ const KunYtelseUtenBesteberegningPanel = ({
       name={brukersAndelFieldArrayName}
       component={BrukersAndelFieldArray}
       readOnly={readOnly}
-      formName={formName}
     />
   </BorderBox>
 );
 
 KunYtelseUtenBesteberegningPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  formName: PropTypes.string.isRequired,
   brukersAndelFieldArrayName: PropTypes.string.isRequired,
 };
 
