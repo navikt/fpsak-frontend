@@ -4,19 +4,21 @@ import { Column, Row } from 'nav-frontend-grid';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import {
-  required, minValue, maxValue, hasValidDecimal,
+  required, minValue, maxValue, hasValidDecimal, DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
 import {
   ElementWrapper, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { DatepickerField, InputField, DecimalField } from '@fpsak-frontend/form';
-
+import moment from 'moment';
 import styles from './activityDataSubPanel.less';
 
 const ytelseTypes = [OAType.SYKEPENGER, OAType.FORELDREPENGER, OAType.PLEIEPENGER, OAType.SVANGERSKAPSPENGER, OAType.UTENLANDSK_ARBEIDSFORHOLD];
 
 const isOfType = (selectedActivityType, ...opptjeningAktivitetType) => selectedActivityType && opptjeningAktivitetType.includes(selectedActivityType.kode);
+
+const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 
 const minValue0 = minValue(0);
 const maxValue200 = maxValue(200);
@@ -24,11 +26,13 @@ const maxValue200 = maxValue(200);
 const getOppdragsgiverMessageId = selectedActivityType => (isOfType(selectedActivityType, OAType.FRILANS)
   ? 'ActivityPanel.Oppdragsgiver' : 'ActivityPanel.Arbeidsgiver');
 
-const getArbeidsgiver = (initialValues) => {
+const getArbeidsgiverText = (initialValues) => {
   if (initialValues.arbeidsgiver) {
-    return initialValues.oppdragsgiverOrg
-      ? `${initialValues.arbeidsgiver} (${initialValues.oppdragsgiverOrg})`
-      : initialValues.arbeidsgiver;
+    return initialValues.oppdragsgiverOrg ? `${initialValues.arbeidsgiver} (${initialValues.oppdragsgiverOrg})` : initialValues.arbeidsgiver;
+  }
+  if (initialValues.privatpersonNavn && initialValues.privatpersonFødselsdato) {
+    const fodselsdato = formatDate(initialValues.privatpersonFødselsdato);
+    return `${initialValues.privatpersonNavn} (${fodselsdato})`;
   }
   return '-';
 };
@@ -63,7 +67,7 @@ const ActivityDataSubPanel = ({
             <FormattedMessage id={getOppdragsgiverMessageId(selectedActivityType)} />
           </Undertekst>
           <div className={styles.arbeidsgiver}>
-            <Normaltekst>{getArbeidsgiver(initialValues)}</Normaltekst>
+            <Normaltekst>{getArbeidsgiverText(initialValues)}</Normaltekst>
           </div>
         </ElementWrapper>
         )
