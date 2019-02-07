@@ -28,3 +28,4 @@ export const invalidNumberMessage = text => ([{ id: 'ValidationMessage.InvalidNu
 export const ukerOgDagerVidNullUtbetalningsgradMessage = () => ([{ id: 'ValidationMessage.ukerOgDagerVidNullUtbetalningsgradMessage' }]);
 export const arbeidsprosentMåVare100VidUtsettelseAvArbeidMessage = () => ([{ id: 'ValidationMessage.UtsettelseUtenFullArbeid' }]);
 export const merEn100ProsentMessage = () => ([{ id: 'ValidationMessage.MerEn100Prosent' }]);
+export const merEnNullMessage = () => ([{ id: 'ValidationMessage.MerEnNullUtaksprosent' }]);

@@ -44,6 +44,7 @@ describe('<RenderUttakTable>', () => {
       fields={fields}
       periodeTyper={[]}
       meta={{}}
+      selectedItemData={{}}
     />);
     const tableRow = wrapper.find('TableRow');
     expect(tableRow).to.have.length(1);
@@ -62,6 +63,7 @@ describe('<RenderUttakTable>', () => {
       readOnly={false}
       fields={fields}
       periodeTyper={[]}
+      selectedItemData={{}}
       meta={{}}
     />);
     const tableRow = wrapper.find('TableRow');

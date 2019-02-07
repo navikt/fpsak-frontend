@@ -114,6 +114,8 @@ export const UttakActivity = ({
             component={RenderUttakTable}
             periodeTyper={periodeTyper}
             readOnly={readOnly}
+            erOppfylt={erOppfylt}
+            selectedItemData={selectedItemData}
           />
         </Column>
       </Row>
