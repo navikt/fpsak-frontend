@@ -9,7 +9,6 @@ import {
   FadingPanel, VerticalSpacer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
 import { Hovedknapp } from 'nav-frontend-knapper';
-<<<<<<< HEAD:packages/fp-behandling-tilbakekreving/src/behandlingsprosess/components/tilbakekreving/TilbakekrevingPanel.jsx
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { addClassNameGroupIdToPerioder } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
@@ -17,15 +16,6 @@ import BpTimelinePanel from '../felles/behandlingspunktTimelineSkjema/BpTimeline
 import { getBehandlingVersjon } from '../../../selectors/tilbakekrevingBehandlingSelectors';
 import { getSelectedBehandlingId } from '../../../duck';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '../../../behandlingForm';
-=======
-import { getBehandlingVersjon } from 'behandlingTilbakekreving/selectors/tilbakekrevingBehandlingSelectors';
-import { getSelectedBehandlingId } from 'behandlingTilbakekreving/duck';
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingTilbakekreving/behandlingForm';
-import BpTimelinePanel from 'behandlingFelles/behandlingsprosess/components/behandlingspunktTimelineSkjema/BpTimelinePanel';
-import behandlingspunktCodes from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { addClassNameGroupIdToPerioder } from 'behandlingFelles/behandlingsprosess/components/behandlingspunktTimelineSkjema/BpTimelineHelper';
->>>>>>> NOJIRA added foreldelse behandlinspunkt:packages/fpsak/src/behandlingTilbakekreving/behandlingsprosess/components/tilbakekreving/TilbakekrevingPanel.jsx
 import {
   hovedsokerKjonnKode, tilbakekrevingPerioderResultat, customTimes,
 } from './mockData';
@@ -51,22 +41,22 @@ const TilbakekrevingPanelImpl = ({
       </Undertittel>
       <VerticalSpacer twentyPx />
       {tilbakekrevingsresultatActivity && (
-        <BpTimelinePanel
-          customTimes={customTimes}
-          hovedsokerKjonnKode={hovedsokerKjonnKode}
-          resultatActivity={tilbakekrevingsresultatActivity}
-          activityPanelName={ACTIVITY_PANEL_NAME}
+      <BpTimelinePanel
+        customTimes={customTimes}
+        hovedsokerKjonnKode={hovedsokerKjonnKode}
+        resultatActivity={tilbakekrevingsresultatActivity}
+        activityPanelName={ACTIVITY_PANEL_NAME}
+        behandlingFormPrefix={behandlingFormPrefix}
+        reduxFormChange={formChange}
+        reduxFormInitialize={formInitialize}
+        formName={formName}
+      >
+        <TilbakekrevingForm
           behandlingFormPrefix={behandlingFormPrefix}
-          reduxFormChange={formChange}
-          reduxFormInitialize={formInitialize}
           formName={formName}
-        >
-          <TilbakekrevingForm
-            behandlingFormPrefix={behandlingFormPrefix}
-            formName={formName}
-            activityPanelName={ACTIVITY_PANEL_NAME}
-          />
-        </BpTimelinePanel>
+          activityPanelName={ACTIVITY_PANEL_NAME}
+        />
+      </BpTimelinePanel>
       )
       }
       <VerticalSpacer twentyPx />

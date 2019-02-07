@@ -1,7 +1,0 @@
-const foreldelseCodes = {
-  FORELDET: 'FORELDET',
-  IKKE_FORELDET: 'IKKE_FORELDET',
-  IKKE_FORELDET_TILLEGGSFRIST: 'IKKE_FORELDET_TILLEGGSFRIST',
-};
-
-export default foreldelseCodes;

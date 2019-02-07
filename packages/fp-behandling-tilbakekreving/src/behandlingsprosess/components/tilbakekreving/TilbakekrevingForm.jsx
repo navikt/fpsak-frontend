@@ -20,12 +20,8 @@ import {
   VerticalSpacer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
-<<<<<<< HEAD:packages/fp-behandling-tilbakekreving/src/behandlingsprosess/components/tilbakekreving/TilbakekrevingForm.jsx
 import { getStatusPeriode } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
 import { behandlingForm, behandlingFormValueSelector } from '../../../behandlingForm';
-=======
-import { getStatusPeriode } from 'behandlingFelles/behandlingsprosess/components/behandlingspunktTimelineSkjema/BpTimelineHelper';
->>>>>>> NOJIRA added foreldelse behandlinspunkt:packages/fpsak/src/behandlingTilbakekreving/behandlingsprosess/components/tilbakekreving/TilbakekrevingForm.jsx
 import tilbakekrevingCodes from './tilbakekrevingCodes';
 import Uaktsomhet from './Uaktsomhet';
 import HandletUaktsomhetGrad from './HandletUaktsomhetGrad';
