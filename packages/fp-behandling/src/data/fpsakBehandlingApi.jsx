@@ -17,6 +17,7 @@ export const BehandlingFpsakApiKeys = {
   SAVE_OVERSTYRT_AKSJONSPUNKT: 'SAVE_OVERSTYRT_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
   SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
+  STONADSKONTOER_GITT_UTTAKSPERIODER: 'STONADSKONTOER_GITT_UTTAKSPERIODER',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -39,6 +40,9 @@ const endpoints = new RestApiConfigBuilder()
   /* /api/brev */
   .withPostAndOpenBlob('/api/brev/forhandsvis', BehandlingFpsakApiKeys.PREVIEW_MESSAGE)
   .withPost('/api/brev/bestill', BehandlingFpsakApiKeys.SUBMIT_MESSAGE)
+
+  /* /STONADSKONTOER_GITT_UTTAKSPERIODER */
+  .withPost('/api/behandling/uttak/stonadskontoerGittUttaksperioder', BehandlingFpsakApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER)
 
 /* /api/brev */
   .build();

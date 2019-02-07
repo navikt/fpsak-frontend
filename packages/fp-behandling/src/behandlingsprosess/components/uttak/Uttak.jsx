@@ -28,8 +28,9 @@ import {
   getBehandlingStatus,
   getBehandlingUttaksperiodegrense,
 } from 'behandlingFpsak/src/behandlingSelectors';
+import { tempUpdateStonadskontoer } from 'behandlingFpsak/src/behandlingsprosess/duck';
 import { getRettigheter } from 'navAnsatt/duck';
-import { getSelectedBehandlingId } from 'behandlingFpsak/src/duck';
+import { getSelectedBehandlingId, getSelectedSaksnummer } from 'behandlingFpsak/src/duck';
 import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -157,8 +158,8 @@ const isInnvilget = uttaksresultatActivity => uttaksresultatActivity.periodeResu
  */
 
 export class UttakImpl extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.initializeActivityForm = this.initializeActivityForm.bind(this);
     this.openPeriodInfo = this.openPeriodInfo.bind(this);
     this.nextPeriod = this.nextPeriod.bind(this);
@@ -173,9 +174,10 @@ export class UttakImpl extends Component {
     this.isReadOnly = this.isReadOnly.bind(this);
     this.skalViseCheckbox = this.skalViseCheckbox.bind(this);
     this.setSelectedDefaultPeriod = this.setSelectedDefaultPeriod.bind(this);
-
+    this.updateStonadskontoer = this.updateStonadskontoer.bind(this);
     this.state = {
       selectedItem: null,
+      stonadskontoKopi: props.stonadskonto,
     };
   }
 
@@ -203,6 +205,7 @@ export class UttakImpl extends Component {
     }
   }
 
+
   setSelectedUttakActivity(uttakActivity, isMounting) {
     if (!isMounting) {
       this.initializeActivityForm(uttakActivity);
@@ -213,6 +216,54 @@ export class UttakImpl extends Component {
   setFormField(fieldName, fieldValue) {
     const { reduxFormChange: formChange, behandlingFormPrefix, formName } = this.props;
     formChange(`${behandlingFormPrefix}.${formName}`, fieldName, fieldValue);
+  }
+
+  updateStonadskontoer(values) {
+    const { tempUpdateStonadskontoer: updateKontoer, behandlingId, saksnummer } = this.props;
+    const transformedResultat = values.map((perioder) => {
+      const { tilknyttetStortinget, ...uta } = perioder; // NOSONAR destruct er bedre enn delete, immutable
+      const { ...transformActivity } = uta;
+      if (uta.oppholdÅrsak.kode !== '-') {
+        uta.aktiviteter = [];
+      }
+
+      const transformAktiviteter = uta.aktiviteter.map((a) => {
+        const { days, weeks, ...transformAktivitet } = a;
+        if (typeof days !== 'undefined' && typeof weeks !== 'undefined') {
+          const trekkdager = (weeks * 5) + days;
+          transformAktivitet.trekkdager = trekkdager; // regner om uker og dager til trekkdager
+        }
+        return transformAktivitet;
+      });
+      transformActivity.aktiviteter = transformAktiviteter;
+      return transformActivity;
+    });
+
+    const params = {
+      behandlingId: {
+        saksnummer,
+        behandlingId,
+      },
+      perioder: transformedResultat,
+    };
+    updateKontoer(params).then((response) => {
+      this.setState({ stonadskontoKopi: response });
+    });
+
+    // fetch('/fpsak/api/behandling/uttak/stonadskontoerGittUttaksperioder',
+    //   {
+    //     method: 'POST',
+    //     headers: {
+    //       Accept: 'application/json, text/plain, */*',
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(payload),
+    //   }).then(response => response.json()).then((result) => {
+    //   const stonadskontoer = result;
+    //   this.setState({ stonadskontoKopi: stonadskontoer });
+    // }).catch((error) => {
+    //   console.error(error);
+    // });
   }
 
   initializeActivityForm(uttakActivity) {
@@ -232,6 +283,7 @@ export class UttakImpl extends Component {
     const otherThanUpdated = uttakPerioder.filter(o => o.id !== verdier.id && o.hovedsoker);
     const sortedActivities = otherThanUpdated.concat(verdier);
     sortedActivities.sort((a, b) => a.id - b.id);
+    this.updateStonadskontoer(sortedActivities);
     this.setFormField(ACTIVITY_PANEL_NAME, sortedActivities);
     const uttakActivity = otherThanUpdated.find(o => o.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING
       || (o.tilknyttetStortinget && !Object.prototype.hasOwnProperty.call(o, 'erOppfylt')));
@@ -347,7 +399,6 @@ export class UttakImpl extends Component {
       endringsDate,
       hovedsokerKjonnKode,
       medsokerKjonnKode,
-      stonadskonto,
       dekningsgrad,
       readOnly,
       uttaksresultatActivity,
@@ -366,7 +417,7 @@ export class UttakImpl extends Component {
       annenForelderSoktOmFlerbarnsdager,
       reduxFormChange: formChange,
     } = this.props;
-    const { selectedItem } = this.state;
+    const { selectedItem, stonadskontoKopi } = this.state;
     const customTimes = getCustomTimes(
       soknadDate,
       familiehendelseDate,
@@ -398,8 +449,8 @@ export class UttakImpl extends Component {
         <div>
           <Row>
             <TimeLineInfo
-              maksDatoUttak={stonadskonto.maksDatoUttak}
-              stonadskonto={stonadskonto.stonadskontoer}
+              maksDatoUttak={stonadskontoKopi.maksDatoUttak}
+              stonadskonto={stonadskontoKopi.stonadskontoer}
               dekningsgrad={dekningsgrad}
             />
           </Row>
@@ -509,6 +560,7 @@ UttakImpl.propTypes = {
   isRevurdering: PropTypes.bool,
   harSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
   annenForelderSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
+  tempUpdateStonadskontoer: PropTypes.func.isRequired,
 };
 
 UttakImpl.defaultProps = {
@@ -582,6 +634,8 @@ const mapStateToProps = (state, props) => {
 
   const annenForelderSoktOmFlerbarnsdager = annenForelderPerioder.filter(p => p.flerbarnsdager === true).length > 0;
   return {
+    saksnummer: getSelectedSaksnummer(state),
+    behandlingId: getSelectedBehandlingId(state),
     soknadDate: determineMottatDato(periodeGrenseMottatDato, soknad.mottattDato),
     familiehendelseDate: fodselTerminDato(soknad),
     endringsDate: ytelseFordeling.endringsDato ? ytelseFordeling.endringsDato : undefined,
@@ -606,6 +660,7 @@ const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
     reduxFormChange,
     reduxFormInitialize,
+    tempUpdateStonadskontoer,
   }, dispatch),
 });
 
