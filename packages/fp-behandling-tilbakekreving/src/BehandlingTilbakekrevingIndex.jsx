@@ -39,7 +39,7 @@ export class BehandlingFpTilbakeIndex extends Component {
     this.cleanUp = this.cleanUp.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const {
       setBehandlingInfo: setInfo, saksnummer, behandlingId, behandlingUpdater, appContextUpdater,
       featureToggles, kodeverk, fagsak,

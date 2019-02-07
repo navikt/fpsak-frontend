@@ -20,7 +20,6 @@ import BehandleKlageFormNfp from './klage/Klagevurdering/Nfp/BehandleKlageFormNf
 import BehandleKlageFormKa from './klage/Klagevurdering/KA/BehandleKlageFormKa';
 import FormkravKlageFormNfp from './klage/Formkrav/FormkravKlageFormNfp';
 import FormkravKlageFormKa from './klage/Formkrav/FormkravKlageFormKa';
-import InnsynForm from './innsyn/InnsynForm';
 import BeregningFP from './beregningsgrunnlag/BeregningFP';
 import VarselOmRevurderingForm from './revurdering/VarselOmRevurderingForm';
 import BeregningsresultatEngangsstonadForm from './beregningsresultat/BeregningsresultatEngangsstonadForm';
@@ -72,9 +71,6 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
         submitCallback={submitCallback}
       />
 
-      {InnsynForm.supports(apCodes)
-      && <InnsynForm submitCallback={submitCallback} readOnly={readOnly} isSubmittable={readOnlySubmitButton} />
-      }
       {BeregningsresultatEngangsstonadForm.supports(selectedBehandlingspunkt)
       && <BeregningsresultatEngangsstonadForm submitCallback={submitCallback} />
       }

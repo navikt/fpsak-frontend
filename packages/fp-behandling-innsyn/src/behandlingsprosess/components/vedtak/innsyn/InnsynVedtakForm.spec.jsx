@@ -11,7 +11,7 @@ import { FormattedMessage } from 'react-intl';
 import { TextAreaField } from '@fpsak-frontend/form';
 
 
-import BehandlingspunktSubmitButton from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
+import BehandlingspunktSubmitButton from 'behandlingInnsyn/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
 import { InnsynVedtakFormImpl } from './InnsynVedtakForm';
 
 

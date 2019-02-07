@@ -37,7 +37,7 @@ describe('Definisjon av behandlingspunkter - Engangsstønad', () => {
       vilkar: [],
       aksjonspunkter: [{
         definisjon: {
-          kode: aksjonspunktCodes.VURDER_INNSYN,
+          kode: aksjonspunktCodes.AVKLAR_PERSONSTATUS,
         },
         status: {
           kode: aksjonspunktStatus.OPPRETTET,
@@ -53,11 +53,11 @@ describe('Definisjon av behandlingspunkter - Engangsstønad', () => {
     const bpPropList = createEngangsstonadBpProps(builderData);
 
     expect(bpPropList).to.eql([{
-      apCodes: [aksjonspunktCodes.VURDER_INNSYN],
-      code: behandlingspunktCodes.BEHANDLE_INNSYN,
+      apCodes: [aksjonspunktCodes.AVKLAR_PERSONSTATUS],
+      code: behandlingspunktCodes.SAKSOPPLYSNINGER,
       isVisible: true,
       status: vilkarUtfallType.IKKE_VURDERT,
-      titleCode: 'Behandlingspunkt.Innsyn',
+      titleCode: 'Behandlingspunkt.Saksopplysninger',
       vilkarene: [],
     }, ...defaultBehandlingspunkter]);
   });
@@ -89,7 +89,7 @@ describe('Definisjon av behandlingspunkter - Engangsstønad', () => {
       vilkar: [],
       aksjonspunkter: [{
         definisjon: {
-          kode: aksjonspunktCodes.VURDER_INNSYN,
+          kode: aksjonspunktCodes.AVKLAR_PERSONSTATUS,
         },
         status: {
           kode: aksjonspunktStatus.OPPRETTET,
@@ -107,11 +107,11 @@ describe('Definisjon av behandlingspunkter - Engangsstønad', () => {
     const bpPropList = createEngangsstonadBpProps(builderData);
 
     expect(bpPropList).to.eql([{
-      apCodes: [aksjonspunktCodes.VURDER_INNSYN],
-      code: behandlingspunktCodes.BEHANDLE_INNSYN,
+      apCodes: [aksjonspunktCodes.AVKLAR_PERSONSTATUS],
+      code: behandlingspunktCodes.SAKSOPPLYSNINGER,
       isVisible: true,
       status: vilkarUtfallType.IKKE_VURDERT,
-      titleCode: 'Behandlingspunkt.Innsyn',
+      titleCode: 'Behandlingspunkt.Saksopplysninger',
       vilkarene: [],
     }, {
       apCodes: [],

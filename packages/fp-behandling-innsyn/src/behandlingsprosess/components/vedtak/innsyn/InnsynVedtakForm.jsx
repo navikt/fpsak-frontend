@@ -7,25 +7,25 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
+import { behandlingForm, behandlingFormValueSelector } from 'behandlingInnsyn/src/behandlingForm';
 import {
   getAksjonspunkter,
   getBehandlingInnsynDokumenter,
   getBehandlingInnsynMottattDato,
   getBehandlingInnsynResultatType,
   getBehandlingSprak,
-} from 'behandlingFpsak/src/behandlingSelectors';
+} from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
 import {
   FadingPanel, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import BehandlingspunktSubmitButton from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
+import BehandlingspunktSubmitButton from 'behandlingInnsyn/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
   hasValidText, maxLength, minLength, requiredIfNotPristine, getLanguageCodeFromSprakkode, decodeHtmlEntity,
 } from '@fpsak-frontend/utils';
-import { getFilteredReceivedDocuments, getSelectedSaksnummer } from 'behandlingFpsak/src/duck';
+import { getFilteredReceivedDocuments, getSelectedSaksnummer } from 'behandlingInnsyn/src/duck';
 import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 import DocumentListVedtakInnsyn from './DocumentListVedtakInnsyn';
 

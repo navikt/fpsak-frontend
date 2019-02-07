@@ -1,11 +1,10 @@
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-behandling-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { behandlingspunktCodes as bpc, BehandlingspunktProperties } from '@fpsak-frontend/fp-behandling-felles';
 import { hasSimuleringOn, getStatusFromSimulering } from './simuleringStatusUtleder';
 import getVedtakStatus from './vedtakStatusUtleder';
-import BehandlingspunktProperties from './behandlingspunktBuilder';
 
 const getStatusFromBeregningsresultat = ({ resultatstruktur }) => (resultatstruktur ? vut.OPPFYLT : vut.IKKE_VURDERT);
 
@@ -18,8 +17,6 @@ const hasNonDefaultBehandlingspunkt = (builderData, bpLength) => bpLength > 0;
  * @see BehandlingspunktProperties.Builder for mer informasjon.
  */
 const engangsstonadBuilders = [
-  new BehandlingspunktProperties.Builder(bpc.BEHANDLE_INNSYN, 'Innsyn')
-    .withAksjonspunktCodes(ac.VURDER_INNSYN),
   new BehandlingspunktProperties.Builder(bpc.VARSEL, 'CheckVarselRevurdering')
     .withAksjonspunktCodes(ac.VARSEL_REVURDERING_MANUELL, ac.VARSEL_REVURDERING_ETTERKONTROLL),
   new BehandlingspunktProperties.Builder(bpc.SAKSOPPLYSNINGER, 'Saksopplysninger')
@@ -61,10 +58,10 @@ const engangsstonadBuilders = [
     .withAksjonspunktCodes(ac.SOKNADSFRISTVILKARET, ac.OVERSTYR_SOKNADSFRISTVILKAR),
   new BehandlingspunktProperties.Builder(bpc.BEREGNING, 'Beregning')
     .withAksjonspunktCodes(ac.OVERSTYR_BEREGNING)
-    .withVisibilityWhen(hasNonDefaultBehandlingspunkt, behandlingTypeNotEquals(bt.DOKUMENTINNSYN, bt.KLAGE))
+    .withVisibilityWhen(hasNonDefaultBehandlingspunkt, behandlingTypeNotEquals(bt.KLAGE))
     .withStatus(getStatusFromBeregningsresultat),
   new BehandlingspunktProperties.Builder(bpc.AVREGNING, 'Avregning')
-    .withVisibilityWhen(hasNonDefaultBehandlingspunkt, behandlingTypeNotEquals(bt.DOKUMENTINNSYN, bt.KLAGE), hasSimuleringOn)
+    .withVisibilityWhen(hasNonDefaultBehandlingspunkt, behandlingTypeNotEquals(bt.KLAGE), hasSimuleringOn)
     .withAksjonspunktCodes(ac.VURDER_FEILUTBETALING, ac.VURDER_INNTREKK)
     .withStatus(getStatusFromSimulering),
   new BehandlingspunktProperties.Builder(bpc.VEDTAK, 'Vedtak')

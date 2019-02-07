@@ -4,29 +4,31 @@ import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import moment from 'moment';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Row } from 'nav-frontend-grid';
-import moment from 'moment';
 
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/src/behandlingsprosess/behandlingsprosessSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import fpsakApi from 'data/fpsakApi';
-import {
-  getBehandlingOnHoldDate, getBehandlingInnsynMottattDato, getBehandlingInnsynResultatType,
-  getBehandlingInnsynVedtaksdokumentasjon, getBehandlingInnsynDokumenter,
-} from 'behandlingFpsak/src/behandlingSelectors';
 import {
   FadingPanel, ArrowBox, VerticalSpacer, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
 import { required, hasValidDate, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { getFilteredReceivedDocuments, getKodeverk, getSelectedSaksnummer } from 'behandlingFpsak/src/duck';
 import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
-import BehandlingspunktSubmitButton from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import innsynResultatTyperKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';
+
+import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingInnsyn/src/behandlingsprosess/behandlingsprosessSelectors';
+import { behandlingForm, behandlingFormValueSelector } from 'behandlingInnsyn/src/behandlingForm';
+import {
+  getBehandlingOnHoldDate, getBehandlingInnsynMottattDato, getBehandlingInnsynResultatType,
+  getBehandlingInnsynVedtaksdokumentasjon, getBehandlingInnsynDokumenter,
+} from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
+import {
+  getFilteredReceivedDocuments, getKodeverk, getSelectedSaksnummer, getAllDocuments,
+} from 'behandlingInnsyn/src/duck';
+import BehandlingspunktSubmitButton from 'behandlingInnsyn/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
 import DocumentListInnsyn from './DocumentListInnsyn';
 import VedtakDocuments from './VedtakDocuments';
 
@@ -202,7 +204,7 @@ const mapStateToProps = (state, ownProps) => ({
   innsynResultatType: behandlingFormValueSelector(formName)(state, 'innsynResultatType'),
   sattPaVent: behandlingFormValueSelector(formName)(state, 'sattPaVent'),
   initialValues: buildInitialValues(state),
-  onSubmit: values => ownProps.submitCallback([transformValues(values, fpsakApi.ALL_DOCUMENTS_FPSAK.getRestApiData()(state))]),
+  onSubmit: values => ownProps.submitCallback([transformValues(values, getAllDocuments(state))]),
 });
 
 

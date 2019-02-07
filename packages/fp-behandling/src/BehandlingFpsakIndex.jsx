@@ -42,10 +42,10 @@ export class BehandlingFpsakIndex extends Component {
   componentDidMount() {
     const {
       setBehandlingInfo: setInfo, saksnummer, behandlingId, behandlingUpdater, appContextUpdater,
-      featureToggles, filteredReceivedDocuments, kodeverk, fagsak,
+      featureToggles, kodeverk, fagsak,
     } = this.props;
     setInfo({
-      behandlingId, fagsakSaksnummer: saksnummer, featureToggles, filteredReceivedDocuments, kodeverk, fagsak,
+      behandlingId, fagsakSaksnummer: saksnummer, featureToggles, kodeverk, fagsak,
     });
 
     behandlingUpdater.setUpdater(fpSakBehandlingUpdater);
@@ -141,13 +141,6 @@ BehandlingFpsakIndex.propTypes = {
   resetBehandlingFpsakContext: PropTypes.func.isRequired,
   appContextUpdater: PropTypes.shape().isRequired,
   featureToggles: PropTypes.shape().isRequired,
-  filteredReceivedDocuments: PropTypes.arrayOf(PropTypes.shape({
-    journalpostId: PropTypes.string.isRequired,
-    dokumentId: PropTypes.string.isRequired,
-    tittel: PropTypes.string.isRequired,
-    tidspunkt: PropTypes.string,
-    kommunikasjonsretning: PropTypes.string.isRequired,
-  })).isRequired,
   kodeverk: PropTypes.shape().isRequired,
   fagsak: PropTypes.shape({
     fagsakStatus: PropTypes.shape().isRequired,

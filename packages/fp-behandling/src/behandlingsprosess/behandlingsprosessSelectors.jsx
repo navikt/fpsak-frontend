@@ -11,7 +11,7 @@ import { getRettigheter } from 'navAnsatt/duck';
 import { DEFAULT_BEHANDLINGSPROSESS } from '@fpsak-frontend/fp-felles';
 import {
   getBehandlingIsOnHold, getAllMerknaderFraBeslutter, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat,
-  getBehandlingInnsynResultatType, getBehandlingResultatstruktur, getStonadskontoer, hasReadOnlyBehandling, isBehandlingStatusReadOnly,
+  getBehandlingResultatstruktur, getStonadskontoer, hasReadOnlyBehandling, isBehandlingStatusReadOnly,
   getUttaksresultatPerioder, getSimuleringResultat,
 } from 'behandlingFpsak/src/behandlingSelectors';
 import createEngangsstonadBpProps from './definition/engangsstonadBpDefinition';
@@ -21,10 +21,10 @@ import { getFeatureToggles, getFagsakYtelseType } from '../duck';
 
 // Kun eksportert for test. Ikke bruk andre steder!
 export const getBehandlingspunkterProps = createSelector(
-  [getFagsakYtelseType, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat, getBehandlingInnsynResultatType,
+  [getFagsakYtelseType, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat,
     getBehandlingResultatstruktur, getStonadskontoer, getFeatureToggles, getUttaksresultatPerioder, getSimuleringResultat],
   (fagsakYtelseType, behandlingType, vilkar = [], aksjonspunkter, behandlingsresultat,
-    innsynResultatType, resultatstruktur, stonadskontoer, featureToggles, uttaksresultat, simuleringResultat) => {
+    resultatstruktur, stonadskontoer, featureToggles, uttaksresultat, simuleringResultat) => {
     if (!behandlingType) {
       return undefined;
     }
@@ -34,7 +34,6 @@ export const getBehandlingspunkterProps = createSelector(
       vilkar,
       aksjonspunkter,
       behandlingsresultat,
-      innsynResultatType,
       resultatstruktur,
       stonadskontoer,
       featureToggles,

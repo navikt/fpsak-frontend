@@ -1,0 +1,29 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+
+.behandlingsPunkt {
+  background-color: @white;
+  border: 1px solid @navGra60;
+  border-radius: @border-radius-base;
+  margin-top: 16px;
+  position: relative;
+  width: 100%;
+
+  &.statusAksjonspunkt,
+  &.notAcceptedByBeslutter {
+    border-left-width: 5px;
+  }
+
+  &.statusAksjonspunkt {
+    border-left-color: @navOransjeLighten20;
+  }
+
+  &.notAcceptedByBeslutter {
+    border-left-color: @redError;
+  }
+
+  &:empty {
+    border: 0;
+    margin-top: 0;
+  }
+}

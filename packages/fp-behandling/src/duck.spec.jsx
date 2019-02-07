@@ -35,7 +35,6 @@ describe('Behandling-reducer', () => {
       featureToggles: {},
       kodeverk: {},
       fagsak: {},
-      filteredReceivedDocuments: [],
     });
   });
 
@@ -57,7 +56,6 @@ describe('Behandling-reducer', () => {
       featureToggles: {},
       kodeverk: {},
       fagsak: {},
-      filteredReceivedDocuments: [],
     });
   });
 
@@ -75,7 +73,6 @@ describe('Behandling-reducer', () => {
       featureToggles: {},
       kodeverk: {},
       fagsak: {},
-      filteredReceivedDocuments: [],
     });
   });
 

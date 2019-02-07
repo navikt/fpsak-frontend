@@ -1,7 +1,6 @@
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingResultatType, { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import innsynResultatTypeKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 import aksjonspunktCodes, { isKlageAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
@@ -23,14 +22,6 @@ const findVedtakStatusForKlage = (aksjonspunkter, behandlingsresultat) => {
 const hasOnlyClosedAps = (aksjonspunkter, vedtakAksjonspunkter) => aksjonspunkter
   .filter(ap => !vedtakAksjonspunkter.some(vap => vap.definisjon.kode === ap.definisjon.kode))
   .every(ap => !isAksjonspunktOpen(ap.status.kode));
-
-const findVedtakStatusForInnsyn = (aksjonspunkter, innsynResultatType) => {
-  const akp = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK);
-  if (!akp) {
-    return vilkarUtfallType.IKKE_VURDERT;
-  }
-  return innsynResultatType.kode === innsynResultatTypeKV.INNVILGET ? vilkarUtfallType.OPPFYLT : vilkarUtfallType.IKKE_OPPFYLT;
-};
 
 const hasAksjonspunkt = ap => (ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING
   || ap.definisjon.kode === aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG
@@ -63,11 +54,8 @@ const findStatusForVedtak = (vilkar, aksjonspunkter, vedtakAksjonspunkter, behan
 };
 
 const getVedtakStatus = ({
-  behandlingType, aksjonspunkter, innsynResultatType, behandlingsresultat, vilkar,
+  behandlingType, aksjonspunkter, behandlingsresultat, vilkar,
 }, vedtakAksjonspunkter) => {
-  if (behandlingType.kode === bt.DOKUMENTINNSYN) {
-    return findVedtakStatusForInnsyn(aksjonspunkter, innsynResultatType);
-  }
   if (behandlingType.kode === bt.KLAGE) {
     return findVedtakStatusForKlage(aksjonspunkter, behandlingsresultat);
   }

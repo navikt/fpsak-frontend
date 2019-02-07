@@ -78,7 +78,6 @@ const initialState = {
   featureToggles: {},
   kodeverk: {},
   fagsak: {},
-  filteredReceivedDocuments: [],
   hasShownBehandlingPaVent: false,
 };
 
@@ -123,6 +122,5 @@ export const getKodeverk = kodeverkType => createSelector(
   [getBehandlingContext], behandlingContext => behandlingContext.kodeverk[kodeverkType],
 );
 export const getFeatureToggles = createSelector([getBehandlingContext], behandlingContext => behandlingContext.featureToggles);
-export const getFilteredReceivedDocuments = createSelector([getBehandlingContext], behandlingContext => behandlingContext.filteredReceivedDocuments);
 
 export const getHasShownBehandlingPaVent = createSelector([getBehandlingContext], behandlingContext => behandlingContext.hasShownBehandlingPaVent);

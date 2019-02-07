@@ -49,7 +49,6 @@ export const getBehandlingBehandlendeEnhetId = createSelector([getSelectedBehand
 export const getBehandlingBehandlendeEnhetNavn = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlendeEnhetNavn);
 export const getBehandlingType = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.type);
 export const getBehandlingIsRevurdering = createSelector([getBehandlingType], (bt = {}) => bt.kode === behandlingType.REVURDERING);
-export const getBehandlingIsInnsyn = createSelector([getBehandlingType], (bt = {}) => bt.kode === behandlingType.DOKUMENTINNSYN);
 export const getBehandlingIsKlage = createSelector([getBehandlingType], (bt = {}) => bt.kode === behandlingType.KLAGE);
 export const getBehandlingArsaker = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingArsaker);
 export const getBehandlingArsakTyper = createSelector(
@@ -238,17 +237,6 @@ export const getBehandlingVedtaksDatoSomSvangerskapsuke = createSelector(
 export const getFamiliehendelseAntallBarnTermin = createSelector([getFamiliehendelse], (familiehendelse = {}) => familiehendelse.antallBarnTermin);
 export const getFamiliehendelseTermindato = createSelector([getFamiliehendelse], (familiehendelse = {}) => familiehendelse.termindato);
 export const getBehandlingSkjaringstidspunkt = createSelector([getFamiliehendelse], (familiehendelse = {}) => familiehendelse.skjaringstidspunkt);
-
-// INNSYN
-const getBehandlingInnsyn = createSelector(
-  [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling.innsyn ? selectedBehandling.innsyn : undefined),
-);
-export const getBehandlingInnsynResultatType = createSelector([getBehandlingInnsyn], (innsyn = {}) => innsyn.innsynResultatType);
-export const getBehandlingInnsynMottattDato = createSelector([getBehandlingInnsyn], (innsyn = {}) => innsyn.innsynMottattDato);
-export const getBehandlingInnsynDokumenter = createSelector([getBehandlingInnsyn], (innsyn = {}) => (innsyn.dokumenter ? innsyn.dokumenter : []));
-export const getBehandlingInnsynVedtaksdokumentasjon = createSelector(
-  [getBehandlingInnsyn], (innsyn = {}) => (innsyn.vedtaksdokumentasjon ? innsyn.vedtaksdokumentasjon : []),
-);
 
 // INNTEKT - ARBEID - YTELSE
 const getBehandlingInntektArbeidYtelse = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling['inntekt-arbeid-ytelse']);

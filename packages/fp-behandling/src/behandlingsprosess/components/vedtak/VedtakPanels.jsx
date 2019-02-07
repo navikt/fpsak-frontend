@@ -5,7 +5,6 @@ import { getBehandlingType } from 'behandlingFpsak/src/behandlingSelectors';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import VedtakForm from './VedtakForm';
-import InnsynVedtakForm from './innsyn/InnsynVedtakForm';
 import VedtakKlageForm from './klage/VedtakKlageForm';
 import VedtakKlageFormNy from './klageNy/VedtakKlageForm';
 import VedtakRevurderingForm from './revurdering/VedtakRevurderingForm';
@@ -21,21 +20,11 @@ const VedtakPanels = ({
   previewVedtakCallback,
   previewManueltBrevCallback,
   previewKlageBrevCallback,
-  previewCallback,
   submitCallback,
   behandlingTypeKode,
   featureToggleFormkrav,
 }) => {
   if (behandlingspunkt === behandlingspunktCodes.VEDTAK || behandlingspunkt === behandlingspunktCodes.KLAGE_RESULTAT) {
-    if (behandlingTypeKode === behandlingType.DOKUMENTINNSYN) {
-      return (
-        <InnsynVedtakForm
-          submitCallback={submitCallback}
-          previewCallback={previewCallback}
-          readOnly={readOnly}
-        />
-      );
-    }
     if (behandlingTypeKode === behandlingType.REVURDERING) {
       return (
         <VedtakRevurderingForm
@@ -84,7 +73,6 @@ VedtakPanels.propTypes = {
   previewVedtakCallback: PropTypes.func.isRequired,
   previewManueltBrevCallback: PropTypes.func.isRequired,
   previewKlageBrevCallback: PropTypes.func.isRequired,
-  previewCallback: PropTypes.func.isRequired,
   submitCallback: PropTypes.func.isRequired,
   behandlingTypeKode: PropTypes.string.isRequired,
   featureToggleFormkrav: PropTypes.bool.isRequired,
