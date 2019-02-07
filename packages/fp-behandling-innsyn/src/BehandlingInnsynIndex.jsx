@@ -86,10 +86,10 @@ export class BehandlingInnsynIndex extends Component {
       handleOnHoldSubmit,
       hasSubmittedPaVentForm,
       hasManualPaVent,
-      behandlingerVersjonMappedById,
       setBehandlingInfoHolder,
       ventearsaker,
       behandlingIdentifier,
+      behandlingerVersjonMappedById,
     } = this.props;
 
     if (!behandlingIdentifier || behandlingIdentifier.behandlingId !== behandlingId) {
@@ -126,6 +126,7 @@ BehandlingInnsynIndex.propTypes = {
   saksnummer: PropTypes.number.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number,
+  behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   fristBehandlingPaaVent: PropTypes.string,
   behandlingPaaVent: PropTypes.bool,
   venteArsakKode: PropTypes.string,
@@ -137,7 +138,6 @@ BehandlingInnsynIndex.propTypes = {
   hasManualPaVent: PropTypes.bool.isRequired,
   setBehandlingInfo: PropTypes.func.isRequired,
   setBehandlingInfoHolder: PropTypes.func.isRequired,
-  behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   behandlingUpdater: PropTypes.shape().isRequired,
   resetInnsynContext: PropTypes.func.isRequired,
   appContextUpdater: PropTypes.shape().isRequired,

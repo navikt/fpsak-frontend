@@ -68,7 +68,6 @@ describe('<VedtakForm>', () => {
     const vedtakInnvilgetPanel = wrapper.find(VedtakInnvilgetPanel);
     expect(vedtakInnvilgetPanel).to.have.length(1);
     expect(wrapper.find('VedtakAvslagPanel')).to.have.length(0);
-    expect(wrapper.find('VedtakKlagePanel')).to.have.length(0);
 
     expect(vedtakInnvilgetPanel.prop('antallBarn')).is.eql(2);
   });

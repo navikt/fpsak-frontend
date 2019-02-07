@@ -36,7 +36,6 @@ const vilkarImages = {
 
 const behandlingspunktImages = {
   [behandlingspunktCodes.VEDTAK]: vedtakImages,
-  [behandlingspunktCodes.KLAGE_RESULTAT]: vedtakImages,
   [behandlingspunktCodes.BEREGNINGSGRUNNLAG]: beregningsgrunnlagImages,
   [behandlingspunktCodes.UTTAK]: uttakImages,
   [behandlingspunktCodes.AVREGNING]: avregningImages,

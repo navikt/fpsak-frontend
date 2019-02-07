@@ -5,8 +5,6 @@ import { getBehandlingType } from 'behandlingFpsak/src/behandlingSelectors';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import VedtakForm from './VedtakForm';
-import VedtakKlageForm from './klage/VedtakKlageForm';
-import VedtakKlageFormNy from './klageNy/VedtakKlageForm';
 import VedtakRevurderingForm from './revurdering/VedtakRevurderingForm';
 
 /*
@@ -19,37 +17,16 @@ const VedtakPanels = ({
   readOnly,
   previewVedtakCallback,
   previewManueltBrevCallback,
-  previewKlageBrevCallback,
   submitCallback,
   behandlingTypeKode,
-  featureToggleFormkrav,
 }) => {
-  if (behandlingspunkt === behandlingspunktCodes.VEDTAK || behandlingspunkt === behandlingspunktCodes.KLAGE_RESULTAT) {
+  if (behandlingspunkt === behandlingspunktCodes.VEDTAK) {
     if (behandlingTypeKode === behandlingType.REVURDERING) {
       return (
         <VedtakRevurderingForm
           submitCallback={submitCallback}
           previewVedtakCallback={previewVedtakCallback}
           previewManueltBrevCallback={previewManueltBrevCallback}
-          readOnly={readOnly}
-        />
-      );
-    }
-
-    if (behandlingTypeKode === behandlingType.KLAGE && !featureToggleFormkrav) {
-      return (
-        <VedtakKlageForm
-          submitCallback={submitCallback}
-          previewVedtakCallback={previewVedtakCallback}
-          readOnly={readOnly}
-        />
-      );
-    }
-    if (behandlingTypeKode === behandlingType.KLAGE && featureToggleFormkrav) {
-      return (
-        <VedtakKlageFormNy
-          submitCallback={submitCallback}
-          previewVedtakCallback={previewKlageBrevCallback}
           readOnly={readOnly}
         />
       );
@@ -72,15 +49,12 @@ VedtakPanels.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
   previewManueltBrevCallback: PropTypes.func.isRequired,
-  previewKlageBrevCallback: PropTypes.func.isRequired,
   submitCallback: PropTypes.func.isRequired,
   behandlingTypeKode: PropTypes.string.isRequired,
-  featureToggleFormkrav: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
   behandlingTypeKode: getBehandlingType(state).kode,
-  featureToggleFormkrav: true,
 });
 
 export default connect(mapStateToProps)(VedtakPanels);

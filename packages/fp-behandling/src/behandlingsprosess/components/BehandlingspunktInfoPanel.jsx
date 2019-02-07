@@ -16,10 +16,6 @@ import TilkjentYtelsePanel from './tilkjentYtelse/TilkjentYtelsePanel';
 import UttakPanel from './uttak/UttakPanel';
 import VedtakPanels from './vedtak/VedtakPanels';
 import VilkarPanels from './vilkar/VilkarPanels';
-import BehandleKlageFormNfp from './klage/Klagevurdering/Nfp/BehandleKlageFormNfp';
-import BehandleKlageFormKa from './klage/Klagevurdering/KA/BehandleKlageFormKa';
-import FormkravKlageFormNfp from './klage/Formkrav/FormkravKlageFormNfp';
-import FormkravKlageFormKa from './klage/Formkrav/FormkravKlageFormKa';
 import BeregningFP from './beregningsgrunnlag/BeregningFP';
 import VarselOmRevurderingForm from './revurdering/VarselOmRevurderingForm';
 import BeregningsresultatEngangsstonadForm from './beregningsresultat/BeregningsresultatEngangsstonadForm';
@@ -37,10 +33,8 @@ const classNames = classnames.bind(styles);
  */
 export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel lesbart
   selectedBehandlingspunkt,
-  saveTempKlage,
   submitCallback,
   previewCallback,
-  previewCallbackKlage,
   previewManueltBrevCallback,
   previewVedtakCallback,
   dispatchSubmitFailed,
@@ -66,7 +60,6 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
         readOnly={readOnly}
         previewCallback={previewCallback}
         previewVedtakCallback={previewVedtakCallback}
-        previewKlageBrevCallback={previewCallbackKlage}
         previewManueltBrevCallback={previewManueltBrevCallback}
         submitCallback={submitCallback}
       />
@@ -85,48 +78,6 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
         dispatchSubmitFailed={dispatchSubmitFailed}
         readOnly={readOnly}
       />
-      )
-      }
-      {BehandleKlageFormKa.supports(apCodes)
-      && (
-      <BehandleKlageFormKa
-        saveKlage={saveTempKlage}
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        previewCallback={previewCallbackKlage}
-        readOnlySubmitButton={readOnlySubmitButton}
-      />
-      )
-      }
-      {BehandleKlageFormNfp.supports(apCodes)
-      && (
-      <BehandleKlageFormNfp
-        saveKlage={saveTempKlage}
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        previewCallback={previewCallbackKlage}
-        readOnlySubmitButton={readOnlySubmitButton}
-      />
-      )
-      }
-      {FormkravKlageFormNfp.supports(apCodes)
-      && (
-        <FormkravKlageFormNfp
-          submitCallback={submitCallback}
-          readOnly={readOnly}
-          previewCallback={previewCallback}
-          readOnlySubmitButton={readOnlySubmitButton}
-        />
-      )
-      }
-      {FormkravKlageFormKa.supports(apCodes)
-      && (
-        <FormkravKlageFormKa
-          submitCallback={submitCallback}
-          readOnly={readOnly}
-          previewCallback={previewCallback}
-          readOnlySubmitButton={readOnlySubmitButton}
-        />
       )
       }
       {BeregningFP.supports(selectedBehandlingspunkt)
@@ -183,12 +134,10 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
 );
 
 BehandlingspunktInfoPanel.propTypes = {
-  saveTempKlage: PropTypes.func.isRequired,
   selectedBehandlingspunkt: PropTypes.string.isRequired,
   submitCallback: PropTypes.func.isRequired,
   openAksjonspunkt: PropTypes.bool.isRequired,
   previewCallback: PropTypes.func.isRequired,
-  previewCallbackKlage: PropTypes.func.isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
   previewManueltBrevCallback: PropTypes.func.isRequired,
   dispatchSubmitFailed: PropTypes.func.isRequired,

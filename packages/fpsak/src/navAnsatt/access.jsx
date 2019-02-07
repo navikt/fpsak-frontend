@@ -1,4 +1,3 @@
-/* @flow */
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import fagsakStatusCode from '@fpsak-frontend/kodeverk/src/fagsakStatus';
@@ -6,8 +5,6 @@ import { without, isObject } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import type { Kodeverk } from '@fpsak-frontend/kodeverk/src/kodeverkFlowType';
-import type { NavAnsatt } from './navAnsattFlowType';
 
 const allFagsakStatuses = Object.values(fagsakStatusCode);
 const allBehandlingStatuses = Object.values(behandlingStatusCode);
@@ -23,8 +20,8 @@ const enabledFor = (validFagsakStauses, validBehandlingStatuses) => (fagsakStatu
   validFagsakStauses.includes(fagsakStatus.kode) && validBehandlingStatuses.includes(behandlingStatus.kode)
 );
 
-const accessSelector = (validNavAnsattPredicates, validFagsakStatuses, validBehandlingStatuses) => (navAnsatt: NavAnsatt,
-  fagsakStatus: Kodeverk, behandlingStatus: Kodeverk) => {
+const accessSelector = (validNavAnsattPredicates, validFagsakStatuses, validBehandlingStatuses) => (navAnsatt,
+  fagsakStatus, behandlingStatus) => {
   if (kanVeilede(navAnsatt)) {
     return {
       employeeHasAccess: true,
@@ -64,7 +61,7 @@ const settBehandlingPaVentAccessSelector = (navAnsatt, soknad, aksjonspunkter, t
 };
 
 export const settBehandlingPaVentAccess = (
-  navAnsatt, fagsakStatus: Kodeverk, behandlingStatus: Kodeverk, soknad, aksjonspunkter, type: Kodeverk,
+  navAnsatt, fagsakStatus, behandlingStatus, soknad, aksjonspunkter, type,
 ) => settBehandlingPaVentAccessSelector(navAnsatt, soknad, aksjonspunkter, type)(navAnsatt, fagsakStatus, behandlingStatus);
 
 export const byttBehandlendeEnhetAccess = accessSelector(
@@ -89,7 +86,7 @@ const opprettRevurderingAccessSelector = (selectedFagsak) => {
   );
 };
 
-export const opprettRevurderingAccess = (navAnsatt: NavAnsatt, fagsakStatus: Kodeverk, behandlingStatus: Kodeverk, selectedFagsak) => (
+export const opprettRevurderingAccess = (navAnsatt, fagsakStatus, behandlingStatus, selectedFagsak) => (
   opprettRevurderingAccessSelector(selectedFagsak)(navAnsatt, fagsakStatus, behandlingStatus)
 );
 
@@ -125,8 +122,8 @@ const opneBehandlingForEndringerAccessSelector = (behandlingType, selectedFagsak
   );
 };
 
-export const opneBehandlingForEndringerAccess = (behandlingType: Kodeverk,
-  navAnsatt: NavAnsatt, fagsakStatus: Kodeverk, behandlingStatus: Kodeverk, selectedFagsak) => (
+export const opneBehandlingForEndringerAccess = (behandlingType,
+  navAnsatt, fagsakStatus, behandlingStatus, selectedFagsak) => (
   opneBehandlingForEndringerAccessSelector(behandlingType, selectedFagsak)(navAnsatt, fagsakStatus, behandlingStatus)
 );
 
@@ -168,15 +165,15 @@ const sendMeldingAccessSelector = (navAnsatt) => {
 };
 
 export const godkjenningsFaneAccess = (
-  navAnsatt: NavAnsatt, fagsakStatus: Kodeverk, behandlingStatus: Kodeverk, ansvarligSaksbehandler,
+  navAnsatt, fagsakStatus, behandlingStatus, ansvarligSaksbehandler,
 ) => godkjenningsFaneAccessSelector(navAnsatt, ansvarligSaksbehandler)(navAnsatt, fagsakStatus, behandlingStatus);
 
-export const sendMeldingAccess = (navAnsatt: NavAnsatt, fagsakStatus: Kodeverk, behandlingStatus: Kodeverk) => sendMeldingAccessSelector(navAnsatt)(
+export const sendMeldingAccess = (navAnsatt, fagsakStatus, behandlingStatus) => sendMeldingAccessSelector(navAnsatt)(
   navAnsatt, fagsakStatus, behandlingStatus,
 );
 
-export const allAccessRights = (navAnsatt: NavAnsatt, fagsakStatus: Kodeverk, behandlingStatus: Kodeverk,
-  soknad, aksjonspunkter, type: Kodeverk, ansvarligSaksbehandler, selectedFagsak) => ({
+export const allAccessRights = (navAnsatt, fagsakStatus, behandlingStatus,
+  soknad, aksjonspunkter, type, ansvarligSaksbehandler, selectedFagsak) => ({
   writeAccess: writeAccess(navAnsatt, fagsakStatus, behandlingStatus),
   henleggBehandlingAccess: henleggBehandlingAccess(navAnsatt, fagsakStatus, behandlingStatus),
   settBehandlingPaVentAccess: settBehandlingPaVentAccess(navAnsatt, fagsakStatus, behandlingStatus, soknad, aksjonspunkter, type),

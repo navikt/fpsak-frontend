@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import BehandlingPapirsoknadIndex from '@fpsak-frontend/fp-behandling-papirsoknad';
 import BehandlingTilbakekrevingIndex from '@fpsak-frontend/fp-behandling-tilbakekreving';
 import BehandlingInnsynIndex from '@fpsak-frontend/fp-behandling-innsyn';
+import BehandlingKlageIndex from '@fpsak-frontend/fp-behandling-klage';
 import BehandlingFpsakIndex from '@fpsak-frontend/fp-behandling';
 import { trackRouteParam, requireProps } from '@fpsak-frontend/fp-felles';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -22,7 +23,7 @@ import {
   setSelectedBehandlingId, getSelectedBehandlingId, setBehandlingInfoHolder, resetBehandlingContext as resetBehandlingContextActionCreator,
 } from './duck';
 import {
-  getBehandlingerVersjonMappedById, getBehandlingerTypesMappedById, getBehandlingerAktivPapirsoknadMappedById,
+  getBehandlingerVersjonMappedById, getBehandlingerTypesMappedById, getBehandlingerAktivPapirsoknadMappedById, getAvsluttedeBehandlinger,
 } from './selectors/behandlingerSelectors';
 import behandlingUpdater from './BehandlingUpdater';
 import appContextUpdater from './AppContextUpdater';
@@ -61,6 +62,14 @@ export class BehandlingIndex extends Component {
       fagsakYtelseType: PropTypes.shape().isRequired,
       isForeldrepengerFagsak: PropTypes.bool.isRequired,
     }).isRequired,
+    avsluttedeBehandlinger: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      type: PropTypes.shape({
+        kode: PropTypes.string.isRequired,
+        navn: PropTypes.string.isRequired,
+      }).isRequired,
+      avsluttet: PropTypes.string,
+    })).isRequired,
   };
 
   componentWillUnmount() {
@@ -82,6 +91,7 @@ export class BehandlingIndex extends Component {
       allDocuments,
       kodeverk,
       fagsak,
+      avsluttedeBehandlinger,
     } = this.props;
     if (erAktivPapirsoknad) {
       return (
@@ -140,6 +150,27 @@ export class BehandlingIndex extends Component {
       );
     }
 
+    if (behandlingType === BehandlingType.KLAGE) {
+      return (
+        <BehandlingKlageIndex
+          key={behandlingId}
+          saksnummer={saksnummer}
+          behandlingId={behandlingId}
+          behandlingerVersjonMappedById={behandlingerVersjonMappedById}
+          location={location}
+          setBehandlingInfoHolder={setHolder}
+          behandlingUpdater={behandlingUpdater}
+          appContextUpdater={appContextUpdater}
+          featureToggles={featureToggles}
+          hasSubmittedPaVentForm={hasSubmittedPaVentForm}
+          allDocuments={allDocuments}
+          kodeverk={kodeverk}
+          fagsak={fagsak}
+          avsluttedeBehandlinger={avsluttedeBehandlinger}
+        />
+      );
+    }
+
     return (
       <BehandlingFpsakIndex
         key={behandlingId}
@@ -178,6 +209,7 @@ const mapStateToProps = (state) => {
       isForeldrepengerFagsak: isForeldrepengerFagsak(state),
     },
     allDocuments: getAllDocuments(state),
+    avsluttedeBehandlinger: getAvsluttedeBehandlinger(state),
   };
 };
 

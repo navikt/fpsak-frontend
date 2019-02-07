@@ -16,10 +16,8 @@ import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import BehandlingsprosessPanel from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingsprosessPanel';
 import IverksetterVedtakStatusModal from 'behandlingFpsak/src/behandlingsprosess/components/vedtak/IverksetterVedtakStatusModal';
 import FatterVedtakStatusModal from 'behandlingFpsak/src/behandlingsprosess/components/vedtak/FatterVedtakStatusModal';
-import KlageBehandlingModal from 'behandlingFpsak/src/behandlingsprosess/components/klage/KlageBehandlingModal';
 import BehandlingspunktInfoPanel from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktInfoPanel';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
-import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
@@ -32,18 +30,11 @@ import {
   resetBehandlingspunkter,
   fetchPreviewBrev as fetchPreview,
   getSelectedBehandlingspunktNavn,
-  fetchPreviewKlageBrev,
-  resolveKlageTemp,
-  saveKlage,
 } from './duck';
 import { getBehandlingspunkter, getSelectedBehandlingspunkt, getDefaultBehandlingspunkt }
   from './behandlingsprosessSelectors';
 
 const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
-
-const hasKlageAp = apModels => (
-  apModels.some(apValue => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP && apValue.klageVurdering === klageVurdering.STADFESTE_YTELSESVEDTAK)
-);
 
 const hasRevurderingAp = apModels => (
   apModels.some(apValue => (
@@ -73,14 +64,7 @@ export class BehandlingsprosessIndex extends Component {
     this.submitVilkar = this.submitVilkar.bind(this);
     this.previewCallback = this.previewCallback.bind(this);
     this.previewVedtakCallback = this.previewVedtakCallback.bind(this);
-    this.previewCallbackKlage = this.previewCallbackKlage.bind(this);
     this.previewManueltBrevCallback = this.previewManueltBrevCallback.bind(this);
-    this.setShowModalKlageBehandling = this.setShowModalKlageBehandling.bind(this);
-    this.saveKlageText = this.saveKlageText.bind(this);
-
-    this.state = {
-      showModalKlageBehandling: false,
-    };
   }
 
   componentDidMount() {
@@ -103,12 +87,6 @@ export class BehandlingsprosessIndex extends Component {
     }
   }
 
-  setShowModalKlageBehandling(showModal) {
-    this.setState({
-      showModalKlageBehandling: showModal,
-    });
-  }
-
   /* NOTE: Denne er en slags toggle, selv om ikke navnet tilsier det */
   goToBehandlingspunkt(punktName) {
     const { selectedBehandlingspunkt, push: pushLocation, location } = this.props;
@@ -129,15 +107,6 @@ export class BehandlingsprosessIndex extends Component {
     pushLocation('/');
   }
 
-  previewCallbackKlage(data) {
-    const { behandlingIdentifier, fetchPreviewKlageBrev: fetchBrevPreview } = this.props;
-    const brevData = {
-      ...data,
-      behandlingId: behandlingIdentifier.behandlingId,
-    };
-    fetchBrevPreview(brevData);
-  }
-
   previewCallback(mottaker, brevmalkode, fritekst) {
     const { behandlingIdentifier, fetchPreview: fetchBrevPreview } = this.props;
     const data = {
@@ -148,20 +117,6 @@ export class BehandlingsprosessIndex extends Component {
     };
     fetchBrevPreview(data);
   }
-
-  saveKlageText(aksjonspunktModel, shouldReopenAp) {
-    const { behandlingIdentifier, saveKlage: saveTempKlage, resolveKlageTemp: resolveKlage } = this.props;
-    const data = {
-      behandlingId: behandlingIdentifier.behandlingId,
-      ...aksjonspunktModel,
-    };
-    if (shouldReopenAp) {
-      resolveKlage(behandlingIdentifier, data);
-    } else {
-      saveTempKlage(data);
-    }
-  }
-
 
   previewVedtakCallback(fritekst) {
     const { behandlingIdentifier, fetchVedtaksbrevPreview: fetchBrevPreview } = this.props;
@@ -195,14 +150,11 @@ export class BehandlingsprosessIndex extends Component {
 
     const apCodes = aksjonspunktModels.map(ap => ap.kode);
 
-    const submitIsKlage = hasKlageAp(aksjonspunktModels);
     const submitIsRevurdering = hasRevurderingAp(aksjonspunktModels);
-    const shouldUpdateInfo = !submitIsKlage && !submitIsRevurdering;
+    const shouldUpdateInfo = !submitIsRevurdering;
     const afterSubmit = () => {
       if (submitIsRevurdering) {
         this.goToSearchPage();
-      } else if (submitIsKlage) {
-        this.setShowModalKlageBehandling(true);
       } else {
         this.goToBehandlingWithDefaultPunktAndFakta();
       }
@@ -232,7 +184,6 @@ export class BehandlingsprosessIndex extends Component {
     const {
       behandlingspunkter, selectedBehandlingspunkt, dispatchSubmitFailed: submitFailedDispatch,
     } = this.props;
-    const { showModalKlageBehandling } = this.state;
     return (
       <React.Fragment>
         <BehandlingsprosessPanel
@@ -243,9 +194,7 @@ export class BehandlingsprosessIndex extends Component {
           <BehandlingspunktInfoPanel
             submitCallback={this.submitVilkar}
             previewCallback={this.previewCallback}
-            saveTempKlage={this.saveKlageText}
             previewVedtakCallback={this.previewVedtakCallback}
-            previewCallbackKlage={this.previewCallbackKlage}
             previewManueltBrevCallback={this.previewManueltBrevCallback}
             dispatchSubmitFailed={submitFailedDispatch}
             selectedBehandlingspunkt={selectedBehandlingspunkt}
@@ -254,7 +203,6 @@ export class BehandlingsprosessIndex extends Component {
 
         <IverksetterVedtakStatusModal closeEvent={this.goToSearchPage} />
         <FatterVedtakStatusModal closeEvent={this.goToSearchPage} />
-        <KlageBehandlingModal showModal={showModalKlageBehandling} closeEvent={this.goToSearchPage} />
       </React.Fragment>
     );
   }
@@ -262,8 +210,6 @@ export class BehandlingsprosessIndex extends Component {
 
 BehandlingsprosessIndex.propTypes = {
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
-  saveKlage: PropTypes.func.isRequired,
-  resolveKlageTemp: PropTypes.func.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   behandlingspunkter: PropTypes.arrayOf(PropTypes.string),
@@ -274,7 +220,6 @@ BehandlingsprosessIndex.propTypes = {
   resolveProsessAksjonspunkter: PropTypes.func.isRequired,
   overrideProsessAksjonspunkter: PropTypes.func.isRequired,
   fetchPreview: PropTypes.func.isRequired,
-  fetchPreviewKlageBrev: PropTypes.func.isRequired,
   fetchVedtaksbrevPreview: PropTypes.func.isRequired,
   dispatchSubmitFailed: PropTypes.func.isRequired,
 };
@@ -299,13 +244,10 @@ const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
     push,
     fetchPreview,
-    fetchPreviewKlageBrev,
     resolveProsessAksjonspunkter,
     overrideProsessAksjonspunkter,
     fetchVedtaksbrevPreview,
     resetBehandlingspunkter,
-    saveKlage,
-    resolveKlageTemp,
     dispatchSubmitFailed,
   }, dispatch),
 });

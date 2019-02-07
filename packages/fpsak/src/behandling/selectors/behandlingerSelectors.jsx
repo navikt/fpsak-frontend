@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fpsakApi from 'data/fpsakApi';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 
@@ -21,6 +22,14 @@ export const getBehandlinger = createSelector(
     return hasRequestedBehandling && isFpsakOk && isTilbakeOk ? behandlingerData : undefined;
   },
 );
+
+export const getAvsluttedeBehandlinger = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
+  .filter(behandling => behandling.status.kode === behandlingStatus.AVSLUTTET)
+  .map(behandling => ({
+    id: behandling.id,
+    type: behandling.type,
+    avsluttet: behandling.avsluttet,
+  })));
 
 export const getBehandlingerIds = createSelector([getBehandlinger], (behandlinger = []) => behandlinger.map(b => b.id));
 

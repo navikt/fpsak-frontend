@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
 import { reducerRegistry } from '@fpsak-frontend/fp-felles';
+import { BehandlingIdentifier, sakOperations } from '@fpsak-frontend/fp-behandling-felles';
 
 import innsynBehandlingApi, { InnsynBehandlingApiKeys } from './data/innsynBehandlingApi';
 
@@ -28,14 +28,12 @@ const resetBehandlingContext = () => ({
 });
 
 
-export const updateBehandling = behandlingIdentifier => dispatch => dispatch(
+export const updateBehandling = (behandlingIdentifier, behandlingerVersjonMappedById) => dispatch => dispatch(
   innsynBehandlingApi.BEHANDLING.makeRestApiRequest()(behandlingIdentifier.toJson(), { keepData: true }),
 )
   .then((response) => {
-    if (response.payload && response.payload.originalBehandlingId) {
-      const { originalBehandlingId } = response.payload;
-      const origianalBehandlingRequestParams = new BehandlingIdentifier(behandlingIdentifier.saksnummer, originalBehandlingId);
-      return dispatch(innsynBehandlingApi.ORIGINAL_BEHANDLING.makeRestApiRequest()(origianalBehandlingRequestParams.toJson(), { keepData: true }));
+    if (behandlingerVersjonMappedById && behandlingerVersjonMappedById[response.payload.id] !== response.payload.versjon) {
+      dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer));
     }
     return Promise.resolve(response);
   });
@@ -45,9 +43,9 @@ export const resetBehandling = dispatch => Promise.all([
   dispatch(resetBehandlingContext()),
 ]);
 
-export const fetchBehandling = behandlingIdentifier => (dispatch) => {
+export const fetchBehandling = (behandlingIdentifier, allBehandlinger) => (dispatch) => {
   dispatch(innsynBehandlingApi.BEHANDLING.resetRestApi()());
-  dispatch(updateBehandling(behandlingIdentifier));
+  dispatch(updateBehandling(behandlingIdentifier, allBehandlinger));
 };
 
 const updateFagsakAndBehandling = (behandlingIdentifier, updateFagsakInfo) => dispatch => dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer))
