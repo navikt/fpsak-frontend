@@ -34,8 +34,22 @@ const uttakAksjonspunkter = [
   aksjonspunktCodes.KONTROLLER_TILSTØTENDE_YTELSER_OPPHØRT,
   aksjonspunktCodes.FASTSETT_UTTAKPERIODER,
 ];
-
 const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter) => {
+  const helptTextAksjonspunkter = aksjonspunkter.filter(ap => ap.definisjon.kode !== aksjonspunktCodes.FASTSETT_UTTAKPERIODER
+    && ap.definisjon.kode !== aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER);
+
+  const uttakPanelAksjonsPunktKoder = {
+    5072: 'UttakPanel.Aksjonspunkt.5072',
+    5073: 'UttakPanel.Aksjonspunkt.5073',
+    5074: 'UttakPanel.Aksjonspunkt.5074',
+    5075: 'UttakPanel.Aksjonspunkt.5075',
+    5076: 'UttakPanel.Aksjonspunkt.5076',
+    5077: 'UttakPanel.Aksjonspunkt.5077',
+    5078: 'UttakPanel.Aksjonspunkt.5078',
+    5079: 'UttakPanel.Aksjonspunkt.5079',
+    5098: 'UttakPanel.Aksjonspunkt.5098',
+  };
+
   const texts = [];
   const [helpText] = uttaksresultat.perioderSøker.filter(p => (p.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING));
 
@@ -46,6 +60,17 @@ const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter) => {
   const overstyrApHelpTextUtfort = aksjonspunkter.length === 1
     && aksjonspunkter[0].definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER
     && aksjonspunkter[0].status.kode === 'UTFO';
+
+
+  if (helptTextAksjonspunkter) {
+    helptTextAksjonspunkter.forEach((ap) => {
+      if (uttakPanelAksjonsPunktKoder[ap.definisjon.kode]) {
+        texts.push(<FormattedMessage key="aksjonspunktTekst" id={uttakPanelAksjonsPunktKoder[ap.definisjon.kode]} />);
+      } else {
+        texts.push(<FormattedMessage key="aksjonspunktTekst" id={`UttakPanel.Aksjonspunkt.${ap.definisjon.kode}`} />);
+      }
+    });
+  }
 
   if (helpText) {
     texts.push(<FormattedMessage key="generellTekst" id="UttakPanel.Aksjonspunkt.Generell" />);
