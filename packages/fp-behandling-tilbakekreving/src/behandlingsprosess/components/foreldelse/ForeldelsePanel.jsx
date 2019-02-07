@@ -9,13 +9,13 @@ import {
   FadingPanel, VerticalSpacer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { getBehandlingVersjon } from 'behandlingTilbakekreving/selectors/tilbakekrevingBehandlingSelectors';
-import { getSelectedBehandlingId } from 'behandlingTilbakekreving/duck';
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingTilbakekreving/behandlingForm';
-import BpTimelinePanel from 'behandlingFelles/behandlingsprosess/components/behandlingspunktTimelineSkjema/BpTimelinePanel';
-import behandlingspunktCodes from 'behandlingFelles/behandlingsprosess/behandlingspunktCodes';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { addClassNameGroupIdToPerioder } from 'behandlingFelles/behandlingsprosess/components/behandlingspunktTimelineSkjema/BpTimelineHelper';
+import { addClassNameGroupIdToPerioder } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
+import BpTimelinePanel from '../felles/behandlingspunktTimelineSkjema/BpTimelinePanel';
+import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '../../../behandlingForm';
+import { getBehandlingVersjon } from '../../../selectors/tilbakekrevingBehandlingSelectors';
+import { getSelectedBehandlingId } from '../../../duck';
 import {
   hovedsokerKjonnKode, tilbakekrevingPerioderResultat, customTimes,
 } from '../tilbakekreving/mockData';

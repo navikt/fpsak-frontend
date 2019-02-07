@@ -10,12 +10,11 @@ import { Modal } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
-import { uttaksresultatAktivitetPropType } from 'behandlingFelles/proptypes/uttaksresultatPropType';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
-import { behandlingForm } from 'behandlingTilbakekreving/behandlingForm';
 import moment from 'moment/moment';
-
+import { uttaksresultatAktivitetPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { behandlingForm } from '../../../../behandlingForm';
 import styles from './delOppPeriodeModal.less';
 
 export const DelOppPeriodeModalImpl = ({

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
 import { clearFields, formPropTypes } from 'redux-form';
-import { behandlingForm } from 'behandlingTilbakekreving/behandlingForm';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -21,7 +20,8 @@ import {
   VerticalSpacer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
-import { getStatusPeriode } from 'behandlingFelles/behandlingsprosess/components/behandlingspunktTimelineSkjema/BpTimelineHelper';
+import { getStatusPeriode } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
+import { behandlingForm } from '../../../behandlingForm';
 import foreldelseCodes from './foreldelseCodes';
 
 const minLength3 = minLength(3);

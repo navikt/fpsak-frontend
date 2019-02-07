@@ -4,9 +4,8 @@ import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
 import { Column, Row } from 'nav-frontend-grid';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import TimeLineControl from 'behandlingFpsak/behandlingsprosess/components/tilkjentYtelse/timeline/TimeLineControl';
-
-import TimeLineSokerEnsamSoker from 'behandlingFpsak/behandlingsprosess/components/tilkjentYtelse/timeline/TimeLineSokerEnsamSoker';
+import TimeLineControl from './TimeLineControl';
+import TimeLineSokerEnsamSoker from './TimeLineSokerEnsamSoker';
 import styles from './bpTimeline.less';
 
 const getStartDateForTimeLine = (tilbakekrevingPeriod, customTimes) => (moment(customTimes.fodsel) < moment(tilbakekrevingPeriod.fom)
