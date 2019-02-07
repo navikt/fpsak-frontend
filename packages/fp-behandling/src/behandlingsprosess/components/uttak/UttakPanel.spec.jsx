@@ -85,7 +85,7 @@ describe('<UttakPanel>', () => {
     const uttak = wrapper.find(Uttak);
     expect(uttak).has.length(1);
     const formattedMessage = wrapper.find('FormattedMessage');
-    expect(formattedMessage).has.length(2);
+    expect(formattedMessage).has.length(3);
     const aksjonspunktHelpText = wrapper.find('AksjonspunktHelpText');
     expect(aksjonspunktHelpText).has.length(1);
 
