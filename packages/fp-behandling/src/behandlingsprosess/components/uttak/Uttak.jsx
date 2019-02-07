@@ -175,6 +175,7 @@ export class UttakImpl extends Component {
     this.skalViseCheckbox = this.skalViseCheckbox.bind(this);
     this.setSelectedDefaultPeriod = this.setSelectedDefaultPeriod.bind(this);
     this.updateStonadskontoer = this.updateStonadskontoer.bind(this);
+
     this.state = {
       selectedItem: null,
       stonadskontoKopi: props.stonadskonto,
@@ -204,7 +205,6 @@ export class UttakImpl extends Component {
       this.setState({ selectedItem: defaultSelectedElement || defaultSelectedElementIfNoAP });
     }
   }
-
 
   setSelectedUttakActivity(uttakActivity, isMounting) {
     if (!isMounting) {
@@ -249,21 +249,6 @@ export class UttakImpl extends Component {
     updateKontoer(params).then((response) => {
       this.setState({ stonadskontoKopi: response });
     });
-
-    // fetch('/fpsak/api/behandling/uttak/stonadskontoerGittUttaksperioder',
-    //   {
-    //     method: 'POST',
-    //     headers: {
-    //       Accept: 'application/json, text/plain, */*',
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(payload),
-    //   }).then(response => response.json()).then((result) => {
-    //   const stonadskontoer = result;
-    //   this.setState({ stonadskontoKopi: stonadskontoer });
-    // }).catch((error) => {
-    //   console.error(error);
-    // });
   }
 
   initializeActivityForm(uttakActivity) {
