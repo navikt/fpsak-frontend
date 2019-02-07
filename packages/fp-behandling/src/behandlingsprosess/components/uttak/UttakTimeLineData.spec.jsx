@@ -30,6 +30,48 @@ describe('<UttakTimeLineData>', () => {
       },
     }],
   };
+  const selectedItem2 = {
+    id: 1,
+    fom: '',
+    tom: '',
+    periodeResultatType: {
+      kode: 'MANUELL_BEHANDLING',
+      kodeverk: '',
+      navn: '',
+    },
+    periodeResultatÅrsak: {
+      kode: '4002',
+    },
+    manuellBehandlingÅrsak: {
+      navn: 'test',
+      kode: '5001',
+    },
+    periodeType: {
+      kode: 'MØDREKVOTE',
+    },
+    aktiviteter: [{
+    }],
+  };
+
+  const stonadskonto = {
+    stonadskontoer: {
+      MØDREKVOTE: {
+        aktivitetSaldoDtoList: [{ aktivitetIdentifikator: { arbeidsgiver: { navn: 'UNIVERSITETET I OSLO' } }, saldo: 0 },
+          { aktivitetIdentifikator: { arbeidsgiver: { navn: 'STATOIL' } }, saldo: 4 }],
+      },
+    },
+  };
+
+  const stonadskontoFlerGarTom = {
+    stonadskontoer: {
+      MØDREKVOTE: {
+        aktivitetSaldoDtoList: [{ aktivitetIdentifikator: { arbeidsgiver: { navn: 'UNIVERSITETET I OSLO' } }, saldo: 0 },
+          { aktivitetIdentifikator: { arbeidsgiver: { navn: 'STATOIL' } }, saldo: 4 },
+          { aktivitetIdentifikator: { arbeidsgiver: { navn: 'MYS' } }, saldo: 0 }],
+      },
+    },
+  };
+
   it('skal rendre UttakTimeLineData, ikke deloppperiode, ikke readonly', () => {
     const wrapper = shallow(<UttakTimeLineData
       readOnly={false}
@@ -184,5 +226,62 @@ describe('<UttakTimeLineData>', () => {
     expect(uttakActivity.first().prop('readOnly')).to.eql(false);
     expect(uttakActivity.first().prop('isApOpen')).to.eql(true);
     // expect(uttakActivity.first().prop('stonadskontoer')).to.eql({});
+  });
+
+  it('skal rendre uttakpanel med aksjonspunkt og korrekt tekst om man går tom för en aktivitets dager', () => {
+    const callbackCancelSelectedActivity = sinon.spy();
+    const callbackUpdateActivity = sinon.spy();
+    const wrapper = shallow(<UttakTimeLineData
+      isApOpen
+      readOnly={false}
+      periodeTyper={[]}
+      callbackForward={sinon.spy()}
+      callbackBackward={sinon.spy()}
+      callbackSetSelected={sinon.spy()}
+      selectedItemData={selectedItem2}
+      callbackUpdateActivity={callbackUpdateActivity}
+      callbackCancelSelectedActivity={callbackCancelSelectedActivity}
+      uttaksresultatActivity={[]}
+      reduxFormChange={sinon.spy}
+      behandlingFormPrefix=""
+      formName=""
+      activityPanelName=""
+      harSoktOmFlerbarnsdager={false}
+      stonadskonto={stonadskonto}
+    />);
+    const uttak = wrapper.find('AksjonspunktHelpText');
+    expect(uttak).has.length(1);
+    const formattedMessage = uttak.find('FormattedMessage');
+    expect(formattedMessage).has.length(1);
+    expect(formattedMessage.prop('id')).to.eql('UttakPanel.manuellBehandlingÅrsakEnskiltArbeidsforhold');
+    expect(formattedMessage).has.length(1);
+  });
+
+  it('skal rendre uttakpanel med aksjonspunkt og korrekt tekst om man går tom för flere aktiviteters dager', () => {
+    const callbackCancelSelectedActivity = sinon.spy();
+    const callbackUpdateActivity = sinon.spy();
+    const wrapper = shallow(<UttakTimeLineData
+      isApOpen
+      readOnly={false}
+      periodeTyper={[]}
+      callbackForward={sinon.spy()}
+      callbackBackward={sinon.spy()}
+      callbackSetSelected={sinon.spy()}
+      selectedItemData={selectedItem2}
+      callbackUpdateActivity={callbackUpdateActivity}
+      callbackCancelSelectedActivity={callbackCancelSelectedActivity}
+      uttaksresultatActivity={[]}
+      reduxFormChange={sinon.spy}
+      behandlingFormPrefix=""
+      formName=""
+      activityPanelName=""
+      harSoktOmFlerbarnsdager={false}
+      stonadskonto={stonadskontoFlerGarTom}
+    />);
+    const uttak = wrapper.find('AksjonspunktHelpText');
+    expect(uttak).has.length(1);
+    const formattedMessage = uttak.find('FormattedMessage');
+    expect(formattedMessage.prop('id')).to.eql('UttakPanel.manuellBehandlingÅrsakArbeidsforhold');
+    expect(formattedMessage).has.length(1);
   });
 });
