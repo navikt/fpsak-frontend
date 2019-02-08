@@ -2,6 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
+import Modal from 'nav-frontend-modal';
 import { SoknadRegistrertModal } from './SoknadRegistrertModal';
 
 describe('<SoknadRegistrertModal>', () => {
@@ -12,7 +13,7 @@ describe('<SoknadRegistrertModal>', () => {
       intl={intlMock}
     />);
 
-    expect(wrapper.find('Modal').prop('isOpen')).is.true;
+    expect(wrapper.find(Modal).prop('isOpen')).is.true;
     expect(wrapper.find('AlertStripeSuksess')).to.have.length(1);
     expect(wrapper.find('Hovedknapp')).to.have.length(1);
   });

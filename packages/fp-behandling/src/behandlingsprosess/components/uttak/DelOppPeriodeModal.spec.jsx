@@ -2,6 +2,7 @@ import React from 'react';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
 import { expect } from 'chai';
+import Modal from 'nav-frontend-modal';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 import { DelOppPeriodeModalImpl } from './DelOppPeriodeModal';
 
@@ -20,7 +21,7 @@ describe('<DelOppPeriodeModal>', () => {
       intl={intlMock}
       cancelEvent={cancelEvent}
     />);
-    const modal = wrapper.find('Modal');
+    const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
     expect(modal.prop('closeButton')).is.false;
@@ -38,7 +39,7 @@ describe('<DelOppPeriodeModal>', () => {
       intl={intlMock}
       cancelEvent={cancelEvent}
     />);
-    const modal = wrapper.find('Modal');
+    const modal = wrapper.find(Modal);
     expect(modal.prop('isOpen')).is.false;
   });
 

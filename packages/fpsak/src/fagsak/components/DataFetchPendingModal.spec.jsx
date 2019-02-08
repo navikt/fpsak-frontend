@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-
+import Modal from 'nav-frontend-modal';
 import DataFetchPendingModal from './DataFetchPendingModal';
 
 describe('<DataFetchPendingModal>', () => {
@@ -10,7 +10,7 @@ describe('<DataFetchPendingModal>', () => {
 
     wrapper.setState({ displayMessage: true });
 
-    const modal = wrapper.find('Modal');
+    const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
     expect(modal.prop('closeButton')).is.false;
@@ -21,6 +21,6 @@ describe('<DataFetchPendingModal>', () => {
 
   it('skal ikke rendre modal før timer har gått ut', () => {
     const wrapper = shallow(<DataFetchPendingModal pendingMessage="test" />);
-    expect(wrapper.find('Modal')).to.have.length(0);
+    expect(wrapper.find(Modal)).to.have.length(0);
   });
 });

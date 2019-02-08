@@ -2,7 +2,7 @@ import React from 'react';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
 import { expect } from 'chai';
-
+import Modal from 'nav-frontend-modal';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { CreateNewBehandlingModal } from './CreateNewBehandlingModal';
@@ -23,7 +23,7 @@ describe('<CreateNewBehandlingModal>', () => {
       hasEnabledCreateRevurdering
     />);
 
-    const modal = wrapper.find('Modal');
+    const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
     expect(modal.prop('closeButton')).is.false;

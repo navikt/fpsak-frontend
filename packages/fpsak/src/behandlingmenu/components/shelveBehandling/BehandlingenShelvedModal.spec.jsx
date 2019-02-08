@@ -1,7 +1,7 @@
 import React from 'react';
 import sinon from 'sinon';
 import { expect } from 'chai';
-
+import Modal from 'nav-frontend-modal';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import BehandlingenShelvedModal from './BehandlingenShelvedModal';
 
@@ -13,7 +13,7 @@ describe('<BehandlingenShelvedModal>', () => {
       intl={intlMock}
     />);
 
-    const modal = wrapper.find('Modal');
+    const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
     expect(modal.prop('closeButton')).is.false;
@@ -32,7 +32,7 @@ describe('<BehandlingenShelvedModal>', () => {
       intl={intlMock}
     />);
 
-    const modal = wrapper.find('Modal');
+    const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.false;
   });

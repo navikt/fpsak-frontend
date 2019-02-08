@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
-
+import Modal from 'nav-frontend-modal';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import IverksetterVedtakStatusModal from './IverksetterVedtakStatusModal';
@@ -45,7 +45,7 @@ describe('<IverksetterVedtakStatusModal>', () => {
       modalTextId="IverksetterVedtakStatusModal.AvslattOgIverksattES"
     />);
 
-    const modal = wrapper.find('Modal');
+    const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
     expect(modal.prop('contentLabel')).is.eql('Engangsstønaden er innvilget. Du kommer nå til forsiden.');

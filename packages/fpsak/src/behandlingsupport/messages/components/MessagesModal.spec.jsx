@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
-
+import Modal from 'nav-frontend-modal';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 
 import MessagesModal from './MessagesModal';
@@ -15,7 +15,7 @@ describe('<MessagesModal>', () => {
       intl={intlMock}
     />);
 
-    const modal = wrapper.find('Modal');
+    const modal = wrapper.find(Modal);
     expect(modal.prop('isOpen')).is.true;
     expect(modal.prop('onRequestClose')).to.eql(closeCallback);
   });
