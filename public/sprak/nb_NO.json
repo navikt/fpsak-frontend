@@ -543,6 +543,7 @@
   "ValidationMessage.ukerOgDagerVidNullUtbetalningsgradMessage": "Trekk minst en dag når utbetalingsgraden er høyre enn 0%",
   "ValidationMessage.UtsettelseUtenFullArbeid": "Søker jobber mindre enn 100%, perioden kan ikke utsettes.",
   "ValidationMessage.MerEn100Prosent": "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%.",
+  "ValidationMessage.MerEnNullUtaksprosent" : "Uttak av foreldrepenger i denne perioden er avslått, utbetalingsgrad kan ikke være større enn 0.",
 
   "VilkarsresultatView.VilkarOppfylt": "Vilkåret er oppfylt",
   "VilkarsresultatView.VilkarIkkeOppfylt": "Vilkåret er ikke oppfylt",

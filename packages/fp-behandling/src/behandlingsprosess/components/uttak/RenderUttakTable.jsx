@@ -11,7 +11,7 @@ import { SelectField, InputField, DecimalField } from '@fpsak-frontend/form';
 import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
 import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/src/uttakArbeidTypeCodes';
 import {
-  minValue, maxValue, hasValidInteger, maxLength, required, hasValidDecimal, notDash, lagVisningsNavn,
+  minValue, maxValue, hasValidInteger, maxLength, required, hasValidDecimal, notDash, lagVisningsNavn, noMoreThanZeroIfRejectedAndNotUtsettelse,
 } from '@fpsak-frontend/utils';
 import styles from './renderUttakTable.less';
 
@@ -46,6 +46,14 @@ const mapPeriodeTyper = typer => typer
   .filter(({ kode }) => gyldigeUttakperioder.includes(kode))
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
+const utsettelse = (erOppfylt, selectedItemData) => {
+  if (!erOppfylt) {
+    if (!selectedItemData.utsettelseType || (selectedItemData.utsettelseType && selectedItemData.utsettelseType.kode === '-')) {
+      return true;
+    }
+  }
+  return false;
+};
 
 const createTextStrings = (fields) => {
   const {
@@ -77,6 +85,8 @@ export const RenderUttakTableImpl = ({
   fields,
   periodeTyper,
   readOnly,
+  erOppfylt,
+  selectedItemData,
 }) => (
   <div className={styles.tableOverflow}>
     {fields.length > 0
@@ -142,7 +152,9 @@ export const RenderUttakTableImpl = ({
                 <Column xs="7">
                   <DecimalField
                     name={`${uttakElementFieldId}.utbetalingsgrad`}
-                    validate={[required, minValue0, maxProsentValue100, hasValidDecimal]}
+                    validate={utsettelse(erOppfylt, selectedItemData)
+                      ? [required, minValue0, maxProsentValue100, hasValidDecimal, noMoreThanZeroIfRejectedAndNotUtsettelse]
+                      : [required, minValue0, maxProsentValue100, hasValidDecimal]}
                     readOnly={readOnly}
                     bredde="XS"
                     format={(value) => {
@@ -178,6 +190,12 @@ RenderUttakTableImpl.propTypes = {
   fields: PropTypes.shape().isRequired,
   periodeTyper: kodeverkPropType.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  erOppfylt: PropTypes.bool,
+  selectedItemData: PropTypes.PropTypes.shape().isRequired,
+};
+
+RenderUttakTableImpl.defaultProps = {
+  erOppfylt: undefined,
 };
 
 const RenderUttakTable = injectIntl(RenderUttakTableImpl);
