@@ -1,6 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
+
 import {
   required, minLength, maxLength, hasValidText,
 } from '@fpsak-frontend/utils';
@@ -12,17 +15,18 @@ import {
 } from '@fpsak-frontend/form';
 import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
 
-import styles from './annenForelderHarRett.less';
+import styles from './annenForelderHarRettForm.less';
 
 const minLength3 = minLength(3);
 const maxLength4000 = maxLength(4000);
 
-export const AnnenForelderHarRett = ({
+export const AnnenForelderHarRettForm = ({
   hasOpenAksjonspunkter,
   aksjonspunkter,
   readOnly,
+  ...formProps
 }) => (
-  <React.Fragment>
+  <form onSubmit={formProps.handleSubmit}>
     {!readOnly && (
     <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
       {aksjonspunkter.map(ap => (
@@ -31,7 +35,6 @@ export const AnnenForelderHarRett = ({
           id={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
         />
       ))}
-
     </AksjonspunktHelpText>
     )
     }
@@ -52,17 +55,26 @@ export const AnnenForelderHarRett = ({
         />
       </div>
     </div>
-  </React.Fragment>
+    {formProps.error
+      && (
+      <span>
+        {formProps.error}
+      </span>
+      )}
+  </form>
 );
 
-AnnenForelderHarRett.propTypes = {
+AnnenForelderHarRettForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired),
 };
 
-AnnenForelderHarRett.defaultProps = {
+AnnenForelderHarRettForm.defaultProps = {
   aksjonspunkter: [],
 };
 
-export default AnnenForelderHarRett;
+export default (behandlingForm({
+  form: 'AnnenForelderHarRettForm',
+  enableReinitialize: true,
+})(AnnenForelderHarRettForm));
