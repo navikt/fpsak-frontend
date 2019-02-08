@@ -46,6 +46,7 @@ export class BehandlingsprosessIndex extends Component {
     this.goToBehandlingspunkt = this.goToBehandlingspunkt.bind(this);
     this.goToBehandlingWithDefaultPunktAndFakta = this.goToBehandlingWithDefaultPunktAndFakta.bind(this);
     this.goToSearchPage = this.goToSearchPage.bind(this);
+    this.submitVilkar = this.submitVilkar.bind(this);
   }
 
   componentDidMount() {
