@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';

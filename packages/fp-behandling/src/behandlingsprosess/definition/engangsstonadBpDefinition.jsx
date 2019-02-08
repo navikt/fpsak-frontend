@@ -1,7 +1,8 @@
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { behandlingspunktCodes as bpc, BehandlingspunktProperties } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingspunktProperties } from '@fpsak-frontend/fp-behandling-felles';
+import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import { hasSimuleringOn, getStatusFromSimulering } from './simuleringStatusUtleder';
 import getVedtakStatus from './vedtakStatusUtleder';
 

@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import fpsakBehandlingApi, { reduxRestApi } from './data/fpsakBehandlingApi';
 import {
   fpsakBehandlingReducer, setBehandlingInfo, setHasShownBehandlingPaVent, updateBehandling, getBehandlingIdentifier,

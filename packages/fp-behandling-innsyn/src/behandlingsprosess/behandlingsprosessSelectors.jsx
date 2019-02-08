@@ -1,14 +1,13 @@
 import { createSelector } from 'reselect';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
 import { arrayToObject } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import fyt from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import { getRettigheter } from 'navAnsatt/duck';
-import { DEFAULT_BEHANDLINGSPROSESS } from '@fpsak-frontend/fp-felles';
+import { DEFAULT_BEHANDLINGSPROSESS, behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import {
   getBehandlingIsOnHold, getAllMerknaderFraBeslutter, getBehandlingType, getAksjonspunkter,
   getBehandlingInnsynResultatType, hasReadOnlyBehandling, isBehandlingStatusReadOnly, getBehandlingVilkar,

@@ -1,4 +1,4 @@
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import vedtakImages from 'behandlingInnsyn/src/behandlingsprosess/statusIconsVedtak';
 
 import innvilgetHoverIkonUrl from '@fpsak-frontend/assets/images/innvilget_hover.svg';

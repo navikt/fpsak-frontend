@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
-import { DEFAULT_BEHANDLINGSPROSESS } from '@fpsak-frontend/fp-felles';
+import { DEFAULT_BEHANDLINGSPROSESS, behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import as from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

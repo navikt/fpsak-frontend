@@ -5,7 +5,7 @@ import { shallow } from 'enzyme';
 
 import { BehandlingspunktInfoPanel } from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktInfoPanel';
 import BeregningsresultatEngangsstonadForm from 'behandlingFpsak/src/behandlingsprosess/components/beregningsresultat/BeregningsresultatEngangsstonadForm';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import VurderSoknadsfristForeldrepengerForm from './soknadsfrist/VurderSoknadsfristForeldrepengerForm';
 

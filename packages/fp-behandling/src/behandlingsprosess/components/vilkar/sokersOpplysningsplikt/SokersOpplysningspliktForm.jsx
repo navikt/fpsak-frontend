@@ -14,7 +14,8 @@ import BpPanelTemplate from 'behandlingFpsak/src/behandlingsprosess/components/v
 import { getBehandlingsresultat, getSoknad, getBehandlingVersjon } from 'behandlingFpsak/src/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/src/behandlingForm';
 import { getSelectedBehandlingId, getKodeverk } from 'behandlingFpsak/src/duck';
-import { behandlingspunktCodes, BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   ElementWrapper, Table, TableRow, TableColumn, VerticalSpacer,

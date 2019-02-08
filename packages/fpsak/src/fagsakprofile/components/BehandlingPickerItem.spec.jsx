@@ -18,17 +18,11 @@ describe('<BehandlingPickerItem>', () => {
       kode: 'FVED',
       navn: 'Fatter vedtak',
     },
-    aksjonspunkter: [],
-    behandlingsresultat: {
-      id: 1,
-      type: {
-        navn: 'test',
-        kode: '1',
-      },
-    },
     fagsakId: 1,
     opprettet: '15.10.2017',
-    vilkar: [],
+    behandlendeEnhetId: '1242424',
+    behandlendeEnhetNavn: 'test',
+    erAktivPapirsoknad: false,
   };
 
   it('skal vise behandling uten lenke når det kun finnes en behandling og denne er valgt', () => {

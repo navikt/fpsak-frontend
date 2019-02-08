@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import fpsakApi, { reduxRestApi } from 'data/fpsakApi';
 import behandlingUpdater from 'behandling/BehandlingUpdater';
 import {

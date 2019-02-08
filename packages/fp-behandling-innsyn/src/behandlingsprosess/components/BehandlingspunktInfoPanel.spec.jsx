@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
 import { BehandlingspunktInfoPanel } from 'behandlingInnsyn/src/behandlingsprosess/components/BehandlingspunktInfoPanel';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import InnsynForm from './innsyn/InnsynForm';
 

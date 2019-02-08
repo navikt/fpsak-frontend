@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { pathToBehandling } from '@fpsak-frontend/fp-felles';
-import { historikkinnslagPropType } from '@fpsak-frontend/fp-behandling-felles';
 import historikkinnslagType from '@fpsak-frontend/kodeverk/src/historikkinnslagType';
+
+import historikkinnslagPropType from '../historikkinnslagPropType';
 import Snakkeboble from './snakkeboble';
 import HistorikkMalType1 from './historikkMalType1';
 import HistorikkMalType2 from './historikkMalType2';

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
-import { BehandlingIdentifier, aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import {
   getAksjonspunkter, getBehandlingVersjon, getBehandlingType,
@@ -21,7 +21,7 @@ import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta,
+  trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta, BehandlingIdentifier,
 } from '@fpsak-frontend/fp-felles';
 import {
   setSelectedBehandlingspunktNavn,

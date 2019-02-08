@@ -4,13 +4,12 @@ import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
 import { getBehandlingVersjon } from 'behandlingFpsak/src/behandlingSelectors';
 import {
   getBehandlingIdentifier,
 } from 'behandlingFpsak/src/duck';
 import {
-  trackRouteParam, requireProps, getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta, DEFAULT_FAKTA,
+  trackRouteParam, requireProps, getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta, DEFAULT_FAKTA, BehandlingIdentifier,
 } from '@fpsak-frontend/fp-felles';
 
 import {

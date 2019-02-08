@@ -7,8 +7,9 @@ import { destroy } from 'redux-form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
-  BehandlingGrid, BehandlingErPaVentModal, sakOperations, BehandlingIdentifier,
+  BehandlingGrid, sakOperations,
 } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingErPaVentModal, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import FpSakBehandlingInfoSetter from './FpSakBehandlingInfoSetter';
 import FpSakBehandlingResolver from './FpSakBehandlingResolver';
 import BehandlingsprosessIndex from './behandlingsprosess/BehandlingsprosessIndex';

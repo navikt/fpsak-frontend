@@ -7,8 +7,9 @@ import { destroy } from 'redux-form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
-  sakOperations, BehandlingErPaVentModal, BehandlingGrid, BehandlingIdentifier,
+  sakOperations, BehandlingGrid,
 } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingErPaVentModal, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import PapirsoknadInfoSetter from './PapirsoknadInfoSetter';
 import PapirsoknadResolver from './PapirsoknadResolver';
 import PapirsoknadIndex from './PapirsoknadIndex';

@@ -6,10 +6,10 @@ import { connect } from 'react-redux';
 import { getSelectedSaksnummer, getFagsakYtelseType, getSelectedFagsakStatus } from 'fagsak/fagsakSelectors';
 import { getBehandlinger, getNoExistingBehandlinger } from 'behandling/selectors/behandlingerSelectors';
 import { getSelectedBehandlingId } from 'behandling/duck';
-import { behandlingPropType } from '@fpsak-frontend/fp-behandling-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { requireProps } from '@fpsak-frontend/fp-felles';
 
+import behandlingIListePropType from './behandlingIListePropType';
 import {
   getShowAllBehandlinger, toggleShowAllBehandlinger, resetFagsakProfile, getAnnenPartBehandling,
 } from './duck';
@@ -54,7 +54,7 @@ FagsakProfileIndex.propTypes = {
   sakstype: PropTypes.shape().isRequired,
   fagsakStatus: PropTypes.shape().isRequired,
   selectedBehandlingId: PropTypes.number,
-  behandlinger: PropTypes.arrayOf(behandlingPropType).isRequired,
+  behandlinger: PropTypes.arrayOf(behandlingIListePropType).isRequired,
   noExistingBehandlinger: PropTypes.bool.isRequired,
   showAll: PropTypes.bool.isRequired,
   toggleShowAll: PropTypes.func.isRequired,

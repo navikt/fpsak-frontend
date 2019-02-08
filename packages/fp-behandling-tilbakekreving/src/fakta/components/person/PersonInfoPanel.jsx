@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { aksjonspunktPropType, withDefaultToggling, faktaPanelCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { aksjonspunktPropType, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
+import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
 import { getKodeverk } from 'behandlingTilbakekreving/src/duck';

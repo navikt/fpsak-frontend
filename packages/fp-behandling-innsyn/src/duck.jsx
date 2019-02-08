@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-import { reducerRegistry } from '@fpsak-frontend/fp-felles';
-import { BehandlingIdentifier, sakOperations } from '@fpsak-frontend/fp-behandling-felles';
+import { reducerRegistry, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import { sakOperations } from '@fpsak-frontend/fp-behandling-felles';
 
 import innsynBehandlingApi, { InnsynBehandlingApiKeys } from './data/innsynBehandlingApi';
 

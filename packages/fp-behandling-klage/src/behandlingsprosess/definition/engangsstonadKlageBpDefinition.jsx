@@ -1,5 +1,6 @@
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { behandlingspunktCodes as bpc, BehandlingspunktProperties } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingspunktProperties } from '@fpsak-frontend/fp-behandling-felles';
+import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import getVedtakStatus from './vedtakKlageStatusUtleder';
 
 const hasNonDefaultBehandlingspunkt = (builderData, bpLength) => bpLength > 0;

@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
-import { historikkinnslagDelPropType } from '@fpsak-frontend/fp-behandling-felles';
+import historikkinnslagDelPropType from '../historikkinnslagDelPropType';
 
 import {
   findEndretFeltNavn,

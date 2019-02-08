@@ -4,7 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 import { withoutRestActions, ignoreRestErrors } from '@fpsak-frontend/assets/testHelpers//data-test-helper';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import klageBehandlingApi, { reduxRestApi } from '../data/klageBehandlingApi';
 import {
   behandlingsprosessReducer, resetBehandlingspunkter, setSelectedBehandlingspunktNavn,

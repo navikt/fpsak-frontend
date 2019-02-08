@@ -1,11 +1,10 @@
 import { createSelector } from 'reselect';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { DEFAULT_BEHANDLINGSPROSESS } from '@fpsak-frontend/fp-felles';
 import { arrayToObject } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { behandlingspunktCodes, DEFAULT_BEHANDLINGSPROSESS } from '@fpsak-frontend/fp-felles';
 
 import { getRettigheter } from 'navAnsatt/duck';
 import {

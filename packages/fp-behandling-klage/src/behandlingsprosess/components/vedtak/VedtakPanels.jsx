@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getBehandlingType } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import VedtakKlageForm from './klage/VedtakKlageForm';
 import VedtakKlageFormNy from './klageNy/VedtakKlageForm';

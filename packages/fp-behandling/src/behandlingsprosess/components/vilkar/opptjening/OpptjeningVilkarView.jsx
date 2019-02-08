@@ -11,7 +11,7 @@ import {
   getBehandlingFastsattOpptjeningperiodeMnder, getBehandlingFastsattOpptjeningperiodeDager,
 } from 'behandlingFpsak/src/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import {
   getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus,
 } from 'behandlingFpsak/src/behandlingsprosess/behandlingsprosessSelectors';

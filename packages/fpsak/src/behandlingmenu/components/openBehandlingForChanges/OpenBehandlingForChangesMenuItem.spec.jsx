@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { OkAvbrytModal } from '@fpsak-frontend/shared-components';
 import OpenBehandlingForChangesMenuItem from './OpenBehandlingForChangesMenuItem';
 import MenuButton from '../MenuButton';

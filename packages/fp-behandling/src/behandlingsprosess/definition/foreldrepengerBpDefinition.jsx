@@ -1,10 +1,10 @@
-import { behandlingspunktCodes as bpc, BehandlingspunktProperties } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingspunktProperties } from '@fpsak-frontend/fp-behandling-felles';
+import { behandlingspunktCodes as bpc, featureToggle } from '@fpsak-frontend/fp-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import prt from '@fpsak-frontend/kodeverk/src/periodeResultatType';
-import { featureToggle } from '@fpsak-frontend/fp-felles';
 import { hasSimuleringOn, getStatusFromSimulering } from './simuleringStatusUtleder';
 import getVedtakStatus from './vedtakStatusUtleder';
 

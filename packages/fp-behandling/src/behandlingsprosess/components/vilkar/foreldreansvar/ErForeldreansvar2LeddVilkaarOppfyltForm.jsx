@@ -12,7 +12,8 @@ import {
 import { getBehandlingsresultat } from 'behandlingFpsak/src/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import { getFagsakYtelseType, getKodeverk } from 'behandlingFpsak/src/duck';
-import { aksjonspunktPropType, behandlingspunktCodes, BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
+import { aksjonspunktPropType, BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import VilkarResultPicker from 'behandlingFpsak/src/behandlingsprosess/components/vilkar/VilkarResultPicker';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
