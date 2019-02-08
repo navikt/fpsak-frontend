@@ -283,8 +283,8 @@ const checkValidStonadKonto = (uttakPerioder, stonadskontoer) => {
   return errors;
 };
 
-const validateUttakPanelForm = (values, stonadskonto) => {
-  const { uttaksresultatActivity } = values;
+const validateUttakPanelForm = (values) => {
+  const { uttaksresultatActivity, stonadskonto } = values;
 
   if (uttaksresultatActivity) {
     const stonadkontoError = checkValidStonadKonto(uttaksresultatActivity, stonadskonto.stonadskontoer);
@@ -304,12 +304,13 @@ const validateUttakPanelForm = (values, stonadskonto) => {
 };
 
 export const buildInitialValues = createSelector(
-  [getUttaksresultatPerioder],
-  uttaksresultat => ({
+  [getUttaksresultatPerioder, getStonadskontoer],
+  (uttaksresultat, stonadskonto) => ({
     uttaksresultatActivity: uttaksresultat.perioderSøker.map((ua, index) => ({
       ...ua,
       id: index + 1,
     })),
+    stonadskonto,
   }),
 );
 
@@ -358,7 +359,7 @@ const mapStateToProps = (state, ownProps) => {
     stonadskonto,
     initialValues: buildInitialValues(state),
     manuellOverstyring: behandlingFormValueSelector(formName)(state, 'manuellOverstyring'),
-    validate: values => validateUttakPanelForm(values, stonadskonto),
+    validate: values => validateUttakPanelForm(values),
     onSubmit: values => ownProps.submitCallback(transformValues(values, ownProps.apCodes, aksjonspunkter)),
   };
 };

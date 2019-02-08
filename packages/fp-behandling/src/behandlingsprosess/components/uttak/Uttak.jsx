@@ -18,7 +18,6 @@ import {
 import { CheckboxField } from '@fpsak-frontend/form';
 import {
   getBehandlingVersjon,
-  getStonadskontoer,
   getSoknad,
   getBehandlingYtelseFordeling,
   getFamiliehendelse,
@@ -43,6 +42,7 @@ import UttakMedsokerReadOnly from './UttakMedsokerReadOnly';
 import styles from './uttak.less';
 
 const ACTIVITY_PANEL_NAME = 'uttaksresultatActivity';
+const STONADSKONTOER_TEMP = 'stonadskonto';
 const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT).toDate();
 const godkjentKlassenavn = 'godkjentPeriode';
 const avvistKlassenavn = 'avvistPeriode';
@@ -178,7 +178,7 @@ export class UttakImpl extends Component {
 
     this.state = {
       selectedItem: null,
-      stonadskontoKopi: props.stonadskonto,
+      stonadskonto: props.stonadskonto,
     };
   }
 
@@ -219,7 +219,15 @@ export class UttakImpl extends Component {
   }
 
   updateStonadskontoer(values) {
-    const { tempUpdateStonadskontoer: updateKontoer, behandlingId, saksnummer } = this.props;
+    const {
+      tempUpdateStonadskontoer: updateKontoer,
+      reduxFormChange: formChange,
+      behandlingFormPrefix,
+      formName,
+      behandlingId,
+      saksnummer,
+    } = this.props;
+
     const transformedResultat = values.map((perioder) => {
       const { tilknyttetStortinget, ...uta } = perioder; // NOSONAR destruct er bedre enn delete, immutable
       const { ...transformActivity } = uta;
@@ -247,7 +255,8 @@ export class UttakImpl extends Component {
       perioder: transformedResultat,
     };
     updateKontoer(params).then((response) => {
-      this.setState({ stonadskontoKopi: response });
+      this.setState({ stonadskonto: response });
+      formChange(`${behandlingFormPrefix}.${formName}`, STONADSKONTOER_TEMP, response);
     });
   }
 
@@ -402,7 +411,7 @@ export class UttakImpl extends Component {
       annenForelderSoktOmFlerbarnsdager,
       reduxFormChange: formChange,
     } = this.props;
-    const { selectedItem, stonadskontoKopi } = this.state;
+    const { selectedItem, stonadskonto } = this.state;
     const customTimes = getCustomTimes(
       soknadDate,
       familiehendelseDate,
@@ -434,8 +443,8 @@ export class UttakImpl extends Component {
         <div>
           <Row>
             <TimeLineInfo
-              maksDatoUttak={stonadskontoKopi.maksDatoUttak}
-              stonadskonto={stonadskontoKopi.stonadskontoer}
+              maksDatoUttak={stonadskonto.maksDatoUttak}
+              stonadskonto={stonadskonto.stonadskontoer}
               dekningsgrad={dekningsgrad}
             />
           </Row>
@@ -627,7 +636,7 @@ const mapStateToProps = (state, props) => {
     familiehendelseDate: fodselTerminDato(soknad),
     endringsDate: ytelseFordeling.endringsDato ? ytelseFordeling.endringsDato : undefined,
     dekningsgrad: soknad.dekningsgrad ? soknad.dekningsgrad : undefined,
-    stonadskonto: getStonadskontoer(state),
+    stonadskonto: behandlingFormValueSelector(props.formName)(state, STONADSKONTOER_TEMP),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
     uttaksresultatActivity: uttakMedOpphold.map(periode => ({ tilknyttetStortinget, ...periode })),
     kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
