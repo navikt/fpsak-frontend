@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { isBehandlingInSync } from './selectors/papirsoknadSelectors';
 import { fetchBehandling as fetchBehandlingActionCreator, getBehandlingIdentifier } from './duck';
 

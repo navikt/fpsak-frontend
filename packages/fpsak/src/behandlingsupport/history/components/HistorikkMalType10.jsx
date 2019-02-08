@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import historikkinnslagType from '@fpsak-frontend/kodeverk/src/historikkinnslagType';
-
 import { FormattedHTMLMessage, injectIntl, intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
 
-import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
-import { historikkinnslagDelPropType } from '@fpsak-frontend/fp-behandling-felles';
+import historikkinnslagType from '@fpsak-frontend/kodeverk/src/historikkinnslagType';
 import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeCodes';
 import historikkOpplysningTypeCodes from '@fpsak-frontend/kodeverk/src/historikkOpplysningTypeCodes';
+
+import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
+import historikkinnslagDelPropType from '../historikkinnslagDelPropType';
 import {
   findEndretFeltNavn,
   findEndretFeltVerdi,

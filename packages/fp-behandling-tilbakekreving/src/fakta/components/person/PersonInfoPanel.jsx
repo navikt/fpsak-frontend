@@ -5,10 +5,11 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { aksjonspunktPropType, withDefaultToggling, faktaPanelCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { aksjonspunktPropType, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
+import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
-import { getKodeverk } from 'behandlingTilbakekreving/src/duck';
+import { getKodeverk } from 'behandlingTilbakekreving/src/duckTilbake';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   getBehandlingRelatertTilgrensendeYtelserForAnnenForelder,
@@ -22,6 +23,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import FullPersonInfo from './panelBody/FullPersonInfo';
 import PersonArbeidsforholdPanel from './panelBody/arbeidsforhold/PersonArbeidsforholdPanel';
+
+
+// TODO (TOR) Flytt ut til fp-behandling-felles, evt fp-felles
 
 /**
  * PersonInfoPanel

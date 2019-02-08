@@ -43,16 +43,6 @@ const resolveProsessAksjonspunkterSuccess = (response, behandlingIdentifier, sho
   return true;
 };
 
-export const resolveKlageTemp = (behandlingIdentifier, params) => (dispatch) => {
-  dispatch(fpsakBehandlingApi.SAVE_REOPEN_KLAGE_VURDERING.makeRestApiRequest()(params))
-    .then(response => dispatch(fpsakBehandlingApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true })))
-    .then(fpsakBehandlingApi.SAVE_KLAGE_VURDERING.resetRestApi());
-};
-
-export const saveKlage = params => dispatch => (
-  dispatch(fpsakBehandlingApi.SAVE_KLAGE_VURDERING.makeRestApiRequest()(params))
-);
-
 export const resolveProsessAksjonspunkter = (behandlingIdentifier, params, shouldUpdateInfo) => (dispatch) => {
   dispatch(resolveProsessAksjonspunkterStarted());
   return dispatch(fpsakBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params))
@@ -66,8 +56,6 @@ export const overrideProsessAksjonspunkter = (behandlingIdentifier, params, shou
 };
 
 export const fetchPreviewBrev = fpsakBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();
-
-export const fetchPreviewKlageBrev = fpsakBehandlingApi.PREVIEW_MESSAGE_KLAGE.makeRestApiRequest();
 
 /* Reducer */
 const initialState = {

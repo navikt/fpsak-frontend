@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
-import { BehandlingIdentifier, sakOperations } from '@fpsak-frontend/fp-behandling-felles';
-import { reducerRegistry } from '@fpsak-frontend/fp-felles';
+import { sakOperations } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingIdentifier, reducerRegistry } from '@fpsak-frontend/fp-felles';
 import fpsakBehandlingApi, { BehandlingFpsakApiKeys } from './data/fpsakBehandlingApi';
 
 const reducerName = 'fpsakBehandling';
@@ -78,7 +78,6 @@ const initialState = {
   featureToggles: {},
   kodeverk: {},
   fagsak: {},
-  filteredReceivedDocuments: [],
   hasShownBehandlingPaVent: false,
 };
 
@@ -123,6 +122,5 @@ export const getKodeverk = kodeverkType => createSelector(
   [getBehandlingContext], behandlingContext => behandlingContext.kodeverk[kodeverkType],
 );
 export const getFeatureToggles = createSelector([getBehandlingContext], behandlingContext => behandlingContext.featureToggles);
-export const getFilteredReceivedDocuments = createSelector([getBehandlingContext], behandlingContext => behandlingContext.filteredReceivedDocuments);
 
 export const getHasShownBehandlingPaVent = createSelector([getBehandlingContext], behandlingContext => behandlingContext.hasShownBehandlingPaVent);

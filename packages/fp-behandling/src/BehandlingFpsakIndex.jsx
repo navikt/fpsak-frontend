@@ -7,8 +7,9 @@ import { destroy } from 'redux-form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
-  BehandlingGrid, BehandlingErPaVentModal, sakOperations, BehandlingIdentifier,
+  BehandlingGrid, sakOperations,
 } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingErPaVentModal, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import FpSakBehandlingInfoSetter from './FpSakBehandlingInfoSetter';
 import FpSakBehandlingResolver from './FpSakBehandlingResolver';
 import BehandlingsprosessIndex from './behandlingsprosess/BehandlingsprosessIndex';
@@ -42,10 +43,10 @@ export class BehandlingFpsakIndex extends Component {
   componentDidMount() {
     const {
       setBehandlingInfo: setInfo, saksnummer, behandlingId, behandlingUpdater, appContextUpdater,
-      featureToggles, filteredReceivedDocuments, kodeverk, fagsak,
+      featureToggles, kodeverk, fagsak,
     } = this.props;
     setInfo({
-      behandlingId, fagsakSaksnummer: saksnummer, featureToggles, filteredReceivedDocuments, kodeverk, fagsak,
+      behandlingId, fagsakSaksnummer: saksnummer, featureToggles, kodeverk, fagsak,
     });
 
     behandlingUpdater.setUpdater(fpSakBehandlingUpdater);
@@ -141,13 +142,6 @@ BehandlingFpsakIndex.propTypes = {
   resetBehandlingFpsakContext: PropTypes.func.isRequired,
   appContextUpdater: PropTypes.shape().isRequired,
   featureToggles: PropTypes.shape().isRequired,
-  filteredReceivedDocuments: PropTypes.arrayOf(PropTypes.shape({
-    journalpostId: PropTypes.string.isRequired,
-    dokumentId: PropTypes.string.isRequired,
-    tittel: PropTypes.string.isRequired,
-    tidspunkt: PropTypes.string,
-    kommunikasjonsretning: PropTypes.string.isRequired,
-  })).isRequired,
   kodeverk: PropTypes.shape().isRequired,
   fagsak: PropTypes.shape({
     fagsakStatus: PropTypes.shape().isRequired,

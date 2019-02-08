@@ -1,13 +1,12 @@
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingspunktProperties } from '@fpsak-frontend/fp-behandling-felles';
+import { behandlingspunktCodes as bpc, featureToggle } from '@fpsak-frontend/fp-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import prt from '@fpsak-frontend/kodeverk/src/periodeResultatType';
-import { featureToggle } from '@fpsak-frontend/fp-felles';
 import { hasSimuleringOn, getStatusFromSimulering } from './simuleringStatusUtleder';
 import getVedtakStatus from './vedtakStatusUtleder';
-import BehandlingspunktProperties from './behandlingspunktBuilder';
 
 const getStatusFromUttakresultat = ({ uttaksresultat }) => {
   if (!uttaksresultat) {
@@ -39,7 +38,6 @@ const getStatusFromResultatstruktur = ({ resultatstruktur, uttaksresultat }) => 
   return vut.IKKE_VURDERT;
 };
 
-const behandlingTypeNotEquals = (...behandlingTypes) => ({ behandlingType }) => !behandlingTypes.some(b => b === behandlingType.kode);
 const behandlingTypeEquals = (...behandlingTypes) => ({ behandlingType }) => behandlingTypes.some(b => b === behandlingType.kode);
 const hasNonDefaultBehandlingspunkt = (builderData, bpLength) => bpLength > 0;
 
@@ -55,18 +53,8 @@ const hasLøpendeMedlemskapOn = ({ featureToggles }) => featureToggles[featureTo
  * @see BehandlingspunktProperties.Builder for mer informasjon.
  */
 const foreldrepengerBuilders = [
-  new BehandlingspunktProperties.Builder(bpc.BEHANDLE_INNSYN, 'Innsyn')
-    .withAksjonspunktCodes(ac.VURDER_INNSYN),
   new BehandlingspunktProperties.Builder(bpc.SAKSOPPLYSNINGER, 'Saksopplysninger')
     .withAksjonspunktCodes(ac.AVKLAR_PERSONSTATUS),
-  new BehandlingspunktProperties.Builder(bpc.FORMKRAV_KLAGE_NAV_FAMILIE_OG_PENSJON, 'FormkravKlageNFP')
-    .withAksjonspunktCodes(ac.VURDERING_AV_FORMKRAV_KLAGE_NFP),
-  new BehandlingspunktProperties.Builder(bpc.KLAGE_NAV_FAMILIE_OG_PENSJON, 'CheckKlageNFP')
-    .withAksjonspunktCodes(ac.BEHANDLE_KLAGE_NFP),
-  new BehandlingspunktProperties.Builder(bpc.FORMKRAV_KLAGE_NAV_KLAGEINSTANS, 'FormkravKlageKA')
-    .withAksjonspunktCodes(ac.VURDERING_AV_FORMKRAV_KLAGE_KA),
-  new BehandlingspunktProperties.Builder(bpc.KLAGE_NAV_KLAGEINSTANS, 'CheckKlageNK')
-    .withAksjonspunktCodes(ac.BEHANDLE_KLAGE_NK),
   new BehandlingspunktProperties.Builder(bpc.OPPLYSNINGSPLIKT, 'Opplysningsplikt')
     .withVilkarTypes(vt.SOKERSOPPLYSNINGSPLIKT)
     .withAksjonspunktCodes(ac.SOKERS_OPPLYSNINGSPLIKT_OVST, ac.SOKERS_OPPLYSNINGSPLIKT_MANU)
@@ -108,7 +96,7 @@ const foreldrepengerBuilders = [
       ac.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE, ac.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
       ac.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, ac.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG, ac.VURDER_DEKNINGSGRAD,
     )
-    .withVisibilityWhen(hasNonDefaultBehandlingspunkt, behandlingTypeNotEquals(bt.DOKUMENTINNSYN, bt.KLAGE))
+    .withVisibilityWhen(hasNonDefaultBehandlingspunkt)
     .withVilkarIsOptional(),
   new BehandlingspunktProperties.Builder(bpc.SOEKNADSFRIST, 'Soknadsfristvilkaret')
     .withAksjonspunktCodes(ac.VURDER_SOKNADSFRIST_FORELDREPENGER),
@@ -119,7 +107,7 @@ const foreldrepengerBuilders = [
     .withVisibilityWhen(behandlingTypeEquals(bt.REVURDERING), hasLøpendeMedlemskapOn),
 
   new BehandlingspunktProperties.Builder(bpc.UTTAK, 'Uttak')
-    .withVisibilityWhen(hasNonDefaultBehandlingspunkt, behandlingTypeNotEquals(bt.KLAGE))
+    .withVisibilityWhen(hasNonDefaultBehandlingspunkt)
     .withAksjonspunktCodes(
       ac.FASTSETT_UTTAKPERIODER,
       ac.OVERSTYRING_AV_UTTAKPERIODER,
@@ -134,10 +122,10 @@ const foreldrepengerBuilders = [
     )
     .withStatus(getStatusFromUttakresultat),
   new BehandlingspunktProperties.Builder(bpc.TILKJENT_YTELSE, 'TilkjentYtelse')
-    .withVisibilityWhen(hasNonDefaultBehandlingspunkt, behandlingTypeNotEquals(bt.DOKUMENTINNSYN, bt.KLAGE))
+    .withVisibilityWhen(hasNonDefaultBehandlingspunkt)
     .withStatus(getStatusFromResultatstruktur),
   new BehandlingspunktProperties.Builder(bpc.AVREGNING, 'Avregning')
-    .withVisibilityWhen(hasNonDefaultBehandlingspunkt, behandlingTypeNotEquals(bt.DOKUMENTINNSYN, bt.KLAGE), hasSimuleringOn)
+    .withVisibilityWhen(hasNonDefaultBehandlingspunkt, hasSimuleringOn)
     .withAksjonspunktCodes(ac.VURDER_FEILUTBETALING, ac.VURDER_INNTREKK)
     .withStatus(getStatusFromSimulering),
   new BehandlingspunktProperties.Builder(bpc.VEDTAK, 'Vedtak')
@@ -145,13 +133,7 @@ const foreldrepengerBuilders = [
       ac.FORESLA_VEDTAK, ac.FATTER_VEDTAK, ac.FORESLA_VEDTAK_MANUELT, ac.VEDTAK_UTEN_TOTRINNSKONTROLL, ac.VURDERE_ANNEN_YTELSE,
       ac.VURDERE_DOKUMENT, ac.KONTROLLER_REVURDERINGSBEHANDLING, ac.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
     )
-    .withVisibilityWhen(hasNonDefaultBehandlingspunkt, behandlingTypeNotEquals(bt.KLAGE))
-    .withStatus(getVedtakStatus),
-  new BehandlingspunktProperties.Builder(bpc.KLAGE_RESULTAT, 'ResultatKlage')
-    .withAksjonspunktCodes(
-      ac.FORESLA_VEDTAK, ac.FATTER_VEDTAK, ac.FORESLA_VEDTAK_MANUELT, ac.VEDTAK_UTEN_TOTRINNSKONTROLL,
-    )
-    .withVisibilityWhen(hasNonDefaultBehandlingspunkt, behandlingTypeEquals(bt.KLAGE))
+    .withVisibilityWhen(hasNonDefaultBehandlingspunkt)
     .withStatus(getVedtakStatus),
 ];
 

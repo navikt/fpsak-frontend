@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import ChangeBehandlendeEnhetModal from './ChangeBehandlendeEnhetModal';
 import MenuButton from '../MenuButton';
 

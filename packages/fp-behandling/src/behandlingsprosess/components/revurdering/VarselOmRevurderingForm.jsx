@@ -19,7 +19,7 @@ import { getKodeverk } from 'behandlingFpsak/src/duck';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/src/behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import FodselSammenligningPanel from 'behandlingFpsak/src/components/fodselSammenligning/FodselSammenligningPanel';
-import { SettBehandlingPaVentModal } from '@fpsak-frontend/fp-behandling-felles';
+import { SettBehandlingPaVentModal } from '@fpsak-frontend/fp-felles';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';

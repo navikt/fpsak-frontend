@@ -8,7 +8,10 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { getBehandlingVerge, getAksjonspunkter } from 'behandlingFpsak/src/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
 import {
-  faktaPanelCodes, aksjonspunktPropType, FaktaBegrunnelseTextField, FaktaEkspandertpanel,
+  faktaPanelCodes,
+} from '@fpsak-frontend/fp-felles';
+import {
+  aksjonspunktPropType, FaktaBegrunnelseTextField, FaktaEkspandertpanel,
 } from '@fpsak-frontend/fp-behandling-felles';
 import withDefaultToggling from 'behandlingFpsak/src/fakta/withDefaultToggling';
 import FaktaSubmitButton from 'behandlingFpsak/src/fakta/components/FaktaSubmitButton';

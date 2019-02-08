@@ -36,14 +36,7 @@ describe('behandlingsprosessSelectors', () => {
         kode: vut.IKKE_VURDERT,
       },
     }];
-    const aksjonspunkter = [{
-      definisjon: {
-        kode: ac.VURDER_INNSYN,
-      },
-      status: {
-        kode: as.OPPRETTET,
-      },
-    }];
+    const aksjonspunkter = [];
     const behandlingsresultat = {};
     const innsynResultatType = innsynResultatTypeKV.INNVILGET;
     const resultatstruktur = undefined;
@@ -54,13 +47,11 @@ describe('behandlingsprosessSelectors', () => {
       behandlingsresultat, innsynResultatType, resultatstruktur, stonadskontoer, featureToggles,
     );
 
-    expect(props).has.length(4);
-    expect(props[0].code).is.eql('behandle_innsyn');
-    expect(props[0].apCodes).is.eql(['5037']);
-    expect(props[1].code).is.eql('omsorg');
-    expect(props[1].vilkarene).is.eql(vilkar);
-    expect(props[2].code).is.eql('beregning');
-    expect(props[3].code).is.eql('vedtak');
+    expect(props).has.length(3);
+    expect(props[0].code).is.eql('omsorg');
+    expect(props[0].vilkarene).is.eql(vilkar);
+    expect(props[1].code).is.eql('beregning');
+    expect(props[2].code).is.eql('vedtak');
   });
 
   it('skal hente behandlingspunkt IDer', () => {

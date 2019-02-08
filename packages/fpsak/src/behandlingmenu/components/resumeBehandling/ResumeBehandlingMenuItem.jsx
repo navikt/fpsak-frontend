@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import MenuButton from '../MenuButton';
 
 const submit = (resumeBehandling, behandlingIdentifier, selectedBehandlingVersjon) => () => {

@@ -4,9 +4,9 @@ import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { behandlingPropType } from '@fpsak-frontend/fp-behandling-felles';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
+import behandlingIListePropType from '../behandlingIListePropType';
 import BehandlingPickerItem from './BehandlingPickerItem';
 
 import styles from './behandlingPicker.less';
@@ -55,7 +55,7 @@ const BehandlingPicker = ({
 );
 
 BehandlingPicker.propTypes = {
-  behandlinger: PropTypes.arrayOf(behandlingPropType).isRequired,
+  behandlinger: PropTypes.arrayOf(behandlingIListePropType).isRequired,
   noExistingBehandlinger: PropTypes.bool.isRequired,
   saksnummer: PropTypes.number.isRequired,
   behandlingId: PropTypes.number,

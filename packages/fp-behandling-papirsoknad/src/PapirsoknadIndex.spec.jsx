@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import SoknadData from './SoknadData';
 import SoknadRegistrertModal from './components/SoknadRegistrertModal';
 import RegisterPapirsoknad from './components/RegistrerPapirsoknad';

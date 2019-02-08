@@ -5,7 +5,8 @@ import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 
-import { FaktaBegrunnelseTextField, FaktaEkspandertpanel, faktaPanelCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { FaktaBegrunnelseTextField, FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
+import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import FaktaSubmitButton from 'behandlingFpsak/src/fakta/components/FaktaSubmitButton';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {

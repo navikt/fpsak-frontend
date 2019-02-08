@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-
 import { pathToBehandling, getLocationWithDefaultBehandlingspunktAndFakta } from '@fpsak-frontend/fp-felles';
-import { behandlingPropType } from '@fpsak-frontend/fp-behandling-felles';
 
+import behandlingIListePropType from '../behandlingIListePropType';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 
 import styles from './behandlingPickerItem.less';
@@ -62,7 +61,7 @@ const BehandlingPickerItem = ({
 
 BehandlingPickerItem.propTypes = {
   onlyOneBehandling: PropTypes.bool.isRequired,
-  behandling: behandlingPropType.isRequired,
+  behandling: behandlingIListePropType.isRequired,
   saksnummer: PropTypes.number.isRequired,
   isActive: PropTypes.bool.isRequired,
   showAll: PropTypes.bool.isRequired,

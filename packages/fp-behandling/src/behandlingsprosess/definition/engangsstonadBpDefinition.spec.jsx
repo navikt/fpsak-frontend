@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 
-import { featureToggle } from '@fpsak-frontend/fp-felles';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { featureToggle, behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -37,7 +36,7 @@ describe('Definisjon av behandlingspunkter - Engangsstønad', () => {
       vilkar: [],
       aksjonspunkter: [{
         definisjon: {
-          kode: aksjonspunktCodes.VURDER_INNSYN,
+          kode: aksjonspunktCodes.AVKLAR_PERSONSTATUS,
         },
         status: {
           kode: aksjonspunktStatus.OPPRETTET,
@@ -53,11 +52,11 @@ describe('Definisjon av behandlingspunkter - Engangsstønad', () => {
     const bpPropList = createEngangsstonadBpProps(builderData);
 
     expect(bpPropList).to.eql([{
-      apCodes: [aksjonspunktCodes.VURDER_INNSYN],
-      code: behandlingspunktCodes.BEHANDLE_INNSYN,
+      apCodes: [aksjonspunktCodes.AVKLAR_PERSONSTATUS],
+      code: behandlingspunktCodes.SAKSOPPLYSNINGER,
       isVisible: true,
       status: vilkarUtfallType.IKKE_VURDERT,
-      titleCode: 'Behandlingspunkt.Innsyn',
+      titleCode: 'Behandlingspunkt.Saksopplysninger',
       vilkarene: [],
     }, ...defaultBehandlingspunkter]);
   });
@@ -89,7 +88,7 @@ describe('Definisjon av behandlingspunkter - Engangsstønad', () => {
       vilkar: [],
       aksjonspunkter: [{
         definisjon: {
-          kode: aksjonspunktCodes.VURDER_INNSYN,
+          kode: aksjonspunktCodes.AVKLAR_PERSONSTATUS,
         },
         status: {
           kode: aksjonspunktStatus.OPPRETTET,
@@ -107,11 +106,11 @@ describe('Definisjon av behandlingspunkter - Engangsstønad', () => {
     const bpPropList = createEngangsstonadBpProps(builderData);
 
     expect(bpPropList).to.eql([{
-      apCodes: [aksjonspunktCodes.VURDER_INNSYN],
-      code: behandlingspunktCodes.BEHANDLE_INNSYN,
+      apCodes: [aksjonspunktCodes.AVKLAR_PERSONSTATUS],
+      code: behandlingspunktCodes.SAKSOPPLYSNINGER,
       isVisible: true,
       status: vilkarUtfallType.IKKE_VURDERT,
-      titleCode: 'Behandlingspunkt.Innsyn',
+      titleCode: 'Behandlingspunkt.Saksopplysninger',
       vilkarene: [],
     }, {
       apCodes: [],

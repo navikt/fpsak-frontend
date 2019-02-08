@@ -5,12 +5,14 @@ import { bindActionCreators } from 'redux';
 
 import BehandlingPapirsoknadIndex from '@fpsak-frontend/fp-behandling-papirsoknad';
 import BehandlingTilbakekrevingIndex from '@fpsak-frontend/fp-behandling-tilbakekreving';
+import BehandlingInnsynIndex from '@fpsak-frontend/fp-behandling-innsyn';
+import BehandlingKlageIndex from '@fpsak-frontend/fp-behandling-klage';
 import BehandlingFpsakIndex from '@fpsak-frontend/fp-behandling';
 import { trackRouteParam, requireProps } from '@fpsak-frontend/fp-felles';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import { getAlleKodeverk } from 'kodeverk/duck';
-import { getFilteredReceivedDocuments } from 'behandlingsupport/behandlingsupportSelectors';
+import { getAllDocuments } from 'behandlingsupport/behandlingsupportSelectors';
 import { getHasSubmittedPaVentForm } from 'behandlingmenu/duck';
 import {
   getSelectedSaksnummer, getSelectedFagsakStatus, getFagsakPerson,
@@ -21,7 +23,7 @@ import {
   setSelectedBehandlingId, getSelectedBehandlingId, setBehandlingInfoHolder, resetBehandlingContext as resetBehandlingContextActionCreator,
 } from './duck';
 import {
-  getBehandlingerVersjonMappedById, getBehandlingerTypesMappedById, getBehandlingerAktivPapirsoknadMappedById,
+  getBehandlingerVersjonMappedById, getBehandlingerTypesMappedById, getBehandlingerAktivPapirsoknadMappedById, getAvsluttedeBehandlinger,
 } from './selectors/behandlingerSelectors';
 import behandlingUpdater from './BehandlingUpdater';
 import appContextUpdater from './AppContextUpdater';
@@ -46,7 +48,7 @@ export class BehandlingIndex extends Component {
     resetBehandlingContext: PropTypes.func.isRequired,
     featureToggles: PropTypes.shape().isRequired,
     hasSubmittedPaVentForm: PropTypes.bool.isRequired,
-    filteredReceivedDocuments: PropTypes.arrayOf(PropTypes.shape({
+    allDocuments: PropTypes.arrayOf(PropTypes.shape({
       journalpostId: PropTypes.string.isRequired,
       dokumentId: PropTypes.string.isRequired,
       tittel: PropTypes.string.isRequired,
@@ -60,6 +62,14 @@ export class BehandlingIndex extends Component {
       fagsakYtelseType: PropTypes.shape().isRequired,
       isForeldrepengerFagsak: PropTypes.bool.isRequired,
     }).isRequired,
+    avsluttedeBehandlinger: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      type: PropTypes.shape({
+        kode: PropTypes.string.isRequired,
+        navn: PropTypes.string.isRequired,
+      }).isRequired,
+      avsluttet: PropTypes.string,
+    })).isRequired,
   };
 
   componentWillUnmount() {
@@ -78,9 +88,10 @@ export class BehandlingIndex extends Component {
       erAktivPapirsoknad,
       featureToggles,
       hasSubmittedPaVentForm,
-      filteredReceivedDocuments,
+      allDocuments,
       kodeverk,
       fagsak,
+      avsluttedeBehandlinger,
     } = this.props;
     if (erAktivPapirsoknad) {
       return (
@@ -119,6 +130,47 @@ export class BehandlingIndex extends Component {
       );
     }
 
+    if (behandlingType === BehandlingType.DOKUMENTINNSYN) {
+      return (
+        <BehandlingInnsynIndex
+          key={behandlingId}
+          saksnummer={saksnummer}
+          behandlingId={behandlingId}
+          behandlingerVersjonMappedById={behandlingerVersjonMappedById}
+          location={location}
+          setBehandlingInfoHolder={setHolder}
+          behandlingUpdater={behandlingUpdater}
+          appContextUpdater={appContextUpdater}
+          featureToggles={featureToggles}
+          hasSubmittedPaVentForm={hasSubmittedPaVentForm}
+          allDocuments={allDocuments}
+          kodeverk={kodeverk}
+          fagsak={fagsak}
+        />
+      );
+    }
+
+    if (behandlingType === BehandlingType.KLAGE) {
+      return (
+        <BehandlingKlageIndex
+          key={behandlingId}
+          saksnummer={saksnummer}
+          behandlingId={behandlingId}
+          behandlingerVersjonMappedById={behandlingerVersjonMappedById}
+          location={location}
+          setBehandlingInfoHolder={setHolder}
+          behandlingUpdater={behandlingUpdater}
+          appContextUpdater={appContextUpdater}
+          featureToggles={featureToggles}
+          hasSubmittedPaVentForm={hasSubmittedPaVentForm}
+          allDocuments={allDocuments}
+          kodeverk={kodeverk}
+          fagsak={fagsak}
+          avsluttedeBehandlinger={avsluttedeBehandlinger}
+        />
+      );
+    }
+
     return (
       <BehandlingFpsakIndex
         key={behandlingId}
@@ -131,7 +183,6 @@ export class BehandlingIndex extends Component {
         appContextUpdater={appContextUpdater}
         featureToggles={featureToggles}
         hasSubmittedPaVentForm={hasSubmittedPaVentForm}
-        filteredReceivedDocuments={filteredReceivedDocuments}
         kodeverk={kodeverk}
         fagsak={fagsak}
       />
@@ -150,7 +201,6 @@ const mapStateToProps = (state) => {
     erAktivPapirsoknad: getBehandlingerAktivPapirsoknadMappedById(state)[behandlingId],
     featureToggles: getFeatureToggles(state),
     hasSubmittedPaVentForm: getHasSubmittedPaVentForm(state),
-    filteredReceivedDocuments: getFilteredReceivedDocuments(state),
     kodeverk: getAlleKodeverk(state),
     fagsak: {
       fagsakStatus: getSelectedFagsakStatus(state),
@@ -158,6 +208,8 @@ const mapStateToProps = (state) => {
       fagsakYtelseType: getFagsakYtelseType(state),
       isForeldrepengerFagsak: isForeldrepengerFagsak(state),
     },
+    allDocuments: getAllDocuments(state),
+    avsluttedeBehandlinger: getAvsluttedeBehandlinger(state),
   };
 };
 

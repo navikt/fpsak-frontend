@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import moment from 'moment';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { PauseBehandlingMenuItem } from './PauseBehandlingMenuItem';
 
 describe('<PauseBehandlingMenuItem>', () => {

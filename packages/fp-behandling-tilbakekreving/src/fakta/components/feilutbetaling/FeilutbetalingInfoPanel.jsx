@@ -7,7 +7,8 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Element, Undertekst, Normaltekst } from 'nav-frontend-typografi';
 
 import { formatCurrencyNoKr, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { FaktaEkspandertpanel, faktaPanelCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
+import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 
 import { getFeilutbetalingFakta } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 

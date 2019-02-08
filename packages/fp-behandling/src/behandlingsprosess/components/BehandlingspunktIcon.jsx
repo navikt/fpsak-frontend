@@ -20,6 +20,8 @@ const getCallback = (
   isIkkeVurdert, behandlingspunkt, selectBehandlingspunktCallback,
 ) => () => (isIkkeVurdert ? undefined : selectBehandlingspunktCallback(behandlingspunkt));
 
+// TODO (TOR) Flytt til fp-behandling-felles
+
 /*
  * BehandlingspunktIcon
  *

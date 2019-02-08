@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
 import { getKodeverk } from 'kodeverk/duck';
 import MenuButton from '../MenuButton';
 

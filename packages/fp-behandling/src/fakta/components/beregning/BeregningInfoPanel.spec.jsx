@@ -4,7 +4,8 @@ import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/in
 import sinon from 'sinon';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
 
-import { faktaPanelCodes, FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
+import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
+import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { FormattedMessage } from 'react-intl';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';

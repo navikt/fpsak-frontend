@@ -8,7 +8,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import { isSelectedBehandlingspunktOverrideReadOnly } from 'behandlingFpsak/src/behandlingsprosess/behandlingsprosessSelectors';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import { getAksjonspunkter, getBehandlingResultatstruktur } from 'behandlingFpsak/src/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import {

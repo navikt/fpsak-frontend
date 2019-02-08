@@ -3,7 +3,8 @@ import { expect } from 'chai';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
-import { faktaPanelCodes, FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
+import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
+import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { MedlemskapInfoPanelImpl } from './MedlemskapInfoPanel';

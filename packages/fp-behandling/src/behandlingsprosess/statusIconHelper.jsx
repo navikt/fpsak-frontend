@@ -1,4 +1,4 @@
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import beregningsgrunnlagImages from 'behandlingFpsak/src/behandlingsprosess/statusIconsBeregningsgrunnlag';
 import uttakImages from 'behandlingFpsak/src/behandlingsprosess/statusIconsUttak';
 import vedtakImages from 'behandlingFpsak/src/behandlingsprosess/statusIconsVedtak';
@@ -36,7 +36,6 @@ const vilkarImages = {
 
 const behandlingspunktImages = {
   [behandlingspunktCodes.VEDTAK]: vedtakImages,
-  [behandlingspunktCodes.KLAGE_RESULTAT]: vedtakImages,
   [behandlingspunktCodes.BEREGNINGSGRUNNLAG]: beregningsgrunnlagImages,
   [behandlingspunktCodes.UTTAK]: uttakImages,
   [behandlingspunktCodes.AVREGNING]: avregningImages,

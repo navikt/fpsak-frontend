@@ -4,12 +4,12 @@ import { injectIntl, intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { historikkinnslagDelPropType } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import { findHendelseText } from './historikkUtils';
+import historikkinnslagDelPropType from '../historikkinnslagDelPropType';
 
 const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.TERMINBEKREFTELSE]: 'TermindatoFaktaForm.ApplicationInformation',

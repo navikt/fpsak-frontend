@@ -10,9 +10,11 @@ import innvilgetValgtIkonUrl from '@fpsak-frontend/assets/images/innvilget_valgt
 import ikkeVurdertIkonUrl from '@fpsak-frontend/assets/images/behandle_disable.svg';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 
 import vedtakImages from './statusIconsVedtak';
+
+// TODO (TOR) Refaktorer: veldig mykje av dette er felles med andre behandlingstypar.
 
 const vilkarImages = {
   imageMap: {

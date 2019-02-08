@@ -6,7 +6,8 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 
-import { behandlingspunktCodes, uttaksresultatPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { uttaksresultatPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import { getUttaksresultatPerioder, getStonadskontoer } from 'behandlingFpsak/src/behandlingSelectors';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/src/behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';

@@ -5,7 +5,7 @@ import { shallow } from 'enzyme';
 
 import { BehandlingspunktInfoPanel } from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktInfoPanel';
 import BeregningsresultatEngangsstonadForm from 'behandlingFpsak/src/behandlingsprosess/components/beregningsresultat/BeregningsresultatEngangsstonadForm';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import VurderSoknadsfristForeldrepengerForm from './soknadsfrist/VurderSoknadsfristForeldrepengerForm';
 
@@ -14,9 +14,7 @@ describe('<BehandlingspunktInfoPanel>', () => {
     const wrapper = shallow(<BehandlingspunktInfoPanel
       selectedBehandlingspunkt={behandlingspunktCodes.BEREGNING}
       submitCallback={sinon.spy()}
-      saveTempKlage={sinon.spy()}
       previewCallback={sinon.spy()}
-      previewCallbackKlage={sinon.spy()}
       previewVedtakCallback={sinon.spy()}
       previewManueltBrevCallback={sinon.spy()}
       dispatchSubmitFailed={sinon.spy()}
@@ -35,9 +33,7 @@ describe('<BehandlingspunktInfoPanel>', () => {
     const wrapper = shallow(<BehandlingspunktInfoPanel
       selectedBehandlingspunkt={behandlingspunktCodes.SOEKNADSFRIST}
       submitCallback={sinon.spy()}
-      saveTempKlage={sinon.spy()}
       previewCallback={sinon.spy()}
-      previewCallbackKlage={sinon.spy()}
       previewVedtakCallback={sinon.spy()}
       previewManueltBrevCallback={sinon.spy()}
       dispatchSubmitFailed={sinon.spy()}

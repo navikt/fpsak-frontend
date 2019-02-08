@@ -10,13 +10,15 @@ import { getBehandlingHenlagt } from 'behandlingTilbakekreving/src/selectors/til
 import findBehandlingsprosessIcon from 'behandlingTilbakekreving/src/behandlingsprosess/statusIconHelper';
 import {
   getBehandlingspunkterStatus, getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus,
-} from 'behandlingTilbakekreving/src/behandlingsprosess/behandlingsprosessSelectors';
+} from 'behandlingTilbakekreving/src/behandlingsprosess/behandlingsprosessTilbakeSelectors';
 
 import styles from './behandlingspunktIcon.less';
 
 const getCallback = (
   isIkkeVurdert, behandlingspunkt, selectBehandlingspunktCallback,
 ) => () => (isIkkeVurdert ? undefined : selectBehandlingspunktCallback(behandlingspunkt));
+
+// TODO (TOR) Flytt til fp-behandling-felles
 
 /*
  * BehandlingspunktIcon

@@ -15,6 +15,8 @@ const isDisabled = (isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields
   return (!isDirty && hasEmptyRequiredFields) || hasEmptyRequiredFields;
 };
 
+// TODO (TOR) Flytt til fp-behandling-felles
+
 /**
  * BehandlingspunktSubmitButton
  */

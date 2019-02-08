@@ -8,6 +8,8 @@ import BehandlingspunktIcon from './BehandlingspunktIcon';
 
 import styles from './behandlingsprosessPanel.less';
 
+// TODO (TOR) Flytt til fp-behandling-felles
+
 /*
  * BehandlingsprosessPanel
  *

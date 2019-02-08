@@ -14,7 +14,8 @@ import withDefaultToggling from 'behandlingFpsak/src/fakta/withDefaultToggling';
 import FodselSammenligningPanel from 'behandlingFpsak/src/components/fodselSammenligning/FodselSammenligningPanel';
 import TermindatoFaktaForm, { termindatoFaktaFormName } from 'behandlingFpsak/src/fakta/components/fodsel/TermindatoFaktaForm';
 import SjekkFodselDokForm, { sjekkFodselDokForm } from 'behandlingFpsak/src/fakta/components/fodsel/SjekkFodselDokForm';
-import { FaktaEkspandertpanel, aksjonspunktPropType, faktaPanelCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { FaktaEkspandertpanel, aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import SykdomPanel, { sykdomPanelName } from './SykdomPanel';
 

@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 
-import { featureToggle } from '@fpsak-frontend/fp-felles';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { featureToggle, behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -72,7 +71,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       vilkar: [sokersOpplysningspliktVilkar],
       aksjonspunkter: [],
       behandlingsresultat: {},
-      innsynResultatType: undefined,
       resultatstruktur: undefined,
       stonadskontoer: undefined,
       featureToggles,
@@ -91,7 +89,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       vilkar: [],
       aksjonspunkter: [],
       behandlingsresultat: {},
-      innsynResultatType: undefined,
       resultatstruktur: undefined,
       stonadskontoer: undefined,
       featureToggles,
@@ -102,39 +99,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
     expect(bpPropList).to.eql([]);
   });
 
-  it('skal vise behandlingspunkt for innsyn som oppfylt når aksjonspunkt er utført', () => {
-    const builderData = {
-      behandlingType: {
-        kode: behandlingType.FORSTEGANGSSOKNAD,
-      },
-      vilkar: [],
-      aksjonspunkter: [{
-        definisjon: {
-          kode: aksjonspunktCodes.VURDER_INNSYN,
-        },
-        status: {
-          kode: aksjonspunktStatus.UTFORT,
-        },
-      }],
-      behandlingsresultat: {},
-      innsynResultatType: undefined,
-      resultatstruktur: undefined,
-      stonadskontoer: undefined,
-      featureToggles,
-    };
-
-    const bpPropList = createForeldrepengerBpProps(builderData);
-
-    expect(bpPropList).to.eql([{
-      apCodes: [aksjonspunktCodes.VURDER_INNSYN],
-      code: behandlingspunktCodes.BEHANDLE_INNSYN,
-      isVisible: true,
-      status: vilkarUtfallType.OPPFYLT,
-      titleCode: 'Behandlingspunkt.Innsyn',
-      vilkarene: [],
-    }, ...defaultBehandlingspunkter]);
-  });
-
   it('skal vise behandlingspunkt for opplysningsplikt når en har dette vilkåret', () => {
     const builderData = {
       behandlingType: {
@@ -143,7 +107,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       vilkar: [sokersOpplysningspliktVilkar],
       aksjonspunkter: [],
       behandlingsresultat: {},
-      innsynResultatType: undefined,
       resultatstruktur: undefined,
       stonadskontoer: undefined,
       featureToggles,
@@ -176,7 +139,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
         },
       }],
       behandlingsresultat: {},
-      innsynResultatType: undefined,
       resultatstruktur: undefined,
       stonadskontoer: undefined,
       featureToggles,
@@ -206,7 +168,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
           kode: behandlingResultatType.INNVILGET,
         },
       },
-      innsynResultatType: undefined,
       resultatstruktur: undefined,
       stonadskontoer: undefined,
       featureToggles,
@@ -232,25 +193,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
     }]);
   });
 
-  it('skal ikke vise behandlingspunkt for beregning og tilkjent ytelse når en har innsynsbehandling', () => {
-    const builderData = {
-      behandlingType: {
-        kode: behandlingType.DOKUMENTINNSYN,
-      },
-      vilkar: [sokersOpplysningspliktVilkar],
-      aksjonspunkter: [],
-      behandlingsresultat: {},
-      innsynResultatType: undefined,
-      resultatstruktur: undefined,
-      stonadskontoer: undefined,
-      featureToggles,
-    };
-
-    const bpPropList = createForeldrepengerBpProps(builderData);
-
-    expect(bpPropList).to.eql([sokersOpplysningspliktBehandlingspunkt, defaultBehandlingspunkter[1], defaultBehandlingspunkter[3]]);
-  });
-
   it('skal vise status oppfylt for behandlingspunktet uttak når det finnes perioder i uttaksresultat', () => {
     const builderData = {
       behandlingType: {
@@ -259,7 +201,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       vilkar: [sokersOpplysningspliktVilkar],
       aksjonspunkter: [],
       behandlingsresultat: {},
-      innsynResultatType: undefined,
       resultatstruktur: undefined,
       stonadskontoer: undefined,
       featureToggles,
@@ -292,7 +233,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       vilkar: [sokersOpplysningspliktVilkar],
       aksjonspunkter: [],
       behandlingsresultat: {},
-      innsynResultatType: undefined,
       resultatstruktur: {
         perioder: [{
           fomDato: '2018-10-10',
@@ -337,7 +277,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       vilkar: [sokersOpplysningspliktVilkar],
       aksjonspunkter: [],
       behandlingsresultat: {},
-      innsynResultatType: undefined,
       resultatstruktur: undefined,
       stonadskontoer: undefined,
       featureToggles,
@@ -363,7 +302,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
         },
       }],
       behandlingsresultat: {},
-      innsynResultatType: undefined,
       resultatstruktur: undefined,
       stonadskontoer: undefined,
       featureToggles,
@@ -386,7 +324,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       vilkar: [],
       aksjonspunkter: [],
       behandlingsresultat: {},
-      innsynResultatType: undefined,
       resultatstruktur: undefined,
       stonadskontoer: undefined,
       featureToggles,

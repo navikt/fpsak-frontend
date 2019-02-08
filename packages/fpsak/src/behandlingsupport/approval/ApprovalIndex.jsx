@@ -13,16 +13,16 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
-import { BehandlingIdentifier, aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
 import {
   getBehandlingVersjon, getAksjonspunkter, getBehandlingAnsvarligSaksbehandler, getTotrinnskontrollArsakerUtenUdefinert,
   getBehandlingStatus, getBehandlingToTrinnsBehandling, getTotrinnskontrollArsakerReadOnly, getBehandlingIdentifier,
 } from 'behandling/duck';
 import navAnsattPropType from 'navAnsatt/navAnsattPropType';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
-import { requireProps } from '@fpsak-frontend/fp-felles';
+import { requireProps, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { getNavAnsatt } from 'navAnsatt/duck';
 import { getKodeverk } from 'kodeverk/duck';
+import approvalAksjonspunktPropType from './approvalAksjonspunktPropType';
 import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';
 import ToTrinnsForm from './components/ToTrinnsForm';
 import ToTrinnsFormReadOnly from './components/ToTrinnsFormReadOnly';
@@ -247,7 +247,7 @@ ApprovalIndexImpl.propTypes = {
   ansvarligSaksbehandler: PropTypes.string,
   status: PropTypes.shape().isRequired,
   toTrinnsBehandling: PropTypes.bool.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired),
+  aksjonspunkter: PropTypes.arrayOf(approvalAksjonspunktPropType.isRequired),
   approvalReceived: PropTypes.bool.isRequired,
   push: PropTypes.func.isRequired,
   resetApproval: PropTypes.func.isRequired,

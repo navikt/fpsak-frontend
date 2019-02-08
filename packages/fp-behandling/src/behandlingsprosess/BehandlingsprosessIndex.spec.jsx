@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import BehandlingspunktInfoPanel from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktInfoPanel';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
@@ -42,14 +42,11 @@ describe('<BehandlingsprosessIndex>', () => {
       behandlingspunkter={[]}
       selectedBehandlingspunkt={null}
       resetBehandlingspunkter={sinon.spy()}
-      saveKlage={sinon.spy()}
-      resolveKlageTemp={sinon.spy()}
       location={{ pathname: 'test' }}
       push={sinon.spy()}
       resolveProsessAksjonspunkter={stub}
       overrideProsessAksjonspunkter={sinon.spy()}
       fetchPreview={sinon.spy()}
-      fetchPreviewKlageBrev={sinon.spy()}
       fetchVedtaksbrevPreview={sinon.spy()}
       dispatchSubmitFailed={sinon.spy()}
       haveSentVarsel
@@ -131,14 +128,11 @@ describe('<BehandlingsprosessIndex>', () => {
       behandlingspunkter={[]}
       selectedBehandlingspunkt={null}
       resetBehandlingspunkter={sinon.spy()}
-      saveKlage={sinon.spy()}
-      resolveKlageTemp={sinon.spy()}
       location={{ pathname: 'test' }}
       push={sinon.spy()}
       resolveProsessAksjonspunkter={stub}
       overrideProsessAksjonspunkter={sinon.spy()}
       fetchPreview={sinon.spy()}
-      fetchPreviewKlageBrev={sinon.spy()}
       fetchVedtaksbrevPreview={sinon.spy()}
       dispatchSubmitFailed={sinon.spy()}
       haveSentVarsel

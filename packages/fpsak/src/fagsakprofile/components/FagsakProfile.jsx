@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-
 import { Systemtittel, Normaltekst, Element } from 'nav-frontend-typografi';
 import { NavLink } from 'react-router-dom';
 import { Row, Column } from 'nav-frontend-grid';
-
 import { Panel } from 'nav-frontend-paneler';
 
-import { behandlingPropType } from '@fpsak-frontend/fp-behandling-felles';
 import BehandlingMenuIndex from 'behandlingmenu/BehandlingMenuIndex';
 
+import behandlingIListePropType from '../behandlingIListePropType';
 import BehandlingPicker from './BehandlingPicker';
 
 import styles from './fagsakProfile.less';
@@ -78,7 +76,7 @@ FagsakProfile.propTypes = {
   saksnummer: PropTypes.number.isRequired,
   sakstype: PropTypes.shape().isRequired,
   fagsakStatus: PropTypes.shape().isRequired,
-  behandlinger: PropTypes.arrayOf(behandlingPropType).isRequired,
+  behandlinger: PropTypes.arrayOf(behandlingIListePropType).isRequired,
   noExistingBehandlinger: PropTypes.bool.isRequired,
   selectedBehandlingId: PropTypes.number,
   showAll: PropTypes.bool.isRequired,

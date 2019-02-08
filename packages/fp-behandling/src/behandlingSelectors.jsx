@@ -33,15 +33,6 @@ export const hasReadOnlyBehandling = createSelector(
   [fpsakBehandlingApi.BEHANDLING.getRestApiError(), getSelectedBehandling], (behandlingFetchError, selectedBehandling = {}) => (!!behandlingFetchError
     || (selectedBehandling.taskStatus && selectedBehandling.taskStatus.readOnly ? selectedBehandling.taskStatus.readOnly : false)),
 );
-export const getMellomlagringData = createSelector(
-  [fpsakBehandlingApi.SAVE_KLAGE_VURDERING.getRestApiMeta()],
-  data => (data ? data.params : {}),
-);
-
-export const getMellomlagringSpinner = createSelector(
-  [fpsakBehandlingApi.SAVE_REOPEN_KLAGE_VURDERING.getRestApiStarted(), fpsakBehandlingApi.SAVE_KLAGE_VURDERING.getRestApiStarted()],
-  (reOpenStarted, saveStarted) => (reOpenStarted || saveStarted),
-);
 
 export const getBehandlingVersjon = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.versjon);
 export const getBehandlingStatus = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.status);
@@ -49,8 +40,6 @@ export const getBehandlingBehandlendeEnhetId = createSelector([getSelectedBehand
 export const getBehandlingBehandlendeEnhetNavn = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlendeEnhetNavn);
 export const getBehandlingType = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.type);
 export const getBehandlingIsRevurdering = createSelector([getBehandlingType], (bt = {}) => bt.kode === behandlingType.REVURDERING);
-export const getBehandlingIsInnsyn = createSelector([getBehandlingType], (bt = {}) => bt.kode === behandlingType.DOKUMENTINNSYN);
-export const getBehandlingIsKlage = createSelector([getBehandlingType], (bt = {}) => bt.kode === behandlingType.KLAGE);
 export const getBehandlingArsaker = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingArsaker);
 export const getBehandlingArsakTyper = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling.behandlingArsaker
@@ -140,18 +129,6 @@ export const hasBehandlingManualPaVent = createSelector(
 export const doesVilkarForSykdomOppfyltExist = createSelector(
   [getAksjonspunkter], (aksjonspunkter = []) => aksjonspunkter.filter(ap => isVilkarForSykdomOppfylt(ap)).length > 0,
 );
-export const isKlageBehandlingInFormkrav = createSelector(
-  [getAksjonspunkter], (openAksjonspunkter = []) => openAksjonspunkter
-    .some(ap => ap.definisjon.kode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP
-      || ap.definisjon.kode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA),
-);
-
-
-export const isKlageBehandlingInKA = createSelector(
-  [getAksjonspunkter], (openAksjonspunkter = []) => openAksjonspunkter
-    .some(ap => ap.definisjon.kode === aksjonspunktCodes.FORMKRAV_KLAGE_NK
-      || ap.definisjon.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NK),
-);
 
 
 // BEREGNINGSGRUNNLAG
@@ -238,17 +215,6 @@ export const getBehandlingVedtaksDatoSomSvangerskapsuke = createSelector(
 export const getFamiliehendelseAntallBarnTermin = createSelector([getFamiliehendelse], (familiehendelse = {}) => familiehendelse.antallBarnTermin);
 export const getFamiliehendelseTermindato = createSelector([getFamiliehendelse], (familiehendelse = {}) => familiehendelse.termindato);
 export const getBehandlingSkjaringstidspunkt = createSelector([getFamiliehendelse], (familiehendelse = {}) => familiehendelse.skjaringstidspunkt);
-
-// INNSYN
-const getBehandlingInnsyn = createSelector(
-  [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling.innsyn ? selectedBehandling.innsyn : undefined),
-);
-export const getBehandlingInnsynResultatType = createSelector([getBehandlingInnsyn], (innsyn = {}) => innsyn.innsynResultatType);
-export const getBehandlingInnsynMottattDato = createSelector([getBehandlingInnsyn], (innsyn = {}) => innsyn.innsynMottattDato);
-export const getBehandlingInnsynDokumenter = createSelector([getBehandlingInnsyn], (innsyn = {}) => (innsyn.dokumenter ? innsyn.dokumenter : []));
-export const getBehandlingInnsynVedtaksdokumentasjon = createSelector(
-  [getBehandlingInnsyn], (innsyn = {}) => (innsyn.vedtaksdokumentasjon ? innsyn.vedtaksdokumentasjon : []),
-);
 
 // INNTEKT - ARBEID - YTELSE
 const getBehandlingInntektArbeidYtelse = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling['inntekt-arbeid-ytelse']);

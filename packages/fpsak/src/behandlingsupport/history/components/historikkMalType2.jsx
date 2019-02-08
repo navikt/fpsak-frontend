@@ -1,11 +1,12 @@
 import React from 'react';
 import { injectIntl, intlShape } from 'react-intl';
 import PropTypes from 'prop-types';
-import { historikkinnslagDelPropType } from '@fpsak-frontend/fp-behandling-felles';
 import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
+
 import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import { findHendelseText, findResultatText } from './historikkUtils';
+import historikkinnslagDelPropType from '../historikkinnslagDelPropType';
 
 const scrollUp = () => {
   if (window.innerWidth < 1305) {

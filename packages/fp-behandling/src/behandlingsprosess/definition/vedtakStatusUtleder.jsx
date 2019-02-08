@@ -1,36 +1,11 @@
-import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
-import behandlingResultatType, { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import innsynResultatTypeKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';
-import aksjonspunktCodes, { isKlageAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-
-// TODO (TOR) refaktorer måten ein finn status for vedtaksbehandlingspunkt
-const findVedtakStatusForKlage = (aksjonspunkter, behandlingsresultat) => {
-  const allAksjonspunkterIkkeUtfort = aksjonspunkter
-    .filter(ap => isKlageAksjonspunkt(ap.definisjon.kode))
-    .some(ak => ak.status.kode !== aksjonspunktStatus.UTFORT);
-  if (!allAksjonspunkterIkkeUtfort) {
-    const resultatTypeCode = behandlingsresultat.type.kode;
-    if (resultatTypeCode === behandlingResultatType.KLAGE_AVVIST || resultatTypeCode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET) {
-      return vilkarUtfallType.IKKE_OPPFYLT;
-    }
-    return vilkarUtfallType.OPPFYLT;
-  }
-  return vilkarUtfallType.IKKE_VURDERT;
-};
 
 const hasOnlyClosedAps = (aksjonspunkter, vedtakAksjonspunkter) => aksjonspunkter
   .filter(ap => !vedtakAksjonspunkter.some(vap => vap.definisjon.kode === ap.definisjon.kode))
   .every(ap => !isAksjonspunktOpen(ap.status.kode));
-
-const findVedtakStatusForInnsyn = (aksjonspunkter, innsynResultatType) => {
-  const akp = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK);
-  if (!akp) {
-    return vilkarUtfallType.IKKE_VURDERT;
-  }
-  return innsynResultatType.kode === innsynResultatTypeKV.INNVILGET ? vilkarUtfallType.OPPFYLT : vilkarUtfallType.IKKE_OPPFYLT;
-};
 
 const hasAksjonspunkt = ap => (ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING
   || ap.definisjon.kode === aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG
@@ -63,15 +38,7 @@ const findStatusForVedtak = (vilkar, aksjonspunkter, vedtakAksjonspunkter, behan
 };
 
 const getVedtakStatus = ({
-  behandlingType, aksjonspunkter, innsynResultatType, behandlingsresultat, vilkar,
-}, vedtakAksjonspunkter) => {
-  if (behandlingType.kode === bt.DOKUMENTINNSYN) {
-    return findVedtakStatusForInnsyn(aksjonspunkter, innsynResultatType);
-  }
-  if (behandlingType.kode === bt.KLAGE) {
-    return findVedtakStatusForKlage(aksjonspunkter, behandlingsresultat);
-  }
-  return findStatusForVedtak(vilkar, aksjonspunkter, vedtakAksjonspunkter, behandlingsresultat);
-};
+  aksjonspunkter, behandlingsresultat, vilkar,
+}, vedtakAksjonspunkter) => findStatusForVedtak(vilkar, aksjonspunkter, vedtakAksjonspunkter, behandlingsresultat);
 
 export default getVedtakStatus;

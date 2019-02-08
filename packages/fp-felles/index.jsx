@@ -4,6 +4,12 @@ export { default as requireProps } from './src/requireProps';
 export { default as trackRouteParam } from './src/trackRouteParam';
 export { default as featureToggle } from './src/featureToggle';
 export { ErrorTypes, errorOfType, getErrorResponseData } from './src/ErrorTypes';
+export { default as BehandlingIdentifier } from './src/BehandlingIdentifier';
+export { default as behandlingspunktCodes } from './src/behandlingspunktCodes';
+export { default as faktaPanelCodes } from './src/faktaPanelCodes';
+export { default as BehandlingErPaVentModal } from './src/behandlingPaVent/BehandlingErPaVentModal';
+export { default as SettBehandlingPaVentForm } from './src/behandlingPaVent/SettBehandlingPaVentForm';
+export { default as SettBehandlingPaVentModal } from './src/behandlingPaVent/SettBehandlingPaVentModal';
 export {
   getPathToFplos,
   getLocationWithDefaultBehandlingspunktAndFakta,

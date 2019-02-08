@@ -7,17 +7,18 @@ import { destroy } from 'redux-form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
-  sakOperations, BehandlingErPaVentModal, BehandlingGrid, BehandlingIdentifier,
+  sakOperations, BehandlingGrid,
 } from '@fpsak-frontend/fp-behandling-felles';
-import BehandlingsprosessIndex from './behandlingsprosess/BehandlingsprosessIndex';
-import FaktaIndex from './fakta/FaktaIndex';
+import { BehandlingErPaVentModal, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import BehandlingsprosessTilbakeIndex from './behandlingsprosess/BehandlingsprosessTilbakeIndex';
+import FaktaTilbakeIndex from './fakta/FaktaTilbakeIndex';
 import FpTilbakeBehandlingResolver from './FpTilbakeBehandlingResolver';
 import FpTilbakeBehandlingInfoSetter from './FpTilbakeBehandlingInfoSetter';
 import { getBehandlingFormPrefix } from './behandlingForm';
 import {
   setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier, resetTilbakekrevingContext,
   getHasShownBehandlingPaVent, getKodeverk,
-} from './duck';
+} from './duckTilbake';
 import {
   getBehandlingVersjon, getBehandlingOnHoldDate, getBehandlingVenteArsakKode, getBehandlingIsOnHold,
   hasBehandlingManualPaVent,
@@ -39,7 +40,7 @@ export class BehandlingFpTilbakeIndex extends Component {
     this.cleanUp = this.cleanUp.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const {
       setBehandlingInfo: setInfo, saksnummer, behandlingId, behandlingUpdater, appContextUpdater,
       featureToggles, kodeverk, fagsak,
@@ -100,8 +101,8 @@ export class BehandlingFpTilbakeIndex extends Component {
       <FpTilbakeBehandlingResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
         <FpTilbakeBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
         <BehandlingGrid
-          behandlingsprosessContent={<BehandlingsprosessIndex />}
-          faktaContent={<FaktaIndex />}
+          behandlingsprosessContent={<BehandlingsprosessTilbakeIndex />}
+          faktaContent={<FaktaTilbakeIndex />}
         />
         {!hasSubmittedPaVentForm
           && (

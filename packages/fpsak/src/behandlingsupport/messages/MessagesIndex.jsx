@@ -10,7 +10,6 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-behandling-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import { getKodeverk } from 'kodeverk/duck';
@@ -22,7 +21,7 @@ import {
   getBehandlingIdentifier,
 } from 'behandling/duck';
 import { setBehandlingOnHold } from 'behandlingmenu/duck';
-import { requireProps } from '@fpsak-frontend/fp-felles';
+import { requireProps, BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
 import {
   resetSubmitMessageActionCreator, previewMessageActionCreator, submitMessageActionCreator, isSubmitMessageFinished,
 } from './duck';

@@ -6,8 +6,10 @@ import { connect } from 'react-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import { BehandlingIdentifier, aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
-import { PersonIndex, requireProps, ErrorTypes } from '@fpsak-frontend/fp-felles';
+import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
+import {
+  PersonIndex, requireProps, ErrorTypes, BehandlingIdentifier,
+} from '@fpsak-frontend/fp-felles';
 import { getRettigheter } from 'navAnsatt/duck';
 import rettighetPropType from 'navAnsatt/rettighetPropType';
 import papirsoknadApi from './data/papirsoknadApi';
@@ -21,6 +23,8 @@ import {
 } from './duck';
 import RegistrerPapirsoknad from './components/RegistrerPapirsoknad';
 import SoknadRegistrertModal from './components/SoknadRegistrertModal';
+
+// TODO (TOR) Slå saman med BehandlingPapirsoknadIndex?
 
 /**
  * RegistreringIndex

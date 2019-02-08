@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect';
 
 import fpsakApi from 'data/fpsakApi';
-import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import {
   getBehandlingHasSoknad,
   getBehandlingIsInnsyn,
@@ -85,10 +84,3 @@ export const getAllHistory = createSelector([fpsakApi.HISTORY_FPSAK.getRestApiDa
 
 export const getAllDocuments = createSelector([fpsakApi.ALL_DOCUMENTS_FPSAK.getRestApiData(), fpsakApi.ALL_DOCUMENTS_FPTILBAKE.getRestApiData()],
   (documentsFpsak = [], documentsTilbake = []) => (documentsFpsak.concat(documentsTilbake)));
-
-// Samme dokument kan ligge på flere behandlinger under samme fagsak.
-export const getFilteredReceivedDocuments = createSelector([getAllDocuments], (documents = []) => {
-  const filteredDocuments = documents.filter(doc => doc.kommunikasjonsretning === kommunikasjonsretning.INN);
-  documents.forEach(doc => !filteredDocuments.some(fd => fd.dokumentId === doc.dokumentId) && filteredDocuments.push(doc));
-  return filteredDocuments;
-});
