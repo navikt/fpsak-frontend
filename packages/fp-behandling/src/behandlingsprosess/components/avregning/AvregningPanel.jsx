@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { clearFields, formPropTypes } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
@@ -23,6 +22,7 @@ import {
   maxLength,
   hasValidText,
   required,
+  getLanguageCodeFromSprakkode,
 } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
@@ -30,12 +30,10 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
 import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
 import { createSelector } from 'reselect';
-import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils';
 import AvregningSummary from './AvregningSummary';
 import AvregningTable from './AvregningTable';
 import styles from './avregningPanel.less';
 
-const classNames = classnames.bind(styles);
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 const simuleringAksjonspunkter = [
@@ -234,7 +232,7 @@ export class AvregningPanelImpl extends Component {
                           />
                           <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={avregningCodes.TILBAKEKR_IGNORER} />
                         </RadioGroupField>
-                        { videreBehandling === avregningCodes.TILBAKEKR_INFOTRYGD
+                        { videreBehandling === avregningCodes.TILBAKEKR_INFOTRYGD && !readOnly
                         && (
                           <div className={styles.varsel}>
                             <ArrowBox alignOffset={12}>
