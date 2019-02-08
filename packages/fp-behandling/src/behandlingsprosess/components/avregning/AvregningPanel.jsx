@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
+import classnames from 'classnames/bind';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { clearFields, formPropTypes } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
-import { Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { Undertekst, Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import {
-  getSimuleringResultat, getTilbakekrevingValg, getAksjonspunkter, getBehandlingVersjon,
+  getSimuleringResultat, getTilbakekrevingValg, getAksjonspunkter, getBehandlingVersjon, getBehandlingSprak,
 } from 'behandlingFpsak/src/behandlingSelectors';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/src/behandlingForm';
@@ -29,10 +30,12 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
 import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
 import { createSelector } from 'reselect';
+import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils';
 import AvregningSummary from './AvregningSummary';
 import AvregningTable from './AvregningTable';
 import styles from './avregningPanel.less';
 
+const classNames = classnames.bind(styles);
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 const simuleringAksjonspunkter = [
@@ -151,9 +154,16 @@ export class AvregningPanelImpl extends Component {
       readOnly,
       erTilbakekrevingVilkårOppfylt,
       grunnerTilReduksjon,
+      videreBehandling,
+      sprakkode,
       ...formProps
     } = this.props;
     const simuleringResultatOption = getSimuleringResult(simuleringResultat, feilutbetaling);
+    const inlineStyle = {
+      radioOption: {
+        height: videreBehandling === avregningCodes.TILBAKEKR_INFOTRYGD ? 230 : 'auto',
+      },
+    };
 
     return (
       <FadingPanel>
@@ -217,9 +227,36 @@ export class AvregningPanelImpl extends Component {
                         <Undertekst><FormattedMessage id="Avregning.videreBehandling" /></Undertekst>
                         <VerticalSpacer eightPx />
                         <RadioGroupField name="videreBehandling" validate={[required]} direction="vertical" readOnly={readOnly}>
-                          <RadioOption label={<FormattedMessage id="Avregning.gjennomfør" />} value={avregningCodes.TILBAKEKR_INFOTRYGD} />
+                          <RadioOption
+                            label={<FormattedMessage id="Avregning.gjennomfør" />}
+                            value={avregningCodes.TILBAKEKR_INFOTRYGD}
+                            style={inlineStyle.radioOption}
+                          />
                           <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={avregningCodes.TILBAKEKR_IGNORER} />
                         </RadioGroupField>
+                        { videreBehandling === avregningCodes.TILBAKEKR_INFOTRYGD
+                        && (
+                          <div className={styles.varsel}>
+                            <ArrowBox alignOffset={12}>
+                              <Normaltekst className={styles.bold}><FormattedMessage id="Avregning.tekstVarsel" /></Normaltekst>
+                              <VerticalSpacer eightPx />
+                              <TextAreaField
+                                name="tekstVarsel"
+                                label={{ id: 'Avregning.fritekst' }}
+                                validate={[required, minLength3, maxLength1500, hasValidText]}
+                                maxLength={1500}
+                                readOnly={readOnly}
+                                id="avregningFritekst"
+                                badges={[{
+                                  type: 'fokus',
+                                  textId: getLanguageCodeFromSprakkode(sprakkode),
+                                  title: 'Malform.Beskrivelse',
+                                }]}
+                              />
+                            </ArrowBox>
+                          </div>
+                        )
+                        }
                       </Column>
                     )
                     }
@@ -350,6 +387,8 @@ const mapStateToProps = (state, initialProps) => ({
   initialValues: buildInitialValues(state),
   erTilbakekrevingVilkårOppfylt: behandlingFormValueSelector(formName)(state, 'erTilbakekrevingVilkårOppfylt'),
   grunnerTilReduksjon: behandlingFormValueSelector(formName)(state, 'grunnerTilReduksjon'),
+  videreBehandling: behandlingFormValueSelector(formName)(state, 'videreBehandling'),
+  sprakkode: getBehandlingSprak(state),
   behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
   onSubmit: values => initialProps.submitCallback(transformValues(values, initialProps.apCodes[0])),
 });
