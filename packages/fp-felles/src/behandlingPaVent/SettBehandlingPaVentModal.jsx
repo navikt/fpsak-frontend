@@ -61,6 +61,8 @@ export const SettBehandlingPaVentModal = ({
     closeButton={false}
     contentLabel={intl.formatMessage({ id: 'SettBehandlingPaVentModal.ModalDescription' })}
     onRequestClose={cancelEvent}
+    shouldCloseOnOverlayClick={false}
+    ariaHideApp={false}
   >
     <Container fluid>
       <form onSubmit={handleSubmit} name="ventModalForm">

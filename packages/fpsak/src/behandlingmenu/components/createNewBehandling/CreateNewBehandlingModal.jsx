@@ -64,6 +64,8 @@ export const CreateNewBehandlingModal = ({
     closeButton={false}
     contentLabel={intl.formatMessage({ id: 'CreateNewBehandlingModal.ModalDescription' })}
     onRequestClose={cancelEvent}
+    shouldCloseOnOverlayClick={false}
+    ariaHideApp={false}
   >
     <form onSubmit={handleSubmit}>
       <Row>

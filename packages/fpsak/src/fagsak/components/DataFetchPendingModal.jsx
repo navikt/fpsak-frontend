@@ -54,6 +54,8 @@ export class DataFetchPendingModal extends Component {
         closeButton={false}
         contentLabel={pendingMessage}
         onRequestClose={doNothing}
+        shouldCloseOnOverlayClick={false}
+        ariaHideApp={false}
       >
         <Row>
           <Column xs="2">

@@ -55,6 +55,8 @@ export const BehandlingErPaVentModal = ({
       contentLabel={intl.formatMessage({ id: 'BehandlingErPaVentModal.ModalDescription' })}
       onRequestClose={closeEvent}
       readOnly
+      shouldCloseOnOverlayClick={false}
+      ariaHideApp={false}
     >
       <Row>
         <Column xs="1">

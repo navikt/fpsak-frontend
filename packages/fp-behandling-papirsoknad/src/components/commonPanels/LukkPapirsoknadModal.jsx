@@ -32,7 +32,8 @@ export const LukkPapirSoknadModal = ({
     closeButton={false}
     contentLabel={intl.formatMessage({ id: 'ModalLukkPapirSoknad.ModalDescription' })}
     onRequestClose={cancelEvent}
-
+    shouldCloseOnOverlayClick={false}
+    ariaHideApp={false}
   >
     <Row>
       <Column xs="1">

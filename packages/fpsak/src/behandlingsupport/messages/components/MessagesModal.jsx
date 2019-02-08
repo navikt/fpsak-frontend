@@ -26,6 +26,8 @@ const MessagesModal = ({
     closeButton={false}
     contentLabel={intl.formatMessage({ id: 'MessagesModal.description' })}
     onRequestClose={closeEvent}
+    shouldCloseOnOverlayClick={false}
+    ariaHideApp={false}
   >
     <Container className={styles.container}>
       <Row>

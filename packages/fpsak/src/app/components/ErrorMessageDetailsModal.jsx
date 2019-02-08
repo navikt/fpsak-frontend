@@ -32,6 +32,8 @@ const ErrorMessageDetailsModal = ({
     closeButton={false}
     contentLabel={intl.formatMessage({ id: 'ErrorMessageDetailsModal.ErrorDetails' })}
     onRequestClose={closeModalFn}
+    shouldCloseOnOverlayClick={false}
+    ariaHideApp={false}
   >
     <Row>
       <Column xs="1">

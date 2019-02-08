@@ -63,6 +63,8 @@ class IverksetterVedtakStatusModal extends Component {
         closeButton={false}
         contentLabel={intl.formatMessage({ id: 'IverksetterVedtakStatusModal.ModalDescription' })}
         onRequestClose={closeEvent}
+        shouldCloseOnOverlayClick={false}
+        ariaHideApp={false}
       >
         <Row>
           <Column xs="1">

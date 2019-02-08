@@ -31,6 +31,8 @@ export const DelOppPeriodeModalImpl = ({
     onRequestClose={cancelEvent}
     closeButton={false}
     className={styles.modal}
+    shouldCloseOnOverlayClick={false}
+    ariaHideApp={false}
   >
     <Element className={styles.marginTop}>
       <FormattedMessage id="DelOppPeriodeModalImpl.DelOppPerioden" />

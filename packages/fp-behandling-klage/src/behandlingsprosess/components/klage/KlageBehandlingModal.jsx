@@ -28,6 +28,8 @@ const KlageVurderingModal = ({
     contentLabel={intl.formatMessage({ id: 'KlageVurderingModal.ModalDescription' })}
     onRequestClose={closeEvent}
     closeButton={false}
+    shouldCloseOnOverlayClick={false}
+    ariaHideApp={false}
   >
     <Row>
       <Column xs="1">

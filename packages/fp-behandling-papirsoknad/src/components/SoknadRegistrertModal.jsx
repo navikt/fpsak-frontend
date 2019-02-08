@@ -23,6 +23,8 @@ export const SoknadRegistrertModal = ({
     contentLabel={intl.formatMessage({ id: 'SoknadRegistrertModal.ContentLabel' })}
     closeButton={false}
     onRequestClose={() => null}
+    shouldCloseOnOverlayClick={false}
+    ariaHideApp={false}
   >
     <AlertStripeSuksess className={styles.alertStyle}>
       <div className={styles.left}>

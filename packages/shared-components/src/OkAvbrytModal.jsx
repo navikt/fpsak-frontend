@@ -29,6 +29,8 @@ const OkAvbrytModal = ({
     closeButton={false}
     contentLabel={intl.formatMessage({ id: textCode })}
     onRequestClose={cancel}
+    shouldCloseOnOverlayClick={false}
+    ariaHideApp={false}
   >
     <Row>
       <Column xs="1">

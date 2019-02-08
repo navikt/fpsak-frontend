@@ -39,6 +39,8 @@ export const RegistrerVirksomhetModalForm = ({
     contentLabel={intl.formatMessage({ id: 'Registrering.RegistrerVirksomhetModalForm.ModalDescription' })}
     onRequestClose={closeEvent}
     closeButton={false}
+    shouldCloseOnOverlayClick={false}
+    ariaHideApp={false}
   >
     <form className={styles.form}>
       <Undertittel><FormattedMessage id="Registrering.RegistrerVirksomhetModalForm.Title" /></Undertittel>

@@ -63,6 +63,8 @@ export const ShelveBehandlingModalImpl = ({
       closeButton={false}
       contentLabel={intl.formatMessage({ id: 'ShelveBehandlingModal.ModalDescription' })}
       onRequestClose={cancelEvent}
+      shouldCloseOnOverlayClick={false}
+      ariaHideApp={false}
     >
       <form onSubmit={handleSubmit}>
         <div>

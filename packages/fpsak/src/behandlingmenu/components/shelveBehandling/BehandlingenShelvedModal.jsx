@@ -28,6 +28,8 @@ const BehandlingenShelvedModal = ({
     closeButton={false}
     contentLabel={intl.formatMessage({ id: 'BehandlingenShelvedModal.ModalDescription' })}
     onRequestClose={closeEvent}
+    shouldCloseOnOverlayClick={false}
+    ariaHideApp={false}
   >
     <Row>
       <Column xs="1">

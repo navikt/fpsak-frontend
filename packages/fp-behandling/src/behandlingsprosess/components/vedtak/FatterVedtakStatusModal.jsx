@@ -53,6 +53,8 @@ export class FatterVedtakStatusModal extends Component {
         closeButton={false}
         contentLabel={intl.formatMessage({ id: modalDescriptionTextCode })}
         onRequestClose={closeEvent}
+        shouldCloseOnOverlayClick={false}
+        ariaHideApp={false}
       >
         <Row>
           <Column xs="1">

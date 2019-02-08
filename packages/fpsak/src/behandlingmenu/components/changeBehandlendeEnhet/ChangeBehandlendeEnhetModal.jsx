@@ -52,6 +52,8 @@ export const ChangeBehandlendeEnhetModalImpl = ({
       closeButton={false}
       contentLabel={intl.formatMessage({ id: 'ChangeBehandlendeEnhetModal.ModalDescription' })}
       onRequestClose={cancelEvent}
+      shouldCloseOnOverlayClick={false}
+      ariaHideApp={false}
     >
       <form onSubmit={handleSubmit}>
         <div>
