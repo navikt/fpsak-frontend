@@ -6,11 +6,11 @@ import { Row, Column } from 'nav-frontend-grid';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
-
+import Modal from 'nav-frontend-modal';
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import { maxLength, required, hasValidText } from '@fpsak-frontend/utils';
 
-import { Modal, Image } from '@fpsak-frontend/shared-components';
+import { Image } from '@fpsak-frontend/shared-components';
 
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 
@@ -52,6 +52,8 @@ export const ChangeBehandlendeEnhetModalImpl = ({
       closeButton={false}
       contentLabel={intl.formatMessage({ id: 'ChangeBehandlendeEnhetModal.ModalDescription' })}
       onRequestClose={cancelEvent}
+      shouldCloseOnOverlayClick={false}
+      ariaHideApp={false}
     >
       <form onSubmit={handleSubmit}>
         <div>

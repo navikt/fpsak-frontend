@@ -1,12 +1,12 @@
 import React from 'react';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import Modal from 'nav-frontend-modal';
 import {
   DDMMYYYY_DATE_FORMAT, hasValidDate, required, dateAfterOrEqual, dateBeforeOrEqual,
 } from '@fpsak-frontend/utils';
 
 import { DatepickerField } from '@fpsak-frontend/form';
-import { Modal } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
@@ -31,6 +31,8 @@ export const DelOppPeriodeModalImpl = ({
     onRequestClose={cancelEvent}
     closeButton={false}
     className={styles.modal}
+    shouldCloseOnOverlayClick={false}
+    ariaHideApp={false}
   >
     <Element className={styles.marginTop}>
       <FormattedMessage id="DelOppPeriodeModalImpl.DelOppPerioden" />

@@ -2,7 +2,8 @@ import React from 'react';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
-import { Modal, Image } from '@fpsak-frontend/shared-components';
+import Modal from 'nav-frontend-modal';
+import { Image } from '@fpsak-frontend/shared-components';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
@@ -27,6 +28,8 @@ const KlageVurderingModal = ({
     contentLabel={intl.formatMessage({ id: 'KlageVurderingModal.ModalDescription' })}
     onRequestClose={closeEvent}
     closeButton={false}
+    shouldCloseOnOverlayClick={false}
+    ariaHideApp={false}
   >
     <Row>
       <Column xs="1">

@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-
+import Modal from 'nav-frontend-modal';
 import PropTypes from 'prop-types';
 import { getRegisteredFields } from 'papirsoknad/src/duck';
-import { Modal, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import VirksomhetIdentifikasjonPanel from './VirksomhetIdentifikasjonPanel';
 import VirksomhetRegnskapPanel from './VirksomhetRegnskapPanel';
 import VirksomhetStartetEndretPanel from './VirksomhetStartetEndretPanel';
@@ -39,6 +39,8 @@ export const RegistrerVirksomhetModalForm = ({
     contentLabel={intl.formatMessage({ id: 'Registrering.RegistrerVirksomhetModalForm.ModalDescription' })}
     onRequestClose={closeEvent}
     closeButton={false}
+    shouldCloseOnOverlayClick={false}
+    ariaHideApp={false}
   >
     <form className={styles.form}>
       <Undertittel><FormattedMessage id="Registrering.RegistrerVirksomhetModalForm.Title" /></Undertittel>

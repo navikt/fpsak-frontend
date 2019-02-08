@@ -10,7 +10,8 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import { Modal, Image } from '@fpsak-frontend/shared-components';
+import Modal from 'nav-frontend-modal';
+import { Image } from '@fpsak-frontend/shared-components';
 
 import { getFagsakYtelseType } from 'behandlingKlage/src/duckKlage';
 import { getResolveProsessAksjonspunkterSuccess } from 'behandlingKlage/src/behandlingsprosess/duckBpKlage';
@@ -55,6 +56,8 @@ class IverksetterVedtakStatusModal extends Component {
         closeButton={false}
         contentLabel={intl.formatMessage({ id: 'IverksetterVedtakStatusModal.ModalDescription' })}
         onRequestClose={closeEvent}
+        shouldCloseOnOverlayClick={false}
+        ariaHideApp={false}
       >
         <Row>
           <Column xs="1">

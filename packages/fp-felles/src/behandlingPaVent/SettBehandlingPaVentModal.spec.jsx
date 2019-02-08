@@ -3,7 +3,7 @@ import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/in
 import sinon from 'sinon';
 import { expect } from 'chai';
 import moment from 'moment';
-
+import Modal from 'nav-frontend-modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import { SettBehandlingPaVentModal } from './SettBehandlingPaVentModal';
@@ -25,7 +25,7 @@ describe('<SettBehandlingPaVentModal>', () => {
       hasManualPaVent
     />);
 
-    const modal = wrapper.find('Modal');
+    const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
     expect(modal.prop('closeButton')).is.false;
@@ -48,7 +48,7 @@ describe('<SettBehandlingPaVentModal>', () => {
       hasManualPaVent
     />);
 
-    const modal = wrapper.find('Modal');
+    const modal = wrapper.find(Modal);
     expect(modal.prop('isOpen')).is.false;
   });
 

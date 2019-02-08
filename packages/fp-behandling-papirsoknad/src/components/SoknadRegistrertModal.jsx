@@ -1,7 +1,7 @@
 import React from 'react';
 import { intlShape, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Modal } from '@fpsak-frontend/shared-components';
+import Modal from 'nav-frontend-modal';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Link } from 'react-router-dom';
 import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
@@ -23,6 +23,8 @@ export const SoknadRegistrertModal = ({
     contentLabel={intl.formatMessage({ id: 'SoknadRegistrertModal.ContentLabel' })}
     closeButton={false}
     onRequestClose={() => null}
+    shouldCloseOnOverlayClick={false}
+    ariaHideApp={false}
   >
     <AlertStripeSuksess className={styles.alertStyle}>
       <div className={styles.left}>

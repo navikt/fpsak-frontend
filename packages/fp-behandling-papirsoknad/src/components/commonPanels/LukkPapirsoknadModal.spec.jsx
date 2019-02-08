@@ -2,7 +2,7 @@ import React from 'react';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 import sinon from 'sinon';
 import { expect } from 'chai';
-
+import Modal from 'nav-frontend-modal';
 import { LukkPapirSoknadModal } from './LukkPapirsoknadModal';
 
 describe('<LukkPapirSoknadModal>', () => {
@@ -21,7 +21,7 @@ describe('<LukkPapirSoknadModal>', () => {
       form={form}
     />);
 
-    const modal = wrapper.find('Modal');
+    const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
     expect(modal.prop('closeButton')).is.false;

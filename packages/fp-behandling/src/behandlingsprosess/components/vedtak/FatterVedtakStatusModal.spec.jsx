@@ -2,9 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { Hovedknapp } from 'nav-frontend-knapper';
-
+import Modal from 'nav-frontend-modal';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import { Modal } from '@fpsak-frontend/shared-components';
 import { FatterVedtakStatusModal } from './FatterVedtakStatusModal';
 
 describe('<FatterVedtakStatusModal>', () => {

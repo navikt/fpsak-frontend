@@ -4,7 +4,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
-import { Modal } from '@fpsak-frontend/shared-components';
+import Modal from 'nav-frontend-modal';
 
 import styles from './dataFetchPendingModal.less';
 
@@ -54,6 +54,8 @@ export class DataFetchPendingModal extends Component {
         closeButton={false}
         contentLabel={pendingMessage}
         onRequestClose={doNothing}
+        shouldCloseOnOverlayClick={false}
+        ariaHideApp={false}
       >
         <Row>
           <Column xs="2">

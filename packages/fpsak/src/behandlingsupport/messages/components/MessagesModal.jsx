@@ -4,8 +4,8 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Container, Row, Column } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
-
-import { Modal, Image } from '@fpsak-frontend/shared-components';
+import Modal from 'nav-frontend-modal';
+import { Image } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 
 import styles from './MessagesModal.less';
@@ -26,6 +26,8 @@ const MessagesModal = ({
     closeButton={false}
     contentLabel={intl.formatMessage({ id: 'MessagesModal.description' })}
     onRequestClose={closeEvent}
+    shouldCloseOnOverlayClick={false}
+    ariaHideApp={false}
   >
     <Container className={styles.container}>
       <Row>

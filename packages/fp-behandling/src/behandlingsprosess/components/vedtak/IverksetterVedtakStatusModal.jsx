@@ -6,12 +6,12 @@ import { createSelector } from 'reselect';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
-
+import Modal from 'nav-frontend-modal';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { Modal, Image } from '@fpsak-frontend/shared-components';
+import { Image } from '@fpsak-frontend/shared-components';
 
 import { getFagsakYtelseType } from 'behandlingFpsak/src/duck';
 import { getResolveProsessAksjonspunkterSuccess } from 'behandlingFpsak/src/behandlingsprosess/duck';
@@ -63,6 +63,8 @@ class IverksetterVedtakStatusModal extends Component {
         closeButton={false}
         contentLabel={intl.formatMessage({ id: 'IverksetterVedtakStatusModal.ModalDescription' })}
         onRequestClose={closeEvent}
+        shouldCloseOnOverlayClick={false}
+        ariaHideApp={false}
       >
         <Row>
           <Column xs="1">

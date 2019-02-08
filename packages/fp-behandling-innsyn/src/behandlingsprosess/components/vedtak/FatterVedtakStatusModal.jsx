@@ -6,12 +6,12 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
-
+import Modal from 'nav-frontend-modal';
 import { getSelectedBehandlingId, getFagsakYtelseType } from 'behandlingInnsyn/src/duckInnsyn';
 import {
   getBehandlingStatus, getBehandlingsresultat, getAksjonspunkter, getBehandlingType,
 } from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
-import { Modal, Image } from '@fpsak-frontend/shared-components';
+import { Image } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -53,6 +53,8 @@ export class FatterVedtakStatusModal extends Component {
         closeButton={false}
         contentLabel={intl.formatMessage({ id: modalDescriptionTextCode })}
         onRequestClose={closeEvent}
+        shouldCloseOnOverlayClick={false}
+        ariaHideApp={false}
       >
         <Row>
           <Column xs="1">

@@ -6,7 +6,7 @@ import {
 } from '@fpsak-frontend/utils';
 
 import { DatepickerField } from '@fpsak-frontend/form';
-import { Modal } from '@fpsak-frontend/shared-components';
+import Modal from 'nav-frontend-modal';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
@@ -30,6 +30,8 @@ export const DelOppPeriodeModalImpl = ({
     onRequestClose={cancelEvent}
     closeButton={false}
     className={styles.modal}
+    shouldCloseOnOverlayClick={false}
+    ariaHideApp={false}
   >
     <Element className={styles.marginTop}>
       <FormattedMessage id="DelOppPeriodeModalImpl.DelOppPerioden" />

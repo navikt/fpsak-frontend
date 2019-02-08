@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
+import Modal from 'nav-frontend-modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import Image from './Image';
-import Modal from './Modal';
+
 
 import styles from './okAvbrytModal.less';
 
@@ -28,6 +29,8 @@ const OkAvbrytModal = ({
     closeButton={false}
     contentLabel={intl.formatMessage({ id: textCode })}
     onRequestClose={cancel}
+    shouldCloseOnOverlayClick={false}
+    ariaHideApp={false}
   >
     <Row>
       <Column xs="1">

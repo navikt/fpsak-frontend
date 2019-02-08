@@ -4,8 +4,8 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
-
-import { Modal, Image } from '@fpsak-frontend/shared-components';
+import Modal from 'nav-frontend-modal';
+import { Image } from '@fpsak-frontend/shared-components';
 
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 
@@ -28,6 +28,8 @@ const BehandlingenShelvedModal = ({
     closeButton={false}
     contentLabel={intl.formatMessage({ id: 'BehandlingenShelvedModal.ModalDescription' })}
     onRequestClose={closeEvent}
+    shouldCloseOnOverlayClick={false}
+    ariaHideApp={false}
   >
     <Row>
       <Column xs="1">

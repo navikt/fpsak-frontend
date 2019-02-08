@@ -6,9 +6,9 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-
+import Modal from 'nav-frontend-modal';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
-import { Modal, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { CheckboxField, SelectField } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
@@ -64,6 +64,8 @@ export const CreateNewBehandlingModal = ({
     closeButton={false}
     contentLabel={intl.formatMessage({ id: 'CreateNewBehandlingModal.ModalDescription' })}
     onRequestClose={cancelEvent}
+    shouldCloseOnOverlayClick={false}
+    ariaHideApp={false}
   >
     <form onSubmit={handleSubmit}>
       <Row>

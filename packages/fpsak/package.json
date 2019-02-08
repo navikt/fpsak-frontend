@@ -39,6 +39,8 @@
     "nav-frontend-lenker-style": "0.2.18",
     "nav-frontend-lukknapp": "1.0.17",
     "nav-frontend-lukknapp-style": "0.2.17",
+    "nav-frontend-modal": "1.0.24",
+    "nav-frontend-modal-style": "0.3.27",
     "nav-frontend-paneler": "1.0.12",
     "nav-frontend-paneler-style": "0.3.13",
     "nav-frontend-skjema": "1.0.56",
@@ -61,6 +63,7 @@
     "redux": "^4.0.1",
     "redux-form": "^7.4.2",
     "redux-logger": "^3.0.6",
+    "react-modal": "3.8.1",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0"
   },

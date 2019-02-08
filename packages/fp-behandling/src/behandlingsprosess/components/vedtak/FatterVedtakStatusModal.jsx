@@ -5,13 +5,14 @@ import { createSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import Modal from 'nav-frontend-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { getSelectedBehandlingId, getFagsakYtelseType } from 'behandlingFpsak/src/duck';
 import {
   getBehandlingStatus, getBehandlingsresultat, getAksjonspunkter,
 } from 'behandlingFpsak/src/behandlingSelectors';
-import { Modal, Image } from '@fpsak-frontend/shared-components';
+import { Image } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
@@ -52,6 +53,8 @@ export class FatterVedtakStatusModal extends Component {
         closeButton={false}
         contentLabel={intl.formatMessage({ id: modalDescriptionTextCode })}
         onRequestClose={closeEvent}
+        shouldCloseOnOverlayClick={false}
+        ariaHideApp={false}
       >
         <Row>
           <Column xs="1">

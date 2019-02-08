@@ -5,7 +5,7 @@ import { formValueSelector, reduxForm } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
 import { Fieldset } from 'nav-frontend-skjema';
 import { injectIntl, intlShape } from 'react-intl';
-import { Modal } from '@fpsak-frontend/shared-components';
+import Modal from 'nav-frontend-modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Undertekst } from 'nav-frontend-typografi';
 
@@ -63,6 +63,8 @@ export const ShelveBehandlingModalImpl = ({
       closeButton={false}
       contentLabel={intl.formatMessage({ id: 'ShelveBehandlingModal.ModalDescription' })}
       onRequestClose={cancelEvent}
+      shouldCloseOnOverlayClick={false}
+      ariaHideApp={false}
     >
       <form onSubmit={handleSubmit}>
         <div>

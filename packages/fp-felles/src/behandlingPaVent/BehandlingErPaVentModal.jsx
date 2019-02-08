@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import Modal from 'nav-frontend-modal';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { Modal, Image } from '@fpsak-frontend/shared-components';
+import { Image } from '@fpsak-frontend/shared-components';
 
 import SettBehandlingPaVentForm from './SettBehandlingPaVentForm';
 
@@ -54,6 +55,8 @@ export const BehandlingErPaVentModal = ({
       contentLabel={intl.formatMessage({ id: 'BehandlingErPaVentModal.ModalDescription' })}
       onRequestClose={closeEvent}
       readOnly
+      shouldCloseOnOverlayClick={false}
+      ariaHideApp={false}
     >
       <Row>
         <Column xs="1">

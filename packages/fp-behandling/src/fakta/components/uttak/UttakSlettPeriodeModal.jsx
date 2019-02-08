@@ -7,15 +7,15 @@ import { TextAreaField } from '@fpsak-frontend/form';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
+import Modal from 'nav-frontend-modal';
 import {
   minLength, maxLength, required, hasValidText, DDMMYYYY_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import {
-  FlexColumn, FlexRow, FlexContainer, Modal, VerticalSpacer, Image,
+  FlexColumn, FlexRow, FlexContainer, VerticalSpacer, Image,
 } from '@fpsak-frontend/shared-components';
 import styles from './uttakSlettPeriodeModal.less';
-
 
 const minLength3 = minLength(3);
 const maxLength2000 = maxLength(2000);
@@ -38,6 +38,8 @@ export const UttakSlettPeriodeModalImpl = ({
       contentLabel="Perioden slettes"
       onRequestClose={closeEvent}
       closeButton={false}
+      shouldCloseOnOverlayClick={false}
+      ariaHideApp={false}
     >
       <FlexContainer wrap>
         <FlexRow>
