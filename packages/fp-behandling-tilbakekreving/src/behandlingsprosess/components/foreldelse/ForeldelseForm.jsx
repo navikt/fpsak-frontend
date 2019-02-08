@@ -127,7 +127,7 @@ const transformValues = (selectedItemData, values) => {
   const { foreldet, begrunnelse } = values;
 
   const resultatType = {
-    kode: periodeResultatType.INNVILGET,
+    kode: foreldet === foreldelseCodes.FORELDET ? periodeResultatType.AVSLATT : periodeResultatType.INNVILGET,
     navn: innvilgetTekst,
     kodeverk: PERIODE_RESULTAT_TYPE,
   };
