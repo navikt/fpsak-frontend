@@ -38,6 +38,28 @@ describe('<UttakPanel>', () => {
     }],
   };
 
+  const stonadskonto = {
+    stonadskontoer: {
+      MØDREKVOTE: {
+        aktivitetSaldoDtoList: [{
+          aktivitetIdentifikator: {
+            arbeidsgiver: {
+              navn: 'UNIVERSITETET I OSLO',
+            },
+          },
+          saldo: 0,
+        },
+        {
+          aktivitetIdentifikator: {
+            arbeidsgiver: {
+              navn: 'STATOIL',
+            },
+          },
+          saldo: 4,
+        }],
+      },
+    },
+  };
 
   it('skal rendre uttakpanel uten aksjonspunkt', () => {
     const wrapper = shallowWithIntl(<UttakPanel
