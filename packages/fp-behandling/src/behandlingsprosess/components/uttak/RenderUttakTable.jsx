@@ -152,7 +152,8 @@ export const RenderUttakTableImpl = ({
                 <Column xs="7">
                   <DecimalField
                     name={`${uttakElementFieldId}.utbetalingsgrad`}
-                    validate={utsettelse(erOppfylt, selectedItemData) ? [required, minValue0, maxProsentValue100, hasValidDecimal, noMoreThanZeroIfRejectedAndNotUtsettelse]
+                    validate={utsettelse(erOppfylt, selectedItemData)
+                      ? [required, minValue0, maxProsentValue100, hasValidDecimal, noMoreThanZeroIfRejectedAndNotUtsettelse]
                       : [required, minValue0, maxProsentValue100, hasValidDecimal]}
                     readOnly={readOnly}
                     bredde="XS"
