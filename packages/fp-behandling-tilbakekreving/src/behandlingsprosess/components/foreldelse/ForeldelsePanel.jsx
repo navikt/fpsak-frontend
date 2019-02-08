@@ -9,13 +9,13 @@ import {
   FadingPanel, VerticalSpacer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { addClassNameGroupIdToPerioder } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
 import BpTimelinePanel from '../felles/behandlingspunktTimelineSkjema/BpTimelinePanel';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '../../../behandlingForm';
 import { getBehandlingVersjon } from '../../../selectors/tilbakekrevingBehandlingSelectors';
-import { getSelectedBehandlingId } from '../../../duck';
+import { getSelectedBehandlingId } from '../../../duckTilbake';
 import {
   hovedsokerKjonnKode, tilbakekrevingPerioderResultat, customTimes,
 } from '../tilbakekreving/mockData';
