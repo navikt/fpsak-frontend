@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { isBehandlingInSync } from './selectors/innsynBehandlingSelectors';
-import { fetchBehandling as fetchBehandlingActionCreator, getBehandlingIdentifier } from './duck';
+import { fetchBehandling as fetchBehandlingActionCreator, getBehandlingIdentifier } from './duckInnsyn';
 
 export class FpTilbakeBehandlingResolver extends Component {
   static propTypes = {

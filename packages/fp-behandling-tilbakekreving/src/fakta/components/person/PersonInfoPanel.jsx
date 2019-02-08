@@ -9,7 +9,7 @@ import { aksjonspunktPropType, withDefaultToggling } from '@fpsak-frontend/fp-be
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
-import { getKodeverk } from 'behandlingTilbakekreving/src/duck';
+import { getKodeverk } from 'behandlingTilbakekreving/src/duckTilbake';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   getBehandlingRelatertTilgrensendeYtelserForAnnenForelder,
@@ -23,6 +23,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import FullPersonInfo from './panelBody/FullPersonInfo';
 import PersonArbeidsforholdPanel from './panelBody/arbeidsforhold/PersonArbeidsforholdPanel';
+
+
+// TODO (TOR) Flytt ut til fp-behandling-felles, evt fp-felles
 
 /**
  * PersonInfoPanel

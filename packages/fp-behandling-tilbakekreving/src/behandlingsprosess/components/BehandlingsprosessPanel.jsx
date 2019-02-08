@@ -5,12 +5,14 @@ import classnames from 'classnames/bind';
 import Panel from 'nav-frontend-paneler';
 
 import { getBehandlingHenlagt } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
-import { getNotAcceptedByBeslutter } from 'behandlingTilbakekreving/src/behandlingsprosess/behandlingsprosessSelectors';
+import { getNotAcceptedByBeslutter } from 'behandlingTilbakekreving/src/behandlingsprosess/behandlingsprosessTilbakeSelectors';
 import BehandlingspunktIcon from './BehandlingspunktIcon';
 
 import styles from './behandlingsprosessPanel.less';
 
 const classNames = classnames.bind(styles);
+
+// TODO (TOR) Flytt til fp-behandling-felles
 
 /*
  * BehandlingsprosessPanel

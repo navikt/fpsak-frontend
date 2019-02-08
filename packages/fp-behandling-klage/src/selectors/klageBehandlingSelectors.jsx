@@ -6,7 +6,7 @@ import aksjonspunktCodes, {
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import klageBehandlingApi from '../data/klageBehandlingApi';
-import { getSelectedBehandlingId, isForeldrepengerFagsak } from '../duck';
+import { getSelectedBehandlingId, isForeldrepengerFagsak } from '../duckKlage';
 
 export const isBehandlingInSync = createSelector(
   [getSelectedBehandlingId, klageBehandlingApi.BEHANDLING.getRestApiData()],

@@ -5,7 +5,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getFagsakYtelseType } from 'behandlingKlage/src/duck';
+import { getFagsakYtelseType } from 'behandlingKlage/src/duckKlage';
 import { findInnvilgetResultatText } from '../VedtakHelper';
 
 export const VedtakInnvilgetKlagePanelImpl = ({

@@ -9,8 +9,8 @@ import {
   getPersonopplysning, getBehandlingIsOnHold, getAksjonspunkter, hasReadOnlyBehandling, getFeilutbetalingFakta,
 } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
-import { getOpenInfoPanels } from '../duck';
-import { getFagsakPerson } from '../../duck';
+import { getOpenInfoPanels } from '../duckFaktaTilbake';
+import { getFagsakPerson } from '../../duckTilbake';
 import PersonInfoPanel from './person/PersonInfoPanel';
 import FeilutbetalingInfoPanel from './feilutbetaling/FeilutbetalingInfoPanel';
 

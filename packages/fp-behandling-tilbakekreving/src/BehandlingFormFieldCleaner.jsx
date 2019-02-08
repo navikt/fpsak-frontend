@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { change as reduxChange } from 'redux-form';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { getBehandlingFormName } from './behandlingForm';
-import { getSelectedBehandlingId } from './duck';
+import { getSelectedBehandlingId } from './duckTilbake';
 import { getBehandlingVersjon } from './selectors/tilbakekrevingBehandlingSelectors';
 
 const findAllNames = children => (children ? React.Children
@@ -20,6 +20,8 @@ const findAllNames = children => (children ? React.Children
     }
     return all;
   }) : []);
+
+// TODO (TOR) Flytt til fp-behandling-felles
 
 /**
  * BehandlingFormFieldCleaner

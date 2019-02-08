@@ -1,5 +1,5 @@
 import klageBehandlingApi from './data/klageBehandlingApi';
-import { updateBehandling, resetBehandling } from './duck';
+import { updateBehandling, resetBehandling } from './duckKlage';
 
 class FpSakBehandlingUpdater {
     changeBehandlendeEnhet = () => klageBehandlingApi.NY_BEHANDLENDE_ENHET.makeRestApiRequest();

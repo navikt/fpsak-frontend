@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 import { getBehandlingVersjon } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
-import { getSelectedBehandlingId, getKodeverk } from 'behandlingTilbakekreving/src/duck';
+import { getSelectedBehandlingId, getKodeverk } from 'behandlingTilbakekreving/src/duckTilbake';
 import { arbeidsforholdPropType } from '@fpsak-frontend/fp-behandling-felles';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingTilbakekreving/src/behandlingForm';
 import FaktaGruppe from 'behandlingTilbakekreving/src/fakta/components/FaktaGruppe';

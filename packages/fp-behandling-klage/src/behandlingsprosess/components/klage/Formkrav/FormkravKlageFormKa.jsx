@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import PropTypes from 'prop-types';
 
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessSelectors';
+import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
 import { behandlingForm } from 'behandlingKlage/src/behandlingForm';
 import { getBehandlingKlageFormkravResultatKA } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

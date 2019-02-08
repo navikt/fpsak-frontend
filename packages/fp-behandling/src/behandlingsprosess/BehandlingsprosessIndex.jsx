@@ -46,6 +46,8 @@ const hasOverstyringAp = aksjonspunkter => (
   aksjonspunkter.some(ap => ap.aksjonspunktType.kode === aksjonspunktType.OVERSTYRING || ap.aksjonspunktType.kode === aksjonspunktType.SAKSBEHANDLEROVERSTYRING)
 );
 
+// TODO (TOR) Refaktorer: veldig mykje av dette er felles med andre behandlingstypar. Flytt ut i hooks?
+
 /**
  * BehandlingsprosessIndex
  *

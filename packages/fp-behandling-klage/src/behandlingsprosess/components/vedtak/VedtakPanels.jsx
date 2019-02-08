@@ -7,6 +7,8 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import VedtakKlageForm from './klage/VedtakKlageForm';
 import VedtakKlageFormNy from './klageNy/VedtakKlageForm';
 
+// TODO (TOR) Refaktorer vedtak og flytt felles komponentar til fp-behandling-felles
+
 /*
  * VedtakPanels
  *

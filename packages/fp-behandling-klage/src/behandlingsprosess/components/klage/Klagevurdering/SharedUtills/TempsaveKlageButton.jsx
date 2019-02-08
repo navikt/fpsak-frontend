@@ -3,7 +3,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import connect from 'react-redux/es/connect/connect';
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessSelectors';
+import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   getMellomlagringData,

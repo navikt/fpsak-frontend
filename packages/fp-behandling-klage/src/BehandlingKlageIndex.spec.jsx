@@ -71,8 +71,8 @@ describe('BehandlingKlageIndex', () => {
     />);
 
     const grid = wrapper.find(BehandlingGrid);
-    expect(grid.prop('behandlingsprosessContent').type.displayName).to.contain('BehandlingsprosessIndex');
-    expect(grid.prop('faktaContent').type.displayName).to.contain('FaktaIndex');
+    expect(grid.prop('behandlingsprosessContent').type.displayName).to.contain('BehandlingsprosessKlageIndex');
+    expect(grid.prop('faktaContent').type.displayName).to.contain('FaktaKlageIndex');
 
     expect(grid.find(BehandlingErPaVentModal)).to.have.length(0);
   });

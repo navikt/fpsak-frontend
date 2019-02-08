@@ -10,15 +10,15 @@ import {
   sakOperations, BehandlingGrid,
 } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingErPaVentModal, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-import BehandlingsprosessIndex from './behandlingsprosess/BehandlingsprosessIndex';
-import FaktaIndex from './fakta/FaktaIndex';
+import BehandlingsprosessTilbakeIndex from './behandlingsprosess/BehandlingsprosessTilbakeIndex';
+import FaktaTilbakeIndex from './fakta/FaktaTilbakeIndex';
 import FpTilbakeBehandlingResolver from './FpTilbakeBehandlingResolver';
 import FpTilbakeBehandlingInfoSetter from './FpTilbakeBehandlingInfoSetter';
 import { getBehandlingFormPrefix } from './behandlingForm';
 import {
   setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier, resetTilbakekrevingContext,
   getHasShownBehandlingPaVent, getKodeverk,
-} from './duck';
+} from './duckTilbake';
 import {
   getBehandlingVersjon, getBehandlingOnHoldDate, getBehandlingVenteArsakKode, getBehandlingIsOnHold,
   hasBehandlingManualPaVent,
@@ -101,8 +101,8 @@ export class BehandlingFpTilbakeIndex extends Component {
       <FpTilbakeBehandlingResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
         <FpTilbakeBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
         <BehandlingGrid
-          behandlingsprosessContent={<BehandlingsprosessIndex />}
-          faktaContent={<FaktaIndex />}
+          behandlingsprosessContent={<BehandlingsprosessTilbakeIndex />}
+          faktaContent={<FaktaTilbakeIndex />}
         />
         {!hasSubmittedPaVentForm
           && (

@@ -24,6 +24,8 @@ import {
 import RegistrerPapirsoknad from './components/RegistrerPapirsoknad';
 import SoknadRegistrertModal from './components/SoknadRegistrertModal';
 
+// TODO (TOR) Slå saman med BehandlingPapirsoknadIndex?
+
 /**
  * RegistreringIndex
  *

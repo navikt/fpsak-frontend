@@ -13,6 +13,8 @@ import ikkeVurdertIkonUrl from '@fpsak-frontend/assets/images/behandle_disable.s
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
+// TODO (TOR) Refaktorer: veldig mykje av dette er felles med andre behandlingstypar.
+
 const vilkarImages = {
   imageMap: {
     [vilkarUtfallType.OPPFYLT]: { true: behandleIkonUrl, false: innvilgetIkonUrl },

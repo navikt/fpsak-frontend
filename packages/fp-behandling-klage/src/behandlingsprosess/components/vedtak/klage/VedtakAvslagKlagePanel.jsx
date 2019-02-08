@@ -8,7 +8,7 @@ import {
   getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK,
   getBehandlingSprak, getBehandlingVilkar,
 } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
-import { getFagsakYtelseType } from 'behandlingKlage/src/duck';
+import { getFagsakYtelseType } from 'behandlingKlage/src/duckKlage';
 import {
   required, hasValidText, decodeHtmlEntity, getLanguageCodeFromSprakkode,
 } from '@fpsak-frontend/utils';

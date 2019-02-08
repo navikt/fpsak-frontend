@@ -12,9 +12,9 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { Modal, Image } from '@fpsak-frontend/shared-components';
 
-import { getFagsakYtelseType } from 'behandlingKlage/src/duck';
-import { getResolveProsessAksjonspunkterSuccess } from 'behandlingKlage/src/behandlingsprosess/duck';
-import { getResolveFaktaAksjonspunkterSuccess } from 'behandlingKlage/src/fakta/duck';
+import { getFagsakYtelseType } from 'behandlingKlage/src/duckKlage';
+import { getResolveProsessAksjonspunkterSuccess } from 'behandlingKlage/src/behandlingsprosess/duckBpKlage';
+import { getResolveFaktaAksjonspunkterSuccess } from 'behandlingKlage/src/fakta/duckFaktaKlage';
 import {
   getBehandlingsresultat,
   getBehandlingStatus,

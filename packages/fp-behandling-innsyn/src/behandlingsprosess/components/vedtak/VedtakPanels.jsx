@@ -6,6 +6,9 @@ import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import InnsynVedtakForm from './innsyn/InnsynVedtakForm';
 
+
+// TODO (TOR) Refaktorer vedtak og flytt felles komponentar til fp-behandling-felles
+
 /*
  * VedtakPanels
  *

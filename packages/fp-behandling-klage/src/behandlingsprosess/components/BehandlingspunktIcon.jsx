@@ -9,7 +9,7 @@ import { getBehandlingHenlagt } from 'behandlingKlage/src/selectors/klageBehandl
 import findBehandlingsprosessIcon from 'behandlingKlage/src/behandlingsprosess/statusIconHelper';
 import {
   getBehandlingspunkterStatus, getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus,
-} from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessSelectors';
+} from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import styles from './behandlingspunktIcon.less';
@@ -19,6 +19,8 @@ const classNames = classnames.bind(styles);
 const getCallback = (
   isIkkeVurdert, behandlingspunkt, selectBehandlingspunktCallback,
 ) => () => (isIkkeVurdert ? undefined : selectBehandlingspunktCallback(behandlingspunkt));
+
+// TODO (TOR) Flytt til fp-behandling-felles
 
 /*
  * BehandlingspunktIcon

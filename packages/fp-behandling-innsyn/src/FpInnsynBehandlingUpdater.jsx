@@ -1,5 +1,5 @@
 import innsynBehandlingApi from './data/innsynBehandlingApi';
-import { updateBehandling, resetBehandling } from './duck';
+import { updateBehandling, resetBehandling } from './duckInnsyn';
 
 class FpInnsynBehandlingResolver {
     changeBehandlendeEnhet = () => innsynBehandlingApi.NY_BEHANDLENDE_ENHET.makeRestApiRequest();

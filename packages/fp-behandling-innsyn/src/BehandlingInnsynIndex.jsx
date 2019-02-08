@@ -10,15 +10,15 @@ import {
   sakOperations, BehandlingGrid,
 } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingErPaVentModal, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-import BehandlingsprosessIndex from './behandlingsprosess/BehandlingsprosessIndex';
-import FaktaIndex from './fakta/FaktaIndex';
+import BehandlingsprosessInnsynIndex from './behandlingsprosess/BehandlingsprosessInnsynIndex';
+import FaktaInnsynIndex from './fakta/FaktaInnsynIndex';
 import FpInnsynBehandlingResolver from './FpInnsynBehandlingResolver';
 import FpInnsynBehandlingInfoSetter from './FpInnsynBehandlingInfoSetter';
 import { getBehandlingFormPrefix } from './behandlingForm';
 import {
   setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier, resetInnsynContext,
   getHasShownBehandlingPaVent, getKodeverk,
-} from './duck';
+} from './duckInnsyn';
 import {
   getBehandlingVersjon, getBehandlingOnHoldDate, getBehandlingVenteArsakKode, getBehandlingIsOnHold,
   hasBehandlingManualPaVent,
@@ -101,8 +101,8 @@ export class BehandlingInnsynIndex extends Component {
       <FpInnsynBehandlingResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
         <FpInnsynBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
         <BehandlingGrid
-          behandlingsprosessContent={<BehandlingsprosessIndex />}
-          faktaContent={<FaktaIndex />}
+          behandlingsprosessContent={<BehandlingsprosessInnsynIndex />}
+          faktaContent={<FaktaInnsynIndex />}
         />
         {!hasSubmittedPaVentForm
           && (

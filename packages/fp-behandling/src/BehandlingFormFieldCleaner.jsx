@@ -21,6 +21,8 @@ const findAllNames = children => (children ? React.Children
     return all;
   }) : []);
 
+// TODO (TOR) Flytt til fp-behandling-felles
+
 /**
  * BehandlingFormFieldCleaner
  *

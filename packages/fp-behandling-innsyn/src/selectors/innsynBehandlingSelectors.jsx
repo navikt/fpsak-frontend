@@ -4,7 +4,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import innsynBehandlingApi from '../data/innsynBehandlingApi';
-import { getSelectedBehandlingId, isForeldrepengerFagsak } from '../duck';
+import { getSelectedBehandlingId, isForeldrepengerFagsak } from '../duckInnsyn';
 
 export const isBehandlingInSync = createSelector(
   [getSelectedBehandlingId, innsynBehandlingApi.BEHANDLING.getRestApiData()],

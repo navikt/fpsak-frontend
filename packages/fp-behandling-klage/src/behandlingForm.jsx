@@ -7,12 +7,14 @@ import {
 } from 'redux-form';
 
 import { getBehandlingVersjon } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
-import { getSelectedBehandlingId } from 'behandlingKlage/src/duck';
+import { getSelectedBehandlingId } from 'behandlingKlage/src/duckKlage';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { requireProps } from '@fpsak-frontend/fp-felles';
 
 export const getBehandlingFormPrefix = (behandlingId, behandlingVersjon) => `behandling_${behandlingId}_v${behandlingVersjon}`;
 export const getBehandlingFormName = (behandlingId, behandlingVersjon, form) => `${getBehandlingFormPrefix(behandlingId, behandlingVersjon)}.${form}`;
+
+// TODO (TOR) Flytt til fp-behandling-felles
 
 /**
  * behandlingForm

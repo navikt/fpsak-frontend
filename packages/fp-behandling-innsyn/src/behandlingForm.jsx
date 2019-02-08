@@ -8,11 +8,13 @@ import {
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { requireProps } from '@fpsak-frontend/fp-felles';
-import { getSelectedBehandlingId } from './duck';
+import { getSelectedBehandlingId } from './duckInnsyn';
 import { getBehandlingVersjon } from './selectors/innsynBehandlingSelectors';
 
 export const getBehandlingFormPrefix = (behandlingId, behandlingVersjon) => `behandling_${behandlingId}_v${behandlingVersjon}`;
 export const getBehandlingFormName = (behandlingId, behandlingVersjon, form) => `${getBehandlingFormPrefix(behandlingId, behandlingVersjon)}.${form}`;
+
+// TODO (TOR) Flytt til fp-behandling-felles
 
 /**
  * behandlingForm

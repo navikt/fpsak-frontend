@@ -14,6 +14,8 @@ import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 
 import vedtakImages from './statusIconsVedtak';
 
+// TODO (TOR) Refaktorer: veldig mykje av dette er felles med andre behandlingstypar.
+
 const vilkarImages = {
   imageMap: {
     [vilkarUtfallType.OPPFYLT]: { true: behandleIkonUrl, false: innvilgetIkonUrl },

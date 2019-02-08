@@ -14,6 +14,8 @@ import { requireProps } from '@fpsak-frontend/fp-felles';
 export const getBehandlingFormPrefix = (behandlingId, behandlingVersjon) => `behandling_${behandlingId}_v${behandlingVersjon}`;
 export const getBehandlingFormName = (behandlingId, behandlingVersjon, form) => `${getBehandlingFormPrefix(behandlingId, behandlingVersjon)}.${form}`;
 
+// TODO (TOR) Flytt til fp-behandling-felles
+
 /**
  * behandlingForm
  *

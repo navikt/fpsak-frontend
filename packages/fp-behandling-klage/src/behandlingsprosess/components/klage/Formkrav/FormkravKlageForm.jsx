@@ -14,7 +14,7 @@ import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import { getAvsluttedeBehandlinger } from 'behandlingKlage/src/duck';
+import { getAvsluttedeBehandlinger } from 'behandlingKlage/src/duckKlage';
 import BehandlingspunktSubmitButton from 'behandlingKlage/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
 
 // TODO komponent skal ha eiga less-fil

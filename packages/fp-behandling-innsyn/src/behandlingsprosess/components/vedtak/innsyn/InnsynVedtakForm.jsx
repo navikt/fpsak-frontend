@@ -25,7 +25,7 @@ import { TextAreaField } from '@fpsak-frontend/form';
 import {
   hasValidText, maxLength, minLength, requiredIfNotPristine, getLanguageCodeFromSprakkode, decodeHtmlEntity,
 } from '@fpsak-frontend/utils';
-import { getFilteredReceivedDocuments, getSelectedSaksnummer } from 'behandlingInnsyn/src/duck';
+import { getFilteredReceivedDocuments, getSelectedSaksnummer } from 'behandlingInnsyn/src/duckInnsyn';
 import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 import DocumentListVedtakInnsyn from './DocumentListVedtakInnsyn';
 

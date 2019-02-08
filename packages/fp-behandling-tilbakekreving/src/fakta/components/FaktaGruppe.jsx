@@ -21,6 +21,8 @@ Wrapper.propTypes = {
   className: PropTypes.string.isRequired,
 };
 
+// TODO (TOR) Same som for andre behandlingar. Flytt til fp-behandling-felles?
+
 /**
  * FaktaGruppe
  *

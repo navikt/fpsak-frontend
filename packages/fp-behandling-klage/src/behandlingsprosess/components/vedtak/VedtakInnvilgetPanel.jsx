@@ -8,7 +8,7 @@ import {
   getAksjonspunkter, getBehandlingResultatstruktur, getBehandlingSprak,
 } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { getFagsakYtelseType } from 'behandlingKlage/src/duck';
+import { getFagsakYtelseType } from 'behandlingKlage/src/duckKlage';
 import VedtakFritekstPanel from 'behandlingKlage/src/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
 import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';

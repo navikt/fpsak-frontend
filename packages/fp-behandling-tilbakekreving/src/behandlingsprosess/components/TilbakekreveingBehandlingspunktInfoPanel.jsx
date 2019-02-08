@@ -7,7 +7,7 @@ import {
   isBehandlingspunktAksjonspunkterSolvable,
   isSelectedBehandlingspunktReadOnly,
   getBehandlingspunktAksjonspunkterCodes,
-} from '../behandlingsprosessSelectors';
+} from '../behandlingsprosessTilbakeSelectors';
 import ForeldelsePanel from './foreldelse/ForeldelsePanel';
 import TilbakekrevingPanel from './tilbakekreving/TilbakekrevingPanel';
 import styles from './tilbakekreveingBehandlingspunktInfoPanel.less';

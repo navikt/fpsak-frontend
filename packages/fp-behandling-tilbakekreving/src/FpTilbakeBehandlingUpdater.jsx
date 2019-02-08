@@ -1,5 +1,5 @@
 import tilbakekrevingBehandlingApi from './data/tilbakekrevingBehandlingApi';
-import { updateBehandling, resetBehandling } from './duck';
+import { updateBehandling, resetBehandling } from './duckTilbake';
 
 class FpTilbakeBehandlingUpdater {
     changeBehandlendeEnhet = () => tilbakekrevingBehandlingApi.NY_BEHANDLENDE_ENHET.makeRestApiRequest();

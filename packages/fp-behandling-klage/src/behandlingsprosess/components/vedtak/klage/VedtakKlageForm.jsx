@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessSelectors';
+import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
 import { isBehandlingStatusReadOnly, getBehandlingStatus, getBehandlingsresultat } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingKlage/src/behandlingForm';
 import { isInnvilget, isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';

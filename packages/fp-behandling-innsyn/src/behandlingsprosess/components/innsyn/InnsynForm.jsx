@@ -19,7 +19,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import innsynResultatTyperKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingInnsyn/src/behandlingsprosess/behandlingsprosessSelectors';
+import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingInnsyn/src/behandlingsprosess/behandlingsprosessInnsynSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingInnsyn/src/behandlingForm';
 import {
   getBehandlingOnHoldDate, getBehandlingInnsynMottattDato, getBehandlingInnsynResultatType,
@@ -27,7 +27,7 @@ import {
 } from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
 import {
   getFilteredReceivedDocuments, getKodeverk, getSelectedSaksnummer, getAllDocuments,
-} from 'behandlingInnsyn/src/duck';
+} from 'behandlingInnsyn/src/duckInnsyn';
 import BehandlingspunktSubmitButton from 'behandlingInnsyn/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
 import DocumentListInnsyn from './DocumentListInnsyn';
 import VedtakDocuments from './VedtakDocuments';

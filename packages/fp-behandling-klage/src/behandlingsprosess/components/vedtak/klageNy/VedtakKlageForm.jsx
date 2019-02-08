@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessSelectors';
+import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
 import {
   isBehandlingStatusReadOnly, getBehandlingStatus, getBehandlingsresultat, getBehandlingKlageVurdering,
 } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';

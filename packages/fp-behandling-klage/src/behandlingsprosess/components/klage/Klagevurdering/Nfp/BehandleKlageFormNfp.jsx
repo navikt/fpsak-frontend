@@ -6,7 +6,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import { formPropTypes } from 'redux-form';
 import PropTypes from 'prop-types';
 
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessSelectors';
+import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
 import { getBehandlingKlageVurderingResultatNFP, getBehandlingSprak, isKlageBehandlingInKA } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingKlage/src/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

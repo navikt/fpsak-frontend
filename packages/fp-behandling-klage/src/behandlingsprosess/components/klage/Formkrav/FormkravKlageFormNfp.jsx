@@ -4,7 +4,7 @@ import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import PropTypes from 'prop-types';
 
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessSelectors';
+import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
 import { getBehandlingKlageFormkravResultatNFP, isKlageBehandlingInKA } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import { behandlingForm } from 'behandlingKlage/src/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
