@@ -546,6 +546,8 @@ UttakImpl.propTypes = {
   harSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
   annenForelderSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
   tempUpdateStonadskontoer: PropTypes.func.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  saksnummer: PropTypes.number.isRequired,
 };
 
 UttakImpl.defaultProps = {
