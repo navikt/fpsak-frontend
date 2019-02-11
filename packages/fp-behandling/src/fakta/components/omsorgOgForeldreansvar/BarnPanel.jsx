@@ -71,6 +71,8 @@ export class BarnPanelImpl extends Component {
                 <Undertittel>
                   {b.navn}
                   {' '}
+                  {b.dodsdato
+              && <div className={styles.inline}><MerkePanel erDod /></div>}
                 </Undertittel>
                 <Element className={styles.antallaar}>
                   <DateLabel dateString={b.fodselsdato} />
