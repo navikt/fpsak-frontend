@@ -236,10 +236,10 @@ export class AvregningPanelImpl extends Component {
                         && (
                           <div className={styles.varsel}>
                             <ArrowBox alignOffset={12}>
-                              <Normaltekst className={styles.bold}><FormattedMessage id="Avregning.tekstVarsel" /></Normaltekst>
+                              <Normaltekst className={styles.bold}><FormattedMessage id="Avregning.varseltekst" /></Normaltekst>
                               <VerticalSpacer eightPx />
                               <TextAreaField
-                                name="tekstVarsel"
+                                name="varseltekst"
                                 label={{ id: 'Avregning.fritekst' }}
                                 validate={[required, minLength3, maxLength1500, hasValidText]}
                                 maxLength={1500}

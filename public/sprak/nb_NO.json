@@ -1119,7 +1119,7 @@
   "Avregning.størrelsenAvBeløp": "Størrelsen på feilutbetalt beløp",
   "Avregning.tidspunktAvFeilutbetaling": "Hvor lang tid siden feilutbetaling fant sted",
   "Avregning.bruker": "Bruker",
-  "Avregning.tekstVarsel": "Send varsel om tilbakekreving",
+  "Avregning.varseltekst": "Send varsel om tilbakekreving",
   "Avregning.fritekst": "Fritekst i varselet",
 
   "Beregningsgrunnlag.Info": "Fakta for beregningsgrunnlag",
