@@ -87,5 +87,6 @@ export const endringerIBeregningsgrunnlagGirFritekstfelt = (aksjonspunkter, ytel
   return aksjonspunkter.find(ap => isBGAksjonspunktSomGirFritekstfelt(ap.definisjon.kode)
     && ap.status.kode === aksjonspunktStatus.UTFORT) !== undefined;
 };
-export const maxLength1500 = (0, maxLength)(1500);
-export const minLength3 = (0, minLength)(3);
+
+export const maxLength1500 = maxLength(1500);
+export const minLength3 = minLength(3);

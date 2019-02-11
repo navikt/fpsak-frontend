@@ -12,8 +12,8 @@ import {
 
 import styles from './vedtakAvslagPanel.less';
 
-const maxLength1500 = (0, maxLength)(1500);
-const minLength3 = (0, minLength)(3);
+const maxLength1500 = maxLength(1500);
+const minLength3 = minLength(3);
 
 const VedtakFritekstPanelImpl = ({
   intl,

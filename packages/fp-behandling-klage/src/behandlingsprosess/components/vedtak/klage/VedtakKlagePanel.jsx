@@ -9,14 +9,19 @@ import {
   getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK,
   getBehandlingSprak, getBehandlingVilkar,
 } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
-import { getLanguageCodeFromSprakkode, required, hasValidText } from '@fpsak-frontend/utils';
+import {
+  getLanguageCodeFromSprakkode, required, hasValidText, minLength, maxLength,
+} from '@fpsak-frontend/utils';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
   ElementWrapper, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import {
-  medholdIKlage, shouldGiveBegrunnelse, maxLength1500, minLength3,
+  medholdIKlage, shouldGiveBegrunnelse,
 } from '../VedtakHelper';
+
+const maxLength1500 = maxLength(1500);
+const minLength3 = minLength(3);
 
 export const getMedholdArsak = (klageVurderingResultatNK, klageVurderingResultatNFP) => {
   if (medholdIKlage(klageVurderingResultatNK)) {

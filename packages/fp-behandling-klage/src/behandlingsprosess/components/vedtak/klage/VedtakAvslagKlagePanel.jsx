@@ -10,17 +10,19 @@ import {
 } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import { getFagsakYtelseType } from 'behandlingKlage/src/duckKlage';
 import {
-  required, hasValidText, decodeHtmlEntity, getLanguageCodeFromSprakkode,
+  required, hasValidText, decodeHtmlEntity, getLanguageCodeFromSprakkode, minLength, maxLength,
 } from '@fpsak-frontend/utils';
 import { TextAreaField } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import {
-  findAvslagResultatText, shouldGiveBegrunnelse, maxLength1500, minLength3,
+  findAvslagResultatText, shouldGiveBegrunnelse,
 } from '../VedtakHelper';
 
-
 import styles from '../vedtakAvslagPanel.less';
+
+const maxLength1500 = maxLength(1500);
+const minLength3 = minLength(3);
 
 const klageVurderingErAvvist = klageVurderingResultat => (klageVurderingResultat && klageVurderingResultat.klageVurdering === klageVurdering.AVVIS_KLAGE);
 
