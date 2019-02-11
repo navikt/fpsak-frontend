@@ -11,7 +11,10 @@ node('DOCKER3') {
    stage('Build and Push'){
       sh 'PATH=$PATH:/usr/local/lib/node/nodejs/bin:/opt/yarn-v1.12.3/bin; yarn install --ignore-scripts'
       sh 'PATH=$PATH:/usr/local/lib/node/nodejs/bin:/opt/yarn-v1.12.3/bin; yarn build' 
-      sh "docker build -t docker.adeo.no:5000/fpsak-frontend:$tagName -f ./docker/DockerfileDev ./ --build-arg HTTPS_PROXY=$HTTPS_PROXY --build-arg HTTP_PROXY=$HTTP_PROXY; docker push docker.adeo.no:5000/fpsak-frontend:$tagName"
+      sh "docker build -t docker.adeo.no:5000/fpsak-frontend:$tagName -f ./docker/DockerfileDev ./ --build-arg HTTPS_PROXY=$HTTPS_PROXY --build-arg HTTP_PROXY=$HTTP_PROXY"
+      sh "docker tag docker.adeo.no:5000/fpsak-frontend:$tagName docker.adeo.no:5000/fpsak-frontend:latest"
+      sh "docker push docker.adeo.no:5000/fpsak-frontend:$tagName"
+      sh "docker push docker.adeo.no:5000/fpsak-frontend:latest"
    }
    stage('Deploy'){
        build job: 'fpsak-frontend-BUILD', parameters: [string(name: 'miljø', value: 't10'), string(name: 'versjonNummer', value: tagName)], wait: true
