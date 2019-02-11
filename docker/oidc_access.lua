@@ -48,14 +48,11 @@ local function set_id_token_cookie(id_token)
 end
 
 -- Allow for session less authentication. For instance for running cypress tests.
--- Use new cookie name "sut_ID_token".
+-- Use new cookie name "sut_ID_token", that will override openidc totally.
 if ngx.var.cookie_sut_ID_token then
-    local json, err = require("resty.openidc").jwt_verify(ngx.var.cookie_sut_ID_token, opts)
-    if json and not err then
-        proxy_cookie.ID_token = ngx.var.cookie_sut_ID_token
-        is_authorized = true
-        set_id_token_cookie(ngx.var.cookie_sut_ID_token)
-    end
+    proxy_cookie.ID_token = ngx.var.cookie_sut_ID_token
+    is_authorized = true
+    set_id_token_cookie(ngx.var.cookie_sut_ID_token)
 end
 
 -- if not autorized then we start that flow.
