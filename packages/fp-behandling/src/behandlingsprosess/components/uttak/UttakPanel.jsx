@@ -181,7 +181,7 @@ const getResult = (uttaksresultatActivity) => {
 };
 
 
-const addAnnenPart = uttakResult => Object.values(uttakResult)
+const convertToArray = uttakResult => Object.values(uttakResult)
   .map((u) => {
     const uttakElement = { ...u };
     uttakElement.trekkdager = u.trekkdager;
@@ -211,8 +211,8 @@ const getMaxDays = (stonadskontoTypeKode, stonadskontoer) => {
 const checkMaxDager = (uttaksresultatActivity, stonadskonto) => {
   let errors = null;
   const uttakResult = getResult(uttaksresultatActivity);
-  const addAnnenPartFordelteDager = addAnnenPart(uttakResult);
-  addAnnenPartFordelteDager.forEach((value) => {
+  const uttakResultArray = convertToArray(uttakResult);
+  uttakResultArray.forEach((value) => {
     const maxDays = getMaxDays(value.konto, stonadskonto.stonadskontoer) - value.trekkdager;
     if (maxDays && (maxDays < 0)) {
       errors = {

@@ -483,7 +483,6 @@ export class UttakImpl extends Component {
                   activityPanelName={ACTIVITY_PANEL_NAME}
                   isApOpen={isApOpen}
                   stonadskonto={stonadskonto}
-                  aksjonspunkter={aksjonspunkter}
                 />
               )
               }
