@@ -14,8 +14,8 @@ import { hasIkkeOppfyltSoknadsfristvilkar } from './VedtakHelper';
 
 import styles from './vedtakAvslagPanel.less';
 
-const maxLength1500 = (0, maxLength)(1500);
-const minLength3 = (0, minLength)(3);
+const maxLength1500 = maxLength(1500);
+const minLength3 = minLength(3);
 
 export const getAvslagArsak = (vilkar, aksjonspunkter, behandlingsresultat) => {
   const avslatteVilkar = vilkar.filter(v => v.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);

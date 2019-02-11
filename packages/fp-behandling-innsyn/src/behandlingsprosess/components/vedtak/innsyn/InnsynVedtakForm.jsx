@@ -33,8 +33,8 @@ import DocumentListVedtakInnsyn from './DocumentListVedtakInnsyn';
 import styles from './innsynVedtakForm.less';
 
 
-const maxLength1500 = (0, maxLength)(1500);
-const minLength3 = (0, minLength)(3);
+const maxLength1500 = maxLength(1500);
+const minLength3 = minLength(3);
 
 const getPreviewCallback = (formProps, begrunnelse, previewCallback) => (e) => {
   if (formProps.valid || formProps.pristine) {

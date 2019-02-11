@@ -15,7 +15,7 @@ import styles from './vedtakForm.less';
 
 const maxLength200 = maxLength(200);
 const maxLength5000 = maxLength(5000);
-const minLength3 = (0, minLength)(3);
+const minLength3 = minLength(3);
 
 const FritekstBrevPanelImpl = ({
   previewBrev,
