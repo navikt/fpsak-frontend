@@ -31,9 +31,6 @@ describe('<UttakFaktaForm>', () => {
       slettedePerioder={[]}
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
-      isRevurdering={false}
-      annenForelderHarRettAp={[]}
-      annenForelderHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -75,9 +72,6 @@ describe('<UttakFaktaForm>', () => {
       slettedePerioder={[]}
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
-      isRevurdering={false}
-      annenForelderHarRettAp={[]}
-      annenForelderHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -114,9 +108,6 @@ describe('<UttakFaktaForm>', () => {
       slettedePerioder={[]}
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
-      isRevurdering={false}
-      annenForelderHarRettAp={[]}
-      annenForelderHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -149,9 +140,6 @@ describe('<UttakFaktaForm>', () => {
       slettedePerioder={[]}
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
-      isRevurdering={false}
-      annenForelderHarRettAp={[]}
-      annenForelderHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -179,9 +167,6 @@ describe('<UttakFaktaForm>', () => {
       slettedePerioder={[]}
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
-      isRevurdering={false}
-      annenForelderHarRettAp={[]}
-      annenForelderHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -209,9 +194,6 @@ describe('<UttakFaktaForm>', () => {
       slettedePerioder={[]}
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
-      isRevurdering={false}
-      annenForelderHarRettAp={[]}
-      annenForelderHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -236,10 +218,7 @@ describe('<UttakFaktaForm>', () => {
       utsettelseArsaker={[]}
       uttakPeriodeVurderingTyper={[]}
       initialValues={{}}
-      isRevurdering={false}
       slettedePerioder={[]}
-      annenForelderHarRettAp={[]}
-      annenForelderHarRettApOpen={false}
       aksjonspunkter={[
         {
           aksjonspunktType: {
@@ -295,9 +274,6 @@ describe('<UttakFaktaForm>', () => {
       slettedePerioder={[]}
       aksjonspunkter={[]}
       førsteUttaksDato="2018-01-12"
-      isRevurdering={false}
-      annenForelderHarRettAp={[]}
-      annenForelderHarRettApOpen={false}
       submitting={false}
     />);
 
@@ -307,5 +283,60 @@ describe('<UttakFaktaForm>', () => {
     wrapper.update();
     const uttakNyPeriode = wrapper.find(UttakNyPeriode);
     expect(uttakNyPeriode.length).to.equal(1);
+  });
+
+  it('skal vise error melding hvis det er noe error', () => {
+    const formProps = {
+      error: 'Perioder overlapper',
+    };
+    const wrapper = shallowWithIntl(<UttakFaktaForm
+      readOnly={false}
+      hasOpenAksjonspunkter
+      inntektsmeldinger={[]}
+      nyPeriode={{}}
+      behandlingFormPrefix="UttakInfoPanel"
+      perioder={[]}
+      disableButtons={false}
+      reduxFormChange={reduxFormChange}
+      reduxFormReset={reduxFormReset}
+      periodeTyper={[]}
+      utsettelseArsaker={[]}
+      uttakPeriodeVurderingTyper={[]}
+      initialValues={{}}
+      slettedePerioder={[]}
+      aksjonspunkter={[]}
+      førsteUttaksDato="2018-01-12"
+      submitting={false}
+      {...formProps}
+    />);
+
+    const span = wrapper.find('span');
+    expect(span).to.have.length(1);
+    expect(span.text()).to.equal('Perioder overlapper');
+  });
+
+  it('skal ikke vise error melding hvis det er ikke noe error', () => {
+    const wrapper = shallowWithIntl(<UttakFaktaForm
+      readOnly={false}
+      hasOpenAksjonspunkter
+      inntektsmeldinger={[]}
+      nyPeriode={{}}
+      behandlingFormPrefix="UttakInfoPanel"
+      perioder={[]}
+      disableButtons={false}
+      reduxFormChange={reduxFormChange}
+      reduxFormReset={reduxFormReset}
+      periodeTyper={[]}
+      utsettelseArsaker={[]}
+      uttakPeriodeVurderingTyper={[]}
+      initialValues={{}}
+      slettedePerioder={[]}
+      aksjonspunkter={[]}
+      førsteUttaksDato="2018-01-12"
+      submitting={false}
+    />);
+
+    const span = wrapper.find('span');
+    expect(span).to.have.length(0);
   });
 });

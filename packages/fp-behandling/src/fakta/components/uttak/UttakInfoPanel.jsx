@@ -1,11 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
-import { FaktaEkspandertpanel, faktaPanelCodes } from '@fpsak-frontend/fp-behandling-felles';
+import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
+import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
 import withDefaultToggling from 'behandlingFpsak/src/fakta/withDefaultToggling';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import {
+  getBehandlingIsManuellRevurdering,
+  hasBehandlingUtredesStatus,
+  getBehandlingIsOnHold,
+} from 'behandlingFpsak/src/behandlingSelectors';
+import {
+  VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 import AnnenForelderHarRettForm from './AnnenForelderHarRettForm';
 import UttakFaktaForm from './UttakFaktaForm';
 
@@ -23,9 +33,14 @@ export const UttakInfoPanelImpl = ({
   readOnly,
   hasOpenAksjonspunkter,
   aksjonspunkter,
+  isRevurdering,
+  hasStatusUtredes,
+  behandlingPaaVent,
   submitCallback,
 }) => {
   const avklarAnnenForelderRettAp = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT);
+  const uttakAp = aksjonspunkter.filter(ap => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT);
+  const uttakApOpen = uttakAp.some(ap => isAksjonspunktOpen(ap.status.kode));
   return (
     <FaktaEkspandertpanel
       title={intl.formatMessage({ id: 'UttakInfoPanel.FaktaUttak' })}
@@ -38,23 +53,31 @@ export const UttakInfoPanelImpl = ({
     >
       {avklarAnnenForelderRettAp
       && (
-      <AnnenForelderHarRettForm
-        hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-        readOnly={readOnly}
+        <React.Fragment>
+          <AnnenForelderHarRettForm
+            hasOpenAksjonspunkter={isAksjonspunktOpen(avklarAnnenForelderRettAp.status.kode)}
+            hasOpenUttakAksjonspunkter={uttakApOpen}
+            readOnly={readOnly}
+            toggleInfoPanelCallback={toggleInfoPanelCallback}
+            aksjonspunkter={[avklarAnnenForelderRettAp]}
+            submitCallback={submitCallback}
+          />
+          <VerticalSpacer twentyPx />
+        </React.Fragment>
+      )
+      }
+
+      {(!avklarAnnenForelderRettAp || !isAksjonspunktOpen(avklarAnnenForelderRettAp.status.kode))
+      && (
+      <UttakFaktaForm
+        hasOpenAksjonspunkter={uttakApOpen}
+        readOnly={readOnly && (!isRevurdering || !hasStatusUtredes || behandlingPaaVent)}
         toggleInfoPanelCallback={toggleInfoPanelCallback}
-        aksjonspunkter={aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT)}
+        aksjonspunkter={uttakAp}
         submitCallback={submitCallback}
       />
       )
     }
-
-      <UttakFaktaForm
-        hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-        readOnly={readOnly}
-        toggleInfoPanelCallback={toggleInfoPanelCallback}
-        aksjonspunkter={aksjonspunkter.filter(ap => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT)}
-        submitCallback={submitCallback}
-      />
 
     </FaktaEkspandertpanel>
   );
@@ -68,7 +91,17 @@ UttakInfoPanelImpl.propTypes = {
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   submitCallback: PropTypes.func.isRequired,
+  isRevurdering: PropTypes.bool.isRequired,
+  hasStatusUtredes: PropTypes.bool.isRequired,
+  behandlingPaaVent: PropTypes.bool.isRequired,
 };
+
+
+const mapStateToProps = state => ({
+  isRevurdering: getBehandlingIsManuellRevurdering(state),
+  hasStatusUtredes: hasBehandlingUtredesStatus(state),
+  behandlingPaaVent: getBehandlingIsOnHold(state) || false,
+});
 
 const ConnectedComponent = injectIntl(UttakInfoPanelImpl);
 
@@ -78,4 +111,4 @@ UttakInfoPanel.supports = (personopplysninger, ytelsesType) => personopplysninge
     && personopplysninger !== undefined
     && ytelsesType.kode === fagsakYtelseType.FORELDREPENGER;
 
-export default UttakInfoPanel;
+export default connect(mapStateToProps)(UttakInfoPanel);

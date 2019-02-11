@@ -7,3 +7,18 @@
 .textAreaStyle {
   width: 370px;
 }
+
+.solvedAksjonspunkt {
+  border-bottom: 2px dashed @navGra40;
+  padding-bottom: 30px;
+}
+
+.inactiveAksjonspunkt {
+  .solvedAksjonspunkt;
+  border-left-color: @navGra40;
+  border-left-style: solid;
+  border-left-width: 5px;
+  margin-left: -21px;
+  padding-left: 21px;
+  z-index: 1000;
+}

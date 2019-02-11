@@ -187,10 +187,10 @@ const validateForm = ({ nyFom, nyTom }) => {
 const mapToStateToProps = (state, ownProps) => {
   const formName = `arbeidOgFerieForm-${ownProps.id}`;
   const resultat = behandlingFormValueSelector(formName)(state, 'resultat');
-  const initialResultat = behandlingFormValueSelector('UttakInfoPanel')(state, `${ownProps.fieldId}.resultat`);
-  const begrunnelse = behandlingFormValueSelector('UttakInfoPanel')(state, `${ownProps.fieldId}.begrunnelse`);
-  const saksebehandlersBegrunnelse = behandlingFormValueSelector('UttakInfoPanel')(state, `${ownProps.fieldId}.saksebehandlersBegrunnelse`);
-  const oppholdArsak = behandlingFormValueSelector('UttakInfoPanel')(state, `${ownProps.fieldId}.oppholdÅrsak`);
+  const initialResultat = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.resultat`);
+  const begrunnelse = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.begrunnelse`);
+  const saksebehandlersBegrunnelse = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.saksebehandlersBegrunnelse`);
+  const oppholdArsak = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.oppholdÅrsak`);
   let initialResultatValue = initialResultat ? initialResultat.kode : undefined;
   if (oppholdArsak && oppholdArsak.kode !== oppholdArsakType.UDEFINERT && !begrunnelse) {
     initialResultatValue = undefined;
@@ -214,7 +214,7 @@ const mapToStateToProps = (state, ownProps) => {
       kontoType: ownProps.uttakPeriodeType.kode,
       oppholdArsak: oppholdArsak ? oppholdArsak.kode : '',
     },
-    updated: behandlingFormValueSelector('UttakInfoPanel')(state, `${ownProps.fieldId}.updated`),
+    updated: behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.updated`),
     form: formName,
     onSubmit: values => ownProps.updatePeriode(values),
   };
