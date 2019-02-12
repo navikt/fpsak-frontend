@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+docker run -it -e USERID=$UID -v "$PWD/":/workdir -w /workdir node:lts yarn build
