@@ -1,6 +1,6 @@
 {
   "name": "fpsak-frontend",
-  "version": "0.2.82",
+  "version": "0.2.83",
   "description": "Klient for Foreldrepenger",
   "main": "./dist/index.js",
   "author": "NAV",
@@ -90,8 +90,8 @@
     "redux-mock-store": "^1.5.3",
     "sinon": "^5.0.10",
     "sinon-chai": "^3.2.0",
-    "stylelint": "^9.10.1",
     "style-loader": "^0.23.1",
+    "stylelint": "^9.10.1",
     "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.25.1",
     "webpack-cli": "3.1.2",
