@@ -345,7 +345,7 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
     identifikator: arbeidsForhold[0] !== '-' ? arbeidsForhold[0] : undefined,
     navn: arbeidsForhold[1] ? arbeidsForhold[1] : undefined,
     aktørId: arbeidsForhold[2] !== '-' ? arbeidsForhold[2] : undefined,
-    virksomhet: arbeidsForhold[3] !== '-' ? arbeidsForhold[3] : undefined,
+    virksomhet: arbeidsForhold[3] !== '-',
     arbeidType: arbeidsForhold[4],
   } : null;
 
