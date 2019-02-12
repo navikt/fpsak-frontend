@@ -47,7 +47,7 @@ const harTilkjentYtelseEndretSeg = (revResultat, orgResultat) => {
   if ((!revResultat && orgResultat) || (revResultat && !orgResultat)) {
     return true;
   }
-  if (!revResultat && !orgResultat) {
+  if (!revResultat) {
     return false;
   }
   return revResultat.beregnetTilkjentYtelse !== orgResultat.beregnetTilkjentYtelse;
