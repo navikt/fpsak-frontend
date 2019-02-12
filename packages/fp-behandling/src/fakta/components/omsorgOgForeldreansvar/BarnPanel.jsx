@@ -13,6 +13,7 @@ import FaktaGruppe from 'behandlingFpsak/src/fakta/components/FaktaGruppe';
 import { getEditedStatus } from 'behandlingFpsak/src/behandlingSelectors';
 import { VerticalSpacer, DateLabel } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { MerkePanel } from '@fpsak-frontend/person-info';
 
 import styles from './barnPanel.less';
 
@@ -72,7 +73,7 @@ export class BarnPanelImpl extends Component {
                   {b.navn}
                   {' '}
                   {b.dodsdato
-              && <div className={styles.inline}><MerkePanel erDod /></div>}
+              && <div className={styles.barnDod}><MerkePanel erDod /></div>}
                 </Undertittel>
                 <Element className={styles.antallaar}>
                   <DateLabel dateString={b.fodselsdato} />
