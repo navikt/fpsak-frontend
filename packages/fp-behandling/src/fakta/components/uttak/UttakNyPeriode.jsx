@@ -19,7 +19,7 @@ import {
   calcDaysAndWeeks,
   lagVisningsNavn,
 } from '@fpsak-frontend/utils';
-import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
+import uttakArbeidType from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
 import moment from 'moment';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 import { getPersonopplysning, getFaktaArbeidsforhold } from 'behandlingFpsak/src/behandlingSelectors';
@@ -65,19 +65,19 @@ const mapArbeidsforhold = andeler => andeler.map((andel) => {
   const { arbeidType, arbeidsgiver } = andel;
 
   let periodeArbeidsforhold = '';
-  if (arbeidType && arbeidType.kode !== uttakArbeidTypeKodeverk.ORDINÆRT_ARBEID) {
+  if (arbeidType && arbeidType.kode !== uttakArbeidType.ORDINÆRT_ARBEID) {
     periodeArbeidsforhold = arbeidType.navn;
   } else {
     periodeArbeidsforhold = lagVisningsNavn(arbeidsgiver);
   }
 
-  const identifkator = (arbeidsgiver || []).identifikator || '-';
+  const identifikator = (arbeidsgiver || []).identifikator || '-';
   const navn = (arbeidsgiver || []).navn || arbeidType.navn;
   const fixedAktørId = (arbeidsgiver || []).aktørId || '-';
   const virksomhet = (arbeidsgiver || []).virksomhet || '-';
 
   return (
-    <option value={`${identifkator}|${navn}|${fixedAktørId}|${virksomhet}`} key={guid()}>{periodeArbeidsforhold}</option>
+    <option value={`${identifikator}|${navn}|${fixedAktørId}|${virksomhet}|${arbeidType.kode}`} key={guid()}>{periodeArbeidsforhold}</option>
   );
 });
 
@@ -345,7 +345,8 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
     identifikator: arbeidsForhold[0] !== '-' ? arbeidsForhold[0] : undefined,
     navn: arbeidsForhold[1] ? arbeidsForhold[1] : undefined,
     aktørId: arbeidsForhold[2] !== '-' ? arbeidsForhold[2] : undefined,
-    virksomhet: arbeidsForhold[3] !== '-' ? arbeidsForhold[3] : undefined,
+    virksomhet: arbeidsForhold[3] !== '-',
+    arbeidType: arbeidsForhold[4],
   } : null;
 
   return {
@@ -357,7 +358,7 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
     samtidigUttak: values.samtidigUttak,
     samtidigUttaksprosent: values.samtidigUttaksprosent,
     flerbarnsdager: values.flerbarnsdager,
-    erArbeidstaker: arbeidsForhold && arbeidsForhold[0] !== '-',
+    erArbeidstaker: arbeidsForhold && arbeidsForhold[4] === uttakArbeidType.ORDINÆRT_ARBEID,
     fom: values.fom,
     tom: values.tom,
     isFromSøknad: false,
