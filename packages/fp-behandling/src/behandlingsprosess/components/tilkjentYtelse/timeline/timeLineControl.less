@@ -43,7 +43,7 @@
   width: 26px;
 
   &:focus {
-    box-shadow: 0 0 0 3px @orangeFocus;// lesshint zeroUnit: false
+    box-shadow: 0 0 0 3px @orangeFocus;
     outline: none;
   }
 }
@@ -59,13 +59,11 @@
   transform: rotate(180deg);
   width: 26px;
 
-
   &:focus {
-    box-shadow: 0 0 0 3px @orangeFocus;// lesshint zeroUnit: false
+    box-shadow: 0 0 0 3px @orangeFocus;
     outline: none;
   }
 }
-
 
 .timeLineButton img:last-child {
   display: none;
@@ -140,11 +138,9 @@
   z-index: 10;
 }
 
-
 // IE11 and Edge-specific css
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
   .upperTimeLine {
-
     &:after {
       top: 58px;
     }
@@ -152,12 +148,9 @@
 }
 
 @supports (-ms-ime-align: auto) {
-
   .timelineSokerContatiner {
-
     &:after {
       top: 58px;
     }
   }
 }
-

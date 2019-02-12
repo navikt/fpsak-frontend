@@ -1859,8 +1859,6 @@
   "UttakInfoPanel.AnnenForelderHarRett": "Annen forelder har rett",
   "UttakInfoPanel.AnnenForelderHarIkkeRett": "Annen forelder har ikke rett",
 
-
-  "UttakPeriode.ManglerInfoUtsettelse": "Inntektsmeldingen mangler info om utsettelse",
   "UttakPeriode.ManglerInfoUtsettelse": "Inntektsmeldingen mangler info om {årsak}",
   "UttakPeriode.AvvikUtsettelse": "Info om utsettelse avviker fra inntektsmelding",
   "UttakPeriode.AvvikGraderingProsent": "Graderingsprosent avviker fra inntektsmelding",
