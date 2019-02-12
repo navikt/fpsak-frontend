@@ -181,20 +181,18 @@ const findInstruksjonForBruker = (tilfellerSomSkalFastsettes, manglerInntektsmel
   }
   if (harVurderMottarYtelseUtenBesteberegning(tilfellerSomSkalFastsettes)) {
     const fastsetteATFLIntersection = fastsettATLIntersection(tilfellerSomSkalFastsettes);
-    if (skalFastsetteFL && !skalFastsetteAT) {
-      return fastsetteATFLIntersection.length === 1
-        ? 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettFrilans'
-        : 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettFrilansAlleOppdrag';
-    }
-    if (skalFastsetteFL && skalFastsetteAT) {
+    if (skalFastsetteFL) {
+      if (!skalFastsetteAT) {
+        return fastsetteATFLIntersection.length === 1
+          ? 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettFrilans'
+          : 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettFrilansAlleOppdrag';
+      }
       return 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettATFLAlleOppdrag';
     }
-    if (skalFastsetteAT && !skalFastsetteFL) {
+    if (skalFastsetteAT) {
       return 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettArbeidsinntekt';
     }
-    if (!skalFastsetteAT && !skalFastsetteFL) {
-      return ' ';
-    }
+    return ' ';
   }
   if (tilfellerSomSkalFastsettes.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)) {
     return manglerInntektsmelding === true
