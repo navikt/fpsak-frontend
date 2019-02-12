@@ -19,7 +19,7 @@ import {
   calcDaysAndWeeks,
   lagVisningsNavn,
 } from '@fpsak-frontend/utils';
-import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
+import uttakArbeidType from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
 import moment from 'moment';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 import { getPersonopplysning, getFaktaArbeidsforhold } from 'behandlingFpsak/src/behandlingSelectors';
@@ -65,7 +65,7 @@ const mapArbeidsforhold = andeler => andeler.map((andel) => {
   const { arbeidType, arbeidsgiver } = andel;
 
   let periodeArbeidsforhold = '';
-  if (arbeidType && arbeidType.kode !== uttakArbeidTypeKodeverk.ORDINÆRT_ARBEID) {
+  if (arbeidType && arbeidType.kode !== uttakArbeidType.ORDINÆRT_ARBEID) {
     periodeArbeidsforhold = arbeidType.navn;
   } else {
     periodeArbeidsforhold = lagVisningsNavn(arbeidsgiver);
@@ -358,7 +358,7 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
     samtidigUttak: values.samtidigUttak,
     samtidigUttaksprosent: values.samtidigUttaksprosent,
     flerbarnsdager: values.flerbarnsdager,
-    erArbeidstaker: arbeidsForhold && arbeidsForhold[4] === 'ORDINÆRT_ARBEID',
+    erArbeidstaker: arbeidsForhold && arbeidsForhold[4] === uttakArbeidType.ORDINÆRT_ARBEID,
     fom: values.fom,
     tom: values.tom,
     isFromSøknad: false,
