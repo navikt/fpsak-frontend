@@ -188,12 +188,11 @@ const findInstruksjonForBruker = (tilfellerSomSkalFastsettes, manglerInntektsmel
           : 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettFrilansAlleOppdrag';
       }
       return 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettATFLAlleOppdrag';
-    } else {
-      if (skalFastsetteAT) {
-        return 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettArbeidsinntekt';
-      }
-      return ' ';
     }
+    if (skalFastsetteAT) {
+      return 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettArbeidsinntekt';
+    }
+    return ' ';
   }
   if (tilfellerSomSkalFastsettes.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)) {
     return manglerInntektsmelding === true
