@@ -14,7 +14,7 @@ import { getFeilutbetalingFakta } from 'behandlingTilbakekreving/src/selectors/t
 
 import styles from './feilutbetalingInfoPanel.less';
 
-const perioderDatoer = periode => `${moment(periode.fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(periode.fom).format(DDMMYYYY_DATE_FORMAT)}`;
+const perioderDatoer = periode => `${moment(periode.fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(periode.tom).format(DDMMYYYY_DATE_FORMAT)}`;
 const perioderBeloper = periode => formatCurrencyNoKr(periode.belop);
 const getPerioder = (perioder, children) => perioder.map(periode => (
   <Row>
