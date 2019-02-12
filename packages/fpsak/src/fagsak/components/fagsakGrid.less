@@ -22,35 +22,33 @@
 }
 
 @media all and (max-width: 1350px) {
+  .leftColumn {
+    width: 100%;
+  }
 
-    .leftColumn {
-      width: 100%;
-    }
+  .rightColumn {
+    margin-left: 0;
+    width: 100%;
+  }
 
-    .rightColumn {
-      margin-left: 0;
-      width: 100%;
-    }
+  .gridContainer {
+    display: flex;
+    flex-flow: row wrap;
+    max-height: 100%;
+    max-width: 100%;
+  }
 
-    .gridContainer {
-      display: flex;
-      flex-flow: row wrap;
-      max-height: 100%;
-      max-width: 100%;
-    }
+  .profileAndNavigationContent {
+    display: none;
+  }
 
-    .profileAndNavigationContent {
-     display: none;
-    }
-
-    .behandlingContent {
-      order: 3;
-    }
-
+  .behandlingContent {
+    order: 3;
+  }
 }
 
 @media all and (max-width: 800px) {
-    .gridContainer {
-        max-width: 640px;
-    }
+  .gridContainer {
+    max-width: 640px;
+  }
 }

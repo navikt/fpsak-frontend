@@ -1,5 +1,8 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
+@marginRight: 8px;
+@removeBtnSize: 17px;
+
 .container {
   flex-wrap: wrap;
 }
@@ -28,8 +31,6 @@
   position: absolute;
   top: 94px;
 }
-
-@removeBtnSize: 17px;
 
 .arrowBox {
   background: @white;
@@ -97,7 +98,6 @@
 .datesRowWithRemoveButton {
   box-sizing: border-box;
   display: inline-block;
-  @marginRight: 8px;
   margin-right: @marginRight;
   margin-top: 5px;
   width: ~'calc(100% - '@removeBtnSize~' - '@marginRight~')';
