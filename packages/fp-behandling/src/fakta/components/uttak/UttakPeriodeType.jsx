@@ -144,20 +144,23 @@ const UttakPeriodeType = ({ // NOSONAR
         </div>
         )
       }
-      {isGradering && !erArbeidstaker
+      {isGradering
       && (
-        <div className={styles.textWrapper}>
-          <Element><FormattedMessage id="UttakInfoPanel.FrilansSelvstendignæringsdrivende" /></Element>
-        </div>
-      )
-      }
-      {isGradering && arbeidsgiver && arbeidsgiver.navn && arbeidsgiver.identifikator
-      && (
-      <div className={styles.textWrapper}>
-        <Element>{lagVisningsNavn(arbeidsgiver)}</Element>
-      </div>
-      )
-      }
+      <React.Fragment>
+        {!erArbeidstaker
+        && (
+          <div className={styles.textWrapper}>
+            <Element><FormattedMessage id="UttakInfoPanel.FrilansSelvstendignæringsdrivende" /></Element>
+          </div>
+        )}
+        {arbeidsgiver && arbeidsgiver.navn && (arbeidsgiver.identifikator || arbeidsgiver.aktorId)
+        && (
+          <div className={styles.textWrapper}>
+            <Element>{lagVisningsNavn(arbeidsgiver)}</Element>
+          </div>
+        )}
+      </React.Fragment>
+      )}
     </div>
   );
 };
