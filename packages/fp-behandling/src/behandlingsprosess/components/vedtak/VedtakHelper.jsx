@@ -3,7 +3,6 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { minLength, maxLength } from '@fpsak-frontend/utils';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { isBGAksjonspunktSomGirFritekstfelt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -87,5 +86,3 @@ export const endringerIBeregningsgrunnlagGirFritekstfelt = (aksjonspunkter, ytel
   return aksjonspunkter.find(ap => isBGAksjonspunktSomGirFritekstfelt(ap.definisjon.kode)
     && ap.status.kode === aksjonspunktStatus.UTFORT) !== undefined;
 };
-export const maxLength1500 = (0, maxLength)(1500);
-export const minLength3 = (0, minLength)(3);
