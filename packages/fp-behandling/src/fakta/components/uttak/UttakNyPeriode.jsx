@@ -71,13 +71,13 @@ const mapArbeidsforhold = andeler => andeler.map((andel) => {
     periodeArbeidsforhold = lagVisningsNavn(arbeidsgiver);
   }
 
-  const identifkator = (arbeidsgiver || []).identifikator || '-';
+  const identifikator = (arbeidsgiver || []).identifikator || '-';
   const navn = (arbeidsgiver || []).navn || arbeidType.navn;
   const fixedAktørId = (arbeidsgiver || []).aktørId || '-';
   const virksomhet = (arbeidsgiver || []).virksomhet || '-';
 
   return (
-    <option value={`${identifkator}|${navn}|${fixedAktørId}|${virksomhet}`} key={guid()}>{periodeArbeidsforhold}</option>
+    <option value={`${identifikator}|${navn}|${fixedAktørId}|${virksomhet}|${arbeidType.kode}`} key={guid()}>{periodeArbeidsforhold}</option>
   );
 });
 
@@ -346,6 +346,7 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
     navn: arbeidsForhold[1] ? arbeidsForhold[1] : undefined,
     aktørId: arbeidsForhold[2] !== '-' ? arbeidsForhold[2] : undefined,
     virksomhet: arbeidsForhold[3] !== '-' ? arbeidsForhold[3] : undefined,
+    arbeidType: arbeidsForhold[4],
   } : null;
 
   return {
@@ -357,7 +358,7 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
     samtidigUttak: values.samtidigUttak,
     samtidigUttaksprosent: values.samtidigUttaksprosent,
     flerbarnsdager: values.flerbarnsdager,
-    erArbeidstaker: arbeidsForhold && arbeidsForhold[0] !== '-',
+    erArbeidstaker: arbeidsForhold && arbeidsForhold[4] === 'ORDINÆRT_ARBEID',
     fom: values.fom,
     tom: values.tom,
     isFromSøknad: false,
