@@ -187,16 +187,12 @@ const findInstruksjonForBruker = (tilfellerSomSkalFastsettes, manglerInntektsmel
           ? 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettFrilans'
           : 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettFrilansAlleOppdrag';
       }
-      if (skalFastsetteAT) {
-        return 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettATFLAlleOppdrag';
-      }
+      return 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettATFLAlleOppdrag';
     } else {
       if (skalFastsetteAT) {
         return 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettArbeidsinntekt';
       }
-      if (!skalFastsetteAT) {
-        return ' ';
-      }
+      return ' ';
     }
   }
   if (tilfellerSomSkalFastsettes.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)) {
