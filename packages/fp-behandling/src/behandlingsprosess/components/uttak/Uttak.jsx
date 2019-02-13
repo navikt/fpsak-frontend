@@ -582,6 +582,8 @@ UttakImpl.propTypes = {
   tempUpdateStonadskontoer: PropTypes.func.isRequired,
   behandlingId: PropTypes.number.isRequired,
   saksnummer: PropTypes.number.isRequired,
+  barnFraTps: PropTypes.arrayOf(PropTypes.shape()),
+  person: PropTypes.shape(),
 };
 
 UttakImpl.defaultProps = {
