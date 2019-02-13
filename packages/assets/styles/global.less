@@ -141,6 +141,41 @@ som fra core/og muligen import fra alla andra komponenter
   }
 }
 
+:global(.dodSoker) {
+  background-color: black;
+  color: white;
+  pointer-events: none;
+
+  &:after {
+    background-color: black;
+    color: white;
+    content: 'Søker død';
+    height: 20px;
+    left: -40px;
+    position: absolute;
+    text-align: center;
+    top: 0px; // lesshint-disable zeroUnit
+    width: 80px;
+  }
+}
+
+:global([class^="vis-custom-time barndod"]) {
+  background-color: black;
+  color: white;
+  pointer-events: none;
+
+  &:after {
+    background-color: black;
+    color: white;
+    content: 'Barn død';
+    left: -40px;
+    position: absolute;
+    text-align: center;
+    top: 0px; // lesshint-disable zeroUnit
+    width: 80px;
+  }
+}
+
 :global(.lastDateInSoknad) {
   display: none;
 }

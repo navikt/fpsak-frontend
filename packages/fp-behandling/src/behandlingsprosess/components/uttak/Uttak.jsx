@@ -27,6 +27,7 @@ import {
   getUttaksresultatPerioder,
   getBehandlingStatus,
   getBehandlingUttaksperiodegrense,
+  getBarnFraTpsRelatertTilSoknad,
 } from 'behandlingFpsak/src/behandlingSelectors';
 import { getRettigheter } from 'navAnsatt/duck';
 import { getSelectedBehandlingId } from 'behandlingFpsak/src/duck';
@@ -126,6 +127,13 @@ const addClassNameGroupIdToPerioder = (hovedsokerPerioder, annenForelderPerioder
   return perioderMedClassName;
 };
 
+const fodselsdato = (soknadsType, endredFodselsDato, familiehendelseDate, omsorgsOvertagelseDato) => {
+  if (soknadsType === soknadType.FODSEL) {
+    return (endredFodselsDato ? parseDateString(endredFodselsDato) : parseDateString(familiehendelseDate));
+  }
+  return parseDateString(omsorgsOvertagelseDato);
+};
+
 const getCustomTimes = (
   soknadDate,
   familiehendelseDate,
@@ -134,19 +142,26 @@ const getCustomTimes = (
   omsorgsOvertagelseDato,
   endredFodselsDato,
   isRevurdering,
+  barnFraTps,
+  person,
 ) => {
-  if (soknadsType === soknadType.FODSEL) {
-    return ({
-      soknad: parseDateString(soknadDate),
-      fodsel: endredFodselsDato ? parseDateString(endredFodselsDato) : parseDateString(familiehendelseDate),
-      revurdering: isRevurdering ? parseDateString(endringsDate) : '1950-01-01',
-    });
-  }
-  return ({
+  // TODO: trumfa tps med avklartebarn fra lösningen - blir TPS-barn en del av dem?
+  const dodeBarn = barnFraTps.filter(barn => barn.dodsdato);
+
+  const customTimesBuilder = {
     soknad: parseDateString(soknadDate),
-    fodsel: parseDateString(omsorgsOvertagelseDato),
+    fodsel: fodselsdato(soknadsType, endredFodselsDato, familiehendelseDate, omsorgsOvertagelseDato),
     revurdering: isRevurdering ? parseDateString(endringsDate) : '1950-01-01',
+    dodSoker: person && person.dodsdato ? parseDateString(person.dodsdato) : '1950-01-01',
+  };
+
+  dodeBarn.forEach((barn, index) => {
+    Object.defineProperty(customTimesBuilder, `${`barndod${index}`}`, {
+      value: parseDateString(barn.dodsdato), enumerable: true,
+    });
   });
+
+  return (customTimesBuilder);
 };
 
 const isInnvilget = uttaksresultatActivity => uttaksresultatActivity.periodeResultatType.kode === periodeResultatType.INNVILGET;
@@ -342,6 +357,7 @@ export class UttakImpl extends Component {
 
   render() {
     const {
+      person,
       soknadDate,
       familiehendelseDate,
       endringsDate,
@@ -362,6 +378,7 @@ export class UttakImpl extends Component {
       endredFodselsDato,
       uttakPerioder,
       isRevurdering,
+      barnFraTps,
       harSoktOmFlerbarnsdager,
       annenForelderSoktOmFlerbarnsdager,
       reduxFormChange: formChange,
@@ -375,6 +392,8 @@ export class UttakImpl extends Component {
       omsorgsovertakelseDato,
       endredFodselsDato,
       isRevurdering,
+      barnFraTps,
+      person,
     );
     return (
       <div>
@@ -509,6 +528,8 @@ UttakImpl.propTypes = {
   isRevurdering: PropTypes.bool,
   harSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
   annenForelderSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
+  barnFraTps: PropTypes.arrayOf(PropTypes.shape()),
+  person: PropTypes.shape(),
 };
 
 UttakImpl.defaultProps = {
@@ -521,6 +542,8 @@ UttakImpl.defaultProps = {
   endredFodselsDato: undefined,
   isRevurdering: false,
   medsokerKjonnKode: undefined,
+  barnFraTps: [],
+  person: undefined,
 };
 
 const determineMottatDato = (soknadsDato, mottatDato) => {
@@ -555,6 +578,7 @@ const mapStateToProps = (state, props) => {
   const familiehendelse = getFamiliehendelse(state);
   const ytelseFordeling = getBehandlingYtelseFordeling(state);
   const uttaksresultatActivity = behandlingFormValueSelector(props.formName)(state, ACTIVITY_PANEL_NAME);
+  const barnFraTps = getBarnFraTpsRelatertTilSoknad(state);
 
   const uttakMedOpphold = uttaksresultatActivity.map((uttak) => {
     const { ...uttakPerioder } = uttak;
@@ -599,6 +623,8 @@ const mapStateToProps = (state, props) => {
     uttakPerioder,
     harSoktOmFlerbarnsdager,
     annenForelderSoktOmFlerbarnsdager,
+    barnFraTps,
+    person,
   };
 };
 
