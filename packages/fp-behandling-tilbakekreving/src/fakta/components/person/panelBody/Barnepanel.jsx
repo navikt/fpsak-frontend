@@ -54,7 +54,7 @@ const Barnepanel = ({
               {' '}
               <FormattedMessage id="Person.Age" values={{ age: getAgeFromDate(barn.fodselsdato) }} />
               {barn.dodsdato
-              && <div className={styles.inline}><MerkePanel erDod /></div>}
+              && <div className={styles.barnDod}><MerkePanel erDod /></div>}
             </Element>
             <Undertekst>{barn.fnr}</Undertekst>
             <div className={styles.undertekstMedRom}>

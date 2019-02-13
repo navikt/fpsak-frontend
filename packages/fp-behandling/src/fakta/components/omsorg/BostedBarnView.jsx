@@ -29,7 +29,7 @@ const BostedBarnView = ({
     <Undertekst>
       <FormattedMessage id="BostedBarnView.Barn" values={{ barnNr }} />
       {barn.dodsdato
-              && <div className={styles.inline}><MerkePanel erDod /></div>}
+              && <div className={styles.barnDod}><MerkePanel erDod /></div>}
     </Undertekst>
 
     <Element>
