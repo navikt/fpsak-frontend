@@ -1,17 +1,17 @@
 node('DOCKER3') {
     def tagName=''
    stage('Checkout Tags') { // checkout only tags.
-      checkout([$class: 'GitSCM', branches: [[name: '*/tags/*']], 
-      doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], 
-      userRemoteConfigs: [[refspec: '+refs/tags/*:refs/remotes/origin/tags/*', 
+      checkout([$class: 'GitSCM', branches: [[name: '*/tags/*']],
+      doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [],
+      userRemoteConfigs: [[refspec: '+refs/tags/*:refs/remotes/origin/tags/*',
       url: 'https://github.com/navikt/fpsak-frontend.git']]])
       tagName=sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').toString().trim()
       echo "Tag to be deployed $tagName"
    }
    stage('Build and Push'){
       sh 'PATH=$PATH:/usr/local/lib/node/nodejs/bin:/opt/yarn-v1.12.3/bin; yarn install --ignore-scripts'
-      sh 'PATH=$PATH:/usr/local/lib/node/nodejs/bin:/opt/yarn-v1.12.3/bin; yarn build' 
-      sh "docker build -t docker.adeo.no:5000/fpsak-frontend:$tagName -f ./docker/DockerfileDev ./ --build-arg HTTPS_PROXY=$HTTPS_PROXY --build-arg HTTP_PROXY=$HTTP_PROXY"
+      sh 'PATH=$PATH:/usr/local/lib/node/nodejs/bin:/opt/yarn-v1.12.3/bin; yarn build'
+      sh "docker build -t docker.adeo.no:5000/fpsak-frontend:$tagName -f ./docker/Dockerfile ./ --build-arg HTTPS_PROXY=$HTTPS_PROXY --build-arg HTTP_PROXY=$HTTP_PROXY"
       sh "docker tag docker.adeo.no:5000/fpsak-frontend:$tagName docker.adeo.no:5000/fpsak-frontend:latest"
       sh "docker push docker.adeo.no:5000/fpsak-frontend:$tagName"
       sh "docker push docker.adeo.no:5000/fpsak-frontend:latest"
