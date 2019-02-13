@@ -63,7 +63,7 @@ describe('<VedtakKlageSubmitPanel>', () => {
     expect(hovedknapp).to.have.length(1);
     expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
     const a = wrapper.find('a');
-    expect(a).to.have.length(0);
+    expect(a).to.have.length(1);
   });
 
 

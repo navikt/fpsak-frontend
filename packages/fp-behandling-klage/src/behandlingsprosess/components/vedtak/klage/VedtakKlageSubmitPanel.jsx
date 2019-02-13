@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import {
-  getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK, getBehandlingIsOnHold,
-} from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
+import { getBehandlingIsOnHold } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import classNames from 'classnames';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Row, Column } from 'nav-frontend-grid';
 
+import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import { medholdIKlage } from '../VedtakHelper';
 
 import styles from '../vedtakForm.less';
@@ -17,9 +17,34 @@ export const isMedholdIKlage = (
   klageVurderingResultatNFP, klageVurderingResultatNK,
 ) => medholdIKlage(klageVurderingResultatNFP) || medholdIKlage(klageVurderingResultatNK);
 
-const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback) => (e) => {
+const getBrevKode = (klageVurdering, klageVurdertAvKa) => {
+  switch (klageVurdering) {
+    case klageVurderingType.STADFESTE_YTELSESVEDTAK:
+      return klageVurdertAvKa ? dokumentMalType.KLAGE_YTELSESVEDTAK_STADFESTET_DOK : dokumentMalType.KLAGE_OVERSENDT_KLAGEINSTANS_DOK;
+    case klageVurderingType.OPPHEVE_YTELSESVEDTAK:
+      return dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET_DOK;
+    case klageVurderingType.HJEMSENDE_UTEN_Å_OPPHEVE:
+      return dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET_DOK;
+    case klageVurderingType.MEDHOLD_I_KLAGE:
+      return dokumentMalType.VEDTAK_MEDHOLD;
+    case klageVurderingType.AVVIS_KLAGE:
+      return dokumentMalType.KLAGE_AVVIST_DOK;
+    default:
+      return null;
+  }
+};
+
+const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback, klageResultat) => (e) => {
+  const klageVurdertAvNK = klageResultat.klageVurdertAv === 'NK';
+  const data = {
+    fritekst: begrunnelse || '',
+    mottaker: '',
+    brevmalkode: getBrevKode(klageResultat.klageVurdering, klageVurdertAvNK),
+    klageVurdertAv: klageVurdertAvNK,
+    erOpphevet: klageResultat.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK,
+  };
   if (formProps.valid || formProps.pristine) {
-    previewVedtakCallback(begrunnelse || ' ');
+    previewVedtakCallback(data);
   } else {
     formProps.submit();
   }
@@ -29,14 +54,13 @@ const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback) => (e
 export const VedtakKlageSubmitPanelImpl = ({
   intl,
   behandlingPaaVent,
-  klageVurderingResultatNFP,
-  klageVurderingResultatNK,
   previewVedtakCallback,
   begrunnelse,
+  klageResultat,
   formProps,
   readOnly,
 }) => {
-  const previewBrev = getPreviewCallback(formProps, begrunnelse, previewVedtakCallback);
+  const previewBrev = getPreviewCallback(formProps, begrunnelse, previewVedtakCallback, klageResultat);
 
   return (
     <Row>
@@ -54,8 +78,6 @@ export const VedtakKlageSubmitPanelImpl = ({
         </Hovedknapp>
         )
         }
-        {!isMedholdIKlage(klageVurderingResultatNFP, klageVurderingResultatNK)
-        && (
         <a
           href=""
           onClick={previewBrev}
@@ -64,8 +86,6 @@ export const VedtakKlageSubmitPanelImpl = ({
         >
           <FormattedMessage id="VedtakKlageForm.ForhandvisBrev" />
         </a>
-        )
-        }
       </Column>
     </Row>
   );
@@ -75,23 +95,19 @@ VedtakKlageSubmitPanelImpl.propTypes = {
   intl: intlShape.isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
   behandlingPaaVent: PropTypes.bool.isRequired,
-  klageVurderingResultatNFP: PropTypes.shape(),
-  klageVurderingResultatNK: PropTypes.shape(),
   begrunnelse: PropTypes.string,
+  klageResultat: PropTypes.shape(),
   readOnly: PropTypes.bool.isRequired,
   formProps: PropTypes.shape().isRequired,
 };
 
 VedtakKlageSubmitPanelImpl.defaultProps = {
   begrunnelse: undefined,
-  klageVurderingResultatNFP: undefined,
-  klageVurderingResultatNK: undefined,
+  klageResultat: undefined,
 };
 
 
 const mapStateToProps = state => ({
-  klageVurderingResultatNFP: getBehandlingKlageVurderingResultatNFP(state),
-  klageVurderingResultatNK: getBehandlingKlageVurderingResultatNK(state),
   behandlingPaaVent: getBehandlingIsOnHold(state),
 });
 
