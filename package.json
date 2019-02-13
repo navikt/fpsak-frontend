@@ -40,7 +40,8 @@
     "dotenv": "^6.2.0",
     "history": "^4.6.3",
     "react": "^16.6.3",
-    "react-dom": "^16.6.3"
+    "react-dom": "^16.6.3",
+    "stylelint-order": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",

@@ -1,4 +1,5 @@
 module.exports = {
+  plugins: ['stylelint-order'],
   rules: {
     'at-rule-empty-line-before': [
       'always',
@@ -7,6 +8,11 @@ module.exports = {
         ignore: ['after-comment'],
       },
     ],
+    "order/order": [
+			"custom-properties",
+			"declarations"
+		],
+		"order/properties-alphabetical-order": true,
     'max-line-length': 160,
     'at-rule-name-case': 'lower',
     'at-rule-name-space-after': 'always-single-line',
@@ -36,6 +42,7 @@ module.exports = {
       },
     ],
     'declaration-no-important': true,
+    'declaration-block-no-duplicate-properties': true,
     'declaration-bang-space-after': 'never',
     'declaration-bang-space-before': 'always',
     'declaration-block-semicolon-newline-after': 'always-multi-line',
@@ -110,13 +117,26 @@ module.exports = {
     'value-list-comma-space-before': 'never',
     'value-list-max-empty-lines': 0,
     'unit-whitelist': [
-      'em', 'ex', 'rem', // Font-relative lengths
-      'pt', 'px', // Absolute lengths
-      'vh', 'vw', 'vmin', 'vmax', // Viewport-percentage lengths
-      'deg', 'grad', 'rad', 'turn', // Angle
-      'ms', 's', // Duration
-      'dpi', 'dpcm', 'dppx', // Resolution
-      '%', 'fr', // Other
+      'em',
+      'ex',
+      'rem', // Font-relative lengths
+      'pt',
+      'px', // Absolute lengths
+      'vh',
+      'vw',
+      'vmin',
+      'vmax', // Viewport-percentage lengths
+      'deg',
+      'grad',
+      'rad',
+      'turn', // Angle
+      'ms',
+      's', // Duration
+      'dpi',
+      'dpcm',
+      'dppx', // Resolution
+      '%',
+      'fr', // Other
     ],
   },
 };
