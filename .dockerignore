@@ -1,5 +1,8 @@
 .git
 *Dockerfile*
 *docker-compose*
-node_modules
+**/node_modules
 cypress
+coverage
+.nyc_output
+packages

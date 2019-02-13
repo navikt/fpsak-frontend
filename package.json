@@ -21,11 +21,9 @@
     "lerna:publish": "(lerna updated && lerna publish --cd-version patch --yes -m \"publish [ci skip]\") || echo \"Ingen endringer avslutter OK\"",
     "less:lint": "stylelint \"packages/**/*.less\"",
     "doc": "react-asciidoc-generator ./packages/ -o ../../docs/generated/react.adoc --handlebar-template src/docs/asciidoc-template.handlebars",
-    "docker-build:dev": "docker build -t fpfront . -f ./docker/DockerfileDev --build-arg HTTP_PROXY=$HTTP_PROXY --build-arg HTTPS_PROXY=$HTTP_PROXY",
-    "docker-start:dev": "yarn docker-stop; yarn docker-build:dev; docker run -d --env-file=./docker/.env --name fpfront --net=host fpfront",
-    "docker-start": "yarn docker-stop; docker run -d --env-file=./docker/.env --name fpfront --net=host navikt/fpsak-frontend",
-    "docker-stop": "docker stop fpfront; docker rm fpfront",
-    "docker-push": "docker build . -t docker.adeo.no:5000/$npm_package_name:$npm_package_version -f ./docker/DockerfileDev --build-arg HTTPS_PROXY=$HTTPS_PROXY --build-arg HTTP_PROXY=$HTTP_PROXY; docker push docker.adeo.no:5000/$npm_package_name:$npm_package_version",
+    "docker:build": "docker build . -t fpfront -f ./docker/Dockerfile --build-arg HTTP_PROXY=$HTTP_PROXY --build-arg HTTPS_PROXY=$HTTP_PROXY",
+    "docker:start": "yarn docker:stop; yarn docker:build; docker run -d --env-file=./docker/.env --name fpfront --net=host fpfront",
+    "docker:stop": "docker stop fpfront; docker rm fpfront",
     "redis:start": "docker stop redis; docker rm redis; docker run --name redis -p 6379:6379 -d redis"
   },
   "workspaces": [

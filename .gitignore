@@ -1,7 +1,5 @@
 **/node_modules/
 /.idea
-!/.idea/runConfigurations
-!/.idea/codeStyles
 /bin/
 /.tmp/
 /.happypack/
@@ -25,4 +23,5 @@ lerna-debug.log
 .vscode
 .consumed-idents.json
 .yarnrc
+ssh.exe.stackdump
 ssh.exe.stackdump
