@@ -123,15 +123,14 @@ export const SjekkFodselDokForm = ({
               </div>
               )
               }
-              {avklartBarn
-                              && (
-                              <FieldArray
-                                name={avklarteBarnFieldArrayName}
-                                component={avklartBarnFieldArray}
-                                readOnly={readOnly}
-                                avklartBarn={avklartBarn}
-                              />
-                              )
+              {avklartBarn && (
+                <FieldArray
+                name={avklarteBarnFieldArrayName}
+                component={avklartBarnFieldArray}
+                readOnly={readOnly}
+                avklartBarn={avklartBarn}
+                />
+                )
               }
             </ArrowBox>
           </Column>
