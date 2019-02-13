@@ -67,10 +67,12 @@ export class VarselOmRevurderingFormImpl extends React.Component {
     if (!validForm) {
       dispatchSubmitFailed('VarselOmRevurderingForm');
     }
-    if (validForm && sendVarsel) {
-      this.setState({ showSettPaVentModal: true });
-    } else if (validForm && !sendVarsel) {
-      handleSubmit();
+    if (validForm) {
+      if (sendVarsel) {
+        this.setState({ showSettPaVentModal: true });
+      } else {
+        handleSubmit();
+      }
     }
   }
 
