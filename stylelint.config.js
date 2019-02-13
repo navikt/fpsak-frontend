@@ -36,6 +36,7 @@ module.exports = {
       },
     ],
     'declaration-no-important': true,
+    'declaration-block-no-duplicate-properties': true,
     'declaration-bang-space-after': 'never',
     'declaration-bang-space-before': 'always',
     'declaration-block-semicolon-newline-after': 'always-multi-line',
