@@ -1,9 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import MannAdoptererFaktaForm from './MannAdoptererFaktaForm';
+import MannAdoptererAleneFaktaForm from './MannAdoptererAleneFaktaForm';
 
-describe('<MannAdoptererFaktaForm>', () => {
+describe('<MannAdoptererAleneFaktaForm>', () => {
   const model = {
     mannAdoptererAlene: true,
     farSokerType: {
@@ -13,12 +13,14 @@ describe('<MannAdoptererFaktaForm>', () => {
   };
 
   it('skal rendre form som lar NAV-ansatt velge om mann adopterer alene eller ei', () => {
-    const wrapper = shallowWithIntl(<MannAdoptererFaktaForm.WrappedComponent
-      intl={intlMock}
-      aksjonspunktData={model}
-      readOnly={false}
-      error={false}
-    />);
+    const wrapper = shallowWithIntl(
+      <MannAdoptererAleneFaktaForm.WrappedComponent
+        intl={intlMock}
+        aksjonspunktData={model}
+        readOnly={false}
+        error={false}
+      />,
+    );
 
     const radioFields = wrapper.find('RadioOption');
     expect(radioFields).to.have.length(2);
@@ -30,7 +32,7 @@ describe('<MannAdoptererFaktaForm>', () => {
     const soknad = {
       farSokerType: 'test',
     };
-    const initialValues = MannAdoptererFaktaForm.buildInitialValues(soknad);
+    const initialValues = MannAdoptererAleneFaktaForm.buildInitialValues(soknad);
 
     expect(initialValues).to.eql({
       mannAdoptererAlene: undefined,
@@ -46,7 +48,7 @@ describe('<MannAdoptererFaktaForm>', () => {
       farSokerType: 'test',
     };
 
-    const initialValues = MannAdoptererFaktaForm.buildInitialValues(soknad, familiehendelse);
+    const initialValues = MannAdoptererAleneFaktaForm.buildInitialValues(soknad, familiehendelse);
 
     expect(initialValues).to.eql({
       mannAdoptererAlene: true,

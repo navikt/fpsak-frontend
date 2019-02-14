@@ -11,7 +11,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import fpsakBehandlingApi from './data/fpsakBehandlingApi';
-import isFieldEdited from './editedFields';
+import isFieldEdited from './isFieldEdited';
 import { getSelectedBehandlingId, isForeldrepengerFagsak } from './duck';
 
 const hasFetchedOriginalBehandlingIfItExists = (behandling, originalBehandlingId) => (behandling && behandling.originalBehandlingId

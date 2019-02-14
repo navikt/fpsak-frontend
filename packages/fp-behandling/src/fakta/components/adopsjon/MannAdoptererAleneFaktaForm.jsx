@@ -13,7 +13,7 @@ import { required } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
-import styles from './mannAdoptererFaktaForm.less';
+import styles from './mannAdoptererAleneFaktaForm.less';
 
 /**
  * MannAdoptererAleneFaktaForm

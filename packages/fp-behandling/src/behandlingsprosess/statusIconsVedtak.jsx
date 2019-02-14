@@ -8,7 +8,7 @@ import ikkeVurdertIkonUrl from '@fpsak-frontend/assets/images/vedtak_ikon_disabl
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
-const vedtakImages = {
+const statusIconsVedtak = {
   imageMap: {
     [vilkarUtfallType.OPPFYLT]: innvilgetHoverIkonUrl,
     [vilkarUtfallType.IKKE_VURDERT]: { true: behandleIkonUrl, false: ikkeVurdertIkonUrl },
@@ -26,4 +26,4 @@ const vedtakImages = {
   },
 };
 
-export default vedtakImages;
+export default statusIconsVedtak;

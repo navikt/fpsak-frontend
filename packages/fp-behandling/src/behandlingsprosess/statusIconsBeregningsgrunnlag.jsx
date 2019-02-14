@@ -10,7 +10,7 @@ import innvilgetHoverIkonUrl from '@fpsak-frontend/assets/images/beregn_hover.sv
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
-const beregningsgrunnlagImages = {
+const statusIconsBeregningsgrunnlag = {
   imageMap: {
     [vilkarUtfallType.OPPFYLT]: { true: behandleIkonUrl, false: innvilgetIkonUrl },
     [vilkarUtfallType.IKKE_VURDERT]: { true: behandleIkonUrl, false: ikkeVurdertIkonUrl },
@@ -28,4 +28,4 @@ const beregningsgrunnlagImages = {
   },
 };
 
-export default beregningsgrunnlagImages;
+export default statusIconsBeregningsgrunnlag;

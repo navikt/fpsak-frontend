@@ -10,7 +10,7 @@ import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-for
 import { AdopsjonInfoPanelImpl } from './AdopsjonInfoPanel';
 import DokumentasjonFaktaForm from './DokumentasjonFaktaForm';
 import EktefelleFaktaForm from './EktefelleFaktaForm';
-import MannAdoptererFaktaForm from './MannAdoptererFaktaForm';
+import MannAdoptererAleneFaktaForm from './MannAdoptererAleneFaktaForm';
 
 describe('<AdopsjonInfoPanel>', () => {
   const adopsjonAksjonspunkt = {
@@ -114,7 +114,7 @@ describe('<AdopsjonInfoPanel>', () => {
 
     expect(panel.find(DokumentasjonFaktaForm)).has.length(1);
     expect(panel.find(EktefelleFaktaForm)).has.length(1);
-    expect(panel.find(MannAdoptererFaktaForm)).has.length(1);
+    expect(panel.find(MannAdoptererAleneFaktaForm)).has.length(1);
     expect(panel.find(FaktaBegrunnelseTextField)).has.length(1);
     expect(panel.find(FaktaSubmitButton)).has.length(1);
   });

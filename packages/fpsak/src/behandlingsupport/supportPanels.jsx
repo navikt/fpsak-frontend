@@ -1,5 +1,5 @@
 /* NOTE: Rekkefølgen styrer visning */
-const SupportPanel = {
+const supportPanels = {
   APPROVAL: 'godkjenning',
   RETURNED: 'frabeslutter',
   HISTORY: 'historikk',
@@ -7,4 +7,4 @@ const SupportPanel = {
   DOCUMENTS: 'dokumenter',
 };
 
-export default SupportPanel;
+export default supportPanels;

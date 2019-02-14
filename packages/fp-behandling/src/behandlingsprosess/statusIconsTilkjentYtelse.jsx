@@ -5,7 +5,7 @@ import innvilgetHoverIkonUrl from '@fpsak-frontend/assets/images/tilkjent_ytelse
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
-const tilkjentYtelseImages = {
+const statusIconsTilkjentYtelse = {
   imageMap: {
     [vilkarUtfallType.OPPFYLT]: innvilgetIkonUrl,
     [vilkarUtfallType.IKKE_VURDERT]: { true: innvilgetIkonUrl, false: ikkeVurdertIkonUrl },
@@ -20,4 +20,4 @@ const tilkjentYtelseImages = {
   },
 };
 
-export default tilkjentYtelseImages;
+export default statusIconsTilkjentYtelse;
