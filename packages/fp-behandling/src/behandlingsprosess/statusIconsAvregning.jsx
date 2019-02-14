@@ -6,7 +6,7 @@ import ikkeVurdertIkonUrl from '@fpsak-frontend/assets/images/avregning_disable.
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
-const avregningImages = {
+const statusIconsAvregning = {
   imageMap: {
     [vilkarUtfallType.OPPFYLT]: { true: behandleIkonUrl, false: avregningIkon },
     [vilkarUtfallType.IKKE_VURDERT]: { true: behandleIkonUrl, false: ikkeVurdertIkonUrl },
@@ -24,4 +24,4 @@ const avregningImages = {
   },
 };
 
-export default avregningImages;
+export default statusIconsAvregning;

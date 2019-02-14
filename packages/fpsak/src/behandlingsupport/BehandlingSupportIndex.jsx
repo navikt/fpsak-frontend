@@ -8,7 +8,7 @@ import { isKontrollerRevurderingAksjonspunkOpen } from 'behandling/duck';
 import { getAccessibleSupportPanels, getEnabledSupportPanels } from './behandlingsupportSelectors';
 import { getSelectedSupportPanel, setSelectedSupportPanel } from './duck';
 
-import SupportPanel from './supportPanels';
+import supportPanels from './supportPanels';
 import LinkRow from './components/LinkRow';
 import SupportPanelLink from './components/SupportPanelLink';
 import HistoryIndex from './history/HistoryIndex';
@@ -19,14 +19,14 @@ import styles from './behandlingSupportIndex.less';
 
 const renderSupportPanel = (supportPanel) => {
   switch (supportPanel) {
-    case SupportPanel.APPROVAL:
-    case SupportPanel.RETURNED:
+    case supportPanels.APPROVAL:
+    case supportPanels.RETURNED:
       return (<ApprovalIndex />);
-    case SupportPanel.HISTORY:
+    case supportPanels.HISTORY:
       return (<HistoryIndex />);
-    case SupportPanel.MESSAGES:
+    case supportPanels.MESSAGES:
       return (<MessagesIndex />);
-    case SupportPanel.DOCUMENTS:
+    case supportPanels.DOCUMENTS:
       return (<DocumentIndex />);
     default:
       return null;
@@ -46,7 +46,7 @@ export const BehandlingSupportIndex = ({
   enabledSupportPanels,
   getSupportPanelLocation,
 }) => (
-  <div className={activeSupportPanel === SupportPanel.APPROVAL ? styles.statusAksjonspunkt : null}>
+  <div className={activeSupportPanel === supportPanels.APPROVAL ? styles.statusAksjonspunkt : null}>
     <Panel className={styles.panelPadding}>
       <div className={styles.marginBottom}>
         <LinkRow>
@@ -73,8 +73,9 @@ BehandlingSupportIndex.propTypes = {
   getSupportPanelLocation: PropTypes.func.isRequired,
 };
 
-const getDefaultSupportPanel = (hasKontrollerRevurderingAp, enabledSupportPanels) => (hasKontrollerRevurderingAp ? SupportPanel.MESSAGES
-  : enabledSupportPanels.find(() => true) || SupportPanel.HISTORY);
+const getDefaultSupportPanel = (hasKontrollerRevurderingAp, enabledSupportPanels) => (
+  hasKontrollerRevurderingAp ? supportPanels.MESSAGES : enabledSupportPanels.find(() => true) || supportPanels.HISTORY
+);
 
 const mapStateToProps = (state) => {
   const acccessibleSupportPanels = getAccessibleSupportPanels(state);

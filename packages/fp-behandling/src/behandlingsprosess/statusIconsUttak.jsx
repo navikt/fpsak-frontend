@@ -10,7 +10,7 @@ import innvilgetHoverIkonUrl from '@fpsak-frontend/assets/images/uttak_hover.svg
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
-const uttakImages = {
+const statusIconsUttak = {
   imageMap: {
     [vilkarUtfallType.OPPFYLT]: { true: behandleIkonUrl, false: innvilgetIkonUrl },
     [vilkarUtfallType.IKKE_VURDERT]: { true: behandleIkonUrl, false: ikkeVurdertIkonUrl },
@@ -28,4 +28,4 @@ const uttakImages = {
   },
 };
 
-export default uttakImages;
+export default statusIconsUttak;

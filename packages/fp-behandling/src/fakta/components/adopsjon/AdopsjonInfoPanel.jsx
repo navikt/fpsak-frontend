@@ -10,7 +10,7 @@ import { getSoknad, getFamiliehendelse, getAksjonspunkter } from 'behandlingFpsa
 import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
 import withDefaultToggling from 'behandlingFpsak/src/fakta/withDefaultToggling';
 import DokumentasjonFaktaForm from 'behandlingFpsak/src/fakta/components/adopsjon/DokumentasjonFaktaForm';
-import MannAdoptererFaktaForm from 'behandlingFpsak/src/fakta/components/adopsjon/MannAdoptererFaktaForm';
+import MannAdoptererAleneFaktaForm from 'behandlingFpsak/src/fakta/components/adopsjon/MannAdoptererAleneFaktaForm';
 import EktefelleFaktaForm from 'behandlingFpsak/src/fakta/components/adopsjon/EktefelleFaktaForm';
 import {
   aksjonspunktPropType, FaktaBegrunnelseTextField, FaktaEkspandertpanel,
@@ -66,35 +66,48 @@ export const AdopsjonInfoPanelImpl = ({
     faktaId={faktaPanelCodes.ADOPSJONSVILKARET}
     readOnly={readOnly}
   >
-    <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>{getHelpTexts(aksjonspunkter)}</AksjonspunktHelpText>
+    <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
+      {getHelpTexts(aksjonspunkter)}
+    </AksjonspunktHelpText>
     <form onSubmit={formProps.handleSubmit}>
       <VerticalSpacer eightPx />
       <Row>
         <Column xs="6">
           <DokumentasjonFaktaForm
             readOnly={readOnly}
-            hasEktefellesBarnAksjonspunkt={hasAksjonspunkt(OM_ADOPSJON_GJELDER_EKTEFELLES_BARN, aksjonspunkter)}
+            hasEktefellesBarnAksjonspunkt={hasAksjonspunkt(
+              OM_ADOPSJON_GJELDER_EKTEFELLES_BARN,
+              aksjonspunkter,
+            )}
           />
         </Column>
         <Column xs="6">
-          { hasAksjonspunkt(OM_ADOPSJON_GJELDER_EKTEFELLES_BARN, aksjonspunkter)
-            && <EktefelleFaktaForm readOnly={readOnly} />
-          }
-          { hasAksjonspunkt(OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE, aksjonspunkter)
-            && <MannAdoptererFaktaForm readOnly={readOnly} />
-          }
+          {hasAksjonspunkt(OM_ADOPSJON_GJELDER_EKTEFELLES_BARN, aksjonspunkter) && (
+          <EktefelleFaktaForm readOnly={readOnly} />
+          )}
+          {hasAksjonspunkt(OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE, aksjonspunkter) && (
+          <MannAdoptererAleneFaktaForm readOnly={readOnly} />
+          )}
         </Column>
       </Row>
-      {(aksjonspunkter && aksjonspunkter.length > 0)
-      && (
+      {aksjonspunkter && aksjonspunkter.length > 0 && (
       <ElementWrapper>
         <VerticalSpacer twentyPx />
-        <FaktaBegrunnelseTextField isDirty={formProps.dirty} isSubmittable={submittable} isReadOnly={readOnly} hasBegrunnelse={!!initialValues.begrunnelse} />
+        <FaktaBegrunnelseTextField
+          isDirty={formProps.dirty}
+          isSubmittable={submittable}
+          isReadOnly={readOnly}
+          hasBegrunnelse={!!initialValues.begrunnelse}
+        />
         <VerticalSpacer twentyPx />
-        <FaktaSubmitButton formName={formProps.form} isSubmittable={submittable} isReadOnly={readOnly} hasOpenAksjonspunkter={hasOpenAksjonspunkter} />
+        <FaktaSubmitButton
+          formName={formProps.form}
+          isSubmittable={submittable}
+          isReadOnly={readOnly}
+          hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+        />
       </ElementWrapper>
-      )
-      }
+      )}
     </form>
   </FaktaEkspandertpanel>
 );
@@ -118,7 +131,7 @@ const buildInitialValues = createSelector([getSoknad, getFamiliehendelse, getAks
 
   let mannAdoptererAleneValues = {};
   if (hasAksjonspunkt(OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE, aksjonspunkter)) {
-    mannAdoptererAleneValues = MannAdoptererFaktaForm.buildInitialValues(soknad, familiehendelse);
+    mannAdoptererAleneValues = MannAdoptererAleneFaktaForm.buildInitialValues(soknad, familiehendelse);
   }
   let omAdopsjonGjelderEktefellesBarn = {};
   if (hasAksjonspunkt(OM_ADOPSJON_GJELDER_EKTEFELLES_BARN, aksjonspunkter)) {
@@ -139,7 +152,7 @@ const transformValues = (values, aksjonspunkter) => {
     aksjonspunkterArray.push(EktefelleFaktaForm.transformValues(values));
   }
   if (hasAksjonspunkt(OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE, aksjonspunkter)) {
-    aksjonspunkterArray.push(MannAdoptererFaktaForm.transformValues(values));
+    aksjonspunkterArray.push(MannAdoptererAleneFaktaForm.transformValues(values));
   }
 
   return aksjonspunkterArray.map(ap => ({
