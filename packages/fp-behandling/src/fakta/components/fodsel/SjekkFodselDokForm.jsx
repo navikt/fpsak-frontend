@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { formPropTypes } from 'redux-form';
+import { formPropTypes, FieldArray } from 'redux-form';
 import { createSelector } from 'reselect';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column } from 'nav-frontend-grid';
@@ -27,10 +27,16 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import FaktaGruppe from 'behandlingFpsak/src/fakta/components/FaktaGruppe';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
+import avklartBarnFieldArray from './AvklartBarnFieldArray';
 import styles from './SjekkFodselDokForm.less';
 
+// TODO: Remove after PFP-574
 const minValue1 = minValue(1);
 const maxValue9 = maxValue(9);
+
+export const AVKLARTE_BARN_FORM_NAME_PREFIX = 'avklartBarn';
+
+export const avklarteBarnFieldArrayName = 'avklartBarn';
 
 /**
  * FodselInfoPanel
@@ -46,6 +52,7 @@ export const SjekkFodselDokForm = ({
   dirty,
   initialValues,
   submittable,
+  avklartBarn,
 }) => (
   <ElementWrapper>
     <FodselSammenligningPanel />
@@ -84,9 +91,11 @@ export const SjekkFodselDokForm = ({
       {(!fodselInfo || !fodselInfo.length) && dokumentasjonForeligger
       && (
         <div className={styles.clearfix}>
-          <Column xs="6">
+          <Column xs="12">
             <ArrowBox>
               {<FormattedMessage id="SjekkFodselDokForm.FyllInnDokumenterteOpplysninger" />}
+              {!avklartBarn
+              && (
               <div className={styles.fodselRow}>
                 <Column xs="5" className={styles.datePickerField}>
                   <DatepickerField
@@ -112,6 +121,17 @@ export const SjekkFodselDokForm = ({
                   />
                 </Column>
               </div>
+              )
+              }
+              {avklartBarn && (
+                <FieldArray
+                  name={avklarteBarnFieldArrayName}
+                  component={avklartBarnFieldArray}
+                  readOnly={readOnly}
+                  avklartBarn={avklartBarn}
+                />
+              )
+              }
             </ArrowBox>
           </Column>
         </div>
@@ -131,6 +151,7 @@ SjekkFodselDokForm.propTypes = {
     kode: PropTypes.string,
     navn: PropTypes.string,
   }),
+  avklartBarn: PropTypes.arrayOf(PropTypes.shape()),
   dokumentasjonForeliggerIsEdited: PropTypes.bool,
   submittable: PropTypes.bool.isRequired,
   ...formPropTypes,
@@ -144,8 +165,19 @@ SjekkFodselDokForm.defaultProps = {
     kode: '',
     navn: '',
   },
+  avklartBarn: undefined,
 };
 
+const createNewChildren = (antallBarnFraSoknad) => {
+  let antallBarn = antallBarnFraSoknad;
+  const childrenArray = [];
+  while (antallBarn > 0) {
+    childrenArray.push({ fodselsdato: '', barnDod: false, dodsDato: '' });
+    antallBarn -= 1;
+  }
+  return childrenArray;
+};
+/*
 export const buildInitialValues = createSelector([getFamiliehendelse, getAksjonspunkter], (familiehendelse, aksjonspunkter) => ({
   fodselsdato: familiehendelse.fodselsdato ? familiehendelse.fodselsdato : null,
   antallBarnFodt: familiehendelse.antallBarnFodsel ? familiehendelse.antallBarnFodsel : null,
@@ -154,7 +186,32 @@ export const buildInitialValues = createSelector([getFamiliehendelse, getAksjons
   brukAntallBarnITps: familiehendelse.brukAntallBarnFraTps !== null
     ? familiehendelse.brukAntallBarnFraTps : undefined,
   ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL)),
-}));
+})); */
+
+export const buildInitialValues = createSelector([getFamiliehendelse, getAksjonspunkter, getSoknadAntallBarn],
+  (familiehendelse, aksjonspunkter, soknadAntallBarn) => {
+    if (familiehendelse.avklartBarn && familiehendelse.avklartBarn !== null) {
+      return ({
+        dokumentasjonForeligger: familiehendelse.dokumentasjonForeligger !== null
+          ? familiehendelse.dokumentasjonForeligger : undefined,
+        brukAntallBarnITps: familiehendelse.brukAntallBarnFraTps !== null
+          ? familiehendelse.brukAntallBarnFraTps : undefined,
+        avklartBarn: familiehendelse.avklartBarn ? familiehendelse.avklartBarn : createNewChildren(soknadAntallBarn),
+        ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL)),
+      });
+    }
+    // TODO: remove when 574 is in place
+    return ({
+      fodselsdato: familiehendelse.fodselsdato ? familiehendelse.fodselsdato : null,
+      antallBarnFodt: familiehendelse.antallBarnFodsel ? familiehendelse.antallBarnFodsel : null,
+      dokumentasjonForeligger: familiehendelse.dokumentasjonForeligger !== null
+        ? familiehendelse.dokumentasjonForeligger : undefined,
+      brukAntallBarnITps: familiehendelse.brukAntallBarnFraTps !== null
+        ? familiehendelse.brukAntallBarnFraTps : undefined,
+      ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL)),
+    });
+  });
+
 
 const getAntallBarn = (brukAntallBarnITps, antallBarnLagret, antallBarnFraSoknad, antallBarnFraTps) => {
   if (antallBarnFraTps === 0) {
@@ -169,6 +226,7 @@ const transformValues = (values, antallBarnFraSoknad, antallBarnFraTps, fodselIn
   antallBarnFodt: values.dokumentasjonForeligger
     ? getAntallBarn(values.brukAntallBarnITps, values.antallBarnFodt, antallBarnFraSoknad, antallBarnFraTps) : undefined,
   dokumentasjonForeligger: values.dokumentasjonForeligger,
+  uidentifiserteBarn: values.avklartBarn,
   brukAntallBarnITps: fodselInfo && !!fodselInfo.length ? values.brukAntallBarnITps : false,
   ...FaktaBegrunnelseTextField.transformValues(values),
 });
@@ -182,6 +240,7 @@ const mapStateToProps = (state, ownProps) => {
     onSubmit: values => ownProps.submitHandler(transformValues(values,
       getSoknadAntallBarn(state), getBarnFraTpsRelatertTilSoknad(state).length, fodselInfo)),
     fodselInfo,
+    avklartBarn: behandlingFormValueSelector(sjekkFodselDokForm)(state, 'avklartBarn'),
     dokumentasjonForeliggerIsEdited: getEditedStatus(state).dokumentasjonForeligger,
     dokumentasjonForeligger: behandlingFormValueSelector(sjekkFodselDokForm)(state, 'dokumentasjonForeligger'),
     behandlingsType: getBehandlingType(state),
