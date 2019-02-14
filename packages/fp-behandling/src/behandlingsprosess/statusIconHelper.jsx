@@ -1,8 +1,8 @@
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
-import beregningsgrunnlagImages from 'behandlingFpsak/src/behandlingsprosess/statusIconsBeregningsgrunnlag';
-import uttakImages from 'behandlingFpsak/src/behandlingsprosess/statusIconsUttak';
-import vedtakImages from 'behandlingFpsak/src/behandlingsprosess/statusIconsVedtak';
-import avregningImages from 'behandlingFpsak/src/behandlingsprosess/statusIconsAvregning';
+import statusIconsBeregningsgrunnlag from 'behandlingFpsak/src/behandlingsprosess/statusIconsBeregningsgrunnlag';
+import statusIconsUttak from 'behandlingFpsak/src/behandlingsprosess/statusIconsUttak';
+import statusIconsVedtak from 'behandlingFpsak/src/behandlingsprosess/statusIconsVedtak';
+import statusIconsAvregning from 'behandlingFpsak/src/behandlingsprosess/statusIconsAvregning';
 
 import innvilgetHoverIkonUrl from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import avslattIkonUrl from '@fpsak-frontend/assets/images/avslaatt.svg';
@@ -35,10 +35,10 @@ const vilkarImages = {
 };
 
 const behandlingspunktImages = {
-  [behandlingspunktCodes.VEDTAK]: vedtakImages,
-  [behandlingspunktCodes.BEREGNINGSGRUNNLAG]: beregningsgrunnlagImages,
-  [behandlingspunktCodes.UTTAK]: uttakImages,
-  [behandlingspunktCodes.AVREGNING]: avregningImages,
+  [behandlingspunktCodes.VEDTAK]: statusIconsVedtak,
+  [behandlingspunktCodes.BEREGNINGSGRUNNLAG]: statusIconsBeregningsgrunnlag,
+  [behandlingspunktCodes.UTTAK]: statusIconsUttak,
+  [behandlingspunktCodes.AVREGNING]: statusIconsAvregning,
 };
 
 const findStatusImageSrc = (isHovering, images, isSelected, isAksjonspunktOpen, status) => {

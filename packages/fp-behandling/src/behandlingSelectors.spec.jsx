@@ -456,9 +456,9 @@ describe('behandlingSelectors', () => {
         id: 2,
       };
 
-      const editedFields = getEditedStatus.resultFunc(soknad, familiehendelse, personopplysning, annenPartPersonopplysning);
+      const isFieldEdited = getEditedStatus.resultFunc(soknad, familiehendelse, personopplysning, annenPartPersonopplysning);
 
-      expect(editedFields.termindato).is.true;
+      expect(isFieldEdited.termindato).is.true;
     });
 
     it('skal markere at termindato ikke er endret', () => {
@@ -482,9 +482,9 @@ describe('behandlingSelectors', () => {
         id: 2,
       };
 
-      const editedFields = getEditedStatus.resultFunc(soknad, familiehendelse, personopplysning, annenPartPersonopplysning);
+      const isFieldEdited = getEditedStatus.resultFunc(soknad, familiehendelse, personopplysning, annenPartPersonopplysning);
 
-      expect(editedFields.termindato).is.false;
+      expect(isFieldEdited.termindato).is.false;
     });
   });
 

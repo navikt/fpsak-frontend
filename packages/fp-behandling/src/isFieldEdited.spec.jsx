@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import editedFields from './editedFields';
+import isFieldEdited from './isFieldEdited';
 
 const personopplysning = {
   fnr: '24069305012',
@@ -138,14 +138,14 @@ const soknad = {
   },
 };
 
-describe('editedFields', () => {
+describe('isFieldEdited', () => {
   describe('termindato', () => {
     it('skal vise endret termindato', () => {
       const familiehendelse = {
         termindato: '2018-07-28',
       };
 
-      const isTermindatoEdited = editedFields(soknad, familiehendelse, personopplysning).termindato;
+      const isTermindatoEdited = isFieldEdited(soknad, familiehendelse, personopplysning).termindato;
 
       expect(isTermindatoEdited).to.be.true;
     });
@@ -155,7 +155,7 @@ describe('editedFields', () => {
         termindato: '2018-07-27',
       };
 
-      const isTermindatoEdited = editedFields(soknad, familiehendelse, personopplysning).termindato;
+      const isTermindatoEdited = isFieldEdited(soknad, familiehendelse, personopplysning).termindato;
 
       expect(isTermindatoEdited).to.be.false;
     });
@@ -167,7 +167,7 @@ describe('editedFields', () => {
         utstedtdato: '2018-06-26',
       };
 
-      const isUtstedtdatoEdited = editedFields(soknad, familiehendelse, personopplysning).utstedtdato;
+      const isUtstedtdatoEdited = isFieldEdited(soknad, familiehendelse, personopplysning).utstedtdato;
 
       expect(isUtstedtdatoEdited).to.be.true;
     });
@@ -177,7 +177,7 @@ describe('editedFields', () => {
         utstedtdato: '2018-06-25',
       };
 
-      const isUtstedtdatoEdited = editedFields(soknad, familiehendelse, personopplysning).utstedtdato;
+      const isUtstedtdatoEdited = isFieldEdited(soknad, familiehendelse, personopplysning).utstedtdato;
 
       expect(isUtstedtdatoEdited).to.be.false;
     });
@@ -189,7 +189,7 @@ describe('editedFields', () => {
         antallBarnTermin: 2,
       };
 
-      const isAntallBarnEdited = editedFields(soknad, familiehendelse, personopplysning).antallBarn;
+      const isAntallBarnEdited = isFieldEdited(soknad, familiehendelse, personopplysning).antallBarn;
 
       expect(isAntallBarnEdited).to.be.true;
     });
@@ -199,7 +199,7 @@ describe('editedFields', () => {
         antallBarnTermin: 1,
       };
 
-      const isAntallBarnEdited = editedFields(soknad, familiehendelse, personopplysning).antallBarn;
+      const isAntallBarnEdited = isFieldEdited(soknad, familiehendelse, personopplysning).antallBarn;
 
       expect(isAntallBarnEdited).to.be.false;
     });
@@ -211,7 +211,7 @@ describe('editedFields', () => {
         vilkarType: 'some value',
       };
 
-      const isVilkarTypeEdited = editedFields(soknad, familiehendelse, personopplysning).vilkarType;
+      const isVilkarTypeEdited = isFieldEdited(soknad, familiehendelse, personopplysning).vilkarType;
 
       expect(isVilkarTypeEdited).to.be.true;
     });
@@ -233,7 +233,8 @@ describe('editedFields', () => {
 
       const adopsjonsSoknad = { ...soknad, ...endretDato };
 
-      const isAdopsjonFodelsedatoerEdited = editedFields(adopsjonsSoknad, familiehendelse, personopplysning).adopsjonFodelsedatoer;
+      const isAdopsjonFodelsedatoerEdited = isFieldEdited(adopsjonsSoknad, familiehendelse, personopplysning)
+        .adopsjonFodelsedatoer;
 
       expect(isAdopsjonFodelsedatoerEdited[1]).to.be.true;
     });
@@ -247,7 +248,8 @@ describe('editedFields', () => {
 
       const adopsjonsSoknad = { ...soknad, ...familiehendelse };
 
-      const isAdopsjonFodelsedatoerEdited = editedFields(adopsjonsSoknad, familiehendelse, personopplysning).adopsjonFodelsedatoer;
+      const isAdopsjonFodelsedatoerEdited = isFieldEdited(adopsjonsSoknad, familiehendelse, personopplysning)
+        .adopsjonFodelsedatoer;
 
       expect(isAdopsjonFodelsedatoerEdited[1]).to.be.false;
     });
@@ -261,7 +263,8 @@ describe('editedFields', () => {
 
       const omsorgsSoknad = { ...soknad, omsorgsovertakelseDato: '2018-01-10' };
 
-      const isOmsorgsovertakelseDatoEdited = editedFields(omsorgsSoknad, familiehendelse, personopplysning).omsorgsovertakelseDato;
+      const isOmsorgsovertakelseDatoEdited = isFieldEdited(omsorgsSoknad, familiehendelse, personopplysning)
+        .omsorgsovertakelseDato;
 
       expect(isOmsorgsovertakelseDatoEdited).to.be.true;
     });
@@ -273,7 +276,8 @@ describe('editedFields', () => {
 
       const omsorgsSoknad = { ...soknad, omsorgsovertakelseDato: '2018-01-01' };
 
-      const isOmsorgsovertakelseDatoEdited = editedFields(omsorgsSoknad, familiehendelse, personopplysning).omsorgsovertakelseDato;
+      const isOmsorgsovertakelseDatoEdited = isFieldEdited(omsorgsSoknad, familiehendelse, personopplysning)
+        .omsorgsovertakelseDato;
 
       expect(isOmsorgsovertakelseDatoEdited).to.be.false;
     });
@@ -287,7 +291,8 @@ describe('editedFields', () => {
 
       const ankomstSoknad = { ...soknad, barnetsAnkomstTilNorgeDato: '2018-01-10' };
 
-      const isBarnetsAnkomstTilNorgeDatoEdited = editedFields(ankomstSoknad, familiehendelse, personopplysning).barnetsAnkomstTilNorgeDato;
+      const isBarnetsAnkomstTilNorgeDatoEdited = isFieldEdited(ankomstSoknad, familiehendelse, personopplysning)
+        .barnetsAnkomstTilNorgeDato;
 
       expect(isBarnetsAnkomstTilNorgeDatoEdited).to.be.true;
     });
@@ -299,7 +304,8 @@ describe('editedFields', () => {
 
       const ankomstSoknad = { ...soknad, barnetsAnkomstTilNorgeDato: '2018-01-01' };
 
-      const isBarnetsAnkomstTilNorgeDatoEdited = editedFields(ankomstSoknad, familiehendelse, personopplysning).barnetsAnkomstTilNorgeDato;
+      const isBarnetsAnkomstTilNorgeDatoEdited = isFieldEdited(ankomstSoknad, familiehendelse, personopplysning)
+        .barnetsAnkomstTilNorgeDato;
 
       expect(isBarnetsAnkomstTilNorgeDatoEdited).to.be.false;
     });
@@ -311,7 +317,8 @@ describe('editedFields', () => {
         antallBarnTilBeregning: 2,
       };
 
-      const isAntallBarnOmsorgOgForeldreansvarEdited = editedFields(soknad, familiehendelse, personopplysning).antallBarnOmsorgOgForeldreansvar;
+      const isAntallBarnOmsorgOgForeldreansvarEdited = isFieldEdited(soknad, familiehendelse, personopplysning)
+        .antallBarnOmsorgOgForeldreansvar;
 
       expect(isAntallBarnOmsorgOgForeldreansvarEdited).to.be.true;
     });
@@ -321,7 +328,8 @@ describe('editedFields', () => {
         antallBarnTilBeregning: 1,
       };
 
-      const isAntallBarnOmsorgOgForeldreansvarEdited = editedFields(soknad, familiehendelse, personopplysning).antallBarnOmsorgOgForeldreansvar;
+      const isAntallBarnOmsorgOgForeldreansvarEdited = isFieldEdited(soknad, familiehendelse, personopplysning)
+        .antallBarnOmsorgOgForeldreansvar;
 
       expect(isAntallBarnOmsorgOgForeldreansvarEdited).to.be.false;
     });
@@ -331,7 +339,11 @@ describe('editedFields', () => {
     it('skal vise endret fodselsdatoer', () => {
       const familiehendelse = {};
 
-      const isFodselsdatoerEdited = editedFields({ ...soknad, fodselsdatoer: { 1: '2018-06-30' } }, familiehendelse, personopplysning).fodselsdatoer;
+      const isFodselsdatoerEdited = isFieldEdited(
+        { ...soknad, fodselsdatoer: { 1: '2018-06-30' } },
+        familiehendelse,
+        personopplysning,
+      ).fodselsdatoer;
 
       expect(isFodselsdatoerEdited[1]).to.be.true;
     });
@@ -339,7 +351,7 @@ describe('editedFields', () => {
     it('skal ikke vise uendret fodselsdatoer', () => {
       const familiehendelse = {};
 
-      const isFodselsdatoerEdited = editedFields(soknad, familiehendelse, personopplysning).fodselsdatoer;
+      const isFodselsdatoerEdited = isFieldEdited(soknad, familiehendelse, personopplysning).fodselsdatoer;
 
       expect(isFodselsdatoerEdited[1]).to.be.false;
     });
@@ -351,7 +363,7 @@ describe('editedFields', () => {
         ektefellesBarn: 'some value',
       };
 
-      const isEktefellesBarnEdited = editedFields(soknad, familiehendelse, personopplysning).ektefellesBarn;
+      const isEktefellesBarnEdited = isFieldEdited(soknad, familiehendelse, personopplysning).ektefellesBarn;
 
       expect(isEktefellesBarnEdited).to.be.true;
     });
@@ -359,7 +371,7 @@ describe('editedFields', () => {
     it('skal ikke vise uendret ektefellesBarn', () => {
       const familiehendelse = {};
 
-      const isEktefellesBarnEdited = editedFields(soknad, familiehendelse, personopplysning).ektefellesBarn;
+      const isEktefellesBarnEdited = isFieldEdited(soknad, familiehendelse, personopplysning).ektefellesBarn;
 
       expect(isEktefellesBarnEdited).to.be.false;
     });
@@ -371,7 +383,8 @@ describe('editedFields', () => {
         mannAdoptererAlene: 'some value',
       };
 
-      const isMannAdoptererAleneEdited = editedFields(soknad, familiehendelse, personopplysning).mannAdoptererAlene;
+      const isMannAdoptererAleneEdited = isFieldEdited(soknad, familiehendelse, personopplysning)
+        .mannAdoptererAlene;
 
       expect(isMannAdoptererAleneEdited).to.be.true;
     });
@@ -379,7 +392,8 @@ describe('editedFields', () => {
     it('skal ikke vise uendret mannAdoptererAlene', () => {
       const familiehendelse = {};
 
-      const isMannAdoptererAleneEdited = editedFields(soknad, familiehendelse, personopplysning).mannAdoptererAlene;
+      const isMannAdoptererAleneEdited = isFieldEdited(soknad, familiehendelse, personopplysning)
+        .mannAdoptererAlene;
 
       expect(isMannAdoptererAleneEdited).to.be.false;
     });
@@ -391,7 +405,8 @@ describe('editedFields', () => {
         dokumentasjonForeligger: 'some value',
       };
 
-      const isDokumentasjonForeliggerEdited = editedFields(soknad, familiehendelse, personopplysning).dokumentasjonForeligger;
+      const isDokumentasjonForeliggerEdited = isFieldEdited(soknad, familiehendelse, personopplysning)
+        .dokumentasjonForeligger;
 
       expect(isDokumentasjonForeliggerEdited).to.be.true;
     });
@@ -399,7 +414,8 @@ describe('editedFields', () => {
     it('skal ikke vise uendret dokumentasjonForeligger', () => {
       const familiehendelse = {};
 
-      const isDokumentasjonForeliggerEdited = editedFields(soknad, familiehendelse, personopplysning).dokumentasjonForeligger;
+      const isDokumentasjonForeliggerEdited = isFieldEdited(soknad, familiehendelse, personopplysning)
+        .dokumentasjonForeligger;
 
       expect(isDokumentasjonForeliggerEdited).to.be.false;
     });
