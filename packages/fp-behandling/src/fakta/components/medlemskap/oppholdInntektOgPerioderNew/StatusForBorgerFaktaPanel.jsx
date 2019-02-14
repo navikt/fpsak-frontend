@@ -2,18 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Row, Column } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import { behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import FaktaGruppe from 'behandlingFpsak/src/fakta/components/FaktaGruppe';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, ArrowBox } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-
-import styles from './statusForBorgerFaktaPanel.less';
 
 /**
  * StatusForBorgerFaktaPanel
@@ -21,49 +18,58 @@ import styles from './statusForBorgerFaktaPanel.less';
  * Presentasjonskomponent. Setter opp aksjonspunktet for avklaring av borgerstatus (Medlemskapsvilkåret).
  */
 const StatusForBorgerFaktaPanelImpl = ({
-  readOnly,
-  erEosBorger,
-  isBorgerAksjonspunktClosed,
-  apKode,
+  readOnly, erEosBorger, isBorgerAksjonspunktClosed, apKode,
 }) => (
   <FaktaGruppe aksjonspunktCode={apKode} titleCode="StatusForBorgerFaktaPanel.ApplicationInformation">
-    <RadioGroupField className={styles.radioGroup} name="erEosBorger" validate={[required]} readOnly={readOnly}>
+    <RadioGroupField name="erEosBorger" validate={[required]} readOnly={readOnly}>
       <RadioOption label={{ id: 'StatusForBorgerFaktaPanel.CitizenEEA' }} value />
       <RadioOption label={{ id: 'StatusForBorgerFaktaPanel.CitizenOutsideEEA' }} value={false} />
     </RadioGroupField>
 
-    {erEosBorger
-    && (
-    <div className={styles.arrowLineEos}>
-      <Undertekst><FormattedMessage id="StatusForBorgerFaktaPanel.Oppholdsrett" /></Undertekst>
-      <VerticalSpacer fourPx />
-      <Row className={styles.error}>
-        <Column xs="9">
-          <RadioGroupField name="oppholdsrettVurdering" validate={[required]} readOnly={readOnly} isEdited={isBorgerAksjonspunktClosed}>
+    {erEosBorger && (
+      <React.Fragment>
+        <ArrowBox alignOffset={0}>
+          <Undertekst>
+            <FormattedMessage id="StatusForBorgerFaktaPanel.Oppholdsrett" />
+          </Undertekst>
+          <VerticalSpacer fourPx />
+          <RadioGroupField
+            name="oppholdsrettVurdering"
+            validate={[required]}
+            readOnly={readOnly}
+            isEdited={isBorgerAksjonspunktClosed}
+          >
             <RadioOption label={{ id: 'StatusForBorgerFaktaPanel.HarOppholdsrett' }} value />
-            <RadioOption label={<FormattedHTMLMessage id="StatusForBorgerFaktaPanel.HarIkkeOppholdsrett" />} value={false} />
+            <RadioOption
+              label={<FormattedHTMLMessage id="StatusForBorgerFaktaPanel.HarIkkeOppholdsrett" />}
+              value={false}
+            />
           </RadioGroupField>
-        </Column>
-      </Row>
-    </div>
-    )
-    }
-    {erEosBorger === false
-    && (
-    <div className={styles.arrowLineOther}>
-      <Undertekst><FormattedMessage id="StatusForBorgerFaktaPanel.LovligOpphold" /></Undertekst>
-      <VerticalSpacer fourPx />
-      <Row className={styles.error}>
-        <Column xs="12">
-          <RadioGroupField name="lovligOppholdVurdering" validate={[required]} readOnly={readOnly} isEdited={isBorgerAksjonspunktClosed}>
+        </ArrowBox>
+      </React.Fragment>
+    )}
+    {erEosBorger === false && (
+      <React.Fragment>
+        <ArrowBox alignOffset={122}>
+          <Undertekst>
+            <FormattedMessage id="StatusForBorgerFaktaPanel.LovligOpphold" />
+          </Undertekst>
+          <VerticalSpacer fourPx />
+          <RadioGroupField
+            name="lovligOppholdVurdering"
+            validate={[required]}
+            readOnly={readOnly}
+            isEdited={isBorgerAksjonspunktClosed}
+          >
             <RadioOption label={{ id: 'StatusForBorgerFaktaPanel.HarLovligOpphold' }} value />
-            <RadioOption label={<FormattedHTMLMessage id="StatusForBorgerFaktaPanel.HarIkkeLovligOpphold" />} value={false} />
+            <RadioOption
+              label={<FormattedHTMLMessage id="StatusForBorgerFaktaPanel.HarIkkeLovligOpphold" />}
+              value={false}
+            />
           </RadioGroupField>
-        </Column>
-      </Row>
-    </div>
-    )
-    }
+        </ArrowBox>
+      </React.Fragment>
+    )}
   </FaktaGruppe>
 );
 
