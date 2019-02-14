@@ -144,9 +144,11 @@ const getCustomTimes = (
   isRevurdering,
   barnFraTps,
   person,
+  familiehendelse,
 ) => {
   // TODO: trumfa tps med avklartebarn fra lösningen - blir TPS-barn en del av dem?
-  const dodeBarn = barnFraTps.filter(barn => barn.dodsdato);
+  const dodeBarn = familiehendelse && !familiehendelse.brukAntallBarnFraTPS && familiehendelse.avklartBarn && familiehendelse.avklartBarn.length > 0
+    ? familiehendelse.avklartBarn.filter(barn => barn.dodsdato) : barnFraTps.filter(barn => barn.dodsdato);
 
   const customTimesBuilder = {
     soknad: parseDateString(soknadDate),
@@ -382,6 +384,7 @@ export class UttakImpl extends Component {
       harSoktOmFlerbarnsdager,
       annenForelderSoktOmFlerbarnsdager,
       reduxFormChange: formChange,
+      familiehendelse,
     } = this.props;
     const { selectedItem } = this.state;
     const customTimes = getCustomTimes(
@@ -394,6 +397,7 @@ export class UttakImpl extends Component {
       isRevurdering,
       barnFraTps,
       person,
+      familiehendelse,
     );
     return (
       <div>
@@ -530,6 +534,7 @@ UttakImpl.propTypes = {
   annenForelderSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
   barnFraTps: PropTypes.arrayOf(PropTypes.shape()),
   person: PropTypes.shape(),
+  familiehendelse: PropTypes.shape(),
 };
 
 UttakImpl.defaultProps = {
@@ -544,6 +549,7 @@ UttakImpl.defaultProps = {
   medsokerKjonnKode: undefined,
   barnFraTps: [],
   person: undefined,
+  familiehendelse: undefined,
 };
 
 const determineMottatDato = (soknadsDato, mottatDato) => {
@@ -625,6 +631,7 @@ const mapStateToProps = (state, props) => {
     annenForelderSoktOmFlerbarnsdager,
     barnFraTps,
     person,
+    familiehendelse,
   };
 };
 
