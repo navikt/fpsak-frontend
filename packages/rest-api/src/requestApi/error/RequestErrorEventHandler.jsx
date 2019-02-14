@@ -29,8 +29,9 @@ const blobParser = (blob: any): Promise<string> => {
         reject(new Error('Problem parsing blob'));
       }
     };
-
-    fileReader.readAsText(blob);
+    if (blob instanceof Blob) {
+      fileReader.readAsText(blob);
+    }
   });
 };
 
