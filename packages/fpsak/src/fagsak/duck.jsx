@@ -79,10 +79,12 @@ const initialState = {
 };
 
 const openPreview = (data) => {
-  if (window.navigator.msSaveOrOpenBlob) {
-    window.navigator.msSaveOrOpenBlob(data);
-  } else {
-    window.open(URL.createObjectURL(data));
+  if (data) {
+    if (window.navigator.msSaveOrOpenBlob) {
+      window.navigator.msSaveOrOpenBlob(data);
+    } else {
+      window.open(URL.createObjectURL(data));
+    }
   }
 };
 
