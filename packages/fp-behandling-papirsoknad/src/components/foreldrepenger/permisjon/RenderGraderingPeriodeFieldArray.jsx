@@ -14,6 +14,9 @@ import {
   DatepickerField, SelectField, InputField, CheckboxField, DecimalField,
 } from '@fpsak-frontend/form';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import arbeidskategori from '@fpsak-frontend/kodeverk/src/arbeidskategori';
+import { getKodeverk } from 'papirsoknad/src/duck';
 import moment from 'moment/moment';
 import { gyldigeUttakperioder } from './RenderPermisjonPeriodeFieldArray';
 
