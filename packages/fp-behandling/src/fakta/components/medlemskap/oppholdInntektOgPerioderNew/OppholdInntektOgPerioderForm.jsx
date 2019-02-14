@@ -257,13 +257,13 @@ const transformValues = (values, aksjonspunkter) => {
 
 
 const buildInitalValues = createSelector([getSoknad, getFagsakPerson, getBehandlingMedlemNew, getBehandlingRevurderingAvFortsattMedlemskapFom],
-  (soknad, person, medlem, gjeldendeFom) => ({
+  (soknad = {}, person = {}, medlem = {}, gjeldendeFom = undefined) => ({
     soknad,
     person,
     gjeldendeFom,
     medlemskapPerioder: medlem.medlemskapPerioder,
     inntekter: medlem.inntekt,
-    perioder: medlem.perioder.map(periode => ({
+    perioder: medlem.perioder || [].map(periode => ({
       ...periode,
       id: guid(),
     })),
