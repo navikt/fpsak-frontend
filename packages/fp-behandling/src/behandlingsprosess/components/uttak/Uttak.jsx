@@ -584,6 +584,7 @@ UttakImpl.propTypes = {
   saksnummer: PropTypes.number.isRequired,
   barnFraTps: PropTypes.arrayOf(PropTypes.shape()),
   person: PropTypes.shape(),
+  familiehendelse: PropTypes.shape(),
 };
 
 UttakImpl.defaultProps = {
