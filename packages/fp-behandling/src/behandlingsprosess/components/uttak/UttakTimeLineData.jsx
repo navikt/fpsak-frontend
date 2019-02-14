@@ -41,61 +41,37 @@ const getCorrectEmptyArbeidsForhold = (preiodeTypeKode, arbeidsForhold) => {
   return [];
 };
 
-const hentApTekst = (kode, stonadskonto, aktiviteter) => {
+const hentApTekst = (manuellBehandlingÅrsak, stonadskonto, aktiviteter) => {
   const texts = [];
 
-  const uttakPanelAksjonsPunktKoder = {
-    5001: 'UttakPanel.Aksjonspunkt.5001',
-    5002: 'UttakPanel.Aksjonspunkt.5002',
-    5003: 'UttakPanel.Aksjonspunkt.5003',
-    5004: 'UttakPanel.Aksjonspunkt.5004',
-    5005: 'UttakPanel.Aksjonspunkt.5005',
-    5006: 'UttakPanel.Aksjonspunkt.5006',
-    5007: 'UttakPanel.Aksjonspunkt.5007',
-    5009: 'UttakPanel.Aksjonspunkt.5009',
-    5010: 'UttakPanel.Aksjonspunkt.5010',
-    5011: 'UttakPanel.Aksjonspunkt.5011',
-    5012: 'UttakPanel.Aksjonspunkt.5012',
-    5014: 'UttakPanel.Aksjonspunkt.5014',
-    5016: 'UttakPanel.Aksjonspunkt.5016',
-    5024: 'UttakPanel.Aksjonspunkt.5024',
-    5072: 'UttakPanel.Aksjonspunkt.5072',
-    5073: 'UttakPanel.Aksjonspunkt.5073',
-    5074: 'UttakPanel.Aksjonspunkt.5074',
-    5075: 'UttakPanel.Aksjonspunkt.5075',
-    5076: 'UttakPanel.Aksjonspunkt.5076',
-    5077: 'UttakPanel.Aksjonspunkt.5077',
-    5078: 'UttakPanel.Aksjonspunkt.5078',
-    5079: 'UttakPanel.Aksjonspunkt.5079',
-    5098: 'UttakPanel.Aksjonspunkt.5098',
-  };
-
-  if (kode === '5001') {
+  if (manuellBehandlingÅrsak.kode === '5001') {
     const arbeidsForhold = getCorrectEmptyArbeidsForhold(aktiviteter, stonadskonto);
     const arbeidsForholdMedNullDagerIgjen = arbeidsForhold.join();
     if (arbeidsForhold.length > 1) {
-      texts.push(<FormattedMessage
-        key="manuellÅrsak"
-        id="UttakPanel.manuellBehandlingÅrsakArbeidsforhold"
-        values={{ arbeidsforhold: arbeidsForholdMedNullDagerIgjen }}
-      />);
+      texts.push(
+        <FormattedMessage
+          key="manuellÅrsak"
+          id="UttakPanel.manuellBehandlingÅrsakArbeidsforhold"
+          values={{ arbeidsforhold: arbeidsForholdMedNullDagerIgjen }}
+        />,
+      );
     } else if (arbeidsForhold.length === 1) {
-      texts.push(<FormattedMessage
-        key="manuellÅrsak"
-        id="UttakPanel.manuellBehandlingÅrsakEnskiltArbeidsforhold"
-        values={{ arbeidsforhold: arbeidsForhold }}
-      />);
+      texts.push(
+        <FormattedMessage
+          key="manuellÅrsak"
+          id="UttakPanel.manuellBehandlingÅrsakEnskiltArbeidsforhold"
+          values={{ arbeidsforhold: arbeidsForhold }}
+        />,
+      );
     } else {
-      texts.push(<FormattedMessage
-        key="manuellÅrsak"
-        id={uttakPanelAksjonsPunktKoder[kode]}
-      />);
+      texts.push(
+        <React.Fragment key={`kode-${manuellBehandlingÅrsak.kode}`}>
+          {manuellBehandlingÅrsak.navn}
+        </React.Fragment>,
+      );
     }
   } else {
-    texts.push(<FormattedMessage
-      key="manuellÅrsak"
-      id={uttakPanelAksjonsPunktKoder[kode]}
-    />);
+    texts.push(<React.Fragment key={`kode-${manuellBehandlingÅrsak.kode}`}>{manuellBehandlingÅrsak.navn}</React.Fragment>);
   }
 
   return texts;
@@ -274,8 +250,8 @@ export class UttakTimeLineData extends Component {
             <ElementWrapper>
               <AksjonspunktHelpText isAksjonspunktOpen={selectedItemData.manuellBehandlingÅrsak !== null}>
                 {selectedItemData.periodeType
-                  ? hentApTekst(selectedItemData.manuellBehandlingÅrsak.kode, stonadskonto, selectedItemData.periodeType.kode)
-                  : hentApTekst(selectedItemData.manuellBehandlingÅrsak.kode, stonadskonto)}
+                  ? hentApTekst(selectedItemData.manuellBehandlingÅrsak, stonadskonto, selectedItemData.periodeType.kode)
+                  : hentApTekst(selectedItemData.manuellBehandlingÅrsak, stonadskonto)}
               </AksjonspunktHelpText>
               <VerticalSpacer twentyPx />
             </ElementWrapper>
