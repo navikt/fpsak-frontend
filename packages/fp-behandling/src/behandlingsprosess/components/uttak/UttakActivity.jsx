@@ -322,6 +322,7 @@ const validateUttakActivity = (values) => {
     const invalidArbeidsProsentVidUsettelse = isArbeidsProsentVidUtsettelse100(values, values.UttakFieldArray);
     if (invalidArbeidsProsentVidUsettelse && values.utsettelseType.kode === utsettelseArsakCodes.ARBEID) {
       errors = {
+        ...errors,
         _error:
   <AlertStripe type="advarsel" className={styles.advarsel}>
     <FormattedMessage
@@ -330,20 +331,22 @@ const validateUttakActivity = (values) => {
   </AlertStripe>,
       };
     }
+
+    if (values.utsettelseType && values.utsettelseType.kode !== '-' && values.erOppfylt) {
+      values.UttakFieldArray.forEach((aktivitet, index) => {
+        const daysInvalid = isTrekkdagerMerEnnNullUtsettelse(aktivitet.days);
+        const weeksInvalid = isTrekkdagerMerEnnNullUtsettelse(aktivitet.weeks);
+        const utbetalingsgradInvalid = isUtbetalingMerEnnNullUtsettelse(aktivitet.utbetalingsgrad);
+        // cannot set property 0 of undefined
+        errors.UttakFieldArray[index] = {
+          days: daysInvalid,
+          weeks: weeksInvalid,
+          utbetalingsgrad: utbetalingsgradInvalid,
+        };
+      });
+    }
   }
 
-  if (values.UttakFieldArray && values.utsettelseType && values.utsettelseType.kode !== '-' && values.erOppfylt) {
-    values.UttakFieldArray.forEach((a, index) => {
-      const daysInvalid = isTrekkdagerMerEnnNullUtsettelse(a.days);
-      const weeksInvalid = isTrekkdagerMerEnnNullUtsettelse(a.weeks);
-      const utbetalingsgradInvalid = isUtbetalingMerEnnNullUtsettelse(a.utbetalingsgrad);
-      errors.UttakFieldArray[index] = {
-        days: daysInvalid,
-        weeks: weeksInvalid,
-        utbetalingsgrad: utbetalingsgradInvalid,
-      };
-    });
-  }
   return errors;
 };
 
