@@ -14,6 +14,7 @@ import { MockFields, metaMock } from '@fpsak-frontend/utils-test/src/redux-form-
 import { RenderGraderingPeriodeFieldArray } from './RenderGraderingPeriodeFieldArray';
 
 const graderingKvoter = [{ navn: 'Mødrekvote', kode: 'MODREKVOTE' }];
+const arbeidskategoriTyper = [{ navn: 'Arbeidstaker', kode: 'ARBEIDSTAKER' }];
 
 const fields = new MockFields('perioder', 1);
 
@@ -26,6 +27,7 @@ describe('<RenderGraderingPeriodeFieldArray>', () => {
       meta={metaMock}
       intl={intlMock}
       graderingKvoter={graderingKvoter}
+      arbeidskategoriTyper={arbeidskategoriTyper}
       readOnly={false}
       graderingValues={[{
         harSamtidigUttak: '',
@@ -54,6 +56,7 @@ describe('<RenderGraderingPeriodeFieldArray>', () => {
       meta={metaMock}
       intl={intlMock}
       graderingKvoter={graderingKvoter}
+      arbeidskategoriTyper={arbeidskategoriTyper}
       readOnly={false}
       graderingValues={[{
         harSamtidigUttak: true,
