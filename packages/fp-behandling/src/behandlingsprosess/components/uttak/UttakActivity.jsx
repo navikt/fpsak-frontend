@@ -446,6 +446,7 @@ const mapStateToProps = (state, ownProps) => {
       graderingInnvilget: selectedItem.graderingInnvilget,
       graderingAvslagAarsak: selectedItem.graderingAvslagÅrsak ? selectedItem.graderingAvslagÅrsak.kode : '-',
       oppholdArsak: selectedItem.oppholdÅrsak.kode,
+      utsettelseType: selectedItem.utsettelseType,
     },
     erOppfylt: behandlingFormValueSelector(uttakActivityForm)(state, 'erOppfylt'),
     avslagAarsakKoder: avslagAarsaker,
