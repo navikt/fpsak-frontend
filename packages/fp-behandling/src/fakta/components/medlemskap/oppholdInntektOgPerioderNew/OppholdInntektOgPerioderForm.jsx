@@ -257,7 +257,7 @@ const transformValues = (values, aksjonspunkter) => {
 
 
 const buildInitalValues = createSelector([getSoknad, getFagsakPerson, getBehandlingMedlemNew, getBehandlingRevurderingAvFortsattMedlemskapFom],
-  (soknad = {}, person = {}, medlem = {}, gjeldendeFom = undefined) => ({
+  (soknad, person, medlem = {}, gjeldendeFom = undefined) => ({
     soknad,
     person,
     gjeldendeFom,
