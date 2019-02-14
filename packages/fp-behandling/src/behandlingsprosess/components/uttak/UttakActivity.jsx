@@ -337,7 +337,6 @@ const validateUttakActivity = (values) => {
         const daysInvalid = isTrekkdagerMerEnnNullUtsettelse(aktivitet.days);
         const weeksInvalid = isTrekkdagerMerEnnNullUtsettelse(aktivitet.weeks);
         const utbetalingsgradInvalid = isUtbetalingMerEnnNullUtsettelse(aktivitet.utbetalingsgrad);
-        // cannot set property 0 of undefined
         errors.UttakFieldArray[index] = {
           days: daysInvalid,
           weeks: weeksInvalid,
