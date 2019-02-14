@@ -65,7 +65,7 @@ const createTextStrings = (fields) => {
   let arbeidsforhold = '';
   if (uttakArbeidType && uttakArbeidType.kode !== uttakArbeidTypeKodeverk.ORDINÆRT_ARBEID) {
     arbeidsforhold = <FormattedMessage id={uttakArbeidTypeTekstCodes[uttakArbeidType.kode]} />;
-  } else {
+  } else if (arbeidsgiver) {
     arbeidsforhold = lagVisningsNavn(arbeidsgiver, arbeidsforholdId);
   }
   return {
