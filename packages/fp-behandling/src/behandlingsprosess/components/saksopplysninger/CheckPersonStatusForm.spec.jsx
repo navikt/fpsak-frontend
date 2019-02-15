@@ -26,7 +26,8 @@ describe('<CheckPersonStatusForm>', () => {
 
     const helpText = wrapper.find('AksjonspunktHelpText');
     expect(helpText).to.have.length(1);
-    expect(helpText.childAt(0).text()).is.eql('Søker har personstatus: Ukjent');
+    expect(helpText.childAt(0).text())
+      .is.eql('Søker har personstatus: Ukjent. Vurder om behandlingen skal henlegges eller kan fortsette med endret personstatus');
 
     const submit = wrapper.find(BehandlingspunktBegrunnelseTextField);
     expect(submit).to.have.length(1);
