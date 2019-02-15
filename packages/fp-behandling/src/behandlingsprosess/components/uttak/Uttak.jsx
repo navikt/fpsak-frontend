@@ -18,7 +18,6 @@ import {
 import { CheckboxField } from '@fpsak-frontend/form';
 import {
   getBehandlingVersjon,
-  getStonadskontoer,
   getSoknad,
   getBehandlingYtelseFordeling,
   getFamiliehendelse,
@@ -28,8 +27,9 @@ import {
   getBehandlingStatus,
   getBehandlingUttaksperiodegrense,
 } from 'behandlingFpsak/src/behandlingSelectors';
+import { tempUpdateStonadskontoer } from 'behandlingFpsak/src/behandlingsprosess/duck';
 import { getRettigheter } from 'navAnsatt/duck';
-import { getSelectedBehandlingId } from 'behandlingFpsak/src/duck';
+import { getSelectedBehandlingId, getSelectedSaksnummer } from 'behandlingFpsak/src/duck';
 import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -42,6 +42,7 @@ import UttakMedsokerReadOnly from './UttakMedsokerReadOnly';
 import styles from './uttak.less';
 
 const ACTIVITY_PANEL_NAME = 'uttaksresultatActivity';
+const STONADSKONTOER_TEMP = 'stonadskonto';
 const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT).toDate();
 const godkjentKlassenavn = 'godkjentPeriode';
 const avvistKlassenavn = 'avvistPeriode';
@@ -157,8 +158,8 @@ const isInnvilget = uttaksresultatActivity => uttaksresultatActivity.periodeResu
  */
 
 export class UttakImpl extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.initializeActivityForm = this.initializeActivityForm.bind(this);
     this.openPeriodInfo = this.openPeriodInfo.bind(this);
     this.nextPeriod = this.nextPeriod.bind(this);
@@ -173,9 +174,11 @@ export class UttakImpl extends Component {
     this.isReadOnly = this.isReadOnly.bind(this);
     this.skalViseCheckbox = this.skalViseCheckbox.bind(this);
     this.setSelectedDefaultPeriod = this.setSelectedDefaultPeriod.bind(this);
+    this.updateStonadskontoer = this.updateStonadskontoer.bind(this);
 
     this.state = {
       selectedItem: null,
+      stonadskonto: props.stonadskonto,
     };
   }
 
@@ -215,6 +218,48 @@ export class UttakImpl extends Component {
     formChange(`${behandlingFormPrefix}.${formName}`, fieldName, fieldValue);
   }
 
+  updateStonadskontoer(values) {
+    const {
+      tempUpdateStonadskontoer: updateKontoer,
+      reduxFormChange: formChange,
+      behandlingFormPrefix,
+      formName,
+      behandlingId,
+      saksnummer,
+    } = this.props;
+
+    const transformedResultat = values.map((perioder) => {
+      const { tilknyttetStortinget, ...uta } = perioder; // NOSONAR destruct er bedre enn delete, immutable
+      const { ...transformActivity } = uta;
+      if (uta.oppholdÅrsak.kode !== '-') {
+        uta.aktiviteter = [];
+      }
+
+      const transformAktiviteter = uta.aktiviteter.map((a) => {
+        const { days, weeks, ...transformAktivitet } = a;
+        if (typeof days !== 'undefined' && typeof weeks !== 'undefined') {
+          const trekkdager = (weeks * 5) + days;
+          transformAktivitet.trekkdager = trekkdager; // regner om uker og dager til trekkdager
+        }
+        return transformAktivitet;
+      });
+      transformActivity.aktiviteter = transformAktiviteter;
+      return transformActivity;
+    });
+
+    const params = {
+      behandlingId: {
+        saksnummer,
+        behandlingId,
+      },
+      perioder: transformedResultat,
+    };
+    updateKontoer(params).then((response) => {
+      this.setState({ stonadskonto: response });
+      formChange(`${behandlingFormPrefix}.${formName}`, STONADSKONTOER_TEMP, response);
+    });
+  }
+
   initializeActivityForm(uttakActivity) {
     const { reduxFormInitialize: formInitialize, behandlingFormPrefix } = this.props;
     formInitialize(`${behandlingFormPrefix}.${ACTIVITY_PANEL_NAME}`, uttakActivity);
@@ -232,6 +277,7 @@ export class UttakImpl extends Component {
     const otherThanUpdated = uttakPerioder.filter(o => o.id !== verdier.id && o.hovedsoker);
     const sortedActivities = otherThanUpdated.concat(verdier);
     sortedActivities.sort((a, b) => a.id - b.id);
+    this.updateStonadskontoer(sortedActivities);
     this.setFormField(ACTIVITY_PANEL_NAME, sortedActivities);
     const uttakActivity = otherThanUpdated.find(o => o.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING
       || (o.tilknyttetStortinget && !Object.prototype.hasOwnProperty.call(o, 'erOppfylt')));
@@ -347,7 +393,6 @@ export class UttakImpl extends Component {
       endringsDate,
       hovedsokerKjonnKode,
       medsokerKjonnKode,
-      stonadskonto,
       dekningsgrad,
       readOnly,
       uttaksresultatActivity,
@@ -366,7 +411,7 @@ export class UttakImpl extends Component {
       annenForelderSoktOmFlerbarnsdager,
       reduxFormChange: formChange,
     } = this.props;
-    const { selectedItem } = this.state;
+    const { selectedItem, stonadskonto } = this.state;
     const customTimes = getCustomTimes(
       soknadDate,
       familiehendelseDate,
@@ -438,7 +483,6 @@ export class UttakImpl extends Component {
                   activityPanelName={ACTIVITY_PANEL_NAME}
                   isApOpen={isApOpen}
                   stonadskonto={stonadskonto}
-                  aksjonspunkter={aksjonspunkter}
                 />
               )
               }
@@ -509,6 +553,9 @@ UttakImpl.propTypes = {
   isRevurdering: PropTypes.bool,
   harSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
   annenForelderSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
+  tempUpdateStonadskontoer: PropTypes.func.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  saksnummer: PropTypes.number.isRequired,
 };
 
 UttakImpl.defaultProps = {
@@ -582,11 +629,13 @@ const mapStateToProps = (state, props) => {
 
   const annenForelderSoktOmFlerbarnsdager = annenForelderPerioder.filter(p => p.flerbarnsdager === true).length > 0;
   return {
+    saksnummer: getSelectedSaksnummer(state),
+    behandlingId: getSelectedBehandlingId(state),
     soknadDate: determineMottatDato(periodeGrenseMottatDato, soknad.mottattDato),
     familiehendelseDate: fodselTerminDato(soknad),
     endringsDate: ytelseFordeling.endringsDato ? ytelseFordeling.endringsDato : undefined,
     dekningsgrad: soknad.dekningsgrad ? soknad.dekningsgrad : undefined,
-    stonadskonto: getStonadskontoer(state),
+    stonadskonto: behandlingFormValueSelector(props.formName)(state, STONADSKONTOER_TEMP),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
     uttaksresultatActivity: uttakMedOpphold.map(periode => ({ tilknyttetStortinget, ...periode })),
     kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
@@ -606,6 +655,7 @@ const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
     reduxFormChange,
     reduxFormInitialize,
+    tempUpdateStonadskontoer,
   }, dispatch),
 });
 

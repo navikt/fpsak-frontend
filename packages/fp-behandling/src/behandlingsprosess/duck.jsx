@@ -54,6 +54,8 @@ export const overrideProsessAksjonspunkter = (behandlingIdentifier, params, shou
   return dispatch(fpsakBehandlingApi.SAVE_OVERSTYRT_AKSJONSPUNKT.makeRestApiRequest()(params))
     .then(response => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo)));
 };
+export const tempUpdateStonadskontoer = params => dispatch => dispatch(fpsakBehandlingApi.STONADSKONTOER_GITT_UTTAKSPERIODER.makeRestApiRequest()(params))
+  .then(response => response.payload);
 
 export const fetchPreviewBrev = fpsakBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();
 
