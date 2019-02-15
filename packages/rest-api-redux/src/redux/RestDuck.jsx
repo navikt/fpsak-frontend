@@ -4,9 +4,9 @@ import { createSelector } from 'reselect';
 import { RequestRunner } from '@fpsak-frontend/rest-api';
 
 import ReduxEvents from './ReduxEvents';
-import createRequestReducer from './restReducer';
-import createRequestActionTypes from './restActionTypes';
-import createRequestActionCreators from './restActionCreators';
+import createRequestReducer from './createRequestReducer';
+import createRequestActionTypes from './createRequestActionTypes';
+import createRequestActionCreators from './createRequestActionCreators';
 
 /**
  * RestDuck

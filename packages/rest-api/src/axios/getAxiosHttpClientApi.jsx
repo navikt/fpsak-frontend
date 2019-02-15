@@ -1,7 +1,7 @@
 /* @flow */
 import axios from 'axios';
 import { withScope } from '@sentry/browser';
-import initRestMethods from './axiosRestMethods';
+import initRestMethods from './initRestMethods';
 
 /**
  * getAxiosHttpClientApi
