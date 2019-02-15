@@ -75,6 +75,9 @@ describe('<Uttak>', () => {
       uttakPerioder={[]}
       harSoktOmFlerbarnsdager={false}
       annenForelderSoktOmFlerbarnsdager={false}
+      tempUpdateStonadskontoer={sinon.spy()}
+      saksnummer={123}
+      behandlingId={999}
     />);
     wrapper.setState({ selectedItem: null });
     const rows = wrapper.find('Row');
@@ -115,6 +118,9 @@ describe('<Uttak>', () => {
       soknadsType="ST-001"
       harSoktOmFlerbarnsdager={false}
       annenForelderSoktOmFlerbarnsdager={false}
+      tempUpdateStonadskontoer={sinon.spy()}
+      saksnummer={123}
+      behandlingId={999}
     />);
     wrapper.setState({ selectedItem: uttakActivities[0] });
     const checkBox = wrapper.find('CheckboxField');
@@ -156,6 +162,9 @@ describe('<Uttak>', () => {
       soknadsType="ST-001"
       harSoktOmFlerbarnsdager={false}
       annenForelderSoktOmFlerbarnsdager={false}
+      tempUpdateStonadskontoer={sinon.spy()}
+      saksnummer={123}
+      behandlingId={999}
     />);
     wrapper.setState({ selectedItem: uttakActivities[0] });
     const checkBox = wrapper.find('CheckboxField');
@@ -212,6 +221,9 @@ describe('<Uttak>', () => {
       soknadsType="ST-001"
       harSoktOmFlerbarnsdager={false}
       annenForelderSoktOmFlerbarnsdager={false}
+      tempUpdateStonadskontoer={sinon.spy()}
+      saksnummer={123}
+      behandlingId={999}
     />);
     wrapper.setState({ selectedItem: uttakActivities[0] });
     const checkBox = wrapper.find('CheckboxField');
@@ -268,6 +280,9 @@ describe('<Uttak>', () => {
       soknadsType="ST-001"
       harSoktOmFlerbarnsdager={false}
       annenForelderSoktOmFlerbarnsdager={false}
+      tempUpdateStonadskontoer={sinon.spy()}
+      saksnummer={123}
+      behandlingId={999}
     />);
     wrapper.setState({ selectedItem: uttakActivities[0] });
     expect(wrapper.state('selectedItem')).to.eql(uttakActivities[0]);

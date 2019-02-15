@@ -63,23 +63,12 @@ const createTextStrings = (arbforhold) => {
 class TimeLineInfo extends Component {
   constructor() {
     super();
-
     this.state = {
       aktiv: undefined,
       visKonto: undefined,
     };
     this.handleChange = this.handleChange.bind(this);
-    this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
   }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    const { aktiv } = this.state;
-    if (nextState.aktiv !== aktiv) {
-      return true;
-    }
-    return false;
-  }
-
 
   handleChange(konto, index) {
     const { aktiv } = this.state;
@@ -107,7 +96,7 @@ class TimeLineInfo extends Component {
     } = this.state;
 
     const gjelderFodsel = true;
-
+    let updatekonto = visKonto;
     const sortedPerioder = [
       stonadskontoType.FORELDREPENGER_FOR_FODSEL,
       stonadskontoType.FELLESPERIODE,
@@ -116,18 +105,19 @@ class TimeLineInfo extends Component {
       stonadskontoType.FORELDREPENGER,
       stonadskontoType.FLERBARNSDAGER];
 
-    const sortAsArray = () => {
-      const stonadArray = Object.keys(stonadskonto).map(key => ({
-        kontonavn: key,
-        kontoinfo: stonadskonto[key],
-      }));
-      const ordering = {};
-      sortedPerioder.forEach((s, index) => {
-        ordering[s] = index;
-      });
-      stonadArray.sort((a, b) => (ordering[a.kontonavn] - ordering[b.kontonavn]));
-      return stonadArray;
-    };
+    const stonadArray = Object.keys(stonadskonto).map(key => ({
+      kontonavn: key,
+      kontoinfo: stonadskonto[key],
+    }));
+    const ordering = {};
+    sortedPerioder.forEach((s, index) => {
+      ordering[s] = index;
+    });
+    stonadArray.sort((a, b) => (ordering[a.kontonavn] - ordering[b.kontonavn]));
+
+    if (aktiv) {
+      updatekonto = stonadArray[aktiv];
+    }
 
     const createKey = (arbeidsforhold) => {
       const { uttakArbeidType, arbeidsgiver, arbeidsforholdId } = arbeidsforhold.aktivitetIdentifikator;
@@ -175,7 +165,7 @@ class TimeLineInfo extends Component {
               <Row>
                 <div className={styles.tabs}>
                   <ul role="tablist">
-                    {sortAsArray().map((konto, index) => (
+                    {stonadArray.map((konto, index) => (
                       <TimeLineTab key={konto.kontonavn} aktiv={index === aktiv} stonadskonto={konto} onClickCallback={() => this.handleChange(konto, index)} />
                     ))
                     }
@@ -183,11 +173,11 @@ class TimeLineInfo extends Component {
                 </div>
               </Row>
               <Row>
-                {visKonto && visKonto.kontoinfo.aktivitetSaldoDtoList.length > 0
+                {updatekonto && updatekonto.kontoinfo.aktivitetSaldoDtoList.length > 0
                 && (
                   <div className={styles.visKonto}>
                     <Table headerTextCodes={headerTextCodes}>
-                      {visKonto.kontoinfo.aktivitetSaldoDtoList.map(arbforhold => (
+                      {updatekonto.kontoinfo.aktivitetSaldoDtoList.map(arbforhold => (
                         <TableRow key={createKey(arbforhold)}>
                           <TableColumn>
                             <Normaltekst>{createTextStrings(arbforhold.aktivitetIdentifikator)}</Normaltekst>

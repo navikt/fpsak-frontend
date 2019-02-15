@@ -38,6 +38,28 @@ describe('<UttakPanel>', () => {
     }],
   };
 
+  const stonadskonto = {
+    stonadskontoer: {
+      MØDREKVOTE: {
+        aktivitetSaldoDtoList: [{
+          aktivitetIdentifikator: {
+            arbeidsgiver: {
+              navn: 'UNIVERSITETET I OSLO',
+            },
+          },
+          saldo: 0,
+        },
+        {
+          aktivitetIdentifikator: {
+            arbeidsgiver: {
+              navn: 'STATOIL',
+            },
+          },
+          saldo: 4,
+        }],
+      },
+    },
+  };
 
   it('skal rendre uttakpanel uten aksjonspunkt', () => {
     const wrapper = shallowWithIntl(<UttakPanel
@@ -179,7 +201,7 @@ describe('<UttakPanel>', () => {
   });
 
   it('skal sette initielle verdier for uttaksperioder', () => {
-    const initialValues = buildInitialValues.resultFunc(uttaksresultat);
+    const initialValues = buildInitialValues.resultFunc(uttaksresultat, stonadskonto);
     expect(initialValues).to.eql({
       uttaksresultatActivity: [{
         fom: '',
@@ -210,6 +232,28 @@ describe('<UttakPanel>', () => {
         aktiviteter: [{
         }],
       }],
+      stonadskonto: {
+        stonadskontoer: {
+          MØDREKVOTE: {
+            aktivitetSaldoDtoList: [{
+              aktivitetIdentifikator: {
+                arbeidsgiver: {
+                  navn: 'UNIVERSITETET I OSLO',
+                },
+              },
+              saldo: 0,
+            },
+            {
+              aktivitetIdentifikator: {
+                arbeidsgiver: {
+                  navn: 'STATOIL',
+                },
+              },
+              saldo: 4,
+            }],
+          },
+        },
+      },
     });
   });
 });
