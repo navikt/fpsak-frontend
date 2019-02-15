@@ -9,7 +9,7 @@ import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 import errorHandler from '@fpsak-frontend/error-api-redux';
 
 import AppIndex from 'app/AppIndex';
-import configureStore from './store';
+import configureStore from './configureStore';
 
 
 /* global VERSION:true */

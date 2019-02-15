@@ -2,7 +2,7 @@
 import { expect } from 'chai';
 import MockAdapter from 'axios-mock-adapter';
 
-import getAxiosHttpClientApi from './axiosHttpClientApi';
+import getAxiosHttpClientApi from './getAxiosHttpClientApi';
 
 describe('axiosHttpClientApi', () => {
   const httpClientApi = getAxiosHttpClientApi();
