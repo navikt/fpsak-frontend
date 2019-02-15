@@ -10,6 +10,7 @@ import { RenderUtsettelsePeriodeFieldArray } from './RenderUtsettelsePeriodeFiel
 
 const utsettelseReasons = [{ navn: 'Grunn1', kode: 'Grunn1' }];
 const utsettelseKvoter = [{ navn: 'Mødrekvote', kode: 'MODREKVOTE' }];
+const arbeidskategoriTyper = [{ navn: 'Arbeidstaker', kode: 'ARBEIDSTAKER' }];
 
 const fields = new MockFields('perioder', 1);
 
@@ -25,6 +26,7 @@ describe('<RenderUtsettelsePeriodeFieldArray>', () => {
       formatMessage={sinon.spy()}
       intl={intlMock}
       readOnly={false}
+      arbeidskategoriTyper={arbeidskategoriTyper}
     />);
 
     const fieldArray = wrapper.find(PeriodFieldArray);

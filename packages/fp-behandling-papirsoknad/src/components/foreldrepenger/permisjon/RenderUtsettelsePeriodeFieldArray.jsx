@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 
 import {
@@ -9,7 +8,12 @@ import {
 import {
   DatepickerField, SelectField,
 } from '@fpsak-frontend/form';
+<<<<<<< HEAD
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
+=======
+import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import arbeidskategori from '@fpsak-frontend/kodeverk/src/arbeidskategori';
+>>>>>>> PFP-4354 Lager samme for utsettelse
 import { gyldigeUttakperioder } from './RenderPermisjonPeriodeFieldArray';
 
 import styles from './renderUtsettelsePeriodeFieldArray.less';
@@ -20,11 +24,21 @@ const defaultUtsettelsePeriode = {
   arsakForUtsettelse: '',
 };
 
+export const gyldigArbeidskategori = [
+  arbeidskategori.ARBEIDSTAKER,
+  arbeidskategori.SELVSTENDIG_NAERINGSDRIVENDE,
+  arbeidskategori.FRILANSER,
+];
+
 const mapTyper = typer => typer
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
 const mapKvoter = typer => typer
   .filter(({ kode }) => gyldigeUttakperioder.includes(kode))
+  .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
+
+const mapArbeidskategori = typer => typer
+  .filter(({ kode }) => gyldigArbeidskategori.includes(kode))
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
 /**
@@ -38,7 +52,7 @@ export const RenderUtsettelsePeriodeFieldArray = ({
   utsettelseReasons,
   utsettelseKvoter,
   meta,
-  intl,
+  arbeidskategoriTyper,
   readOnly,
 }) => (
   <PeriodFieldArray
@@ -90,10 +104,7 @@ export const RenderUtsettelsePeriodeFieldArray = ({
                   label={index === 0 ? { id: 'Registrering.Permisjon.ErArbeidstakerLabel' } : ''}
                   name={`${periodeElementFieldId}.erArbeidstaker`}
                   bredde="xl"
-                  selectValues={[
-                    <option value="true" key="true">{intl.formatMessage({ id: 'Registrering.Permisjon.ErArbeidstaker' })}</option>,
-                    <option value="false" key="false">{intl.formatMessage({ id: 'Registrering.Permisjon.ErIkkeArbeidstaker' })}</option>,
-                  ]}
+                  selectValues={mapArbeidskategori(arbeidskategoriTyper)}
                 />
               </FlexColumn>
               <FlexColumn>
@@ -112,8 +123,8 @@ RenderUtsettelsePeriodeFieldArray.propTypes = {
   utsettelseReasons: kodeverkPropType.isRequired,
   utsettelseKvoter: kodeverkPropType.isRequired,
   meta: PropTypes.shape().isRequired,
-  intl: intlShape.isRequired,
+  arbeidskategoriTyper: kodeverkPropType.isRequired,
   readOnly: PropTypes.bool.isRequired,
 };
 
-export default injectIntl(RenderUtsettelsePeriodeFieldArray);
+export default RenderUtsettelsePeriodeFieldArray;
