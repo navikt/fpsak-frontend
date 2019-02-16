@@ -24,6 +24,10 @@ const arbeidsforholdPropType = PropTypes.shape({
   tilVurdering: PropTypes.bool,
   vurderOmSkalErstattes: PropTypes.bool,
   erEndret: PropTypes.bool,
+  brukMedJustertPeriode: PropTypes.bool,
+  handlingType: PropTypes.shape({
+    navn: PropTypes.string,
+  }),
 });
 
 export default arbeidsforholdPropType;

@@ -20,7 +20,7 @@ import PersonArbeidsforholdDetailForm, { PERSON_ARBEIDSFORHOLD_DETAIL_FORM } fro
 const removeDeleted = arbeidsforhold => arbeidsforhold.filter(a => !a.erSlettet);
 
 const cleanUpArbeidsforhold = (newValues, originalValues) => {
-  if (!newValues.brukArbeidsforholdet) {
+  if (!newValues.brukArbeidsforhold) {
     return {
       ...newValues,
       erNyttArbeidsforhold: undefined,
@@ -82,9 +82,19 @@ export class PersonArbeidsforholdPanelImpl extends Component {
   updateArbeidsforhold(values) {
     const { selectedArbeidsforhold } = this.state;
     const { arbeidsforhold } = this.props;
-    const newValues = cleanUpArbeidsforhold(values, selectedArbeidsforhold);
-    let other = arbeidsforhold.filter(o => o.id !== newValues.id);
+    const brukArbeidsforhold = values.brukUendretArbeidsforhold || (values.brukUendretArbeidsforhold === false && values.overstyrtTom);
+    const fortsettUtenInntektsmelding = values.brukInntektsmelding || (values.brukUendretArbeidsforhold === false && values.overstyrtTom);
+    const brukMedJustertPeriode = values.brukUendretArbeidsforhold === false && values.overstyrtTom;
+    const cleanedValues = cleanUpArbeidsforhold(values, selectedArbeidsforhold);
 
+    const newValues = {
+      ...cleanedValues,
+      brukArbeidsforhold,
+      fortsettUtenInntektsmelding,
+      brukMedJustertPeriode,
+    };
+
+    let other = arbeidsforhold.filter(o => o.id !== newValues.id);
     const oldState = arbeidsforhold.find(a => a.id === newValues.id);
     let { fomDato } = newValues;
     if (newValues.erstatterArbeidsforholdId !== oldState.erstatterArbeidsforholdId) {
@@ -221,13 +231,26 @@ const addReplaceableArbeidsforhold = arbeidsforholdList => arbeidsforholdList.ma
   };
 });
 
-const addOriginalFomDate = arbeidsforholdList => arbeidsforholdList.map(a => ({
+const sjekkBrukInntektsmelding = (arbfor) => {
+  if (arbfor.brukMedJustertPeriode) {
+    return undefined;
+  }
+  return arbfor.fortsettBehandlingUtenInntektsmelding;
+};
+
+const sjekkBrukUendretArbeidsforhold = arbfor => (arbfor.fortsettBehandlingUtenInntektsmelding || arbfor.brukArbeidsforholdet)
+  && !arbfor.brukMedJustertPeriode;
+
+const addValuesToArbeisdforhold = arbeidsforholdList => arbeidsforholdList.map(a => ({
   ...a,
   originalFomDato: a.fomDato,
+  brukUendretArbeidsforhold: sjekkBrukUendretArbeidsforhold(a),
+  brukInntektsmelding: sjekkBrukInntektsmelding(a),
+  overstyrtTom: a.tomDato,
 }));
 
 PersonArbeidsforholdPanel.buildInitialValues = arbeidsforhold => ({
-  arbeidsforhold: addOriginalFomDate(addReplaceableArbeidsforhold(arbeidsforhold)),
+  arbeidsforhold: addValuesToArbeisdforhold(addReplaceableArbeidsforhold(arbeidsforhold)),
 });
 
 PersonArbeidsforholdPanel.isReadOnly = (state) => {
