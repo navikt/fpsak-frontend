@@ -5,7 +5,7 @@ import sinon from 'sinon';
 
 import PersonArbeidsforholdTable from './PersonArbeidsforholdTable';
 import PersonArbeidsforholdDetailForm from './PersonArbeidsforholdDetailForm';
-import PersonArbeidsforholdPanel, { PersonArbeidsforholdPanelImpl, sortArbeidsforhold, isAllowedToContinueWithoutInntekstmelding }
+import PersonArbeidsforholdPanel, { PersonArbeidsforholdPanelImpl, sortArbeidsforhold, sjekkKanFortsetteBehandlingForAktivtArbeidsforhodUtenIM }
   from './PersonArbeidsforholdPanel';
 
 describe('<PersonArbeidsforholdPanel>', () => {
@@ -46,7 +46,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       reduxFormChange={sinon.spy()}
       reduxFormInitialize={sinon.spy()}
       fagsystemer={fagsystemer}
-      isAllowedToContinueWithoutInntekstmelding
+      kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM
     />);
     expect(wrapper.find(PersonArbeidsforholdTable)).has.length(1);
     expect(wrapper.find(PersonArbeidsforholdDetailForm)).has.length(1);
@@ -67,7 +67,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       reduxFormChange={sinon.spy()}
       reduxFormInitialize={sinon.spy()}
       fagsystemer={fagsystemer}
-      isAllowedToContinueWithoutInntekstmelding
+      kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM
     />);
 
     const table = wrapper.find(PersonArbeidsforholdTable);
@@ -84,7 +84,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       reduxFormChange={sinon.spy()}
       reduxFormInitialize={sinon.spy()}
       fagsystemer={fagsystemer}
-      isAllowedToContinueWithoutInntekstmelding
+      kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM
     />);
 
     wrapper.setState({ selectedArbeidsforhold: undefined });
@@ -102,7 +102,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       reduxFormChange={sinon.spy()}
       reduxFormInitialize={sinon.spy()}
       fagsystemer={fagsystemer}
-      isAllowedToContinueWithoutInntekstmelding
+      kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM
     />);
 
     expect(wrapper.find(PersonArbeidsforholdDetailForm)).has.length(1);
@@ -122,7 +122,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       reduxFormChange={sinon.spy()}
       reduxFormInitialize={sinon.spy()}
       fagsystemer={fagsystemer}
-      isAllowedToContinueWithoutInntekstmelding
+      kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM
     />);
 
     expect(wrapper.find(PersonArbeidsforholdDetailForm)).has.length(0);
@@ -141,7 +141,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       reduxFormChange={sinon.spy()}
       reduxFormInitialize={sinon.spy()}
       fagsystemer={fagsystemer}
-      isAllowedToContinueWithoutInntekstmelding
+      kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM
     />);
 
     expect(wrapper.find(PersonArbeidsforholdDetailForm)).has.length(0);
@@ -157,7 +157,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       reduxFormChange={sinon.spy()}
       reduxFormInitialize={sinon.spy()}
       fagsystemer={fagsystemer}
-      isAllowedToContinueWithoutInntekstmelding
+      kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM
     />);
 
 
@@ -187,12 +187,13 @@ describe('<PersonArbeidsforholdPanel>', () => {
       reduxFormChange={formChangeCallback}
       reduxFormInitialize={sinon.spy()}
       fagsystemer={fagsystemer}
-      isAllowedToContinueWithoutInntekstmelding
+      kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM
     />);
 
     const editedArbeidsforhold = {
       ...newArbeidsforhold,
       brukArbeidsforholdet: false,
+      brukUendretArbeidsforhold: false,
     };
 
     const detailForm = wrapper.find(PersonArbeidsforholdDetailForm);
@@ -209,6 +210,9 @@ describe('<PersonArbeidsforholdPanel>', () => {
       erNyttArbeidsforhold: undefined,
       brukArbeidsforholdet: false,
       erEndret: true,
+      brukUendretArbeidsforhold: false,
+      fortsettBehandlingUtenInntektsmelding: false,
+      brukMedJustertPeriode: false,
     }]);
 
     expect(wrapper.state().selectedArbeidsforhold).is.undefined;
@@ -238,12 +242,13 @@ describe('<PersonArbeidsforholdPanel>', () => {
       reduxFormChange={formChangeCallback}
       reduxFormInitialize={sinon.spy()}
       fagsystemer={fagsystemer}
-      isAllowedToContinueWithoutInntekstmelding
+      kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM
     />);
 
     const editedArbeidsforhold = {
       ...newArbeidsforhold,
       erNyttArbeidsforhold: true,
+      brukUendretArbeidsforhold: true,
     };
     wrapper.setState({ selectedArbeidsforhold: editedArbeidsforhold });
 
@@ -266,6 +271,10 @@ describe('<PersonArbeidsforholdPanel>', () => {
       erstatterArbeidsforholdId: undefined,
       erEndret: true,
       fomDato: undefined,
+      brukUendretArbeidsforhold: true,
+      brukArbeidsforholdet: true,
+      brukMedJustertPeriode: false,
+      fortsettBehandlingUtenInntektsmelding: false,
     }]);
 
     expect(wrapper.state().selectedArbeidsforhold).is.undefined;
@@ -303,12 +312,18 @@ describe('<PersonArbeidsforholdPanel>', () => {
     const oldArbeidsforhold = {
       ...arbeidsforhold,
       mottattDatoInntektsmelding: '2018-01-01',
+      brukMedJustertPeriode: false,
+      fortsettBehandlingUtenInntektsmelding: true,
+      brukArbeidsforholdet: true,
     };
     const newArbeidsforhold = {
       id: 2,
       ...arbeidsforhold,
       arbeidsforholdId: '1231-9876',
       mottattDatoInntektsmelding: '2018-10-01',
+      brukMedJustertPeriode: false,
+      fortsettBehandlingUtenInntektsmelding: true,
+      brukArbeidsforholdet: true,
     };
 
     const initialValues = PersonArbeidsforholdPanel.buildInitialValues([newArbeidsforhold, oldArbeidsforhold]);
@@ -318,10 +333,16 @@ describe('<PersonArbeidsforholdPanel>', () => {
         ...newArbeidsforhold,
         originalFomDato: '2018-01-01',
         replaceOptions: [oldArbeidsforhold],
+        fortsettUtenImAktivtArbeidsforhold: true,
+        brukUendretArbeidsforhold: true,
+        overstyrtTom: '2018-10-10',
       }, {
         ...oldArbeidsforhold,
         originalFomDato: '2018-01-01',
         replaceOptions: [],
+        fortsettUtenImAktivtArbeidsforhold: true,
+        brukUendretArbeidsforhold: true,
+        overstyrtTom: '2018-10-10',
       }],
     });
   });
@@ -362,7 +383,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       erstatterArbeidsforholdId: undefined,
       tilVurdering: false,
     }];
-    const isAllowed = isAllowedToContinueWithoutInntekstmelding(toArbeidsforhold);
+    const isAllowed = sjekkKanFortsetteBehandlingForAktivtArbeidsforhodUtenIM(toArbeidsforhold);
 
     expect(isAllowed).is.false;
   });
@@ -403,7 +424,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       erstatterArbeidsforholdId: undefined,
       tilVurdering: false,
     }];
-    const isAllowed = isAllowedToContinueWithoutInntekstmelding(toArbeidsforhold);
+    const isAllowed = sjekkKanFortsetteBehandlingForAktivtArbeidsforhodUtenIM(toArbeidsforhold);
 
     expect(isAllowed).is.true;
   });

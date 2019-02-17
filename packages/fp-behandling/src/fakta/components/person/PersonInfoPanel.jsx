@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -126,9 +127,6 @@ PersonInfoPanelImpl.propTypes = {
   personopplysninger: PropTypes.shape().isRequired,
   relatertTilgrensendeYtelserForSoker: PropTypes.arrayOf(PropTypes.shape()),
   relatertTilgrensendeYtelserForAnnenForelder: PropTypes.arrayOf(PropTypes.shape()),
-  /**
-   * Oversikt over hvilke faktapaneler som er åpne
-   */
   openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
   toggleInfoPanelCallback: PropTypes.func.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
@@ -147,9 +145,17 @@ PersonInfoPanelImpl.defaultProps = {
 };
 
 const transformValues = values => ({
-  arbeidsforhold: values.arbeidsforhold.map(a => omit(a, 'erEndret', 'replaceOptions', 'originalFomDato')),
+  arbeidsforhold: values.arbeidsforhold.map(a => omit(a, 'erEndret', 'replaceOptions', 'originalFomDato',
+    'brukUendretArbeidsforhold', 'fortsettUtenImAktivtArbeidsforhold')),
   kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
 });
+
+const buildInitialValues = createSelector(
+  [getBehandlingArbeidsforhold],
+  arbeidsforhold => ({
+    ...PersonArbeidsforholdPanel.buildInitialValues(arbeidsforhold),
+  }),
+);
 
 const mapStateToProps = (state, initialProps) => ({
   personopplysninger: getPersonopplysning(state),
@@ -162,19 +168,14 @@ const mapStateToProps = (state, initialProps) => ({
     ...getKodeverk(kodeverkTyper.RELATERT_YTELSE_TILSTAND)(state),
   ],
   isBekreftButtonReadOnly: PersonArbeidsforholdPanel.isReadOnly(state),
-  initialValues: PersonArbeidsforholdPanel.buildInitialValues(getBehandlingArbeidsforhold(state)),
+  initialValues: buildInitialValues(state),
   onSubmit: values => initialProps.submitCallback([transformValues(values)]),
   dirty: !initialProps.notSubmittable && initialProps.dirty,
 });
 
+const ConnectedComponent = connect(mapStateToProps)(behandlingForm({ form: 'PersonInfoPanel' })(PersonInfoPanelImpl));
 const personAksjonspunkter = [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD];
-
-const ConnectedComponent = connect(mapStateToProps)(behandlingForm({
-  form: 'PersonInfoPanel',
-})(PersonInfoPanelImpl));
-
 const PersonInfoPanel = withDefaultToggling(faktaPanelCodes.PERSON, personAksjonspunkter)(ConnectedComponent);
-
 PersonInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => ap.definisjon.kode === personAksjonspunkter[0]);
 
 export default PersonInfoPanel;
