@@ -178,7 +178,7 @@ SokersOpplysningspliktFormImpl.defaultProps = {
 };
 
 export const getSortedManglendeVedlegg = createSelector([getSoknad], soknad => (soknad && soknad.manglendeVedlegg
-  ? soknad.manglendeVedlegg.slice().sort(mv1 => (mv1.dokumentType.kode === dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL ? 1 : 0))
+  ? soknad.manglendeVedlegg.slice().sort(mv1 => (mv1.dokumentType.kode === dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL ? 1 : -1))
   : []));
 
 const hasSoknad = createSelector([getSoknad], soknad => soknad !== null && isObject(soknad));

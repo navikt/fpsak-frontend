@@ -198,11 +198,11 @@ describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
       barn: [{
         opplysningsKilde: opplysningsKilde.SAKSBEHANDLER,
         fodselsdato: '10-10-2017',
-        nummer: 2,
+        nummer: 1,
       }, {
         opplysningsKilde: opplysningsKilde.SAKSBEHANDLER,
         fodselsdato: '10-10-2017',
-        nummer: 1,
+        nummer: 2,
       }],
       foreldre: [{
         dodsdato: undefined,

@@ -230,17 +230,17 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
 
     expect(initialValues).to.eql({
       fixedMedlemskapPerioder: [{
-        fom: '2017-01-15',
-        tom: '2017-10-15',
-        dekning: 'testdekning2017',
-        status: 'testStatus2017',
-        beslutningsdato: '2017-10-16',
-      }, {
         fom: '2016-01-15',
         tom: '2016-10-15',
         dekning: 'testdekning',
         status: 'testStatus',
         beslutningsdato: '2016-10-16',
+      }, {
+        fom: '2017-01-15',
+        tom: '2017-10-15',
+        dekning: 'testdekning2017',
+        status: 'testStatus2017',
+        beslutningsdato: '2017-10-16',
       }],
       isPeriodAksjonspunktClosed: false,
       medlemskapManuellVurderingType: 'manuellType',

@@ -129,10 +129,23 @@ const mapStateToProps = state => ({
 
 const BarnPanel = connect(mapStateToProps)(BarnPanelImpl);
 
-const sortChildren = children => children
-  .sort(bb1 => bb1.opplysningsKilde && bb1.opplysningsKilde === opplysningsKilde.TPS)
-  .sort((bb1, bb2) => (bb1.navn < bb2.navn ? -1 : 1))
-  .sort((bb1, bb2) => new Date(bb1.fodselsdato) - new Date(bb2.fodselsdato));
+const prepChildObj = child => ({
+  isTps: child.opplysningsKilde && child.opplysningsKilde === opplysningsKilde.TPS,
+  navn: child.navn,
+  fdato: new Date(child.fodselsdato),
+});
+
+const sortChildren = children => children.sort((child1, child2) => {
+  const a = prepChildObj(child1);
+  const b = prepChildObj(child2);
+  if (a.isTps && !b.isTps) { return -1; }
+  if (!a.isTps && b.isTps) { return 1; }
+  if (a.navn > b.navn) { return -1; }
+  if (a.navn < b.navn) { return 1; }
+  if (a.fdato > b.fdato) { return -1; }
+  if (a.fdato < b.fdato) { return 1; }
+  return 0;
+});
 
 BarnPanel.buildInitialValues = (personopplysning, soknad) => {
   const confirmedChildren = personopplysning.barnSoktFor
