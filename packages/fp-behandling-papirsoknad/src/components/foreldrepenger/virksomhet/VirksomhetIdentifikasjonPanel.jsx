@@ -6,10 +6,10 @@ import { FormattedMessage, intlShape } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import {
-  RadioGroupField, RadioOption, SelectField, InputField,
+  RadioGroupField, RadioOption, SelectField, InputField, DatepickerField,
 } from '@fpsak-frontend/form';
 import { ArrowBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { required, hasValidInteger } from '@fpsak-frontend/utils';
+import { required, hasValidInteger, hasValidPeriodIncludingOtherErrors } from '@fpsak-frontend/utils';
 import { getKodeverk } from 'papirsoknad/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
@@ -65,18 +65,41 @@ export const VirksomhetIdentifikasjonPanel = ({
       </ElementWrapper>
       )
     }
-      { !virksomhetRegistrertINorge
+      { !virksomhetRegistrertINorge && virksomhetRegistrertINorge !== undefined
       && (
-      <Row>
-        <Column xs="5">
-          <SelectField
-            name="landJobberFra"
-            selectValues={countrySelectValues(sortedCountriesByName)}
-            validate={[required]}
-            label={intl.formatMessage({ id: 'Registrering.VirksomhetIdentifikasjonPanel.Country' })}
-          />
-        </Column>
-      </Row>
+        <ElementWrapper>
+          <ArrowBox alignOffset={57}>
+            <Row>
+              <Column xs="5">
+                <SelectField
+                  name="landJobberFra"
+                  selectValues={countrySelectValues(sortedCountriesByName)}
+                  validate={[required]}
+                  label={intl.formatMessage({ id: 'Registrering.VirksomhetIdentifikasjonPanel.Country' })}
+                />
+              </Column>
+            </Row>
+            <Row>
+              <Column xs="3">
+                <DatepickerField
+                  readOnly={readOnly}
+                  validate={[required]}
+                  name="periodeFom"
+                  defaultValue={null}
+                  label={{ id: 'Registrering.InntektsgivendeArbeid.periodeFom' }}
+                />
+              </Column>
+              <Column xs="3">
+                <DatepickerField
+                  readOnly={readOnly}
+                  name="periodeTom"
+                  defaultValue={null}
+                  label={{ id: 'Registrering.InntektsgivendeArbeid.periodeTom' }}
+                />
+              </Column>
+            </Row>
+          </ArrowBox>
+        </ElementWrapper>
       )
       }
     </ElementWrapper>
@@ -93,6 +116,13 @@ VirksomhetIdentifikasjonPanel.propTypes = {
 VirksomhetIdentifikasjonPanel.defaultProps = {
   virksomhetRegistrertINorge: undefined,
   readOnly: true,
+};
+
+VirksomhetIdentifikasjonPanel.validate = (values) => {
+  if (!values || !values.length) {
+    return { _error: isRequiredMessage() };
+  }
+  return hasValidPeriodIncludingOtherErrors(values);
 };
 
 const mapStateToProps = (state, initialProps) => ({

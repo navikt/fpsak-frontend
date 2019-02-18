@@ -105,5 +105,6 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps)(reduxForm({
   enableReinitialize: true,
+  validate: VirksomhetIdentifikasjonPanel.validate,
   form: REGISTRER_VIRKSOMHET_FORM_NAME,
 })(injectIntl(RegistrerVirksomhetModalForm)));
