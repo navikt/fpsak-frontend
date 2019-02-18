@@ -260,6 +260,7 @@ describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
         nummer: 1,
         navn: 'Barn nr 1',
         fodselsdato: '10-10-2017',
+        dodsdato: undefined,
         opplysningsKilde: {
           kode: opplysningsKilde.TPS,
         },
@@ -268,6 +269,7 @@ describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
         nummer: 2,
         navn: 'Barn nr 2',
         fodselsdato: '05-05-2011',
+        dodsdato: undefined,
         opplysningsKilde: {
           kode: opplysningsKilde.TPS,
         },
@@ -283,6 +285,7 @@ describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
         aktorId: '1',
         opplysningsKilde: opplysningsKilde.TPS,
         fodselsdato: '10-10-2017',
+        dodsdato: undefined,
         navn: 'Barn nr 1',
         nummer: 1,
       }, {
