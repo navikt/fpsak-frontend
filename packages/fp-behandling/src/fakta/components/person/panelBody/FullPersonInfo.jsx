@@ -35,10 +35,12 @@ const FullPersonInfo = ({
   relatertYtelseStatus,
   hasOpenAksjonspunkter,
   hasAksjonspunkter,
+  erUtenlandssak,
   readOnly,
   isPrimaryParent,
   personstatusTypes,
   sivilstandTypes,
+  featureToggleUtland,
 }) => {
   if (!personopplysning) {
     return null;
@@ -64,12 +66,14 @@ const FullPersonInfo = ({
             : adresseListe[opplysningAdresseType.UTENLANDSK_NAV_TILLEGSADRESSE]
         }
         personstatus={findPersonStatus(personopplysning)}
+        erUtenlandssak={erUtenlandssak}
         sivilstandtype={personopplysning.sivilstand}
         region={personopplysning.region ? personopplysning.region.navn : null}
         sprakkode={sprakkode}
         isPrimaryParent={isPrimaryParent}
         sivilstandTypes={sivilstandTypes}
         personstatusTypes={personstatusTypes}
+        featureToggleUtland={featureToggleUtland}
       />
       {harBarnITPSSjekk && <BarnePanel barneListe={barnFraTPS} />}
       {isPrimaryParent && (
@@ -101,13 +105,16 @@ FullPersonInfo.propTypes = {
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   hasAksjonspunkter: PropTypes.bool.isRequired,
+  erUtenlandssak: PropTypes.bool.isRequired,
   isPrimaryParent: PropTypes.bool.isRequired,
   sivilstandTypes: kodeverkPropType.isRequired,
   personstatusTypes: kodeverkPropType.isRequired,
+  featureToggleUtland: PropTypes.bool,
 };
 
 FullPersonInfo.defaultProps = {
   ytelser: undefined,
+  featureToggleUtland: false,
 };
 
 export default FullPersonInfo;

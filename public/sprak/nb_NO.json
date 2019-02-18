@@ -227,6 +227,8 @@
   "FortsattMedlemskapFaktaPanel.EndretPersonstatus": "Endret personstatus f.o.m. {dato}",
   "FortsattMedlemskapFaktaPanel.DateNotAfterOrEqual": "Dato kan ikke være før skjæringstidspunktet {limit}",
 
+  "PersonInfoPanel.OpptjeningUtland": "Søker har oppgitt informasjon om opptjening i utlandet. Innhent dokumentasjon fra utenlandsk trygdemyndighet ved behov.",
+
   "FodselInfoPanel.Fodsel": "Fakta om fødsel",
   "FodselInfoPanel.VurderVilkarForSykdom": "Vurder om vilkår for sykdom er oppfylt",
   "FodselInfoPanel.KontrollerMotTerminbekreftelsen": "Kontroller terminbekreftelse",
@@ -1430,6 +1432,9 @@
   "AdressePanel.midlertidigAdresse": "Midlertidig adresse",
   "AdressePanel.postadresseNorge": "Postadresse i Norge",
   "AdressePanel.postadresseUtland": "Postadresse i utlandet",
+  "AdressePanel.utland": "Utland",
+  "AdressePanel.tilhorighet.nasjonal": "Nasjonal",
+  "AdressePanel.tilhorighet.eosBosatt": "EØS-bosatt i Norge",
 
   "PersonYtelserTable.Ytelser": "Ytelser",
   "PersonYtelserTable.Ytelse": "Ytelse",

@@ -170,7 +170,49 @@ describe('<PersonInfoPanel>', () => {
     expect(wrapper.find(Hovedknapp)).to.have.length(0);
   });
 
-  it('skal vise knapp for bekreftelse av aksjonspunkt når en har aksjonspunkt og har valgt hovedsøker', () => {
+  it('skal vise knapp for bekreftelse av aksjonspunkt når en har aksjonspunkt AVKLAR_ARBEIDSFORHOLD og har valgt hovedsøker', () => {
+    const aksjonspunkter = [{
+      id: 0,
+      definisjon: {
+        navn: 'Avklar arbeidsforhold',
+        kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+      },
+      status: {
+        navn: 'Opprettet',
+        kode: '',
+      },
+      kanLoses: true,
+      aksjonspunktType: {
+        navn: 'MANUELL',
+        kode: aksjonspunktType.MANUELL,
+      },
+      erAktivt: true,
+    },
+    ];
+    const wrapper = shallow(<PersonInfoPanel
+      personopplysninger={personopplysninger}
+      relatertTilgrensendeYtelserForSoker={[]}
+      relatertTilgrensendeYtelserForAnnenForelder={[]}
+      openInfoPanels={[]}
+      toggleInfoPanelCallback={sinon.spy()}
+      hasOpenAksjonspunkter
+      sprakkode={{}}
+      readOnly={false}
+      isBekreftButtonReadOnly
+      relatertYtelseTypes={relatertYtelseTypes}
+      relatertYtelseStatus={relatertYtelseStatus}
+      personstatusTypes={personstatusTypes}
+      sivilstandTypes={sivilstandTypes}
+      aksjonspunkter={aksjonspunkter}
+      {...reduxFormPropsMock}
+    />);
+
+    wrapper.setProps({ openInfoPanels: [faktaPanelCodes.PERSON] });
+
+    expect(wrapper.find(Hovedknapp)).to.have.length(1);
+  });
+
+  it('skal ikke vise knapp for bekreftelse av aksjonspunkt når en har aksjonspunkt som ikke er AVKLAR_ARBEIDSFORHOLD', () => {
     const aksjonspunkter = [{
       id: 0,
       definisjon: {
@@ -211,7 +253,7 @@ describe('<PersonInfoPanel>', () => {
 
     wrapper.setProps({ openInfoPanels: [faktaPanelCodes.PERSON] });
 
-    expect(wrapper.find(Hovedknapp)).to.have.length(1);
+    expect(wrapper.find(Hovedknapp)).to.have.length(0);
   });
 
   it('skal ikke vise knapp for bekreftelse av aksjonspunkt når en har aksjonspunkt men annen part er valgt', () => {

@@ -136,13 +136,15 @@ describe('<AdressePanel>', () => {
       personstatusTypes={personstatusTypes}
       sivilstandTypes={sivilstandTypes}
       isPrimaryParent
+      featureToggleUtland
     />);
 
     const normaltekster = wrapper.find(Normaltekst);
     expect(normaltekster.at(0).children().text()).to.equal('bostostedet 1');
     expect(normaltekster.at(1).children().text()).to.equal('postboks 2');
-    expect(normaltekster.at(2).children().text()).to.equal('midlertidig 3');
-    expect(normaltekster.at(3).children().text()).to.equal('utlandet 4');
+    expect(normaltekster.at(2).children().text()).to.equal('Nasjonal');
+    expect(normaltekster.at(3).children().text()).to.equal('midlertidig 3');
+    expect(normaltekster.at(4).children().text()).to.equal('utlandet 4');
   });
 
   it('skal sjekke at alle etiketter unntatt språk kan vises for annenforelder', () => {

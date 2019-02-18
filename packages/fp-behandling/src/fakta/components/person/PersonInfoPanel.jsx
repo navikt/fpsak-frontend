@@ -5,8 +5,9 @@ import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import { getFeatureToggles } from 'app/duck';
 import { aksjonspunktPropType, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
+import { faktaPanelCodes, featureToggle } from '@fpsak-frontend/fp-felles';
 import { omit } from '@fpsak-frontend/utils';
 import { getKodeverk } from 'behandlingFpsak/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -24,6 +25,11 @@ import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import FullPersonInfo from './panelBody/FullPersonInfo';
 import PersonArbeidsforholdPanel from './panelBody/arbeidsforhold/PersonArbeidsforholdPanel';
 
+const {
+  AVKLAR_ARBEIDSFORHOLD, INNHENT_DOKUMENTASJON_FRA_UTENLANDS_TRYGDEMYNDIGHET,
+} = aksjonspunktCodes;
+
+const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 /**
  * PersonInfoPanel
  *
@@ -85,6 +91,7 @@ export class PersonInfoPanelImpl extends Component {
       readOnly,
       aksjonspunkter,
       isBekreftButtonReadOnly,
+      featureToggleUtland,
       ...formProps
     } = this.props;
     const { selected } = this.state;
@@ -110,11 +117,13 @@ export class PersonInfoPanelImpl extends Component {
             relatertYtelseStatus={relatertYtelseStatus}
             hasAksjonspunkter={aksjonspunkter.length > 0}
             hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+            erUtenlandssak={hasAksjonspunkt(INNHENT_DOKUMENTASJON_FRA_UTENLANDS_TRYGDEMYNDIGHET, aksjonspunkter)}
             readOnly={readOnly}
             sivilstandTypes={sivilstandTypes}
             personstatusTypes={personstatusTypes}
+            featureToggleUtland={featureToggleUtland}
           />
-          {isPrimaryParent && aksjonspunkter.length > 0
+          {isPrimaryParent && hasAksjonspunkt(AVKLAR_ARBEIDSFORHOLD, aksjonspunkter)
             && (
             <ElementWrapper>
               <VerticalSpacer twentyPx />
@@ -183,11 +192,12 @@ const mapStateToProps = (state, initialProps) => ({
   initialValues: buildInitialValues(state),
   onSubmit: values => initialProps.submitCallback([transformValues(values)]),
   dirty: !initialProps.notSubmittable && initialProps.dirty,
+  featureToggleUtland: getFeatureToggles(state)[featureToggle.MARKER_UTENLANDSSAK],
 });
 
 const ConnectedComponent = connect(mapStateToProps)(behandlingForm({ form: 'PersonInfoPanel' })(PersonInfoPanelImpl));
-const personAksjonspunkter = [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD];
+const personAksjonspunkter = [AVKLAR_ARBEIDSFORHOLD, INNHENT_DOKUMENTASJON_FRA_UTENLANDS_TRYGDEMYNDIGHET];
 const PersonInfoPanel = withDefaultToggling(faktaPanelCodes.PERSON, personAksjonspunkter)(ConnectedComponent);
-PersonInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => ap.definisjon.kode === personAksjonspunkter[0]);
+PersonInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => personAksjonspunkter.includes(ap.definisjon.kode));
 
 export default PersonInfoPanel;
