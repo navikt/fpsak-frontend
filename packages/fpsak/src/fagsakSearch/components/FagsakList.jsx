@@ -15,7 +15,10 @@ const headerTextCodes = [
   'FagsakList.Status',
   'FagsakList.BarnFodt',
 ];
-
+const lagFagsakSortObj = fagsak => ({
+  avsluttet: fagsak.status.kode === fagsakStatus.AVSLUTTET,
+  endret: fagsak.endret ? fagsak.endret : fagsak.opprettet,
+});
 /**
  * FagsakList
  *
@@ -26,16 +29,13 @@ const FagsakList = ({
   selectFagsakCallback,
 }) => {
   const sortedFagsaker = fagsaker.sort((fagsak1, fagsak2) => {
-    if (fagsak1.status.kode === fagsakStatus.AVSLUTTET && fagsak2.status.kode !== fagsakStatus.AVSLUTTET) {
-      return true;
-    }
-
-    if (fagsak1.status.kode !== fagsakStatus.AVSLUTTET && fagsak2.status.kode === fagsakStatus.AVSLUTTET) {
-      return false;
-    }
-    const changeTimeFagsak1 = fagsak1.endret ? fagsak1.endret : fagsak1.opprettet;
-    const changeTimeFagsak2 = fagsak2.endret ? fagsak2.endret : fagsak2.opprettet;
-    return changeTimeFagsak1 > changeTimeFagsak2;
+    const a = lagFagsakSortObj(fagsak1);
+    const b = lagFagsakSortObj(fagsak2);
+    if (a.avsluttet && !b.avsluttet) { return 1; }
+    if (!a.avsluttet && b.avsluttet) { return -1; }
+    if (a.endret > b.endret) { return -1; }
+    if (a.endret < b.endret) { return 1; }
+    return 0;
   });
 
   return (
