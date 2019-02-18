@@ -25,3 +25,4 @@ lerna-debug.log
 .yarnrc
 ssh.exe.stackdump
 ssh.exe.stackdump
+.DS_Store

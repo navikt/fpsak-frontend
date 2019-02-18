@@ -25,8 +25,8 @@ describe('<FagsakList>', () => {
       kode: 'UBEH',
     },
     barnFodt: null,
-    opprettet: '16‎.‎07‎.‎2004‎ ‎17‎:‎35‎:‎21',
-    endret: '16‎.‎07‎.‎2004‎ ‎17‎:‎35‎:‎21',
+    opprettet: '2019-02-17T13:49:18.645',
+    endret: '2019-02-17T13:49:18.645',
     person,
   };
 
@@ -68,8 +68,8 @@ describe('<FagsakList>', () => {
         kode: 'UBEH',
       },
       barnFodt: null,
-      opprettet: '13‎.‎02‎.‎2017‎ ‎09‎:‎54‎:‎22 ',
-      endret: '13‎.‎02‎.‎2017‎ ‎09‎:‎54‎:‎22',
+      opprettet: '2019-02-18T13:49:18.645',
+      endret: '2019-02-18T13:49:18.645',
       person,
     };
     const fagsak3 = {
@@ -83,8 +83,8 @@ describe('<FagsakList>', () => {
         kode: 'AVSLU',
       },
       barnFodt: null,
-      opprettet: '13‎.‎02‎.‎2017‎ ‎09‎:‎54‎:‎22',
-      endret: '13‎.‎02‎.‎2017‎ ‎09‎:‎54‎:‎22',
+      opprettet: '2019-02-18T13:49:18.645',
+      endret: '2019-02-18T13:49:18.645',
       person,
     };
 
@@ -128,9 +128,9 @@ describe('<FagsakList>', () => {
         navn: 'Under behandling',
         kode: 'UBEH',
       },
-      barnFodt: '13‎.‎02‎.‎2017‎ ‎09‎:‎54‎:‎22',
-      opprettet: '13‎.‎02‎.‎2017‎ ‎09‎:‎54‎:‎22',
-      endret: '13‎.‎02‎.‎2017‎ ‎09‎:‎54‎:‎22',
+      barnFodt: '2019-02-18T13:49:18.645',
+      opprettet: '2019-02-18T13:49:18.645',
+      endret: '2019-02-18T13:49:18.645',
       person,
     };
 
@@ -141,10 +141,13 @@ describe('<FagsakList>', () => {
     const tableRows = table.children();
     expect(tableRows).to.have.length(2);
 
-    const tableColumnsRow1 = tableRows.first().children();
-    expect(tableColumnsRow1.last().childAt(0).text()).is.eql('<DateLabel />');
 
-    const tableColumnsRow2 = tableRows.last().children();
-    expect(tableColumnsRow2.last().childAt(0)).is.empty;
+    tableRows.forEach((tableRow) => {
+      if (tableRow.key() === fagsak4.saksnummer) {
+        expect(tableRow.last().childAt(0).text()).is.eql('<DateLabel />');
+      } else {
+        expect(tableRow.last().childAt(0)).is.empty;
+      }
+    });
   });
 });
