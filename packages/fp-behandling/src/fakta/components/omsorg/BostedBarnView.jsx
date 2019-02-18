@@ -7,6 +7,7 @@ import { personopplysningPropType } from '@fpsak-frontend/fp-behandling-felles';
 import PropTypes from 'prop-types';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, getAddresses } from '@fpsak-frontend/utils';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
+import { MerkePanel } from '@fpsak-frontend/person-info';
 
 import styles from './bostedBarnView.less';
 
@@ -27,6 +28,8 @@ const BostedBarnView = ({
   <div className={className}>
     <Undertekst>
       <FormattedMessage id="BostedBarnView.Barn" values={{ barnNr }} />
+      {barn.dodsdato
+              && <div className={styles.inline}><MerkePanel erDod /></div>}
     </Undertekst>
 
     <Element>

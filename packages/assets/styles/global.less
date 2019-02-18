@@ -534,3 +534,40 @@ input::-webkit-inner-spin-button {
 div[class^='SjekkFodselDokForm'] [class^='periodFieldArray_buttonRemove'] {
   margin-top: 42px;
 }
+
+:global(.dodSoker) {
+  background-color: black;
+  color: white;
+  pointer-events: none;
+  z-index: 0; // lesshint-disable zeroUnit
+
+  &:after {
+    background-color: black;
+    color: white;
+    content: 'Søker død';
+    height: 20px;
+    left: -40px;
+    position: absolute;
+    text-align: center;
+    top: 0; // lesshint-disable zeroUnit
+    width: 80px;
+  }
+}
+
+:global([class^="vis-custom-time barndod"]) {
+  background-color: black;
+  color: white;
+  pointer-events: none;
+  z-index: 0; // lesshint-disable zeroUnit
+
+  &:after {
+    background-color: black;
+    color: white;
+    content: 'Barn død';
+    left: -40px;
+    position: absolute;
+    text-align: center;
+    top: 0; // lesshint-disable zeroUnit
+    width: 80px;
+  }
+}

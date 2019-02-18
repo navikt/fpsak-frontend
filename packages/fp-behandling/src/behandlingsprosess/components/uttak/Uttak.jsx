@@ -26,6 +26,7 @@ import {
   getUttaksresultatPerioder,
   getBehandlingStatus,
   getBehandlingUttaksperiodegrense,
+  getBarnFraTpsRelatertTilSoknad,
 } from 'behandlingFpsak/src/behandlingSelectors';
 import { tempUpdateStonadskontoer } from 'behandlingFpsak/src/behandlingsprosess/duck';
 import { getRettigheter } from 'navAnsatt/duck';
@@ -127,6 +128,13 @@ const addClassNameGroupIdToPerioder = (hovedsokerPerioder, annenForelderPerioder
   return perioderMedClassName;
 };
 
+const fodselsdato = (soknadsType, endredFodselsDato, familiehendelseDate, omsorgsOvertagelseDato) => {
+  if (soknadsType === soknadType.FODSEL) {
+    return (endredFodselsDato ? parseDateString(endredFodselsDato) : parseDateString(familiehendelseDate));
+  }
+  return parseDateString(omsorgsOvertagelseDato);
+};
+
 const getCustomTimes = (
   soknadDate,
   familiehendelseDate,
@@ -135,19 +143,27 @@ const getCustomTimes = (
   omsorgsOvertagelseDato,
   endredFodselsDato,
   isRevurdering,
+  barnFraTps,
+  person,
+  familiehendelse,
 ) => {
-  if (soknadsType === soknadType.FODSEL) {
-    return ({
-      soknad: parseDateString(soknadDate),
-      fodsel: endredFodselsDato ? parseDateString(endredFodselsDato) : parseDateString(familiehendelseDate),
-      revurdering: isRevurdering ? parseDateString(endringsDate) : '1950-01-01',
-    });
-  }
-  return ({
+  // TODO: trumfa tps med avklartebarn fra lösningen - blir TPS-barn en del av dem?
+  const dodeBarn = familiehendelse && !familiehendelse.brukAntallBarnFraTPS && familiehendelse.avklartBarn && familiehendelse.avklartBarn.length > 0
+    ? familiehendelse.avklartBarn.filter(barn => barn.dodsdato) : barnFraTps.filter(barn => barn.dodsdato);
+
+  const customTimesBuilder = {
     soknad: parseDateString(soknadDate),
-    fodsel: parseDateString(omsorgsOvertagelseDato),
+    fodsel: fodselsdato(soknadsType, endredFodselsDato, familiehendelseDate, omsorgsOvertagelseDato),
     revurdering: isRevurdering ? parseDateString(endringsDate) : '1950-01-01',
+    dodSoker: person && person.dodsdato ? parseDateString(person.dodsdato) : '1950-01-01',
+  };
+
+  dodeBarn.forEach((barn, index) => {
+    Object.defineProperty(customTimesBuilder, `${`barndod${index}`}`, {
+      value: parseDateString(barn.dodsdato), enumerable: true,
+    });
   });
+  return (customTimesBuilder);
 };
 
 const isInnvilget = uttaksresultatActivity => uttaksresultatActivity.periodeResultatType.kode === periodeResultatType.INNVILGET;
@@ -410,6 +426,9 @@ export class UttakImpl extends Component {
       harSoktOmFlerbarnsdager,
       annenForelderSoktOmFlerbarnsdager,
       reduxFormChange: formChange,
+      person,
+      barnFraTps,
+      familiehendelse,
     } = this.props;
     const { selectedItem, stonadskonto } = this.state;
     const customTimes = getCustomTimes(
@@ -420,6 +439,9 @@ export class UttakImpl extends Component {
       omsorgsovertakelseDato,
       endredFodselsDato,
       isRevurdering,
+      person,
+      barnFraTps,
+      familiehendelse,
     );
     return (
       <div>
@@ -556,6 +578,9 @@ UttakImpl.propTypes = {
   tempUpdateStonadskontoer: PropTypes.func.isRequired,
   behandlingId: PropTypes.number.isRequired,
   saksnummer: PropTypes.number.isRequired,
+  barnFraTps: PropTypes.arrayOf(PropTypes.shape()),
+  person: PropTypes.shape(),
+  familiehendelse: PropTypes.shape(),
 };
 
 UttakImpl.defaultProps = {
@@ -568,6 +593,9 @@ UttakImpl.defaultProps = {
   endredFodselsDato: undefined,
   isRevurdering: false,
   medsokerKjonnKode: undefined,
+  barnFraTps: [],
+  person: undefined,
+  familiehendelse: undefined,
 };
 
 const determineMottatDato = (soknadsDato, mottatDato) => {
@@ -602,6 +630,7 @@ const mapStateToProps = (state, props) => {
   const familiehendelse = getFamiliehendelse(state);
   const ytelseFordeling = getBehandlingYtelseFordeling(state);
   const uttaksresultatActivity = behandlingFormValueSelector(props.formName)(state, ACTIVITY_PANEL_NAME);
+  const barnFraTps = getBarnFraTpsRelatertTilSoknad(state);
 
   const uttakMedOpphold = uttaksresultatActivity.map((uttak) => {
     const { ...uttakPerioder } = uttak;
@@ -648,6 +677,9 @@ const mapStateToProps = (state, props) => {
     uttakPerioder,
     harSoktOmFlerbarnsdager,
     annenForelderSoktOmFlerbarnsdager,
+    barnFraTps,
+    person,
+    familiehendelse,
   };
 };
 

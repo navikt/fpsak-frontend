@@ -12,6 +12,7 @@ import urlMann from '@fpsak-frontend/assets/images/barn_gutt.svg';
 import urlKvinne from '@fpsak-frontend/assets/images/barn_jente.svg';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import { getAddresses } from '@fpsak-frontend/utils';
+import { MerkePanel } from '@fpsak-frontend/person-info';
 
 import styles from './barnepanel.less';
 
@@ -52,6 +53,8 @@ const Barnepanel = ({
               {barn.navn}
               {' '}
               <FormattedMessage id="Person.Age" values={{ age: getAgeFromDate(barn.fodselsdato) }} />
+              {barn.dodsdato
+              && <div className={styles.erDod}><MerkePanel erDod /></div>}
             </Element>
             <Undertekst>{barn.fnr}</Undertekst>
             <div className={styles.undertekstMedRom}>
