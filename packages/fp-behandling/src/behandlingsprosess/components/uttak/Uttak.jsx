@@ -439,8 +439,8 @@ export class UttakImpl extends Component {
       omsorgsovertakelseDato,
       endredFodselsDato,
       isRevurdering,
-      person,
       barnFraTps,
+      person,
       familiehendelse,
     );
     return (
