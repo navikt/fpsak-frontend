@@ -5,8 +5,35 @@ import sinon from 'sinon';
 import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
 import { UttakInfoPanelImpl } from './UttakInfoPanel';
 import UttakFaktaForm from './UttakFaktaForm';
+import AnnenForelderHarRettForm from './AnnenForelderHarRettForm';
 
-const førsteUttaksDato = '2018-08-01';
+const avklarAnnenforelderHarRettAp = [{
+  aksjonspunktType: {
+    kode: 'MANU',
+    navn: 'Manuell',
+    kodeverk: 'AKSJONSPUNKT_TYPE',
+  },
+  kode: 'MANU',
+  kodeverk: 'AKSJONSPUNKT_TYPE',
+  navn: 'Manuell',
+  begrunnelse: 'test2',
+  besluttersBegrunnelse: null,
+  definisjon: {
+    kode: '5086',
+    navn: 'Avklar annen forelder har ikke rett',
+  },
+  erAktivt: true,
+  kanLoses: true,
+  status: {
+    kode: 'UTFO',
+    navn: 'Utført',
+    kodeverk: 'AKSJONSPUNKT_STATUS',
+  },
+  toTrinnsBehandling: true,
+  toTrinnsBehandlingGodkjent: null,
+  vilkarType: null,
+  vurderPaNyttArsaker: null,
+}];
 
 describe('<UttakInfoPanel>', () => {
   it('skal vise UttakInfoPanel', () => {
@@ -15,74 +42,41 @@ describe('<UttakInfoPanel>', () => {
     const wrapper = shallowWithIntl(<UttakInfoPanelImpl
       intl={intlMock}
       toggleInfoPanelCallback={toggleInfoPanelCallback}
-      submitValidation={sinon.spy()}
+      submitCallback={sinon.spy()}
       openInfoPanels={[]}
       readOnly
       hasOpenAksjonspunkter
-      aksjonspunkter={[]}
-      førsteUttaksDato={førsteUttaksDato}
-      initialUttaksPerioder={[]}
-      handleSubmit={sinon.spy()}
       isRevurdering={false}
-      annenForelderHarRettAp={[]}
-      annenForelderHarRettApOpen={false}
-      hasStatusUtredes
+      hasStatusUtredes={false}
+      behandlingPaaVent={false}
+      aksjonspunkter={[]}
     />);
 
     const faktaEkspandertpanel = wrapper.find(FaktaEkspandertpanel);
-    const form = faktaEkspandertpanel.find('form');
     const uttakFaktaForm = faktaEkspandertpanel.find(UttakFaktaForm);
     expect(faktaEkspandertpanel).to.have.length(1);
-    expect(form).to.have.length(1);
     expect(uttakFaktaForm).to.have.length(1);
   });
 
-  it('skal vise error melding hvis det er noe error', () => {
+  it('skal vise Avklar annen forelder har rett ', () => {
     const toggleInfoPanelCallback = sinon.spy();
-    const formProps = {
-      error: 'Perioder overlapper',
-    };
-    const wrapper = shallowWithIntl(<UttakInfoPanelImpl
-      intl={intlMock}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      submitValidation={sinon.spy()}
-      openInfoPanels={[]}
-      readOnly
-      hasOpenAksjonspunkter
-      aksjonspunkter={[]}
-      førsteUttaksDato={førsteUttaksDato}
-      initialUttaksPerioder={[]}
-      handleSubmit={sinon.spy()}
-      isRevurdering={false}
-      annenForelderHarRettAp={[]}
-      annenForelderHarRettApOpen={false}
-      hasStatusUtredes
-      {...formProps}
-    />);
-    const span = wrapper.find('span');
-    expect(span).to.have.length(1);
-    expect(span.text()).to.equal('Perioder overlapper');
-  });
 
-  it('skal ikke vise error melding hvis det er ikke noe error', () => {
-    const toggleInfoPanelCallback = sinon.spy();
     const wrapper = shallowWithIntl(<UttakInfoPanelImpl
       intl={intlMock}
       toggleInfoPanelCallback={toggleInfoPanelCallback}
-      submitValidation={sinon.spy()}
+      submitCallback={sinon.spy()}
       openInfoPanels={[]}
       readOnly
       hasOpenAksjonspunkter
-      aksjonspunkter={[]}
-      initialUttaksPerioder={[]}
-      handleSubmit={sinon.spy()}
-      førsteUttaksDato={førsteUttaksDato}
       isRevurdering={false}
-      annenForelderHarRettAp={[]}
-      annenForelderHarRettApOpen={false}
-      hasStatusUtredes
+      hasStatusUtredes={false}
+      behandlingPaaVent={false}
+      aksjonspunkter={avklarAnnenforelderHarRettAp}
     />);
-    const span = wrapper.find('span');
-    expect(span).to.have.length(0);
+
+    const faktaEkspandertpanel = wrapper.find(FaktaEkspandertpanel);
+    const annenForelderHarRettForm = faktaEkspandertpanel.find(AnnenForelderHarRettForm);
+    expect(faktaEkspandertpanel).to.have.length(1);
+    expect(annenForelderHarRettForm).to.have.length(1);
   });
 });

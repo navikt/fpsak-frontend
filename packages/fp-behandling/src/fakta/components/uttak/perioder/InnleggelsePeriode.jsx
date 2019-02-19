@@ -183,9 +183,9 @@ const validateInnleggelseForm = (values) => {
 const mapToStateToProps = (state, ownProps) => {
   const formName = `innleggelseForm-${ownProps.id}`;
   const resultat = behandlingFormValueSelector(formName)(state, 'resultat');
-  const initialResultat = behandlingFormValueSelector('UttakInfoPanel')(state, `${ownProps.fieldId}.resultat`);
-  const begrunnelse = behandlingFormValueSelector('UttakInfoPanel')(state, `${ownProps.fieldId}.begrunnelse`);
-  const initialDokumentertePerioder = behandlingFormValueSelector('UttakInfoPanel')(state, `${ownProps.fieldId}.dokumentertePerioder`);
+  const initialResultat = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.resultat`);
+  const begrunnelse = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.begrunnelse`);
+  const initialDokumentertePerioder = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.dokumentertePerioder`);
   const dokumentertePerioder = behandlingFormValueSelector(formName)(state, 'dokumentertePerioder');
   const formSyncErrors = getBehandlingFormSyncErrors(formName)(state);
 
@@ -199,8 +199,8 @@ const mapToStateToProps = (state, ownProps) => {
       resultat: initialResultat ? initialResultat.kode : undefined,
       dokumentertePerioder: initialDokumentertePerioder !== undefined ? initialDokumentertePerioder : [],
     },
-    updated: behandlingFormValueSelector('UttakInfoPanel')(state, `${ownProps.fieldId}.updated`),
-    bekreftet: behandlingFormValueSelector('UttakInfoPanel')(state, `${ownProps.fieldId}.bekreftet`),
+    updated: behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.updated`),
+    bekreftet: behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.bekreftet`),
     form: formName,
     onSubmit: values => ownProps.updatePeriode(values),
   };

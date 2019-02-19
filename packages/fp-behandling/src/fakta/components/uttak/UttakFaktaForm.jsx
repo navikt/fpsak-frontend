@@ -1,33 +1,45 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 import {
   FieldArray,
   change as reduxFormChange,
   reset as reduxFormReset,
-  getFormInitialValues,
 } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { getBehandlingFormPrefix, behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
-import { getInntektsmeldinger, getBehandlingVersjon, getBehandlingIsOnHold } from 'behandlingFpsak/src/behandlingSelectors';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { behandlingForm, getBehandlingFormPrefix, behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
+import {
+  getInntektsmeldinger, getBehandlingVersjon, getUttakPerioder,
+  getBehandlingYtelseFordeling,
+} from 'behandlingFpsak/src/behandlingSelectors';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import { getSelectedBehandlingId, getKodeverk } from 'behandlingFpsak/src/duck';
-import { ariaCheck, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import {
+  ariaCheck, DDMMYYYY_DATE_FORMAT, guid, dateFormat,
+} from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import {
   VerticalSpacer, AksjonspunktHelpText, FlexContainer, FlexColumn, FlexRow,
 } from '@fpsak-frontend/shared-components';
-import AnnenForelderHarRett from './components/AnnenForelderHarRett';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import UttakPeriode from './UttakPeriode';
 import UttakNyPeriode from './UttakNyPeriode';
 import UttakSlettPeriodeModal from './UttakSlettPeriodeModal';
+import {
+  sjekkOmfaktaOmUttakAksjonspunkt,
+  sjekkArbeidsprosentOver100,
+  sjekkOverlappendePerioder,
+  sjekkEndretFørsteUttaksDato,
+  sjekkNyFørsteUttakDatoStartErEtterSkjæringpunkt,
+  sjekkNyFørsteUttakDatoStartErFørSkjæringpunkt,
+} from './components/UttakPeriodeValidering';
+
 
 const createNewPerioder = (perioder, id, values) => {
   const updatedIndex = perioder.findIndex(p => p.id === id);
@@ -132,7 +144,7 @@ export class UttakFaktaForm extends Component {
 
     const newPerioder = perioder.concat(nyPeriode).sort((a, b) => a.fom.localeCompare(b.fom));
 
-    formChange(`${behandlingFormPrefix}.UttakInfoPanel`, 'perioder', newPerioder);
+    formChange(`${behandlingFormPrefix}.UttakFaktaForm`, 'perioder', newPerioder);
 
     this.setState({
       isNyPeriodeFormOpen: !isNyPeriodeFormOpen,
@@ -160,7 +172,7 @@ export class UttakFaktaForm extends Component {
 
     if (hasOriginalPeriode) {
       formChange(
-        `${behandlingFormPrefix}.UttakInfoPanel`,
+        `${behandlingFormPrefix}.UttakFaktaForm`,
         'slettedePerioder',
         slettedePerioder.concat([{
           ...periodeSlett,
@@ -171,7 +183,7 @@ export class UttakFaktaForm extends Component {
 
     const newPerioder = perioder.filter(periode => periode.id !== periodeSlett.id);
 
-    formChange(`${behandlingFormPrefix}.UttakInfoPanel`, 'perioder', newPerioder);
+    formChange(`${behandlingFormPrefix}.UttakFaktaForm`, 'perioder', newPerioder);
 
     this.setState({
       inntektsmeldingInfo: newPerioder.map(periode => findRelevantInntektsmeldingInfo(inntektsmeldinger, periode)),
@@ -190,7 +202,7 @@ export class UttakFaktaForm extends Component {
     const { behandlingFormPrefix, perioder, reduxFormChange: formChange } = this.props;
 
     formChange(
-      `${behandlingFormPrefix}.UttakInfoPanel`, 'perioder',
+      `${behandlingFormPrefix}.UttakFaktaForm`, 'perioder',
       perioder.map((periode) => {
         if (periode.id === id) {
           return {
@@ -209,7 +221,7 @@ export class UttakFaktaForm extends Component {
 
     const newPerioder = createNewPerioder(perioder, id, { openForm: true });
 
-    formChange(`${behandlingFormPrefix}.UttakInfoPanel`, 'perioder', newPerioder);
+    formChange(`${behandlingFormPrefix}.UttakFaktaForm`, 'perioder', newPerioder);
   }
 
   cancelEditPeriode(id) {
@@ -217,7 +229,7 @@ export class UttakFaktaForm extends Component {
 
     const newPerioder = createNewPerioder(perioder, id, { openForm: false });
 
-    formChange(`${behandlingFormPrefix}.UttakInfoPanel`, 'perioder', newPerioder);
+    formChange(`${behandlingFormPrefix}.UttakFaktaForm`, 'perioder', newPerioder);
   }
 
   updatePeriode(values) {
@@ -281,7 +293,7 @@ export class UttakFaktaForm extends Component {
 
     const newPerioder = createNewPerioder(perioder, id, newPeriodeObject);
 
-    formChange(`${behandlingFormPrefix}.UttakInfoPanel`, 'perioder', newPerioder.sort((a, b) => a.fom.localeCompare(b.fom)));
+    formChange(`${behandlingFormPrefix}.UttakFaktaForm`, 'perioder', newPerioder.sort((a, b) => a.fom.localeCompare(b.fom)));
   }
 
   isAnyFormOpen() {
@@ -302,125 +314,110 @@ export class UttakFaktaForm extends Component {
       perioder,
       aksjonspunkter,
       førsteUttaksDato,
-      annenForelderHarRettErLøst,
-      annenForelderHarRettAp,
-      annenForelderHarRettApOpen,
       submitting,
-      behandlingPaaVent,
+      hasOpenAksjonspunkter,
+      ...formProps
     } = this.props;
     const {
       periodeSlett, isNyPeriodeFormOpen, inntektsmeldingInfo, showModalSlettPeriode,
     } = this.state;
     const nyPeriodeDisabledDaysFom = førsteUttaksDato || (perioder[0] || []).fom;
-
-    // TODO fikse logikken her slik at det blir mer ryddig
-    const aksjonspunkterFixed = aksjonspunkter.filter(ap => ap.definisjon.kode
-      !== aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT);
-    const hasOpenAksjonspunkterFixed = !!aksjonspunkterFixed.filter(ap => isAksjonspunktOpen(ap.status.kode)).length;
     return (
-      <div>
-        {annenForelderHarRettAp.length > 0 && (
-          <AnnenForelderHarRett
-            readOnly={readOnly}
-            hasOpenAksjonspunkter={annenForelderHarRettApOpen}
-            aksjonspunkter={annenForelderHarRettAp}
-          />
-        )}
-        {(annenForelderHarRettAp.length === 0 || annenForelderHarRettErLøst !== null) && (
-
-          <React.Fragment>
-
-            {annenForelderHarRettAp.length > 0
-          && <VerticalSpacer twentyPx dashed />
-        }
-            {!readOnly && (
-            <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkterFixed}>
-              {aksjonspunkterFixed.map((ap) => {
-                const førsteUttak = {
-                  value: moment(førsteUttaksDato).format(DDMMYYYY_DATE_FORMAT),
-                };
-                return (
-                  <FormattedMessage
-                    key={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
-                    id={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
-                    values={førsteUttak}
-                  />
-                );
-              })}
-            </AksjonspunktHelpText>
-            )
-        }
-            <VerticalSpacer twentyPx />
-
-            <Element><FormattedMessage id="UttakInfoPanel.SoknadsPeriode" /></Element>
-
-            <FieldArray
-              name="perioder"
-              component={UttakPeriode}
-              openSlettPeriodeModalCallback={this.openSlettPeriodeModalCallback}
-              updatePeriode={this.updatePeriode}
-              editPeriode={this.editPeriode}
-              cleaningUpForm={this.cleaningUpForm}
-              cancelEditPeriode={this.cancelEditPeriode}
-              isAnyFormOpen={this.isAnyFormOpen}
-              isNyPeriodeFormOpen={isNyPeriodeFormOpen}
-              perioder={perioder}
-              readOnly={readOnly}
-              inntektsmeldingInfo={inntektsmeldingInfo}
-              førsteUttaksDato={førsteUttaksDato}
-            />
-            <VerticalSpacer twentyPx />
-            <FlexContainer fluid wrap>
-              <FlexRow>
-                <FlexColumn>
-                  <Hovedknapp
-                    mini
-                    disabled={disableButtons || readOnly || isNyPeriodeFormOpen || behandlingPaaVent}
-                    onClick={ariaCheck}
-                    spinner={submitting}
-                  >
-                    <FormattedMessage id="UttakInfoPanel.BekreftOgFortsett" />
-                  </Hovedknapp>
-                </FlexColumn>
-                <FlexColumn>
-                  <Knapp
-                    mini
-                    htmlType="button"
-                    onClick={this.addNewPeriod}
-                    disabled={disableButtons || readOnly || isNyPeriodeFormOpen || behandlingPaaVent}
-                  >
-                    <FormattedMessage id="UttakInfoPanel.LeggTilPeriode" />
-                  </Knapp>
-                </FlexColumn>
-              </FlexRow>
-            </FlexContainer>
-            <VerticalSpacer eightPx />
-
-            {isNyPeriodeFormOpen && (
-            <div ref={this.setNyPeriodeFormRef}>
-              <UttakNyPeriode
-                newPeriodeCallback={this.newPeriodeCallback}
-                newPeriodeResetCallback={this.newPeriodeResetCallback}
-                inntektsmeldinger={inntektsmeldinger}
-                nyPeriodeDisabledDaysFom={nyPeriodeDisabledDaysFom}
+      <form onSubmit={formProps.handleSubmit}>
+        {!readOnly && (
+        <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
+          {aksjonspunkter.map((ap) => {
+            const førsteUttak = {
+              value: moment(førsteUttaksDato).format(DDMMYYYY_DATE_FORMAT),
+            };
+            return (
+              <FormattedMessage
+                key={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
+                id={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
+                values={førsteUttak}
               />
-            </div>
-            )}
-            <UttakSlettPeriodeModal
-              showModal={showModalSlettPeriode}
-              periode={periodeSlett}
-              cancelEvent={this.hideModal}
-              closeEvent={this.removePeriode}
-            />
-          </React.Fragment>
+            );
+          })}
+        </AksjonspunktHelpText>
+        )
+        }
+        <VerticalSpacer twentyPx />
+
+        <Element><FormattedMessage id="UttakInfoPanel.SoknadsPeriode" /></Element>
+
+        <FieldArray
+          name="perioder"
+          component={UttakPeriode}
+          openSlettPeriodeModalCallback={this.openSlettPeriodeModalCallback}
+          updatePeriode={this.updatePeriode}
+          editPeriode={this.editPeriode}
+          cleaningUpForm={this.cleaningUpForm}
+          cancelEditPeriode={this.cancelEditPeriode}
+          isAnyFormOpen={this.isAnyFormOpen}
+          isNyPeriodeFormOpen={isNyPeriodeFormOpen}
+          perioder={perioder}
+          readOnly={readOnly}
+          inntektsmeldingInfo={inntektsmeldingInfo}
+          førsteUttaksDato={førsteUttaksDato}
+        />
+        <VerticalSpacer twentyPx />
+        <FlexContainer fluid wrap>
+          <FlexRow>
+            <FlexColumn>
+              <Hovedknapp
+                mini
+                disabled={disableButtons || readOnly || isNyPeriodeFormOpen}
+                onClick={ariaCheck}
+                spinner={formProps.submitting}
+              >
+                <FormattedMessage id="UttakInfoPanel.BekreftOgFortsett" />
+              </Hovedknapp>
+            </FlexColumn>
+            <FlexColumn>
+              <Knapp
+                mini
+                htmlType="button"
+                onClick={this.addNewPeriod}
+                disabled={disableButtons || readOnly || isNyPeriodeFormOpen}
+              >
+                <FormattedMessage id="UttakInfoPanel.LeggTilPeriode" />
+              </Knapp>
+            </FlexColumn>
+          </FlexRow>
+        </FlexContainer>
+        <VerticalSpacer eightPx />
+
+        {isNyPeriodeFormOpen && (
+        <div ref={this.setNyPeriodeFormRef}>
+          <UttakNyPeriode
+            newPeriodeCallback={this.newPeriodeCallback}
+            newPeriodeResetCallback={this.newPeriodeResetCallback}
+            inntektsmeldinger={inntektsmeldinger}
+            nyPeriodeDisabledDaysFom={nyPeriodeDisabledDaysFom}
+          />
+        </div>
         )}
-      </div>
+        <UttakSlettPeriodeModal
+          showModal={showModalSlettPeriode}
+          periode={periodeSlett}
+          cancelEvent={this.hideModal}
+          closeEvent={this.removePeriode}
+        />
+        {formProps.error
+      && (
+      <span>
+        {formProps.error}
+      </span>
+      )}
+      </form>
+
     );
   }
 }
 
 UttakFaktaForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
+  hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   inntektsmeldinger: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
@@ -436,37 +433,154 @@ UttakFaktaForm.propTypes = {
   })).isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   førsteUttaksDato: PropTypes.string,
-  behandlingPaaVent: PropTypes.bool,
-  annenForelderHarRettErLøst: PropTypes.bool,
-  annenForelderHarRettAp: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  annenForelderHarRettApOpen: PropTypes.bool,
 };
 
 UttakFaktaForm.defaultProps = {
   førsteUttaksDato: undefined,
-  behandlingPaaVent: false,
-  annenForelderHarRettErLøst: null,
-  annenForelderHarRettApOpen: undefined,
 };
 
-const perioder = state => behandlingFormValueSelector('UttakInfoPanel')(state, 'perioder') || [];
-const førsteUttaksDato = state => behandlingFormValueSelector('UttakInfoPanel')(state, 'førsteUttaksDato') || undefined;
-const slettedePerioder = state => behandlingFormValueSelector('UttakInfoPanel')(state, 'slettedePerioder') || [];
-const annenForelderHarRett = state => behandlingFormValueSelector('UttakInfoPanel')(state, 'annenForelderHarRett');
+const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOSONAR må ha disse sjekkene
+  const errors = {};
 
-const mapStateToProps = (state) => {
+  if (sjekkOmfaktaOmUttakAksjonspunkt(aksjonspunkter)) {
+    const originalStartDato = (originalPerioder[0] || []).fom;
+    const nyStartDato = (values.perioder[0] || []).fom;
+    const { førsteUttaksDato } = values;
+
+    if (values.perioder.length === 0) {
+      errors.perioder = {
+        _error: <FormattedMessage id="UttakInfoPanel.IngenPerioder" />,
+      };
+    } else {
+      values.perioder.forEach((periode, index) => {
+        const forrigePeriode = values.perioder[index - 1];
+        const nestePeriode = periode;
+
+        if (sjekkArbeidsprosentOver100(periode)) {
+          errors.perioder = {
+            _error: <FormattedMessage id="UttakInfoPanel.ForHoyArbeidstidsprosent" />,
+          };
+        }
+
+        if (sjekkOverlappendePerioder(index, nestePeriode, forrigePeriode)) {
+          errors.perioder = {
+            _error: <FormattedMessage id="UttakInfoPanel.OverlappendePerioder" />,
+          };
+        }
+      });
+      if (sjekkEndretFørsteUttaksDato(originalStartDato, nyStartDato, aksjonspunkter)) {
+        errors.perioder = {
+          _error: <FormattedMessage
+            id="UttakInfoPanel.OrginaleStartdatoKanIkkeEndres"
+            values={{ originalStartDato: dateFormat(originalStartDato) }}
+          />,
+        };
+      }
+
+      if (sjekkNyFørsteUttakDatoStartErEtterSkjæringpunkt(nyStartDato, førsteUttaksDato, aksjonspunkter)) {
+        errors.perioder = {
+          _error: <FormattedMessage
+            id="UttakInfoPanel.manglerPeriodeEtterFørsteUttaksdag"
+            values={{ førsteUttaksDato: dateFormat(førsteUttaksDato) }}
+          />,
+        };
+      }
+      if (sjekkNyFørsteUttakDatoStartErFørSkjæringpunkt(nyStartDato, førsteUttaksDato, aksjonspunkter)) {
+        errors.perioder = {
+          _error: <FormattedMessage
+            id="UttakInfoPanel.periodeFørFørsteUttaksdag"
+            values={{ førsteUttaksDato: dateFormat(førsteUttaksDato) }}
+          />,
+        };
+      }
+    }
+  }
+
+  return errors;
+};
+
+const buildInitialValues = createSelector([getUttakPerioder, getBehandlingYtelseFordeling],
+  (perioder, ytelseFordeling) => {
+    const førsteUttaksDato = ytelseFordeling && ytelseFordeling.førsteUttaksDato ? ytelseFordeling.førsteUttaksDato : undefined;
+    if (perioder) {
+      return ({
+        førsteUttaksDato,
+        perioder: perioder.map(periode => ({
+          ...periode,
+          id: guid(),
+          openForm: periode.bekreftet === false,
+          updated: false,
+          isFromSøknad: true,
+        })),
+      });
+    }
+
+    return undefined;
+  });
+
+const getOriginalPeriodeId = (origPeriode) => {
+  if (origPeriode) {
+    return origPeriode.id;
+  }
+
+  return null;
+};
+
+const transformValues = (values, initialValues, aksjonspunkter) => { // NOSONAR
+  const apCodes = aksjonspunkter.length
+    ? aksjonspunkter.map(ap => ap.definisjon.kode)
+    : [aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK];
+  return apCodes.map(ap => ({
+    kode: ap,
+    bekreftedePerioder: values.perioder.map((periode) => {
+      const {
+        id, openForm, updated, kontoType, isFromSøknad, ...bekreftetPeriode // NOSONAR
+      } = periode;
+      const origPeriode = initialValues.perioder.filter(p => p.id === id);
+      return {
+        bekreftetPeriode,
+        orginalFom: origPeriode[0] ? origPeriode[0].fom : null,
+        orginalTom: origPeriode[0] ? origPeriode[0].tom : null,
+        originalArbeidstidsprosent: origPeriode[0] ? origPeriode[0].arbeidstidsprosent : null,
+        originalBegrunnelse: origPeriode[0] ? origPeriode[0].begrunnelse : null,
+        originalResultat: origPeriode[0] ? origPeriode[0].resultat : null,
+      };
+    }),
+    slettedePerioder: values.slettedePerioder
+      ? values.slettedePerioder.map((periode) => {
+        const { id, begrunnelse, ...slettetPeriode } = periode;
+        const origPeriode = initialValues.perioder.filter(p => p.id === id);
+
+        return {
+          ...slettetPeriode,
+          begrunnelse: id === getOriginalPeriodeId(origPeriode[0]) ? begrunnelse : null,
+        };
+      })
+      : [],
+    begrunnelse: '',
+  }));
+};
+
+const førsteUttaksDato = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'førsteUttaksDato') || undefined;
+const slettedePerioder = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'slettedePerioder') || [];
+const perioder = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'perioder') || [];
+const mapStateToProps = (state, initialProps) => {
   const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state));
+  const initialValues = buildInitialValues(state);
+
+  const orginalePerioder = getUttakPerioder(state);
+
   return {
+    initialValues,
     behandlingFormPrefix,
+    perioder: perioder(state),
     uttakPeriodeVurderingTyper: getKodeverk(kodeverkTyper.UTTAK_PERIODE_VURDERING_TYPE)(state),
     inntektsmeldinger: getInntektsmeldinger(state),
-    initialValues: getFormInitialValues(`${behandlingFormPrefix}.UttakInfoPanel`)(state),
     slettedePerioder: slettedePerioder(state),
-    perioder: perioder(state),
     førsteUttaksDato: førsteUttaksDato(state),
-    annenForelderHarRettErLøst: annenForelderHarRett(state),
     disableButtons: perioder(state).find(periode => periode.openForm === true) !== undefined,
-    behandlingPaaVent: getBehandlingIsOnHold(state),
+    validate: values => validateUttakForm(values, orginalePerioder, initialProps.aksjonspunkter),
+    onSubmit: values => initialProps.submitCallback(transformValues(values, initialValues, initialProps.aksjonspunkter)),
   };
 };
 
@@ -477,4 +591,7 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UttakFaktaForm);
+export default connect(mapStateToProps, mapDispatchToProps)(behandlingForm({
+  form: 'UttakFaktaForm',
+  enableReinitialize: true,
+})(UttakFaktaForm));

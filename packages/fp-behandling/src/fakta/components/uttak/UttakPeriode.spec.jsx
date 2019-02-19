@@ -81,7 +81,6 @@ describe('<UttakPeriode>', () => {
       meta={meta}
       inntektsmeldingInfo={[]}
       readOnly
-      isRevurdering={false}
       samtidigUttak={perioder[0].samtidigUttak}
       flerbarnsdager={perioder[0].flerbarnsdager}
       endringsDato={endringsDato}
@@ -107,7 +106,6 @@ describe('<UttakPeriode>', () => {
       inntektsmeldingInfo={[]}
       readOnly
       isFromSøknad={perioder[0].isFromSøknad}
-      isRevurdering={false}
       samtidigUttak={perioder[0].samtidigUttak}
       flerbarnsdager={perioder[0].flerbarnsdager}
       endringsDato={endringsDato}
@@ -132,7 +130,6 @@ describe('<UttakPeriode>', () => {
       isFromSøknad={perioder[0].isFromSøknad}
       inntektsmeldingInfo={[]}
       readOnly={false}
-      isRevurdering={false}
       samtidigUttak={perioder[0].samtidigUttak}
       flerbarnsdager={perioder[0].flerbarnsdager}
       endringsDato={endringsDato}
@@ -163,7 +160,6 @@ describe('<UttakPeriode>', () => {
       isNyPeriodeFormOpen
       readOnly={false}
       endringsDato={endringsDato}
-      isRevurdering={false}
       samtidigUttak={perioder[0].samtidigUttak}
       flerbarnsdager={perioder[0].flerbarnsdager}
       {...otherProps}
