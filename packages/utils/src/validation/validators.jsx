@@ -99,7 +99,10 @@ export const noMoreThanZeroIfRejectedAndNotUtsettelse = value => (parseFloat(val
 
 export const hasValidPeriodIncludingOtherErrors = (values, otherErrors = [{}], options = {}) => {
   const today = moment().format(ISO_DATE_FORMAT);
-  const earliestDate = options.todayOrAfter ? today : null;
+  let earliestDate = options.todayOrAfter ? today : null;
+  if (options.tidligstDato) {
+    earliestDate = options.tidligstDato;
+  }
   const latestDate = options.todayOrBefore ? today : null;
   if (!values || !values.length) {
     return { _error: isRequiredMessage() };

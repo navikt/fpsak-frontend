@@ -146,23 +146,27 @@ describe('<OppholdINorgePanel>', () => {
         expect(errorsWithValidDates.fremtidigeOppholdUtenlands).to.not.exist;
       });
 
-      it('skal validere at alle datoer er lik eller etter dagens dato', () => {
+      it('skal validere at alle datoer er lik eller etter mottatt dato', () => {
+        const periode = {
+          land: countryCodes[1].kode,
+          periodeFom: '2019-01-01',
+          periodeTom: '2019-05-01',
+        };
         const errorsWithInvalidDates = OppholdINorgePanel.validate({
           harFremtidigeOppholdUtenlands: true,
-          fremtidigeOppholdUtenlands: [getPeriodDaysFromToday(15, 20), getPeriodDaysFromToday(-1, +1)],
+          fremtidigeOppholdUtenlands: [periode],
+          mottattDato: '2019-02-01',
         });
         const errorsWithValidDates = OppholdINorgePanel.validate({
           harFremtidigeOppholdUtenlands: true,
-          fremtidigeOppholdUtenlands: [
-            getPeriodDaysFromToday(5, 10),
-            getPeriodDaysFromToday(15, 20),
-          ],
+          fremtidigeOppholdUtenlands: [periode],
+          mottattDato: '2019-01-01',
         });
 
         expect(errorsWithInvalidDates.fremtidigeOppholdUtenlands).to.be.an('array');
-        expect(errorsWithInvalidDates.fremtidigeOppholdUtenlands[1].periodeTom).to.not.exist;
-        expect(errorsWithInvalidDates.fremtidigeOppholdUtenlands[1].periodeFom).to.be.an('array');
-        expect(errorsWithInvalidDates.fremtidigeOppholdUtenlands[1].periodeFom[0].id).to.eql(dateNotAfterOrEqualMessage()[0].id);
+        expect(errorsWithInvalidDates.fremtidigeOppholdUtenlands[0].periodeTom).to.not.exist;
+        expect(errorsWithInvalidDates.fremtidigeOppholdUtenlands[0].periodeFom).to.be.an('array');
+        expect(errorsWithInvalidDates.fremtidigeOppholdUtenlands[0].periodeFom[0].id).to.eql(dateNotAfterOrEqualMessage()[0].id);
 
         expect(errorsWithValidDates.fremtidigeOppholdUtenlands).to.not.exist;
       });
