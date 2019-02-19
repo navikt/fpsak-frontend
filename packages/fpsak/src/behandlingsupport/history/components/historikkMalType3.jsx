@@ -24,12 +24,15 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]: 'Behandlingspunkt.Opptjeningsvilkaret',
   [aksjonspunktCodes.MANUELL_VURDERING_AV_OMSORGSVILKARET]: 'OmsorgOgForeldreansvarFaktaForm.ApplicationInformation',
   [aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD]: 'Registrering.RegistrerePapirSoknadAksPkt',
-  [aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD]: 'ErForeldreansvar2LeddVilkaarOppfyltForm.Foreldreansvar',
-  [aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_4_LEDD]: 'ErForeldreansvar4LeddVilkaarOppfyltForm.Foreldreansvar',
+  [aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD]:
+    'ErForeldreansvar2LeddVilkaarOppfyltForm.Foreldreansvar',
+  [aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_4_LEDD]:
+    'ErForeldreansvar4LeddVilkaarOppfyltForm.Foreldreansvar',
   [aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL]: 'VarselOmRevurderingInfoPanel.Etterkontroll',
   [aksjonspunktCodes.VARSEL_REVURDERING_MANUELL]: 'VarselOmRevurderingInfoPanel.Manuell',
   [aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN]: 'HistorikkAksjonpunktMapping.SokersStonadGjelderSammeBarn',
-  [aksjonspunktCodes.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN]: 'HistorikkAksjonpunktMapping.AnnenForeldersStonadGjelderSammeBarn',
+  [aksjonspunktCodes.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN]:
+    'HistorikkAksjonpunktMapping.AnnenForeldersStonadGjelderSammeBarn',
   [aksjonspunktCodes.AVKLAR_VERGE]: 'Verge.AvklarVerge',
   [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL]: 'SjekkFodselDokForm.ApplicationInformation',
   [aksjonspunktCodes.BEHANDLE_KLAGE_NFP]: 'Klage.KlageNFP.Fastsett',
@@ -51,7 +54,9 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.OVERSTYR_BEREGNING]: 'Overstyr.beregning',
   [aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER]: 'Overstyr.uttak',
   [aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK]: 'UttakInfoPanel.FaktaUttak',
-  [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG]: 'OmsorgFaktaForm.Aleneomsorg.ApplicationInformation',
+  [aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK]: 'UttakInfoPanel.FaktaUttak',
+  [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG]:
+    'OmsorgFaktaForm.Aleneomsorg.ApplicationInformation',
   [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG]: 'OmsorgFaktaForm.Omsorg.ApplicationInformation',
   [aksjonspunktCodes.AVKLAR_UTTAK]: 'UttakInfoPanel.FaktaUttak',
   [aksjonspunktCodes.FASTSETT_UTTAKPERIODER]: 'Fastsett.Manuelt',
@@ -59,20 +64,25 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST]: 'Uttak.OpplysningerOmSoknadsfrist',
   [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_MEDLEMSKAP]: 'Uttak.OpplysningerOmMedlemskap',
   [aksjonspunktCodes.KONTROLLER_REALITETSBEHANDLING_ELLER_KLAGE]: 'Uttak.OpplysningerOmKlage',
-  [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_FORDELING_AV_STØNADSPERIODEN]: 'Uttak.OpplysningerOmFordelingStonadsperiode',
+  [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_FORDELING_AV_STØNADSPERIODEN]:
+    'Uttak.OpplysningerOmFordelingStonadsperiode',
   [aksjonspunktCodes.KONTROLLER_TILSTØTENDE_YTELSER_INNVILGET]: 'Uttak.OpplysningerOmTilstotendeYtelser.Innvilget',
   [aksjonspunktCodes.KONTROLLER_TILSTØTENDE_YTELSER_OPPHØRT]: 'Uttak.OpplysningerOmTilstotendeYtelser.Opphort',
   [aksjonspunktCodes.TILKNYTTET_STORTINGET]: 'Uttak.TilknyttetStortinget',
   [aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS]: 'Beregning.BeregningsgrunnlagManueltATFL',
-  [aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE]: 'Beregning.VurderVarigEndring',
-  [aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE]: 'Beregning.BeregningsgrunnlagManueltSN',
-  [aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD]: 'Beregning.BeregningsgrunnlagManueltTidsbegrenset',
-  [aksjonspunktCodes.AVKLAR_BEREGNINGSGRUNNLAG_OG_INNTEKTSKATEGORI_FOR_BRUKER_MED_TILSTOTENDE_YTELSE]: 'Beregning.BeregningsgrunnlagOgInntektskategoriTY',
-  [aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET]: 'Beregning.BeregningsgrunnlagManueltSNNYIArbeidslivet',
+  [aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE]:
+    'Beregning.VurderVarigEndring',
+  [aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE]:
+    'Beregning.BeregningsgrunnlagManueltSN',
+  [aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD]:
+    'Beregning.BeregningsgrunnlagManueltTidsbegrenset',
+  [aksjonspunktCodes.AVKLAR_BEREGNINGSGRUNNLAG_OG_INNTEKTSKATEGORI_FOR_BRUKER_MED_TILSTOTENDE_YTELSE]:
+    'Beregning.BeregningsgrunnlagOgInntektskategoriTY',
+  [aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET]:
+    'Beregning.BeregningsgrunnlagManueltSNNYIArbeidslivet',
   [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: 'Beregning.VurderFaktaATFLSN',
   [aksjonspunktCodes.FORESLA_VEDTAK]: 'Vedtak.Fritekstbrev',
   [aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO]: 'UttakInfoPanel.FaktaUttak.ForsteUttakDato',
-
 };
 
 const scrollUp = () => {
