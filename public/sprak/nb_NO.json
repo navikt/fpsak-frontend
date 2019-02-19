@@ -2226,6 +2226,7 @@
   "HistorikkResultat.DelvisMedholdIKlage": "Vedtaket er delvis omgjort",
   "HistorikkResultat.BehandlingErHjemsendt": "Behandling er hjemsendt",
   "HistorikkResultat.MedholdTilUgunst": "Vedtaket er omgjort til ugunst",
+  "HistorikkResultat.OverstyringFaktaUttak": "Overstyrt vurdering:",
 
   "HistorikkSoeknadsperiode.Gradering": "<b>Uttak: gradering</b> <br>{navnVerdi} <br>{value}",
   "HistorikkSoeknadsperiode.UtsettelseArbeid": "<b>Utsettelse: arbeid</b> <br>{value}",
