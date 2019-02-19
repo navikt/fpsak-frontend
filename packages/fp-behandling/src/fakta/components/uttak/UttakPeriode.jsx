@@ -11,7 +11,6 @@ import {
 import classnames from 'classnames/bind';
 import overlapp from '@fpsak-frontend/assets/images/overlapp.svg';
 import tomPeriode from '@fpsak-frontend/assets/images/tom_periode.svg';
-import { utsettelseArsakTexts } from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import UttakPeriodeType from './UttakPeriodeType';
 import UttakPeriodeInnhold from './UttakPeriodeInnhold';
 
@@ -71,7 +70,7 @@ const avvikInntekstmeldInfo = (periode, inntektsmeldingInfo) => {
       if (manglerUtsettelseInntektsmelding) {
         avvikTekst = (
           <Element className={styles.avvikInfoMargin}>
-            <FormattedMessage id="UttakPeriode.ManglerInfoUtsettelse" values={{ årsak: utsettelseArsakTexts[periode.utsettelseÅrsak.kode].toLowerCase() }} />
+            <FormattedMessage id="UttakPeriode.ManglerInfoUtsettelse" values={{ årsak: periode.utsettelseÅrsak.navn.toLowerCase() }} />
           </Element>
         );
       }
