@@ -7,9 +7,11 @@ import {
   change as reduxFormChange,
   reset as reduxFormReset,
 } from 'redux-form';
+import { getRettigheter } from 'navAnsatt/duck';
 import { FormattedMessage } from 'react-intl';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
+import { CheckboxField } from '@fpsak-frontend/form';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { behandlingForm, getBehandlingFormPrefix, behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
@@ -31,6 +33,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import UttakPeriode from './UttakPeriode';
 import UttakNyPeriode from './UttakNyPeriode';
 import UttakSlettPeriodeModal from './UttakSlettPeriodeModal';
+
 import {
   sjekkOmfaktaOmUttakAksjonspunkt,
   sjekkArbeidsprosentOver100,
@@ -306,16 +309,44 @@ export class UttakFaktaForm extends Component {
     this.newPeriodeResetCallback();
   }
 
+  disableButtons(sjekkOmIsDirty = false) {
+    const {
+      readOnly, openForms, isManuellOverstyring, isDirty,
+    } = this.props;
+    const { isNyPeriodeFormOpen } = this.state;
+
+    if (sjekkOmIsDirty && !isDirty) {
+      return true;
+    }
+
+    if (openForms || isNyPeriodeFormOpen) {
+      return true;
+    }
+
+    if (isManuellOverstyring) {
+      return false;
+    }
+
+    if (readOnly) {
+      return true;
+    }
+
+    return false;
+  }
+
   render() {
     const {
       readOnly,
       inntektsmeldinger,
-      disableButtons,
+      openForms,
       perioder,
       aksjonspunkter,
       førsteUttaksDato,
       submitting,
       hasOpenAksjonspunkter,
+      kanOverstyre,
+      hasRevurderingOvertyringAp,
+      isManuellOverstyring,
       ...formProps
     } = this.props;
     const {
@@ -343,7 +374,24 @@ export class UttakFaktaForm extends Component {
         }
         <VerticalSpacer twentyPx />
 
-        <Element><FormattedMessage id="UttakInfoPanel.SoknadsPeriode" /></Element>
+        <FlexContainer>
+          <FlexRow>
+            <FlexColumn>
+              <Element><FormattedMessage id="UttakInfoPanel.SoknadsPeriode" /></Element>
+            </FlexColumn>
+            {kanOverstyre
+                && (
+                <FlexColumn className="justifyItemsToFlexEnd">
+                  <CheckboxField
+                    name="manuellOverstyring"
+                    label={{ id: 'UttakInfoPanel.ManuellOverstyring' }}
+                    readOnly={hasRevurderingOvertyringAp || !kanOverstyre}
+                  />
+                </FlexColumn>
+                )
+                }
+          </FlexRow>
+        </FlexContainer>
 
         <FieldArray
           name="perioder"
@@ -356,7 +404,7 @@ export class UttakFaktaForm extends Component {
           isAnyFormOpen={this.isAnyFormOpen}
           isNyPeriodeFormOpen={isNyPeriodeFormOpen}
           perioder={perioder}
-          readOnly={readOnly}
+          readOnly={readOnly && !isManuellOverstyring}
           inntektsmeldingInfo={inntektsmeldingInfo}
           førsteUttaksDato={førsteUttaksDato}
         />
@@ -366,7 +414,7 @@ export class UttakFaktaForm extends Component {
             <FlexColumn>
               <Hovedknapp
                 mini
-                disabled={disableButtons || readOnly || isNyPeriodeFormOpen}
+                disabled={this.disableButtons(true)}
                 onClick={ariaCheck}
                 spinner={formProps.submitting}
               >
@@ -378,7 +426,7 @@ export class UttakFaktaForm extends Component {
                 mini
                 htmlType="button"
                 onClick={this.addNewPeriod}
-                disabled={disableButtons || readOnly || isNyPeriodeFormOpen}
+                disabled={this.disableButtons()}
               >
                 <FormattedMessage id="UttakInfoPanel.LeggTilPeriode" />
               </Knapp>
@@ -421,22 +469,29 @@ UttakFaktaForm.propTypes = {
   inntektsmeldinger: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  disableButtons: PropTypes.bool.isRequired,
+  openForms: PropTypes.bool.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormReset: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
   slettedePerioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   initialValues: PropTypes.shape().isRequired,
-  uttakPeriodeVurderingTyper: PropTypes.arrayOf(PropTypes.shape({
-    kode: PropTypes.string,
-    name: PropTypes.string,
-  })).isRequired,
+  uttakPeriodeVurderingTyper: PropTypes.arrayOf(
+    PropTypes.shape({
+      kode: PropTypes.string,
+      name: PropTypes.string,
+    }),
+  ).isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   førsteUttaksDato: PropTypes.string,
+  isDirty: PropTypes.bool.isRequired,
+  isManuellOverstyring: PropTypes.bool,
+  hasRevurderingOvertyringAp: PropTypes.bool.isRequired,
+  kanOverstyre: PropTypes.bool.isRequired,
 };
 
 UttakFaktaForm.defaultProps = {
   førsteUttaksDato: undefined,
+  isManuellOverstyring: false,
 };
 
 const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOSONAR må ha disse sjekkene
@@ -526,10 +581,14 @@ const getOriginalPeriodeId = (origPeriode) => {
   return null;
 };
 
+const manueltEllerOverstyring = manuellOverstyring => (
+  manuellOverstyring ? aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK : aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK
+);
+
 const transformValues = (values, initialValues, aksjonspunkter) => { // NOSONAR
   const apCodes = aksjonspunkter.length
     ? aksjonspunkter.map(ap => ap.definisjon.kode)
-    : [aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK];
+    : [manueltEllerOverstyring(values.manuellOverstyring)];
   return apCodes.map(ap => ({
     kode: ap,
     bekreftedePerioder: values.perioder.map((periode) => {
@@ -564,21 +623,28 @@ const transformValues = (values, initialValues, aksjonspunkter) => { // NOSONAR
 const førsteUttaksDato = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'førsteUttaksDato') || undefined;
 const slettedePerioder = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'slettedePerioder') || [];
 const perioder = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'perioder') || [];
+
+const manuellOverstyring = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'manuellOverstyring') || false;
 const mapStateToProps = (state, initialProps) => {
   const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state));
   const initialValues = buildInitialValues(state);
 
   const orginalePerioder = getUttakPerioder(state);
-
+  const hasRevurderingOvertyringAp = !!initialProps.aksjonspunkter.includes(
+    ap => ap.definisjon.kode === aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK,
+  );
   return {
     initialValues,
     behandlingFormPrefix,
+    hasRevurderingOvertyringAp,
     perioder: perioder(state),
     uttakPeriodeVurderingTyper: getKodeverk(kodeverkTyper.UTTAK_PERIODE_VURDERING_TYPE)(state),
     inntektsmeldinger: getInntektsmeldinger(state),
     slettedePerioder: slettedePerioder(state),
     førsteUttaksDato: førsteUttaksDato(state),
-    disableButtons: perioder(state).find(periode => periode.openForm === true) !== undefined,
+    isManuellOverstyring: manuellOverstyring(state),
+    kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
+    openForms: !!perioder(state).find(periode => periode.openForm === true),
     validate: values => validateUttakForm(values, orginalePerioder, initialProps.aksjonspunkter),
     onSubmit: values => initialProps.submitCallback(transformValues(values, initialValues, initialProps.aksjonspunkter)),
   };

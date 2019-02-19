@@ -64,6 +64,10 @@ const historikkResultatTypeCodes = {
     kode: 'UGUNST_MEDHOLD_I_KLAGE',
     feltId: 'HistorikkResultat.MedholdTilUgunst',
   },
+  OVERSTYRING_FAKTA_UTTAK: {
+    kode: 'OVERSTYRING_FAKTA_UTTAK',
+    feltId: 'HistorikkResultat.OverstyringFaktaUttak',
+  },
 };
 
 export default historikkResultatTypeCodes;

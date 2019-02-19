@@ -14,25 +14,30 @@ const reduxFormReset = sinon.spy();
 
 describe('<UttakFaktaForm>', () => {
   it('skal vise uttak faktaform', () => {
-    const wrapper = shallowWithIntl(<UttakFaktaForm
-      readOnly
-      hasOpenAksjonspunkter
-      inntektsmeldinger={[]}
-      nyPeriode={{}}
-      behandlingFormPrefix="UttakInfoPanel"
-      perioder={[]}
-      disableButtons
-      reduxFormChange={reduxFormChange}
-      reduxFormReset={reduxFormReset}
-      periodeTyper={[]}
-      utsettelseArsaker={[]}
-      uttakPeriodeVurderingTyper={[]}
-      initialValues={{}}
-      slettedePerioder={[]}
-      aksjonspunkter={[]}
-      førsteUttaksDato="2018-01-12"
-      submitting={false}
-    />);
+    const wrapper = shallowWithIntl(
+      <UttakFaktaForm
+        readOnly
+        hasOpenAksjonspunkter
+        inntektsmeldinger={[]}
+        nyPeriode={{}}
+        behandlingFormPrefix="UttakInfoPanel"
+        perioder={[]}
+        reduxFormChange={reduxFormChange}
+        reduxFormReset={reduxFormReset}
+        periodeTyper={[]}
+        utsettelseArsaker={[]}
+        uttakPeriodeVurderingTyper={[]}
+        initialValues={{}}
+        slettedePerioder={[]}
+        aksjonspunkter={[]}
+        førsteUttaksDato="2018-01-12"
+        submitting={false}
+        openForms={false}
+        kanOverstyre={false}
+        isDirty={false}
+        hasRevurderingOvertyringAp={false}
+      />,
+    );
 
     const fieldArray = wrapper.find('FieldArray');
     const verticalSpacer = wrapper.find('VerticalSpacer');
@@ -45,9 +50,9 @@ describe('<UttakFaktaForm>', () => {
     const uttakSlettPeriodeModal = wrapper.find('UttakSlettPeriodeModal');
     expect(fieldArray).to.have.length(1);
     expect(verticalSpacer).to.have.length(3);
-    expect(flexContainer).to.have.length(1);
-    expect(flexRow).to.have.length(1);
-    expect(flexColumn).to.have.length(2);
+    expect(flexContainer).to.have.length(2);
+    expect(flexRow).to.have.length(2);
+    expect(flexColumn).to.have.length(3);
     expect(element).to.have.length(1);
     expect(formattedMessage).to.have.length(3);
     expect(uttakNyPeriode).to.have.length(0);
@@ -55,25 +60,30 @@ describe('<UttakFaktaForm>', () => {
   });
 
   it('skal vise UttakNyPeriode og disable knapper når isNyPeriodeFormOpen er true', () => {
-    const wrapper = shallowWithIntl(<UttakFaktaForm
-      readOnly
-      hasOpenAksjonspunkter
-      inntektsmeldinger={[]}
-      nyPeriode={{}}
-      behandlingFormPrefix="UttakInfoPanel"
-      perioder={[]}
-      disableButtons
-      reduxFormChange={reduxFormChange}
-      reduxFormReset={reduxFormReset}
-      periodeTyper={[]}
-      utsettelseArsaker={[]}
-      uttakPeriodeVurderingTyper={[]}
-      initialValues={{}}
-      slettedePerioder={[]}
-      aksjonspunkter={[]}
-      førsteUttaksDato="2018-01-12"
-      submitting={false}
-    />);
+    const wrapper = shallowWithIntl(
+      <UttakFaktaForm
+        readOnly
+        hasOpenAksjonspunkter
+        inntektsmeldinger={[]}
+        nyPeriode={{}}
+        behandlingFormPrefix="UttakInfoPanel"
+        perioder={[]}
+        reduxFormChange={reduxFormChange}
+        reduxFormReset={reduxFormReset}
+        periodeTyper={[]}
+        utsettelseArsaker={[]}
+        uttakPeriodeVurderingTyper={[]}
+        initialValues={{}}
+        slettedePerioder={[]}
+        aksjonspunkter={[]}
+        førsteUttaksDato="2018-01-12"
+        submitting={false}
+        openForms={false}
+        kanOverstyre={false}
+        isDirty={false}
+        hasRevurderingOvertyringAp={false}
+      />,
+    );
 
     wrapper.setState({ isNyPeriodeFormOpen: true });
     const fieldArray = wrapper.find('FieldArray');
@@ -85,31 +95,36 @@ describe('<UttakFaktaForm>', () => {
     expect(hovedknapp.prop('disabled')).is.equal(true);
     expect(knapp.prop('disabled')).is.equal(true);
     expect(fieldArray).to.have.length(1);
-    expect(flexContainer).to.have.length(1);
+    expect(flexContainer).to.have.length(2);
     expect(uttakSlettPeriodeModal).to.have.length(0);
     expect(uttakNyPeriode).to.have.length(1);
   });
 
   it('skal vise UttakSlettPeriodeModal når showModalSlettPeriode er true', () => {
-    const wrapper = shallowWithIntl(<UttakFaktaForm
-      readOnly
-      hasOpenAksjonspunkter
-      inntektsmeldinger={[]}
-      nyPeriode={{}}
-      behandlingFormPrefix="UttakInfoPanel"
-      perioder={[]}
-      disableButtons
-      reduxFormChange={reduxFormChange}
-      reduxFormReset={reduxFormReset}
-      periodeTyper={[]}
-      utsettelseArsaker={[]}
-      uttakPeriodeVurderingTyper={[]}
-      initialValues={{}}
-      slettedePerioder={[]}
-      aksjonspunkter={[]}
-      førsteUttaksDato="2018-01-12"
-      submitting={false}
-    />);
+    const wrapper = shallowWithIntl(
+      <UttakFaktaForm
+        readOnly
+        hasOpenAksjonspunkter
+        inntektsmeldinger={[]}
+        nyPeriode={{}}
+        behandlingFormPrefix="UttakInfoPanel"
+        perioder={[]}
+        reduxFormChange={reduxFormChange}
+        reduxFormReset={reduxFormReset}
+        periodeTyper={[]}
+        utsettelseArsaker={[]}
+        uttakPeriodeVurderingTyper={[]}
+        initialValues={{}}
+        slettedePerioder={[]}
+        aksjonspunkter={[]}
+        førsteUttaksDato="2018-01-12"
+        submitting={false}
+        openForms
+        kanOverstyre={false}
+        isDirty={false}
+        hasRevurderingOvertyringAp={false}
+      />,
+    );
 
     wrapper.setState({ showModalSlettPeriode: true });
     const fieldArray = wrapper.find('FieldArray');
@@ -117,31 +132,36 @@ describe('<UttakFaktaForm>', () => {
     const uttakNyPeriode = wrapper.find('UttakNyPeriode');
     const uttakSlettPeriodeModal = wrapper.find(UttakSlettPeriodeModal);
     expect(fieldArray).to.have.length(1);
-    expect(flexContainer).to.have.length(1);
+    expect(flexContainer).to.have.length(2);
     expect(uttakNyPeriode).to.have.length(0);
     expect(uttakSlettPeriodeModal).to.have.length(1);
   });
 
   it('skal disable knapper når disableButtons er true', () => {
-    const wrapper = shallowWithIntl(<UttakFaktaForm
-      readOnly
-      hasOpenAksjonspunkter
-      inntektsmeldinger={[]}
-      nyPeriode={{}}
-      behandlingFormPrefix="UttakInfoPanel"
-      perioder={[]}
-      disableButtons
-      reduxFormChange={reduxFormChange}
-      reduxFormReset={reduxFormReset}
-      periodeTyper={[]}
-      utsettelseArsaker={[]}
-      uttakPeriodeVurderingTyper={[]}
-      initialValues={{}}
-      slettedePerioder={[]}
-      aksjonspunkter={[]}
-      førsteUttaksDato="2018-01-12"
-      submitting={false}
-    />);
+    const wrapper = shallowWithIntl(
+      <UttakFaktaForm
+        readOnly
+        hasOpenAksjonspunkter
+        inntektsmeldinger={[]}
+        nyPeriode={{}}
+        behandlingFormPrefix="UttakInfoPanel"
+        perioder={[]}
+        reduxFormChange={reduxFormChange}
+        reduxFormReset={reduxFormReset}
+        periodeTyper={[]}
+        utsettelseArsaker={[]}
+        uttakPeriodeVurderingTyper={[]}
+        initialValues={{}}
+        slettedePerioder={[]}
+        aksjonspunkter={[]}
+        førsteUttaksDato="2018-01-12"
+        submitting={false}
+        openForms
+        kanOverstyre={false}
+        isDirty={false}
+        hasRevurderingOvertyringAp={false}
+      />,
+    );
 
     const hovedknapp = wrapper.find(Hovedknapp);
     const knapp = wrapper.find(Knapp);
@@ -150,25 +170,30 @@ describe('<UttakFaktaForm>', () => {
   });
 
   it('skal disable knapper når readOnly er true', () => {
-    const wrapper = shallowWithIntl(<UttakFaktaForm
-      readOnly
-      hasOpenAksjonspunkter
-      inntektsmeldinger={[]}
-      nyPeriode={{}}
-      behandlingFormPrefix="UttakInfoPanel"
-      perioder={[]}
-      disableButtons={false}
-      reduxFormChange={reduxFormChange}
-      reduxFormReset={reduxFormReset}
-      periodeTyper={[]}
-      utsettelseArsaker={[]}
-      uttakPeriodeVurderingTyper={[]}
-      initialValues={{}}
-      slettedePerioder={[]}
-      aksjonspunkter={[]}
-      førsteUttaksDato="2018-01-12"
-      submitting={false}
-    />);
+    const wrapper = shallowWithIntl(
+      <UttakFaktaForm
+        readOnly
+        hasOpenAksjonspunkter
+        inntektsmeldinger={[]}
+        nyPeriode={{}}
+        behandlingFormPrefix="UttakInfoPanel"
+        perioder={[]}
+        reduxFormChange={reduxFormChange}
+        reduxFormReset={reduxFormReset}
+        periodeTyper={[]}
+        utsettelseArsaker={[]}
+        uttakPeriodeVurderingTyper={[]}
+        initialValues={{}}
+        slettedePerioder={[]}
+        aksjonspunkter={[]}
+        førsteUttaksDato="2018-01-12"
+        submitting={false}
+        openForms={false}
+        kanOverstyre={false}
+        isDirty={false}
+        hasRevurderingOvertyringAp={false}
+      />,
+    );
 
     const hovedknapp = wrapper.find(Hovedknapp);
     const knapp = wrapper.find(Knapp);
@@ -176,26 +201,32 @@ describe('<UttakFaktaForm>', () => {
     expect(knapp.prop('disabled')).is.equal(true);
   });
 
-  it('skal ikke disable knapper når disableButtons og readOnly er false', () => {
-    const wrapper = shallowWithIntl(<UttakFaktaForm
-      readOnly={false}
-      hasOpenAksjonspunkter
-      inntektsmeldinger={[]}
-      nyPeriode={{}}
-      behandlingFormPrefix="UttakInfoPanel"
-      perioder={[]}
-      disableButtons={false}
-      reduxFormChange={reduxFormChange}
-      reduxFormReset={reduxFormReset}
-      periodeTyper={[]}
-      utsettelseArsaker={[]}
-      uttakPeriodeVurderingTyper={[]}
-      initialValues={{}}
-      slettedePerioder={[]}
-      aksjonspunkter={[]}
-      førsteUttaksDato="2018-01-12"
-      submitting={false}
-    />);
+  it('skal ikke disable knapper når openForms og readOnly er false', () => {
+    const wrapper = shallowWithIntl(
+      <UttakFaktaForm
+        readOnly={false}
+        hasOpenAksjonspunkter
+        inntektsmeldinger={[]}
+        nyPeriode={{}}
+        behandlingFormPrefix="UttakInfoPanel"
+        perioder={[]}
+        reduxFormChange={reduxFormChange}
+        reduxFormReset={reduxFormReset}
+        periodeTyper={[]}
+        utsettelseArsaker={[]}
+        uttakPeriodeVurderingTyper={[]}
+        initialValues={{}}
+        slettedePerioder={[]}
+        aksjonspunkter={[]}
+        førsteUttaksDato="2018-01-12"
+        submitting={false}
+        openForms={false}
+        kanOverstyre={false}
+        isDirty
+        behandlingPaaVent={false}
+        hasRevurderingOvertyringAp={false}
+      />,
+    );
 
     const hovedknapp = wrapper.find(Hovedknapp);
     const knapp = wrapper.find(Knapp);
@@ -204,50 +235,55 @@ describe('<UttakFaktaForm>', () => {
   });
 
   it('skal vise AksjonspunktHelpText når readOnly er false', () => {
-    const wrapper = shallowWithIntl(<UttakFaktaForm
-      readOnly={false}
-      hasOpenAksjonspunkter
-      inntektsmeldinger={[]}
-      nyPeriode={{}}
-      behandlingFormPrefix="UttakInfoPanel"
-      perioder={[]}
-      disableButtons
-      reduxFormChange={reduxFormChange}
-      reduxFormReset={reduxFormReset}
-      periodeTyper={[]}
-      utsettelseArsaker={[]}
-      uttakPeriodeVurderingTyper={[]}
-      initialValues={{}}
-      slettedePerioder={[]}
-      aksjonspunkter={[
-        {
-          aksjonspunktType: {
-            kode: 'MANU',
-            navn: 'Manuell',
-            kodeverk: 'AKSJONSPUNKT_TYPE',
+    const wrapper = shallowWithIntl(
+      <UttakFaktaForm
+        readOnly={false}
+        hasOpenAksjonspunkter
+        inntektsmeldinger={[]}
+        nyPeriode={{}}
+        behandlingFormPrefix="UttakInfoPanel"
+        perioder={[]}
+        reduxFormChange={reduxFormChange}
+        reduxFormReset={reduxFormReset}
+        periodeTyper={[]}
+        utsettelseArsaker={[]}
+        uttakPeriodeVurderingTyper={[]}
+        initialValues={{}}
+        slettedePerioder={[]}
+        aksjonspunkter={[
+          {
+            aksjonspunktType: {
+              kode: 'MANU',
+              navn: 'Manuell',
+              kodeverk: 'AKSJONSPUNKT_TYPE',
+            },
+            begrunnelse: null,
+            besluttersBegrunnelse: null,
+            definisjon: {
+              kode: '5071',
+              navn: 'Fastsett uttaksperioder manuelt',
+            },
+            erAktivt: true,
+            kanLoses: true,
+            status: {
+              kode: 'OPPR',
+              navn: 'Opprettet',
+              kodeverk: 'AKSJONSPUNKT_STATUS',
+            },
+            toTrinnsBehandling: true,
+            toTrinnsBehandlingGodkjent: null,
+            vilkarType: null,
+            vurderPaNyttArsaker: [],
           },
-          begrunnelse: null,
-          besluttersBegrunnelse: null,
-          definisjon: {
-            kode: '5071',
-            navn: 'Fastsett uttaksperioder manuelt',
-          },
-          erAktivt: true,
-          kanLoses: true,
-          status: {
-            kode: 'OPPR',
-            navn: 'Opprettet',
-            kodeverk: 'AKSJONSPUNKT_STATUS',
-          },
-          toTrinnsBehandling: true,
-          toTrinnsBehandlingGodkjent: null,
-          vilkarType: null,
-          vurderPaNyttArsaker: [],
-        },
-      ]}
-      førsteUttaksDato="2018-01-12"
-      submitting={false}
-    />);
+        ]}
+        førsteUttaksDato="2018-01-12"
+        submitting={false}
+        openForms={false}
+        kanOverstyre={false}
+        isDirty={false}
+        hasRevurderingOvertyringAp={false}
+      />,
+    );
 
     const aksjonspunktHelpText = wrapper.find(AksjonspunktHelpText);
     expect(aksjonspunktHelpText).to.have.length(1);
@@ -257,25 +293,30 @@ describe('<UttakFaktaForm>', () => {
   });
 
   it('skal vise nyPeriode skjema onClick på knappen', () => {
-    const wrapper = shallowWithIntl(<UttakFaktaForm
-      readOnly={false}
-      hasOpenAksjonspunkter
-      inntektsmeldinger={[]}
-      nyPeriode={{}}
-      behandlingFormPrefix="UttakInfoPanel"
-      perioder={[]}
-      disableButtons={false}
-      reduxFormChange={reduxFormChange}
-      reduxFormReset={reduxFormReset}
-      periodeTyper={[]}
-      utsettelseArsaker={[]}
-      uttakPeriodeVurderingTyper={[]}
-      initialValues={{}}
-      slettedePerioder={[]}
-      aksjonspunkter={[]}
-      førsteUttaksDato="2018-01-12"
-      submitting={false}
-    />);
+    const wrapper = shallowWithIntl(
+      <UttakFaktaForm
+        readOnly={false}
+        hasOpenAksjonspunkter
+        inntektsmeldinger={[]}
+        nyPeriode={{}}
+        behandlingFormPrefix="UttakInfoPanel"
+        perioder={[]}
+        reduxFormChange={reduxFormChange}
+        reduxFormReset={reduxFormReset}
+        periodeTyper={[]}
+        utsettelseArsaker={[]}
+        uttakPeriodeVurderingTyper={[]}
+        initialValues={{}}
+        slettedePerioder={[]}
+        aksjonspunkter={[]}
+        førsteUttaksDato="2018-01-12"
+        submitting={false}
+        openForms={false}
+        kanOverstyre={false}
+        isDirty={false}
+        hasRevurderingOvertyringAp={false}
+      />,
+    );
 
     const knapp = wrapper.find(Knapp);
     expect(knapp.length).to.equal(1);
@@ -289,26 +330,31 @@ describe('<UttakFaktaForm>', () => {
     const formProps = {
       error: 'Perioder overlapper',
     };
-    const wrapper = shallowWithIntl(<UttakFaktaForm
-      readOnly={false}
-      hasOpenAksjonspunkter
-      inntektsmeldinger={[]}
-      nyPeriode={{}}
-      behandlingFormPrefix="UttakInfoPanel"
-      perioder={[]}
-      disableButtons={false}
-      reduxFormChange={reduxFormChange}
-      reduxFormReset={reduxFormReset}
-      periodeTyper={[]}
-      utsettelseArsaker={[]}
-      uttakPeriodeVurderingTyper={[]}
-      initialValues={{}}
-      slettedePerioder={[]}
-      aksjonspunkter={[]}
-      førsteUttaksDato="2018-01-12"
-      submitting={false}
-      {...formProps}
-    />);
+    const wrapper = shallowWithIntl(
+      <UttakFaktaForm
+        readOnly={false}
+        hasOpenAksjonspunkter
+        inntektsmeldinger={[]}
+        nyPeriode={{}}
+        behandlingFormPrefix="UttakInfoPanel"
+        perioder={[]}
+        reduxFormChange={reduxFormChange}
+        reduxFormReset={reduxFormReset}
+        periodeTyper={[]}
+        utsettelseArsaker={[]}
+        uttakPeriodeVurderingTyper={[]}
+        initialValues={{}}
+        slettedePerioder={[]}
+        aksjonspunkter={[]}
+        førsteUttaksDato="2018-01-12"
+        submitting={false}
+        openForms={false}
+        kanOverstyre={false}
+        isDirty={false}
+        hasRevurderingOvertyringAp={false}
+        {...formProps}
+      />,
+    );
 
     const span = wrapper.find('span');
     expect(span).to.have.length(1);
@@ -316,25 +362,30 @@ describe('<UttakFaktaForm>', () => {
   });
 
   it('skal ikke vise error melding hvis det er ikke noe error', () => {
-    const wrapper = shallowWithIntl(<UttakFaktaForm
-      readOnly={false}
-      hasOpenAksjonspunkter
-      inntektsmeldinger={[]}
-      nyPeriode={{}}
-      behandlingFormPrefix="UttakInfoPanel"
-      perioder={[]}
-      disableButtons={false}
-      reduxFormChange={reduxFormChange}
-      reduxFormReset={reduxFormReset}
-      periodeTyper={[]}
-      utsettelseArsaker={[]}
-      uttakPeriodeVurderingTyper={[]}
-      initialValues={{}}
-      slettedePerioder={[]}
-      aksjonspunkter={[]}
-      førsteUttaksDato="2018-01-12"
-      submitting={false}
-    />);
+    const wrapper = shallowWithIntl(
+      <UttakFaktaForm
+        readOnly={false}
+        hasOpenAksjonspunkter
+        inntektsmeldinger={[]}
+        nyPeriode={{}}
+        behandlingFormPrefix="UttakInfoPanel"
+        perioder={[]}
+        reduxFormChange={reduxFormChange}
+        reduxFormReset={reduxFormReset}
+        periodeTyper={[]}
+        utsettelseArsaker={[]}
+        uttakPeriodeVurderingTyper={[]}
+        initialValues={{}}
+        slettedePerioder={[]}
+        aksjonspunkter={[]}
+        førsteUttaksDato="2018-01-12"
+        submitting={false}
+        openForms={false}
+        kanOverstyre={false}
+        isDirty={false}
+        hasRevurderingOvertyringAp={false}
+      />,
+    );
 
     const span = wrapper.find('span');
     expect(span).to.have.length(0);

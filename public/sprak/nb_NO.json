@@ -1861,6 +1861,7 @@
   "UttakPeriode.AvvikGradering": "Inntektsmeldingen angir ikke noe info om gradering",
   "UttakInfoPanel.AnnenForelderHarRett": "Annen forelder har rett",
   "UttakInfoPanel.AnnenForelderHarIkkeRett": "Annen forelder har ikke rett",
+  "UttakInfoPanel.ManuellOverstyring": "Manuell overstyring",
 
   "UttakPeriode.ManglerInfoUtsettelse": "Inntektsmeldingen mangler info om {årsak}",
   "UttakPeriode.AvvikUtsettelse": "Info om utsettelse avviker fra inntektsmelding",
