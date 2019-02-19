@@ -309,15 +309,12 @@ export class UttakFaktaForm extends Component {
     this.newPeriodeResetCallback();
   }
 
-  disableButtons(sjekkOmIsDirty = false) {
+  disableButtons() {
     const {
-      readOnly, openForms, isManuellOverstyring, isDirty,
+      readOnly, openForms, isManuellOverstyring,
     } = this.props;
     const { isNyPeriodeFormOpen } = this.state;
 
-    if (sjekkOmIsDirty && !isDirty) {
-      return true;
-    }
 
     if (openForms || isNyPeriodeFormOpen) {
       return true;
@@ -414,7 +411,7 @@ export class UttakFaktaForm extends Component {
             <FlexColumn>
               <Hovedknapp
                 mini
-                disabled={this.disableButtons(true)}
+                disabled={this.disableButtons()}
                 onClick={ariaCheck}
                 spinner={formProps.submitting}
               >
@@ -483,7 +480,6 @@ UttakFaktaForm.propTypes = {
   ).isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   førsteUttaksDato: PropTypes.string,
-  isDirty: PropTypes.bool.isRequired,
   isManuellOverstyring: PropTypes.bool,
   hasRevurderingOvertyringAp: PropTypes.bool.isRequired,
   kanOverstyre: PropTypes.bool.isRequired,
