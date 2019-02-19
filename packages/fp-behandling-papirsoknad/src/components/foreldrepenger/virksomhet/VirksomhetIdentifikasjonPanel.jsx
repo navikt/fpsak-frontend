@@ -86,7 +86,7 @@ export const VirksomhetIdentifikasjonPanel = ({
                 <DatepickerField
                   readOnly={readOnly}
                   validate={[required, hasValidDate, dateBeforeOrEqualToToday]}
-                  name="periodeFom"
+                  name="fom"
                   defaultValue={null}
                   label={{ id: 'Registrering.InntektsgivendeArbeid.periodeFom' }}
                 />
@@ -95,7 +95,7 @@ export const VirksomhetIdentifikasjonPanel = ({
                 <DatepickerField
                   readOnly={readOnly}
                   validate={[hasValidDate]}
-                  name="periodeTom"
+                  name="tom"
                   defaultValue={null}
                   label={{ id: 'Registrering.InntektsgivendeArbeid.periodeTom' }}
                 />
@@ -123,8 +123,8 @@ VirksomhetIdentifikasjonPanel.defaultProps = {
 
 VirksomhetIdentifikasjonPanel.validate = (values) => {
   const errors = {};
-  if (values.periodeFom && values.periodeTom) {
-    errors.periodeFom = validPeriodeFomTom(values.periodeFom, values.periodeTom);
+  if (values.fom && values.tom) {
+    errors.fom = validPeriodeFomTom(values.fom, values.tom);
   }
   return errors;
 };
