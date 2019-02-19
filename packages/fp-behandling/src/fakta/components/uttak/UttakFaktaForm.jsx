@@ -382,7 +382,7 @@ export class UttakFaktaForm extends Component {
                   <CheckboxField
                     name="manuellOverstyring"
                     label={{ id: 'UttakInfoPanel.ManuellOverstyring' }}
-                    readOnly={hasRevurderingOvertyringAp || !kanOverstyre}
+                    readOnly={!readOnly || hasRevurderingOvertyringAp || !kanOverstyre}
                   />
                 </FlexColumn>
                 )
