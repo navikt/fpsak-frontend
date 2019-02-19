@@ -11,8 +11,8 @@ import {
 } from 'behandlingFpsak/src/behandlingSelectors';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/src/behandlingForm';
-import { getSelectedBehandlingId } from 'behandlingFpsak/src/duck';
-
+import { getSelectedBehandlingId, getFeatureToggles } from 'behandlingFpsak/src/duck';
+import { featureToggle } from '@fpsak-frontend/fp-felles';
 import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import {
   VerticalSpacer, AksjonspunktHelpText, ArrowBox, Image, FadingPanel,
@@ -154,12 +154,13 @@ export class AvregningPanelImpl extends Component {
       grunnerTilReduksjon,
       videreBehandling,
       sprakkode,
+      featureVarseltekst,
       ...formProps
     } = this.props;
     const simuleringResultatOption = getSimuleringResult(simuleringResultat, feilutbetaling);
     const inlineStyle = {
       radioOption: {
-        height: videreBehandling === avregningCodes.TILBAKEKR_INFOTRYGD ? 230 : 'auto',
+        height: (videreBehandling === avregningCodes.TILBAKEKR_INFOTRYGD && featureVarseltekst) ? 250 : 'auto',
       },
     };
 
@@ -232,7 +233,7 @@ export class AvregningPanelImpl extends Component {
                           />
                           <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={avregningCodes.TILBAKEKR_IGNORER} />
                         </RadioGroupField>
-                        { videreBehandling === avregningCodes.TILBAKEKR_INFOTRYGD && !readOnly
+                        { videreBehandling === avregningCodes.TILBAKEKR_INFOTRYGD && featureVarseltekst
                         && (
                           <div className={styles.varsel}>
                             <ArrowBox alignOffset={12}>
@@ -343,6 +344,7 @@ export class AvregningPanelImpl extends Component {
 AvregningPanelImpl.propTypes = {
   isApOpen: PropTypes.bool.isRequired,
   simuleringResultat: PropTypes.shape(),
+  previewCallback: PropTypes.func.isRequired,
   ...formPropTypes,
 };
 
@@ -366,6 +368,7 @@ const buildInitialValues = createSelector(
 
     let values = {
       videreBehandling: tilbakekrevingValg.videreBehandling.kode,
+      varseltekst: tilbakekrevingValg.varseltekst,
       begrunnelse: aksjonspunkt.begrunnelse,
     };
 
@@ -383,11 +386,10 @@ const buildInitialValues = createSelector(
 const mapStateToProps = (state, initialProps) => ({
   simuleringResultat: getSimuleringResultat(state),
   initialValues: buildInitialValues(state),
-  erTilbakekrevingVilkårOppfylt: behandlingFormValueSelector(formName)(state, 'erTilbakekrevingVilkårOppfylt'),
-  grunnerTilReduksjon: behandlingFormValueSelector(formName)(state, 'grunnerTilReduksjon'),
-  videreBehandling: behandlingFormValueSelector(formName)(state, 'videreBehandling'),
+  ...behandlingFormValueSelector(formName)(state, 'erTilbakekrevingVilkårOppfylt', 'grunnerTilReduksjon', 'videreBehandling', 'varseltekst'),
   sprakkode: getBehandlingSprak(state),
   behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+  featureVarseltekst: getFeatureToggles(state)[featureToggle.SIMULER_VARSELTEKST],
   onSubmit: values => initialProps.submitCallback(transformValues(values, initialProps.apCodes[0])),
 });
 

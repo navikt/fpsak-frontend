@@ -341,6 +341,7 @@
   "Messages.DocumentList": "Liste over dokumenter (skriv ett dokument pr. linje)",
   "Messages.Submit": "Send brev",
   "Messages.Preview": "Forhåndsvis",
+  "Messages.PreviewText": "Forhåndsvis varselbrev",
   "Messages.BrevErBestilt": "Brevet er bestilt. Du kan endre frist eller årsak før du fortsetter.",
 
   "Tekstbygger.Og" : "{value1} og {value2}",
