@@ -4,12 +4,11 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fpsakApi from 'data/fpsakApi';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 
-const getBehandlingerData = fpsakApi.BEHANDLINGER_FPSAK.getRestApiData();
-/* const getBehandlingerData = createSelector(
+const getBehandlingerData = createSelector(
   [fpsakApi.BEHANDLINGER_FPSAK.getRestApiData(), fpsakApi.BEHANDLINGER_FPTILBAKE.getRestApiData()],
   (behandlingerFpsak = [], behandlingerTilbake = []) => behandlingerFpsak.concat(behandlingerTilbake),
 );
- */
+
 const getBehandlingerFpsakMeta = fpsakApi.BEHANDLINGER_FPSAK.getRestApiMeta();
 const getBehandlingerTilbakeMeta = fpsakApi.BEHANDLINGER_FPTILBAKE.getRestApiMeta();
 
