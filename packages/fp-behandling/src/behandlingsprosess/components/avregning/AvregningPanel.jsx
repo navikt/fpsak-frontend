@@ -9,10 +9,9 @@ import { Undertekst, Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import {
   getSimuleringResultat, getTilbakekrevingValg, getAksjonspunkter, getBehandlingVersjon, getBehandlingSprak,
 } from 'behandlingFpsak/src/behandlingSelectors';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import { behandlingspunktCodes, featureToggle } from '@fpsak-frontend/fp-felles';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/src/behandlingForm';
 import { getSelectedBehandlingId, getFeatureToggles } from 'behandlingFpsak/src/duck';
-import { featureToggle } from '@fpsak-frontend/fp-felles';
 import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import {
   VerticalSpacer, AksjonspunktHelpText, ArrowBox, Image, FadingPanel,
@@ -344,7 +343,6 @@ export class AvregningPanelImpl extends Component {
 AvregningPanelImpl.propTypes = {
   isApOpen: PropTypes.bool.isRequired,
   simuleringResultat: PropTypes.shape(),
-  previewCallback: PropTypes.func.isRequired,
   ...formPropTypes,
 };
 
