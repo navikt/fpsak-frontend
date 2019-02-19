@@ -266,6 +266,18 @@ const warningUttakActivity = (values) => {
   let warnings = {};
   const rowArray = [];
   const touchedaktiviteter = document.getElementsByClassName('tableRowHighlight');
+  const invalidArbeidsProsentVidUsettelse = isArbeidsProsentVidUtsettelse100(values, values.UttakFieldArray);
+  if (invalidArbeidsProsentVidUsettelse && values.utsettelseType.kode === utsettelseArsakCodes.ARBEID) {
+    warnings = {
+      _warning:
+  <AlertStripe type="info" className={styles.advarsel}>
+    <FormattedMessage
+      id="ValidationMessage.UtsettelseUtenFullArbeid"
+    />
+  </AlertStripe>,
+    };
+  }
+
   if (touchedaktiviteter) {
     for (let i = 0; i < touchedaktiviteter.length; i += 1) {
       touchedaktiviteter[i].classList.remove('tableRowHighlight');
@@ -286,21 +298,34 @@ const warningUttakActivity = (values) => {
           aktiviteter[item + 1].classList.add('tableRowHighlight');
         });
       }
-      warnings = {
-        _warning:
+      if (invalidArbeidsProsentVidUsettelse && values.utsettelseType.kode === utsettelseArsakCodes.ARBEID) {
+        warnings = {
+          ...warnings,
+          _warning:
+  <AlertStripe type="info" className={styles.advarsel}>
+    <FormattedMessage
+      id="ValidationMessage.MerEn100ProsentOgOgyldigUtsettlse"
+    />
+  </AlertStripe>,
+        };
+      } else {
+        warnings = {
+          ...warnings,
+          _warning:
   <AlertStripe type="info" className={styles.advarsel}>
     <FormattedMessage
       id="ValidationMessage.MerEn100Prosent"
     />
   </AlertStripe>,
-      };
+        };
+      }
     }
   }
   return warnings;
 };
 
 const validateUttakActivity = (values) => {
-  let errors = {};
+  const errors = {};
   errors.UttakFieldArray = [];
   if (values.UttakFieldArray) {
     values.UttakFieldArray.forEach((aktivitet, index) => {
@@ -319,19 +344,6 @@ const validateUttakActivity = (values) => {
         };
       }
     });
-    const invalidArbeidsProsentVidUsettelse = isArbeidsProsentVidUtsettelse100(values, values.UttakFieldArray);
-    if (invalidArbeidsProsentVidUsettelse && values.utsettelseType.kode === utsettelseArsakCodes.ARBEID) {
-      errors = {
-        ...errors,
-        _error:
-  <AlertStripe type="advarsel" className={styles.advarsel}>
-    <FormattedMessage
-      id="ValidationMessage.UtsettelseUtenFullArbeid"
-    />
-  </AlertStripe>,
-      };
-    }
-
     if (values.utsettelseType && values.utsettelseType.kode !== '-' && values.erOppfylt) {
       values.UttakFieldArray.forEach((aktivitet, index) => {
         const daysInvalid = isTrekkdagerMerEnnNullUtsettelse(aktivitet.days);
