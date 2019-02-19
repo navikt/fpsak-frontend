@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Element, Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import utsettelseArsakCodes, { utsettelseArsakTexts } from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
+import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import overforingArsakCodes, { overforingArsakTexts } from '@fpsak-frontend/kodeverk/src/overforingArsakCodes';
-import oppholdArsakType, { oppholdArsakKontoNavn } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
+import oppholdArsakType from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import { Image } from '@fpsak-frontend/shared-components';
 import {
   ISO_DATE_FORMAT, dateFormat, calcDaysAndWeeks, lagVisningsNavn,
@@ -31,7 +31,7 @@ const getUttakTypeTitle = (utsettelseArsak, overforingArsak, arbeidstidprosent, 
     return (
       <FormattedMessage
         id="UttakInfoPanel.UtsettelseMedÅrsak"
-        values={{ årsak: utsettelseArsakTexts[utsettelseArsak.kode] }}
+        values={{ årsak: utsettelseArsak.navn }}
       />
     );
   }
@@ -51,7 +51,7 @@ const getUttakTypeTitle = (utsettelseArsak, overforingArsak, arbeidstidprosent, 
 
 const getUttakPeriode = (uttakPeriodeType, oppholdArsak) => {
   if (oppholdArsak && oppholdArsak.kode !== oppholdArsakType.UDEFINERT) {
-    return oppholdArsakKontoNavn[oppholdArsak.kode];
+    return oppholdArsak.navn;
   }
 
   return uttakPeriodeType;
