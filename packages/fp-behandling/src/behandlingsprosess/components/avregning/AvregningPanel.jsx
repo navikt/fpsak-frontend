@@ -287,8 +287,9 @@ export class AvregningPanelImpl extends Component {
                         mini
                         htmlType="button"
                         onClick={formProps.handleSubmit}
-                        disabled={formProps.invalid || formProps.pristine}
+                        disabled={formProps.invalid || formProps.pristine || formProps.submitting}
                         readOnly={readOnly}
+                        spinner={formProps.submitting}
                       >
                         <FormattedMessage id="SubmitButton.ConfirmInformation" />
                       </Hovedknapp>
