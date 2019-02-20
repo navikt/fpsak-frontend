@@ -173,10 +173,10 @@ export const isutbetalingPlusArbeidsprosentMerEn100 = (utbetalingsgrad, prosentA
 
 const getSum = (total, num) => total + num;
 
-export const isArbeidsProsentVidUtsettelse100 = (values) => {
+export const isArbeidsProsentVidUtsettelse100 = (values, aktivitetArray) => {
   const andelIArbeid = [0];
-  if (values.utsettelseType && values.erOppfylt && values.UttakFieldArray) {
-    values.UttakFieldArray.forEach((aktivitet) => {
+  if (values.utsettelseType && values.erOppfylt && aktivitetArray) {
+    aktivitetArray.forEach((aktivitet) => {
       andelIArbeid.push(aktivitet.prosentArbeid);
     });
     const prosentIArbeid = andelIArbeid.reduce(getSum);
