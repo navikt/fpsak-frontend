@@ -341,6 +341,7 @@
   "Messages.DocumentList": "Liste over dokumenter (skriv ett dokument pr. linje)",
   "Messages.Submit": "Send brev",
   "Messages.Preview": "Forhåndsvis",
+  "Messages.PreviewText": "Forhåndsvis varselbrev",
   "Messages.BrevErBestilt": "Brevet er bestilt. Du kan endre frist eller årsak før du fortsetter.",
 
   "Tekstbygger.Og" : "{value1} og {value2}",
@@ -1103,7 +1104,7 @@
   "Avregning.AksjonspunktHelpText.5085": "Vurder om inntrekk kan gjøres etter § 22-15",
   "Avregning.vurdering": "Vurdering",
   "Avregning.videreBehandling": "Fastsett videre behandling",
-  "Avregning.gjennomfør": "Gjennomfør tilbakekreving i Infotrygd",
+  "Avregning.gjennomfør": "Opprett tilbakekreving",
   "Avregning.avvent": "Avvent samordning, ingen tilbakekreving",
   "Avregning.formAlternativ.ja": "Ja",
   "Avregning.formAlternativ.nei": "Nei",
@@ -1119,6 +1120,8 @@
   "Avregning.størrelsenAvBeløp": "Størrelsen på feilutbetalt beløp",
   "Avregning.tidspunktAvFeilutbetaling": "Hvor lang tid siden feilutbetaling fant sted",
   "Avregning.bruker": "Bruker",
+  "Avregning.varseltekst": "Send varsel om tilbakekreving",
+  "Avregning.fritekst": "Fritekst i varselet",
 
   "Beregningsgrunnlag.Info": "Fakta for beregningsgrunnlag",
   "Beregningsgrunnlag.Title": "Beregning",

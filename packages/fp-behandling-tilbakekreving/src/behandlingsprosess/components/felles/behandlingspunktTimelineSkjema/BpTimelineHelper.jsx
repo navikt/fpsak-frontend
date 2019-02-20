@@ -7,6 +7,7 @@ export const getStatusPeriode = (resultatType) => {
   if (resultatType.kode === periodeResultatType.INNVILGET) {
     return godkjentKlassenavn;
   }
+
   if (resultatType.kode === periodeResultatType.MANUELL_BEHANDLING) {
     return 'undefined';
   }
