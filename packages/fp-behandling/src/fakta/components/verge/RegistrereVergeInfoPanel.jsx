@@ -11,9 +11,11 @@ import {
   faktaPanelCodes,
 } from '@fpsak-frontend/fp-felles';
 import {
-  aksjonspunktPropType, FaktaBegrunnelseTextField, FaktaEkspandertpanel,
+  aksjonspunktPropType,
+  FaktaBegrunnelseTextField,
+  FaktaEkspandertpanel,
+  withDefaultToggling,
 } from '@fpsak-frontend/fp-behandling-felles';
-import withDefaultToggling from 'behandlingFpsak/src/fakta/withDefaultToggling';
 import FaktaSubmitButton from 'behandlingFpsak/src/fakta/components/FaktaSubmitButton';
 import { getKodeverk } from 'behandlingFpsak/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';

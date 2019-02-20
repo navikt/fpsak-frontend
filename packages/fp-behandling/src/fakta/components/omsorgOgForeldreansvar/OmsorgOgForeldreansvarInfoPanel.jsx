@@ -5,7 +5,11 @@ import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 
-import { FaktaBegrunnelseTextField, FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
+import {
+  FaktaBegrunnelseTextField,
+  FaktaEkspandertpanel,
+  withDefaultToggling,
+} from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import FaktaSubmitButton from 'behandlingFpsak/src/fakta/components/FaktaSubmitButton';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -14,7 +18,6 @@ import {
   getAksjonspunkter,
 } from 'behandlingFpsak/src/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
-import withDefaultToggling from 'behandlingFpsak/src/fakta/withDefaultToggling';
 import { getKodeverk } from 'behandlingFpsak/src/duck';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';

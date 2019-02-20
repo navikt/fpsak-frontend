@@ -8,12 +8,14 @@ import { createSelector } from 'reselect';
 
 import { getSoknad, getFamiliehendelse, getAksjonspunkter } from 'behandlingFpsak/src/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
-import withDefaultToggling from 'behandlingFpsak/src/fakta/withDefaultToggling';
 import DokumentasjonFaktaForm from 'behandlingFpsak/src/fakta/components/adopsjon/DokumentasjonFaktaForm';
 import MannAdoptererAleneFaktaForm from 'behandlingFpsak/src/fakta/components/adopsjon/MannAdoptererAleneFaktaForm';
 import EktefelleFaktaForm from 'behandlingFpsak/src/fakta/components/adopsjon/EktefelleFaktaForm';
 import {
-  aksjonspunktPropType, FaktaBegrunnelseTextField, FaktaEkspandertpanel,
+  aksjonspunktPropType,
+  FaktaBegrunnelseTextField,
+  FaktaEkspandertpanel,
+  withDefaultToggling,
 } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import FaktaSubmitButton from 'behandlingFpsak/src/fakta/components/FaktaSubmitButton';

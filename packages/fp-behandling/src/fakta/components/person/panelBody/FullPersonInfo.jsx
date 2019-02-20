@@ -1,14 +1,13 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-
 import { getAddresses } from '@fpsak-frontend/utils';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
+import FaktaGruppe from 'behandlingFpsak/src/fakta/components/FaktaGruppe';
 import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
-import AdressePanel from './AdressePanel';
-import Barnepanel from './Barnepanel';
-import PersonYtelserTable from './PersonYtelserTable';
+import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import { AdressePanel, BarnePanel, PersonYtelserTable } from '@fpsak-frontend/person-info';
 import PersonArbeidsforholdPanel from './arbeidsforhold/PersonArbeidsforholdPanel';
 
 const findPersonStatus = (personopplysning) => {
@@ -38,6 +37,8 @@ const FullPersonInfo = ({
   hasAksjonspunkter,
   readOnly,
   isPrimaryParent,
+  personstatusTypes,
+  sivilstandTypes,
 }) => {
   if (!personopplysning) {
     return null;
@@ -48,47 +49,45 @@ const FullPersonInfo = ({
 
   return (
     <div>
-      {isPrimaryParent && hasAksjonspunkter
-      && (
-      <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
-        {[<FormattedMessage key="AvklarArbeidsforhold" id="FullPersonInfo.AvklarArbeidsforhold" />]}
-      </AksjonspunktHelpText>
-      )
-      }
+      {isPrimaryParent && hasAksjonspunkter && (
+        <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
+          {[<FormattedMessage key="AvklarArbeidsforhold" id="FullPersonInfo.AvklarArbeidsforhold" />]}
+        </AksjonspunktHelpText>
+      )}
       <AdressePanel
         bostedsadresse={adresseListe[opplysningAdresseType.BOSTEDSADRESSE]}
         postAdresseNorge={adresseListe[opplysningAdresseType.POSTADRESSE]}
         postadresseUtland={adresseListe[opplysningAdresseType.UTENLANDSK_POSTADRESSE]}
-        midlertidigAdresse={adresseListe[opplysningAdresseType.NORSK_NAV_TILLEGGSADRESSE]
-          ? adresseListe[opplysningAdresseType.NORSK_NAV_TILLEGGSADRESSE]
-          : adresseListe[opplysningAdresseType.UTENLANDSK_NAV_TILLEGSADRESSE]}
+        midlertidigAdresse={
+          adresseListe[opplysningAdresseType.NORSK_NAV_TILLEGGSADRESSE]
+            ? adresseListe[opplysningAdresseType.NORSK_NAV_TILLEGGSADRESSE]
+            : adresseListe[opplysningAdresseType.UTENLANDSK_NAV_TILLEGSADRESSE]
+        }
         personstatus={findPersonStatus(personopplysning)}
         sivilstandtype={personopplysning.sivilstand}
         region={personopplysning.region ? personopplysning.region.navn : null}
         sprakkode={sprakkode}
         isPrimaryParent={isPrimaryParent}
+        sivilstandTypes={sivilstandTypes}
+        personstatusTypes={personstatusTypes}
       />
-      {harBarnITPSSjekk
-        && <Barnepanel barneListe={barnFraTPS} />
-      }
-      {isPrimaryParent
-      && (
-      <PersonArbeidsforholdPanel
-        readOnly={readOnly}
-        hasAksjonspunkter={hasAksjonspunkter}
-        hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-      />
-      )
-      }
-      {ytelser && ytelser.length > 0
-        && (
-        <PersonYtelserTable
-          ytelser={ytelser}
-          relatertYtelseTypes={relatertYtelseTypes}
-          relatertYtelseStatus={relatertYtelseStatus}
+      {harBarnITPSSjekk && <BarnePanel barneListe={barnFraTPS} />}
+      {isPrimaryParent && (
+        <PersonArbeidsforholdPanel
+          readOnly={readOnly}
+          hasAksjonspunkter={hasAksjonspunkter}
+          hasOpenAksjonspunkter={hasOpenAksjonspunkter}
         />
-        )
-      }
+      )}
+      {ytelser && ytelser.length > 0 && (
+        <FaktaGruppe titleCode="PersonYtelserTable.Ytelser">
+          <PersonYtelserTable
+            ytelser={ytelser}
+            relatertYtelseTypes={relatertYtelseTypes}
+            relatertYtelseStatus={relatertYtelseStatus}
+          />
+        </FaktaGruppe>
+      )}
     </div>
   );
 };
@@ -103,6 +102,8 @@ FullPersonInfo.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   hasAksjonspunkter: PropTypes.bool.isRequired,
   isPrimaryParent: PropTypes.bool.isRequired,
+  sivilstandTypes: kodeverkPropType.isRequired,
+  personstatusTypes: kodeverkPropType.isRequired,
 };
 
 FullPersonInfo.defaultProps = {

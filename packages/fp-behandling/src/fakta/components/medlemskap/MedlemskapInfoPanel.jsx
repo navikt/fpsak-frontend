@@ -2,11 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 
-import withDefaultToggling from 'behandlingFpsak/src/fakta/withDefaultToggling';
 import { getFeatureToggles } from 'behandlingFpsak/src/duck';
-import {
-  FaktaEkspandertpanel, aksjonspunktPropType,
-} from '@fpsak-frontend/fp-behandling-felles';
+import { FaktaEkspandertpanel, aksjonspunktPropType, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { featureToggle, faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

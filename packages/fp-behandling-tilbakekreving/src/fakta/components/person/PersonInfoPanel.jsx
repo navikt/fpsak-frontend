@@ -78,8 +78,17 @@ export class PersonInfoPanelImpl extends Component {
 
   render() {
     const {
-      sprakkode, relatertYtelseStatus, relatertYtelseTypes, personopplysninger,
-      hasOpenAksjonspunkter, readOnly, aksjonspunkter, isBekreftButtonReadOnly, ...formProps
+      sprakkode,
+      relatertYtelseStatus,
+      relatertYtelseTypes,
+      personopplysninger,
+      sivilstandTypes,
+      personstatusTypes,
+      hasOpenAksjonspunkter,
+      readOnly,
+      aksjonspunkter,
+      isBekreftButtonReadOnly,
+      ...formProps
     } = this.props;
     const { selected } = this.state;
     const isPrimaryParent = personopplysninger === selected;
@@ -105,6 +114,8 @@ export class PersonInfoPanelImpl extends Component {
             hasAksjonspunkter={aksjonspunkter.length > 0}
             hasOpenAksjonspunkter={hasOpenAksjonspunkter}
             readOnly={readOnly}
+            sivilstandTypes={sivilstandTypes}
+            personstatusTypes={personstatusTypes}
           />
           {isPrimaryParent && aksjonspunkter.length > 0
             && (
@@ -155,6 +166,8 @@ const transformValues = values => ({
 });
 
 const mapStateToProps = (state, initialProps) => ({
+  sivilstandTypes: getKodeverk(kodeverkTyper.SIVILSTAND_TYPE)(state),
+  personstatusTypes: getKodeverk(kodeverkTyper.PERSONSTATUS_TYPE)(state),
   personopplysninger: getPersonopplysning(state),
   relatertTilgrensendeYtelserForSoker: getBehandlingRelatertTilgrensendeYtelserForSoker(state),
   relatertTilgrensendeYtelserForAnnenForelder: getBehandlingRelatertTilgrensendeYtelserForAnnenForelder(state),

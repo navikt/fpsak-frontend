@@ -8,8 +8,7 @@ import moment from 'moment';
 
 import { getBehandlingFastsattOpptjening, getBehandlingOpptjeningActivities } from 'behandlingFpsak/src/behandlingSelectors';
 import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
-import withDefaultToggling from 'behandlingFpsak/src/fakta/withDefaultToggling';
-import { aksjonspunktPropType, FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
+import { aksjonspunktPropType, FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { omit, addDaysToDate } from '@fpsak-frontend/utils';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';

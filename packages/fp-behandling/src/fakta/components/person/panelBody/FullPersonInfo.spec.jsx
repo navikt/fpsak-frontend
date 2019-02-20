@@ -10,11 +10,9 @@ import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
 import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
+import { AdressePanel, BarnePanel, PersonYtelserTable } from '@fpsak-frontend/person-info';
 import FullPersonInfo from './FullPersonInfo';
-import AdressePanel from './AdressePanel';
-import Barnepanel from './Barnepanel';
 import PersonArbeidsforholdPanel from './arbeidsforhold/PersonArbeidsforholdPanel';
-import PersonYtelserTable from './PersonYtelserTable';
 
 const barnITPS = {
   navn: 'Barn 1',
@@ -128,6 +126,32 @@ const personopplysning = {
 
   ],
 };
+
+const personstatusTypes = [
+  {
+    kode: personstatusType.UFULLSTENDIGFNR,
+    navn: 'Ufullstendig fnr',
+  },
+  {
+    kode: personstatusType.UTVANDRET,
+    navn: 'Utvandret',
+  },
+  {
+    kode: personstatusType.BOSATT,
+    navn: 'Bosatt',
+  },
+];
+
+const sivilstandTypes = [
+  {
+    kode: sivilstandType.GIFTLEVERADSKILT,
+    navn: 'Gift, lever adskilt',
+  },
+  {
+    kode: sivilstandType.SKILT,
+    navn: 'Skilt',
+  },
+];
 const ytelser = [{}];
 const relatertYtelseTypes = [{}];
 const relatertYtelseStatus = [{}];
@@ -135,18 +159,22 @@ const relatertYtelseStatus = [{}];
 
 describe('<FullPersonInfo>', () => {
   it('Skal sjekke at adressepanel får korrekte props', () => {
-    const wrapper = shallow(<FullPersonInfo
-      sprakkode={sprakkode}
-      personopplysning={personopplysning}
-      ytelser={ytelser}
-      relatertYtelseTypes={relatertYtelseTypes}
-      relatertYtelseStatus={relatertYtelseStatus}
-      hasOpenAksjonspunkter={false}
-      readOnly={false}
-      hasAksjonspunkter={false}
-      isPrimaryParent
-      {...reduxFormPropsMock}
-    />);
+    const wrapper = shallow(
+      <FullPersonInfo
+        sprakkode={sprakkode}
+        personopplysning={personopplysning}
+        ytelser={ytelser}
+        relatertYtelseTypes={relatertYtelseTypes}
+        relatertYtelseStatus={relatertYtelseStatus}
+        personstatusTypes={personstatusTypes}
+        sivilstandTypes={sivilstandTypes}
+        hasOpenAksjonspunkter={false}
+        readOnly={false}
+        hasAksjonspunkter={false}
+        isPrimaryParent
+        {...reduxFormPropsMock}
+      />,
+    );
     const adressePanel = wrapper.find(AdressePanel);
     expect(adressePanel.props().bostedsadresse).to.equal('Bostedet 5, 1234 Bostedet');
     expect(adressePanel.props().postAdresseNorge).to.equal('Postveien 5, 1234 Posten');
@@ -158,119 +186,147 @@ describe('<FullPersonInfo>', () => {
   });
 
   it('Skal sjekke at barnepanel får korrekte props', () => {
-    const wrapper = shallow(<FullPersonInfo
-      sprakkode={sprakkode}
-      personopplysning={personopplysning}
-      ytelser={ytelser}
-      relatertYtelseTypes={relatertYtelseTypes}
-      relatertYtelseStatus={relatertYtelseStatus}
-      hasOpenAksjonspunkter={false}
-      readOnly={false}
-      hasAksjonspunkter={false}
-      isPrimaryParent
-      {...reduxFormPropsMock}
-    />);
-    const barnepanel = wrapper.find(Barnepanel);
+    const wrapper = shallow(
+      <FullPersonInfo
+        sprakkode={sprakkode}
+        personopplysning={personopplysning}
+        ytelser={ytelser}
+        relatertYtelseTypes={relatertYtelseTypes}
+        relatertYtelseStatus={relatertYtelseStatus}
+        personstatusTypes={personstatusTypes}
+        sivilstandTypes={sivilstandTypes}
+        hasOpenAksjonspunkter={false}
+        readOnly={false}
+        hasAksjonspunkter={false}
+        isPrimaryParent
+        {...reduxFormPropsMock}
+      />,
+    );
+    const barnepanel = wrapper.find(BarnePanel);
     expect(barnepanel.props().barneListe[0]).to.equal(barnITPS);
   });
 
   it('Skal vise panel for arbeidsforhold når søker er valgt', () => {
-    const wrapper = shallow(<FullPersonInfo
-      sprakkode={sprakkode}
-      personopplysning={personopplysning}
-      ytelser={ytelser}
-      relatertYtelseTypes={relatertYtelseTypes}
-      relatertYtelseStatus={relatertYtelseStatus}
-      hasOpenAksjonspunkter={false}
-      readOnly={false}
-      hasAksjonspunkter={false}
-      isPrimaryParent
-      {...reduxFormPropsMock}
-    />);
+    const wrapper = shallow(
+      <FullPersonInfo
+        sprakkode={sprakkode}
+        personopplysning={personopplysning}
+        ytelser={ytelser}
+        relatertYtelseTypes={relatertYtelseTypes}
+        relatertYtelseStatus={relatertYtelseStatus}
+        personstatusTypes={personstatusTypes}
+        sivilstandTypes={sivilstandTypes}
+        hasOpenAksjonspunkter={false}
+        readOnly={false}
+        hasAksjonspunkter={false}
+        isPrimaryParent
+        {...reduxFormPropsMock}
+      />,
+    );
 
     expect(wrapper.find(PersonArbeidsforholdPanel)).has.length(1);
   });
 
   it('Skal ikke vise panel for arbeidsforhold når annen part er valgt', () => {
-    const wrapper = shallow(<FullPersonInfo
-      sprakkode={sprakkode}
-      personopplysning={personopplysning}
-      ytelser={ytelser}
-      relatertYtelseTypes={relatertYtelseTypes}
-      relatertYtelseStatus={relatertYtelseStatus}
-      hasOpenAksjonspunkter={false}
-      readOnly={false}
-      hasAksjonspunkter={false}
-      isPrimaryParent={false}
-      {...reduxFormPropsMock}
-    />);
+    const wrapper = shallow(
+      <FullPersonInfo
+        sprakkode={sprakkode}
+        personopplysning={personopplysning}
+        ytelser={ytelser}
+        relatertYtelseTypes={relatertYtelseTypes}
+        relatertYtelseStatus={relatertYtelseStatus}
+        personstatusTypes={personstatusTypes}
+        sivilstandTypes={sivilstandTypes}
+        hasOpenAksjonspunkter={false}
+        readOnly={false}
+        hasAksjonspunkter={false}
+        isPrimaryParent={false}
+        {...reduxFormPropsMock}
+      />,
+    );
 
     expect(wrapper.find(PersonArbeidsforholdPanel)).has.length(0);
   });
 
   it('Skal vise hjelpetekst for aksjonspunkt når en har aksjonspunkt og søker er valgt', () => {
-    const wrapper = shallow(<FullPersonInfo
-      sprakkode={sprakkode}
-      personopplysning={personopplysning}
-      ytelser={ytelser}
-      relatertYtelseTypes={relatertYtelseTypes}
-      relatertYtelseStatus={relatertYtelseStatus}
-      hasOpenAksjonspunkter
-      readOnly={false}
-      hasAksjonspunkter
-      isPrimaryParent
-      {...reduxFormPropsMock}
-    />);
+    const wrapper = shallow(
+      <FullPersonInfo
+        sprakkode={sprakkode}
+        personopplysning={personopplysning}
+        ytelser={ytelser}
+        relatertYtelseTypes={relatertYtelseTypes}
+        relatertYtelseStatus={relatertYtelseStatus}
+        personstatusTypes={personstatusTypes}
+        sivilstandTypes={sivilstandTypes}
+        hasOpenAksjonspunkter
+        readOnly={false}
+        hasAksjonspunkter
+        isPrimaryParent
+        {...reduxFormPropsMock}
+      />,
+    );
 
     expect(wrapper.find(AksjonspunktHelpText)).has.length(1);
   });
 
   it('Skal ikke vise hjelpetekst for aksjonspunkt når en har aksjonspunkt og annen part er valgt', () => {
-    const wrapper = shallow(<FullPersonInfo
-      sprakkode={sprakkode}
-      personopplysning={personopplysning}
-      ytelser={ytelser}
-      relatertYtelseTypes={relatertYtelseTypes}
-      relatertYtelseStatus={relatertYtelseStatus}
-      hasOpenAksjonspunkter
-      readOnly={false}
-      hasAksjonspunkter
-      isPrimaryParent={false}
-      {...reduxFormPropsMock}
-    />);
+    const wrapper = shallow(
+      <FullPersonInfo
+        sprakkode={sprakkode}
+        personopplysning={personopplysning}
+        ytelser={ytelser}
+        relatertYtelseTypes={relatertYtelseTypes}
+        relatertYtelseStatus={relatertYtelseStatus}
+        personstatusTypes={personstatusTypes}
+        sivilstandTypes={sivilstandTypes}
+        hasOpenAksjonspunkter
+        readOnly={false}
+        hasAksjonspunkter
+        isPrimaryParent={false}
+        {...reduxFormPropsMock}
+      />,
+    );
 
     expect(wrapper.find(AksjonspunktHelpText)).has.length(0);
   });
 
   it('Skal vise ytelsepanel når en har ytelser', () => {
-    const wrapper = shallow(<FullPersonInfo
-      sprakkode={sprakkode}
-      personopplysning={personopplysning}
-      ytelser={ytelser}
-      relatertYtelseTypes={relatertYtelseTypes}
-      relatertYtelseStatus={relatertYtelseStatus}
-      hasOpenAksjonspunkter
-      readOnly={false}
-      hasAksjonspunkter
-      isPrimaryParent={false}
-      {...reduxFormPropsMock}
-    />);
+    const wrapper = shallow(
+      <FullPersonInfo
+        sprakkode={sprakkode}
+        personopplysning={personopplysning}
+        ytelser={ytelser}
+        relatertYtelseTypes={relatertYtelseTypes}
+        relatertYtelseStatus={relatertYtelseStatus}
+        personstatusTypes={personstatusTypes}
+        sivilstandTypes={sivilstandTypes}
+        hasOpenAksjonspunkter
+        readOnly={false}
+        hasAksjonspunkter
+        isPrimaryParent={false}
+        {...reduxFormPropsMock}
+      />,
+    );
 
     expect(wrapper.find(PersonYtelserTable)).has.length(1);
   });
 
   it('Skal ikke vise ytelsepanel når en ikke har ytelser', () => {
-    const wrapper = shallow(<FullPersonInfo
-      sprakkode={sprakkode}
-      personopplysning={personopplysning}
-      relatertYtelseTypes={relatertYtelseTypes}
-      relatertYtelseStatus={relatertYtelseStatus}
-      hasOpenAksjonspunkter
-      readOnly={false}
-      hasAksjonspunkter
-      isPrimaryParent={false}
-      {...reduxFormPropsMock}
-    />);
+    const wrapper = shallow(
+      <FullPersonInfo
+        sprakkode={sprakkode}
+        personopplysning={personopplysning}
+        relatertYtelseTypes={relatertYtelseTypes}
+        relatertYtelseStatus={relatertYtelseStatus}
+        personstatusTypes={personstatusTypes}
+        sivilstandTypes={sivilstandTypes}
+        hasOpenAksjonspunkter
+        readOnly={false}
+        hasAksjonspunkter
+        isPrimaryParent={false}
+        {...reduxFormPropsMock}
+      />,
+    );
 
     expect(wrapper.find(PersonYtelserTable)).has.length(0);
   });
