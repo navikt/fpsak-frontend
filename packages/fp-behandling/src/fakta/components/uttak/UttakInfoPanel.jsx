@@ -24,6 +24,7 @@ const uttakAksjonspunkter = [
   aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO,
   aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT,
   aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK,
+  aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK,
 ];
 
 export const UttakInfoPanelImpl = ({
