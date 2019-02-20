@@ -266,7 +266,7 @@ const warningUttakActivity = (values) => {
   let warnings = {};
   const rowArray = [];
   const touchedaktiviteter = document.getElementsByClassName('tableRowHighlight');
-  const invalidArbeidsProsentVidUsettelse = isArbeidsProsentVidUtsettelse100(values, values.UttakFieldArray);
+  const invalidArbeidsProsentVidUsettelse = isArbeidsProsentVidUtsettelse100(values);
   if (invalidArbeidsProsentVidUsettelse && values.utsettelseType.kode === utsettelseArsakCodes.ARBEID) {
     warnings = {
       _warning:
