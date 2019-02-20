@@ -4,7 +4,7 @@ import Collapse from 'react-collapse';
 import classnames from 'classnames/bind';
 import { NedChevron, OppChevron } from 'nav-frontend-chevron';
 
-import PersonDetailedHeader from './panelHeader/PersonDetailedHeader';
+import { PersonDetailedHeader } from '@fpsak-frontend/person-info';
 
 import styles from './ekspanderbartPersonPanel.less';
 

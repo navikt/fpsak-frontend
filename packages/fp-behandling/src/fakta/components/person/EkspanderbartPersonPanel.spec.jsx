@@ -4,8 +4,8 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import { PersonDetailedHeader } from '@fpsak-frontend/person-info';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
-import PersonDetailedHeader from './panelHeader/PersonDetailedHeader';
 
 const primaryParent = {
   navn: 'Parent 1',
