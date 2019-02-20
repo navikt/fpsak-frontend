@@ -2264,8 +2264,11 @@
 
   "PersonArbeidsforholdDetailForm.Header": "Detaljer",
   "PersonArbeidsforholdDetailForm.Arbeidsgiver": "Beskrivelse",
-  "PersonArbeidsforholdDetailForm.BrukArbeidsforholdet": "Arbeidsforholdet er relevant for denne behandlingen",
+  "PersonArbeidsforholdDetailForm.BrukArbeidsforholdet": "Arbeidsforholdet er aktivt og skal benyttes i behandlingen.",
   "PersonArbeidsforholdDetailForm.ArbeidsforholdIkkeRelevant": "Fjern arbeidsforholdet for denne behandlingen",
+  "PersonArbeidsforholdDetailForm.ArbeidsforholdetErIkkeAktivt": "Arbeidsforholdet er ikke aktivt. Inntektsmelding er ikke nødvendig.",
+  "PersonArbeidsforholdDetailForm.ArbeidsforholdetAktivTomDato": "Arbeidsforhold aktivt tom. dato",
+  "PersonArbeidsforholdDetailForm.DateNotAfterOrEqual": "Dato kan ikke være før startdato {fomDato}",
   "PersonArbeidsforholdDetailForm.IkkeMottatt": "Nødvendig inntektsmelding er ikke mottatt",
   "PersonArbeidsforholdDetailForm.FortsettBehandling": "Fortsett behandling uten inntektsmelding",
   "PersonArbeidsforholdDetailForm.Oppdater": "Oppdater",

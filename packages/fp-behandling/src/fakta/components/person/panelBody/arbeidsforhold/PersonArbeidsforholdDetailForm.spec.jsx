@@ -33,13 +33,13 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       cancelArbeidsforhold={sinon.spy()}
-      shouldUseBehandling
+      skalBrukeUendretForhold
       isErstattArbeidsforhold
       hasReceivedInntektsmelding={false}
       harErstattetEttEllerFlere
       readOnly={false}
       vurderOmSkalErstattes={false}
-      isAllowedToContinueWithoutInntekstmelding={false}
+      kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM={false}
       arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
@@ -47,7 +47,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       }}
     />);
 
-    const radiogroup = wrapper.find('[name=\'fortsettBehandlingUtenInntektsmelding\']');
+    const radiogroup = wrapper.find('[name=\'fortsettUtenImAktivtArbeidsforhold\']');
     expect(radiogroup).has.length(1);
   });
 
@@ -56,13 +56,13 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       cancelArbeidsforhold={sinon.spy()}
-      shouldUseBehandling={false}
+      skalBrukeUendretForhold={false}
       isErstattArbeidsforhold
       hasReceivedInntektsmelding={false}
       harErstattetEttEllerFlere
       readOnly={false}
       vurderOmSkalErstattes={false}
-      isAllowedToContinueWithoutInntekstmelding={false}
+      kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM={false}
       arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
@@ -70,7 +70,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       }}
     />);
 
-    const radiogroup = wrapper.find('[name=\'fortsettBehandlingUtenInntektsmelding\']');
+    const radiogroup = wrapper.find('[name=\'fortsettUtenImAktivtArbeidsforhold\']');
     expect(radiogroup).has.length(0);
   });
 
@@ -79,13 +79,13 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       cancelArbeidsforhold={sinon.spy()}
-      shouldUseBehandling
+      skalBrukeUendretForhold
       isErstattArbeidsforhold
       hasReceivedInntektsmelding
       harErstattetEttEllerFlere
       readOnly={false}
       vurderOmSkalErstattes={false}
-      isAllowedToContinueWithoutInntekstmelding={false}
+      kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM={false}
       arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
@@ -93,7 +93,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       }}
     />);
 
-    const radiogroup = wrapper.find('[name=\'fortsettBehandlingUtenInntektsmelding\']');
+    const radiogroup = wrapper.find('[name=\'fortsettUtenImAktivtArbeidsforhold\']');
     expect(radiogroup).has.length(0);
   });
 
@@ -102,13 +102,13 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       cancelArbeidsforhold={sinon.spy()}
-      shouldUseBehandling
+      skalBrukeUendretForhold
       isErstattArbeidsforhold
       hasReceivedInntektsmelding
       harErstattetEttEllerFlere
       readOnly={false}
       vurderOmSkalErstattes={false}
-      isAllowedToContinueWithoutInntekstmelding={false}
+      kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM={false}
       arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
@@ -125,13 +125,13 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       cancelArbeidsforhold={sinon.spy()}
-      shouldUseBehandling
+      skalBrukeUendretForhold
       isErstattArbeidsforhold
       hasReceivedInntektsmelding
       harErstattetEttEllerFlere
       readOnly={false}
       vurderOmSkalErstattes={false}
-      isAllowedToContinueWithoutInntekstmelding={false}
+      kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM={false}
       arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
@@ -147,13 +147,13 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       cancelArbeidsforhold={sinon.spy()}
-      shouldUseBehandling
+      skalBrukeUendretForhold
       isErstattArbeidsforhold
       hasReceivedInntektsmelding
       harErstattetEttEllerFlere={false}
       readOnly={false}
       vurderOmSkalErstattes
-      isAllowedToContinueWithoutInntekstmelding={false}
+      kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM={false}
       arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
@@ -170,13 +170,13 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       cancelArbeidsforhold={sinon.spy()}
-      shouldUseBehandling={false}
+      skalBrukeUendretForhold={false}
       isErstattArbeidsforhold
       hasReceivedInntektsmelding
       harErstattetEttEllerFlere
       readOnly={false}
       vurderOmSkalErstattes={false}
-      isAllowedToContinueWithoutInntekstmelding={false}
+      kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM={false}
       arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
@@ -193,13 +193,13 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       cancelArbeidsforhold={sinon.spy()}
-      shouldUseBehandling
+      skalBrukeUendretForhold
       isErstattArbeidsforhold
       hasReceivedInntektsmelding
       harErstattetEttEllerFlere
       readOnly={false}
       vurderOmSkalErstattes={false}
-      isAllowedToContinueWithoutInntekstmelding={false}
+      kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM={false}
       arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
@@ -216,13 +216,13 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       cancelArbeidsforhold={sinon.spy()}
-      shouldUseBehandling
+      skalBrukeUendretForhold
       isErstattArbeidsforhold
       hasReceivedInntektsmelding
       harErstattetEttEllerFlere
       readOnly={false}
       vurderOmSkalErstattes={false}
-      isAllowedToContinueWithoutInntekstmelding={false}
+      kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM={false}
       arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
@@ -238,13 +238,13 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       cancelArbeidsforhold={sinon.spy()}
-      shouldUseBehandling={false}
+      skalBrukeUendretForhold={false}
       isErstattArbeidsforhold
       hasReceivedInntektsmelding
       harErstattetEttEllerFlere
       readOnly={false}
       vurderOmSkalErstattes={false}
-      isAllowedToContinueWithoutInntekstmelding={false}
+      kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM={false}
       arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
@@ -260,13 +260,13 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       cancelArbeidsforhold={sinon.spy()}
-      shouldUseBehandling
+      skalBrukeUendretForhold
       isErstattArbeidsforhold
       hasReceivedInntektsmelding
       harErstattetEttEllerFlere={false}
       readOnly={false}
       vurderOmSkalErstattes={false}
-      isAllowedToContinueWithoutInntekstmelding={false}
+      kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM={false}
       arbeidsforhold={arbeidsforhold}
       initialValues={{
         begrunnelse: '',
@@ -287,7 +287,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
   it('skal ikke vise begrunnelsefelt når form er dirty og en har valgt å ikke fortsette uten inntektsmelding', () => {
     const dirty = true;
     const values = {
-      fortsettBehandlingUtenInntektsmelding: false,
+      fortsettUtenImAktivtArbeidsforhold: false,
     };
     const initialValues = {};
     expect(showBegrunnelse.resultFunc(dirty, values, initialValues)).is.false;
