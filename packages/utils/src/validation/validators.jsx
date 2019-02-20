@@ -175,7 +175,7 @@ const getSum = (total, num) => total + num;
 
 export const isArbeidsProsentVidUtsettelse100 = (values, aktivitetArray) => {
   const andelIArbeid = [0];
-  if (values.utsettelseType && values.erOppfylt) {
+  if (values.utsettelseType && values.erOppfylt && aktivitetArray) {
     aktivitetArray.forEach((aktivitet) => {
       andelIArbeid.push(aktivitet.prosentArbeid);
     });
