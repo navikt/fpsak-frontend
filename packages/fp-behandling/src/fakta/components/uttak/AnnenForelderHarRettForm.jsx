@@ -62,7 +62,7 @@ export const AnnenForelderHarRettForm = ({
         </div>
         <FaktaSubmitButton
           formName={formProps.form}
-          isSubmittable={formProps.dirty}
+          isSubmittable={!readOnly}
           isReadOnly={readOnly}
           hasOpenAksjonspunkter={hasOpenAksjonspunkter}
         />
