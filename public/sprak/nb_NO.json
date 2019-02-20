@@ -1783,6 +1783,7 @@
   "UttakInfoPanel.Aksjonspunkt.5081": "Første dato for uttak er {value}. Legg inn manglende søknadsperiode. Kontakt søker ved behov.",
   "UttakInfoPanel.Aksjonspunkt.6070": "Saksbehandler initierer kontroll av søknadsperiodene",
   "UttakInfoPanel.Aksjonspunkt.5086": "Vurder om den andre forelderen har rett til foreldrepenger. Slå opp i relevant fagsystem for å finne informasjon om inntekt. Dersom den andre forelderen har rett må du endre til riktige kvoter i alle søknadsperiodene.",
+  "UttakInfoPanel.Aksjonspunkt.6013": "Perioder er overstyrt.",
   "UttakInfoPanel.TilpassSoknadsperiode": "Tilpass søknadsperiode til inntektsmeldingen",
   "UttakInfoPanel.SykdomSkadenDokumentertAngiAvklartPeriode": "Sykdommen/skaden er dokumentert, angi periode",
   "UttakInfoPanel.SykdomSkadenIkkeDokumentert": "Sykdommen/skaden er ikke dokumentert",
