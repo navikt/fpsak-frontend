@@ -4,7 +4,7 @@ import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { aksjonspunktPropType, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { omit } from '@fpsak-frontend/utils';
 import { getKodeverk } from 'behandlingFpsak/src/duck';
@@ -19,7 +19,6 @@ import {
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
-import withDefaultToggling from 'behandlingFpsak/src/fakta/withDefaultToggling';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import FullPersonInfo from './panelBody/FullPersonInfo';
 import PersonArbeidsforholdPanel from './panelBody/arbeidsforhold/PersonArbeidsforholdPanel';
@@ -75,8 +74,17 @@ export class PersonInfoPanelImpl extends Component {
 
   render() {
     const {
-      sprakkode, relatertYtelseStatus, relatertYtelseTypes, personopplysninger,
-      hasOpenAksjonspunkter, readOnly, aksjonspunkter, isBekreftButtonReadOnly, ...formProps
+      sprakkode,
+      relatertYtelseStatus,
+      relatertYtelseTypes,
+      personopplysninger,
+      personstatusTypes,
+      sivilstandTypes,
+      hasOpenAksjonspunkter,
+      readOnly,
+      aksjonspunkter,
+      isBekreftButtonReadOnly,
+      ...formProps
     } = this.props;
     const { selected } = this.state;
     const isPrimaryParent = personopplysninger === selected;
@@ -102,6 +110,8 @@ export class PersonInfoPanelImpl extends Component {
             hasAksjonspunkter={aksjonspunkter.length > 0}
             hasOpenAksjonspunkter={hasOpenAksjonspunkter}
             readOnly={readOnly}
+            sivilstandTypes={sivilstandTypes}
+            personstatusTypes={personstatusTypes}
           />
           {isPrimaryParent && aksjonspunkter.length > 0
             && (
@@ -152,6 +162,8 @@ const transformValues = values => ({
 });
 
 const mapStateToProps = (state, initialProps) => ({
+  sivilstandTypes: getKodeverk(kodeverkTyper.SIVILSTAND_TYPE)(state),
+  personstatusTypes: getKodeverk(kodeverkTyper.PERSONSTATUS_TYPE)(state),
   personopplysninger: getPersonopplysning(state),
   relatertTilgrensendeYtelserForSoker: getBehandlingRelatertTilgrensendeYtelserForSoker(state),
   relatertTilgrensendeYtelserForAnnenForelder: getBehandlingRelatertTilgrensendeYtelserForAnnenForelder(state),

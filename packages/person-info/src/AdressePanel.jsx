@@ -1,15 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import Panel from 'nav-frontend-paneler';
 import { Row, Column } from 'nav-frontend-grid';
 import { EtikettFokus } from 'nav-frontend-etiketter';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
-import { getKodeverk } from 'behandlingTilbakekreving/src/duckTilbake';
 import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils';
 
 import styles from './adressePanel.less';
@@ -143,9 +140,4 @@ AdressePanel.defaultProps = {
   sivilstandtype: undefined,
 };
 
-const mapStateToProps = state => ({
-  sivilstandTypes: getKodeverk(kodeverkTyper.SIVILSTAND_TYPE)(state),
-  personstatusTypes: getKodeverk(kodeverkTyper.PERSONSTATUS_TYPE)(state),
-});
-
-export default injectIntl(connect(mapStateToProps)(AdressePanel));
+export default injectIntl(AdressePanel);

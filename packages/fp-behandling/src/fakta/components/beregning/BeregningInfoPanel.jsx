@@ -4,15 +4,12 @@ import { injectIntl, intlShape } from 'react-intl';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import {
-  aksjonspunktPropType, FaktaEkspandertpanel,
-} from '@fpsak-frontend/fp-behandling-felles';
+import { aksjonspunktPropType, FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   getFaktaOmBeregningTilfellerKoder,
 } from 'behandlingFpsak/src/behandlingSelectors';
-import withDefaultToggling from 'behandlingFpsak/src/fakta/withDefaultToggling';
 import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
 import FaktaSubmitButton from 'behandlingFpsak/src/fakta/components/FaktaSubmitButton';
 import { AksjonspunktHelpText, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';

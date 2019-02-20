@@ -3,7 +3,8 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
 import { Hovedknapp } from 'nav-frontend-knapper';
-
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
@@ -50,25 +51,55 @@ describe('<PersonInfoPanel>', () => {
     },
   };
 
+  const personstatusTypes = [
+    {
+      kode: personstatusType.UFULLSTENDIGFNR,
+      navn: 'Ufullstendig fnr',
+    },
+    {
+      kode: personstatusType.UTVANDRET,
+      navn: 'Utvandret',
+    },
+    {
+      kode: personstatusType.BOSATT,
+      navn: 'Bosatt',
+    },
+  ];
+
+  const sivilstandTypes = [
+    {
+      kode: sivilstandType.GIFTLEVERADSKILT,
+      navn: 'Gift, lever adskilt',
+    },
+    {
+      kode: sivilstandType.SKILT,
+      navn: 'Skilt',
+    },
+  ];
+
   const relatertYtelseTypes = [];
   const relatertYtelseStatus = [];
 
   it('skal ikke vise åpent panel når ingen av foreldrene er valgt', () => {
-    const wrapper = shallow(<PersonInfoPanel
-      personopplysninger={personopplysninger}
-      relatertTilgrensendeYtelserForSoker={[]}
-      relatertTilgrensendeYtelserForAnnenForelder={[]}
-      openInfoPanels={[]}
-      toggleInfoPanelCallback={sinon.spy()}
-      hasOpenAksjonspunkter
-      sprakkode={{}}
-      readOnly={false}
-      isBekreftButtonReadOnly
-      relatertYtelseTypes={relatertYtelseTypes}
-      relatertYtelseStatus={relatertYtelseStatus}
-      aksjonspunkter={[]}
-      {...reduxFormPropsMock}
-    />);
+    const wrapper = shallow(
+      <PersonInfoPanel
+        personopplysninger={personopplysninger}
+        relatertTilgrensendeYtelserForSoker={[]}
+        relatertTilgrensendeYtelserForAnnenForelder={[]}
+        openInfoPanels={[]}
+        toggleInfoPanelCallback={sinon.spy()}
+        hasOpenAksjonspunkter
+        sprakkode={{}}
+        readOnly={false}
+        isBekreftButtonReadOnly
+        relatertYtelseTypes={relatertYtelseTypes}
+        relatertYtelseStatus={relatertYtelseStatus}
+        personstatusTypes={personstatusTypes}
+        sivilstandTypes={sivilstandTypes}
+        aksjonspunkter={[]}
+        {...reduxFormPropsMock}
+      />,
+    );
 
     const panel = wrapper.find(EkspanderbartPersonPanel);
     expect(panel).to.have.length(1);
@@ -78,21 +109,25 @@ describe('<PersonInfoPanel>', () => {
   });
 
   it('skal ikke vise åpent panel når ingen av foreldrene er valgt', () => {
-    const wrapper = shallow(<PersonInfoPanel
-      personopplysninger={personopplysninger}
-      relatertTilgrensendeYtelserForSoker={[]}
-      relatertTilgrensendeYtelserForAnnenForelder={[]}
-      openInfoPanels={[]}
-      toggleInfoPanelCallback={sinon.spy()}
-      hasOpenAksjonspunkter
-      sprakkode={{}}
-      readOnly={false}
-      isBekreftButtonReadOnly
-      relatertYtelseTypes={relatertYtelseTypes}
-      relatertYtelseStatus={relatertYtelseStatus}
-      aksjonspunkter={[]}
-      {...reduxFormPropsMock}
-    />);
+    const wrapper = shallow(
+      <PersonInfoPanel
+        personopplysninger={personopplysninger}
+        relatertTilgrensendeYtelserForSoker={[]}
+        relatertTilgrensendeYtelserForAnnenForelder={[]}
+        openInfoPanels={[]}
+        toggleInfoPanelCallback={sinon.spy()}
+        hasOpenAksjonspunkter
+        sprakkode={{}}
+        readOnly={false}
+        isBekreftButtonReadOnly
+        relatertYtelseTypes={relatertYtelseTypes}
+        relatertYtelseStatus={relatertYtelseStatus}
+        personstatusTypes={personstatusTypes}
+        sivilstandTypes={sivilstandTypes}
+        aksjonspunkter={[]}
+        {...reduxFormPropsMock}
+      />,
+    );
 
     const panel = wrapper.find(EkspanderbartPersonPanel);
     expect(panel).to.have.length(1);
@@ -102,21 +137,25 @@ describe('<PersonInfoPanel>', () => {
   });
 
   it('skal vise søkerpanel automatisk når dette er markert i URL (openInfoPanels)', () => {
-    const wrapper = shallow(<PersonInfoPanel
-      personopplysninger={personopplysninger}
-      relatertTilgrensendeYtelserForSoker={[]}
-      relatertTilgrensendeYtelserForAnnenForelder={[]}
-      openInfoPanels={[]}
-      toggleInfoPanelCallback={sinon.spy()}
-      hasOpenAksjonspunkter
-      sprakkode={{}}
-      readOnly={false}
-      isBekreftButtonReadOnly
-      relatertYtelseTypes={relatertYtelseTypes}
-      relatertYtelseStatus={relatertYtelseStatus}
-      aksjonspunkter={[]}
-      {...reduxFormPropsMock}
-    />);
+    const wrapper = shallow(
+      <PersonInfoPanel
+        personopplysninger={personopplysninger}
+        relatertTilgrensendeYtelserForSoker={[]}
+        relatertTilgrensendeYtelserForAnnenForelder={[]}
+        openInfoPanels={[]}
+        toggleInfoPanelCallback={sinon.spy()}
+        hasOpenAksjonspunkter
+        sprakkode={{}}
+        readOnly={false}
+        isBekreftButtonReadOnly
+        relatertYtelseTypes={relatertYtelseTypes}
+        relatertYtelseStatus={relatertYtelseStatus}
+        personstatusTypes={personstatusTypes}
+        sivilstandTypes={sivilstandTypes}
+        aksjonspunkter={[]}
+        {...reduxFormPropsMock}
+      />,
+    );
 
     expect(wrapper.state('selected')).is.null;
     wrapper.setProps({ openInfoPanels: [faktaPanelCodes.PERSON] });
@@ -150,21 +189,25 @@ describe('<PersonInfoPanel>', () => {
       erAktivt: true,
     },
     ];
-    const wrapper = shallow(<PersonInfoPanel
-      personopplysninger={personopplysninger}
-      relatertTilgrensendeYtelserForSoker={[]}
-      relatertTilgrensendeYtelserForAnnenForelder={[]}
-      openInfoPanels={[]}
-      toggleInfoPanelCallback={sinon.spy()}
-      hasOpenAksjonspunkter
-      sprakkode={{}}
-      readOnly={false}
-      isBekreftButtonReadOnly
-      relatertYtelseTypes={relatertYtelseTypes}
-      relatertYtelseStatus={relatertYtelseStatus}
-      aksjonspunkter={aksjonspunkter}
-      {...reduxFormPropsMock}
-    />);
+    const wrapper = shallow(
+      <PersonInfoPanel
+        personopplysninger={personopplysninger}
+        relatertTilgrensendeYtelserForSoker={[]}
+        relatertTilgrensendeYtelserForAnnenForelder={[]}
+        openInfoPanels={[]}
+        toggleInfoPanelCallback={sinon.spy()}
+        hasOpenAksjonspunkter
+        sprakkode={{}}
+        readOnly={false}
+        isBekreftButtonReadOnly
+        relatertYtelseTypes={relatertYtelseTypes}
+        relatertYtelseStatus={relatertYtelseStatus}
+        personstatusTypes={personstatusTypes}
+        sivilstandTypes={sivilstandTypes}
+        aksjonspunkter={aksjonspunkter}
+        {...reduxFormPropsMock}
+      />,
+    );
 
     wrapper.setProps({ openInfoPanels: [faktaPanelCodes.PERSON] });
 
@@ -190,21 +233,25 @@ describe('<PersonInfoPanel>', () => {
       erAktivt: true,
     },
     ];
-    const wrapper = shallow(<PersonInfoPanel
-      personopplysninger={personopplysninger}
-      relatertTilgrensendeYtelserForSoker={[]}
-      relatertTilgrensendeYtelserForAnnenForelder={[]}
-      openInfoPanels={[]}
-      toggleInfoPanelCallback={sinon.spy()}
-      hasOpenAksjonspunkter
-      sprakkode={{}}
-      readOnly={false}
-      isBekreftButtonReadOnly
-      relatertYtelseTypes={relatertYtelseTypes}
-      relatertYtelseStatus={relatertYtelseStatus}
-      aksjonspunkter={aksjonspunkter}
-      {...reduxFormPropsMock}
-    />);
+    const wrapper = shallow(
+      <PersonInfoPanel
+        personopplysninger={personopplysninger}
+        relatertTilgrensendeYtelserForSoker={[]}
+        relatertTilgrensendeYtelserForAnnenForelder={[]}
+        openInfoPanels={[]}
+        toggleInfoPanelCallback={sinon.spy()}
+        hasOpenAksjonspunkter
+        sprakkode={{}}
+        readOnly={false}
+        isBekreftButtonReadOnly
+        relatertYtelseTypes={relatertYtelseTypes}
+        relatertYtelseStatus={relatertYtelseStatus}
+        personstatusTypes={personstatusTypes}
+        sivilstandTypes={sivilstandTypes}
+        aksjonspunkter={aksjonspunkter}
+        {...reduxFormPropsMock}
+      />,
+    );
 
     wrapper.setState({ selected: personopplysninger.annenPart });
 
@@ -213,21 +260,25 @@ describe('<PersonInfoPanel>', () => {
 
   it('skal velge hovedsøker og legge denne i url ved klikk på hovedsøker i panel-header ', () => {
     const toggleInfoPanelCallback = sinon.spy();
-    const wrapper = shallow(<PersonInfoPanel
-      personopplysninger={personopplysninger}
-      relatertTilgrensendeYtelserForSoker={[]}
-      relatertTilgrensendeYtelserForAnnenForelder={[]}
-      openInfoPanels={[]}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      hasOpenAksjonspunkter
-      sprakkode={{}}
-      readOnly={false}
-      isBekreftButtonReadOnly
-      relatertYtelseTypes={relatertYtelseTypes}
-      relatertYtelseStatus={relatertYtelseStatus}
-      aksjonspunkter={[]}
-      {...reduxFormPropsMock}
-    />);
+    const wrapper = shallow(
+      <PersonInfoPanel
+        personopplysninger={personopplysninger}
+        relatertTilgrensendeYtelserForSoker={[]}
+        relatertTilgrensendeYtelserForAnnenForelder={[]}
+        openInfoPanels={[]}
+        toggleInfoPanelCallback={toggleInfoPanelCallback}
+        hasOpenAksjonspunkter
+        sprakkode={{}}
+        readOnly={false}
+        isBekreftButtonReadOnly
+        relatertYtelseTypes={relatertYtelseTypes}
+        relatertYtelseStatus={relatertYtelseStatus}
+        personstatusTypes={personstatusTypes}
+        sivilstandTypes={sivilstandTypes}
+        aksjonspunkter={[]}
+        {...reduxFormPropsMock}
+      />,
+    );
 
     const panel = wrapper.find(EkspanderbartPersonPanel);
 
@@ -244,21 +295,25 @@ describe('<PersonInfoPanel>', () => {
 
   it('skal ikke fjerna personmarkering i url ved bytte fra hovedsøker til annen part', () => {
     const toggleInfoPanelCallback = sinon.spy();
-    const wrapper = shallow(<PersonInfoPanel
-      personopplysninger={personopplysninger}
-      relatertTilgrensendeYtelserForSoker={[]}
-      relatertTilgrensendeYtelserForAnnenForelder={[]}
-      openInfoPanels={[]}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      hasOpenAksjonspunkter
-      sprakkode={{}}
-      readOnly={false}
-      isBekreftButtonReadOnly
-      relatertYtelseTypes={relatertYtelseTypes}
-      relatertYtelseStatus={relatertYtelseStatus}
-      aksjonspunkter={[]}
-      {...reduxFormPropsMock}
-    />);
+    const wrapper = shallow(
+      <PersonInfoPanel
+        personopplysninger={personopplysninger}
+        relatertTilgrensendeYtelserForSoker={[]}
+        relatertTilgrensendeYtelserForAnnenForelder={[]}
+        openInfoPanels={[]}
+        toggleInfoPanelCallback={toggleInfoPanelCallback}
+        hasOpenAksjonspunkter
+        sprakkode={{}}
+        readOnly={false}
+        isBekreftButtonReadOnly
+        relatertYtelseTypes={relatertYtelseTypes}
+        relatertYtelseStatus={relatertYtelseStatus}
+        personstatusTypes={personstatusTypes}
+        sivilstandTypes={sivilstandTypes}
+        aksjonspunkter={[]}
+        {...reduxFormPropsMock}
+      />,
+    );
 
     wrapper.setState({ selected: personopplysninger });
 
@@ -274,21 +329,25 @@ describe('<PersonInfoPanel>', () => {
 
   it('skal fjerne valgt hovedsøker ved nytt klikk på denne i panel-header ', () => {
     const toggleInfoPanelCallback = sinon.spy();
-    const wrapper = shallow(<PersonInfoPanel
-      personopplysninger={personopplysninger}
-      relatertTilgrensendeYtelserForSoker={[]}
-      relatertTilgrensendeYtelserForAnnenForelder={[]}
-      openInfoPanels={[]}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      hasOpenAksjonspunkter
-      sprakkode={{}}
-      readOnly={false}
-      isBekreftButtonReadOnly
-      relatertYtelseTypes={relatertYtelseTypes}
-      relatertYtelseStatus={relatertYtelseStatus}
-      aksjonspunkter={[]}
-      {...reduxFormPropsMock}
-    />);
+    const wrapper = shallow(
+      <PersonInfoPanel
+        personopplysninger={personopplysninger}
+        relatertTilgrensendeYtelserForSoker={[]}
+        relatertTilgrensendeYtelserForAnnenForelder={[]}
+        openInfoPanels={[]}
+        toggleInfoPanelCallback={toggleInfoPanelCallback}
+        hasOpenAksjonspunkter
+        sprakkode={{}}
+        readOnly={false}
+        isBekreftButtonReadOnly
+        relatertYtelseTypes={relatertYtelseTypes}
+        relatertYtelseStatus={relatertYtelseStatus}
+        personstatusTypes={personstatusTypes}
+        sivilstandTypes={sivilstandTypes}
+        aksjonspunkter={[]}
+        {...reduxFormPropsMock}
+      />,
+    );
 
     wrapper.setState({ selected: personopplysninger });
 

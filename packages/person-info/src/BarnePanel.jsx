@@ -12,9 +12,9 @@ import urlMann from '@fpsak-frontend/assets/images/barn_gutt.svg';
 import urlKvinne from '@fpsak-frontend/assets/images/barn_jente.svg';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import { getAddresses } from '@fpsak-frontend/utils';
-import { MerkePanel } from '@fpsak-frontend/person-info';
+import MerkePanel from './Merkepanel';
 
-import styles from './barnepanel.less';
+import styles from './barnePanel.less';
 
 const getChildrenAddresses = (opplysningAdresser) => {
   const addressesIndexedByType = getAddresses(opplysningAdresser);
@@ -30,7 +30,7 @@ const erKvinne = genderCode => genderCode === navBrukerKjonn.KVINNE;
  * Presentasjonskomponent. Viser en liste over en persons kjente barn med informasjon om
  * kjønn, navn, personnummer og adresse. Forventer å få inn en liste med personopplysningsobjekter.
  */
-const Barnepanel = ({
+const BarnePanel = ({
   barneListe,
 }) => {
   if (!barneListe) {
@@ -76,7 +76,7 @@ const Barnepanel = ({
   );
   return <Panel className={styles.panel}>{content}</Panel>;
 };
-Barnepanel.propTypes = {
+BarnePanel.propTypes = {
   barneListe: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
-export default Barnepanel;
+export default BarnePanel;

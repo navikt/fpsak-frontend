@@ -3,9 +3,9 @@ import { expect } from 'chai';
 import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import Barnepanel from './Barnepanel';
+import BarnePanel from './BarnePanel';
 
-describe('<Barnepanel>', () => {
+describe('<BarnePanel>', () => {
   const barn1 = {
     navn: 'barn test 1',
     fodselsDato: '2010-11-12',
@@ -27,9 +27,7 @@ describe('<Barnepanel>', () => {
   const barneListe = [barn1, barn2, barn3];
 
   it('skal sjekke at korrekt ikon vises for barna', () => {
-    const wrapper = shallowWithIntl(<Barnepanel
-      barneListe={barneListe}
-    />);
+    const wrapper = shallowWithIntl(<BarnePanel barneListe={barneListe} />);
 
     const image = wrapper.find('InjectIntl(Image)');
     expect(image.first().prop('titleCode')).to.equal('Person.Girl');
@@ -37,9 +35,7 @@ describe('<Barnepanel>', () => {
   });
 
   it('skal sjekke at korrekt antall barn vises', () => {
-    const wrapper = shallowWithIntl(<Barnepanel
-      barneListe={barneListe}
-    />);
+    const wrapper = shallowWithIntl(<BarnePanel barneListe={barneListe} />);
     expect(wrapper.find('Row').children()).to.have.length(barneListe.length);
   });
 });

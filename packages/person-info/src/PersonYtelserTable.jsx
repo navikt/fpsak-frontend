@@ -5,7 +5,6 @@ import moment from 'moment';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components';
-import FaktaGruppe from '../../FaktaGruppe';
 
 import styles from './personYtelserTable.less';
 
@@ -57,18 +56,17 @@ export const PersonYtelserTable = ({
   }).reduce((a, b) => a.concat(b), []);
 
   return (
-    <FaktaGruppe titleCode="PersonYtelserTable.Ytelser">
-      <Table headerTextCodes={headerTextCodes} classNameTable={styles.tableStyle} noHover>
-        {ytelseRows && ytelseRows.map((ytelse, index) => (
-          <TableRow key={`index${index + 1}`}>
-            <TableColumn><Normaltekst>{ytelse.navn}</Normaltekst></TableColumn>
-            <TableColumn><Normaltekst>{ytelse.periode}</Normaltekst></TableColumn>
-            <TableColumn><Normaltekst>{ytelse.status}</Normaltekst></TableColumn>
-            <TableColumn><Normaltekst>{ytelse.saksnummer}</Normaltekst></TableColumn>
-          </TableRow>
-        ))}
-      </Table>
-    </FaktaGruppe>
+    <Table headerTextCodes={headerTextCodes} classNameTable={styles.tableStyle} noHover>
+      {ytelseRows && ytelseRows.map((ytelse, index) => (
+        <TableRow key={`index${index + 1}`}>
+          <TableColumn><Normaltekst>{ytelse.navn}</Normaltekst></TableColumn>
+          <TableColumn><Normaltekst>{ytelse.periode}</Normaltekst></TableColumn>
+          <TableColumn><Normaltekst>{ytelse.status}</Normaltekst></TableColumn>
+          <TableColumn><Normaltekst>{ytelse.saksnummer}</Normaltekst></TableColumn>
+        </TableRow>
+      ))}
+    </Table>
+
   );
 };
 
