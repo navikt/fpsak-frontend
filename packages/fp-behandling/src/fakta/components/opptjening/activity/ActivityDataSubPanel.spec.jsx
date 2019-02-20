@@ -9,14 +9,18 @@ import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import ActivityDataSubPanel from './ActivityDataSubPanel';
 
 describe('<ActivityDataSubPanel>', () => {
-  const activity = {
+  const activity1 = {
     arbeidsgiver: 'Svensen Eksos',
     oppdragsgiverOrg: '123456789',
+  };
+  const activity2 = {
+    privatpersonNavn: 'Tom Hansen',
+    privatpersonFødselsdato: '1992-11-10',
   };
 
   it('skal vise arbeidsgiver, org-nr og stillingsandel for type Arbeid', () => {
     const wrapper = shallow(<ActivityDataSubPanel
-      initialValues={activity}
+      initialValues={activity1}
       readOnly={false}
       isManuallyAdded={false}
       selectedActivityType={{ kode: OAType.ARBEID, navn: 'arbeid' }}
@@ -64,7 +68,7 @@ describe('<ActivityDataSubPanel>', () => {
 
   it('skal ikke vise label Oppdragsgiver for type Frilans', () => {
     const wrapper = shallow(<ActivityDataSubPanel
-      initialValues={activity}
+      initialValues={activity1}
       readOnly={false}
       isManuallyAdded={false}
       selectedActivityType={{ kode: OAType.FRILANS, navn: 'FRILANS' }}
@@ -79,7 +83,7 @@ describe('<ActivityDataSubPanel>', () => {
 
   it('skal vise ikke vise stillingsandel for type Næring', () => {
     const wrapper = shallow(<ActivityDataSubPanel
-      initialValues={activity}
+      initialValues={activity1}
       readOnly={false}
       isManuallyAdded={false}
       selectedActivityType={{ kode: OAType.NARING, navn: 'NARING' }}
@@ -95,7 +99,7 @@ describe('<ActivityDataSubPanel>', () => {
 
   it('skal ikke vise noen felter for type Vartpenger', () => {
     const wrapper = shallow(<ActivityDataSubPanel
-      initialValues={activity}
+      initialValues={activity1}
       readOnly={false}
       isManuallyAdded={false}
       selectedActivityType={{ kode: OAType.VARTPENGER, navn: 'VARTPENGER' }}
@@ -108,7 +112,7 @@ describe('<ActivityDataSubPanel>', () => {
 
   it('skal vise inputfelt for organisasjonsnr når saksbehandler manuelt har lagt til aktivitet Arbeid', () => {
     const wrapper = shallow(<ActivityDataSubPanel
-      initialValues={activity}
+      initialValues={activity1}
       readOnly={false}
       isManuallyAdded
       selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
@@ -127,7 +131,7 @@ describe('<ActivityDataSubPanel>', () => {
 
   it('skal vise inputfelt som readOnly', () => {
     const wrapper = shallow(<ActivityDataSubPanel
-      initialValues={activity}
+      initialValues={activity1}
       readOnly
       isManuallyAdded
       selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
@@ -141,5 +145,38 @@ describe('<ActivityDataSubPanel>', () => {
     expect(decimalField).to.have.length(1);
     expect(decimalField.prop('name')).is.eql('stillingsandel');
     expect(decimalField.prop('readOnly')).is.true;
+  });
+  it('skal vise arbeidsgiver som privatperson', () => {
+    const wrapper = shallow(<ActivityDataSubPanel
+      initialValues={activity2}
+      readOnly={false}
+      isManuallyAdded={false}
+      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+    />);
+    const tekst = wrapper.find(Normaltekst);
+    expect(tekst).to.have.length(1);
+    expect(tekst.props().children).to.equal('Tom Hansen (10.11.1992)');
+  });
+  it('skal vise org når ikke privatperson', () => {
+    const wrapper = shallow(<ActivityDataSubPanel
+      initialValues={activity1}
+      readOnly={false}
+      isManuallyAdded={false}
+      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+    />);
+    const tekst = wrapper.find(Normaltekst);
+    expect(tekst).to.have.length(1);
+    expect(tekst.props().children).to.equal('Svensen Eksos (123456789)');
+  });
+  it('skal vise - som arbeidsgiver når ikke arbeidsgiver eller privatperson', () => {
+    const wrapper = shallow(<ActivityDataSubPanel
+      initialValues={{}}
+      readOnly={false}
+      isManuallyAdded={false}
+      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+    />);
+    const tekst = wrapper.find(Normaltekst);
+    expect(tekst).to.have.length(1);
+    expect(tekst.props().children).to.equal('-');
   });
 });
