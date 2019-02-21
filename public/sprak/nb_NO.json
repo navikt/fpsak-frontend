@@ -1410,6 +1410,7 @@
   "ToTrinnsForm.Uttak.TilstotendeYtelser.Innvilget": "Opplysninger om tilstøtende ytelser innvilget er kontrollert.",
   "ToTrinnsForm.Uttak.TilstotendeYtelser.Opphort": "Opplysninger om tilstøtende ytelser opphørt er kontrollert.",
   "ToTrinnsForm.Uttak.Stortinget": "Søker er stortingsrepresentant/administrativt ansatt i Stortinget. Uttak er kontrollert.",
+  "ToTrinnsForm.Uttak.Overstyrt": "Uttaksperioder er overstyrt.",
 
   "ToTrinnsForm.Klage.OmgjortTilGunst": "Omgjort til gunst",
   "ToTrinnsForm.Klage.StadfesteYtelsesVedtak": "Stadfest ytelsesvedtak",
