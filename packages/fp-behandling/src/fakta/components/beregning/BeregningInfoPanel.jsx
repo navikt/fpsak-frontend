@@ -11,6 +11,7 @@ import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   getFaktaOmBeregningTilfellerKoder,
+  getBehandlingIsOnHold,
 } from 'behandlingFpsak/src/behandlingSelectors';
 import withDefaultToggling from 'behandlingFpsak/src/fakta/withDefaultToggling';
 import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
@@ -123,12 +124,18 @@ export class BeregningInfoPanelImpl extends Component {
         initialValues,
         helpText,
         verdiForAvklarAktivitetErEndret,
+        isOnHold,
         ...formProps
       },
       state: {
         submitEnabled,
       },
     } = this;
+
+    if (isOnHold) {
+      return null;
+    }
+
     return (
       <FaktaEkspandertpanel
         title={intl.formatMessage({ id: 'BeregningInfoPanel.Title' })}
@@ -173,6 +180,7 @@ BeregningInfoPanelImpl.propTypes = {
   helpText: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   faktaTilfeller: PropTypes.arrayOf(PropTypes.string).isRequired,
   verdiForAvklarAktivitetErEndret: PropTypes.bool.isRequired,
+  isOnHold: PropTypes.bool.isRequired,
   ...formPropTypes,
 };
 
@@ -209,8 +217,10 @@ export const transformValues = createSelector(
 
 const mapStateToProps = (state, initialProps) => {
   const faktaTilfeller = getFaktaOmBeregningTilfellerKoder(state) ? getFaktaOmBeregningTilfellerKoder(state) : [];
+  const isOnHold = getBehandlingIsOnHold(state);
   return {
     faktaTilfeller,
+    isOnHold,
     helpText: getHelpText(state),
     initialValues: buildInitialValues(state),
     validate: getValidate(state),

@@ -16,6 +16,28 @@ import AvklareAktiviteterPanel from './avklareAktiviteter/AvklareAktiviteterPane
 const helpTexts = [<FormattedMessage key="AvklarBGTilstøtendeYtelse" id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.TilstøtendeYtelse" />];
 
 describe('<BeregningInfoPanel>', () => {
+  it('skal ikkje vise ekspanderbart panel', () => {
+    const wrapper = shallowWithIntl(<BeregningInfoPanelImpl
+      {...reduxFormPropsMock}
+      intl={intlMock}
+      aksjonspunkter={[]}
+      openInfoPanels={['beregning']}
+      toggleInfoPanelCallback={sinon.spy()}
+      hasOpenAksjonspunkter
+      submittable
+      readOnly
+      hasFaktaForBeregning
+      submitCallback={sinon.spy()}
+      helpText={helpTexts}
+      knappForInntektstabellSkalKunneKlikkes={false}
+      verdiForAvklarAktivitetErEndret={false}
+      faktaTilfeller={[]}
+      isOnHold
+    />);
+    const panel = wrapper.find(FaktaEkspandertpanel);
+    expect(panel).has.length(0);
+  });
+
   it('skal vise ekspanderbart panel', () => {
     const wrapper = shallowWithIntl(<BeregningInfoPanelImpl
       {...reduxFormPropsMock}
@@ -32,6 +54,7 @@ describe('<BeregningInfoPanel>', () => {
       knappForInntektstabellSkalKunneKlikkes={false}
       verdiForAvklarAktivitetErEndret={false}
       faktaTilfeller={[]}
+      isOnHold={false}
     />);
     const panel = wrapper.find(FaktaEkspandertpanel);
     expect(panel).has.length(1);
@@ -71,6 +94,7 @@ describe('<BeregningInfoPanel>', () => {
       knappForInntektstabellSkalKunneKlikkes={false}
       faktaTilfeller={[]}
       verdiForAvklarAktivitetErEndret={false}
+      isOnHold={false}
     />);
     const panel = wrapper.find(VurderFaktaBeregningPanel);
     expect(panel).has.length(1);
@@ -125,6 +149,7 @@ describe('<BeregningInfoPanel>', () => {
       knappForInntektstabellSkalKunneKlikkes={false}
       faktaTilfeller={[]}
       verdiForAvklarAktivitetErEndret
+      isOnHold={false}
     />);
     const faktaPanel = wrapper.find(VurderFaktaBeregningPanel);
     expect(faktaPanel).has.length(0);
