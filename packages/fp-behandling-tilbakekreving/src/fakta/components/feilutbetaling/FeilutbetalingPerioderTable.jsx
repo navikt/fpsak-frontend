@@ -57,7 +57,7 @@ const FeilutbetalingPerioderTable = ({ perioder, årsak }) => (
               )
             }
           </TableColumn>
-          <TableColumn>
+          <TableColumn className={styles.redText}>
             {periode.belop}
           </TableColumn>
         </TableRow>

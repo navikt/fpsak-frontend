@@ -73,8 +73,8 @@ export const FeilutbetalingInfoPanelImpl = ({
                 </Column>
               </Row>
               <Row>
-                <Column xs="12">
-                  <Normaltekst className={styles.smallPaddingRight}>
+                <Column xs="12" className={styles.smallPaddingRight}>
+                  <Normaltekst className={styles.redText}>
                     {feilutbetaling.aktuellFeilUtbetaltBeløp}
                   </Normaltekst>
                 </Column>
