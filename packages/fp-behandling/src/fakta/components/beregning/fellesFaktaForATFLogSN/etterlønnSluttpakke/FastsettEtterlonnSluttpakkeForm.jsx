@@ -55,7 +55,7 @@ FastsettEtterlonnSluttpakkeForm.buildInitialValues = (beregningsgrunnlag) => {
   if (relevanteAndeler.length > 0) {
     const tidligereBeregnetPrÅr = relevanteAndeler[0].beregnetPrAar;
     const tidligereBeregnetPrMnd = tidligereBeregnetPrÅr === undefined || tidligereBeregnetPrÅr === null ? undefined : tidligereBeregnetPrÅr / 12;
-    initialValues[etterlonnSluttpakkeFieldname] = tidligereBeregnetPrMnd === undefined || tidligereBeregnetPrMnd === null
+    initialValues[etterlonnSluttpakkeFieldname] = tidligereBeregnetPrMnd === undefined
       ? '' : formatCurrencyNoKr(tidligereBeregnetPrMnd);
   }
   return initialValues;
