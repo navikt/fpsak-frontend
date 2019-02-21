@@ -59,6 +59,7 @@ const totrinnskontrollaksjonspunktTextCodes = {
   [aksjonspunktCodes.KONTROLLER_TILSTØTENDE_YTELSER_INNVILGET]: 'ToTrinnsForm.Uttak.TilstotendeYtelser.Innvilget',
   [aksjonspunktCodes.KONTROLLER_TILSTØTENDE_YTELSER_OPPHØRT]: 'ToTrinnsForm.Uttak.TilstotendeYtelser.Opphort',
   [aksjonspunktCodes.TILKNYTTET_STORTINGET]: 'ToTrinnsForm.Uttak.Stortinget',
+  [aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK]: 'ToTrinnsForm.Uttak.Overstyrt',
 };
 
 export default totrinnskontrollaksjonspunktTextCodes;
