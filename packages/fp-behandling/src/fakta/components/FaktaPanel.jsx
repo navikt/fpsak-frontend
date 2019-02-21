@@ -8,7 +8,6 @@ import {
 }
   from 'behandlingFpsak/src/behandlingSelectors';
 import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
-import { PersonIndex } from '@fpsak-frontend/fp-felles';
 import { getOpenInfoPanels } from 'behandlingFpsak/src/fakta/duck';
 import { getFagsakYtelseType, getFagsakPerson } from 'behandlingFpsak/src/duck';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
@@ -23,6 +22,7 @@ import OmsorgInfoPanel from './omsorg/OmsorgInfoPanel';
 import UttakInfoPanel from './uttak/UttakInfoPanel';
 import BeregningInfoPanel from './beregning/BeregningInfoPanel';
 import PersonInfoPanel from './person/PersonInfoPanel';
+import PersonIndexPanel from './person/PersonIndexPanel';
 
 import styles from './faktaPanel.less';
 
@@ -59,7 +59,17 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
       )
       }
       {!personopplysninger
-      && <PersonIndex medPanel person={fagsakPerson} />
+      && (
+      <PersonIndexPanel
+        person={fagsakPerson}
+        aksjonspunkter={aksjonspunkter}
+        submitCallback={submitCallback}
+        openInfoPanels={openInfoPanels}
+        toggleInfoPanelCallback={toggleInfoPanelCallback}
+        shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+        readOnly={readOnly}
+      />
+      )
       }
     </div>
     <div className={styles.container}>

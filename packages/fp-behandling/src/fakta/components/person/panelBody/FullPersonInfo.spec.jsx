@@ -171,6 +171,7 @@ describe('<FullPersonInfo>', () => {
         hasOpenAksjonspunkter={false}
         readOnly={false}
         hasAksjonspunkter={false}
+        erUtenlandssak={false}
         isPrimaryParent
         {...reduxFormPropsMock}
       />,
@@ -198,6 +199,7 @@ describe('<FullPersonInfo>', () => {
         hasOpenAksjonspunkter={false}
         readOnly={false}
         hasAksjonspunkter={false}
+        erUtenlandssak={false}
         isPrimaryParent
         {...reduxFormPropsMock}
       />,
@@ -219,6 +221,7 @@ describe('<FullPersonInfo>', () => {
         hasOpenAksjonspunkter={false}
         readOnly={false}
         hasAksjonspunkter={false}
+        erUtenlandssak={false}
         isPrimaryParent
         {...reduxFormPropsMock}
       />,
@@ -240,6 +243,7 @@ describe('<FullPersonInfo>', () => {
         hasOpenAksjonspunkter={false}
         readOnly={false}
         hasAksjonspunkter={false}
+        erUtenlandssak={false}
         isPrimaryParent={false}
         {...reduxFormPropsMock}
       />,
@@ -261,6 +265,7 @@ describe('<FullPersonInfo>', () => {
         hasOpenAksjonspunkter
         readOnly={false}
         hasAksjonspunkter
+        erUtenlandssak={false}
         isPrimaryParent
         {...reduxFormPropsMock}
       />,
@@ -282,6 +287,7 @@ describe('<FullPersonInfo>', () => {
         hasOpenAksjonspunkter
         readOnly={false}
         hasAksjonspunkter
+        erUtenlandssak={false}
         isPrimaryParent={false}
         {...reduxFormPropsMock}
       />,
@@ -303,6 +309,7 @@ describe('<FullPersonInfo>', () => {
         hasOpenAksjonspunkter
         readOnly={false}
         hasAksjonspunkter
+        erUtenlandssak={false}
         isPrimaryParent={false}
         {...reduxFormPropsMock}
       />,
@@ -323,6 +330,7 @@ describe('<FullPersonInfo>', () => {
         hasOpenAksjonspunkter
         readOnly={false}
         hasAksjonspunkter
+        erUtenlandssak={false}
         isPrimaryParent={false}
         {...reduxFormPropsMock}
       />,
