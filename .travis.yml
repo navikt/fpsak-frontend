@@ -10,7 +10,6 @@ cache:
   - node_modules
   yarn: true
 
-
 jobs:
   include:
   - stage: Before install
@@ -31,6 +30,7 @@ jobs:
       script:
       - git config user.name team-foreldrepenger[bot]
       - git config user.email team-foreldrepenger[bot]@users.noreply.github.com
+      after_success:
       - chmod a+x ./travis/push-tag.sh
       - "./travis/push-tag.sh"
 env:
