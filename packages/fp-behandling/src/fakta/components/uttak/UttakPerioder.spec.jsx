@@ -5,17 +5,17 @@ import sinon from 'sinon';
 import { FormattedMessage } from 'react-intl';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { UttakFaktaPerioder } from './UttakFaktaPerioder';
+import { UttakPerioder } from './UttakPerioder';
 import UttakSlettPeriodeModal from './UttakSlettPeriodeModal';
 import UttakNyPeriode from './UttakNyPeriode';
 
 const reduxFormChange = sinon.spy();
 const reduxFormReset = sinon.spy();
 
-describe('<UttakFaktaPerioder>', () => {
-  it('skal vise uttak UttakFaktaPerioder', () => {
+describe('<UttakPerioder>', () => {
+  it('skal vise uttak UttakPerioder', () => {
     const wrapper = shallowWithIntl(
-      <UttakFaktaPerioder
+      <UttakPerioder
         readOnly
         hasOpenAksjonspunkter
         inntektsmeldinger={[]}
@@ -34,7 +34,6 @@ describe('<UttakFaktaPerioder>', () => {
         submitting={false}
         openForms={false}
         kanOverstyre={false}
-        isDirty={false}
         hasRevurderingOvertyringAp={false}
       />,
     );
@@ -61,7 +60,7 @@ describe('<UttakFaktaPerioder>', () => {
 
   it('skal vise UttakNyPeriode og disable knapper når isNyPeriodeFormOpen er true', () => {
     const wrapper = shallowWithIntl(
-      <UttakFaktaPerioder
+      <UttakPerioder
         readOnly
         hasOpenAksjonspunkter
         inntektsmeldinger={[]}
@@ -80,7 +79,6 @@ describe('<UttakFaktaPerioder>', () => {
         submitting={false}
         openForms={false}
         kanOverstyre={false}
-        isDirty={false}
         hasRevurderingOvertyringAp={false}
       />,
     );
@@ -102,7 +100,7 @@ describe('<UttakFaktaPerioder>', () => {
 
   it('skal vise UttakSlettPeriodeModal når showModalSlettPeriode er true', () => {
     const wrapper = shallowWithIntl(
-      <UttakFaktaPerioder
+      <UttakPerioder
         readOnly
         hasOpenAksjonspunkter
         inntektsmeldinger={[]}
@@ -121,7 +119,6 @@ describe('<UttakFaktaPerioder>', () => {
         submitting={false}
         openForms
         kanOverstyre={false}
-        isDirty={false}
         hasRevurderingOvertyringAp={false}
       />,
     );
@@ -139,7 +136,7 @@ describe('<UttakFaktaPerioder>', () => {
 
   it('skal disable knapper når disableButtons er true', () => {
     const wrapper = shallowWithIntl(
-      <UttakFaktaPerioder
+      <UttakPerioder
         readOnly
         hasOpenAksjonspunkter
         inntektsmeldinger={[]}
@@ -158,7 +155,6 @@ describe('<UttakFaktaPerioder>', () => {
         submitting={false}
         openForms
         kanOverstyre={false}
-        isDirty={false}
         hasRevurderingOvertyringAp={false}
       />,
     );
@@ -171,7 +167,7 @@ describe('<UttakFaktaPerioder>', () => {
 
   it('skal disable knapper når readOnly er true', () => {
     const wrapper = shallowWithIntl(
-      <UttakFaktaPerioder
+      <UttakPerioder
         readOnly
         hasOpenAksjonspunkter
         inntektsmeldinger={[]}
@@ -190,7 +186,6 @@ describe('<UttakFaktaPerioder>', () => {
         submitting={false}
         openForms={false}
         kanOverstyre={false}
-        isDirty={false}
         hasRevurderingOvertyringAp={false}
       />,
     );
@@ -203,7 +198,7 @@ describe('<UttakFaktaPerioder>', () => {
 
   it('skal ikke disable knapper når openForms og readOnly er false', () => {
     const wrapper = shallowWithIntl(
-      <UttakFaktaPerioder
+      <UttakPerioder
         readOnly={false}
         hasOpenAksjonspunkter
         inntektsmeldinger={[]}
@@ -236,7 +231,7 @@ describe('<UttakFaktaPerioder>', () => {
 
   it('skal vise AksjonspunktHelpText når readOnly er false', () => {
     const wrapper = shallowWithIntl(
-      <UttakFaktaPerioder
+      <UttakPerioder
         readOnly={false}
         hasOpenAksjonspunkter
         inntektsmeldinger={[]}
@@ -280,7 +275,6 @@ describe('<UttakFaktaPerioder>', () => {
         submitting={false}
         openForms={false}
         kanOverstyre={false}
-        isDirty={false}
         hasRevurderingOvertyringAp={false}
       />,
     );
@@ -294,7 +288,7 @@ describe('<UttakFaktaPerioder>', () => {
 
   it('skal vise nyPeriode skjema onClick på knappen', () => {
     const wrapper = shallowWithIntl(
-      <UttakFaktaPerioder
+      <UttakPerioder
         readOnly={false}
         hasOpenAksjonspunkter
         inntektsmeldinger={[]}
@@ -313,7 +307,6 @@ describe('<UttakFaktaPerioder>', () => {
         submitting={false}
         openForms={false}
         kanOverstyre={false}
-        isDirty={false}
         hasRevurderingOvertyringAp={false}
       />,
     );

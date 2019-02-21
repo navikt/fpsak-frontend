@@ -13,14 +13,9 @@ describe('<UttakFaktaForm>', () => {
       <UttakFaktaForm
         readOnly={false}
         hasOpenAksjonspunkter
-        inntektsmeldinger={[]}
         behandlingFormPrefix="UttakFaktaForm"
-        perioder={[]}
-        periodeTyper={[]}
-        utsettelseArsaker={[]}
         initialValues={{}}
         aksjonspunkter={[]}
-        førsteUttaksDato="2018-01-12"
         submitting={false}
         hasRevurderingOvertyringAp={false}
         {...formProps}

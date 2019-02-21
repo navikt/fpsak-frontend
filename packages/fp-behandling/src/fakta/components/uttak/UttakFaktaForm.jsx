@@ -11,7 +11,7 @@ import {
 import { getSelectedBehandlingId } from 'behandlingFpsak/src/duck';
 import { guid, dateFormat } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import UttakFaktaPerioder from './UttakFaktaPerioder';
+import UttakPerioder from './UttakPerioder';
 
 import {
   sjekkOmfaktaOmUttakAksjonspunkt,
@@ -30,7 +30,7 @@ export const UttakFaktaForm = ({
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
-    <UttakFaktaPerioder
+    <UttakPerioder
       hasOpenAksjonspunkter={hasOpenAksjonspunkter}
       readOnly={readOnly}
       aksjonspunkter={aksjonspunkter}

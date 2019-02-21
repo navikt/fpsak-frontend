@@ -86,7 +86,7 @@ const updateInntektsmeldingInfo = (inntektsmeldinger, inntektsmeldingInfo, updat
   ...inntektsmeldingInfo.slice(updatedIndex + 1),
 ]);
 
-export class UttakFaktaPerioder extends Component {
+export class UttakPerioder extends Component {
   constructor(props) {
     super(props);
 
@@ -323,7 +323,6 @@ export class UttakFaktaPerioder extends Component {
     const {
       readOnly,
       inntektsmeldinger,
-      openForms,
       perioder,
       aksjonspunkter,
       førsteUttaksDato,
@@ -332,7 +331,6 @@ export class UttakFaktaPerioder extends Component {
       kanOverstyre,
       hasRevurderingOvertyringAp,
       isManuellOverstyring,
-      ...formProps
     } = this.props;
     const {
       periodeSlett, isNyPeriodeFormOpen, inntektsmeldingInfo, showModalSlettPeriode,
@@ -401,7 +399,7 @@ export class UttakFaktaPerioder extends Component {
                 mini
                 disabled={this.disableButtons()}
                 onClick={ariaCheck}
-                spinner={formProps.submitting}
+                spinner={submitting}
               >
                 <FormattedMessage id="UttakInfoPanel.BekreftOgFortsett" />
               </Hovedknapp>
@@ -443,7 +441,7 @@ export class UttakFaktaPerioder extends Component {
   }
 }
 
-UttakFaktaPerioder.propTypes = {
+UttakPerioder.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   inntektsmeldinger: PropTypes.arrayOf(PropTypes.shape()).isRequired,
@@ -468,7 +466,7 @@ UttakFaktaPerioder.propTypes = {
   kanOverstyre: PropTypes.bool.isRequired,
 };
 
-UttakFaktaPerioder.defaultProps = {
+UttakPerioder.defaultProps = {
   førsteUttaksDato: undefined,
   isManuellOverstyring: false,
 };
@@ -502,4 +500,4 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UttakFaktaPerioder);
+export default connect(mapStateToProps, mapDispatchToProps)(UttakPerioder);
