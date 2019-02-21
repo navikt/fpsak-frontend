@@ -40,8 +40,9 @@ export const UttakInfoPanelImpl = ({
 }) => {
   const avklarAnnenForelderRettAp = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT);
   const uttakAp = aksjonspunkter.filter(ap => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT);
-  const overrideReadOnly = readOnly || (uttakAp.filter(ap => isAksjonspunktOpen(ap.status.kode)).length === 0);
   const uttakApOpen = uttakAp.some(ap => isAksjonspunktOpen(ap.status.kode));
+  const overrideReadOnly = readOnly || (!uttakAp.length && !uttakAp.some(ap => ap.kanLoses));
+
   return (
     <FaktaEkspandertpanel
       title={intl.formatMessage({ id: 'UttakInfoPanel.FaktaUttak' })}
