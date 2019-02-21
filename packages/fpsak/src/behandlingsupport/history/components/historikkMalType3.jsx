@@ -83,6 +83,7 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: 'Beregning.VurderFaktaATFLSN',
   [aksjonspunktCodes.FORESLA_VEDTAK]: 'Vedtak.Fritekstbrev',
   [aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO]: 'UttakInfoPanel.FaktaUttak.ForsteUttakDato',
+  [aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT]: 'UttakInfoPanel.FaktaUttak.VurderAnnenForelder',
 };
 
 const scrollUp = () => {
