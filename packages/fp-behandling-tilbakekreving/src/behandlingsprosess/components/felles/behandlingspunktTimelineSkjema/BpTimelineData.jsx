@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
-import styles from './bpTimelineData.less';
+import { getPeriodFeilutbetaling } from './BpTimelineHelper';
 import PerioderControler from './PerioderControler';
 import PeriodSummary from './PeriodSummary';
-
+import styles from './bpTimelineData.less';
 
 export class BpTimelineData extends Component {
   constructor() {
@@ -46,14 +46,20 @@ export class BpTimelineData extends Component {
     const forstePeriode = JSON.parse(JSON.stringify(...periodToUpdate));
     const andrePeriode = JSON.parse(JSON.stringify(...periodToUpdate));
     const currentId = formValues.periodeId;
+    const forstePeriodeTomIndex = formValues.dagligUtbetalinger.findIndex(e => e.dag === formValues.forstePeriode.tom) + 1;
     if (!periodToUpdate[0].begrunnelse) {
       forstePeriode.begrunnelse = ' ';
       andrePeriode.begrunnelse = ' ';
     }
+
     forstePeriode.fom = formValues.forstePeriode.fom;
     forstePeriode.tom = formValues.forstePeriode.tom;
+    forstePeriode.dagligUtbetalinger = formValues.dagligUtbetalinger.slice(0, forstePeriodeTomIndex);
+    forstePeriode.feilutbetaling = getPeriodFeilutbetaling(forstePeriode.dagligUtbetalinger);
     andrePeriode.fom = formValues.andrePeriode.fom;
     andrePeriode.tom = formValues.andrePeriode.tom;
+    andrePeriode.dagligUtbetalinger = formValues.dagligUtbetalinger.slice(forstePeriodeTomIndex);
+    andrePeriode.feilutbetaling = getPeriodFeilutbetaling(andrePeriode.dagligUtbetalinger);
     andrePeriode.id = currentId + 1;
     otherThanUpdated.map((periode) => {
       const periodeCopy = periode;

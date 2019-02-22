@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
+import { getResultType } from './BpTimelineHelper';
 import BpTimeline from './BpTimeline';
 import BpTimelineData from './BpTimelineData';
 
@@ -29,7 +30,7 @@ export class BpTimelinePanel extends Component {
   setSelectedDefaultPeriod() {
     const { resultatActivity } = this.props;
     const { selectedItem } = this.state;
-    const defaultSelectedElement = resultatActivity.find(period => period.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING);
+    const defaultSelectedElement = resultatActivity.find(period => getResultType(period).kode === periodeResultatType.MANUELL_BEHANDLING);
     const defaultSelectedElementIfNoAP = resultatActivity.find(period => period.hovedsoker);
     if (!selectedItem) {
       this.setState({ selectedItem: defaultSelectedElement || defaultSelectedElementIfNoAP });
@@ -61,7 +62,7 @@ export class BpTimelinePanel extends Component {
     const sortedActivities = otherThanUpdated.concat(verdier);
     sortedActivities.sort((a, b) => a.id - b.id);
     this.setFormField(activityPanelName, sortedActivities);
-    const tilbakekrevingPeriod = otherThanUpdated.find(o => o.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING);
+    const tilbakekrevingPeriod = otherThanUpdated.find(o => getResultType(o).kode === periodeResultatType.MANUELL_BEHANDLING);
     this.setSelectedTilbakekrevingActivity(tilbakekrevingPeriod || undefined);
   }
 
@@ -124,7 +125,6 @@ export class BpTimelinePanel extends Component {
       formName,
       activityPanelName,
       hovedsokerKjonnKode,
-      customTimes,
     } = this.props;
     const { selectedItem } = this.state;
     const childrenWithProps = React.Children.map(children, child => React.cloneElement(child, {
@@ -137,7 +137,6 @@ export class BpTimelinePanel extends Component {
       <>
         <BpTimeline
           selectedPeriod={selectedItem}
-          customTimes={customTimes}
           tilbakekrevingPerioder={resultatActivity}
           selectPeriodCallback={this.selectHandler}
           openPeriodInfo={this.openPeriodInfo}
@@ -172,7 +171,6 @@ BpTimelinePanel.propTypes = {
   formName: PropTypes.string.isRequired,
   activityPanelName: PropTypes.string.isRequired,
   hovedsokerKjonnKode: PropTypes.string.isRequired,
-  customTimes: PropTypes.shape().isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,

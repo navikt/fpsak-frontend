@@ -11,14 +11,11 @@ import {
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingTilbakekreving/src/behandlingForm';
+import { getBehandlingVersjon, getForeldelsePerioder } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingTilbakekreving/src/duckTilbake';
 import { addClassNameGroupIdToPerioder } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
 import BpTimelinePanel from '../felles/behandlingspunktTimelineSkjema/BpTimelinePanel';
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '../../../behandlingForm';
-import { getBehandlingVersjon } from '../../../selectors/tilbakekrevingBehandlingSelectors';
-import { getSelectedBehandlingId } from '../../../duckTilbake';
-import {
-  hovedsokerKjonnKode, tilbakekrevingPerioderResultat, customTimes,
-} from '../tilbakekreving/mockData';
 import ForeldelseForm from './ForeldelseForm';
 
 const ACTIVITY_PANEL_NAME = 'foreldelsesresultatActivity';
@@ -26,12 +23,14 @@ const formName = 'ForeldelseForm';
 const foreldelseAksjonspunkter = [
   aksjonspunktCodes.VURDER_FORELDELSE,
 ];
+export const getKjonn = person => (person.erKvinne ? 'K' : 'M');
 
 const ForeldelsePanelImpl = ({
   foreldelsesresultatActivity,
   behandlingFormPrefix,
   reduxFormChange: formChange,
   reduxFormInitialize: formInitialize,
+  fagsakPerson,
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
@@ -42,8 +41,7 @@ const ForeldelsePanelImpl = ({
       <VerticalSpacer twentyPx />
       {foreldelsesresultatActivity && (
       <BpTimelinePanel
-        customTimes={customTimes}
-        hovedsokerKjonnKode={hovedsokerKjonnKode}
+        hovedsokerKjonnKode={getKjonn(fagsakPerson)}
         resultatActivity={foreldelsesresultatActivity}
         activityPanelName={ACTIVITY_PANEL_NAME}
         behandlingFormPrefix={behandlingFormPrefix}
@@ -80,6 +78,7 @@ ForeldelsePanelImpl.propTypes = {
   behandlingFormPrefix: PropTypes.string.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
+  fagsakPerson: PropTypes.string.isRequired,
 };
 
 export const transformValues = values => [{
@@ -88,18 +87,16 @@ export const transformValues = values => [{
 }];
 
 export const buildInitialValues = foreldelsePerioder => ({
-  foreldelsesresultatActivity: foreldelsePerioder.map((period, index) => ({
-    ...period,
-    id: index + 1,
-  })),
+  foreldelsesresultatActivity: addClassNameGroupIdToPerioder(foreldelsePerioder),
 });
 
 const mapStateToProps = (state, ownProps) => {
-  const foreldelsePerioder = addClassNameGroupIdToPerioder(tilbakekrevingPerioderResultat);
+  const foreldelsePerioderResultat = getForeldelsePerioder(state).periodeDtoListe;
   return {
-    initialValues: buildInitialValues(foreldelsePerioder),
+    initialValues: buildInitialValues(foreldelsePerioderResultat),
     foreldelsesresultatActivity: behandlingFormValueSelector(formName)(state, ACTIVITY_PANEL_NAME),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+    fagsakPerson: getFagsakPerson(state),
     onSubmit: values => ownProps.submitCallback(transformValues(values)),
   };
 };

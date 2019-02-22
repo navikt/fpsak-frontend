@@ -5,6 +5,7 @@ const periodeResultatType = {
   GYLDIG_UTSETTELSE: 'GYLDIG_UTSETTELSE',
   UGYLDIG_UTSETTELSE: 'UGYLDIG_UTSETTELSE',
   MANUELL_BEHANDLING: 'MANUELL_BEHANDLING',
+  DEFAULT: '-',
 };
 
 export default periodeResultatType;
