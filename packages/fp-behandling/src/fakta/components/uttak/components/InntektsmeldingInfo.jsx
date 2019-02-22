@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Undertekst, Normaltekst, Element } from 'nav-frontend-typografi';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
-import { utsettelseArsakTexts } from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import classnames from 'classnames/bind';
 import {
   flatten, guid, dateFormat, calcDaysAndWeeks, TIDENES_ENDE,
@@ -47,8 +46,8 @@ const renderAvvikContentUtsettelseFraSøknad = utsettelseArsak => (
           <FormattedHTMLMessage
             id="UttakInfoPanel.IkkeOppgittUtsettelse"
             values={{
-              årsak: utsettelseArsakTexts[utsettelseArsak.kode],
-              årsakLowerCase: utsettelseArsakTexts[utsettelseArsak.kode].toLowerCase(),
+              årsak: utsettelseArsak.navn,
+              årsakLowerCase: utsettelseArsak.navn.toLowerCase(),
             }}
           />
         </Normaltekst>
@@ -70,7 +69,7 @@ const renderAvvikContent = (periode, fom, tom, isGradering, avvikArbeidsprosent,
         <FlexColumn>
           {!isGradering && (
           <Element>
-            {utsettelseArsakTexts[periode.utsettelseArsak.kode]}
+            {periode.utsettelseArsak.navn}
 :
           </Element>
           )}
@@ -141,7 +140,7 @@ export const InntektsmeldingInfo = ({
   const manglerUtsettelseFraInntektsmelding = utsettelseArsak && utsettelseArsak.kode !== '-' && !bekreftet;
   const shouldRenderAvvik = shouldRender(inntektsmeldingInfo);
   return (
-    <div>
+    <React.Fragment>
       {shouldRenderAvvik && (
       <React.Fragment>
         <Undertekst><FormattedMessage id="UttakInfoPanel.AvvikiInntektsmelding" /></Undertekst>
@@ -186,7 +185,7 @@ export const InntektsmeldingInfo = ({
           })}
         </React.Fragment>
       )}
-    </div>
+    </React.Fragment>
   );
 };
 
