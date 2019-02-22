@@ -9,7 +9,7 @@ import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/src/historikk
 import historikkEndretFeltTypeHeadingCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeHeadingCodes';
 
 import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
-import historikkinnslagDelPropType from '../historikkinnslagDelPropType';
+import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
 import {
   findEndretFeltNavn,
   findEndretFeltVerdi,

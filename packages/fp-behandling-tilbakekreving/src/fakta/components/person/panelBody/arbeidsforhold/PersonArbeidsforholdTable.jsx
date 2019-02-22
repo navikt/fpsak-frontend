@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { arbeidsforholdPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import {
   Table, TableRow, TableColumn, DateLabel, PeriodLabel, Image,

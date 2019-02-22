@@ -1,6 +1,24 @@
 import PropTypes from 'prop-types';
 
-const arbeidsforholdPropType = PropTypes.shape({
+// fra uttak
+export const arbeidsgiverUttakPropType = PropTypes.shape({
+  aktørId: PropTypes.string,
+  identifikator: PropTypes.string,
+  navn: PropTypes.string,
+  virksomhet: PropTypes.bool,
+});
+
+// fra beregning
+export const arbeidsforholdBeregningProptype = PropTypes.shape({
+  arbeidsgiverNavn: PropTypes.string,
+  arbeidsgiverId: PropTypes.string,
+  startdato: PropTypes.string,
+  opphoersdato: PropTypes.string,
+  arbeidsforholdId: PropTypes.string,
+});
+
+
+export const arbeidsforholdPropType = PropTypes.shape({
   id: PropTypes.string.isRequired,
   navn: PropTypes.string.isRequired,
   arbeidsgiverIdentifikator: PropTypes.string.isRequired,

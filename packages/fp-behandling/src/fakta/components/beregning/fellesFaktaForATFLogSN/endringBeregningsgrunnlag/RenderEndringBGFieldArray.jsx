@@ -20,11 +20,12 @@ import {
 } from 'behandlingFpsak/src/behandlingSelectors';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { getKodeverk } from 'behandlingFpsak/src/duck';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import { kodeverkPropType, arbeidsforholdBeregningProptype } from '@fpsak-frontend/prop-types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
 import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-frontend/kodeverk/src/inntektskategorier';
-import { arbeidsforholdProptype, getUniqueListOfArbeidsforhold } from '../../ArbeidsforholdHelper';
+
+import { getUniqueListOfArbeidsforhold } from '../../ArbeidsforholdHelper';
 import {
   validateAndelFields, validateSumFastsattBelop, validateUlikeAndeler,
   validateTotalRefusjonPrArbeidsforhold,
@@ -370,7 +371,7 @@ RenderEndringBGFieldArrayImpl.propTypes = {
   fields: PropTypes.shape().isRequired,
   meta: PropTypes.shape().isRequired,
   intl: intlShape.isRequired,
-  arbeidsforholdList: PropTypes.arrayOf(arbeidsforholdProptype).isRequired,
+  arbeidsforholdList: PropTypes.arrayOf(arbeidsforholdBeregningProptype).isRequired,
   inntektskategoriKoder: kodeverkPropType.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   periodeUtenAarsak: PropTypes.bool.isRequired,

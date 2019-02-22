@@ -6,7 +6,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 
-import { uttaksresultatPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { uttaksresultaltPerioderSøkerPropType } from '@fpsak-frontend/prop-types';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import { getUttaksresultatPerioder, getStonadskontoer } from 'behandlingFpsak/src/behandlingSelectors';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/src/behandlingsprosess/behandlingsprosessSelectors';
@@ -139,7 +139,7 @@ export const UttakPanelImpl = ({
 UttakPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
-  uttaksresultat: uttaksresultatPropType,
+  uttaksresultat: uttaksresultaltPerioderSøkerPropType,
   manuellOverstyring: PropTypes.bool,
   apCodes: PropTypes.arrayOf(PropTypes.string),
   isApOpen: PropTypes.bool,

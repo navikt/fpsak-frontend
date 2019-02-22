@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Element } from 'nav-frontend-typografi';
 
-import historikkinnslagDelPropType from '../historikkinnslagDelPropType';
+import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
 import BubbleText from './bubbleText';
 import { findHendelseText } from './historikkUtils';
 import HistorikkDokumentLenke from './HistorikkDokumentLenke';

@@ -12,7 +12,7 @@ import {
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { endringerIBeregningsgrunnlagGirFritekstfelt } from 'behandlingFpsak/src/behandlingsprosess/components/vedtak/VedtakHelper';
 import VedtakFritekstPanel from 'behandlingFpsak/src/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
-import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 

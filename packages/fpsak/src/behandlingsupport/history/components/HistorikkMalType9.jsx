@@ -8,7 +8,7 @@ import historikkinnslagType from '@fpsak-frontend/kodeverk/src/historikkinnslagT
 import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
 
 import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
-import historikkinnslagDelPropType from '../historikkinnslagDelPropType';
+import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
 import { findEndretFeltVerdi } from './historikkUtils';
 import BubbleText from './bubbleText';
 

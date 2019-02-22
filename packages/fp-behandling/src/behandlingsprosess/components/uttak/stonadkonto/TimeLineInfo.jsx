@@ -4,7 +4,7 @@ import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { stonadskontoerPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { stonadskontoerPropType } from '@fpsak-frontend/prop-types';
 import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
 import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/src/uttakArbeidTypeCodes';
 import stonadskontoType from '@fpsak-frontend/kodeverk/src/stonadskontoType';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { arbeidsforholdPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
 
 const getTextCode = (arbeidsforhold) => {

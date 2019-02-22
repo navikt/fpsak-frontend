@@ -6,7 +6,7 @@ import { Undertekst } from 'nav-frontend-typografi';
 
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { CheckboxField } from '@fpsak-frontend/form';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import naringsvirksomhetType from '@fpsak-frontend/kodeverk/src/naringsvirksomhetType';
 import { getKodeverk } from 'papirsoknad/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';

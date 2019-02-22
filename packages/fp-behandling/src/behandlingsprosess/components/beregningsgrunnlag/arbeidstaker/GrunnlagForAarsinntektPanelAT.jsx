@@ -6,7 +6,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import { InputField } from '@fpsak-frontend/form';
-import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import {
   Image, VerticalSpacer, Table, TableRow, TableColumn,
 } from '@fpsak-frontend/shared-components';

@@ -5,8 +5,7 @@ import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
-
-import { aksjonspunktPropType, beregningsgrunnlagPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { aksjonspunktPropType, beregningsgrunnlagPropType } from '@fpsak-frontend/prop-types';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer, FadingPanel } from '@fpsak-frontend/shared-components';
 import {

@@ -9,7 +9,7 @@ import { Fieldset } from 'nav-frontend-skjema';
 import { RadioGroupField, RadioOption, NavFieldGroup } from '@fpsak-frontend/form';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
 import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 

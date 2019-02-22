@@ -13,7 +13,7 @@ import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import moment from 'moment/moment';
-import { uttaksresultatAktivitetPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { uttaksresultatAktivitetPropType } from '@fpsak-frontend/prop-types';
 import { behandlingForm } from '../../../../behandlingForm';
 import styles from './delOppPeriodeModal.less';
 

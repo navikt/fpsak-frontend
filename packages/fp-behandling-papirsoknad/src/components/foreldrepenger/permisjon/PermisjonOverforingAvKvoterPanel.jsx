@@ -5,7 +5,7 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { FormSection, formValueSelector } from 'redux-form';
 import { Element } from 'nav-frontend-typografi';
 import SoknadData from 'papirsoknad/src/SoknadData';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import {
   FlexColumn, FlexContainer, FlexRow, ElementWrapper, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';

@@ -6,12 +6,11 @@ import { connect } from 'react-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { aksjonspunktPropType, rettighetPropType } from '@fpsak-frontend/prop-types';
 import {
   PersonIndex, requireProps, ErrorTypes, BehandlingIdentifier,
 } from '@fpsak-frontend/fp-felles';
 import { getRettigheter } from 'navAnsatt/duck';
-import rettighetPropType from 'navAnsatt/rettighetPropType';
 import papirsoknadApi from './data/papirsoknadApi';
 import SoknadData from './SoknadData';
 import {

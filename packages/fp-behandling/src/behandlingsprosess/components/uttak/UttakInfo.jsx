@@ -12,7 +12,7 @@ import {
   calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
 import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/src/uttakArbeidTypeCodes';

@@ -8,7 +8,7 @@ import { Panel } from 'nav-frontend-paneler';
 
 import BehandlingMenuIndex from 'behandlingmenu/BehandlingMenuIndex';
 
-import behandlingIListePropType from '../behandlingIListePropType';
+import { behandlingIListePropType } from '@fpsak-frontend/prop-types';
 import BehandlingPicker from './BehandlingPicker';
 
 import styles from './fagsakProfile.less';

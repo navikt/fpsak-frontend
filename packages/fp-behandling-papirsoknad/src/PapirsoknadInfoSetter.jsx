@@ -1,8 +1,8 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
-import { aksjonspunktPropType, BehandlingInfoHolder } from '@fpsak-frontend/fp-behandling-felles';
+import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import { BehandlingInfoHolder } from '@fpsak-frontend/fp-behandling-felles';
 import {
   getBehandlingSprak, getBehandlingVersjon, getBrevMaler, getBrevMottakere, getAksjonspunkter,
   getBehandlingAnsvarligSaksbehandler, getBehandlingStatus, getBehandlingResultatstruktur,

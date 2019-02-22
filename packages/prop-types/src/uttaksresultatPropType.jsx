@@ -1,25 +1,15 @@
 import PropTypes from 'prop-types';
+import { kodeverkObjektPropType } from './kodeverkPropType';
+import { arbeidsgiverUttakPropType } from './arbeidsforholdPropType';
 
-export const kodeverkPropType = PropTypes.shape({
-  kode: PropTypes.string.isRequired,
-  kodeverk: PropTypes.string.isRequired,
-  navn: PropTypes.string.isRequired,
-});
-
-const arbeidsgiverPropType = PropTypes.shape({
-  aktørId: PropTypes.string,
-  identifikator: PropTypes.string,
-  navn: PropTypes.string,
-  virksomhet: PropTypes.bool,
-});
 
 export const uttaksresultatAktivitetPropType = PropTypes.shape({
   arbeidsforholdId: PropTypes.string, // Hvis andel tilhører arbeidsgiver
-  arbeidsgiver: arbeidsgiverPropType,
+  arbeidsgiver: arbeidsgiverUttakPropType,
   gradering: PropTypes.bool,
   prosentArbeid: PropTypes.number, // Hvis andel tilhører søker
   samtidigUttak: PropTypes.bool,
-  stønadskontoType: kodeverkPropType,
+  stønadskontoType: kodeverkObjektPropType,
   trekkdager: PropTypes.number,
   trekkdagerFlerbarnKvote: PropTypes.number,
   utbetalingsgrad: PropTypes.number,
@@ -30,9 +20,11 @@ export const uttaksresultatPeriodePropType = PropTypes.shape({
   tom: PropTypes.string.isRequired,
   begrunnelse: PropTypes.string,
   aktiviteter: PropTypes.arrayOf(uttaksresultatAktivitetPropType).isRequired,
-  periodeResultatType: kodeverkPropType.isRequired,
+  periodeResultatType: kodeverkObjektPropType.isRequired,
 });
 
-export default PropTypes.shape({
+export const uttaksresultaltPerioderSøkerPropType = PropTypes.shape({
   perioderSøker: PropTypes.arrayOf(uttaksresultatPeriodePropType).isRequired,
 });
+
+export default uttaksresultatPeriodePropType;

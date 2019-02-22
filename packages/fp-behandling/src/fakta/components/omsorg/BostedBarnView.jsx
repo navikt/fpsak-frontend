@@ -3,7 +3,7 @@ import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 
-import { personopplysningPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { personopplysningPropType } from '@fpsak-frontend/prop-types';
 import PropTypes from 'prop-types';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, getAddresses } from '@fpsak-frontend/utils';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';

@@ -9,7 +9,7 @@ import { getSelectedBehandlingId } from 'behandling/duck';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { requireProps } from '@fpsak-frontend/fp-felles';
 
-import behandlingIListePropType from './behandlingIListePropType';
+import { behandlingIListePropType } from '@fpsak-frontend/prop-types';
 import {
   getShowAllBehandlinger, toggleShowAllBehandlinger, resetFagsakProfile, getAnnenPartBehandling,
 } from './duck';

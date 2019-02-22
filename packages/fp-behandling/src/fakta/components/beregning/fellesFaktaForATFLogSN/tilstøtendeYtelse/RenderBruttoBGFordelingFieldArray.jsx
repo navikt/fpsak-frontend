@@ -9,7 +9,7 @@ import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { getKodeverk } from 'behandlingFpsak/src/duck';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import { kodeverkPropType, arbeidsforholdBeregningProptype } from '@fpsak-frontend/prop-types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   PeriodpickerField, SelectField, InputField, DecimalField, NavFieldGroup,
@@ -23,7 +23,7 @@ import {
   Table, TableRow, TableColumn, VerticalSpacer, Image,
 } from '@fpsak-frontend/shared-components';
 import styles from './renderBruttoBGFordelingFieldArray.less';
-import { arbeidsforholdProptype, getUniqueListOfArbeidsforhold } from '../../ArbeidsforholdHelper';
+import { getUniqueListOfArbeidsforhold } from '../../ArbeidsforholdHelper';
 import { validateAndelFields, validateUlikeAndeler } from '../ValidateAndelerUtils';
 import { isBeregningFormDirty as isFormDirty } from '../../BeregningFormUtils';
 
@@ -360,7 +360,7 @@ RenderBruttoBGFordelingFieldArrayImpl.propTypes = {
   fields: PropTypes.shape().isRequired,
   meta: PropTypes.shape().isRequired,
   intl: intlShape.isRequired,
-  arbeidsforholdList: PropTypes.arrayOf(arbeidsforholdProptype).isRequired,
+  arbeidsforholdList: PropTypes.arrayOf(arbeidsforholdBeregningProptype).isRequired,
   inntektskategoriKoder: kodeverkPropType.isRequired,
   andeltyper: kodeverkPropType.isRequired,
   dekningsgrad: PropTypes.number.isRequired,

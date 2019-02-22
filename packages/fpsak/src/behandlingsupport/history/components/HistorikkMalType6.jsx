@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import historikkinnslagDelPropType from '../historikkinnslagDelPropType';
+import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
 import styles from './historikkMalType.less';
 import { findHendelseText } from './historikkUtils';
 

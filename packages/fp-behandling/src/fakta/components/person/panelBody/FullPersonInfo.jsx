@@ -6,7 +6,7 @@ import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import FaktaGruppe from 'behandlingFpsak/src/fakta/components/FaktaGruppe';
 import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import { AdressePanel, BarnePanel, PersonYtelserTable } from '@fpsak-frontend/person-info';
 import PersonArbeidsforholdPanel from './arbeidsforhold/PersonArbeidsforholdPanel';
 

@@ -10,7 +10,7 @@ import {
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { getFagsakYtelseType } from 'behandlingFpsak/src/duck';
 import VedtakFritekstPanel from 'behandlingFpsak/src/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
-import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { findInnvilgetResultatText, endringerIBeregningsgrunnlagGirFritekstfelt, findTilbakekrevingText } from './VedtakHelper';

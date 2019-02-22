@@ -13,7 +13,7 @@ import { maxValue, hasValidDecimal } from '@fpsak-frontend/utils';
 import {
   DatepickerField, SelectField, InputField, CheckboxField, DecimalField,
 } from '@fpsak-frontend/form';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import moment from 'moment/moment';
 import { gyldigeUttakperioder } from './RenderPermisjonPeriodeFieldArray';
 

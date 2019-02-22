@@ -9,7 +9,7 @@ import {
   DatepickerField, SelectField,
 } from '@fpsak-frontend/form';
 import oppholdArsakType from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 
 import styles from './renderOppholdPeriodeFieldArray.less';
 

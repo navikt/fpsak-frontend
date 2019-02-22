@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const commonSoknad = {
+export const commonSoknad = {
   soknadType: PropTypes.shape({
     kode: PropTypes.string,
     navn: PropTypes.string,

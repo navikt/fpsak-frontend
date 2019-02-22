@@ -14,12 +14,12 @@ import {
 } from '@fpsak-frontend/fp-felles';
 import { getBehandlingerIds } from 'behandling/selectors/behandlingerSelectors';
 import { resetFagsakSearch as resetFagsakSearchActionCreator } from 'fagsakSearch/duck';
+import { fagsakPropType } from '@fpsak-frontend/prop-types';
 import { resetFagsakContext as resetFagsakContextActionCreator, fetchFagsakInfo as fetchFagsakInfoActionCreator } from './duck';
 import {
   getSelectedSaksnummer, getFetchFagsakInfoFinished, getFetchFagsakInfoFailed, getAllFagsakInfoResolved, getSelectedFagsak,
 }
   from './fagsakSelectors';
-import fagsakPropType from './fagsakPropType';
 
 /**
  * FagsakResolver

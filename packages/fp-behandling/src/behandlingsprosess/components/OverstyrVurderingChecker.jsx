@@ -8,7 +8,7 @@ import { toggleBehandlingspunktOverstyring } from 'behandlingFpsak/src/behandlin
 import { getSelectedBehandlingspunkt, getSelectedBehandlingspunktAksjonspunkter, isSelectedBehandlingspunktOverrideReadOnly }
   from 'behandlingFpsak/src/behandlingsprosess/behandlingsprosessSelectors';
 import { getRettigheter } from 'navAnsatt/duck';
-import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { CheckboxField } from '@fpsak-frontend/form';
 
 const isOverridden = (aksjonspunkter, aksjonspunktCode) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);

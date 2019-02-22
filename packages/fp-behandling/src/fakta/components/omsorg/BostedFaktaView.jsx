@@ -1,10 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
-import { personopplysningPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { personopplysningPropType } from '@fpsak-frontend/prop-types';
 import FaktaGruppe from 'behandlingFpsak/src/fakta/components/FaktaGruppe';
 import { FormattedMessage } from 'react-intl';
-import PropTypes from 'prop-types';
-
 import BostedSokerView from 'behandlingFpsak/src/fakta/components/BostedSokerView';
 import BostedBarnView from './BostedBarnView';
 import styles from './bostedFaktaView.less';
