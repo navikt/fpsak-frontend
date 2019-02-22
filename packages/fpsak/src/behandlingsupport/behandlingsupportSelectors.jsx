@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-
+import moment from 'moment';
 import fpsakApi from 'data/fpsakApi';
 import {
   getBehandlingHasSoknad,
@@ -79,8 +79,12 @@ export const getEnabledSupportPanels = createSelector(
     }),
 );
 
-export const getAllHistory = createSelector([fpsakApi.HISTORY_FPSAK.getRestApiData(), fpsakApi.HISTORY_FPTILBAKE.getRestApiData()],
-  (historyFpsak = [], historyTilbake = []) => (historyFpsak.concat(historyTilbake)));
+export const getAllHistory = createSelector(
+  [fpsakApi.HISTORY_FPSAK.getRestApiData(), fpsakApi.HISTORY_FPTILBAKE.getRestApiData()],
+  (historyFpsak = [], historyTilbake = []) => (
+    historyFpsak.concat(historyTilbake).sort((a, b) => moment(b.opprettetTidspunkt) - moment(a.opprettetTidspunkt))
+  ),
+);
 
 export const getAllDocuments = createSelector([fpsakApi.ALL_DOCUMENTS_FPSAK.getRestApiData(), fpsakApi.ALL_DOCUMENTS_FPTILBAKE.getRestApiData()],
   (documentsFpsak = [], documentsTilbake = []) => (documentsFpsak.concat(documentsTilbake)));
