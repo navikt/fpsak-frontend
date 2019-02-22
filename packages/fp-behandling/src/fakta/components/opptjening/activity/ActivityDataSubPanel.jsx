@@ -27,12 +27,12 @@ const getOppdragsgiverMessageId = selectedActivityType => (isOfType(selectedActi
   ? 'ActivityPanel.Oppdragsgiver' : 'ActivityPanel.Arbeidsgiver');
 
 const getArbeidsgiverText = (initialValues) => {
-  if (initialValues.arbeidsgiver) {
-    return initialValues.oppdragsgiverOrg ? `${initialValues.arbeidsgiver} (${initialValues.oppdragsgiverOrg})` : initialValues.arbeidsgiver;
-  }
   if (initialValues.privatpersonNavn && initialValues.privatpersonFødselsdato) {
     const fodselsdato = formatDate(initialValues.privatpersonFødselsdato);
     return `${initialValues.privatpersonNavn} (${fodselsdato})`;
+  }
+  if (initialValues.arbeidsgiver) {
+    return initialValues.oppdragsgiverOrg ? `${initialValues.arbeidsgiver} (${initialValues.oppdragsgiverOrg})` : initialValues.arbeidsgiver;
   }
   return '-';
 };
