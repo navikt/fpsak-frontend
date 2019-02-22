@@ -242,6 +242,10 @@
   "FeilutbetalingInfoPanel.PeriodeMedFeilutbetaling": "Periode med feilutbetaling",
   "FeilutbetalingInfoPanel.FeilutbetaltBeløp": "Feilutbetalt beløp totalt",
   "FeilutbetalingInfoPanel.TidligereVarsel": "Tidligere sendt varsel om tilbakekreving",
+  "FeilutbetalingInfoPanel.TidligereVarseltBeløp": "Tidligere varselt beløp",
+  "FeilutbetalingInfoPanel.Period": "Period",
+  "FeilutbetalingInfoPanel.Hendelse": "Hendelse",
+  "FeilutbetalingInfoPanel.Beløp": "Feilutbetalt beløp",
   "FeilutbetalingInfoPanel.Resultat": "Resultat",
 
   "DokumentasjonFaktaForm.ApplicationInformation": "Adopsjonsopplysninger fra søknad",
