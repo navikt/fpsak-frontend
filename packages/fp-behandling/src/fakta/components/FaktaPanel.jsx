@@ -7,7 +7,7 @@ import {
   getBehandlingVilkarCodes, getPersonopplysning, getBehandlingIsOnHold, getAksjonspunkter, hasReadOnlyBehandling,
 }
   from 'behandlingFpsak/src/behandlingSelectors';
-import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { getOpenInfoPanels } from 'behandlingFpsak/src/fakta/duck';
 import { getFagsakYtelseType, getFagsakPerson } from 'behandlingFpsak/src/duck';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';

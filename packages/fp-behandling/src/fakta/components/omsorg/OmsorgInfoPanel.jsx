@@ -7,9 +7,8 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { aksjonspunktPropType, personopplysningPropType } from '@fpsak-frontend/prop-types';
 import {
-  personopplysningPropType,
-  aksjonspunktPropType,
   FaktaBegrunnelseTextField,
   FaktaEkspandertpanel,
   withDefaultToggling,

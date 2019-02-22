@@ -10,8 +10,8 @@ import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
 import {
   faktaPanelCodes,
 } from '@fpsak-frontend/fp-felles';
+import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import {
-  aksjonspunktPropType,
   FaktaBegrunnelseTextField,
   FaktaEkspandertpanel,
   withDefaultToggling,

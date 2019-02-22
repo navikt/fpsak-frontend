@@ -4,14 +4,14 @@ import { injectIntl, intlShape } from 'react-intl';
 import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
-
+import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import BpPanelTemplate from 'behandlingFpsak/src/behandlingsprosess/components/vilkar/BpPanelTemplate';
 import {
   getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus,
 } from 'behandlingFpsak/src/behandlingsprosess/behandlingsprosessSelectors';
 import { getBehandlingsresultat } from 'behandlingFpsak/src/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
-import { aksjonspunktPropType, BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import VilkarResultPicker from 'behandlingFpsak/src/behandlingsprosess/components/vilkar/VilkarResultPicker';
 import { getKodeverk } from 'behandlingFpsak/src/duck';

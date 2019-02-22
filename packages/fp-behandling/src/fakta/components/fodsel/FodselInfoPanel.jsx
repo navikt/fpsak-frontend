@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { submit as reduxSubmit } from 'redux-form';
 import { connect } from 'react-redux';
-
+import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import FaktaSubmitButton from 'behandlingFpsak/src/fakta/components/FaktaSubmitButton';
 import { getBehandlingFormPrefix } from 'behandlingFpsak/src/behandlingForm';
 import { getBehandlingVersjon } from 'behandlingFpsak/src/behandlingSelectors';
@@ -13,7 +13,7 @@ import { VerticalSpacer, ElementWrapper, AksjonspunktHelpText } from '@fpsak-fro
 import FodselSammenligningPanel from 'behandlingFpsak/src/components/fodselSammenligning/FodselSammenligningPanel';
 import TermindatoFaktaForm, { termindatoFaktaFormName } from 'behandlingFpsak/src/fakta/components/fodsel/TermindatoFaktaForm';
 import SjekkFodselDokForm, { sjekkFodselDokForm } from 'behandlingFpsak/src/fakta/components/fodsel/SjekkFodselDokForm';
-import { FaktaEkspandertpanel, aksjonspunktPropType, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
+import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import SykdomPanel, { sykdomPanelName } from './SykdomPanel';

@@ -11,8 +11,8 @@ import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
 import DokumentasjonFaktaForm from 'behandlingFpsak/src/fakta/components/adopsjon/DokumentasjonFaktaForm';
 import MannAdoptererAleneFaktaForm from 'behandlingFpsak/src/fakta/components/adopsjon/MannAdoptererAleneFaktaForm';
 import EktefelleFaktaForm from 'behandlingFpsak/src/fakta/components/adopsjon/EktefelleFaktaForm';
+import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import {
-  aksjonspunktPropType,
   FaktaBegrunnelseTextField,
   FaktaEkspandertpanel,
   withDefaultToggling,

@@ -9,7 +9,7 @@ import { required } from '@fpsak-frontend/utils';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { getBehandlingYtelseFordeling, getSoknad } from 'behandlingFpsak/src/behandlingSelectors';
 import FaktaGruppe from 'behandlingFpsak/src/fakta/components/FaktaGruppe';
-import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import IkkeOmsorgPeriodeField from './IkkeOmsorgPeriodeField';

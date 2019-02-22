@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 
 import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
-import { aksjonspunktPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Undertittel } from 'nav-frontend-typografi';

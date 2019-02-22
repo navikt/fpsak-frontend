@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 
 import BehandlingFormFieldCleaner from 'behandlingFpsak/src/BehandlingFormFieldCleaner';
-import { arbeidsforholdPropType } from '@fpsak-frontend/fp-behandling-felles';
+import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import { required } from '@fpsak-frontend/utils';
 import { ElementWrapper, ArrowBox } from '@fpsak-frontend/shared-components';
 import { SelectField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
