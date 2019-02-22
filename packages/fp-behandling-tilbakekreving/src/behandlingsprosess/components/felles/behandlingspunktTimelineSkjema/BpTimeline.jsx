@@ -34,10 +34,10 @@ const getOptions = tilbakekrevingPeriod => ({
 const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT).toDate();
 
 function sortByDate(a, b) {
-  if (a.fom < b.tom) {
+  if (a.fom < b.fom) {
     return -1;
   }
-  if (a.fom > b.tom) {
+  if (a.fom > b.fom) {
     return 1;
   }
   return 0;
