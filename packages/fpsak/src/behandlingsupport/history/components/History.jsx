@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { pathToBehandling } from '@fpsak-frontend/fp-felles';
 import historikkinnslagType from '@fpsak-frontend/kodeverk/src/historikkinnslagType';
 
-import historikkinnslagPropType from '../historikkinnslagPropType';
+import { historikkinnslagPropType } from '@fpsak-frontend/prop-types';
 import Snakkeboble from './snakkeboble';
 import HistorikkMalType1 from './historikkMalType1';
 import HistorikkMalType2 from './historikkMalType2';

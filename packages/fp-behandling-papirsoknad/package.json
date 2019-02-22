@@ -13,6 +13,7 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/fp-behandling-felles": "1.0.0",
     "@fpsak-frontend/rest-api-redux": "1.0.0",
+    "@fpsak-frontend/prop-types": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "classnames": "^2.2.6",
     "moment": "^2.22.2",

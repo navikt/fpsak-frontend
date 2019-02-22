@@ -17,12 +17,11 @@ import {
   getBehandlingVersjon, getAksjonspunkter, getBehandlingAnsvarligSaksbehandler, getTotrinnskontrollArsakerUtenUdefinert,
   getBehandlingStatus, getBehandlingToTrinnsBehandling, getTotrinnskontrollArsakerReadOnly, getBehandlingIdentifier,
 } from 'behandling/duck';
-import navAnsattPropType from 'navAnsatt/navAnsattPropType';
+import { approvalAksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import { requireProps, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { getNavAnsatt } from 'navAnsatt/duck';
 import { getKodeverk } from 'kodeverk/duck';
-import approvalAksjonspunktPropType from './approvalAksjonspunktPropType';
 import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';
 import ToTrinnsForm from './components/ToTrinnsForm';
 import ToTrinnsFormReadOnly from './components/ToTrinnsFormReadOnly';

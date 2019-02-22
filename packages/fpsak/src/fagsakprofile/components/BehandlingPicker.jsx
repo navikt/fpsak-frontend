@@ -6,7 +6,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
-import behandlingIListePropType from '../behandlingIListePropType';
+import { behandlingIListePropType } from '@fpsak-frontend/prop-types';
 import BehandlingPickerItem from './BehandlingPickerItem';
 
 import styles from './behandlingPicker.less';

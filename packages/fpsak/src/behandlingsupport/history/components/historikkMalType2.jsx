@@ -3,10 +3,9 @@ import { injectIntl, intlShape } from 'react-intl';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
-
+import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
 import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import { findHendelseText, findResultatText } from './historikkUtils';
-import historikkinnslagDelPropType from '../historikkinnslagDelPropType';
 
 const scrollUp = () => {
   if (window.innerWidth < 1305) {

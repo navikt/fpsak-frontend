@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 
 import { pathToFagsak } from '@fpsak-frontend/fp-felles';
 
-import fagsakPropType from 'fagsak/fagsakPropType';
+import { fagsakPropType } from '@fpsak-frontend/prop-types';
 import { searchFagsaker, resetFagsakSearch } from './duck';
 import {
   getFagsaker,

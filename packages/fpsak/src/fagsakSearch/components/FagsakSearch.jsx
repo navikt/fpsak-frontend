@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { PersonIndex } from '@fpsak-frontend/fp-felles';
-import fagsakPropType from 'fagsak/fagsakPropType';
+import { fagsakPropType } from '@fpsak-frontend/prop-types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { SearchForm } from '@fpsak-frontend/search-form';
 import FagsakList from './FagsakList';

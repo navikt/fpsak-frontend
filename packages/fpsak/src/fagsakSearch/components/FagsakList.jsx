@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {
   Table, TableRow, TableColumn, DateLabel,
 } from '@fpsak-frontend/shared-components';
-import fagsakPropType from 'fagsak/fagsakPropType';
+import { fagsakPropType } from '@fpsak-frontend/prop-types';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 
 import styles from './fagsakList.less';

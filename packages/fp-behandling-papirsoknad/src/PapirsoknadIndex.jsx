@@ -11,7 +11,7 @@ import {
   PersonIndex, requireProps, ErrorTypes, BehandlingIdentifier,
 } from '@fpsak-frontend/fp-felles';
 import { getRettigheter } from 'navAnsatt/duck';
-import rettighetPropType from 'navAnsatt/rettighetPropType';
+import { rettighetPropType } from '@fpsak-frontend/prop-types';
 import papirsoknadApi from './data/papirsoknadApi';
 import SoknadData from './SoknadData';
 import {

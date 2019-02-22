@@ -7,7 +7,7 @@ import { Fieldset } from 'nav-frontend-skjema';
 import { Row, Column } from 'nav-frontend-grid';
 
 import { CheckboxField } from '@fpsak-frontend/form';
-import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
+import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
 import { ElementWrapper, BorderBox, ArrowBox } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
