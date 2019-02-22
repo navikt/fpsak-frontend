@@ -28,8 +28,10 @@ export const beregningsresultatPeriodePropType = PropTypes.shape({
   andeler: PropTypes.arrayOf(beregningsresultatPeriodeAndelPropType).isRequired,
 });
 
-export default PropTypes.shape({
+export const beregningresultatMedUttaksplanPropType = PropTypes.shape({
   sokerErMor: PropTypes.bool.isRequired,
   opphoersdato: PropTypes.string,
   perioder: PropTypes.arrayOf(beregningsresultatPeriodePropType).isRequired,
 });
+
+export default beregningresultatMedUttaksplanPropType;

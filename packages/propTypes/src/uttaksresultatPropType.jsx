@@ -1,10 +1,5 @@
 import PropTypes from 'prop-types';
-
-export const kodeverkPropType = PropTypes.shape({
-  kode: PropTypes.string.isRequired,
-  kodeverk: PropTypes.string.isRequired,
-  navn: PropTypes.string.isRequired,
-});
+import kodeverkPropType from './kodeverkPropType';
 
 const arbeidsgiverPropType = PropTypes.shape({
   aktørId: PropTypes.string,
@@ -33,6 +28,8 @@ export const uttaksresultatPeriodePropType = PropTypes.shape({
   periodeResultatType: kodeverkPropType.isRequired,
 });
 
-export default PropTypes.shape({
+export const uttaksresultatPropType = PropTypes.shape({
   perioderSøker: PropTypes.arrayOf(uttaksresultatPeriodePropType).isRequired,
 });
+
+export default uttaksresultatPropType;
