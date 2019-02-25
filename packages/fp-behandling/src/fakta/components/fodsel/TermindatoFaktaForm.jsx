@@ -1,15 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
+
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
+import AlertStripe from 'nav-frontend-alertstriper';
 
 import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
-import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
+import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import {
   DateLabel, VerticalSpacer, ElementWrapper,
 } from '@fpsak-frontend/shared-components';
@@ -23,6 +25,8 @@ import {
   getEditedStatus, getSoknad, getFamiliehendelse, getAksjonspunkter,
 } from 'behandlingFpsak/src/behandlingSelectors';
 
+import styles from './termindatoFaktaForm.less';
+
 const minValue1 = minValue(1);
 const maxValue9 = maxValue(9);
 
@@ -35,6 +39,7 @@ export const TermindatoFaktaForm = ({
   readOnly,
   isTerminDatoEdited,
   isUtstedtDatoEdited,
+  isForTidligTerminbekreftelse,
   isAntallBarnEdited,
   dirty,
   initialValues,
@@ -100,6 +105,15 @@ export const TermindatoFaktaForm = ({
     }
     <VerticalSpacer sixteenPx />
     <FaktaBegrunnelseTextField isDirty={dirty} isSubmittable={submittable} isReadOnly={readOnly} hasBegrunnelse={!!initialValues.begrunnelse} />
+    {isForTidligTerminbekreftelse
+            && (
+              <AlertStripe type="advarsel" className={styles.marginBottom}>
+                <FormattedMessage
+                  id="TermindatoFaktaForm.AdvarselForTidligUtstedtdato"
+                />
+              </AlertStripe>
+            )
+          }
   </ElementWrapper>
 );
 
@@ -107,6 +121,7 @@ TermindatoFaktaForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isTerminDatoEdited: PropTypes.bool,
   isUtstedtDatoEdited: PropTypes.bool,
+  isForTidligTerminbekreftelse: PropTypes.bool.isRequired,
   isAntallBarnEdited: PropTypes.bool,
   fodselsdatoTps: PropTypes.string,
   antallBarnTps: PropTypes.number,
@@ -134,19 +149,8 @@ export const buildInitialValues = createSelector([getSoknad, getFamiliehendelse,
   };
 });
 
-const isUtstedtDatoOrTerminDatoEdited = (
-  utstedtdato, termindato, initialValues,
-) => initialValues && (initialValues.utstedtdato !== utstedtdato || initialValues.termindato !== termindato);
-
-const validate = ({ utstedtdato, termindato }, initialValues) => {
-  const errors = {};
-
-  if (isUtstedtDatoOrTerminDatoEdited(utstedtdato, termindato, initialValues)
-    && !moment(utstedtdato).isAfter(moment(termindato).subtract(14, 'weeks').subtract(4, 'days'))) {
-    errors.utstedtdato = ([{ id: 'TermindatoFaktaForm.14WeeksAndThreeDays' }]);
-  }
-  return errors;
-};
+const erTerminbekreftelseUtstedtForTidlig = (utstedtdato, termindato) => utstedtdato !== undefined && termindato !== undefined
+&& !moment(utstedtdato).isAfter(moment(termindato).subtract(10, 'weeks').subtract(3, 'days'));
 
 const transformValues = values => ({
   kode: aksjonspunktCodes.TERMINBEKREFTELSE,
@@ -156,20 +160,24 @@ const transformValues = values => ({
   ...FaktaBegrunnelseTextField.transformValues(values),
 });
 
-const mapStateToProps = (state, ownProps) => ({
-  initialValues: buildInitialValues(state),
-  onSubmit: values => ownProps.submitHandler(transformValues(values)),
-  isTerminDatoEdited: getEditedStatus(state).termindato,
-  isUtstedtDatoEdited: getEditedStatus(state).utstedtdato,
-  isAntallBarnEdited: getEditedStatus(state).antallBarn,
-  fodselsdatoTps: getFamiliehendelse(state).fodselsdato,
-  antallBarnTps: getFamiliehendelse(state).antallBarnFodsel,
-  isOverridden: getFamiliehendelse(state).erOverstyrt,
-});
-
 export const termindatoFaktaFormName = 'TermindatoFaktaForm';
+
+const mapStateToProps = (state, ownProps) => {
+  const termindato = behandlingFormValueSelector(termindatoFaktaFormName)(state, 'termindato');
+  const utstedtdato = behandlingFormValueSelector(termindatoFaktaFormName)(state, 'utstedtdato');
+  return {
+    initialValues: buildInitialValues(state),
+    onSubmit: values => ownProps.submitHandler(transformValues(values)),
+    isTerminDatoEdited: getEditedStatus(state).termindato,
+    isUtstedtDatoEdited: getEditedStatus(state).utstedtdato,
+    isForTidligTerminbekreftelse: erTerminbekreftelseUtstedtForTidlig(utstedtdato, termindato),
+    isAntallBarnEdited: getEditedStatus(state).antallBarn,
+    fodselsdatoTps: getFamiliehendelse(state).fodselsdato,
+    antallBarnTps: getFamiliehendelse(state).antallBarnFodsel,
+    isOverridden: getFamiliehendelse(state).erOverstyrt,
+  };
+};
 
 export default connect(mapStateToProps)(behandlingForm({
   form: termindatoFaktaFormName,
-  validate,
 })(TermindatoFaktaForm));

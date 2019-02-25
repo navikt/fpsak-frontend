@@ -17,6 +17,7 @@ describe('<TermindatoFaktaForm>', () => {
       initialValues={{ begrunnelse: 'test' }}
       readOnly={false}
       error={false}
+      isForTidligTerminbekreftelse={false}
       submittable
     />);
 
@@ -32,6 +33,7 @@ describe('<TermindatoFaktaForm>', () => {
       error={false}
       fodselsdatoTps="2018-01-01"
       antallBarnTps={1}
+      isForTidligTerminbekreftelse={false}
       isOverridden={false}
       submittable
     />);
