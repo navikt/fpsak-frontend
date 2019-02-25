@@ -110,14 +110,11 @@ export class BehandlingMenu extends Component {
   }
 
   isShelveBehandlingEnebled() {
-    const { henleggBehandlingAccess, isInnsynsbehandling, hasSoknad } = this.props;
+    const { henleggBehandlingAccess } = this.props;
     if (!henleggBehandlingAccess.employeeHasAccess) {
       return false;
     }
-    if (!this.isBehandlingOnHold()) {
-      return true;
-    }
-    return (!isInnsynsbehandling && !hasSoknad) || this.isBehandlingQueued();
+    return true;
   }
 
   isChangeBehandlendeEnhetEnabled() {
@@ -277,7 +274,6 @@ BehandlingMenu.propTypes = {
   opneBehandlingForEndringerAccess: rettighetPropType.isRequired,
   ikkeVisOpprettNyBehandling: rettighetPropType.isRequired,
   navAnsatt: navAnsattPropType.isRequired,
-  hasSoknad: PropTypes.bool,
   isInnsynsbehandling: PropTypes.bool,
 };
 
@@ -289,7 +285,6 @@ BehandlingMenu.defaultProps = {
   behandlingPaaVent: undefined,
   behandlingKoet: false,
   behandlendeEnheter: null,
-  hasSoknad: false,
   isInnsynsbehandling: false,
 };
 
