@@ -12,7 +12,7 @@ import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 
 import { getFeilutbetalingFakta } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector } from '../../../behandlingForm';
+import { behandlingForm } from 'behandlingTilbakekreving/src/behandlingForm';
 import styles from './feilutbetalingInfoPanel.less';
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';
 
@@ -99,7 +99,10 @@ export const FeilutbetalingInfoPanelImpl = ({
           </Row>
           <Row className={styles.smallMarginTop}>
             <Column xs="11">
-              <FeilutbetalingPerioderTable perioder={feilutbetaling.perioder} årsak={årsak} />
+              <FeilutbetalingPerioderTable
+                perioder={feilutbetaling.perioder}
+                formName={formName}
+              />
             </Column>
           </Row>
         </Column>
@@ -172,10 +175,6 @@ export const FeilutbetalingInfoPanelImpl = ({
   </FaktaEkspandertpanel>
 );
 
-FeilutbetalingInfoPanelImpl.defaultProps = {
-  årsak: null,
-};
-
 FeilutbetalingInfoPanelImpl.propTypes = {
   intl: intlShape.isRequired,
   toggleInfoPanelCallback: PropTypes.func.isRequired,
@@ -183,13 +182,11 @@ FeilutbetalingInfoPanelImpl.propTypes = {
   openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
   feilutbetaling: PropTypes.shape.isRequired,
   submitCallback: PropTypes.func.isRequired,
-  årsak: PropTypes.string,
   ...formPropTypes,
 };
 
 const mapStateToProps = (state, initialProps) => ({
   feilutbetaling: getFeilutbetalingFakta(state).behandlingFakta[0],
-  årsak: behandlingFormValueSelector(formName)(state, 'årsak'),
   onSubmit: values => initialProps.submitCallback(values),
 });
 
