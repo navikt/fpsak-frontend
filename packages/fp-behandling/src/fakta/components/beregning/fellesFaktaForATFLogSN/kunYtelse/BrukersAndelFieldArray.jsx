@@ -20,7 +20,7 @@ import {
   Image, Table, TableRow, TableColumn, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import styles from './brukersAndelFieldArray.less';
-import { validateUlikeAndelerWithMap } from '../ValidateAndelerUtils';
+import { validateUlikeAndelerWithGroupingFunction } from '../ValidateAndelerUtils';
 import { isBeregningFormDirty as isFormDirty } from '../../BeregningFormUtils';
 
 const defaultBGFordeling = aktivitetStatuser => ({
@@ -215,7 +215,7 @@ BrukersAndelFieldArray.validate = (values) => {
   if (isArrayEmpty(values)) {
     return null;
   }
-  const ulikeAndelerError = validateUlikeAndelerWithMap(values, mapBrukesAndelToSortedObject);
+  const ulikeAndelerError = validateUlikeAndelerWithGroupingFunction(values, mapBrukesAndelToSortedObject);
   if (ulikeAndelerError) {
     return { _error: ulikeAndelerError };
   }

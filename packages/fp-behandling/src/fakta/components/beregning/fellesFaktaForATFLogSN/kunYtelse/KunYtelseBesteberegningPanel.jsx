@@ -9,7 +9,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { LINK_TIL_BESTE_BEREGNING_REGNEARK } from '@fpsak-frontend/fp-felles';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-
+// TODO (SAFIR) PFP-6021 Ta i bruk InntektFieldArray i staden for BrukersAndelFieldArray
 import BrukersAndelFieldArray from './BrukersAndelFieldArray';
 import { getFormValuesForBeregning } from '../../BeregningFormUtils';
 
@@ -23,7 +23,6 @@ export const besteberegningField = 'besteberegningField';
  * Presentasjonskomponent. Behandling av aksjonspunktet for fastsetting av bg for kun ytelse
  *  med vurdering av besteberegning.
  */
-
 const KunYtelseBesteberegningImpl = ({
   readOnly,
   isAksjonspunktClosed,

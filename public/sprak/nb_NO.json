@@ -1234,6 +1234,10 @@
   "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForArbeid" : "Søker er arbeidstaker og det er ikke mottatt inntektsmelding. Mottar søker sykepenger, foreldrepenger, pleiepenger eller svangerskapspenger for arbeid i {arbeid}?",
   "BeregningInfoPanel.VurderMottarYtelse.KanIkkeGaaVidere" : "Funksjonalitet for aktivitet med ytelse er ikke implementert enda.",
 
+  "BeregningInfoPanel.VurderBestebergning.IkkeImplementert" : "Denne funksjonaliteten er ikke implementert enda.",
+  "BeregningInfoPanel.VurderBestebergning.HarBesteberegning" : "Søker har hatt dagpenger i opptjeningsperioden. Skal dette fordeles etter besteberegning?",
+
+
   "BeregningInfoPanel.FastsettInntektTabell.Aktivitet": "Aktivitet",
   "BeregningInfoPanel.FastsettInntektTabell.Arbeidsperiode": "Arbeidsperiode",
   "BeregningInfoPanel.FastsettInntektTabell.Refusjonskrav": "Refusjonskrav",
@@ -1348,6 +1352,7 @@
   "ToTrinnsForm.Beregning.VurderMottarYtelse": "Det er vurdert om søker har mottatt ytelse",
   "ToTrinnsForm.Beregning.FrilansinntektFastsatt": "Frilansinntekt er fastsatt",
   "ToTrinnsForm.Beregning.GraderingUtenBG": "Det er vurdert at fordeling av inntektsgrunnlag ved gradering er riktig",
+  "ToTrinnsForm.Beregning.VurderBesteberegning": "Det er vurdert om beregningsgrunnlaget skal fordeles etter besteberegning.",
 
   "ToTrinnsForm.Opptjening.Endring": "Perioden {aktivitetType}{arbeidsInfoText} er endret.",
   "ToTrinnsForm.Opptjening.Underkjenning": "Aktivitet {aktivitetType}{arbeidsInfoText} er <b>ikke</b> godkjent.",

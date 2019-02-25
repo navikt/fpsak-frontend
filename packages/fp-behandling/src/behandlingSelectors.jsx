@@ -171,6 +171,9 @@ export const getBehandlingGjelderBesteberegning = createSelector(
     : false),
 );
 
+export const getVurderBesteberegning = createSelector(
+  [getFaktaOmBeregning], (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.vurderBesteberegning : undefined),
+);
 export const getVurderMottarYtelse = createSelector(
   [getFaktaOmBeregning], (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.vurderMottarYtelse : undefined),
 );

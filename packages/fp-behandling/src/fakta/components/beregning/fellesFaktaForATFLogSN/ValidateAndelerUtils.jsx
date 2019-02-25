@@ -42,7 +42,7 @@ export const ulikeAndelerErrorMessage = () => ([{ id: 'BeregningInfoPanel.Endrin
 
 const erAndelerLike = (andel1, andel2) => andel2.andelsinfo === andel1.andelsinfo && andel2.inntektskategori === andel1.inntektskategori;
 
-export const validateUlikeAndelerWithMap = (andelList, mapToSort) => {
+export const validateUlikeAndelerWithGroupingFunction = (andelList, mapToSort) => {
   const mappedAndeler = andelList.map(value => (mapToSort(value, andelList)));
   const sortedAndeler = mappedAndeler.slice().sort((andel1, andel2) => compareAndeler(andel1, andel2));
   for (let i = 0; i < sortedAndeler.length - 1; i += 1) {
@@ -54,7 +54,7 @@ export const validateUlikeAndelerWithMap = (andelList, mapToSort) => {
 };
 
 
-export const validateUlikeAndeler = andelList => validateUlikeAndelerWithMap(andelList, mapAndelToSortedObject);
+export const validateUlikeAndeler = andelList => validateUlikeAndelerWithGroupingFunction(andelList, mapAndelToSortedObject);
 
 
 const finnArbeidsforholdRefusjonsinfoListe = (andelList) => {
