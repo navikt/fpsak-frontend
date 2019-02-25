@@ -3,8 +3,18 @@ import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatTyp
 const godkjentKlassenavn = 'godkjentPeriode';
 const avvistKlassenavn = 'avvistPeriode';
 
+export const getPeriodFeilutbetaling = (dagligUtbetalinger) => {
+  let totatFeilutbetaling = 0;
+  dagligUtbetalinger.forEach((dagligUtbetaling) => {
+    totatFeilutbetaling += dagligUtbetaling.utbetaltBeløp;
+  });
+
+  return totatFeilutbetaling;
+};
+
+export const getResultType = item => (item.periodeResultatType ? item.periodeResultatType : item.foreldelseVurderingType);
 export const getStatusPeriode = (resultatType) => {
-  if (resultatType.kode === periodeResultatType.INNVILGET) {
+  if (resultatType.kode === periodeResultatType.INNVILGET || resultatType.kode === periodeResultatType.DEFAULT) {
     return godkjentKlassenavn;
   }
 
@@ -21,9 +31,10 @@ export const addClassNameGroupIdToPerioder = (tilbakekrevingPerioder) => {
     const periodMedClassName = {
       ...item,
       id: index + 1,
-      className: getStatusPeriode(item.periodeResultatType),
+      className: getStatusPeriode(getResultType(item)),
       hovedsoker: true,
       group: 1,
+      feilutbetaling: getPeriodFeilutbetaling(item.dagligUtbetalinger),
     };
     perioderMedClassName.push(periodMedClassName);
   });

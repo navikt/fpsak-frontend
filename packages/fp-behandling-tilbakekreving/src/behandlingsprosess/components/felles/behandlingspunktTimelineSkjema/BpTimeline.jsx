@@ -8,18 +8,15 @@ import TimeLineControl from './TimeLineControl';
 import TimeLineSokerEnsamSoker from './TimeLineSokerEnsamSoker';
 import styles from './bpTimeline.less';
 
-const getStartDateForTimeLine = (tilbakekrevingPeriod, customTimes) => (moment(customTimes.fodsel) < moment(tilbakekrevingPeriod.fom)
-  ? moment(customTimes.fodsel).subtract(4, 'weeks') : moment(tilbakekrevingPeriod.fom).subtract(4, 'weeks'));
-const getEndDateForTimeLine = customTimes => moment(customTimes.fodsel).add(4, 'years');
-const getOptions = (customTimes, tilbakekrevingPeriod) => ({
+const getOptions = tilbakekrevingPeriod => ({
   height: '104px',
   width: '100%',
   zoomMin: 1000 * 60 * 60 * 24 * 30,
   zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
   zoomable: true,
   moveable: true,
-  min: getStartDateForTimeLine(tilbakekrevingPeriod, customTimes),
-  max: getEndDateForTimeLine(customTimes),
+  min: moment(tilbakekrevingPeriod.fom).subtract(4, 'weeks'),
+  max: moment(tilbakekrevingPeriod.fom).add(4, 'years'),
   margin: {
     item: 14,
   },
@@ -139,7 +136,6 @@ class BpTimeline extends Component {
   render() {
     const {
       selectedPeriod,
-      customTimes,
       selectPeriodCallback,
       openPeriodInfo,
       hovedsokerKjonnKode,
@@ -159,10 +155,9 @@ class BpTimeline extends Component {
             <div className={styles.timeLineWrapper}>
               <div className="uttakTimeline">
                 <Timeline
-                  options={getOptions(customTimes, tilbakekrevingPerioder.sort(sortByDate)[0])}
+                  options={getOptions(tilbakekrevingPerioder.sort(sortByDate)[0])}
                   items={items}
                   groups={groups}
-                  customTimes={customTimes}
                   selectHandler={selectPeriodCallback}
                   ref={el => (this.timelineRef = el)} // eslint-disable-line no-return-assign
                   selection={[selectedPeriod ? selectedPeriod.id : null]}
@@ -190,7 +185,6 @@ class BpTimeline extends Component {
 
 BpTimeline.propTypes = {
   selectedPeriod: PropTypes.shape(),
-  customTimes: PropTypes.shape().isRequired,
   tilbakekrevingPerioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   selectPeriodCallback: PropTypes.func.isRequired,
   openPeriodInfo: PropTypes.func.isRequired,
