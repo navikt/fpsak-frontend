@@ -9,15 +9,7 @@ import {
 import {
   DatepickerField, SelectField,
 } from '@fpsak-frontend/form';
-<<<<<<< HEAD
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
-=======
-import kodeverkPropType from '@fpsak-frontend/kodeverk/src/kodeverkPropType';
-<<<<<<< HEAD
-import arbeidskategori from '@fpsak-frontend/kodeverk/src/arbeidskategori';
->>>>>>> PFP-4354 Lager samme for utsettelse
-=======
->>>>>>> PFP-4354 skrive om til å passe backend
 import { gyldigeUttakperioder } from './RenderPermisjonPeriodeFieldArray';
 
 import styles from './renderUtsettelsePeriodeFieldArray.less';
