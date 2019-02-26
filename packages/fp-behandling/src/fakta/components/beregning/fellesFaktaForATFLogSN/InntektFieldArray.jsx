@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import { getAksjonspunkter } from 'behandlingFpsak/src/behandlingSelectors';
+import { getAksjonspunkter, getFaktaOmBeregningTilfellerKoder } from 'behandlingFpsak/src/behandlingSelectors';
 import { InputField, NavFieldGroup, SelectField } from '@fpsak-frontend/form';
 import {
   isArrayEmpty, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, required,
@@ -16,15 +16,19 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import {
   Image, Table, TableRow, TableColumn, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import styles from './brukersAndelFieldArray.less';
-import { validateUlikeAndelerWithGroupingFunction } from '../ValidateAndelerUtils';
-import { isBeregningFormDirty as isFormDirty } from '../../BeregningFormUtils';
+import { setGenerellAndelsinfo } from './BgFordelingUtils';
+import { arbeidsforholdProptype, getUniqueListOfArbeidsforhold } from '../ArbeidsforholdHelper';
+import styles from './kunYtelse/brukersAndelFieldArray.less';
+import { validateUlikeAndeler, validateUlikeAndelerWithGroupingFunction } from './ValidateAndelerUtils';
+import ArbeidsforholdField from './ArbeidsforholdField';
+import { isBeregningFormDirty as isFormDirty } from '../BeregningFormUtils';
 
-const defaultBGFordeling = aktivitetStatuser => ({
-  andel: aktivitetStatuser.filter(({ kode }) => kode === aktivitetStatus.BRUKERS_ANDEL)[0].navn,
+const defaultBGFordeling = (aktivitetStatuser, erKunYtelse) => ({
+  andel: erKunYtelse ? aktivitetStatuser.filter(({ kode }) => kode === aktivitetStatus.BRUKERS_ANDEL)[0].navn : undefined,
   fastsattBeløp: '',
   inntektskategori: '',
   nyAndel: true,
@@ -50,20 +54,30 @@ const isDirty = (meta, isBeregningFormDirty) => (meta.dirty || isBeregningFormDi
 const getErrorMessage = (meta, intl, isBeregningFormDirty) => (meta.error && isDirty(meta, isBeregningFormDirty)
 && meta.submitFailed ? intl.formatMessage(...meta.error) : null);
 
-function skalViseSletteknapp(index, fields, readOnly) {
-  return (fields.get(index).nyAndel || fields.get(index).lagtTilAvSaksbehandler) && !readOnly;
-}
-const onKeyDown = (fields, aktivitetStatuser) => ({ keyCode }) => {
+const skalViseSletteknapp = (index, fields, readOnly) => (fields.get(index).nyAndel || fields.get(index).lagtTilAvSaksbehandler) && !readOnly;
+
+const onKeyDown = (fields, aktivitetStatuser, erKunYtelse) => ({ keyCode }) => {
   if (keyCode === 13) {
-    fields.push(defaultBGFordeling(aktivitetStatuser));
+    fields.push(defaultBGFordeling(aktivitetStatuser, erKunYtelse));
   }
 };
 
 const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
-  inntektskategoriKoder, intl) => fields.map((andelElementFieldId, index) => (
+  inntektskategoriKoder, intl, erKunYtelse, arbeidsforholdList) => fields.map((andelElementFieldId, index) => (
     <TableRow key={andelElementFieldId}>
       <TableColumn>
-        <FormattedMessage id="BeregningInfoPanel.FordelingBG.Ytelse" />
+        {erKunYtelse && <FormattedMessage id="BeregningInfoPanel.FordelingBG.Ytelse" />}
+        {!erKunYtelse
+          && (
+          <ArbeidsforholdField
+            fields={fields}
+            index={index}
+            name={`${andelElementFieldId}.andel`}
+            readOnly={readOnly}
+            arbeidsforholdList={arbeidsforholdList}
+          />
+          )
+        }
       </TableColumn>
       <TableColumn className={styles.rightAlignInput}>
         <InputField
@@ -122,12 +136,12 @@ const getHeaderTextCodes = () => ([
 );
 
 /**
- *  BrukersAndelFieldArray
+ *  InntektFieldArray
  *
- * Presentasjonskomponent: Viser fordeling for brukers andel ved kun ytelse
+ * Presentasjonskomponent: Viser fordeling for andeler
  * Komponenten må rendres som komponenten til et FieldArray.
  */
-export const BrukersAndelFieldArrayImpl = ({
+export const InntektFieldArrayImpl = ({
   fields,
   meta,
   intl,
@@ -136,9 +150,12 @@ export const BrukersAndelFieldArrayImpl = ({
   readOnly,
   isAksjonspunktClosed,
   isBeregningFormDirty,
+  erKunYtelse,
+  arbeidsforholdList,
 }) => {
   const sumFordeling = summerFordeling(fields) || 0;
-  const tablerows = createAndelerTableRows(fields, isAksjonspunktClosed, readOnly, inntektskategoriKoder, intl);
+  const tablerows = createAndelerTableRows(fields, isAksjonspunktClosed, readOnly, inntektskategoriKoder, intl,
+    erKunYtelse, arbeidsforholdList);
   tablerows.push(createBruttoBGSummaryRow(sumFordeling));
   return (
     <NavFieldGroup errorMessage={getErrorMessage(meta, intl, isBeregningFormDirty)}>
@@ -154,9 +171,9 @@ export const BrukersAndelFieldArrayImpl = ({
             <div
               id="leggTilAndelDiv"
               onClick={() => {
-                fields.push(defaultBGFordeling(aktivitetStatuser));
+                fields.push(defaultBGFordeling(aktivitetStatuser, erKunYtelse));
               }}
-              onKeyDown={onKeyDown(fields, aktivitetStatuser)}
+              onKeyDown={onKeyDown(fields, aktivitetStatuser, erKunYtelse)}
               className={styles.addPeriode}
               role="button"
               tabIndex="0"
@@ -183,7 +200,7 @@ export const BrukersAndelFieldArrayImpl = ({
 };
 
 
-BrukersAndelFieldArrayImpl.propTypes = {
+InntektFieldArrayImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   fields: PropTypes.shape().isRequired,
   meta: PropTypes.shape().isRequired,
@@ -192,19 +209,33 @@ BrukersAndelFieldArrayImpl.propTypes = {
   aktivitetStatuser: kodeverkPropType.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   isBeregningFormDirty: PropTypes.bool.isRequired,
+  erKunYtelse: PropTypes.bool.isRequired,
+  arbeidsforholdList: PropTypes.arrayOf(arbeidsforholdProptype).isRequired,
 };
 
-const BrukersAndelFieldArray = injectIntl(BrukersAndelFieldArrayImpl);
+
+const InntektFieldArray = injectIntl(InntektFieldArrayImpl);
+
+InntektFieldArray.transformValues = values => (
+  values.map(fieldValue => ({
+    andelsnr: fieldValue.andelsnr,
+    fastsattBeløp: removeSpacesFromNumber(fieldValue.fastsattBeløp),
+    inntektskategori: fieldValue.inntektskategori,
+    nyAndel: fieldValue.nyAndel,
+    lagtTilAvSaksbehandler: fieldValue.lagtTilAvSaksbehandler,
+  }))
+);
 
 
-const mapBrukesAndelToSortedObject = (value) => {
+const mapAndelToSortedObject = (value) => {
   const { andel, inntektskategori } = value;
   return { andelsinfo: andel, inntektskategori };
 };
 
-BrukersAndelFieldArray.validate = (values) => {
+InntektFieldArray.validate = (values, erKunYtelse) => {
   const arrayErrors = values.map((andelFieldValues) => {
     const fieldErrors = {};
+    fieldErrors.andel = required(andelFieldValues.andel);
     fieldErrors.fastsattBeløp = required(andelFieldValues.fastsattBeløp);
     fieldErrors.inntektskategori = required(andelFieldValues.inntektskategori);
     return fieldErrors.fastsattBeløp || fieldErrors.inntektskategori ? fieldErrors : null;
@@ -215,30 +246,47 @@ BrukersAndelFieldArray.validate = (values) => {
   if (isArrayEmpty(values)) {
     return null;
   }
-  const ulikeAndelerError = validateUlikeAndelerWithGroupingFunction(values, mapBrukesAndelToSortedObject);
+  const ulikeAndelerError = erKunYtelse ? validateUlikeAndelerWithGroupingFunction(values, mapAndelToSortedObject) : validateUlikeAndeler(values);
   if (ulikeAndelerError) {
     return { _error: ulikeAndelerError };
   }
   return null;
 };
 
+
+InntektFieldArray.buildInitialValues = (andeler) => {
+  if (!andeler || andeler.length === 0) {
+    return {};
+  }
+  return andeler.map(andel => ({
+    ...setGenerellAndelsinfo(andel),
+    fastsattBeløp: andel.fastsattBelopPrMnd || andel.fastsattBelopPrMnd === 0
+      ? formatCurrencyNoKr(andel.fastsattBelopPrMnd) : '',
+  }));
+};
+
+
 const sorterKodeverkAlfabetisk = kodeverkListe => kodeverkListe.slice().sort((a, b) => a.navn.localeCompare(b.navn));
 
 
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state, ownProps) => {
+  const tilfeller = getFaktaOmBeregningTilfellerKoder(state);
   const isBeregningFormDirty = isFormDirty(state);
   const aktivitetStatuser = getKodeverk(kodeverkTyper.AKTIVITET_STATUS)(state);
   const alleAp = getAksjonspunkter(state);
   const relevantAp = alleAp
     .filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN);
   const isAksjonspunktClosed = relevantAp.length === 0 ? undefined : !isAksjonspunktOpen(relevantAp[0].status.kode);
+  const arbeidsforholdList = getUniqueListOfArbeidsforhold(ownProps.andeler);
   return {
+    arbeidsforholdList,
     isBeregningFormDirty,
     isAksjonspunktClosed,
     aktivitetStatuser,
     inntektskategoriKoder: sorterKodeverkAlfabetisk(getKodeverk(kodeverkTyper.INNTEKTSKATEGORI)(state)),
+    erKunYtelse: tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE),
   };
 };
 
 
-export default connect(mapStateToProps)(BrukersAndelFieldArray);
+export default connect(mapStateToProps)(InntektFieldArray);

@@ -20,6 +20,7 @@ import {
   getKunYtelse,
   getBehandlingIsRevurdering,
   getVurderMottarYtelse,
+  getVurderBesteberegning,
   getBehandlingIsOnHold,
   hasReadOnlyBehandling,
 } from 'behandlingFpsak/src/behandlingSelectors';
@@ -48,6 +49,7 @@ import FastsettBBFodendeKvinneForm from './besteberegningFodendeKvinne/FastsettB
 import VurderEtterlonnSluttpakkeForm from './etterlønnSluttpakke/VurderEtterlonnSluttpakkeForm';
 import FastsettEtterlonnSluttpakkeForm from './etterlønnSluttpakke/FastsettEtterlonnSluttpakkeForm';
 import VurderMottarYtelseForm from './vurderOgFastsettATFL/forms/VurderMottarYtelseForm';
+import VurderBesteberegningForm, { vurderBesteberegningTransform } from './vurderbesteberegning/VurderBesteberegningForm';
 
 
 const {
@@ -71,6 +73,7 @@ export const getValidationFaktaForATFLOgSN = createSelector([mapStateToValidatio
   ...TilstotendeYtelseIKombinasjon.validate(values, props.endringBGPerioder, props.aktivertePaneler),
   ...getKunYtelseValidation(values, props.kunYtelse, props.endringBGPerioder, props.aktivertePaneler),
   ...VurderMottarYtelseForm.validate(values, props.vurderMottarYtelse),
+  ...VurderBesteberegningForm.validate(values, props.aktivertePaneler),
 }));
 
 export const lagHelpTextsForFakta = (aktivertePaneler) => {
@@ -139,6 +142,18 @@ const getFaktaPanels = (readOnly, tilfeller, isAksjonspunktClosed, showTableCall
         <ElementWrapper key={tilfelle}>
           {spacer(hasShownPanel)}
           <VurderEtterlonnSluttpakkeForm
+            readOnly={readOnly}
+            isAksjonspunktClosed={isAksjonspunktClosed}
+          />
+        </ElementWrapper>,
+      );
+    }
+    if (tilfelle === faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING) {
+      hasShownPanel = true;
+      faktaPanels.push(
+        <ElementWrapper key={tilfelle}>
+          {spacer(hasShownPanel)}
+          <VurderBesteberegningForm
             readOnly={readOnly}
             isAksjonspunktClosed={isAksjonspunktClosed}
           />
@@ -327,7 +342,7 @@ export const transformValues = (
 };
 
 export const setInntektValues = (aktivePaneler, fatsettKunYtelseTransform, fastsettEndretTransform,
-  fastsettATFLTransform, fastsettBBFodendeKvinneTransform) => (values) => {
+  fastsettATFLTransform, fastsettBBFodendeKvinneTransform, vurderBBTransform) => (values) => {
   if (aktivePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE)) {
     return fatsettKunYtelseTransform(values);
   }
@@ -340,6 +355,9 @@ export const setInntektValues = (aktivePaneler, fatsettKunYtelseTransform, fasts
   if (aktivePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)) {
     return fastsettBBFodendeKvinneTransform(values);
   }
+  if (aktivePaneler.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)) {
+    return vurderBBTransform(values);
+  }
   return { faktaOmBeregningTilfeller: [] };
 };
 
@@ -350,6 +368,7 @@ const setValuesForVurderFakta = (aktivePaneler, values, endringBGPerioder, kortv
     endretBGTransform(endringBGPerioder),
     atflSammeOrgTransform(faktaOmBeregning, beregningsgrunnlag),
     besteberegningTransform(faktaOmBeregning),
+    vurderBesteberegningTransform,
   )(values);
   return transformValues(aktivePaneler,
     nyIArbeidslivetTransform,
@@ -386,10 +405,10 @@ const getVurderFaktaAksjonspunkt = createSelector([getAksjonspunkter], aksjonspu
 export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
   [getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlag,
     getKortvarigeArbeidsforhold, getVurderFaktaAksjonspunkt, getTilstøtendeYtelse, getKunYtelse,
-    getFaktaOmBeregningTilfellerKoder, getBehandlingIsRevurdering, getVurderMottarYtelse,
+    getFaktaOmBeregningTilfellerKoder, getBehandlingIsRevurdering, getVurderMottarYtelse, getVurderBesteberegning,
     isReadOnly],
   (endringBGPerioder, beregningsgrunnlag, kortvarigeArbeidsforhold, vurderFaktaAP, tilstotendeYtelse, kunYtelse,
-    tilfeller, isRevurdering, vurderMottarYtelse, readOnly) => () => ({
+    tilfeller, isRevurdering, vurderMottarYtelse, vurderBesteberegning, readOnly) => () => ({
     ...TidsbegrensetArbeidsforholdForm.buildInitialValues(kortvarigeArbeidsforhold),
     ...NyIArbeidslivetSNForm.buildInitialValues(beregningsgrunnlag),
     ...FastsettEndretBeregningsgrunnlag.buildInitialValues(endringBGPerioder, tilfeller, readOnly),
@@ -403,6 +422,7 @@ export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
     ...VurderEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag, vurderFaktaAP),
     ...FastsettEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag),
     ...VurderMottarYtelseForm.buildInitialValues(vurderMottarYtelse),
+    ...VurderBesteberegningForm.buildInitialValues(vurderBesteberegning),
   }),
 );
 

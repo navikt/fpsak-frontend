@@ -15,6 +15,7 @@ const vurderFaktaOmBeregningTotrinnText = {
   [faktaOmBeregningTilfelle.FASTSETT_ETTERLONN_SLUTTPAKKE]: 'ToTrinnsForm.Beregning.FastsettEtterlønnSluttpakke',
   [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE]: 'ToTrinnsForm.Beregning.VurderMottarYtelse',
   [faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL]: 'ToTrinnsForm.Beregning.FrilansinntektFastsatt',
+  [faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING]: 'ToTrinnsForm.Beregning.VurderBesteberegning',
 
 };
 
