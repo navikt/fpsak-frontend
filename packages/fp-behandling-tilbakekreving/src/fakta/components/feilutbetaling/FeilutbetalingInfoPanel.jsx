@@ -186,7 +186,7 @@ FeilutbetalingInfoPanelImpl.propTypes = {
 };
 
 const mapStateToProps = (state, initialProps) => ({
-  feilutbetaling: getFeilutbetalingFakta(state).behandlingFakta[0],
+  feilutbetaling: getFeilutbetalingFakta(state).behandlingFakta,
   onSubmit: values => initialProps.submitCallback(values),
 });
 
