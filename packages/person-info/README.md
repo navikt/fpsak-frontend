@@ -15,8 +15,18 @@ yarn add @fpsak-frontend/person-info
 
  ##### Eksempel:
  ```js
- <PersonInfo person={navn:"Ola" alder:{40} personnummer:"12345678910" erKvinne:false
- erDod:false diskresjonskode:"6" dodsdato:"1990.03.03"} medPanel />
+<PersonInfo
+    person={{
+        navn: 'Ola',
+        alder: 40,
+        personnummer: '12345678910',
+        erKvinne: false,
+        erDod: false,
+        diskresjonskode: '6',
+        dodsdato: '1990.03.03'
+    }}
+    medPanel
+/>
 ```
 
 ### MerkePanel
