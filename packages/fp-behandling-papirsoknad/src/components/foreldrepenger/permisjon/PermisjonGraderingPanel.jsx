@@ -41,6 +41,7 @@ export const PermisjonGraderingPanel = ({
   skalGradere,
   readOnly,
   visFeilMelding,
+  arbeidskategoriTyper,
 }) => (
   <div>
     <Element><FormattedMessage id="Registrering.Permisjon.Gradering.Title" /></Element>
@@ -60,6 +61,7 @@ export const PermisjonGraderingPanel = ({
       form={form}
       namePrefix={namePrefix}
       graderingPrefix={graderingPeriodeFieldArrayName}
+      arbeidskategoriTyper={arbeidskategoriTyper}
       readOnly={readOnly}
     />
     )
@@ -116,6 +118,7 @@ PermisjonGraderingPanel.propTypes = {
   skalGradere: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   visFeilMelding: PropTypes.bool.isRequired,
+  arbeidskategoriTyper: kodeverkPropType.isRequired,
 };
 
 PermisjonGraderingPanel.initialValues = {
@@ -127,6 +130,7 @@ PermisjonGraderingPanel.initialValues = {
 const mapStateToProps = (state, ownProps) => ({
   graderingKvoter: getKodeverk(kodeverkTyper.UTSETTELSE_GRADERING_KVOTE)(state),
   skalGradere: formValueSelector(ownProps.form)(state, ownProps.namePrefix).skalGradere,
+  arbeidskategoriTyper: getKodeverk(kodeverkTyper.ARBEIDSKATEGORI)(state),
 });
 
 export default connect(mapStateToProps)(PermisjonGraderingPanel);
