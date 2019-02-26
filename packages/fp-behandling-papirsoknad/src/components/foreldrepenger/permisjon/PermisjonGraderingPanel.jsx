@@ -19,6 +19,8 @@ import {
   hasValidFodselsnummer,
   isRequiredMessage,
 } from '@fpsak-frontend/utils';
+import arbeidskategori from '@fpsak-frontend/kodeverk/src/arbeidskategori';
+
 import RenderGraderingPeriodeFieldArray from './RenderGraderingPeriodeFieldArray';
 import styles from './permisjonPanel.less';
 
@@ -96,6 +98,16 @@ PermisjonGraderingPanel.validate = (values) => {
 
   return hasValidPeriodIncludingOtherErrors(values, otherErrors);
 };
+
+PermisjonGraderingPanel.transformValues = perioder => perioder.map((p) => {
+  const { ...periode } = p;
+  if (p.erArbeidstaker) {
+    periode.erArbeidstaker = p.erArbeidstaker === arbeidskategori.ARBEIDSTAKER;
+    periode.erFrilanser = p.erArbeidstaker === arbeidskategori.FRILANSER;
+    periode.erSelvstendig = p.erArbeidstaker === arbeidskategori.SELVSTENDIG_NAERINGSDRIVENDE;
+  }
+  return periode;
+});
 
 PermisjonGraderingPanel.propTypes = {
   graderingKvoter: kodeverkPropType.isRequired,

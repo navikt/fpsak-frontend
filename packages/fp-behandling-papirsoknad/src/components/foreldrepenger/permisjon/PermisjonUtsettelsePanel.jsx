@@ -31,7 +31,6 @@ export const PermisjonUtsettelsePanel = ({
   skalUtsette,
   readOnly,
   visFeilMelding,
-  arbeidskategoriTyper,
 }) => (
   <div>
     <Element><FormattedMessage id="Registrering.Permisjon.Utsettelse.Title" /></Element>
@@ -49,7 +48,6 @@ export const PermisjonUtsettelsePanel = ({
         component={RenderUtsettelsePeriodeFieldArray}
         utsettelseReasons={utsettelseReasons}
         utsettelseKvoter={utsettelseKvoter}
-        arbeidskategoriTyper={arbeidskategoriTyper}
         readOnly={readOnly}
       />
       )
@@ -98,7 +96,6 @@ const mapStateToProps = (state, ownProps) => ({
   utsettelseReasons: getKodeverk(kodeverkTyper.UTSETTELSE_ARSAK)(state),
   utsettelseKvoter: getKodeverk(kodeverkTyper.UTSETTELSE_GRADERING_KVOTE)(state),
   skalUtsette: formValueSelector(ownProps.form)(state, ownProps.namePrefix).skalUtsette,
-  arbeidskategoriTyper: getKodeverk(kodeverkTyper.ARBEIDSKATEGORI)(state),
 });
 
 export default connect(mapStateToProps)(PermisjonUtsettelsePanel);
