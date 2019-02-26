@@ -6,6 +6,20 @@ import PerioderControler from './PerioderControler';
 import PeriodSummary from './PeriodSummary';
 import styles from './bpTimelineData.less';
 
+const findSliceIndex = (dagligUtbetalinger, tom) => {
+  if (tom > dagligUtbetalinger[dagligUtbetalinger.length - 1].dag) {
+    return dagligUtbetalinger.length;
+  }
+  if (tom < dagligUtbetalinger[0].dag) {
+    return 0;
+  }
+  const periodeToIndex = dagligUtbetalinger.findIndex(e => e.dag >= tom);
+  if (tom === dagligUtbetalinger[periodeToIndex].dag) {
+    return periodeToIndex + 1;
+  }
+  return periodeToIndex;
+};
+
 export class BpTimelineData extends Component {
   constructor() {
     super();
@@ -46,7 +60,7 @@ export class BpTimelineData extends Component {
     const forstePeriode = JSON.parse(JSON.stringify(...periodToUpdate));
     const andrePeriode = JSON.parse(JSON.stringify(...periodToUpdate));
     const currentId = formValues.periodeId;
-    const forstePeriodeTomIndex = formValues.dagligUtbetalinger.findIndex(e => e.dag === formValues.forstePeriode.tom) + 1;
+    const forstePeriodeTomIndex = findSliceIndex(formValues.dagligUtbetalinger, formValues.forstePeriode.tom);
     if (!periodToUpdate[0].begrunnelse) {
       forstePeriode.begrunnelse = ' ';
       andrePeriode.begrunnelse = ' ';
@@ -59,7 +73,7 @@ export class BpTimelineData extends Component {
     andrePeriode.fom = formValues.andrePeriode.fom;
     andrePeriode.tom = formValues.andrePeriode.tom;
     andrePeriode.dagligUtbetalinger = formValues.dagligUtbetalinger.slice(forstePeriodeTomIndex);
-    andrePeriode.feilutbetaling = getPeriodFeilutbetaling(andrePeriode.dagligUtbetalinger);
+    andrePeriode.feilutbetaling = formValues.feilutbetaling - forstePeriode.feilutbetaling;
     andrePeriode.id = currentId + 1;
     otherThanUpdated.map((periode) => {
       const periodeCopy = periode;
