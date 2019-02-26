@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
-import FodselOgPermisjonFaktaForm from './FodselOgPermisjonFaktaForm';
+import FodselOgTilretteleggingFaktaForm from './FodselOgTilretteleggingFaktaForm';
 
 const fodselOgPermAksjonspunkter = [
 
 ];
 
-export const FodselOgPermisjonInfoPanelImpl = ({
+export const FodselOgTilretteleggingInfoPanelImpl = ({
   intl,
   toggleInfoPanelCallback,
   openInfoPanels,
@@ -20,22 +19,22 @@ export const FodselOgPermisjonInfoPanelImpl = ({
   submitCallback,
 }) => (
   <FaktaEkspandertpanel
-    title={intl.formatMessage({ id: 'FodselOgPermisjonInfoPanel.FaktaFodselOgPermisjon' })}
+    title={intl.formatMessage({ id: 'FodselOgTilretteleggingInfoPanel.FaktaFodselOgTilrettelegging' })}
     hasOpenAksjonspunkter
     isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.FODSELPERMISJON)}
     toggleInfoPanelCallback={toggleInfoPanelCallback}
     faktaId={faktaPanelCodes.FODSELPERMISJON}
     readOnly={readOnly}
-    disabledTextCode="FodselOgPermisjonInfoPanel.FodselOgPermisjon"
+    disabledTextCode="FodselOgTilretteleggingInfoPanel.FodselOgTilrettelegging"
   >
     <AksjonspunktHelpText isAksjonspunktOpen>
       {[<FormattedMessage id="Kontroller opplysninger fra jordmor og arbeidsgiver" key="svangerskapspengerAp" />]}
     </AksjonspunktHelpText>
-    <FodselOgPermisjonFaktaForm readOnly={readOnly} hasOpenAksjonspunkter={hasOpenAksjonspunkter} />
+    <FodselOgTilretteleggingFaktaForm readOnly={readOnly} hasOpenAksjonspunkter={hasOpenAksjonspunkter} />
   </FaktaEkspandertpanel>
 );
 
-FodselOgPermisjonInfoPanelImpl.propTypes = {
+FodselOgTilretteleggingInfoPanelImpl.propTypes = {
   intl: intlShape.isRequired,
   toggleInfoPanelCallback: PropTypes.func.isRequired,
   openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -45,11 +44,8 @@ FodselOgPermisjonInfoPanelImpl.propTypes = {
 };
 
 
-const mapStateToProps = state => ({
-});
+const ConnectedComponent = injectIntl(FodselOgTilretteleggingInfoPanelImpl);
 
-const ConnectedComponent = injectIntl(FodselOgPermisjonInfoPanelImpl);
+const FodselOgTilretteleggingInfoPanel = withDefaultToggling(faktaPanelCodes.FODSELPERMISJON, fodselOgPermAksjonspunkter)(ConnectedComponent);
 
-const FodselOgPermisjonInfoPanel = withDefaultToggling(faktaPanelCodes.FODSELPERMISJON, fodselOgPermAksjonspunkter)(ConnectedComponent);
-
-export default connect(mapStateToProps)(FodselOgPermisjonInfoPanel);
+export default (FodselOgTilretteleggingInfoPanel);

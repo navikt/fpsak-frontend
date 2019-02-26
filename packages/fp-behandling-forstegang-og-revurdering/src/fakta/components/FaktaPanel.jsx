@@ -22,11 +22,7 @@ import UttakInfoPanel from './uttak/UttakInfoPanel';
 import BeregningInfoPanel from './beregning/BeregningInfoPanel';
 import PersonInfoPanel from './person/PersonInfoPanel';
 import PersonIndexPanel from './person/PersonIndexPanel';
-<<<<<<< HEAD
 import ArbeidsforholdInfoPanel from './arbeidsforholdInfoPanel/ArbeidsforholdInfoPanel';
-=======
-import FodselOgPermisjonInfoPanel from './fodselOgPermisjon/FodselOgPermisjonInfoPanel';
->>>>>>> PFP-5936 svangerskapspenger wip
 
 import styles from './faktaPanel.less';
 
@@ -137,7 +133,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         />
       )
       }
-      <FodselOgPermisjonInfoPanel
+      <FodselOgTilretteleggingInfoPanel
         openInfoPanels={openInfoPanels}
         toggleInfoPanelCallback={toggleInfoPanelCallback}
         shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}

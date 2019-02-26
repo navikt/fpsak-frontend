@@ -210,14 +210,6 @@
   "FodselInfoPanel.VurderVilkarForSykdom": "Vurder om vilkår for sykdom er oppfylt",
   "FodselInfoPanel.KontrollerMotTerminbekreftelsen": "Kontroller terminbekreftelse",
   "FodselInfoPanel.KontrollerMotFodselsdokumentasjon": "Kontroller mot opplysningene fra fødselsdokumentasjonen",
-<<<<<<< HEAD
-=======
-
-  "FodselOgPermisjonInfoPanel.FaktaFodselOgPermisjon": "Fakta om fødsel og permisjon",
-  "FodselOgPermisjonFaktaForm.Termindato": "Termindato",
-  "ArbeidsforholdFaktaPanel.Faktagruppe": "Arbeidsforhold som er søkt for",
-
->>>>>>> PFP-5936 svangerskapspenger wip
   "FeilutbetalingInfoPanel.FaktaFeilutbetaling": "Fakta om feilutbetaling",
   "FeilutbetalingInfoPanel.Revurdering": "Revurdering",
   "FeilutbetalingInfoPanel.Feilutbetaling": "Feilutbetaling",

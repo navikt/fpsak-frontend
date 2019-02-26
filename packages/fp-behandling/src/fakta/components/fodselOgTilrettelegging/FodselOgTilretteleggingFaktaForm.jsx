@@ -13,10 +13,10 @@ import {
 
 import ArbeidsforholdFaktaPanel from './ArbeidsforholdFaktaPanel';
 
-export class FodselOgPermisjonFaktaForm extends Component {
-  // constructor() {
-  //   super();
-  // }
+export class FodselOgTilretteleggingFaktaForm extends Component {
+  constructor() {
+    super();
+  }
 
   render() {
     const {
@@ -31,7 +31,7 @@ export class FodselOgPermisjonFaktaForm extends Component {
             <FlexColumn>
               <DatepickerField
                 name="termindato"
-                label={{ id: 'FodselOgPermisjonFaktaForm.Termindato' }}
+                label={{ id: 'FodselOgTilretteleggingFaktaForm.Termindato' }}
                 validate={[required, hasValidDate]}
                 readOnly={false}
               />
@@ -56,12 +56,12 @@ export class FodselOgPermisjonFaktaForm extends Component {
   }
 }
 
-FodselOgPermisjonFaktaForm.propTypes = {
+FodselOgTilretteleggingFaktaForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
 };
 
 export default (behandlingForm({
-  form: 'FodselOgPermisjonForm',
-})(FodselOgPermisjonFaktaForm));
+  form: 'FodselOgTilretteleggingForm',
+})(FodselOgTilretteleggingFaktaForm));
