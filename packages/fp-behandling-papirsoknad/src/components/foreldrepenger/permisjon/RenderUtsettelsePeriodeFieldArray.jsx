@@ -121,7 +121,6 @@ RenderUtsettelsePeriodeFieldArray.propTypes = {
   utsettelseKvoter: kodeverkPropType.isRequired,
   meta: PropTypes.shape().isRequired,
   intl: intlShape.isRequired,
-  arbeidskategoriTyper: kodeverkPropType.isRequired,
   readOnly: PropTypes.bool.isRequired,
 };
 

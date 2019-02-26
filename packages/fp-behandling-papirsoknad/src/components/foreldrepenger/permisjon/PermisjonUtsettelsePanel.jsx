@@ -84,7 +84,6 @@ PermisjonUtsettelsePanel.propTypes = {
   skalUtsette: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   visFeilMelding: PropTypes.bool.isRequired,
-  arbeidskategoriTyper: kodeverkPropType.isRequired,
 };
 
 PermisjonUtsettelsePanel.initialValues = {
