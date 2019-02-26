@@ -25,6 +25,7 @@ import {
 } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
 import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
@@ -145,7 +146,7 @@ export class AvregningPanelImpl extends Component {
 
   previewMessage(e, previewCallback) {
     const { varseltekst } = this.props;
-    previewCallback('', 'TBKVAR', varseltekst || ' ');
+    previewCallback('', dokumentMalType.TBKVAR, varseltekst || ' ');
     e.preventDefault();
   }
 
