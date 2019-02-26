@@ -116,6 +116,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
           readOnlySubmitButton={readOnlySubmitButton}
           apCodes={apCodes}
           isApOpen={openAksjonspunkt}
+          previewCallback={previewCallback}
         />
       )
       }
