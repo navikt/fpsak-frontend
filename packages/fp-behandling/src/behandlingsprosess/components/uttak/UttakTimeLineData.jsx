@@ -29,7 +29,9 @@ const getCorrectEmptyArbeidsForhold = (preiodeTypeKode, arbeidsForhold) => {
   if (arbeidsForhold.stonadskontoer[preiodeTypeKode] && arbeidsForhold.stonadskontoer[preiodeTypeKode].aktivitetSaldoDtoList) {
     arbeidsForhold.stonadskontoer[preiodeTypeKode].aktivitetSaldoDtoList.forEach((item) => {
       if (item.saldo === 0) {
-        arbeidsForholdMedNullDagerIgjenArray.push(item.aktivitetIdentifikator.arbeidsgiver.navn);
+        arbeidsForholdMedNullDagerIgjenArray.push(
+          (item.aktivitetIdentifikator.arbeidsgiver || item.aktivitetIdentifikator.uttakArbeidType).navn,
+        );
       } else {
         arbeidsforholdMedPositivSaldoFinnes = true;
       }
