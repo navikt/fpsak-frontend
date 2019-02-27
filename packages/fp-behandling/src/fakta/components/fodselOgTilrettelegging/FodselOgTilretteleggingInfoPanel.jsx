@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+
 import FodselOgTilretteleggingFaktaForm from './FodselOgTilretteleggingFaktaForm';
 
 const fodselOgPermAksjonspunkter = [
