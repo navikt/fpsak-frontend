@@ -143,7 +143,6 @@ export const InnleggelsePeriode = ({
             inntektsmeldingInfo={inntektsmeldingInfo}
             fraDato={fraDato}
             tilDato={tilDato}
-            bekreftet={bekreftet}
           />
         </FlexColumn>
 

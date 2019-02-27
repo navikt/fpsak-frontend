@@ -119,9 +119,7 @@ export const FerieOgArbeidsPeriode = ({
               tilDato={tilDato}
               uttakPeriodeType={uttakPeriodeType}
               arbeidsprosentFraSøknad={arbeidstidprosent}
-              bekreftet={bekreftet}
               arbeidsgiver={arbeidsgiver}
-              utsettelseArsak={utsettelseArsak}
             />
           </FlexColumn>
         </FlexRow>

@@ -122,7 +122,6 @@ export const SykdomOgSkadePeriode = ({
               fraDato={fraDato}
               tilDato={tilDato}
               arbeidsgiver={arbeidsgiver}
-              bekreftet={bekreftet}
             />
           </div>
         </FlexColumn>

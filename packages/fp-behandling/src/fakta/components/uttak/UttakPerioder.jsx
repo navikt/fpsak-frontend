@@ -58,7 +58,7 @@ const overlappingDates = (innmldPeriode, soknadsPeriode) => {
 
   const isGradering = innmldPeriode.arbeidsprosent !== undefined && innmldPeriode.arbeidsprosent !== null;
 
-  if (søknadFomBetween || søknadTomBetween) {
+  if (søknadFomBetween && søknadTomBetween) {
     if (isGradering) {
       return soknadsPeriode.arbeidstidsprosent !== innmldPeriode.arbeidsprosent;
     }
@@ -71,12 +71,22 @@ const overlappingDates = (innmldPeriode, soknadsPeriode) => {
 
 const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => inntektsmeldinger.map((innmld) => {
   const { graderingPerioder, utsettelsePerioder } = innmld;
+  const isGradering = soknadsPeriode.arbeidstidsprosent !== undefined && soknadsPeriode.arbeidstidsprosent !== null;
+  const isUtsettelse = soknadsPeriode.utsettelseÅrsak.kode !== '-';
+  const gjeldeneGraderingPerioder = graderingPerioder.filter(grp => overlappingDates(grp, soknadsPeriode));
+  const gjeldeneUtsettelsePerioder = utsettelsePerioder.filter(utp => overlappingDates(utp, soknadsPeriode));
+  let isManglendeInntektsmelding = false;
+  if (gjeldeneGraderingPerioder.length === 0 && gjeldeneUtsettelsePerioder.length === 0 && (isGradering || isUtsettelse)) {
+    isManglendeInntektsmelding = true;
+  }
 
   return {
     ...innmld,
     arbeidsProsentFraInntektsmelding: graderingPerioder.reduce((acc, periode) => parseFloat(acc) + parseFloat(periode.arbeidsprosent, 10), 0),
-    graderingPerioder: graderingPerioder.filter(grp => overlappingDates(grp, soknadsPeriode)),
-    utsettelsePerioder: utsettelsePerioder.filter(utp => overlappingDates(utp, soknadsPeriode)),
+    graderingPerioder: gjeldeneGraderingPerioder,
+    utsettelsePerioder: gjeldeneUtsettelsePerioder,
+    isManglendeInntektsmelding,
+    utsettelseÅrsak: isUtsettelse ? soknadsPeriode.utsettelseÅrsak : false,
   };
 });
 
@@ -252,7 +262,6 @@ export class UttakPerioder extends Component {
       dokumentertePerioder: resultat && resultat !== uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES ? dokumentertePerioder : null,
       arbeidstidsprosent: nyArbeidstidsprosent || updatedPeriode.arbeidstidprosent,
       openForm: !updatedPeriode.openForm,
-      bekreftet: updatedPeriode.bekreftet,
       utsettelseÅrsak: updatedPeriode.utsettelseÅrsak,
       overføringÅrsak: updatedPeriode.overføringÅrsak,
       erArbeidstaker: updatedPeriode.erArbeidstaker,
@@ -263,6 +272,7 @@ export class UttakPerioder extends Component {
       arbeidsgiver: updatedPeriode.arbeidsgiver,
       isFromSøknad: updatedPeriode.isFromSøknad,
       updated: true,
+      bekreftet: true,
     };
 
     if (kontoType) {
