@@ -40,7 +40,6 @@ describe('<UttakPeriodeType>', () => {
       readOnly={false}
       manuellOverstyring
       isNyPeriodeFormOpen={false}
-      erArbeidstaker={false}
       samtidigUttak={samtidigUttak}
       flerbarnsdager={flerbarnsdager}
       oppholdArsak={oppholdArsak}
@@ -68,7 +67,6 @@ describe('<UttakPeriodeType>', () => {
       samtidigUttak={samtidigUttak}
       flerbarnsdager={flerbarnsdager}
       oppholdArsak={oppholdArsak}
-      erArbeidstaker
       isFromSøknad
     />);
 
@@ -76,7 +74,7 @@ describe('<UttakPeriodeType>', () => {
     expect(image).to.have.length(0);
   });
 
-  it('skal vise frilans/selvstending næringsdrivene hvis ikke erArbeidstaker', () => {
+  it('skal vise frilans når erFrilans er true', () => {
     const wrapper = shallow(<UttakPeriodeType
       tilDato={tilDato}
       fraDato={fraDato}
@@ -90,7 +88,8 @@ describe('<UttakPeriodeType>', () => {
       readOnly
       manuellOverstyring={false}
       isNyPeriodeFormOpen={false}
-      erArbeidstaker={false}
+      erFrilanser
+      erSelvstendig={false}
       samtidigUttak={samtidigUttak}
       flerbarnsdager={flerbarnsdager}
       arbeidstidprosent={arbeidstidprosent}
@@ -98,7 +97,7 @@ describe('<UttakPeriodeType>', () => {
       isFromSøknad
     />);
 
-    expect(wrapper.find('FormattedMessage').last().prop('id')).to.eql('UttakInfoPanel.FrilansSelvstendignæringsdrivende');
+    expect(wrapper.find('FormattedMessage').last().prop('id')).to.eql('UttakInfoPanel.Frilans');
   });
 
   it('skal vise arbeidsgiver og arbeidsgiverIdentifikator hvis erArbeidstaker', () => {
@@ -117,7 +116,6 @@ describe('<UttakPeriodeType>', () => {
       isNyPeriodeFormOpen={false}
       samtidigUttak={samtidigUttak}
       flerbarnsdager={flerbarnsdager}
-      erArbeidstaker
       arbeidstidprosent={arbeidstidprosent}
       arbeidsgiver={arbeidsgiver}
       oppholdArsak={oppholdArsak}
