@@ -4,14 +4,44 @@ import PropTypes from 'prop-types';
 import {
   FlexContainer, FlexColumn, FlexRow,
 } from '@fpsak-frontend/shared-components';
-import FaktaSubmitButton from 'behandlingFpsak/src/fakta/components/FaktaSubmitButton';
-import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
 import { DatepickerField } from '@fpsak-frontend/form';
 import {
   required, hasValidDate,
 } from '@fpsak-frontend/utils';
 
+import FaktaSubmitButton from 'behandlingFpsak/src/fakta/components/FaktaSubmitButton';
+import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
 import ArbeidsforholdFaktaPanel from './ArbeidsforholdFaktaPanel';
+
+// Dette blir helt sikkert på et annet format
+const tilrettelegging = {
+  termindato: '2019-08-01',
+  arbforhold: [
+    {
+      id: 123,
+      jordmor: {
+        tilretteleggingFra: '14.04.2019',
+      },
+      arbeidsforhold: {
+        navn: 'Hansen flyttebyrå AS',
+        tilrettelegging: 'REDUSERT',
+        tilretteleggingFra: '14.04.2019',
+        stillingsprosent: 50,
+      },
+    },
+    {
+      id: 456,
+      jordmor: {
+        tilretteleggingFra: '20.6.2019',
+      },
+      arbeidsforhold: {
+        navn: 'Rema 100',
+        tilrettelegging: 'IKKE_GJENNOMFORES',
+        tilretteleggingFra: '14.04.2019',
+        stillingsprosent: null,
+      },
+    }],
+};
 
 export class FodselOgTilretteleggingFaktaForm extends Component {
   constructor() {
@@ -29,6 +59,7 @@ export class FodselOgTilretteleggingFaktaForm extends Component {
         <FlexContainer fluid wrap>
           <FlexRow>
             <FlexColumn>
+              {tilrettelegging.termindato}
               <DatepickerField
                 name="termindato"
                 label={{ id: 'FodselOgTilretteleggingFaktaForm.Termindato' }}
@@ -38,7 +69,7 @@ export class FodselOgTilretteleggingFaktaForm extends Component {
             </FlexColumn>
           </FlexRow>
         </FlexContainer>
-        <ArbeidsforholdFaktaPanel />
+        <ArbeidsforholdFaktaPanel tilrettelegging={tilrettelegging} />
         <FlexContainer fluid wrap>
           <FlexRow>
             <FlexColumn>
