@@ -94,7 +94,7 @@ const ForeldelsePanelImpl = ({
 );
 
 ForeldelsePanelImpl.propTypes = {
-  foreldelsesresultatActivity: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  foreldelsesresultatActivity: PropTypes.arrayOf(PropTypes.shape()),
   behandlingFormPrefix: PropTypes.string.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
@@ -102,11 +102,25 @@ ForeldelsePanelImpl.propTypes = {
   isApOpen: PropTypes.bool.isRequired,
 };
 
-export const transformValues = values => [{
-  ...values,
-  kode: '5555',
-}];
+ForeldelsePanelImpl.defaultProps = {
+  foreldelsesresultatActivity: undefined,
+};
 
+export const transformValues = (values, apCode) => {
+  const foreldelsePerioder = values.foreldelsesresultatActivity.map(period => ({
+    fraDato: period.fom,
+    tilDato: period.tom,
+    begrunnelse: period.begrunnelse,
+    foreldelseVurderingType: {
+      kode: period.foreldet,
+    },
+  }));
+  return [
+    {
+      foreldelsePerioder,
+      kode: apCode,
+    }];
+};
 export const buildInitialValues = foreldelsePerioder => ({
   foreldelsesresultatActivity: addClassNameGroupIdToPerioder(foreldelsePerioder),
 });
@@ -118,7 +132,7 @@ const mapStateToProps = (state, ownProps) => {
     foreldelsesresultatActivity: behandlingFormValueSelector(formName)(state, ACTIVITY_PANEL_NAME),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
     fagsakPerson: getFagsakPerson(state),
-    onSubmit: values => ownProps.submitCallback(transformValues(values)),
+    onSubmit: values => ownProps.submitCallback(transformValues(values, ownProps.apCodes[0])),
   };
 };
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
+import foreldelseCodes from '../../foreldelse/foreldelseCodes';
 import { getResultType } from './BpTimelineHelper';
 import BpTimeline from './BpTimeline';
 import BpTimelineData from './BpTimelineData';
@@ -30,7 +30,7 @@ export class BpTimelinePanel extends Component {
   setSelectedDefaultPeriod() {
     const { resultatActivity } = this.props;
     const { selectedItem } = this.state;
-    const defaultSelectedElement = resultatActivity.find(period => getResultType(period).kode === periodeResultatType.MANUELL_BEHANDLING);
+    const defaultSelectedElement = resultatActivity.find(period => getResultType(period).kode === foreldelseCodes.MANUELL_BEHANDLING);
     const defaultSelectedElementIfNoAP = resultatActivity.find(period => period.hovedsoker);
     if (!selectedItem) {
       this.setState({ selectedItem: defaultSelectedElement || defaultSelectedElementIfNoAP });
@@ -62,7 +62,7 @@ export class BpTimelinePanel extends Component {
     const sortedActivities = otherThanUpdated.concat(verdier);
     sortedActivities.sort((a, b) => a.id - b.id);
     this.setFormField(activityPanelName, sortedActivities);
-    const tilbakekrevingPeriod = otherThanUpdated.find(o => getResultType(o).kode === periodeResultatType.MANUELL_BEHANDLING);
+    const tilbakekrevingPeriod = otherThanUpdated.find(o => getResultType(o).kode === foreldelseCodes.MANUELL_BEHANDLING);
     this.setSelectedTilbakekrevingActivity(tilbakekrevingPeriod || undefined);
   }
 
