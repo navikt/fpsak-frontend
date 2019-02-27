@@ -5,8 +5,8 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "axios": "^0.18.0",
-    "@sentry/browser": "^4.5.3"
+    "@sentry/browser": "^4.6.4",
+    "axios": "^0.18.0"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.15.0",
