@@ -10,8 +10,8 @@ yarn add @fpsak-frontend/person-info
 
 | navn     | type   | påkrevd |
 |----------|--------|---------|
-| person    | object   |    x    |
-| medPanel    | bool |      |
+| person   | object |    x    |
+| medPanel | bool   |         |
 
  ##### Eksempel:
  ```js
@@ -32,13 +32,13 @@ yarn add @fpsak-frontend/person-info
 ### MerkePanel
 Presentasjonskomponent. Definerer visning av personens merkinger. (Søker)
 
-| navn     | type   | påkrevd |
-|----------|--------|---------|
-| erDod    | bool   |        |
-| erNAVAnsatt | bool |        |
-| erVerge | bool    |        |
-| diskresjonskode | string  |        |
-| intl | object |   x     |
+| navn            | type   | påkrevd |
+|-----------------|--------|---------|
+| erDod           | bool   |         |
+| erNAVAnsatt     | bool   |         |
+| erVerge         | bool   |         |
+| diskresjonskode | string |         |
+| intl            | object |    x    |
 
 ##### Eksempel:
 ```js
@@ -69,35 +69,37 @@ Presentasjonskomponent. Definerer visning av personen relatert til fagsak. (Søk
 Presentasjonskomponent. Har ansvar for å vise de kjente adressene til en person. Viser tilhørende labels hvis
 en person er: bosatt, norsk statsborger eller skilt. Viser også label for foretrukket målform eller engelsk.
 
-| navn     | type   | påkrevd |
-|----------|--------|---------|
-| intl    | object   |    x    |
-| bostedsadresse    | string |        |
+| navn               | type   | påkrevd |
+|--------------------|--------|---------|
+| intl               | object |   x     |
+| bostedsadresse     | string |         |
 | midlertidigAdresse | string |         |
-| postAdresseNorge | string |         |
-| postadresseUtland | string |         |
-| sprakkode | objekt |     x    |
-| region | string |         |
-| personstatus | objekt |     x    |
-| sivilstandtype | objekt |         |
-| sivilstandTypes | objekt |    x     |
-| personstatusTypes | objekt |    x     |
-| isPrimaryParent | bool |    x     |
+| postAdresseNorge   | string |         |
+| postadresseUtland  | string |         |
+| sprakkode          | objekt |   x     |
+| region             | string |         |
+| personstatus       | objekt |   x     |
+| sivilstandtype     | objekt |         |
+| sivilstandTypes    | objekt |   x     |
+| personstatusTypes  | objekt |   x     |
+| isPrimaryParent    | bool   |   x     |
 
 ### Barnepanel
 Presentasjonskomponent. Viser en liste over en persons kjente barn med informasjon om
 kjønn, navn, personnummer og adresse. Forventer å få inn en liste med personopplysningsobjekter.
 
-| navn     | type   | påkrevd |
-|----------|--------|---------|
-| barneListe    | array   |    x    |
+| navn       | type  | påkrevd |
+|------------|-------|---------|
+| barneListe | array |    x    |
+
 
 ### PersonYtelserTable
 Presentasjonskomponent som viser tilgrensede ytelser for valgt person.
 
-| navn     | type   | påkrevd |
-|----------|--------|---------|
-| intl    | object   |    x    |
-| ytelser    | array |    x    |
-| relatertYtelseTypes | array |     x    |
-| relatertYtelseStatus | array |     x    |
+| navn                 | type   | påkrevd |
+|----------------------|--------|---------|
+| intl                 | object |   x     |
+| ytelser              | array  |   x     |
+| relatertYtelseTypes  | array  |   x     |
+| relatertYtelseStatus | array  |   x     |
+
