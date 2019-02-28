@@ -8,7 +8,6 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { Image } from '@fpsak-frontend/shared-components';
@@ -46,14 +45,13 @@ class IverksetterVedtakStatusModal extends Component {
 
   render() {
     const {
-      intl, closeEvent, modalTextId, behandlingsresultat, behandlingStatusKode,
-      resolveProsessAksjonspunkterSuccess, resolveFaktaAksjonspunkterSuccess,
+      intl, closeEvent, modalTextId, behandlingsresultat, isVedtakSubmission,
     } = this.props;
     const rejected = behandlingsresultat
       && behandlingsresultat.type.kode === behandlingResultatType.AVSLATT;
 
-    if (!this.showModal && behandlingStatusKode === behandlingStatus.IVERKSETTER_VEDTAK) {
-      this.showModal = resolveProsessAksjonspunkterSuccess || resolveFaktaAksjonspunkterSuccess;
+    if (!this.showModal && isVedtakSubmission) {
+      this.showModal = isVedtakSubmission;
     }
 
     return (
@@ -65,6 +63,7 @@ class IverksetterVedtakStatusModal extends Component {
         onRequestClose={closeEvent}
         shouldCloseOnOverlayClick={false}
         ariaHideApp={false}
+        style={{ overlay: { zIndex: 3000 } }}
       >
         <Row>
           <Column xs="1">
@@ -103,15 +102,14 @@ class IverksetterVedtakStatusModal extends Component {
 IverksetterVedtakStatusModal.propTypes = {
   intl: intlShape.isRequired,
   closeEvent: PropTypes.func.isRequired,
-  resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
-  resolveFaktaAksjonspunkterSuccess: PropTypes.bool.isRequired,
-  behandlingStatusKode: PropTypes.string.isRequired,
   behandlingsresultat: PropTypes.shape(),
   modalTextId: PropTypes.string.isRequired,
+  isVedtakSubmission: PropTypes.bool,
 };
 
 IverksetterVedtakStatusModal.defaultProps = {
   behandlingsresultat: undefined,
+  isVedtakSubmission: false,
 };
 
 const erSammeResultatPåEngangsstønad = (behandlingsresultat,

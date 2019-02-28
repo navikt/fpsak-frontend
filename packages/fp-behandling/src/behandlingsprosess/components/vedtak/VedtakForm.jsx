@@ -50,6 +50,8 @@ const getPreviewManueltBrevCallback = (formProps, finnesAllerede, skalOverstyre,
   e.preventDefault();
 };
 
+const isVedtakSubmission = true;
+
 export const ForhaandsvisningsKnapp = (props) => {
   const { previewFunction } = props;
   return (
@@ -268,6 +270,7 @@ const transformValues = values => values.aksjonspunktKoder.map(apCode => ({
   fritekstBrev: values.brødtekst,
   skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
   overskrift: values.overskrift,
+  isVedtakSubmission,
 }));
 
 const formName = 'VedtakForm';
