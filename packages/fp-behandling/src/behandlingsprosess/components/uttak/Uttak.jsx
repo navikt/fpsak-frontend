@@ -667,7 +667,7 @@ const mapStateToProps = (state, props) => {
     stonadskonto: behandlingFormValueSelector(props.formName)(state, STONADSKONTOER_TEMP),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
     uttaksresultatActivity: uttakMedOpphold.map(periode => ({ tilknyttetStortinget, ...periode })),
-    kanOverstyre: getRettigheter(state).kanOverstyreAccess.isEnabled,
+    kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
     soknadsType: soknad.soknadType.kode,
     omsorgsovertakelseDato: soknad.omsorgsovertakelseDato,
     endredFodselsDato: familiehendelse.fodselsdato,

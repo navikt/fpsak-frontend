@@ -286,7 +286,7 @@ const mapStateToProps = (state, ownProps) => ({
   sprakkode: getBehandlingSprak(state),
   aksjonspunktKoder: getSelectedBehandlingspunktAksjonspunkter(state).map(ap => ap.definisjon.kode),
   revurderingsAarsakString: createAarsakString(getBehandlingArsakTyper(state)),
-  kanOverstyre: getRettigheter(state).kanOverstyreAccess.isEnabled,
+  kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
 });
 
 const mapDispatchToProps = dispatch => ({
