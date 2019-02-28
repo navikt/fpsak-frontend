@@ -67,7 +67,7 @@ export class BehandlingsprosessIndex extends Component {
     this.previewCallback = this.previewCallback.bind(this);
     this.previewVedtakCallback = this.previewVedtakCallback.bind(this);
     this.previewManueltBrevCallback = this.previewManueltBrevCallback.bind(this);
-    this.settingState = this.settingState.bind(this);
+    this.submitVilkarUtenPromise = this.submitVilkarUtenPromise.bind(this);
 
     this.state = {
       isVedtakSubmission: false,
@@ -96,7 +96,7 @@ export class BehandlingsprosessIndex extends Component {
   }
 
 
-  settingState(aksjonspunktModels) {
+  submitVilkarUtenPromise(aksjonspunktModels) {
     const {
       resolveProsessAksjonspunkter: resolveAksjonspunkter,
       overrideProsessAksjonspunkter: overrideAksjonspunkter,
@@ -188,7 +188,7 @@ export class BehandlingsprosessIndex extends Component {
       this.setState({
         isVedtakSubmission: true,
       }, () => {
-        this.settingState(aksjonspunktModels);
+        this.submitVilkarUtenPromise(aksjonspunktModels);
       });
       return false;
     }
