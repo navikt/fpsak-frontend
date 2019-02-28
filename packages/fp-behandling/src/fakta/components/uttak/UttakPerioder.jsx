@@ -482,7 +482,7 @@ const mapStateToProps = (state) => {
   return {
     behandlingFormPrefix,
     isManuellOverstyring: manuellOverstyring(state),
-    kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
+    kanOverstyre: getRettigheter(state).kanOverstyreAccess.isEnabled,
     openForms: !!perioder(state).find(periode => periode.openForm === true),
     førsteUttaksDato: førsteUttaksDato(state),
     uttakPeriodeVurderingTyper: getKodeverk(kodeverkTyper.UTTAK_PERIODE_VURDERING_TYPE)(state),
