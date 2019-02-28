@@ -42,6 +42,7 @@ export class TilbakekrevingFormImpl extends Component {
   constructor() {
     super();
     this.resetFields = this.resetFields.bind(this);
+    this.resetAnnetTextField = this.resetAnnetTextField.bind(this);
   }
 
   resetFields() {
@@ -52,12 +53,23 @@ export class TilbakekrevingFormImpl extends Component {
     clearFormFields(`${behandlingFormPrefix}.${activityPanelName}`, false, false, ...fields);
   }
 
+  resetAnnetTextField() {
+    const {
+      behandlingFormPrefix, activityPanelName, clearFields: clearFormFields, oppfylt, handletUaktsomhetGrad, annet,
+    } = this.props;
+    if (!annet) {
+      const fields = [`${oppfylt}.${handletUaktsomhetGrad}.annetTekst`];
+      clearFormFields(`${behandlingFormPrefix}.${activityPanelName}`, false, false, ...fields);
+    }
+  }
+
   render() {
     const {
       oppfylt,
       handletUaktsomhetGrad,
       grunnerTilReduksjon,
       cancelSelectedActivity,
+      annet,
       ...formProps
     } = this.props;
 
@@ -106,47 +118,53 @@ export class TilbakekrevingFormImpl extends Component {
               />
             </RadioGroupField>
           </Column>
-          <Column md="6">
-            <FormSection name={oppfylt}>
-              {oppfylt !== tilbakekrevingCodes.GODTRO && (
-                <>
-                  <Uaktsomhet
-                    grunnerTilReduksjon={grunnerTilReduksjon}
-                    readOnly={readOnly}
-                    handletUaktsomhetGrad={handletUaktsomhetGrad}
-                    resetFields={this.resetFields}
-                  />
-                  { uaktsomhetCodes.includes(handletUaktsomhetGrad)
-                  && (
-                    <FormSection name={handletUaktsomhetGrad} key={handletUaktsomhetGrad}>
-                      <HandletUaktsomhetGrad
-                        grunnerTilReduksjon={grunnerTilReduksjon}
-                        readOnly={readOnly}
-                        handletUaktsomhetGrad={handletUaktsomhetGrad}
-                      />
-                    </FormSection>
-                  )
-                  }
-                </>
-              )
-              }
-              {oppfylt === tilbakekrevingCodes.GODTRO && (
-                <>
-                  <Undertekst><FormattedMessage id="Tilbakekreving.RadioGroup.BeløpetIBehold" /></Undertekst>
-                  <VerticalSpacer eightPx />
-                  <RadioGroupField
-                    validate={[required]}
-                    name="beløpetIBehold"
-                    readOnly={readOnly}
-                  >
-                    <RadioOption label={<FormattedMessage id="Tilbakekreving.Ja" />} value />
-                    <RadioOption label={<FormattedMessage id="Tilbakekreving.Nei" />} value={false} />
-                  </RadioGroupField>
-                </>
-              )
-              }
-            </FormSection>
-          </Column>
+          {oppfylt
+            && (
+            <Column md="6">
+              <FormSection name={oppfylt}>
+                {oppfylt !== tilbakekrevingCodes.GODTRO && (
+                  <>
+                    <Uaktsomhet
+                      grunnerTilReduksjon={grunnerTilReduksjon}
+                      readOnly={readOnly}
+                      handletUaktsomhetGrad={handletUaktsomhetGrad}
+                      resetFields={this.resetFields}
+                    />
+                    { uaktsomhetCodes.includes(handletUaktsomhetGrad)
+                    && (
+                      <FormSection name={handletUaktsomhetGrad} key={handletUaktsomhetGrad}>
+                        <HandletUaktsomhetGrad
+                          grunnerTilReduksjon={grunnerTilReduksjon}
+                          readOnly={readOnly}
+                          handletUaktsomhetGrad={handletUaktsomhetGrad}
+                          annet={annet}
+                          resetAnnetTextField={this.resetAnnetTextField}
+                        />
+                      </FormSection>
+                    )
+                    }
+                  </>
+                )
+                }
+                {oppfylt === tilbakekrevingCodes.GODTRO && (
+                  <>
+                    <Undertekst><FormattedMessage id="Tilbakekreving.RadioGroup.BeløpetIBehold" /></Undertekst>
+                    <VerticalSpacer eightPx />
+                    <RadioGroupField
+                      validate={[required]}
+                      name="beløpetIBehold"
+                      readOnly={readOnly}
+                    >
+                      <RadioOption label={<FormattedMessage id="Tilbakekreving.Ja" />} value />
+                      <RadioOption label={<FormattedMessage id="Tilbakekreving.Nei" />} value={false} />
+                    </RadioGroupField>
+                  </>
+                )
+                }
+              </FormSection>
+            </Column>
+            )
+          }
         </Row>
         <VerticalSpacer twentyPx />
         <FlexRow>
@@ -231,6 +249,7 @@ const mapStateToProps = (state, initialProps) => {
     oppfylt,
     handletUaktsomhetGrad,
     grunnerTilReduksjon: behandlingFormValueSelector(initialProps.activityPanelName)(state, `${oppfylt}.${handletUaktsomhetGrad}.grunnerTilReduksjon`),
+    annet: behandlingFormValueSelector(initialProps.activityPanelName)(state, `${oppfylt}.${handletUaktsomhetGrad}.annet`),
     initialValues: buildInitalValues(initialProps.selectedItemData),
     onSubmit: values => initialProps.updateActivity(transformValues(initialProps.selectedItemData, values)),
   };

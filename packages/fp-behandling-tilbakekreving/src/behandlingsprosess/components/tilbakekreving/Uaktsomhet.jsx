@@ -37,9 +37,7 @@ const Uaktsomhet = ({
 );
 
 Uaktsomhet.propTypes = {
-  grunnerTilReduksjon: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  handletUaktsomhetGrad: PropTypes.string.isRequired,
   resetFields: PropTypes.func.isRequired,
 };
 
