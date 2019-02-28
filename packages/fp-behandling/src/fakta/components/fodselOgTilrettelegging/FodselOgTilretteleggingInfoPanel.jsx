@@ -8,9 +8,7 @@ import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 
 import FodselOgTilretteleggingFaktaForm from './FodselOgTilretteleggingFaktaForm';
 
-const fodselOgPermAksjonspunkter = [
-
-];
+const fodselOgPermAksjonspunkter = ['ap'];
 
 export const FodselOgTilretteleggingInfoPanelImpl = ({
   intl,
@@ -32,7 +30,7 @@ export const FodselOgTilretteleggingInfoPanelImpl = ({
     <AksjonspunktHelpText isAksjonspunktOpen>
       {[<FormattedMessage id="Kontroller opplysninger fra jordmor og arbeidsgiver" key="svangerskapspengerAp" />]}
     </AksjonspunktHelpText>
-    <FodselOgTilretteleggingFaktaForm readOnly={readOnly} hasOpenAksjonspunkter={hasOpenAksjonspunkter} />
+    <FodselOgTilretteleggingFaktaForm submitCallback={submitCallback} readOnly={readOnly} hasOpenAksjonspunkter={hasOpenAksjonspunkter} />
   </FaktaEkspandertpanel>
 );
 
