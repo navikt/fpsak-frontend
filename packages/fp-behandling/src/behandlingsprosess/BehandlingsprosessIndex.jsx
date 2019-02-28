@@ -29,6 +29,7 @@ import {
   overrideProsessAksjonspunkter,
   resetBehandlingspunkter,
   fetchPreviewBrev as fetchPreview,
+  fetchFptilbakePreviewBrev as fetchFptilbakePreview,
   getSelectedBehandlingspunktNavn,
 } from './duck';
 import { getBehandlingspunkter, getSelectedBehandlingspunkt, getDefaultBehandlingspunkt }
@@ -67,6 +68,7 @@ export class BehandlingsprosessIndex extends Component {
     this.previewCallback = this.previewCallback.bind(this);
     this.previewVedtakCallback = this.previewVedtakCallback.bind(this);
     this.previewManueltBrevCallback = this.previewManueltBrevCallback.bind(this);
+    this.previewFptilbakeCallback = this.previewFptilbakeCallback.bind(this);
   }
 
   componentDidMount() {
@@ -114,6 +116,17 @@ export class BehandlingsprosessIndex extends Component {
     const data = {
       behandlingId: behandlingIdentifier.behandlingId,
       fritekst: fritekst || '',
+      mottaker,
+      brevmalkode,
+    };
+    fetchBrevPreview(data);
+  }
+
+  previewFptilbakeCallback(mottaker, brevmalkode, fritekst) {
+    const { behandlingIdentifier, fetchFptilbakePreview: fetchBrevPreview } = this.props;
+    const data = {
+      behandlingId: behandlingIdentifier.behandlingId,
+      varseltekst: fritekst || '',
       mottaker,
       brevmalkode,
     };
@@ -198,6 +211,7 @@ export class BehandlingsprosessIndex extends Component {
             previewCallback={this.previewCallback}
             previewVedtakCallback={this.previewVedtakCallback}
             previewManueltBrevCallback={this.previewManueltBrevCallback}
+            previewFptilbakeCallback={this.previewFptilbakeCallback}
             dispatchSubmitFailed={submitFailedDispatch}
             selectedBehandlingspunkt={selectedBehandlingspunkt}
           />
@@ -222,6 +236,7 @@ BehandlingsprosessIndex.propTypes = {
   resolveProsessAksjonspunkter: PropTypes.func.isRequired,
   overrideProsessAksjonspunkter: PropTypes.func.isRequired,
   fetchPreview: PropTypes.func.isRequired,
+  fetchFptilbakePreview: PropTypes.func.isRequired,
   fetchVedtaksbrevPreview: PropTypes.func.isRequired,
   dispatchSubmitFailed: PropTypes.func.isRequired,
 };
@@ -246,6 +261,7 @@ const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
     push,
     fetchPreview,
+    fetchFptilbakePreview,
     resolveProsessAksjonspunkter,
     overrideProsessAksjonspunkter,
     fetchVedtaksbrevPreview,
