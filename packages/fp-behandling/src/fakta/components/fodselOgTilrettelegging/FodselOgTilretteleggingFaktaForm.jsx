@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import {
   FlexContainer, FlexColumn, FlexRow,
 } from '@fpsak-frontend/shared-components';
@@ -13,45 +13,12 @@ import FaktaSubmitButton from 'behandlingFpsak/src/fakta/components/FaktaSubmitB
 import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
 import ArbeidsforholdFaktaPanel from './ArbeidsforholdFaktaPanel';
 
-// Dette blir helt sikkert på et annet format
-const tilrettelegging = {
-  termindato: '2019-08-01',
-  arbforhold: [
-    {
-      id: 123,
-      jordmor: {
-        tilretteleggingFra: '14.04.2019',
-      },
-      arbeidsforhold: {
-        navn: 'Hansen flyttebyrå AS',
-        tilrettelegging: 'REDUSERT',
-        tilretteleggingFra: '14.04.2019',
-        stillingsprosent: 50,
-      },
-    },
-    {
-      id: 456,
-      jordmor: {
-        tilretteleggingFra: '20.6.2019',
-      },
-      arbeidsforhold: {
-        navn: 'Rema 100',
-        tilrettelegging: 'IKKE_GJENNOMFORES',
-        tilretteleggingFra: '14.04.2019',
-        stillingsprosent: null,
-      },
-    }],
-};
-
 export class FodselOgTilretteleggingFaktaForm extends Component {
-  constructor() {
-    super();
-  }
-
   render() {
     const {
       readOnly,
       hasOpenAksjonspunkter,
+      tilrettelegging,
       ...formProps
     } = this.props;
     return (
@@ -59,7 +26,6 @@ export class FodselOgTilretteleggingFaktaForm extends Component {
         <FlexContainer fluid wrap>
           <FlexRow>
             <FlexColumn>
-              {tilrettelegging.termindato}
               <DatepickerField
                 name="termindato"
                 label={{ id: 'FodselOgTilretteleggingFaktaForm.Termindato' }}
@@ -90,9 +56,49 @@ export class FodselOgTilretteleggingFaktaForm extends Component {
 FodselOgTilretteleggingFaktaForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
-  submitCallback: PropTypes.func.isRequired,
+  tilrettelegging: PropTypes.shape().isRequired,
 };
 
-export default (behandlingForm({
+const mapStateToProps = (state, props) => {
+  // Dette blir helt sikkert på et annet format
+  const tilrettelegging = {
+    termindato: '2019-08-01',
+    arbforhold: [
+      {
+        id: 123,
+        jordmor: {
+          tilretteleggingFra: '2019-04-18',
+        },
+        arbeidsforhold: {
+          navn: 'Hansen flyttebyrå AS',
+          tilrettelegging: 'REDUSERT',
+          tilretteleggingFra: '2019-04-18',
+          stillingsprosent: 50,
+          begrunnelse: 'TEsting',
+        },
+      },
+      {
+        id: 456,
+        jordmor: {
+          tilretteleggingFra: '2019-06-20',
+        },
+        arbeidsforhold: {
+          navn: 'Rema 100',
+          tilrettelegging: 'IKKE_GJENNOMFORES',
+          tilretteleggingFra: '2019-06-20',
+          stillingsprosent: null,
+          begrunnelse: 'Heia',
+        },
+      }],
+  };
+  return {
+    tilrettelegging,
+    initialValues: {
+      termindato: tilrettelegging.termindato,
+    },
+  };
+};
+
+export default connect(mapStateToProps)(behandlingForm({
   form: 'FodselOgTilretteleggingForm',
 })(FodselOgTilretteleggingFaktaForm));
