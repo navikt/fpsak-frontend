@@ -404,20 +404,6 @@ const transformValues = (values, selectedItemData, avslagAarsakKoder, innvilgels
   return transformvalue;
 };
 
-const calculateCorrectWeeks = (aktivitet) => {
-  if ((aktivitet.utbetalingsgrad || aktivitet.utbetalingsgrad === 0) || !aktivitet.prosentArbeid) {
-    return Math.floor(aktivitet.trekkdager / 5);
-  }
-  return Math.floor((aktivitet.trekkdager * parseFloat(1 - (aktivitet.prosentArbeid * 0.01)).toPrecision(2)) / 5);
-};
-
-const calculateCorrectDays = (aktivitet) => {
-  if ((aktivitet.utbetalingsgrad || aktivitet.utbetalingsgrad === 0) || !aktivitet.prosentArbeid) {
-    return Math.floor(aktivitet.trekkdager % 5);
-  }
-  return Math.floor((aktivitet.trekkdager * parseFloat(1 - (aktivitet.prosentArbeid * 0.01)).toPrecision(2)) % 5);
-};
-
 export const initialValue = (selectedItem, kontoIkkeSatt) => {
   const { ...returnValues } = selectedItem;
   return returnValues.aktiviteter.map((a) => {
