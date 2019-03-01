@@ -13,6 +13,8 @@ import FaktaSubmitButton from 'behandlingFpsak/src/fakta/components/FaktaSubmitB
 import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
 import ArbeidsforholdFaktaPanel from './ArbeidsforholdFaktaPanel';
 
+const FODSEL_TILRETTELEGGING_FORM = 'FodselOgTilretteleggingForm';
+
 export class FodselOgTilretteleggingFaktaForm extends Component {
   render() {
     const {
@@ -35,7 +37,7 @@ export class FodselOgTilretteleggingFaktaForm extends Component {
             </FlexColumn>
           </FlexRow>
         </FlexContainer>
-        <ArbeidsforholdFaktaPanel tilrettelegging={tilrettelegging} />
+        <ArbeidsforholdFaktaPanel formName={FODSEL_TILRETTELEGGING_FORM} />
         <FlexContainer fluid wrap>
           <FlexRow>
             <FlexColumn>
@@ -59,7 +61,7 @@ FodselOgTilretteleggingFaktaForm.propTypes = {
   tilrettelegging: PropTypes.shape().isRequired,
 };
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = () => {
   // Dette blir helt sikkert på et annet format
   const tilrettelegging = {
     termindato: '2019-08-01',
@@ -69,36 +71,64 @@ const mapStateToProps = (state, props) => {
         jordmor: {
           tilretteleggingFra: '2019-04-18',
         },
-        arbeidsforhold: {
-          navn: 'Hansen flyttebyrå AS',
-          tilrettelegging: 'REDUSERT',
-          tilretteleggingFra: '2019-04-18',
-          stillingsprosent: 50,
-          begrunnelse: 'TEsting',
+        navn: 'Hansen flyttebyrå AS',
+        // tilrettelegging: [{
+        //   kanGjennomfores: true,
+        //   dato: '2019-05-30',
+        // }, {
+        //   kanIkkeGjennomfores: false,
+        //   dato: '',
+        // }, {
+        //   redusertArbeid: true,
+        //   dato: '2019-04-18',
+        //   stillingsprosent: 50,
+        // }],
+        kanGjennomfores: {
+          kanGjennomfores: true,
+          dato: '2019-05-30',
         },
+        kanIkkeGjennomfores: {
+          kanIkkeGjennomfores: false,
+          dato: '',
+        },
+        redusertArbeid: {
+          redusertArbeid: true,
+          dato: '2019-04-18',
+          stillingsprosent: 50,
+        },
+        begrunnelse: 'TEsting',
       },
       {
         id: 456,
         jordmor: {
           tilretteleggingFra: '2019-06-20',
         },
-        arbeidsforhold: {
-          navn: 'Rema 100',
-          tilrettelegging: 'IKKE_GJENNOMFORES',
-          tilretteleggingFra: '2019-06-20',
-          stillingsprosent: null,
-          begrunnelse: 'Heia',
+        navn: 'Rema 100',
+        kanGjennomfores: {
+          kanGjennomfores: false,
+          dato: '',
         },
+        kanIkkeGjennomfores: {
+          kanIkkeGjennomfores: true,
+          dato: '2019-06-20',
+        },
+        redusertArbeid: {
+          redusertArbeid: false,
+          dato: '',
+          stillingsprosent: null,
+        },
+        begrunnelse: 'Heia',
       }],
   };
   return {
     tilrettelegging,
     initialValues: {
       termindato: tilrettelegging.termindato,
+      arbforhold: tilrettelegging.arbforhold,
     },
   };
 };
 
 export default connect(mapStateToProps)(behandlingForm({
-  form: 'FodselOgTilretteleggingForm',
+  form: FODSEL_TILRETTELEGGING_FORM,
 })(FodselOgTilretteleggingFaktaForm));

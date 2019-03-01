@@ -210,6 +210,26 @@
   "FodselInfoPanel.VurderVilkarForSykdom": "Vurder om vilkår for sykdom er oppfylt",
   "FodselInfoPanel.KontrollerMotTerminbekreftelsen": "Kontroller terminbekreftelse",
   "FodselInfoPanel.KontrollerMotFodselsdokumentasjon": "Kontroller mot opplysningene fra fødselsdokumentasjonen",
+<<<<<<< HEAD
+=======
+  
+  "FodselOgTilretteleggingInfoPanel.FaktaFodselOgTilrettelegging": "Fakta om fødsel og tilrettelegging",
+  "FodselOgTilretteleggingFaktaForm.Termindato": "Termindato",
+  "ArbeidsforholdFaktaPanel.Faktagruppe": "Arbeidsforhold som det er søkt for",
+  "ArbeidsforholdFaktaPanel.Oppdater": "Oppdater",
+  "ArbeidsforholdFaktaPanel.Avbryt": "Avbryt",
+  "ArbeidsforholdTable.Arbeidsforhold": "Arbeidsforhold",
+  "ArbeidsforholdTable.TilretteleggingFra": "Trenger tilrettelegging fra",
+  "ArbeidsforholdInnhold.Jordmor.TilretteleggingFra": "Jordmor oppgir at tilrettelegging er nødvendig fra og med",
+  "ArbeidsforholdInnhold.BegrunnEndringene": "Begrunn endringene",
+  "ArbeidsforholdInnhold.Arbeidsgiver.Tilrettelegging": "Arbeidsgiver oppgir at nødvendig tilrettelegging",
+  "ArbeidsforholdInnhold.Arbeidsgiver.Dato": "Dato",
+  "ArbeidsforholdInnhold.Arbeidsgiver.Stillingsprosent": "Stillingsprosent",
+  "ArbeidsforholdInnhold.Arbeidsgiver.KanGjennomfores": "a) kan gjennomføres slik at arbeidstakeren kan fortsette med samme stilling fra og med",
+  "ArbeidsforholdInnhold.Arbeidsgiver.RedusertArbeid": "b) kan gjennomføres slik at arbeidstakeren kan fortsette med redusert arbeidstid fra og med",
+  "ArbeidsforholdInnhold.Arbeidsgiver.KanIkkeGjennomfores": "c) kan ikke gjennomfores og arbeidstakeren må midlertidig gå ut av sitt arbeid fra og med",
+  
+>>>>>>> PFP-5936 checkboxer
   "FeilutbetalingInfoPanel.FaktaFeilutbetaling": "Fakta om feilutbetaling",
   "FeilutbetalingInfoPanel.Revurdering": "Revurdering",
   "FeilutbetalingInfoPanel.Feilutbetaling": "Feilutbetaling",

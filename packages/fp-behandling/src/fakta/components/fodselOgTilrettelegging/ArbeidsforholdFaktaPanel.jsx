@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
+import { bindActionCreators } from 'redux';
 
+import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/src/behandlingForm';
+import { getSelectedBehandlingId } from 'behandlingFpsak/src/duck';
+import {
+  getBehandlingVersjon,
+} from 'behandlingFpsak/src/behandlingSelectors';
 import FaktaGruppe from 'behandlingFpsak/src/fakta/components/FaktaGruppe';
 import ArbeidsforholdTable from './ArbeidsforholdTable';
 import ArbeidsforholdInnhold from './ArbeidsforholdInnhold';
@@ -13,25 +21,37 @@ export class ArbeidsforholdFaktaPanel extends Component {
     };
     this.setSelectedArbeidsforhold = this.setSelectedArbeidsforhold.bind(this);
     this.cancelArbeidsforhold = this.cancelArbeidsforhold.bind(this);
+    this.updateArbeidsforhold = this.updateArbeidsforhold.bind(this);
   }
 
   setSelectedArbeidsforhold(event, id, selectedArbeidsforhold) {
-    // this.initializeActivityForm(selectedArbeidsforhold);
+    this.initializeArbforholdForm({});
     this.setState({ selectedArbeidsforhold });
   }
 
+  initializeArbforholdForm() {
+    const { reduxFormInitialize: formInitialize, behandlingFormPrefix } = this.props;
+    formInitialize(`${behandlingFormPrefix}.${'selectedFodselOgTilretteleggingForm'}`);
+  }
+
   cancelArbeidsforhold() {
-    // this.initializeActivityForm({});
+    this.initializeArbforholdForm({});
     this.setState({ selectedArbeidsforhold: undefined });
   }
 
+  updateArbeidsforhold() {
+
+  }
+
   render() {
-    const { tilrettelegging } = this.props;
+    const {
+      arbforhold,
+    } = this.props;
     const { selectedArbeidsforhold } = this.state;
     return (
       <FaktaGruppe titleCode="ArbeidsforholdFaktaPanel.Faktagruppe">
         <ArbeidsforholdTable
-          arbeidsforhold={tilrettelegging.arbforhold}
+          arbeidsforhold={arbforhold}
           selectArbeidsforholdCallback={this.setSelectedArbeidsforhold}
           selectedArbeidsforhold={selectedArbeidsforhold ? selectedArbeidsforhold.id : undefined}
         />
@@ -40,6 +60,7 @@ export class ArbeidsforholdFaktaPanel extends Component {
         <ArbeidsforholdInnhold
           selectedArbeidsforhold={selectedArbeidsforhold}
           cancelArbeidsforholdCallback={this.cancelArbeidsforhold}
+          updateArbeidsforholdCallback={this.updateArbeidsforhold}
         />
         )
       }
@@ -48,10 +69,26 @@ export class ArbeidsforholdFaktaPanel extends Component {
   }
 }
 ArbeidsforholdFaktaPanel.propTypes = {
-  tilrettelegging: PropTypes.shape().isRequired,
+  arbforhold: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 ArbeidsforholdFaktaPanel.defaultProps = {
 };
 
-export default ArbeidsforholdFaktaPanel;
+
+const mapStateToProps = (state, props) => {
+  const arbforhold = behandlingFormValueSelector(props.formName)(state, 'arbforhold');
+  return {
+    arbforhold,
+    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators({
+    reduxFormChange,
+    reduxFormInitialize,
+  }, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ArbeidsforholdFaktaPanel);

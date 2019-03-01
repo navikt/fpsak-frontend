@@ -7,8 +7,8 @@ import {
 } from '@fpsak-frontend/shared-components';
 
 const headerTextCodes = [
-  'ArbeidsforholdFaktaPanel.Arbeidsforhold',
-  'ArbeidsforholdFaktaPanel.TilretteleggingFra',
+  'ArbeidsforholdTable.Arbeidsforhold',
+  'ArbeidsforholdTable.TilretteleggingFra',
 ];
 
 const ArbeidsforholdTable = ({
@@ -27,7 +27,7 @@ const ArbeidsforholdTable = ({
         isSelected={a.id === selectedArbeidsforhold}
       >
         <TableColumn>
-          <Normaltekst>{a.arbeidsforhold.navn}</Normaltekst>
+          <Normaltekst>{a.navn}</Normaltekst>
         </TableColumn>
         <TableColumn>
           <Normaltekst>{a.jordmor.tilretteleggingFra}</Normaltekst>
@@ -38,7 +38,7 @@ const ArbeidsforholdTable = ({
 );
 ArbeidsforholdTable.propTypes = {
   arbeidsforhold: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  selectedArbeidsforhold: PropTypes.string,
+  selectedArbeidsforhold: PropTypes.number,
   selectArbeidsforholdCallback: PropTypes.func.isRequired,
 };
 
