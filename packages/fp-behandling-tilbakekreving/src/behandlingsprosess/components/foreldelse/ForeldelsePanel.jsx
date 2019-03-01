@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import {
-  FadingPanel, VerticalSpacer, FlexRow, FlexColumn,
+  FadingPanel, VerticalSpacer, FlexRow, FlexColumn, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
@@ -14,6 +14,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingTilbakekreving/src/behandlingForm';
 import { getBehandlingVersjon, getForeldelsePerioder } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingTilbakekreving/src/duckTilbake';
+import moment from 'moment';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { addClassNameGroupIdToPerioder } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
 import BpTimelinePanel from '../felles/behandlingspunktTimelineSkjema/BpTimelinePanel';
 import ForeldelseForm from './ForeldelseForm';
@@ -25,6 +27,10 @@ const foreldelseAksjonspunkter = [
   aksjonspunktCodes.VURDER_FORELDELSE,
 ];
 export const getKjonn = person => (person.erKvinne ? 'K' : 'M');
+const getDate = () => moment().subtract(30, 'months').format(DDMMYYYY_DATE_FORMAT);
+const getApTekst = apCode => (apCode
+  ? [<FormattedMessage id={`Foreldelse.AksjonspunktHelpText.${apCode}`} key="vurderForeldelse" values={{ dato: getDate() }} />]
+  : []);
 
 const ForeldelsePanelImpl = ({
   foreldelsesresultatActivity,
@@ -59,6 +65,10 @@ const ForeldelsePanelImpl = ({
       }
       {foreldelsesresultatActivity && isApOpen && (
         <>
+          <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
+            { getApTekst(apCodes[0]) }
+          </AksjonspunktHelpText>
+          <VerticalSpacer twentyPx />
           <BpTimelinePanel
             hovedsokerKjonnKode={getKjonn(fagsakPerson)}
             resultatActivity={foreldelsesresultatActivity}
@@ -100,10 +110,12 @@ ForeldelsePanelImpl.propTypes = {
   reduxFormInitialize: PropTypes.func.isRequired,
   fagsakPerson: PropTypes.string.isRequired,
   isApOpen: PropTypes.bool.isRequired,
+  apCodes: PropTypes.arrayOf(PropTypes.string),
 };
 
 ForeldelsePanelImpl.defaultProps = {
   foreldelsesresultatActivity: undefined,
+  apCodes: undefined,
 };
 
 export const transformValues = (values, apCode) => {
