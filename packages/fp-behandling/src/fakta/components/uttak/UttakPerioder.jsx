@@ -74,17 +74,16 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => i
   const gjeldeneGraderingPerioder = graderingPerioder.filter(grp => overlappingDates(grp, soknadsPeriode));
   const gjeldeneUtsettelsePerioder = utsettelsePerioder.filter(utp => overlappingDates(utp, soknadsPeriode));
 
-  const isGradering = gjeldeneGraderingPerioder.some(innmldPeriode => innmldPeriode.arbeidsprosent !== soknadsPeriode.arbeidstidsprosent)
-  || (soknadsPeriode.arbeidstidsprosent !== undefined && soknadsPeriode.arbeidstidsprosent !== null);
-  const isUtsettelse = gjeldeneUtsettelsePerioder.some(innmldPeriode => innmldPeriode.utsettelseÅrsak.kode !== soknadsPeriode.utsettelseÅrsak.kode)
-  || soknadsPeriode.utsettelseÅrsak.kode !== '-';
+  const isManglerGradering = gjeldeneGraderingPerioder.some(innmldPeriode => innmldPeriode.arbeidsprosent !== soknadsPeriode.arbeidstidsprosent)
+  && soknadsPeriode.arbeidstidsprosent !== null;
+  const isManglerUtsettelse = gjeldeneUtsettelsePerioder.some(innmldPeriode => innmldPeriode.utsettelseÅrsak.kode !== soknadsPeriode.utsettelseÅrsak.kode);
 
   const isArbeidstaker = (soknadsPeriode.arbeidsgiver || {}).virksomhet;
 
   let isManglendeInntektsmelding = false;
   if (isArbeidstaker && gjeldeneGraderingPerioder.length === 0
     && gjeldeneUtsettelsePerioder.length === 0
-    && (isGradering || isUtsettelse)) {
+    && (isManglerGradering || isManglerUtsettelse)) {
     isManglendeInntektsmelding = true;
   }
 
@@ -94,7 +93,7 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => i
     graderingPerioder: gjeldeneGraderingPerioder,
     utsettelsePerioder: gjeldeneUtsettelsePerioder,
     isManglendeInntektsmelding,
-    utsettelseÅrsak: isUtsettelse ? soknadsPeriode.utsettelseÅrsak : false,
+    utsettelseÅrsak: isManglerUtsettelse ? soknadsPeriode.utsettelseÅrsak : false,
   };
 });
 
