@@ -215,12 +215,14 @@ const transformValues = (selectedItemData, values) => {
     handletUaktsomhetGrad,
     className: getStatusPeriode(resultatType),
     periodeResultatType: resultatType,
-    ...values[oppfylt][handletUaktsomhetGrad],
+    periodValues: { ...values[oppfylt][handletUaktsomhetGrad] },
   };
 };
 
 const buildInitalValues = (selectedItemData) => {
-  const { oppfylt, begrunnelse, handletUaktsomhetGrad } = selectedItemData;
+  const {
+    oppfylt, begrunnelse, handletUaktsomhetGrad, periodValues,
+  } = selectedItemData;
 
   if (oppfylt) {
     return {
@@ -228,7 +230,7 @@ const buildInitalValues = (selectedItemData) => {
       begrunnelse,
       [oppfylt]: {
         handletUaktsomhetGrad,
-        [handletUaktsomhetGrad]: { ...selectedItemData },
+        [handletUaktsomhetGrad]: { ...periodValues },
       },
     };
   }
