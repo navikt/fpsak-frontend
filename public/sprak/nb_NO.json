@@ -478,6 +478,7 @@
   "TermindatoFaktaForm.OpplysningerTPS": "Opplysninger om fødsel fra folkeregisteret",
   "TermindatoFaktaForm.FodselsdatoTps": "Fødselsdato",
   "TermindatoFaktaForm.AntallBarnTps": "Antall barn",
+  "TermindatoFaktaForm.AdvarselForTidligUtstedtdato": "Terminbekreftelsen utstedt før 22. svangerskapsuke. Kontakt søker for en nyere terminbekreftelse og sett saken på vent. Fortsett dersom ny bekreftelse ikke skal hentes inn. Behandlingen vil avslås på grunn av manglende dokumentasjon",
 
   "TilleggsopplysningerInfoPanel.Tilleggsopplysninger": "Tilleggsopplysninger",
 

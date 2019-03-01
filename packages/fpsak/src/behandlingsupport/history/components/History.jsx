@@ -59,6 +59,7 @@ const velgHistorikkMal = (histType) => { // NOSONAR
     case historikkinnslagType.KLAGE_BEH_NFP:
     case historikkinnslagType.BYTT_ENHET:
     case historikkinnslagType.UTTAK:
+    case historikkinnslagType.TERMINBEKREFTELSE_UGYLDIG:
       return HistorikkMalType5;
     case historikkinnslagType.NY_INFO_FRA_TPS:
       return HistorikkMalType6;
