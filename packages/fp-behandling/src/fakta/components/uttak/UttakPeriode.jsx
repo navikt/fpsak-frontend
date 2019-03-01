@@ -134,7 +134,6 @@ const UttakPeriode = ({
     <FlexContainer fluid wrap>
       {fields.map((fieldId, index, field) => {
         const periode = field.get(index);
-        // TODO skal denne vises hvis det ikke er noen aksjonspunkt men man. revurdering (PFP-639)
         const harEndringsDatoSomErFørFørsteUttaksPeriode = førsteUttaksDato ? moment(periode.fom).isAfter(førsteUttaksDato) : false;
         return (
           <React.Fragment key={fieldId}>

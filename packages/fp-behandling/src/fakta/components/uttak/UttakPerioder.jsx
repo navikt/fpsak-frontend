@@ -170,6 +170,11 @@ export class UttakPerioder extends Component {
     });
   }
 
+  manuellOverstyringResetCallback() {
+    const { behandlingFormPrefix, reduxFormReset: formReset } = this.props;
+    formReset(`${behandlingFormPrefix}.UttakFaktaForm`);
+  }
+
   removePeriode(values) {
     const {
       behandlingFormPrefix, perioder, inntektsmeldinger, slettedePerioder, initialValues, reduxFormChange: formChange,
@@ -272,7 +277,7 @@ export class UttakPerioder extends Component {
       arbeidsgiver: updatedPeriode.arbeidsgiver,
       isFromSøknad: updatedPeriode.isFromSøknad,
       updated: true,
-      bekreftet: true,
+      bekreftet: updatedPeriode.bekreftet,
     };
 
     if (kontoType) {
@@ -387,6 +392,7 @@ export class UttakPerioder extends Component {
                     name="manuellOverstyring"
                     label={{ id: 'UttakInfoPanel.ManuellOverstyring' }}
                     readOnly={!readOnly || hasRevurderingOvertyringAp || !kanOverstyre}
+                    onClick={() => this.manuellOverstyringResetCallback()}
                   />
                 </FlexColumn>
                 )

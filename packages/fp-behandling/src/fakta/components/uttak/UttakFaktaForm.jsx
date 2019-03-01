@@ -60,7 +60,7 @@ UttakFaktaForm.propTypes = {
 const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOSONAR må ha disse sjekkene
   const errors = {};
 
-  if (sjekkOmfaktaOmUttakAksjonspunkt(aksjonspunkter)) {
+  if (sjekkOmfaktaOmUttakAksjonspunkt(aksjonspunkter) || values.manuellOverstyring) {
     const originalStartDato = (originalPerioder[0] || []).fom;
     const nyStartDato = (values.perioder[0] || []).fom;
     const { førsteUttaksDato } = values;
