@@ -71,18 +71,24 @@ const overlappingDates = (innmldPeriode, soknadsPeriode) => {
 
 const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => inntektsmeldinger.map((innmld) => {
   const { graderingPerioder, utsettelsePerioder } = innmld;
-  const isGradering = soknadsPeriode.arbeidstidsprosent !== undefined && soknadsPeriode.arbeidstidsprosent !== null;
-  const isUtsettelse = soknadsPeriode.utsettelseÅrsak.kode !== '-';
   const gjeldeneGraderingPerioder = graderingPerioder.filter(grp => overlappingDates(grp, soknadsPeriode));
   const gjeldeneUtsettelsePerioder = utsettelsePerioder.filter(utp => overlappingDates(utp, soknadsPeriode));
+
+  const isGradering = gjeldeneGraderingPerioder.some(innmldPeriode => innmldPeriode.arbeidsprosent !== soknadsPeriode.arbeidstidsprosent);
+  const isUtsettelse = gjeldeneUtsettelsePerioder.some(innmldPeriode => innmldPeriode.utsettelseÅrsak.kode !== soknadsPeriode.utsettelseÅrsak.kode);
+
+  const isArbeidstaker = (soknadsPeriode.arbeidsgiver || {}).virksomhet;
+
   let isManglendeInntektsmelding = false;
-  if (gjeldeneGraderingPerioder.length === 0 && gjeldeneUtsettelsePerioder.length === 0 && (isGradering || isUtsettelse)) {
+  if (isArbeidstaker && gjeldeneGraderingPerioder.length === 0
+    && gjeldeneUtsettelsePerioder.length === 0
+    && (isGradering || isUtsettelse)) {
     isManglendeInntektsmelding = true;
   }
 
   return {
     ...innmld,
-    arbeidsProsentFraInntektsmelding: graderingPerioder.reduce((acc, periode) => parseFloat(acc) + parseFloat(periode.arbeidsprosent, 10), 0),
+    arbeidsProsentFraInntektsmelding: gjeldeneGraderingPerioder.reduce((acc, periode) => parseFloat(acc) + parseFloat(periode.arbeidsprosent, 10), 0),
     graderingPerioder: gjeldeneGraderingPerioder,
     utsettelsePerioder: gjeldeneUtsettelsePerioder,
     isManglendeInntektsmelding,
