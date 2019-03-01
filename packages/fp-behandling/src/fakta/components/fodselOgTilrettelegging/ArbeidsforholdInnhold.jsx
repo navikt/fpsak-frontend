@@ -22,6 +22,8 @@ const maxLength1500 = maxLength(1500);
 
 export const ArbeidsforholdInnhold = ({
   cancelArbeidsforholdCallback,
+  updateArbeidsforholdCallback,
+  ...formProps
 }) => (
   <div>
     <FlexContainer>
@@ -58,7 +60,7 @@ export const ArbeidsforholdInnhold = ({
           <Hovedknapp
             htmlType="button"
             mini
-            onClick=""
+            onClick={formProps.handleSubmit}
           >
             <FormattedMessage id="ArbeidsforholdFaktaPanel.Oppdater" />
           </Hovedknapp>
@@ -79,11 +81,19 @@ export const ArbeidsforholdInnhold = ({
 
 ArbeidsforholdInnhold.propTypes = {
   cancelArbeidsforholdCallback: PropTypes.func.isRequired,
+  updateArbeidsforholdCallback: PropTypes.func.isRequired,
 };
-
-ArbeidsforholdInnhold.defaultProps = {
+const transformValues = (values, selectedArbeidsforhold) => {
+  const { ...transformvalue } = selectedArbeidsforhold;
+  transformvalue.kanGjennomfores.kanGjennomfores = values.kanGjennomfores;
+  transformvalue.kanGjennomfores.dato = values.kanGjennomforesDato;
+  transformvalue.kanIkkeGjennomfores.kanIkkeGjennomfores = values.kanIkkeGjennomfores;
+  transformvalue.kanIkkeGjennomfores.dato = values.kanIkkeGjennomforesDato;
+  transformvalue.redusertArbeid.redusertArbeid = values.redusertArbeid;
+  transformvalue.redusertArbeid.dato = values.redusertArbeidDato;
+  transformvalue.redusertArbeid.stillingsprosent = values.redusertArbeidStillingsprosent;
+  return transformvalue;
 };
-
 const mapStateToProps = (state, ownProps) => {
   const { selectedArbeidsforhold } = ownProps;
   // TODO: Tilpasse responsen fra backend
@@ -99,6 +109,7 @@ const mapStateToProps = (state, ownProps) => {
       redusertArbeidDato: selectedArbeidsforhold.redusertArbeid.dato,
       redusertArbeidStillingsprosent: selectedArbeidsforhold.redusertArbeid.stillingsprosent,
     },
+    onSubmit: values => ownProps.updateArbeidsforholdCallback(transformValues(values, selectedArbeidsforhold)),
   };
 };
 
