@@ -74,8 +74,10 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => i
   const gjeldeneGraderingPerioder = graderingPerioder.filter(grp => overlappingDates(grp, soknadsPeriode));
   const gjeldeneUtsettelsePerioder = utsettelsePerioder.filter(utp => overlappingDates(utp, soknadsPeriode));
 
-  const isGradering = gjeldeneGraderingPerioder.some(innmldPeriode => innmldPeriode.arbeidsprosent !== soknadsPeriode.arbeidstidsprosent);
-  const isUtsettelse = gjeldeneUtsettelsePerioder.some(innmldPeriode => innmldPeriode.utsettelseÅrsak.kode !== soknadsPeriode.utsettelseÅrsak.kode);
+  const isGradering = gjeldeneGraderingPerioder.some(innmldPeriode => innmldPeriode.arbeidsprosent !== soknadsPeriode.arbeidstidsprosent)
+  || (soknadsPeriode.arbeidstidsprosent !== undefined && soknadsPeriode.arbeidstidsprosent !== null);
+  const isUtsettelse = gjeldeneUtsettelsePerioder.some(innmldPeriode => innmldPeriode.utsettelseÅrsak.kode !== soknadsPeriode.utsettelseÅrsak.kode)
+  || soknadsPeriode.utsettelseÅrsak.kode !== '-';
 
   const isArbeidstaker = (soknadsPeriode.arbeidsgiver || {}).virksomhet;
 
