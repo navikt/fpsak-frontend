@@ -197,7 +197,7 @@ describe('<UttakActivity>', () => {
   it('skal sette opp initial values for perioder', () => {
     const initialValues = initialValue(selectedItem);
     expect(initialValues).to.eql([{
-      days: 3,
+      days: 0,
       fom: '2018-01-01',
       tom: '2018-02-01',
       stønadskontoType: {
@@ -207,7 +207,7 @@ describe('<UttakActivity>', () => {
       },
       trekkdager: 28,
       utbetalingsgrad: 100,
-      weeks: 5,
+      weeks: 3,
     }]);
   });
 });
