@@ -425,8 +425,8 @@ export const initialValue = (selectedItem, kontoIkkeSatt) => {
     aktivitet.utbetalingsgrad = !kontoIkkeSatt ? aktivitet.utbetalingsgrad : 0;
     aktivitet.fom = selectedItem.fom;
     aktivitet.tom = selectedItem.tom;
-    aktivitet.weeks = typeof a.weeks !== 'undefined' ? a.weeks : calculateCorrectWeeks(aktivitet);
-    aktivitet.days = typeof a.weeks !== 'undefined' ? a.days : calculateCorrectDays(aktivitet);
+    aktivitet.weeks = typeof a.weeks !== 'undefined' ? a.weeks : 0;
+    aktivitet.days = typeof a.weeks !== 'undefined' ? a.days : 0;
     if (aktivitet.weeks === 0 && aktivitet.days === 0 && selectedItem.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING) {
       aktivitet.weeks = '';
       aktivitet.days = '';
