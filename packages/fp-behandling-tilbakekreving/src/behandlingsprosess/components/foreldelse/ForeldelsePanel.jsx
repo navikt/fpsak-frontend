@@ -39,6 +39,7 @@ const ForeldelsePanelImpl = ({
   reduxFormInitialize: formInitialize,
   fagsakPerson,
   isApOpen,
+  apCodes,
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
