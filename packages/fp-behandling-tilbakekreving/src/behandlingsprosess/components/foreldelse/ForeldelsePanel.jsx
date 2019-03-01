@@ -17,6 +17,7 @@ import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingTilbakekrevi
 import { addClassNameGroupIdToPerioder } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
 import BpTimelinePanel from '../felles/behandlingspunktTimelineSkjema/BpTimelinePanel';
 import ForeldelseForm from './ForeldelseForm';
+import styles from './foreldelsePanel.less';
 
 const ACTIVITY_PANEL_NAME = 'foreldelsesresultatActivity';
 const formName = 'ForeldelseForm';
@@ -31,6 +32,7 @@ const ForeldelsePanelImpl = ({
   reduxFormChange: formChange,
   reduxFormInitialize: formInitialize,
   fagsakPerson,
+  isApOpen,
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
@@ -39,36 +41,54 @@ const ForeldelsePanelImpl = ({
         <FormattedMessage id="Behandlingspunkt.Foreldelse" />
       </Undertittel>
       <VerticalSpacer twentyPx />
-      {foreldelsesresultatActivity && (
-      <BpTimelinePanel
-        hovedsokerKjonnKode={getKjonn(fagsakPerson)}
-        resultatActivity={foreldelsesresultatActivity}
-        activityPanelName={ACTIVITY_PANEL_NAME}
-        behandlingFormPrefix={behandlingFormPrefix}
-        reduxFormChange={formChange}
-        reduxFormInitialize={formInitialize}
-        formName={formName}
-      >
-        <ForeldelseForm
-          behandlingFormPrefix={behandlingFormPrefix}
-          formName={formName}
-          activityPanelName={ACTIVITY_PANEL_NAME}
-        />
-      </BpTimelinePanel>
+      {!isApOpen && (
+        <div className={styles.bold}>
+          <FlexRow>
+            <FlexColumn>
+              <FormattedMessage id="Foreldelse.Foreldelsesloven" />
+            </FlexColumn>
+          </FlexRow>
+          <VerticalSpacer eightPx />
+          <FlexRow>
+            <FlexColumn>
+              <FormattedMessage id="Foreldelse.AutomatiskVurdert" />
+            </FlexColumn>
+          </FlexRow>
+        </div>
       )
       }
-      <VerticalSpacer twentyPx />
-      <FlexRow>
-        <FlexColumn>
-          <Hovedknapp
-            mini
-            disabled={false}
-            spinner={formProps.submitting}
+      {foreldelsesresultatActivity && isApOpen && (
+        <>
+          <BpTimelinePanel
+            hovedsokerKjonnKode={getKjonn(fagsakPerson)}
+            resultatActivity={foreldelsesresultatActivity}
+            activityPanelName={ACTIVITY_PANEL_NAME}
+            behandlingFormPrefix={behandlingFormPrefix}
+            reduxFormChange={formChange}
+            reduxFormInitialize={formInitialize}
+            formName={formName}
           >
-            <FormattedMessage id="Uttak.Confirm" />
-          </Hovedknapp>
-        </FlexColumn>
-      </FlexRow>
+            <ForeldelseForm
+              behandlingFormPrefix={behandlingFormPrefix}
+              formName={formName}
+              activityPanelName={ACTIVITY_PANEL_NAME}
+            />
+          </BpTimelinePanel>
+          <VerticalSpacer twentyPx />
+          <FlexRow>
+            <FlexColumn>
+              <Hovedknapp
+                mini
+                disabled={false}
+                spinner={formProps.submitting}
+              >
+                <FormattedMessage id="Uttak.Confirm" />
+              </Hovedknapp>
+            </FlexColumn>
+          </FlexRow>
+        </>
+      )
+      }
     </FadingPanel>
   </form>
 );
@@ -79,6 +99,7 @@ ForeldelsePanelImpl.propTypes = {
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
   fagsakPerson: PropTypes.string.isRequired,
+  isApOpen: PropTypes.bool.isRequired,
 };
 
 export const transformValues = values => [{
