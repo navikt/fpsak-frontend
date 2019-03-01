@@ -39,8 +39,10 @@ export class ArbeidsforholdFaktaPanel extends Component {
     this.setState({ selectedArbeidsforhold: undefined });
   }
 
-  updateArbeidsforhold() {
-
+  updateArbeidsforhold(values) {
+    const { reduxFormChange: formChange, behandlingFormPrefix, arbforhold } = this.props;
+    // concat med nye verdier
+    formChange(`${behandlingFormPrefix}.${'FodselOgTilretteleggingForm'}`, 'arbforhold', fieldValues);
   }
 
   render() {
@@ -70,6 +72,9 @@ export class ArbeidsforholdFaktaPanel extends Component {
 }
 ArbeidsforholdFaktaPanel.propTypes = {
   arbforhold: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  behandlingFormPrefix: PropTypes.string.isRequired,
+  reduxFormChange: PropTypes.func.isRequired,
+  reduxFormInitialize: PropTypes.func.isRequired,
 };
 
 ArbeidsforholdFaktaPanel.defaultProps = {
