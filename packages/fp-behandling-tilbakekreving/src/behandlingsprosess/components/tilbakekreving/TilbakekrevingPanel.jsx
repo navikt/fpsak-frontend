@@ -76,11 +76,15 @@ const TilbakekrevingPanelImpl = ({
 );
 
 TilbakekrevingPanelImpl.propTypes = {
-  tilbakekrevingsresultatActivity: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  tilbakekrevingsresultatActivity: PropTypes.arrayOf(PropTypes.shape()),
   tilbakekrevingPerioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
+};
+
+TilbakekrevingPanelImpl.defaultProps = {
+  tilbakekrevingsresultatActivity: undefined,
 };
 
 export const transformValues = values => [{
