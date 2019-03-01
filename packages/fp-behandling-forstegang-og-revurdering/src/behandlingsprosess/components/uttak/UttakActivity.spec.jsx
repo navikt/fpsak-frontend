@@ -207,7 +207,7 @@ describe('<UttakActivity>', () => {
       },
       trekkdager: 28,
       utbetalingsgrad: 100,
-      weeks: 3,
+      weeks: 0,
     }]);
   });
 });
