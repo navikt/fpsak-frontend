@@ -38,12 +38,12 @@ export class FatterVedtakStatusModal extends Component {
 
   render() {
     const {
-      intl, showModal, closeEvent, infoTextCode, altImgTextCode, modalDescriptionTextCode, isVedtakSubmission,
+      intl, showModal, closeEvent, infoTextCode, altImgTextCode, resolveProsessAksjonspunkterSuccess, modalDescriptionTextCode,
     } = this.props;
     if (showModal !== undefined) {
       this.showModal = showModal;
     } else if (!this.showModal) {
-      this.showModal = isVedtakSubmission;
+      this.showModal = resolveProsessAksjonspunkterSuccess;
     }
 
     return (
@@ -88,14 +88,13 @@ FatterVedtakStatusModal.propTypes = {
   infoTextCode: PropTypes.string.isRequired,
   altImgTextCode: PropTypes.string.isRequired,
   modalDescriptionTextCode: PropTypes.string.isRequired,
-  isVedtakSubmission: PropTypes.bool,
+  resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
   intl: intlShape.isRequired,
   showModal: PropTypes.bool,
 };
 
 FatterVedtakStatusModal.defaultProps = {
   showModal: undefined,
-  isVedtakSubmission: false,
 };
 
 const hasOpenAksjonspunktForVedtakUtenTotrinnskontroll = createSelector(
