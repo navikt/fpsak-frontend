@@ -92,6 +92,8 @@
   "FaktaBegrunnelseTextField.Vurdering": "Vurdering",
 
   "Foreldelse.Vurdering": "Vurdering",
+  "Foreldelse.Foreldelsesloven": "Foreldelsesloven §§ 2 og 3",
+  "Foreldelse.AutomatiskVurdert": "Automatisk vurdert",
   "Foreldelse.RadioGroup.Foreldet": "Vurder om perioden er foreldet",
   "Foreldelse.RadioOption.Foreldet": "Perioden er foreldet",
   "Foreldelse.RadioOption.IkkeForeldet": "Perioden er ikke foreldet",
