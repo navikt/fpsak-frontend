@@ -1,11 +1,13 @@
-"use strict";
-require('dotenv').config()
+'use strict';
+require('dotenv')
+  .config();
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var config = require('./webpack.dev');
+const vtpLogin = require('./login/vtp');
 
 if (process.argv.includes('--no-fix')) {
-  console.warn("Setting eslint-loader option 'fix' to false");
+  console.warn('Setting eslint-loader option \'fix\' to false');
   config.module.rules.find(rules => rules.loader === 'eslint-loader').options.fix = false;
 }
 
@@ -14,27 +16,30 @@ var options = {
     'packages',
   ],
   watchContentBase: true,
+  before: function (app, server) {
+    vtpLogin(app);
+  },
   proxy: {
-    "/fpoppdrag/**": {
-      target: process.env.APP_URL_FPOPPDRAG || "http://localhost:8070",
+    '/fpoppdrag/**': {
+      target: process.env.APP_URL_FPOPPDRAG || 'http://localhost:8070',
       secure: false,
       changeOrigin: (!!process.env.APP_URL_FPOPPDRAG),
     },
-    "/fptilbake/**": {
-      target: process.env.APP_URL_FPTILBAKE || "http://localhost:8030",
+    '/fptilbake/**': {
+      target: process.env.APP_URL_FPTILBAKE || 'http://localhost:8030',
       secure: false,
       changeOrigin: (!!process.env.APP_URL_FPTILBAKE),
     },
-    "/fpsak/(api|jetty)/**": {
-      target: process.env.APP_URL_FPSAK || "http://localhost:8080",
+    '/fpsak/(api|jetty)/**': {
+      target: process.env.APP_URL_FPSAK || 'http://localhost:8080',
       secure: false,
       changeOrigin: (!!process.env.APP_URL_FPSAK),
       onProxyRes: function onProxyRes(proxyRes, req, res) {
         // For å håndtere redirects på 202 Accepted responser med location headers...
-        if(proxyRes.headers.location && proxyRes.headers.location.startsWith(process.env.APP_URL_FPSAK)){
+        if (proxyRes.headers.location && proxyRes.headers.location.startsWith(process.env.APP_URL_FPSAK)) {
           proxyRes.headers.location = proxyRes.headers.location.split(process.env.APP_URL_FPSAK)[1];
         }
-      }
+      },
     },
   },
   publicPath: config.output.publicPath,
@@ -49,7 +54,7 @@ var options = {
 
 var wds = new WebpackDevServer(webpack(config), options);
 
-wds.listen(9000, 'localhost', function(err) {
+wds.listen(9000, 'localhost', function (err) {
   if (err) {
     return console.log(err); // NOSONAR
   }
