@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
@@ -15,50 +15,43 @@ import ArbeidsforholdFaktaPanel from './ArbeidsforholdFaktaPanel';
 
 const FODSEL_TILRETTELEGGING_FORM = 'FodselOgTilretteleggingForm';
 
-export class FodselOgTilretteleggingFaktaForm extends Component {
-  render() {
-    const {
-      readOnly,
-      hasOpenAksjonspunkter,
-      tilrettelegging,
-      ...formProps
-    } = this.props;
-    return (
-      <form onSubmit={formProps.handleSubmit}>
-        <FlexContainer fluid wrap>
-          <FlexRow>
-            <FlexColumn>
-              <DatepickerField
-                name="termindato"
-                label={{ id: 'FodselOgTilretteleggingFaktaForm.Termindato' }}
-                validate={[required, hasValidDate]}
-                readOnly={false}
-              />
-            </FlexColumn>
-          </FlexRow>
-        </FlexContainer>
-        <ArbeidsforholdFaktaPanel formName={FODSEL_TILRETTELEGGING_FORM} />
-        <FlexContainer fluid wrap>
-          <FlexRow>
-            <FlexColumn>
-              <FaktaSubmitButton
-                formName={formProps.form}
-                isSubmittable={!readOnly}
-                isReadOnly={false}
-                hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-              />
-            </FlexColumn>
-          </FlexRow>
-        </FlexContainer>
-      </form>
-    );
-  }
-}
+const FodselOgTilretteleggingFaktaForm = ({
+  readOnly,
+  hasOpenAksjonspunkter,
+  ...formProps
+}) => (
+  <form onSubmit={formProps.handleSubmit}>
+    <FlexContainer fluid wrap>
+      <FlexRow>
+        <FlexColumn>
+          <DatepickerField
+            name="termindato"
+            label={{ id: 'FodselOgTilretteleggingFaktaForm.Termindato' }}
+            validate={[required, hasValidDate]}
+            readOnly={false}
+          />
+        </FlexColumn>
+      </FlexRow>
+    </FlexContainer>
+    <ArbeidsforholdFaktaPanel formName={FODSEL_TILRETTELEGGING_FORM} />
+    <FlexContainer fluid wrap>
+      <FlexRow>
+        <FlexColumn>
+          <FaktaSubmitButton
+            formName={formProps.form}
+            isSubmittable={!readOnly}
+            isReadOnly={false}
+            hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+          />
+        </FlexColumn>
+      </FlexRow>
+    </FlexContainer>
+  </form>
+);
 
 FodselOgTilretteleggingFaktaForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
-  tilrettelegging: PropTypes.shape().isRequired,
 };
 
 const mapStateToProps = () => {
@@ -71,7 +64,7 @@ const mapStateToProps = () => {
         jordmor: {
           tilretteleggingFra: '2019-04-18',
         },
-        navn: 'Hansen flyttebyrå AS',
+        navn: 'Xansen flyttebyrå AS',
         // tilrettelegging: [{
         //   kanGjennomfores: true,
         //   dato: '2019-05-30',
@@ -121,7 +114,6 @@ const mapStateToProps = () => {
       }],
   };
   return {
-    tilrettelegging,
     initialValues: {
       termindato: tilrettelegging.termindato,
       arbforhold: tilrettelegging.arbforhold,

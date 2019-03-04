@@ -13,9 +13,10 @@ import {
 import {
   required, hasValidDate, maxLength, minLength, hasValidText,
 } from '@fpsak-frontend/utils';
-import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
 
+import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
 import ArbeidsforholdCheckboxes from './ArbeidsforholdCheckboxes';
+import styles from './arbeidsforholdInnhold.less';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
@@ -39,7 +40,7 @@ export const ArbeidsforholdInnhold = ({
       </FlexRow>
       <ArbeidsforholdCheckboxes />
       <FlexRow>
-        <FlexColumn>
+        <FlexColumn className={styles.textAreaBredde}>
           <TextAreaField
             name="begrunnelse"
             label={{ id: 'ArbeidsforholdInnhold.BegrunnEndringene' }}
@@ -85,6 +86,7 @@ ArbeidsforholdInnhold.propTypes = {
 };
 const transformValues = (values, selectedArbeidsforhold) => {
   const { ...transformvalue } = selectedArbeidsforhold;
+  transformvalue.jordmor.tilretteleggingFra = values.jordmorTilretteleggingFra;
   transformvalue.kanGjennomfores.kanGjennomfores = values.kanGjennomfores;
   transformvalue.kanGjennomfores.dato = values.kanGjennomforesDato;
   transformvalue.kanIkkeGjennomfores.kanIkkeGjennomfores = values.kanIkkeGjennomfores;
@@ -92,6 +94,7 @@ const transformValues = (values, selectedArbeidsforhold) => {
   transformvalue.redusertArbeid.redusertArbeid = values.redusertArbeid;
   transformvalue.redusertArbeid.dato = values.redusertArbeidDato;
   transformvalue.redusertArbeid.stillingsprosent = values.redusertArbeidStillingsprosent;
+  transformvalue.begrunnelse = values.begrunnelse;
   return transformvalue;
 };
 const mapStateToProps = (state, ownProps) => {

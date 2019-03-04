@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { Normaltekst } from 'nav-frontend-typografi';
 
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import {
   Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
@@ -30,7 +32,7 @@ const ArbeidsforholdTable = ({
           <Normaltekst>{a.navn}</Normaltekst>
         </TableColumn>
         <TableColumn>
-          <Normaltekst>{a.jordmor.tilretteleggingFra}</Normaltekst>
+          <Normaltekst>{moment(a.jordmor.tilretteleggingFra).format(DDMMYYYY_DATE_FORMAT)}</Normaltekst>
         </TableColumn>
       </TableRow>
     ))}
