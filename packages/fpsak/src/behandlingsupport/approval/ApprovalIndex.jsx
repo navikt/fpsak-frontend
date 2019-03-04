@@ -25,7 +25,7 @@ import { getKodeverk } from 'kodeverk/duck';
 import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';
 import ToTrinnsForm from './components/ToTrinnsForm';
 import ToTrinnsFormReadOnly from './components/ToTrinnsFormReadOnly';
-import { approve, getApproveFinished, resetApproval } from './duck';
+import { approve, resetApproval } from './duck';
 
 import styles from './ApprovalIndex.less';
 
@@ -89,6 +89,7 @@ export class ApprovalIndexImpl extends Component {
     this.state = {
       approvals: [],
       allAksjonspunktApproved: undefined,
+      showBeslutterModal: false,
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.goToSearchPage = this.goToSearchPage.bind(this);
@@ -142,6 +143,9 @@ export class ApprovalIndexImpl extends Component {
       bekreftedeAksjonspunktDtoer: [fatterVedtakAksjonspunktDto],
     };
     this.setAksjonspunktApproved(aksjonspunkter);
+    this.setState({
+      showBeslutterModal: true,
+    });
     return approveAp(params);
   }
 
@@ -174,10 +178,10 @@ export class ApprovalIndexImpl extends Component {
   render() {
     const {
       totrinnskontrollSkjermlenkeContext, totrinnskontrollReadOnlySkjermlenkeContext, status,
-      approvalReceived, location, navAnsatt, ansvarligSaksbehandler,
+      location, navAnsatt, ansvarligSaksbehandler,
     } = this.props;
-    const { approvals, allAksjonspunktApproved } = this.state;
-    const showModalVedtakStatus = approvalReceived;
+    const { approvals, allAksjonspunktApproved, showBeslutterModal } = this.state;
+    const showModalVedtakStatus = showBeslutterModal;
     const { brukernavn, kanVeilede } = navAnsatt;
     const readOnly = brukernavn === ansvarligSaksbehandler || kanVeilede;
 
@@ -247,7 +251,6 @@ ApprovalIndexImpl.propTypes = {
   status: PropTypes.shape().isRequired,
   toTrinnsBehandling: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(approvalAksjonspunktPropType.isRequired),
-  approvalReceived: PropTypes.bool.isRequired,
   push: PropTypes.func.isRequired,
   resetApproval: PropTypes.func.isRequired,
   location: PropTypes.shape().isRequired,
@@ -271,7 +274,6 @@ const mapStateToProps = state => ({
   status: getBehandlingStatus(state),
   toTrinnsBehandling: getBehandlingToTrinnsBehandling(state),
   aksjonspunkter: getAksjonspunkter(state),
-  approvalReceived: getApproveFinished(state),
   navAnsatt: getNavAnsatt(state),
   skjemalenkeTyper: getKodeverk(kodeverkTyper.SKJERMLENKE_TYPE)(state),
   location: state.router.location,
