@@ -49,7 +49,7 @@ const ForeldelsePanelImpl = ({
         <FormattedMessage id="Behandlingspunkt.Foreldelse" />
       </Undertittel>
       <VerticalSpacer twentyPx />
-      {readOnly && (
+      {!apCodes[0] && (
         <div className={styles.bold}>
           <FlexRow>
             <FlexColumn>
@@ -65,7 +65,7 @@ const ForeldelsePanelImpl = ({
         </div>
       )
       }
-      {foreldelsesresultatActivity && !readOnly && (
+      {foreldelsesresultatActivity && apCodes[0] && (
         <>
           <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
             { getApTekst(apCodes[0]) }
