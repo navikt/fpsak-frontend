@@ -25,6 +25,7 @@ import {
 } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
 import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
@@ -92,6 +93,7 @@ export class AvregningPanelImpl extends Component {
     super();
     this.toggleDetails = this.toggleDetails.bind(this);
     this.resetFields = this.resetFields.bind(this);
+    this.previewMessage = this.previewMessage.bind(this);
 
     this.state = {
       showDetails: [],
@@ -142,6 +144,12 @@ export class AvregningPanelImpl extends Component {
     clearFormFields(`${behandlingFormPrefix}.${formName}`, false, false, ...fields);
   }
 
+  previewMessage(e, previewCallback) {
+    const { varseltekst } = this.props;
+    previewCallback('', dokumentMalType.TBKVAR, varseltekst || ' ');
+    e.preventDefault();
+  }
+
   render() {
     const { showDetails, feilutbetaling } = this.state;
     const {
@@ -154,6 +162,7 @@ export class AvregningPanelImpl extends Component {
       videreBehandling,
       sprakkode,
       featureVarseltekst,
+      previewCallback,
       ...formProps
     } = this.props;
     const simuleringResultatOption = getSimuleringResult(simuleringResultat, feilutbetaling);
@@ -251,6 +260,15 @@ export class AvregningPanelImpl extends Component {
                                   title: 'Malform.Beskrivelse',
                                 }]}
                               />
+                              <a
+                                href=""
+                                onClick={(e) => {
+                                  this.previewMessage(e, previewCallback);
+                                }}
+                                className={styles.previewLink}
+                              >
+                                <FormattedMessage id="Messages.PreviewText" />
+                              </a>
                             </ArrowBox>
                           </div>
                         )
@@ -344,6 +362,7 @@ export class AvregningPanelImpl extends Component {
 AvregningPanelImpl.propTypes = {
   isApOpen: PropTypes.bool.isRequired,
   simuleringResultat: PropTypes.shape(),
+  previewCallback: PropTypes.func.isRequired,
   ...formPropTypes,
 };
 

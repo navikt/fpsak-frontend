@@ -3,6 +3,7 @@ import { createSelector } from 'reselect';
 import { sakOperations } from '@fpsak-frontend/fp-behandling-felles';
 import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 import fpsakBehandlingApi from '../data/fpsakBehandlingApi';
+import fptilbakeBehandlingApi from '../data/fptilbakeBehandlingApi';
 
 const reducerName = 'fpsakBehandlingsprosess';
 
@@ -58,6 +59,7 @@ export const tempUpdateStonadskontoer = params => dispatch => dispatch(fpsakBeha
   .then(response => response.payload);
 
 export const fetchPreviewBrev = fpsakBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();
+export const fetchFptilbakePreviewBrev = fptilbakeBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();
 
 /* Reducer */
 const initialState = {
