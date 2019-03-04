@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Fieldset } from 'nav-frontend-skjema';
+import { injectIntl, intlShape } from 'react-intl';
+
 
 import { behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import {
@@ -22,6 +24,7 @@ export const ArbeidsforholdCheckboxes = ({
   kanGjennomfores,
   redusertArbeid,
   kanIkkeGjennomfores,
+  intl,
 }) => {
   const arrowBox = (dato, stillingsprosent) => (
     <ArrowBox>
@@ -55,7 +58,7 @@ export const ArbeidsforholdCheckboxes = ({
     </ArrowBox>
   );
   return (
-    <Fieldset legend="ArbeidsforholdInnhold.Arbeidsgiver.Tilrettelegging">
+    <Fieldset legend={intl.formatMessage({ id: 'ArbeidsforholdInnhold.Arbeidsgiver.Tilrettelegging' })}>
       <CheckboxField name="kanGjennomfores" label={{ id: 'ArbeidsforholdInnhold.Arbeidsgiver.KanGjennomfores' }} readOnly={false} />
       {kanGjennomfores && arrowBox('kanGjennomforesDato')}
       <CheckboxField name="redusertArbeid" label={{ id: 'ArbeidsforholdInnhold.Arbeidsgiver.RedusertArbeid' }} readOnly={false} />
@@ -70,6 +73,7 @@ ArbeidsforholdCheckboxes.propTypes = {
   kanGjennomfores: PropTypes.bool,
   redusertArbeid: PropTypes.bool,
   kanIkkeGjennomfores: PropTypes.bool,
+  intl: intlShape.isRequired,
 };
 
 ArbeidsforholdCheckboxes.defaultProps = {
@@ -84,4 +88,4 @@ const mapStateToProps = state => ({
   kanIkkeGjennomfores: behandlingFormValueSelector('selectedFodselOgTilretteleggingForm')(state, 'kanIkkeGjennomfores'),
 });
 
-export default connect(mapStateToProps)(ArbeidsforholdCheckboxes);
+export default injectIntl(connect(mapStateToProps)(ArbeidsforholdCheckboxes));

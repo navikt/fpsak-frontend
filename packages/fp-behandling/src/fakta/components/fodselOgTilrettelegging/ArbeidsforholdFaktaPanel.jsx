@@ -25,13 +25,24 @@ export class ArbeidsforholdFaktaPanel extends Component {
   }
 
   setSelectedArbeidsforhold(event, id, selectedArbeidsforhold) {
-    this.initializeArbforholdForm({});
+    const initialValues = {
+      jordmorTilretteleggingFra: selectedArbeidsforhold.jordmor.tilretteleggingFra,
+      begrunnelse: selectedArbeidsforhold.begrunnelse,
+      kanGjennomfores: selectedArbeidsforhold.kanGjennomfores.kanGjennomfores,
+      kanGjennomforesDato: selectedArbeidsforhold.kanGjennomfores.dato,
+      kanIkkeGjennomfores: selectedArbeidsforhold.kanIkkeGjennomfores.kanIkkeGjennomfores,
+      kanIkkeGjennomforesDato: selectedArbeidsforhold.kanIkkeGjennomfores.dato,
+      redusertArbeid: selectedArbeidsforhold.redusertArbeid.redusertArbeid,
+      redusertArbeidDato: selectedArbeidsforhold.redusertArbeid.dato,
+      redusertArbeidStillingsprosent: selectedArbeidsforhold.redusertArbeid.stillingsprosent,
+    };
+    this.initializeArbforholdForm(initialValues);
     this.setState({ selectedArbeidsforhold });
   }
 
-  initializeArbforholdForm() {
+  initializeArbforholdForm(selectedArbeidsforhold) {
     const { reduxFormInitialize: formInitialize, behandlingFormPrefix } = this.props;
-    formInitialize(`${behandlingFormPrefix}.${'selectedFodselOgTilretteleggingForm'}`);
+    formInitialize(`${behandlingFormPrefix}.${'selectedFodselOgTilretteleggingForm'}`, selectedArbeidsforhold);
   }
 
   cancelArbeidsforhold() {
@@ -41,8 +52,10 @@ export class ArbeidsforholdFaktaPanel extends Component {
 
   updateArbeidsforhold(values) {
     const { reduxFormChange: formChange, behandlingFormPrefix, arbforhold } = this.props;
-    // concat med nye verdier
+    const otherThanUpdated = arbforhold.filter(a => a.id !== values.id);
+    const fieldValues = otherThanUpdated.concat(values).sort((a, b) => a.navn.localeCompare(b.navn));
     formChange(`${behandlingFormPrefix}.${'FodselOgTilretteleggingForm'}`, 'arbforhold', fieldValues);
+    this.setState({ selectedArbeidsforhold: undefined });
   }
 
   render() {
@@ -77,12 +90,9 @@ ArbeidsforholdFaktaPanel.propTypes = {
   reduxFormInitialize: PropTypes.func.isRequired,
 };
 
-ArbeidsforholdFaktaPanel.defaultProps = {
-};
-
-
 const mapStateToProps = (state, props) => {
   const arbforhold = behandlingFormValueSelector(props.formName)(state, 'arbforhold');
+  arbforhold.sort((a, b) => a.navn.localeCompare(b.navn));
   return {
     arbforhold,
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
