@@ -14,6 +14,7 @@ services:
       - AUTOTEST_VTP_BASE_URL=http://fpmock2:8060
   fpsak:
     image: repo.adeo.no:5443/fpsak-for-vtp:v201903011747
+    restart: on-failure
     links:
       - fpsak-oracle
       - fpmock2
