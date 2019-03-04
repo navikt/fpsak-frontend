@@ -1711,6 +1711,7 @@
   "UttakPeriode.ManglerInfoUtsettelse": "Inntektsmeldingen mangler info om {årsak}",
   "UttakPeriode.AvvikUtsettelse": "Info om utsettelse avviker fra inntektsmelding",
   "UttakPeriode.AvvikGraderingProsent": "Graderingsprosent avviker fra inntektsmelding",
+  "UttakPeriode.AvvikPeriode": "Fra og til avviker fra inntektsmelding",
   "StartdatoForForeldrepengerperiodenForm.StartdatoEtterArbeidsgiverdato": "Startdato kan ikke være etter datoen som arbeidsgiver opplyser",
   "StartdatoForForeldrepengerperiodenForm.PeriodenAvviker": "Ulik startdato i søknad og inntektsmelding. Fastsett korrekt startdato for søknad eller innhent ny inntektsmelding",
   "StartdatoForForeldrepengerperiodenForm.StartdatoForPerioden": "Startdato for foreldrepengeperioden",

@@ -56,8 +56,13 @@ const renderAvvikContentUtsettelseFraSøknad = utsettelseArsak => (
   </React.Fragment>
 );
 
-const renderAvvikContent = (periode, fom, tom, isGradering, avvikArbeidsprosent, avvikPeriode) => {
+const renderAvvikContent = (periode, avvik) => {
+  const {
+    fom, tom, arbeidsprosent,
+  } = periode;
+  const { isAvvikPeriode, isAvvikArbeidsprosent } = avvik;
   const numberOfDaysAndWeeks = calcDaysAndWeeks(fom, tom, 'YYYY-MM-DD');
+  const isGradering = arbeidsprosent !== undefined && arbeidsprosent !== null;
   const tidenesEnde = tom === TIDENES_ENDE;
   return (
     <React.Fragment key={guid()}>
@@ -81,7 +86,7 @@ const renderAvvikContent = (periode, fom, tom, isGradering, avvikArbeidsprosent,
           )}
         </FlexColumn>
         <FlexColumn>
-          <Normaltekst className={classNames('avvik', { hasAvvik: avvikPeriode })}>
+          <Normaltekst className={classNames('avvik', { hasAvvik: isAvvikPeriode })}>
             {`${dateFormat(fom)} - ${tidenesEnde ? '' : dateFormat(tom)}`}
           </Normaltekst>
           <Undertekst>
@@ -98,7 +103,7 @@ const renderAvvikContent = (periode, fom, tom, isGradering, avvikArbeidsprosent,
           <React.Fragment>
             <VerticalSpacer eightPx />
             <Normaltekst><FormattedMessage id="UttakInfoPanel.AndelIArbeid" /></Normaltekst>
-            <Undertekst className={classNames('avvik', { hasAvvik: avvikArbeidsprosent })}>
+            <Undertekst className={classNames('avvik', { hasAvvik: isAvvikArbeidsprosent })}>
               {periode.arbeidsprosent}
 %
             </Undertekst>
@@ -111,23 +116,20 @@ const renderAvvikContent = (periode, fom, tom, isGradering, avvikArbeidsprosent,
   );
 };
 
-const renderAvvik = (innmldInfo, arbeidsprosentFraSøknad, fraDato, tilDato) => {
-  const inntektsmeldingInfoPerioder = innmldInfo.graderingPerioder.concat(innmldInfo.utsettelsePerioder);
+const renderAvvik = (innmldInfo) => {
+  const {
+    isManglendeInntektsmelding, avvik, graderingPerioder, utsettelsePerioder,
+  } = innmldInfo;
+  const inntektsmeldingInfoPerioder = graderingPerioder.concat(utsettelsePerioder);
 
-
-  if (innmldInfo.isManglendeInntektsmelding) {
-    if (innmldInfo.utsettelseÅrsak) {
-      return [renderAvvikContentUtsettelseFraSøknad(innmldInfo.utsettelseÅrsak)];
+  if (isManglendeInntektsmelding) {
+    if (avvik.utsettelseÅrsak) {
+      return [renderAvvikContentUtsettelseFraSøknad(avvik.utsettelseÅrsak)];
     }
     return [renderAvvikContentGraderingFraSøknad()];
   }
 
-  return inntektsmeldingInfoPerioder.map((periode) => {
-    const isGradering = periode.arbeidsprosent !== undefined && periode.arbeidsprosent !== null;
-    const avvikArbeidsprosent = periode.arbeidsprosent !== arbeidsprosentFraSøknad;
-    const avvikPeriode = periode.fom !== fraDato || periode.tom !== tilDato;
-    return renderAvvikContent(periode, periode.fom, periode.tom, isGradering, avvikArbeidsprosent, avvikPeriode);
-  });
+  return inntektsmeldingInfoPerioder.map(periode => renderAvvikContent(periode, avvik));
 };
 
 const shouldRender = (inntektsmeldingInfo) => {
@@ -140,7 +142,7 @@ const shouldRender = (inntektsmeldingInfo) => {
 };
 
 export const InntektsmeldingInfo = ({
-  inntektsmeldingInfo, arbeidsgiver, arbeidsprosentFraSøknad, fraDato, tilDato,
+  inntektsmeldingInfo, arbeidsgiver,
 }) => {
   const shouldRenderAvvik = shouldRender(inntektsmeldingInfo);
   return (
@@ -150,7 +152,7 @@ export const InntektsmeldingInfo = ({
         <Undertekst><FormattedMessage id="UttakInfoPanel.AvvikiInntektsmelding" /></Undertekst>
         <VerticalSpacer eightPx />
         {inntektsmeldingInfo.map((innmldInfo) => {
-          const renderContent = renderAvvik(innmldInfo, arbeidsprosentFraSøknad, fraDato, tilDato).filter(rc => rc);
+          const renderContent = renderAvvik(innmldInfo).filter(rc => rc);
           const avvikArbeidforhold = innmldInfo.arbeidsgiver !== arbeidsgiver || {}.navn || innmldInfo.arbeidsgiverOrgnr !== arbeidsgiver || {}.identifikator;
           return (
             renderContent.length > 0 && (
@@ -177,10 +179,7 @@ InntektsmeldingInfo.defaultProps = {
 
 InntektsmeldingInfo.propTypes = {
   inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  fraDato: PropTypes.string.isRequired,
-  tilDato: PropTypes.string.isRequired,
   arbeidsgiver: PropTypes.shape(),
-  arbeidsprosentFraSøknad: PropTypes.number,
 };
 
 export default InntektsmeldingInfo;

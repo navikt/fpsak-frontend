@@ -141,8 +141,6 @@ export const InnleggelsePeriode = ({
         <FlexColumn className={styles.fieldColumn}>
           <InntektsmeldingInfo
             inntektsmeldingInfo={inntektsmeldingInfo}
-            fraDato={fraDato}
-            tilDato={tilDato}
           />
         </FlexColumn>
 

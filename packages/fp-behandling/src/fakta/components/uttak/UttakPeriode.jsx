@@ -74,26 +74,33 @@ const avvikInntekstmeldInfo = (periode, inntektsmeldingInfo) => {
   if (periode.bekreftet) {
     return null;
   }
+
   return inntektsmeldingInfo && inntektsmeldingInfo.map((innmldInfo) => {
-    if (innmldInfo.isManglendeInntektsmelding) {
+    const { isManglendeInntektsmelding, avvik } = innmldInfo;
+
+    if (isManglendeInntektsmelding) {
       // skall ikke vises vid utsettelse pga sykdom - fjern det - troligen periode.utsettleseÅrsak.
-      if (innmldInfo.utsettelseÅrsak && !isUtsettelseMedSykdom(periode)) {
+      if (avvik.utsettelseÅrsak && !isUtsettelseMedSykdom(periode)) {
         return (
           <Element className={styles.avvikInfoMargin}>
             <FormattedMessage id="UttakPeriode.ManglerInfoUtsettelse" values={{ årsak: periode.utsettelseÅrsak.navn.toLowerCase() }} />
           </Element>
         );
       }
-      if (innmldInfo.isManglendeInntektsmelding && !innmldInfo.utsettelseÅrsak) {
+      if (avvik.isAvvikArbeidsprosent) {
         return (
           <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikGradering" /></Element>
         );
       }
-    } else if (!innmldInfo.isManglendeInntektsmelding) {
-      if (innmldInfo.utsettelseÅrsak) {
+    }
+    if (!isManglendeInntektsmelding) {
+      if (avvik.isAvvikUtsettelse) {
         return <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikUtsettelse" /></Element>;
       }
-      if (innmldInfo.arbeidsProsentFraInntektsmelding !== periode.arbeidstidsprosent) {
+      if (avvik.isAvvikPeriode) {
+        return <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikPeriode" /></Element>;
+      }
+      if (avvik.isAvvikArbeidsprosent) {
         return <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikGraderingProsent" /></Element>;
       }
     }

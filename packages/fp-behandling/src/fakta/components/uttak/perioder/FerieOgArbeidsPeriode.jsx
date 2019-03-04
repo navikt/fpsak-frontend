@@ -115,10 +115,7 @@ export const FerieOgArbeidsPeriode = ({
           <FlexColumn className={styles.fieldColumn}>
             <InntektsmeldingInfo
               inntektsmeldingInfo={inntektsmeldingInfo}
-              fraDato={fraDato}
-              tilDato={tilDato}
               uttakPeriodeType={uttakPeriodeType}
-              arbeidsprosentFraSøknad={arbeidstidprosent}
               arbeidsgiver={arbeidsgiver}
             />
           </FlexColumn>

@@ -46,7 +46,7 @@ const createNewPerioder = (perioder, id, values) => {
   ];
 };
 
-const overlappingDates = (innmldPeriode, soknadsPeriode) => {
+const overlappingDates = (inntektsmelding, innmldPeriode, soknadsPeriode) => {
   const søknadFomBetween = moment(soknadsPeriode.fom)
     .isBetween(moment(innmldPeriode.fom), moment(innmldPeriode.tom), null, '[]');
   const søknadTomBetween = moment(soknadsPeriode.tom)
@@ -56,44 +56,40 @@ const overlappingDates = (innmldPeriode, soknadsPeriode) => {
   const inntekstmeldingTomBetween = moment(innmldPeriode.tom)
     .isBetween(moment(soknadsPeriode.fom), moment(soknadsPeriode.tom), null, '[]');
 
-  const isGradering = innmldPeriode.arbeidsprosent !== undefined && innmldPeriode.arbeidsprosent !== null;
-
-  if (søknadFomBetween && søknadTomBetween) {
-    if (isGradering) {
-      return soknadsPeriode.arbeidstidsprosent !== innmldPeriode.arbeidsprosent;
-    }
-
-    return innmldPeriode.utsettelseArsak && (innmldPeriode.utsettelseArsak.kode !== soknadsPeriode.utsettelseÅrsak.kode);
-  }
-
-  return inntekstmeldingFomBetween || inntekstmeldingTomBetween;
+  return (søknadFomBetween && søknadTomBetween) || inntekstmeldingFomBetween || inntekstmeldingTomBetween;
 };
 
-const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => inntektsmeldinger.map((innmld) => {
-  const { graderingPerioder, utsettelsePerioder } = innmld;
-  const gjeldeneGraderingPerioder = graderingPerioder.filter(grp => overlappingDates(grp, soknadsPeriode));
-  const gjeldeneUtsettelsePerioder = utsettelsePerioder.filter(utp => overlappingDates(utp, soknadsPeriode));
-
-  const isManglerGradering = gjeldeneGraderingPerioder.some(innmldPeriode => innmldPeriode.arbeidsprosent !== soknadsPeriode.arbeidstidsprosent)
-  && soknadsPeriode.arbeidstidsprosent !== null;
-  const isManglerUtsettelse = gjeldeneUtsettelsePerioder.some(innmldPeriode => innmldPeriode.utsettelseÅrsak.kode !== soknadsPeriode.utsettelseÅrsak.kode);
+const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => inntektsmeldinger.map((inntektsmelding) => {
+  const { graderingPerioder, utsettelsePerioder } = inntektsmelding;
+  const gjeldeneGraderingPerioder = graderingPerioder.filter(graderingPeriode => overlappingDates(inntektsmelding, graderingPeriode, soknadsPeriode));
+  const gjeldeneUtsettelsePerioder = utsettelsePerioder.filter(utsettelsePeriode => overlappingDates(inntektsmelding, utsettelsePeriode, soknadsPeriode));
+  const inntektsmeldingInfoPerioder = gjeldeneGraderingPerioder.concat(gjeldeneUtsettelsePerioder);
 
   const isArbeidstaker = (soknadsPeriode.arbeidsgiver || {}).virksomhet;
 
+  const isAvvikPeriode = inntektsmeldingInfoPerioder.some(periode => periode.fom !== soknadsPeriode.fom || periode.tom !== soknadsPeriode.tom);
+  const isAvvikArbeidsprosent = gjeldeneGraderingPerioder
+    .some(graderingPeriode => graderingPeriode.arbeidsprosent !== parseInt(soknadsPeriode.arbeidstidsprosent, 10));
+  const isAvvikUtsettelse = gjeldeneUtsettelsePerioder
+    .some(utsettelsePeriode => utsettelsePeriode.utsettelseArsak.kode !== soknadsPeriode.utsettelseÅrsak.kode);
+
   let isManglendeInntektsmelding = false;
-  if (isArbeidstaker && gjeldeneGraderingPerioder.length === 0
-    && gjeldeneUtsettelsePerioder.length === 0
-    && (isManglerGradering || isManglerUtsettelse)) {
+  if ((isArbeidstaker && gjeldeneGraderingPerioder.length === 0 && soknadsPeriode.arbeidstidsprosent !== null) || soknadsPeriode.utsettelseÅrsak.kode !== '-') {
     isManglendeInntektsmelding = true;
   }
 
   return {
-    ...innmld,
+    ...inntektsmelding,
     arbeidsProsentFraInntektsmelding: gjeldeneGraderingPerioder.reduce((acc, periode) => parseFloat(acc) + parseFloat(periode.arbeidsprosent, 10), 0),
-    graderingPerioder: gjeldeneGraderingPerioder,
-    utsettelsePerioder: gjeldeneUtsettelsePerioder,
+    graderingPerioder: isAvvikArbeidsprosent || isAvvikPeriode ? gjeldeneGraderingPerioder : [],
+    utsettelsePerioder: isAvvikUtsettelse || isAvvikPeriode ? gjeldeneUtsettelsePerioder : [],
     isManglendeInntektsmelding,
-    utsettelseÅrsak: isManglerUtsettelse ? soknadsPeriode.utsettelseÅrsak : false,
+    avvik: {
+      utsettelseÅrsak: isManglendeInntektsmelding ? soknadsPeriode.utsettelseÅrsak : false,
+      isAvvikArbeidsprosent,
+      isAvvikUtsettelse,
+      isAvvikPeriode,
+    },
   };
 });
 

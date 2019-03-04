@@ -119,8 +119,6 @@ export const SykdomOgSkadePeriode = ({
           <div>
             <InntektsmeldingInfo
               inntektsmeldingInfo={inntektsmeldingInfo}
-              fraDato={fraDato}
-              tilDato={tilDato}
               arbeidsgiver={arbeidsgiver}
             />
           </div>
