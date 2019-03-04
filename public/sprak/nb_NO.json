@@ -1650,7 +1650,8 @@
   "Timeline.TidspunktMotakSoknad" : "Tidspunkt for mottatt søknad",
   "Timeline.IkkeAvklartPeriode" : "Uavklart periode",
   "Timeline.TidspunktRevurdering" : "Startpunkt for revurdering",
-
+  "Timeline.GradertPeriode" : "Gradert periode",
+  "Timeline.ManueltAvklart" : "Manuelt avklart periode",
 
   "TilkjentYtelse.Title": "Tilkjent ytelse",
   "TilkjentYtelse.Stonadinfo.Stonadsdager": "Stønadsdager",

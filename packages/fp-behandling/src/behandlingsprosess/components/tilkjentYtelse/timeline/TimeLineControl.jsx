@@ -23,6 +23,8 @@ import fodselUrl from '@fpsak-frontend/assets/images/fodsel.svg';
 import revurderingUrl from '@fpsak-frontend/assets/images/endringstidspunkt.svg';
 import soknadUrl from '@fpsak-frontend/assets/images/soknad.svg';
 import uavklartUrl from '@fpsak-frontend/assets/images/uavklart.svg';
+import gradertImage from '@fpsak-frontend/assets/images/periode_gradert.svg';
+import manueltAvklart from '@fpsak-frontend/assets/images/periode_manuelt_avklart.svg';
 
 import { VerticalSpacer, Image } from '@fpsak-frontend/shared-components';
 import styles from './timeLineControl.less';
@@ -123,6 +125,25 @@ const TimeLineControl = ({
                   altCode="Timeline.TidspunktRevurdering"
                 />
                 <FormattedMessage id="Timeline.TidspunktRevurdering" />
+              </Column>
+            </Row>
+            <VerticalSpacer eightPx />
+            <Row>
+              <Column xs="6">
+                <Image
+                  className={styles.timeLineButton}
+                  src={gradertImage}
+                  altCode="Timeline.GradertPeriode"
+                />
+                <FormattedMessage id="Timeline.GradertPeriode" />
+              </Column>
+              <Column xs="6">
+                <Image
+                  className={styles.timeLineButton}
+                  src={manueltAvklart}
+                  altCode="Timeline.ManueltAvklart"
+                />
+                <FormattedMessage id="Timeline.ManueltAvklart" />
               </Column>
             </Row>
           </div>
