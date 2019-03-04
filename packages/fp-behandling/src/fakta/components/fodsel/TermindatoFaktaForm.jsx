@@ -150,7 +150,7 @@ export const buildInitialValues = createSelector([getSoknad, getFamiliehendelse,
 });
 
 const erTerminbekreftelseUtstedtForTidlig = (utstedtdato, termindato) => utstedtdato !== undefined && termindato !== undefined
-&& !moment(utstedtdato).isAfter(moment(termindato).subtract(10, 'weeks').subtract(3, 'days'));
+&& !moment(utstedtdato).isAfter(moment(termindato).subtract(18, 'weeks').subtract(3, 'days'));
 
 const transformValues = values => ({
   kode: aksjonspunktCodes.TERMINBEKREFTELSE,
