@@ -100,6 +100,10 @@ export const InnleggelsePeriode = ({
             </Column>
           </div>
           )}
+        </FlexColumn>
+      </FlexRow>
+      <FlexRow>
+        <FlexColumn>
           <TextAreaField
             name="begrunnelse"
             label={{ id: 'UttakInfoPanel.BegrunnEndringene' }}
@@ -109,6 +113,7 @@ export const InnleggelsePeriode = ({
             maxLength={4000}
           />
         </FlexColumn>
+
         <FlexColumn className={styles.fieldColumn}>
           <InntektsmeldingInfo
             inntektsmeldingInfo={inntektsmeldingInfo}
@@ -117,6 +122,7 @@ export const InnleggelsePeriode = ({
             bekreftet={bekreftet}
           />
         </FlexColumn>
+
       </FlexRow>
       <FlexRow>
         <FlexColumn>
