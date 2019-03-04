@@ -12,6 +12,7 @@ import {
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { getKodeverk } from 'behandlingFpsak/src/duck';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -32,6 +33,17 @@ const defaultBGFordeling = (aktivitetStatuser, erKunYtelse) => ({
   fastsattBeløp: '',
   inntektskategori: '',
   nyAndel: true,
+  skalKunneEndreAktivitet: true,
+  lagtTilAvSaksbehandler: true,
+});
+
+const dagpenger = aktivitetStatuser => ({
+  andel: aktivitetStatuser.filter(({ kode }) => kode === aktivitetStatus.DAGPENGER)[0].navn,
+  aktivitetStatus: aktivitetStatus.DAGPENGER,
+  fastsattBeløp: '',
+  inntektskategori: inntektskategorier.DAGPENGER,
+  nyAndel: true,
+  skalKunneEndreAktivitet: false,
   lagtTilAvSaksbehandler: true,
 });
 
@@ -54,7 +66,7 @@ const isDirty = (meta, isBeregningFormDirty) => (meta.dirty || isBeregningFormDi
 const getErrorMessage = (meta, intl, isBeregningFormDirty) => (meta.error && isDirty(meta, isBeregningFormDirty)
 && meta.submitFailed ? intl.formatMessage(...meta.error) : null);
 
-const skalViseSletteknapp = (index, fields, readOnly) => (fields.get(index).nyAndel || fields.get(index).lagtTilAvSaksbehandler) && !readOnly;
+const skalViseSletteknapp = (index, fields, readOnly) => (fields.get(index).skalKunneEndreAktivitet && !readOnly);
 
 const onKeyDown = (fields, aktivitetStatuser, erKunYtelse) => ({ keyCode }) => {
   if (keyCode === 13) {
@@ -92,7 +104,7 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
         <SelectField
           label=""
           name={`${andelElementFieldId}.inntektskategori`}
-          bredde="L"
+          bredde="l"
           selectValues={inntektskategoriSelectValues(inntektskategoriKoder)}
           value={fields.get(index).inntektskategori}
           readOnly={readOnly}
@@ -135,6 +147,24 @@ const getHeaderTextCodes = () => ([
   'BeregningInfoPanel.FordelingBG.Inntektskategori']
 );
 
+const harDagpenger = (fields) => {
+  let harDp = false;
+  fields.forEach((id, index) => {
+    const field = fields.get(index);
+    if (field.aktivitetStatus === aktivitetStatus.DAGPENGER) {
+      harDp = true;
+    }
+  });
+  return harDp;
+};
+
+export const leggTilDagpengerOmBesteberegning = (fields, skalHaBesteberegning, aktivitetStatuser) => {
+  if (!skalHaBesteberegning || harDagpenger(fields)) {
+    return;
+  }
+  fields.push(dagpenger(aktivitetStatuser));
+};
+
 /**
  *  InntektFieldArray
  *
@@ -152,17 +182,20 @@ export const InntektFieldArrayImpl = ({
   isBeregningFormDirty,
   erKunYtelse,
   arbeidsforholdList,
+  skalHaBesteberegning,
+  skalKunneLeggeTilAndel,
 }) => {
   const sumFordeling = summerFordeling(fields) || 0;
   const tablerows = createAndelerTableRows(fields, isAksjonspunktClosed, readOnly, inntektskategoriKoder, intl,
     erKunYtelse, arbeidsforholdList);
   tablerows.push(createBruttoBGSummaryRow(sumFordeling));
+  leggTilDagpengerOmBesteberegning(fields, skalHaBesteberegning, aktivitetStatuser);
   return (
     <NavFieldGroup errorMessage={getErrorMessage(meta, intl, isBeregningFormDirty)}>
       <Table headerTextCodes={getHeaderTextCodes()} noHover classNameTable={styles.inntektTable}>
         {tablerows}
       </Table>
-      {!readOnly
+      {!readOnly && skalKunneLeggeTilAndel
       && (
         <Row className={styles.buttonRow}>
           <Column xs="3">
@@ -210,7 +243,13 @@ InntektFieldArrayImpl.propTypes = {
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   isBeregningFormDirty: PropTypes.bool.isRequired,
   erKunYtelse: PropTypes.bool.isRequired,
+  skalHaBesteberegning: PropTypes.bool.isRequired,
   arbeidsforholdList: PropTypes.arrayOf(arbeidsforholdProptype).isRequired,
+  skalKunneLeggeTilAndel: PropTypes.bool,
+};
+
+InntektFieldArrayImpl.defaultProps = {
+  skalKunneLeggeTilAndel: true,
 };
 
 
@@ -260,6 +299,7 @@ InntektFieldArray.buildInitialValues = (andeler) => {
   }
   return andeler.map(andel => ({
     ...setGenerellAndelsinfo(andel),
+    skalKunneEndreAktivitet: andel.lagtTilAvSaksbehandler && andel.aktivitetStatus.kode !== aktivitetStatus.DAGPENGER,
     fastsattBeløp: andel.fastsattBelopPrMnd || andel.fastsattBelopPrMnd === 0
       ? formatCurrencyNoKr(andel.fastsattBelopPrMnd) : '',
   }));

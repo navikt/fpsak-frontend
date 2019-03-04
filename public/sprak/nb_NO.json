@@ -1238,7 +1238,6 @@
   "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForArbeid" : "Søker er arbeidstaker og det er ikke mottatt inntektsmelding. Mottar søker sykepenger, foreldrepenger, pleiepenger eller svangerskapspenger for arbeid i {arbeid}?",
   "BeregningInfoPanel.VurderMottarYtelse.KanIkkeGaaVidere" : "Funksjonalitet for aktivitet med ytelse er ikke implementert enda.",
 
-  "BeregningInfoPanel.VurderBestebergning.IkkeImplementert" : "Denne funksjonaliteten er ikke implementert enda.",
   "BeregningInfoPanel.VurderBestebergning.HarBesteberegning" : "Søker har hatt dagpenger i opptjeningsperioden. Skal dette fordeles etter besteberegning?",
 
 

@@ -9,6 +9,7 @@ import {
   getVurderBesteberegning,
 } from 'behandlingFpsak/src/behandlingSelectors';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { LINK_TIL_BESTE_BEREGNING_REGNEARK } from '@fpsak-frontend/fp-felles';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
@@ -21,8 +22,6 @@ import styles from '../kunYtelse/kunYtelseBesteberegningPanel.less';
 export const besteberegningField = 'vurderbesteberegningField';
 
 export const inntektFieldArrayName = 'besteberegningInntekt';
-
-const erImplementert = false;
 
 /**
  * VurderBesteberegningPanel
@@ -61,7 +60,7 @@ const VurderBesteberegningPanelImpl = ({
         </a>
       </Column>
     </Row>
-    {erBesteberegning && erImplementert
+    {erBesteberegning
     && (
       <ArrowBox alignOffset={-5}>
         <Row>
@@ -77,7 +76,9 @@ const VurderBesteberegningPanelImpl = ({
               name={inntektFieldArrayName}
               component={InntektFieldArray}
               readOnly={readOnly}
+              skalHaBesteberegning={erBesteberegning}
               andeler={andeler}
+              skalKunneLeggeTilAndel={false}
             />
           </Column>
         </Row>
@@ -99,24 +100,21 @@ VurderBesteberegningPanelImpl.defaultProps = {
 };
 
 
-VurderBesteberegningPanelImpl.buildInitialValues = (vurderBesteberegning) => {
+VurderBesteberegningPanelImpl.buildInitialValues = (vurderBesteberegning, faktaOmBeregningTilfeller) => {
+  if (!faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)) {
+    return {};
+  }
   if (!vurderBesteberegning || !vurderBesteberegning.andeler || vurderBesteberegning.andeler.length === 0) {
     return {};
   }
   const initialValues = {
     [besteberegningField]: vurderBesteberegning.skalHaBesteberegning,
   };
-  if (!erImplementert) {
-    return initialValues;
-  }
   return {
     ...initialValues,
     [inntektFieldArrayName]: InntektFieldArray.buildInitialValues(vurderBesteberegning.andeler),
   };
 };
-
-export const ikkeImplementert = () => ([{ id: 'BeregningInfoPanel.VurderBestebergning.IkkeImplementert' }]);
-
 
 VurderBesteberegningPanelImpl.validate = (values, aktivertePaneler) => {
   if (!values || !aktivertePaneler.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)) {
@@ -127,36 +125,46 @@ VurderBesteberegningPanelImpl.validate = (values, aktivertePaneler) => {
   if (errors[besteberegningField]) {
     return errors;
   }
-  if (values[besteberegningField] && !erImplementert) {
-    errors[besteberegningField] = ikkeImplementert();
+  if (!values[besteberegningField]) {
     return errors;
   }
   errors[inntektFieldArrayName] = InntektFieldArray.validate(values[inntektFieldArrayName]);
   return errors;
 };
 
-VurderBesteberegningPanelImpl.transformValues = (values) => {
+
+VurderBesteberegningPanelImpl.transformValues = (values, faktaOmBeregning) => {
+  if (!faktaOmBeregning || !faktaOmBeregning.vurderBesteberegning) {
+    return {};
+  }
   const skalHaBesteberegning = values[besteberegningField];
   if (!skalHaBesteberegning) {
     return {
-      vurderBesteberegning: {
-        verdierPrAndel: [],
-        skalHaBesteberegning,
+      besteberegningAndeler: {
+        besteberegningAndelListe: [],
       },
     };
   }
   const verdierPrAndel = InntektFieldArray.transformValues(values[inntektFieldArrayName]);
-  return {
-    vurderBesteberegning: {
-      verdierPrAndel,
-      skalHaBesteberegning,
+  const transformedValues = verdierPrAndel.map(verdi => ({
+    andelsnr: verdi.andelsnr,
+    nyAndel: verdi.nyAndel,
+    lagtTilAvSaksbehandler: verdi.lagtTilAvSaksbehandler,
+    aktivitetStatus: verdi.nyAndel ? aktivitetStatus.DAGPENGER : null,
+    fastsatteVerdier: {
+      fastsattBeløp: verdi.fastsattBeløp,
+      inntektskategori: verdi.inntektskategori,
     },
+  }));
+  return {
+    besteberegningAndeler: { besteberegningAndelListe: transformedValues },
   };
 };
 
-export const vurderBesteberegningTransform = values => ({
-  faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING],
-  ...VurderBesteberegningPanelImpl.transformValues(values),
+
+export const vurderBesteberegningTransform = faktaOmBeregning => values => ({
+  faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE],
+  ...VurderBesteberegningPanelImpl.transformValues(values, faktaOmBeregning),
 });
 
 const mapStateToProps = (state) => {

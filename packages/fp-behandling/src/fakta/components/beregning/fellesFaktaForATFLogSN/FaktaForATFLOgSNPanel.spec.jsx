@@ -321,9 +321,13 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     expect(transformedValues.faktaOmBeregningTilfeller[0]).is.eql(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE);
     expect(transformedValues.besteberegningAndeler.besteberegningAndelListe).to.have.length(2);
     expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[0].andelsnr).is.eql(andel1.andelsnr);
+    expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[0].fastsatteVerdier.fastsattBeløp).is.eql(10000);
+    expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[0].fastsatteVerdier.inntektskategori).is.eql('ARBEIDSTAKER');
+    expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[1].andelsnr).is.eql(andel2.andelsnr);
+    expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[1].fastsatteVerdier.fastsattBeløp).is.eql(20000);
+    expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[1].fastsatteVerdier.inntektskategori).is.eql('SELVSTENDIG_NÆRINGSDRIVENDE');
     expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[0].inntektPrMnd).is.eql(10000);
     expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[0].inntektskategori).is.eql('ARBEIDSTAKER');
-    expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[1].andelsnr).is.eql(andel2.andelsnr);
     expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[1].inntektPrMnd).is.eql(20000);
     expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[1].inntektskategori).is.eql('SELVSTENDIG_NÆRINGSDRIVENDE');
   });

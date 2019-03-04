@@ -192,7 +192,7 @@ FastsettBBFodendeKvinneForm.buildInitialValues = (beregningsgrunnlag) => {
   const initialValues = {};
   const faktaOmBeregning = beregningsgrunnlag ? beregningsgrunnlag.faktaOmBeregning : undefined;
   if (!beregningsgrunnlag || !faktaOmBeregning || !beregningsgrunnlag.beregningsgrunnlagPeriode
-    || beregningsgrunnlag.beregningsgrunnlagPeriode.length < 1) {
+    || beregningsgrunnlag.beregningsgrunnlagPeriode.length < 1 || faktaOmBeregning.vurderBesteberegning) {
     return initialValues;
   }
 
@@ -214,7 +214,7 @@ FastsettBBFodendeKvinneForm.buildInitialValues = (beregningsgrunnlag) => {
 };
 
 FastsettBBFodendeKvinneForm.transformValues = (values, faktaOmBeregning) => {
-  if (!faktaOmBeregning || !faktaOmBeregning.besteberegningAndeler) {
+  if (!faktaOmBeregning || !faktaOmBeregning.besteberegningAndeler || faktaOmBeregning.vurderBesteberegning) {
     return {};
   }
   const transformedValues = [];
@@ -225,6 +225,12 @@ FastsettBBFodendeKvinneForm.transformValues = (values, faktaOmBeregning) => {
       inntektPrMnd: removeSpacesFromNumber(values[inputKey]),
       inntektskategori: values[selectKey],
       andelsnr: andel.andelsnr,
+      nyAndel: false,
+      lagtTilAvSaksbehandler: false,
+      fastsatteVerdier: {
+        fastsattBeløp: removeSpacesFromNumber(values[inputKey]),
+        inntektskategori: values[selectKey],
+      },
     });
   });
   return {
