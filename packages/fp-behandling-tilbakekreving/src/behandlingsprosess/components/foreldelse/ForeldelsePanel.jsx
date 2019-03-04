@@ -39,6 +39,7 @@ const ForeldelsePanelImpl = ({
   reduxFormInitialize: formInitialize,
   fagsakPerson,
   isApOpen,
+  readOnly,
   apCodes,
   ...formProps
 }) => (
@@ -48,7 +49,7 @@ const ForeldelsePanelImpl = ({
         <FormattedMessage id="Behandlingspunkt.Foreldelse" />
       </Undertittel>
       <VerticalSpacer twentyPx />
-      {!isApOpen && (
+      {readOnly && (
         <div className={styles.bold}>
           <FlexRow>
             <FlexColumn>
@@ -64,7 +65,7 @@ const ForeldelsePanelImpl = ({
         </div>
       )
       }
-      {foreldelsesresultatActivity && isApOpen && (
+      {foreldelsesresultatActivity && !readOnly && (
         <>
           <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
             { getApTekst(apCodes[0]) }
@@ -111,6 +112,7 @@ ForeldelsePanelImpl.propTypes = {
   reduxFormInitialize: PropTypes.func.isRequired,
   fagsakPerson: PropTypes.string.isRequired,
   isApOpen: PropTypes.bool.isRequired,
+  readOnly: PropTypes.bool.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string),
 };
 
@@ -124,9 +126,7 @@ export const transformValues = (values, apCode) => {
     fraDato: period.fom,
     tilDato: period.tom,
     begrunnelse: period.begrunnelse,
-    foreldelseVurderingType: {
-      kode: period.foreldet,
-    },
+    foreldelseVurderingType: period.foreldet,
   }));
   return [
     {

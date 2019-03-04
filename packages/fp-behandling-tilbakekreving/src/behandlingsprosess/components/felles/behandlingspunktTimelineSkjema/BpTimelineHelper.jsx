@@ -31,6 +31,7 @@ export const addClassNameGroupIdToPerioder = (tilbakekrevingPerioder) => {
     const periodMedClassName = {
       ...item,
       id: index + 1,
+      foreldet: item.foreldelseVurderingType.kode,
       className: getStatusPeriode(getResultType(item)),
       hovedsoker: true,
       group: 1,
