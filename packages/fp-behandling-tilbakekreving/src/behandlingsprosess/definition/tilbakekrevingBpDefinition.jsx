@@ -12,7 +12,7 @@ export const getTilbakekrevingStatus = () => vut.OPPFYLT;
  */
 const tilbakekrevingBuilders = [
   new BehandlingspunktProperties.Builder(bpc.FORELDELSE, 'Foreldelse')
-    .withAksjonspunktCodes(ac.FORELDELSE)
+    .withAksjonspunktCodes(ac.VURDER_FORELDELSE)
     .withVisibilityWhen(() => true)
     .withStatus(getTilbakekrevingStatus),
   new BehandlingspunktProperties.Builder(bpc.TILBAKEKREVING, 'Tilbakekreving')

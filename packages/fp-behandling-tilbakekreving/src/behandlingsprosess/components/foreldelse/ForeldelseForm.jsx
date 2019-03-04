@@ -19,7 +19,6 @@ import {
 import {
   VerticalSpacer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
-import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import { getStatusPeriode } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
 import { behandlingForm } from '../../../behandlingForm';
 import foreldelseCodes from './foreldelseCodes';
@@ -85,7 +84,7 @@ export class ForeldelseFormImpl extends Component {
               />
               <RadioOption
                 label={<FormattedMessage id="Foreldelse.RadioOption.IkkeForeldetTilleggsfrist" />}
-                value={foreldelseCodes.IKKE_FORELDET_TILLEGGSFRIST}
+                value={foreldelseCodes.TILLEGGSFRIST}
               />
             </RadioGroupField>
           </Column>
@@ -127,7 +126,7 @@ const transformValues = (selectedItemData, values) => {
   const { foreldet, begrunnelse } = values;
 
   const resultatType = {
-    kode: foreldet === foreldelseCodes.FORELDET ? periodeResultatType.AVSLATT : periodeResultatType.INNVILGET,
+    kode: foreldet,
     navn: innvilgetTekst,
     kodeverk: PERIODE_RESULTAT_TYPE,
   };

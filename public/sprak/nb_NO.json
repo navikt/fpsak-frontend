@@ -98,6 +98,7 @@
   "Foreldelse.RadioOption.Foreldet": "Perioden er foreldet",
   "Foreldelse.RadioOption.IkkeForeldet": "Perioden er ikke foreldet",
   "Foreldelse.RadioOption.IkkeForeldetTilleggsfrist": "Perioden er ikke foreldet, regel om tilleggsfrist (10år) benyttes",
+  "Foreldelse.AksjonspunktHelpText.5003": "Perioden før {dato} kan være foreldet. Del opp perioden ved behov og fastsett foreldelse",
 
   "BehandlingspunktBegrunnelseTextField.ExplanationRequired": "Vurdering",
   "BehandlingspunktBegrunnelseTextField.ExplanationRequiredReadOnly": "Begrunnelse",

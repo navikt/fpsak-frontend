@@ -1,4 +1,4 @@
-import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
+import foreldelseCodes from '../../foreldelse/foreldelseCodes';
 
 const godkjentKlassenavn = 'godkjentPeriode';
 const avvistKlassenavn = 'avvistPeriode';
@@ -14,14 +14,14 @@ export const getPeriodFeilutbetaling = (dagligUtbetalinger) => {
 
 export const getResultType = item => (item.periodeResultatType ? item.periodeResultatType : item.foreldelseVurderingType);
 export const getStatusPeriode = (resultatType) => {
-  if (resultatType.kode === periodeResultatType.INNVILGET || resultatType.kode === periodeResultatType.DEFAULT) {
-    return godkjentKlassenavn;
+  if (resultatType.kode === foreldelseCodes.FORELDET) {
+    return avvistKlassenavn;
   }
 
-  if (resultatType.kode === periodeResultatType.MANUELL_BEHANDLING) {
+  if (resultatType.kode === foreldelseCodes.MANUELL_BEHANDLING) {
     return 'undefined';
   }
-  return avvistKlassenavn;
+  return godkjentKlassenavn;
 };
 
 export const addClassNameGroupIdToPerioder = (tilbakekrevingPerioder) => {
@@ -31,6 +31,7 @@ export const addClassNameGroupIdToPerioder = (tilbakekrevingPerioder) => {
     const periodMedClassName = {
       ...item,
       id: index + 1,
+      foreldet: item.foreldelseVurderingType.kode,
       className: getStatusPeriode(getResultType(item)),
       hovedsoker: true,
       group: 1,

@@ -34,6 +34,7 @@ export const TilbakekreveingBehandlingspunktInfoPanel = ({ // NOSONAR Kompleksit
         submitCallback={submitCallback}
         readOnly={readOnly}
         isApOpen={openAksjonspunkt}
+        apCodes={apCodes}
       />
     )
     }
