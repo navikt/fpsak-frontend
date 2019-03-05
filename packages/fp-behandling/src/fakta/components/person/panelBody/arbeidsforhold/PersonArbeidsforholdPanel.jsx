@@ -23,8 +23,8 @@ import PersonArbeidsforholdDetailForm, { PERSON_ARBEIDSFORHOLD_DETAIL_FORM } fro
 
 const removeDeleted = arbeidsforhold => arbeidsforhold.filter(a => !a.erSlettet);
 
-const cleanUpArbeidsforhold = (newValues, originalValues, brukArbeidsforholdet) => {
-  if (!brukArbeidsforholdet) {
+const cleanUpArbeidsforhold = (newValues, originalValues) => {
+  if (!newValues.brukArbeidsforholdet) {
     return {
       ...newValues,
       erNyttArbeidsforhold: undefined,
@@ -67,7 +67,7 @@ export const sortArbeidsforhold = arbeidsforhold => arbeidsforhold
     return a1.id.localeCompare(a2.id);
   });
 
-export const sjekkKanFortsetteBehandlingForAktivtArbeidsforhodUtenIM = (arbeidsforhold) => {
+export const erDetTillattMedFortsettingAvAktivtArbeidsforholdUtenIM = (arbeidsforhold) => {
   let isAllowed = true;
   const arbeidsforholdUtenInntektsmeldingTilVurdering = arbeidsforhold.filter(a => (a.tilVurdering || a.erEndret) && !a.mottattDatoInntektsmelding);
 
@@ -92,7 +92,7 @@ const addReplaceableArbeidsforhold = arbeidsforholdList => arbeidsforholdList.ma
   };
 });
 
-const sjekkFortsettUtenImAktivtArbeidsforhold = arbeidsforhold => (arbeidsforhold.brukMedJustertPeriode === true ? undefined
+const sjekkAktivtArbeidsforholdFortsettBehandlingUtenIM = arbeidsforhold => (arbeidsforhold.brukMedJustertPeriode === true ? undefined
   : arbeidsforhold.fortsettBehandlingUtenInntektsmelding);
 
 const sjekkBrukUendretArbeidsforhold = arbeidsforhold => arbeidsforhold.brukArbeidsforholdet && !arbeidsforhold.brukMedJustertPeriode;
@@ -101,14 +101,17 @@ const leggTilValuesForRendering = arbeidsforholdList => arbeidsforholdList.map(a
   ...arbeidsforhold,
   originalFomDato: arbeidsforhold.fomDato,
   brukUendretArbeidsforhold: sjekkBrukUendretArbeidsforhold(arbeidsforhold),
-  fortsettUtenImAktivtArbeidsforhold: sjekkFortsettUtenImAktivtArbeidsforhold(arbeidsforhold),
-  overstyrtTom: arbeidsforhold.tomDato,
+  aktivtArbeidsforholdFortsettBehandlingUtenIM: sjekkAktivtArbeidsforholdFortsettBehandlingUtenIM(arbeidsforhold),
+  overstyrtTom: arbeidsforhold.brukMedJustertPeriode ? arbeidsforhold.tomDato : undefined,
 }));
 
-// -------------------------------------------------------------------------------------------------------------
-// Component: PersonArbeidsforholdPanelImpl
-// -------------------------------------------------------------------------------------------------------------
-
+/**
+ * PersonArbeidsforholdPanelImpl:
+ * - Håndterer staten for children-components.
+ * - Bygger initialValues til children-components ved hjelp av arbeidsforhold PropType. Verdiene
+ * som har samme navn i GUI og PropTypen blir fylt inn 'automatisk', mens andre variabler som
+ * ikke er med i PropTypen må håndteres f.eks. i UpdateArbeidsforhold metoden.
+ */
 export class PersonArbeidsforholdPanelImpl extends Component {
   constructor() {
     super();
@@ -145,32 +148,35 @@ export class PersonArbeidsforholdPanelImpl extends Component {
   updateArbeidsforhold(values) {
     const { selectedArbeidsforhold } = this.state;
     const { arbeidsforhold } = this.props;
+
     const brukMedJustertPeriode = values.brukUendretArbeidsforhold === false && !!values.overstyrtTom;
     const brukArbeidsforholdet = values.brukUendretArbeidsforhold || brukMedJustertPeriode;
-    const fortsettBehandlingUtenInntektsmelding = values.fortsettUtenImAktivtArbeidsforhold || brukMedJustertPeriode;
-    const cleanedValues = cleanUpArbeidsforhold(values, selectedArbeidsforhold, brukArbeidsforholdet);
+    const fortsettBehandlingUtenInntektsmelding = values.aktivtArbeidsforholdFortsettBehandlingUtenIM || brukMedJustertPeriode;
+
     const newValues = {
-      ...cleanedValues,
-      fortsettBehandlingUtenInntektsmelding,
-      brukArbeidsforholdet,
+      ...values,
       brukMedJustertPeriode,
+      brukArbeidsforholdet,
+      fortsettBehandlingUtenInntektsmelding,
     };
 
-    let other = arbeidsforhold.filter(o => o.id !== newValues.id);
-    const oldState = arbeidsforhold.find(a => a.id === newValues.id);
-    let { fomDato } = newValues;
-    if (newValues.erstatterArbeidsforholdId !== oldState.erstatterArbeidsforholdId) {
+    const cleanedValues = cleanUpArbeidsforhold(newValues, selectedArbeidsforhold);
+
+    let other = arbeidsforhold.filter(o => o.id !== cleanedValues.id);
+    const oldState = arbeidsforhold.find(a => a.id === cleanedValues.id);
+    let { fomDato } = cleanedValues;
+    if (cleanedValues.erstatterArbeidsforholdId !== oldState.erstatterArbeidsforholdId) {
       if (oldState.erstatterArbeidsforholdId) {
         other = other.map(o => (o.id === oldState.erstatterArbeidsforholdId ? { ...o, erSlettet: false } : o));
       }
-      if (newValues.erstatterArbeidsforholdId) {
-        other = other.map(o => (o.id === newValues.erstatterArbeidsforholdId ? { ...o, erSlettet: true } : o));
+      if (cleanedValues.erstatterArbeidsforholdId) {
+        other = other.map(o => (o.id === cleanedValues.erstatterArbeidsforholdId ? { ...o, erSlettet: true } : o));
       }
-      fomDato = findFomDato(newValues, arbeidsforhold.find(a => a.id === newValues.erstatterArbeidsforholdId));
+      fomDato = findFomDato(cleanedValues, arbeidsforhold.find(a => a.id === cleanedValues.erstatterArbeidsforholdId));
     }
 
     this.setFormField('arbeidsforhold', other.concat({
-      ...newValues,
+      ...cleanedValues,
       fomDato,
       erEndret: true,
     }));
@@ -186,9 +192,18 @@ export class PersonArbeidsforholdPanelImpl extends Component {
 
   render() {
     const {
-      readOnly, hasAksjonspunkter, hasOpenAksjonspunkter, arbeidsforhold, fagsystemer, kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM,
+      readOnly,
+      hasAksjonspunkter,
+      hasOpenAksjonspunkter,
+      arbeidsforhold,
+      fagsystemer,
+      aktivtArbeidsforholdTillatUtenIM,
     } = this.props;
-    const { selectedArbeidsforhold } = this.state;
+
+    const {
+      selectedArbeidsforhold,
+    } = this.state;
+
     return (
       <ElementWrapper>
         <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD} titleCode="PersonArbeidsforholdPanel.ArbeidsforholdHeader">
@@ -207,7 +222,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
             hasOpenAksjonspunkter={hasOpenAksjonspunkter}
             updateArbeidsforhold={this.updateArbeidsforhold}
             cancelArbeidsforhold={this.cancelArbeidsforhold}
-            kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM={kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM}
+            aktivtArbeidsforholdTillatUtenIM={aktivtArbeidsforholdTillatUtenIM}
           />
           )
         }
@@ -227,7 +242,7 @@ PersonArbeidsforholdPanelImpl.propTypes = {
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
   fagsystemer: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM: PropTypes.bool.isRequired,
+  aktivtArbeidsforholdTillatUtenIM: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -236,7 +251,7 @@ const mapStateToProps = (state) => {
     arbeidsforhold,
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
     fagsystemer: getKodeverk(kodeverkTyper.FAGSYSTEM)(state),
-    kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM: sjekkKanFortsetteBehandlingForAktivtArbeidsforhodUtenIM(arbeidsforhold),
+    aktivtArbeidsforholdTillatUtenIM: erDetTillattMedFortsettingAvAktivtArbeidsforholdUtenIM(arbeidsforhold),
   };
 };
 
@@ -249,12 +264,9 @@ const mapDispatchToProps = dispatch => ({
 
 const PersonArbeidsforholdPanel = connect(mapStateToProps, mapDispatchToProps)(injectIntl(PersonArbeidsforholdPanelImpl));
 
-PersonArbeidsforholdPanel.buildInitialValues = (arbeidsforhold) => {
-  const mArbeidsforhold = leggTilValuesForRendering(addReplaceableArbeidsforhold(arbeidsforhold));
-  return {
-    arbeidsforhold: mArbeidsforhold,
-  };
-};
+PersonArbeidsforholdPanel.buildInitialValues = arbeidsforhold => ({
+  arbeidsforhold: leggTilValuesForRendering(addReplaceableArbeidsforhold(arbeidsforhold)),
+});
 
 PersonArbeidsforholdPanel.isReadOnly = (state) => {
   const isDetailFormOpen = !!behandlingFormValueSelector(PERSON_ARBEIDSFORHOLD_DETAIL_FORM)(state, 'navn');

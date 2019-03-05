@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -11,20 +11,26 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import BehandlingFormFieldCleaner from 'behandlingFpsak/src/BehandlingFormFieldCleaner';
 import {
-  behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, getBehandlingFormValues, getBehandlingFormInitialValues,
-}
-  from 'behandlingFpsak/src/behandlingForm';
-import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
+  behandlingForm,
+  behandlingFormValueSelector,
+  getBehandlingFormInitialValues,
+  getBehandlingFormValues,
+  isBehandlingFormDirty,
+} from 'behandlingFpsak/src/behandlingForm';
+import {
+  dateAfterOrEqual, hasValidDate, hasValidText, maxLength, required,
+} from '@fpsak-frontend/utils';
 import {
   InputField, RadioGroupField, RadioOption, TextAreaField,
 } from '@fpsak-frontend/form';
 import {
-  ElementWrapper, VerticalSpacer, FlexContainer, FlexColumn, FlexRow,
+  ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import handlingTyper from '@fpsak-frontend/kodeverk/src/handlingTyper';
+import ArrowBox from '@fpsak-frontend/shared-components/src/ArrowBox';
+import DatepickerField from '@fpsak-frontend/form/src/DatepickerField';
 import PersonAksjonspunktText from './PersonAksjonspunktText';
 import PersonNyttEllerErstattArbeidsforholdPanel from './PersonNyttEllerErstattArbeidsforholdPanel';
-import ArbeidsforholdAktivTomDatoPickerPanel from './ArbeidsforholdAktivTomDatoPickerPanel';
 
 // ----------------------------------------------------------------------------------
 // VARIABLES
@@ -40,14 +46,21 @@ const maxLength400 = maxLength(400);
 // METHODS
 // ----------------------------------------------------------------------------------
 
+const arbeidsforholdTomDatoPickerErrorMsg = fomDato => ([
+  { id: 'PersonArbeidsforholdDetailForm.DateNotAfterOrEqual' },
+  { fomDato },
+]);
+
 const isKildeAaRegisteret = arbeidsforhold => arbeidsforhold.kilde && arbeidsforhold.kilde.navn.toLowerCase() === AA_REGISTERET;
 
 const showNyttOrErstattPanel = (
   skalBrukeUendretForhold, vurderOmSkalErstattes, harErstattetEttEllerFlere,
-) => skalBrukeUendretForhold && vurderOmSkalErstattes && !harErstattetEttEllerFlere;
+) => !!skalBrukeUendretForhold
+  && vurderOmSkalErstattes
+  && !harErstattetEttEllerFlere;
 
 const skalKunneOverstyreArbeidsforholdTomDato = (hasReceivedInntekstmelding, arbeidsforhold) => {
-  const erLopende = arbeidsforhold.tomDato === null || arbeidsforhold.tomDato === undefined;
+  const erLopende = arbeidsforhold.tomDato === undefined || arbeidsforhold.tomDato === null;
   return (isKildeAaRegisteret(arbeidsforhold) && erLopende && !hasReceivedInntekstmelding)
     || (arbeidsforhold.handlingType && arbeidsforhold.handlingType.kode === handlingTyper.BRUK_MED_OVERSTYRT_PERIODE);
 };
@@ -59,7 +72,6 @@ const skalKunneOverstyreArbeidsforholdTomDato = (hasReceivedInntekstmelding, arb
  * PersonArbeidsforholdDetailForm
  */
 export const PersonArbeidsforholdDetailForm = ({
-  intl,
   cancelArbeidsforhold,
   isErstattArbeidsforhold,
   hasReceivedInntektsmelding,
@@ -67,7 +79,7 @@ export const PersonArbeidsforholdDetailForm = ({
   readOnly,
   showBegrunnelse,
   vurderOmSkalErstattes,
-  kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM,
+  aktivtArbeidsforholdTillatUtenIM,
   arbeidsforhold,
   skalBrukeUendretForhold,
   ...formProps
@@ -84,95 +96,98 @@ export const PersonArbeidsforholdDetailForm = ({
           bredde="XL"
           readOnly
         />
-        <BehandlingFormFieldCleaner
-          formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
-          fieldNames={['fortsettUtenImAktivtArbeidsforhold', 'overstyrtTom']}
+        <RadioGroupField
+          name="brukUendretArbeidsforhold"
+          validate={[required]}
+          direction="vertical"
+          readOnly={readOnly}
         >
-          <RadioGroupField
-            name="brukUendretArbeidsforhold"
-            validate={[required]}
-            direction="vertical"
-            readOnly={readOnly}
+          <RadioOption
+            label={{ id: 'PersonArbeidsforholdDetailForm.BrukArbeidsforholdet' }}
+            value
+            manualHideChildren
           >
+            <BehandlingFormFieldCleaner formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM} fieldNames={['aktivtArbeidsforholdFortsettBehandlingUtenIM']}>
+              {skalBrukeUendretForhold && !hasReceivedInntektsmelding && (
+                <Row>
+                  <Column xs="1" />
+                  <Column xs="11">
+                    <RadioGroupField
+                      name="aktivtArbeidsforholdFortsettBehandlingUtenIM"
+                      validate={[required]}
+                      direction="vertical"
+                      readOnly={readOnly}
+                    >
+                      <RadioOption
+                        label={{ id: 'PersonArbeidsforholdDetailForm.IkkeMottatt' }}
+                        value={false}
+                      />
+                      <RadioOption
+                        label={{ id: 'PersonArbeidsforholdDetailForm.FortsettBehandling' }}
+                        value
+                        disabled={!aktivtArbeidsforholdTillatUtenIM}
+                      />
+                    </RadioGroupField>
+                  </Column>
+                </Row>
+              )}
+            </BehandlingFormFieldCleaner>
+          </RadioOption>
+          { skalKunneOverstyreArbeidsforholdTomDato(hasReceivedInntektsmelding, arbeidsforhold) && (
             <RadioOption
-              label={intl.formatMessage({ id: 'PersonArbeidsforholdDetailForm.BrukArbeidsforholdet' })}
-              value
+              label={{ id: 'PersonArbeidsforholdDetailForm.ArbeidsforholdetErIkkeAktivt' }}
+              value={false}
               manualHideChildren
             >
-              {skalBrukeUendretForhold && !hasReceivedInntektsmelding
-              && (
-              <Row>
-                <Column xs="1" />
-                <Column xs="11">
-                  <RadioGroupField
-                    name="fortsettUtenImAktivtArbeidsforhold"
-                    validate={[required]}
-                    direction="vertical"
-                    readOnly={readOnly}
-                  >
-                    <RadioOption
-                      label={intl.formatMessage({ id: 'PersonArbeidsforholdDetailForm.IkkeMottatt' })}
-                      value={false}
+              <BehandlingFormFieldCleaner formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM} fieldNames={['overstyrtTom']}>
+                { skalBrukeUendretForhold === false && (
+                  <ArrowBox alignOffset={0}>
+                    <DatepickerField
+                      name="overstyrtTom"
+                      label={<FormattedMessage id="PersonArbeidsforholdDetailForm.ArbeidsforholdetAktivTomDato" />}
+                      validate={[required, hasValidDate, dateAfterOrEqual(arbeidsforhold.fomDato, arbeidsforholdTomDatoPickerErrorMsg)]}
+                      readOnly={readOnly}
                     />
-                    <RadioOption
-                      label={intl.formatMessage({ id: 'PersonArbeidsforholdDetailForm.FortsettBehandling' })}
-                      value
-                      disabled={!kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM}
-                    />
-                  </RadioGroupField>
-                </Column>
-              </Row>
-              )}
+                  </ArrowBox>
+                )}
+              </BehandlingFormFieldCleaner>
             </RadioOption>
-            { skalKunneOverstyreArbeidsforholdTomDato(hasReceivedInntektsmelding, arbeidsforhold) && (
+          )}
+          { !skalKunneOverstyreArbeidsforholdTomDato(hasReceivedInntektsmelding, arbeidsforhold) && (
             <RadioOption
-              label={intl.formatMessage({ id: 'PersonArbeidsforholdDetailForm.ArbeidsforholdetErIkkeAktivt' })}
-              value={false}
-            >
-              <ArbeidsforholdAktivTomDatoPickerPanel
-                readOnly={readOnly}
-                fomDato={arbeidsforhold.fomDato}
-              />
-            </RadioOption>
-            )}
-            { !skalKunneOverstyreArbeidsforholdTomDato(hasReceivedInntektsmelding, arbeidsforhold) && (
-            <RadioOption
-              label={intl.formatMessage({ id: 'PersonArbeidsforholdDetailForm.ArbeidsforholdIkkeRelevant' })}
+              label={{ id: 'PersonArbeidsforholdDetailForm.ArbeidsforholdIkkeRelevant' }}
               value={false}
               disabled={isKildeAaRegisteret(arbeidsforhold)}
             />
-            )}
-          </RadioGroupField>
-        </BehandlingFormFieldCleaner>
+          )}
+        </RadioGroupField>
         <VerticalSpacer twentyPx />
         <BehandlingFormFieldCleaner formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM} fieldNames={['begrunnelse']}>
-          {showBegrunnelse
-          && (
-          <TextAreaField
-            name="begrunnelse"
-            label={intl.formatMessage({ id: 'PersonArbeidsforholdDetailForm.Begrunnelse' })}
-            validate={[required, maxLength400, hasValidText]}
-            maxLength={400}
-            readOnly={readOnly}
-          />
+          {showBegrunnelse && (
+            <TextAreaField
+              name="begrunnelse"
+              label={{ id: 'PersonArbeidsforholdDetailForm.Begrunnelse' }}
+              validate={[required, maxLength400, hasValidText]}
+              maxLength={400}
+              readOnly={readOnly}
+            />
           )}
         </BehandlingFormFieldCleaner>
-        { (formProps.initialValues.tilVurdering || formProps.initialValues.erEndret)
-        && (
-        <FlexContainer fluid>
-          <FlexRow>
-            <FlexColumn>
-              <Hovedknapp mini spinner={false} onClick={formProps.handleSubmit} disabled={formProps.pristine || readOnly}>
-                <FormattedMessage id="PersonArbeidsforholdDetailForm.Oppdater" />
-              </Hovedknapp>
-            </FlexColumn>
-            <FlexColumn>
-              <Knapp mini htmlType="button" onClick={cancelArbeidsforhold} disabled={readOnly}>
-                <FormattedMessage id="PersonArbeidsforholdDetailForm.Avbryt" />
-              </Knapp>
-            </FlexColumn>
-          </FlexRow>
-        </FlexContainer>
+        { (formProps.initialValues.tilVurdering || formProps.initialValues.erEndret) && (
+          <FlexContainer fluid>
+            <FlexRow>
+              <FlexColumn>
+                <Hovedknapp mini spinner={false} onClick={formProps.handleSubmit} disabled={formProps.pristine || readOnly}>
+                  <FormattedMessage id="PersonArbeidsforholdDetailForm.Oppdater" />
+                </Hovedknapp>
+              </FlexColumn>
+              <FlexColumn>
+                <Knapp mini htmlType="button" onClick={cancelArbeidsforhold} disabled={readOnly}>
+                  <FormattedMessage id="PersonArbeidsforholdDetailForm.Avbryt" />
+                </Knapp>
+              </FlexColumn>
+            </FlexRow>
+          </FlexContainer>
         )}
       </Column>
       <Column xs="6">
@@ -183,44 +198,43 @@ export const PersonArbeidsforholdDetailForm = ({
           showContent={showNyttOrErstattPanel(skalBrukeUendretForhold, vurderOmSkalErstattes, harErstattetEttEllerFlere)}
           formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
         />
-        { skalBrukeUendretForhold && harErstattetEttEllerFlere
-          && (
+        { skalBrukeUendretForhold && harErstattetEttEllerFlere && (
           <Normaltekst>
             <FormattedMessage id="PersonArbeidsforholdDetailForm.ErstatteTidligereArbeidsforhod" />
           </Normaltekst>
-          )
-        }
+        )}
       </Column>
     </Row>
   </ElementWrapper>
 );
 
 PersonArbeidsforholdDetailForm.propTypes = {
-  intl: intlShape.isRequired,
   cancelArbeidsforhold: PropTypes.func.isRequired,
   isErstattArbeidsforhold: PropTypes.bool.isRequired,
   hasReceivedInntektsmelding: PropTypes.bool.isRequired,
   vurderOmSkalErstattes: PropTypes.bool.isRequired,
   harErstattetEttEllerFlere: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
-  kanFortsetteBehandlingForAktivtArbeidsforhodUtenIM: PropTypes.bool.isRequired,
+  aktivtArbeidsforholdTillatUtenIM: PropTypes.bool.isRequired,
   arbeidsforhold: arbeidsforholdPropType.isRequired,
-  skalBrukeUendretForhold: PropTypes.bool.isRequired,
+  skalBrukeUendretForhold: PropTypes.bool,
   ...formPropTypes,
 };
 
 PersonArbeidsforholdDetailForm.defaultProps = {
   harErstattetEttEllerFlere: false,
+  skalBrukeUendretForhold: undefined,
 };
 
 export const showBegrunnelse = createSelector(
   [
     isBehandlingFormDirty(PERSON_ARBEIDSFORHOLD_DETAIL_FORM),
     getBehandlingFormValues(PERSON_ARBEIDSFORHOLD_DETAIL_FORM),
-    getBehandlingFormInitialValues(PERSON_ARBEIDSFORHOLD_DETAIL_FORM)],
-  (dirty, values, initialValues = {}) => (dirty
-    ? values.fortsettUtenImAktivtArbeidsforhold !== false
-    : !!initialValues.begrunnelse && initialValues.begrunnelse !== ''),
+    getBehandlingFormInitialValues(PERSON_ARBEIDSFORHOLD_DETAIL_FORM),
+  ],
+  (dirty, values, initialValues = {}) => (
+    dirty ? values.aktivtArbeidsforholdFortsettBehandlingUtenIM !== false : !!initialValues.begrunnelse && initialValues.begrunnelse !== ''
+  ),
 );
 
 const mapStateToProps = (state, ownProps) => ({
@@ -231,19 +245,17 @@ const mapStateToProps = (state, ownProps) => ({
   vurderOmSkalErstattes: !!behandlingFormValueSelector(PERSON_ARBEIDSFORHOLD_DETAIL_FORM)(state, 'vurderOmSkalErstattes'),
   harErstattetEttEllerFlere: behandlingFormValueSelector(PERSON_ARBEIDSFORHOLD_DETAIL_FORM)(state, 'harErstattetEttEllerFlere'),
   isErstattArbeidsforhold: behandlingFormValueSelector(PERSON_ARBEIDSFORHOLD_DETAIL_FORM)(state, 'erNyttArbeidsforhold') === false,
-  skalBrukeUendretForhold: !!behandlingFormValueSelector(PERSON_ARBEIDSFORHOLD_DETAIL_FORM)(state, 'brukUendretArbeidsforhold'),
-  fortsettUtenImAktivtArbeidsforhold: !!behandlingFormValueSelector(PERSON_ARBEIDSFORHOLD_DETAIL_FORM)(state, 'fortsettUtenImAktivtArbeidsforhold'),
-  harOverstyrtTom: !!behandlingFormValueSelector(PERSON_ARBEIDSFORHOLD_DETAIL_FORM)(state, 'overstyrtTom'),
+  skalBrukeUendretForhold: behandlingFormValueSelector(PERSON_ARBEIDSFORHOLD_DETAIL_FORM)(state, 'brukUendretArbeidsforhold'),
+  aktivtArbeidsforholdFortsettBehandlingUtenIM:
+    !!behandlingFormValueSelector(PERSON_ARBEIDSFORHOLD_DETAIL_FORM)(state, 'aktivtArbeidsforholdFortsettBehandlingUtenIM'),
+  overstyrtTom: behandlingFormValueSelector(PERSON_ARBEIDSFORHOLD_DETAIL_FORM)(state, 'overstyrtTom'),
   onSubmit: values => ownProps.updateArbeidsforhold(values),
 });
 
-const validateForm = () => {
-  const errors = {};
-  return errors;
-};
+const validateForm = () => ({});
 
-export default connect(mapStateToProps)(injectIntl(behandlingForm({
+export default connect(mapStateToProps)(behandlingForm({
   form: PERSON_ARBEIDSFORHOLD_DETAIL_FORM,
   validate: validateForm,
   enableReinitialize: true,
-})(PersonArbeidsforholdDetailForm)));
+})(PersonArbeidsforholdDetailForm));
