@@ -6,6 +6,7 @@ import { SelectField } from '@fpsak-frontend/form';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { behandlingFormValueSelector } from 'behandlingTilbakekreving/src/behandlingForm';
+import { getFeilutbetalingAarsaker } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import styles from './feilutbetalingPerioderTable.less';
 
 const getSubÅrsaker = (årsakNavn, årsaker) => {
@@ -66,6 +67,7 @@ FeilutbetalingPerioderForm.propTypes = {
 };
 
 const mapStateToProps = (state, initialProps) => ({
+  årsaker: getFeilutbetalingAarsaker(state),
   årsak: behandlingFormValueSelector(initialProps.formName)(state, `perioder.${initialProps.elementId}.årsak`),
 });
 
