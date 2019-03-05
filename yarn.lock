@@ -7110,167 +7110,167 @@ natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
 
-nav-frontend-alertstriper-style@0.2.52:
-  version "0.2.52"
-  resolved "https://registry.npmjs.org/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-0.2.52.tgz#4a23bd1d5bc9865410eff5d7ebd0cab054489120"
-  integrity sha512-2Xy+EIYqYQw1cwwTcpnOVx+5yiRKnDtctvSSYcI1jwsWlhQ0bxShASJ5vZEdldcxxcWhM0jG5qpdC6vsSo/x1g==
+nav-frontend-alertstriper-style@0.2.53:
+  version "0.2.53"
+  resolved "https://registry.npmjs.org/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-0.2.53.tgz#54aab60a9dac95d91cbf11b5353e84ebca67401a"
+  integrity sha512-HIYnB8+5w7KgLyGKFvb901v9FwQPFEA8ckNQyNJEhGVEeO6b3l5+sCIEdUvs5mM9dgtuViGEuIR7wTHmC5YCcA==
 
-nav-frontend-alertstriper@1.0.33:
-  version "1.0.33"
-  resolved "https://registry.npmjs.org/nav-frontend-alertstriper/-/nav-frontend-alertstriper-1.0.33.tgz#61b722cefa8e65dd17a8c4714c9cc1258d9b6749"
-  integrity sha512-eDN2O1sM8QqYtZCHODV4JK5VAwjvoSD+t0JeCXRl7+P0wyjMHq+SWiM5Kt+pV95iBCaaMtqmOjeyc7CxpdTaeA==
+nav-frontend-alertstriper@1.0.34:
+  version "1.0.34"
+  resolved "https://registry.npmjs.org/nav-frontend-alertstriper/-/nav-frontend-alertstriper-1.0.34.tgz#20914d4ed526cb88a69a94e3939fbd429fffca05"
+  integrity sha512-cdbC9E5lSTvWrPYC3dEG2N5+6+ijJyLTTlI1+As7OwyNsMAg088O3j7hH3YVKW7RjunL6UXQwXn1raV2hFHBMg==
 
 nav-frontend-chevron-style@0.3.4:
   version "0.3.4"
   resolved "https://registry.npmjs.org/nav-frontend-chevron-style/-/nav-frontend-chevron-style-0.3.4.tgz#e6b0d5e9ddd87af988e4e1a44fc7fcb1fbb70994"
   integrity sha512-pAWxabxXujZhwgYUvkWyuuLEDbyYP52VmA0jeXicJT6vfxHewkycMIgP4TqPPrHtPyNx2SVEa+RPK+OiPMcRPw==
 
-nav-frontend-chevron@1.0.8:
-  version "1.0.8"
-  resolved "https://registry.npmjs.org/nav-frontend-chevron/-/nav-frontend-chevron-1.0.8.tgz#46cc5eb689e9e12d466e6f7f237416bc184fc56c"
-  integrity sha512-mwcJKT8s9QVqSHhH8G0onCuMnOc78clezGBiNEjNq9lYMgOyAxISZ3tqc1ZXsM3OOnst411mHCoyxP3CrkqhrQ==
+nav-frontend-chevron@1.0.9:
+  version "1.0.9"
+  resolved "https://registry.npmjs.org/nav-frontend-chevron/-/nav-frontend-chevron-1.0.9.tgz#d4d81f38f1ce6a55494f9f26dd84ab164a9b6be9"
+  integrity sha512-G/Rjx7e5MYdsqAI8qGakJV+F92BEXIrm3Hx7+lXLoz4GoFCJJR0G2+Q+Uy7Iqu9FbdJOBGgapZXEIbiIEbKdmQ==
 
-nav-frontend-core@4.0.6, nav-frontend-core@^4.0.6:
-  version "4.0.6"
-  resolved "https://registry.npmjs.org/nav-frontend-core/-/nav-frontend-core-4.0.6.tgz#a7c493257c47e4ddc09721da721743345d6ccf9d"
-  integrity sha512-ZIC0xZU2QeyKrJWAUcVjEySZl3IYAX/judnNvzgUi0vZSlCHuutmzEzdmRlAZjTAfTFkjGHp2s+vMBIB+E7qcw==
+nav-frontend-core@4.0.8, nav-frontend-core@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.npmjs.org/nav-frontend-core/-/nav-frontend-core-4.0.8.tgz#f29caa0ed19ade5a6a2e56c0674cef96ee7f9aeb"
+  integrity sha512-EVClW7xi36sC6lrsEPmyikOhVcU258j3UTa6PcDhfVG99Bx1wTGHlojw+k0oHbWiIlOYyeem3Zx4IS1O2ryODw==
 
-nav-frontend-ekspanderbartpanel-style@0.3.18:
-  version "0.3.18"
-  resolved "https://registry.npmjs.org/nav-frontend-ekspanderbartpanel-style/-/nav-frontend-ekspanderbartpanel-style-0.3.18.tgz#6fa19ef844fcc4f754b14d0ec304256b443f53eb"
-  integrity sha512-TpuF5rJObK4c0mCKr90KHvGiAxftisnDAtbm0nc8LNtUlG1kAt+FODAiFsvgnS82mnvehzfF8XpqzWfNrLUslA==
+nav-frontend-ekspanderbartpanel-style@0.3.19:
+  version "0.3.19"
+  resolved "https://registry.npmjs.org/nav-frontend-ekspanderbartpanel-style/-/nav-frontend-ekspanderbartpanel-style-0.3.19.tgz#fbb9ef91909bd4e3fd66e815dcb6e0f036c4e74c"
+  integrity sha512-ShEeVjUwaSX2JzSvhywhjOWuwZzUya/q8fjcBTeQxGJdmabwm1JDiCcKyUQm09/9PdL6Jk7LYDUKlLu/N+96YQ==
 
-nav-frontend-ekspanderbartpanel@1.0.24:
-  version "1.0.24"
-  resolved "https://registry.npmjs.org/nav-frontend-ekspanderbartpanel/-/nav-frontend-ekspanderbartpanel-1.0.24.tgz#e6341a8d4090921bcefbcdcc4c772794034155a0"
-  integrity sha512-eRLni2B68I0P5HihWqY5PA7SX538rMZLNVPe7HnbfZcRPt8v/m5+p0kTaKJmIUjMi/9cCqno+U1jIQbeLDo93A==
+nav-frontend-ekspanderbartpanel@1.0.25:
+  version "1.0.25"
+  resolved "https://registry.npmjs.org/nav-frontend-ekspanderbartpanel/-/nav-frontend-ekspanderbartpanel-1.0.25.tgz#487db3a2fdeed9e98f6c180466e290b595c5da63"
+  integrity sha512-/m0EChRqTHMeyFuZRGzTKR1CoKnSf8MJBEjr3/cRd+62xnNebd9RRN8JZSbV4XXViam/8C0D7RAlanl9sE+fzQ==
 
-nav-frontend-etiketter-style@0.3.15:
-  version "0.3.15"
-  resolved "https://registry.npmjs.org/nav-frontend-etiketter-style/-/nav-frontend-etiketter-style-0.3.15.tgz#66cd65d5ddacac58d3683fdc26af632e84f8fb7b"
-  integrity sha512-z9qZMneYd26yjIZjfF6zSWa31c+PisEkBMRfnncAr+e3fHRSAKRny42LLLvqLooKO5jVDrzn/KVrr3MnaDyQwQ==
+nav-frontend-etiketter-style@0.3.16:
+  version "0.3.16"
+  resolved "https://registry.npmjs.org/nav-frontend-etiketter-style/-/nav-frontend-etiketter-style-0.3.16.tgz#fcf87390e32d95968d45e9c6023b08a72fd83d88"
+  integrity sha512-WwKI2XTGgN2MVKmUPLjs3PVXA8IvqG8qHFIvyLCIL59yJmyzkdfh5Gp6oSMfj13I4LGOVioUMTb1An8U7NFW1Q==
 
-nav-frontend-etiketter@1.0.20:
-  version "1.0.20"
-  resolved "https://registry.npmjs.org/nav-frontend-etiketter/-/nav-frontend-etiketter-1.0.20.tgz#5b5bdbfaea220ac5f03572f15312a354572e4d71"
-  integrity sha512-7C5xsapg42TuJ+iRX4g0y47UBBsdJfDVS+39j1OeBnak31iFZ9rEVKfeX8yXhRlzG+txNXPQ8+LAaQSaqMxCiQ==
+nav-frontend-etiketter@1.0.21:
+  version "1.0.21"
+  resolved "https://registry.npmjs.org/nav-frontend-etiketter/-/nav-frontend-etiketter-1.0.21.tgz#cc6c4e290cfc7fb8a2d8b28dd541a3ccf5db73d6"
+  integrity sha512-VCLHvvGSVlA3goFcl0RYy7cLt08y0I1ZGKKk1a64osfAZS+QLKFGimeZQhmSAGQCiMs+onwpDFREaGiXcTsedQ==
 
 nav-frontend-grid-style@0.2.18:
   version "0.2.18"
   resolved "https://registry.npmjs.org/nav-frontend-grid-style/-/nav-frontend-grid-style-0.2.18.tgz#4b510a2edd70147b5268563d8320400f994b489b"
   integrity sha512-+r5JsDxCbgjr+kXnjBmTgM4YvshmTgXqAEa2+UjzlI5KVEeyGksJ1ZmNVFKYISVpyhItWgq9oJ0+B6fScL/vpg==
 
-nav-frontend-grid@1.0.19:
-  version "1.0.19"
-  resolved "https://registry.npmjs.org/nav-frontend-grid/-/nav-frontend-grid-1.0.19.tgz#9a18c09c687e70fd28047b9bd506ab5fbc5b71fd"
-  integrity sha512-R1ms42aym9ty0U8XmikPjrQvL5IoiP0/kEfvTZpuMpfxXuEn+G4WtCG547zejFZzEmAo36KnknunPcj43P3XiA==
+nav-frontend-grid@1.0.20:
+  version "1.0.20"
+  resolved "https://registry.npmjs.org/nav-frontend-grid/-/nav-frontend-grid-1.0.20.tgz#e788266b118a1384d78fa94fc6672bf0af03e7ac"
+  integrity sha512-Zhj8B5QDZWIHJAFGwCYsflXw+CvNG7eRqB1vpqkpk2KPNd0tOSG0uq93KMqVZy66BoH3KpwtpwLq0CKcSIVVnw==
 
 nav-frontend-ikoner-assets@0.2.32:
   version "0.2.32"
   resolved "https://registry.npmjs.org/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-0.2.32.tgz#fd178e028dcfd5e438c6e43e783fcd5858edb0a9"
   integrity sha512-+5rmN8+7ki00QLupFLl8y/Xw1Esg54TtzHhehZLcoXiqoMzlmOD5KGA8Kol8+GrwwkScNiH/1rNX7A8OdRrezg==
 
-nav-frontend-js-utils@1.0.6:
-  version "1.0.6"
-  resolved "https://registry.npmjs.org/nav-frontend-js-utils/-/nav-frontend-js-utils-1.0.6.tgz#e3320dffd377239ccfaf22da7f4886d3b79303df"
-  integrity sha512-d9aOUnIREijWV1454WwHLnz4bz3qD1qAPKrH2xQDruBFkKJRoyidzW+aLTMABKe9OeCpEIq2HOkMPbB2v6mpEw==
+nav-frontend-js-utils@1.0.7:
+  version "1.0.7"
+  resolved "https://registry.npmjs.org/nav-frontend-js-utils/-/nav-frontend-js-utils-1.0.7.tgz#07ba8117561c1d7552041380e20e8d88e86afd55"
+  integrity sha512-/XzbrFCfIou61E+fpeuyiKG5SVFd2EYUk96B9SfP8BZLwfRMjNdFieWpu0WP//5KbR9sMhpbqc2evzTnzXyrfQ==
 
-nav-frontend-knapper-style@0.3.22:
-  version "0.3.22"
-  resolved "https://registry.npmjs.org/nav-frontend-knapper-style/-/nav-frontend-knapper-style-0.3.22.tgz#ee94cc3776c99b0b6d17537a76afbf7954a048ce"
-  integrity sha512-wcaHvmaSAmWiU/3fDJraIvbx5b6KHvzkPj6EFytl6GSauCDTCGoJ6EsJPAjLFo984AbbREzRnnwclFzZmc+t3g==
-
-nav-frontend-knapper@1.0.26:
-  version "1.0.26"
-  resolved "https://registry.npmjs.org/nav-frontend-knapper/-/nav-frontend-knapper-1.0.26.tgz#84db548dd2ea7bcfd71848d62a6447023fb9920c"
-  integrity sha512-e5cujFZexICeeMUeSpPH8DkaK1BalLikPPOIZxI6RJ4s6rdvGG9GVRWTR7Ds3ofV2iuJAIHCV4dYjOpjt/00Dw==
-
-nav-frontend-lenkepanel-style@^0.3.23:
+nav-frontend-knapper-style@0.3.23:
   version "0.3.23"
-  resolved "https://registry.npmjs.org/nav-frontend-lenkepanel-style/-/nav-frontend-lenkepanel-style-0.3.23.tgz#85caef881cced6b092e5da9ae518c9d9718afc3d"
-  integrity sha512-sephbhPH05HtNr3/oFHPVF474w3RxViisI920WOK2mEVVVvx6mA6/mHSbYiBX2cEfEi89sGDpgh0wwXh+xQweQ==
+  resolved "https://registry.npmjs.org/nav-frontend-knapper-style/-/nav-frontend-knapper-style-0.3.23.tgz#60c5bc8af8a88ce2e6be5597332afa41deaba1ba"
+  integrity sha512-gAQ9z55qL9qt/HAJhY8zcpd36EkfXv/jAL/Jp9+ilgFepR6psI4J+0Se5lESsGM1ugL+sVDazdgvQMm9ZzFkug==
 
-nav-frontend-lenkepanel@^1.0.26:
-  version "1.0.26"
-  resolved "https://registry.npmjs.org/nav-frontend-lenkepanel/-/nav-frontend-lenkepanel-1.0.26.tgz#4e837f221875fc2b26073f096fd0df2123f18eec"
-  integrity sha512-8/T8YBx08QShXFlYbVmTKh17TEvMmRjiDJM2VrP3maLxPfxB2qkoWgpUzv2xNCEzDgReCdbcLJJyjNW9JOQdsQ==
+nav-frontend-knapper@1.0.27:
+  version "1.0.27"
+  resolved "https://registry.npmjs.org/nav-frontend-knapper/-/nav-frontend-knapper-1.0.27.tgz#3e151c269e75ae70416d69d1c175448ba73c4827"
+  integrity sha512-TvvDlMasRiEM3kxFK1DPghobZiFYwXX8kBLUg47X2asK2KPwZXhlxiXCUcR7SHW6DxQjBr1/YQGSElIr3PNdSw==
 
-nav-frontend-lenker-style@0.2.18:
+nav-frontend-lenkepanel-style@^0.3.24:
+  version "0.3.24"
+  resolved "https://registry.npmjs.org/nav-frontend-lenkepanel-style/-/nav-frontend-lenkepanel-style-0.3.24.tgz#658f71f19a3a3abb4e0acf596ea859470ea28883"
+  integrity sha512-+co76Xf9HUE43q4DMpQ0DXqpLvusS7/toXGw7/S6PXmQyVNrLQcSfqiFqpf5IQHayWIE6PqG7F7TulxEdHdrOw==
+
+nav-frontend-lenkepanel@^1.0.27:
+  version "1.0.27"
+  resolved "https://registry.npmjs.org/nav-frontend-lenkepanel/-/nav-frontend-lenkepanel-1.0.27.tgz#7e96d9eb33b6191c2f9af4ea6069834489bbfd5f"
+  integrity sha512-k2KJ+uDRgBiemxncVmOEosRW0S/jYbD11sAdmCHQ6eOlmEYnOjf1DhlKJrc0ThmI9bmqNeR+ZbqHOR0ILZukww==
+
+nav-frontend-lenker-style@0.2.19:
+  version "0.2.19"
+  resolved "https://registry.npmjs.org/nav-frontend-lenker-style/-/nav-frontend-lenker-style-0.2.19.tgz#b4d64ab7041afee9cc49f6ce49915cb9e4626917"
+  integrity sha512-HiwZuQBE5odTQLIX30yznnf4NjSAyD6Y8krm2kHvnaky5dStSqyF6A42ciabyRGBopEck17CL23V+dO84NiLTA==
+
+nav-frontend-lukknapp-style@0.2.18:
   version "0.2.18"
-  resolved "https://registry.npmjs.org/nav-frontend-lenker-style/-/nav-frontend-lenker-style-0.2.18.tgz#77f9b9f1d311cf00d998a8d452ae7d6906756067"
-  integrity sha512-tB176p95FS6bm6ItbG65LgIvp0Y2u1RPgoh6aThSkxtMaeyY2r+xjPNxliSaqdR7vzy5ZOpUKfW4TuCq86RMiQ==
+  resolved "https://registry.npmjs.org/nav-frontend-lukknapp-style/-/nav-frontend-lukknapp-style-0.2.18.tgz#9e491b9ed2a4d21cc4a45b63f6d9488bfa30d973"
+  integrity sha512-L6t58QZBcTDkhrjq+PtD89IMQmPhtcH0yOgy8dD/5lGgnfJ2j3+AvBP4YLla/bkYGQ4d1hHzSFOjH+U9cXUE8Q==
 
-nav-frontend-lukknapp-style@0.2.17:
+nav-frontend-lukknapp@1.0.20:
+  version "1.0.20"
+  resolved "https://registry.npmjs.org/nav-frontend-lukknapp/-/nav-frontend-lukknapp-1.0.20.tgz#014698adb07350c73f69c1b817c6e7f842efbc00"
+  integrity sha512-3jXJApAd0pLWHB8pbXuaKaYwah6N6FhWyVBOgfpEsY9M/ltNqCL0NkyqBXAFSXo4a01UZCkyjs5s5DgCwJJ+Vg==
+
+nav-frontend-modal-style@0.3.28:
+  version "0.3.28"
+  resolved "https://registry.npmjs.org/nav-frontend-modal-style/-/nav-frontend-modal-style-0.3.28.tgz#767853223d965b5b1bf2e5e95c3ff30b1c395db9"
+  integrity sha512-mT4tnUWzMXWKKCqOgGJ8Db4NBkE41v8LEe98eTSeHVI7d6iF1bPT2ptnjT9WTHNfjcFBY8RBRKBVnkYfhr2BVw==
+
+nav-frontend-modal@1.0.27:
+  version "1.0.27"
+  resolved "https://registry.npmjs.org/nav-frontend-modal/-/nav-frontend-modal-1.0.27.tgz#7b7effe1666bb1d5e40e02dd7c9a67c4560c381c"
+  integrity sha512-babUGj6cVc9dDDvv+qETjvrKtmRknyve6coBdwWqf9fpEmqt+hRv+REm3Ia9WFLTpDktPHxEKhJS27YzkUTmww==
+
+nav-frontend-paneler-style@0.3.14:
+  version "0.3.14"
+  resolved "https://registry.npmjs.org/nav-frontend-paneler-style/-/nav-frontend-paneler-style-0.3.14.tgz#5b1ca610cf126daf3333c778e86984a3f78dc2ff"
+  integrity sha512-U47bo8/wFUSg/nsrTeaFaQjhaIK6EpzoW1Tg7xEyZ4tpRb+iihc6AL3RbCKnxap3p+vjuMQPc8AU9ntBUkMRWA==
+
+nav-frontend-paneler@1.0.15:
+  version "1.0.15"
+  resolved "https://registry.npmjs.org/nav-frontend-paneler/-/nav-frontend-paneler-1.0.15.tgz#fbc0002a90f2c58d94fbae3373e83af552a13d3e"
+  integrity sha512-el2fMWgvCIywndTpEw8STXM8I0ye2iTteNCxBZQ2/g1BuBd4q3p/KW+pUgYzIDuN+MAe559E9o7ZaSn2iPYfHA==
+
+nav-frontend-skjema-style@1.0.38:
+  version "1.0.38"
+  resolved "https://registry.npmjs.org/nav-frontend-skjema-style/-/nav-frontend-skjema-style-1.0.38.tgz#f12da979685c09854693d4cbd0e0d0a8ce089e9a"
+  integrity sha512-Lwx5U/eLgzJR0iymk7KKVJeKiN4SnXHHAbI/XmyAxa/r9in5yR2UrHfFjwyc05sugK17I6T/KB2CJWthzf6NAQ==
+
+nav-frontend-skjema@1.0.60:
+  version "1.0.60"
+  resolved "https://registry.npmjs.org/nav-frontend-skjema/-/nav-frontend-skjema-1.0.60.tgz#fa58f5bb011c71836d8d853d8b47c3d38cd9f197"
+  integrity sha512-qLgO0i2nCeqgKwxmGPc1Kc5h6GJr2WkViUdLESadYq2zKt71LfGzM1NRkwYd7m5QtEu0HlzsIsVrcUr1Vl/1uA==
+
+nav-frontend-snakkeboble-style@0.2.17:
   version "0.2.17"
-  resolved "https://registry.npmjs.org/nav-frontend-lukknapp-style/-/nav-frontend-lukknapp-style-0.2.17.tgz#b08cf5fcec8b95d89c8979e5e829e08d172e8300"
-  integrity sha512-rIdfYQl9mzmYEeaCqbD9AoV/G3pRz7l+n7tVV7RoapVVEDWixXDBKtwzRKQ5YLjV3Yi3m6Jb0Cku+5ZTL/CseQ==
+  resolved "https://registry.npmjs.org/nav-frontend-snakkeboble-style/-/nav-frontend-snakkeboble-style-0.2.17.tgz#ff4f90b24d7f4b8db7cc5bcdfd3703dff1790baa"
+  integrity sha512-2SxczZqFE/6GzYiW5Xph5liw2w9PQ379Gp7DHu4OLMMmSnEyhnO5JjflGRnWzlL7j49VRQ8nvYGjGjCvGbR+WA==
 
-nav-frontend-lukknapp@1.0.19:
-  version "1.0.19"
-  resolved "https://registry.npmjs.org/nav-frontend-lukknapp/-/nav-frontend-lukknapp-1.0.19.tgz#ab9c8a2fc29e5d9685d6c7b99059b4be011655fe"
-  integrity sha512-BRmdlh4PUNVJb7EVBJKPZSmmXMISM+mbEihwSeQyQKKBuRqjzb+HZ4ZY/bFROaxztnf7Vmu3Ba46I1gTghEtcw==
-
-nav-frontend-modal-style@0.3.27:
-  version "0.3.27"
-  resolved "https://registry.npmjs.org/nav-frontend-modal-style/-/nav-frontend-modal-style-0.3.27.tgz#c6c34d99825c09369f4952887bf5a88d1750c7a7"
-  integrity sha512-4lZaxxiVEvsfJ7MXOcSakFW+plrtbFCAn2QJxhoWXdcMs0n4nY0blKjXLlvnpDIA8HYmhVf2Fn4GBVrC6SDh2Q==
-
-nav-frontend-modal@1.0.26:
+nav-frontend-snakkeboble@1.0.26:
   version "1.0.26"
-  resolved "https://registry.npmjs.org/nav-frontend-modal/-/nav-frontend-modal-1.0.26.tgz#346b3d7ca7de844126dd0635d4499ecc890c6133"
-  integrity sha512-F16DMP/wbOn0DwFhtbTP4iw353wV4YuzMn/xtO5iOY76HGutneVBkyI4ECq4Y5bylldgqZ3n4JJNpJzOBSODcQ==
-
-nav-frontend-paneler-style@0.3.13:
-  version "0.3.13"
-  resolved "https://registry.npmjs.org/nav-frontend-paneler-style/-/nav-frontend-paneler-style-0.3.13.tgz#e149df51b2aff32f44e6f42ded5f218b35025c63"
-  integrity sha512-3M+q3As52QezzIqdcVsithkXZKDIK1eLFUeOyhv7hUWzWgbbWMGatAHttcefCeKfyymRigFDjUORylvccG1jPA==
-
-nav-frontend-paneler@1.0.14:
-  version "1.0.14"
-  resolved "https://registry.npmjs.org/nav-frontend-paneler/-/nav-frontend-paneler-1.0.14.tgz#9dc8bb9d4c08f9d1c9d112d97c4788edad7533dd"
-  integrity sha512-vOgEi4N1fCBoOdL9oOvc1hn1dxLo/8KnNu4RTZg5II9KTH9a9MrZ4xasa7C8JwnazuaRuOAsP941Vy0mH65Vhg==
-
-nav-frontend-skjema-style@1.0.37:
-  version "1.0.37"
-  resolved "https://registry.npmjs.org/nav-frontend-skjema-style/-/nav-frontend-skjema-style-1.0.37.tgz#566abc42de9b0d7ea9ba6631230baa8c3a6f538b"
-  integrity sha512-X1hyNAKWfvZj05iUcgpmlj/4SZ3XBlMsErtgALsa5KxBHgHHT72dE+V9KDlgLrrMOJGWSOzukXkrEZ3iV39Plg==
-
-nav-frontend-skjema@1.0.59:
-  version "1.0.59"
-  resolved "https://registry.npmjs.org/nav-frontend-skjema/-/nav-frontend-skjema-1.0.59.tgz#ee85340e818102cadb327aa737f3ceaa49bdf051"
-  integrity sha512-8mYd4TV22vVJzBsjtBNT9zgGw71YW/QMmDV27U/JRiQcbTwY3e18XS7D2jACow8qpGkEWVophqnU/9BbBLWoPw==
-
-nav-frontend-snakkeboble-style@0.2.16:
-  version "0.2.16"
-  resolved "https://registry.npmjs.org/nav-frontend-snakkeboble-style/-/nav-frontend-snakkeboble-style-0.2.16.tgz#09b389424c47b2e4a7e30a32867bc3967f10e4f0"
-  integrity sha512-vbwGm5OHYQJaFLRwrNqsD5XRAlWZzGlMk3VGMu2ejqmc/zRxHF1yv+QPTvqPgeqJ8vWb/aQpqypfyCmttIrzvg==
-
-nav-frontend-snakkeboble@1.0.25:
-  version "1.0.25"
-  resolved "https://registry.npmjs.org/nav-frontend-snakkeboble/-/nav-frontend-snakkeboble-1.0.25.tgz#960d7eda427d2405349a28ee37b60c8c60ebdada"
-  integrity sha512-w4pQHtOa3u1nWuiT7yL3qXC692bUgXA1Bd4POXWX1K1oiovtipCgrg8Qx0h2SPBi06zN3rmKtA78UWTvkpZKLw==
+  resolved "https://registry.npmjs.org/nav-frontend-snakkeboble/-/nav-frontend-snakkeboble-1.0.26.tgz#cf367633489f11e31ad0e1206c17313cd6b2dad8"
+  integrity sha512-/xpzB1/cRz6Wzd+NeUNMCvoRN+rj+NjLCEApHgtUqWNRGSZZ9K/3d2AkU5Lpx9b1qpgfsduc1tC69F4FwoInvw==
 
 nav-frontend-spinner-style@0.2.5:
   version "0.2.5"
   resolved "https://registry.npmjs.org/nav-frontend-spinner-style/-/nav-frontend-spinner-style-0.2.5.tgz#c782c63589776e768a45d6049047b1a60b6805be"
   integrity sha512-PWSfscmNMbrnXRcXQUgBquU5479bNmO/sw3IwML6s6K/qyEYggRvJdGCbBEYyxXmoeDDjXGd2tkIVy5gja387A==
 
-nav-frontend-spinner@1.0.16:
-  version "1.0.16"
-  resolved "https://registry.npmjs.org/nav-frontend-spinner/-/nav-frontend-spinner-1.0.16.tgz#867e14e86b54071f5783eaafb0b47948e84e5815"
-  integrity sha512-+J9eMdBOpTbg32u3MHIcbqcCvyhtoOFvrOBB0zyVToNX9/OBgt5zVOMVL4u3mp4c7lj+CQJWbmdMusSN7b1xpg==
+nav-frontend-spinner@1.0.17:
+  version "1.0.17"
+  resolved "https://registry.npmjs.org/nav-frontend-spinner/-/nav-frontend-spinner-1.0.17.tgz#f98255640e097b32cd4e70b47c2042203814947b"
+  integrity sha512-Ctbed6aL/E3dTDezLjNGU7do9DKtsKWkcZUPi2+FKzDk7MBu2TD8ocogoY/V8okuz4J5Dos/8d8XylJKhd6vhg==
 
-nav-frontend-typografi-style@1.0.11:
-  version "1.0.11"
-  resolved "https://registry.npmjs.org/nav-frontend-typografi-style/-/nav-frontend-typografi-style-1.0.11.tgz#aa8f83046ac9ba045f81d0a2e40e5d8d379fe840"
-  integrity sha512-UzSOseVBELrbg3WNHa14mY7o9L8rASEsC+Vs2H5hYIZWD1OUUr33TV7D0mk6COxc5FxrpldWURbXyRmN2/0Glg==
+nav-frontend-typografi-style@1.0.12:
+  version "1.0.12"
+  resolved "https://registry.npmjs.org/nav-frontend-typografi-style/-/nav-frontend-typografi-style-1.0.12.tgz#2cf55ae9346b030bf0daa78d63597bfa387d14d2"
+  integrity sha512-cBCr04/ClBx0bieJu2WSk6fxdLvG7omxHipVLYLPyEDL7tsWJXHo1RklJDGWuHIf3DvHVEnmkp6qBHIxGNKV4w==
   dependencies:
-    nav-frontend-core "^4.0.6"
+    nav-frontend-core "^4.0.8"
 
-nav-frontend-typografi@2.0.9:
-  version "2.0.9"
-  resolved "https://registry.npmjs.org/nav-frontend-typografi/-/nav-frontend-typografi-2.0.9.tgz#c78e75f0478600ef10ef4fac2156286ecfa919b7"
-  integrity sha512-FOe5oM5+nuttkD1QVT+xCTZuDHJ48UmblPdemqdLyPOd5X2Lpn8j6sJGfBfWg9Yr9PRuipGldO/4fJAiYx6RBQ==
+nav-frontend-typografi@2.0.10:
+  version "2.0.10"
+  resolved "https://registry.npmjs.org/nav-frontend-typografi/-/nav-frontend-typografi-2.0.10.tgz#63ece2b7ef8da1657b1f8f9b41eef595d9db53dc"
+  integrity sha512-1A8wNIYEARXlC5/Rlsp1pYpFh5tYKzttBQCGKm0FQkk0S04/M2gtxgZyIABs9fsXduYs4IcAHzoMAENt2VrI+w==
 
 nearley@^2.7.10:
   version "2.15.1"
