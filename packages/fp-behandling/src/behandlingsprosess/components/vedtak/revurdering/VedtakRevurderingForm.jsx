@@ -31,6 +31,8 @@ import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
 
 export const VEDTAK_REVURDERING_FORM_NAME = 'VEDTAK_REVURDERING_FORM';
 
+const isVedtakSubmission = true;
+
 const getPreviewAutomatiskBrevCallback = formProps => (e) => {
   const {
     begrunnelse, brødtekst, behandlingId,
@@ -244,6 +246,7 @@ const transformValues = values => values.aksjonspunktKoder.map(apCode => ({
   fritekstBrev: values.brødtekst,
   skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
   overskrift: values.overskrift,
+  isVedtakSubmission,
 }));
 
 const createAarsakString = (revurderingAarsaker) => {

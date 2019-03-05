@@ -63,6 +63,7 @@ export class FatterVedtakApprovalModal extends Component {
         onRequestClose={closeEvent}
         shouldCloseOnOverlayClick={false}
         ariaHideApp={false}
+        style={{ overlay: { zIndex: 3000 } }}
       >
         <Row>
           <Column xs="1">

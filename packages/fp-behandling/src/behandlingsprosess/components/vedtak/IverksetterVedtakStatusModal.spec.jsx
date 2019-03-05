@@ -39,8 +39,7 @@ describe('<IverksetterVedtakStatusModal>', () => {
       selectedBehandling={behandling}
       behandlingStatusKode={behandlingStatus.IVERKSETTER_VEDTAK}
       isSameResultAsOriginalBehandling
-      resolveProsessAksjonspunkterSuccess
-      resolveFaktaAksjonspunkterSuccess
+      isVedtakSubmission
       behandlinger={[behandling]}
       modalTextId="IverksetterVedtakStatusModal.AvslattOgIverksattES"
     />);

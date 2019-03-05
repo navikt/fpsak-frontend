@@ -69,6 +69,12 @@ export class BehandlingsprosessIndex extends Component {
     this.previewVedtakCallback = this.previewVedtakCallback.bind(this);
     this.previewManueltBrevCallback = this.previewManueltBrevCallback.bind(this);
     this.previewFptilbakeCallback = this.previewFptilbakeCallback.bind(this);
+    this.submitVilkarUtenPromise = this.submitVilkarUtenPromise.bind(this);
+
+    this.state = {
+      isVedtakSubmission: false,
+
+    };
   }
 
   componentDidMount() {
@@ -91,6 +97,39 @@ export class BehandlingsprosessIndex extends Component {
     }
   }
 
+  submitVilkarUtenPromise(aksjonspunktModels) {
+    const {
+      resolveProsessAksjonspunkter: resolveAksjonspunkter,
+      overrideProsessAksjonspunkter: overrideAksjonspunkter,
+      behandlingIdentifier, behandlingVersjon, aksjonspunkter,
+    } = this.props;
+    const models = aksjonspunktModels.map(ap => ({
+      '@type': ap.kode,
+      ...ap,
+    }));
+
+    const apCodes = aksjonspunktModels.map(ap => ap.kode);
+
+    const submitIsRevurdering = hasRevurderingAp(aksjonspunktModels);
+    const shouldUpdateInfo = !submitIsRevurdering;
+    const aktuelleAksjonspunkter = aksjonspunkter.filter(ap => apCodes.includes(ap.definisjon.kode));
+    if (aktuelleAksjonspunkter.length === 0 || hasOverstyringAp(aktuelleAksjonspunkter)) {
+      const params = {
+        ...behandlingIdentifier.toJson(),
+        behandlingVersjon,
+        overstyrteAksjonspunktDtoer: models,
+      };
+      return overrideAksjonspunkter(behandlingIdentifier, params, shouldUpdateInfo);
+    }
+
+    const params = {
+      ...behandlingIdentifier.toJson(),
+      behandlingVersjon,
+      bekreftedeAksjonspunktDtoer: models,
+    };
+    return resolveAksjonspunkter(behandlingIdentifier, params, shouldUpdateInfo);
+  }
+
   /* NOTE: Denne er en slags toggle, selv om ikke navnet tilsier det */
   goToBehandlingspunkt(punktName) {
     const { selectedBehandlingspunkt, push: pushLocation, location } = this.props;
@@ -107,6 +146,9 @@ export class BehandlingsprosessIndex extends Component {
   }
 
   goToSearchPage() {
+    this.setState({
+      isVedtakSubmission: false,
+    });
     const { push: pushLocation } = this.props;
     pushLocation('/');
   }
@@ -153,6 +195,14 @@ export class BehandlingsprosessIndex extends Component {
   }
 
   submitVilkar(aksjonspunktModels) {
+    if (aksjonspunktModels[0] && aksjonspunktModels[0].isVedtakSubmission) {
+      this.setState({
+        isVedtakSubmission: true,
+      }, () => {
+        this.submitVilkarUtenPromise(aksjonspunktModels);
+      });
+      return false;
+    }
     const {
       resolveProsessAksjonspunkter: resolveAksjonspunkter,
       overrideProsessAksjonspunkter: overrideAksjonspunkter,
@@ -199,6 +249,7 @@ export class BehandlingsprosessIndex extends Component {
     const {
       behandlingspunkter, selectedBehandlingspunkt, dispatchSubmitFailed: submitFailedDispatch,
     } = this.props;
+    const { isVedtakSubmission } = this.state;
     return (
       <React.Fragment>
         <BehandlingsprosessPanel
@@ -217,8 +268,8 @@ export class BehandlingsprosessIndex extends Component {
           />
         </BehandlingsprosessPanel>
 
-        <IverksetterVedtakStatusModal closeEvent={this.goToSearchPage} />
-        <FatterVedtakStatusModal closeEvent={this.goToSearchPage} />
+        <IverksetterVedtakStatusModal closeEvent={this.goToSearchPage} isVedtakSubmission={isVedtakSubmission} />
+        <FatterVedtakStatusModal closeEvent={this.goToSearchPage} isVedtakSubmission={isVedtakSubmission} />
       </React.Fragment>
     );
   }
