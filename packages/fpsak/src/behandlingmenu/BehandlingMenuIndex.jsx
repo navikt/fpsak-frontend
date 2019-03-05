@@ -11,7 +11,6 @@ import {
   getBehandlingIsQueued,
   getBehandlingBehandlendeEnhetId,
   getBehandlingBehandlendeEnhetNavn,
-  getBehandlingHasSoknad,
   getBehandlingIsInnsyn,
   getBehandlingIdentifier,
 } from 'behandling/duck';
@@ -60,7 +59,6 @@ const mapStateToProps = (state) => {
     behandlendeEnhetNavn: getBehandlingBehandlendeEnhetNavn(state),
     behandlendeEnheter: fpsakApi.BEHANDLENDE_ENHETER.getRestApiData()(state),
     navAnsatt: getNavAnsatt(state),
-    hasSoknad: getBehandlingHasSoknad(state),
     isInnsynsbehandling: getBehandlingIsInnsyn(state),
     henleggBehandlingAccess,
     settBehandlingPaVentAccess,
