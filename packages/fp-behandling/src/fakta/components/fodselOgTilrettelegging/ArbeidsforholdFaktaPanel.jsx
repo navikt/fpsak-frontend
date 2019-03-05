@@ -61,6 +61,8 @@ export class ArbeidsforholdFaktaPanel extends Component {
   render() {
     const {
       arbforhold,
+      readOnly,
+      error,
     } = this.props;
     const { selectedArbeidsforhold } = this.state;
     return (
@@ -73,6 +75,7 @@ export class ArbeidsforholdFaktaPanel extends Component {
         {selectedArbeidsforhold
         && (
         <ArbeidsforholdInnhold
+          readOnly={readOnly}
           selectedArbeidsforhold={selectedArbeidsforhold}
           cancelArbeidsforholdCallback={this.cancelArbeidsforhold}
           updateArbeidsforholdCallback={this.updateArbeidsforhold}
@@ -88,6 +91,7 @@ ArbeidsforholdFaktaPanel.propTypes = {
   behandlingFormPrefix: PropTypes.string.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
+  readOnly: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, props) => {

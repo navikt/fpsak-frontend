@@ -228,6 +228,7 @@
   "ArbeidsforholdInnhold.Arbeidsgiver.KanGjennomfores": "a) kan gjennomføres slik at arbeidstakeren kan fortsette med samme stilling fra og med",
   "ArbeidsforholdInnhold.Arbeidsgiver.RedusertArbeid": "b) kan gjennomføres slik at arbeidstakeren kan fortsette med redusert arbeidstid fra og med",
   "ArbeidsforholdInnhold.Arbeidsgiver.KanIkkeGjennomfores": "c) kan ikke gjennomfores og arbeidstakeren må midlertidig gå ut av sitt arbeid fra og med",
+  "ArbeidsforholdInnhold.TilretteleggingError": "Minst en må velges",
   
 >>>>>>> PFP-5936 checkboxer
   "FeilutbetalingInfoPanel.FaktaFeilutbetaling": "Fakta om feilutbetaling",

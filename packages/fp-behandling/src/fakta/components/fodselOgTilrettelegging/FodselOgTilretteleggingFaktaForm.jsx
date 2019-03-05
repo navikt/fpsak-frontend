@@ -28,19 +28,19 @@ const FodselOgTilretteleggingFaktaForm = ({
             name="termindato"
             label={{ id: 'FodselOgTilretteleggingFaktaForm.Termindato' }}
             validate={[required, hasValidDate]}
-            readOnly={false}
+            readOnly={readOnly}
           />
         </FlexColumn>
       </FlexRow>
     </FlexContainer>
-    <ArbeidsforholdFaktaPanel formName={FODSEL_TILRETTELEGGING_FORM} />
+    <ArbeidsforholdFaktaPanel readOnly={readOnly} formName={FODSEL_TILRETTELEGGING_FORM} />
     <FlexContainer fluid wrap>
       <FlexRow>
         <FlexColumn>
           <FaktaSubmitButton
             formName={formProps.form}
             isSubmittable={!readOnly}
-            isReadOnly={false}
+            isReadOnly={readOnly}
             hasOpenAksjonspunkter={hasOpenAksjonspunkter}
           />
         </FlexColumn>
@@ -89,7 +89,7 @@ const mapStateToProps = () => {
           dato: '2019-04-18',
           stillingsprosent: 50,
         },
-        begrunnelse: 'TEsting',
+        begrunnelse: '',
       },
       {
         id: 456,
@@ -110,7 +110,7 @@ const mapStateToProps = () => {
           dato: '',
           stillingsprosent: null,
         },
-        begrunnelse: 'Heia',
+        begrunnelse: '',
       }],
   };
   return {
