@@ -1,3 +1,4 @@
+import moment from 'moment';
 import foreldelseCodes from '../../foreldelse/foreldelseCodes';
 
 const godkjentKlassenavn = 'godkjentPeriode';
@@ -39,5 +40,5 @@ export const addClassNameGroupIdToPerioder = (tilbakekrevingPerioder) => {
     };
     perioderMedClassName.push(periodMedClassName);
   });
-  return perioderMedClassName;
+  return perioderMedClassName.sort((a, b) => moment(a.fom) - moment(b.fom));
 };
