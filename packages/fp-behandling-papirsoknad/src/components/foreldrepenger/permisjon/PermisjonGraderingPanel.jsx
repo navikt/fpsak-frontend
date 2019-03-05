@@ -106,7 +106,7 @@ PermisjonGraderingPanel.transformValues = perioder => perioder.map((p) => {
   if (p.erArbeidstaker) {
     periode.erArbeidstaker = p.erArbeidstaker === arbeidskategori.ARBEIDSTAKER;
     periode.erFrilanser = p.erArbeidstaker === arbeidskategori.FRILANSER;
-    periode.erSelvstendig = p.erArbeidstaker === arbeidskategori.SELVSTENDIG_NAERINGSDRIVENDE;
+    periode.erSelvstNæringsdrivende = p.erArbeidstaker === arbeidskategori.SELVSTENDIG_NAERINGSDRIVENDE;
   }
   return periode;
 });
