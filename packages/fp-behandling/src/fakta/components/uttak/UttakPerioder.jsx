@@ -66,15 +66,15 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => i
   const inntektsmeldingInfoPerioder = gjeldeneGraderingPerioder.concat(gjeldeneUtsettelsePerioder);
 
   const isArbeidstaker = (soknadsPeriode.arbeidsgiver || {}).virksomhet;
-
   const isAvvikPeriode = inntektsmeldingInfoPerioder.some(periode => periode.fom !== soknadsPeriode.fom || periode.tom !== soknadsPeriode.tom);
   const isAvvikArbeidsprosent = gjeldeneGraderingPerioder
-    .some(graderingPeriode => graderingPeriode.arbeidsprosent !== parseInt(soknadsPeriode.arbeidstidsprosent, 10));
+    .some(graderingPeriode => parseFloat(graderingPeriode.arbeidsprosent).toFixed(2) !== parseFloat(soknadsPeriode.arbeidstidsprosent).toFixed(2));
   const isAvvikUtsettelse = gjeldeneUtsettelsePerioder
     .some(utsettelsePeriode => utsettelsePeriode.utsettelseArsak.kode !== soknadsPeriode.utsettelseÅrsak.kode);
 
   let isManglendeInntektsmelding = false;
-  if ((isArbeidstaker && gjeldeneGraderingPerioder.length === 0 && soknadsPeriode.arbeidstidsprosent !== null) || soknadsPeriode.utsettelseÅrsak.kode !== '-') {
+  if ((isArbeidstaker && gjeldeneGraderingPerioder.length === 0 && soknadsPeriode.arbeidstidsprosent !== null)
+  || (gjeldeneUtsettelsePerioder.length === 0 && soknadsPeriode.utsettelseÅrsak.kode !== '-')) {
     isManglendeInntektsmelding = true;
   }
 
@@ -85,7 +85,7 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => i
     utsettelsePerioder: isAvvikUtsettelse || isAvvikPeriode ? gjeldeneUtsettelsePerioder : [],
     isManglendeInntektsmelding,
     avvik: {
-      utsettelseÅrsak: isManglendeInntektsmelding ? soknadsPeriode.utsettelseÅrsak : false,
+      utsettelseÅrsak: isManglendeInntektsmelding && soknadsPeriode.utsettelseÅrsak.kode !== '-' ? soknadsPeriode.utsettelseÅrsak : false,
       isAvvikArbeidsprosent,
       isAvvikUtsettelse,
       isAvvikPeriode,
