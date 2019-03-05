@@ -62,7 +62,6 @@ export class ArbeidsforholdFaktaPanel extends Component {
     const {
       arbforhold,
       readOnly,
-      error,
     } = this.props;
     const { selectedArbeidsforhold } = this.state;
     return (
