@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Fieldset } from 'nav-frontend-skjema';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape } from 'react-intl';
 
 import { behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
 import {
@@ -16,8 +16,6 @@ import {
   required, hasValidDate, hasValidDecimal, minValue, maxValue,
 } from '@fpsak-frontend/utils';
 
-import styles from './arbeidsforholdCheckboxes.less';
-
 const minValue0 = minValue(0);
 const maxProsentValue100 = maxValue(100);
 
@@ -26,7 +24,7 @@ export const ArbeidsforholdCheckboxes = ({
   redusertArbeid,
   kanIkkeGjennomfores,
   readOnly,
-  error,
+  warning,
   intl,
 }) => {
   const arrowBox = (dato, stillingsprosent) => (
@@ -62,30 +60,27 @@ export const ArbeidsforholdCheckboxes = ({
   );
   return (
     <Fieldset legend={intl.formatMessage({ id: 'ArbeidsforholdInnhold.Arbeidsgiver.Tilrettelegging' })}>
-      {error && error.permisjonsError
+      {warning && warning.permisjonsWarning
       && (
       <div className="skjemaelement__feilmelding">
-        <FormattedMessage id={error.permisjonsError} />
+        {warning.permisjonsWarning}
         <VerticalSpacer sixteenPx />
       </div>
       )
       }
       <CheckboxField
-        className={error && error.permisjonsError ? styles.showErrorBackground : ''}
         name="kanGjennomfores"
         label={{ id: 'ArbeidsforholdInnhold.Arbeidsgiver.KanGjennomfores' }}
         readOnly={readOnly}
       />
       {kanGjennomfores && arrowBox('kanGjennomforesDato')}
       <CheckboxField
-        className={error && error.permisjonsError ? styles.showErrorBackground : ''}
         name="redusertArbeid"
         label={{ id: 'ArbeidsforholdInnhold.Arbeidsgiver.RedusertArbeid' }}
         readOnly={readOnly}
       />
       {redusertArbeid && arrowBox('redusertArbeidDato', 'redusertArbeidStillingsprosent')}
       <CheckboxField
-        className={error && error.permisjonsError ? styles.showErrorBackground : ''}
         name="kanIkkeGjennomfores"
         label={{ id: 'ArbeidsforholdInnhold.Arbeidsgiver.KanIkkeGjennomfores' }}
         readOnly={readOnly}
@@ -101,14 +96,14 @@ ArbeidsforholdCheckboxes.propTypes = {
   kanIkkeGjennomfores: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
   intl: intlShape.isRequired,
-  error: PropTypes.shape(),
+  warning: PropTypes.shape(),
 };
 
 ArbeidsforholdCheckboxes.defaultProps = {
   kanGjennomfores: false,
   redusertArbeid: false,
   kanIkkeGjennomfores: false,
-  error: {},
+  warning: {},
 };
 
 const mapStateToProps = state => ({

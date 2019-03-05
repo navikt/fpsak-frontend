@@ -54,7 +54,12 @@ FodselOgTilretteleggingFaktaForm.propTypes = {
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = () => {
+const transformValues = values => ({
+  kode: '',
+  values,
+});
+
+const mapStateToProps = (state, ownProps) => {
   // Dette blir helt sikkert på et annet format
   const tilrettelegging = {
     termindato: '2019-08-01',
@@ -118,6 +123,7 @@ const mapStateToProps = () => {
       termindato: tilrettelegging.termindato,
       arbforhold: tilrettelegging.arbforhold,
     },
+    onSubmit: values => ownProps.submitCallback(transformValues(values)),
   };
 };
 

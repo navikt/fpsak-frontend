@@ -25,7 +25,7 @@ export const ArbeidsforholdInnhold = ({
   cancelArbeidsforholdCallback,
   updateArbeidsforholdCallback,
   readOnly,
-  error,
+  warning,
   ...formProps
 }) => (
   <div>
@@ -40,8 +40,7 @@ export const ArbeidsforholdInnhold = ({
           />
         </FlexColumn>
       </FlexRow>
-
-      <ArbeidsforholdCheckboxes readOnly={readOnly} error={error} />
+      <ArbeidsforholdCheckboxes readOnly={readOnly} warning={warning} />
       <FlexRow>
         <FlexColumn className={styles.textAreaBredde}>
           <TextAreaField
@@ -92,24 +91,24 @@ ArbeidsforholdInnhold.propTypes = {
   cancelArbeidsforholdCallback: PropTypes.func.isRequired,
   updateArbeidsforholdCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  error: PropTypes.shape(),
+  warning: PropTypes.shape(),
 };
 
 ArbeidsforholdInnhold.defaultProps = {
-  error: {},
+  warning: {},
 };
 
-const validate = (values) => {
-  let errors = {};
+const validateWarning = (values) => {
+  let warnings = {};
 
   if (!values.kanGjennomfores && !values.kanIkkeGjennomfores && !values.redusertArbeid) {
-    errors = {
-      _error: {
-        permisjonsError: 'ArbeidsforholdInnhold.TilretteleggingError',
+    warnings = {
+      _warning: {
+        permisjonsWarning: <FormattedMessage id="ArbeidsforholdInnhold.TilretteleggingWarning" />,
       },
     };
   }
-  return errors;
+  return warnings;
 };
 
 const transformValues = (values, selectedArbeidsforhold) => {
@@ -141,7 +140,7 @@ const mapStateToProps = (state, ownProps) => {
       redusertArbeidDato: selectedArbeidsforhold.redusertArbeid.dato,
       redusertArbeidStillingsprosent: selectedArbeidsforhold.redusertArbeid.stillingsprosent,
     },
-    validate: values => validate(values),
+    warn: values => validateWarning(values),
     onSubmit: values => ownProps.updateArbeidsforholdCallback(transformValues(values, selectedArbeidsforhold)),
   };
 };
