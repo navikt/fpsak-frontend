@@ -133,6 +133,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         />
       )
       }
+      {/* TODO: tilpasse når denne skal vises */}
       <FodselOgTilretteleggingInfoPanel
         openInfoPanels={openInfoPanels}
         toggleInfoPanelCallback={toggleInfoPanelCallback}

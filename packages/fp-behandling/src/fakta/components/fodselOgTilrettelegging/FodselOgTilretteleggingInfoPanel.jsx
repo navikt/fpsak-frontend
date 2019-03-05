@@ -24,13 +24,13 @@ export const FodselOgTilretteleggingInfoPanelImpl = ({
     isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.FODSELTILRETTELEGGING)}
     toggleInfoPanelCallback={toggleInfoPanelCallback}
     faktaId={faktaPanelCodes.FODSELTILRETTELEGGING}
-    readOnly={false}
+    readOnly={readOnly}
     disabledTextCode="FodselOgTilretteleggingInfoPanel.FodselOgTilrettelegging"
   >
     <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
       {[<FormattedMessage id="Kontroller opplysninger fra jordmor og arbeidsgiver" key="svangerskapspengerAp" />]}
     </AksjonspunktHelpText>
-    <FodselOgTilretteleggingFaktaForm submitCallback={submitCallback} readOnly={false} hasOpenAksjonspunkter={hasOpenAksjonspunkter} />
+    <FodselOgTilretteleggingFaktaForm submitCallback={submitCallback} readOnly={readOnly} hasOpenAksjonspunkter={hasOpenAksjonspunkter} />
   </FaktaEkspandertpanel>
 );
 
