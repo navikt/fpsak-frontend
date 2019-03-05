@@ -250,6 +250,7 @@
   "FeilutbetalingInfoPanel.Hendelse": "Hendelse",
   "FeilutbetalingInfoPanel.Beløp": "Feilutbetalt beløp",
   "FeilutbetalingInfoPanel.Resultat": "Resultat",
+  "FeilutbetalingInfoPanel.Begrunnelse": "Begrunn endringene",
 
   "DokumentasjonFaktaForm.ApplicationInformation": "Adopsjonsopplysninger fra søknad",
   "DokumentasjonFaktaForm.Omsorgsovertakelsesdato": "Dato for omsorgsovertakelse",

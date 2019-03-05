@@ -6,17 +6,26 @@ import { formPropTypes } from 'redux-form';
 import moment from 'moment';
 import { Row, Column } from 'nav-frontend-grid';
 import { Element, Undertekst, Normaltekst } from 'nav-frontend-typografi';
-
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { TextAreaField } from '@fpsak-frontend/form';
 import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
-
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getFeilutbetalingFakta } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { behandlingForm } from 'behandlingTilbakekreving/src/behandlingForm';
+import {
+  DDMMYYYY_DATE_FORMAT,
+  minLength,
+  maxLength,
+  hasValidText,
+  required,
+} from '@fpsak-frontend/utils';
 import styles from './feilutbetalingInfoPanel.less';
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';
 
 const formName = 'FaktaFeilutbetalingForm';
+const minLength3 = minLength(3);
+const maxLength1500 = maxLength(1500);
 
 export const FeilutbetalingInfoPanelImpl = ({
   toggleInfoPanelCallback,
@@ -25,6 +34,7 @@ export const FeilutbetalingInfoPanelImpl = ({
   intl,
   feilutbetaling,
   årsak,
+  readOnly,
   ...formProps
 }) => (
   <FaktaEkspandertpanel
@@ -171,6 +181,34 @@ export const FeilutbetalingInfoPanelImpl = ({
           </Element>
         </Column>
       </Row>
+      <VerticalSpacer twentyPx />
+      <Row>
+        <Column md="6">
+          <TextAreaField
+            name="begrunnelse"
+            label={{ id: 'FeilutbetalingInfoPanel.Begrunnelse' }}
+            validate={[required, minLength3, maxLength1500, hasValidText]}
+            maxLength={1500}
+            readOnly={readOnly}
+            id="begrunnelse"
+          />
+        </Column>
+      </Row>
+      <VerticalSpacer eightPx />
+      <Row>
+        <Column md="6">
+          <Hovedknapp
+            mini
+            htmlType="button"
+            onClick={formProps.handleSubmit}
+            disabled={formProps.invalid || formProps.pristine || formProps.submitting}
+            readOnly={readOnly}
+            spinner={formProps.submitting}
+          >
+            <FormattedMessage id="Uttak.Confirm" />
+          </Hovedknapp>
+        </Column>
+      </Row>
     </form>
   </FaktaEkspandertpanel>
 );
@@ -179,15 +217,21 @@ FeilutbetalingInfoPanelImpl.propTypes = {
   intl: intlShape.isRequired,
   toggleInfoPanelCallback: PropTypes.func.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
+  readOnly: PropTypes.bool.isRequired,
   openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
   feilutbetaling: PropTypes.shape.isRequired,
   submitCallback: PropTypes.func.isRequired,
   ...formPropTypes,
 };
 
+const transformValues = values => [{
+  ...values,
+  kode: '5004',
+}];
+
 const mapStateToProps = (state, initialProps) => ({
   feilutbetaling: getFeilutbetalingFakta(state).behandlingFakta,
-  onSubmit: values => initialProps.submitCallback(values),
+  onSubmit: values => initialProps.submitCallback(transformValues(values)),
 });
 
 const FeilutbetalingInfoPanel = connect(mapStateToProps)(injectIntl(behandlingForm({

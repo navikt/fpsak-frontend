@@ -74,6 +74,7 @@ export const getFeilutbetalingFakta = createSelector([getSelectedBehandling], (s
 
 // FORELDELSE
 export const getForeldelsePerioder = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.perioderForeldelse);
+export const getFeilutbetalingAarsaker = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.feilutbetalingAarsak);
 
 // SPRÅK
 export const getBehandlingSprak = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.sprakkode);
