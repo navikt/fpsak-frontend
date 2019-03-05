@@ -355,7 +355,7 @@ export class UttakImpl extends Component {
     const kunOverStyrAp = aksjonspunkter.length === 1
       && aksjonspunkter[0].definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER
       && aksjonspunkter[0].status.kode === 'OPPR';
-    if (kunOverStyrAp) {
+    if (kunOverStyrAp && manuellOverstyring) {
       return !kunOverStyrAp;
     }
 
@@ -454,7 +454,7 @@ export class UttakImpl extends Component {
                 name="manuellOverstyring"
                 label={{ id: 'Uttak.ManuellOverstyring' }}
                 onChange={this.onToggleOverstyring}
-                readOnly={readOnly || this.skalViseCheckbox()}
+                readOnly={readOnly || !this.skalViseCheckbox()}
               />
             </div>
           )}
