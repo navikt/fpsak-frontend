@@ -87,6 +87,7 @@ describe('<InntektFieldArray>', () => {
   const ownProps = {};
   ownProps.andeler = [andel1];
   ownProps.readOnly = false;
+  ownProps.skalHaBesteberegning = false;
   ownProps;
   const initial = {};
   initial.fieldArrayName = [andelField];
@@ -174,5 +175,17 @@ describe('<InntektFieldArray>', () => {
   it('skal ikkje bygge initial values om ingen andeler', () => {
     const iv = InntektFieldArray.buildInitialValues([]);
     expect(iv).to.be.empty;
+  });
+
+  it('skal ikkje kunne endre aktivitet om status dagpenger', () => {
+    const andel = {
+      andelsnr: 1,
+      aktivitetStatus: { kode: 'DP' },
+      inntektskategori: { kode: 'DAGPENGER' },
+      lagtTilAvSaksbehandler: true,
+    };
+    const iv = InntektFieldArray.buildInitialValues([andel]);
+    expect(iv.length).to.equal(1);
+    expect(iv[0].skalKunneEndreAktivitet).to.equal(false);
   });
 });

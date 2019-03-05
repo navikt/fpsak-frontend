@@ -91,6 +91,7 @@ export class MockFieldsWithContent {
     const formatName = index => `${name}[${index}]`;
     this.array = [array].map(formatName); // NOSONAR;
     this.push = () => array.push(formatName(array.length));
+
     this.pop = array.pop.bind(array);
     this.map = array.map.bind(array);
     this.get = index => array[index];

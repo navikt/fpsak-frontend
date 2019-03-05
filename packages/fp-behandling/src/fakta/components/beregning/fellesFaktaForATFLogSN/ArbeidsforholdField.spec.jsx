@@ -54,8 +54,8 @@ describe('<ArbeidsforholdField>', () => {
   });
 
 
-  it('skal render ArbeidsforholdField med selectField for ny andel', () => {
-    const copyAndel = { ...andelField, nyAndel: true };
+  it('skal render ArbeidsforholdField med selectField', () => {
+    const copyAndel = { ...andelField, skalKunneEndreAktivitet: true };
     const fields2 = new MockFieldsWithContent('fieldArrayName', [copyAndel]);
 
     const wrapper = shallow(<ArbeidsforholdField

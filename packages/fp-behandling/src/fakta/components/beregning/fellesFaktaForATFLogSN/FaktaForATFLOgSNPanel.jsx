@@ -49,7 +49,7 @@ import FastsettBBFodendeKvinneForm from './besteberegningFodendeKvinne/FastsettB
 import VurderEtterlonnSluttpakkeForm from './etterlønnSluttpakke/VurderEtterlonnSluttpakkeForm';
 import FastsettEtterlonnSluttpakkeForm from './etterlønnSluttpakke/FastsettEtterlonnSluttpakkeForm';
 import VurderMottarYtelseForm from './vurderOgFastsettATFL/forms/VurderMottarYtelseForm';
-import VurderBesteberegningForm, { vurderBesteberegningTransform } from './vurderbesteberegning/VurderBesteberegningForm';
+import VurderBesteberegningForm, { vurderBesteberegningTransform } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
 
 
 const {
@@ -173,7 +173,8 @@ const getFaktaPanels = (readOnly, tilfeller, isAksjonspunktClosed, showTableCall
       </ElementWrapper>,
     );
   }
-  if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)) {
+  if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)
+   && !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)) {
     faktaPanels.push(
       <ElementWrapper key="BBFodendeKvinne">
         {spacer(true)}
@@ -352,7 +353,8 @@ export const setInntektValues = (aktivePaneler, fatsettKunYtelseTransform, fasts
   if (aktivePaneler.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)) {
     return fastsettATFLTransform(values);
   }
-  if (aktivePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)) {
+  if (aktivePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)
+   && !aktivePaneler.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)) {
     return fastsettBBFodendeKvinneTransform(values);
   }
   if (aktivePaneler.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)) {
@@ -368,7 +370,7 @@ const setValuesForVurderFakta = (aktivePaneler, values, endringBGPerioder, kortv
     endretBGTransform(endringBGPerioder),
     atflSammeOrgTransform(faktaOmBeregning, beregningsgrunnlag),
     besteberegningTransform(faktaOmBeregning),
-    vurderBesteberegningTransform,
+    vurderBesteberegningTransform(faktaOmBeregning),
   )(values);
   return transformValues(aktivePaneler,
     nyIArbeidslivetTransform,
@@ -422,7 +424,7 @@ export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
     ...VurderEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag, vurderFaktaAP),
     ...FastsettEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag),
     ...VurderMottarYtelseForm.buildInitialValues(vurderMottarYtelse),
-    ...VurderBesteberegningForm.buildInitialValues(vurderBesteberegning),
+    ...VurderBesteberegningForm.buildInitialValues(vurderBesteberegning, tilfeller),
   }),
 );
 

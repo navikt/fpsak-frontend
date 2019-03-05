@@ -47,7 +47,7 @@ const ArbeidsforholdField = ({
   arbeidsforholdList,
 }) => (
   <ElementWrapper>
-    {(!fields.get(index).nyAndel)
+    {(!fields.get(index).skalKunneEndreAktivitet)
       && (
       <InputField
         name={name}
@@ -56,7 +56,7 @@ const ArbeidsforholdField = ({
       />
       )
       }
-    {fields.get(index).nyAndel
+    {fields.get(index).skalKunneEndreAktivitet
       && (
       <SelectField
         name={name}
