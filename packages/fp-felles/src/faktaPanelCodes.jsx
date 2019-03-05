@@ -5,7 +5,7 @@ const faktaPanelCodes = {
   BEREGNING: 'beregning',
   DEFAULT: 'default',
   FODSELSVILKARET: 'foedselsvilkaaret',
-  FODSELPERMISJON: 'fodselPermisjon',
+  FODSELTILRETTELEGGING: 'fodselTilrettelegging',
   MEDLEMSKAPSVILKARET: 'medlemskapsvilkaaret',
   OMSORG: 'omsorg',
   OMSORGSVILKARET: 'omsorgsvilkaaret',

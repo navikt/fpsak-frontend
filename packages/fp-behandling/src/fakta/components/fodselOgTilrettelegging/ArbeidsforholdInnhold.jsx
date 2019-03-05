@@ -24,6 +24,8 @@ const maxLength1500 = maxLength(1500);
 export const ArbeidsforholdInnhold = ({
   cancelArbeidsforholdCallback,
   updateArbeidsforholdCallback,
+  readOnly,
+  error,
   ...formProps
 }) => (
   <div>
@@ -34,27 +36,31 @@ export const ArbeidsforholdInnhold = ({
             name="jordmorTilretteleggingFra"
             label={{ id: 'ArbeidsforholdInnhold.Jordmor.TilretteleggingFra' }}
             validate={[required, hasValidDate]}
-            readOnly={false}
+            readOnly={readOnly}
           />
         </FlexColumn>
       </FlexRow>
-      <ArbeidsforholdCheckboxes />
+
+      <ArbeidsforholdCheckboxes readOnly={readOnly} error={error} />
       <FlexRow>
         <FlexColumn className={styles.textAreaBredde}>
           <TextAreaField
             name="begrunnelse"
             label={{ id: 'ArbeidsforholdInnhold.BegrunnEndringene' }}
-            readOnly={false}
+            readOnly={readOnly}
             validate={[
               minLength3,
               maxLength1500,
               hasValidText,
+              required,
             ]}
             maxLength={1500}
           />
         </FlexColumn>
       </FlexRow>
     </FlexContainer>
+    {!readOnly
+    && (
     <FlexContainer fluid>
       <FlexRow>
         <FlexColumn>
@@ -77,13 +83,35 @@ export const ArbeidsforholdInnhold = ({
         </FlexColumn>
       </FlexRow>
     </FlexContainer>
+    )
+  }
   </div>
 );
 
 ArbeidsforholdInnhold.propTypes = {
   cancelArbeidsforholdCallback: PropTypes.func.isRequired,
   updateArbeidsforholdCallback: PropTypes.func.isRequired,
+  readOnly: PropTypes.bool.isRequired,
+  error: PropTypes.shape(),
 };
+
+ArbeidsforholdInnhold.defaultProps = {
+  error: {},
+};
+
+const validate = (values) => {
+  let errors = {};
+
+  if (!values.kanGjennomfores && !values.kanIkkeGjennomfores && !values.redusertArbeid) {
+    errors = {
+      _error: {
+        permisjonsError: 'ArbeidsforholdInnhold.TilretteleggingError',
+      },
+    };
+  }
+  return errors;
+};
+
 const transformValues = (values, selectedArbeidsforhold) => {
   const { ...transformvalue } = selectedArbeidsforhold;
   transformvalue.jordmor.tilretteleggingFra = values.jordmorTilretteleggingFra;
@@ -97,6 +125,7 @@ const transformValues = (values, selectedArbeidsforhold) => {
   transformvalue.begrunnelse = values.begrunnelse;
   return transformvalue;
 };
+
 const mapStateToProps = (state, ownProps) => {
   const { selectedArbeidsforhold } = ownProps;
   // TODO: Tilpasse responsen fra backend
@@ -112,6 +141,7 @@ const mapStateToProps = (state, ownProps) => {
       redusertArbeidDato: selectedArbeidsforhold.redusertArbeid.dato,
       redusertArbeidStillingsprosent: selectedArbeidsforhold.redusertArbeid.stillingsprosent,
     },
+    validate: values => validate(values),
     onSubmit: values => ownProps.updateArbeidsforholdCallback(transformValues(values, selectedArbeidsforhold)),
   };
 };

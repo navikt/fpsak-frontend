@@ -20,17 +20,17 @@ export const FodselOgTilretteleggingInfoPanelImpl = ({
 }) => (
   <FaktaEkspandertpanel
     title={intl.formatMessage({ id: 'FodselOgTilretteleggingInfoPanel.FaktaFodselOgTilrettelegging' })}
-    hasOpenAksjonspunkter
-    isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.FODSELPERMISJON)}
+    hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+    isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.FODSELTILRETTELEGGING)}
     toggleInfoPanelCallback={toggleInfoPanelCallback}
-    faktaId={faktaPanelCodes.FODSELPERMISJON}
-    readOnly={readOnly}
+    faktaId={faktaPanelCodes.FODSELTILRETTELEGGING}
+    readOnly={false}
     disabledTextCode="FodselOgTilretteleggingInfoPanel.FodselOgTilrettelegging"
   >
-    <AksjonspunktHelpText isAksjonspunktOpen>
+    <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
       {[<FormattedMessage id="Kontroller opplysninger fra jordmor og arbeidsgiver" key="svangerskapspengerAp" />]}
     </AksjonspunktHelpText>
-    <FodselOgTilretteleggingFaktaForm submitCallback={submitCallback} readOnly={readOnly} hasOpenAksjonspunkter={hasOpenAksjonspunkter} />
+    <FodselOgTilretteleggingFaktaForm submitCallback={submitCallback} readOnly={false} hasOpenAksjonspunkter={hasOpenAksjonspunkter} />
   </FaktaEkspandertpanel>
 );
 
@@ -46,6 +46,6 @@ FodselOgTilretteleggingInfoPanelImpl.propTypes = {
 
 const ConnectedComponent = injectIntl(FodselOgTilretteleggingInfoPanelImpl);
 
-const FodselOgTilretteleggingInfoPanel = withDefaultToggling(faktaPanelCodes.FODSELPERMISJON, fodselOgPermAksjonspunkter)(ConnectedComponent);
+const FodselOgTilretteleggingInfoPanel = withDefaultToggling(faktaPanelCodes.FODSELTILRETTELEGGING, fodselOgPermAksjonspunkter)(ConnectedComponent);
 
 export default (FodselOgTilretteleggingInfoPanel);
