@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 import { getIntegrationStatusList, getShowDetailedErrorMessages } from 'app/duck';
 import fpsakApi from 'data/fpsakApi';
-import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import FagsakSearchIndex from 'fagsakSearch/FagsakSearchIndex';
 import IntegrationStatusPanel from './IntegrationStatusPanel';
 
@@ -26,12 +25,12 @@ export class Dashboard extends Component {
   render() {
     const { integrationStatusList, showIntegrationStatus } = this.props;
     return (
-      <ElementWrapper>
+      <React.Fragment>
         {showIntegrationStatus && integrationStatusList.length > 0
           && <IntegrationStatusPanel integrationStatusList={integrationStatusList} />
         }
         <FagsakSearchIndex />
-      </ElementWrapper>
+      </React.Fragment>
     );
   }
 }
