@@ -30,10 +30,10 @@ export class BpTimelinePanel extends Component {
   setSelectedDefaultPeriod() {
     const { resultatActivity } = this.props;
     const { selectedItem } = this.state;
-    const defaultSelectedElement = resultatActivity.find(period => getResultType(period).kode === foreldelseCodes.MANUELL_BEHANDLING);
-    const defaultSelectedElementIfNoAP = resultatActivity.find(period => period.hovedsoker);
+
     if (!selectedItem) {
-      this.setState({ selectedItem: defaultSelectedElement || defaultSelectedElementIfNoAP });
+      const defaultSelectedElement = resultatActivity.find(period => getResultType(period).kode === foreldelseCodes.MANUELL_BEHANDLING);
+      this.setState({ selectedItem: defaultSelectedElement });
     }
   }
 

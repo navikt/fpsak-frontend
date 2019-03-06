@@ -91,7 +91,7 @@ const ForeldelsePanelImpl = ({
             <FlexColumn>
               <Hovedknapp
                 mini
-                disabled={false}
+                disabled={formProps.pristine}
                 spinner={formProps.submitting}
               >
                 <FormattedMessage id="Uttak.Confirm" />
