@@ -8,10 +8,10 @@ import moment from 'moment';
 import { captureException, withScope, configureScope } from '@sentry/browser';
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import { parseQueryString } from '@fpsak-frontend/utils';
+import { Header } from '@fpsak-frontend/dekorator';
 import AppConfigResolver from './AppConfigResolver';
 import { getFunksjonellTid, getNavAnsattName } from './duck';
 import LanguageProvider from './LanguageProvider';
-import Header from './components/Header';
 import Home from './components/Home';
 
 import '@fpsak-frontend/assets/styles/global.less';
