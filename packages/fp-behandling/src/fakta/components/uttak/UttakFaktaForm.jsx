@@ -148,10 +148,10 @@ const manueltEllerOverstyring = manuellOverstyring => (
   manuellOverstyring ? aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK : aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK
 );
 
-const transformValues = (values, initialValues, aksjonspunkter) => { // NOSONAR
+export const transformValues = (values, initialValues, aksjonspunkter) => { // NOSONAR
   // const overstyrApErOpprettet = aksjonspunkter
   // .filter(ap => ap.status.kode === 'OPPR' && ap.definisjon.kode === aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK);
-  const aksjonspunktUtenOverstyr = aksjonspunkter.filter(ap => ap !== aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK);
+  const aksjonspunktUtenOverstyr = aksjonspunkter.filter(ap => ap.definisjon.kode !== aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK);
 
   const apCodes = aksjonspunktUtenOverstyr.length
     ? aksjonspunktUtenOverstyr.map(ap => ap.definisjon.kode)
