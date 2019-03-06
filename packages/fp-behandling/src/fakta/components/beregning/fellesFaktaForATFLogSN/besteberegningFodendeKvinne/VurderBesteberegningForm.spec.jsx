@@ -37,9 +37,9 @@ describe('<VurderBesteberegning>', () => {
     const values = {};
     values[besteberegningField] = true;
     values[inntektFieldArrayName] = [
-      { andelsnr: 1, fastsattBeløp: '10 000', inntektskategori: 'ARBEIDSTAKER' },
+      { andelsnr: 1, fastsattBelop: '10 000', inntektskategori: 'ARBEIDSTAKER' },
       {
-        nyAndel: true, lagtTilAvSaksbehandler: true, andelsnr: undefined, fastsattBeløp: '20 000', inntektskategori: 'DAGPENGER', aktivitetStatus: 'DP',
+        nyAndel: true, lagtTilAvSaksbehandler: true, andelsnr: undefined, fastsattBelop: '20 000', inntektskategori: 'DAGPENGER', aktivitetStatus: 'DP',
       },
     ];
     const transformed = VurderBesteberegningForm.transformValues(values, { vurderBesteberegning: {} });

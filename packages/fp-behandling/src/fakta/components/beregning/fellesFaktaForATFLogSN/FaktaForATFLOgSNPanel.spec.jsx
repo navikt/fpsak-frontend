@@ -23,9 +23,9 @@ import { createInputfieldKeyAT, createInputfieldKeyFL } from './vurderOgFastsett
 import { lonnsendringField } from './vurderOgFastsettATFL/forms/LonnsendringForm';
 import { erNyoppstartetFLField } from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import {
-  createInputFieldKeyForAndel,
-  createSelectfieldKeyForAndel,
-} from './besteberegningFodendeKvinne/FastsettBBFodendeKvinneForm';
+  besteberegningField,
+  inntektFieldArrayName,
+} from './besteberegningFodendeKvinne/VurderBesteberegningForm';
 import VurderOgFastsettATFL from './vurderOgFastsettATFL/VurderOgFastsettATFL';
 
 const {
@@ -310,15 +310,18 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     const andel2 = { andelsnr: 2, aktivitetStatus: { kode: 'SN' } };
     const faktaOmBeregning = {
       besteberegningAndeler: [andel1, andel2],
+      vurderBesteberegning: { andeler: [andel1, andel2] },
     };
     const values = {};
-    values[createInputFieldKeyForAndel(andel1)] = '10 000';
-    values[createSelectfieldKeyForAndel(andel1)] = 'ARBEIDSTAKER';
-    values[createInputFieldKeyForAndel(andel2)] = '20 000';
-    values[createSelectfieldKeyForAndel(andel2)] = 'SELVSTENDIG_NÆRINGSDRIVENDE';
+    values[besteberegningField] = true;
+    values[inntektFieldArrayName] = [
+      { fastsattBelop: '10 000', inntektskategori: 'ARBEIDSTAKER', andelsnr: andel1.andelsnr },
+      { fastsattBelop: '20 000', inntektskategori: 'SELVSTENDIG_NÆRINGSDRIVENDE', andelsnr: andel2.andelsnr },
+    ];
     const transformedValues = transformValuesFaktaForATFLOgSN.resultFunc(aktivePaneler, [], undefined, faktaOmBeregning, {})(values);
-    expect(transformedValues.faktaOmBeregningTilfeller).to.have.length(1);
+    expect(transformedValues.faktaOmBeregningTilfeller).to.have.length(2);
     expect(transformedValues.faktaOmBeregningTilfeller[0]).is.eql(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE);
+    expect(transformedValues.faktaOmBeregningTilfeller[1]).is.eql(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING);
     expect(transformedValues.besteberegningAndeler.besteberegningAndelListe).to.have.length(2);
     expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[0].andelsnr).is.eql(andel1.andelsnr);
     expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[0].fastsatteVerdier.fastsattBeløp).is.eql(10000);
@@ -326,10 +329,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[1].andelsnr).is.eql(andel2.andelsnr);
     expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[1].fastsatteVerdier.fastsattBeløp).is.eql(20000);
     expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[1].fastsatteVerdier.inntektskategori).is.eql('SELVSTENDIG_NÆRINGSDRIVENDE');
-    expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[0].inntektPrMnd).is.eql(10000);
-    expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[0].inntektskategori).is.eql('ARBEIDSTAKER');
-    expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[1].inntektPrMnd).is.eql(20000);
-    expect(transformedValues.besteberegningAndeler.besteberegningAndelListe[1].inntektskategori).is.eql('SELVSTENDIG_NÆRINGSDRIVENDE');
   });
 
 

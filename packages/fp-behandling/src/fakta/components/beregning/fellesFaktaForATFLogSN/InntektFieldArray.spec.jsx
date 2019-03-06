@@ -8,7 +8,7 @@ import { isRequiredMessage } from '@fpsak-frontend/utils';
 import { lagStateMedAksjonspunkterOgFaktaOmBeregning } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
 import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components';
-import { InputField, SelectField } from '@fpsak-frontend/form';
+import { InputField, SelectField, PeriodpickerField } from '@fpsak-frontend/form';
 import ArbeidsforholdField from './ArbeidsforholdField';
 import InntektFieldArray, { mapStateToProps, InntektFieldArrayImpl } from './InntektFieldArray';
 
@@ -74,9 +74,13 @@ describe('<InntektFieldArray>', () => {
     nyAndel: false,
     andel: 'Sopra Steria AS (233647823)',
     andelsnr: 1,
-    fastsattBeløp: '0',
+    fastsattBelop: '0',
     lagtTilAvSaksbehandler: false,
     inntektskategori: 'ARBEIDSTAKER',
+    arbeidsgiverId: '233647823',
+    arbeidsperiodeFom: '01.01.2018',
+    arbeidsperiodeTom: null,
+    refusjonskrav: '10 000',
   };
 
   const fields = new MockFieldsWithContent('fieldArrayName', [andelField]);
@@ -94,10 +98,45 @@ describe('<InntektFieldArray>', () => {
   const state = lagStateMedAksjonspunkterOgFaktaOmBeregning(aksjonspunkter, faktaOmBeregning, initial, initial);
   const props = mapStateToProps(state, ownProps);
 
-  it('skal vise komponent', () => {
+  it('skal vise komponent med arbeidsperiode og refusjonskrav', () => {
     const wrapper = shallowWithIntl(<InntektFieldArrayImpl
       intl={intlMock}
       fields={fields}
+      meta={{}}
+      {...ownProps}
+      {...props}
+    />);
+    const table = wrapper.find(Table);
+    expect(table.length).to.eql(1);
+    const rows = table.find(TableRow);
+    expect(rows.length).to.eql(2);
+    const columns = rows.first().find(TableColumn);
+    expect(columns.length).to.eql(6);
+    expect(columns.first().find(ArbeidsforholdField).length).to.eql(1);
+    expect(columns.at(1).find(PeriodpickerField).length).to.eql(1);
+    expect(columns.at(2).find(InputField).length).to.eql(1);
+    expect(columns.at(3).find(InputField).length).to.eql(1);
+    expect(columns.at(4).find(SelectField).length).to.eql(1);
+  });
+
+  it('skal vise komponent uten arbeidsperiode og refusjonskrav', () => {
+    const andelField2 = {
+      nyAndel: false,
+      andel: 'Sopra Steria AS (233647823)',
+      andelsnr: 1,
+      fastsattBelop: '0',
+      lagtTilAvSaksbehandler: false,
+      inntektskategori: 'ARBEIDSTAKER',
+      arbeidsgiverId: '',
+      arbeidsperiodeFom: '',
+      arbeidsperiodeTom: '',
+    };
+
+    const fields2 = new MockFieldsWithContent('fieldArrayName', [andelField2]);
+
+    const wrapper = shallowWithIntl(<InntektFieldArrayImpl
+      intl={intlMock}
+      fields={fields2}
       meta={{}}
       {...ownProps}
       {...props}
@@ -116,7 +155,7 @@ describe('<InntektFieldArray>', () => {
   it('skal validere eksisterende andeler uten errors', () => {
     const values = [];
     const andel2 = {
-      fastsattBeløp: '10 000',
+      fastsattBelop: '10 000',
       aktivitetstatus: 'ARBEIDSTAKER',
       andel: 'Visningsnavn for virksomhet',
       inntektskategori: 'ARBEIDSTAKER',
@@ -130,22 +169,22 @@ describe('<InntektFieldArray>', () => {
     const values = [];
     const andel2 = {
       refusjonskrav: '10 000',
-      fastsattBeløp: '',
+      fastsattBelop: '',
       aktivitetstatus: 'ARBEIDSTAKER',
       andel: 'Visningsnavn for virksomhet',
       inntektskategori: 'ARBEIDSTAKER',
     };
     values.push(andel2);
     const errors = InntektFieldArray.validate(values, false);
-    expect(errors[0].fastsattBeløp).to.have.length(1);
-    expect(errors[0].fastsattBeløp[0].id).to.equal(isRequiredMessage()[0].id);
+    expect(errors[0].fastsattBelop).to.have.length(1);
+    expect(errors[0].fastsattBelop[0].id).to.equal(isRequiredMessage()[0].id);
   });
 
   it('skal gi error om inntektkategori ikkje er oppgitt', () => {
     const values = [];
     const andel2 = {
       refusjonskrav: '10 000',
-      fastsattBeløp: '100 000',
+      fastsattBelop: '100 000',
       aktivitetstatus: 'ARBEIDSTAKER',
       andel: 'Visningsnavn for virksomhet',
       inntektskategori: '',
@@ -160,7 +199,7 @@ describe('<InntektFieldArray>', () => {
     const values = [];
     const andel2 = {
       refusjonskrav: '10 000',
-      fastsattBeløp: '100 000',
+      fastsattBelop: '100 000',
       aktivitetstatus: 'ARBEIDSTAKER',
       andel: '',
       inntektskategori: '',

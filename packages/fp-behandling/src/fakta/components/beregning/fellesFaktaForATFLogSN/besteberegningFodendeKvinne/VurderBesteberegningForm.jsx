@@ -101,7 +101,8 @@ VurderBesteberegningPanelImpl.defaultProps = {
 
 
 VurderBesteberegningPanelImpl.buildInitialValues = (vurderBesteberegning, faktaOmBeregningTilfeller) => {
-  if (!faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)) {
+  if (!(faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)
+    || faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE))) {
     return {};
   }
   if (!vurderBesteberegning || !vurderBesteberegning.andeler || vurderBesteberegning.andeler.length === 0) {
@@ -117,7 +118,8 @@ VurderBesteberegningPanelImpl.buildInitialValues = (vurderBesteberegning, faktaO
 };
 
 VurderBesteberegningPanelImpl.validate = (values, aktivertePaneler) => {
-  if (!values || !aktivertePaneler.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)) {
+  if (!values || !(aktivertePaneler.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)
+  || aktivertePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE))) {
     return {};
   }
   const errors = {};
@@ -152,7 +154,7 @@ VurderBesteberegningPanelImpl.transformValues = (values, faktaOmBeregning) => {
     lagtTilAvSaksbehandler: verdi.lagtTilAvSaksbehandler,
     aktivitetStatus: verdi.nyAndel ? aktivitetStatus.DAGPENGER : null,
     fastsatteVerdier: {
-      fastsattBeløp: verdi.fastsattBeløp,
+      fastsattBeløp: verdi.fastsattBelop,
       inntektskategori: verdi.inntektskategori,
     },
   }));
@@ -163,7 +165,7 @@ VurderBesteberegningPanelImpl.transformValues = (values, faktaOmBeregning) => {
 
 
 export const vurderBesteberegningTransform = faktaOmBeregning => values => ({
-  faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE],
+  faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE, faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING],
   ...VurderBesteberegningPanelImpl.transformValues(values, faktaOmBeregning),
 });
 
