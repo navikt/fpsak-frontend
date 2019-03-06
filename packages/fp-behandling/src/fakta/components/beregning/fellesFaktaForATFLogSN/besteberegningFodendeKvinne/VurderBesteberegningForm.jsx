@@ -5,9 +5,6 @@ import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'redux-form';
 import { Element } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import {
-  getVurderBesteberegning,
-} from 'behandlingFpsak/src/behandlingSelectors';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { LINK_TIL_BESTE_BEREGNING_REGNEARK } from '@fpsak-frontend/fp-felles';
@@ -34,7 +31,6 @@ const VurderBesteberegningPanelImpl = ({
   readOnly,
   isAksjonspunktClosed,
   erBesteberegning,
-  andeler,
 }) => (
   <div>
     <Row>
@@ -77,7 +73,6 @@ const VurderBesteberegningPanelImpl = ({
               component={InntektFieldArray}
               readOnly={readOnly}
               skalHaBesteberegning={erBesteberegning}
-              andeler={andeler}
               skalKunneLeggeTilAndel={false}
             />
           </Column>
@@ -92,7 +87,6 @@ VurderBesteberegningPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   erBesteberegning: PropTypes.bool,
-  andeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 VurderBesteberegningPanelImpl.defaultProps = {
@@ -169,12 +163,8 @@ export const vurderBesteberegningTransform = faktaOmBeregning => values => ({
   ...VurderBesteberegningPanelImpl.transformValues(values, faktaOmBeregning),
 });
 
-const mapStateToProps = (state) => {
-  const vurderBesteberegning = getVurderBesteberegning(state);
-  return {
-    andeler: vurderBesteberegning.andeler,
-    erBesteberegning: getFormValuesForBeregning(state)[besteberegningField],
-  };
-};
+const mapStateToProps = state => ({
+  erBesteberegning: getFormValuesForBeregning(state)[besteberegningField],
+});
 
 export default connect(mapStateToProps)(VurderBesteberegningPanelImpl);

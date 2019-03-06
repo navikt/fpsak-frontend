@@ -38,6 +38,28 @@ export const getUniqueListOfArbeidsforhold = (andeler) => {
   return arbeidsgiverList;
 };
 
+export const getUniqueListOfArbeidsforholdFields = (fields) => {
+  const arbeidsgiverList = [];
+  if (fields === undefined) {
+    return arbeidsgiverList;
+  }
+  fields.forEach((id, index) => {
+    const field = fields.get(index);
+    if (field.arbeidsforhold !== null && !arbeidsforholdEksistererIListen(field, arbeidsgiverList)) {
+      const arbeidsforholdObject = {
+        andelsnr: field.andelsnr,
+        arbeidsforholdId: field.arbeidsforholdId,
+        arbeidsgiverId: field.arbeidsgiverId,
+        arbeidsgiverNavn: field.arbeidsgiverNavn,
+        arbeidsperiodeFom: field.arbeidsperiodeFom,
+        arbeidsperiodeTom: field.arbeidsperiodeTom,
+      };
+      arbeidsgiverList.push(arbeidsforholdObject);
+    }
+  });
+  return arbeidsgiverList;
+};
+
 
 export const arbeidsforholdProptype = PropTypes.shape({
   arbeidsgiverNavn: PropTypes.string,

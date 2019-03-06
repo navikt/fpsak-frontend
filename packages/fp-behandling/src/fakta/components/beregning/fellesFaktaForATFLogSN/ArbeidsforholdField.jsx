@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { InputField, SelectField } from '@fpsak-frontend/form';
 import { createVisningsnavnForAktivitet } from '@fpsak-frontend/utils';
-import { arbeidsforholdProptype } from '../ArbeidsforholdHelper';
+import { arbeidsforholdProptype, getUniqueListOfArbeidsforholdFields } from '../ArbeidsforholdHelper';
 
 const finnArbeidsforholdForAndel = (arbeidsforholdListe, val) => {
   const andelsnr = Number(val);
@@ -17,8 +18,8 @@ const setArbeidsforholdInfo = (fields, index, arbeidsforholdList, val) => {
     field.arbeidsforholdId = arbeidsforhold.arbeidsforholdId;
     field.arbeidsgiverNavn = arbeidsforhold.arbeidsgiverNavn;
     field.arbeidsgiverId = arbeidsforhold.arbeidsgiverId;
-    field.arbeidsperiodeFom = arbeidsforhold.startdato;
-    field.arbeidsperiodeTom = arbeidsforhold.opphoersdato;
+    field.arbeidsperiodeFom = arbeidsforhold.arbeidsperiodeFom;
+    field.arbeidsperiodeTom = arbeidsforhold.arbeidsperiodeTom;
     field.andelsnrRef = arbeidsforhold.andelsnr;
   }
 };
@@ -39,7 +40,7 @@ const arbeidsgiverSelectValues = arbeidsforholdList => (arbeidsforholdList
   )));
 
 
-const ArbeidsforholdField = ({
+export const ArbeidsforholdFieldImpl = ({
   fields,
   index,
   name,
@@ -71,7 +72,7 @@ const ArbeidsforholdField = ({
   </ElementWrapper>
 );
 
-ArbeidsforholdField.propTypes = {
+ArbeidsforholdFieldImpl.propTypes = {
   fields: PropTypes.shape().isRequired,
   index: PropTypes.number.isRequired,
   readOnly: PropTypes.bool.isRequired,
@@ -80,4 +81,12 @@ ArbeidsforholdField.propTypes = {
 };
 
 
-export default ArbeidsforholdField;
+export const mapStateToProps = (state, ownProps) => {
+  const arbeidsforholdList = getUniqueListOfArbeidsforholdFields(ownProps.fields);
+  return {
+    arbeidsforholdList,
+  };
+};
+
+
+export default connect(mapStateToProps)(ArbeidsforholdFieldImpl);

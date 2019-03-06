@@ -7,9 +7,10 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
 import { lagStateMedAksjonspunkterOgFaktaOmBeregning } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
 import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components';
-import { InputField, SelectField, PeriodpickerField } from '@fpsak-frontend/form';
-import ArbeidsforholdField from './ArbeidsforholdField';
+import { Table } from '@fpsak-frontend/shared-components';
+import { MockFieldsWithContent } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
+import { Table } from '@fpsak-frontend/shared-components';
+import { AndelRow, SummaryRow } from './InntektFieldArrayRow';
 import InntektFieldArray, { mapStateToProps, InntektFieldArrayImpl } from './InntektFieldArray';
 
 const arbeidsforhold1 = {
@@ -50,11 +51,8 @@ describe('<InntektFieldArray>', () => {
     ownProps.andeler = [andel1];
     const state = lagStateMedAksjonspunkterOgFaktaOmBeregning(aksjonspunkter, faktaOmBeregning);
     const props = mapStateToProps(state, ownProps);
-    expect(props.arbeidsforholdList.length).to.eql(1);
     expect(props.isBeregningFormDirty).to.eql(false);
-    expect(props.isAksjonspunktClosed).to.eql(false);
     expect(props.aktivitetStatuser.length).to.eql(13);
-    expect(props.inntektskategoriKoder.length).to.eql(2);
     expect(props.erKunYtelse).to.eql(false);
   });
 
@@ -98,7 +96,7 @@ describe('<InntektFieldArray>', () => {
   const state = lagStateMedAksjonspunkterOgFaktaOmBeregning(aksjonspunkter, faktaOmBeregning, initial, initial);
   const props = mapStateToProps(state, ownProps);
 
-  it('skal vise komponent med arbeidsperiode og refusjonskrav', () => {
+  it('skal vise komponent', () => {
     const wrapper = shallowWithIntl(<InntektFieldArrayImpl
       intl={intlMock}
       fields={fields}
@@ -108,49 +106,12 @@ describe('<InntektFieldArray>', () => {
     />);
     const table = wrapper.find(Table);
     expect(table.length).to.eql(1);
-    const rows = table.find(TableRow);
-    expect(rows.length).to.eql(2);
-    const columns = rows.first().find(TableColumn);
-    expect(columns.length).to.eql(6);
-    expect(columns.first().find(ArbeidsforholdField).length).to.eql(1);
-    expect(columns.at(1).find(PeriodpickerField).length).to.eql(1);
-    expect(columns.at(2).find(InputField).length).to.eql(1);
-    expect(columns.at(3).find(InputField).length).to.eql(1);
-    expect(columns.at(4).find(SelectField).length).to.eql(1);
+    const andelRows = table.find(AndelRow);
+    expect(andelRows.length).to.eql(1);
+    const summaryRow = table.find(SummaryRow);
+    expect(summaryRow.length).to.eql(1);
   });
 
-  it('skal vise komponent uten arbeidsperiode og refusjonskrav', () => {
-    const andelField2 = {
-      nyAndel: false,
-      andel: 'Sopra Steria AS (233647823)',
-      andelsnr: 1,
-      fastsattBelop: '0',
-      lagtTilAvSaksbehandler: false,
-      inntektskategori: 'ARBEIDSTAKER',
-      arbeidsgiverId: '',
-      arbeidsperiodeFom: '',
-      arbeidsperiodeTom: '',
-    };
-
-    const fields2 = new MockFieldsWithContent('fieldArrayName', [andelField2]);
-
-    const wrapper = shallowWithIntl(<InntektFieldArrayImpl
-      intl={intlMock}
-      fields={fields2}
-      meta={{}}
-      {...ownProps}
-      {...props}
-    />);
-    const table = wrapper.find(Table);
-    expect(table.length).to.eql(1);
-    const rows = table.find(TableRow);
-    expect(rows.length).to.eql(2);
-    const columns = rows.first().find(TableColumn);
-    expect(columns.length).to.eql(4);
-    expect(columns.first().find(ArbeidsforholdField).length).to.eql(1);
-    expect(columns.at(1).find(InputField).length).to.eql(1);
-    expect(columns.at(2).find(SelectField).length).to.eql(1);
-  });
 
   it('skal validere eksisterende andeler uten errors', () => {
     const values = [];
