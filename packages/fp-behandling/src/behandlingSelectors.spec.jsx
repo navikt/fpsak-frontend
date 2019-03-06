@@ -197,7 +197,7 @@ describe('behandlingSelectors', () => {
     it('skal ha åpent aksjonspunkt for kontrollering av revurdering', () => {
       const openAksjonspunkter = [{
         definisjon: {
-          kode: aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING,
+          kode: aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST,
         },
       }];
 

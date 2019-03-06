@@ -121,7 +121,7 @@ export const isBehandlingInInnhentSoknadsopplysningerSteg = createSelector(
 );
 export const isKontrollerRevurderingAksjonspunkOpen = createSelector(
   [getOpenAksjonspunkter], (openAksjonspunkter = []) => openAksjonspunkter
-    .some(ap => ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING),
+    .some(ap => ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST),
 );
 export const hasBehandlingManualPaVent = createSelector(
   [getOpenAksjonspunkter], (openAksjonspunkter = []) => openAksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT),

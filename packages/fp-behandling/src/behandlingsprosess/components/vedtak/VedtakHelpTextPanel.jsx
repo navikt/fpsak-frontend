@@ -15,7 +15,7 @@ const findHelpTexts = (intl, aksjonspunktKoder) => {
   if (aksjonspunktKoder && aksjonspunktKoder.includes(aksjonspunktCodes.VURDERE_DOKUMENT)) {
     helpTexts.push(intl.formatMessage({ id: 'VedtakForm.VurderDokument' }));
   }
-  if (aksjonspunktKoder && aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING)) {
+  if (aksjonspunktKoder && aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST)) {
     helpTexts.push(intl.formatMessage({ id: 'VedtakForm.KontrollerRevurderingsbehandling' }));
   }
 
@@ -37,6 +37,7 @@ export const VedtakHelpTextPanelImpl = ({
           {helpTexts}
         </AksjonspunktHelpText>
         <VerticalSpacer eightPx />
+        <Element className={styles.inline}><FormattedMessage id="VedtakForm.HelpText0" /></Element>
         <Normaltekst className={styles.inline}><FormattedMessage id="VedtakForm.HelpText1" /></Normaltekst>
         <Element className={styles.inline}><FormattedMessage id="VedtakForm.TilGodkjenning" /></Element>
         <Normaltekst className={styles.inline}><FormattedMessage id="VedtakForm.HelpText2" /></Normaltekst>
