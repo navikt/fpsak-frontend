@@ -82,8 +82,8 @@ const mapArbeidsforhold = andeler => andeler.map((andel) => {
 });
 
 const periodeTypeTrengerArsak = (sokerKjonn, periodeType) => (
-  (sokerKjonn === navBrukerKjonn.MANN && periodeType === 'MØDREKVOTE')
-  || (sokerKjonn === navBrukerKjonn.KVINNE && periodeType === 'FEDREKVOTE')
+  (sokerKjonn === navBrukerKjonn.MANN && periodeType === uttakPeriodeType.MODREKVOTE)
+  || (sokerKjonn === navBrukerKjonn.KVINNE && periodeType === uttakPeriodeType.FEDREKVOTE)
 );
 
 export const UttakNyPeriode = ({
@@ -281,6 +281,7 @@ export const UttakNyPeriode = ({
                   htmlType="button"
                   mini
                   onClick={formProps.handleSubmit}
+                  spinner={formProps.submitting}
                 >
                   <FormattedMessage id="UttakInfoPanel.Oppdater" />
                 </Hovedknapp>

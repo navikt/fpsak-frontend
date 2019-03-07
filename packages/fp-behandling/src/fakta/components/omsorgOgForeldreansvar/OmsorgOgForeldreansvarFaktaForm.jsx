@@ -103,7 +103,7 @@ const OmsorgOgForeldreansvarFaktaFormImpl = ({
           && (
           <div className={styles.vilkarTypeReadOnly}>
             <Element tag="span">
-              {vilkarTypes.find(d => d.kode === vilkarType).navn}
+              {(vilkarTypes.find(d => d.kode === vilkarType) || {}).navn}
             </Element>
             {vilkarTypeIsEdited
               && <EditedIcon />
