@@ -25,6 +25,7 @@ export const SoknadRegistrertModal = ({
     onRequestClose={() => null}
     shouldCloseOnOverlayClick={false}
     ariaHideApp={false}
+    style={{ overlay: { zIndex: 3000 } }}
   >
     <AlertStripeSuksess className={styles.alertStyle}>
       <div className={styles.left}>
