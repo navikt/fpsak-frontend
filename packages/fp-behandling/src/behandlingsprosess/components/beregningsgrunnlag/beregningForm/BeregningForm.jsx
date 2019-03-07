@@ -207,7 +207,8 @@ export const BeregningFormImpl = ({
         gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
         readOnlySubmitButton={readOnlySubmitButton}
         formName={formName}
-      />)}
+      />
+    )}
 
   </form>
 );

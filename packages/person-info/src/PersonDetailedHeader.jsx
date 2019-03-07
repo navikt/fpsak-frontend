@@ -115,7 +115,8 @@ const PersonDetailedHeader = ({
           <MerkePanel erDod={isDod} erVerge={harVerge} diskresjonskode={diskresjonskode ? diskresjonskode.kode : null} />
         </div>
       </div>
-    </div>);
+    </div>
+  );
   return medPanel ? <Panel className={styles.padding}>{content}</Panel> : content;
 };
 

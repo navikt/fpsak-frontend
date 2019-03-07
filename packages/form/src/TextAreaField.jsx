@@ -25,7 +25,8 @@ const TextAreaWithBadge = ({
       { badges.map(({ textId, type, title }) => (
         <EtikettFokus key={textId} type={type} title={intl.formatMessage({ id: title })}>
           <FormattedMessage id={textId} />
-        </EtikettFokus>))}
+        </EtikettFokus>
+      ))}
     </div>
     )
     }

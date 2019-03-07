@@ -83,7 +83,8 @@ const createTableRow = (andel, readOnly, isAksjonspunktClosed, inntektskategorie
         readOnly={readOnly && isAksjonspunktClosed}
       />
     </TableColumn>
-  </TableRow>);
+  </TableRow>
+);
 
 const createSummaryRow = totalSum => (
   <TableRow key="SummaryRowBB">

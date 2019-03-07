@@ -119,7 +119,8 @@ export const MessagesImpl = ({
           {intl.formatMessage({ id: 'Messages.Preview' })}
         </a>
       </div>
-    </form>);
+    </form>
+  );
 };
 
 MessagesImpl.propTypes = {

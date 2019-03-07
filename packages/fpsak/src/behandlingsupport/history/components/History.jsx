@@ -119,7 +119,8 @@ const History = ({
             originType={item.type}
             saksNr={saksNr}
           />
-        </Snakkeboble>);
+        </Snakkeboble>
+      );
     })
     }
   </div>

@@ -45,7 +45,8 @@ export const ForeldrePanel = ({
               && <Normaltekst> - </Normaltekst>
             }
             <VerticalSpacer sixteenPx />
-          </div>);
+          </div>
+        );
       }
       return (
         <div key={`${f.aktorId}`}>
@@ -64,7 +65,8 @@ export const ForeldrePanel = ({
             && <Normaltekst> - </Normaltekst>
           }
           <VerticalSpacer sixteenPx />
-        </div>);
+        </div>
+      );
     })}
   </FaktaGruppe>
 );

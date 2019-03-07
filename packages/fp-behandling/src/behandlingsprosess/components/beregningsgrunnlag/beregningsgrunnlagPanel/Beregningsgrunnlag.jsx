@@ -216,7 +216,8 @@ export const BeregningsgrunnlagImpl = ({
           readOnly={readOnly}
         />
         <VerticalSpacer eightPx />
-      </ElementWrapper>)}
+      </ElementWrapper>
+    )}
     { finnAksjonspunktForATFL(gjeldendeAksjonspunkter)
       && (
       <TextAreaField
@@ -259,7 +260,8 @@ export const BeregningsgrunnlagImpl = ({
         validate={[required, maxLength1500, minLength3, hasValidText]}
         maxLength={1500}
         readOnly={readOnly}
-      />)}
+      />
+    )}
     { gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0
         && (
         <ElementWrapper>

@@ -174,7 +174,8 @@ export const UttakActivity = ({
                           label={{ id: 'UttakActivity.GraderingAvslagAarsaker' }}
                           readOnly={readOnly}
                           bredde="fullbredde"
-                        />)}
+                        />
+                      )}
                     </div>
                   )}
                 </ArrowBox>

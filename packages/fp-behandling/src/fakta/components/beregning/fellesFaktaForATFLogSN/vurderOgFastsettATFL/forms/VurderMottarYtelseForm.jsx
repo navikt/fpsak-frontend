@@ -98,12 +98,6 @@ VurderMottarYtelseFormImpl.propTypes = {
   erFrilans: PropTypes.bool.isRequired,
 };
 
-VurderMottarYtelseFormImpl.defaultProps = {
-  skalViseInntektstabell: undefined,
-  erLonnsendring: undefined,
-  skalKunFastsetteAT: false,
-};
-
 VurderMottarYtelseFormImpl.buildInitialValues = (vurderMottarYtelse) => {
   const initialValues = {};
   if (!vurderMottarYtelse) {

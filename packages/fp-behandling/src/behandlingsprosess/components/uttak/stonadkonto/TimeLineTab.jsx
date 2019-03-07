@@ -74,7 +74,8 @@ const TimeLineTab = ({
           </Column>
         </button>
       </li>
-    </div>);
+    </div>
+  );
 };
 
 TimeLineTab.propTypes = {

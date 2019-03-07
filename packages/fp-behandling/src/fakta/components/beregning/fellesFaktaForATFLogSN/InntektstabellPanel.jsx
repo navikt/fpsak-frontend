@@ -25,7 +25,8 @@ const InntektstabellPanel = ({
       {hjelpeTekstId && (
       <Element>
         <FormattedMessage id={hjelpeTekstId} />
-      </Element>)}
+      </Element>
+      )}
       {skalViseTabell
       && tabell
       }
