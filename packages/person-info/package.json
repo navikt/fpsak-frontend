@@ -24,6 +24,7 @@
         "react-intl": "^2.8.0"
     },
     "devDependencies": {
+        "@fpsak-frontend/utils-test": "1.0.0",
         "chai": "^4.2.0",
         "enzyme": "^3.9.0",
         "sinon": "^5.0.10",

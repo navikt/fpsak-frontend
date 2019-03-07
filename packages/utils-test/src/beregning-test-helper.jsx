@@ -1,8 +1,5 @@
-import fpsakApi from 'data/fpsakApi';
-import { ApiStateBuilder } from '@fpsak-frontend/assets/testHelpers/data-test-helper';
-import fpsakBehandlingApi from 'behandlingFpsak/src/data/fpsakBehandlingApi';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { formName } from './BeregningFormUtils';
+import { ApiStateBuilder } from './data-test-helper';
 
 
 const navAnsatt = { navn: 'Ann S. Att', kanSaksbehandle: true };
@@ -24,6 +21,8 @@ const fagsak = {
     kodeverk: 'FAGSAK_STATUS',
   },
 };
+
+const formName = 'faktaOmBeregningForm';
 
 const behandlingFormName = 'behandling_1000051_v1';
 
@@ -61,10 +60,10 @@ export const lagStateMedAksjonspunkterOgFaktaOmBeregning = (aksjonspunkter, fakt
     aksjonspunkter,
   };
   const dataState = new ApiStateBuilder()
-    .withData(fpsakApi.NAV_ANSATT.name, navAnsatt)
-    .withData(fpsakApi.FETCH_FAGSAK.name, fagsak)
-    .withData(fpsakBehandlingApi.BEHANDLING.name, data, 'dataContextFpsakBehandling')
-    .withData(fpsakBehandlingApi.ORIGINAL_BEHANDLING.name, {}, 'dataContextFpsakBehandling')
+    .withData('NAV_ANSATT', navAnsatt)
+    .withData('FETCH_FAGSAK', fagsak)
+    .withData('BEHANDLING', data, 'dataContextFpsakBehandling')
+    .withData('ORIGINAL_BEHANDLING', {}, 'dataContextFpsakBehandling')
     .build();
 
   const state = {

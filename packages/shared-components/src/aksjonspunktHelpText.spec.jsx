@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import AksjonspunktHelpText from './AksjonspunktHelpText';
 
 describe('<AksjonspunktHelpText>', () => {

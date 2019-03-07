@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
-import { MockFieldsWithContent } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import {
   InputField, NavFieldGroup, PeriodpickerField, SelectField,

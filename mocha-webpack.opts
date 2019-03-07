@@ -1,4 +1,4 @@
 --colors
 --require babel-polyfill
---require ./packages/assets/testHelpers/setup.jsx
---include ./packages/assets/testHelpers/setup-enzyme.jsx
+--require ./setup/setup.jsx
+--include ./packages/utils-test/src/setup-enzyme.jsx

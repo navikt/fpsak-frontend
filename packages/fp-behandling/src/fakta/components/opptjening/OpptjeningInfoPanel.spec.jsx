@@ -4,8 +4,8 @@ import sinon from 'sinon';
 
 import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { OpptjeningInfoPanelImpl, buildInitialValues } from './OpptjeningInfoPanel';
 import OpptjeningFaktaForm from './OpptjeningFaktaForm';
 

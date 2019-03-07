@@ -2,7 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
-import { withoutRestActions, ignoreRestErrors } from '@fpsak-frontend/assets/testHelpers//data-test-helper';
+import { withoutRestActions, ignoreRestErrors } from '@fpsak-frontend/utils-test/src/data-test-helper';
 
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import innsynBehandlingApi, { reduxRestApi } from '../data/innsynBehandlingApi';

@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import { Redirect } from 'react-router-dom';
 
-import { dummyFagsak } from '@fpsak-frontend/assets/testHelpers//data-test-helper';
+import { dummyFagsak } from '@fpsak-frontend/utils-test/src/data-test-helper';
 import {
   getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling, pathToBehandlinger, pathToMissingPage,
 } from '@fpsak-frontend/fp-felles';

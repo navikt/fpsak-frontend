@@ -1,5 +1,5 @@
 import React from 'react';
-import { mountFieldComponent } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { mountFieldComponent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';

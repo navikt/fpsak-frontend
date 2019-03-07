@@ -1,11 +1,11 @@
 import React from 'react';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { PeriodFieldArray } from '@fpsak-frontend/shared-components';
 import { SelectField, DatepickerField } from '@fpsak-frontend/form';
-import { MockFields, metaMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { MockFields, metaMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { RenderUtsettelsePeriodeFieldArray } from './RenderUtsettelsePeriodeFieldArray';
 
 const utsettelseReasons = [{ navn: 'Grunn1', kode: 'Grunn1' }];

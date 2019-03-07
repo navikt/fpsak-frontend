@@ -102,7 +102,7 @@
   "nyc": {
     "require": [
       "@babel/register",
-      "./packages/assets/testHelpers/setup.jsx"
+      "./setup/setup.jsx"
     ],
     "sourceMap": false,
     "instrument": false,

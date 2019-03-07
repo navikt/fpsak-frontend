@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { lagStateMedAksjonspunkterOgFaktaOmBeregning } from './BeregningTestHelper';
+import { lagStateMedAksjonspunkterOgFaktaOmBeregning } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
 import {
   getFormValuesForBeregning, getFormInitialValuesForBeregning,
 } from './BeregningFormUtils';

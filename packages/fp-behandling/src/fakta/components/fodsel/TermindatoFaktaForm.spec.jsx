@@ -6,7 +6,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import FaktaGruppe from 'behandlingFpsak/src/fakta/components/FaktaGruppe';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { DateLabel } from '@fpsak-frontend/shared-components';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
 import { TermindatoFaktaForm, buildInitialValues } from './TermindatoFaktaForm';
 

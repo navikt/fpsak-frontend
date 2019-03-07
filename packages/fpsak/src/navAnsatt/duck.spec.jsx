@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { ApiStateBuilder } from '@fpsak-frontend/assets/testHelpers/data-test-helper';
+import { ApiStateBuilder } from '@fpsak-frontend/utils-test/src/data-test-helper';
 import fpsakApi from 'data/fpsakApi';
 
 import { getRettigheter, getNavAnsatt } from './duck';
