@@ -1,7 +1,7 @@
 FROM openresty/openresty:alpine-fat
 LABEL maintainer="teamforeldrepenger"
 
-RUN apk add --no-cache bash gettext libintl
+RUN apk add --no-cache bash gettext libintl openssl
 
 RUN ["luarocks", "install", "lua-resty-session"]
 RUN ["luarocks", "install", "lua-resty-http"]
