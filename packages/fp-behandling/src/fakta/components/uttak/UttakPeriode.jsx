@@ -11,8 +11,10 @@ import {
 import classnames from 'classnames/bind';
 import overlapp from '@fpsak-frontend/assets/images/overlapp.svg';
 import tomPeriode from '@fpsak-frontend/assets/images/tom_periode.svg';
+import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import UttakPeriodeType from './UttakPeriodeType';
 import UttakPeriodeInnhold from './UttakPeriodeInnhold';
+
 
 import styles from './uttakPeriode.less';
 
@@ -57,6 +59,17 @@ const getClassName = (periode, readOnly) => {
   return classNames('periodeContainer', { active: !periode.bekreftet && !readOnly });
 };
 
+const isUtsettelseMedSykdom = (periode) => {
+  if (periode.utsettelseÅrsak && periode.utsettelseÅrsak.kode) {
+    if (periode.utsettelseÅrsak.kode === utsettelseArsakCodes.INSTITUSJONSOPPHOLD_SØKER
+      || periode.utsettelseÅrsak.kode === utsettelseArsakCodes.INSTITUSJONSOPPHOLD_BARNET
+      || periode.utsettelseÅrsak.kode === utsettelseArsakCodes.SYKDOM) {
+      return true;
+    }
+  }
+  return false;
+};
+
 const avvikInntekstmeldInfo = (periode, inntektsmeldingInfo) => {
   let avvikTekst = '';
   if (periode.bekreftet) {
@@ -67,7 +80,8 @@ const avvikInntekstmeldInfo = (periode, inntektsmeldingInfo) => {
       const manglerUtsettelseInntektsmelding = periode.utsettelseÅrsak.kode !== '-' && innmldInfo.utsettelsePerioder.length === 0;
       const harGraderingPeriode = periode.arbeidstidsprosent !== undefined && periode.arbeidstidsprosent !== null;
       const manglerGraderingInntektsmelding = harGraderingPeriode && innmldInfo.graderingPerioder.length === 0;
-      if (manglerUtsettelseInntektsmelding) {
+      if (manglerUtsettelseInntektsmelding && !isUtsettelseMedSykdom(periode)) {
+        // skall ikke vises vid utsettelse pga sykdom - fjern det - troligen periode.utsettleseÅrsak.
         avvikTekst = (
           <Element className={styles.avvikInfoMargin}>
             <FormattedMessage id="UttakPeriode.ManglerInfoUtsettelse" values={{ årsak: periode.utsettelseÅrsak.navn.toLowerCase() }} />
