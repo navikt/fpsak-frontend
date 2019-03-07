@@ -62,7 +62,8 @@ const getClassName = (periode, readOnly) => {
 const isUtsettelseMedSykdom = (periode) => {
   if (periode.utsettelseÅrsak && periode.utsettelseÅrsak.kode) {
     if (periode.utsettelseÅrsak.kode === utsettelseArsakCodes.INSTITUSJONSOPPHOLD_SØKER
-      || periode.utsettelseÅrsak.kode === utsettelseArsakCodes.INSTITUSJONSOPPHOLD_BARNET) {
+      || periode.utsettelseÅrsak.kode === utsettelseArsakCodes.INSTITUSJONSOPPHOLD_BARNET
+      || periode.utsettelseÅrsak.kode === utsettelseArsakCodes.SYKDOM) {
       return true;
     }
   }
