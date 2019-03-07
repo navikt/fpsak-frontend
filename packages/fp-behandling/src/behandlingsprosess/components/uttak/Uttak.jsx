@@ -350,12 +350,12 @@ export class UttakImpl extends Component {
     event.preventDefault();
   }
 
-  testForReadOnly(aksjonspunkter) {
+  testForReadOnly(aksjonspunkter, kanOverstyre) {
     const { manuellOverstyring } = this.props;
     const kunOverStyrAp = aksjonspunkter.length === 1
       && aksjonspunkter[0].definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER
       && aksjonspunkter[0].status.kode === 'OPPR';
-    if (kunOverStyrAp) {
+    if (kunOverStyrAp && kanOverstyre) {
       return !kunOverStyrAp;
     }
 
@@ -386,10 +386,10 @@ export class UttakImpl extends Component {
 
   isReadOnly() {
     const {
-      readOnly, aksjonspunkter, endringsDate, isRevurdering,
+      readOnly, aksjonspunkter, endringsDate, isRevurdering, kanOverstyre,
     } = this.props;
     const { selectedItem } = this.state;
-    const uttakIsReadOnly = this.testForReadOnly(aksjonspunkter) || (endringsDate && isRevurdering && selectedItem.tom < endringsDate);
+    const uttakIsReadOnly = this.testForReadOnly(aksjonspunkter, kanOverstyre) || (endringsDate && isRevurdering && selectedItem.tom < endringsDate);
     return readOnly || uttakIsReadOnly;
   }
 
@@ -454,12 +454,12 @@ export class UttakImpl extends Component {
                 name="manuellOverstyring"
                 label={{ id: 'Uttak.ManuellOverstyring' }}
                 onChange={this.onToggleOverstyring}
-                readOnly={readOnly || this.skalViseCheckbox()}
+                readOnly={isApOpen}
               />
             </div>
           )}
         </Row>
-        {this.testForReadOnly(aksjonspunkter) && !kanOverstyre
+        {this.testForReadOnly(aksjonspunkter, kanOverstyre)
         && <FormattedMessage id="Uttak.Overstyrt" />
         }
         <div>
@@ -524,7 +524,7 @@ export class UttakImpl extends Component {
               }
             </ElementWrapper>
           )}
-          {(!readOnly && !(this.testForReadOnly(aksjonspunkter)))
+          {(!readOnly && !(this.testForReadOnly(aksjonspunkter, kanOverstyre)))
           && (
             <div className={styles.marginTop}>
               <FlexContainer fluid>
