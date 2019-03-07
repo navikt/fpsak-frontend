@@ -6,7 +6,6 @@ import { SelectField } from '@fpsak-frontend/form';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { behandlingFormValueSelector } from 'behandlingTilbakekreving/src/behandlingForm';
-import { getFeilutbetalingAarsaker } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import styles from './feilutbetalingPerioderTable.less';
 
 const getSubÅrsaker = (årsakNavn, årsaker) => {
@@ -14,7 +13,7 @@ const getSubÅrsaker = (årsakNavn, årsaker) => {
   return årsak && årsak.underÅrsaker.length > 0 ? årsak.underÅrsaker : null;
 };
 const FeilutbetalingPerioderForm = ({
-  periode, årsak, elementId, årsaker,
+  periode, årsak, elementId, årsaker, readOnly,
 }) => {
   const subÅrsaker = getSubÅrsaker(årsak, årsaker);
   return (
@@ -30,6 +29,7 @@ const FeilutbetalingPerioderForm = ({
           name={`perioder.${elementId}.årsak`}
           selectValues={årsaker.map(a => <option key={a.årsak} value={a.årsakKode}>{a.årsak}</option>)}
           validate={[required]}
+          disabled={readOnly}
           bredde="m"
           label=""
         />
@@ -39,6 +39,7 @@ const FeilutbetalingPerioderForm = ({
             name={`perioder.${elementId}.underÅrsak`}
             selectValues={subÅrsaker.map(a => <option key={a.underÅrsak} value={a.underÅrsakKode}>{a.underÅrsak}</option>)}
             validate={[required]}
+            disabled={readOnly}
             bredde="m"
             label=""
           />
@@ -61,10 +62,10 @@ FeilutbetalingPerioderForm.propTypes = {
   elementId: PropTypes.number.isRequired,
   årsak: PropTypes.string,
   årsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  readOnly: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, initialProps) => ({
-  årsaker: getFeilutbetalingAarsaker(state),
   årsak: behandlingFormValueSelector(initialProps.formName)(state, `perioder.${initialProps.elementId}.årsak`),
 });
 

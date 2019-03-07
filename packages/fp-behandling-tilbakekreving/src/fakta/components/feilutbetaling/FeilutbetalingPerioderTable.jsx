@@ -11,7 +11,9 @@ const headerTextCodes = [
   'FeilutbetalingInfoPanel.Beløp',
 ];
 
-const FeilutbetalingPerioderTable = ({ perioder, formName }) => (
+const FeilutbetalingPerioderTable = ({
+  perioder, formName, årsaker, readOnly,
+}) => (
   <div className={styles.feilutbetalingTable}>
     <Table
       headerTextCodes={headerTextCodes}
@@ -21,6 +23,8 @@ const FeilutbetalingPerioderTable = ({ perioder, formName }) => (
           periode={periode}
           elementId={index}
           formName={formName}
+          årsaker={årsaker}
+          readOnly={readOnly}
           key={`formIndex${index + 1}`}
         />
       ))
@@ -32,6 +36,8 @@ const FeilutbetalingPerioderTable = ({ perioder, formName }) => (
 FeilutbetalingPerioderTable.propTypes = {
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   formName: PropTypes.string.isRequired,
+  årsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  readOnly: PropTypes.bool.isRequired,
 };
 
 export default FeilutbetalingPerioderTable;
