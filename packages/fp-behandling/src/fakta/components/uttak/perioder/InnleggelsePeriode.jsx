@@ -9,11 +9,22 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandlingFpsak/src/behandlingForm';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import {
-  FlexContainer, FlexRow, FlexColumn, VerticalSpacer,
+  FlexContainer,
+  FlexRow,
+  FlexColumn,
+  VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import {
-  required, maxLength, minLength, hasValidPeriod, hasValidText,
+  RadioOption,
+  RadioGroupField,
+  TextAreaField,
+} from '@fpsak-frontend/form';
+import {
+  required,
+  maxLength,
+  minLength,
+  hasValidPeriod,
+  hasValidText,
 } from '@fpsak-frontend/utils';
 import PerioderKnapper from './PerioderKnapper';
 import InntektsmeldingInfo from '../components/InntektsmeldingInfo';
@@ -44,18 +55,26 @@ export const InnleggelsePeriode = ({
   if (
     Object.keys(formSyncErrors).length !== 0
     && formProps.submitFailed
-    && (formSyncErrors.dokumentertePerioder.length - 1) > 0) {
+    && formSyncErrors.dokumentertePerioder.length - 1 > 0
+  ) {
     formSyncErrors.dokumentertePerioder.forEach((error) => {
-      errorHeight += error !== undefined && error.fom[0].id === 'ValidationMessage.NotEmpty' ? 30 : 52;
+      errorHeight
+        += error !== undefined && error.fom[0].id === 'ValidationMessage.NotEmpty'
+          ? 30
+          : 52;
     });
   }
   const isEdited = resultat === uttakPeriodeVurdering.PERIODE_OK_ENDRET
-  && readOnly && behandlingStatusKode === behandlingStatus.FATTER_VEDTAK;
+    && readOnly
+    && behandlingStatusKode === behandlingStatus.FATTER_VEDTAK;
+
+  // const periodeOkDisabled = !bekreftet;
 
   const inlineheight = dokumentertePerioder
     && resultat === uttakPeriodeVurdering.PERIODE_OK
     && !readOnly
-    ? (dokumentertePerioder.length * 58) + errorHeight + 170 : 'auto';
+    ? dokumentertePerioder.length * 58 + errorHeight + 170
+    : 'auto';
 
   const inlineStyle = {
     radioOption: {
@@ -66,7 +85,9 @@ export const InnleggelsePeriode = ({
     <FlexContainer wrap>
       <FlexRow wrap>
         <FlexColumn className={styles.fieldColumn}>
-          <Undertekst><FormattedMessage id="UttakInfoPanel.FastsettResultat" /></Undertekst>
+          <Undertekst>
+            <FormattedMessage id="UttakInfoPanel.FastsettResultat" />
+          </Undertekst>
           <VerticalSpacer fourPx />
           <RadioGroupField
             direction="vertical"
@@ -78,7 +99,10 @@ export const InnleggelsePeriode = ({
             readOnly={readOnly}
           >
             <RadioOption
-              label={{ id: 'UttakInfoPanel.InnleggelsenErDokumentertAngiAvklartPeriode' }}
+              label={{
+                id:
+                  'UttakInfoPanel.InnleggelsenErDokumentertAngiAvklartPeriode',
+              }}
               value={uttakPeriodeVurdering.PERIODE_OK}
               style={inlineStyle.radioOption}
             />
@@ -88,17 +112,17 @@ export const InnleggelsePeriode = ({
             />
           </RadioGroupField>
           {resultat === uttakPeriodeVurdering.PERIODE_OK && !readOnly && (
-          <div className={styles.addPeriodeInnleggelse}>
-            <Column>
-              <div className={styles.arrowBox}>
-                <FieldArray
-                  name="dokumentertePerioder"
-                  component={DokumentertePerioderPeriodePicker}
-                  props={{ fraDato, tilDato, readOnly }}
-                />
-              </div>
-            </Column>
-          </div>
+            <div className={styles.addPeriodeInnleggelse}>
+              <Column>
+                <div className={styles.arrowBox}>
+                  <FieldArray
+                    name="dokumentertePerioder"
+                    component={DokumentertePerioderPeriodePicker}
+                    props={{ fraDato, tilDato, readOnly }}
+                  />
+                </div>
+              </Column>
+            </div>
           )}
         </FlexColumn>
       </FlexRow>
@@ -117,9 +141,6 @@ export const InnleggelsePeriode = ({
         <FlexColumn className={styles.fieldColumn}>
           <InntektsmeldingInfo
             inntektsmeldingInfo={inntektsmeldingInfo}
-            fraDato={fraDato}
-            tilDato={tilDato}
-            bekreftet={bekreftet}
           />
         </FlexColumn>
 
@@ -167,7 +188,6 @@ InnleggelsePeriode.defaultProps = {
   resultat: undefined,
   behandlingStatusKode: undefined,
   arbeidsgiver: {},
-
 };
 
 const validateInnleggelseForm = (values) => {
@@ -203,7 +223,10 @@ const mapToStateToProps = (state, ownProps) => {
       begrunnelse,
       id: ownProps.id,
       resultat: initialResultat ? initialResultat.kode : undefined,
-      dokumentertePerioder: initialDokumentertePerioder !== undefined ? initialDokumentertePerioder : [],
+      dokumentertePerioder:
+        initialDokumentertePerioder !== undefined
+          ? initialDokumentertePerioder
+          : [],
     },
     updated: behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.updated`),
     bekreftet: behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.bekreftet`),
@@ -212,7 +235,9 @@ const mapToStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapToStateToProps)(behandlingForm({
-  enableReinitialize: true,
-  validate: values => validateInnleggelseForm(values),
-})(InnleggelsePeriode));
+export default connect(mapToStateToProps)(
+  behandlingForm({
+    enableReinitialize: true,
+    validate: values => validateInnleggelseForm(values),
+  })(InnleggelsePeriode),
+);

@@ -46,7 +46,7 @@ const createNewPerioder = (perioder, id, values) => {
   ];
 };
 
-const overlappingDates = (innmldPeriode, soknadsPeriode) => {
+const overlappingDates = (inntektsmelding, innmldPeriode, soknadsPeriode) => {
   const søknadFomBetween = moment(soknadsPeriode.fom)
     .isBetween(moment(innmldPeriode.fom), moment(innmldPeriode.tom), null, '[]');
   const søknadTomBetween = moment(soknadsPeriode.tom)
@@ -56,27 +56,40 @@ const overlappingDates = (innmldPeriode, soknadsPeriode) => {
   const inntekstmeldingTomBetween = moment(innmldPeriode.tom)
     .isBetween(moment(soknadsPeriode.fom), moment(soknadsPeriode.tom), null, '[]');
 
-  const isGradering = innmldPeriode.arbeidsprosent !== undefined && innmldPeriode.arbeidsprosent !== null;
-
-  if (søknadFomBetween || søknadTomBetween) {
-    if (isGradering) {
-      return soknadsPeriode.arbeidstidsprosent !== innmldPeriode.arbeidsprosent;
-    }
-
-    return innmldPeriode.utsettelseArsak && (innmldPeriode.utsettelseArsak.kode !== soknadsPeriode.utsettelseÅrsak.kode);
-  }
-
-  return inntekstmeldingFomBetween || inntekstmeldingTomBetween;
+  return (søknadFomBetween && søknadTomBetween) || inntekstmeldingFomBetween || inntekstmeldingTomBetween;
 };
 
-const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => inntektsmeldinger.map((innmld) => {
-  const { graderingPerioder, utsettelsePerioder } = innmld;
+const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => inntektsmeldinger.map((inntektsmelding) => {
+  const { graderingPerioder, utsettelsePerioder } = inntektsmelding;
+  const gjeldeneGraderingPerioder = graderingPerioder.filter(graderingPeriode => overlappingDates(inntektsmelding, graderingPeriode, soknadsPeriode));
+  const gjeldeneUtsettelsePerioder = utsettelsePerioder.filter(utsettelsePeriode => overlappingDates(inntektsmelding, utsettelsePeriode, soknadsPeriode));
+  const inntektsmeldingInfoPerioder = gjeldeneGraderingPerioder.concat(gjeldeneUtsettelsePerioder);
+
+  const isArbeidstaker = (soknadsPeriode.arbeidsgiver || {}).virksomhet;
+  const isAvvikPeriode = inntektsmeldingInfoPerioder.some(periode => periode.fom !== soknadsPeriode.fom || periode.tom !== soknadsPeriode.tom);
+  const isAvvikArbeidsprosent = gjeldeneGraderingPerioder
+    .some(graderingPeriode => parseFloat(graderingPeriode.arbeidsprosent).toFixed(2) !== parseFloat(soknadsPeriode.arbeidstidsprosent).toFixed(2));
+  const isAvvikUtsettelse = gjeldeneUtsettelsePerioder
+    .some(utsettelsePeriode => utsettelsePeriode.utsettelseArsak.kode !== soknadsPeriode.utsettelseÅrsak.kode);
+
+  let isManglendeInntektsmelding = false;
+  if ((isArbeidstaker && gjeldeneGraderingPerioder.length === 0 && soknadsPeriode.arbeidstidsprosent !== null)
+  || (gjeldeneUtsettelsePerioder.length === 0 && soknadsPeriode.utsettelseÅrsak.kode !== '-')) {
+    isManglendeInntektsmelding = true;
+  }
 
   return {
-    ...innmld,
-    arbeidsProsentFraInntektsmelding: graderingPerioder.reduce((acc, periode) => parseFloat(acc) + parseFloat(periode.arbeidsprosent, 10), 0),
-    graderingPerioder: graderingPerioder.filter(grp => overlappingDates(grp, soknadsPeriode)),
-    utsettelsePerioder: utsettelsePerioder.filter(utp => overlappingDates(utp, soknadsPeriode)),
+    ...inntektsmelding,
+    arbeidsProsentFraInntektsmelding: gjeldeneGraderingPerioder.reduce((acc, periode) => parseFloat(acc) + parseFloat(periode.arbeidsprosent, 10), 0),
+    graderingPerioder: isAvvikArbeidsprosent || isAvvikPeriode ? gjeldeneGraderingPerioder : [],
+    utsettelsePerioder: isAvvikUtsettelse || isAvvikPeriode ? gjeldeneUtsettelsePerioder : [],
+    isManglendeInntektsmelding,
+    avvik: {
+      utsettelseÅrsak: isManglendeInntektsmelding && soknadsPeriode.utsettelseÅrsak.kode !== '-' ? soknadsPeriode.utsettelseÅrsak : false,
+      isAvvikArbeidsprosent,
+      isAvvikUtsettelse,
+      isAvvikPeriode,
+    },
   };
 });
 
@@ -120,6 +133,13 @@ export class UttakPerioder extends Component {
     }
   }
 
+  overrideResultat = (resultat) => {
+    if (resultat === uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES) {
+      return resultat;
+    }
+    return uttakPeriodeVurdering.PERIODE_IKKE_VURDERT;
+  }
+
   newPeriodeResetCallback() {
     const { behandlingFormPrefix, reduxFormReset: formReset } = this.props;
     const { isNyPeriodeFormOpen } = this.state;
@@ -151,6 +171,11 @@ export class UttakPerioder extends Component {
       showModalSlettPeriode: !showModalSlettPeriode,
       periodeSlett: periodeSlett[0],
     });
+  }
+
+  manuellOverstyringResetCallback() {
+    const { behandlingFormPrefix, reduxFormReset: formReset } = this.props;
+    formReset(`${behandlingFormPrefix}.UttakFaktaForm`);
   }
 
   removePeriode(values) {
@@ -240,12 +265,11 @@ export class UttakPerioder extends Component {
       tom,
       fom,
       kontoType,
-      resultat: uttakPeriodeVurderingTyper.find(type => type.kode === resultat),
+      resultat: uttakPeriodeVurderingTyper.find(type => type.kode === this.overrideResultat(resultat)),
       begrunnelse: values.begrunnelse,
       dokumentertePerioder: resultat && resultat !== uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES ? dokumentertePerioder : null,
       arbeidstidsprosent: nyArbeidstidsprosent || updatedPeriode.arbeidstidprosent,
       openForm: !updatedPeriode.openForm,
-      bekreftet: updatedPeriode.bekreftet,
       utsettelseÅrsak: updatedPeriode.utsettelseÅrsak,
       overføringÅrsak: updatedPeriode.overføringÅrsak,
       erArbeidstaker: updatedPeriode.erArbeidstaker,
@@ -256,7 +280,9 @@ export class UttakPerioder extends Component {
       arbeidsgiver: updatedPeriode.arbeidsgiver,
       isFromSøknad: updatedPeriode.isFromSøknad,
       updated: true,
+      bekreftet: updatedPeriode.bekreftet,
     };
+
     if (kontoType) {
       newPeriodeObject.uttakPeriodeType = {
         kode: kontoType,
@@ -369,6 +395,7 @@ export class UttakPerioder extends Component {
                     name="manuellOverstyring"
                     label={{ id: 'UttakInfoPanel.ManuellOverstyring' }}
                     readOnly={!readOnly || hasRevurderingOvertyringAp || !kanOverstyre}
+                    onClick={() => this.manuellOverstyringResetCallback()}
                   />
                 </FlexColumn>
                 )

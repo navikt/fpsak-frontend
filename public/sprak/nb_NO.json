@@ -3,27 +3,21 @@
   "AdopsjonInfoPanel.KontrollerMotDok": "Kontroller mot opplysningene fra adopsjonsdokumentasjonen",
   "AdopsjonInfoPanel.VurderOmEktefellesBarn": "Vurder om det er ektefelles/samboers barn som adopteres",
   "AdopsjonInfoPanel.VurderOmMannAdoptererAlene": "Vurder om mann adopterer alene",
-
   "Personspanel.Arbeidsforhold": "Opplysninger om søker",
-
   "Opphold.Lovlig": "Avklar lovlig opphold",
   "Opphold.Bosatt": "Fastsett om søker er bosatt",
   "Opphold.Rett": "Avklar oppholdsrett",
-
   "Arbeidsforhold.AvklarArbeidsforhold": "Avklar arbeidsforhold",
-
   "BarnPanel.BarnDetSøkesOm": "Barn søknaden gjelder for",
   "BarnPanel.Address": "Adresse",
   "BarnPanel.ChildNumberBornData": "Barn {childNumber} fødselsdato",
   "BehandlingList.ZeroBehandlinger": "Ingen behandlinger er opprettet",
-
   "BehandlingListItem.Behandlinger": "Behandlinger",
   "BehandlingListItem.Opprettet": "Opprettet",
   "BehandlingListItem.Avsluttet": "Avsluttet",
   "BehandlingListItem.Behandlingsstatus": "Behandlingsstatus",
   "BehandlingListItem.Open": "Åpne behandlingsliste",
   "BehandlingListItem.Close": "Lukk behandlingsliste",
-
   "Behandlingspunkt.Saksopplysninger": "Saksopplysninger",
   "Behandlingspunkt.CheckVarselRevurdering": "Varsel",
   "Behandlingspunkt.CheckFormkravNFP": "Formkrav Vedtaksinstans",
@@ -67,7 +61,6 @@
   "Beregning.BeregningsgrunnlagManueltSNNYIArbeidslivet": "Fastsatt beregningsgrunnlag for selvstendig næring ny i arbeidslivet",
   "Beregning.BeregningsgrunnlagOgInntektskategoriTY": "Fastsatt beregningsgrunnlag og inntektskategori for bruker med tilstøtende ytelse",
   "Beregning.VurderFaktaATFLSN": "Vurder fakta for beregning",
-
   "IverksetterVedtakStatusModal.ModalDescription": "Engangsstønaden er innvilget. Du kommer nå til forsiden.",
   "IverksetterVedtakStatusModal.Innvilget": "Innvilget",
   "IverksetterVedtakStatusModal.Avslatt": "Avslått",
@@ -77,17 +70,14 @@
   "IverksetterVedtakStatusModal.UendretUtfall": "Resultat: Ingen endring, behandlingen avsluttes.",
   "IverksetterVedtakStatusModal.GoToSearchPage": "Du kommer nå til forsiden",
   "IverksetterVedtakStatusModal.Ok": "OK",
-
   "BeregningEngangsstonadForm.Beregning": "Beregning",
   "BeregningEngangsstonadForm.BeregnetEngangsstonad": "Beregnet engangsstønad",
   "BeregningEngangsstonadForm.AntallBarn": "Antall barn",
   "BeregningEngangsstonadForm.Sats": "Sats",
   "BeregningEngangsstonadForm.Kroner": "kr",
-
   "BegrunnelsePanel.ConfirmInformation": "Bekreft opplysningene",
   "BegrunnelsePanel.ChangeOfInformationRequiresExplanation": "Begrunn endringene",
   "BegrunnelsePanel.readOnly": "Begrunnelse",
-
   "FaktaBegrunnelseTextField.BegrunnEndringene": "Begrunn endringene",
   "FaktaBegrunnelseTextField.Vurdering": "Vurdering",
 
@@ -102,12 +92,9 @@
 
   "BehandlingspunktBegrunnelseTextField.ExplanationRequired": "Vurdering",
   "BehandlingspunktBegrunnelseTextField.ExplanationRequiredReadOnly": "Begrunnelse",
-
   "ConfirmInformationVilkarReadOnly.Reasoning": "Begrunnelse",
   "ConfirmInformationVilkarReadOnly.ConditionMet": "Vilkåret er oppfylt",
   "ConfirmInformationVilkarReadOnly.ConditionNotMet": "Vilkåret er ikke oppfylt",
-
-
   "DocumentList.Direction": "Inn/ut",
   "DocumentList.DocumentType": "Dokument",
   "DocumentList.Gjelder": "Gjelder",
@@ -118,7 +105,6 @@
   "DocumentList.Intern": "Intern",
   "DocumentList.IProduksjon": "I bestilling",
   "DocumentList.IBruk": "Brukes i behandlingen",
-
   "DocumentListInnsyn.Direction": "Inn/ut",
   "DocumentListInnsyn.DocumentType": "Dokument",
   "DocumentListInnsyn.DateTime": "Sendt/mottatt",
@@ -131,7 +117,6 @@
   "DocumentListInnsyn.VelgInnsynsDok": "Velg innsynsdokumentasjon til søker",
   "DocumentListInnsyn.Vedtaksdokumentasjon": "Vedtaksdokumentasjon på saken ({numberOfDocuments})",
   "DocumentListInnsyn.Empty": " ",
-
   "ErSoknadsfristVilkaretOppfyltForm.Soknadsfrist": "Søknadsfrist",
   "ErSoknadsfristVilkaretOppfyltForm.ApplicationInformation": "Søknadsfrist",
   "ErSoknadsfristVilkaretOppfyltForm.Consider": "Vurder følgende",
@@ -146,7 +131,6 @@
   "ErSoknadsfristVilkaretOppfyltForm.ApplicationReceivedPart1": "Søknaden ble mottatt ",
   "ErSoknadsfristVilkaretOppfyltForm.ApplicationReceivedPart2": "{numberOfDays} dager ",
   "ErSoknadsfristVilkaretOppfyltForm.ApplicationReceivedPart3": "etter søknadsfristen ",
-
   "VurderSoknadsfristForeldrepengerForm.AksjonspunktHelpText": "Søknad ble mottatt {numberOfDays} dager etter søknadsfrist ({soknadsfristdato})",
   "VurderSoknadsfristForeldrepengerForm.SoknadMottatt": "Søknad mottatt dato",
   "VurderSoknadsfristForeldrepengerForm.SoknadPeriode": "Søknadsperiode",
@@ -158,17 +142,13 @@
   "VurderSoknadsfristForeldrepengerForm.GyldigGrunn": "Gyldig grunn for sen fremsetting av søknaden",
   "VurderSoknadsfristForeldrepengerForm.IkkeGyldigGrunn": "Ingen gyldig grunn for sen fremsetting av søknaden",
   "VurderSoknadsfristForeldrepengerForm.NyMottattDato": "Dato for når søknaden kan anses som mottatt",
-
   "FagsakProfile.AnnenPartSak": "Åpne den annen parts sak",
   "Fagsak.NoFagsakWithReferenceNr": "Det finnes ingen sak med saksnummer: {saksnummer}",
-
   "FagsakGrid.PleaseSelectBehandling": "Velg behandling",
-
   "FagsakList.Saksnummer": "Saksnummer",
   "FagsakList.Sakstype": "Sakstype",
   "FagsakList.Status": "Status",
   "FagsakList.BarnFodt": "Barnet er født",
-
   "Behandlingsmeny.Behandlingsmeny": "Behandlingsmeny",
   "Behandlingsmeny.Open": "Åpne behandlingsmenyen",
   "Behandlingsmeny.Close": "Lukk behandlingsmenyen",
@@ -180,23 +160,18 @@
   "Behandlingsmeny.RevurderFagsak": "Opprett revurdering",
   "Behandlingsmeny.NyForstegangsbehandling": "Opprett ny behandling",
   "Behandlingsmeny.ReopenBehandling": "Åpne behandling for endringer",
-
   "OpenBehandlingForChangesMenuItem.OpenBehandling": "Åpne behandling for endringer?",
-
   "FagsakSearch.ZeroSearchResults": "Søket ga ingen treff",
-
   "BehandlingErPaVentModal.ModalDescription": "Behandlingen er satt på vent",
   "BehandlingErPaVentModal.PaVent": "På vent",
   "BehandlingErPaVentModal.SattPaVent": "Behandlingen er satt på vent med frist {frist}",
   "BehandlingErPaVentModal.Ok": "OK",
   "BehandlingErPaVentModal.EndreFrist": "Du kan endre frist eller årsak før du fortsetter",
-
   "BehandlingenShelvedModal.ModalDescription": "Behandlingen er henlagt",
   "BehandlingenShelvedModal.Henlagt": "Henlagt",
   "BehandlingenShelvedModal.BehandlingenErHenlagt": "Behandlingen er henlagt",
   "BehandlingenShelvedModal.RutetTilForsiden": "Du kommer nå til forsiden",
   "BehandlingenShelvedModal.Ok": "OK",
-
   "CreateNewBehandlingModal.ModalDescription": "Ny behandling",
   "CreateNewBehandlingModal.OpprettRevurdering": "Revurderingsbehandling",
   "CreateNewBehandlingModal.NyForstegangsbehandling": "Ny behandling",
@@ -207,7 +182,6 @@
   "CreateNewBehandlingModal.Avbryt": "Avbryt",
   "CreateNewBehandlingModal.SelectBehandlingTypePlaceholder": "Velg",
   "CreateNewBehandlingModal.SelectBehandlingArsakTypePlaceholder": "Velg årsak",
-
   "OppholdINorgeOgAdresserFaktaPanel.BosattAdresser": "Bostedsadresse fra folkeregisteret",
   "OppholdINorgeOgAdresserFaktaPanel.Applicant": "Søker",
   "OppholdINorgeOgAdresserFaktaPanel.Parent": "Den andre forelderen",
@@ -222,7 +196,6 @@
   "OppholdINorgeOgAdresserFaktaPanel.IkkeOpphold": "Har ikke opphold",
   "OppholdINorgeOgAdresserFaktaPanel.Yes": "Ja",
   "OppholdINorgeOgAdresserFaktaPanel.No": "Nei",
-
   "FortsattMedlemskapFaktaPanel.Fom": "Gjeldende f.o.m",
   "FortsattMedlemskapFaktaPanel.OpplysningerFraFolkeregisteret": "Opplysninger fra folkeregisteret:",
   "FortsattMedlemskapFaktaPanel.NyUtlandsadresse": "Ny utenlandsadresse f.o.m. {dato}",
@@ -236,7 +209,6 @@
   "FodselInfoPanel.VurderVilkarForSykdom": "Vurder om vilkår for sykdom er oppfylt",
   "FodselInfoPanel.KontrollerMotTerminbekreftelsen": "Kontroller terminbekreftelse",
   "FodselInfoPanel.KontrollerMotFodselsdokumentasjon": "Kontroller mot opplysningene fra fødselsdokumentasjonen",
-
   "FeilutbetalingInfoPanel.FaktaFeilutbetaling": "Fakta om feilutbetaling",
   "FeilutbetalingInfoPanel.Revurdering": "Revurdering",
   "FeilutbetalingInfoPanel.Feilutbetaling": "Feilutbetaling",
@@ -260,57 +232,47 @@
   "DokumentasjonFaktaForm.BarnErOver15Ar": "Barnet er over 15 år ved omsorgsovertakelsen",
   "DokumentasjonFaktaForm.DatoForBarnetsAnkomstTilNorge": "Dato for barnets ankomst til Norge (ved utenlandsadopsjon)",
   "DokumentasjonFaktaForm.Foreldreansvardato": "Dato for foreldreansvar",
-
   "EktefelleFaktaForm.ApplicationInformation": "Ektefelles/samboers barn",
   "EktefelleFaktaForm.EktefellesBarn": "Vurder om det er ektefelles/samboers barn som adopteres",
   "EktefelleFaktaForm.ErIkkeValg": "Ikke ektefelles/samboers barn",
   "EktefelleFaktaForm.ErValg": "Ektefelles/samboers barn",
-
   "ErForeldreansvar2LeddVilkaarOppfyltForm.Foreldreansvar": "Foreldreansvaret",
   "ErForeldreansvar2LeddVilkaarOppfyltForm.ParagrafEngangsStonad": "Vurder om vilkår om foreldreansvaret etter § 14-17 andre ledd er oppfylt",
   "ErForeldreansvar2LeddVilkaarOppfyltForm.ParagrafForeldrepenger": "Vurder om vilkår om foreldreansvaret etter § 14-5 andre ledd er oppfylt",
   "ErForeldreansvar2LeddVilkaarOppfyltForm.Vurder": "Vurder om tidligere utbetalte foreldrepenger eller engangsstønad gjelder for samme barn. Dersom det gjelder for samme barn er dette vilkåret ikke oppfylt.",
-
   "ErForeldreansvar4LeddVilkaarOppfyltForm.Foreldreansvar": "Foreldreansvaret",
   "ErForeldreansvar4LeddVilkaarOppfyltForm.Paragraf": "Vurder om vilkårene i § 14-17 fjerde ledd for far er oppfylt (når far overtar foreldreansvaret alene)",
   "ErForeldreansvar4LeddVilkaarOppfyltForm.Vurder": "Vurder om tidligere utbetalt foreldrepenger eller engangsstønad gjelder for samme barn. Dersom det gjelder for samme barn er dette vilkåret ikke oppfylt.",
-
   "CheckPersonStatusForm.CheckInformation": "Kontroll av saksopplysninger",
   "CheckPersonStatusForm.PersonStatus": "Søker har personstatus: {status}. Vurder om behandlingen skal henlegges eller kan fortsette med endret personstatus",
   "CheckPersonStatusForm.HaltBehandling": "Henlegg behandlingen",
   "CheckPersonStatusForm.ContinueBehandling": "Fortsett behandlingen",
   "CheckPersonStatusForm.SetPersonStatus": "Fastsett personstatusen",
   "CheckPersonStatusForm.GjeldendeFom": "Gjeldende f.o.m. {dato}",
-
   "ForeldrePanel.Foreldre": "Søkere",
   "ForeldrePanel.Address": "Adresse",
   "ForeldrePanel.MotherDeathDate": "Dato for mors død",
-  "ForeldrePanel.DeathDate": "Dødsdato for {name}" ,
+  "ForeldrePanel.DeathDate": "Dødsdato for {name}",
   "ForeldrePanel.FatherDeathDate": "Dato for fars død",
-
   "MannAdoptererAleneFaktaForm.ApplicationInformation": "Mann adopterer",
   "MannAdoptererAleneFaktaForm.Opplysninger": "Opplysninger oppgitt i søknaden",
   "MannAdoptererAleneFaktaForm.VurderOmMannAdoptererAlene": "Vurder om mann adopterer alene",
   "MannAdoptererAleneFaktaForm.AdoptererIkkeAlene": "Adopterer ikke alene",
   "MannAdoptererAleneFaktaForm.AdoptererAlene": "Adopterer alene",
-
   "MedlemskapInfoPanel.Medlemskap": "Fakta om medlemskap",
   "MedlemskapInfoPanel.ErSokerBosattINorge": "Vurder om søker er bosatt i Norge",
   "MedlemskapInfoPanel.GyldigMedlemFolketrygden": "Vurder om søker har gyldig medlemskap i perioden",
   "MedlemskapInfoPanel.EOSBorgerMedOppholdsrett": "Vurder om søker er EØS-borger med oppholdsrett",
   "MedlemskapInfoPanel.IkkeEOSBorgerMedLovligOpphold": "Avklar om søker har lovlig opphold",
   "MedlemskapInfoPanel.HarFortsattMedlemskap": "Vurder om søker fortsatt har gyldig medlemskap i perioden",
-
   "Header.Foreldrepenger": "Foreldrepenger og engangsstønad",
   "Header.NavAnsatt": "NAV-ansatt",
   "Header.LinkToMainPage": "NAV, forsiden",
   "Header.Rettskilde": "Rettskildene",
   "Header.Systemrutine": "Systemrutine",
-
   "HelpText.Aksjonspunkt": "Aksjonspunkt",
   "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt",
   "HelpText.ToTrinnsKontroll": "Kontroller endrede opplysninger og faglige vurderinger",
-
   "InfoPanel.History": "Historikk",
   "InfoPanel.Messages": "Send melding",
   "InfoPanel.Documents": "Dokumenter",
@@ -328,19 +290,16 @@
   "InfoPanel.FeilRegelForstaelse": "Feil regelforståelse",
   "InfoPanel.Annet": "Annet",
   "InfoPanel.resultatAvGodkjenning": "Resultat av godkjenning",
-
   "InntektOgYtelserFaktaPanel.Person": "Person",
   "InntektOgYtelserFaktaPanel.Employer": "Arbeidsgiver/ytelse",
   "InntektOgYtelserFaktaPanel.Period": "Periode",
   "InntektOgYtelserFaktaPanel.Amount": "Beløp",
   "InntektOgYtelserFaktaPanel.ApplicationInformation": "Inntekt og ytelser fra NAV",
   "InntektOgYtelserFaktaPanel.NoInformation": "Ingen inntekt i Norge de siste tre månedene",
-
   "Malform.Bokmal": "Bokmål",
   "Malform.Nynorsk": "Nynorsk",
   "Malform.Engelsk": "Engelsk",
   "Malform.Beskrivelse": "Foretrukket språk",
-
   "Messages.Recipient": "Mottaker",
   "Messages.Årsak": "Årsak",
   "Messages.ChooseRecipient": "Velg mottaker",
@@ -353,17 +312,13 @@
   "Messages.Preview": "Forhåndsvis",
   "Messages.PreviewText": "Forhåndsvis varselbrev",
   "Messages.BrevErBestilt": "Brevet er bestilt. Du kan endre frist eller årsak før du fortsetter.",
-
-  "Tekstbygger.Og" : "{value1} og {value2}",
+  "Tekstbygger.Og": "{value1} og {value2}",
   "Tekstbygger.KombinerObjekter": "{object1} {object2}",
-
   "MessagesModal.description": "Brevet er bestilt",
   "MessagesModal.text": "Brevet er bestilt",
   "MessagesModal.OK": "OK",
-
   "MissingPage.PageIsMissing": "Siden finnes ikke",
   "MissingPage.Home": "Hjem",
-
   "OmsorgOgForeldreansvarFaktaForm.OmsorgInfo": "Opplysninger om omsorg",
   "OmsorgOgForeldreansvarFaktaForm.CheckInformationForeldreansvar": "Kontroller opplysninger om foreldreansvar og omsorg",
   "OmsorgOgForeldreansvarFaktaForm.ForeldreansvarInfo": "Foreldreansvar og omsorg",
@@ -384,46 +339,32 @@
   "OmsorgOgForeldreansvarFaktaForm.HelpTextForeldreAndreLedd": "Engangsstønad kan ytes også til person som har foreldreansvar når den andre av foreldrene dør, eller får tildelt foreldreansvaret i medhold av barneloven §§ 38 og 63, såfremt vedkommende har hatt mindre samvær enn tilsvarende barneloven § 43 andre ledd",
   "OmsorgOgForeldreansvarFaktaForm.HelpTextForeldreFjerdeLedd": "Faren har rett til engangsstønad også dersom han i stønadsperioden har overtatt omsorgen for barnet med sikte på å overta foreldreansvaret alene etter barneloven kapittel 5. Retten gjelder selv om moren har fått utbetalt engangsstønad",
   "OmsorgOgForeldreansvarFaktaForm.AntallBarnValidation": "Antall barn må være mindre eller lik antall barn det søkes for",
-
   "ErOmsorgVilkaarOppfyltForm.Omsorg": "Omsorg",
   "ErOmsorgVilkaarOppfyltForm.Paragraf": "Vurder om vilkårene i § 14-17 tredje ledd for far er oppfylt (når mor dør ifm fødsel/omsorgsovertakelse)",
   "ErOmsorgVilkaarOppfyltForm.Vurder": "Vurder om tidligere utbetalte foreldrepenger eller engangsstønad gjelder for samme barn. Dersom det gjelder for samme barn er dette vilkåret ikke oppfylt.",
   "ErOmsorgVilkaarOppfyltForm.Anvendes": "Vilkår som anvendes",
-
   "FodselVilkarForm.Fodsel": "Fødsel",
   "FodselVilkarForm.VurderGjelderSammeBarn": "Vurder om tidligere utbetalte foreldrepenger eller engangsstønad gjelder for samme barn. Dersom det gjelder for samme barn er dette vilkåret ikke oppfylt.",
-
   "TilleggsopplysningerFaktaForm.AdditionalInfo": "Tilleggsopplysninger",
   "TilleggsopplysningerFaktaForm.Confirmed": "Jeg har lest dette",
-
-
   "FodselOgTilleggsopplysningerForm.Fodselsdato": "Fødselsdato",
-
   "AdopsjonVilkarForm.Adopsjon": "Adopsjon",
   "AdopsjonVilkarForm.VurderGjelderSammeBarn": "Vurder om tidligere utbetalte foreldrepenger eller engangsstønad gjelder for samme barn. Dersom det gjelder for samme barn er dette vilkåret ikke oppfylt.",
-
   "VilkarResultPanel.VilkarOppfylt": "Vilkåret er oppfylt",
   "VilkarResultPanel.VilkarIkkeOppfylt": "Vilkåret er ikke oppfylt",
-
   "BehandlingsprosessIndex.CheckAvklarPersonstatus": "Kontroller manglende opplysninger om fødsel",
-
   "OmsorgOgForeldreansvarInfoPanel.Omsorg": "Fakta om omsorg og foreldreansvar",
   "OmsorgOgForeldreansvarInfoPanel.BegrunnelseTitleEs": "Begrunn valg av vilkår",
   "OmsorgOgForeldreansvarInfoPanel.BegrunnelseTitleFp": "Begrunn endringene",
-
   "OmsorgInfoPanel.Omsorg": "Fakta om omsorg",
-
   "BostedFaktaView.BosattAdresser": "Bostedsadresser fra folkeregisteret",
   "BostedFaktaView.Soker": "Søker",
   "BostedFaktaView.ForelderTo": "Forelder 2",
-
   "BostedBarnView.Barn": "Barn {barnNr}",
   "BostedBarnView.Adresse": "Adresse ",
   "BostedBarnView.Age": " {fodselsdato} ({age} år)",
-
   "BostedSokerView.ForeignAddresse": "Utenlandsadresse",
   "BostedSokerView.Region": "Region",
-
   "OmsorgInfoPanel.VurderOmsorg": "Vurder om søker har omsorg for barnet i søknadsperioden",
   "OmsorgInfoPanel.VurderAleneomsorg": "Vurder om søker har aleneomsorg for barnet",
   "OmsorgFaktaForm.Aleneomsorg": "Aleneomsorg",
@@ -438,9 +379,7 @@
   "OmsorgFaktaForm.OppgittIkkeAleneomsorg": "Søker har oppgitt <b>ikke</b> å ha aleneomsorg for barnet",
   "OmsorgFaktaForm.OppgittOmsorg": "Søker har oppgitt å ha omsorg for barnet",
   "OmsorgFaktaForm.OppgittIkkeOmsorg": "Søker har oppgitt å <b>ikke</b> ha omsorg for barnet",
-
   "IkkeOmsorgPeriodeField.Periode": "Periode f.o.m. - t.o.m. dato",
-
   "Person.Age": "{age} år",
   "Person.ImageText": "Personinformasjon",
   "Person.Woman": "Kvinne",
@@ -451,26 +390,21 @@
   "Person.ManglerDodsdato": "Dødsdato mangler",
   "Person.UkjentNavn": "Ukjent navn på forelder",
   "Person.HarIkkeNorskFnrEllerDnr": "Har ikke norsk f.nr. eller d-nr.",
-
   "MerkePanel.Dod": "DØD",
   "MerkePanel.Diskresjon6": "Kode 6",
   "MerkePanel.Diskresjon7": "Kode 7",
   "MerkePanel.EgenAnsatt": "NAV",
   "MerkePanel.Verge": "Verge",
-
   "MerkePanel.DodTittel": "Personen er død",
   "MerkePanel.Diskresjon6Tittel": "Personen har diskresjonsmerking kode 6",
   "MerkePanel.Diskresjon7Tittel": "Personen har diskresjonsmerking kode 7",
   "MerkePanel.EgenAnsattTittel": "Personen er ansatt i NAV",
   "MerkePanel.VergeTittel": "Personen har verge",
-
   "Search.SearchFagsakOrPerson": "Søk på sak eller person",
   "Search.SaksnummerOrPersonId": "Saksnummer eller fødselsnummer/D-nummer",
   "Search.Search": "Søk",
-
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
   "SubmitButton.SettPåVent": "Sett behandling på vent",
-
   "TermindatoFaktaForm.ApplicationInformation": "Opplysninger om termin oppgitt i søknaden",
   "TermindatoFaktaForm.UtstedtDato": "Utstedt dato",
   "TermindatoFaktaForm.Termindato": "Termindato",
@@ -483,9 +417,7 @@
   "TermindatoFaktaForm.AdvarselForTidligUtstedtdato": "Terminbekreftelsen utstedt før 22. svangerskapsuke. Kontakt søker for en nyere terminbekreftelse og sett saken på vent. Fortsett dersom ny bekreftelse ikke skal hentes inn. Behandlingen vil avslås på grunn av manglende dokumentasjon",
 
   "TilleggsopplysningerInfoPanel.Tilleggsopplysninger": "Tilleggsopplysninger",
-
   "OpptjeningInfoPanel.KontrollerFaktaForOpptjening": "Fakta om opptjening",
-
   "VarselOmRevurderingForm.VarselOmRevurdering": "Varsel om revurdering",
   "VarselOmRevurderingForm.VarselOmRevurderingVurder": "Vurder om varsel om revurdering skal sendes til søker",
   "VarselOmRevurderingForm.Etterkontroll": "Etterkontroll",
@@ -500,7 +432,6 @@
   "VarselOmRevurderingForm.UtstedDato": "Utstedt dato",
   "VarselOmRevurderingForm.Ytelsesvedtak": "Vedtak",
   "VarselOmRevurderingForm.OpplysningerISoknad": "Opplysninger om fødsel i søknaden",
-
   "SjekkFodselDokForm.DokumentasjonForeligger": "Dokumentasjon foreligger",
   "SjekkFodselDokForm.DokumentasjonForeliggerIkke": "Dokumentasjon foreligger ikke, bruk opplysningene i folkeregisteret",
   "SjekkFodselDokForm.BrukAntallIYtelsesvedtaket": "Bruk antall fra vedtaket",
@@ -512,20 +443,17 @@
   "SjekkFodselDokForm.FastsettAntallBarn": "Antall barn",
   "SjekkFodselDokForm.FyllInnDokumenterteOpplysninger": "Fyll inn dokumenterte opplysninger",
   "SjekkFodselDokForm.ApplicationInformation": "Kontroller manglende opplysninger om fødsel",
-
   "FodselsammenligningPanel.AntallBarn": "Antall barn",
   "FodselsammenligningPanel.Termindato": "Termindato",
   "FodselsammenligningPanel.Vedtaksdato": "Vedtaksdato",
   "FodselsammenligningPanel.Svangerskapsuke": "Svangerskapsuke",
   "FodselsammenligningPanel.OpplysningerTPS": "Opplysninger om fødsel fra folkeregisteret",
-    "FodselsammenligningPanel.Fodselsdato": "Fødselsdato",
+  "FodselsammenligningPanel.Fodselsdato": "Fødselsdato",
   "FodselsammenligningPanel.UstedtDato": "Utstedt dato",
   "FodselsammenligningPanel.Ytelsesvedtak": "Vedtak",
   "FodselsammenligningPanel.Dodfodt": "Dødfødsel",
-
   "FodselSammenligningOtherPanel.OpplysningerISoknad": "Opplysninger om fødsel fra søknaden",
   "FodselSammenligningOtherPanel.TerminISoknad": "Opplysninger om termin oppgitt i søknaden",
-
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
   "ValidationMessage.MinLength": "Du må skrive minst {length} tegn",
   "ValidationMessage.MaxLength": "Du kan skrive maksimalt {length} tegn",
@@ -572,23 +500,21 @@
   "VilkarsresultatView.VilkarIkkeOppfylt3": " oppfylt",
   "VilkarsresultatView.VurderOmKravErOppfylt": "Vurder om {lovReferanse} er oppfylt",
   "VilkarsresultatView.Begrunnelse": "Vurdering",
-
   "FatterVedtakStatusModal.GoToSearchPage": "Du kommer nå til forsiden.",
   "FatterVedtakStatusModal.Ok": "OK",
   "FatterVedtakStatusModal.ModalDescription": "Forslag til vedtak er sendt til beslutter. Du kommer nå til forsiden.",
-  "FatterVedtakStatusModal.ModalDescriptionFPOpphort":  "Foreldrepenger er opphørt. Du kommer nå til forsiden.",
-  "FatterVedtakStatusModal.ModalDescriptionES":  "Engangsstønaden er avslått. Du kommer nå til forsiden.",
-  "FatterVedtakStatusModal.ModalDescriptionFP":  "Foreldrepenger er avslått. Du kommer nå til forsiden.",
+  "FatterVedtakStatusModal.ModalDescriptionFPOpphort": "Foreldrepenger er opphørt. Du kommer nå til forsiden.",
+  "FatterVedtakStatusModal.ModalDescriptionES": "Engangsstønaden er avslått. Du kommer nå til forsiden.",
+  "FatterVedtakStatusModal.ModalDescriptionFP": "Foreldrepenger er avslått. Du kommer nå til forsiden.",
   "FatterVedtakStatusModal.IkkeInnvilgetES": "Engangsstønad er avslått",
   "FatterVedtakStatusModal.IkkeInnvilgetFP": "Foreldrepenger er avslått",
   "FatterVedtakStatusModal.Sendt": "Forslag til vedtak er sendt til beslutter",
   "FatterVedtakStatusModal.SendtBeslutter": "Forslag til vedtak er sendt til beslutter",
   "FatterVedtakStatusModal.SendtKlageResultatTilBeslutter": "Forslag til klageresultat er sendt til beslutter",
-
   "FatterVedtakApprovalModal.GoToSearchPage": "Du kommer nå til forsiden.",
   "FatterVedtakApprovalModal.Ok": "OK",
   "FatterVedtakApprovalModal.ModalDescription": "Forslag til vedtak er sendt til beslutter. Du kommer nå til forsiden.",
-  "FatterVedtakApprovalModal.ModalDescriptionFP":  "Foreldrepenger er avslått. Du kommer nå til forsiden.",
+  "FatterVedtakApprovalModal.ModalDescriptionFP": "Foreldrepenger er avslått. Du kommer nå til forsiden.",
   "FatterVedtakApprovalModal.VedtakReturneresTilSaksbehandler": "Vedtak returneres til saksbehandler for ny vurdering.",
   "FatterVedtakApprovalModal.IkkeInnvilgetES": "Engangsstønad er avslått",
   "FatterVedtakApprovalModal.IkkeInnvilgetFP": "Foreldrepenger er avslått",
@@ -603,9 +529,8 @@
   "FatterVedtakApprovalModal.VedtakOmgjort": "Vedtaket er omgjort",
   "FatterVedtakApprovalModal.InnvilgetEngangsstonad": "Engangsstønad er innvilget og vedtaket blir iverksatt",
   "FatterVedtakApprovalModal.InnvilgetForeldrepenger": "Foreldrepenger er innvilget og vedtaket blir iverksatt",
-  "FatterVedtakApprovalModal.OpphortForeldrepenger":  "Foreldrepenger er opphørt.",
+  "FatterVedtakApprovalModal.OpphortForeldrepenger": "Foreldrepenger er opphørt.",
   "FatterVedtakApprovalModal.ModalDescriptionKlage": "Resultatet av klagebehandlingen blir iverksatt",
-
   "SettBehandlingPaVentModal.ModalDescription": "Behandlingen settes på vent med frist",
   "SettBehandlingPaVentModal.PaVent": "På vent",
   "SettBehandlingPaVentModal.SettesPaVent": "Behandlingen settes på vent med frist",
@@ -616,7 +541,6 @@
   "SettBehandlingPaVentModal.SelectPlaceholder": "Velg årsak",
   "SettBehandlingPaVentModal.Avbryt": "Avbryt",
   "SettBehandlingPaVentModal.Lukk": "Lukk",
-
   "ShelveBehandlingModal.ModalDescription": "Behandlingen henlegges",
   "ShelveBehandlingModal.HenleggBehandling": "Henlegg behandling",
   "ShelveBehandlingModal.ArsakField": "Velg årsak",
@@ -626,14 +550,12 @@
   "ShelveBehandlingModal.Avbryt": "Avbryt",
   "ShelveBehandlingModal.SokerInformeres": "Informer søker",
   "ShelveBehandlingModal.ForhandsvisBrev": "Forhåndsvis brev",
-
   "HENLAGT_SØKNAD_TRUKKET": "Søknaden er trukket",
   "HENLAGT_FEILOPPRETTET": "Behandlingen er feilaktig opprettet",
   "HENLAGT_KLAGE_TRUKKET": "Klagen er trukket",
   "HENLAGT_INNSYN_TRUKKET": "Innsynskrav er trukket",
   "HENLAGT_SØKNAD_MANGLER": "Søknad mangler",
   "MANGLER_BEREGNINGSREGLER": "Mangler beregningsregler (1. jan 2019)",
-
   "ChangeBehandlendeEnhetModal.ModalDescription": "Endre behandlende enhet",
   "ChangeBehandlendeEnhetModal.BehandlendeEnhet": "Behandlende enhet",
   "ChangeBehandlendeEnhetModal.Endre": "Endre enhet",
@@ -643,19 +565,15 @@
   "ChangeBehandlendeEnhetModal.BegrunnelseField": "Begrunnelse",
   "ChangeBehandlendeEnhetModal.Ok": "OK",
   "ChangeBehandlendeEnhetModal.Avbryt": "Avbryt",
-
   "ModalLukkPapirSoknad.ModalDescription": "Registrering av søknaden avsluttes",
   "ModalLukkPapirSoknad.Avslutt": "Avslutt registrering av søknaden",
   "ModalLukkPapirSoknad.AvslutterRegistrering": "Avslutter registrering av søknaden. Det er ikke mulig å innhente ytterligere opplysninger.",
   "ModalLukkPapirSoknad.BekreftAvslag": "Bekreft at søknaden skal avslås",
   "ModalLukkPapirSoknad.Ok": "OK",
   "ModalLukkPapirSoknad.Avbryt": "Avbryt",
-
-
   "OppholdInntektOgPerioder.Bekreft": "Bekreft og fortsett",
   "OppholdInntektOgPeriode.Oppdater": "Oppdater",
   "OppholdInntektOgPeriode.Avbryt": "Avbryt",
-
   "PerioderMedMedlemskapFaktaPanel.ApplicationInformation": "Perioder med medlemskap",
   "PerioderMedMedlemskapFaktaPanel.Period": "Periode",
   "PerioderMedMedlemskapFaktaPanel.Coverage": "Dekning",
@@ -665,15 +583,11 @@
   "PerioderMedMedlemskapFaktaPanel.Termindato": "Termindato: {dato}",
   "PerioderMedMedlemskapFaktaPanel.Omsorgsovertakelse": "Dato for omsorgsovertakelse: {dato}",
   "PerioderMedMedlemskapFaktaPanel.NoInformation": "Ingen registrerte opplysninger om medlemskap",
-
   "MedlemskapEndringerTabell.GjeldeneFom": "Gjeldende f.o.m",
   "MedlemskapEndringerTabell.Register": "Register",
   "MedlemskapEndringerTabell.Opplysning": "Opplysning",
-
   "PeriodLabel.DateToday": "d.d.",
-
   "ShowVilkarStatus.Check": "Informasjonen er utfylt",
-
   "Registrering.RegistrereSoknad": "Registrere søknad",
   "Registrering.RegistrerePapirSoknadAksPkt": "Registrering av papirsøknad",
   "Registrering.RegistrerAlleOpplysninger": "Registrer inn alle opplysninger fra papirsøknaden",
@@ -730,7 +644,6 @@
   "Registrering.Sprak.Bokmal": "Bokmål",
   "Registrering.Sprak.Nynorsk": "Nynorsk",
   "Registrering.Sprak.Engelsk": "Engelsk",
-
   "Registrering.Verge": "Verge/fullmektig skal knyttes til saken",
   "Registrering.Opphold.Yes": "Ja",
   "Registrering.Opphold.No": "Nei",
@@ -765,14 +678,11 @@
   "Registrering.AndreYtelser.Ventelonn": "Ventelønn",
   "Registrering.AndreYtelser.periodeTom": "T.o.m.",
   "Registrering.AndreYtelser.periodeFom": "F.o.m.",
-
-
   "Registrering.RegistrerVirksomhetModalForm.Save": "Lagre",
   "Registrering.RegistrerVirksomhetModalForm.Cancel": "Avbryt",
   "Registrering.RegistrerVirksomhetModalForm.Name": "Legg til næringsvirksomhet",
   "Registrering.RegistrerVirksomhetModalForm.ModalDescription": "Legg til næringsvirksomhet",
   "Registrering.RegistrerVirksomhetModalForm.Title": "Egen næringsvirksomhet",
-
   "Registrering.VirksomhetStartetPanel.Reason": "Årsak",
   "Registrering.VirksomhetStartetPanel.NewlyStartedOrChanged": "Er virksomheten blitt varig endret, nyoppstartet eller er søker ny i arbeidslivet?",
   "Registrering.VirksomhetStartetPanel.Yes": "Ja",
@@ -783,7 +693,6 @@
   "Registrering.VirksomhetStartetPanel.VirksomhetEndretBeskrivelse": "Beskriv endringen i næring",
   "Registrering.VirksomhetStartetPanel.GjeldendeFom": "Gjeldende f.o.m.",
   "Registrering.VirksomhetStartetPanel.Inntekt": "Årsinntekt",
-
   "Registrering.VirksomhetIdentifikasjonPanel.Name": "Navn på foretaket",
   "Registrering.VirksomhetIdentifikasjonPanel.No": "Nei",
   "Registrering.VirksomhetIdentifikasjonPanel.Yes": "Ja",
@@ -791,18 +700,15 @@
   "Registrering.VirksomhetIdentifikasjonPanel.Country": "Hvilket land er virksomheten registrert i?",
   "Registrering.VirksomhetIdentifikasjonPanel.Stillingsprosent": "Prosentandel",
   "Registrering.VirksomhetIdentifikasjonPanel.OrganizationNumber": "Virksomhetsnummer",
-
   "Registrering.VirksomhetRegnskapPanel.Yes": "Ja",
   "Registrering.VirksomhetRegnskapPanel.No": "Nei",
   "Registrering.VirksomhetRegnskapPanel.Accountant": "Har søker regnskapsfører eller revisor?",
   "Registrering.VirksomhetRegnskapPanel.AccountantName": "Navn på regnskapsfører/revisor?",
   "Registrering.VirksomhetRegnskapPanel.AccountantPhone": "Telefonnummer til regnskapsfører/revisor?",
-
   "Registrering.VirksomhetNyIArbeidslivetPanel.ErNyIArbeidslivet": "Er søker ny i arbeidslivet",
   "Registrering.VirksomhetNyIArbeidslivetPanel.Yes": "Ja",
   "Registrering.VirksomhetNyIArbeidslivetPanel.No": "Nei",
   "Registrering.VirksomhetNyIArbeidslivetPanel.OppgiOppstartsdato": "Oppgi oppstartsdato",
-
   "Registrering.VirksomhetNaeringTypePanel.Title": "Type næringsvirksomhet",
   "Registrering.VirksomhetNaeringTypePanel.Fiske": "Fiske",
   "Registrering.VirksomhetNaeringTypePanel.Reindrift": "Reindrift",
@@ -814,13 +720,9 @@
   "Registrering.VirksomhetStartetPanel.BladB": "Blad B",
   "Registrering.VirksomhetStartetPanel.Lott": "Lott",
   "Registrering.VirksomhetStartetPanel.Hyre": "Hyre",
-
-
-
   "Registrering.VirksomhetRelasjonPanel.Relation": "Relasjon",
   "Registrering.VirksomhetRelasjonPanel.Yes": "Nei, har ikke nære venner eller er i familie tilknyttet næringen",
   "Registrering.VirksomhetRelasjonPanel.No": "Ja, har nære venner eller er i familie tilknyttet næringen",
-
   "Parent.Mother": "Mor",
   "Parent.Father": "Far",
   "Registrering.TerminOgFodsel": "Opplysninger om termin og fødsel",
@@ -842,7 +744,6 @@
   "Registrering.SaveApplication.ResetButton": "Nullstill",
   "Registrering.SaveApplication.OpplysningspliktErIkkeOverholdt": "Søkers opplysningsplikt er ikke overholdt",
   "Registrering.SaveApplication.CannotComplete": "Ikke mulig å registrere søknaden",
-
   "Registrering.Frilans.Title": "Frilanser",
   "Registrering.Frilans.HarFrilansvirksomhet": "Har søker periode med frilansvirksomhet?",
   "Registrering.Frilans.OppgiPeriode": "Oppgi periode med frilansvirksomhet",
@@ -852,7 +753,6 @@
   "Registrering.Frilans.periodeFom": "F.o.m.",
   "Registrering.Frilans.ErNyoppstartedFrilanser": "Er søker nyoppstartet frilanser?",
   "Registrering.Frilans.HarInntektFraForsterhjem": "Har søker inntekt fra fosterhjem?",
-
   "PeriodFieldArray.LeggTilPeriode": "Legg til periode",
   "PeriodFieldArray.LeggTilBarn": "Legg til barn",
 
@@ -860,12 +760,10 @@
   "Registrering.FrilansOppdrag.Yes": "Ja",
   "Registrering.FrilansOppdrag.No": "Nei",
   "Registrering.FrilansOppdrag.OppgiPeriode": "Oppgi periode",
-
   "Registrering.FrilansOppdrag.FieldArray.periodeFom": "F.o.m.",
   "Registrering.FrilansOppdrag.FieldArray.periodeTom": "T.o.m.",
   "Registrering.FrilansOppdrag.FieldArray.Oppdragsgiver": "Oppdragsgiver",
   "Registrering.FrilansOppdrag.FieldArray.BeforeFomValidation": "F.o.m må være lik eller etter dato for første periode med frilansvirksomhet",
-
   "Registrering.Permisjon.Title": "Tidsrom for permisjon",
   "Registrering.Permisjon.PermisjonForFodsel": "Permisjon før fødsel",
   "Registrering.Permisjon.PerioderForeldrepenger": "Perioder med permisjon med foreldrepenger",
@@ -925,12 +823,10 @@
   "Registrering.Permisjon.Gradering.LeggTilPeriode": "Legg til periode for gradering",
   "Registrering.Permisjon.Gradering.GraderUttaket": "Søker ønsker å gradere uttaket",
   "Registrering.Permisjon.PeriodeFomForTidlig": "Behandlinger med første uttaksdag før 01.01.2019 skal ikke behandles i vedtaksløsningen",
-
   "SoknadRegistrertModal.ContentLabel": "Søknaden er registrert. Du kommer nå til forsiden.",
   "SoknadRegistrertModal.InfoTextOne": "Søknaden er registrert og vil bli behandlet",
   "SoknadRegistrertModal.InfoTextTwo": "Du kommer nå til forsiden",
   "SoknadRegistrertModal.OkButtonText": "OK",
-
   "StatusForBorgerFaktaPanel.ApplicationInformation": "Status for søker",
   "StatusForBorgerFaktaPanel.CitizenEEA": "EØS borger",
   "StatusForBorgerFaktaPanel.CitizenOutsideEEA": "Utenlandsk borger utenfor EØS",
@@ -940,7 +836,6 @@
   "StatusForBorgerFaktaPanel.LovligOpphold": "Lovlig opphold",
   "StatusForBorgerFaktaPanel.HarLovligOpphold": "Søker har lovlig opphold",
   "StatusForBorgerFaktaPanel.HarIkkeLovligOpphold": "Søker har <b>ikke</b> lovlig opphold",
-
   "Historikk.Utgått": "{tag} (utgått)",
   "Historikk.Template.5.ChangedFromTo": "<b>{fieldName}</b> endret fra {fromValue} til <b>{toValue}</b>",
   "Historikk.Template.5.FieldSetTo": "<b>{fieldName}</b> er satt til <b>{value}</b>.",
@@ -948,17 +843,14 @@
   "Historikk.Template.5.GjeldendeFra": "Gjeldende fra <b>{dato}</b>:",
   "Historikk.Template.5.VerdiGjeldendeFra": " gjeldende fra <b>{dato}</b>:",
   "Historikk.Template.5.IngenEndring": "Ingen endring av vurdering",
-
   "Historikk.Template.7.ChangedFromTo": "<b>{sub1}</b> {sub2} <b>{fromValue}</b> til <b>{toValue}</b>",
   "Historikk.Template.7.OverstyrtVilkar": "Overstyrt vurdering:; Utfallet er endret fra",
   "Historikk.Template.7.OverstyrtBeregning": "Overstyrt beregning:; Beløpet er endret fra",
-
   "Historikk.Template.8.ChangedFromTo": "<b>{fieldName}</b> endret fra {fromValue} til <b>{toValue}</b>",
   "Historikk.Template.8.LagtTil": "<b>{fieldName}</b> er lagt til med perioden <b>{value}</b>",
   "Historikk.Template.9": "<b>Overstyrt vurdering</b> av perioden {opprinneligPeriode}. <br><b>Perioden</b> er delt i {numberOfPeriods} og satt til <b>{splitPeriods}</b>",
-  "Historikk.Template.9.ManuellVurdering" : "<b>Manuell vurdering</b> av perioden {opprinneligPeriode}. <br><b>Perioden</b> er delt i {numberOfPeriods} og satt til <b>{splitPeriods}</b>",
-  "Historikk.Template.9.TilbakekrViderebehandling" : "<b>{felt}</b> er satt til <b>{verdi}</b>",
-
+  "Historikk.Template.9.ManuellVurdering": "<b>Manuell vurdering</b> av perioden {opprinneligPeriode}. <br><b>Perioden</b> er delt i {numberOfPeriods} og satt til <b>{splitPeriods}</b>",
+  "Historikk.Template.9.TilbakekrViderebehandling": "<b>{felt}</b> er satt til <b>{verdi}</b>",
   "Historikk.Template.10.ChangedFromTo": "<b>{fieldName}</b> er endret fra {fromValue} til <b>{toValue}</b>",
   "Historikk.Template.10.FieldSetTo": "<b>{fieldName}</b> er satt til <b>{toValue}</b>",
   "Historikk.Template.10.ChangedFromToTrekkdager": "<b>{fieldName}</b> er endret fra {fromValueWeeks} uker og {fromValueDays} dager til <b>{toValueWeeks} uker og {toValueDays} dager</b>",
@@ -966,12 +858,9 @@
   "Historikk.Template.10.ChangedFromToProsentUtbetalingFromNothing": "<b>{fieldName}</b> er satt til <b>{toValue}%</b>",
   "Historikk.Template.10.OverstyrtVurderingPeriode": "<b>Overstyrt vurdering</b> av perioden {periodeFom} - {periodeTom}.",
   "Historikk.Template.10.ManuellVurderingPeriode": "<b>Manuell vurdering</b> av perioden {periodeFom} - {periodeTom}.",
-
   "HistorikkAksjonpunktMapping.SokersStonadGjelderSammeBarn": "Vurder om engangsstønad eller foreldrepenger utbetalt til søker gjelder samme barn",
   "HistorikkAksjonpunktMapping.AnnenForeldersStonadGjelderSammeBarn": "Avklar om engangsstønad eller foreldrepenger utbetalt til annen forelder gjelder samme barn",
-
   "VedtakRevurderingForm.OpphorPanel.ArsakTilOpphor": "Årsak til opphør",
-
   "VedtakForm.ForslagTilVedtak": "Vedtak",
   "VedtakForm.BehandlingHenlagt": "Behandlingen er henlagt",
   "VedtakForm.ResultatKlageYtelsesvedtakOpphevet": "Vedtaket er opphevet",
@@ -1022,7 +911,6 @@
   "VedtakForm.Innhold": "Innhold i brev til søker",
   "VedtakForm.AutomatiskBrev": "Innhold fra det automatisk genererte brevet kan kopieres ut og limes inn i det manuelle brevet",
   "VedtakForm.AutomatiskBrev.Lenke": "Forhåndsvis automatisk brev",
-
   "VedtakKlageForm.ArsakTilAvslag": "Årsak til avslag",
   "VedtakKlageForm.ResultatOpprettholdVedtak": "Vedtaket er stadfestet",
   "VedtakKlageForm.ResultatKlageMedhold": "Vedtaket er omgjort",
@@ -1042,19 +930,13 @@
   "VedtakKlageForm.KlageOmgjortGunst": "Vedtaket er omgjort til gunst",
   "VedtakKlageForm.KlageOmgjortUgunst": "Vedtaket er omgjort til ugunst",
   "VedtakKlageForm.KlageOmgjortDelvis": "Vedtaket er delvis omgjort til gunst",
-  "VedtakKlageForm.HjemmsendUtenOpphev" : "Vedtaket er hjemsendt",
+  "VedtakKlageForm.HjemmsendUtenOpphev": "Vedtaket er hjemsendt",
   "VedtakKlageForm.Header": "Resultat",
   "VedtakKlageForm.KlageAvvist": "Avvist fordi klagen ikke oppfyller formkravene",
   "VedtakKlageForm.KlageStadfestet": "Vedtaket er stadfestet",
   "VedtakKlageForm.YtelsesvedtakOpphevet": "Vedtak er opphevet og hjemsendt",
-
-
-
-
-
   "RegistrereVergeInfoPanel.CheckInformation": "Fyll ut og kontroller vergeopplysninger",
   "RegistrereVergeInfoPanel.Info": "Fakta om verge/fullmektig",
-
   "Verge.KontaktPerson": "Kontaktperson",
   "Verge.Navn": "Navn",
   "Verge.Mandat": "Mandat",
@@ -1066,7 +948,6 @@
   "Verge.Soker": "Søker",
   "Verge.BrukerErUnderTvungenForvaltning": "Søker er under tvungen forvaltning",
   "Verge.AvklarVerge": "Avklar verge",
-
   "Avregning.Title": "Simulering",
   "Avregning.FP.nyttBeløp": "Foreldrepenger nytt beløp",
   "Avregning.FP.tidligereUtbetalt": "Foreldrepenger tidligere utbetalt",
@@ -1211,7 +1092,6 @@
   "Beregningsgrunnlag.Gradering.AksjonspunkttekstFlereForhold": "Søker skal gradere hos {arbeidsforholdTekst} og det vil ikke bli utbetaling for disse aktivitetene. Vurder om fordeling av beregningsgrunnlag er riktig.",
   "Beregningsgrunnlag.Gradering.FordelingErRiktig": "Ja, fordelingen av inntekt er riktig. Fortsett behandlingen",
   "Beregningsgrunnlag.Gradering.FordelingMåVurderes": "Nei, fordelingen av inntekt må vurderes på nytt. Behandlingen settes på vent",
-
   "BeregningInfoPanel.Title": "Fakta om beregning",
   "BeregningInfoPanel.VisTabell": "Vis tabell",
   "BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning": "Vurder fakta for beregningen",
@@ -1234,7 +1114,6 @@
   "BeregningInfoPanel.VurderOgFastsettATFL.FastsettArbeidsinntekt": "Fastsett arbeidsinntekt",
   "BeregningInfoPanel.VurderOgFastsettATFL.HarSokerEndring": "Har søker hatt lønnsendring i løpet av de siste tre månedene?",
   "BeregningInfoPanel.VurderOgFastsettATFL.Periode": "{fom} - {tom}",
-
   "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForFrilansUtenFrilans": "Mottar søker sykepenger, foreldrepenger, pleiepenger eller svangerskapspenger for frilansaktiviteten?",
   "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForFrilans": "Søker er frilanser. Mottar søker sykepenger, foreldrepenger, pleiepenger eller svangerskapspenger for frilansaktiviteten?",
   "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForArbeid" : "Søker er arbeidstaker og det er ikke mottatt inntektsmelding. Mottar søker sykepenger, foreldrepenger, pleiepenger eller svangerskapspenger for arbeid i {arbeid}?",
@@ -1248,13 +1127,11 @@
   "BeregningInfoPanel.FastsettInntektTabell.Refusjonskrav": "Refusjonskrav",
   "BeregningInfoPanel.FastsettInntektTabell.InntektPrMnd": "Inntekt per måned",
   "BeregningInfoPanel.FastsettInntektTabell.Inntektskategori": "Inntektskategori",
-
   "BeregningInfoPanel.FastsettBBFodendeKvinne.FastsettBB": "Fastsett månedsinntekten etter besteberegning og fordel beregningsgrunnlag",
   "BeregningInfoPanel.FastsettBBFodendeKvinne.Frilans": "Frilanser",
   "BeregningInfoPanel.FastsettBBFodendeKvinne.Dagpenger": "Dagpenger",
   "BeregningInfoPanel.FastsettBBFodendeKvinne.RegnarkNavet": "Finn regneark på navet",
   "BeregningInfoPanel.FastsettBBFodendeKvinne.Sum": "Sum",
-
   "BeregningInfoPanel.TilstøtendeYtelseForm.TilstøtendeYtelse": "Tilstøtende ytelse: {ytelse}",
   "BeregningInfoPanel.TilstøtendeYtelseForm.BruttoBeregningsgrunnlag": "Brutto beregningsgrunnlag: {bruttoBG}",
   "BeregningInfoPanel.TilstøtendeYtelseForm.Dekningsgrad": "Dekningsgrad: {dekningsgrad}%",
@@ -1264,7 +1141,6 @@
   "BeregningInfoPanel.TilstøtendeYtelseForm.TilstøtendeYtelseIKombinasjonHeader": "Søker har også direkte overgang fra ytelse. Fastsett årsbeløp for fordeling av beregningsgrunnlaget",
   "BeregningInfoPanel.TilstøtendeYtelseForm.TilstøtendeYtelseBesteberegningHeader": "Direkte overgang fra ytelse. Fastsett årsinntekten etter besteberegning og fordel beregningsgrunnlaget.",
   "BeregningInfoPanel.TilstøtendeYtelseForm.Oppdater": "Oppdater",
-
   "BeregningInfoPanel.FordelingBG.Sum": "Sum",
   "BeregningInfoPanel.FordelingBG.FordelingAvBruttoBG": "Fordeling av brutto beregningsgrunnlag",
   "BeregningInfoPanel.FordelingBG.FordelingAvBruttoBGGjeldendeFom": "Fordeling av brutto beregningsgrunnlag gjeldende {fom}",
@@ -1289,7 +1165,6 @@
   "KunYtelsePanel.Overskrift": "Søker har ytelse som eneste inntekt. Fastsett månedsbeløp for fordeling av beregningsgrunnlaget.",
   "KunYtelsePanel.HarBesteberegning": "Søker har ytelse som eneste inntekt. Skal denne fordeles etter besteberegning?",
   "KunYtelsePanel.OverskriftBesteberegning": "Fastsett månedsbeløp for brutto beregningsgrunnlag etter besteberegning",
-
   "BeregningInfoPanel.EndringBG.PeriodeFom": "Gjeldende f.o.m. {fom}",
   "BeregningInfoPanel.EndringBG.PeriodeFomOgTom": "Gjeldende {fom} - {tom}",
   "BeregningInfoPanel.EndringBG.Andel": "Aktivitet",
@@ -1308,7 +1183,6 @@
 
   "BeregningInfoPanel.EtterlønnSluttpakke.HarSøkerInntekt": "Har søker etterlønn eller sluttpakke?",
   "BeregningInfoPanel.EtterlønnSluttpakke.Månedsinntekt": "Månedsinntekt",
-
   "VilkarResultPicker.SelectArsak": "Velg årsak",
   "VilkarResultPicker.Arsak": "Angi avslagsårsak",
   "VilkarResultPicker.VilkarOppfylt": "Vilkåret er oppfylt",
@@ -1316,7 +1190,6 @@
   "VilkarResultPicker.VilkarOppfyltRevurderingFom": "Vilkåret er  oppfylt f.o.m. {fom}",
   "VilkarResultPicker.VilkarIkkeOppfyltRevurderingFom": "Vilkåret er <b>ikke</b> oppfylt f.o.m. {fom}",
   "VilkarResultPicker.VilkarDato": "Dato",
-
   "SokersOpplysningspliktForm.SokersOpplysningsplikt": "Søkers opplysningsplikt",
   "SokersOpplysningspliktForm.UtfyllendeOpplysninger": "Vurder om søker har oppfylt opplysningsplikten etter § 21-3 og § 21-7",
   "SokersOpplysningspliktForm.VilkarOppfylt": "Vilkåret er oppfylt",
@@ -1326,14 +1199,10 @@
   "SokersOpplysningspliktForm.VilkarIkkeOppfyltValgt": "Vilkår er ikke oppfylt",
   "SokersOpplysningspliktForm.Begrunnelse": "Begrunnelse",
   "SokersOpplysningspliktForm.ManglendeDokumentasjon": "Manglende dokumentasjon",
-
   "Totrinnskontroll.godkjent": "er godkjent",
   "Totrinnskontroll.ikkeGodkjent": "må vurderes på nytt",
-
   "ToTrinnsForm.Godkjent": "Godkjent",
   "ToTrinnsForm.LøstAksjonspunkt": "<b>Løst aksjonspunkt:</b> Kontroller endrede opplysninger og faglige vurderinger",
-
-
   "ToTrinnsForm.Beregning.VarigEndring": "Det er fastsatt varig endret/nyoppstartet næring.",
   "ToTrinnsForm.Beregning.IkkeVarigEndring": "Det er fastsatt at det ikke er varig endring i næring.",
   "ToTrinnsForm.Beregning.InntektFastsatt": "Inntekt er skjønnsmessig fastsatt.",
@@ -1370,17 +1239,14 @@
   "ToTrinnsForm.Opptjening.GodkjenningArbeidMedNavn": "Aktivitet {a} for {b} ({c}) er godkjent.",
   "ToTrinnsForm.Opptjening.GodkjenningArbeidUtenNavn": "Aktivitet {a} for organisasjonen med orgnr. {b} er godkjent.",
   "ToTrinnsForm.Opptjening.GodkjenningAktivitet": "Aktivitet {a} er godkjent.",
-
   "ToTrinnsForm.Adopsjon.KontrollerOpplysninger": "Opplysninger om adopsjon er endret.",
   "ToTrinnsForm.Adopsjon.VurderEktefellesBarn": "Det er vurdert om adopsjon gjelder ektefelles barn.",
   "ToTrinnsForm.Adopsjon.VurderMannAdoptererAlene": "Det er vurdert om mann adopterer alene.",
   "ToTrinnsForm.Adopsjon.VilkarOverstyrt": "Adopsjonsvilkåret er overstyrt.",
-
   "ToTrinnsForm.Omsorgovertagelse.KontrollerOpplysninger": "Opplysninger om omsorgsovertagelse er endret.",
   "ToTrinnsForm.Omsorgovertagelse.VurderVilkarForeldreansvarTredjeLedd": "Vilkårene for § 14-17 tredje ledd er vurdert.",
   "ToTrinnsForm.Omsorgovertagelse.VurderTidligereUtbetaling": "Det er vurdert om tidligere utbetalt ytelse gjelder for samme barn.",
   "ToTrinnsForm.OpplysningerOmSøker.Arbeidsforhold": "<b>Arbeidsforhold hos {orgnavn}({orgnummer}){arbeidsforholdId}</b> er satt til <b>{melding}.</b>",
-
   "ToTrinnsForm.Fødsel.VurderSokersRelasjon": "Søkers relasjon til barnet er vurdert.",
   "ToTrinnsForm.Fødsel.VurderVilkarSykdom": "Vilkår for sykdom er vurdert.",
   "ToTrinnsForm.Fødsel.VurderTidligereUtbetaling": "Det er vurdert om tidligere utbetalt ytelse gjelder for samme barn.",
@@ -1388,19 +1254,15 @@
   "ToTrinnsForm.Fødsel.KontrollerOpplysningerFodselsdokumentasjonen": "Opplysninger om fødsel fra dokumentasjon er endret.",
   "ToTrinnsForm.Fødsel.SjekkManglendeFødsel": "Manglende opplysninger om dokumentasjon er endret.",
   "ToTrinnsForm.Fødsel.VilkarOverstyrt": "Fødselsvilkåret er overstyrt.",
-
   "ToTrinnsForm.Omsorg.VurderOmsorg": "Opplysninger om omsorg er endret.",
   "ToTrinnsForm.Aleneomsorg.VurderAleneomsorg": "Opplysninger om aleneomsorg er endret.",
-
   "ToTrinnsForm.Foreldreansvar.VurderVilkarForeldreansvarFjerdeLedd": "Vilkårene for § 14-17 fjerde ledd er vurdert.",
   "ToTrinnsForm.Foreldreansvar.VurderVilkarForeldreansvarAndreLeddES": "Vilkårene for § 14-17 andre ledd er vurdert.",
   "ToTrinnsForm.Foreldreansvar.VurderVilkarForeldreansvarAndreLeddFP": "Vilkårene for § 14-5 andre ledd er vurdert.",
   "ToTrinnsForm.Foreldreansvar.VurderTidligereUtbetaling": "Det er vurdert om tidligere utbetalt ytelse gjelder for samme barn.",
   "ToTrinnsForm.Foreldreansvar.OpplysningerOmForeldreansvarOgOmsorg": "Opplysninger om foreldreansvar og omsorg er kontrollert",
-
   "ToTrinnsForm.Soknadsfrist.ManueltVurdert": "Søknadsfrist er manuelt vurdert.",
   "ToTrinnsForm.Soknadsfrist.VilkarOverstyrt": "Søknadsfristvilkåret er overstyrt.",
-
   "ToTrinnsForm.Medlemskap.AvklarLovligOpphold": "Det er vurdert om søker har lovlig opphold.",
   "ToTrinnsForm.Medlemskap.AvklarOppholdsrett": "Det er vurdert om søker har oppholdsrett.",
   "ToTrinnsForm.Medlemskap.VurderPersonStatus": "Søkers personstatus er vurdert",
@@ -1433,16 +1295,11 @@
   "ToTrinnsForm.Klage.DelvisOmgjortTilGunst": "Delvis omgjøring, til gunst",
   "ToTrinnsForm.Klage.HjemsendUtenOpphev": "Hjemsend uten å oppheve",
   "ToTrinnsForm.Klage.OmgjortTilUgunst": "Omgjort til ugunst",
-
-
   "ToTrinnsForm.Vedtak.Fritekstbrev": "Det er laget et fritekstbrev",
   "Vedtak.Fritekstbrev": "Fritekstbrev",
-
-
   "Tilgangskontroll.Avslag.Kode6": "Ingen tilgang.",
   "Tilgangskontroll.Avslag.Kode7": "Ingen tilgang.",
   "Tilgangskontroll.Avslag.EgenAnsatt": "Ingen tilgang. Søker har markering <b>Egen ansatt</b>.",
-
   "AdressePanel.bostedsadresse": "Bostedsadresse",
   "AdressePanel.midlertidigAdresse": "Midlertidig adresse",
   "AdressePanel.postadresseNorge": "Postadresse i Norge",
@@ -1457,10 +1314,8 @@
   "PersonYtelserTable.Status": "Status",
   "PersonYtelserTable.Saksnummer": "Saksnr.",
   "PersonYtelserTable.Ingen": "Ingen",
-
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
   "Barnepanel.Adresse1": "Adresse 1",
-
   "Calendar.Day.0": "søndag",
   "Calendar.Day.1": "mandag",
   "Calendar.Day.2": "tirsdag",
@@ -1468,7 +1323,6 @@
   "Calendar.Day.4": "torsdag",
   "Calendar.Day.5": "fredag",
   "Calendar.Day.6": "lørdag",
-
   "Calendar.Day.Short.0": "søn",
   "Calendar.Day.Short.1": "man",
   "Calendar.Day.Short.2": "tir",
@@ -1476,7 +1330,6 @@
   "Calendar.Day.Short.4": "tor",
   "Calendar.Day.Short.5": "fre",
   "Calendar.Day.Short.6": "lør",
-
   "Calendar.Month.0": "Januar",
   "Calendar.Month.1": "Februar",
   "Calendar.Month.2": "Mars",
@@ -1489,7 +1342,6 @@
   "Calendar.Month.9": "Oktober",
   "Calendar.Month.10": "November",
   "Calendar.Month.11": "Desember",
-
   "Klage.ResolveKlage.Title": "Behandle klage",
   "Klage.ResolveKlage.HelpText": "Vurder om klagen skal tas til følge",
   "Klage.ResolveKlage.Begrunnelse": "Begrunnelse",
@@ -1517,13 +1369,10 @@
   "Klage.KlageKA.Formkrav": "Vurder om klagen oppfyller formkravene",
   "Klage.ResolveKlage.TempSaveButton": "Lagre",
   "Klage.ResolveKlage.TempSaveButtonGjennopne": "Gjennåpne aksjonspunkt",
-
-
   "KlageVurderingModal.VedtakOversendt": "Innstilling er sendt til NAV Klageinstans.",
   "KlageVurderingModal.ModalDescription": "Vedtaket er stadfestet. Du kommer nå til forsiden",
   "KlageVurderingModal.GoToSearchPage": "Du kommer nå til forsiden.",
   "KlageVurderingModal.Ok": "OK",
-
   "Klage.Formkrav.VelgVedtak": "Vedtaket som er påklagd",
   "Klage.Formkrav.Title": "Vurder formkrav",
   "Klage.Formkrav.HelpText": "Vurder om klagen oppfyller formkravene",
@@ -1535,61 +1384,49 @@
   "Klage.Formkrav.SelectVedtakPlaceholder": "Velg vedtak",
   "Klage.Formkrav.Ja": "Ja",
   "Klage.Formkrav.Nei": "Nei",
-
-
   "OverstyrVurderingChecker.OverstyrBeregning": "Overstyr beregning",
   "OverstyrVurderingChecker.OverstyrtBeregning": "Overstyrt beregning",
   "OverstyrVurderingChecker.OverstyrAutomatiskVurdering": "Overstyr automatisk vurdering",
   "OverstyrVurderingChecker.OverstyrtAutomatiskVurdering": "Overstyrt automatisk vurdering",
-
   "OverstyrConfirmationForm.Beregning": "Oppgi årsak til overstyring av beregningsgrunnlag",
   "OverstyrConfirmationForm.Vilkar": "Vurdering",
   "OverstyrConfirmationForm.ConfirmInformation": "Bekreft overstyring",
-
   "Overstyr.fodselsvilkar": "Overstyring av fødselsvilkåret",
   "Overstyr.adopsjonsvilkar": "Overstyring av adopsjonsvilkåret",
   "Overstyr.medlemskapsvilkar": "Overstyring av medlemskapsvilkåret",
   "Overstyr.opptjeningsvilkår": "Overstyring av opptjeningsvilkåret",
   "Overstyr.soknadsfristvilkar": "Overstyring av søknadsfristvilkåret",
   "Overstyr.beregning": "Overstyring av beregning",
-
   "Statsborgerskap.Hjelpetekst": "Statsborgerskap",
-
   "Personstatus.Hjelpetekst": "Personstatus",
-
   "Sivilstand.Hjelpetekst": "Sivilstand",
-
   "InnsynForm.Innsynsbehandling": "Innsynsbehandling",
   "InnsynForm.VurderKravetOmInnsyn": "Følg manuelle rutiner for innsynsbehandling",
   "InnsynForm.DatoMottattKrav": "Dato for mottatt krav om innsyn",
   "InnsynForm.Resultat": "Resultat",
-  "InnsynForm.SettBehandlingPåVent":"Sett behandling på vent i påvente av skanning",
+  "InnsynForm.SettBehandlingPåVent": "Sett behandling på vent i påvente av skanning",
   "InnsynForm.ForeslåOgFatteVedtak": "Foreslå og fatte vedtak",
   "InnsynForm.VelgVidereAksjon": "Velg videre aksjon",
   "InnsynForm.FristDato": "Behandling blir satt på vent med frist",
-
-  "InnsynVedtakForm.ForslagVedtak" : "Forslag til vedtak",
-  "InnsynVedtakForm.Vedtak" : "Vedtak",
-  "InnsynVedtakForm.Innvilget" : "Krav om innsyn innvilget",
+  "InnsynVedtakForm.ForslagVedtak": "Forslag til vedtak",
+  "InnsynVedtakForm.Vedtak": "Vedtak",
+  "InnsynVedtakForm.Innvilget": "Krav om innsyn innvilget",
   "InnsynVedtakForm.Delvis": "Krav om innsyn delvis innvilget",
-  "InnsynVedtakForm.Avslatt" : "Krav om innsyn avslått",
-  "InnsynVedtakForm.Resultat" : "Resultat",
-  "InnsynVedtakForm.Vurdering" : "Vurdering",
-  "InnsynVedtakForm.Fritekst" : "Fritekst i brev",
-  "InnsynVedtakForm.ForhåndsvisBrev" : "Forhåndsvis brev",
+  "InnsynVedtakForm.Avslatt": "Krav om innsyn avslått",
+  "InnsynVedtakForm.Resultat": "Resultat",
+  "InnsynVedtakForm.Vurdering": "Vurdering",
+  "InnsynVedtakForm.Fritekst": "Fritekst i brev",
+  "InnsynVedtakForm.ForhåndsvisBrev": "Forhåndsvis brev",
   "InnsynVedtakForm.VisVedtaksbrev": "Vis vedtaksbrev",
-
   "DocumentListVedtakInnsyn.Dokument": "Dokument",
   "DocumentListVedtakInnsyn.InnsynsDok": "Innsynsdokumentasjon til søker",
   "DocumentListVedtakInnsyn.NoDocuments": "Det finnes ingen dokumenter på saken",
-
   "OpptjeningFaktaForm.Skjaringstidspunkt": "Skjæringstidspunkt for opptjening",
   "OpptjeningFaktaForm.EttArbeidKanGodkjennes": "Vurder om aktiviteten kan godkjennes",
   "OpptjeningFaktaForm.FlereArbeidKanGodkjennes": "Vurder om aktivitetene kan godkjennes",
   "OpptjeningFaktaForm.AktivitetenErTimeAvslonnet": "Arbeidet er timeavlønnet. Slå opp i A-ordningen for å vurdere opptjeningen",
   "OpptjeningFaktaForm.Confirm": "Bekreft og fortsett",
   "OpptjeningFaktaForm.AddActivity": "Legg til aktivitet",
-
   "ActivityPanel.Details": "Detaljer for valgt aktivitet",
   "ActivityPanel.NewActivity": "Legg til aktivitet",
   "ActivityPanel.Period": "Periode",
@@ -1608,7 +1445,6 @@
   "ActivityPanel.VelgAktivitet": "Velg aktivitet",
   "ActivityPanel.MonthsAndDays": "({months} mndr. {days} dager)",
   "ActivityPanel.Days": "({days} dager)",
-
   "OpptjeningVilkarView.Oppfylt": "Vilkåret er oppfylt",
   "OpptjeningVilkarView.IkkeOppfylt": "Vilkåret er <b>ikke</b> oppfylt",
   "OpptjeningVilkarView.Godkjent": "Godkjent",
@@ -1618,7 +1454,6 @@
   "OpptjeningVilkarView.Days": "dager",
   "OpptjeningVilkarView.MonthsAndDays": "{months} måneder og {days} dager aktivitet i opptjeningsperioden",
   "OpptjeningVilkarView.DetailsForSelectedPeriod": "Detaljer for valgt periode",
-
   "UtbetalningTimeLine.Title": "Detaljer for valgt periode",
   "UtbetalningTimeLine.Periode": "Periode",
   "UtbetalningTimeLine.Type": "Type",
@@ -1627,11 +1462,8 @@
   "UtbetalningTimeLine.IArbeid": "I arbeid",
   "UtbetalningTimeLine.Refusjon": "Refusjon",
   "UtbetalningTimeLine.SistePermisjonsdag": "Siste permisjonsdag",
-
   "KeyboardNavigation.PrevPeriod": "Foregående periode",
   "KeyboardNavigation.NextPeriod": "Neste periode",
-
-
   "Timeline.scrollLeft": "Scrolle venstre",
   "Timeline.scrollRight": "Scrolle høyre",
   "Timeline.zoomIn": "Zoom inn",
@@ -1653,10 +1485,8 @@
   "Timeline.TidspunktRevurdering" : "Startpunkt for revurdering",
   "Timeline.GradertPeriode" : "Gradert periode",
   "Timeline.ManueltAvklart" : "Manuelt avklart periode",
-
   "TilkjentYtelse.Title": "Tilkjent ytelse",
   "TilkjentYtelse.Stonadinfo.Stonadsdager": "Stønadsdager",
-
   "TilkjentYtelse.PeriodeData.Detaljer": "Detaljer for valgt periode",
   "TilkjentYtelse.PeriodeData.UkerDager": "{weeks} uker {days} dager",
   "TilkjentYtelse.PeriodeData.Godkjent": "Godkjent",
@@ -1678,7 +1508,6 @@
   "TilkjentYtelse.PeriodeData.AAP": "Arbeidsavklaringspenger",
   "TilkjentYtelse.PeriodeData.Arbeidstaker": "Arbeidstaker",
   "TilkjentYtelse.PeriodeData.BrukersAndel": "Brukers andel",
-
   "UttakPanel.Title": "Uttak",
   "UttakPanel.Aksjonspunkt.5001": "Stønadskonto tom for stønadsdager. Vurder bruk av annen stønadskonto eller avslå perioden.",
   "UttakPanel.Aksjonspunkt.5002": "Ikke gyldig grunn for uttak av denne stønadskontoen. Vurder bruk av annen stønadskonto eller avslå perioden.",
@@ -1720,7 +1549,6 @@
   "RenderUttakTable.ArbeidType.FRILANS": "Frilanser",
   "RenderUttakTable.ArbeidType.SELVSTENDIG_NÆRINGSDRIVENDE": "Selvstendig næringsdrivende",
   "RenderUttakTable.ArbeidType.ANNET": "Annet",
-
   "Uttak.OpplysningerOmDod": "Kontroller opplysninger om død",
   "Uttak.OpplysningerOmSoknadsfrist": "Kontroller opplysninger om søknadsfrist",
   "Uttak.OpplysningerOmMedlemskap": "Kontroller opplysninger om medlemskap",
@@ -1729,15 +1557,11 @@
   "Uttak.OpplysningerOmTilstotendeYtelser.Innvilget": "Kontroller opplysninger om tilstøtende ytelser innvilget",
   "Uttak.OpplysningerOmTilstotendeYtelser.Opphort": "Kontroller opplysninger om tilstøtende ytelser opphørt",
   "Uttak.TilknyttetStortinget": "Søker er stortingsrepresentant/administrativt ansatt i Stortinget. Uttak",
-
   "Uttak.Confirm": "Bekreft og fortsett",
   "Uttak.ManuellOverstyring": "Manuell overstyring",
-  "Uttak.Overstyrt" : "Kun overstyrer kan endre på periodene",
-
+  "Uttak.Overstyrt": "Kun overstyrer kan endre på periodene",
   "UttakTimeLineData.PeriodeData.Detaljer": "Detaljer for valgt periode",
   "UttakTimeLineData.PeriodeData.DelOppPerioden": "Del opp perioden",
-
-
   "TimeLineInfo.Aktivitet": "Aktivitet",
   "TimeLineInfo.Disponibelt": "Disponibelt",
   "TimeLineInfo.Stonadinfo.DisponibleStonadsdager": "Disponible stønadsdager (u/d)",
@@ -1753,7 +1577,6 @@
   "TimeLineTab.Stonadinfo.Flerbarnsdager": "Flerbarnsdager",
   "TimeLineTab.Stonadinfo.ForeldrePenger": "Foreldrepenger",
   "TimeLineTab.Stonadinfo.Empty": " ",
-
   "Overstyr.uttak": "Overstyrte uttaksperioder",
   "Fastsett.Manuelt": "Manuelt fastsatte uttaksperioder",
   "DelOppPeriodeModalImpl.Periode": "Periode",
@@ -1763,14 +1586,12 @@
   "DelOppPeriodeModalImpl.Ok": "Ok",
   "DelOppPeriodeModalImpl.Avbryt": "Avbryt",
   "DelOppPeriodeModalImpl.DatoUtenforPeriode": "Dato må være innenfor perioden",
-
   "UttakperiodeType.MØDREKVOTE": "Mødrekvote",
   "UttakperiodeType.FEDREKVOTE": "Fedrekvote",
   "UttakperiodeType.FELLESPERIODE": "Fellesperiode",
   "UttakperiodeType.FORELDREPENGER_FØR_FØDSEL": "Foreldrepenger FF",
   "UttakperiodeType.FORELDREPENGER": "Foreldrepenger",
   "UttaksperiodeType.ANNET": "Annet",
-
   "UttakActivity.Vurdering": "Vurdering: ",
   "UttakActivity.Oppfylt": "Oppfylt",
   "UttakActivity.IkkeOppfylt": "Ikke Oppfylt",
@@ -1790,17 +1611,14 @@
   "UttakActivity.Uttak": "Uttak",
   "UttakActivity.IngenKonto": "Ingen stønadskonto",
   "UttakActivity.Utsettelse": "Utsettelse - {utsettelseType}",
-
   "UttakInfo.Uttaksdager": "Prosentandel samtidig uttak",
   "UttakInfo.SamtidigUttaksprosent": "Uttak",
   "UttakInfo.Opphold.AnnenForelder": "Opphold i uttak grunnet annen foreldres uttak",
-
   "PeriodeResultatType.INNVILGET": "Innvilget",
   "PeriodeResultatType.AVSLÅTT": "Avslått",
   "PeriodeResultatType.IKKE_FASTSATT": "Ikke fastsatt",
   "PeriodeResultatType.GYLDIG_UTSETTELSE": "Gyldig utsettelse",
   "PeriodeResultatType.UGYLDIG_UTSETTELSE": "Ugyldig utsettelse",
-
   "UttakInfoPanel.FaktaUttak": "Fakta om uttak",
   "UttakInfoPanel.FaktaUttak.ForsteUttakDato": "Kontroller manglende uttaksperiode",
   "UttakInfoPanel.FaktaUttak.VurderAnnenForelder": "Vurdering om den andre forelderen har rett til foreldrepenger",
@@ -1828,7 +1646,7 @@
   "UttakInfoPanel.FraSøknad": "Fra søknad",
   "UttakInfoPanel.AvvikiInntektsmelding": "Avvikende inntektsmelding",
   "UttakInfoPanel.EndreSoknadsperioden": "Endre søknadsperioden",
-  "UttakInfoPanel.PeriodenKanIkkeAvklares": "Perioden kan ikke avklares",
+  "UttakInfoPanel.PeriodenKanIkkeAvklares": "Gå videre med avvikende opplysninger og vurder om ytelsen skal reduseres",
   "UttakInfoPanel.PeriodenErOverlappende": "Perioden er overlappende",
   "UttakInfoPanel.Periode": "Periode",
   "UttakInfoPanel.NyPeriode": "Ny periode",
@@ -1893,22 +1711,20 @@
   "UttakPeriode.ManglerInfoUtsettelse": "Inntektsmeldingen mangler info om {årsak}",
   "UttakPeriode.AvvikUtsettelse": "Info om utsettelse avviker fra inntektsmelding",
   "UttakPeriode.AvvikGraderingProsent": "Graderingsprosent avviker fra inntektsmelding",
+  "UttakPeriode.AvvikPeriode": "Fra og til avviker fra inntektsmelding",
   "StartdatoForForeldrepengerperiodenForm.StartdatoEtterArbeidsgiverdato": "Startdato kan ikke være etter datoen som arbeidsgiver opplyser",
   "StartdatoForForeldrepengerperiodenForm.PeriodenAvviker": "Ulik startdato i søknad og inntektsmelding. Fastsett korrekt startdato for søknad eller innhent ny inntektsmelding",
   "StartdatoForForeldrepengerperiodenForm.StartdatoForPerioden": "Startdato for foreldrepengeperioden",
   "StartdatoForForeldrepengerperiodenForm.Vurdering": "Vurdering",
   "StartdatoForForeldrepengerperiodenForm.Startdato": "Startdato som skal benyttes (fra søknad)",
-
   "SykdomPanel.ApplicationInformation": "Sykdom",
   "SykdomPanel.Begrunnelse": "Vurdering",
   "SykdomPanel.AnnenForelderForSyk": "Det er dokumentert at den andre forelderen er for syk til å ta seg av barnet",
   "SykdomPanel.AnnenForelderIkkeForSyk": "Det er <b>ikke</b> dokumentert at den andre forelderen er for syk til å ta seg av barnet",
-
   "SykdomsperiodeFieldArray.AngiSykdomsperiode": "Angi sykdomsperiode",
-  "SykdomsperiodeFieldArray.periodeFom":"F.o.m.",
-  "SykdomsperiodeFieldArray.periodeTom":"T.o.m.",
-  "SykdomsperiodeFieldArray.LeggTilPeriode":"Legg til periode",
-
+  "SykdomsperiodeFieldArray.periodeFom": "F.o.m.",
+  "SykdomsperiodeFieldArray.periodeTom": "T.o.m.",
+  "SykdomsperiodeFieldArray.LeggTilPeriode": "Legg til periode",
   "HistorikkAarsak.AvvDok": "Avventer dokumentasjon",
   "HistorikkAarsak.AvvFodsel": "Avventer fødsel",
   "HistorikkAarsak.UtvFrist": "Søker har bedt om utvidet frist",
@@ -1936,7 +1752,6 @@
   "HistorikkAarsak.VentInfotrygd": "Venter på en ytelse i Infotrygd",
   "HistorikkAarsak.VentÅpenBehandling": "Søker eller den andre forelderen har en åpen behandling",
   "HistorikkAarsak.VentInntektRapporteringsfrist": "Venter på inntektsopplysninger fra register",
-
   "HistorikkBegrunnelse.BehandlingAarsakETTERKLAGE": "Ny behandling eller revurdering etter klage",
   "HistorikkBegrunnelse.BehandlingAarsakREMF": "Manglende fødsel",
   "HistorikkBegrunnelse.BehandlingAarsakREMFIP": "Manglende fødsel i terminperiode",
@@ -1985,7 +1800,6 @@
   "HistorikkBegrunnelse.ReTilstøtendeYtelseInnvilget": "Tilstøtende ytelse innvilget",
   "HistorikkBegrunnelse.ReEndrinBeregningsgrunnlag": "Endring i beregningsgrunnlag",
   "HistorikkBegrunnelse.ReTilstøtendeYtelseOpphørt": "Tilstøtende ytelse opphørt",
-
   "HistorikkEndretFelt.Adopsjonsvilkaret": "Adopsjonsvilkåret",
   "HistorikkEndretFelt.Arbeidsforhold": "Arbeidsforhold hos {value}",
   "HistorikkEndretFelt.Aktivitet": "Aktivitet {value}",
@@ -2182,32 +1996,32 @@
   "HistorikkEndretFeltVerdiType.IkkeTidsbegrensetArbeidsforhold": "ikke tidsbegrenset",
   "HistorikkEndretFeltVerdiType.NyIArbeidslivet": "ny i arbeidslivet",
   "HistorikkEndretFeltVerdiType.IkkeNyIArbeidslivet": "ikke ny i arbeidslivet",
-  "HistorikkEndretFeltVerdiType.Innvilget" : "Oppfylt",
-  "HistorikkEndretFeltVerdiType.GyldigUtsettelsePgaFerie" : "Gyldig utsettelse pga ferie",
-  "HistorikkEndretFeltVerdiType.GyldigUtsettelsePgaArbeid" : "Gyldig utsettelse pga 100% arbeid",
-  "HistorikkEndretFeltVerdiType.GyldigUtsettelsePgaInnleggelse" : "Gyldig utsettelse pga innleggelse",
-  "HistorikkEndretFeltVerdiType.GyldigUtsettelsePgaBarnInnlagt" : "Gyldig utsettelse pga barn innlagt",
-  "HistorikkEndretFeltVerdiType.GyldigUtsettelsePgaSykdom" : "Gyldig utsettelse pga sykdom",
-  "HistorikkEndretFeltVerdiType.OverforingOppfyltAnnePartIkkeRett" : "Overføring oppfylt, annen part har ikke rett til foreldrepengene",
-  "HistorikkEndretFeltVerdiType.OverforingOppfyltAleneomsorg" : "Overføring oppfylt, søker har aleneomsorg for barnet",
-  "HistorikkEndretFeltVerdiType.OverforingOppfyltAnnenPartInnlagt" : "Overføring oppfylt, annen part er innlagt i helseinstitusjon",
-  "HistorikkEndretFeltVerdiType.OverforingOppfyltAnnePartHjelp" : "Overføring oppfylt, annen part er helt avhengig av hjelp til å ta seg av barnet",
-  "HistorikkEndretFeltVerdiType.InnvilgetUttakKvote" : "Innvilget uttak av kvote",
-  "HistorikkEndretFeltVerdiType.InnvilgetFellesEllerFP" : "Innvilget fellesperiode/foreldrepenger",
-  "HistorikkEndretFeltVerdiType.InnvilgetFPKunFarHarRett" : "Innvilget foreldrepenger, kun far har rett",
-  "HistorikkEndretFeltVerdiType.InnvilgetFPVedAleneomsorg" : "Innvilget foreldrepenger ved aleneomsorg",
-  "HistorikkEndretFeltVerdiType.InnvilgetFPFF" : "Innvilget foreldrepenger før fødsel",
-  "HistorikkEndretFeltVerdiType.InnvilgetFPKunMorHarRett" : "Innvilget foreldrepenger, kun mor har rett",
-  "HistorikkEndretFeltVerdiType.UtsetFerieKunFarHarRett" : "Utsettelse pga. ferie, kun far har rett",
-  "HistorikkEndretFeltVerdiType.UtsetArbeidKunFarHarRett" : "Utsettelse pga. 100% arbeid, kun far har rett",
-  "HistorikkEndretFeltVerdiType.UtsetSykdomSkadeKunFarHarRett" : "Utsettelse pga. sykdom, skade, kun far har rett",
-  "HistorikkEndretFeltVerdiType.UtsetInnleggelseKunFarHarRett" : "Utsettelse pga. egen innleggelse på helseinstitusjon, kun far har rett",
-  "HistorikkEndretFeltVerdiType.UtsetBarnetsInnleggelseKunFarHarRett" : "Utsettelse pga. barnets innleggelse på helseinstitusjon, kun far har rett",
-  "HistorikkEndretFeltVerdiType.GraderingFellesEllerFP" : "Gradering av fellesperiode/foreldrepenger",
-  "HistorikkEndretFeltVerdiType.GraderingKvote" : "Gradering av kvote/overført kvote",
-  "HistorikkEndretFeltVerdiType.GraderingFPAleneomsorg" : "Gradering foreldrepenger ved aleneomsorg",
-  "HistorikkEndretFeltVerdiType.GraderingFPKunFarRett" : "Gradering foreldrepenger, kun far har rett",
-  "HistorikkEndretFeltVerdiType.GraderingFPMorFarRett" : "Gradering foreldrepenger, kun mor har rett",
+  "HistorikkEndretFeltVerdiType.Innvilget": "Oppfylt",
+  "HistorikkEndretFeltVerdiType.GyldigUtsettelsePgaFerie": "Gyldig utsettelse pga ferie",
+  "HistorikkEndretFeltVerdiType.GyldigUtsettelsePgaArbeid": "Gyldig utsettelse pga 100% arbeid",
+  "HistorikkEndretFeltVerdiType.GyldigUtsettelsePgaInnleggelse": "Gyldig utsettelse pga innleggelse",
+  "HistorikkEndretFeltVerdiType.GyldigUtsettelsePgaBarnInnlagt": "Gyldig utsettelse pga barn innlagt",
+  "HistorikkEndretFeltVerdiType.GyldigUtsettelsePgaSykdom": "Gyldig utsettelse pga sykdom",
+  "HistorikkEndretFeltVerdiType.OverforingOppfyltAnnePartIkkeRett": "Overføring oppfylt, annen part har ikke rett til foreldrepengene",
+  "HistorikkEndretFeltVerdiType.OverforingOppfyltAleneomsorg": "Overføring oppfylt, søker har aleneomsorg for barnet",
+  "HistorikkEndretFeltVerdiType.OverforingOppfyltAnnenPartInnlagt": "Overføring oppfylt, annen part er innlagt i helseinstitusjon",
+  "HistorikkEndretFeltVerdiType.OverforingOppfyltAnnePartHjelp": "Overføring oppfylt, annen part er helt avhengig av hjelp til å ta seg av barnet",
+  "HistorikkEndretFeltVerdiType.InnvilgetUttakKvote": "Innvilget uttak av kvote",
+  "HistorikkEndretFeltVerdiType.InnvilgetFellesEllerFP": "Innvilget fellesperiode/foreldrepenger",
+  "HistorikkEndretFeltVerdiType.InnvilgetFPKunFarHarRett": "Innvilget foreldrepenger, kun far har rett",
+  "HistorikkEndretFeltVerdiType.InnvilgetFPVedAleneomsorg": "Innvilget foreldrepenger ved aleneomsorg",
+  "HistorikkEndretFeltVerdiType.InnvilgetFPFF": "Innvilget foreldrepenger før fødsel",
+  "HistorikkEndretFeltVerdiType.InnvilgetFPKunMorHarRett": "Innvilget foreldrepenger, kun mor har rett",
+  "HistorikkEndretFeltVerdiType.UtsetFerieKunFarHarRett": "Utsettelse pga. ferie, kun far har rett",
+  "HistorikkEndretFeltVerdiType.UtsetArbeidKunFarHarRett": "Utsettelse pga. 100% arbeid, kun far har rett",
+  "HistorikkEndretFeltVerdiType.UtsetSykdomSkadeKunFarHarRett": "Utsettelse pga. sykdom, skade, kun far har rett",
+  "HistorikkEndretFeltVerdiType.UtsetInnleggelseKunFarHarRett": "Utsettelse pga. egen innleggelse på helseinstitusjon, kun far har rett",
+  "HistorikkEndretFeltVerdiType.UtsetBarnetsInnleggelseKunFarHarRett": "Utsettelse pga. barnets innleggelse på helseinstitusjon, kun far har rett",
+  "HistorikkEndretFeltVerdiType.GraderingFellesEllerFP": "Gradering av fellesperiode/foreldrepenger",
+  "HistorikkEndretFeltVerdiType.GraderingKvote": "Gradering av kvote/overført kvote",
+  "HistorikkEndretFeltVerdiType.GraderingFPAleneomsorg": "Gradering foreldrepenger ved aleneomsorg",
+  "HistorikkEndretFeltVerdiType.GraderingFPKunFarRett": "Gradering foreldrepenger, kun far har rett",
+  "HistorikkEndretFeltVerdiType.GraderingFPMorFarRett": "Gradering foreldrepenger, kun mor har rett",
   "HistorikkEndretFeltVerdiType.Avslått": "Ikke oppfylt",
   "HistorikkEndretFeltVerdiType.IkkeFastsatt": "ikke fastsatt",
   "HistorikkEndretFeltVerdiType.Modrekvote": "Mødrekvote",
@@ -2232,10 +2046,8 @@
   "HistorikkEndretFeltVerdiType.AnnenforelderHarRett": "Annen forelder har rett",
   "HistorikkEndretFeltVerdiType.AnnenforelderHarIkkeRett": "Annen forelder har ikke rett",
   "HistorikkEndretFeltVerdiType.GraderingPåAndelUtenBGIkkeSattPåVent": "Riktig",
-
   "HistorikkEndretFeltHeading.FordelingForNyAndel": "<b>Det er lagt til ny aktivitet:</b> <br><b>{value}</b>: Fordeling for ",
   "HistorikkEndretFeltHeading.FordelingForAndel": "Fordeling for <b>{value}</b>:",
-
   "HistorikkResultat.Avslag": "Avslag",
   "HistorikkResultat.AvvisKlage": "Klagen er avvist",
   "HistorikkResultat.DelvisInnvilget": "delvis innvilget",
@@ -2268,10 +2080,8 @@
   "HistorikkSoeknadsperiode.OverføringIkkeRett": "<b>Overføring: ikke rett</b> <br>{value}",
   "HistorikkSoeknadsperiode.Uttak": "<b>Uttak</b> <br>{value}",
   "HistorikkSoeknadsperiode.Opphold": "<b>Opphold: annen foreldres uttak</b> <br>{value}",
-
   "OkAvbrytModal.Ok": "OK",
   "OkAvbrytModal.Avbryt": "Avbryt",
-
   "PersonArbeidsforholdPanel.ArbeidsforholdHeader": "Arbeidsforhold som er aktive ved permisjonsstart",
   "PersonArbeidsforholdTable.Arbeidsforhold": "<br />Arbeidsforhold",
   "PersonArbeidsforholdTable.Periode": "<br />Periode",
@@ -2280,10 +2090,8 @@
   "PersonArbeidsforholdTable.MottattDato": "Inntektsmeld.<br />mottatt dato",
   "PersonArbeidsforholdTable.ErIBruk": "Arbeidsforhold skal brukes",
   "PersonArbeidsforholdTable.IngenArbeidsforhold": "Det finnes ingen arbeidsforhold",
-
   "FullPersonInfo.AvklarArbeidsforhold": "Avklar aksjonspunkt på arbeidsforhold som skal benyttes i behandlingen",
   "FullPersonInfo.Confirm": "Bekreft og fortsett",
-
   "PersonArbeidsforholdDetailForm.Header": "Detaljer",
   "PersonArbeidsforholdDetailForm.Arbeidsgiver": "Beskrivelse",
   "PersonArbeidsforholdDetailForm.BrukArbeidsforholdet": "Arbeidsforholdet er aktivt og skal benyttes i behandlingen.",
@@ -2297,15 +2105,13 @@
   "PersonArbeidsforholdDetailForm.Avbryt": "Avbryt",
   "PersonArbeidsforholdDetailForm.Begrunnelse": "Begrunn endringene",
   "PersonArbeidsforholdDetailForm.ErstatteTidligereArbeidsforhod": "Dette vil erstatte alle tidligere arbeidsforhold for denne arbeidsgiveren",
-
   "PersonNyttEllerErstattArbeidsforholdPanel.NyttArbeidsforhold": "Nytt arbeidsforhold",
   "PersonNyttEllerErstattArbeidsforholdPanel.ErstattArbeidsforhold": "Erstatt annet arbeidsforhold",
   "PersonNyttEllerErstattArbeidsforholdPanel.SelectArbeidsforhold": "Erstatter arbeidsforhold",
   "PersonNyttEllerErstattArbeidsforholdPanel.ChooseArbeidsforhold": "Velg arbeidsforhold",
-
-  "PersonAksjonspunktText.AvklarManglendeInntektsmelding":"Ta kontakt med arbeidsgiver for å få inntektsmelding for alle arbeidsforhold. <BR />Sett deretter behandlingen manuelt på vent, ved å bruke Behandlingsmenyen",
-  "PersonAksjonspunktText.AvklarErstatteTidligere" : "Fastsett om arbeidsforhold skal erstatte tidligere benyttet arbeidsforhold eller om dette er et nytt",
-  "PersonAksjonspunktText.AvklarErstatteAlle" :"Fastsett om arbeidsforhold skal erstatte alle tidligere benyttet arbeidsforhold i virksomheten",
+  "PersonAksjonspunktText.AvklarManglendeInntektsmelding": "Ta kontakt med arbeidsgiver for å få inntektsmelding for alle arbeidsforhold. <BR />Sett deretter behandlingen manuelt på vent, ved å bruke Behandlingsmenyen",
+  "PersonAksjonspunktText.AvklarErstatteTidligere": "Fastsett om arbeidsforhold skal erstatte tidligere benyttet arbeidsforhold eller om dette er et nytt",
+  "PersonAksjonspunktText.AvklarErstatteAlle": "Fastsett om arbeidsforhold skal erstatte alle tidligere benyttet arbeidsforhold i virksomheten",
   "PersonAksjonspunktText.AvklarIkkeRegistrertIAa": "Fastsett om arbeidsforhold som ikke er registrert i Aa-registeret skal brukes",
 
   "Tilbakekreving.Vurdering":"Vurdering",
@@ -2340,13 +2146,10 @@
   "IntegrationStatusPanel.Endpoint": "Endepunkt:",
   "IntegrationStatusPanel.ErrorMessage": "Feilmelding:",
   "IntegrationStatusPanel.Stacktrace": "StackTrace:",
-
   "ErrorMessagePanel.ErrorDetails": "Detaljert informasjon",
   "ErrorMessagePanel.Close": "Lukk",
-
   "ErrorMessageDetailsModal.ErrorDetails": "Detaljert informasjon",
   "ErrorMessageDetailsModal.Close": "Lukk",
-
   "DataFetchPendingModal.LosningenJobberMedBehandlingen": "Løsningen jobber med behandlingen...",
 
   "DashboardResolver.FpLosErNede": "Forsiden har nedetid",

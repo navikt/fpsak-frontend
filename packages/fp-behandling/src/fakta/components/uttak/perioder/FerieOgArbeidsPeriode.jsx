@@ -54,6 +54,7 @@ export const FerieOgArbeidsPeriode = ({
   };
 
   const withGradering = arbeidstidprosent !== null && arbeidstidprosent !== undefined && arbeidstidprosent > 0;
+  const periodeOkDisabled = !bekreftet;
 
   return (
     <div>
@@ -77,6 +78,7 @@ export const FerieOgArbeidsPeriode = ({
               <RadioOption
                 label={{ id: 'UttakInfoPanel.PeriodenErOk' }}
                 value={uttakPeriodeVurdering.PERIODE_OK}
+                disabled={periodeOkDisabled}
               />
               <RadioOption
                 label={{ id: 'UttakInfoPanel.EndreSoknadsperioden' }}
@@ -113,13 +115,8 @@ export const FerieOgArbeidsPeriode = ({
           <FlexColumn className={styles.fieldColumn}>
             <InntektsmeldingInfo
               inntektsmeldingInfo={inntektsmeldingInfo}
-              fraDato={fraDato}
-              tilDato={tilDato}
               uttakPeriodeType={uttakPeriodeType}
-              arbeidsprosentFraSøknad={arbeidstidprosent}
-              bekreftet={bekreftet}
               arbeidsgiver={arbeidsgiver}
-              utsettelseArsak={utsettelseArsak}
             />
           </FlexColumn>
         </FlexRow>

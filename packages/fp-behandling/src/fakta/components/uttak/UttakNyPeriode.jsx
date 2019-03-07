@@ -352,9 +352,14 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
   return {
     id: guid(),
     arbeidstidsprosent: values.arbeidstidprosent ? +values.arbeidstidprosent : null,
+    resultat: {
+      kode: 'PERIODE_IKKE_VURDERT',
+      kodeverk: 'UTTAK_PERIODE_VURDERING_TYPE',
+      navn: 'Perioden er ikke vurdert',
+    },
     updated: false,
-    bekreftet: false,
-    openForm: true,
+    bekreftet: true,
+    openForm: false,
     samtidigUttak: values.samtidigUttak,
     samtidigUttaksprosent: values.samtidigUttaksprosent,
     flerbarnsdager: values.flerbarnsdager,
