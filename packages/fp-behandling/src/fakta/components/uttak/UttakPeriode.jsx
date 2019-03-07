@@ -82,26 +82,26 @@ const avvikInntekstmeldInfo = (periode, inntektsmeldingInfo) => {
       // skall ikke vises vid utsettelse pga sykdom - fjern det - troligen periode.utsettleseÅrsak.
       if (avvik.utsettelseÅrsak && !isUtsettelseMedSykdom(periode)) {
         return (
-          <Element className={styles.avvikInfoMargin}>
+          <Element key="key1" className={styles.avvikInfoMargin}>
             <FormattedMessage id="UttakPeriode.ManglerInfoUtsettelse" values={{ årsak: periode.utsettelseÅrsak.navn.toLowerCase() }} />
           </Element>
         );
       }
       if (avvik.isAvvikArbeidsprosent) {
         return (
-          <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikGradering" /></Element>
+          <Element key="key2" className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikGradering" /></Element>
         );
       }
     }
     if (!isManglendeInntektsmelding) {
       if (avvik.isAvvikUtsettelse) {
-        return <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikUtsettelse" /></Element>;
+        return <Element key="key3" className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikUtsettelse" /></Element>;
       }
       if (avvik.isAvvikPeriode) {
-        return <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikPeriode" /></Element>;
+        return <Element key="key4" className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikPeriode" /></Element>;
       }
       if (avvik.isAvvikArbeidsprosent) {
-        return <Element className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikGraderingProsent" /></Element>;
+        return <Element key="key5" className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikGraderingProsent" /></Element>;
       }
     }
     return null;
