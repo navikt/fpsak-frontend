@@ -8,6 +8,8 @@ import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 
 import FodselOgTilretteleggingFaktaForm from './FodselOgTilretteleggingFaktaForm';
 
+// TODO: Må tilpasses med riktig aksjonspunkt og ap.tekst
+
 const fodselOgPermAksjonspunkter = ['ap'];
 
 export const FodselOgTilretteleggingInfoPanelImpl = ({
@@ -25,12 +27,11 @@ export const FodselOgTilretteleggingInfoPanelImpl = ({
     toggleInfoPanelCallback={toggleInfoPanelCallback}
     faktaId={faktaPanelCodes.FODSELTILRETTELEGGING}
     readOnly={readOnly}
-    disabledTextCode="FodselOgTilretteleggingInfoPanel.FodselOgTilrettelegging"
   >
     <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
-      {[<FormattedMessage id="Kontroller opplysninger fra jordmor og arbeidsgiver" key="svangerskapspengerAp" />]}
+      {[<FormattedMessage id="FodselOgTilretteleggingInfoPanel.Aksjonspunkt" key="svangerskapspengerAp" />]}
     </AksjonspunktHelpText>
-    <FodselOgTilretteleggingFaktaForm submitCallback={submitCallback} readOnly={readOnly} hasOpenAksjonspunkter={hasOpenAksjonspunkter} />
+    <FodselOgTilretteleggingFaktaForm submitCallback={submitCallback} readOnly={false} hasOpenAksjonspunkter={hasOpenAksjonspunkter} />
   </FaktaEkspandertpanel>
 );
 

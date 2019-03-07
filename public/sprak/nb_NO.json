@@ -214,6 +214,7 @@
 =======
   
   "FodselOgTilretteleggingInfoPanel.FaktaFodselOgTilrettelegging": "Fakta om fødsel og tilrettelegging",
+  "FodselOgTilretteleggingInfoPanel.Aksjonspunkt": "Kontroller opplysninger fra jordmor og arbeidsgiver",
   "FodselOgTilretteleggingFaktaForm.Termindato": "Termindato",
   "ArbeidsforholdFaktaPanel.Faktagruppe": "Arbeidsforhold som det er søkt for",
   "ArbeidsforholdFaktaPanel.Oppdater": "Oppdater",
@@ -227,7 +228,7 @@
   "ArbeidsforholdInnhold.Arbeidsgiver.Stillingsprosent": "Stillingsprosent",
   "ArbeidsforholdInnhold.Arbeidsgiver.KanGjennomfores": "a) kan gjennomføres slik at arbeidstakeren kan fortsette med samme stilling fra og med",
   "ArbeidsforholdInnhold.Arbeidsgiver.RedusertArbeid": "b) kan gjennomføres slik at arbeidstakeren kan fortsette med redusert arbeidstid fra og med",
-  "ArbeidsforholdInnhold.Arbeidsgiver.KanIkkeGjennomfores": "c) kan ikke gjennomfores og arbeidstakeren må midlertidig gå ut av sitt arbeid fra og med",
+  "ArbeidsforholdInnhold.Arbeidsgiver.KanIkkeGjennomfores": "c) kan ikke gjennomføres og arbeidstakeren må midlertidig gå ut av sitt arbeid fra og med",
   "ArbeidsforholdInnhold.TilretteleggingWarning": "OBS Ingen av valgene under er krysset av, du kan fortsatt gå videre...something..",
   
 >>>>>>> PFP-5936 checkboxer

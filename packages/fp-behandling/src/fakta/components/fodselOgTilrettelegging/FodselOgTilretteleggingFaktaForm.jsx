@@ -15,7 +15,7 @@ import ArbeidsforholdFaktaPanel from './ArbeidsforholdFaktaPanel';
 
 const FODSEL_TILRETTELEGGING_FORM = 'FodselOgTilretteleggingForm';
 
-const FodselOgTilretteleggingFaktaForm = ({
+export const FodselOgTilretteleggingFaktaForm = ({
   readOnly,
   hasOpenAksjonspunkter,
   ...formProps
