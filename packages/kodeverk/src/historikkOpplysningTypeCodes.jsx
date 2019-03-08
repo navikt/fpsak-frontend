@@ -18,6 +18,12 @@ const historikkOpplysningTypeCodes = {
   UTTAK_PERIODE_TOM: {
     kode: 'UTTAK_PERIODE_TOM',
   },
+  PERIODE_TOM: {
+    kode: 'PERIODE_TOM',
+  },
+  PERIODE_FOM: {
+    kode: 'PERIODE_FOM',
+  },
 };
 
 export default historikkOpplysningTypeCodes;

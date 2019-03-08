@@ -369,6 +369,14 @@ const historikkEndretFeltTypeCodes = {
     kode: 'VURDER_DEKNINGSGRAD',
     feltId: 'HistorikkEndretFelt.Dekningsgrad',
   },
+  FAKTA_OM_FEILUTBETALING_AARSAK: {
+    kode: 'HENDELSE_AARSAK',
+    verdiId: '',
+  },
+  FAKTA_OM_FEILUTBETALING_UNDERAARSAK: {
+    kode: 'HENDELSE_UNDER_AARSAK',
+    verdiId: '',
+  },
 };
 
 export default historikkEndretFeltTypeCodes;
