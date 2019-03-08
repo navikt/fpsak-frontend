@@ -165,8 +165,12 @@ PersonInfoPanelImpl.defaultProps = {
 };
 
 const transformValues = values => ({
-  arbeidsforhold: values.arbeidsforhold.map(a => omit(a, 'erEndret', 'replaceOptions', 'originalFomDato',
-    'brukUendretArbeidsforhold', 'fortsettUtenImAktivtArbeidsforhold')),
+  arbeidsforhold: values.arbeidsforhold.map(a => omit(a,
+    'erEndret',
+    'replaceOptions',
+    'originalFomDato',
+    'brukUendretArbeidsforhold',
+    'aktivtArbeidsforholdFortsettBehandlingUtenIM')),
   kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
 });
 
