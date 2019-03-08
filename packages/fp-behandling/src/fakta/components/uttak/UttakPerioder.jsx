@@ -134,7 +134,11 @@ export class UttakPerioder extends Component {
   }
 
   overrideResultat = (resultat) => {
-    if (resultat === uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES) {
+    if (
+      [uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES,
+        uttakPeriodeVurdering.PERIODE_OK,
+      ].some(type => type === resultat)
+    ) {
       return resultat;
     }
     return uttakPeriodeVurdering.PERIODE_IKKE_VURDERT;

@@ -368,6 +368,7 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
     fom: values.fom,
     tom: values.tom,
     isFromSøknad: false,
+    begrunnelse: values.begrunnelse,
     saksebehandlersBegrunnelse: values.begrunnelse,
     uttakPeriodeType: periodeObjekt ? {
       kode: periodeObjekt.kode,
