@@ -233,12 +233,17 @@ FeilutbetalingInfoPanelImpl.propTypes = {
 };
 
 const buildInitalValues = perioder => ({
-  perioder: perioder.map(p => ({
-    fom: p.fom,
-    tom: p.tom,
-    årsak: p.feilutbetalingÅrsakDto.årsakKode,
-    underÅrsak: p.feilutbetalingÅrsakDto.underÅrsaker[0].underÅrsakKode,
-  })),
+  perioder: perioder.sort((a, b) => moment(a.fom) - moment(b.fom)).map((p) => {
+    const {
+      fom, tom, feilutbetalingÅrsakDto: { årsakKode }, feilutbetalingÅrsakDto: { underÅrsaker },
+    } = p;
+    return {
+      fom,
+      tom,
+      årsak: årsakKode,
+      underÅrsak: underÅrsaker[0] ? underÅrsaker[0].underÅrsakKode : null,
+    };
+  }),
 });
 
 const transformValues = (values, aksjonspunkter, årsaker) => {
