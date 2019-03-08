@@ -264,7 +264,6 @@ export class UttakPerioder extends Component {
     const updatedPeriodeIndex = perioder.findIndex(p => p.id === id);
     const tom = nyTom || updatedPeriode.tom;
     const fom = nyFom || updatedPeriode.fom;
-    const b = uttakPeriodeVurderingTyper.find(type => type.kode === this.overrideResultat(resultat));
     const newPeriodeObject = {
       id,
       tom,
