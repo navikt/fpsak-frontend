@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-import { hot } from 'react-hot-loader';
 import moment from 'moment';
 import { captureException, withScope, configureScope } from '@sentry/browser';
 import errorHandler from '@fpsak-frontend/error-api-redux';
@@ -119,4 +118,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   removeErrorMessage: errorHandler.getRemoveErrorMessageActionCreator(),
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(hot(module)(AppIndex)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AppIndex));

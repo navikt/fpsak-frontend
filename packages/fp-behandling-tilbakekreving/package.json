@@ -17,7 +17,7 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "classnames": "^2.2.6",
-    "connected-react-router": "^6.3.1",
+    "connected-react-router": "^5.0.1",
     "moment": "^2.24.0",
     "nav-frontend-alertstriper": "1.0.34",
     "nav-frontend-alertstriper-style": "0.2.53",
@@ -43,11 +43,11 @@
     "react-collapse": "^4.0.3",
     "react-intl": "^2.8.0",
     "react-motion": "^0.5.2",
-    "react-redux": "^6.0.1",
+    "react-redux": "^5.1.1",
     "react-router-dom": "^4.3.1",
     "react-visjs-timeline": "^1.5.0",
     "redux": "^4.0.1",
-    "redux-form": "^8.1.0",
+    "redux-form": "^7.4.2",
     "reselect": "^4.0.0"
   },
   "devDependencies": {
