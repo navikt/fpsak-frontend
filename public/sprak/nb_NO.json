@@ -204,6 +204,7 @@
   "FortsattMedlemskapFaktaPanel.DateNotAfterOrEqual": "Dato kan ikke være før skjæringstidspunktet {limit}",
 
   "PersonInfoPanel.OpptjeningUtland": "Søker har oppgitt informasjon om opptjening i utlandet. Innhent dokumentasjon fra utenlandsk trygdemyndighet ved behov.",
+  "PersonInfoPanel.UtlandEndret": "Utland endret, ved behov flytt saken til riktig enhet.",
 
   "FodselInfoPanel.Fodsel": "Fakta om fødsel",
   "FodselInfoPanel.VurderVilkarForSykdom": "Vurder om vilkår for sykdom er oppfylt",
@@ -1308,9 +1309,13 @@
   "AdressePanel.midlertidigAdresse": "Midlertidig adresse",
   "AdressePanel.postadresseNorge": "Postadresse i Norge",
   "AdressePanel.postadresseUtland": "Postadresse i utlandet",
+
   "AdressePanel.utland": "Utland",
-  "AdressePanel.tilhorighet.nasjonal": "Nasjonal",
-  "AdressePanel.tilhorighet.eosBosatt": "EØS-bosatt i Norge",
+  "AdressePanel.utland.lagre": "Lagre",
+  "AdressePanel.utland.avbryt": "Avbryt",
+  "AdressePanel.utlandSakstype.Nasjonal": "Nasjonal",
+  "AdressePanel.utlandSakstype.EøsBosattNorge": "EØS bosatt Norge",
+  "AdressePanel.utlandSakstype.BosattUtland": "Bosatt utland",
 
   "PersonYtelserTable.Ytelser": "Ytelser",
   "PersonYtelserTable.Ytelse": "Ytelse",
@@ -1942,6 +1947,7 @@
   "HistorikkEndretFelt.VurderGraderingPåAndelUtenBG": "Inntektsgrunnlag ved gradering",
   "HistorikkEndretFelt.Dekningsgrad": "Dekningsgrad",
   "HistorikkEndretFelt.Tilbaketrekk": "Tilbaketrekk",
+  "HistorikkEndretFelt.Utland": "Utland",
 
   "HistorikkEndretFeltVerdiType.AdoptererAlene": "adopterer alene",
   "HistorikkEndretFeltVerdiType.AdoptererIkkeAlene": "adopterer ikke alene",
@@ -2057,7 +2063,9 @@
   "HistorikkEndretFeltVerdiType.GraderingPåAndelUtenBGIkkeSattPåVent": "Riktig",
   "HistorikkEndretFeltVerdiType.HindreTilbaketrekk": "Ikke tilbakekrev fra søker",
   "HistorikkEndretFeltVerdiType.UtførTilbaketrekk": "Tilbakekrev fra søker",
-
+  "HistorikkEndretFeltVerdiType.Nasjonal": "Nasjonal",
+  "HistorikkEndretFeltVerdiType.EosBosattNorge": "EØS bosatt Norge",
+  "HistorikkEndretFeltVerdiType.BosattUtland": "Bosatt utland",
 
   "HistorikkEndretFeltHeading.FordelingForNyAndel": "<b>Det er lagt til ny aktivitet:</b> <br><b>{value}</b>: Fordeling for ",
   "HistorikkEndretFeltHeading.FordelingForAndel": "Fordeling for <b>{value}</b>:",

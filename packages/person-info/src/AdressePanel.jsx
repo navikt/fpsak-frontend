@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
-import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import Panel from 'nav-frontend-paneler';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 import { EtikettFokus } from 'nav-frontend-etiketter';
 
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils';
-import { ElementWrapper } from '@fpsak-frontend/shared-components';
 
 import styles from './adressePanel.less';
 
@@ -24,7 +23,6 @@ export const AdressePanel = ({
   midlertidigAdresse,
   postAdresseNorge,
   postadresseUtland,
-  erUtenlandssak,
   region,
   personstatus,
   sivilstandtype,
@@ -32,10 +30,9 @@ export const AdressePanel = ({
   sivilstandTypes,
   personstatusTypes,
   isPrimaryParent,
-  featureToggleUtland,
+  children,
 }) => {
   const malformTekstKode = getLanguageCodeFromSprakkode(sprakkode);
-  const tilhorighet = erUtenlandssak ? 'AdressePanel.tilhorighet.eosBosatt' : 'AdressePanel.tilhorighet.nasjonal';
   const content = (
     <div>
       <Row>
@@ -98,20 +95,11 @@ export const AdressePanel = ({
           <Normaltekst>
             {postAdresseNorge}
           </Normaltekst>
-          {featureToggleUtland
-          && (
-          <ElementWrapper>
+          {children !== undefined && (
             <div className={styles.undertekstMedEkstraRom}>
-              <Undertekst>
-                {intl.formatMessage({ id: 'AdressePanel.utland' })}
-              </Undertekst>
+              {children}
             </div>
-            <Normaltekst>
-              {intl.formatMessage({ id: tilhorighet })}
-            </Normaltekst>
-          </ElementWrapper>
-          )
-          }
+          )}
         </Column>
         <Column xs="4">
           <Undertekst>
@@ -141,7 +129,7 @@ AdressePanel.propTypes = {
   midlertidigAdresse: PropTypes.string,
   postAdresseNorge: PropTypes.string,
   postadresseUtland: PropTypes.string,
-  erUtenlandssak: PropTypes.bool,
+  children: PropTypes.element,
   sprakkode: PropTypes.shape().isRequired,
   region: PropTypes.string,
   personstatus: PropTypes.shape().isRequired,
@@ -149,7 +137,6 @@ AdressePanel.propTypes = {
   sivilstandTypes: kodeverkPropType.isRequired,
   personstatusTypes: kodeverkPropType.isRequired,
   isPrimaryParent: PropTypes.bool.isRequired,
-  featureToggleUtland: PropTypes.bool,
 };
 
 AdressePanel.defaultProps = {
@@ -157,10 +144,9 @@ AdressePanel.defaultProps = {
   midlertidigAdresse: '-',
   postAdresseNorge: '-',
   postadresseUtland: '-',
-  erUtenlandssak: false,
   region: undefined,
   sivilstandtype: undefined,
-  featureToggleUtland: false,
+  children: undefined,
 };
 
 export default injectIntl(AdressePanel);
