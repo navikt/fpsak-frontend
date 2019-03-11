@@ -49,7 +49,7 @@ export const FerieOgArbeidsPeriode = ({
 
   const inlineStyle = {
     radioOption: {
-      height: resultat === uttakPeriodeVurdering.PERIODE_OK_ENDRET && !readOnly ? 250 : 'auto',
+      height: resultat === uttakPeriodeVurdering.PERIODE_OK_ENDRET && !readOnly ? 260 : 'auto',
     },
   };
 

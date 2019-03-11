@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { FlexColumn, FlexRow } from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexRow, ArrowBox } from '@fpsak-frontend/shared-components';
 import { DecimalField, SelectField, PeriodpickerField } from '@fpsak-frontend/form';
 import oppholdArsakType, { oppholdArsakKontoNavn } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import {
@@ -33,7 +33,7 @@ const mapPeriodeTyper = () => Object.keys(oppholdArsakType)
 const ElementWrapper = ({ children }) => children;
 
 export const EndreSoknadsperiode = ({ withGradering, oppholdArsak }) => (
-  <div className={styles.arrowBox}>
+  <ArrowBox marginTop={10}>
     <FlexRow>
       <FlexColumn>
         <PeriodpickerField
@@ -81,7 +81,7 @@ export const EndreSoknadsperiode = ({ withGradering, oppholdArsak }) => (
         )
       }
     </FlexRow>
-  </div>
+  </ArrowBox>
 );
 
 EndreSoknadsperiode.propTypes = {

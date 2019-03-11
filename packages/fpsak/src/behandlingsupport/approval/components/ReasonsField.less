@@ -1,51 +1,9 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
-.flexContainer {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.fullColumn {
-  flex: 0 0 100%;
-}
-
 .halfColumn {
   flex: 0 0 34%;
 }
 
 .fullWidth {
   width: 100%;
-}
-
-.arrowBox {
-  background: @white;
-  border: 1px solid @navGra20;
-  margin-bottom: 20px;
-  margin-top: 2px;
-  padding: 5px 10px;
-  position: relative;
-}
-
-.arrowBox:after,
-.arrowBox:before {
-  border: solid transparent;
-  bottom: 100%;
-  content: ' ';
-  height: 0;
-  left: 115px;
-  pointer-events: none;
-  position: absolute;
-  width: 0;
-}
-
-.arrowBox:after {
-  border-bottom-color: @white;
-  border-width: 11px;
-  margin-left: -11px;
-}
-
-.arrowBox:before {
-  border-bottom-color: @navGra20;
-  border-width: 12px;
-  margin-left: -12px;
 }

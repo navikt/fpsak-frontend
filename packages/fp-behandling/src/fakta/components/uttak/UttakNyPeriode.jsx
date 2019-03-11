@@ -25,7 +25,7 @@ import moment from 'moment';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 import { getPersonopplysning, getFaktaArbeidsforhold } from 'behandlingFpsak/src/behandlingSelectors';
 import {
-  FlexContainer, FlexRow, FlexColumn, VerticalSpacer,
+  FlexContainer, FlexRow, FlexColumn, VerticalSpacer, ArrowBox,
 } from '@fpsak-frontend/shared-components';
 import { getKodeverk } from 'behandlingFpsak/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -99,11 +99,6 @@ export const UttakNyPeriode = ({
   andeler,
   ...formProps
 }) => {
-  const inlineStyle = {
-    arrowBox: {
-      marginTop: nyPeriode.typeUttak === 'utsettelse' ? 80 : 0,
-    },
-  };
   const numberOfDaysAndWeeks = calcDaysAndWeeks(nyPeriode.fom, nyPeriode.tom, ISO_DATE_FORMAT);
   return (
     <div>
@@ -221,7 +216,11 @@ export const UttakNyPeriode = ({
                     {nyPeriode.typeUttak !== null
                       && nyPeriode.typeUttak !== 'fullt'
                       && (
-                      <div className={styles.arrowBox} style={inlineStyle.arrowBox}>
+                      <ArrowBox
+                        alignLeft
+                        marginTop={nyPeriode.typeUttak === 'utsettelse' ? 80 : 0}
+                        alignOffset={nyPeriode.typeUttak === 'utsettelse' ? 52 : 92}
+                      >
                         {nyPeriode.typeUttak === 'gradert' && (
                         <div>
                           <div>
@@ -258,7 +257,7 @@ export const UttakNyPeriode = ({
                           validate={[required]}
                         />
                         )}
-                      </div>
+                      </ArrowBox>
                       )}
                   </FlexColumn>
                 </FlexRow>

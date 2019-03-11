@@ -37,7 +37,7 @@ const HandletUaktsomhetGrad = ({
     { handletUaktsomhetGrad === tilbakekrevingCodes.FORSETT
     && (
       <div className={styles.marginBottom20}>
-        <ArrowBox alignOffset={12}>
+        <ArrowBox alignOffset={20}>
           <Normaltekst>
             <FormattedMessage id="Tilbakekreving.RadioGroup.Andel" />
           </Normaltekst>
@@ -52,7 +52,7 @@ const HandletUaktsomhetGrad = ({
     {uaktsomhetCodes.includes(handletUaktsomhetGrad)
     && (
       <div className={styles.marginBottom20}>
-        <ArrowBox alignOffset={112}>
+        <ArrowBox alignOffset={120}>
           <div>
             <Row>
               <Column md="12">
@@ -83,7 +83,7 @@ const HandletUaktsomhetGrad = ({
             </Row>
             {annet
               && (
-              <ArrowBox alignOffset={16}>
+              <ArrowBox alignOffset={24}>
                 <Row>
                   <Column md="12">
                     <TextAreaField
@@ -116,7 +116,7 @@ const HandletUaktsomhetGrad = ({
             </Row>
             {grunnerTilReduksjon
               && (
-              <ArrowBox alignOffset={16}>
+              <ArrowBox alignOffset={24}>
                 <Row>
                   <Column md="6">
                     <Undertekst><FormattedMessage id="Tilbakekreving.andelSomTilbakekreves" /></Undertekst>

@@ -12,6 +12,7 @@ import FaktaGruppe from 'behandlingFpsak/src/fakta/components/FaktaGruppe';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { ArrowBox } from '@fpsak-frontend/shared-components';
 import IkkeOmsorgPeriodeField from './IkkeOmsorgPeriodeField';
 import styles from './omsorgFaktaForm.less';
 
@@ -69,13 +70,13 @@ const OmsorgFaktaForm = ({
             <Row>
               <Column xs="2" />
               <Column xs="6">
-                <div className={styles.arrowBox}>
+                <ArrowBox alignOffset={40}>
                   <FieldArray
                     name="ikkeOmsorgPerioder"
                     component={IkkeOmsorgPeriodeField}
                     readOnly={readOnly}
                   />
-                </div>
+                </ArrowBox>
               </Column>
             </Row>
           )

@@ -141,7 +141,7 @@ export const PersonArbeidsforholdDetailForm = ({
             >
               <BehandlingFormFieldCleaner formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM} fieldNames={['overstyrtTom']}>
                 { skalBrukeUendretForhold === false && (
-                  <ArrowBox alignOffset={0}>
+                  <ArrowBox>
                     <DatepickerField
                       name="overstyrtTom"
                       label={<FormattedMessage id="PersonArbeidsforholdDetailForm.ArbeidsforholdetAktivTomDato" />}

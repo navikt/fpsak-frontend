@@ -74,7 +74,7 @@ export const CheckPersonStatusFormImpl = ({
         </Row>
         {(fortsettBehandling === true)
           && (
-          <ArrowBox alignOffset={readOnly ? 0 : 190}>
+          <ArrowBox alignOffset={readOnly ? 0 : 198}>
             <Undertekst>{intl.formatMessage({ id: 'CheckPersonStatusForm.SetPersonStatus' })}</Undertekst>
             <VerticalSpacer eightPx />
             <RadioGroupField name="personstatus" validate={[required]} readOnly={readOnly}>

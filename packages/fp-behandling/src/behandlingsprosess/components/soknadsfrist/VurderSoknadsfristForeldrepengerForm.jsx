@@ -17,7 +17,7 @@ import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/src
 import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import BehandlingspunktSubmitButton from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
 import {
-  AksjonspunktHelpText, FadingPanel, VerticalSpacer,
+  AksjonspunktHelpText, FadingPanel, VerticalSpacer, ArrowBox,
 } from '@fpsak-frontend/shared-components';
 import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import {
@@ -101,18 +101,21 @@ export const VurderSoknadsfristForeldrepengerFormImpl = ({
         </div>
         {gyldigSenFremsetting
           && (
-          <div className={styles.arrowBoxWrapper}>
-            <div className={styles.arrowBox}>
-              <DatepickerField
-                name="ansesMottatt"
-                readOnly={readOnly}
-                label={{ id: 'VurderSoknadsfristForeldrepengerForm.NyMottattDato' }}
-                validate={[required, hasValidDate, dateBeforeOrEqualToToday]}
-              />
-            </div>
-          </div>
+            <Row>
+              <Column xs="4">
+                <ArrowBox>
+                  <DatepickerField
+                    name="ansesMottatt"
+                    readOnly={readOnly}
+                    label={{ id: 'VurderSoknadsfristForeldrepengerForm.NyMottattDato' }}
+                    validate={[required, hasValidDate, dateBeforeOrEqualToToday]}
+                  />
+                </ArrowBox>
+              </Column>
+            </Row>
           )
         }
+        <VerticalSpacer twentyPx />
         <BehandlingspunktSubmitButton formName={formProps.form} isReadOnly={readOnly} isSubmittable={!readOnlySubmitButton} />
       </div>
     </form>

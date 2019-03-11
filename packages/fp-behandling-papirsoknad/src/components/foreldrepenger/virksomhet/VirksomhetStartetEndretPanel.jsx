@@ -42,7 +42,7 @@ export const VirksomhetStartetEndretPanel = ({
           <CheckboxField name="harVarigEndring" label={<FormattedMessage id="Registrering.VirksomhetStartetPanel.HarVarigEndring" />} />
           {harVarigEndring
           && (
-          <ArrowBox alignOffset={-6}>
+          <ArrowBox>
             <DatepickerField
               name="varigEndringGjeldendeFom"
               readOnly={readOnly}
@@ -56,7 +56,7 @@ export const VirksomhetStartetEndretPanel = ({
           <CheckboxField name="erNyIArbeidslivet" label={<FormattedMessage id="Registrering.VirksomhetNyIArbeidslivetPanel.ErNyIArbeidslivet" />} />
           {erNyIArbeidslivet
           && (
-          <ArrowBox alignOffset={-6}>
+          <ArrowBox>
             <DatepickerField
               name="nyIArbeidslivetFom"
               readOnly={readOnly}

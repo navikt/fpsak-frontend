@@ -12,7 +12,7 @@ import {
 import {
   required, hasValidFodselsnummerFormat, hasValidFodselsnummer, hasValidName, sammeFodselsnummerSomSokerMessage,
 } from '@fpsak-frontend/utils';
-import { BorderBox, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { BorderBox, ArrowBox } from '@fpsak-frontend/shared-components';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import { getKodeverk } from 'papirsoknad/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -20,7 +20,6 @@ import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
 
 import SoknadData from '../../SoknadData';
 import PermisjonRettigheterPanel from '../foreldrepenger/permisjon/PermisjonRettigheterPanel';
-import styles from './annenForelderPanel.less';
 
 const countrySelectValues = countryCodes => countryCodes
   .filter(({ kode }) => kode !== landkoder.NORGE)
@@ -44,7 +43,7 @@ export const KanIkkeOppgiBegrunnelsePanel = ({
     </RadioGroupField>
     {kanIkkeOppgiBegrunnelse.arsak === kanIkkeOppgiAnnenForelderArsaker.IKKE_NORSK_FNR
     && (
-    <ElementWrapper>
+    <React.Fragment>
       <SelectField
         name="land"
         label={formatMessage({ id: 'Registrering.TheOtherParent.CannotSpecifyOtherParent.Land' })}
@@ -58,7 +57,7 @@ export const KanIkkeOppgiBegrunnelsePanel = ({
         bredde="S"
         readOnly={readOnly}
       />
-    </ElementWrapper>
+    </React.Fragment>
     )
     }
   </NavFieldGroup>
@@ -104,16 +103,16 @@ export const AnnenForelderPanelImpl = ({
         />
         {kanIkkeOppgiAnnenForelder === true
         && (
-        <div className={styles.arrowBox}>
-          <FormSection name="kanIkkeOppgiBegrunnelse">
-            <KanIkkeOppgiBegrunnelsePanel
-              kanIkkeOppgiBegrunnelse={kanIkkeOppgiBegrunnelse}
-              formatMessage={formatMessage}
-              countryCodes={sortedCountriesByName}
-              readOnly={readOnly}
-            />
-          </FormSection>
-        </div>
+          <ArrowBox>
+            <FormSection name="kanIkkeOppgiBegrunnelse">
+              <KanIkkeOppgiBegrunnelsePanel
+                kanIkkeOppgiBegrunnelse={kanIkkeOppgiBegrunnelse}
+                formatMessage={formatMessage}
+                countryCodes={sortedCountriesByName}
+                readOnly={readOnly}
+              />
+            </FormSection>
+          </ArrowBox>
         )
         }
         {(isForeldrepenger && soknadData.getFagsakYtelseType() !== fagsakYtelseType.ENDRING_FORELDREPENGER)
