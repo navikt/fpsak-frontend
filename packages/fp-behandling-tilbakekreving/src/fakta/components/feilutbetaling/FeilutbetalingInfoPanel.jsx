@@ -43,11 +43,11 @@ export class FeilutbetalingInfoPanelImpl extends Component {
     this.resetFields = this.resetFields.bind(this);
   }
 
-  resetFields(elementId, e) {
+  resetFields(elementId, årsak) {
     const {
       behandlingFormPrefix, clearFields: clearFormFields,
     } = this.props;
-    const fields = [`perioder.${elementId}.${e.target.value}.underÅrsak`];
+    const fields = [`perioder.${elementId}.${årsak}`];
     clearFormFields(`${behandlingFormPrefix}.${formName}`, false, false, ...fields);
   }
 
@@ -260,21 +260,26 @@ FeilutbetalingInfoPanelImpl.propTypes = {
   ...formPropTypes,
 };
 
-const buildInitalValues = perioder => ({
-  perioder: perioder.sort((a, b) => moment(a.fom) - moment(b.fom)).map((p) => {
-    const {
-      fom, tom, feilutbetalingÅrsakDto: { årsakKode }, feilutbetalingÅrsakDto: { underÅrsaker },
-    } = p;
-    return {
-      fom,
-      tom,
-      årsak: årsakKode,
-      [årsakKode]: {
-        underÅrsak: underÅrsaker[0] ? underÅrsaker[0].underÅrsakKode : null,
-      },
-    };
-  }),
-});
+const buildInitalValues = (perioder, aksjonspunkter) => {
+  const apCode = aksjonspunkter.find(ap => ap.definisjon.kode === feilutbetalingAksjonspunkter[0]);
+  return {
+    begrunnelse: apCode.begrunnelse,
+    perioder: perioder.sort((a, b) => moment(a.fom) - moment(b.fom))
+      .map((p) => {
+        const {
+          fom, tom, feilutbetalingÅrsakDto: { årsakKode }, feilutbetalingÅrsakDto: { underÅrsaker },
+        } = p;
+        return {
+          fom,
+          tom,
+          årsak: årsakKode,
+          [årsakKode]: {
+            underÅrsak: underÅrsaker[0] ? underÅrsaker[0].underÅrsakKode : null,
+          },
+        };
+      }),
+  };
+};
 
 const transformValues = (values, aksjonspunkter, årsaker) => {
   const apCode = aksjonspunkter.find(ap => ap.definisjon.kode === feilutbetalingAksjonspunkter[0]);
@@ -305,7 +310,7 @@ const mapStateToProps = (state, initialProps) => {
   return {
     feilutbetaling,
     årsaker,
-    initialValues: buildInitalValues(feilutbetaling.perioder),
+    initialValues: buildInitalValues(feilutbetaling.perioder, initialProps.aksjonspunkter),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
     onSubmit: values => initialProps.submitCallback(transformValues(values, initialProps.aksjonspunkter, årsaker)),
   };
