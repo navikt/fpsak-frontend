@@ -10,7 +10,8 @@ import {
   isSelectedBehandlingspunktReadOnly,
   getNotAcceptedByBeslutter,
 } from 'behandlingInnsyn/src/behandlingsprosess/behandlingsprosessInnsynSelectors';
-import VedtakPanels from './vedtak/VedtakPanels';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import InnsynVedtakForm from './vedtak/InnsynVedtakForm';
 import InnsynForm from './innsyn/InnsynForm';
 
 import styles from './behandlingspunktInnsynInfoPanel.less';
@@ -36,12 +37,15 @@ export const BehandlingspunktInnsynInfoPanel = ({ // NOSONAR Kompleksitet er hø
 }) => (
   <div className={classNames('behandlingsPunkt', { notAcceptedByBeslutter, statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
     <div>
-      <VedtakPanels
-        behandlingspunkt={selectedBehandlingspunkt}
-        readOnly={readOnly}
-        previewCallback={previewCallback}
+      { selectedBehandlingspunkt === behandlingspunktCodes.VEDTAK
+      && (
+      <InnsynVedtakForm
         submitCallback={submitCallback}
+        previewCallback={previewCallback}
+        readOnly={readOnly}
       />
+      )
+     }
 
       {InnsynForm.supports(apCodes)
       && <InnsynForm submitCallback={submitCallback} readOnly={readOnly} isSubmittable={readOnlySubmitButton} />

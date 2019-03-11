@@ -4,34 +4,37 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
+
+import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import {
-  getAksjonspunkter, getBehandlingVersjon, getBehandlingType, getBehandlingHenlagt,
-} from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
-import {
-  getBehandlingIdentifier,
+  getBehandlingIdentifier, getFagsakYtelseType,
 } from 'behandlingInnsyn/src/duckInnsyn';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import findBehandlingsprosessIcon from 'behandlingInnsyn/src/behandlingsprosess/statusIconHelper';
-import { BehandlingsprosessPanel } from '@fpsak-frontend/fp-behandling-felles';
-import IverksetterVedtakStatusModal from 'behandlingInnsyn/src/behandlingsprosess/components/vedtak/IverksetterVedtakStatusModal';
-import FatterVedtakStatusModal from 'behandlingInnsyn/src/behandlingsprosess/components/vedtak/FatterVedtakStatusModal';
+import { BehandlingsprosessPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
 import BehandlingspunktInnsynInfoPanel from 'behandlingInnsyn/src/behandlingsprosess/components/BehandlingspunktInnsynInfoPanel';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { getResolveFaktaAksjonspunkterSuccess } from 'behandlingInnsyn/src/fakta/duckFaktaInnsyn';
 import {
   trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta, BehandlingIdentifier,
 } from '@fpsak-frontend/fp-felles';
+import {
+  getBehandlingStatus, getBehandlingsresultat, getAksjonspunkter, getBehandlingType, getBehandlingVersjon, getBehandlingHenlagt,
+} from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
 import {
   setSelectedBehandlingspunktNavn,
   resolveProsessAksjonspunkter,
   resetBehandlingspunkter,
   fetchPreviewBrev as fetchPreview,
   getSelectedBehandlingspunktNavn,
+  getResolveProsessAksjonspunkterSuccess,
 } from './duckBpInnsyn';
 import {
   getBehandlingspunkter, getSelectedBehandlingspunkt, getDefaultBehandlingspunkt,
   getBehandlingspunkterStatus, getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus,
 } from './behandlingsprosessInnsynSelectors';
+
 
 const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
 
@@ -135,7 +138,8 @@ export class BehandlingsprosessInnsynIndex extends Component {
 
   render() {
     const {
-      behandlingspunkter, selectedBehandlingspunkt, isSelectedBehandlingHenlagt,
+      behandlingspunkter, selectedBehandlingspunkt, isSelectedBehandlingHenlagt, fagsakYtelseType, behandlingIdentifier,
+      resolveProsessAksjonspunkterSuccess, resolveFaktaAksjonspunkterSuccess, behandlingStatus, behandlingsresultat, aksjonspunkter, behandlingType,
     } = this.props;
     return (
       <React.Fragment>
@@ -156,8 +160,24 @@ export class BehandlingsprosessInnsynIndex extends Component {
           />
         </BehandlingsprosessPanel>
 
-        <IverksetterVedtakStatusModal closeEvent={this.goToSearchPage} />
-        <FatterVedtakStatusModal closeEvent={this.goToSearchPage} />
+        <IverksetterVedtakStatusModal
+          closeEvent={this.goToSearchPage}
+          behandlingsresultat={behandlingsresultat}
+          behandlingStatusKode={behandlingStatus.kode}
+          fagsakYtelseType={fagsakYtelseType}
+          resolveFaktaAksjonspunkterSuccess={resolveFaktaAksjonspunkterSuccess}
+          resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
+        />
+        <FatterVedtakStatusModal
+          closeEvent={this.goToSearchPage}
+          selectedBehandlingId={behandlingIdentifier.behandlingId}
+          fagsakYtelseType={fagsakYtelseType}
+          resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
+          behandlingStatus={behandlingStatus}
+          behandlingsresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
+          behandlingType={behandlingType}
+        />
       </React.Fragment>
     );
   }
@@ -174,14 +194,23 @@ BehandlingsprosessInnsynIndex.propTypes = {
   push: PropTypes.func.isRequired,
   resolveProsessAksjonspunkter: PropTypes.func.isRequired,
   fetchPreview: PropTypes.func.isRequired,
+  fagsakYtelseType: kodeverkObjektPropType.isRequired,
+  behandlingStatus: kodeverkObjektPropType.isRequired,
+  behandlingType: kodeverkObjektPropType.isRequired,
+  resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
+  resolveFaktaAksjonspunkterSuccess: PropTypes.bool.isRequired,
+  behandlingsresultat: PropTypes.shape(),
+  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
 };
 
 BehandlingsprosessInnsynIndex.defaultProps = {
   behandlingspunkter: undefined,
   selectedBehandlingspunkt: undefined,
+  behandlingsresultat: undefined,
 };
 
 const mapStateToProps = state => ({
+  fagsakYtelseType: getFagsakYtelseType(state),
   isSelectedBehandlingHenlagt: getBehandlingHenlagt(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: getBehandlingVersjon(state),
@@ -191,6 +220,10 @@ const mapStateToProps = state => ({
   selectedBehandlingspunkt: getSelectedBehandlingspunkt(state),
   behandlingType: getBehandlingType(state),
   location: state.router.location,
+  resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
+  behandlingStatus: getBehandlingStatus(state),
+  behandlingsresultat: getBehandlingsresultat(state),
+  resolveFaktaAksjonspunkterSuccess: getResolveFaktaAksjonspunkterSuccess(state),
 });
 
 const mapDispatchToProps = dispatch => ({

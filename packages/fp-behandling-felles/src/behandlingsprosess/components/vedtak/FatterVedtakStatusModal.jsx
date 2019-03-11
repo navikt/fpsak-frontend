@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
-import { getSelectedBehandlingId, getFagsakYtelseType } from 'behandlingInnsyn/src/duckInnsyn';
-import {
-  getBehandlingStatus, getBehandlingsresultat, getAksjonspunkter, getBehandlingType,
-} from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
+
 import { Image } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -19,7 +15,6 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { requireProps } from '@fpsak-frontend/fp-felles';
-import { getResolveProsessAksjonspunkterSuccess } from 'behandlingInnsyn/src/behandlingsprosess/duckBpInnsyn';
 
 import styles from './fatterVedtakStatusModal.less';
 
@@ -97,55 +92,47 @@ FatterVedtakStatusModal.defaultProps = {
   showModal: undefined,
 };
 
-const hasOpenAksjonspunktForVedtakUtenTotrinnskontroll = createSelector(
-  [getAksjonspunkter], (aksjonspunkter = []) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL),
-);
+const hasOpenAksjonspunktForVedtakUtenTotrinnskontroll = (aksjonspunkter = []) => aksjonspunkter
+  .some(ap => ap.definisjon.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL);
 
-const isBehandlingsresultatOpphor = createSelector(
-  [getBehandlingsresultat], behandlingsresultat => behandlingsresultat.type.kode === behandlingResultatType.OPPHOR,
-);
+const isBehandlingsresultatOpphor = behandlingsresultat => behandlingsresultat.type.kode === behandlingResultatType.OPPHOR;
 
-const getModalDescriptionTextCode = createSelector(
-  [isBehandlingsresultatOpphor, hasOpenAksjonspunktForVedtakUtenTotrinnskontroll, getFagsakYtelseType, getBehandlingType],
-  (isOpphor, hasOpenAksjonspunkter, ytelseType, behType) => {
-    if (isOpphor) {
-      return 'FatterVedtakStatusModal.ModalDescriptionFPOpphort';
-    }
-    if (hasOpenAksjonspunkter) {
-      return ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
-        ? 'FatterVedtakStatusModal.ModalDescriptionES'
-        : 'FatterVedtakStatusModal.ModalDescriptionFP';
-    }
-    return behType === behandlingType.KLAGE ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter' : 'FatterVedtakStatusModal.Sendt';
-  },
-);
+const getModalDescriptionTextCode = (behandlingsresultat, aksjonspunkter, ytelseType, behType) => {
+  if (isBehandlingsresultatOpphor(behandlingsresultat)) {
+    return 'FatterVedtakStatusModal.ModalDescriptionFPOpphort';
+  }
+  if (hasOpenAksjonspunktForVedtakUtenTotrinnskontroll(aksjonspunkter)) {
+    return ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
+      ? 'FatterVedtakStatusModal.ModalDescriptionES'
+      : 'FatterVedtakStatusModal.ModalDescriptionFP';
+  }
+  return behType === behandlingType.KLAGE ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter' : 'FatterVedtakStatusModal.Sendt';
+};
 
+const getAltImgTextCode = (aksjonspunkter, ytelseType, behType) => {
+  if (hasOpenAksjonspunktForVedtakUtenTotrinnskontroll(aksjonspunkter)) {
+    return ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
+      ? 'FatterVedtakStatusModal.IkkeInnvilgetES'
+      : 'FatterVedtakStatusModal.IkkeInnvilgetFP';
+  }
+  return behType === behandlingType.KLAGE ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter' : 'FatterVedtakStatusModal.Sendt';
+};
 
-const getAltImgTextCode = createSelector(
-  [hasOpenAksjonspunktForVedtakUtenTotrinnskontroll, getFagsakYtelseType, getBehandlingType],
-  (hasOpenAksjonspunkter, ytelseType, behType) => {
-    if (hasOpenAksjonspunkter) {
-      return ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
-        ? 'FatterVedtakStatusModal.IkkeInnvilgetES'
-        : 'FatterVedtakStatusModal.IkkeInnvilgetFP';
-    }
-    return behType === behandlingType.KLAGE ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter' : 'FatterVedtakStatusModal.Sendt';
-  },
-);
+const getInfoTextCode = bType => (bType.kode === behandlingType.KLAGE
+  ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter' : 'FatterVedtakStatusModal.SendtBeslutter');
 
-const getInfoTextCode = createSelector(
-  [getBehandlingType],
-  bType => (bType.kode === behandlingType.KLAGE ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter' : 'FatterVedtakStatusModal.SendtBeslutter'),
-);
-const isStatusFatterVedtak = createSelector([getBehandlingStatus], behandlingstatus => behandlingstatus.kode === behandlingStatus.FATTER_VEDTAK);
+const isStatusFatterVedtak = behandlingstatus => behandlingstatus.kode === behandlingStatus.FATTER_VEDTAK;
 
-const mapStateToProps = state => ({
-  selectedBehandlingId: getSelectedBehandlingId(state),
-  isBehandlingStatusFatterVedtak: getBehandlingStatus(state).kode === behandlingStatus.FATTER_VEDTAK ? true : undefined,
-  infoTextCode: isStatusFatterVedtak(state) ? getInfoTextCode(state) : '',
-  altImgTextCode: isStatusFatterVedtak(state) ? getAltImgTextCode(state) : '',
-  modalDescriptionTextCode: isStatusFatterVedtak(state) ? getModalDescriptionTextCode(state) : 'FatterVedtakStatusModal.ModalDescription',
-  resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
-});
+const mapStateToProps = (state, ownProps) => {
+  const isFatterVedtak = isStatusFatterVedtak(ownProps.behandlingStatus);
+  return {
+    isBehandlingStatusFatterVedtak: ownProps.behandlingStatus.kode === behandlingStatus.FATTER_VEDTAK ? true : undefined,
+    infoTextCode: isFatterVedtak ? getInfoTextCode(ownProps.behandlingType) : '',
+    altImgTextCode: isFatterVedtak ? getAltImgTextCode(ownProps.aksjonspunkter, ownProps.fagsakYtelseType, ownProps.behandlingType) : '',
+    modalDescriptionTextCode: isFatterVedtak
+      ? getModalDescriptionTextCode(ownProps.behandlingsresultat, ownProps.aksjonspunkter, ownProps.fagsakYtelseType, ownProps.behandlingType)
+      : 'FatterVedtakStatusModal.ModalDescription',
+  };
+};
 
 export default connect(mapStateToProps)(injectIntl(requireProps(['selectedBehandlingId', 'isBehandlingStatusFatterVedtak'])(FatterVedtakStatusModal)));

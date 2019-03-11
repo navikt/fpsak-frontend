@@ -7,6 +7,8 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import BehandlingspunktInnsynInfoPanel from 'behandlingInnsyn/src/behandlingsprosess/components/BehandlingspunktInnsynInfoPanel';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BehandlingsprosessInnsynIndex } from './BehandlingsprosessInnsynIndex';
 
@@ -54,9 +56,23 @@ describe('<BehandlingsprosessInnsynIndex>', () => {
       haveSentVarsel
       behandlingType={{
         kode: BehandlingType.FORSTEGANGSSOKNAD,
-        name: 'FORSTEGANGSSOKNAD',
+        navn: 'FORSTEGANGSSOKNAD',
       }}
       isSelectedBehandlingHenlagt={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+        navn: 'FORELDREPENGER',
+      }}
+      behandlingStatus={{
+        kode: behandlingStatus.OPPRETTET,
+        navn: 'OPPRETTET',
+      }}
+      resolveProsessAksjonspunkterSuccess
+      resolveFaktaAksjonspunkterSuccess
+      behandlingsresultat={{
+        kode: 'test',
+        navn: 'test',
+      }}
     />);
 
     const panel = wrapper.find(BehandlingspunktInnsynInfoPanel);
@@ -143,9 +159,23 @@ describe('<BehandlingsprosessInnsynIndex>', () => {
       haveSentVarsel
       behandlingType={{
         kode: BehandlingType.FORSTEGANGSSOKNAD,
-        name: 'FORSTEGANGSSOKNAD',
+        navn: 'FORSTEGANGSSOKNAD',
       }}
       isSelectedBehandlingHenlagt={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+        navn: 'FORELDREPENGER',
+      }}
+      behandlingStatus={{
+        kode: behandlingStatus.OPPRETTET,
+        navn: 'OPPRETTET',
+      }}
+      resolveProsessAksjonspunkterSuccess
+      resolveFaktaAksjonspunkterSuccess
+      behandlingsresultat={{
+        kode: 'test',
+        navn: 'test',
+      }}
     />);
 
     const panel = wrapper.find(BehandlingspunktInnsynInfoPanel);
