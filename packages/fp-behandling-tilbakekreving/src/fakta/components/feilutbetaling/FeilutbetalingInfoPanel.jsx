@@ -118,7 +118,7 @@ export const FeilutbetalingInfoPanelImpl = ({
                 perioder={feilutbetaling.perioder}
                 formName={formName}
                 årsaker={årsaker}
-                readOnly={readOnly || !hasOpenAksjonspunkter}
+                readOnly={readOnly}
               />
             </Column>
           </Row>
@@ -196,7 +196,7 @@ export const FeilutbetalingInfoPanelImpl = ({
             label={{ id: 'FeilutbetalingInfoPanel.Begrunnelse' }}
             validate={[required, minLength3, maxLength1500, hasValidText]}
             maxLength={1500}
-            readOnly={readOnly || !hasOpenAksjonspunkter}
+            readOnly={readOnly}
             id="begrunnelse"
           />
         </Column>
@@ -209,7 +209,7 @@ export const FeilutbetalingInfoPanelImpl = ({
             htmlType="button"
             onClick={formProps.handleSubmit}
             disabled={formProps.invalid || formProps.pristine || formProps.submitting}
-            readOnly={readOnly || !hasOpenAksjonspunkter}
+            readOnly={readOnly}
             spinner={formProps.submitting}
           >
             <FormattedMessage id="Uttak.Confirm" />
