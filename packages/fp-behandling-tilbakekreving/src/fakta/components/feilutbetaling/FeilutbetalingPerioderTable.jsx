@@ -12,7 +12,7 @@ const headerTextCodes = [
 ];
 
 const FeilutbetalingPerioderTable = ({
-  perioder, formName, årsaker, readOnly,
+  perioder, formName, årsaker, readOnly, resetFields,
 }) => (
   <div className={styles.feilutbetalingTable}>
     <Table
@@ -25,6 +25,7 @@ const FeilutbetalingPerioderTable = ({
           formName={formName}
           årsaker={årsaker}
           readOnly={readOnly}
+          resetFields={resetFields}
           key={`formIndex${index + 1}`}
         />
       ))
@@ -38,6 +39,7 @@ FeilutbetalingPerioderTable.propTypes = {
   formName: PropTypes.string.isRequired,
   årsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   readOnly: PropTypes.bool.isRequired,
+  resetFields: PropTypes.func.isRequired,
 };
 
 export default FeilutbetalingPerioderTable;

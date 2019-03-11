@@ -13,7 +13,7 @@ const getSubÅrsaker = (årsakNavn, årsaker) => {
   return årsak && årsak.underÅrsaker.length > 0 ? årsak.underÅrsaker : null;
 };
 const FeilutbetalingPerioderForm = ({
-  periode, årsak, elementId, årsaker, readOnly,
+  periode, årsak, elementId, årsaker, readOnly, resetFields,
 }) => {
   const subÅrsaker = getSubÅrsaker(årsak, årsaker);
   return (
@@ -30,13 +30,14 @@ const FeilutbetalingPerioderForm = ({
           selectValues={årsaker.map(a => <option key={a.årsak} value={a.årsakKode}>{a.årsak}</option>)}
           validate={[required]}
           disabled={readOnly}
+          onChange={e => resetFields(elementId, e)}
           bredde="m"
           label=""
         />
         {subÅrsaker
         && (
           <SelectField
-            name={`perioder.${elementId}.underÅrsak`}
+            name={`perioder.${elementId}.${årsak}.underÅrsak`}
             selectValues={subÅrsaker.map(a => <option key={a.underÅrsak} value={a.underÅrsakKode}>{a.underÅrsak}</option>)}
             validate={[required]}
             disabled={readOnly}
@@ -63,6 +64,7 @@ FeilutbetalingPerioderForm.propTypes = {
   årsak: PropTypes.string,
   årsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   readOnly: PropTypes.bool.isRequired,
+  resetFields: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, initialProps) => ({
