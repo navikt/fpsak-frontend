@@ -115,6 +115,7 @@ export const SykdomOgSkadePeriode = ({
           </div>
           )}
         </FlexColumn>
+        {inntektsmeldingInfo && (
         <FlexColumn className={styles.fieldColumn}>
           <div>
             <InntektsmeldingInfo
@@ -123,6 +124,7 @@ export const SykdomOgSkadePeriode = ({
             />
           </div>
         </FlexColumn>
+        )}
       </FlexRow>
       <FlexRow>
         <FlexColumn>

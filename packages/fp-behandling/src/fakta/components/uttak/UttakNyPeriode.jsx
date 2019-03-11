@@ -20,6 +20,7 @@ import {
   lagVisningsNavn,
 } from '@fpsak-frontend/utils';
 import uttakArbeidType from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
+import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import moment from 'moment';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 import { getPersonopplysning, getFaktaArbeidsforhold } from 'behandlingFpsak/src/behandlingSelectors';
@@ -317,10 +318,19 @@ UttakNyPeriode.defaultProps = {
   periodeTyper: null,
 };
 
-const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅrsaker) => {
-  const getPeriodeData = (periode, periodeArray) => periodeArray
-    .filter(({ kode }) => kode === periode);
+const getPeriodeData = (periode, periodeArray) => periodeArray
+  .filter(({ kode }) => kode === periode);
 
+const getResultat = (utsettelseÅrsak, uttakPeriodeVurderingTyper) => {
+  if ([utsettelseArsakCodes.INSTITUSJONSOPPHOLD_SØKER, utsettelseArsakCodes.INSTITUSJONSOPPHOLD_BARNET, utsettelseArsakCodes.SYKDOM]
+    .some(årsak => årsak === utsettelseÅrsak.kode)) {
+    return uttakPeriodeVurderingTyper.find(type => type.kode === uttakPeriodeVurdering.PERIODE_OK);
+  }
+  return uttakPeriodeVurderingTyper.find(type => type.kode === uttakPeriodeVurdering.PERIODE_IKKE_VURDERT);
+};
+
+
+const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅrsaker, uttakPeriodeVurderingTyper) => {
   const periodeObjekt = getPeriodeData(values.periodeType, periodeTyper)[0] || null;
   const utsettelseÅrsakObjekt = getPeriodeData(values.periodeArsak, utsettelseÅrsaker)[0];
   const overføringÅrsakObjekt = getPeriodeData(values.periodeOverforingArsak, overføringÅrsaker)[0];
@@ -340,6 +350,7 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
     kode: overforingArsak.UDEFINERT,
   };
 
+  const resultat = getResultat(utsettelseÅrsak, uttakPeriodeVurderingTyper);
   const arbeidsForhold = values.arbeidsForhold ? values.arbeidsForhold.split('|') : null;
 
   const arbeidsgiver = arbeidsForhold && (arbeidsForhold[0] !== '-' || arbeidsForhold[2] !== '-') ? {
@@ -353,11 +364,6 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
   return {
     id: guid(),
     arbeidstidsprosent: values.arbeidstidprosent ? +values.arbeidstidprosent : null,
-    resultat: {
-      kode: 'PERIODE_IKKE_VURDERT',
-      kodeverk: 'UTTAK_PERIODE_VURDERING_TYPE',
-      navn: 'Perioden er ikke vurdert',
-    },
     updated: false,
     bekreftet: true,
     openForm: false,
@@ -378,6 +384,7 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
     arbeidsgiver,
     utsettelseÅrsak,
     overføringÅrsak,
+    resultat,
   };
 };
 
@@ -432,7 +439,9 @@ const mapStateToProps = (state, ownProps) => {
       'typeUttak',
     ),
 
-    onSubmit: values => ownProps.newPeriodeCallback(transformValues(values, periodeTyper, utsettelseÅrsaker, overføringÅrsaker)),
+    onSubmit: values => ownProps.newPeriodeCallback(
+      transformValues(values, periodeTyper, utsettelseÅrsaker, overføringÅrsaker, ownProps.uttakPeriodeVurderingTyper),
+    ),
   };
 };
 

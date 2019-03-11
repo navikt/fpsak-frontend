@@ -27,7 +27,6 @@ import {
   hasValidText,
 } from '@fpsak-frontend/utils';
 import PerioderKnapper from './PerioderKnapper';
-import InntektsmeldingInfo from '../components/InntektsmeldingInfo';
 import DokumentertePerioderPeriodePicker from './DokumentertePerioderPeriodePicker';
 import styles from './periodeTyper.less';
 
@@ -45,7 +44,6 @@ export const InnleggelsePeriode = ({
   dokumentertePerioder,
   readOnly,
   formSyncErrors,
-  inntektsmeldingInfo,
   behandlingStatusKode,
   arbeidsgiver,
   ...formProps
@@ -138,12 +136,6 @@ export const InnleggelsePeriode = ({
           />
         </FlexColumn>
 
-        <FlexColumn className={styles.fieldColumn}>
-          <InntektsmeldingInfo
-            inntektsmeldingInfo={inntektsmeldingInfo}
-          />
-        </FlexColumn>
-
       </FlexRow>
       <FlexRow>
         <FlexColumn>
@@ -176,7 +168,6 @@ InnleggelsePeriode.propTypes = {
   fraDato: PropTypes.string.isRequired,
   tilDato: PropTypes.string.isRequired,
   formSyncErrors: PropTypes.shape(),
-  inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.shape()),
   arbeidsgiver: PropTypes.shape(),
   behandlingStatusKode: PropTypes.string,
 };
@@ -184,7 +175,6 @@ InnleggelsePeriode.propTypes = {
 InnleggelsePeriode.defaultProps = {
   dokumentertePerioder: [{}],
   formSyncErrors: {},
-  inntektsmeldingInfo: [],
   resultat: undefined,
   behandlingStatusKode: undefined,
   arbeidsgiver: {},
