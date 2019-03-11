@@ -147,6 +147,11 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.DEFAULT,
     punktNavn: behandlingspunktCodes.SIMULERING,
   },
+  FAKTA_OM_FEILUTBETALING: {
+    kode: 'FAKTA_OM_FEILUTBETALING',
+    faktaNavn: faktaPanelCodes.FEILUTBETALING,
+    punktNavn: '',
+  },
 };
 
 export const createLocationForHistorikkItems = (behandlingLocation, skjermlenkeCode) => {
