@@ -70,7 +70,6 @@ const OmsorgFaktaForm = ({
             <Row>
               <Column xs="2" />
               <Column xs="6">
-                <div className={styles.arrowBox}>
                 <ArrowBox alignOffset={32}>
                   <FieldArray
                     name="ikkeOmsorgPerioder"
