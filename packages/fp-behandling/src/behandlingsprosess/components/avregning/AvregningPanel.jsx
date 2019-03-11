@@ -244,7 +244,7 @@ export class AvregningPanelImpl extends Component {
                         { videreBehandling === avregningCodes.TILBAKEKR_INFOTRYGD && featureVarseltekst
                         && (
                           <div className={styles.varsel}>
-                            <ArrowBox alignOffset={12}>
+                            <ArrowBox alignOffset={20}>
                               <Normaltekst className={styles.bold}><FormattedMessage id="Avregning.varseltekst" /></Normaltekst>
                               <VerticalSpacer eightPx />
                               <TextAreaField
@@ -291,7 +291,7 @@ export class AvregningPanelImpl extends Component {
                         { erTilbakekrevingVilkårOppfylt
                         && (
                           <div className={styles.marginBottom20}>
-                            <ArrowBox alignOffset={12}>
+                            <ArrowBox alignOffset={20}>
                               <RadioGroupField
                                 label={radioGroupLabel(avregningCodes.REDUKSJON)}
                                 validate={[required]}
@@ -305,7 +305,7 @@ export class AvregningPanelImpl extends Component {
                               { grunnerTilReduksjon
                               && (
                                 <div className={styles.marginBottom20}>
-                                  <ArrowBox alignOffset={12}>
+                                  <ArrowBox alignOffset={20}>
                                     <RadioGroupField validate={[required]} name="videreBehandling" direction="vertical" readOnly={readOnly}>
                                       <RadioOption label={<FormattedMessage id="Avregning.gjennomfør" />} value={avregningCodes.TILBAKEKR_INFOTRYGD} />
                                       <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={avregningCodes.TILBAKEKR_IGNORER} />
@@ -321,7 +321,7 @@ export class AvregningPanelImpl extends Component {
                         { erTilbakekrevingVilkårOppfylt !== undefined && !erTilbakekrevingVilkårOppfylt
                         && (
                           <div className={styles.marginBottom20}>
-                            <ArrowBox alignOffset={90}>
+                            <ArrowBox alignOffset={98}>
                               <RadioGroupField validate={[required]} name="videreBehandling" direction="vertical" readOnly={readOnly}>
                                 <RadioOption label={<FormattedMessage id="Avregning.gjennomfør" />} value={avregningCodes.TILBAKEKR_INFOTRYGD} />
                                 <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={avregningCodes.TILBAKEKR_IGNORER} />

@@ -103,7 +103,7 @@ export const AnnenForelderPanelImpl = ({
         />
         {kanIkkeOppgiAnnenForelder === true
         && (
-          <ArrowBox alignOffset={-6}>
+          <ArrowBox>
             <FormSection name="kanIkkeOppgiBegrunnelse">
               <KanIkkeOppgiBegrunnelsePanel
                 kanIkkeOppgiBegrunnelse={kanIkkeOppgiBegrunnelse}

@@ -70,7 +70,7 @@ const OmsorgFaktaForm = ({
             <Row>
               <Column xs="2" />
               <Column xs="6">
-                <ArrowBox alignOffset={32}>
+                <ArrowBox alignOffset={40}>
                   <FieldArray
                     name="ikkeOmsorgPerioder"
                     component={IkkeOmsorgPeriodeField}

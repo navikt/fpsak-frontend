@@ -27,7 +27,7 @@ const maxLength2000 = maxLength(2000);
  */
 const ReasonsField = ({ fieldName, showOnlyBegrunnelse, intl }) => (
   <React.Fragment>
-    <ArrowBox alignOffset={102}>
+    <ArrowBox alignOffset={110}>
       {!showOnlyBegrunnelse
         && (
         <FlexContainer fluid wrap>

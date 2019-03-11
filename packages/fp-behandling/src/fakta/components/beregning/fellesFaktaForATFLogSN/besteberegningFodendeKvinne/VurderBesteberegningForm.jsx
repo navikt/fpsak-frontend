@@ -62,7 +62,7 @@ const VurderBesteberegningPanelImpl = ({
     </Row>
     {erBesteberegning
     && (
-      <ArrowBox alignOffset={-5}>
+      <ArrowBox>
         <Row>
           <Column xs="12">
             <Element>

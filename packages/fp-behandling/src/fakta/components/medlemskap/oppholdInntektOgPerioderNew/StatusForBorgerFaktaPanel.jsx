@@ -28,7 +28,7 @@ const StatusForBorgerFaktaPanelImpl = ({
 
     {erEosBorger && (
       <React.Fragment>
-        <ArrowBox alignOffset={0}>
+        <ArrowBox>
           <Undertekst>
             <FormattedMessage id="StatusForBorgerFaktaPanel.Oppholdsrett" />
           </Undertekst>
@@ -50,7 +50,7 @@ const StatusForBorgerFaktaPanelImpl = ({
     )}
     {erEosBorger === false && (
       <React.Fragment>
-        <ArrowBox alignOffset={122}>
+        <ArrowBox alignOffset={130}>
           <Undertekst>
             <FormattedMessage id="StatusForBorgerFaktaPanel.LovligOpphold" />
           </Undertekst>

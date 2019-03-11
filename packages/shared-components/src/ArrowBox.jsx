@@ -101,7 +101,7 @@ ArrowBox.propTypes = {
 };
 
 ArrowBox.defaultProps = {
-  alignOffset: undefined,
+  alignOffset: 0,
   alignLeft: false,
   hideBorder: false,
   marginTop: 0,

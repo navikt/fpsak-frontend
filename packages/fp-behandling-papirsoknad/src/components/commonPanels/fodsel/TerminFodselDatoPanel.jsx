@@ -48,7 +48,7 @@ export const TerminFodselDatoPanelImpl = ({
           </RadioGroupField>
           {erBarnetFodt === false
           && (
-            <ArrowBox alignOffset={55}>
+            <ArrowBox alignOffset={64}>
               <div className={styles.row}>
                 <div className={styles.col}>
                   <DatepickerField

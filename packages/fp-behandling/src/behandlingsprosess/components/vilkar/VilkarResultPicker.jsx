@@ -68,7 +68,7 @@ const VilkarResultPickerImpl = ({
     && (
     <Row>
       <Column xs="6">
-        <ArrowBox alignOffset={158} hideBorder={readOnly}>
+        <ArrowBox alignOffset={166} hideBorder={readOnly}>
           <VerticalSpacer eightPx />
           <SelectField
             name="avslagCode"

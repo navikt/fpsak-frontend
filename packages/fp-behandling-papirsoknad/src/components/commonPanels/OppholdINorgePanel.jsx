@@ -73,7 +73,7 @@ export const OppholdINorgePanelImpl = ({
           </RadioGroupField>
           {harTidligereOppholdUtenlands
             ? (
-              <ArrowBox alignOffset={56}>
+              <ArrowBox alignOffset={64}>
                 <UtenlandsOppholdField
                   name="tidligereOppholdUtenlands"
                   countryCodes={sortedCountriesByName}
@@ -97,7 +97,7 @@ export const OppholdINorgePanelImpl = ({
           </RadioGroupField>
           {harFremtidigeOppholdUtenlands
             ? (
-              <ArrowBox alignOffset={56}>
+              <ArrowBox alignOffset={64}>
                 <UtenlandsOppholdField
                   name="fremtidigeOppholdUtenlands"
                   countryCodes={sortedCountriesByName}

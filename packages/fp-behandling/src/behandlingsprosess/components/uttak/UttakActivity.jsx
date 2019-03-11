@@ -145,7 +145,7 @@ export const UttakActivity = ({
             {erOppfylt !== undefined
             && (
               <div className={styles.marginBottom20}>
-                <ArrowBox alignOffset={erOppfylt ? -6 : 90}>
+                <ArrowBox alignOffset={erOppfylt ? 0 : 98}>
                   <SelectField
                     id="aarsak"
                     name={erOppfylt ? 'innvilgelseAarsak' : 'avslagAarsak'}

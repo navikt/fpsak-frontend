@@ -82,7 +82,7 @@ export const InnsynFormImpl = ({
       </RadioGroupField>
       {(innsynResultatType === innsynResultatTyperKV.INNVILGET || innsynResultatType === innsynResultatTyperKV.DELVISTINNVILGET)
       && (
-      <ArrowBox alignOffset={(innsynResultatType === innsynResultatTyperKV.INNVILGET) ? 20 : 168}>
+      <ArrowBox alignOffset={(innsynResultatType === innsynResultatTyperKV.INNVILGET) ? 28 : 176}>
         <RadioGroupField
           name="sattPaVent"
           label={<FormattedMessage id="InnsynForm.VelgVidereAksjon" key="1" />}
