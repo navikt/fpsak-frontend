@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { formPropTypes } from 'redux-form';
+import { bindActionCreators } from 'redux';
+import { clearFields, formPropTypes } from 'redux-form';
 import moment from 'moment';
 import { Row, Column } from 'nav-frontend-grid';
 import { Element, Undertekst, Normaltekst } from 'nav-frontend-typografi';
@@ -11,8 +12,13 @@ import { TextAreaField } from '@fpsak-frontend/form';
 import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getFeilutbetalingFakta, getFeilutbetalingAarsaker } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
-import { behandlingForm } from 'behandlingTilbakekreving/src/behandlingForm';
+import {
+  getFeilutbetalingFakta,
+  getFeilutbetalingAarsaker,
+  getBehandlingVersjon,
+} from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+import { getSelectedBehandlingId } from 'behandlingTilbakekreving/src/duckTilbake';
+import { behandlingForm, getBehandlingFormPrefix } from 'behandlingTilbakekreving/src/behandlingForm';
 import {
   DDMMYYYY_DATE_FORMAT,
   minLength,
@@ -31,194 +37,216 @@ const feilutbetalingAksjonspunkter = [
   aksjonspunktCodes.AVKLAR_FAKTA_FOR_FEILUTBETALING,
 ];
 
-export const FeilutbetalingInfoPanelImpl = ({
-  toggleInfoPanelCallback,
-  openInfoPanels,
-  hasOpenAksjonspunkter,
-  intl,
-  feilutbetaling,
-  årsak,
-  årsaker,
-  readOnly,
-  ...formProps
-}) => (
-  <FaktaEkspandertpanel
-    title={intl.formatMessage({ id: 'FeilutbetalingInfoPanel.FaktaFeilutbetaling' })}
-    hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-    isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.FEILUTBETALING)}
-    toggleInfoPanelCallback={toggleInfoPanelCallback}
-    faktaId={faktaPanelCodes.FEILUTBETALING}
-  >
-    <form onSubmit={formProps.handleSubmit}>
-      <Row className={styles.smallMarginBottom}>
-        <Column xs="12" md="6">
+export class FeilutbetalingInfoPanelImpl extends Component {
+  constructor() {
+    super();
+    this.resetFields = this.resetFields.bind(this);
+  }
+
+  resetFields(elementId, e) {
+    const {
+      behandlingFormPrefix, clearFields: clearFormFields,
+    } = this.props;
+    const fields = [`perioder.${elementId}.${e.target.value}.underÅrsak`];
+    clearFormFields(`${behandlingFormPrefix}.${formName}`, false, false, ...fields);
+  }
+
+  render() {
+    const {
+      toggleInfoPanelCallback,
+      openInfoPanels,
+      hasOpenAksjonspunkter,
+      intl,
+      feilutbetaling,
+      årsaker,
+      readOnly,
+      ...formProps
+    } = this.props;
+
+    return (
+      <FaktaEkspandertpanel
+        title={intl.formatMessage({ id: 'FeilutbetalingInfoPanel.FaktaFeilutbetaling' })}
+        hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+        isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.FEILUTBETALING)}
+        toggleInfoPanelCallback={toggleInfoPanelCallback}
+        faktaId={faktaPanelCodes.FEILUTBETALING}
+      >
+        <form onSubmit={formProps.handleSubmit}>
           <Row className={styles.smallMarginBottom}>
-            <Column xs="12">
-              <Element>
-                <FormattedMessage id="FeilutbetalingInfoPanel.Feilutbetaling" />
-              </Element>
-            </Column>
-          </Row>
-          <Row>
-            <Column xs="12" md="4">
-              <Row>
-                <Column xs="12">
-                  <Undertekst className={styles.undertekstMarginBottom}>
-                    <FormattedMessage id="FeilutbetalingInfoPanel.PeriodeMedFeilutbetaling" />
-                  </Undertekst>
-                </Column>
-              </Row>
-              <Row>
-                <Column xs="12">
-                  <Normaltekst className={styles.smallPaddingRight}>
-                    {moment(feilutbetaling.totalPeriodeFom).format(DDMMYYYY_DATE_FORMAT)}
-                    {' '}
-  -
-                    {moment(feilutbetaling.totalPeriodeTom).format(DDMMYYYY_DATE_FORMAT)}
-                  </Normaltekst>
-                </Column>
-              </Row>
-            </Column>
-            <Column xs="12" md="4">
-              <Row>
-                <Column xs="12">
-                  <Undertekst className={styles.undertekstMarginBottom}>
-                    <FormattedMessage id="FeilutbetalingInfoPanel.FeilutbetaltBeløp" />
-                  </Undertekst>
-                </Column>
-              </Row>
-              <Row>
-                <Column xs="12" className={styles.smallPaddingRight}>
-                  <Normaltekst className={styles.redText}>
-                    {feilutbetaling.aktuellFeilUtbetaltBeløp}
-                  </Normaltekst>
-                </Column>
-              </Row>
-            </Column>
-            <Column xs="12" md="4">
-              <Row>
-                <Column xs="12">
-                  <Undertekst className={styles.undertekstMarginBottom}>
-                    <FormattedMessage id="FeilutbetalingInfoPanel.TidligereVarseltBeløp" />
-                  </Undertekst>
-                </Column>
-              </Row>
-              <Row>
-                <Column xs="12">
-                  <Normaltekst className={styles.smallPaddingRight}>
-                    {feilutbetaling.tidligereVarseltBeløp}
-                  </Normaltekst>
-                </Column>
-              </Row>
-            </Column>
-          </Row>
-          <Row className={styles.smallMarginTop}>
-            <Column xs="11">
-              <FeilutbetalingPerioderTable
-                perioder={feilutbetaling.perioder}
-                formName={formName}
-                årsaker={årsaker}
-                readOnly={readOnly}
-              />
-            </Column>
-          </Row>
-        </Column>
-        <Column xs="12" md="6">
-          <Row className={styles.smallMarginBottom}>
-            <Column xs="12">
-              <Element>
-                <FormattedMessage id="FeilutbetalingInfoPanel.Revurdering" />
-              </Element>
-            </Column>
-          </Row>
-          <Row>
             <Column xs="12" md="6">
-              <Row>
+              <Row className={styles.smallMarginBottom}>
                 <Column xs="12">
-                  <Undertekst className={styles.undertekstMarginBottom}>
-                    <FormattedMessage id="FeilutbetalingInfoPanel.Årsaker" />
-                  </Undertekst>
+                  <Element>
+                    <FormattedMessage id="FeilutbetalingInfoPanel.Feilutbetaling" />
+                  </Element>
                 </Column>
               </Row>
               <Row>
-                <Column xs="12">
-                  <Normaltekst className={styles.smallPaddingRight}>
-                    {feilutbetaling.årsakRevurdering}
-                  </Normaltekst>
+                <Column xs="12" md="4">
+                  <Row>
+                    <Column xs="12">
+                      <Undertekst className={styles.undertekstMarginBottom}>
+                        <FormattedMessage id="FeilutbetalingInfoPanel.PeriodeMedFeilutbetaling" />
+                      </Undertekst>
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column xs="12">
+                      <Normaltekst className={styles.smallPaddingRight}>
+                        {moment(feilutbetaling.totalPeriodeFom)
+                          .format(DDMMYYYY_DATE_FORMAT)}
+                        {' '}
+                        -
+                        {moment(feilutbetaling.totalPeriodeTom)
+                          .format(DDMMYYYY_DATE_FORMAT)}
+                      </Normaltekst>
+                    </Column>
+                  </Row>
+                </Column>
+                <Column xs="12" md="4">
+                  <Row>
+                    <Column xs="12">
+                      <Undertekst className={styles.undertekstMarginBottom}>
+                        <FormattedMessage id="FeilutbetalingInfoPanel.FeilutbetaltBeløp" />
+                      </Undertekst>
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column xs="12" className={styles.smallPaddingRight}>
+                      <Normaltekst className={styles.redText}>
+                        {feilutbetaling.aktuellFeilUtbetaltBeløp}
+                      </Normaltekst>
+                    </Column>
+                  </Row>
+                </Column>
+                <Column xs="12" md="4">
+                  <Row>
+                    <Column xs="12">
+                      <Undertekst className={styles.undertekstMarginBottom}>
+                        <FormattedMessage id="FeilutbetalingInfoPanel.TidligereVarseltBeløp" />
+                      </Undertekst>
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column xs="12">
+                      <Normaltekst className={styles.smallPaddingRight}>
+                        {feilutbetaling.tidligereVarseltBeløp}
+                      </Normaltekst>
+                    </Column>
+                  </Row>
                 </Column>
               </Row>
               <Row className={styles.smallMarginTop}>
-                <Column xs="12">
-                  <Undertekst className={styles.undertekstMarginBottom}>
-                    <FormattedMessage id="FeilutbetalingInfoPanel.Resultat" />
-                  </Undertekst>
-                </Column>
-              </Row>
-              <Row>
-                <Column xs="12">
-                  <Normaltekst className={styles.smallPaddingRight}>
-                    {feilutbetaling.resultatFeilutbetaling}
-                  </Normaltekst>
+                <Column xs="11">
+                  <FeilutbetalingPerioderTable
+                    perioder={feilutbetaling.perioder}
+                    formName={formName}
+                    årsaker={årsaker}
+                    readOnly={readOnly}
+                    resetFields={this.resetFields}
+                  />
                 </Column>
               </Row>
             </Column>
             <Column xs="12" md="6">
-              <Row>
+              <Row className={styles.smallMarginBottom}>
                 <Column xs="12">
-                  <Undertekst className={styles.undertekstMarginBottom}>
-                    <FormattedMessage id="FeilutbetalingInfoPanel.DatoForRevurdering" />
-                  </Undertekst>
+                  <Element>
+                    <FormattedMessage id="FeilutbetalingInfoPanel.Revurdering" />
+                  </Element>
                 </Column>
               </Row>
               <Row>
-                <Column xs="12">
-                  <Normaltekst className={styles.smallPaddingRight}>
-                    {moment(feilutbetaling.datoForRevurderingsvedtak).format(DDMMYYYY_DATE_FORMAT)}
-                  </Normaltekst>
+                <Column xs="12" md="6">
+                  <Row>
+                    <Column xs="12">
+                      <Undertekst className={styles.undertekstMarginBottom}>
+                        <FormattedMessage id="FeilutbetalingInfoPanel.Årsaker" />
+                      </Undertekst>
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column xs="12">
+                      <Normaltekst className={styles.smallPaddingRight}>
+                        {feilutbetaling.årsakRevurdering}
+                      </Normaltekst>
+                    </Column>
+                  </Row>
+                  <Row className={styles.smallMarginTop}>
+                    <Column xs="12">
+                      <Undertekst className={styles.undertekstMarginBottom}>
+                        <FormattedMessage id="FeilutbetalingInfoPanel.Resultat" />
+                      </Undertekst>
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column xs="12">
+                      <Normaltekst className={styles.smallPaddingRight}>
+                        {feilutbetaling.resultatFeilutbetaling}
+                      </Normaltekst>
+                    </Column>
+                  </Row>
+                </Column>
+                <Column xs="12" md="6">
+                  <Row>
+                    <Column xs="12">
+                      <Undertekst className={styles.undertekstMarginBottom}>
+                        <FormattedMessage id="FeilutbetalingInfoPanel.DatoForRevurdering" />
+                      </Undertekst>
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column xs="12">
+                      <Normaltekst className={styles.smallPaddingRight}>
+                        {moment(feilutbetaling.datoForRevurderingsvedtak)
+                          .format(DDMMYYYY_DATE_FORMAT)}
+                      </Normaltekst>
+                    </Column>
+                  </Row>
                 </Column>
               </Row>
             </Column>
           </Row>
-        </Column>
-      </Row>
-      <Row className={styles.smallMarginBottom}>
-        <Column xs="12" md="6">
-          <Element>
-            <FormattedMessage id="FeilutbetalingInfoPanel.TidligereVarsel" />
-          </Element>
-        </Column>
-      </Row>
-      <VerticalSpacer twentyPx />
-      <Row>
-        <Column md="6">
-          <TextAreaField
-            name="begrunnelse"
-            label={{ id: 'FeilutbetalingInfoPanel.Begrunnelse' }}
-            validate={[required, minLength3, maxLength1500, hasValidText]}
-            maxLength={1500}
-            readOnly={readOnly}
-            id="begrunnelse"
-          />
-        </Column>
-      </Row>
-      <VerticalSpacer eightPx />
-      <Row>
-        <Column md="6">
-          <Hovedknapp
-            mini
-            htmlType="button"
-            onClick={formProps.handleSubmit}
-            disabled={formProps.invalid || formProps.pristine || formProps.submitting}
-            readOnly={readOnly}
-            spinner={formProps.submitting}
-          >
-            <FormattedMessage id="Uttak.Confirm" />
-          </Hovedknapp>
-        </Column>
-      </Row>
-    </form>
-  </FaktaEkspandertpanel>
-);
+          <Row className={styles.smallMarginBottom}>
+            <Column xs="12" md="6">
+              <Element>
+                <FormattedMessage id="FeilutbetalingInfoPanel.TidligereVarsel" />
+              </Element>
+            </Column>
+          </Row>
+          <VerticalSpacer twentyPx />
+          <Row>
+            <Column md="6">
+              <TextAreaField
+                name="begrunnelse"
+                label={{ id: 'FeilutbetalingInfoPanel.Begrunnelse' }}
+                validate={[required, minLength3, maxLength1500, hasValidText]}
+                maxLength={1500}
+                readOnly={readOnly}
+                id="begrunnelse"
+              />
+            </Column>
+          </Row>
+          <VerticalSpacer eightPx />
+          <Row>
+            <Column md="6">
+              <Hovedknapp
+                mini
+                htmlType="button"
+                onClick={formProps.handleSubmit}
+                disabled={formProps.invalid || formProps.pristine || formProps.submitting}
+                readOnly={readOnly}
+                spinner={formProps.submitting}
+              >
+                <FormattedMessage id="Uttak.Confirm" />
+              </Hovedknapp>
+            </Column>
+          </Row>
+        </form>
+      </FaktaEkspandertpanel>
+    );
+  }
+}
 
 FeilutbetalingInfoPanelImpl.propTypes = {
   intl: intlShape.isRequired,
@@ -241,7 +269,9 @@ const buildInitalValues = perioder => ({
       fom,
       tom,
       årsak: årsakKode,
-      underÅrsak: underÅrsaker[0] ? underÅrsaker[0].underÅrsakKode : null,
+      [årsakKode]: {
+        underÅrsak: underÅrsaker[0] ? underÅrsaker[0].underÅrsakKode : null,
+      },
     };
   }),
 });
@@ -251,9 +281,12 @@ const transformValues = (values, aksjonspunkter, årsaker) => {
   return [
     {
       kode: apCode.definisjon.kode,
+      begrunnelse: values.begrunnelse,
       feilutbetalingFakta: values.perioder.map((periode) => {
         const feilutbetalingÅrsak = årsaker.find(el => el.årsakKode === periode.årsak);
-        const feilutbetalingUnderÅrsak = feilutbetalingÅrsak.underÅrsaker.find(el => el.underÅrsakKode === periode.underÅrsak);
+        const findUnderÅrsakObjekt = underÅrsak => feilutbetalingÅrsak.underÅrsaker.find(el => el.underÅrsakKode === underÅrsak);
+        const feilutbetalingUnderÅrsak = periode[periode.årsak] ? findUnderÅrsakObjekt(periode[periode.årsak].underÅrsak) : false;
+
         return {
           fom: periode.fom,
           tom: periode.tom,
@@ -273,9 +306,16 @@ const mapStateToProps = (state, initialProps) => {
     feilutbetaling,
     årsaker,
     initialValues: buildInitalValues(feilutbetaling.perioder),
+    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
     onSubmit: values => initialProps.submitCallback(transformValues(values, initialProps.aksjonspunkter, årsaker)),
   };
 };
+
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators({
+    clearFields,
+  }, dispatch),
+});
 
 const feilutbetalingForm = injectIntl(behandlingForm({
   form: formName,
@@ -284,4 +324,4 @@ const feilutbetalingForm = injectIntl(behandlingForm({
 
 const FeilutbetalingInfoPanel = withDefaultToggling(faktaPanelCodes.FEILUTBETALING, feilutbetalingAksjonspunkter)(feilutbetalingForm);
 
-export default connect(mapStateToProps)(FeilutbetalingInfoPanel);
+export default connect(mapStateToProps, mapDispatchToProps)(FeilutbetalingInfoPanel);
