@@ -439,7 +439,9 @@ const mapStateToProps = (state, ownProps) => {
       'typeUttak',
     ),
 
-    onSubmit: values => ownProps.newPeriodeCallback(transformValues(values, periodeTyper, utsettelseÅrsaker, overføringÅrsaker, ownProps.uttakPeriodeVurderingTyper)),
+    onSubmit: values => ownProps.newPeriodeCallback(
+      transformValues(values, periodeTyper, utsettelseÅrsaker, overføringÅrsaker, ownProps.uttakPeriodeVurderingTyper),
+    ),
   };
 };
 
