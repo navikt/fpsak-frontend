@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
-import { BehandlingsprosessPanel } from './BehandlingsprosessPanel';
+import BehandlingsprosessPanel from './BehandlingsprosessPanel';
 import BehandlingspunktIcon from './BehandlingspunktIcon';
 
 describe('<BehandlingsprosessPanel>', () => {
@@ -15,6 +15,10 @@ describe('<BehandlingsprosessPanel>', () => {
       selectBehandlingspunktCallback={sinon.spy()}
       isSelectedBehandlingHenlagt={false}
       notAcceptedByBeslutter={false}
+      getAksjonspunkterOpenStatus={sinon.spy()}
+      findBehandlingsprosessIcon={sinon.spy()}
+      getBehandlingspunkterStatus={sinon.spy()}
+      getBehandlingspunkterTitleCodes={sinon.spy()}
     />);
 
     expect(wrapper.find(BehandlingspunktIcon)).to.have.length(1);
@@ -27,6 +31,10 @@ describe('<BehandlingsprosessPanel>', () => {
       selectBehandlingspunktCallback={sinon.spy()}
       isSelectedBehandlingHenlagt={false}
       notAcceptedByBeslutter={false}
+      getAksjonspunkterOpenStatus={sinon.spy()}
+      findBehandlingsprosessIcon={sinon.spy()}
+      getBehandlingspunkterStatus={sinon.spy()}
+      getBehandlingspunkterTitleCodes={sinon.spy()}
     />);
 
     expect(wrapper.find(BehandlingspunktIcon)).to.have.length(2);
@@ -40,6 +48,10 @@ describe('<BehandlingsprosessPanel>', () => {
       selectBehandlingspunktCallback={selectCallback}
       isSelectedBehandlingHenlagt={false}
       notAcceptedByBeslutter={false}
+      getAksjonspunkterOpenStatus={sinon.spy()}
+      findBehandlingsprosessIcon={sinon.spy()}
+      getBehandlingspunkterStatus={sinon.spy()}
+      getBehandlingspunkterTitleCodes={sinon.spy()}
     />);
 
     const icon = wrapper.find(BehandlingspunktIcon);
@@ -55,6 +67,10 @@ describe('<BehandlingsprosessPanel>', () => {
       selectBehandlingspunktCallback={selectCallback}
       isSelectedBehandlingHenlagt={false}
       notAcceptedByBeslutter={false}
+      getAksjonspunkterOpenStatus={sinon.spy()}
+      findBehandlingsprosessIcon={sinon.spy()}
+      getBehandlingspunkterStatus={sinon.spy()}
+      getBehandlingspunkterTitleCodes={sinon.spy()}
     />);
 
     const icon = wrapper.find(BehandlingspunktIcon);

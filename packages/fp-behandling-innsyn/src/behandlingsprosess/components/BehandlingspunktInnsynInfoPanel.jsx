@@ -27,8 +27,6 @@ export const BehandlingspunktInnsynInfoPanel = ({ // NOSONAR Kompleksitet er hø
   selectedBehandlingspunkt,
   submitCallback,
   previewCallback,
-  previewManueltBrevCallback,
-  previewVedtakCallback,
   openAksjonspunkt,
   readOnly,
   isApSolvable,
@@ -42,8 +40,6 @@ export const BehandlingspunktInnsynInfoPanel = ({ // NOSONAR Kompleksitet er hø
         behandlingspunkt={selectedBehandlingspunkt}
         readOnly={readOnly}
         previewCallback={previewCallback}
-        previewVedtakCallback={previewVedtakCallback}
-        previewManueltBrevCallback={previewManueltBrevCallback}
         submitCallback={submitCallback}
       />
 
@@ -59,8 +55,6 @@ BehandlingspunktInnsynInfoPanel.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   openAksjonspunkt: PropTypes.bool.isRequired,
   previewCallback: PropTypes.func.isRequired,
-  previewVedtakCallback: PropTypes.func.isRequired,
-  previewManueltBrevCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   isApSolvable: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,

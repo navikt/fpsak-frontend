@@ -13,7 +13,6 @@ export const InnsynBehandlingApiKeys = {
   HENLEGG_BEHANDLING: 'HENLEGG_BEHANDLING',
   NY_BEHANDLENDE_ENHET: 'NY_BEHANDLENDE_ENHET',
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
-  SAVE_OVERSTYRT_AKSJONSPUNKT: 'SAVE_OVERSTYRT_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
   SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
 };
@@ -32,7 +31,6 @@ const endpoints = new RestApiConfigBuilder()
 
   /* /api/behandling */
   .withAsyncPost('/api/behandling/aksjonspunkt', InnsynBehandlingApiKeys.SAVE_AKSJONSPUNKT)
-  .withAsyncPost('/api/behandling/aksjonspunkt/overstyr', InnsynBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT)
 
   /* /api/brev */
   .withPostAndOpenBlob('/api/brev/forhandsvis', InnsynBehandlingApiKeys.PREVIEW_MESSAGE)

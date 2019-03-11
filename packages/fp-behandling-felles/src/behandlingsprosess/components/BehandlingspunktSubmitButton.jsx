@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting } from 'behandlingInnsyn/src/behandlingForm';
 import { isRequiredMessage, ariaCheck } from '@fpsak-frontend/utils';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 
@@ -14,8 +13,6 @@ const isDisabled = (isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields
   }
   return (!isDirty && hasEmptyRequiredFields) || hasEmptyRequiredFields;
 };
-
-// TODO (TOR) Flytt til fp-behandling-felles
 
 /**
  * BehandlingspunktSubmitButton
@@ -61,9 +58,9 @@ const mapStateToProps = (state, ownProps) => {
   const fNames = ownProps.formNames ? ownProps.formNames : [ownProps.formName];
   const formNames = fNames.map(f => (f.includes('.') ? f.substr(f.lastIndexOf('.') + 1) : f));
   return {
-    isSubmitting: formNames.some(formName => isBehandlingFormSubmitting(formName)(state)),
-    isDirty: ownProps.isDirty ? ownProps.isDirty : formNames.some(formName => isBehandlingFormDirty(formName)(state)),
-    hasEmptyRequiredFields: formNames.some(formName => hasBehandlingFormErrorsOfType(formName, isRequiredMessage())(state)),
+    isSubmitting: formNames.some(formName => ownProps.isBehandlingFormSubmitting(formName)(state)),
+    isDirty: ownProps.isDirty ? ownProps.isDirty : formNames.some(formName => ownProps.isBehandlingFormDirty(formName)(state)),
+    hasEmptyRequiredFields: formNames.some(formName => ownProps.hasBehandlingFormErrorsOfType(formName, isRequiredMessage())(state)),
   };
 };
 

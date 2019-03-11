@@ -7,7 +7,10 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingInnsyn/src/behandlingForm';
+import {
+  isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, behandlingForm, behandlingFormValueSelector,
+} from 'behandlingInnsyn/src/behandlingForm';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import {
   getAksjonspunkter,
   getBehandlingInnsynDokumenter,
@@ -19,8 +22,6 @@ import {
   FadingPanel, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-
-import BehandlingspunktSubmitButton from 'behandlingInnsyn/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
   hasValidText, maxLength, minLength, requiredIfNotPristine, getLanguageCodeFromSprakkode, decodeHtmlEntity,
@@ -122,6 +123,9 @@ export const InnsynVedtakFormImpl = ({
               formName={formProps.form}
               isReadOnly={readOnly}
               isSubmittable
+              isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+              isBehandlingFormDirty={isBehandlingFormDirty}
+              hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
             />
           </Column>
           )}

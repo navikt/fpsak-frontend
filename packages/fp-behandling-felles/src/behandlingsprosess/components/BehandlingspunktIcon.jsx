@@ -5,11 +5,6 @@ import { Undertekst, Element } from 'nav-frontend-typografi';
 import { injectIntl, intlShape } from 'react-intl';
 import classnames from 'classnames/bind';
 import { Image } from '@fpsak-frontend/shared-components';
-import { getBehandlingHenlagt } from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
-import findBehandlingsprosessIcon from 'behandlingInnsyn/src/behandlingsprosess/statusIconHelper';
-import {
-  getBehandlingspunkterStatus, getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus,
-} from 'behandlingInnsyn/src/behandlingsprosess/behandlingsprosessInnsynSelectors';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import styles from './behandlingspunktIcon.less';
@@ -19,8 +14,6 @@ const classNames = classnames.bind(styles);
 const getCallback = (
   isIkkeVurdert, behandlingspunkt, selectBehandlingspunktCallback,
 ) => () => (isIkkeVurdert ? undefined : selectBehandlingspunktCallback(behandlingspunkt));
-
-// TODO (TOR) Flytt til fp-behandling-felles
 
 /*
  * BehandlingspunktIcon
@@ -36,6 +29,7 @@ export const BehandlingspunktIcon = ({
   status,
   hasOpenAksjonspunkt,
   selectBehandlingspunktCallback,
+  findBehandlingsprosessIcon,
 }) => {
   const isIkkeVurdert = status === vilkarUtfallType.IKKE_VURDERT && !hasOpenAksjonspunkt;
   const title = intl.formatMessage({ id: titleCode });
@@ -65,13 +59,13 @@ BehandlingspunktIcon.propTypes = {
   status: PropTypes.string.isRequired,
   hasOpenAksjonspunkt: PropTypes.bool.isRequired,
   selectBehandlingspunktCallback: PropTypes.func.isRequired,
+  findBehandlingsprosessIcon: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, initialProps) => ({
-  isSelectedBehandlingHenlagt: getBehandlingHenlagt(state),
-  status: getBehandlingspunkterStatus(state)[initialProps.behandlingspunkt],
-  titleCode: getBehandlingspunkterTitleCodes(state)[initialProps.behandlingspunkt],
-  hasOpenAksjonspunkt: getAksjonspunkterOpenStatus(state)[initialProps.behandlingspunkt],
+  status: initialProps.getBehandlingspunkterStatus(state)[initialProps.behandlingspunkt],
+  titleCode: initialProps.getBehandlingspunkterTitleCodes(state)[initialProps.behandlingspunkt],
+  hasOpenAksjonspunkt: initialProps.getAksjonspunkterOpenStatus(state)[initialProps.behandlingspunkt],
 });
 
 export default injectIntl(connect(mapStateToProps)(BehandlingspunktIcon));

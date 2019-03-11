@@ -1,14 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import Panel from 'nav-frontend-paneler';
 
-import { getBehandlingHenlagt } from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
 import BehandlingspunktIcon from './BehandlingspunktIcon';
 
 import styles from './behandlingsprosessPanel.less';
-
-// TODO (TOR) Flytt til fp-behandling-felles
 
 /*
  * BehandlingsprosessPanel
@@ -16,11 +12,15 @@ import styles from './behandlingsprosessPanel.less';
  * Presentasjonskomponent. Viser behandlingspunkt-ikonene som lar den NAV-ansatte velge behandingspunkt.
  * I tillegg vises navn og merknad knyttet til behandlingspunktet.
  */
-export const BehandlingsprosessPanel = ({
+const BehandlingsprosessPanel = ({
   behandlingspunkter,
   selectedBehandlingspunkt,
   selectBehandlingspunktCallback,
   isSelectedBehandlingHenlagt,
+  findBehandlingsprosessIcon,
+  getBehandlingspunkterStatus,
+  getBehandlingspunkterTitleCodes,
+  getAksjonspunkterOpenStatus,
   children,
 }) => (
   <Panel className={styles.container}>
@@ -31,6 +31,10 @@ export const BehandlingsprosessPanel = ({
         isSelectedBehandlingspunkt={bp === selectedBehandlingspunkt}
         isSelectedBehandlingHenlagt={isSelectedBehandlingHenlagt}
         selectBehandlingspunktCallback={selectBehandlingspunktCallback}
+        findBehandlingsprosessIcon={findBehandlingsprosessIcon}
+        getBehandlingspunkterStatus={getBehandlingspunkterStatus}
+        getBehandlingspunkterTitleCodes={getBehandlingspunkterTitleCodes}
+        getAksjonspunkterOpenStatus={getAksjonspunkterOpenStatus}
       />
     ))
       }
@@ -46,6 +50,10 @@ BehandlingsprosessPanel.propTypes = {
   behandlingspunkter: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectedBehandlingspunkt: PropTypes.string,
   selectBehandlingspunktCallback: PropTypes.func.isRequired,
+  findBehandlingsprosessIcon: PropTypes.func.isRequired,
+  getBehandlingspunkterStatus: PropTypes.func.isRequired,
+  getBehandlingspunkterTitleCodes: PropTypes.func.isRequired,
+  getAksjonspunkterOpenStatus: PropTypes.func.isRequired,
   isSelectedBehandlingHenlagt: PropTypes.bool,
   children: PropTypes.element,
 };
@@ -56,8 +64,4 @@ BehandlingsprosessPanel.defaultProps = {
   children: undefined,
 };
 
-const mapStateToProps = state => ({
-  isSelectedBehandlingHenlagt: getBehandlingHenlagt(state),
-});
-
-export default connect(mapStateToProps)(BehandlingsprosessPanel);
+export default BehandlingsprosessPanel;

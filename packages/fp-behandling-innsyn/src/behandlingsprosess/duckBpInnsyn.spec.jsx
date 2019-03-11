@@ -8,7 +8,7 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import innsynBehandlingApi, { reduxRestApi } from '../data/innsynBehandlingApi';
 import {
   behandlingsprosessReducer, resetBehandlingspunkter, setSelectedBehandlingspunktNavn,
-  resolveProsessAksjonspunkter, overrideProsessAksjonspunkter,
+  resolveProsessAksjonspunkter,
 } from './duckBpInnsyn';
 
 const middlewares = [thunk];
@@ -31,7 +31,6 @@ describe('Behandlingsprosess-reducer', () => {
 
   it('skal returnere initial state', () => {
     expect(behandlingsprosessReducer(undefined, {})).to.eql({
-      overrideBehandlingspunkter: [],
       selectedBehandlingspunktNavn: undefined,
       resolveProsessAksjonspunkterStarted: false,
       resolveProsessAksjonspunkterSuccess: false,
@@ -40,14 +39,12 @@ describe('Behandlingsprosess-reducer', () => {
 
   it('skal resette behandlingspunkter til opprinnelig state, men ikke selectedBehandlingspunktNavn', () => {
     const manipulertState = {
-      overrideBehandlingspunkter: [{ test: 'test' }],
       selectedBehandlingspunktNavn: 'askjlhd',
       resolveProsessAksjonspunkterStarted: true,
       resolveProsessAksjonspunkterSuccess: true,
     };
 
     expect(behandlingsprosessReducer(manipulertState, resetBehandlingspunkter())).to.eql({
-      overrideBehandlingspunkter: [],
       selectedBehandlingspunktNavn: 'askjlhd',
       resolveProsessAksjonspunkterStarted: false,
       resolveProsessAksjonspunkterSuccess: false,
@@ -58,7 +55,6 @@ describe('Behandlingsprosess-reducer', () => {
     const behandlingspunkt = setSelectedBehandlingspunktNavn('test');
 
     expect(behandlingsprosessReducer(undefined, behandlingspunkt)).to.eql({
-      overrideBehandlingspunkter: [],
       selectedBehandlingspunktNavn: 'test',
       resolveProsessAksjonspunkterStarted: false,
       resolveProsessAksjonspunkterSuccess: false,
@@ -81,7 +77,6 @@ describe('Behandlingsprosess-reducer', () => {
 
         const stateAfterFetchStarted = behandlingsprosessReducer(undefined, actions[0]);
         expect(stateAfterFetchStarted).to.eql({
-          overrideBehandlingspunkter: [],
           selectedBehandlingspunktNavn: undefined,
           resolveProsessAksjonspunkterStarted: true,
           resolveProsessAksjonspunkterSuccess: false,
@@ -89,71 +84,6 @@ describe('Behandlingsprosess-reducer', () => {
 
         const stateAfterFetchFinished = behandlingsprosessReducer(undefined, actions[2]);
         expect(stateAfterFetchFinished).to.eql({
-          overrideBehandlingspunkter: [],
-          selectedBehandlingspunktNavn: undefined,
-          resolveProsessAksjonspunkterStarted: false,
-          resolveProsessAksjonspunkterSuccess: true,
-        });
-      });
-  });
-
-  it('skal overstyre aksjonspunkter', () => {
-    mockAxios
-      .onPost(innsynBehandlingApi.SAVE_OVERSTYRT_AKSJONSPUNKT.path)
-      .reply(200, [{ personstatus: 'test' }]);
-
-    const store = mockStore();
-    const behandlingIdentifier = new BehandlingIdentifier('123', '456');
-
-    return store.dispatch(overrideProsessAksjonspunkter(behandlingIdentifier, [{ id: 1 }], false))
-      .catch(ignoreRestErrors)
-      .then(() => {
-        const actions = withoutRestActions(store.getActions());
-        expect(actions).to.have.length(3);
-
-        const stateAfterFetchStarted = behandlingsprosessReducer(undefined, actions[0]);
-        expect(stateAfterFetchStarted).to.eql({
-          overrideBehandlingspunkter: [],
-          selectedBehandlingspunktNavn: undefined,
-          resolveProsessAksjonspunkterStarted: true,
-          resolveProsessAksjonspunkterSuccess: false,
-        });
-
-        const stateAfterFetchFinished = behandlingsprosessReducer(undefined, actions[2]);
-        expect(stateAfterFetchFinished).to.eql({
-          overrideBehandlingspunkter: [],
-          selectedBehandlingspunktNavn: undefined,
-          resolveProsessAksjonspunkterStarted: false,
-          resolveProsessAksjonspunkterSuccess: true,
-        });
-      });
-  });
-
-  it('skal overstyre aksjonspunkter', () => {
-    mockAxios
-      .onPost(innsynBehandlingApi.SAVE_OVERSTYRT_AKSJONSPUNKT.path)
-      .reply(200, [{ personstatus: 'test' }]);
-
-    const store = mockStore();
-    const behandlingIdentifier = new BehandlingIdentifier('123', '456');
-
-    return store.dispatch(overrideProsessAksjonspunkter(behandlingIdentifier, [{ id: 1 }], false))
-      .catch(ignoreRestErrors)
-      .then(() => {
-        const actions = withoutRestActions(store.getActions());
-        expect(actions).to.have.length(3);
-
-        const stateAfterFetchStarted = behandlingsprosessReducer(undefined, actions[0]);
-        expect(stateAfterFetchStarted).to.eql({
-          overrideBehandlingspunkter: [],
-          selectedBehandlingspunktNavn: undefined,
-          resolveProsessAksjonspunkterStarted: true,
-          resolveProsessAksjonspunkterSuccess: false,
-        });
-
-        const stateAfterFetchFinished = behandlingsprosessReducer(undefined, actions[2]);
-        expect(stateAfterFetchFinished).to.eql({
-          overrideBehandlingspunkter: [],
           selectedBehandlingspunktNavn: undefined,
           resolveProsessAksjonspunkterStarted: false,
           resolveProsessAksjonspunkterSuccess: true,

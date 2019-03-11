@@ -20,6 +20,7 @@ describe('<BehandlingspunktIcon>', () => {
       status={vilkarUtfallType.IKKE_VURDERT}
       hasOpenAksjonspunkt
       selectBehandlingspunktCallback={sinon.spy()}
+      findBehandlingsprosessIcon={sinon.spy()}
     />);
 
     const image = wrapper.find(Image);
@@ -37,6 +38,7 @@ describe('<BehandlingspunktIcon>', () => {
       status={vilkarUtfallType.IKKE_VURDERT}
       hasOpenAksjonspunkt
       selectBehandlingspunktCallback={callback}
+      findBehandlingsprosessIcon={sinon.spy()}
     />);
 
     wrapper.find(Image).simulate('keyDown');
@@ -58,6 +60,7 @@ describe('<BehandlingspunktIcon>', () => {
       status={vilkarUtfallType.IKKE_VURDERT}
       hasOpenAksjonspunkt={false}
       selectBehandlingspunktCallback={callback}
+      findBehandlingsprosessIcon={sinon.spy()}
     />);
 
     wrapper.find(Image).simulate('keyDown');

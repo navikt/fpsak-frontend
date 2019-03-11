@@ -14,13 +14,15 @@ import {
   FadingPanel, ArrowBox, VerticalSpacer, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
 import { required, hasValidDate, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import innsynResultatTyperKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingInnsyn/src/behandlingsprosess/behandlingsprosessInnsynSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingInnsyn/src/behandlingForm';
+import {
+  isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, behandlingForm, behandlingFormValueSelector,
+} from 'behandlingInnsyn/src/behandlingForm';
 import {
   getBehandlingOnHoldDate, getBehandlingInnsynMottattDato, getBehandlingInnsynResultatType,
   getBehandlingInnsynVedtaksdokumentasjon, getBehandlingInnsynDokumenter,
@@ -28,9 +30,9 @@ import {
 import {
   getFilteredReceivedDocuments, getKodeverk, getSelectedSaksnummer, getAllDocuments,
 } from 'behandlingInnsyn/src/duckInnsyn';
-import BehandlingspunktSubmitButton from 'behandlingInnsyn/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
 import DocumentListInnsyn from './DocumentListInnsyn';
 import VedtakDocuments from './VedtakDocuments';
+
 
 /**
  * InnsynForm
@@ -115,6 +117,9 @@ export const InnsynFormImpl = ({
         textCode={sattPaVent ? 'SubmitButton.SettPåVent' : undefined}
         isReadOnly={readOnly}
         isSubmittable={!isSubmittable}
+        isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+        isBehandlingFormDirty={isBehandlingFormDirty}
+        hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
       />
     </form>
   </FadingPanel>

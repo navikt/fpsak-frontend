@@ -1,17 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
-
+import { FormattedMessage } from 'react-intl';
 
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
-import { FormattedMessage } from 'react-intl';
-
-
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import { TextAreaField } from '@fpsak-frontend/form';
 
-
-import BehandlingspunktSubmitButton from 'behandlingInnsyn/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
 import { InnsynVedtakFormImpl } from './InnsynVedtakForm';
 
 

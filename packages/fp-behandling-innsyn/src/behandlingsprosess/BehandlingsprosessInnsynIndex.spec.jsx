@@ -47,7 +47,6 @@ describe('<BehandlingsprosessInnsynIndex>', () => {
       location={{ pathname: 'test' }}
       push={sinon.spy()}
       resolveProsessAksjonspunkter={stub}
-      overrideProsessAksjonspunkter={sinon.spy()}
       fetchPreview={sinon.spy()}
       fetchPreviewKlageBrev={sinon.spy()}
       fetchVedtaksbrevPreview={sinon.spy()}
@@ -57,6 +56,7 @@ describe('<BehandlingsprosessInnsynIndex>', () => {
         kode: BehandlingType.FORSTEGANGSSOKNAD,
         name: 'FORSTEGANGSSOKNAD',
       }}
+      isSelectedBehandlingHenlagt={false}
     />);
 
     const panel = wrapper.find(BehandlingspunktInnsynInfoPanel);
@@ -136,7 +136,6 @@ describe('<BehandlingsprosessInnsynIndex>', () => {
       location={{ pathname: 'test' }}
       push={sinon.spy()}
       resolveProsessAksjonspunkter={stub}
-      overrideProsessAksjonspunkter={sinon.spy()}
       fetchPreview={sinon.spy()}
       fetchPreviewKlageBrev={sinon.spy()}
       fetchVedtaksbrevPreview={sinon.spy()}
@@ -146,6 +145,7 @@ describe('<BehandlingsprosessInnsynIndex>', () => {
         kode: BehandlingType.FORSTEGANGSSOKNAD,
         name: 'FORSTEGANGSSOKNAD',
       }}
+      isSelectedBehandlingHenlagt={false}
     />);
 
     const panel = wrapper.find(BehandlingspunktInnsynInfoPanel);
