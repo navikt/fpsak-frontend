@@ -234,7 +234,7 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                 mini
                 htmlType="button"
                 onClick={formProps.handleSubmit}
-                disabled={formProps.invalid || formProps.pristine || formProps.submitting}
+                disabled={formProps.pristine || formProps.submitting}
                 readOnly={readOnly}
                 spinner={formProps.submitting}
               >
