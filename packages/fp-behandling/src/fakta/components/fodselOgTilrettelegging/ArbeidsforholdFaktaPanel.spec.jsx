@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import FaktaGruppe from 'behandlingFpsak/src/fakta/components/FaktaGruppe';
 
 import { ArbeidsforholdFaktaPanel } from './ArbeidsforholdFaktaPanel';
