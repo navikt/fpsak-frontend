@@ -125,21 +125,23 @@ const transformValues = (values, selectedArbeidsforhold) => {
   return transformvalue;
 };
 
+export const buildInitialValues = values => ({
+  jordmorTilretteleggingFra: values.jordmor.tilretteleggingFra,
+  begrunnelse: values.begrunnelse,
+  kanGjennomfores: values.kanGjennomfores.kanGjennomfores,
+  kanGjennomforesDato: values.kanGjennomfores.dato,
+  kanIkkeGjennomfores: values.kanIkkeGjennomfores.kanIkkeGjennomfores,
+  kanIkkeGjennomforesDato: values.kanIkkeGjennomfores.dato,
+  redusertArbeid: values.redusertArbeid.redusertArbeid,
+  redusertArbeidDato: values.redusertArbeid.dato,
+  redusertArbeidStillingsprosent: values.redusertArbeid.stillingsprosent,
+});
+
 const mapStateToProps = (state, ownProps) => {
   const { selectedArbeidsforhold } = ownProps;
   // TODO: Tilpasse responsen fra backend
   return {
-    initialValues: {
-      jordmorTilretteleggingFra: selectedArbeidsforhold.jordmor.tilretteleggingFra,
-      begrunnelse: selectedArbeidsforhold.begrunnelse,
-      kanGjennomfores: selectedArbeidsforhold.kanGjennomfores.kanGjennomfores,
-      kanGjennomforesDato: selectedArbeidsforhold.kanGjennomfores.dato,
-      kanIkkeGjennomfores: selectedArbeidsforhold.kanIkkeGjennomfores.kanIkkeGjennomfores,
-      kanIkkeGjennomforesDato: selectedArbeidsforhold.kanIkkeGjennomfores.dato,
-      redusertArbeid: selectedArbeidsforhold.redusertArbeid.redusertArbeid,
-      redusertArbeidDato: selectedArbeidsforhold.redusertArbeid.dato,
-      redusertArbeidStillingsprosent: selectedArbeidsforhold.redusertArbeid.stillingsprosent,
-    },
+    initialValues: buildInitialValues(selectedArbeidsforhold),
     warn: values => validateWarning(values),
     onSubmit: values => ownProps.updateArbeidsforholdCallback(transformValues(values, selectedArbeidsforhold)),
   };

@@ -65,7 +65,7 @@ describe('<ArbeidsforholdFaktaPanel>', () => {
     const faktaGruppe = wrapper.find(FaktaGruppe);
     expect(faktaGruppe).has.length(1);
     expect(faktaGruppe.prop('titleCode')).to.eql('ArbeidsforholdFaktaPanel.Faktagruppe');
-    const arbforholdTable = faktaGruppe.find(ArbeidsforholdTable);
+    const arbforholdTable = wrapper.find(ArbeidsforholdTable);
     expect(arbforholdTable).has.length(1);
     const arbforholdInnhold = wrapper.find(ArbeidsforholdInnhold);
     expect(arbforholdInnhold).has.length(0);
@@ -82,7 +82,7 @@ describe('<ArbeidsforholdFaktaPanel>', () => {
     const faktaGruppe = wrapper.find(FaktaGruppe);
     expect(faktaGruppe).has.length(1);
     expect(faktaGruppe.prop('titleCode')).to.eql('ArbeidsforholdFaktaPanel.Faktagruppe');
-    const arbforholdTable = faktaGruppe.find(ArbeidsforholdTable);
+    const arbforholdTable = wrapper.find(ArbeidsforholdTable);
     expect(arbforholdTable).has.length(1);
     const arbforholdInnhold = wrapper.find(ArbeidsforholdInnhold);
     expect(arbforholdInnhold).has.length(1);
