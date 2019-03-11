@@ -210,8 +210,6 @@
   "FodselInfoPanel.VurderVilkarForSykdom": "Vurder om vilkår for sykdom er oppfylt",
   "FodselInfoPanel.KontrollerMotTerminbekreftelsen": "Kontroller terminbekreftelse",
   "FodselInfoPanel.KontrollerMotFodselsdokumentasjon": "Kontroller mot opplysningene fra fødselsdokumentasjonen",
-<<<<<<< HEAD
-=======
   
   "FodselOgTilretteleggingInfoPanel.FaktaFodselOgTilrettelegging": "Fakta om fødsel og tilrettelegging",
   "FodselOgTilretteleggingInfoPanel.Aksjonspunkt": "Kontroller opplysninger fra jordmor og arbeidsgiver",
@@ -231,7 +229,6 @@
   "ArbeidsforholdInnhold.Arbeidsgiver.KanIkkeGjennomfores": "c) kan ikke gjennomføres og arbeidstakeren må midlertidig gå ut av sitt arbeid fra og med",
   "ArbeidsforholdInnhold.TilretteleggingWarning": "OBS Ingen av valgene under er krysset av, du kan fortsatt gå videre...something..",
   
->>>>>>> PFP-5936 checkboxer
   "FeilutbetalingInfoPanel.FaktaFeilutbetaling": "Fakta om feilutbetaling",
   "FeilutbetalingInfoPanel.Revurdering": "Revurdering",
   "FeilutbetalingInfoPanel.Feilutbetaling": "Feilutbetaling",
