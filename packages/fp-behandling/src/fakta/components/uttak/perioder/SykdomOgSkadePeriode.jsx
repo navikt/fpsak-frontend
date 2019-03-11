@@ -10,7 +10,7 @@ import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncError
 import overforingArsakCodes from '@fpsak-frontend/kodeverk/src/overforingArsakCodes';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import {
-  FlexContainer, FlexRow, FlexColumn, VerticalSpacer,
+  FlexContainer, FlexRow, FlexColumn, VerticalSpacer, ArrowBox,
 } from '@fpsak-frontend/shared-components';
 import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import {
@@ -104,13 +104,13 @@ export const SykdomOgSkadePeriode = ({
           {resultat === uttakPeriodeVurdering.PERIODE_OK && !readOnly && (
           <div className={styles.addPeriodeSykdom}>
             <Column xs="12">
-              <div className={styles.arrowBox}>
+              <ArrowBox>
                 <FieldArray
                   name="dokumentertePerioder"
                   component={DokumentertePerioderPeriodePicker}
                   props={{ fraDato, tilDato, readOnly }}
                 />
-              </div>
+              </ArrowBox>
             </Column>
           </div>
           )}

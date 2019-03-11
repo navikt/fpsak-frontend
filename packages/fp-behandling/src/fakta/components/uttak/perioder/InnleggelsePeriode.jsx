@@ -13,6 +13,7 @@ import {
   FlexRow,
   FlexColumn,
   VerticalSpacer,
+  ArrowBox,
 } from '@fpsak-frontend/shared-components';
 import {
   RadioOption,
@@ -112,13 +113,13 @@ export const InnleggelsePeriode = ({
           {resultat === uttakPeriodeVurdering.PERIODE_OK && !readOnly && (
             <div className={styles.addPeriodeInnleggelse}>
               <Column>
-                <div className={styles.arrowBox}>
+                <ArrowBox>
                   <FieldArray
                     name="dokumentertePerioder"
                     component={DokumentertePerioderPeriodePicker}
                     props={{ fraDato, tilDato, readOnly }}
                   />
-                </div>
+                </ArrowBox>
               </Column>
             </div>
           )}

@@ -1,8 +1,5 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
-@marginRight: 8px;
-@removeBtnSize: 17px;
-
 .container {
   flex-wrap: wrap;
 }
@@ -32,97 +29,12 @@
   top: 94px;
 }
 
-.arrowBox {
-  background: @white;
-  border: 1px solid @navGra20;
-  border-radius: 4px;
-  margin-bottom: 12px;
-  margin-top: 10px;
-  padding: 12px 10px 10px;
-  position: relative;
-}
-
-.arrowBox:after,
-.arrowBox:before {
-  border: solid transparent;
-  bottom: 100%;
-  content: ' ';
-  height: 0;
-  left: 50px;
-  pointer-events: none;
-  position: absolute;
-  width: 0;
-}
-
-.arrowBox:after {
-  border-bottom-color: @white;
-  border-width: 11px;
-  margin-left: -11px;
-}
-
-.arrowBox:before {
-  border-bottom-color: @navGra20;
-  border-width: 12px;
-  margin-left: -12px;
-}
-
-.dateField {
-  margin-right: 16px;
-}
-
 .datePickerField {
   min-width: 136px;
 }
 
-.clearfix {
-  &:after {
-    clear: both;
-    content: '';
-    display: table;
-  }
-}
-
-.buttonRemove {
-  background: @white url('@fpsak-frontend/assets/images/remove.svg') no-repeat;
-  background-size: 100% 100%;
-  border: 0;
-  cursor: pointer;
-  display: inline-block;
-  height: @removeBtnSize;
-  margin-top: 20px;
-  padding: 0;
-  vertical-align: top;
-  width: @removeBtnSize;
-}
-
-.datesRowWithRemoveButton {
-  box-sizing: border-box;
-  display: inline-block;
-  margin-right: @marginRight;
-  margin-top: 5px;
-  width: ~'calc(100% - '@removeBtnSize~' - '@marginRight~')';
-}
-
 .notLastRow {
   margin-bottom: -8px;
-}
-
-.buttonAdd {
-  background: @white url('@fpsak-frontend/assets/images/add-circle.svg') no-repeat;
-  background-size: contain;
-  border: 0;
-  cursor: pointer;
-  display: inline-block;
-  height: 23px;
-  padding-left: 7px;
-  width: 100px;
-}
-
-.addCircleIcon,
-.imageText {
-  display: inline-block;
-  margin-right: 1ex;
-  vertical-align: text-bottom;
 }
 
 .addPeriode,
