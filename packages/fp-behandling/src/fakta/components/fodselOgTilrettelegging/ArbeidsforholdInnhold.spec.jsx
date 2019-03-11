@@ -33,7 +33,6 @@ describe('<ArbeidsforholdInnhold>', () => {
     },
     begrunnelse: '',
   };
-  
   it('skal vise faktaform med liste av arbeidsforhold readonly', () => {
     const wrapper = shallowWithIntl(<ArbeidsforholdInnhold
       readOnly
@@ -51,7 +50,6 @@ describe('<ArbeidsforholdInnhold>', () => {
     const avbrytKnapp = wrapper.find(Knapp);
     expect(avbrytKnapp).has.length(0);
   });
-  
   it('skal vise faktaform med liste av arbeidsforhold ikke readonly', () => {
     const wrapper = shallowWithIntl(<ArbeidsforholdInnhold
       readOnly={false}
@@ -69,7 +67,6 @@ describe('<ArbeidsforholdInnhold>', () => {
     const avbrytKnapp = wrapper.find(Knapp);
     expect(avbrytKnapp).has.length(1);
   });
-  
   it('skal sette opp initial values', () => {
     const initialValues = buildInitialValues(selectedArbeidsforhold);
     expect(initialValues).to.eql({
