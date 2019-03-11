@@ -361,6 +361,7 @@ export class UttakPerioder extends Component {
       kanOverstyre,
       hasRevurderingOvertyringAp,
       isManuellOverstyring,
+      uttakPeriodeVurderingTyper,
     } = this.props;
     const {
       periodeSlett, isNyPeriodeFormOpen, inntektsmeldingInfo, showModalSlettPeriode,
@@ -456,6 +457,7 @@ export class UttakPerioder extends Component {
             newPeriodeResetCallback={this.newPeriodeResetCallback}
             inntektsmeldinger={inntektsmeldinger}
             nyPeriodeDisabledDaysFom={nyPeriodeDisabledDaysFom}
+            uttakPeriodeVurderingTyper={uttakPeriodeVurderingTyper}
           />
         </div>
         )}
