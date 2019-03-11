@@ -30,13 +30,14 @@ const finnTomOpplysning = (opplysninger) => {
 const buildEndretFeltText = (endredeFelter) => {
   const årsakFelt = endredeFelter.filter(felt => felt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.FAKTA_OM_FEILUTBETALING_AARSAK.kode)[0];
   const underÅrsakFelt = endredeFelter.filter(felt => felt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.FAKTA_OM_FEILUTBETALING_UNDERAARSAK.kode)[0];
+  const underÅrsakFraVerdi = underÅrsakFelt ? underÅrsakFelt.fraVerdi : null;
+  const underÅrsakTilVerdi = underÅrsakFelt ? underÅrsakFelt.tilVerdi : null;
   const endret = endredeFelter.filter(felt => felt.fraVerdi !== null).length > 0;
 
   if (endret) {
     const årsakFraVerdi = årsakFelt.fraVerdi ? årsakFelt.fraVerdi : årsakFelt.tilVerdi;
-    const underÅrsakFraVerdi = underÅrsakFelt.fraVerdi ? underÅrsakFelt.fraVerdi : underÅrsakFelt.tilVerdi;
-    const fraVerdi = `${årsakFraVerdi} (${underÅrsakFraVerdi})`;
-    const tilVerdi = `${årsakFelt.tilVerdi} (${underÅrsakFelt.tilVerdi})`;
+    const fraVerdi = `${årsakFraVerdi} ${underÅrsakFraVerdi ? `(${underÅrsakFraVerdi})` : ''}`;
+    const tilVerdi = `${årsakFelt.tilVerdi} ${underÅrsakTilVerdi ? `(${underÅrsakTilVerdi})` : ''}`;
     return (
       <FormattedHTMLMessage
         id="Historikk.Template.11.endretFelt"
@@ -44,7 +45,7 @@ const buildEndretFeltText = (endredeFelter) => {
       />
     );
   }
-  const feltVerdi = `${årsakFelt.tilVerdi} ${underÅrsakFelt.tilVerdi ? `(${underÅrsakFelt.tilVerdi})` : ''}`;
+  const feltVerdi = `${årsakFelt.tilVerdi} ${underÅrsakTilVerdi ? `(${underÅrsakTilVerdi})` : ''}`;
   return (
     <FormattedHTMLMessage
       id="Historikk.Template.11.sattFelt"
@@ -85,9 +86,9 @@ const HistorikkMalType11 = ({
       </div>
     ))
     }
-    {historikkinnslagDeler[0].begrunnelse && (
+    {historikkinnslagDeler[0].begrunnelseFritekst && (
       <BubbleText
-        bodyText={historikkinnslagDeler[0].begrunnelse}
+        bodyText={historikkinnslagDeler[0].begrunnelseFritekst}
         className="snakkeboble-panel__tekst"
       />
     )}

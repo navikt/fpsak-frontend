@@ -30,7 +30,7 @@ const FeilutbetalingPerioderForm = ({
           selectValues={årsaker.map(a => <option key={a.årsak} value={a.årsakKode}>{a.årsak}</option>)}
           validate={[required]}
           disabled={readOnly}
-          onChange={e => resetFields(elementId, e)}
+          onChange={() => resetFields(elementId, årsak)}
           bredde="m"
           label=""
         />
