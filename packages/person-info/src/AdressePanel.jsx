@@ -130,7 +130,8 @@ export const AdressePanel = ({
           </Normaltekst>
         </Column>
       </Row>
-    </div>);
+    </div>
+  );
   return <Panel className={styles.panel}>{content}</Panel>;
 };
 

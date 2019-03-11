@@ -17,7 +17,7 @@ const config = {
   performance: { hints: false },
 
   entry: [
-    'babel-polyfill',
+    '@babel/polyfill',
     APP_DIR + '/index.jsx',
   ],
   output: {

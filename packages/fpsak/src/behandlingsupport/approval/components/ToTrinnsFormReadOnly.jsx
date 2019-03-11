@@ -59,7 +59,8 @@ const godkjendAksjonspunkt = (aksjonspunkt) => {
           </div>
         )
       }
-    </div>);
+    </div>
+  );
 };
 /* eslint-enable react/no-array-index-key */
 
@@ -107,18 +108,14 @@ export const ToTrinnsFormReadOnlyImpl = ({ approvalList, getAksjonspunktText }) 
         return null;
       })
       }
-    </div>);
+    </div>
+  );
 };
 
 ToTrinnsFormReadOnlyImpl.propTypes = {
   approvalList: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   getAksjonspunktText: PropTypes.func.isRequired,
 };
-
-ToTrinnsFormReadOnlyImpl.defaultProps = {
-  data: [],
-};
-
 
 const mapStateToProps = state => ({
   getAksjonspunktText: getAksjonspunktTextSelector(state),

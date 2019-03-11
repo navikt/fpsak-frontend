@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import { inputMock, metaMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
-import { intlMock } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { inputMock, metaMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import renderNavField from './renderNavField';
 

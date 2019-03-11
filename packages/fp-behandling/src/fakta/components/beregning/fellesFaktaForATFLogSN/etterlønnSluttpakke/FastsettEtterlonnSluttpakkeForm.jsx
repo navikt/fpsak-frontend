@@ -8,6 +8,8 @@ import {
   required, parseCurrencyInput, formatCurrencyNoKr, removeSpacesFromNumber,
 } from '@fpsak-frontend/utils';
 
+import 'core-js/fn/array/flat-map';
+
 /**
  * FastsettEtterlønnSluttpakkeForm
  *

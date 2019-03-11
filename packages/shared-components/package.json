@@ -10,7 +10,7 @@
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "classnames": "^2.2.6",
-    "moment": "^2.22.2",
+    "moment": "^2.24.0",
     "nav-frontend-core": "4.0.8",
     "nav-frontend-grid": "1.0.20",
     "nav-frontend-grid-style": "0.2.18",
@@ -28,17 +28,17 @@
     "nav-frontend-spinner-style": "0.2.5",
     "nav-frontend-typografi": "2.0.10",
     "nav-frontend-typografi-style": "1.0.12",
-    "prop-types": "^15.6.2",
-    "react": "^16.6.3",
-    "react-day-picker": "^7.2.4",
-    "react-intl": "^2.7.2",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.4",
+    "react-day-picker": "^7.3.0",
+    "react-intl": "^2.8.0",
     "react-modal": "3.8.1",
-    "react-redux": "^5.1.1",
-    "redux-form": "^7.4.2"
+    "react-redux": "^5.1.1"
   },
   "devDependencies": {
+    "@fpsak-frontend/utils-test": "1.0.0",
     "chai": "^4.2.0",
-    "enzyme": "^3.7.0",
+    "enzyme": "^3.9.0",
     "sinon": "^5.0.10",
     "sinon-chai": "^3.2.0"
   }

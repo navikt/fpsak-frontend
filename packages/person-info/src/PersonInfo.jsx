@@ -51,7 +51,8 @@ const PersonInfo = ({
           <MerkePanel erDod={erDod} diskresjonskode={diskresjonskode} />
         </div>
       </div>
-    </div>);
+    </div>
+  );
   return medPanel ? <Panel>{content}</Panel> : content;
 };
 

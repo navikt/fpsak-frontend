@@ -1,11 +1,11 @@
 import { expect } from 'chai';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { lagStateMedAksjonspunkterOgFaktaOmBeregning } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
 import {
   buildInitialValuesVurderFaktaBeregning, getValidationVurderFaktaBeregning, transformValuesVurderFaktaBeregning,
   BEGRUNNELSE_FAKTA_TILFELLER_NAME,
 } from './VurderFaktaBeregningPanel';
-import { lagStateMedAksjonspunkterOgFaktaOmBeregning } from '../BeregningTestHelper';
 
 
 const {

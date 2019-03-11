@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import sinon from 'sinon';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { UttakActivity, initialValue } from './UttakActivity';
 
 describe('<UttakActivity>', () => {

@@ -26,15 +26,16 @@
     "nav-frontend-paneler-style": "0.3.14",
     "nav-frontend-typografi": "2.0.10",
     "nav-frontend-typografi-style": "1.0.12",
-    "prop-types": "^15.6.2",
-    "react": "^16.6.3",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.4",
     "react-collapse": "^4.0.3",
-    "react-intl": "^2.7.2",
+    "react-intl": "^2.8.0",
     "react-motion": "^0.5.2"
   },
   "devDependencies": {
+    "@fpsak-frontend/utils-test": "1.0.0",
     "chai": "^4.2.0",
-    "enzyme": "^3.7.0",
+    "enzyme": "^3.9.0",
     "sinon": "^5.0.10"
   }
 }

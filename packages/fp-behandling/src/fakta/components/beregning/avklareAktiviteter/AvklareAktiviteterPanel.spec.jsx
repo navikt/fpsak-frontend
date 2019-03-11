@@ -3,6 +3,8 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
+import { lagStateMedAksjonspunkterOgFaktaOmBeregning } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
+
 import { getBehandlingFormValues } from 'behandlingFpsak/src/behandlingForm';
 import {
   AvklareAktiviteterPanelImpl, buildInitialValuesAvklarAktiviteter,
@@ -12,7 +14,6 @@ import VentelonnVartpengerPanel, {
   AVKLAR_AKTIVITETER_VENTELONN_VARTPENGER_FIELDNAME,
 } from './VentelonnVartpengerPanel';
 import { formName } from '../BeregningFormUtils';
-import { lagStateMedAksjonspunkterOgFaktaOmBeregning } from '../BeregningTestHelper';
 
 const {
   AVKLAR_AKTIVITETER,

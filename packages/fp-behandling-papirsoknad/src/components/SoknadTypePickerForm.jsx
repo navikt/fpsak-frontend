@@ -124,13 +124,11 @@ SoknadTypePickerForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   selectedFagsakYtelseType: PropTypes.string,
   ytelseErSatt: PropTypes.bool.isRequired,
-  soknadData: PropTypes.instanceOf(SoknadData),
   submitSucceeded: PropTypes.bool.isRequired,
 };
 
 SoknadTypePickerForm.defaultProps = {
   selectedFagsakYtelseType: null,
-  soknadData: null,
 };
 
 const getSakstype = createSelector(

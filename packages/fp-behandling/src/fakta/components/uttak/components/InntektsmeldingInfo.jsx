@@ -173,8 +173,6 @@ export const InntektsmeldingInfo = ({
 
 InntektsmeldingInfo.defaultProps = {
   arbeidsgiver: {},
-  arbeidsprosentFraSøknad: undefined,
-  utsettelseArsak: undefined,
 };
 
 InntektsmeldingInfo.propTypes = {

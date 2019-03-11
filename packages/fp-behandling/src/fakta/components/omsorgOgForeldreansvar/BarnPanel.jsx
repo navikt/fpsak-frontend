@@ -86,7 +86,8 @@ export class BarnPanelImpl extends Component {
                   {' '}
                 </Element>
                 <VerticalSpacer sixteenPx />
-              </div>);
+              </div>
+            );
           }
 
           return (

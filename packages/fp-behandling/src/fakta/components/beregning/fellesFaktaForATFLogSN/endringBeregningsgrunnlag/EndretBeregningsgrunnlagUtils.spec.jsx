@@ -2,6 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { lagStateMedAksjonspunkterOgFaktaOmBeregning } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
 import { lonnsendringField }
   from 'behandlingFpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
 import { erNyoppstartetFLField }
@@ -14,7 +15,6 @@ import {
   finnFrilansFieldName,
   utledArbeidsforholdFieldName,
 } from '../vurderOgFastsettATFL/forms/VurderMottarYtelseUtils';
-import { lagStateMedAksjonspunkterOgFaktaOmBeregning } from '../../BeregningTestHelper';
 
 const {
   VURDER_FAKTA_FOR_ATFL_SN,

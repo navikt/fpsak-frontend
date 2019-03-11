@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
-import { MockFields } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { MockFields } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 
 import { RegistrerVirksomhetPanel } from './RegistrerVirksomhetPanel';

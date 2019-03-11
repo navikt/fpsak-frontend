@@ -82,7 +82,8 @@ const buildUttakText = aksjonspunkt => aksjonspunkt.uttakPerioder.map((uttakperi
 const buildOpptjeningText = aksjonspunkt => aksjonspunkt.opptjeningAktiviteter.map(aktivitet => (
   <OpptjeningTotrinnText
     aktivitet={aktivitet}
-  />));
+  />
+));
 
 const getTextFromAksjonspunktkode = (aksjonspunkt) => {
   const aksjonspunktTextId = totrinnskontrollaksjonspunktTextCodes[aksjonspunkt.aksjonspunktKode];

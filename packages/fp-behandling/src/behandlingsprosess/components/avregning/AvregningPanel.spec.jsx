@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
-import { reduxFormPropsMock } from '@fpsak-frontend/assets/testHelpers/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import sinon from 'sinon';
 import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
 import { AvregningPanelImpl, transformValues } from './AvregningPanel';

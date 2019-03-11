@@ -24,6 +24,7 @@ import { kodeverkPropType, arbeidsforholdBeregningProptype } from '@fpsak-fronte
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
 import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-frontend/kodeverk/src/inntektskategorier';
+import 'core-js/fn/array/flat-map';
 
 import { getUniqueListOfArbeidsforhold } from '../../ArbeidsforholdHelper';
 import {

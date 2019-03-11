@@ -4,7 +4,7 @@ import sinon from 'sinon';
 
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { shallowWithIntl } from '@fpsak-frontend/assets/testHelpers/intl-enzyme-test-helper';
+import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import ToTrinnsForm from 'behandlingsupport/approval/components/ToTrinnsForm';
 import ToTrinnsFormReadOnly from 'behandlingsupport/approval/components/ToTrinnsFormReadOnly';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';

@@ -1,16 +1,16 @@
 
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
-import { MockFieldsWithContent } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
+import { lagStateMedAksjonspunkterOgFaktaOmBeregning } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
+import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components';
 import { InputField, SelectField } from '@fpsak-frontend/form';
 import ArbeidsforholdField from './ArbeidsforholdField';
 import InntektFieldArray, { mapStateToProps, InntektFieldArrayImpl } from './InntektFieldArray';
-import { lagStateMedAksjonspunkterOgFaktaOmBeregning } from '../BeregningTestHelper';
 
 const arbeidsforhold1 = {
   arbeidsgiverNavn: 'Sopra Steria AS',

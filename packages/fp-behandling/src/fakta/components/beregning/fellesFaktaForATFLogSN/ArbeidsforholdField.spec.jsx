@@ -2,7 +2,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import { MockFieldsWithContent } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
+import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { InputField, SelectField } from '@fpsak-frontend/form';
 import { getUniqueListOfArbeidsforhold } from '../ArbeidsforholdHelper';
 import ArbeidsforholdField from './ArbeidsforholdField';

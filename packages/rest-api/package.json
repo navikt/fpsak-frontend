@@ -9,7 +9,7 @@
     "axios": "^0.18.0"
   },
   "devDependencies": {
-    "axios-mock-adapter": "^1.15.0",
+    "axios-mock-adapter": "^1.16.0",
     "chai": "^4.2.0",
     "sinon": "^5.0.10"
   }

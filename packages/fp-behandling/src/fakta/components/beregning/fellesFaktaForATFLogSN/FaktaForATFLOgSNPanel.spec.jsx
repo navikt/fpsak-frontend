@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ApiStateBuilder } from '@fpsak-frontend/assets/testHelpers/data-test-helper';
+import { ApiStateBuilder } from '@fpsak-frontend/utils-test/src/data-test-helper';
 import fpsakBehandlingApi from 'behandlingFpsak/src/data/fpsakBehandlingApi';
 import {
   FaktaForATFLOgSNPanelImpl,
