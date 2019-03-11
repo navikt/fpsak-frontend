@@ -5,14 +5,16 @@ import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import { behandlingForm, getBehandlingFormPrefix } from 'behandlingFpsak/src/behandlingForm';
 import {
-  getBehandlingVersjon, getUttakPerioder,
+  getBehandlingVersjon,
+  getUttakPerioder,
   getBehandlingYtelseFordeling,
+  getBehandlingType,
 } from 'behandlingFpsak/src/behandlingSelectors';
 import { getSelectedBehandlingId } from 'behandlingFpsak/src/duck';
 import { guid, dateFormat } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import behandlingTypeKodeverk from '@fpsak-frontend/kodeverk/src/behandlingType';
 import UttakPerioder from './UttakPerioder';
-
 import {
   sjekkOmfaktaOmUttakAksjonspunkt,
   sjekkArbeidsprosentOver100,
@@ -117,12 +119,14 @@ const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOS
   return errors;
 };
 
-const buildInitialValues = createSelector([getUttakPerioder, getBehandlingYtelseFordeling],
-  (perioder, ytelseFordeling) => {
+const buildInitialValues = createSelector(
+  [getUttakPerioder, getBehandlingYtelseFordeling, getBehandlingType],
+  (perioder, ytelseFordeling, behandlingType) => {
     const førsteUttaksDato = ytelseFordeling && ytelseFordeling.førsteUttaksDato ? ytelseFordeling.førsteUttaksDato : undefined;
+    const endringsDato = ytelseFordeling && ytelseFordeling.endringsDato ? ytelseFordeling.endringsDato : undefined;
     if (perioder) {
-      return ({
-        førsteUttaksDato,
+      return {
+        førsteUttaksDato: behandlingType.kode !== behandlingTypeKodeverk.FORSTEGANGSSOKNAD ? førsteUttaksDato : endringsDato,
         perioder: perioder.map(periode => ({
           ...periode,
           id: guid(),
@@ -130,11 +134,12 @@ const buildInitialValues = createSelector([getUttakPerioder, getBehandlingYtelse
           updated: false,
           isFromSøknad: true,
         })),
-      });
+      };
     }
 
     return undefined;
-  });
+  },
+);
 
 const getOriginalPeriodeId = (origPeriode) => {
   if (origPeriode) {
