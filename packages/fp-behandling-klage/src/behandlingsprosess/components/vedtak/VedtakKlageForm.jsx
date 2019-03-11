@@ -4,17 +4,18 @@ import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
+import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+
+import { FadingPanel, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
 import {
   isBehandlingStatusReadOnly, getBehandlingStatus, getBehandlingsresultat, getBehandlingKlageVurdering,
 } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingKlage/src/behandlingForm';
-import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
-import VedtakKlageSubmitPanel from 'behandlingKlage/src/behandlingsprosess/components/vedtak/klage/VedtakKlageSubmitPanel';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import { FadingPanel, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import VedtakKlageSubmitPanel from './VedtakKlageSubmitPanel';
 
 export const VEDTAK_KLAGE_FORM_NAME = 'VEDTAK_KLAGE_FORM';
 

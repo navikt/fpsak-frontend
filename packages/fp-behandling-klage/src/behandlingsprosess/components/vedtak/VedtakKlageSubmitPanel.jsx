@@ -2,16 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { getBehandlingIsOnHold } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import classNames from 'classnames';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Row, Column } from 'nav-frontend-grid';
 
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { medholdIKlage } from '../VedtakHelper';
 
-import styles from '../vedtakForm.less';
+import { getBehandlingIsOnHold } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
+
+import styles from './vedtakKlageSubmitPanel.less';
+
+const medholdIKlage = klageVurderingResultat => (klageVurderingResultat && klageVurderingResultat.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE);
 
 export const isMedholdIKlage = (
   klageVurderingResultatNFP, klageVurderingResultatNK,
@@ -82,7 +84,7 @@ export const VedtakKlageSubmitPanelImpl = ({
           href=""
           onClick={previewBrev}
           onKeyDown={e => (e.keyCode === 13 ? previewBrev(e) : null)}
-          className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
+          className={classNames('lenke lenke--frittstaende')}
         >
           <FormattedMessage id="VedtakKlageForm.ForhandvisBrev" />
         </a>
