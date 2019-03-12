@@ -1,5 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
+import { FormattedMessage } from 'react-intl';
 
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
@@ -9,7 +10,7 @@ import {
 import { ArrowBox } from '@fpsak-frontend/shared-components';
 import { ArbeidsforholdCheckboxes } from './ArbeidsforholdCheckboxes';
 
-describe.only('<ArbeidsforholdCheckboxes>', () => {
+describe('<ArbeidsforholdCheckboxes>', () => {
   it('skal vise checkboxer når ingen valgt', () => {
     const wrapper = shallowWithIntl(<ArbeidsforholdCheckboxes
       intl={intlMock}
@@ -46,6 +47,8 @@ describe.only('<ArbeidsforholdCheckboxes>', () => {
     expect(datepicker).has.length(1);
     const stillingsprosent = wrapper.find(DecimalField);
     expect(stillingsprosent).has.length(0);
+    const warning = wrapper.find(FormattedMessage);
+    expect(warning).has.length(0);
   });
   it('skal vise checkboxer når ingen kan gjennomfores og redusert arbeid er valgt', () => {
     const wrapper = shallowWithIntl(<ArbeidsforholdCheckboxes
@@ -80,5 +83,21 @@ describe.only('<ArbeidsforholdCheckboxes>', () => {
     expect(datepicker).has.length(3);
     const stillingsprosent = wrapper.find(DecimalField);
     expect(stillingsprosent).has.length(1);
+  });
+  it('skal vise warning når ingen checkboxer er valgt', () => {
+    const wrapper = shallowWithIntl(<ArbeidsforholdCheckboxes
+      intl={intlMock}
+      kanGjennomfores={false}
+      kanIkkeGjennomfores={false}
+      redusertArbeid={false}
+      readOnly={false}
+      warning={{ permisjonsWarning: <FormattedMessage id="ArbeidsforholdInnhold.TilretteleggingWarning" /> }}
+    />);
+    const checkbox = wrapper.find(CheckboxField);
+    expect(checkbox).has.length(3);
+    const div = wrapper.find('div');
+    expect(div).has.length(1);
+    const warning = wrapper.find(FormattedMessage);
+    expect(warning).has.length(1);
   });
 });
