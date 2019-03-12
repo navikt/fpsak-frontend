@@ -1,14 +1,12 @@
 FROM openresty/openresty:alpine-fat
 LABEL maintainer="teamforeldrepenger"
 
-RUN apk add --no-cache bash gettext libintl openssl
+RUN apk add --no-cache --update bash gettext libintl openssl \
+    && luarocks install lua-resty-session \
+    && luarocks install lua-resty-http \
+    && luarocks install lua-resty-jwt \
+    && luarocks install lua-resty-openidc
 
-RUN ["luarocks", "install", "lua-resty-session"]
-RUN ["luarocks", "install", "lua-resty-http"]
-RUN ["luarocks", "install", "lua-resty-jwt"]
-RUN ["luarocks", "install", "lua-resty-openidc"]
-
-COPY docker/openidc.lua          /usr/local/openresty/lualib/resty/
 COPY docker/default-config.nginx /etc/nginx/conf.d/app.conf.template
 COPY docker/oidc_access.lua      /usr/local/openresty/nginx/
 COPY docker/start-nginx.sh       /usr/sbin/start-nginx
