@@ -22,10 +22,10 @@
     "less:lint": "stylelint \"packages/**/*.less\"",
     "doc": "react-asciidoc-generator ./packages/ -o ../../docs/generated/react.adoc --handlebar-template src/docs/asciidoc-template.handlebars",
     "docker:build": "docker build . -t fpfront -f ./docker/Dockerfile --build-arg HTTP_PROXY=$HTTP_PROXY --build-arg HTTPS_PROXY=$HTTP_PROXY",
-    "docker:start": "yarn docker:stop; yarn docker:build; docker run -d --env-file=./docker/.env --name fpfront --net=host fpfront",
+    "docker:start": "yarn docker:stop; yarn docker:build; docker run -d --env-file=./docker/.env --name fpfront -p 443:9000 fpfront",
     "docker:stop": "docker stop fpfront; docker rm fpfront",
     "redis:start": "docker stop redis; docker rm redis; docker run --name redis -p 6379:6379 -d redis",
-    "up": "docker-compose up -d",
+    "up": "docker-compose up -d --remove-orphans --build && wait-on http://localhost:8080/fpsak/internal/health/isReady",
     "down": "docker-compose down"
   },
   "workspaces": [
@@ -98,7 +98,8 @@
     "webpack": "^4.29.6",
     "webpack-cli": "3.2.3",
     "webpack-dev-server": "^3.2.1",
-    "webpack-merge": "^4.2.1"
+    "webpack-merge": "^4.2.1",
+    "wait-on": "^3.2.0"
   },
   "nyc": {
     "require": [

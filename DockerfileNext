@@ -1,0 +1,17 @@
+FROM navikt/nginx-spa-docker:latest
+# FPSAK spesifikk
+# Dette er den nye dockerfila som baserer seg på ferdigbygd baseimage.
+
+ENV APP_DIR="/app" \
+	APP_PATH_PREFIX="/fpsak" \
+	APP_CALLBACK_PATH="/fpsak/cb" \
+	APP_URL_FPTILBAKE="http://fptilbake" \
+	APP_URL_FPOPPDRAG="http://fpoppdrag" \
+	APP_URL_FPSAK="http://fpsak"
+
+#FPSAK spesifkk
+COPY dist /app/fpsak/
+
+#FPSAK spesifkk
+COPY public/proxy.nginx      /nginx/proxy.nginx
+EXPOSE 9090

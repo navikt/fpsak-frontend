@@ -1,0 +1,13 @@
+# Simple Proxy to backend
+location  /fpsak/api/ {
+    access_by_lua_file oidc_protected.lua;
+    proxy_pass "${APP_URL_FPSAK}/fpsak/api/";
+}
+
+
+# Simple Proxy to backend middlertidig fix frem til bedre løsning kommer på plass.
+location  /fpsak/oppgaveredirect {
+    access_by_lua_file oidc_protected.lua;
+    proxy_pass          "${APP_URL_FPSAK}/fpsak/oppgaveredirect";
+    proxy_redirect      "~*/fpsak/#/(.+)$" "$app_baseurl/fpsak/$1";
+}
