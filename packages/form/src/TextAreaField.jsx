@@ -14,14 +14,9 @@ import ReadOnlyField from './ReadOnlyField';
 class TextAreaWithBadge extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.bacon = 22;
     this.state = { controlled: props.value };
+    this.onChangeDebounce = debounce(value => props.onChange(value), 300);
   }
-
-  updateFoo = debounce((value) => { // this can also dispatch a redux action
-    const { onChange } = this.props;
-    onChange(value);
-  }, 300);
 
   handleInputChange = (event) => {
     const { value } = event.target;
@@ -30,7 +25,7 @@ class TextAreaWithBadge extends React.PureComponent {
       controlled: value,
     });
 
-    this.updateFoo(value);
+    this.onChangeDebounce(value);
   }
 
   render() {
@@ -40,6 +35,7 @@ class TextAreaWithBadge extends React.PureComponent {
       isEdited,
       ...otherProps
     } = this.props;
+    const { controlled } = this.state;
     return (
       <div className={badges ? styles.textAreaFieldWithBadges : null}>
         { badges
@@ -56,7 +52,7 @@ class TextAreaWithBadge extends React.PureComponent {
         <NavTextarea
           {...otherProps}
           onChange={this.handleInputChange}
-          value={this.state.controlled}
+          value={controlled}
         />
       </div>
     );
@@ -100,6 +96,8 @@ TextAreaWithBadge.propTypes = {
     title: PropTypes.string.isRequired,
   })),
   isEdited: PropTypes.bool,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 TextAreaWithBadge.defaultProps = {
