@@ -4,22 +4,45 @@ import { Field } from 'redux-form';
 import { Textarea as NavTextarea } from 'nav-frontend-skjema';
 import EtikettFokus from 'nav-frontend-etiketter';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-
+import debounce from 'lodash.debounce';
 import renderNavField from './renderNavField';
 import { labelPropType } from './Label';
 
 import styles from './textAreaField.less';
 import ReadOnlyField from './ReadOnlyField';
 
+class TextAreaWithBadge extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.bacon = 22;
+    this.state = { controlled: props.value };
+  }
 
-const TextAreaWithBadge = ({
-  badges,
-  intl,
-  isEdited,
-  ...otherProps
-}) => (
-  <div className={badges ? styles.textAreaFieldWithBadges : null}>
-    { badges
+  updateFoo = debounce((value) => { // this can also dispatch a redux action
+    const { onChange } = this.props;
+    onChange(value);
+  }, 300);
+
+  handleInputChange = (event) => {
+    const { value } = event.target;
+
+    this.setState({
+      controlled: value,
+    });
+
+    this.updateFoo(value);
+  }
+
+  render() {
+    const {
+      badges,
+      intl,
+      isEdited,
+      ...otherProps
+    } = this.props;
+    return (
+      <div className={badges ? styles.textAreaFieldWithBadges : null}>
+        { badges
     && (
     <div className={styles.etikettWrapper}>
       { badges.map(({ textId, type, title }) => (
@@ -30,9 +53,15 @@ const TextAreaWithBadge = ({
     </div>
     )
     }
-    <NavTextarea {...otherProps} />
-  </div>
-);
+        <NavTextarea
+          {...otherProps}
+          onChange={this.handleInputChange}
+          value={this.state.controlled}
+        />
+      </div>
+    );
+  }
+}
 
 const renderNavTextArea = renderNavField(injectIntl(TextAreaWithBadge));
 

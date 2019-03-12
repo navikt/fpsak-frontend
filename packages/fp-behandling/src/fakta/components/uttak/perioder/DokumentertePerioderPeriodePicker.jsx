@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
 
@@ -15,7 +15,7 @@ const periode = {
   tom: '',
 };
 
-class DokumentertePerioderPeriodePicker extends Component {
+class DokumentertePerioderPeriodePicker extends PureComponent {
   componentWillMount() {
     const { fields, fraDato, tilDato } = this.props;
     if (fields.length === 0) {
