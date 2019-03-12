@@ -298,6 +298,7 @@ const transformValues = (values, aksjonspunkter, årsaker) => {
           årsak: {
             årsakKode: periode.årsak,
             årsak: feilutbetalingÅrsak.årsak,
+            kodeverk: feilutbetalingÅrsak.kodeverk,
             underÅrsaker: feilutbetalingUnderÅrsak ? [feilutbetalingUnderÅrsak] : [],
           },
         };
