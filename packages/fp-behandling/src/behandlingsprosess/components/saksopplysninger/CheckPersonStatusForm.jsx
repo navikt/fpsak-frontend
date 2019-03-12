@@ -13,9 +13,10 @@ import { required, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import {
   getPersonopplysning, getBehandlingRevurderingAvFortsattMedlemskapFom, getBehandlingHenlagt,
 } from 'behandlingFpsak/src/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
-import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
-import BehandlingspunktSubmitButton from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
+import {
+  behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingFpsak/src/behandlingForm';
+import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import { getKodeverk } from 'behandlingFpsak/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
@@ -88,7 +89,14 @@ export const CheckPersonStatusFormImpl = ({
       </div>
       <VerticalSpacer sixteenPx />
       <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
-      <BehandlingspunktSubmitButton formName={formProps.form} isReadOnly={readOnly} isSubmittable={!readOnlySubmitButton} />
+      <BehandlingspunktSubmitButton
+        formName={formProps.form}
+        isReadOnly={readOnly}
+        isSubmittable={!readOnlySubmitButton}
+        isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+        isBehandlingFormDirty={isBehandlingFormDirty}
+        hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+      />
     </form>
   </FadingPanel>
 );

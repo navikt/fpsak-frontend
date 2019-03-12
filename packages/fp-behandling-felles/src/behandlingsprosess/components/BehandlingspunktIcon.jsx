@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Undertekst, Element } from 'nav-frontend-typografi';
+import { Undertekst } from 'nav-frontend-typografi';
 import { injectIntl, intlShape } from 'react-intl';
 import classnames from 'classnames/bind';
 import { Image } from '@fpsak-frontend/shared-components';
@@ -43,7 +43,6 @@ export const BehandlingspunktIcon = ({
         imageSrcFunction={findBehandlingsprosessIcon(behandlingspunkt, status, isSelectedBehandlingspunkt, isSelectedBehandlingHenlagt, hasOpenAksjonspunkt)}
         onKeyDown={getCallback(isIkkeVurdert, behandlingspunkt, selectBehandlingspunktCallback)}
         onMouseDown={getCallback(isIkkeVurdert, behandlingspunkt, selectBehandlingspunktCallback)}
-        tooltip={{ header: <Element>{title}</Element> }}
       />
       <Undertekst className={styles.label}>{title}</Undertekst>
     </div>

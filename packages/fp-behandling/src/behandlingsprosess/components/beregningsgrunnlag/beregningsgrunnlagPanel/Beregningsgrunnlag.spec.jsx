@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import BehandlingspunktSubmitButton from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';

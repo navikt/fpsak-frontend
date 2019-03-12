@@ -30,6 +30,8 @@ import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg
 import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
 import styles from './iverksetterVedtakStatusModal.less';
 
+// TODO (TOR) Bør denne slåast i saman med komponent med same navn i fp-behandling-felles?
+
 /**
  * IverksetterVedtakStatusModal
  *

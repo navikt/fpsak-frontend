@@ -238,7 +238,7 @@ export class BehandlingsprosessKlageIndex extends Component {
           closeEvent={this.goToSearchPage}
           selectedBehandlingId={behandlingIdentifier.behandlingId}
           fagsakYtelseType={fagsakYtelseType}
-          resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
+          isVedtakSubmission={resolveProsessAksjonspunkterSuccess}
           behandlingStatus={behandlingStatus}
           behandlingsresultat={behandlingsresultat}
           aksjonspunkter={aksjonspunkter}

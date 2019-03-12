@@ -172,7 +172,7 @@ export class BehandlingsprosessInnsynIndex extends Component {
           closeEvent={this.goToSearchPage}
           selectedBehandlingId={behandlingIdentifier.behandlingId}
           fagsakYtelseType={fagsakYtelseType}
-          resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
+          isVedtakSubmission={resolveProsessAksjonspunkterSuccess}
           behandlingStatus={behandlingStatus}
           behandlingsresultat={behandlingsresultat}
           aksjonspunkter={aksjonspunkter}

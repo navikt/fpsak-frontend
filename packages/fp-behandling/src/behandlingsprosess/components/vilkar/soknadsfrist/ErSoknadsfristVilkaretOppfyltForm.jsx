@@ -19,13 +19,14 @@ import {
 import {
   getBehandlingsresultat, getBehandlingVilkar, getSoknad, getFamiliehendelse,
 } from 'behandlingFpsak/src/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
+import {
+  behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingFpsak/src/behandlingForm';
 import {
   ElementWrapper, FadingPanel, VerticalSpacer, DateLabel,
 } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
-import BehandlingspunktSubmitButton from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
+import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -142,7 +143,14 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
         )
       }
       <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
-      <BehandlingspunktSubmitButton formName={formProps.form} isReadOnly={readOnly} isSubmittable={!readOnlySubmitButton} />
+      <BehandlingspunktSubmitButton
+        formName={formProps.form}
+        isReadOnly={readOnly}
+        isSubmittable={!readOnlySubmitButton}
+        isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+        isBehandlingFormDirty={isBehandlingFormDirty}
+        hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+      />
     </form>
   </FadingPanel>
 );

@@ -33,12 +33,12 @@ export class FatterVedtakStatusModal extends Component {
 
   render() {
     const {
-      intl, showModal, closeEvent, infoTextCode, altImgTextCode, resolveProsessAksjonspunkterSuccess, modalDescriptionTextCode,
+      intl, showModal, closeEvent, infoTextCode, altImgTextCode, isVedtakSubmission, modalDescriptionTextCode,
     } = this.props;
     if (showModal !== undefined) {
       this.showModal = showModal;
     } else if (!this.showModal) {
-      this.showModal = resolveProsessAksjonspunkterSuccess;
+      this.showModal = isVedtakSubmission;
     }
 
     return (
@@ -50,6 +50,7 @@ export class FatterVedtakStatusModal extends Component {
         onRequestClose={closeEvent}
         shouldCloseOnOverlayClick={false}
         ariaHideApp={false}
+        style={{ overlay: { zIndex: 3000 } }}
       >
         <Row>
           <Column xs="1">
@@ -83,13 +84,14 @@ FatterVedtakStatusModal.propTypes = {
   infoTextCode: PropTypes.string.isRequired,
   altImgTextCode: PropTypes.string.isRequired,
   modalDescriptionTextCode: PropTypes.string.isRequired,
-  resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
+  isVedtakSubmission: PropTypes.bool,
   intl: intlShape.isRequired,
   showModal: PropTypes.bool,
 };
 
 FatterVedtakStatusModal.defaultProps = {
   showModal: undefined,
+  isVedtakSubmission: false,
 };
 
 const hasOpenAksjonspunktForVedtakUtenTotrinnskontroll = (aksjonspunkter = []) => aksjonspunkter
