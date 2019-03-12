@@ -14,7 +14,7 @@ import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
-} from 'behandlingInnsyn/src/behandlingForm';
+} from 'behandlingKlage/src/behandlingForm';
 import { getAvsluttedeBehandlinger } from 'behandlingKlage/src/duckKlage';
 import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 

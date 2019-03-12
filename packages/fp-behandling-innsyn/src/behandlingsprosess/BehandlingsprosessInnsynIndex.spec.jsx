@@ -44,13 +44,10 @@ describe('<BehandlingsprosessInnsynIndex>', () => {
       behandlingspunkter={[]}
       selectedBehandlingspunkt={null}
       resetBehandlingspunkter={sinon.spy()}
-      saveKlage={sinon.spy()}
-      resolveKlageTemp={sinon.spy()}
       location={{ pathname: 'test' }}
       push={sinon.spy()}
       resolveProsessAksjonspunkter={stub}
       fetchPreview={sinon.spy()}
-      fetchPreviewKlageBrev={sinon.spy()}
       fetchVedtaksbrevPreview={sinon.spy()}
       dispatchSubmitFailed={sinon.spy()}
       haveSentVarsel
@@ -147,13 +144,10 @@ describe('<BehandlingsprosessInnsynIndex>', () => {
       behandlingspunkter={[]}
       selectedBehandlingspunkt={null}
       resetBehandlingspunkter={sinon.spy()}
-      saveKlage={sinon.spy()}
-      resolveKlageTemp={sinon.spy()}
       location={{ pathname: 'test' }}
       push={sinon.spy()}
       resolveProsessAksjonspunkter={stub}
       fetchPreview={sinon.spy()}
-      fetchPreviewKlageBrev={sinon.spy()}
       fetchVedtaksbrevPreview={sinon.spy()}
       dispatchSubmitFailed={sinon.spy()}
       haveSentVarsel

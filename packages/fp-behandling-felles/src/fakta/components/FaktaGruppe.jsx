@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
-import { getMerknaderFraBeslutter } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+
 import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 const Wrapper = ({
@@ -20,8 +20,6 @@ Wrapper.propTypes = {
   withoutBorder: PropTypes.bool.isRequired,
   className: PropTypes.string.isRequired,
 };
-
-// TODO (TOR) Same som for andre behandlingar. Flytt til fp-behandling-felles?
 
 /**
  * FaktaGruppe
@@ -55,13 +53,12 @@ FaktaGruppeImpl.propTypes = {
 };
 
 const mapStateToProps = (state, props) => ({
-  error: !!(props.aksjonspunktCode && getMerknaderFraBeslutter(props.aksjonspunktCode)(state).notAccepted),
+  error: !!(props.merknaderFraBeslutter && props.merknaderFraBeslutter.notAccepted),
 });
 
 const FaktaGruppe = connect(mapStateToProps)(FaktaGruppeImpl);
 
 FaktaGruppe.propTypes = {
-  aksjonspunktCode: PropTypes.string,
   titleCode: PropTypes.string,
   children: PropTypes.node,
   withoutBorder: PropTypes.bool,
@@ -69,8 +66,6 @@ FaktaGruppe.propTypes = {
 };
 
 FaktaGruppe.defaultProps = {
-  /** Hvilket aksjonspunkt gruppen tilhører */
-  aksjonspunktCode: null,
   titleCode: '',
   children: null,
   withoutBorder: false,
