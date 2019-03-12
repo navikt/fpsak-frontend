@@ -70,7 +70,7 @@ const HistorikkMalType11 = ({
       </Element>
     )
     }
-    {historikkinnslagDeler.map((historikkinnslagDel, index) => (
+    {historikkinnslagDeler.map((historikkinnslagDel, index) => (historikkinnslagDel.endredeFelter ? (
       <div key={`historikkinnslagDel${index + 1}`}>
         <FormattedHTMLMessage
           id="Historikk.Template.11.FaktaFeilutbetalingPeriode"
@@ -84,7 +84,7 @@ const HistorikkMalType11 = ({
         </Element>
         <VerticalSpacer eightPx />
       </div>
-    ))
+    ) : null))
     }
     {historikkinnslagDeler[0].begrunnelseFritekst && (
       <BubbleText
