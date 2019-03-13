@@ -81,13 +81,19 @@ const hentApTekst = (manuellBehandlingÅrsak, stonadskonto, aktiviteter) => {
   return texts;
 };
 
+const isPeriodDefined = (period) => {
+  if (period.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING) {
+    return false;
+  }
+  return true;
+};
+
 export class UttakTimeLineData extends Component {
   constructor() {
     super();
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
     this.splitPeriod = this.splitPeriod.bind(this);
-    this.isPeriodDefined = this.isPeriodDefined.bind(this);
 
     this.state = {
       showDelPeriodeModal: false,
@@ -114,14 +120,6 @@ export class UttakTimeLineData extends Component {
     });
   }
 
-  isPeriodDefined(period) {
-    if (period.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING
-      || period.tilknyttetStortinget) {
-      return false;
-    }
-    return true;
-  }
-
   splitPeriod(formValues) {
     const { uttaksresultatActivity, activityPanelName, callbackSetSelected: setSelected } = this.props;
     const otherThanUpdated = uttaksresultatActivity.filter(o => o.id !== formValues.periodeId);
@@ -131,7 +129,7 @@ export class UttakTimeLineData extends Component {
     const newTrekkDagerForstePeriode = calcDays(formValues.forstePeriode.fom, formValues.forstePeriode.tom);
     const newTrekkDagerAndrePeriode = calcDays(formValues.andrePeriode.fom, formValues.andrePeriode.tom);
     const currentId = formValues.periodeId;
-    const definedPeriod = this.isPeriodDefined(periodToUpdate[0]) || null;
+    const definedPeriod = isPeriodDefined(periodToUpdate[0]) || null;
     if (!periodToUpdate[0].begrunnelse) {
       forstePeriode.begrunnelse = ' ';
       andrePeriode.begrunnelse = ' ';
@@ -143,7 +141,7 @@ export class UttakTimeLineData extends Component {
     andrePeriode.fom = formValues.andrePeriode.fom;
     andrePeriode.tom = formValues.andrePeriode.tom;
     periodToUpdate[0].aktiviteter.forEach((period, index) => {
-      if (period.days || period.weeks || (formValues.gradertTrekkdager && this.isPeriodDefined(periodToUpdate[0]))) {
+      if (period.days || period.weeks || (formValues.gradertTrekkdager && isPeriodDefined(periodToUpdate[0]))) {
         const periodUtbetalningsgrad = !period.utbetalingsgrad ? (formValues.gradertTrekkdager * (1 - formValues.gradertProsentandelArbeid * 0.01))
           : formValues.gradertTrekkdager;
         const totalTrekkDagerUtenGradering = newTrekkDagerForstePeriode + newTrekkDagerAndrePeriode;
