@@ -82,7 +82,7 @@ const hentApTekst = (manuellBehandlingÅrsak, stonadskonto, aktiviteter) => {
 };
 
 const isPeriodDefined = (period) => {
-  if (period.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING) {
+  if (period && period.periodeResultatType && period.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING) {
     return false;
   }
   return true;
