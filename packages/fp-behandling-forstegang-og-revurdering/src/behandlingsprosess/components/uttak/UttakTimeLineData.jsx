@@ -47,7 +47,7 @@ const getCorrectEmptyArbeidsForhold = (preiodeTypeKode, arbeidsForhold) => {
 const hentApTekst = (manuellBehandlingÅrsak, stonadskonto, aktiviteter) => {
   const texts = [];
 
-  // TODO: Fix att hente fra korrekt plass
+  // TODO: Fix - ta bort 5001 med verdi fra kodeverk
   if (manuellBehandlingÅrsak.kode === '5001') {
     const arbeidsForhold = getCorrectEmptyArbeidsForhold(aktiviteter, stonadskonto);
     const arbeidsForholdMedNullDagerIgjen = arbeidsForhold.join();
