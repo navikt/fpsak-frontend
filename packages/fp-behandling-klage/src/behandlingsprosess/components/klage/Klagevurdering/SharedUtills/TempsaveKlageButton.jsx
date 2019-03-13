@@ -42,9 +42,12 @@ export const TempsaveKlageButtonImpl = ({
   readOnly,
 }) => {
   const lagringDisabled = isEqual(lastSavedVersionValues, transformValues(formValues));
-  const tempSave = () => {
+
+  const tempSave = (event) => {
+    event.preventDefault();
     saveKlage(transformValues(formValues, aksjonspunktCode), hasForeslaVedtakAp);
   };
+
   return (
     <div>
       {!readOnly && (
@@ -53,7 +56,7 @@ export const TempsaveKlageButtonImpl = ({
           htmlType="button"
           disabled={lagringDisabled}
           spinner={spinner}
-          onClick={(e) => { tempSave(e); }}
+          onClick={(event) => { tempSave(event); }}
         >
           <FormattedMessage id="Klage.ResolveKlage.TempSaveButton" />
         </Hovedknapp>
