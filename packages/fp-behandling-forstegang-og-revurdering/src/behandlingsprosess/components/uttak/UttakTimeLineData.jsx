@@ -81,12 +81,7 @@ const hentApTekst = (manuellBehandlingÅrsak, stonadskonto, aktiviteter) => {
   return texts;
 };
 
-const isPeriodDefined = (period) => {
-  if (period && period.periodeResultatType && period.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING) {
-    return false;
-  }
-  return true;
-};
+const isPeriodDefined = period => (!(period.periodeResultatType && period.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING));
 
 export class UttakTimeLineData extends Component {
   constructor() {
@@ -129,7 +124,7 @@ export class UttakTimeLineData extends Component {
     const newTrekkDagerForstePeriode = calcDays(formValues.forstePeriode.fom, formValues.forstePeriode.tom);
     const newTrekkDagerAndrePeriode = calcDays(formValues.andrePeriode.fom, formValues.andrePeriode.tom);
     const currentId = formValues.periodeId;
-    const definedPeriod = isPeriodDefined(periodToUpdate[0]) || null;
+    const definedPeriod = isPeriodDefined(periodToUpdate[0]);
     if (!periodToUpdate[0].begrunnelse) {
       forstePeriode.begrunnelse = ' ';
       andrePeriode.begrunnelse = ' ';
