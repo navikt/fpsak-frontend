@@ -34,15 +34,16 @@ export const TilleggsopplysningerPanel = ({
   <BorderBox>
     <FlexContainer>
       <FlexRow>
-        <FlexColumn>
-          <TextAreaField
-            name="tilleggsopplysninger"
-            label={intl.formatMessage({ id: 'Registrering.SokerensTilleggsopplysninger' })}
-            textareaClass={styles.textAreaSettings}
-            maxLength={maxLength}
-            validate={validate}
-            readOnly={readOnly}
-          />
+        <FlexColumn className={styles.halfWidth}>
+          <Fieldset legend={intl.formatMessage({ id: 'Registrering.SokerensTilleggsopplysninger' })}>
+            <TextAreaField
+              name="tilleggsopplysninger"
+              label=""
+              maxLength={maxLength}
+              validate={validate}
+              readOnly={readOnly}
+            />
+          </Fieldset>
         </FlexColumn>
         {localfeatureToggle
         && (

@@ -5,10 +5,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Fieldset } from 'nav-frontend-skjema';
-import { Row, Column } from 'nav-frontend-grid';
 
 import { ariaCheck, maxLength, hasValidText } from '@fpsak-frontend/utils';
-import { BorderBox } from '@fpsak-frontend/shared-components';
+import {
+  BorderBox, FlexContainer, FlexColumn, FlexRow,
+} from '@fpsak-frontend/shared-components';
 import { CheckboxField, TextAreaField } from '@fpsak-frontend/form';
 import LukkPapirsoknadModal from './LukkPapirsoknadModal';
 
@@ -44,78 +45,73 @@ export class LagreSoknadPanel extends Component {
     const { showLukkSoknadModal } = this.state;
 
     return (
-      <Row>
-        <Column xs="12">
-          <BorderBox>
-            <Fieldset legend={formatMessage({ id: 'Registrering.SaveApplication.Title' })}>
-              <Row>
-                <Column xs="12">
-                  <div className={styles.flexContainer}>
-                    <div className={styles.textFlex}>
-                      <TextAreaField
-                        name="kommentarEndring"
-                        label={formatMessage({ id: 'Registrering.SaveApplication.Description' })}
-                        textareaClass={styles.textAreaSettings}
-                        maxLength={1500}
-                        validate={[maxLength1500, hasValidText]}
-                        readOnly={readOnly}
-                      />
-                    </div>
-                    <div className={styles.buttonFlex}>
-                      <CheckboxField
-                        name="registrerVerge"
-                        onChange={this.toggleVerge}
-                        label={formatMessage({ id: 'Registrering.Verge' })}
-                        readOnly={readOnly}
-                      />
-                      <CheckboxField
-                        name="ufullstendigSoeknad"
-                        label={formatMessage({ id: 'Registrering.SaveApplication.OpplysningspliktErIkkeOverholdt' })}
-                        readOnly={readOnly}
-                      />
-                    </div>
-                  </div>
-                </Column>
-              </Row>
-              <Row>
-                <Column xs="12">
-                  <div>
-                    <div className={styles.right}>
-                      <Hovedknapp
-                        id="saveButton"
-                        mini
-                        className={ufullstendigSoeknad ? 'hidden' : ''}
-                        spinner={submitting}
-                        disabled={readOnly || submitting}
-                        onClick={ariaCheck}
-                      >
-                        {formatMessage({ id: 'Registrering.SaveApplication.SaveButton' })}
-                      </Hovedknapp>
-                      <Hovedknapp
-                        id="endButton"
-                        htmlType="button"
-                        onClick={this.toggleLukkPapirsoknadModal}
-                        mini
-                        className={ufullstendigSoeknad ? '' : 'hidden'}
-                        spinner={submitting}
-                        disabled={readOnly || submitting}
-                      >
-                        {formatMessage({ id: 'Registrering.SaveApplication.EndButton' })}
-                      </Hovedknapp>
-                    </div>
-                  </div>
-                </Column>
-              </Row>
-            </Fieldset>
-            <LukkPapirsoknadModal
-              handleSubmit={onSubmitUfullstendigsoknad}
-              showModal={showLukkSoknadModal}
-              cancelEvent={this.toggleLukkPapirsoknadModal}
-              form={form}
-            />
-          </BorderBox>
-        </Column>
-      </Row>
+      <BorderBox>
+        <FlexContainer fluid>
+          <FlexRow>
+            <FlexColumn className={styles.fullWidth}>
+              <Fieldset legend={formatMessage({ id: 'Registrering.SaveApplication.Title' })}>
+                <FlexRow>
+                  <FlexColumn className={styles.halfWidth}>
+                    <TextAreaField
+                      name="kommentarEndring"
+                      label={formatMessage({ id: 'Registrering.SaveApplication.Description' })}
+                      textareaClass={styles.textAreaSettings}
+                      maxLength={1500}
+                      validate={[maxLength1500, hasValidText]}
+                      readOnly={readOnly}
+                    />
+                  </FlexColumn>
+                  <FlexColumn>
+                    <CheckboxField
+                      name="registrerVerge"
+                      onChange={this.toggleVerge}
+                      label={formatMessage({ id: 'Registrering.Verge' })}
+                      readOnly={readOnly}
+                    />
+                    <CheckboxField
+                      name="ufullstendigSoeknad"
+                      label={formatMessage({ id: 'Registrering.SaveApplication.OpplysningspliktErIkkeOverholdt' })}
+                      readOnly={readOnly}
+                    />
+                  </FlexColumn>
+                </FlexRow>
+                <FlexRow>
+                  <FlexColumn className="justifyItemsToFlexEnd">
+                    <Hovedknapp
+                      id="saveButton"
+                      mini
+                      className={ufullstendigSoeknad ? 'hidden' : ''}
+                      spinner={submitting}
+                      disabled={readOnly || submitting}
+                      onClick={ariaCheck}
+                    >
+                      {formatMessage({ id: 'Registrering.SaveApplication.SaveButton' })}
+                    </Hovedknapp>
+                    <Hovedknapp
+                      id="endButton"
+                      htmlType="button"
+                      onClick={this.toggleLukkPapirsoknadModal}
+                      mini
+                      className={ufullstendigSoeknad ? '' : 'hidden'}
+                      spinner={submitting}
+                      disabled={readOnly || submitting}
+                    >
+                      {formatMessage({ id: 'Registrering.SaveApplication.EndButton' })}
+                    </Hovedknapp>
+                  </FlexColumn>
+                </FlexRow>
+              </Fieldset>
+              <LukkPapirsoknadModal
+                handleSubmit={onSubmitUfullstendigsoknad}
+                showModal={showLukkSoknadModal}
+                cancelEvent={this.toggleLukkPapirsoknadModal}
+                form={form}
+              />
+
+            </FlexColumn>
+          </FlexRow>
+        </FlexContainer>
+      </BorderBox>
     );
   }
 }
