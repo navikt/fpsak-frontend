@@ -11,7 +11,6 @@ import {
 import {
   finnFrilansFieldName, utledArbeidsforholdFieldName,
 } from './VurderMottarYtelseUtils';
-import { createInputfieldKeyAT, createInputfieldKeyFL } from './FastsettATFLInntektForm';
 
 const requiredMessageId = isRequiredMessage()[0].id;
 
@@ -212,11 +211,12 @@ describe('<VurderMottarYtelseForm>', () => {
 
   it('skal transform values og sende ned FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING ved mottar ytelse for AT uten inntektsmelding', () => {
     const tilfeller = [faktaOmBeregningTilfelle.VURDER_LONNSENDRING, faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE];
-    const transformedValues = {
-      vurdertLonnsendring: { erLønnsendringIBeregningsperioden: true },
-      faktaOmBeregningTilfeller: tilfeller,
-    };
+    const inntektPrMnd = [
+      { andelsnr: andel.andelsnr, fastsattBelop: 10000 },
+      { andelsnr: andel3.andelsnr, fastsattBelop: 20000 },
+    ];
     const faktaOmBeregning = {
+      faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
       vurderMottarYtelse: {
         erFrilanser: false,
         arbeidstakerAndelerUtenIM,
@@ -226,31 +226,31 @@ describe('<VurderMottarYtelseForm>', () => {
     values[utledArbeidsforholdFieldName(andel)] = true;
     values[utledArbeidsforholdFieldName(andel2)] = false;
     values[utledArbeidsforholdFieldName(andel3)] = true;
-    values[createInputfieldKeyAT(andel.arbeidsforhold)] = '10 000';
-    values[createInputfieldKeyAT(andel3.arbeidsforhold)] = '20 000';
-
-    const transformed = VurderMottarYtelseFormImpl.transformValues(values, faktaOmBeregning, tilfeller, transformedValues, beregningsgrunnlag);
+    const fastsatteAndelsnr = [];
+    const transformed = VurderMottarYtelseFormImpl.transformValues(values, inntektPrMnd, faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr);
     const fastsatteInntekter = transformed.fastsattUtenInntektsmelding.andelListe;
+    expect(fastsatteAndelsnr.length).to.equal(2);
+    expect(fastsatteAndelsnr.find(nr => nr === andel.andelsnr) === undefined).to.equal(false);
+    expect(fastsatteAndelsnr.find(nr => nr === andel3.andelsnr) === undefined).to.equal(false);
     expect(fastsatteInntekter.length).to.equal(2);
     expect(fastsatteInntekter[0].andelsnr).to.equal(1);
     expect(fastsatteInntekter[0].arbeidsinntekt).to.equal(10000);
     expect(fastsatteInntekter[1].andelsnr).to.equal(3);
     expect(fastsatteInntekter[1].arbeidsinntekt).to.equal(20000);
     const fastsatteTilfeller = transformed.faktaOmBeregningTilfeller;
-    expect(fastsatteTilfeller.length).to.equal(3);
-    expect(fastsatteTilfeller[0]).to.equal(faktaOmBeregningTilfelle.VURDER_LONNSENDRING);
-    expect(fastsatteTilfeller[1]).to.equal(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE);
-    expect(fastsatteTilfeller[2]).to.equal(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING);
+    expect(fastsatteTilfeller.length).to.equal(2);
+    expect(fastsatteTilfeller[0]).to.equal(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE);
+    expect(fastsatteTilfeller[1]).to.equal(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING);
   });
 
 
   it('skal transform values og sende ned FASTSETT_MAANEDSINNTEKT_FL ved mottar ytelse for Frilans', () => {
     const tilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE];
-    const transformedValues = {
-      vurderNyoppstartetFL: { erNyoppstartetFL: true },
-      faktaOmBeregningTilfeller: tilfeller,
-    };
+    const inntektPrMnd = [
+      { andelsnr: 4, fastsattBelop: 10000, aktivitetStatus: 'FL' },
+    ];
     const faktaOmBeregning = {
+      faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
       vurderMottarYtelse: {
         erFrilanser: true,
         arbeidstakerAndelerUtenIM: [],
@@ -258,44 +258,43 @@ describe('<VurderMottarYtelseForm>', () => {
     };
     const values = {};
     values[finnFrilansFieldName()] = true;
-    values[createInputfieldKeyFL()] = '10 000';
-
-    const transformed = VurderMottarYtelseFormImpl.transformValues(values, faktaOmBeregning, tilfeller, transformedValues, beregningsgrunnlag);
+    const fastsatteAndelsnr = [];
+    const transformed = VurderMottarYtelseFormImpl.transformValues(values, inntektPrMnd, faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr);
     const fastsattInntekt = transformed.fastsettMaanedsinntektFL.maanedsinntekt;
+    expect(fastsatteAndelsnr.length).to.equal(1);
     expect(fastsattInntekt).to.equal(10000);
     const fastsatteTilfeller = transformed.faktaOmBeregningTilfeller;
-    expect(fastsatteTilfeller.length).to.equal(3);
-    expect(fastsatteTilfeller[0]).to.equal(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL);
-    expect(fastsatteTilfeller[1]).to.equal(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE);
-    expect(fastsatteTilfeller[2]).to.equal(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL);
+    expect(fastsatteTilfeller.length).to.equal(2);
+    expect(fastsatteTilfeller[0]).to.equal(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE);
+    expect(fastsatteTilfeller[1]).to.equal(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL);
   });
 
 
   it('skal transform values ved mottar ytelse for Frilans og arbeidstaker uten inntektsmelding', () => {
     const tilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_LONNSENDRING,
       faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE];
-    const transformedValues = {
-      vurderNyoppstartetFL: { erNyoppstartetFL: true },
-      vurdertLonnsendring: { erLønnsendringIBeregningsperioden: true },
-      faktaOmBeregningTilfeller: tilfeller,
-    };
+    const inntektPrMnd = [
+      { andelsnr: andel.andelsnr, fastsattBelop: 10000 },
+      { andelsnr: andel3.andelsnr, fastsattBelop: 20000 },
+      { andelsnr: 4, fastsattBelop: 10000, aktivitetStatus: 'FL' },
+    ];
     const faktaOmBeregning = {
+      faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
       vurderMottarYtelse: {
         erFrilanser: true,
         arbeidstakerAndelerUtenIM,
       },
     };
+    const fastsatteAndelsnr = [];
     const values = {};
     values[finnFrilansFieldName()] = true;
     values[utledArbeidsforholdFieldName(andel)] = true;
     values[utledArbeidsforholdFieldName(andel2)] = false;
     values[utledArbeidsforholdFieldName(andel3)] = true;
-    values[createInputfieldKeyFL()] = '10 000';
-    values[createInputfieldKeyAT(andel.arbeidsforhold)] = '10 000';
-    values[createInputfieldKeyAT(andel3.arbeidsforhold)] = '20 000';
 
 
-    const transformed = VurderMottarYtelseFormImpl.transformValues(values, faktaOmBeregning, tilfeller, transformedValues, beregningsgrunnlag);
+    const transformed = VurderMottarYtelseFormImpl.transformValues(values, inntektPrMnd, faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr);
+    expect(fastsatteAndelsnr.length).to.equal(3);
     const fastsattFrilansinntekt = transformed.fastsettMaanedsinntektFL.maanedsinntekt;
     expect(fastsattFrilansinntekt).to.equal(10000);
 
@@ -306,36 +305,33 @@ describe('<VurderMottarYtelseForm>', () => {
     expect(fastsatteArbeidsinntekter[1].andelsnr).to.equal(3);
     expect(fastsatteArbeidsinntekter[1].arbeidsinntekt).to.equal(20000);
     const fastsatteTilfeller = transformed.faktaOmBeregningTilfeller;
-    expect(fastsatteTilfeller.length).to.equal(5);
-    expect(fastsatteTilfeller[0]).to.equal(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL);
-    expect(fastsatteTilfeller[1]).to.equal(faktaOmBeregningTilfelle.VURDER_LONNSENDRING);
-    expect(fastsatteTilfeller[2]).to.equal(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE);
-    expect(fastsatteTilfeller[4]).to.equal(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL);
-    expect(fastsatteTilfeller[3]).to.equal(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING);
+    expect(fastsatteTilfeller.length).to.equal(3);
+    expect(fastsatteTilfeller[0]).to.equal(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE);
+    expect(fastsatteTilfeller[2]).to.equal(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL);
+    expect(fastsatteTilfeller[1]).to.equal(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING);
   });
 
   it('skal ikkje transform values mottar ytelse for AT uten inntektsmelding visst inntekt allerede er lagt til', () => {
     const tilfeller = [faktaOmBeregningTilfelle.VURDER_LONNSENDRING, faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING,
       faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE];
-    const transformedValues = {
-      vurdertLonnsendring: { erLønnsendringIBeregningsperioden: true },
-      fastsattUtenInntektsmelding: { andelListe: [{ andelsnr: 1, arbeidsinntekt: 10000 }, { andelsnr: 2, arbeidsinntekt: 20000 }] },
-      faktaOmBeregningTilfeller: tilfeller,
-    };
+    const inntektPrMnd = [
+      { andelsnr: andel.andelsnr, fastsattBelop: 10000 },
+      { andelsnr: andel3.andelsnr, fastsattBelop: 20000 },
+    ];
     const faktaOmBeregning = {
+      faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
       vurderMottarYtelse: {
         erFrilanser: false,
         arbeidstakerAndelerUtenIM,
       },
     };
+    const fastsatteAndelsnr = [andel.andelsnr, andel3.andelsnr];
     const values = {};
     values[utledArbeidsforholdFieldName(andel)] = true;
     values[utledArbeidsforholdFieldName(andel2)] = false;
     values[utledArbeidsforholdFieldName(andel3)] = true;
-    values[createInputfieldKeyAT(andel.arbeidsforhold)] = '10 000';
-    values[createInputfieldKeyAT(andel3.arbeidsforhold)] = '20 000';
 
-    const transformed = VurderMottarYtelseFormImpl.transformValues(values, faktaOmBeregning, tilfeller, transformedValues);
+    const transformed = VurderMottarYtelseFormImpl.transformValues(values, inntektPrMnd, faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr);
     expect(transformed.fastsattUtenInntektsmelding).to.be.equal(undefined);
   });
 
@@ -343,22 +339,20 @@ describe('<VurderMottarYtelseForm>', () => {
   it('skal ikkje transform values mottar ytelse for frilans visst inntekt allerede er lagt til', () => {
     const tilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL,
       faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE];
-    const transformedValues = {
-      vurderNyoppstartetFL: { erNyoppstartetFL: true },
-      fastsettMaanedsinntektFL: { maanedsinntekt: 10000 },
-      faktaOmBeregningTilfeller: tilfeller,
-    };
+    const inntektPrMnd = [
+      { andelsnr: 4, fastsattBelop: 10000, aktivitetStatus: 'FL' },
+    ];
     const faktaOmBeregning = {
+      faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
       vurderMottarYtelse: {
         erFrilanser: true,
         arbeidstakerAndelerUtenIM: [],
       },
     };
+    const fastsatteAndelsnr = [4];
     const values = {};
     values[finnFrilansFieldName()] = true;
-    values[createInputfieldKeyFL()] = '10 000';
-
-    const transformed = VurderMottarYtelseFormImpl.transformValues(values, faktaOmBeregning, tilfeller, transformedValues);
+    const transformed = VurderMottarYtelseFormImpl.transformValues(values, inntektPrMnd, faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr);
     expect(transformed.fastsettMaanedsinntektFL).to.equal(undefined);
   });
 });

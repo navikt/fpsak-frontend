@@ -1,36 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { getFaktaOmBeregning } from 'behandlingFpsak/src/behandlingSelectors';
-import { required } from '@fpsak-frontend/utils';
+import { required, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import faktaOmBeregningTilfelle, {
-  erATFLSpesialtilfelleEllerVurderMottarYtelseUtenBesteberegning,
-  harIkkeATFLSameOrgEllerBesteberegning,
-} from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import { Column, Row } from 'nav-frontend-grid';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import FastsettATFLInntektForm
-  from 'behandlingFpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/FastsettATFLInntektForm';
-import { getFormValuesForBeregning } from '../../../BeregningFormUtils';
 
-import styles from './lonnsendringForm.less';
-
-export const utledOverskriftForLonnsendringForm = (tilfeller, manglerIM) => {
-  if (!tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)
-  || erATFLSpesialtilfelleEllerVurderMottarYtelseUtenBesteberegning(tilfeller)) {
-    return ['BeregningInfoPanel.VurderOgFastsettATFL.HarSokerEndring'];
-  }
-  return manglerIM
-    ? ['BeregningInfoPanel.VurderOgFastsettATFL.ATFLSammeOrgUtenIM',
-      'BeregningInfoPanel.VurderOgFastsettATFL.OgsaLonnsendring']
-    : ['BeregningInfoPanel.VurderOgFastsettATFL.ATFLSammeOrg',
-      'BeregningInfoPanel.VurderOgFastsettATFL.OgsaLonnsendring'];
-};
-
+// import styles from './lonnsendringForm.less';
 
 /**
  * LonnsendringForm
@@ -43,25 +21,14 @@ export const utledOverskriftForLonnsendringForm = (tilfeller, manglerIM) => {
 
 export const lonnsendringField = 'lonnsendringField';
 
-export const LonnsendringFormImpl = ({
+const LonnsendringForm = ({
   readOnly,
   isAksjonspunktClosed,
-  skalViseInntektstabell,
-  tilfeller,
-  radioknappOverskrift,
-  manglerIM,
-  erLonnsendring,
-  skalKunFastsetteAT,
 }) => (
   <div>
-    {radioknappOverskrift.map(kode => (
-      <div key={kode}>
-        <Normaltekst>
-          <FormattedMessage id={kode} />
-        </Normaltekst>
-      </div>
-    ))
-      }
+    <Normaltekst>
+      <FormattedMessage id="BeregningInfoPanel.VurderOgFastsettATFL.HarSokerEndring" />
+    </Normaltekst>
     <VerticalSpacer eightPx />
     <RadioGroupField
       name={lonnsendringField}
@@ -72,45 +39,21 @@ export const LonnsendringFormImpl = ({
       <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Ja" />} value />
       <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Nei" />} value={false} />
     </RadioGroupField>
-    { skalViseInntektstabell
-      && (
-      <Row>
-        <Column xs="12">
-          <div className={erLonnsendring ? styles.arrowLineLonnsendring : styles.arrowLineIngenLonnsendring}>
-            <FastsettATFLInntektForm
-              readOnly={readOnly}
-              isAksjonspunktClosed={isAksjonspunktClosed}
-              tilfellerSomSkalFastsettes={tilfeller}
-              manglerInntektsmelding={manglerIM}
-              skalViseFL={!skalKunFastsetteAT}
-              skalViseAT
-            />
-          </div>
-        </Column>
-      </Row>
-      )
-      }
   </div>
 );
 
-LonnsendringFormImpl.propTypes = {
+LonnsendringForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
-  skalViseInntektstabell: PropTypes.bool,
-  tilfeller: PropTypes.arrayOf(PropTypes.string).isRequired,
-  radioknappOverskrift: PropTypes.arrayOf(PropTypes.string).isRequired,
-  manglerIM: PropTypes.bool.isRequired,
-  erLonnsendring: PropTypes.bool,
-  skalKunFastsetteAT: PropTypes.bool,
 };
 
-LonnsendringFormImpl.defaultProps = {
-  skalViseInntektstabell: undefined,
-  erLonnsendring: undefined,
-  skalKunFastsetteAT: false,
+const buildInitialLonnsendring = (alleATAndeler) => {
+  const harSattLonnsendringTilTrue = alleATAndeler.find(andel => andel.lonnsendringIBeregningsperioden === true) !== undefined;
+  const harSattLonnsendringTilFalse = alleATAndeler.find(andel => andel.lonnsendringIBeregningsperioden === false) !== undefined;
+  return harSattLonnsendringTilTrue || (harSattLonnsendringTilFalse ? false : undefined);
 };
 
-LonnsendringFormImpl.buildInitialValues = (beregningsgrunnlag) => {
+LonnsendringForm.buildInitialValues = (beregningsgrunnlag) => {
   let initialValues = {};
   if (!beregningsgrunnlag || !beregningsgrunnlag.beregningsgrunnlagPeriode) {
     return initialValues;
@@ -123,49 +66,39 @@ LonnsendringFormImpl.buildInitialValues = (beregningsgrunnlag) => {
   if (!alleATAndeler || alleATAndeler.length < 1) {
     return initialValues;
   }
-  // Alle andeler vil ha den samme verdien, trenger derfor kun sjekke første element
   initialValues = {
-    lonnsendringField: alleATAndeler[0].lonnsendringIBeregningsperioden,
+    lonnsendringField: buildInitialLonnsendring(alleATAndeler),
   };
   return initialValues;
 };
 
-LonnsendringFormImpl.transformValues = values => ({
-  vurdertLonnsendring: { erLønnsendringIBeregningsperioden: values[lonnsendringField] },
-});
-
-LonnsendringFormImpl.lonnendringFastsatt = (values, tilfeller, faktaOmBeregning, transformedValues, beregningsgrunnlag) => {
-  // Dersom vi har tilfellet VURDER_AT_OG_FL_I_SAMME_ORGANISASJON
-  // eller FASTSETT_BESTEBEREGNING_FODENDE_KVINNE vil arbeidsinntekt tas med når det tilfellet submittes
-  if (values[lonnsendringField] && harIkkeATFLSameOrgEllerBesteberegning(tilfeller)) {
-    if (!transformedValues.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)) {
-      transformedValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING);
-      return {
-        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning,
-          faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING, beregningsgrunnlag),
-        faktaOmBeregningTilfeller: transformedValues.faktaOmBeregningTilfeller,
-      };
-    }
-    if (!transformedValues.fastsattUtenInntektsmelding) {
-      return {
-        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning,
-          faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING, beregningsgrunnlag),
-      };
-    }
+LonnsendringForm.transformValues = (values, inntektVerdier, faktaOmBeregning, fastsatteAndelsnr) => {
+  if (!faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)) {
+    return {};
   }
-  return {};
+  if (inntektVerdier === null) {
+    return {
+      faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_LONNSENDRING],
+      vurdertLonnsendring: { erLønnsendringIBeregningsperioden: values[lonnsendringField] },
+    };
+  }
+
+  const andelerMedLonnsendringFields = inntektVerdier
+    .filter(field => faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM
+      .find(andel => andel.andelsnr === field.andelsnr || andel.andelsnr === field.andelsnrRef));
+
+  andelerMedLonnsendringFields.forEach(field => fastsatteAndelsnr.push(field.andelsnr));
+
+  const lonnsendringInntekt = andelerMedLonnsendringFields
+    .map(field => ({
+      andelsnr: field.andelsnr,
+      arbeidsinntekt: removeSpacesFromNumber(field.fastsattBelop),
+    }));
+  return ({
+    faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_LONNSENDRING, faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING],
+    fastsattUtenInntektsmelding: { andelListe: lonnsendringInntekt },
+    vurdertLonnsendring: { erLønnsendringIBeregningsperioden: values[lonnsendringField] },
+  });
 };
 
-const mapStateToProps = (state, initialProps) => {
-  const faktaOmBeregning = getFaktaOmBeregning(state);
-  let manglerInntektsmelding = false;
-  if (faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe && faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.length > 0) {
-    manglerInntektsmelding = faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.find(forhold => !forhold.inntektPrMnd) !== undefined;
-  }
-  return {
-    erLonnsendring: getFormValuesForBeregning(state)[lonnsendringField],
-    radioknappOverskrift: utledOverskriftForLonnsendringForm(initialProps.tilfeller, manglerInntektsmelding),
-  };
-};
-
-export default connect(mapStateToProps)(LonnsendringFormImpl);
+export default LonnsendringForm;

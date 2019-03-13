@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { lagStateMedAksjonspunkterOgFaktaOmBeregning } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
+import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
 import {
   buildInitialValuesVurderFaktaBeregning, getValidationVurderFaktaBeregning, transformValuesVurderFaktaBeregning,
   BEGRUNNELSE_FAKTA_TILFELLER_NAME,
@@ -56,7 +56,7 @@ describe('<VurderFaktaBeregningPanel>', () => {
         },
       },
     };
-    const state = lagStateMedAksjonspunkterOgFaktaOmBeregning([avklarAktiviteterAp], faktaOmBeregning);
+    const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag([avklarAktiviteterAp], { faktaOmBeregning });
     const initialValues = buildInitialValuesVurderFaktaBeregning(state);
     expect(initialValues).to.be.empty;
   });
@@ -83,7 +83,7 @@ describe('<VurderFaktaBeregningPanel>', () => {
       },
     };
     const values = {};
-    const state = lagStateMedAksjonspunkterOgFaktaOmBeregning([avklarAktiviteterAp], faktaOmBeregning, values);
+    const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag([avklarAktiviteterAp], { faktaOmBeregning }, values);
     const transformed = transformValuesVurderFaktaBeregning(state)(values);
     expect(transformed).to.be.empty;
   });

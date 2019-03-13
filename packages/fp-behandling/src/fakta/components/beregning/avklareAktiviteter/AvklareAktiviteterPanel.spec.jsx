@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
-import { lagStateMedAksjonspunkterOgFaktaOmBeregning } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
+import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
 
 import { getBehandlingFormValues } from 'behandlingFpsak/src/behandlingForm';
 import {
@@ -25,7 +25,7 @@ const lagStateMedAvklarAktitiveter = (avklarAktiviteter, values = {}, initial = 
   const faktaOmBeregning = {
     avklarAktiviteter,
   };
-  return lagStateMedAksjonspunkterOgFaktaOmBeregning(aksjonspunkter, faktaOmBeregning, values, initial);
+  return lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, { faktaOmBeregning }, values, initial);
 };
 
 describe('<AvklareAktiviteterPanel>', () => {

@@ -22,13 +22,18 @@ const InntektstabellPanel = ({
     {children}
     <div className={styles.fadeinTabell}>
       <VerticalSpacer sixteenPx />
-      {hjelpeTekstId && (
-      <Element>
-        <FormattedMessage id={hjelpeTekstId} />
-      </Element>
-      )}
       {skalViseTabell
-      && tabell
+      && (
+      <ElementWrapper>
+        {hjelpeTekstId
+        && (
+          <Element>
+            <FormattedMessage id={hjelpeTekstId} />
+          </Element>
+        )}
+        {tabell}
+      </ElementWrapper>
+      )
       }
     </div>
   </ElementWrapper>

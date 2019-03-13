@@ -18,13 +18,13 @@ describe('<InntektstabellPanel>', () => {
     );
 
     const elementWrapper = wrapper.find('ElementWrapper');
-    expect(elementWrapper).has.length(1);
-    const children = elementWrapper.prop('children');
+    expect(elementWrapper).has.length(2);
+    const children = elementWrapper.first().prop('children');
     expect(children).has.length(2);
     expect(children[0]).has.length(2);
     expect(children[0][0]).is.eql(<span>test1</span>);
     expect(children[0][1]).is.eql(<span>test2</span>);
-    const form = elementWrapper.find('div');
+    const form = elementWrapper.first().find('div');
     expect(form).has.length(1);
   });
 });

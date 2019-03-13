@@ -9,8 +9,10 @@ import {
   getFaktaOmBeregning,
   getBeregningsgrunnlag,
 } from 'behandlingFpsak/src/behandlingSelectors';
+import { createSelector } from 'reselect';
 import { andelsnrMottarYtelseMap, frilansMottarYtelse, skalFastsetteInntektATUtenInntektsmelding } from './vurderOgFastsettATFL/forms/VurderMottarYtelseUtils';
 import { getFormValuesForBeregning } from '../BeregningFormUtils';
+import { besteberegningField } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
 
 const nullOrUndefined = value => value === null || value === undefined;
 
@@ -25,7 +27,6 @@ export const settAndelIArbeid = (andelerIArbeid) => {
   const maxAndel = Math.max(...andelerIArbeid);
   return `${minAndel} - ${maxAndel}`;
 };
-
 
 export const preutfyllInntektskategori = andel => (andel.inntektskategori
 && andel.inntektskategori.kode !== inntektskategorier.UDEFINERT ? andel.inntektskategori.kode : '');
@@ -89,54 +90,85 @@ export const setGenerellAndelsinfo = andel => ({
   aktivitetStatus: andel.aktivitetStatus.kode,
   andelsnr: andel.andelsnr,
   nyAndel: false,
-  lagtTilAvSaksbehandler: andel.lagtTilAvSaksbehandler,
+  lagtTilAvSaksbehandler: andel.lagtTilAvSaksbehandler === true,
   inntektskategori: preutfyllInntektskategori(andel),
 });
 
-const erArbeidstakerFrilansISammeOrganisasjon = (field, faktaOmBeregning) => {
-  const andelsnrListe = faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe
-    .map(({ andelsnr }) => andelsnr);
-  return andelsnrListe.includes(field.andelsnr) || andelsnrListe.includes(field.andelsnrRef);
+
+const listeInneholderAndel = (liste, field) => (liste ? liste.find(element => element.andelsnr === field.andelsnr
+|| element.andelsnr === field.andelsnrRef) : undefined);
+
+const erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon = (field, faktaOmBeregning) => {
+  const andelIListe = listeInneholderAndel(faktaOmBeregning
+    .arbeidstakerOgFrilanserISammeOrganisasjonListe, field);
+  return andelIListe && (andelIListe.inntektPrMnd === null || andelIListe.inntektPrMnd === undefined);
 };
+
+// Aktivitetstatus
 
 const erArbeidstaker = field => field.aktivitetStatus === aktivitetStatus.ARBEIDSTAKER;
 
 const erFrilanser = field => field.aktivitetStatus === aktivitetStatus.FRILANSER;
 
+// Nyoppstartet frilanser
+
 const erNyoppstartetFrilanser = (field, values) => erFrilanser(field) && values[erNyoppstartetFLField];
 
-const erATUtenInntektsmeldingMedLonnsendring = (field, values) => erArbeidstaker(field)
-&& (field.belopFraInntektsmelding === undefined || field.belopFraInntektsmelding === null) && values[lonnsendringField];
+// Besteberegning
+
+const skalHaBesteberegning = values => values[besteberegningField];
+
+export const skalHaBesteberegningSelector = createSelector([getFormValuesForBeregning], skalHaBesteberegning);
+
+// Lonnsendring
+
+const harLonnsendringUtenInntektsmelding = (values, field, faktaOmBeregning) => listeInneholderAndel(faktaOmBeregning
+  .arbeidsforholdMedLønnsendringUtenIM, field) && values[lonnsendringField];
+
+const erATUtenInntektsmeldingMedLonnsendring = (field, values, faktaOmBeregning) => erArbeidstaker(field)
+&& harLonnsendringUtenInntektsmelding(values, field, faktaOmBeregning);
+
+// AT og FL i samme organisasjon
 
 const andelErStatusFLOgHarATISammeOrg = (field, faktaOmBeregning) => faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe
 && erFrilanser(field);
 
-const andelErStatusATOgHarFLISammeOrg = (field, faktaOmBeregning) => faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe
-&& erArbeidstaker(field) && erArbeidstakerFrilansISammeOrganisasjon(field, faktaOmBeregning);
+const andelErStatusATUtenInntektsmeldingOgHarFLISammeOrg = (field, faktaOmBeregning) => faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe
+&& erArbeidstaker(field) && erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon(field, faktaOmBeregning);
+
+// Søker mottar ytelse
 
 const sokerMottarYtelseForAndel = (values, field, faktaOmBeregning, beregningsgrunnlag) => {
   const mottarYtelseMap = andelsnrMottarYtelseMap(values, faktaOmBeregning.vurderMottarYtelse, beregningsgrunnlag);
   return mottarYtelseMap[field.andelsnr] || mottarYtelseMap[field.andelsnrRef];
 };
 
+// Skal redigere inntekt
+
 export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => {
+  if (skalHaBesteberegning(values)) {
+    return true;
+  }
   if (sokerMottarYtelseForAndel(values, andel, faktaOmBeregning, beregningsgrunnlag)) {
     return true;
   }
   if (erNyoppstartetFrilanser(andel, values)) {
     return true;
   }
-  if (erATUtenInntektsmeldingMedLonnsendring(andel, values)) {
+  if (erATUtenInntektsmeldingMedLonnsendring(andel, values, faktaOmBeregning)) {
     return true;
   }
   if (andelErStatusFLOgHarATISammeOrg(andel, faktaOmBeregning)) {
     return true;
   }
-  if (andelErStatusATOgHarFLISammeOrg(andel, faktaOmBeregning)) {
+  if (andelErStatusATUtenInntektsmeldingOgHarFLISammeOrg(andel, faktaOmBeregning)) {
     return true;
   }
-  return andel.harPeriodeAarsakGraderingEllerRefusjon;
+  return andel.harPeriodeAarsakGraderingEllerRefusjon === true;
 };
+
+export const skalRedigereInntektSelector = createSelector([getFormValuesForBeregning, getFaktaOmBeregning, getBeregningsgrunnlag], skalRedigereInntektForAndel);
+
 
 export const setSkalRedigereInntektForATFL = (state, fields) => {
   const values = getFormValuesForBeregning(state);
@@ -150,6 +182,29 @@ export const setSkalRedigereInntektForATFL = (state, fields) => {
   }
 };
 
+export const skalFastsettInntektForStatus = (inntektFieldArrayName, status) => createSelector([
+  getFormValuesForBeregning,
+  skalRedigereInntektSelector],
+(values, skalFastsette) => {
+  const fields = values[inntektFieldArrayName];
+  if (!fields) {
+    return false;
+  }
+  return fields.filter(field => field.aktivitetStatus === status).map(skalFastsette).includes(true);
+});
+
+
+// Skal redigere inntektskategori
+
+export const skalRedigereInntektskategoriForAndel = values => (andel) => {
+  if (skalHaBesteberegning(values)) {
+    return true;
+  }
+  return andel.harPeriodeAarsakGraderingEllerRefusjon === true;
+};
+
+export const skalRedigereInntektskategoriSelector = createSelector([getFormValuesForBeregning], skalRedigereInntektskategoriForAndel);
+
 export const mapToBelop = skalRedigereInntekt => (andel) => {
   const { fastsattBeløp, readOnlyBelop } = andel;
   if (!skalRedigereInntekt || skalRedigereInntekt(andel)) {
@@ -162,3 +217,22 @@ export const skalFastsetteForATUavhengigAvATFLSammeOrg = (values,
   faktaOmBeregning) => (skalFastsetteInntektATUtenInntektsmelding(values, faktaOmBeregning.vurderMottarYtelse) || values[lonnsendringField]);
 
 export const skalFastsetteForFLUavhengigAvATFLSammeOrg = values => (frilansMottarYtelse(values) || values[erNyoppstartetFLField]);
+
+const mapToFastsattBelop = (andel) => {
+  if (andel.besteberegningPrAar || andel.besteberegningPrAar === 0) {
+    return formatCurrencyNoKr(andel.besteberegningPrAar / 12);
+  }
+  if (andel.beregnetPrAar || andel.beregnetPrAar === 0) {
+    return formatCurrencyNoKr(andel.beregnetPrAar / 12);
+  }
+  return '';
+};
+
+export const mapAndelToField = andel => ({
+  ...setGenerellAndelsinfo(andel),
+  ...setArbeidsforholdInitialValues(andel),
+  skalKunneEndreAktivitet: andel.lagtTilAvSaksbehandler && andel.aktivitetStatus.kode !== aktivitetStatus.DAGPENGER,
+  fastsattBelop: mapToFastsattBelop(andel),
+  refusjonskrav: andel.arbeidsforhold && andel.arbeidsforhold.refusjonPrAar !== null
+  && andel.arbeidsforhold.refusjonPrAar !== undefined ? formatCurrencyNoKr(andel.refusjonPrAar / 12) : '',
+});

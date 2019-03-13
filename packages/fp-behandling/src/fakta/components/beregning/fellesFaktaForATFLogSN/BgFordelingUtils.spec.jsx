@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import { lonnsendringField }
   from 'behandlingFpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
 import { erNyoppstartetFLField }
@@ -13,12 +14,109 @@ import {
   skalRedigereInntektForAndel,
   settReadOnlyBelop,
   mapToBelop,
+  mapAndelToField,
+  skalFastsettInntektForStatus,
+  skalRedigereInntektskategoriForAndel,
 } from './BgFordelingUtils';
 import { utledArbeidsforholdFieldName, finnFrilansFieldName }
   from './vurderOgFastsettATFL/forms/VurderMottarYtelseUtils';
+import { besteberegningField } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
 
+const lagAndelValues = (andelsnr, fastsattBelop, inntektskategori, aktivitetStatus, lagtTilAvSaksbehandler = false, nyAndel = false) => ({
+  nyAndel, andelsnr, fastsattBelop, inntektskategori, aktivitetStatus, lagtTilAvSaksbehandler, skalRedigereInntekt: true,
+});
+
+const arbeidsgiver = {
+  arbeidsgiverNavn: 'Virksomheten',
+  arbeidsgiverId: '3284788923',
+  startdato: '2017-01-01',
+  opphoersdato: '2018-01-01',
+};
+
+const arbeidstakerIkkeFastsatt = {
+  lagtTilAvSaksbehandler: false,
+  fastsattAvSaksbehandler: false,
+  aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER, navn: 'Arbeidstaker' },
+  inntektskategori: { kode: 'ARBEIDSTAKER' },
+};
+
+const arbeidstakerAndel1 = {
+  arbeidsforhold: {
+    ...arbeidsgiver,
+    arbeidsforholdId: '6765756g5',
+  },
+  andelsnr: 1,
+  ...arbeidstakerIkkeFastsatt,
+};
 
 describe('<BgFordelingUtils>', () => {
+  it('skal returnere true for fastsetting av FL-inntekt når FL-inntekt skal fastsettes', () => {
+    const fieldArrayName = 'test';
+    const values = {};
+    values[fieldArrayName] = [
+      lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
+      lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
+    ];
+    const skalFastsetteInntektMock = andel => (andel.aktivitetStatus === aktivitetStatuser.FRILANSER);
+    const skalFastsetteFL = skalFastsettInntektForStatus(fieldArrayName, aktivitetStatuser.FRILANSER).resultFunc(values, skalFastsetteInntektMock);
+    expect(skalFastsetteFL).to.equal(true);
+  });
+
+  it('skal returnere false for fastsetting av FL-inntekt når FL-inntekt ikkje skal fastsettes', () => {
+    const fieldArrayName = 'test';
+    const values = {};
+    values[fieldArrayName] = [
+      lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
+      lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
+    ];
+    const skalFastsetteInntektMock = andel => (andel.aktivitetStatus !== aktivitetStatuser.FRILANSER);
+    const skalFastsetteFL = skalFastsettInntektForStatus(fieldArrayName, aktivitetStatuser.FRILANSER).resultFunc(values, skalFastsetteInntektMock);
+    expect(skalFastsetteFL).to.equal(false);
+  });
+
+  it('skal returnere true for fastsetting av AT-inntekt når AT-inntekt skal fastsettes', () => {
+    const fieldArrayName = 'test';
+    const values = {};
+    values[fieldArrayName] = [
+      lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
+      lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
+    ];
+    const skalFastsetteInntektMock = andel => (andel.aktivitetStatus === aktivitetStatuser.ARBEIDSTAKER);
+    const skalFastsetteFL = skalFastsettInntektForStatus(fieldArrayName, aktivitetStatuser.ARBEIDSTAKER).resultFunc(values, skalFastsetteInntektMock);
+    expect(skalFastsetteFL).to.equal(true);
+  });
+
+  it('skal returnere false for fastsetting av FL-inntekt når FL-inntekt ikkje skal fastsettes', () => {
+    const fieldArrayName = 'test';
+    const values = {};
+    values[fieldArrayName] = [
+      lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
+      lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
+    ];
+    const skalFastsetteInntektMock = andel => (andel.aktivitetStatus !== aktivitetStatuser.ARBEIDSTAKER);
+    const skalFastsetteFL = skalFastsettInntektForStatus(fieldArrayName, aktivitetStatuser.ARBEIDSTAKER).resultFunc(values, skalFastsetteInntektMock);
+    expect(skalFastsetteFL).to.equal(false);
+  });
+
+  it('skal mappe dagpengerandel til feltverdier', () => {
+    const dagpengerAndel = {
+      aktivitetStatus: { kode: aktivitetStatuser.DAGPENGER, navn: 'Dagpenger' },
+      andelsnr: 1,
+      lagtTilAvSaksbehandler: true,
+      inntektskategori: { kode: 'DAGPENGER' },
+      beregnetPrAar: 240000,
+    };
+    const dagpengeField = mapAndelToField(dagpengerAndel);
+    expect(dagpengeField.aktivitetStatus).to.equal('DP');
+    expect(dagpengeField.andelsnr).to.equal(1);
+    expect(dagpengeField.nyAndel).to.equal(false);
+    expect(dagpengeField.lagtTilAvSaksbehandler).to.equal(true);
+    expect(dagpengeField.skalKunneEndreAktivitet).to.equal(false);
+    expect(dagpengeField.inntektskategori).to.equal('DAGPENGER');
+    expect(dagpengeField.fastsattBelop).to.equal('20 000');
+    expect(dagpengeField.refusjonskrav).to.equal('');
+  });
+
   it('skal sette riktig fastsatt beløp for andel i periode med gradering eller refusjon og fastsatt beregnetPrÅr', () => {
     const beregnetPrMnd = 10000;
     const fastsattAvSaksbehandler = true;
@@ -84,7 +182,7 @@ describe('<BgFordelingUtils>', () => {
         arbeidsgiverId: '3284788923',
         arbeidsforholdId: '321378huda7e2',
       },
-      aktivitetStatus: { kode: aktivitetStatus.ARBEIDSTAKER, navn: 'Arbeidstaker' },
+      aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER, navn: 'Arbeidstaker' },
       andelsnr: 3,
       lagtTilAvSaksbehandler: false,
       inntektskategori: { kode: 'ARBEIDSTAKER' },
@@ -100,7 +198,7 @@ describe('<BgFordelingUtils>', () => {
 
   it('skal sette initial values for generell andelinfo uten arbeidsforhold', () => {
     const andelValueFromState = {
-      aktivitetStatus: { kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, navn: 'Selvstendig næringsdrivende' },
+      aktivitetStatus: { kode: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE, navn: 'Selvstendig næringsdrivende' },
       andelsnr: 2,
       lagtTilAvSaksbehandler: true,
       inntektskategori: { kode: 'SN' },
@@ -116,7 +214,7 @@ describe('<BgFordelingUtils>', () => {
 
   it('skal ikkje sette arbeidsforhold initial values for andel uten arbeidsforhold', () => {
     const andelValueFromState = {
-      aktivitetStatus: { kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, navn: 'Selvstendig næringsdrivende' },
+      aktivitetStatus: { kode: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE, navn: 'Selvstendig næringsdrivende' },
       andelsnr: 2,
       lagtTilAvSaksbehandler: true,
       inntektskategori: { kode: 'SN' },
@@ -127,19 +225,6 @@ describe('<BgFordelingUtils>', () => {
     expect(arbeidsforholdIV.arbeidsperiodeTom).to.equal('');
   });
 
-  const arbeidsgiver = {
-    arbeidsgiverNavn: 'Virksomheten',
-    arbeidsgiverId: '3284788923',
-    startdato: '2017-01-01',
-    opphoersdato: '2018-01-01',
-  };
-
-  const arbeidstakerIkkeFastsatt = {
-    lagtTilAvSaksbehandler: false,
-    fastsattAvSaksbehandler: false,
-    aktivitetStatus: { kode: aktivitetStatus.ARBEIDSTAKER, navn: 'Arbeidstaker' },
-    inntektskategori: { kode: 'ARBEIDSTAKER' },
-  };
 
   const arbeidstakerAndel3 = {
     arbeidsforhold: {
@@ -157,15 +242,6 @@ describe('<BgFordelingUtils>', () => {
     expect(arbeidsforholdIV.arbeidsperiodeTom).to.equal('2018-01-01');
   });
 
-  const arbeidstakerAndel1 = {
-    arbeidsforhold: {
-      ...arbeidsgiver,
-      arbeidsforholdId: '6765756g5',
-    },
-    andelsnr: 1,
-    ...arbeidstakerIkkeFastsatt,
-  };
-
 
   const arbeidstakerAndel4 = {
     arbeidsforhold: {
@@ -177,7 +253,7 @@ describe('<BgFordelingUtils>', () => {
   };
 
   const frilansAndel = {
-    aktivitetStatus: { kode: aktivitetStatus.FRILANSER, navn: 'Frilans' },
+    aktivitetStatus: { kode: aktivitetStatuser.FRILANSER, navn: 'Frilans' },
     andelsnr: 2,
   };
 
@@ -226,6 +302,19 @@ describe('<BgFordelingUtils>', () => {
     refusjonskravFraInntektsmelding: null,
   };
 
+  it('skal redigere inntektskategori for arbeidstakerandel som skalhaBesteberegning', () => {
+    const andelFieldValue = {
+      ...andelValuesUtenInntektsmelding,
+      harPeriodeAarsakGraderingEllerRefusjon: false,
+      ...setGenerellAndelsinfo(arbeidstakerAndel3),
+    };
+    const vals = {
+      [besteberegningField]: true,
+    };
+    const skalRedigereInntektskategori = skalRedigereInntektskategoriForAndel(vals)(andelFieldValue);
+    expect(skalRedigereInntektskategori).to.equal(true);
+  });
+
   it('skal redigere inntekt for arbeidstakerandel som mottar ytelse', () => {
     const andelFieldValue = {
       ...andelValuesUtenInntektsmelding,
@@ -242,6 +331,7 @@ describe('<BgFordelingUtils>', () => {
       harPeriodeAarsakGraderingEllerRefusjon: false,
       ...setGenerellAndelsinfo(arbeidstakerAndel1),
     };
+    faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM = [arbeidstakerAndel1];
     const skalRedigereInntekt = skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag)(andelFieldValue);
     expect(skalRedigereInntekt).to.equal(true);
   });
@@ -266,13 +356,27 @@ describe('<BgFordelingUtils>', () => {
     expect(skalRedigereInntekt).to.equal(false);
   });
 
-  it('skal redigere inntekt for arbeidstakerandel med inntektsmelding i samme org som frilans', () => {
+  it('skal ikkje redigere inntekt for arbeidstakerandel med inntektsmelding i samme org som frilans', () => {
+    const andelFieldValue = {
+      ...andelValuesUtenInntektsmelding,
+      harPeriodeAarsakGraderingEllerRefusjon: false,
+      ...setGenerellAndelsinfo(arbeidstakerAndel4),
+    };
+    const faktaOmBeregningCopy = { ...faktaOmBeregning };
+    arbeidstakerAndel4.inntektPrMnd = 30000;
+    faktaOmBeregningCopy.arbeidstakerOgFrilanserISammeOrganisasjonListe = [arbeidstakerAndel4];
+    const skalRedigereInntekt = skalRedigereInntektForAndel(values, faktaOmBeregningCopy, beregningsgrunnlag)(andelFieldValue);
+    expect(skalRedigereInntekt).to.equal(false);
+  });
+
+  it('skal redigere inntekt for arbeidstakerandel uten inntektsmelding i samme org som frilans', () => {
     const andelFieldValue = {
       ...andelValuesMedInntektsmelding,
       harPeriodeAarsakGraderingEllerRefusjon: false,
       ...setGenerellAndelsinfo(arbeidstakerAndel4),
     };
     const faktaOmBeregningCopy = { ...faktaOmBeregning };
+    arbeidstakerAndel4.inntektPrMnd = null;
     faktaOmBeregningCopy.arbeidstakerOgFrilanserISammeOrganisasjonListe = [arbeidstakerAndel4];
     const skalRedigereInntekt = skalRedigereInntektForAndel(values, faktaOmBeregningCopy, beregningsgrunnlag)(andelFieldValue);
     expect(skalRedigereInntekt).to.equal(true);

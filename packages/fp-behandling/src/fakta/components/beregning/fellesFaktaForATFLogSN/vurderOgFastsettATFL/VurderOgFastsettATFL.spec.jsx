@@ -1,384 +1,196 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import sinon from 'sinon';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import VurderOgFastsettATFL, { skalViseInntektsTabellUnderRadioknapp, skalViseInntektstabell } from './VurderOgFastsettATFL';
+import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
+import VurderOgFastsettATFL, { inntektFieldArrayName } from './VurderOgFastsettATFL';
+import VurderBesteberegningForm, { besteberegningField } from '../besteberegningFodendeKvinne/VurderBesteberegningForm';
 import LonnsendringForm, { lonnsendringField } from './forms/LonnsendringForm';
 import NyoppstartetFLForm, { erNyoppstartetFLField } from './forms/NyoppstartetFLForm';
-import FastsettATFLInntektForm from './forms/FastsettATFLInntektForm';
+import VurderMottarYtelseForm from './forms/VurderMottarYtelseForm';
 import InntektstabellPanel from '../InntektstabellPanel';
-import { finnFrilansFieldName, utledArbeidsforholdFieldName } from './forms/VurderMottarYtelseUtils';
 
-const showTableCallback = sinon.spy();
+// const showTableCallback = sinon.spy();
 
-const atUtenIM = { arbeidstakerAndelerUtenIM: [{ andelsnr: 1, mottarYtelse: undefined, inntektPrMnd: 10000 }] };
-const frilanser = {
-  erFrilans: true,
-  frilansMottarYtelse: null,
-  frilansInntektPrMnd: 10000,
-};
+// const atUtenIM = { arbeidstakerAndelerUtenIM: [{ andelsnr: 1, mottarYtelse: undefined, inntektPrMnd: 10000 }] };
+// const frilanser = {
+//   erFrilans: true,
+//   frilansMottarYtelse: null,
+//   frilansInntektPrMnd: 10000,
+// };
 
 
-const lagWrapper = (tilfeller, erLonnsendring, erNyoppstartetFL, values, faktaOmBeregning) => (shallow(<VurderOgFastsettATFL.WrappedComponent
-  readOnly={false}
-  isAksjonspunktClosed={false}
-  tilfeller={tilfeller}
-  manglerInntektsmelding={false}
-  showTableCallback={showTableCallback}
-  erLonnsendring={erLonnsendring}
-  erNyoppstartetFL={erNyoppstartetFL}
-  skalViseTabell={skalViseInntektstabell(tilfeller, values, faktaOmBeregning)}
-/>));
+// const lagWrapper = (tilfeller, erLonnsendring, erNyoppstartetFL, values, faktaOmBeregning) => (shallow(<VurderOgFastsettATFL.WrappedComponent
+//   readOnly={false}
+//   isAksjonspunktClosed={false}
+//   tilfeller={tilfeller}
+//   manglerInntektsmelding={false}
+//   showTableCallback={showTableCallback}
+//   erLonnsendring={erLonnsendring}
+//   erNyoppstartetFL={erNyoppstartetFL}
+//   skalViseTabell={skalViseInntektstabell(tilfeller, values, faktaOmBeregning)}
+// />));
 
-const assertInntektstabell = (wrapper, skalViseTabell) => {
-  const inntektstabellPanel = wrapper.find(InntektstabellPanel);
-  expect(inntektstabellPanel).to.have.length(1);
-  expect(inntektstabellPanel.prop('skalViseTabell')).to.equal(skalViseTabell);
-};
+// const assertInntektstabell = (wrapper, skalViseTabell) => {
+//   const inntektstabellPanel = wrapper.find(InntektstabellPanel);
+//   expect(inntektstabellPanel).to.have.length(1);
+//   expect(inntektstabellPanel.prop('skalViseTabell')).to.equal(skalViseTabell);
+// };
 
-const assertFormNyoppstartetFL = (wrapper, skalViseTabellUnderKnapp, skalKunFastsetteFL) => {
-  const formWrapper = wrapper.find(NyoppstartetFLForm);
-  expect(formWrapper.prop('skalViseInntektstabell')).to.eql(skalViseTabellUnderKnapp);
-  if (skalViseTabellUnderKnapp) {
-    expect(formWrapper.prop('skalKunFastsetteFL')).to.eql(skalKunFastsetteFL);
-  }
-};
+// const assertFormNyoppstartetFL = (wrapper, skalViseTabellUnderKnapp, skalKunFastsetteFL) => {
+//   const formWrapper = wrapper.find(NyoppstartetFLForm);
+//   expect(formWrapper.prop('skalViseInntektstabell')).to.eql(skalViseTabellUnderKnapp);
+//   if (skalViseTabellUnderKnapp) {
+//     expect(formWrapper.prop('skalKunFastsetteFL')).to.eql(skalKunFastsetteFL);
+//   }
+// };
 
-const assertFormLonnsendring = (wrapper, skalViseTabellUnderKnapp, skalKunFastsetteAT) => {
-  const formWrapper = wrapper.find(LonnsendringForm);
-  expect(formWrapper.prop('skalViseInntektstabell')).to.eql(skalViseTabellUnderKnapp);
-  if (skalViseTabellUnderKnapp) {
-    expect(formWrapper.prop('skalKunFastsetteAT')).to.eql(skalKunFastsetteAT);
-  }
-};
+// const assertFormLonnsendring = (wrapper, skalViseTabellUnderKnapp, skalKunFastsetteAT) => {
+//   const formWrapper = wrapper.find(LonnsendringForm);
+//   expect(formWrapper.prop('skalViseInntektstabell')).to.eql(skalViseTabellUnderKnapp);
+//   if (skalViseTabellUnderKnapp) {
+//     expect(formWrapper.prop('skalKunFastsetteAT')).to.eql(skalKunFastsetteAT);
+//   }
+// };
+
+const lagBeregningsgrunnlag = andeler => ({
+  beregningsgrunnlagPeriode: [
+    {
+      beregningsgrunnlagPrStatusOgAndel: andeler.map(andel => (
+        {
+          andelsnr: andel.andelsnr,
+          aktivitetStatus: { kode: andel.aktivitetStatus },
+          inntektskategori: { kode: andel.inntektskategori },
+          erNyoppstartet: andel.erNyoppstartet,
+        }
+      )),
+    },
+  ],
+});
+
+const lagFaktaOmBeregning = (tilfeller, vurderBesteberegning, arbeidsforholdMedLønnsendringUtenIM, arbeidstakerOgFrilanserISammeOrganisasjonListe) => ({
+  faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
+  vurderBesteberegning,
+  arbeidsforholdMedLønnsendringUtenIM,
+  arbeidstakerOgFrilanserISammeOrganisasjonListe,
+});
+
+const lagAndel = (andelsnr, aktivitetStatus, inntektskategori) => (
+  { andelsnr, aktivitetStatus, inntektskategori }
+);
+
+const lagAndelValues = (andelsnr, fastsattBelop, inntektskategori, aktivitetStatus, lagtTilAvSaksbehandler = false, nyAndel = false) => ({
+  nyAndel, andelsnr, fastsattBelop, inntektskategori, aktivitetStatus, lagtTilAvSaksbehandler, skalRedigereInntekt: true,
+});
 
 describe('<VurderOgFastsettATFL>', () => {
-  it('Skal vise inntekttabell under radioknapp for lønnsendring uten atfl i samme org og uten nyoppstartet fl', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_LONNSENDRING];
-    const erLonnsendring = true;
-    const skalViseTabellUnderRadio = skalViseInntektsTabellUnderRadioknapp(tilfeller, erLonnsendring);
-    expect(skalViseTabellUnderRadio).to.equal(true);
-  });
-
-  it('Skal ikkje vise inntekttabell under radioknapp for ikkje lønnsendring uten atfl i samme org og uten nyoppstartet fl', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_LONNSENDRING];
-    const erLonnsendring = false;
-    const skalViseTabellUnderRadio = skalViseInntektsTabellUnderRadioknapp(tilfeller, erLonnsendring);
-    expect(skalViseTabellUnderRadio).to.equal(false);
-  });
-
-  it('Skal vise inntekttabell under radioknapp for lønnsendring med atfl i samme org og uten nyoppstartet fl', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_LONNSENDRING, faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON];
-    const erLonnsendring = true;
-    const skalViseTabellUnderRadio = skalViseInntektsTabellUnderRadioknapp(tilfeller, erLonnsendring);
-    expect(skalViseTabellUnderRadio).to.equal(true);
-  });
-
-  it('Skal vise inntekttabell under radioknapp for ikkje lønnsendring med atfl i samme org og uten nyoppstartet fl', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_LONNSENDRING, faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON];
-    const erLonnsendring = false;
-    const skalViseTabellUnderRadio = skalViseInntektsTabellUnderRadioknapp(tilfeller, erLonnsendring);
-    expect(skalViseTabellUnderRadio).to.equal(true);
-  });
-
-  it('Skal vise inntekttabell under radioknapp for nyoppstartet FL uten atfl i samme org og uten lønnsendring', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
-    const erNyoppstartetFL = true;
-    const skalViseTabellUnderRadio = skalViseInntektsTabellUnderRadioknapp(tilfeller, erNyoppstartetFL);
-    expect(skalViseTabellUnderRadio).to.equal(true);
-  });
-
-  it('Skal ikkje vise inntekttabell under radioknapp for ikkje nyoppstartet FL uten atfl i samme org og uten lønnsendring', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
-    const erNyoppstartetFL = false;
-    const skalViseTabellUnderRadio = skalViseInntektsTabellUnderRadioknapp(tilfeller, erNyoppstartetFL);
-    expect(skalViseTabellUnderRadio).to.equal(false);
-  });
-
-  it('Skal vise inntekttabell under radioknapp for nyoppstartet FL med atfl i samme org og uten lønnsendring', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON];
-    const erNyoppstartetFL = true;
-    const skalViseTabellUnderRadio = skalViseInntektsTabellUnderRadioknapp(tilfeller, erNyoppstartetFL);
-    expect(skalViseTabellUnderRadio).to.equal(true);
-  });
-
-  it('Skal vise inntekttabell under radioknapp for ikkje nyoppstartet FL med atfl i samme org og uten lønnsendring', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON];
-    const erNyoppstartetFL = false;
-    const skalViseTabellUnderRadio = skalViseInntektsTabellUnderRadioknapp(tilfeller, erNyoppstartetFL);
-    expect(skalViseTabellUnderRadio).to.equal(true);
-  });
-
-
-  it('Skal vise inntekttabell under radioknapp for lonnsendring med nyoppstartet FL og omvendt', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_LONNSENDRING];
-    const skalViseTabellUnderRadio = skalViseInntektsTabellUnderRadioknapp(tilfeller, true);
-    expect(skalViseTabellUnderRadio).to.equal(true);
-  });
-
-  it('Skal ikkje vise inntekttabell under radioknapp for ikkje lonnsendring med nyoppstartet FL og omvendt', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_LONNSENDRING];
-    const skalViseTabellUnderRadio = skalViseInntektsTabellUnderRadioknapp(tilfeller, false);
-    expect(skalViseTabellUnderRadio).to.equal(false);
-  });
-
-  it('Skal vise kun LonnsendringForm', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_LONNSENDRING];
-    const wrapper = lagWrapper(tilfeller, undefined, undefined);
-    const lonnsendringForm = wrapper.find(LonnsendringForm);
-    expect(lonnsendringForm).to.have.length(1);
-    const flForm = wrapper.find(NyoppstartetFLForm);
-    expect(flForm).to.have.length(0);
-    const fastsettATFLInntektForm = wrapper.find(FastsettATFLInntektForm);
-    expect(fastsettATFLInntektForm).to.have.length(0);
-    assertInntektstabell(wrapper, false);
-  });
-  it('Skal vise kun Lønnsendringsformen', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
-    const wrapper = lagWrapper(tilfeller, undefined, undefined);
-    const lonnsendringForm = wrapper.find(LonnsendringForm);
-    expect(lonnsendringForm).to.have.length(0);
-    const flForm = wrapper.find(NyoppstartetFLForm);
-    expect(flForm).to.have.length(1);
-    assertInntektstabell(wrapper, false);
-  });
-
-  it('Skal vise LonnsendringForm, NyoppstartetFLForm i Inntektstabell', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_LONNSENDRING, faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
-    const wrapper = lagWrapper(tilfeller, undefined, undefined);
-    const lonnsendringForm = wrapper.find(LonnsendringForm);
-    expect(lonnsendringForm).to.have.length(1);
-    const flForm = wrapper.find(NyoppstartetFLForm);
-    expect(flForm).to.have.length(1);
-    assertInntektstabell(wrapper, false);
-  });
-
-  it('Skal vise LonnsendringForm, NyoppstartetFLForm og FastsettATFLInntektForm i Inntektstabell', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_LONNSENDRING, faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL,
-      faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON];
-    const wrapper = lagWrapper(tilfeller, undefined, undefined);
-    assertFormLonnsendring(wrapper, false, false);
-    assertFormNyoppstartetFL(wrapper, false, false);
-    assertInntektstabell(wrapper, true);
-  });
-
-  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er fastsatt lønnsendring og ikkje nyoppstartet FL', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_LONNSENDRING, faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
-    const wrapper = lagWrapper(tilfeller, true, false);
-    assertFormLonnsendring(wrapper, true, true);
-    assertFormNyoppstartetFL(wrapper, false, true);
-    assertInntektstabell(wrapper, false);
-  });
-
-  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er fastsatt ikkje lønnsendring og nyoppstartet FL', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_LONNSENDRING, faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
-    const wrapper = lagWrapper(tilfeller, false, true);
-    assertFormLonnsendring(wrapper, false, true);
-    assertFormNyoppstartetFL(wrapper, true, true);
-    assertInntektstabell(wrapper, false);
-  });
-
-  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er ikkje fastsatt lønnsendring og ikkje nyoppstartet FL', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_LONNSENDRING, faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
-    const wrapper = lagWrapper(tilfeller, false, false);
-    assertFormLonnsendring(wrapper, false, true);
-    assertFormNyoppstartetFL(wrapper, false, true);
-    assertInntektstabell(wrapper, false);
-  });
-
-  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er fastsatt lønnsendring og nyoppstartet FL', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_LONNSENDRING, faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
-    const wrapper = lagWrapper(tilfeller, true, true);
-    assertFormLonnsendring(wrapper, true, true);
-    assertFormNyoppstartetFL(wrapper, true, true);
-    assertInntektstabell(wrapper, false);
-  });
-
-
-  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er fastsatt lønnsendring og atfl i samme org', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_LONNSENDRING, faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON];
-    const wrapper = lagWrapper(tilfeller, true, undefined);
-    assertFormLonnsendring(wrapper, true, false);
-    assertInntektstabell(wrapper, false);
-  });
-
-  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er fastsatt ikkje lønnsendring og atfl i samme org', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_LONNSENDRING, faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON];
-    const wrapper = lagWrapper(tilfeller, false, undefined);
-    assertFormLonnsendring(wrapper, true, false);
-    assertInntektstabell(wrapper, false);
-  });
-
-  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er fastsatt nyoppstartet fl og atfl i samme org', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON];
-    const wrapper = lagWrapper(tilfeller, undefined, true);
-    assertFormNyoppstartetFL(wrapper, true, false);
-    assertInntektstabell(wrapper, false);
-  });
-
-  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er fastsatt ikkje nyoppstartet fl og atfl i samme org', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON];
-    const wrapper = lagWrapper(tilfeller, undefined, false);
-    assertFormNyoppstartetFL(wrapper, true, false);
-    assertInntektstabell(wrapper, false);
-  });
-
-  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er fastsatt nyoppstartet fl, lonnsendring og er atfl i samme org', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_LONNSENDRING,
-      faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON];
-    const wrapper = lagWrapper(tilfeller, true, true);
-    assertFormNyoppstartetFL(wrapper, false, false);
-    assertFormLonnsendring(wrapper, false, false);
-    assertInntektstabell(wrapper, true);
-  });
-
-  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er fastsatt ikkje nyoppstartet fl, lonnsendring og er atfl i samme org', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_LONNSENDRING,
-      faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON];
-    const wrapper = lagWrapper(tilfeller, true, false);
-    assertFormNyoppstartetFL(wrapper, false, false);
-    assertFormLonnsendring(wrapper, false, false);
-    assertInntektstabell(wrapper, true);
-  });
-
-  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er fastsatt nyoppstartet fl, ikkje lonnsendring og er atfl i samme org', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_LONNSENDRING,
-      faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON];
-    const wrapper = lagWrapper(tilfeller, false, true);
-    assertFormNyoppstartetFL(wrapper, false, false);
-    assertFormLonnsendring(wrapper, false, false);
-    assertInntektstabell(wrapper, true);
-  });
-
-  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er kun vurder mottar ytelse og verdi er satt', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE];
-    const faktaOmBeregning = {
-      vurderMottarYtelse: {
-        ...frilanser,
-        arbeidstakerAndelerUtenIM: [],
-      },
-    };
+  it('skal transform values om besteberegning', () => {
     const values = {};
-    values[finnFrilansFieldName()] = true;
-    const wrapper = lagWrapper(tilfeller, undefined, undefined, values, faktaOmBeregning);
-    assertInntektstabell(wrapper, true);
+    values[besteberegningField] = true;
+    values[inntektFieldArrayName] = [
+      lagAndelValues(1, '10 000', inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
+      lagAndelValues(undefined, '20 000', inntektskategorier.DAGPENGER, aktivitetStatuser.DAGPENGER, true, true),
+    ];
+    const andeler = [lagAndel(1, aktivitetStatuser.ARBEIDSTAKER, inntektskategorier.ARBEIDSTAKER)];
+    const beregningsgrunnlag = lagBeregningsgrunnlag(andeler);
+    const faktaOmBeregning = lagFaktaOmBeregning([faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING], {}, undefined, undefined);
+    const transformed = VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag)(values);
+    expect(transformed.besteberegningAndeler.besteberegningAndelListe.length).to.equal(2);
+    expect(transformed.besteberegningAndeler.besteberegningAndelListe[0].andelsnr).to.equal(1);
+    expect(transformed.besteberegningAndeler.besteberegningAndelListe[0].fastsatteVerdier.fastsattBeløp).to.equal(10000);
+    expect(transformed.besteberegningAndeler.besteberegningAndelListe[0].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
+    expect(transformed.besteberegningAndeler.besteberegningAndelListe[1].andelsnr).to.equal(undefined);
+    expect(transformed.besteberegningAndeler.besteberegningAndelListe[1].lagtTilAvSaksbehandler).to.equal(true);
+    expect(transformed.besteberegningAndeler.besteberegningAndelListe[1].nyAndel).to.equal(true);
+    expect(transformed.besteberegningAndeler.besteberegningAndelListe[1].fastsatteVerdier.inntektskategori).to.equal('DAGPENGER');
+    expect(transformed.besteberegningAndeler.besteberegningAndelListe[1].aktivitetStatus).to.equal('DP');
+    expect(transformed.besteberegningAndeler.besteberegningAndelListe[1].fastsatteVerdier.fastsattBeløp).to.equal(20000);
   });
 
-  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er kun vurder mottar ytelse og verdi ikkje er satt', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE];
-    const faktaOmBeregning = {
-      vurderMottarYtelse: {
-        erFrilans: false,
-        ...atUtenIM,
-      },
-    };
-    const values = {};
-    values[utledArbeidsforholdFieldName(atUtenIM.arbeidstakerAndelerUtenIM[0])] = undefined;
-    const wrapper = lagWrapper(tilfeller, undefined, undefined, values, faktaOmBeregning);
-    assertInntektstabell(wrapper, false);
-  });
 
-  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er mottar ytelse og fastsatt lønnsendring og verdier er satt', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE, faktaOmBeregningTilfelle.VURDER_LONNSENDRING];
-    const faktaOmBeregning = {
-      vurderMottarYtelse: {
-        erFrilans: false,
-        ...atUtenIM,
-      },
-    };
+  it('skal ikkje transform inntekt for nyoppstartetFL og lønnsendring når man har besteberegning', () => {
     const values = {};
-    values[utledArbeidsforholdFieldName(atUtenIM.arbeidstakerAndelerUtenIM[0])] = true;
-    values[lonnsendringField] = false;
-    const wrapper = lagWrapper(tilfeller, true, undefined, values, faktaOmBeregning);
-    assertFormLonnsendring(wrapper, false, false);
-    assertInntektstabell(wrapper, true);
-  });
-
-  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er mottar ytelse'
-  + 'og fastsatt lønnsendring og minst ein verdi ikkje er satt', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE, faktaOmBeregningTilfelle.VURDER_LONNSENDRING];
-    const faktaOmBeregning = {
-      vurderMottarYtelse: {
-        ...frilanser,
-        ...atUtenIM,
-      },
-    };
-    const values = {};
-    values[finnFrilansFieldName()] = undefined;
-    values[utledArbeidsforholdFieldName(atUtenIM.arbeidstakerAndelerUtenIM[0])] = true;
+    values[besteberegningField] = true;
     values[lonnsendringField] = true;
-    const wrapper = lagWrapper(tilfeller, true, undefined, values, faktaOmBeregning);
-    assertFormLonnsendring(wrapper, false, false);
-    assertInntektstabell(wrapper, false);
+    values[erNyoppstartetFLField] = true;
+    values[inntektFieldArrayName] = [
+      lagAndelValues(1, '10 000', inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
+      lagAndelValues(2, '30 000', inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
+      lagAndelValues(undefined, '20 000', inntektskategorier.DAGPENGER, aktivitetStatuser.DAGPENGER, true, true),
+    ];
+    const andelMedLonnsendring = lagAndel(1, aktivitetStatuser.ARBEIDSTAKER, inntektskategorier.ARBEIDSTAKER);
+    const andeler = [
+      andelMedLonnsendring,
+      lagAndel(2, aktivitetStatuser.FRILANSER, inntektskategorier.FRILANSER),
+    ];
+    const beregningsgrunnlag = lagBeregningsgrunnlag(andeler);
+    const faktaOmBeregning = lagFaktaOmBeregning([faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING,
+      faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_LONNSENDRING], {}, [andelMedLonnsendring], undefined);
+    const transformed = VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag)(values);
+    expect(transformed.besteberegningAndeler.besteberegningAndelListe.length).to.equal(3);
+    expect(transformed.faktaOmBeregningTilfeller.length).to.equal(4);
   });
 
-  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er mottar ytelse og ikkje fastsatt lønnsendring', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE, faktaOmBeregningTilfelle.VURDER_LONNSENDRING];
-    const faktaOmBeregning = {
-      vurderMottarYtelse: {
-        ...frilanser,
-        ...atUtenIM,
-      },
-    };
+
+  it('skal fastsette inntekt for nyoppstartetFL og arbeidstaker uten inntektsmelding med lønnendring', () => {
     const values = {};
-    values[finnFrilansFieldName()] = false;
-    values[utledArbeidsforholdFieldName(atUtenIM.arbeidstakerAndelerUtenIM[0])] = true;
-    values[lonnsendringField] = false;
-    const wrapper = lagWrapper(tilfeller, false, undefined, values, faktaOmBeregning);
-    assertFormLonnsendring(wrapper, false, false);
-    assertInntektstabell(wrapper, true);
+    values[lonnsendringField] = true;
+    values[erNyoppstartetFLField] = true;
+    values[inntektFieldArrayName] = [
+      lagAndelValues(1, '10 000', inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
+      lagAndelValues(2, '30 000', inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
+      lagAndelValues(undefined, '20 000', inntektskategorier.DAGPENGER, aktivitetStatuser.DAGPENGER, true, true),
+    ];
+    const andelMedLonnsendring = lagAndel(1, aktivitetStatuser.ARBEIDSTAKER, inntektskategorier.ARBEIDSTAKER);
+    const andeler = [
+      andelMedLonnsendring,
+      {
+        ...lagAndel(2, aktivitetStatuser.FRILANSER, inntektskategorier.FRILANSER),
+        erNyoppstartet: true,
+      },
+    ];
+    const beregningsgrunnlag = lagBeregningsgrunnlag(andeler);
+    const faktaOmBeregning = lagFaktaOmBeregning([faktaOmBeregningTilfelle.VURDER_LONNSENDRING,
+      faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL], {}, [andelMedLonnsendring], undefined);
+    const transformed = VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag)(values);
+    expect(transformed.fastsattUtenInntektsmelding.andelListe.length).to.equal(1);
+    expect(transformed.fastsattUtenInntektsmelding.andelListe[0].andelsnr).to.equal(1);
+    expect(transformed.fastsattUtenInntektsmelding.andelListe[0].arbeidsinntekt).to.equal(10000);
+    expect(transformed.fastsettMaanedsinntektFL.maanedsinntekt).to.equal(30000);
+    expect(transformed.faktaOmBeregningTilfeller.length).to.equal(4);
+    expect(transformed.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL)).to.equal(true);
+    expect(transformed.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)).to.equal(true);
+    expect(transformed.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL)).to.equal(true);
+    expect(transformed.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)).to.equal(true);
   });
 
-  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er mottar ytelse og fastsatt nyoppstartet frilans', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE, faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
-    const faktaOmBeregning = {
-      vurderMottarYtelse: {
-        ...frilanser,
-        ...atUtenIM,
-      },
-    };
-    const values = {};
-    values[finnFrilansFieldName()] = false;
-    values[utledArbeidsforholdFieldName(atUtenIM.arbeidstakerAndelerUtenIM[0])] = true;
-    values[erNyoppstartetFLField] = false;
-    const wrapper = lagWrapper(tilfeller, undefined, true, values, faktaOmBeregning);
-    assertFormNyoppstartetFL(wrapper, false, false);
-    assertInntektstabell(wrapper, true);
-  });
 
-  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er mottar ytelse og ikkje fastsatt nyoppstartet frilans', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE, faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
-    const faktaOmBeregning = {
-      vurderMottarYtelse: {
-        ...frilanser,
-        ...atUtenIM,
-      },
-    };
-    const values = {};
-    values[finnFrilansFieldName()] = false;
-    values[utledArbeidsforholdFieldName(atUtenIM.arbeidstakerAndelerUtenIM[0])] = true;
-    values[erNyoppstartetFLField] = false;
-    const wrapper = lagWrapper(tilfeller, undefined, false, values, faktaOmBeregning);
-    assertFormNyoppstartetFL(wrapper, false, false);
-    assertInntektstabell(wrapper, true);
-  });
+  it('skal vise komponent', () => {
+    const tilfeller = [faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING, faktaOmBeregningTilfelle.VURDER_LONNSENDRING,
+      faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE, faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL,
+    ];
+    const wrapper = shallow(<VurderOgFastsettATFL.WrappedComponent
+      readOnly={false}
+      isAksjonspunktClosed={false}
+      tilfeller={tilfeller}
+      skalViseTabell={false}
+      skalFastsetteAT
+      skalFastsetteFL={false}
+      skalHaBesteberegning={false}
+      manglerInntektsmelding
+    />);
+    const inntektstabellPanel = wrapper.find(InntektstabellPanel);
+    const lonnsendringForm = inntektstabellPanel.find(LonnsendringForm);
+    expect(lonnsendringForm.length).to.equal(1);
 
-  it('Skal teste at underkomponenter mottar prop for å vise tabell dersom det er mottar ytelse og ikkje fastsatt nyoppstartet frilans'
-  + ' og vurder mottar ytelse ikkje er fastsatt', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE, faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
-    const faktaOmBeregning = {
-      vurderMottarYtelse: {
-        ...frilanser,
-        ...atUtenIM,
-      },
-    };
-    const values = {};
-    values[finnFrilansFieldName()] = undefined;
-    values[utledArbeidsforholdFieldName(atUtenIM.arbeidstakerAndelerUtenIM[0])] = true;
-    values[erNyoppstartetFLField] = false;
-    const wrapper = lagWrapper(tilfeller, undefined, false, values, faktaOmBeregning);
-    assertFormNyoppstartetFL(wrapper, false, false);
-    assertInntektstabell(wrapper, false);
+    const besteberegningForm = inntektstabellPanel.find(VurderBesteberegningForm);
+    expect(besteberegningForm.length).to.equal(1);
+
+    const nyoppstartetFLForm = inntektstabellPanel.find(NyoppstartetFLForm);
+    expect(nyoppstartetFLForm.length).to.equal(1);
+
+    const vurderMottarYtelseForm = inntektstabellPanel.find(VurderMottarYtelseForm);
+    expect(vurderMottarYtelseForm.length).to.equal(1);
   });
 });

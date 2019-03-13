@@ -16,10 +16,17 @@ const faktaOmBeregningTilfelle = {
   VURDER_BESTEBEREGNING: 'VURDER_BESTEBEREGNING',
 };
 
+const besteberegningTilfeller = [
+  faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING,
+  faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE];
+
+
 export const vurderOgFastsettATFLTilfeller = [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON,
   faktaOmBeregningTilfelle.VURDER_LONNSENDRING,
   faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL,
-  faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE];
+  faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE,
+  faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING,
+  faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE];
 
 
 export const fastsettATLIntersection = tilfeller => vurderOgFastsettATFLTilfeller.filter(tilfelle => tilfeller.includes(tilfelle));
@@ -30,29 +37,28 @@ const harLonnsendringOgNyoppstartet = tilfeller => tilfeller.includes(faktaOmBer
 const harIkkeLonnsendringEllerNyoppstartet = tilfeller => !(tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)
 || tilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL));
 
-export const harVurderMottarYtelseUtenBesteberegning = tilfeller => tilfeller.includes(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE)
-&& !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE);
+export const harVurderMottarYtelse = tilfeller => tilfeller.includes(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE);
 
-export const harKunATFLISammeOrgUtenBestebergning = tilfeller => (harIkkeLonnsendringEllerNyoppstartet(tilfeller)
-  || harVurderMottarYtelseUtenBesteberegning(tilfeller))
-  && tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)
-  && !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE);
+export const harKunATFLISammeOrg = tilfeller => (harIkkeLonnsendringEllerNyoppstartet(tilfeller)
+  || harVurderMottarYtelse(tilfeller))
+  && tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON);
 
-const harLonnsendringNyOppstartetFLOgATFLISammeOrgUtenBesteberegning = tilfeller => harLonnsendringOgNyoppstartet(tilfeller)
-  && tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)
-  && !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE);
+const harLonnsendringNyOppstartetFLOgATFLISammeOrg = tilfeller => harLonnsendringOgNyoppstartet(tilfeller)
+  && tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON);
 
 export const erSpesialtilfelleMedEkstraKnapp = tilfeller => tilfeller.includes(faktaOmBeregningTilfelle.TILSTOTENDE_YTELSE)
   && tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG);
 
-export const erATFLSpesialtilfelle = tilfeller => harLonnsendringNyOppstartetFLOgATFLISammeOrgUtenBesteberegning(tilfeller);
+export const erATFLSpesialtilfelle = tilfeller => harLonnsendringNyOppstartetFLOgATFLISammeOrg(tilfeller);
 
-export const erATFLSpesialtilfelleEllerVurderMottarYtelseUtenBesteberegning = tilfeller => erATFLSpesialtilfelle(tilfeller)
-|| harVurderMottarYtelseUtenBesteberegning(tilfeller);
+export const erATFLSpesialtilfelleEllerVurderMottarYtelse = tilfeller => erATFLSpesialtilfelle(tilfeller)
+|| harVurderMottarYtelse(tilfeller);
 
-export const harIkkeATFLSameOrgEllerBesteberegning = tilfeller => !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)
-  && !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON);
+export const harIkkeATFLSameOrg = tilfeller => !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON);
 
 export const harFastsettATFLInntektTilfelle = tilfeller => tilfeller.some(tilfelle => vurderOgFastsettATFLTilfeller.includes(tilfelle));
+
+export const harFastsettATFLInntektTilfelleUtenomBesteberegning = tilfeller => tilfeller.some(tilfelle => vurderOgFastsettATFLTilfeller.includes(tilfelle)
+  && !besteberegningTilfeller.includes(tilfelle));
 
 export default faktaOmBeregningTilfelle;

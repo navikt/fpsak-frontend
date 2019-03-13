@@ -14,7 +14,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getAksjonspunkter } from 'behandlingFpsak/src/behandlingSelectors';
 import styles from './kunYtelse/brukersAndelFieldArray.less';
 import ArbeidsforholdField from './ArbeidsforholdField';
-
+import { skalRedigereInntektSelector, skalRedigereInntektskategoriSelector } from './BgFordelingUtils';
 
 const summerFordeling = (fields) => {
   let sum = 0;
@@ -86,6 +86,8 @@ export const AndelRowImpl = ({
   skalVisePeriode,
   skalViseRefusjon,
   skalViseSletteknapp,
+  skalRedigereInntekt,
+  skalRedigereInntektskategori,
   andelElementFieldId,
   inntektskategoriKoder,
   readOnly,
@@ -118,8 +120,8 @@ export const AndelRowImpl = ({
         name={`${andelElementFieldId}.fastsattBelop`}
         bredde="M"
         parse={parseCurrencyInput}
-        readOnly={readOnly}
-        isEdited={isAksjonspunktClosed}
+        readOnly={readOnly || !skalRedigereInntekt}
+        isEdited={isAksjonspunktClosed && skalRedigereInntekt}
       />
     </TableColumn>
     {skalViseRefusjon
@@ -141,8 +143,8 @@ export const AndelRowImpl = ({
         bredde="l"
         selectValues={inntektskategoriSelectValues(inntektskategoriKoder)}
         value={fields.get(index).inntektskategori}
-        readOnly={readOnly}
-        isEdited={isAksjonspunktClosed}
+        readOnly={readOnly || !skalRedigereInntektskategori}
+        isEdited={isAksjonspunktClosed && skalRedigereInntektskategori}
       />
     </TableColumn>
     <TableColumn>
@@ -170,6 +172,8 @@ AndelRowImpl.propTypes = {
   skalVisePeriode: PropTypes.bool.isRequired,
   skalViseRefusjon: PropTypes.bool.isRequired,
   skalViseSletteknapp: PropTypes.bool.isRequired,
+  skalRedigereInntekt: PropTypes.bool.isRequired,
+  skalRedigereInntektskategori: PropTypes.bool.isRequired,
   andelElementFieldId: PropTypes.string.isRequired,
   removeAndel: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
@@ -178,12 +182,19 @@ AndelRowImpl.propTypes = {
 
 const sorterKodeverkAlfabetisk = kodeverkListe => kodeverkListe.slice().sort((a, b) => a.navn.localeCompare(b.navn));
 
-export const mapStateToProps = (state) => {
+
+export const mapStateToProps = (state, ownProps) => {
   const alleAp = getAksjonspunkter(state);
   const relevantAp = alleAp
     .filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN);
   const isAksjonspunktClosed = relevantAp.length === 0 ? undefined : !isAksjonspunktOpen(relevantAp[0].status.kode);
+  const field = ownProps.fields.get(ownProps.index);
+  const skalRedigereInntekt = skalRedigereInntektSelector(state)(field);
+  const skalRedigereInntektskategori = skalRedigereInntektskategoriSelector(state)(field);
+  field.skalRedigereInntekt = skalRedigereInntekt;
   return {
+    skalRedigereInntekt,
+    skalRedigereInntektskategori,
     isAksjonspunktClosed,
     inntektskategoriKoder: sorterKodeverkAlfabetisk(getKodeverk(kodeverkTyper.INNTEKTSKATEGORI)(state)),
   };

@@ -52,11 +52,11 @@ kodeverk[kodeverkTyper.INNTEKTSKATEGORI] = [
 ];
 
 
-export const lagStateMedAksjonspunkterOgFaktaOmBeregning = (aksjonspunkter, faktaOmBeregning, values = {}, initial = {}) => {
+export const lagStateMedAksjonspunkterOgBeregningsgrunnlag = (aksjonspunkter, beregningsgrunnlag, values = {}, initial = {}) => {
   const data = {
     id: 1000051,
     versjon: 1,
-    beregningsgrunnlag: { faktaOmBeregning },
+    beregningsgrunnlag,
     aksjonspunkter,
   };
   const dataState = new ApiStateBuilder()

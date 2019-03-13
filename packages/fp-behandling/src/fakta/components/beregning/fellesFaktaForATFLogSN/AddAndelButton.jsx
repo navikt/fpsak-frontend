@@ -15,7 +15,7 @@ import styles from './addAndelButton.less';
 
 const defaultAndel = (aktivitetStatuser, erKunYtelse) => ({
   andel: erKunYtelse ? aktivitetStatuser.filter(({ kode }) => kode === aktivitetStatus.BRUKERS_ANDEL)[0].navn : undefined,
-  fastsattBeløp: '',
+  fastsattBelop: '',
   inntektskategori: '',
   nyAndel: true,
   skalKunneEndreAktivitet: true,

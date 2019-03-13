@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { lagStateMedAksjonspunkterOgFaktaOmBeregning } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
+import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
 import {
   getFormValuesForBeregning, getFormInitialValuesForBeregning,
 } from './BeregningFormUtils';
@@ -23,7 +23,7 @@ describe('<BeregningFormUtils>', () => {
     const values = {
       test: 'test',
     };
-    const state = lagStateMedAksjonspunkterOgFaktaOmBeregning(aksjonspunkter, {}, values);
+    const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, {}, values);
     const formValues = getFormValuesForBeregning(state);
     expect(formValues.test).to.equal('test');
   });
@@ -32,7 +32,7 @@ describe('<BeregningFormUtils>', () => {
     const values = {
       test: 'test',
     };
-    const state = lagStateMedAksjonspunkterOgFaktaOmBeregning(aksjonspunkter, {}, {}, values);
+    const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, {}, {}, values);
     const formValues = getFormInitialValuesForBeregning(state);
     expect(formValues.test).to.equal('test');
   });

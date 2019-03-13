@@ -1,14 +1,14 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/assets/testHelpers//intl-enzyme-test-helper';
-import { MockFieldsWithContent } from '@fpsak-frontend/assets/testHelpers//redux-form-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
+import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { TableRow, TableColumn } from '@fpsak-frontend/shared-components';
 import { InputField, SelectField, PeriodpickerField } from '@fpsak-frontend/form';
 import { AndelRowImpl, mapStateToProps } from './InntektFieldArrayRow';
 import ArbeidsforholdField from './ArbeidsforholdField';
-import { lagStateMedAksjonspunkterOgFaktaOmBeregning } from '../BeregningTestHelper';
 
 
 const aksjonspunkter = [
@@ -38,8 +38,8 @@ const faktaOmBeregning = {
 };
 const initial = {};
 initial.fieldArrayName = [andelField];
-const state = lagStateMedAksjonspunkterOgFaktaOmBeregning(aksjonspunkter, faktaOmBeregning, initial, initial);
-const props = mapStateToProps(state);
+const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, { faktaOmBeregning }, initial, initial);
+const props = mapStateToProps(state, { fields, index: 0 });
 
 
 it('skal vise komponent med arbeidsperiode og refusjonskrav', () => {
@@ -50,6 +50,7 @@ it('skal vise komponent med arbeidsperiode og refusjonskrav', () => {
     skalVisePeriode
     skalViseRefusjon
     skalViseSletteknapp={false}
+    skalRedigereInntekt
     andelElementFieldId="fieldArrayName[0]"
     removeAndel={() => {}}
     index={0}
@@ -90,6 +91,7 @@ it('skal vise komponent uten arbeidsperiode og refusjonskrav', () => {
     skalVisePeriode={false}
     skalViseSletteknapp={false}
     skalViseRefusjon={false}
+    skalRedigereInntekt
     andelElementFieldId="fieldArrayName[0]"
     removeAndel={() => {}}
     index={0}
@@ -129,6 +131,7 @@ it('skal vise komponent med sletteknapp', () => {
     skalVisePeriode={false}
     skalViseSletteknapp
     skalViseRefusjon={false}
+    skalRedigereInntekt
     andelElementFieldId="fieldArrayName[0]"
     removeAndel={() => {}}
     index={0}
