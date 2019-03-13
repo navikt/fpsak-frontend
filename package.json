@@ -1,6 +1,6 @@
 {
   "name": "fpsak-frontend",
-  "version": "0.3.85",
+  "version": "0.3.86",
   "description": "Klient for Foreldrepenger",
   "main": "./dist/index.js",
   "author": "NAV",
@@ -95,11 +95,11 @@
     "style-loader": "^0.23.1",
     "stylelint": "^9.10.1",
     "uglifyjs-webpack-plugin": "^2.1.0",
+    "wait-on": "^3.2.0",
     "webpack": "^4.29.6",
     "webpack-cli": "3.2.3",
     "webpack-dev-server": "^3.2.1",
-    "webpack-merge": "^4.2.1",
-    "wait-on": "^3.2.0"
+    "webpack-merge": "^4.2.1"
   },
   "nyc": {
     "require": [
