@@ -4,22 +4,41 @@ import { Field } from 'redux-form';
 import { Textarea as NavTextarea } from 'nav-frontend-skjema';
 import EtikettFokus from 'nav-frontend-etiketter';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-
+import debounce from 'lodash.debounce';
 import renderNavField from './renderNavField';
 import { labelPropType } from './Label';
 
 import styles from './textAreaField.less';
 import ReadOnlyField from './ReadOnlyField';
 
+class TextAreaWithBadge extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = { controlled: props.value };
+    this.onChangeDebounce = debounce(value => props.onChange(value), 300);
+  }
 
-const TextAreaWithBadge = ({
-  badges,
-  intl,
-  isEdited,
-  ...otherProps
-}) => (
-  <div className={badges ? styles.textAreaFieldWithBadges : null}>
-    { badges
+  handleInputChange = (event) => {
+    const { value } = event.target;
+
+    this.setState({
+      controlled: value,
+    });
+
+    this.onChangeDebounce(value);
+  }
+
+  render() {
+    const {
+      badges,
+      intl,
+      isEdited,
+      ...otherProps
+    } = this.props;
+    const { controlled } = this.state;
+    return (
+      <div className={badges ? styles.textAreaFieldWithBadges : null}>
+        { badges
     && (
     <div className={styles.etikettWrapper}>
       { badges.map(({ textId, type, title }) => (
@@ -30,9 +49,15 @@ const TextAreaWithBadge = ({
     </div>
     )
     }
-    <NavTextarea {...otherProps} />
-  </div>
-);
+        <NavTextarea
+          {...otherProps}
+          onChange={this.handleInputChange}
+          value={controlled}
+        />
+      </div>
+    );
+  }
+}
 
 const renderNavTextArea = renderNavField(injectIntl(TextAreaWithBadge));
 
@@ -71,6 +96,8 @@ TextAreaWithBadge.propTypes = {
     title: PropTypes.string.isRequired,
   })),
   isEdited: PropTypes.bool,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 TextAreaWithBadge.defaultProps = {

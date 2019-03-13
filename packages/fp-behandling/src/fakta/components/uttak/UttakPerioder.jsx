@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
@@ -99,7 +99,7 @@ const updateInntektsmeldingInfo = (inntektsmeldinger, inntektsmeldingInfo, updat
   ...inntektsmeldingInfo.slice(updatedIndex + 1),
 ]);
 
-export class UttakPerioder extends Component {
+export class UttakPerioder extends PureComponent {
   constructor(props) {
     super(props);
 

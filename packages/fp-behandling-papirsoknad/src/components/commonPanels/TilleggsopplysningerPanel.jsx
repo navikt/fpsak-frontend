@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import { Fieldset } from 'nav-frontend-skjema';
 
-import { BorderBox } from '@fpsak-frontend/shared-components';
+import {
+  BorderBox, FlexContainer, FlexColumn, FlexRow,
+} from '@fpsak-frontend/shared-components';
 import { TextAreaField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { maxLength as maxLengthValidator, hasValidText, required } from '@fpsak-frontend/utils';
-import { Row, Column } from 'nav-frontend-grid';
 
 import styles from './tilleggsopplysningerPanel.less';
 
@@ -22,33 +23,31 @@ const sprakvalg = {
 };
 
 /**
- * s
- *
  * Presentasjonskomponent. Komponenten vises som del av skjermbildet for registrering av papirsøknad dersom søknad gjelder engangsstønad.
  * Komponenten har inputfelter og må derfor rendres som etterkommer av komponent dekorert med reduxForm.
  */
+
 export const TilleggsopplysningerPanel = ({
   readOnly,
   intl,
 }) => (
   <BorderBox>
-    <div className={styles.flexContainer}>
-      <Row>
-        <Column xs="6">
+    <FlexContainer>
+      <FlexRow>
+        <FlexColumn className={styles.halfWidth}>
           <Fieldset legend={intl.formatMessage({ id: 'Registrering.SokerensTilleggsopplysninger' })}>
             <TextAreaField
               name="tilleggsopplysninger"
               label=""
-              textareaClass={styles.textAreaSettings}
               maxLength={maxLength}
               validate={validate}
               readOnly={readOnly}
             />
           </Fieldset>
-        </Column>
+        </FlexColumn>
         {localfeatureToggle
         && (
-        <Column xs="6">
+        <FlexColumn>
           <Fieldset legend={intl.formatMessage({ id: 'Registrering.Sprak' })}>
             <RadioGroupField
               name="sprakvalg"
@@ -70,10 +69,10 @@ export const TilleggsopplysningerPanel = ({
               />
             </RadioGroupField>
           </Fieldset>
-        </Column>
+        </FlexColumn>
         )}
-      </Row>
-    </div>
+      </FlexRow>
+    </FlexContainer>
   </BorderBox>
 );
 

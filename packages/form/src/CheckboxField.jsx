@@ -9,7 +9,7 @@ import { labelPropType } from './Label';
 
 export const RenderCheckboxField = renderNavField(({ onChange, label, ...otherProps }) => (
   <NavCheckbox
-    onChange={e => onChange(e.target.checked)}
+    onChange={event => onChange(event.target.checked)}
     checked={otherProps.value}
     label={React.cloneElement(label, { typographyElement: Normaltekst })}
     {...otherProps}

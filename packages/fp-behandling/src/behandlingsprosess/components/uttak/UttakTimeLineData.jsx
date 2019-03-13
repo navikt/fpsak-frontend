@@ -189,7 +189,7 @@ export class UttakTimeLineData extends Component {
     const { showDelPeriodeModal } = this.state;
     const isEdited = !!selectedItemData.begrunnelse && !isApOpen;
     return (
-      <Row>
+      <Row key={`selectedItemData_${selectedItemData.id}`}>
         <Column xs="12">
           <div className={styles.showDataContainer}>
             <Row>
