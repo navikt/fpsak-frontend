@@ -377,6 +377,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'HENDELSE_UNDER_AARSAK',
     verdiId: '',
   },
+  TILBAKETREKK: {
+    kode: 'TILBAKETREKK',
+    feltId: 'HistorikkEndretFelt.Tilbaketrekk',
+  },
 };
 
 export default historikkEndretFeltTypeCodes;

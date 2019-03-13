@@ -142,6 +142,12 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.VERGE,
     punktNavn: '',
   },
+  TILKJENT_YTELSE: {
+    kode: 'TILKJENT_YTELSE',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: behandlingspunktCodes.TILKJENT_YTELSE,
+  },
+
   FAKTA_OM_SIMULERING: {
     kode: 'SIMULERING',
     faktaNavn: faktaPanelCodes.DEFAULT,
