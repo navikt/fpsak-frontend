@@ -404,6 +404,26 @@ const transformValues = (values, selectedItemData, avslagAarsakKoder, innvilgels
   return transformvalue;
 };
 
+const calculateCorrectWeeks = (aktivitet, item) => {
+  if (item.periodeResultatType && (item.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING)) {
+    return 0;
+  }
+  if ((aktivitet.utbetalingsgrad || aktivitet.utbetalingsgrad === 0) || !aktivitet.prosentArbeid) {
+    return Math.floor(aktivitet.trekkdager / 5);
+  }
+  return Math.floor((aktivitet.trekkdager * parseFloat(1 - (aktivitet.prosentArbeid * 0.01)).toPrecision(2)) / 5);
+};
+
+const calculateCorrectDays = (aktivitet, item) => {
+  if (item.periodeResultatType && (item.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING)) {
+    return 0;
+  }
+  if ((aktivitet.utbetalingsgrad || aktivitet.utbetalingsgrad === 0) || !aktivitet.prosentArbeid) {
+    return Math.floor(aktivitet.trekkdager % 5);
+  }
+  return Math.floor((aktivitet.trekkdager * parseFloat(1 - (aktivitet.prosentArbeid * 0.01)).toPrecision(2)) % 5);
+};
+
 export const initialValue = (selectedItem, kontoIkkeSatt) => {
   const { ...returnValues } = selectedItem;
   return returnValues.aktiviteter.map((a) => {
@@ -411,8 +431,8 @@ export const initialValue = (selectedItem, kontoIkkeSatt) => {
     aktivitet.utbetalingsgrad = !kontoIkkeSatt ? aktivitet.utbetalingsgrad : 0;
     aktivitet.fom = selectedItem.fom;
     aktivitet.tom = selectedItem.tom;
-    aktivitet.weeks = typeof a.weeks !== 'undefined' ? a.weeks : 0;
-    aktivitet.days = typeof a.weeks !== 'undefined' ? a.days : 0;
+    aktivitet.weeks = typeof a.weeks !== 'undefined' ? a.weeks : calculateCorrectWeeks(aktivitet, selectedItem);
+    aktivitet.days = typeof a.weeks !== 'undefined' ? a.days : calculateCorrectDays(aktivitet, selectedItem);
     if (aktivitet.weeks === 0 && aktivitet.days === 0 && selectedItem.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING) {
       aktivitet.weeks = '';
       aktivitet.days = '';

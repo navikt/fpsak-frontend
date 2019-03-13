@@ -7,6 +7,7 @@ import { calcDays } from '@fpsak-frontend/utils';
 import {
   Image, EditedIcon, ElementWrapper, AksjonspunktHelpText, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
+import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
 import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
 import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
@@ -46,6 +47,7 @@ const getCorrectEmptyArbeidsForhold = (preiodeTypeKode, arbeidsForhold) => {
 const hentApTekst = (manuellBehandlingÅrsak, stonadskonto, aktiviteter) => {
   const texts = [];
 
+  // TODO: Fix att hente fra korrekt plass
   if (manuellBehandlingÅrsak.kode === '5001') {
     const arbeidsForhold = getCorrectEmptyArbeidsForhold(aktiviteter, stonadskonto);
     const arbeidsForholdMedNullDagerIgjen = arbeidsForhold.join();
@@ -85,6 +87,7 @@ export class UttakTimeLineData extends Component {
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
     this.splitPeriod = this.splitPeriod.bind(this);
+    this.isPeriodDefined = this.isPeriodDefined.bind(this);
 
     this.state = {
       showDelPeriodeModal: false,
@@ -111,6 +114,14 @@ export class UttakTimeLineData extends Component {
     });
   }
 
+  isPeriodDefined(period) {
+    if (period.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING
+      || period.tilknyttetStortinget) {
+      return false;
+    }
+    return true;
+  }
+
   splitPeriod(formValues) {
     const { uttaksresultatActivity, activityPanelName, callbackSetSelected: setSelected } = this.props;
     const otherThanUpdated = uttaksresultatActivity.filter(o => o.id !== formValues.periodeId);
@@ -120,6 +131,7 @@ export class UttakTimeLineData extends Component {
     const newTrekkDagerForstePeriode = calcDays(formValues.forstePeriode.fom, formValues.forstePeriode.tom);
     const newTrekkDagerAndrePeriode = calcDays(formValues.andrePeriode.fom, formValues.andrePeriode.tom);
     const currentId = formValues.periodeId;
+    const definedPeriod = this.isPeriodDefined(periodToUpdate[0]) || null;
     if (!periodToUpdate[0].begrunnelse) {
       forstePeriode.begrunnelse = ' ';
       andrePeriode.begrunnelse = ' ';
@@ -131,7 +143,7 @@ export class UttakTimeLineData extends Component {
     andrePeriode.fom = formValues.andrePeriode.fom;
     andrePeriode.tom = formValues.andrePeriode.tom;
     periodToUpdate[0].aktiviteter.forEach((period, index) => {
-      if (period.days || period.weeks || formValues.gradertTrekkdager) {
+      if (period.days || period.weeks || (formValues.gradertTrekkdager && this.isPeriodDefined(periodToUpdate[0]))) {
         const periodUtbetalningsgrad = !period.utbetalingsgrad ? (formValues.gradertTrekkdager * (1 - formValues.gradertProsentandelArbeid * 0.01))
           : formValues.gradertTrekkdager;
         const totalTrekkDagerUtenGradering = newTrekkDagerForstePeriode + newTrekkDagerAndrePeriode;
@@ -151,12 +163,12 @@ export class UttakTimeLineData extends Component {
         andrePeriode.aktiviteter[index].trekkdager = (andrePeriode.aktiviteter[index].weeks * 5)
           + andrePeriode.aktiviteter[index].days;
       } else {
-        forstePeriode.aktiviteter[index].weeks = Math.trunc(newTrekkDagerForstePeriode / 5);
-        forstePeriode.aktiviteter[index].days = newTrekkDagerForstePeriode % 5;
-        andrePeriode.aktiviteter[index].weeks = Math.trunc(newTrekkDagerAndrePeriode / 5);
-        andrePeriode.aktiviteter[index].days = newTrekkDagerAndrePeriode % 5;
-        forstePeriode.aktiviteter[index].trekkdager = newTrekkDagerForstePeriode;
-        andrePeriode.aktiviteter[index].trekkdager = newTrekkDagerAndrePeriode;
+        forstePeriode.aktiviteter[index].weeks = definedPeriod ? Math.trunc(newTrekkDagerForstePeriode / 5) : '';
+        forstePeriode.aktiviteter[index].days = definedPeriod ? newTrekkDagerForstePeriode % 5 : '';
+        andrePeriode.aktiviteter[index].weeks = definedPeriod ? Math.trunc(newTrekkDagerAndrePeriode / 5) : '';
+        andrePeriode.aktiviteter[index].days = definedPeriod ? newTrekkDagerAndrePeriode % 5 : '';
+        forstePeriode.aktiviteter[index].trekkdager = definedPeriod ? newTrekkDagerForstePeriode : 0;
+        andrePeriode.aktiviteter[index].trekkdager = definedPeriod ? newTrekkDagerAndrePeriode : 0;
       }
     });
     andrePeriode.id = currentId + 1;
