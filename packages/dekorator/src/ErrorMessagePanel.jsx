@@ -33,20 +33,21 @@ export class ErrorMessagePanel extends Component {
     this.toggleModalOnKeyDown = this.toggleModalOnKeyDown.bind(this);
   }
 
-  toggleModalOnClick(e, index) {
+  toggleModalOnClick(event, index) {
     const { isModalOpen } = this.state;
     this.setState({
       isModalOpen: !isModalOpen,
       selectedErrorMsgIndex: index,
     });
-    e.preventDefault();
+
+    if (event) event.preventDefault();
   }
 
-  toggleModalOnKeyDown(e, index) {
-    if (e.key === 'Enter' || e.key === ' ') {
-      this.toggleModal(e, index);
+  toggleModalOnKeyDown(event, index) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.toggleModal(event, index);
     } else {
-      e.preventDefault();
+      event.preventDefault();
     }
   }
 
@@ -73,8 +74,8 @@ export class ErrorMessagePanel extends Component {
                 <Undertekst>
                   <a
                     href=""
-                    onClick={e => this.toggleModalOnClick(e, index)}
-                    onKeyDown={e => this.toggleModalOnKeyDown(e, index)}
+                    onClick={event => this.toggleModalOnClick(event, index)}
+                    onKeyDown={event => this.toggleModalOnKeyDown(event, index)}
                     className={styles.link}
                   >
                     <FormattedMessage id="ErrorMessagePanel.ErrorDetails" />
