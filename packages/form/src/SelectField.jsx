@@ -1,16 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
 import { Field } from 'redux-form';
 import CustomNavSelect from './CustomNavSelect';
 
 import renderNavField from './renderNavField';
 import { labelPropType } from './Label';
 import ReadOnlyField from './ReadOnlyField';
-
-import styles from './selectField.less';
-
-const classNames = classnames.bind(styles);
 
 // eslint-disable-next-line react/prop-types
 const renderReadOnly = () => ({ input, selectValues, ...otherProps }) => {
@@ -34,7 +29,6 @@ const SelectField = ({
     {...otherProps}
     readOnly={readOnly}
     readOnlyHideEmpty
-    className={classNames('navSelect', { navSelectReadOnly: readOnly })}
   />
 );
 

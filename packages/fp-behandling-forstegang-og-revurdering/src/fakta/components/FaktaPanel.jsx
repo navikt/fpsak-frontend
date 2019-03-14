@@ -10,7 +10,6 @@ import {
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { getOpenInfoPanels } from 'behandlingForstegangOgRevurdering/src/fakta/duck';
 import { getFagsakYtelseType, getFagsakPerson } from 'behandlingForstegangOgRevurdering/src/duck';
-import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import FodselInfoPanel from './fodsel/FodselInfoPanel';
 import TilleggsopplysningerInfoPanel from './tilleggsopplysninger/TilleggsopplysningerInfoPanel';
 import OpptjeningInfoPanel from './opptjening/OpptjeningInfoPanel';
@@ -44,7 +43,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
   ytelsesType,
   fagsakPerson,
 }) => (
-  <ElementWrapper>
+  <React.Fragment>
     <div className={styles.personContainer}>
       {personopplysninger
       && (
@@ -195,7 +194,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
       )
       }
     </div>
-  </ElementWrapper>
+  </React.Fragment>
 );
 
 FaktaPanel.propTypes = {
