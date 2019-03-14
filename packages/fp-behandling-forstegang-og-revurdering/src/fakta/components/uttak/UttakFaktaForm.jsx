@@ -151,17 +151,14 @@ const manueltEllerOverstyring = (manuellOverstyring, erManuellOverstyrApErOppret
 );
 
 export const transformValues = (values, initialValues, aksjonspunkter) => { // NOSONAR
-  const overstyringAp = [
-    aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK,
-    // aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK
-  ];
-  // const erManuellOverstyrApErOpprettet = aksjonspunkter
-  //  .some(ap => ap.status.kode === 'OPPR' && ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK);
+  const overstyringAp = [aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK, aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK];
+  const erManuellOverstyrApErOpprettet = aksjonspunkter
+    .some(ap => ap.status.kode === 'OPPR' && ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK);
   const aksjonspunktUtenOverstyr = aksjonspunkter.filter(ap => !overstyringAp.includes(ap.definisjon.kode));
 
   const apCodes = aksjonspunktUtenOverstyr.length
     ? aksjonspunktUtenOverstyr.map(ap => ap.definisjon.kode)
-    : overstyringAp; // [manueltEllerOverstyring(values.manuellOverstyring, erManuellOverstyrApErOpprettet)];
+    : [manueltEllerOverstyring(values.manuellOverstyring, erManuellOverstyrApErOpprettet)];
   return apCodes.map(ap => ({
     kode: ap,
     bekreftedePerioder: values.perioder.map((periode) => {
