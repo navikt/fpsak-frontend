@@ -72,7 +72,8 @@ const UttakPeriodeType = ({ // NOSONAR
   uttakPeriodeType,
   isFromSøknad,
   arbeidsgiver,
-  erArbeidstaker,
+  erFrilanser,
+  erSelvstendig,
   samtidigUttak,
   samtidigUttaksprosent,
   flerbarnsdager,
@@ -147,10 +148,16 @@ const UttakPeriodeType = ({ // NOSONAR
       {isGradering
       && (
       <React.Fragment>
-        {!erArbeidstaker
+        {erFrilanser
         && (
           <div className={styles.textWrapper}>
-            <Element><FormattedMessage id="UttakInfoPanel.FrilansSelvstendignæringsdrivende" /></Element>
+            <Element><FormattedMessage id="UttakInfoPanel.Frilans" /></Element>
+          </div>
+        )}
+        {erSelvstendig
+        && (
+          <div className={styles.textWrapper}>
+            <Element><FormattedMessage id="UttakInfoPanel.Selvstendignæringsdrivende" /></Element>
           </div>
         )}
         {arbeidsgiver && arbeidsgiver.navn && (arbeidsgiver.identifikator || arbeidsgiver.aktorId)
@@ -183,7 +190,8 @@ UttakPeriodeType.propTypes = {
   flerbarnsdager: PropTypes.bool.isRequired,
   samtidigUttak: PropTypes.bool.isRequired,
   samtidigUttaksprosent: PropTypes.string,
-  erArbeidstaker: PropTypes.bool,
+  erFrilanser: PropTypes.bool,
+  erSelvstendig: PropTypes.bool,
   oppholdArsak: PropTypes.shape(),
 };
 
@@ -191,7 +199,8 @@ UttakPeriodeType.defaultProps = {
   arbeidstidprosent: null,
   samtidigUttaksprosent: null,
   arbeidsgiver: {},
-  erArbeidstaker: false,
+  erFrilanser: false,
+  erSelvstendig: false,
   oppholdArsak: undefined,
 };
 

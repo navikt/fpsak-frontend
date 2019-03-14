@@ -19,6 +19,8 @@ import {
   hasValidFodselsnummer,
   isRequiredMessage,
 } from '@fpsak-frontend/utils';
+import arbeidskategori from '@fpsak-frontend/kodeverk/src/arbeidskategori';
+
 import RenderGraderingPeriodeFieldArray from './RenderGraderingPeriodeFieldArray';
 import styles from './permisjonPanel.less';
 
@@ -39,6 +41,7 @@ export const PermisjonGraderingPanel = ({
   skalGradere,
   readOnly,
   visFeilMelding,
+  arbeidskategoriTyper,
 }) => (
   <div>
     <Element><FormattedMessage id="Registrering.Permisjon.Gradering.Title" /></Element>
@@ -58,6 +61,7 @@ export const PermisjonGraderingPanel = ({
       form={form}
       namePrefix={namePrefix}
       graderingPrefix={graderingPeriodeFieldArrayName}
+      arbeidskategoriTyper={arbeidskategoriTyper}
       readOnly={readOnly}
     />
     )
@@ -97,6 +101,16 @@ PermisjonGraderingPanel.validate = (values) => {
   return hasValidPeriodIncludingOtherErrors(values, otherErrors);
 };
 
+PermisjonGraderingPanel.transformValues = perioder => perioder.map((p) => {
+  const { ...periode } = p;
+  if (p.erArbeidstaker) {
+    periode.erArbeidstaker = p.erArbeidstaker === arbeidskategori.ARBEIDSTAKER;
+    periode.erFrilanser = p.erArbeidstaker === arbeidskategori.FRILANSER;
+    periode.erSelvstNæringsdrivende = p.erArbeidstaker === arbeidskategori.SELVSTENDIG_NAERINGSDRIVENDE;
+  }
+  return periode;
+});
+
 PermisjonGraderingPanel.propTypes = {
   graderingKvoter: kodeverkPropType.isRequired,
   form: PropTypes.string.isRequired,
@@ -104,6 +118,7 @@ PermisjonGraderingPanel.propTypes = {
   skalGradere: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   visFeilMelding: PropTypes.bool.isRequired,
+  arbeidskategoriTyper: kodeverkPropType.isRequired,
 };
 
 PermisjonGraderingPanel.initialValues = {
@@ -115,6 +130,7 @@ PermisjonGraderingPanel.initialValues = {
 const mapStateToProps = (state, ownProps) => ({
   graderingKvoter: getKodeverk(kodeverkTyper.UTSETTELSE_GRADERING_KVOTE)(state),
   skalGradere: formValueSelector(ownProps.form)(state, ownProps.namePrefix).skalGradere,
+  arbeidskategoriTyper: getKodeverk(kodeverkTyper.ARBEIDSKATEGORI)(state),
 });
 
 export default connect(mapStateToProps)(PermisjonGraderingPanel);

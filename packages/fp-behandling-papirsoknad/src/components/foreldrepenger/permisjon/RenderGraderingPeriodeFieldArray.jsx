@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getFormValues } from 'redux-form';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 import AlertStripe from 'nav-frontend-alertstriper';
@@ -14,6 +14,7 @@ import {
   DatepickerField, SelectField, InputField, CheckboxField, DecimalField,
 } from '@fpsak-frontend/form';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
+import arbeidskategori from '@fpsak-frontend/kodeverk/src/arbeidskategori';
 import moment from 'moment/moment';
 import { gyldigeUttakperioder } from './RenderPermisjonPeriodeFieldArray';
 
@@ -27,10 +28,21 @@ const defaultGraderingPeriode = {
   skalGraderes: false,
 };
 
+export const gyldigArbeidskategori = [
+  arbeidskategori.ARBEIDSTAKER,
+  arbeidskategori.SELVSTENDIG_NAERINGSDRIVENDE,
+  arbeidskategori.FRILANSER,
+];
+
+
 const maxValue100 = maxValue(100);
 
 const mapKvoter = typer => typer
   .filter(({ kode }) => gyldigeUttakperioder.includes(kode))
+  .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
+
+const mapArbeidskategori = typer => typer
+  .filter(({ kode }) => gyldigArbeidskategori.includes(kode))
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
 /**
@@ -43,9 +55,9 @@ export const RenderGraderingPeriodeFieldArray = ({
   fields,
   meta,
   graderingKvoter,
-  intl,
   readOnly,
   graderingValues,
+  arbeidskategoriTyper,
 }) => (
   <PeriodFieldArray
     fields={fields}
@@ -112,20 +124,7 @@ export const RenderGraderingPeriodeFieldArray = ({
                     label={{ id: 'Registrering.Permisjon.ErArbeidstakerLabel' }}
                     name={`${periodeElementFieldId}.erArbeidstaker`}
                     bredde="m"
-                    selectValues={[
-                      <option
-                        value="true"
-                        key="true"
-                      >
-                        {intl.formatMessage({ id: 'Registrering.Permisjon.ErArbeidstaker' })}
-                      </option>,
-                      <option
-                        value="false"
-                        key="false"
-                      >
-                        {intl.formatMessage({ id: 'Registrering.Permisjon.ErIkkeArbeidstaker' })}
-                      </option>,
-                    ]}
+                    selectValues={mapArbeidskategori(arbeidskategoriTyper)}
                   />
                 </FlexColumn>
                 <FlexColumn>
@@ -204,9 +203,9 @@ RenderGraderingPeriodeFieldArray.propTypes = {
   fields: PropTypes.shape().isRequired,
   graderingKvoter: kodeverkPropType.isRequired,
   meta: PropTypes.shape().isRequired,
-  intl: intlShape.isRequired,
   readOnly: PropTypes.bool.isRequired,
   graderingValues: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  arbeidskategoriTyper: kodeverkPropType.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -218,4 +217,4 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 
-export default connect(mapStateToProps)(injectIntl(RenderGraderingPeriodeFieldArray));
+export default connect(mapStateToProps)(RenderGraderingPeriodeFieldArray);

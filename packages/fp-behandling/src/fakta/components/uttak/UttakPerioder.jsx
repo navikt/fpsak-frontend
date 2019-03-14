@@ -277,6 +277,8 @@ export class UttakPerioder extends PureComponent {
       utsettelseÅrsak: updatedPeriode.utsettelseÅrsak,
       overføringÅrsak: updatedPeriode.overføringÅrsak,
       erArbeidstaker: updatedPeriode.erArbeidstaker,
+      erFrilanser: updatedPeriode.erFrilanser,
+      erSelvstendig: updatedPeriode.erSelvstendig,
       samtidigUttak: updatedPeriode.samtidigUttak,
       samtidigUttaksprosent: updatedPeriode.samtidigUttaksprosent,
       flerBarnsDager: updatedPeriode.flerBarnsDager,
