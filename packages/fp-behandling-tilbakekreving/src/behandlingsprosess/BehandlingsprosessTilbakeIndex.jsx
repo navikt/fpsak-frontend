@@ -136,24 +136,22 @@ export class BehandlingsprosessTilbakeIndex extends Component {
       behandlingspunkter, selectedBehandlingspunkt, dispatchSubmitFailed: submitFailedDispatch, isSelectedBehandlingHenlagt,
     } = this.props;
     return (
-      <>
-        <BehandlingsprosessPanel
-          behandlingspunkter={behandlingspunkter}
+      <BehandlingsprosessPanel
+        behandlingspunkter={behandlingspunkter}
+        selectedBehandlingspunkt={selectedBehandlingspunkt}
+        selectBehandlingspunktCallback={this.goToBehandlingspunkt}
+        isSelectedBehandlingHenlagt={isSelectedBehandlingHenlagt}
+        findBehandlingsprosessIcon={findBehandlingsprosessIcon}
+        getBehandlingspunkterStatus={getBehandlingspunkterStatus}
+        getBehandlingspunkterTitleCodes={getBehandlingspunkterTitleCodes}
+        getAksjonspunkterOpenStatus={getAksjonspunkterOpenStatus}
+      >
+        <TilbakekreveingBehandlingspunktInfoPanel
+          submitCallback={this.submitVilkar}
+          dispatchSubmitFailed={submitFailedDispatch}
           selectedBehandlingspunkt={selectedBehandlingspunkt}
-          selectBehandlingspunktCallback={this.goToBehandlingspunkt}
-          isSelectedBehandlingHenlagt={isSelectedBehandlingHenlagt}
-          findBehandlingsprosessIcon={findBehandlingsprosessIcon}
-          getBehandlingspunkterStatus={getBehandlingspunkterStatus}
-          getBehandlingspunkterTitleCodes={getBehandlingspunkterTitleCodes}
-          getAksjonspunkterOpenStatus={getAksjonspunkterOpenStatus}
-        >
-          <TilbakekreveingBehandlingspunktInfoPanel
-            submitCallback={this.submitVilkar}
-            dispatchSubmitFailed={submitFailedDispatch}
-            selectedBehandlingspunkt={selectedBehandlingspunkt}
-          />
-        </BehandlingsprosessPanel>
-      </>
+        />
+      </BehandlingsprosessPanel>
     );
   }
 }

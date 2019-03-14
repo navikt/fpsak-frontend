@@ -24,7 +24,7 @@ const classNames = classnames.bind(styles);
  * Presentasjonskomponent. Viser panel gitt valgt behandlingspunkt. Finnes det en aksjonspunktkode blir denne
  * brukt til å velge panel. Finnes det ikke aksjonspunkter blir enten beregning, vedtak eller vilkårsresultatet vist.
  */
-export const BehandlingspunktInnsynInfoPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel lesbart
+export const BehandlingspunktInnsynInfoPanel = ({
   selectedBehandlingspunkt,
   submitCallback,
   previewCallback,

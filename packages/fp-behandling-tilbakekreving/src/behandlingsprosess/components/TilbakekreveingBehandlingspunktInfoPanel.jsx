@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import classnames from 'classnames/bind';
 
 import {
   hasBehandlingspunktAtLeastOneOpenAksjonspunkt,
@@ -10,16 +11,18 @@ import {
 } from '../behandlingsprosessTilbakeSelectors';
 import ForeldelsePanel from './foreldelse/ForeldelsePanel';
 import TilbakekrevingPanel from './tilbakekreving/TilbakekrevingPanel';
+
 import styles from './tilbakekreveingBehandlingspunktInfoPanel.less';
 
-const findStyle = (isApOpen, isApSolvable, readOnly) => (isApOpen && isApSolvable && !readOnly ? styles.statusAksjonspunkt : undefined);
+const classNames = classnames.bind(styles);
+
 /*
  * TilbakekrevingBehandlingspunktInfoPanel
  *
  * Presentasjonskomponent. Viser panel gitt valgt behandlingspunkt. Finnes det en aksjonspunktkode blir denne
  * brukt til å velge panel. Finnes det ikke aksjonspunkter blir enten beregning, vedtak eller vilkårsresultatet vist.
  */
-export const TilbakekreveingBehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel lesbart
+export const TilbakekreveingBehandlingspunktInfoPanel = ({
   openAksjonspunkt,
   readOnly,
   isApSolvable,
@@ -27,7 +30,7 @@ export const TilbakekreveingBehandlingspunktInfoPanel = ({ // NOSONAR Kompleksit
   selectedBehandlingspunkt,
   apCodes,
 }) => (
-  <div className={findStyle(openAksjonspunkt, isApSolvable, readOnly)}>
+  <div className={classNames('behandlingsPunkt', { statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
     {ForeldelsePanel.supports(selectedBehandlingspunkt, apCodes)
     && (
       <ForeldelsePanel
