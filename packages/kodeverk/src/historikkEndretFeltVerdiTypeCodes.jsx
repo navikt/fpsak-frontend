@@ -785,6 +785,15 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'GRADERING_PÅ_ANDEL_UTEN_BG_IKKE_SATT_PÅ_VENT',
     verdiId: 'HistorikkEndretFeltVerdiType.GraderingPåAndelUtenBGIkkeSattPåVent',
   },
+  HINDRE_TILBAKETREKK: {
+    kode: 'HINDRE_TILBAKETREKK',
+    verdiId: 'HistorikkEndretFeltVerdiType.HindreTilbaketrekk',
+  },
+  UTFØR_TILBAKETREKK: {
+    kode: 'UTFØR_TILBAKETREKK',
+    verdiId: 'HistorikkEndretFeltVerdiType.UtførTilbaketrekk',
+  },
+
 };
 
 export default historikkEndretFeltVerdiTypeCodes;

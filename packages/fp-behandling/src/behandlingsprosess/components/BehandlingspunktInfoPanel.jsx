@@ -95,6 +95,8 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
       && (
       <TilkjentYtelsePanel
         readOnly={readOnly}
+        submitCallback={submitCallback}
+        readOnlySubmitButton={readOnlySubmitButton}
       />
       )
       }

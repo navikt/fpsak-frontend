@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment/moment';
+import { createSelector } from 'reselect';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
 import { Undertittel } from 'nav-frontend-typografi';
@@ -13,9 +14,12 @@ import {
   getBehandlingResultatstruktur,
   getSoknad,
   getFamiliehendelse,
+  getAksjonspunkter,
 } from 'behandlingFpsak/src/behandlingSelectors';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
 import TilkjentYtelse from './TilkjentYtelse';
 
 const perioderMedClassName = [];
@@ -39,6 +43,10 @@ export const TilkjentYtelsePanelImpl = ({
   medsokerKjonn,
   soknadDato,
   familiehendelseDato,
+  vurderTilbaketrekkAP,
+  readOnly,
+  submitCallback,
+  readOnlySubmitButton,
 }) => (
   <FadingPanel>
     <Undertittel>
@@ -56,9 +64,18 @@ export const TilkjentYtelsePanelImpl = ({
       />
       )
       }
+    { vurderTilbaketrekkAP
+    && (
+    <Tilbaketrekkpanel
+      readOnly={readOnly}
+      vurderTilbaketrekkAP={vurderTilbaketrekkAP}
+      submitCallback={submitCallback}
+      readOnlySubmitButton={readOnlySubmitButton}
+    />
+    )
+    }
   </FadingPanel>
 );
-
 
 TilkjentYtelsePanelImpl.propTypes = {
   beregningsresultatMedUttaksplan: beregningresultatMedUttaksplanPropType,
@@ -66,11 +83,16 @@ TilkjentYtelsePanelImpl.propTypes = {
   medsokerKjonn: PropTypes.string,
   soknadDato: PropTypes.string.isRequired,
   familiehendelseDato: PropTypes.shape().isRequired,
+  vurderTilbaketrekkAP: PropTypes.shape(),
+  readOnly: PropTypes.bool.isRequired,
+  submitCallback: PropTypes.func.isRequired,
+  readOnlySubmitButton: PropTypes.bool.isRequired,
 };
 
 TilkjentYtelsePanelImpl.defaultProps = {
   beregningsresultatMedUttaksplan: undefined,
   medsokerKjonn: undefined,
+  vurderTilbaketrekkAP: undefined,
 };
 
 const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT).toDate();
@@ -98,6 +120,13 @@ const getCurrentFamiliehendelseDato = (
   return endredomsorgsOvertagelseDato ? parseDateString(endredomsorgsOvertagelseDato) : parseDateString(omsorgsOvertagelseDato);
 };
 
+const finnTilbaketrekkAksjonspunkt = createSelector([getAksjonspunkter], (alleAksjonspunkter) => {
+  if (alleAksjonspunkter) {
+    return alleAksjonspunkter.find(ap => ap.definisjon && ap.definisjon.kode === aksjonspunktCodes.VURDER_TILBAKETREKK);
+  }
+  return undefined;
+});
+
 const mapStateToProps = (state) => {
   const person = getPersonopplysning(state);
   const familiehendelse = getFamiliehendelse(state);
@@ -115,6 +144,7 @@ const mapStateToProps = (state) => {
       familiehendelse.omsorgsovertakelseDato,
     ),
     beregningsresultatMedUttaksplan: beregningsresultat,
+    vurderTilbaketrekkAP: finnTilbaketrekkAksjonspunkt(state),
   };
 };
 

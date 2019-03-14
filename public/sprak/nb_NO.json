@@ -1290,6 +1290,7 @@
   "ToTrinnsForm.Uttak.TilstotendeYtelser.Opphort": "Opplysninger om tilstøtende ytelser opphørt er kontrollert.",
   "ToTrinnsForm.Uttak.Stortinget": "Søker er stortingsrepresentant/administrativt ansatt i Stortinget. Uttak er kontrollert.",
   "ToTrinnsForm.Uttak.Overstyrt": "Uttaksperioder er overstyrt.",
+  "ToTrinnsForm.TilkjentYtelse.Tilbaketrekk": "Det er vurdert om det skal utføres tilbakekreving fra søker.",
 
   "ToTrinnsForm.Klage.OmgjortTilGunst": "Omgjort til gunst",
   "ToTrinnsForm.Klage.StadfesteYtelsesVedtak": "Stadfest ytelsesvedtak",
@@ -1489,6 +1490,9 @@
   "Timeline.GradertPeriode" : "Gradert periode",
   "Timeline.ManueltAvklart" : "Manuelt avklart periode",
   "TilkjentYtelse.Title": "Tilkjent ytelse",
+  "TilkjentYtelse.VurderTilbaketrekk.Aksjonspunkttekst": "Foreldrepengene er utbetalt til søker, arbeidsgiver krever nå refusjon fra startdato av foreldrepengene. Vurder om beløpet som er feilutbetalt skal tilbakekreves fra søker eller om dette er en sak mellom arbeidstaker eller arbeidsgiver.",
+  "TilkjentYtelse.VurderTilbaketrekk.Utfør": "Tilbakekrev fra søker",
+  "TilkjentYtelse.VurderTilbaketrekk.Hindre": "Ikke tilbakekrev fra søker",
   "TilkjentYtelse.Stonadinfo.Stonadsdager": "Stønadsdager",
   "TilkjentYtelse.PeriodeData.Detaljer": "Detaljer for valgt periode",
   "TilkjentYtelse.PeriodeData.UkerDager": "{weeks} uker {days} dager",
@@ -1937,6 +1941,7 @@
   "HistorikkEndretFelt.RettTilForeldrepenger": "Rett til foreldrepenger",
   "HistorikkEndretFelt.VurderGraderingPåAndelUtenBG": "Inntektsgrunnlag ved gradering",
   "HistorikkEndretFelt.Dekningsgrad": "Dekningsgrad",
+  "HistorikkEndretFelt.Tilbaketrekk": "Tilbaketrekk",
 
   "HistorikkEndretFeltVerdiType.AdoptererAlene": "adopterer alene",
   "HistorikkEndretFeltVerdiType.AdoptererIkkeAlene": "adopterer ikke alene",
@@ -2050,6 +2055,10 @@
   "HistorikkEndretFeltVerdiType.AnnenforelderHarRett": "Annen forelder har rett",
   "HistorikkEndretFeltVerdiType.AnnenforelderHarIkkeRett": "Annen forelder har ikke rett",
   "HistorikkEndretFeltVerdiType.GraderingPåAndelUtenBGIkkeSattPåVent": "Riktig",
+  "HistorikkEndretFeltVerdiType.HindreTilbaketrekk": "Ikke tilbakekrev fra søker",
+  "HistorikkEndretFeltVerdiType.UtførTilbaketrekk": "Tilbakekrev fra søker",
+
+
   "HistorikkEndretFeltHeading.FordelingForNyAndel": "<b>Det er lagt til ny aktivitet:</b> <br><b>{value}</b>: Fordeling for ",
   "HistorikkEndretFeltHeading.FordelingForAndel": "Fordeling for <b>{value}</b>:",
   "HistorikkResultat.Avslag": "Avslag",
