@@ -13,6 +13,7 @@ const kanVeilede = (navAnsatt = {}) => navAnsatt.kanVeilede;
 const kanSaksbehandle = (navAnsatt = {}) => navAnsatt.kanSaksbehandle;
 const kanBeslutte = (navAnsatt = {}) => kanSaksbehandle(navAnsatt) && navAnsatt.kanBeslutte;
 const kanOverstyre = (navAnsatt = {}) => kanSaksbehandle(navAnsatt) && navAnsatt.kanOverstyre;
+const isBehandlingAvTilbakekreving = type => (type ? type.kode === BehandlingType.TILBAKEKREVING : false);
 
 const accessibleFor = validNavAnsattPredicates => navAnsatt => validNavAnsattPredicates.some(predicate => predicate(navAnsatt));
 
@@ -21,7 +22,7 @@ const enabledFor = (validFagsakStauses, validBehandlingStatuses) => (fagsakStatu
 );
 
 const accessSelector = (validNavAnsattPredicates, validFagsakStatuses, validBehandlingStatuses) => (navAnsatt,
-  fagsakStatus, behandlingStatus) => {
+  fagsakStatus, behandlingStatus, type) => {
   if (kanVeilede(navAnsatt)) {
     return {
       employeeHasAccess: true,
@@ -29,7 +30,8 @@ const accessSelector = (validNavAnsattPredicates, validFagsakStatuses, validBeha
     };
   }
   const employeeHasAccess = accessibleFor(validNavAnsattPredicates)(navAnsatt);
-  const isEnabled = employeeHasAccess && enabledFor(validFagsakStatuses, validBehandlingStatuses)(fagsakStatus, behandlingStatus);
+  const isEnabled = employeeHasAccess
+    && (enabledFor(validFagsakStatuses, validBehandlingStatuses)(fagsakStatus, behandlingStatus) || isBehandlingAvTilbakekreving(type));
   return { employeeHasAccess, isEnabled };
 };
 
@@ -62,7 +64,7 @@ const settBehandlingPaVentAccessSelector = (navAnsatt, soknad, aksjonspunkter, t
 
 export const settBehandlingPaVentAccess = (
   navAnsatt, fagsakStatus, behandlingStatus, soknad, aksjonspunkter, type,
-) => settBehandlingPaVentAccessSelector(navAnsatt, soknad, aksjonspunkter, type)(navAnsatt, fagsakStatus, behandlingStatus);
+) => settBehandlingPaVentAccessSelector(navAnsatt, soknad, aksjonspunkter, type)(navAnsatt, fagsakStatus, behandlingStatus, type);
 
 export const byttBehandlendeEnhetAccess = accessSelector(
   [kanSaksbehandle],
@@ -174,14 +176,14 @@ export const sendMeldingAccess = (navAnsatt, fagsakStatus, behandlingStatus) => 
 
 export const allAccessRights = (navAnsatt, fagsakStatus, behandlingStatus,
   soknad, aksjonspunkter, type, ansvarligSaksbehandler, selectedFagsak) => ({
-  writeAccess: writeAccess(navAnsatt, fagsakStatus, behandlingStatus),
-  henleggBehandlingAccess: henleggBehandlingAccess(navAnsatt, fagsakStatus, behandlingStatus),
+  writeAccess: writeAccess(navAnsatt, fagsakStatus, behandlingStatus, type),
+  henleggBehandlingAccess: henleggBehandlingAccess(navAnsatt, fagsakStatus, behandlingStatus, type),
   settBehandlingPaVentAccess: settBehandlingPaVentAccess(navAnsatt, fagsakStatus, behandlingStatus, soknad, aksjonspunkter, type),
-  byttBehandlendeEnhetAccess: byttBehandlendeEnhetAccess(navAnsatt, fagsakStatus, behandlingStatus),
+  byttBehandlendeEnhetAccess: byttBehandlendeEnhetAccess(navAnsatt, fagsakStatus, behandlingStatus, type),
   fraBeslutterFaneAccess: fraBeslutterFaneAccess(navAnsatt, fagsakStatus, behandlingStatus),
   opprettRevurderingAccess: opprettRevurderingAccess(navAnsatt, fagsakStatus, behandlingStatus, selectedFagsak),
   opprettNyForstegangsBehandlingAccess: opprettNyForstegangsBehandlingAccess(navAnsatt, fagsakStatus, behandlingStatus),
-  gjenopptaBehandlingAccess: gjenopptaBehandlingAccess(navAnsatt, fagsakStatus, behandlingStatus),
+  gjenopptaBehandlingAccess: gjenopptaBehandlingAccess(navAnsatt, fagsakStatus, behandlingStatus, type),
   opneBehandlingForEndringerAccess: opneBehandlingForEndringerAccess(type, navAnsatt, fagsakStatus, behandlingStatus, selectedFagsak),
   godkjenningsFaneAccess: godkjenningsFaneAccess(navAnsatt, fagsakStatus, behandlingStatus, ansvarligSaksbehandler),
   kanOverstyreAccess: kanOverstyreAccess(navAnsatt, fagsakStatus, behandlingStatus),
