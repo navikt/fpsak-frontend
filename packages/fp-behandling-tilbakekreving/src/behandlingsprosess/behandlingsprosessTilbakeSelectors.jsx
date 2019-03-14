@@ -9,7 +9,7 @@ import { behandlingspunktCodes, DEFAULT_BEHANDLINGSPROSESS } from '@fpsak-fronte
 import { getRettigheter } from 'navAnsatt/duck';
 import {
   getBehandlingIsOnHold, getAllMerknaderFraBeslutter, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat,
-  getStonadskontoer, hasReadOnlyBehandling, isBehandlingStatusReadOnly,
+  getStonadskontoer, hasReadOnlyBehandling, isBehandlingStatusReadOnly, getForeldelsePerioder,
 } from '../selectors/tilbakekrevingBehandlingSelectors';
 import createTilbakekrevingBpProps from './definition/tilbakekrevingBpDefinition';
 import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from './duckBpTilbake';
@@ -20,9 +20,9 @@ import { getFagsakYtelseType, getFeatureToggles } from '../duckTilbake';
 // Kun eksportert for test. Ikke bruk andre steder!
 export const getBehandlingspunkterProps = createSelector(
   [getFagsakYtelseType, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat,
-    getStonadskontoer, getFeatureToggles],
+    getStonadskontoer, getFeatureToggles, getForeldelsePerioder],
   (fagsakYtelseType, behandlingType, vilkar = [], aksjonspunkter, behandlingsresultat,
-    stonadskontoer, featureToggles) => {
+    stonadskontoer, featureToggles, foreldelseResultat) => {
     if (!behandlingType) {
       return undefined;
     }
@@ -34,6 +34,7 @@ export const getBehandlingspunkterProps = createSelector(
       behandlingsresultat,
       stonadskontoer,
       featureToggles,
+      foreldelseResultat,
     };
 
     return createTilbakekrevingBpProps(builderData);
