@@ -19,7 +19,9 @@ import { skalRedigereInntektSelector, skalRedigereInntektskategoriSelector } fro
 const summerFordeling = (fields) => {
   let sum = 0;
   fields.forEach((andelElementFieldId, index) => {
-    sum += fields.get(index).fastsattBelop ? parseInt(removeSpacesFromNumber(fields.get(index).fastsattBelop), 10) : 0;
+    const field = fields.get(index);
+    const belop = field.skalRedigereInntekt ? field.fastsattBelop : field.belopReadOnly;
+    sum += belop ? parseInt(removeSpacesFromNumber(belop), 10) : 0;
   });
   return sum > 0 ? formatCurrencyNoKr(sum) : '';
 };
@@ -115,15 +117,31 @@ export const AndelRowImpl = ({
       </TableColumn>
       )
     }
+    {skalRedigereInntekt
+    && (
     <TableColumn className={styles.rightAlignInput}>
       <InputField
         name={`${andelElementFieldId}.fastsattBelop`}
         bredde="M"
         parse={parseCurrencyInput}
-        readOnly={readOnly || !skalRedigereInntekt}
-        isEdited={isAksjonspunktClosed && skalRedigereInntekt}
+        readOnly={readOnly}
+        isEdited={isAksjonspunktClosed}
       />
     </TableColumn>
+    )
+    }
+    {!skalRedigereInntekt
+    && (
+    <TableColumn className={styles.rightAlignInput}>
+      <InputField
+        name={`${andelElementFieldId}.belopReadOnly`}
+        bredde="M"
+        parse={parseCurrencyInput}
+        readOnly
+      />
+    </TableColumn>
+    )
+    }
     {skalViseRefusjon
           && (
           <TableColumn className={styles.rightAlign}>

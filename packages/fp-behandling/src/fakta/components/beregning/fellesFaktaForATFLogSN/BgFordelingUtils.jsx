@@ -219,11 +219,23 @@ export const skalFastsetteForATUavhengigAvATFLSammeOrg = (values,
 export const skalFastsetteForFLUavhengigAvATFLSammeOrg = values => (frilansMottarYtelse(values) || values[erNyoppstartetFLField]);
 
 const mapToFastsattBelop = (andel) => {
-  if (andel.besteberegningPrAar || andel.besteberegningPrAar === 0) {
-    return formatCurrencyNoKr(andel.besteberegningPrAar / 12);
+  if (andel.fastsattAvSaksbehandler) {
+    if (andel.besteberegningPrAar || andel.besteberegningPrAar === 0) {
+      return formatCurrencyNoKr(andel.besteberegningPrAar / 12);
+    }
+    if (andel.beregnetPrAar || andel.beregnetPrAar === 0) {
+      return formatCurrencyNoKr(andel.beregnetPrAar / 12);
+    }
   }
-  if (andel.beregnetPrAar || andel.beregnetPrAar === 0) {
-    return formatCurrencyNoKr(andel.beregnetPrAar / 12);
+  return '';
+};
+
+const mapToReadOnlyBelop = (andel) => {
+  if (andel.arbeidsforhold && (andel.arbeidsforhold.belopFraInntektsmeldingPrMnd || andel.arbeidsforhold.belopFraInntektsmeldingPrMnd === 0)) {
+    return formatCurrencyNoKr(andel.arbeidsforhold.belopFraInntektsmeldingPrMnd);
+  }
+  if (andel.belopPrMndEtterAOrdningen || andel.belopPrMndEtterAOrdningen === 0) {
+    return formatCurrencyNoKr(andel.belopPrMndEtterAOrdningen);
   }
   return '';
 };
@@ -233,6 +245,7 @@ export const mapAndelToField = andel => ({
   ...setArbeidsforholdInitialValues(andel),
   skalKunneEndreAktivitet: andel.lagtTilAvSaksbehandler && andel.aktivitetStatus.kode !== aktivitetStatus.DAGPENGER,
   fastsattBelop: mapToFastsattBelop(andel),
+  belopReadOnly: mapToReadOnlyBelop(andel),
   refusjonskrav: andel.arbeidsforhold && andel.arbeidsforhold.refusjonPrAar !== null
-  && andel.arbeidsforhold.refusjonPrAar !== undefined ? formatCurrencyNoKr(andel.refusjonPrAar / 12) : '',
+  && andel.arbeidsforhold.refusjonPrAar !== undefined ? formatCurrencyNoKr(andel.arbeidsforhold.refusjonPrAar / 12) : '',
 });
