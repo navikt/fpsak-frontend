@@ -25,12 +25,23 @@ import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import FullPersonInfo from './panelBody/FullPersonInfo';
 import PersonArbeidsforholdPanel from './panelBody/arbeidsforhold/PersonArbeidsforholdPanel';
+import utlandSakstypeKode from './panelBody/utland/utlandSakstypeKode';
 
 const {
-  AVKLAR_ARBEIDSFORHOLD, INNHENT_DOKUMENTASJON_FRA_UTENLANDS_TRYGDEMYNDIGHET,
+  AVKLAR_ARBEIDSFORHOLD, AUTOMATISK_MARKERING_AV_UTENLANDSSAK, MANUELL_MARKERING_AV_UTLAND_SAKSTYPE,
 } = aksjonspunktCodes;
 
 const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
+
+const getUtlandSakstype = (aksjonspunkter) => {
+  if (hasAksjonspunkt(AUTOMATISK_MARKERING_AV_UTENLANDSSAK, aksjonspunkter)) {
+    return utlandSakstypeKode.EØS_BOSATT_NORGE;
+  }
+  if (hasAksjonspunkt(MANUELL_MARKERING_AV_UTLAND_SAKSTYPE, aksjonspunkter)) {
+    return aksjonspunkter.find(ap => ap.definisjon.kode === MANUELL_MARKERING_AV_UTLAND_SAKSTYPE).begrunnelse;
+  }
+  return utlandSakstypeKode.NASJONAL;
+};
 /**
  * PersonInfoPanel
  *
@@ -90,6 +101,7 @@ export class PersonInfoPanelImpl extends Component {
       sivilstandTypes,
       hasOpenAksjonspunkter,
       readOnly,
+      submitCallback,
       aksjonspunkter,
       isBekreftButtonReadOnly,
       featureToggleUtland,
@@ -118,11 +130,12 @@ export class PersonInfoPanelImpl extends Component {
             relatertYtelseStatus={relatertYtelseStatus}
             hasAksjonspunkter={aksjonspunkter.length > 0}
             hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-            erUtenlandssak={hasAksjonspunkt(INNHENT_DOKUMENTASJON_FRA_UTENLANDS_TRYGDEMYNDIGHET, aksjonspunkter)}
+            utlandSakstype={getUtlandSakstype(aksjonspunkter)}
             readOnly={readOnly}
+            submitCallback={submitCallback}
             sivilstandTypes={sivilstandTypes}
             personstatusTypes={personstatusTypes}
-            featureToggleUtland={featureToggleUtland}
+            featureToggleUtland={featureToggleUtland || true}
           />
           {isPrimaryParent && hasAksjonspunkt(AVKLAR_ARBEIDSFORHOLD, aksjonspunkter)
             && (
@@ -152,6 +165,7 @@ PersonInfoPanelImpl.propTypes = {
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
+  submitCallback: PropTypes.func,
   isBekreftButtonReadOnly: PropTypes.bool.isRequired,
   relatertYtelseTypes: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   relatertYtelseStatus: PropTypes.arrayOf(PropTypes.shape()).isRequired,
@@ -162,6 +176,7 @@ PersonInfoPanelImpl.propTypes = {
 PersonInfoPanelImpl.defaultProps = {
   relatertTilgrensendeYtelserForSoker: undefined,
   relatertTilgrensendeYtelserForAnnenForelder: undefined,
+  submitCallback: undefined,
 };
 
 const transformValues = values => ({
@@ -201,7 +216,7 @@ const mapStateToProps = (state, initialProps) => ({
 });
 
 const ConnectedComponent = connect(mapStateToProps)(behandlingForm({ form: 'PersonInfoPanel' })(PersonInfoPanelImpl));
-const personAksjonspunkter = [AVKLAR_ARBEIDSFORHOLD, INNHENT_DOKUMENTASJON_FRA_UTENLANDS_TRYGDEMYNDIGHET];
+const personAksjonspunkter = [AVKLAR_ARBEIDSFORHOLD, AUTOMATISK_MARKERING_AV_UTENLANDSSAK, MANUELL_MARKERING_AV_UTLAND_SAKSTYPE];
 const PersonInfoPanel = withDefaultToggling(faktaPanelCodes.PERSON, personAksjonspunkter)(ConnectedComponent);
 PersonInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => personAksjonspunkter.includes(ap.definisjon.kode));
 

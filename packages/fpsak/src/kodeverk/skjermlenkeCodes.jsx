@@ -158,6 +158,11 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.FEILUTBETALING,
     punktNavn: '',
   },
+  UTLAND: {
+    kode: 'UTLAND',
+    faktaNavn: faktaPanelCodes.PERSON,
+    punktNavn: '',
+  },
 };
 
 export const createLocationForHistorikkItems = (behandlingLocation, skjermlenkeCode) => {

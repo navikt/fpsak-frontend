@@ -9,6 +9,7 @@ import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import { AdressePanel, BarnePanel, PersonYtelserTable } from '@fpsak-frontend/person-info';
 import PersonArbeidsforholdPanel from './arbeidsforhold/PersonArbeidsforholdPanel';
+import { Utland } from './utland/Utland';
 
 const findPersonStatus = (personopplysning) => {
   if (personopplysning.avklartPersonstatus) {
@@ -35,12 +36,12 @@ const FullPersonInfo = ({
   relatertYtelseStatus,
   hasOpenAksjonspunkter,
   hasAksjonspunkter,
-  erUtenlandssak,
+  utlandSakstype,
   readOnly,
+  submitCallback,
   isPrimaryParent,
   personstatusTypes,
   sivilstandTypes,
-  featureToggleUtland,
 }) => {
   if (!personopplysning) {
     return null;
@@ -66,15 +67,18 @@ const FullPersonInfo = ({
             : adresseListe[opplysningAdresseType.UTENLANDSK_NAV_TILLEGSADRESSE]
         }
         personstatus={findPersonStatus(personopplysning)}
-        erUtenlandssak={erUtenlandssak}
         sivilstandtype={personopplysning.sivilstand}
         region={personopplysning.region ? personopplysning.region.navn : null}
         sprakkode={sprakkode}
         isPrimaryParent={isPrimaryParent}
         sivilstandTypes={sivilstandTypes}
         personstatusTypes={personstatusTypes}
-        featureToggleUtland={featureToggleUtland}
-      />
+      >
+        <Utland
+          initialValue={utlandSakstype}
+          submitCallback={submitCallback}
+        />
+      </AdressePanel>
       {harBarnITPSSjekk && <BarnePanel barneListe={barnFraTPS} />}
       {isPrimaryParent && (
         <PersonArbeidsforholdPanel
@@ -104,17 +108,17 @@ FullPersonInfo.propTypes = {
   relatertYtelseStatus: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  submitCallback: PropTypes.func,
   hasAksjonspunkter: PropTypes.bool.isRequired,
-  erUtenlandssak: PropTypes.bool.isRequired,
+  utlandSakstype: PropTypes.string.isRequired,
   isPrimaryParent: PropTypes.bool.isRequired,
   sivilstandTypes: kodeverkPropType.isRequired,
   personstatusTypes: kodeverkPropType.isRequired,
-  featureToggleUtland: PropTypes.bool,
 };
 
 FullPersonInfo.defaultProps = {
   ytelser: undefined,
-  featureToggleUtland: false,
+  submitCallback: undefined,
 };
 
 export default FullPersonInfo;

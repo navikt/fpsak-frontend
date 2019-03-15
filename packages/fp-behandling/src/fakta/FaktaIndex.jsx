@@ -25,6 +25,8 @@ const paramsAreEqual = (a = [], b = []) => ((a.length === b.length) && a.every((
 
 
 const uttakOverstyringAp = ['6013', '6070'];
+const manueltMarkereUtlandsakAp = '6068';
+
 /**
  * FaktaIndex
  *
@@ -70,7 +72,7 @@ export class FaktaIndex extends Component {
 
     // todo if 6070 and revurdering use resolveFaktaOverstyrAksjonspunkter else use resolveFaktaAksjonspunkter
 
-    if (model && uttakOverstyringAp.includes(model[0].kode)) {
+    if (model && (uttakOverstyringAp.includes(model[0].kode) || model[0].kode === manueltMarkereUtlandsakAp)) {
       const params = {
         ...behandlingIdentifier.toJson(),
         behandlingVersjon,

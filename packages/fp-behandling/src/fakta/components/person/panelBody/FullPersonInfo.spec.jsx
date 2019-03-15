@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
+import sinon from 'sinon';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
@@ -169,9 +170,10 @@ describe('<FullPersonInfo>', () => {
         personstatusTypes={personstatusTypes}
         sivilstandTypes={sivilstandTypes}
         hasOpenAksjonspunkter={false}
+        submitCallback={sinon.spy()}
         readOnly={false}
         hasAksjonspunkter={false}
-        erUtenlandssak={false}
+        utlandSakstype=""
         isPrimaryParent
         {...reduxFormPropsMock}
       />,
@@ -199,7 +201,7 @@ describe('<FullPersonInfo>', () => {
         hasOpenAksjonspunkter={false}
         readOnly={false}
         hasAksjonspunkter={false}
-        erUtenlandssak={false}
+        utlandSakstype=""
         isPrimaryParent
         {...reduxFormPropsMock}
       />,
@@ -221,7 +223,7 @@ describe('<FullPersonInfo>', () => {
         hasOpenAksjonspunkter={false}
         readOnly={false}
         hasAksjonspunkter={false}
-        erUtenlandssak={false}
+        utlandSakstype=""
         isPrimaryParent
         {...reduxFormPropsMock}
       />,
@@ -243,7 +245,7 @@ describe('<FullPersonInfo>', () => {
         hasOpenAksjonspunkter={false}
         readOnly={false}
         hasAksjonspunkter={false}
-        erUtenlandssak={false}
+        utlandSakstype=""
         isPrimaryParent={false}
         {...reduxFormPropsMock}
       />,
@@ -265,7 +267,7 @@ describe('<FullPersonInfo>', () => {
         hasOpenAksjonspunkter
         readOnly={false}
         hasAksjonspunkter
-        erUtenlandssak={false}
+        utlandSakstype=""
         isPrimaryParent
         {...reduxFormPropsMock}
       />,
@@ -287,7 +289,7 @@ describe('<FullPersonInfo>', () => {
         hasOpenAksjonspunkter
         readOnly={false}
         hasAksjonspunkter
-        erUtenlandssak={false}
+        utlandSakstype=""
         isPrimaryParent={false}
         {...reduxFormPropsMock}
       />,
@@ -309,7 +311,7 @@ describe('<FullPersonInfo>', () => {
         hasOpenAksjonspunkter
         readOnly={false}
         hasAksjonspunkter
-        erUtenlandssak={false}
+        utlandSakstype=""
         isPrimaryParent={false}
         {...reduxFormPropsMock}
       />,
@@ -330,7 +332,7 @@ describe('<FullPersonInfo>', () => {
         hasOpenAksjonspunkter
         readOnly={false}
         hasAksjonspunkter
-        erUtenlandssak={false}
+        utlandSakstype=""
         isPrimaryParent={false}
         {...reduxFormPropsMock}
       />,

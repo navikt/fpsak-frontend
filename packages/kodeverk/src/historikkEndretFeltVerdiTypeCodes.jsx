@@ -793,7 +793,18 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'UTFØR_TILBAKETREKK',
     verdiId: 'HistorikkEndretFeltVerdiType.UtførTilbaketrekk',
   },
-
+  NASJONAL: {
+    kode: 'NASJONAL',
+    verdiId: 'HistorikkEndretFeltVerdiType.Nasjonal',
+  },
+  EØS_BOSATT_NORGE: {
+    kode: 'EØS_BOSATT_NORGE',
+    verdiId: 'HistorikkEndretFeltVerdiType.EosBosattNorge',
+  },
+  BOSATT_UTLAND: {
+    kode: 'BOSATT_UTLAND',
+    verdiId: 'HistorikkEndretFeltVerdiType.BosattUtland',
+  },
 };
 
 export default historikkEndretFeltVerdiTypeCodes;

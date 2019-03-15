@@ -381,6 +381,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'TILBAKETREKK',
     feltId: 'HistorikkEndretFelt.Tilbaketrekk',
   },
+  UTLAND: {
+    kode: 'UTLAND',
+    feltId: 'HistorikkEndretFelt.Utland',
+  },
 };
 
 export default historikkEndretFeltTypeCodes;

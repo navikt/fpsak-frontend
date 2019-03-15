@@ -13,7 +13,7 @@ import Panel from 'nav-frontend-paneler';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import styles from './PersonIndexPanel.less';
 
-const personAksjonspunkter = [aksjonspunktCodes.INNHENT_DOKUMENTASJON_FRA_UTENLANDS_TRYGDEMYNDIGHET];
+const personAksjonspunkter = [aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK];
 const erMarkertUtenlandssak = aksjonspunkter => aksjonspunkter.some(ap => ap.definisjon.kode === personAksjonspunkter[0]);
 
 /**
