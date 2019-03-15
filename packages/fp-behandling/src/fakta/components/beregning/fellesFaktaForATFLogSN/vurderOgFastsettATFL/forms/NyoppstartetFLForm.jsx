@@ -25,7 +25,7 @@ const NyoppstartetFLForm = ({
 }) => (
   <div>
     <Normaltekst>
-      <FormattedMessage id={"'BeregningInfoPanel.VurderOgFastsettATFL.ErSokerNyoppstartetFL'"} />
+      <FormattedMessage id="BeregningInfoPanel.VurderOgFastsettATFL.ErSokerNyoppstartetFL" />
     </Normaltekst>
     <VerticalSpacer eightPx />
     <RadioGroupField

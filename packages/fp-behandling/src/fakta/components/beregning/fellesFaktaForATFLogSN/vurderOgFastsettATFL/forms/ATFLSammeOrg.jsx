@@ -24,12 +24,14 @@ export const transformValuesForATFLISammeOrg = (inntektVerdier, faktaOmBeregning
       });
     }
     andelsliste.forEach(andel => fastsatteAndelsnr.push(andel.andelsnr));
-    return {
-      faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON],
-      vurderATogFLiSammeOrganisasjon: { vurderATogFLiSammeOrganisasjonAndelListe: andelsliste },
-    };
+    if (andelsliste.length > 0) {
+      return {
+        faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON],
+        vurderATogFLiSammeOrganisasjon: { vurderATogFLiSammeOrganisasjonAndelListe: andelsliste },
+      };
+    }
   }
-  return {};
+  return { faktaOmBeregningTilfeller: [] };
 };
 
 

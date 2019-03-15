@@ -73,6 +73,7 @@ export const getValidationFaktaForATFLOgSN = createSelector([mapStateToValidatio
   ...getKunYtelseValidation(values, props.kunYtelse, props.endringBGPerioder, props.aktivertePaneler),
   ...VurderMottarYtelseForm.validate(values, props.vurderMottarYtelse),
   ...VurderBesteberegningForm.validate(values, props.aktivertePaneler),
+  ...VurderOgFastsettATFL.validate(values, props.aktivertePaneler, props.faktaOmBeregning, props.beregningsgrunnlag),
 }));
 
 export const lagHelpTextsForFakta = (aktivertePaneler) => {

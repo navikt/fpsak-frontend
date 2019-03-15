@@ -96,7 +96,7 @@ describe('<ATFLSammeOrg>', () => {
     };
 
     const transformed = transformValuesForATFLISammeOrg(inntektVerdier, faktaOmBeregning, []);
-    expect(transformed).to.be.empty;
+    expect(transformed.faktaOmBeregningTilfeller.length).to.equal(0);
   });
 
 

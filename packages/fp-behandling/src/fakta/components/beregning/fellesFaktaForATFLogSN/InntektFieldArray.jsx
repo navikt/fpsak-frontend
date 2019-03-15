@@ -192,11 +192,10 @@ const mapAndelToSortedObject = (value) => {
 
 InntektFieldArray.validate = (values, erKunYtelse, skalRedigereInntekt) => {
   const arrayErrors = values
-    .filter(skalRedigereInntekt)
     .map((andelFieldValues) => {
       const fieldErrors = {};
       fieldErrors.andel = required(andelFieldValues.andel);
-      fieldErrors.fastsattBelop = required(andelFieldValues.fastsattBelop);
+      fieldErrors.fastsattBelop = skalRedigereInntekt(andelFieldValues) ? required(andelFieldValues.fastsattBelop) : null;
       fieldErrors.inntektskategori = required(andelFieldValues.inntektskategori);
       return fieldErrors.andel || fieldErrors.fastsattBelop || fieldErrors.inntektskategori ? fieldErrors : null;
     });

@@ -104,6 +104,7 @@ describe('<BgFordelingUtils>', () => {
       andelsnr: 1,
       lagtTilAvSaksbehandler: true,
       inntektskategori: { kode: 'DAGPENGER' },
+      fastsattAvSaksbehandler: true,
       beregnetPrAar: 240000,
     };
     const dagpengeField = mapAndelToField(dagpengerAndel);
@@ -114,6 +115,7 @@ describe('<BgFordelingUtils>', () => {
     expect(dagpengeField.skalKunneEndreAktivitet).to.equal(false);
     expect(dagpengeField.inntektskategori).to.equal('DAGPENGER');
     expect(dagpengeField.fastsattBelop).to.equal('20 000');
+    expect(dagpengeField.belopReadOnly).to.equal('');
     expect(dagpengeField.refusjonskrav).to.equal('');
   });
 

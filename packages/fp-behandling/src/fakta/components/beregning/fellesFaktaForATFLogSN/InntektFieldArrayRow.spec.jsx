@@ -80,6 +80,7 @@ it('skal vise komponent uten arbeidsperiode og refusjonskrav', () => {
     arbeidsgiverId: '',
     arbeidsperiodeFom: '',
     arbeidsperiodeTom: '',
+    skalRedigereInntekt: true,
   };
 
   const fields2 = new MockFieldsWithContent('fieldArrayName', [andelField2]);
@@ -95,14 +96,63 @@ it('skal vise komponent uten arbeidsperiode og refusjonskrav', () => {
     andelElementFieldId="fieldArrayName[0]"
     removeAndel={() => {}}
     index={0}
-    {...props}
+    inntektskategoriKoder={[]}
+    isAksjonspunktClosed={false}
+    skalRedigereInntektskategori={false}
   />);
   const row = wrapper.find(TableRow);
   expect(row.length).to.eql(1);
   const columns = row.first().find(TableColumn);
   expect(columns.length).to.eql(4);
   expect(columns.first().find(ArbeidsforholdField).length).to.eql(1);
-  expect(columns.at(1).find(InputField).length).to.eql(1);
+  const inputField = columns.at(1).find(InputField);
+  expect(inputField.length).to.eql(1);
+  expect(inputField.props().name).to.eql('fieldArrayName[0].fastsattBelop');
+  expect(columns.at(2).find(SelectField).length).to.eql(1);
+  const btn = columns.at(3).find('button');
+  expect(btn.length).to.eql(0);
+});
+
+
+it('skal vise komponent med readOnly beløp', () => {
+  const andelField2 = {
+    nyAndel: false,
+    andel: 'Sopra Steria AS (233647823)',
+    andelsnr: 1,
+    fastsattBelop: '0',
+    lagtTilAvSaksbehandler: false,
+    inntektskategori: 'ARBEIDSTAKER',
+    arbeidsgiverId: '',
+    arbeidsperiodeFom: '',
+    arbeidsperiodeTom: '',
+    skalRedigereInntekt: false,
+  };
+
+  const fields2 = new MockFieldsWithContent('fieldArrayName', [andelField2]);
+
+  const wrapper = shallowWithIntl(<AndelRowImpl
+    intl={intlMock}
+    fields={fields2}
+    readOnly={false}
+    skalVisePeriode={false}
+    skalViseSletteknapp={false}
+    skalViseRefusjon={false}
+    skalRedigereInntekt={false}
+    andelElementFieldId="fieldArrayName[0]"
+    removeAndel={() => {}}
+    index={0}
+    inntektskategoriKoder={[]}
+    isAksjonspunktClosed={false}
+    skalRedigereInntektskategori={false}
+  />);
+  const row = wrapper.find(TableRow);
+  expect(row.length).to.eql(1);
+  const columns = row.first().find(TableColumn);
+  expect(columns.length).to.eql(4);
+  expect(columns.first().find(ArbeidsforholdField).length).to.eql(1);
+  const inputField = columns.at(1).find(InputField);
+  expect(inputField.length).to.eql(1);
+  expect(inputField.props().name).to.eql('fieldArrayName[0].belopReadOnly');
   expect(columns.at(2).find(SelectField).length).to.eql(1);
   const btn = columns.at(3).find('button');
   expect(btn.length).to.eql(0);
