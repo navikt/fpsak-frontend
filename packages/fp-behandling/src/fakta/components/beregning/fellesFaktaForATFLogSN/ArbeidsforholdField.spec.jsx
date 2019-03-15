@@ -5,7 +5,7 @@ import { shallow } from 'enzyme';
 import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { InputField, SelectField } from '@fpsak-frontend/form';
 import { getUniqueListOfArbeidsforhold } from '../ArbeidsforholdHelper';
-import ArbeidsforholdField from './ArbeidsforholdField';
+import { ArbeidsforholdFieldImpl } from './ArbeidsforholdField';
 
 const andelField = {
   nyAndel: false,
@@ -43,7 +43,7 @@ const fields = new MockFieldsWithContent('fieldArrayName', [andelField]);
 
 describe('<ArbeidsforholdField>', () => {
   it('skal render ArbeidsforholdField med input for eksisterende andel', () => {
-    const wrapper = shallow(<ArbeidsforholdField
+    const wrapper = shallow(<ArbeidsforholdFieldImpl
       fields={fields}
       arbeidsforholdList={getUniqueListOfArbeidsforhold([andel])}
       readOnly={false}
@@ -58,7 +58,7 @@ describe('<ArbeidsforholdField>', () => {
     const copyAndel = { ...andelField, skalKunneEndreAktivitet: true };
     const fields2 = new MockFieldsWithContent('fieldArrayName', [copyAndel]);
 
-    const wrapper = shallow(<ArbeidsforholdField
+    const wrapper = shallow(<ArbeidsforholdFieldImpl
       fields={fields2}
       arbeidsforholdList={getUniqueListOfArbeidsforhold([andel])}
       readOnly={false}

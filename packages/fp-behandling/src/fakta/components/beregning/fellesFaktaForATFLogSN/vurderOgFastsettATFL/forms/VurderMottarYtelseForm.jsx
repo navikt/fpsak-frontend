@@ -4,14 +4,28 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { createVisningsnavnForAktivitet, required } from '@fpsak-frontend/utils';
+import { createVisningsnavnForAktivitet, required, removeSpacesFromNumber } from '@fpsak-frontend/utils';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { getVurderMottarYtelse } from 'behandlingFpsak/src/behandlingSelectors';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import faktaOmBeregningTilfelle, { harIkkeATFLSameOrgEllerBesteberegning } from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import FastsettATFLInntektForm from './FastsettATFLInntektForm';
-import { utledArbeidsforholdFieldName, finnFrilansFieldName, skalFastsetteInntektATUtenInntektsmelding } from './VurderMottarYtelseUtils';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import {
+  utledArbeidsforholdFieldName, finnFrilansFieldName, skalFastsetteInntektATUtenInntektsmelding, frilansMottarYtelse, andelsnrMottarYtelseMap,
+} from './VurderMottarYtelseUtils';
+
 
 const andreFrilansTilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON];
+
+const {
+  VURDER_AT_OG_FL_I_SAMME_ORGANISASJON,
+  FASTSETT_ENDRET_BEREGNINGSGRUNNLAG,
+} = faktaOmBeregningTilfelle;
+
+const tilfellerSomHandtererAllInntekt = [VURDER_AT_OG_FL_I_SAMME_ORGANISASJON,
+  FASTSETT_ENDRET_BEREGNINGSGRUNNLAG];
+
+export const harTilfelleSomHandtererInntekt = tilfeller => (tilfeller.some(tilfelle => tilfellerSomHandtererAllInntekt.includes(tilfelle)));
+
 
 export const mottarYtelseForArbeidMsg = () => ('BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForArbeid');
 
@@ -117,53 +131,61 @@ VurderMottarYtelseFormImpl.buildInitialValues = (vurderMottarYtelse) => {
   return initialValues;
 };
 
-const transformValuesArbeidstakerUtenIM = (values, tilfeller, faktaOmBeregning, transformedValues, beregningsgrunnlag) => {
+const transformValuesArbeidstakerUtenIM = (values, inntektVerdier, faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr, faktaOmBeregningTilfeller) => {
+  if (inntektVerdier === null) {
+    return {};
+  }
   const skalFastsetteAT = skalFastsetteInntektATUtenInntektsmelding(values, faktaOmBeregning.vurderMottarYtelse);
-  if (skalFastsetteAT && harIkkeATFLSameOrgEllerBesteberegning(tilfeller)) {
-    if (!transformedValues.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)) {
-      transformedValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING);
+  if (skalFastsetteAT) {
+    const listeMedFastsatteMaanedsinntekter = [];
+    const mottarYtelseMap = andelsnrMottarYtelseMap(values, faktaOmBeregning.vurderMottarYtelse, beregningsgrunnlag);
+    faktaOmBeregning.vurderMottarYtelse.arbeidstakerAndelerUtenIM.forEach((andel) => {
+      if (mottarYtelseMap[andel.andelsnr] && !fastsatteAndelsnr.includes(andel.andelsnr)) {
+        const inntektUtenFormat = inntektVerdier.find(field => field.andelsnr === andel.andelsnr).fastsattBelop;
+        listeMedFastsatteMaanedsinntekter.push({
+          andelsnr: andel.andelsnr,
+          arbeidsinntekt: inntektUtenFormat ? removeSpacesFromNumber(inntektUtenFormat) : undefined,
+        });
+        fastsatteAndelsnr.push(andel.andelsnr);
+      }
+    });
+    if (listeMedFastsatteMaanedsinntekter.length > 0) {
+      faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING);
       return {
-        ...transformedValues,
-        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning,
-          faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING, beregningsgrunnlag),
-        faktaOmBeregningTilfeller: transformedValues.faktaOmBeregningTilfeller,
+        fastsattUtenInntektsmelding: { andelListe: listeMedFastsatteMaanedsinntekter },
       };
     }
-    if (!transformedValues.fastsattUtenInntektsmelding) {
-      return {
-        ...transformedValues,
-        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning,
-          faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING, beregningsgrunnlag),
-      };
-    }
+    return {};
   }
   return {};
 };
 
 
-const transformValuesFrilans = (values, tilfeller, faktaOmBeregning, transformedValues, beregningsgrunnlag) => {
+const transformValuesFrilans = (values, inntektVerdier, beregningsgrunnlag, fastsatteAndelsnr, faktaOmBeregningTilfeller) => {
+  if (inntektVerdier === null) {
+    return {};
+  }
   const skalFastsetteInntektFrilans = values[finnFrilansFieldName()];
-  if (skalFastsetteInntektFrilans && harIkkeATFLSameOrgEllerBesteberegning(tilfeller)) {
-    if (!transformedValues.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL)) {
-      transformedValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL);
+  if (skalFastsetteInntektFrilans) {
+    const frilansAndel = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
+      .find(andel => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
+    if (!fastsatteAndelsnr.includes(frilansAndel.andelsnr) && frilansMottarYtelse(values)) {
+      const frilansInntekt = inntektVerdier.find(field => field.andelsnr === frilansAndel.andelsnr);
+      fastsatteAndelsnr.push(frilansAndel.andelsnr);
+      faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL);
       return {
-        ...transformedValues,
-        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL, beregningsgrunnlag),
-        faktaOmBeregningTilfeller: transformedValues.faktaOmBeregningTilfeller,
+        fastsettMaanedsinntektFL: { maanedsinntekt: removeSpacesFromNumber(frilansInntekt.fastsattBelop) },
+
       };
     }
-    if (!transformedValues.fastsettMaanedsinntektFL) {
-      return {
-        ...transformedValues,
-        ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL, beregningsgrunnlag),
-      };
-    }
+    return {};
   }
   return {};
 };
 
-const transformValuesMottarYtelse = (values, faktaOmBeregning) => {
+const transformValuesMottarYtelse = (values, faktaOmBeregning, faktaOmBeregningTilfeller) => {
   const ATAndelerUtenIM = faktaOmBeregning.vurderMottarYtelse.arbeidstakerAndelerUtenIM ? faktaOmBeregning.vurderMottarYtelse.arbeidstakerAndelerUtenIM : [];
+  faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE);
   return {
     mottarYtelse: {
       frilansMottarYtelse: values[finnFrilansFieldName()],
@@ -175,11 +197,18 @@ const transformValuesMottarYtelse = (values, faktaOmBeregning) => {
   };
 };
 
-VurderMottarYtelseFormImpl.transformValues = (values, faktaOmBeregning, tilfeller, transformedValues, beregningsgrunnlag) => ({
-  ...transformValuesMottarYtelse(values, faktaOmBeregning),
-  ...transformValuesArbeidstakerUtenIM(values, tilfeller, faktaOmBeregning, transformedValues, beregningsgrunnlag),
-  ...transformValuesFrilans(values, tilfeller, faktaOmBeregning, transformedValues),
-});
+VurderMottarYtelseFormImpl.transformValues = (values, inntektVerdier, faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr) => {
+  const faktaOmBeregningTilfeller = [];
+  if (!faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE)) {
+    return {};
+  }
+  return ({
+    ...transformValuesMottarYtelse(values, faktaOmBeregning, faktaOmBeregningTilfeller),
+    ...transformValuesArbeidstakerUtenIM(values, inntektVerdier, faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr, faktaOmBeregningTilfeller),
+    ...transformValuesFrilans(values, inntektVerdier, beregningsgrunnlag, fastsatteAndelsnr, faktaOmBeregningTilfeller),
+    faktaOmBeregningTilfeller,
+  });
+};
 
 VurderMottarYtelseFormImpl.validate = (values, vurderMottarYtelse) => {
   const errors = {};

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import VurderBesteberegningForm, { besteberegningField, inntektFieldArrayName } from './VurderBesteberegningForm';
+import VurderBesteberegningForm, { besteberegningField } from './VurderBesteberegningForm';
 
 
 describe('<VurderBesteberegning>', () => {
@@ -36,13 +36,13 @@ describe('<VurderBesteberegning>', () => {
   it('skal transform values om besteberegning', () => {
     const values = {};
     values[besteberegningField] = true;
-    values[inntektFieldArrayName] = [
-      { andelsnr: 1, fastsattBeløp: '10 000', inntektskategori: 'ARBEIDSTAKER' },
+    const inntektPrMnd = [
+      { andelsnr: 1, fastsattBelop: 10000, inntektskategori: 'ARBEIDSTAKER' },
       {
-        nyAndel: true, lagtTilAvSaksbehandler: true, andelsnr: undefined, fastsattBeløp: '20 000', inntektskategori: 'DAGPENGER', aktivitetStatus: 'DP',
+        nyAndel: true, lagtTilAvSaksbehandler: true, andelsnr: undefined, fastsattBelop: 20000, inntektskategori: 'DAGPENGER', aktivitetStatus: 'DP',
       },
     ];
-    const transformed = VurderBesteberegningForm.transformValues(values, { vurderBesteberegning: {} });
+    const transformed = VurderBesteberegningForm.transformValues(values, { vurderBesteberegning: {} }, inntektPrMnd);
     expect(transformed.besteberegningAndeler.besteberegningAndelListe.length).to.equal(2);
     expect(transformed.besteberegningAndeler.besteberegningAndelListe[0].andelsnr).to.equal(1);
     expect(transformed.besteberegningAndeler.besteberegningAndelListe[0].fastsatteVerdier.fastsattBeløp).to.equal(10000);

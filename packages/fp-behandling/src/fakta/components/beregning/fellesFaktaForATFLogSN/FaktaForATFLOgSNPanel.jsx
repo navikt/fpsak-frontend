@@ -44,12 +44,11 @@ import {
 import LonnsendringForm from './vurderOgFastsettATFL/forms/LonnsendringForm';
 import NyIArbeidslivetSNForm from './nyIArbeidslivet/NyIArbeidslivetSNForm';
 import VurderOgFastsettATFL from './vurderOgFastsettATFL/VurderOgFastsettATFL';
-import FastsettATFLInntektForm from './vurderOgFastsettATFL/forms/FastsettATFLInntektForm';
-import FastsettBBFodendeKvinneForm from './besteberegningFodendeKvinne/FastsettBBFodendeKvinneForm';
 import VurderEtterlonnSluttpakkeForm from './etterlønnSluttpakke/VurderEtterlonnSluttpakkeForm';
 import FastsettEtterlonnSluttpakkeForm from './etterlønnSluttpakke/FastsettEtterlonnSluttpakkeForm';
 import VurderMottarYtelseForm from './vurderOgFastsettATFL/forms/VurderMottarYtelseForm';
-import VurderBesteberegningForm, { vurderBesteberegningTransform } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
+import VurderBesteberegningForm from './besteberegningFodendeKvinne/VurderBesteberegningForm';
+import { getFormValuesForBeregning } from '../BeregningFormUtils';
 
 
 const {
@@ -148,37 +147,12 @@ const getFaktaPanels = (readOnly, tilfeller, isAksjonspunktClosed, showTableCall
         </ElementWrapper>,
       );
     }
-    if (tilfelle === faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING) {
-      hasShownPanel = true;
-      faktaPanels.push(
-        <ElementWrapper key={tilfelle}>
-          {spacer(hasShownPanel)}
-          <VurderBesteberegningForm
-            readOnly={readOnly}
-            isAksjonspunktClosed={isAksjonspunktClosed}
-          />
-        </ElementWrapper>,
-      );
-    }
   });
   if (tilfeller.filter(tilfelle => vurderOgFastsettATFLTilfeller.indexOf(tilfelle) !== -1).length !== 0) {
     faktaPanels.push(
       <ElementWrapper key="VurderOgFastsettATFL">
         {spacer(true)}
         <VurderOgFastsettATFL
-          readOnly={readOnly}
-          isAksjonspunktClosed={isAksjonspunktClosed}
-          tilfeller={tilfeller}
-        />
-      </ElementWrapper>,
-    );
-  }
-  if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)
-   && !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)) {
-    faktaPanels.push(
-      <ElementWrapper key="BBFodendeKvinne">
-        {spacer(true)}
-        <FastsettBBFodendeKvinneForm
           readOnly={readOnly}
           isAksjonspunktClosed={isAksjonspunktClosed}
           tilfeller={tilfeller}
@@ -246,18 +220,6 @@ const endretBGTransform = endringBGPerioder => values => ({
   ...FastsettEndretBeregningsgrunnlag.transformValues(values, endringBGPerioder),
 });
 
-const atflSammeOrgTransform = (faktaOmBeregning, beregningsgrunnlag) => values => ({
-  faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON],
-  ...FastsettATFLInntektForm.transformValues(values, faktaOmBeregning, faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON,
-    beregningsgrunnlag),
-});
-
-const besteberegningTransform = faktaOmBeregning => values => ({
-  faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE],
-  ...FastsettBBFodendeKvinneForm.transformValues(values, faktaOmBeregning),
-});
-
-
 const nyIArbeidslivetTransform = (vurderFaktaValues, values) => {
   vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_SN_NY_I_ARBEIDSLIVET);
   return ({
@@ -274,24 +236,6 @@ const kortvarigeArbeidsforholdTransform = kortvarigeArbeidsforhold => (vurderFak
   });
 };
 
-const nyoppstartetFLTransform = (aktivePaneler, beregningsgrunnlag) => (vurderFaktaValues, values) => {
-  vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL);
-  return {
-    ...vurderFaktaValues,
-    ...NyoppstartetFLForm.nyOppstartetFLInntekt(values, aktivePaneler, vurderFaktaValues, beregningsgrunnlag),
-    ...NyoppstartetFLForm.transformValues(values),
-  };
-};
-
-const fastsattLonnsendringTransform = (aktivePaneler, beregningsgrunnlag, faktaOmBeregning) => (vurderFaktaValues, values) => {
-  vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_LONNSENDRING);
-  return {
-    ...vurderFaktaValues,
-    ...LonnsendringForm.lonnendringFastsatt(values, aktivePaneler, faktaOmBeregning, vurderFaktaValues, beregningsgrunnlag),
-    ...LonnsendringForm.transformValues(values),
-  };
-};
-
 const etterlonnSluttpakkeTransform = aktivePaneler => (vurderFaktaValues, values) => {
   vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_ETTERLONN_SLUTTPAKKE);
   return {
@@ -301,22 +245,12 @@ const etterlonnSluttpakkeTransform = aktivePaneler => (vurderFaktaValues, values
   };
 };
 
-const vurderMottarYtelseTransform = (aktivePaneler, beregningsgrunnlag, faktaOmBeregning) => (vurderFaktaValues, values) => {
-  vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE);
-  return {
-    ...vurderFaktaValues,
-    ...VurderMottarYtelseForm.transformValues(values, faktaOmBeregning, aktivePaneler, vurderFaktaValues, beregningsgrunnlag),
-  };
-};
 
 export const transformValues = (
   aktivePaneler,
   nyIArbTransform,
   kortvarigTransform,
-  nyoppstartetTransform,
-  lonnsendringTransform,
   etterlonnTransform,
-  mottarYtelseTransform,
 ) => (vurderFaktaValues, values) => {
   let transformed = { ...vurderFaktaValues };
   aktivePaneler.forEach((kode) => {
@@ -326,41 +260,22 @@ export const transformValues = (
     if (kode === faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD) {
       transformed = kortvarigTransform(transformed, values);
     }
-    if (kode === faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL) {
-      transformed = nyoppstartetTransform(transformed, values);
-    }
-    if (kode === faktaOmBeregningTilfelle.VURDER_LONNSENDRING) {
-      transformed = lonnsendringTransform(transformed, values);
-    }
     if (kode === faktaOmBeregningTilfelle.VURDER_ETTERLONN_SLUTTPAKKE) {
       transformed = etterlonnTransform(transformed, values);
-    }
-    if (kode === faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE) {
-      transformed = mottarYtelseTransform(transformed, values);
     }
   });
   return transformed;
 };
 
 export const setInntektValues = (aktivePaneler, fatsettKunYtelseTransform, fastsettEndretTransform,
-  fastsettATFLTransform, fastsettBBFodendeKvinneTransform, vurderBBTransform) => (values) => {
+  vurderOgFastsettATFLTransform) => (values) => {
   if (aktivePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE)) {
     return fatsettKunYtelseTransform(values);
   }
   if (aktivePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
     return fastsettEndretTransform(values);
   }
-  if (aktivePaneler.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)) {
-    return fastsettATFLTransform(values);
-  }
-  if (aktivePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)
-   && !aktivePaneler.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)) {
-    return fastsettBBFodendeKvinneTransform(values);
-  }
-  if (aktivePaneler.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)) {
-    return vurderBBTransform(values);
-  }
-  return { faktaOmBeregningTilfeller: [] };
+  return { ...vurderOgFastsettATFLTransform(values) };
 };
 
 const setValuesForVurderFakta = (aktivePaneler, values, endringBGPerioder, kortvarigeArbeidsforhold, faktaOmBeregning, beregningsgrunnlag) => {
@@ -368,17 +283,12 @@ const setValuesForVurderFakta = (aktivePaneler, values, endringBGPerioder, kortv
     aktivePaneler,
     kunYtelseTransform(faktaOmBeregning, endringBGPerioder, aktivePaneler),
     endretBGTransform(endringBGPerioder),
-    atflSammeOrgTransform(faktaOmBeregning, beregningsgrunnlag),
-    besteberegningTransform(faktaOmBeregning),
-    vurderBesteberegningTransform(faktaOmBeregning),
+    VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag),
   )(values);
   return transformValues(aktivePaneler,
     nyIArbeidslivetTransform,
     kortvarigeArbeidsforholdTransform(kortvarigeArbeidsforhold),
-    nyoppstartetFLTransform(aktivePaneler, beregningsgrunnlag),
-    fastsattLonnsendringTransform(aktivePaneler, beregningsgrunnlag, faktaOmBeregning),
-    etterlonnSluttpakkeTransform(aktivePaneler),
-    vurderMottarYtelseTransform(aktivePaneler, beregningsgrunnlag, faktaOmBeregning))(vurderFaktaValues, values);
+    etterlonnSluttpakkeTransform(aktivePaneler))(vurderFaktaValues, values);
 };
 
 
@@ -408,16 +318,14 @@ export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
   [getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlag,
     getKortvarigeArbeidsforhold, getVurderFaktaAksjonspunkt, getTilstøtendeYtelse, getKunYtelse,
     getFaktaOmBeregningTilfellerKoder, getBehandlingIsRevurdering, getVurderMottarYtelse, getVurderBesteberegning,
-    isReadOnly],
+    isReadOnly, getFormValuesForBeregning],
   (endringBGPerioder, beregningsgrunnlag, kortvarigeArbeidsforhold, vurderFaktaAP, tilstotendeYtelse, kunYtelse,
-    tilfeller, isRevurdering, vurderMottarYtelse, vurderBesteberegning, readOnly) => () => ({
+    tilfeller, isRevurdering, vurderMottarYtelse, vurderBesteberegning, readOnly, values) => () => ({
     ...TidsbegrensetArbeidsforholdForm.buildInitialValues(kortvarigeArbeidsforhold),
     ...NyIArbeidslivetSNForm.buildInitialValues(beregningsgrunnlag),
     ...FastsettEndretBeregningsgrunnlag.buildInitialValues(endringBGPerioder, tilfeller, readOnly),
     ...LonnsendringForm.buildInitialValues(beregningsgrunnlag),
     ...NyoppstartetFLForm.buildInitialValues(beregningsgrunnlag),
-    ...FastsettATFLInntektForm.buildInitialValues(beregningsgrunnlag),
-    ...FastsettBBFodendeKvinneForm.buildInitialValues(beregningsgrunnlag),
     ...TilstotendeYtelseForm.buildInitialValues(tilstotendeYtelse, endringBGPerioder),
     ...TilstotendeYtelseIKombinasjon.buildInitialValues(tilstotendeYtelse, endringBGPerioder, tilfeller),
     ...buildInitialValuesKunYtelse(kunYtelse, endringBGPerioder, isRevurdering, tilfeller),
@@ -425,6 +333,7 @@ export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
     ...FastsettEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag),
     ...VurderMottarYtelseForm.buildInitialValues(vurderMottarYtelse),
     ...VurderBesteberegningForm.buildInitialValues(vurderBesteberegning, tilfeller),
+    ...VurderOgFastsettATFL.buildInitialValues(beregningsgrunnlag, values),
   }),
 );
 

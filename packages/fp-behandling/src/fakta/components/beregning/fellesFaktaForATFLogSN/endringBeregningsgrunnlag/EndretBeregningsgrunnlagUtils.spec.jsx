@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { lagStateMedAksjonspunkterOgFaktaOmBeregning } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
+import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
 import { lonnsendringField }
   from 'behandlingFpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
 import { erNyoppstartetFLField }
@@ -85,7 +85,7 @@ const forventetRefusjonString = 'arbeidsgiver 2 (987654321) f.o.m. 20.01.2017 og
 
 const lagStateMedFaktaOmBeregningOgValues = (faktaOmBeregning, values = {}) => {
   const ap = { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN } };
-  return lagStateMedAksjonspunkterOgFaktaOmBeregning([ap], faktaOmBeregning, values);
+  return lagStateMedAksjonspunkterOgBeregningsgrunnlag([ap], { faktaOmBeregning }, values);
 };
 
 describe('<EndretBeregningsgrunnlagUtils>', () => {

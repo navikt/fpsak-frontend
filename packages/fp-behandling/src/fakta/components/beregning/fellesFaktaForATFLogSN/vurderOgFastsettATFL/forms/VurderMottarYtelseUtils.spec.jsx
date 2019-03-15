@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import {
   andelsnrMottarYtelseMap, utledArbeidsforholdFieldName, finnFrilansFieldName,
-  skalFastsetteInntektATUtenInntektsmelding,
+  skalFastsetteInntektATUtenInntektsmelding, harVurdertMottarYtelse,
 } from './VurderMottarYtelseUtils';
 
 const arbeidsforhold = {
@@ -72,6 +72,55 @@ const beregningsgrunnlag = {
 };
 
 describe('<VurderMottarYtelseUtils>', () => {
+  it('skal returnere false når man ikke har vurdert alle punktene i mottar ytelse for frilans', () => {
+    const vurderMottarYtelse = {
+      erFrilans: true,
+      arbeidstakerAndelerUtenIM: [],
+    };
+    const values = {};
+    values[finnFrilansFieldName()] = null;
+    const harVurdert = harVurdertMottarYtelse(values, vurderMottarYtelse);
+    expect(harVurdert).to.equal(false);
+  });
+
+  it('skal returnere true når man har vurdert alle punktene i mottar ytelse for frilans', () => {
+    const vurderMottarYtelse = {
+      erFrilans: true,
+      arbeidstakerAndelerUtenIM: [],
+    };
+    const values = {};
+    values[finnFrilansFieldName()] = true;
+    const harVurdert = harVurdertMottarYtelse(values, vurderMottarYtelse);
+    expect(harVurdert).to.equal(true);
+  });
+
+  it('skal returnere true når man har vurdert alle punktene i mottar ytelse for arbeidstaker uten inntektsmelding', () => {
+    const vurderMottarYtelse = {
+      erFrilans: false,
+      arbeidstakerAndelerUtenIM,
+    };
+    const values = {};
+    values[utledArbeidsforholdFieldName(andel)] = true;
+    values[utledArbeidsforholdFieldName(andel2)] = false;
+    values[utledArbeidsforholdFieldName(andel3)] = false;
+    const harVurdert = harVurdertMottarYtelse(values, vurderMottarYtelse);
+    expect(harVurdert).to.equal(true);
+  });
+
+
+  it('skal returnere false når man har ikkje vurdert alle punktene i mottar ytelse for arbeidstaker uten inntektsmelding', () => {
+    const vurderMottarYtelse = {
+      erFrilans: false,
+      arbeidstakerAndelerUtenIM,
+    };
+    const values = {};
+    values[utledArbeidsforholdFieldName(andel)] = true;
+    values[utledArbeidsforholdFieldName(andel2)] = false;
+    values[utledArbeidsforholdFieldName(andel3)] = null;
+    const harVurdert = harVurdertMottarYtelse(values, vurderMottarYtelse);
+    expect(harVurdert).to.equal(false);
+  });
+
   it('skal returnere tomt objekt om vurderMottarYtelseDto ikkje er tilstades', () => {
     const mottarYtelseMap = andelsnrMottarYtelseMap({}, undefined, undefined);
     expect(mottarYtelseMap).to.be.empty;

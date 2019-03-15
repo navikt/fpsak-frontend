@@ -1,39 +1,77 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import faktaOmBeregningTilfelle, {
-  harKunATFLISammeOrgUtenBestebergning,
-  erATFLSpesialtilfelle,
-  harVurderMottarYtelseUtenBesteberegning,
-  erATFLSpesialtilfelleEllerVurderMottarYtelseUtenBesteberegning,
-} from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import { FieldArray } from 'redux-form';
 import LonnsendringForm, { lonnsendringField }
   from 'behandlingFpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
 import NyoppstartetFLForm, { erNyoppstartetFLField }
   from 'behandlingFpsak/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/NyoppstartetFLForm';
-import { getFaktaOmBeregning } from 'behandlingFpsak/src/behandlingSelectors';
+import { getFaktaOmBeregning, getBeregningsgrunnlag } from 'behandlingFpsak/src/behandlingSelectors';
 import { harVurdertMottarYtelse } from './forms/VurderMottarYtelseUtils';
-import FastsettATFLInntektForm from './forms/FastsettATFLInntektForm';
 import InntektstabellPanel from '../InntektstabellPanel';
+import { ATFLSammeOrgTekst, transformValuesForATFLISammeOrg } from './forms/ATFLSammeOrg';
+
 import VurderMottarYtelseForm from './forms/VurderMottarYtelseForm';
 import FastsettEndretBeregningsgrunnlag from '../endringBeregningsgrunnlag/FastsettEndretBeregningsgrunnlag';
 import { getFormValuesForBeregning } from '../../BeregningFormUtils';
+import { skalRedigereInntektForAndel, mapAndelToField, skalFastsettInntektForStatus } from '../BgFordelingUtils';
+import VurderBesteberegningForm, { besteberegningField, vurderBesteberegningTransform } from '../besteberegningFodendeKvinne/VurderBesteberegningForm';
+import InntektFieldArray from '../InntektFieldArray';
 
 
-export const skalViseInntektsTabellUnderRadioknapp = (tilfeller, lonnEndringEllerNyFL) => {
-  // Dersom vi har tilfellet for besteberegning fødende kvinne skal alle inntekter fastsettes der.
-  // Skal aldri vise inntektstabell under radioknapp dersom det er et spesialtilfelle
-  if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)
-  || erATFLSpesialtilfelleEllerVurderMottarYtelseUtenBesteberegning(tilfeller)
-  || tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
-    return false;
+export const inntektFieldArrayName = 'inntektFieldArray';
+
+
+const lonnsendringErVurdertEllerIkkjeTilstede = (tilfeller, values) => (
+  !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)
+  || (values[lonnsendringField] !== undefined && values[lonnsendringField] !== null));
+
+const nyoppstartetFLErVurdertEllerIkkjeTilstede = (tilfeller, values) => (
+  !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL)
+  || (values[erNyoppstartetFLField] !== undefined && values[erNyoppstartetFLField] !== null));
+
+
+const besteberegningErVurdertEllerIkkjeTilstede = (tilfeller, values) => (
+  !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)
+  || (values[besteberegningField] !== undefined && values[besteberegningField] !== null));
+
+const mottarYtelseErVurdertEllerIkkjeTilstede = (tilfeller, vurderMottarYtelse, values) => (
+  !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE)
+  || (harVurdertMottarYtelse(values, vurderMottarYtelse)));
+
+const harVurdert = (tilfeller, values, faktaOmBeregning) => (
+  lonnsendringErVurdertEllerIkkjeTilstede(tilfeller, values)
+    && nyoppstartetFLErVurdertEllerIkkjeTilstede(tilfeller, values)
+    && mottarYtelseErVurdertEllerIkkjeTilstede(tilfeller, faktaOmBeregning.vurderMottarYtelse, values)
+    && besteberegningErVurdertEllerIkkjeTilstede(tilfeller, values)
+);
+
+const skalFastsetteInntekt = (values, faktaOmBeregning, beregningsgrunnlag) => beregningsgrunnlag.beregningsgrunnlagPeriode[0]
+  .beregningsgrunnlagPrStatusOgAndel
+  .map(mapAndelToField)
+  .find(skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag)) !== undefined;
+
+
+export const findInstruksjonForFastsetting = (skalHaBesteberegning, skalFastsetteFL, skalFastsetteAT) => {
+  if (skalHaBesteberegning) {
+    return 'KunYtelsePanel.OverskriftBesteberegning';
   }
-  return (lonnEndringEllerNyFL) || (lonnEndringEllerNyFL === false
-    && tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON));
+  if (skalFastsetteFL) {
+    if (!skalFastsetteAT) {
+      return 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettFrilans';
+    }
+    return 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettATFLAlleOppdrag';
+  }
+  if (skalFastsetteAT) {
+    return 'BeregningInfoPanel.VurderOgFastsettATFL.FastsettArbeidsinntekt';
+  }
+  return ' ';
 };
 
 
-const finnInntektstabell = (tilfeller, readOnly, isAksjonspunktClosed, manglerInntektsmelding, erNyoppstartetFL) => {
+const finnInntektstabell = (tilfeller, readOnly, isAksjonspunktClosed) => {
   if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
     return (
       <FastsettEndretBeregningsgrunnlag
@@ -43,16 +81,14 @@ const finnInntektstabell = (tilfeller, readOnly, isAksjonspunktClosed, manglerIn
     );
   }
   return (
-    <FastsettATFLInntektForm
+    <FieldArray
+      name={inntektFieldArrayName}
+      component={InntektFieldArray}
       readOnly={readOnly}
-      isAksjonspunktClosed={isAksjonspunktClosed}
-      tilfellerSomSkalFastsettes={tilfeller}
-      manglerInntektsmelding={manglerInntektsmelding}
-      erNyoppstartetFL={erNyoppstartetFL}
+      skalKunneLeggeTilAndel={false}
     />
   );
 };
-
 
 /**
  * VurderOgFastsettATFL
@@ -65,19 +101,25 @@ const finnInntektstabell = (tilfeller, readOnly, isAksjonspunktClosed, manglerIn
 
 const VurderOgFastsettATFL = ({
   readOnly,
-  erLonnsendring,
-  erNyoppstartetFL,
   isAksjonspunktClosed,
   tilfeller,
   manglerInntektsmelding,
   skalViseTabell,
+  skalFastsetteAT,
+  skalFastsetteFL,
+  skalHaBesteberegning,
 }) => (
   <div>
     <InntektstabellPanel
       key="inntektstabell"
-      tabell={finnInntektstabell(tilfeller, readOnly, isAksjonspunktClosed, manglerInntektsmelding, erNyoppstartetFL)}
+      tabell={finnInntektstabell(tilfeller, readOnly, isAksjonspunktClosed)}
       skalViseTabell={skalViseTabell}
+      hjelpeTekstId={findInstruksjonForFastsetting(skalHaBesteberegning, skalFastsetteFL, skalFastsetteAT)}
     >
+      <ATFLSammeOrgTekst
+        tilfeller={tilfeller}
+        manglerInntektsmelding={manglerInntektsmelding}
+      />
       {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)
       && (
         <LonnsendringForm
@@ -85,8 +127,6 @@ const VurderOgFastsettATFL = ({
           isAksjonspunktClosed={isAksjonspunktClosed}
           tilfeller={tilfeller}
           manglerIM={manglerInntektsmelding}
-          skalViseInntektstabell={skalViseInntektsTabellUnderRadioknapp(tilfeller, erLonnsendring)}
-          skalKunFastsetteAT={!tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)}
         />
       )
       }
@@ -96,9 +136,7 @@ const VurderOgFastsettATFL = ({
           readOnly={readOnly}
           isAksjonspunktClosed={isAksjonspunktClosed}
           tilfeller={tilfeller}
-          skalViseInntektstabell={skalViseInntektsTabellUnderRadioknapp(tilfeller, erNyoppstartetFL)}
           manglerIM={manglerInntektsmelding}
-          skalKunFastsetteFL={!tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)}
         />
       )
       }
@@ -111,49 +149,91 @@ const VurderOgFastsettATFL = ({
         />
       )
       }
+      {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)
+      && (
+        <VurderBesteberegningForm
+          readOnly={readOnly}
+          isAksjonspunktClosed={isAksjonspunktClosed}
+        />
+      )
+      }
     </InntektstabellPanel>
   </div>
 );
+
+VurderOgFastsettATFL.buildInitialValues = (beregningsgrunnlag, values) => {
+  const andeler = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel;
+  return {
+    [inntektFieldArrayName]: InntektFieldArray.buildInitialValues(andeler, values ? values[besteberegningField] : undefined),
+  };
+};
+
+
+VurderOgFastsettATFL.validate = (values, tilfeller, faktaOmBeregning, beregningsgrunnlag) => {
+  const errors = {};
+  if (harVurdert(tilfeller, values, faktaOmBeregning) && skalFastsetteInntekt(values, faktaOmBeregning, beregningsgrunnlag)) {
+    errors[inntektFieldArrayName] = InntektFieldArray.validate(values[inntektFieldArrayName], false,
+      skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag));
+  }
+  return errors;
+};
+
+const concatTilfeller = (transformed, newTransformedValues) => ({
+  ...transformed,
+  ...newTransformedValues,
+  faktaOmBeregningTilfeller: newTransformedValues.faktaOmBeregningTilfeller
+    ? transformed.faktaOmBeregningTilfeller.concat(newTransformedValues.faktaOmBeregningTilfeller) : transformed.faktaOmBeregningTilfeller,
+});
+
+
+VurderOgFastsettATFL.transformValues = (faktaOmBeregning, beregningsgrunnlag) => (values) => {
+  const tilfeller = faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode);
+  if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
+    return ({});
+  }
+  const inntektVerdier = InntektFieldArray.transformValues(values[inntektFieldArrayName]);
+  let transformed = { faktaOmBeregningTilfeller: [] };
+  const fastsatteAndelsnr = [];
+  // Besteberegning
+  const allInntektErFastsatt = values[besteberegningField] === true;
+  transformed = concatTilfeller(transformed, vurderBesteberegningTransform(faktaOmBeregning)(values, inntektVerdier));
+  // Nyoppstartet FL
+  transformed = concatTilfeller(transformed, NyoppstartetFLForm.transformValues(values, allInntektErFastsatt ? null : inntektVerdier,
+    faktaOmBeregning, fastsatteAndelsnr));
+  // Lønnsendring FL
+  transformed = concatTilfeller(transformed,
+    LonnsendringForm.transformValues(values, allInntektErFastsatt ? null : inntektVerdier, faktaOmBeregning, fastsatteAndelsnr));
+  // Mottar ytelse
+  transformed = concatTilfeller(transformed, VurderMottarYtelseForm.transformValues(values, allInntektErFastsatt ? null : inntektVerdier,
+    faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr));
+  // ATFL i samme org
+  transformed = concatTilfeller(transformed, transformValuesForATFLISammeOrg(allInntektErFastsatt ? null : inntektVerdier,
+    faktaOmBeregning, fastsatteAndelsnr));
+  return transformed;
+};
 
 VurderOgFastsettATFL.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   tilfeller: PropTypes.arrayOf(PropTypes.string).isRequired,
   manglerInntektsmelding: PropTypes.bool.isRequired,
-  erLonnsendring: PropTypes.bool,
-  erNyoppstartetFL: PropTypes.bool,
   skalViseTabell: PropTypes.bool.isRequired,
+  skalFastsetteAT: PropTypes.bool.isRequired,
+  skalFastsetteFL: PropTypes.bool.isRequired,
+  skalHaBesteberegning: PropTypes.bool.isRequired,
 };
 
-VurderOgFastsettATFL.defaultProps = {
-  erLonnsendring: undefined,
-  erNyoppstartetFL: undefined,
+export const skalViseInntektstabell = (tilfeller, values, faktaOmBeregning, beregningsgrunnlag) => {
+  if (!harVurdert(tilfeller, values, faktaOmBeregning)) {
+    return false;
+  }
+  return skalFastsetteInntekt(values, faktaOmBeregning, beregningsgrunnlag);
 };
 
-export const skalViseInntektstabell = (tilfeller, values, faktaOmBeregning) => {
-  if ((harKunATFLISammeOrgUtenBestebergning(tilfeller) || erATFLSpesialtilfelle(tilfeller))
-  && !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
-    return true;
-  }
-  if (harVurderMottarYtelseUtenBesteberegning(tilfeller)) {
-    if (tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)) {
-      const harLonnsendring = values[lonnsendringField];
-      if (harLonnsendring === undefined || harLonnsendring === null) {
-        return false;
-      }
-    }
-    if (tilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL)) {
-      const erNyoppstartetFL = values[erNyoppstartetFLField];
-      if (erNyoppstartetFL === undefined || erNyoppstartetFL === null) {
-        return false;
-      }
-    }
-    return harVurdertMottarYtelse(values, faktaOmBeregning.vurderMottarYtelse);
-  }
-  return false;
-};
 
 const mapStateToProps = (state, initialProps) => {
+  const skalFastsetteAT = skalFastsettInntektForStatus(inntektFieldArrayName, aktivitetStatus.ARBEIDSTAKER)(state);
+  const skalFastsetteFL = skalFastsettInntektForStatus(inntektFieldArrayName, aktivitetStatus.FRILANSER)(state);
   const faktaOmBeregning = getFaktaOmBeregning(state);
   let manglerInntektsmelding = false;
   if (faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe && faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.length > 0) {
@@ -161,10 +241,11 @@ const mapStateToProps = (state, initialProps) => {
   }
   const values = getFormValuesForBeregning(state);
   return {
-    erLonnsendring: values[lonnsendringField],
-    erNyoppstartetFL: values[erNyoppstartetFLField],
-    skalViseTabell: skalViseInntektstabell(initialProps.tilfeller, values, faktaOmBeregning),
+    skalViseTabell: skalViseInntektstabell(initialProps.tilfeller, values, faktaOmBeregning, getBeregningsgrunnlag(state)),
+    skalHaBesteberegning: values[besteberegningField] === true,
     manglerInntektsmelding,
+    skalFastsetteAT,
+    skalFastsetteFL,
   };
 };
 
