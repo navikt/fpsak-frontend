@@ -17,6 +17,8 @@ class PapirsoknadUpdater {
     setBehandlingResult = () => papirsoknadApi.BEHANDLING.setDataRestApi();
 
     previewMessage = () => papirsoknadApi.PREVIEW_MESSAGE.makeRestApiRequest();
+
+    isSubmitMessageFinished = () => papirsoknadApi.SUBMIT_MESSAGE.makeRestApiRequest();
 }
 
 export default new PapirsoknadUpdater();
