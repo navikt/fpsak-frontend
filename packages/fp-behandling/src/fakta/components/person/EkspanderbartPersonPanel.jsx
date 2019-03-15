@@ -43,7 +43,10 @@ const EkspanderbartPersonPanel = ({
       <div
         className={classNames({ primary: secondaryParent, primaryfull: !secondaryParent })}
         onClick={() => (setSelected(primaryParent))}
-        onKeyDown={() => (setSelected(primaryParent))}
+        onKeyDown={(event) => {
+          if (event.keyCode === 32 || event.keyCode === 13) return (setSelected(primaryParent));
+          return false;
+        }}
         role="link"
         tabIndex="0"
       >
@@ -51,9 +54,9 @@ const EkspanderbartPersonPanel = ({
           <PersonDetailedHeader personopplysninger={primaryParent} medPanel isPrimaryParent />
         </div>
         <div className={classNames({ personchevron: secondaryParent, personchevronfull: !secondaryParent })}>
-          <button type="button" className={styles.invisibleButton}>
+          <div className={styles.invisibleButton}>
             {selected === primaryParent ? <OppChevron /> : <NedChevron />}
-          </button>
+          </div>
         </div>
       </div>
 
@@ -62,7 +65,10 @@ const EkspanderbartPersonPanel = ({
         <div
           className={styles.secondary}
           onClick={() => (setSelected(secondaryParent))}
-          onKeyDown={() => (setSelected(secondaryParent))}
+          onKeyDown={(event) => {
+            if (event.keyCode === 32 || event.keyCode === 13) return (setSelected(primaryParent));
+            return false;
+          }}
           role="link"
           tabIndex="0"
         >
@@ -75,9 +81,9 @@ const EkspanderbartPersonPanel = ({
             />
           </div>
           <div className={classNames('personchevron')}>
-            <button type="button" className={styles.invisibleButton}>
+            <div className={styles.invisibleButton}>
               {selected === secondaryParent ? <OppChevron /> : <NedChevron />}
-            </button>
+            </div>
           </div>
         </div>
         )}
