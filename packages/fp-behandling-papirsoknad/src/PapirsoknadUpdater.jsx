@@ -18,6 +18,10 @@ class PapirsoknadUpdater {
 
     previewMessage = () => papirsoknadApi.PREVIEW_MESSAGE.makeRestApiRequest();
 
+    resetSubmitMessage = () => papirsoknadApi.SUBMIT_MESSAGE.resetRestApi();
+
+    submitMessage = () => papirsoknadApi.SUBMIT_MESSAGE.makeRestApiRequest();
+
     isSubmitMessageFinished = () => papirsoknadApi.SUBMIT_MESSAGE.makeRestApiRequest();
 }
 
