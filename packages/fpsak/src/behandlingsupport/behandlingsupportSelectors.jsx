@@ -10,9 +10,11 @@ import {
   isBehandlingInInnhentSoknadsopplysningerSteg,
   getBehandlingIsKlage,
 } from 'behandling/duck';
+import { getSelectedSaksnummer } from '@fpsak-frontend/fp-behandling-papirsoknad/src/duck';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { getRettigheter } from 'navAnsatt/duck';
 import SupportPanel from './supportPanels';
+
 
 const getSendMessageIsRelevant = createSelector(
   [
@@ -21,9 +23,10 @@ const getSendMessageIsRelevant = createSelector(
     getBehandlingIsOnHold,
     getBehandlingIsInnsyn,
     getBehandlingIsKlage,
+    getSelectedSaksnummer,
   ],
-  (behandlingHasSoknad, behandlingIsInnhentSoknadsopplysninger, behandlingIsOnHold, behandlingIsInnsyn, behandlingIsKlage) => (
-    (behandlingHasSoknad || behandlingIsInnhentSoknadsopplysninger || behandlingIsInnsyn || behandlingIsKlage) && !behandlingIsOnHold
+  (behandlingHasSoknad, behandlingIsInnhentSoknadsopplysninger, behandlingIsOnHold, behandlingIsInnsyn, behandlingIsKlage, fagsakSaksnummer) => (
+    (behandlingHasSoknad || behandlingIsInnhentSoknadsopplysninger || behandlingIsInnsyn || behandlingIsKlage || fagsakSaksnummer) && !behandlingIsOnHold
   ),
 );
 
