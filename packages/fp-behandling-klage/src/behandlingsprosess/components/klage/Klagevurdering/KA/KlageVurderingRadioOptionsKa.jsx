@@ -3,7 +3,7 @@ import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { required } from '@fpsak-frontend/utils';
 import { injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, ArrowBox } from '@fpsak-frontend/shared-components';
 import { Row, Column } from 'nav-frontend-grid';
 import {
   RadioGroupField, RadioOption, SelectField,
@@ -36,9 +36,8 @@ export const KlageVurderingRadioOptionsKaImpl = ({
           <RadioGroupField
             name="klageVurdering"
             validate={[required]}
-            readOnly={readOnly}
-            className={styles.noWrap}
             direction="vertical"
+            readOnly={readOnly}
           >
             <RadioOption value={klageVurderingType.STADFESTE_YTELSESVEDTAK} label={{ id: 'Klage.ResolveKlage.KeepVedtakNk' }} />
             <RadioOption value={klageVurderingType.MEDHOLD_I_KLAGE} label={{ id: 'Klage.ResolveKlage.ChangeVedtak' }} />
@@ -49,7 +48,7 @@ export const KlageVurderingRadioOptionsKaImpl = ({
             name="klageVurdering"
             validate={[required]}
             readOnly={readOnly}
-            className={styles.noWrap}
+            className={readOnly ? styles.selectReadOnly : null}
             direction="vertical"
           >
             <RadioOption value={klageVurderingType.HJEMSENDE_UTEN_Å_OPPHEVE} label={{ id: 'Klage.Behandle.Hjemsendt' }} />
@@ -59,36 +58,44 @@ export const KlageVurderingRadioOptionsKaImpl = ({
       </Row>
       {(klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE)
     && (
-      <div className={getClassForMedholdKlage(readOnly, aksjonspunktCode)}>
+      <ArrowBox>
         <SelectField
           readOnly={readOnly}
           name="klageMedholdArsak"
           selectValues={medholdOptions}
+          className={readOnly ? styles.selectReadOnly : null}
           label={intl.formatMessage({ id: 'Klage.ResolveKlage.Cause' })}
           validate={[required]}
           bredde="xl"
         />
         <VerticalSpacer sixPx />
-        <RadioGroupField name="klageVurderingOmgjoer" validate={[required]} readOnly={readOnly} className={styles.noWrap} direction="vertical">
+        <RadioGroupField
+          name="klageVurderingOmgjoer"
+          validate={[required]}
+          readOnly={readOnly}
+          className={readOnly ? styles.selectReadOnly : null}
+          direction="vertical"
+        >
           <RadioOption value={klageVurderingOmgjoerType.GUNST_MEDHOLD_I_KLAGE} label={{ id: 'Klage.Behandle.Omgjort' }} />
           <RadioOption value={klageVurderingOmgjoerType.UGUNST_MEDHOLD_I_KLAGE} label={{ id: 'Klage.Behandle.Ugunst' }} />
           <RadioOption value={klageVurderingOmgjoerType.DELVIS_MEDHOLD_I_KLAGE} label={{ id: 'Klage.Behandle.DelvisOmgjort' }} />
         </RadioGroupField>
-      </div>
+      </ArrowBox>
     )
     }
       {(klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK)
       && (
-        <div className={getClassForOpphevKlage(readOnly, aksjonspunktCode)}>
+        <ArrowBox marginLeft={380}>
           <SelectField
             readOnly={readOnly}
             name="klageMedholdArsak"
+            className={readOnly ? styles.selectReadOnly : null}
             selectValues={medholdOptions}
             label={intl.formatMessage({ id: 'Klage.ResolveKlage.Cause' })}
             validate={[required]}
             bredde="xl"
           />
-        </div>
+        </ArrowBox>
       )
       }
     </div>

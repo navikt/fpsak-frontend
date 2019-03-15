@@ -30,9 +30,7 @@ import { getFilteredReceivedDocuments, getSelectedSaksnummer } from 'behandlingI
 import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 import DocumentListVedtakInnsyn from './DocumentListVedtakInnsyn';
 
-
 import styles from './innsynVedtakForm.less';
-
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);

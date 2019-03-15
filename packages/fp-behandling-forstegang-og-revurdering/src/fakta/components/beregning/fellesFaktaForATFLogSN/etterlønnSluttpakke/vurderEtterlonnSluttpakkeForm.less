@@ -1,14 +1,5 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
-.arrowLine() {
-  composes: panel panel-relatert from '@fpsak-frontend/assets/styles/arrowLineModigDesign.less';
-  margin-bottom: 10px;
-  padding-bottom: 10px;
-  padding-left: 15px;
-  padding-top: 5px;
-  width: 250px;
-}
-
 .row {
   display: flex;
   flex-flow: row nowrap;
@@ -21,12 +12,4 @@
   .inlineLabel {
     margin-top: 4px;
   }
-}
-
-.arrowLineEtterlonnSluttpakke() {
-  composes: arrowLine;
-}
-
-.arrowLineEtterlonnSluttpakke:before {
-  left: 5px;
 }
