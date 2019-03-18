@@ -8,12 +8,10 @@ import {
   getBehandlingVersjon,
   getUttakPerioder,
   getBehandlingYtelseFordeling,
-  getBehandlingType,
 } from 'behandlingFpsak/src/behandlingSelectors';
 import { getSelectedBehandlingId } from 'behandlingFpsak/src/duck';
 import { guid, dateFormat } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import behandlingTypeKodeverk from '@fpsak-frontend/kodeverk/src/behandlingType';
 import UttakPerioder from './UttakPerioder';
 import {
   sjekkOmfaktaOmUttakAksjonspunkt,
@@ -120,13 +118,12 @@ const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOS
 };
 
 const buildInitialValues = createSelector(
-  [getUttakPerioder, getBehandlingYtelseFordeling, getBehandlingType],
-  (perioder, ytelseFordeling, behandlingType) => {
-    const førsteUttaksDato = ytelseFordeling && ytelseFordeling.førsteUttaksDato ? ytelseFordeling.førsteUttaksDato : undefined;
+  [getUttakPerioder, getBehandlingYtelseFordeling],
+  (perioder, ytelseFordeling) => {
     const endringsDato = ytelseFordeling && ytelseFordeling.endringsDato ? ytelseFordeling.endringsDato : undefined;
     if (perioder) {
       return {
-        førsteUttaksDato: behandlingType.kode !== behandlingTypeKodeverk.FORSTEGANGSSOKNAD ? førsteUttaksDato : endringsDato,
+        førsteUttaksDato: endringsDato,
         perioder: perioder.map(periode => ({
           ...periode,
           id: guid(),
