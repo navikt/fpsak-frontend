@@ -13,6 +13,10 @@ import FaktaGruppe from 'behandlingFpsak/src/fakta/components/FaktaGruppe';
 import ArbeidsforholdTable from './ArbeidsforholdTable';
 import ArbeidsforholdInnhold from './ArbeidsforholdInnhold';
 
+/**
+ * Svangerskapspenger
+ * Vise tabell med arbforhold og vise detaljer( fra søknad) når man klikker på et.
+ */
 export class ArbeidsforholdFaktaPanel extends Component {
   constructor() {
     super();

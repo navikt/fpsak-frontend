@@ -8,6 +8,11 @@ import {
   Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
 
+/**
+ * Svangerskapspenger
+ * tabell av arbforhold
+ */
+
 const headerTextCodes = [
   'ArbeidsforholdTable.Arbeidsforhold',
   'ArbeidsforholdTable.TilretteleggingFra',
