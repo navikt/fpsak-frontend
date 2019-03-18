@@ -6,7 +6,7 @@ import aksjonspunktCodes, {
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import klageBehandlingApi from '../data/klageBehandlingApi';
-import { getSelectedBehandlingId, isForeldrepengerFagsak } from '../duckKlage';
+import { getSelectedBehandlingId } from '../duckKlage';
 
 export const isBehandlingInSync = createSelector(
   [getSelectedBehandlingId, klageBehandlingApi.BEHANDLING.getRestApiData()],
@@ -45,16 +45,11 @@ export const getBehandlingOnHoldDate = createSelector([getSelectedBehandling], (
 export const getBehandlingsresultat = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingsresultat);
 export const getBehandlingHenlagt = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingHenlagt);
 export const getBehandlingToTrinnsBehandling = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.toTrinnsBehandling);
-export const getBehandlingResultatstruktur = createSelector(
-  [isForeldrepengerFagsak, getSelectedBehandling], (isForeldrepenger, selectedBehandling = {}) => (isForeldrepenger
-    ? selectedBehandling['beregningsresultat-foreldrepenger'] : selectedBehandling['beregningsresultat-engangsstonad']),
-);
-export const getUttaksresultatPerioder = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['uttaksresultat-perioder']));
+
 export const getBehandlingVenteArsakKode = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.venteArsakKode);
 export const getBehandlingAnsvarligSaksbehandler = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.ansvarligSaksbehandler,
 );
-export const getStonadskontoer = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling['uttak-stonadskontoer']);
 export const getHenleggArsaker = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['henlegg-arsaker']));
 export const getTotrinnskontrollArsaker = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['totrinnskontroll-arsaker']),

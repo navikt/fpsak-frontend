@@ -4,7 +4,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import innsynBehandlingApi from '../data/innsynBehandlingApi';
-import { getSelectedBehandlingId, isForeldrepengerFagsak } from '../duckInnsyn';
+import { getSelectedBehandlingId } from '../duckInnsyn';
 
 export const isBehandlingInSync = createSelector(
   [getSelectedBehandlingId, innsynBehandlingApi.BEHANDLING.getRestApiData()],
@@ -34,18 +34,11 @@ export const getBehandlingOnHoldDate = createSelector([getSelectedBehandling], (
 export const getBehandlingsresultat = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingsresultat);
 export const getBehandlingHenlagt = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingHenlagt);
 
-export const getBehandlingResultatstruktur = createSelector(
-  [isForeldrepengerFagsak, getSelectedBehandling], (isForeldrepenger, selectedBehandling = {}) => (isForeldrepenger
-    ? selectedBehandling['beregningsresultat-foreldrepenger'] : selectedBehandling['beregningsresultat-engangsstonad']),
-);
 export const getBehandlingVenteArsakKode = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.venteArsakKode);
 export const getBehandlingAnsvarligSaksbehandler = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.ansvarligSaksbehandler,
 );
 export const getHenleggArsaker = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['henlegg-arsaker']));
-
-export const getSimuleringResultat = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling.simuleringResultat));
-export const getTilbakekrevingValg = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling.tilbakekrevingvalg));
 
 // AKSJONSPUNKTER
 export const getAksjonspunkter = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.aksjonspunkter);
@@ -67,9 +60,6 @@ export const getBehandlingInnsynDokumenter = createSelector([getBehandlingInnsyn
 export const getBehandlingInnsynVedtaksdokumentasjon = createSelector(
   [getBehandlingInnsyn], (innsyn = {}) => (innsyn.vedtaksdokumentasjon ? innsyn.vedtaksdokumentasjon : []),
 );
-
-// PERSONOPPLYSNINGER
-export const getPersonopplysning = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling['soeker-personopplysninger']);
 
 // SPRÅK
 export const getBehandlingSprak = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.sprakkode);
