@@ -4,55 +4,13 @@ import { shallow } from 'enzyme';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
-import VurderOgFastsettATFL, { inntektFieldArrayName } from './VurderOgFastsettATFL';
+import VurderOgFastsettATFL, { inntektFieldArrayName, skalViseInntektstabell } from './VurderOgFastsettATFL';
 import VurderBesteberegningForm, { besteberegningField } from '../besteberegningFodendeKvinne/VurderBesteberegningForm';
 import LonnsendringForm, { lonnsendringField } from './forms/LonnsendringForm';
 import NyoppstartetFLForm, { erNyoppstartetFLField } from './forms/NyoppstartetFLForm';
 import VurderMottarYtelseForm from './forms/VurderMottarYtelseForm';
 import InntektstabellPanel from '../InntektstabellPanel';
 
-// const showTableCallback = sinon.spy();
-
-// const atUtenIM = { arbeidstakerAndelerUtenIM: [{ andelsnr: 1, mottarYtelse: undefined, inntektPrMnd: 10000 }] };
-// const frilanser = {
-//   erFrilans: true,
-//   frilansMottarYtelse: null,
-//   frilansInntektPrMnd: 10000,
-// };
-
-
-// const lagWrapper = (tilfeller, erLonnsendring, erNyoppstartetFL, values, faktaOmBeregning) => (shallow(<VurderOgFastsettATFL.WrappedComponent
-//   readOnly={false}
-//   isAksjonspunktClosed={false}
-//   tilfeller={tilfeller}
-//   manglerInntektsmelding={false}
-//   showTableCallback={showTableCallback}
-//   erLonnsendring={erLonnsendring}
-//   erNyoppstartetFL={erNyoppstartetFL}
-//   skalViseTabell={skalViseInntektstabell(tilfeller, values, faktaOmBeregning)}
-// />));
-
-// const assertInntektstabell = (wrapper, skalViseTabell) => {
-//   const inntektstabellPanel = wrapper.find(InntektstabellPanel);
-//   expect(inntektstabellPanel).to.have.length(1);
-//   expect(inntektstabellPanel.prop('skalViseTabell')).to.equal(skalViseTabell);
-// };
-
-// const assertFormNyoppstartetFL = (wrapper, skalViseTabellUnderKnapp, skalKunFastsetteFL) => {
-//   const formWrapper = wrapper.find(NyoppstartetFLForm);
-//   expect(formWrapper.prop('skalViseInntektstabell')).to.eql(skalViseTabellUnderKnapp);
-//   if (skalViseTabellUnderKnapp) {
-//     expect(formWrapper.prop('skalKunFastsetteFL')).to.eql(skalKunFastsetteFL);
-//   }
-// };
-
-// const assertFormLonnsendring = (wrapper, skalViseTabellUnderKnapp, skalKunFastsetteAT) => {
-//   const formWrapper = wrapper.find(LonnsendringForm);
-//   expect(formWrapper.prop('skalViseInntektstabell')).to.eql(skalViseTabellUnderKnapp);
-//   if (skalViseTabellUnderKnapp) {
-//     expect(formWrapper.prop('skalKunFastsetteAT')).to.eql(skalKunFastsetteAT);
-//   }
-// };
 
 const lagBeregningsgrunnlag = andeler => ({
   beregningsgrunnlagPeriode: [
@@ -69,11 +27,13 @@ const lagBeregningsgrunnlag = andeler => ({
   ],
 });
 
-const lagFaktaOmBeregning = (tilfeller, vurderBesteberegning, arbeidsforholdMedLønnsendringUtenIM, arbeidstakerOgFrilanserISammeOrganisasjonListe) => ({
+const lagFaktaOmBeregning = (tilfeller, vurderBesteberegning, arbeidsforholdMedLønnsendringUtenIM, arbeidstakerOgFrilanserISammeOrganisasjonListe,
+  vurderMottarYtelse = {}) => ({
   faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
   vurderBesteberegning,
   arbeidsforholdMedLønnsendringUtenIM,
   arbeidstakerOgFrilanserISammeOrganisasjonListe,
+  vurderMottarYtelse,
 });
 
 const lagAndel = (andelsnr, aktivitetStatus, inntektskategori) => (
@@ -85,6 +45,16 @@ const lagAndelValues = (andelsnr, fastsattBelop, inntektskategori, aktivitetStat
 });
 
 describe('<VurderOgFastsettATFL>', () => {
+  it('skal vise tabell om alt er vurdert og det er refusjon/gradering aksjonspunkt', () => {
+    const values = {};
+    values.mottarYtelseField1 = false;
+    const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE, faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG];
+    const faktaOmBeregning = lagFaktaOmBeregning(tilfeller,
+      {}, undefined, undefined, { arbeidstakerAndelerUtenIM: { andelsnr: 1 } });
+    const skalVise = skalViseInntektstabell(tilfeller, values, faktaOmBeregning, {});
+    expect(skalVise).to.equal(true);
+  });
+
   it('skal transform values om besteberegning', () => {
     const values = {};
     values[besteberegningField] = true;
