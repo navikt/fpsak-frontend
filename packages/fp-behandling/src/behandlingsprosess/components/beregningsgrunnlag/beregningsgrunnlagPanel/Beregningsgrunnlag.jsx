@@ -10,7 +10,7 @@ import {
   getBeregningsgrunnlagPerioder,
 } from 'behandlingFpsak/src/behandlingSelectors';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import BehandlingspunktSubmitButton from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BorderBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
@@ -18,6 +18,9 @@ import { TextAreaField } from '@fpsak-frontend/form';
 import {
   hasValidText, maxLength, minLength, required, removeSpacesFromNumber,
 } from '@fpsak-frontend/utils';
+import {
+  isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingFpsak/src/behandlingForm';
 import YtelserFraInfotrygd
   from 'behandlingFpsak/src/behandlingsprosess/components/beregningsgrunnlag/tilstotendeYtelser/YtelserFraInfotrygd';
 import GrunnlagForAarsinntektPanelFL from '../frilanser/GrunnlagForAarsinntektPanelFL';
@@ -266,7 +269,14 @@ export const BeregningsgrunnlagImpl = ({
         && (
         <ElementWrapper>
           <VerticalSpacer sixteenPx />
-          <BehandlingspunktSubmitButton formName={formName} isReadOnly={readOnly} isSubmittable={!readOnlySubmitButton} />
+          <BehandlingspunktSubmitButton
+            formName={formName}
+            isReadOnly={readOnly}
+            isSubmittable={!readOnlySubmitButton}
+            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+            isBehandlingFormDirty={isBehandlingFormDirty}
+            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+          />
         </ElementWrapper>
         )
       }

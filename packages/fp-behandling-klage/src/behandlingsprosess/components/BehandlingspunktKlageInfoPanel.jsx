@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames/bind';
+
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+
 import {
   getBehandlingspunktAksjonspunkterCodes,
   hasBehandlingspunktAtLeastOneOpenAksjonspunkt,
@@ -10,7 +13,7 @@ import {
   isSelectedBehandlingspunktReadOnly,
   getNotAcceptedByBeslutter,
 } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
-import VedtakPanels from './vedtak/VedtakPanels';
+import VedtakKlageFormNy from './vedtak/VedtakKlageForm';
 import BehandleKlageFormNfp from './klage/Klagevurdering/Nfp/BehandleKlageFormNfp';
 import BehandleKlageFormKa from './klage/Klagevurdering/KA/BehandleKlageFormKa';
 import FormkravKlageFormNfp from './klage/Formkrav/FormkravKlageFormNfp';
@@ -32,7 +35,6 @@ export const BehandlingspunktKlageInfoPanel = ({ // NOSONAR Kompleksitet er høg
   submitCallback,
   previewCallback,
   previewCallbackKlage,
-  previewVedtakCallback,
   openAksjonspunkt,
   readOnly,
   isApSolvable,
@@ -42,14 +44,15 @@ export const BehandlingspunktKlageInfoPanel = ({ // NOSONAR Kompleksitet er høg
 }) => (
   <div className={classNames('behandlingsPunkt', { notAcceptedByBeslutter, statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
     <div>
-      <VedtakPanels
-        behandlingspunkt={selectedBehandlingspunkt}
-        readOnly={readOnly}
-        previewCallback={previewCallback}
-        previewVedtakCallback={previewVedtakCallback}
-        previewKlageBrevCallback={previewCallbackKlage}
-        submitCallback={submitCallback}
-      />
+      {selectedBehandlingspunkt === behandlingspunktCodes.KLAGE_RESULTAT
+       && (
+       <VedtakKlageFormNy
+         submitCallback={submitCallback}
+         previewVedtakCallback={previewCallbackKlage}
+         readOnly={readOnly}
+       />
+       )
+      }
 
       {BehandleKlageFormKa.supports(apCodes)
       && (
@@ -104,7 +107,6 @@ BehandlingspunktKlageInfoPanel.propTypes = {
   openAksjonspunkt: PropTypes.bool.isRequired,
   previewCallback: PropTypes.func.isRequired,
   previewCallbackKlage: PropTypes.func.isRequired,
-  previewVedtakCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   isApSolvable: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,

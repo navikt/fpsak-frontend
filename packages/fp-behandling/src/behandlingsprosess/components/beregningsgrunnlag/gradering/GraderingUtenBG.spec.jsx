@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import { RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import BehandlingspunktSubmitButton from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import { GraderingUtenBG as UnwrappedForm, buildInitialValues } from './GraderingUtenBG';
 

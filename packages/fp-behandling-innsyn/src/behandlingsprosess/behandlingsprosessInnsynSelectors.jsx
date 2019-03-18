@@ -14,7 +14,7 @@ import {
 } from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
 import createEngangsstonadBpProps from './definition/engangsstonadInnsynBpDefinition';
 import createForeldrepengerBpProps from './definition/foreldrepengerInnsynBpDefinition';
-import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from './duckBpInnsyn';
+import { getSelectedBehandlingspunktNavn } from './duckBpInnsyn';
 import { getFagsakYtelseType } from '../duckInnsyn';
 
 // TODO (TOR) Refaktorer: veldig mykje av dette er felles med andre behandlingstypar.
@@ -79,9 +79,9 @@ const getVedtakBehandlingspunkt = createSelector(
 );
 
 const getSelectableBehandlingspunkter = createSelector(
-  [getBehandlingspunkter, getBehandlingspunkterWithOpenAksjonspunkter, getBehandlingspunkterStatus, getOverrideBehandlingspunkter],
-  (bps = [], bpsWithOpenAps = [], bpStatus = {}, overriddenBps = []) => bps
-    .filter(bp => !(bpStatus[bp] === vilkarUtfallType.IKKE_VURDERT && !bpsWithOpenAps.includes(bp)) || overriddenBps.includes(bp)),
+  [getBehandlingspunkter, getBehandlingspunkterWithOpenAksjonspunkter, getBehandlingspunkterStatus],
+  (bps = [], bpsWithOpenAps = [], bpStatus = {}) => bps
+    .filter(bp => !(bpStatus[bp] === vilkarUtfallType.IKKE_VURDERT && !bpsWithOpenAps.includes(bp))),
 );
 
 export const getDefaultBehandlingspunkt = createSelector(
@@ -94,11 +94,6 @@ export const getSelectedBehandlingspunkt = createSelector(
   (selectableBps = [], defaultBehandlingspunkt = null, selectedBpNavn = null) => (selectedBpNavn === DEFAULT_BEHANDLINGSPROSESS
     ? selectableBps.find(bp => bp === defaultBehandlingspunkt)
     : selectableBps.find(bp => bp === selectedBpNavn)),
-);
-
-export const getIsSelectedBehandlingspunktOverridden = createSelector(
-  [getSelectedBehandlingspunkt, getOverrideBehandlingspunkter],
-  (selectedBehandlingspunkt, overriddenBehandlingspunkter = []) => overriddenBehandlingspunkter.includes(selectedBehandlingspunkt),
 );
 
 export const getSelectedBehandlingspunktStatus = createSelector(
@@ -140,10 +135,10 @@ const findApStatus = punktAksjonspunkter => (punktAksjonspunkter.length > 0
   ? punktAksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses) : false);
 
 export const getAksjonspunkterOpenStatus = createSelector(
-  [getBehandlingspunktAksjonspunkter, getOverrideBehandlingspunkter],
-  (behandlingspunktAksjonspunkter, overriddenBehandlingspunkter) => arrayToObject(
+  [getBehandlingspunktAksjonspunkter],
+  behandlingspunktAksjonspunkter => arrayToObject(
     Object.keys(behandlingspunktAksjonspunkter), key => key,
-    key => (overriddenBehandlingspunkter.includes(key) ? true : findApStatus(behandlingspunktAksjonspunkter[key])),
+    key => (findApStatus(behandlingspunktAksjonspunkter[key])),
   ),
 );
 

@@ -4,7 +4,10 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 
 import VilkarResultPanel from 'behandlingFpsak/src/behandlingsprosess/components/vilkar/VilkarResultPanel';
-import BehandlingspunktSubmitButton from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
+import {
+  isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingFpsak/src/behandlingForm';
 import {
   ElementWrapper, VerticalSpacer, AksjonspunktHelpText, FadingPanel,
 } from '@fpsak-frontend/shared-components';
@@ -53,7 +56,15 @@ const BpPanelTemplate = ({
       </AksjonspunktHelpText>
       <VerticalSpacer twentyPx />
       {children}
-      <BehandlingspunktSubmitButton formName={formProps.form} isReadOnly={readOnly} isSubmittable={!readOnlySubmitButton} isDirty={isDirty} />
+      <BehandlingspunktSubmitButton
+        formName={formProps.form}
+        isReadOnly={readOnly}
+        isSubmittable={!readOnlySubmitButton}
+        isDirty={isDirty}
+        isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+        isBehandlingFormDirty={isBehandlingFormDirty}
+        hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+      />
     </form>
   </FadingPanel>
 );

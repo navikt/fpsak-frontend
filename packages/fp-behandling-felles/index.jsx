@@ -1,8 +1,13 @@
 export { default as BehandlingspunktBegrunnelseTextField } from './src/behandlingsprosess/components/BehandlingspunktBegrunnelseTextField';
+export { default as BehandlingsprosessPanel } from './src/behandlingsprosess/components/BehandlingsprosessPanel';
+export { default as FatterVedtakStatusModal } from './src/behandlingsprosess/components/vedtak/FatterVedtakStatusModal';
+export { default as IverksetterVedtakStatusModal } from './src/behandlingsprosess/components/vedtak/IverksetterVedtakStatusModal';
+export { default as BehandlingspunktSubmitButton } from './src/behandlingsprosess/components/BehandlingspunktSubmitButton';
 export { default as BehandlingspunktProperties } from './src/behandlingsprosess/definition/behandlingspunktBuilder';
 export { default as BehandlingInfoHolder } from './src/BehandlingInfoHolder';
 export { default as sakOperations } from './src/SakOperations';
 export { default as BehandlingGrid } from './src/components/BehandlingGrid';
 export { default as FaktaBegrunnelseTextField } from './src/fakta/components/FaktaBegrunnelseTextField';
+export { default as FaktaGruppe } from './src/fakta/components/FaktaGruppe';
 export { default as FaktaEkspandertpanel } from './src/fakta/components/FaktaEkspandertpanel';
 export { default as withDefaultToggling } from './src/fakta/withDefaultToggling';

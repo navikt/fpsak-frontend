@@ -6,11 +6,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import { getBehandlingVersjon } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+import { getBehandlingVersjon, getMerknaderFraBeslutter } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { getSelectedBehandlingId, getKodeverk } from 'behandlingTilbakekreving/src/duckTilbake';
 import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingTilbakekreving/src/behandlingForm';
-import FaktaGruppe from 'behandlingTilbakekreving/src/fakta/components/FaktaGruppe';
+import { FaktaGruppe } from '@fpsak-frontend/fp-behandling-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
@@ -116,12 +116,15 @@ export class PersonArbeidsforholdPanelImpl extends Component {
 
   render() {
     const {
-      readOnly, hasAksjonspunkter, hasOpenAksjonspunkter, arbeidsforhold, fagsystemer,
+      readOnly, hasAksjonspunkter, hasOpenAksjonspunkter, arbeidsforhold, fagsystemer, merknaderFraBeslutter,
     } = this.props;
     const { selectedArbeidsforhold } = this.state;
     return (
       <ElementWrapper>
-        <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD} titleCode="PersonArbeidsforholdPanel.ArbeidsforholdHeader">
+        <FaktaGruppe
+          merknaderFraBeslutter={merknaderFraBeslutter}
+          titleCode="PersonArbeidsforholdPanel.ArbeidsforholdHeader"
+        >
           <PersonAksjonspunktText arbeidsforhold={selectedArbeidsforhold} />
           <PersonArbeidsforholdTable
             selectedId={selectedArbeidsforhold ? selectedArbeidsforhold.id : undefined}
@@ -157,6 +160,11 @@ PersonArbeidsforholdPanelImpl.propTypes = {
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
   fagsystemer: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  merknaderFraBeslutter: PropTypes.shape(),
+};
+
+PersonArbeidsforholdPanelImpl.defaultProps = {
+  merknaderFraBeslutter: undefined,
 };
 
 export const sortArbeidsforhold = arbeidsforhold => arbeidsforhold
@@ -184,6 +192,7 @@ const mapStateToProps = (state) => {
     arbeidsforhold,
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
     fagsystemer: getKodeverk(kodeverkTyper.FAGSYSTEM)(state),
+    merknaderFraBeslutter: getMerknaderFraBeslutter(aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD)(state),
   };
 };
 

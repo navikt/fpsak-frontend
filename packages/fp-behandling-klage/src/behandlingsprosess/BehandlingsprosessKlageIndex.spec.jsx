@@ -8,6 +8,8 @@ import BehandlingspunktKlageInfoPanel from 'behandlingKlage/src/behandlingsprose
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { BehandlingsprosessKlageIndex } from './BehandlingsprosessKlageIndex';
 
 describe('<BehandlingsprosessKlageIndex>', () => {
@@ -55,7 +57,22 @@ describe('<BehandlingsprosessKlageIndex>', () => {
       haveSentVarsel
       behandlingType={{
         kode: BehandlingType.FORSTEGANGSSOKNAD,
-        name: 'FORSTEGANGSSOKNAD',
+        navn: 'FORSTEGANGSSOKNAD',
+      }}
+      isSelectedBehandlingHenlagt={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+        navn: 'FORELDREPENGER',
+      }}
+      behandlingStatus={{
+        kode: behandlingStatus.OPPRETTET,
+        navn: 'OPPRETTET',
+      }}
+      resolveProsessAksjonspunkterSuccess
+      resolveFaktaAksjonspunkterSuccess
+      behandlingsresultat={{
+        kode: 'test',
+        navn: 'test',
       }}
     />);
 
@@ -144,7 +161,22 @@ describe('<BehandlingsprosessKlageIndex>', () => {
       haveSentVarsel
       behandlingType={{
         kode: BehandlingType.FORSTEGANGSSOKNAD,
-        name: 'FORSTEGANGSSOKNAD',
+        navn: 'FORSTEGANGSSOKNAD',
+      }}
+      isSelectedBehandlingHenlagt={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+        navn: 'FORELDREPENGER',
+      }}
+      behandlingStatus={{
+        kode: behandlingStatus.OPPRETTET,
+        navn: 'OPPRETTET',
+      }}
+      resolveProsessAksjonspunkterSuccess
+      resolveFaktaAksjonspunkterSuccess
+      behandlingsresultat={{
+        kode: 'test',
+        navn: 'test',
       }}
     />);
 

@@ -16,7 +16,6 @@ export const TilbakekrevingBehandlingApiKeys = {
   SAVE_OVERSTYRT_AKSJONSPUNKT: 'SAVE_OVERSTYRT_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
   SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
-  PREVIEW_MESSAGE_KLAGE: 'PREVIEW_MESSAGE_KLAGE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -35,7 +34,6 @@ const endpoints = new RestApiConfigBuilder()
 /* /api/brev */
   .withPostAndOpenBlob('/api/brev/forhandsvis', TilbakekrevingBehandlingApiKeys.PREVIEW_MESSAGE)
   .withPost('/api/brev/bestill', TilbakekrevingBehandlingApiKeys.SUBMIT_MESSAGE)
-  .withPostAndOpenBlob('/api/brev/forhandsvis-klage', TilbakekrevingBehandlingApiKeys.PREVIEW_MESSAGE_KLAGE)
 
   .build();
 

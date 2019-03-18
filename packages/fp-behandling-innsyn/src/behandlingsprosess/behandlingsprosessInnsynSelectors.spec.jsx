@@ -12,7 +12,7 @@ import fyt from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import {
   getBehandlingspunkterProps, getBehandlingspunkter, getBehandlingspunkterStatus, getBehandlingspunkterTitleCodes,
   getBehandlingspunktAksjonspunkter, getBehandlingspunkterWithOpenAksjonspunkter, getDefaultBehandlingspunkt, getSelectedBehandlingspunkt,
-  getIsSelectedBehandlingspunktOverridden, getNotAcceptedByBeslutter, getAksjonspunkterOpenStatus, isSelectedBehandlingspunktReadOnly,
+  getNotAcceptedByBeslutter, getAksjonspunkterOpenStatus, isSelectedBehandlingspunktReadOnly,
   isBehandlingspunktAksjonspunkterSolvable, getBehandlingspunktAksjonspunkterCodes, isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt,
   hasBehandlingspunktAtLeastOneOpenAksjonspunkt, isSelectedBehandlingspunktOverrideReadOnly,
 }
@@ -215,22 +215,6 @@ describe('behandlingsprosessSelectors', () => {
 
       expect(selectedBehandlingpunkt).is.eql(selectableBps[1]);
     });
-  });
-
-  it('skal finne ut at valgt behandlingspunkt er overstyrt', () => {
-    const selectedBehandlingspunkt = 'medlem';
-    const overriddenBehandlingspunkter = ['omsorg', 'medlem'];
-    const isOverridden = getIsSelectedBehandlingspunktOverridden.resultFunc(selectedBehandlingspunkt, overriddenBehandlingspunkter);
-
-    expect(isOverridden).is.true;
-  });
-
-  it('skal finne ut at valgt behandlingspunkt ikke er overstyrt', () => {
-    const selectedBehandlingspunkt = 'fodsel';
-    const overriddenBehandlingspunkter = ['omsorg', 'medlem'];
-    const isOverridden = getIsSelectedBehandlingspunktOverridden.resultFunc(selectedBehandlingspunkt, overriddenBehandlingspunkter);
-
-    expect(isOverridden).is.false;
   });
 
   it('skal se at aksjonspunktene til behandlingspunktet er akseptert av beslutter', () => {

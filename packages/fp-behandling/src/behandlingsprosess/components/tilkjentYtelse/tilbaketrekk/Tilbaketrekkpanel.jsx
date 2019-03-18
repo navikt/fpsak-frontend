@@ -6,7 +6,9 @@ import { FormattedMessage } from 'react-intl';
 
 import { Element } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
+import {
+  behandlingForm, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingFpsak/src/behandlingForm';
 import behandleImageURL from '@fpsak-frontend/assets/images/advarsel.svg';
 import {
   VerticalSpacer, Image, FlexContainer, FlexRow, FlexColumn,
@@ -17,7 +19,7 @@ import {
 import { getBehandlingResultatstruktur } from 'behandlingFpsak/src/behandlingSelectors';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
-import BehandlingspunktSubmitButton from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import styles from './tilbaketrekkpanel.less';
 
@@ -91,7 +93,14 @@ export const Tilbaketrekkpanel = ({
       <Row>
         <Column xs="1">
           <VerticalSpacer eightPx />
-          <BehandlingspunktSubmitButton formName={formProps.form} isReadOnly={readOnly} isSubmittable={!readOnlySubmitButton} />
+          <BehandlingspunktSubmitButton
+            formName={formProps.form}
+            isReadOnly={readOnly}
+            isSubmittable={!readOnlySubmitButton}
+            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+            isBehandlingFormDirty={isBehandlingFormDirty}
+            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+          />
         </Column>
       </Row>
     </form>

@@ -11,11 +11,12 @@ import {
 } from 'nav-frontend-typografi';
 import Panel from 'nav-frontend-paneler';
 
+import {
+  behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingFpsak/src/behandlingForm';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingFpsak/src/behandlingsprosess/behandlingsprosessSelectors';
 import { getSoknad, getBehandlingUttaksperiodegrense } from 'behandlingFpsak/src/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
-import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
-import BehandlingspunktSubmitButton from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
+import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import {
   AksjonspunktHelpText, FadingPanel, VerticalSpacer, ArrowBox,
 } from '@fpsak-frontend/shared-components';
@@ -116,7 +117,14 @@ export const VurderSoknadsfristForeldrepengerFormImpl = ({
           )
         }
         <VerticalSpacer twentyPx />
-        <BehandlingspunktSubmitButton formName={formProps.form} isReadOnly={readOnly} isSubmittable={!readOnlySubmitButton} />
+        <BehandlingspunktSubmitButton
+          formName={formProps.form}
+          isReadOnly={readOnly}
+          isSubmittable={!readOnlySubmitButton}
+          isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+          isBehandlingFormDirty={isBehandlingFormDirty}
+          hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+        />
       </div>
     </form>
   </FadingPanel>

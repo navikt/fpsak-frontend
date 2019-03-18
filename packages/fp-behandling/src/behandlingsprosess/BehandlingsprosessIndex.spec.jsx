@@ -3,6 +3,8 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import BehandlingspunktInfoPanel from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktInfoPanel';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -53,7 +55,20 @@ describe('<BehandlingsprosessIndex>', () => {
       haveSentVarsel
       behandlingType={{
         kode: BehandlingType.FORSTEGANGSSOKNAD,
-        name: 'FORSTEGANGSSOKNAD',
+        navn: 'FORSTEGANGSSOKNAD',
+      }}
+      isSelectedBehandlingHenlagt={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+        navn: 'FORELDREPENGER',
+      }}
+      behandlingStatus={{
+        kode: behandlingStatus.OPPRETTET,
+        navn: 'OPPRETTET',
+      }}
+      behandlingsresultat={{
+        kode: 'test',
+        navn: 'test',
       }}
     />);
 
@@ -140,7 +155,20 @@ describe('<BehandlingsprosessIndex>', () => {
       haveSentVarsel
       behandlingType={{
         kode: BehandlingType.FORSTEGANGSSOKNAD,
-        name: 'FORSTEGANGSSOKNAD',
+        navn: 'FORSTEGANGSSOKNAD',
+      }}
+      isSelectedBehandlingHenlagt={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+        navn: 'FORELDREPENGER',
+      }}
+      behandlingStatus={{
+        kode: behandlingStatus.OPPRETTET,
+        navn: 'OPPRETTET',
+      }}
+      behandlingsresultat={{
+        kode: 'test',
+        navn: 'test',
       }}
     />);
 

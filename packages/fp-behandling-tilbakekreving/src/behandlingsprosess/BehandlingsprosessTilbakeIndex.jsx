@@ -12,18 +12,21 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta, BehandlingIdentifier,
 } from '@fpsak-frontend/fp-felles';
-import BehandlingsprosessPanel from './components/BehandlingsprosessPanel';
+import { BehandlingsprosessPanel } from '@fpsak-frontend/fp-behandling-felles';
+import findBehandlingsprosessIcon from 'behandlingTilbakekreving/src/behandlingsprosess/statusIconHelper';
 import TilbakekreveingBehandlingspunktInfoPanel from './components/TilbakekreveingBehandlingspunktInfoPanel';
 import {
   setSelectedBehandlingspunktNavn, resolveProsessAksjonspunkter, overrideProsessAksjonspunkter,
   resetBehandlingspunkter, getSelectedBehandlingspunktNavn,
 } from './duckBpTilbake';
 import {
-  getAksjonspunkter, getBehandlingVersjon,
+  getAksjonspunkter, getBehandlingVersjon, getBehandlingHenlagt,
 } from '../selectors/tilbakekrevingBehandlingSelectors';
 import { getBehandlingIdentifier } from '../duckTilbake';
-import { getBehandlingspunkter, getSelectedBehandlingspunkt, getDefaultBehandlingspunkt }
-  from './behandlingsprosessTilbakeSelectors';
+import {
+  getBehandlingspunkter, getSelectedBehandlingspunkt, getDefaultBehandlingspunkt,
+  getBehandlingspunkterStatus, getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus,
+} from './behandlingsprosessTilbakeSelectors';
 
 const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
 
@@ -130,22 +133,25 @@ export class BehandlingsprosessTilbakeIndex extends Component {
 
   render() {
     const {
-      behandlingspunkter, selectedBehandlingspunkt, dispatchSubmitFailed: submitFailedDispatch,
+      behandlingspunkter, selectedBehandlingspunkt, dispatchSubmitFailed: submitFailedDispatch, isSelectedBehandlingHenlagt,
     } = this.props;
     return (
-      <>
-        <BehandlingsprosessPanel
-          behandlingspunkter={behandlingspunkter}
+      <BehandlingsprosessPanel
+        behandlingspunkter={behandlingspunkter}
+        selectedBehandlingspunkt={selectedBehandlingspunkt}
+        selectBehandlingspunktCallback={this.goToBehandlingspunkt}
+        isSelectedBehandlingHenlagt={isSelectedBehandlingHenlagt}
+        findBehandlingsprosessIcon={findBehandlingsprosessIcon}
+        getBehandlingspunkterStatus={getBehandlingspunkterStatus}
+        getBehandlingspunkterTitleCodes={getBehandlingspunkterTitleCodes}
+        getAksjonspunkterOpenStatus={getAksjonspunkterOpenStatus}
+      >
+        <TilbakekreveingBehandlingspunktInfoPanel
+          submitCallback={this.submitVilkar}
+          dispatchSubmitFailed={submitFailedDispatch}
           selectedBehandlingspunkt={selectedBehandlingspunkt}
-          selectBehandlingspunktCallback={this.goToBehandlingspunkt}
-        >
-          <TilbakekreveingBehandlingspunktInfoPanel
-            submitCallback={this.submitVilkar}
-            dispatchSubmitFailed={submitFailedDispatch}
-            selectedBehandlingspunkt={selectedBehandlingspunkt}
-          />
-        </BehandlingsprosessPanel>
-      </>
+        />
+      </BehandlingsprosessPanel>
     );
   }
 }
@@ -157,6 +163,7 @@ BehandlingsprosessTilbakeIndex.propTypes = {
   behandlingspunkter: PropTypes.arrayOf(PropTypes.string),
   selectedBehandlingspunkt: PropTypes.string,
   resetBehandlingspunkter: PropTypes.func.isRequired,
+  isSelectedBehandlingHenlagt: PropTypes.bool.isRequired,
   location: PropTypes.shape().isRequired,
   push: PropTypes.func.isRequired,
   resolveProsessAksjonspunkter: PropTypes.func.isRequired,
@@ -171,6 +178,7 @@ BehandlingsprosessTilbakeIndex.defaultProps = {
 
 const mapStateToProps = state => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
+  isSelectedBehandlingHenlagt: getBehandlingHenlagt(state),
   behandlingVersjon: getBehandlingVersjon(state),
   aksjonspunkter: getAksjonspunkter(state),
   behandlingspunkter: getBehandlingspunkter(state),

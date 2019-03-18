@@ -2,21 +2,21 @@ import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { Row, Column } from 'nav-frontend-grid';
 import { formPropTypes } from 'redux-form';
 import PropTypes from 'prop-types';
+import { Row, Column } from 'nav-frontend-grid';
+import { Undertittel } from 'nav-frontend-typografi';
+
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import { VerticalSpacer, AksjonspunktHelpText, FadingPanel } from '@fpsak-frontend/shared-components';
+import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
 import { getBehandlingKlageVurderingResultatNFP, getBehandlingSprak, isKlageBehandlingInKA } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingKlage/src/behandlingForm';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
-
-import { Undertittel } from 'nav-frontend-typografi';
-
-import { VerticalSpacer, AksjonspunktHelpText, FadingPanel } from '@fpsak-frontend/shared-components';
-import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
-import BehandlingspunktSubmitButton from 'behandlingKlage/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
+import {
+  isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, behandlingForm, behandlingFormValueSelector,
+} from 'behandlingKlage/src/behandlingForm';
 import KlageVurderingRadioOptionsNfp from './KlageVurderingRadioOptionsNfp';
 import FritekstBrevTextField from '../SharedUtills/FritekstKlageBrevTextField';
 import PreviewKlageLink from '../SharedUtills/PreviewKlageLink';
@@ -68,7 +68,14 @@ export const BehandleKlageFormNfpImpl = ({
         />
         <Row>
           <Column xs="8">
-            <BehandlingspunktSubmitButton formName={formProps.form} isReadOnly={readOnly} isSubmittable={!readOnlySubmitButton} />
+            <BehandlingspunktSubmitButton
+              formName={formProps.form}
+              isReadOnly={readOnly}
+              isSubmittable={!readOnlySubmitButton}
+              isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+              isBehandlingFormDirty={isBehandlingFormDirty}
+              hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+            />
             {!readOnly && formValues.klageVurdering && formValues.fritekstTilBrev && (formValues.fritekstTilBrev.length > 2)
               && (
                 <PreviewKlageLink

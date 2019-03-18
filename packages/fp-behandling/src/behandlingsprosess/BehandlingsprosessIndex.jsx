@@ -4,19 +4,22 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+
+import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
+import { BehandlingsprosessPanel, FatterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
+
+
+import findBehandlingsprosessIcon from 'behandlingFpsak/src/behandlingsprosess/statusIconHelper';
 import {
-  getAksjonspunkter, getBehandlingVersjon, getBehandlingType,
+  getAksjonspunkter, getBehandlingVersjon, getBehandlingType, getBehandlingsresultat, getBehandlingHenlagt, getBehandlingStatus,
 } from 'behandlingFpsak/src/behandlingSelectors';
 import {
-  getBehandlingIdentifier,
+  getBehandlingIdentifier, getFagsakYtelseType,
 } from 'behandlingFpsak/src/duck';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
-import BehandlingsprosessPanel from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingsprosessPanel';
-import IverksetterVedtakStatusModal from 'behandlingFpsak/src/behandlingsprosess/components/vedtak/IverksetterVedtakStatusModal';
-import FatterVedtakStatusModal from 'behandlingFpsak/src/behandlingsprosess/components/vedtak/FatterVedtakStatusModal';
 import BehandlingspunktInfoPanel from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktInfoPanel';
+import IverksetterVedtakStatusModal from 'behandlingFpsak/src/behandlingsprosess/components/vedtak/IverksetterVedtakStatusModal';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -32,8 +35,10 @@ import {
   fetchFptilbakePreviewBrev as fetchFptilbakePreview,
   getSelectedBehandlingspunktNavn,
 } from './duck';
-import { getBehandlingspunkter, getSelectedBehandlingspunkt, getDefaultBehandlingspunkt }
-  from './behandlingsprosessSelectors';
+import {
+  getBehandlingspunkter, getSelectedBehandlingspunkt, getDefaultBehandlingspunkt,
+  getBehandlingspunkterStatus, getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus,
+} from './behandlingsprosessSelectors';
 
 const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
 
@@ -247,7 +252,9 @@ export class BehandlingsprosessIndex extends Component {
 
   render() {
     const {
-      behandlingspunkter, selectedBehandlingspunkt, dispatchSubmitFailed: submitFailedDispatch,
+      behandlingspunkter, selectedBehandlingspunkt, dispatchSubmitFailed: submitFailedDispatch, isSelectedBehandlingHenlagt,
+      fagsakYtelseType, behandlingIdentifier, behandlingStatus, behandlingsresultat, aksjonspunkter, behandlingType,
+
     } = this.props;
     const { isVedtakSubmission } = this.state;
     return (
@@ -256,6 +263,11 @@ export class BehandlingsprosessIndex extends Component {
           behandlingspunkter={behandlingspunkter}
           selectedBehandlingspunkt={selectedBehandlingspunkt}
           selectBehandlingspunktCallback={this.goToBehandlingspunkt}
+          isSelectedBehandlingHenlagt={isSelectedBehandlingHenlagt}
+          findBehandlingsprosessIcon={findBehandlingsprosessIcon}
+          getBehandlingspunkterStatus={getBehandlingspunkterStatus}
+          getBehandlingspunkterTitleCodes={getBehandlingspunkterTitleCodes}
+          getAksjonspunkterOpenStatus={getAksjonspunkterOpenStatus}
         >
           <BehandlingspunktInfoPanel
             submitCallback={this.submitVilkar}
@@ -268,8 +280,20 @@ export class BehandlingsprosessIndex extends Component {
           />
         </BehandlingsprosessPanel>
 
-        <IverksetterVedtakStatusModal closeEvent={this.goToSearchPage} isVedtakSubmission={isVedtakSubmission} />
-        <FatterVedtakStatusModal closeEvent={this.goToSearchPage} isVedtakSubmission={isVedtakSubmission} />
+        <IverksetterVedtakStatusModal
+          closeEvent={this.goToSearchPage}
+          isVedtakSubmission={isVedtakSubmission}
+        />
+        <FatterVedtakStatusModal
+          closeEvent={this.goToSearchPage}
+          selectedBehandlingId={behandlingIdentifier.behandlingId}
+          fagsakYtelseType={fagsakYtelseType}
+          isVedtakSubmission={isVedtakSubmission}
+          behandlingStatus={behandlingStatus}
+          behandlingsresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
+          behandlingType={behandlingType}
+        />
       </React.Fragment>
     );
   }
@@ -282,6 +306,7 @@ BehandlingsprosessIndex.propTypes = {
   behandlingspunkter: PropTypes.arrayOf(PropTypes.string),
   selectedBehandlingspunkt: PropTypes.string,
   resetBehandlingspunkter: PropTypes.func.isRequired,
+  isSelectedBehandlingHenlagt: PropTypes.bool.isRequired,
   location: PropTypes.shape().isRequired,
   push: PropTypes.func.isRequired,
   resolveProsessAksjonspunkter: PropTypes.func.isRequired,
@@ -290,14 +315,20 @@ BehandlingsprosessIndex.propTypes = {
   fetchFptilbakePreview: PropTypes.func.isRequired,
   fetchVedtaksbrevPreview: PropTypes.func.isRequired,
   dispatchSubmitFailed: PropTypes.func.isRequired,
+  fagsakYtelseType: kodeverkObjektPropType.isRequired,
+  behandlingStatus: kodeverkObjektPropType.isRequired,
+  behandlingType: kodeverkObjektPropType.isRequired,
+  behandlingsresultat: PropTypes.shape(),
 };
 
 BehandlingsprosessIndex.defaultProps = {
   behandlingspunkter: undefined,
   selectedBehandlingspunkt: undefined,
+  behandlingsresultat: undefined,
 };
 
 const mapStateToProps = state => ({
+  fagsakYtelseType: getFagsakYtelseType(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: getBehandlingVersjon(state),
   aksjonspunkter: getAksjonspunkter(state),
@@ -306,6 +337,9 @@ const mapStateToProps = state => ({
   selectedBehandlingspunkt: getSelectedBehandlingspunkt(state),
   behandlingType: getBehandlingType(state),
   location: state.router.location,
+  behandlingsresultat: getBehandlingsresultat(state),
+  isSelectedBehandlingHenlagt: getBehandlingHenlagt(state),
+  behandlingStatus: getBehandlingStatus(state),
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -3,22 +3,26 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
-
 import { Normaltekst, Element } from 'nav-frontend-typografi';
-import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
+import { Column, Row } from 'nav-frontend-grid';
+
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
   required, minLength, maxLength, hasValidText, createVisningsnavnForAktivitet,
 } from '@fpsak-frontend/utils';
-import BehandlingspunktSubmitButton from 'behandlingFpsak/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
-import { Column, Row } from 'nav-frontend-grid';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer, Image, BorderBox } from '@fpsak-frontend/shared-components';
 import behandleImageURL from '@fpsak-frontend/assets/images/advarsel.svg';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+
+import {
+  behandlingForm, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingFpsak/src/behandlingForm';
 import { getAksjonspunkter, getBehandlingVenteArsakKode, getAndelerMedGraderingUtenBG } from 'behandlingFpsak/src/behandlingSelectors';
+
 import styles from './graderingUtenBG.less';
 
 const maxLength1500 = maxLength(1500);
@@ -114,7 +118,14 @@ export const GraderingUtenBG = ({
         <Row>
           <Column xs="1">
             <VerticalSpacer eightPx />
-            <BehandlingspunktSubmitButton formName={formProps.form} isReadOnly={readOnly} isSubmittable={!readOnly} />
+            <BehandlingspunktSubmitButton
+              formName={formProps.form}
+              isReadOnly={readOnly}
+              isSubmittable={!readOnly}
+              isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+              isBehandlingFormDirty={isBehandlingFormDirty}
+              hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+            />
           </Column>
         </Row>
       </form>

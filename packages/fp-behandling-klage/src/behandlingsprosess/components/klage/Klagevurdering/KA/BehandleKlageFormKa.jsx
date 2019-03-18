@@ -5,17 +5,18 @@ import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
+import { Undertittel } from 'nav-frontend-typografi';
+
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
+import { VerticalSpacer, AksjonspunktHelpText, FadingPanel } from '@fpsak-frontend/shared-components';
 
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
 import { getBehandlingKlageVurderingResultatNK, getBehandlingSprak } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingKlage/src/behandlingForm';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
-
-import { Undertittel } from 'nav-frontend-typografi';
-
-import { VerticalSpacer, AksjonspunktHelpText, FadingPanel } from '@fpsak-frontend/shared-components';
-import BehandlingspunktSubmitButton from 'behandlingKlage/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
+import {
+  behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingKlage/src/behandlingForm';
 import KlageVurderingRadioOptionsKa from './KlageVurderingRadioOptionsKa';
 import FritekstBrevTextField from '../SharedUtills/FritekstKlageBrevTextField';
 import PreviewKlageLink from '../SharedUtills/PreviewKlageLink';
@@ -63,7 +64,14 @@ export const BehandleKlageFormKaImpl = ({
         />
         <Row>
           <Column xs="8">
-            <BehandlingspunktSubmitButton formName={formProps.form} isReadOnly={readOnly} isSubmittable={!readOnlySubmitButton} />
+            <BehandlingspunktSubmitButton
+              formName={formProps.form}
+              isReadOnly={readOnly}
+              isSubmittable={!readOnlySubmitButton}
+              isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+              isBehandlingFormDirty={isBehandlingFormDirty}
+              hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+            />
             {!readOnly && formValues.klageVurdering && formValues.fritekstTilBrev && (formValues.fritekstTilBrev.length > 2)
             && (
               <PreviewKlageLink

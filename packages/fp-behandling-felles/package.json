@@ -6,6 +6,7 @@
   "private": true,
   "dependencies": {
     "@fpsak-frontend/assets": "1.0.0",
+    "@fpsak-frontend/fp-felles": "1.0.0",
     "@fpsak-frontend/form": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/prop-types": "1.0.0",
@@ -17,6 +18,8 @@
     "nav-frontend-core": "4.0.8",
     "nav-frontend-ekspanderbartpanel": "1.0.25",
     "nav-frontend-ekspanderbartpanel-style": "0.3.19",
+    "nav-frontend-grid": "1.0.20",
+    "nav-frontend-grid-style": "0.2.18",
     "nav-frontend-js-utils": "1.0.7",
     "nav-frontend-knapper": "1.0.27",
     "nav-frontend-knapper-style": "0.3.23",
@@ -30,7 +33,8 @@
     "react": "^16.8.4",
     "react-collapse": "^4.0.3",
     "react-intl": "^2.8.0",
-    "react-motion": "^0.5.2"
+    "react-motion": "^0.5.2",
+    "react-redux": "^5.1.1"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",

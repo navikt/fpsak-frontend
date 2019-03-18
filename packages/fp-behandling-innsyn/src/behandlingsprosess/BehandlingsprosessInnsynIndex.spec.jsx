@@ -7,6 +7,8 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import BehandlingspunktInnsynInfoPanel from 'behandlingInnsyn/src/behandlingsprosess/components/BehandlingspunktInnsynInfoPanel';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BehandlingsprosessInnsynIndex } from './BehandlingsprosessInnsynIndex';
 
@@ -42,20 +44,31 @@ describe('<BehandlingsprosessInnsynIndex>', () => {
       behandlingspunkter={[]}
       selectedBehandlingspunkt={null}
       resetBehandlingspunkter={sinon.spy()}
-      saveKlage={sinon.spy()}
-      resolveKlageTemp={sinon.spy()}
       location={{ pathname: 'test' }}
       push={sinon.spy()}
       resolveProsessAksjonspunkter={stub}
-      overrideProsessAksjonspunkter={sinon.spy()}
       fetchPreview={sinon.spy()}
-      fetchPreviewKlageBrev={sinon.spy()}
       fetchVedtaksbrevPreview={sinon.spy()}
       dispatchSubmitFailed={sinon.spy()}
       haveSentVarsel
       behandlingType={{
         kode: BehandlingType.FORSTEGANGSSOKNAD,
-        name: 'FORSTEGANGSSOKNAD',
+        navn: 'FORSTEGANGSSOKNAD',
+      }}
+      isSelectedBehandlingHenlagt={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+        navn: 'FORELDREPENGER',
+      }}
+      behandlingStatus={{
+        kode: behandlingStatus.OPPRETTET,
+        navn: 'OPPRETTET',
+      }}
+      resolveProsessAksjonspunkterSuccess
+      resolveFaktaAksjonspunkterSuccess
+      behandlingsresultat={{
+        kode: 'test',
+        navn: 'test',
       }}
     />);
 
@@ -131,20 +144,31 @@ describe('<BehandlingsprosessInnsynIndex>', () => {
       behandlingspunkter={[]}
       selectedBehandlingspunkt={null}
       resetBehandlingspunkter={sinon.spy()}
-      saveKlage={sinon.spy()}
-      resolveKlageTemp={sinon.spy()}
       location={{ pathname: 'test' }}
       push={sinon.spy()}
       resolveProsessAksjonspunkter={stub}
-      overrideProsessAksjonspunkter={sinon.spy()}
       fetchPreview={sinon.spy()}
-      fetchPreviewKlageBrev={sinon.spy()}
       fetchVedtaksbrevPreview={sinon.spy()}
       dispatchSubmitFailed={sinon.spy()}
       haveSentVarsel
       behandlingType={{
         kode: BehandlingType.FORSTEGANGSSOKNAD,
-        name: 'FORSTEGANGSSOKNAD',
+        navn: 'FORSTEGANGSSOKNAD',
+      }}
+      isSelectedBehandlingHenlagt={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+        navn: 'FORELDREPENGER',
+      }}
+      behandlingStatus={{
+        kode: behandlingStatus.OPPRETTET,
+        navn: 'OPPRETTET',
+      }}
+      resolveProsessAksjonspunkterSuccess
+      resolveFaktaAksjonspunkterSuccess
+      behandlingsresultat={{
+        kode: 'test',
+        navn: 'test',
       }}
     />);
 

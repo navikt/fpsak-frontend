@@ -11,11 +11,12 @@ import {
   AksjonspunktHelpText, VerticalSpacer, FadingPanel,
 } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
-import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-
+import {
+  isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingKlage/src/behandlingForm';
 import { getAvsluttedeBehandlinger } from 'behandlingKlage/src/duckKlage';
-import BehandlingspunktSubmitButton from 'behandlingKlage/src/behandlingsprosess/components/BehandlingspunktSubmitButton';
+import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 
 // TODO komponent skal ha eiga less-fil
 import styles from '../Klagevurdering/SharedUtills/behandleKlageForm.less';
@@ -127,7 +128,14 @@ export const FormkravKlageForm = ({
         </Column>
       </Row>
       <div className={styles.confirmVilkarForm}>
-        <BehandlingspunktSubmitButton formName={formProps.form} isReadOnly={readOnly} isSubmittable={!readOnlySubmitButton} />
+        <BehandlingspunktSubmitButton
+          formName={formProps.form}
+          isReadOnly={readOnly}
+          isSubmittable={!readOnlySubmitButton}
+          isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+          isBehandlingFormDirty={isBehandlingFormDirty}
+          hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+        />
       </div>
 
     </FadingPanel>
