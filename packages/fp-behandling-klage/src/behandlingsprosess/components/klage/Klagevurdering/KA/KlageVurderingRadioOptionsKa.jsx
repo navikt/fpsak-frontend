@@ -13,14 +13,12 @@ import { getKodeverk } from 'behandlingKlage/src/duckKlage';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import klageVurderingOmgjoerType from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
-import { getClassForMedholdKlage, getClassForOpphevKlage } from '../SharedUtills/getClassHelper';
 import styles from '../SharedUtills/behandleKlageForm.less';
 
 export const KlageVurderingRadioOptionsKaImpl = ({
   readOnly,
   medholdReasons,
   klageVurdering,
-  aksjonspunktCode,
   intl,
 }) => {
   const medholdOptions = medholdReasons.map(mo => <option key={mo.kode} value={mo.kode}>{mo.navn}</option>);
@@ -103,7 +101,6 @@ export const KlageVurderingRadioOptionsKaImpl = ({
 };
 KlageVurderingRadioOptionsKaImpl.propTypes = {
   readOnly: PropTypes.bool,
-  aksjonspunktCode: PropTypes.string.isRequired,
   medholdReasons: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string,
     navn: PropTypes.string,
