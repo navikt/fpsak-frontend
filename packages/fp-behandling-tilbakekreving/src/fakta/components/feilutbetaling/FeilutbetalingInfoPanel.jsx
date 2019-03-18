@@ -263,7 +263,7 @@ FeilutbetalingInfoPanelImpl.propTypes = {
 const buildInitalValues = (perioder, aksjonspunkter) => {
   const apCode = aksjonspunkter.find(ap => ap.definisjon.kode === feilutbetalingAksjonspunkter[0]);
   return {
-    begrunnelse: apCode.begrunnelse,
+    begrunnelse: apCode ? apCode.begrunnelse : null,
     perioder: perioder.sort((a, b) => moment(a.fom) - moment(b.fom))
       .map((p) => {
         const {
