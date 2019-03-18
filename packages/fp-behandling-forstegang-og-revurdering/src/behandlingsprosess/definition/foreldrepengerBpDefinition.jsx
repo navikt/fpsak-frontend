@@ -8,11 +8,18 @@ import prt from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import { hasSimuleringOn, getStatusFromSimulering } from './simuleringStatusUtleder';
 import getVedtakStatus from './vedtakStatusUtleder';
 
-const getStatusFromUttakresultat = ({ uttaksresultat }) => {
-  if (!uttaksresultat) {
+const faktaUttakAp = [
+  ac.AVKLAR_UTTAK,
+  ac.AVKLAR_FØRSTE_UTTAKSDATO,
+  ac.AVKLAR_ANNEN_FORELDER_RETT,
+  ac.MANUELL_AVKLAR_FAKTA_UTTAK,
+  ac.OVERSTYR_AVKLAR_FAKTA_UTTAK,
+];
+
+const getStatusFromUttakresultat = ({ uttaksresultat, aksjonspunkter }) => {
+  if (!uttaksresultat || aksjonspunkter.some(ap => faktaUttakAp.includes(ap.definisjon.kode) && ap.status.kode === 'OPPR')) {
     return vut.IKKE_VURDERT;
   }
-
   if (uttaksresultat.perioderSøker && uttaksresultat.perioderSøker.length > 0) {
     const oppfylt = uttaksresultat.perioderSøker.some(p => (
       p.periodeResultatType.kode !== prt.AVSLATT
