@@ -8,7 +8,11 @@ import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 
 import FodselOgTilretteleggingFaktaForm from './FodselOgTilretteleggingFaktaForm';
 
-// TODO: Må tilpasses med riktig aksjonspunkt og ap.tekst
+/**
+ * Svangerskapspenger
+ * Fakta om Fødsel og tilrettelegging
+ */
+// TODO: Må tilpasses med riktig aksjonspunkt og ap.tekst når backend er klar
 
 const fodselOgPermAksjonspunkter = ['ap'];
 

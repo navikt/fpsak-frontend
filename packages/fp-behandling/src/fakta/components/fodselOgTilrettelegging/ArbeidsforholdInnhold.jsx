@@ -18,6 +18,11 @@ import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
 import ArbeidsforholdCheckboxes from './ArbeidsforholdCheckboxes';
 import styles from './arbeidsforholdInnhold.less';
 
+/**
+ * Svangerskapspenger
+ * Vise info pr arbforhold fra søknad og kunne endre feltene.
+ */
+
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 

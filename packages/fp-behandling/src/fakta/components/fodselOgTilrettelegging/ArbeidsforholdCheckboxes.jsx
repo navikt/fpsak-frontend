@@ -16,6 +16,10 @@ import {
   required, hasValidDate, hasValidDecimal, minValue, maxValue,
 } from '@fpsak-frontend/utils';
 
+/**
+ * Svangerskapspenger
+ */
+
 const minValue0 = minValue(0);
 const maxProsentValue100 = maxValue(100);
 

@@ -13,6 +13,10 @@ import FaktaSubmitButton from 'behandlingFpsak/src/fakta/components/FaktaSubmitB
 import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
 import ArbeidsforholdFaktaPanel from './ArbeidsforholdFaktaPanel';
 
+/**
+ * Svangerskapspenger
+ */
+
 const FODSEL_TILRETTELEGGING_FORM = 'FodselOgTilretteleggingForm';
 
 export const FodselOgTilretteleggingFaktaForm = ({
@@ -60,7 +64,7 @@ const transformValues = values => ({
 });
 
 const mapStateToProps = (state, ownProps) => {
-  // Dette blir helt sikkert på et annet format
+  // TODO: hente info fra backend når klart.  Dette blir helt sikkert på et litt annet format og feltnavn
   const tilrettelegging = {
     termindato: '2019-08-01',
     arbforhold: [
