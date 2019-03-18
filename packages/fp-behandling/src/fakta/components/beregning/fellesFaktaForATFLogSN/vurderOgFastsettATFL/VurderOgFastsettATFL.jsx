@@ -48,10 +48,15 @@ const harVurdert = (tilfeller, values, faktaOmBeregning) => (
     && besteberegningErVurdertEllerIkkjeTilstede(tilfeller, values)
 );
 
-const skalFastsetteInntekt = (values, faktaOmBeregning, beregningsgrunnlag) => beregningsgrunnlag.beregningsgrunnlagPeriode[0]
-  .beregningsgrunnlagPrStatusOgAndel
-  .map(mapAndelToField)
-  .find(skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag)) !== undefined;
+const skalFastsetteInntekt = (values, faktaOmBeregning, beregningsgrunnlag) => {
+  if (faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
+    return true;
+  }
+  return beregningsgrunnlag.beregningsgrunnlagPeriode[0]
+    .beregningsgrunnlagPrStatusOgAndel
+    .map(mapAndelToField)
+    .find(skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag)) !== undefined;
+};
 
 
 export const findInstruksjonForFastsetting = (skalHaBesteberegning, skalFastsetteFL, skalFastsetteAT) => {
