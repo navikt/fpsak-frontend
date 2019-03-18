@@ -134,6 +134,13 @@ export const hasValidPeriodIncludingOtherErrors = (values, otherErrors = [{}], o
   return null;
 };
 
+export const validPeriodeFomTom = (fomDate, tomDate) => {
+  if (isEmpty(fomDate) && isEmpty(tomDate)) {
+    return null;
+  }
+  return moment(fomDate).isSameOrBefore(moment(tomDate).startOf('day')) ? null : invalidPeriodMessage();
+};
+
 export const hasValidPeriod = (fomDate, tomDate) => {
   if (isEmpty(fomDate) && isEmpty(tomDate)) {
     return null;

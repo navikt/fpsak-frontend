@@ -74,6 +74,7 @@ export {
   isWithinOpptjeningsperiode,
   hasValidPeriod,
   hasValidPeriodIncludingOtherErrors,
+  validPeriodeFomTom,
   isDatesEqual,
   dateIsAfter,
   arrayMinLength,
