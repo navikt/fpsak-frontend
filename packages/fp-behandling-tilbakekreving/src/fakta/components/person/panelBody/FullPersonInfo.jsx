@@ -5,7 +5,7 @@ import { getAddresses } from '@fpsak-frontend/utils';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
-import FaktaGruppe from 'behandlingFpsak/src/fakta/components/FaktaGruppe';
+import { FaktaGruppe } from '@fpsak-frontend/fp-behandling-felles';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 
 import { AdressePanel, BarnePanel, PersonYtelserTable } from '@fpsak-frontend/person-info';
