@@ -50,7 +50,7 @@ const harVurdert = (tilfeller, values, faktaOmBeregning) => (
 
 const skalFastsetteInntekt = (values, faktaOmBeregning, beregningsgrunnlag) => {
   if (faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
-    return true;
+    return !values[besteberegningField];
   }
   return beregningsgrunnlag.beregningsgrunnlagPeriode[0]
     .beregningsgrunnlagPrStatusOgAndel

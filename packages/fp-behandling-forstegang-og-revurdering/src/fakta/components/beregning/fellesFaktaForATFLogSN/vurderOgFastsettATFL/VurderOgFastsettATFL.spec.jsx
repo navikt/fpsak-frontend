@@ -55,6 +55,26 @@ describe('<VurderOgFastsettATFL>', () => {
     expect(skalVise).to.equal(true);
   });
 
+  it('skal ikkje vise tabell om det er refusjon/gradering og bestebergning er vurdert til true', () => {
+    const values = {};
+    values[besteberegningField] = true;
+    const tilfeller = [faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING, faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG];
+    const faktaOmBeregning = lagFaktaOmBeregning(tilfeller,
+      { }, undefined, undefined);
+    const skalVise = skalViseInntektstabell(tilfeller, values, faktaOmBeregning, {});
+    expect(skalVise).to.equal(false);
+  });
+
+  it('skal vise tabell om det er refusjon/gradering og bestebergning er vurdert til false', () => {
+    const values = {};
+    values[besteberegningField] = false;
+    const tilfeller = [faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING, faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG];
+    const faktaOmBeregning = lagFaktaOmBeregning(tilfeller,
+      { }, undefined, undefined);
+    const skalVise = skalViseInntektstabell(tilfeller, values, faktaOmBeregning, {});
+    expect(skalVise).to.equal(true);
+  });
+
   it('skal transform values om besteberegning', () => {
     const values = {};
     values[besteberegningField] = true;

@@ -1136,6 +1136,7 @@
   "BeregningInfoPanel.FastsettBBFodendeKvinne.Dagpenger": "Dagpenger",
   "BeregningInfoPanel.FastsettBBFodendeKvinne.RegnarkNavet": "Finn regneark på navet",
   "BeregningInfoPanel.FastsettBBFodendeKvinne.Sum": "Sum",
+  "BeregningInfoPanel.FastsettBBFodendeKvinne.ErIkkeStottet": "Denne funksjonaliteten er ikke støttet enda.",
   "BeregningInfoPanel.TilstøtendeYtelseForm.TilstøtendeYtelse": "Tilstøtende ytelse: {ytelse}",
   "BeregningInfoPanel.TilstøtendeYtelseForm.BruttoBeregningsgrunnlag": "Brutto beregningsgrunnlag: {bruttoBG}",
   "BeregningInfoPanel.TilstøtendeYtelseForm.Dekningsgrad": "Dekningsgrad: {dekningsgrad}%",
