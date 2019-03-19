@@ -146,19 +146,19 @@ const getOriginalPeriodeId = (origPeriode) => {
   return null;
 };
 
-const manueltEllerOverstyring = manuellOverstyring => (
-  manuellOverstyring ? aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK : aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK
+const manueltEllerOverstyring = (manuellOverstyring, erManuellOverstyrApErOpprettet) => (
+  manuellOverstyring || erManuellOverstyrApErOpprettet ? aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK : aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK
 );
 
 export const transformValues = (values, initialValues, aksjonspunkter) => { // NOSONAR
   const overstyringAp = [aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK, aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK];
-  // const overstyrApErOpprettet = aksjonspunkter
-  // .filter(ap => ap.status.kode === 'OPPR' && ap.definisjon.kode === aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK);
+  const erManuellOverstyrApErOpprettet = aksjonspunkter
+    .some(ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK);
   const aksjonspunktUtenOverstyr = aksjonspunkter.filter(ap => !overstyringAp.includes(ap.definisjon.kode));
 
   const apCodes = aksjonspunktUtenOverstyr.length
     ? aksjonspunktUtenOverstyr.map(ap => ap.definisjon.kode)
-    : [manueltEllerOverstyring(values.manuellOverstyring)];
+    : [manueltEllerOverstyring(values.manuellOverstyring, erManuellOverstyrApErOpprettet)];
   return apCodes.map(ap => ({
     kode: ap,
     bekreftedePerioder: values.perioder.map((periode) => {
