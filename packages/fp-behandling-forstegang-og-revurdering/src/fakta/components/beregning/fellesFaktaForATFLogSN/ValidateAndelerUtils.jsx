@@ -62,7 +62,7 @@ const finnArbeidsforholdRefusjonsinfoListe = (andelList) => {
   const arbeidsforholdRefusjonsbelop = [];
   andelerMedArbeidsforhold.forEach((andel) => {
     const infoIndex = arbeidsforholdRefusjonsbelop
-      .findIndex(({ arbeidsforholdId }) => arbeidsforholdId === andel.arbeidsforholdId);
+      .findIndex(({ arbeidsforholdId, arbeidsgiverId }) => arbeidsforholdId === andel.arbeidsforholdId && arbeidsgiverId === andel.arbeidsgiverId);
     if (infoIndex >= 0) {
       const belopsInfo = arbeidsforholdRefusjonsbelop[infoIndex];
       if (belopsInfo.refusjonskravFraInntektsmelding < andel.refusjonskravFraInntektsmelding) {
@@ -111,7 +111,7 @@ export const skalIkkjeVereHogareEnnInntektmeldingMessage = () => ([{ id: 'Beregn
 
 const skalIkkjeVereHogareEnnInntektmelding = (
   value, belopFraInntektsmelding,
-) => ((value > belopFraInntektsmelding) ? skalIkkjeVereHogareEnnInntektmeldingMessage() : undefined);
+) => ((value > Math.round(belopFraInntektsmelding)) ? skalIkkjeVereHogareEnnInntektmeldingMessage() : undefined);
 
 export const skalVereLikFordelingMessage = fordeling => (
   [{ id: 'BeregningInfoPanel.EndringBG.Validation.LikFordeling' },

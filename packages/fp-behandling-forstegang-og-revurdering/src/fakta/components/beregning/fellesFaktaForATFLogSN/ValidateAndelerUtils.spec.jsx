@@ -37,6 +37,37 @@ describe('<ValidateAndelerUtils>', () => {
     expect(error).to.equal(null);
   });
 
+  it('skal ikkje gi error når total refusjon er lavere enn inntektsmelding for arbeidsforholdId lik null', () => {
+    const arbeidsgiverAndersen = {
+      arbeidsforholdId: null,
+      arbeidsgiverNavn: 'Andersen flyttebyrå',
+      arbeidsgiverId: '36363463463',
+    };
+    const andeler = [{
+      ...arbeidsgiverAndersen,
+      refusjonskrav: '10 000',
+      refusjonskravFraInntektsmelding: 20000,
+    },
+    {
+      ...arbeidsgiverAndersen,
+      refusjonskrav: '5 000',
+      refusjonskravFraInntektsmelding: 0,
+    },
+    {
+      arbeidsforholdId: null,
+      refusjonskrav: '40 000',
+      refusjonskravFraInntektsmelding: 40000,
+      arbeidsgiverNavn: 'Torgersen flyttebyrå',
+      arbeidsgiverId: '658568568',
+    },
+    {
+      arbeidsforholdId: '', refusjonskrav: null, refusjonskravFraInntektsmelding: 0,
+    },
+    ];
+    const error = validateTotalRefusjonPrArbeidsforhold(andeler);
+    expect(error).to.equal(null);
+  });
+
   it('skal ikkje gi error når total refusjon er lik inntektsmelding', () => {
     const arbeidsgiverAndersen = {
       arbeidsforholdId: '89r2hf923',
