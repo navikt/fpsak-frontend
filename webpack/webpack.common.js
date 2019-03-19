@@ -23,7 +23,7 @@ const config = {
       data: path.join(APP_DIR, 'data'),
 
       //Andre pakker
-      behandlingFpsak: path.join(PACKAGES_DIR, 'fp-behandling'),
+      behandlingForstegangOgRevurdering: path.join(PACKAGES_DIR, 'fp-behandling-forstegang-og-revurdering'),
       behandlingTilbakekreving: path.join(PACKAGES_DIR, 'fp-behandling-tilbakekreving'),
       behandlingInnsyn: path.join(PACKAGES_DIR, 'fp-behandling-innsyn'),
       behandlingKlage: path.join(PACKAGES_DIR, 'fp-behandling-klage'),

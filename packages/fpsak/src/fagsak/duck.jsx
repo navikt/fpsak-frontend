@@ -35,14 +35,12 @@ const resetFetchFagsakInfo = () => (dispatch) => {
   dispatch(fpsakApi.ANNEN_PART_BEHANDLING.resetRestApi()());
 };
 
-export const updateFagsakInfo = saksnummer => dispatch => (
-  dispatch(fpsakApi.FETCH_FAGSAK.makeRestApiRequest()({ saksnummer }, { keepData: true }))
-    .then(() => Promise.all([
-      dispatch(updateBehandlinger(saksnummer)),
-      dispatch(updateAnnenPartBehandling(saksnummer)),
-    ]))
-    .then(() => dispatch(updateBehandlingsupportInfo(saksnummer)))
-);
+export const updateFagsakInfo = saksnummer => dispatch => Promise.all([
+  dispatch(fpsakApi.FETCH_FAGSAK.makeRestApiRequest()({ saksnummer }, { keepData: true })),
+  dispatch(updateBehandlinger(saksnummer)),
+  dispatch(updateAnnenPartBehandling(saksnummer)),
+  dispatch(updateBehandlingsupportInfo(saksnummer)),
+]);
 
 export const fetchFagsakInfo = saksnummer => (dispatch) => {
   dispatch(resetFetchFagsakInfo());

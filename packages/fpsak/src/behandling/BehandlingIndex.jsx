@@ -7,7 +7,7 @@ import BehandlingPapirsoknadIndex from '@fpsak-frontend/fp-behandling-papirsokna
 import BehandlingTilbakekrevingIndex from '@fpsak-frontend/fp-behandling-tilbakekreving';
 import BehandlingInnsynIndex from '@fpsak-frontend/fp-behandling-innsyn';
 import BehandlingKlageIndex from '@fpsak-frontend/fp-behandling-klage';
-import BehandlingFpsakIndex from '@fpsak-frontend/fp-behandling';
+import BehandlingForstegangOgRevurderingIndex from '@fpsak-frontend/fp-behandling-forstegang-og-revurdering';
 import { trackRouteParam, requireProps } from '@fpsak-frontend/fp-felles';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
@@ -172,7 +172,7 @@ export class BehandlingIndex extends Component {
     }
 
     return (
-      <BehandlingFpsakIndex
+      <BehandlingForstegangOgRevurderingIndex
         key={behandlingId}
         saksnummer={saksnummer}
         behandlingId={behandlingId}

@@ -5,7 +5,7 @@ import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { BehandlingInfoHolder } from '@fpsak-frontend/fp-behandling-felles';
 import {
   getBehandlingSprak, getBehandlingVersjon, getBrevMaler, getBrevMottakere, getAksjonspunkter,
-  getBehandlingAnsvarligSaksbehandler, getBehandlingStatus, getBehandlingResultatstruktur,
+  getBehandlingAnsvarligSaksbehandler, getBehandlingStatus,
   getBehandlingsresultat, getBehandlingType, getBehandlingHasSoknad,
   getBehandlingIsOnHold, getBehandlingIsQueued, getBehandlingBehandlendeEnhetId,
   getBehandlingBehandlendeEnhetNavn, getHenleggArsaker, getSoknad,
@@ -17,7 +17,7 @@ export class PapirsoknadInfoSetter extends Component {
   setBehandlingInfo = () => {
     const {
       setBehandlingInfoHolder, behandlingSprak, behandlingVersjon, brevMaler, brevMottakere, aksjonspunkter,
-      behandlingAnsvarligSaksbehandler, behandlingStatus, behandlingResultatstruktur,
+      behandlingAnsvarligSaksbehandler, behandlingStatus,
       behandlingsresultat, behandlingType, behandlingHasSoknad,
       behandlingIsOnHold, behandlingIsQueued, behandlingBehandlendeEnhetId,
       behandlingBehandlendeEnhetNavn, henleggArsaker, soknad,
@@ -31,7 +31,6 @@ export class PapirsoknadInfoSetter extends Component {
       .withAksjonspunkter(aksjonspunkter)
       .withBehandlingAnsvarligSaksbehandler(behandlingAnsvarligSaksbehandler)
       .withBehandlingStatus(behandlingStatus)
-      .withBehandlingResultatstruktur(behandlingResultatstruktur)
       .withBehandlingsresultat(behandlingsresultat)
       .withBehandlingType(behandlingType)
       .withBehandlingHasSoknad(behandlingHasSoknad)
@@ -71,7 +70,6 @@ PapirsoknadInfoSetter.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired),
   behandlingAnsvarligSaksbehandler: PropTypes.string,
   behandlingStatus: PropTypes.shape().isRequired,
-  behandlingResultatstruktur: PropTypes.shape(),
   behandlingsresultat: PropTypes.shape(),
   behandlingType: PropTypes.shape().isRequired,
   behandlingHasSoknad: PropTypes.bool.isRequired,
@@ -90,7 +88,6 @@ PapirsoknadInfoSetter.defaultProps = {
   behandlingVersjon: undefined,
   aksjonspunkter: [],
   behandlingAnsvarligSaksbehandler: undefined,
-  behandlingResultatstruktur: undefined,
   behandlingsresultat: undefined,
   brevMaler: undefined,
   brevMottakere: undefined,
@@ -109,7 +106,6 @@ const mapStateToProps = state => ({
   aksjonspunkter: getAksjonspunkter(state),
   behandlingAnsvarligSaksbehandler: getBehandlingAnsvarligSaksbehandler(state),
   behandlingStatus: getBehandlingStatus(state),
-  behandlingResultatstruktur: getBehandlingResultatstruktur(state),
   behandlingsresultat: getBehandlingsresultat(state),
   behandlingType: getBehandlingType(state),
   behandlingHasSoknad: getBehandlingHasSoknad(state),

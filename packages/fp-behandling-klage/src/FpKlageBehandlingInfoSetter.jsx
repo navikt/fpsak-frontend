@@ -6,7 +6,7 @@ import { BehandlingInfoHolder } from '@fpsak-frontend/fp-behandling-felles';
 import {
   isKontrollerRevurderingAksjonspunkOpen, getBehandlingSprak, getBehandlingVersjon, getBrevMaler, getBrevMottakere, getAksjonspunkter,
   getBehandlingAnsvarligSaksbehandler, getBehandlingStatus, getBehandlingToTrinnsBehandling, getTotrinnskontrollArsakerUtenUdefinert,
-  getTotrinnskontrollArsakerReadOnly, getTotrinnskontrollArsaker, getBehandlingKlageVurdering, getBehandlingResultatstruktur,
+  getTotrinnskontrollArsakerReadOnly, getTotrinnskontrollArsaker, getBehandlingKlageVurdering,
   getBehandlingsresultat, getBehandlingType, getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK, getBehandlingHasSoknad,
   getBehandlingIsOnHold, isBehandlingInInnhentSoknadsopplysningerSteg, getBehandlingIsQueued, getBehandlingBehandlendeEnhetId,
   getBehandlingBehandlendeEnhetNavn, getHenleggArsaker, getSoknad,
@@ -19,7 +19,7 @@ export class FpSakBehandlingInfoSetter extends Component {
     const {
       setBehandlingInfoHolder, isKontrollerRevurderingApOpen, behandlingSprak, behandlingVersjon, brevMaler, brevMottakere, aksjonspunkter,
       behandlingAnsvarligSaksbehandler, behandlingStatus, behandlingToTrinnsBehandling, totrinnskontrollArsakerUtenUdefinert,
-      totrinnskontrollArsakerReadOnly, totrinnskontrollArsaker, behandlingKlageVurdering, behandlingResultatstruktur,
+      totrinnskontrollArsakerReadOnly, totrinnskontrollArsaker, behandlingKlageVurdering,
       behandlingsresultat, behandlingType, behandlingKlageVurderingResultatNFP, behandlingKlageVurderingResultatNK, behandlingHasSoknad,
       behandlingIsOnHold, isBehandlingInInnhentSoknadsinfoSteg, behandlingIsQueued, behandlingBehandlendeEnhetId,
       behandlingBehandlendeEnhetNavn, henleggArsaker, soknad, behandlingsresultatFraOriginalBehandling, resultatstrukturFraOriginalBehandling,
@@ -40,7 +40,6 @@ export class FpSakBehandlingInfoSetter extends Component {
       .withTotrinnskontrollArsaker(totrinnskontrollArsaker)
       .withBehandlingKlageVurdering(behandlingKlageVurdering)
       .withBehandlingIsKlage(true)
-      .withBehandlingResultatstruktur(behandlingResultatstruktur)
       .withBehandlingsresultat(behandlingsresultat)
       .withBehandlingType(behandlingType)
       .withBehandlingKlageVurderingResultatNFP(behandlingKlageVurderingResultatNFP)
@@ -91,7 +90,6 @@ FpSakBehandlingInfoSetter.propTypes = {
   totrinnskontrollArsakerReadOnly: PropTypes.arrayOf(PropTypes.shape()),
   totrinnskontrollArsaker: PropTypes.arrayOf(PropTypes.shape()),
   behandlingKlageVurdering: PropTypes.shape(),
-  behandlingResultatstruktur: PropTypes.shape(),
   behandlingsresultat: PropTypes.shape(),
   behandlingType: PropTypes.shape().isRequired,
   behandlingKlageVurderingResultatNFP: PropTypes.shape(),
@@ -118,7 +116,6 @@ FpSakBehandlingInfoSetter.defaultProps = {
   totrinnskontrollArsakerUtenUdefinert: undefined,
   totrinnskontrollArsakerReadOnly: undefined,
   totrinnskontrollArsaker: [],
-  behandlingResultatstruktur: undefined,
   behandlingsresultat: undefined,
   behandlingKlageVurdering: undefined,
   behandlingKlageVurderingResultatNFP: undefined,
@@ -148,7 +145,6 @@ const mapStateToProps = state => ({
   totrinnskontrollArsakerReadOnly: getTotrinnskontrollArsakerReadOnly(state),
   totrinnskontrollArsaker: getTotrinnskontrollArsaker(state),
   behandlingKlageVurdering: getBehandlingKlageVurdering(state),
-  behandlingResultatstruktur: getBehandlingResultatstruktur(state),
   behandlingsresultat: getBehandlingsresultat(state),
   behandlingType: getBehandlingType(state),
   behandlingKlageVurderingResultatNFP: getBehandlingKlageVurderingResultatNFP(state),

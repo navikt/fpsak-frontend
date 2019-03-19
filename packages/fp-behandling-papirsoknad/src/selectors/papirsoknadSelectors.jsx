@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import { getSelectedBehandlingId, isForeldrepengerFagsak } from '../duck';
+import { getSelectedBehandlingId } from '../duck';
 import papirsoknadApi from '../data/papirsoknadApi';
 
 export const isBehandlingInSync = createSelector(
@@ -31,10 +31,6 @@ export const getBehandlingBehandlendeEnhetId = createSelector([getSelectedBehand
 export const getBehandlingBehandlendeEnhetNavn = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlendeEnhetNavn);
 export const getBehandlingAnsvarligSaksbehandler = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.ansvarligSaksbehandler,
-);
-export const getBehandlingResultatstruktur = createSelector(
-  [isForeldrepengerFagsak, getSelectedBehandling], (isForeldrepenger, selectedBehandling = {}) => (isForeldrepenger
-    ? selectedBehandling['beregningsresultat-foreldrepenger'] : selectedBehandling['beregningsresultat-engangsstonad']),
 );
 export const getBehandlingsresultat = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingsresultat);
 export const getHenleggArsaker = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['henlegg-arsaker']));
