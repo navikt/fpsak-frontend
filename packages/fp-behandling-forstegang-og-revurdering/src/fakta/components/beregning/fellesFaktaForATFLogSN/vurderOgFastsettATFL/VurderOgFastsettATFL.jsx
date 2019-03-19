@@ -167,6 +167,9 @@ const VurderOgFastsettATFL = ({
 );
 
 VurderOgFastsettATFL.buildInitialValues = (beregningsgrunnlag, values) => {
+  if (!beregningsgrunnlag) {
+    return {};
+  }
   const andeler = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel;
   return {
     [inntektFieldArrayName]: InntektFieldArray.buildInitialValues(andeler, values ? values[besteberegningField] : undefined),
