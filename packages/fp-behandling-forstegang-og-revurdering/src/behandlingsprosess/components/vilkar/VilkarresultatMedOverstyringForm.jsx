@@ -27,6 +27,7 @@ import OverstyrConfirmationForm from 'behandlingForstegangOgRevurdering/src/beha
 import VilkarResultPicker from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/VilkarResultPicker';
 import OverstyrConfirmVilkarButton from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/OverstyrConfirmVilkarButton';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { getFodselVilkarAvslagsarsaker } from './fodsel/FodselVilkarForm';
 
 import styles from './vilkarresultatMedOverstyringForm.less';
 
@@ -71,6 +72,16 @@ const getCustomVilkarText = (state, behandlingspunkt, oppfylt) => {
     customVilkarText.values = { fom: moment(fom).format(DDMMYYYY_DATE_FORMAT) };
   }
   return customVilkarText.id ? customVilkarText : undefined;
+};
+
+const getRelevanteAvslagsarsaker = (vilkarTypeKode, state) => {
+  const vilkartypeAvslagsarsaker = getKodeverk(kodeverkTyper.AVSLAGSARSAK)(state)[vilkarTypeKode];
+  switch (vilkarTypeKode) {
+    case vilkarType.FODSELSVILKARET_MOR:
+      return getFodselVilkarAvslagsarsaker(isForeldrepengerFagsak(state), vilkartypeAvslagsarsaker);
+    default:
+      return vilkartypeAvslagsarsaker;
+  }
 };
 
 /**
@@ -208,7 +219,7 @@ const mapStateToProps = (state, ownProps) => {
     lovReferanse: vilkar.lovReferanse,
     isSolvable: getIsSelectedBehandlingspunktOverridden(state) || isSolvable,
     hasAksjonspunkt: aksjonspunkt !== undefined,
-    avslagsarsaker: getKodeverk(kodeverkTyper.AVSLAGSARSAK)(state)[vilkar.vilkarType.kode],
+    avslagsarsaker: getRelevanteAvslagsarsaker(vilkar.vilkarType.kode, state),
     isReadOnly: isSelectedBehandlingspunktOverrideReadOnly(state),
     behandlingspunktTitleCode: getSelectedBehandlingspunktTitleCode(state),
     form: formName,

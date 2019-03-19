@@ -14,11 +14,17 @@ import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegan
 import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import VilkarResultPicker from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/VilkarResultPicker';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getKodeverk, isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+
+const avslagsarsakerES = ['1002', '1003', '1032'];
+
+export const getFodselVilkarAvslagsarsaker = (isFpFagsak, fodselsvilkarAvslagskoder) => (isFpFagsak
+  ? fodselsvilkarAvslagskoder.filter(arsak => !avslagsarsakerES.includes(arsak.kode))
+  : fodselsvilkarAvslagskoder);
 
 /**
  * FodselVilkarForm
@@ -101,7 +107,8 @@ const mapStateToProps = (state, initialProps) => {
     onSubmit: values => initialProps.submitCallback([transformValues(values, aksjonspunkter)]),
     lovReferanse: getSelectedBehandlingspunktVilkar(state)[0].lovReferanse,
     hasAksjonspunkt: aksjonspunkter.length > 0,
-    avslagsarsaker: getKodeverk(kodeverkTyper.AVSLAGSARSAK)(state)[vilkarType.FODSELSVILKARET_MOR],
+    avslagsarsaker: getFodselVilkarAvslagsarsaker(isForeldrepengerFagsak(state),
+      getKodeverk(kodeverkTyper.AVSLAGSARSAK)(state)[vilkarType.FODSELSVILKARET_MOR]),
   };
 };
 
