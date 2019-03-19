@@ -16,7 +16,6 @@ import {
   getFaktaOmBeregning,
   getFaktaOmBeregningTilfellerKoder,
   getKortvarigeArbeidsforhold,
-  getTilstøtendeYtelse,
   getKunYtelse,
   getBehandlingIsRevurdering,
   getVurderMottarYtelse,
@@ -26,8 +25,6 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import TilstotendeYtelseForm, { harKunTilstotendeYtelse } from './tilstøtendeYtelse/TilstøtendeYtelseForm';
-import TilstotendeYtelseIKombinasjon, { erTilstotendeYtelseIKombinasjon } from './tilstøtendeYtelse/TilstotendeYtelseIKombinasjon';
 import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm';
 import NyoppstartetFLForm from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import {
@@ -68,8 +65,6 @@ export const mapStateToValidationProps = createStructuredSelector({
 
 export const getValidationFaktaForATFLOgSN = createSelector([mapStateToValidationProps], props => values => ({
   ...FastsettEndretBeregningsgrunnlag.validate(values, props.endringBGPerioder, props.aktivertePaneler, props.faktaOmBeregning, props.beregningsgrunnlag),
-  ...TilstotendeYtelseForm.validate(values, props.aktivertePaneler),
-  ...TilstotendeYtelseIKombinasjon.validate(values, props.endringBGPerioder, props.aktivertePaneler),
   ...getKunYtelseValidation(values, props.kunYtelse, props.endringBGPerioder, props.aktivertePaneler),
   ...VurderMottarYtelseForm.validate(values, props.vurderMottarYtelse),
   ...VurderBesteberegningForm.validate(values, props.aktivertePaneler),
@@ -99,19 +94,9 @@ const spacer = (hasShownPanel) => {
 };
 
 
-const getFaktaPanels = (readOnly, tilfeller, isAksjonspunktClosed, showTableCallback) => {
+const getFaktaPanels = (readOnly, tilfeller, isAksjonspunktClosed) => {
   const faktaPanels = [];
   let hasShownPanel = false;
-
-  if (erTilstotendeYtelseIKombinasjon(tilfeller)) {
-    return [<TilstotendeYtelseIKombinasjon
-      key="kombinasjonTY"
-      readOnly={readOnly}
-      tilfeller={tilfeller}
-      isAksjonspunktClosed={isAksjonspunktClosed}
-      showTableCallback={showTableCallback}
-    />];
-  }
   tilfeller.forEach((tilfelle) => {
     if (tilfelle === faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD) {
       hasShownPanel = true;
@@ -176,16 +161,6 @@ const getFaktaPanels = (readOnly, tilfeller, isAksjonspunktClosed, showTableCall
     );
   }
   setFaktaPanelForKunYtelse(faktaPanels, tilfeller, readOnly, isAksjonspunktClosed);
-
-  if (harKunTilstotendeYtelse(tilfeller)) {
-    faktaPanels.push(
-      <ElementWrapper key="TilstotendeYtelse">
-        <TilstotendeYtelseForm
-          readOnly={readOnly}
-        />
-      </ElementWrapper>,
-    );
-  }
   return faktaPanels;
 };
 
@@ -198,10 +173,9 @@ export const FaktaForATFLOgSNPanelImpl = ({
   readOnly,
   aktivePaneler,
   isAksjonspunktClosed,
-  showTableCallback,
 }) => (
   <div>
-    {getFaktaPanels(readOnly, aktivePaneler, isAksjonspunktClosed, showTableCallback).map(panelOrSpacer => panelOrSpacer)}
+    {getFaktaPanels(readOnly, aktivePaneler, isAksjonspunktClosed).map(panelOrSpacer => panelOrSpacer)}
   </div>
 );
 
@@ -210,7 +184,6 @@ FaktaForATFLOgSNPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   aktivePaneler: PropTypes.arrayOf(PropTypes.string).isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
-  showTableCallback: PropTypes.func.isRequired,
 };
 
 const kunYtelseTransform = (faktaOmBeregning, endringBGPerioder, aktivePaneler) => values => transformValuesForKunYtelse(values,
@@ -317,18 +290,16 @@ const getVurderFaktaAksjonspunkt = createSelector([getAksjonspunkter], aksjonspu
 
 export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
   [getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlag,
-    getKortvarigeArbeidsforhold, getVurderFaktaAksjonspunkt, getTilstøtendeYtelse, getKunYtelse,
+    getKortvarigeArbeidsforhold, getVurderFaktaAksjonspunkt, getKunYtelse,
     getFaktaOmBeregningTilfellerKoder, getBehandlingIsRevurdering, getVurderMottarYtelse, getVurderBesteberegning,
     isReadOnly, getFormValuesForBeregning],
-  (endringBGPerioder, beregningsgrunnlag, kortvarigeArbeidsforhold, vurderFaktaAP, tilstotendeYtelse, kunYtelse,
+  (endringBGPerioder, beregningsgrunnlag, kortvarigeArbeidsforhold, vurderFaktaAP, kunYtelse,
     tilfeller, isRevurdering, vurderMottarYtelse, vurderBesteberegning, readOnly, values) => () => ({
     ...TidsbegrensetArbeidsforholdForm.buildInitialValues(kortvarigeArbeidsforhold),
     ...NyIArbeidslivetSNForm.buildInitialValues(beregningsgrunnlag),
     ...FastsettEndretBeregningsgrunnlag.buildInitialValues(endringBGPerioder, tilfeller, readOnly),
     ...LonnsendringForm.buildInitialValues(beregningsgrunnlag),
     ...NyoppstartetFLForm.buildInitialValues(beregningsgrunnlag),
-    ...TilstotendeYtelseForm.buildInitialValues(tilstotendeYtelse, endringBGPerioder),
-    ...TilstotendeYtelseIKombinasjon.buildInitialValues(tilstotendeYtelse, endringBGPerioder, tilfeller),
     ...buildInitialValuesKunYtelse(kunYtelse, endringBGPerioder, isRevurdering, tilfeller),
     ...VurderEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag, vurderFaktaAP),
     ...FastsettEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag),

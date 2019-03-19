@@ -9,7 +9,7 @@ import { erNyoppstartetFLField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import {
   createEndretArbeidsforholdString, getHelpTextsEndringBG,
-  lagFastsetteATFLInntektHeader, createEndringHeadingForDate,
+  lagFastsetteATFLInntektHeader, createEndringHeadingForDate, byggListeSomStreng,
 } from './EndretBeregningsgrunnlagUtils';
 import {
   finnFrilansFieldName,
@@ -89,6 +89,20 @@ const lagStateMedFaktaOmBeregningOgValues = (faktaOmBeregning, values = {}) => {
 };
 
 describe('<EndretBeregningsgrunnlagUtils>', () => {
+  it('skal lage streng fra liste med 2 elementer', () => {
+    const inntektskategoriliste = [{ kode: 'ARBEIDSTAKER', navn: 'Arbeidstaker' }, { kode: 'FRILANSER', navn: 'Frilanser' }];
+    const message = byggListeSomStreng(inntektskategoriliste.map(({ navn }) => (navn)));
+    expect(message).to.equal('Arbeidstaker og Frilanser');
+  });
+
+  it('skal lage streng fra liste med 3 elementer', () => {
+    const inntektskategoriliste = [{ kode: 'ARBEIDSTAKER', navn: 'Arbeidstaker' },
+      { kode: 'FRILANSER', navn: 'Frilanser' }, { kode: 'SJØMANN', navn: 'Sjømann' }];
+    const message = byggListeSomStreng(inntektskategoriliste.map(({ navn }) => (navn)));
+    expect(message).to.equal('Arbeidstaker, Frilanser og Sjømann');
+  });
+
+
   it('skal få header med kun dateheading', () => {
     const periodeFom = '2018-01-01';
     const periodeTom = '2019-01-01';

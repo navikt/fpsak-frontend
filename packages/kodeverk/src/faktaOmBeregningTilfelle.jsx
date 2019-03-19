@@ -8,7 +8,6 @@ const faktaOmBeregningTilfelle = {
   FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING: 'FASTSETT_MÅNEDSLØNN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING',
   VURDER_AT_OG_FL_I_SAMME_ORGANISASJON: 'VURDER_AT_OG_FL_I_SAMME_ORGANISASJON',
   FASTSETT_BESTEBEREGNING_FODENDE_KVINNE: 'FASTSETT_BESTEBEREGNING_FØDENDE_KVINNE',
-  TILSTOTENDE_YTELSE: 'TILSTØTENDE_YTELSE',
   VURDER_ETTERLONN_SLUTTPAKKE: 'VURDER_ETTERLØNN_SLUTTPAKKE',
   FASTSETT_ETTERLONN_SLUTTPAKKE: 'FASTSETT_ETTERLØNN_SLUTTPAKKE',
   FASTSETT_BG_KUN_YTELSE: 'FASTSETT_BG_KUN_YTELSE',
@@ -45,9 +44,6 @@ export const harKunATFLISammeOrg = tilfeller => (harIkkeLonnsendringEllerNyoppst
 
 const harLonnsendringNyOppstartetFLOgATFLISammeOrg = tilfeller => harLonnsendringOgNyoppstartet(tilfeller)
   && tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON);
-
-export const erSpesialtilfelleMedEkstraKnapp = tilfeller => tilfeller.includes(faktaOmBeregningTilfelle.TILSTOTENDE_YTELSE)
-  && tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG);
 
 export const erATFLSpesialtilfelle = tilfeller => harLonnsendringNyOppstartetFLOgATFLISammeOrg(tilfeller);
 

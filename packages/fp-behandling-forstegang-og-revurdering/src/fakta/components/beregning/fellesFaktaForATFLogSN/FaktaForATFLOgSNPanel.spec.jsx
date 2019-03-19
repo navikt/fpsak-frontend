@@ -18,7 +18,6 @@ import {
 } from './FaktaForATFLOgSNPanel';
 import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm';
 import FastsettEndretBeregningsgrunnlag from './endringBeregningsgrunnlag/FastsettEndretBeregningsgrunnlag';
-import TilstotendeYtelseIKombinasjon from './tilstøtendeYtelse/TilstotendeYtelseIKombinasjon';
 import NyIArbeidslivetSNForm from './nyIArbeidslivet/NyIArbeidslivetSNForm';
 import { lonnsendringField } from './vurderOgFastsettATFL/forms/LonnsendringForm';
 import { erNyoppstartetFLField } from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
@@ -280,18 +279,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     />);
     const endretBeregninsgrunnlag = wrapper.find(FastsettEndretBeregningsgrunnlag);
     expect(endretBeregninsgrunnlag).to.have.length(0);
-  });
-
-  it('skal rendre Inntektstabell om Tilstøtende ytelse og kortvarig arbeidsforhold', () => {
-    const aktivertePaneler = [faktaOmBeregningTilfelle.TILSTOTENDE_YTELSE, faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD];
-    const wrapper = shallow(<FaktaForATFLOgSNPanelImpl
-      readOnly={false}
-      aktivePaneler={aktivertePaneler}
-      isAksjonspunktClosed={false}
-      showTableCallback={showTableCallback}
-    />);
-    const tyKombinasjon = wrapper.find(TilstotendeYtelseIKombinasjon);
-    expect(tyKombinasjon).to.have.length(1);
   });
 
   it('skal kunne transform values for kun besteberegning', () => {

@@ -42,7 +42,7 @@ const frilanserAndel = {
 };
 const tyAndel = {
   aktivitetStatus: {
-    kode: aktivitetStatus.TILSTOTENDE_YTELSE,
+    kode: aktivitetStatus.KUN_YTELSE,
   },
   beregnetPrAar: 300000,
   beregningsperiodeFom: '2016-01-01',

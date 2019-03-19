@@ -38,13 +38,11 @@ export const VurderFaktaBeregningPanelImpl = ({
   submittable,
   hasBegrunnelse,
   isDirty,
-  showTableCallback,
 }) => (
   <ElementWrapper>
     <FaktaForATFLOgSNPanel
       readOnly={readOnly}
       isAksjonspunktClosed={isAksjonspunktClosed}
-      showTableCallback={showTableCallback}
     />
     <VerticalSpacer eightPx />
     <VerticalSpacer twentyPx />
@@ -64,7 +62,6 @@ VurderFaktaBeregningPanelImpl.propTypes = {
   isDirty: PropTypes.bool.isRequired,
   hasBegrunnelse: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
-  showTableCallback: PropTypes.func.isRequired,
 };
 
 // /// TRANSFORM VALUES METHODS ///////
