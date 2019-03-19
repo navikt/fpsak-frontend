@@ -30,6 +30,10 @@ const readOnly = false;
 const PERIODE_RESULTAT_TYPE = 'PERIODE_RESULTAT_TYPE';
 const innvilgetTekst = 'Innvilget';
 
+const oldForeldetValue = foreldelseVurderingType => (foreldelseVurderingType.kode !== foreldelseCodes.MANUELL_BEHANDLING ? foreldelseVurderingType.kode : null);
+const checkForeldetValue = selectedItemData => (selectedItemData.foreldet ? selectedItemData.foreldet
+  : oldForeldetValue(selectedItemData.foreldelseVurderingType));
+
 export class ForeldelseFormImpl extends Component {
   constructor() {
     super();
@@ -95,8 +99,10 @@ export class ForeldelseFormImpl extends Component {
             <Hovedknapp
               mini
               htmlType="button"
-              onClick={formProps.handleSubmit}
+              onClick={formProps.handleSubmit || formProps.submitting}
               disabled={formProps.pristine}
+              readOnly={readOnly}
+              spinner={formProps.submitting}
             >
               <FormattedMessage id="UttakActivity.Oppdater" />
             </Hovedknapp>
@@ -140,7 +146,10 @@ const transformValues = (selectedItemData, values) => {
   };
 };
 
-const buildInitalValues = selectedItemData => ({ ...selectedItemData });
+const buildInitalValues = selectedItemData => ({
+  ...selectedItemData,
+  foreldet: checkForeldetValue(selectedItemData),
+});
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
