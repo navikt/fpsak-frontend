@@ -15,6 +15,14 @@ describe('<VurderBesteberegning>', () => {
     expect(error[besteberegningField][0].id).to.equal(isRequiredMessage()[0].id);
   });
 
+  it('skal validere om vurdert til true med refusjon/gradering', () => {
+    const values = {};
+    values[besteberegningField] = true;
+    const error = VurderBesteberegningForm.validate(values, [faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING,
+      faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG]);
+    expect(error[besteberegningField][0].id).to.equal('BeregningInfoPanel.FastsettBBFodendeKvinne.ErIkkeStottet');
+  });
+
   it('skal bygge initial values', () => {
     const vurderBesteberegning = {
       skalHaBesteberegning: false,

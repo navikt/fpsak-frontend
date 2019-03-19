@@ -33,6 +33,7 @@ const tilfellerSomStøtterEndringBG = [faktaOmBeregningTilfelle.FASTSETT_ENDRET_
   faktaOmBeregningTilfelle.VURDER_LONNSENDRING,
   faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON,
   faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING,
+  faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING,
   faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL];
 
 export const harKunTilfellerSomStøtterEndringBG = aktivertePaneler => (aktivertePaneler && aktivertePaneler.length > 0
