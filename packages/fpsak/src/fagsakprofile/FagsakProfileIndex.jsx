@@ -5,15 +5,21 @@ import { connect } from 'react-redux';
 
 import { getSelectedSaksnummer, getFagsakYtelseType, getSelectedFagsakStatus } from 'fagsak/fagsakSelectors';
 import { getBehandlinger, getNoExistingBehandlinger } from 'behandling/selectors/behandlingerSelectors';
+import {
+  getRisikoklassifisering,
+} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { getSelectedBehandlingId } from 'behandling/duck';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { requireProps } from '@fpsak-frontend/fp-felles';
+import { Panel } from 'nav-frontend-paneler';
 
 import { behandlingIListePropType } from '@fpsak-frontend/prop-types';
 import {
   getShowAllBehandlinger, toggleShowAllBehandlinger, resetFagsakProfile, getAnnenPartBehandling,
 } from './duck';
 import FagsakProfile from './components/FagsakProfile';
+import RisikoklassifiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';
+import styles from './fagsakProfileIndex.less';
 
 export class FagsakProfileIndex extends Component {
   componentDidMount() {
@@ -31,20 +37,25 @@ export class FagsakProfileIndex extends Component {
   render() {
     const {
       sakstype, toggleShowAll, showAll, selectedBehandlingId, behandlinger,
-      noExistingBehandlinger, fagsakStatus, annenPartLink, saksnummer,
+      noExistingBehandlinger, fagsakStatus, annenPartLink, saksnummer, harRisikoklassifisering,
     } = this.props;
     return (
-      <FagsakProfile
-        annenPartLink={annenPartLink}
-        saksnummer={saksnummer}
-        sakstype={sakstype}
-        fagsakStatus={fagsakStatus}
-        behandlinger={behandlinger}
-        noExistingBehandlinger={noExistingBehandlinger}
-        selectedBehandlingId={selectedBehandlingId}
-        showAll={showAll}
-        toggleShowAll={toggleShowAll}
-      />
+      <Panel className={styles.panelPadding}>
+        <FagsakProfile
+          annenPartLink={annenPartLink}
+          saksnummer={saksnummer}
+          sakstype={sakstype}
+          fagsakStatus={fagsakStatus}
+          behandlinger={behandlinger}
+          noExistingBehandlinger={noExistingBehandlinger}
+          selectedBehandlingId={selectedBehandlingId}
+          showAll={showAll}
+          toggleShowAll={toggleShowAll}
+        />
+        {harRisikoklassifisering
+          && <RisikoklassifiseringIndex />
+        }
+      </Panel>
     );
   }
 }
@@ -60,6 +71,7 @@ FagsakProfileIndex.propTypes = {
   toggleShowAll: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   annenPartLink: PropTypes.shape(),
+  harRisikoklassifisering: PropTypes.bool.isRequired,
 };
 
 FagsakProfileIndex.defaultProps = {
@@ -79,6 +91,7 @@ const mapStateToProps = (state) => {
     behandlinger: getBehandlinger(state),
     noExistingBehandlinger: getNoExistingBehandlinger(state),
     showAll: getShowAllBehandlinger(state),
+    harRisikoklassifisering: !!getRisikoklassifisering(state),
   };
 };
 

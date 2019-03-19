@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { Systemtittel, Normaltekst, Element } from 'nav-frontend-typografi';
 import { NavLink } from 'react-router-dom';
 import { Row, Column } from 'nav-frontend-grid';
-import { Panel } from 'nav-frontend-paneler';
 
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import { behandlingIListePropType } from '@fpsak-frontend/prop-types';
@@ -35,7 +34,7 @@ export const FagsakProfile = ({
   annenPartLink,
   getKodeverknavn,
 }) => (
-  <Panel>
+  <div>
     <Row>
       <Column xs="6">
         <div className={styles.bottomMargin}>
@@ -72,7 +71,7 @@ export const FagsakProfile = ({
       showAll={showAll}
       toggleShowAll={toggleShowAll}
     />
-  </Panel>
+  </div>
 );
 
 FagsakProfile.propTypes = {

@@ -228,6 +228,14 @@ export const getAndelerMedGraderingUtenBG = createSelector(
 );
 
 
+// Risikoklassifisering
+export const getRisikoklassifisering = createSelector(
+  [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling.kontrollresultat ? selectedBehandling.kontrollresultat : undefined),
+);
+export const getRisikoAksjonspunkt = createSelector(
+  [getAksjonspunkter], (aksjonspunkter = []) => (aksjonspunkter.find(ap => ap.definisjon && ap.definisjon.kode === aksjonspunktCodes.VURDER_FARESIGNALER)),
+);
+
 // FAMILIEHENDELSE
 export const getFamiliehendelse = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling['familiehendelse-v2']);
 export const getFamiliehendelseGjeldende = createSelector([getFamiliehendelse], (familiehendelse = {}) => familiehendelse.gjeldende);
