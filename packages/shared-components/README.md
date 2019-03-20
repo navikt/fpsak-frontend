@@ -1,7 +1,7 @@
-# shared-compontens
+# shared-components
 
 ```
-yarn add @fpsak-frontend/shared-compontens
+yarn add @fpsak-frontend/shared-components
 ```
 
 ### AksjonspunktHelpText
@@ -20,8 +20,23 @@ yarn add @fpsak-frontend/shared-compontens
  ```
 
 ### ArrowBox
-Vise innhold med ramme og pil
+Vise innhold med ramme og pil enten til venstre eller topp
 
+| navn        | type   | påkrevd | default |
+|-------------|--------|---------|---------|
+| alignOffset | number |         | 0       |
+| alignLeft   | bool   |         | false   |
+| hideBorder  | bool   |         | false   |
+| children    | node   | x       |         |
+| marginTop   | number |         | 0       |
+| marginLeft  | number |         | 0       |
+
+ ##### Eksempel:
+ ```js
+ <ArrowBox alignOffset={64}>
+ {children}
+ </ArrowBox>
+ ```
 
 ### BorderBox
 ### DateLabel
