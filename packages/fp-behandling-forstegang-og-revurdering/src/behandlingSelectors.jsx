@@ -229,6 +229,11 @@ export const getBehandlingArbeidsforhold = createSelector(
   [getBehandlingInntektArbeidYtelse], (inntektArbeidYtelse = {}) => inntektArbeidYtelse.arbeidsforhold,
 );
 
+export const getSkalKunneLeggeTilNyeArbeidsforhold = createSelector(
+  [getBehandlingInntektArbeidYtelse], (inntektArbeidYtelse = {}) => inntektArbeidYtelse.skalKunneLeggeTilNyeArbeidsforhold,
+);
+
+
 // KLAGEVURDERING
 export const getBehandlingKlageVurdering = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['klage-vurdering'] ? selectedBehandling['klage-vurdering'] : undefined),

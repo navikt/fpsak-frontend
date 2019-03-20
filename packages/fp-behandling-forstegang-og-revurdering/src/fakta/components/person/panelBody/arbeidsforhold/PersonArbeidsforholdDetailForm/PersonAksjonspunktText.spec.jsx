@@ -13,6 +13,7 @@ describe('<PersonAksjonspunktText>', () => {
     arbeidsgiverIdentifiktorGUI: '123423',
     fomDato: '2018-10-10',
     tilVurdering: true,
+    lagtTilAvSaksbehandler: false,
   };
 
   it('skal ikke vise hjelpetekst når en ikke har arbeidsforhold', () => {
@@ -94,5 +95,20 @@ describe('<PersonAksjonspunktText>', () => {
       }}
     />);
     expect(wrapper.html()).is.null;
+  });
+
+  it('skal hjelpetekst for å legge til arbeidsforhold', () => {
+    const gamleArbeidsforhold = [{}];
+    const wrapper = shallow(<PersonAksjonspunktText
+      arbeidsforhold={{
+        ...arbeidsforholdTemplate,
+        lagtTilAvSaksbehandler: true,
+        mottattDatoInntektsmelding: '2018-01-01',
+        replaceOptions: { gamleArbeidsforhold },
+        harErstattetEttEllerFlere: false,
+        ikkeRegistrertIAaRegister: true,
+      }}
+    />);
+    expect(wrapper.find(FormattedHTMLMessage).prop('id')).is.eql('PersonAksjonspunktText.LeggTilArbeidsforhold');
   });
 });

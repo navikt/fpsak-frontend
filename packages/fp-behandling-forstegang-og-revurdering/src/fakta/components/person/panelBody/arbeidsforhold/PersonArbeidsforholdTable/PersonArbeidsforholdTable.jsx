@@ -2,14 +2,13 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-
 import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import {
   Image, Table, TableColumn, TableRow, PeriodLabel, DateLabel,
 } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import erIBrukImageUrl from '@fpsak-frontend/assets/images/stjerne.svg';
-
+import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
 import styles from './personArbeidsforholdTable.less';
 
 const headerTextCodes = [
@@ -23,20 +22,32 @@ const headerTextCodes = [
 
 const getEndCharFromId = id => id.substring(id.length - 4, id.length);
 
+const utledNavn = (arbeidsforhold) => {
+  if (arbeidsforhold.lagtTilAvSaksbehandler) {
+    return arbeidsforhold.navn;
+  }
+  return arbeidsforhold.arbeidsforholdId
+    ? `${arbeidsforhold.navn}(${arbeidsforhold.arbeidsgiverIdentifiktorGUI})...${getEndCharFromId(arbeidsforhold.arbeidsforholdId)}`
+    : `${arbeidsforhold.navn}(${arbeidsforhold.arbeidsgiverIdentifiktorGUI})`;
+};
+
 const PersonArbeidsforholdTable = ({
   alleArbeidsforhold,
   selectedId,
   selectArbeidsforholdCallback,
 }) => {
   if (alleArbeidsforhold.length === 0) {
-    return <Normaltekst><FormattedMessage id="PersonArbeidsforholdTable.IngenArbeidsforhold" /></Normaltekst>;
+    return (
+      <IngenArbeidsforholdRegistrert
+        headerTextCodes={headerTextCodes}
+      />
+    );
   }
   return (
     <Table headerTextCodes={headerTextCodes}>
       {alleArbeidsforhold && alleArbeidsforhold.map((a) => {
-        const navn = a.arbeidsforholdId ? `${a.navn}(${a.arbeidsgiverIdentifiktorGUI})...${getEndCharFromId(a.arbeidsforholdId)}`
-          : `${a.navn}(${a.arbeidsgiverIdentifiktorGUI})`;
         const stillingsprosent = a.stillingsprosent ? `${parseFloat(a.stillingsprosent).toFixed(2)} %` : '';
+        const navn = utledNavn(a);
         return (
           <TableRow
             key={navn}

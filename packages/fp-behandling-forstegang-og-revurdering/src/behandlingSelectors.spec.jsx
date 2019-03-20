@@ -12,7 +12,7 @@ import {
   isBehandlingInInnhentSoknadsopplysningerSteg, isKontrollerRevurderingAksjonspunkOpen, hasBehandlingManualPaVent,
   getAktivitetStatuser, getAlleAndelerIForstePeriode, isBehandlingRevurderingFortsattMedlemskap, getBehandlingLanguageCode,
   getBehandlingVilkarCodes, isBehandlingStatusReadOnly, getEditedStatus, getAllMerknaderFraBeslutter, getMerknaderFraBeslutter,
-  getAntallDodfodteBarn, getGjeldendeBeregningAksjonspunkter,
+  getAntallDodfodteBarn, getGjeldendeBeregningAksjonspunkter, getSkalKunneLeggeTilNyeArbeidsforhold,
 }
   from './behandlingSelectors';
 
@@ -503,6 +503,21 @@ describe('behandlingSelectors', () => {
       const notAccepted = getMerknaderFraBeslutter(aksjonspunktCodes.VURDER_INNSYN).resultFunc(allMerknaderFraBeslutter);
 
       expect(notAccepted).is.eql(allMerknaderFraBeslutter[aksjonspunktCodes.VURDER_INNSYN]);
+    });
+  });
+
+  describe('getSkalKunneLeggeTilNyeArbeidsforhold', () => {
+    it('skal hente hvorvidt man skal kunne legge til nye arbeidsforhold - true', () => {
+      const iayObj = {
+        skalKunneLeggeTilNyeArbeidsforhold: true,
+      };
+      expect(getSkalKunneLeggeTilNyeArbeidsforhold.resultFunc(iayObj)).is.eql(true);
+    });
+    it('skal hente hvorvidt man skal kunne legge til nye arbeidsforhold - false', () => {
+      const iayObj = {
+        skalKunneLeggeTilNyeArbeidsforhold: false,
+      };
+      expect(getSkalKunneLeggeTilNyeArbeidsforhold.resultFunc(iayObj)).is.eql(false);
     });
   });
 });

@@ -12,7 +12,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import FullPersonInfo from './panelBody/FullPersonInfo';
-import { PersonInfoPanelImpl as PersonInfoPanel } from './PersonInfoPanel';
+import { fjernIdFraArbeidsforholdLagtTilAvSaksbehandler, PersonInfoPanelImpl as PersonInfoPanel } from './PersonInfoPanel';
 
 describe('<PersonInfoPanel>', () => {
   const personopplysninger = {
@@ -404,5 +404,23 @@ describe('<PersonInfoPanel>', () => {
     const { args } = toggleInfoPanelCallback.getCalls()[0];
     expect(args).to.have.length(1);
     expect(args[0]).to.eql(faktaPanelCodes.PERSON);
+  });
+
+  it('skal fjerne ID fra arbeidsforhold som er lagt til av saksbehandler, men ikke fra andre', () => {
+    const arbeidsforhold = [
+      {
+        id: 1,
+        lagtTilAvSaksbehandler: true,
+      },
+      {
+        id: 2,
+        lagtTilAvSaksbehandler: false,
+      },
+    ];
+    const result = fjernIdFraArbeidsforholdLagtTilAvSaksbehandler(arbeidsforhold);
+    expect(result[0].id).to.eql(null);
+    expect(result[0].lagtTilAvSaksbehandler).to.eql(true);
+    expect(result[1].id).to.eql(2);
+    expect(result[1].lagtTilAvSaksbehandler).to.eql(false);
   });
 });

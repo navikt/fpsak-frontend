@@ -19,12 +19,12 @@ export const arbeidsforholdBeregningProptype = PropTypes.shape({
 
 
 export const arbeidsforholdPropType = PropTypes.shape({
-  id: PropTypes.string.isRequired,
-  navn: PropTypes.string.isRequired,
-  arbeidsgiverIdentifikator: PropTypes.string.isRequired,
-  arbeidsgiverIdentifiktorGUI: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  navn: PropTypes.string,
+  arbeidsgiverIdentifikator: PropTypes.string,
+  arbeidsgiverIdentifiktorGUI: PropTypes.string,
   arbeidsforholdId: PropTypes.string,
-  fomDato: PropTypes.string.isRequired,
+  fomDato: PropTypes.string,
   tomDato: PropTypes.string,
   kilde: PropTypes.shape({
     navn: PropTypes.string,
@@ -46,6 +46,8 @@ export const arbeidsforholdPropType = PropTypes.shape({
   handlingType: PropTypes.shape({
     navn: PropTypes.string,
   }),
+  overstyrtTom: PropTypes.string,
+  lagtTilAvSaksbehandler: PropTypes.bool,
 });
 
 export default arbeidsforholdPropType;
