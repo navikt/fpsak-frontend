@@ -86,7 +86,6 @@ const ArrowBox = ({
   marginTop,
   marginLeft,
   hideBorder,
-  className,
 }) => (
   <React.Fragment>
     <style dangerouslySetInnerHTML={{ // eslint-disable-line react/no-danger
