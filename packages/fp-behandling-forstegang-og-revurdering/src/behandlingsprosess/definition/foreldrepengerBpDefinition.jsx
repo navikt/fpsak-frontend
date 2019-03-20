@@ -8,8 +8,16 @@ import prt from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import { hasSimuleringOn, getStatusFromSimulering } from './simuleringStatusUtleder';
 import getVedtakStatus from './vedtakStatusUtleder';
 
-const getStatusFromUttakresultat = ({ uttaksresultat }) => {
-  if (!uttaksresultat) {
+const faktaUttakAp = [
+  ac.AVKLAR_UTTAK,
+  ac.AVKLAR_FØRSTE_UTTAKSDATO,
+  ac.AVKLAR_ANNEN_FORELDER_RETT,
+  ac.MANUELL_AVKLAR_FAKTA_UTTAK,
+  ac.OVERSTYR_AVKLAR_FAKTA_UTTAK,
+];
+
+const getStatusFromUttakresultat = ({ uttaksresultat, aksjonspunkter }) => {
+  if (!uttaksresultat || aksjonspunkter.some(ap => faktaUttakAp.includes(ap.definisjon.kode) && ap.status.kode === 'OPPR')) {
     return vut.IKKE_VURDERT;
   }
   if (uttaksresultat.perioderSøker && uttaksresultat.perioderSøker.length > 0) {
@@ -108,6 +116,7 @@ const foreldrepengerBuilders = [
 
   new BehandlingspunktProperties.Builder(bpc.UTTAK, 'Uttak')
     .withVisibilityWhen(hasNonDefaultBehandlingspunkt)
+    .withStatus(getStatusFromUttakresultat)
     .withAksjonspunktCodes(
       ac.FASTSETT_UTTAKPERIODER,
       ac.OVERSTYRING_AV_UTTAKPERIODER,
@@ -119,8 +128,7 @@ const foreldrepengerBuilders = [
       ac.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
       ac.KONTROLLER_TILSTØTENDE_YTELSER_INNVILGET,
       ac.KONTROLLER_TILSTØTENDE_YTELSER_OPPHØRT,
-    )
-    .withStatus(getStatusFromUttakresultat),
+    ),
   new BehandlingspunktProperties.Builder(bpc.TILKJENT_YTELSE, 'TilkjentYtelse')
     .withVisibilityWhen(hasNonDefaultBehandlingspunkt)
     .withAksjonspunktCodes(ac.VURDER_TILBAKETREKK)
