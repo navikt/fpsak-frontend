@@ -14,10 +14,9 @@ import { ArbeidsforholdInnhold, buildInitialValues } from './ArbeidsforholdInnho
 describe('<ArbeidsforholdInnhold>', () => {
   const selectedArbeidsforhold = {
     id: 123,
-    jordmor: {
-      tilretteleggingFra: '2019-04-18',
-    },
-    navn: 'Xansen flyttebyrå AS',
+    tilretteleggingBehovFom: '2019-04-18',
+    arbeidsgiverNavn: 'Xansen flyttebyrå AS',
+    arbeidsgiverIdent: 1234,
     kanGjennomfores: {
       kanGjennomfores: true,
       dato: '2019-05-30',

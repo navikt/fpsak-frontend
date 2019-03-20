@@ -30,7 +30,7 @@ export class ArbeidsforholdFaktaPanel extends Component {
 
   setSelectedArbeidsforhold(event, id, selectedArbeidsforhold) {
     const initialValues = {
-      jordmorTilretteleggingFra: selectedArbeidsforhold.jordmor.tilretteleggingFra,
+      jordmorTilretteleggingFra: selectedArbeidsforhold.tilretteleggingBehovFom,
       begrunnelse: selectedArbeidsforhold.begrunnelse,
       kanGjennomfores: selectedArbeidsforhold.kanGjennomfores.kanGjennomfores,
       kanGjennomforesDato: selectedArbeidsforhold.kanGjennomfores.dato,
@@ -55,23 +55,23 @@ export class ArbeidsforholdFaktaPanel extends Component {
   }
 
   updateArbeidsforhold(values) {
-    const { reduxFormChange: formChange, behandlingFormPrefix, arbforhold } = this.props;
-    const otherThanUpdated = arbforhold.filter(a => a.id !== values.id);
-    const fieldValues = otherThanUpdated.concat(values).sort((a, b) => a.navn.localeCompare(b.navn));
-    formChange(`${behandlingFormPrefix}.${'FodselOgTilretteleggingForm'}`, 'arbforhold', fieldValues);
+    const { reduxFormChange: formChange, behandlingFormPrefix, arbeidsforhold } = this.props;
+    const otherThanUpdated = arbeidsforhold.filter(a => a.id !== values.id);
+    const fieldValues = otherThanUpdated.concat(values).sort((a, b) => a.arbeidsgiverNavn.localeCompare(b.arbeidsgiverNavn));
+    formChange(`${behandlingFormPrefix}.${'FodselOgTilretteleggingForm'}`, 'arbeidsforhold', fieldValues);
     this.setState({ selectedArbeidsforhold: undefined });
   }
 
   render() {
     const {
-      arbforhold,
+      arbeidsforhold,
       readOnly,
     } = this.props;
     const { selectedArbeidsforhold } = this.state;
     return (
       <FaktaGruppe titleCode="ArbeidsforholdFaktaPanel.Faktagruppe">
         <ArbeidsforholdTable
-          arbeidsforhold={arbforhold}
+          arbeidsforhold={arbeidsforhold}
           selectArbeidsforholdCallback={this.setSelectedArbeidsforhold}
           selectedArbeidsforhold={selectedArbeidsforhold ? selectedArbeidsforhold.id : undefined}
         />
@@ -90,7 +90,7 @@ export class ArbeidsforholdFaktaPanel extends Component {
   }
 }
 ArbeidsforholdFaktaPanel.propTypes = {
-  arbforhold: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  arbeidsforhold: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
@@ -98,10 +98,10 @@ ArbeidsforholdFaktaPanel.propTypes = {
 };
 
 const mapStateToProps = (state, props) => {
-  const arbforhold = behandlingFormValueSelector(props.formName)(state, 'arbforhold');
-  arbforhold.sort((a, b) => a.navn.localeCompare(b.navn));
+  const arbeidsforhold = behandlingFormValueSelector(props.formName)(state, 'arbeidsforhold');
+  arbeidsforhold.sort((a, b) => a.arbeidsgiverNavn.localeCompare(b.arbeidsgiverNavn));
   return {
-    arbforhold,
+    arbeidsforhold,
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
   };
 };
