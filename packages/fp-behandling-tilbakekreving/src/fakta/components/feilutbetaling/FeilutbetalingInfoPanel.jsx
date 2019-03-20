@@ -281,13 +281,18 @@ const buildInitalValues = (perioder, aksjonspunkter) => {
   };
 };
 
-const transformValues = (values, aksjonspunkter, årsaker) => {
+const transformValues = (values, aksjonspunkter, årsaker, initialPerioder) => {
   const apCode = aksjonspunkter.find(ap => ap.definisjon.kode === feilutbetalingAksjonspunkter[0]);
+  const checkUnderÅrsak = underÅrsaker => (underÅrsaker[0] ? underÅrsaker[0].underÅrsakKode : null);
+  const checkPeriodeUnderÅrsak = periode => (periode[periode.årsak] ? periode[periode.årsak].underÅrsak : null);
+  const underÅrsakNotEqual = (periode, underÅrsaker) => checkPeriodeUnderÅrsak(periode) !== checkUnderÅrsak(underÅrsaker);
+  const hendelseEndringer = values.perioder.some((periode, index) => periode.årsak !== initialPerioder[index].feilutbetalingÅrsakDto.årsakKode
+    || underÅrsakNotEqual(periode, initialPerioder[index].feilutbetalingÅrsakDto.underÅrsaker));
   return [
     {
       kode: apCode.definisjon.kode,
       begrunnelse: values.begrunnelse,
-      feilutbetalingFakta: values.perioder.map((periode) => {
+      feilutbetalingFakta: hendelseEndringer ? values.perioder.map((periode) => {
         const feilutbetalingÅrsak = årsaker.find(el => el.årsakKode === periode.årsak);
         const findUnderÅrsakObjekt = underÅrsak => feilutbetalingÅrsak.underÅrsaker.find(el => el.underÅrsakKode === underÅrsak);
         const feilutbetalingUnderÅrsak = periode[periode.årsak] ? findUnderÅrsakObjekt(periode[periode.årsak].underÅrsak) : false;
@@ -302,7 +307,7 @@ const transformValues = (values, aksjonspunkter, årsaker) => {
             underÅrsaker: feilutbetalingUnderÅrsak ? [feilutbetalingUnderÅrsak] : [],
           },
         };
-      }),
+      }) : [],
     }];
 };
 const mapStateToProps = (state, initialProps) => {
@@ -313,7 +318,7 @@ const mapStateToProps = (state, initialProps) => {
     årsaker,
     initialValues: buildInitalValues(feilutbetaling.perioder, initialProps.aksjonspunkter),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
-    onSubmit: values => initialProps.submitCallback(transformValues(values, initialProps.aksjonspunkter, årsaker)),
+    onSubmit: values => initialProps.submitCallback(transformValues(values, initialProps.aksjonspunkter, årsaker, feilutbetaling.perioder)),
   };
 };
 
