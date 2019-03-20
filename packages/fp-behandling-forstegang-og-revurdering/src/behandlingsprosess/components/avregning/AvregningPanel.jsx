@@ -11,7 +11,7 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { behandlingspunktCodes, featureToggle } from '@fpsak-frontend/fp-felles';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { getSelectedBehandlingId, getFeatureToggles } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getSelectedBehandlingId, getFeatureToggles, getSelectedSaksnummer } from 'behandlingForstegangOgRevurdering/src/duck';
 import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import {
   VerticalSpacer, AksjonspunktHelpText, ArrowBox, Image, FadingPanel,
@@ -146,8 +146,8 @@ export class AvregningPanelImpl extends Component {
   }
 
   previewMessage(e, previewCallback) {
-    const { varseltekst } = this.props;
-    previewCallback('', dokumentMalType.TBKVAR, varseltekst || ' ');
+    const { varseltekst, saksnummer } = this.props;
+    previewCallback('', dokumentMalType.TBKVAR, varseltekst || ' ', saksnummer);
     e.preventDefault();
   }
 
@@ -413,6 +413,7 @@ const mapStateToProps = (state, initialProps) => ({
   sprakkode: getBehandlingSprak(state),
   behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
   featureVarseltekst: getFeatureToggles(state)[featureToggle.SIMULER_VARSELTEKST],
+  saksnummer: getSelectedSaksnummer(state),
   onSubmit: values => initialProps.submitCallback(transformValues(values, initialProps.apCodes[0])),
 });
 

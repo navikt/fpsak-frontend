@@ -127,11 +127,12 @@ export class BpTimelinePanel extends Component {
       hovedsokerKjonnKode,
     } = this.props;
     const { selectedItem } = this.state;
-    const childrenWithProps = React.Children.map(children, child => React.cloneElement(child, {
+    const childWithProps = React.cloneElement(children, {
       selectedItemData: selectedItem,
       cancelSelectedActivity: this.cancelSelectedActivity,
       updateActivity: this.updateActivity,
-    }));
+      key: selectedItem ? selectedItem.tom : null,
+    });
 
     return (
       <>
@@ -156,7 +157,7 @@ export class BpTimelinePanel extends Component {
             formName={formName}
             activityPanelName={activityPanelName}
           >
-            { childrenWithProps }
+            { childWithProps }
           </BpTimelineData>
         )
         }
