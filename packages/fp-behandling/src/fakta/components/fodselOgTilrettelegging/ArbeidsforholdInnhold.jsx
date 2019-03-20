@@ -118,7 +118,7 @@ const validateWarning = (values) => {
 
 const transformValues = (values, selectedArbeidsforhold) => {
   const { ...transformvalue } = selectedArbeidsforhold;
-  transformvalue.jordmor.tilretteleggingFra = values.jordmorTilretteleggingFra;
+  transformvalue.tilretteleggingBehovFom = values.jordmorTilretteleggingFra;
   transformvalue.kanGjennomfores.kanGjennomfores = values.kanGjennomfores;
   transformvalue.kanGjennomfores.dato = values.kanGjennomforesDato;
   transformvalue.kanIkkeGjennomfores.kanIkkeGjennomfores = values.kanIkkeGjennomfores;
@@ -131,7 +131,7 @@ const transformValues = (values, selectedArbeidsforhold) => {
 };
 
 export const buildInitialValues = values => ({
-  jordmorTilretteleggingFra: values.jordmor.tilretteleggingFra,
+  jordmorTilretteleggingFra: values.tilretteleggingBehovFom,
   begrunnelse: values.begrunnelse,
   kanGjennomfores: values.kanGjennomfores.kanGjennomfores,
   kanGjennomforesDato: values.kanGjennomfores.dato,

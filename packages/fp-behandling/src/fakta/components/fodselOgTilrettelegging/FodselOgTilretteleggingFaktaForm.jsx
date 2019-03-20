@@ -64,16 +64,19 @@ const transformValues = values => ({
 });
 
 const mapStateToProps = (state, ownProps) => {
-  // TODO: hente info fra backend når klart.  Dette blir helt sikkert på et litt annet format og feltnavn
+  // TODO: hente info fra backend når klart.  venter avklaring på om det blir checkboxer( mulighet for flere datoer),
+  //  eller radiobuttons (kun 1 dato)
   const tilrettelegging = {
     termindato: '2019-08-01',
-    arbforhold: [
+    fødselsdato: null,
+    arbeidsforholdListe: [
       {
         id: 123,
-        jordmor: {
-          tilretteleggingFra: '2019-04-18',
-        },
-        navn: 'Xansen flyttebyrå AS',
+        tilretteleggingBehovFom: '2019-04-18',
+        arbeidsgiverNavn: 'Xansen flyttebyrå AS',
+        arbeidsgiverIdent: 1234,
+        // tilretteleggingType: 'KODE', // felt som det er nå i backend, tilpasset for kun 1 valg
+        // tiltakFom: ''2019-05-30'', // felt som det er nå i backend, tilpasset for kun 1 valg
         // tilrettelegging: [{
         //   kanGjennomfores: true,
         //   dato: '2019-05-30',
@@ -102,10 +105,11 @@ const mapStateToProps = (state, ownProps) => {
       },
       {
         id: 456,
-        jordmor: {
-          tilretteleggingFra: '2019-06-20',
-        },
-        navn: 'Rema 100',
+        tilretteleggingBehovFom: '2019-06-20',
+        arbeidsgiverNavn: 'Rema 100',
+        arbeidsgiverIdent: 432,
+        // tilretteleggingType: 'KODE',
+        // tiltakFom: ''2019-05-30'',
         kanGjennomfores: {
           kanGjennomfores: false,
           dato: '',
@@ -125,7 +129,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     initialValues: {
       termindato: tilrettelegging.termindato,
-      arbforhold: tilrettelegging.arbforhold,
+      arbeidsforhold: tilrettelegging.arbeidsforholdListe,
     },
     onSubmit: values => ownProps.submitCallback(transformValues(values)),
   };

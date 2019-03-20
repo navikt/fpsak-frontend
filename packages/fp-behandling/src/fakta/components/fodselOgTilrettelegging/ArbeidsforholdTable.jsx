@@ -34,10 +34,16 @@ const ArbeidsforholdTable = ({
         isSelected={a.id === selectedArbeidsforhold}
       >
         <TableColumn>
-          <Normaltekst>{a.navn}</Normaltekst>
+          <Normaltekst>
+            {a.arbeidsgiverNavn}
+            {' '}
+(
+            {a.arbeidsgiverIdent}
+)
+          </Normaltekst>
         </TableColumn>
         <TableColumn>
-          <Normaltekst>{moment(a.jordmor.tilretteleggingFra).format(DDMMYYYY_DATE_FORMAT)}</Normaltekst>
+          <Normaltekst>{moment(a.tilretteleggingBehovFom).format(DDMMYYYY_DATE_FORMAT)}</Normaltekst>
         </TableColumn>
       </TableRow>
     ))}
