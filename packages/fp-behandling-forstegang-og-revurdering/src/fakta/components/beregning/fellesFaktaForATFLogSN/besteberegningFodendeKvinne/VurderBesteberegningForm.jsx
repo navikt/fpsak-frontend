@@ -88,7 +88,7 @@ VurderBesteberegningPanelImpl.validate = (values, aktivertePaneler) => {
   const errors = {};
   errors[besteberegningField] = required(values[besteberegningField]);
   if (!errors[besteberegningField]) {
-    if (aktivertePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
+    if (aktivertePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG) && values[besteberegningField]) {
       errors[besteberegningField] = erIkkeStottet();
     }
   }
