@@ -94,6 +94,7 @@ export class AvregningPanelImpl extends Component {
     this.toggleDetails = this.toggleDetails.bind(this);
     this.resetFields = this.resetFields.bind(this);
     this.previewMessage = this.previewMessage.bind(this);
+    this.textVarselBox = React.createRef();
 
     this.state = {
       showDetails: [],
@@ -166,9 +167,10 @@ export class AvregningPanelImpl extends Component {
       ...formProps
     } = this.props;
     const simuleringResultatOption = getSimuleringResult(simuleringResultat, feilutbetaling);
+    const varselBoxHeight = this.textVarselBox.current ? this.textVarselBox.current.clientHeight : null;
     const inlineStyle = {
       radioOption: {
-        height: (videreBehandling === avregningCodes.TILBAKEKR_INFOTRYGD && featureVarseltekst) ? 250 : 'auto',
+        height: (videreBehandling === avregningCodes.TILBAKEKR_INFOTRYGD && featureVarseltekst) ? varselBoxHeight + 45 : 'auto',
       },
     };
 
@@ -243,7 +245,10 @@ export class AvregningPanelImpl extends Component {
                         </RadioGroupField>
                         { videreBehandling === avregningCodes.TILBAKEKR_INFOTRYGD && featureVarseltekst
                         && (
-                          <div className={styles.varsel}>
+                          <div
+                            className={styles.varsel}
+                            ref={this.textVarselBox}
+                          >
                             <ArrowBox alignOffset={20}>
                               <Normaltekst className={styles.bold}><FormattedMessage id="Avregning.varseltekst" /></Normaltekst>
                               <VerticalSpacer eightPx />
