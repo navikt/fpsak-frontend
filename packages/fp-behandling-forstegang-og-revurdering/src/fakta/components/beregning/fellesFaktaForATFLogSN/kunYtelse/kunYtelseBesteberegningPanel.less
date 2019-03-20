@@ -12,28 +12,3 @@
 .navetLink:hover {
   border-bottom: 1px solid @navBla;
 }
-
-.arrowLine() {
-  composes: panel panel-relatert from '@fpsak-frontend/assets/styles/arrowLineModigDesign.less';
-  margin-bottom: 10px;
-  padding-bottom: 10px;
-  padding-left: 15px;
-  padding-top: 5px;
-  width: 100%;
-}
-
-.arrowLineBesteberegning() {
-  composes: arrowLine;
-}
-
-.arrowLineBesteberegning:before {
-  left: 0;
-}
-
-.arrowLineIngenBesteberegning() {
-  composes: arrowLine;
-}
-
-.arrowLineIngenBesteberegning:before {
-  left: 60px;
-}

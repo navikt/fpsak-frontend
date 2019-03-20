@@ -1,14 +1,5 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
-.arrowLine() {
-  composes: panel panel-relatert from '@fpsak-frontend/assets/styles/arrowLineModigDesign.less';
-  margin-bottom: 10px;
-  padding-bottom: 10px;
-  padding-left: 15px;
-  padding-top: 5px;
-  width: 100%;
-}
-
 .row {
   display: flex;
   flex-flow: row nowrap;
@@ -21,22 +12,4 @@
   .inlineLabel {
     margin-top: 4px;
   }
-}
-
-.arrowLineLonnsendring() {
-  composes: arrowLine;
-  max-width: 900px;
-}
-
-.arrowLineLonnsendring:before {
-  left: 0;
-}
-
-.arrowLineIngenLonnsendring() {
-  composes: arrowLine;
-  max-width: 1000px;
-}
-
-.arrowLineIngenLonnsendring:before {
-  left: 60px;
 }

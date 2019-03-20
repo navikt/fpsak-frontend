@@ -9,8 +9,8 @@ import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import 'core-js/fn/array/flat-map';
+import { ArrowBox } from '@fpsak-frontend/shared-components';
 import FastsettEtterlonnSluttpakkeForm from './FastsettEtterlonnSluttpakkeForm';
-import styles from './vurderEtterlonnSluttpakkeForm.less';
 import { getFormValuesForBeregning } from '../../BeregningFormUtils';
 
 /**
@@ -41,12 +41,12 @@ const VurderEtterlonnSluttpakkeForm = ({
     && (
       <Row>
         <Column xs="12">
-          <div className={styles.arrowLineEtterlonnSluttpakke}>
+          <ArrowBox>
             <FastsettEtterlonnSluttpakkeForm
               readOnly={readOnly}
               isAksjonspunktClosed={isAksjonspunktClosed}
             />
-          </div>
+          </ArrowBox>
         </Column>
       </Row>
     )

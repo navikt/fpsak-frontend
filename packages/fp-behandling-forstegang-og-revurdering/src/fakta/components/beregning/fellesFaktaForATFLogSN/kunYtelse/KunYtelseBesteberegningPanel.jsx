@@ -9,6 +9,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { LINK_TIL_BESTE_BEREGNING_REGNEARK } from '@fpsak-frontend/fp-felles';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
+import { ArrowBox } from '@fpsak-frontend/shared-components';
 // TODO (SAFIR) PFP-6021 Ta i bruk InntektFieldArray i staden for BrukersAndelFieldArray
 import BrukersAndelFieldArray from './BrukersAndelFieldArray';
 import { getFormValuesForBeregning } from '../../BeregningFormUtils';
@@ -41,7 +42,7 @@ const KunYtelseBesteberegningImpl = ({
     </RadioGroupField>
     {erBesteberegning !== undefined && erBesteberegning !== null
     && (
-      <div className={erBesteberegning ? styles.arrowLineBesteberegning : styles.arrowLineIngenBesteberegning}>
+      <ArrowBox alignOffset={erBesteberegning ? 0 : 60}>
         <Row>
           <Column xs="9">
             <Element>
@@ -72,7 +73,7 @@ const KunYtelseBesteberegningImpl = ({
             />
           </Column>
         </Row>
-      </div>
+      </ArrowBox>
     )
   }
   </div>

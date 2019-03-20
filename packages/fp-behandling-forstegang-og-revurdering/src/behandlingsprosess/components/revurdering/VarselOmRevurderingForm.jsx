@@ -11,7 +11,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
-  FadingPanel, VerticalSpacer, AksjonspunktHelpText,
+  FadingPanel, VerticalSpacer, AksjonspunktHelpText, ArrowBox,
 } from '@fpsak-frontend/shared-components';
 import PropTypes from 'prop-types';
 import { getBehandlingLanguageCode, getBehandlingArsaker } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
@@ -20,7 +20,6 @@ import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangO
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import FodselSammenligningPanel from 'behandlingForstegangOgRevurdering/src/components/fodselSammenligning/FodselSammenligningPanel';
 import { SettBehandlingPaVentModal } from '@fpsak-frontend/fp-felles';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
@@ -137,7 +136,7 @@ export class VarselOmRevurderingFormImpl extends React.Component {
               </RadioGroupField>
               {sendVarsel
               && (
-              <div className={styles.arrowLine}>
+              <ArrowBox>
                 <TextAreaField
                   badges={[{ textId: languageCode, type: 'fokus', title: 'Malform.Beskrivelse' }]}
                   name="fritekst"
@@ -153,8 +152,9 @@ export class VarselOmRevurderingFormImpl extends React.Component {
                 >
                   <FormattedMessage id="Messages.Preview" />
                 </a>
-              </div>
+              </ArrowBox>
               )}
+
               <div className={styles.flexContainer}>
                 <TextAreaField
                   name="begrunnelse"

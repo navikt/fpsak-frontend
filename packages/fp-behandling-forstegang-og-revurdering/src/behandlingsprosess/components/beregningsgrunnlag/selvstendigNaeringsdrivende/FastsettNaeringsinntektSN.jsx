@@ -9,6 +9,7 @@ import {
   required, minLength, maxLength, hasValidText,
   parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr,
 } from '@fpsak-frontend/utils';
+import { ArrowBox } from '@fpsak-frontend/shared-components';
 import {
   InputField, RadioGroupField, RadioOption, TextAreaField,
 } from '@fpsak-frontend/form';
@@ -146,7 +147,7 @@ export const FastsettNaeringsinntektSNImpl = ({
         && (
         <Row>
           <Column xs="12">
-            <div className={styles.arrowLineVarigEndretNaering}>
+            <ArrowBox>
               <Row>
                 <Element>
                   <FormattedMessage
@@ -178,7 +179,7 @@ export const FastsettNaeringsinntektSNImpl = ({
                   />
                 </Column>
               </Row>
-            </div>
+            </ArrowBox>
           </Column>
         </Row>
         )
