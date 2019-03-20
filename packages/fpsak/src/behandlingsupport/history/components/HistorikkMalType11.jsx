@@ -58,7 +58,7 @@ const HistorikkMalType11 = ({
   historikkinnslagDeler, behandlingLocation,
 }) => (
   <div>
-    {historikkinnslagDeler[0].skjermlenke
+    {historikkinnslagDeler[0] && historikkinnslagDeler[0].skjermlenke
     && (
       <Element>
         <NavLink
@@ -86,7 +86,7 @@ const HistorikkMalType11 = ({
       </div>
     ) : null))
     }
-    {historikkinnslagDeler[0].begrunnelseFritekst && (
+    {historikkinnslagDeler[0] && historikkinnslagDeler[0].begrunnelseFritekst && (
       <BubbleText
         bodyText={historikkinnslagDeler[0].begrunnelseFritekst}
         className="snakkeboble-panel__tekst"
