@@ -26,6 +26,7 @@ const behandlingspunktCodes = {
   VEDTAK: 'vedtak',
   UTTAK: 'uttak',
   SIMULERING: 'simulering',
+  SVANGERSKAP: 'svangerskap',
   KLAGE_RESULTAT: 'resultat',
 };
 

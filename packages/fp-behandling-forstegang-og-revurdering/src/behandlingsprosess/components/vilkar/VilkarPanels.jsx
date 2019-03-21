@@ -10,6 +10,7 @@ import ErForeldreansvar2LeddVilkaarOppfyltForm from './foreldreansvar/ErForeldre
 import ErForeldreansvar4LeddVilkaarOppfyltForm from './foreldreansvar/ErForeldreansvar4LeddVilkaarOppfyltForm';
 import SokersOpplysningspliktForm from './sokersOpplysningsplikt/SokersOpplysningspliktForm';
 import FodselVilkarForm from './fodsel/FodselVilkarForm';
+import SvangerskapVilkarForm from './svangerskap/SvangerskapVilkarForm';
 import AdopsjonVilkarForm from './adopsjon/AdopsjonVilkarForm';
 import OpptjeningVilkarView from './opptjening/OpptjeningVilkarView';
 import VilkarresultatMedOverstyringForm from './VilkarresultatMedOverstyringForm';
@@ -69,6 +70,18 @@ export const VilkarPanels = ({
         behandlingspunkt={behandlingspunkt}
         readOnly={readOnly}
         readOnlySubmitButton={readOnlySubmitButton}
+      />
+      )
+    }
+    {/* TODO: styre når dette vises */}
+
+    {SvangerskapVilkarForm.supports(behandlingspunkt)
+      && (
+      <SvangerskapVilkarForm
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+        readOnlySubmitButton={readOnlySubmitButton}
+        isAksjonspunktOpen={isAksjonspunktOpen}
       />
       )
     }
