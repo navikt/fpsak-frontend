@@ -38,6 +38,16 @@ export const AVKLARTE_BARN_FORM_NAME_PREFIX = 'avklartBarn';
 
 export const avklarteBarnFieldArrayName = 'avklartBarn';
 
+const createNewChildren = (antallBarnFraSoknad) => {
+  let antallBarn = antallBarnFraSoknad;
+  const childrenArray = [];
+  while (antallBarn > 0) {
+    childrenArray.push({ fodselsdato: '', isBarnDodt: false, dodsDato: '' });
+    antallBarn -= 1;
+  }
+  return childrenArray;
+};
+
 /**
  * FodselInfoPanel
  *
@@ -173,25 +183,27 @@ SjekkFodselDokForm.defaultProps = {
   avklartBarn: [],
 };
 
-const createNewChildren = (antallBarnFraSoknad) => {
-  let antallBarn = antallBarnFraSoknad;
-  const childrenArray = [];
-  while (antallBarn > 0) {
-    childrenArray.push({ fodselsdato: '', isBarnDodt: false, dodsDato: '' });
-    antallBarn -= 1;
-  }
-  return childrenArray;
-};
 
 const addIsBarnDodt = (avklarteBarn) => {
   const avklarteBarnMedDodFlagg = [];
-  avklarteBarn.forEach((barn) => {
-    if (barn.dodsdato) {
-      barn.isBarnDodt = true;
-    }
+  avklarteBarn.forEach((barn, index) => {
     avklarteBarnMedDodFlagg.push(barn);
+    if (barn.dodsdato) {
+      avklarteBarnMedDodFlagg[index].isBarnDodt = true;
+    }
   });
   return avklarteBarnMedDodFlagg;
+};
+
+const allaBarn = (avklarteBarn) => {
+  const komplettBarn = [];
+  avklarteBarn.forEach((barn, index) => {
+    komplettBarn.push(barn);
+    if (!barn.isBarnDodt) {
+      komplettBarn[index].dodsdato = null;
+    }
+  });
+  return komplettBarn;
 };
 
 export const buildInitialValues = createSelector([getFamiliehendelse, getAksjonspunkter, getSoknadAntallBarn],
@@ -218,7 +230,7 @@ const transformValues = (values, antallBarnFraSoknad, antallBarnFraTps, fodselIn
   antallBarnFodt: values.dokumentasjonForeligger
     ? getAntallBarn(values.brukAntallBarnITps, values.antallBarnFodt, antallBarnFraSoknad, antallBarnFraTps) : undefined,
   dokumentasjonForeligger: values.dokumentasjonForeligger,
-  uidentifiserteBarn: values.avklartBarn,
+  uidentifiserteBarn: allaBarn(values.avklartBarn),
   brukAntallBarnITps: fodselInfo && !!fodselInfo.length ? values.brukAntallBarnITps : false,
   ...FaktaBegrunnelseTextField.transformValues(values),
 });
