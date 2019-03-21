@@ -53,20 +53,24 @@ export const SjekkFodselDokForm = ({
   initialValues,
   submittable,
   avklartBarn,
-}) => (
-  <ElementWrapper>
-    <FodselSammenligningPanel />
-    <FaktaGruppe
-      aksjonspunktCode={aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL}
-      titleCode="SjekkFodselDokForm.DokumentasjonAvFodsel"
-    >
-      <div className={styles.horizontalForm}>
-        <RadioGroupField name="dokumentasjonForeligger" validate={[required]} readOnly={readOnly} isEdited={dokumentasjonForeliggerIsEdited}>
-          <RadioOption label={<FormattedMessage id="SjekkFodselDokForm.DokumentasjonForeligger" />} value />
-          <RadioOption label={<FormattedMessage id="SjekkFodselDokForm.DokumentasjonForeliggerIkke" />} value={false} />
-        </RadioGroupField>
-      </div>
-      {fodselInfo && !!fodselInfo.length && dokumentasjonForeligger
+}) => {
+  if (avklartBarn === []) {
+    createNewChildren(1);
+  }
+  return (
+    <ElementWrapper>
+      <FodselSammenligningPanel />
+      <FaktaGruppe
+        aksjonspunktCode={aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL}
+        titleCode="SjekkFodselDokForm.DokumentasjonAvFodsel"
+      >
+        <div className={styles.horizontalForm}>
+          <RadioGroupField name="dokumentasjonForeligger" validate={[required]} readOnly={readOnly} isEdited={dokumentasjonForeliggerIsEdited}>
+            <RadioOption label={<FormattedMessage id="SjekkFodselDokForm.DokumentasjonForeligger" />} value />
+            <RadioOption label={<FormattedMessage id="SjekkFodselDokForm.DokumentasjonForeliggerIkke" />} value={false} />
+          </RadioGroupField>
+        </div>
+        {fodselInfo && !!fodselInfo.length && dokumentasjonForeligger
       && (
         <div className={styles.clearfix}>
           <Column xs="6">
@@ -88,7 +92,7 @@ export const SjekkFodselDokForm = ({
         </div>
       )
       }
-      {(!fodselInfo || !fodselInfo.length) && dokumentasjonForeligger
+        {(!fodselInfo || !fodselInfo.length) && dokumentasjonForeligger
       && (
         <div className={styles.clearfix}>
           <Column xs="12">
@@ -137,11 +141,12 @@ export const SjekkFodselDokForm = ({
         </div>
       )
       }
-    </FaktaGruppe>
-    <VerticalSpacer sixteenPx />
-    <FaktaBegrunnelseTextField isDirty={dirty} isSubmittable={submittable} isReadOnly={readOnly} hasBegrunnelse={!!initialValues.begrunnelse} />
-  </ElementWrapper>
-);
+      </FaktaGruppe>
+      <VerticalSpacer sixteenPx />
+      <FaktaBegrunnelseTextField isDirty={dirty} isSubmittable={submittable} isReadOnly={readOnly} hasBegrunnelse={!!initialValues.begrunnelse} />
+    </ElementWrapper>
+  );
+};
 
 SjekkFodselDokForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
@@ -165,52 +170,39 @@ SjekkFodselDokForm.defaultProps = {
     kode: '',
     navn: '',
   },
-  avklartBarn: undefined,
+  avklartBarn: [],
 };
 
 const createNewChildren = (antallBarnFraSoknad) => {
   let antallBarn = antallBarnFraSoknad;
   const childrenArray = [];
   while (antallBarn > 0) {
-    childrenArray.push({ fodselsdato: '', barnDod: false, dodsDato: '' });
+    childrenArray.push({ fodselsdato: '', isBarnDodt: false, dodsDato: '' });
     antallBarn -= 1;
   }
   return childrenArray;
 };
-/*
-export const buildInitialValues = createSelector([getFamiliehendelse, getAksjonspunkter], (familiehendelse, aksjonspunkter) => ({
-  fodselsdato: familiehendelse.fodselsdato ? familiehendelse.fodselsdato : null,
-  antallBarnFodt: familiehendelse.antallBarnFodsel ? familiehendelse.antallBarnFodsel : null,
-  dokumentasjonForeligger: familiehendelse.dokumentasjonForeligger !== null
-    ? familiehendelse.dokumentasjonForeligger : undefined,
-  brukAntallBarnITps: familiehendelse.brukAntallBarnFraTps !== null
-    ? familiehendelse.brukAntallBarnFraTps : undefined,
-  ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL)),
-})); */
+
+const addIsBarnDodt = (avklarteBarn) => {
+  const avklarteBarnMedDodFlagg = [];
+  avklarteBarn.forEach((barn) => {
+    if (barn.dodsdato) {
+      barn.isBarnDodt = true;
+    }
+    avklarteBarnMedDodFlagg.push(barn);
+  });
+  return avklarteBarnMedDodFlagg;
+};
 
 export const buildInitialValues = createSelector([getFamiliehendelse, getAksjonspunkter, getSoknadAntallBarn],
-  (familiehendelse, aksjonspunkter, soknadAntallBarn) => {
-    if (familiehendelse.avklartBarn && familiehendelse.avklartBarn !== null) {
-      return ({
-        dokumentasjonForeligger: familiehendelse.dokumentasjonForeligger !== null
-          ? familiehendelse.dokumentasjonForeligger : undefined,
-        brukAntallBarnITps: familiehendelse.brukAntallBarnFraTps !== null
-          ? familiehendelse.brukAntallBarnFraTps : undefined,
-        avklartBarn: familiehendelse.avklartBarn ? familiehendelse.avklartBarn : createNewChildren(soknadAntallBarn),
-        ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL)),
-      });
-    }
-    // TODO: remove when 574 is in place
-    return ({
-      fodselsdato: familiehendelse.fodselsdato ? familiehendelse.fodselsdato : null,
-      antallBarnFodt: familiehendelse.antallBarnFodsel ? familiehendelse.antallBarnFodsel : null,
-      dokumentasjonForeligger: familiehendelse.dokumentasjonForeligger !== null
-        ? familiehendelse.dokumentasjonForeligger : undefined,
-      brukAntallBarnITps: familiehendelse.brukAntallBarnFraTps !== null
-        ? familiehendelse.brukAntallBarnFraTps : undefined,
-      ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL)),
-    });
-  });
+  (familiehendelse, aksjonspunkter, soknadAntallBarn) => ({
+    dokumentasjonForeligger: familiehendelse.dokumentasjonForeligger !== null
+      ? familiehendelse.dokumentasjonForeligger : undefined,
+    brukAntallBarnITps: familiehendelse.brukAntallBarnFraTps !== null
+      ? familiehendelse.brukAntallBarnFraTps : undefined,
+    avklartBarn: familiehendelse.avklartBarn ? addIsBarnDodt(familiehendelse.avklartBarn) : createNewChildren(soknadAntallBarn),
+    ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL)),
+  }));
 
 
 const getAntallBarn = (brukAntallBarnITps, antallBarnLagret, antallBarnFraSoknad, antallBarnFraTps) => {
