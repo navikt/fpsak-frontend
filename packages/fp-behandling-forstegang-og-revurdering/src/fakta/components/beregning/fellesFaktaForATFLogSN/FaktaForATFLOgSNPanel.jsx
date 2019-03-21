@@ -63,13 +63,18 @@ export const mapStateToValidationProps = createStructuredSelector({
   beregningsgrunnlag: getBeregningsgrunnlag,
 });
 
-export const getValidationFaktaForATFLOgSN = createSelector([mapStateToValidationProps], props => values => ({
-  ...FastsettEndretBeregningsgrunnlag.validate(values, props.endringBGPerioder, props.aktivertePaneler, props.faktaOmBeregning, props.beregningsgrunnlag),
-  ...getKunYtelseValidation(values, props.kunYtelse, props.endringBGPerioder, props.aktivertePaneler),
-  ...VurderMottarYtelseForm.validate(values, props.vurderMottarYtelse),
-  ...VurderBesteberegningForm.validate(values, props.aktivertePaneler),
-  ...VurderOgFastsettATFL.validate(values, props.aktivertePaneler, props.faktaOmBeregning, props.beregningsgrunnlag),
-}));
+export const getValidationFaktaForATFLOgSN = createSelector([mapStateToValidationProps], props => (values) => {
+  if (!values || !props.faktaOmBeregning || !props.beregningsgrunnlag || !props.aktivertePaneler) {
+    return {};
+  }
+  return ({
+    ...FastsettEndretBeregningsgrunnlag.validate(values, props.endringBGPerioder, props.aktivertePaneler, props.faktaOmBeregning, props.beregningsgrunnlag),
+    ...getKunYtelseValidation(values, props.kunYtelse, props.endringBGPerioder, props.aktivertePaneler),
+    ...VurderMottarYtelseForm.validate(values, props.vurderMottarYtelse),
+    ...VurderBesteberegningForm.validate(values, props.aktivertePaneler),
+    ...VurderOgFastsettATFL.validate(values, props.aktivertePaneler, props.faktaOmBeregning, props.beregningsgrunnlag),
+  });
+});
 
 export const lagHelpTextsForFakta = (aktivertePaneler) => {
   const helpTexts = [];

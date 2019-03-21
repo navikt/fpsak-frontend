@@ -6,7 +6,8 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 
 export const transformValuesForATFLISammeOrg = (inntektVerdier, faktaOmBeregning, fastsatteAndelsnr) => {
-  if (faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)) {
+  if (faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)
+  && inntektVerdier) {
     const andelsliste = inntektVerdier
       .filter(field => !fastsatteAndelsnr.includes(field.andelsnr))
       .filter(field => faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.map(({ andelsnr }) => andelsnr).includes(field.andelsnr))
@@ -16,7 +17,7 @@ export const transformValuesForATFLISammeOrg = (inntektVerdier, faktaOmBeregning
       }));
 
 
-    if (faktaOmBeregning.frilansAndel && !fastsatteAndelsnr.includes(faktaOmBeregning.frilansAndel.andelsnr)) {
+    if (faktaOmBeregning.frilansAndel && !fastsatteAndelsnr.includes(faktaOmBeregning.frilansAndel.andelsnr) && inntektVerdier) {
       const frilansVerdi = inntektVerdier.find(verdi => verdi.andelsnr === faktaOmBeregning.frilansAndel.andelsnr);
       andelsliste.push({
         andelsnr: faktaOmBeregning.frilansAndel.andelsnr,
