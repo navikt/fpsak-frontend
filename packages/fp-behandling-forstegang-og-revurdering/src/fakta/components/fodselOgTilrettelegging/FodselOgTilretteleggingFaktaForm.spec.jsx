@@ -3,7 +3,7 @@ import { expect } from 'chai';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { DatepickerField } from '@fpsak-frontend/form';
-import FaktaSubmitButton from 'behandlingFpsak/src/fakta/components/FaktaSubmitButton';
+import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 
 import { FodselOgTilretteleggingFaktaForm } from './FodselOgTilretteleggingFaktaForm';
 import ArbeidsforholdFaktaPanel from './ArbeidsforholdFaktaPanel';

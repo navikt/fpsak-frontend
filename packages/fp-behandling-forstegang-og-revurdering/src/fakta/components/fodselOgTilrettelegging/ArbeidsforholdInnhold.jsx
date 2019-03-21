@@ -14,7 +14,7 @@ import {
   required, hasValidDate, maxLength, minLength, hasValidText,
 } from '@fpsak-frontend/utils';
 
-import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
+import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import ArbeidsforholdCheckboxes from './ArbeidsforholdCheckboxes';
 import styles from './arbeidsforholdInnhold.less';
 

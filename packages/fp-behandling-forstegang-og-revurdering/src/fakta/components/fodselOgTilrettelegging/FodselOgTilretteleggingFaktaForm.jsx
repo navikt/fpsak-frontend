@@ -9,8 +9,8 @@ import {
   required, hasValidDate,
 } from '@fpsak-frontend/utils';
 
-import FaktaSubmitButton from 'behandlingFpsak/src/fakta/components/FaktaSubmitButton';
-import { behandlingForm } from 'behandlingFpsak/src/behandlingForm';
+import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
+import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import ArbeidsforholdFaktaPanel from './ArbeidsforholdFaktaPanel';
 
 /**
