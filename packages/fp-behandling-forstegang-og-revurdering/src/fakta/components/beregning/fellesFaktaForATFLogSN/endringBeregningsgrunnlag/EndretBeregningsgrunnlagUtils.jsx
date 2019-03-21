@@ -15,7 +15,6 @@ import {
   getFaktaOmBeregningTilfellerKoder,
   getFaktaOmBeregning,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { byggListeSomStreng } from '../tilstøtendeYtelse/YtelsePanel';
 import { skalFastsetteForATUavhengigAvATFLSammeOrg, skalFastsetteForFLUavhengigAvATFLSammeOrg } from '../BgFordelingUtils';
 import { getFormValuesForBeregning } from '../../BeregningFormUtils';
 
@@ -53,6 +52,22 @@ export const getEndredeArbeidsforhold = createSelector(
     return [];
   },
 );
+
+export const byggListeSomStreng = (listeMedStrenger) => {
+  if (listeMedStrenger.length === 0) {
+    return '';
+  }
+  if (listeMedStrenger.length === 1) {
+    return listeMedStrenger[0];
+  }
+  if (listeMedStrenger.length === 2) {
+    return `${listeMedStrenger[0]} og ${listeMedStrenger[1]}`;
+  }
+  if (listeMedStrenger.length > 2) {
+    return `${listeMedStrenger.splice(0, listeMedStrenger.length - 1).join(', ')} og ${listeMedStrenger[listeMedStrenger.length - 1]}`;
+  }
+  return '';
+};
 
 const lagPeriodeStreng = (perioder) => {
   const listeMedPeriodeStrenger = perioder.map((periode) => {

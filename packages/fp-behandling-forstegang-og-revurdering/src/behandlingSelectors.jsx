@@ -180,9 +180,6 @@ export const getVurderMottarYtelse = createSelector(
 export const getKunYtelse = createSelector(
   [getFaktaOmBeregning], (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.kunYtelse : undefined),
 );
-export const getTilstøtendeYtelse = createSelector(
-  [getFaktaOmBeregning], (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.tilstøtendeYtelse : undefined),
-);
 export const getKortvarigeArbeidsforhold = createSelector(
   [getFaktaOmBeregning], (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.kortvarigeArbeidsforhold : undefined),
 );

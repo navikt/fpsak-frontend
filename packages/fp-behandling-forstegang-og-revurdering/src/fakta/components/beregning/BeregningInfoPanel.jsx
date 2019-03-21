@@ -15,7 +15,6 @@ import {
 import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { AksjonspunktHelpText, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { erSpesialtilfelleMedEkstraKnapp } from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { getHelpTextsFaktaForATFLOgSN } from './fellesFaktaForATFLogSN/FaktaForATFLOgSNPanel';
 import VurderFaktaBeregningPanel, {
   transformValuesVurderFaktaBeregning,
@@ -49,7 +48,7 @@ const getHelpText = createSelector([getHelpTextsAvklarAktiviteter, getHelpTextsF
 
 const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
-const createRelevantForms = (readOnly, aksjonspunkter, showTableCallback, verdiForAvklartErEndret, submittable, isDirty) => (
+const createRelevantForms = (readOnly, aksjonspunkter, verdiForAvklartErEndret, submittable, isDirty) => (
   <div>
     {hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)
       && (
@@ -67,7 +66,6 @@ const createRelevantForms = (readOnly, aksjonspunkter, showTableCallback, verdiF
       <VurderFaktaBeregningPanel
         readOnly={readOnly}
         formName={formName}
-        showTableCallback={showTableCallback}
         submittable={submittable}
         isDirty={isDirty}
       />
@@ -89,28 +87,19 @@ export class BeregningInfoPanelImpl extends Component {
     this.state = {
       submitEnabled: false,
     };
-    this.showTableCallback = this.showTableCallback.bind(this);
   }
 
   componentDidMount() {
-    const { faktaTilfeller } = this.props;
     const { submitEnabled } = this.state;
-    if (!erSpesialtilfelleMedEkstraKnapp(faktaTilfeller) && !submitEnabled) {
+    if (!submitEnabled) {
       this.setState({
         submitEnabled: true,
       });
     }
   }
 
-  showTableCallback() {
-    this.setState({
-      submitEnabled: true,
-    });
-  }
-
   render() {
     const {
-      showTableCallback,
       props: {
         intl,
         openInfoPanels,
@@ -147,7 +136,7 @@ export class BeregningInfoPanelImpl extends Component {
         <VerticalSpacer sixteenPx />
         <VerticalSpacer sixteenPx />
         <form onSubmit={formProps.handleSubmit}>
-          {createRelevantForms(readOnly, aksjonspunkter, showTableCallback, verdiForAvklarAktivitetErEndret, submittable, formProps.dirty)}
+          {createRelevantForms(readOnly, aksjonspunkter, verdiForAvklarAktivitetErEndret, submittable, formProps.dirty)}
           <ElementWrapper>
             <VerticalSpacer twentyPx />
             <FaktaSubmitButton

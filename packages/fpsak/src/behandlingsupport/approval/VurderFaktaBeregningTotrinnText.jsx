@@ -9,7 +9,6 @@ const vurderFaktaOmBeregningTotrinnText = {
   [faktaOmBeregningTilfelle.VURDER_LONNSENDRING]: 'ToTrinnsForm.Beregning.VurderLonnsendring',
   [faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING]: 'ToTrinnsForm.Beregning.FastsettLonnsendring',
   [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON]: 'ToTrinnsForm.Beregning.VurderATFLISammeOrg',
-  [faktaOmBeregningTilfelle.TILSTOTENDE_YTELSE]: 'ToTrinnsForm.Beregning.BeregningsgrunnlagOgInntektskategoriFastsatt',
   [faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE]: 'ToTrinnsForm.Beregning.FastsettBgKunYtelse',
   [faktaOmBeregningTilfelle.VURDER_ETTERLONN_SLUTTPAKKE]: 'ToTrinnsForm.Beregning.VurderEtterlønnSluttpakke',
   [faktaOmBeregningTilfelle.FASTSETT_ETTERLONN_SLUTTPAKKE]: 'ToTrinnsForm.Beregning.FastsettEtterlønnSluttpakke',

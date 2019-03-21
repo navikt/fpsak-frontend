@@ -156,18 +156,9 @@ describe('<ApprovalTextUtils>', () => {
     const message = getAksjonspunktText.resultFunc(true, null, null, null, null)(aksjonspunkt);
     expect(message[0].props.id).to.eql('ToTrinnsForm.Beregning.VurderATFLISammeOrg');
   });
-  it('skal vise korrekt tekst for aksjonspunkt 5058 tilstøtende ytelse', () => {
-    const beregningDto = { faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.TILSTOTENDE_YTELSE }] };
-    const aksjonspunkt = lagAksjonspunkt(
-      aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN, undefined,
-      beregningDto, 'begrunnelse', false, undefined, 'status', undefined,
-    );
-    const message = getAksjonspunktText.resultFunc(true, null, null, null, null)(aksjonspunkt);
-    expect(message[0].props.id).to.eql('ToTrinnsForm.Beregning.BeregningsgrunnlagOgInntektskategoriFastsatt');
-  });
   it('skal vise korrekte tekster for kombinasjon av aksjonspunkt 5058', () => {
     const beregningDto = {
-      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.TILSTOTENDE_YTELSE },
+      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING },
         { kode: faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD }],
     };
     const aksjonspunkt = lagAksjonspunkt(
@@ -175,7 +166,7 @@ describe('<ApprovalTextUtils>', () => {
       beregningDto, 'begrunnelse', false, undefined, 'status', undefined,
     );
     const message = getAksjonspunktText.resultFunc(true, null, null, null, null)(aksjonspunkt);
-    expect(message[0].props.id).to.eql('ToTrinnsForm.Beregning.BeregningsgrunnlagOgInntektskategoriFastsatt');
+    expect(message[0].props.id).to.eql('ToTrinnsForm.Beregning.VurderBesteberegning');
     expect(message[1].props.id).to.eql('ToTrinnsForm.Beregning.VurderTidsbegrensetArbeidsforhold');
   });
 

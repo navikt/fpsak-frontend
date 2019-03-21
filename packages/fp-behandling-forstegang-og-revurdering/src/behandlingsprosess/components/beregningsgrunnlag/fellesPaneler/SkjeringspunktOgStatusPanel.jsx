@@ -8,11 +8,8 @@ import { BorderBox, DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-com
 import {
   getAktivitetStatuser,
   getSkjæringstidspunktBeregning,
-  getTilstøtendeYtelse,
   getGjeldendeDekningsgrad,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import dekningsgrad from '@fpsak-frontend/kodeverk/src/dekningsgrad';
 import { Column, Row } from 'nav-frontend-grid';
@@ -27,7 +24,7 @@ import styles from './skjeringspunktOgStatusPanel.less';
 export const RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN = 'dekningsgrad';
 const { VURDER_DEKNINGSGRAD } = aksjonspunktCodes;
 
-const createAktivitetstatusString = (listeMedStatuser, tilstøtendeYtelseType) => {
+const createAktivitetstatusString = (listeMedStatuser) => {
   const tekstList = [];
   const listeMedKoder = listeMedStatuser.map(status => status.kode);
   if (listeMedKoder.includes(aktivitetStatus.DAGPENGER)) {
@@ -36,15 +33,11 @@ const createAktivitetstatusString = (listeMedStatuser, tilstøtendeYtelseType) =
   if (listeMedKoder.includes(aktivitetStatus.ARBEIDSAVKLARINGSPENGER)) {
     tekstList.push('Tilstøtende ytelse AAP');
   }
-  if (listeMedKoder.includes(aktivitetStatus.TILSTOTENDE_YTELSE)) {
-    tekstList.push(`Tilstøtende ytelse ${tilstøtendeYtelseType}`);
-  }
   if (listeMedKoder.includes(aktivitetStatus.MILITAER_ELLER_SIVIL)) {
     tekstList.push('Militær eller sivilforsvarstjeneste');
   }
   const statuserMedEgneNavn = listeMedStatuser.filter(status => status.kode !== aktivitetStatus.ARBEIDSAVKLARINGSPENGER
     && status.kode !== aktivitetStatus.DAGPENGER
-    && status.kode !== aktivitetStatus.TILSTOTENDE_YTELSE
     && status.kode !== aktivitetStatus.MILITAER_ELLER_SIVIL);
   statuserMedEgneNavn.forEach((status) => {
     tekstList.push(status.navn);
@@ -56,7 +49,6 @@ const createAktivitetstatusString = (listeMedStatuser, tilstøtendeYtelseType) =
     tekstString = `${tekstString} og ${sisteElement[0].toLowerCase()}`;
     return tekstString;
   }
-
   if (tekstList.length === 1) {
     return tekstList[0];
   }
@@ -121,7 +113,6 @@ export const SkjeringspunktOgStatusPanelImpl = ({
   readOnly,
   skjeringstidspunktDato,
   aktivitetStatusList,
-  tilstøtendeYtelseType,
   gjeldendeAksjonspunkter,
   gjeldendeDekningsgrad,
 }) => (
@@ -144,7 +135,7 @@ export const SkjeringspunktOgStatusPanelImpl = ({
             <FormattedMessage id="Beregningsgrunnlag.Skjeringstidspunkt.Status" />
           </Undertekst>
           <Normaltekst>
-            {createAktivitetstatusString(aktivitetStatusList, tilstøtendeYtelseType)}
+            {createAktivitetstatusString(aktivitetStatusList)}
           </Normaltekst>
         </div>
       </Column>
@@ -169,27 +160,21 @@ SkjeringspunktOgStatusPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   skjeringstidspunktDato: PropTypes.string.isRequired,
   aktivitetStatusList: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  tilstøtendeYtelseType: PropTypes.string,
   gjeldendeAksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   gjeldendeDekningsgrad: PropTypes.number,
 };
 
 SkjeringspunktOgStatusPanelImpl.defaultProps = {
-  tilstøtendeYtelseType: '',
   gjeldendeDekningsgrad: undefined,
 };
 
 const mapStateToProps = (state) => {
-  const tilstøtendeYtelse = getTilstøtendeYtelse(state);
   const skjeringstidspunktDato = getSkjæringstidspunktBeregning(state);
   const aktivitetStatusList = getAktivitetStatuser(state);
-  const ytelseType = tilstøtendeYtelse ? getKodeverk(kodeverkTyper.RELATERT_YTELSE_TYPE)(state)
-    .filter(ik => ik.kode === tilstøtendeYtelse.ytelseType.kode)[0].navn : '';
   const gjeldendeDekningsgrad = getGjeldendeDekningsgrad(state);
   return {
     skjeringstidspunktDato,
     aktivitetStatusList,
-    tilstøtendeYtelseType: ytelseType,
     gjeldendeDekningsgrad,
   };
 };
