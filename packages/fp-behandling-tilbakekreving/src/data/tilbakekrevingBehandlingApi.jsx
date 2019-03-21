@@ -6,7 +6,6 @@ import { reducerRegistry, setRequestPollingMessage } from '@fpsak-frontend/fp-fe
 
 export const TilbakekrevingBehandlingApiKeys = {
   BEHANDLING: 'BEHANDLING',
-  ORIGINAL_BEHANDLING: 'ORIGINAL_BEHANDLING',
   UPDATE_ON_HOLD: 'UPDATE_ON_HOLD',
   BEHANDLING_ON_HOLD: 'BEHANDLING_ON_HOLD',
   RESUME_BEHANDLING: 'RESUME_BEHANDLING',
@@ -20,7 +19,6 @@ export const TilbakekrevingBehandlingApiKeys = {
 
 const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/api/behandlinger', TilbakekrevingBehandlingApiKeys.BEHANDLING)
-  .withAsyncPost('/api/behandlinger', TilbakekrevingBehandlingApiKeys.ORIGINAL_BEHANDLING)
   .withPost('/api/behandlinger/endre-pa-vent', TilbakekrevingBehandlingApiKeys.UPDATE_ON_HOLD)
   .withPost('/api/behandlinger/sett-pa-vent', TilbakekrevingBehandlingApiKeys.BEHANDLING_ON_HOLD)
   .withAsyncPost('/api/behandlinger/gjenoppta', TilbakekrevingBehandlingApiKeys.RESUME_BEHANDLING)

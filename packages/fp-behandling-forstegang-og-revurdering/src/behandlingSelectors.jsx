@@ -14,13 +14,9 @@ import fpsakBehandlingApi from './data/fpsakBehandlingApi';
 import isFieldEdited from './isFieldEdited';
 import { getSelectedBehandlingId, isForeldrepengerFagsak } from './duck';
 
-const hasFetchedOriginalBehandlingIfItExists = (behandling, originalBehandlingId) => (behandling && behandling.originalBehandlingId
-  ? behandling.originalBehandlingId === originalBehandlingId : true);
-
 export const isBehandlingInSync = createSelector(
-  [getSelectedBehandlingId, fpsakBehandlingApi.BEHANDLING.getRestApiData(), fpsakBehandlingApi.ORIGINAL_BEHANDLING.getRestApiData()],
-  (behandlingId, behandling = {}, originalBehandling = {}) => behandlingId !== undefined
-  && behandlingId === behandling.id && hasFetchedOriginalBehandlingIfItExists(behandling, originalBehandling.id),
+  [getSelectedBehandlingId, fpsakBehandlingApi.BEHANDLING.getRestApiData()],
+  (behandlingId, behandling = {}) => behandlingId !== undefined && behandlingId === behandling.id,
 );
 
 // NB! Kun intern bruk
@@ -324,8 +320,8 @@ export const getBehandlingVilkar = createSelector([getSelectedBehandling], (sele
 export const getBehandlingVilkarCodes = createSelector([getBehandlingVilkar], (vilkar = []) => vilkar.map(v => v.vilkarType.kode));
 
 // ORIGINAL BEHANDLING
-export const getOriginalBehandlingId = createSelector(
-  [getSelectedBehandling], selectedBehandling => (selectedBehandling ? selectedBehandling.originalBehandlingId : undefined),
+export const getOriginalBehandling = createSelector(
+  [getSelectedBehandling], selectedBehandling => (selectedBehandling ? selectedBehandling['original-behandling'] : undefined),
 );
 
 

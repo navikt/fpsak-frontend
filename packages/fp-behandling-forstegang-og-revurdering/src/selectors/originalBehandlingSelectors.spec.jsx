@@ -1,43 +1,9 @@
 import { expect } from 'chai';
 
-import { getOriginalBehandling, getResultatstrukturFraOriginalBehandling }
+import { getResultatstrukturFraOriginalBehandling }
   from './originalBehandlingSelectors';
 
 describe('originalBehandlingSelectors', () => {
-  describe('getOriginalBehandling', () => {
-    it('skal hente originalbehandling når denne er i sync', () => {
-      const originalBehandlingId = 1;
-      const originalBehandlingData = {
-        id: 1,
-      };
-      const originalBehandlingMeta = {
-        params: {
-          behandlingId: originalBehandlingId,
-        },
-      };
-
-      const originalBehandling = getOriginalBehandling.resultFunc(originalBehandlingId, originalBehandlingData, originalBehandlingMeta);
-
-      expect(originalBehandling).is.eql(originalBehandling);
-    });
-
-    it('skal ikke hente originalbehandling når denne ikke er i sync', () => {
-      const originalBehandlingId = 1;
-      const originalBehandlingData = {
-        id: 1,
-      };
-      const originalBehandlingMeta = {
-        params: {
-          behandlingId: 2,
-        },
-      };
-
-      const originalBehandling = getOriginalBehandling.resultFunc(originalBehandlingId, originalBehandlingData, originalBehandlingMeta);
-
-      expect(originalBehandling).is.undefined;
-    });
-  });
-
   describe('getResultatstrukturFraOriginalBehandling', () => {
     it('skal hente beregningsresultat for foreldrepenger', () => {
       const isForeldrepenger = true;

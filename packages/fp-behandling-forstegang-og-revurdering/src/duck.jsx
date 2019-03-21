@@ -4,7 +4,7 @@ import { sakOperations } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingIdentifier, reducerRegistry } from '@fpsak-frontend/fp-felles';
 import fpsakBehandlingApi, { BehandlingFpsakApiKeys } from './data/fpsakBehandlingApi';
 
-const reducerName = 'fpsakBehandling';
+const reducerName = 'forstegangOgRevurderingBehandling';
 
 /* Action types */
 const actionType = name => `${reducerName}/${name}`;
@@ -25,7 +25,7 @@ const resetBehandlingContext = () => ({
   type: RESET_FPSAK_BEHANDLING,
 });
 
-// TODO (TOR) Rydd opp i dette. Kan ein legge rehenting av fagsakInfo og original-behandling i resolver i staden?
+// TODO (TOR) Rydd opp i dette. Kan ein legge rehenting av fagsakInfo i resolver i staden?
 export const updateBehandling = (
   behandlingIdentifier, behandlingerVersjonMappedById,
 ) => dispatch => dispatch(fpsakBehandlingApi.BEHANDLING.makeRestApiRequest()(behandlingIdentifier.toJson(), { keepData: true }))
@@ -34,25 +34,15 @@ export const updateBehandling = (
       dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer));
     }
     return Promise.resolve(response);
-  })
-  .then((response) => {
-    if (response.payload && response.payload.originalBehandlingId) {
-      const { originalBehandlingId } = response.payload;
-      const origianalBehandlingRequestParams = new BehandlingIdentifier(behandlingIdentifier.saksnummer, originalBehandlingId);
-      return dispatch(fpsakBehandlingApi.ORIGINAL_BEHANDLING.makeRestApiRequest()(origianalBehandlingRequestParams.toJson(), { keepData: true }));
-    }
-    return Promise.resolve(response);
   });
 
 export const resetBehandling = dispatch => Promise.all([
   dispatch(fpsakBehandlingApi.BEHANDLING.resetRestApi()()),
-  dispatch(fpsakBehandlingApi.ORIGINAL_BEHANDLING.resetRestApi()()),
   dispatch(resetBehandlingContext()),
 ]);
 
 export const fetchBehandling = (behandlingIdentifier, allBehandlinger) => (dispatch) => {
   dispatch(fpsakBehandlingApi.BEHANDLING.resetRestApi()());
-  dispatch(fpsakBehandlingApi.ORIGINAL_BEHANDLING.resetRestApi()());
   dispatch(updateBehandling(behandlingIdentifier, allBehandlinger));
 };
 
@@ -108,8 +98,7 @@ export const getSelectedBehandlingId = createSelector([getBehandlingContext], be
 export const getSelectedSaksnummer = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsakSaksnummer);
 export const getBehandlingIdentifier = createSelector(
   [getSelectedBehandlingId, getSelectedSaksnummer],
-  (behandlingId, saksnummer) => (behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined
-  ),
+  (behandlingId, saksnummer) => (behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined),
 );
 
 export const getFagsakStatus = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.fagsakStatus);

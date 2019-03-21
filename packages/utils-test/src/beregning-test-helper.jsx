@@ -62,8 +62,7 @@ export const lagStateMedAksjonspunkterOgBeregningsgrunnlag = (aksjonspunkter, be
   const dataState = new ApiStateBuilder()
     .withData('NAV_ANSATT', navAnsatt)
     .withData('FETCH_FAGSAK', fagsak)
-    .withData('BEHANDLING', data, 'dataContextFpsakBehandling')
-    .withData('ORIGINAL_BEHANDLING', {}, 'dataContextFpsakBehandling')
+    .withData('BEHANDLING', data, 'dataContextForstegangOgRevurderingBehandling')
     .build();
 
   const state = {
@@ -72,7 +71,7 @@ export const lagStateMedAksjonspunkterOgBeregningsgrunnlag = (aksjonspunkter, be
       fagsak: {
         selectedSaksnummer: 1,
       },
-      fpsakBehandling: {
+      forstegangOgRevurderingBehandling: {
         behandlingId: 1000051,
         kodeverk,
       },

@@ -34,25 +34,15 @@ export const updateBehandling = (
       dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer));
     }
     return Promise.resolve(response);
-  })
-  .then((response) => {
-    if (response.payload && response.payload.originalBehandlingId) {
-      const { originalBehandlingId } = response.payload;
-      const origianalBehandlingRequestParams = new BehandlingIdentifier(behandlingIdentifier.saksnummer, originalBehandlingId);
-      return dispatch(tilbakekrevingBehandlingApi.ORIGINAL_BEHANDLING.makeRestApiRequest()(origianalBehandlingRequestParams.toJson(), { keepData: true }));
-    }
-    return Promise.resolve(response);
   });
 
 export const resetBehandling = dispatch => Promise.all([
   dispatch(tilbakekrevingBehandlingApi.BEHANDLING.resetRestApi()()),
-  dispatch(tilbakekrevingBehandlingApi.ORIGINAL_BEHANDLING.resetRestApi()()),
   dispatch(resetBehandlingContext()),
 ]);
 
 export const fetchBehandling = (behandlingIdentifier, allBehandlinger, updateFagsakInfo) => (dispatch) => {
   dispatch(tilbakekrevingBehandlingApi.BEHANDLING.resetRestApi()());
-  dispatch(tilbakekrevingBehandlingApi.ORIGINAL_BEHANDLING.resetRestApi()());
   dispatch(updateBehandling(behandlingIdentifier, allBehandlinger, updateFagsakInfo));
 };
 

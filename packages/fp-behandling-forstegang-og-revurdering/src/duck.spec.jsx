@@ -76,7 +76,7 @@ describe('Behandling-reducer', () => {
     });
   });
 
-  it('skal hente behandling uten original behandling', () => {
+  it('skal hente behandling', () => {
     mockAxios
       .onPost(fpsakBehandlingApi.BEHANDLING.path)
       .reply(200, { id: 456, osv: 'osv' });
@@ -94,51 +94,6 @@ describe('Behandling-reducer', () => {
 
         expect(requestFinishedAction.type).to.contain('fpsak/api/behandlinger FINISHED');
         expect(requestFinishedAction.payload).is.eql({ id: 456, osv: 'osv' });
-      });
-  });
-
-  it('skal hente behandling med original behandling', () => {
-    const revurderingBehandling = {
-      id: 456,
-      osv: 'osv',
-      originalBehandlingId: 23,
-    };
-    const forstegangsbehandling = {
-      id: 23,
-      osv: 'orig behandling',
-    };
-    mockAxios
-      .onPost(fpsakBehandlingApi.BEHANDLING.path)
-      .replyOnce(200, revurderingBehandling);
-    mockAxios
-      .onPost(fpsakBehandlingApi.BEHANDLING.path)
-      .replyOnce(200, forstegangsbehandling);
-
-    const store = mockStore();
-    const behandlingIdentifier = new BehandlingIdentifier(1, 456);
-
-    return store.dispatch(updateBehandling(behandlingIdentifier))
-      .then(() => {
-        expect(store.getActions()).to.have.length(6);
-        const [requestStartedAction, requestFinishedAction, pollingMessageAction,
-          origBehandlingrequestStartedAction, origBehandlingrequestFinishedAction] = store.getActions();
-
-        expect(requestStartedAction.type).to.contain('fpsak/api/behandlinger STARTED');
-        expect(requestStartedAction.payload.params).is.eql({ behandlingId: 456, saksnummer: '1' });
-        expect(requestStartedAction.meta).is.eql({ options: { keepData: true } });
-
-        expect(requestFinishedAction.type).to.contain('fpsak/api/behandlinger FINISHED');
-        expect(requestFinishedAction.payload).is.eql(revurderingBehandling);
-
-        expect(pollingMessageAction.type).to.contain('pollingMessage/SET_REQUEST_POLLING_MESSAGE');
-        expect(pollingMessageAction.payload).is.undefined;
-
-        expect(origBehandlingrequestStartedAction.type).to.contain('fpsak/api/behandlinger STARTED');
-        expect(origBehandlingrequestStartedAction.payload.params).is.eql({ behandlingId: 23, saksnummer: '1' });
-        expect(origBehandlingrequestStartedAction.meta).is.eql({ options: { keepData: true } });
-
-        expect(origBehandlingrequestFinishedAction.type).to.contain('fpsak/api/behandlinger FINISHED');
-        expect(origBehandlingrequestFinishedAction.payload).is.eql(forstegangsbehandling);
       });
   });
 

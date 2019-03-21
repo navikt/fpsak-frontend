@@ -18,29 +18,13 @@ import {
 
 describe('behandlingSelectors', () => {
   describe('isBehandlingInSync', () => {
-    it('skal vise at behandling er i sync når behandling stemmer med valgt behandlingId og original behandling ikke finnes', () => {
-      const originalBehandling = undefined;
+    it('skal vise at behandling er i sync når behandling stemmer med valgt behandlingId', () => {
       const behandlingId = 1;
       const behandling = {
         id: behandlingId,
       };
 
-      const isInSync = isBehandlingInSync.resultFunc(behandlingId, behandling, originalBehandling);
-
-      expect(isInSync).is.true;
-    });
-
-    it('skal vise at behandling er i sync når behandling stemmer med valgt behandlingId og original behandling er hentet', () => {
-      const originalBehandling = {
-        id: 1,
-      };
-      const behandlingId = 2;
-      const behandling = {
-        id: behandlingId,
-        originalBehandlingId: originalBehandling.id,
-      };
-
-      const isInSync = isBehandlingInSync.resultFunc(behandlingId, behandling, originalBehandling);
+      const isInSync = isBehandlingInSync.resultFunc(behandlingId, behandling);
 
       expect(isInSync).is.true;
     });
@@ -57,21 +41,6 @@ describe('behandlingSelectors', () => {
       expect(isInSync).is.false;
     });
 
-    it('skal vise at behandling ikke er i sync når original behandling ikke er hentet', () => {
-      const originalBehandling = undefined;
-      const behandlingId = 2;
-      const behandling = {
-        id: behandlingId,
-        originalBehandlingId: 1,
-      };
-
-      const isInSync = isBehandlingInSync.resultFunc(behandlingId, behandling, originalBehandling);
-
-      expect(isInSync).is.false;
-    });
-  });
-
-  describe('hasReadOnlyBehandling', () => {
     it('skal vise feilmelding når task-status er readOnly', () => {
       const behandling = {
         id: 1,
