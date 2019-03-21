@@ -49,7 +49,6 @@ export const AvklartBarnFieldArray = ({
                 <CheckboxField
                   className={styles.registerBarnCheckbox}
                   name={`${periodeElementFieldId}.isBarnDodt`}
-
                   label={{ id: 'Registrering.ErBarnetDott' }}
                   disabled={readOnly}
                 />
