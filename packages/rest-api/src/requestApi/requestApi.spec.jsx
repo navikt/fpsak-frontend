@@ -24,7 +24,10 @@ describe('RequestApi', () => {
 
   it('skal utføre get-request', async () => {
     const httpClientMock = {
-      get: () => 'data',
+      get: () => ({
+        data: 'data',
+        status: 200,
+      }),
     };
 
     const requestConfig = new RequestConfig('BEHANDLING', '/behandling');

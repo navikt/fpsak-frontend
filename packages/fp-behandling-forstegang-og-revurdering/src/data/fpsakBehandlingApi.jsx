@@ -6,7 +6,6 @@ import { reducerRegistry, setRequestPollingMessage } from '@fpsak-frontend/fp-fe
 
 export const BehandlingFpsakApiKeys = {
   BEHANDLING: 'BEHANDLING',
-  ORIGINAL_BEHANDLING: 'ORIGINAL_BEHANDLING',
   UPDATE_ON_HOLD: 'UPDATE_ON_HOLD',
   BEHANDLING_ON_HOLD: 'BEHANDLING_ON_HOLD',
   RESUME_BEHANDLING: 'RESUME_BEHANDLING',
@@ -25,7 +24,6 @@ const endpoints = new RestApiConfigBuilder()
 
   /* /api/behandlinger */
   .withAsyncPost('/api/behandlinger', BehandlingFpsakApiKeys.BEHANDLING)
-  .withAsyncPost('/api/behandlinger', BehandlingFpsakApiKeys.ORIGINAL_BEHANDLING)
   .withPost('/api/behandlinger/endre-pa-vent', BehandlingFpsakApiKeys.UPDATE_ON_HOLD)
   .withPost('/api/behandlinger/sett-pa-vent', BehandlingFpsakApiKeys.BEHANDLING_ON_HOLD)
   .withPost('/api/behandlinger/bytt-enhet', BehandlingFpsakApiKeys.NY_BEHANDLENDE_ENHET)
@@ -45,7 +43,7 @@ const endpoints = new RestApiConfigBuilder()
 /* /api/brev */
   .build();
 
-const reducerName = 'dataContextFpsakBehandling';
+const reducerName = 'dataContextForstegangOgRevurderingBehandling';
 
 export const reduxRestApi = new ReduxRestApiBuilder(endpoints, reducerName)
   .withContextPath('fpsak')

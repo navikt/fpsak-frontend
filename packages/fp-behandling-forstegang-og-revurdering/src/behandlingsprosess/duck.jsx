@@ -5,7 +5,7 @@ import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 import fpsakBehandlingApi from '../data/fpsakBehandlingApi';
 import fptilbakeBehandlingApi from '../data/fptilbakeBehandlingApi';
 
-const reducerName = 'fpsakBehandlingsprosess';
+const reducerName = 'forstegangOgRevurderingBehandlingsprosess';
 
 /* Action types */
 const actionType = name => `${reducerName}/${name}`;

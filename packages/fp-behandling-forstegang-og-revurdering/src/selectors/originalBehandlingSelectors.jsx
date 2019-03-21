@@ -1,15 +1,7 @@
 import { createSelector } from 'reselect';
 
-import { getOriginalBehandlingId } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getOriginalBehandling } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duck';
-import fpsakBehandlingApi from '../data/fpsakBehandlingApi';
-
-// Denne er kun eksportert for bruk i test. Ikke bruk andre steder!!!
-export const getOriginalBehandling = createSelector(
-  [getOriginalBehandlingId, fpsakBehandlingApi.ORIGINAL_BEHANDLING.getRestApiData(), fpsakBehandlingApi.ORIGINAL_BEHANDLING.getRestApiMeta()],
-  (originalBehandlingId, originalBehandling, originalBehandlingMeta = { params: {} }) => (originalBehandling
-    && originalBehandlingMeta.params.behandlingId === originalBehandlingId ? originalBehandling : undefined),
-);
 
 export const getFamiliehendelseFraOriginalBehandling = createSelector(
   [getOriginalBehandling], (originalBehandling = {}) => originalBehandling.familiehendelse,

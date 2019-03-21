@@ -74,13 +74,12 @@ describe('<FaktaForATFLOgSNPanel>', () => {
       },
     };
     const dataState = new ApiStateBuilder()
-      .withData(fpsakBehandlingApi.BEHANDLING.name, data, 'dataContextFpsakBehandling')
-      .withData(fpsakBehandlingApi.ORIGINAL_BEHANDLING.name, {}, 'dataContextFpsakBehandling')
+      .withData(fpsakBehandlingApi.BEHANDLING.name, data, 'dataContextForstegangOgRevurderingBehandling')
       .build();
     const state = {
       default: {
         ...dataState.default,
-        fpsakBehandling: {
+        forstegangOgRevurderingBehandling: {
           behandlingId: 1000051,
         },
       },

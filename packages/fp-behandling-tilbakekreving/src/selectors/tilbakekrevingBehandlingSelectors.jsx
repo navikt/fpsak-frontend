@@ -5,13 +5,9 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import tilbakekrevingBehandlingApi from '../data/tilbakekrevingBehandlingApi';
 import { getSelectedBehandlingId } from '../duckTilbake';
 
-const hasFetchedOriginalBehandlingIfItExists = (behandling, originalBehandlingId) => (behandling && behandling.originalBehandlingId
-  ? behandling.originalBehandlingId === originalBehandlingId : true);
-
 export const isBehandlingInSync = createSelector(
-  [getSelectedBehandlingId, tilbakekrevingBehandlingApi.BEHANDLING.getRestApiData(), tilbakekrevingBehandlingApi.ORIGINAL_BEHANDLING.getRestApiData()],
-  (behandlingId, behandling = {}, originalBehandling = {}) => behandlingId !== undefined
-  && behandlingId === behandling.id && hasFetchedOriginalBehandlingIfItExists(behandling, originalBehandling.id),
+  [getSelectedBehandlingId, tilbakekrevingBehandlingApi.BEHANDLING.getRestApiData()],
+  (behandlingId, behandling = {}) => behandlingId !== undefined && behandlingId === behandling.id,
 );
 
 // NB! Kun intern bruk

@@ -12,8 +12,13 @@ describe('NAV-ansatt-reducer', () => {
     const dataState = new ApiStateBuilder()
       .withData(fpsakApi.NAV_ANSATT.name, navAnsatt)
       .withData(fpsakApi.FETCH_FAGSAK.name, {})
-      .withData('BEHANDLING', {}, 'dataContextFpsakBehandling')
-      .withData('ORIGINAL_BEHANDLING', {}, 'dataContextFpsakBehandling')
+      .withData('BEHANDLING', {
+        id: 1000051,
+        'original-behandling': {
+          id: 1000050,
+          versjon: 1,
+        },
+      }, 'dataContextFpsakBehandling')
       .build();
 
 

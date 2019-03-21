@@ -101,15 +101,13 @@ class RequestProcess {
     const requestList = responseData.links
       .map(link => () => this.execute(// eslint-disable-line no-use-before-define
         link.href, getRestMethod(this.httpClientApi, link.type), link.requestPayload,
-      )
-        .then(response => Promise.resolve({ [link.rel]: response.data })));
+      ).then(response => Promise.resolve({ [link.rel]: response.data })));
 
-    // TODO (TOR) Må kunna konfigurera om ein skal feila om eitt av kalla feilar. Og kva med logging?
-    return Promise.all([Promise.resolve(responseData), ...requestList.map(request => request())])
-      .then(allResponses => (this.config.addLinkDataToArray
-      // $FlowFixMe
-        ? allResponses.reduce((acc, rData) => (rData.links ? acc : acc.concat(Object.values(rData)[0])), [])
-        : allResponses.reduce((acc, rData) => ({ ...acc, ...rData }), {})));
+    const allResponses = await Promise.all([Promise.resolve(responseData), ...requestList.map(request => request())]);
+    const data = this.config.addLinkDataToArray
+      ? allResponses.reduce((acc, rData) => (rData.links ? acc : acc.concat(Object.values(rData)[0])), [])
+      : allResponses.reduce((acc, rData) => ({ ...acc, ...rData }), {});
+    return { data };
   }
 
   execute = async (path: string, restMethod: (path: string, params?: any) => Response, params: any): Promise<Response> => {
@@ -129,7 +127,6 @@ class RequestProcess {
     }
     const responseData = response && response.data;
     if (this.config.fetchLinkDataAutomatically && responseData && responseData.links && responseData.links.length > 0) {
-      // TODO (TOR) execLinkRequests returnerar no responseData.
       response = await this.execLinkRequests(responseData);
     }
     return response;
@@ -148,9 +145,7 @@ class RequestProcess {
         return { payload: CANCELLED };
       }
 
-      // TODO (TOR) Bør unngå denne testen ved å sikre at ein alltid får det same tilbake fra execute
-      const responseData = response.data !== undefined ? response.data : response;
-
+      const responseData = response.data;
       this.notify(EventType.REQUEST_FINISHED, responseData);
       return responseData ? { payload: responseData } : { payload: [] };
     } catch (error) {

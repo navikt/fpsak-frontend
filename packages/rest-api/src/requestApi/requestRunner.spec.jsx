@@ -31,7 +31,10 @@ describe('RequestRunner', () => {
 
   it('skal utføre get-request og sende status-eventer', async () => {
     const httpClientMock = {
-      get: () => 'data',
+      get: () => ({
+        data: 'data',
+        status: 200,
+      }),
     };
 
     const requestConfig = new RequestConfig('BEHANDLING', '/behandling');
