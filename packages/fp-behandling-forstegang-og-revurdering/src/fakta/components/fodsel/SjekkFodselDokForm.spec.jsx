@@ -42,8 +42,7 @@ describe('<SjekkFodselDokForm>', () => {
     const initialValues = buildInitialValues.resultFunc(familiehendelse, aksjonspunkter);
 
     expect(initialValues).to.eql({
-      fodselsdato: null,
-      antallBarnFodt: null,
+      avklartBarn: [],
       dokumentasjonForeligger: undefined,
       brukAntallBarnITps: undefined,
       begrunnelse: 'test',
