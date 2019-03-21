@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import FaktaGruppe from 'behandlingFpsak/src/fakta/components/FaktaGruppe';
+import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 
 import { ArbeidsforholdFaktaPanel } from './ArbeidsforholdFaktaPanel';
 import ArbeidsforholdTable from './ArbeidsforholdTable';

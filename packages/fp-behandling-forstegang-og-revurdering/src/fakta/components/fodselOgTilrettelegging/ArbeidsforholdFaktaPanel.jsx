@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import { bindActionCreators } from 'redux';
 
-import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingFpsak/src/behandlingForm';
-import { getSelectedBehandlingId } from 'behandlingFpsak/src/duck';
+import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duck';
 import {
   getBehandlingVersjon,
-} from 'behandlingFpsak/src/behandlingSelectors';
-import FaktaGruppe from 'behandlingFpsak/src/fakta/components/FaktaGruppe';
+} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import ArbeidsforholdTable from './ArbeidsforholdTable';
 import ArbeidsforholdInnhold from './ArbeidsforholdInnhold';
 

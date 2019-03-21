@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Fieldset } from 'nav-frontend-skjema';
 import { injectIntl, intlShape } from 'react-intl';
 
-import { behandlingFormValueSelector } from 'behandlingFpsak/src/behandlingForm';
+import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import {
   DatepickerField, CheckboxField, DecimalField,
 } from '@fpsak-frontend/form';
