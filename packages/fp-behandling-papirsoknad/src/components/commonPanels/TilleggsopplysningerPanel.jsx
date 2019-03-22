@@ -46,7 +46,7 @@ export const TilleggsopplysningerPanel = ({
         <FlexColumn>
           <Fieldset legend={intl.formatMessage({ id: 'Registrering.Sprak' })}>
             <RadioGroupField
-              name="sprakvalg"
+              name="språkkode"
               direction="vertical"
               readOnly={readOnly}
               validate={required}
