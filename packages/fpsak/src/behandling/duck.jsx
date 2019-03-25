@@ -67,7 +67,6 @@ export const isKontrollerRevurderingAksjonspunkOpen = createSelector([getBehandl
 export const getBehandlingSprak = createSelector([getBehandlingInfoHolder], data => data.behandlingSprak);
 export const getBehandlingVersjon = createSelector([getBehandlingInfoHolder], data => data.behandlingVersjon);
 export const getBrevMaler = createSelector([getBehandlingInfoHolder], data => data.brevMaler);
-export const getBrevMottakere = createSelector([getBehandlingInfoHolder], data => data.brevMottakere);
 export const getAksjonspunkter = createSelector([getBehandlingInfoHolder], data => data.aksjonspunkter);
 export const getBehandlingAnsvarligSaksbehandler = createSelector([getBehandlingInfoHolder], data => data.behandlingAnsvarligSaksbehandler);
 export const getBehandlingStatus = createSelector([getBehandlingInfoHolder], data => data.behandlingStatus);
@@ -90,7 +89,6 @@ export const isBehandlingInInnhentSoknadsopplysningerSteg = createSelector([
 export const getBehandlingIsQueued = createSelector([getBehandlingInfoHolder], data => data.behandlingIsQueued);
 export const getBehandlingBehandlendeEnhetId = createSelector([getBehandlingInfoHolder], data => data.behandlingBehandlendeEnhetId);
 export const getBehandlingBehandlendeEnhetNavn = createSelector([getBehandlingInfoHolder], data => data.behandlingBehandlendeEnhetNavn);
-export const getHenleggArsaker = createSelector([getBehandlingInfoHolder], data => data.henleggArsaker);
 export const getSoknad = createSelector([getBehandlingInfoHolder], data => data.soknad);
 export const getBehandlingsresultatFraOriginalBehandling = createSelector([getBehandlingInfoHolder], data => data.behandlingsresultatFraOriginalBehandling);
 export const getResultatstrukturFraOriginalBehandling = createSelector([getBehandlingInfoHolder], data => data.resultatstrukturFraOriginalBehandling);

@@ -35,7 +35,6 @@ export const getBehandlingBehandlendeEnhetNavn = createSelector([getSelectedBeha
 export const getBehandlingAnsvarligSaksbehandler = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.ansvarligSaksbehandler,
 );
-export const getHenleggArsaker = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['henlegg-arsaker']));
 
 // SØKNAD
 export const getSoknad = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.soknad);

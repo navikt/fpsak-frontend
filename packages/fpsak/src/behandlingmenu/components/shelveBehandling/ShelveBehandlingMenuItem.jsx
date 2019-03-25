@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { getHenleggArsaker, getBehandlingType } from 'behandling/duck';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import MenuButton from '../MenuButton';
 import ShelveBehandlingModal from './ShelveBehandlingModal';
@@ -61,7 +59,7 @@ class ShelveBehandlingMenuItem extends Component {
 
   render() {
     const {
-      henleggArsaker, behandlingIdentifier, henleggBehandlingEnabled, previewHenleggBehandling, behandlingsType,
+      behandlingIdentifier, henleggBehandlingEnabled, previewHenleggBehandling,
     } = this.props;
     const { showBehandlingErHenlagtModal, showModal } = this.state;
     return (
@@ -77,8 +75,6 @@ class ShelveBehandlingMenuItem extends Component {
             cancelEvent={this.hideModal}
             previewHenleggBehandling={previewHenleggBehandling}
             behandlingId={behandlingIdentifier ? behandlingIdentifier.behandlingId : undefined}
-            henleggArsaker={henleggArsaker}
-            behandlingsType={behandlingsType}
           />
           )
         }
@@ -101,13 +97,6 @@ ShelveBehandlingMenuItem.propTypes = {
   behandlingVersjon: PropTypes.number,
   toggleBehandlingsmeny: PropTypes.func.isRequired,
   shelveBehandling: PropTypes.func.isRequired,
-  henleggArsaker: PropTypes.arrayOf(PropTypes.shape({
-    valg: PropTypes.string,
-  })),
-  behandlingsType: PropTypes.shape({
-    kode: PropTypes.string,
-    navn: PropTypes.string,
-  }),
   push: PropTypes.func.isRequired,
   henleggBehandlingEnabled: PropTypes.bool,
 };
@@ -115,14 +104,7 @@ ShelveBehandlingMenuItem.propTypes = {
 ShelveBehandlingMenuItem.defaultProps = {
   behandlingIdentifier: undefined,
   behandlingVersjon: undefined,
-  henleggArsaker: null,
-  behandlingsType: null,
   henleggBehandlingEnabled: false,
 };
 
-const mapStateToProps = state => ({
-  henleggArsaker: getHenleggArsaker(state),
-  behandlingsType: getBehandlingType(state),
-});
-
-export default connect(mapStateToProps)(ShelveBehandlingMenuItem);
+export default ShelveBehandlingMenuItem;

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 import { formValueSelector, reduxForm } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
 import { Fieldset } from 'nav-frontend-skjema';
@@ -9,9 +10,14 @@ import Modal from 'nav-frontend-modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Undertekst } from 'nav-frontend-typografi';
 
+import { getKodeverk } from 'kodeverk/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
+
+import { getBehandlingType } from 'behandling/duck';
 
 import styles from './shelveBehandlingModal.less';
 
@@ -36,12 +42,13 @@ export const ShelveBehandlingModalImpl = ({
   begrunnelse,
 }) => {
   const previewHenleggBehandlingDoc = (e) => {
+    // TODO Denne verdien burde ikkje vera hardkoda. Er dette eit kodeverk?
     previewHenleggBehandling(behandlingId, 'HENLEG');
     e.preventDefault();
   };
 
   const selectOptions = (type) => {
-    if (type.kode === 'BT-004') {
+    if (type.kode === behandlingType.REVURDERING) {
       return henleggArsaker
         .filter(valg => valg.kode !== behandlingResultatType.HENLAGT_BRUKER_DOD
           && valg.kode !== behandlingResultatType.MANGLER_BEREGNINGSREGLER)
@@ -147,7 +154,8 @@ ShelveBehandlingModalImpl.propTypes = {
     navn: PropTypes.string,
   }).isRequired,
   henleggArsaker: PropTypes.arrayOf(PropTypes.shape({
-    valg: PropTypes.string,
+    kode: PropTypes.string,
+    navn: PropTypes.string,
   })).isRequired,
   /**
    * Valgt behandlingsresultat-type
@@ -161,6 +169,20 @@ ShelveBehandlingModalImpl.defaultProps = {
   begrunnelse: null,
 };
 
+const henleggArsakerPerBehandlingType = {
+  [behandlingType.KLAGE]: [behandlingResultatType.HENLAGT_KLAGE_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET],
+  [behandlingType.DOKUMENTINNSYN]: [behandlingResultatType.HENLAGT_INNSYN_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET],
+  OTHER: [behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET, behandlingResultatType.HENLAGT_BRUKER_DOD,
+    behandlingResultatType.HENLAGT_SOKNAD_MANGLER, behandlingResultatType.MANGLER_BEREGNINGSREGLER],
+};
+
+const getHenleggArsaker = createSelector([getKodeverk(kodeverkTyper.BEHANDLING_RESULTAT_TYPE), getBehandlingType],
+  (behandlingResultatTyper, bType) => {
+    const typerForBehandlingType = henleggArsakerPerBehandlingType[bType.kode];
+    const typer = typerForBehandlingType || henleggArsakerPerBehandlingType.OTHER;
+    return typer.map(type => behandlingResultatTyper.find(brt => brt.kode === type));
+  });
+
 const ShelveBehandlingModal = reduxForm({
   form: 'ShelveBehandlingModal',
 })(ShelveBehandlingModalImpl);
@@ -168,6 +190,8 @@ const ShelveBehandlingModal = reduxForm({
 const mapStateToProps = state => ({
   årsakKode: formValueSelector('ShelveBehandlingModal')(state, 'årsakKode'),
   begrunnelse: formValueSelector('ShelveBehandlingModal')(state, 'begrunnelse'),
+  behandlingsType: getBehandlingType(state),
+  henleggArsaker: getHenleggArsaker(state),
 });
 
 export default connect(mapStateToProps)(injectIntl(ShelveBehandlingModal));

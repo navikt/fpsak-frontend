@@ -119,8 +119,6 @@ describe('<BehandlingMenu>', () => {
     expect(behandlingOnHoldMenuItem).has.length(1);
     expect(behandlingOnHoldMenuItem.prop('behandlingIdentifier')).is.eql(behandlingIdentifier);
     expect(behandlingOnHoldMenuItem.prop('toggleBehandlingsmeny')).is.not.null;
-
-    expect(wrapper.find('ShelveBehandlingMenuItem')).has.length(0);
   });
 
 
