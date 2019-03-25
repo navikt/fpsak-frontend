@@ -97,7 +97,10 @@ export class MockFieldsWithContent {
     this.get = index => array[index];
 
     this.get = index => array[index];
-    this.remove = index => array.splice(index, 1);
+    this.remove = (index) => {
+      this.array.splice(index, 1);
+      return this.array;
+    };
 
     this.forEach = array.forEach.bind(array);
   }
