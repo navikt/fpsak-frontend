@@ -357,7 +357,7 @@ export class UttakPerioder extends PureComponent {
       inntektsmeldinger,
       perioder,
       aksjonspunkter,
-      førsteuttaksdato,
+      førsteUttaksdato,
       submitting,
       hasOpenAksjonspunkter,
       kanOverstyre,
@@ -368,14 +368,14 @@ export class UttakPerioder extends PureComponent {
     const {
       periodeSlett, isNyPeriodeFormOpen, inntektsmeldingInfo, showModalSlettPeriode,
     } = this.state;
-    const nyPeriodeDisabledDaysFom = førsteuttaksdato || (perioder[0] || []).fom;
+    const nyPeriodeDisabledDaysFom = førsteUttaksdato || (perioder[0] || []).fom;
     return (
       <React.Fragment>
         {!readOnly && (
         <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
           {aksjonspunkter.map((ap) => {
             const førsteUttak = {
-              value: moment(førsteuttaksdato).format(DDMMYYYY_DATE_FORMAT),
+              value: moment(førsteUttaksdato).format(DDMMYYYY_DATE_FORMAT),
             };
             return (
               <FormattedMessage
@@ -423,7 +423,7 @@ export class UttakPerioder extends PureComponent {
           perioder={perioder}
           readOnly={readOnly && !isManuellOverstyring}
           inntektsmeldingInfo={inntektsmeldingInfo}
-          førsteuttaksdato={førsteuttaksdato}
+          førsteUttaksdato={førsteUttaksdato}
         />
         <VerticalSpacer twentyPx />
         <FlexContainer fluid wrap>
@@ -495,18 +495,18 @@ UttakPerioder.propTypes = {
     }),
   ).isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  førsteuttaksdato: PropTypes.string,
+  førsteUttaksdato: PropTypes.string,
   isManuellOverstyring: PropTypes.bool,
   hasRevurderingOvertyringAp: PropTypes.bool.isRequired,
   kanOverstyre: PropTypes.bool.isRequired,
 };
 
 UttakPerioder.defaultProps = {
-  førsteuttaksdato: undefined,
+  førsteUttaksdato: undefined,
   isManuellOverstyring: false,
 };
 
-const førsteuttaksdato = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'førsteuttaksdato') || undefined;
+const getFørsteUttaksdato = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'førsteUttaksdato') || undefined;
 const slettedePerioder = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'slettedePerioder') || [];
 const perioder = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'perioder') || [];
 const manuellOverstyring = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'manuellOverstyring') || false;
@@ -519,7 +519,7 @@ const mapStateToProps = (state) => {
     isManuellOverstyring: manuellOverstyring(state),
     kanOverstyre: getRettigheter(state).kanOverstyreAccess.isEnabled,
     openForms: !!perioder(state).find(periode => periode.openForm === true),
-    førsteuttaksdato: førsteuttaksdato(state),
+    førsteUttaksdato: getFørsteUttaksdato(state),
     uttakPeriodeVurderingTyper: getKodeverk(kodeverkTyper.UTTAK_PERIODE_VURDERING_TYPE)(state),
     inntektsmeldinger: getInntektsmeldinger(state),
     initialValues: getFormInitialValues(`${behandlingFormPrefix}.UttakFaktaForm`)(state),

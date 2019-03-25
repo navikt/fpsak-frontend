@@ -10,11 +10,11 @@ export const sjekkArbeidsprosentOver100 = periode => periode.arbeidstidsprosent 
 export const sjekkOverlappendePerioder = (index, nestePeriode, forrigePeriode) => index !== 0
   && moment(nestePeriode.fom) <= moment(forrigePeriode.tom);
 
-export const sjekkEndretFørsteuttaksdato = (originalStartDato, nyStartDato, aksjonspunkter) => moment(originalStartDato).diff(moment(nyStartDato)) !== 0
+export const sjekkEndretFørsteUttaksdato = (originalStartDato, nyStartDato, aksjonspunkter) => moment(originalStartDato).diff(moment(nyStartDato)) !== 0
   && !aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO);
 
-export const sjekkNyFørsteuttakdatoStartErEtterSkjæringpunkt = (nyStartDato, førsteuttaksdato, aksjonspunkter) => moment(nyStartDato) > moment(førsteuttaksdato)
+export const sjekkNyFørsteUttakdatoStartErEtterSkjæringpunkt = (nyStartDato, førsteUttaksdato, aksjonspunkter) => moment(nyStartDato) > moment(førsteUttaksdato)
   && aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO);
 
-export const sjekkNyFørsteuttakdatoStartErFørSkjæringpunkt = (nyStartDato, førsteuttaksdato, aksjonspunkter) => moment(nyStartDato) < moment(førsteuttaksdato)
+export const sjekkNyFørsteUttakdatoStartErFørSkjæringpunkt = (nyStartDato, førsteUttaksdato, aksjonspunkter) => moment(nyStartDato) < moment(førsteUttaksdato)
   && aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO);
