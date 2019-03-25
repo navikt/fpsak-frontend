@@ -17,9 +17,9 @@ import {
   sjekkOmfaktaOmUttakAksjonspunkt,
   sjekkArbeidsprosentOver100,
   sjekkOverlappendePerioder,
-  sjekkEndretFørsteuttaksdato,
-  sjekkNyFørsteuttakdatoStartErEtterSkjæringpunkt,
-  sjekkNyFørsteuttakdatoStartErFørSkjæringpunkt,
+  sjekkEndretFørsteUttaksdato,
+  sjekkNyFørsteUttakdatoStartErEtterSkjæringpunkt,
+  sjekkNyFørsteUttakdatoStartErFørSkjæringpunkt,
 } from './components/UttakPeriodeValidering';
 
 export const UttakFaktaForm = ({
@@ -63,7 +63,7 @@ const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOS
   if (sjekkOmfaktaOmUttakAksjonspunkt(aksjonspunkter) || values.manuellOverstyring) {
     const originalStartDato = (originalPerioder[0] || []).fom;
     const nyStartDato = (values.perioder[0] || []).fom;
-    const { førsteuttaksdato } = values;
+    const { førsteUttaksdato } = values;
 
     if (values.perioder.length === 0) {
       errors.perioder = {
@@ -86,7 +86,7 @@ const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOS
           };
         }
       });
-      if (sjekkEndretFørsteuttaksdato(originalStartDato, nyStartDato, aksjonspunkter)) {
+      if (sjekkEndretFørsteUttaksdato(originalStartDato, nyStartDato, aksjonspunkter)) {
         errors.perioder = {
           _error: <FormattedMessage
             id="UttakInfoPanel.OrginaleStartdatoKanIkkeEndres"
@@ -95,19 +95,19 @@ const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOS
         };
       }
 
-      if (sjekkNyFørsteuttakdatoStartErEtterSkjæringpunkt(nyStartDato, førsteuttaksdato, aksjonspunkter)) {
+      if (sjekkNyFørsteUttakdatoStartErEtterSkjæringpunkt(nyStartDato, førsteUttaksdato, aksjonspunkter)) {
         errors.perioder = {
           _error: <FormattedMessage
-            id="UttakInfoPanel.manglerPeriodeEtterFørsteuttaksdato"
-            values={{ førsteuttaksdato: dateFormat(førsteuttaksdato) }}
+            id="UttakInfoPanel.manglerPeriodeEtterFørsteUttaksdato"
+            values={{ førsteUttaksdato: dateFormat(førsteUttaksdato) }}
           />,
         };
       }
-      if (sjekkNyFørsteuttakdatoStartErFørSkjæringpunkt(nyStartDato, førsteuttaksdato, aksjonspunkter)) {
+      if (sjekkNyFørsteUttakdatoStartErFørSkjæringpunkt(nyStartDato, førsteUttaksdato, aksjonspunkter)) {
         errors.perioder = {
           _error: <FormattedMessage
-            id="UttakInfoPanel.periodeFørFørsteuttaksdato"
-            values={{ førsteuttaksdato: dateFormat(førsteuttaksdato) }}
+            id="UttakInfoPanel.periodeFørFørsteUttaksdato"
+            values={{ førsteUttaksdato: dateFormat(førsteUttaksdato) }}
           />,
         };
       }
@@ -122,7 +122,7 @@ const buildInitialValues = createSelector(
   (perioder, ytelseFordeling) => {
     if (perioder) {
       return {
-        førsteuttaksdato: ytelseFordeling && ytelseFordeling.førsteuttaksdato ? ytelseFordeling.førsteuttaksdato : undefined,
+        førsteUttaksdato: ytelseFordeling && ytelseFordeling.førsteUttaksdato ? ytelseFordeling.førsteUttaksdato : undefined,
         perioder: perioder.map(periode => ({
           ...periode,
           id: guid(),
