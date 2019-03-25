@@ -8,7 +8,7 @@ import ShelveBehandlingMenuItem from './ShelveBehandlingMenuItem';
 
 describe('<ShelveBehandlingMenuItem>', () => {
   it('skal ikke vise modal ved rendring', () => {
-    const wrapper = shallow(<ShelveBehandlingMenuItem.WrappedComponent
+    const wrapper = shallow(<ShelveBehandlingMenuItem
       behandlingIdentifier={new BehandlingIdentifier(1, 1)}
       behandlingVersjon={2}
       previewHenleggBehandling={sinon.spy()}
@@ -26,7 +26,7 @@ describe('<ShelveBehandlingMenuItem>', () => {
 
   it('skal vise modal ved trykk på meny-lenke', () => {
     const toggleBehandlingsmenyCallback = sinon.spy();
-    const wrapper = shallow(<ShelveBehandlingMenuItem.WrappedComponent
+    const wrapper = shallow(<ShelveBehandlingMenuItem
       behandlingIdentifier={new BehandlingIdentifier(1, 1)}
       behandlingVersjon={2}
       previewHenleggBehandling={sinon.spy()}
@@ -55,7 +55,7 @@ describe('<ShelveBehandlingMenuItem>', () => {
   });
 
   it('skal skjule modal ved trykk på avbryt', () => {
-    const wrapper = shallow(<ShelveBehandlingMenuItem.WrappedComponent
+    const wrapper = shallow(<ShelveBehandlingMenuItem
       behandlingIdentifier={new BehandlingIdentifier(1, 1)}
       behandlingVersjon={2}
       previewHenleggBehandling={sinon.spy()}
@@ -81,7 +81,7 @@ describe('<ShelveBehandlingMenuItem>', () => {
 
   it('skal sende data til server og vise "behandling er henlagt"-modal ved trykk på ok-knapp', () => {
     const shelveBehandlingCallback = sinon.stub();
-    const wrapper = shallow(<ShelveBehandlingMenuItem.WrappedComponent
+    const wrapper = shallow(<ShelveBehandlingMenuItem
       behandlingIdentifier={new BehandlingIdentifier(1, 1)}
       behandlingVersjon={2}
       previewHenleggBehandling={sinon.spy()}

@@ -7,7 +7,7 @@ import {
   getBehandlingSprak, getBehandlingVersjon, getAksjonspunkter, getBehandlingAnsvarligSaksbehandler, getBehandlingStatus,
   getBehandlingsresultat, getBehandlingType, getBehandlingHasSoknad,
   getBehandlingIsOnHold, getBehandlingBehandlendeEnhetId,
-  getBehandlingBehandlendeEnhetNavn, getHenleggArsaker, getSoknad,
+  getBehandlingBehandlendeEnhetNavn, getSoknad,
 } from './selectors/innsynBehandlingSelectors';
 
 
@@ -17,7 +17,7 @@ export class FpInnsynBehandlingInfoSetter extends Component {
     const {
       setBehandlingInfoHolder, behandlingSprak, behandlingVersjon, aksjonspunkter, behandlingAnsvarligSaksbehandler, behandlingStatus,
       behandlingsresultat, behandlingType, behandlingHasSoknad, behandlingIsOnHold, behandlingBehandlendeEnhetId,
-      behandlingBehandlendeEnhetNavn, henleggArsaker, soknad,
+      behandlingBehandlendeEnhetNavn, soknad,
     } = this.props;
 
     setBehandlingInfoHolder(new BehandlingInfoHolder()
@@ -33,7 +33,6 @@ export class FpInnsynBehandlingInfoSetter extends Component {
       .withBehandlingIsOnHold(behandlingIsOnHold)
       .withBehandlingBehandlendeEnhetId(behandlingBehandlendeEnhetId)
       .withBehandlendeEnhetNavn(behandlingBehandlendeEnhetNavn)
-      .withHenleggArsaker(henleggArsaker)
       .withSoknad(soknad));
   }
 
@@ -65,9 +64,6 @@ FpInnsynBehandlingInfoSetter.propTypes = {
   behandlingIsOnHold: PropTypes.bool.isRequired,
   behandlingBehandlendeEnhetId: PropTypes.string,
   behandlingBehandlendeEnhetNavn: PropTypes.string,
-  henleggArsaker: PropTypes.arrayOf(PropTypes.shape({
-    valg: PropTypes.string,
-  })),
   soknad: PropTypes.shape(),
 };
 
@@ -79,7 +75,6 @@ FpInnsynBehandlingInfoSetter.defaultProps = {
   behandlingsresultat: undefined,
   behandlingBehandlendeEnhetId: undefined,
   behandlingBehandlendeEnhetNavn: undefined,
-  henleggArsaker: null,
   soknad: undefined,
 };
 
@@ -95,7 +90,6 @@ const mapStateToProps = state => ({
   behandlingIsOnHold: getBehandlingIsOnHold(state),
   behandlingBehandlendeEnhetId: getBehandlingBehandlendeEnhetId(state),
   behandlingBehandlendeEnhetNavn: getBehandlingBehandlendeEnhetNavn(state),
-  henleggArsaker: getHenleggArsaker(state),
   soknad: getSoknad(state),
 });
 

@@ -89,18 +89,16 @@ export const getFaktaArbeidsforhold = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['fakta-arbeidsforhold']
     ? selectedBehandling['fakta-arbeidsforhold'] : undefined),
 );
-export const getHenleggArsaker = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['henlegg-arsaker']));
 export const getHaveSentVarsel = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['sendt-varsel-om-revurdering']));
 export const getTotrinnskontrollArsaker = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['totrinnskontroll-arsaker']),
 );
 export const getTotrinnskontrollArsakerUtenUdefinert = createSelector(
-  [getTotrinnskontrollArsaker], (aarsaker = {}) => (aarsaker.filter(aarsak => aarsak.skjermlenkeType !== '-')),
+  [getTotrinnskontrollArsaker], (aarsaker = []) => (aarsaker.filter(aarsak => aarsak.skjermlenkeType !== '-')),
 );
 export const getTotrinnskontrollArsakerReadOnly = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['totrinnskontroll-arsaker-readOnly']),
 );
-export const getBrevMottakere = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['brev-mottakere']));
 export const getBrevMaler = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['brev-maler']));
 
 export const getSimuleringResultat = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling.simuleringResultat));

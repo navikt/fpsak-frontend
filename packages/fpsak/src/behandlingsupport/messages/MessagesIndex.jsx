@@ -17,7 +17,6 @@ import {
   getBehandlingSprak,
   getBehandlingVersjon,
   getBrevMaler,
-  getBrevMottakere,
   getBehandlingIdentifier,
 } from 'behandling/duck';
 import { setBehandlingOnHold } from 'behandlingmenu/duck';
@@ -185,7 +184,7 @@ MessagesIndex.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  recipients: getBrevMottakere(state),
+  recipients: ['Søker'],
   templates: getBrevMaler(state),
   submitFinished: isSubmitMessageFinished(state),
   behandlingIdentifier: getBehandlingIdentifier(state),

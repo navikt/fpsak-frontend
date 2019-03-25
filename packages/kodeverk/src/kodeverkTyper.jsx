@@ -41,6 +41,7 @@ const kodeverkTyper = {
   FAKTA_OM_BEREGNING_TILFELLE: 'FaktaOmBeregningTilfelle',
   GRADERING_AVSLAG_AARSAK: 'GraderingAvslagÅrsak',
   SKJERMLENKE_TYPE: 'SkjermlenkeType',
+  BEHANDLING_RESULTAT_TYPE: 'BehandlingResultatType',
 };
 
 export default kodeverkTyper;

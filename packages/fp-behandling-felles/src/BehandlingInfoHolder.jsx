@@ -9,8 +9,6 @@ class BehandlingInfoHolder {
 
     brevMaler;
 
-    brevMottakere;
-
     aksjonspunkter;
 
     behandlingAnsvarligSaksbehandler;
@@ -53,8 +51,6 @@ class BehandlingInfoHolder {
 
     behandlingBehandlendeEnhetNavn;
 
-    henleggArsaker;
-
     soknad;
 
     behandlingIdentifier;
@@ -80,11 +76,6 @@ class BehandlingInfoHolder {
 
     withBrevMaler = (brevMaler) => {
       this.brevMaler = brevMaler;
-      return this;
-    }
-
-    withBrevMottakere = (brevMottakere) => {
-      this.brevMottakere = brevMottakere;
       return this;
     }
 
@@ -190,11 +181,6 @@ class BehandlingInfoHolder {
 
     withBehandlendeEnhetNavn = (behandlingBehandlendeEnhetNavn) => {
       this.behandlingBehandlendeEnhetNavn = behandlingBehandlendeEnhetNavn;
-      return this;
-    }
-
-    withHenleggArsaker = (henleggArsaker) => {
-      this.henleggArsaker = henleggArsaker;
       return this;
     }
 

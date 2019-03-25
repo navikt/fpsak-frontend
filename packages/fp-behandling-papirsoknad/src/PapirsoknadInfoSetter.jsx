@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { BehandlingInfoHolder } from '@fpsak-frontend/fp-behandling-felles';
 import {
-  getBehandlingSprak, getBehandlingVersjon, getBrevMaler, getBrevMottakere, getAksjonspunkter,
+  getBehandlingSprak, getBehandlingVersjon, getBrevMaler, getAksjonspunkter,
   getBehandlingAnsvarligSaksbehandler, getBehandlingStatus,
   getBehandlingsresultat, getBehandlingType, getBehandlingHasSoknad,
   getBehandlingIsOnHold, getBehandlingIsQueued, getBehandlingBehandlendeEnhetId,
-  getBehandlingBehandlendeEnhetNavn, getHenleggArsaker, getSoknad,
+  getBehandlingBehandlendeEnhetNavn, getSoknad,
 } from './selectors/papirsoknadSelectors';
 
 
@@ -16,18 +16,17 @@ import {
 export class PapirsoknadInfoSetter extends Component {
   setBehandlingInfo = () => {
     const {
-      setBehandlingInfoHolder, behandlingSprak, behandlingVersjon, brevMaler, brevMottakere, aksjonspunkter,
+      setBehandlingInfoHolder, behandlingSprak, behandlingVersjon, brevMaler, aksjonspunkter,
       behandlingAnsvarligSaksbehandler, behandlingStatus,
       behandlingsresultat, behandlingType, behandlingHasSoknad,
       behandlingIsOnHold, behandlingIsQueued, behandlingBehandlendeEnhetId,
-      behandlingBehandlendeEnhetNavn, henleggArsaker, soknad,
+      behandlingBehandlendeEnhetNavn, soknad,
     } = this.props;
 
     setBehandlingInfoHolder(new BehandlingInfoHolder()
       .withBehandlingSprak(behandlingSprak)
       .withBehandlingVersjon(behandlingVersjon)
       .withBrevMaler(brevMaler)
-      .withBrevMottakere(brevMottakere)
       .withAksjonspunkter(aksjonspunkter)
       .withBehandlingAnsvarligSaksbehandler(behandlingAnsvarligSaksbehandler)
       .withBehandlingStatus(behandlingStatus)
@@ -38,7 +37,6 @@ export class PapirsoknadInfoSetter extends Component {
       .withBehandlingIsQueued(behandlingIsQueued)
       .withBehandlingBehandlendeEnhetId(behandlingBehandlendeEnhetId)
       .withBehandlendeEnhetNavn(behandlingBehandlendeEnhetNavn)
-      .withHenleggArsaker(henleggArsaker)
       .withSoknad(soknad));
   }
 
@@ -66,7 +64,6 @@ PapirsoknadInfoSetter.propTypes = {
     navn: PropTypes.string.isRequired,
     tilgjengelig: PropTypes.bool.isRequired,
   })),
-  brevMottakere: PropTypes.arrayOf(PropTypes.string),
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired),
   behandlingAnsvarligSaksbehandler: PropTypes.string,
   behandlingStatus: PropTypes.shape().isRequired,
@@ -77,9 +74,6 @@ PapirsoknadInfoSetter.propTypes = {
   behandlingIsQueued: PropTypes.bool,
   behandlingBehandlendeEnhetId: PropTypes.string,
   behandlingBehandlendeEnhetNavn: PropTypes.string,
-  henleggArsaker: PropTypes.arrayOf(PropTypes.shape({
-    valg: PropTypes.string,
-  })),
   soknad: PropTypes.shape(),
 };
 
@@ -90,11 +84,9 @@ PapirsoknadInfoSetter.defaultProps = {
   behandlingAnsvarligSaksbehandler: undefined,
   behandlingsresultat: undefined,
   brevMaler: undefined,
-  brevMottakere: undefined,
   behandlingIsQueued: false,
   behandlingBehandlendeEnhetId: undefined,
   behandlingBehandlendeEnhetNavn: undefined,
-  henleggArsaker: null,
   soknad: undefined,
 };
 
@@ -102,7 +94,6 @@ const mapStateToProps = state => ({
   behandlingSprak: getBehandlingSprak(state),
   behandlingVersjon: getBehandlingVersjon(state),
   brevMaler: getBrevMaler(state),
-  brevMottakere: getBrevMottakere(state),
   aksjonspunkter: getAksjonspunkter(state),
   behandlingAnsvarligSaksbehandler: getBehandlingAnsvarligSaksbehandler(state),
   behandlingStatus: getBehandlingStatus(state),
@@ -113,7 +104,6 @@ const mapStateToProps = state => ({
   behandlingIsQueued: getBehandlingIsQueued(state),
   behandlingBehandlendeEnhetId: getBehandlingBehandlendeEnhetId(state),
   behandlingBehandlendeEnhetNavn: getBehandlingBehandlendeEnhetNavn(state),
-  henleggArsaker: getHenleggArsaker(state),
   soknad: getSoknad(state),
 });
 
