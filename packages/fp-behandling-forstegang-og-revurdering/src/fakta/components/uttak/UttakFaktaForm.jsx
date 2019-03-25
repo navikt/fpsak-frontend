@@ -18,8 +18,6 @@ import {
   sjekkArbeidsprosentOver100,
   sjekkOverlappendePerioder,
   sjekkEndretFørsteUttaksdato,
-  sjekkNyFørsteUttakdatoStartErEtterSkjæringpunkt,
-  sjekkNyFørsteUttakdatoStartErFørSkjæringpunkt,
 } from './components/UttakPeriodeValidering';
 
 export const UttakFaktaForm = ({
@@ -63,7 +61,7 @@ const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOS
   if (sjekkOmfaktaOmUttakAksjonspunkt(aksjonspunkter) || values.manuellOverstyring) {
     const originalStartDato = (originalPerioder[0] || []).fom;
     const nyStartDato = (values.perioder[0] || []).fom;
-    const { førsteUttaksdato } = values;
+    const { førsteUttaksdato, endringsdato } = values;
 
     if (values.perioder.length === 0) {
       errors.perioder = {
@@ -86,28 +84,12 @@ const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOS
           };
         }
       });
-      if (sjekkEndretFørsteUttaksdato(originalStartDato, nyStartDato, aksjonspunkter)) {
+      // todo, denne skal bort
+      if (sjekkEndretFørsteUttaksdato(originalStartDato, nyStartDato, førsteUttaksdato, endringsdato)) {
         errors.perioder = {
           _error: <FormattedMessage
             id="UttakInfoPanel.OrginaleStartdatoKanIkkeEndres"
             values={{ originalStartDato: dateFormat(originalStartDato) }}
-          />,
-        };
-      }
-
-      if (sjekkNyFørsteUttakdatoStartErEtterSkjæringpunkt(nyStartDato, førsteUttaksdato, aksjonspunkter)) {
-        errors.perioder = {
-          _error: <FormattedMessage
-            id="UttakInfoPanel.manglerPeriodeEtterFørsteUttaksdato"
-            values={{ førsteUttaksdato: dateFormat(førsteUttaksdato) }}
-          />,
-        };
-      }
-      if (sjekkNyFørsteUttakdatoStartErFørSkjæringpunkt(nyStartDato, førsteUttaksdato, aksjonspunkter)) {
-        errors.perioder = {
-          _error: <FormattedMessage
-            id="UttakInfoPanel.periodeFørFørsteUttaksdato"
-            values={{ førsteUttaksdato: dateFormat(førsteUttaksdato) }}
           />,
         };
       }
@@ -123,6 +105,7 @@ const buildInitialValues = createSelector(
     if (perioder) {
       return {
         førsteUttaksdato: ytelseFordeling && ytelseFordeling.førsteUttaksdato ? ytelseFordeling.førsteUttaksdato : undefined,
+        endringsdato: ytelseFordeling && ytelseFordeling.endringsdato ? ytelseFordeling.endringsdato : undefined,
         perioder: perioder.map(periode => ({
           ...periode,
           id: guid(),

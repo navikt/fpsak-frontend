@@ -358,6 +358,7 @@ export class UttakPerioder extends PureComponent {
       perioder,
       aksjonspunkter,
       førsteUttaksdato,
+      endringsdato,
       submitting,
       hasOpenAksjonspunkter,
       kanOverstyre,
@@ -423,7 +424,8 @@ export class UttakPerioder extends PureComponent {
           perioder={perioder}
           readOnly={readOnly && !isManuellOverstyring}
           inntektsmeldingInfo={inntektsmeldingInfo}
-          førsteUttaksdato={førsteUttaksdato}
+          endringsdato={endringsdato
+          }
         />
         <VerticalSpacer twentyPx />
         <FlexContainer fluid wrap>
@@ -496,6 +498,7 @@ UttakPerioder.propTypes = {
   ).isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   førsteUttaksdato: PropTypes.string,
+  endringsdato: PropTypes.string,
   isManuellOverstyring: PropTypes.bool,
   hasRevurderingOvertyringAp: PropTypes.bool.isRequired,
   kanOverstyre: PropTypes.bool.isRequired,
@@ -503,10 +506,12 @@ UttakPerioder.propTypes = {
 
 UttakPerioder.defaultProps = {
   førsteUttaksdato: undefined,
+  endringsdato: undefined,
   isManuellOverstyring: false,
 };
 
 const getFørsteUttaksdato = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'førsteUttaksdato') || undefined;
+const getEndringsdato = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'endringsdato') || undefined;
 const slettedePerioder = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'slettedePerioder') || [];
 const perioder = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'perioder') || [];
 const manuellOverstyring = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'manuellOverstyring') || false;
@@ -520,6 +525,7 @@ const mapStateToProps = (state) => {
     kanOverstyre: getRettigheter(state).kanOverstyreAccess.isEnabled,
     openForms: !!perioder(state).find(periode => periode.openForm === true),
     førsteUttaksdato: getFørsteUttaksdato(state),
+    endringsdato: getEndringsdato(state),
     uttakPeriodeVurderingTyper: getKodeverk(kodeverkTyper.UTTAK_PERIODE_VURDERING_TYPE)(state),
     inntektsmeldinger: getInntektsmeldinger(state),
     initialValues: getFormInitialValues(`${behandlingFormPrefix}.UttakFaktaForm`)(state),

@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { ISO_DATE_FORMAT, calcDays } from '@fpsak-frontend/utils';
+import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT, calcDays } from '@fpsak-frontend/utils';
 import {
   FlexContainer, FlexRow, FlexColumn, Image,
 } from '@fpsak-frontend/shared-components';
@@ -19,6 +19,22 @@ import UttakPeriodeInnhold from './UttakPeriodeInnhold';
 import styles from './uttakPeriode.less';
 
 const classNames = classnames.bind(styles);
+
+const renderFørsteUttaksdato = førsteUttaksdato => (
+  <div className={styles.divider}>
+    Første uttaksdato:
+    {' '}
+    {moment(førsteUttaksdato, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT)}
+  </div>
+);
+
+const renderEndringsdato = endringsdato => (
+  <div className={styles.divider}>
+    Endringsdato:
+    {' '}
+    {moment(endringsdato, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT)}
+  </div>
+);
 
 const renderTomPeriode = () => (
   <div className={styles.periodeIconWrapper}>
@@ -119,7 +135,7 @@ const UttakPeriode = ({
   readOnly,
   perioder,
   inntektsmeldingInfo,
-  førsteUttaksdato,
+  endringsdato,
   meta,
 }) => (
   <div>
@@ -128,7 +144,8 @@ const UttakPeriode = ({
     <FlexContainer fluid wrap>
       {fields.map((fieldId, index, field) => {
         const periode = field.get(index);
-        const harEndringsdatoSomErFørFørsteUttaksperiode = førsteUttaksdato ? moment(periode.fom).isAfter(førsteUttaksdato) : false;
+        // todo bruk endringsdato fra ytelsefordeling
+        const harEndringsdatoSomErFørFørsteUttaksperiode = endringsdato ? moment(periode.fom).isAfter(endringsdato) : false;
         return (
           <React.Fragment key={fieldId}>
             <FlexRow>
@@ -203,11 +220,11 @@ UttakPeriode.propTypes = {
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   isNyPeriodeFormOpen: PropTypes.bool.isRequired,
   inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape())).isRequired,
-  førsteUttaksdato: PropTypes.string,
+  endringsdato: PropTypes.string,
 };
 
 UttakPeriode.defaultProps = {
-  førsteUttaksdato: undefined,
+  endringsdato: undefined,
 };
 
 export default UttakPeriode;
