@@ -104,7 +104,10 @@ export const leggTilDagpengerOmBesteberegning = (fields, skalHaBesteberegning, a
   const dpIndex = findDagpengerIndex(fields);
   if (!skalHaBesteberegning) {
     if (dpIndex !== -1) {
-      fields.remove(dpIndex);
+      const field = fields.get(dpIndex);
+      if (field.lagtTilAvSaksbehandler) {
+        fields.remove(dpIndex);
+      }
     }
     return;
   }

@@ -155,6 +155,17 @@ describe('<InntektFieldArray>', () => {
     expect(summaryRow.length).to.eql(1);
   });
 
+  it('skal fjerne dagpengeandel om dagpenger og lagt til manuelt', () => {
+    const newfields = new MockFieldsWithContent('fieldArrayName', [{ aktivitetStatus: aktivitetStatuser.DAGPENGER, lagtTilAvSaksbehandler: true }]);
+    leggTilDagpengerOmBesteberegning(newfields, false, [aktivitetStatuser.DAGPENGER], undefined);
+    expect(newfields.length).to.equal(0);
+  });
+
+  it('skal ikkje fjerne dagpengeandel om dagpenger og ikkje lagt til manuelt', () => {
+    const newfields = new MockFieldsWithContent('fieldArrayName', [{ aktivitetStatus: aktivitetStatuser.DAGPENGER, lagtTilAvSaksbehandler: false }]);
+    leggTilDagpengerOmBesteberegning(newfields, false, [aktivitetStatuser.DAGPENGER], undefined);
+    expect(newfields.length).to.equal(1);
+  });
 
   it('skal legge til dagpengeandel med fastsatt belop', () => {
     const dagpengeAndel = { aktivitetStatus: { kode: aktivitetStatuser.DAGPENGER }, beregnetPrAar: 120000 };
