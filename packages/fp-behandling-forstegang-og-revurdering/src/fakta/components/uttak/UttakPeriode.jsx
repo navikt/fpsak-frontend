@@ -119,7 +119,7 @@ const UttakPeriode = ({
   readOnly,
   perioder,
   inntektsmeldingInfo,
-  førsteUttaksDato,
+  førsteuttaksdato,
   meta,
 }) => (
   <div>
@@ -128,13 +128,13 @@ const UttakPeriode = ({
     <FlexContainer fluid wrap>
       {fields.map((fieldId, index, field) => {
         const periode = field.get(index);
-        const harEndringsDatoSomErFørFørsteUttaksPeriode = førsteUttaksDato ? moment(periode.fom).isAfter(førsteUttaksDato) : false;
+        const harEndringsdatoSomErFørFørsteUttaksPeriode = førsteuttaksdato ? moment(periode.fom).isAfter(førsteuttaksdato) : false;
         return (
           <React.Fragment key={fieldId}>
             <FlexRow>
               <FlexColumn className={styles.fullWidth}>
                 {avvikInntekstmeldInfo(periode, inntektsmeldingInfo[index])}
-                {index === 0 && harEndringsDatoSomErFørFørsteUttaksPeriode && renderTomPeriode()}
+                {index === 0 && harEndringsdatoSomErFørFørsteUttaksPeriode && renderTomPeriode()}
                 <div className={getClassName(periode, readOnly)}>
                   <UttakPeriodeType
                     bekreftet={periode.bekreftet}
@@ -203,11 +203,11 @@ UttakPeriode.propTypes = {
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   isNyPeriodeFormOpen: PropTypes.bool.isRequired,
   inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape())).isRequired,
-  førsteUttaksDato: PropTypes.string,
+  førsteuttaksdato: PropTypes.string,
 };
 
 UttakPeriode.defaultProps = {
-  førsteUttaksDato: undefined,
+  førsteuttaksdato: undefined,
 };
 
 export default UttakPeriode;

@@ -138,7 +138,7 @@ const fodselsdato = (soknadsType, endredFodselsDato, familiehendelseDate, omsorg
 const getCustomTimes = (
   soknadDate,
   familiehendelseDate,
-  endringsDate,
+  endringsdato,
   soknadsType,
   omsorgsOvertagelseDato,
   endredFodselsDato,
@@ -154,7 +154,7 @@ const getCustomTimes = (
   const customTimesBuilder = {
     soknad: parseDateString(soknadDate),
     fodsel: fodselsdato(soknadsType, endredFodselsDato, familiehendelseDate, omsorgsOvertagelseDato),
-    revurdering: isRevurdering ? parseDateString(endringsDate) : '1950-01-01',
+    revurdering: isRevurdering ? parseDateString(endringsdato) : '1950-01-01',
     dodSoker: person && person.dodsdato ? parseDateString(person.dodsdato) : '1950-01-01',
   };
 
@@ -386,10 +386,10 @@ export class UttakImpl extends Component {
 
   isReadOnly() {
     const {
-      readOnly, aksjonspunkter, endringsDate, isRevurdering, kanOverstyre,
+      readOnly, aksjonspunkter, endringsdato, isRevurdering, kanOverstyre,
     } = this.props;
     const { selectedItem } = this.state;
-    const uttakIsReadOnly = this.testForReadOnly(aksjonspunkter, kanOverstyre) || (endringsDate && isRevurdering && selectedItem.tom < endringsDate);
+    const uttakIsReadOnly = this.testForReadOnly(aksjonspunkter, kanOverstyre) || (endringsdato && isRevurdering && selectedItem.tom < endringsdato);
     return readOnly || uttakIsReadOnly;
   }
 
@@ -406,7 +406,7 @@ export class UttakImpl extends Component {
     const {
       soknadDate,
       familiehendelseDate,
-      endringsDate,
+      endringsdato,
       hovedsokerKjonnKode,
       medsokerKjonnKode,
       dekningsgrad,
@@ -434,7 +434,7 @@ export class UttakImpl extends Component {
     const customTimes = getCustomTimes(
       soknadDate,
       familiehendelseDate,
-      endringsDate,
+      endringsdato,
       soknadsType,
       omsorgsovertakelseDato,
       endredFodselsDato,
@@ -552,7 +552,7 @@ UttakImpl.propTypes = {
   formName: PropTypes.string.isRequired,
   soknadDate: PropTypes.string.isRequired,
   familiehendelseDate: PropTypes.string.isRequired,
-  endringsDate: PropTypes.string.isRequired,
+  endringsdato: PropTypes.string.isRequired,
   hovedsokerKjonnKode: PropTypes.string.isRequired,
   medsokerKjonnKode: PropTypes.string,
   readOnly: PropTypes.bool.isRequired,
@@ -662,7 +662,7 @@ const mapStateToProps = (state, props) => {
     behandlingId: getSelectedBehandlingId(state),
     soknadDate: determineMottatDato(periodeGrenseMottatDato, soknad.mottattDato),
     familiehendelseDate: fodselTerminDato(soknad),
-    endringsDate: ytelseFordeling.endringsDato ? ytelseFordeling.endringsDato : undefined,
+    endringsdato: ytelseFordeling.endringsdato ? ytelseFordeling.endringsdato : undefined,
     dekningsgrad: soknad.dekningsgrad ? soknad.dekningsgrad : undefined,
     stonadskonto: behandlingFormValueSelector(props.formName)(state, STONADSKONTOER_TEMP),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
