@@ -18,6 +18,7 @@ const config = {
     'no-unused-expressions': OFF,
     'no-debugger': ERROR,
     'no-console': ERROR,
+    'import/no-extraneous-dependencies': OFF,
   },
 };
 

@@ -33,7 +33,6 @@ const minLength3 = minLength(3);
 export const Tilbaketrekkpanel = ({
   readOnly,
   vurderTilbaketrekkAP,
-  submitCallback,
   readOnlySubmitButton,
   ...formProps
 }) => (
@@ -112,7 +111,6 @@ Tilbaketrekkpanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   vurderTilbaketrekkAP: PropTypes.shape().isRequired,
-  submitCallback: PropTypes.func.isRequired,
 };
 
 export const transformValues = (values) => {

@@ -245,6 +245,7 @@ export class UttakImpl extends Component {
     } = this.props;
 
     const transformedResultat = values.map((perioder) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { tilknyttetStortinget, ...uta } = perioder; // NOSONAR destruct er bedre enn delete, immutable
       const { ...transformActivity } = uta;
       if (uta.oppholdÅrsak.kode !== '-') {

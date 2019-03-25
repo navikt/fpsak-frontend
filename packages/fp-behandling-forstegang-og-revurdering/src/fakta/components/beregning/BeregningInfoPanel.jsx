@@ -108,7 +108,6 @@ export class BeregningInfoPanelImpl extends Component {
         readOnly,
         aksjonspunkter,
         submittable,
-        initialValues,
         helpText,
         verdiForAvklarAktivitetErEndret,
         isOnHold,

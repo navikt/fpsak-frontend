@@ -46,7 +46,6 @@ export const InnleggelsePeriode = ({
   readOnly,
   formSyncErrors,
   behandlingStatusKode,
-  arbeidsgiver,
   ...formProps
 }) => {
   let errorHeight = 0;
@@ -169,7 +168,6 @@ InnleggelsePeriode.propTypes = {
   fraDato: PropTypes.string.isRequired,
   tilDato: PropTypes.string.isRequired,
   formSyncErrors: PropTypes.shape(),
-  arbeidsgiver: PropTypes.shape(),
   behandlingStatusKode: PropTypes.string,
 };
 
@@ -178,7 +176,6 @@ InnleggelsePeriode.defaultProps = {
   formSyncErrors: {},
   resultat: undefined,
   behandlingStatusKode: undefined,
-  arbeidsgiver: {},
 };
 
 const validateInnleggelseForm = (values) => {

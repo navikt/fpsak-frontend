@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -25,7 +24,6 @@ import VilkarResultPicker from 'behandlingForstegangOgRevurdering/src/behandling
  * Presentasjonskomponent. Setter opp aksjonspunktet for avklaring av Adopsjonsvilkåret.
  */
 export const AdopsjonVilkarFormImpl = ({
-  intl,
   avslagsarsaker,
   lovReferanse,
   readOnly,
@@ -54,7 +52,6 @@ export const AdopsjonVilkarFormImpl = ({
 );
 
 AdopsjonVilkarFormImpl.propTypes = {
-  intl: intlShape.isRequired,
   lovReferanse: PropTypes.string.isRequired,
   avslagsarsaker: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string.isRequired,
@@ -104,10 +101,10 @@ const mapStateToProps = (state, initialProps) => {
   };
 };
 
-const AdopsjonVilkarForm = connect(mapStateToProps)(injectIntl(behandlingForm({
+const AdopsjonVilkarForm = connect(mapStateToProps)(behandlingForm({
   form: formName,
   validate,
-})(AdopsjonVilkarFormImpl)));
+})(AdopsjonVilkarFormImpl));
 
 AdopsjonVilkarForm.supports = (behandlingspunkt, apCodes) => behandlingspunkt === behandlingspunktCodes.ADOPSJON
     && (apCodes.includes(aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN)

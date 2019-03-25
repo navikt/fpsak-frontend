@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 
@@ -58,10 +58,8 @@ const getHelpTexts = (aksjonspunkter) => {
  * Presentasjonskomponent. Har ansvar for å sette opp Redux Formen for faktapenelet til Medlemskapsvilkåret.
  */
 export const OppholdInntektOgPerioderForm = ({
-  intl,
   hasOpenAksjonspunkter,
   submittable,
-  openInfoPanels,
   aksjonspunkter,
   readOnly,
   initialValues,
@@ -92,7 +90,6 @@ export const OppholdInntektOgPerioderForm = ({
 );
 
 OppholdInntektOgPerioderForm.propTypes = {
-  intl: intlShape.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired).isRequired,
@@ -161,4 +158,4 @@ const mapStateToProps = (state, initialProps) => ({
 
 export default connect(mapStateToProps)(behandlingForm({
   form: 'OppholdInntektOgPerioderForm',
-})(injectIntl(OppholdInntektOgPerioderForm)));
+})(OppholdInntektOgPerioderForm));

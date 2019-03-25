@@ -232,21 +232,12 @@ const transformValues = (values, aksjonspunkter) => {
     kode: ap.definisjon.kode,
     begrunnelse: '',
     bekreftedePerioder: values.perioder.map((periode) => {
+      // TODO Kor mange felt er det i bekreftetPeriode? Kan ein heller laga nytt objekt med det ein treng?
       const {
-        id,
-        fixedMedlemskapPerioder,
-        foreldre,
-        inntekter,
-        manuellVurderingType,
-        hasBosattAksjonspunkt,
-        hasPeriodeAksjonspunkt,
-        isBosattAksjonspunktClosed,
-        isPeriodAksjonspunktClosed,
-        opphold,
-        personopplysninger,
-        fom,
-        termindato,
-        årsaker,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        id, fixedMedlemskapPerioder, foreldre, inntekter, manuellVurderingType, hasBosattAksjonspunkt, hasPeriodeAksjonspunkt,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        isBosattAksjonspunktClosed, isPeriodAksjonspunktClosed, opphold, personopplysninger, fom, termindato, årsaker,
         ...bekreftetPeriode
       } = periode;
       return bekreftetPeriode;

@@ -39,7 +39,6 @@ const ForeldelsePanelImpl = ({
   reduxFormInitialize: formInitialize,
   fagsakPerson,
   isApOpen,
-  readOnly,
   apCodes,
   ...formProps
 }) => (
@@ -112,7 +111,6 @@ ForeldelsePanelImpl.propTypes = {
   reduxFormInitialize: PropTypes.func.isRequired,
   fagsakPerson: PropTypes.string.isRequired,
   isApOpen: PropTypes.bool.isRequired,
-  readOnly: PropTypes.bool.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string),
 };
 

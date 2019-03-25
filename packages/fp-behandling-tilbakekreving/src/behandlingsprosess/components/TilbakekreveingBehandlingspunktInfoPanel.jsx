@@ -35,7 +35,6 @@ export const TilbakekreveingBehandlingspunktInfoPanel = ({
     && (
       <ForeldelsePanel
         submitCallback={submitCallback}
-        readOnly={readOnly}
         isApOpen={openAksjonspunkt}
         apCodes={apCodes}
       />

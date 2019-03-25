@@ -17,6 +17,7 @@ const config = {
   rules: {
     'no-unused-expressions': OFF,
     'no-debugger': WARN,
+    'import/no-extraneous-dependencies': OFF,
   },
 };
 

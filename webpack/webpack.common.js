@@ -29,7 +29,7 @@ const config = {
       behandlingKlage: path.join(PACKAGES_DIR, 'fp-behandling-klage'),
       papirsoknad: path.join(PACKAGES_DIR, 'fp-behandling-papirsoknad'),
     },
-    extensions: ['.json', '.js', '.jsx'],
+    extensions: ['.json', '.js', '.jsx', '.ts', '.tsx'],
   },
 
   externals: {

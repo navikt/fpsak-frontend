@@ -41,7 +41,6 @@ export const CheckPersonStatusFormImpl = ({
   fortsettBehandling,
   originalPersonstatusName,
   personStatuser,
-  initialValues,
   gjeldeneFom,
   ...formProps
 }) => (

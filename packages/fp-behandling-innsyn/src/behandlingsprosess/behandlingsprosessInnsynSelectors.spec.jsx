@@ -134,6 +134,7 @@ describe('behandlingsprosessSelectors', () => {
       },
     }];
     const behandlingspunktAksjonspunkterNames = {
+      // eslint-disable-next-line @typescript-eslint/camelcase
       behandle_innsyn: [ac.VURDER_INNSYN],
     };
 
@@ -141,12 +142,14 @@ describe('behandlingsprosessSelectors', () => {
 
     expect(Object.keys(statuser)).has.length(1);
     expect(statuser).is.eql({
+      // eslint-disable-next-line @typescript-eslint/camelcase
       behandle_innsyn: [aksjonspunkter[0]],
     });
   });
 
   it('skal hente behandlingspunkter med åpne og løsbare aksjonspunkter', () => {
     const behandlingspunktAksjonspunkter = {
+      // eslint-disable-next-line @typescript-eslint/camelcase
       behandle_innsyn: [{
         definisjon: {
           kode: ac.VURDER_INNSYN,
@@ -250,6 +253,7 @@ describe('behandlingsprosessSelectors', () => {
 
   it('skal ha behandlingspunktstatus markert åpen når minst ett av aksjonspunktene kan løses', () => {
     const behandlingspunktAksjonspunkter = {
+      // eslint-disable-next-line @typescript-eslint/camelcase
       behandle_innsyn: [{
         definisjon: {
           kode: ac.VURDER_INNSYN,
@@ -279,6 +283,7 @@ describe('behandlingsprosessSelectors', () => {
 
   it('skal ha behandlingspunktstatus markert lukket når ingen av aksjonspunktene kan løses', () => {
     const behandlingspunktAksjonspunkter = {
+      // eslint-disable-next-line @typescript-eslint/camelcase
       behandle_innsyn: [{
         definisjon: {
           kode: ac.VURDER_INNSYN,

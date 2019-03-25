@@ -33,15 +33,11 @@ export const FerieOgArbeidsPeriode = ({
   arbeidstidprosent,
   readOnly,
   inntektsmeldingInfo,
-  fraDato,
-  tilDato,
-  fieldId,
   arbeidsgiver,
   uttakPeriodeType,
   behandlingStatusKode,
   skalViseResultat,
   oppholdArsak,
-  utsettelseArsak,
   ...formProps
 }) => {
   const isEdited = resultat === uttakPeriodeVurdering.PERIODE_OK_ENDRET
@@ -139,7 +135,6 @@ export const FerieOgArbeidsPeriode = ({
 };
 
 FerieOgArbeidsPeriode.propTypes = {
-  fieldId: PropTypes.string.isRequired,
   resultat: PropTypes.string,
   updatePeriode: PropTypes.func.isRequired,
   cancelEditPeriode: PropTypes.func.isRequired,
@@ -149,14 +144,11 @@ FerieOgArbeidsPeriode.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   arbeidstidprosent: PropTypes.number,
   inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.shape()),
-  fraDato: PropTypes.string.isRequired,
-  tilDato: PropTypes.string.isRequired,
   uttakPeriodeType: PropTypes.shape().isRequired,
   arbeidsgiver: PropTypes.shape(),
   skalViseResultat: PropTypes.bool.isRequired,
   oppholdArsak: PropTypes.shape(),
   behandlingStatusKode: PropTypes.string,
-  utsettelseArsak: PropTypes.shape(),
 };
 
 FerieOgArbeidsPeriode.defaultProps = {
@@ -165,7 +157,6 @@ FerieOgArbeidsPeriode.defaultProps = {
   resultat: undefined,
   arbeidsgiver: {},
   oppholdArsak: undefined,
-  utsettelseArsak: undefined,
   behandlingStatusKode: undefined,
 };
 

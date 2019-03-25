@@ -43,7 +43,6 @@ export const ErForeldreansvar4LeddVilkaarOppfyltFormImpl = ({
   readOnly,
   readOnlySubmitButton,
   erVilkarOk,
-  initialValues,
   aksjonspunkter,
   ...formProps
 }) => (
