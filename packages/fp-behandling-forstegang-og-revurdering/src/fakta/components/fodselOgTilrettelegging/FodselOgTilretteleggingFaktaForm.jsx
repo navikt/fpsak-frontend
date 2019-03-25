@@ -11,6 +11,9 @@ import {
 
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import {
+  getSvangerskapspengerTil,
+} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import ArbeidsforholdFaktaPanel from './ArbeidsforholdFaktaPanel';
 
 /**
@@ -64,6 +67,8 @@ const transformValues = values => ({
 });
 
 const mapStateToProps = (state, ownProps) => {
+  // const tilretteleggingREST = getSvangerskapspengerTil(state);
+
   // TODO: hente info fra backend når klart.  venter avklaring på om det blir checkboxer( mulighet for flere datoer),
   //  eller radiobuttons (kun 1 dato)
   const tilrettelegging = {
