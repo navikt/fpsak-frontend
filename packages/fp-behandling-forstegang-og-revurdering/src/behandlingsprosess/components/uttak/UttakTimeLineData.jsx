@@ -81,7 +81,13 @@ const hentApTekst = (manuellBehandlingÅrsak, stonadskonto, aktiviteter) => {
   return texts;
 };
 
-const isPeriodDefined = period => (!(period.periodeResultatType && period.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING));
+const isPeriodDefined = (period) => {
+  if (period.aktiviteter[0].trekkdager) {
+    return true;
+  }
+  return (!(period.periodeResultatType
+  && period.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING));
+};
 
 export class UttakTimeLineData extends Component {
   constructor() {
@@ -136,7 +142,7 @@ export class UttakTimeLineData extends Component {
     andrePeriode.fom = formValues.andrePeriode.fom;
     andrePeriode.tom = formValues.andrePeriode.tom;
     periodToUpdate[0].aktiviteter.forEach((period, index) => {
-      if (period.days || period.weeks || (formValues.gradertTrekkdager && isPeriodDefined(periodToUpdate[0]))) {
+      if (period.days || period.weeks || (formValues.gradertTrekkdager && period.utbetalingsgrad < 100 && period.prosentArbeid && period.prosentArbeid > 0)) {
         const periodUtbetalningsgrad = !period.utbetalingsgrad ? (formValues.gradertTrekkdager * (1 - formValues.gradertProsentandelArbeid * 0.01))
           : formValues.gradertTrekkdager;
         const totalTrekkDagerUtenGradering = newTrekkDagerForstePeriode + newTrekkDagerAndrePeriode;
