@@ -4,8 +4,6 @@ import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-
 import { behandlingIListePropType } from '@fpsak-frontend/prop-types';
 import BehandlingPickerItem from './BehandlingPickerItem';
 
@@ -15,7 +13,7 @@ const sortBehandlinger = (behandlinger, selectedBehandlingId) => {
   const selected = behandlinger.filter(b => b.id === selectedBehandlingId);
   const other = behandlinger
     .filter(b => b.id !== selectedBehandlingId)
-    .sort((b1, b2) => moment(b1.opprettet, ISO_DATE_FORMAT).diff(moment(b2.opprettet, ISO_DATE_FORMAT)));
+    .sort((b1, b2) => moment(b2.opprettet).diff(moment(b1.opprettet)));
   return [...selected, ...other];
 };
 
