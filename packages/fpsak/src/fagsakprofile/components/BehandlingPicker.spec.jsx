@@ -39,7 +39,7 @@ describe('<BehandlingPicker>', () => {
     expect(message.prop('id')).is.eql('BehandlingList.ZeroBehandlinger');
   });
 
-  it('skal vise alle behandlinger sortert med først opprettet først i listen', () => {
+  it('skal vise alle behandlinger sortert med sist opprettet først i listen', () => {
     const behandlinger = [{
       ...behandlingTemplate,
       id: 1,
@@ -63,9 +63,9 @@ describe('<BehandlingPicker>', () => {
 
     const item = wrapper.find(BehandlingPickerItem);
     expect(item).has.length(3);
-    expect(item.first().prop('behandling').id).is.eql(3);
+    expect(item.first().prop('behandling').id).is.eql(2);
     expect(item.at(1).prop('behandling').id).is.eql(1);
-    expect(item.last().prop('behandling').id).is.eql(2);
+    expect(item.last().prop('behandling').id).is.eql(3);
   });
 
   it('skal vise alle behandlinger sortert med valgt behandling først i listen', () => {
@@ -94,7 +94,7 @@ describe('<BehandlingPicker>', () => {
     const item = wrapper.find(BehandlingPickerItem);
     expect(item).has.length(3);
     expect(item.first().prop('behandling').id).is.eql(2);
-    expect(item.at(1).prop('behandling').id).is.eql(3);
-    expect(item.last().prop('behandling').id).is.eql(1);
+    expect(item.at(1).prop('behandling').id).is.eql(1);
+    expect(item.last().prop('behandling').id).is.eql(3);
   });
 });
