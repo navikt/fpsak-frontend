@@ -135,7 +135,7 @@ BeregningFPImpl.defaultProps = {
   sokerHarGraderingPaaAndelUtenBG: false,
 };
 
-const bestemGjeldendeStatuser = createSelector([getAktivitetStatuser], aktivitetStatuser => ({
+const bestemGjeldendeStatuser = createSelector([getAktivitetStatuser], aktivitetStatuser => (aktivitetStatuser ? ({
   isArbeidstaker: aktivitetStatuser.some(({ kode }) => isStatusArbeidstakerOrKombinasjon(kode)),
   isFrilanser: aktivitetStatuser.some(({ kode }) => isStatusFrilanserOrKombinasjon(kode)),
   isSelvstendigNaeringsdrivende: aktivitetStatuser.some(({ kode }) => isStatusSNOrKombinasjon(kode)),
@@ -144,12 +144,12 @@ const bestemGjeldendeStatuser = createSelector([getAktivitetStatuser], aktivitet
   skalViseBeregningsgrunnlag: aktivitetStatuser && aktivitetStatuser.length > 0,
   isKombinasjonsstatus: aktivitetStatuser.some(({ kode }) => isStatusKombinasjon(kode)) || aktivitetStatuser.length > 1,
   isMilitaer: aktivitetStatuser.some(({ kode }) => isStatusMilitaer(kode)),
-}));
+}) : null));
 
 const getBeregnetAarsinntekt = createSelector(
   [getBeregningsgrunnlag, bestemGjeldendeStatuser, getAlleAndelerIForstePeriode, getBehandlingGjelderBesteberegning],
   (beregningsgrunnlag, relevanteStatuser, alleAndelerIForstePeriode, gjelderBesteberegning) => {
-    if (!beregningsgrunnlag) {
+    if (!beregningsgrunnlag || !relevanteStatuser) {
       return {};
     }
     if (relevanteStatuser.harAndreTilstotendeYtelser) {
@@ -170,7 +170,7 @@ const buildProps = createSelector(
   [getBeregningsgrunnlag, getSelectedBehandlingspunktVilkar, bestemGjeldendeStatuser,
     getGjeldendeBeregningAksjonspunkter, getBeregnetAarsinntekt, getBeregningGraderingAksjonspunkt],
   (berGr, gjeldendeVilkar, relevanteStatuser, gjeldendeAksjonspunkter, beregnetAarsinntekt, graderingAP) => {
-    if (!berGr) {
+    if (!berGr || !relevanteStatuser) {
       return {};
     }
     const sammenligningsgrunnlag = berGr.sammenligningsgrunnlag ? berGr.sammenligningsgrunnlag.rapportertPrAar : undefined;
