@@ -271,7 +271,7 @@ const warningUttakActivity = (values) => {
   if (invalidArbeidsProsentVidUsettelse && values.utsettelseType.kode === utsettelseArsakCodes.ARBEID) {
     warnings = {
       _warning:
-  <AlertStripe type="info" className={styles.advarsel}>
+  <AlertStripe type="advarsel" className={styles.advarsel}>
     <FormattedMessage
       id="ValidationMessage.UtsettelseUtenFullArbeid"
     />
@@ -303,7 +303,7 @@ const warningUttakActivity = (values) => {
         warnings = {
           ...warnings,
           _warning:
-  <AlertStripe type="info" className={styles.advarsel}>
+  <AlertStripe type="advarsel" className={styles.advarsel}>
     <FormattedMessage
       id="ValidationMessage.MerEn100ProsentOgOgyldigUtsettlse"
     />
@@ -313,7 +313,7 @@ const warningUttakActivity = (values) => {
         warnings = {
           ...warnings,
           _warning:
-  <AlertStripe type="info" className={styles.advarsel}>
+  <AlertStripe type="advarsel" className={styles.advarsel}>
     <FormattedMessage
       id="ValidationMessage.MerEn100Prosent"
     />
