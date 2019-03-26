@@ -144,7 +144,6 @@ const UttakPeriode = ({
     <FlexContainer fluid wrap>
       {fields.map((fieldId, index, field) => {
         const periode = field.get(index);
-        // todo bruk endringsdato fra ytelsefordeling
         const harEndringsdatoSomErFørFørsteUttaksperiode = endringsdato ? moment(periode.fom).isAfter(endringsdato) : false;
         return (
           <React.Fragment key={fieldId}>
