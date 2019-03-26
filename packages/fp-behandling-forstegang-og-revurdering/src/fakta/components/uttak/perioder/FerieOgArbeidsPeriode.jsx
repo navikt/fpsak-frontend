@@ -35,6 +35,7 @@ export const FerieOgArbeidsPeriode = ({
   uttakPeriodeType,
   behandlingStatusKode,
   skalViseResultat,
+  førsteUttaksdato,
   oppholdArsak,
   ...formProps
 }) => {

@@ -139,7 +139,8 @@ const UttakPeriode = ({
   meta,
 }) => (
   <div>
-    {meta.error && <AlertStripe className={styles.fullWidth} type="advarsel">{meta.error}</AlertStripe>}
+    {meta.error && <AlertStripe className={styles.fullWidth} type="feil">{meta.error}</AlertStripe>}
+    {meta.warning && <AlertStripe className={styles.fullWidth} type="info">{meta.warning}</AlertStripe>}
 
     <FlexContainer fluid wrap>
       {fields.map((fieldId, index, field) => {
