@@ -52,6 +52,7 @@ export const DelOppPeriodeModalImpl = ({
         name="ForstePeriodeTomDato"
         className={styles.datePicker}
         validate={[required, hasValidDate]}
+        initialMonth={new Date(periodeData.tom)}
       />
     </div>
     <Row className={styles.marginTop}>

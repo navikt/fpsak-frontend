@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Input } from 'nav-frontend-skjema';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import ElementWrapper from '../ElementWrapper';
 import CalendarOverlay from './CalendarOverlay';
 import CalendarToggleButton from './CalendarToggleButton';
 
@@ -76,14 +75,14 @@ class Datepicker extends Component {
 
   render() {
     const {
-      label, placeholder, onChange, onBlur, value, feil, disabled,
+      label, placeholder, onChange, onBlur, value, feil, disabled, initialMonth,
     } = this.props;
     const {
       inputOffsetTop, inputOffsetWidth, showCalendar,
     } = this.state;
 
     return (
-      <ElementWrapper>
+      <>
         <div className={styles.inputWrapper}>
           <Input
             className={styles.dateInput}
@@ -105,6 +104,7 @@ class Datepicker extends Component {
             toggleShowCalendar={this.toggleShowCalendar}
             buttonRef={this.handleButtonRef}
             disabled={disabled}
+
           />
         </div>
         {showCalendar
@@ -117,10 +117,11 @@ class Datepicker extends Component {
           elementIsCalendarButton={this.elementIsCalendarButton}
           className={styles.calendarRoot}
           dayPickerClassName={styles.calendarWrapper}
+          initialMonth={initialMonth}
         />
         )
         }
-      </ElementWrapper>
+      </>
     );
   }
 }
@@ -133,6 +134,7 @@ Datepicker.propTypes = {
   value: PropTypes.string,
   feil: PropTypes.shape({ feilmelding: PropTypes.string }),
   disabled: PropTypes.bool,
+  initialMonth: PropTypes.instanceOf(Date),
 };
 
 Datepicker.defaultProps = {
@@ -141,6 +143,7 @@ Datepicker.defaultProps = {
   value: '',
   feil: null,
   disabled: false,
+  initialMonth: null,
 };
 
 export default Datepicker;
