@@ -26,10 +26,6 @@ import foreldelseCodes from './foreldelseCodes';
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 
-const readOnly = false;
-const PERIODE_RESULTAT_TYPE = 'PERIODE_RESULTAT_TYPE';
-const innvilgetTekst = 'Innvilget';
-
 const oldForeldetValue = foreldelseVurderingType => (foreldelseVurderingType.kode !== foreldelseCodes.MANUELL_BEHANDLING ? foreldelseVurderingType.kode : null);
 const checkForeldetValue = selectedItemData => (selectedItemData.foreldet ? selectedItemData.foreldet
   : oldForeldetValue(selectedItemData.foreldelseVurderingType));
@@ -51,6 +47,7 @@ export class ForeldelseFormImpl extends Component {
   render() {
     const {
       cancelSelectedActivity,
+      readOnly,
       ...formProps
     } = this.props;
 
@@ -131,18 +128,11 @@ ForeldelseFormImpl.propTypes = {
 const transformValues = (selectedItemData, values) => {
   const { foreldet, begrunnelse } = values;
 
-  const resultatType = {
-    kode: foreldet,
-    navn: innvilgetTekst,
-    kodeverk: PERIODE_RESULTAT_TYPE,
-  };
-
   return {
     ...selectedItemData,
     begrunnelse,
     foreldet,
-    className: getStatusPeriode(resultatType),
-    periodeResultatType: resultatType,
+    className: getStatusPeriode(foreldet),
   };
 };
 

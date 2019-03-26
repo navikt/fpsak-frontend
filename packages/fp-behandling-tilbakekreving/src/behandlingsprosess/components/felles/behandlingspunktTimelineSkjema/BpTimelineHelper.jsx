@@ -4,22 +4,12 @@ import foreldelseCodes from '../../foreldelse/foreldelseCodes';
 const godkjentKlassenavn = 'godkjentPeriode';
 const avvistKlassenavn = 'avvistPeriode';
 
-export const getPeriodFeilutbetaling = (dagligUtbetalinger) => {
-  let totatFeilutbetaling = 0;
-  dagligUtbetalinger.forEach((dagligUtbetaling) => {
-    totatFeilutbetaling += dagligUtbetaling.utbetaltBeløp;
-  });
-
-  return totatFeilutbetaling;
-};
-
-export const getResultType = item => (item.periodeResultatType ? item.periodeResultatType : item.foreldelseVurderingType);
-export const getStatusPeriode = (resultatType) => {
-  if (resultatType.kode === foreldelseCodes.FORELDET) {
+export const getStatusPeriode = (vurderingTypeKode) => {
+  if (vurderingTypeKode === foreldelseCodes.FORELDET) {
     return avvistKlassenavn;
   }
 
-  if (resultatType.kode === foreldelseCodes.MANUELL_BEHANDLING) {
+  if (vurderingTypeKode === foreldelseCodes.MANUELL_BEHANDLING) {
     return 'undefined';
   }
   return godkjentKlassenavn;
@@ -33,10 +23,10 @@ export const addClassNameGroupIdToPerioder = (tilbakekrevingPerioder) => {
       ...item,
       id: index + 1,
       foreldet: item.foreldelseVurderingType.kode,
-      className: getStatusPeriode(getResultType(item)),
+      className: getStatusPeriode(item.foreldelseVurderingType.kode),
       hovedsoker: true,
       group: 1,
-      feilutbetaling: getPeriodFeilutbetaling(item.dagligUtbetalinger),
+      feilutbetaling: item.belop,
     };
     perioderMedClassName.push(periodMedClassName);
   });

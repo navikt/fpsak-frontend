@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import foreldelseCodes from '../../foreldelse/foreldelseCodes';
-import { getResultType } from './BpTimelineHelper';
 import BpTimeline from './BpTimeline';
 import BpTimelineData from './BpTimelineData';
 
@@ -32,7 +31,7 @@ export class BpTimelinePanel extends Component {
     const { selectedItem } = this.state;
 
     if (!selectedItem) {
-      const defaultSelectedElement = resultatActivity.find(period => getResultType(period).kode === foreldelseCodes.MANUELL_BEHANDLING);
+      const defaultSelectedElement = resultatActivity.find(period => period.foreldet === foreldelseCodes.MANUELL_BEHANDLING);
       this.setState({ selectedItem: defaultSelectedElement });
     }
   }
@@ -62,7 +61,7 @@ export class BpTimelinePanel extends Component {
     const sortedActivities = otherThanUpdated.concat(verdier);
     sortedActivities.sort((a, b) => a.id - b.id);
     this.setFormField(activityPanelName, sortedActivities);
-    const tilbakekrevingPeriod = otherThanUpdated.find(o => getResultType(o).kode === foreldelseCodes.MANUELL_BEHANDLING);
+    const tilbakekrevingPeriod = otherThanUpdated.find(period => period.foreldet === foreldelseCodes.MANUELL_BEHANDLING);
     this.setSelectedTilbakekrevingActivity(tilbakekrevingPeriod || undefined);
   }
 
@@ -127,12 +126,12 @@ export class BpTimelinePanel extends Component {
       hovedsokerKjonnKode,
     } = this.props;
     const { selectedItem } = this.state;
-    const childWithProps = React.cloneElement(children, {
+    const childWithProps = selectedItem ? React.cloneElement(children, {
       selectedItemData: selectedItem,
       cancelSelectedActivity: this.cancelSelectedActivity,
       updateActivity: this.updateActivity,
-      key: selectedItem ? selectedItem.tom : null,
-    });
+      key: selectedItem.tom,
+    }) : null;
 
     return (
       <>
