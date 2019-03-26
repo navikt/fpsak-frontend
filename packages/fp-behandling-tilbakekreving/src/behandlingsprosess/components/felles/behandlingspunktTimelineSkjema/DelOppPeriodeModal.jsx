@@ -109,7 +109,6 @@ const transformValues = (values, periodeData) => {
   return {
     periodeId: periodeData.id,
     hovedsoker: periodeData.hovedsoker,
-    dagligUtbetalinger: periodeData.dagligUtbetalinger.sort((a, b) => moment(a.dag) - moment(b.dag)),
     feilutbetaling: periodeData.feilutbetaling,
     forstePeriode,
     andrePeriode,

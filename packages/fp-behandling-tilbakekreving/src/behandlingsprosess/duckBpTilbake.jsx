@@ -55,6 +55,9 @@ export const overrideProsessAksjonspunkter = (behandlingIdentifier, params, shou
     .then(response => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo, updateFagsakInfo)));
 };
 
+export const beregnBeløp = params => dispatch => dispatch(tilbakekrevingBehandlingApi.BEREGNE_BELØP.makeRestApiRequest()(params))
+  .then(response => response.payload);
+
 /* Reducer */
 const initialState = {
   overrideBehandlingspunkter: [],

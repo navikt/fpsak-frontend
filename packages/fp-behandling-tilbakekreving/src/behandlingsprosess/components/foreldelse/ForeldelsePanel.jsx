@@ -11,7 +11,9 @@ import {
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingTilbakekreving/src/behandlingForm';
+import {
+  behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, getBehandlingFormSyncErrors, isBehandlingFormDirty,
+} from 'behandlingTilbakekreving/src/behandlingForm';
 import { getBehandlingVersjon, getForeldelsePerioder } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingTilbakekreving/src/duckTilbake';
 import moment from 'moment';
@@ -20,6 +22,7 @@ import { addClassNameGroupIdToPerioder } from '../felles/behandlingspunktTimelin
 import BpTimelinePanel from '../felles/behandlingspunktTimelineSkjema/BpTimelinePanel';
 import ForeldelseForm from './ForeldelseForm';
 import styles from './foreldelsePanel.less';
+import foreldelseCodes from './foreldelseCodes';
 
 const ACTIVITY_PANEL_NAME = 'foreldelsesresultatActivity';
 const formName = 'ForeldelseForm';
@@ -31,6 +34,9 @@ const getDate = () => moment().subtract(30, 'months').format(DDMMYYYY_DATE_FORMA
 const getApTekst = apCode => (apCode
   ? [<FormattedMessage id={`Foreldelse.AksjonspunktHelpText.${apCode}`} key="vurderForeldelse" values={{ dato: getDate() }} />]
   : []);
+const isConfirmButtonDisabled = (foreldelsesresultatActivity, foreldeseSyncErrors, foreldeseDirty) => foreldeseDirty
+  || Object.entries(foreldeseSyncErrors).length !== 0
+  || foreldelsesresultatActivity.some(periode => periode.begrunnelse === null || periode.foreldet === foreldelseCodes.MANUELL_BEHANDLING);
 
 const ForeldelsePanelImpl = ({
   foreldelsesresultatActivity,
@@ -41,6 +47,8 @@ const ForeldelsePanelImpl = ({
   isApOpen,
   readOnly,
   apCodes,
+  foreldeseSyncErrors,
+  foreldeseDirty,
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
@@ -84,6 +92,7 @@ const ForeldelsePanelImpl = ({
               behandlingFormPrefix={behandlingFormPrefix}
               formName={formName}
               activityPanelName={ACTIVITY_PANEL_NAME}
+              readOnly={readOnly}
             />
           </BpTimelinePanel>
           <VerticalSpacer twentyPx />
@@ -91,7 +100,8 @@ const ForeldelsePanelImpl = ({
             <FlexColumn>
               <Hovedknapp
                 mini
-                disabled={formProps.pristine}
+                disabled={isConfirmButtonDisabled(foreldelsesresultatActivity, foreldeseSyncErrors, foreldeseDirty)}
+                readOnly={readOnly}
                 spinner={formProps.submitting}
               >
                 <FormattedMessage id="Uttak.Confirm" />
@@ -114,11 +124,15 @@ ForeldelsePanelImpl.propTypes = {
   isApOpen: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string),
+  foreldeseSyncErrors: PropTypes.shape(),
+  foreldeseDirty: PropTypes.bool,
 };
 
 ForeldelsePanelImpl.defaultProps = {
   foreldelsesresultatActivity: undefined,
   apCodes: undefined,
+  foreldeseSyncErrors: undefined,
+  foreldeseDirty: false,
 };
 
 export const transformValues = (values, apCode) => {
@@ -139,12 +153,14 @@ export const buildInitialValues = foreldelsePerioder => ({
 });
 
 const mapStateToProps = (state, ownProps) => {
-  const foreldelsePerioderResultat = getForeldelsePerioder(state).periodeDtoListe;
+  const foreldelsePerioderResultat = getForeldelsePerioder(state);
   return {
     initialValues: buildInitialValues(foreldelsePerioderResultat),
     foreldelsesresultatActivity: behandlingFormValueSelector(formName)(state, ACTIVITY_PANEL_NAME),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
     fagsakPerson: getFagsakPerson(state),
+    foreldeseSyncErrors: getBehandlingFormSyncErrors(ACTIVITY_PANEL_NAME)(state),
+    foreldeseDirty: isBehandlingFormDirty(ACTIVITY_PANEL_NAME)(state),
     onSubmit: values => ownProps.submitCallback(transformValues(values, ownProps.apCodes[0])),
   };
 };

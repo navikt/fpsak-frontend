@@ -1,26 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
-import { getPeriodFeilutbetaling } from './BpTimelineHelper';
+import { beregnBeløp } from 'behandlingTilbakekreving/src/behandlingsprosess/duckBpTilbake';
+import { getSelectedBehandlingId } from 'behandlingTilbakekreving/src/duckTilbake';
 import PerioderControler from './PerioderControler';
 import PeriodSummary from './PeriodSummary';
 import styles from './bpTimelineData.less';
 
-const findSliceIndex = (dagligUtbetalinger, tom) => {
-  if (tom > dagligUtbetalinger[dagligUtbetalinger.length - 1].dag) {
-    return dagligUtbetalinger.length;
-  }
-  if (tom < dagligUtbetalinger[0].dag) {
-    return 0;
-  }
-  const periodeToIndex = dagligUtbetalinger.findIndex(e => e.dag >= tom);
-  if (tom === dagligUtbetalinger[periodeToIndex].dag) {
-    return periodeToIndex + 1;
-  }
-  return periodeToIndex;
-};
-
-export class BpTimelineData extends Component {
+export class BpTimelineDataImpl extends Component {
   constructor() {
     super();
     this.showModal = this.showModal.bind(this);
@@ -54,40 +43,50 @@ export class BpTimelineData extends Component {
   }
 
   splitPeriod(formValues) {
-    const { resultatActivity, activityPanelName, callbackSetSelected: setSelected } = this.props;
-    const otherThanUpdated = resultatActivity.filter(o => o.id !== formValues.periodeId);
-    const periodToUpdate = resultatActivity.filter(o => o.id === formValues.periodeId);
-    const forstePeriode = JSON.parse(JSON.stringify(...periodToUpdate));
-    const andrePeriode = JSON.parse(JSON.stringify(...periodToUpdate));
+    const {
+      resultatActivity,
+      activityPanelName,
+      callbackSetSelected: setSelected,
+      beregnBeløp: callBeregnBeløp,
+      behandlingId: selectedBehandlingId,
+    } = this.props;
     const currentId = formValues.periodeId;
-    const forstePeriodeTomIndex = findSliceIndex(formValues.dagligUtbetalinger, formValues.forstePeriode.tom);
-    if (!periodToUpdate[0].begrunnelse) {
+    const otherThanUpdated = resultatActivity.filter(o => o.id !== currentId);
+    const forstePeriode = resultatActivity.find(o => o.id === currentId);
+    const andrePeriode = { ...forstePeriode };
+    forstePeriode.fom = formValues.forstePeriode.fom;
+    forstePeriode.tom = formValues.forstePeriode.tom;
+    andrePeriode.fom = formValues.andrePeriode.fom;
+    andrePeriode.tom = formValues.andrePeriode.tom;
+    andrePeriode.id = currentId + 1;
+    if (!forstePeriode.begrunnelse) {
       forstePeriode.begrunnelse = ' ';
       andrePeriode.begrunnelse = ' ';
     }
 
-    forstePeriode.fom = formValues.forstePeriode.fom;
-    forstePeriode.tom = formValues.forstePeriode.tom;
-    forstePeriode.dagligUtbetalinger = formValues.dagligUtbetalinger.slice(0, forstePeriodeTomIndex);
-    forstePeriode.feilutbetaling = getPeriodFeilutbetaling(forstePeriode.dagligUtbetalinger);
-    andrePeriode.fom = formValues.andrePeriode.fom;
-    andrePeriode.tom = formValues.andrePeriode.tom;
-    andrePeriode.dagligUtbetalinger = formValues.dagligUtbetalinger.slice(forstePeriodeTomIndex);
-    andrePeriode.feilutbetaling = formValues.feilutbetaling - forstePeriode.feilutbetaling;
-    andrePeriode.id = currentId + 1;
-    otherThanUpdated.map((periode) => {
-      const periodeCopy = periode;
-      if (periode.id > currentId) {
-        periodeCopy.id += 1;
-      }
-      return periodeCopy;
+    const params = {
+      behandlingId: selectedBehandlingId,
+      perioder: [forstePeriode, andrePeriode],
+    };
+
+    callBeregnBeløp(params).then((response) => {
+      const forstePeriodeMedBeløp = { ...forstePeriode, ...response.perioder[0].belop };
+      const andrePeriodeMedBeløp = { ...andrePeriode, ...response.perioder[1].belop };
+
+      otherThanUpdated.map((periode) => {
+        const periodeCopy = periode;
+        if (periode.id > currentId) {
+          periodeCopy.id += 1;
+        }
+        return periodeCopy;
+      });
+      const sortedActivities = otherThanUpdated.concat(forstePeriodeMedBeløp, andrePeriodeMedBeløp);
+      sortedActivities.sort((a, b) => a.id - b.id);
+      this.setFormField(activityPanelName, sortedActivities);
+      this.hideModal();
+      setSelected(forstePeriodeMedBeløp);
+      this.hideModal();
     });
-    const sortedActivities = otherThanUpdated.concat(forstePeriode, andrePeriode);
-    sortedActivities.sort((a, b) => a.id - b.id);
-    this.setFormField(activityPanelName, sortedActivities);
-    this.hideModal();
-    setSelected(forstePeriode);
-    this.hideModal();
   }
 
   render() {
@@ -124,7 +123,7 @@ export class BpTimelineData extends Component {
   }
 }
 
-BpTimelineData.propTypes = {
+BpTimelineDataImpl.propTypes = {
   selectedItemData: PropTypes.shape().isRequired,
   resultatActivity: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
@@ -135,6 +134,20 @@ BpTimelineData.propTypes = {
   formName: PropTypes.string.isRequired,
   activityPanelName: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
+  beregnBeløp: PropTypes.func.isRequired,
+  behandlingId: PropTypes.number.isRequired,
 };
+
+const mapStateToPros = state => ({
+  behandlingId: getSelectedBehandlingId(state),
+});
+
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators({
+    beregnBeløp,
+  }, dispatch),
+});
+
+const BpTimelineData = connect(mapStateToPros, mapDispatchToProps)(BpTimelineDataImpl);
 
 export default BpTimelineData;
