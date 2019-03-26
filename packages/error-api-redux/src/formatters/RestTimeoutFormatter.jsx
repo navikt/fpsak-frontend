@@ -1,4 +1,3 @@
-/* @flow */
 import ErrorEventType from './errorEventType';
 import ErrorMessage from './ErrorMessage';
 
