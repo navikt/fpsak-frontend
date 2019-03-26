@@ -6785,13 +6785,15 @@ natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
 
-nav-frontend-alertstriper-style@0.2.53:
-  version "0.2.53"
-  resolved "https://registry.npmjs.org/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-0.2.53.tgz#54aab60a9dac95d91cbf11b5353e84ebca67401a"
+nav-frontend-alertstriper-style@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-1.0.2.tgz#ff71909b979cb76d43d175e58aff799cfe2f1c3b"
+  integrity sha512-hIET2Tr+4LKx9tQ1Vx0CW/IRpy46PhGARLIb9jabsqe8nkBsZKxSwx0JuD1XWyoLwNFOK8p8hwJMhGYZ8LKdpw==
 
-nav-frontend-alertstriper@1.0.34:
-  version "1.0.34"
-  resolved "https://registry.npmjs.org/nav-frontend-alertstriper/-/nav-frontend-alertstriper-1.0.34.tgz#20914d4ed526cb88a69a94e3939fbd429fffca05"
+nav-frontend-alertstriper@2.0.2:
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/nav-frontend-alertstriper/-/nav-frontend-alertstriper-2.0.2.tgz#8ca38c596f522383273ef3f553e1bdfd2c8da577"
+  integrity sha512-JHPZVhxvchI1lHar9at38ektL9/Pgm7nUvVzFQXGNgsSxNk/mWGMl+bhmwU1qxc9vZMaZYb9ng/DhG9pxnBoYg==
 
 nav-frontend-chevron-style@0.3.4:
   version "0.3.4"
@@ -6829,9 +6831,10 @@ nav-frontend-grid@1.0.20:
   version "1.0.20"
   resolved "https://registry.npmjs.org/nav-frontend-grid/-/nav-frontend-grid-1.0.20.tgz#e788266b118a1384d78fa94fc6672bf0af03e7ac"
 
-nav-frontend-ikoner-assets@0.2.32:
-  version "0.2.32"
-  resolved "https://registry.npmjs.org/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-0.2.32.tgz#fd178e028dcfd5e438c6e43e783fcd5858edb0a9"
+nav-frontend-ikoner-assets@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-1.0.1.tgz#13d7e33b7404bdb258d709ae3c99a4c493201ca8"
+  integrity sha512-+115YXOYtF5+tOc7zeDQz+X/ZYjdPJJ+coxzeBMDuGkg+Zf+yIzrZUv9Wc0B0gBoAQEDt0NbB1Eza6R2gFEamA==
 
 nav-frontend-js-utils@1.0.7:
   version "1.0.7"
@@ -6901,9 +6904,10 @@ nav-frontend-spinner-style@0.2.5:
   version "0.2.5"
   resolved "https://registry.npmjs.org/nav-frontend-spinner-style/-/nav-frontend-spinner-style-0.2.5.tgz#c782c63589776e768a45d6049047b1a60b6805be"
 
-nav-frontend-spinner@1.0.17:
-  version "1.0.17"
-  resolved "https://registry.npmjs.org/nav-frontend-spinner/-/nav-frontend-spinner-1.0.17.tgz#f98255640e097b32cd4e70b47c2042203814947b"
+nav-frontend-spinner@1.0.18:
+  version "1.0.18"
+  resolved "https://registry.npmjs.org/nav-frontend-spinner/-/nav-frontend-spinner-1.0.18.tgz#c393832e6d1d5d837301ef9560c6458f330d4e0f"
+  integrity sha512-2ojDpOrnrNWGoCp51cVzdltxKWvq3M6LMIy+cfEpsxVJDx8KCOTHxt/mw8qadavQrAByvxnKVxRNFLjji10tZA==
 
 nav-frontend-typografi-style@1.0.12:
   version "1.0.12"

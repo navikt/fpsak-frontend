@@ -12,6 +12,7 @@ import {
 import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duck';
 import { guid, dateFormat } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import moment from 'moment';
 import UttakPerioder from './UttakPerioder';
 import {
   sjekkOmfaktaOmUttakAksjonspunkt,
@@ -28,6 +29,12 @@ export const UttakFaktaForm = ({
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
+    {formProps.warning
+      && (
+      <span>
+        {formProps.warning}
+      </span>
+      )}
     <UttakPerioder
       hasOpenAksjonspunkter={hasOpenAksjonspunkter}
       readOnly={readOnly}
@@ -53,6 +60,22 @@ UttakFaktaForm.propTypes = {
   initialValues: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   hasRevurderingOvertyringAp: PropTypes.bool.isRequired,
+};
+
+const warningsUttakForm = (values) => {
+  const warnings = {};
+  const nyStartDato = (values.perioder[0] || []).fom;
+  const { førsteUttaksdato, endringsdato } = values;
+
+  if (moment(nyStartDato).isBefore(endringsdato) && moment(nyStartDato).isAfter(førsteUttaksdato)) {
+    warnings.perioder = {
+      _warning: <FormattedMessage
+        id="UttakInfoPanel.blabla"
+        values={{ endringsdato: dateFormat(endringsdato), førsteuttaksdato: dateFormat(førsteUttaksdato) }}
+      />,
+    };
+  }
+  return warnings;
 };
 
 const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOSONAR må ha disse sjekkene
@@ -185,6 +208,7 @@ const mapStateToProps = (state, initialProps) => {
     behandlingFormPrefix,
     hasRevurderingOvertyringAp,
     validate: values => validateUttakForm(values, orginalePerioder, initialProps.aksjonspunkter),
+    warn: values => warningsUttakForm(values),
     onSubmit: values => initialProps.submitCallback(transformValues(values, initialValues, initialProps.aksjonspunkter)),
   };
 };

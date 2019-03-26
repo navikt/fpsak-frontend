@@ -1699,6 +1699,7 @@
   "UttakInfoPanel.PeriodenharTommeDagerFremTilNestePeriode": "Perioden har tomme dager frem til neste periode",
   "UttakInfoPanel.DokumentertSykdom": "Sykdommen/skaden er vurdert som dokumentert i Fakta om fødsel. Vurderingene må være like.",
   "UttakInfoPanel.IkkeDokumentertSykdom": "Sykdommen/skaden er vurdert som ikke dokumentert i Fakta om fødsel. Vurderingene må være like.",
+  "UttakInfoPanel.blabla": "bla bla endringsdato {endringsdato} bla bla første uttaksdato {førsteuttaksdato}",
   "UttakInfoPanel.OrginaleStartdatoKanIkkeEndres": "Den originale startdatoen til søknadsperioden må ikke endres.\nOriginal startdato: {originalStartDato}",
   "UttakInfoPanel.manglerPeriodeEtterFørsteuttaksdato": "Mangler periode etter første uttaksdag: {førsteuttaksdato}",
   "UttakInfoPanel.periodeFørFørsteuttaksdato": " Søknadsperiode starter før første uttaksdag: {førsteuttaksdato}",
