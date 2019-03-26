@@ -1,3 +1,4 @@
+/* @flow */
 import { expect } from 'chai';
 
 import {
@@ -30,7 +31,6 @@ describe('Error-reducer', () => {
     expect(errorReducer(undefined, addAction).crashMessage).to.eql('app error');
 
     const removeAction = removeErrorMessage();
-    // eslint-disable-next-line no-unused-expressions
     expect(errorReducer(undefined, removeAction).crashMessage).is.undefined;
   });
 });

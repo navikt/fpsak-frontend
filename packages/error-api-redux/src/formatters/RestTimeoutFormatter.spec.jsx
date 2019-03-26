@@ -1,3 +1,4 @@
+/* @flow */
 import { expect } from 'chai';
 
 import RestTimeoutFormatter from './RestTimeoutFormatter';
@@ -6,12 +7,10 @@ import ErrorEventType from './errorEventType';
 
 describe('RestTimeoutFormatter', () => {
   it('skal håndtere feil når feildata er av korrekt type', () => {
-    // eslint-disable-next-line no-unused-expressions
     expect(new RestTimeoutFormatter().isOfType(ErrorEventType.POLLING_TIMEOUT)).is.true;
   });
 
   it('skal ikke håndtere feil når feildata er av annen type', () => {
-    // eslint-disable-next-line no-unused-expressions
     expect(new RestTimeoutFormatter().isOfType(ErrorEventType.POLLING_HALTED_OR_DELAYED)).is.false;
   });
 

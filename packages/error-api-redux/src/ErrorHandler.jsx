@@ -6,8 +6,6 @@ import {
 import ErrorFormatter from './ErrorFormatter';
 
 class ErrorHandler {
-  errorFormatter: ErrorFormatter;
-
   constructor() {
     this.errorFormatter = new ErrorFormatter();
   }
@@ -18,9 +16,9 @@ class ErrorHandler {
 
   getErrorActionCreator = () => addErrorMessage;
 
-  showCrashMessage = showCrashMessage;
+  getCrashMessageActionCreator = () => showCrashMessage;
 
-  removeErrorMessage = removeErrorMessage;
+  getRemoveErrorMessageActionCreator = () => removeErrorMessage;
 
   getAllErrorMessages = createSelector([getErrorMessages, getCrashMessage],
     (errorMessages, crashMessage) => this.errorFormatter
