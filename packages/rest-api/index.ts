@@ -1,4 +1,3 @@
-/* @flow */
 import getAxiosHttpClientApi from './src/axios/getAxiosHttpClientApi';
 import RequestApi from './src/requestApi/RequestApi';
 import RequestConfig from './src/RequestConfig';
