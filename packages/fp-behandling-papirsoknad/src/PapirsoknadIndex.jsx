@@ -56,9 +56,7 @@ export class PapirsoknadIndex extends Component {
   }
 
   onSubmitUfullstendigsoknad() {
-    this.setState({
-      showRegistrertModal: true,
-    }, () => this.createManuellRegistrering({ ufullstendigSoeknad: true }));
+    return this.createManuellRegistrering({ ufullstendigSoeknad: true });
   }
 
 
