@@ -84,7 +84,9 @@ const getResultatRadene = (ingenPerioderMedAvvik, resultatPerFagområde, resulta
 const avvikBruker = (ingenPerioderMedAvvik, mottakerTypeKode) => (!!(ingenPerioderMedAvvik && mottakerTypeKode === mottakerTyper.BRUKER));
 const getPeriodeFom = (periodeFom, nesteUtbPeriodeFom) => (periodeFom || nesteUtbPeriodeFom);
 const getPeriod = (ingenPerioderMedAvvik, periodeFom, mottaker) => getRangeOfMonths(
-  avvikBruker(ingenPerioderMedAvvik, mottaker.mottakerType.kode) ? moment(mottaker.nestUtbPeriodeTom).subtract(1, 'months') : getPeriodeFom(periodeFom, mottaker.nesteUtbPeriodeFom),
+  avvikBruker(ingenPerioderMedAvvik, mottaker.mottakerType.kode)
+    ? moment(mottaker.nestUtbPeriodeTom).subtract(1, 'months')
+    : getPeriodeFom(periodeFom, mottaker.nesteUtbPeriodeFom),
   mottaker.nestUtbPeriodeTom,
 );
 
