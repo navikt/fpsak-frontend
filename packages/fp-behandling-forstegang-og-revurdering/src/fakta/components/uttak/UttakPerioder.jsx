@@ -74,6 +74,7 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => {
     const isAvvikUtsettelse = gjeldeneUtsettelsePerioder
       .some(utsettelsePeriode => utsettelsePeriode.utsettelseArsak.kode !== soknadsPeriode.utsettelseÅrsak.kode);
 
+    const isManglendeSøktGraderingEllerUtsettelse = soknadsPeriode.arbeidstidsprosent === null && soknadsPeriode.utsettelseÅrsak.kode === '-';
     let isManglendeInntektsmelding = false;
     if ((isArbeidstaker && gjeldeneGraderingPerioder.length === 0 && soknadsPeriode.arbeidstidsprosent !== null)
   || (gjeldeneUtsettelsePerioder.length === 0 && soknadsPeriode.utsettelseÅrsak.kode !== '-')) {
@@ -86,6 +87,7 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => {
       graderingPerioder: isAvvikArbeidsprosent || isAvvikPeriode ? gjeldeneGraderingPerioder : [],
       utsettelsePerioder: isAvvikUtsettelse || isAvvikPeriode ? gjeldeneUtsettelsePerioder : [],
       isManglendeInntektsmelding,
+      isManglendeSøktGraderingEllerUtsettelse,
       avvik: {
         utsettelseÅrsak: isManglendeInntektsmelding && soknadsPeriode.utsettelseÅrsak.kode !== '-' ? soknadsPeriode.utsettelseÅrsak : false,
         isAvvikArbeidsprosent,
@@ -97,7 +99,7 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => {
   });
   // TODO hvis funnet relevant inntekstmelding, ikke vis de som ikke er søkt om
   const gyldigeInntektsmeldinger = relevant
-    .filter(inntektsmelding => !inntektsmelding.isManglendeInntektsmelding);
+    .filter(inntektsmelding => !inntektsmelding.isManglendeSøktGraderingEllerUtsettelse || inntektsmelding.isManglendeInntektsmelding);
   if (gyldigeInntektsmeldinger.length) {
     return gyldigeInntektsmeldinger;
   }
