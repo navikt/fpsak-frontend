@@ -94,7 +94,6 @@ export const getTilrettelegging = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.tilrettelegging,
 ); // TODO: ikke gjort tilgjengelig fra backend
 
-export const getHenleggArsaker = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['henlegg-arsaker']));
 export const getHaveSentVarsel = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['sendt-varsel-om-revurdering']));
 export const getTotrinnskontrollArsaker = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['totrinnskontroll-arsaker']),
