@@ -5,7 +5,7 @@ import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import EndringBeregningsgrunnlagPeriodePanel from './EndringBeregningsgrunnlagPeriodePanel';
-import { mapToBelop, skalRedigereInntektForAndel } from '../BgFordelingUtils';
+import { mapToBelop, skalRedigereInntektForAndel, skalKunneOverstyreBeregningsgrunnlag } from '../BgFordelingUtils';
 
 import styles from './endringBeregningsgrunnlagForm.less';
 
@@ -96,10 +96,11 @@ EndringBeregningsgrunnlagForm.validate = (values, endringBGPerioder, faktaOmBere
   const errors = {};
   if (endringBGPerioder && endringBGPerioder.length > 0) {
     const skalRedigereInntekt = skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag);
+    const skalOverstyreBg = skalKunneOverstyreBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag);
     const fastsattIForstePeriode = finnFastsattIForstePeriode(values, skalRedigereInntekt);
     for (let i = 0; i < endringBGPerioder.length; i += 1) {
       const periode = values[getFieldNameKey(i)];
-      errors[getFieldNameKey(i)] = EndringBeregningsgrunnlagPeriodePanel.validate(periode, fastsattIForstePeriode, skalRedigereInntekt);
+      errors[getFieldNameKey(i)] = EndringBeregningsgrunnlagPeriodePanel.validate(periode, fastsattIForstePeriode, skalRedigereInntekt, skalOverstyreBg);
     }
   }
   return errors;
