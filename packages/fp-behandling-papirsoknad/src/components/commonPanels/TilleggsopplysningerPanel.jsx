@@ -14,12 +14,10 @@ import styles from './tilleggsopplysningerPanel.less';
 const maxLength = 1500;
 const validate = [maxLengthValidator(maxLength), hasValidText];
 
-const localfeatureToggle = false;
-
 const sprakvalg = {
-  BOKMAL: 'BOKMAL',
-  NYNORSK: 'NYNORSK',
-  ENGELSK: 'ENGELSK',
+  BOKMAL: 'NB',
+  NYNORSK: 'NN',
+  ENGELSK: 'EN',
 };
 
 /**
@@ -45,12 +43,10 @@ export const TilleggsopplysningerPanel = ({
             />
           </Fieldset>
         </FlexColumn>
-        {localfeatureToggle
-        && (
         <FlexColumn>
           <Fieldset legend={intl.formatMessage({ id: 'Registrering.Sprak' })}>
             <RadioGroupField
-              name="sprakvalg"
+              name="språkkode"
               direction="vertical"
               readOnly={readOnly}
               validate={required}
@@ -70,7 +66,6 @@ export const TilleggsopplysningerPanel = ({
             </RadioGroupField>
           </Fieldset>
         </FlexColumn>
-        )}
       </FlexRow>
     </FlexContainer>
   </BorderBox>
