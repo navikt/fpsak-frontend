@@ -46,24 +46,22 @@ export const BehandlingSupportIndex = ({
   enabledSupportPanels,
   getSupportPanelLocation,
 }) => (
-  <div className={activeSupportPanel === supportPanels.APPROVAL ? styles.statusAksjonspunkt : null}>
-    <Panel className={styles.panelPadding}>
-      <div className={styles.marginBottom}>
-        <LinkRow>
-          {acccessibleSupportPanels.map(supportPanel => (
-            <SupportPanelLink
-              key={supportPanel}
-              supportPanel={supportPanel}
-              isEnabled={enabledSupportPanels.includes(supportPanel)}
-              isActive={supportPanel === activeSupportPanel}
-              supportPanelLocation={getSupportPanelLocation(supportPanel)}
-            />
+  <Panel className={activeSupportPanel === supportPanels.APPROVAL ? styles.statusAksjonspunkt : null}>
+    <div className={styles.marginBottom}>
+      <LinkRow>
+        {acccessibleSupportPanels.map(supportPanel => (
+          <SupportPanelLink
+            key={supportPanel}
+            supportPanel={supportPanel}
+            isEnabled={enabledSupportPanels.includes(supportPanel)}
+            isActive={supportPanel === activeSupportPanel}
+            supportPanelLocation={getSupportPanelLocation(supportPanel)}
+          />
           ))}
-        </LinkRow>
-      </div>
-      {renderSupportPanel(activeSupportPanel)}
-    </Panel>
-  </div>
+      </LinkRow>
+    </div>
+    {renderSupportPanel(activeSupportPanel)}
+  </Panel>
 );
 
 BehandlingSupportIndex.propTypes = {

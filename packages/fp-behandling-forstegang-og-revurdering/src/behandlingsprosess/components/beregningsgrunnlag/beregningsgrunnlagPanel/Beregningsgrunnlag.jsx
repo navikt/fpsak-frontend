@@ -12,7 +12,7 @@ import {
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { BorderBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
@@ -210,7 +210,7 @@ export const BeregningsgrunnlagImpl = ({
 }) => (
   <div className={styles.beregningsgrunnlagPanel}>
     { harFlereAksjonspunkterOgVurderDekningsgradErInkludert(gjeldendeAksjonspunkter) && (
-      <ElementWrapper>
+      <>
         <TextAreaField
           name={TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING}
           label={<FormattedMessage id="Beregningsgrunnlag.Forms.BegrunnEndringAvDekningsgrad" />}
@@ -219,7 +219,7 @@ export const BeregningsgrunnlagImpl = ({
           readOnly={readOnly}
         />
         <VerticalSpacer eightPx />
-      </ElementWrapper>
+      </>
     )}
     { finnAksjonspunktForATFL(gjeldendeAksjonspunkter)
       && (
@@ -267,7 +267,7 @@ export const BeregningsgrunnlagImpl = ({
     )}
     { gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0
         && (
-        <ElementWrapper>
+        <>
           <VerticalSpacer sixteenPx />
           <BehandlingspunktSubmitButton
             formName={formName}
@@ -277,7 +277,7 @@ export const BeregningsgrunnlagImpl = ({
             isBehandlingFormDirty={isBehandlingFormDirty}
             hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
           />
-        </ElementWrapper>
+        </>
         )
       }
   </div>

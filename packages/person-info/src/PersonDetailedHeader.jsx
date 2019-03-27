@@ -6,7 +6,7 @@ import { Element, Undertittel, Undertekst } from 'nav-frontend-typografi';
 import Panel from 'nav-frontend-paneler';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import nbKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import { Image, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { Image } from '@fpsak-frontend/shared-components';
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import urlUkjent from '@fpsak-frontend/assets/images/ukjent.svg';
@@ -62,7 +62,7 @@ const PersonDetailedHeader = ({
   const isDod = currentPersonstatus ? currentPersonstatus.kode === personstatusType.DOD : false;
 
   const content = (
-    <div>
+    <>
       <Image
         className={styles.icon}
         src={getPersonImage(navBrukerKjonn.kode)}
@@ -73,19 +73,19 @@ const PersonDetailedHeader = ({
         <div>
           {!hasAktorId
             && (
-            <ElementWrapper>
+            <>
               <Undertittel>
                 <FormattedMessage id="Person.UkjentNavn" />
               </Undertittel>
               <Undertekst>
                 <FormattedMessage id="Person.HarIkkeNorskFnrEllerDnr" />
               </Undertekst>
-            </ElementWrapper>
+            </>
             )
           }
           {hasAktorId
             && (
-            <ElementWrapper>
+            <>
               {isPrimaryParent
                 && (
                 <Undertittel>
@@ -107,17 +107,15 @@ const PersonDetailedHeader = ({
               <Undertekst>
                 {fnr}
               </Undertekst>
-            </ElementWrapper>
+            </>
             )
           }
         </div>
-        <div>
-          <MerkePanel erDod={isDod} erVerge={harVerge} diskresjonskode={diskresjonskode ? diskresjonskode.kode : null} />
-        </div>
+        <MerkePanel erDod={isDod} erVerge={harVerge} diskresjonskode={diskresjonskode ? diskresjonskode.kode : null} />
       </div>
-    </div>
+    </>
   );
-  return medPanel ? <Panel className={styles.padding}>{content}</Panel> : content;
+  return medPanel ? <Panel>{content}</Panel> : content;
 };
 
 PersonDetailedHeader.propTypes = {

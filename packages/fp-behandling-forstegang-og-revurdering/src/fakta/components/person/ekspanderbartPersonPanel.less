@@ -6,7 +6,7 @@
 
 .container {
   background: @white;
-  border-radius: 4px;
+  border-radius: @border-radius-base;
   display: flex;
 }
 
@@ -35,27 +35,19 @@
 }
 
 .primaryfull {
-  display: flex;
+  .primary;
+
   flex: 0 0 100%;
-  position: relative;
 }
 
 .secondary {
-  display: flex;
+  .primary;
+
   flex: 0 0 45%;
-  position: relative;
 }
 
-.personprimary {
-  cursor: pointer;
-  flex: 0 0 100%;
-}
-
-.personprimaryfull {
-  cursor: pointer;
-  flex: 0 0 100%;
-}
-
+.personprimary,
+.personprimaryfull,
 .personsecondary {
   cursor: pointer;
   flex: 0 0 100%;
@@ -66,15 +58,13 @@
   padding-left: 1px;
   padding-top: 25px;
   position: absolute;
-  right: 8px;
+  right: 16px;
 }
 
 .personchevronfull {
-  cursor: pointer;
+  .personchevron;
+
   padding-left: 8px;
-  padding-top: 25px;
-  position: absolute;
-  right: 8px;
 }
 
 .statusAksjonspunkt {
