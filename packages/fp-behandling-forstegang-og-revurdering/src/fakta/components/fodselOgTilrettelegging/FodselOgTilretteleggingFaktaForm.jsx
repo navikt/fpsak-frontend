@@ -18,9 +18,9 @@ import {
   isBehandlingFormDirty,
 } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-import {
-  getSvangerskapspengerTil,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+// import {
+//   getTilrettelegging,
+// } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import ArbeidsforholdFaktaPanel from './ArbeidsforholdFaktaPanel';
 
 import styles from './arbeidsforholdInnhold.less';
@@ -107,10 +107,11 @@ const mapStateToProps = (state, ownProps) => {
     ],
     (dirty, values, initialValues = {}) => dirty && values.termindato !== initialValues.termindato,
   );
-  // const tilretteleggingREST = getSvangerskapspengerTil(state);
+
 
   // TODO: hente info fra backend når klart.  venter avklaring på om det blir checkboxer( mulighet for flere datoer),
   //  eller radiobuttons (kun 1 dato)
+  // const tilrettelegging = getTilrettelegging(state);
   const tilrettelegging = {
     termindato: '2019-08-01',
     fødselsdato: null,
@@ -122,18 +123,8 @@ const mapStateToProps = (state, ownProps) => {
         arbeidsgiverNavn: 'Xansen flyttebyrå AS',
         arbeidsgiverIdent: 1234,
         // tilretteleggingType: 'KODE', // felt som det er nå i backend, tilpasset for kun 1 valg
-        // tiltakFom: ''2019-05-30'', // felt som det er nå i backend, tilpasset for kun 1 valg
-        // tilrettelegging: [{
-        //   kanGjennomfores: true,
-        //   dato: '2019-05-30',
-        // }, {
-        //   kanIkkeGjennomfores: false,
-        //   dato: '',
-        // }, {
-        //   redusertArbeid: true,
-        //   dato: '2019-04-18',
-        //   stillingsprosent: 50,
-        // }],
+        // tiltakFom: '2019-05-30', // felt som det er nå i backend, tilpasset for kun 1 valg
+        // stillingsprosent: 50,  // felt som det er nå i backend, tilpasset for kun 1 valg
         kanGjennomfores: {
           kanGjennomfores: true,
           dato: '2019-05-30',
@@ -156,6 +147,7 @@ const mapStateToProps = (state, ownProps) => {
         arbeidsgiverIdent: 432,
         // tilretteleggingType: 'KODE',
         // tiltakFom: ''2019-05-30'',
+        // stillingsprosent: 50,  // felt som det er nå i backend, tilpasset for kun 1 valg
         kanGjennomfores: {
           kanGjennomfores: false,
           dato: '',

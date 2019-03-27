@@ -90,9 +90,9 @@ export const getFaktaArbeidsforhold = createSelector(
     ? selectedBehandling['fakta-arbeidsforhold'] : undefined),
 );
 
-export const getSvangerskapspengerTil = createSelector(
+export const getTilrettelegging = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.tilrettelegging,
-); // TODO: tilpass backend
+); // TODO: ikke gjort tilgjengelig fra backend
 
 export const getHenleggArsaker = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['henlegg-arsaker']));
 export const getHaveSentVarsel = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['sendt-varsel-om-revurdering']));
