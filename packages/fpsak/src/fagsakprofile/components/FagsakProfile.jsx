@@ -32,7 +32,7 @@ const FagsakProfile = ({
   noExistingBehandlinger,
   annenPartLink,
 }) => (
-  <Panel className={styles.panelPadding}>
+  <Panel>
     <Row>
       <Column xs="6">
         <div className={styles.bottomMargin}>

@@ -45,7 +45,7 @@ const FaktaEkspandertpanel = ({
     <EkspanderbartpanelPure
       className={hasOpenAksjonspunkter && !readOnly ? classNames('statusAksjonspunkt', `aksjonspunkt--${faktaId}`, ekstraClass) : styles.statusOk}
       tittel={title}
-      tag="h3"
+      tag="h2"
       apen={isInfoPanelOpen}
       onClick={() => toggleInfoPanelCallback(faktaId)}
     >

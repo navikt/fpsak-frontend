@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import Panel from 'nav-frontend-paneler';
 
 import styles from './borderBox.less';
 
@@ -17,7 +18,7 @@ const BorderBox = ({
   error,
   className,
   children,
-}) => <div className={classNames('borderbox', { error }, className)}>{children}</div>;
+}) => <Panel border className={classNames('borderbox', { error }, className)}>{children}</Panel>;
 
 BorderBox.propTypes = {
   error: PropTypes.bool,
