@@ -38,7 +38,7 @@ export const ArbeidsforholdCheckboxes = ({
           <FlexColumn>
             <DatepickerField
               name={dato}
-              label={{ id: 'ArbeidsforholdInnhold.Arbeidsgiver.Dato' }}
+              label={{ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.Dato' }}
               validate={[required, hasValidDate]}
               readOnly={readOnly}
             />
@@ -48,7 +48,7 @@ export const ArbeidsforholdCheckboxes = ({
           <FlexColumn>
             <DecimalField
               name={stillingsprosent}
-              label={{ id: 'ArbeidsforholdInnhold.Arbeidsgiver.Stillingsprosent' }}
+              label={{ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.Stillingsprosent' }}
               validate={[required, minValue0, maxProsentValue100, hasValidDecimal]}
               readOnly={readOnly}
               bredde="XS"
@@ -63,7 +63,7 @@ export const ArbeidsforholdCheckboxes = ({
     </ArrowBox>
   );
   return (
-    <Fieldset legend={intl.formatMessage({ id: 'ArbeidsforholdInnhold.Arbeidsgiver.Tilrettelegging' })}>
+    <Fieldset legend={intl.formatMessage({ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.Tilrettelegging' })}>
       {warning && warning.permisjonsWarning
       && (
       <div className="skjemaelement__feilmelding">
@@ -74,19 +74,19 @@ export const ArbeidsforholdCheckboxes = ({
       }
       <CheckboxField
         name="kanGjennomfores"
-        label={{ id: 'ArbeidsforholdInnhold.Arbeidsgiver.KanGjennomfores' }}
+        label={{ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.KanGjennomfores' }}
         readOnly={readOnly}
       />
       {kanGjennomfores && arrowBox('kanGjennomforesDato')}
       <CheckboxField
         name="redusertArbeid"
-        label={{ id: 'ArbeidsforholdInnhold.Arbeidsgiver.RedusertArbeid' }}
+        label={{ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.RedusertArbeid' }}
         readOnly={readOnly}
       />
       {redusertArbeid && arrowBox('redusertArbeidDato', 'redusertArbeidStillingsprosent')}
       <CheckboxField
         name="kanIkkeGjennomfores"
-        label={{ id: 'ArbeidsforholdInnhold.Arbeidsgiver.KanIkkeGjennomfores' }}
+        label={{ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.KanIkkeGjennomfores' }}
         readOnly={readOnly}
       />
       {kanIkkeGjennomfores && arrowBox('kanIkkeGjennomforesDato')}

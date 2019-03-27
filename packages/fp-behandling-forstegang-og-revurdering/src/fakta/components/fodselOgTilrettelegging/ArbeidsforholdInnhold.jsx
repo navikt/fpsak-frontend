@@ -28,7 +28,6 @@ const maxLength1500 = maxLength(1500);
 
 export const ArbeidsforholdInnhold = ({
   cancelArbeidsforholdCallback,
-  updateArbeidsforholdCallback,
   readOnly,
   warning,
   ...formProps
