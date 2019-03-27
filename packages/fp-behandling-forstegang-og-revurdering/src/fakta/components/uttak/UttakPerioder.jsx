@@ -74,18 +74,19 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => {
     const isAvvikUtsettelse = gjeldeneUtsettelsePerioder
       .some(utsettelsePeriode => utsettelsePeriode.utsettelseArsak.kode !== soknadsPeriode.utsettelseÅrsak.kode);
 
-    const isManglendeSøktGraderingEllerUtsettelse = soknadsPeriode.arbeidstidsprosent === null && soknadsPeriode.utsettelseÅrsak.kode === '-';
+    const isManglendeSøktGraderingEllerUtsettelse = !!(isAvvikArbeidsgiver && !isAvvikPeriode);
+
     let isManglendeInntektsmelding = false;
     if ((isArbeidstaker && gjeldeneGraderingPerioder.length === 0 && soknadsPeriode.arbeidstidsprosent !== null)
-  || (gjeldeneUtsettelsePerioder.length === 0 && soknadsPeriode.utsettelseÅrsak.kode !== '-')) {
+    || (gjeldeneUtsettelsePerioder.length === 0 && soknadsPeriode.utsettelseÅrsak.kode !== '-')) {
       isManglendeInntektsmelding = true;
     }
 
     return {
       ...inntektsmelding,
       arbeidsProsentFraInntektsmelding: gjeldeneGraderingPerioder.reduce((acc, periode) => parseFloat(acc) + parseFloat(periode.arbeidsprosent, 10), 0),
-      graderingPerioder: isAvvikArbeidsprosent || isAvvikPeriode ? gjeldeneGraderingPerioder : [],
-      utsettelsePerioder: isAvvikUtsettelse || isAvvikPeriode ? gjeldeneUtsettelsePerioder : [],
+      graderingPerioder: isAvvikArbeidsprosent || isAvvikPeriode || isAvvikArbeidsgiver ? gjeldeneGraderingPerioder : [],
+      utsettelsePerioder: isAvvikUtsettelse || isAvvikPeriode || isAvvikArbeidsgiver ? gjeldeneUtsettelsePerioder : [],
       isManglendeInntektsmelding,
       isManglendeSøktGraderingEllerUtsettelse,
       avvik: {
@@ -97,9 +98,17 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => {
       },
     };
   });
-  // TODO hvis funnet relevant inntekstmelding, ikke vis de som ikke er søkt om
+  //
+  //
+  //
+  //
+  //
+  //
+  //
   const gyldigeInntektsmeldinger = relevant
-    .filter(inntektsmelding => !inntektsmelding.isManglendeSøktGraderingEllerUtsettelse || inntektsmelding.isManglendeInntektsmelding);
+    .filter(inntektsmelding => (!inntektsmelding.isManglendeInntektsmelding && !inntektsmelding.isManglendeSøktGraderingEllerUtsettelse)
+    || (!inntektsmelding.isManglendeInntektsmelding && inntektsmelding.isManglendeSøktGraderingEllerUtsettelse)
+    || (inntektsmelding.isManglendeInntektsmelding && !inntektsmelding.isManglendeSøktGraderingEllerUtsettelse));
   if (gyldigeInntektsmeldinger.length) {
     return gyldigeInntektsmeldinger;
   }
