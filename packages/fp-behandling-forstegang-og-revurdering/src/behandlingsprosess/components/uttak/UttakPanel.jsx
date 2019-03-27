@@ -96,7 +96,6 @@ export const UttakPanelImpl = ({
   readOnly,
   manuellOverstyring,
   isApOpen,
-  stonadskonto,
   intl,
   ...formProps
 }) => (
@@ -143,7 +142,6 @@ UttakPanelImpl.propTypes = {
   manuellOverstyring: PropTypes.bool,
   apCodes: PropTypes.arrayOf(PropTypes.string),
   isApOpen: PropTypes.bool,
-  stonadskonto: PropTypes.shape(),
   ...formPropTypes,
 };
 
@@ -152,7 +150,6 @@ UttakPanelImpl.defaultProps = {
   apCodes: undefined,
   isApOpen: false,
   manuellOverstyring: undefined,
-  stonadskonto: {},
 };
 
 const getResult = (uttaksresultatActivity) => {
@@ -320,6 +317,7 @@ export const transformValues = (values, apCodes, aksjonspunkter) => {
   let aksjonspunkt = removeOverstyrApCode;
 
   const transformedResultat = values.uttaksresultatActivity.map((perioder) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { tilknyttetStortinget, ...uta } = perioder; // NOSONAR destruct er bedre enn delete, immutable
     const { ...transformActivity } = uta;
     if (uta.oppholdÅrsak.kode !== '-') {

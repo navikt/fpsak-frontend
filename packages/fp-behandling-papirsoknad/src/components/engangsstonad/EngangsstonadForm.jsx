@@ -3,7 +3,7 @@ import { reduxForm, formPropTypes, formValueSelector } from 'redux-form';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { isEqual } from '@fpsak-frontend/utils';
+import { isEqual, omit } from '@fpsak-frontend/utils';
 import { getRegisteredFields, getFagsakPerson } from 'papirsoknad/src/duck';
 import MottattDatoPanel from 'papirsoknad/src/components/commonPanels/MottattDatoPanel';
 import SoknadData from 'papirsoknad/src/SoknadData';
@@ -98,8 +98,7 @@ const getValidation = (soknadData, sokerPersonnummer) => {
 const transformRootValues = (state, registeredFieldNames) => {
   const values = formValueSelector(ENGANGSSTONAD_FORM_NAME)(state, ...registeredFieldNames);
   if (values.rettigheter === rettighet.IKKE_RELEVANT) {
-    const { rettigheter, ...nyeVerdier } = values; // NOSONAR destruct er bedre enn delete, immutable
-    return nyeVerdier;
+    return omit(values, 'rettigheter');
   }
   return values;
 };

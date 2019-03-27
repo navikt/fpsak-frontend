@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
@@ -29,7 +29,6 @@ const allSelected = formState => formState
   * Presentasjonskomponent. Holds the form of the totrinnkontroll
   */
 export const ToTrinnsFormImpl = ({
-  intl,
   handleSubmit,
   formState,
   forhandsvisVedtaksbrev,
@@ -109,7 +108,6 @@ ToTrinnsFormImpl.propTypes = {
   klageVurderingResultatNFP: PropTypes.shape(),
   klageVurderingResultatNK: PropTypes.shape(),
   readOnly: PropTypes.bool.isRequired,
-  intl: intlShape.isRequired,
 };
 
 ToTrinnsFormImpl.defaultProps = {
@@ -142,7 +140,7 @@ const mapStateToProps = state => ({
   klageVurderingResultatNFP: getBehandlingKlageVurderingResultatNFP(state),
   klageVurderingResultatNK: getBehandlingKlageVurderingResultatNK(state),
 });
-const ToTrinnsForm = behandlingForm({ form: formName, validate })(connect(mapStateToProps)(injectIntl(ToTrinnsFormImpl)));
+const ToTrinnsForm = behandlingForm({ form: formName, validate })(connect(mapStateToProps)(ToTrinnsFormImpl));
 
 ToTrinnsForm.formName = formName;
 

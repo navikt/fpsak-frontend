@@ -26,7 +26,6 @@ export const OppholdInntektOgPeriodeForm = ({
   readOnly,
   initialValues,
   submittable,
-  isRevurdering,
   periodeResetCallback,
   ...formProps
 }) => (
@@ -84,7 +83,6 @@ OppholdInntektOgPeriodeForm.propTypes = {
   submittable: PropTypes.bool.isRequired,
   valgtPeriode: PropTypes.shape().isRequired,
   initialValues: PropTypes.shape().isRequired,
-  isRevurdering: PropTypes.bool.isRequired,
   periodeResetCallback: PropTypes.func.isRequired,
 };
 

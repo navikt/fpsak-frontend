@@ -88,7 +88,6 @@ const periodeTypeTrengerArsak = (sokerKjonn, periodeType) => (
 );
 
 export const UttakNyPeriode = ({
-  newPeriodeCallback,
   newPeriodeResetCallback,
   periodeTyper,
   utsettelseÅrsaker,
@@ -302,7 +301,6 @@ export const UttakNyPeriode = ({
 };
 
 UttakNyPeriode.propTypes = {
-  newPeriodeCallback: PropTypes.func.isRequired,
   newPeriodeResetCallback: PropTypes.func.isRequired,
   periodeTyper: PropTypes.arrayOf(PropTypes.shape()),
   utsettelseÅrsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,

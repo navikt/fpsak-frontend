@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { change } from 'redux-form';
 import { createSelector } from 'reselect';
 import {
   FormattedHTMLMessage, FormattedMessage, injectIntl, intlShape,
@@ -11,9 +9,9 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import BpPanelTemplate from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/BpPanelTemplate';
-import { getBehandlingsresultat, getSoknad, getBehandlingVersjon } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { getSelectedBehandlingId, getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getBehandlingsresultat, getSoknad } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -66,8 +64,6 @@ export const SokersOpplysningspliktFormImpl = ({
   manglendeVedlegg,
   dokumentTypeIds,
   inntektsmeldingerSomIkkeKommer,
-  reduxFormChange,
-  behandlingFormPrefix,
   ...formProps
 }) => (
   <BpPanelTemplate
@@ -164,8 +160,6 @@ SokersOpplysningspliktFormImpl.propTypes = {
   manglendeVedlegg: PropTypes.arrayOf(PropTypes.shape()),
   dokumentTypeIds: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   inntektsmeldingerSomIkkeKommer: PropTypes.shape(),
-  reduxFormChange: PropTypes.func.isRequired,
-  behandlingFormPrefix: PropTypes.string.isRequired,
 };
 
 SokersOpplysningspliktFormImpl.defaultProps = {
@@ -223,18 +217,11 @@ const mapStateToProps = (state, ownProps) => ({
   dokumentTypeIds: getKodeverk(kodeverkTyper.DOKUMENT_TYPE_ID)(state),
   manglendeVedlegg: getSortedManglendeVedlegg(state),
   initialValues: buildInitialValues(state),
-  behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
   onSubmit: values => ownProps.submitCallback([transformValues(values)]),
   ...behandlingFormValueSelector(formName)(state, 'hasAksjonspunkt', 'erVilkarOk', 'inntektsmeldingerSomIkkeKommer'),
 });
 
-const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators({
-    reduxFormChange: change,
-  }, dispatch),
-});
-
-const SokersOpplysningspliktForm = connect(mapStateToProps, mapDispatchToProps)(injectIntl(behandlingForm({
+const SokersOpplysningspliktForm = connect(mapStateToProps)(injectIntl(behandlingForm({
   form: formName,
 })(SokersOpplysningspliktFormImpl)));
 

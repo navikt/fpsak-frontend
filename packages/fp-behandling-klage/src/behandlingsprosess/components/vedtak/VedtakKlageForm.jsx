@@ -12,7 +12,7 @@ import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
 import {
-  isBehandlingStatusReadOnly, getBehandlingStatus, getBehandlingsresultat, getBehandlingKlageVurdering,
+  getBehandlingsresultat, getBehandlingKlageVurdering,
 } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingKlage/src/behandlingForm';
 import VedtakKlageSubmitPanel from './VedtakKlageSubmitPanel';
@@ -27,16 +27,13 @@ export const VEDTAK_KLAGE_FORM_NAME = 'VEDTAK_KLAGE_FORM';
 export const VedtakKlageFormImpl = ({
   intl,
   readOnly,
-  behandlingStatusKode,
   omgjortAarsak,
   previewVedtakCallback,
   isAvvist,
   isOmgjort,
   fritekstTilBrev,
   isOpphevOgHjemsend,
-  aksjonspunktKoder,
   avvistArsaker,
-  isBehandlingReadOnly,
   behandlingsResultatTekst,
   klageVurdering,
   ...formProps
@@ -93,11 +90,9 @@ VedtakKlageFormImpl.propTypes = {
   isAvvist: PropTypes.bool.isRequired,
   isOmgjort: PropTypes.bool.isRequired,
   isOpphevOgHjemsend: PropTypes.bool.isRequired,
-  behandlingStatusKode: PropTypes.string.isRequired,
   behandlingsResultatTekst: PropTypes.string.isRequired,
   klageVurdering: PropTypes.shape().isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
-  isBehandlingReadOnly: PropTypes.bool.isRequired,
   avvistArsaker: PropTypes.arrayOf(PropTypes.object),
   omgjortAarsak: PropTypes.string,
   fritekstTilBrev: PropTypes.string,
@@ -216,18 +211,15 @@ export const buildInitialValues = createSelector(
 
 const mapStateToProps = (state, initialProps) => ({
   initialValues: buildInitialValues(state),
-  isBehandlingReadOnly: isBehandlingStatusReadOnly(state),
   isAvvist: getIsAvvist(state),
   avvistArsaker: getAvvisningsAarsaker(state),
   isOpphevOgHjemsend: getIsOpphevOgHjemsend(state),
   isOmgjort: getIsOmgjort(state),
   omgjortAarsak: getOmgjortAarsak(state),
-  behandlingStatusKode: getBehandlingStatus(state).kode,
   fritekstTilBrev: getFritekstTilBrev(state),
   behandlingsResultatTekst: getResultatText(state),
   klageVurdering: getKlageResultat(state),
   behandlingsresultat: getBehandlingsresultat(state),
-  aksjonspunktKoder: getSelectedBehandlingspunktAksjonspunkter(state).map(ap => ap.definisjon.kode),
   onSubmit: values => initialProps.submitCallback(transformValues(values)),
   ...behandlingFormValueSelector(VEDTAK_KLAGE_FORM_NAME)(
     state,

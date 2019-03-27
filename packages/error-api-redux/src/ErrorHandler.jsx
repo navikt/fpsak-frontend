@@ -1,4 +1,3 @@
-/* @flow */
 import { createSelector } from 'reselect';
 
 import {
@@ -7,8 +6,6 @@ import {
 import ErrorFormatter from './ErrorFormatter';
 
 class ErrorHandler {
-  errorFormatter: ErrorFormatter;
-
   constructor() {
     this.errorFormatter = new ErrorFormatter();
   }

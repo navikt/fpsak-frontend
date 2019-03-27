@@ -39,7 +39,6 @@ export const SykdomOgSkadePeriode = ({
   inntektsmeldingInfo,
   behandlingStatusKode,
   arbeidsgiver,
-  fieldId,
   ...formProps
 }) => {
   let errorHeight = 0;
@@ -145,7 +144,6 @@ export const SykdomOgSkadePeriode = ({
 };
 
 SykdomOgSkadePeriode.propTypes = {
-  fieldId: PropTypes.string.isRequired,
   resultat: PropTypes.string,
   updatePeriode: PropTypes.func.isRequired,
   cancelEditPeriode: PropTypes.func.isRequired,

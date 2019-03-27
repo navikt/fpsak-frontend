@@ -1,4 +1,3 @@
-/* @flow */
 import DefaultFormatter from './formatters/DefaultFormatter';
 import RestTimeoutFormatter from './formatters/RestTimeoutFormatter';
 import RestHaltedOrDelayedFormatter from './formatters/RestHaltedOrDelayedFormatter';
@@ -6,12 +5,8 @@ import RestHaltedOrDelayedFormatter from './formatters/RestHaltedOrDelayedFormat
 const defaultFormatter = new DefaultFormatter();
 const formatters = [new RestTimeoutFormatter(), new RestHaltedOrDelayedFormatter(), defaultFormatter];
 
-type ErrorMessage = {
-  type: string,
-}
-
 class ErrorFormatter {
-  format = (errorMessages: ErrorMessage[], crashMessage?: string) => {
+  format = (errorMessages, crashMessage) => {
     const allErrorMessages = [];
     if (crashMessage) {
       allErrorMessages.push(defaultFormatter.format(crashMessage));
@@ -19,7 +14,7 @@ class ErrorFormatter {
 
     if (errorMessages.length > 0) {
       errorMessages
-        .map((e: ErrorMessage) => {
+        .map((e) => {
           const formatter = formatters.find(f => f.isOfType(e.type));
           return formatter ? formatter.format(e) : undefined;
         })

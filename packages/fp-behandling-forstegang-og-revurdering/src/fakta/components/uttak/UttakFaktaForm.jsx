@@ -163,6 +163,7 @@ export const transformValues = (values, initialValues, aksjonspunkter) => { // N
     kode: ap,
     bekreftedePerioder: values.perioder.map((periode) => {
       const {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         id, openForm, updated, kontoType, isFromSøknad, ...bekreftetPeriode // NOSONAR
       } = periode;
       const origPeriode = initialValues.perioder.filter(p => p.id === id);

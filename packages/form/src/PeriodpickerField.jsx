@@ -48,6 +48,7 @@ const renderReadOnly = () => ({ names, renderIfMissingDateOnReadOnly, ...otherPr
 };
 
 const renderPeriodpicker = () => injectIntl(({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   intl, label, isEdited, names, ...otherProps
 }) => {
   const fieldProps = {

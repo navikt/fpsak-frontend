@@ -9,7 +9,7 @@ const config = {
   mode: 'development',
   module: {
     rules: [{
-  	  test: /\.jsx?$/,
+  	  test: /\.(tsx?|ts?|jsx?)$/,
   	  enforce: 'pre',
   	  loader: 'eslint-loader',
   	  options: {
@@ -21,7 +21,7 @@ const config = {
   	  },
       include: [PACKAGES_DIR],
     }, {
-  	  test: /\.jsx?$/,
+  	  test: /\.(tsx?|ts?|jsx?)$/,
   	  use: ['happypack/loader'],
       include: [PACKAGES_DIR],
     }],

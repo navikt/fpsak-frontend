@@ -14,7 +14,7 @@ const config = {
   target: 'node', // webpack should compile node compatible code
   module: {
     rules: [{
-  	  test: /\.jsx?$/,
+  	  test: /\.(tsx?|ts?|jsx?)$/,
       use: [{
         loader: 'istanbul-instrumenter-loader',
         options: { esModules: true }

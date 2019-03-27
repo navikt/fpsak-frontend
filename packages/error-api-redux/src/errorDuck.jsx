@@ -1,4 +1,3 @@
-/* @flow */
 import { createSelector } from 'reselect';
 
 /* Action types */
@@ -7,12 +6,12 @@ const ADD_CRASH_MESSAGE = 'ADD_CRASH_MESSAGE';
 export const REMOVE_ERROR_MESSAGE = 'REMOVE_ERROR_MESSAGE';
 
 /* Action creators */
-export const addErrorMessage = (data: any) => ({
+export const addErrorMessage = data => ({
   type: ADD_ERROR_MESSAGE,
   data,
 });
 
-export const showCrashMessage = (message: string) => ({
+export const showCrashMessage = message => ({
   type: ADD_CRASH_MESSAGE,
   data: message,
 });
@@ -29,16 +28,7 @@ const initialState = {
   crashMessage: undefined,
 };
 
-type ActionFlowType = {
-  type?: string,
-  data?: any,
-};
-type StateFlowType = {
-  errorMessages: any,
-  crashMessage?: string,
-};
-
-export const errorReducer = (state: StateFlowType = initialState, action: ActionFlowType = {}) => {
+export const errorReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case ADD_ERROR_MESSAGE:
       return {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Row } from 'nav-frontend-grid';
@@ -40,7 +40,6 @@ import VedtakDocuments from './VedtakDocuments';
  * Presentasjonskomponent. Viser panelet som håndterer avklaring av innsyn.
  */
 export const InnsynFormImpl = ({
-  intl,
   readOnly,
   isSubmittable,
   innsynResultatTyper,
@@ -127,7 +126,6 @@ export const InnsynFormImpl = ({
 
 
 InnsynFormImpl.propTypes = {
-  intl: intlShape.isRequired,
   readOnly: PropTypes.bool.isRequired,
   isSubmittable: PropTypes.bool.isRequired,
   innsynResultatTyper: PropTypes.arrayOf(PropTypes.shape()).isRequired,
@@ -213,9 +211,9 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 
-const InnsynForm = connect(mapStateToProps)(injectIntl(behandlingForm({
+const InnsynForm = connect(mapStateToProps)(behandlingForm({
   form: formName,
-})(InnsynFormImpl)));
+})(InnsynFormImpl));
 
 InnsynForm.supports = apCodes => apCodes.includes(aksjonspunktCodes.VURDER_INNSYN);
 

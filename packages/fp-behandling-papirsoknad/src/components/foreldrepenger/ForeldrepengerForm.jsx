@@ -5,6 +5,7 @@ import {
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { omit } from '@fpsak-frontend/utils';
 import { getRegisteredFields, getKodeverk, getFagsakPerson } from 'papirsoknad/src/duck';
 import MottattDatoPanel from 'papirsoknad/src/components/commonPanels/MottattDatoPanel';
 import AnnenForelderPanel from 'papirsoknad/src/components/commonPanels/AnnenForelderPanel';
@@ -146,8 +147,7 @@ const getValidation = (soknadData, andreYtelser, sokerPersonnummer) => {
 const transformRootValues = (state, registeredFieldNames) => {
   const values = formValueSelector(FORELDREPENGER_FORM_NAME)(state, ...registeredFieldNames);
   if (values.rettigheter === rettighet.IKKE_RELEVANT) {
-    const { rettigheter, ...nyeVerdier } = values; // NOSONAR destruct er bedre enn delete, immutable
-    return nyeVerdier;
+    return omit(values, 'rettigheter');
   }
   return values;
 };

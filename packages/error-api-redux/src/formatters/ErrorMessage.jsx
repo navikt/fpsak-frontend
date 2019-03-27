@@ -1,18 +1,11 @@
-/* @flow */
 class ErrorMessage {
-  text: string
-
-  code: string
-
-  params: any
-
-  static withMessage(message: string) {
+  static withMessage(message) {
     const errorMessage = new ErrorMessage();
     errorMessage.text = message;
     return errorMessage;
   }
 
-  static withMessageCode(messageCode: string, params: any) {
+  static withMessageCode(messageCode, params) {
     const errorMessage = new ErrorMessage();
     errorMessage.code = messageCode;
     errorMessage.params = params;

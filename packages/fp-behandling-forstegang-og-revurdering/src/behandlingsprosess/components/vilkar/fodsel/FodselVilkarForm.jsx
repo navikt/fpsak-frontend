@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
 import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
@@ -32,7 +31,6 @@ export const getFodselVilkarAvslagsarsaker = (isFpFagsak, fodselsvilkarAvslagsko
  * Presentasjonskomponent. Setter opp aksjonspunktet for avklaring av Fødselsvilkåret.
  */
 export const FodselVilkarFormImpl = ({
-  intl,
   avslagsarsaker,
   lovReferanse,
   readOnly,
@@ -61,7 +59,6 @@ export const FodselVilkarFormImpl = ({
 );
 
 FodselVilkarFormImpl.propTypes = {
-  intl: intlShape.isRequired,
   lovReferanse: PropTypes.string.isRequired,
   avslagsarsaker: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string.isRequired,
@@ -112,10 +109,10 @@ const mapStateToProps = (state, initialProps) => {
   };
 };
 
-const FodselVilkarForm = connect(mapStateToProps)(injectIntl(behandlingForm({
+const FodselVilkarForm = connect(mapStateToProps)(behandlingForm({
   form: formName,
   validate,
-})(FodselVilkarFormImpl)));
+})(FodselVilkarFormImpl));
 
 FodselVilkarForm.supports = (behandlingspunkt, apCodes) => behandlingspunkt === behandlingspunktCodes.FOEDSEL
     && (apCodes.includes(aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN)

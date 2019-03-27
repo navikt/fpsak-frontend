@@ -1,22 +1,14 @@
-/* @flow */
 import ErrorEventType from './errorEventType';
 import ErrorMessage from './ErrorMessage';
-import { Formatter } from './Formatter';
 
 const TIMEOUT_MESSAGE_CODE = 'Rest.ErrorMessage.Timeout';
 
-type ErrorData = {
-  type: string,
-  message: string,
-  location: string,
-}
-
-class RestTimeoutFormatter implements Formatter<ErrorData> {
+class RestTimeoutFormatter {
   type = ErrorEventType.POLLING_TIMEOUT;
 
-  isOfType = (type: string) => type === this.type;
+  isOfType = type => type === this.type;
 
-  format = (errorData: ErrorData) => ErrorMessage.withMessageCode(TIMEOUT_MESSAGE_CODE, errorData);
+  format = errorData => ErrorMessage.withMessageCode(TIMEOUT_MESSAGE_CODE, errorData);
 }
 
 export default RestTimeoutFormatter;

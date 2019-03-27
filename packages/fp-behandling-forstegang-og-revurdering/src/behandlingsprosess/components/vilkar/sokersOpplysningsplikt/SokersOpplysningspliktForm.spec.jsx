@@ -147,6 +147,7 @@ describe('<SokersOpplysningspliktForm>', () => {
         erVilkarOk: true,
         hasAksjonspunkt: false,
         inntektsmeldingerSomIkkeKommer: {
+          // eslint-disable-next-line @typescript-eslint/camelcase
           org_973861778: false,
         },
       });

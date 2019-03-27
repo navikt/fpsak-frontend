@@ -15,14 +15,13 @@ const config = {
     VERSION: ON,
   },
 
+  parser: '@typescript-eslint/parser',
+
+  plugins: ['@typescript-eslint'],
+
   extends: [
     'airbnb',
-    'plugin:flowtype/recommended',
-  ],
-
-  parser: 'babel-eslint',
-  plugins: [
-    'flowtype',
+    'plugin:@typescript-eslint/recommended',
   ],
 
   parserOptions: {
@@ -38,9 +37,20 @@ const config = {
     'linebreak-style': OFF,
     'import/no-named-as-default': OFF,
     'max-len': [ERROR, 160],
+    'react/require-default-props': OFF,
+    'react/jsx-filename-extension': OFF,
+    'no-undef': OFF,
 
     // TODO (TOR) Ignorert inntil videre grunnet kost/nytte
     'jsx-a11y/anchor-is-valid': OFF,
+    
+    '@typescript-eslint/no-unused-vars': ERROR,
+    '@typescript-eslint/indent': OFF,
+
+    // TODO (TOR) Midlertidig utkommentert
+    '@typescript-eslint/explicit-member-accessibility': OFF,
+    '@typescript-eslint/explicit-function-return-type': OFF,
+    '@typescript-eslint/no-explicit-any': OFF,
   },
 };
 

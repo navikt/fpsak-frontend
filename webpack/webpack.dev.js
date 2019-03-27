@@ -26,7 +26,6 @@ const config = {
     filename: 'bundle.js',
   },
   plugins: [
-   
     new webpack.HotModuleReplacementPlugin(),
   ],
   optimization: {

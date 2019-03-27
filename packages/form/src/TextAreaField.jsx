@@ -32,7 +32,6 @@ class TextAreaWithBadge extends React.PureComponent {
     const {
       badges,
       intl,
-      isEdited,
       ...otherProps
     } = this.props;
     const { controlled } = this.state;
@@ -95,14 +94,12 @@ TextAreaWithBadge.propTypes = {
     type: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
   })),
-  isEdited: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
 };
 
 TextAreaWithBadge.defaultProps = {
   badges: null,
-  isEdited: false,
 };
 
 export default TextAreaField;
