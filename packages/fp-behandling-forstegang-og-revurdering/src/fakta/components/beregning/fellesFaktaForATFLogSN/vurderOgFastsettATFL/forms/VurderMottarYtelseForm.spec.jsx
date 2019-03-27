@@ -243,6 +243,39 @@ describe('<VurderMottarYtelseForm>', () => {
     expect(fastsatteTilfeller[1]).to.equal(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING);
   });
 
+  it('skal kunne sette beløp til 0', () => {
+    const tilfeller = [faktaOmBeregningTilfelle.VURDER_LONNSENDRING, faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE];
+    const inntektPrMnd = [
+      { andelsnr: andel.andelsnr, fastsattBelop: 0 },
+      { andelsnr: andel3.andelsnr, fastsattBelop: 0 },
+    ];
+    const faktaOmBeregning = {
+      faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
+      vurderMottarYtelse: {
+        erFrilanser: false,
+        arbeidstakerAndelerUtenIM,
+      },
+    };
+    const values = {};
+    values[utledArbeidsforholdFieldName(andel)] = true;
+    values[utledArbeidsforholdFieldName(andel2)] = false;
+    values[utledArbeidsforholdFieldName(andel3)] = true;
+    const fastsatteAndelsnr = [];
+    const transformed = VurderMottarYtelseFormImpl.transformValues(values, inntektPrMnd, faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr);
+    const fastsatteInntekter = transformed.fastsattUtenInntektsmelding.andelListe;
+    expect(fastsatteAndelsnr.length).to.equal(2);
+    expect(fastsatteAndelsnr.find(nr => nr === andel.andelsnr) === undefined).to.equal(false);
+    expect(fastsatteAndelsnr.find(nr => nr === andel3.andelsnr) === undefined).to.equal(false);
+    expect(fastsatteInntekter.length).to.equal(2);
+    expect(fastsatteInntekter[0].andelsnr).to.equal(1);
+    expect(fastsatteInntekter[0].arbeidsinntekt).to.equal(0);
+    expect(fastsatteInntekter[1].andelsnr).to.equal(3);
+    expect(fastsatteInntekter[1].arbeidsinntekt).to.equal(0);
+    const fastsatteTilfeller = transformed.faktaOmBeregningTilfeller;
+    expect(fastsatteTilfeller.length).to.equal(2);
+    expect(fastsatteTilfeller[0]).to.equal(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE);
+    expect(fastsatteTilfeller[1]).to.equal(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING);
+  });
 
   it('skal transform values og sende ned FASTSETT_MAANEDSINNTEKT_FL ved mottar ytelse for Frilans', () => {
     const tilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE];
