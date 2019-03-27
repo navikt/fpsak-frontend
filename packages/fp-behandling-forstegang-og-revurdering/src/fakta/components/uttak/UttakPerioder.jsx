@@ -97,7 +97,7 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => {
   });
   // TODO hvis funnet relevant inntekstmelding, ikke vis de som ikke er søkt om
   const gyldigeInntektsmeldinger = relevant
-    .filter(inntektsmelding => !inntektsmelding.isManglendeInntektsmelding && !inntektsmelding.avvik.isAvvikArbeidsgiver);
+    .filter(inntektsmelding => !inntektsmelding.isManglendeInntektsmelding);
   if (gyldigeInntektsmeldinger.length) {
     return gyldigeInntektsmeldinger;
   }
