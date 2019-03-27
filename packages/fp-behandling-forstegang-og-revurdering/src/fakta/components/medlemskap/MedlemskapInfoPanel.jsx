@@ -15,8 +15,10 @@ import OppholdInntektOgPerioderForm from './oppholdInntektOgPerioder/OppholdInnt
 
 const {
   AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, AVKLAR_OM_BRUKER_ER_BOSATT, AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
-  AVKLAR_OPPHOLDSRETT, AVKLAR_LOVLIG_OPPHOLD, AVKLAR_FORTSATT_MEDLEMSKAP,
+  AVKLAR_OPPHOLDSRETT, AVKLAR_LOVLIG_OPPHOLD, AVKLAR_FORTSATT_MEDLEMSKAP, OVERSTYR_AVKLAR_STARTDATO,
 } = aksjonspunktCodes;
+
+const avklarStartdatoAp = [AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, OVERSTYR_AVKLAR_STARTDATO];
 
 /**
  * MedlemskapInfoPanel
@@ -37,6 +39,7 @@ export const MedlemskapInfoPanelImpl = ({
   skalBrukeNyeMedlemskap,
 }) => {
   const avklarStartdatoAksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
+  const avklarStartdatoOverstyring = aksjonspunkter.find(ap => ap.definisjon.kode === OVERSTYR_AVKLAR_STARTDATO);
   return (
     <FaktaEkspandertpanel
       title={intl.formatMessage({ id: 'MedlemskapInfoPanel.Medlemskap' })}
@@ -46,25 +49,20 @@ export const MedlemskapInfoPanelImpl = ({
       faktaId={faktaPanelCodes.MEDLEMSKAPSVILKARET}
       readOnly={readOnly}
     >
-      { avklarStartdatoAksjonspunkt
-        && (
-        <StartdatoForForeldrepengerperiodenForm
-          readOnly={readOnly}
-          aksjonspunkt={avklarStartdatoAksjonspunkt}
-          submitCallback={submitCallback}
-          submittable={submittable}
-          hasOpenMedlemskapAksjonspunkter={hasOpenAksjonspunkter}
-        />
-        )
-      }
-
+      <StartdatoForForeldrepengerperiodenForm
+        readOnly={readOnly}
+        aksjonspunkt={avklarStartdatoAksjonspunkt || avklarStartdatoOverstyring}
+        submitCallback={submitCallback}
+        submittable={submittable}
+        hasOpenMedlemskapAksjonspunkter={hasOpenAksjonspunkter}
+      />
       { (skalBrukeNyeMedlemskap && (!avklarStartdatoAksjonspunkt || !isAksjonspunktOpen(avklarStartdatoAksjonspunkt.status.kode)))
         && (
         <OppholdInntektOgPerioderFormNew
           readOnly={readOnly}
           submitCallback={submitCallback}
           submittable={submittable}
-          aksjonspunkter={aksjonspunkter.filter(ap => ap.definisjon.kode !== AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN)}
+          aksjonspunkter={aksjonspunkter.filter(ap => !avklarStartdatoAp.includes(ap.definisjon.kode))}
         />
         )
       }
@@ -74,7 +72,7 @@ export const MedlemskapInfoPanelImpl = ({
           readOnly={readOnly}
           submitCallback={submitCallback}
           submittable={submittable}
-          aksjonspunkter={aksjonspunkter.filter(ap => ap.definisjon.kode !== AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN)}
+          aksjonspunkter={aksjonspunkter.filter(ap => !avklarStartdatoAp.includes(ap.definisjon.kode))}
         />
       )
       }
@@ -106,7 +104,7 @@ const mapStateToProps = state => ({
 });
 
 const medlemAksjonspunkter = [AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, AVKLAR_OM_BRUKER_ER_BOSATT, AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
-  AVKLAR_OPPHOLDSRETT, AVKLAR_LOVLIG_OPPHOLD, AVKLAR_FORTSATT_MEDLEMSKAP];
+  AVKLAR_OPPHOLDSRETT, AVKLAR_LOVLIG_OPPHOLD, AVKLAR_FORTSATT_MEDLEMSKAP, OVERSTYR_AVKLAR_STARTDATO];
 
 const ConnectedComponent = connect(mapStateToProps)(injectIntl(MedlemskapInfoPanelImpl));
 

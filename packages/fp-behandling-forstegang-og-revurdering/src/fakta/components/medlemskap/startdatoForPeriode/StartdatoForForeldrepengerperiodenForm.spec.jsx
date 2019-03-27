@@ -12,6 +12,7 @@ describe('<StartdatoForForeldrepengerperiodenForm>', () => {
     const wrapper = shallow(<StartdatoForForeldrepengerperiodenForm
       {...reduxFormPropsMock}
       arbeidsgiver="Sopra Steria"
+      hasAksjonspunkt
       hasOpenAksjonspunkt
       hasOpenMedlemskapAksjonspunkter
       submittable
