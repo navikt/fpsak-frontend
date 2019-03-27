@@ -385,11 +385,7 @@ const summerFordelingForrigeBehandlingFraValues = values => (values
   .map(({ fordelingForrigeBehandling }) => (fordelingForrigeBehandling ? removeSpacesFromNumber(fordelingForrigeBehandling) : 0))
   .reduce((sum, fordeling) => sum + fordeling, 0));
 
-const harAndelUtenInntektsmeldingIForstegangsbehandling = values => values
-  .some(({ fordelingForrigeBehandling }) => (fordelingForrigeBehandling === '' || fordelingForrigeBehandling === null
-  || fordelingForrigeBehandling === undefined));
-
-RenderEndringBGFieldArray.validate = (values, fastsattIForstePeriode, skalRedigereInntekt) => {
+RenderEndringBGFieldArray.validate = (values, fastsattIForstePeriode, skalRedigereInntekt, skalOverstyreBg) => {
   const arrayErrors = values.map((andelFieldValues) => {
     if (!skalRedigereInntekt(andelFieldValues)) {
       return null;
@@ -414,9 +410,10 @@ RenderEndringBGFieldArray.validate = (values, fastsattIForstePeriode, skalRedige
   if (!kanRedigereInntekt) {
     return null;
   }
-  if (harAndelUtenInntektsmeldingIForstegangsbehandling(values)) {
+  if (values.some(andel => skalOverstyreBg(andel))) {
     if (fastsattIForstePeriode !== undefined && fastsattIForstePeriode !== null) {
       const fastsattBelopError = validateSumFastsattBelop(values, fastsattIForstePeriode, skalRedigereInntekt);
+
       if (fastsattBelopError) {
         return { _error: fastsattBelopError };
       }

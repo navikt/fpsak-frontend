@@ -143,9 +143,8 @@ const sokerMottarYtelseForAndel = (values, field, faktaOmBeregning, beregningsgr
   return mottarYtelseMap[field.andelsnr] || mottarYtelseMap[field.andelsnrRef];
 };
 
-// Skal redigere inntekt
 
-export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => {
+export const skalKunneOverstyreBeregningsgrunnlag = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => {
   if (skalHaBesteberegning(values)) {
     return true;
   }
@@ -164,8 +163,14 @@ export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregnings
   if (andelErStatusATUtenInntektsmeldingOgHarFLISammeOrg(andel, faktaOmBeregning)) {
     return true;
   }
-  return andel.harPeriodeAarsakGraderingEllerRefusjon === true;
+  return false;
 };
+
+
+// Skal redigere inntekt
+
+export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregningsgrunnlag) => andel => andel.harPeriodeAarsakGraderingEllerRefusjon === true
+|| skalKunneOverstyreBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag)(andel);
 
 export const skalRedigereInntektSelector = createSelector([getFormValuesForBeregning, getFaktaOmBeregning, getBeregningsgrunnlag], skalRedigereInntektForAndel);
 

@@ -5,6 +5,7 @@ import {
   transformPerioder,
 } from './EndringBeregningsgrunnlagForm';
 
+const skalOverstyreBg = () => true;
 
 const andel1 = {
   andelsnr: 1,
@@ -41,7 +42,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     const endringBGPerioder = [];
     const faktaOmBeregning = {};
     const beregningsgrunnlag = {};
-    const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag);
+    const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag, skalOverstyreBg);
     expect(errors).to.be.empty;
   });
 
@@ -51,7 +52,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     const endringBGPerioder = [{ fom: '2018-01-01', tom: null }];
     const faktaOmBeregning = {};
     const beregningsgrunnlag = {};
-    const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag);
+    const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag, skalOverstyreBg);
     expect(errors[getFieldNameKey(0)]).to.not.be.empty;
   });
 
@@ -62,7 +63,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     const endringBGPerioder = [{ fom: '2018-01-01', tom: '2018-07-01' }, { fom: '2018-07-02', tom: null }];
     const faktaOmBeregning = {};
     const beregningsgrunnlag = {};
-    const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag);
+    const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag, skalOverstyreBg);
     expect(errors[getFieldNameKey(0)]).to.not.be.empty;
     expect(errors[getFieldNameKey(1)]).to.not.be.empty;
   });

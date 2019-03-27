@@ -67,7 +67,7 @@ EndringBeregningsgrunnlagPeriodePanelImpl.defaultProps = {
 
 
 EndringBeregningsgrunnlagPeriodePanelImpl.validate = (values, fastsattIForstePeriode,
-  skalRedigereInntekt) => RenderEndringBGFieldArray.validate(values, fastsattIForstePeriode, skalRedigereInntekt);
+  skalRedigereInntekt, skalOverstyreBg) => RenderEndringBGFieldArray.validate(values, fastsattIForstePeriode, skalRedigereInntekt, skalOverstyreBg);
 
 EndringBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (periode, readOnly) => {
   if (!periode || !periode.endringBeregningsgrunnlagAndeler) {
