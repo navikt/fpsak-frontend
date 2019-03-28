@@ -12,6 +12,9 @@ import SoknadData from 'papirsoknad/src/SoknadData';
 import foreldreType from '@fpsak-frontend/kodeverk/src/foreldreType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { CheckboxField } from '@fpsak-frontend/form';
+import {
+  dateRangesNotOverlappingCrossTypes,
+} from '@fpsak-frontend/utils';
 import PermisjonUtsettelsePanel, { utsettelsePeriodeFieldArrayName } from './PermisjonUtsettelsePanel';
 import PermisjonGraderingPanel, { graderingPeriodeFieldArrayName } from './PermisjonGraderingPanel';
 import PermisjonOverforingAvKvoterPanel from './PermisjonOverforingAvKvoterPanel';
@@ -116,6 +119,12 @@ const permisjonErrors = (values, soknadData) => {
   if (values.skalUtsette) {
     const utsettelseperiodeValues = values ? values[utsettelsePeriodeFieldArrayName] : null;
     errors[utsettelsePeriodeFieldArrayName] = PermisjonUtsettelsePanel.validate(utsettelseperiodeValues, isEndringForeldrepenger);
+
+    if (values.permisjonsPerioder) {
+      const uttaksPerioder = values[permisjonPeriodeFieldArrayName];
+      const combinedUttakAndUtsettelseValues = utsettelseperiodeValues.concat(uttaksPerioder);
+      errors[permisjonPeriodeFieldArrayName] = PermisjonPanel.validateXross(combinedUttakAndUtsettelseValues);
+    }
   }
 
   if (values.skalGradere) {
@@ -149,6 +158,18 @@ PermisjonPanel.validate = (values, soknadData) => {
   const permisjonValues = values[TIDSROM_PERMISJON_FORM_NAME_PREFIX] || null;
   errors[TIDSROM_PERMISJON_FORM_NAME_PREFIX] = permisjonErrors(permisjonValues, soknadData);
   return errors;
+};
+
+PermisjonPanel.validateXross = (values) => {
+  if (values && values[0].periodeFom && values[0].periodeTom) {
+    const errors = {};
+    const overlapError = dateRangesNotOverlappingCrossTypes(values.map(({ periodeFom, periodeTom }) => [periodeFom, periodeTom]));
+    if (overlapError) {
+      return { _error: overlapError };
+    }
+    return errors;
+  }
+  return null;
 };
 
 PermisjonPanel.transformValues = (values) => {

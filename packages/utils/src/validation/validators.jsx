@@ -53,6 +53,7 @@ export const dateAfterOrEqual = (earliest, customErrorMessageFunction = undefine
     : getErrorMessage(earliest, customErrorMessageFunction)
 );
 export const dateRangesNotOverlapping = ranges => (dateRangesAreSequential(ranges) ? null : dateRangesOverlappingMessage());
+export const dateRangesNotOverlappingCrossTypes = ranges => (dateRangesAreSequential(ranges) ? null : merEnNullMessage());
 
 export const dateBeforeToday = text => dateBeforeOrEqual(yesterday())(text);
 export const dateBeforeOrEqualToToday = text => dateBeforeOrEqual(moment().startOf('day'))(text);
