@@ -122,7 +122,7 @@ const permisjonErrors = (values, soknadData) => {
 
     if (values.permisjonsPerioder) {
       const uttaksPerioder = values[permisjonPeriodeFieldArrayName];
-      const combinedUttakAndUtsettelseValues = utsettelseperiodeValues.concat(uttaksPerioder);
+      const combinedUttakAndUtsettelseValues = utsettelseperiodeValues ? utsettelseperiodeValues.concat(uttaksPerioder) : [];
       errors[permisjonPeriodeFieldArrayName] = PermisjonPanel.validateXrossPeriodTypes(combinedUttakAndUtsettelseValues);
     }
   }
