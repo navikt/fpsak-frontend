@@ -8,9 +8,10 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { aksjonspunktPropType, rettighetPropType } from '@fpsak-frontend/prop-types';
 import {
-  PersonIndex, requireProps, BehandlingIdentifier,
+  PersonIndex, requireProps, BehandlingIdentifier, ErrorTypes,
 } from '@fpsak-frontend/fp-felles';
 import { getRettigheter } from 'navAnsatt/duck';
+import papirsoknadApi from './data/papirsoknadApi';
 import SoknadData from './SoknadData';
 import {
   getBehandlingVersjon, getBehandlingIsOnHold, getAksjonspunkter,
@@ -37,10 +38,12 @@ export class PapirsoknadIndex extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onSubmitUfullstendigsoknad = this.onSubmitUfullstendigsoknad.bind(this);
     this.createManuellRegistrering = this.createManuellRegistrering.bind(this);
+  }
 
-    this.state = {
-      showRegistrertModal: false,
-    };
+  shouldComponentUpdate(nextProps) {
+    const { soknadData, submitRegistreringSuccess } = this.props;
+    return (nextProps.submitRegistreringSuccess !== submitRegistreringSuccess
+      || nextProps.soknadData !== soknadData);
   }
 
   componentWillUnmount() {
@@ -50,9 +53,7 @@ export class PapirsoknadIndex extends Component {
   }
 
   onSubmit(formValues, dispatch, { valuesForRegisteredFieldsOnly }) {
-    this.setState({
-      showRegistrertModal: true,
-    }, () => this.createManuellRegistrering(valuesForRegisteredFieldsOnly));
+    return this.createManuellRegistrering(valuesForRegisteredFieldsOnly);
   }
 
   onSubmitUfullstendigsoknad() {
@@ -91,9 +92,8 @@ export class PapirsoknadIndex extends Component {
 
   render() {
     const {
-      setSoknadData: setData, writeAccess, behandlingPaaVent, soknadData, fagsakPerson,
+      setSoknadData: setData, writeAccess, behandlingPaaVent, soknadData, fagsakPerson, submitRegistreringSuccess,
     } = this.props;
-    const { showRegistrertModal } = this.state;
     return (
       <div>
         <PersonIndex medPanel person={fagsakPerson} />
@@ -104,7 +104,7 @@ export class PapirsoknadIndex extends Component {
           readOnly={!writeAccess.isEnabled || behandlingPaaVent}
           soknadData={soknadData}
         />
-        <SoknadRegistrertModal isOpen={showRegistrertModal} />
+        <SoknadRegistrertModal isOpen={submitRegistreringSuccess} />
       </div>
     );
   }
@@ -116,6 +116,7 @@ PapirsoknadIndex.propTypes = {
   behandlingPaaVent: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType),
   submitRegistrering: PropTypes.func.isRequired,
+  submitRegistreringSuccess: PropTypes.bool.isRequired,
   resetRegistrering: PropTypes.func.isRequired,
   writeAccess: rettighetPropType,
   setSoknadData: PropTypes.func.isRequired,
@@ -133,7 +134,11 @@ PapirsoknadIndex.defaultProps = {
   aksjonspunkter: [],
 };
 
+const hasAccessError = error => !!(error && error.type === ErrorTypes.MANGLER_TILGANG_FEIL);
+
 const mapStateToProps = state => ({
+  submitRegistreringSuccess: papirsoknadApi.SAVE_AKSJONSPUNKT.getRestApiFinished()(state)
+  || hasAccessError(papirsoknadApi.SAVE_AKSJONSPUNKT.getRestApiError()(state)),
   soknadData: getSoknadData(state),
   aksjonspunkter: getAksjonspunkter(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
