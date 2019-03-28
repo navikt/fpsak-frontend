@@ -1702,7 +1702,7 @@
   "UttakInfoPanel.blabla": "bla bla endringsdato {endringsdato} bla bla første uttaksdato {førsteuttaksdato}",
   "UttakInfoPanel.OrginaleStartdatoKanIkkeEndres": "Den originale startdatoen til søknadsperioden må ikke endres.\nOriginal startdato: {originalStartDato}",
   "UttakInfoPanel.manglerPeriodeEtterFørsteuttaksdato": "Mangler periode etter første uttaksdag: {førsteuttaksdato}",
-  "UttakInfoPanel.periodeFørFørsteuttaksdato": " Søknadsperiode starter før første uttaksdag: {førsteuttaksdato}",
+  "UttakInfoPanel.periodeFørFørsteuttaksdato": "Første søknadsperiode {nyStartDato} kan ikke starte før første uttaksdag {førsteUttaksdato}",
   "UttakInfoPanel.ForHoyArbeidstidsprosent": "En eller flere perioder har en arbeidstidsprosent over 100%.",
   "UttakInfoPanel.IngenPerioder": "Det må være minst én periode i uttaket.",
   "UttakInfoPanel.AntallEnDagOgEnUke": "{weeks} uke {days} dag",
