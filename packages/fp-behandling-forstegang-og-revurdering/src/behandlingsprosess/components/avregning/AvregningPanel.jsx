@@ -9,6 +9,7 @@ import { Undertekst, Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import {
   getSimuleringResultat, getTilbakekrevingValg, getAksjonspunkter, getBehandlingVersjon, getBehandlingSprak,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getNavAnsatt } from 'navAnsatt/duck';
 import { behandlingspunktCodes, featureToggle } from '@fpsak-frontend/fp-felles';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import { getSelectedBehandlingId, getFeatureToggles, getSelectedSaksnummer } from 'behandlingForstegangOgRevurdering/src/duck';
@@ -146,8 +147,8 @@ export class AvregningPanelImpl extends Component {
   }
 
   previewMessage(e, previewCallback) {
-    const { varseltekst, saksnummer } = this.props;
-    previewCallback('', dokumentMalType.TBKVAR, varseltekst || ' ', saksnummer);
+    const { varseltekst, saksnummer, navAnsatt } = this.props;
+    previewCallback('', dokumentMalType.TBKVAR, varseltekst || ' ', saksnummer, navAnsatt.navn);
     e.preventDefault();
   }
 
@@ -414,6 +415,7 @@ const mapStateToProps = (state, initialProps) => ({
   behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
   featureVarseltekst: getFeatureToggles(state)[featureToggle.SIMULER_VARSELTEKST],
   saksnummer: getSelectedSaksnummer(state),
+  navAnsatt: getNavAnsatt(state),
   onSubmit: values => initialProps.submitCallback(transformValues(values, initialProps.apCodes[0])),
 });
 

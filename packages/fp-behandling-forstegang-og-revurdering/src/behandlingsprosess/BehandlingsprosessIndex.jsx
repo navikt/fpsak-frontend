@@ -169,7 +169,7 @@ export class BehandlingsprosessIndex extends Component {
     fetchBrevPreview(data);
   }
 
-  previewFptilbakeCallback(mottaker, brevmalkode, fritekst, saksnummer) {
+  previewFptilbakeCallback(mottaker, brevmalkode, fritekst, saksnummer, signerendeBeslutterNavn) {
     const { behandlingIdentifier, fetchFptilbakePreview: fetchBrevPreview } = this.props;
     const data = {
       behandlingId: behandlingIdentifier.behandlingId,
@@ -177,6 +177,7 @@ export class BehandlingsprosessIndex extends Component {
       mottaker,
       brevmalkode,
       saksnummer,
+      signerendeBeslutterNavn,
     };
     fetchBrevPreview(data);
   }
