@@ -70,8 +70,8 @@ export class BpTimelineDataImpl extends Component {
     };
 
     callBeregnBeløp(params).then((response) => {
-      const forstePeriodeMedBeløp = { ...forstePeriode, ...response.perioder[0].belop };
-      const andrePeriodeMedBeløp = { ...andrePeriode, ...response.perioder[1].belop };
+      const forstePeriodeMedBeløp = { ...forstePeriode, feilutbetaling: response.perioder[0].belop };
+      const andrePeriodeMedBeløp = { ...andrePeriode, feilutbetaling: response.perioder[1].belop };
 
       otherThanUpdated.map((periode) => {
         const periodeCopy = periode;
