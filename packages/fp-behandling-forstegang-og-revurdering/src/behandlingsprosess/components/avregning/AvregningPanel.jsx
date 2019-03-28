@@ -265,7 +265,7 @@ export class AvregningPanelImpl extends Component {
                                   title: 'Malform.Beskrivelse',
                                 }]}
                               />
-                              {!readOnly &&
+                              {!readOnly && (
                                 <a
                                   href=""
                                   onClick={(e) => {
@@ -275,7 +275,7 @@ export class AvregningPanelImpl extends Component {
                                 >
                                   <FormattedMessage id="Messages.PreviewText" />
                                 </a>
-                              }
+                              )}
                             </ArrowBox>
                           </div>
                         )
