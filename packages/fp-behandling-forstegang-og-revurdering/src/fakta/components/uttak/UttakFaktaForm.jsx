@@ -111,8 +111,8 @@ const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOS
       if (sjekkEndretFørsteUttaksdato(originalStartDato, nyStartDato, førsteUttaksdato, endringsdato)) {
         errors.perioder = {
           _error: <FormattedMessage
-            id="UttakInfoPanel.OrginaleStartdatoKanIkkeEndres"
-            values={{ originalStartDato: dateFormat(originalStartDato) }}
+            id="UttakInfoPanel.periodeFørFørsteuttaksdato"
+            values={{ nyStartDato: dateFormat(nyStartDato), førsteUttaksdato: dateFormat(førsteUttaksdato) }}
           />,
         };
       }
