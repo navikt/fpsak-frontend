@@ -12,8 +12,9 @@ import ArbeidsforholdInnhold from './ArbeidsforholdInnhold';
 describe('<ArbeidsforholdFaktaPanel>', () => {
   const tilrettelegging = {
     termindato: '2019-08-01',
+    fødselsdato: null,
+    begrunnelse: '',
     arbeidsforholdListe: [{
-      id: 123,
       tilretteleggingBehovFom: '2019-04-18',
       arbeidsgiverNavn: 'Xansen flyttebyrå AS',
       arbeidsgiverIdent: 1234,
@@ -32,7 +33,6 @@ describe('<ArbeidsforholdFaktaPanel>', () => {
       },
       begrunnelse: '',
     }, {
-      id: 456,
       tilretteleggingBehovFom: '2019-06-20',
       arbeidsgiverNavn: 'Rema 100',
       arbeidsgiverIdent: 98754,

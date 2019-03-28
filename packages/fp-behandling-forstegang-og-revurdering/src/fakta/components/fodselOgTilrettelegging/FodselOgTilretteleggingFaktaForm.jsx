@@ -118,7 +118,6 @@ const mapStateToProps = (state, ownProps) => {
     begrunnelse: '',
     arbeidsforholdListe: [
       {
-        id: 123,
         tilretteleggingBehovFom: '2019-04-18',
         arbeidsgiverNavn: 'Xansen flyttebyrå AS',
         arbeidsgiverIdent: 1234,
@@ -141,7 +140,6 @@ const mapStateToProps = (state, ownProps) => {
         begrunnelse: '',
       },
       {
-        id: 456,
         tilretteleggingBehovFom: '2019-06-20',
         arbeidsgiverNavn: 'Rema 100',
         arbeidsgiverIdent: 432,
@@ -167,6 +165,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     initialValues: {
       termindato: tilrettelegging.termindato,
+      begrunnelse: tilrettelegging.begrunnelse,
       arbeidsforhold: tilrettelegging.arbeidsforholdListe,
     },
     visBegrunnelse: visBegrunnelse(state),

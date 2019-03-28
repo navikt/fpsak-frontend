@@ -13,7 +13,6 @@ import { ArbeidsforholdInnhold, buildInitialValues } from './ArbeidsforholdInnho
 
 describe('<ArbeidsforholdInnhold>', () => {
   const selectedArbeidsforhold = {
-    id: 123,
     tilretteleggingBehovFom: '2019-04-18',
     arbeidsgiverNavn: 'Xansen flyttebyrå AS',
     arbeidsgiverIdent: 1234,
