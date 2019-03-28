@@ -115,6 +115,7 @@ export {
   isRequiredMessage,
   sammeFodselsnummerSomSokerMessage,
   dateRangesOverlappingMessage,
+  dateRangesOverlappingBetweenPeriodTypesMessage,
   invalidPeriodMessage,
   invalidDateMessage,
   invalidDecimalMessage,
