@@ -12,7 +12,6 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import {
   hasValidPeriodIncludingOtherErrors, required, isRequiredMessage,
-  // dateRangesNotOverlapping, overlapError,
 } from '@fpsak-frontend/utils';
 import RenderUtsettelsePeriodeFieldArray from './RenderUtsettelsePeriodeFieldArray';
 import styles from './permisjonPanel.less';
@@ -61,10 +60,6 @@ PermisjonUtsettelsePanel.validate = (values) => {
   if (!values || !values.length) {
     return { _error: isRequiredMessage() };
   }
-  //  const overlapError = dateRangesNotOverlapping(values.map(({ periodeFom, periodeTom }) => [periodeFom, periodeTom]));
-  //  if (overlapError) {
-  //    return { _error: overlapError };
-  //  }
   const otherErrors = values.map(({
     arsakForUtsettelse, erArbeidstaker,
   }) => {
