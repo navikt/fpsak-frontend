@@ -26,12 +26,12 @@ const ArbeidsforholdTable = ({
   <Table headerTextCodes={headerTextCodes}>
     {arbeidsforhold.map(a => (
       <TableRow
-        key={a.id}
-        id={a.id}
+        key={a.arbeidsgiverIdent}
+        id={a.arbeidsgiverIdent}
         model={a}
         onMouseDown={selectArbeidsforholdCallback}
         onKeyDown={selectArbeidsforholdCallback}
-        isSelected={a.id === selectedArbeidsforhold}
+        isSelected={a.arbeidsgiverIdent === selectedArbeidsforhold}
       >
         <TableColumn>
           <Normaltekst>
