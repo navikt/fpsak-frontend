@@ -198,7 +198,7 @@ const transformValues = (values) => {
       'replaceOptions',
       'originalFomDato',
       'brukUendretArbeidsforhold',
-      'aktivtArbeidsforholdFortsettBehandlingUtenIM')),
+      'aktivtArbeidsforholdHandlingField')),
     kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
   };
 };
