@@ -48,6 +48,7 @@ const ForeldelsePanelImpl = ({
   apCodes,
   foreldeseSyncErrors,
   foreldeseDirty,
+  readOnly,
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
@@ -119,11 +120,12 @@ ForeldelsePanelImpl.propTypes = {
   behandlingFormPrefix: PropTypes.string.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
-  fagsakPerson: PropTypes.string.isRequired,
+  fagsakPerson: PropTypes.shape().isRequired,
   isApOpen: PropTypes.bool.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string),
   foreldeseSyncErrors: PropTypes.shape(),
   foreldeseDirty: PropTypes.bool,
+  readOnly: PropTypes.bool.isRequired,
 };
 
 ForeldelsePanelImpl.defaultProps = {
@@ -151,7 +153,7 @@ export const buildInitialValues = foreldelsePerioder => ({
 });
 
 const mapStateToProps = (state, ownProps) => {
-  const foreldelsePerioderResultat = getForeldelsePerioder(state);
+  const foreldelsePerioderResultat = getForeldelsePerioder(state).perioder;
   return {
     initialValues: buildInitialValues(foreldelsePerioderResultat),
     foreldelsesresultatActivity: behandlingFormValueSelector(formName)(state, ACTIVITY_PANEL_NAME),
