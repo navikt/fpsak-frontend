@@ -88,6 +88,7 @@ export {
   dateBeforeOrEqualToToday,
   dateBeforeToday,
   dateRangesNotOverlapping,
+  dateRangesNotOverlappingCrossTypes,
   dateAfterOrEqual,
   dateBeforeOrEqual,
   hasValidDate,

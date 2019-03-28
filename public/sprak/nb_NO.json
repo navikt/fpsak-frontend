@@ -464,6 +464,7 @@
   "ValidationMessage.DateNotBeforeOrEqual": "Dato må være før eller lik {limit}",
   "ValidationMessage.DateNotAfterOrEqual": "Dato må være etter eller lik {limit}",
   "ValidationMessage.DateRangesOverlapping": "Perioder kan ikke overlappe i tid",
+  "ValidationMessage.DateRangesOverlappingPeriodTypes" : "Uttaks- og utsettelseperioder kan ikke overlappe i tid" ,
   "ValidationMessage.DatesNotEqual": "Dato må være lik {value}",
   "ValidationMessage.InvalidInteger": "Tallet kan ikke ha desimaler",
   "ValidationMessage.InvalidDecimal": "Tallet kan ikke inneholde mer enn to desimaler",

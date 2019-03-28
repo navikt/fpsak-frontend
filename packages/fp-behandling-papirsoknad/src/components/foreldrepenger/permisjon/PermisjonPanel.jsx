@@ -160,8 +160,10 @@ PermisjonPanel.validate = (values, soknadData) => {
   return errors;
 };
 
+PermisjonPanel.checkForFomTom = val => ('periodeTom' in val && 'periodeFom' in val);
+
 PermisjonPanel.validateXross = (values) => {
-  if (values && values[0].periodeFom && values[0].periodeTom) {
+  if (values.every(PermisjonPanel.checkForFomTom)) {
     const errors = {};
     const overlapError = dateRangesNotOverlappingCrossTypes(values.map(({ periodeFom, periodeTom }) => [periodeFom, periodeTom]));
     if (overlapError) {

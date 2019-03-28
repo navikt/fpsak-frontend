@@ -30,3 +30,4 @@ export const arbeidsprosentMåVare100VidUtsettelseAvArbeidMessage = () => ([{ id
 export const merEn100ProsentMessage = () => ([{ id: 'ValidationMessage.MerEn100Prosent' }]);
 export const merEnNullMessage = () => ([{ id: 'ValidationMessage.MerEnNullUtaksprosent' }]);
 export const datesRangeBetweenUttakAndUtsettelseMessage = () => ([{ id: 'ValidationMessage.MerEnNullUtaksprosent' }]);
+export const dateRangesOverlappingBetweenPeriodTypesMessage = () => ([{ id: 'ValidationMessage.DateRangesOverlappingPeriodTypes' }]);
