@@ -123,7 +123,7 @@ const permisjonErrors = (values, soknadData) => {
     if (values.permisjonsPerioder) {
       const uttaksPerioder = values[permisjonPeriodeFieldArrayName];
       const combinedUttakAndUtsettelseValues = utsettelseperiodeValues.concat(uttaksPerioder);
-      errors[permisjonPeriodeFieldArrayName] = PermisjonPanel.validateXross(combinedUttakAndUtsettelseValues);
+      errors[permisjonPeriodeFieldArrayName] = PermisjonPanel.validateXrossPeriodTypes(combinedUttakAndUtsettelseValues);
     }
   }
 
@@ -160,18 +160,18 @@ PermisjonPanel.validate = (values, soknadData) => {
   return errors;
 };
 
+// Den her checken trengs för att ikke validerings skall slå till för tidligt
 PermisjonPanel.checkForFomTom = val => ('periodeTom' in val && 'periodeFom' in val);
 
-PermisjonPanel.validateXross = (values) => {
+PermisjonPanel.validateXrossPeriodTypes = (values) => {
+  const errors = {};
   if (values.every(PermisjonPanel.checkForFomTom)) {
-    const errors = {};
     const overlapError = dateRangesNotOverlappingCrossTypes(values.map(({ periodeFom, periodeTom }) => [periodeFom, periodeTom]));
     if (overlapError) {
       return { _error: overlapError };
     }
-    return errors;
   }
-  return null;
+  return errors;
 };
 
 PermisjonPanel.transformValues = (values) => {
