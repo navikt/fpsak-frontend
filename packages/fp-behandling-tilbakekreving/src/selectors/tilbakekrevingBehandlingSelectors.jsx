@@ -68,7 +68,7 @@ export const getBehandlingArbeidsforhold = createSelector(
 export const getFeilutbetalingFakta = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.feilutbetalingFakta);
 
 // FORELDELSE
-export const getForeldelsePerioder = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.perioderForeldelse.perioder);
+export const getForeldelsePerioder = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.perioderForeldelse);
 export const getFeilutbetalingAarsaker = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.feilutbetalingAarsak);
 
 // SPRÅK

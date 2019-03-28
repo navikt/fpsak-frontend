@@ -70,6 +70,7 @@ export class FeilutbetalingInfoPanelImpl extends Component {
         isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.FEILUTBETALING)}
         toggleInfoPanelCallback={toggleInfoPanelCallback}
         faktaId={faktaPanelCodes.FEILUTBETALING}
+        readOnly={readOnly}
       >
         <form onSubmit={formProps.handleSubmit}>
           <Row className={styles.smallMarginBottom}>
@@ -254,7 +255,7 @@ FeilutbetalingInfoPanelImpl.propTypes = {
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  feilutbetaling: PropTypes.shape.isRequired,
+  feilutbetaling: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
   årsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   ...formPropTypes,
