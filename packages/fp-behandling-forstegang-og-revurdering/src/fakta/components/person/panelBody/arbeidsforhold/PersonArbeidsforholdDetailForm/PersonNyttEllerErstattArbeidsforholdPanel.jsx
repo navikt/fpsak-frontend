@@ -15,12 +15,9 @@ const PersonNyttEllerErstattArbeidsforholdPanel = ({
   readOnly,
   isErstattArbeidsforhold,
   arbeidsforholdList,
-  showContent,
   formName,
 }) => (
   <BehandlingFormFieldCleaner formName={formName} fieldNames={['erNyttArbeidsforhold', 'erstatterArbeidsforholdId']}>
-    {showContent
-    && (
     <ElementWrapper>
       <ArrowBox alignLeft>
         <RadioGroupField
@@ -40,25 +37,22 @@ const PersonNyttEllerErstattArbeidsforholdPanel = ({
         </RadioGroupField>
         {isErstattArbeidsforhold
         && (
-        <SelectField
-          name="erstatterArbeidsforholdId"
-          label={intl.formatMessage({ id: 'PersonNyttEllerErstattArbeidsforholdPanel.SelectArbeidsforhold' })}
-          placeholder={intl.formatMessage({ id: 'PersonNyttEllerErstattArbeidsforholdPanel.ChooseArbeidsforhold' })}
-          validate={[required]}
-          selectValues={arbeidsforholdList.map(a => (
-            <option key={a.arbeidsgiverIdentifikator + a.arbeidsforholdId} value={a.id}>
-              {`${a.navn}(${a.arbeidsgiverIdentifiktorGUI})...${getEndCharFromId(a.arbeidsforholdId)}`}
-            </option>
-          ))}
-          bredde="xl"
-          readOnly={readOnly}
-        />
-        )
-        }
+          <SelectField
+            name="erstatterArbeidsforholdId"
+            label={intl.formatMessage({ id: 'PersonNyttEllerErstattArbeidsforholdPanel.SelectArbeidsforhold' })}
+            placeholder={intl.formatMessage({ id: 'PersonNyttEllerErstattArbeidsforholdPanel.ChooseArbeidsforhold' })}
+            validate={[required]}
+            selectValues={arbeidsforholdList.map(a => (
+              <option key={a.arbeidsgiverIdentifikator + a.arbeidsforholdId} value={a.id}>
+                {`${a.navn}(${a.arbeidsgiverIdentifiktorGUI})...${getEndCharFromId(a.arbeidsforholdId)}`}
+              </option>
+            ))}
+            bredde="xl"
+            readOnly={readOnly}
+          />
+        )}
       </ArrowBox>
     </ElementWrapper>
-    )
-    }
   </BehandlingFormFieldCleaner>
 );
 
@@ -67,7 +61,6 @@ PersonNyttEllerErstattArbeidsforholdPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isErstattArbeidsforhold: PropTypes.bool.isRequired,
   arbeidsforholdList: PropTypes.arrayOf(arbeidsforholdPropType).isRequired,
-  showContent: PropTypes.bool.isRequired,
   formName: PropTypes.string.isRequired,
 };
 

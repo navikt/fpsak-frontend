@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { getAddresses } from '@fpsak-frontend/utils';
@@ -8,6 +9,7 @@ import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/
 import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import { AdressePanel, BarnePanel, PersonYtelserTable } from '@fpsak-frontend/person-info';
+import { getSkalKunneLeggeTilNyeArbeidsforhold } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import PersonArbeidsforholdPanel from './arbeidsforhold/PersonArbeidsforholdPanel';
 import { Utland } from './utland/Utland';
 
@@ -28,7 +30,7 @@ export const getBarnFraTPS = (barneListe = []) => barneListe.filter(barn => barn
  * når NAV-ansatt utvider nedtrekksfanen med personopplysninger.
  *
  */
-const FullPersonInfo = ({
+export const FullPersonInfoImpl = ({
   sprakkode,
   personopplysning,
   ytelser,
@@ -42,6 +44,7 @@ const FullPersonInfo = ({
   isPrimaryParent,
   personstatusTypes,
   sivilstandTypes,
+  skalKunneLeggeTilNyeArbeidsforhold,
 }) => {
   if (!personopplysning) {
     return null;
@@ -49,12 +52,13 @@ const FullPersonInfo = ({
   const adresseListe = getAddresses(personopplysning.adresser);
   const barnFraTPS = getBarnFraTPS(personopplysning.barn);
   const harBarnITPSSjekk = barnFraTPS.length !== 0;
+  const aksjonspunktID = skalKunneLeggeTilNyeArbeidsforhold ? 'FullPersonInfo.IngenArbeidsforholdRegistrert' : 'FullPersonInfo.AvklarArbeidsforhold';
 
   return (
     <div>
       {isPrimaryParent && hasAksjonspunkter && (
         <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
-          {[<FormattedMessage key="AvklarArbeidsforhold" id="FullPersonInfo.AvklarArbeidsforhold" />]}
+          {[<FormattedMessage key="AvklarArbeidsforhold" id={aksjonspunktID} />]}
         </AksjonspunktHelpText>
       )}
       <AdressePanel
@@ -85,6 +89,7 @@ const FullPersonInfo = ({
           readOnly={readOnly}
           hasAksjonspunkter={hasAksjonspunkter}
           hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+          skalKunneLeggeTilNyeArbeidsforhold={skalKunneLeggeTilNyeArbeidsforhold}
         />
       )}
       {ytelser && ytelser.length > 0 && (
@@ -100,7 +105,7 @@ const FullPersonInfo = ({
   );
 };
 
-FullPersonInfo.propTypes = {
+FullPersonInfoImpl.propTypes = {
   sprakkode: PropTypes.shape().isRequired,
   personopplysning: PropTypes.shape({}).isRequired,
   ytelser: PropTypes.arrayOf(PropTypes.shape({})),
@@ -114,11 +119,16 @@ FullPersonInfo.propTypes = {
   isPrimaryParent: PropTypes.bool.isRequired,
   sivilstandTypes: kodeverkPropType.isRequired,
   personstatusTypes: kodeverkPropType.isRequired,
+  skalKunneLeggeTilNyeArbeidsforhold: PropTypes.bool.isRequired,
 };
 
-FullPersonInfo.defaultProps = {
+FullPersonInfoImpl.defaultProps = {
   ytelser: undefined,
   submitCallback: undefined,
 };
 
-export default FullPersonInfo;
+const mapStateToProps = state => ({
+  skalKunneLeggeTilNyeArbeidsforhold: getSkalKunneLeggeTilNyeArbeidsforhold(state),
+});
+
+export default connect(mapStateToProps)(FullPersonInfoImpl);

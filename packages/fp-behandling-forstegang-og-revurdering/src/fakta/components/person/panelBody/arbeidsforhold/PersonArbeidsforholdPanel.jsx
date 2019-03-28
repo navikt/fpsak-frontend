@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -14,8 +14,10 @@ import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import PersonArbeidsforholdTable from './PersonArbeidsforholdTable';
-import PersonArbeidsforholdDetailForm, { PERSON_ARBEIDSFORHOLD_DETAIL_FORM } from './PersonArbeidsforholdDetailForm';
+import arbeidsforholdKilder from '@fpsak-frontend/kodeverk/src/arbeidsforholdKilder';
+import PersonArbeidsforholdTable from './PersonArbeidsforholdTable/PersonArbeidsforholdTable';
+import PersonArbeidsforholdDetailForm, { PERSON_ARBEIDSFORHOLD_DETAIL_FORM } from './PersonArbeidsforholdDetailForm/PersonArbeidsforholdDetailForm';
+import styles from './personArbeidsforholdPanel.less';
 
 // -------------------------------------------------------------------------------------------------------------
 // Methods
@@ -122,6 +124,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
     this.updateArbeidsforhold = this.updateArbeidsforhold.bind(this);
     this.cancelArbeidsforhold = this.cancelArbeidsforhold.bind(this);
     this.initializeActivityForm = this.initializeActivityForm.bind(this);
+    this.leggTilArbeidsforhold = this.leggTilArbeidsforhold.bind(this);
   }
 
   componentWillMount() {
@@ -141,8 +144,11 @@ export class PersonArbeidsforholdPanelImpl extends Component {
   }
 
   initializeActivityForm(arbeidsforhold) {
-    const { behandlingFormPrefix, reduxFormInitialize: formInitialize } = this.props;
-    formInitialize(`${behandlingFormPrefix}.${PERSON_ARBEIDSFORHOLD_DETAIL_FORM}`, arbeidsforhold);
+    const { selectedArbeidsforhold } = this.state;
+    if (selectedArbeidsforhold !== arbeidsforhold) {
+      const { behandlingFormPrefix, reduxFormInitialize: formInitialize } = this.props;
+      formInitialize(`${behandlingFormPrefix}.${PERSON_ARBEIDSFORHOLD_DETAIL_FORM}`, arbeidsforhold);
+    }
   }
 
   updateArbeidsforhold(values) {
@@ -165,7 +171,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
     let other = arbeidsforhold.filter(o => o.id !== cleanedValues.id);
     const oldState = arbeidsforhold.find(a => a.id === cleanedValues.id);
     let { fomDato } = cleanedValues;
-    if (cleanedValues.erstatterArbeidsforholdId !== oldState.erstatterArbeidsforholdId) {
+    if (oldState !== undefined && oldState !== null && cleanedValues.erstatterArbeidsforholdId !== oldState.erstatterArbeidsforholdId) {
       if (oldState.erstatterArbeidsforholdId) {
         other = other.map(o => (o.id === oldState.erstatterArbeidsforholdId ? { ...o, erSlettet: false } : o));
       }
@@ -190,6 +196,40 @@ export class PersonArbeidsforholdPanelImpl extends Component {
     this.setState({ selectedArbeidsforhold: undefined });
   }
 
+  leggTilArbeidsforhold() {
+    const lagtTilArbeidsforhold = {
+      id: `${(new Date()).getTime()}_${Math.floor(Math.random() * 1000000000)}`,
+      navn: undefined,
+      arbeidsgiverIdentifikator: undefined,
+      arbeidsgiverIdentifiktorGUI: undefined,
+      arbeidsforholdId: undefined,
+      fomDato: undefined,
+      tomDato: undefined,
+      kilde: {
+        navn: arbeidsforholdKilder.SAKSBEHANDLER,
+      },
+      mottattDatoInntektsmelding: undefined,
+      beskrivelse: undefined,
+      stillingsprosent: undefined,
+      brukArbeidsforholdet: true,
+      fortsettBehandlingUtenInntektsmelding: undefined,
+      erNyttArbeidsforhold: undefined,
+      erSlettet: undefined,
+      erstatterArbeidsforholdId: undefined,
+      harErsattetEttEllerFlere: undefined,
+      ikkeRegistrertIAaRegister: undefined,
+      tilVurdering: true,
+      vurderOmSkalErstattes: undefined,
+      erEndret: undefined,
+      brukMedJustertPeriode: false,
+      handlingType: undefined,
+      lagtTilAvSaksbehandler: true,
+      brukUendretArbeidsforhold: true,
+    };
+    this.initializeActivityForm(lagtTilArbeidsforhold);
+    this.setState({ selectedArbeidsforhold: lagtTilArbeidsforhold });
+  }
+
   render() {
     const {
       readOnly,
@@ -198,6 +238,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
       arbeidsforhold,
       fagsystemer,
       aktivtArbeidsforholdTillatUtenIM,
+      skalKunneLeggeTilNyeArbeidsforhold,
     } = this.props;
 
     const {
@@ -213,19 +254,28 @@ export class PersonArbeidsforholdPanelImpl extends Component {
             selectArbeidsforholdCallback={this.setSelectedArbeidsforhold}
             fagsystemer={fagsystemer}
           />
-          {hasArbeidsforholdAksjonspunkt(selectedArbeidsforhold)
-          && (
-          <PersonArbeidsforholdDetailForm
-            arbeidsforhold={selectedArbeidsforhold}
-            readOnly={readOnly}
-            hasAksjonspunkter={hasAksjonspunkter}
-            hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-            updateArbeidsforhold={this.updateArbeidsforhold}
-            cancelArbeidsforhold={this.cancelArbeidsforhold}
-            aktivtArbeidsforholdTillatUtenIM={aktivtArbeidsforholdTillatUtenIM}
-          />
-          )
-        }
+          { !readOnly && skalKunneLeggeTilNyeArbeidsforhold && selectedArbeidsforhold === undefined && arbeidsforhold.length === 0 && (
+            <button
+              type="button"
+              className={styles.leggTilArbeidsforholdButton}
+              onClick={this.leggTilArbeidsforhold}
+              disabled={readOnly}
+            >
+              <FormattedMessage id="PersonArbeidsforholdTable.LeggTilArbeidsforhold" />
+            </button>
+          )}
+          { hasArbeidsforholdAksjonspunkt(selectedArbeidsforhold) && (
+            <PersonArbeidsforholdDetailForm
+              arbeidsforhold={selectedArbeidsforhold}
+              readOnly={readOnly}
+              hasAksjonspunkter={hasAksjonspunkter}
+              hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+              updateArbeidsforhold={this.updateArbeidsforhold}
+              cancelArbeidsforhold={this.cancelArbeidsforhold}
+              aktivtArbeidsforholdTillatUtenIM={aktivtArbeidsforholdTillatUtenIM}
+              skalKunneLeggeTilNyeArbeidsforhold={skalKunneLeggeTilNyeArbeidsforhold}
+            />
+          )}
         </FaktaGruppe>
         <VerticalSpacer twentyPx />
       </ElementWrapper>
@@ -243,6 +293,7 @@ PersonArbeidsforholdPanelImpl.propTypes = {
   reduxFormInitialize: PropTypes.func.isRequired,
   fagsystemer: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   aktivtArbeidsforholdTillatUtenIM: PropTypes.bool.isRequired,
+  skalKunneLeggeTilNyeArbeidsforhold: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => {

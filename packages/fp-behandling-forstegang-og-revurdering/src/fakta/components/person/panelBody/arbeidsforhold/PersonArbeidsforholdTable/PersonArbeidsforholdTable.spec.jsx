@@ -7,6 +7,7 @@ import {
   Table, TableRow, TableColumn, Image, DateLabel, PeriodLabel,
 } from '@fpsak-frontend/shared-components';
 import PersonArbeidsforholdTable from './PersonArbeidsforholdTable';
+import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
 
 describe('<PersonArbeidsforholdTable>', () => {
   const arbeidsforhold = {
@@ -25,6 +26,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     brukArbeidsforholdet: false,
     tilVurdering: true,
     stillingsprosent: 80,
+    lagtTilAvSaksbehandler: false,
   };
 
   const fagsystemer = [{
@@ -51,6 +53,7 @@ describe('<PersonArbeidsforholdTable>', () => {
       mottattDatoInntektsmelding: undefined,
       brukArbeidsforholdet: false,
       stillingsprosent: 50,
+      lagtTilAvSaksbehandler: false,
     };
 
     const wrapper = shallow(<PersonArbeidsforholdTable
@@ -138,5 +141,31 @@ describe('<PersonArbeidsforholdTable>', () => {
     const cols = wrapper.find(TableColumn);
     expect(cols).has.length(6);
     expect(cols.last().find(Image)).has.length(1);
+  });
+
+  it('skal vise IngenArbeidsforholdRegistrert komponent når ingen arbeidsforhold', () => {
+    const wrapper = shallow(<PersonArbeidsforholdTable
+      alleArbeidsforhold={[]}
+      selectedId={undefined}
+      selectArbeidsforholdCallback={sinon.spy()}
+      fagsystemer={fagsystemer}
+    />);
+    const element = wrapper.find(IngenArbeidsforholdRegistrert);
+    expect(element).has.length(1);
+  });
+
+  it('skal viste riktig utledet navn når lagt til av saksbehandler', () => {
+    const endretArbeidsforhold = {
+      ...arbeidsforhold,
+      lagtTilAvSaksbehandler: true,
+    };
+    const wrapper = shallow(<PersonArbeidsforholdTable
+      alleArbeidsforhold={[endretArbeidsforhold]}
+      selectedId={undefined}
+      selectArbeidsforholdCallback={sinon.spy()}
+      fagsystemer={fagsystemer}
+    />);
+    const tableRow = wrapper.find(TableRow);
+    expect(tableRow.props().model.navn).to.eql('Svendsen Eksos');
   });
 });

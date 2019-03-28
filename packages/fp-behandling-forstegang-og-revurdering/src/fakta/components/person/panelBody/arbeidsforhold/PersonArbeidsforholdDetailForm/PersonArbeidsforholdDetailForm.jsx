@@ -31,7 +31,7 @@ import ArrowBox from '@fpsak-frontend/shared-components/src/ArrowBox';
 import DatepickerField from '@fpsak-frontend/form/src/DatepickerField';
 import PersonAksjonspunktText from './PersonAksjonspunktText';
 import PersonNyttEllerErstattArbeidsforholdPanel from './PersonNyttEllerErstattArbeidsforholdPanel';
-
+import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 // ----------------------------------------------------------------------------------
 // VARIABLES
 // ----------------------------------------------------------------------------------
@@ -59,9 +59,11 @@ const showNyttOrErstattPanel = (
   && vurderOmSkalErstattes
   && !harErstattetEttEllerFlere;
 
-const skalKunneOverstyreArbeidsforholdTomDato = (hasReceivedInntekstmelding, arbeidsforhold) => {
+const skalKunneOverstyreArbeidsforholdTomDato = (hasReceivedInntektsmelding, arbeidsforhold) => {
   const erLopende = arbeidsforhold.tomDato === undefined || arbeidsforhold.tomDato === null;
-  return (isKildeAaRegisteret(arbeidsforhold) && erLopende && !hasReceivedInntekstmelding)
+  return (isKildeAaRegisteret(arbeidsforhold)
+      && erLopende
+      && !hasReceivedInntektsmelding)
     || (arbeidsforhold.handlingType && arbeidsforhold.handlingType.kode === handlingTyper.BRUK_MED_OVERSTYRT_PERIODE);
 };
 
@@ -82,12 +84,21 @@ export const PersonArbeidsforholdDetailForm = ({
   aktivtArbeidsforholdTillatUtenIM,
   arbeidsforhold,
   skalBrukeUendretForhold,
+  skalKunneLeggeTilNyeArbeidsforhold,
   ...formProps
 }) => (
   <ElementWrapper>
     <Element><FormattedMessage id="PersonArbeidsforholdDetailForm.Header" /></Element>
-    <PersonAksjonspunktText arbeidsforhold={arbeidsforhold} />
+    <PersonAksjonspunktText
+      arbeidsforhold={arbeidsforhold}
+    />
     <VerticalSpacer eightPx />
+    { skalKunneLeggeTilNyeArbeidsforhold && (
+      <LeggTilArbeidsforholdFelter
+        readOnly={readOnly}
+        formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
+      />
+    )}
     <Row>
       <Column xs="5">
         <InputField
@@ -157,7 +168,7 @@ export const PersonArbeidsforholdDetailForm = ({
             <RadioOption
               label={{ id: 'PersonArbeidsforholdDetailForm.ArbeidsforholdIkkeRelevant' }}
               value={false}
-              disabled={isKildeAaRegisteret(arbeidsforhold)}
+              disabled={isKildeAaRegisteret(arbeidsforhold) || skalKunneLeggeTilNyeArbeidsforhold}
             />
           )}
         </RadioGroupField>
@@ -191,13 +202,14 @@ export const PersonArbeidsforholdDetailForm = ({
         )}
       </Column>
       <Column xs="6">
-        <PersonNyttEllerErstattArbeidsforholdPanel
-          readOnly={readOnly}
-          isErstattArbeidsforhold={isErstattArbeidsforhold}
-          arbeidsforholdList={formProps.initialValues.replaceOptions}
-          showContent={showNyttOrErstattPanel(skalBrukeUendretForhold, vurderOmSkalErstattes, harErstattetEttEllerFlere)}
-          formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
-        />
+        { showNyttOrErstattPanel(skalBrukeUendretForhold, vurderOmSkalErstattes, harErstattetEttEllerFlere) && (
+          <PersonNyttEllerErstattArbeidsforholdPanel
+            readOnly={readOnly}
+            isErstattArbeidsforhold={isErstattArbeidsforhold}
+            arbeidsforholdList={formProps.initialValues.replaceOptions}
+            formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
+          />
+        )}
         { skalBrukeUendretForhold && harErstattetEttEllerFlere && (
           <Normaltekst>
             <FormattedMessage id="PersonArbeidsforholdDetailForm.ErstatteTidligereArbeidsforhod" />
@@ -218,6 +230,7 @@ PersonArbeidsforholdDetailForm.propTypes = {
   aktivtArbeidsforholdTillatUtenIM: PropTypes.bool.isRequired,
   arbeidsforhold: arbeidsforholdPropType.isRequired,
   skalBrukeUendretForhold: PropTypes.bool,
+  skalKunneLeggeTilNyeArbeidsforhold: PropTypes.bool.isRequired,
   ...formPropTypes,
 };
 
@@ -252,10 +265,12 @@ const mapStateToProps = (state, ownProps) => ({
   onSubmit: values => ownProps.updateArbeidsforhold(values),
 });
 
-const validateForm = () => ({});
+const validateForm = values => ({
+  ...LeggTilArbeidsforholdFelter.validate(values),
+});
 
 export default connect(mapStateToProps)(behandlingForm({
   form: PERSON_ARBEIDSFORHOLD_DETAIL_FORM,
-  validate: validateForm,
+  validate: values => validateForm(values),
   enableReinitialize: true,
 })(PersonArbeidsforholdDetailForm));

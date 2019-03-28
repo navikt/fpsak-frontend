@@ -9,6 +9,9 @@ const getTextCode = (arbeidsforhold) => {
   if (!arbeidsforhold || (!arbeidsforhold.tilVurdering && !arbeidsforhold.erEndret)) {
     return undefined;
   }
+  if (arbeidsforhold.lagtTilAvSaksbehandler) {
+    return 'PersonAksjonspunktText.LeggTilArbeidsforhold';
+  }
   if (!arbeidsforhold.mottattDatoInntektsmelding) {
     return 'PersonAksjonspunktText.AvklarManglendeInntektsmelding';
   }

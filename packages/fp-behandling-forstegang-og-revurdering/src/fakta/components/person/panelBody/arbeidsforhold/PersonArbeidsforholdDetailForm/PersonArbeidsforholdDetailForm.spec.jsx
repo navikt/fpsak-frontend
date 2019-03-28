@@ -2,11 +2,13 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { TextAreaField } from '@fpsak-frontend/form';
+import { RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import handlingTyper from '@fpsak-frontend/kodeverk/src/handlingTyper';
 import PersonNyttEllerErstattArbeidsforholdPanel from './PersonNyttEllerErstattArbeidsforholdPanel';
 import { PersonArbeidsforholdDetailForm, showBegrunnelse } from './PersonArbeidsforholdDetailForm';
+import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 
 describe('<PersonArbeidsforholdDetailForm>', () => {
   const arbeidsforhold = {
@@ -41,6 +43,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       vurderOmSkalErstattes={false}
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={arbeidsforhold}
+      skalKunneLeggeTilNyeArbeidsforhold={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -64,6 +67,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       vurderOmSkalErstattes={false}
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={arbeidsforhold}
+      skalKunneLeggeTilNyeArbeidsforhold={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -87,6 +91,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       vurderOmSkalErstattes={false}
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={arbeidsforhold}
+      skalKunneLeggeTilNyeArbeidsforhold={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -110,6 +115,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       vurderOmSkalErstattes={false}
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={arbeidsforhold}
+      skalKunneLeggeTilNyeArbeidsforhold={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -133,6 +139,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       vurderOmSkalErstattes={false}
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={arbeidsforhold}
+      skalKunneLeggeTilNyeArbeidsforhold={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -155,14 +162,14 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       vurderOmSkalErstattes
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={arbeidsforhold}
+      skalKunneLeggeTilNyeArbeidsforhold={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [{ id: 2 }],
       }}
     />);
-
     const panel = wrapper.find(PersonNyttEllerErstattArbeidsforholdPanel);
-    expect(panel.prop('showContent')).is.true;
+    expect(panel).to.be.length(1);
   });
 
   it('skal ikke vise panel for å velge nytt eller erstatte når behandling ikke er i bruk', () => {
@@ -178,14 +185,14 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       vurderOmSkalErstattes={false}
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={arbeidsforhold}
+      skalKunneLeggeTilNyeArbeidsforhold={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [{ id: 2 }],
       }}
     />);
-
     const panel = wrapper.find(PersonNyttEllerErstattArbeidsforholdPanel);
-    expect(panel.prop('showContent')).is.false;
+    expect(panel).to.be.length(0);
   });
 
   it('skal ikke vise panel for å velge nytt eller erstatte når behandling ikke har gamle arbeidsforhold for samme org', () => {
@@ -201,6 +208,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       vurderOmSkalErstattes={false}
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={arbeidsforhold}
+      skalKunneLeggeTilNyeArbeidsforhold={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -208,7 +216,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
     />);
 
     const panel = wrapper.find(PersonNyttEllerErstattArbeidsforholdPanel);
-    expect(panel.prop('showContent')).is.false;
+    expect(panel).to.be.length(0);
   });
 
   it('skal vise tekst for å erstatte alle tidligere arbeidsforhold når behandling er i bruk og flagget harErstattetEttEllerFlere er satt', () => {
@@ -224,6 +232,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       vurderOmSkalErstattes={false}
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={arbeidsforhold}
+      skalKunneLeggeTilNyeArbeidsforhold={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -246,6 +255,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       vurderOmSkalErstattes={false}
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={arbeidsforhold}
+      skalKunneLeggeTilNyeArbeidsforhold={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -268,6 +278,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       vurderOmSkalErstattes={false}
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={arbeidsforhold}
+      skalKunneLeggeTilNyeArbeidsforhold={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -342,6 +353,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       vurderOmSkalErstattes={false}
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={lopendeArbeidsforhold}
+      skalKunneLeggeTilNyeArbeidsforhold={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -384,6 +396,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       vurderOmSkalErstattes={false}
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={lopendeArbeidsforhold}
+      skalKunneLeggeTilNyeArbeidsforhold={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -397,5 +410,120 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
     expect(radiogroup.props().children[2].props.label.id).to.equal('PersonArbeidsforholdDetailForm.ArbeidsforholdIkkeRelevant');
     const tomPicker = wrapper.find('[name=\'overstyrtTom\']');
     expect(tomPicker).has.length(0);
+  });
+
+  it('skal vise LeggTilArbeidsforholdFelter ', () => {
+    const wrapper = shallowWithIntl(<PersonArbeidsforholdDetailForm
+      {...reduxFormPropsMock}
+      intl={intlMock}
+      cancelArbeidsforhold={sinon.spy()}
+      skalBrukeUendretForhold
+      isErstattArbeidsforhold
+      hasReceivedInntektsmelding={false}
+      harErstattetEttEllerFlere
+      readOnly={false}
+      vurderOmSkalErstattes={false}
+      aktivtArbeidsforholdTillatUtenIM={false}
+      arbeidsforhold={arbeidsforhold}
+      skalKunneLeggeTilNyeArbeidsforhold
+      initialValues={{
+        begrunnelse: '',
+        replaceOptions: [],
+      }}
+    />);
+    const radiogroup = wrapper.find(LeggTilArbeidsforholdFelter);
+    expect(radiogroup).has.length(1);
+  });
+
+  it('skal ikke vise LeggTilArbeidsforholdFelter ', () => {
+    const wrapper = shallowWithIntl(<PersonArbeidsforholdDetailForm
+      {...reduxFormPropsMock}
+      intl={intlMock}
+      cancelArbeidsforhold={sinon.spy()}
+      skalBrukeUendretForhold
+      isErstattArbeidsforhold
+      hasReceivedInntektsmelding={false}
+      harErstattetEttEllerFlere
+      readOnly={false}
+      vurderOmSkalErstattes={false}
+      aktivtArbeidsforholdTillatUtenIM={false}
+      arbeidsforhold={arbeidsforhold}
+      skalKunneLeggeTilNyeArbeidsforhold={false}
+      initialValues={{
+        begrunnelse: '',
+        replaceOptions: [],
+      }}
+    />);
+    const radiogroup = wrapper.find(LeggTilArbeidsforholdFelter);
+    expect(radiogroup).has.length(0);
+  });
+
+  it('skal vise radio option for arbeidsforhold ikke aktivt ', () => {
+    const endretArbeidsforhold = {
+      ...arbeidsforhold,
+      tomDato: undefined,
+      kilde: {
+        navn: 'aa-registeret',
+      },
+      hasReceivedInntektsmelding: false,
+      handlingType: {
+        kode: handlingTyper.BRUK_MED_OVERSTYRT_PERIODE,
+      },
+    };
+    const wrapper = shallowWithIntl(<PersonArbeidsforholdDetailForm
+      {...reduxFormPropsMock}
+      intl={intlMock}
+      cancelArbeidsforhold={sinon.spy()}
+      skalBrukeUendretForhold
+      isErstattArbeidsforhold
+      hasReceivedInntektsmelding={false}
+      harErstattetEttEllerFlere
+      readOnly={false}
+      vurderOmSkalErstattes={false}
+      aktivtArbeidsforholdTillatUtenIM={false}
+      arbeidsforhold={endretArbeidsforhold}
+      skalKunneLeggeTilNyeArbeidsforhold={false}
+      initialValues={{
+        begrunnelse: '',
+        replaceOptions: [],
+      }}
+    />);
+    const radiogroups = wrapper.find(RadioOption);
+    expect(radiogroups).has.length(4);
+    expect(radiogroups.get(0).props.label.id).to.eql('PersonArbeidsforholdDetailForm.BrukArbeidsforholdet');
+    expect(radiogroups.get(1).props.label.id).to.eql('PersonArbeidsforholdDetailForm.IkkeMottatt');
+    expect(radiogroups.get(2).props.label.id).to.eql('PersonArbeidsforholdDetailForm.FortsettBehandling');
+    expect(radiogroups.get(3).props.label.id).to.eql('PersonArbeidsforholdDetailForm.ArbeidsforholdetErIkkeAktivt');
+  });
+
+  it('skal vise radio option for å fjerne arbeidsforhold ', () => {
+    const endretArbeidsforhold = {
+      ...arbeidsforhold,
+      hasReceivedInntektsmelding: false,
+    };
+    const wrapper = shallowWithIntl(<PersonArbeidsforholdDetailForm
+      {...reduxFormPropsMock}
+      intl={intlMock}
+      cancelArbeidsforhold={sinon.spy()}
+      skalBrukeUendretForhold
+      isErstattArbeidsforhold
+      hasReceivedInntektsmelding={false}
+      harErstattetEttEllerFlere
+      readOnly={false}
+      vurderOmSkalErstattes={false}
+      aktivtArbeidsforholdTillatUtenIM={false}
+      arbeidsforhold={endretArbeidsforhold}
+      skalKunneLeggeTilNyeArbeidsforhold={false}
+      initialValues={{
+        begrunnelse: '',
+        replaceOptions: [],
+      }}
+    />);
+    const radiogroups = wrapper.find(RadioOption);
+    expect(radiogroups).has.length(4);
+    expect(radiogroups.get(0).props.label.id).to.eql('PersonArbeidsforholdDetailForm.BrukArbeidsforholdet');
+    expect(radiogroups.get(1).props.label.id).to.eql('PersonArbeidsforholdDetailForm.IkkeMottatt');
+    expect(radiogroups.get(2).props.label.id).to.eql('PersonArbeidsforholdDetailForm.FortsettBehandling');
+    expect(radiogroups.get(3).props.label.id).to.eql('PersonArbeidsforholdDetailForm.ArbeidsforholdIkkeRelevant');
   });
 });

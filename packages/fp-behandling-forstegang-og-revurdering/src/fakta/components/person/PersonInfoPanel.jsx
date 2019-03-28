@@ -42,6 +42,17 @@ const getUtlandSakstype = (aksjonspunkter) => {
   }
   return utlandSakstypeKode.NASJONAL;
 };
+
+export const fjernIdFraArbeidsforholdLagtTilAvSaksbehandler = arbeidsforhold => arbeidsforhold.map((a) => {
+  if (a.lagtTilAvSaksbehandler === true) {
+    return {
+      ...a,
+      id: null,
+    };
+  }
+  return a;
+});
+
 /**
  * PersonInfoPanel
  *
@@ -179,15 +190,18 @@ PersonInfoPanelImpl.defaultProps = {
   submitCallback: undefined,
 };
 
-const transformValues = values => ({
-  arbeidsforhold: values.arbeidsforhold.map(a => omit(a,
-    'erEndret',
-    'replaceOptions',
-    'originalFomDato',
-    'brukUendretArbeidsforhold',
-    'aktivtArbeidsforholdFortsettBehandlingUtenIM')),
-  kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
-});
+const transformValues = (values) => {
+  const arbeidsforhold = fjernIdFraArbeidsforholdLagtTilAvSaksbehandler(values.arbeidsforhold);
+  return {
+    arbeidsforhold: arbeidsforhold.map(a => omit(a,
+      'erEndret',
+      'replaceOptions',
+      'originalFomDato',
+      'brukUendretArbeidsforhold',
+      'aktivtArbeidsforholdFortsettBehandlingUtenIM')),
+    kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+  };
+};
 
 const buildInitialValues = createSelector(
   [getBehandlingArbeidsforhold],
