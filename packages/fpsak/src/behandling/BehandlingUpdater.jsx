@@ -17,14 +17,6 @@ class BehandlingUpdater {
 
     resetBehandling = dispatch => (this.updater ? dispatch(this.updater.resetBehandling()) : undefined)
 
-    setBehandlingOnHold = (dispatch, params) => dispatch(this.updater.setBehandlingOnHold()(params))
-
-    resumeBehandling = (dispatch, params) => dispatch(this.updater.resumeBehandling()(params))
-
-    shelveBehandling = (dispatch, params) => dispatch(this.updater.shelveBehandling()(params))
-
-    openBehandlingForChanges = (dispatch, params) => dispatch(this.updater.openBehandlingForChanges()(params))
-
     setBehandlingResult = (dispatch, payload, params, options) => dispatch(this.updater.setBehandlingResult()(payload, params, options))
 
     resetSubmitMessage = dispatch => dispatch(this.updater.resetSubmitMessage())

@@ -51,12 +51,7 @@ class RestDuck {
 
   get actionTypes() {
     if (!this.$$duck.actionTypes) {
-      this.$$duck.actionTypes = createRequestActionTypes(
-        this.requestRunner.isAsyncRestMethod(),
-        this.name,
-        this.requestRunner.getRestMethodName(),
-        this.requestRunner.getPath(),
-      );
+      this.$$duck.actionTypes = createRequestActionTypes(this.requestRunner);
     }
     return this.$$duck.actionTypes;
   }
@@ -70,7 +65,7 @@ class RestDuck {
 
   get reducer() {
     if (!this.$$duck.reducer) {
-      this.$$duck.reducer = createRequestReducer(this.requestRunner.isAsyncRestMethod(), this.actionTypes);
+      this.$$duck.reducer = createRequestReducer(this.actionTypes, this.name);
     }
     return this.$$duck.reducer;
   }

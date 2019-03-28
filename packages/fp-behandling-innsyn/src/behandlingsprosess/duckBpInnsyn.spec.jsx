@@ -62,8 +62,17 @@ describe('Behandlingsprosess-reducer', () => {
   });
 
   it('skal avklare aksjonspunkter', () => {
+    const data = {
+      resource: 'resource',
+    };
+    const headers = {
+      location: 'status-url',
+    };
     mockAxios
       .onPost(innsynBehandlingApi.SAVE_AKSJONSPUNKT.path)
+      .reply(202, data, headers);
+    mockAxios
+      .onGet(headers.location)
       .reply(200, [{ personstatus: 'test' }]);
 
     const store = mockStore();

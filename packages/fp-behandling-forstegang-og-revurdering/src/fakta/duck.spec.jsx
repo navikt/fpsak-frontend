@@ -60,8 +60,17 @@ describe('Fakta-reducer', () => {
   });
 
   it('skal avklare aksjonspunkter', () => {
+    const data = {
+      resource: 'resource',
+    };
+    const headers = {
+      location: 'status-url',
+    };
     mockAxios
       .onPost(fpsakBehandlingApi.SAVE_AKSJONSPUNKT.path)
+      .reply(202, data, headers);
+    mockAxios
+      .onGet(headers.location)
       .reply(200, [{ vurdering: 'test' }]);
 
     const store = mockStore();

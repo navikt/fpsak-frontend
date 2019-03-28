@@ -18,7 +18,6 @@ describe('RequestApi', () => {
     getAsync: () => undefined,
     postAsync: () => undefined,
     putAsync: () => undefined,
-    isAsyncRestMethod: () => undefined,
   };
 
   it('skal sette opp korrekt request-runner', () => {

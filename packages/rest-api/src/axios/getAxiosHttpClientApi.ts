@@ -39,7 +39,6 @@ const getAxiosHttpClientApi = () => {
     getAsync: restMethods.getAsync,
     postAsync: restMethods.postAsync,
     putAsync: restMethods.putAsync,
-    isAsyncRestMethod: restMethods.isAsyncRestMethod,
     axiosInstance,
   };
 };

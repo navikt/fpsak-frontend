@@ -8,10 +8,6 @@ import { reducerRegistry, setRequestPollingMessage } from '@fpsak-frontend/fp-fe
 export const PapirsoknadApiKeys = {
   BEHANDLING: 'BEHANDLING',
   UPDATE_ON_HOLD: 'UPDATE_ON_HOLD',
-  BEHANDLING_ON_HOLD: 'BEHANDLING_ON_HOLD',
-  RESUME_BEHANDLING: 'RESUME_BEHANDLING',
-  HENLEGG_BEHANDLING: 'HENLEGG_BEHANDLING',
-  NY_BEHANDLENDE_ENHET: 'NY_BEHANDLENDE_ENHET',
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
   SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
@@ -20,10 +16,6 @@ export const PapirsoknadApiKeys = {
 const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/api/behandlinger', PapirsoknadApiKeys.BEHANDLING)
   .withPost('/api/behandlinger/endre-pa-vent', PapirsoknadApiKeys.UPDATE_ON_HOLD)
-  .withPost('/api/behandlinger/sett-pa-vent', PapirsoknadApiKeys.BEHANDLING_ON_HOLD)
-  .withPost('/api/behandlinger/bytt-enhet', PapirsoknadApiKeys.NY_BEHANDLENDE_ENHET)
-  .withAsyncPost('/api/behandlinger/gjenoppta', PapirsoknadApiKeys.RESUME_BEHANDLING)
-  .withPost('/api/behandlinger/henlegg', PapirsoknadApiKeys.HENLEGG_BEHANDLING)
 
   /* /api/behandling */
   .withAsyncPost('/api/behandling/aksjonspunkt', PapirsoknadApiKeys.SAVE_AKSJONSPUNKT)

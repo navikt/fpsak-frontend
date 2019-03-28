@@ -42,6 +42,9 @@ export const getBehandlingerVersjonMappedById = createSelector([getBehandlinger]
 export const getBehandlingerAktivPapirsoknadMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
   .reduce((a, b) => ({ ...a, [b.id]: b.erAktivPapirsoknad }), {}));
 
+export const getBehandlingerLinksMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
+  .reduce((a, b) => ({ ...a, [b.id]: b.links }), {}));
+
 export const getNumBehandlinger = createSelector([getBehandlinger], (behandlinger = []) => behandlinger.length);
 
 export const getNoExistingBehandlinger = createSelector([getBehandlinger], (behandlinger = []) => behandlinger.length === 0);

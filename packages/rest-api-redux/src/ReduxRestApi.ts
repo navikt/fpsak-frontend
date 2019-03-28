@@ -1,4 +1,5 @@
 import { createRequestApi, RequestConfig } from '@fpsak-frontend/rest-api';
+import { Link } from '@fpsak-frontend/rest-api/src/requestApi/LinkTsType';
 import { HttpClientApi } from '@fpsak-frontend/rest-api/src/HttpClientApiTsType';
 
 import EndpointOperations from './redux/EndpointOperations';
@@ -12,6 +13,8 @@ class ReduxRestApi {
 
   contextPath: string = '';
 
+  requestApi;
+
   httpClientApi: HttpClientApi;
 
   reduxApiCreator: ReduxApiCreator;
@@ -19,9 +22,9 @@ class ReduxRestApi {
   constructor(config: RequestConfig[], reducerName: string, contextPath: string, reduxEvents: ReduxEvents) {
     this.config = config;
     this.contextPath = contextPath;
-    const requestApi = createRequestApi(contextPath, config);
-    this.httpClientApi = requestApi.getHttpClientApi();
-    this.reduxApiCreator = new ReduxApiCreator(requestApi, getDataContext(reducerName), reduxEvents);
+    this.requestApi = createRequestApi(contextPath, config);
+    this.httpClientApi = this.requestApi.getHttpClientApi();
+    this.reduxApiCreator = new ReduxApiCreator(this.requestApi, getDataContext(reducerName), reduxEvents);
   }
 
   getEndpointApi = (): { [name: string]: EndpointOperations } => this.config.reduce((acc, c) => ({
@@ -30,6 +33,10 @@ class ReduxRestApi {
   }), {})
 
   getDataReducer = () => this.reduxApiCreator.createReducer();
+
+  injectPaths = (links: Link[]) => {
+    this.requestApi.injectPaths(links);
+  };
 
   getHttpClientApi = () => this.httpClientApi;
 }

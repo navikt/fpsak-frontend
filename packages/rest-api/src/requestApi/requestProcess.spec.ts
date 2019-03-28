@@ -46,7 +46,6 @@ const httpClientGeneralMock = {
   getAsync: () => undefined,
   postAsync: () => undefined,
   putAsync: () => undefined,
-  isAsyncRestMethod: () => undefined,
 };
 
 describe('RequestProcess', () => {

@@ -7,11 +7,6 @@ import { reducerRegistry, setRequestPollingMessage } from '@fpsak-frontend/fp-fe
 export const KlageBehandlingApiKeys = {
   BEHANDLING: 'BEHANDLING',
   UPDATE_ON_HOLD: 'UPDATE_ON_HOLD',
-  BEHANDLING_ON_HOLD: 'BEHANDLING_ON_HOLD',
-  RESUME_BEHANDLING: 'RESUME_BEHANDLING',
-  OPEN_BEHANDLING_FOR_CHANGES: 'OPEN_BEHANDLING_FOR_CHANGES',
-  HENLEGG_BEHANDLING: 'HENLEGG_BEHANDLING',
-  NY_BEHANDLENDE_ENHET: 'NY_BEHANDLENDE_ENHET',
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
   SAVE_OVERSTYRT_AKSJONSPUNKT: 'SAVE_OVERSTYRT_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
@@ -27,11 +22,6 @@ const endpoints = new RestApiConfigBuilder()
   /* /api/behandlinger */
   .withAsyncPost('/api/behandlinger', KlageBehandlingApiKeys.BEHANDLING)
   .withPost('/api/behandlinger/endre-pa-vent', KlageBehandlingApiKeys.UPDATE_ON_HOLD)
-  .withPost('/api/behandlinger/sett-pa-vent', KlageBehandlingApiKeys.BEHANDLING_ON_HOLD)
-  .withPost('/api/behandlinger/bytt-enhet', KlageBehandlingApiKeys.NY_BEHANDLENDE_ENHET)
-  .withAsyncPost('/api/behandlinger/gjenoppta', KlageBehandlingApiKeys.RESUME_BEHANDLING)
-  .withPost('/api/behandlinger/henlegg', KlageBehandlingApiKeys.HENLEGG_BEHANDLING)
-  .withAsyncPost('/api/behandlinger/opne-for-endringer', KlageBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES)
 
   /* /api/behandling */
   .withAsyncPost('/api/behandling/aksjonspunkt', KlageBehandlingApiKeys.SAVE_AKSJONSPUNKT)

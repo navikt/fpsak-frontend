@@ -23,6 +23,11 @@ describe('<BehandlingPickerItem>', () => {
     behandlendeEnhetId: '1242424',
     behandlendeEnhetNavn: 'test',
     erAktivPapirsoknad: false,
+    links: [{
+      href: '/fpsak/test',
+      rel: 'test',
+      type: 'GET',
+    }],
   };
 
   it('skal vise behandling uten lenke når det kun finnes en behandling og denne er valgt', () => {

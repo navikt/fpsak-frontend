@@ -31,16 +31,18 @@ const formatConfig = (config = {}) => ({
 class RequestConfig {
     name: string;
 
-    config: RequestAdditionalConfig;
+    config?: RequestAdditionalConfig;
 
-    path: string;
+    path?: string;
 
-    restMethod: string = RequestType.GET;
+    restMethod?: string = RequestType.GET;
 
-    constructor(name: string, path: string, config?: RequestAdditionalConfig) {
+    rel?: string;
+
+    constructor(name: string, path?: string, config?: RequestAdditionalConfig) {
       this.name = name;
-      this.config = formatConfig(config);
       this.path = path;
+      this.config = formatConfig(config);
     }
 
     withGetMethod = () => {
@@ -75,6 +77,16 @@ class RequestConfig {
 
     withPostAndOpenBlob = () => {
       this.restMethod = RequestType.POST_AND_OPEN_BLOB;
+      return this;
+    }
+
+    withRel = (rel: string) => {
+      this.rel = rel;
+      return this;
+    }
+
+    withRestMethod = (restMethod: string) => {
+      this.restMethod = restMethod.toUpperCase();
       return this;
     }
 }

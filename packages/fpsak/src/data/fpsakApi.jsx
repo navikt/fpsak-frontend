@@ -7,7 +7,6 @@ import { reducerRegistry, setRequestPollingMessage } from '@fpsak-frontend/fp-fe
 export const FpsakApiKeys = {
   LANGUAGE_FILE: 'LANGUAGE_FILE',
   KODEVERK: 'KODEVERK',
-  AVSLAG_REASONS: 'AVSLAG_REASONS',
   NAV_ANSATT: 'NAV_ANSATT',
   SEARCH_FAGSAK: 'SEARCH_FAGSAK',
   FETCH_FAGSAK: 'FETCH_FAGSAK',
@@ -27,56 +26,65 @@ export const FpsakApiKeys = {
   INTEGRATION_STATUS: 'INTEGRATION_STATUS',
   FEATURE_TOGGLE: 'FEATURE_TOGGLE',
   AKTOER_INFO: 'AKTOER_INFO',
+  BEHANDLING_NY_BEHANDLENDE_ENHET: 'BEHANDLING_NY_BEHANDLENDE_ENHET',
+  OPEN_BEHANDLING_FOR_CHANGES: 'OPEN_BEHANDLING_FOR_CHANGES',
+  HENLEGG_BEHANDLING: 'HENLEGG_BEHANDLING',
+  RESUME_BEHANDLING: 'RESUME_BEHANDLING',
+  BEHANDLING_ON_HOLD: 'BEHANDLING_ON_HOLD',
 };
 
 const endpoints = new RestApiConfigBuilder()
-/* /api */
 
   /* /api/fagsak */
-  .withPost('fpsak/api/fagsak/sok', FpsakApiKeys.SEARCH_FAGSAK)
-  .withGet('fpsak/api/fagsak', FpsakApiKeys.FETCH_FAGSAK)
+  .withPost('/fpsak/api/fagsak/sok', FpsakApiKeys.SEARCH_FAGSAK)
+  .withGet('/fpsak/api/fagsak', FpsakApiKeys.FETCH_FAGSAK)
 
   /* /api/behandlinger */
-  .withGet('fpsak/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPSAK, { fetchLinkDataAutomatically: false })
-  .withGet('fptilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE, { fetchLinkDataAutomatically: false })
-  .withAsyncPut('fpsak/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING)
-  .withGet('fpsak/api/behandlinger/annen-part-behandling', FpsakApiKeys.ANNEN_PART_BEHANDLING)
+  .withGet('/fpsak/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPSAK, { fetchLinkDataAutomatically: false })
+  .withGet('/fptilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE, { fetchLinkDataAutomatically: false })
+  .withAsyncPut('/fpsak/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING)
+  .withGet('/fpsak/api/behandlinger/annen-part-behandling', FpsakApiKeys.ANNEN_PART_BEHANDLING)
+  .withInjectedPath('bytt-behandlende-enhet', FpsakApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
+  .withInjectedPath('opne-for-endringer', FpsakApiKeys.OPEN_BEHANDLING_FOR_CHANGES)
+  .withInjectedPath('henlegg-behandling', FpsakApiKeys.HENLEGG_BEHANDLING)
+  .withInjectedPath('gjenoppta-behandling', FpsakApiKeys.RESUME_BEHANDLING)
+  .withInjectedPath('sett-behandling-pa-vent', FpsakApiKeys.BEHANDLING_ON_HOLD)
 
   /* /api/behandling */
-  .withAsyncPost('fpsak/api/behandling/aksjonspunkt', FpsakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT)
+  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', FpsakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT)
 
   /* /api/dokument */
-  .withGet('fpsak/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS_FPSAK)
-  .withGet('fptilbake/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS_FPTILBAKE)
-  .withGet('fpsak/api/dokument/hent-dokument', FpsakApiKeys.DOCUMENT)
+  .withGet('/fpsak/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS_FPSAK)
+  .withGet('/fptilbake/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS_FPTILBAKE)
+  .withGet('/fpsak/api/dokument/hent-dokument', FpsakApiKeys.DOCUMENT)
 
   /* /api/historikk */
-  .withGet('fpsak/api/historikk', FpsakApiKeys.HISTORY_FPSAK)
-  .withGet('fptilbake/api/historikk', FpsakApiKeys.HISTORY_FPTILBAKE)
+  .withGet('/fpsak/api/historikk', FpsakApiKeys.HISTORY_FPSAK)
+  .withGet('/fptilbake/api/historikk', FpsakApiKeys.HISTORY_FPTILBAKE)
 
   /* /api/dokumentbestiller */
-  .withPostAndOpenBlob('fpsak/api/dokumentbestiller/forhandsvis-vedtaksbrev', FpsakApiKeys.FORHANDSVISNING_FORVED_BREV)
+  .withPostAndOpenBlob('/fpsak/api/dokumentbestiller/forhandsvis-vedtaksbrev', FpsakApiKeys.FORHANDSVISNING_FORVED_BREV)
 
   /* /api/kodeverk */
-  .withGet('fpsak/api/kodeverk', FpsakApiKeys.KODEVERK)
-  .withGet('fpsak/api/kodeverk/avslag-arsaker', FpsakApiKeys.AVSLAG_REASONS)
-  .withGet('fpsak/api/kodeverk/behandlende-enheter', FpsakApiKeys.BEHANDLENDE_ENHETER)
+  .withGet('/fpsak/api/kodeverk', FpsakApiKeys.KODEVERK)
+  .withGet('/fpsak/api/kodeverk/behandlende-enheter', FpsakApiKeys.BEHANDLENDE_ENHETER)
 
   /* /api/nav-ansatt */
-  .withGet('fpsak/api/nav-ansatt', FpsakApiKeys.NAV_ANSATT)
+  .withGet('/fpsak/api/nav-ansatt', FpsakApiKeys.NAV_ANSATT)
 
   /* /api/integrasjon */
-  .withGet('fpsak/api/integrasjon/status', FpsakApiKeys.INTEGRATION_STATUS)
-  .withGet('fpsak/api/integrasjon/status/vises', FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES)
+  .withGet('/fpsak/api/integrasjon/status', FpsakApiKeys.INTEGRATION_STATUS)
+  .withGet('/fpsak/api/integrasjon/status/vises', FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES)
 
   /* /api/aktoer */
-  .withGet('fpsak/api/aktoer-info', FpsakApiKeys.AKTOER_INFO)
+  .withGet('/fpsak/api/aktoer-info', FpsakApiKeys.AKTOER_INFO)
 
   /* /sprak */
-  .withGet('fpsak/public/sprak/nb_NO.json', FpsakApiKeys.LANGUAGE_FILE)
+  .withGet('/fpsak/public/sprak/nb_NO.json', FpsakApiKeys.LANGUAGE_FILE)
 
   /* /api/feature-toggle */
-  .withPost('fpsak/api/feature-toggle', FpsakApiKeys.FEATURE_TOGGLE)
+  .withPost('/fpsak/api/feature-toggle', FpsakApiKeys.FEATURE_TOGGLE)
+
   .build();
 
 const reducerName = 'dataContext';
