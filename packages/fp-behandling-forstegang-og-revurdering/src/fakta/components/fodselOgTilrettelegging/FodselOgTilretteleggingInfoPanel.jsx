@@ -14,7 +14,7 @@ import FodselOgTilretteleggingFaktaForm from './FodselOgTilretteleggingFaktaForm
  */
 // TODO: Må tilpasses med riktig aksjonspunkt og ap.tekst når backend er klar
 
-const fodselOgPermAksjonspunkter = ['ap'];
+const fodselTilretteleggingAksjonspunkt = ['ap'];
 
 export const FodselOgTilretteleggingInfoPanelImpl = ({
   intl,
@@ -51,6 +51,6 @@ FodselOgTilretteleggingInfoPanelImpl.propTypes = {
 
 const ConnectedComponent = injectIntl(FodselOgTilretteleggingInfoPanelImpl);
 
-const FodselOgTilretteleggingInfoPanel = withDefaultToggling(faktaPanelCodes.FODSELTILRETTELEGGING, fodselOgPermAksjonspunkter)(ConnectedComponent);
+const FodselOgTilretteleggingInfoPanel = withDefaultToggling(faktaPanelCodes.FODSELTILRETTELEGGING, fodselTilretteleggingAksjonspunkt)(ConnectedComponent);
 
 export default (FodselOgTilretteleggingInfoPanel);
