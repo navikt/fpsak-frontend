@@ -33,7 +33,7 @@ class RequestApi {
       if (rel) {
         const link = links.find(l => l.rel === rel);
         if (link) {
-          runner.injectLink(link.href, link.type);
+          runner.injectLink(rel, link.href, link.type);
         }
       }
     });

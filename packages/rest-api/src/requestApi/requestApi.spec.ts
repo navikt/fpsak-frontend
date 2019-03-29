@@ -69,4 +69,24 @@ describe('RequestApi', () => {
 
     expect(result.payload).to.eql('data');
   });
+
+  it('skal kunnne injecte url når rel er satt opp for endepunkt', () => {
+    const rel = 'behandling-rel';
+    const requestConfig = new RequestConfig('BEHANDLING').withRel(rel);
+
+    const api = new RequestApi(httpClientGeneralMock, contextPath, [requestConfig]);
+
+    const links = [{
+      href: '/behandling',
+      rel,
+      type: 'GET',
+    }];
+    api.injectPaths(links);
+
+    const newConfig = api.getRequestRunner(requestConfig.name).getConfig();
+    expect(newConfig.name).to.eql('BEHANDLING');
+    expect(newConfig.path).to.eql('/behandling');
+    expect(newConfig.restMethod).to.eql('GET');
+    expect(newConfig.rel).to.eql('behandling-rel');
+  });
 });
