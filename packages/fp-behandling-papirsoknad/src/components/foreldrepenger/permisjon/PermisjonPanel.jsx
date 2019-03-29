@@ -129,7 +129,10 @@ const permisjonErrors = (values, soknadData) => {
     const oppholdPerioderValues = values ? values[oppholdPeriodeFieldArrayName] : null;
     errors[oppholdPeriodeFieldArrayName] = PermisjonOppholdPanel.validate(oppholdPerioderValues, isEndringForeldrepenger);
   }
+  return errors;
+};
 
+const overLappingError = (values) => {
   if (values) {
     const allOverlappingErrors = [];
     const permisjonPeriodeValues = values.fulltUttak ? values[permisjonPeriodeFieldArrayName] : [];
@@ -137,15 +140,15 @@ const permisjonErrors = (values, soknadData) => {
     const graderingperiodeValues = values.skalGradere ? values[graderingPeriodeFieldArrayName] : [];
     const oppholdPerioderValues = values.skalHaOpphold ? values[oppholdPeriodeFieldArrayName] : [];
     const overforingsperiodeValue = values.skalOvertaKvote ? values.overforingsperiode : {};
+    const mappedOveforingsPeriodeValue = overforingsperiodeValue ? { periodeFom: overforingsperiodeValue.fomDato, periodeTom: overforingsperiodeValue.tomDato } : {};
     const errorArrayRaw = allOverlappingErrors.concat(permisjonPeriodeValues, utsettelseperiodeValues, graderingperiodeValues, oppholdPerioderValues);
-    allOverlappingErrors.push[overforingsperiodeValue];
+    errorArrayRaw.push(mappedOveforingsPeriodeValue);
     const errorArray = errorArrayRaw.filter(value => Object.keys(value).length !== 0);
-    if (errorArray.length > 0) {
-      errors[permisjonPeriodeFieldArrayName] = PermisjonPanel.validateXrossPeriodTypes(errorArray);
+    if (errorArray.length > 0 && PermisjonPanel.validateXrossPeriodTypes(errorArray)) {
+      return true;
     }
   }
-
-  return errors;
+  return false;
 };
 
 
@@ -165,6 +168,13 @@ PermisjonPanel.validate = (values, soknadData) => {
   }
 
   const permisjonValues = values[TIDSROM_PERMISJON_FORM_NAME_PREFIX] || null;
+  if (overLappingError(permisjonValues)) {
+    errors = {
+      _error: {
+        permisjonsError: 'ValidationMessage.DateRangesOverlappingPeriodTypes',
+      },
+    };
+  }
   errors[TIDSROM_PERMISJON_FORM_NAME_PREFIX] = permisjonErrors(permisjonValues, soknadData);
   return errors;
 };
@@ -177,10 +187,10 @@ PermisjonPanel.validateXrossPeriodTypes = (values) => {
   if (values.every(PermisjonPanel.checkForFomTom)) {
     const overlapError = dateRangesNotOverlappingCrossTypes(values.map(({ periodeFom, periodeTom }) => [periodeFom, periodeTom]));
     if (overlapError) {
-      return { _error: overlapError };
+     return true;
     }
   }
-  return errors;
+  return false;
 };
 
 PermisjonPanel.transformValues = (values) => {
