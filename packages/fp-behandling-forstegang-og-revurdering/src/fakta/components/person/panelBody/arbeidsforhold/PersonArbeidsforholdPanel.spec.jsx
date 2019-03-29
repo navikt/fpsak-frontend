@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
+import aktivtArbeidsforholdHandling from '@fpsak-frontend/kodeverk/src/aktivtArbeidsforholdHandling';
 import PersonArbeidsforholdTable from './PersonArbeidsforholdTable/PersonArbeidsforholdTable';
 import PersonArbeidsforholdDetailForm from './PersonArbeidsforholdDetailForm/PersonArbeidsforholdDetailForm';
 import PersonArbeidsforholdPanel, { PersonArbeidsforholdPanelImpl, sortArbeidsforhold, erDetTillattMedFortsettingAvAktivtArbeidsforholdUtenIM }
@@ -26,6 +27,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
     erNyttArbeidsforhold: undefined,
     erstatterArbeidsforholdId: undefined,
     tilVurdering: true,
+    inntektIkkeMedTilBeregningsgrunnlaget: false,
   };
   const fagsystemer = [{
     kode: 'AA',
@@ -200,7 +202,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
     const editedArbeidsforhold = {
       ...newArbeidsforhold,
       brukUendretArbeidsforhold: false,
-      aktivtArbeidsforholdFortsettBehandlingUtenIM: false,
+      aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.AVSLA_YTELSE,
       overstyrtTom: undefined,
     };
 
@@ -219,7 +221,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       brukArbeidsforholdet: false,
       erEndret: true,
       brukUendretArbeidsforhold: false,
-      aktivtArbeidsforholdFortsettBehandlingUtenIM: false,
+      aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.AVSLA_YTELSE,
       fortsettBehandlingUtenInntektsmelding: false,
       brukMedJustertPeriode: false,
       overstyrtTom: undefined,
@@ -260,7 +262,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       ...newArbeidsforhold,
       erNyttArbeidsforhold: true,
       brukUendretArbeidsforhold: true,
-      aktivtArbeidsforholdFortsettBehandlingUtenIM: true,
+      aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.FORTSETT_BEHANDLING,
       overstyrtTom: undefined,
     };
     wrapper.setState({ selectedArbeidsforhold: editedArbeidsforhold });
@@ -285,7 +287,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       erEndret: true,
       fomDato: undefined,
       brukUendretArbeidsforhold: true,
-      aktivtArbeidsforholdFortsettBehandlingUtenIM: true,
+      aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.FORTSETT_BEHANDLING,
       overstyrtTom: undefined,
       brukArbeidsforholdet: true,
       brukMedJustertPeriode: false,
@@ -348,14 +350,14 @@ describe('<PersonArbeidsforholdPanel>', () => {
         ...newArbeidsforhold,
         originalFomDato: '2018-01-01',
         replaceOptions: [oldArbeidsforhold],
-        aktivtArbeidsforholdFortsettBehandlingUtenIM: true,
+        aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.FORTSETT_BEHANDLING,
         brukUendretArbeidsforhold: true,
         overstyrtTom: undefined,
       }, {
         ...oldArbeidsforhold,
         originalFomDato: '2018-01-01',
         replaceOptions: [],
-        aktivtArbeidsforholdFortsettBehandlingUtenIM: true,
+        aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.FORTSETT_BEHANDLING,
         brukUendretArbeidsforhold: true,
         overstyrtTom: undefined,
       }],
@@ -462,7 +464,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
     const editedArbeidsforhold = {
       ...arbeidsforhold,
       brukUendretArbeidsforhold: false,
-      aktivtArbeidsforholdFortsettBehandlingUtenIM: false,
+      aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.AVSLA_YTELSE,
       overstyrtTom: undefined,
     };
 
@@ -480,7 +482,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       erEndret: true,
       brukArbeidsforholdet: false,
       brukUendretArbeidsforhold: false,
-      aktivtArbeidsforholdFortsettBehandlingUtenIM: false,
+      aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.AVSLA_YTELSE,
       fortsettBehandlingUtenInntektsmelding: false,
       brukMedJustertPeriode: false,
       overstyrtTom: undefined,
@@ -507,7 +509,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
     const editedArbeidsforhold = {
       ...arbeidsforhold,
       brukUendretArbeidsforhold: true,
-      aktivtArbeidsforholdFortsettBehandlingUtenIM: true,
+      aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.FORTSETT_BEHANDLING,
       overstyrtTom: undefined,
     };
 
@@ -524,7 +526,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       ...arbeidsforhold,
       erEndret: true,
       brukUendretArbeidsforhold: true,
-      aktivtArbeidsforholdFortsettBehandlingUtenIM: true,
+      aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.FORTSETT_BEHANDLING,
       fortsettBehandlingUtenInntektsmelding: true,
       brukMedJustertPeriode: false,
       overstyrtTom: undefined,
@@ -551,7 +553,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
     const editedArbeidsforhold = {
       ...arbeidsforhold,
       brukUendretArbeidsforhold: true,
-      aktivtArbeidsforholdFortsettBehandlingUtenIM: false,
+      aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.AVSLA_YTELSE,
       overstyrtTom: undefined,
     };
 
@@ -568,7 +570,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       ...arbeidsforhold,
       erEndret: true,
       brukUendretArbeidsforhold: true,
-      aktivtArbeidsforholdFortsettBehandlingUtenIM: false,
+      aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.AVSLA_YTELSE,
       fortsettBehandlingUtenInntektsmelding: false,
       brukMedJustertPeriode: false,
       overstyrtTom: undefined,
@@ -595,7 +597,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
     const editedArbeidsforhold = {
       ...arbeidsforhold,
       brukUendretArbeidsforhold: true,
-      aktivtArbeidsforholdFortsettBehandlingUtenIM: true,
+      aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.FORTSETT_BEHANDLING,
       overstyrtTom: '2019-03-06',
     };
 
@@ -612,7 +614,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       ...arbeidsforhold,
       erEndret: true,
       brukUendretArbeidsforhold: true,
-      aktivtArbeidsforholdFortsettBehandlingUtenIM: true,
+      aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.FORTSETT_BEHANDLING,
       fortsettBehandlingUtenInntektsmelding: true,
       brukMedJustertPeriode: false,
       overstyrtTom: '2019-03-06',

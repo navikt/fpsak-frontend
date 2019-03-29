@@ -48,6 +48,8 @@ export const arbeidsforholdPropType = PropTypes.shape({
   }),
   overstyrtTom: PropTypes.string,
   lagtTilAvSaksbehandler: PropTypes.bool,
+  inntektIkkeMedTilBeregningsgrunnlaget: PropTypes.bool,
+  skjaeringstidspunkt: PropTypes.string,
 });
 
 export default arbeidsforholdPropType;
