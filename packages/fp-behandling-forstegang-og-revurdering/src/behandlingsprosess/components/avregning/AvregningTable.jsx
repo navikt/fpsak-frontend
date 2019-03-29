@@ -81,8 +81,12 @@ const getResultatRadene = (ingenPerioderMedAvvik, resultatPerFagområde, resulta
   return resultatPerFagområde.length > 1 ? resultatOgMotregningRader.filter(resultat => resultat.feltnavn !== avregningCodes.INNTREKKNESTEMÅNED) : [];
 };
 
+const avvikBruker = (ingenPerioderMedAvvik, mottakerTypeKode) => (!!(ingenPerioderMedAvvik && mottakerTypeKode === mottakerTyper.BRUKER));
+const getPeriodeFom = (periodeFom, nesteUtbPeriodeFom) => (periodeFom || nesteUtbPeriodeFom);
 const getPeriod = (ingenPerioderMedAvvik, periodeFom, mottaker) => getRangeOfMonths(
-  ingenPerioderMedAvvik && mottaker.mottakerType.kode === mottakerTyper.BRUKER ? moment(mottaker.nestUtbPeriodeTom).subtract(1, 'months') : periodeFom,
+  avvikBruker(ingenPerioderMedAvvik, mottaker.mottakerType.kode)
+    ? moment(mottaker.nestUtbPeriodeTom).subtract(1, 'months')
+    : getPeriodeFom(periodeFom, mottaker.nesteUtbPeriodeFom),
   mottaker.nestUtbPeriodeTom,
 );
 
