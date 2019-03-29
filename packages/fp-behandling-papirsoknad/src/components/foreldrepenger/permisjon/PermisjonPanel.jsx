@@ -140,9 +140,12 @@ const overLappingError = (values) => {
     const graderingperiodeValues = values.skalGradere ? values[graderingPeriodeFieldArrayName] : [];
     const oppholdPerioderValues = values.skalHaOpphold ? values[oppholdPeriodeFieldArrayName] : [];
     const overforingsperiodeValue = values.skalOvertaKvote ? values.overforingsperiode : {};
-    const mappedOveforingsPeriodeValue = overforingsperiodeValue ? { periodeFom: overforingsperiodeValue.fomDato, periodeTom: overforingsperiodeValue.tomDato } : {};
+    const mappedOveforingsPeriodeValue = Object.keys(overforingsperiodeValue).length ? {
+ periodeFom: overforingsperiodeValue.fomDato || null,
+     periodeTom: overforingsperiodeValue.tomDato || null,
+} : {};
     const errorArrayRaw = allOverlappingErrors.concat(permisjonPeriodeValues, utsettelseperiodeValues, graderingperiodeValues, oppholdPerioderValues);
-    errorArrayRaw.push(mappedOveforingsPeriodeValue);
+    if (Object.keys(overforingsperiodeValue).length) { errorArrayRaw.push(mappedOveforingsPeriodeValue); }
     const errorArray = errorArrayRaw.filter(value => Object.keys(value).length !== 0);
     if (errorArray.length > 0 && PermisjonPanel.validateXrossPeriodTypes(errorArray)) {
       return true;
