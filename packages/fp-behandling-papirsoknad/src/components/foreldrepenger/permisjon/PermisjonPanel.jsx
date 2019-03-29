@@ -119,12 +119,6 @@ const permisjonErrors = (values, soknadData) => {
   if (values.skalUtsette) {
     const utsettelseperiodeValues = values ? values[utsettelsePeriodeFieldArrayName] : null;
     errors[utsettelsePeriodeFieldArrayName] = PermisjonUtsettelsePanel.validate(utsettelseperiodeValues, isEndringForeldrepenger);
-
-    if (values.permisjonsPerioder) {
-      const uttaksPerioder = values[permisjonPeriodeFieldArrayName];
-      const combinedUttakAndUtsettelseValues = utsettelseperiodeValues ? utsettelseperiodeValues.concat(uttaksPerioder) : [];
-      errors[permisjonPeriodeFieldArrayName] = PermisjonPanel.validateXrossPeriodTypes(combinedUttakAndUtsettelseValues);
-    }
   }
 
   if (values.skalGradere) {
@@ -134,6 +128,21 @@ const permisjonErrors = (values, soknadData) => {
   if (values.skalHaOpphold) {
     const oppholdPerioderValues = values ? values[oppholdPeriodeFieldArrayName] : null;
     errors[oppholdPeriodeFieldArrayName] = PermisjonOppholdPanel.validate(oppholdPerioderValues, isEndringForeldrepenger);
+  }
+
+  if (values) {
+    const allOverlappingErrors = [];
+    const permisjonPeriodeValues = values.fulltUttak ? values[permisjonPeriodeFieldArrayName] : [];
+    const utsettelseperiodeValues = values.skalUtsette ? values[utsettelsePeriodeFieldArrayName] : [];
+    const graderingperiodeValues = values.skalGradere ? values[graderingPeriodeFieldArrayName] : [];
+    const oppholdPerioderValues = values.skalHaOpphold ? values[oppholdPeriodeFieldArrayName] : [];
+    const overforingsperiodeValue = values.skalOvertaKvote ? values.overforingsperiode : {};
+    const errorArrayRaw = allOverlappingErrors.concat(permisjonPeriodeValues, utsettelseperiodeValues, graderingperiodeValues, oppholdPerioderValues);
+    allOverlappingErrors.push[overforingsperiodeValue];
+    const errorArray = errorArrayRaw.filter(value => Object.keys(value).length !== 0);
+    if (errorArray.length > 0) {
+      errors[permisjonPeriodeFieldArrayName] = PermisjonPanel.validateXrossPeriodTypes(errorArray);
+    }
   }
 
   return errors;
@@ -161,7 +170,7 @@ PermisjonPanel.validate = (values, soknadData) => {
 };
 
 // Den her checken trengs för att ikke validerings skall slå till för tidligt
-PermisjonPanel.checkForFomTom = val => ('periodeTom' in val && 'periodeFom' in val);
+PermisjonPanel.checkForFomTom = val => ('periodeTom' in val && val.periodeTom !== '' && 'periodeFom' in val && val.periodeFom !== '');
 
 PermisjonPanel.validateXrossPeriodTypes = (values) => {
   const errors = {};
