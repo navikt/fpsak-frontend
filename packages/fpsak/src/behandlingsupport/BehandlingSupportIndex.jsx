@@ -57,7 +57,7 @@ export const BehandlingSupportIndex = ({
             isActive={supportPanel === activeSupportPanel}
             supportPanelLocation={getSupportPanelLocation(supportPanel)}
           />
-          ))}
+        ))}
       </LinkRow>
     </div>
     {renderSupportPanel(activeSupportPanel)}

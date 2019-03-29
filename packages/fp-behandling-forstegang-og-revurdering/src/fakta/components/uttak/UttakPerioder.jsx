@@ -59,39 +59,61 @@ const overlappingDates = (inntektsmelding, innmldPeriode, soknadsPeriode) => {
   return (søknadFomBetween && søknadTomBetween) || inntekstmeldingFomBetween || inntekstmeldingTomBetween;
 };
 
-const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => inntektsmeldinger.map((inntektsmelding) => {
-  const { graderingPerioder, utsettelsePerioder } = inntektsmelding;
-  const gjeldeneGraderingPerioder = graderingPerioder.filter(graderingPeriode => overlappingDates(inntektsmelding, graderingPeriode, soknadsPeriode));
-  const gjeldeneUtsettelsePerioder = utsettelsePerioder.filter(utsettelsePeriode => overlappingDates(inntektsmelding, utsettelsePeriode, soknadsPeriode));
-  const inntektsmeldingInfoPerioder = gjeldeneGraderingPerioder.concat(gjeldeneUtsettelsePerioder);
+const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => {
+  const relevant = inntektsmeldinger.map((inntektsmelding) => {
+    const { graderingPerioder, utsettelsePerioder } = inntektsmelding;
+    const gjeldeneGraderingPerioder = graderingPerioder.filter(graderingPeriode => overlappingDates(inntektsmelding, graderingPeriode, soknadsPeriode));
+    const gjeldeneUtsettelsePerioder = utsettelsePerioder.filter(utsettelsePeriode => overlappingDates(inntektsmelding, utsettelsePeriode, soknadsPeriode));
+    const inntektsmeldingInfoPerioder = gjeldeneGraderingPerioder.concat(gjeldeneUtsettelsePerioder);
 
-  const isArbeidstaker = (soknadsPeriode.arbeidsgiver || {}).virksomhet;
-  const isAvvikPeriode = inntektsmeldingInfoPerioder.some(periode => periode.fom !== soknadsPeriode.fom || periode.tom !== soknadsPeriode.tom);
-  const isAvvikArbeidsprosent = gjeldeneGraderingPerioder
-    .some(graderingPeriode => parseFloat(graderingPeriode.arbeidsprosent).toFixed(2) !== parseFloat(soknadsPeriode.arbeidstidsprosent).toFixed(2));
-  const isAvvikUtsettelse = gjeldeneUtsettelsePerioder
-    .some(utsettelsePeriode => utsettelsePeriode.utsettelseArsak.kode !== soknadsPeriode.utsettelseÅrsak.kode);
+    const isArbeidstaker = (soknadsPeriode.arbeidsgiver || {}).virksomhet;
+    const isAvvikPeriode = inntektsmeldingInfoPerioder.some(periode => periode.fom !== soknadsPeriode.fom || periode.tom !== soknadsPeriode.tom);
+    const isAvvikArbeidsgiver = inntektsmelding.arbeidsgiverOrgnr !== (soknadsPeriode.arbeidsgiver || {}).identifikator;
+    const isAvvikArbeidsprosent = gjeldeneGraderingPerioder
+      .some(graderingPeriode => parseFloat(graderingPeriode.arbeidsprosent).toFixed(2) !== parseFloat(soknadsPeriode.arbeidstidsprosent).toFixed(2));
+    const isAvvikUtsettelse = gjeldeneUtsettelsePerioder
+      .some(utsettelsePeriode => utsettelsePeriode.utsettelseArsak.kode !== soknadsPeriode.utsettelseÅrsak.kode);
 
-  let isManglendeInntektsmelding = false;
-  if ((isArbeidstaker && gjeldeneGraderingPerioder.length === 0 && soknadsPeriode.arbeidstidsprosent !== null)
-  || (gjeldeneUtsettelsePerioder.length === 0 && soknadsPeriode.utsettelseÅrsak.kode !== '-')) {
-    isManglendeInntektsmelding = true;
+    const isManglendeSøktGraderingEllerUtsettelse = !!(isAvvikArbeidsgiver && !isAvvikPeriode);
+
+    let isManglendeInntektsmelding = false;
+    if ((isArbeidstaker && gjeldeneGraderingPerioder.length === 0 && soknadsPeriode.arbeidstidsprosent !== null)
+    || (gjeldeneUtsettelsePerioder.length === 0 && soknadsPeriode.utsettelseÅrsak.kode !== '-')) {
+      isManglendeInntektsmelding = true;
+    }
+
+    return {
+      ...inntektsmelding,
+      arbeidsProsentFraInntektsmelding: gjeldeneGraderingPerioder.reduce((acc, periode) => parseFloat(acc) + parseFloat(periode.arbeidsprosent, 10), 0),
+      graderingPerioder: isAvvikArbeidsprosent || isAvvikPeriode || isAvvikArbeidsgiver ? gjeldeneGraderingPerioder : [],
+      utsettelsePerioder: isAvvikUtsettelse || isAvvikPeriode || isAvvikArbeidsgiver ? gjeldeneUtsettelsePerioder : [],
+      isManglendeInntektsmelding,
+      isManglendeSøktGraderingEllerUtsettelse,
+      avvik: {
+        utsettelseÅrsak: isManglendeInntektsmelding && soknadsPeriode.utsettelseÅrsak.kode !== '-' ? soknadsPeriode.utsettelseÅrsak : false,
+        isAvvikArbeidsprosent,
+        isAvvikArbeidsgiver,
+        isAvvikUtsettelse,
+        isAvvikPeriode,
+      },
+    };
+  });
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  const gyldigeInntektsmeldinger = relevant
+    .filter(inntektsmelding => (!inntektsmelding.isManglendeInntektsmelding && !inntektsmelding.isManglendeSøktGraderingEllerUtsettelse)
+    || (!inntektsmelding.isManglendeInntektsmelding && inntektsmelding.isManglendeSøktGraderingEllerUtsettelse)
+    || (inntektsmelding.isManglendeInntektsmelding && !inntektsmelding.isManglendeSøktGraderingEllerUtsettelse));
+  if (gyldigeInntektsmeldinger.length) {
+    return gyldigeInntektsmeldinger;
   }
-
-  return {
-    ...inntektsmelding,
-    arbeidsProsentFraInntektsmelding: gjeldeneGraderingPerioder.reduce((acc, periode) => parseFloat(acc) + parseFloat(periode.arbeidsprosent, 10), 0),
-    graderingPerioder: isAvvikArbeidsprosent || isAvvikPeriode ? gjeldeneGraderingPerioder : [],
-    utsettelsePerioder: isAvvikUtsettelse || isAvvikPeriode ? gjeldeneUtsettelsePerioder : [],
-    isManglendeInntektsmelding,
-    avvik: {
-      utsettelseÅrsak: isManglendeInntektsmelding && soknadsPeriode.utsettelseÅrsak.kode !== '-' ? soknadsPeriode.utsettelseÅrsak : false,
-      isAvvikArbeidsprosent,
-      isAvvikUtsettelse,
-      isAvvikPeriode,
-    },
-  };
-});
+  return relevant;
+};
 
 const updateInntektsmeldingInfo = (inntektsmeldinger, inntektsmeldingInfo, updatedIndex, periode) => ([
   ...inntektsmeldingInfo.slice(0, updatedIndex),
