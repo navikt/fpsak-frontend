@@ -38,7 +38,7 @@ const isConfirmButtonDisabled = (foreldelsesresultatActivity, foreldeseSyncError
   || Object.entries(foreldeseSyncErrors).length !== 0
   || foreldelsesresultatActivity.some(periode => periode.begrunnelse === null || periode.foreldet === foreldelseCodes.MANUELL_BEHANDLING);
 
-const ForeldelsePanelImpl = ({
+export const ForeldelsePanelImpl = ({
   foreldelsesresultatActivity,
   behandlingFormPrefix,
   reduxFormChange: formChange,
