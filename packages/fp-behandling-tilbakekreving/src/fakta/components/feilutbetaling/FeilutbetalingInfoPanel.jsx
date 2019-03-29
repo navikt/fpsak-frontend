@@ -96,8 +96,7 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                       <Normaltekst className={styles.smallPaddingRight}>
                         {moment(feilutbetaling.totalPeriodeFom)
                           .format(DDMMYYYY_DATE_FORMAT)}
-                        {' '}
-                        -
+                        {' - '}
                         {moment(feilutbetaling.totalPeriodeTom)
                           .format(DDMMYYYY_DATE_FORMAT)}
                       </Normaltekst>

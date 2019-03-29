@@ -12,7 +12,7 @@ const getSubÅrsaker = (årsakNavn, årsaker) => {
   const årsak = årsaker.find(a => a.årsakKode === årsakNavn);
   return årsak && årsak.underÅrsaker.length > 0 ? årsak.underÅrsaker : null;
 };
-const FeilutbetalingPerioderForm = ({
+export const FeilutbetalingPerioderFormImpl = ({
   periode, årsak, elementId, årsaker, readOnly, resetFields,
 }) => {
   const subÅrsaker = getSubÅrsaker(årsak, årsaker);
@@ -54,11 +54,11 @@ const FeilutbetalingPerioderForm = ({
   );
 };
 
-FeilutbetalingPerioderForm.defaultProps = {
+FeilutbetalingPerioderFormImpl.defaultProps = {
   årsak: null,
 };
 
-FeilutbetalingPerioderForm.propTypes = {
+FeilutbetalingPerioderFormImpl.propTypes = {
   periode: PropTypes.shape().isRequired,
   elementId: PropTypes.number.isRequired,
   årsak: PropTypes.string,
@@ -71,4 +71,5 @@ const mapStateToProps = (state, initialProps) => ({
   årsak: behandlingFormValueSelector(initialProps.formName)(state, `perioder.${initialProps.elementId}.årsak`),
 });
 
-export default connect(mapStateToProps)(FeilutbetalingPerioderForm);
+const FeilutbetalingPerioderForm = connect(mapStateToProps)(FeilutbetalingPerioderFormImpl);
+export default FeilutbetalingPerioderForm;
