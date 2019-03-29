@@ -33,7 +33,7 @@ describe('<MedlemskapInfoPanel>', () => {
     expect(panel.prop('readOnly')).is.true;
   });
 
-  it('skal kun vise form for startdato for foreldrepengerperioden når en har aksjonspunktet for dette', () => {
+  it('skal vise form for startdato for foreldrepengerperioden når en har aksjonspunktet for dette', () => {
     const avklarStartdatoAksjonspunkt = {
       id: 1,
       definisjon: {
@@ -97,7 +97,7 @@ describe('<MedlemskapInfoPanel>', () => {
     expect(wrapper.find(OppholdInntektOgPerioderForm)).has.length(1);
   });
 
-  it('skal ikke vise panel for avklaring av startdato for foreldrepengerperioden når aksjonspunktet ikke finnes', () => {
+  it('skal vise panel for avklaring av startdato for foreldrepengerperioden, for å tilate manuell korrigering selvom aksjonspunktet ikke finnes', () => {
     const wrapper = shallowWithIntl(<MedlemskapInfoPanelImpl
       intl={intlMock}
       aksjonspunkter={[]}
@@ -109,7 +109,7 @@ describe('<MedlemskapInfoPanel>', () => {
       submitCallback={sinon.spy()}
     />);
 
-    expect(wrapper.find(StartdatoForForeldrepengerperiodenForm)).has.length(0);
+    expect(wrapper.find(StartdatoForForeldrepengerperiodenForm)).has.length(1);
     expect(wrapper.find(OppholdInntektOgPerioderForm)).has.length(1);
   });
 });

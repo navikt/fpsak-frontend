@@ -24,8 +24,7 @@ const parseFaktaParam = (openInfoPanels = '') => openInfoPanels.split(',').filte
 const paramsAreEqual = (a = [], b = []) => ((a.length === b.length) && a.every((param, index) => param === b[index]));
 
 
-const uttakOverstyringAp = ['6013', '6070'];
-const manueltMarkereUtlandsakAp = '6068';
+const overstyringAp = ['6013', '6045', '6068', '6070'];
 
 /**
  * FaktaIndex
@@ -72,7 +71,7 @@ export class FaktaIndex extends Component {
 
     // todo if 6070 and revurdering use resolveFaktaOverstyrAksjonspunkter else use resolveFaktaAksjonspunkter
 
-    if (model && (uttakOverstyringAp.includes(model[0].kode) || model[0].kode === manueltMarkereUtlandsakAp)) {
+    if (model && overstyringAp.includes(model[0].kode)) {
       const params = {
         ...behandlingIdentifier.toJson(),
         behandlingVersjon,
