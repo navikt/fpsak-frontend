@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT, calcDays } from '@fpsak-frontend/utils';
+import { ISO_DATE_FORMAT, calcDays } from '@fpsak-frontend/utils';
 import {
   FlexContainer, FlexRow, FlexColumn, Image,
 } from '@fpsak-frontend/shared-components';
@@ -19,22 +19,6 @@ import UttakPeriodeInnhold from './UttakPeriodeInnhold';
 import styles from './uttakPeriode.less';
 
 const classNames = classnames.bind(styles);
-
-const renderFørsteUttaksdato = førsteUttaksdato => (
-  <div className={styles.divider}>
-    Første uttaksdato:
-    {' '}
-    {moment(førsteUttaksdato, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT)}
-  </div>
-);
-
-const renderEndringsdato = endringsdato => (
-  <div className={styles.divider}>
-    Endringsdato:
-    {' '}
-    {moment(endringsdato, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT)}
-  </div>
-);
 
 const renderTomPeriode = () => (
   <div className={styles.periodeIconWrapper}>

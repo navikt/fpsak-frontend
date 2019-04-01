@@ -70,7 +70,7 @@ const warningsUttakForm = (values) => {
   if (moment(nyStartDato).isBefore(endringsdato) && moment(nyStartDato).isAfter(førsteUttaksdato)) {
     warnings.perioder = {
       _warning: <FormattedMessage
-        id="UttakInfoPanel.blabla"
+        id="UttakInfoPanel.PeriodeMellomFørsteuttaksdatoOgEndringsdato"
         values={{ endringsdato: dateFormat(endringsdato), førsteuttaksdato: dateFormat(førsteUttaksdato) }}
       />,
     };
@@ -82,9 +82,9 @@ const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOS
   const errors = {};
 
   if (sjekkOmfaktaOmUttakAksjonspunkt(aksjonspunkter) || values.manuellOverstyring) {
-    const originalStartDato = (originalPerioder[0] || []).fom;
+    // const originalStartDato = (originalPerioder[0] || []).fom;
     const nyStartDato = (values.perioder[0] || []).fom;
-    const { førsteUttaksdato, endringsdato } = values;
+    const { førsteUttaksdato } = values;
 
     if (values.perioder.length === 0) {
       errors.perioder = {
@@ -108,7 +108,7 @@ const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOS
         }
       });
       // todo, denne skal bort
-      if (sjekkEndretFørsteUttaksdato(originalStartDato, nyStartDato, førsteUttaksdato, endringsdato)) {
+      if (sjekkEndretFørsteUttaksdato(nyStartDato, førsteUttaksdato)) {
         errors.perioder = {
           _error: <FormattedMessage
             id="UttakInfoPanel.periodeFørFørsteuttaksdato"

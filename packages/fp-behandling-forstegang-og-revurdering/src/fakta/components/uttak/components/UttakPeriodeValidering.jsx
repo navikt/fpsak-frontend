@@ -15,4 +15,4 @@ export const sjekkOverlappendePerioder = (index, nestePeriode, forrigePeriode) =
   && moment(nestePeriode.fom) <= moment(forrigePeriode.tom);
 
 
-export const sjekkEndretFørsteUttaksdato = (originalStartDato, nyStartDato, førsteUttaksdato, endringsdato) => moment(nyStartDato).isBefore(moment(førsteUttaksdato));
+export const sjekkEndretFørsteUttaksdato = (nyStartDato, førsteUttaksdato) => moment(nyStartDato).isBefore(moment(førsteUttaksdato));
