@@ -13,7 +13,7 @@ describe('<BubbleText>', () => {
       bodyText={bodyText}
       cutOffLength={cutOffLength}
     />);
-    expect(wrapper.find('div').at(1).text()).is.eql('My body...');
+    expect(wrapper.find('div').text()).is.eql('My body...');
   });
 
   it('skal vise chevron ned om teksten er cutoff', () => {
@@ -48,6 +48,6 @@ describe('<BubbleText>', () => {
       cutOffLength={cutOffLength}
     />);
 
-    expect(wrapper.find('div').at(1).text()).is.eql('My bodytekst is the only thing tha keeps me awa...');
+    expect(wrapper.find('div').text()).is.eql('My bodytekst is the only thing tha keeps me awa...');
   });
 });

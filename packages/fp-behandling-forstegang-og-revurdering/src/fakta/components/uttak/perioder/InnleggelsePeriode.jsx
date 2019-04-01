@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FieldArray } from 'redux-form';
 import { Undertekst } from 'nav-frontend-typografi';
-import { Column } from 'nav-frontend-grid';
 import { FormattedMessage } from 'react-intl';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
@@ -111,29 +110,26 @@ export const InnleggelsePeriode = ({
           </RadioGroupField>
           {resultat === uttakPeriodeVurdering.PERIODE_OK && !readOnly && (
             <div className={styles.addPeriodeInnleggelse}>
-              <Column>
-                <ArrowBox>
-                  <FieldArray
-                    name="dokumentertePerioder"
-                    component={DokumentertePerioderPeriodePicker}
-                    props={{ fraDato, tilDato, readOnly }}
-                  />
-                </ArrowBox>
-              </Column>
+              <ArrowBox>
+                <FieldArray
+                  name="dokumentertePerioder"
+                  component={DokumentertePerioderPeriodePicker}
+                  props={{ fraDato, tilDato, readOnly }}
+                />
+              </ArrowBox>
             </div>
           )}
-        </FlexColumn>
-      </FlexRow>
-      <FlexRow>
-        <FlexColumn>
-          <TextAreaField
-            name="begrunnelse"
-            label={{ id: 'UttakInfoPanel.BegrunnEndringene' }}
-            readOnly={readOnly}
-            validate={[required, minLength3, maxLength4000, hasValidText]}
-            textareaClass={styles.textAreaStyle}
-            maxLength={4000}
-          />
+          <VerticalSpacer twentyPx />
+          <div className={styles.textAreaStyle}>
+            <TextAreaField
+              name="begrunnelse"
+              label={{ id: 'UttakInfoPanel.BegrunnEndringene' }}
+              readOnly={readOnly}
+              validate={[required, minLength3, maxLength4000, hasValidText]}
+              textareaClass={styles.textAreaStyle}
+              maxLength={4000}
+            />
+          </div>
         </FlexColumn>
 
       </FlexRow>

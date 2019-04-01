@@ -25,9 +25,6 @@ describe('<FerieOgArbeidsPeriode>', () => {
       readOnly={false}
       behandlingStatusKode={behandlingStatusKode}
       arbeidsgiver={arbeidsgiver}
-      utsettelseArsak={{
-        kode: 'ARBEID',
-      }}
       skalViseResultat
       oppholdArsak={{}}
       inntektsmeldinger={[{

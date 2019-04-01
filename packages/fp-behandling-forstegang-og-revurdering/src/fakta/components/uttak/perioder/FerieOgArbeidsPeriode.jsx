@@ -22,8 +22,6 @@ import styles from './periodeTyper.less';
 const minLength3 = minLength(3);
 const maxLength4000 = maxLength(4000);
 
-const ElementWrapper = ({ children }) => children;
-
 export const FerieOgArbeidsPeriode = ({
   resultat,
   id,
@@ -56,7 +54,7 @@ export const FerieOgArbeidsPeriode = ({
     <div>
       {skalViseResultat
     && (
-    <ElementWrapper>
+    <>
       <FlexContainer>
         <FlexRow wrap>
           <FlexColumn className={styles.fieldColumn}>
@@ -127,7 +125,7 @@ export const FerieOgArbeidsPeriode = ({
         id={id}
         readOnly={readOnly}
       />
-    </ElementWrapper>
+    </>
     )
 }
     </div>
