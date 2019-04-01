@@ -4,20 +4,24 @@ import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { Row, Column } from 'nav-frontend-grid';
-import { formPropTypes, FieldArray } from 'redux-form';
+import { Column, Row } from 'nav-frontend-grid';
+import { FieldArray, formPropTypes } from 'redux-form';
 
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import {
-  getSoknad, getInntektsmeldinger, getAksjonspunkter, getBehandlingIsOnHold, hasReadOnlyBehandling,
+  getAksjonspunkter,
+  getBehandlingIsOnHold,
+  getInntektsmeldinger,
+  getBehandlingStartDatoForPermisjon,
+  hasReadOnlyBehandling,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
-  required, hasValidDate, minLength, maxLength, hasValidText,
+ hasValidDate, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
-import { TextAreaField, DatepickerField } from '@fpsak-frontend/form';
+import { DatepickerField, TextAreaField } from '@fpsak-frontend/form';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -121,17 +125,16 @@ StartdatoForForeldrepengerperiodenForm.propTypes = {
 };
 
 const buildInitialValues = createSelector(
-  [getAksjonspunkter, getSoknad, getInntektsmeldinger],
-  (aksjonspunkter, soknad, inntektsmeldinger) => {
+  [getAksjonspunkter, getBehandlingStartDatoForPermisjon, getInntektsmeldinger],
+  (aksjonspunkter, startdatoForPermisjon, inntektsmeldinger) => {
   const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
   const overstyringAp = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO);
-  const initialValues = {
-    opprinneligDato: soknad.oppgittFordeling.startDatoForPermisjon,
-    startdatoFraSoknad: soknad.oppgittFordeling.startDatoForPermisjon,
+    return {
+    opprinneligDato: startdatoForPermisjon,
+    startdatoFraSoknad: startdatoForPermisjon,
     arbeidsgivere: inntektsmeldinger,
     begrunnelse: (overstyringAp && overstyringAp.begrunnelse) || (aksjonspunkt && aksjonspunkt.begrunnelse),
   };
-  return initialValues;
   },
 );
 
@@ -145,12 +148,13 @@ const transformValues = (values, isOverstyring) => ({
 const mapStateToProps = (state, initialProps) => {
   const hasAksjonspunkt = initialProps.aksjonspunkt !== undefined;
   const hasOpenAksjonspunkt = hasAksjonspunkt && isAksjonspunktOpen(initialProps.aksjonspunkt.status.kode);
+  const isOverstyring = !hasAksjonspunkt || initialProps.aksjonspunkt.definisjon.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO;
   return {
     hasAksjonspunkt,
     hasOpenAksjonspunkt,
     overstyringDisabled: getBehandlingIsOnHold(state) || hasReadOnlyBehandling(state),
     initialValues: buildInitialValues(state),
-    onSubmit: values => initialProps.submitCallback([transformValues(values, !hasOpenAksjonspunkt)]),
+    onSubmit: values => initialProps.submitCallback([transformValues(values, isOverstyring)]),
   };
 };
 

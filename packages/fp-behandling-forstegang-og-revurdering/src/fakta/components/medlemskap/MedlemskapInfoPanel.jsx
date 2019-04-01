@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 
-import { getFeatureToggles } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getFeatureToggles, isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duck';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { featureToggle, faktaPanelCodes } from '@fpsak-frontend/fp-felles';
@@ -37,9 +37,11 @@ export const MedlemskapInfoPanelImpl = ({
   readOnly,
   submitCallback,
   skalBrukeNyeMedlemskap,
+  isForeldrepenger,
 }) => {
   const avklarStartdatoAksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
   const avklarStartdatoOverstyring = aksjonspunkter.find(ap => ap.definisjon.kode === OVERSTYR_AVKLAR_STARTDATO);
+  const oppholdInntektOgPeriodeAp = aksjonspunkter.filter(ap => !avklarStartdatoAp.includes(ap.definisjon.kode));
   return (
     <FaktaEkspandertpanel
       title={intl.formatMessage({ id: 'MedlemskapInfoPanel.Medlemskap' })}
@@ -49,13 +51,17 @@ export const MedlemskapInfoPanelImpl = ({
       faktaId={faktaPanelCodes.MEDLEMSKAPSVILKARET}
       readOnly={readOnly}
     >
-      <StartdatoForForeldrepengerperiodenForm
-        readOnly={readOnly}
-        aksjonspunkt={avklarStartdatoAksjonspunkt || avklarStartdatoOverstyring}
-        submitCallback={submitCallback}
-        submittable={submittable}
-        hasOpenMedlemskapAksjonspunkter={hasOpenAksjonspunkter}
-      />
+      { (avklarStartdatoAksjonspunkt || (isForeldrepenger && (oppholdInntektOgPeriodeAp.length === 0 || !hasOpenAksjonspunkter)))
+        && (
+        <StartdatoForForeldrepengerperiodenForm
+          readOnly={readOnly}
+          aksjonspunkt={avklarStartdatoAksjonspunkt || avklarStartdatoOverstyring}
+          submitCallback={submitCallback}
+          submittable={submittable}
+          hasOpenMedlemskapAksjonspunkter={hasOpenAksjonspunkter}
+        />
+        )
+      }
       { (skalBrukeNyeMedlemskap && (!avklarStartdatoAksjonspunkt || !isAksjonspunktOpen(avklarStartdatoAksjonspunkt.status.kode)))
         && (
         <OppholdInntektOgPerioderFormNew
@@ -93,14 +99,17 @@ MedlemskapInfoPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
   skalBrukeNyeMedlemskap: PropTypes.bool,
+  isForeldrepenger: PropTypes.bool,
 };
 
 MedlemskapInfoPanelImpl.defaultProps = {
   skalBrukeNyeMedlemskap: false,
+  isForeldrepenger: true,
 };
 
 const mapStateToProps = state => ({
   skalBrukeNyeMedlemskap: getFeatureToggles(state)[featureToggle.LØPENDE_MEDLESMKAP],
+  isForeldrepenger: isForeldrepengerFagsak(state),
 });
 
 const medlemAksjonspunkter = [AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, AVKLAR_OM_BRUKER_ER_BOSATT, AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
