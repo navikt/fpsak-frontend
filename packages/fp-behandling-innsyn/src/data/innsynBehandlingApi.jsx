@@ -13,26 +13,24 @@ export const InnsynBehandlingApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-/* /api */
-
-  /* /api/behandlinger */
-  .withAsyncPost('/api/behandlinger', InnsynBehandlingApiKeys.BEHANDLING)
-  .withPost('/api/behandlinger/endre-pa-vent', InnsynBehandlingApiKeys.UPDATE_ON_HOLD)
+  .withAsyncPost('/fpsak/api/behandlinger', InnsynBehandlingApiKeys.BEHANDLING, { linksToFetchAutomatically: ['innsyn', 'aksjonspunkter', 'vilkar'] })
+  .withPost('/fpsak/api/behandlinger/endre-pa-vent', InnsynBehandlingApiKeys.UPDATE_ON_HOLD)
 
   /* /api/behandling */
-  .withAsyncPost('/api/behandling/aksjonspunkt', InnsynBehandlingApiKeys.SAVE_AKSJONSPUNKT)
+  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', InnsynBehandlingApiKeys.SAVE_AKSJONSPUNKT,
+    { linksToFetchAutomatically: ['innsyn', 'aksjonspunkter', 'vilkar'] })
 
   /* /api/brev */
-  .withPostAndOpenBlob('/api/brev/forhandsvis', InnsynBehandlingApiKeys.PREVIEW_MESSAGE)
-  .withPost('/api/brev/bestill', InnsynBehandlingApiKeys.SUBMIT_MESSAGE)
+  .withPostAndOpenBlob('/fpsak/api/brev/forhandsvis', InnsynBehandlingApiKeys.PREVIEW_MESSAGE)
+  .withPost('/fpsak/api/brev/bestill', InnsynBehandlingApiKeys.SUBMIT_MESSAGE)
 
 /* /api/brev */
   .build();
 
+
 const reducerName = 'dataContextInnsynBehandling';
 
 export const reduxRestApi = new ReduxRestApiBuilder(endpoints, reducerName)
-  .withContextPath('fpsak')
   .withReduxEvents(new ReduxEvents()
     .withErrorActionCreator(errorHandler.getErrorActionCreator())
     .withPollingMessageActionCreator(setRequestPollingMessage))

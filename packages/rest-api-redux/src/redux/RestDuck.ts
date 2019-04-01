@@ -35,18 +35,21 @@ class RestDuck {
 
   reduxEvents: ReduxEvents;
 
+  resultKeyActionCreators: any;
+
   $$duck: {
     actionTypes?: any;
     actionCreators?: any;
     reducer?: any;
   };
 
-  constructor(requestRunner: RequestRunner, getApiContext: (state: any) => any, reduxEvents: ReduxEvents) {
+  constructor(requestRunner: RequestRunner, getApiContext: (state: any) => any, reduxEvents: ReduxEvents, resultKeyActionCreators) {
     this.requestRunner = requestRunner;
     this.name = requestRunner.getName();
     this.getApiContext = getApiContext;
     this.reduxEvents = reduxEvents;
     this.$$duck = {}; // for class internal use
+    this.resultKeyActionCreators = resultKeyActionCreators;
   }
 
   get actionTypes() {
@@ -58,7 +61,7 @@ class RestDuck {
 
   get actionCreators() {
     if (!this.$$duck.actionCreators) {
-      this.$$duck.actionCreators = createRequestActionCreators(this.requestRunner, this.actionTypes, this.reduxEvents);
+      this.$$duck.actionCreators = createRequestActionCreators(this.requestRunner, this.actionTypes, this.reduxEvents, this.resultKeyActionCreators);
     }
     return this.$$duck.actionCreators;
   }

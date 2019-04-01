@@ -6,11 +6,16 @@ import ReduxEvents from './ReduxEvents';
 import RestDuck from './RestDuck';
 
 class ReduxApiCreator {
-  ducks: RestDuck[]
+  ducks: RestDuck[] = []
 
   constructor(requestApi: RequestApi, getRestApiState: (state: any) => any, reduxEvents: ReduxEvents) {
     const endpointNames = requestApi.getEndpointNames();
-    this.ducks = endpointNames.map(endpointName => new RestDuck(requestApi.getRequestRunner(endpointName), getRestApiState, reduxEvents));
+    endpointNames.forEach((endpointName) => {
+      const requestRunner = requestApi.getRequestRunner(endpointName);
+      const { storeResultKey } = requestRunner.getConfig().config;
+      const resultKeyActionCreators = storeResultKey ? this.getEndpoint(storeResultKey).actionCreators : undefined;
+      this.ducks.push(new RestDuck(requestRunner, getRestApiState, reduxEvents, resultKeyActionCreators));
+    });
   }
 
   createReducer = (): any => {

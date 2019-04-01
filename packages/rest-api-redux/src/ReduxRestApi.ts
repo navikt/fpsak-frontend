@@ -8,8 +8,26 @@ import ReduxEvents from './redux/ReduxEvents';
 
 const getDataContext = (reducerName: string) => (state: any) => state.default[reducerName];
 
+const replaceWithConfigFromAnotherKey = (configs: RequestConfig[]) => configs.map((c) => {
+    if (!c.config.storeResultKey) {
+      return c;
+    }
+
+    const otherConfig = configs.find(c2 => c2.name === c.config.storeResultKey);
+    if (!otherConfig) {
+      throw Error(`Could not find config for key ${c.config.storeResultKey}`);
+    }
+
+    const newConfig = {
+      ...otherConfig.config,
+      storeResultKey: c.config.storeResultKey,
+    };
+    return new RequestConfig(c.name, c.path, newConfig).withRel(c.rel).withRestMethod(c.restMethod);
+  });
+
+
 class ReduxRestApi {
-  config: RequestConfig[];
+  configs: RequestConfig[];
 
   contextPath: string = '';
 
@@ -20,17 +38,17 @@ class ReduxRestApi {
   reduxApiCreator: ReduxApiCreator;
 
   constructor(config: RequestConfig[], reducerName: string, contextPath: string, reduxEvents: ReduxEvents) {
-    this.config = config;
+    this.configs = replaceWithConfigFromAnotherKey(config);
     this.contextPath = contextPath;
-    this.requestApi = createRequestApi(contextPath, config);
+    this.requestApi = createRequestApi(contextPath, this.configs);
     this.httpClientApi = this.requestApi.getHttpClientApi();
     this.reduxApiCreator = new ReduxApiCreator(this.requestApi, getDataContext(reducerName), reduxEvents);
   }
 
-  getEndpointApi = (): { [name: string]: EndpointOperations } => this.config.reduce((acc, c) => ({
-    ...acc,
-    [c.name]: new EndpointOperations(this.reduxApiCreator, this.contextPath, c),
-  }), {})
+  getEndpointApi = (): { [name: string]: EndpointOperations } => this.configs.reduce((acc, c) => ({
+      ...acc,
+      [c.name]: new EndpointOperations(this.reduxApiCreator, this.contextPath, c),
+    }), {})
 
   getDataReducer = () => this.reduxApiCreator.createReducer();
 

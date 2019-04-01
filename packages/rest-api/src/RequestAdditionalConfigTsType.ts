@@ -3,5 +3,7 @@
 export type RequestAdditionalConfig = Readonly<{
   maxPollingLimit?: number;
   fetchLinkDataAutomatically?: boolean;
+  linksToFetchAutomatically?: string[];
   addLinkDataToArray?: boolean;
+  storeResultKey?: string;
 }>

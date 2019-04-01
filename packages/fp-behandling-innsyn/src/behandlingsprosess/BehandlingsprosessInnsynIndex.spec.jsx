@@ -83,7 +83,7 @@ describe('<BehandlingsprosessInnsynIndex>', () => {
 
     expect(stub).to.have.property('callCount', 1);
     const { args } = stub.getCalls()[0];
-    expect(args).to.have.length(3);
+    expect(args).to.have.length(2);
     const models = args[1];
 
     expect(models).to.eql({
@@ -186,7 +186,7 @@ describe('<BehandlingsprosessInnsynIndex>', () => {
 
     expect(stub).to.have.property('callCount', 1);
     const { args } = stub.getCalls()[0];
-    expect(args).to.have.length(3);
+    expect(args).to.have.length(2);
     const models = args[1];
     expect(models).to.eql({
       behandlingId: 2,

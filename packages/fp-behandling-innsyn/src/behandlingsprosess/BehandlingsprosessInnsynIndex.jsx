@@ -132,7 +132,7 @@ export class BehandlingsprosessInnsynIndex extends Component {
       bekreftedeAksjonspunktDtoer: models,
     };
 
-    return resolveAksjonspunkter(behandlingIdentifier, params, true)
+    return resolveAksjonspunkter(behandlingIdentifier, params)
       .then(afterSubmit);
   }
 

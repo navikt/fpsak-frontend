@@ -36,8 +36,15 @@ const createSetDataActionCreator = actionCreators => (data: any, params: any, op
   return dispatch(actionCreators.copyDataFinished(data));
 };
 
-const createRequestThunk = (requestRunner, actionCreators, reduxEvents) => (params: any, options: Options = {}) => (dispatch: Dispatch) => {
+const createRequestThunk = (requestRunner, actionCreators, reduxEvents, resultKeyActionCreators) => (params: any,
+    options: Options = {}) => (dispatch: Dispatch) => {
   const notificationMapper = new NotificationMapper();
+
+  if (resultKeyActionCreators) {
+    notificationMapper.addRequestStartedEventHandler(() => dispatch(resultKeyActionCreators.requestStarted(params, options)));
+    notificationMapper.addRequestFinishedEventHandler(data => dispatch(resultKeyActionCreators.requestFinished(data)));
+    notificationMapper.addRequestErrorEventHandler(data => dispatch(resultKeyActionCreators.requestError(data)));
+  }
 
   notificationMapper.addRequestStartedEventHandler(() => dispatch(actionCreators.requestStarted(params, options)));
   notificationMapper.addRequestFinishedEventHandler(data => dispatch(actionCreators.requestFinished(data)));
@@ -64,12 +71,12 @@ const createRequestThunk = (requestRunner, actionCreators, reduxEvents) => (para
   return requestRunner.startProcess(params, notificationMapper);
 };
 
-const createRequestActionCreators = (requestRunner: RequestRunner, actionTypes: ActionTypes, reduxEvents: ReduxEvents) => {
+const createRequestActionCreators = (requestRunner: RequestRunner, actionTypes: ActionTypes, reduxEvents: ReduxEvents, resultKeyActionCreators) => {
   const actionCreators = getActionCreators(actionTypes);
 
   return {
     ...actionCreators,
-    execRequest: createRequestThunk(requestRunner, actionCreators, reduxEvents),
+    execRequest: createRequestThunk(requestRunner, actionCreators, reduxEvents, resultKeyActionCreators),
     execSetData: createSetDataActionCreator(actionCreators),
   };
 };

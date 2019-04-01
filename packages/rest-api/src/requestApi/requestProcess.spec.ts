@@ -54,6 +54,7 @@ describe('RequestProcess', () => {
     maxPollingLimit: undefined,
     fetchLinkDataAutomatically: true,
     addLinkDataToArray: false,
+    linksToFetchAutomatically: [],
   };
 
   it('skal hente data via get-kall', async () => {

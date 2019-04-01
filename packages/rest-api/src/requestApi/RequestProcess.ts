@@ -103,7 +103,9 @@ class RequestProcess {
   };
 
   execLinkRequests = async (responseData: {links: ResponseDataLink[]}) => {
+    const linksToFetch = this.config.linksToFetchAutomatically;
     const requestList = responseData.links
+      .filter(link => linksToFetch.length === 0 || linksToFetch.includes(link.rel))
       .map(link => () => this.execute(// eslint-disable-line no-use-before-define
         link.href, getRestMethod(this.httpClientApi, link.type), link.requestPayload,
       ).then((response: SuccessResponse) => Promise.resolve({ [link.rel]: response.data })));
