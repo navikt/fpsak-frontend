@@ -10,6 +10,7 @@ import getVedtakStatus from './vedtakStatusUtleder';
 
 const faktaUttakAp = [
   ac.AVKLAR_UTTAK,
+  ac.ANNEN_FORELDER_IKKE_RETT_OG_LØPENDE_VEDTAK,
   ac.AVKLAR_FØRSTE_UTTAKSDATO,
   ac.AVKLAR_ANNEN_FORELDER_RETT,
   ac.MANUELL_AVKLAR_FAKTA_UTTAK,

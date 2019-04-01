@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
-import { Row, Column } from 'nav-frontend-grid';
 import { behandlingFormValueSelector, behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import {
   PeriodpickerField, SelectField, CheckboxField, RadioGroupField, RadioOption, TextAreaField, DecimalField,
@@ -100,32 +99,29 @@ export const UttakNyPeriode = ({
 }) => {
   const numberOfDaysAndWeeks = calcDaysAndWeeks(nyPeriode.fom, nyPeriode.tom, ISO_DATE_FORMAT);
   return (
-    <div>
-      <Row>
-        <Column>
-          <div className={styles.periodeContainer}>
-            <div className={styles.periodeType}>
-              <div className={styles.headerWrapper}>
-                <Element><FormattedMessage id="UttakInfoPanel.NyPeriode" /></Element>
-              </div>
-            </div>
-            <div className={styles.periodeInnhold}>
-              <VerticalSpacer eightPx />
-              <FlexContainer fluid wrap>
-                <FlexRow wrap>
-                  <FlexColumn>
-                    <FlexRow>
-                      <FlexColumn>
-                        <PeriodpickerField
-                          names={['fom', 'tom']}
-                          label={{ id: 'UttakInfoPanel.Periode' }}
-                          validate={[required, hasValidDate]}
-                          disabledDays={{ before: moment(nyPeriodeDisabledDaysFom).toDate() }}
-                        />
-                      </FlexColumn>
-                      <FlexColumn className={styles.suffix}>
-                        <div id="antallDager">
-                          {nyPeriode.fom
+    <div className={styles.periodeContainer}>
+      <div className={styles.periodeType}>
+        <div className={styles.headerWrapper}>
+          <Element><FormattedMessage id="UttakInfoPanel.NyPeriode" /></Element>
+        </div>
+      </div>
+      <div className={styles.periodeInnhold}>
+        <VerticalSpacer eightPx />
+        <FlexContainer fluid wrap>
+          <FlexRow wrap>
+            <FlexColumn>
+              <FlexRow>
+                <FlexColumn>
+                  <PeriodpickerField
+                    names={['fom', 'tom']}
+                    label={{ id: 'UttakInfoPanel.Periode' }}
+                    validate={[required, hasValidDate]}
+                    disabledDays={{ before: moment(nyPeriodeDisabledDaysFom).toDate() }}
+                  />
+                </FlexColumn>
+                <FlexColumn className={styles.suffix}>
+                  <div id="antallDager">
+                    {nyPeriode.fom
                           && (
                           <FormattedMessage
                             id={numberOfDaysAndWeeks.id.toString()}
@@ -135,84 +131,84 @@ export const UttakNyPeriode = ({
                             }}
                           />
                           )}
-                        </div>
-                      </FlexColumn>
+                  </div>
+                </FlexColumn>
+              </FlexRow>
+              <FlexColumn>
+                <FlexRow wrap>
+                  <FlexColumn>
+                    <FlexRow>
+                      <SelectField
+                        label={{ id: 'UttakInfoPanel.StonadsKonto' }}
+                        bredde="m"
+                        name="periodeType"
+                        validate={nyPeriode.typeUttak !== 'utsettelse' ? [required] : []}
+                        selectValues={mapPeriodeTyper(periodeTyper)}
+                      />
                     </FlexRow>
+                  </FlexColumn>
+                  <FlexColumn className={styles.alignRightHorizontalBottom}>
+                    <CheckboxField
+                      name="flerbarnsdager"
+                      label={<FormattedMessage id="UttakInfoPanel.Flerbarnsdager" />}
+                    />
+                    <CheckboxField
+                      id="samtidigUttak_nyperiode"
+                      name="samtidigUttak"
+                      label={<FormattedMessage id="UttakInfoPanel.SamtidigUttak" />}
+                    />
+                    {nyPeriode.samtidigUttak && (
                     <FlexColumn>
-                      <FlexRow wrap>
-                        <FlexColumn>
-                          <FlexRow>
-                            <SelectField
-                              label={{ id: 'UttakInfoPanel.StonadsKonto' }}
-                              bredde="m"
-                              name="periodeType"
-                              validate={nyPeriode.typeUttak !== 'utsettelse' ? [required] : []}
-                              selectValues={mapPeriodeTyper(periodeTyper)}
-                            />
-                          </FlexRow>
-                        </FlexColumn>
-                        <FlexColumn className={styles.alignRightHorizontalBottom}>
-                          <CheckboxField
-                            name="flerbarnsdager"
-                            label={<FormattedMessage id="UttakInfoPanel.Flerbarnsdager" />}
-                          />
-                          <CheckboxField
-                            id="samtidigUttak_nyperiode"
-                            name="samtidigUttak"
-                            label={<FormattedMessage id="UttakInfoPanel.SamtidigUttak" />}
-                          />
-                          {nyPeriode.samtidigUttak && (
-                            <FlexColumn>
-                              <FlexRow>
-                                <FlexColumn>
-                                  <DecimalField
-                                    className={styles.fieldHorizontal}
-                                    name="samtidigUttaksprosent"
-                                    bredde="XS"
-                                    label={{ id: 'UttakInfoPanel.SamtidigUttakProsentandel' }}
-                                    validate={[required, maxValue100, hasValidDecimal]}
-                                    normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
-                                    inputClassName={styles.textAlignRight}
-                                  />
-                                </FlexColumn>
-                                <FlexColumn className={styles.suffixAligAuto}>%</FlexColumn>
-                              </FlexRow>
-                            </FlexColumn>
-                          )}
-                        </FlexColumn>
-                      </FlexRow>
-                    </FlexColumn>
-                    <FlexColumn>
-                      {periodeTypeTrengerArsak(sokerKjonn, nyPeriode.periodeType) && (
                       <FlexRow>
-                        <SelectField
-                          label={{ id: 'UttakInfoPanel.AngiArsakforOverforing' }}
-                          bredde="m"
-                          name="periodeOverforingArsak"
-                          selectValues={mapOverføringÅrsaker(overføringÅrsaker)}
-                          validate={[required]}
-                        />
+                        <FlexColumn>
+                          <DecimalField
+                            className={styles.fieldHorizontal}
+                            name="samtidigUttaksprosent"
+                            bredde="XS"
+                            label={{ id: 'UttakInfoPanel.SamtidigUttakProsentandel' }}
+                            validate={[required, maxValue100, hasValidDecimal]}
+                            normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                            inputClassName={styles.textAlignRight}
+                          />
+                        </FlexColumn>
+                        <FlexColumn className={styles.suffixAligAuto}>%</FlexColumn>
                       </FlexRow>
-                      )}
                     </FlexColumn>
+                          )}
                   </FlexColumn>
                 </FlexRow>
-                <FlexRow wrap className={styles.typeUttakStyle}>
-                  <FlexColumn>
-                    <div>
-                      <Undertekst><FormattedMessage id="UttakInfoPanel.TypeUttak" /></Undertekst>
-                      <VerticalSpacer eightPx />
-                    </div>
-                    <div>
-                      <RadioGroupField name="typeUttak" validate={[required]} direction="vertical">
-                        <RadioOption label={<FormattedMessage id="UttakInfoPanel.FulltUttak" />} value="fullt" />
-                        <RadioOption label={<FormattedMessage id="UttakInfoPanel.GradertUttak" />} value="gradert" />
-                        <RadioOption label={<FormattedMessage id="UttakInfoPanel.Utsettelse" />} value="utsettelse" />
-                      </RadioGroupField>
-                    </div>
-                  </FlexColumn>
-                  <FlexColumn>
-                    {nyPeriode.typeUttak !== null
+              </FlexColumn>
+              <FlexColumn>
+                {periodeTypeTrengerArsak(sokerKjonn, nyPeriode.periodeType) && (
+                <FlexRow>
+                  <SelectField
+                    label={{ id: 'UttakInfoPanel.AngiArsakforOverforing' }}
+                    bredde="m"
+                    name="periodeOverforingArsak"
+                    selectValues={mapOverføringÅrsaker(overføringÅrsaker)}
+                    validate={[required]}
+                  />
+                </FlexRow>
+                      )}
+              </FlexColumn>
+            </FlexColumn>
+          </FlexRow>
+          <FlexRow wrap className={styles.typeUttakStyle}>
+            <FlexColumn>
+              <div>
+                <Undertekst><FormattedMessage id="UttakInfoPanel.TypeUttak" /></Undertekst>
+                <VerticalSpacer eightPx />
+              </div>
+              <div>
+                <RadioGroupField name="typeUttak" validate={[required]} direction="vertical">
+                  <RadioOption label={<FormattedMessage id="UttakInfoPanel.FulltUttak" />} value="fullt" />
+                  <RadioOption label={<FormattedMessage id="UttakInfoPanel.GradertUttak" />} value="gradert" />
+                  <RadioOption label={<FormattedMessage id="UttakInfoPanel.Utsettelse" />} value="utsettelse" />
+                </RadioGroupField>
+              </div>
+            </FlexColumn>
+            <FlexColumn>
+              {nyPeriode.typeUttak !== null
                       && nyPeriode.typeUttak !== 'fullt'
                       && (
                       <ArrowBox
@@ -258,44 +254,39 @@ export const UttakNyPeriode = ({
                         )}
                       </ArrowBox>
                       )}
-                  </FlexColumn>
-                </FlexRow>
-                <FlexRow>
-                  <FlexColumn>
-                    <div className={styles.textAreaStyle}>
-                      <TextAreaField
-                        name="begrunnelse"
-                        label={{ id: 'UttakInfoPanel.BegrunnEndringene' }}
-                        validate={[required, minLength3, maxLength4000, hasValidText]}
-                        maxLength={4000}
-                      />
-                    </div>
-                  </FlexColumn>
-                </FlexRow>
-              </FlexContainer>
-              <div>
-                <VerticalSpacer twentyPx />
-                <Hovedknapp
-                  className={styles.oppdaterMargin}
-                  htmlType="button"
-                  mini
-                  onClick={formProps.handleSubmit}
-                  spinner={formProps.submitting}
-                >
-                  <FormattedMessage id="UttakInfoPanel.Oppdater" />
-                </Hovedknapp>
-                <Knapp
-                  htmlType="button"
-                  mini
-                  onClick={newPeriodeResetCallback}
-                >
-                  <FormattedMessage id="UttakInfoPanel.Avbryt" />
-                </Knapp>
+            </FlexColumn>
+          </FlexRow>
+          <FlexRow>
+            <FlexColumn>
+              <div className={styles.textAreaStyle}>
+                <TextAreaField
+                  name="begrunnelse"
+                  label={{ id: 'UttakInfoPanel.BegrunnEndringene' }}
+                  validate={[required, minLength3, maxLength4000, hasValidText]}
+                  maxLength={4000}
+                />
               </div>
-            </div>
-          </div>
-        </Column>
-      </Row>
+            </FlexColumn>
+          </FlexRow>
+        </FlexContainer>
+        <VerticalSpacer twentyPx />
+        <Hovedknapp
+          className={styles.oppdaterMargin}
+          htmlType="button"
+          mini
+          onClick={formProps.handleSubmit}
+          spinner={formProps.submitting}
+        >
+          <FormattedMessage id="UttakInfoPanel.Oppdater" />
+        </Hovedknapp>
+        <Knapp
+          htmlType="button"
+          mini
+          onClick={newPeriodeResetCallback}
+        >
+          <FormattedMessage id="UttakInfoPanel.Avbryt" />
+        </Knapp>
+      </div>
     </div>
   );
 };

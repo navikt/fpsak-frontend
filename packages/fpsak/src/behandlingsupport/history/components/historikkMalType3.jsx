@@ -59,6 +59,7 @@ const aksjonspunktCodesToTextCode = {
     'OmsorgFaktaForm.Aleneomsorg.ApplicationInformation',
   [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG]: 'OmsorgFaktaForm.Omsorg.ApplicationInformation',
   [aksjonspunktCodes.AVKLAR_UTTAK]: 'UttakInfoPanel.FaktaUttak',
+  [aksjonspunktCodes.ANNEN_FORELDER_IKKE_RETT_OG_LØPENDE_VEDTAK]: 'UttakInfoPanel.FaktaUttak',
   [aksjonspunktCodes.FASTSETT_UTTAKPERIODER]: 'Fastsett.Manuelt',
   [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_DØD]: 'Uttak.OpplysningerOmDod',
   [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST]: 'Uttak.OpplysningerOmSoknadsfrist',

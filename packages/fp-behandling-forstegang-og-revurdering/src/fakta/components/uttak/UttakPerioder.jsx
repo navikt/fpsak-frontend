@@ -151,7 +151,7 @@ export class UttakPerioder extends PureComponent {
   setNyPeriodeFormRef(element) {
     if (element) {
       this.nyPeriodeFormRef = element;
-      this.nyPeriodeFormRef.scrollIntoView({ block: 'end', behavior: 'smooth' });
+      this.nyPeriodeFormRef.scrollIntoView({ block: 'start', behavior: 'smooth' });
     }
   }
 

@@ -21,6 +21,7 @@ import UttakFaktaForm from './UttakFaktaForm';
 const uttakAksjonspunkter = [
   aksjonspunktCodes.AVKLAR_UTTAK,
   aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO,
+  aksjonspunktCodes.ANNEN_FORELDER_IKKE_RETT_OG_LØPENDE_VEDTAK,
   aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT,
   aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK,
   aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK,
