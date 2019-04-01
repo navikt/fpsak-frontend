@@ -70,7 +70,8 @@ const mapAarsak = (kodeverk, starttidspunktForeldrepenger) => {
   kodeverk.sort(sortAlphabetically);
   const nyKodeArray = kodeverk.filter(kodeItem => kodeItem.gyldigTom >= starttidspunktForeldrepenger
     && kodeItem.gyldigFom <= starttidspunktForeldrepenger);
-  return (nyKodeArray
+    const filteredNyKodeArray = nyKodeArray.filter(item => (item.kode < 4096 || item.kode > 4099));
+  return (filteredNyKodeArray
     .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>));
 };
 
