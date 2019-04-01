@@ -86,12 +86,12 @@ const mapAktivitetTextGodkjenning = (arbeidsgiverNavn, orgnr, aktivitetType) => 
  */
 export const OpptjeningTotrinnText = ({ aktivitet }) => {
   if (aktivitet.erEndring) {
-    return mapAktivitetTextEndring(aktivitet.arbeidsgiverNavn, aktivitet.orgnr, aktivitet.aktivitetType);
+    return mapAktivitetTextEndring(aktivitet.arbeidsgiverNavn, aktivitet.orgnr, aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null);
   }
   if (aktivitet.godkjent) {
-    return mapAktivitetTextGodkjenning(aktivitet.arbeidsgiverNavn, aktivitet.orgnr, aktivitet.aktivitetType);
+    return mapAktivitetTextGodkjenning(aktivitet.arbeidsgiverNavn, aktivitet.orgnr, aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null);
   }
-  return mapAktivitetTextUnderkjenning(aktivitet.arbeidsgiverNavn, aktivitet.orgnr, aktivitet.aktivitetType);
+  return mapAktivitetTextUnderkjenning(aktivitet.arbeidsgiverNavn, aktivitet.orgnr, aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null);
 };
 
 
