@@ -12,7 +12,6 @@ const headerTextCodes = [
   'MedlemskapEndringerTabell.Opplysning',
 ];
 
-// TODO sortere perioder på dato
 const MedlemskapEndringerTabellImpl = ({
   perioder,
   velgPeriodeCallback,
@@ -27,7 +26,7 @@ const MedlemskapEndringerTabellImpl = ({
         onKeyDown={velgPeriodeCallback}
         isSelected={periode.id === selectedId}
         model={periode}
-        isApLeftBorder={periode.begrunnelse === null}
+        isApLeftBorder={periode.begrunnelse === null && periode.aksjonspunkter.length > 0}
       >
         <TableColumn>
           <DateLabel dateString={periode.vurderingsdato} />
