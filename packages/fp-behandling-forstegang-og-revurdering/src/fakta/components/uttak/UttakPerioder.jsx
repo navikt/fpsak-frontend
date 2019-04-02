@@ -68,7 +68,8 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => {
 
     const isArbeidstaker = (soknadsPeriode.arbeidsgiver || {}).virksomhet;
     const isAvvikPeriode = inntektsmeldingInfoPerioder.some(periode => periode.fom !== soknadsPeriode.fom || periode.tom !== soknadsPeriode.tom);
-    const isAvvikArbeidsgiver = soknadsPeriode.utsettelseÅrsak.kode === '-' && inntektsmelding.arbeidsgiverOrgnr !== (soknadsPeriode.arbeidsgiver || {}).identifikator;
+    const isAvvikArbeidsgiver = soknadsPeriode.utsettelseÅrsak.kode === '-'
+    && inntektsmelding.arbeidsgiverOrgnr !== (soknadsPeriode.arbeidsgiver || {}).identifikator;
     const isAvvikArbeidsprosent = gjeldeneGraderingPerioder
       .some(graderingPeriode => parseFloat(graderingPeriode.arbeidsprosent).toFixed(2) !== parseFloat(soknadsPeriode.arbeidstidsprosent).toFixed(2));
     const isAvvikUtsettelse = gjeldeneUtsettelsePerioder
@@ -99,13 +100,7 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => {
       },
     };
   });
-  //
-  //
-  //
-  //
-  //
-  //
-  //
+
   const gyldigeInntektsmeldinger = relevant
     .filter(inntektsmelding => (!inntektsmelding.isManglendeInntektsmelding && !inntektsmelding.isManglendeSøktGraderingEllerUtsettelse)
     || (!inntektsmelding.isManglendeInntektsmelding && inntektsmelding.isManglendeSøktGraderingEllerUtsettelse)
