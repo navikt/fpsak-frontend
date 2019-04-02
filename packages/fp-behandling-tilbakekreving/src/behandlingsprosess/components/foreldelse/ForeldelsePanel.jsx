@@ -3,26 +3,29 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import { bindActionCreators } from 'redux';
+import moment from 'moment';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
+
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import {
   FadingPanel, VerticalSpacer, FlexRow, FlexColumn, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+
 import {
-  behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, getBehandlingFormSyncErrors, isBehandlingFormDirty,
+  behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, isBehandlingFormDirty,
+  hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingTilbakekreving/src/behandlingForm';
 import { getBehandlingVersjon, getForeldelsePerioder } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingTilbakekreving/src/duckTilbake';
-import moment from 'moment';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { addClassNameGroupIdToPerioder } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
 import BpTimelinePanel from '../felles/behandlingspunktTimelineSkjema/BpTimelinePanel';
 import ForeldelseForm from './ForeldelseForm';
+
 import styles from './foreldelsePanel.less';
-import foreldelseCodes from './foreldelseCodes';
 
 const ACTIVITY_PANEL_NAME = 'foreldelsesresultatActivity';
 const formName = 'ForeldelseForm';
@@ -34,9 +37,6 @@ const getDate = () => moment().subtract(30, 'months').format(DDMMYYYY_DATE_FORMA
 const getApTekst = apCode => (apCode
   ? [<FormattedMessage id={`Foreldelse.AksjonspunktHelpText.${apCode}`} key="vurderForeldelse" values={{ dato: getDate() }} />]
   : []);
-const isConfirmButtonDisabled = (foreldelsesresultatActivity, foreldeseSyncErrors, foreldeseDirty) => foreldeseDirty
-  || Object.entries(foreldeseSyncErrors).length !== 0
-  || foreldelsesresultatActivity.some(periode => periode.begrunnelse === null || periode.foreldet === foreldelseCodes.MANUELL_BEHANDLING);
 
 export const ForeldelsePanelImpl = ({
   foreldelsesresultatActivity,
@@ -46,8 +46,7 @@ export const ForeldelsePanelImpl = ({
   fagsakPerson,
   isApOpen,
   apCodes,
-  foreldeseSyncErrors,
-  foreldeseDirty,
+  readOnlySubmitButton,
   readOnly,
   ...formProps
 }) => (
@@ -98,14 +97,14 @@ export const ForeldelsePanelImpl = ({
           <VerticalSpacer twentyPx />
           <FlexRow>
             <FlexColumn>
-              <Hovedknapp
-                mini
-                disabled={isConfirmButtonDisabled(foreldelsesresultatActivity, foreldeseSyncErrors, foreldeseDirty)}
-                readOnly={readOnly}
-                spinner={formProps.submitting}
-              >
-                <FormattedMessage id="Uttak.Confirm" />
-              </Hovedknapp>
+              <BehandlingspunktSubmitButton
+                formName={formName}
+                isReadOnly={readOnly}
+                isSubmittable={!readOnlySubmitButton}
+                isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+                isBehandlingFormDirty={isBehandlingFormDirty}
+                hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+              />
             </FlexColumn>
           </FlexRow>
         </>
@@ -123,16 +122,13 @@ ForeldelsePanelImpl.propTypes = {
   fagsakPerson: PropTypes.shape().isRequired,
   isApOpen: PropTypes.bool.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string),
-  foreldeseSyncErrors: PropTypes.shape(),
-  foreldeseDirty: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
+  readOnlySubmitButton: PropTypes.bool.isRequired,
 };
 
 ForeldelsePanelImpl.defaultProps = {
   foreldelsesresultatActivity: undefined,
   apCodes: undefined,
-  foreldeseSyncErrors: undefined,
-  foreldeseDirty: false,
 };
 
 export const transformValues = (values, apCode) => {
@@ -159,8 +155,6 @@ const mapStateToProps = (state, ownProps) => {
     foreldelsesresultatActivity: behandlingFormValueSelector(formName)(state, ACTIVITY_PANEL_NAME),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
     fagsakPerson: getFagsakPerson(state),
-    foreldeseSyncErrors: getBehandlingFormSyncErrors(ACTIVITY_PANEL_NAME)(state),
-    foreldeseDirty: isBehandlingFormDirty(ACTIVITY_PANEL_NAME)(state),
     onSubmit: values => ownProps.submitCallback(transformValues(values, ownProps.apCodes[0])),
   };
 };
@@ -174,7 +168,6 @@ const mapDispatchToProps = dispatch => ({
 
 const ForeldelsePanel = connect(mapStateToProps, mapDispatchToProps)(injectIntl(behandlingForm({
   form: formName,
-  enableReinitialize: true,
 })(ForeldelsePanelImpl)));
 
 ForeldelsePanel.supports = (bp, apCodes) => bp === behandlingspunktCodes.FORELDELSE || foreldelseAksjonspunkter.some(ap => apCodes.includes(ap));

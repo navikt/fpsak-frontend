@@ -46,7 +46,7 @@ export class BehandlingIndex extends Component {
     behandlingerVersjonMappedById: PropTypes.shape().isRequired,
     location: PropTypes.shape().isRequired,
     setHolder: PropTypes.func.isRequired,
-    erAktivPapirsoknad: PropTypes.bool.isRequired,
+    erAktivPapirsoknad: PropTypes.bool,
     resetBehandlingContext: PropTypes.func.isRequired,
     featureToggles: PropTypes.shape().isRequired,
     hasSubmittedPaVentForm: PropTypes.bool.isRequired,
@@ -79,6 +79,10 @@ export class BehandlingIndex extends Component {
       type: PropTypes.string.isRequired,
     })).isRequired,
   };
+
+  static defaultProps = {
+    erAktivPapirsoknad: false,
+  }
 
   componentWillMount() {
     const { behandlingLinks } = this.props;

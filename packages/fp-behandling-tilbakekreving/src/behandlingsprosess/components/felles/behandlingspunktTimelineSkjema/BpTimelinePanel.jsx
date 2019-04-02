@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import foreldelseCodes from '../../foreldelse/foreldelseCodes';
+import foreldelseCodes from '../../../foreldelseCodes';
 import BpTimeline from './BpTimeline';
 import BpTimelineData from './BpTimelineData';
 

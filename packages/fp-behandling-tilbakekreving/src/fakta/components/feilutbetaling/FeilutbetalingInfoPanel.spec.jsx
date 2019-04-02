@@ -43,7 +43,7 @@ const mockProps = {
   årsaker: [],
 };
 
-describe('<FeilutbetalingInfoPanelImpl>', () => {
+describe('<FeilutbetalingInfoPanel>', () => {
   it('skal rendre FeilutbetalingInfoPanel', () => {
     const wrapper = shallowWithIntl(<FeilutbetalingInfoPanelImpl
       {...mockProps}
@@ -56,7 +56,7 @@ describe('<FeilutbetalingInfoPanelImpl>', () => {
     expect(faktaEkspandertpanel.prop('isInfoPanelOpen')).is.true;
     expect(faktaEkspandertpanel.prop('faktaId')).to.eql(faktaPanelCodes.FEILUTBETALING);
     const formattedMessage = wrapper.find('FormattedMessage');
-    expect(formattedMessage).has.length(10);
+    expect(formattedMessage).has.length(11);
     const element = wrapper.find('Element');
     expect(element).has.length(3);
     const undertekst = wrapper.find('Undertekst');

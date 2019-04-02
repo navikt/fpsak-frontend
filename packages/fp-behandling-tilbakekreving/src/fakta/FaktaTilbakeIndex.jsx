@@ -4,13 +4,14 @@ import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 
-import { getBehandlingVersjon } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
-import { getBehandlingIdentifier } from 'behandlingTilbakekreving/src/duckTilbake';
+import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   trackRouteParam, requireProps, getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta,
   DEFAULT_FAKTA, BehandlingIdentifier,
 } from '@fpsak-frontend/fp-felles';
 
+import { getBehandlingVersjon } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+import { getBehandlingIdentifier } from 'behandlingTilbakekreving/src/duckTilbake';
 import {
   resetFakta, resolveFaktaAksjonspunkter, resolveFaktaOverstyrAksjonspunkter, setOpenInfoPanels,
   getOpenInfoPanels,
@@ -68,7 +69,7 @@ export class FaktaTilbakeIndex extends Component {
 
     // todo if 6070 and revurdering use resolveFaktaOverstyrAksjonspunkter else use resolveFaktaAksjonspunkter
 
-    if (model && model[0].kode === '6070') {
+    if (model && model[0].kode === ac.MANUELL_AVKLAR_FAKTA_UTTAK) {
       const params = {
         ...behandlingIdentifier.toJson(),
         behandlingVersjon,

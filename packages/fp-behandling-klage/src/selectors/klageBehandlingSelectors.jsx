@@ -83,7 +83,7 @@ export const hasBehandlingManualPaVent = createSelector(
 
 export const isKlageBehandlingInKA = createSelector(
   [getAksjonspunkter], (openAksjonspunkter = []) => openAksjonspunkter
-    .some(ap => ap.definisjon.kode === aksjonspunktCodes.FORMKRAV_KLAGE_NK
+    .some(ap => ap.definisjon.kode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA
       || ap.definisjon.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NK),
 );
 

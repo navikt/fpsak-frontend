@@ -17,7 +17,7 @@ const tilbakekrevingBuilders = [
     .withVisibilityWhen(() => true)
     .withStatus(getForeldelseStatus),
   new BehandlingspunktProperties.Builder(bpc.TILBAKEKREVING, 'Tilbakekreving')
-    .withAksjonspunktCodes(ac.TILBAKEKREVING)
+    .withAksjonspunktCodes(ac.VURDER_FEILUTBETALING)
     .withVisibilityWhen(() => true)
     .withStatus(getTilbakekrevingStatus),
   new BehandlingspunktProperties.Builder(bpc.VEDTAK, 'Vedtak')

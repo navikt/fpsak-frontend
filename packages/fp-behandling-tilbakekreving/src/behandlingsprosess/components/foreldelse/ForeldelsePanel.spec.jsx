@@ -2,6 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
+
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
+
 import { ForeldelsePanelImpl } from './ForeldelsePanel';
 
 const periode = {
@@ -23,9 +26,10 @@ const mockProps = {
   apCodes: ['5003'],
   foreldeseSyncErrors: {},
   readOnly: false,
+  readOnlySubmitButton: false,
 };
 
-describe('<ForeldelsePanelImpl>', () => {
+describe('<ForeldelsePanel>', () => {
   it('skal rendre ForeldelsePanel', () => {
     const wrapper = shallow(<ForeldelsePanelImpl
       {...mockProps}
@@ -47,7 +51,7 @@ describe('<ForeldelsePanelImpl>', () => {
     expect(bpTimelinePanel).has.length(1);
     const aksjonspunktHelpText = wrapper.find('AksjonspunktHelpText');
     expect(aksjonspunktHelpText).has.length(1);
-    const hovedknapp = wrapper.find('Hovedknapp');
+    const hovedknapp = wrapper.find(BehandlingspunktSubmitButton);
     expect(hovedknapp).has.length(1);
   });
 
@@ -64,7 +68,7 @@ describe('<ForeldelsePanelImpl>', () => {
     expect(bpTimelinePanel).has.length(0);
     const aksjonspunktHelpText = wrapper.find('AksjonspunktHelpText');
     expect(aksjonspunktHelpText).has.length(0);
-    const hovedknapp = wrapper.find('Hovedknapp');
+    const hovedknapp = wrapper.find(BehandlingspunktSubmitButton);
     expect(hovedknapp).has.length(0);
   });
 });

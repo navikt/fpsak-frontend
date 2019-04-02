@@ -8,10 +8,16 @@ import moment from 'moment';
 import { Row, Column } from 'nav-frontend-grid';
 import { Element, Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
+
 import { TextAreaField } from '@fpsak-frontend/form';
 import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import {
+ DDMMYYYY_DATE_FORMAT, minLength, maxLength, hasValidText, required,
+} from '@fpsak-frontend/utils';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
 import {
   getFeilutbetalingFakta,
   getFeilutbetalingAarsaker,
@@ -19,16 +25,9 @@ import {
 } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { getSelectedBehandlingId } from 'behandlingTilbakekreving/src/duckTilbake';
 import { behandlingForm, getBehandlingFormPrefix } from 'behandlingTilbakekreving/src/behandlingForm';
-import {
-  DDMMYYYY_DATE_FORMAT,
-  minLength,
-  maxLength,
-  hasValidText,
-  required,
-} from '@fpsak-frontend/utils';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import styles from './feilutbetalingInfoPanel.less';
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';
+
+import styles from './feilutbetalingInfoPanel.less';
 
 const formName = 'FaktaFeilutbetalingForm';
 const minLength3 = minLength(3);
@@ -72,6 +71,10 @@ export class FeilutbetalingInfoPanelImpl extends Component {
         faktaId={faktaPanelCodes.FEILUTBETALING}
         readOnly={readOnly}
       >
+        <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
+          {[<FormattedMessage key="1" id="FeilutbetalingInfoPanel.Aksjonspunkt" />]}
+        </AksjonspunktHelpText>
+        <VerticalSpacer sixteenPx />
         <form onSubmit={formProps.handleSubmit}>
           <Row className={styles.smallMarginBottom}>
             <Column xs="12" md="6">

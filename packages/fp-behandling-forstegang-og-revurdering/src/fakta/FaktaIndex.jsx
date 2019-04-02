@@ -4,14 +4,13 @@ import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 
-import { getBehandlingVersjon } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import {
-  getBehandlingIdentifier,
-} from 'behandlingForstegangOgRevurdering/src/duck';
+import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   trackRouteParam, requireProps, getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta, DEFAULT_FAKTA, BehandlingIdentifier,
 } from '@fpsak-frontend/fp-felles';
 
+import { getBehandlingVersjon } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBehandlingIdentifier } from 'behandlingForstegangOgRevurdering/src/duck';
 import {
   resetFakta, resolveFaktaAksjonspunkter, resolveFaktaOverstyrAksjonspunkter, setOpenInfoPanels, getOpenInfoPanels,
 } from './duck';
@@ -23,8 +22,8 @@ const formatFaktaParam = (openInfoPanels = []) => openInfoPanels.filter(notEmpty
 const parseFaktaParam = (openInfoPanels = '') => openInfoPanels.split(',').filter(notEmptyParam);
 const paramsAreEqual = (a = [], b = []) => ((a.length === b.length) && a.every((param, index) => param === b[index]));
 
-
-const overstyringAp = ['6013', '6045', '6068', '6070'];
+const overstyringAp = [ac.OVERSTYR_AVKLAR_FAKTA_UTTAK, ac.OVERSTYR_AVKLAR_STARTDATO, ac.MANUELL_MARKERING_AV_UTLAND_SAKSTYPE,
+  ac.MANUELL_AVKLAR_FAKTA_UTTAK];
 
 /**
  * FaktaIndex

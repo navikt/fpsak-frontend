@@ -1,5 +1,5 @@
 import moment from 'moment';
-import foreldelseCodes from '../../foreldelse/foreldelseCodes';
+import foreldelseCodes from '../../../foreldelseCodes';
 
 const godkjentKlassenavn = 'godkjentPeriode';
 const avvistKlassenavn = 'avvistPeriode';
