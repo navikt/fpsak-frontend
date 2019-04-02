@@ -30,13 +30,12 @@ const resolveProsessAksjonspunkterSuccess = (response, behandlingIdentifier) => 
   dispatch({
     type: RESOLVE_PROSESS_AKSJONSPUNKTER_SUCCESS,
   });
-  return dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer))
-    .then(() => dispatch(innsynBehandlingApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true })));
+  return dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer));
 };
 
 export const resolveProsessAksjonspunkter = (behandlingIdentifier, params) => (dispatch) => {
   dispatch(resolveProsessAksjonspunkterStarted());
-  return dispatch(innsynBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params))
+  return dispatch(innsynBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params, { keepData: true }))
     .then(response => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier)));
 };
 
