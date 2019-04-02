@@ -82,26 +82,30 @@ const avvikInntekstmeldInfo = (periode, inntektsmeldingInfo) => {
       // skall ikke vises vid utsettelse pga sykdom - fjern det - troligen periode.utsettleseÅrsak.
       if (avvik.utsettelseÅrsak && !isUtsettelseMedSykdom(periode)) {
         return (
-          <AlertStripe type="info" key="key1">
+          <AlertStripe type="info" key="key1" className={styles.avvikInfoMargin}>
             <FormattedMessage id="UttakPeriode.ManglerInfoUtsettelse" values={{ årsak: periode.utsettelseÅrsak.navn.toLowerCase() }} />
           </AlertStripe>
         );
       }
       if (avvik.isAvvikArbeidsprosent) {
         return (
-          <AlertStripe type="info" key="key2"><FormattedMessage id="UttakPeriode.AvvikGradering" /></AlertStripe>
+          <AlertStripe type="info" key="key2" className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikGradering" /></AlertStripe>
         );
       }
     }
     if (!isManglendeInntektsmelding) {
       if (avvik.isAvvikUtsettelse) {
-        return <AlertStripe type="info" key="key3"><FormattedMessage id="UttakPeriode.AvvikUtsettelse" /></AlertStripe>;
+        return <AlertStripe type="info" key="key3" className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikUtsettelse" /></AlertStripe>;
       }
       if (avvik.isAvvikPeriode) {
-        return <AlertStripe type="info" key="key4"><FormattedMessage id="UttakPeriode.AvvikPeriode" /></AlertStripe>;
+        return <AlertStripe type="info" key="key4" className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikPeriode" /></AlertStripe>;
       }
       if (avvik.isAvvikArbeidsprosent) {
-        return <AlertStripe type="info" key="key5"><FormattedMessage id="UttakPeriode.AvvikGraderingProsent" /></AlertStripe>;
+        return (
+          <AlertStripe type="info" key="key5" className={styles.avvikInfoMargin}>
+            <FormattedMessage id="UttakPeriode.AvvikGraderingProsent" />
+          </AlertStripe>
+        );
       }
     }
     return null;

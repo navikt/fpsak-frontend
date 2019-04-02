@@ -64,10 +64,10 @@ UttakFaktaForm.propTypes = {
 
 const warningsUttakForm = (values) => {
   const warnings = {};
-  const nyStartDato = (values.perioder[0] || []).fom;
   const { førsteUttaksdato, endringsdato } = values;
 
-  if (moment(nyStartDato).isBefore(endringsdato) && moment(nyStartDato).isAfter(førsteUttaksdato)) {
+  // hvis endringsdato er etter førsteuttakdato
+  if (moment(endringsdato).isAfter(førsteUttaksdato)) {
     warnings.perioder = {
       _warning: <FormattedMessage
         id="UttakInfoPanel.PeriodeMellomFørsteuttaksdatoOgEndringsdato"
