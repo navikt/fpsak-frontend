@@ -53,7 +53,7 @@ const skjermlenkeCodes = {
   },
   FAKTA_OM_ARBEIDSFORHOLD: {
     kode: 'FAKTA_OM_ARBEIDSFORHOLD',
-    faktaNavn: faktaPanelCodes.PERSON,
+    faktaNavn: faktaPanelCodes.ARBEIDSFORHOLD,
     punktNavn: '',
   },
   PUNKT_FOR_FORELDREANSVAR: {

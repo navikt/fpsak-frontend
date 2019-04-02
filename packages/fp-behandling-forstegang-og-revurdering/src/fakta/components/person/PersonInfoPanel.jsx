@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { getFeatureToggles } from 'app/duck';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes, featureToggle } from '@fpsak-frontend/fp-felles';
-import { omit } from '@fpsak-frontend/utils';
 import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
@@ -17,18 +13,16 @@ import {
   getBehandlingRelatertTilgrensendeYtelserForSoker,
   getBehandlingSprak,
   getPersonopplysning,
-  getBehandlingArbeidsforhold,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import FullPersonInfo from './panelBody/FullPersonInfo';
-import PersonArbeidsforholdPanel from './panelBody/arbeidsforhold/PersonArbeidsforholdPanel';
 import utlandSakstypeKode from './panelBody/utland/utlandSakstypeKode';
 
 const {
-  AVKLAR_ARBEIDSFORHOLD, AUTOMATISK_MARKERING_AV_UTENLANDSSAK, MANUELL_MARKERING_AV_UTLAND_SAKSTYPE,
+  AUTOMATISK_MARKERING_AV_UTENLANDSSAK, MANUELL_MARKERING_AV_UTLAND_SAKSTYPE,
 } = aksjonspunktCodes;
 
 const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
@@ -42,16 +36,6 @@ const getUtlandSakstype = (aksjonspunkter) => {
   }
   return utlandSakstypeKode.NASJONAL;
 };
-
-export const fjernIdFraArbeidsforholdLagtTilAvSaksbehandler = arbeidsforhold => arbeidsforhold.map((a) => {
-  if (a.lagtTilAvSaksbehandler === true) {
-    return {
-      ...a,
-      id: null,
-    };
-  }
-  return a;
-});
 
 /**
  * PersonInfoPanel
@@ -114,7 +98,6 @@ export class PersonInfoPanelImpl extends Component {
       readOnly,
       submitCallback,
       aksjonspunkter,
-      isBekreftButtonReadOnly,
       featureToggleUtland,
       ...formProps
     } = this.props;
@@ -148,16 +131,6 @@ export class PersonInfoPanelImpl extends Component {
             personstatusTypes={personstatusTypes}
             featureToggleUtland={featureToggleUtland || true}
           />
-          {isPrimaryParent && hasAksjonspunkt(AVKLAR_ARBEIDSFORHOLD, aksjonspunkter)
-            && (
-            <ElementWrapper>
-              <VerticalSpacer twentyPx />
-              <Hovedknapp mini spinner={formProps.submitting} disabled={readOnly || isBekreftButtonReadOnly || formProps.submitting}>
-                <FormattedMessage id="FullPersonInfo.Confirm" />
-              </Hovedknapp>
-            </ElementWrapper>
-            )
-          }
           <VerticalSpacer eightPx />
         </form>
         )
@@ -177,7 +150,6 @@ PersonInfoPanelImpl.propTypes = {
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func,
-  isBekreftButtonReadOnly: PropTypes.bool.isRequired,
   relatertYtelseTypes: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   relatertYtelseStatus: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
@@ -190,27 +162,7 @@ PersonInfoPanelImpl.defaultProps = {
   submitCallback: undefined,
 };
 
-const transformValues = (values) => {
-  const arbeidsforhold = fjernIdFraArbeidsforholdLagtTilAvSaksbehandler(values.arbeidsforhold);
-  return {
-    arbeidsforhold: arbeidsforhold.map(a => omit(a,
-      'erEndret',
-      'replaceOptions',
-      'originalFomDato',
-      'brukUendretArbeidsforhold',
-      'aktivtArbeidsforholdHandlingField')),
-    kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
-  };
-};
-
-const buildInitialValues = createSelector(
-  [getBehandlingArbeidsforhold],
-  arbeidsforhold => ({
-    ...PersonArbeidsforholdPanel.buildInitialValues(arbeidsforhold),
-  }),
-);
-
-const mapStateToProps = (state, initialProps) => ({
+const mapStateToProps = state => ({
   sivilstandTypes: getKodeverk(kodeverkTyper.SIVILSTAND_TYPE)(state),
   personstatusTypes: getKodeverk(kodeverkTyper.PERSONSTATUS_TYPE)(state),
   personopplysninger: getPersonopplysning(state),
@@ -222,15 +174,11 @@ const mapStateToProps = (state, initialProps) => ({
     ...getKodeverk(kodeverkTyper.FAGSAK_STATUS)(state),
     ...getKodeverk(kodeverkTyper.RELATERT_YTELSE_TILSTAND)(state),
   ],
-  isBekreftButtonReadOnly: PersonArbeidsforholdPanel.isReadOnly(state),
-  initialValues: buildInitialValues(state),
-  onSubmit: values => initialProps.submitCallback([transformValues(values)]),
-  dirty: !initialProps.notSubmittable && initialProps.dirty,
   featureToggleUtland: getFeatureToggles(state)[featureToggle.MARKER_UTENLANDSSAK],
 });
 
 const ConnectedComponent = connect(mapStateToProps)(behandlingForm({ form: 'PersonInfoPanel' })(PersonInfoPanelImpl));
-const personAksjonspunkter = [AVKLAR_ARBEIDSFORHOLD, AUTOMATISK_MARKERING_AV_UTENLANDSSAK, MANUELL_MARKERING_AV_UTLAND_SAKSTYPE];
+const personAksjonspunkter = [AUTOMATISK_MARKERING_AV_UTENLANDSSAK, MANUELL_MARKERING_AV_UTLAND_SAKSTYPE];
 const PersonInfoPanel = withDefaultToggling(faktaPanelCodes.PERSON, personAksjonspunkter)(ConnectedComponent);
 PersonInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => personAksjonspunkter.includes(ap.definisjon.kode));
 

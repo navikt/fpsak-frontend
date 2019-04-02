@@ -2151,6 +2151,11 @@
   "PersonAksjonspunktText.AvklarIkkeRegistrertIAa": "Fastsett om arbeidsforhold som ikke er registrert i Aa-registeret skal brukes",
   "PersonAksjonspunktText.LeggTilArbeidsforhold": "Det er ikke rapportert inntekt, arbeidsforhold, eller mottat inntektsmelding for bruker. Legg til arbeidsforhold i henhold til ustrukturert informasjon.",
 
+  "ArbeidsforholdInfoPanel.Title": "Fakta om arbeidsforhold",
+  "ArbeidsforholdInfoPanel.ArbeidsforholdUndertittel": "Arbeidsforhold",
+  "ArbeidsforholdInfoPanel.IngenArbeidsforholdRegistrert": "Ingen arbeidsforhold registrert. Vurder om det er dokumentert andre arbeidsforhold.",
+  "ArbeidsforholdInfoPanel.AvklarArbeidsforhold": "Avklar aksjonspunkt på arbeidsforhold som skal benyttes i behandlingen",
+
   "Tilbakekreving.Vurdering":"Vurdering",
   "Tilbakekreving.RadioGroup.oppfylt": "Er vilkårene for tilbakekreving oppfylt?",
   "Tilbakekreving.RadioGroup.Forstått":"Ja, bruker forsto eller burde forstått",

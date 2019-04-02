@@ -1,16 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import { getAddresses } from '@fpsak-frontend/utils';
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import { AdressePanel, BarnePanel, PersonYtelserTable } from '@fpsak-frontend/person-info';
-import { getSkalKunneLeggeTilNyeArbeidsforhold } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import PersonArbeidsforholdPanel from './arbeidsforhold/PersonArbeidsforholdPanel';
 import { Utland } from './utland/Utland';
 
 const findPersonStatus = (personopplysning) => {
@@ -36,15 +31,11 @@ export const FullPersonInfoImpl = ({
   ytelser,
   relatertYtelseTypes,
   relatertYtelseStatus,
-  hasOpenAksjonspunkter,
-  hasAksjonspunkter,
   utlandSakstype,
-  readOnly,
   submitCallback,
   isPrimaryParent,
   personstatusTypes,
   sivilstandTypes,
-  skalKunneLeggeTilNyeArbeidsforhold,
 }) => {
   if (!personopplysning) {
     return null;
@@ -52,15 +43,8 @@ export const FullPersonInfoImpl = ({
   const adresseListe = getAddresses(personopplysning.adresser);
   const barnFraTPS = getBarnFraTPS(personopplysning.barn);
   const harBarnITPSSjekk = barnFraTPS.length !== 0;
-  const aksjonspunktID = skalKunneLeggeTilNyeArbeidsforhold ? 'FullPersonInfo.IngenArbeidsforholdRegistrert' : 'FullPersonInfo.AvklarArbeidsforhold';
-
   return (
     <div>
-      {isPrimaryParent && hasAksjonspunkter && (
-        <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
-          {[<FormattedMessage key="AvklarArbeidsforhold" id={aksjonspunktID} />]}
-        </AksjonspunktHelpText>
-      )}
       <AdressePanel
         bostedsadresse={adresseListe[opplysningAdresseType.BOSTEDSADRESSE]}
         postAdresseNorge={adresseListe[opplysningAdresseType.POSTADRESSE]}
@@ -83,14 +67,8 @@ export const FullPersonInfoImpl = ({
           submitCallback={submitCallback}
         />
       </AdressePanel>
-      {harBarnITPSSjekk && <BarnePanel barneListe={barnFraTPS} />}
-      {isPrimaryParent && (
-        <PersonArbeidsforholdPanel
-          readOnly={readOnly}
-          hasAksjonspunkter={hasAksjonspunkter}
-          hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-          skalKunneLeggeTilNyeArbeidsforhold={skalKunneLeggeTilNyeArbeidsforhold}
-        />
+      { harBarnITPSSjekk && (
+        <BarnePanel barneListe={barnFraTPS} />
       )}
       {ytelser && ytelser.length > 0 && (
         <FaktaGruppe titleCode="PersonYtelserTable.Ytelser">
@@ -111,15 +89,11 @@ FullPersonInfoImpl.propTypes = {
   ytelser: PropTypes.arrayOf(PropTypes.shape({})),
   relatertYtelseTypes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   relatertYtelseStatus: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  hasOpenAksjonspunkter: PropTypes.bool.isRequired,
-  readOnly: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func,
-  hasAksjonspunkter: PropTypes.bool.isRequired,
   utlandSakstype: PropTypes.string.isRequired,
   isPrimaryParent: PropTypes.bool.isRequired,
   sivilstandTypes: kodeverkPropType.isRequired,
   personstatusTypes: kodeverkPropType.isRequired,
-  skalKunneLeggeTilNyeArbeidsforhold: PropTypes.bool.isRequired,
 };
 
 FullPersonInfoImpl.defaultProps = {
@@ -127,8 +101,4 @@ FullPersonInfoImpl.defaultProps = {
   submitCallback: undefined,
 };
 
-const mapStateToProps = state => ({
-  skalKunneLeggeTilNyeArbeidsforhold: getSkalKunneLeggeTilNyeArbeidsforhold(state),
-});
-
-export default connect(mapStateToProps)(FullPersonInfoImpl);
+export default FullPersonInfoImpl;

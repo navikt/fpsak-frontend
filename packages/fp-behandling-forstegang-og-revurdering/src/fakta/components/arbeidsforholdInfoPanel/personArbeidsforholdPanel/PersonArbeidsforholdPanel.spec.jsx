@@ -213,7 +213,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
     expect(calls).to.have.length(1);
     const { args } = calls[0];
     expect(args).to.have.length(3);
-    expect(args[0]).to.eql('panel.PersonInfoPanel');
+    expect(args[0]).to.eql('panel.ArbeidsforholdInfoPanel');
     expect(args[1]).to.eql('arbeidsforhold');
     expect(args[2]).to.eql([{
       ...newArbeidsforhold,
@@ -273,7 +273,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
     expect(calls).to.have.length(1);
     const { args } = calls[0];
     expect(args).to.have.length(3);
-    expect(args[0]).to.eql('panel.PersonInfoPanel');
+    expect(args[0]).to.eql('panel.ArbeidsforholdInfoPanel');
     expect(args[1]).to.eql('arbeidsforhold');
 
     // FIXME (TOR) fomDato skal ikkje vera undefined her
@@ -475,7 +475,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
     expect(calls).to.have.length(1);
     const { args } = calls[0];
     expect(args).to.have.length(3);
-    expect(args[0]).to.eql('panel.PersonInfoPanel');
+    expect(args[0]).to.eql('panel.ArbeidsforholdInfoPanel');
     expect(args[1]).to.eql('arbeidsforhold');
     expect(args[2]).to.eql([{
       ...arbeidsforhold,
@@ -520,7 +520,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
     expect(calls).to.have.length(1);
     const { args } = calls[0];
     expect(args).to.have.length(3);
-    expect(args[0]).to.eql('panel.PersonInfoPanel');
+    expect(args[0]).to.eql('panel.ArbeidsforholdInfoPanel');
     expect(args[1]).to.eql('arbeidsforhold');
     expect(args[2]).to.eql([{
       ...arbeidsforhold,
@@ -564,7 +564,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
     expect(calls).to.have.length(1);
     const { args } = calls[0];
     expect(args).to.have.length(3);
-    expect(args[0]).to.eql('panel.PersonInfoPanel');
+    expect(args[0]).to.eql('panel.ArbeidsforholdInfoPanel');
     expect(args[1]).to.eql('arbeidsforhold');
     expect(args[2]).to.eql([{
       ...arbeidsforhold,
@@ -608,7 +608,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
     expect(calls).to.have.length(1);
     const { args } = calls[0];
     expect(args).to.have.length(3);
-    expect(args[0]).to.eql('panel.PersonInfoPanel');
+    expect(args[0]).to.eql('panel.ArbeidsforholdInfoPanel');
     expect(args[1]).to.eql('arbeidsforhold');
     expect(args[2]).to.eql([{
       ...arbeidsforhold,

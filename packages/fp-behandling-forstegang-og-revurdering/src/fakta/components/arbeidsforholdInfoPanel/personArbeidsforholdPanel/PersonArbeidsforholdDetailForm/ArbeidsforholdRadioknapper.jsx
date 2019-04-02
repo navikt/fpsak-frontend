@@ -23,9 +23,9 @@ const AA_REGISTERET = 'aa-registeret';
 // METHODS
 // ----------------------------------------------------------------------------------
 
-const arbeidsforholdTomDatoPickerErrorMsg = fomDato => ([
+const arbeidsforholdTomDatoPickerErrorMsg = dato => ([
   { id: 'PersonArbeidsforholdDetailForm.DateNotAfterOrEqual' },
-  { fomDato },
+  { dato },
 ]);
 
 const isKildeAaRegisteret = arbeidsforhold => arbeidsforhold.kilde && arbeidsforhold.kilde.navn.toLowerCase() === AA_REGISTERET;

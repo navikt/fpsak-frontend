@@ -13,12 +13,12 @@ import BehandlingFormFieldCleaner from 'behandlingForstegangOgRevurdering/src/Be
 import {
   behandlingForm,
   behandlingFormValueSelector,
-  getBehandlingFormInitialValues,
   getBehandlingFormValues,
+  getBehandlingFormInitialValues,
   isBehandlingFormDirty,
 } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
-import { InputField, TextAreaField } from '@fpsak-frontend/form';
+import { TextAreaField } from '@fpsak-frontend/form';
 import {
   ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -79,12 +79,6 @@ export const PersonArbeidsforholdDetailForm = ({
     )}
     <Row>
       <Column xs="5">
-        <InputField
-          name="beskrivelse"
-          label={{ id: 'PersonArbeidsforholdDetailForm.Arbeidsgiver' }}
-          bredde="XL"
-          readOnly
-        />
         <VerticalSpacer twentyPx />
         <ArbeidsforholdRadioknapper
           readOnly={readOnly}
@@ -96,10 +90,10 @@ export const PersonArbeidsforholdDetailForm = ({
           skalBrukeUendretForhold={skalBrukeUendretForhold}
         />
         <VerticalSpacer twentyPx />
-        <BehandlingFormFieldCleaner formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM} fieldNames={['begrunnelse']}>
+        <BehandlingFormFieldCleaner formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM} fieldNames={['beskrivelse']}>
           {showBegrunnelse && (
             <TextAreaField
-              name="begrunnelse"
+              name="beskrivelse"
               label={{ id: 'PersonArbeidsforholdDetailForm.Begrunnelse' }}
               validate={[required, maxLength400, hasValidText]}
               maxLength={400}
