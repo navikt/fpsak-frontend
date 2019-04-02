@@ -20,8 +20,7 @@ describe('<SjekkFodselDokForm>', () => {
 
   it('skal sette korrekte initielle verdier når vi har avklarte data', () => {
     const familiehendelse = {
-      antallBarnFodsel: 2,
-      fodselsdato: '2016-09-15',
+      avklartBarn: [],
       dokumentasjonForeligger: true,
       brukAntallBarnFraTps: false,
     };
@@ -30,8 +29,7 @@ describe('<SjekkFodselDokForm>', () => {
     const initialValues = buildInitialValues.resultFunc(familiehendelse, aksjonspunkter);
 
     expect(initialValues).to.eql({
-      fodselsdato: '2016-09-15',
-      antallBarnFodt: 2,
+      avklartBarn: [],
       dokumentasjonForeligger: true,
       brukAntallBarnITps: false,
       begrunnelse: 'test',
@@ -44,8 +42,7 @@ describe('<SjekkFodselDokForm>', () => {
     const initialValues = buildInitialValues.resultFunc(familiehendelse, aksjonspunkter);
 
     expect(initialValues).to.eql({
-      fodselsdato: null,
-      antallBarnFodt: null,
+      avklartBarn: [],
       dokumentasjonForeligger: undefined,
       brukAntallBarnITps: undefined,
       begrunnelse: 'test',
