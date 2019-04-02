@@ -1,7 +1,7 @@
 import RequestProcess from './RequestProcess';
 import NotificationMapper from './NotificationMapper';
 import RestApiRequestContext from './RestApiRequestContext';
-import { RequestType } from '../RequestConfig';
+import RequestConfig, { RequestType } from '../RequestConfig';
 import { HttpClientApi } from '../HttpClientApiTsType';
 
 const getMethod = (httpClientApi: HttpClientApi, restMethod: string) => {
@@ -52,11 +52,12 @@ class RequestRunner {
 
   getRestMethod = () => getMethod(this.httpClientApi, this.getConfig().restMethod)
 
-  getPath = (): string => `${this.context.getHostname()}/${this.context.getContextPath()}${this.getConfig().path}`
+  getPath = (): string => {
+    const contextPath = this.context.getContextPath() ? `/${this.context.getContextPath()}` : '';
+    return `${this.context.getHostname()}${contextPath}${this.getConfig().path}`;
+  }
 
   getRestMethodName = (): string => this.getConfig().restMethod
-
-  isAsyncRestMethod = (): boolean => this.httpClientApi.isAsyncRestMethod(this.getRestMethod())
 
   stopProcess = () => {
     if (this.process) {
@@ -73,6 +74,13 @@ class RequestRunner {
     }
 
     return this.process.run(params);
+  }
+
+  injectLink = (rel: string, href: string, type: string) => {
+    const contextConfig = this.context.getConfig();
+    const newConfig = new RequestConfig(contextConfig.name, href, contextConfig.config);
+    newConfig.withRestMethod(type).withRel(rel);
+    this.context = new RestApiRequestContext(this.context.getContextPath(), newConfig);
   }
 }
 

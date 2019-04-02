@@ -18,7 +18,6 @@ describe('RequestApi', () => {
     getAsync: () => undefined,
     postAsync: () => undefined,
     putAsync: () => undefined,
-    isAsyncRestMethod: () => undefined,
   };
 
   it('skal sette opp korrekt request-runner', () => {
@@ -69,5 +68,25 @@ describe('RequestApi', () => {
     const result = await runner.startProcess(params);
 
     expect(result.payload).to.eql('data');
+  });
+
+  it('skal kunnne injecte url når rel er satt opp for endepunkt', () => {
+    const rel = 'behandling-rel';
+    const requestConfig = new RequestConfig('BEHANDLING').withRel(rel);
+
+    const api = new RequestApi(httpClientGeneralMock, contextPath, [requestConfig]);
+
+    const links = [{
+      href: '/behandling',
+      rel,
+      type: 'GET',
+    }];
+    api.injectPaths(links);
+
+    const newConfig = api.getRequestRunner(requestConfig.name).getConfig();
+    expect(newConfig.name).to.eql('BEHANDLING');
+    expect(newConfig.path).to.eql('/behandling');
+    expect(newConfig.restMethod).to.eql('GET');
+    expect(newConfig.rel).to.eql('behandling-rel');
   });
 });

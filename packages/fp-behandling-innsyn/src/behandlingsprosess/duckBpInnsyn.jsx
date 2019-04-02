@@ -26,21 +26,18 @@ const resolveProsessAksjonspunkterStarted = () => ({
   type: RESOLVE_PROSESS_AKSJONSPUNKTER_STARTED,
 });
 
-const resolveProsessAksjonspunkterSuccess = (response, behandlingIdentifier, shouldUpdateInfo) => (dispatch) => {
+const resolveProsessAksjonspunkterSuccess = (response, behandlingIdentifier) => (dispatch) => {
   dispatch({
     type: RESOLVE_PROSESS_AKSJONSPUNKTER_SUCCESS,
   });
-  if (shouldUpdateInfo) {
-    return dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer))
-      .then(() => dispatch(innsynBehandlingApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true })));
-  }
-  return true;
+  return dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer))
+    .then(() => dispatch(innsynBehandlingApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true })));
 };
 
-export const resolveProsessAksjonspunkter = (behandlingIdentifier, params, shouldUpdateInfo) => (dispatch) => {
+export const resolveProsessAksjonspunkter = (behandlingIdentifier, params) => (dispatch) => {
   dispatch(resolveProsessAksjonspunkterStarted());
   return dispatch(innsynBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params))
-    .then(response => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo)));
+    .then(response => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier)));
 };
 
 export const fetchPreviewBrev = innsynBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();

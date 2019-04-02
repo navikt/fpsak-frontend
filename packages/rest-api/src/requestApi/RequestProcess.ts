@@ -26,7 +26,7 @@ const getRestMethod = (httpClientApi: HttpClientApi, restMethodString: string) =
 const hasLocationAndStatusDelayedOrHalted = responseData => responseData.location && (responseData.status === asyncPollingStatus.DELAYED
   || responseData.status === asyncPollingStatus.HALTED);
 
-type Notify = (eventType: keyof typeof EventType, data?: any) => void
+type Notify = (eventType: keyof typeof EventType, data?: any, isPolling?: boolean) => void
 type NotificationEmitter = (eventType: keyof typeof EventType, data?: any) => void
 
 interface ResponseDataLink {
@@ -58,6 +58,8 @@ class RequestProcess {
   notify: Notify = () => undefined;
 
   isCancelled: boolean = false;
+
+  isPollingRequest: boolean = false;
 
   constructor(httpClientApi: HttpClientApi, restMethod: (url: string, params: any, responseType?: string) => Promise<Response>,
     path: string, config: RequestAdditionalConfig) {
@@ -101,7 +103,9 @@ class RequestProcess {
   };
 
   execLinkRequests = async (responseData: {links: ResponseDataLink[]}) => {
+    const linksToFetch = this.config.linksToFetchAutomatically;
     const requestList = responseData.links
+      .filter(link => linksToFetch.length === 0 || linksToFetch.includes(link.rel))
       .map(link => () => this.execute(// eslint-disable-line no-use-before-define
         link.href, getRestMethod(this.httpClientApi, link.type), link.requestPayload,
       ).then((response: SuccessResponse) => Promise.resolve({ [link.rel]: response.data })));
@@ -116,6 +120,7 @@ class RequestProcess {
   execute = async (path: string, restMethod: (path: string, params?: any) => Promise<Response>, params: any): Promise<Response> => {
     let response = await restMethod(path, params);
     if ('status' in response && response.status === HTTP_ACCEPTED) {
+      this.isPollingRequest = true;
       try {
         response = await this.execLongPolling(response.headers.location);
       } catch (error) {
@@ -151,10 +156,10 @@ class RequestProcess {
       }
 
       const responseData = response.data;
-      this.notify(EventType.REQUEST_FINISHED, responseData);
+      this.notify(EventType.REQUEST_FINISHED, responseData, this.isPollingRequest);
       return responseData ? { payload: responseData } : { payload: [] };
     } catch (error) {
-      new RequestErrorEventHandler(this.notify).handleError(error);
+      new RequestErrorEventHandler(this.notify, this.isPollingRequest).handleError(error);
       throw error;
     }
   }

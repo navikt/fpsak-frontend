@@ -1,33 +1,30 @@
+import { RequestRunner } from '@fpsak-frontend/rest-api';
 import { ActionTypes } from './ActionTypesTsType';
 
 /**
-   * createRequestActionType
+   * createActionType og createActionTypeWithoutPath
    * Hjelpefunksjon for å generere actionType for actions relatert til AJAX-kall
    *
    * Eks: createRequestActionType('fetchBehandlinger', 'ERROR', get, '/fpsak/api/behandlinger') -> '@@REST/fetchBehandlinger GET /fpsak/api/behandlinger ERROR'
    */
-const createRequestActionType = (name, qualifier, restMethod = '', path = '') => [`@@REST/${name}`, restMethod, path, qualifier]
-  .filter(s => s !== '')
-  .join(' ');
+const createActionType = (name, qualifier, restMethod = '', path = '') => `@@REST/${name} ${restMethod} ${path} ${qualifier}`;
+const createActionTypeWithoutPath = (name, qualifier) => `@@REST/${name} ${qualifier}`;
 
-const getCopyDataActionTypes = name => ({
-  copyDataStarted: createRequestActionType(name, 'COPY_DATA_STARTED'),
-  copyDataFinished: createRequestActionType(name, 'COPY_DATA_FINISHED'),
-});
+const getName = requestRunner => requestRunner.getName();
+const getRestMethod = requestRunner => requestRunner.getRestMethodName();
+const getPath = requestRunner => requestRunner.getPath();
 
-const getDefaultActionTypes = (name, restMethod, path) => ({
-  ...getCopyDataActionTypes(name),
-  requestStarted: createRequestActionType(name, 'STARTED', restMethod, path),
-  requestFinished: createRequestActionType(name, 'FINISHED', restMethod, path),
-  requestError: createRequestActionType(name, 'ERROR', restMethod, path),
-  reset: createRequestActionType(name, 'RESET'),
-});
-
-const getAsyncActionTypes = (name, restMethod, path) => ({
-  updatePollingMessage: createRequestActionType(name, 'POLLING_MESSAGE_RECEIVED', restMethod, path),
-  statusRequestStarted: createRequestActionType(name, 'STATUS_STARTED', restMethod, path),
-  statusRequestFinished: createRequestActionType(name, 'STATUS_FINISHED', restMethod, path),
-  pollingTimeout: createRequestActionType(name, 'POLLING_TIMEOUT', restMethod, path),
+const getActionTypes = (requestRunner: RequestRunner) => ({
+  requestStarted: () => createActionType(getName(requestRunner), 'STARTED', getRestMethod(requestRunner), getPath(requestRunner)),
+  requestFinished: () => createActionType(getName(requestRunner), 'FINISHED', getRestMethod(requestRunner), getPath(requestRunner)),
+  requestError: () => createActionType(getName(requestRunner), 'ERROR', getRestMethod(requestRunner), getPath(requestRunner)),
+  reset: () => createActionTypeWithoutPath(getName(requestRunner), 'RESET'),
+  updatePollingMessage: () => createActionType(getName(requestRunner), 'POLLING_MESSAGE_RECEIVED', getRestMethod(requestRunner), getPath(requestRunner)),
+  statusRequestStarted: () => createActionType(getName(requestRunner), 'STATUS_STARTED', getRestMethod(requestRunner), getPath(requestRunner)),
+  statusRequestFinished: () => createActionType(getName(requestRunner), 'STATUS_FINISHED', getRestMethod(requestRunner), getPath(requestRunner)),
+  pollingTimeout: () => createActionType(getName(requestRunner), 'POLLING_TIMEOUT', getRestMethod(requestRunner), getPath(requestRunner)),
+  copyDataStarted: () => createActionTypeWithoutPath(getName(requestRunner), 'COPY_DATA_STARTED'),
+  copyDataFinished: () => createActionTypeWithoutPath(getName(requestRunner), 'COPY_DATA_FINISHED'),
 });
 
 /**
@@ -41,8 +38,5 @@ const getAsyncActionTypes = (name, restMethod, path) => ({
    *   requestFinished: '@@REST GET /fpsak/api/behandlinger FINISHED',
    * }
    */
-const createRequestActionTypes = (isAsync: boolean, name: string, restMethod: string, path: string): ActionTypes => (isAsync
-  ? { ...getDefaultActionTypes(name, restMethod, path), ...getAsyncActionTypes(name, restMethod, path) }
-  : getDefaultActionTypes(name, restMethod, path));
-
+const createRequestActionTypes = (requestRunner: RequestRunner): ActionTypes => getActionTypes(requestRunner);
 export default createRequestActionTypes;

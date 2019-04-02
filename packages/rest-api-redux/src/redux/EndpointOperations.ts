@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import RequestConfig from '@fpsak-frontend/rest-api';
+import { RequestConfig } from '@fpsak-frontend/rest-api';
 import { State } from './createRequestReducer';
 
 import ReduxApiCreator from './ReduxApiCreator';
@@ -18,7 +18,7 @@ class EndpointOperations {
     this.reduxApiCreator = reduxApiCreator;
     this.contextPath = contextPath;
     this.name = config.name;
-    this.path = config.path ? `/${contextPath}${config.path}` : '';
+    this.path = config.path && contextPath ? `/${contextPath}${config.path}` : config.path;
   }
 
   makeRestApiRequest = () => this.reduxApiCreator.makeRequestActionCreator(this.name);

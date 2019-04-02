@@ -85,9 +85,19 @@ describe('BehandlingMenu-reducer', () => {
     };
     behandlingUpdater.setUpdater(updater);
 
+    const data = {
+      resource: 'resource',
+    };
+    const headers = {
+      location: 'status-url',
+    };
     mockAxios
       .onPut(fpsakApi.NEW_BEHANDLING.path)
+      .reply(202, data, headers);
+    mockAxios
+      .onGet(headers.location)
       .reply(200, fagsak);
+
     mockAxios
       .onGet(fpsakApi.ALL_DOCUMENTS_FPSAK.path)
       .replyOnce(200, { dokId: 10 });
@@ -106,12 +116,15 @@ describe('BehandlingMenu-reducer', () => {
 
     return store.dispatch(createNewForstegangsbehandling(push, fagsak.saksnummer, params))
       .then(() => {
-        expect(store.getActions()).to.have.length(11);
-        const [requestStartedAction, requestFinishedAction] = store.getActions();
+        expect(store.getActions()).to.have.length(13);
+        const [requestStartedAction, requestStatusStartedAction, requestStatusFinishedAction, requestFinishedAction] = store.getActions();
 
         expect(requestStartedAction.type).to.contain('fpsak/api/behandlinger STARTED');
         expect(requestStartedAction.payload.params).is.eql(params);
         expect(requestStartedAction.meta).is.eql({ options: {} });
+
+        expect(requestStatusStartedAction.type).to.contain('fpsak/api/behandlinger STATUS_STARTED');
+        expect(requestStatusFinishedAction.type).to.contain('fpsak/api/behandlinger STATUS_FINISHED');
 
         expect(requestFinishedAction.type).to.contain('fpsak/api/behandlinger FINISHED');
         expect(requestFinishedAction.payload).is.eql(fagsak);

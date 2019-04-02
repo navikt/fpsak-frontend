@@ -7,10 +7,6 @@ import { reducerRegistry, setRequestPollingMessage } from '@fpsak-frontend/fp-fe
 export const TilbakekrevingBehandlingApiKeys = {
   BEHANDLING: 'BEHANDLING',
   UPDATE_ON_HOLD: 'UPDATE_ON_HOLD',
-  BEHANDLING_ON_HOLD: 'BEHANDLING_ON_HOLD',
-  RESUME_BEHANDLING: 'RESUME_BEHANDLING',
-  NY_BEHANDLENDE_ENHET: 'NY_BEHANDLENDE_ENHET',
-  HENLEGG_BEHANDLING: 'HENLEGG_BEHANDLING',
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
   SAVE_OVERSTYRT_AKSJONSPUNKT: 'SAVE_OVERSTYRT_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
@@ -21,10 +17,6 @@ export const TilbakekrevingBehandlingApiKeys = {
 const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/api/behandlinger', TilbakekrevingBehandlingApiKeys.BEHANDLING)
   .withPost('/api/behandlinger/endre-pa-vent', TilbakekrevingBehandlingApiKeys.UPDATE_ON_HOLD)
-  .withPost('/api/behandlinger/sett-pa-vent', TilbakekrevingBehandlingApiKeys.BEHANDLING_ON_HOLD)
-  .withAsyncPost('/api/behandlinger/gjenoppta', TilbakekrevingBehandlingApiKeys.RESUME_BEHANDLING)
-  .withPost('/api/behandlinger/bytt-enhet', TilbakekrevingBehandlingApiKeys.NY_BEHANDLENDE_ENHET)
-  .withPost('/api/behandlinger/henlegg', TilbakekrevingBehandlingApiKeys.HENLEGG_BEHANDLING)
 
   /* /api/behandling */
   .withAsyncPost('/api/behandling/aksjonspunkt', TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT)

@@ -35,42 +35,40 @@ class RestDuck {
 
   reduxEvents: ReduxEvents;
 
+  resultKeyActionCreators: any;
+
   $$duck: {
     actionTypes?: any;
     actionCreators?: any;
     reducer?: any;
   };
 
-  constructor(requestRunner: RequestRunner, getApiContext: (state: any) => any, reduxEvents: ReduxEvents) {
+  constructor(requestRunner: RequestRunner, getApiContext: (state: any) => any, reduxEvents: ReduxEvents, resultKeyActionCreators) {
     this.requestRunner = requestRunner;
     this.name = requestRunner.getName();
     this.getApiContext = getApiContext;
     this.reduxEvents = reduxEvents;
     this.$$duck = {}; // for class internal use
+    this.resultKeyActionCreators = resultKeyActionCreators;
   }
 
   get actionTypes() {
     if (!this.$$duck.actionTypes) {
-      this.$$duck.actionTypes = createRequestActionTypes(
-        this.requestRunner.isAsyncRestMethod(),
-        this.name,
-        this.requestRunner.getRestMethodName(),
-        this.requestRunner.getPath(),
-      );
+      this.$$duck.actionTypes = createRequestActionTypes(this.requestRunner);
     }
     return this.$$duck.actionTypes;
   }
 
   get actionCreators() {
     if (!this.$$duck.actionCreators) {
-      this.$$duck.actionCreators = createRequestActionCreators(this.requestRunner, this.actionTypes, this.reduxEvents);
+      this.$$duck.actionCreators = createRequestActionCreators(this.requestRunner, this.actionTypes, this.reduxEvents, this.resultKeyActionCreators);
     }
     return this.$$duck.actionCreators;
   }
 
   get reducer() {
     if (!this.$$duck.reducer) {
-      this.$$duck.reducer = createRequestReducer(this.requestRunner.isAsyncRestMethod(), this.actionTypes);
+      this.$$duck.reducer = createRequestReducer(this.actionTypes, this.name);
     }
     return this.$$duck.reducer;
   }

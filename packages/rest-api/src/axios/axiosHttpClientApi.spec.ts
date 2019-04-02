@@ -165,16 +165,4 @@ describe('axiosHttpClientApi', () => {
 
     expect(result.data).to.eql({ resource: true });
   });
-
-  it('skal finne ut at rest-metode er asynkron (long polling)', () => {
-    const isAsync = httpClientApi.isAsyncRestMethod(httpClientApi.putAsync);
-    // eslint-disable-next-line no-unused-expressions
-    expect(isAsync).to.true;
-  });
-
-  it('skal finne ut at rest-metode er synkron', () => {
-    const isAsync = httpClientApi.isAsyncRestMethod(httpClientApi.putAsync);
-    // eslint-disable-next-line no-unused-expressions
-    expect(isAsync).to.true;
-  });
 });

@@ -5,7 +5,7 @@ import TimeoutError from './TimeoutError';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
-type NotificationEmitter = (eventType: keyof typeof EventType, data?: any) => void
+type NotificationEmitter = (eventType: keyof typeof EventType, data?: any, isPollingRequest?: boolean) => void
 
 const isString = value => typeof value === 'string';
 
@@ -37,8 +37,11 @@ const blobParser = (blob: any): Promise<string> => {
 class RequestErrorEventHandler {
   notify: NotificationEmitter
 
-  constructor(notificationEmitter: NotificationEmitter) {
+  isPollingRequest: boolean
+
+  constructor(notificationEmitter: NotificationEmitter, isPollingRequest: boolean) {
     this.notify = notificationEmitter;
+    this.isPollingRequest = isPollingRequest;
   }
 
   handleError = async (error: ErrorType | TimeoutError) => {
@@ -56,13 +59,13 @@ class RequestErrorEventHandler {
       }
     }
     if (is401Error(formattedError.status) && !isDevelopment) {
-      this.notify(EventType.REQUEST_ERROR, { message: error.message });
+      this.notify(EventType.REQUEST_ERROR, { message: error.message }, this.isPollingRequest);
     } else if (is418Error(formattedError.status)) {
       this.notify(EventType.POLLING_HALTED_OR_DELAYED, formattedError.data);
     } else if (!error.response && error.message) {
-      this.notify(EventType.REQUEST_ERROR, { message: error.message });
+      this.notify(EventType.REQUEST_ERROR, { message: error.message }, this.isPollingRequest);
     } else if (!isHandledError(formattedError.type)) {
-      this.notify(EventType.REQUEST_ERROR, this.getFormattedData(formattedError.data));
+      this.notify(EventType.REQUEST_ERROR, this.getFormattedData(formattedError.data), this.isPollingRequest);
     }
   };
 

@@ -19,11 +19,13 @@ import {
   getFagsakYtelseType, isForeldrepengerFagsak,
 } from 'fagsak/fagsakSelectors';
 import { getFeatureToggles } from 'app/duck';
+import { reduxRestApi } from 'data/fpsakApi';
 import {
   setSelectedBehandlingId, getSelectedBehandlingId, setBehandlingInfoHolder, resetBehandlingContext as resetBehandlingContextActionCreator,
 } from './duck';
 import {
   getBehandlingerVersjonMappedById, getBehandlingerTypesMappedById, getBehandlingerAktivPapirsoknadMappedById, getAvsluttedeBehandlinger,
+  getBehandlingerLinksMappedById,
 } from './selectors/behandlingerSelectors';
 import behandlingUpdater from './BehandlingUpdater';
 import appContextUpdater from './AppContextUpdater';
@@ -70,7 +72,25 @@ export class BehandlingIndex extends Component {
       }).isRequired,
       avsluttet: PropTypes.string,
     })).isRequired,
+    behandlingLinks: PropTypes.arrayOf(PropTypes.shape({
+      href: PropTypes.string.isRequired,
+      rel: PropTypes.string.isRequired,
+      requestPayload: PropTypes.any,
+      type: PropTypes.string.isRequired,
+    })).isRequired,
   };
+
+  componentWillMount() {
+    const { behandlingLinks } = this.props;
+    reduxRestApi.injectPaths(behandlingLinks);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { behandlingId, behandlingLinks } = this.props;
+    if (behandlingId !== prevProps.behandlingId) {
+      reduxRestApi.injectPaths(behandlingLinks);
+    }
+  }
 
   componentWillUnmount() {
     const { resetBehandlingContext } = this.props;
@@ -210,6 +230,7 @@ const mapStateToProps = (state) => {
     },
     allDocuments: getAllDocuments(state),
     avsluttedeBehandlinger: getAvsluttedeBehandlinger(state),
+    behandlingLinks: getBehandlingerLinksMappedById(state)[behandlingId],
   };
 };
 

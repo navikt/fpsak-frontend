@@ -30,7 +30,7 @@ export const resetBehandlingMenuData = () => ({
   type: RESET_BEHANDLING_MENU,
 });
 
-export const shelveBehandling = params => dispatch => behandlingUpdater.shelveBehandling(dispatch, params);
+export const shelveBehandling = params => dispatch => dispatch(fpsakApi.HENLEGG_BEHANDLING.makeRestApiRequest()(params));
 
 export const createNewForstegangsbehandling = (push, saksnummer, params) => dispatch => behandlingUpdater.resetBehandling(dispatch)
   .then(() => dispatch(fpsakApi.NEW_BEHANDLING.makeRestApiRequest()(params)))
@@ -58,20 +58,21 @@ export const createNewForstegangsbehandling = (push, saksnummer, params) => disp
 const updateFagsakAndBehandlingInfo = behandlingIdentifier => dispatch => dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer))
   .then(() => behandlingUpdater.updateBehandling(dispatch, behandlingIdentifier));
 
-export const setBehandlingOnHold = (params, behandlingIdentifier) => dispatch => behandlingUpdater.setBehandlingOnHold(dispatch, params)
+export const setBehandlingOnHold = (params, behandlingIdentifier) => dispatch => dispatch(fpsakApi.BEHANDLING_ON_HOLD.makeRestApiRequest()(params))
   .then(() => dispatch(setHasSubmittedPaVentForm()))
   .then(() => dispatch(updateFagsakAndBehandlingInfo(behandlingIdentifier)));
 
-export const resumeBehandling = (behandlingIdentifier, params) => dispatch => behandlingUpdater.resumeBehandling(dispatch, params)
+export const resumeBehandling = (behandlingIdentifier, params) => dispatch => dispatch(fpsakApi.RESUME_BEHANDLING.makeRestApiRequest()(params))
   .then(response => Promise.all([
     dispatch(updateBehandlingsupportInfo(behandlingIdentifier.saksnummer)),
     behandlingUpdater.setBehandlingResult(dispatch, response.payload, behandlingIdentifier.toJson(), { keepData: true }),
   ]));
 
-export const nyBehandlendeEnhet = (params, behandlingIdentifier) => dispatch => behandlingUpdater.changeBehandlendeEnhet(dispatch, params)
+export const nyBehandlendeEnhet = (params, behandlingIdentifier) => dispatch => dispatch(fpsakApi.BEHANDLING_NY_BEHANDLENDE_ENHET.makeRestApiRequest()(params))
   .then(() => dispatch(updateFagsakAndBehandlingInfo(behandlingIdentifier)));
 
-export const openBehandlingForChanges = (params, behandlingIdentifier) => dispatch => behandlingUpdater.openBehandlingForChanges(dispatch, params)
+export const openBehandlingForChanges = (params, behandlingIdentifier) => dispatch => dispatch(fpsakApi.OPEN_BEHANDLING_FOR_CHANGES
+    .makeRestApiRequest()(params))
   .then(response => behandlingUpdater.setBehandlingResult(dispatch, response.payload, behandlingIdentifier.toJson(), { keepData: true }))
   .then(() => dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer)));
 

@@ -12,5 +12,4 @@ export interface HttpClientApi {
   getAsync: (url: string, params: any) => Promise<Response>;
   postAsync: (url: string, params: any) => Promise<Response>;
   putAsync: (url: string, params: any) => Promise<Response>;
-  isAsyncRestMethod: (restMethod: any) => boolean;
 }

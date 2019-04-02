@@ -76,8 +76,8 @@ describe('RestDuck (async)', () => {
     return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
       .then(() => {
         const [requestStartedAction, requestFinishedAction] = store.getActions();
-        expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted);
-        expect(requestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestFinished);
+        expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted());
+        expect(requestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestFinished());
         const stateAfterRequestStarted = asyncGetRessursDuck.reducer(undefined, requestStartedAction);
 
         expect(stateAfterRequestStarted).to.eql({
@@ -133,10 +133,10 @@ describe('RestDuck (async)', () => {
     return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
       .then(() => {
         const [requestStartedAction, requestStatusStartedAction, requestStatusFinishedAction, requestFinishedAction] = store.getActions();
-        expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted);
-        expect(requestStatusStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestStarted);
-        expect(requestStatusFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestFinished);
-        expect(requestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestFinished);
+        expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted());
+        expect(requestStatusStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestStarted());
+        expect(requestStatusFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestFinished());
+        expect(requestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestFinished());
 
         const stateAfterRequestStarted = asyncGetRessursDuck.reducer(undefined, requestStartedAction);
         expect(stateAfterRequestStarted).to.eql({
@@ -225,13 +225,13 @@ describe('RestDuck (async)', () => {
           secondStatusRequestStartedAction,
           secondStatusRequestFinishedAction,
           requestFinishedAction] = store.getActions();
-        expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted);
-        expect(firstStatusRequestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestStarted);
-        expect(firstStatusRequestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestFinished);
-        expect(updatePollingMessageAction.type).to.eql(asyncGetRessursDuck.actionTypes.updatePollingMessage);
-        expect(secondStatusRequestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestStarted);
-        expect(secondStatusRequestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestFinished);
-        expect(requestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestFinished);
+        expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted());
+        expect(firstStatusRequestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestStarted());
+        expect(firstStatusRequestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestFinished());
+        expect(updatePollingMessageAction.type).to.eql(asyncGetRessursDuck.actionTypes.updatePollingMessage());
+        expect(secondStatusRequestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestStarted());
+        expect(secondStatusRequestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestFinished());
+        expect(requestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestFinished());
         const stateAfterRequestStarted = asyncGetRessursDuck.reducer(undefined, requestStartedAction);
         expect(stateAfterRequestStarted).to.eql({
           data: undefined,
@@ -362,8 +362,8 @@ describe('RestDuck (async)', () => {
     return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
       .then(() => {
         const [requestStartedAction, requestFinishedAction] = store.getActions();
-        expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted);
-        expect(requestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestFinished);
+        expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted());
+        expect(requestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestFinished());
 
         const stateAfterRequestStarted = asyncGetRessursDuck.reducer(undefined, requestStartedAction);
         expect(stateAfterRequestStarted).to.eql({
@@ -424,7 +424,7 @@ describe('RestDuck (async)', () => {
     const params = { id: 'id' };
 
     const result = await store.dispatch(asyncGetRessursDuck.actionCreators.execSetData(behandling, params));
-    expect(result.type).to.eql(asyncGetRessursDuck.actionTypes.copyDataFinished);
+    expect(result.type).to.eql(asyncGetRessursDuck.actionTypes.copyDataFinished());
     expect(result.payload).to.eql(behandling);
   });
 
@@ -443,8 +443,8 @@ describe('RestDuck (async)', () => {
     return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
       .catch(() => {
         const [requestStartedAction, requestErrorAction] = store.getActions();
-        expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted);
-        expect(requestErrorAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestError);
+        expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted());
+        expect(requestErrorAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestError());
 
         const stateAfterRequestStarted = asyncGetRessursDuck.reducer(undefined, requestStartedAction);
         expect(stateAfterRequestStarted).to.eql({
@@ -500,9 +500,9 @@ describe('RestDuck (async)', () => {
     return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
       .catch(() => {
         const [requestStartedAction, requestStatusStartedAction, requestErrorAction] = store.getActions();
-        expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted);
-        expect(requestStatusStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestStarted);
-        expect(requestErrorAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestError);
+        expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted());
+        expect(requestStatusStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestStarted());
+        expect(requestErrorAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestError());
 
         const stateAfterRequestStarted = asyncGetRessursDuck.reducer(undefined, requestStartedAction);
         expect(stateAfterRequestStarted).to.eql({
@@ -585,8 +585,8 @@ describe('RestDuck (async)', () => {
     return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
       .catch(() => {
         const [requestStartedAction, requestErrorAction] = store.getActions();
-        expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted);
-        expect(requestErrorAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestError);
+        expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted());
+        expect(requestErrorAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestError());
 
         const stateAfterRequestStarted = asyncGetRessursDuck.reducer(undefined, requestStartedAction);
         expect(stateAfterRequestStarted).to.eql({

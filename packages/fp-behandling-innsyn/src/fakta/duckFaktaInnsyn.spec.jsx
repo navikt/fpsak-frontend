@@ -2,11 +2,12 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
+
 import { withoutRestActions } from '@fpsak-frontend/utils-test/src/data-test-helper';
-
+import { sakOperations } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-import innsynBehandlingApi, { reduxRestApi } from '../data/innsynBehandlingApi';
 
+import innsynBehandlingApi, { reduxRestApi } from '../data/innsynBehandlingApi';
 import {
   setOpenInfoPanels, faktaReducer, resolveFaktaAksjonspunkter, RESOLVE_FAKTA_AKSJONSPUNKTER_STARTED, RESOLVE_FAKTA_AKSJONSPUNKTER_SUCCESS,
 }
@@ -60,8 +61,25 @@ describe('Fakta-reducer', () => {
   });
 
   it('skal avklare aksjonspunkter', () => {
+    reduxRestApi.injectPaths([{
+      href: '/lagre-ap',
+      rel: 'bekreft-aksjonspunkt',
+      type: 'POST',
+    }]);
+
+    sakOperations.withUpdateFagsakInfo(() => ({ type: 'SET-FAGSAK-INFO' }));
+
+    const data = {
+      resource: 'resource',
+    };
+    const headers = {
+      location: 'status-url',
+    };
     mockAxios
       .onPost(innsynBehandlingApi.SAVE_AKSJONSPUNKT.path)
+      .reply(202, data, headers);
+    mockAxios
+      .onGet(headers.location)
       .reply(200, [{ vurdering: 'test' }]);
 
     const store = mockStore();
@@ -71,7 +89,7 @@ describe('Fakta-reducer', () => {
       .catch(e => e) // Don't care if other APIs fail
       .then(() => {
         const actions = withoutRestActions(store.getActions());
-        expect(actions).to.have.length(3);
+        expect(actions).to.have.length(4);
         const [resolveFaktaStartedAction, pollingMessageAction, resolveFaktaSuccessAction] = actions;
         expect(resolveFaktaStartedAction).to.have.property('type', RESOLVE_FAKTA_AKSJONSPUNKTER_STARTED);
         expect(pollingMessageAction).to.have.property('type', 'pollingMessage/SET_REQUEST_POLLING_MESSAGE');

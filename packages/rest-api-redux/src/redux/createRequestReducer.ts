@@ -1,6 +1,6 @@
 import { ActionTypes } from './ActionTypesTsType';
 
-const initialStateAsync = {
+const initialState = {
   data: undefined,
   meta: undefined,
   error: undefined,
@@ -10,14 +10,6 @@ const initialStateAsync = {
   statusRequestFinished: false,
   pollingMessage: undefined,
   pollingTimeout: false,
-};
-
-const initialStateSync = {
-  data: undefined,
-  meta: undefined,
-  error: undefined,
-  started: false,
-  finished: false,
 };
 
 export interface State {
@@ -51,13 +43,14 @@ interface Action {
    *   actionTypes.requestFinished
    *   actionTypes.requestError
    */
-const createRequestReducer = (isAsync: boolean, actionTypes: ActionTypes) => {
-  const initialState = isAsync ? initialStateAsync : initialStateSync;
-
-  return (state: State = initialState, action: Action = { type: '' }) => { // NOSONAR Switch brukes som standard i reducers
+const createRequestReducer = (actionTypes: ActionTypes, name: string) => (state: State = initialState,
+  action: Action = { type: '' }) => { // NOSONAR Switch brukes som standard i reducers
+    if (!action.type.includes(`@@REST/${name}`)) {
+      return state;
+    }
     switch (action.type) {
-      case actionTypes.requestStarted:
-      case actionTypes.copyDataStarted: {
+      case actionTypes.requestStarted():
+      case actionTypes.copyDataStarted(): {
         return {
           ...initialState,
           data: action.meta && action.meta.options.keepData ? state.data : initialState.data,
@@ -65,48 +58,46 @@ const createRequestReducer = (isAsync: boolean, actionTypes: ActionTypes) => {
           meta: action.payload,
         };
       }
-      case actionTypes.statusRequestStarted:
+      case actionTypes.statusRequestStarted():
         return {
           ...state,
           statusRequestStarted: true,
           statusRequestFinished: false,
         };
-      case actionTypes.updatePollingMessage:
+      case actionTypes.updatePollingMessage():
         return {
           ...state,
           pollingMessage: action.payload,
         };
-      case actionTypes.pollingTimeout:
+      case actionTypes.pollingTimeout():
         return {
           ...state,
           pollingTimeout: true,
         };
-      case actionTypes.statusRequestFinished:
+      case actionTypes.statusRequestFinished():
         return {
           ...state,
           statusRequestStarted: false,
           statusRequestFinished: true,
         };
-      case actionTypes.requestFinished:
-      case actionTypes.copyDataFinished: {
-        const newState = {
+      case actionTypes.requestFinished():
+      case actionTypes.copyDataFinished():
+        return {
           ...state,
           started: false,
           finished: true,
           data: action.payload,
+          pollingMessage: undefined,
         };
-        return isAsync ? { ...newState, pollingMessage: undefined } : newState;
-      }
-      case actionTypes.requestError: {
-        const newState = {
+      case actionTypes.requestError():
+        return {
           ...state,
           data: undefined,
           started: false,
           error: action.payload,
+          pollingMessage: undefined,
         };
-        return isAsync ? { ...newState, pollingMessage: undefined } : newState;
-      }
-      case actionTypes.reset:
+      case actionTypes.reset():
         return {
           ...initialState,
         };
@@ -114,6 +105,5 @@ const createRequestReducer = (isAsync: boolean, actionTypes: ActionTypes) => {
         return state;
     }
   };
-};
 
 export default createRequestReducer;

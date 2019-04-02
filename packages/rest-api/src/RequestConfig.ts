@@ -13,12 +13,17 @@ export const RequestType = {
 /**
  * maxPollingLimit: Maksimum antall ganger en skal forsøke å polle når en venter på ressurs (long polling). Kun aktuell ved metodene som inkluderer "Async".
  * fetchLinkDataAutomatically: Når satt til true blir "links" i en respons utført automatisk og resultatene fra desse kallene blir aggregert til en respons.
- * addLinkDataToArray: Når satt til true blir data hentet fra "links" lagt til i samme array (i responsen). Er kun aktuell når fetchLinkDataAutomatically=true.
+ * linksToFetchAutomatically: Liste med rel's som skal hentes automatisk
+ * addLinkDataToArray: Når satt til true blir data hentet fra "links" lagt til i samme array (i responsen). Er kun aktuell når
+ *  fetchLinkDataAutomatically=true.
+ * storeResultKey: Bruk denne når en utfører long-polling og resultatet skal lagres på en annen nøkkel en den som initierer kallet.
  */
 const defaultConfig = {
   maxPollingLimit: undefined,
   fetchLinkDataAutomatically: true,
+  linksToFetchAutomatically: [],
   addLinkDataToArray: false,
+  storeResultKey: undefined,
 };
 const formatConfig = (config = {}) => ({
   ...defaultConfig,
@@ -31,16 +36,18 @@ const formatConfig = (config = {}) => ({
 class RequestConfig {
     name: string;
 
-    config: RequestAdditionalConfig;
+    config?: RequestAdditionalConfig;
 
-    path: string;
+    path?: string;
 
-    restMethod: string = RequestType.GET;
+    restMethod?: string = RequestType.GET;
 
-    constructor(name: string, path: string, config?: RequestAdditionalConfig) {
+    rel?: string;
+
+    constructor(name: string, path?: string, config?: RequestAdditionalConfig) {
       this.name = name;
-      this.config = formatConfig(config);
       this.path = path;
+      this.config = formatConfig(config);
     }
 
     withGetMethod = () => {
@@ -75,6 +82,16 @@ class RequestConfig {
 
     withPostAndOpenBlob = () => {
       this.restMethod = RequestType.POST_AND_OPEN_BLOB;
+      return this;
+    }
+
+    withRel = (rel: string) => {
+      this.rel = rel;
+      return this;
+    }
+
+    withRestMethod = (restMethod: string) => {
+      this.restMethod = restMethod.toUpperCase();
       return this;
     }
 }

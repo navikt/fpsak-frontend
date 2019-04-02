@@ -78,9 +78,6 @@ const getAsync = axiosInstance => (url: string, params: any) => get(axiosInstanc
 const postAsync = axiosInstance => (url: string, params: any) => post(axiosInstance)(url, params);
 const putAsync = axiosInstance => (url: string, params: any) => put(axiosInstance)(url, params);
 
-const isAsyncRestMethod = allRestMethods => (restMethod: any) => restMethod === allRestMethods.getAsync
-|| restMethod === allRestMethods.postAsync || restMethod === allRestMethods.putAsync;
-
 const initRestMethods = (axiosInstance: any) => {
   const restMethods = {
     get: get(axiosInstance),
@@ -96,7 +93,6 @@ const initRestMethods = (axiosInstance: any) => {
 
   return {
     ...restMethods,
-    isAsyncRestMethod: isAsyncRestMethod(restMethods),
   };
 };
 

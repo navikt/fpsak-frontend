@@ -46,7 +46,6 @@ const httpClientGeneralMock = {
   getAsync: () => undefined,
   postAsync: () => undefined,
   putAsync: () => undefined,
-  isAsyncRestMethod: () => undefined,
 };
 
 describe('RequestProcess', () => {
@@ -55,6 +54,7 @@ describe('RequestProcess', () => {
     maxPollingLimit: undefined,
     fetchLinkDataAutomatically: true,
     addLinkDataToArray: false,
+    linksToFetchAutomatically: [],
   };
 
   it('skal hente data via get-kall', async () => {

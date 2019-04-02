@@ -12,7 +12,7 @@ import {
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('Behandling-reducer', () => {
+describe('Førstegangsbehandling og revurdering-reducer', () => {
   let mockAxios;
 
   before(() => {
@@ -77,20 +77,32 @@ describe('Behandling-reducer', () => {
   });
 
   it('skal hente behandling', () => {
+    const data = {
+      resource: 'resource',
+    };
+    const headers = {
+      location: 'status-url',
+    };
     mockAxios
       .onPost(fpsakBehandlingApi.BEHANDLING.path)
+      .reply(202, data, headers);
+    mockAxios
+      .onGet(headers.location)
       .reply(200, { id: 456, osv: 'osv' });
 
     const store = mockStore();
     const behandlingIdentifier = new BehandlingIdentifier('123', '456');
     return store.dispatch(updateBehandling(behandlingIdentifier))
       .then(() => {
-        expect(store.getActions()).to.have.length(3);
-        const [requestStartedAction, requestFinishedAction] = store.getActions();
+        expect(store.getActions()).to.have.length(5);
+        const [requestStartedAction, requestStatusStartedAction, requestStatusFinishedAction, requestFinishedAction] = store.getActions();
 
         expect(requestStartedAction.type).to.contain('fpsak/api/behandlinger STARTED');
         expect(requestStartedAction.payload.params).is.eql({ behandlingId: '456', saksnummer: '123' });
         expect(requestStartedAction.meta).is.eql({ options: { keepData: true } });
+
+        expect(requestStatusStartedAction.type).to.contain('fpsak/api/behandlinger STATUS_STARTED');
+        expect(requestStatusFinishedAction.type).to.contain('fpsak/api/behandlinger STATUS_FINISHED');
 
         expect(requestFinishedAction.type).to.contain('fpsak/api/behandlinger FINISHED');
         expect(requestFinishedAction.payload).is.eql({ id: 456, osv: 'osv' });

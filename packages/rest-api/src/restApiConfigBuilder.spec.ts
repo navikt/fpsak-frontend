@@ -17,6 +17,8 @@ describe('RestApiConfigBuilder', () => {
       addLinkDataToArray: false,
       fetchLinkDataAutomatically: true,
       maxPollingLimit: undefined,
+      linksToFetchAutomatically: [],
+      storeResultKey: undefined,
     });
 
     expect(endpoints[1].name).is.eql('ESPENUTVIKLER');
@@ -26,6 +28,8 @@ describe('RestApiConfigBuilder', () => {
       addLinkDataToArray: false,
       fetchLinkDataAutomatically: true,
       maxPollingLimit: undefined,
+      linksToFetchAutomatically: [],
+      storeResultKey: undefined,
     });
   });
 });

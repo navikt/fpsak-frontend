@@ -18,6 +18,12 @@ const behandlingIListePropType = PropTypes.shape({
   behandlendeEnhetId: PropTypes.string.isRequired,
   behandlendeEnhetNavn: PropTypes.string.isRequired,
   erAktivPapirsoknad: PropTypes.bool.isRequired,
+  links: PropTypes.arrayOf(PropTypes.shape({
+    href: PropTypes.string.isRequired,
+    rel: PropTypes.string.isRequired,
+    requestPayload: PropTypes.any,
+    type: PropTypes.string.isRequired,
+  })).isRequired,
 });
 
 export default behandlingIListePropType;

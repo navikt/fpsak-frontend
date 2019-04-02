@@ -64,6 +64,7 @@ export const getBehandlingInnsynVedtaksdokumentasjon = createSelector(
 export const getBehandlingSprak = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.sprakkode);
 
 // SØKNAD
+// TODO (TOR) Denne kan vel fjernast?
 export const getSoknad = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.soknad);
 export const getBehandlingHasSoknad = createSelector([getSoknad], soknad => !!soknad);
 

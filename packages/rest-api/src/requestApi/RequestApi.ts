@@ -2,6 +2,7 @@ import RequestRunner from './RequestRunner';
 import RestApiRequestContext from './RestApiRequestContext';
 import { HttpClientApi } from '../HttpClientApiTsType';
 import RequestConfig from '../RequestConfig';
+import { Link } from './LinkTsType';
 
 /**
  * RequestApi
@@ -25,6 +26,18 @@ class RequestApi {
   getEndpointNames = (): string[] => Object.keys(this.requestRunnersMappedByName)
 
   getRequestRunner = (endpointName: string): RequestRunner => this.requestRunnersMappedByName[endpointName];
+
+  injectPaths = (links: Link[]) => {
+    Object.values(this.requestRunnersMappedByName).forEach((runner) => {
+      const { rel } = runner.getConfig();
+      if (rel) {
+        const link = links.find(l => l.rel === rel);
+        if (link) {
+          runner.injectLink(rel, link.href, link.type);
+        }
+      }
+    });
+  }
 
   getHttpClientApi = () => this.httpClientApi;
 }
