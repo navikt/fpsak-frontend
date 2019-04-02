@@ -2176,6 +2176,8 @@
   "Tilbakekreving.andelSomTilbakekreves": "Angi andel som skal tilbakekreves",
   "Tilbakekreving.RenterTillegges": "Skal det tillegges renter?",
 
+  "FeilutbetalingInfoPanel.Aksjonspunkt": "Kontroller at korrekt hendelse er satt",
+
   "IntegrationStatusPanel.ServiceDowntime": "Tredjepartstjeneste(r) har nedetid",
   "IntegrationStatusPanel.Downtime": "{system} har nedetid.",
   "IntegrationStatusPanel.DowntimeUntil": "{system} har nedetid frem til {datetime}.",

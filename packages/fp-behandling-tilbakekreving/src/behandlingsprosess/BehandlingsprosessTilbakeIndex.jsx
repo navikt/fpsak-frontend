@@ -13,8 +13,9 @@ import {
   trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta, BehandlingIdentifier,
 } from '@fpsak-frontend/fp-felles';
 import { BehandlingsprosessPanel } from '@fpsak-frontend/fp-behandling-felles';
+
 import findBehandlingsprosessIcon from 'behandlingTilbakekreving/src/behandlingsprosess/statusIconHelper';
-import TilbakekreveingBehandlingspunktInfoPanel from './components/TilbakekreveingBehandlingspunktInfoPanel';
+import TilbakekrevingBehandlingspunktInfoPanel from './components/TilbakekrevingBehandlingspunktInfoPanel';
 import {
   setSelectedBehandlingspunktNavn, resolveProsessAksjonspunkter, overrideProsessAksjonspunkter,
   resetBehandlingspunkter, getSelectedBehandlingspunktNavn,
@@ -146,7 +147,7 @@ export class BehandlingsprosessTilbakeIndex extends Component {
         getBehandlingspunkterTitleCodes={getBehandlingspunkterTitleCodes}
         getAksjonspunkterOpenStatus={getAksjonspunkterOpenStatus}
       >
-        <TilbakekreveingBehandlingspunktInfoPanel
+        <TilbakekrevingBehandlingspunktInfoPanel
           submitCallback={this.submitVilkar}
           dispatchSubmitFailed={submitFailedDispatch}
           selectedBehandlingspunkt={selectedBehandlingspunkt}

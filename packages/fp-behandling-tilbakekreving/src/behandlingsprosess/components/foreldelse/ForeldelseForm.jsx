@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import connect from 'react-redux/es/connect/connect';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { clearFields, formPropTypes } from 'redux-form';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+
 import {
   RadioOption, RadioGroupField, TextAreaField,
 } from '@fpsak-frontend/form';
-import { FormattedMessage, injectIntl } from 'react-intl';
 import {
   minLength,
   maxLength,
@@ -19,9 +20,10 @@ import {
 import {
   VerticalSpacer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
+
 import { getStatusPeriode } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
 import { behandlingForm } from '../../../behandlingForm';
-import foreldelseCodes from './foreldelseCodes';
+import foreldelseCodes from '../../foreldelseCodes';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);

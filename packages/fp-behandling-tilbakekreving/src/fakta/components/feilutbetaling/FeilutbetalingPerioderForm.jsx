@@ -1,17 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
+import PropTypes from 'prop-types';
+
 import { TableRow, TableColumn } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { SelectField } from '@fpsak-frontend/form';
-import moment from 'moment';
-import PropTypes from 'prop-types';
+
 import { behandlingFormValueSelector } from 'behandlingTilbakekreving/src/behandlingForm';
+
 import styles from './feilutbetalingPerioderTable.less';
 
 const getSubÅrsaker = (årsakNavn, årsaker) => {
   const årsak = årsaker.find(a => a.årsakKode === årsakNavn);
   return årsak && årsak.underÅrsaker.length > 0 ? årsak.underÅrsaker : null;
 };
+
 export const FeilutbetalingPerioderFormImpl = ({
   periode, årsak, elementId, årsaker, readOnly, resetFields,
 }) => {

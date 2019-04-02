@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table } from '@fpsak-frontend/shared-components';
 import moment from 'moment';
-import styles from './feilutbetalingPerioderTable.less';
+
+import { Table } from '@fpsak-frontend/shared-components';
+
 import FeilutbetalingPerioderForm from './FeilutbetalingPerioderForm';
+
+import styles from './feilutbetalingPerioderTable.less';
 
 const headerTextCodes = [
   'FeilutbetalingInfoPanel.Period',
@@ -17,6 +20,7 @@ const FeilutbetalingPerioderTable = ({
   <div className={styles.feilutbetalingTable}>
     <Table
       headerTextCodes={headerTextCodes}
+      noHover
     >
       { perioder.sort((a, b) => moment(a.fom) - moment(b.fom)).map((periode, index) => (
         <FeilutbetalingPerioderForm

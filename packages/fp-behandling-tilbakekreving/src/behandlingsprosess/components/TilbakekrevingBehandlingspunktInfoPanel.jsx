@@ -8,11 +8,12 @@ import {
   isBehandlingspunktAksjonspunkterSolvable,
   isSelectedBehandlingspunktReadOnly,
   getBehandlingspunktAksjonspunkterCodes,
+  isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt,
 } from '../behandlingsprosessTilbakeSelectors';
 import ForeldelsePanel from './foreldelse/ForeldelsePanel';
 import TilbakekrevingPanel from './tilbakekreving/TilbakekrevingPanel';
 
-import styles from './tilbakekreveingBehandlingspunktInfoPanel.less';
+import styles from './tilbakekrevingBehandlingspunktInfoPanel.less';
 
 const classNames = classnames.bind(styles);
 
@@ -22,13 +23,14 @@ const classNames = classnames.bind(styles);
  * Presentasjonskomponent. Viser panel gitt valgt behandlingspunkt. Finnes det en aksjonspunktkode blir denne
  * brukt til å velge panel. Finnes det ikke aksjonspunkter blir enten beregning, vedtak eller vilkårsresultatet vist.
  */
-export const TilbakekreveingBehandlingspunktInfoPanel = ({
+export const TilbakekrevingBehandlingspunktInfoPanel = ({
   openAksjonspunkt,
   readOnly,
   isApSolvable,
   submitCallback,
   selectedBehandlingspunkt,
   apCodes,
+  readOnlySubmitButton,
 }) => (
   <div className={classNames('behandlingsPunkt', { statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
     {ForeldelsePanel.supports(selectedBehandlingspunkt, apCodes)
@@ -38,6 +40,7 @@ export const TilbakekreveingBehandlingspunktInfoPanel = ({
         isApOpen={openAksjonspunkt}
         apCodes={apCodes}
         readOnly={readOnly}
+        readOnlySubmitButton={readOnlySubmitButton}
       />
     )
     }
@@ -53,20 +56,22 @@ export const TilbakekreveingBehandlingspunktInfoPanel = ({
   </div>
 );
 
-TilbakekreveingBehandlingspunktInfoPanel.propTypes = {
+TilbakekrevingBehandlingspunktInfoPanel.propTypes = {
   openAksjonspunkt: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   isApSolvable: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
   selectedBehandlingspunkt: PropTypes.string.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  readOnlySubmitButton: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
+  readOnlySubmitButton: isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
   openAksjonspunkt: hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
   readOnly: isSelectedBehandlingspunktReadOnly(state),
   isApSolvable: isBehandlingspunktAksjonspunkterSolvable(state),
   apCodes: getBehandlingspunktAksjonspunkterCodes(state),
 });
 
-export default connect(mapStateToProps)(TilbakekreveingBehandlingspunktInfoPanel);
+export default connect(mapStateToProps)(TilbakekrevingBehandlingspunktInfoPanel);
