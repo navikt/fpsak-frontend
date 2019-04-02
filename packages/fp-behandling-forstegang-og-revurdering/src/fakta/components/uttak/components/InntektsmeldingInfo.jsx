@@ -60,7 +60,7 @@ const renderAvvikContent = (periode, avvik) => {
   const {
     fom, tom, arbeidsprosent,
   } = periode;
-  const { isAvvikPeriode, isAvvikArbeidsprosent } = avvik;
+  const { isAvvikPeriode, isAvvikArbeidsprosent, isAvvikUtsettelse } = avvik;
   const numberOfDaysAndWeeks = calcDaysAndWeeks(fom, tom, 'YYYY-MM-DD');
   const isGradering = arbeidsprosent !== undefined && arbeidsprosent !== null;
   const tidenesEnde = tom === TIDENES_ENDE;
@@ -73,10 +73,10 @@ const renderAvvikContent = (periode, avvik) => {
         </FlexColumn>
         <FlexColumn>
           {!isGradering && (
-          <Element>
-            {periode.utsettelseArsak.navn}
+            <Normaltekst className={classNames('avvik', { hasAvvik: isAvvikUtsettelse })}>
+              {periode.utsettelseArsak.navn}
 :
-          </Element>
+            </Normaltekst>
           )}
           {isGradering && (
           <Element>
