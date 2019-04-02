@@ -39,7 +39,6 @@ export const renderPeriode = (
           cancelEditPeriode={cancelEditPeriode}
           readOnly={readOnly}
           arbeidstidprosent={arbeidstidprosent}
-          utsettelseArsak={utsettelseArsak}
           fraDato={fraDato}
           tilDato={tilDato}
           inntektsmeldingInfo={inntektsmeldingInfo}
@@ -59,11 +58,9 @@ export const renderPeriode = (
           readOnly={readOnly}
           fraDato={fraDato}
           tilDato={tilDato}
-          inntektsmeldingInfo={inntektsmeldingInfo}
-          utsettelseArsak={utsettelseArsak}
           overforingArsak={overforingArsak}
+          utsettelseArsak={utsettelseArsak}
           bekreftet={bekreftet}
-          arbeidsgiver={arbeidsgiver}
           behandlingStatusKode={behandlingStatusKode}
         />
       );
@@ -80,7 +77,6 @@ export const renderPeriode = (
           fraDato={fraDato}
           tilDato={tilDato}
           bekreftet={bekreftet}
-          arbeidsgiver={arbeidsgiver}
           behandlingStatusKode={behandlingStatusKode}
         />
       );
@@ -95,11 +91,9 @@ export const renderPeriode = (
             readOnly={readOnly}
             fraDato={fraDato}
             tilDato={tilDato}
-            inntektsmeldingInfo={inntektsmeldingInfo}
             utsettelseArsak={utsettelseArsak}
             overforingArsak={overforingArsak}
             bekreftet={bekreftet}
-            arbeidsgiver={arbeidsgiver}
             behandlingStatusKode={behandlingStatusKode}
           />
         );
@@ -117,7 +111,6 @@ export const renderPeriode = (
             fraDato={fraDato}
             tilDato={tilDato}
             bekreftet={bekreftet}
-            arbeidsgiver={arbeidsgiver}
             behandlingStatusKode={behandlingStatusKode}
           />
         );
@@ -133,7 +126,6 @@ export const renderPeriode = (
           arbeidstidprosent={arbeidstidprosent}
           fraDato={fraDato}
           tilDato={tilDato}
-          utsettelseArsak={utsettelseArsak}
           inntektsmeldingInfo={inntektsmeldingInfo}
           bekreftet={bekreftet}
           uttakPeriodeType={uttakPeriodeType}

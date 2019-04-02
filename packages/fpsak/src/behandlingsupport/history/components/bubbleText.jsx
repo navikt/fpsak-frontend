@@ -59,10 +59,8 @@ class BubbleText extends Component {
 
       if (expanded) {
         return (
-          <div>
-            <div>
-              {bodyText}
-            </div>
+          <>
+            <div>{bodyText}</div>
             <a
               href="#"
               onClick={this.handleClick}
@@ -72,13 +70,13 @@ class BubbleText extends Component {
             >
               <OppChevron />
             </a>
-          </div>
+          </>
         );
       }
 
       return (
-        <div>
-          <div>
+        <>
+          <div className={styles.breakWord}>
             {truncateText(bodyText, cutOffLength)}
           </div>
           <a
@@ -90,7 +88,7 @@ class BubbleText extends Component {
           >
             <NedChevron />
           </a>
-        </div>
+        </>
       );
     }
 

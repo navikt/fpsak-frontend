@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FieldArray } from 'redux-form';
 import { Undertekst } from 'nav-frontend-typografi';
-import { Column } from 'nav-frontend-grid';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { getFamiliehendelse, doesVilkarForSykdomOppfyltExist } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
@@ -18,7 +17,6 @@ import {
 } from '@fpsak-frontend/utils';
 import { FormattedMessage } from 'react-intl';
 import PerioderKnapper from './PerioderKnapper';
-import InntektsmeldingInfo from '../components/InntektsmeldingInfo';
 import DokumentertePerioderPeriodePicker from './DokumentertePerioderPeriodePicker';
 import styles from './periodeTyper.less';
 
@@ -36,9 +34,7 @@ export const SykdomOgSkadePeriode = ({
   readOnly,
   dokumentertePerioder,
   formSyncErrors,
-  inntektsmeldingInfo,
   behandlingStatusKode,
-  arbeidsgiver,
   ...formProps
 }) => {
   let errorHeight = 0;
@@ -70,17 +66,11 @@ export const SykdomOgSkadePeriode = ({
   return (
     <FlexContainer wrap>
       {formProps.error}
-      <FlexRow>
+      <FlexRow wrap>
         <FlexColumn className={styles.fieldColumn}>
-          <TextAreaField
-            name="begrunnelse"
-            label={{ id: 'UttakInfoPanel.Vurdering' }}
-            readOnly={readOnly}
-            validate={[required, minLength3, maxLength4000, hasValidText]}
-            textareaClass={styles.textAreaStyle}
-            maxLength={4000}
-          />
-          <Undertekst><FormattedMessage id="UttakInfoPanel.FastsettResultat" /></Undertekst>
+          <Undertekst>
+            <FormattedMessage id="UttakInfoPanel.FastsettResultat" />
+          </Undertekst>
           <VerticalSpacer fourPx />
           <RadioGroupField
             direction="vertical"
@@ -102,28 +92,27 @@ export const SykdomOgSkadePeriode = ({
           </RadioGroupField>
           {resultat === uttakPeriodeVurdering.PERIODE_OK && !readOnly && (
           <div className={styles.addPeriodeSykdom}>
-            <Column xs="12">
-              <ArrowBox>
-                <FieldArray
-                  name="dokumentertePerioder"
-                  component={DokumentertePerioderPeriodePicker}
-                  props={{ fraDato, tilDato, readOnly }}
-                />
-              </ArrowBox>
-            </Column>
+            <ArrowBox>
+              <FieldArray
+                name="dokumentertePerioder"
+                component={DokumentertePerioderPeriodePicker}
+                props={{ fraDato, tilDato, readOnly }}
+              />
+            </ArrowBox>
           </div>
           )}
-        </FlexColumn>
-        {inntektsmeldingInfo && (
-        <FlexColumn className={styles.fieldColumn}>
-          <div>
-            <InntektsmeldingInfo
-              inntektsmeldingInfo={inntektsmeldingInfo}
-              arbeidsgiver={arbeidsgiver}
+          <VerticalSpacer twentyPx />
+          <div className={styles.textAreaStyle}>
+            <TextAreaField
+              name="begrunnelse"
+              label={{ id: 'UttakInfoPanel.Vurdering' }}
+              readOnly={readOnly}
+              validate={[required, minLength3, maxLength4000, hasValidText]}
+              textareaClass={styles.textAreaStyle}
+              maxLength={4000}
             />
           </div>
         </FlexColumn>
-        )}
       </FlexRow>
       <FlexRow>
         <FlexColumn>
@@ -157,18 +146,14 @@ SykdomOgSkadePeriode.propTypes = {
   utsettelseArsak: PropTypes.shape().isRequired,
   overforingArsak: PropTypes.shape().isRequired,
   formSyncErrors: PropTypes.shape(),
-  inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.shape()),
-  arbeidsgiver: PropTypes.shape(),
   behandlingStatusKode: PropTypes.string,
 };
 
 SykdomOgSkadePeriode.defaultProps = {
   dokumentertePerioder: [{}],
   formSyncErrors: {},
-  inntektsmeldingInfo: [],
   resultat: undefined,
   behandlingStatusKode: undefined,
-  arbeidsgiver: {},
 };
 
 const validateSykdomOgSkadeForm = (

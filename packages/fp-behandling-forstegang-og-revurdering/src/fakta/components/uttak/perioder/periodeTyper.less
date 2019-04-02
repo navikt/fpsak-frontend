@@ -1,9 +1,5 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
-.container {
-  flex-wrap: wrap;
-}
-
 .fieldColumn {
   position: relative;
   width: 50%;
@@ -12,20 +8,21 @@
 .textAreaStyle {
   min-width: 300px;
   width: 100%;
+  word-break: break-all;
 }
 
-.addPeriodeSykdom {
-  position: absolute;
-  top: 186px;
-}
-
+.endreSoknadsperiode,
+.addPeriodeSykdom,
 .addPeriodeInnleggelse {
   position: absolute;
+}
+
+.addPeriodeSykdom,
+.addPeriodeInnleggelse {
   top: 76px;
 }
 
 .endreSoknadsperiode {
-  position: absolute;
   top: 94px;
 }
 
