@@ -62,8 +62,7 @@ const isAnyFormOpen = sinon.spy();
 const meta = {
   error: undefined,
 };
-const endringsDato = '2018-08-01';
-
+const endringsdato = '2018-08-01';
 
 describe('<UttakPeriode>', () => {
   it('skal vise UttakPeriode', () => {
@@ -83,7 +82,7 @@ describe('<UttakPeriode>', () => {
       readOnly
       samtidigUttak={perioder[0].samtidigUttak}
       flerbarnsdager={perioder[0].flerbarnsdager}
-      endringsDato={endringsDato}
+      endringsdato={endringsdato}
     />);
     const uttakPeriodeType = wrapper.find(UttakPeriodeType);
     expect(uttakPeriodeType).to.have.length(2);
@@ -108,7 +107,7 @@ describe('<UttakPeriode>', () => {
       isFromSøknad={perioder[0].isFromSøknad}
       samtidigUttak={perioder[0].samtidigUttak}
       flerbarnsdager={perioder[0].flerbarnsdager}
-      endringsDato={endringsDato}
+      endringsdato={endringsdato}
     />);
 
     const periodeContainer = wrapper.find('div.periodeContainer');
@@ -132,7 +131,7 @@ describe('<UttakPeriode>', () => {
       readOnly={false}
       samtidigUttak={perioder[0].samtidigUttak}
       flerbarnsdager={perioder[0].flerbarnsdager}
-      endringsDato={endringsDato}
+      endringsdato={endringsdato}
     />);
 
     const periodeContainer = wrapper.find('div.periodeContainer');
@@ -159,7 +158,7 @@ describe('<UttakPeriode>', () => {
       inntektsmeldingInfo={[]}
       isNyPeriodeFormOpen
       readOnly={false}
-      endringsDato={endringsDato}
+      endringsdato={endringsdato}
       samtidigUttak={perioder[0].samtidigUttak}
       flerbarnsdager={perioder[0].flerbarnsdager}
       {...otherProps}

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import moment from 'moment';
 import { FlexColumn, FlexRow, ArrowBox } from '@fpsak-frontend/shared-components';
 import { DecimalField, SelectField, PeriodpickerField } from '@fpsak-frontend/form';
 import oppholdArsakType, { oppholdArsakKontoNavn } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
@@ -30,15 +30,14 @@ const mapPeriodeTyper = () => Object.keys(oppholdArsakType)
   .filter(key => gyldigeÅrsaker.includes(key))
   .map(key => (<option key={key} value={key}>{oppholdArsakKontoNavn[key]}</option>));
 
-const ElementWrapper = ({ children }) => children;
-
-export const EndreSoknadsperiode = ({ withGradering, oppholdArsak }) => (
+export const EndreSoknadsperiode = ({ withGradering, oppholdArsak, førsteUttaksdato }) => (
   <ArrowBox marginTop={10}>
     <FlexRow>
       <FlexColumn>
         <PeriodpickerField
           names={['nyFom', 'nyTom']}
           label={{ id: 'UttakInfoPanel.Periode' }}
+          disabledDays={{ before: moment(førsteUttaksdato).toDate() }}
         />
       </FlexColumn>
     </FlexRow>
@@ -66,7 +65,7 @@ export const EndreSoknadsperiode = ({ withGradering, oppholdArsak }) => (
       </FlexColumn>
       {withGradering
         && (
-        <ElementWrapper>
+        <React.Fragment>
           <FlexColumn>
             <DecimalField
               name="nyArbeidstidsprosent"
@@ -77,7 +76,7 @@ export const EndreSoknadsperiode = ({ withGradering, oppholdArsak }) => (
             />
           </FlexColumn>
           <div className={styles.suffix}>%</div>
-        </ElementWrapper>
+        </React.Fragment>
         )
       }
     </FlexRow>
@@ -87,11 +86,13 @@ export const EndreSoknadsperiode = ({ withGradering, oppholdArsak }) => (
 EndreSoknadsperiode.propTypes = {
   withGradering: PropTypes.bool,
   oppholdArsak: PropTypes.shape(),
+  førsteUttaksdato: PropTypes.string,
 };
 
 EndreSoknadsperiode.defaultProps = {
   withGradering: false,
   oppholdArsak: undefined,
+  førsteUttaksdato: undefined,
 };
 
 export default EndreSoknadsperiode;

@@ -56,5 +56,23 @@
 }
 
 .avvikInfoMargin {
-  margin-top: 15px;
+  margin-top: 16px;
+}
+
+.divider {
+  display: table;
+  white-space: nowrap;
+  width: 100%;
+
+  &:before,
+  &:after {
+    border-top: 2px dashed @navGra20;
+    content: '';
+    display: table-cell;
+    position: relative;
+    top: 0.6em;
+    width: 50%;
+  }
+  &:before { right: 1.5%; }
+  &:after { left: 1.5%; }
 }

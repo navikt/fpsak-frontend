@@ -12,14 +12,13 @@ import {
 import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duck';
 import { guid, dateFormat } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import moment from 'moment';
 import UttakPerioder from './UttakPerioder';
 import {
   sjekkOmfaktaOmUttakAksjonspunkt,
   sjekkArbeidsprosentOver100,
   sjekkOverlappendePerioder,
-  sjekkEndretFørsteUttaksDato,
-  sjekkNyFørsteUttakDatoStartErEtterSkjæringpunkt,
-  sjekkNyFørsteUttakDatoStartErFørSkjæringpunkt,
+  sjekkEndretFørsteUttaksdato,
 } from './components/UttakPeriodeValidering';
 
 export const UttakFaktaForm = ({
@@ -30,6 +29,12 @@ export const UttakFaktaForm = ({
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
+    {formProps.warning
+      && (
+      <span>
+        {formProps.warning}
+      </span>
+      )}
     <UttakPerioder
       hasOpenAksjonspunkter={hasOpenAksjonspunkter}
       readOnly={readOnly}
@@ -57,13 +62,29 @@ UttakFaktaForm.propTypes = {
   hasRevurderingOvertyringAp: PropTypes.bool.isRequired,
 };
 
+const warningsUttakForm = (values) => {
+  const warnings = {};
+  const { førsteUttaksdato, endringsdato } = values;
+
+  // hvis endringsdato er etter førsteuttakdato
+  if (moment(endringsdato).isAfter(førsteUttaksdato)) {
+    warnings.perioder = {
+      _warning: <FormattedMessage
+        id="UttakInfoPanel.PeriodeMellomFørsteuttaksdatoOgEndringsdato"
+        values={{ endringsdato: dateFormat(endringsdato), førsteuttaksdato: dateFormat(førsteUttaksdato) }}
+      />,
+    };
+  }
+  return warnings;
+};
+
 const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOSONAR må ha disse sjekkene
   const errors = {};
 
   if (sjekkOmfaktaOmUttakAksjonspunkt(aksjonspunkter) || values.manuellOverstyring) {
-    const originalStartDato = (originalPerioder[0] || []).fom;
+    // const originalStartDato = (originalPerioder[0] || []).fom;
     const nyStartDato = (values.perioder[0] || []).fom;
-    const { førsteUttaksDato } = values;
+    const { førsteUttaksdato } = values;
 
     if (values.perioder.length === 0) {
       errors.perioder = {
@@ -86,28 +107,12 @@ const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOS
           };
         }
       });
-      if (sjekkEndretFørsteUttaksDato(originalStartDato, nyStartDato, aksjonspunkter)) {
+      // todo, denne skal bort
+      if (sjekkEndretFørsteUttaksdato(nyStartDato, førsteUttaksdato)) {
         errors.perioder = {
           _error: <FormattedMessage
-            id="UttakInfoPanel.OrginaleStartdatoKanIkkeEndres"
-            values={{ originalStartDato: dateFormat(originalStartDato) }}
-          />,
-        };
-      }
-
-      if (sjekkNyFørsteUttakDatoStartErEtterSkjæringpunkt(nyStartDato, førsteUttaksDato, aksjonspunkter)) {
-        errors.perioder = {
-          _error: <FormattedMessage
-            id="UttakInfoPanel.manglerPeriodeEtterFørsteUttaksdag"
-            values={{ førsteUttaksDato: dateFormat(førsteUttaksDato) }}
-          />,
-        };
-      }
-      if (sjekkNyFørsteUttakDatoStartErFørSkjæringpunkt(nyStartDato, førsteUttaksDato, aksjonspunkter)) {
-        errors.perioder = {
-          _error: <FormattedMessage
-            id="UttakInfoPanel.periodeFørFørsteUttaksdag"
-            values={{ førsteUttaksDato: dateFormat(førsteUttaksDato) }}
+            id="UttakInfoPanel.periodeFørFørsteuttaksdato"
+            values={{ nyStartDato: dateFormat(nyStartDato), førsteUttaksdato: dateFormat(førsteUttaksdato) }}
           />,
         };
       }
@@ -120,10 +125,10 @@ const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOS
 const buildInitialValues = createSelector(
   [getUttakPerioder, getBehandlingYtelseFordeling],
   (perioder, ytelseFordeling) => {
-    const endringsDato = ytelseFordeling && ytelseFordeling.endringsDato ? ytelseFordeling.endringsDato : undefined;
     if (perioder) {
       return {
-        førsteUttaksDato: endringsDato,
+        førsteUttaksdato: ytelseFordeling && ytelseFordeling.førsteUttaksdato ? ytelseFordeling.førsteUttaksdato : undefined,
+        endringsdato: ytelseFordeling && ytelseFordeling.endringsdato ? ytelseFordeling.endringsdato : undefined,
         perioder: perioder.map(periode => ({
           ...periode,
           id: guid(),
@@ -204,6 +209,7 @@ const mapStateToProps = (state, initialProps) => {
     behandlingFormPrefix,
     hasRevurderingOvertyringAp,
     validate: values => validateUttakForm(values, orginalePerioder, initialProps.aksjonspunkter),
+    warn: values => warningsUttakForm(values),
     onSubmit: values => initialProps.submitCallback(transformValues(values, initialValues, initialProps.aksjonspunkter)),
   };
 };

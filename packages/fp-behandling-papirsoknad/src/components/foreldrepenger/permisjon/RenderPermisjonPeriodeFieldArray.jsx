@@ -175,7 +175,7 @@ export const RenderPermisjonPeriodeFieldArray = ({
                   && (
                     <div>
                       <FlexRow wrap>
-                        <AlertStripe type="info">
+                        <AlertStripe type="advarsel">
                           <FormattedMessage id="Registrering.Permisjon.PeriodeFomForTidlig" />
                         </AlertStripe>
                       </FlexRow>

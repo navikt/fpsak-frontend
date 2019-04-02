@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
-import { Normaltekst, Element } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { ISO_DATE_FORMAT, calcDays } from '@fpsak-frontend/utils';
 import {
@@ -82,26 +82,30 @@ const avvikInntekstmeldInfo = (periode, inntektsmeldingInfo) => {
       // skall ikke vises vid utsettelse pga sykdom - fjern det - troligen periode.utsettleseÅrsak.
       if (avvik.utsettelseÅrsak && !isUtsettelseMedSykdom(periode)) {
         return (
-          <Element key="key1" className={styles.avvikInfoMargin}>
+          <AlertStripe type="info" key="key1" className={styles.avvikInfoMargin}>
             <FormattedMessage id="UttakPeriode.ManglerInfoUtsettelse" values={{ årsak: periode.utsettelseÅrsak.navn.toLowerCase() }} />
-          </Element>
+          </AlertStripe>
         );
       }
       if (avvik.isAvvikArbeidsprosent) {
         return (
-          <Element key="key2" className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikGradering" /></Element>
+          <AlertStripe type="info" key="key2" className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikGradering" /></AlertStripe>
         );
       }
     }
     if (!isManglendeInntektsmelding) {
       if (avvik.isAvvikUtsettelse) {
-        return <Element key="key3" className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikUtsettelse" /></Element>;
+        return <AlertStripe type="info" key="key3" className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikUtsettelse" /></AlertStripe>;
       }
       if (avvik.isAvvikPeriode) {
-        return <Element key="key4" className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikPeriode" /></Element>;
+        return <AlertStripe type="info" key="key4" className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikPeriode" /></AlertStripe>;
       }
       if (avvik.isAvvikArbeidsprosent) {
-        return <Element key="key5" className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikGraderingProsent" /></Element>;
+        return (
+          <AlertStripe type="info" key="key5" className={styles.avvikInfoMargin}>
+            <FormattedMessage id="UttakPeriode.AvvikGraderingProsent" />
+          </AlertStripe>
+        );
       }
     }
     return null;
@@ -119,22 +123,23 @@ const UttakPeriode = ({
   readOnly,
   perioder,
   inntektsmeldingInfo,
-  førsteUttaksDato,
+  endringsdato,
   meta,
 }) => (
   <div>
-    {meta.error && <AlertStripe className={styles.fullWidth} type="advarsel">{meta.error}</AlertStripe>}
+    {meta.error && <AlertStripe className={styles.fullWidth} type="feil">{meta.error}</AlertStripe>}
+    {meta.warning && <AlertStripe className={styles.fullWidth} type="info">{meta.warning}</AlertStripe>}
 
     <FlexContainer fluid wrap>
       {fields.map((fieldId, index, field) => {
         const periode = field.get(index);
-        const harEndringsDatoSomErFørFørsteUttaksPeriode = førsteUttaksDato ? moment(periode.fom).isAfter(førsteUttaksDato) : false;
+        const harEndringsdatoSomErFørFørsteUttaksperiode = endringsdato ? moment(periode.fom).isAfter(endringsdato) : false;
         return (
           <React.Fragment key={fieldId}>
             <FlexRow>
               <FlexColumn className={styles.fullWidth}>
                 {avvikInntekstmeldInfo(periode, inntektsmeldingInfo[index])}
-                {index === 0 && harEndringsDatoSomErFørFørsteUttaksPeriode && renderTomPeriode()}
+                {index === 0 && harEndringsdatoSomErFørFørsteUttaksperiode && renderTomPeriode()}
                 <div className={getClassName(periode, readOnly)}>
                   <UttakPeriodeType
                     bekreftet={periode.bekreftet}
@@ -203,11 +208,11 @@ UttakPeriode.propTypes = {
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   isNyPeriodeFormOpen: PropTypes.bool.isRequired,
   inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape())).isRequired,
-  førsteUttaksDato: PropTypes.string,
+  endringsdato: PropTypes.string,
 };
 
 UttakPeriode.defaultProps = {
-  førsteUttaksDato: undefined,
+  endringsdato: undefined,
 };
 
 export default UttakPeriode;

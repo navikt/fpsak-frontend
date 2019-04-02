@@ -35,6 +35,7 @@ export const FerieOgArbeidsPeriode = ({
   uttakPeriodeType,
   behandlingStatusKode,
   skalViseResultat,
+  førsteUttaksdato,
   oppholdArsak,
   ...formProps
 }) => {
@@ -87,7 +88,7 @@ export const FerieOgArbeidsPeriode = ({
             {resultat === uttakPeriodeVurdering.PERIODE_OK_ENDRET && !readOnly
             && (
               <div className={styles.endreSoknadsperiode}>
-                <EndreSoknadsperiode oppholdArsak={oppholdArsak} withGradering={withGradering} />
+                <EndreSoknadsperiode oppholdArsak={oppholdArsak} withGradering={withGradering} førsteUttaksdato={førsteUttaksdato} />
               </div>
             )
             }
@@ -147,6 +148,7 @@ FerieOgArbeidsPeriode.propTypes = {
   skalViseResultat: PropTypes.bool.isRequired,
   oppholdArsak: PropTypes.shape(),
   behandlingStatusKode: PropTypes.string,
+  førsteUttaksdato: PropTypes.string,
 };
 
 FerieOgArbeidsPeriode.defaultProps = {
@@ -156,6 +158,7 @@ FerieOgArbeidsPeriode.defaultProps = {
   arbeidsgiver: {},
   oppholdArsak: undefined,
   behandlingStatusKode: undefined,
+  førsteUttaksdato: undefined,
 };
 
 const validateForm = ({ nyFom, nyTom }) => {
@@ -173,6 +176,7 @@ const validateForm = ({ nyFom, nyTom }) => {
 const mapToStateToProps = (state, ownProps) => {
   const formName = `arbeidOgFerieForm-${ownProps.id}`;
   const resultat = behandlingFormValueSelector(formName)(state, 'resultat');
+  const førsteUttaksdato = behandlingFormValueSelector('UttakFaktaForm')(state, 'førsteUttaksdato');
   const initialResultat = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.resultat`);
   const begrunnelse = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.begrunnelse`);
   const saksebehandlersBegrunnelse = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.saksebehandlersBegrunnelse`);
@@ -190,6 +194,7 @@ const mapToStateToProps = (state, ownProps) => {
     bekreftet,
     skalViseResultat,
     oppholdArsak,
+    førsteUttaksdato,
     initialValues: {
       begrunnelse: begrunnelse || saksebehandlersBegrunnelse,
       id: ownProps.id,
