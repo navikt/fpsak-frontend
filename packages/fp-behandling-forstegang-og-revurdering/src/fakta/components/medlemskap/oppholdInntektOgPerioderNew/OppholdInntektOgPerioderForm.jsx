@@ -9,7 +9,7 @@ import {
 } from 'redux-form';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import {
-  AksjonspunktHelpText, VerticalSpacer, ElementWrapper,
+  AksjonspunktHelpText, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -194,15 +194,13 @@ export class OppholdInntektOgPerioderFormNew extends Component {
         />
 
         <VerticalSpacer twentyPx />
-        <ElementWrapper>
-          <Hovedknapp
-            mini
-            disabled={this.isConfirmButtonDisabled()}
-            spinner={submitting}
-          >
-            <FormattedMessage id="OppholdInntektOgPerioder.Bekreft" />
-          </Hovedknapp>
-        </ElementWrapper>
+        <Hovedknapp
+          mini
+          disabled={this.isConfirmButtonDisabled()}
+          spinner={submitting}
+        >
+          <FormattedMessage id="OppholdInntektOgPerioder.Bekreft" />
+        </Hovedknapp>
       </form>
     );
   }
@@ -252,9 +250,9 @@ const buildInitalValues = createSelector([getSoknad, getFagsakPerson, getBehandl
     soknad,
     person,
     gjeldendeFom,
-    medlemskapPerioder: medlem.medlemskapPerioder,
+    medlemskapPerioder: medlem.medlemskapPerioder || [],
     inntekter: medlem.inntekt,
-    perioder: medlem.perioder || [].map(periode => ({
+    perioder: (medlem.perioder || []).map(periode => ({
       ...periode,
       id: guid(),
     })),
