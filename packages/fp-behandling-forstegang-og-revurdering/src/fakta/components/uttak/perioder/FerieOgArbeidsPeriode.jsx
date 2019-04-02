@@ -37,7 +37,6 @@ export const FerieOgArbeidsPeriode = ({
   skalViseResultat,
   førsteUttaksdato,
   oppholdArsak,
-  førsteUttaksdato,
   ...formProps
 }) => {
   const isEdited = resultat === uttakPeriodeVurdering.PERIODE_OK_ENDRET
