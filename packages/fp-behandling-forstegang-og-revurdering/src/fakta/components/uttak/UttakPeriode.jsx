@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
-import { Normaltekst, Element } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { ISO_DATE_FORMAT, calcDays } from '@fpsak-frontend/utils';
 import {
