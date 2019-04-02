@@ -14,17 +14,13 @@ export const InnsynBehandlingApiKeys = {
 
 const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/fpsak/api/behandlinger', InnsynBehandlingApiKeys.BEHANDLING, { linksToFetchAutomatically: ['innsyn', 'aksjonspunkter', 'vilkar'] })
-  .withPost('/fpsak/api/behandlinger/endre-pa-vent', InnsynBehandlingApiKeys.UPDATE_ON_HOLD)
-
-  /* /api/behandling */
-  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', InnsynBehandlingApiKeys.SAVE_AKSJONSPUNKT,
-    { linksToFetchAutomatically: ['innsyn', 'aksjonspunkter', 'vilkar'] })
-
-  /* /api/brev */
+  .withInjectedPath('endre-pa-vent', InnsynBehandlingApiKeys.UPDATE_ON_HOLD)
+  .withInjectedPath('bekreft-aksjonspunkt', InnsynBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
+    storeResultKey: InnsynBehandlingApiKeys.BEHANDLING,
+  })
+  .withInjectedPath('bestill-brev', InnsynBehandlingApiKeys.SUBMIT_MESSAGE)
+  // TODO (TOR) Bør få lenke fra backend og så åpne blob (Flytt open blob ut av rest-apis)
   .withPostAndOpenBlob('/fpsak/api/brev/forhandsvis', InnsynBehandlingApiKeys.PREVIEW_MESSAGE)
-  .withPost('/fpsak/api/brev/bestill', InnsynBehandlingApiKeys.SUBMIT_MESSAGE)
-
-/* /api/brev */
   .build();
 
 
