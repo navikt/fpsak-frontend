@@ -8,11 +8,11 @@ module.exports = {
         ignore: ['after-comment'],
       },
     ],
-    "order/order": [
-			"custom-properties",
-			"declarations"
-		],
-		"order/properties-alphabetical-order": true,
+    'order/order': [
+      'custom-properties',
+      'declarations',
+    ],
+    'order/properties-alphabetical-order': true,
     'max-line-length': 160,
     'at-rule-name-case': 'lower',
     'at-rule-name-space-after': 'always-single-line',

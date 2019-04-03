@@ -76,12 +76,10 @@ const getCustomVilkarText = (state, behandlingspunkt, oppfylt) => {
 
 const getRelevanteAvslagsarsaker = (vilkarTypeKode, state) => {
   const vilkartypeAvslagsarsaker = getKodeverk(kodeverkTyper.AVSLAGSARSAK)(state)[vilkarTypeKode];
-  switch (vilkarTypeKode) {
-    case vilkarType.FODSELSVILKARET_MOR:
+  if (vilkarTypeKode === vilkarType.FODSELSVILKARET_MOR) {
       return getFodselVilkarAvslagsarsaker(isForeldrepengerFagsak(state), vilkartypeAvslagsarsaker);
-    default:
-      return vilkartypeAvslagsarsaker;
   }
+  return vilkartypeAvslagsarsaker;
 };
 
 /**
