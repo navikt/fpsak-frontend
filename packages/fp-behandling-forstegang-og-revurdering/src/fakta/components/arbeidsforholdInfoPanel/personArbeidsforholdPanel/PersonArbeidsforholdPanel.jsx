@@ -150,13 +150,13 @@ export class PersonArbeidsforholdPanelImpl extends Component {
   }
 
   setSelectedArbeidsforhold(p, id, selectedArbeidsforhold) {
-    this.initializeActivityForm(selectedArbeidsforhold);
     this.setState({ selectedArbeidsforhold });
+    this.initializeActivityForm(selectedArbeidsforhold);
   }
 
   setFormField(fieldName, fieldValue) {
     const { behandlingFormPrefix, reduxFormChange: formChange } = this.props;
-    formChange(`${behandlingFormPrefix}.${'PersonInfoPanel'}`, fieldName, fieldValue);
+    formChange(`${behandlingFormPrefix}.${'ArbeidsforholdInfoPanel'}`, fieldName, fieldValue);
   }
 
   initializeActivityForm(arbeidsforhold) {
@@ -211,8 +211,8 @@ export class PersonArbeidsforholdPanelImpl extends Component {
   }
 
   cancelArbeidsforhold() {
-    this.initializeActivityForm({});
     this.setState({ selectedArbeidsforhold: undefined });
+    this.initializeActivityForm({});
   }
 
   leggTilArbeidsforhold() {
@@ -228,7 +228,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
         navn: arbeidsforholdKilder.SAKSBEHANDLER,
       },
       mottattDatoInntektsmelding: undefined,
-      beskrivelse: undefined,
+      begrunnelse: undefined,
       stillingsprosent: undefined,
       brukArbeidsforholdet: true,
       fortsettBehandlingUtenInntektsmelding: undefined,
@@ -246,8 +246,8 @@ export class PersonArbeidsforholdPanelImpl extends Component {
       brukUendretArbeidsforhold: true,
       inntektIkkeMedTilBeregningsgrunnlaget: false,
     };
-    this.initializeActivityForm(lagtTilArbeidsforhold);
     this.setState({ selectedArbeidsforhold: lagtTilArbeidsforhold });
+    this.initializeActivityForm(lagtTilArbeidsforhold);
   }
 
   render() {
@@ -317,7 +317,7 @@ PersonArbeidsforholdPanelImpl.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  const arbeidsforhold = sortArbeidsforhold(behandlingFormValueSelector('PersonInfoPanel')(state, 'arbeidsforhold'));
+  const arbeidsforhold = sortArbeidsforhold(behandlingFormValueSelector('ArbeidsforholdInfoPanel')(state, 'arbeidsforhold'));
   return {
     arbeidsforhold,
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
@@ -344,7 +344,7 @@ PersonArbeidsforholdPanel.isReadOnly = (state) => {
   if (isDetailFormOpen) {
     return true;
   }
-  const arbeidsforhold = behandlingFormValueSelector('PersonInfoPanel')(state, 'arbeidsforhold');
+  const arbeidsforhold = behandlingFormValueSelector('ArbeidsforholdInfoPanel')(state, 'arbeidsforhold');
   return !arbeidsforhold || !!getUnresolvedArbeidsforhold(arbeidsforhold);
 };
 

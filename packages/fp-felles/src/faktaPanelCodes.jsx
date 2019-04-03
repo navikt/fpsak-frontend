@@ -1,6 +1,7 @@
 // Definerer koder for alle fakta-penelene.
 const faktaPanelCodes = {
   ADOPSJONSVILKARET: 'adopsjonsvilkaaret',
+  ARBEIDSFORHOLD: 'arbeidsforhold',
   BEREGNING: 'beregning',
   DEFAULT: 'default',
   FODSELSVILKARET: 'foedselsvilkaaret',

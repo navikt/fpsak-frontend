@@ -22,6 +22,7 @@ import UttakInfoPanel from './uttak/UttakInfoPanel';
 import BeregningInfoPanel from './beregning/BeregningInfoPanel';
 import PersonInfoPanel from './person/PersonInfoPanel';
 import PersonIndexPanel from './person/PersonIndexPanel';
+import ArbeidsforholdInfoPanel from './arbeidsforholdInfoPanel/ArbeidsforholdInfoPanel';
 
 import styles from './faktaPanel.less';
 
@@ -72,6 +73,18 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
       }
     </div>
     <div className={styles.container}>
+      {personopplysninger
+      && (
+        <ArbeidsforholdInfoPanel
+          aksjonspunkter={aksjonspunkter}
+          submitCallback={submitCallback}
+          openInfoPanels={openInfoPanels}
+          toggleInfoPanelCallback={toggleInfoPanelCallback}
+          shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+          readOnly={readOnly}
+        />
+      )
+      }
       {RegistrereVergeInfoPanel.supports(aksjonspunkter)
       && (
         <RegistrereVergeInfoPanel
@@ -96,7 +109,6 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         />
       )
       }
-
       {OmsorgOgForeldreansvarInfoPanel.supports(aksjonspunkter)
       && (
         <OmsorgOgForeldreansvarInfoPanel

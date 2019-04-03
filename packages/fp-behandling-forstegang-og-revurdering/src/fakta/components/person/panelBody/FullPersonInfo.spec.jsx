@@ -13,7 +13,6 @@ import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import { AdressePanel, BarnePanel, PersonYtelserTable } from '@fpsak-frontend/person-info';
 import { FullPersonInfoImpl } from './FullPersonInfo';
-import PersonArbeidsforholdPanel from './arbeidsforhold/PersonArbeidsforholdPanel';
 
 const barnITPS = {
   navn: 'Barn 1',
@@ -212,75 +211,6 @@ describe('<FullPersonInfo>', () => {
     expect(barnepanel.props().barneListe[0]).to.equal(barnITPS);
   });
 
-  it('Skal vise panel for arbeidsforhold når søker er valgt', () => {
-    const wrapper = shallow(
-      <FullPersonInfoImpl
-        sprakkode={sprakkode}
-        personopplysning={personopplysning}
-        ytelser={ytelser}
-        relatertYtelseTypes={relatertYtelseTypes}
-        relatertYtelseStatus={relatertYtelseStatus}
-        personstatusTypes={personstatusTypes}
-        sivilstandTypes={sivilstandTypes}
-        hasOpenAksjonspunkter={false}
-        readOnly={false}
-        hasAksjonspunkter={false}
-        utlandSakstype=""
-        isPrimaryParent
-        skalKunneLeggeTilNyeArbeidsforhold={false}
-        {...reduxFormPropsMock}
-      />,
-    );
-
-    expect(wrapper.find(PersonArbeidsforholdPanel)).has.length(1);
-  });
-
-  it('Skal ikke vise panel for arbeidsforhold når annen part er valgt', () => {
-    const wrapper = shallow(
-      <FullPersonInfoImpl
-        sprakkode={sprakkode}
-        personopplysning={personopplysning}
-        ytelser={ytelser}
-        relatertYtelseTypes={relatertYtelseTypes}
-        relatertYtelseStatus={relatertYtelseStatus}
-        personstatusTypes={personstatusTypes}
-        sivilstandTypes={sivilstandTypes}
-        hasOpenAksjonspunkter={false}
-        readOnly={false}
-        hasAksjonspunkter={false}
-        utlandSakstype=""
-        isPrimaryParent={false}
-        skalKunneLeggeTilNyeArbeidsforhold={false}
-        {...reduxFormPropsMock}
-      />,
-    );
-
-    expect(wrapper.find(PersonArbeidsforholdPanel)).has.length(0);
-  });
-
-  it('Skal vise hjelpetekst for aksjonspunkt når en har aksjonspunkt og søker er valgt', () => {
-    const wrapper = shallow(
-      <FullPersonInfoImpl
-        sprakkode={sprakkode}
-        personopplysning={personopplysning}
-        ytelser={ytelser}
-        relatertYtelseTypes={relatertYtelseTypes}
-        relatertYtelseStatus={relatertYtelseStatus}
-        personstatusTypes={personstatusTypes}
-        sivilstandTypes={sivilstandTypes}
-        hasOpenAksjonspunkter
-        readOnly={false}
-        hasAksjonspunkter
-        utlandSakstype=""
-        isPrimaryParent
-        skalKunneLeggeTilNyeArbeidsforhold={false}
-        {...reduxFormPropsMock}
-      />,
-    );
-
-    expect(wrapper.find(AksjonspunktHelpText)).has.length(1);
-  });
-
   it('Skal ikke vise hjelpetekst for aksjonspunkt når en har aksjonspunkt og annen part er valgt', () => {
     const wrapper = shallow(
       <FullPersonInfoImpl
@@ -347,48 +277,5 @@ describe('<FullPersonInfo>', () => {
     );
 
     expect(wrapper.find(PersonYtelserTable)).has.length(0);
-  });
-
-  it('Skal vise aksjonspunkttekst for ingen arbeidsforhold', () => {
-    const wrapper = shallow(
-      <FullPersonInfoImpl
-        sprakkode={sprakkode}
-        personopplysning={personopplysning}
-        relatertYtelseTypes={relatertYtelseTypes}
-        relatertYtelseStatus={relatertYtelseStatus}
-        personstatusTypes={personstatusTypes}
-        sivilstandTypes={sivilstandTypes}
-        hasOpenAksjonspunkter
-        readOnly={false}
-        hasAksjonspunkter
-        utlandSakstype=""
-        isPrimaryParent
-        skalKunneLeggeTilNyeArbeidsforhold
-        {...reduxFormPropsMock}
-      />,
-    );
-    const component = wrapper.find(AksjonspunktHelpText);
-    expect(component.props().children[0].props.id).to.eql('FullPersonInfo.IngenArbeidsforholdRegistrert');
-  });
-  it('Skal vise aksjonspunkttekst for avklar arbeidsforhold', () => {
-    const wrapper = shallow(
-      <FullPersonInfoImpl
-        sprakkode={sprakkode}
-        personopplysning={personopplysning}
-        relatertYtelseTypes={relatertYtelseTypes}
-        relatertYtelseStatus={relatertYtelseStatus}
-        personstatusTypes={personstatusTypes}
-        sivilstandTypes={sivilstandTypes}
-        hasOpenAksjonspunkter
-        readOnly={false}
-        hasAksjonspunkter
-        utlandSakstype=""
-        isPrimaryParent
-        skalKunneLeggeTilNyeArbeidsforhold={false}
-        {...reduxFormPropsMock}
-      />,
-    );
-    const component = wrapper.find(AksjonspunktHelpText);
-    expect(component.props().children[0].props.id).to.eql('FullPersonInfo.AvklarArbeidsforhold');
   });
 });
