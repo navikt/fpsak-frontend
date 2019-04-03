@@ -69,7 +69,7 @@ export const getValidationFaktaForATFLOgSN = createSelector([mapStateToValidatio
   }
   return ({
     ...FastsettEndretBeregningsgrunnlag.validate(values, props.endringBGPerioder, props.aktivertePaneler, props.faktaOmBeregning, props.beregningsgrunnlag),
-    ...getKunYtelseValidation(values, props.kunYtelse, props.endringBGPerioder, props.aktivertePaneler),
+    ...getKunYtelseValidation(values, props.kunYtelse, props.endringBGPerioder, props.aktivertePaneler, props.beregningsgrunnlag.skjaeringstidspunktBeregning),
     ...VurderMottarYtelseForm.validate(values, props.vurderMottarYtelse),
     ...VurderBesteberegningForm.validate(values, props.aktivertePaneler),
     ...VurderOgFastsettATFL.validate(values, props.aktivertePaneler, props.faktaOmBeregning, props.beregningsgrunnlag),
@@ -302,7 +302,7 @@ export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
     tilfeller, isRevurdering, vurderMottarYtelse, vurderBesteberegning, readOnly, values) => () => ({
     ...TidsbegrensetArbeidsforholdForm.buildInitialValues(kortvarigeArbeidsforhold),
     ...NyIArbeidslivetSNForm.buildInitialValues(beregningsgrunnlag),
-    ...FastsettEndretBeregningsgrunnlag.buildInitialValues(endringBGPerioder, tilfeller, readOnly),
+    ...FastsettEndretBeregningsgrunnlag.buildInitialValues(endringBGPerioder, tilfeller, readOnly, beregningsgrunnlag),
     ...LonnsendringForm.buildInitialValues(beregningsgrunnlag),
     ...NyoppstartetFLForm.buildInitialValues(beregningsgrunnlag),
     ...buildInitialValuesKunYtelse(kunYtelse, endringBGPerioder, isRevurdering, tilfeller),

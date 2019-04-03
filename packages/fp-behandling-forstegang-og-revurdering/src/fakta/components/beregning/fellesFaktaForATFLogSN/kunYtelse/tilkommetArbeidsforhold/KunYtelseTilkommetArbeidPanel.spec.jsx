@@ -5,7 +5,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
-import Panel from './KunYtelseTilkommetArbeidPanel';
+import KunYtelseTilkommetArbeidPanel from './KunYtelseTilkommetArbeidPanel';
 import { skalVereLikFordelingMessage, ulikeAndelerErrorMessage } from '../../ValidateAndelerUtils';
 import { brukersAndelFieldArrayName } from '../KunYtelsePanel';
 import EndringBeregningsgrunnlagForm, { getFieldNameKey }
@@ -72,11 +72,11 @@ const lagPeriode = (harPeriodeAarsakGraderingEllerRefusjon,
 const inntektskategoriArbeidstaker = { kode: inntektskategorier.ARBEIDSTAKER };
 const inntektskategoriUdefinert = { kode: inntektskategorier.UDEFINERT };
 const kunYtelseOgEndringTilfeller = [faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE, faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG];
-
+const skjaeringstidspunktBeregning = '2018-01-01';
 
 describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
   it('skal ikkje vise tilkommetpanel', () => {
-    const wrapper = shallowWithIntl(<Panel.WrappedComponent
+    const wrapper = shallowWithIntl(<KunYtelseTilkommetArbeidPanel.WrappedComponent
       readOnly={false}
       skalSjekkeBesteberegning
       isAksjonspunktClosed={false}
@@ -88,7 +88,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
   });
 
   it('skal vise tilkommetpanel', () => {
-    const wrapper = shallowWithIntl(<Panel.WrappedComponent
+    const wrapper = shallowWithIntl(<KunYtelseTilkommetArbeidPanel.WrappedComponent
       readOnly={false}
       skalSjekkeBesteberegning
       isAksjonspunktClosed={false}
@@ -113,20 +113,20 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const perioder = [
       lagPeriode(false, false, endringAndeler2),
       lagPeriode(true, true, endringandeler1)];
-    const initialValues = Panel.buildInitialValues(kunYtelse, perioder, false, kunYtelseOgEndringTilfeller);
+    const initialValues = KunYtelseTilkommetArbeidPanel.buildInitialValues(kunYtelse, perioder, false, kunYtelseOgEndringTilfeller);
     const brukersAndelInitialValues = initialValues[`${brukersAndelFieldArrayName}`];
     expect(brukersAndelInitialValues).to.have.length(2);
     expect(brukersAndelInitialValues[0].andelsnr).to.equal(1);
     expect(brukersAndelInitialValues[0].andel).to.equal('Brukers andel');
     expect(brukersAndelInitialValues[0].aktivitetStatus).to.equal('BA');
-    expect(brukersAndelInitialValues[0].fastsattBeløp).to.equal('10 000');
+    expect(brukersAndelInitialValues[0].fastsattBelop).to.equal('10 000');
     expect(brukersAndelInitialValues[0].inntektskategori).to.equal('');
     expect(brukersAndelInitialValues[0].nyAndel).to.equal(false);
     expect(brukersAndelInitialValues[0].lagtTilAvSaksbehandler).to.equal(false);
 
     expect(brukersAndelInitialValues[1].andelsnr).to.equal(2);
     expect(brukersAndelInitialValues[1].andel).to.equal('Brukers andel');
-    expect(brukersAndelInitialValues[1].fastsattBeløp).to.equal('20 000');
+    expect(brukersAndelInitialValues[1].fastsattBelop).to.equal('20 000');
     expect(brukersAndelInitialValues[1].aktivitetStatus).to.equal('BA');
     expect(brukersAndelInitialValues[1].inntektskategori).to.equal(inntektskategorier.ARBEIDSTAKER);
     expect(brukersAndelInitialValues[1].nyAndel).to.equal(false);
@@ -178,20 +178,20 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const perioder = [
       lagPeriode(false, false, endringAndeler2),
       lagPeriode(true, true, endringandeler1)];
-    const initialValues = Panel.buildInitialValues(kunYtelse, perioder, true, kunYtelseOgEndringTilfeller);
+    const initialValues = KunYtelseTilkommetArbeidPanel.buildInitialValues(kunYtelse, perioder, true, kunYtelseOgEndringTilfeller);
     const brukersAndelInitialValues = initialValues[`${brukersAndelFieldArrayName}`];
     expect(brukersAndelInitialValues).to.have.length(2);
     expect(brukersAndelInitialValues[0].andelsnr).to.equal(1);
     expect(brukersAndelInitialValues[0].andel).to.equal('Brukers andel');
     expect(brukersAndelInitialValues[0].aktivitetStatus).to.equal('BA');
-    expect(brukersAndelInitialValues[0].fastsattBeløp).to.equal('10 000');
+    expect(brukersAndelInitialValues[0].fastsattBelop).to.equal('10 000');
     expect(brukersAndelInitialValues[0].inntektskategori).to.equal('');
     expect(brukersAndelInitialValues[0].nyAndel).to.equal(false);
     expect(brukersAndelInitialValues[0].lagtTilAvSaksbehandler).to.equal(false);
 
     expect(brukersAndelInitialValues[1].andelsnr).to.equal(2);
     expect(brukersAndelInitialValues[1].andel).to.equal('Brukers andel');
-    expect(brukersAndelInitialValues[1].fastsattBeløp).to.equal('20 000');
+    expect(brukersAndelInitialValues[1].fastsattBelop).to.equal('20 000');
     expect(brukersAndelInitialValues[1].aktivitetStatus).to.equal('BA');
     expect(brukersAndelInitialValues[1].inntektskategori).to.equal(inntektskategorier.ARBEIDSTAKER);
     expect(brukersAndelInitialValues[1].nyAndel).to.equal(false);
@@ -231,14 +231,14 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
 
 
   it('skal ikkje validere om values er udefinert', () => {
-    const errors = Panel.validate(undefined, [], null, null);
+    const errors = KunYtelseTilkommetArbeidPanel.validate(undefined, [], null, null, skjaeringstidspunktBeregning);
     expect(errors).to.equal(null);
   });
 
-  const setKunYtelseFastsattBeløp = (fastsattBeløp, inntektskategori) => {
+  const setKunYtelseFastsattBeløp = (fastsattBelop, inntektskategori) => {
     const values = {};
     values[brukersAndelFieldArrayName] = [{
-      fastsattBeløp,
+      fastsattBelop,
       inntektskategori,
     }];
     return values;
@@ -256,26 +256,26 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
   it('skal ikkje validere om det ikkje er kun ytelse og endret beregningsgrunnlag', () => {
     const values = setKunYtelseFastsattBeløp('10 000', 'ARBEIDSTAKER');
     const endringBGPerioder = [{ fom: '2018-08-01', tom: null, harPeriodeAarsakGraderingEllerRefusjon: false }];
-    const errors = Panel.validate(values, [], kunYtelseUtenDP, endringBGPerioder);
+    const errors = KunYtelseTilkommetArbeidPanel.validate(values, [], kunYtelseUtenDP, endringBGPerioder, skjaeringstidspunktBeregning);
     expect(errors).to.equal(null);
   });
 
 
   it('skal validere kun ytelse om det ikkje er fastsatt beløp', () => {
     const endringBGPerioder = [{ fom: '2018-08-01', tom: null, harPeriodeAarsakGraderingEllerRefusjon: false }];
-    const errors = Panel.validate(setKunYtelseFastsattBeløp(null, 'ARBEIDSTAKER'),
+    const errors = KunYtelseTilkommetArbeidPanel.validate(setKunYtelseFastsattBeløp(null, 'ARBEIDSTAKER'),
       kunYtelseOgEndringTilfeller,
-      kunYtelseUtenDP, endringBGPerioder);
+      kunYtelseUtenDP, endringBGPerioder, skjaeringstidspunktBeregning);
     const kunYtelseError = errors[brukersAndelFieldArrayName];
     expect(kunYtelseError.length).to.equal(1);
-    expect(kunYtelseError[0].fastsattBeløp[0].id).to.equal(isRequiredMessage()[0].id);
+    expect(kunYtelseError[0].fastsattBelop[0].id).to.equal(isRequiredMessage()[0].id);
   });
 
   it('skal validere kun ytelse om det ikkje er fastsatt inntektskategori', () => {
     const endringBGPerioder = [{ fom: '2018-08-01', tom: null, harPeriodeAarsakGraderingEllerRefusjon: false }];
-    const errors = Panel.validate(setKunYtelseFastsattBeløp('10 000', ''),
+    const errors = KunYtelseTilkommetArbeidPanel.validate(setKunYtelseFastsattBeløp('10 000', ''),
       kunYtelseOgEndringTilfeller,
-      kunYtelseUtenDP, endringBGPerioder);
+      kunYtelseUtenDP, endringBGPerioder, skjaeringstidspunktBeregning);
     const kunYtelseError = errors[brukersAndelFieldArrayName];
     expect(kunYtelseError.length).to.equal(1);
     expect(kunYtelseError[0].inntektskategori[0].id).to.equal(isRequiredMessage()[0].id);
@@ -286,7 +286,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const values = setKunYtelseFastsattBeløp('10 000', 'ARBEIDSTAKER');
     values[getFieldNameKey(0)] = [{
       refusjonskrav: '10 000',
-      fastsattBeløp: '10 000',
+      fastsattBelop: '10 000',
       belopFraInntektsmelding: 100000,
       skalKunneEndreRefusjon: false,
       aktivitetstatus: 'ARBEIDSTAKER',
@@ -297,10 +297,11 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     }];
     const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
       { fom: '2018-10-02', tom: null, harPeriodeAarsakGraderingEllerRefusjon: true }];
-    const errors = Panel.validate(values,
+    const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder);
+      endringBGPerioder,
+      skjaeringstidspunktBeregning);
     assertEmptyKunYtelseError(errors);
     const endringError = errors[getFieldNameKey(0)];
     expect(endringError).to.equal(null);
@@ -310,7 +311,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const values = setKunYtelseFastsattBeløp('10 000', 'ARBEIDSTAKER');
     values[getFieldNameKey(0)] = [{
       refusjonskrav: '10 000',
-      fastsattBeløp: '',
+      fastsattBelop: '',
       belopFraInntektsmelding: 100000,
       skalKunneEndreRefusjon: false,
       aktivitetstatus: 'ARBEIDSTAKER',
@@ -321,14 +322,15 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     }];
     const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
       { fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true }];
-    const errors = Panel.validate(values,
+    const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder);
+      endringBGPerioder,
+      skjaeringstidspunktBeregning);
     assertEmptyKunYtelseError(errors);
     expect(errors[getFieldNameKey(0)]).to.have.length(1);
-    expect(errors[getFieldNameKey(0)][0].fastsattBeløp).to.have.length(1);
-    expect(errors[getFieldNameKey(0)][0].fastsattBeløp[0].id).to.equal(isRequiredMessage()[0].id);
+    expect(errors[getFieldNameKey(0)][0].fastsattBelop).to.have.length(1);
+    expect(errors[getFieldNameKey(0)][0].fastsattBelop[0].id).to.equal(isRequiredMessage()[0].id);
     expect(errors[getFieldNameKey(0)][0].inntektskategori).to.equal(undefined);
   });
 
@@ -336,7 +338,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const values = setKunYtelseFastsattBeløp('10 000', 'ARBEIDSTAKER');
     values[getFieldNameKey(0)] = [{
       refusjonskrav: '10 000',
-      fastsattBeløp: '',
+      fastsattBelop: '',
       belopFraInntektsmelding: 100000,
       skalKunneEndreRefusjon: false,
       aktivitetstatus: 'ARBEIDSTAKER',
@@ -347,14 +349,15 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     }];
     const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
       { fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true }];
-    const errors = Panel.validate(values,
+    const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder);
+      endringBGPerioder,
+      skjaeringstidspunktBeregning);
     assertEmptyKunYtelseError(errors);
     expect(errors[getFieldNameKey(0)]).to.have.length(1);
-    expect(errors[getFieldNameKey(0)][0].fastsattBeløp).to.have.length(1);
-    expect(errors[getFieldNameKey(0)][0].fastsattBeløp[0].id).to.equal(isRequiredMessage()[0].id);
+    expect(errors[getFieldNameKey(0)][0].fastsattBelop).to.have.length(1);
+    expect(errors[getFieldNameKey(0)][0].fastsattBelop[0].id).to.equal(isRequiredMessage()[0].id);
     expect(errors[getFieldNameKey(0)][0].inntektskategori).to.have.length(1);
     expect(errors[getFieldNameKey(0)][0].inntektskategori[0].id).to.equal(isRequiredMessage()[0].id);
   });
@@ -363,7 +366,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const values = setKunYtelseFastsattBeløp('10 000', 'ARBEIDSTAKER');
     values[getFieldNameKey(0)] = [{
       refusjonskrav: '',
-      fastsattBeløp: '',
+      fastsattBelop: '',
       belopFraInntektsmelding: 100000,
       skalKunneEndreRefusjon: false,
       aktivitetstatus: 'ARBEIDSTAKER',
@@ -374,10 +377,11 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     }];
     const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
       { fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true }];
-    const errors = Panel.validate(values,
+    const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder);
+      endringBGPerioder,
+      skjaeringstidspunktBeregning);
     assertEmptyKunYtelseError(errors);
     expect(errors[getFieldNameKey(0)]).to.have.length(1);
     expect(errors[getFieldNameKey(0)][0].refusjonskrav).to.equal(undefined);
@@ -387,7 +391,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const values = setKunYtelseFastsattBeløp('10 000', 'ARBEIDSTAKER');
     values[getFieldNameKey(0)] = [{
       refusjonskrav: '',
-      fastsattBeløp: '',
+      fastsattBelop: '',
       belopFraInntektsmelding: 100000,
       skalKunneEndreRefusjon: true,
       aktivitetstatus: 'ARBEIDSTAKER',
@@ -398,10 +402,11 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     }];
     const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
       { fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true }];
-    const errors = Panel.validate(values,
+    const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder);
+      endringBGPerioder,
+      skjaeringstidspunktBeregning);
     assertEmptyKunYtelseError(errors);
     expect(errors[getFieldNameKey(0)]).to.have.length(1);
     expect(errors[getFieldNameKey(0)][0].refusjonskrav).to.have.length(1);
@@ -412,7 +417,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const values = setKunYtelseFastsattBeløp('10 000', 'ARBEIDSTAKER');
     values[getFieldNameKey(0)] = [{
       refusjonskrav: '',
-      fastsattBeløp: '',
+      fastsattBelop: '',
       belopFraInntektsmelding: 100000,
       skalKunneEndreRefusjon: true,
       aktivitetstatus: 'ARBEIDSTAKER',
@@ -423,10 +428,11 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     }];
     const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
       { fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true }];
-    const errors = Panel.validate(values,
+    const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder);
+      endringBGPerioder,
+      skjaeringstidspunktBeregning);
     assertEmptyKunYtelseError(errors);
     expect(errors[getFieldNameKey(0)]).to.have.length(1);
     expect(errors[getFieldNameKey(0)][0].andel).to.have.length(1);
@@ -437,7 +443,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const values = setKunYtelseFastsattBeløp('10 000', 'ARBEIDSTAKER');
     values[getFieldNameKey(0)] = [{
       refusjonskrav: '',
-      fastsattBeløp: '120 000',
+      fastsattBelop: '120 000',
       belopFraInntektsmelding: 100000,
       skalKunneEndreRefusjon: true,
       aktivitetstatus: 'ARBEIDSTAKER',
@@ -448,10 +454,11 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     }];
     const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
       { fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true }];
-    const errors = Panel.validate(values,
+    const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder);
+      endringBGPerioder,
+      skjaeringstidspunktBeregning);
     assertEmptyKunYtelseError(errors);
     expect(errors[getFieldNameKey(0)]).to.have.length(1);
     expect(errors[getFieldNameKey(0)][0].andel).to.have.length(1);
@@ -465,7 +472,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const values = setKunYtelseFastsattBeløp('10 000', 'ARBEIDSTAKER');
     values[getFieldNameKey(0)] = [{
       refusjonskrav: '10 000',
-      fastsattBeløp: '100 000',
+      fastsattBelop: '100 000',
       belopFraInntektsmelding: 100000,
       skalKunneEndreRefusjon: true,
       aktivitetstatus: 'ARBEIDSTAKER',
@@ -476,10 +483,11 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     }];
     const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
       { fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true }];
-    const errors = Panel.validate(values,
+    const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder);
+      endringBGPerioder,
+      skjaeringstidspunktBeregning);
     assertEmptyKunYtelseError(errors);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
     expect(errors[getFieldNameKey(0)]._error[0].id).to.equal(skalVereLikFordelingMessage()[0].id);
@@ -489,7 +497,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
   const getAndel = (andelsnr, andelsinfo, inntektskategori) => ({
     andelsnr,
     refusjonskrav: '10 000',
-    fastsattBeløp: '10 000',
+    fastsattBelop: '10 000',
     belopFraInntektsmelding: 15000,
     skalKunneEndreRefusjon: true,
     aktivitetstatus: 'ARBEIDSTAKER',
@@ -504,17 +512,18 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
   it('skal returnere validering på sum for fleire andeler', () => {
     const values = {};
     values[brukersAndelFieldArrayName] = [
-      { andelsnr: 1, fastsattBeløp: '10 000' }, { andelsnr: 2, fastsattBeløp: '10 000' },
-      { andelsnr: 3, fastsattBeløp: '10 000' }, { andelsnr: 4, fastsattBeløp: '10 000' },
+      { andelsnr: 1, fastsattBelop: '10 000' }, { andelsnr: 2, fastsattBelop: '10 000' },
+      { andelsnr: 3, fastsattBelop: '10 000' }, { andelsnr: 4, fastsattBelop: '10 000' },
     ];
 
     values[getFieldNameKey(0)] = [getAndel(1), getAndel(2), getAndel(3), getAndel(4), getAndel(undefined, '1', 'SJØMANN')];
     const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
       { fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true }];
-    const errors = Panel.validate(values,
+    const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder);
+      endringBGPerioder,
+      skjaeringstidspunktBeregning);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
     expect(errors[getFieldNameKey(0)]._error[0].id).to.equal(skalVereLikFordelingMessage()[0].id);
     expect(errors[getFieldNameKey(0)]._error[1].fordeling).to.equal('40 000');
@@ -523,17 +532,18 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
   it('skal ikkje returnere errors når sum er lik sum i første periode for fleire andeler', () => {
     const values = {};
     values[brukersAndelFieldArrayName] = [
-      { andelsnr: 1, fastsattBeløp: '10 000' }, { andelsnr: 2, fastsattBeløp: '10 000' },
-      { andelsnr: 3, fastsattBeløp: '10 000' }, { andelsnr: 4, fastsattBeløp: '10 000' },
+      { andelsnr: 1, fastsattBelop: '10 000' }, { andelsnr: 2, fastsattBelop: '10 000' },
+      { andelsnr: 3, fastsattBelop: '10 000' }, { andelsnr: 4, fastsattBelop: '10 000' },
     ];
-    values[getFieldNameKey(0)] = [getAndel(1), getAndel(2), getAndel(3), { ...getAndel(4), ...{ fastsattBeløp: '5 000' } },
-      { ...getAndel(undefined, '1', 'SJØMANN'), ...{ fastsattBeløp: '5 000' } }];
+    values[getFieldNameKey(0)] = [getAndel(1), getAndel(2), getAndel(3), { ...getAndel(4), ...{ fastsattBelop: '5 000' } },
+      { ...getAndel(undefined, '1', 'SJØMANN'), ...{ fastsattBelop: '5 000' } }];
     const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
       { fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true }];
-    const errors = Panel.validate(values,
+    const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder);
+      endringBGPerioder,
+      skjaeringstidspunktBeregning);
     expect(errors[getFieldNameKey(0)]).to.equal(null);
   });
 
@@ -541,17 +551,18 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
   it('skal returnere errors når det finnes 2 andeler for samme virksomhet med samme inntektskategori', () => {
     const values = {};
     values[brukersAndelFieldArrayName] = [
-      { andelsnr: 1, fastsattBeløp: '10 000' }, { andelsnr: 2, fastsattBeløp: '10 000' },
-      { andelsnr: 3, fastsattBeløp: '10 000' }, { andelsnr: 4, fastsattBeløp: '10 000' },
+      { andelsnr: 1, fastsattBelop: '10 000' }, { andelsnr: 2, fastsattBelop: '10 000' },
+      { andelsnr: 3, fastsattBelop: '10 000' }, { andelsnr: 4, fastsattBelop: '10 000' },
     ];
-    values[getFieldNameKey(0)] = [getAndel(1), getAndel(2), getAndel(3), { ...getAndel(4), ...{ fastsattBeløp: '5 000' } },
-      { ...getAndel(undefined, '1', undefined), ...{ fastsattBeløp: '5 000' } }];
+    values[getFieldNameKey(0)] = [getAndel(1), getAndel(2), getAndel(3), { ...getAndel(4), ...{ fastsattBelop: '5 000' } },
+      { ...getAndel(undefined, '1', undefined), ...{ fastsattBelop: '5 000' } }];
     const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
       { fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true }];
-    const errors = Panel.validate(values,
+    const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder);
+      endringBGPerioder,
+      skjaeringstidspunktBeregning);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
     expect(errors[getFieldNameKey(0)]._error[0].id).to.equal(ulikeAndelerErrorMessage()[0].id);
   });

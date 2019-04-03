@@ -18,6 +18,7 @@ import {
   mapAndelToField,
   skalFastsettInntektForStatus,
   skalRedigereInntektskategoriForAndel,
+  skalKunneOverstigeRapportertInntekt,
 } from './BgFordelingUtils';
 import { utledArbeidsforholdFieldName, finnFrilansFieldName }
   from './vurderOgFastsettATFL/forms/VurderMottarYtelseUtils';
@@ -99,16 +100,19 @@ describe('<BgFordelingUtils>', () => {
     expect(skalFastsetteFL).to.equal(false);
   });
 
+  const dagpengerAndel = {
+    aktivitetStatus: { kode: aktivitetStatuser.DAGPENGER, navn: 'Dagpenger' },
+    andelsnr: 1,
+    lagtTilAvSaksbehandler: true,
+    inntektskategori: { kode: 'DAGPENGER' },
+    fastsattAvSaksbehandler: true,
+    beregnetPrAar: 240000,
+  };
+
+  const dagpengeField = mapAndelToField(dagpengerAndel);
+
+
   it('skal mappe dagpengerandel til feltverdier', () => {
-    const dagpengerAndel = {
-      aktivitetStatus: { kode: aktivitetStatuser.DAGPENGER, navn: 'Dagpenger' },
-      andelsnr: 1,
-      lagtTilAvSaksbehandler: true,
-      inntektskategori: { kode: 'DAGPENGER' },
-      fastsattAvSaksbehandler: true,
-      beregnetPrAar: 240000,
-    };
-    const dagpengeField = mapAndelToField(dagpengerAndel);
     expect(dagpengeField.aktivitetStatus).to.equal('DP');
     expect(dagpengeField.andelsnr).to.equal(1);
     expect(dagpengeField.nyAndel).to.equal(false);
@@ -301,7 +305,7 @@ describe('<BgFordelingUtils>', () => {
 
   const andelValuesUtenInntektsmelding = {
     fordelingForrigeBehandling: '',
-    fastsattBeløp: '',
+    fastsattBelop: '',
     readOnlyBelop: 25000,
     skalRedigereInntekt: false,
     snittIBeregningsperiodenPrMnd: 25000,
@@ -313,7 +317,7 @@ describe('<BgFordelingUtils>', () => {
 
   const andelValuesMedInntektsmelding = {
     fordelingForrigeBehandling: 25000,
-    fastsattBeløp: 25000,
+    fastsattBelop: 25000,
     readOnlyBelop: 25000,
     skalRedigereInntekt: false,
     snittIBeregningsperiodenPrMnd: null,
@@ -322,6 +326,27 @@ describe('<BgFordelingUtils>', () => {
     belopFraInntektsmelding: 25000,
     refusjonskravFraInntektsmelding: null,
   };
+
+  it('skal kunne overstyre rapportert inntekt om dagpenger med periodeårsak', () => {
+    const andelFieldValue = {
+      ...andelValuesUtenInntektsmelding,
+      harPeriodeAarsakGraderingEllerRefusjon: true,
+      ...dagpengeField,
+    };
+    const skalKunneOverstyreRapportertInntekt = skalKunneOverstigeRapportertInntekt(null, null, null)(andelFieldValue);
+    expect(skalKunneOverstyreRapportertInntekt).to.equal(true);
+  });
+
+
+  it('skal ikkje kunne overstyre rapportert inntekt om dagpenger uten periodeårsak', () => {
+    const andelFieldValue = {
+      ...andelValuesUtenInntektsmelding,
+      harPeriodeAarsakGraderingEllerRefusjon: false,
+      ...dagpengeField,
+    };
+    const skalKunneOverstyreRapportertInntekt = skalKunneOverstigeRapportertInntekt({}, {}, beregningsgrunnlag)(andelFieldValue);
+    expect(skalKunneOverstyreRapportertInntekt).to.equal(false);
+  });
 
   it('skal redigere inntektskategori for arbeidstakerandel som skalhaBesteberegning', () => {
     const andelFieldValue = {
@@ -478,7 +503,7 @@ describe('<BgFordelingUtils>', () => {
 
   it('skal mappe fastsattBeløp til beløp om skalRedigereInntekt er udefinert', () => {
     const andel = {
-      fastsattBeløp: '10 000',
+      fastsattBelop: '10 000',
       readOnlyBelop: '20 000',
     };
     const belop = mapToBelop(undefined)(andel);
@@ -487,7 +512,7 @@ describe('<BgFordelingUtils>', () => {
 
   it('skal mappe fastsattBeløp til beløp om skalRedigereInntekt returnerer true', () => {
     const andel = {
-      fastsattBeløp: '10 000',
+      fastsattBelop: '10 000',
       readOnlyBelop: '20 000',
     };
     const belop = mapToBelop(() => true)(andel);
@@ -496,7 +521,7 @@ describe('<BgFordelingUtils>', () => {
 
   it('skal mappe readOnlyBelop til beløp om skalRedigereInntekt returnerer false', () => {
     const andel = {
-      fastsattBeløp: '10 000',
+      fastsattBelop: '10 000',
       readOnlyBelop: '20 000',
     };
     const belop = mapToBelop(() => false)(andel);

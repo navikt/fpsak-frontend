@@ -4,6 +4,7 @@ import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-e
 import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
 import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { TableRow, TableColumn } from '@fpsak-frontend/shared-components';
 import { InputField, SelectField, PeriodpickerField } from '@fpsak-frontend/form';
@@ -29,6 +30,7 @@ const andelField = {
   arbeidsperiodeFom: '01.01.2018',
   arbeidsperiodeTom: null,
   refusjonskrav: '10 000',
+  aktivitetStatus: aktivitetStatuser.ARBEIDSTAKER,
 };
 
 const fields = new MockFieldsWithContent('fieldArrayName', [andelField]);

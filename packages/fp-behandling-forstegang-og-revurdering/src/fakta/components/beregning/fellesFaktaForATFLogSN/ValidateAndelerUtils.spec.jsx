@@ -1,7 +1,9 @@
 import { expect } from 'chai';
+import { isRequiredMessage } from '@fpsak-frontend/utils';
 import {
   validateUlikeAndeler, ulikeAndelerErrorMessage, validateSumFastsattBelop, skalVereLikFordelingMessage, compareAndeler,
-  validateTotalRefusjonPrArbeidsforhold, skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding,
+  validateTotalRefusjonPrArbeidsforhold, skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding, validateAndeler, tomErrorMessage,
+  validateAgainstRegisterOrInntektsmelding, validateFastsattBelop,
 } from './ValidateAndelerUtils';
 
 
@@ -414,16 +416,16 @@ describe('<ValidateAndelerUtils>', () => {
 
   it('skal gi error om fastsatt beløp er ulik oppgitt sum', () => {
     const values = [{
-      fastsattBeløp: '10 000',
+      fastsattBelop: '10 000',
     },
     {
-      fastsattBeløp: '20 000',
+      fastsattBelop: '20 000',
     },
     {
-      fastsattBeløp: '10 000',
+      fastsattBelop: '10 000',
     },
     {
-      fastsattBeløp: '10 000',
+      fastsattBelop: '10 000',
     },
     ];
     const fastsattError = validateSumFastsattBelop(values, 40000);
@@ -434,16 +436,16 @@ describe('<ValidateAndelerUtils>', () => {
 
   it('skal ikkje gi error om fastsatt beløp er lik oppgitt sum', () => {
     const values = [{
-      fastsattBeløp: '10 000',
+      fastsattBelop: '10 000',
     },
     {
-      fastsattBeløp: '20 000',
+      fastsattBelop: '20 000',
     },
     {
-      fastsattBeløp: '10 000',
+      fastsattBelop: '10 000',
     },
     {
-      fastsattBeløp: '10 000',
+      fastsattBelop: '10 000',
     },
     ];
     const fastsattError = validateSumFastsattBelop(values, 50000);
@@ -460,22 +462,22 @@ describe('<ValidateAndelerUtils>', () => {
 
     const values = [{
       andelsnr: 1,
-      fastsattBeløp: '10 000',
+      fastsattBelop: '10 000',
       readOnlyBelop: '50 000',
     },
     {
       andelsnr: 2,
-      fastsattBeløp: '20 000',
+      fastsattBelop: '20 000',
       readOnlyBelop: '100 000',
     },
     {
       andelsnr: 3,
-      fastsattBeløp: '40 000',
+      fastsattBelop: '40 000',
       readOnlyBelop: '10 000',
     },
     {
       andelsnr: 4,
-      fastsattBeløp: '15 000',
+      fastsattBelop: '15 000',
       readOnlyBelop: '10 000',
     },
     ];
@@ -493,22 +495,22 @@ describe('<ValidateAndelerUtils>', () => {
 
     const values = [{
       andelsnr: 1,
-      fastsattBeløp: '50 000',
+      fastsattBelop: '50 000',
       readOnlyBelop: '10 000',
     },
     {
       andelsnr: 2,
-      fastsattBeløp: '100 000',
+      fastsattBelop: '100 000',
       readOnlyBelop: '20 000',
     },
     {
       andelsnr: 3,
-      fastsattBeløp: '10 000',
+      fastsattBelop: '10 000',
       readOnlyBelop: '40 000',
     },
     {
       andelsnr: 4,
-      fastsattBeløp: '10 000',
+      fastsattBelop: '10 000',
       readOnlyBelop: '15 000',
     },
     ];
@@ -516,5 +518,114 @@ describe('<ValidateAndelerUtils>', () => {
     expect(fastsattError).to.have.length(2);
     expect(fastsattError[0].id).to.equal(skalVereLikFordelingMessage()[0].id);
     expect(fastsattError[1].fordeling).to.equal('50 000');
+  });
+
+  it('skal gi error om total beløp for arbeidsforhold overstiger rapportert beløp', () => {
+    const stpBeregning = '2018-01-01';
+    const values = [{
+      andel: 'Arbeidsgiver 1',
+      fastsattBelop: '10 000',
+      arbeidsgiverNavn: 'Arbeidsgiver 1',
+      arbeidsgiverId: '2342353525',
+      arbeidsperiodeFom: '2016-01-01',
+      arbeidsforholdId: '3r4h3uihr43',
+      registerInntekt: '10 000',
+      inntektskategori: 'ARBEIDSTAKER',
+    },
+    {
+      andel: 'Arbeidsgiver 1',
+      fastsattBelop: '20 000',
+      arbeidsgiverNavn: 'Arbeidsgiver 1',
+      arbeidsgiverId: '2342353525',
+      arbeidsperiodeFom: '2016-01-01',
+      arbeidsforholdId: '3r4h3uihr43',
+      registerInntekt: '10 000',
+      inntektskategori: 'FRILANSER',
+    },
+    ];
+    const fastsattError = validateAndeler(values, () => true, stpBeregning, () => true);
+    expect(fastsattError['0'].fastsattBelop[0].id).to.equal(tomErrorMessage()[0].id);
+    expect(fastsattError['1'].fastsattBelop[0].id).to.equal(tomErrorMessage()[0].id);
+    /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
+    expect(fastsattError._error.props.totalInntektPrArbeidsforhold.length).to.equal(1);
+    expect(fastsattError._error.props.totalInntektPrArbeidsforhold[0].key).to.equal('Arbeidsgiver 1 (2342353525) ...hr43');
+    expect(fastsattError._error.props.totalInntektPrArbeidsforhold[0].fastsattBelop).to.equal(30000);
+    expect(fastsattError._error.props.totalInntektPrArbeidsforhold[0].registerInntekt).to.equal(10000);
+    expect(fastsattError._error.props.totalInntektPrArbeidsforhold[0].belopFraInntektsmeldingen).to.equal(undefined);
+    expect(fastsattError._error.props.totalInntektPrArbeidsforhold[0].beforeStp).to.equal(true);
+  });
+
+  it('skal validere mot registerinntekt for arbeidsforhold som tilkommer før skjæringstidspunktet', () => {
+    const andelValue = {
+      andel: 'Arbeidsgiver 1',
+      arbeidsgiverNavn: 'Arbeidsgiver 1',
+      arbeidsgiverId: '2342353525',
+      arbeidsforholdId: '3r4h3uihr43',
+    };
+    const inntektList = [{
+      key: 'Arbeidsgiver 1 (2342353525) ...hr43',
+      registerInntekt: 10000,
+      fastsattBelop: 20000,
+      belopFraInntektsmelding: null,
+      beforeStp: true,
+    }];
+    const fastsattError = validateAgainstRegisterOrInntektsmelding(andelValue, inntektList);
+    expect(fastsattError[0].id).to.equal(tomErrorMessage()[0].id);
+  });
+
+  it('skal validere mot beløp fra inntektsmelding for arbeidsforhold som tilkommer etter skjæringstidspunktet', () => {
+    const andelValue = {
+      andel: 'Arbeidsgiver 1',
+      arbeidsgiverNavn: 'Arbeidsgiver 1',
+      arbeidsgiverId: '2342353525',
+      arbeidsforholdId: '3r4h3uihr43',
+    };
+    const inntektList = [{
+      key: 'Arbeidsgiver 1 (2342353525) ...hr43',
+      registerInntekt: null,
+      fastsattBelop: 20000,
+      belopFraInntektsmelding: 10000,
+      beforeStp: false,
+    }];
+    const fastsattError = validateAgainstRegisterOrInntektsmelding(andelValue, inntektList);
+    expect(fastsattError[0].id).to.equal(tomErrorMessage()[0].id);
+  });
+
+  it('skal ikkje validere mot beløp om det ikkje finnes ein matchende arbeidsforholdInntektMapping', () => {
+    const andelValue = {
+      andel: 'Arbeidsgiver 1',
+      arbeidsgiverNavn: 'Arbeidsgiver 1',
+      arbeidsgiverId: '2342353525',
+      arbeidsforholdId: '3r4h3uihr43',
+    };
+    const inntektList = [{
+      key: 'Arbeidsgiver 2 (35354353) ...5435',
+      registerInntekt: null,
+      fastsattBelop: 20000,
+      belopFraInntektsmelding: 10000,
+      beforeStp: false,
+    }];
+    const fastsattError = validateAgainstRegisterOrInntektsmelding(andelValue, inntektList);
+    expect(fastsattError).to.equal(null);
+  });
+
+
+  it('skal returnere required error om fastsatt beløp ikkje er satt', () => {
+    const andelValue = {
+      andel: 'Arbeidsgiver 1',
+      arbeidsgiverNavn: 'Arbeidsgiver 1',
+      arbeidsgiverId: '2342353525',
+      arbeidsforholdId: '3r4h3uihr43',
+      fastsattBelop: '',
+    };
+    const inntektList = [{
+      key: 'Arbeidsgiver 1 (2342353525) ...hr43',
+      registerInntekt: null,
+      fastsattBelop: 20000,
+      belopFraInntektsmelding: 10000,
+      beforeStp: false,
+    }];
+    const fastsattError = validateFastsattBelop(andelValue, inntektList);
+    expect(fastsattError[0].id).to.equal(isRequiredMessage()[0].id);
   });
 });

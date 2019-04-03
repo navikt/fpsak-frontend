@@ -89,6 +89,7 @@ export class MockFields {
 export class MockFieldsWithContent {
   constructor(name, array) {
     const formatName = index => `${name}[${index}]`;
+    this.fields = array;
     this.array = [array].map(formatName); // NOSONAR;
     this.push = () => array.push(formatName(array.length));
 
@@ -98,6 +99,7 @@ export class MockFieldsWithContent {
 
     this.get = index => array[index];
     this.remove = (index) => {
+      this.fields.splice(index, 1);
       this.array.splice(index, 1);
       return this.array;
     };
@@ -106,6 +108,6 @@ export class MockFieldsWithContent {
   }
 
   get length() {
-    return this.array.length;
+    return this.fields.length;
   }
 }

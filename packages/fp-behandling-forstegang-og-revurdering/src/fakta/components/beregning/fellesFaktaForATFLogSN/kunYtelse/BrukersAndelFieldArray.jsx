@@ -25,7 +25,7 @@ import { isBeregningFormDirty as isFormDirty } from '../../BeregningFormUtils';
 
 const defaultBGFordeling = aktivitetStatuser => ({
   andel: aktivitetStatuser.filter(({ kode }) => kode === aktivitetStatus.BRUKERS_ANDEL)[0].navn,
-  fastsattBeløp: '',
+  fastsattBelop: '',
   inntektskategori: '',
   nyAndel: true,
   lagtTilAvSaksbehandler: true,
@@ -40,15 +40,17 @@ const inntektskategoriSelectValues = kategorier => kategorier.map(ik => (
 const summerFordeling = (fields) => {
   let sum = 0;
   fields.forEach((andelElementFieldId, index) => {
-    sum += fields.get(index).fastsattBeløp ? parseInt(removeSpacesFromNumber(fields.get(index).fastsattBeløp), 10) : 0;
+    sum += fields.get(index).fastsattBelop ? parseInt(removeSpacesFromNumber(fields.get(index).fastsattBelop), 10) : 0;
   });
   return sum > 0 ? formatCurrencyNoKr(sum) : '';
 };
 
 const isDirty = (meta, isBeregningFormDirty) => (meta.dirty || isBeregningFormDirty);
 
+const renderMessage = (intl, error) => (error[0] && error[0].id ? intl.formatMessage(...error) : error);
+
 const getErrorMessage = (meta, intl, isBeregningFormDirty) => (meta.error && isDirty(meta, isBeregningFormDirty)
-&& meta.submitFailed ? intl.formatMessage(...meta.error) : null);
+&& meta.submitFailed ? renderMessage(intl, meta.error) : null);
 
 function skalViseSletteknapp(index, fields, readOnly) {
   return (fields.get(index).nyAndel || fields.get(index).lagtTilAvSaksbehandler) && !readOnly;
@@ -67,7 +69,7 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
       </TableColumn>
       <TableColumn className={styles.rightAlignInput}>
         <InputField
-          name={`${andelElementFieldId}.fastsattBeløp`}
+          name={`${andelElementFieldId}.fastsattBelop`}
           bredde="M"
           parse={parseCurrencyInput}
           readOnly={readOnly}
@@ -205,9 +207,9 @@ const mapBrukesAndelToSortedObject = (value) => {
 BrukersAndelFieldArray.validate = (values) => {
   const arrayErrors = values.map((andelFieldValues) => {
     const fieldErrors = {};
-    fieldErrors.fastsattBeløp = required(andelFieldValues.fastsattBeløp);
+    fieldErrors.fastsattBelop = required(andelFieldValues.fastsattBelop);
     fieldErrors.inntektskategori = required(andelFieldValues.inntektskategori);
-    return fieldErrors.fastsattBeløp || fieldErrors.inntektskategori ? fieldErrors : null;
+    return fieldErrors.fastsattBelop || fieldErrors.inntektskategori ? fieldErrors : null;
   });
   if (arrayErrors.some(errors => errors !== null)) {
     return arrayErrors;
@@ -217,7 +219,7 @@ BrukersAndelFieldArray.validate = (values) => {
   }
   const ulikeAndelerError = validateUlikeAndelerWithGroupingFunction(values, mapBrukesAndelToSortedObject);
   if (ulikeAndelerError) {
-    return { _error: ulikeAndelerError };
+    return { _error: <FormattedMessage id={ulikeAndelerError[0].id} /> };
   }
   return null;
 };

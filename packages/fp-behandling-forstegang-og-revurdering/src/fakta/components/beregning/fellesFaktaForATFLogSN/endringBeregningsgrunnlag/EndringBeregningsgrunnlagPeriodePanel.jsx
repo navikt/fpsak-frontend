@@ -1,14 +1,17 @@
 import React from 'react';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FieldArray } from 'redux-form';
 import { EkspanderbartpanelPure } from 'nav-frontend-ekspanderbartpanel';
+import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import classnames from 'classnames/bind';
 import RenderEndringBGFieldArray from './RenderEndringBGFieldArray';
 import { createEndringHeadingForDate, renderDateHeading } from './EndretBeregningsgrunnlagUtils';
 import {
   settAndelIArbeid, setGenerellAndelsinfo, setArbeidsforholdInitialValues, settFastsattBelop, settReadOnlyBelop,
+  erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon, andelErStatusFLOgHarATISammeOrg,
 } from '../BgFordelingUtils';
 
 
@@ -67,20 +70,42 @@ EndringBeregningsgrunnlagPeriodePanelImpl.defaultProps = {
 
 
 EndringBeregningsgrunnlagPeriodePanelImpl.validate = (values, fastsattIForstePeriode,
-  skalRedigereInntekt, skalOverstyreBg) => RenderEndringBGFieldArray.validate(values, fastsattIForstePeriode, skalRedigereInntekt, skalOverstyreBg);
+  skalRedigereInntekt, skalOverstyreBg, skjaeringstidspunktBeregning, skalValidereMotRapportert) => RenderEndringBGFieldArray
+  .validate(values, fastsattIForstePeriode,
+    skalRedigereInntekt, skalOverstyreBg, skjaeringstidspunktBeregning, skalValidereMotRapportert);
 
-EndringBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (periode, readOnly) => {
+const finnRiktigAndel = (andel, bgPeriode) => bgPeriode.beregningsgrunnlagPrStatusOgAndel.find(a => a.andelsnr === andel.andelsnr);
+
+const finnRegister = (andel, bgAndel, skjaeringstidspunktBeregning, faktaOmBeregning) => {
+  if (bgAndel.arbeidsforhold && !moment(bgAndel.arbeidsforhold.startdato).isBefore(moment(skjaeringstidspunktBeregning))) {
+    return null;
+  }
+  if (erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon(bgAndel, faktaOmBeregning)) {
+    return null;
+  }
+  if (andelErStatusFLOgHarATISammeOrg(bgAndel, faktaOmBeregning)) {
+    return null;
+  }
+  return andel.belopFraInntektsmelding
+|| andel.belopFraInntektsmelding === 0 ? formatCurrencyNoKr(andel.belopFraInntektsmelding) : formatCurrencyNoKr(bgAndel.belopPrMndEtterAOrdningen);
+};
+
+EndringBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (periode, readOnly, bgPeriode, skjaeringstidspunktBeregning, faktaOmBeregning) => {
   if (!periode || !periode.endringBeregningsgrunnlagAndeler) {
     return {};
   }
   return (
-    periode.endringBeregningsgrunnlagAndeler.map(andel => ({
+    periode.endringBeregningsgrunnlagAndeler
+    .filter(({ aktivitetStatus }) => aktivitetStatus.kode !== aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE)
+    .map((andel) => {
+      const bgAndel = andel.lagtTilAvSaksbehandler ? undefined : finnRiktigAndel(andel, bgPeriode);
+      return ({
       ...setGenerellAndelsinfo(andel),
       ...setArbeidsforholdInitialValues(andel),
       andelIArbeid: settAndelIArbeid(andel.andelIArbeid),
       fordelingForrigeBehandling: andel.fordelingForrigeBehandling || andel.fordelingForrigeBehandling === 0
         ? formatCurrencyNoKr(andel.fordelingForrigeBehandling) : '',
-      fastsattBeløp: settFastsattBelop(andel.beregnetPrMnd, andel.fastsattForrige, andel.fastsattAvSaksbehandler),
+      fastsattBelop: settFastsattBelop(andel.beregnetPrMnd, andel.fastsattForrige, andel.fastsattAvSaksbehandler),
       readOnlyBelop: settReadOnlyBelop(readOnly, andel.fordelingForrigeBehandling,
         andel.beregnetPrMnd, andel.snittIBeregningsperiodenPrMnd),
       skalRedigereInntekt: periode.harPeriodeAarsakGraderingEllerRefusjon,
@@ -91,7 +116,9 @@ EndringBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (periode, readOnl
       belopFraInntektsmelding: andel.belopFraInntektsmelding,
       harPeriodeAarsakGraderingEllerRefusjon: periode.harPeriodeAarsakGraderingEllerRefusjon,
       refusjonskravFraInntektsmelding: andel.refusjonskravFraInntektsmelding,
-    }))
+      registerInntekt: andel.lagtTilAvSaksbehandler ? null : finnRegister(andel, bgAndel, skjaeringstidspunktBeregning, faktaOmBeregning),
+    });
+})
   );
 };
 

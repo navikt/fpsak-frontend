@@ -5,7 +5,9 @@ import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import EndringBeregningsgrunnlagPeriodePanel from './EndringBeregningsgrunnlagPeriodePanel';
-import { mapToBelop, skalRedigereInntektForAndel, skalKunneOverstyreBeregningsgrunnlag } from '../BgFordelingUtils';
+import {
+ mapToBelop, skalRedigereInntektForAndel, skalKunneOverstyreBeregningsgrunnlag, skalKunneOverstigeRapportertInntekt,
+} from '../BgFordelingUtils';
 
 import styles from './endringBeregningsgrunnlagForm.less';
 
@@ -89,7 +91,7 @@ export const finnFastsattIForstePeriode = (values, skalRedigereInntekt) => {
   const forstePeriode = values[getFieldNameKey(0)];
   return forstePeriode
     .map(mapToBelop(skalRedigereInntekt))
-    .reduce((sum, fastsattBeløp) => sum + fastsattBeløp, 0);
+    .reduce((sum, fastsattBelop) => sum + fastsattBelop, 0);
 };
 
 EndringBeregningsgrunnlagForm.validate = (values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag) => {
@@ -97,22 +99,29 @@ EndringBeregningsgrunnlagForm.validate = (values, endringBGPerioder, faktaOmBere
   if (endringBGPerioder && endringBGPerioder.length > 0) {
     const skalRedigereInntekt = skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag);
     const skalOverstyreBg = skalKunneOverstyreBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag);
+    const skalValidereMotRapportert = andel => !skalKunneOverstigeRapportertInntekt(values, faktaOmBeregning, beregningsgrunnlag)(andel);
     const fastsattIForstePeriode = finnFastsattIForstePeriode(values, skalRedigereInntekt);
     for (let i = 0; i < endringBGPerioder.length; i += 1) {
       const periode = values[getFieldNameKey(i)];
-      errors[getFieldNameKey(i)] = EndringBeregningsgrunnlagPeriodePanel.validate(periode, fastsattIForstePeriode, skalRedigereInntekt, skalOverstyreBg);
+      errors[getFieldNameKey(i)] = EndringBeregningsgrunnlagPeriodePanel.validate(periode, fastsattIForstePeriode,
+         skalRedigereInntekt, skalOverstyreBg, beregningsgrunnlag.skjaeringstidspunktBeregning, skalValidereMotRapportert);
     }
   }
   return errors;
 };
 
-EndringBeregningsgrunnlagForm.buildInitialValues = (endringBGPerioder, readOnly) => {
+const finnRiktigBgPeriode = (periode, bgPerioder) => bgPerioder.find(p => p.beregningsgrunnlagPeriodeFom === periode.fom);
+
+EndringBeregningsgrunnlagForm.buildInitialValues = (endringBGPerioder, readOnly, bg) => {
   const initialValues = {};
   if (!endringBGPerioder) {
     return initialValues;
   }
+  const bgPerioder = bg.beregningsgrunnlagPeriode;
   endringBGPerioder.forEach((periode, index) => {
-    initialValues[getFieldNameKey(index)] = EndringBeregningsgrunnlagPeriodePanel.buildInitialValues(periode, readOnly);
+    const bgPeriode = finnRiktigBgPeriode(periode, bgPerioder);
+    initialValues[getFieldNameKey(index)] = EndringBeregningsgrunnlagPeriodePanel
+    .buildInitialValues(periode, readOnly, bgPeriode, bg.skjaeringstidspunktBeregning, bg.faktaOmBeregning);
   });
   return initialValues;
 };
@@ -144,7 +153,7 @@ export const finnRedigerteAndeler = (values, index, harPeriodeAarsakGraderingEll
 
 export const mapTilFastsatteVerdier = aktivitet => ({
   refusjon: aktivitet.skalKunneEndreRefusjon ? removeSpacesFromNumber(aktivitet.refusjonskrav) : null,
-  fastsattBeløp: removeSpacesFromNumber(aktivitet.fastsattBeløp),
+  fastsattBeløp: removeSpacesFromNumber(aktivitet.fastsattBelop),
   inntektskategori: aktivitet.inntektskategori,
 });
 
@@ -169,7 +178,8 @@ export const transformPerioder = (endringBGPerioder, values, harKunYtelse) => {
   for (let index = 0; index < endringBGPerioder.length; index += 1) {
     const { harPeriodeAarsakGraderingEllerRefusjon } = endringBGPerioder[index];
     if (shouldBeSubmitted(harPeriodeAarsakGraderingEllerRefusjon, values, index)) {
-      endringBeregningsgrunnlagPerioder.push(lagPeriodeForSubmit(values, index, harPeriodeAarsakGraderingEllerRefusjon, harKunYtelse, endringBGPerioder));
+      endringBeregningsgrunnlagPerioder.push(lagPeriodeForSubmit(values, index, harPeriodeAarsakGraderingEllerRefusjon,
+        harKunYtelse, endringBGPerioder));
     }
   }
   return endringBeregningsgrunnlagPerioder;

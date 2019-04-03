@@ -32,7 +32,10 @@ const NavFieldGroup = ({
 
 NavFieldGroup.propTypes = {
   errorMessageName: PropTypes.string,
-  errorMessage: PropTypes.string,
+  errorMessage: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+  ]),
   title: PropTypes.node,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),

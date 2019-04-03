@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
@@ -17,6 +18,8 @@ import {
 import {
   getEndringBeregningsgrunnlagPerioder,
   getFaktaOmBeregningTilfellerKoder,
+  getBehandlingIsRevurdering,
+  getBeregningsgrunnlag,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
@@ -28,7 +31,7 @@ import 'core-js/fn/array/flat-map';
 
 import { getUniqueListOfArbeidsforhold } from '../../ArbeidsforholdHelper';
 import {
-  validateAndelFields, validateSumFastsattBelop, validateUlikeAndeler,
+  validateAndeler, validateSumFastsattBelop, validateUlikeAndeler,
   validateTotalRefusjonPrArbeidsforhold,
 } from '../ValidateAndelerUtils';
 import { setSkalRedigereInntektForATFL } from '../BgFordelingUtils';
@@ -37,7 +40,7 @@ import styles from './renderEndringBGFieldArray.less';
 const defaultBGFordeling = periodeUtenAarsak => ({
   nyAndel: true,
   fordelingForrigeBehandling: 0,
-  fastsattBeløp: formatCurrencyNoKr(0),
+  fastsattBelop: formatCurrencyNoKr(0),
   lagtTilAvSaksbehandler: true,
   refusjonskravFraInntektsmelding: 0,
   belopFraInntektsmelding: null,
@@ -86,10 +89,9 @@ const summerFordelingForrigeBehandlingFraFields = (fields) => {
   let index = 0;
   for (index; index < fields.length; index += 1) {
     const { fordelingForrigeBehandling } = fields.get(index);
-    if (fordelingForrigeBehandling === undefined || fordelingForrigeBehandling === null || fordelingForrigeBehandling === '') {
-      return '';
+    if (fordelingForrigeBehandling !== undefined && fordelingForrigeBehandling !== null && fordelingForrigeBehandling !== '') {
+      sum += Number(removeSpacesFromNumber(fordelingForrigeBehandling));
     }
-    sum += Number(removeSpacesFromNumber(fordelingForrigeBehandling));
   }
   return sum > 0 ? formatCurrencyNoKr(sum) : '';
 };
@@ -100,7 +102,7 @@ const summerFordeling = (fields) => {
   for (index; index < fields.length; index += 1) {
     const field = fields.get(index);
     if (field.skalRedigereInntekt) {
-      sum += field.fastsattBeløp ? Number(removeSpacesFromNumber(field.fastsattBeløp)) : 0;
+      sum += field.fastsattBelop ? Number(removeSpacesFromNumber(field.fastsattBelop)) : 0;
     } else {
       sum += field.readOnlyBelop ? Number(removeSpacesFromNumber(field.readOnlyBelop)) : 0;
     }
@@ -108,10 +110,33 @@ const summerFordeling = (fields) => {
   return sum > 0 ? formatCurrencyNoKr(sum) : '';
 };
 
+const startBeforeStp = (field,
+  skjaeringstidspunktBeregning) => (field.arbeidsperiodeFom === ''
+  || !field.arbeidsperiodeFom
+  || moment(field.arbeidsperiodeFom).isBefore(skjaeringstidspunktBeregning));
+
+const summerRegister = (fields, skjaeringstidspunktBeregning) => {
+  let sum = 0;
+  let index = 0;
+  for (index; index < fields.length; index += 1) {
+    const field = fields.get(index);
+    if (field.registerInntekt) {
+      sum += field.registerInntekt ? Number(removeSpacesFromNumber(field.registerInntekt)) : 0;
+    } else if (field.nyAndel === false
+      && (startBeforeStp(field, skjaeringstidspunktBeregning))) {
+        return '';
+      }
+  }
+  return sum > 0 ? formatCurrencyNoKr(sum) : '';
+};
+
 const isSelvstendigOrFrilanser = fieldVal => (isSelvstendigNæringsdrivende(fieldVal.inntektskategori)
   || inntektskategorier.FRILANSER === fieldVal.inntektskategori);
 
-const getErrorMessage = (meta, intl) => (meta.error && (meta.submitFailed) ? intl.formatMessage(...meta.error) : null);
+const renderMessage = (intl, error) => (error[0] && error[0].id ? intl.formatMessage(...error) : error);
+
+const getErrorMessage = (meta, intl) => (meta.error
+&& meta.submitFailed ? renderMessage(intl, meta.error) : null);
 
 const onKeyDown = (fields, periode) => ({ keyCode }) => {
   if (keyCode === 13) {
@@ -124,6 +149,16 @@ const finnArbeidsforholdForAndel = (arbeidsforholdListe, val) => {
   return arbeidsforholdListe.find(arbeidsforhold => arbeidsforhold.andelsnr === andelsnr);
 };
 
+const finnAktivitetStatus = (fields, val) => {
+  const andelsnr = Number(val);
+  for (let index = 0; index < fields.length; index += 1) {
+    if (fields.get(index).andelsnr === andelsnr) {
+      return fields.get(index).aktivitetStatus;
+    }
+  }
+  return null;
+};
+
 const setArbeidsforholdInfo = (fields, index, arbeidsforholdList, val) => {
   const field = fields.get(index);
   const arbeidsforhold = finnArbeidsforholdForAndel(arbeidsforholdList, val);
@@ -134,6 +169,7 @@ const setArbeidsforholdInfo = (fields, index, arbeidsforholdList, val) => {
     field.arbeidsperiodeFom = arbeidsforhold.startdato;
     field.arbeidsperiodeTom = arbeidsforhold.opphoersdato;
     field.andelsnrRef = arbeidsforhold.andelsnr;
+    field.aktivitetStatus = finnAktivitetStatus(fields, val);
   }
 };
 
@@ -180,7 +216,7 @@ export const lagBelopKolonne = (andelElementFieldId, readOnly, skalRedigereInnte
   return (
     <TableColumn className={styles.rightAlignInput}>
       <InputField
-        name={`${andelElementFieldId}.fastsattBeløp`}
+        name={`${andelElementFieldId}.fastsattBelop`}
         bredde="XS"
         parse={parseCurrencyInput}
         readOnly={false}
@@ -194,7 +230,7 @@ const skalViseSletteknapp = (index, fields, readOnly) => ((fields.get(index).nyA
 || fields.get(index).lagtTilAvSaksbehandler) && !readOnly);
 
 const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
-  inntektskategoriKoder, periodeUtenAarsak, arbeidsforholdList, selectVals) => (
+  inntektskategoriKoder, periodeUtenAarsak, arbeidsforholdList, selectVals, erRevurdering) => (
   fields.map((andelElementFieldId, index) => (
     <TableRow key={andelElementFieldId}>
       <TableColumn>
@@ -212,6 +248,8 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
         )
         }
       </TableColumn>
+      {erRevurdering
+      && (
       <TableColumn>
         <InputField
           name={`${andelElementFieldId}.fordelingForrigeBehandling`}
@@ -220,6 +258,8 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
           parse={parseCurrencyInput}
         />
       </TableColumn>
+)
+        }
       <TableColumn>
         <DecimalField
           name={`${andelElementFieldId}.andelIArbeid`}
@@ -239,6 +279,14 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
           name={`${andelElementFieldId}.refusjonskrav`}
           bredde="XS"
           readOnly={(readOnly || periodeUtenAarsak) || !fields.get(index).skalKunneEndreRefusjon}
+          parse={parseCurrencyInput}
+        />
+      </TableColumn>
+      <TableColumn>
+        <InputField
+          name={`${andelElementFieldId}.registerInntekt`}
+          bredde="S"
+          readOnly
           parse={parseCurrencyInput}
         />
       </TableColumn>
@@ -270,19 +318,28 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
     </TableRow>
   ))
 );
-const createBruttoBGSummaryRow = (sumFordelingForrigeBehandling, sumFordeling) => (
+const createBruttoBGSummaryRow = (sumFordelingForrigeBehandling, sumFordeling, sumRegister, erRevurdering) => (
   <TableRow key="bruttoBGSummaryRow">
     <TableColumn>
       <FormattedMessage id="BeregningInfoPanel.EndringBG.Sum" />
     </TableColumn>
     <TableColumn />
+    {erRevurdering
+    && (
     <TableColumn>
       <Element>
         {sumFordelingForrigeBehandling}
       </Element>
     </TableColumn>
+)
+    }
     <TableColumn />
     <TableColumn />
+    <TableColumn>
+      <Element>
+        {sumRegister}
+      </Element>
+    </TableColumn>
     <TableColumn>
       <Element>
         {sumFordeling}
@@ -293,15 +350,20 @@ const createBruttoBGSummaryRow = (sumFordelingForrigeBehandling, sumFordeling) =
   </TableRow>
 );
 
-const getHeaderTextCodes = () => ([
-  'BeregningInfoPanel.EndringBG.Andel',
-  'BeregningInfoPanel.EndringBG.Arbeidsperiode',
-  'BeregningInfoPanel.EndringBG.FordelingForrigeBehandling',
-  'BeregningInfoPanel.EndringBG.AndelIArbeid',
-  'BeregningInfoPanel.EndringBG.Refusjonskrav',
-  'BeregningInfoPanel.EndringBG.Fordeling',
-  'BeregningInfoPanel.EndringBG.Inntektskategori']
-);
+const getHeaderTextCodes = (erRevurdering) => {
+  const headerCodes = [];
+  headerCodes.push('BeregningInfoPanel.EndringBG.Andel');
+  headerCodes.push('BeregningInfoPanel.EndringBG.Arbeidsperiode');
+  if (erRevurdering) {
+    headerCodes.push('BeregningInfoPanel.EndringBG.FordelingForrigeBehandling');
+  }
+  headerCodes.push('BeregningInfoPanel.EndringBG.AndelIArbeid');
+  headerCodes.push('BeregningInfoPanel.EndringBG.Refusjonskrav');
+  headerCodes.push('BeregningInfoPanel.EndringBG.RapportertInntekt');
+  headerCodes.push('BeregningInfoPanel.EndringBG.Fordeling');
+  headerCodes.push('BeregningInfoPanel.EndringBG.Inntektskategori');
+  return headerCodes;
+};
 
 /**
  *  RenderEndringBGFieldArray
@@ -319,17 +381,22 @@ export const RenderEndringBGFieldArrayImpl = ({
   periodeUtenAarsak,
   isAksjonspunktClosed,
   harKunYtelse,
+  erRevurdering,
+  skjaeringstidspunktBeregning,
 }) => {
   const sumFordelingForrigeBehandling = summerFordelingForrigeBehandlingFraFields(fields);
   const sumFordeling = summerFordeling(fields);
+  const sumRegister = summerRegister(fields, skjaeringstidspunktBeregning);
   const selectVals = harKunYtelse
     ? arbeidsgiverSelectValuesForKunYtelse(arbeidsforholdList, intl)
     : arbeidsgiverSelectValues(arbeidsforholdList);
-  const tablerows = createAndelerTableRows(fields, isAksjonspunktClosed, readOnly, inntektskategoriKoder, periodeUtenAarsak, arbeidsforholdList, selectVals);
-  tablerows.push(createBruttoBGSummaryRow(sumFordelingForrigeBehandling, sumFordeling));
+  const tablerows = createAndelerTableRows(fields, isAksjonspunktClosed, readOnly, inntektskategoriKoder, periodeUtenAarsak,
+    arbeidsforholdList, selectVals, erRevurdering);
+  tablerows.push(createBruttoBGSummaryRow(sumFordelingForrigeBehandling, sumFordeling, sumRegister, erRevurdering));
+  const error = getErrorMessage(meta, intl);
   return (
-    <NavFieldGroup errorMessage={getErrorMessage(meta, intl)} className={styles.dividerTop}>
-      <Table headerTextCodes={getHeaderTextCodes()} noHover classNameTable={styles.inntektTable}>
+    <NavFieldGroup errorMessage={error} className={styles.dividerTop}>
+      <Table headerTextCodes={getHeaderTextCodes(erRevurdering)} noHover classNameTable={styles.inntektTable}>
         {tablerows}
       </Table>
       {!readOnly && !periodeUtenAarsak
@@ -377,34 +444,33 @@ RenderEndringBGFieldArrayImpl.propTypes = {
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   periodeUtenAarsak: PropTypes.bool.isRequired,
   harKunYtelse: PropTypes.bool.isRequired,
+  erRevurdering: PropTypes.bool.isRequired,
+  skjaeringstidspunktBeregning: PropTypes.string.isRequired,
 };
 
 const RenderEndringBGFieldArray = injectIntl(RenderEndringBGFieldArrayImpl);
 
-const summerFordelingForrigeBehandlingFraValues = values => (values
-  .map(({ fordelingForrigeBehandling }) => (fordelingForrigeBehandling ? removeSpacesFromNumber(fordelingForrigeBehandling) : 0))
+const summerRegisterInntektFraValues = values => (values
+  .map(({ registerInntekt }) => (registerInntekt ? removeSpacesFromNumber(registerInntekt) : 0))
   .reduce((sum, fordeling) => sum + fordeling, 0));
 
-RenderEndringBGFieldArray.validate = (values, fastsattIForstePeriode, skalRedigereInntekt, skalOverstyreBg) => {
-  const arrayErrors = values.map((andelFieldValues) => {
-    if (!skalRedigereInntekt(andelFieldValues)) {
-      return null;
-    }
-    return validateAndelFields(andelFieldValues);
-  });
-  if (arrayErrors.some(errors => errors !== null)) {
-    return arrayErrors;
+
+RenderEndringBGFieldArray.validate = (values, fastsattIForstePeriode, skalRedigereInntekt, skalOverstyreBg,
+  skjaeringstidspunktBeregning, skalValidereMotRapportert) => {
+  const fieldErrors = validateAndeler(values, skalRedigereInntekt, skjaeringstidspunktBeregning, skalValidereMotRapportert);
+  if (fieldErrors != null) {
+    return fieldErrors;
   }
   if (isArrayEmpty(values)) {
     return null;
   }
   const ulikeAndelerError = validateUlikeAndeler(values);
   if (ulikeAndelerError) {
-    return { _error: ulikeAndelerError };
+    return { _error: <FormattedMessage id={ulikeAndelerError[0].id} /> };
   }
   const refusjonPrArbeidsforholdError = validateTotalRefusjonPrArbeidsforhold(values);
   if (refusjonPrArbeidsforholdError) {
-    return { _error: refusjonPrArbeidsforholdError };
+    return { _error: <FormattedMessage id={refusjonPrArbeidsforholdError[0].id} values={refusjonPrArbeidsforholdError[1]} /> };
   }
   const kanRedigereInntekt = values.some(andel => skalRedigereInntekt(andel));
   if (!kanRedigereInntekt) {
@@ -413,28 +479,31 @@ RenderEndringBGFieldArray.validate = (values, fastsattIForstePeriode, skalRedige
   if (values.some(andel => skalOverstyreBg(andel))) {
     if (fastsattIForstePeriode !== undefined && fastsattIForstePeriode !== null) {
       const fastsattBelopError = validateSumFastsattBelop(values, fastsattIForstePeriode, skalRedigereInntekt);
-
       if (fastsattBelopError) {
-        return { _error: fastsattBelopError };
+        return { _error: <FormattedMessage id={fastsattBelopError[0].id} values={fastsattBelopError[1]} /> };
       }
     }
     return null;
   }
-  const sumFordelingForrigeBehandling = summerFordelingForrigeBehandlingFraValues(values);
-  const fastsattBelopError = validateSumFastsattBelop(values, sumFordelingForrigeBehandling, skalRedigereInntekt);
+  const sumRegister = summerRegisterInntektFraValues(values);
+  let fastsattBelopError = null;
+  fastsattBelopError = validateSumFastsattBelop(values, sumRegister, skalRedigereInntekt);
   if (fastsattBelopError) {
-    return { _error: fastsattBelopError };
+    return { _error: <FormattedMessage id={fastsattBelopError[0].id} values={fastsattBelopError[1]} /> };
   }
   return null;
 };
 
 const mapStateToProps = (state, ownProps) => {
+  const erRevurdering = getBehandlingIsRevurdering(state);
   const tilfeller = getFaktaOmBeregningTilfellerKoder(state);
   const arbeidsforholdList = getUniqueListOfArbeidsforhold(getEndringBeregningsgrunnlagPerioder(state)
     ? getEndringBeregningsgrunnlagPerioder(state).flatMap(p => p.endringBeregningsgrunnlagAndeler) : undefined);
   setSkalRedigereInntektForATFL(state, ownProps.fields);
   return {
+    erRevurdering,
     arbeidsforholdList,
+    skjaeringstidspunktBeregning: getBeregningsgrunnlag(state).skjaeringstidspunktBeregning,
     inntektskategoriKoder: getKodeverk(kodeverkTyper.INNTEKTSKATEGORI)(state),
     harKunYtelse: tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE),
   };
