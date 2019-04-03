@@ -15,8 +15,9 @@ import {
   hasValidText,
   required,
 } from '@fpsak-frontend/utils';
-import styles from './tilbakekrevingForm.less';
 import tilbakekrevingCodes from './tilbakekrevingCodes';
+
+import styles from './uaktsomhetGradFormPanel.less';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
@@ -26,57 +27,56 @@ const uaktsomhetCodes = [
   tilbakekrevingCodes.MANGELFULLEOPPLYSNINGER,
 ];
 
-const HandletUaktsomhetGrad = ({
+const UaktsomhetGradFormPanel = ({
   grunnerTilReduksjon,
   readOnly,
   handletUaktsomhetGrad,
   annet,
+  andelSomSkalTilbakekreves,
   resetAnnetTextField,
 }) => (
   <>
-    { handletUaktsomhetGrad === tilbakekrevingCodes.FORSETT
-    && (
-      <div className={styles.marginBottom20}>
+    { handletUaktsomhetGrad === tilbakekrevingCodes.FORSETT && (
+      <div className={styles.arrowbox}>
         <ArrowBox alignOffset={20}>
+          <Undertekst>
+            <FormattedMessage id="UaktsomhetGradFormPanel.Andel" />
+          </Undertekst>
+          <Normaltekst>{`${andelSomSkalTilbakekreves} %`}</Normaltekst>
+          <VerticalSpacer eightPx />
           <Normaltekst>
-            <FormattedMessage id="Tilbakekreving.RadioGroup.Andel" />
-          </Normaltekst>
-          <Normaltekst>100%</Normaltekst>
-          <Normaltekst>
-            <FormattedMessage id="Tilbakekreving.RadioGroup.Renter" />
+            <FormattedMessage id="UaktsomhetGradFormPanel.Renter" />
           </Normaltekst>
         </ArrowBox>
       </div>
-    )
-    }
-    {uaktsomhetCodes.includes(handletUaktsomhetGrad)
-    && (
-      <div className={styles.marginBottom20}>
+    )}
+    {uaktsomhetCodes.includes(handletUaktsomhetGrad) && (
+      <div className={styles.arrowboxWide}>
         <ArrowBox alignOffset={120}>
           <div>
             <Row>
               <Column md="12">
-                <Undertekst><FormattedMessage id="Tilbakekreving.CheckboxGroup.GrunnerTilReduksjon" /></Undertekst>
+                <Undertekst><FormattedMessage id="UaktsomhetGradFormPanel.GrunnerTilReduksjon" /></Undertekst>
                 <VerticalSpacer eightPx />
                 <CheckboxField
                   name="uaktsomhetRetterSeg"
-                  label={<FormattedMessage id="Tilbakekreving.Checkbox.UaktsomhetRetterSeg" />}
+                  label={<FormattedMessage id="UaktsomhetGradFormPanel.UaktsomhetRetterSeg" />}
                 />
                 <CheckboxField
                   name="feilTilskrivesTilNav"
-                  label={<FormattedMessage id="Tilbakekreving.Checkbox.FeilTilskrivesTilNav" />}
+                  label={<FormattedMessage id="UaktsomhetGradFormPanel.FeilTilskrivesTilNav" />}
                 />
                 <CheckboxField
                   name="feilutbetalingStørrelsen"
-                  label={<FormattedMessage id="Tilbakekreving.Checkbox.FeilutbetalingStørrelsen" />}
+                  label={<FormattedMessage id="UaktsomhetGradFormPanel.FeilutbetalingStorrelsen" />}
                 />
                 <CheckboxField
                   name="tideSidenFeilutbetaling"
-                  label={<FormattedMessage id="Tilbakekreving.Checkbox.TideSidenFeilutbetaling" />}
+                  label={<FormattedMessage id="UaktsomhetGradFormPanel.TidenSidenFeilutbetaling" />}
                 />
                 <CheckboxField
                   name="annet"
-                  label={<FormattedMessage id="Tilbakekreving.Checkbox.Annet" />}
+                  label={<FormattedMessage id="UaktsomhetGradFormPanel.Annet" />}
                   onChange={resetAnnetTextField}
                 />
               </Column>
@@ -102,7 +102,7 @@ const HandletUaktsomhetGrad = ({
             <Row>
               <Column md="12">
                 <VerticalSpacer eightPx />
-                <Undertekst><FormattedMessage id="Tilbakekreving.RadioGroup.GrunnerTilReduksjon" /></Undertekst>
+                <Undertekst><FormattedMessage id="UaktsomhetGradFormPanel.SkalSarligeGrunnerGiReduksjon" /></Undertekst>
                 <VerticalSpacer eightPx />
                 <RadioGroupField
                   validate={[required]}
@@ -119,7 +119,7 @@ const HandletUaktsomhetGrad = ({
               <ArrowBox alignOffset={24}>
                 <Row>
                   <Column md="6">
-                    <Undertekst><FormattedMessage id="Tilbakekreving.andelSomTilbakekreves" /></Undertekst>
+                    <Undertekst><FormattedMessage id="UaktsomhetGradFormPanel.andelSomTilbakekreves" /></Undertekst>
                     <FlexRow>
                       <FlexColumn>
                         <SelectField
@@ -145,18 +145,13 @@ const HandletUaktsomhetGrad = ({
   </>
 );
 
-
-HandletUaktsomhetGrad.propTypes = {
-  grunnerTilReduksjon: PropTypes.bool,
+UaktsomhetGradFormPanel.propTypes = {
+  grunnerTilReduksjon: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   handletUaktsomhetGrad: PropTypes.string.isRequired,
-  annet: PropTypes.bool,
+  annet: PropTypes.bool.isRequired,
   resetAnnetTextField: PropTypes.func.isRequired,
+  andelSomSkalTilbakekreves: PropTypes.number.isRequired,
 };
 
-HandletUaktsomhetGrad.defaultProps = {
-  annet: false,
-  grunnerTilReduksjon: false,
-};
-
-export default HandletUaktsomhetGrad;
+export default UaktsomhetGradFormPanel;

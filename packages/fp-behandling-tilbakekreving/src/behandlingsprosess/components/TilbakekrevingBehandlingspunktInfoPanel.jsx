@@ -50,6 +50,7 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({
         submitCallback={submitCallback}
         readOnly={readOnly}
         isApOpen={openAksjonspunkt}
+        readOnlySubmitButton={readOnlySubmitButton}
       />
     )
     }

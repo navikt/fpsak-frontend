@@ -14,6 +14,7 @@ import {
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 
 import {
   behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, isBehandlingFormDirty,
@@ -32,7 +33,7 @@ const formName = 'ForeldelseForm';
 const foreldelseAksjonspunkter = [
   aksjonspunktCodes.VURDER_FORELDELSE,
 ];
-export const getKjonn = person => (person.erKvinne ? 'K' : 'M');
+
 const getDate = () => moment().subtract(30, 'months').format(DDMMYYYY_DATE_FORMAT);
 const getApTekst = apCode => (apCode
   ? [<FormattedMessage id={`Foreldelse.AksjonspunktHelpText.${apCode}`} key="vurderForeldelse" values={{ dato: getDate() }} />]
@@ -43,7 +44,7 @@ export const ForeldelsePanelImpl = ({
   behandlingFormPrefix,
   reduxFormChange: formChange,
   reduxFormInitialize: formInitialize,
-  fagsakPerson,
+  kjonn,
   isApOpen,
   apCodes,
   readOnlySubmitButton,
@@ -79,7 +80,7 @@ export const ForeldelsePanelImpl = ({
           </AksjonspunktHelpText>
           <VerticalSpacer twentyPx />
           <BpTimelinePanel
-            hovedsokerKjonnKode={getKjonn(fagsakPerson)}
+            hovedsokerKjonnKode={kjonn}
             resultatActivity={foreldelsesresultatActivity}
             activityPanelName={ACTIVITY_PANEL_NAME}
             behandlingFormPrefix={behandlingFormPrefix}
@@ -95,18 +96,14 @@ export const ForeldelsePanelImpl = ({
             />
           </BpTimelinePanel>
           <VerticalSpacer twentyPx />
-          <FlexRow>
-            <FlexColumn>
-              <BehandlingspunktSubmitButton
-                formName={formName}
-                isReadOnly={readOnly}
-                isSubmittable={!readOnlySubmitButton}
-                isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-                isBehandlingFormDirty={isBehandlingFormDirty}
-                hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-              />
-            </FlexColumn>
-          </FlexRow>
+          <BehandlingspunktSubmitButton
+            formName={formName}
+            isReadOnly={readOnly}
+            isSubmittable={!readOnlySubmitButton}
+            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+            isBehandlingFormDirty={isBehandlingFormDirty}
+            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+          />
         </>
       )
       }
@@ -119,7 +116,7 @@ ForeldelsePanelImpl.propTypes = {
   behandlingFormPrefix: PropTypes.string.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
-  fagsakPerson: PropTypes.shape().isRequired,
+  kjonn: PropTypes.string.isRequired,
   isApOpen: PropTypes.bool.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string),
   readOnly: PropTypes.bool.isRequired,
@@ -154,7 +151,7 @@ const mapStateToProps = (state, ownProps) => {
     initialValues: buildInitialValues(foreldelsePerioderResultat),
     foreldelsesresultatActivity: behandlingFormValueSelector(formName)(state, ACTIVITY_PANEL_NAME),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
-    fagsakPerson: getFagsakPerson(state),
+    kjonn: getFagsakPerson(state).erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN,
     onSubmit: values => ownProps.submitCallback(transformValues(values, ownProps.apCodes[0])),
   };
 };

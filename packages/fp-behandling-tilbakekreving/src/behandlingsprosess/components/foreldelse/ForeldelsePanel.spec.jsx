@@ -21,7 +21,7 @@ const mockProps = {
   behandlingFormPrefix: '',
   reduxFormChange: sinon.spy(),
   reduxFormInitialize: sinon.spy(),
-  fagsakPerson: {},
+  kjonn: 'K',
   isApOpen: true,
   apCodes: ['5003'],
   foreldeseSyncErrors: {},
@@ -43,10 +43,6 @@ describe('<ForeldelsePanel>', () => {
     expect(undertittel).has.length(1);
     const verticalSpacer = wrapper.find('VerticalSpacer');
     expect(verticalSpacer).has.length(3);
-    const flexRow = wrapper.find('FlexRow');
-    expect(flexRow).has.length(1);
-    const flexColumn = wrapper.find('FlexColumn');
-    expect(flexColumn).has.length(1);
     const bpTimelinePanel = wrapper.find('BpTimelinePanel');
     expect(bpTimelinePanel).has.length(1);
     const aksjonspunktHelpText = wrapper.find('AksjonspunktHelpText');

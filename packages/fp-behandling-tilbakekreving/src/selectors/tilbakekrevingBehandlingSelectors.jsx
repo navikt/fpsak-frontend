@@ -74,6 +74,10 @@ export const getBehandlingSprak = createSelector([getSelectedBehandling], (selec
 // VILKÅR
 export const getBehandlingVilkar = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.vilkar);
 
+// VILKÅRSVURDERING
+export const getBehandlingVilkarsvurderingsperioder = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling
+  .vilkarvurderingsperioder.perioder);
+
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 const hasBehandlingLukketStatus = createSelector(
