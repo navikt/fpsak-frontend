@@ -286,6 +286,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
           )}
           { hasArbeidsforholdAksjonspunkt(selectedArbeidsforhold) && (
             <PersonArbeidsforholdDetailForm
+              key={selectedArbeidsforhold.id}
               arbeidsforhold={selectedArbeidsforhold}
               readOnly={readOnly}
               hasAksjonspunkter={hasAksjonspunkter}
