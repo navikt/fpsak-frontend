@@ -4,7 +4,7 @@ import { CheckboxField } from '@fpsak-frontend/form';
 import styles from './vedtakOverstyrendeKnapp.less';
 
 
-const VedtakOverstyrendeKnappImpl = ({
+const VedtakOverstyrendeKnapp = ({
   readOnly, readOnlyHideEmpty, toggleCallback, keyName,
 }) => (
   <div className={styles.manuell}>
@@ -19,15 +19,15 @@ const VedtakOverstyrendeKnappImpl = ({
   </div>
 );
 
-VedtakOverstyrendeKnappImpl.propTypes = {
+VedtakOverstyrendeKnapp.propTypes = {
   toggleCallback: PropTypes.func.isRequired,
   keyName: PropTypes.string.isRequired,
   readOnly: PropTypes.bool.isRequired,
   readOnlyHideEmpty: PropTypes.bool,
 };
 
-VedtakOverstyrendeKnappImpl.defaultProps = {
+VedtakOverstyrendeKnapp.defaultProps = {
   readOnlyHideEmpty: false,
 };
 
-export default VedtakOverstyrendeKnappImpl;
+export default VedtakOverstyrendeKnapp;
