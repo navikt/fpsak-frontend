@@ -17,7 +17,7 @@ const BehandlingsprosessPanel = ({
   selectedBehandlingspunkt,
   selectBehandlingspunktCallback,
   isSelectedBehandlingHenlagt,
-  findBehandlingsprosessIcon,
+  getBehandlingsprosessIkon,
   getBehandlingspunkterStatus,
   getBehandlingspunkterTitleCodes,
   getAksjonspunkterOpenStatus,
@@ -31,7 +31,7 @@ const BehandlingsprosessPanel = ({
         isSelectedBehandlingspunkt={bp === selectedBehandlingspunkt}
         isSelectedBehandlingHenlagt={isSelectedBehandlingHenlagt}
         selectBehandlingspunktCallback={selectBehandlingspunktCallback}
-        findBehandlingsprosessIcon={findBehandlingsprosessIcon}
+        getBehandlingsprosessIkon={getBehandlingsprosessIkon}
         getBehandlingspunkterStatus={getBehandlingspunkterStatus}
         getBehandlingspunkterTitleCodes={getBehandlingspunkterTitleCodes}
         getAksjonspunkterOpenStatus={getAksjonspunkterOpenStatus}
@@ -50,7 +50,7 @@ BehandlingsprosessPanel.propTypes = {
   behandlingspunkter: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectedBehandlingspunkt: PropTypes.string,
   selectBehandlingspunktCallback: PropTypes.func.isRequired,
-  findBehandlingsprosessIcon: PropTypes.func.isRequired,
+  getBehandlingsprosessIkon: PropTypes.func.isRequired,
   getBehandlingspunkterStatus: PropTypes.func.isRequired,
   getBehandlingspunkterTitleCodes: PropTypes.func.isRequired,
   getAksjonspunkterOpenStatus: PropTypes.func.isRequired,

@@ -12,14 +12,19 @@ import {
 import {
   getBehandlingIdentifier, getFagsakYtelseType,
 } from 'behandlingKlage/src/duckKlage';
-import { BehandlingsprosessPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
+import {
+ BehandlingsprosessPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal, getBehandlingsprosessIkon,
+} from '@fpsak-frontend/fp-behandling-felles';
 import KlageBehandlingModal from 'behandlingKlage/src/behandlingsprosess/components/klage/KlageBehandlingModal';
 import BehandlingspunktKlageInfoPanel from 'behandlingKlage/src/behandlingsprosess/components/BehandlingspunktKlageInfoPanel';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import findBehandlingsprosessIcon from 'behandlingKlage/src/behandlingsprosess/statusIconHelper';
 import {
-  trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta, BehandlingIdentifier,
+  trackRouteParam,
+  requireProps,
+  getBehandlingspunktLocation,
+  getLocationWithDefaultBehandlingspunktAndFakta,
+  BehandlingIdentifier,
 } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
@@ -212,7 +217,7 @@ export class BehandlingsprosessKlageIndex extends Component {
           selectedBehandlingspunkt={selectedBehandlingspunkt}
           selectBehandlingspunktCallback={this.goToBehandlingspunkt}
           isSelectedBehandlingHenlagt={isSelectedBehandlingHenlagt}
-          findBehandlingsprosessIcon={findBehandlingsprosessIcon}
+          getBehandlingsprosessIkon={getBehandlingsprosessIkon}
           getBehandlingspunkterStatus={getBehandlingspunkterStatus}
           getBehandlingspunkterTitleCodes={getBehandlingspunkterTitleCodes}
           getAksjonspunkterOpenStatus={getAksjonspunkterOpenStatus}

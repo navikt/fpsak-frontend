@@ -11,3 +11,4 @@ export { default as FaktaBegrunnelseTextField } from './src/fakta/components/Fak
 export { default as FaktaGruppe } from './src/fakta/components/FaktaGruppe';
 export { default as FaktaEkspandertpanel } from './src/fakta/components/FaktaEkspandertpanel';
 export { default as withDefaultToggling } from './src/fakta/withDefaultToggling';
+export { default as getBehandlingsprosessIkon } from './src/getBehandlingsprosessIkon';

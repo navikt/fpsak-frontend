@@ -29,7 +29,7 @@ export const BehandlingspunktIcon = ({
   status,
   hasOpenAksjonspunkt,
   selectBehandlingspunktCallback,
-  findBehandlingsprosessIcon,
+  getBehandlingsprosessIkon,
 }) => {
   const isIkkeVurdert = status === vilkarUtfallType.IKKE_VURDERT && !hasOpenAksjonspunkt;
   const title = intl.formatMessage({ id: titleCode });
@@ -40,7 +40,7 @@ export const BehandlingspunktIcon = ({
         className={isIkkeVurdert ? styles.behandlingspunktIkonDisabled : styles.behandlingspunktIkon}
         alt={title}
         tabIndex={isIkkeVurdert ? '-1' : '0'}
-        imageSrcFunction={findBehandlingsprosessIcon(behandlingspunkt, status, isSelectedBehandlingspunkt, isSelectedBehandlingHenlagt, hasOpenAksjonspunkt)}
+        imageSrcFunction={getBehandlingsprosessIkon(behandlingspunkt, status, isSelectedBehandlingspunkt, isSelectedBehandlingHenlagt, hasOpenAksjonspunkt)}
         onKeyDown={getCallback(isIkkeVurdert, behandlingspunkt, selectBehandlingspunktCallback)}
         onMouseDown={getCallback(isIkkeVurdert, behandlingspunkt, selectBehandlingspunktCallback)}
       />
@@ -58,7 +58,7 @@ BehandlingspunktIcon.propTypes = {
   status: PropTypes.string.isRequired,
   hasOpenAksjonspunkt: PropTypes.bool.isRequired,
   selectBehandlingspunktCallback: PropTypes.func.isRequired,
-  findBehandlingsprosessIcon: PropTypes.func.isRequired,
+  getBehandlingsprosessIkon: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, initialProps) => ({

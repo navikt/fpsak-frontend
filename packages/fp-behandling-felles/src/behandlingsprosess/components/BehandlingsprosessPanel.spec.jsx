@@ -16,7 +16,7 @@ describe('<BehandlingsprosessPanel>', () => {
       isSelectedBehandlingHenlagt={false}
       notAcceptedByBeslutter={false}
       getAksjonspunkterOpenStatus={sinon.spy()}
-      findBehandlingsprosessIcon={sinon.spy()}
+      getBehandlingsprosessIkon={sinon.spy()}
       getBehandlingspunkterStatus={sinon.spy()}
       getBehandlingspunkterTitleCodes={sinon.spy()}
     />);
@@ -32,7 +32,7 @@ describe('<BehandlingsprosessPanel>', () => {
       isSelectedBehandlingHenlagt={false}
       notAcceptedByBeslutter={false}
       getAksjonspunkterOpenStatus={sinon.spy()}
-      findBehandlingsprosessIcon={sinon.spy()}
+      getBehandlingsprosessIkon={sinon.spy()}
       getBehandlingspunkterStatus={sinon.spy()}
       getBehandlingspunkterTitleCodes={sinon.spy()}
     />);
@@ -49,7 +49,7 @@ describe('<BehandlingsprosessPanel>', () => {
       isSelectedBehandlingHenlagt={false}
       notAcceptedByBeslutter={false}
       getAksjonspunkterOpenStatus={sinon.spy()}
-      findBehandlingsprosessIcon={sinon.spy()}
+      getBehandlingsprosessIkon={sinon.spy()}
       getBehandlingspunkterStatus={sinon.spy()}
       getBehandlingspunkterTitleCodes={sinon.spy()}
     />);
@@ -68,7 +68,7 @@ describe('<BehandlingsprosessPanel>', () => {
       isSelectedBehandlingHenlagt={false}
       notAcceptedByBeslutter={false}
       getAksjonspunkterOpenStatus={sinon.spy()}
-      findBehandlingsprosessIcon={sinon.spy()}
+      getBehandlingsprosessIkon={sinon.spy()}
       getBehandlingspunkterStatus={sinon.spy()}
       getBehandlingspunkterTitleCodes={sinon.spy()}
     />);

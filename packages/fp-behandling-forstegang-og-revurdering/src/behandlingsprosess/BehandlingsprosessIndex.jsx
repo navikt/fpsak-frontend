@@ -7,10 +7,9 @@ import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 
 import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
-import { BehandlingsprosessPanel, FatterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingsprosessPanel, FatterVedtakStatusModal, getBehandlingsprosessIkon } from '@fpsak-frontend/fp-behandling-felles';
 
 
-import findBehandlingsprosessIcon from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/statusIconHelper';
 import {
   getAksjonspunkter, getBehandlingVersjon, getBehandlingType, getBehandlingsresultat, getBehandlingHenlagt, getBehandlingStatus,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
@@ -265,7 +264,7 @@ export class BehandlingsprosessIndex extends Component {
           selectedBehandlingspunkt={selectedBehandlingspunkt}
           selectBehandlingspunktCallback={this.goToBehandlingspunkt}
           isSelectedBehandlingHenlagt={isSelectedBehandlingHenlagt}
-          findBehandlingsprosessIcon={findBehandlingsprosessIcon}
+          getBehandlingsprosessIkon={getBehandlingsprosessIkon}
           getBehandlingspunkterStatus={getBehandlingspunkterStatus}
           getBehandlingspunkterTitleCodes={getBehandlingspunkterTitleCodes}
           getAksjonspunkterOpenStatus={getAksjonspunkterOpenStatus}
