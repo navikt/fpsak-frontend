@@ -82,7 +82,8 @@ export const ForeldelsePanelImpl = ({
           <BpTimelinePanel
             hovedsokerKjonnKode={kjonn}
             resultatActivity={foreldelsesresultatActivity}
-            activityPanelName={ACTIVITY_PANEL_NAME}
+            detailPanelForm={ACTIVITY_PANEL_NAME}
+            fieldNameToStoreDetailInfo={ACTIVITY_PANEL_NAME}
             behandlingFormPrefix={behandlingFormPrefix}
             reduxFormChange={formChange}
             reduxFormInitialize={formInitialize}

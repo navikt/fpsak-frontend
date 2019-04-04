@@ -10,16 +10,16 @@ import {
 } from '@fpsak-frontend/utils';
 import { TextAreaField, RadioOption, RadioGroupField } from '@fpsak-frontend/form';
 
+import aktsomhet from '../../../kodeverk/aktsomhet';
 import UaktsomhetGradFormPanel from './UaktsomhetGradFormPanel';
-import tilbakekrevingCodes from './tilbakekrevingCodes';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 
 const uaktsomhetCodes = [
-  tilbakekrevingCodes.GROVUAKTSOMHET,
-  tilbakekrevingCodes.MANGELFULLEOPPLYSNINGER,
-  tilbakekrevingCodes.FORSETT,
+  aktsomhet.GROVT_UAKTSOM,
+  aktsomhet.SIMPEL_UAKTSOM,
+  aktsomhet.FORSETT,
 ];
 
 const UaktsomhetFormPanel = ({
@@ -53,15 +53,15 @@ const UaktsomhetFormPanel = ({
     >
       <RadioOption
         label={<FormattedMessage id="UaktsomhetFormPanel.Forsett" />}
-        value={tilbakekrevingCodes.FORSETT}
+        value={aktsomhet.FORSETT}
       />
       <RadioOption
         label={<FormattedMessage id="UaktsomhetFormPanel.GrovUaktsomhet" />}
-        value={tilbakekrevingCodes.GROVUAKTSOMHET}
+        value={aktsomhet.GROVT_UAKTSOM}
       />
       <RadioOption
         label={<FormattedMessage id="UaktsomhetFormPanel.SimpelUaktsomhet" />}
-        value={tilbakekrevingCodes.MANGELFULLEOPPLYSNINGER}
+        value={aktsomhet.SIMPEL_UAKTSOM}
       />
     </RadioGroupField>
     { uaktsomhetCodes.includes(handletUaktsomhetGrad) && (

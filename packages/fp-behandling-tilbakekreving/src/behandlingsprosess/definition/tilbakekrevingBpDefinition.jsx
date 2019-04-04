@@ -4,8 +4,8 @@ import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
+// TODO (TOR) Kvifor trengs denne?
 export const getForeldelseStatus = ({ foreldelseResultat }) => (foreldelseResultat ? vut.OPPFYLT : vut.IKKE_VURDERT);
-export const getTilbakekrevingStatus = () => vut.OPPFYLT;
 
 /**
  * Rekkefølgen i listene under bestemmer behandlingspunkt-rekkefølgen i GUI.
@@ -23,7 +23,6 @@ const tilbakekrevingBuilders = [
     .withAksjonspunktCodes(ac.FORESLA_VEDTAK)
     .withVisibilityWhen(() => true),
 ];
-
 
 const createTilbakekrevingBpProps = builderData => tilbakekrevingBuilders.reduce((currentEbs, eb) => {
   const res = eb.build(builderData, currentEbs.length);

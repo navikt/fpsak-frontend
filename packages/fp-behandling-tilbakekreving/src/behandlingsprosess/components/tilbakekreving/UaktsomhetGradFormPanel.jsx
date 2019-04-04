@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
+
 import {
   VerticalSpacer, ArrowBox, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
@@ -15,7 +16,8 @@ import {
   hasValidText,
   required,
 } from '@fpsak-frontend/utils';
-import tilbakekrevingCodes from './tilbakekrevingCodes';
+
+import aktsomhet from '../../../kodeverk/aktsomhet';
 
 import styles from './uaktsomhetGradFormPanel.less';
 
@@ -23,8 +25,8 @@ const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 const andeler = ['10', '20', '30', '40', '50', '60', '70', '80', '90', '100'];
 const uaktsomhetCodes = [
-  tilbakekrevingCodes.GROVUAKTSOMHET,
-  tilbakekrevingCodes.MANGELFULLEOPPLYSNINGER,
+  aktsomhet.GROVT_UAKTSOM,
+  aktsomhet.SIMPEL_UAKTSOM,
 ];
 
 const UaktsomhetGradFormPanel = ({
@@ -36,7 +38,7 @@ const UaktsomhetGradFormPanel = ({
   resetAnnetTextField,
 }) => (
   <>
-    { handletUaktsomhetGrad === tilbakekrevingCodes.FORSETT && (
+    { handletUaktsomhetGrad === 'FORSETT' && (
       <div className={styles.arrowbox}>
         <ArrowBox alignOffset={20}>
           <Undertekst>
@@ -59,23 +61,23 @@ const UaktsomhetGradFormPanel = ({
                 <Undertekst><FormattedMessage id="UaktsomhetGradFormPanel.GrunnerTilReduksjon" /></Undertekst>
                 <VerticalSpacer eightPx />
                 <CheckboxField
-                  name="uaktsomhetRetterSeg"
+                  name={sarligGrunn.GRAD_AV_UAKTSOMHET}
                   label={<FormattedMessage id="UaktsomhetGradFormPanel.UaktsomhetRetterSeg" />}
                 />
                 <CheckboxField
-                  name="feilTilskrivesTilNav"
+                  name={sarligGrunn.HELT_ELLER_DELVIS_NAVS_FEIL}
                   label={<FormattedMessage id="UaktsomhetGradFormPanel.FeilTilskrivesTilNav" />}
                 />
                 <CheckboxField
-                  name="feilutbetalingStørrelsen"
+                  name={sarligGrunn.STOERRELSE_BELOEP}
                   label={<FormattedMessage id="UaktsomhetGradFormPanel.FeilutbetalingStorrelsen" />}
                 />
                 <CheckboxField
-                  name="tideSidenFeilutbetaling"
+                  name={sarligGrunn.TID_FRA_UTBETALING}
                   label={<FormattedMessage id="UaktsomhetGradFormPanel.TidenSidenFeilutbetaling" />}
                 />
                 <CheckboxField
-                  name="annet"
+                  name={sarligGrunn.ANNET}
                   label={<FormattedMessage id="UaktsomhetGradFormPanel.Annet" />}
                   onChange={resetAnnetTextField}
                 />
@@ -87,12 +89,11 @@ const UaktsomhetGradFormPanel = ({
                 <Row>
                   <Column md="12">
                     <TextAreaField
-                      name="annetTekst"
+                      name="annetBegrunnelse"
                       label=""
                       validate={[required, minLength3, maxLength1500, hasValidText]}
                       maxLength={1500}
                       readOnly={readOnly}
-                      id="annetTekst"
                     />
                   </Column>
                 </Row>
