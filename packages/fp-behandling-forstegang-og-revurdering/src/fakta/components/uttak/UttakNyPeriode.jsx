@@ -366,7 +366,7 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
     erArbeidstaker: arbeidsForhold && arbeidsForhold[4] === uttakArbeidType.ORDINÆRT_ARBEID,
     erFrilanser: arbeidsForhold && arbeidsForhold[4] === uttakArbeidType.FRILANS,
     erSelvstendig: arbeidsForhold && arbeidsForhold[4] === uttakArbeidType.SELVSTENDIG_NÆRINGSDRIVENDE,
-    dokumentertePerioder: resultat && resultat !== uttakPeriodeVurdering.PERIODE_IKKE_VURDERT ? dokumentertePerioder : null,
+    dokumentertePerioder: resultat && resultat.kode !== uttakPeriodeVurdering.PERIODE_IKKE_VURDERT ? dokumentertePerioder : null,
     fom: values.fom,
     tom: values.tom,
     isFromSøknad: false,
