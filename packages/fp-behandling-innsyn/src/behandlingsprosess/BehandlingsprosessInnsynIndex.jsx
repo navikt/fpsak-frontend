@@ -11,13 +11,14 @@ import {
   getBehandlingIdentifier, getFagsakYtelseType,
 } from 'behandlingInnsyn/src/duckInnsyn';
 import { fetchVedtaksbrevPreview } from 'fagsak/duck';
-import { BehandlingsprosessPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
+import {
+ BehandlingsprosessPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal, getBehandlingsprosessIkon,
+} from '@fpsak-frontend/fp-behandling-felles';
 import BehandlingspunktInnsynInfoPanel from 'behandlingInnsyn/src/behandlingsprosess/components/BehandlingspunktInnsynInfoPanel';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { getResolveFaktaAksjonspunkterSuccess } from 'behandlingInnsyn/src/fakta/duckFaktaInnsyn';
 import {
   trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta, BehandlingIdentifier,
-  getBehandlingsprosessIkon,
 } from '@fpsak-frontend/fp-felles';
 import {
   getBehandlingStatus, getBehandlingsresultat, getAksjonspunkter, getBehandlingType, getBehandlingVersjon, getBehandlingHenlagt,
