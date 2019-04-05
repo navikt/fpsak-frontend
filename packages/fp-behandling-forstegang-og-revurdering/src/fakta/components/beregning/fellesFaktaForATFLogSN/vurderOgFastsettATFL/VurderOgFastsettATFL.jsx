@@ -12,7 +12,7 @@ import { getFaktaOmBeregning, getBeregningsgrunnlag } from 'behandlingForstegang
 import { harVurdertMottarYtelse } from './forms/VurderMottarYtelseUtils';
 import InntektstabellPanel from '../InntektstabellPanel';
 import { ATFLSammeOrgTekst, transformValuesForATFLISammeOrg } from './forms/ATFLSammeOrg';
-
+import { transformValuesKunstigArbeidsforhold, harKunstigArbeidsforhold } from './forms/KunstigArbeidsforhold';
 import VurderMottarYtelseForm from './forms/VurderMottarYtelseForm';
 import FastsettEndretBeregningsgrunnlag from '../endringBeregningsgrunnlag/FastsettEndretBeregningsgrunnlag';
 import { getFormValuesForBeregning } from '../../BeregningFormUtils';
@@ -59,7 +59,10 @@ const skalFastsetteInntekt = (values, faktaOmBeregning, beregningsgrunnlag) => {
 };
 
 
-export const findInstruksjonForFastsetting = (skalHaBesteberegning, skalFastsetteFL, skalFastsetteAT) => {
+export const findInstruksjonForFastsetting = (skalHaBesteberegning, skalFastsetteFL, skalFastsetteAT, harKunstigArbeid) => {
+  if (harKunstigArbeid) {
+    return 'BeregningInfoPanel.KunstigArbeidsforhold.FastsettKunstigArbeidsforhold';
+  }
   if (skalHaBesteberegning) {
     return 'KunYtelsePanel.OverskriftBesteberegning';
   }
@@ -113,13 +116,14 @@ const VurderOgFastsettATFL = ({
   skalFastsetteAT,
   skalFastsetteFL,
   skalHaBesteberegning,
+  harKunstigArbeid,
 }) => (
   <div>
     <InntektstabellPanel
       key="inntektstabell"
       tabell={finnInntektstabell(tilfeller, readOnly, isAksjonspunktClosed)}
       skalViseTabell={skalViseTabell}
-      hjelpeTekstId={findInstruksjonForFastsetting(skalHaBesteberegning, skalFastsetteFL, skalFastsetteAT)}
+      hjelpeTekstId={findInstruksjonForFastsetting(skalHaBesteberegning, skalFastsetteFL, skalFastsetteAT, harKunstigArbeid)}
     >
       <ATFLSammeOrgTekst
         tilfeller={tilfeller}
@@ -217,6 +221,9 @@ VurderOgFastsettATFL.transformValues = (faktaOmBeregning, beregningsgrunnlag) =>
   // ATFL i samme org
   transformed = concatTilfeller(transformed, transformValuesForATFLISammeOrg(allInntektErFastsatt ? null : inntektVerdier,
     faktaOmBeregning, fastsatteAndelsnr));
+  // Kunstig arbeidsforhold
+  transformed = concatTilfeller(transformed, transformValuesKunstigArbeidsforhold(allInntektErFastsatt ? null : inntektVerdier,
+    faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr));
   return transformed;
 };
 
@@ -229,9 +236,13 @@ VurderOgFastsettATFL.propTypes = {
   skalFastsetteAT: PropTypes.bool.isRequired,
   skalFastsetteFL: PropTypes.bool.isRequired,
   skalHaBesteberegning: PropTypes.bool.isRequired,
+  harKunstigArbeid: PropTypes.bool.isRequired,
 };
 
 export const skalViseInntektstabell = (tilfeller, values, faktaOmBeregning, beregningsgrunnlag) => {
+  if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)) {
+    return true;
+  }
   if (!harVurdert(tilfeller, values, faktaOmBeregning)) {
     return false;
   }
@@ -243,6 +254,7 @@ const mapStateToProps = (state, initialProps) => {
   const skalFastsetteAT = skalFastsettInntektForStatus(inntektFieldArrayName, aktivitetStatus.ARBEIDSTAKER)(state);
   const skalFastsetteFL = skalFastsettInntektForStatus(inntektFieldArrayName, aktivitetStatus.FRILANSER)(state);
   const faktaOmBeregning = getFaktaOmBeregning(state);
+  const beregningsgrunnlag = getBeregningsgrunnlag(state);
   let manglerInntektsmelding = false;
   if (faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe && faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.length > 0) {
     manglerInntektsmelding = faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.find(forhold => !forhold.inntektPrMnd) !== undefined;
@@ -251,6 +263,7 @@ const mapStateToProps = (state, initialProps) => {
   return {
     skalViseTabell: skalViseInntektstabell(initialProps.tilfeller, values, faktaOmBeregning, getBeregningsgrunnlag(state)),
     skalHaBesteberegning: values[besteberegningField] === true,
+    harKunstigArbeid: harKunstigArbeidsforhold(initialProps.tilfeller, beregningsgrunnlag),
     manglerInntektsmelding,
     skalFastsetteAT,
     skalFastsetteFL,

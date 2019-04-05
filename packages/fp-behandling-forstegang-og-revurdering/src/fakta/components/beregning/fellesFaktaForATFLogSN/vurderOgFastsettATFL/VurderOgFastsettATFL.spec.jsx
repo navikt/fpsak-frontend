@@ -45,6 +45,15 @@ const lagAndelValues = (andelsnr, fastsattBelop, inntektskategori, aktivitetStat
 });
 
 describe('<VurderOgFastsettATFL>', () => {
+  it('skal vise tabell om tilfelle FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING', () => {
+    const values = {};
+    const tilfeller = [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE, faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING];
+    const faktaOmBeregning = lagFaktaOmBeregning(tilfeller,
+      {}, undefined, undefined, { arbeidstakerAndelerUtenIM: { andelsnr: 1 } });
+    const skalVise = skalViseInntektstabell(tilfeller, values, faktaOmBeregning, {});
+    expect(skalVise).to.equal(true);
+  });
+
   it('skal vise tabell om alt er vurdert og det er refusjon/gradering aksjonspunkt', () => {
     const values = {};
     values.mottarYtelseField1 = false;
@@ -146,7 +155,7 @@ describe('<VurderOgFastsettATFL>', () => {
     const transformed = VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag)(values);
     expect(transformed.fastsattUtenInntektsmelding.andelListe.length).to.equal(1);
     expect(transformed.fastsattUtenInntektsmelding.andelListe[0].andelsnr).to.equal(1);
-    expect(transformed.fastsattUtenInntektsmelding.andelListe[0].arbeidsinntekt).to.equal(10000);
+    expect(transformed.fastsattUtenInntektsmelding.andelListe[0].fastsatteVerdier.fastsattBeløp).to.equal(10000);
     expect(transformed.fastsettMaanedsinntektFL.maanedsinntekt).to.equal(30000);
     expect(transformed.faktaOmBeregningTilfeller.length).to.equal(4);
     expect(transformed.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL)).to.equal(true);
@@ -168,6 +177,7 @@ describe('<VurderOgFastsettATFL>', () => {
       skalFastsetteAT
       skalFastsetteFL={false}
       skalHaBesteberegning={false}
+      harKunstigArbeid={false}
       manglerInntektsmelding
     />);
     const inntektstabellPanel = wrapper.find(InntektstabellPanel);
