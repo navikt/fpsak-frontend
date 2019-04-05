@@ -11,7 +11,7 @@ import { SelectField, InputField, DecimalField } from '@fpsak-frontend/form';
 import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
 import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/src/uttakArbeidTypeCodes';
 import {
-  minValue, maxValue, hasValidInteger, maxLength, required, hasValidDecimal, notDash, lagVisningsNavn, noMoreThanZeroIfRejectedAndNotUtsettelse,
+  minValue, maxValue, hasValidInteger, maxLength, required, hasValidDecimal, notDash, lagVisningsNavn, noMoreThanZeroIfRejectedAndNotUtsettelse, hasValidOneDecimal,
 } from '@fpsak-frontend/utils';
 import styles from './renderUttakTable.less';
 
@@ -135,10 +135,10 @@ export const RenderUttakTableImpl = ({
                       name={`${uttakElementFieldId}.days`}
                       id={`${uttakElementFieldId}.days`}
                       readOnly={readOnly}
-                      bredde="XXS"
-                      validate={[required, hasValidInteger, maxLength3]}
+                      bredde="XS"
+                      validate={[required, hasValidDecimal, maxLength3]}
                       parse={(value) => {
-                        const parsedValue = parseInt(value, 10);
+                        const parsedValue = parseInt(value, 1);
                         return Number.isNaN(parsedValue) ? value : parsedValue;
                       }}
                     />

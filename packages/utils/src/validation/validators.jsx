@@ -31,8 +31,11 @@ export const maxValue = length => number => (number <= length ? null : maxValueM
 const hasValidNumber = text => (isEmpty(text) || numberRegex.test(text) ? null : invalidNumberMessage(text));
 const hasValidInt = text => (isEmpty(text) || integerRegex.test(text) ? null : invalidIntegerMessage(text));
 const hasValidDec = text => (isEmpty(text) || decimalRegex.test(text) ? null : invalidDecimalMessage(text));
+const hasValidOneDec = text => (isEmpty(text) || oneDecimalRegex.test(text) ? null : invalidDecimalMessage(text));
 export const hasValidInteger = text => (hasValidNumber(text) || hasValidInt(text));
 export const hasValidDecimal = text => (hasValidNumber(text) || hasValidDec(text));
+export const hasValidOneDecimal = text => (hasValidNumber(text) || hasValidOneDec(text));
+
 
 export const hasValidSaksnummerOrFodselsnummerFormat = text => (isEmpty(text) || saksnummerOrFodselsnummerPattern.test(text)
   ? null : invalidSaksnummerOrFodselsnummerFormatMessage());
