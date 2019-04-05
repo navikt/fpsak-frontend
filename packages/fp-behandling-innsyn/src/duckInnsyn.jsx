@@ -4,7 +4,7 @@ import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsre
 import { reducerRegistry, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { sakOperations } from '@fpsak-frontend/fp-behandling-felles';
 
-import innsynBehandlingApi, { InnsynBehandlingApiKeys, reduxRestApi } from './data/innsynBehandlingApi';
+import innsynBehandlingApi, { InnsynBehandlingApiKeys } from './data/innsynBehandlingApi';
 
 const reducerName = 'innsynBehandling';
 
@@ -32,12 +32,11 @@ export const updateBehandling = (behandlingIdentifier, behandlingerVersjonMapped
   innsynBehandlingApi.BEHANDLING.makeRestApiRequest()(behandlingIdentifier.toJson(), { keepData: true }),
 )
 .then((response) => {
-    reduxRestApi.injectPaths(response.payload.links);
-    if (behandlingerVersjonMappedById && behandlingerVersjonMappedById[response.payload.id] !== response.payload.versjon) {
-      dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer));
-    }
-    return Promise.resolve(response);
-  });
+  if (behandlingerVersjonMappedById && behandlingerVersjonMappedById[response.payload.id] !== response.payload.versjon) {
+    dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer));
+  }
+  return Promise.resolve(response);
+});
 
 export const resetBehandling = dispatch => Promise.all([
   dispatch(innsynBehandlingApi.BEHANDLING.resetRestApi()()),
