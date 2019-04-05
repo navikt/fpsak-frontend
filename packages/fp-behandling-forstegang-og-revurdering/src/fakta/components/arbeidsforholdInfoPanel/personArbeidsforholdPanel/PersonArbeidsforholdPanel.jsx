@@ -243,8 +243,9 @@ export class PersonArbeidsforholdPanelImpl extends Component {
       brukMedJustertPeriode: false,
       handlingType: undefined,
       lagtTilAvSaksbehandler: true,
-      brukUendretArbeidsforhold: true,
       inntektIkkeMedTilBeregningsgrunnlaget: false,
+      brukUendretArbeidsforhold: true,
+      aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.FORTSETT_BEHANDLING,
     };
     this.setState({ selectedArbeidsforhold: lagtTilArbeidsforhold });
     this.initializeActivityForm(lagtTilArbeidsforhold);
