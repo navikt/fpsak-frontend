@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { destroy } from 'redux-form';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   sakOperations, BehandlingGrid,
 } from '@fpsak-frontend/fp-behandling-felles';
@@ -17,8 +16,9 @@ import FpTilbakeBehandlingInfoSetter from './FpTilbakeBehandlingInfoSetter';
 import { getBehandlingFormPrefix } from './behandlingForm';
 import {
   setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier, resetTilbakekrevingContext,
-  getHasShownBehandlingPaVent, getKodeverk,
+  getHasShownBehandlingPaVent, getTilbakekrevingKodeverk,
 } from './duckTilbake';
+import tilbakekrevingKodeverkTyper from './kodeverk/tilbakekrevingKodeverkTyper';
 import {
   getBehandlingVersjon, getBehandlingOnHoldDate, getBehandlingVenteArsakKode, getBehandlingIsOnHold,
   hasBehandlingManualPaVent,
@@ -26,14 +26,14 @@ import {
 import fpTilbakeBehandlingUpdater from './FpTilbakeBehandlingUpdater';
 
 /**
- * BehandlingIndex
+ * BehandlingTilbakekrevingIndex
  *
  * Container-komponent. Er rot for for den delen av hovedvinduet som har innhold for en valgt behandling, og styrer livssyklusen til de mekanismene som er
  * relatert til den valgte behandlingen.
  *
  * Komponenten har ansvar å legge valgt behandlingId fra URL-en i staten.
  */
-export class BehandlingFpTilbakeIndex extends Component {
+export class BehandlingTilbakekrevingIndex extends Component {
   constructor() {
     super();
     this.didGetNewBehandlingVersion = this.didGetNewBehandlingVersion.bind(this);
@@ -42,11 +42,10 @@ export class BehandlingFpTilbakeIndex extends Component {
 
   componentDidMount() {
     const {
-      setBehandlingInfo: setInfo, saksnummer, behandlingId, behandlingUpdater, appContextUpdater,
-      featureToggles, kodeverk, fagsak,
+      setBehandlingInfo: setInfo, saksnummer, behandlingId, behandlingUpdater, appContextUpdater, fagsak,
     } = this.props;
     setInfo({
-      behandlingId, fagsakSaksnummer: saksnummer, featureToggles, kodeverk, fagsak,
+      behandlingId, fagsakSaksnummer: saksnummer, fagsak,
     });
 
     behandlingUpdater.setUpdater(fpTilbakeBehandlingUpdater);
@@ -123,7 +122,7 @@ export class BehandlingFpTilbakeIndex extends Component {
   }
 }
 
-BehandlingFpTilbakeIndex.propTypes = {
+BehandlingTilbakekrevingIndex.propTypes = {
   saksnummer: PropTypes.number.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number,
@@ -142,8 +141,6 @@ BehandlingFpTilbakeIndex.propTypes = {
   behandlingUpdater: PropTypes.shape().isRequired,
   resetTilbakekrevingContext: PropTypes.func.isRequired,
   appContextUpdater: PropTypes.shape().isRequired,
-  featureToggles: PropTypes.shape().isRequired,
-  kodeverk: PropTypes.shape().isRequired,
   fagsak: PropTypes.shape({
     fagsakStatus: PropTypes.shape().isRequired,
     fagsakPerson: PropTypes.shape().isRequired,
@@ -157,7 +154,7 @@ BehandlingFpTilbakeIndex.propTypes = {
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
 };
 
-BehandlingFpTilbakeIndex.defaultProps = {
+BehandlingTilbakekrevingIndex.defaultProps = {
   fristBehandlingPaaVent: undefined,
   behandlingPaaVent: false,
   behandlingVersjon: undefined,
@@ -174,7 +171,7 @@ const mapStateToProps = state => ({
   venteArsakKode: getBehandlingVenteArsakKode(state),
   hasShownBehandlingPaVent: getHasShownBehandlingPaVent(state),
   hasManualPaVent: hasBehandlingManualPaVent(state),
-  ventearsaker: getKodeverk(kodeverkTyper.VENTEARSAK)(state),
+  ventearsaker: getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.VENTEARSAK)(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -201,4 +198,4 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(BehandlingFpTilbakeIndex);
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(BehandlingTilbakekrevingIndex);

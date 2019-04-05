@@ -12,7 +12,6 @@ import {
   FadingPanel, VerticalSpacer, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import {
   behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, isBehandlingFormDirty,
@@ -23,10 +22,11 @@ import foreldelseCodes from '../../foreldelseCodes';
 import BpTimelinePanel from '../felles/behandlingspunktTimelineSkjema/BpTimelinePanel';
 import { getBehandlingVersjon, getBehandlingVilkarsvurderingsperioder } from '../../../selectors/tilbakekrevingBehandlingSelectors';
 import TilbakekrevingPeriodeForm, { TILBAKEKREVING_PERIODE_FORM_NAME } from './TilbakekrevingPeriodeForm';
+import tilbakekrevingAksjonspunktCodes from '../../../kodeverk/tilbakekrevingAksjonspunktCodes';
 
 const TILBAKEKREVING_FORM_NAME = 'TilbakekrevingForm';
 
-const tilbakekrevingAksjonspunkter = [aksjonspunktCodes.VURDER_TILBAKEKREVING];
+const tilbakekrevingAksjonspunkter = [tilbakekrevingAksjonspunktCodes.VURDER_TILBAKEKREVING];
 
 const TilbakekrevingFormImpl = ({
   tilbakekrevingPerioder,

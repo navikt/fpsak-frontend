@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { arrayToObject } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -9,20 +8,19 @@ import { behandlingspunktCodes, DEFAULT_BEHANDLINGSPROSESS } from '@fpsak-fronte
 import { getRettigheter } from 'navAnsatt/duck';
 import {
   getBehandlingIsOnHold, getAllMerknaderFraBeslutter, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat,
-  getStonadskontoer, hasReadOnlyBehandling, isBehandlingStatusReadOnly, getForeldelsePerioder,
+  hasReadOnlyBehandling, isBehandlingStatusReadOnly, getForeldelsePerioder,
 } from '../selectors/tilbakekrevingBehandlingSelectors';
 import createTilbakekrevingBpProps from './definition/tilbakekrevingBpDefinition';
 import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from './duckBpTilbake';
-import { getFagsakYtelseType, getFeatureToggles } from '../duckTilbake';
+import tilbakekrevingAksjonspunktCodes from '../kodeverk/tilbakekrevingAksjonspunktCodes';
+import { getFagsakYtelseType } from '../duckTilbake';
 
 // TODO (TOR) Refaktorer: veldig mykje av dette er felles med andre behandlingstypar.
 
 // Kun eksportert for test. Ikke bruk andre steder!
 export const getBehandlingspunkterProps = createSelector(
-  [getFagsakYtelseType, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat,
-    getStonadskontoer, getFeatureToggles, getForeldelsePerioder],
-  (fagsakYtelseType, behandlingType, vilkar = [], aksjonspunkter, behandlingsresultat,
-    stonadskontoer, featureToggles, foreldelseResultat) => {
+  [getFagsakYtelseType, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat, getForeldelsePerioder],
+  (fagsakYtelseType, behandlingType, vilkar = [], aksjonspunkter, behandlingsresultat, foreldelseResultat) => {
     if (!behandlingType) {
       return undefined;
     }
@@ -32,8 +30,6 @@ export const getBehandlingspunkterProps = createSelector(
       vilkar,
       aksjonspunkter,
       behandlingsresultat,
-      stonadskontoer,
-      featureToggles,
       foreldelseResultat,
     };
 
@@ -168,7 +164,7 @@ export const isSelectedBehandlingspunktOverrideReadOnly = createSelector(
 export const hasBehandlingspunktAtLeastOneOpenAksjonspunkt = createSelector(
   [getSelectedBehandlingspunktAksjonspunkter],
   (aksjonspunkter = []) => aksjonspunkter
-    .filter(ap => ap.definisjon.kode !== aksjonspunktCodes.FORESLA_VEDTAK)
+    .filter(ap => ap.definisjon.kode !== tilbakekrevingAksjonspunktCodes.FORESLA_VEDTAK)
     .some(ap => isAksjonspunktOpen(ap.status.kode)),
 );
 

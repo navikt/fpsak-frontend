@@ -21,6 +21,8 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { behandlingForm, behandlingFormValueSelector } from '../../../behandlingForm';
 import vilkarResultat from '../../../kodeverk/vilkarResultat';
+import tilbakekrevingKodeverkTyper from '../../../kodeverk/tilbakekrevingKodeverkTyper';
+import { getTilbakekrevingKodeverk } from '../../../duckTilbake';
 import TilbakekrevingAktivitetTabell from './TilbakekrevingAktivitetTabell';
 import BelopetMottattIGodTroFormPanel from './BelopetMottattIGodTroFormPanel';
 import UaktsomhetFormPanel from './UaktsomhetFormPanel';
@@ -41,6 +43,9 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
     aktiviteter: PropTypes.arrayOf(PropTypes.shape()),
     updateActivity: PropTypes.func.isRequired,
     andelSomSkalTilbakekreves: PropTypes.number.isRequired,
+    vilkarResultatTyper: PropTypes.arrayOf(PropTypes.shape()),
+    aktsomhetTyper: PropTypes.arrayOf(PropTypes.shape()),
+    sarligGrunnTyper: PropTypes.arrayOf(PropTypes.shape()),
     ...formPropTypes,
   };
 
@@ -77,6 +82,9 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
       erBelopetIBehold,
       annet,
       andelSomSkalTilbakekreves,
+      vilkarResultatTyper,
+      aktsomhetTyper,
+      sarligGrunnTyper,
       ...formProps
     } = this.props;
     return (
@@ -110,22 +118,13 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
                   readOnly={readOnly}
                   onChange={this.resetFields}
                 >
-                  <RadioOption
-                    label={<FormattedMessage id="Tilbakekreving.RadioGroup.Forstått" />}
-                    value={vilkarResultat.FORSTO_BURDE_FORSTAATT}
-                  />
-                  <RadioOption
-                    label={<FormattedMessage id="Tilbakekreving.RadioGroup.FeilaktigeOpplysninger" />}
-                    value={vilkarResultat.FEIL_OPPLYSNINGER}
-                  />
-                  <RadioOption
-                    label={<FormattedMessage id="Tilbakekreving.RadioGroup.MangelfulleOpplysniner" />}
-                    value={vilkarResultat.MANGELFULL_OPPLYSNING}
-                  />
-                  <RadioOption
-                    label={<FormattedMessage id="Tilbakekreving.RadioGroup.GodTro" />}
-                    value={vilkarResultat.GOD_TRO}
-                  />
+                  {vilkarResultatTyper.map(vrt => (
+                    <RadioOption
+                      key={vrt.kode}
+                      label={vrt.navn}
+                      value={vrt.kode}
+                    />
+                  ))}
                 </RadioGroupField>
               </Column>
             </Row>
@@ -147,6 +146,8 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
                         resetAnnetTextField={this.resetAnnetTextField}
                         annet={annet}
                         andelSomSkalTilbakekreves={andelSomSkalTilbakekreves}
+                        aktsomhetTyper={aktsomhetTyper}
+                        sarligGrunnTyper={sarligGrunnTyper}
                       />
                     )}
                   </FormSection>
@@ -232,6 +233,9 @@ const mapStateToProps = (state, ownProps) => {
     erBelopetIBehold: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${oppfylt}.erBelopetIBehold`),
     initialValues: buildInitalValues(ownProps.selectedItemData),
     onSubmit: values => ownProps.updateActivity(transformValues(ownProps.selectedItemData, values)),
+    vilkarResultatTyper: getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.VILKAR_RESULTAT)(state),
+    aktsomhetTyper: getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.AKTSOMHET)(state),
+    sarligGrunnTyper: getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.SARLIG_GRUNN)(state),
   };
 };
 

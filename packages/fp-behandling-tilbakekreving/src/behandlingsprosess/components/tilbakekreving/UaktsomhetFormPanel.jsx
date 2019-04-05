@@ -30,6 +30,8 @@ const UaktsomhetFormPanel = ({
   grunnerTilReduksjon,
   annet,
   andelSomSkalTilbakekreves,
+  aktsomhetTyper,
+  sarligGrunnTyper,
 }) => (
   <>
     <Element>
@@ -51,18 +53,13 @@ const UaktsomhetFormPanel = ({
       readOnly={readOnly}
       onChange={resetFields}
     >
-      <RadioOption
-        label={<FormattedMessage id="UaktsomhetFormPanel.Forsett" />}
-        value={aktsomhet.FORSETT}
-      />
-      <RadioOption
-        label={<FormattedMessage id="UaktsomhetFormPanel.GrovUaktsomhet" />}
-        value={aktsomhet.GROVT_UAKTSOM}
-      />
-      <RadioOption
-        label={<FormattedMessage id="UaktsomhetFormPanel.SimpelUaktsomhet" />}
-        value={aktsomhet.SIMPEL_UAKTSOM}
-      />
+      {aktsomhetTyper.map(vrt => (
+        <RadioOption
+          key={vrt.kode}
+          label={vrt.navn}
+          value={vrt.kode}
+        />
+      ))}
     </RadioGroupField>
     { uaktsomhetCodes.includes(handletUaktsomhetGrad) && (
       <FormSection name={handletUaktsomhetGrad} key={handletUaktsomhetGrad}>
@@ -73,6 +70,7 @@ const UaktsomhetFormPanel = ({
           annet={annet}
           resetAnnetTextField={resetAnnetTextField}
           andelSomSkalTilbakekreves={andelSomSkalTilbakekreves}
+          sarligGrunnTyper={sarligGrunnTyper}
         />
       </FormSection>
     )}
@@ -87,6 +85,8 @@ UaktsomhetFormPanel.propTypes = {
   annet: PropTypes.bool,
   handletUaktsomhetGrad: PropTypes.string,
   andelSomSkalTilbakekreves: PropTypes.number.isRequired,
+  aktsomhetTyper: PropTypes.arrayOf(PropTypes.shape()),
+  sarligGrunnTyper: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 UaktsomhetGradFormPanel.defaultProps = {

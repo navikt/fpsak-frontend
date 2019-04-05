@@ -2178,10 +2178,6 @@
 
   "Tilbakekreving.Vurdering":"Vurdering",
   "Tilbakekreving.RadioGroup.oppfylt": "Er vilkårene for tilbakekreving oppfylt?",
-  "Tilbakekreving.RadioGroup.Forstått":"Ja, mottaker forsto eller burde forstått at utbetalingen skyldtes en feil (1. ledd, 1. punkt)",
-  "Tilbakekreving.RadioGroup.FeilaktigeOpplysninger":"Ja, mottaker har forårsaket feilutbetalingen ved forsett eller uaktsomt gitt feilaktige opplysninger (1. ledd, 2 punkt)",
-  "Tilbakekreving.RadioGroup.MangelfulleOpplysniner":"Ja, mottaker har forårsaket feilutbetalingen ved forsett eller uaktsomt gitt mangelfulle opplysninger (1. ledd, 2 punkt)",
-  "Tilbakekreving.RadioGroup.GodTro":"Nei, mottaker har mottatt beløpet i god tro (1. ledd)",
   "Tilbakekreving.RadioGroup.UaktsomhetGrad":"I hvilken grad har bruker handlet uaktsomhet?",
   "Tilbakekreving.RadioGroup.BeløpetIBehold": "Er beløpet i behold",
   "Tilbakekreving.Ja": "Ja",
@@ -2191,11 +2187,6 @@
   "UaktsomhetGradFormPanel.Renter": "Det legges til 10% renter",
   "UaktsomhetGradFormPanel.GrunnerTilReduksjon": "Særlige grunner som er vektlagt (4. ledd)",
   "UaktsomhetGradFormPanel.SkalSarligeGrunnerGiReduksjon": "Skal særlige grunner gi reduksjon av beløpet?",
-  "UaktsomhetGradFormPanel.UaktsomhetRetterSeg": "Graden av uaktsomhet hos den kravet retter seg mot",
-  "UaktsomhetGradFormPanel.FeilTilskrivesTilNav": "Om feilen helt eller delvis kan tilskrives NAV",
-  "UaktsomhetGradFormPanel.FeilutbetalingStorrelsen": "Størrelsen på feilutbetalt beløp",
-  "UaktsomhetGradFormPanel.TidenSidenFeilutbetaling": "Hvor lang til siden utbetalingen fant sted",
-  "UaktsomhetGradFormPanel.Annet": "Annet",
   "UaktsomhetGradFormPanel.andelSomTilbakekreves": "Angi andel som skal tilbakekreves",
 
   "FeilutbetalingInfoPanel.Aksjonspunkt": "Kontroller at korrekt hendelse er satt",
@@ -2210,9 +2201,6 @@
   "UaktsomhetFormPanel.Aktsomhet": "Aktsomhet",
   "UaktsomhetFormPanel.Vurdering": "Vurdering",
   "UaktsomhetFormPanel.HandletUaktsomhetGrad": "I hvilken grad har mottaker handlet uaktsomt?",
-  "UaktsomhetFormPanel.Forsett":"Forsett",
-  "UaktsomhetFormPanel.GrovUaktsomhet":"Grov uaktsomhet",
-  "UaktsomhetFormPanel.SimpelUaktsomhet":"Simpel uaktsomhet",
 
   "BelopetMottattIGodTroPanel.BelopetMottattIGodTro": "Beløpet mottatt i god tro",
   "BelopetMottattIGodTroPanel.Vurdering": "Vurdering",

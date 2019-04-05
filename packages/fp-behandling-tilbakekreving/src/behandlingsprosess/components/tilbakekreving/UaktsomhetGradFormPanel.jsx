@@ -35,7 +35,7 @@ const UaktsomhetGradFormPanel = ({
   handletUaktsomhetGrad,
   annet,
   andelSomSkalTilbakekreves,
-  resetAnnetTextField,
+  sarligGrunnTyper,
 }) => (
   <>
     { handletUaktsomhetGrad === 'FORSETT' && (
@@ -60,27 +60,13 @@ const UaktsomhetGradFormPanel = ({
               <Column md="12">
                 <Undertekst><FormattedMessage id="UaktsomhetGradFormPanel.GrunnerTilReduksjon" /></Undertekst>
                 <VerticalSpacer eightPx />
-                <CheckboxField
-                  name={sarligGrunn.GRAD_AV_UAKTSOMHET}
-                  label={<FormattedMessage id="UaktsomhetGradFormPanel.UaktsomhetRetterSeg" />}
-                />
-                <CheckboxField
-                  name={sarligGrunn.HELT_ELLER_DELVIS_NAVS_FEIL}
-                  label={<FormattedMessage id="UaktsomhetGradFormPanel.FeilTilskrivesTilNav" />}
-                />
-                <CheckboxField
-                  name={sarligGrunn.STOERRELSE_BELOEP}
-                  label={<FormattedMessage id="UaktsomhetGradFormPanel.FeilutbetalingStorrelsen" />}
-                />
-                <CheckboxField
-                  name={sarligGrunn.TID_FRA_UTBETALING}
-                  label={<FormattedMessage id="UaktsomhetGradFormPanel.TidenSidenFeilutbetaling" />}
-                />
-                <CheckboxField
-                  name={sarligGrunn.ANNET}
-                  label={<FormattedMessage id="UaktsomhetGradFormPanel.Annet" />}
-                  onChange={resetAnnetTextField}
-                />
+                {sarligGrunnTyper.map(sgt => (
+                  <CheckboxField
+                    key={sgt.kode}
+                    name={sgt.kode}
+                    label={sgt.navn}
+                  />
+                  ))}
               </Column>
             </Row>
             {annet
@@ -151,8 +137,8 @@ UaktsomhetGradFormPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   handletUaktsomhetGrad: PropTypes.string.isRequired,
   annet: PropTypes.bool.isRequired,
-  resetAnnetTextField: PropTypes.func.isRequired,
   andelSomSkalTilbakekreves: PropTypes.number.isRequired,
+  sarligGrunnTyper: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 export default UaktsomhetGradFormPanel;

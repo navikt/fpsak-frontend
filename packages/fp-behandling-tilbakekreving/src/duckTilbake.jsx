@@ -42,6 +42,7 @@ export const resetBehandling = dispatch => Promise.all([
 ]);
 
 export const fetchBehandling = (behandlingIdentifier, allBehandlinger, updateFagsakInfo) => (dispatch) => {
+  dispatch(tilbakekrevingBehandlingApi.KODEVERK.makeRestApiRequest()());
   dispatch(tilbakekrevingBehandlingApi.BEHANDLING.resetRestApi()());
   dispatch(updateBehandling(behandlingIdentifier, allBehandlinger, updateFagsakInfo));
 };
@@ -67,9 +68,7 @@ export const resetTilbakekrevingContext = () => (dispatch) => {
 const initialState = {
   behandlingId: undefined,
   fagsakSaksnummer: undefined,
-  featureToggles: {},
   hasShownBehandlingPaVent: false,
-  kodeverk: {},
   fagsak: {},
 };
 
@@ -95,6 +94,10 @@ export const tilbakekrevingBehandlingReducer = (state = initialState, action = {
 reducerRegistry.register(reducerName, tilbakekrevingBehandlingReducer);
 
 // Selectors (Kun de knyttet til reducer)
+export const getTilbakekrevingKodeverk = kodeverkType => createSelector(
+  [tilbakekrevingBehandlingApi.KODEVERK.getRestApiData()], (kodeverk = {}) => kodeverk[kodeverkType],
+);
+
 const getBehandlingContext = state => state.default[reducerName];
 export const getSelectedBehandlingId = createSelector([getBehandlingContext], behandlingContext => behandlingContext.behandlingId);
 export const getSelectedSaksnummer = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsakSaksnummer);
@@ -102,11 +105,6 @@ export const getBehandlingIdentifier = createSelector(
   [getSelectedBehandlingId, getSelectedSaksnummer],
   (behandlingId, saksnummer) => (saksnummer && behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined
   ),
-);
-
-export const getFeatureToggles = createSelector([getBehandlingContext], behandlingContext => behandlingContext.featureToggles);
-export const getKodeverk = kodeverkType => createSelector(
-  [getBehandlingContext], behandlingContext => behandlingContext.kodeverk[kodeverkType],
 );
 
 export const getFagsakStatus = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.fagsakStatus);

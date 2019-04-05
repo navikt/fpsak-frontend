@@ -12,7 +12,6 @@ import {
   FadingPanel, VerticalSpacer, FlexRow, FlexColumn, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 
@@ -25,13 +24,14 @@ import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingTilbakekrevi
 import { addClassNameGroupIdToPerioder } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
 import BpTimelinePanel from '../felles/behandlingspunktTimelineSkjema/BpTimelinePanel';
 import ForeldelseForm from './ForeldelseForm';
+import tilbakekrevingAksjonspunktCodes from '../../../kodeverk/tilbakekrevingAksjonspunktCodes';
 
 import styles from './foreldelsePanel.less';
 
 const ACTIVITY_PANEL_NAME = 'foreldelsesresultatActivity';
 const formName = 'ForeldelseForm';
 const foreldelseAksjonspunkter = [
-  aksjonspunktCodes.VURDER_FORELDELSE,
+  tilbakekrevingAksjonspunktCodes.VURDER_FORELDELSE,
 ];
 
 const getDate = () => moment().subtract(30, 'months').format(DDMMYYYY_DATE_FORMAT);

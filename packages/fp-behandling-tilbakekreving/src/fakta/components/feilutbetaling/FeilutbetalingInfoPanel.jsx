@@ -16,7 +16,6 @@ import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-com
 import {
  DDMMYYYY_DATE_FORMAT, minLength, maxLength, hasValidText, required,
 } from '@fpsak-frontend/utils';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import {
   getFeilutbetalingFakta,
@@ -26,6 +25,7 @@ import {
 import { getSelectedBehandlingId } from 'behandlingTilbakekreving/src/duckTilbake';
 import { behandlingForm, getBehandlingFormPrefix } from 'behandlingTilbakekreving/src/behandlingForm';
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';
+import tilbakekrevingAksjonspunktCodes from '../../../kodeverk/tilbakekrevingAksjonspunktCodes';
 
 import styles from './feilutbetalingInfoPanel.less';
 
@@ -33,7 +33,7 @@ const formName = 'FaktaFeilutbetalingForm';
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 const feilutbetalingAksjonspunkter = [
-  aksjonspunktCodes.AVKLAR_FAKTA_FOR_FEILUTBETALING,
+  tilbakekrevingAksjonspunktCodes.AVKLAR_FAKTA_FOR_FEILUTBETALING,
 ];
 
 export class FeilutbetalingInfoPanelImpl extends Component {

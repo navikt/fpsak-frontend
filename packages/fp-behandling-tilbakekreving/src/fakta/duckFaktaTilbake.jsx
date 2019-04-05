@@ -42,12 +42,6 @@ export const resolveFaktaAksjonspunkter = (params, behandlingIdentifier) => (dis
     .then(response => dispatch(resolveFaktaAksjonspunkterSuccess(response, behandlingIdentifier)));
 };
 
-export const resolveFaktaOverstyrAksjonspunkter = (params, behandlingIdentifier) => (dispatch) => {
-  dispatch(resolveFaktaAksjonspunkterStarted());
-  return dispatch(tilbakekrevingBehandlingApi.SAVE_OVERSTYRT_AKSJONSPUNKT.makeRestApiRequest()(params))
-    .then(response => dispatch(resolveFaktaAksjonspunkterSuccess(response, behandlingIdentifier)));
-};
-
 /* Reducer */
 const initialState = {
   openInfoPanels: [],

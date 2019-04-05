@@ -146,9 +146,7 @@ export class BehandlingIndex extends Component {
           setBehandlingInfoHolder={setHolder}
           behandlingUpdater={behandlingUpdater}
           appContextUpdater={appContextUpdater}
-          featureToggles={featureToggles}
           hasSubmittedPaVentForm={hasSubmittedPaVentForm}
-          kodeverk={kodeverk}
           fagsak={fagsak}
         />
       );

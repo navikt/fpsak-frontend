@@ -1,8 +1,8 @@
-import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BehandlingspunktProperties } from '@fpsak-frontend/fp-behandling-felles';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
-
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+
+import ac from '../../kodeverk/tilbakekrevingAksjonspunktCodes';
 
 // TODO (TOR) Kvifor trengs denne?
 export const getForeldelseStatus = ({ foreldelseResultat }) => (foreldelseResultat ? vut.OPPFYLT : vut.IKKE_VURDERT);
