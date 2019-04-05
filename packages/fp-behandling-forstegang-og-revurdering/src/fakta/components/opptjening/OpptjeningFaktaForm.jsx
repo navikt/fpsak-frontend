@@ -231,6 +231,7 @@ export class OpptjeningFaktaFormImpl extends Component {
           && (
           <ElementWrapper>
             <ActivityPanel
+              key={selectedOpptjeningActivity.id}
               activity={selectedOpptjeningActivity}
               readOnly={readOnly}
               opptjeningAktivitetTypes={opptjeningAktivitetTypes}

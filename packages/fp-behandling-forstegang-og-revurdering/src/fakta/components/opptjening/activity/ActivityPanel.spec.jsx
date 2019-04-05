@@ -4,7 +4,9 @@ import sinon from 'sinon';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { FormattedMessage } from 'react-intl';
-import { PeriodpickerField, SelectField, RadioGroupField } from '@fpsak-frontend/form';
+import {
+ PeriodpickerField, SelectField, RadioGroupField, TextAreaField,
+} from '@fpsak-frontend/form';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
@@ -279,5 +281,86 @@ describe('<ActivityPanel>', () => {
 
     expect(wrapper.find(Hovedknapp)).to.have.length(1);
     expect(wrapper.find(RadioGroupField)).to.have.length(0);
+  });
+
+  it('skal vise uredigerbar begrunnelse hvis readOnly er true', () => {
+    const activity = {
+      erManueltOpprettet: false,
+      erGodkjent: false,
+      erEndret: false,
+      begrunnelse: undefined,
+    };
+
+    const wrapper = shallowWithIntl(<ActivityPanel
+      {...reduxFormPropsMock}
+      intl={intlMock}
+      initialValues={activity}
+      readOnly
+      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+      cancelSelectedOpptjeningActivity={sinon.spy()}
+      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+      opptjeningFom="2017-08-15"
+      opptjeningTom="2017-12-31"
+      hasAksjonspunkt
+      activityId={1}
+    />);
+    const tekstFelt = wrapper.find(TextAreaField);
+    expect(tekstFelt).to.have.length(1);
+    expect(tekstFelt.props().readOnly).to.eql(true);
+    expect(tekstFelt.props().label.props.id).to.eql('ActivityPanel.Begrunnelse');
+  });
+
+  it('skal vise uredigerbar begrunnelse hvis man skal disable perioder picker', () => {
+    const activity = {
+      erManueltOpprettet: false,
+      erGodkjent: true,
+      erEndret: false,
+      begrunnelse: undefined,
+    };
+
+    const wrapper = shallowWithIntl(<ActivityPanel
+      {...reduxFormPropsMock}
+      intl={intlMock}
+      initialValues={activity}
+      readOnly={false}
+      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+      cancelSelectedOpptjeningActivity={sinon.spy()}
+      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+      opptjeningFom="2017-08-15"
+      opptjeningTom="2017-12-31"
+      hasAksjonspunkt
+      activityId={1}
+    />);
+    const tekstFelt = wrapper.find(TextAreaField);
+    expect(tekstFelt).to.have.length(1);
+    expect(tekstFelt.props().readOnly).to.eql(true);
+    expect(tekstFelt.props().label.props.id).to.eql('ActivityPanel.Begrunnelse');
+  });
+
+  it('skal vise redigerbar begrunnelse hvis man ikke skal disable perioder picker og ikke readOnly', () => {
+    const activity = {
+      erManueltOpprettet: false,
+      erGodkjent: false,
+      erEndret: false,
+      begrunnelse: undefined,
+    };
+
+    const wrapper = shallowWithIntl(<ActivityPanel
+      {...reduxFormPropsMock}
+      intl={intlMock}
+      initialValues={activity}
+      readOnly={false}
+      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+      cancelSelectedOpptjeningActivity={sinon.spy()}
+      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+      opptjeningFom="2017-08-15"
+      opptjeningTom="2017-12-31"
+      hasAksjonspunkt
+      activityId={1}
+    />);
+    const tekstFelt = wrapper.find(TextAreaField);
+    expect(tekstFelt).to.have.length(1);
+    expect(tekstFelt.props().readOnly).to.eql(false);
+    expect(tekstFelt.props().label.props.id).to.eql('ActivityPanel.BegrunnEndringene');
   });
 });

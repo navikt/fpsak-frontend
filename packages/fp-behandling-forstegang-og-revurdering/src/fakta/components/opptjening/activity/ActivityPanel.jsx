@@ -14,7 +14,7 @@ import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  Image, FlexContainer, FlexRow, FlexColumn, VerticalSpacer, ElementWrapper,
+  Image, FlexContainer, FlexRow, FlexColumn, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
@@ -85,6 +85,12 @@ const isBegrunnelseRequired = (allValues, props) => {
   return !isEqual(omit(props.initialValues, 'erGodkjent'), omit(allValues, 'erGodkjent'));
 };
 const requiredCustom = requiredIfCustomFunctionIsTrue(isBegrunnelseRequired);
+
+const finnBegrunnelseLabel = (initialValues, readOnly, hasAksjonspunkt) => (
+  initialValues.erManueltOpprettet || readOnly || shouldDisablePeriodpicker(hasAksjonspunkt, initialValues)
+    ? 'ActivityPanel.Begrunnelse'
+    : 'ActivityPanel.BegrunnEndringene'
+);
 
 export const activityPanelName = 'ActivityPanel';
 
@@ -173,46 +179,48 @@ export const ActivityPanel = ({
       isManuallyAdded={initialValues.erManueltOpprettet}
       selectedActivityType={selectedActivityType}
     />
-    {!shouldDisablePeriodpicker(hasAksjonspunkt, initialValues)
-    && (
-    <ElementWrapper>
-      <VerticalSpacer twentyPx />
-      {(!initialValues.erManueltOpprettet)
-      && (
-      <RadioGroupField name="erGodkjent" validate={[required]} readOnly={readOnly} isEdited={initialValues.erEndret}>
-        <RadioOption value label={{ id: 'ActivityPanel.Godkjent' }} />
-        <RadioOption value={false} label={<FormattedHTMLMessage id="ActivityPanel.IkkeGodkjent" />} />
-      </RadioGroupField>
-      )
-      }
+    { !shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
+      <React.Fragment>
+        <VerticalSpacer twentyPx />
+        { (!initialValues.erManueltOpprettet) && (
+          <RadioGroupField name="erGodkjent" validate={[required]} readOnly={readOnly} isEdited={initialValues.erEndret}>
+            <RadioOption value label={{ id: 'ActivityPanel.Godkjent' }} />
+            <RadioOption value={false} label={<FormattedHTMLMessage id="ActivityPanel.IkkeGodkjent" />} />
+          </RadioGroupField>
+        )}
+      </React.Fragment>
+    )}
+    <React.Fragment>
       <VerticalSpacer fourPx />
       <TextAreaField
         name="begrunnelse"
         textareaClass={styles.explanationTextarea}
-        label={{ id: initialValues.erManueltOpprettet ? 'ActivityPanel.Begrunnelse' : 'ActivityPanel.BegrunnEndringene' }}
+        label={<FormattedMessage id={finnBegrunnelseLabel(initialValues, readOnly, hasAksjonspunkt)} />}
         validate={[requiredCustom, minLength3, maxLength1500, hasValidText]}
         maxLength={1500}
-        readOnly={readOnly}
+        readOnly={readOnly || shouldDisablePeriodpicker(hasAksjonspunkt, initialValues)}
       />
-      <FlexContainer fluid>
-        <FlexRow>
-          <FlexColumn>
-            <Hovedknapp mini htmlType="button" onClick={formProps.handleSubmit} disabled={formProps.pristine}>
-              <FormattedMessage id="ActivityPanel.Oppdater" />
-            </Hovedknapp>
-          </FlexColumn>
-          <FlexColumn>
-            <Knapp mini htmlType="button" onClick={cancelSelectedOpptjeningActivity}>
-              <FormattedMessage
-                id="ActivityPanel.Avbryt"
-              />
-            </Knapp>
-          </FlexColumn>
-        </FlexRow>
-      </FlexContainer>
-    </ElementWrapper>
-    )
-    }
+    </React.Fragment>
+    { !shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
+      <React.Fragment>
+        <FlexContainer fluid>
+          <FlexRow>
+            <FlexColumn>
+              <Hovedknapp mini htmlType="button" onClick={formProps.handleSubmit} disabled={formProps.pristine}>
+                <FormattedMessage id="ActivityPanel.Oppdater" />
+              </Hovedknapp>
+            </FlexColumn>
+            <FlexColumn>
+              <Knapp mini htmlType="button" onClick={cancelSelectedOpptjeningActivity}>
+                <FormattedMessage
+                  id="ActivityPanel.Avbryt"
+                />
+              </Knapp>
+            </FlexColumn>
+          </FlexRow>
+        </FlexContainer>
+      </React.Fragment>
+    )}
   </FaktaGruppe>
 );
 
