@@ -183,4 +183,31 @@ describe('<PersonArbeidsforholdTable>', () => {
     const tableRow = wrapper.find(TableRow);
     expect(tableRow.props().model.navn).to.eql('Svendsen Eksos');
   });
+  it('skal vise overstyrt tom dato', () => {
+    const endretArbeidsforhold = {
+      ...arbeidsforhold,
+      overstyrtTom: '2025-01-01',
+    };
+    const wrapper = shallow(<PersonArbeidsforholdTable
+      alleArbeidsforhold={[endretArbeidsforhold]}
+      selectedId={undefined}
+      selectArbeidsforholdCallback={sinon.spy()}
+      fagsystemer={fagsystemer}
+    />);
+    const periodeLabel = wrapper.find(PeriodLabel);
+    expect(periodeLabel.props().dateStringTom).to.eql('2025-01-01');
+  });
+  it('skal vise tom dato', () => {
+    const endretArbeidsforhold = {
+      ...arbeidsforhold,
+    };
+    const wrapper = shallow(<PersonArbeidsforholdTable
+      alleArbeidsforhold={[endretArbeidsforhold]}
+      selectedId={undefined}
+      selectArbeidsforholdCallback={sinon.spy()}
+      fagsystemer={fagsystemer}
+    />);
+    const periodeLabel = wrapper.find(PeriodLabel);
+    expect(periodeLabel.props().dateStringTom).to.eql('2018-10-10');
+  });
 });
