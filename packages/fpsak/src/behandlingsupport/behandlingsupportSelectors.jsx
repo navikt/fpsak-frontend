@@ -2,15 +2,12 @@ import { createSelector } from 'reselect';
 import moment from 'moment';
 import fpsakApi from 'data/fpsakApi';
 import {
-  getBehandlingHasSoknad,
-  getBehandlingIsInnsyn,
-  getBehandlingIsOnHold,
   getBehandlingStatus,
   getTotrinnskontrollArsakerReadOnly,
-  isBehandlingInInnhentSoknadsopplysningerSteg,
-  getBehandlingIsKlage,
+  getBehandlingIsOnHold,
 } from 'behandling/duck';
-import { getSelectedSaksnummer } from '@fpsak-frontend/fp-behandling-papirsoknad/src/duck';
+import { getSelectedSaksnummer as getPapirsoknadSelectedSaksnummer } from '@fpsak-frontend/fp-behandling-papirsoknad/src/duck';
+import { getSelectedSaksnummer } from '@fpsak-frontend/fp-behandling-forstegang-og-revurdering/src/duck';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { getRettigheter } from 'navAnsatt/duck';
 import SupportPanel from './supportPanels';
@@ -18,15 +15,12 @@ import SupportPanel from './supportPanels';
 
 const getSendMessageIsRelevant = createSelector(
   [
-    getBehandlingHasSoknad,
-    isBehandlingInInnhentSoknadsopplysningerSteg,
-    getBehandlingIsOnHold,
-    getBehandlingIsInnsyn,
-    getBehandlingIsKlage,
     getSelectedSaksnummer,
+    getPapirsoknadSelectedSaksnummer,
+    getBehandlingIsOnHold,
   ],
-  (behandlingHasSoknad, behandlingIsInnhentSoknadsopplysninger, behandlingIsOnHold, behandlingIsInnsyn, behandlingIsKlage, fagsakSaksnummer) => (
-    (behandlingHasSoknad || behandlingIsInnhentSoknadsopplysninger || behandlingIsInnsyn || behandlingIsKlage || fagsakSaksnummer) && !behandlingIsOnHold
+  (fagsakSaksnummerPapir, fagsakSaksnummer, isOnHold) => (
+    (fagsakSaksnummerPapir || fagsakSaksnummer) && !isOnHold
   ),
 );
 
