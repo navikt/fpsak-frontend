@@ -20,6 +20,7 @@ describe('<FerieOgArbeidsPeriode>', () => {
       fraDato="2018-06-02"
       tilDato="2018-06-25"
       uttakPeriodeType={{}}
+      originalResultat={{}}
       updated
       bekreftet
       readOnly={false}
