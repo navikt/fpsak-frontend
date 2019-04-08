@@ -4,6 +4,7 @@ import {
   isoDateRegex,
   integerRegex,
   decimalRegex,
+  oneDecimalRegex,
   saksnummerOrFodselsnummerPattern,
   textRegex,
   textGyldigRegex,
@@ -35,6 +36,13 @@ describe('validatorsHelper', () => {
     it('Skal sjekke om input er desimal', () => {
       expect(decimalRegex.test('23,34')).is.true;
       expect(decimalRegex.test('XXX')).is.false;
+    });
+  });
+
+  describe('oneDecimalRegex', () => {
+    it('Skal sjekke om input er EN desimal', () => {
+      expect(oneDecimalRegex.test('23,3')).is.true;
+      expect(oneDecimalRegex.test('23,33')).is.false;
     });
   });
 

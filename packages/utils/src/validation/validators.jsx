@@ -12,7 +12,7 @@ import {
 } from './messages';
 import {
   isoDateRegex, numberRegex, integerRegex, decimalRegex, textRegex, textGyldigRegex, isEmpty, yesterday, tomorrow,
-  dateRangesAreSequential, nameRegex, nameGyldigRegex, saksnummerOrFodselsnummerPattern,
+  dateRangesAreSequential, nameRegex, nameGyldigRegex, saksnummerOrFodselsnummerPattern, oneDecimalRegex,
 } from './validatorsHelper';
 
 export const maxLengthOrFodselsnr = length => text => (isEmpty(text) || text.toString().trim().length <= length ? null : maxLengthOrFodselsnrMessage(length));
