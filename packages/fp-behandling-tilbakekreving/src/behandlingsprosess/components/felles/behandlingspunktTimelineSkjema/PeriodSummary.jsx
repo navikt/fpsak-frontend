@@ -15,7 +15,7 @@ import styles from './periodSummary.less';
 
 
 const PeriodSummary = ({
-  fom, tom, feilutbetaling,
+  fom, tom, feilutbetaling, arsak,
 }) => (
   <Row>
     <Column md="8">
@@ -51,6 +51,11 @@ const PeriodSummary = ({
                 <span className={feilutbetaling ? styles.redNumber : styles.positivNumber}>{ formatCurrencyNoKr(feilutbetaling) }</span>
               </Normaltekst>
             </Column>
+            <Column xs="6">
+              <Normaltekst className={styles.resultName}>
+                {arsak}
+              </Normaltekst>
+            </Column>
           </Row>
         </div>
       </div>
@@ -62,6 +67,7 @@ PeriodSummary.propTypes = {
   fom: PropTypes.string.isRequired,
   tom: PropTypes.string.isRequired,
   feilutbetaling: PropTypes.number.isRequired,
+  arsak: PropTypes.string.isRequired,
 };
 
 export default PeriodSummary;

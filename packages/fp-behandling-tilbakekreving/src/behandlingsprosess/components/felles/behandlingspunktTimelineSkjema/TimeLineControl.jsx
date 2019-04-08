@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Column } from 'nav-frontend-grid';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
 import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
@@ -19,21 +18,10 @@ import ikkeOppfyltUrl from '@fpsak-frontend/assets/images/ikke_oppfylt.svg';
 import oppfyltUrl from '@fpsak-frontend/assets/images/oppfylt.svg';
 import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
 import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
-import fodselUrl from '@fpsak-frontend/assets/images/fodsel.svg';
-import revurderingUrl from '@fpsak-frontend/assets/images/endringstidspunkt.svg';
-import soknadUrl from '@fpsak-frontend/assets/images/soknad.svg';
 import uavklartUrl from '@fpsak-frontend/assets/images/uavklart.svg';
 
 import { VerticalSpacer, Image } from '@fpsak-frontend/shared-components';
 import styles from './timeLineControl.less';
-
-/*
- * Timeline controller
- *
- * Holds the controls for the timeline (zoom, traversing left/right and opening the data area)
- *
- * ```
- */
 
 const findArrowLeftImg = isHovering => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
 const findArrowRightImg = isHovering => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
@@ -43,12 +31,15 @@ const findOpenPeriodImage = isHovering => (isHovering ? arrowDownFilledImageUrl 
 const findQuestionImage = isHovering => (isHovering ? questionHoverUrl : questionNormalUrl);
 const oppfyltImage = () => (oppfyltUrl);
 const ikkeOppfyltImage = () => (ikkeOppfyltUrl);
-const findFodselImage = () => (fodselUrl);
-const soknadImage = () => (soknadUrl);
-const endringsTidspunktImage = () => (revurderingUrl);
 const uavklartImage = () => (uavklartUrl);
 
-
+/*
+ * Timeline controller
+ *
+ * Holds the controls for the timeline (zoom, traversing left/right and opening the data area)
+ *
+ * ```
+ */
 const TimeLineControl = ({
   goBackwardCallback,
   goForwardCallback,
@@ -56,78 +47,41 @@ const TimeLineControl = ({
   zoomOutCallback,
   openPeriodInfo,
   selectedPeriod,
+  isTilbakekreving,
 }) => (
-  <div>
-    <Row>
-      <div className={styles.scrollButtonContainer}>
-        <span className={styles.popUnder}>
-          <span>
-            <Image
-              className={styles.timeLineButton}
-              imageSrcFunction={findQuestionImage}
-              altCode="Timeline.openData"
-            />
-          </span>
-          <div className={styles.popUnderContent}>
-            <Row>
-              <Column xs="6">
-                <Image
-                  className={styles.timeLineButton}
-                  imageSrcFunction={oppfyltImage}
-                  altCode="Timeline.OppfyltPeriode"
-                />
-                <FormattedMessage id="Timeline.OppfyltPeriode" />
-              </Column>
-              <Column xs="6">
-                <Image
-                  className={styles.timeLineButton}
-                  imageSrcFunction={findFodselImage}
-                  altCode="Timeline.TidspunktFamiliehendelse"
-                />
-                <FormattedMessage id="Timeline.TidspunktFamiliehendelse" />
-              </Column>
-            </Row>
-            <VerticalSpacer eightPx />
-            <Row>
-              <Column xs="6">
-                <Image
-                  className={styles.timeLineButton}
-                  imageSrcFunction={ikkeOppfyltImage}
-                  altCode="Timeline.IkkeOppfyltPeriode"
-                />
-                <FormattedMessage id="Timeline.IkkeOppfyltPeriode" />
-              </Column>
-              <Column xs="6">
-                <Image
-                  className={styles.timeLineButton}
-                  imageSrcFunction={soknadImage}
-                  altCode="Timeline.TidspunktMotakSoknad"
-                />
-                <FormattedMessage id="Timeline.TidspunktMotakSoknad" />
-              </Column>
-            </Row>
-            <VerticalSpacer eightPx />
-            <Row>
-              <Column xs="6">
-                <Image
-                  className={styles.timeLineButton}
-                  imageSrcFunction={uavklartImage}
-                  altCode="Timeline.IkkeAvklartPeriode"
-                />
-                <FormattedMessage id="Timeline.IkkeAvklartPeriode" />
-              </Column>
-              <Column xs="6">
-                <Image
-                  className={styles.timeLineButton}
-                  imageSrcFunction={endringsTidspunktImage}
-                  altCode="Timeline.TidspunktRevurdering"
-                />
-                <FormattedMessage id="Timeline.TidspunktRevurdering" />
-              </Column>
-            </Row>
-          </div>
-        </span>
-        {!selectedPeriod
+  <div className={styles.scrollButtonContainer}>
+    <span className={styles.popUnder}>
+      <span>
+        <Image
+          className={styles.timeLineButton}
+          imageSrcFunction={findQuestionImage}
+          altCode="Timeline.openData"
+        />
+      </span>
+      <div className={styles.popUnderContent}>
+        <Image
+          className={styles.timeLineButton}
+          imageSrcFunction={oppfyltImage}
+          altCode="Timeline.OppfyltPeriode"
+        />
+        <FormattedMessage id={isTilbakekreving ? 'Timeline.BelopTilbakereves' : 'Timeline.OppfyltPeriode'} />
+        <VerticalSpacer eightPx />
+        <Image
+          className={styles.timeLineButton}
+          imageSrcFunction={ikkeOppfyltImage}
+          altCode="Timeline.IkkeOppfyltPeriode"
+        />
+        <FormattedMessage id={isTilbakekreving ? 'Timeline.IngenTilbakekreving' : 'Timeline.IkkeOppfyltPeriode'} />
+        <VerticalSpacer eightPx />
+        <Image
+          className={styles.timeLineButton}
+          imageSrcFunction={uavklartImage}
+          altCode="Timeline.IkkeAvklartPeriode"
+        />
+        <FormattedMessage id="Timeline.IkkeAvklartPeriode" />
+      </div>
+    </span>
+    {!selectedPeriod
         && (
         <Image
           tabIndex="0"
@@ -139,7 +93,7 @@ const TimeLineControl = ({
         />
         )
         }
-        {selectedPeriod
+    {selectedPeriod
         && (
         <Image
           tabIndex="0"
@@ -151,42 +105,40 @@ const TimeLineControl = ({
         />
         )
         }
-        <span className={styles.buttonSpacing}>
-          <Image
-            tabIndex="0"
-            className={styles.timeLineButton}
-            imageSrcFunction={findZoomInImg}
-            altCode="Timeline.zoomIn"
-            onMouseDown={zoomInCallback}
-            onKeyDown={zoomInCallback}
-          />
-          <Image
-            tabIndex="0"
-            className={styles.timeLineButton}
-            imageSrcFunction={findZoomOutImg}
-            altCode="Timeline.zoomOut"
-            onMouseDown={zoomOutCallback}
-            onKeyDown={zoomOutCallback}
-          />
-        </span>
-        <Image
-          tabIndex="0"
-          className={styles.timeLineButton}
-          imageSrcFunction={findArrowLeftImg}
-          altCode="Timeline.prevPeriod"
-          onMouseDown={goBackwardCallback}
-          onKeyDown={goBackwardCallback}
-        />
-        <Image
-          tabIndex="0"
-          className={styles.timeLineButton}
-          imageSrcFunction={findArrowRightImg}
-          altCode="Timeline.nextPeriod"
-          onMouseDown={goForwardCallback}
-          onKeyDown={goForwardCallback}
-        />
-      </div>
-    </Row>
+    <span className={styles.buttonSpacing}>
+      <Image
+        tabIndex="0"
+        className={styles.timeLineButton}
+        imageSrcFunction={findZoomInImg}
+        altCode="Timeline.zoomIn"
+        onMouseDown={zoomInCallback}
+        onKeyDown={zoomInCallback}
+      />
+      <Image
+        tabIndex="0"
+        className={styles.timeLineButton}
+        imageSrcFunction={findZoomOutImg}
+        altCode="Timeline.zoomOut"
+        onMouseDown={zoomOutCallback}
+        onKeyDown={zoomOutCallback}
+      />
+    </span>
+    <Image
+      tabIndex="0"
+      className={styles.timeLineButton}
+      imageSrcFunction={findArrowLeftImg}
+      altCode="Timeline.prevPeriod"
+      onMouseDown={goBackwardCallback}
+      onKeyDown={goBackwardCallback}
+    />
+    <Image
+      tabIndex="0"
+      className={styles.timeLineButton}
+      imageSrcFunction={findArrowRightImg}
+      altCode="Timeline.nextPeriod"
+      onMouseDown={goForwardCallback}
+      onKeyDown={goForwardCallback}
+    />
   </div>
 );
 
@@ -197,6 +149,7 @@ TimeLineControl.propTypes = {
   zoomOutCallback: PropTypes.func.isRequired,
   openPeriodInfo: PropTypes.func.isRequired,
   selectedPeriod: PropTypes.shape(),
+  isTilbakekreving: PropTypes.bool.isRequired,
 };
 
 

@@ -114,6 +114,7 @@ export class BpTimelineDataImpl extends Component {
               feilutbetaling={selectedItemData.feilutbetaling}
               fom={selectedItemData.fom}
               tom={selectedItemData.tom}
+              arsak={selectedItemData.arsak}
             />
             { children }
           </div>

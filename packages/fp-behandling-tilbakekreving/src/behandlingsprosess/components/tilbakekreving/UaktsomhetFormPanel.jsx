@@ -29,9 +29,11 @@ const UaktsomhetFormPanel = ({
   handletUaktsomhetGrad,
   grunnerTilReduksjon,
   annet,
-  andelSomSkalTilbakekreves,
   aktsomhetTyper,
   sarligGrunnTyper,
+  antallYtelser,
+  feilutbetalingBelop,
+  erTotalBelopUnder4Rettsgebyr,
 }) => (
   <>
     <Element>
@@ -69,8 +71,10 @@ const UaktsomhetFormPanel = ({
           handletUaktsomhetGrad={handletUaktsomhetGrad}
           annet={annet}
           resetAnnetTextField={resetAnnetTextField}
-          andelSomSkalTilbakekreves={andelSomSkalTilbakekreves}
           sarligGrunnTyper={sarligGrunnTyper}
+          harMerEnnEnYtelse={antallYtelser > 1}
+          feilutbetalingBelop={feilutbetalingBelop}
+          erTotalBelopUnder4Rettsgebyr={erTotalBelopUnder4Rettsgebyr}
         />
       </FormSection>
     )}
@@ -84,14 +88,16 @@ UaktsomhetFormPanel.propTypes = {
   grunnerTilReduksjon: PropTypes.bool,
   annet: PropTypes.bool,
   handletUaktsomhetGrad: PropTypes.string,
-  andelSomSkalTilbakekreves: PropTypes.number.isRequired,
+  antallYtelser: PropTypes.number.isRequired,
+  feilutbetalingBelop: PropTypes.number.isRequired,
+  erTotalBelopUnder4Rettsgebyr: PropTypes.bool.isRequired,
   aktsomhetTyper: PropTypes.arrayOf(PropTypes.shape()),
   sarligGrunnTyper: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 UaktsomhetGradFormPanel.defaultProps = {
   annet: false,
-  grunnerTilReduksjon: false,
+  grunnerTilReduksjon: undefined,
   handletUaktsomhetGrad: undefined,
 };
 

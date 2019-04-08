@@ -23,13 +23,15 @@ import BpTimelinePanel from '../felles/behandlingspunktTimelineSkjema/BpTimeline
 import { getBehandlingVersjon, getBehandlingVilkarsvurderingsperioder } from '../../../selectors/tilbakekrevingBehandlingSelectors';
 import TilbakekrevingPeriodeForm, { TILBAKEKREVING_PERIODE_FORM_NAME } from './TilbakekrevingPeriodeForm';
 import tilbakekrevingAksjonspunktCodes from '../../../kodeverk/tilbakekrevingAksjonspunktCodes';
+import vilkarResultat from '../../../kodeverk/vilkarResultat';
+import aktsomhet from '../../../kodeverk/aktsomhet';
 
 const TILBAKEKREVING_FORM_NAME = 'TilbakekrevingForm';
 
 const tilbakekrevingAksjonspunkter = [tilbakekrevingAksjonspunktCodes.VURDER_TILBAKEKREVING];
 
 const TilbakekrevingFormImpl = ({
-  tilbakekrevingPerioder,
+  vilkarsVurdertePerioder,
   behandlingFormPrefix,
   isApOpen,
   kjonn,
@@ -49,20 +51,21 @@ const TilbakekrevingFormImpl = ({
         {[<FormattedMessage key="AksjonspunktHjelpetekst" id="TilbakekrevingPanel.AksjonspunktHjelpetekst" />] }
       </AksjonspunktHelpText>
       <VerticalSpacer twentyPx />
-      {tilbakekrevingPerioder && (
+      {vilkarsVurdertePerioder && (
         <BpTimelinePanel
           hovedsokerKjonnKode={kjonn}
-          resultatActivity={tilbakekrevingPerioder}
+          resultatActivity={vilkarsVurdertePerioder}
           behandlingFormPrefix={behandlingFormPrefix}
           reduxFormChange={formChange}
           reduxFormInitialize={formInitialize}
           formName={TILBAKEKREVING_FORM_NAME}
           detailPanelForm={TILBAKEKREVING_PERIODE_FORM_NAME}
-          fieldNameToStoreDetailInfo="tilbakekrevingPerioder"
+          fieldNameToStoreDetailInfo="vilkarsVurdertePerioder"
+          isTilbakekreving
         >
           <TilbakekrevingPeriodeForm
             behandlingFormPrefix={behandlingFormPrefix}
-            aktiviteter={tilbakekrevingPerioder}
+            aktiviteter={vilkarsVurdertePerioder}
             formName={TILBAKEKREVING_FORM_NAME}
             readOnly={readOnly}
           />
@@ -82,7 +85,7 @@ const TilbakekrevingFormImpl = ({
 );
 
 TilbakekrevingFormImpl.propTypes = {
-  tilbakekrevingPerioder: PropTypes.arrayOf(PropTypes.shape()),
+  vilkarsVurdertePerioder: PropTypes.arrayOf(PropTypes.shape()),
   behandlingFormPrefix: PropTypes.string.isRequired,
   isApOpen: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
@@ -93,18 +96,58 @@ TilbakekrevingFormImpl.propTypes = {
 };
 
 TilbakekrevingFormImpl.defaultProps = {
-  tilbakekrevingPerioder: undefined,
+  vilkarsVurdertePerioder: undefined,
 };
 
-export const transformValues = values => [{
-  ...values,
-}];
+const getAktsomhetData = (period) => {
+  if (period.handletUaktsomhetGrad === aktsomhet.FORSETT) {
+    return {};
+  }
+  if (period.handletUaktsomhetGrad === aktsomhet.GROVT_UAKTSOM) {
+    return { saerligGrunner: period.sarligGrunner };
+  }
+  return {};
+};
+
+const getVilkarResultatData = (period) => {
+  if (period.valgtVilkarResultatType === vilkarResultat.GOD_TRO) {
+    return {
+      vilkaerResultatInfoForGodTro: {
+        begrunnelse: period.godTroBegrunnelse,
+        erBeloepetIBehold: period.erBelopetIBehold,
+        tilbakekrevdBeloep: period.tilbakekrevdBelop,
+      },
+    };
+  }
+    return {
+      vilkaerResultatInfoForAnnet: {
+        begrunnelse: period.aktsomhetBegrunnelse,
+        aktsomhet: period.handletUaktsomhetGrad,
+        ...getAktsomhetData(period),
+      },
+    };
+  };
+
+export const transformValues = (values) => {
+  const vilkarsVurdertePerioder = values.vilkarsVurdertePerioder.map(v => ({
+    fom: v.fom,
+    tom: v.tom,
+    vilkaerResultatType: v.valgtVilkarResultatType,
+    begrunnelse: v.begrunnelse,
+    ...getVilkarResultatData(v),
+  }));
+  return [{
+    vilkarsVurdertePerioder,
+  }];
+};
 
 export const buildInitialValues = perioder => ({
-  tilbakekrevingPerioder: perioder.map((tb, index) => ({
-    ...tb,
+  vilkarsVurdertePerioder: perioder.map((periode, index) => ({
+    ...periode,
     id: index + 1,
     group: 1,
+    arsak: periode.årsak.årsak,
+    erTotalBelopUnder4Rettsgebyr: true,
   })),
 });
 
@@ -113,17 +156,21 @@ const addClassname = (perioder) => {
     return undefined;
   }
   // TODO (TOR) treng ein foreldet her. Om ikkje, endre i BpTimelinePanel
-  return perioder.map(p => ({
-    ...p,
-    className: p.begrunnelse ? 'godkjentPeriode' : 'undefined',
-    foreldet: p.begrunnelse ? undefined : foreldelseCodes.MANUELL_BEHANDLING,
-  }));
+  return perioder.map((p) => {
+    const erBehandlet = p.begrunnelse ? 'godkjentPeriode' : 'undefined';
+    const statusClassName = p.erForeldet || p.erBelopetIBehold === false ? 'avvistPeriode' : erBehandlet;
+    return {
+      ...p,
+      className: statusClassName,
+      foreldet: p.begrunnelse ? undefined : foreldelseCodes.MANUELL_BEHANDLING,
+    };
+  });
 };
 
 const mapStateToProps = (state, ownProps) => ({
   initialValues: buildInitialValues(getBehandlingVilkarsvurderingsperioder(state)),
   kjonn: getFagsakPerson(state).erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN,
-  tilbakekrevingPerioder: addClassname(behandlingFormValueSelector(TILBAKEKREVING_FORM_NAME)(state, 'tilbakekrevingPerioder')),
+  vilkarsVurdertePerioder: addClassname(behandlingFormValueSelector(TILBAKEKREVING_FORM_NAME)(state, 'vilkarsVurdertePerioder')),
   behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
   onSubmit: values => ownProps.submitCallback(transformValues(values)),
 });

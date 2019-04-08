@@ -124,6 +124,7 @@ export class BpTimelinePanel extends Component {
       formName,
       fieldNameToStoreDetailInfo,
       hovedsokerKjonnKode,
+      isTilbakekreving,
     } = this.props;
     const { selectedItem } = this.state;
     const childWithProps = selectedItem ? React.cloneElement(children, {
@@ -141,6 +142,7 @@ export class BpTimelinePanel extends Component {
           selectPeriodCallback={this.selectHandler}
           openPeriodInfo={this.openPeriodInfo}
           hovedsokerKjonnKode={hovedsokerKjonnKode}
+          isTilbakekreving={isTilbakekreving}
         />
         {selectedItem && (
           <BpTimelineData
@@ -175,6 +177,11 @@ BpTimelinePanel.propTypes = {
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
+  isTilbakekreving: PropTypes.bool,
+};
+
+BpTimelinePanel.defaultProps = {
+  isTilbakekreving: false,
 };
 
 export default BpTimelinePanel;
