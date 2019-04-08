@@ -29,6 +29,7 @@ const KunYtelseBesteberegningImpl = ({
   isAksjonspunktClosed,
   erBesteberegning,
   brukersAndelFieldArrayName,
+  skalViseInntektstabell,
 }) => (
   <div>
     <RadioGroupField
@@ -64,6 +65,8 @@ const KunYtelseBesteberegningImpl = ({
           )
           }
         </Row>
+        {skalViseInntektstabell
+        && (
         <Row>
           <Column xs="12">
             <FieldArray
@@ -73,6 +76,8 @@ const KunYtelseBesteberegningImpl = ({
             />
           </Column>
         </Row>
+)
+        }
       </ArrowBox>
     )
   }
@@ -84,10 +89,12 @@ KunYtelseBesteberegningImpl.propTypes = {
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   brukersAndelFieldArrayName: PropTypes.string.isRequired,
   erBesteberegning: PropTypes.bool,
+  skalViseInntektstabell: PropTypes.bool,
 };
 
 KunYtelseBesteberegningImpl.defaultProps = {
   erBesteberegning: undefined,
+  skalViseInntektstabell: true,
 };
 
 KunYtelseBesteberegningImpl.buildInitialValues = kunYtelse => ({ [besteberegningField]: kunYtelse.erBesteberegning });

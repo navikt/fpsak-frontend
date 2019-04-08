@@ -1,6 +1,7 @@
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import organisasjonstyper from '@fpsak-frontend/kodeverk/src/organisasjonstype';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { lonnsendringField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
   import { erNyoppstartetFLField }
@@ -161,6 +162,9 @@ const erAndelKunstigArbeidsforhold = (andel, beregningsgrunnlag) => {
   return lagtTilAvBruker !== undefined;
 };
 
+// Kun Ytelse
+const harKunYtelse = faktaOmBeregning => faktaOmBeregning.faktaOmBeregningTilfeller
+.find(({ kode }) => kode === faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE) !== undefined;
 
 export const skalKunneOverstigeRapportertInntekt = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => {
   if (erDagpenger(andel) && andel.harPeriodeAarsakGraderingEllerRefusjon) {
@@ -201,7 +205,8 @@ export const skalKunneOverstyreBeregningsgrunnlag = (values, faktaOmBeregning, b
 // Skal redigere inntekt
 
 export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregningsgrunnlag) => andel => andel.harPeriodeAarsakGraderingEllerRefusjon === true
-|| skalKunneOverstyreBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag)(andel);
+|| skalKunneOverstyreBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag)(andel)
+|| harKunYtelse(faktaOmBeregning);
 
 export const skalRedigereInntektSelector = createSelector([getFormValuesForBeregning, getFaktaOmBeregning, getBeregningsgrunnlag], skalRedigereInntektForAndel);
 

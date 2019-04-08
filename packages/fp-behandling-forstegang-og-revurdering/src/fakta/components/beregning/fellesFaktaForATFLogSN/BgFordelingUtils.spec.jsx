@@ -7,6 +7,7 @@ import { lonnsendringField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
 import { erNyoppstartetFLField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/NyoppstartetFLForm';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import {
   setArbeidsforholdInitialValues,
   setGenerellAndelsinfo,
@@ -166,7 +167,6 @@ describe('<BgFordelingUtils>', () => {
     expect(readOnlyFastsattBelop).to.equal(formatCurrencyNoKr(fordelingForrigeBehandling));
   });
 
-
   it('skal returnere tom streng om ingen andeler i arbeid', () => {
     const andelIArbeid = settAndelIArbeid([]);
     expect(andelIArbeid).to.equal('');
@@ -290,6 +290,7 @@ describe('<BgFordelingUtils>', () => {
   };
 
   const faktaOmBeregning = {
+    faktaOmBeregningTilfeller: [],
     vurderMottarYtelse: {
       erFrilans: true,
       frilansMottarYtelse: null,
@@ -413,6 +414,20 @@ describe('<BgFordelingUtils>', () => {
     };
     const skalRedigereInntekt = skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag)(andelFieldValue);
     expect(skalRedigereInntekt).to.equal(false);
+  });
+
+
+  it('skal redigere inntekt for kun ytelse', () => {
+    const brukersAndel = {
+      andelsnr: 1,
+      aktivitetStatus: 'BA',
+    };
+    const fakta = {
+      ...faktaOmBeregning,
+      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE }],
+    };
+    const skalRedigereInntekt = skalRedigereInntektForAndel(values, fakta, beregningsgrunnlag)(brukersAndel);
+    expect(skalRedigereInntekt).to.equal(true);
   });
 
   it('skal ikkje redigere inntekt for arbeidstakerandel med inntektsmelding i samme org som frilans', () => {

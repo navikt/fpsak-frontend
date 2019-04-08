@@ -22,6 +22,7 @@ const KunYtelsePanel = ({
   readOnly,
   skalSjekkeBesteberegning,
   isAksjonspunktClosed,
+  skalViseInntektstabell,
 }) => (
   <div>
     {skalSjekkeBesteberegning
@@ -30,10 +31,11 @@ const KunYtelsePanel = ({
         readOnly={readOnly}
         isAksjonspunktClosed={isAksjonspunktClosed}
         brukersAndelFieldArrayName={brukersAndelFieldArrayName}
+        skalViseInntektstabell={skalViseInntektstabell}
       />
     )
     }
-    {!skalSjekkeBesteberegning
+    {!skalSjekkeBesteberegning && skalViseInntektstabell
     && (
       <KunYtelseUtenBesteberegningPanel
         readOnly={readOnly}
@@ -48,6 +50,11 @@ KunYtelsePanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   skalSjekkeBesteberegning: PropTypes.bool.isRequired,
+  skalViseInntektstabell: PropTypes.bool,
+};
+
+KunYtelsePanel.defaultProps = {
+  skalViseInntektstabell: true,
 };
 
 KunYtelsePanel.buildInitialValues = (kunYtelse) => {
