@@ -157,7 +157,8 @@ export class UttakTimeLineData extends Component {
         andrePeriode.aktiviteter[index].weeks = formValues.gradertTrekkdager && !(period.days || period.weeks)
           ? Math.trunc((faktiskaTrekkdagerGradert - forstePeriodeAntalDagar) / 5) : Math.trunc((totalSetDays - forstePeriodeAntalDagar) / 5);
         andrePeriode.aktiviteter[index].days = formValues.gradertTrekkdager && !(period.days || period.weeks)
-          ? Math.round(((faktiskaTrekkdagerGradert - forstePeriodeAntalDagar) % 5) * 10) / 10 : Math.round(((totalSetDays - forstePeriodeAntalDagar) % 5) * 10) / 10;
+          ? Math.round(((faktiskaTrekkdagerGradert - forstePeriodeAntalDagar) % 5) * 10) / 10
+          : Math.round(((totalSetDays - forstePeriodeAntalDagar) % 5) * 10) / 10;
         forstePeriode.aktiviteter[index].trekkdager = forstePeriodeAntalDagar;
         andrePeriode.aktiviteter[index].trekkdager = (andrePeriode.aktiviteter[index].weeks * 5)
           + andrePeriode.aktiviteter[index].days;

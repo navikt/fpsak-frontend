@@ -12,15 +12,15 @@ import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidTyp
 import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/src/uttakArbeidTypeCodes';
 import {
   minValue,
-   maxValue,
-    hasValidInteger,
-     maxLength,
-      required,
-       hasValidDecimal,
-        notDash,
-         lagVisningsNavn,
-         noMoreThanZeroIfRejectedAndNotUtsettelse,
-    hasValidOneDecimal,
+  maxValue,
+  hasValidInteger,
+  maxLength,
+  required,
+  hasValidDecimal,
+  notDash,
+  lagVisningsNavn,
+  noMoreThanZeroIfRejectedAndNotUtsettelse,
+  hasValidOneDecimal,
 } from '@fpsak-frontend/utils';
 import styles from './renderUttakTable.less';
 
@@ -146,6 +146,10 @@ export const RenderUttakTableImpl = ({
                       readOnly={readOnly}
                       bredde="XS"
                       validate={[required, hasValidOneDecimal, maxLength3]}
+                      parse={(value) => {
+                        const parsedValue = parseFloat(value * 10) / 10;
+                        return Number.isNaN(parsedValue) ? value : parsedValue;
+                      }}
 
                     />
                   </Column>
