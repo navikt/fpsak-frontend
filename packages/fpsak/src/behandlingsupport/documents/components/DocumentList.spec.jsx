@@ -11,7 +11,7 @@ describe('<DocumentList>', () => {
       journalpostId: '1',
       dokumentId: '1',
       tittel: 'Terminbekreftelse',
-      tidspunkt: '0405198632231',
+      tidspunkt2: '0405198632231',
       kommunikasjonsretning: 'INN',
     };
 
@@ -19,7 +19,7 @@ describe('<DocumentList>', () => {
       journalpostId: '2',
       dokumentId: '2',
       tittel: 'Førstegangssøknad',
-      tidspunkt: '0405198632231',
+      tidspunkt2: '0405198632231',
       kommunikasjonsretning: 'UT',
     };
 
