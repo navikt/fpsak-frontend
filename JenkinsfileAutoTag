@@ -1,12 +1,13 @@
-node('DOCKER3') {
+node('DOCKER2') {
     def tagName=''
    stage('Checkout Tags') { // checkout only tags.
-      checkout([$class: 'GitSCM', branches: [[name: '*/tags/*']],
-      doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [],
-      userRemoteConfigs: [[refspec: '+refs/tags/*:refs/remotes/origin/tags/*',
-      url: 'https://github.com/navikt/fpsak-frontend.git']]])
-      tagName=sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').toString().trim()
+      checkout scm
+      sh(script: 'git fetch --tags')
+      tagName=sh(returnStdout: true, script: 'git describe --tags `git rev-list --tags --max-count=1`').toString().trim()
       echo "Tag to be deployed $tagName"
+      
+      sh(script: 'git checkout $tagName')
+      sh(script: 'git log --oneline -n10')
    }
    stage('Build and Push'){
       sh 'PATH=$PATH:/usr/local/lib/node/nodejs/bin:/opt/yarn-v1.12.3/bin; yarn install --ignore-scripts'
