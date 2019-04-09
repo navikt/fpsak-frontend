@@ -84,6 +84,7 @@ export const setArbeidsforholdInitialValues = andel => ({
   arbeidsperiodeFom: andel.arbeidsforhold ? andel.arbeidsforhold.startdato : '',
   arbeidsperiodeTom: andel.arbeidsforhold && andel.arbeidsforhold.opphoersdato !== null
     ? andel.arbeidsforhold.opphoersdato : '',
+  arbeidsforholdType: andel.arbeidsforholdType,
 });
 
 export const setGenerellAndelsinfo = andel => ({
@@ -99,17 +100,23 @@ export const setGenerellAndelsinfo = andel => ({
 const listeInneholderAndel = (liste, field) => (liste ? liste.find(element => element.andelsnr === field.andelsnr
 || element.andelsnr === field.andelsnrRef) : undefined);
 
-const erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon = (field, faktaOmBeregning) => {
+export const erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon = (field, faktaOmBeregning) => {
   const andelIListe = listeInneholderAndel(faktaOmBeregning
     .arbeidstakerOgFrilanserISammeOrganisasjonListe, field);
   return andelIListe && (andelIListe.inntektPrMnd === null || andelIListe.inntektPrMnd === undefined);
 };
 
+
 // Aktivitetstatus
 
-const erArbeidstaker = field => field.aktivitetStatus === aktivitetStatus.ARBEIDSTAKER;
+const erArbeidstaker = field => (field.aktivitetStatus && (field.aktivitetStatus === aktivitetStatus.ARBEIDSTAKER
+  || field.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER));
 
-const erFrilanser = field => field.aktivitetStatus === aktivitetStatus.FRILANSER;
+const erFrilanser = field => (field.aktivitetStatus && (field.aktivitetStatus === aktivitetStatus.FRILANSER
+  || field.aktivitetStatus.kode === aktivitetStatus.FRILANSER));
+
+const erDagpenger = field => (field.aktivitetStatus && (field.aktivitetStatus === aktivitetStatus.DAGPENGER
+  || field.aktivitetStatus.kode === aktivitetStatus.DAGPENGER));
 
 // Nyoppstartet frilanser
 
@@ -131,7 +138,7 @@ const erATUtenInntektsmeldingMedLonnsendring = (field, values, faktaOmBeregning)
 
 // AT og FL i samme organisasjon
 
-const andelErStatusFLOgHarATISammeOrg = (field, faktaOmBeregning) => faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe
+export const andelErStatusFLOgHarATISammeOrg = (field, faktaOmBeregning) => faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe
 && erFrilanser(field);
 
 const andelErStatusATUtenInntektsmeldingOgHarFLISammeOrg = (field, faktaOmBeregning) => faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe
@@ -154,14 +161,14 @@ const erAndelKunstigArbeidsforhold = (andel, beregningsgrunnlag) => {
 };
 
 
-export const skalKunneOverstyreBeregningsgrunnlag = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => {
+export const skalKunneOverstigeRapportertInntekt = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => {
+  if (erDagpenger(andel) && andel.harPeriodeAarsakGraderingEllerRefusjon) {
+    return true;
+  }
   if (skalHaBesteberegning(values)) {
     return true;
   }
   if (sokerMottarYtelseForAndel(values, andel, faktaOmBeregning, beregningsgrunnlag)) {
-    return true;
-  }
-  if (erNyoppstartetFrilanser(andel, values)) {
     return true;
   }
   if (erATUtenInntektsmeldingMedLonnsendring(andel, values, faktaOmBeregning)) {
@@ -174,6 +181,16 @@ export const skalKunneOverstyreBeregningsgrunnlag = (values, faktaOmBeregning, b
     return true;
   }
   if (erAndelKunstigArbeidsforhold(andel, beregningsgrunnlag)) {
+    return true;
+  }
+  return false;
+};
+
+export const skalKunneOverstyreBeregningsgrunnlag = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => {
+  if (skalKunneOverstigeRapportertInntekt(values, faktaOmBeregning, beregningsgrunnlag)(andel)) {
+    return true;
+  }
+  if (erNyoppstartetFrilanser(andel, values)) {
     return true;
   }
   return false;
@@ -227,9 +244,9 @@ export const skalRedigereInntektskategoriForAndel = (values, beregningsgrunnlag)
 export const skalRedigereInntektskategoriSelector = createSelector([getFormValuesForBeregning, getBeregningsgrunnlag], skalRedigereInntektskategoriForAndel);
 
 export const mapToBelop = skalRedigereInntekt => (andel) => {
-  const { fastsattBeløp, readOnlyBelop } = andel;
+  const { fastsattBelop, readOnlyBelop } = andel;
   if (!skalRedigereInntekt || skalRedigereInntekt(andel)) {
-    return fastsattBeløp ? removeSpacesFromNumber(fastsattBeløp) : 0;
+    return fastsattBelop ? removeSpacesFromNumber(fastsattBelop) : 0;
   }
   return readOnlyBelop ? removeSpacesFromNumber(readOnlyBelop) : 0;
 };

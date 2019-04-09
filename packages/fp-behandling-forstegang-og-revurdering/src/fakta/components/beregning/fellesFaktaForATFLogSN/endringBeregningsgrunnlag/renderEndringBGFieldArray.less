@@ -16,7 +16,7 @@
   height: @removeBtnSize;
   margin-top: 20px;
   padding: 0;
-  vertical-align: top;
+  vertical-align: baseline;
   width: @removeBtnSize;
 }
 
@@ -124,7 +124,7 @@
 }
 
 .inntektTable > thead > tr > td:last-child {
-  text-align: right;
+  text-align: left;
 }
 
 .inntektTable > tbody > tr > td {
@@ -136,8 +136,9 @@
   padding-left: 0;
 }
 
-.inntektTable > tbody > tr > td:last-child {
+.inntektTable > tbody > tr > td:not(:first-child) {
   text-align: right;
+  vertical-align: baseline;
 }
 
 .inntektTable > tbody > tr > td:not(:first-child) > div {

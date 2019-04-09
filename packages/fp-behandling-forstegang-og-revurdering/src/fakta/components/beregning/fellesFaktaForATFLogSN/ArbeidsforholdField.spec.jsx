@@ -11,7 +11,7 @@ const andelField = {
   nyAndel: false,
   andel: 'Sopra Steria AS (233647823)',
   andelsnr: 1,
-  fastsattBeløp: '0',
+  fastsattBelop: '0',
   lagtTilAvSaksbehandler: false,
   inntektskategori: 'ARBEIDSTAKER',
 };

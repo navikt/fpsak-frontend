@@ -48,9 +48,9 @@ export const transformValuesForKunYtelse = (values, kunYtelse, endringBGPerioder
   return {};
 };
 
-export const getKunYtelseValidation = (values, kunYtelse, endringBgPerioder, aktivertePaneler) => {
+export const getKunYtelseValidation = (values, kunYtelse, endringBgPerioder, aktivertePaneler, skjaeringstidspunktBeregning) => {
   if (harKunYtelseOgEndretBeregningsgrunnlag(aktivertePaneler)) {
-    return KunYtelseTilkommetArbeidPanel.validate(values, aktivertePaneler, kunYtelse, endringBgPerioder);
+    return KunYtelseTilkommetArbeidPanel.validate(values, aktivertePaneler, kunYtelse, endringBgPerioder, skjaeringstidspunktBeregning);
   }
   if (aktivertePaneler.includes(FASTSETT_BG_KUN_YTELSE)) {
     return KunYtelsePanel.validate(values, aktivertePaneler, kunYtelse);

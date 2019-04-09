@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import {
   EndringBeregningsgrunnlagForm, getFieldNameKey, finnFastsattIForstePeriode,
   mapTilFastsatteVerdier, mapAndel, finnRedigerteAndeler, shouldBeSubmitted, lagPeriodeForSubmit,
@@ -6,10 +7,12 @@ import {
 } from './EndringBeregningsgrunnlagForm';
 
 const skalOverstyreBg = () => true;
+const skalValidereMotRapportert = () => true;
+const stpBeregning = '2019-01-01';
 
 const andel1 = {
   andelsnr: 1,
-  fastsattBeløp: null,
+  fastsattBelop: null,
   readOnlyBelop: '10 000',
   skalRedigereInntekt: true,
   harPeriodeAarsakGraderingEllerRefusjon: true,
@@ -19,11 +22,12 @@ const andel1 = {
   lagtTilAvSaksbehandler: false,
   arbeidsforholdId: null,
   andel: 'Sopra Steria AS (2342342348)',
+  aktivitetStatus: aktivitetStatuser.ARBEIDSTAKER,
 };
 
 const andel2 = {
   andelsnr: 2,
-  fastsattBeløp: '20 000',
+  fastsattBelop: '20 000',
   readOnlyBelop: '10 000',
   skalRedigereInntekt: true,
   harPeriodeAarsakGraderingEllerRefusjon: true,
@@ -34,6 +38,7 @@ const andel2 = {
   lagtTilAvSaksbehandler: false,
   arbeidsforholdId: 'ri4j3f34rt3144',
   andel: 'Sopra Steria AS (2342342348)',
+  aktivitetStatus: aktivitetStatuser.ARBEIDSTAKER,
 };
 
 describe('<EndringBeregningsgrunnlagForm>', () => {
@@ -42,7 +47,8 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     const endringBGPerioder = [];
     const faktaOmBeregning = {};
     const beregningsgrunnlag = {};
-    const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag, skalOverstyreBg);
+    const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag,
+      skalOverstyreBg, stpBeregning, skalValidereMotRapportert);
     expect(errors).to.be.empty;
   });
 
@@ -51,8 +57,9 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     values[getFieldNameKey(0)] = [andel1, andel2];
     const endringBGPerioder = [{ fom: '2018-01-01', tom: null }];
     const faktaOmBeregning = {};
-    const beregningsgrunnlag = {};
-    const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag, skalOverstyreBg);
+    const beregningsgrunnlag = { beregningsgrunnlagPeriode: [{ beregningsgrunnlagPrStatusOgAndel: [] }] };
+    const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag,
+      skalOverstyreBg, stpBeregning, skalValidereMotRapportert);
     expect(errors[getFieldNameKey(0)]).to.not.be.empty;
   });
 
@@ -62,8 +69,9 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     values[getFieldNameKey(1)] = [andel1, andel2];
     const endringBGPerioder = [{ fom: '2018-01-01', tom: '2018-07-01' }, { fom: '2018-07-02', tom: null }];
     const faktaOmBeregning = {};
-    const beregningsgrunnlag = {};
-    const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag, skalOverstyreBg);
+    const beregningsgrunnlag = { beregningsgrunnlagPeriode: [{ beregningsgrunnlagPrStatusOgAndel: [] }] };
+    const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag,
+      skalOverstyreBg, stpBeregning, skalValidereMotRapportert);
     expect(errors[getFieldNameKey(0)]).to.not.be.empty;
     expect(errors[getFieldNameKey(1)]).to.not.be.empty;
   });
@@ -74,12 +82,12 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     values[getFieldNameKey(0)] = [andel1, andel2];
     const andel1IAndrePeriode = {
       ...andel1,
-      fastsattBeløp: 50000,
+      fastsattBelop: 50000,
       readOnlyBelop: 50000,
     };
     const andel2IAndrePeriode = {
       ...andel2,
-      fastsattBeløp: 50000,
+      fastsattBelop: 50000,
       readOnlyBelop: 50000,
     };
     values[getFieldNameKey(1)] = [andel1IAndrePeriode, andel2IAndrePeriode];
@@ -92,17 +100,17 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     const values = {};
     const andel1LocalCopy = {
       ...andel1,
-      fastsattBeløp: 30000,
+      fastsattBelop: 30000,
     };
     values[getFieldNameKey(0)] = [andel1LocalCopy, andel2];
     const andel1IAndrePeriode = {
       ...andel1,
-      fastsattBeløp: 50000,
+      fastsattBelop: 50000,
       readOnlyBelop: 50000,
     };
     const andel2IAndrePeriode = {
       ...andel2,
-      fastsattBeløp: 50000,
+      fastsattBelop: 50000,
       readOnlyBelop: 50000,
     };
     values[getFieldNameKey(1)] = [andel1IAndrePeriode, andel2IAndrePeriode];
@@ -207,7 +215,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     ];
     const values = {};
     values[getFieldNameKey(0)] = [{ ...andel1, skalRedigereInntekt: false }, { ...andel2, skalRedigereInntekt: false }];
-    values[getFieldNameKey(1)] = [{ ...andel1, skalRedigereInntekt: false, fastsattBeløp: '10 000' }, andel2];
+    values[getFieldNameKey(1)] = [{ ...andel1, skalRedigereInntekt: false, fastsattBelop: '10 000' }, andel2];
     const perioder = transformPerioder(endringBGPerioder, values, false);
     expect(perioder.length).to.equal(1);
     expect(perioder[0].fom).to.equal('2018-06-02');

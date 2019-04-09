@@ -8,10 +8,10 @@ describe('<KunYtelsePanel>', () => {
   it('skal transform values riktig', () => {
     const kunYtelse = { fodendeKvinneMedDP: false };
     const andel1 = {
-      andelsnr: 1, nyAndel: false, lagtTilAvSaksbehandler: false, fastsattBeløp: '10 000', inntektskategori: inntektskategorier.ARBEIDSTAKER,
+      andelsnr: 1, nyAndel: false, lagtTilAvSaksbehandler: false, fastsattBelop: '10 000', inntektskategori: inntektskategorier.ARBEIDSTAKER,
     };
     const andel2 = {
-      andelsnr: null, nyAndel: true, lagtTilAvSaksbehandler: true, fastsattBeløp: '20 000', inntektskategori: inntektskategorier.SJØMANN,
+      andelsnr: null, nyAndel: true, lagtTilAvSaksbehandler: true, fastsattBelop: '20 000', inntektskategori: inntektskategorier.SJØMANN,
     };
     const values = {};
     values[`${brukersAndelFieldArrayName}`] = [andel1, andel2];
@@ -56,14 +56,14 @@ describe('<KunYtelsePanel>', () => {
     expect(andeler[0].andelsnr).to.equal(1);
     expect(andeler[0].andel).to.equal('Brukers andel');
     expect(andeler[0].aktivitetStatus).to.equal('BA');
-    expect(andeler[0].fastsattBeløp).to.equal('');
+    expect(andeler[0].fastsattBelop).to.equal('');
     expect(andeler[0].inntektskategori).to.equal('');
     expect(andeler[0].nyAndel).to.equal(false);
     expect(andeler[0].lagtTilAvSaksbehandler).to.equal(false);
 
     expect(andeler[1].andelsnr).to.equal(2);
     expect(andeler[1].andel).to.equal('Brukers andel');
-    expect(andeler[1].fastsattBeløp).to.equal('10 000');
+    expect(andeler[1].fastsattBelop).to.equal('10 000');
     expect(andeler[1].aktivitetStatus).to.equal('BA');
     expect(andeler[1].inntektskategori).to.equal(inntektskategorier.ARBEIDSTAKER);
     expect(andeler[1].nyAndel).to.equal(false);
@@ -96,14 +96,14 @@ describe('<KunYtelsePanel>', () => {
     expect(andeler[0].andelsnr).to.equal(1);
     expect(andeler[0].andel).to.equal('Brukers andel');
     expect(andeler[0].aktivitetStatus).to.equal('BA');
-    expect(andeler[0].fastsattBeløp).to.equal('');
+    expect(andeler[0].fastsattBelop).to.equal('');
     expect(andeler[0].inntektskategori).to.equal('');
     expect(andeler[0].nyAndel).to.equal(false);
     expect(andeler[0].lagtTilAvSaksbehandler).to.equal(false);
 
     expect(andeler[1].andelsnr).to.equal(2);
     expect(andeler[1].andel).to.equal('Brukers andel');
-    expect(andeler[1].fastsattBeløp).to.equal('10 000');
+    expect(andeler[1].fastsattBelop).to.equal('10 000');
     expect(andeler[1].aktivitetStatus).to.equal('BA');
     expect(andeler[1].inntektskategori).to.equal(inntektskategorier.ARBEIDSTAKER);
     expect(andeler[1].nyAndel).to.equal(false);
@@ -139,14 +139,14 @@ describe('<KunYtelsePanel>', () => {
     expect(andeler[0].andelsnr).to.equal(1);
     expect(andeler[0].andel).to.equal('Brukers andel');
     expect(andeler[0].aktivitetStatus).to.equal('BA');
-    expect(andeler[0].fastsattBeløp).to.equal('');
+    expect(andeler[0].fastsattBelop).to.equal('');
     expect(andeler[0].inntektskategori).to.equal('');
     expect(andeler[0].nyAndel).to.equal(false);
     expect(andeler[0].lagtTilAvSaksbehandler).to.equal(false);
 
     expect(andeler[1].andelsnr).to.equal(2);
     expect(andeler[1].andel).to.equal('Brukers andel');
-    expect(andeler[1].fastsattBeløp).to.equal('10 000');
+    expect(andeler[1].fastsattBelop).to.equal('10 000');
     expect(andeler[1].aktivitetStatus).to.equal('BA');
     expect(andeler[1].inntektskategori).to.equal(inntektskategorier.ARBEIDSTAKER);
     expect(andeler[1].nyAndel).to.equal(false);

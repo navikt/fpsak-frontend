@@ -57,7 +57,7 @@ KunYtelsePanel.buildInitialValues = (kunYtelse) => {
   const initialValues = {
     [brukersAndelFieldArrayName]: kunYtelse.andeler.map(andel => ({
       ...setGenerellAndelsinfo(andel),
-      fastsattBeløp: andel.fastsattBelopPrMnd || andel.fastsattBelopPrMnd === 0
+      fastsattBelop: andel.fastsattBelopPrMnd || andel.fastsattBelopPrMnd === 0
         ? formatCurrencyNoKr(andel.fastsattBelopPrMnd) : '',
     })),
   };
@@ -71,14 +71,14 @@ KunYtelsePanel.buildInitialValues = (kunYtelse) => {
 };
 
 KunYtelsePanel.summerFordeling = values => (values[brukersAndelFieldArrayName]
-  .map(({ fastsattBeløp }) => (fastsattBeløp ? removeSpacesFromNumber(fastsattBeløp) : 0))
-  .reduce((sum, fastsattBeløp) => sum + fastsattBeløp, 0));
+  .map(({ fastsattBelop }) => (fastsattBelop ? removeSpacesFromNumber(fastsattBelop) : 0))
+  .reduce((sum, fastsattBelop) => sum + fastsattBelop, 0));
 
 KunYtelsePanel.transformValues = (values, kunYtelse) => ({
   kunYtelseFordeling: {
     andeler: values[brukersAndelFieldArrayName].map(fieldValue => ({
       andelsnr: fieldValue.andelsnr,
-      fastsattBeløp: removeSpacesFromNumber(fieldValue.fastsattBeløp),
+      fastsattBeløp: removeSpacesFromNumber(fieldValue.fastsattBelop),
       inntektskategori: fieldValue.inntektskategori,
       nyAndel: fieldValue.nyAndel,
       lagtTilAvSaksbehandler: fieldValue.lagtTilAvSaksbehandler,

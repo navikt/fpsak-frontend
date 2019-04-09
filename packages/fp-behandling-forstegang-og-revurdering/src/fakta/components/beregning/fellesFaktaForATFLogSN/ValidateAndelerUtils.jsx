@@ -1,9 +1,11 @@
+import React from 'react';
 import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
 import { aktivitetstatusTilAndeltypeMap } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import {
   required, formatCurrencyNoKr, createVisningsnavnForAktivitet, removeSpacesFromNumber,
 } from '@fpsak-frontend/utils';
 import { mapToBelop } from './BgFordelingUtils';
+import TotalbelopPrArbeidsgiverError, { lagTotalInntektArbeidsforholdList } from './TotalbelopPrArbeidsgiverError';
 
 export const compareAndeler = (andel1, andel2) => {
   if (andel1.andelsinfo === andel2.andelsinfo) {
@@ -107,15 +109,20 @@ export const validateTotalRefusjonPrArbeidsforhold = (andelList) => {
   return null;
 };
 
-export const skalIkkjeVereHogareEnnInntektmeldingMessage = () => ([{ id: 'BeregningInfoPanel.EndringBG.Validation.IkkeHøyereEnnInntektsmelding' }]);
+export const skalIkkjeVereHogareEnnRegisterMessage = () => ([{ id: 'BeregningInfoPanel.EndringBG.Validation.IkkeHøyereEnnRapportertInntekt' }]);
+export const skalIkkjeVereHogareEnnInntektsmeldingMessage = () => ([{ id: 'BeregningInfoPanel.EndringBG.Validation.IkkeHøyereEnnInntektsmelding' }]);
 
-const skalIkkjeVereHogareEnnInntektmelding = (
-  value, belopFraInntektsmelding,
-) => ((value > Math.round(belopFraInntektsmelding)) ? skalIkkjeVereHogareEnnInntektmeldingMessage() : undefined);
+const skalIkkjeVereHogareEnn = (
+  value, registerInntekt, errorMessage,
+) => ((value > Math.round(registerInntekt)) ? errorMessage() : undefined);
 
 export const skalVereLikFordelingMessage = fordeling => (
   [{ id: 'BeregningInfoPanel.EndringBG.Validation.LikFordeling' },
     { fordeling }]);
+
+export const tomErrorMessage = () => (
+  [{ id: ' ' }]);
+
 
 export const likFordeling = (
   value, fordeling,
@@ -129,35 +136,78 @@ export const validateRefusjonsbelop = (refusjonskrav, skalKunneEndreRefusjon) =>
   return refusjonskravError;
 };
 
-export const validateFastsattBelop = (fastsattBelop, belopFraInntektsmelding) => {
-  let error = required(fastsattBelop);
-  if (belopFraInntektsmelding !== null && belopFraInntektsmelding !== undefined) {
-    error = error || skalIkkjeVereHogareEnnInntektmelding(Number(removeSpacesFromNumber(fastsattBelop)), belopFraInntektsmelding);
+export const validateFastsattBelopEqualOrBelowRegister = (fastsattBelop, registerInntekt) => {
+  if (registerInntekt !== null && registerInntekt !== undefined) {
+    return skalIkkjeVereHogareEnn(Number(fastsattBelop),
+    registerInntekt, tomErrorMessage);
   }
-  return error;
+  return null;
+};
+
+export const validateAgainstRegisterOrInntektsmelding = (andelFieldValues, totalInntektArbeidsforholdList) => {
+  const arbeidsforholdBelopValues = totalInntektArbeidsforholdList.find(({ key }) => key === createVisningsnavnForAktivitet(andelFieldValues));
+  if (arbeidsforholdBelopValues) {
+    const arbeidsforholdTotalFastsatt = arbeidsforholdBelopValues.fastsattBelop;
+    const { beforeStp } = arbeidsforholdBelopValues;
+    if (!beforeStp) {
+      const arbeidsforholdInntektsmeldingBelop = arbeidsforholdBelopValues.belopFraInntektsmelding;
+      return validateFastsattBelopEqualOrBelowRegister(arbeidsforholdTotalFastsatt, arbeidsforholdInntektsmeldingBelop);
+    }
+    const arbeidsforholdRegister = arbeidsforholdBelopValues.registerInntekt;
+      return validateFastsattBelopEqualOrBelowRegister(arbeidsforholdTotalFastsatt, arbeidsforholdRegister);
+  }
+  return null;
+};
+
+
+export const validateFastsattBelop = (andelFieldValues, totalInntektArbeidsforholdList, skalValidereMotRapportert) => {
+  const fastsattBelopError = required(andelFieldValues.fastsattBelop);
+  if (!fastsattBelopError && skalValidereMotRapportert(andelFieldValues)) {
+    return validateAgainstRegisterOrInntektsmelding(andelFieldValues, totalInntektArbeidsforholdList);
+  }
+  return fastsattBelopError;
 };
 
 export const hasFieldErrors = fieldErrors => (fieldErrors.refusjonskrav || fieldErrors.andel
-  || fieldErrors.fastsattBeløp || fieldErrors.inntektskategori);
+  || fieldErrors.fastsattBelop || fieldErrors.inntektskategori);
 
 
-export const validateAndelFields = (andelFieldValues) => {
+export const validateAndelFields = (andelFieldValues, totalInntektArbeidsforholdList, skalValidereMotRapportert) => {
   const {
-    refusjonskrav, fastsattBeløp, belopFraInntektsmelding, skalKunneEndreRefusjon,
+    refusjonskrav, skalKunneEndreRefusjon,
     andel, inntektskategori,
   } = andelFieldValues;
   const fieldErrors = {};
-  fieldErrors.refusjonskrav = validateRefusjonsbelop(
-    refusjonskrav, skalKunneEndreRefusjon,
-  );
-  fieldErrors.fastsattBeløp = validateFastsattBelop(fastsattBeløp, belopFraInntektsmelding);
+  fieldErrors.refusjonskrav = validateRefusjonsbelop(refusjonskrav, skalKunneEndreRefusjon);
+  fieldErrors.fastsattBelop = validateFastsattBelop(andelFieldValues, totalInntektArbeidsforholdList, skalValidereMotRapportert);
   fieldErrors.andel = required(andel);
   fieldErrors.inntektskategori = required(inntektskategori);
   return hasFieldErrors(fieldErrors) ? fieldErrors : null;
 };
 
+
+export const validateAndeler = (values, skalRedigereInntekt, skjaeringstidspunktBeregning, skalValidereMotRapportert) => {
+  const totalInntektPrArbeidsforhold = lagTotalInntektArbeidsforholdList(values, skjaeringstidspunktBeregning);
+  const arrayErrors = values.map((andelFieldValues) => {
+    if (!skalRedigereInntekt(andelFieldValues)) {
+        return null;
+    }
+    return validateAndelFields(andelFieldValues, totalInntektPrArbeidsforhold, skalValidereMotRapportert);
+  });
+  if (arrayErrors.some(errors => errors !== null)) {
+    if (arrayErrors.some(errors => errors && errors.fastsattBelop && errors.fastsattBelop[0].id === tomErrorMessage()[0].id)) {
+      return {
+        ...arrayErrors,
+        _error: <TotalbelopPrArbeidsgiverError totalInntektPrArbeidsforhold={totalInntektPrArbeidsforhold} />,
+      };
+    }
+    return arrayErrors;
+  }
+  return null;
+};
+
 export const validateSumFastsattBelop = (values, fordeling, skalRedigereInntekt) => {
   const sumFastsattBelop = values.map(mapToBelop(skalRedigereInntekt))
-    .reduce((sum, fastsattBeløp) => sum + fastsattBeløp, 0);
+    .reduce((sum, fastsattBelop) => sum + fastsattBelop, 0);
   return fordeling !== undefined && fordeling !== null ? likFordeling(sumFastsattBelop, fordeling) : null;
 };

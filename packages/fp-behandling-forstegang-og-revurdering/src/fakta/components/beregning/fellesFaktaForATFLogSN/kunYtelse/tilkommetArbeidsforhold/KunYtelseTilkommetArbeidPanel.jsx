@@ -12,7 +12,7 @@ import EndringBeregningsgrunnlagForm, { getFieldNameKey }
 import {
   settAndelIArbeid, setGenerellAndelsinfo, setArbeidsforholdInitialValues, settFastsattBelop,
 } from '../../BgFordelingUtils';
-import { validateAndelFields, validateSumFastsattBelop, validateUlikeAndeler } from '../../ValidateAndelerUtils';
+import { validateAndeler, validateSumFastsattBelop, validateUlikeAndeler } from '../../ValidateAndelerUtils';
 import { getFormValuesForBeregning } from '../../../BeregningFormUtils';
 
 const harKunYtelseOgEndretBeregningsgrunnlag = aktivertePaneler => (aktivertePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE)
@@ -74,7 +74,7 @@ const buildPeriodeInitialValues = (periode, isRevurdering) => {
         andelIArbeid: settAndelIArbeid(andel.andelIArbeid),
         fordelingForrigeBehandling: isRevurdering && (andel.fordelingForrigeBehandling || andel.fordelingForrigeBehandling === 0)
           ? formatCurrencyNoKr(andel.fordelingForrigeBehandling) : null,
-        fastsattBeløp: settFastsattBelop(periode.harPeriodeAarsakGraderingEllerRefusjon,
+        fastsattBelop: settFastsattBelop(periode.harPeriodeAarsakGraderingEllerRefusjon,
           andel.beregnetPrMnd, andel.fastsattForrige, andel.fordelingForrigeBehandling, andel.fastsattAvSaksbehandler),
         refusjonskrav: andel.refusjonskrav && !erBrukersAndel ? formatCurrencyNoKr(andel.refusjonskrav) : '0',
         skalKunneEndreRefusjon: periode.skalKunneEndreRefusjon && !erBrukersAndel ? periode.skalKunneEndreRefusjon : false,
@@ -121,14 +121,14 @@ KunYtelseTilkommetArbeidPanel.transformValues = (values, kunYtelse, endringBGPer
   ...KunYtelsePanel.transformValues(values, kunYtelse),
 });
 
-const validatePeriode = (periode, sumFordelingKunYtelse) => {
-  const arrayErrors = periode.map((andelFieldValues) => {
-    if (!andelFieldValues.harPeriodeAarsakGraderingEllerRefusjon) {
-      return null;
-    }
-    return validateAndelFields(andelFieldValues);
-  });
-  if (arrayErrors.some(errors => errors !== null)) {
+
+const skalRedigereInntekt = andel => andel.harPeriodeAarsakGraderingEllerRefusjon;
+
+const skalValidereMotRapportert = () => true;
+
+const validatePeriode = (periode, sumFordelingKunYtelse, skjaeringstidspunktBeregning) => {
+  const arrayErrors = validateAndeler(periode, skalRedigereInntekt, skjaeringstidspunktBeregning, skalValidereMotRapportert);
+  if (arrayErrors != null) {
     return arrayErrors;
   }
   if (isArrayEmpty(periode)) {
@@ -145,7 +145,7 @@ const validatePeriode = (periode, sumFordelingKunYtelse) => {
   return null;
 };
 
-KunYtelseTilkommetArbeidPanel.validate = (values, aktivertePaneler, kunYtelse, endringBGPerioder) => {
+KunYtelseTilkommetArbeidPanel.validate = (values, aktivertePaneler, kunYtelse, endringBGPerioder, skjaeringstidspunktBeregning) => {
   if (!values || !harKunYtelseOgEndretBeregningsgrunnlag(aktivertePaneler)) {
     return null;
   }
@@ -154,7 +154,7 @@ KunYtelseTilkommetArbeidPanel.validate = (values, aktivertePaneler, kunYtelse, e
   const sumFordeling = KunYtelsePanel.summerFordeling(values);
   const endringErrors = {};
   for (let i = 0; i < perioderEtterForste.length; i += 1) {
-    endringErrors[getFieldNameKey(i)] = validatePeriode(values[getFieldNameKey(i)], sumFordeling);
+    endringErrors[getFieldNameKey(i)] = validatePeriode(values[getFieldNameKey(i)], sumFordeling, skjaeringstidspunktBeregning);
   }
   return {
     ...kunYtelseErrors,
