@@ -5,9 +5,8 @@ import sinon from 'sinon';
 import { TextAreaField } from '@fpsak-frontend/form';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import aktivtArbeidsforholdHandling from '@fpsak-frontend/kodeverk/src/aktivtArbeidsforholdHandling';
 import PersonNyttEllerErstattArbeidsforholdPanel from './PersonNyttEllerErstattArbeidsforholdPanel';
-import { PersonArbeidsforholdDetailForm, showBegrunnelse } from './PersonArbeidsforholdDetailForm';
+import { PersonArbeidsforholdDetailForm } from './PersonArbeidsforholdDetailForm';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 
 describe('<PersonArbeidsforholdDetailForm>', () => {
@@ -29,28 +28,6 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
     erstatterArbeidsforholdId: undefined,
     tilVurdering: true,
   };
-  it('skal vise tekstfelt for begrunnelse når form er dirty', () => {
-    const wrapper = shallowWithIntl(<PersonArbeidsforholdDetailForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      cancelArbeidsforhold={sinon.spy()}
-      skalBrukeUendretForhold
-      isErstattArbeidsforhold
-      hasReceivedInntektsmelding
-      harErstattetEttEllerFlere
-      readOnly={false}
-      vurderOmSkalErstattes={false}
-      aktivtArbeidsforholdTillatUtenIM={false}
-      arbeidsforhold={arbeidsforhold}
-      skalKunneLeggeTilNyeArbeidsforhold={false}
-      initialValues={{
-        begrunnelse: '',
-        replaceOptions: [],
-      }}
-      showBegrunnelse
-    />);
-    expect(wrapper.find(TextAreaField)).has.length(1);
-  });
   it('skal ikke vise tekstfelt for begrunnelse når form ikke er dirty og begrunnelse ikke har verdi', () => {
     const wrapper = shallowWithIntl(<PersonArbeidsforholdDetailForm
       {...reduxFormPropsMock}
@@ -202,36 +179,6 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       }}
     />);
     expect(wrapper.find('[id="PersonArbeidsforholdDetailForm.ErstatteTidligereArbeidsforhod"]')).has.length(0);
-  });
-  it('skal ikke vise begrunnelsefelt når form ikke er dirty og begrunnelse ikke er lagret fra før', () => {
-    const dirty = false;
-    const values = {};
-    const initialValues = {};
-    expect(showBegrunnelse.resultFunc(dirty, values, initialValues)).is.false;
-  });
-  it('skal ikke vise begrunnelsefelt når form er dirty og en har valgt å ikke fortsette uten inntektsmelding', () => {
-    const dirty = true;
-    const values = {
-      aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.AVSLA_YTELSE,
-    };
-    const initialValues = {};
-    expect(showBegrunnelse.resultFunc(dirty, values, initialValues)).is.false;
-  });
-  it('skal vise begrunnelsefelt når form er dirty og en har valgt å fortsette uten inntektsmelding', () => {
-    const dirty = true;
-    const values = {
-      fortsettBehandlingUtenInntektsmelding: true,
-    };
-    const initialValues = {};
-    expect(showBegrunnelse.resultFunc(dirty, values, initialValues)).is.true;
-  });
-  it('skal vise begrunnelsefelt når form ikke er dirty men beskrivelse finnes', () => {
-    const dirty = false;
-    const values = {};
-    const initialValues = {
-      begrunnelse: 'test',
-    };
-    expect(showBegrunnelse.resultFunc(dirty, values, initialValues)).is.true;
   });
   it('skal vise LeggTilArbeidsforholdFelter ', () => {
     const wrapper = shallowWithIntl(<PersonArbeidsforholdDetailForm

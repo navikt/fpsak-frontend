@@ -30,7 +30,6 @@ export const arbeidsforholdPropType = PropTypes.shape({
     navn: PropTypes.string,
   }),
   mottattDatoInntektsmelding: PropTypes.string,
-  beskrivelse: PropTypes.string,
   stillingsprosent: PropTypes.number,
   brukArbeidsforholdet: PropTypes.bool,
   fortsettBehandlingUtenInntektsmelding: PropTypes.bool,
@@ -50,6 +49,7 @@ export const arbeidsforholdPropType = PropTypes.shape({
   lagtTilAvSaksbehandler: PropTypes.bool,
   inntektIkkeMedTilBeregningsgrunnlaget: PropTypes.bool,
   skjaeringstidspunkt: PropTypes.string,
+  begrunnelse: PropTypes.string,
 });
 
 export default arbeidsforholdPropType;

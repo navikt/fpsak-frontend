@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
@@ -9,32 +8,25 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
-import BehandlingFormFieldCleaner from 'behandlingForstegangOgRevurdering/src/BehandlingFormFieldCleaner';
 import {
   behandlingForm,
   behandlingFormValueSelector,
-  getBehandlingFormValues,
-  getBehandlingFormInitialValues,
-  isBehandlingFormDirty,
 } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
-import { TextAreaField } from '@fpsak-frontend/form';
 import {
   ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 
-import aktivtArbeidsforholdHandling from '@fpsak-frontend/kodeverk/src/aktivtArbeidsforholdHandling';
 import PersonAksjonspunktText from './PersonAksjonspunktText';
 import PersonNyttEllerErstattArbeidsforholdPanel from './PersonNyttEllerErstattArbeidsforholdPanel';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
+import ArbeidsforholdBegrunnelse from './ArbeidsforholdBegrunnelse';
+
 // ----------------------------------------------------------------------------------
 // VARIABLES
 // ----------------------------------------------------------------------------------
 
 export const PERSON_ARBEIDSFORHOLD_DETAIL_FORM = 'PersonArbeidsforholdDetailForm';
-
-const maxLength400 = maxLength(400);
 
 // ----------------------------------------------------------------------------------
 // METHODS
@@ -57,7 +49,6 @@ export const PersonArbeidsforholdDetailForm = ({
   hasReceivedInntektsmelding,
   harErstattetEttEllerFlere,
   readOnly,
-  showBegrunnelse,
   vurderOmSkalErstattes,
   aktivtArbeidsforholdTillatUtenIM,
   arbeidsforhold,
@@ -90,17 +81,10 @@ export const PersonArbeidsforholdDetailForm = ({
           skalBrukeUendretForhold={skalBrukeUendretForhold}
         />
         <VerticalSpacer twentyPx />
-        <BehandlingFormFieldCleaner formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM} fieldNames={['beskrivelse']}>
-          {showBegrunnelse && (
-            <TextAreaField
-              name="beskrivelse"
-              label={{ id: 'PersonArbeidsforholdDetailForm.Begrunnelse' }}
-              validate={[required, maxLength400, hasValidText]}
-              maxLength={400}
-              readOnly={readOnly}
-            />
-          )}
-        </BehandlingFormFieldCleaner>
+        <ArbeidsforholdBegrunnelse
+          readOnly={readOnly}
+          formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
+        />
         { (formProps.initialValues.tilVurdering || formProps.initialValues.erEndret) && (
           <FlexContainer fluid>
             <FlexRow>
@@ -156,23 +140,9 @@ PersonArbeidsforholdDetailForm.defaultProps = {
   skalBrukeUendretForhold: undefined,
 };
 
-export const showBegrunnelse = createSelector(
-  [
-    isBehandlingFormDirty(PERSON_ARBEIDSFORHOLD_DETAIL_FORM),
-    getBehandlingFormValues(PERSON_ARBEIDSFORHOLD_DETAIL_FORM),
-    getBehandlingFormInitialValues(PERSON_ARBEIDSFORHOLD_DETAIL_FORM),
-  ],
-  (dirty, values, initialValues = {}) => (
-    dirty
-      ? values.aktivtArbeidsforholdHandlingField !== aktivtArbeidsforholdHandling.AVSLA_YTELSE
-      : !!initialValues.begrunnelse && initialValues.begrunnelse !== ''
-  ),
-);
-
 const mapStateToProps = (state, ownProps) => ({
   initialValues: ownProps.arbeidsforhold,
   readOnly: ownProps.readOnly || (!ownProps.arbeidsforhold.tilVurdering && !ownProps.arbeidsforhold.erEndret),
-  showBegrunnelse: showBegrunnelse(state),
   hasReceivedInntektsmelding: !!behandlingFormValueSelector(PERSON_ARBEIDSFORHOLD_DETAIL_FORM)(state, 'mottattDatoInntektsmelding'),
   vurderOmSkalErstattes: !!behandlingFormValueSelector(PERSON_ARBEIDSFORHOLD_DETAIL_FORM)(state, 'vurderOmSkalErstattes'),
   harErstattetEttEllerFlere: behandlingFormValueSelector(PERSON_ARBEIDSFORHOLD_DETAIL_FORM)(state, 'harErstattetEttEllerFlere'),
