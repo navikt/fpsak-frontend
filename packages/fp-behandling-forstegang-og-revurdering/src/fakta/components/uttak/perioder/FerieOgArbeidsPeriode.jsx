@@ -36,6 +36,7 @@ export const FerieOgArbeidsPeriode = ({
   behandlingStatusKode,
   skalViseResultat,
   førsteUttaksdato,
+  originalResultat,
   oppholdArsak,
   ...formProps
 }) => {
@@ -49,7 +50,7 @@ export const FerieOgArbeidsPeriode = ({
   };
 
   const withGradering = arbeidstidprosent !== null && arbeidstidprosent !== undefined && arbeidstidprosent > 0;
-  const periodeOkDisabled = !bekreftet;
+  const periodeOkDisabled = !bekreftet || originalResultat.kode !== uttakPeriodeVurdering.PERIODE_OK;
 
   return (
     <div>
@@ -149,6 +150,7 @@ FerieOgArbeidsPeriode.propTypes = {
   oppholdArsak: PropTypes.shape(),
   behandlingStatusKode: PropTypes.string,
   førsteUttaksdato: PropTypes.string,
+  originalResultat: PropTypes.shape().isRequired,
 };
 
 FerieOgArbeidsPeriode.defaultProps = {
@@ -178,6 +180,7 @@ const mapToStateToProps = (state, ownProps) => {
   const resultat = behandlingFormValueSelector(formName)(state, 'resultat');
   const førsteUttaksdato = behandlingFormValueSelector('UttakFaktaForm')(state, 'førsteUttaksdato');
   const initialResultat = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.resultat`);
+  const originalResultat = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.originalResultat`) || {};
   const begrunnelse = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.begrunnelse`);
   const saksebehandlersBegrunnelse = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.saksebehandlersBegrunnelse`);
   const oppholdArsak = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.oppholdÅrsak`);
@@ -195,6 +198,7 @@ const mapToStateToProps = (state, ownProps) => {
     skalViseResultat,
     oppholdArsak,
     førsteUttaksdato,
+    originalResultat,
     initialValues: {
       begrunnelse: begrunnelse || saksebehandlersBegrunnelse,
       id: ownProps.id,

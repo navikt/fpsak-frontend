@@ -272,7 +272,11 @@ export class UttakPerioder extends PureComponent {
 
   updatePeriode(values) {
     const {
-      behandlingFormPrefix, perioder, inntektsmeldinger, uttakPeriodeVurderingTyper, reduxFormChange: formChange,
+      behandlingFormPrefix,
+      perioder,
+      inntektsmeldinger,
+      uttakPeriodeVurderingTyper,
+      reduxFormChange: formChange,
     } = this.props;
     const { inntektsmeldingInfo } = this.state;
     const {
@@ -305,6 +309,7 @@ export class UttakPerioder extends PureComponent {
       isFromSøknad: updatedPeriode.isFromSøknad,
       updated: true,
       bekreftet: updatedPeriode.bekreftet,
+      originalResultat: updatedPeriode.resultat,
     };
 
     if (kontoType) {
