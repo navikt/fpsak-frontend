@@ -1107,6 +1107,9 @@
   "BeregningInfoPanel.FormAlternativ.Nei": "Nei",
   "BeregningInfoPanel.NyIArbeidslivet.SelvstendigNaeringsdrivende": "Søker er selvstendig næringsdrivende. Ble søker yrkesaktiv i løpet av de siste tre årene?",
 
+  "AvklarAktivitetPanel.ButtonText": "Oppdater",
+  "VurderAktiviteterTabell.FullAAPKombinert.Overskrift": "Søker har full AAP (200%) sammen med andre aktiviteter. Skjæringstidspunkt for beregning {skjaeringstidspunkt}",
+  
   "BeregningInfoPanel.VurderOgFastsettATFL.ErSokerNyoppstartetFL": "Startet søker som frilanser i løpet av de siste tre månedene?",
   "BeregningInfoPanel.VurderOgFastsettATFL.ATFLSammeOrgUtenIM": "Søker er arbeidstaker og frilanser i samme virksomhet og det er ikke mottatt inntektsmelding(er).",
   "BeregningInfoPanel.VurderOgFastsettATFL.ATFLSammeOrg": "Søker er arbeidstaker og frilanser i samme virksomhet.",
@@ -1167,6 +1170,13 @@
 
   "AvklareAktiviteter.AvklarVentelonnVartpenger": "Har søker inntekt fra ventelønn eller vartpenger?",
   "AvklareAktiviteter.IkkeImplementert": "Denne funksjonaliteten er ikke implementert enda.",
+  "AvklareAktiviteter.AksjonspunktHelpText.VurderAktiviteter": "Vurder hvilke aktiviteter som skal benyttes i beregning.",
+  "VurderAktiviteterTabell.Header.Aktivitet": "Aktivitet",
+  "VurderAktiviteterTabell.Header.Periode": "Periode",
+  "VurderAktiviteterTabell.Header.Benytt": "Benytt",
+  "VurderAktiviteterTabell.Header.IkkeBenytt": "Ikke benytt",
+
+  "BeregningInfoPanel.AksjonspunktHelpText.VurderAktiviteter": "Vurder hvilke aktiviteter som skal benyttes i beregning.",
 
   "BeregningInfoPanel.KunstigArbeidsforhold.FastsettKunstigArbeidsforhold": "Det finnes ikke registerdata for arbeidsforholdet og det er ikke mottatt inntektsmelding. Fastsett månedsinntekt for arbeidsforholdet",
 
@@ -1215,6 +1225,7 @@
   "Totrinnskontroll.ikkeGodkjent": "må vurderes på nytt",
   "ToTrinnsForm.Godkjent": "Godkjent",
   "ToTrinnsForm.LøstAksjonspunkt": "<b>Løst aksjonspunkt:</b> Kontroller endrede opplysninger og faglige vurderinger",
+  "ToTrinnsForm.Beregning.AvklarAktiviteter": "Det er vurdert hvilke aktiviteter som skal benyttes i beregning.",
   "ToTrinnsForm.Beregning.VarigEndring": "Det er fastsatt varig endret/nyoppstartet næring.",
   "ToTrinnsForm.Beregning.IkkeVarigEndring": "Det er fastsatt at det ikke er varig endring i næring.",
   "ToTrinnsForm.Beregning.InntektFastsatt": "Inntekt er skjønnsmessig fastsatt.",
@@ -1967,6 +1978,7 @@
   "HistorikkEndretFeltVerdiType.Arbeidsavklaringspenger": "Arbeidsavklaringspenger",
   "HistorikkEndretFeltVerdiType.Arbeidstaker": "Arbeidstaker",
   "HistorikkEndretFeltVerdiType.ArbeidstakerUtenFeriepenger": "Arbeidstaker uten feriepenger",
+  "HistorikkEndretFeltVerdiType.Benytt": "Benytt",
   "HistorikkEndretFeltVerdiType.BosattINorge": "Søker er bosatt i Norge",
   "HistorikkEndretFeltVerdiType.Dagmamma": "Selvstendig næringsdrivende - Dagmamma",
   "HistorikkEndretFeltVerdiType.Dagpenger": "Dagpenger",
@@ -2022,6 +2034,7 @@
   "HistorikkEndretFeltVerdiType.TidsbegrensetArbeidsforhold": "tidsbegrenset",
   "HistorikkEndretFeltVerdiType.IkkeTidsbegrensetArbeidsforhold": "ikke tidsbegrenset",
   "HistorikkEndretFeltVerdiType.NyIArbeidslivet": "ny i arbeidslivet",
+  "HistorikkEndretFeltVerdiType.IkkeBenytt": "Ikke benytt",
   "HistorikkEndretFeltVerdiType.IkkeNyIArbeidslivet": "ikke ny i arbeidslivet",
   "HistorikkEndretFeltVerdiType.Innvilget": "Oppfylt",
   "HistorikkEndretFeltVerdiType.GyldigUtsettelsePgaFerie": "Gyldig utsettelse pga ferie",

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
@@ -13,7 +13,9 @@ import {
 import FaktaForATFLOgSNPanel, {
   transformValuesFaktaForATFLOgSN,
   getBuildInitialValuesFaktaForATFLOgSN, getValidationFaktaForATFLOgSN,
+  getHelpTextsFaktaForATFLOgSN,
 } from './FaktaForATFLOgSNPanel';
+
 import { getFormInitialValuesForBeregning } from '../BeregningFormUtils';
 
 const {
@@ -38,13 +40,15 @@ export const VurderFaktaBeregningPanelImpl = ({
   submittable,
   hasBegrunnelse,
   isDirty,
+  helpText,
 }) => (
   <ElementWrapper>
+    <AksjonspunktHelpText isAksjonspunktOpen={!isAksjonspunktClosed}>{helpText}</AksjonspunktHelpText>
+    <VerticalSpacer twentyPx />
     <FaktaForATFLOgSNPanel
       readOnly={readOnly}
       isAksjonspunktClosed={isAksjonspunktClosed}
     />
-    <VerticalSpacer eightPx />
     <VerticalSpacer twentyPx />
     <FaktaBegrunnelseTextField
       name={BEGRUNNELSE_FAKTA_TILFELLER_NAME}
@@ -62,6 +66,7 @@ VurderFaktaBeregningPanelImpl.propTypes = {
   isDirty: PropTypes.bool.isRequired,
   hasBegrunnelse: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
+  helpText: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 // /// TRANSFORM VALUES METHODS ///////
@@ -121,6 +126,7 @@ const mapStateToProps = (state) => {
   const hasBegrunnelse = initialValues
   && !!initialValues[BEGRUNNELSE_FAKTA_TILFELLER_NAME];
   return {
+    helpText: getHelpTextsFaktaForATFLOgSN(state),
     isAksjonspunktClosed,
     hasBegrunnelse,
   };

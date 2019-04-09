@@ -24,6 +24,10 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'ARBEIDSTAKER',
     verdiId: 'HistorikkEndretFeltVerdiType.Arbeidstaker',
   },
+  BENYTT: {
+    kode: 'BENYTT',
+    verdiId: 'HistorikkEndretFeltVerdiType.Benytt',
+  },
   BOSA: {
     kode: 'BOSA',
     verdiId: 'HistorikkEndretFeltVerdiType.PersonstatusBOSA',
@@ -79,6 +83,10 @@ const historikkEndretFeltVerdiTypeCodes = {
   HENLEGG_BEHANDLING: {
     kode: 'HENLEGG_BEHANDLING',
     verdiId: 'HistorikkEndretFeltVerdiType.HenleggBehandling',
+  },
+  IKKE_BENYTT: {
+    kode: 'IKKE_BENYTT',
+    verdiId: 'HistorikkEndretFeltVerdiType.IkkeBenytt',
   },
   IKKE_BOSATT_I_NORGE: {
     kode: 'IKKE_BOSATT_I_NORGE',
