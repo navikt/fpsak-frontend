@@ -19,7 +19,7 @@ import styles from './uaktsomhetReduksjonAvBelopFormPanel.less';
 const andeler = ['30', '50', '70'];
 
 const UaktsomhetReduksjonAvBelopFormPanel = ({
-  grunnerTilReduksjon,
+  harGrunnerTilReduksjon,
   readOnly,
   handletUaktsomhetGrad,
   harMerEnnEnYtelse,
@@ -33,7 +33,7 @@ const UaktsomhetReduksjonAvBelopFormPanel = ({
         <VerticalSpacer eightPx />
         <RadioGroupField
           validate={[required]}
-          name="grunnerTilReduksjon"
+          name="harGrunnerTilReduksjon"
           readOnly={readOnly}
         >
           <RadioOption label={<FormattedMessage id="UaktsomhetGradFormPanel.Ja" />} value />
@@ -41,7 +41,7 @@ const UaktsomhetReduksjonAvBelopFormPanel = ({
         </RadioGroupField>
       </Column>
     </Row>
-    {grunnerTilReduksjon && (
+    {harGrunnerTilReduksjon && (
       <ArrowBox alignOffset={24}>
         <Row>
           <Column md="6">
@@ -64,7 +64,7 @@ const UaktsomhetReduksjonAvBelopFormPanel = ({
             )}
             {harMerEnnEnYtelse && (
               <InputField
-                name="beloepSomSkalTilbakekreves"
+                name="belopSomSkalTilbakekreves"
                 label={<FormattedMessage id="UaktsomhetGradFormPanel.AngiBelopSomSkalTilbakekreves" />}
                 validate={[required]}
                 readOnly={readOnly}
@@ -82,7 +82,7 @@ const UaktsomhetReduksjonAvBelopFormPanel = ({
         </Row>
       </ArrowBox>
     )}
-    {grunnerTilReduksjon === false && (
+    {harGrunnerTilReduksjon === false && (
       <ArrowBox alignOffset={90}>
         <Row>
           <Column md="6">
@@ -113,7 +113,7 @@ const UaktsomhetReduksjonAvBelopFormPanel = ({
 );
 
 UaktsomhetReduksjonAvBelopFormPanel.propTypes = {
-  grunnerTilReduksjon: PropTypes.bool,
+  harGrunnerTilReduksjon: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
   handletUaktsomhetGrad: PropTypes.string.isRequired,
   harMerEnnEnYtelse: PropTypes.bool.isRequired,
@@ -121,7 +121,7 @@ UaktsomhetReduksjonAvBelopFormPanel.propTypes = {
 };
 
 UaktsomhetReduksjonAvBelopFormPanel.defaultProps = {
-  grunnerTilReduksjon: undefined,
+  harGrunnerTilReduksjon: undefined,
 };
 
 export default UaktsomhetReduksjonAvBelopFormPanel;

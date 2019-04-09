@@ -76,7 +76,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
     const {
       valgtVilkarResultatType,
       handletUaktsomhetGrad,
-      grunnerTilReduksjon,
+      harGrunnerTilReduksjon,
       cancelSelectedActivity,
       selectedItemData,
       readOnly,
@@ -138,7 +138,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
                     )}
                     {valgtVilkarResultatType !== vilkarResultat.GOD_TRO && (
                       <UaktsomhetFormPanel
-                        grunnerTilReduksjon={grunnerTilReduksjon}
+                        harGrunnerTilReduksjon={harGrunnerTilReduksjon}
                         readOnly={readOnly}
                         handletUaktsomhetGrad={handletUaktsomhetGrad}
                         resetFields={this.resetFields}
@@ -185,9 +185,12 @@ const formatAktsomhetData = (aktsomhet, sarligGrunnTyper) => {
     return { };
   }
   return {
-    grunnerTilReduksjon: aktsomhet.grunnerTilReduksjon,
+    harGrunnerTilReduksjon: aktsomhet.harGrunnerTilReduksjon,
     skalDetTilleggesRenter: aktsomhet.skalDetTilleggesRenter,
     sarligGrunner: sarligGrunnTyper.reduce((acc, type) => (aktsomhet[type.kode] ? acc.concat(type.kode) : acc), []),
+    andelSomTilbakekreves: aktsomhet.andelSomTilbakekreves,
+    belopSomSkalTilbakekreves: aktsomhet.belopSomSkalTilbakekreves,
+    tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhet.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
   };
 };
 
@@ -243,8 +246,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     valgtVilkarResultatType,
     handletUaktsomhetGrad,
-    grunnerTilReduksjon: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(
-      state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.grunnerTilReduksjon`,
+    harGrunnerTilReduksjon: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(
+      state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.harGrunnerTilReduksjon`,
     ),
     annet: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.${sarligGrunn.ANNET}`),
     erBelopetIBehold: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.erBelopetIBehold`),

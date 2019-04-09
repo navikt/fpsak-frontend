@@ -27,7 +27,7 @@ const UaktsomhetFormPanel = ({
   resetFields,
   resetAnnetTextField,
   handletUaktsomhetGrad,
-  grunnerTilReduksjon,
+  harGrunnerTilReduksjon,
   annet,
   aktsomhetTyper,
   sarligGrunnTyper,
@@ -66,13 +66,13 @@ const UaktsomhetFormPanel = ({
     { uaktsomhetCodes.includes(handletUaktsomhetGrad) && (
       <FormSection name={handletUaktsomhetGrad} key={handletUaktsomhetGrad}>
         <UaktsomhetGradFormPanel
-          grunnerTilReduksjon={grunnerTilReduksjon}
+          harGrunnerTilReduksjon={harGrunnerTilReduksjon}
           readOnly={readOnly}
           handletUaktsomhetGrad={handletUaktsomhetGrad}
           annet={annet}
           resetAnnetTextField={resetAnnetTextField}
           sarligGrunnTyper={sarligGrunnTyper}
-          harMerEnnEnYtelse={antallYtelser > 1}
+          harMerEnnEnYtelse={antallYtelser - 2 > 1}
           feilutbetalingBelop={feilutbetalingBelop}
           erTotalBelopUnder4Rettsgebyr={erTotalBelopUnder4Rettsgebyr}
         />
@@ -85,7 +85,7 @@ UaktsomhetFormPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   resetFields: PropTypes.func.isRequired,
   resetAnnetTextField: PropTypes.func.isRequired,
-  grunnerTilReduksjon: PropTypes.bool,
+  harGrunnerTilReduksjon: PropTypes.bool,
   annet: PropTypes.bool,
   handletUaktsomhetGrad: PropTypes.string,
   antallYtelser: PropTypes.number.isRequired,
@@ -97,7 +97,7 @@ UaktsomhetFormPanel.propTypes = {
 
 UaktsomhetGradFormPanel.defaultProps = {
   annet: false,
-  grunnerTilReduksjon: undefined,
+  harGrunnerTilReduksjon: undefined,
   handletUaktsomhetGrad: undefined,
 };
 

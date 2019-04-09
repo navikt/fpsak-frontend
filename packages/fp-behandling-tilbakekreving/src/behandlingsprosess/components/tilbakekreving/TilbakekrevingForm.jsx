@@ -104,10 +104,16 @@ const getAktsomhetData = (period) => {
   if (period.handletUaktsomhetGrad === aktsomhet.FORSETT) {
     return {};
   }
-  if (period.handletUaktsomhetGrad === aktsomhet.GROVT_UAKTSOM) {
-    return { saerligGrunner: period.sarligGrunner };
-  }
-  return {};
+    return {
+      aktsomhetInfo: {
+        sarligGrunner: period.sarligGrunner,
+        harGrunnerTilReduksjon: period.harGrunnerTilReduksjon,
+        andelTilbakekreves: period.andelSomTilbakekreves,
+        ileggRenter: period.skalDetTilleggesRenter,
+        tilbakekrevesBelop: removeSpacesFromNumber(period.belopSomSkalTilbakekreves),
+        tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: period.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
+      },
+    };
 };
 
 const getVilkarResultatData = (period) => {
@@ -151,7 +157,7 @@ export const buildInitialValues = perioder => ({
     id: index + 1,
     group: 1,
     arsak: periode.årsak.årsak,
-    erTotalBelopUnder4Rettsgebyr: true,
+    erTotalBelopUnder4Rettsgebyr: false,
   })),
 });
 

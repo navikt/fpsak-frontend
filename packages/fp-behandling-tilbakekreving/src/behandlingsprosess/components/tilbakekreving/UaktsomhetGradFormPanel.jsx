@@ -12,7 +12,7 @@ import UaktsomhetSarligeGrunnerFormPanel from './UaktsomhetSarligeGrunnerFormPan
 import aktsomhet from '../../../kodeverk/aktsomhet';
 
 const UaktsomhetGradFormPanel = ({
-  grunnerTilReduksjon,
+  harGrunnerTilReduksjon,
   readOnly,
   handletUaktsomhetGrad,
   annet,
@@ -33,12 +33,12 @@ const UaktsomhetGradFormPanel = ({
             <VerticalSpacer eightPx />
             <RadioGroupField
               validate={[required]}
-              name="tilbakekrevSelvOmBeloepErUnder4Rettsgebyr "
+              name="tilbakekrevSelvOmBeloepErUnder4Rettsgebyr"
               readOnly={readOnly}
             >
               <RadioOption label={<FormattedMessage id="UaktsomhetGradFormPanel.Ja" />} value>
                 <UaktsomhetSarligeGrunnerFormPanel
-                  grunnerTilReduksjon={grunnerTilReduksjon}
+                  harGrunnerTilReduksjon={harGrunnerTilReduksjon}
                   annet={annet}
                   sarligGrunnTyper={sarligGrunnTyper}
                   harMerEnnEnYtelse={harMerEnnEnYtelse}
@@ -58,7 +58,7 @@ const UaktsomhetGradFormPanel = ({
         )}
         {(handletUaktsomhetGrad !== aktsomhet.SIMPEL_UAKTSOM || !erTotalBelopUnder4Rettsgebyr) && (
           <UaktsomhetSarligeGrunnerFormPanel
-            grunnerTilReduksjon={grunnerTilReduksjon}
+            harGrunnerTilReduksjon={harGrunnerTilReduksjon}
             annet={annet}
             sarligGrunnTyper={sarligGrunnTyper}
             harMerEnnEnYtelse={harMerEnnEnYtelse}
@@ -73,7 +73,7 @@ const UaktsomhetGradFormPanel = ({
 );
 
 UaktsomhetGradFormPanel.propTypes = {
-  grunnerTilReduksjon: PropTypes.bool,
+  harGrunnerTilReduksjon: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
   handletUaktsomhetGrad: PropTypes.string.isRequired,
   annet: PropTypes.bool.isRequired,
@@ -84,7 +84,7 @@ UaktsomhetGradFormPanel.propTypes = {
 };
 
 UaktsomhetGradFormPanel.defaultProps = {
-  grunnerTilReduksjon: undefined,
+  harGrunnerTilReduksjon: undefined,
 };
 
 export default UaktsomhetGradFormPanel;

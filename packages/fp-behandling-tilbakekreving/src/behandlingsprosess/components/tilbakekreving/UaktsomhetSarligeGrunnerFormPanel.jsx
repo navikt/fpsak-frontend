@@ -23,7 +23,7 @@ const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 
 const UaktsomhetSarligeGrunnerFormPanel = ({
-  grunnerTilReduksjon,
+  harGrunnerTilReduksjon,
   readOnly,
   handletUaktsomhetGrad,
   annet,
@@ -58,7 +58,7 @@ const UaktsomhetSarligeGrunnerFormPanel = ({
       </Row>
     )}
     <UaktsomhetReduksjonAvBelopFormPanel
-      grunnerTilReduksjon={grunnerTilReduksjon}
+      harGrunnerTilReduksjon={harGrunnerTilReduksjon}
       readOnly={readOnly}
       handletUaktsomhetGrad={handletUaktsomhetGrad}
       harMerEnnEnYtelse={harMerEnnEnYtelse}
@@ -68,7 +68,7 @@ const UaktsomhetSarligeGrunnerFormPanel = ({
 );
 
 UaktsomhetSarligeGrunnerFormPanel.propTypes = {
-  grunnerTilReduksjon: PropTypes.bool,
+  harGrunnerTilReduksjon: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
   handletUaktsomhetGrad: PropTypes.string.isRequired,
   annet: PropTypes.bool.isRequired,
@@ -78,7 +78,7 @@ UaktsomhetSarligeGrunnerFormPanel.propTypes = {
 };
 
 UaktsomhetSarligeGrunnerFormPanel.defaultProps = {
-  grunnerTilReduksjon: undefined,
+  harGrunnerTilReduksjon: undefined,
 };
 
 export default UaktsomhetSarligeGrunnerFormPanel;
