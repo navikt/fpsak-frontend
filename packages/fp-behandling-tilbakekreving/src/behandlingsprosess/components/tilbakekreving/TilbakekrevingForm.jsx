@@ -12,6 +12,7 @@ import {
   FadingPanel, VerticalSpacer, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
 
 import {
   behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, isBehandlingFormDirty,
@@ -112,15 +113,17 @@ const getAktsomhetData = (period) => {
 const getVilkarResultatData = (period) => {
   if (period.valgtVilkarResultatType === vilkarResultat.GOD_TRO) {
     return {
-      vilkaerResultatInfoForGodTro: {
+      vilkarResultatInfo: {
+        '@type': 'godTro',
         begrunnelse: period.godTroBegrunnelse,
-        erBeloepetIBehold: period.erBelopetIBehold,
-        tilbakekrevdBeloep: period.tilbakekrevdBelop,
+        erBelopetIBehold: period.erBelopetIBehold,
+        tilbakekrevesBelop: removeSpacesFromNumber(period.tilbakekrevdBelop),
       },
     };
   }
     return {
-      vilkaerResultatInfoForAnnet: {
+      vilkarResultatInfo: {
+        '@type': 'annet',
         begrunnelse: period.aktsomhetBegrunnelse,
         aktsomhet: period.handletUaktsomhetGrad,
         ...getAktsomhetData(period),
@@ -132,11 +135,12 @@ export const transformValues = (values) => {
   const vilkarsVurdertePerioder = values.vilkarsVurdertePerioder.map(v => ({
     fom: v.fom,
     tom: v.tom,
-    vilkaerResultatType: v.valgtVilkarResultatType,
+    vilkarResultat: v.valgtVilkarResultatType,
     begrunnelse: v.begrunnelse,
     ...getVilkarResultatData(v),
   }));
   return [{
+    kode: tilbakekrevingAksjonspunktCodes.VURDER_TILBAKEKREVING,
     vilkarsVurdertePerioder,
   }];
 };
