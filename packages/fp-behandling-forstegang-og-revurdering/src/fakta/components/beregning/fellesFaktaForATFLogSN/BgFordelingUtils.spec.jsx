@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
+import organisasjonstyper from '@fpsak-frontend/kodeverk/src/organisasjonstype';
 import { lonnsendringField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
 import { erNyoppstartetFLField }
@@ -227,6 +228,24 @@ describe('<BgFordelingUtils>', () => {
     expect(arbeidsforholdIV.arbeidsperiodeTom).to.equal('');
   });
 
+  const andelsnrKunstigArbeid = 241;
+
+  const kunstigArbeidsgiver = {
+    arbeidsgiverNavn: 'Kunstig virksomhet',
+    arbeidsgiverId: '42672364432',
+    startdato: '2017-01-01',
+    opphoersdato: '2018-01-01',
+    organisasjonstype: { kode: organisasjonstyper.KUNSTIG },
+  };
+
+  const kunstigArbeidstakerAndel = {
+    arbeidsforhold: {
+      ...kunstigArbeidsgiver,
+      arbeidsforholdId: null,
+    },
+    andelsnr: andelsnrKunstigArbeid,
+    ...arbeidstakerIkkeFastsatt,
+  };
 
   const arbeidstakerAndel3 = {
     arbeidsforhold: {
@@ -261,7 +280,7 @@ describe('<BgFordelingUtils>', () => {
 
   const beregningsgrunnlag = {
     beregningsgrunnlagPeriode: [{
-      beregningsgrunnlagPrStatusOgAndel: [arbeidstakerAndel1, arbeidstakerAndel3, frilansAndel, arbeidstakerAndel4],
+      beregningsgrunnlagPrStatusOgAndel: [arbeidstakerAndel1, arbeidstakerAndel3, frilansAndel, arbeidstakerAndel4, kunstigArbeidstakerAndel],
     },
     ],
   };
@@ -313,7 +332,20 @@ describe('<BgFordelingUtils>', () => {
     const vals = {
       [besteberegningField]: true,
     };
-    const skalRedigereInntektskategori = skalRedigereInntektskategoriForAndel(vals)(andelFieldValue);
+    const skalRedigereInntektskategori = skalRedigereInntektskategoriForAndel(vals, beregningsgrunnlag)(andelFieldValue);
+    expect(skalRedigereInntektskategori).to.equal(true);
+  });
+
+
+  it('skal redigere inntektskategori for kunstig arbeid', () => {
+    const andelFieldValue = {
+      ...andelValuesUtenInntektsmelding,
+      harPeriodeAarsakGraderingEllerRefusjon: false,
+      ...setArbeidsforholdInitialValues(kunstigArbeidstakerAndel),
+      ...setGenerellAndelsinfo(kunstigArbeidstakerAndel),
+    };
+    const vals = {};
+    const skalRedigereInntektskategori = skalRedigereInntektskategoriForAndel(vals, beregningsgrunnlag)(andelFieldValue);
     expect(skalRedigereInntektskategori).to.equal(true);
   });
 

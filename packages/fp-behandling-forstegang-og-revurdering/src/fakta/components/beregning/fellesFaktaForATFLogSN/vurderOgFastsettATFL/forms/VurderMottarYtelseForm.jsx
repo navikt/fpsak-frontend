@@ -144,7 +144,9 @@ const transformValuesArbeidstakerUtenIM = (values, inntektVerdier, faktaOmBeregn
         const inntektUtenFormat = inntektVerdier.find(field => field.andelsnr === andel.andelsnr).fastsattBelop;
         listeMedFastsatteMaanedsinntekter.push({
           andelsnr: andel.andelsnr,
-          arbeidsinntekt: inntektUtenFormat || inntektUtenFormat === 0 ? removeSpacesFromNumber(inntektUtenFormat) : undefined,
+          fastsatteVerdier: {
+            fastsattBeløp: inntektUtenFormat || inntektUtenFormat === 0 ? removeSpacesFromNumber(inntektUtenFormat) : undefined,
+          },
         });
         fastsatteAndelsnr.push(andel.andelsnr);
       }

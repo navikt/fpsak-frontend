@@ -77,8 +77,13 @@ NyoppstartetFLForm.transformValues = (values, inntektPrMnd, faktaOmBeregning, fa
       vurderNyoppstartetFL: { erNyoppstartetFL: values[erNyoppstartetFLField] },
     });
   }
+  if (fastsatteAndelsnr.includes(frilansField.andelsnr)) {
+    return ({
+      faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL],
+      vurderNyoppstartetFL: { erNyoppstartetFL: values[erNyoppstartetFLField] },
+    });
+  }
   fastsatteAndelsnr.push(frilansField.andelsnr);
-
   const inntekt = {
     fastsettMaanedsinntektFL: { maanedsinntekt: frilansField.fastsattBelop },
   };

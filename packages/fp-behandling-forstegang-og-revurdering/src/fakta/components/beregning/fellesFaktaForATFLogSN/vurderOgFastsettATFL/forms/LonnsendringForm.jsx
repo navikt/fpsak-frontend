@@ -82,17 +82,17 @@ LonnsendringForm.transformValues = (values, inntektVerdier, faktaOmBeregning, fa
       vurdertLonnsendring: { erLønnsendringIBeregningsperioden: values[lonnsendringField] },
     };
   }
-
   const andelerMedLonnsendringFields = inntektVerdier
+    .filter(field => !fastsatteAndelsnr.includes(field.andelsnr) && !fastsatteAndelsnr.includes(field.andelsnrRef))
     .filter(field => faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM
       .find(andel => andel.andelsnr === field.andelsnr || andel.andelsnr === field.andelsnrRef));
-
   andelerMedLonnsendringFields.forEach(field => fastsatteAndelsnr.push(field.andelsnr));
-
   const lonnsendringInntekt = andelerMedLonnsendringFields
     .map(field => ({
       andelsnr: field.andelsnr,
-      arbeidsinntekt: removeSpacesFromNumber(field.fastsattBelop),
+      fastsatteVerdier: {
+        fastsattBeløp: removeSpacesFromNumber(field.fastsattBelop),
+      },
     }));
   return ({
     faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_LONNSENDRING, faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING],

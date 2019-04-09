@@ -1,8 +1,9 @@
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import organisasjonstyper from '@fpsak-frontend/kodeverk/src/organisasjonstype';
 import { lonnsendringField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
-import { erNyoppstartetFLField }
+  import { erNyoppstartetFLField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import { formatCurrencyNoKr, createVisningsnavnForAktivitet, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import {
@@ -143,6 +144,15 @@ const sokerMottarYtelseForAndel = (values, field, faktaOmBeregning, beregningsgr
   return mottarYtelseMap[field.andelsnr] || mottarYtelseMap[field.andelsnrRef];
 };
 
+// Manuelt registrert med handlingstype LAGT_TIL_AV_BRUKER
+const erAndelKunstigArbeidsforhold = (andel, beregningsgrunnlag) => {
+  const firstBgPeriod = beregningsgrunnlag.beregningsgrunnlagPeriode[0];
+  const lagtTilAvBruker = firstBgPeriod.beregningsgrunnlagPrStatusOgAndel.find(a => a.arbeidsforhold
+  && a.arbeidsforhold.arbeidsgiverId === andel.arbeidsgiverId
+  && a.arbeidsforhold.organisasjonstype.kode === organisasjonstyper.KUNSTIG);
+  return lagtTilAvBruker !== undefined;
+};
+
 
 export const skalKunneOverstyreBeregningsgrunnlag = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => {
   if (skalHaBesteberegning(values)) {
@@ -161,6 +171,9 @@ export const skalKunneOverstyreBeregningsgrunnlag = (values, faktaOmBeregning, b
     return true;
   }
   if (andelErStatusATUtenInntektsmeldingOgHarFLISammeOrg(andel, faktaOmBeregning)) {
+    return true;
+  }
+  if (erAndelKunstigArbeidsforhold(andel, beregningsgrunnlag)) {
     return true;
   }
   return false;
@@ -201,14 +214,17 @@ export const skalFastsettInntektForStatus = (inntektFieldArrayName, status) => c
 
 // Skal redigere inntektskategori
 
-export const skalRedigereInntektskategoriForAndel = values => (andel) => {
+export const skalRedigereInntektskategoriForAndel = (values, beregningsgrunnlag) => (andel) => {
   if (skalHaBesteberegning(values)) {
+    return true;
+  }
+  if (erAndelKunstigArbeidsforhold(andel, beregningsgrunnlag)) {
     return true;
   }
   return andel.harPeriodeAarsakGraderingEllerRefusjon === true;
 };
 
-export const skalRedigereInntektskategoriSelector = createSelector([getFormValuesForBeregning], skalRedigereInntektskategoriForAndel);
+export const skalRedigereInntektskategoriSelector = createSelector([getFormValuesForBeregning, getBeregningsgrunnlag], skalRedigereInntektskategoriForAndel);
 
 export const mapToBelop = skalRedigereInntekt => (andel) => {
   const { fastsattBeløp, readOnlyBelop } = andel;
