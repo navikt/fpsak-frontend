@@ -1637,7 +1637,7 @@
   "UttakInfoPanel.FaktaUttak.ForsteUttakDato": "Kontroller manglende uttaksperiode",
   "UttakInfoPanel.FaktaUttak.VurderAnnenForelder": "Vurdering om den andre forelderen har rett til foreldrepenger",
   "UttakInfoPanel.Aksjonspunkt.5070": "Kontakt søker ved behov. Fastsett korrekt og dokumentert søknadsperiode og andel i arbeid.",
-  "UttakInfoPanel.Aksjonspunkt.5081": "Første dato for uttak er {value}. Legg inn manglende søknadsperiode. Kontakt søker ved behov.",
+  "UttakInfoPanel.Aksjonspunkt.5081": "Første dato for uttak er {value}. Rediger søknadsperiodene så de stemmer overens med startdato. Kontakt søker ved behov.",
   "UttakInfoPanel.Aksjonspunkt.5088": "Søker har oppgitt at annen forelder ikke har rett, men annen forelder har uttak av foreldrepenger for samme barn.\nEndre søknadsperiodene under til perioder med kvoter. Ved behov ta kontakt med bruker",
   "UttakInfoPanel.Aksjonspunkt.6070": "Saksbehandler initierer kontroll av søknadsperiodene",
   "UttakInfoPanel.Aksjonspunkt.5086": "Vurder om den andre forelderen har rett til foreldrepenger. Slå opp i relevant fagsystem for å finne informasjon om inntekt.\nDersom den andre forelderen har rett må du endre til riktige kvoter i alle søknadsperiodene.",
