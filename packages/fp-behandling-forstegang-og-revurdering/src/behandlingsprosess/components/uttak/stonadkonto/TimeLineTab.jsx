@@ -27,6 +27,15 @@ const findKorrektLabelForKvote = (stonadtype) => {
   }
 };
 
+const setCss = (aktiv, saldoLength, stonadsKonto) => {
+  if (stonadsKonto.kontoinfo && !stonadsKonto.kontoinfo.gyldigForbruk) {
+    return styles.error;
+  } if (aktiv && saldoLength > 0) {
+    return styles.aktiv;
+  }
+  return styles.inaktiv;
+};
+
 const findAntallUkerOgDager = (kontoinfo) => {
   const modifier = kontoinfo.saldo < 0 ? -1 : 1;
   const justertSaldo = kontoinfo.saldo * modifier;
@@ -44,7 +53,7 @@ const TimeLineTab = ({
   const fordelteDager = findAntallUkerOgDager(stonadskonto.kontoinfo);
   return (
     <div className={styles.tabs}>
-      <li role="presentation" className={(aktiv && stonadskonto.kontoinfo.aktivitetSaldoDtoList.length > 0) ? styles.aktiv : styles.inaktiv}>
+      <li role="presentation" className={setCss(aktiv, stonadskonto.kontoinfo.aktivitetSaldoDtoList.length, stonadskonto)}>
         <button
           role="tab"
           className={styles.tabInner}

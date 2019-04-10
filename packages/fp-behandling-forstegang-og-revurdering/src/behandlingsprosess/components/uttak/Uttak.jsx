@@ -191,6 +191,7 @@ export class UttakImpl extends Component {
     this.skalViseCheckbox = this.skalViseCheckbox.bind(this);
     this.setSelectedDefaultPeriod = this.setSelectedDefaultPeriod.bind(this);
     this.updateStonadskontoer = this.updateStonadskontoer.bind(this);
+    this.ikkeGykdigForbruk = this.ikkeGykdigForbruk.bind(this);
 
     this.state = {
       selectedItem: null,
@@ -365,14 +366,34 @@ export class UttakImpl extends Component {
       && !manuellOverstyring;
   }
 
+  ikkeGykdigForbruk(stonadskontoer) {
+    let validationError = false;
+    if (stonadskontoer && stonadskontoer.stonadskontoer) {
+      const kontoer = stonadskontoer.stonadskontoer;
+      for (const key in kontoer) {
+        const kontoerObj = kontoer[key];
+        if (!kontoerObj.gyldigForbruk) {
+          validationError = true;
+          break;
+        }
+      }
+      return validationError;
+    }
+  }
+
   isConfirmButtonDisabled() {
     const {
-      uttaksresultatActivity, readOnly, submitting, isDirty,
+      uttaksresultatActivity, readOnly, submitting, isDirty, stonadskonto,
     } = this.props;
 
     if (uttaksresultatActivity.every(isInnvilget)) {
       return false;
     }
+
+    if (this.ikkeGykdigForbruk(stonadskonto)) {
+      return true;
+    }
+
     if (!(uttaksresultatActivity.some(ac => Object.prototype.hasOwnProperty.call(ac, 'erOppfylt')))) {
       return true;
     }
