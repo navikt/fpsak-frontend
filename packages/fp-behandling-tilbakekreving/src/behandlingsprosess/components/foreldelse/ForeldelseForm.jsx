@@ -149,12 +149,16 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-const mapStateToProps = (state, initialProps) => ({
-  initialValues: buildInitalValues(initialProps.selectedItemData),
-  onSubmit: values => initialProps.updateActivity(transformValues(initialProps.selectedItemData, values)),
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const initialValues = buildInitalValues(ownProps.selectedItemData);
+  const onSubmit = values => ownProps.updateActivity(transformValues(ownProps.selectedItemData, values));
+  return () => ({
+    initialValues,
+    onSubmit,
+  });
+};
 
-const ForeldelseForm = connect(mapStateToProps, mapDispatchToProps)(injectIntl(behandlingForm({
+const ForeldelseForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
   form: 'foreldelsesresultatActivity',
   enableReinitialize: true,
 })(ForeldelseFormImpl)));

@@ -177,6 +177,7 @@ export const buildInitialValues = (perioder, rettsgebyr) => {
   };
 };
 
+// TODO (TOR) Endre til selector
 const addClassname = (perioder) => {
   if (!perioder) {
     return undefined;
@@ -203,14 +204,16 @@ const validateForm = (values) => {
   return errors;
 };
 
-
-const mapStateToProps = (state, ownProps) => ({
-  initialValues: buildInitialValues(getBehandlingVilkarsvurderingsperioder(state), getBehandlingVilkarsvurderingsRettsgebyr(state)),
-  kjonn: getFagsakPerson(state).erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN,
-  vilkarsVurdertePerioder: addClassname(behandlingFormValueSelector(TILBAKEKREVING_FORM_NAME)(state, 'vilkarsVurdertePerioder')),
-  behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
-  onSubmit: values => ownProps.submitCallback(transformValues(values)),
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const submitCallback = values => ownProps.submitCallback(transformValues(values));
+  return state => ({
+    initialValues: buildInitialValues(getBehandlingVilkarsvurderingsperioder(state), getBehandlingVilkarsvurderingsRettsgebyr(state)),
+    kjonn: getFagsakPerson(state).erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN,
+    vilkarsVurdertePerioder: addClassname(behandlingFormValueSelector(TILBAKEKREVING_FORM_NAME)(state, 'vilkarsVurdertePerioder')),
+    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+    onSubmit: submitCallback,
+  });
+};
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
@@ -219,7 +222,7 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-const TilbakekrevingForm = connect(mapStateToProps, mapDispatchToProps)(injectIntl(behandlingForm({
+const TilbakekrevingForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
   form: TILBAKEKREVING_FORM_NAME,
   validate: validateForm,
 })(TilbakekrevingFormImpl)));

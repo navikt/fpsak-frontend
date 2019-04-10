@@ -313,16 +313,17 @@ const transformValues = (values, aksjonspunkter, årsaker, initialPerioder) => {
       }) : [],
     }];
 };
-const mapStateToProps = (state, initialProps) => {
-  const feilutbetaling = getFeilutbetalingFakta(state).behandlingFakta;
-  const årsaker = getFeilutbetalingAarsaker(state);
-  return {
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const feilutbetaling = getFeilutbetalingFakta(initialState).behandlingFakta;
+  const årsaker = getFeilutbetalingAarsaker(initialState);
+  const submitCallback = values => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter, årsaker, feilutbetaling.perioder));
+  return state => ({
     feilutbetaling,
     årsaker,
-    initialValues: buildInitalValues(feilutbetaling.perioder, initialProps.aksjonspunkter),
+    initialValues: buildInitalValues(feilutbetaling.perioder, ownProps.aksjonspunkter),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
-    onSubmit: values => initialProps.submitCallback(transformValues(values, initialProps.aksjonspunkter, årsaker, feilutbetaling.perioder)),
-  };
+    onSubmit: submitCallback,
+  });
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -338,4 +339,4 @@ const feilutbetalingForm = injectIntl(behandlingForm({
 
 const FeilutbetalingInfoPanel = withDefaultToggling(faktaPanelCodes.FEILUTBETALING, feilutbetalingAksjonspunkter)(feilutbetalingForm);
 
-export default connect(mapStateToProps, mapDispatchToProps)(FeilutbetalingInfoPanel);
+export default connect(mapStateToPropsFactory, mapDispatchToProps)(FeilutbetalingInfoPanel);

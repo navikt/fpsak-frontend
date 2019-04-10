@@ -115,12 +115,17 @@ const transformValues = (values, periodeData) => {
   };
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  validate: values => validateForm(values, ownProps.periodeData),
-  onSubmit: values => ownProps.splitPeriod(transformValues(values, ownProps.periodeData)),
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const validate = values => validateForm(values, ownProps.periodeData);
+  const onSubmit = values => ownProps.splitPeriod(transformValues(values, ownProps.periodeData));
+  return () => ({
+    validate,
+    onSubmit,
+  });
+};
 
-const DelOppPeriodeModal = connect(mapStateToProps)(behandlingForm({
+
+const DelOppPeriodeModal = connect(mapStateToPropsFactory)(behandlingForm({
   form: 'DelOppPeriode',
 })(DelOppPeriodeModalImpl));
 

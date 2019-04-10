@@ -146,15 +146,15 @@ export const buildInitialValues = foreldelsePerioder => ({
   foreldelsesresultatActivity: addClassNameGroupIdToPerioder(foreldelsePerioder),
 });
 
-const mapStateToProps = (state, ownProps) => {
-  const foreldelsePerioderResultat = getForeldelsePerioder(state).perioder;
-  return {
-    initialValues: buildInitialValues(foreldelsePerioderResultat),
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const submitCallback = values => ownProps.submitCallback(transformValues(values, ownProps.apCodes[0]));
+  return state => ({
+    initialValues: buildInitialValues(getForeldelsePerioder(state).perioder),
     foreldelsesresultatActivity: behandlingFormValueSelector(formName)(state, ACTIVITY_PANEL_NAME),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
     kjonn: getFagsakPerson(state).erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN,
-    onSubmit: values => ownProps.submitCallback(transformValues(values, ownProps.apCodes[0])),
-  };
+    onSubmit: submitCallback,
+  });
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -164,7 +164,7 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-const ForeldelsePanel = connect(mapStateToProps, mapDispatchToProps)(injectIntl(behandlingForm({
+const ForeldelsePanel = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
   form: formName,
 })(ForeldelsePanelImpl)));
 
