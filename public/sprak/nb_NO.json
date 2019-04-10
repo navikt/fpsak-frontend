@@ -2179,7 +2179,6 @@
   "ArbeidsforholdInfoPanel.AvklarArbeidsforhold": "Avklar aksjonspunkt på arbeidsforhold som skal benyttes i behandlingen",
 
   "Tilbakekreving.Vurdering":"Vurdering",
-  "Tilbakekreving.RadioGroup.oppfylt": "Er vilkårene for tilbakekreving oppfylt?",
   "Tilbakekreving.RadioGroup.UaktsomhetGrad":"I hvilken grad har bruker handlet uaktsomhet?",
   "Tilbakekreving.RadioGroup.BeløpetIBehold": "Er beløpet i behold",
   "Tilbakekreving.Ja": "Ja",
@@ -2202,11 +2201,17 @@
   "FeilutbetalingInfoPanel.Aksjonspunkt": "Kontroller at korrekt hendelse er satt",
   
   "TilbakekrevingPanel.AksjonspunktHjelpetekst": "Fastsett tilbakekreving etter §22-1. Del opp perioden ved behov for ulik vurdering",
+
+  "TilbakekrevingPeriodeForm.VilkarForTilbakekreving": "Vilkårene for tilbakekreving",
+  "TilbakekrevingPeriodeForm.oppfylt": "Er vilkårene for tilbakekreving oppfylt?",
+  "TilbakekrevingPeriodeForm.TotalbelopetUnder4Rettsgebyr": "Totalbeløpet er under 4 rettsgebyr. Dersom 6.ledd skal anvendes for å frafalle tilbakekrevingen, må denne anvendes likt på alle periodene.",
+  "TilbakekrevingPeriodeForm.Oppdater": "Oppdater",
+  "TilbakekrevingPeriodeForm.Avbryt": "Avbryt",
   
   "TilbakekrevingAktivitetTabell.Aktivitet": "Aktivitet",
   "TilbakekrevingAktivitetTabell.FeilutbetaltBelop": "Feilutbetalt beløp",
 
-  "TilbakekrevingForm.VilkarForTilbakekreving": "Vilkårene for tilbakekreving",
+  "AdvarselModal.Ok": "OK",
 
   "UaktsomhetFormPanel.Aktsomhet": "Aktsomhet",
   "UaktsomhetFormPanel.Vurdering": "Vurdering",

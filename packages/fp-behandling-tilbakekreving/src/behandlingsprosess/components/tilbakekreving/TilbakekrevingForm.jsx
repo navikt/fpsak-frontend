@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
@@ -21,11 +21,15 @@ import {
 import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingTilbakekreving/src/duckTilbake';
 import foreldelseCodes from '../../foreldelseCodes';
 import BpTimelinePanel from '../felles/behandlingspunktTimelineSkjema/BpTimelinePanel';
-import { getBehandlingVersjon, getBehandlingVilkarsvurderingsperioder } from '../../../selectors/tilbakekrevingBehandlingSelectors';
+import {
+  getBehandlingVersjon, getBehandlingVilkarsvurderingsperioder, getBehandlingVilkarsvurderingsRettsgebyr,
+} from '../../../selectors/tilbakekrevingBehandlingSelectors';
 import TilbakekrevingPeriodeForm, { TILBAKEKREVING_PERIODE_FORM_NAME } from './TilbakekrevingPeriodeForm';
 import tilbakekrevingAksjonspunktCodes from '../../../kodeverk/tilbakekrevingAksjonspunktCodes';
 import vilkarResultat from '../../../kodeverk/vilkarResultat';
 import aktsomhet from '../../../kodeverk/aktsomhet';
+
+import styles from './tilbakekrevingForm.less';
 
 const TILBAKEKREVING_FORM_NAME = 'TilbakekrevingForm';
 
@@ -73,6 +77,14 @@ const TilbakekrevingFormImpl = ({
         </BpTimelinePanel>
       )}
       <VerticalSpacer twentyPx />
+      {formProps.error && (
+        <>
+          <Normaltekst className={styles.error}>
+            <FormattedMessage id={formProps.error} />
+          </Normaltekst>
+          <VerticalSpacer twentyPx />
+        </>
+      )}
       <BehandlingspunktSubmitButton
         formNames={[TILBAKEKREVING_FORM_NAME, TILBAKEKREVING_PERIODE_FORM_NAME]}
         isReadOnly={readOnly}
@@ -107,6 +119,7 @@ const getAktsomhetData = (period) => {
     return {
       aktsomhetInfo: {
         sarligGrunner: period.sarligGrunner,
+        annetBegrunnelse: period.annetBegrunnelse,
         harGrunnerTilReduksjon: period.harGrunnerTilReduksjon,
         andelTilbakekreves: period.andelSomTilbakekreves,
         ileggRenter: period.skalDetTilleggesRenter,
@@ -151,15 +164,18 @@ export const transformValues = (values) => {
   }];
 };
 
-export const buildInitialValues = perioder => ({
-  vilkarsVurdertePerioder: perioder.map((periode, index) => ({
-    ...periode,
-    id: index + 1,
-    group: 1,
-    arsak: periode.årsak.årsak,
-    erTotalBelopUnder4Rettsgebyr: false,
-  })),
-});
+export const buildInitialValues = (perioder, rettsgebyr) => {
+  const totalbelop = perioder.reduce((acc, periode) => acc + periode.feilutbetaling, 0);
+  return {
+    vilkarsVurdertePerioder: perioder.map((periode, index) => ({
+      ...periode,
+      id: index + 1,
+      group: 1,
+      arsak: periode.årsak.årsak,
+      erTotalBelopUnder4Rettsgebyr: totalbelop > rettsgebyr * 4,
+    })),
+  };
+};
 
 const addClassname = (perioder) => {
   if (!perioder) {
@@ -177,8 +193,19 @@ const addClassname = (perioder) => {
   });
 };
 
+const validateForm = (values) => {
+  const antall = values.vilkarsVurdertePerioder.reduce((sum, periode) => (periode.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr === false ? sum + 1 : sum), 0);
+  const errors = {};
+  if (antall > 0 && antall !== values.vilkarsVurdertePerioder.length) {
+    // eslint-disable-next-line no-underscore-dangle
+    errors._error = 'TilbakekrevingPeriodeForm.TotalbelopetUnder4Rettsgebyr';
+  }
+  return errors;
+};
+
+
 const mapStateToProps = (state, ownProps) => ({
-  initialValues: buildInitialValues(getBehandlingVilkarsvurderingsperioder(state)),
+  initialValues: buildInitialValues(getBehandlingVilkarsvurderingsperioder(state), getBehandlingVilkarsvurderingsRettsgebyr(state)),
   kjonn: getFagsakPerson(state).erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN,
   vilkarsVurdertePerioder: addClassname(behandlingFormValueSelector(TILBAKEKREVING_FORM_NAME)(state, 'vilkarsVurdertePerioder')),
   behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
@@ -194,6 +221,7 @@ const mapDispatchToProps = dispatch => ({
 
 const TilbakekrevingForm = connect(mapStateToProps, mapDispatchToProps)(injectIntl(behandlingForm({
   form: TILBAKEKREVING_FORM_NAME,
+  validate: validateForm,
 })(TilbakekrevingFormImpl)));
 
 TilbakekrevingForm.supports = (bp, apCodes) => bp === behandlingspunktCodes.TILBAKEKREVING || tilbakekrevingAksjonspunkter.some(ap => apCodes.includes(ap));

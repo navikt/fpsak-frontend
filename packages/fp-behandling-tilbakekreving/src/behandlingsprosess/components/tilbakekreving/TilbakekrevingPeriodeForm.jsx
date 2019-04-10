@@ -17,7 +17,7 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import {
-  VerticalSpacer, FlexRow, FlexColumn,
+  VerticalSpacer, FlexRow, FlexColumn, AdvarselModal,
 } from '@fpsak-frontend/shared-components';
 import { behandlingForm, behandlingFormValueSelector } from '../../../behandlingForm';
 import vilkarResultat from '../../../kodeverk/vilkarResultat';
@@ -35,6 +35,8 @@ const maxLength1500 = maxLength(1500);
 export const TILBAKEKREVING_PERIODE_FORM_NAME = 'TilbakekrevingPeriodeForm';
 
 export class TilbakekrevingPeriodeFormImpl extends Component {
+  state = { showModal: false };
+
   static propTypes = {
     selectedItemData: PropTypes.shape({}).isRequired,
     behandlingFormPrefix: PropTypes.string.isRequired,
@@ -42,6 +44,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
     readOnly: PropTypes.bool.isRequired,
     erBelopetIBehold: PropTypes.bool,
     formName: PropTypes.string.isRequired,
+    tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: PropTypes.bool,
     aktiviteter: PropTypes.arrayOf(PropTypes.shape()),
     updateActivity: PropTypes.func.isRequired,
     vilkarResultatTyper: PropTypes.arrayOf(PropTypes.shape()),
@@ -52,6 +55,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
 
   static defaultProps = {
     erBelopetIBehold: undefined,
+    tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: undefined,
   }
 
   resetFields = () => {
@@ -72,6 +76,31 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
     }
   }
 
+  saveOrToggleModal = () => {
+    const { showModal } = this.state;
+    const {
+      selectedItemData,
+      tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
+      ...formProps
+    } = this.props;
+
+    if (selectedItemData.erTotalBelopUnder4Rettsgebyr && tilbakekrevSelvOmBeloepErUnder4Rettsgebyr === false) {
+      this.setState(state => ({ ...state, showModal: !showModal }));
+    } else {
+      formProps.handleSubmit();
+    }
+  }
+
+  saveForm = () => {
+    const { showModal } = this.state;
+    const {
+      ...formProps
+    } = this.props;
+
+    this.setState(state => ({ ...state, showModal: !showModal }));
+    formProps.handleSubmit();
+  }
+
   render() {
     const {
       valgtVilkarResultatType,
@@ -87,6 +116,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
       sarligGrunnTyper,
       ...formProps
     } = this.props;
+    const { showModal } = this.state;
     return (
       <>
         <VerticalSpacer twentyPx />
@@ -97,7 +127,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
             <Row>
               <Column md="10">
                 <Element>
-                  <FormattedMessage id="TilbakekrevingForm.VilkarForTilbakekreving" />
+                  <FormattedMessage id="TilbakekrevingPeriodeForm.VilkarForTilbakekreving" />
                 </Element>
                 <VerticalSpacer eightPx />
                 <TextAreaField
@@ -108,7 +138,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
                   readOnly={readOnly}
                 />
                 <VerticalSpacer twentyPx />
-                <Undertekst><FormattedMessage id="Tilbakekreving.RadioGroup.oppfylt" /></Undertekst>
+                <Undertekst><FormattedMessage id="TilbakekrevingPeriodeForm.oppfylt" /></Undertekst>
                 <VerticalSpacer eightPx />
                 <RadioGroupField
                   validate={[required]}
@@ -163,18 +193,21 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
             <Hovedknapp
               mini
               htmlType="button"
-              onClick={formProps.handleSubmit}
+              onClick={this.saveOrToggleModal}
               disabled={formProps.pristine}
             >
-              <FormattedMessage id="UttakActivity.Oppdater" />
+              <FormattedMessage id="TilbakekrevingPeriodeForm.Oppdater" />
             </Hovedknapp>
           </FlexColumn>
           <FlexColumn>
             <Knapp mini htmlType="button" onClick={cancelSelectedActivity}>
-              <FormattedMessage id="UttakActivity.Avbryt" />
+              <FormattedMessage id="TilbakekrevingPeriodeForm.Avbryt" />
             </Knapp>
           </FlexColumn>
         </FlexRow>
+        { showModal
+          && <AdvarselModal textCode="TilbakekrevingPeriodeForm.TotalbelopetUnder4Rettsgebyr" showModal submit={this.saveForm} />
+        }
       </>
     );
   }
@@ -249,6 +282,9 @@ const mapStateToProps = (state, ownProps) => {
     harGrunnerTilReduksjon: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(
       state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.harGrunnerTilReduksjon`,
     ),
+    tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(
+      state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr`,
+),
     annet: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.${sarligGrunn.ANNET}`),
     erBelopetIBehold: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.erBelopetIBehold`),
     initialValues: buildInitalValues(ownProps.selectedItemData),
@@ -261,7 +297,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const TilbakekrevingPeriodeForm = connect(mapStateToProps, mapDispatchToProps)(injectIntl(behandlingForm({
   form: TILBAKEKREVING_PERIODE_FORM_NAME,
-  enableReinitialize: true,
 })(TilbakekrevingPeriodeFormImpl)));
 
 export default TilbakekrevingPeriodeForm;
