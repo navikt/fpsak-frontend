@@ -156,6 +156,7 @@ const erAndelKunstigArbeidsforhold = (andel, beregningsgrunnlag) => {
   const firstBgPeriod = beregningsgrunnlag.beregningsgrunnlagPeriode[0];
   const lagtTilAvBruker = firstBgPeriod.beregningsgrunnlagPrStatusOgAndel.find(a => a.arbeidsforhold
   && a.arbeidsforhold.arbeidsgiverId === andel.arbeidsgiverId
+  && a.arbeidsforhold.organisasjonstype
   && a.arbeidsforhold.organisasjonstype.kode === organisasjonstyper.KUNSTIG);
   return lagtTilAvBruker !== undefined;
 };
