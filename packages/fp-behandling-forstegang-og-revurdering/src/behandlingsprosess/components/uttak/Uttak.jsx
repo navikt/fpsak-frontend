@@ -366,31 +366,33 @@ export class UttakImpl extends Component {
       && !manuellOverstyring;
   }
 
-  ikkeGykdigForbruk(stonadskontoer) {
+  ikkeGykdigForbruk() {
+    const { stonadskonto } = this.props;
     let validationError = false;
-    if (stonadskontoer && stonadskontoer.stonadskontoer) {
-      const kontoer = stonadskontoer.stonadskontoer;
-      for (const key in kontoer) {
-        const kontoerObj = kontoer[key];
-        if (!kontoerObj.gyldigForbruk) {
+    if (stonadskonto && stonadskonto.stonadskontoer) {
+      const kontoer = stonadskonto.stonadskontoer;
+      const myArray = Object.entries(kontoer);
+       // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      for (const [name, periode] of myArray) { // eslint-disable-line no-restricted-syntax
+        if (!periode.gyldigForbruk) {
           validationError = true;
           break;
         }
       }
-      return validationError;
     }
+    return validationError;
   }
 
   isConfirmButtonDisabled() {
     const {
-      uttaksresultatActivity, readOnly, submitting, isDirty, stonadskonto,
+      uttaksresultatActivity, readOnly, submitting, isDirty,
     } = this.props;
 
     if (uttaksresultatActivity.every(isInnvilget)) {
       return false;
     }
 
-    if (this.ikkeGykdigForbruk(stonadskonto)) {
+    if (this.ikkeGykdigForbruk()) {
       return true;
     }
 
