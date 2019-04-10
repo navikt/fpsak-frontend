@@ -191,7 +191,7 @@ export class UttakImpl extends Component {
     this.skalViseCheckbox = this.skalViseCheckbox.bind(this);
     this.setSelectedDefaultPeriod = this.setSelectedDefaultPeriod.bind(this);
     this.updateStonadskontoer = this.updateStonadskontoer.bind(this);
-    this.ikkeGykdigForbruk = this.ikkeGykdigForbruk.bind(this);
+    this.ikkeGyldigForbruk = this.ikkeGyldigForbruk.bind(this);
 
     this.state = {
       selectedItem: null,
@@ -366,7 +366,7 @@ export class UttakImpl extends Component {
       && !manuellOverstyring;
   }
 
-  ikkeGykdigForbruk() {
+  ikkeGyldigForbruk() {
     const { stonadskonto } = this.props;
     let validationError = false;
     if (stonadskonto && stonadskonto.stonadskontoer) {
@@ -392,7 +392,7 @@ export class UttakImpl extends Component {
       return false;
     }
 
-    if (this.ikkeGykdigForbruk()) {
+    if (this.ikkeGyldigForbruk()) {
       return true;
     }
 
