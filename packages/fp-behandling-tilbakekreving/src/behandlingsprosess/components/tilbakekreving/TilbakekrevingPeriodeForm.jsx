@@ -223,6 +223,7 @@ const formatAktsomhetData = (aktsomhet, sarligGrunnTyper) => {
     sarligGrunner: sarligGrunnTyper.reduce((acc, type) => (aktsomhet[type.kode] ? acc.concat(type.kode) : acc), []),
     andelSomTilbakekreves: aktsomhet.andelSomTilbakekreves,
     belopSomSkalTilbakekreves: aktsomhet.belopSomSkalTilbakekreves,
+    annetBegrunnelse: aktsomhet.annetBegrunnelse,
     tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhet.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
   };
 };

@@ -77,7 +77,7 @@ export const getBehandlingVilkar = createSelector([getSelectedBehandling], (sele
 export const getBehandlingVilkarsvurderingsperioder = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling
   .vilkarvurderingsperioder.perioder);
   export const getBehandlingVilkarsvurderingsRettsgebyr = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling
-  .vilkarvurderingsperioder.rettsGebyr);
+  .vilkarvurderingsperioder.rettsgebyr);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
