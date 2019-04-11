@@ -41,7 +41,7 @@ export const RadioOption = ({
 
 RadioOption.propTypes = {
   name: PropTypes.string,
-  label: labelPropType.isRequired,
+  label: labelPropType,
   value: PropTypes.any.isRequired,
   actualValue: PropTypes.any,
   className: PropTypes.string,
@@ -55,6 +55,7 @@ RadioOption.propTypes = {
 
 RadioOption.defaultProps = {
   name: '',
+  label: undefined,
   className: '',
   disabled: false,
   groupDisabled: false,

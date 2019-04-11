@@ -3,19 +3,21 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
-import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, BorderBox, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
   getAksjonspunkter,
   getAvklarAktiviteter,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { getFormValuesForBeregning, getFormInitialValuesForBeregning } from '../BeregningFormUtils';
-import VentelonnVartpengerPanel from './VentelonnVartpengerPanel';
+import VurderAktiviteterPanel from './VurderAktiviteterPanel';
 
 const {
   AVKLAR_AKTIVITETER,
+  VURDER_FAKTA_FOR_ATFL_SN,
 } = aksjonspunktCodes;
 
 export const BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME = 'begrunnelseAvklareAktiviteter';
@@ -33,17 +35,21 @@ export const erAvklartAktivitetEndret = createSelector(
     if (!hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)) {
       return false;
     }
-    if (values && avklarAktiviteter && avklarAktiviteter.ventelonnVartpenger) {
-      return VentelonnVartpengerPanel.hasValueChangedFromInitial(values, initialValues);
+    let harEndring = false;
+    if (values && avklarAktiviteter && avklarAktiviteter.aktiviteterTomDatoMapping) {
+      harEndring = VurderAktiviteterPanel.hasValueChangedFromInitial(avklarAktiviteter.aktiviteterTomDatoMapping, values, initialValues);
     }
-    return false;
+    if (values && !harEndring) {
+      harEndring = initialValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] !== values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME];
+    }
+    return harEndring;
   },
 );
 
 export const getHelpTextsAvklarAktiviteter = createSelector(
   [getAksjonspunkter],
   aksjonspunkter => (hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)
-    ? [<FormattedMessage key="VurderFaktaForBeregningen" id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning" />]
+    ? [<FormattedMessage key="VurderFaktaForBeregningen" id="BeregningInfoPanel.AksjonspunktHelpText.VurderAktiviteter" />]
     : []),
 );
 
@@ -59,26 +65,49 @@ export const AvklareAktiviteterPanelImpl = ({
   submittable,
   hasBegrunnelse,
   isDirty,
+  submitEnabled,
+  formName,
+  helpText,
+  harAndreAksjonspunkterIPanel,
+  erEndret,
 }) => (
-  <ElementWrapper>
-    {avklarAktiviteter.ventelonnVartpenger
-      && (
-      <VentelonnVartpengerPanel
-        readOnly={readOnly}
-        isAksjonspunktClosed={isAksjonspunktClosed}
-      />
-      )
-    }
-    <VerticalSpacer eightPx />
+  <React.Fragment>
+    <AksjonspunktHelpText isAksjonspunktOpen={!isAksjonspunktClosed}>{helpText}</AksjonspunktHelpText>
     <VerticalSpacer twentyPx />
-    <FaktaBegrunnelseTextField
-      name={BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME}
-      isDirty={isDirty}
-      isSubmittable={submittable}
-      isReadOnly={readOnly}
-      hasBegrunnelse={hasBegrunnelse}
-    />
-  </ElementWrapper>
+    <BorderBox>
+      {avklarAktiviteter.aktiviteterTomDatoMapping
+        && (
+        <VurderAktiviteterPanel
+          aktiviteterTomDatoMapping={avklarAktiviteter.aktiviteterTomDatoMapping}
+          readOnly={readOnly}
+          isAksjonspunktClosed={isAksjonspunktClosed}
+        />
+        )
+      }
+      <VerticalSpacer twentyPx />
+      <FaktaBegrunnelseTextField
+        name={BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME}
+        isDirty={isDirty}
+        isSubmittable={submittable}
+        isReadOnly={readOnly}
+        hasBegrunnelse={hasBegrunnelse}
+      />
+      {harAndreAksjonspunkterIPanel
+          && (
+          <FaktaSubmitButton
+            buttonTextId="AvklarAktivitetPanel.ButtonText"
+            formName={formName}
+            isSubmittable={submittable && submitEnabled && erEndret}
+            isReadOnly={readOnly}
+            hasOpenAksjonspunkter={!isAksjonspunktClosed}
+          />
+         )
+      }
+    </BorderBox>
+    {harAndreAksjonspunkterIPanel
+      && <VerticalSpacer twentyPx />
+    }
+  </React.Fragment>
 );
 
 
@@ -89,24 +118,27 @@ AvklareAktiviteterPanelImpl.propTypes = {
   isDirty: PropTypes.bool.isRequired,
   hasBegrunnelse: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
+  submitEnabled: PropTypes.bool.isRequired,
+  harAndreAksjonspunkterIPanel: PropTypes.bool.isRequired,
+  helpText: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  formName: PropTypes.string.isRequired,
+  erEndret: PropTypes.bool.isRequired,
 };
 
 // /// TRANSFORM VALUES METHODS ///////
 
 export const transformValuesAvklarAktiviteter = createSelector(
-  [getAksjonspunkter, getAvklarAktiviteter],
-  (aksjonspunkter, avklarAktiviteter) => (values) => {
-    if (hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)) {
-      if (avklarAktiviteter && avklarAktiviteter.ventelonnVartpenger) {
-        const ventelonnVartpengerTransformed = VentelonnVartpengerPanel.transformValues(values, avklarAktiviteter);
-        if (ventelonnVartpengerTransformed) {
-          const beg = values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME];
-          return [{
-            kode: AVKLAR_AKTIVITETER,
-            begrunnelse: beg === undefined ? null : beg,
-            ...ventelonnVartpengerTransformed,
-          }];
-        }
+  [getAksjonspunkter, getAvklarAktiviteter, erAvklartAktivitetEndret],
+  (aksjonspunkter, avklarAktiviteter, endret) => (values) => {
+    if (endret || (!hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter))) {
+      if (avklarAktiviteter && avklarAktiviteter.aktiviteterTomDatoMapping) {
+        const vurderAktiviteterTransformed = VurderAktiviteterPanel.transformValues(values, avklarAktiviteter.aktiviteterTomDatoMapping);
+        const beg = values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME];
+        return [{
+          kode: AVKLAR_AKTIVITETER,
+          begrunnelse: beg === undefined ? null : beg,
+          ...vurderAktiviteterTransformed,
+        }];
       }
     }
     return null;
@@ -122,8 +154,8 @@ export const buildInitialValuesAvklarAktiviteter = createSelector(
       return {};
     }
     let initialValues = {};
-    if (avklarAktiviteter && avklarAktiviteter.ventelonnVartpenger) {
-      initialValues = VentelonnVartpengerPanel.buildInitialValues(avklarAktiviteter);
+    if (avklarAktiviteter && avklarAktiviteter.aktiviteterTomDatoMapping) {
+      initialValues = VurderAktiviteterPanel.buildInitialValues(avklarAktiviteter.aktiviteterTomDatoMapping);
     }
     return {
       ...initialValues,
@@ -131,19 +163,6 @@ export const buildInitialValuesAvklarAktiviteter = createSelector(
     };
   },
 );
-
-// / VALIDATION METHODS ///
-
-export const getValidationAvklarAktiviteter = createSelector([getAksjonspunkter, getAvklarAktiviteter], (aksjonspunkter, avklarAktiviteter) => (values) => {
-  if (hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)) {
-    let errors = {};
-    if (avklarAktiviteter && avklarAktiviteter.ventelonnVartpenger) {
-      errors = VentelonnVartpengerPanel.validate(values);
-    }
-    return errors;
-  }
-  return null;
-});
 
 
 // // MAP STATE TO PROPS METHODS //////
@@ -154,12 +173,16 @@ const mapStateToProps = (state) => {
   const relevantAp = alleAp.filter(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_AKTIVITETER);
   const isAksjonspunktClosed = relevantAp.length === 0 ? undefined : !isAksjonspunktOpen(relevantAp[0].status.kode);
   const initialValues = getFormInitialValuesForBeregning(state);
+  const values = getFormValuesForBeregning(state);
   const hasBegrunnelse = initialValues
   && !!initialValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME];
   return {
+    values,
     isAksjonspunktClosed,
     avklarAktiviteter,
     hasBegrunnelse,
+    erEndret: erAvklartAktivitetEndret(state),
+    helpText: getHelpTextsAvklarAktiviteter(state),
   };
 };
 

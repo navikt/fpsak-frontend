@@ -9,21 +9,17 @@ import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-be
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  getFaktaOmBeregningTilfellerKoder,
   getBehandlingIsOnHold,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-import { AksjonspunktHelpText, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getHelpTextsFaktaForATFLOgSN } from './fellesFaktaForATFLogSN/FaktaForATFLOgSNPanel';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import VurderFaktaBeregningPanel, {
   transformValuesVurderFaktaBeregning,
   buildInitialValuesVurderFaktaBeregning,
   getValidationVurderFaktaBeregning,
 } from './fellesFaktaForATFLogSN/VurderFaktaBeregningPanel';
-import AvklareAktiviteterForm, {
-  getHelpTextsAvklarAktiviteter,
-  getValidationAvklarAktiviteter,
+import AvklareAktiviteterPanel, {
   buildInitialValuesAvklarAktiviteter,
   transformValuesAvklarAktiviteter,
   erAvklartAktivitetEndret,
@@ -38,30 +34,23 @@ const {
 
 const faktaOmBeregningAksjonspunkter = [VURDER_FAKTA_FOR_ATFL_SN, AVKLAR_AKTIVITETER];
 
-const getHelpText = createSelector([getHelpTextsAvklarAktiviteter, getHelpTextsFaktaForATFLOgSN],
-  (helpTextAvklareAktiviteter, helpTextFaktaATFLSN) => {
-    if (helpTextAvklareAktiviteter.length > 0) {
-      return helpTextAvklareAktiviteter;
-    }
-    return helpTextFaktaATFLSN;
-  });
-
 const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
-const createRelevantForms = (readOnly, aksjonspunkter, verdiForAvklartErEndret, submittable, isDirty) => (
+const createRelevantForms = (readOnly, aksjonspunkter, submittable, isDirty, submitEnabled) => (
   <div>
     {hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)
       && (
-        <AvklareAktiviteterForm
+        <AvklareAktiviteterPanel
           readOnly={readOnly}
           formName={formName}
           submittable={submittable}
           isDirty={isDirty}
+          submitEnabled={submitEnabled}
+          harAndreAksjonspunkterIPanel={hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)}
         />
       )
     }
     {hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)
-    && (!hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) || !verdiForAvklartErEndret)
     && (
       <VurderFaktaBeregningPanel
         readOnly={readOnly}
@@ -73,6 +62,13 @@ const createRelevantForms = (readOnly, aksjonspunkter, verdiForAvklartErEndret, 
     }
   </div>
 );
+
+export const harIkkeEndringerIAvklarMedFlereAksjonspunkter = (verdiForAvklarAktivitetErEndret, aksjonspunkter) => {
+  if (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)) {
+    return !verdiForAvklarAktivitetErEndret;
+  }
+  return true;
+};
 
 /**
  * BeregningInfoPanel
@@ -108,7 +104,6 @@ export class BeregningInfoPanelImpl extends Component {
         readOnly,
         aksjonspunkter,
         submittable,
-        helpText,
         verdiForAvklarAktivitetErEndret,
         isOnHold,
         ...formProps
@@ -131,20 +126,17 @@ export class BeregningInfoPanelImpl extends Component {
         faktaId={faktaPanelCodes.BEREGNING}
         readOnly={readOnly}
       >
-        <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>{helpText}</AksjonspunktHelpText>
-        <VerticalSpacer sixteenPx />
-        <VerticalSpacer sixteenPx />
         <form onSubmit={formProps.handleSubmit}>
-          {createRelevantForms(readOnly, aksjonspunkter, verdiForAvklarAktivitetErEndret, submittable, formProps.dirty)}
-          <ElementWrapper>
+          {createRelevantForms(readOnly, aksjonspunkter, submittable, formProps.dirty, submitEnabled)}
+          <React.Fragment>
             <VerticalSpacer twentyPx />
             <FaktaSubmitButton
               formName={formProps.form}
-              isSubmittable={submittable && submitEnabled}
+              isSubmittable={submittable && submitEnabled && harIkkeEndringerIAvklarMedFlereAksjonspunkter(verdiForAvklarAktivitetErEndret, aksjonspunkter)}
               isReadOnly={readOnly}
               hasOpenAksjonspunkter={hasOpenAksjonspunkter}
             />
-          </ElementWrapper>
+          </React.Fragment>
         </form>
       </FaktaEkspandertpanel>
     );
@@ -163,8 +155,6 @@ BeregningInfoPanelImpl.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired).isRequired,
   initialValues: PropTypes.shape(),
   submittable: PropTypes.bool.isRequired,
-  helpText: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  faktaTilfeller: PropTypes.arrayOf(PropTypes.string).isRequired,
   verdiForAvklarAktivitetErEndret: PropTypes.bool.isRequired,
   isOnHold: PropTypes.bool.isRequired,
   ...formPropTypes,
@@ -183,9 +173,8 @@ const buildInitialValues = createSelector(
 );
 
 const getValidate = createSelector(
-  [getValidationVurderFaktaBeregning, getValidationAvklarAktiviteter],
-  (validationForVurderFakta, validationAvklarAktiviteter) => values => ({
-    ...validationAvklarAktiviteter(values),
+  [getValidationVurderFaktaBeregning],
+  validationForVurderFakta => values => ({
     ...validationForVurderFakta(values),
   }),
 );
@@ -202,12 +191,9 @@ export const transformValues = createSelector(
 );
 
 const mapStateToProps = (state, initialProps) => {
-  const faktaTilfeller = getFaktaOmBeregningTilfellerKoder(state) ? getFaktaOmBeregningTilfellerKoder(state) : [];
   const isOnHold = getBehandlingIsOnHold(state);
   return {
-    faktaTilfeller,
     isOnHold,
-    helpText: getHelpText(state),
     initialValues: buildInitialValues(state),
     validate: getValidate(state),
     verdiForAvklarAktivitetErEndret: erAvklartAktivitetEndret(state),

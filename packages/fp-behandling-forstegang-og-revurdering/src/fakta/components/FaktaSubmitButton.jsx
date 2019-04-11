@@ -29,6 +29,7 @@ export const FaktaSubmitButton = ({
   isDirty,
   hasEmptyRequiredFields,
   hasOpenAksjonspunkter,
+  buttonTextId,
 }) => (
   <ElementWrapper>
     {!isReadOnly
@@ -39,7 +40,7 @@ export const FaktaSubmitButton = ({
         disabled={isDisabled(isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields, hasOpenAksjonspunkter)}
         onClick={ariaCheck}
       >
-        <FormattedMessage id="SubmitButton.ConfirmInformation" />
+        <FormattedMessage id={buttonTextId} />
       </Hovedknapp>
       )
     }
@@ -47,12 +48,17 @@ export const FaktaSubmitButton = ({
 );
 
 FaktaSubmitButton.propTypes = {
+  buttonTextId: PropTypes.string,
   isReadOnly: PropTypes.bool.isRequired,
   isSubmittable: PropTypes.bool.isRequired,
   isSubmitting: PropTypes.bool.isRequired,
   isDirty: PropTypes.bool.isRequired,
   hasEmptyRequiredFields: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
+};
+
+FaktaSubmitButton.defaultProps = {
+  buttonTextId: 'SubmitButton.ConfirmInformation',
 };
 
 const mapStateToProps = (state, ownProps) => {
