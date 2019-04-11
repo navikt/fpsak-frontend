@@ -6,7 +6,7 @@ import {
 } from 'nav-frontend-typografi';
 
 import {
- minLength, maxLength, hasValidText, required, parseCurrencyInput,
+ minLength, maxLength, hasValidText, required, parseCurrencyInput, removeSpacesFromNumber,
 } from '@fpsak-frontend/utils';
 import { VerticalSpacer, ArrowBox } from '@fpsak-frontend/shared-components';
 import {
@@ -76,5 +76,18 @@ BelopetMottattIGodTroFormPanel.propTypes = {
 BelopetMottattIGodTroFormPanel.defaultProps = {
   erBelopetIBehold: undefined,
 };
+
+BelopetMottattIGodTroFormPanel.transformValuesGodTro = info => ({
+  '@type': 'godTro',
+  begrunnelse: info.godTroBegrunnelse,
+  erBelopetIBehold: info.erBelopetIBehold,
+  tilbakekrevesBelop: info.erBelopetIBehold ? removeSpacesFromNumber(info.tilbakekrevdBelop) : undefined,
+});
+
+BelopetMottattIGodTroFormPanel.buildIntialValuesGodTro = vilkarResultatInfo => ({
+  godTroBegrunnelse: vilkarResultatInfo.begrunnelse,
+  erBelopetIBehold: vilkarResultatInfo.erBelopetIBehold,
+  tilbakekrevdBelop: vilkarResultatInfo.tilbakekrevesBelop,
+});
 
 export default BelopetMottattIGodTroFormPanel;

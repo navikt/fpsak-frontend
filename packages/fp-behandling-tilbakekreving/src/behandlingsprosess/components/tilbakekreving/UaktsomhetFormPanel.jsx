@@ -6,20 +6,20 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Undertekst, Element } from 'nav-frontend-typografi';
 
 import {
- required, minLength, maxLength, hasValidText,
+ required, minLength, maxLength, hasValidText, removeSpacesFromNumber,
 } from '@fpsak-frontend/utils';
 import { TextAreaField, RadioOption, RadioGroupField } from '@fpsak-frontend/form';
 
-import aktsomhet from '../../../kodeverk/aktsomhet';
+import Aktsomhet from '../../../kodeverk/aktsomhet';
 import UaktsomhetGradFormPanel from './UaktsomhetGradFormPanel';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 
 const uaktsomhetCodes = [
-  aktsomhet.GROVT_UAKTSOM,
-  aktsomhet.SIMPEL_UAKTSOM,
-  aktsomhet.FORSETT,
+  Aktsomhet.GROVT_UAKTSOM,
+  Aktsomhet.SIMPEL_UAKTSOM,
+  Aktsomhet.FORSETT,
 ];
 
 const UaktsomhetFormPanel = ({
@@ -95,10 +95,54 @@ UaktsomhetFormPanel.propTypes = {
   sarligGrunnTyper: PropTypes.arrayOf(PropTypes.shape()),
 };
 
-UaktsomhetGradFormPanel.defaultProps = {
+UaktsomhetFormPanel.defaultProps = {
   annet: false,
   harGrunnerTilReduksjon: undefined,
   handletUaktsomhetGrad: undefined,
+};
+
+const formatAktsomhetData = (aktsomhet, sarligGrunnTyper) => ({
+  harGrunnerTilReduksjon: aktsomhet.harGrunnerTilReduksjon,
+  ileggRenter: aktsomhet.skalDetTilleggesRenter,
+  sarligGrunner: sarligGrunnTyper.reduce((acc, type) => (aktsomhet[type.kode] ? acc.concat({ kode: type.kode }) : acc), []),
+  andelTilbakekreves: Number.parseInt(aktsomhet.andelSomTilbakekreves, 10),
+  tilbakekrevesBelop: removeSpacesFromNumber(aktsomhet.belopSomSkalTilbakekreves),
+  annetBegrunnelse: aktsomhet.annetBegrunnelse,
+  tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhet.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
+});
+
+UaktsomhetFormPanel.transformValuesAnnet = (info, sarligGrunnTyper) => {
+  const aktsomhet = info[info.handletUaktsomhetGrad];
+
+  const test = {
+    '@type': 'annet',
+    aktsomhet: { kode: info.handletUaktsomhetGrad },
+    begrunnelse: info.aktsomhetBegrunnelse,
+    aktsomhetInfo: aktsomhet ? formatAktsomhetData(aktsomhet, sarligGrunnTyper) : null,
+  };
+  return test;
+};
+
+
+UaktsomhetFormPanel.buildInitalValuesAnnet = (vilkarResultatInfo) => {
+  const { aktsomhet, aktsomhetInfo } = vilkarResultatInfo;
+  const aktsomhetData = aktsomhetInfo ? {
+    [aktsomhet.kode]: {
+      harGrunnerTilReduksjon: aktsomhetInfo.harGrunnerTilReduksjon,
+      skalDetTilleggesRenter: aktsomhetInfo.ileggRenter,
+      andelSomTilbakekreves: `${aktsomhetInfo.andelTilbakekreves}`,
+      belopSomSkalTilbakekreves: aktsomhetInfo.tilbakekrevesBelop,
+      annetBegrunnelse: aktsomhetInfo.annetBegrunnelse,
+      tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhetInfo.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
+      ...aktsomhetInfo.sarligGrunner.reduce((acc, sg) => ({ ...acc, [sg.kode]: true }), {}),
+    },
+  } : {};
+
+  return {
+    aktsomhetBegrunnelse: vilkarResultatInfo.begrunnelse,
+    handletUaktsomhetGrad: aktsomhet.kode,
+    ...aktsomhetData,
+  };
 };
 
 export default UaktsomhetFormPanel;

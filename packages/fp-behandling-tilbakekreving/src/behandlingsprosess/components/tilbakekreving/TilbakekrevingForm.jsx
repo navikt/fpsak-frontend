@@ -12,7 +12,6 @@ import {
   FadingPanel, VerticalSpacer, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
-import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
 
 import {
   behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, isBehandlingFormDirty,
@@ -22,12 +21,10 @@ import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingTilbakekrevi
 import foreldelseCodes from '../../foreldelseCodes';
 import BpTimelinePanel from '../felles/behandlingspunktTimelineSkjema/BpTimelinePanel';
 import {
-  getBehandlingVersjon, getBehandlingVilkarsvurderingsperioder, getBehandlingVilkarsvurderingsRettsgebyr,
+  getBehandlingVersjon, getBehandlingVilkarsvurderingsperioder, getBehandlingVilkarsvurderingsRettsgebyr, getBehandlingVilkarsvurdering,
 } from '../../../selectors/tilbakekrevingBehandlingSelectors';
 import TilbakekrevingPeriodeForm, { TILBAKEKREVING_PERIODE_FORM_NAME } from './TilbakekrevingPeriodeForm';
 import tilbakekrevingAksjonspunktCodes from '../../../kodeverk/tilbakekrevingAksjonspunktCodes';
-import vilkarResultat from '../../../kodeverk/vilkarResultat';
-import aktsomhet from '../../../kodeverk/aktsomhet';
 
 import styles from './tilbakekrevingForm.less';
 
@@ -112,84 +109,47 @@ TilbakekrevingFormImpl.defaultProps = {
   vilkarsVurdertePerioder: undefined,
 };
 
-const getAktsomhetData = (period) => {
-  if (period.handletUaktsomhetGrad === aktsomhet.FORSETT) {
-    return {};
-  }
-    return {
-      aktsomhetInfo: {
-        sarligGrunner: period.sarligGrunner,
-        annetBegrunnelse: period.annetBegrunnelse,
-        harGrunnerTilReduksjon: period.harGrunnerTilReduksjon,
-        andelTilbakekreves: period.andelSomTilbakekreves,
-        ileggRenter: period.skalDetTilleggesRenter,
-        tilbakekrevesBelop: removeSpacesFromNumber(period.belopSomSkalTilbakekreves),
-        tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: period.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
-      },
-    };
-};
+export const transformValues = values => [{
+  kode: tilbakekrevingAksjonspunktCodes.VURDER_TILBAKEKREVING,
+  vilkarsVurdertePerioder: values.vilkarsVurdertePerioder.map(v => v.storedData),
+}];
 
-const getVilkarResultatData = (period) => {
-  if (period.valgtVilkarResultatType === vilkarResultat.GOD_TRO) {
-    return {
-      vilkarResultatInfo: {
-        '@type': 'godTro',
-        begrunnelse: period.godTroBegrunnelse,
-        erBelopetIBehold: period.erBelopetIBehold,
-        tilbakekrevesBelop: removeSpacesFromNumber(period.tilbakekrevdBelop),
-      },
-    };
-  }
-    return {
-      vilkarResultatInfo: {
-        '@type': 'annet',
-        begrunnelse: period.aktsomhetBegrunnelse,
-        aktsomhet: period.handletUaktsomhetGrad,
-        ...getAktsomhetData(period),
-      },
-    };
-  };
+const addFigureData = (periode, index) => ({
+  id: index + 1,
+  group: 1,
+  arsak: periode.årsak.årsak,
+});
 
-export const transformValues = (values) => {
-  const vilkarsVurdertePerioder = values.vilkarsVurdertePerioder.map(v => ({
-    fom: v.fom,
-    tom: v.tom,
-    vilkarResultat: v.valgtVilkarResultatType,
-    begrunnelse: v.begrunnelse,
-    ...getVilkarResultatData(v),
-  }));
-  return [{
-    kode: tilbakekrevingAksjonspunktCodes.VURDER_TILBAKEKREVING,
-    vilkarsVurdertePerioder,
-  }];
-};
-
-export const buildInitialValues = (perioder, rettsgebyr) => {
+export const buildInitialValues = (perioder, vilkarsvurdering, rettsgebyr) => {
   const totalbelop = perioder.reduce((acc, periode) => acc + periode.feilutbetaling, 0);
+  const lagredeVilkarsvurdertePerioder = vilkarsvurdering.vilkarsVurdertePerioder;
+
   return {
-    vilkarsVurdertePerioder: perioder.map((periode, index) => ({
-      ...periode,
-      id: index + 1,
-      group: 1,
-      arsak: periode.årsak.årsak,
-      erTotalBelopUnder4Rettsgebyr: totalbelop > rettsgebyr * 4,
-    })),
+    vilkarsVurdertePerioder: perioder.map((periode, index) => {
+      const lagretPeriode = lagredeVilkarsvurdertePerioder.find(p => p.fom === periode.fom && p.tom === periode.tom);
+      return {
+        ...periode,
+        storedData: lagretPeriode,
+        ...addFigureData(periode, index),
+        erTotalBelopUnder4Rettsgebyr: totalbelop > rettsgebyr * 4,
+      };
+    }),
   };
 };
 
-// TODO (TOR) Endre til selector
+// TODO (TOR) Endre til selectors
 const addClassname = (perioder) => {
   if (!perioder) {
     return undefined;
   }
   // TODO (TOR) treng ein foreldet her. Om ikkje, endre i BpTimelinePanel
   return perioder.map((p) => {
-    const erBehandlet = p.begrunnelse ? 'godkjentPeriode' : 'undefined';
+    const erBehandlet = p.storedData.begrunnelse ? 'godkjentPeriode' : 'undefined';
     const statusClassName = p.erForeldet || p.erBelopetIBehold === false ? 'avvistPeriode' : erBehandlet;
     return {
       ...p,
       className: statusClassName,
-      foreldet: p.begrunnelse ? undefined : foreldelseCodes.MANUELL_BEHANDLING,
+      foreldet: p.storedData.begrunnelse ? undefined : foreldelseCodes.MANUELL_BEHANDLING,
     };
   });
 };
@@ -207,7 +167,8 @@ const validateForm = (values) => {
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const submitCallback = values => ownProps.submitCallback(transformValues(values));
   return state => ({
-    initialValues: buildInitialValues(getBehandlingVilkarsvurderingsperioder(state), getBehandlingVilkarsvurderingsRettsgebyr(state)),
+    initialValues: buildInitialValues(getBehandlingVilkarsvurderingsperioder(state), getBehandlingVilkarsvurdering(state),
+      getBehandlingVilkarsvurderingsRettsgebyr(state)),
     kjonn: getFagsakPerson(state).erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN,
     vilkarsVurdertePerioder: addClassname(behandlingFormValueSelector(TILBAKEKREVING_FORM_NAME)(state, 'vilkarsVurdertePerioder')),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),

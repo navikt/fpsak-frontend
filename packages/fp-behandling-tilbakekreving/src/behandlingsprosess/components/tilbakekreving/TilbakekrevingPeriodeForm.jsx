@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FormSection, clearFields, formPropTypes } from 'redux-form';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertekst, Element } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import {
   RadioOption, RadioGroupField, TextAreaField,
 } from '@fpsak-frontend/form';
-import { FormattedMessage, injectIntl } from 'react-intl';
+
 import {
   minLength,
   maxLength,
@@ -19,8 +20,9 @@ import {
 import {
   VerticalSpacer, FlexRow, FlexColumn, AdvarselModal,
 } from '@fpsak-frontend/shared-components';
+
 import { behandlingForm, behandlingFormValueSelector } from '../../../behandlingForm';
-import vilkarResultat from '../../../kodeverk/vilkarResultat';
+import VilkarResultat from '../../../kodeverk/vilkarResultat';
 import tilbakekrevingKodeverkTyper from '../../../kodeverk/tilbakekrevingKodeverkTyper';
 import { getTilbakekrevingKodeverk } from '../../../duckTilbake';
 import TilbakekrevingAktivitetTabell from './TilbakekrevingAktivitetTabell';
@@ -163,10 +165,10 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
               <Column md="10">
                 {valgtVilkarResultatType && (
                   <FormSection name={valgtVilkarResultatType}>
-                    {valgtVilkarResultatType === vilkarResultat.GOD_TRO && (
+                    {valgtVilkarResultatType === VilkarResultat.GOD_TRO && (
                       <BelopetMottattIGodTroFormPanel readOnly={readOnly} erBelopetIBehold={erBelopetIBehold} />
                     )}
-                    {valgtVilkarResultatType !== vilkarResultat.GOD_TRO && (
+                    {valgtVilkarResultatType !== VilkarResultat.GOD_TRO && (
                       <UaktsomhetFormPanel
                         harGrunnerTilReduksjon={harGrunnerTilReduksjon}
                         readOnly={readOnly}
@@ -213,57 +215,44 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
   }
 }
 
-const formatAktsomhetData = (aktsomhet, sarligGrunnTyper) => {
-  if (!aktsomhet) {
-    return { };
-  }
-  return {
-    harGrunnerTilReduksjon: aktsomhet.harGrunnerTilReduksjon,
-    skalDetTilleggesRenter: aktsomhet.skalDetTilleggesRenter,
-    sarligGrunner: sarligGrunnTyper.reduce((acc, type) => (aktsomhet[type.kode] ? acc.concat(type.kode) : acc), []),
-    andelSomTilbakekreves: aktsomhet.andelSomTilbakekreves,
-    belopSomSkalTilbakekreves: aktsomhet.belopSomSkalTilbakekreves,
-    annetBegrunnelse: aktsomhet.annetBegrunnelse,
-    tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhet.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
-  };
-};
-
 const transformValues = (selectedItemData, values, sarligGrunnTyper) => {
   const { valgtVilkarResultatType, begrunnelse } = values;
   const info = values[valgtVilkarResultatType];
-  const aktsomhet = info[info.handletUaktsomhetGrad];
+
+  const godTroData = valgtVilkarResultatType === VilkarResultat.GOD_TRO ? BelopetMottattIGodTroFormPanel.transformValuesGodTro(info) : {};
+  const annetData = valgtVilkarResultatType !== VilkarResultat.GOD_TRO ? UaktsomhetFormPanel.transformValuesAnnet(info, sarligGrunnTyper) : {};
+
   return {
     ...selectedItemData,
-    begrunnelse,
-    valgtVilkarResultatType,
-    ...info,
-    ...formatAktsomhetData(aktsomhet, sarligGrunnTyper, values.aktsomhetBegrunnelse),
+    storedData: {
+      begrunnelse,
+      fom: selectedItemData.fom,
+      tom: selectedItemData.tom,
+      vilkarResultat: { kode: valgtVilkarResultatType },
+      vilkarResultatInfo: {
+        ...godTroData,
+        ...annetData,
+      },
+    },
   };
 };
 
-const buildInitalValues = (selectedItemData) => {
-  const {
-    valgtVilkarResultatType, begrunnelse, erBelopetIBehold, godTroBegrunnelse, annetBegrunnelse, handletUaktsomhetGrad, aktsomhetBegrunnelse,
-  } = selectedItemData;
-  if (valgtVilkarResultatType === vilkarResultat.GOD_TRO) {
-    return {
-      valgtVilkarResultatType,
-      begrunnelse,
-      [vilkarResultat.GOD_TRO]: {
-        erBelopetIBehold,
-        godTroBegrunnelse,
-      },
-    };
-  }
-    return {
-      valgtVilkarResultatType,
-      begrunnelse,
-      [valgtVilkarResultatType]: {
-        aktsomhetBegrunnelse,
-        annetBegrunnelse,
-        handletUaktsomhetGrad,
-        [handletUaktsomhetGrad]: selectedItemData[handletUaktsomhetGrad],
-      },
+const buildInitalValues = (period) => {
+  const { vilkarResultat, begrunnelse, vilkarResultatInfo } = period.storedData;
+
+  const initialValues = {
+    valgtVilkarResultatType: vilkarResultat.kode,
+    begrunnelse,
+  };
+
+  const godTroData = vilkarResultat.kode === VilkarResultat.GOD_TRO ? BelopetMottattIGodTroFormPanel.buildIntialValuesGodTro(vilkarResultatInfo) : {};
+  const annetData = vilkarResultat.kode !== VilkarResultat.GOD_TRO ? UaktsomhetFormPanel.buildInitalValuesAnnet(vilkarResultatInfo) : {};
+  return {
+    ...initialValues,
+    [initialValues.valgtVilkarResultatType]: {
+      ...godTroData,
+      ...annetData,
+    },
   };
 };
 
@@ -303,6 +292,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 
 const TilbakekrevingPeriodeForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
   form: TILBAKEKREVING_PERIODE_FORM_NAME,
+  enableReinitialize: true,
 })(TilbakekrevingPeriodeFormImpl)));
 
 export default TilbakekrevingPeriodeForm;
