@@ -4,12 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import {
-  VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
-import {
- CheckboxField, TextAreaField,
-} from '@fpsak-frontend/form';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { CheckboxField, TextAreaField } from '@fpsak-frontend/form';
 import {
   minLength,
   maxLength,
@@ -17,12 +13,12 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 
-import UaktsomhetReduksjonAvBelopFormPanel from './UaktsomhetReduksjonAvBelopFormPanel';
+import AktsomhetReduksjonAvBelopFormPanel from './AktsomhetReduksjonAvBelopFormPanel';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 
-const UaktsomhetSarligeGrunnerFormPanel = ({
+const AktsomhetSarligeGrunnerFormPanel = ({
   harGrunnerTilReduksjon,
   readOnly,
   handletUaktsomhetGrad,
@@ -57,7 +53,7 @@ const UaktsomhetSarligeGrunnerFormPanel = ({
         </Column>
       </Row>
     )}
-    <UaktsomhetReduksjonAvBelopFormPanel
+    <AktsomhetReduksjonAvBelopFormPanel
       harGrunnerTilReduksjon={harGrunnerTilReduksjon}
       readOnly={readOnly}
       handletUaktsomhetGrad={handletUaktsomhetGrad}
@@ -67,7 +63,7 @@ const UaktsomhetSarligeGrunnerFormPanel = ({
   </div>
 );
 
-UaktsomhetSarligeGrunnerFormPanel.propTypes = {
+AktsomhetSarligeGrunnerFormPanel.propTypes = {
   harGrunnerTilReduksjon: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
   handletUaktsomhetGrad: PropTypes.string.isRequired,
@@ -77,8 +73,8 @@ UaktsomhetSarligeGrunnerFormPanel.propTypes = {
   sarligGrunnTyper: PropTypes.arrayOf(PropTypes.shape()),
 };
 
-UaktsomhetSarligeGrunnerFormPanel.defaultProps = {
+AktsomhetSarligeGrunnerFormPanel.defaultProps = {
   harGrunnerTilReduksjon: undefined,
 };
 
-export default UaktsomhetSarligeGrunnerFormPanel;
+export default AktsomhetSarligeGrunnerFormPanel;

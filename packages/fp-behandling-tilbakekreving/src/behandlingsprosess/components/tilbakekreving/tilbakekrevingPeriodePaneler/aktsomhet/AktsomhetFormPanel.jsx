@@ -10,8 +10,8 @@ import {
 } from '@fpsak-frontend/utils';
 import { TextAreaField, RadioOption, RadioGroupField } from '@fpsak-frontend/form';
 
-import Aktsomhet from '../../../kodeverk/aktsomhet';
-import UaktsomhetGradFormPanel from './UaktsomhetGradFormPanel';
+import Aktsomhet from 'behandlingTilbakekreving/src/kodeverk/aktsomhet';
+import AktsomhetGradFormPanel from './AktsomhetGradFormPanel';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
@@ -22,7 +22,7 @@ const uaktsomhetCodes = [
   Aktsomhet.FORSETT,
 ];
 
-const UaktsomhetFormPanel = ({
+const AktsomhetFormPanel = ({
   readOnly,
   resetFields,
   resetAnnetTextField,
@@ -37,17 +37,19 @@ const UaktsomhetFormPanel = ({
 }) => (
   <>
     <Element>
-      <FormattedMessage id="UaktsomhetFormPanel.Aktsomhet" />
+      <FormattedMessage id="AktsomhetFormPanel.Aktsomhet" />
     </Element>
     <VerticalSpacer eightPx />
     <TextAreaField
       name="aktsomhetBegrunnelse"
-      label={{ id: 'UaktsomhetFormPanel.Vurdering' }}
+      label={{ id: 'AktsomhetFormPanel.Vurdering' }}
       validate={[required, minLength3, maxLength1500, hasValidText]}
       maxLength={1500}
       readOnly={readOnly}
     />
-    <Undertekst><FormattedMessage id="UaktsomhetFormPanel.HandletUaktsomhetGrad" /></Undertekst>
+    <Undertekst>
+      <FormattedMessage id="AktsomhetFormPanel.HandletUaktsomhetGrad" />
+    </Undertekst>
     <VerticalSpacer eightPx />
     <RadioGroupField
       validate={[required]}
@@ -65,7 +67,7 @@ const UaktsomhetFormPanel = ({
     </RadioGroupField>
     { uaktsomhetCodes.includes(handletUaktsomhetGrad) && (
       <FormSection name={handletUaktsomhetGrad} key={handletUaktsomhetGrad}>
-        <UaktsomhetGradFormPanel
+        <AktsomhetGradFormPanel
           harGrunnerTilReduksjon={harGrunnerTilReduksjon}
           readOnly={readOnly}
           handletUaktsomhetGrad={handletUaktsomhetGrad}
@@ -81,7 +83,7 @@ const UaktsomhetFormPanel = ({
   </>
 );
 
-UaktsomhetFormPanel.propTypes = {
+AktsomhetFormPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   resetFields: PropTypes.func.isRequired,
   resetAnnetTextField: PropTypes.func.isRequired,
@@ -95,7 +97,7 @@ UaktsomhetFormPanel.propTypes = {
   sarligGrunnTyper: PropTypes.arrayOf(PropTypes.shape()),
 };
 
-UaktsomhetFormPanel.defaultProps = {
+AktsomhetFormPanel.defaultProps = {
   annet: false,
   harGrunnerTilReduksjon: undefined,
   handletUaktsomhetGrad: undefined,
@@ -104,14 +106,16 @@ UaktsomhetFormPanel.defaultProps = {
 const formatAktsomhetData = (aktsomhet, sarligGrunnTyper) => ({
   harGrunnerTilReduksjon: aktsomhet.harGrunnerTilReduksjon,
   ileggRenter: aktsomhet.skalDetTilleggesRenter,
-  sarligGrunner: sarligGrunnTyper.reduce((acc, type) => (aktsomhet[type.kode] ? acc.concat({ kode: type.kode }) : acc), []),
+  sarligGrunner: sarligGrunnTyper.length > 0
+    ? sarligGrunnTyper.reduce((acc, type) => (aktsomhet[type.kode] ? acc.concat({ kode: type.kode }) : acc), [])
+    : undefined,
   andelTilbakekreves: Number.parseInt(aktsomhet.andelSomTilbakekreves, 10),
   tilbakekrevesBelop: removeSpacesFromNumber(aktsomhet.belopSomSkalTilbakekreves),
   annetBegrunnelse: aktsomhet.annetBegrunnelse,
   tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhet.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
 });
 
-UaktsomhetFormPanel.transformValuesAnnet = (info, sarligGrunnTyper) => {
+AktsomhetFormPanel.transformValues = (info, sarligGrunnTyper) => {
   const aktsomhet = info[info.handletUaktsomhetGrad];
 
   const test = {
@@ -124,7 +128,7 @@ UaktsomhetFormPanel.transformValuesAnnet = (info, sarligGrunnTyper) => {
 };
 
 
-UaktsomhetFormPanel.buildInitalValuesAnnet = (vilkarResultatInfo) => {
+AktsomhetFormPanel.buildInitalValues = (vilkarResultatInfo) => {
   const { aktsomhet, aktsomhetInfo } = vilkarResultatInfo;
   const aktsomhetData = aktsomhetInfo ? {
     [aktsomhet.kode]: {
@@ -145,4 +149,4 @@ UaktsomhetFormPanel.buildInitalValuesAnnet = (vilkarResultatInfo) => {
   };
 };
 
-export default UaktsomhetFormPanel;
+export default AktsomhetFormPanel;

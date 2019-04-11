@@ -6,19 +6,19 @@ import {
   VerticalSpacer, ArrowBox,
 } from '@fpsak-frontend/shared-components';
 
-const UaktsomhetGradForsettPanel = () => (
+const AktsomhetGradForsettFormPanel = () => (
   <div>
     <ArrowBox alignOffset={20}>
       <Undertekst>
-        <FormattedMessage id="UaktsomhetGradFormPanel.Andel" />
+        <FormattedMessage id="AktsomhetGradForsettFormPanel.Andel" />
       </Undertekst>
       <Normaltekst>100 %</Normaltekst>
       <VerticalSpacer eightPx />
       <Normaltekst>
-        <FormattedMessage id="UaktsomhetGradFormPanel.Renter" />
+        <FormattedMessage id="AktsomhetGradForsettFormPanel.Renter" />
       </Normaltekst>
     </ArrowBox>
   </div>
 );
 
-export default UaktsomhetGradForsettPanel;
+export default AktsomhetGradForsettFormPanel;

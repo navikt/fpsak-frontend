@@ -24,32 +24,32 @@ const BelopetMottattIGodTroFormPanel = ({
 }) => (
   <>
     <Element>
-      <FormattedMessage id="BelopetMottattIGodTroPanel.BelopetMottattIGodTro" />
+      <FormattedMessage id="BelopetMottattIGodTroFormPanel.BelopetMottattIGodTro " />
     </Element>
     <VerticalSpacer eightPx />
     <TextAreaField
       name="godTroBegrunnelse"
-      label={{ id: 'BelopetMottattIGodTroPanel.Vurdering' }}
+      label={{ id: 'BelopetMottattIGodTroFormPanel.Vurdering' }}
       validate={[required, minLength3, maxLength1500, hasValidText]}
       maxLength={1500}
       readOnly={readOnly}
     />
-    <Undertekst><FormattedMessage id="BelopetMottattIGodTroPanel.BelopetIBehold" /></Undertekst>
+    <Undertekst><FormattedMessage id="BelopetMottattIGodTroFormPanel.BelopetIBehold" /></Undertekst>
     <VerticalSpacer eightPx />
     <RadioGroupField
       validate={[required]}
       name="erBelopetIBehold"
       readOnly={readOnly}
     >
-      <RadioOption label={<FormattedMessage id="BelopetMottattIGodTroPanel.Ja" />} value />
-      <RadioOption label={<FormattedMessage id="BelopetMottattIGodTroPanel.Nei" />} value={false} />
+      <RadioOption label={<FormattedMessage id="BelopetMottattIGodTroFormPanel.Ja" />} value />
+      <RadioOption label={<FormattedMessage id="BelopetMottattIGodTroFormPanel.Nei" />} value={false} />
     </RadioGroupField>
     <div className={styles.arrowbox}>
       {erBelopetIBehold === true && (
       <ArrowBox alignOffset={25}>
         <InputField
           name="tilbakekrevdBelop"
-          label={{ id: 'BelopetMottattIGodTroPanel.AngiBelop' }}
+          label={{ id: 'BelopetMottattIGodTroFormPanel.AngiBelop' }}
           validate={[required]}
           readOnly={readOnly}
           parse={parseCurrencyInput}
@@ -60,7 +60,7 @@ const BelopetMottattIGodTroFormPanel = ({
       {erBelopetIBehold === false && (
       <ArrowBox alignOffset={90}>
         <Normaltekst>
-          <FormattedMessage id="BelopetMottattIGodTroPanel.IngenTilbakekreving" />
+          <FormattedMessage id="BelopetMottattIGodTroFormPanel.IngenTilbakekreving" />
         </Normaltekst>
       </ArrowBox>
     )}
@@ -77,17 +77,17 @@ BelopetMottattIGodTroFormPanel.defaultProps = {
   erBelopetIBehold: undefined,
 };
 
-BelopetMottattIGodTroFormPanel.transformValuesGodTro = info => ({
+BelopetMottattIGodTroFormPanel.transformValues = info => ({
   '@type': 'godTro',
   begrunnelse: info.godTroBegrunnelse,
   erBelopetIBehold: info.erBelopetIBehold,
   tilbakekrevesBelop: info.erBelopetIBehold ? removeSpacesFromNumber(info.tilbakekrevdBelop) : undefined,
 });
 
-BelopetMottattIGodTroFormPanel.buildIntialValuesGodTro = vilkarResultatInfo => ({
-  godTroBegrunnelse: vilkarResultatInfo.begrunnelse,
-  erBelopetIBehold: vilkarResultatInfo.erBelopetIBehold,
-  tilbakekrevdBelop: vilkarResultatInfo.tilbakekrevesBelop,
+BelopetMottattIGodTroFormPanel.buildIntialValues = info => ({
+  godTroBegrunnelse: info.begrunnelse,
+  erBelopetIBehold: info.erBelopetIBehold,
+  tilbakekrevdBelop: info.tilbakekrevesBelop,
 });
 
 export default BelopetMottattIGodTroFormPanel;

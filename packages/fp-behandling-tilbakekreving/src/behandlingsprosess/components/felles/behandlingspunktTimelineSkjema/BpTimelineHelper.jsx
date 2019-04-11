@@ -1,18 +1,18 @@
 import moment from 'moment';
 import foreldelseCodes from '../../../foreldelseCodes';
 
-const godkjentKlassenavn = 'godkjentPeriode';
-const avvistKlassenavn = 'avvistPeriode';
+export const GODKJENT_CLASSNAME = 'godkjentPeriode';
+export const AVVIST_CLASSNAME = 'avvistPeriode';
 
 export const getStatusPeriode = (vurderingTypeKode) => {
   if (vurderingTypeKode === foreldelseCodes.FORELDET) {
-    return avvistKlassenavn;
+    return AVVIST_CLASSNAME;
   }
 
   if (vurderingTypeKode === foreldelseCodes.MANUELL_BEHANDLING) {
     return 'undefined';
   }
-  return godkjentKlassenavn;
+  return GODKJENT_CLASSNAME;
 };
 
 export const addClassNameGroupIdToPerioder = (tilbakekrevingPerioder) => {

@@ -12,13 +12,13 @@ import {
 } from '@fpsak-frontend/form';
 import { required, parseCurrencyInput, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 
-import aktsomhet from '../../../kodeverk/aktsomhet';
+import aktsomhet from 'behandlingTilbakekreving/src/kodeverk/aktsomhet';
 
-import styles from './uaktsomhetReduksjonAvBelopFormPanel.less';
+import styles from './aktsomhetReduksjonAvBelopFormPanel.less';
 
 const andeler = ['30', '50', '70'];
 
-const UaktsomhetReduksjonAvBelopFormPanel = ({
+const AktsomhetReduksjonAvBelopFormPanel = ({
   harGrunnerTilReduksjon,
   readOnly,
   handletUaktsomhetGrad,
@@ -29,15 +29,15 @@ const UaktsomhetReduksjonAvBelopFormPanel = ({
     <Row>
       <Column md="12">
         <VerticalSpacer eightPx />
-        <Undertekst><FormattedMessage id="UaktsomhetGradFormPanel.SkalSarligeGrunnerGiReduksjon" /></Undertekst>
+        <Undertekst><FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.SkalSarligeGrunnerGiReduksjon" /></Undertekst>
         <VerticalSpacer eightPx />
         <RadioGroupField
           validate={[required]}
           name="harGrunnerTilReduksjon"
           readOnly={readOnly}
         >
-          <RadioOption label={<FormattedMessage id="UaktsomhetGradFormPanel.Ja" />} value />
-          <RadioOption label={<FormattedMessage id="UaktsomhetGradFormPanel.Nei" />} value={false} />
+          <RadioOption label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />} value />
+          <RadioOption label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />} value={false} />
         </RadioGroupField>
       </Column>
     </Row>
@@ -47,7 +47,7 @@ const UaktsomhetReduksjonAvBelopFormPanel = ({
           <Column md="6">
             {!harMerEnnEnYtelse && (
               <>
-                <Undertekst><FormattedMessage id="UaktsomhetGradFormPanel.AngiAndelSomTilbakekreves" /></Undertekst>
+                <Undertekst><FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.AngiAndelSomTilbakekreves" /></Undertekst>
                 <FlexRow>
                   <FlexColumn>
                     <SelectField
@@ -65,7 +65,7 @@ const UaktsomhetReduksjonAvBelopFormPanel = ({
             {harMerEnnEnYtelse && (
               <InputField
                 name="belopSomSkalTilbakekreves"
-                label={<FormattedMessage id="UaktsomhetGradFormPanel.AngiBelopSomSkalTilbakekreves" />}
+                label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.AngiBelopSomSkalTilbakekreves" />}
                 validate={[required]}
                 readOnly={readOnly}
                 parse={parseCurrencyInput}
@@ -75,8 +75,8 @@ const UaktsomhetReduksjonAvBelopFormPanel = ({
           </Column>
           {handletUaktsomhetGrad === aktsomhet.GROVT_UAKTSOM && (
             <Column md="6">
-              <Undertekst><FormattedMessage id="UaktsomhetGradFormPanel.SkalTilleggesRenter" /></Undertekst>
-              <Normaltekst className={styles.labelPadding}><FormattedMessage id="UaktsomhetGradFormPanel.Nei" /></Normaltekst>
+              <Undertekst><FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.SkalTilleggesRenter" /></Undertekst>
+              <Normaltekst className={styles.labelPadding}><FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" /></Normaltekst>
             </Column>
           )}
         </Row>
@@ -88,7 +88,8 @@ const UaktsomhetReduksjonAvBelopFormPanel = ({
           <Column md="6">
             <Undertekst>
               <FormattedMessage
-                id={harMerEnnEnYtelse ? 'UaktsomhetGradFormPanel.BelopSomSkalTilbakekreves' : 'UaktsomhetGradFormPanel.andelSomTilbakekreves'}
+                id={harMerEnnEnYtelse ? 'AktsomhetReduksjonAvBelopFormPanel.BelopSomSkalTilbakekreves'
+                : 'AktsomhetReduksjonAvBelopFormPanel.andelSomTilbakekreves'}
               />
             </Undertekst>
             <Normaltekst className={styles.labelPadding}>{harMerEnnEnYtelse ? formatCurrencyNoKr(feilutbetalingBelop) : '100%'}</Normaltekst>
@@ -96,13 +97,13 @@ const UaktsomhetReduksjonAvBelopFormPanel = ({
           { handletUaktsomhetGrad === aktsomhet.GROVT_UAKTSOM && (
             <Column md="6">
               <RadioGroupField
-                label={<FormattedMessage id="UaktsomhetGradFormPanel.SkalTilleggesRenter" />}
+                label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.SkalTilleggesRenter" />}
                 validate={[required]}
                 name="skalDetTilleggesRenter"
                 readOnly={readOnly}
               >
-                <RadioOption label={<FormattedMessage id="UaktsomhetGradFormPanel.Ja" />} value />
-                <RadioOption label={<FormattedMessage id="UaktsomhetGradFormPanel.Nei" />} value={false} />
+                <RadioOption label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />} value />
+                <RadioOption label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />} value={false} />
               </RadioGroupField>
             </Column>
           )}
@@ -112,7 +113,7 @@ const UaktsomhetReduksjonAvBelopFormPanel = ({
   </>
 );
 
-UaktsomhetReduksjonAvBelopFormPanel.propTypes = {
+AktsomhetReduksjonAvBelopFormPanel.propTypes = {
   harGrunnerTilReduksjon: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
   handletUaktsomhetGrad: PropTypes.string.isRequired,
@@ -120,8 +121,8 @@ UaktsomhetReduksjonAvBelopFormPanel.propTypes = {
   feilutbetalingBelop: PropTypes.number.isRequired,
 };
 
-UaktsomhetReduksjonAvBelopFormPanel.defaultProps = {
+AktsomhetReduksjonAvBelopFormPanel.defaultProps = {
   harGrunnerTilReduksjon: undefined,
 };
 
-export default UaktsomhetReduksjonAvBelopFormPanel;
+export default AktsomhetReduksjonAvBelopFormPanel;

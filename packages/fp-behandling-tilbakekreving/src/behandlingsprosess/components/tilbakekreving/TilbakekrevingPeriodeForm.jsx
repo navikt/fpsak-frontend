@@ -21,15 +21,14 @@ import {
   VerticalSpacer, FlexRow, FlexColumn, AdvarselModal,
 } from '@fpsak-frontend/shared-components';
 
-import { behandlingForm, behandlingFormValueSelector } from '../../../behandlingForm';
-import VilkarResultat from '../../../kodeverk/vilkarResultat';
-import tilbakekrevingKodeverkTyper from '../../../kodeverk/tilbakekrevingKodeverkTyper';
-import { getTilbakekrevingKodeverk } from '../../../duckTilbake';
-import TilbakekrevingAktivitetTabell from './TilbakekrevingAktivitetTabell';
-import BelopetMottattIGodTroFormPanel from './BelopetMottattIGodTroFormPanel';
-import UaktsomhetFormPanel from './UaktsomhetFormPanel';
-import sarligGrunn from '../../../kodeverk/sarligGrunn';
-
+import { behandlingForm, behandlingFormValueSelector } from 'behandlingTilbakekreving/src/behandlingForm';
+import sarligGrunn from 'behandlingTilbakekreving/src/kodeverk/sarligGrunn';
+import VilkarResultat from 'behandlingTilbakekreving/src/kodeverk/vilkarResultat';
+import tilbakekrevingKodeverkTyper from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingKodeverkTyper';
+import { getTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckTilbake';
+import TilbakekrevingAktivitetTabell from './tilbakekrevingPeriodePaneler/TilbakekrevingAktivitetTabell';
+import BelopetMottattIGodTroFormPanel from './tilbakekrevingPeriodePaneler/godTro/BelopetMottattIGodTroFormPanel';
+import AktsomhetFormPanel from './tilbakekrevingPeriodePaneler/aktsomhet/AktsomhetFormPanel';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
@@ -47,8 +46,8 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
     erBelopetIBehold: PropTypes.bool,
     formName: PropTypes.string.isRequired,
     tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: PropTypes.bool,
-    aktiviteter: PropTypes.arrayOf(PropTypes.shape()),
     updateActivity: PropTypes.func.isRequired,
+    antallPerioder: PropTypes.number.isRequired,
     vilkarResultatTyper: PropTypes.arrayOf(PropTypes.shape()),
     aktsomhetTyper: PropTypes.arrayOf(PropTypes.shape()),
     sarligGrunnTyper: PropTypes.arrayOf(PropTypes.shape()),
@@ -83,10 +82,11 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
     const {
       selectedItemData,
       tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
+      antallPerioder,
       ...formProps
     } = this.props;
 
-    if (selectedItemData.erTotalBelopUnder4Rettsgebyr && tilbakekrevSelvOmBeloepErUnder4Rettsgebyr === false) {
+    if (antallPerioder > 1 && selectedItemData.erTotalBelopUnder4Rettsgebyr && tilbakekrevSelvOmBeloepErUnder4Rettsgebyr === false) {
       this.setState(state => ({ ...state, showModal: !showModal }));
     } else {
       formProps.handleSubmit();
@@ -169,7 +169,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
                       <BelopetMottattIGodTroFormPanel readOnly={readOnly} erBelopetIBehold={erBelopetIBehold} />
                     )}
                     {valgtVilkarResultatType !== VilkarResultat.GOD_TRO && (
-                      <UaktsomhetFormPanel
+                      <AktsomhetFormPanel
                         harGrunnerTilReduksjon={harGrunnerTilReduksjon}
                         readOnly={readOnly}
                         handletUaktsomhetGrad={handletUaktsomhetGrad}
@@ -219,8 +219,8 @@ const transformValues = (selectedItemData, values, sarligGrunnTyper) => {
   const { valgtVilkarResultatType, begrunnelse } = values;
   const info = values[valgtVilkarResultatType];
 
-  const godTroData = valgtVilkarResultatType === VilkarResultat.GOD_TRO ? BelopetMottattIGodTroFormPanel.transformValuesGodTro(info) : {};
-  const annetData = valgtVilkarResultatType !== VilkarResultat.GOD_TRO ? UaktsomhetFormPanel.transformValuesAnnet(info, sarligGrunnTyper) : {};
+  const godTroData = valgtVilkarResultatType === VilkarResultat.GOD_TRO ? BelopetMottattIGodTroFormPanel.transformValues(info) : {};
+  const annetData = valgtVilkarResultatType !== VilkarResultat.GOD_TRO ? AktsomhetFormPanel.transformValues(info, sarligGrunnTyper) : {};
 
   return {
     ...selectedItemData,
@@ -240,13 +240,16 @@ const transformValues = (selectedItemData, values, sarligGrunnTyper) => {
 const buildInitalValues = (period) => {
   const { vilkarResultat, begrunnelse, vilkarResultatInfo } = period.storedData;
 
+  const vilkarResultatKode = vilkarResultat ? vilkarResultat.kode : undefined;
   const initialValues = {
-    valgtVilkarResultatType: vilkarResultat.kode,
+    valgtVilkarResultatType: vilkarResultatKode,
     begrunnelse,
+    erForeldet: period.erForeldet,
   };
 
-  const godTroData = vilkarResultat.kode === VilkarResultat.GOD_TRO ? BelopetMottattIGodTroFormPanel.buildIntialValuesGodTro(vilkarResultatInfo) : {};
-  const annetData = vilkarResultat.kode !== VilkarResultat.GOD_TRO ? UaktsomhetFormPanel.buildInitalValuesAnnet(vilkarResultatInfo) : {};
+  const godTroData = vilkarResultatKode === VilkarResultat.GOD_TRO ? BelopetMottattIGodTroFormPanel.buildIntialValues(vilkarResultatInfo) : {};
+  const annetData = vilkarResultatKode !== undefined && vilkarResultatKode !== VilkarResultat.GOD_TRO
+    ? AktsomhetFormPanel.buildInitalValues(vilkarResultatInfo) : {};
   return {
     ...initialValues,
     [initialValues.valgtVilkarResultatType]: {
