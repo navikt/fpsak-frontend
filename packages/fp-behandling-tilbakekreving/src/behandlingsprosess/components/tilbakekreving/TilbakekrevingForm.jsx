@@ -43,6 +43,7 @@ const TilbakekrevingFormImpl = ({
   readOnlySubmitButton,
   reduxFormChange: formChange,
   reduxFormInitialize: formInitialize,
+  antallPerioderMedAksjonspunkt,
   isDetailFormOpen,
   ...formProps
 }) => (
@@ -67,10 +68,11 @@ const TilbakekrevingFormImpl = ({
           detailPanelForm={TILBAKEKREVING_PERIODE_FORM_NAME}
           fieldNameToStoreDetailInfo="vilkarsVurdertePerioder"
           isTilbakekreving
+          readOnly={readOnly}
         >
           <TilbakekrevingPeriodeForm
             behandlingFormPrefix={behandlingFormPrefix}
-            antallPerioder={perioderFormatertForTimeline.length}
+            antallPerioderMedAksjonspunkt={antallPerioderMedAksjonspunkt}
             formName={TILBAKEKREVING_FORM_NAME}
             readOnly={readOnly}
           />
@@ -107,6 +109,7 @@ TilbakekrevingFormImpl.propTypes = {
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
   isDetailFormOpen: PropTypes.bool.isRequired,
+  antallPerioderMedAksjonspunkt: PropTypes.number.isRequired,
 };
 
 TilbakekrevingFormImpl.defaultProps = {
@@ -157,6 +160,9 @@ const leggTilTimelineData = createSelector([state => behandlingFormValueSelector
     });
 });
 
+const getAntallPerioderMedAksjonspunkt = createSelector([state => behandlingFormValueSelector(TILBAKEKREVING_FORM_NAME)(state, 'vilkarsVurdertePerioder')],
+  (perioder = []) => perioder.reduce((sum, periode) => (periode.erForeldet ? sum + 1 : sum), 0));
+
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const submitCallback = values => ownProps.submitCallback(transformValues(values));
   return (state) => {
@@ -169,6 +175,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       onSubmit: submitCallback,
       isDetailFormOpen: periodFormValues !== undefined && !isObjectEmpty(periodFormValues),
       readOnly: ownProps.readOnly || periodFormValues.erForeldet === true,
+      antallPerioderMedAksjonspunkt: getAntallPerioderMedAksjonspunkt(state),
     };
   };
 };
@@ -183,7 +190,8 @@ const mapDispatchToProps = dispatch => ({
 const validateForm = (values) => {
   const errors = {};
   const perioder = values.vilkarsVurdertePerioder;
-  if (perioder.length < 2) {
+  const antallPerioderMedAksjonspunkt = perioder.reduce((sum, periode) => (periode.erForeldet ? sum + 1 : sum), 0);
+  if (antallPerioderMedAksjonspunkt < 2) {
     return errors;
   }
 

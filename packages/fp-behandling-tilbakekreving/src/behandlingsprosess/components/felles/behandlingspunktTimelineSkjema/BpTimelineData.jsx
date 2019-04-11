@@ -95,6 +95,7 @@ export class BpTimelineDataImpl extends Component {
       callbackBackward,
       selectedItemData,
       children,
+      readOnly,
     } = this.props;
     const { showDelPeriodeModal } = this.state;
     return (
@@ -109,6 +110,7 @@ export class BpTimelineDataImpl extends Component {
               hideModal={this.hideModal}
               showModal={this.showModal}
               selectedItemData={selectedItemData}
+              readOnly={readOnly}
             />
             <PeriodSummary
               feilutbetaling={selectedItemData.feilutbetaling}
@@ -137,6 +139,7 @@ BpTimelineDataImpl.propTypes = {
   children: PropTypes.node.isRequired,
   beregnBeløp: PropTypes.func.isRequired,
   behandlingId: PropTypes.number.isRequired,
+  readOnly: PropTypes.bool.isRequired,
 };
 
 const mapStateToPros = state => ({

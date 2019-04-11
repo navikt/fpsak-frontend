@@ -17,7 +17,6 @@ const findArrowLeftImg = isHovering => (isHovering ? arrowLeftFilledImageUrl : a
 const findArrowRightImg = isHovering => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
 const splitPeriodImg = isHovering => (isHovering ? splitPeriodImageHoverUrl : splitPeriodImageUrl);
 
-const readOnly = false;
 const isEdited = false;
 
 const PerioderControler = ({
@@ -28,6 +27,7 @@ const PerioderControler = ({
   callbackForward,
   callbackBackward,
   selectedItemData,
+  readOnly,
 }) => (
   <Row>
     <Column xs="3">
@@ -95,6 +95,7 @@ PerioderControler.propTypes = {
   callbackForward: PropTypes.func.isRequired,
   callbackBackward: PropTypes.func.isRequired,
   selectedItemData: PropTypes.shape().isRequired,
+  readOnly: PropTypes.bool.isRequired,
 };
 
 export default PerioderControler;

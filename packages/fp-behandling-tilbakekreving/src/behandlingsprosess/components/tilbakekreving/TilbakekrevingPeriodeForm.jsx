@@ -47,7 +47,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
     formName: PropTypes.string.isRequired,
     tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: PropTypes.bool,
     updateActivity: PropTypes.func.isRequired,
-    antallPerioder: PropTypes.number.isRequired,
+    antallPerioderMedAksjonspunkt: PropTypes.number.isRequired,
     vilkarResultatTyper: PropTypes.arrayOf(PropTypes.shape()),
     aktsomhetTyper: PropTypes.arrayOf(PropTypes.shape()),
     sarligGrunnTyper: PropTypes.arrayOf(PropTypes.shape()),
@@ -82,11 +82,11 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
     const {
       selectedItemData,
       tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
-      antallPerioder,
+      antallPerioderMedAksjonspunkt,
       ...formProps
     } = this.props;
 
-    if (antallPerioder > 1 && selectedItemData.erTotalBelopUnder4Rettsgebyr && tilbakekrevSelvOmBeloepErUnder4Rettsgebyr === false) {
+    if (antallPerioderMedAksjonspunkt > 1 && selectedItemData.erTotalBelopUnder4Rettsgebyr && tilbakekrevSelvOmBeloepErUnder4Rettsgebyr === false) {
       this.setState(state => ({ ...state, showModal: !showModal }));
     } else {
       formProps.handleSubmit();
@@ -127,37 +127,39 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
         <Row>
           <Column md="6">
             <Row>
-              <Column md="10">
-                <Element>
-                  <FormattedMessage id="TilbakekrevingPeriodeForm.VilkarForTilbakekreving" />
-                </Element>
-                <VerticalSpacer eightPx />
-                <TextAreaField
-                  name="begrunnelse"
-                  label={{ id: 'Tilbakekreving.Vurdering' }}
-                  validate={[required, minLength3, maxLength1500, hasValidText]}
-                  maxLength={1500}
-                  readOnly={readOnly}
-                />
-                <VerticalSpacer twentyPx />
-                <Undertekst><FormattedMessage id="TilbakekrevingPeriodeForm.oppfylt" /></Undertekst>
-                <VerticalSpacer eightPx />
-                <RadioGroupField
-                  validate={[required]}
-                  name="valgtVilkarResultatType"
-                  direction="vertical"
-                  readOnly={readOnly}
-                  onChange={this.resetFields}
-                >
-                  {vilkarResultatTyper.map(vrt => (
-                    <RadioOption
-                      key={vrt.kode}
-                      label={vrt.navn}
-                      value={vrt.kode}
-                    />
-                  ))}
-                </RadioGroupField>
-              </Column>
+              {!selectedItemData.erForeldet && (
+                <Column md="10">
+                  <Element>
+                    <FormattedMessage id="TilbakekrevingPeriodeForm.VilkarForTilbakekreving" />
+                  </Element>
+                  <VerticalSpacer eightPx />
+                  <TextAreaField
+                    name="begrunnelse"
+                    label={{ id: 'TilbakekrevingPeriodeForm.Vurdering' }}
+                    validate={[required, minLength3, maxLength1500, hasValidText]}
+                    maxLength={1500}
+                    readOnly={readOnly}
+                  />
+                  <VerticalSpacer twentyPx />
+                  <Undertekst><FormattedMessage id="TilbakekrevingPeriodeForm.oppfylt" /></Undertekst>
+                  <VerticalSpacer eightPx />
+                  <RadioGroupField
+                    validate={[required]}
+                    name="valgtVilkarResultatType"
+                    direction="vertical"
+                    readOnly={readOnly}
+                    onChange={this.resetFields}
+                  >
+                    {vilkarResultatTyper.map(vrt => (
+                      <RadioOption
+                        key={vrt.kode}
+                        label={vrt.navn}
+                        value={vrt.kode}
+                      />
+                    ))}
+                  </RadioGroupField>
+                </Column>
+                )}
             </Row>
           </Column>
           <Column md="6">
@@ -196,7 +198,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
               mini
               htmlType="button"
               onClick={this.saveOrToggleModal}
-              disabled={formProps.pristine}
+              disabled={formProps.pristine || readOnly}
             >
               <FormattedMessage id="TilbakekrevingPeriodeForm.Oppdater" />
             </Hovedknapp>

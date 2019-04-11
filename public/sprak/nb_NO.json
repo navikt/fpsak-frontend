@@ -2178,12 +2178,6 @@
   "ArbeidsforholdInfoPanel.IngenArbeidsforholdRegistrert": "Ingen arbeidsforhold registrert. Vurder om det er dokumentert andre arbeidsforhold.",
   "ArbeidsforholdInfoPanel.AvklarArbeidsforhold": "Avklar aksjonspunkt på arbeidsforhold som skal benyttes i behandlingen",
 
-  "Tilbakekreving.Vurdering":"Vurdering",
-  "Tilbakekreving.RadioGroup.UaktsomhetGrad":"I hvilken grad har bruker handlet uaktsomhet?",
-  "Tilbakekreving.RadioGroup.BeløpetIBehold": "Er beløpet i behold",
-  "Tilbakekreving.Ja": "Ja",
-  "Tilbakekreving.Nei": "Nei",
-  
   "AktsomhetGradForsettFormPanel.Andel": "Andel som skal tilbakekreves",
   "AktsomhetGradForsettFormPanel.Renter": "Det legges til 10% renter",
 
@@ -2210,6 +2204,9 @@
   "TilbakekrevingPeriodeForm.TotalbelopetUnder4Rettsgebyr": "Totalbeløpet er under 4 rettsgebyr. Dersom 6.ledd skal anvendes for å frafalle tilbakekrevingen, må denne anvendes likt på alle periodene.",
   "TilbakekrevingPeriodeForm.Oppdater": "Oppdater",
   "TilbakekrevingPeriodeForm.Avbryt": "Avbryt",
+  "TilbakekrevingPeriodeForm.Vurdering":"Vurdering",
+  
+  "AktsomhetSarligeGrunnerFormPanel.GrunnerTilReduksjon":"Særlige grunner som er vektlagt (4.ledd)",
   
   "TilbakekrevingAktivitetTabell.Aktivitet": "Aktivitet",
   "TilbakekrevingAktivitetTabell.FeilutbetaltBelop": "Feilutbetalt beløp",

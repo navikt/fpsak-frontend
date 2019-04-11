@@ -125,6 +125,7 @@ export class BpTimelinePanel extends Component {
       fieldNameToStoreDetailInfo,
       hovedsokerKjonnKode,
       isTilbakekreving,
+      readOnly,
     } = this.props;
     const { selectedItem } = this.state;
     const childWithProps = selectedItem ? React.cloneElement(children, {
@@ -157,6 +158,7 @@ export class BpTimelinePanel extends Component {
             behandlingFormPrefix={behandlingFormPrefix}
             formName={formName}
             activityPanelName={fieldNameToStoreDetailInfo}
+            readOnly={readOnly}
           >
             { childWithProps }
           </BpTimelineData>
@@ -178,10 +180,12 @@ BpTimelinePanel.propTypes = {
   reduxFormInitialize: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
   isTilbakekreving: PropTypes.bool,
+  readOnly: PropTypes.bool,
 };
 
 BpTimelinePanel.defaultProps = {
   isTilbakekreving: false,
+  readOnly: false,
 };
 
 export default BpTimelinePanel;

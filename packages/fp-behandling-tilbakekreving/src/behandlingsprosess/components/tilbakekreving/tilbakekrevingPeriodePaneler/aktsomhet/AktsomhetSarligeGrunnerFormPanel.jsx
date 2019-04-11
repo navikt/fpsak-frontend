@@ -29,7 +29,7 @@ const AktsomhetSarligeGrunnerFormPanel = ({
 }) => (
   <div>
     <Undertekst>
-      <FormattedMessage id="UaktsomhetGradFormPanel.GrunnerTilReduksjon" />
+      <FormattedMessage id="AktsomhetSarligeGrunnerFormPanel.GrunnerTilReduksjon" />
     </Undertekst>
     <VerticalSpacer eightPx />
     {sarligGrunnTyper.map(sgt => (
