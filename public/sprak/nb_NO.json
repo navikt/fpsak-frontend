@@ -1020,6 +1020,12 @@
   "Avregning.bruker": "Bruker",
   "Avregning.varseltekst": "Send varsel om tilbakekreving",
   "Avregning.fritekst": "Fritekst i varselet",
+  "Avregning.SVP.nyttBeløp": "Svangerskapspenger nytt beløp",
+  "Avregning.SVP.tidligereUtbetalt": "Svangerskapspenger tidligere utbetalt",
+  "Avregning.SVP.differanse": "Svangerskapspenger avvik",
+  "Avregning.SVPREF.nyttBeløp": "Svangerskapspenger nytt beløp",
+  "Avregning.SVPREF.tidligereUtbetalt": "Svangerskapspenger tidligere utbetalt",
+  "Avregning.SVPREF.differanse": "Svangerskapspenger avvik",
 
   "Beregningsgrunnlag.Info": "Fakta for beregningsgrunnlag",
   "Beregningsgrunnlag.Title": "Beregning",
