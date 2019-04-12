@@ -151,43 +151,44 @@ export const shouldBeSubmitted = (harPeriodeAarsakGraderingEllerRefusjon, values
 export const finnRedigerteAndeler = (values, index, harPeriodeAarsakGraderingEllerRefusjon) => (values[getFieldNameKey(index)]
   .filter(({ skalRedigereInntekt }) => harPeriodeAarsakGraderingEllerRefusjon || skalRedigereInntekt));
 
-export const mapTilFastsatteVerdier = aktivitet => ({
+export const mapTilFastsatteVerdier = (aktivitet, skalHaBesteberegning) => ({
   refusjon: aktivitet.skalKunneEndreRefusjon ? removeSpacesFromNumber(aktivitet.refusjonskrav) : null,
   fastsattBeløp: removeSpacesFromNumber(aktivitet.fastsattBelop),
   inntektskategori: aktivitet.inntektskategori,
+  skalHaBesteberegning,
 });
 
-export const mapAndel = (harKunYtelse, endringBGPerioder, index) => aktivitet => ({
+export const mapAndel = (harKunYtelse, endringBGPerioder, index, skalHaBesteberegning) => aktivitet => ({
   andel: aktivitet.andel,
   andelsnr: gjelderKunYtelse(harKunYtelse, aktivitet) ? getAndelsnrForKunYtelse(endringBGPerioder[index]) : getAndelsnr(aktivitet),
   arbeidsforholdId: aktivitet.arbeidsforholdId !== '' ? aktivitet.arbeidsforholdId : null,
   nyAndel: aktivitet.nyAndel,
   lagtTilAvSaksbehandler: aktivitet.lagtTilAvSaksbehandler,
-  fastsatteVerdier: mapTilFastsatteVerdier(aktivitet),
+  fastsatteVerdier: mapTilFastsatteVerdier(aktivitet, skalHaBesteberegning),
 });
 
-export const lagPeriodeForSubmit = (values, index, harPeriodeAarsakGraderingEllerRefusjon, harKunYtelse, endringBGPerioder) => ({
+export const lagPeriodeForSubmit = (values, index, harPeriodeAarsakGraderingEllerRefusjon, harKunYtelse, endringBGPerioder, skalHaBesteberegning) => ({
   andeler: finnRedigerteAndeler(values, index, harPeriodeAarsakGraderingEllerRefusjon)
-    .map(mapAndel(harKunYtelse, endringBGPerioder, index)),
+    .map(mapAndel(harKunYtelse, endringBGPerioder, index, skalHaBesteberegning)),
   fom: endringBGPerioder[index].fom,
   tom: endringBGPerioder[index].tom,
 });
 
-export const transformPerioder = (endringBGPerioder, values, harKunYtelse) => {
+export const transformPerioder = (endringBGPerioder, values, harKunYtelse, skalHaBesteberegning) => {
   const endringBeregningsgrunnlagPerioder = [];
   for (let index = 0; index < endringBGPerioder.length; index += 1) {
     const { harPeriodeAarsakGraderingEllerRefusjon } = endringBGPerioder[index];
     if (shouldBeSubmitted(harPeriodeAarsakGraderingEllerRefusjon, values, index)) {
       endringBeregningsgrunnlagPerioder.push(lagPeriodeForSubmit(values, index, harPeriodeAarsakGraderingEllerRefusjon,
-        harKunYtelse, endringBGPerioder));
+        harKunYtelse, endringBGPerioder, skalHaBesteberegning));
     }
   }
   return endringBeregningsgrunnlagPerioder;
 };
 
-EndringBeregningsgrunnlagForm.transformValues = (values, endringBGPerioder, harKunYtelse) => ({
+EndringBeregningsgrunnlagForm.transformValues = (values, endringBGPerioder, harKunYtelse, skalHaBesteberegning) => ({
   fastsettEndringBeregningsgrunnlag: {
-    endretBeregningsgrunnlagPerioder: transformPerioder(endringBGPerioder, values, harKunYtelse),
+    endretBeregningsgrunnlagPerioder: transformPerioder(endringBGPerioder, values, harKunYtelse, skalHaBesteberegning),
   },
 });
 

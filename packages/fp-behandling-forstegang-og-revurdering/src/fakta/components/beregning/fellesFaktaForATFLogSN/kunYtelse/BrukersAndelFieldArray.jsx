@@ -205,6 +205,9 @@ const mapBrukesAndelToSortedObject = (value) => {
 };
 
 BrukersAndelFieldArray.validate = (values) => {
+  if (!values) {
+    return null;
+  }
   const arrayErrors = values.map((andelFieldValues) => {
     const fieldErrors = {};
     fieldErrors.fastsattBelop = required(andelFieldValues.fastsattBelop);

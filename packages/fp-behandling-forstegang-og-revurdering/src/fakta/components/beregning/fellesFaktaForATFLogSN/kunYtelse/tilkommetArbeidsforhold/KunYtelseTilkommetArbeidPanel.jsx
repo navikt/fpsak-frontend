@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import { isArrayEmpty, formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { isArrayEmpty, formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import { getKunYtelse, getEndringBeregningsgrunnlagPerioder } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { besteberegningField } from '../KunYtelseBesteberegningPanel';
@@ -30,12 +30,14 @@ export const KunYtelseTilkommetArbeidPanel = ({
   isAksjonspunktClosed,
   perioder,
   skalViseTilkommetTabell,
+  harKunBrukersAndelIForstePeriode,
 }) => (
   <div>
     <KunYtelsePanel
       readOnly={readOnly}
       isAksjonspunktClosed={isAksjonspunktClosed}
       skalSjekkeBesteberegning={skalSjekkeBesteberegning}
+      skalViseInntektstabell={harKunBrukersAndelIForstePeriode}
     />
     {skalViseTilkommetTabell
     && (
@@ -56,6 +58,7 @@ KunYtelseTilkommetArbeidPanel.propTypes = {
   skalSjekkeBesteberegning: PropTypes.bool.isRequired,
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   skalViseTilkommetTabell: PropTypes.bool.isRequired,
+  harKunBrukersAndelIForstePeriode: PropTypes.bool.isRequired,
 };
 
 
@@ -74,8 +77,7 @@ const buildPeriodeInitialValues = (periode, isRevurdering) => {
         andelIArbeid: settAndelIArbeid(andel.andelIArbeid),
         fordelingForrigeBehandling: isRevurdering && (andel.fordelingForrigeBehandling || andel.fordelingForrigeBehandling === 0)
           ? formatCurrencyNoKr(andel.fordelingForrigeBehandling) : null,
-        fastsattBelop: settFastsattBelop(periode.harPeriodeAarsakGraderingEllerRefusjon,
-          andel.beregnetPrMnd, andel.fastsattForrige, andel.fordelingForrigeBehandling, andel.fastsattAvSaksbehandler),
+        fastsattBelop: settFastsattBelop(andel.beregnetPrMnd, andel.fastsattForrige, andel.fastsattAvSaksbehandler),
         refusjonskrav: andel.refusjonskrav && !erBrukersAndel ? formatCurrencyNoKr(andel.refusjonskrav) : '0',
         skalKunneEndreRefusjon: periode.skalKunneEndreRefusjon && !erBrukersAndel ? periode.skalKunneEndreRefusjon : false,
         belopFraInntektsmelding: andel.belopFraInntektsmelding,
@@ -97,6 +99,11 @@ const buildInitialValuesForPerioder = (endringBGPerioder, isRevurdering) => {
   return initialValues;
 };
 
+const harAndreStatuserEnnBrukersAndelIForstePeriode = endringBGPerioder => (endringBGPerioder[0].endringBeregningsgrunnlagAndeler
+.find(a => a.aktivitetStatus.kode !== aktivitetStatus.BRUKERS_ANDEL) !== undefined);
+
+const finnPerioder = endringBGPerioder => (harAndreStatuserEnnBrukersAndelIForstePeriode(endringBGPerioder) ? endringBGPerioder
+: endringBGPerioder.slice(1, endringBGPerioder.length));
 
 KunYtelseTilkommetArbeidPanel.buildInitialValues = (kunYtelse, endringBGPerioder, isRevurdering, aktivertePaneler) => {
   if (!harKunYtelseOgEndretBeregningsgrunnlag(aktivertePaneler)) {
@@ -105,21 +112,34 @@ KunYtelseTilkommetArbeidPanel.buildInitialValues = (kunYtelse, endringBGPerioder
   if (!kunYtelse || !kunYtelse.andeler || kunYtelse.andeler.length === 0) {
     return {};
   }
-  if (!endringBGPerioder || endringBGPerioder.length < 2) {
+  if (!endringBGPerioder || endringBGPerioder.length === 0) {
     return {};
   }
-  const perioder = endringBGPerioder.slice(1, endringBGPerioder.length);
+  if (harAndreStatuserEnnBrukersAndelIForstePeriode(endringBGPerioder)) {
+    return {
+      ...buildInitialValuesForPerioder(endringBGPerioder, isRevurdering),
+    };
+  }
   return {
     ...KunYtelsePanel.buildInitialValues(kunYtelse),
-    ...buildInitialValuesForPerioder(perioder, isRevurdering),
+    ...buildInitialValuesForPerioder(finnPerioder(endringBGPerioder), isRevurdering),
   };
 };
 
 
-KunYtelseTilkommetArbeidPanel.transformValues = (values, kunYtelse, endringBGPerioder) => ({
-  ...EndringBeregningsgrunnlagForm.transformValues(values, endringBGPerioder.slice(1, endringBGPerioder.length), true),
+KunYtelseTilkommetArbeidPanel.transformValues = (values, kunYtelse, endringBGPerioder) => {
+  if (harAndreStatuserEnnBrukersAndelIForstePeriode(endringBGPerioder)) {
+    return {
+      faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG],
+      ...EndringBeregningsgrunnlagForm.transformValues(values, finnPerioder(endringBGPerioder), true, values[besteberegningField] === true),
+    };
+  }
+  return {
+    faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE, faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG],
+  ...EndringBeregningsgrunnlagForm.transformValues(values, finnPerioder(endringBGPerioder), true, values[besteberegningField] === true),
   ...KunYtelsePanel.transformValues(values, kunYtelse),
-});
+  };
+};
 
 
 const skalRedigereInntekt = andel => andel.harPeriodeAarsakGraderingEllerRefusjon;
@@ -145,15 +165,27 @@ const validatePeriode = (periode, sumFordelingKunYtelse, skjaeringstidspunktBere
   return null;
 };
 
+
+const finnBelop = fastsattBelop => (fastsattBelop && fastsattBelop !== '' ? removeSpacesFromNumber(fastsattBelop) : 0);
+
+const summerForstePeriode = (values) => {
+  const verdier = values[getFieldNameKey(0)]
+.map(andel => andel.fastsattBelop);
+return verdier.reduce((sum, fastsattBelop) => (sum + finnBelop(fastsattBelop)), 0);
+};
+
 KunYtelseTilkommetArbeidPanel.validate = (values, aktivertePaneler, kunYtelse, endringBGPerioder, skjaeringstidspunktBeregning) => {
   if (!values || !harKunYtelseOgEndretBeregningsgrunnlag(aktivertePaneler)) {
     return null;
   }
   const kunYtelseErrors = KunYtelsePanel.validate(values, aktivertePaneler, kunYtelse);
-  const perioderEtterForste = endringBGPerioder.slice(1, endringBGPerioder.length);
-  const sumFordeling = KunYtelsePanel.summerFordeling(values);
+  const perioder = harAndreStatuserEnnBrukersAndelIForstePeriode(endringBGPerioder)
+    ? endringBGPerioder : endringBGPerioder.slice(1, endringBGPerioder.length);
+
+  const sumFordeling = harAndreStatuserEnnBrukersAndelIForstePeriode(endringBGPerioder) ? summerForstePeriode(values)
+  : KunYtelsePanel.summerFordeling(values);
   const endringErrors = {};
-  for (let i = 0; i < perioderEtterForste.length; i += 1) {
+  for (let i = 0; i < perioder.length; i += 1) {
     endringErrors[getFieldNameKey(i)] = validatePeriode(values[getFieldNameKey(i)], sumFordeling, skjaeringstidspunktBeregning);
   }
   return {
@@ -167,7 +199,8 @@ const mapStateToProps = (state) => {
   const perioder = getEndringBeregningsgrunnlagPerioder(state);
   return {
     skalSjekkeBesteberegning: kunYtelse.fodendeKvinneMedDP,
-    perioder: perioder.slice(1, perioder.length),
+    perioder: finnPerioder(perioder),
+    harKunBrukersAndelIForstePeriode: !harAndreStatuserEnnBrukersAndelIForstePeriode(perioder),
     skalViseTilkommetTabell: !kunYtelse.fodendeKvinneMedDP
     || getFormValuesForBeregning(state)[besteberegningField] !== undefined,
   };

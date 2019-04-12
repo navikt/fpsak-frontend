@@ -83,9 +83,9 @@ const forventetRefusjonString = 'arbeidsgiver 2 (987654321) f.o.m. 20.01.2017 og
 + ' arbeidsgiver 4 (987654321) f.o.m. 20.01.2017 - t.o.m. 15.06.2017';
 
 
-const lagStateMedFaktaOmBeregningOgValues = (faktaOmBeregning, values = {}) => {
+const lagStateMedBeregningsgrunnlagOgValues = (bg, values = {}) => {
   const ap = { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN } };
-  return lagStateMedAksjonspunkterOgBeregningsgrunnlag([ap], { faktaOmBeregning }, values);
+  return lagStateMedAksjonspunkterOgBeregningsgrunnlag([ap], bg, values);
 };
 
 describe('<EndretBeregningsgrunnlagUtils>', () => {
@@ -115,15 +115,16 @@ describe('<EndretBeregningsgrunnlagUtils>', () => {
         endredeArbeidsforhold: [],
       },
     };
-    const state = lagStateMedFaktaOmBeregningOgValues(faktaOmBeregning);
+    const state = lagStateMedBeregningsgrunnlagOgValues({ faktaOmBeregning });
     const dateHeading = <div id="DateHeading" />;
     const endringHeading = createEndringHeadingForDate(state, periodeFom, periodeTom, dateHeading, false);
     expect(endringHeading.props.children.length).to.equal(3);
     expect(endringHeading.props.children[2].props.id).to.equal('DateHeading');
-    expect(endringHeading.props.children[0].props.children.length).to.equal(3);
-    expect(endringHeading.props.children[0].props.children[0].length).to.equal(0);
-    expect(endringHeading.props.children[0].props.children[1]).to.equal(null);
-    expect(endringHeading.props.children[0].props.children[2]).to.equal(false);
+    expect(endringHeading.props.children[0].props.children.length).to.equal(4);
+    expect(endringHeading.props.children[0].props.children[0]).to.equal(false);
+    expect(endringHeading.props.children[0].props.children[1].length).to.equal(0);
+    expect(endringHeading.props.children[0].props.children[2]).to.equal(null);
+    expect(endringHeading.props.children[0].props.children[3]).to.equal(false);
   });
 
   it('skal lage header med gradering og refusjon informasjon', () => {
@@ -138,17 +139,18 @@ describe('<EndretBeregningsgrunnlagUtils>', () => {
         endredeArbeidsforhold: forhold,
       },
     };
-    const state = lagStateMedFaktaOmBeregningOgValues(faktaOmBeregning);
+    const state = lagStateMedBeregningsgrunnlagOgValues({ faktaOmBeregning });
     const dateHeading = <div id="DateHeading" />;
     const endringHeading = createEndringHeadingForDate(state, periodeFom, periodeTom, dateHeading, false);
     expect(endringHeading.props.children.length).to.equal(3);
     expect(endringHeading.props.children[2].props.id).to.equal('DateHeading');
-    expect(endringHeading.props.children[0].props.children.length).to.equal(3);
-    expect(endringHeading.props.children[0].props.children[0].length).to.equal(2);
-    expect(endringHeading.props.children[0].props.children[0][0].key).to.equal('gradering');
-    expect(endringHeading.props.children[0].props.children[0][1].key).to.equal('refusjon');
-    expect(endringHeading.props.children[0].props.children[1]).to.equal(false);
+    expect(endringHeading.props.children[0].props.children.length).to.equal(4);
+    expect(endringHeading.props.children[0].props.children[0]).to.equal(false);
+    expect(endringHeading.props.children[0].props.children[1].length).to.equal(2);
+    expect(endringHeading.props.children[0].props.children[1][0].key).to.equal('gradering');
+    expect(endringHeading.props.children[0].props.children[1][1].key).to.equal('refusjon');
     expect(endringHeading.props.children[0].props.children[2]).to.equal(false);
+    expect(endringHeading.props.children[0].props.children[3]).to.equal(false);
   });
 
 
@@ -165,15 +167,16 @@ describe('<EndretBeregningsgrunnlagUtils>', () => {
         endredeArbeidsforhold: [],
       },
     };
-    const state = lagStateMedFaktaOmBeregningOgValues(faktaOmBeregning);
+    const state = lagStateMedBeregningsgrunnlagOgValues({ faktaOmBeregning });
     const dateHeading = <div id="DateHeading" />;
     const endringHeading = createEndringHeadingForDate(state, periodeFom, periodeTom, dateHeading, false);
     expect(endringHeading.props.children.length).to.equal(3);
     expect(endringHeading.props.children[2].props.id).to.equal('DateHeading');
-    expect(endringHeading.props.children[0].props.children.length).to.equal(3);
-    expect(endringHeading.props.children[0].props.children[0].length).to.equal(0);
-    expect(endringHeading.props.children[0].props.children[1].props.id).to.equal('BeregningInfoPanel.VurderOgFastsettATFL.ATFLSammeOrgFastsettATFLAlleOppdrag');
-    expect(endringHeading.props.children[0].props.children[2]).to.equal(false);
+    expect(endringHeading.props.children[0].props.children.length).to.equal(4);
+    expect(endringHeading.props.children[0].props.children[0]).to.equal(false);
+    expect(endringHeading.props.children[0].props.children[1].length).to.equal(0);
+    expect(endringHeading.props.children[0].props.children[2].props.id).to.equal('BeregningInfoPanel.VurderOgFastsettATFL.ATFLSammeOrgFastsettATFLAlleOppdrag');
+    expect(endringHeading.props.children[0].props.children[3]).to.equal(false);
   });
 
 
@@ -190,17 +193,45 @@ describe('<EndretBeregningsgrunnlagUtils>', () => {
         endredeArbeidsforhold: [],
       },
     };
-    const state = lagStateMedFaktaOmBeregningOgValues(faktaOmBeregning);
+    const state = lagStateMedBeregningsgrunnlagOgValues({ faktaOmBeregning });
     const dateHeading = <div id="DateHeading" />;
     const endringHeading = createEndringHeadingForDate(state, periodeFom, periodeTom, dateHeading, true);
     expect(endringHeading.props.children.length).to.equal(3);
     expect(endringHeading.props.children[2].props.id).to.equal('DateHeading');
-    expect(endringHeading.props.children[0].props.children.length).to.equal(3);
-    expect(endringHeading.props.children[0].props.children[0].length).to.equal(0);
-    expect(endringHeading.props.children[0].props.children[1]).to.equal(false);
-    expect(endringHeading.props.children[0].props.children[2].props.id).to.equal('BeregningInfoPanel.FordelingBG.FastsettMånedsbeløp');
+    expect(endringHeading.props.children[0].props.children.length).to.equal(4);
+    expect(endringHeading.props.children[0].props.children[0]).to.equal(false);
+    expect(endringHeading.props.children[0].props.children[1].length).to.equal(0);
+    expect(endringHeading.props.children[0].props.children[2]).to.equal(false);
+    expect(endringHeading.props.children[0].props.children[3].props.id).to.equal('BeregningInfoPanel.FordelingBG.FastsettMånedsbeløp');
   });
 
+  it('skal lage header med informasjon om at søker har kun ytelse som inntekt', () => {
+    const periodeFom = '2018-01-01';
+    const periodeTom = '2019-01-01';
+    const faktaOmBeregning = {
+      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG },
+        { kode: faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE }],
+      endringBeregningsgrunnlag: {
+        endringBeregningsgrunnlagPerioder: [
+          { fom: periodeFom, tom: periodeTom },
+        ],
+        endredeArbeidsforhold: [],
+      },
+    };
+    const beregningsgrunnlagPrStatusOgAndel = [
+      { aktivitetStatus: { kode: 'AT' } },
+    ];
+    const state = lagStateMedBeregningsgrunnlagOgValues({ faktaOmBeregning, beregningsgrunnlagPeriode: [{ beregningsgrunnlagPrStatusOgAndel }] });
+    const dateHeading = <div id="DateHeading" />;
+    const endringHeading = createEndringHeadingForDate(state, periodeFom, periodeTom, dateHeading, true);
+    expect(endringHeading.props.children.length).to.equal(3);
+    expect(endringHeading.props.children[2].props.id).to.equal('DateHeading');
+    expect(endringHeading.props.children[0].props.children.length).to.equal(4);
+    expect(endringHeading.props.children[0].props.children[0].props.id).to.equal('KunYtelsePanel.YtelseSomEnesteInntekt');
+    expect(endringHeading.props.children[0].props.children[1].length).to.equal(0);
+    expect(endringHeading.props.children[0].props.children[2]).to.equal(false);
+    expect(endringHeading.props.children[0].props.children[3].props.id).to.equal('BeregningInfoPanel.FordelingBG.FastsettMånedsbeløp');
+  });
 
   it('skal lage endret arbeidsforhold string', () => {
     const endretAFGraderingString = createEndretArbeidsforholdString(forhold

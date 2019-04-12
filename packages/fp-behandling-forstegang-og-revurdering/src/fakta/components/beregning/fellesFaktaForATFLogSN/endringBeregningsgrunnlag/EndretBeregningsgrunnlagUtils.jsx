@@ -6,6 +6,7 @@ import {
 } from '@fpsak-frontend/utils';
 import { Element } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import faktaOmBeregningTilfelle, { harFastsettATFLInntektTilfelle } from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import moment from 'moment';
@@ -14,6 +15,7 @@ import {
   getEndringBeregningsgrunnlag,
   getFaktaOmBeregningTilfellerKoder,
   getFaktaOmBeregning,
+  getBeregningsgrunnlag,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { skalFastsetteForATUavhengigAvATFLSammeOrg, skalFastsetteForFLUavhengigAvATFLSammeOrg } from '../BgFordelingUtils';
 import { getFormValuesForBeregning } from '../../BeregningFormUtils';
@@ -192,6 +194,15 @@ export const lagFastsetteATFLInntektHeader = (values, faktaOmBeregning) => {
   return null;
 };
 
+const harKunYtelse = faktaOmBeregning => faktaOmBeregning.faktaOmBeregningTilfeller
+.find(({ kode }) => kode === faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE) !== undefined;
+
+const harKunBrukersAndelIForstePeriode = (state) => {
+  const bg = getBeregningsgrunnlag(state);
+  const forstePeriode = bg.beregningsgrunnlagPeriode[0];
+  return forstePeriode.beregningsgrunnlagPrStatusOgAndel.find(andel => andel.aktivitetStatus.kode !== aktivitetStatuser.BRUKERS_ANDEL) === undefined;
+};
+
 
 export const createEndringHeadingForDate = (state, periodeFom, periodeTom, dateHeading, harPeriodeaarsak) => {
   const heading = findGraderingOrRefusjonHeading(state, periodeFom, periodeTom);
@@ -200,6 +211,9 @@ export const createEndringHeadingForDate = (state, periodeFom, periodeTom, dateH
   return (
     <ElementWrapper>
       <Element>
+        {harKunYtelse(faktaOmBeregning) && !harKunBrukersAndelIForstePeriode(state)
+          && <FormattedMessage id="KunYtelsePanel.YtelseSomEnesteInntekt" />
+        }
         {heading.map((text, index) => (
           <ElementWrapper key={index === 0 ? 'gradering' : 'refusjon'}>
             {text}

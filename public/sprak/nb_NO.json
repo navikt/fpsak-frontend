@@ -1181,6 +1181,7 @@
   "BeregningInfoPanel.KunstigArbeidsforhold.FastsettKunstigArbeidsforhold": "Det finnes ikke registerdata for arbeidsforholdet og det er ikke mottatt inntektsmelding. Fastsett månedsinntekt for arbeidsforholdet",
 
   "KunYtelsePanel.Overskrift": "Søker har ytelse som eneste inntekt. Fastsett månedsbeløp for fordeling av beregningsgrunnlaget.",
+  "KunYtelsePanel.YtelseSomEnesteInntekt": "Søker har ytelse som eneste inntekt. ",
   "KunYtelsePanel.HarBesteberegning": "Søker har ytelse som eneste inntekt. Skal denne fordeles etter besteberegning?",
   "KunYtelsePanel.OverskriftBesteberegning": "Fastsett månedsbeløp for brutto beregningsgrunnlag etter besteberegning",
   "BeregningInfoPanel.EndringBG.PeriodeFom": "Gjeldende f.o.m. {fom}",

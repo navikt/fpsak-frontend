@@ -35,7 +35,6 @@ export const setFaktaPanelForKunYtelse = (faktaPanels, tilfeller, readOnly, isAk
 export const transformValuesForKunYtelse = (values, kunYtelse, endringBGPerioder, tilfeller) => {
   if (harKunYtelseOgEndretBeregningsgrunnlag(tilfeller)) {
     return {
-      faktaOmBeregningTilfeller: [FASTSETT_BG_KUN_YTELSE, FASTSETT_ENDRET_BEREGNINGSGRUNNLAG],
       ...KunYtelseTilkommetArbeidPanel.transformValues(values, kunYtelse, endringBGPerioder),
     };
   }

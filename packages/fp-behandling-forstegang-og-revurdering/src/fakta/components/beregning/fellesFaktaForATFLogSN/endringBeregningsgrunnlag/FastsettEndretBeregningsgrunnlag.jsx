@@ -33,7 +33,8 @@ FastsettEndretBeregningsgrunnlagImpl.buildInitialValues = (endringBGPerioder, ti
   return buildValues(tilfeller, build);
 };
 
-FastsettEndretBeregningsgrunnlagImpl.transformValues = (values, endringBGPerioder) => EndringBeregningsgrunnlagForm.transformValues(values, endringBGPerioder);
+FastsettEndretBeregningsgrunnlagImpl.transformValues = (values, endringBGPerioder) => EndringBeregningsgrunnlagForm.transformValues(values,
+  endringBGPerioder, false, false);
 
 export const validateValues = (tilfeller, validateBg) => {
   if (!harKunTilfellerSomStøtterEndringBG(tilfeller)) {

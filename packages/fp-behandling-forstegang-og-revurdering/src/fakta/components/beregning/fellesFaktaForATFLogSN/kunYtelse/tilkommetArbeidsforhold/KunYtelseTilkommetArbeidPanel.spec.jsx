@@ -82,6 +82,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
       isAksjonspunktClosed={false}
       perioder={[]}
       skalViseTilkommetTabell={false}
+      harKunBrukersAndelIForstePeriode
     />);
     const tilkommetTabell = wrapper.find(EndringBeregningsgrunnlagForm);
     expect(tilkommetTabell).to.have.length(0);
@@ -94,6 +95,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
       isAksjonspunktClosed={false}
       perioder={[]}
       skalViseTilkommetTabell
+      harKunBrukersAndelIForstePeriode
     />);
     const tilkommetTabell = wrapper.find(EndringBeregningsgrunnlagForm);
     expect(tilkommetTabell).to.have.length(1);
@@ -148,6 +150,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     expect(endringPeriodeInitialValues[0].fordelingForrigeBehandling).to.equal(null);
     expect(endringPeriodeInitialValues[0].skalKunneEndreRefusjon).to.equal(false);
     expect(endringPeriodeInitialValues[0].harPeriodeAarsakGraderingEllerRefusjon).to.equal(true);
+    expect(endringPeriodeInitialValues[0].fastsattBelop).to.equal('10 000');
 
     expect(endringPeriodeInitialValues[1].andel).to.equal('Virksomheten (3284788923) ...a7e2');
     expect(endringPeriodeInitialValues[1].andelsnr).to.equal(2);
@@ -161,6 +164,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     expect(endringPeriodeInitialValues[1].refusjonskrav).to.equal('10 000');
     expect(endringPeriodeInitialValues[1].skalKunneEndreRefusjon).to.equal(true);
     expect(endringPeriodeInitialValues[1].harPeriodeAarsakGraderingEllerRefusjon).to.equal(true);
+    expect(endringPeriodeInitialValues[1].fastsattBelop).to.equal('');
   });
 
 
@@ -255,14 +259,18 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
 
   it('skal ikkje validere om det ikkje er kun ytelse og endret beregningsgrunnlag', () => {
     const values = setKunYtelseFastsattBeløp('10 000', 'ARBEIDSTAKER');
-    const endringBGPerioder = [{ fom: '2018-08-01', tom: null, harPeriodeAarsakGraderingEllerRefusjon: false }];
+    const endringBGPerioder = [{
+ fom: '2018-08-01', tom: null, harPeriodeAarsakGraderingEllerRefusjon: false, endringBeregningsgrunnlagAndeler: [],
+}];
     const errors = KunYtelseTilkommetArbeidPanel.validate(values, [], kunYtelseUtenDP, endringBGPerioder, skjaeringstidspunktBeregning);
     expect(errors).to.equal(null);
   });
 
 
   it('skal validere kun ytelse om det ikkje er fastsatt beløp', () => {
-    const endringBGPerioder = [{ fom: '2018-08-01', tom: null, harPeriodeAarsakGraderingEllerRefusjon: false }];
+    const endringBGPerioder = [{
+ fom: '2018-08-01', tom: null, harPeriodeAarsakGraderingEllerRefusjon: false, endringBeregningsgrunnlagAndeler: [],
+}];
     const errors = KunYtelseTilkommetArbeidPanel.validate(setKunYtelseFastsattBeløp(null, 'ARBEIDSTAKER'),
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP, endringBGPerioder, skjaeringstidspunktBeregning);
@@ -272,7 +280,9 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
   });
 
   it('skal validere kun ytelse om det ikkje er fastsatt inntektskategori', () => {
-    const endringBGPerioder = [{ fom: '2018-08-01', tom: null, harPeriodeAarsakGraderingEllerRefusjon: false }];
+    const endringBGPerioder = [{
+ fom: '2018-08-01', tom: null, harPeriodeAarsakGraderingEllerRefusjon: false, endringBeregningsgrunnlagAndeler: [],
+}];
     const errors = KunYtelseTilkommetArbeidPanel.validate(setKunYtelseFastsattBeløp('10 000', ''),
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP, endringBGPerioder, skjaeringstidspunktBeregning);
@@ -295,8 +305,12 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
       inntektskategori: 'ARBEIDSTAKER',
       refusjonskravFraInntektsmelding: 10000,
     }];
-    const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
-      { fom: '2018-10-02', tom: null, harPeriodeAarsakGraderingEllerRefusjon: true }];
+    const endringBGPerioder = [{
+ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false, endringBeregningsgrunnlagAndeler: [],
+},
+      {
+ fom: '2018-10-02', tom: null, harPeriodeAarsakGraderingEllerRefusjon: true, endringBeregningsgrunnlagAndeler: [],
+}];
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
@@ -320,8 +334,12 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
       inntektskategori: 'ARBEIDSTAKER',
       refusjonskravFraInntektsmelding: 10000,
     }];
-    const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
-      { fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true }];
+    const endringBGPerioder = [{
+ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false, endringBeregningsgrunnlagAndeler: [],
+},
+      {
+ fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true, endringBeregningsgrunnlagAndeler: [],
+}];
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
@@ -347,8 +365,12 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
       inntektskategori: '',
       refusjonskravFraInntektsmelding: 10000,
     }];
-    const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
-      { fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true }];
+    const endringBGPerioder = [{
+ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false, endringBeregningsgrunnlagAndeler: [],
+},
+      {
+ fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true, endringBeregningsgrunnlagAndeler: [],
+}];
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
@@ -375,8 +397,12 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
       inntektskategori: '',
       refusjonskravFraInntektsmelding: 10000,
     }];
-    const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
-      { fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true }];
+    const endringBGPerioder = [{
+ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false, endringBeregningsgrunnlagAndeler: [],
+},
+      {
+ fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true, endringBeregningsgrunnlagAndeler: [],
+}];
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
@@ -400,8 +426,12 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
       inntektskategori: '',
       refusjonskravFraInntektsmelding: 10000,
     }];
-    const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
-      { fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true }];
+    const endringBGPerioder = [{
+ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false, endringBeregningsgrunnlagAndeler: [],
+},
+      {
+ fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true, endringBeregningsgrunnlagAndeler: [],
+}];
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
@@ -426,8 +456,12 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
       inntektskategori: '',
       refusjonskravFraInntektsmelding: 10000,
     }];
-    const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
-      { fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true }];
+    const endringBGPerioder = [{
+ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false, endringBeregningsgrunnlagAndeler: [],
+},
+      {
+ fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true, endringBeregningsgrunnlagAndeler: [],
+}];
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
@@ -452,8 +486,12 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
       inntektskategori: '',
       refusjonskravFraInntektsmelding: 10000,
     }];
-    const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
-      { fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true }];
+    const endringBGPerioder = [{
+ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false, endringBeregningsgrunnlagAndeler: [],
+},
+      {
+ fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true, endringBeregningsgrunnlagAndeler: [],
+}];
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
@@ -481,8 +519,12 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
       inntektskategori: 'ARBEIDSTAKER',
       refusjonskravFraInntektsmelding: 10000,
     }];
-    const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
-      { fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true }];
+    const endringBGPerioder = [{
+ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false, endringBeregningsgrunnlagAndeler: [],
+},
+      {
+ fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true, endringBeregningsgrunnlagAndeler: [],
+}];
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
@@ -492,6 +534,45 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
     expect(errors[getFieldNameKey(0)]._error[0].id).to.equal(skalVereLikFordelingMessage()[0].id);
     expect(errors[getFieldNameKey(0)]._error[1].fordeling).to.equal('10 000');
+  });
+
+  it('skal ikkje returnere validering på sum om det ikkje er kun BA i første periode', () => {
+    const values = {};
+    values[getFieldNameKey(0)] = [{
+      refusjonskrav: '10 000',
+      fastsattBelop: '100 000',
+      belopFraInntektsmelding: 100000,
+      skalKunneEndreRefusjon: true,
+      aktivitetstatus: 'ARBEIDSTAKER',
+      andel: 'Visningsnavn',
+      harPeriodeAarsakGraderingEllerRefusjon: true,
+      inntektskategori: 'ARBEIDSTAKER',
+      refusjonskravFraInntektsmelding: 10000,
+    }];
+    values[getFieldNameKey(1)] = [{
+      refusjonskrav: '10 000',
+      fastsattBelop: '100 000',
+      belopFraInntektsmelding: 100000,
+      skalKunneEndreRefusjon: true,
+      aktivitetstatus: 'ARBEIDSTAKER',
+      andel: 'Visningsnavn',
+      harPeriodeAarsakGraderingEllerRefusjon: true,
+      inntektskategori: 'ARBEIDSTAKER',
+      refusjonskravFraInntektsmelding: 10000,
+    }];
+    const endringBGPerioder = [{
+ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false, endringBeregningsgrunnlagAndeler: [{ aktivitetStatus: { kode: 'AT' } }],
+},
+      {
+ fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true, endringBeregningsgrunnlagAndeler: [],
+}];
+    const errors = KunYtelseTilkommetArbeidPanel.validate(values,
+      kunYtelseOgEndringTilfeller,
+      kunYtelseUtenDP,
+      endringBGPerioder,
+      skjaeringstidspunktBeregning);
+    assertEmptyKunYtelseError(errors);
+    expect(errors[getFieldNameKey(0)]).to.equal(null);
   });
 
   const getAndel = (andelsnr, andelsinfo, inntektskategori) => ({
@@ -517,8 +598,12 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     ];
 
     values[getFieldNameKey(0)] = [getAndel(1), getAndel(2), getAndel(3), getAndel(4), getAndel(undefined, '1', 'SJØMANN')];
-    const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
-      { fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true }];
+    const endringBGPerioder = [{
+ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false, endringBeregningsgrunnlagAndeler: [],
+},
+      {
+ fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true, endringBeregningsgrunnlagAndeler: [],
+}];
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
@@ -537,8 +622,12 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     ];
     values[getFieldNameKey(0)] = [getAndel(1), getAndel(2), getAndel(3), { ...getAndel(4), ...{ fastsattBelop: '5 000' } },
       { ...getAndel(undefined, '1', 'SJØMANN'), ...{ fastsattBelop: '5 000' } }];
-    const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
-      { fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true }];
+    const endringBGPerioder = [{
+ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false, endringBeregningsgrunnlagAndeler: [],
+},
+      {
+ fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true, endringBeregningsgrunnlagAndeler: [],
+}];
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
@@ -556,8 +645,12 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     ];
     values[getFieldNameKey(0)] = [getAndel(1), getAndel(2), getAndel(3), { ...getAndel(4), ...{ fastsattBelop: '5 000' } },
       { ...getAndel(undefined, '1', undefined), ...{ fastsattBelop: '5 000' } }];
-    const endringBGPerioder = [{ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false },
-      { fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true }];
+    const endringBGPerioder = [{
+ fom: '2018-08-01', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: false, endringBeregningsgrunnlagAndeler: [],
+},
+      {
+ fom: '2018-10-02', tom: 'null', harPeriodeAarsakGraderingEllerRefusjon: true, endringBeregningsgrunnlagAndeler: [],
+}];
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
