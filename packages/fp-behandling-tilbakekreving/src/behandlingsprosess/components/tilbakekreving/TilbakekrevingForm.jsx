@@ -118,9 +118,8 @@ TilbakekrevingFormImpl.defaultProps = {
 
 export const transformValues = values => [{
   kode: tilbakekrevingAksjonspunktCodes.VURDER_TILBAKEKREVING,
-  vilkarsVurdertePerioder: values.vilkarsVurdertePerioder.map(v => v.storedData),
+  vilkarsVurdertePerioder: values.vilkarsVurdertePerioder.map(periode => periode.storedData).filter(storedData => !isObjectEmpty(storedData)),
 }];
-
 
 const buildInitialValues = createSelector([getBehandlingVilkarsvurderingsperioder, getBehandlingVilkarsvurdering, getBehandlingVilkarsvurderingsRettsgebyr],
  (perioder, vilkarsvurdering, rettsgebyr) => {
@@ -147,15 +146,19 @@ const leggTilTimelineData = createSelector([state => behandlingFormValueSelector
 
     return perioder.map((periode, index) => {
       const erBehandlet = periode.storedData.begrunnelse ? GODKJENT_CLASSNAME : 'undefined';
-      const statusClassName = periode.foreldet || periode.erBelopetIBehold === false ? AVVIST_CLASSNAME : erBehandlet;
+      const erForeldet = periode.erForeldet !== undefined ? periode.erForeldet : periode.foreldet;
+      const erBelopetIBehold = periode.storedData && periode.storedData.vilkarResultatInfo
+        ? periode.storedData.vilkarResultatInfo.erBelopetIBehold : undefined;
+      const statusClassName = erForeldet || erBelopetIBehold === false ? AVVIST_CLASSNAME : erBehandlet;
+
       return {
         ...periode,
         className: statusClassName,
-        foreldet: periode.foreldet || periode.storedData.begrunnelse ? undefined : foreldelseCodes.MANUELL_BEHANDLING,
-        erForeldet: periode.foreldet,
         id: index + 1,
         group: 1,
         arsak: periode.årsak.årsak,
+        foreldet: erForeldet || periode.storedData.begrunnelse ? undefined : foreldelseCodes.MANUELL_BEHANDLING,
+        erForeldet,
       };
     });
 });

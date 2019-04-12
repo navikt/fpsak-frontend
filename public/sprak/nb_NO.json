@@ -2211,6 +2211,10 @@
   "TilbakekrevingAktivitetTabell.Aktivitet": "Aktivitet",
   "TilbakekrevingAktivitetTabell.FeilutbetaltBelop": "Feilutbetalt beløp",
 
+  "ForeldetPanel.Vurdering": "Varsel",
+  "ForeldetPanel.VurderOmPeriodenErForeldet": "Vurder om perioden er foreldet",
+  "ForeldetPanel.PeriodenErForeldet": "Perioden er foreldet",
+
   "AdvarselModal.Ok": "OK",
 
   "AktsomhetFormPanel.Aktsomhet": "Aktsomhet",

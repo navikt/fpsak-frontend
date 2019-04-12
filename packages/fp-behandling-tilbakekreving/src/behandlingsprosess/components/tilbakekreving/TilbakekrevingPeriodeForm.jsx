@@ -21,12 +21,14 @@ import {
   VerticalSpacer, FlexRow, FlexColumn, AdvarselModal,
 } from '@fpsak-frontend/shared-components';
 
+import { getForeldelsePerioder } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingTilbakekreving/src/behandlingForm';
 import sarligGrunn from 'behandlingTilbakekreving/src/kodeverk/sarligGrunn';
 import VilkarResultat from 'behandlingTilbakekreving/src/kodeverk/vilkarResultat';
 import tilbakekrevingKodeverkTyper from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingKodeverkTyper';
 import { getTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckTilbake';
 import TilbakekrevingAktivitetTabell from './tilbakekrevingPeriodePaneler/TilbakekrevingAktivitetTabell';
+import ForeldetFormPanel from './tilbakekrevingPeriodePaneler/ForeldetFormPanel';
 import BelopetMottattIGodTroFormPanel from './tilbakekrevingPeriodePaneler/godTro/BelopetMottattIGodTroFormPanel';
 import AktsomhetFormPanel from './tilbakekrevingPeriodePaneler/aktsomhet/AktsomhetFormPanel';
 
@@ -125,8 +127,13 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
         <TilbakekrevingAktivitetTabell ytelser={selectedItemData.ytelser} />
         <VerticalSpacer twentyPx />
         <Row>
-          <Column md="6">
+          <Column md={selectedItemData.erForeldet ? '12' : '6'}>
             <Row>
+              {selectedItemData.erForeldet && (
+                <Column md="12">
+                  <ForeldetFormPanel />
+                </Column>
+              )}
               {!selectedItemData.erForeldet && (
                 <Column md="10">
                   <Element>
@@ -239,14 +246,24 @@ const transformValues = (selectedItemData, values, sarligGrunnTyper) => {
   };
 };
 
-const buildInitalValues = (period) => {
+const buildInitalValues = (period, foreldelsePerioder) => {
   const { vilkarResultat, begrunnelse, vilkarResultatInfo } = period.storedData;
 
   const vilkarResultatKode = vilkarResultat ? vilkarResultat.kode : undefined;
+  let foreldetData = { erForeldet: false };
+  if (period.erForeldet) {
+    const foreldelsePeriode = foreldelsePerioder.find(p => p.fom === period.fom && p.tom === period.tom);
+    foreldetData = {
+      erForeldet: period.erForeldet,
+      periodenErForeldet: true,
+      foreldetBegrunnelse: foreldelsePeriode.begrunnelse,
+    };
+  }
+
   const initialValues = {
     valgtVilkarResultatType: vilkarResultatKode,
     begrunnelse,
-    erForeldet: period.erForeldet,
+    ...foreldetData,
   };
 
   const godTroData = vilkarResultatKode === VilkarResultat.GOD_TRO ? BelopetMottattIGodTroFormPanel.buildIntialValues(vilkarResultatInfo) : {};
@@ -272,6 +289,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const vilkarResultatTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.VILKAR_RESULTAT)(initialState);
   const aktsomhetTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.AKTSOMHET)(initialState);
   const submitCallback = values => ownProps.updateActivity(transformValues(ownProps.selectedItemData, values, sarligGrunnTyper));
+  const foreldelsePerioder = getForeldelsePerioder(initialState).perioder;
   return (state) => {
     const valgtVilkarResultatType = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, 'valgtVilkarResultatType');
     const handletUaktsomhetGrad = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.handletUaktsomhetGrad`);
@@ -284,7 +302,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       ),
       annet: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.${sarligGrunn.ANNET}`),
       erBelopetIBehold: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.erBelopetIBehold`),
-      initialValues: buildInitalValues(ownProps.selectedItemData),
+      initialValues: buildInitalValues(ownProps.selectedItemData, foreldelsePerioder),
       onSubmit: submitCallback,
       valgtVilkarResultatType,
       handletUaktsomhetGrad,
