@@ -23,3 +23,5 @@ const hasStatusCode = statusCode => (errorStatus?: number) => errorStatus === st
 export const is401Error = hasStatusCode(401);
 
 export const is418Error = hasStatusCode(418);
+
+export const is403Error = hasStatusCode(403);

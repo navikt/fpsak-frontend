@@ -1,6 +1,7 @@
 const axios = require('axios');
 const qs = require('querystring');
 const vtpAccessTokenUrl = 'http://localhost:8060/isso/oauth2/access_token';
+const { URL } = require('url');
 /**
  *
  * @param Express.app
@@ -26,6 +27,7 @@ module.exports = function (app) {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
+      proxy: false
     })
       .then(result => {
         res.cookie('ID_token', result.data.id_token, {
@@ -33,6 +35,9 @@ module.exports = function (app) {
           httpOnly: true,
         });
         res.redirect(redirectUri);
-      });
+      }).catch((e)=>{
+        //console.error(e)
+        res.status(500).send(e.message)
+    })
   });
 };

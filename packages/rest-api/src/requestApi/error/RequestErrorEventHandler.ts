@@ -1,6 +1,8 @@
 import EventType from '../eventType';
 import { ErrorType } from './errorTsType';
-import { isHandledError, is401Error, is418Error } from './ErrorTypes';
+import {
+ is401Error, is403Error, is418Error, isHandledError,
+} from './ErrorTypes';
 import TimeoutError from './TimeoutError';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -35,9 +37,9 @@ const blobParser = (blob: any): Promise<string> => {
 };
 
 class RequestErrorEventHandler {
-  notify: NotificationEmitter
+  notify: NotificationEmitter;
 
-  isPollingRequest: boolean
+  isPollingRequest: boolean;
 
   constructor(notificationEmitter: NotificationEmitter, isPollingRequest: boolean) {
     this.notify = notificationEmitter;
@@ -62,6 +64,8 @@ class RequestErrorEventHandler {
       this.notify(EventType.REQUEST_ERROR, { message: error.message }, this.isPollingRequest);
     } else if (is418Error(formattedError.status)) {
       this.notify(EventType.POLLING_HALTED_OR_DELAYED, formattedError.data);
+    } else if (is403Error(formattedError.status)) {
+      this.notify(EventType.REQUEST_ERROR, formattedError.data);
     } else if (!error.response && error.message) {
       this.notify(EventType.REQUEST_ERROR, { message: error.message }, this.isPollingRequest);
     } else if (!isHandledError(formattedError.type)) {
@@ -71,7 +75,7 @@ class RequestErrorEventHandler {
 
   getFormattedData = (data: string | Record<string, any>) => (isString(data) ? { message: data } : data);
 
-  findErrorData = (response: {data?: any; status?: number; statusText?: string}) => (response.data ? response.data : response.statusText);
+  findErrorData = (response: { data?: any; status?: number; statusText?: string }) => (response.data ? response.data : response.statusText);
 
   formatError = (error: ErrorType) => {
     const response = error && error.response ? error.response : undefined;
