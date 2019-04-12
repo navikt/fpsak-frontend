@@ -16,7 +16,7 @@ export const formatCurrencyNoKr = (value) => {
 };
 
 export const removeSpacesFromNumber = (input) => {
-  if (input === parseInt(input, 10)) {
+  if (!input || input === parseInt(input, 10)) {
     return input;
   }
   const noSpaceInput = parseInt(input.replace(/\s/g, ''), 10);

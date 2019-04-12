@@ -1,265 +1,226 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
+import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import { bindActionCreators } from 'redux';
-import { FormSection, clearFields, formPropTypes } from 'redux-form';
-import { Undertekst } from 'nav-frontend-typografi';
-import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { injectIntl, FormattedMessage } from 'react-intl';
+import { Undertittel } from 'nav-frontend-typografi';
+import AlertStripe from 'nav-frontend-alertstriper';
+
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import {
-  RadioOption, RadioGroupField, TextAreaField,
-} from '@fpsak-frontend/form';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import {
-  minLength,
-  maxLength,
-  hasValidText,
-  required,
-} from '@fpsak-frontend/utils';
-import {
-  VerticalSpacer, FlexRow, FlexColumn,
+  FadingPanel, VerticalSpacer, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
-import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
-import { getStatusPeriode } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
-import { behandlingForm, behandlingFormValueSelector } from '../../../behandlingForm';
-import tilbakekrevingCodes from './tilbakekrevingCodes';
-import Uaktsomhet from './Uaktsomhet';
-import HandletUaktsomhetGrad from './HandletUaktsomhetGrad';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import { isObjectEmpty } from '@fpsak-frontend/utils';
 
-const minLength3 = minLength(3);
-const maxLength1500 = maxLength(1500);
+import {
+  behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, isBehandlingFormDirty,
+  hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, getBehandlingFormValues,
+} from 'behandlingTilbakekreving/src/behandlingForm';
+import {
+  getBehandlingVersjon, getBehandlingVilkarsvurderingsperioder, getBehandlingVilkarsvurderingsRettsgebyr, getBehandlingVilkarsvurdering,
+} from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingTilbakekreving/src/duckTilbake';
+import tilbakekrevingAksjonspunktCodes from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingAksjonspunktCodes';
+import foreldelseCodes from '../../foreldelseCodes';
+import BpTimelinePanel from '../felles/behandlingspunktTimelineSkjema/BpTimelinePanel';
+import { AVVIST_CLASSNAME, GODKJENT_CLASSNAME } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
+import TilbakekrevingPeriodeForm, { TILBAKEKREVING_PERIODE_FORM_NAME } from './TilbakekrevingPeriodeForm';
 
-const readOnly = false;
-const uaktsomhetCodes = [
-  tilbakekrevingCodes.GROVUAKTSOMHET,
-  tilbakekrevingCodes.MANGELFULLEOPPLYSNINGER,
-  tilbakekrevingCodes.FORSETT,
-];
-const PERIODE_RESULTAT_TYPE = 'PERIODE_RESULTAT_TYPE';
-const innvilgetTekst = 'Innvilget';
+const TILBAKEKREVING_FORM_NAME = 'TilbakekrevingForm';
 
-export class TilbakekrevingFormImpl extends Component {
-  constructor() {
-    super();
-    this.resetFields = this.resetFields.bind(this);
-    this.resetAnnetTextField = this.resetAnnetTextField.bind(this);
-  }
+const tilbakekrevingAksjonspunkter = [tilbakekrevingAksjonspunktCodes.VURDER_TILBAKEKREVING];
 
-  resetFields() {
-    const {
-      behandlingFormPrefix, activityPanelName, clearFields: clearFormFields, oppfylt,
-    } = this.props;
-    const fields = [oppfylt];
-    clearFormFields(`${behandlingFormPrefix}.${activityPanelName}`, false, false, ...fields);
-  }
-
-  resetAnnetTextField() {
-    const {
-      behandlingFormPrefix, activityPanelName, clearFields: clearFormFields, oppfylt, handletUaktsomhetGrad, annet,
-    } = this.props;
-    if (!annet) {
-      const fields = [`${oppfylt}.${handletUaktsomhetGrad}.annetTekst`];
-      clearFormFields(`${behandlingFormPrefix}.${activityPanelName}`, false, false, ...fields);
-    }
-  }
-
-  render() {
-    const {
-      oppfylt,
-      handletUaktsomhetGrad,
-      grunnerTilReduksjon,
-      cancelSelectedActivity,
-      annet,
-      ...formProps
-    } = this.props;
-
-    return (
-      <>
-        <VerticalSpacer twentyPx />
-        <Row>
-          <Column md="6">
-            <TextAreaField
-              name="begrunnelse"
-              label={{ id: 'Tilbakekreving.Vurdering' }}
-              validate={[required, minLength3, maxLength1500, hasValidText]}
-              maxLength={1500}
-              readOnly={readOnly}
-              id="tilbakekrevingVurdering"
-            />
-          </Column>
-        </Row>
-        <VerticalSpacer twentyPx />
-        <Row>
-          <Column md="6">
-            <Undertekst><FormattedMessage id="Tilbakekreving.RadioGroup.oppfylt" /></Undertekst>
-            <VerticalSpacer eightPx />
-            <RadioGroupField
-              validate={[required]}
-              name="oppfylt"
-              direction="vertical"
-              readOnly={readOnly}
-              onChange={this.resetFields}
-            >
-              <RadioOption
-                label={<FormattedMessage id="Tilbakekreving.RadioGroup.Forstått" />}
-                value={tilbakekrevingCodes.FORSTÅTT}
-              />
-              <RadioOption
-                label={<FormattedMessage id="Tilbakekreving.RadioGroup.FeilaktigeOpplysninger" />}
-                value={tilbakekrevingCodes.FEILAKTIGEOPPLYSNINGER}
-              />
-              <RadioOption
-                label={<FormattedMessage id="Tilbakekreving.RadioGroup.MangelfulleOpplysniner" />}
-                value={tilbakekrevingCodes.MANGELFULLEOPPLYSNINGER}
-              />
-              <RadioOption
-                label={<FormattedMessage id="Tilbakekreving.RadioGroup.GodTro" />}
-                value={tilbakekrevingCodes.GODTRO}
-              />
-            </RadioGroupField>
-          </Column>
-          {oppfylt
-            && (
-            <Column md="6">
-              <FormSection name={oppfylt}>
-                {oppfylt !== tilbakekrevingCodes.GODTRO && (
-                  <>
-                    <Uaktsomhet
-                      grunnerTilReduksjon={grunnerTilReduksjon}
-                      readOnly={readOnly}
-                      handletUaktsomhetGrad={handletUaktsomhetGrad}
-                      resetFields={this.resetFields}
-                    />
-                    { uaktsomhetCodes.includes(handletUaktsomhetGrad)
-                    && (
-                      <FormSection name={handletUaktsomhetGrad} key={handletUaktsomhetGrad}>
-                        <HandletUaktsomhetGrad
-                          grunnerTilReduksjon={grunnerTilReduksjon}
-                          readOnly={readOnly}
-                          handletUaktsomhetGrad={handletUaktsomhetGrad}
-                          annet={annet}
-                          resetAnnetTextField={this.resetAnnetTextField}
-                        />
-                      </FormSection>
-                    )
-                    }
-                  </>
-                )
-                }
-                {oppfylt === tilbakekrevingCodes.GODTRO && (
-                  <>
-                    <Undertekst><FormattedMessage id="Tilbakekreving.RadioGroup.BeløpetIBehold" /></Undertekst>
-                    <VerticalSpacer eightPx />
-                    <RadioGroupField
-                      validate={[required]}
-                      name="beløpetIBehold"
-                      readOnly={readOnly}
-                    >
-                      <RadioOption label={<FormattedMessage id="Tilbakekreving.Ja" />} value />
-                      <RadioOption label={<FormattedMessage id="Tilbakekreving.Nei" />} value={false} />
-                    </RadioGroupField>
-                  </>
-                )
-                }
-              </FormSection>
-            </Column>
-            )
-          }
-        </Row>
-        <VerticalSpacer twentyPx />
-        <FlexRow>
-          <FlexColumn>
-            <Hovedknapp
-              mini
-              htmlType="button"
-              onClick={formProps.handleSubmit}
-              disabled={formProps.pristine}
-            >
-              <FormattedMessage id="UttakActivity.Oppdater" />
-            </Hovedknapp>
-          </FlexColumn>
-          <FlexColumn>
-            <Knapp mini htmlType="button" onClick={cancelSelectedActivity}>
-              <FormattedMessage id="UttakActivity.Avbryt" />
-            </Knapp>
-          </FlexColumn>
-        </FlexRow>
-      </>
-    );
-  }
-}
+const TilbakekrevingFormImpl = ({
+  perioderFormatertForTimeline,
+  behandlingFormPrefix,
+  isApOpen,
+  kjonn,
+  readOnly,
+  readOnlySubmitButton,
+  reduxFormChange: formChange,
+  reduxFormInitialize: formInitialize,
+  antallPerioderMedAksjonspunkt,
+  isDetailFormOpen,
+  ...formProps
+}) => (
+  <form onSubmit={formProps.handleSubmit}>
+    <FadingPanel>
+      <Undertittel>
+        <FormattedMessage id="Behandlingspunkt.Tilbakekreving" />
+      </Undertittel>
+      <VerticalSpacer twentyPx />
+      <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
+        {[<FormattedMessage key="AksjonspunktHjelpetekst" id="TilbakekrevingForm.AksjonspunktHjelpetekst" />] }
+      </AksjonspunktHelpText>
+      <VerticalSpacer twentyPx />
+      {perioderFormatertForTimeline && (
+        <BpTimelinePanel
+          hovedsokerKjonnKode={kjonn}
+          resultatActivity={perioderFormatertForTimeline}
+          behandlingFormPrefix={behandlingFormPrefix}
+          reduxFormChange={formChange}
+          reduxFormInitialize={formInitialize}
+          formName={TILBAKEKREVING_FORM_NAME}
+          detailPanelForm={TILBAKEKREVING_PERIODE_FORM_NAME}
+          fieldNameToStoreDetailInfo="vilkarsVurdertePerioder"
+          isTilbakekreving
+          readOnly={readOnly}
+        >
+          <TilbakekrevingPeriodeForm
+            behandlingFormPrefix={behandlingFormPrefix}
+            antallPerioderMedAksjonspunkt={antallPerioderMedAksjonspunkt}
+            formName={TILBAKEKREVING_FORM_NAME}
+            readOnly={readOnly}
+          />
+        </BpTimelinePanel>
+      )}
+      <VerticalSpacer twentyPx />
+      {formProps.error && (
+        <>
+          <AlertStripe type="feil">
+            <FormattedMessage id={formProps.error} />
+          </AlertStripe>
+          <VerticalSpacer twentyPx />
+        </>
+      )}
+      <BehandlingspunktSubmitButton
+        formName={TILBAKEKREVING_FORM_NAME}
+        isReadOnly={readOnly}
+        isSubmittable={!readOnlySubmitButton && !isDetailFormOpen}
+        isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+        isBehandlingFormDirty={isBehandlingFormDirty}
+        hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+      />
+    </FadingPanel>
+  </form>
+);
 
 TilbakekrevingFormImpl.propTypes = {
-  selectedItemData: PropTypes.shape().isRequired,
+  perioderFormatertForTimeline: PropTypes.arrayOf(PropTypes.shape()),
   behandlingFormPrefix: PropTypes.string.isRequired,
-  cancelSelectedActivity: PropTypes.func.isRequired,
-  formName: PropTypes.string.isRequired,
-  activityPanelName: PropTypes.string.isRequired,
-  updateActivity: PropTypes.func.isRequired,
-  ...formPropTypes,
+  isApOpen: PropTypes.bool.isRequired,
+  readOnly: PropTypes.bool.isRequired,
+  readOnlySubmitButton: PropTypes.bool.isRequired,
+  kjonn: PropTypes.string.isRequired,
+  reduxFormChange: PropTypes.func.isRequired,
+  reduxFormInitialize: PropTypes.func.isRequired,
+  isDetailFormOpen: PropTypes.bool.isRequired,
+  antallPerioderMedAksjonspunkt: PropTypes.number.isRequired,
 };
 
-const transformValues = (selectedItemData, values) => {
-  const { oppfylt, begrunnelse } = values;
-  const { handletUaktsomhetGrad } = values[oppfylt];
-  const resultatType = {
-    kode: periodeResultatType.INNVILGET,
-    navn: innvilgetTekst,
-    kodeverk: PERIODE_RESULTAT_TYPE,
-  };
+TilbakekrevingFormImpl.defaultProps = {
+  perioderFormatertForTimeline: undefined,
+};
+
+export const transformValues = values => [{
+  kode: tilbakekrevingAksjonspunktCodes.VURDER_TILBAKEKREVING,
+  vilkarsVurdertePerioder: values.vilkarsVurdertePerioder.map(periode => periode.storedData).filter(storedData => !isObjectEmpty(storedData)),
+}];
+
+const buildInitialValues = createSelector([getBehandlingVilkarsvurderingsperioder, getBehandlingVilkarsvurdering, getBehandlingVilkarsvurderingsRettsgebyr],
+ (perioder, vilkarsvurdering, rettsgebyr) => {
+  const totalbelop = perioder.reduce((acc, periode) => acc + periode.feilutbetaling, 0);
+  const lagredeVilkarsvurdertePerioder = vilkarsvurdering.vilkarsVurdertePerioder;
 
   return {
-    ...selectedItemData,
-    begrunnelse,
-    oppfylt,
-    handletUaktsomhetGrad,
-    className: getStatusPeriode(resultatType),
-    periodeResultatType: resultatType,
-    periodValues: { ...values[oppfylt][handletUaktsomhetGrad] },
+    vilkarsVurdertePerioder: perioder.map((periode) => {
+      const lagretPeriode = lagredeVilkarsvurdertePerioder.find(p => p.fom === periode.fom && p.tom === periode.tom);
+      return {
+        ...periode,
+        storedData: lagretPeriode || {},
+        erTotalBelopUnder4Rettsgebyr: totalbelop < rettsgebyr * 4,
+      };
+    }),
   };
-};
+});
 
-const buildInitalValues = (selectedItemData) => {
-  const {
-    oppfylt, begrunnelse, handletUaktsomhetGrad, periodValues,
-  } = selectedItemData;
+const leggTilTimelineData = createSelector([state => behandlingFormValueSelector(TILBAKEKREVING_FORM_NAME)(state, 'vilkarsVurdertePerioder')],
+  (perioder) => {
+    if (!perioder) {
+      return undefined;
+    }
 
-  if (oppfylt) {
+    return perioder.map((periode, index) => {
+      const erBehandlet = periode.storedData.begrunnelse ? GODKJENT_CLASSNAME : 'undefined';
+      const erForeldet = periode.erForeldet !== undefined ? periode.erForeldet : periode.foreldet;
+      const erBelopetIBehold = periode.storedData && periode.storedData.vilkarResultatInfo
+        ? periode.storedData.vilkarResultatInfo.erBelopetIBehold : undefined;
+      const statusClassName = erForeldet || erBelopetIBehold === false ? AVVIST_CLASSNAME : erBehandlet;
+
+      return {
+        ...periode,
+        className: statusClassName,
+        id: index + 1,
+        group: 1,
+        arsak: periode.årsak.årsak,
+        foreldet: erForeldet || periode.storedData.begrunnelse ? undefined : foreldelseCodes.MANUELL_BEHANDLING,
+        erForeldet,
+      };
+    });
+});
+
+const getAntallPerioderMedAksjonspunkt = createSelector([state => behandlingFormValueSelector(TILBAKEKREVING_FORM_NAME)(state, 'vilkarsVurdertePerioder')],
+  (perioder = []) => perioder.reduce((sum, periode) => (periode.erForeldet ? sum + 1 : sum), 0));
+
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const submitCallback = values => ownProps.submitCallback(transformValues(values));
+  return (state) => {
+    const periodFormValues = getBehandlingFormValues(TILBAKEKREVING_PERIODE_FORM_NAME)(state) || {};
     return {
-      oppfylt,
-      begrunnelse,
-      [oppfylt]: {
-        handletUaktsomhetGrad,
-        [handletUaktsomhetGrad]: { ...periodValues },
-      },
+      initialValues: buildInitialValues(state),
+      kjonn: getFagsakPerson(state).erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN,
+      perioderFormatertForTimeline: leggTilTimelineData(state),
+      behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+      onSubmit: submitCallback,
+      isDetailFormOpen: periodFormValues !== undefined && !isObjectEmpty(periodFormValues),
+      readOnly: ownProps.readOnly || periodFormValues.erForeldet === true,
+      antallPerioderMedAksjonspunkt: getAntallPerioderMedAksjonspunkt(state),
     };
-  }
-
-  return null;
+  };
 };
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
-    clearFields,
+    reduxFormChange,
+    reduxFormInitialize,
   }, dispatch),
 });
 
-const mapStateToProps = (state, initialProps) => {
-  const oppfylt = behandlingFormValueSelector(initialProps.activityPanelName)(state, 'oppfylt');
-  const handletUaktsomhetGrad = behandlingFormValueSelector(initialProps.activityPanelName)(state, `${oppfylt}.handletUaktsomhetGrad`);
-  return {
-    oppfylt,
-    handletUaktsomhetGrad,
-    grunnerTilReduksjon: behandlingFormValueSelector(initialProps.activityPanelName)(state, `${oppfylt}.${handletUaktsomhetGrad}.grunnerTilReduksjon`),
-    annet: behandlingFormValueSelector(initialProps.activityPanelName)(state, `${oppfylt}.${handletUaktsomhetGrad}.annet`),
-    initialValues: buildInitalValues(initialProps.selectedItemData),
-    onSubmit: values => initialProps.updateActivity(transformValues(initialProps.selectedItemData, values)),
-  };
+const validateForm = (values) => {
+  const errors = {};
+  const perioder = values.vilkarsVurdertePerioder;
+  const antallPerioderMedAksjonspunkt = perioder.reduce((sum, periode) => (periode.erForeldet ? sum + 1 : sum), 0);
+  if (antallPerioderMedAksjonspunkt < 2) {
+    return errors;
+  }
+
+  const antallValgt = perioder.reduce((sum, periode) => {
+    if (!periode.storedData) {
+      return sum;
+    }
+    const { vilkarResultatInfo } = periode.storedData;
+    const info = vilkarResultatInfo ? vilkarResultatInfo.aktsomhetInfo : undefined;
+    if (info) {
+      return info.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr === false ? sum + 1 : sum;
+    }
+    return sum;
+  }, 0);
+  if (antallValgt > 0 && antallValgt !== perioder.length) {
+    // eslint-disable-next-line no-underscore-dangle
+    errors._error = 'TilbakekrevingPeriodeForm.TotalbelopetUnder4Rettsgebyr';
+  }
+  return errors;
 };
 
-const TilbakekrevingForm = connect(mapStateToProps, mapDispatchToProps)(injectIntl(behandlingForm({
-  form: 'tilbakekrevingsresultatActivity',
-  enableReinitialize: true,
+const TilbakekrevingForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
+  form: TILBAKEKREVING_FORM_NAME,
+  validate: validateForm,
 })(TilbakekrevingFormImpl)));
+
+TilbakekrevingForm.supports = (bp, apCodes) => bp === behandlingspunktCodes.TILBAKEKREVING || tilbakekrevingAksjonspunkter.some(ap => apCodes.includes(ap));
 
 export default TilbakekrevingForm;

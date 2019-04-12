@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 
-import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   trackRouteParam, requireProps, getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta,
   DEFAULT_FAKTA, BehandlingIdentifier,
@@ -13,8 +12,7 @@ import {
 import { getBehandlingVersjon } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { getBehandlingIdentifier } from 'behandlingTilbakekreving/src/duckTilbake';
 import {
-  resetFakta, resolveFaktaAksjonspunkter, resolveFaktaOverstyrAksjonspunkter, setOpenInfoPanels,
-  getOpenInfoPanels,
+  resetFakta, resolveFaktaAksjonspunkter, setOpenInfoPanels, getOpenInfoPanels,
 } from './duckFaktaTilbake';
 import TilbakekrevingFaktaPanel from './components/TilbakekrevingFaktaPanel';
 
@@ -59,28 +57,12 @@ export class FaktaTilbakeIndex extends Component {
     const {
       behandlingIdentifier,
       behandlingVersjon,
-      resolveFaktaOverstyrAksjonspunkter: resolveFaktaOverstyrAp,
       resolveFaktaAksjonspunkter: resolveFaktaAp,
     } = this.props;
     const model = aksjonspunkter.map(ap => ({
       '@type': ap.kode,
       ...ap,
     }));
-
-    // todo if 6070 and revurdering use resolveFaktaOverstyrAksjonspunkter else use resolveFaktaAksjonspunkter
-
-    if (model && model[0].kode === ac.MANUELL_AVKLAR_FAKTA_UTTAK) {
-      const params = {
-        ...behandlingIdentifier.toJson(),
-        behandlingVersjon,
-        overstyrteAksjonspunktDtoer: model,
-      };
-
-      return resolveFaktaOverstyrAp(
-        params,
-        behandlingIdentifier,
-      ).then(() => this.goToBehandlingWithDefaultPunktAndFakta());
-    }
 
     const params = {
       ...behandlingIdentifier.toJson(),
@@ -129,7 +111,6 @@ FaktaTilbakeIndex.propTypes = {
   location: PropTypes.shape().isRequired,
   push: PropTypes.func.isRequired,
   resolveFaktaAksjonspunkter: PropTypes.func.isRequired,
-  resolveFaktaOverstyrAksjonspunkter: PropTypes.func.isRequired,
   shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
 };
 
@@ -145,7 +126,6 @@ const mapDispatchToProps = dispatch => ({
     push,
     resetFakta,
     resolveFaktaAksjonspunkter,
-    resolveFaktaOverstyrAksjonspunkter,
   }, dispatch),
 });
 

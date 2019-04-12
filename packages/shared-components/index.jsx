@@ -10,6 +10,7 @@ export { default as Image } from './src/Image';
 export { default as LoadingPanel } from './src/LoadingPanel';
 export { default as Tooltip } from './src/Tooltip';
 export { default as OkAvbrytModal } from './src/OkAvbrytModal';
+export { default as AdvarselModal } from './src/AdvarselModal';
 export { default as PeriodFieldArray } from './src/PeriodFieldArray';
 export { default as PeriodLabel } from './src/PeriodLabel';
 export { default as VerticalSpacer } from './src/VerticalSpacer';

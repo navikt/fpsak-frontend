@@ -12,8 +12,8 @@ import {
   FadingPanel, VerticalSpacer, FlexRow, FlexColumn, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 
 import {
   behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, isBehandlingFormDirty,
@@ -24,15 +24,16 @@ import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingTilbakekrevi
 import { addClassNameGroupIdToPerioder } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
 import BpTimelinePanel from '../felles/behandlingspunktTimelineSkjema/BpTimelinePanel';
 import ForeldelseForm from './ForeldelseForm';
+import tilbakekrevingAksjonspunktCodes from '../../../kodeverk/tilbakekrevingAksjonspunktCodes';
 
 import styles from './foreldelsePanel.less';
 
 const ACTIVITY_PANEL_NAME = 'foreldelsesresultatActivity';
 const formName = 'ForeldelseForm';
 const foreldelseAksjonspunkter = [
-  aksjonspunktCodes.VURDER_FORELDELSE,
+  tilbakekrevingAksjonspunktCodes.VURDER_FORELDELSE,
 ];
-export const getKjonn = person => (person.erKvinne ? 'K' : 'M');
+
 const getDate = () => moment().subtract(30, 'months').format(DDMMYYYY_DATE_FORMAT);
 const getApTekst = apCode => (apCode
   ? [<FormattedMessage id={`Foreldelse.AksjonspunktHelpText.${apCode}`} key="vurderForeldelse" values={{ dato: getDate() }} />]
@@ -43,7 +44,7 @@ export const ForeldelsePanelImpl = ({
   behandlingFormPrefix,
   reduxFormChange: formChange,
   reduxFormInitialize: formInitialize,
-  fagsakPerson,
+  kjonn,
   isApOpen,
   apCodes,
   readOnlySubmitButton,
@@ -79,9 +80,10 @@ export const ForeldelsePanelImpl = ({
           </AksjonspunktHelpText>
           <VerticalSpacer twentyPx />
           <BpTimelinePanel
-            hovedsokerKjonnKode={getKjonn(fagsakPerson)}
+            hovedsokerKjonnKode={kjonn}
             resultatActivity={foreldelsesresultatActivity}
-            activityPanelName={ACTIVITY_PANEL_NAME}
+            detailPanelForm={ACTIVITY_PANEL_NAME}
+            fieldNameToStoreDetailInfo={ACTIVITY_PANEL_NAME}
             behandlingFormPrefix={behandlingFormPrefix}
             reduxFormChange={formChange}
             reduxFormInitialize={formInitialize}
@@ -95,18 +97,14 @@ export const ForeldelsePanelImpl = ({
             />
           </BpTimelinePanel>
           <VerticalSpacer twentyPx />
-          <FlexRow>
-            <FlexColumn>
-              <BehandlingspunktSubmitButton
-                formName={formName}
-                isReadOnly={readOnly}
-                isSubmittable={!readOnlySubmitButton}
-                isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-                isBehandlingFormDirty={isBehandlingFormDirty}
-                hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-              />
-            </FlexColumn>
-          </FlexRow>
+          <BehandlingspunktSubmitButton
+            formName={formName}
+            isReadOnly={readOnly}
+            isSubmittable={!readOnlySubmitButton}
+            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+            isBehandlingFormDirty={isBehandlingFormDirty}
+            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+          />
         </>
       )
       }
@@ -119,7 +117,7 @@ ForeldelsePanelImpl.propTypes = {
   behandlingFormPrefix: PropTypes.string.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
-  fagsakPerson: PropTypes.shape().isRequired,
+  kjonn: PropTypes.string.isRequired,
   isApOpen: PropTypes.bool.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string),
   readOnly: PropTypes.bool.isRequired,
@@ -148,15 +146,15 @@ export const buildInitialValues = foreldelsePerioder => ({
   foreldelsesresultatActivity: addClassNameGroupIdToPerioder(foreldelsePerioder),
 });
 
-const mapStateToProps = (state, ownProps) => {
-  const foreldelsePerioderResultat = getForeldelsePerioder(state).perioder;
-  return {
-    initialValues: buildInitialValues(foreldelsePerioderResultat),
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const submitCallback = values => ownProps.submitCallback(transformValues(values, ownProps.apCodes[0]));
+  return state => ({
+    initialValues: buildInitialValues(getForeldelsePerioder(state).perioder),
     foreldelsesresultatActivity: behandlingFormValueSelector(formName)(state, ACTIVITY_PANEL_NAME),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
-    fagsakPerson: getFagsakPerson(state),
-    onSubmit: values => ownProps.submitCallback(transformValues(values, ownProps.apCodes[0])),
-  };
+    kjonn: getFagsakPerson(state).erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN,
+    onSubmit: submitCallback,
+  });
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -166,7 +164,7 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-const ForeldelsePanel = connect(mapStateToProps, mapDispatchToProps)(injectIntl(behandlingForm({
+const ForeldelsePanel = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
   form: formName,
 })(ForeldelsePanelImpl)));
 

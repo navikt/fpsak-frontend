@@ -11,7 +11,7 @@ import {
   isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt,
 } from '../behandlingsprosessTilbakeSelectors';
 import ForeldelsePanel from './foreldelse/ForeldelsePanel';
-import TilbakekrevingPanel from './tilbakekreving/TilbakekrevingPanel';
+import TilbakekrevingForm from './tilbakekreving/TilbakekrevingForm';
 
 import styles from './tilbakekrevingBehandlingspunktInfoPanel.less';
 
@@ -44,12 +44,13 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({
       />
     )
     }
-    {TilbakekrevingPanel.supports(selectedBehandlingspunkt, apCodes)
+    {TilbakekrevingForm.supports(selectedBehandlingspunkt, apCodes)
     && (
-      <TilbakekrevingPanel
+      <TilbakekrevingForm
         submitCallback={submitCallback}
         readOnly={readOnly}
         isApOpen={openAksjonspunkt}
+        readOnlySubmitButton={readOnlySubmitButton}
       />
     )
     }

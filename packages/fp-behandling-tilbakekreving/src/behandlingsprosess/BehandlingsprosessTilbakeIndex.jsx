@@ -5,9 +5,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
-import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta, BehandlingIdentifier,
@@ -17,11 +15,10 @@ import { BehandlingsprosessPanel } from '@fpsak-frontend/fp-behandling-felles';
 import findBehandlingsprosessIcon from 'behandlingTilbakekreving/src/behandlingsprosess/statusIconHelper';
 import TilbakekrevingBehandlingspunktInfoPanel from './components/TilbakekrevingBehandlingspunktInfoPanel';
 import {
-  setSelectedBehandlingspunktNavn, resolveProsessAksjonspunkter, overrideProsessAksjonspunkter,
-  resetBehandlingspunkter, getSelectedBehandlingspunktNavn,
+  setSelectedBehandlingspunktNavn, resolveProsessAksjonspunkter, resetBehandlingspunkter, getSelectedBehandlingspunktNavn,
 } from './duckBpTilbake';
 import {
-  getAksjonspunkter, getBehandlingVersjon, getBehandlingHenlagt,
+  getBehandlingVersjon, getBehandlingHenlagt,
 } from '../selectors/tilbakekrevingBehandlingSelectors';
 import { getBehandlingIdentifier } from '../duckTilbake';
 import {
@@ -30,10 +27,6 @@ import {
 } from './behandlingsprosessTilbakeSelectors';
 
 const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
-
-const hasOverstyringAp = aksjonspunkter => (
-  aksjonspunkter.some(ap => ap.aksjonspunktType.kode === aksjonspunktType.OVERSTYRING || ap.aksjonspunktType.kode === aksjonspunktType.SAKSBEHANDLEROVERSTYRING)
-);
 
 // TODO (TOR) Refaktorer: veldig mykje av dette er felles med andre behandlingstypar. Flytt ut i hooks?
 
@@ -97,39 +90,23 @@ export class BehandlingsprosessTilbakeIndex extends Component {
 
   submitVilkar(aksjonspunktModels) {
     const {
-      resolveProsessAksjonspunkter: resolveAksjonspunkter,
-      overrideProsessAksjonspunkter: overrideAksjonspunkter,
-      behandlingIdentifier, behandlingVersjon, aksjonspunkter,
+      resolveProsessAksjonspunkter: resolveAksjonspunkter, behandlingIdentifier, behandlingVersjon,
     } = this.props;
+
     const models = aksjonspunktModels.map(ap => ({
       '@type': ap.kode,
       ...ap,
     }));
-
-    const apCodes = aksjonspunktModels.map(ap => ap.kode);
-
-    const afterSubmit = () => {
-      this.goToBehandlingWithDefaultPunktAndFakta();
-    };
-
-    const aktuelleAksjonspunkter = aksjonspunkter.filter(ap => apCodes.includes(ap.definisjon.kode));
-    if (aktuelleAksjonspunkter.length === 0 || hasOverstyringAp(aktuelleAksjonspunkter)) {
-      const params = {
-        ...behandlingIdentifier.toJson(),
-        behandlingVersjon,
-        overstyrteAksjonspunktDtoer: models,
-      };
-      return overrideAksjonspunkter(behandlingIdentifier, params, true)
-        .then(afterSubmit);
-    }
-
     const params = {
       ...behandlingIdentifier.toJson(),
       behandlingVersjon,
       bekreftedeAksjonspunktDtoer: models,
     };
+
     return resolveAksjonspunkter(behandlingIdentifier, params, true)
-      .then(afterSubmit);
+      .then(() => {
+        this.goToBehandlingWithDefaultPunktAndFakta();
+      });
   }
 
   render() {
@@ -160,7 +137,6 @@ export class BehandlingsprosessTilbakeIndex extends Component {
 BehandlingsprosessTilbakeIndex.propTypes = {
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   behandlingspunkter: PropTypes.arrayOf(PropTypes.string),
   selectedBehandlingspunkt: PropTypes.string,
   resetBehandlingspunkter: PropTypes.func.isRequired,
@@ -168,7 +144,6 @@ BehandlingsprosessTilbakeIndex.propTypes = {
   location: PropTypes.shape().isRequired,
   push: PropTypes.func.isRequired,
   resolveProsessAksjonspunkter: PropTypes.func.isRequired,
-  overrideProsessAksjonspunkter: PropTypes.func.isRequired,
   dispatchSubmitFailed: PropTypes.func.isRequired,
 };
 
@@ -181,7 +156,6 @@ const mapStateToProps = state => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
   isSelectedBehandlingHenlagt: getBehandlingHenlagt(state),
   behandlingVersjon: getBehandlingVersjon(state),
-  aksjonspunkter: getAksjonspunkter(state),
   behandlingspunkter: getBehandlingspunkter(state),
   defaultBehandlingspunkt: getDefaultBehandlingspunkt(state),
   selectedBehandlingspunkt: getSelectedBehandlingspunkt(state),
@@ -192,7 +166,6 @@ const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
     push,
     resolveProsessAksjonspunkter,
-    overrideProsessAksjonspunkter,
     resetBehandlingspunkter,
     dispatchSubmitFailed,
   }, dispatch),

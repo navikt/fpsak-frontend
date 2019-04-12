@@ -29,7 +29,6 @@ export const getBehandlingIsOnHold = createSelector([getSelectedBehandling], (se
 export const getBehandlingVenteArsakKode = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.venteArsakKode);
 export const getBehandlingsresultat = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingsresultat);
 export const getBehandlingHenlagt = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingHenlagt);
-export const getStonadskontoer = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling['uttak-stonadskontoer']);
 export const getBehandlingBehandlendeEnhetId = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlendeEnhetId);
 export const getBehandlingBehandlendeEnhetNavn = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlendeEnhetNavn);
 export const getBehandlingAnsvarligSaksbehandler = createSelector(
@@ -73,6 +72,14 @@ export const getBehandlingSprak = createSelector([getSelectedBehandling], (selec
 
 // VILKÅR
 export const getBehandlingVilkar = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.vilkar);
+
+// VILKÅRSVURDERING
+export const getBehandlingVilkarsvurderingsperioder = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling
+  .vilkarvurderingsperioder.perioder);
+export const getBehandlingVilkarsvurderingsRettsgebyr = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling
+  .vilkarvurderingsperioder.rettsgebyr);
+export const getBehandlingVilkarsvurdering = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling
+  .vilkarvurdering);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 

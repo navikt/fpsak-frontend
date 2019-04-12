@@ -36,7 +36,6 @@ const vilkarImages = {
 
 const behandlingspunktImages = {
   [behandlingspunktCodes.VEDTAK]: vedtakImages,
-  [behandlingspunktCodes.TILBAKEKREVING]: vedtakImages,
 };
 
 const findStatusImageSrc = (isHovering, images, isSelected, isAksjonspunktOpen, status) => {

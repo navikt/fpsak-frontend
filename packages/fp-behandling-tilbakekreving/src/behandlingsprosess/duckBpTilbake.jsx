@@ -49,12 +49,6 @@ export const resolveProsessAksjonspunkter = (behandlingIdentifier, params, shoul
     .then(response => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo)));
 };
 
-export const overrideProsessAksjonspunkter = (behandlingIdentifier, params, shouldUpdateInfo, updateFagsakInfo) => (dispatch) => {
-  dispatch(resolveProsessAksjonspunkterStarted());
-  return dispatch(tilbakekrevingBehandlingApi.SAVE_OVERSTYRT_AKSJONSPUNKT.makeRestApiRequest()(params))
-    .then(response => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo, updateFagsakInfo)));
-};
-
 export const beregnBeløp = params => dispatch => dispatch(tilbakekrevingBehandlingApi.BEREGNE_BELØP.makeRestApiRequest()(params))
   .then(response => response.payload);
 

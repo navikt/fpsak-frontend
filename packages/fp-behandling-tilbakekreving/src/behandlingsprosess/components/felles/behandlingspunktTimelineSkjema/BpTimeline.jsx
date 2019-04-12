@@ -140,6 +140,7 @@ class BpTimeline extends Component {
       openPeriodInfo,
       hovedsokerKjonnKode,
       tilbakekrevingPerioder,
+      isTilbakekreving,
     } = this.props;
     const groups = formatGroups(tilbakekrevingPerioder);
     const items = formatItems(tilbakekrevingPerioder);
@@ -175,6 +176,7 @@ class BpTimeline extends Component {
               zoomOutCallback={this.zoomOut}
               openPeriodInfo={openPeriodInfo}
               selectedPeriod={selectedPeriod}
+              isTilbakekreving={isTilbakekreving}
             />
           </Column>
         </Row>
@@ -189,6 +191,7 @@ BpTimeline.propTypes = {
   selectPeriodCallback: PropTypes.func.isRequired,
   openPeriodInfo: PropTypes.func.isRequired,
   hovedsokerKjonnKode: PropTypes.string.isRequired,
+  isTilbakekreving: PropTypes.bool.isRequired,
 };
 
 BpTimeline.defaultProps = {

@@ -49,18 +49,18 @@ export class BpTimelinePanel extends Component {
   }
 
   initializePeriodForm(tilbakekrevingPeriod) {
-    const { reduxFormInitialize: formInitialize, behandlingFormPrefix, activityPanelName } = this.props;
-    formInitialize(`${behandlingFormPrefix}.${activityPanelName}`, tilbakekrevingPeriod);
+    const { reduxFormInitialize: formInitialize, behandlingFormPrefix, detailPanelForm } = this.props;
+    formInitialize(`${behandlingFormPrefix}.${detailPanelForm}`, tilbakekrevingPeriod);
   }
 
   updateActivity(values) {
-    const { resultatActivity, activityPanelName } = this.props;
+    const { resultatActivity, fieldNameToStoreDetailInfo } = this.props;
     const { ...verdier } = values;
 
     const otherThanUpdated = resultatActivity.filter(o => o.id !== verdier.id);
     const sortedActivities = otherThanUpdated.concat(verdier);
     sortedActivities.sort((a, b) => a.id - b.id);
-    this.setFormField(activityPanelName, sortedActivities);
+    this.setFormField(fieldNameToStoreDetailInfo, sortedActivities);
     const tilbakekrevingPeriod = otherThanUpdated.find(period => period.foreldet === foreldelseCodes.MANUELL_BEHANDLING);
     this.setSelectedTilbakekrevingActivity(tilbakekrevingPeriod || undefined);
   }
@@ -122,8 +122,10 @@ export class BpTimelinePanel extends Component {
       reduxFormChange: formChange,
       children,
       formName,
-      activityPanelName,
+      fieldNameToStoreDetailInfo,
       hovedsokerKjonnKode,
+      isTilbakekreving,
+      readOnly,
     } = this.props;
     const { selectedItem } = this.state;
     const childWithProps = selectedItem ? React.cloneElement(children, {
@@ -141,6 +143,7 @@ export class BpTimelinePanel extends Component {
           selectPeriodCallback={this.selectHandler}
           openPeriodInfo={this.openPeriodInfo}
           hovedsokerKjonnKode={hovedsokerKjonnKode}
+          isTilbakekreving={isTilbakekreving}
         />
         {selectedItem && (
           <BpTimelineData
@@ -154,7 +157,8 @@ export class BpTimelinePanel extends Component {
             reduxFormChange={formChange}
             behandlingFormPrefix={behandlingFormPrefix}
             formName={formName}
-            activityPanelName={activityPanelName}
+            activityPanelName={fieldNameToStoreDetailInfo}
+            readOnly={readOnly}
           >
             { childWithProps }
           </BpTimelineData>
@@ -169,11 +173,19 @@ BpTimelinePanel.propTypes = {
   resultatActivity: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
   formName: PropTypes.string.isRequired,
-  activityPanelName: PropTypes.string.isRequired,
+  fieldNameToStoreDetailInfo: PropTypes.string.isRequired,
+  detailPanelForm: PropTypes.string.isRequired,
   hovedsokerKjonnKode: PropTypes.string.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
+  isTilbakekreving: PropTypes.bool,
+  readOnly: PropTypes.bool,
+};
+
+BpTimelinePanel.defaultProps = {
+  isTilbakekreving: false,
+  readOnly: false,
 };
 
 export default BpTimelinePanel;
