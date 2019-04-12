@@ -46,7 +46,7 @@ export const BehandlingSupportIndex = ({
   enabledSupportPanels,
   getSupportPanelLocation,
 }) => (
-  <Panel className={activeSupportPanel === supportPanels.APPROVAL ? styles.statusAksjonspunkt : null}>
+  <div className={activeSupportPanel === supportPanels.APPROVAL ? styles.statusAksjonspunkt : styles.behandlingsupportIndex}>
     <div className={styles.marginBottom}>
       <LinkRow>
         {acccessibleSupportPanels.map(supportPanel => (
@@ -61,7 +61,7 @@ export const BehandlingSupportIndex = ({
       </LinkRow>
     </div>
     {renderSupportPanel(activeSupportPanel)}
-  </Panel>
+  </div>
 );
 
 BehandlingSupportIndex.propTypes = {
