@@ -9,7 +9,7 @@ const AktsomhetGradFormPanel = ({
   harGrunnerTilReduksjon,
   readOnly,
   handletUaktsomhetGrad,
-  annet,
+  erSerligGrunnAnnetValgt,
   sarligGrunnTyper,
   harMerEnnEnYtelse,
   feilutbetalingBelop,
@@ -24,7 +24,7 @@ const AktsomhetGradFormPanel = ({
         harGrunnerTilReduksjon={harGrunnerTilReduksjon}
         readOnly={readOnly}
         handletUaktsomhetGrad={handletUaktsomhetGrad}
-        annet={annet}
+        erSerligGrunnAnnetValgt={erSerligGrunnAnnetValgt}
         sarligGrunnTyper={sarligGrunnTyper}
         harMerEnnEnYtelse={harMerEnnEnYtelse}
         feilutbetalingBelop={feilutbetalingBelop}
@@ -38,7 +38,7 @@ AktsomhetGradFormPanel.propTypes = {
   harGrunnerTilReduksjon: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
   handletUaktsomhetGrad: PropTypes.string.isRequired,
-  annet: PropTypes.bool.isRequired,
+  erSerligGrunnAnnetValgt: PropTypes.bool.isRequired,
   harMerEnnEnYtelse: PropTypes.bool.isRequired,
   feilutbetalingBelop: PropTypes.number.isRequired,
   erTotalBelopUnder4Rettsgebyr: PropTypes.bool.isRequired,

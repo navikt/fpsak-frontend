@@ -22,7 +22,7 @@ const AktsomhetSarligeGrunnerFormPanel = ({
   harGrunnerTilReduksjon,
   readOnly,
   handletUaktsomhetGrad,
-  annet,
+  erSerligGrunnAnnetValgt,
   sarligGrunnTyper,
   harMerEnnEnYtelse,
   feilutbetalingBelop,
@@ -39,7 +39,7 @@ const AktsomhetSarligeGrunnerFormPanel = ({
         label={sgt.navn}
       />
     ))}
-    {annet && (
+    {erSerligGrunnAnnetValgt && (
       <Row>
         <Column md="1" />
         <Column md="10">
@@ -67,7 +67,7 @@ AktsomhetSarligeGrunnerFormPanel.propTypes = {
   harGrunnerTilReduksjon: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
   handletUaktsomhetGrad: PropTypes.string.isRequired,
-  annet: PropTypes.bool.isRequired,
+  erSerligGrunnAnnetValgt: PropTypes.bool.isRequired,
   harMerEnnEnYtelse: PropTypes.bool.isRequired,
   feilutbetalingBelop: PropTypes.number.isRequired,
   sarligGrunnTyper: PropTypes.arrayOf(PropTypes.shape()),

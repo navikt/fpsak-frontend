@@ -28,7 +28,7 @@ const AktsomhetFormPanel = ({
   resetAnnetTextField,
   handletUaktsomhetGrad,
   harGrunnerTilReduksjon,
-  annet,
+  erSerligGrunnAnnetValgt,
   aktsomhetTyper,
   sarligGrunnTyper,
   antallYtelser,
@@ -71,10 +71,10 @@ const AktsomhetFormPanel = ({
           harGrunnerTilReduksjon={harGrunnerTilReduksjon}
           readOnly={readOnly}
           handletUaktsomhetGrad={handletUaktsomhetGrad}
-          annet={annet}
+          erSerligGrunnAnnetValgt={erSerligGrunnAnnetValgt}
           resetAnnetTextField={resetAnnetTextField}
           sarligGrunnTyper={sarligGrunnTyper}
-          harMerEnnEnYtelse={antallYtelser - 2 > 1}
+          harMerEnnEnYtelse={antallYtelser > 1}
           feilutbetalingBelop={feilutbetalingBelop}
           erTotalBelopUnder4Rettsgebyr={erTotalBelopUnder4Rettsgebyr}
         />
@@ -88,7 +88,7 @@ AktsomhetFormPanel.propTypes = {
   resetFields: PropTypes.func.isRequired,
   resetAnnetTextField: PropTypes.func.isRequired,
   harGrunnerTilReduksjon: PropTypes.bool,
-  annet: PropTypes.bool,
+  erSerligGrunnAnnetValgt: PropTypes.bool,
   handletUaktsomhetGrad: PropTypes.string,
   antallYtelser: PropTypes.number.isRequired,
   feilutbetalingBelop: PropTypes.number.isRequired,
@@ -98,7 +98,7 @@ AktsomhetFormPanel.propTypes = {
 };
 
 AktsomhetFormPanel.defaultProps = {
-  annet: false,
+  erSerligGrunnAnnetValgt: false,
   harGrunnerTilReduksjon: undefined,
   handletUaktsomhetGrad: undefined,
 };
@@ -128,7 +128,7 @@ AktsomhetFormPanel.transformValues = (info, sarligGrunnTyper) => {
 
 
 AktsomhetFormPanel.buildInitalValues = (vilkarResultatInfo) => {
-  const { aktsomhet, aktsomhetInfo } = vilkarResultatInfo;
+  const { aktsomhet, aktsomhetInfo, begrunnelse } = vilkarResultatInfo;
   const aktsomhetData = aktsomhetInfo ? {
     [aktsomhet.kode]: {
       harGrunnerTilReduksjon: aktsomhetInfo.harGrunnerTilReduksjon,
@@ -137,12 +137,12 @@ AktsomhetFormPanel.buildInitalValues = (vilkarResultatInfo) => {
       belopSomSkalTilbakekreves: aktsomhetInfo.tilbakekrevesBelop,
       annetBegrunnelse: aktsomhetInfo.annetBegrunnelse,
       tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhetInfo.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
-      ...aktsomhetInfo.sarligGrunner.reduce((acc, sg) => ({ ...acc, [sg.kode]: true }), {}),
+      ...(aktsomhetInfo.sarligGrunner ? aktsomhetInfo.sarligGrunner.reduce((acc, sg) => ({ ...acc, [sg.kode]: true }), {}) : {}),
     },
   } : {};
 
   return {
-    aktsomhetBegrunnelse: vilkarResultatInfo.begrunnelse,
+    aktsomhetBegrunnelse: begrunnelse,
     handletUaktsomhetGrad: aktsomhet.kode,
     ...aktsomhetData,
   };
