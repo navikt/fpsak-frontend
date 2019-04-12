@@ -54,7 +54,6 @@ const ArbeidsforholdRadioknapper = ({
   formName,
   hasReceivedInntektsmelding,
   arbeidsforhold,
-  skalKunneLeggeTilNyeArbeidsforhold,
   aktivtArbeidsforholdTillatUtenIM,
   skalBrukeUendretForhold,
 }) => (
@@ -83,11 +82,13 @@ const ArbeidsforholdRadioknapper = ({
                 <RadioOption
                   label={{ id: 'PersonArbeidsforholdDetailForm.AvslaYtelseManglendeOpplysninger' }}
                   value={aktivtArbeidsforholdHandling.AVSLA_YTELSE}
+                  disabled={arbeidsforhold.lagtTilAvSaksbehandler === true}
                 />
                 { skalViseInntektIkkeMedTilBeregningsgrunnlagetValgmulighet(arbeidsforhold, hasReceivedInntektsmelding) && (
                   <RadioOption
                     label={{ id: 'PersonArbeidsforholdDetailForm.InntektIkkeMedIBeregningsgrunnlaget' }}
                     value={aktivtArbeidsforholdHandling.INNTEKT_IKKE_MED_I_BG}
+                    disabled={arbeidsforhold.lagtTilAvSaksbehandler === true}
                   />
                 )}
                 <RadioOption
@@ -126,7 +127,7 @@ const ArbeidsforholdRadioknapper = ({
       <RadioOption
         label={{ id: 'PersonArbeidsforholdDetailForm.ArbeidsforholdIkkeRelevant' }}
         value={false}
-        disabled={isKildeAaRegisteret(arbeidsforhold) || skalKunneLeggeTilNyeArbeidsforhold}
+        disabled={isKildeAaRegisteret(arbeidsforhold) || arbeidsforhold.lagtTilAvSaksbehandler === true}
       />
     )}
   </RadioGroupField>
@@ -137,7 +138,6 @@ ArbeidsforholdRadioknapper.propTypes = {
   formName: PropTypes.string.isRequired,
   hasReceivedInntektsmelding: PropTypes.bool.isRequired,
   arbeidsforhold: arbeidsforholdPropType.isRequired,
-  skalKunneLeggeTilNyeArbeidsforhold: PropTypes.bool.isRequired,
   aktivtArbeidsforholdTillatUtenIM: PropTypes.bool.isRequired,
   skalBrukeUendretForhold: PropTypes.bool,
 };

@@ -88,7 +88,7 @@ LeggTilArbeidsforholdFelter.validate = (values) => {
   if (values === undefined || values === null) {
     return null;
   }
-  if (moment(values.fomDato).isAfter(moment(values.tomDato))) {
+  if (values.fomDato && values.tomDato && moment(values.fomDato).isAfter(moment(values.tomDato))) {
     return ({
       tomDato: sluttdatoErrorMsg(formatDate(values.fomDato)),
       fomDato: startdatoErrorMsg(formatDate(values.tomDato)),
