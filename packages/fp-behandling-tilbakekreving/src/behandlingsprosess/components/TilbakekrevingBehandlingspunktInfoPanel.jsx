@@ -33,8 +33,7 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({
   readOnlySubmitButton,
 }) => (
   <div className={classNames('behandlingsPunkt', { statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
-    {ForeldelsePanel.supports(selectedBehandlingspunkt, apCodes)
-    && (
+    {ForeldelsePanel.supports(selectedBehandlingspunkt, apCodes) && (
       <ForeldelsePanel
         submitCallback={submitCallback}
         isApOpen={openAksjonspunkt}
@@ -42,18 +41,15 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({
         readOnly={readOnly}
         readOnlySubmitButton={readOnlySubmitButton}
       />
-    )
-    }
-    {TilbakekrevingForm.supports(selectedBehandlingspunkt, apCodes)
-    && (
+    )}
+    {TilbakekrevingForm.supports(selectedBehandlingspunkt, apCodes) && (
       <TilbakekrevingForm
         submitCallback={submitCallback}
         readOnly={readOnly}
         isApOpen={openAksjonspunkt}
         readOnlySubmitButton={readOnlySubmitButton}
       />
-    )
-    }
+    )}
   </div>
 );
 

@@ -34,7 +34,7 @@ const TILBAKEKREVING_FORM_NAME = 'TilbakekrevingForm';
 
 const tilbakekrevingAksjonspunkter = [tilbakekrevingAksjonspunktCodes.VURDER_TILBAKEKREVING];
 
-const TilbakekrevingFormImpl = ({
+export const TilbakekrevingFormImpl = ({
   perioderFormatertForTimeline,
   behandlingFormPrefix,
   isApOpen,

@@ -14,7 +14,7 @@ const AktsomhetGradUaktsomhetFormPanel = ({
   harGrunnerTilReduksjon,
   readOnly,
   handletUaktsomhetGrad,
-  annet,
+  erSerligGrunnAnnetValgt,
   sarligGrunnTyper,
   harMerEnnEnYtelse,
   feilutbetalingBelop,
@@ -33,7 +33,7 @@ const AktsomhetGradUaktsomhetFormPanel = ({
           <RadioOption label={<FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.Ja" />} value>
             <AktsomhetSarligeGrunnerFormPanel
               harGrunnerTilReduksjon={harGrunnerTilReduksjon}
-              annet={annet}
+              erSerligGrunnAnnetValgt={erSerligGrunnAnnetValgt}
               sarligGrunnTyper={sarligGrunnTyper}
               harMerEnnEnYtelse={harMerEnnEnYtelse}
               feilutbetalingBelop={feilutbetalingBelop}
@@ -53,7 +53,7 @@ const AktsomhetGradUaktsomhetFormPanel = ({
     {(handletUaktsomhetGrad !== aktsomhet.SIMPEL_UAKTSOM || !erTotalBelopUnder4Rettsgebyr) && (
       <AktsomhetSarligeGrunnerFormPanel
         harGrunnerTilReduksjon={harGrunnerTilReduksjon}
-        annet={annet}
+        erSerligGrunnAnnetValgt={erSerligGrunnAnnetValgt}
         sarligGrunnTyper={sarligGrunnTyper}
         harMerEnnEnYtelse={harMerEnnEnYtelse}
         feilutbetalingBelop={feilutbetalingBelop}
@@ -68,7 +68,7 @@ AktsomhetGradUaktsomhetFormPanel.propTypes = {
   harGrunnerTilReduksjon: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
   handletUaktsomhetGrad: PropTypes.string.isRequired,
-  annet: PropTypes.bool.isRequired,
+  erSerligGrunnAnnetValgt: PropTypes.bool.isRequired,
   harMerEnnEnYtelse: PropTypes.bool.isRequired,
   feilutbetalingBelop: PropTypes.number.isRequired,
   erTotalBelopUnder4Rettsgebyr: PropTypes.bool.isRequired,

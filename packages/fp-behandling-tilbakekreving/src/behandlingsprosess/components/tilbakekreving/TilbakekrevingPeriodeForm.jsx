@@ -72,9 +72,9 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
 
   resetAnnetTextField = () => {
     const {
-      behandlingFormPrefix, clearFields: clearFormFields, valgtVilkarResultatType, handletUaktsomhetGrad, annet,
+      behandlingFormPrefix, clearFields: clearFormFields, valgtVilkarResultatType, handletUaktsomhetGrad, erSerligGrunnAnnetValgt,
     } = this.props;
-    if (!annet) {
+    if (!erSerligGrunnAnnetValgt) {
       const fields = [`${valgtVilkarResultatType}.${handletUaktsomhetGrad}.annetBegrunnelse`];
       clearFormFields(`${behandlingFormPrefix}.${TILBAKEKREVING_PERIODE_FORM_NAME}`, false, false, ...fields);
     }
@@ -115,7 +115,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
       selectedItemData,
       readOnly,
       erBelopetIBehold,
-      annet,
+      erSerligGrunnAnnetValgt,
       vilkarResultatTyper,
       aktsomhetTyper,
       sarligGrunnTyper,
@@ -185,7 +185,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
                         handletUaktsomhetGrad={handletUaktsomhetGrad}
                         resetFields={this.resetFields}
                         resetAnnetTextField={this.resetAnnetTextField}
-                        annet={annet}
+                        erSerligGrunnAnnetValgt={erSerligGrunnAnnetValgt}
                         aktsomhetTyper={aktsomhetTyper}
                         sarligGrunnTyper={sarligGrunnTyper}
                         antallYtelser={selectedItemData.ytelser.length}
@@ -322,7 +322,8 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(
         state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr`,
       ),
-      annet: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.${sarligGrunn.ANNET}`),
+      erSerligGrunnAnnetValgt: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state,
+        `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.${sarligGrunn.ANNET}`),
       erBelopetIBehold: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.erBelopetIBehold`),
       initialValues: buildInitalValues(ownProps.selectedItemData, foreldelsePerioder),
       onSubmit: submitCallback,
