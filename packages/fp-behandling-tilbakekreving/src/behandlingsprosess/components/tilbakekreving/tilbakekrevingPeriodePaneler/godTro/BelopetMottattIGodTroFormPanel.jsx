@@ -24,7 +24,7 @@ const BelopetMottattIGodTroFormPanel = ({
 }) => (
   <>
     <Element>
-      <FormattedMessage id="BelopetMottattIGodTroFormPanel.BelopetMottattIGodTro " />
+      <FormattedMessage id="BelopetMottattIGodTroFormPanel.BelopetMottattIGodTro" />
     </Element>
     <VerticalSpacer eightPx />
     <TextAreaField
@@ -46,24 +46,24 @@ const BelopetMottattIGodTroFormPanel = ({
     </RadioGroupField>
     <div className={styles.arrowbox}>
       {erBelopetIBehold === true && (
-      <ArrowBox alignOffset={25}>
-        <InputField
-          name="tilbakekrevdBelop"
-          label={{ id: 'BelopetMottattIGodTroFormPanel.AngiBelop' }}
-          validate={[required]}
-          readOnly={readOnly}
-          parse={parseCurrencyInput}
-          bredde="S"
-        />
-      </ArrowBox>
-    )}
+        <ArrowBox alignOffset={25}>
+          <InputField
+            name="tilbakekrevdBelop"
+            label={{ id: 'BelopetMottattIGodTroFormPanel.AngiBelop' }}
+            validate={[required]}
+            readOnly={readOnly}
+            parse={parseCurrencyInput}
+            bredde="S"
+          />
+        </ArrowBox>
+      )}
       {erBelopetIBehold === false && (
-      <ArrowBox alignOffset={90}>
-        <Normaltekst>
-          <FormattedMessage id="BelopetMottattIGodTroFormPanel.IngenTilbakekreving" />
-        </Normaltekst>
-      </ArrowBox>
-    )}
+        <ArrowBox alignOffset={90}>
+          <Normaltekst>
+            <FormattedMessage id="BelopetMottattIGodTroFormPanel.IngenTilbakekreving" />
+          </Normaltekst>
+        </ArrowBox>
+      )}
     </div>
   </>
 );

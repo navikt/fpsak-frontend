@@ -103,28 +103,27 @@ AktsomhetFormPanel.defaultProps = {
   handletUaktsomhetGrad: undefined,
 };
 
-const formatAktsomhetData = (aktsomhet, sarligGrunnTyper) => ({
-  harGrunnerTilReduksjon: aktsomhet.harGrunnerTilReduksjon,
-  ileggRenter: aktsomhet.skalDetTilleggesRenter,
-  sarligGrunner: sarligGrunnTyper.length > 0
-    ? sarligGrunnTyper.reduce((acc, type) => (aktsomhet[type.kode] ? acc.concat({ kode: type.kode }) : acc), [])
-    : undefined,
-  andelTilbakekreves: Number.parseInt(aktsomhet.andelSomTilbakekreves, 10),
-  tilbakekrevesBelop: removeSpacesFromNumber(aktsomhet.belopSomSkalTilbakekreves),
-  annetBegrunnelse: aktsomhet.annetBegrunnelse,
-  tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhet.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
-});
+const formatAktsomhetData = (aktsomhet, sarligGrunnTyper) => {
+  const sarligeGrunner = sarligGrunnTyper.reduce((acc, type) => (aktsomhet[type.kode] ? acc.concat({ kode: type.kode }) : acc), []);
+  return {
+    harGrunnerTilReduksjon: aktsomhet.harGrunnerTilReduksjon,
+    ileggRenter: aktsomhet.skalDetTilleggesRenter,
+    sarligGrunner: sarligeGrunner.length > 0 ? sarligeGrunner : undefined,
+    andelTilbakekreves: aktsomhet.andelSomTilbakekreves,
+    tilbakekrevesBelop: removeSpacesFromNumber(aktsomhet.belopSomSkalTilbakekreves),
+    annetBegrunnelse: aktsomhet.annetBegrunnelse,
+    tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhet.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
+  };
+};
 
 AktsomhetFormPanel.transformValues = (info, sarligGrunnTyper) => {
   const aktsomhet = info[info.handletUaktsomhetGrad];
-
-  const test = {
+  return {
     '@type': 'annet',
     aktsomhet: { kode: info.handletUaktsomhetGrad },
     begrunnelse: info.aktsomhetBegrunnelse,
     aktsomhetInfo: aktsomhet ? formatAktsomhetData(aktsomhet, sarligGrunnTyper) : null,
   };
-  return test;
 };
 
 
@@ -134,7 +133,7 @@ AktsomhetFormPanel.buildInitalValues = (vilkarResultatInfo) => {
     [aktsomhet.kode]: {
       harGrunnerTilReduksjon: aktsomhetInfo.harGrunnerTilReduksjon,
       skalDetTilleggesRenter: aktsomhetInfo.ileggRenter,
-      andelSomTilbakekreves: `${aktsomhetInfo.andelTilbakekreves}`,
+      andelSomTilbakekreves: aktsomhetInfo.andelTilbakekreves,
       belopSomSkalTilbakekreves: aktsomhetInfo.tilbakekrevesBelop,
       annetBegrunnelse: aktsomhetInfo.annetBegrunnelse,
       tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhetInfo.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,

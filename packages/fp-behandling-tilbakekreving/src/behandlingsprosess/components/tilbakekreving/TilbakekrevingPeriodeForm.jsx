@@ -24,6 +24,7 @@ import {
 import { getForeldelsePerioder } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingTilbakekreving/src/behandlingForm';
 import sarligGrunn from 'behandlingTilbakekreving/src/kodeverk/sarligGrunn';
+import Aktsomhet from 'behandlingTilbakekreving/src/kodeverk/aktsomhet';
 import VilkarResultat from 'behandlingTilbakekreving/src/kodeverk/vilkarResultat';
 import tilbakekrevingKodeverkTyper from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingKodeverkTyper';
 import { getTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckTilbake';
@@ -284,11 +285,32 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
+const validate = (values, sarligGrunnTyper) => {
+  let errors = {};
+  const vilkarResultatInfo = values[values.valgtVilkarResultatType];
+  if (vilkarResultatInfo && vilkarResultatInfo.handletUaktsomhetGrad && vilkarResultatInfo.handletUaktsomhetGrad !== Aktsomhet.FORSETT) {
+    const aktsomhetInfo = vilkarResultatInfo[vilkarResultatInfo.handletUaktsomhetGrad];
+    if (aktsomhetInfo && !sarligGrunnTyper.some(type => aktsomhetInfo[type.kode])) {
+       // eslint-disable-next-line no-underscore-dangle
+       errors = {
+         [values.valgtVilkarResultatType]: {
+           [vilkarResultatInfo.handletUaktsomhetGrad]: {
+             [sarligGrunn.ANNET]: [{ id: 'TilbakekrevingPeriodeForm.MaVelgeSarligGrunn' }],
+           },
+          },
+        };
+    }
+  }
+
+  return errors;
+};
+
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const sarligGrunnTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.SARLIG_GRUNN)(initialState);
   const vilkarResultatTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.VILKAR_RESULTAT)(initialState);
   const aktsomhetTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.AKTSOMHET)(initialState);
   const submitCallback = values => ownProps.updateActivity(transformValues(ownProps.selectedItemData, values, sarligGrunnTyper));
+  const validateForm = values => validate(values, sarligGrunnTyper);
   const foreldelsePerioder = getForeldelsePerioder(initialState).perioder;
   return (state) => {
     const valgtVilkarResultatType = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, 'valgtVilkarResultatType');
@@ -304,6 +326,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       erBelopetIBehold: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.erBelopetIBehold`),
       initialValues: buildInitalValues(ownProps.selectedItemData, foreldelsePerioder),
       onSubmit: submitCallback,
+      validate: validateForm,
       valgtVilkarResultatType,
       handletUaktsomhetGrad,
       vilkarResultatTyper,
