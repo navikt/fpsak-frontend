@@ -100,7 +100,7 @@ VurderBesteberegningPanelImpl.transformValues = (values, faktaOmBeregning, innte
     return {};
   }
   const skalHaBesteberegning = values[besteberegningField];
-  if (!skalHaBesteberegning) {
+  if (!skalHaBesteberegning || !inntektPrAndel) {
     return {
       besteberegningAndeler: {
         besteberegningAndelListe: [],

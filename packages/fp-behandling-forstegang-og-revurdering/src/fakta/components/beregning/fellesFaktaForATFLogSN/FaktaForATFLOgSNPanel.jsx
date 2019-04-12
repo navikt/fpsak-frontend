@@ -194,11 +194,6 @@ FaktaForATFLOgSNPanelImpl.propTypes = {
 const kunYtelseTransform = (faktaOmBeregning, endringBGPerioder, aktivePaneler) => values => transformValuesForKunYtelse(values,
   faktaOmBeregning.kunYtelse, endringBGPerioder, aktivePaneler);
 
-const endretBGTransform = endringBGPerioder => values => ({
-  faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG],
-  ...FastsettEndretBeregningsgrunnlag.transformValues(values, endringBGPerioder),
-});
-
 const nyIArbeidslivetTransform = (vurderFaktaValues, values) => {
   vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_SN_NY_I_ARBEIDSLIVET);
   return ({
@@ -246,13 +241,10 @@ export const transformValues = (
   return transformed;
 };
 
-export const setInntektValues = (aktivePaneler, fatsettKunYtelseTransform, fastsettEndretTransform,
+export const setInntektValues = (aktivePaneler, fatsettKunYtelseTransform,
   vurderOgFastsettATFLTransform) => (values) => {
   if (aktivePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE)) {
     return fatsettKunYtelseTransform(values);
-  }
-  if (aktivePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
-    return fastsettEndretTransform(values);
   }
   return { ...vurderOgFastsettATFLTransform(values) };
 };
@@ -261,7 +253,6 @@ const setValuesForVurderFakta = (aktivePaneler, values, endringBGPerioder, kortv
   const vurderFaktaValues = setInntektValues(
     aktivePaneler,
     kunYtelseTransform(faktaOmBeregning, endringBGPerioder, aktivePaneler),
-    endretBGTransform(endringBGPerioder),
     VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag),
   )(values);
   return transformValues(aktivePaneler,

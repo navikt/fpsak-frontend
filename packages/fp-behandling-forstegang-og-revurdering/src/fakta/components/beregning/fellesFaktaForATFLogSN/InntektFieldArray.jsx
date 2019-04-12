@@ -177,15 +177,15 @@ InntektFieldArrayImpl.defaultProps = {
 
 const InntektFieldArray = injectIntl(InntektFieldArrayImpl);
 
-InntektFieldArray.transformValues = values => (
-  values.filter(({ skalRedigereInntekt }) => skalRedigereInntekt).map(fieldValue => ({
+InntektFieldArray.transformValues = values => (values
+  ? values.filter(({ skalRedigereInntekt }) => skalRedigereInntekt).map(fieldValue => ({
     andelsnr: fieldValue.andelsnr,
     fastsattBelop: removeSpacesFromNumber(fieldValue.fastsattBelop),
     inntektskategori: fieldValue.inntektskategori,
     nyAndel: fieldValue.nyAndel,
     lagtTilAvSaksbehandler: fieldValue.lagtTilAvSaksbehandler,
     aktivitetStatus: fieldValue.aktivitetStatus,
-  }))
+  })) : null
 );
 
 const mapAndelToSortedObject = (value) => {
