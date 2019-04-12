@@ -16,7 +16,9 @@ export const transformValuesKunstigArbeidsforhold = (inntektVerdier, faktaOmBere
     .filter(field => !fastsatteAndelsnr.includes(field.andelsnr) && !fastsatteAndelsnr.includes(field.andelsnrRef))
     .filter(field => bg.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
       .find(andel => (andel.andelsnr === field.andelsnr || andel.andelsnr === field.andelsnrRef)
-      && andel.arbeidsforhold && andel.arbeidsforhold.organisasjonstype.kode === organisasjonstyper.KUNSTIG));
+      && andel.arbeidsforhold
+      && andel.arbeidsforhold.organisasjonstype
+      && andel.arbeidsforhold.organisasjonstype.kode === organisasjonstyper.KUNSTIG));
       kunstigeArbeidsforhold.forEach(field => fastsatteAndelsnr.push(field.andelsnr));
   const fastsattInntekt = kunstigeArbeidsforhold
     .map(field => ({
@@ -38,7 +40,9 @@ export const transformValuesKunstigArbeidsforhold = (inntektVerdier, faktaOmBere
 export const harKunstigArbeidsforhold = (tilfeller, beregningsgrunnlag) => {
   if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)) {
     return beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
-    .find(andel => andel.arbeidsforhold && andel.arbeidsforhold.organisasjonstype.kode === organisasjonstyper.KUNSTIG) !== undefined;
+    .find(andel => andel.arbeidsforhold
+      && andel.arbeidsforhold.organisasjonstype
+      && andel.arbeidsforhold.organisasjonstype.kode === organisasjonstyper.KUNSTIG) !== undefined;
   }
   return false;
 };
