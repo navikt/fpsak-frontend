@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Panel } from 'nav-frontend-paneler';
 
 import { trackRouteParam, getSupportPanelLocationCreator } from '@fpsak-frontend/fp-felles';
 import { isKontrollerRevurderingAksjonspunkOpen } from 'behandling/duck';
