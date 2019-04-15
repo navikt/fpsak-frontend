@@ -1,60 +1,63 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
 .linkElement() {
-  margin-right: 24px;
-  padding-left: 2px;
-  padding-right: 2px;
-  text-decoration: none;
+  background-color: @navGra20;
+  border-radius: 4px;
+  margin-right: 12px;
+  padding-bottom: 6px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 6px;
+
+  &:hover {
+    background-color: @navLysGra;
+    color: black;
+  }
+
+  &:active {
+    background-color: white;
+  }
+
+  &:focus {
+    border-left: 2px solid @navOransje;
+    border-right: 2px solid @navOransje;
+    border-top: 2px solid @navOransje;
+  }
 }
 
 .disabled {
   .linkElement();
 
-  color: @navGra40;
-  pointer-events: none;
+  color: white;
 
-  &:focus {
-    outline: none;
+  &:hover {
+    background-color: @navGra20;
+    color: white;
   }
 }
 
 .link {
   .linkElement();
 
-  color: black;
+  color: @navBla;
+  text-decoration: none;
 
   &.isActive,
   &:active {
-    border-bottom: 2px solid @navBla;
-    color: @navDypBla;
-    padding-bottom: 4px;
-    text-decoration: none;
-
-    &:focus {
-      color: @navLilla;
-      text-decoration: none;
-    }
+    background-color: white;
+    color: black;
   }
 
   &.isActive {
-    pointer-events: none;
+    text-decoration: none;
   }
 
   &:focus {
-    background-color: @navOransjeLighten40;
-    border-bottom: 2px solid @navBla;
+    background-color: white;
     color: @navBla;
-    padding-bottom: 4px;
-    text-decoration: none;
 
     &:hover {
-      color: @navBla;
+      color: black;
     }
-  }
-
-  &:hover {
-    border-bottom: 2px solid @navBla;
-    color: @navBla;
-    padding-bottom: 4px;
   }
 }

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import { NavLink } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import { Element } from 'nav-frontend-typografi';
 
 import SupportPanel from 'behandlingsupport/supportPanels';
 
@@ -25,7 +26,7 @@ const SupportPanelLink = ({
   if (isEnabled) {
     return (
       <NavLink to={supportPanelLocation} className={classNames('link', { isActive })} tabIndex={isActive || !isEnabled ? -1 : 0}>
-        {linkContent}
+        <Element tag="span">{linkContent}</Element>
       </NavLink>
     );
   }

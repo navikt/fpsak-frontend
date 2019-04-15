@@ -190,7 +190,7 @@ export class ApprovalIndexImpl extends Component {
     }
 
     return (
-      <div>
+      <div className={styles.approvalContainer}>
         {approvals && approvals.length > 0
           ? (
             <div>

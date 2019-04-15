@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Panel } from 'nav-frontend-paneler';
 
 import { trackRouteParam, getSupportPanelLocationCreator } from '@fpsak-frontend/fp-felles';
 import { isKontrollerRevurderingAksjonspunkOpen } from 'behandling/duck';
@@ -46,7 +45,7 @@ export const BehandlingSupportIndex = ({
   enabledSupportPanels,
   getSupportPanelLocation,
 }) => (
-  <Panel className={activeSupportPanel === supportPanels.APPROVAL ? styles.statusAksjonspunkt : null}>
+  <div className={activeSupportPanel === supportPanels.APPROVAL ? styles.statusAksjonspunkt : styles.behandlingsupportIndex}>
     <div className={styles.marginBottom}>
       <LinkRow>
         {acccessibleSupportPanels.map(supportPanel => (
@@ -61,7 +60,7 @@ export const BehandlingSupportIndex = ({
       </LinkRow>
     </div>
     {renderSupportPanel(activeSupportPanel)}
-  </Panel>
+  </div>
 );
 
 BehandlingSupportIndex.propTypes = {
