@@ -85,6 +85,7 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.FORESLA_VEDTAK]: 'Vedtak.Fritekstbrev',
   [aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO]: 'UttakInfoPanel.FaktaUttak.ForsteUttakDato',
   [aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT]: 'UttakInfoPanel.FaktaUttak.VurderAnnenForelder',
+  [aksjonspunktCodes.AVKLAR_AKTIVITETER]: 'BeregningInfoPanel.Historikkinnslag.AvklarAktiviteter',
 };
 
 const scrollUp = () => {

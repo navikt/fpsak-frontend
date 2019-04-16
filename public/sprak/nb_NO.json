@@ -1115,7 +1115,9 @@
 
   "AvklarAktivitetPanel.ButtonText": "Oppdater",
   "VurderAktiviteterTabell.FullAAPKombinert.Overskrift": "Søker har full AAP (200%) sammen med andre aktiviteter. Skjæringstidspunkt for beregning {skjaeringstidspunkt}",
-  
+
+  "BeregningInfoPanel.Historikkinnslag.AvklarAktiviteter": "Avklar aktiviteter",
+
   "BeregningInfoPanel.VurderOgFastsettATFL.ErSokerNyoppstartetFL": "Startet søker som frilanser i løpet av de siste tre månedene?",
   "BeregningInfoPanel.VurderOgFastsettATFL.ATFLSammeOrgUtenIM": "Søker er arbeidstaker og frilanser i samme virksomhet og det er ikke mottatt inntektsmelding(er).",
   "BeregningInfoPanel.VurderOgFastsettATFL.ATFLSammeOrg": "Søker er arbeidstaker og frilanser i samme virksomhet.",
@@ -2195,14 +2197,14 @@
   "AktsomhetReduksjonAvBelopFormPanel.SkalSarligeGrunnerGiReduksjon": "Skal særlige grunner gi reduksjon av beløpet?",
   "AktsomhetReduksjonAvBelopFormPanel.Nei": "Nei",
   "AktsomhetReduksjonAvBelopFormPanel.Ja": "Ja",
-  
+
   "AktsomhetGradUaktsomhetFormPanel.AllePerioderBehandlesLikt": "Når 6. ledd anvendes må alle perioder behandles likt",
   "AktsomhetGradUaktsomhetFormPanel.Nei": "Nei",
   "AktsomhetGradUaktsomhetFormPanel.Ja": "Ja",
   "AktsomhetGradUaktsomhetFormPanel.Tilbakekrev": "Totalbeløpet er under 4 rettsgebyr (6. ledd). Skal det tilbakekreves?",
 
   "FeilutbetalingInfoPanel.Aksjonspunkt": "Kontroller at korrekt hendelse er satt",
-  
+
   "TilbakekrevingForm.AksjonspunktHjelpetekst": "Fastsett tilbakekreving etter §22-1. Del opp perioden ved behov for ulik vurdering",
 
   "TilbakekrevingPeriodeForm.VilkarForTilbakekreving": "Vilkårene for tilbakekreving",
@@ -2212,9 +2214,9 @@
   "TilbakekrevingPeriodeForm.Avbryt": "Avbryt",
   "TilbakekrevingPeriodeForm.Vurdering":"Vurdering",
   "TilbakekrevingPeriodeForm.MaVelgeSarligGrunn":"Du må velge minst en Særlig grunn",
-  
+
   "AktsomhetSarligeGrunnerFormPanel.GrunnerTilReduksjon":"Særlige grunner som er vektlagt (4.ledd)",
-  
+
   "TilbakekrevingAktivitetTabell.Aktivitet": "Aktivitet",
   "TilbakekrevingAktivitetTabell.FeilutbetaltBelop": "Feilutbetalt beløp",
 
