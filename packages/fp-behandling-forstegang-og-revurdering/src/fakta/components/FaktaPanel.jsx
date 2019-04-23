@@ -22,10 +22,7 @@ import UttakInfoPanel from './uttak/UttakInfoPanel';
 import BeregningInfoPanel from './beregning/BeregningInfoPanel';
 import PersonInfoPanel from './person/PersonInfoPanel';
 import PersonIndexPanel from './person/PersonIndexPanel';
-<<<<<<< HEAD
 import ArbeidsforholdInfoPanel from './arbeidsforholdInfoPanel/ArbeidsforholdInfoPanel';
-=======
->>>>>>> FIX: mergecommit
 
 import styles from './faktaPanel.less';
 
