@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import {
-  Table, TableRow, TableColumn, DateLabel, Image, Tooltip,
+  Table, TableRow, TableColumn, DateTimeLabel, Image, Tooltip,
 } from '@fpsak-frontend/shared-components';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
@@ -109,7 +109,7 @@ const DocumentList = ({
             </TableColumn>
             <TableColumn>
               {document.tidspunkt
-                ? <DateLabel dateString={document.tidspunkt} />
+                ? <DateTimeLabel dateTimeString={document.tidspunkt2} />
                 : <Normaltekst><FormattedMessage id="DocumentList.IProduksjon" /></Normaltekst>}
             </TableColumn>
           </TableRow>
