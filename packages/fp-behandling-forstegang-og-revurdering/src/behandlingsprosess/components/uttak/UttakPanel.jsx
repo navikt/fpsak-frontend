@@ -186,48 +186,67 @@ const convertToArray = uttakResult => Object.values(uttakResult)
     return uttakElement;
   });
 
-const checkPeriodMaxDays = periode => (periode ? periode.maxDager : 665); // tallet hentet fra -PKMANTIS-1808
+  const checkPeriodMaxDays = periode => (periode ? periode.maxDager : 665); // tallet hentet fra -PKMANTIS-1808
 
-const getMaxDays = (stonadskontoTypeKode, stonadskontoer) => {
-  switch (stonadskontoTypeKode) {
-    case stonadskontoType.FORELDREPENGER_FØR_FØDSEL:
-      return checkPeriodMaxDays(stonadskontoer.FORELDREPENGER_FØR_FØDSEL);
-    case stonadskontoType.FORELDREPENGER:
-      return checkPeriodMaxDays(stonadskontoer.FORELDREPENGER);
-    case stonadskontoType.FELLESPERIODE:
-      return checkPeriodMaxDays(stonadskontoer.FELLESPERIODE);
-    case stonadskontoType.MØDREKVOTE:
-      return checkPeriodMaxDays(stonadskontoer.MØDREKVOTE);
-    case stonadskontoType.FEDREKVOTE:
-      return checkPeriodMaxDays(stonadskontoer.FEDREKVOTE);
-    default:
-      return undefined;
-  }
-};
+  // todo (petter), ta bort denne hvis vi ikke trenger den lenger?
+  const getMaxDays = (stonadskontoTypeKode, stonadskontoer) => {
+    switch (stonadskontoTypeKode) {
+      case stonadskontoType.FORELDREPENGER_FØR_FØDSEL:
+        return checkPeriodMaxDays(stonadskontoer.FORELDREPENGER_FØR_FØDSEL);
+      case stonadskontoType.FORELDREPENGER:
+        return checkPeriodMaxDays(stonadskontoer.FORELDREPENGER);
+      case stonadskontoType.FELLESPERIODE:
+        return checkPeriodMaxDays(stonadskontoer.FELLESPERIODE);
+      case stonadskontoType.MØDREKVOTE:
+        return checkPeriodMaxDays(stonadskontoer.MØDREKVOTE);
+      case stonadskontoType.FEDREKVOTE:
+        return checkPeriodMaxDays(stonadskontoer.FEDREKVOTE);
+      default:
+        return undefined;
+    }
+  };
 
-const checkMaxDager = (uttaksresultatActivity, stonadskonto) => {
-  let errors = null;
-  const uttakResult = getResult(uttaksresultatActivity);
-  const uttakResultArray = convertToArray(uttakResult);
-  uttakResultArray.forEach((value) => {
-    const maxDays = getMaxDays(value.konto, stonadskonto.stonadskontoer) - value.trekkdager;
-    if (maxDays && (maxDays < 0)) {
-      errors = {
-        _error:
+  const getGyldigForbruk = (stonadskontoTypeKode, stonadskontoer) => {
+    switch (stonadskontoTypeKode) {
+      case stonadskontoType.FORELDREPENGER_FØR_FØDSEL:
+        return stonadskontoer.FORELDREPENGER_FØR_FØDSEL.gyldigForbruk;
+      case stonadskontoType.FORELDREPENGER:
+        return stonadskontoer.FORELDREPENGER.gyldigForbruk;
+      case stonadskontoType.FELLESPERIODE:
+        return stonadskontoer.FELLESPERIODE.gyldigForbruk;
+      case stonadskontoType.MØDREKVOTE:
+        return stonadskontoer.MØDREKVOTE.gyldigForbruk;
+      case stonadskontoType.FEDREKVOTE:
+        return stonadskontoer.FEDREKVOTE.gyldigForbruk;
+      default:
+        return undefined;
+    }
+  };
+
+  const checkMaxDager = (uttaksresultatActivity, stonadskonto) => {
+    let errors = null;
+    const uttakResult = getResult(uttaksresultatActivity);
+    const uttakResultArray = convertToArray(uttakResult);
+    uttakResultArray.forEach((value) => {
+      const maxDays = getMaxDays(value.konto, stonadskonto.stonadskontoer) - value.trekkdager;
+      const gyldigForbruk = getGyldigForbruk(value.konto, stonadskonto.stonadskontoer);
+      if (!gyldigForbruk) {
+        errors = {
+          _error:
   <AlertStripe type="advarsel" className={styles.marginTop}>
     <FormattedMessage
       id="ValidationMessage.NegativeSaldo"
       values={{
-        periode: uttakPeriodeNavn[value.konto],
-        days: maxDays * -1,
-      }}
+          periode: uttakPeriodeNavn[value.konto],
+          days: maxDays * -1,
+        }}
     />
   </AlertStripe>,
-      };
-    }
-  });
-  return errors;
-};
+        };
+      }
+    });
+    return errors;
+  };
 
 const checkFlerbarnsMaksDager = (uttaksresultatActivity, stonadskonto) => {
   let errors = null;
