@@ -23,6 +23,7 @@ import BeregningInfoPanel from './beregning/BeregningInfoPanel';
 import PersonInfoPanel from './person/PersonInfoPanel';
 import PersonIndexPanel from './person/PersonIndexPanel';
 import ArbeidsforholdInfoPanel from './arbeidsforholdInfoPanel/ArbeidsforholdInfoPanel';
+import FodselOgTilretteleggingInfoPanel from './fodselOgTilrettelegging/FodselOgTilretteleggingInfoPanel';
 
 import styles from './faktaPanel.less';
 
@@ -121,6 +122,14 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         />
       )
       }
+         {/* TODO: tilpasse når denne skal vises */}
+         <FodselOgTilretteleggingInfoPanel
+        openInfoPanels={openInfoPanels}
+        toggleInfoPanelCallback={toggleInfoPanelCallback}
+        shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+      />
       {AdopsjonInfoPanel.supports(vilkarCodes, aksjonspunkter)
       && (
         <AdopsjonInfoPanel
