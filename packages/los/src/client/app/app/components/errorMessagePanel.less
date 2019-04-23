@@ -1,0 +1,42 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.container {
+  background-color: @redError;
+  color: white;
+  display: block;
+  max-height: 120px;
+  min-height: 50px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-bottom: 5px;
+  padding-left: 40px;
+  padding-top: 5px;
+  position: relative;
+}
+
+.link {
+  background: none;
+  border: 0px;
+  border-bottom: solid 1px white;
+  color: white;
+  cursor: pointer;
+  padding: 0px;
+  text-decoration: none;
+
+  &:focus,
+  &:hover {
+    border-bottom-color: @navGra40;
+    color: @navGra40;
+  }
+}
+
+.lukkContainer {
+  font-size: 18px;
+  position: absolute;
+  right: 16px;
+  top: 8px;
+}
+
+.wordWrap {
+  white-space: pre-line;
+}

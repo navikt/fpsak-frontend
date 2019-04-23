@@ -1,0 +1,56 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.oppgaveContainer {
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+}
+
+.leftColumn {
+  float: left;
+  width: 69%;
+}
+
+.rightColumn {
+  float: left;
+  margin-left: 24px;
+  width: 29%;
+
+  & > div {
+    margin-bottom: 16px;
+  }
+}
+
+@media all and (max-width: 1450px) {
+
+    .leftColumn {
+      width: 100%;
+    }
+
+    .rightColumn {
+      margin-left: 0px;
+      width: 100%;
+    }
+
+    .gridContainer {
+      display: flex;
+      flex-flow: row wrap;
+      max-height: 100%;
+      max-width: 100%;
+    }
+
+    .sakslisteContent {
+      order: 3;
+    }
+
+}
+
+@media all and (max-width: 800px) {
+    .gridContainer {
+        max-width: 640px;
+    }
+}
+
+.sakslistePanel {
+  margin-bottom: 20px;
+}

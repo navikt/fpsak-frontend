@@ -1,0 +1,30 @@
+{
+	"compilerOptions": {
+		"target": "esnext",
+		"moduleResolution": "node",
+		"allowJs": true,
+		"noEmit": true,
+		"strict": false,
+		"isolatedModules": true,
+		"esModuleInterop": true,
+		"sourceMap": true, 
+		"jsx": "react",
+		"typeRoots": ["./node_modules/@types", "./src/@types"],
+		"baseUrl": "src/client/",
+		"paths": {
+			"app/*": ["app/app/*"],
+			"data/*": ["app/data/*"],
+			"form/*": ["app/form/*"],
+			"kodeverk/*": ["app/kodeverk/*"],
+			"navAnsatt/*": ["app/navAnsatt/*"],
+			"sharedComponents/*": ["app/sharedComponents/*"],
+			"avdelingsleder/*": ["app/avdelingsleder/*"],
+			"saksbehandler/*": ["app/saksbehandler/*"],
+			"utils/*": ["app/utils/*"],
+			"testHelpers/*": ["testHelpers/*"],
+		  }
+	},
+	"include": [
+		"src"
+	],
+}

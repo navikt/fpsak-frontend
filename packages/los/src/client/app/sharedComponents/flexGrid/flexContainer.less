@@ -1,0 +1,18 @@
+.flexContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+
+  &.fluid {
+    width: 100%;
+  }
+
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    flex-direction: row;
+
+    // ie10 fix, should maybe not be an optional class
+    &.flexWrap { // lesshint qualifyingElement: false
+      flex-wrap: wrap;
+    }
+  }
+}

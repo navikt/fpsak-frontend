@@ -1,0 +1,51 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.table {
+  background-color: transparent;
+  border-collapse: collapse;
+  border-spacing: 0px;
+  margin-bottom: 1rem;
+  max-width: 100%;
+  width: 100%;
+
+  thead {
+    display: table-header-group;
+  }
+
+  caption {
+    color: @navGra60;
+    left: -3000px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    position: absolute;
+    text-align: left;
+  }
+
+  tbody {
+
+    tr {
+
+      &:first-child th,
+      &:first-child td {
+        border-top: 1px solid @navGra40;
+        border-top-width: 2px;
+      }
+
+      &:hover {
+        background-color: @navLysGra;
+      }
+    }
+  }
+
+  &.noHover {
+    tbody {
+
+      tr {
+
+        &:hover {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}

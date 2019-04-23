@@ -1,0 +1,4 @@
+--colors
+--require @babel/polyfill
+--require ./src/client/testHelpers/setup.js
+--include ./src/client/testHelpers/setup-enzyme.js

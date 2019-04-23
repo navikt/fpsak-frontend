@@ -1,0 +1,80 @@
+/* Based on https://www.w3schools.com/css/css_tooltip.asp */
+.tooltip {
+    display: inline-block;
+    position: relative;
+}
+
+.tooltiptext {
+    background-color: #3e3832;
+    border: 1px solid #3e3832;
+    border-radius: 4px;
+    box-shadow: 5px 2px 10px #888888;
+    color: white;
+    margin-bottom: 20px;
+    min-width: 200px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 10px;
+    padding-top: 10px;
+    position: absolute;
+    z-index: 101;
+}
+
+.tooltiptextLeft {
+  margin-left: 45px;
+  top: -30px;
+}
+
+.tooltiptextBottom {
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+}
+
+.show {
+  visibility: visible;
+}
+
+.hide {
+  visibility: hidden;
+}
+
+.tooltiptextLeft::before {
+    border-color: transparent #3e3832 transparent transparent;
+    border-style: solid;
+    content: ' ';
+    filter: drop-shadow(2px 5px 8px #888888);
+    position: absolute;
+    right: 100%; /* To the left of the tooltip */
+    top: 30px;
+}
+
+.tooltiptextLeft::after {
+    border-color: transparent #3e3832 transparent transparent;
+    border-style: solid;
+    border-width: 12px;
+    content: ' ';
+    position: absolute;
+    right: 100%; /* To the left of the tooltip */
+    top: 30px;
+}
+
+.tooltiptextBottom::before {
+    border-color: #3e3832 transparent transparent transparent;
+    border-style: solid;
+    content: ' ';
+    filter: drop-shadow(2px 5px 8px #888888);
+    left: 42px;
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+}
+
+.tooltiptextBottom::after {
+    border-color: #3e3832 transparent transparent transparent;
+    border-style: solid;
+    border-width: 12px;
+    content: ' ';
+    left: 43px;
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+}

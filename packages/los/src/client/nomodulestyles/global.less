@@ -1,0 +1,81 @@
+// CSS-endringer för felleskomponenter og globaler så som fra core/og muligen import fra alla andra komponenter
+@import '@{coreModulePath}nav-frontend-core/less/core';
+@import './dayPicker';
+
+:global(.cal-wrap) {
+  width: 300px;
+}
+
+:global(.modal__overlay) {
+   background-color: rgba(61, 56, 49, 0.9);
+}
+
+// Text-area custom styling
+:global(.textarea--medMeta__teller) {
+   color: @navMorkGra;
+   font-size: 0.8rem;
+   font-style: italic;
+}
+
+:global(.lenke) {
+  color: @navBla;
+  border: 0;
+  padding: 0;
+  background: none;
+  text-decoration: none;
+  border-bottom: solid 1px @navGra40;
+  cursor: pointer;
+
+  &:hover,
+  &--hover {
+    border-bottom-color: @navBla;
+  }
+
+  &:focus,
+  &--focus {
+    outline: none;
+    background-color: @orangeFocus;
+  }
+
+  &:active,
+  &--active {
+    color: @navDypBla;
+    border-bottom-color: @navDypBla;
+  }
+
+  &--frittstaende {
+    border-bottom: 0;
+  }
+}
+
+:global(.skjemaelement > .skjemaelement) {
+  &__feilmelding {
+    margin-top: 1rem;
+  }
+}
+
+:global(.skjemaelement > .skjemaelement__input) {
+  padding: 9px;
+ }
+
+//TODO (TOR) Dette bør kunna gjerast på ein bedre måte (Har lagt til float:left for å få vist to månedar for periodevelgjar)
+:global(.DayPicker-Month) {
+  display: table;
+  border-collapse: collapse;
+  border-spacing: 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  margin: 0 1rem;
+  margin-top: 1rem;
+  float: left;
+}
+
+:global(.nav-frontend-tabs) {
+  border-bottom: none;
+}
+
+:global(.nav-frontend-tabs__tab-inner--aktiv) {
+  border: none;
+}
