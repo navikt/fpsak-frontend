@@ -6,9 +6,11 @@ import { NavLink } from 'react-router-dom';
 import { Row, Column } from 'nav-frontend-grid';
 import { Panel } from 'nav-frontend-paneler';
 
-import BehandlingMenuIndex from 'behandlingmenu/BehandlingMenuIndex';
-
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import { behandlingIListePropType } from '@fpsak-frontend/prop-types';
+
+import BehandlingMenuIndex from 'behandlingmenu/BehandlingMenuIndex';
+import { getAlleKodeverk } from 'kodeverk/duck';
 import BehandlingPicker from './BehandlingPicker';
 
 import styles from './fagsakProfile.less';
@@ -21,7 +23,7 @@ import styles from './fagsakProfile.less';
 const hasLink = link => link && link.saksnr && link.saksnr.verdi && link.behandlingId;
 const createLink = link => `/fagsak/${link.saksnr.verdi}/behandling/${link.behandlingId}/?punkt=uttak`;
 
-const FagsakProfile = ({
+export const FagsakProfile = ({
   saksnummer,
   sakstype,
   fagsakStatus,
@@ -31,17 +33,18 @@ const FagsakProfile = ({
   toggleShowAll,
   noExistingBehandlinger,
   annenPartLink,
+  getKodeverknavn,
 }) => (
   <Panel>
     <Row>
       <Column xs="6">
         <div className={styles.bottomMargin}>
           <Systemtittel>
-            {sakstype.navn}
+            {getKodeverknavn(sakstype)}
           </Systemtittel>
         </div>
         <Normaltekst>
-          {`${saksnummer} - ${fagsakStatus.navn}`}
+          {`${saksnummer} - ${getKodeverknavn(fagsakStatus)}`}
         </Normaltekst>
       </Column>
       <Column xs="6">
@@ -82,6 +85,7 @@ FagsakProfile.propTypes = {
   showAll: PropTypes.bool.isRequired,
   toggleShowAll: PropTypes.func.isRequired,
   annenPartLink: PropTypes.shape(),
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 FagsakProfile.defaultProps = {
@@ -89,4 +93,4 @@ FagsakProfile.defaultProps = {
   annenPartLink: null,
 };
 
-export default FagsakProfile;
+export default injectKodeverk(getAlleKodeverk)(FagsakProfile);

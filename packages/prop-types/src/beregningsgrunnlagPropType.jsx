@@ -8,7 +8,6 @@ const beregningsgrunnlagArbeidsforholdProptype = PropTypes.shape({
   arbeidsforholdId: PropTypes.string,
   arbeidsforholdType: PropTypes.shape({
     kode: PropTypes.string,
-    navn: PropTypes.string,
     kodeverk: PropTypes.string,
   }),
 });
@@ -18,12 +17,10 @@ const faktaOmBeregningAndelPropType = PropTypes.shape({
   andelsnr: PropTypes.number,
   inntektskategori: PropTypes.shape({
     kode: PropTypes.string,
-    navn: PropTypes.string,
     kodeverk: PropTypes.string,
   }),
   aktivitetStatus: PropTypes.shape({
     kode: PropTypes.string,
-    navn: PropTypes.string,
     kodeverk: PropTypes.string,
   }),
 });
@@ -42,7 +39,6 @@ const beregningsgrunnlagPropType = PropTypes.shape({
   aktivitetStatus: PropTypes.arrayOf(PropTypes.shape({
     aktivitetStatus: PropTypes.shape({
       kode: PropTypes.string.isRequired,
-      navn: PropTypes.string.isRequired,
       kodeverk: PropTypes.string.isRequired,
     }),
   })),
@@ -62,17 +58,14 @@ const beregningsgrunnlagPropType = PropTypes.shape({
     periodeAarsaker: PropTypes.arrayOf(PropTypes.shape({
       kode: PropTypes.string.isRequired,
       kodeverk: PropTypes.string.isRequired,
-      navn: PropTypes.string.isRequired,
     })),
     beregningsgrunnlagPrStatusOgAndel: PropTypes.arrayOf(PropTypes.shape({
       aktivitetStatus: PropTypes.shape({
         kode: PropTypes.string.isRequired,
-        navn: PropTypes.string.isRequired,
         kodeverk: PropTypes.string.isRequired,
       }),
       arbeidsforholdType: PropTypes.shape({
         kode: PropTypes.string.isRequired,
-        navn: PropTypes.string.isRequired,
         kodeverk: PropTypes.string.isRequired,
       }),
       avkortetPrAar: PropTypes.number,

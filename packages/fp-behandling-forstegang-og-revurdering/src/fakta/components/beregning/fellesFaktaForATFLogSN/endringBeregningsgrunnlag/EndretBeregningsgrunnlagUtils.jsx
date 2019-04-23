@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 import {
-  DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, createVisningsnavnForAktivitet,
+  DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
 import { Element } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -10,6 +10,7 @@ import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import faktaOmBeregningTilfelle, { harFastsettATFLInntektTilfelle } from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import moment from 'moment';
+import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import {
   getAksjonspunkter,
   getEndringBeregningsgrunnlag,

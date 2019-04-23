@@ -17,7 +17,6 @@ export const beregningsresultatPeriodeAndelPropType = PropTypes.shape({
   uttak: uttakPropType.isRequired,
   aktivitetStatus: PropTypes.shape({
     kode: PropTypes.string.isRequired,
-    navn: PropTypes.string.isRequired,
   }).isRequired,
 });
 

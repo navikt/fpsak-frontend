@@ -5,6 +5,7 @@ import { expect } from 'chai';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FormkravKlageFormNfpImpl } from './FormkravKlageFormNfp';
+import FormkravKlageForm from './FormkravKlageForm';
 
 describe('<FormkravKlageFormNfp>', () => {
   it('skal initiere fomrkrav-form', () => {
@@ -15,6 +16,6 @@ describe('<FormkravKlageFormNfp>', () => {
       intl={intlMock}
       {...reduxFormPropsMock}
     />);
-    expect(wrapper.find('Connect(InjectIntl(FormkravKlageForm))')).has.length(1);
+    expect(wrapper.find(FormkravKlageForm)).has.length(1);
   });
 });

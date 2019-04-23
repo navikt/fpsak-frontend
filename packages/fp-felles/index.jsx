@@ -10,6 +10,7 @@ export { default as faktaPanelCodes } from './src/faktaPanelCodes';
 export { default as BehandlingErPaVentModal } from './src/behandlingPaVent/BehandlingErPaVentModal';
 export { default as SettBehandlingPaVentForm } from './src/behandlingPaVent/SettBehandlingPaVentForm';
 export { default as SettBehandlingPaVentModal } from './src/behandlingPaVent/SettBehandlingPaVentModal';
+export { default as injectKodeverk } from './src/injectKodeverk';
 export {
   getPathToFplos,
   getLocationWithDefaultBehandlingspunktAndFakta,

@@ -3,16 +3,19 @@ import PropTypes from 'prop-types';
 import { Element } from 'nav-frontend-typografi';
 
 import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+
+import { getAlleKodeverk } from 'kodeverk/duck';
 import BubbleText from './bubbleText';
 import { findHendelseText } from './historikkUtils';
 import HistorikkDokumentLenke from './HistorikkDokumentLenke';
 
 const HistorikkMalType1 = ({
-  historikkinnslagDeler, dokumentLinks, saksNr,
+  historikkinnslagDeler, dokumentLinks, saksNr, getKodeverknavn,
 }) => (
   <div>
     {historikkinnslagDeler[0] && historikkinnslagDeler[0].hendelse
-      && <Element className="snakkeboble-panel__tekst">{findHendelseText(historikkinnslagDeler[0].hendelse)}</Element>
+      && <Element className="snakkeboble-panel__tekst">{findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}</Element>
     }
 
     {historikkinnslagDeler[0].begrunnelse && (
@@ -40,9 +43,10 @@ HistorikkMalType1.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   dokumentLinks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   saksNr: PropTypes.number.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default HistorikkMalType1;
+export default injectKodeverk(getAlleKodeverk)(HistorikkMalType1);
 
 /*
  https://confluence.adeo.no/display/MODNAV/OMR-13+SF4+Sakshistorikk+-+UX+og+grafisk+design

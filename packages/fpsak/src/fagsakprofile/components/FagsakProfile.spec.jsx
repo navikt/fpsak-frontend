@@ -6,7 +6,7 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import BehandlingMenuIndex from 'behandlingmenu/BehandlingMenuIndex';
 
-import FagsakProfile from './FagsakProfile';
+import { FagsakProfile } from './FagsakProfile';
 
 describe('<FagsakProfile>', () => {
   const behandling = {
@@ -14,7 +14,6 @@ describe('<FagsakProfile>', () => {
     versjon: 1,
     type: {
       kode: 'BT-001',
-      navn: 'Endringssøknad',
     },
     fagsakId: 2,
     opprettet: '2017-06-07T10:36:29.845',
@@ -24,31 +23,42 @@ describe('<FagsakProfile>', () => {
       {
         id: 1,
         definisjon: {
-          navn: 'Registrer papirsøknad',
           kode: '5012',
         },
         status: {
           kode: 'OPPR',
-          navn: 'test',
         },
         kanLoses: true,
       },
     ],
     status: {
       kode: 'OPPR',
-      navn: 'Opprettet',
     },
     behandlingPaaVent: false,
   };
 
+  const getKodeverknavn = ({ kode }) => {
+    if (kode === 'BT-001') {
+      return 'Endringssøknad';
+    }
+    if (kode === 'ES') {
+      return 'Engangsstønad';
+    }
+    if (kode === '5012') {
+      return 'Registrer papirsøknad';
+    }
+    if (kode === 'OPPR') {
+      return 'Opprettet';
+    }
+    return '';
+  };
+
   it('skal vise en fagsak med tilhørende informasjon', () => {
     const sakstype = {
-      kode: 'kode',
-      navn: 'Engangsstønad',
+      kode: 'ES',
     };
     const status = {
-      kode: 'kode',
-      navn: 'Opprettet',
+      kode: 'OPPR',
     };
     const wrapper = shallowWithIntl(<FagsakProfile
       saksnummer={12345}
@@ -60,6 +70,7 @@ describe('<FagsakProfile>', () => {
       toggleShowAll={sinon.spy()}
       noExistingBehandlinger
       push={sinon.spy()}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const h2 = wrapper.find(Systemtittel);

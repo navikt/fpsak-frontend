@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
+
 import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
+import { getAlleKodeverk } from 'kodeverk/duck';
 import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import { findHendelseText } from './historikkUtils';
 
@@ -97,7 +100,7 @@ const scrollUp = () => {
 
 
 const HistorikkMalType3 = ({
-  historikkinnslagDeler, behandlingLocation, intl,
+  historikkinnslagDeler, behandlingLocation, intl, getKodeverknavn,
 }) => {
   const { formatMessage } = intl;
 
@@ -137,7 +140,7 @@ const HistorikkMalType3 = ({
       {historikkinnslagDel.hendelse
           && (
           <div>
-            <Element>{findHendelseText(historikkinnslagDel.hendelse)}</Element>
+            <Element>{findHendelseText(historikkinnslagDel.hendelse, getKodeverknavn)}</Element>
             <VerticalSpacer fourPx />
           </div>
           )
@@ -149,7 +152,7 @@ const HistorikkMalType3 = ({
               to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
               onClick={scrollUp}
             >
-              {historikkinnslagDel.skjermlenke.navn}
+              {getKodeverknavn(historikkinnslagDel.skjermlenke)}
             </NavLink>
           </Element>
         )
@@ -169,7 +172,8 @@ const HistorikkMalType3 = ({
 HistorikkMalType3.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
 };
 
-export default injectIntl(HistorikkMalType3);
+export default injectIntl(injectKodeverk(getAlleKodeverk)(HistorikkMalType3));

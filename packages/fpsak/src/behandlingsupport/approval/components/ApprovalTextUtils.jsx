@@ -2,14 +2,17 @@ import React from 'react';
 import moment from 'moment';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
-import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { getBehandlingKlageVurdering, getBehandlingStatus } from 'behandling/duck';
-import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
 import aksjonspunktCodes, { isUttakAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { getBehandlingKlageVurdering, getBehandlingStatus } from 'behandling/duck';
+import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
+import { getKodeverk } from 'kodeverk/duck';
 import totrinnskontrollaksjonspunktTextCodes from '../totrinnskontrollaksjonspunktTextCodes';
 import vurderFaktaOmBeregningTotrinnText from '../VurderFaktaBeregningTotrinnText';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
@@ -32,7 +35,12 @@ const buildVarigEndringBeregningText = beregningDto => (beregningDto.fastsattVar
   />
 ));
 
-const buildArbeidsforholdText = aksjonspunkt => aksjonspunkt.arbeidforholdDtos.map(
+const getNavn = (arbeidsforholdHandlingType, arbeidsforholdHandlingTyper) => {
+  const type = arbeidsforholdHandlingTyper.find(t => t.kode === arbeidsforholdHandlingType.kode);
+  return type ? type.navn : '';
+};
+
+const buildArbeidsforholdText = (aksjonspunkt, arbeidsforholdHandlingTyper) => aksjonspunkt.arbeidforholdDtos.map(
   arbeidforholdDto => (
     <FormattedHTMLMessage
       id="ToTrinnsForm.OpplysningerOmSøker.Arbeidsforhold"
@@ -41,7 +49,7 @@ const buildArbeidsforholdText = aksjonspunkt => aksjonspunkt.arbeidforholdDtos.m
           orgnavn: arbeidforholdDto.navn,
           orgnummer: arbeidforholdDto.organisasjonsnummer,
           arbeidsforholdId: arbeidforholdDto.arbeidsforholdId ? `...${arbeidforholdDto.arbeidsforholdId.slice(-4)}` : '',
-          melding: arbeidforholdDto.arbeidsforholdHandlingType.navn,
+          melding: getNavn(arbeidforholdDto.arbeidsforholdHandlingType, arbeidsforholdHandlingTyper),
         }
       }
     />
@@ -170,8 +178,8 @@ const erKlageAksjonspunkt = aksjonspunkt => aksjonspunkt.aksjonspunktKode === ak
   || aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA;
 
 export const getAksjonspunktTextSelector = createSelector(
-  [isForeldrepengerFagsak, getBehandlingKlageVurdering, getBehandlingStatus],
-  (isForeldrepenger, klagebehandlingVurdering, behandlingStatus) => (aksjonspunkt) => {
+  [isForeldrepengerFagsak, getBehandlingKlageVurdering, getBehandlingStatus, getKodeverk(kodeverkTyper.ARBEIDSFORHOLD_HANDLING_TYPE)],
+  (isForeldrepenger, klagebehandlingVurdering, behandlingStatus, arbeidsforholdHandlingTyper) => (aksjonspunkt) => {
     if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) {
       return buildOpptjeningText(aksjonspunkt);
     }
@@ -195,7 +203,7 @@ export const getAksjonspunktTextSelector = createSelector(
       return [getTextForKlage(klagebehandlingVurdering, behandlingStatus)];
     }
     if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD) {
-      return buildArbeidsforholdText(aksjonspunkt);
+      return buildArbeidsforholdText(aksjonspunkt, arbeidsforholdHandlingTyper);
     }
     return [getTextFromAksjonspunktkode(aksjonspunkt)];
   },

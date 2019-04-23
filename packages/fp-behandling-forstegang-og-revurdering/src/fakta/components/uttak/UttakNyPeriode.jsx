@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
-import { behandlingFormValueSelector, behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
+
 import {
   PeriodpickerField, SelectField, CheckboxField, RadioGroupField, RadioOption, TextAreaField, DecimalField,
 } from '@fpsak-frontend/form';
@@ -16,22 +18,23 @@ import {
   maxValue, minLength, maxLength, hasValidText, guid,
   ISO_DATE_FORMAT,
   calcDaysAndWeeks,
-  lagVisningsNavn,
 } from '@fpsak-frontend/utils';
 import uttakArbeidType from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
-import moment from 'moment';
-import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
-import { getPersonopplysning, getFaktaArbeidsforhold } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import {
   FlexContainer, FlexRow, FlexColumn, VerticalSpacer, ArrowBox,
 } from '@fpsak-frontend/shared-components';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import uttakPeriodeType from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import overforingArsak from '@fpsak-frontend/kodeverk/src/overforingArsak';
+
+import { getPersonopplysning, getFaktaArbeidsforhold } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { behandlingFormValueSelector, behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { lagVisningsNavn } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
+import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+
 import styles from './uttakNyPeriode.less';
 
 const maxValue100 = maxValue(100);

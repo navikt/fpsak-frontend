@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { pathToBehandling } from '@fpsak-frontend/fp-felles';
+import { injectKodeverk, pathToBehandling } from '@fpsak-frontend/fp-felles';
 import historikkinnslagType from '@fpsak-frontend/kodeverk/src/historikkinnslagType';
-
 import { historikkinnslagPropType } from '@fpsak-frontend/prop-types';
+
+import { getAlleKodeverk } from 'kodeverk/duck';
 import Snakkeboble from './snakkeboble';
 import HistorikkMalType1 from './historikkMalType1';
 import HistorikkMalType2 from './historikkMalType2';
@@ -92,6 +93,7 @@ const History = ({
   selectedBehandlingId,
   saksNr,
   location,
+  getKodeverknavn,
 }) => (
   <div className={styles.historyContainer}>
     {historyList.map((item, index) => {
@@ -104,7 +106,7 @@ const History = ({
           key={`${item.opprettetTidspunkt}${index}`} // eslint-disable-line react/no-array-index-key
           historikkinnslagDeler={item.historikkinnslagDeler}
           rolle={item.aktoer.kode}
-          rolleNavn={item.aktoer.navn}
+          rolleNavn={getKodeverknavn(item.aktoer)}
           dato={item.opprettetTidspunkt}
           kjoennKode={item.kjoenn ? item.kjoenn.kode : ''}
           opprettetAv={(aktorIsSOKER || aktorIsArbeidsgiver || aktorIsVL) ? null : item.opprettetAv}
@@ -136,6 +138,7 @@ History.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 History.defaultProps = {
@@ -143,4 +146,4 @@ History.defaultProps = {
   saksNr: 0,
 };
 
-export default History;
+export default injectKodeverk(getAlleKodeverk)(History);

@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { Table } from '@fpsak-frontend/shared-components';
-import FagsakList from './FagsakList';
+import { FagsakList } from './FagsakList';
 
 describe('<FagsakList>', () => {
   const person = {
@@ -17,17 +17,28 @@ describe('<FagsakList>', () => {
   const fagsak = {
     saksnummer: 12345,
     sakstype: {
-      navn: 'Engangsstonad',
-      kode: 'TEST',
+      kode: 'ES',
     },
     status: {
-      navn: 'Under behandling',
       kode: 'UBEH',
     },
     barnFodt: null,
     opprettet: '2019-02-17T13:49:18.645',
     endret: '2019-02-17T13:49:18.645',
     person,
+  };
+
+  const getKodeverknavn = ({ kode }) => {
+    if (kode === 'ES') {
+      return 'Engangsstonad';
+    }
+    if (kode === 'UBEH') {
+      return 'Under behandling';
+    }
+    if (kode === 'AVSLU') {
+      return 'Avsluttet';
+    }
+    return '';
   };
 
   const headerTextCodes = [
@@ -39,7 +50,7 @@ describe('<FagsakList>', () => {
 
   it('skal vise en tabell med en rad og tilhørende kolonnedata', () => {
     const clickFunction = sinon.spy();
-    const wrapper = shallow(<FagsakList fagsaker={[fagsak]} selectFagsakCallback={clickFunction} />);
+    const wrapper = shallow(<FagsakList fagsaker={[fagsak]} selectFagsakCallback={clickFunction} getKodeverknavn={getKodeverknavn} />);
 
     const table = wrapper.find(Table);
     expect(table).to.have.length(1);
@@ -60,11 +71,9 @@ describe('<FagsakList>', () => {
     const fagsak2 = {
       saksnummer: 23456,
       sakstype: {
-        navn: 'Engangsstonad',
-        kode: 'TEST',
+        kode: 'ES',
       },
       status: {
-        navn: 'Under behandling',
         kode: 'UBEH',
       },
       barnFodt: null,
@@ -75,11 +84,9 @@ describe('<FagsakList>', () => {
     const fagsak3 = {
       saksnummer: 34567,
       sakstype: {
-        navn: 'Engangsstonad',
-        kode: 'TEST',
+        kode: 'ES',
       },
       status: {
-        navn: 'Avsluttet',
         kode: 'AVSLU',
       },
       barnFodt: null,
@@ -89,7 +96,7 @@ describe('<FagsakList>', () => {
     };
 
     const fagsaker = [fagsak, fagsak2, fagsak3];
-    const wrapper = shallow(<FagsakList fagsaker={fagsaker} selectFagsakCallback={() => true} />);
+    const wrapper = shallow(<FagsakList fagsaker={fagsaker} selectFagsakCallback={() => true} getKodeverknavn={getKodeverknavn} />);
 
     const table = wrapper.find(Table);
     const tableRows = table.children();
@@ -121,11 +128,9 @@ describe('<FagsakList>', () => {
     const fagsak4 = {
       saksnummer: 23456,
       sakstype: {
-        navn: 'Engangsstonad',
         kode: 'TEST',
       },
       status: {
-        navn: 'Under behandling',
         kode: 'UBEH',
       },
       barnFodt: '2019-02-18T13:49:18.645',
@@ -135,7 +140,7 @@ describe('<FagsakList>', () => {
     };
 
     const clickFunction = sinon.spy();
-    const wrapper = shallow(<FagsakList fagsaker={[fagsak, fagsak4]} selectFagsakCallback={clickFunction} />);
+    const wrapper = shallow(<FagsakList fagsaker={[fagsak, fagsak4]} selectFagsakCallback={clickFunction} getKodeverknavn={getKodeverknavn} />);
 
     const table = wrapper.find(Table);
     const tableRows = table.children();

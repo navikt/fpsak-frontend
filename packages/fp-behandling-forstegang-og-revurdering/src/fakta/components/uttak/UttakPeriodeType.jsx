@@ -2,17 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Element, Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
+
 import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import overforingArsakCodes, { overforingArsakTexts } from '@fpsak-frontend/kodeverk/src/overforingArsakCodes';
 import oppholdArsakType from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import { Image } from '@fpsak-frontend/shared-components';
 import {
-  ISO_DATE_FORMAT, dateFormat, calcDaysAndWeeks, lagVisningsNavn,
+  ISO_DATE_FORMAT, dateFormat, calcDaysAndWeeks,
 } from '@fpsak-frontend/utils';
 import editPeriodeIcon from '@fpsak-frontend/assets/images/endre.svg';
 import editPeriodeDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
 import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
 import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
+
+import { lagVisningsNavn } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import styles from './uttakPeriodeType.less';
 
 const formatProsent = prosent => `${prosent}%`;

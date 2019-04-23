@@ -1,60 +1,63 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { pathToBehandling, getLocationWithDefaultBehandlingspunktAndFakta } from '@fpsak-frontend/fp-felles';
 
+import { injectKodeverk, pathToBehandling, getLocationWithDefaultBehandlingspunktAndFakta } from '@fpsak-frontend/fp-felles';
 import { behandlingIListePropType } from '@fpsak-frontend/prop-types';
+
+import { getAlleKodeverk } from 'kodeverk/duck';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 
 import styles from './behandlingPickerItem.less';
 
 
-const getContentProps = behandling => ({
+const getContentProps = (behandling, getKodeverknavn) => ({
   behandlingId: behandling.id,
-  behandlingType: behandling.type.navn,
+  behandlingType: getKodeverknavn(behandling.type),
   behandlendeEnhetId: behandling.behandlendeEnhetId,
   behandlendeEnhetNavn: behandling.behandlendeEnhetNavn,
   opprettetDato: behandling.opprettet,
   avsluttetDato: behandling.avsluttet,
-  behandlingsstatus: behandling.status.navn,
+  behandlingsstatus: getKodeverknavn(behandling.status),
 });
 
-const renderItemContent = (behandling, withChevronDown = false, withChevronUp = false) => (
-  <BehandlingPickerItemContent withChevronDown={withChevronDown} withChevronUp={withChevronUp} {...getContentProps(behandling)} />
+const renderItemContent = (behandling, getKodeverknavn, withChevronDown = false, withChevronUp = false) => (
+  <BehandlingPickerItemContent withChevronDown={withChevronDown} withChevronUp={withChevronUp} {...getContentProps(behandling, getKodeverknavn)} />
 );
 
-const renderToggleShowAllButton = (toggleShowAll, behandling, showAll) => (
+const renderToggleShowAllButton = (toggleShowAll, behandling, showAll, getKodeverknavn) => (
   <button type="button" className={styles.toggleShowAllButton} onClick={toggleShowAll}>
-    {renderItemContent(behandling, !showAll, showAll)}
+    {renderItemContent(behandling, getKodeverknavn, !showAll, showAll)}
   </button>
 );
 
-const renderLinkToBehandling = (saksnummer, behandling, toggleShowAll) => (
+const renderLinkToBehandling = (saksnummer, behandling, toggleShowAll, getKodeverknavn) => (
   <NavLink
     className={styles.linkToBehandling}
     to={getLocationWithDefaultBehandlingspunktAndFakta({ pathname: pathToBehandling(saksnummer, behandling.id) })}
     onClick={toggleShowAll}
   >
-    {renderItemContent(behandling)}
+    {renderItemContent(behandling, getKodeverknavn)}
   </NavLink>
 );
 
-const BehandlingPickerItem = ({
+export const BehandlingPickerItem = ({
   onlyOneBehandling,
   behandling,
   saksnummer,
   isActive,
   showAll,
   toggleShowAll,
+  getKodeverknavn,
 }) => {
   if (onlyOneBehandling && isActive) {
-    return renderItemContent(behandling);
+    return renderItemContent(behandling, getKodeverknavn);
   }
   if (onlyOneBehandling || showAll) {
-    return renderLinkToBehandling(saksnummer, behandling, toggleShowAll);
+    return renderLinkToBehandling(saksnummer, behandling, toggleShowAll, getKodeverknavn);
   }
   if (isActive) {
-    return renderToggleShowAllButton(toggleShowAll, behandling, showAll);
+    return renderToggleShowAllButton(toggleShowAll, behandling, showAll, getKodeverknavn);
   }
   return null;
 };
@@ -66,6 +69,7 @@ BehandlingPickerItem.propTypes = {
   isActive: PropTypes.bool.isRequired,
   showAll: PropTypes.bool.isRequired,
   toggleShowAll: PropTypes.func.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default BehandlingPickerItem;
+export default injectKodeverk(getAlleKodeverk)(BehandlingPickerItem);

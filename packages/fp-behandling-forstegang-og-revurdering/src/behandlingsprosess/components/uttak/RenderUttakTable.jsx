@@ -11,8 +11,9 @@ import { SelectField, InputField, DecimalField } from '@fpsak-frontend/form';
 import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
 import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/src/uttakArbeidTypeCodes';
 import {
-  minValue, maxValue, hasValidInteger, maxLength, required, hasValidDecimal, notDash, lagVisningsNavn, noMoreThanZeroIfRejectedAndNotUtsettelse,
+  minValue, maxValue, hasValidInteger, maxLength, required, hasValidDecimal, notDash, noMoreThanZeroIfRejectedAndNotUtsettelse,
 } from '@fpsak-frontend/utils';
+import { lagVisningsNavn } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import styles from './renderUttakTable.less';
 
 /**

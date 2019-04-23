@@ -17,7 +17,7 @@ const kodeverkTyper = {
   FAGSAK_STATUS: 'FagsakStatus',
   RELATERT_YTELSE_TILSTAND: 'RelatertYtelseTilstand',
   RELATERT_YTELSE_TYPE: 'RelatertYtelseType',
-  FAGSAK_YTELSE_TYPE: 'FagsakYtelseType',
+  FAGSAK_YTELSE: 'FagsakYtelseType',
   FORELDRE_TYPE: 'ForeldreType',
   FAMILIE_HENDELSE_TYPE: 'FamilieHendelseType',
   INNSYN_RESULTAT_TYPE: 'InnsynResultatType',
@@ -42,6 +42,12 @@ const kodeverkTyper = {
   GRADERING_AVSLAG_AARSAK: 'GraderingAvslagÅrsak',
   SKJERMLENKE_TYPE: 'SkjermlenkeType',
   BEHANDLING_RESULTAT_TYPE: 'BehandlingResultatType',
+  ARBEIDSFORHOLD_HANDLING_TYPE: 'ArbeidsforholdHandlingType',
+  HISTORIKK_OPPLYSNING_TYPE: 'HistorikkOpplysningType',
+  HISTORIKK_ENDRET_FELT_TYPE: 'HistorikkEndretFeltType',
+  HISTORIKKINNSLAG_TYPE: 'HistorikkinnslagType',
+  HISTORIKK_AKTOER: 'HistorikkAktør',
+  BEHANDLING_STATUS: 'BehandlingStatus',
 };
 
 export default kodeverkTyper;

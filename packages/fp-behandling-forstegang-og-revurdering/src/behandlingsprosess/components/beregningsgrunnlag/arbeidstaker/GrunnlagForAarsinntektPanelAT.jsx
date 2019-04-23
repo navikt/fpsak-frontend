@@ -11,8 +11,9 @@ import {
   Image, VerticalSpacer, Table, TableRow, TableColumn,
 } from '@fpsak-frontend/shared-components';
 import {
-  createVisningsnavnForAktivitet, required, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber,
+  required, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber,
 } from '@fpsak-frontend/utils';
+import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

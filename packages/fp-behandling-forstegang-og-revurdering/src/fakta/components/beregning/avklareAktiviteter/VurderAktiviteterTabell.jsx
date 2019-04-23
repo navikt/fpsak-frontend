@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
-import { required, createVisningsnavnForAktivitet, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { required, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import opptjeningAktivitetTyper from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import {
@@ -11,6 +11,7 @@ import {
 import {
  Table, TableRow, TableColumn, PeriodLabel, EditedIcon,
 } from '@fpsak-frontend/shared-components';
+import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import beregningAktivitetPropType from './beregningAktivitetPropType';
 
 import styles from './vurderAktiviteterTabell.less';
