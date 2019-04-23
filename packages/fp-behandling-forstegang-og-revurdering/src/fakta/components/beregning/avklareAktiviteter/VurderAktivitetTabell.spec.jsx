@@ -2,7 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { RadioGroupField } from '@fpsak-frontend/form';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components';
+import {
+ Table, TableRow, TableColumn, EditedIcon,
+} from '@fpsak-frontend/shared-components';
 import VurderAktiviteterTabell, { lagAktivitetFieldId } from './VurderAktiviteterTabell';
 
 
@@ -67,7 +69,7 @@ describe('<VurderAktiviteterTabell>', () => {
     expect(rows).has.length(4);
 
     const cols = rows.first().find(TableColumn);
-    expect(cols).has.length(5);
+    expect(cols).has.length(4);
     const radios1 = rows.first().find(RadioGroupField);
     expect(radios1).has.length(2);
     radios1.forEach((radio) => {
@@ -75,12 +77,53 @@ describe('<VurderAktiviteterTabell>', () => {
     });
 
     const cols2 = rows.at(1).find(TableColumn);
-    expect(cols2).has.length(5);
+    expect(cols2).has.length(4);
     const radios2 = rows.at(1).find(RadioGroupField);
     expect(radios2).has.length(2);
     radios2.forEach((radio) => {
       expect(radio.props().readOnly).to.equal(false);
     });
+
+    const cols3 = rows.last().find(TableColumn);
+    expect(cols3).has.length(4);
+    const radios3 = rows.last().find(RadioGroupField);
+    expect(radios3).has.length(2);
+    radios3.forEach((radio) => {
+      expect(radio.props().readOnly).to.equal(true);
+    });
+  });
+
+  it('skal vise tabell med gul mann kolonne for alle rader unntatt AAP', () => {
+    const wrapper = shallow(<VurderAktiviteterTabell
+      readOnly
+      isAksjonspunktClosed
+      aktiviteter={aktiviteter}
+      skjaeringstidspunkt="2019-02-01"
+    />);
+    const table = wrapper.find(Table);
+    expect(table).has.length(1);
+    const rows = table.find(TableRow);
+    expect(rows).has.length(4);
+
+    const cols = rows.first().find(TableColumn);
+    expect(cols).has.length(5);
+    const radios1 = rows.first().find(RadioGroupField);
+    expect(radios1).has.length(2);
+    radios1.forEach((radio) => {
+      expect(radio.props().readOnly).to.equal(true);
+    });
+    const edited1 = rows.first().find(EditedIcon);
+    expect(edited1).has.length(1);
+
+    const cols2 = rows.at(1).find(TableColumn);
+    expect(cols2).has.length(5);
+    const radios2 = rows.at(1).find(RadioGroupField);
+    expect(radios2).has.length(2);
+    radios2.forEach((radio) => {
+      expect(radio.props().readOnly).to.equal(true);
+    });
+    const edited2 = rows.at(1).find(EditedIcon);
+    expect(edited2).has.length(1);
 
     const cols3 = rows.last().find(TableColumn);
     expect(cols3).has.length(5);
@@ -89,6 +132,8 @@ describe('<VurderAktiviteterTabell>', () => {
     radios3.forEach((radio) => {
       expect(radio.props().readOnly).to.equal(true);
     });
+    const edited3 = rows.last().find(EditedIcon);
+    expect(edited3).has.length(0);
   });
 
   const id1 = '3847238947232019-01-01';
