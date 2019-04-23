@@ -1115,6 +1115,7 @@
 
   "AvklarAktivitetPanel.ButtonText": "Oppdater",
   "VurderAktiviteterTabell.FullAAPKombinert.Overskrift": "Søker har full AAP (200%) sammen med andre aktiviteter. Skjæringstidspunkt for beregning {skjaeringstidspunkt}",
+  "VurderAktiviteterTabell.VentelonnVartpenger.Overskrift": "Søker har ventelønn eller vartpenger som siste aktivitet. Skjæringstidspunkt for beregning {skjaeringstidspunkt}",
 
   "BeregningInfoPanel.Historikkinnslag.AvklarAktiviteter": "Avklar aktiviteter",
 
