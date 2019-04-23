@@ -68,7 +68,7 @@ const lagTableRow = (readOnly, isAksjonspunktClosed, aktivitet) => (
         {[<RadioOption key={`${lagAktivitetFieldId(aktivitet)}.ikkeBruk`} value={false} />]}
       </RadioGroupField>
     </TableColumn>
-    {isAksjonspunktClosed
+    {isAksjonspunktClosed && readOnly
       && (
       <TableColumn>
         {!skalIkkeVurdereAktivitet(aktivitet)
