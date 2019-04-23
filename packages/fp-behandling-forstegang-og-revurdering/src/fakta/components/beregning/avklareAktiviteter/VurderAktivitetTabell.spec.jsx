@@ -1,6 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
+import { FormattedMessage } from 'react-intl';
 import { RadioGroupField } from '@fpsak-frontend/form';
 import {
  Table, TableRow, TableColumn, EditedIcon,
@@ -63,6 +64,10 @@ describe('<VurderAktiviteterTabell>', () => {
       aktiviteter={aktiviteter}
       skjaeringstidspunkt="2019-02-01"
     />);
+
+    const heading = wrapper.find(FormattedMessage).first();
+    expect(heading.props().id).to.equal('VurderAktiviteterTabell.FullAAPKombinert.Overskrift');
+
     const table = wrapper.find(Table);
     expect(table).has.length(1);
     const rows = table.find(TableRow);
@@ -93,6 +98,36 @@ describe('<VurderAktiviteterTabell>', () => {
     });
   });
 
+  it('skal vise tabell med ventelønn/vartpenger overskrift', () => {
+    const utenAAP = [
+      aktivitet1,
+      aktivitet2,
+      aktivitet3,
+    ];
+    const wrapper = shallow(<VurderAktiviteterTabell
+      readOnly={false}
+      isAksjonspunktClosed
+      aktiviteter={utenAAP}
+      skjaeringstidspunkt="2019-02-01"
+    />);
+
+    const heading = wrapper.find(FormattedMessage).first();
+    expect(heading.props().id).to.equal('VurderAktiviteterTabell.VentelonnVartpenger.Overskrift');
+
+    const table = wrapper.find(Table);
+    expect(table).has.length(1);
+    const rows = table.find(TableRow);
+    expect(rows).has.length(3);
+
+    rows.forEach((row) => {
+      const radios = row.find(RadioGroupField);
+      expect(radios).has.length(2);
+      radios.forEach((radio) => {
+        expect(radio.props().readOnly).to.equal(false);
+      });
+    });
+  });
+
   it('skal vise tabell med gul mann kolonne for alle rader unntatt AAP', () => {
     const wrapper = shallow(<VurderAktiviteterTabell
       readOnly
@@ -100,6 +135,11 @@ describe('<VurderAktiviteterTabell>', () => {
       aktiviteter={aktiviteter}
       skjaeringstidspunkt="2019-02-01"
     />);
+
+    const heading = wrapper.find(FormattedMessage).first();
+    expect(heading.props().id).to.equal('VurderAktiviteterTabell.FullAAPKombinert.Overskrift');
+
+
     const table = wrapper.find(Table);
     expect(table).has.length(1);
     const rows = table.find(TableRow);

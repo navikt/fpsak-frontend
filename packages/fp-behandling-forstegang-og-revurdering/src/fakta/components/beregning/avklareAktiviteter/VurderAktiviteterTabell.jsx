@@ -88,6 +88,11 @@ const getHeaderTextCodes = () => ([
   ]
 );
 
+const finnHeading = (aktiviteter) => {
+  const harAAP = aktiviteter.some(aktivitet => aktivitet.arbeidsforholdType && aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.AAP);
+  return harAAP ? 'VurderAktiviteterTabell.FullAAPKombinert.Overskrift' : 'VurderAktiviteterTabell.VentelonnVartpenger.Overskrift';
+};
+
 /**
  * VurderAktiviteterTabell
  *
@@ -102,7 +107,7 @@ export const VurderAktiviteterTabell = ({
   <React.Fragment>
     <Element>
       <FormattedMessage
-        id="VurderAktiviteterTabell.FullAAPKombinert.Overskrift"
+        id={finnHeading(aktiviteter)}
         values={{ skjaeringstidspunkt: moment(skjaeringstidspunkt).format(DDMMYYYY_DATE_FORMAT) }}
       />
     </Element>
