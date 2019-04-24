@@ -209,7 +209,7 @@ const convertToArray = uttakResult => Object.values(uttakResult)
     const uttakResultArray = convertToArray(uttakResult);
     uttakResultArray.forEach((value) => {
       const gjeldeneStønadskonto = getGjeldeneStønadskonto(value.konto, stonadskonto.stonadskontoer);
-      if (!gjeldeneStønadskonto.gyldigForbruk) {
+      if (gjeldeneStønadskonto && !gjeldeneStønadskonto.gyldigForbruk) {
         errors = {
           _error:
   <AlertStripe type="advarsel" className={styles.marginTop}>
