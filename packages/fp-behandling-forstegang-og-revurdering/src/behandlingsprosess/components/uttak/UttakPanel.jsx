@@ -217,7 +217,7 @@ const convertToArray = uttakResult => Object.values(uttakResult)
       id="ValidationMessage.NegativeSaldo"
       values={{
           periode: uttakPeriodeNavn[value.konto],
-          days: gjeldeneStønadskonto.saldo,
+          days: gjeldeneStønadskonto.saldo * -1,
         }}
     />
   </AlertStripe>,
