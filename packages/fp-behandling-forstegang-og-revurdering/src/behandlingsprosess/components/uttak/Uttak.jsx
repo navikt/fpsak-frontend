@@ -7,8 +7,9 @@ import { change as reduxFormChange, initialize as reduxFormInitialize } from 're
 import { bindActionCreators } from 'redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import {
-  VerticalSpacer, FlexContainer, FlexRow, FlexColumn, ElementWrapper,
+  VerticalSpacer, FlexContainer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
@@ -487,7 +488,7 @@ export class UttakImpl extends Component {
           </Row>
           {selectedItem
           && (
-            <ElementWrapper>
+            <>
               {selectedItem.hovedsoker
               && (
                 <UttakTimeLineData
@@ -523,7 +524,7 @@ export class UttakImpl extends Component {
                 />
               )
               }
-            </ElementWrapper>
+            </>
           )}
           {(!readOnly && !(this.testForReadOnly(aksjonspunkter, kanOverstyre)))
           && (
@@ -626,8 +627,9 @@ const mapStateToProps = (state, props) => {
   const hovedsokerKjonnKode = person ? person.navBrukerKjonn.kode : undefined;
   const annenForelderUttak = getUttaksresultatPerioder(state).perioderAnnenpart;
   const viseUttakMedsoker = annenForelderUttak.length > 0;
-  const medsokerKjonnKode = (viseUttakMedsoker && person && person.annenPart) ? person.annenPart.navBrukerKjonn.kode : undefined;
-
+  const getMedsokerKjonnKode = (viseUttakMedsoker && person && person.annenPart) ? person.annenPart.navBrukerKjonn.kode : undefined;
+  // hvis ukjent annenpart og annenpart uttak, vis ukjent ikon
+  const medsokerKjonnKode = viseUttakMedsoker && getMedsokerKjonnKode === undefined ? navBrukerKjonn.UDEFINERT : getMedsokerKjonnKode;
   const familiehendelse = getFamiliehendelse(state);
   const ytelseFordeling = getBehandlingYtelseFordeling(state);
   const uttaksresultatActivity = behandlingFormValueSelector(props.formName)(state, ACTIVITY_PANEL_NAME);
