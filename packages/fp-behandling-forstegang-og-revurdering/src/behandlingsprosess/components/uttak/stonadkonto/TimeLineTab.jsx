@@ -5,8 +5,10 @@ import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import stonadskontoType from '@fpsak-frontend/kodeverk/src/stonadskontoType';
 import PropTypes from 'prop-types';
 import { stonadskontoerPropType } from '@fpsak-frontend/prop-types';
-
+import classnames from 'classnames/bind';
 import styles from './timeLineTab.less';
+
+const classNames = classnames.bind(styles);
 
 const findKorrektLabelForKvote = (stonadtype) => {
   switch (stonadtype) {
@@ -27,15 +29,6 @@ const findKorrektLabelForKvote = (stonadtype) => {
   }
 };
 
-const setCss = (aktiv, saldoLength, stonadsKonto) => {
-  if (stonadsKonto.kontoinfo && !stonadsKonto.kontoinfo.gyldigForbruk) {
-    return styles.error;
-  } if (aktiv && saldoLength > 0) {
-    return styles.aktiv;
-  }
-  return styles.inaktiv;
-};
-
 const findAntallUkerOgDager = (kontoinfo) => {
   const modifier = kontoinfo.saldo < 0 ? -1 : 1;
   const justertSaldo = kontoinfo.saldo * modifier;
@@ -53,10 +46,10 @@ const TimeLineTab = ({
   const fordelteDager = findAntallUkerOgDager(stonadskonto.kontoinfo);
   return (
     <div className={styles.tabs}>
-      <li role="presentation" className={setCss(aktiv, stonadskonto.kontoinfo.aktivitetSaldoDtoList.length, stonadskonto)}>
+      <li role="presentation" className={classNames('tab', { aktiv, error: stonadskonto.kontoinfo && !stonadskonto.kontoinfo.gyldigForbruk })}>
         <button
           role="tab"
-          className={styles.tabInner}
+          className={classNames('tabInner', { error: stonadskonto.kontoinfo && !stonadskonto.kontoinfo.gyldigForbruk })}
           type="button"
           onClick={onClickCallback}
           aria-selected={aktiv}
