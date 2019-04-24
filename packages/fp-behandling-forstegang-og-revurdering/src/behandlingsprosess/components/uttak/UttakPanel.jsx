@@ -186,40 +186,20 @@ const convertToArray = uttakResult => Object.values(uttakResult)
     return uttakElement;
   });
 
-  const checkPeriodMaxDays = periode => (periode ? periode.maxDager : 665); // tallet hentet fra -PKMANTIS-1808
-
-  // todo (petter), ta bort denne hvis vi ikke trenger den lenger?
-  const getMaxDays = (stonadskontoTypeKode, stonadskontoer) => {
+  const getGjeldeneStønadskonto = (stonadskontoTypeKode, stonadskontoer) => {
     switch (stonadskontoTypeKode) {
       case stonadskontoType.FORELDREPENGER_FØR_FØDSEL:
-        return checkPeriodMaxDays(stonadskontoer.FORELDREPENGER_FØR_FØDSEL);
+        return stonadskontoer.FORELDREPENGER_FØR_FØDSEL;
       case stonadskontoType.FORELDREPENGER:
-        return checkPeriodMaxDays(stonadskontoer.FORELDREPENGER);
+        return stonadskontoer.FORELDREPENGER;
       case stonadskontoType.FELLESPERIODE:
-        return checkPeriodMaxDays(stonadskontoer.FELLESPERIODE);
+        return stonadskontoer.FELLESPERIODE;
       case stonadskontoType.MØDREKVOTE:
-        return checkPeriodMaxDays(stonadskontoer.MØDREKVOTE);
+        return stonadskontoer.MØDREKVOTE;
       case stonadskontoType.FEDREKVOTE:
-        return checkPeriodMaxDays(stonadskontoer.FEDREKVOTE);
+        return stonadskontoer.FEDREKVOTE;
       default:
-        return undefined;
-    }
-  };
-
-  const getGyldigForbruk = (stonadskontoTypeKode, stonadskontoer) => {
-    switch (stonadskontoTypeKode) {
-      case stonadskontoType.FORELDREPENGER_FØR_FØDSEL:
-        return stonadskontoer.FORELDREPENGER_FØR_FØDSEL.gyldigForbruk;
-      case stonadskontoType.FORELDREPENGER:
-        return stonadskontoer.FORELDREPENGER.gyldigForbruk;
-      case stonadskontoType.FELLESPERIODE:
-        return stonadskontoer.FELLESPERIODE.gyldigForbruk;
-      case stonadskontoType.MØDREKVOTE:
-        return stonadskontoer.MØDREKVOTE.gyldigForbruk;
-      case stonadskontoType.FEDREKVOTE:
-        return stonadskontoer.FEDREKVOTE.gyldigForbruk;
-      default:
-        return undefined;
+        return {};
     }
   };
 
@@ -228,9 +208,8 @@ const convertToArray = uttakResult => Object.values(uttakResult)
     const uttakResult = getResult(uttaksresultatActivity);
     const uttakResultArray = convertToArray(uttakResult);
     uttakResultArray.forEach((value) => {
-      const maxDays = getMaxDays(value.konto, stonadskonto.stonadskontoer) - value.trekkdager;
-      const gyldigForbruk = getGyldigForbruk(value.konto, stonadskonto.stonadskontoer);
-      if (!gyldigForbruk) {
+      const gjeldeneStønadskonto = getGjeldeneStønadskonto(value.konto, stonadskonto.stonadskontoer);
+      if (!gjeldeneStønadskonto.gyldigForbruk) {
         errors = {
           _error:
   <AlertStripe type="advarsel" className={styles.marginTop}>
@@ -238,7 +217,7 @@ const convertToArray = uttakResult => Object.values(uttakResult)
       id="ValidationMessage.NegativeSaldo"
       values={{
           periode: uttakPeriodeNavn[value.konto],
-          days: maxDays * -1,
+          days: gjeldeneStønadskonto.saldo,
         }}
     />
   </AlertStripe>,
@@ -248,18 +227,16 @@ const convertToArray = uttakResult => Object.values(uttakResult)
     return errors;
   };
 
-const checkFlerbarnsMaksDager = (uttaksresultatActivity, stonadskonto) => {
+const checkFlerbarnsMaksDager = (stonadskonto) => {
   let errors = null;
-  const flerbarnsMaksDager = stonadskonto.FLERBARNSDAGER ? stonadskonto.FLERBARNSDAGER.maxDager : 0;
-  const flerbarnsDagerGyldigforbruk = stonadskonto.FLERBARNSDAGER ? stonadskonto.FLERBARNSDAGER.gyldigForbruk : true;
-  if (!flerbarnsDagerGyldigforbruk) {
+  if (stonadskonto.FLERBARNSDAGER && !stonadskonto.FLERBARNSDAGER.gyldigForbruk) {
     errors = {
       _error:
   <AlertStripe type="advarsel" className={styles.marginTop}>
     <FormattedMessage
       id="ValidationMessage.InvalidTrekkDagerFlerbarnsdager"
       values={{
-        maxDays: flerbarnsMaksDager,
+        maxDays: stonadskonto.FLERBARNSDAGER.maxDager,
       }}
     />
   </AlertStripe>,
@@ -302,7 +279,7 @@ const validateUttakPanelForm = (values) => {
     if (maxDagerError) {
       return maxDagerError;
     }
-    const flerbarnsMaksDager = checkFlerbarnsMaksDager(uttaksresultatActivity, stonadskonto.stonadskontoer);
+    const flerbarnsMaksDager = checkFlerbarnsMaksDager(stonadskonto.stonadskontoer);
     if (flerbarnsMaksDager) {
       return flerbarnsMaksDager;
     }
