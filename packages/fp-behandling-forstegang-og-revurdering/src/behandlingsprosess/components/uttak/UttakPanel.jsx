@@ -158,12 +158,12 @@ const getResult = (uttaksresultatActivity) => {
     uttak.aktiviteter.forEach((a, index) => {
       const aktivitetDays = (typeof a.days !== 'undefined' && typeof a.weeks !== 'undefined')
         ? ((a.weeks * 5) + a.days)
-        : a.trekkdager;
+        : a.trekkdagerDesimaler;
 
       if ((`${a.stønadskontoType.kode}_${index}`) in uttakResult) {
-        const trekkdager = uttakResult[`${a.stønadskontoType.kode}_${index}`].trekkdager + aktivitetDays;
+        const trekkdagerDesimaler = uttakResult[`${a.stønadskontoType.kode}_${index}`].trekkdagerDesimaler + aktivitetDays;
         uttakResult[`${a.stønadskontoType.kode}_${index}`] = {
-          trekkdager,
+          trekkdagerDesimaler,
           konto: a.stønadskontoType.kode,
         };
       } else {
@@ -181,7 +181,7 @@ const getResult = (uttaksresultatActivity) => {
 const convertToArray = uttakResult => Object.values(uttakResult)
   .map((u) => {
     const uttakElement = { ...u };
-    uttakElement.trekkdager = u.trekkdager;
+    uttakElement.trekkdagerDesimaler = u.trekkdagerDesimaler;
     uttakElement.saldo = u.saldo;
     return uttakElement;
   });
@@ -210,7 +210,7 @@ const checkMaxDager = (uttaksresultatActivity, stonadskonto) => {
   const uttakResult = getResult(uttaksresultatActivity);
   const uttakResultArray = convertToArray(uttakResult);
   uttakResultArray.forEach((value) => {
-    const maxDays = getMaxDays(value.konto, stonadskonto.stonadskontoer) - value.trekkdager;
+    const maxDays = getMaxDays(value.konto, stonadskonto.stonadskontoer) - value.trekkdagerDesimaler;
     if (maxDays && (maxDays < 0)) {
       errors = {
         _error:
@@ -238,7 +238,7 @@ const checkFlerbarnsMaksDager = (uttaksresultatActivity, stonadskonto) => {
       uttak.aktiviteter.forEach((a) => {
         flerbarnsdager += (typeof a.days !== 'undefined' && typeof a.weeks !== 'undefined')
           ? ((a.weeks * 5) + a.days)
-          : a.trekkdager;
+          : a.trekkdagerDesimaler;
       });
     }
   });
@@ -328,7 +328,7 @@ export const transformValues = (values, apCodes, aksjonspunkter) => {
       const { days, weeks, ...transformAktivitet } = a;
       if (typeof days !== 'undefined' && typeof weeks !== 'undefined') {
         const trekkdager = (weeks * 5) + days;
-        transformAktivitet.trekkdager = trekkdager; // regner om uker og dager til trekkdager
+        transformAktivitet.trekkdagerDesimaler = trekkdager; // regner om uker og dager til trekkdager
       }
       return transformAktivitet;
     });

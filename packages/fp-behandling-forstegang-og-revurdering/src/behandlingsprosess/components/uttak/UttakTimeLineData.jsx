@@ -82,7 +82,7 @@ const hentApTekst = (manuellBehandlingÅrsak, stonadskonto, aktiviteter) => {
 };
 
 const isPeriodDefined = (period) => {
-  if (period.aktiviteter[0].trekkdager) {
+  if (period.aktiviteter[0].trekkdagerDesimaler) {
     return true;
   }
   return (!(period.periodeResultatType
@@ -159,16 +159,16 @@ export class UttakTimeLineData extends Component {
         andrePeriode.aktiviteter[index].days = formValues.gradertTrekkdager && !(period.days || period.weeks)
           ? Math.round(((faktiskaTrekkdagerGradert - forstePeriodeAntalDagar) % 5) * 10) / 10
           : Math.round(((totalSetDays - forstePeriodeAntalDagar) % 5) * 10) / 10;
-        forstePeriode.aktiviteter[index].trekkdager = forstePeriodeAntalDagar;
-        andrePeriode.aktiviteter[index].trekkdager = (andrePeriode.aktiviteter[index].weeks * 5)
+        forstePeriode.aktiviteter[index].trekkdagerDesimaler = forstePeriodeAntalDagar;
+        andrePeriode.aktiviteter[index].trekkdagerDesimaler = (andrePeriode.aktiviteter[index].weeks * 5)
           + andrePeriode.aktiviteter[index].days;
       } else {
         forstePeriode.aktiviteter[index].weeks = definedPeriod ? Math.trunc(newTrekkDagerForstePeriode / 5) : '';
         forstePeriode.aktiviteter[index].days = definedPeriod ? Math.round((newTrekkDagerForstePeriode % 5)) * 10 / 10 : '';
         andrePeriode.aktiviteter[index].weeks = definedPeriod ? Math.trunc(newTrekkDagerAndrePeriode / 5) : '';
         andrePeriode.aktiviteter[index].days = definedPeriod ? Math.round((newTrekkDagerAndrePeriode % 5) * 10) / 10 : '';
-        forstePeriode.aktiviteter[index].trekkdager = definedPeriod ? newTrekkDagerForstePeriode : 0;
-        andrePeriode.aktiviteter[index].trekkdager = definedPeriod ? newTrekkDagerAndrePeriode : 0;
+        forstePeriode.aktiviteter[index].trekkdagerDesimaler = definedPeriod ? newTrekkDagerForstePeriode : 0;
+        andrePeriode.aktiviteter[index].trekkdagerDesimaler = definedPeriod ? newTrekkDagerAndrePeriode : 0;
       }
     });
     andrePeriode.id = currentId + 1;

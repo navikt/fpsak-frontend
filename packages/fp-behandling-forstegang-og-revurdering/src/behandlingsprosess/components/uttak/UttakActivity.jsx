@@ -405,23 +405,23 @@ const transformValues = (values, selectedItemData, avslagAarsakKoder, innvilgels
 };
 
 const calculateCorrectWeeks = (aktivitet, item) => {
-  if (item.periodeResultatType && !aktivitet.trekkdager && (item.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING)) {
+  if (item.periodeResultatType && !aktivitet.trekkdagerDesimaler && (item.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING)) {
     return 0;
   }
   if ((aktivitet.utbetalingsgrad || aktivitet.utbetalingsgrad === 0) || !aktivitet.prosentArbeid) {
-    return Math.floor(aktivitet.trekkdager / 5);
+    return Math.floor(aktivitet.trekkdagerDesimaler / 5);
   }
-  return Math.floor((aktivitet.trekkdager * parseFloat(1 - (aktivitet.prosentArbeid * 0.01)).toPrecision(2)) / 5);
+  return Math.floor((aktivitet.trekkdagerDesimaler * parseFloat(1 - (aktivitet.prosentArbeid * 0.01)).toPrecision(2)) / 5);
 };
 
 const calculateCorrectDays = (aktivitet, item) => {
-  if (item.periodeResultatType && !aktivitet.trekkdager && (item.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING)) {
+  if (item.periodeResultatType && !aktivitet.trekkdagerDesimaler && (item.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING)) {
     return 0;
   }
   if ((aktivitet.utbetalingsgrad || aktivitet.utbetalingsgrad === 0) || !aktivitet.prosentArbeid) {
-    return Math.floor(aktivitet.trekkdager % 5);
+    return Math.floor(aktivitet.trekkdagerDesimaler % 5);
   }
-  return Math.floor((aktivitet.trekkdager * parseFloat(1 - (aktivitet.prosentArbeid * 0.01)).toPrecision(2)) % 5);
+  return Math.floor((aktivitet.trekkdagerDesimaler * parseFloat(1 - (aktivitet.prosentArbeid * 0.01)).toPrecision(2)) % 5);
 };
 
 export const initialValue = (selectedItem, kontoIkkeSatt) => {

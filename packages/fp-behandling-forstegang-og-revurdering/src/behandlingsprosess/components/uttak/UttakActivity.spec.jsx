@@ -33,7 +33,7 @@ describe('<UttakActivity>', () => {
       kode: '-',
     },
     aktiviteter: [{
-      trekkdager: 28,
+      trekkdagerDesimaler: 28,
       utbetalingsgrad: 100,
       stønadskontoType: {
         kode: '',
@@ -205,7 +205,7 @@ describe('<UttakActivity>', () => {
         navn: 'Mødrekvote',
         kodeverk: '',
       },
-      trekkdager: 28,
+      trekkdagerDesimaler: 28,
       utbetalingsgrad: 100,
       weeks: 5,
     }]);
