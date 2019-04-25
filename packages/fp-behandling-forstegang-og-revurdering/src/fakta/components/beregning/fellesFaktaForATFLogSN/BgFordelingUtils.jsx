@@ -65,15 +65,15 @@ export const settFastsattBelop = (beregnet,
   return '';
 };
 
-export const settReadOnlyBelop = (readOnly, fordelingForrigeBehandling, beregnetPrMnd, snittIBeregningsperiodenPrMnd) => {
+export const settReadOnlyBelop = (readOnly, beregnetPrMnd, snittIBeregningsperiodenPrMnd, belopFraInntektsmeldingPrMnd) => {
   if (!nullOrUndefined(snittIBeregningsperiodenPrMnd) && !readOnly) {
     return formatCurrencyNoKr(snittIBeregningsperiodenPrMnd);
   }
   if (!nullOrUndefined(beregnetPrMnd)) {
     return formatCurrencyNoKr(beregnetPrMnd);
   }
-  if (!nullOrUndefined(fordelingForrigeBehandling)) {
-    return formatCurrencyNoKr(fordelingForrigeBehandling);
+  if (!nullOrUndefined(belopFraInntektsmeldingPrMnd)) {
+    return formatCurrencyNoKr(belopFraInntektsmeldingPrMnd);
   }
   return '0';
 };
