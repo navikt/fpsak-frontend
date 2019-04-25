@@ -119,25 +119,6 @@ VurderMottarYtelseFormImpl.propTypes = {
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
-VurderMottarYtelseFormImpl.buildInitialValues = (vurderMottarYtelse) => {
-  const initialValues = {};
-  if (!vurderMottarYtelse) {
-    return null;
-  }
-  if (vurderMottarYtelse.erFrilans) {
-    initialValues[finnFrilansFieldName()] = vurderMottarYtelse.frilansMottarYtelse;
-  }
-
-  const ATAndelerUtenIM = vurderMottarYtelse.arbeidstakerAndelerUtenIM ? vurderMottarYtelse.arbeidstakerAndelerUtenIM : [];
-  if (ATAndelerUtenIM.length < 1) {
-    return initialValues;
-  }
-  ATAndelerUtenIM.forEach((andel) => {
-    initialValues[utledArbeidsforholdFieldName(andel)] = andel.mottarYtelse;
-  });
-  return initialValues;
-};
-
 const transformValuesArbeidstakerUtenIM = (values, inntektVerdier, faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr, faktaOmBeregningTilfeller) => {
   if (inntektVerdier === null) {
     return {};
@@ -206,7 +187,39 @@ const transformValuesMottarYtelse = (values, faktaOmBeregning, faktaOmBeregningT
   };
 };
 
-VurderMottarYtelseFormImpl.transformValues = (values, inntektVerdier, faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr) => {
+const mapStateToProps = (state) => {
+  const vurderInfo = getVurderMottarYtelse(state);
+  const erFrilans = vurderInfo && vurderInfo.erFrilans;
+  const arbeidsforholdUtenIM = vurderInfo && vurderInfo.arbeidstakerAndelerUtenIM ? vurderInfo.arbeidstakerAndelerUtenIM : [];
+  return {
+    arbeidsforholdUtenIM,
+    erFrilans,
+  };
+};
+
+const VurderMottarYtelseForm = connect(mapStateToProps)(injectKodeverk(getAlleKodeverk)(VurderMottarYtelseFormImpl));
+
+
+VurderMottarYtelseForm.buildInitialValues = (vurderMottarYtelse) => {
+  const initialValues = {};
+  if (!vurderMottarYtelse) {
+    return null;
+  }
+  if (vurderMottarYtelse.erFrilans) {
+    initialValues[finnFrilansFieldName()] = vurderMottarYtelse.frilansMottarYtelse;
+  }
+
+  const ATAndelerUtenIM = vurderMottarYtelse.arbeidstakerAndelerUtenIM ? vurderMottarYtelse.arbeidstakerAndelerUtenIM : [];
+  if (ATAndelerUtenIM.length < 1) {
+    return initialValues;
+  }
+  ATAndelerUtenIM.forEach((andel) => {
+    initialValues[utledArbeidsforholdFieldName(andel)] = andel.mottarYtelse;
+  });
+  return initialValues;
+};
+
+VurderMottarYtelseForm.transformValues = (values, inntektVerdier, faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr) => {
   const faktaOmBeregningTilfeller = [];
   if (!faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE)) {
     return {};
@@ -219,7 +232,7 @@ VurderMottarYtelseFormImpl.transformValues = (values, inntektVerdier, faktaOmBer
   });
 };
 
-VurderMottarYtelseFormImpl.validate = (values, vurderMottarYtelse) => {
+VurderMottarYtelseForm.validate = (values, vurderMottarYtelse) => {
   const errors = {};
   if (!vurderMottarYtelse) {
     return null;
@@ -234,14 +247,4 @@ VurderMottarYtelseFormImpl.validate = (values, vurderMottarYtelse) => {
   return errors;
 };
 
-const mapStateToProps = (state) => {
-  const vurderInfo = getVurderMottarYtelse(state);
-  const erFrilans = vurderInfo && vurderInfo.erFrilans;
-  const arbeidsforholdUtenIM = vurderInfo && vurderInfo.arbeidstakerAndelerUtenIM ? vurderInfo.arbeidstakerAndelerUtenIM : [];
-  return {
-    arbeidsforholdUtenIM,
-    erFrilans,
-  };
-};
-
-export default connect(mapStateToProps)(injectKodeverk(getAlleKodeverk)(VurderMottarYtelseFormImpl));
+export default VurderMottarYtelseForm;
