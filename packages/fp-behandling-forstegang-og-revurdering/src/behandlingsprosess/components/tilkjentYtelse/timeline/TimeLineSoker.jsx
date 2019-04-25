@@ -5,7 +5,7 @@ import { Row } from 'nav-frontend-grid';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import { Image } from '@fpsak-frontend/shared-components';
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
-
+import urlUkjent from '@fpsak-frontend/assets/images/ukjent.svg';
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import styles from './timeLineSoker.less';
 
@@ -15,7 +15,18 @@ import styles from './timeLineSoker.less';
  * Presentationskomponent. Viser korrekt ikon for soker/medsoker
  */
 
-const isKvinne = kode => kode === navBrukerKjonn.KVINNE;
+const getKjønn = (kode) => {
+  switch (kode) {
+    case navBrukerKjonn.KVINNE:
+      return { src: urlKvinne, title: 'Person.Woman' };
+    case navBrukerKjonn.MANN:
+      return { src: urlMann, title: 'Person.Man' };
+    case navBrukerKjonn.UDEFINERT:
+      return { src: urlUkjent, title: 'Person.Unknown' };
+    default:
+      return { src: urlUkjent, title: 'Person.Unknown' };
+  }
+};
 
 const TimeLineSoker = ({
   hovedsokerKjonnKode,
@@ -25,17 +36,17 @@ const TimeLineSoker = ({
     <Row>
       <Image
         className={styles.iconHovedsoker}
-        src={isKvinne(hovedsokerKjonnKode) ? urlKvinne : urlMann}
+        src={getKjønn(hovedsokerKjonnKode).src}
         altCode="Person.ImageText"
-        titleCode={isKvinne(hovedsokerKjonnKode) ? 'Person.Woman' : 'Person.Man'}
+        titleCode={getKjønn(hovedsokerKjonnKode).title}
       />
     </Row>
     <Row>
       <Image
         className={styles.iconMedsoker}
-        src={isKvinne(medsokerKjonnKode) ? urlKvinne : urlMann}
+        src={getKjønn(medsokerKjonnKode).src}
         altCode="Person.ImageText"
-        titleCode={isKvinne(medsokerKjonnKode) ? 'Person.Woman' : 'Person.Man'}
+        titleCode={getKjønn(medsokerKjonnKode).title}
       />
     </Row>
   </div>
