@@ -108,8 +108,7 @@ EndringBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (periode, readOnl
       fordelingForrigeBehandling: andel.fordelingForrigeBehandling || andel.fordelingForrigeBehandling === 0
         ? formatCurrencyNoKr(andel.fordelingForrigeBehandling) : '',
       fastsattBelop: settFastsattBelop(andel.beregnetPrMnd, andel.fastsattForrige, andel.fastsattAvSaksbehandler),
-      readOnlyBelop: settReadOnlyBelop(readOnly, andel.fordelingForrigeBehandling,
-        andel.beregnetPrMnd, andel.snittIBeregningsperiodenPrMnd),
+      readOnlyBelop: settReadOnlyBelop(readOnly, andel.beregnetPrMnd, andel.snittIBeregningsperiodenPrMnd, andel.belopFraInntektsmelding),
       skalRedigereInntekt: periode.harPeriodeAarsakGraderingEllerRefusjon,
       snittIBeregningsperiodenPrMnd: andel.snittIBeregningsperiodenPrMnd,
       refusjonskrav: andel.refusjonskrav !== null && andel.refusjonskrav !== undefined ? formatCurrencyNoKr(andel.refusjonskrav) : '',

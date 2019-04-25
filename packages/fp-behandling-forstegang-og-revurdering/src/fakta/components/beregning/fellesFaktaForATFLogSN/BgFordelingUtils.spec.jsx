@@ -129,8 +129,7 @@ describe('<BgFordelingUtils>', () => {
     const beregnetPrMnd = 10000;
     const fastsattAvSaksbehandler = true;
     const fastsattForrige = 50000;
-    const fordelingForrigeBehandling = 75000;
-    const fastsattBelop = settFastsattBelop(beregnetPrMnd, fastsattForrige, fordelingForrigeBehandling, fastsattAvSaksbehandler);
+    const fastsattBelop = settFastsattBelop(beregnetPrMnd, fastsattForrige, fastsattAvSaksbehandler);
     expect(fastsattBelop).to.equal(formatCurrencyNoKr(beregnetPrMnd));
   });
 
@@ -138,33 +137,33 @@ describe('<BgFordelingUtils>', () => {
     const beregnetPrMnd = null;
     const fastsattAvSaksbehandler = false;
     const fastsattForrige = 50000;
-    const fordelingForrigeBehandling = 75000;
-    const fastsattBelop = settFastsattBelop(beregnetPrMnd, fastsattForrige, fordelingForrigeBehandling, fastsattAvSaksbehandler);
-    const readOnlyFastsattBelop = settReadOnlyBelop(true, fordelingForrigeBehandling, beregnetPrMnd, undefined);
+    const belopFraInntektsmelding = 75000;
+    const fastsattBelop = settFastsattBelop(beregnetPrMnd, fastsattForrige, fastsattAvSaksbehandler);
+    const readOnlyFastsattBelop = settReadOnlyBelop(true, beregnetPrMnd, undefined, belopFraInntektsmelding);
     expect(fastsattBelop).to.equal(formatCurrencyNoKr(fastsattForrige));
-    expect(readOnlyFastsattBelop).to.equal(formatCurrencyNoKr(fordelingForrigeBehandling));
+    expect(readOnlyFastsattBelop).to.equal(formatCurrencyNoKr(belopFraInntektsmelding));
   });
 
   it('skal sette riktig fastsatt beløp for andel i periode med gradering eller refusjon for første gangs behandling', () => {
     const beregnetPrMnd = null;
     const fastsattAvSaksbehandler = false;
     const fastsattForrige = null;
-    const fordelingForrigeBehandling = 75000;
-    const fastsattBelop = settFastsattBelop(beregnetPrMnd, fastsattForrige, fordelingForrigeBehandling, fastsattAvSaksbehandler);
-    const readOnlyFastsattBelop = settReadOnlyBelop(true, fordelingForrigeBehandling, beregnetPrMnd, undefined);
+    const belopFraInntektsmelding = 75000;
+    const fastsattBelop = settFastsattBelop(beregnetPrMnd, fastsattForrige, fastsattAvSaksbehandler);
+    const readOnlyFastsattBelop = settReadOnlyBelop(true, beregnetPrMnd, undefined, belopFraInntektsmelding);
     expect(fastsattBelop).to.equal('');
-    expect(readOnlyFastsattBelop).to.equal(formatCurrencyNoKr(fordelingForrigeBehandling));
+    expect(readOnlyFastsattBelop).to.equal(formatCurrencyNoKr(belopFraInntektsmelding));
   });
 
   it('skal sette riktig fastsatt beløp for andel i periode uten gradering eller refusjon', () => {
     const beregnetPrMnd = null;
     const fastsattAvSaksbehandler = false;
     const fastsattForrige = null;
-    const fordelingForrigeBehandling = 75000;
+    const belopFraInntektsmelding = 75000;
     const fastsattBelop = settFastsattBelop(beregnetPrMnd, fastsattForrige, fastsattAvSaksbehandler);
-    const readOnlyFastsattBelop = settReadOnlyBelop(false, fordelingForrigeBehandling, beregnetPrMnd, undefined);
+    const readOnlyFastsattBelop = settReadOnlyBelop(false, beregnetPrMnd, undefined, belopFraInntektsmelding);
     expect(fastsattBelop).to.equal('');
-    expect(readOnlyFastsattBelop).to.equal(formatCurrencyNoKr(fordelingForrigeBehandling));
+    expect(readOnlyFastsattBelop).to.equal(formatCurrencyNoKr(belopFraInntektsmelding));
   });
 
   it('skal returnere tom streng om ingen andeler i arbeid', () => {
