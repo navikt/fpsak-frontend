@@ -94,7 +94,6 @@ export {
   hasValidDate,
   hasValidSaksnummerOrFodselsnummerFormat,
   hasValidDecimal,
-  hasValidOneDecimal,
   hasValidInteger,
   maxValue,
   minValue,

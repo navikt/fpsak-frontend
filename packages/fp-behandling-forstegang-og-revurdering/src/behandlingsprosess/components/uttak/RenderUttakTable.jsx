@@ -150,7 +150,6 @@ export const RenderUttakTableImpl = ({
                         const parsedValue = parseFloat(value * 10) / 10;
                         return Number.isNaN(parsedValue) ? value : parsedValue;
                       }}
-
                     />
                   </Column>
                 </div>

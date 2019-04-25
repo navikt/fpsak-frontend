@@ -329,6 +329,7 @@ export const transformValues = (values, apCodes, aksjonspunkter) => {
       if (typeof days !== 'undefined' && typeof weeks !== 'undefined') {
         const trekkdager = (weeks * 5) + days;
         transformAktivitet.trekkdagerDesimaler = trekkdager; // regner om uker og dager til trekkdager
+        transformAktivitet.trekkdager = null;
       }
       return transformAktivitet;
     });

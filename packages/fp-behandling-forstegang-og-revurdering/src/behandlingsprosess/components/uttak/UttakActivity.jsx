@@ -375,6 +375,7 @@ const transformValues = (values, selectedItemData, avslagAarsakKoder, innvilgels
   transformvalue.aktiviteter = nyeVerdier.UttakFieldArray.map((a) => {
     const { ...bekreftetAktivitet } = a;
     bekreftetAktivitet.stønadskontoType.navn = uttakPeriodeNavn[a.stønadskontoType.kode];
+    bekreftetAktivitet.trekkdager = null;
     return bekreftetAktivitet;
   });
   transformvalue.begrunnelse = values.begrunnelse;

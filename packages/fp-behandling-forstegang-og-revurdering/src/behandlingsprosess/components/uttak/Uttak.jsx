@@ -289,6 +289,7 @@ export class UttakImpl extends Component {
     verdier.aktiviteter = verdier.aktiviteter.map((a) => {
       const { ...aktivitet } = a;
       aktivitet.utbetalingsgrad = a.utbetalingsgrad || a.utbetalingsgrad === 0 ? parseFloat(a.utbetalingsgrad) : null;
+      aktivitet.trekkdager = null;
       return aktivitet;
     });
 
