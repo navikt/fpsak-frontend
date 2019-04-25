@@ -200,7 +200,7 @@ const arbeidsforholdReadOnlyOrSelect = (fields, index, elementFieldId, selectVal
 );
 
 export const lagBelopKolonne = (andelElementFieldId, readOnly, skalRedigereInntekt, isAksjonspunktClosed) => {
-  if (readOnly || !skalRedigereInntekt) {
+  if (!readOnly && !skalRedigereInntekt) {
     return (
       <TableColumn>
         <InputField
@@ -219,7 +219,7 @@ export const lagBelopKolonne = (andelElementFieldId, readOnly, skalRedigereInnte
         name={`${andelElementFieldId}.fastsattBelop`}
         bredde="XS"
         parse={parseCurrencyInput}
-        readOnly={false}
+        readOnly={readOnly}
         isEdited={isAksjonspunktClosed && skalRedigereInntekt}
       />
     </TableColumn>
