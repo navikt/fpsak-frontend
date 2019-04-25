@@ -2,19 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
+import classnames from 'classnames/bind';
 import { Normaltekst } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
+
 import { ISO_DATE_FORMAT, calcDays } from '@fpsak-frontend/utils';
 import {
   FlexContainer, FlexRow, FlexColumn, Image,
 } from '@fpsak-frontend/shared-components';
-import classnames from 'classnames/bind';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import overlapp from '@fpsak-frontend/assets/images/overlapp.svg';
 import tomPeriode from '@fpsak-frontend/assets/images/tom_periode.svg';
 import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
+
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import UttakPeriodeType from './UttakPeriodeType';
 import UttakPeriodeInnhold from './UttakPeriodeInnhold';
-
 
 import styles from './uttakPeriode.less';
 
@@ -70,7 +73,7 @@ const isUtsettelseMedSykdom = (periode) => {
   return false;
 };
 
-const avvikInntekstmeldInfo = (periode, inntektsmeldingInfo) => {
+const avvikInntekstmeldInfo = (periode, inntektsmeldingInfo, getKodeverknavn) => {
   if (periode.bekreftet) {
     return null;
   }
@@ -83,7 +86,7 @@ const avvikInntekstmeldInfo = (periode, inntektsmeldingInfo) => {
       if (avvik.utsettelseÅrsak && !isUtsettelseMedSykdom(periode)) {
         return (
           <AlertStripe type="info" key="key1" className={styles.avvikInfoMargin}>
-            <FormattedMessage id="UttakPeriode.ManglerInfoUtsettelse" values={{ årsak: periode.utsettelseÅrsak.navn.toLowerCase() }} />
+            <FormattedMessage id="UttakPeriode.ManglerInfoUtsettelse" values={{ årsak: getKodeverknavn(periode.utsettelseÅrsak).toLowerCase() }} />
           </AlertStripe>
         );
       }
@@ -112,7 +115,7 @@ const avvikInntekstmeldInfo = (periode, inntektsmeldingInfo) => {
   });
 };
 
-const UttakPeriode = ({
+export const UttakPeriode = ({
   fields,
   openSlettPeriodeModalCallback,
   updatePeriode,
@@ -125,6 +128,7 @@ const UttakPeriode = ({
   inntektsmeldingInfo,
   endringsdato,
   meta,
+  getKodeverknavn,
 }) => (
   <div>
     {meta.error && <AlertStripe className={styles.fullWidth} type="feil">{meta.error}</AlertStripe>}
@@ -138,7 +142,7 @@ const UttakPeriode = ({
           <React.Fragment key={fieldId}>
             <FlexRow>
               <FlexColumn className={styles.fullWidth}>
-                {avvikInntekstmeldInfo(periode, inntektsmeldingInfo[index])}
+                {avvikInntekstmeldInfo(periode, inntektsmeldingInfo[index], getKodeverknavn)}
                 {index === 0 && harEndringsdatoSomErFørFørsteUttaksperiode && renderTomPeriode()}
                 <div className={getClassName(periode, readOnly)}>
                   <UttakPeriodeType
@@ -209,10 +213,11 @@ UttakPeriode.propTypes = {
   isNyPeriodeFormOpen: PropTypes.bool.isRequired,
   inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape())).isRequired,
   endringsdato: PropTypes.string,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 UttakPeriode.defaultProps = {
   endringsdato: undefined,
 };
 
-export default UttakPeriode;
+export default injectKodeverk(getAlleKodeverk)(UttakPeriode);

@@ -2,13 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { Normaltekst } from 'nav-frontend-typografi';
+
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import { getVurderMottarYtelse } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getVurderMottarYtelse } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import {
   utledArbeidsforholdFieldName, finnFrilansFieldName, skalFastsetteInntektATUtenInntektsmelding, frilansMottarYtelse, andelsnrMottarYtelseMap,
@@ -30,16 +34,16 @@ export const harTilfelleSomHandtererInntekt = tilfeller => (tilfeller.some(tilfe
 
 export const mottarYtelseForArbeidMsg = () => ('BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForArbeid');
 
-const utledArbeidsforholdUtenIMRadioTekst = arbeidsforhold => (
-  <FormattedMessage id={mottarYtelseForArbeidMsg()} values={{ arbeid: createVisningsnavnForAktivitet(arbeidsforhold) }} />
+const utledArbeidsforholdUtenIMRadioTekst = (arbeidsforhold, getKodeverknavn) => (
+  <FormattedMessage id={mottarYtelseForArbeidMsg()} values={{ arbeid: createVisningsnavnForAktivitet(arbeidsforhold, getKodeverknavn) }} />
 );
 
 
-const mottarYtelseArbeidsforholdRadio = (andel, readOnly, isAksjonspunktClosed) => (
+const mottarYtelseArbeidsforholdRadio = (andel, readOnly, isAksjonspunktClosed, getKodeverknavn) => (
   <div key={utledArbeidsforholdFieldName(andel)}>
     <div>
       <Normaltekst>
-        {utledArbeidsforholdUtenIMRadioTekst(andel.arbeidsforhold)}
+        {utledArbeidsforholdUtenIMRadioTekst(andel.arbeidsforhold, getKodeverknavn)}
       </Normaltekst>
     </div>
     <VerticalSpacer eightPx />
@@ -77,6 +81,7 @@ export const VurderMottarYtelseFormImpl = ({
   erFrilans,
   arbeidsforholdUtenIM,
   tilfeller,
+  getKodeverknavn,
 }) => (
   <div>
     {erFrilans
@@ -100,7 +105,7 @@ export const VurderMottarYtelseFormImpl = ({
       )
     }
     {arbeidsforholdUtenIM.map(andel => (
-      mottarYtelseArbeidsforholdRadio(andel, readOnly, isAksjonspunktClosed)
+      mottarYtelseArbeidsforholdRadio(andel, readOnly, isAksjonspunktClosed, getKodeverknavn)
     ))}
   </div>
 );
@@ -111,6 +116,7 @@ VurderMottarYtelseFormImpl.propTypes = {
   tilfeller: PropTypes.arrayOf(PropTypes.string).isRequired,
   arbeidsforholdUtenIM: PropTypes.arrayOf(PropTypes.object).isRequired,
   erFrilans: PropTypes.bool.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 VurderMottarYtelseFormImpl.buildInitialValues = (vurderMottarYtelse) => {
@@ -238,4 +244,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(VurderMottarYtelseFormImpl);
+export default connect(mapStateToProps)(injectKodeverk(getAlleKodeverk)(VurderMottarYtelseFormImpl));

@@ -5,10 +5,10 @@ import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/util
 import { FormattedMessage } from 'react-intl';
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 
-export const lagTotalInntektArbeidsforholdList = (values, skjaeringstidspunktBeregning) => {
+export const lagTotalInntektArbeidsforholdList = (values, skjaeringstidspunktBeregning, getKodeverknavn) => {
   const totalInntektArbeidsforholdList = [];
   values.forEach((andel) => {
-    const navn = createVisningsnavnForAktivitet(andel);
+    const navn = createVisningsnavnForAktivitet(andel, getKodeverknavn);
     if (andel.arbeidsgiverId) {
       const arbforhold = totalInntektArbeidsforholdList.find(({ key }) => key === navn);
       if (arbforhold !== undefined) {

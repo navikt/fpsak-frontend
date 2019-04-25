@@ -113,6 +113,8 @@ describe('<VedtakAvslagPanel>', () => {
     },
   }];
 
+  const getKodeverknavn = () => undefined;
+
   it('skal rendre avslagspanel for engangsstønad', () => {
     const wrapper = shallowWithIntl(<VedtakAvslagPanelImpl
       intl={intlMock}
@@ -124,6 +126,7 @@ describe('<VedtakAvslagPanel>', () => {
       readOnly
       behandlinger={[behandling]}
       ytelseType={engangsstonad}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const undertekstFields = wrapper.find('Undertekst');
@@ -148,6 +151,7 @@ describe('<VedtakAvslagPanel>', () => {
       readOnly
       behandlinger={[behandling]}
       ytelseType={engangsstonad}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const undertekstFields = wrapper.find('Undertekst');
@@ -172,6 +176,7 @@ describe('<VedtakAvslagPanel>', () => {
       readOnly
       behandlinger={[behandling]}
       ytelseType={foreldrepenger}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const undertekstFields = wrapper.find('Undertekst');
@@ -196,6 +201,7 @@ describe('<VedtakAvslagPanel>', () => {
       readOnly
       behandlinger={[behandling]}
       ytelseType={foreldrepenger}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const undertekstFields = wrapper.find('Undertekst');

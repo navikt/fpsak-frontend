@@ -47,9 +47,9 @@ export const transformValuesForKunYtelse = (values, kunYtelse, endringBGPerioder
   return {};
 };
 
-export const getKunYtelseValidation = (values, kunYtelse, endringBgPerioder, aktivertePaneler, skjaeringstidspunktBeregning) => {
+export const getKunYtelseValidation = (values, kunYtelse, endringBgPerioder, aktivertePaneler, skjaeringstidspunktBeregning, getKodeverknavn) => {
   if (harKunYtelseOgEndretBeregningsgrunnlag(aktivertePaneler)) {
-    return KunYtelseTilkommetArbeidPanel.validate(values, aktivertePaneler, kunYtelse, endringBgPerioder, skjaeringstidspunktBeregning);
+    return KunYtelseTilkommetArbeidPanel.validate(values, aktivertePaneler, kunYtelse, endringBgPerioder, skjaeringstidspunktBeregning, getKodeverknavn);
   }
   if (aktivertePaneler.includes(FASTSETT_BG_KUN_YTELSE)) {
     return KunYtelsePanel.validate(values, aktivertePaneler, kunYtelse);
@@ -58,12 +58,12 @@ export const getKunYtelseValidation = (values, kunYtelse, endringBgPerioder, akt
 };
 
 
-export const buildInitialValuesKunYtelse = (kunYtelse, endringBgPerioder, isRevurdering, tilfeller) => {
+export const buildInitialValuesKunYtelse = (kunYtelse, endringBgPerioder, isRevurdering, tilfeller, getKodeverknavn) => {
   if (harKunYtelseOgEndretBeregningsgrunnlag(tilfeller)) {
-    return KunYtelseTilkommetArbeidPanel.buildInitialValues(kunYtelse, endringBgPerioder, isRevurdering, tilfeller);
+    return KunYtelseTilkommetArbeidPanel.buildInitialValues(kunYtelse, endringBgPerioder, isRevurdering, tilfeller, getKodeverknavn);
   }
   if (tilfeller.includes(FASTSETT_BG_KUN_YTELSE)) {
-    return KunYtelsePanel.buildInitialValues(kunYtelse);
+    return KunYtelsePanel.buildInitialValues(kunYtelse, getKodeverknavn);
   }
   return {};
 };

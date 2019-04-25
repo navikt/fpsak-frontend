@@ -1,15 +1,28 @@
 import React from 'react';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
 
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+
 import { CheckPersonStatusFormImpl as UnwrappedForm, buildInitialValues } from './CheckPersonStatusForm';
 
 describe('<CheckPersonStatusForm>', () => {
+  const alleKodeverk = {
+    [kodeverkTyper.PERSONSTATUS_TYPE]: [{
+      kode: 'UKJENT',
+      kodeverk: 'PERSONSTATUS_TYPE',
+      navn: 'Ukjent',
+    }, {
+      kode: 'BOSATT',
+      kodeverk: 'PERSONSTATUS_TYPE',
+      navn: 'Bosatt',
+    }],
+  };
+
   it('skal vise hjelpetekst med original personstatus og begrunnelse/submit', () => {
     const wrapper = shallowWithIntl(<UnwrappedForm
       {...reduxFormPropsMock}
@@ -114,16 +127,16 @@ describe('<CheckPersonStatusForm>', () => {
     const personopplysning = {
       personstatus: {
         kode: 'UKJENT',
-        navn: 'Ukjent',
+        kodeverk: 'PERSONSTATUS_TYPE',
       },
       avklartPersonstatus: {
         orginalPersonstatus: {
           kode: 'UKJENT',
-          navn: 'Ukjent',
+          kodeverk: 'PERSONSTATUS_TYPE',
         },
         overstyrtPersonstatus: {
           kode: personstatusType.BOSATT,
-          navn: 'Bosatt',
+          kodeverk: 'PERSONSTATUS_TYPE',
         },
       },
     };
@@ -137,7 +150,7 @@ describe('<CheckPersonStatusForm>', () => {
       begrunnelse: 'Dette er en begrunnelse',
     }];
 
-    const initialValues = buildInitialValues.resultFunc(behandlingHenlagt, aksjonspunkter, personopplysning);
+    const initialValues = buildInitialValues.resultFunc(behandlingHenlagt, aksjonspunkter, personopplysning, alleKodeverk);
 
     expect(initialValues).to.eql({
       originalPersonstatusName: 'Ukjent',
@@ -152,16 +165,16 @@ describe('<CheckPersonStatusForm>', () => {
     const personopplysning = {
       personstatus: {
         kode: 'UKJENT',
-        navn: 'Ukjent',
+        kodeverk: 'PERSONSTATUS_TYPE',
       },
       avklartPersonstatus: {
         orginalPersonstatus: {
           kode: 'UKJENT',
-          navn: 'Ukjent',
+          kodeverk: 'PERSONSTATUS_TYPE',
         },
         overstyrtPersonstatus: {
           kode: personstatusType.BOSATT,
-          navn: 'Bosatt',
+          kodeverk: 'PERSONSTATUS_TYPE',
         },
       },
     };
@@ -175,7 +188,7 @@ describe('<CheckPersonStatusForm>', () => {
       begrunnelse: 'Dette er en begrunnelse',
     }];
 
-    const initialValues = buildInitialValues.resultFunc(behandlingHenlagt, aksjonspunkter, personopplysning);
+    const initialValues = buildInitialValues.resultFunc(behandlingHenlagt, aksjonspunkter, personopplysning, alleKodeverk);
 
     expect(initialValues).to.eql({
       originalPersonstatusName: 'Ukjent',
@@ -190,7 +203,7 @@ describe('<CheckPersonStatusForm>', () => {
     const personopplysning = {
       personstatus: {
         kode: 'UKJENT',
-        navn: 'Ukjent',
+        kodeverk: 'PERSONSTATUS_TYPE',
       },
     };
     const aksjonspunkter = [{
@@ -203,7 +216,7 @@ describe('<CheckPersonStatusForm>', () => {
       begrunnelse: 'Dette er en begrunnelse',
     }];
 
-    const initialValues = buildInitialValues.resultFunc(behandlingHenlagt, aksjonspunkter, personopplysning);
+    const initialValues = buildInitialValues.resultFunc(behandlingHenlagt, aksjonspunkter, personopplysning, alleKodeverk);
 
     expect(initialValues).to.eql({
       originalPersonstatusName: 'Ukjent',

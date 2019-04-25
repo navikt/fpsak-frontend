@@ -67,6 +67,7 @@ const sokerKjonn = navBrukerKjonn.MANN;
 
 const newPeriodeCallback = sinon.spy();
 const newPeriodeResetCallback = sinon.spy();
+const getKodeverknavn = sinon.spy();
 
 describe('<UttakNyPeriode>', () => {
   it('skal vise skjema for ny utakksperiode', () => {
@@ -80,6 +81,7 @@ describe('<UttakNyPeriode>', () => {
       andeler={andeler}
       sokerKjonn={sokerKjonn}
       nyPeriodeDisabledDaysFom="2018-05-20"
+      getKodeverknavn={getKodeverknavn}
       {...reduxFormPropsMock}
     />);
 
@@ -124,6 +126,7 @@ describe('<UttakNyPeriode>', () => {
       andeler={andeler}
       sokerKjonn={sokerKjonn}
       nyPeriodeDisabledDaysFom="2018-05-20"
+      getKodeverknavn={getKodeverknavn}
       {...reduxFormPropsMock}
     />);
 
@@ -146,6 +149,7 @@ describe('<UttakNyPeriode>', () => {
       andeler={andeler}
       sokerKjonn={sokerKjonn}
       nyPeriodeDisabledDaysFom="2018-05-20"
+      getKodeverknavn={getKodeverknavn}
       {...reduxFormPropsMock}
     />);
     wrapper.setProps({
@@ -168,6 +172,7 @@ describe('<UttakNyPeriode>', () => {
       andeler={andeler}
       sokerKjonn={sokerKjonn}
       nyPeriodeDisabledDaysFom="2018-05-20"
+      getKodeverknavn={getKodeverknavn}
       {...reduxFormPropsMock}
     />);
     wrapper.setProps({
@@ -190,6 +195,7 @@ describe('<UttakNyPeriode>', () => {
       andeler={andeler}
       sokerKjonn={sokerKjonn}
       nyPeriodeDisabledDaysFom="2018-05-20"
+      getKodeverknavn={getKodeverknavn}
       {...reduxFormPropsMock}
     />);
     wrapper.setProps({
@@ -212,6 +218,7 @@ describe('<UttakNyPeriode>', () => {
       andeler={andeler}
       sokerKjonn={sokerKjonn}
       nyPeriodeDisabledDaysFom="2018-05-20"
+      getKodeverknavn={getKodeverknavn}
       {...reduxFormPropsMock}
     />);
     wrapper.setProps({
@@ -234,6 +241,7 @@ describe('<UttakNyPeriode>', () => {
       andeler={andeler}
       sokerKjonn={sokerKjonn}
       nyPeriodeDisabledDaysFom="2018-05-20"
+      getKodeverknavn={getKodeverknavn}
       {...reduxFormPropsMock}
     />);
     wrapper.setProps({

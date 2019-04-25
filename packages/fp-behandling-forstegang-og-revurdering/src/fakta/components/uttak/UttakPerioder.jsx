@@ -7,19 +7,21 @@ import {
   reset as reduxFormReset,
   getFormInitialValues,
 } from 'redux-form';
-import { getRettigheter } from 'navAnsatt/duck';
 import { FormattedMessage } from 'react-intl';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
-import { CheckboxField } from '@fpsak-frontend/form';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+import { CheckboxField } from '@fpsak-frontend/form';
 import { getBehandlingFormPrefix, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { getRettigheter } from 'navAnsatt/duck';
 import {
   getInntektsmeldinger, getBehandlingVersjon,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
-import { getSelectedBehandlingId, getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getSelectedBehandlingId, getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import {
   ariaCheck, DDMMYYYY_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
@@ -277,6 +279,7 @@ export class UttakPerioder extends PureComponent {
       inntektsmeldinger,
       uttakPeriodeVurderingTyper,
       reduxFormChange: formChange,
+      getKodeverknavn,
     } = this.props;
     const { inntektsmeldingInfo } = this.state;
     const {
@@ -323,7 +326,7 @@ export class UttakPerioder extends PureComponent {
     if (oppholdArsak) {
       newPeriodeObject.oppholdÅrsak = {
         kode: oppholdArsak,
-        navn: updatedPeriode.oppholdÅrsak.navn,
+        navn: getKodeverknavn(updatedPeriode.oppholdÅrsak),
         kodeverk: updatedPeriode.oppholdÅrsak.kodeverk,
       };
     }
@@ -525,6 +528,7 @@ UttakPerioder.propTypes = {
   isManuellOverstyring: PropTypes.bool,
   hasRevurderingOvertyringAp: PropTypes.bool.isRequired,
   kanOverstyre: PropTypes.bool.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 UttakPerioder.defaultProps = {
@@ -564,4 +568,4 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UttakPerioder);
+export default connect(mapStateToProps, mapDispatchToProps)(injectKodeverk(getAlleKodeverk)(UttakPerioder));

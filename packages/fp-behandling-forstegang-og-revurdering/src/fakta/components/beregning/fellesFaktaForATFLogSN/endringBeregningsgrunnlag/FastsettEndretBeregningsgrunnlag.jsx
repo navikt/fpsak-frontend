@@ -27,9 +27,9 @@ export const buildValues = (tilfeller, build) => {
 };
 
 
-FastsettEndretBeregningsgrunnlagImpl.buildInitialValues = (endringBGPerioder, tilfeller, readOnly, bg) => {
+FastsettEndretBeregningsgrunnlagImpl.buildInitialValues = (endringBGPerioder, tilfeller, readOnly, bg, getKodeverknavn) => {
   const build = () => EndringBeregningsgrunnlagForm
-    .buildInitialValues(endringBGPerioder, readOnly, bg);
+    .buildInitialValues(endringBGPerioder, readOnly, bg, getKodeverknavn);
   return buildValues(tilfeller, build);
 };
 
@@ -43,9 +43,9 @@ export const validateValues = (tilfeller, validateBg) => {
   return validateBg();
 };
 
-FastsettEndretBeregningsgrunnlagImpl.validate = (values, endringBGPerioder, tilfeller, faktaOmBeregning, beregningsgrunnlag) => {
+FastsettEndretBeregningsgrunnlagImpl.validate = (values, endringBGPerioder, tilfeller, faktaOmBeregning, beregningsgrunnlag, getKodeverknavn) => {
   const validateBg = () => EndringBeregningsgrunnlagForm
-    .validate(values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag);
+    .validate(values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag, getKodeverknavn);
   return validateValues(tilfeller, validateBg);
 };
 

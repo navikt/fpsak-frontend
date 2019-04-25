@@ -25,7 +25,6 @@ const mockAksjonspunktMedKodeOgStatus = (apKode, status) => ({
 const atAndelEn = {
   aktivitetStatus: {
     kode: aktivitetStatus.ARBEIDSTAKER,
-    navn: 'Arbeidstaker',
   },
   arbeidsforhold: {
     arbeidsgiverNavn: 'arbeidsgiver',
@@ -37,7 +36,6 @@ const atAndelEn = {
 const atAndelTo = {
   aktivitetStatus: {
     kode: aktivitetStatus.ARBEIDSTAKER,
-    navn: 'Arbeidstaker',
   },
   arbeidsforhold: {
     arbeidsgiverNavn: 'arbeidsgiver',
@@ -49,7 +47,6 @@ const atAndelTo = {
 const snAndel = {
   aktivitetStatus: {
     kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-    navn: 'Selvstendig næringsdrivende',
   },
   andelsnr: 3,
 };
@@ -57,9 +54,22 @@ const snAndel = {
 const flAndel = {
   aktivitetStatus: {
     kode: aktivitetStatus.FRILANSER,
-    navn: 'Frilanser',
   },
   andelsnr: 4,
+};
+
+const getKodeverknavn = (kodeverk) => {
+  if (kodeverk.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE) {
+    return 'Selvstendig næringsdrivende';
+  }
+  if (kodeverk.kode === aktivitetStatus.FRILANSER) {
+    return 'Frilanser';
+  }
+  if (kodeverk.kode === aktivitetStatus.ARBEIDSTAKER) {
+    return 'Arbeidstaker';
+  }
+
+  return '';
 };
 
 describe('<GraderingUtenBG>', () => {
@@ -69,6 +79,7 @@ describe('<GraderingUtenBG>', () => {
       andelerMedGraderingUtenBG={[atAndelEn, atAndelTo]}
       submitCallback={sinon.spy()}
       aksjonspunkt={mockAksjonspunktMedKodeOgStatus('5050', 'OPPR')}
+      getKodeverknavn={getKodeverknavn}
       {...reduxFormPropsMock}
     />);
     const radioOption = wrapper.find(RadioOption);
@@ -92,6 +103,7 @@ describe('<GraderingUtenBG>', () => {
       andelerMedGraderingUtenBG={[atAndelEn, snAndel, flAndel]}
       submitCallback={sinon.spy()}
       aksjonspunkt={mockAksjonspunktMedKodeOgStatus('5050', 'OPPR')}
+      getKodeverknavn={getKodeverknavn}
       {...reduxFormPropsMock}
     />);
     const radioOption = wrapper.find(RadioOption);

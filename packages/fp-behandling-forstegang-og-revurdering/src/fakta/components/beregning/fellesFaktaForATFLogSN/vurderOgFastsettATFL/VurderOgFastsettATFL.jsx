@@ -48,13 +48,13 @@ const harVurdert = (tilfeller, values, faktaOmBeregning) => (
     && besteberegningErVurdertEllerIkkjeTilstede(tilfeller, values)
 );
 
-const skalFastsetteInntekt = (values, faktaOmBeregning, beregningsgrunnlag) => {
+const skalFastsetteInntekt = (values, faktaOmBeregning, beregningsgrunnlag, getKodeverknavn) => {
   if (faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
     return !values[besteberegningField];
   }
   return beregningsgrunnlag.beregningsgrunnlagPeriode[0]
     .beregningsgrunnlagPrStatusOgAndel
-    .map(mapAndelToField)
+    .map(andel => mapAndelToField(andel, getKodeverknavn))
     .find(skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag)) !== undefined;
 };
 
@@ -170,20 +170,20 @@ const VurderOgFastsettATFL = ({
   </div>
 );
 
-VurderOgFastsettATFL.buildInitialValues = (beregningsgrunnlag, values) => {
+VurderOgFastsettATFL.buildInitialValues = (beregningsgrunnlag, getKodeverknavn) => {
   if (!beregningsgrunnlag) {
     return {};
   }
   const andeler = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel;
   return {
-    [inntektFieldArrayName]: InntektFieldArray.buildInitialValues(andeler, values ? values[besteberegningField] : undefined),
+    [inntektFieldArrayName]: InntektFieldArray.buildInitialValues(andeler, getKodeverknavn),
   };
 };
 
 
-VurderOgFastsettATFL.validate = (values, tilfeller, faktaOmBeregning, beregningsgrunnlag) => {
+VurderOgFastsettATFL.validate = (values, tilfeller, faktaOmBeregning, beregningsgrunnlag, getKodeverknavn) => {
   const errors = {};
-  if (harVurdert(tilfeller, values, faktaOmBeregning) && skalFastsetteInntekt(values, faktaOmBeregning, beregningsgrunnlag)) {
+  if (harVurdert(tilfeller, values, faktaOmBeregning) && skalFastsetteInntekt(values, faktaOmBeregning, beregningsgrunnlag, getKodeverknavn)) {
     errors[inntektFieldArrayName] = InntektFieldArray.validate(values[inntektFieldArrayName], false,
       skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag));
   }

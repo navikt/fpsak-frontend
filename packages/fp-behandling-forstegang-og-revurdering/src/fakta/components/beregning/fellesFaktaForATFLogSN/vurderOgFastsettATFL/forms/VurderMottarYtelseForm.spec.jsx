@@ -74,6 +74,8 @@ const arbeidstakerAndelerUtenIM = [
   { ...andel3, mottarYtelse: true },
 ];
 
+const getKodeverknavn = () => undefined;
+
 describe('<VurderMottarYtelseForm>', () => {
   it('skal teste at initial values bygges korrekt uten dto til stede', () => {
     const initialValues = VurderMottarYtelseFormImpl.buildInitialValues(undefined);
@@ -165,6 +167,7 @@ describe('<VurderMottarYtelseForm>', () => {
       tilfeller={[]}
       erFrilans
       arbeidsforholdUtenIM={[]}
+      getKodeverknavn={getKodeverknavn}
     />);
     const flRadio = wrapper.find(RadioGroupField);
     expect(flRadio).to.have.length(1);
@@ -181,6 +184,7 @@ describe('<VurderMottarYtelseForm>', () => {
       tilfeller={[faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL]}
       erFrilans
       arbeidsforholdUtenIM={[]}
+      getKodeverknavn={getKodeverknavn}
     />);
     const flRadio = wrapper.find(RadioGroupField);
     expect(flRadio).to.have.length(1);
@@ -198,6 +202,7 @@ describe('<VurderMottarYtelseForm>', () => {
       tilfeller={[faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL]}
       erFrilans={false}
       arbeidsforholdUtenIM={arbeidstakerAndelerUtenIM}
+      getKodeverknavn={getKodeverknavn}
     />);
     const atRadio = wrapper.find(RadioGroupField);
     expect(atRadio).to.have.length(3);

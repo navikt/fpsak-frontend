@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import {
   Table, TableRow, TableColumn, VerticalSpacer, Image,
 } from '@fpsak-frontend/shared-components';
@@ -20,7 +22,7 @@ import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType'
 
 import styles from './timeLineData.less';
 
-const createVisningNavnForUttakArbeidstaker = (andel) => {
+const createVisningNavnForUttakArbeidstaker = (andel, getKodeverknavn) => {
   if (!andel.arbeidsgiverOrgnr) {
     return <FormattedMessage id="TilkjentYtelse.PeriodeData.Arbeidstaker" />;
   }
@@ -32,7 +34,7 @@ const createVisningNavnForUttakArbeidstaker = (andel) => {
     arbeidsforholdId: andel.arbeidsforholdId,
     arbeidsforholType: andel.arbeidsforholdType,
   };
-  return createVisningsnavnForAktivitet(andelsObjekt);
+  return createVisningsnavnForAktivitet(andelsObjekt, getKodeverknavn);
 };
 
 const tableHeaderTextCodes = [
@@ -45,10 +47,10 @@ const tableHeaderTextCodes = [
   'TilkjentYtelse.PeriodeData.SisteUtbDato',
 ];
 
-const findAndelsnavn = (andel) => {
+const findAndelsnavn = (andel, getKodeverknavn) => {
   switch (andel.aktivitetStatus.kode) {
     case aktivitetStatus.ARBEIDSTAKER:
-      return createVisningNavnForUttakArbeidstaker(andel);
+      return createVisningNavnForUttakArbeidstaker(andel, getKodeverknavn);
     case aktivitetStatus.FRILANSER:
       return <FormattedMessage id="TilkjentYtelse.PeriodeData.Frilans" />;
     case aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE:
@@ -88,12 +90,13 @@ const getGradering = (andel) => {
  *
  * Viser opp data fra valgt periode i tilkjent ytelse-tidslinjen
  */
-const TimeLineData = ({
+export const TimeLineData = ({
   selectedItemStartDate,
   selectedItemEndDate,
   selectedItemData,
   callbackForward,
   callbackBackward,
+  getKodeverknavn,
 }) => {
   const numberOfDaysAndWeeks = calcDaysAndWeeks(selectedItemStartDate, selectedItemEndDate);
 
@@ -172,7 +175,7 @@ const TimeLineData = ({
           <Table headerTextCodes={tableHeaderTextCodes}>
             {selectedItemData.andeler.map((andel, index) => (
               <TableRow key={`index${index + 1}`}>
-                <TableColumn>{findAndelsnavn(andel)}</TableColumn>
+                <TableColumn>{findAndelsnavn(andel, getKodeverknavn)}</TableColumn>
                 <TableColumn><Normaltekst>{uttakPeriodeNavn[andel.uttak.stonadskontoType]}</Normaltekst></TableColumn>
                 <TableColumn><Normaltekst>{getGradering(andel)}</Normaltekst></TableColumn>
                 <TableColumn><Normaltekst>{andel.utbetalingsgrad}</Normaltekst></TableColumn>
@@ -205,10 +208,11 @@ TimeLineData.propTypes = {
   selectedItemData: beregningsresultatPeriodePropType,
   callbackForward: PropTypes.func.isRequired,
   callbackBackward: PropTypes.func.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 TimeLineData.defaultProps = {
   selectedItemData: undefined,
 };
 
-export default TimeLineData;
+export default injectKodeverk(getAlleKodeverk)(TimeLineData);

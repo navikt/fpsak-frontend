@@ -22,6 +22,8 @@ const inntektskategorier = [
   },
 ];
 
+const getKodeverknavn = () => undefined;
+
 const kanRedigereInntekt = andel => skalRedigereInntektForAndel({}, {}, {})(andel);
 
 const skalOverstyreBg = () => true;
@@ -70,6 +72,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       harKunYtelse
       erRevurdering={false}
       skjaeringstidspunktBeregning={skjaeringstidspunktBeregning}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const selectFields = wrapper.find(SelectField);
@@ -96,6 +99,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       periodeUtenAarsak={false}
       erRevurdering={false}
       skjaeringstidspunktBeregning={skjaeringstidspunktBeregning}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const selectFields = wrapper.find(SelectField);
@@ -143,6 +147,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       periodeUtenAarsak={false}
       erRevurdering={false}
       skjaeringstidspunktBeregning={skjaeringstidspunktBeregning}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const rows = wrapper.find(TableRow);
@@ -187,6 +192,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       periodeUtenAarsak={false}
       erRevurdering={false}
       skjaeringstidspunktBeregning={skjaeringstidspunktBeregning}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const rows = wrapper.find(TableRow);
@@ -245,6 +251,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       periodeUtenAarsak={false}
       erRevurdering={false}
       skjaeringstidspunktBeregning={skjaeringstidspunktBeregning}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const rows = wrapper.find(TableRow);
@@ -303,6 +310,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       periodeUtenAarsak={false}
       erRevurdering={false}
       skjaeringstidspunktBeregning={skjaeringstidspunktBeregning}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const rows = wrapper.find(TableRow);

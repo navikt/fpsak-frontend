@@ -34,6 +34,8 @@ const periode = {
 const closeEvent = sinon.spy();
 const cancelEvent = sinon.spy();
 
+const getKodeverknavn = () => undefined;
+
 describe('<UttakSlettPeriodeModal>', () => {
   it('skal vise åpen modal', () => {
     const wrapper = shallowWithIntl(<UttakSlettPeriodeModalImpl
@@ -43,6 +45,7 @@ describe('<UttakSlettPeriodeModal>', () => {
       closeEvent={closeEvent}
       cancelEvent={cancelEvent}
       periode={periode}
+      getKodeverknavn={getKodeverknavn}
     />);
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
@@ -71,6 +74,7 @@ describe('<UttakSlettPeriodeModal>', () => {
       closeEvent={closeEvent}
       cancelEvent={cancelEvent}
       periode={periode}
+      getKodeverknavn={getKodeverknavn}
     />);
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);

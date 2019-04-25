@@ -3,19 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { getKodeverknavnFraKode } from './kodeverkUtils';
 
 const injectKodeverk = getAlleKodeverkSelector => (WrappedComponent) => {
   class KodeverkWrapper extends React.Component {
     getKodeverknavnFraKode = (kodeverkType, kode) => {
       const { alleKodeverk } = this.props;
-      const kodeverkForType = alleKodeverk[kodeverkType];
-      if (!kodeverkForType || kodeverkForType.length === 0) {
-        return '';
-      }
-      const kodeverk = kodeverkForType.find(k => k.kode === kode);
-      return kodeverk ? kodeverk.navn : '';
+      return getKodeverknavnFraKode(alleKodeverk, kodeverkType, kode);
     }
 
+    // TODO (TOR) Endre nøkkel i map returnert av KodeverkRestTjeneste til å bruka DISCRIMINATOR, ikkje simplename. Kan da fjerna
+    // mappinga kodeverkTyper[kodeverkOjekt.kodeverk]
     getKodeverknavn = kodeverkOjekt => this.getKodeverknavnFraKode(kodeverkTyper[kodeverkOjekt.kodeverk], kodeverkOjekt.kode)
 
     render() {

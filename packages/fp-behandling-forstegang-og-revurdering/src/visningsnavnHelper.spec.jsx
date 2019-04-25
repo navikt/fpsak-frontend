@@ -3,7 +3,7 @@ import { createVisningsnavnForAktivitet } from './visningsnavnHelper';
 
 const andelUtenNavn = {
   arbeidsforholdType: {
-    navn: 'Arbeidstaker',
+    kode: 'A',
   },
   arbeidsforholdId: '123',
   arbeidsgiverId: '321',
@@ -11,7 +11,7 @@ const andelUtenNavn = {
 
 const andelUtenArbeidsforholdId = {
   arbeidsforholdType: {
-    navn: 'Arbeidstaker',
+    kode: 'A',
   },
   arbeidsgiverNavn: 'Andeby bank',
   arbeidsgiverId: '321',
@@ -19,26 +19,28 @@ const andelUtenArbeidsforholdId = {
 
 const andelMedAlt = {
   arbeidsforholdType: {
-    navn: 'Arbeidstaker',
+    kode: 'A',
   },
   arbeidsgiverNavn: 'Andeby bank',
   arbeidsgiverId: '321',
   arbeidsforholdId: '999888777',
 };
 
+const getKodeverknavn = kodeverk => (kodeverk.kode === 'A' ? 'Arbeidstaker' : '');
+
 describe('visningsnavnHelper', () => {
   it('skal lage visningsnavn når vi mangler navn på bedrift', () => {
-    const arbeidsgiverNavnOrgnr = createVisningsnavnForAktivitet(andelUtenNavn);
+    const arbeidsgiverNavnOrgnr = createVisningsnavnForAktivitet(andelUtenNavn, getKodeverknavn);
     expect(arbeidsgiverNavnOrgnr).to.equal('Arbeidstaker');
   });
 
   it('skal lage visningsnavn når vi mangler arbeidsforholdId', () => {
-    const arbeidsgiverNavnOrgnr = createVisningsnavnForAktivitet(andelUtenArbeidsforholdId);
+    const arbeidsgiverNavnOrgnr = createVisningsnavnForAktivitet(andelUtenArbeidsforholdId, getKodeverknavn);
     expect(arbeidsgiverNavnOrgnr).to.equal('Andeby bank (321)');
   });
 
   it('skal lage visningsnavn når vi ikke mangler noe', () => {
-    const arbeidsgiverNavnOrgnr = createVisningsnavnForAktivitet(andelMedAlt);
+    const arbeidsgiverNavnOrgnr = createVisningsnavnForAktivitet(andelMedAlt, getKodeverknavn);
     expect(arbeidsgiverNavnOrgnr).to.equal('Andeby bank (321) ...8777');
   });
 });

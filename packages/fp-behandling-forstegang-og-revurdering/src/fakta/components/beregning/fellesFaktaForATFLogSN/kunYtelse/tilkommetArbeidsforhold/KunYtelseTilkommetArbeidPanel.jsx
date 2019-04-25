@@ -62,13 +62,13 @@ KunYtelseTilkommetArbeidPanel.propTypes = {
 };
 
 
-const buildPeriodeInitialValues = (periode, isRevurdering) => {
+const buildPeriodeInitialValues = (periode, isRevurdering, getKodeverknavn) => {
   if (!periode || !periode.endringBeregningsgrunnlagAndeler) {
     return {};
   }
   return (
     periode.endringBeregningsgrunnlagAndeler.map((andel) => {
-      const andelsInfo = setGenerellAndelsinfo(andel);
+      const andelsInfo = setGenerellAndelsinfo(andel, getKodeverknavn);
       const erBrukersAndel = andelsInfo.aktivitetStatus === aktivitetStatus.BRUKERS_ANDEL;
       return ({
         ...andelsInfo,
@@ -88,13 +88,13 @@ const buildPeriodeInitialValues = (periode, isRevurdering) => {
   );
 };
 
-const buildInitialValuesForPerioder = (endringBGPerioder, isRevurdering) => {
+const buildInitialValuesForPerioder = (endringBGPerioder, isRevurdering, getKodeverknavn) => {
   const initialValues = {};
   if (!endringBGPerioder) {
     return initialValues;
   }
   endringBGPerioder.forEach((periode, index) => {
-    initialValues[getFieldNameKey(index)] = buildPeriodeInitialValues(periode, isRevurdering);
+    initialValues[getFieldNameKey(index)] = buildPeriodeInitialValues(periode, isRevurdering, getKodeverknavn);
   });
   return initialValues;
 };
@@ -105,7 +105,7 @@ const harAndreStatuserEnnBrukersAndelIForstePeriode = endringBGPerioder => (endr
 const finnPerioder = endringBGPerioder => (harAndreStatuserEnnBrukersAndelIForstePeriode(endringBGPerioder) ? endringBGPerioder
 : endringBGPerioder.slice(1, endringBGPerioder.length));
 
-KunYtelseTilkommetArbeidPanel.buildInitialValues = (kunYtelse, endringBGPerioder, isRevurdering, aktivertePaneler) => {
+KunYtelseTilkommetArbeidPanel.buildInitialValues = (kunYtelse, endringBGPerioder, isRevurdering, aktivertePaneler, getKodeverknavn) => {
   if (!harKunYtelseOgEndretBeregningsgrunnlag(aktivertePaneler)) {
     return null;
   }
@@ -117,12 +117,12 @@ KunYtelseTilkommetArbeidPanel.buildInitialValues = (kunYtelse, endringBGPerioder
   }
   if (harAndreStatuserEnnBrukersAndelIForstePeriode(endringBGPerioder)) {
     return {
-      ...buildInitialValuesForPerioder(endringBGPerioder, isRevurdering),
+      ...buildInitialValuesForPerioder(endringBGPerioder, isRevurdering, getKodeverknavn),
     };
   }
   return {
-    ...KunYtelsePanel.buildInitialValues(kunYtelse),
-    ...buildInitialValuesForPerioder(finnPerioder(endringBGPerioder), isRevurdering),
+    ...KunYtelsePanel.buildInitialValues(kunYtelse, getKodeverknavn),
+    ...buildInitialValuesForPerioder(finnPerioder(endringBGPerioder), isRevurdering, getKodeverknavn),
   };
 };
 
@@ -146,8 +146,8 @@ const skalRedigereInntekt = andel => andel.harPeriodeAarsakGraderingEllerRefusjo
 
 const skalValidereMotRapportert = () => true;
 
-const validatePeriode = (periode, sumFordelingKunYtelse, skjaeringstidspunktBeregning) => {
-  const arrayErrors = validateAndeler(periode, skalRedigereInntekt, skjaeringstidspunktBeregning, skalValidereMotRapportert);
+const validatePeriode = (periode, sumFordelingKunYtelse, skjaeringstidspunktBeregning, getKodeverknavn) => {
+  const arrayErrors = validateAndeler(periode, skalRedigereInntekt, skjaeringstidspunktBeregning, skalValidereMotRapportert, getKodeverknavn);
   if (arrayErrors != null) {
     return arrayErrors;
   }
@@ -174,7 +174,7 @@ const summerForstePeriode = (values) => {
 return verdier.reduce((sum, fastsattBelop) => (sum + finnBelop(fastsattBelop)), 0);
 };
 
-KunYtelseTilkommetArbeidPanel.validate = (values, aktivertePaneler, kunYtelse, endringBGPerioder, skjaeringstidspunktBeregning) => {
+KunYtelseTilkommetArbeidPanel.validate = (values, aktivertePaneler, kunYtelse, endringBGPerioder, skjaeringstidspunktBeregning, getKodeverknavn) => {
   if (!values || !harKunYtelseOgEndretBeregningsgrunnlag(aktivertePaneler)) {
     return null;
   }
@@ -186,7 +186,7 @@ KunYtelseTilkommetArbeidPanel.validate = (values, aktivertePaneler, kunYtelse, e
   : KunYtelsePanel.summerFordeling(values);
   const endringErrors = {};
   for (let i = 0; i < perioder.length; i += 1) {
-    endringErrors[getFieldNameKey(i)] = validatePeriode(values[getFieldNameKey(i)], sumFordeling, skjaeringstidspunktBeregning);
+    endringErrors[getFieldNameKey(i)] = validatePeriode(values[getFieldNameKey(i)], sumFordeling, skjaeringstidspunktBeregning, getKodeverknavn);
   }
   return {
     ...kunYtelseErrors,

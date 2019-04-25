@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
+
 import { calcDays } from '@fpsak-frontend/utils';
 import {
   Image, EditedIcon, ElementWrapper, AksjonspunktHelpText, VerticalSpacer,
@@ -15,24 +16,29 @@ import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_fi
 import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
 import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
 import { uttaksresultatAktivitetPropType } from '@fpsak-frontend/prop-types';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
-import styles from './uttakTimeLineData.less';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import UttakActivity from './UttakActivity';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
+
+import styles from './uttakTimeLineData.less';
 
 const findArrowLeftImg = isHovering => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
 const findArrowRightImg = isHovering => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
 const splitPeriodImg = isHovering => (isHovering ? splitPeriodImageHoverUrl : splitPeriodImageUrl);
 
-const getCorrectEmptyArbeidsForhold = (preiodeTypeKode, arbeidsForhold) => {
+const getCorrectEmptyArbeidsForhold = (preiodeTypeKode, arbeidsForhold, getKodeverknavn) => {
   const arbeidsForholdMedNullDagerIgjenArray = [];
   let arbeidsforholdMedPositivSaldoFinnes = false;
   if (arbeidsForhold.stonadskontoer[preiodeTypeKode] && arbeidsForhold.stonadskontoer[preiodeTypeKode].aktivitetSaldoDtoList) {
     arbeidsForhold.stonadskontoer[preiodeTypeKode].aktivitetSaldoDtoList.forEach((item) => {
       if (item.saldo === 0) {
-        arbeidsForholdMedNullDagerIgjenArray.push(
-          (item.aktivitetIdentifikator.arbeidsgiver || item.aktivitetIdentifikator.uttakArbeidType).navn,
-        );
+        if (item.aktivitetIdentifikator.arbeidsgiver) {
+          arbeidsForholdMedNullDagerIgjenArray.push(item.aktivitetIdentifikator.arbeidsgiver.navn);
+        } else {
+          arbeidsForholdMedNullDagerIgjenArray.push(getKodeverknavn(item.aktivitetIdentifikator.uttakArbeidType));
+        }
       } else {
         arbeidsforholdMedPositivSaldoFinnes = true;
       }
@@ -44,12 +50,12 @@ const getCorrectEmptyArbeidsForhold = (preiodeTypeKode, arbeidsForhold) => {
   return [];
 };
 
-const hentApTekst = (manuellBehandlingÅrsak, stonadskonto, aktiviteter) => {
+const hentApTekst = (manuellBehandlingÅrsak, stonadskonto, getKodeverknavn, aktiviteter) => {
   const texts = [];
 
   // TODO: Fix - ta bort 5001 med verdi fra kodeverk
   if (manuellBehandlingÅrsak.kode === '5001') {
-    const arbeidsForhold = getCorrectEmptyArbeidsForhold(aktiviteter, stonadskonto);
+    const arbeidsForhold = getCorrectEmptyArbeidsForhold(aktiviteter, stonadskonto, getKodeverknavn);
     const arbeidsForholdMedNullDagerIgjen = arbeidsForhold.join();
     if (arbeidsForhold.length > 1) {
       texts.push(
@@ -70,12 +76,12 @@ const hentApTekst = (manuellBehandlingÅrsak, stonadskonto, aktiviteter) => {
     } else {
       texts.push(
         <React.Fragment key={`kode-${manuellBehandlingÅrsak.kode}`}>
-          {manuellBehandlingÅrsak.navn}
+          {getKodeverknavn(manuellBehandlingÅrsak)}
         </React.Fragment>,
       );
     }
   } else {
-    texts.push(<React.Fragment key={`kode-${manuellBehandlingÅrsak.kode}`}>{manuellBehandlingÅrsak.navn}</React.Fragment>);
+    texts.push(<React.Fragment key={`kode-${manuellBehandlingÅrsak.kode}`}>{getKodeverknavn(manuellBehandlingÅrsak)}</React.Fragment>);
   }
 
   return texts;
@@ -196,6 +202,7 @@ export class UttakTimeLineData extends Component {
       isApOpen,
       stonadskonto,
       harSoktOmFlerbarnsdager,
+      getKodeverknavn,
     } = this.props;
     const { showDelPeriodeModal } = this.state;
     const isEdited = !!selectedItemData.begrunnelse && !isApOpen;
@@ -263,8 +270,8 @@ export class UttakTimeLineData extends Component {
             <ElementWrapper>
               <AksjonspunktHelpText isAksjonspunktOpen={selectedItemData.manuellBehandlingÅrsak !== null}>
                 {selectedItemData.periodeType
-                  ? hentApTekst(selectedItemData.manuellBehandlingÅrsak, stonadskonto, selectedItemData.periodeType.kode)
-                  : hentApTekst(selectedItemData.manuellBehandlingÅrsak, stonadskonto)}
+                  ? hentApTekst(selectedItemData.manuellBehandlingÅrsak, stonadskonto, getKodeverknavn, selectedItemData.periodeType.kode)
+                  : hentApTekst(selectedItemData.manuellBehandlingÅrsak, stonadskonto, getKodeverknavn)}
               </AksjonspunktHelpText>
               <VerticalSpacer twentyPx />
             </ElementWrapper>
@@ -301,6 +308,7 @@ UttakTimeLineData.propTypes = {
   isApOpen: PropTypes.bool,
   stonadskonto: PropTypes.shape(),
   harSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 UttakTimeLineData.defaultProps = {
@@ -309,4 +317,4 @@ UttakTimeLineData.defaultProps = {
   stonadskonto: {},
 };
 
-export default UttakTimeLineData;
+export default injectKodeverk(getAlleKodeverk)(UttakTimeLineData);

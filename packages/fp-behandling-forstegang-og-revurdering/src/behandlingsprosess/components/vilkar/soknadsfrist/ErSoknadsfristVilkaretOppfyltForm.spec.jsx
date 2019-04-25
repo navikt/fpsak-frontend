@@ -37,6 +37,8 @@ describe('<ErSoknadsfristVilkaretOppfyltForm>', () => {
     merknadParametere: { test: 'test' },
   };
 
+  const getKodeverknavn = () => undefined;
+
   it('skal rendre form og vise søknadsfristdato som er lik mottatt dato minus antallDagerSoknadLevertForSent', () => {
     const wrapper = shallowWithIntl(<UnwrappedForm
       {...reduxFormPropsMock}
@@ -51,6 +53,7 @@ describe('<ErSoknadsfristVilkaretOppfyltForm>', () => {
       textCode="ErSoknadsfristVilkaretOppfyltForm.Omsorgsovertakelsesdato"
       dato="2017-10-10"
       behandlingspunkt={behandlingspunkt}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const dateLabel = wrapper.find('DateLabel');
@@ -73,6 +76,7 @@ describe('<ErSoknadsfristVilkaretOppfyltForm>', () => {
       textCode="ErSoknadsfristVilkaretOppfyltForm.Omsorgsovertakelsesdato"
       dato="2017-10-10"
       behandlingspunkt={behandlingspunkt}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const dateLabel = wrapper.find('DateLabel');
@@ -95,6 +99,7 @@ describe('<ErSoknadsfristVilkaretOppfyltForm>', () => {
       textCode="ErSoknadsfristVilkaretOppfyltForm.Omsorgsovertakelsesdato"
       dato="2017-10-10"
       behandlingspunkt={behandlingspunkt}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const dateLabel = wrapper.find('span');
@@ -115,6 +120,7 @@ describe('<ErSoknadsfristVilkaretOppfyltForm>', () => {
       textCode="ErSoknadsfristVilkaretOppfyltForm.Omsorgsovertakelsesdato"
       dato="2017-10-10"
       behandlingspunkt={behandlingspunkt}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const dateLabel = wrapper.find('span');
@@ -135,6 +141,7 @@ describe('<ErSoknadsfristVilkaretOppfyltForm>', () => {
       textCode="ErSoknadsfristVilkaretOppfyltForm.Omsorgsovertakelsesdato"
       dato="2017-10-10"
       behandlingspunkt={behandlingspunkt}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const radioButtons = wrapper.find('RadioOption');
@@ -157,6 +164,7 @@ describe('<ErSoknadsfristVilkaretOppfyltForm>', () => {
       textCode="ErSoknadsfristVilkaretOppfyltForm.Omsorgsovertakelsesdato"
       dato="2017-10-10"
       behandlingspunkt={behandlingspunkt}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const confirm = wrapper.find(BehandlingspunktBegrunnelseTextField);

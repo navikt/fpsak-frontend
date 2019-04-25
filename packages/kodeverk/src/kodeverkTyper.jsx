@@ -23,7 +23,7 @@ const kodeverkTyper = {
   INNSYN_RESULTAT_TYPE: 'InnsynResultatType',
   BEHANDLING_TYPE: 'BehandlingType',
   OPPHOLD_ARSAK: 'OppholdÅrsak',
-  UTSETTELSE_ARSAK: 'UtsettelseÅrsak',
+  UTSETTELSE_AARSAK_TYPE: 'UtsettelseÅrsak',
   UTSETTELSE_GRADERING_KVOTE: 'UttakPeriodeType',
   OPPTJENING_AKTIVITET_TYPE: 'OpptjeningAktivitetType',
   UTTAK_PERIODE_TYPE: 'UttakPeriodeType',
@@ -48,6 +48,14 @@ const kodeverkTyper = {
   HISTORIKKINNSLAG_TYPE: 'HistorikkinnslagType',
   HISTORIKK_AKTOER: 'HistorikkAktør',
   BEHANDLING_STATUS: 'BehandlingStatus',
+  FAR_SOEKER_TYPE: 'FarSøkerType',
+  MEDLEMSKAP_DEKNING: 'MedlemskapDekningType',
+  MEDLEMSKAP_TYPE: 'MedlemskapType',
+  STOENADSKONTOTYPE: 'StønadskontoType',
+  KONSEKVENS_FOR_YTELSEN: 'KonsekvensForYtelsen',
+  UTTAK_ARBEID_TYPE: 'UttakArbeidType',
+  UTTAK_UTSETTELSE_TYPE: 'UttakUtsettelseType',
+  PERIODE_RESULTAT_AARSAK: 'PeriodeResultatÅrsak',
 };
 
 export default kodeverkTyper;

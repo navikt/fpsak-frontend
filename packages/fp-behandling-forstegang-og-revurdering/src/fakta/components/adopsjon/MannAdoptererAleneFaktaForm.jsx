@@ -5,13 +5,16 @@ import { connect } from 'react-redux';
 import { Container } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
-import { getEditedStatus } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { required } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getEditedStatus } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 
 import styles from './mannAdoptererAleneFaktaForm.less';
 
@@ -20,17 +23,18 @@ import styles from './mannAdoptererAleneFaktaForm.less';
  *
  * Presentasjonskomponent. Setter opp aksjonspunktet for vurdering av om mann adopterer alene.
  */
-const MannAdoptererAleneFaktaFormImpl = ({
+export const MannAdoptererAleneFaktaFormImpl = ({
   farSokerType,
   readOnly,
   mannAdoptererAleneIsEdited,
+  getKodeverknavn,
 }) => (
   <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE} titleCode="MannAdoptererAleneFaktaForm.ApplicationInformation">
     <Container className={styles.container}>
       <Undertekst><FormattedMessage id="MannAdoptererAleneFaktaForm.Opplysninger" /></Undertekst>
       <VerticalSpacer fourPx />
-      {farSokerType.navn
-        && <Normaltekst>{farSokerType.navn}</Normaltekst>
+      {farSokerType
+        && <Normaltekst>{getKodeverknavn(farSokerType)}</Normaltekst>
       }
       <VerticalSpacer sixteenPx />
       <hr className={styles.hr} />
@@ -46,6 +50,7 @@ MannAdoptererAleneFaktaFormImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   farSokerType: PropTypes.shape(),
   mannAdoptererAleneIsEdited: PropTypes.bool,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 MannAdoptererAleneFaktaFormImpl.defaultProps = {
@@ -56,7 +61,7 @@ MannAdoptererAleneFaktaFormImpl.defaultProps = {
 const MannAdoptererAleneFaktaForm = connect(state => ({
   mannAdoptererAleneIsEdited: getEditedStatus(state).mannAdoptererAlene,
   ...behandlingFormValueSelector('AdopsjonInfoPanel')(state, 'farSokerType'),
-}))(MannAdoptererAleneFaktaFormImpl);
+}))(injectKodeverk(getAlleKodeverk)(MannAdoptererAleneFaktaFormImpl));
 
 MannAdoptererAleneFaktaForm.buildInitialValues = (soknad, familiehendelse) => ({
   mannAdoptererAlene: familiehendelse ? familiehendelse.mannAdoptererAlene : undefined,

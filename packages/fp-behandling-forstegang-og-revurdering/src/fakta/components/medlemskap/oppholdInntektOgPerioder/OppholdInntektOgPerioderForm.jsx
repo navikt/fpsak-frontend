@@ -6,6 +6,7 @@ import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 
 import { VerticalSpacer, AksjonspunktHelpText, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
@@ -16,7 +17,7 @@ import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandling
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
-import { getKodeverk, getFagsakPerson } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getKodeverk, getFagsakPerson, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
 import InntektOgYtelserFaktaPanel from './InntektOgYtelserFaktaPanel';
@@ -101,8 +102,8 @@ const medlemAksjonspunkter = [AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, AVKLA
   AVKLAR_OPPHOLDSRETT, AVKLAR_LOVLIG_OPPHOLD];
 
 const buildInitialValues = createSelector(
-  [getFagsakPerson, getBehandlingMedlem, getPersonopplysning, getSoknad, getAksjonspunkter, getBehandlingRevurderingAvFortsattMedlemskapFom],
-  (person, medlem, personopplysning, soknad, allAksjonspunkter, gjeldendeFom) => {
+  [getFagsakPerson, getBehandlingMedlem, getPersonopplysning, getSoknad, getAksjonspunkter, getBehandlingRevurderingAvFortsattMedlemskapFom, getAlleKodeverk],
+  (person, medlem, personopplysning, soknad, allAksjonspunkter, gjeldendeFom, alleKodeverk) => {
     const aksjonspunkter = allAksjonspunkter
       .filter(ap => medlemAksjonspunkter.includes(ap.definisjon.kode))
       .filter(ap => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
@@ -118,7 +119,7 @@ const buildInitialValues = createSelector(
     return {
       ...OppholdINorgeOgAdresserFaktaPanel.buildInitialValues(soknad, personopplysning, medlem, aksjonspunkter),
       ...InntektOgYtelserFaktaPanel.buildInitialValues(person, medlem),
-      ...PerioderMedMedlemskapFaktaPanel.buildInitialValues(medlem, soknad, aksjonspunkter),
+      ...PerioderMedMedlemskapFaktaPanel.buildInitialValues(medlem, soknad, aksjonspunkter, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
       ...FortsattMedlemskapFaktaPanel.buildInitialValues(gjeldendeFom),
       ...oppholdValues,
       ...confirmValues,

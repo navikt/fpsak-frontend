@@ -6,7 +6,7 @@ import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-e
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import VedtakAvslagArsakOgBegrunnelsePanel from './VedtakAvslagArsakOgBegrunnelsePanel';
+import { VedtakAvslagArsakOgBegrunnelsePanel } from './VedtakAvslagArsakOgBegrunnelsePanel';
 
 
 describe('<VedtakAvslagArsakOgBegrunnelsePanel>', () => {
@@ -18,11 +18,9 @@ describe('<VedtakAvslagArsakOgBegrunnelsePanel>', () => {
     const vilkar = [{
       vilkarType: {
         kode: vilkarType.SOKNADFRISTVILKARET,
-        navn: 'Medlemskapsvilkåret',
       },
       vilkarStatus: {
         kode: vilkarUtfallType.IKKE_OPPFYLT,
-        navn: 'test',
       },
       lovReferanse: '§ 22-13, 2. ledd',
     }];
@@ -34,9 +32,20 @@ describe('<VedtakAvslagArsakOgBegrunnelsePanel>', () => {
       },
       avslagsarsak: {
         kode: '1019',
-        navn: 'Manglende dokumentasjon',
       },
       avslagsarsakFritekst: null,
+    };
+    const getKodeverknavn = (kodeverk) => {
+      if (kodeverk.kode === vilkarType.SOKNADFRISTVILKARET) {
+        return 'Medlemskapsvilkåret';
+      }
+      if (kodeverk.kode === vilkarUtfallType.IKKE_OPPFYLT) {
+        return 'test';
+      }
+      if (kodeverk.kode === '1019') {
+        return 'Manglende dokumentasjon';
+      }
+      return '';
     };
     const wrapper = shallowWithIntl(<VedtakAvslagArsakOgBegrunnelsePanel
       intl={intlMock}
@@ -46,6 +55,7 @@ describe('<VedtakAvslagArsakOgBegrunnelsePanel>', () => {
       behandlingsresultat={behandlingsresultat}
       sprakkode={sprakkode}
       readOnly
+      getKodeverknavn={getKodeverknavn}
     />);
 
 

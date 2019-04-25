@@ -446,7 +446,7 @@ const mapStateToProps = (state, ownProps) => {
   const avslagAarsaker = getKodeverk(kodeverkTyper.UTTAK_AVSLAG_ARSAK)(state);
   const innvilgelseAarsaker = getKodeverk(kodeverkTyper.INNVILGET_AARSAK)(state);
   const graderingAvslagAarsakKoder = getKodeverk(kodeverkTyper.GRADERING_AVSLAG_AARSAK)(state);
-  const utsettelseAarsak = getKodeverk(kodeverkTyper.UTSETTELSE_ARSAK)(state);
+  const utsettelseAarsak = getKodeverk(kodeverkTyper.UTSETTELSE_AARSAK_TYPE)(state);
   const kontoIkkeSatt = !selectedItem.periodeType
     && (selectedItem.aktiviteter[0].stønadskontoType.kode === '-');
 

@@ -191,7 +191,7 @@ const HistorikkMalType5 = ({
         {lagGjeldendeFraInnslag(historikkinnslagDel)}
 
 
-        {historikkinnslagDel.soeknadsperiode && lagSoeknadsperiode(historikkinnslagDel.soeknadsperiode)}
+        {historikkinnslagDel.soeknadsperiode && lagSoeknadsperiode(historikkinnslagDel.soeknadsperiode, getKodeverknavn)}
 
         {lagTemaHeadingId(historikkinnslagDel)}
 
@@ -206,12 +206,12 @@ const HistorikkMalType5 = ({
           <FormattedHTMLMessage
             id={findIdForOpplysningCode(opplysning)}
             values={{ antallBarn: opplysning.tilVerdi }}
-            key={`${opplysning.navn}@${opplysning.tilVerdi}`}
+            key={`${getKodeverknavn(opplysning)}@${opplysning.tilVerdi}`}
           />
         ))}
 
-        {historikkinnslagDel.aarsak && <Normaltekst>{historikkinnslagDel.aarsak.navn}</Normaltekst>}
-        {historikkinnslagDel.begrunnelse && <BubbleText bodyText={historikkinnslagDel.begrunnelse.navn} className="snakkeboble-panel__tekst" />}
+        {historikkinnslagDel.aarsak && <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak)}</Normaltekst>}
+        {historikkinnslagDel.begrunnelse && <BubbleText bodyText={getKodeverknavn(historikkinnslagDel.begrunnelse)} className="snakkeboble-panel__tekst" />}
         {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} className="snakkeboble-panel__tekst" />}
         <div>
           {dokumentLinks && dokumentLinks.map(dokumentLenke => (

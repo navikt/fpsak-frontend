@@ -110,6 +110,9 @@ export const isForeldrepengerFagsak = createSelector([getBehandlingContext], beh
 export const getKodeverk = kodeverkType => createSelector(
   [getBehandlingContext], behandlingContext => behandlingContext.kodeverk[kodeverkType],
 );
+export const getAlleKodeverk = createSelector(
+  [getBehandlingContext], behandlingContext => behandlingContext.kodeverk,
+);
 export const getFeatureToggles = createSelector([getBehandlingContext], behandlingContext => behandlingContext.featureToggles);
 
 export const getHasShownBehandlingPaVent = createSelector([getBehandlingContext], behandlingContext => behandlingContext.hasShownBehandlingPaVent);

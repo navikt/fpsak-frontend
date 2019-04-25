@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
+import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import { Element, Undertekst } from 'nav-frontend-typografi';
+import moment from 'moment/moment';
+
 import {
   CheckboxField, DecimalField, SelectField,
 } from '@fpsak-frontend/form';
@@ -11,14 +15,15 @@ import {
   notDash,
   calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
 import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/src/uttakArbeidTypeCodes';
 import oppholdArsakType, { oppholdArsakKontoNavn } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
-import { Element, Undertekst } from 'nav-frontend-typografi';
-import moment from 'moment/moment';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+
 import styles from './uttakActivity.less';
 
 /**
@@ -72,32 +77,42 @@ const gradertArbforhold = (selectedItem) => {
   return arbeidsforhold;
 };
 
-const typePeriode = (selectedItem, kontoIkkeSatt) => {
+const typePeriode = (selectedItem, kontoIkkeSatt, getKodeverknavn) => {
   let returnText = '';
   if (selectedItem.utsettelseType.kode === '-' && !kontoIkkeSatt) {
     returnText = (<FormattedMessage id="UttakActivity.Uttak" />);
   } else if (selectedItem.utsettelseType.kode !== '-') {
-    returnText = (<FormattedHTMLMessage id="UttakActivity.Utsettelse" values={{ utsettelseType: selectedItem.utsettelseType.navn }} />);
+    returnText = (<FormattedHTMLMessage id="UttakActivity.Utsettelse" values={{ utsettelseType: getKodeverknavn(selectedItem.utsettelseType) }} />);
   } else if (kontoIkkeSatt) {
     returnText = (<FormattedMessage id="UttakActivity.IngenKonto" />);
   }
   return returnText;
 };
 
-const isInnvilgetText = (isApOpen, selectedItemData) => {
+const isInnvilgetText = (isApOpen, selectedItemData, getKodeverknavn) => {
   let returnText = '';
   if (periodeIsInnvilget(selectedItemData)) {
-    returnText = <FormattedHTMLMessage id="UttakActivity.InnvilgelseAarsak" values={{ innvilgelseAarsak: selectedItemData.periodeResultatÅrsak.navn }} />;
+    returnText = (
+      <FormattedHTMLMessage
+        id="UttakActivity.InnvilgelseAarsak"
+        values={{ innvilgelseAarsak: getKodeverknavn(selectedItemData.periodeResultatÅrsak) }}
+      />
+    );
   } else {
-    returnText = <FormattedHTMLMessage id="UttakActivity.IkkeOppfyltAarsak" values={{ avslagAarsak: selectedItemData.periodeResultatÅrsak.navn }} />;
+    returnText = (
+      <FormattedHTMLMessage
+        id="UttakActivity.IkkeOppfyltAarsak"
+        values={{ avslagAarsak: getKodeverknavn(selectedItemData.periodeResultatÅrsak) }}
+      />
+);
   }
   return returnText;
 };
 
-const stonadskonto = (selectedItem, kontoIkkeSatt) => {
+const stonadskonto = (selectedItem, kontoIkkeSatt, getKodeverknavn) => {
   let returnText = '';
   if (!kontoIkkeSatt) {
-    returnText = selectedItem.aktiviteter[0].stønadskontoType.navn;
+    returnText = getKodeverknavn(selectedItem.aktiviteter[0].stønadskontoType);
   }
   return returnText;
 };
@@ -129,6 +144,7 @@ export const UttakInfo = ({
   erSamtidigUttak,
   harSoktOmFlerbarnsdager,
   oppholdArsakTyper,
+  getKodeverknavn,
 }) => (
   <Column xs="12">
     <div className={periodeStatusClassName(selectedItemData)}>
@@ -139,19 +155,19 @@ export const UttakInfo = ({
           <Row>
             <Column xs="12">
               <Element>
-                {typePeriode(selectedItemData, kontoIkkeSatt)}
+                {typePeriode(selectedItemData, kontoIkkeSatt, getKodeverknavn)}
               </Element>
             </Column>
           </Row>
           <Row>
-            <Column xs="12">{stonadskonto(selectedItemData, kontoIkkeSatt)}</Column>
+            <Column xs="12">{stonadskonto(selectedItemData, kontoIkkeSatt, getKodeverknavn)}</Column>
           </Row>
         </Column>
         <Column xs="5">
           {readOnly
           && (
             <div>
-              {isInnvilgetText(isApOpen, selectedItemData)}
+              {isInnvilgetText(isApOpen, selectedItemData, getKodeverknavn)}
             </div>
           )
           }
@@ -279,7 +295,7 @@ export const UttakInfo = ({
                 <FormattedMessage id="UttakActivity.GraderingIkkeOppfylt" />
                 {': '}
               </b>
-              {selectedItemData.graderingAvslagÅrsak.navn}
+              {getKodeverknavn(selectedItemData.graderingAvslagÅrsak)}
             </Column>
           </Row>
           )}
@@ -322,6 +338,7 @@ UttakInfo.propTypes = {
   harSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
   graderingInnvilget: PropTypes.bool,
   erSamtidigUttak: PropTypes.bool,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 UttakInfo.defaultProps = {
@@ -331,4 +348,4 @@ UttakInfo.defaultProps = {
   isApOpen: undefined,
 };
 
-export default UttakInfo;
+export default injectKodeverk(getAlleKodeverk)(UttakInfo);

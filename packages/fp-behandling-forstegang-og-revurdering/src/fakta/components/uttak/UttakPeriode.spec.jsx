@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
-import UttakPeriode from './UttakPeriode';
+import { UttakPeriode } from './UttakPeriode';
 import UttakPeriodeType from './UttakPeriodeType';
 import UttakPeriodeInnhold from './UttakPeriodeInnhold';
 
@@ -15,6 +15,7 @@ const getMockedFields = (fieldNames, perioder) => {
   };
 };
 
+const getKodeverknavn = () => undefined;
 const fieldNames = ['periode[0]', 'periode[1]'];
 const perioder = [{
   id: '345435345-34235-344',
@@ -83,6 +84,7 @@ describe('<UttakPeriode>', () => {
       samtidigUttak={perioder[0].samtidigUttak}
       flerbarnsdager={perioder[0].flerbarnsdager}
       endringsdato={endringsdato}
+      getKodeverknavn={getKodeverknavn}
     />);
     const uttakPeriodeType = wrapper.find(UttakPeriodeType);
     expect(uttakPeriodeType).to.have.length(2);
@@ -108,6 +110,7 @@ describe('<UttakPeriode>', () => {
       samtidigUttak={perioder[0].samtidigUttak}
       flerbarnsdager={perioder[0].flerbarnsdager}
       endringsdato={endringsdato}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const periodeContainer = wrapper.find('div.periodeContainer');
@@ -132,6 +135,7 @@ describe('<UttakPeriode>', () => {
       samtidigUttak={perioder[0].samtidigUttak}
       flerbarnsdager={perioder[0].flerbarnsdager}
       endringsdato={endringsdato}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const periodeContainer = wrapper.find('div.periodeContainer');
@@ -161,6 +165,7 @@ describe('<UttakPeriode>', () => {
       endringsdato={endringsdato}
       samtidigUttak={perioder[0].samtidigUttak}
       flerbarnsdager={perioder[0].flerbarnsdager}
+      getKodeverknavn={getKodeverknavn}
       {...otherProps}
     />);
 

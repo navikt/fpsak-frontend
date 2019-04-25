@@ -14,13 +14,15 @@ import editPeriodeIcon from '@fpsak-frontend/assets/images/endre.svg';
 import editPeriodeDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
 import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
 import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import { lagVisningsNavn } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import styles from './uttakPeriodeType.less';
 
 const formatProsent = prosent => `${prosent}%`;
 
-const getUttakTypeTitle = (utsettelseArsak, overforingArsak, arbeidstidprosent, oppholdArsak) => {
+const getUttakTypeTitle = (utsettelseArsak, overforingArsak, arbeidstidprosent, oppholdArsak, getKodeverknavn) => {
   if (overforingArsak.kode !== overforingArsakCodes.UDEFINERT) {
     return (
       <FormattedMessage
@@ -34,7 +36,7 @@ const getUttakTypeTitle = (utsettelseArsak, overforingArsak, arbeidstidprosent, 
     return (
       <FormattedMessage
         id="UttakInfoPanel.UtsettelseMedÅrsak"
-        values={{ årsak: utsettelseArsak.navn }}
+        values={{ årsak: getKodeverknavn(utsettelseArsak) }}
       />
     );
   }
@@ -54,13 +56,13 @@ const getUttakTypeTitle = (utsettelseArsak, overforingArsak, arbeidstidprosent, 
 
 const getUttakPeriode = (uttakPeriodeType, oppholdArsak) => {
   if (oppholdArsak && oppholdArsak.kode !== oppholdArsakType.UDEFINERT) {
-    return oppholdArsak.navn;
+    return getKodeverknavn(oppholdArsak);
   }
 
   return uttakPeriodeType;
 };
 
-const UttakPeriodeType = ({ // NOSONAR
+export const UttakPeriodeType = ({ // NOSONAR
   tilDato,
   fraDato,
   openSlettPeriodeModalCallback,
@@ -81,6 +83,7 @@ const UttakPeriodeType = ({ // NOSONAR
   samtidigUttaksprosent,
   flerbarnsdager,
   oppholdArsak,
+  getKodeverknavn,
 }) => {
   const isAnyFormOrNyPeriodeOpen = isAnyFormOpen() || isNyPeriodeFormOpen;
   const numberOfDaysAndWeeks = calcDaysAndWeeks(fraDato, tilDato, ISO_DATE_FORMAT);
@@ -90,8 +93,8 @@ const UttakPeriodeType = ({ // NOSONAR
       <div className={styles.headerWrapper}>
         <div>
           {isFromSøknad && <Undertekst><FormattedMessage id="UttakInfoPanel.FraSøknad" /></Undertekst>}
-          <Element>{getUttakTypeTitle(utsettelseArsak, overforingArsak, arbeidstidprosent, oppholdArsak)}</Element>
-          <Normaltekst>{getUttakPeriode(uttakPeriodeType.navn, oppholdArsak)}</Normaltekst>
+          <Element>{getUttakTypeTitle(utsettelseArsak, overforingArsak, arbeidstidprosent, oppholdArsak, getKodeverknavn)}</Element>
+          <Normaltekst>{getUttakPeriode(getKodeverknavn(uttakPeriodeType), oppholdArsak)}</Normaltekst>
         </div>
         {!readOnly
           && (
@@ -196,6 +199,7 @@ UttakPeriodeType.propTypes = {
   erFrilanser: PropTypes.bool,
   erSelvstendig: PropTypes.bool,
   oppholdArsak: PropTypes.shape(),
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 UttakPeriodeType.defaultProps = {
@@ -207,4 +211,4 @@ UttakPeriodeType.defaultProps = {
   oppholdArsak: undefined,
 };
 
-export default UttakPeriodeType;
+export default injectKodeverk(getAlleKodeverk)(UttakPeriodeType);

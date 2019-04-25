@@ -1,9 +1,9 @@
 import moment from 'moment';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 
-export const createVisningsnavnForAktivitet = (aktivitet) => {
+export const createVisningsnavnForAktivitet = (aktivitet, getKodeverknavn) => {
   if (!aktivitet.arbeidsgiverNavn) {
-    return aktivitet.arbeidsforholdType ? aktivitet.arbeidsforholdType.navn : '';
+    return aktivitet.arbeidsforholdType ? getKodeverknavn(aktivitet.arbeidsforholdType) : '';
   }
   let visningsNavn = `${aktivitet.arbeidsgiverNavn}`;
   if (aktivitet.arbeidsgiverId && aktivitet.arbeidsforholdId) {

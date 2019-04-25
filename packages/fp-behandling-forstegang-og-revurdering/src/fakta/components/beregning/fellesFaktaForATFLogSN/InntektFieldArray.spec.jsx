@@ -268,8 +268,10 @@ describe('<InntektFieldArray>', () => {
     expect(errors[0].andel[0].id).to.equal(isRequiredMessage()[0].id);
   });
 
+  const getKodeverknavn = () => undefined;
+
   it('skal ikkje bygge initial values om ingen andeler', () => {
-    const iv = InntektFieldArray.buildInitialValues([]);
+    const iv = InntektFieldArray.buildInitialValues([], getKodeverknavn);
     expect(iv).to.be.empty;
   });
 
@@ -280,7 +282,7 @@ describe('<InntektFieldArray>', () => {
       inntektskategori: { kode: 'DAGPENGER' },
       lagtTilAvSaksbehandler: true,
     };
-    const iv = InntektFieldArray.buildInitialValues([andel]);
+    const iv = InntektFieldArray.buildInitialValues([andel], getKodeverknavn);
     expect(iv.length).to.equal(1);
     expect(iv[0].skalKunneEndreAktivitet).to.equal(false);
   });

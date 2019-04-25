@@ -27,7 +27,7 @@ const arbeidsgiver2Key = 'Sopra Steria AS (9987432724)';
 const frilanser = {
  arbeidsgiverNavn: '',
 arbeidsgiverId: '',
-arbeidsforholdType: { kode: 'FRILANS', navn: 'Frilans' },
+arbeidsforholdType: { kode: 'FRILANS' },
 arbeidsperiodeFom: '',
 registerInntekt: '30 000',
 belopFraInntektsmelding: null,
@@ -35,7 +35,7 @@ belopFraInntektsmelding: null,
 
 const frilanserKey = 'Frilans';
 
-describe('<InntektstabellPanel>', () => {
+describe('<TotalbelopPrArbeidsgiverError>', () => {
   it('skal vise children og skal vise tabell', () => {
     const values = [
       {
@@ -60,7 +60,14 @@ describe('<InntektstabellPanel>', () => {
      },
     ];
 
-    const inntektPrArbeidsforholdList = lagTotalInntektArbeidsforholdList(values, stpBeregning);
+    const getKodeverknavn = (kodeverk) => {
+      if (kodeverk.kode === 'FRILANS') {
+        return 'Frilans';
+      }
+      return '';
+    };
+
+    const inntektPrArbeidsforholdList = lagTotalInntektArbeidsforholdList(values, stpBeregning, getKodeverknavn);
     expect(inntektPrArbeidsforholdList.length).to.equal(3);
     const inntektForArbeidsgiver1 = inntektPrArbeidsforholdList.find(({ key }) => key === arbeidsgiver1Key);
     expect(inntektForArbeidsgiver1.fastsattBelop).to.equal(30000);

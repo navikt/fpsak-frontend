@@ -20,7 +20,7 @@ const HistorikkMalType1 = ({
 
     {historikkinnslagDeler[0].begrunnelse && (
       <BubbleText
-        bodyText={historikkinnslagDeler[0].begrunnelse.navn}
+        bodyText={getKodeverknavn(historikkinnslagDeler[0].begrunnelse)}
         cutOffLength={70}
         className="snakkeboble-panel__tekst"
       />

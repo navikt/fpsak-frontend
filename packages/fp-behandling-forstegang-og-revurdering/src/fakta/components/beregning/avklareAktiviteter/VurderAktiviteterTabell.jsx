@@ -11,6 +11,9 @@ import {
 import {
  Table, TableRow, TableColumn, PeriodLabel, EditedIcon,
 } from '@fpsak-frontend/shared-components';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import beregningAktivitetPropType from './beregningAktivitetPropType';
 
@@ -39,11 +42,11 @@ const skalIkkeVurdereAktivitet = (aktivitet) => {
   return false;
 };
 
-const lagTableRow = (readOnly, isAksjonspunktClosed, aktivitet) => (
+const lagTableRow = (readOnly, isAksjonspunktClosed, aktivitet, getKodeverknavn) => (
   <TableRow key={lagAktivitetFieldId(aktivitet)}>
     <TableColumn>
       <Normaltekst>
-        {createVisningsnavnForAktivitet(aktivitet)}
+        {createVisningsnavnForAktivitet(aktivitet, getKodeverknavn)}
       </Normaltekst>
     </TableColumn>
     <TableColumn>
@@ -99,11 +102,12 @@ const finnHeading = (aktiviteter) => {
  *
  * Presentasjonskomponent.. Inneholder tabeller for avklaring av skjæringstidspunkt
  */
-export const VurderAktiviteterTabell = ({
+export const VurderAktiviteterTabellImpl = ({
   readOnly,
   isAksjonspunktClosed,
   aktiviteter,
   skjaeringstidspunkt,
+  getKodeverknavn,
 }) => (
   <React.Fragment>
     <Element>
@@ -114,19 +118,22 @@ export const VurderAktiviteterTabell = ({
     </Element>
     <Table headerTextCodes={getHeaderTextCodes()} noHover>
       {aktiviteter.map(aktivitet => (
-        lagTableRow(readOnly, isAksjonspunktClosed, aktivitet)
+        lagTableRow(readOnly, isAksjonspunktClosed, aktivitet, getKodeverknavn)
       ))
       }
     </Table>
   </React.Fragment>
 );
 
-VurderAktiviteterTabell.propTypes = {
+VurderAktiviteterTabellImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   aktiviteter: PropTypes.arrayOf(beregningAktivitetPropType).isRequired,
   skjaeringstidspunkt: PropTypes.string.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
+
+const VurderAktiviteterTabell = injectKodeverk(getAlleKodeverk)(VurderAktiviteterTabellImpl);
 
 VurderAktiviteterTabell.transformValues = (values, aktiviteter) => aktiviteter
     .filter(aktivitet => values[lagAktivitetFieldId(aktivitet)].skalBrukes === false)
@@ -144,20 +151,20 @@ VurderAktiviteterTabell.hasValueChangedFromInitial = (aktiviteter, values, initi
     values[fieldId] !== initialValues[fieldId]
     )) !== undefined);
 
-const mapToInitialValues = aktivitet => ({
-    beregningAktivitetNavn: createVisningsnavnForAktivitet(aktivitet),
+const mapToInitialValues = (aktivitet, getKodeverknavn) => ({
+    beregningAktivitetNavn: createVisningsnavnForAktivitet(aktivitet, getKodeverknavn),
     fom: aktivitet.fom,
     tom: aktivitet.tom,
     skalBrukes: skalIkkeVurdereAktivitet(aktivitet) ? true : aktivitet.skalBrukes,
   });
 
-VurderAktiviteterTabell.buildInitialValues = (aktiviteter) => {
+VurderAktiviteterTabell.buildInitialValues = (aktiviteter, getKodeverknavn) => {
   if (!aktiviteter) {
     return {};
   }
   const initialValues = {};
   aktiviteter.forEach((aktivitet) => {
-    initialValues[lagAktivitetFieldId(aktivitet)] = mapToInitialValues(aktivitet);
+    initialValues[lagAktivitetFieldId(aktivitet)] = mapToInitialValues(aktivitet, getKodeverknavn);
   });
   return initialValues;
 };

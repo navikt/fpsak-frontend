@@ -57,13 +57,13 @@ KunYtelsePanel.defaultProps = {
   skalViseInntektstabell: true,
 };
 
-KunYtelsePanel.buildInitialValues = (kunYtelse) => {
+KunYtelsePanel.buildInitialValues = (kunYtelse, getKodeverknavn) => {
   if (!kunYtelse || !kunYtelse.andeler || kunYtelse.andeler.length === 0) {
     return {};
   }
   const initialValues = {
     [brukersAndelFieldArrayName]: kunYtelse.andeler.map(andel => ({
-      ...setGenerellAndelsinfo(andel),
+      ...setGenerellAndelsinfo(andel, getKodeverknavn),
       fastsattBelop: andel.fastsattBelopPrMnd || andel.fastsattBelopPrMnd === 0
         ? formatCurrencyNoKr(andel.fastsattBelopPrMnd) : '',
     })),

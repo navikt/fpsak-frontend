@@ -9,11 +9,9 @@ import SkjeringspunktOgStatusPanel, { SkjeringspunktOgStatusPanelImpl, RADIO_GRO
 const apentVurderDekningsgradAP = {
   definisjon: {
     kode: aksjonspunktCodes.VURDER_DEKNINGSGRAD,
-    navn: 'apNavn2',
   },
   status: {
     kode: 'OPPR',
-    navn: 'statusNavn2',
   },
   kanLoses: true,
   erAktivt: true,
@@ -21,26 +19,31 @@ const apentVurderDekningsgradAP = {
 const lukketVurderDekningsgradAP = {
   definisjon: {
     kode: aksjonspunktCodes.VURDER_DEKNINGSGRAD,
-    navn: 'vurder dekningsgrad',
   },
   status: {
     kode: 'UTFO',
-    navn: 'utført',
   },
   kanLoses: false,
   erAktivt: true,
 };
 const skjeringstidspunktDato = '2017-12-12';
-const aktivitetstatusList = [
-  {
+const aktivitetstatusList = [{
     kode: aktivitetStatus.ARBEIDSTAKER,
-    navn: 'Arbeidstaker',
-  },
-  {
+  }, {
     kode: aktivitetStatus.FRILANSER,
-    navn: 'Frilanser',
   },
 ];
+
+const getKodeverknavn = (kodeverk) => {
+  if (kodeverk.kode === aktivitetStatus.ARBEIDSTAKER) {
+    return 'Arbeidstaker';
+  }
+  if (kodeverk.kode === aktivitetStatus.FRILANSER) {
+    return 'Frilanser';
+  }
+
+  return '';
+};
 
 describe('<SkjeringspunktOgStatusPanel>', () => {
   it('Skal se at korrekte verdier settes i undertittlene', () => {
@@ -50,6 +53,7 @@ describe('<SkjeringspunktOgStatusPanel>', () => {
       skjeringstidspunktDato={skjeringstidspunktDato}
       gjeldendeAksjonspunkter={[]}
       gjeldendeDekningsgrad={100}
+      getKodeverknavn={getKodeverknavn}
     />);
     expect(wrapper.find('Normaltekst').children().at(1).text()).to.equal('Arbeidstaker og frilanser');
     expect(wrapper.find('Normaltekst').children().at(0).text()).is.eql('<DateLabel />');
@@ -61,6 +65,7 @@ describe('<SkjeringspunktOgStatusPanel>', () => {
       skjeringstidspunktDato={skjeringstidspunktDato}
       gjeldendeAksjonspunkter={[]}
       gjeldendeDekningsgrad={undefined}
+      getKodeverknavn={getKodeverknavn}
     />);
     const radioGroup = wrapper.find('RadioGroupField');
     expect(radioGroup).to.be.lengthOf(0);
@@ -78,6 +83,7 @@ describe('<SkjeringspunktOgStatusPanel>', () => {
       skjeringstidspunktDato={skjeringstidspunktDato}
       gjeldendeAksjonspunkter={ap}
       gjeldendeDekningsgrad={100}
+      getKodeverknavn={getKodeverknavn}
     />);
     const radioGroup = wrapper.find('RadioGroupField');
     expect(radioGroup.props().name).to.equal('dekningsgrad');
@@ -95,6 +101,7 @@ describe('<SkjeringspunktOgStatusPanel>', () => {
       skjeringstidspunktDato={skjeringstidspunktDato}
       gjeldendeAksjonspunkter={ap}
       gjeldendeDekningsgrad={100}
+      getKodeverknavn={getKodeverknavn}
     />);
     const radioGroup = wrapper.find('RadioGroupField');
     expect(radioGroup.props().name).to.equal('dekningsgrad');
@@ -111,6 +118,7 @@ describe('<SkjeringspunktOgStatusPanel>', () => {
       skjeringstidspunktDato={skjeringstidspunktDato}
       gjeldendeAksjonspunkter={[]}
       gjeldendeDekningsgrad={100}
+      getKodeverknavn={getKodeverknavn}
     />);
     const radioGroup = wrapper.find('RadioGroupField');
     expect(radioGroup).to.have.lengthOf(0);

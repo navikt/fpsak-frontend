@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
-import TidsbegrensetArbeidsforholdForm from './TidsbegrensetArbeidsforholdForm';
+import { TidsbegrensetArbeidsforholdForm } from './TidsbegrensetArbeidsforholdForm';
 
 const andeler = [
   {
@@ -22,22 +22,25 @@ const andeler = [
     },
   },
 ];
+const getKodeverknavn = () => undefined;
 
 describe('<TidsbegrensetArbeidsforholdForm>', () => {
   it('skal teste at korrekt antall radioknapper vises', () => {
-    const wrapper = shallowWithIntl(<TidsbegrensetArbeidsforholdForm.WrappedComponent
+    const wrapper = shallowWithIntl(<TidsbegrensetArbeidsforholdForm
       readOnly={false}
       andelsliste={andeler}
       isAksjonspunktClosed={false}
+      getKodeverknavn={getKodeverknavn}
     />);
     const radios = wrapper.find('RadioOption');
     expect(radios).to.have.length(4);
   });
   it('skal teste at korrekte overskrifter vises', () => {
-    const wrapper = shallowWithIntl(<TidsbegrensetArbeidsforholdForm.WrappedComponent
+    const wrapper = shallowWithIntl(<TidsbegrensetArbeidsforholdForm
       readOnly={false}
       andelsliste={andeler}
       isAksjonspunktClosed={false}
+      getKodeverknavn={getKodeverknavn}
     />);
     const message = wrapper.find('FormattedMessage');
     expect(message).to.have.length(2);

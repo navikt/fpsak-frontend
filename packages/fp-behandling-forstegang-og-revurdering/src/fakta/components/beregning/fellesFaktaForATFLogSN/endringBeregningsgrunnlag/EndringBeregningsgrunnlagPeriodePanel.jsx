@@ -3,17 +3,21 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FieldArray } from 'redux-form';
+import classnames from 'classnames/bind';
 import { EkspanderbartpanelPure } from 'nav-frontend-ekspanderbartpanel';
+
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import classnames from 'classnames/bind';
+
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import RenderEndringBGFieldArray from './RenderEndringBGFieldArray';
 import { createEndringHeadingForDate, renderDateHeading } from './EndretBeregningsgrunnlagUtils';
 import {
   settAndelIArbeid, setGenerellAndelsinfo, setArbeidsforholdInitialValues, settFastsattBelop, settReadOnlyBelop,
   erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon, andelErStatusFLOgHarATISammeOrg,
 } from '../BgFordelingUtils';
-
 
 import styles from './endringBeregningsgrunnlagPeriodePanel.less';
 
@@ -70,9 +74,9 @@ EndringBeregningsgrunnlagPeriodePanelImpl.defaultProps = {
 
 
 EndringBeregningsgrunnlagPeriodePanelImpl.validate = (values, fastsattIForstePeriode,
-  skalRedigereInntekt, skalOverstyreBg, skjaeringstidspunktBeregning, skalValidereMotRapportert) => RenderEndringBGFieldArray
+  skalRedigereInntekt, skalOverstyreBg, skjaeringstidspunktBeregning, skalValidereMotRapportert, getKodeverknavn) => RenderEndringBGFieldArray
   .validate(values, fastsattIForstePeriode,
-    skalRedigereInntekt, skalOverstyreBg, skjaeringstidspunktBeregning, skalValidereMotRapportert);
+    skalRedigereInntekt, skalOverstyreBg, skjaeringstidspunktBeregning, skalValidereMotRapportert, getKodeverknavn);
 
 const finnRiktigAndel = (andel, bgPeriode) => bgPeriode.beregningsgrunnlagPrStatusOgAndel.find(a => a.andelsnr === andel.andelsnr);
 
@@ -92,7 +96,8 @@ const finnRegister = (andel, bgAndel, skjaeringstidspunktBeregning, faktaOmBereg
 || andel.belopFraInntektsmelding === 0 ? formatCurrencyNoKr(andel.belopFraInntektsmelding) : formatCurrencyNoKr(bgAndel.belopPrMndEtterAOrdningen);
 };
 
-EndringBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (periode, readOnly, bgPeriode, skjaeringstidspunktBeregning, faktaOmBeregning) => {
+EndringBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (periode, readOnly, bgPeriode, skjaeringstidspunktBeregning, faktaOmBeregning,
+    getKodeverknavn) => {
   if (!periode || !periode.endringBeregningsgrunnlagAndeler) {
     return {};
   }
@@ -102,7 +107,7 @@ EndringBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (periode, readOnl
     .map((andel) => {
       const bgAndel = andel.lagtTilAvSaksbehandler ? undefined : finnRiktigAndel(andel, bgPeriode);
       return ({
-      ...setGenerellAndelsinfo(andel),
+      ...setGenerellAndelsinfo(andel, getKodeverknavn),
       ...setArbeidsforholdInitialValues(andel),
       andelIArbeid: settAndelIArbeid(andel.andelIArbeid),
       fordelingForrigeBehandling: andel.fordelingForrigeBehandling || andel.fordelingForrigeBehandling === 0
@@ -127,7 +132,7 @@ const mapStateToProps = (state, props) => {
   if (props.skalHaEndretInformasjonIHeader) {
     return ({
       heading: createEndringHeadingForDate(state, props.fom, props.tom, renderDateHeading(props.fom, props.tom),
-        props.harPeriodeAarsakGraderingEllerRefusjon),
+        props.harPeriodeAarsakGraderingEllerRefusjon, getKodeverknavnFn(getAlleKodeverk(state), kodeverkTyper)),
     });
   }
   return ({
