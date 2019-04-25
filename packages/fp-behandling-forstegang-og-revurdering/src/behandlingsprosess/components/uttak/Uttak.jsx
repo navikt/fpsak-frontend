@@ -673,6 +673,7 @@ const mapStateToProps = (state, props) => {
           navn: uttakPeriodeNavn[stonadskonto],
         },
         trekkdagerDesimaler: calcDays(moment(uttak.fom.toString()), moment(uttak.tom.toString())),
+        trekkdager: null,
       };
       uttakPerioder.aktiviteter = [oppholdInfo];
     }
