@@ -51,7 +51,7 @@ DocumentIndex.defaultProps = {
 
 const mapStateToProps = state => ({
   saksNr: getSelectedSaksnummer(state),
-  documents: (getAllDocuments(state) || []).sort((a, b) => b.tidspunkt2.localeCompare(a.tidspunkt2)),
+  documents: (getAllDocuments(state) || []).sort((a, b) => b.tidspunkt.localeCompare(a.tidspunkt)),
   behandlingId: getSelectedBehandlingId(state),
 });
 

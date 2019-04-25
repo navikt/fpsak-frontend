@@ -109,7 +109,7 @@ const DocumentList = ({
             </TableColumn>
             <TableColumn>
               {document.tidspunkt
-                ? <DateTimeLabel dateTimeString={document.tidspunkt2} />
+                ? <DateTimeLabel dateTimeString={document.tidspunkt} />
                 : <Normaltekst><FormattedMessage id="DocumentList.IProduksjon" /></Normaltekst>}
             </TableColumn>
           </TableRow>
