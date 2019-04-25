@@ -259,8 +259,9 @@ export class UttakImpl extends Component {
       const transformAktiviteter = uta.aktiviteter.map((a) => {
         const { days, weeks, ...transformAktivitet } = a;
         if (typeof days !== 'undefined' && typeof weeks !== 'undefined') {
-          const trekkdager = (weeks * 5) + days;
-          transformAktivitet.trekkdager = trekkdager; // regner om uker og dager til trekkdager
+          const trekkdager = (weeks * 5) + parseFloat(days);
+          transformAktivitet.trekkdagerDesimaler = trekkdager; // regner om uker og dager til trekkdager
+          transformAktivitet.trekkdager = null;
         }
         return transformAktivitet;
       });
@@ -292,6 +293,7 @@ export class UttakImpl extends Component {
     verdier.aktiviteter = verdier.aktiviteter.map((a) => {
       const { ...aktivitet } = a;
       aktivitet.utbetalingsgrad = a.utbetalingsgrad || a.utbetalingsgrad === 0 ? parseFloat(a.utbetalingsgrad) : null;
+      aktivitet.trekkdager = null;
       return aktivitet;
     });
 
@@ -670,7 +672,7 @@ const mapStateToProps = (state, props) => {
           kodeverk: uttak.oppholdÅrsak.kodeverk,
           navn: uttakPeriodeNavn[stonadskonto],
         },
-        trekkdager: calcDays(moment(uttak.fom.toString()), moment(uttak.tom.toString())),
+        trekkdagerDesimaler: calcDays(moment(uttak.fom.toString()), moment(uttak.tom.toString())),
       };
       uttakPerioder.aktiviteter = [oppholdInfo];
     }

@@ -158,17 +158,17 @@ const getResult = (uttaksresultatActivity) => {
     uttak.aktiviteter.forEach((a, index) => {
       const aktivitetDays = (typeof a.days !== 'undefined' && typeof a.weeks !== 'undefined')
         ? ((a.weeks * 5) + a.days)
-        : a.trekkdager;
+        : a.trekkdagerDesimaler;
 
       if ((`${a.stønadskontoType.kode}_${index}`) in uttakResult) {
-        const trekkdager = uttakResult[`${a.stønadskontoType.kode}_${index}`].trekkdager + aktivitetDays;
+        const trekkdagerDesimaler = uttakResult[`${a.stønadskontoType.kode}_${index}`].trekkdagerDesimaler + aktivitetDays;
         uttakResult[`${a.stønadskontoType.kode}_${index}`] = {
-          trekkdager,
+          trekkdagerDesimaler,
           konto: a.stønadskontoType.kode,
         };
       } else {
         uttakResult[`${a.stønadskontoType.kode}_${index}`] = {
-          trekkdager: aktivitetDays,
+          trekkdagerDesimaler: aktivitetDays,
           konto: a.stønadskontoType.kode,
         };
       }
@@ -181,7 +181,7 @@ const getResult = (uttaksresultatActivity) => {
 const convertToArray = uttakResult => Object.values(uttakResult)
   .map((u) => {
     const uttakElement = { ...u };
-    uttakElement.trekkdager = u.trekkdager;
+    uttakElement.trekkdagerDesimaler = u.trekkdagerDesimaler;
     uttakElement.saldo = u.saldo;
     return uttakElement;
   });
@@ -229,7 +229,22 @@ const convertToArray = uttakResult => Object.values(uttakResult)
 
 const checkFlerbarnsMaksDager = (stonadskonto) => {
   let errors = null;
+<<<<<<< HEAD
   if (stonadskonto.FLERBARNSDAGER && !stonadskonto.FLERBARNSDAGER.gyldigForbruk) {
+=======
+  let flerbarnsdager = 0;
+  const flerbarnsMaksDager = stonadskonto.FLERBARNSDAGER ? stonadskonto.FLERBARNSDAGER.maxDager : 0;
+  uttaksresultatActivity.forEach((uttak) => {
+    if (uttak.flerbarnsdager) {
+      uttak.aktiviteter.forEach((a) => {
+        flerbarnsdager += (typeof a.days !== 'undefined' && typeof a.weeks !== 'undefined')
+          ? ((a.weeks * 5) + a.days)
+          : a.trekkdagerDesimaler;
+      });
+    }
+  });
+  if (flerbarnsdager > flerbarnsMaksDager) {
+>>>>>>> FIX: first commit2
     errors = {
       _error:
   <AlertStripe type="advarsel" className={styles.marginTop}>
@@ -314,7 +329,8 @@ export const transformValues = (values, apCodes, aksjonspunkter) => {
       const { days, weeks, ...transformAktivitet } = a;
       if (typeof days !== 'undefined' && typeof weeks !== 'undefined') {
         const trekkdager = (weeks * 5) + days;
-        transformAktivitet.trekkdager = trekkdager; // regner om uker og dager til trekkdager
+        transformAktivitet.trekkdagerDesimaler = trekkdager; // regner om uker og dager til trekkdager
+        transformAktivitet.trekkdager = trekkdager;
       }
       return transformAktivitet;
     });
