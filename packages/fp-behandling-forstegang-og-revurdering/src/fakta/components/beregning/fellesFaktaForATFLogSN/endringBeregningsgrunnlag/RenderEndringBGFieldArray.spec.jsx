@@ -941,44 +941,43 @@ describe('<RenderEndringBGFieldArray>', () => {
     expect(errors).to.equal(null);
   });
 
-  it('lagBelopKolonne skal gi readOnly versjon om andel ikke skal redigere inntekt', () => {
+  it('lagBelopKolonne skal gi readOnly beløp om andel ikke skal redigere inntekt og det er ikkje er readOnly', () => {
     const belopKolonne = lagBelopKolonne('test', false, false, false);
     expect(belopKolonne.props.className).to.equal(undefined);
     expect(belopKolonne.props.children.props.name).to.equal('test.readOnlyBelop');
     expect(belopKolonne.props.children.props.isEdited).to.equal(false);
   });
 
-  it('lagBelopKolonne skal gi readOnly versjon om andel skal redigere inntekt i readOnly', () => {
-    const belopKolonne = lagBelopKolonne('test', true, true, false);
+  it('lagBelopKolonne skal ikkje gi readOnly beløp om andel ikke skal redigere inntekt og det er readOnly', () => {
+    const belopKolonne = lagBelopKolonne('test', true, false, false);
     expect(belopKolonne.props.className).to.equal(undefined);
-    expect(belopKolonne.props.children.props.name).to.equal('test.readOnlyBelop');
+    expect(belopKolonne.props.children.props.name).to.equal('test.fastsattBelop');
     expect(belopKolonne.props.children.props.isEdited).to.equal(false);
+    expect(belopKolonne.props.children.props.readOnly).to.equal(true);
   });
 
-  it('lagBelopKolonne skal gi readOnly versjon med isEdited true om andel skal redigere inntekt i readOnly med aksjonspunkt lukket', () => {
+
+  it('lagBelopKolonne skal ikkje gi readOnly beløp om andel skal redigere inntekt i uten readOnly', () => {
+    const belopKolonne = lagBelopKolonne('test', false, true, false);
+    expect(belopKolonne.props.className).to.equal(undefined);
+    expect(belopKolonne.props.children.props.name).to.equal('test.fastsattBelop');
+    expect(belopKolonne.props.children.props.isEdited).to.equal(false);
+    expect(belopKolonne.props.children.props.readOnly).to.equal(false);
+  });
+
+  it('lagBelopKolonne skal gi fastsattBeløp med isEdited true om andel skal redigere inntekt i readOnly med aksjonspunkt lukket', () => {
     const belopKolonne = lagBelopKolonne('test', true, true, true);
     expect(belopKolonne.props.className).to.equal(undefined);
-    expect(belopKolonne.props.children.props.name).to.equal('test.readOnlyBelop');
+    expect(belopKolonne.props.children.props.name).to.equal('test.fastsattBelop');
     expect(belopKolonne.props.children.props.isEdited).to.equal(true);
+    expect(belopKolonne.props.children.props.readOnly).to.equal(true);
   });
 
-  it('lagBelopKolonne skal gi readOnly versjon med isEdited false om andel ikkje skal redigere inntekt i readOnly med aksjonspunkt lukket', () => {
+  it('lagBelopKolonne skal gi fastsattBeløp versjon med isEdited false om andel ikkje skal redigere inntekt i readOnly med aksjonspunkt lukket', () => {
     const belopKolonne = lagBelopKolonne('test', true, false, true);
     expect(belopKolonne.props.className).to.equal(undefined);
-    expect(belopKolonne.props.children.props.name).to.equal('test.readOnlyBelop');
-    expect(belopKolonne.props.children.props.isEdited).to.equal(false);
-  });
-
-
-  it('lagBelopKolonne skal gi redigerbar versjon med isEdited true om andel skal redigere inntekt med aksjonspunkt lukket', () => {
-    const belopKolonne = lagBelopKolonne('test', false, true, true);
-    expect(belopKolonne.props.children.props.name).to.equal('test.fastsattBelop');
-    expect(belopKolonne.props.children.props.isEdited).to.equal(true);
-  });
-
-  it('lagBelopKolonne skal gi redigerbar versjon med isEdited false om andel skal redigere inntekt med aksjonspunkt åpent', () => {
-    const belopKolonne = lagBelopKolonne('test', false, true, false);
     expect(belopKolonne.props.children.props.name).to.equal('test.fastsattBelop');
     expect(belopKolonne.props.children.props.isEdited).to.equal(false);
+    expect(belopKolonne.props.children.props.readOnly).to.equal(true);
   });
 });
