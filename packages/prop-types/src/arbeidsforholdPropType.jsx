@@ -27,7 +27,7 @@ export const arbeidsforholdPropType = PropTypes.shape({
   fomDato: PropTypes.string,
   tomDato: PropTypes.string,
   kilde: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
+    navn: PropTypes.string.isRequired,
   }),
   mottattDatoInntektsmelding: PropTypes.string,
   stillingsprosent: PropTypes.number,
@@ -42,14 +42,22 @@ export const arbeidsforholdPropType = PropTypes.shape({
   vurderOmSkalErstattes: PropTypes.bool,
   erEndret: PropTypes.bool,
   brukMedJustertPeriode: PropTypes.bool,
-  handlingType: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-  }),
   overstyrtTom: PropTypes.string,
   lagtTilAvSaksbehandler: PropTypes.bool,
-  inntektIkkeMedTilBeregningsgrunnlaget: PropTypes.bool,
+  inntektIkkeMedTilBeregningsgrunnlaget: PropTypes.bool, // TODO : Fjern denne når back-end er inne (PFP-7972)
+  inntektMedTilBeregningsgrunnlag: PropTypes.bool,
   skjaeringstidspunkt: PropTypes.string,
   begrunnelse: PropTypes.string,
+  permisjoner: PropTypes.arrayOf(PropTypes.shape({
+    permisjonFom: PropTypes.string,
+    permisjonTom: PropTypes.string,
+    permisjonsprosent: PropTypes.number,
+    type: PropTypes.shape({
+      kode: PropTypes.string,
+      kodeverk: PropTypes.string,
+    }),
+  })),
+  brukPermisjon: PropTypes.bool,
 });
 
 export default arbeidsforholdPropType;

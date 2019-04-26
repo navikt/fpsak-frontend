@@ -16,11 +16,13 @@ import {
   ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 
+import arbeidsforholdHandling from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandling';
 import PersonAksjonspunktText from './PersonAksjonspunktText';
 import PersonNyttEllerErstattArbeidsforholdPanel from './PersonNyttEllerErstattArbeidsforholdPanel';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
 import ArbeidsforholdBegrunnelse from './ArbeidsforholdBegrunnelse';
+import PermisjonPeriode from './PermisjonPeriode';
 
 // ----------------------------------------------------------------------------------
 // VARIABLES
@@ -32,8 +34,8 @@ export const PERSON_ARBEIDSFORHOLD_DETAIL_FORM = 'PersonArbeidsforholdDetailForm
 // METHODS
 // ----------------------------------------------------------------------------------
 const showNyttOrErstattPanel = (
-  skalBrukeUendretForhold, vurderOmSkalErstattes, harErstattetEttEllerFlere,
-) => !!skalBrukeUendretForhold
+  arbeidsforholdHandlingVerdi, vurderOmSkalErstattes, harErstattetEttEllerFlere,
+) => arbeidsforholdHandlingVerdi === arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD
   && vurderOmSkalErstattes
   && !harErstattetEttEllerFlere;
 
@@ -52,15 +54,14 @@ export const PersonArbeidsforholdDetailForm = ({
   vurderOmSkalErstattes,
   aktivtArbeidsforholdTillatUtenIM,
   arbeidsforhold,
-  skalBrukeUendretForhold,
+  arbeidsforholdHandlingVerdi,
   skalKunneLeggeTilNyeArbeidsforhold,
   ...formProps
 }) => (
   <ElementWrapper>
     <Element><FormattedMessage id="PersonArbeidsforholdDetailForm.Header" /></Element>
-    <PersonAksjonspunktText
-      arbeidsforhold={arbeidsforhold}
-    />
+    <PermisjonPeriode arbeidsforhold={arbeidsforhold} />
+    <PersonAksjonspunktText arbeidsforhold={arbeidsforhold} />
     <VerticalSpacer eightPx />
     { skalKunneLeggeTilNyeArbeidsforhold && (
       <LeggTilArbeidsforholdFelter
@@ -78,7 +79,7 @@ export const PersonArbeidsforholdDetailForm = ({
           arbeidsforhold={arbeidsforhold}
           skalKunneLeggeTilNyeArbeidsforhold={skalKunneLeggeTilNyeArbeidsforhold}
           aktivtArbeidsforholdTillatUtenIM={aktivtArbeidsforholdTillatUtenIM}
-          skalBrukeUendretForhold={skalBrukeUendretForhold}
+          arbeidsforholdHandlingVerdi={arbeidsforholdHandlingVerdi}
         />
         <VerticalSpacer twentyPx />
         <ArbeidsforholdBegrunnelse
@@ -103,7 +104,7 @@ export const PersonArbeidsforholdDetailForm = ({
         )}
       </Column>
       <Column xs="6">
-        { showNyttOrErstattPanel(skalBrukeUendretForhold, vurderOmSkalErstattes, harErstattetEttEllerFlere) && (
+        { showNyttOrErstattPanel(arbeidsforholdHandlingVerdi, vurderOmSkalErstattes, harErstattetEttEllerFlere) && (
           <PersonNyttEllerErstattArbeidsforholdPanel
             readOnly={readOnly}
             isErstattArbeidsforhold={isErstattArbeidsforhold}
@@ -111,7 +112,7 @@ export const PersonArbeidsforholdDetailForm = ({
             formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
           />
         )}
-        { skalBrukeUendretForhold && harErstattetEttEllerFlere && (
+        { arbeidsforholdHandlingVerdi === arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD && harErstattetEttEllerFlere && (
           <Normaltekst>
             <FormattedMessage id="PersonArbeidsforholdDetailForm.ErstatteTidligereArbeidsforhod" />
           </Normaltekst>
@@ -130,14 +131,14 @@ PersonArbeidsforholdDetailForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   aktivtArbeidsforholdTillatUtenIM: PropTypes.bool.isRequired,
   arbeidsforhold: arbeidsforholdPropType.isRequired,
-  skalBrukeUendretForhold: PropTypes.bool,
+  arbeidsforholdHandlingVerdi: PropTypes.string,
   skalKunneLeggeTilNyeArbeidsforhold: PropTypes.bool.isRequired,
   ...formPropTypes,
 };
 
 PersonArbeidsforholdDetailForm.defaultProps = {
   harErstattetEttEllerFlere: false,
-  skalBrukeUendretForhold: undefined,
+  arbeidsforholdHandlingVerdi: undefined,
 };
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
@@ -149,7 +150,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     vurderOmSkalErstattes: !!behandlingFormValueSelector(PERSON_ARBEIDSFORHOLD_DETAIL_FORM)(state, 'vurderOmSkalErstattes'),
     harErstattetEttEllerFlere: behandlingFormValueSelector(PERSON_ARBEIDSFORHOLD_DETAIL_FORM)(state, 'harErstattetEttEllerFlere'),
     isErstattArbeidsforhold: behandlingFormValueSelector(PERSON_ARBEIDSFORHOLD_DETAIL_FORM)(state, 'erNyttArbeidsforhold') === false,
-    skalBrukeUendretForhold: behandlingFormValueSelector(PERSON_ARBEIDSFORHOLD_DETAIL_FORM)(state, 'brukUendretArbeidsforhold'),
+    arbeidsforholdHandlingVerdi: behandlingFormValueSelector(PERSON_ARBEIDSFORHOLD_DETAIL_FORM)(state, 'arbeidsforholdHandlingField'),
     overstyrtTom: behandlingFormValueSelector(PERSON_ARBEIDSFORHOLD_DETAIL_FORM)(state, 'overstyrtTom'),
     onSubmit,
   });
