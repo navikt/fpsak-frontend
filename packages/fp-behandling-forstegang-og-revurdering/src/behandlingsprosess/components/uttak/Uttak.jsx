@@ -192,6 +192,7 @@ export class UttakImpl extends Component {
     this.skalViseCheckbox = this.skalViseCheckbox.bind(this);
     this.setSelectedDefaultPeriod = this.setSelectedDefaultPeriod.bind(this);
     this.updateStonadskontoer = this.updateStonadskontoer.bind(this);
+    this.ikkeGyldigForbruk = this.ikkeGyldigForbruk.bind(this);
 
     this.state = {
       selectedItem: null,
@@ -366,6 +367,23 @@ export class UttakImpl extends Component {
       && !manuellOverstyring;
   }
 
+  ikkeGyldigForbruk() {
+    const { stonadskonto } = this.props;
+    let validationError = false;
+    if (stonadskonto && stonadskonto.stonadskontoer) {
+      const kontoer = stonadskonto.stonadskontoer;
+      const myArray = Object.entries(kontoer);
+       // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      for (const [name, periode] of myArray) { // eslint-disable-line no-restricted-syntax
+        if (!periode.gyldigForbruk) {
+          validationError = true;
+          break;
+        }
+      }
+    }
+    return validationError;
+  }
+
   isConfirmButtonDisabled() {
     const {
       uttaksresultatActivity, readOnly, submitting, isDirty,
@@ -374,6 +392,11 @@ export class UttakImpl extends Component {
     if (uttaksresultatActivity.every(isInnvilget)) {
       return false;
     }
+
+    if (this.ikkeGyldigForbruk()) {
+      return true;
+    }
+
     if (!(uttaksresultatActivity.some(ac => Object.prototype.hasOwnProperty.call(ac, 'erOppfylt')))) {
       return true;
     }

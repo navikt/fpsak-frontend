@@ -186,70 +186,57 @@ const convertToArray = uttakResult => Object.values(uttakResult)
     return uttakElement;
   });
 
-const checkPeriodMaxDays = periode => (periode ? periode.maxDager : 665); // tallet hentet fra -PKMANTIS-1808
+  const getGjeldeneStønadskonto = (stonadskontoTypeKode, stonadskontoer) => {
+    switch (stonadskontoTypeKode) {
+      case stonadskontoType.FORELDREPENGER_FØR_FØDSEL:
+        return stonadskontoer.FORELDREPENGER_FØR_FØDSEL;
+      case stonadskontoType.FORELDREPENGER:
+        return stonadskontoer.FORELDREPENGER;
+      case stonadskontoType.FELLESPERIODE:
+        return stonadskontoer.FELLESPERIODE;
+      case stonadskontoType.MØDREKVOTE:
+        return stonadskontoer.MØDREKVOTE;
+      case stonadskontoType.FEDREKVOTE:
+        return stonadskontoer.FEDREKVOTE;
+      default:
+        return {};
+    }
+  };
 
-const getMaxDays = (stonadskontoTypeKode, stonadskontoer) => {
-  switch (stonadskontoTypeKode) {
-    case stonadskontoType.FORELDREPENGER_FØR_FØDSEL:
-      return checkPeriodMaxDays(stonadskontoer.FORELDREPENGER_FØR_FØDSEL);
-    case stonadskontoType.FORELDREPENGER:
-      return checkPeriodMaxDays(stonadskontoer.FORELDREPENGER);
-    case stonadskontoType.FELLESPERIODE:
-      return checkPeriodMaxDays(stonadskontoer.FELLESPERIODE);
-    case stonadskontoType.MØDREKVOTE:
-      return checkPeriodMaxDays(stonadskontoer.MØDREKVOTE);
-    case stonadskontoType.FEDREKVOTE:
-      return checkPeriodMaxDays(stonadskontoer.FEDREKVOTE);
-    default:
-      return undefined;
-  }
-};
-
-const checkMaxDager = (uttaksresultatActivity, stonadskonto) => {
-  let errors = null;
-  const uttakResult = getResult(uttaksresultatActivity);
-  const uttakResultArray = convertToArray(uttakResult);
-  uttakResultArray.forEach((value) => {
-    const maxDays = getMaxDays(value.konto, stonadskonto.stonadskontoer) - value.trekkdager;
-    if (maxDays && (maxDays < 0)) {
-      errors = {
-        _error:
+  const checkMaxDager = (uttaksresultatActivity, stonadskonto) => {
+    let errors = null;
+    const uttakResult = getResult(uttaksresultatActivity);
+    const uttakResultArray = convertToArray(uttakResult);
+    uttakResultArray.forEach((value) => {
+      const gjeldeneStønadskonto = getGjeldeneStønadskonto(value.konto, stonadskonto.stonadskontoer);
+      if (gjeldeneStønadskonto && !gjeldeneStønadskonto.gyldigForbruk) {
+        errors = {
+          _error:
   <AlertStripe type="advarsel" className={styles.marginTop}>
     <FormattedMessage
       id="ValidationMessage.NegativeSaldo"
       values={{
-        periode: uttakPeriodeNavn[value.konto],
-        days: maxDays * -1,
-      }}
+          periode: uttakPeriodeNavn[value.konto],
+          days: gjeldeneStønadskonto.saldo * -1,
+        }}
     />
   </AlertStripe>,
-      };
-    }
-  });
-  return errors;
-};
+        };
+      }
+    });
+    return errors;
+  };
 
-const checkFlerbarnsMaksDager = (uttaksresultatActivity, stonadskonto) => {
+const checkFlerbarnsMaksDager = (stonadskonto) => {
   let errors = null;
-  let flerbarnsdager = 0;
-  const flerbarnsMaksDager = stonadskonto.FLERBARNSDAGER ? stonadskonto.FLERBARNSDAGER.maxDager : 0;
-  uttaksresultatActivity.forEach((uttak) => {
-    if (uttak.flerbarnsdager) {
-      uttak.aktiviteter.forEach((a) => {
-        flerbarnsdager += (typeof a.days !== 'undefined' && typeof a.weeks !== 'undefined')
-          ? ((a.weeks * 5) + a.days)
-          : a.trekkdager;
-      });
-    }
-  });
-  if (flerbarnsdager > flerbarnsMaksDager) {
+  if (stonadskonto.FLERBARNSDAGER && !stonadskonto.FLERBARNSDAGER.gyldigForbruk) {
     errors = {
       _error:
   <AlertStripe type="advarsel" className={styles.marginTop}>
     <FormattedMessage
       id="ValidationMessage.InvalidTrekkDagerFlerbarnsdager"
       values={{
-        maxDays: flerbarnsMaksDager,
+        maxDays: stonadskonto.FLERBARNSDAGER.maxDager,
       }}
     />
   </AlertStripe>,
@@ -292,7 +279,7 @@ const validateUttakPanelForm = (values) => {
     if (maxDagerError) {
       return maxDagerError;
     }
-    const flerbarnsMaksDager = checkFlerbarnsMaksDager(uttaksresultatActivity, stonadskonto.stonadskontoer);
+    const flerbarnsMaksDager = checkFlerbarnsMaksDager(stonadskonto.stonadskontoer);
     if (flerbarnsMaksDager) {
       return flerbarnsMaksDager;
     }
