@@ -10,12 +10,8 @@ import { ISO_DATE_FORMAT, calcDays } from '@fpsak-frontend/utils';
 import {
   FlexContainer, FlexRow, FlexColumn, Image,
 } from '@fpsak-frontend/shared-components';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import overlapp from '@fpsak-frontend/assets/images/overlapp.svg';
 import tomPeriode from '@fpsak-frontend/assets/images/tom_periode.svg';
-import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
-
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import UttakPeriodeType from './UttakPeriodeType';
 import UttakPeriodeInnhold from './UttakPeriodeInnhold';
 
@@ -62,60 +58,7 @@ const getClassName = (periode, readOnly) => {
   return classNames('periodeContainer', { active: !periode.bekreftet && !readOnly });
 };
 
-const isUtsettelseMedSykdom = (periode) => {
-  if (periode.utsettelseÅrsak && periode.utsettelseÅrsak.kode) {
-    if (periode.utsettelseÅrsak.kode === utsettelseArsakCodes.INSTITUSJONSOPPHOLD_SØKER
-      || periode.utsettelseÅrsak.kode === utsettelseArsakCodes.INSTITUSJONSOPPHOLD_BARNET
-      || periode.utsettelseÅrsak.kode === utsettelseArsakCodes.SYKDOM) {
-      return true;
-    }
-  }
-  return false;
-};
-
-const avvikInntekstmeldInfo = (periode, inntektsmeldingInfo, getKodeverknavn) => {
-  if (periode.bekreftet) {
-    return null;
-  }
-
-  return inntektsmeldingInfo && inntektsmeldingInfo.map((innmldInfo) => {
-    const { isManglendeInntektsmelding, avvik } = innmldInfo;
-
-    if (isManglendeInntektsmelding) {
-      // skall ikke vises vid utsettelse pga sykdom - fjern det - troligen periode.utsettleseÅrsak.
-      if (avvik.utsettelseÅrsak && !isUtsettelseMedSykdom(periode)) {
-        return (
-          <AlertStripe type="info" key="key1" className={styles.avvikInfoMargin}>
-            <FormattedMessage id="UttakPeriode.ManglerInfoUtsettelse" values={{ årsak: getKodeverknavn(periode.utsettelseÅrsak).toLowerCase() }} />
-          </AlertStripe>
-        );
-      }
-      if (avvik.isAvvikArbeidsprosent) {
-        return (
-          <AlertStripe type="info" key="key2" className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikGradering" /></AlertStripe>
-        );
-      }
-    }
-    if (!isManglendeInntektsmelding) {
-      if (avvik.isAvvikUtsettelse) {
-        return <AlertStripe type="info" key="key3" className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikUtsettelse" /></AlertStripe>;
-      }
-      if (avvik.isAvvikPeriode) {
-        return <AlertStripe type="info" key="key4" className={styles.avvikInfoMargin}><FormattedMessage id="UttakPeriode.AvvikPeriode" /></AlertStripe>;
-      }
-      if (avvik.isAvvikArbeidsprosent) {
-        return (
-          <AlertStripe type="info" key="key5" className={styles.avvikInfoMargin}>
-            <FormattedMessage id="UttakPeriode.AvvikGraderingProsent" />
-          </AlertStripe>
-        );
-      }
-    }
-    return null;
-  });
-};
-
-export const UttakPeriode = ({
+const UttakPeriode = ({
   fields,
   openSlettPeriodeModalCallback,
   updatePeriode,
@@ -128,7 +71,6 @@ export const UttakPeriode = ({
   inntektsmeldingInfo,
   endringsdato,
   meta,
-  getKodeverknavn,
 }) => (
   <div>
     {meta.error && <AlertStripe className={styles.fullWidth} type="feil">{meta.error}</AlertStripe>}
@@ -142,7 +84,6 @@ export const UttakPeriode = ({
           <React.Fragment key={fieldId}>
             <FlexRow>
               <FlexColumn className={styles.fullWidth}>
-                {avvikInntekstmeldInfo(periode, inntektsmeldingInfo[index], getKodeverknavn)}
                 {index === 0 && harEndringsdatoSomErFørFørsteUttaksperiode && renderTomPeriode()}
                 <div className={getClassName(periode, readOnly)}>
                   <UttakPeriodeType
@@ -213,11 +154,10 @@ UttakPeriode.propTypes = {
   isNyPeriodeFormOpen: PropTypes.bool.isRequired,
   inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape())).isRequired,
   endringsdato: PropTypes.string,
-  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 UttakPeriode.defaultProps = {
   endringsdato: undefined,
 };
 
-export default injectKodeverk(getAlleKodeverk)(UttakPeriode);
+export default UttakPeriode;
