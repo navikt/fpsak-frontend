@@ -12,7 +12,6 @@ import {
   getHelpTextsFaktaForATFLOgSN,
   transformValuesFaktaForATFLOgSN,
   mapStateToValidationProps,
-  setInntektValues,
   transformValues,
   isReadOnly,
 } from './FaktaForATFLOgSNPanel';
@@ -399,76 +398,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     expect(transformedValues.fastsattUtenInntektsmelding.andelListe[0].fastsatteVerdier.fastsattBeløp).to.eql(10000);
     expect(transformedValues.fastsettMaanedsinntektFL.maanedsinntekt).to.eql(20000);
   });
-
-
-  it('skal transform values for kun ytelse om kun ytelse, endret beregningsgrunnlag, atfl i samme org og besteberegning', () => {
-    const fatsettKunYtelseTransform = sinon.spy();
-    const fatsettEndretBgTransform = sinon.spy();
-    const fatsettATFLISammeOrgTransform = sinon.spy();
-    const besteberegningTransform = sinon.spy();
-    const aktivePaneler = [faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE, faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG,
-      faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON, faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE];
-    setInntektValues(aktivePaneler,
-      fatsettKunYtelseTransform,
-      fatsettEndretBgTransform,
-      fatsettATFLISammeOrgTransform,
-      besteberegningTransform)({});
-    expect(fatsettKunYtelseTransform).to.have.property('callCount', 1);
-    expect(fatsettEndretBgTransform).to.have.property('callCount', 0);
-    expect(fatsettATFLISammeOrgTransform).to.have.property('callCount', 0);
-    expect(besteberegningTransform).to.have.property('callCount', 0);
-  });
-
-  it('skal transform values for endret beregningsgrunnlag om endret beregningsgrunnlag, atfl i samme org og besteberegning', () => {
-    const fatsettKunYtelseTransform = sinon.spy();
-    const fatsettEndretBgTransform = sinon.spy();
-    const fatsettATFLISammeOrgTransform = sinon.spy();
-    const besteberegningTransform = sinon.spy();
-    const aktivePaneler = [faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG,
-      faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON, faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE];
-    setInntektValues(aktivePaneler,
-      fatsettKunYtelseTransform,
-      fatsettEndretBgTransform,
-      fatsettATFLISammeOrgTransform,
-      besteberegningTransform)({});
-    expect(fatsettKunYtelseTransform).to.have.property('callCount', 0);
-    expect(fatsettEndretBgTransform).to.have.property('callCount', 1);
-    expect(fatsettATFLISammeOrgTransform).to.have.property('callCount', 0);
-    expect(besteberegningTransform).to.have.property('callCount', 0);
-  });
-
-  it('skal transform values for atfl samm org om atfl i samme org og besteberegning', () => {
-    const fatsettKunYtelseTransform = sinon.spy();
-    const fatsettEndretBgTransform = sinon.spy();
-    const fatsettATFLISammeOrgTransform = sinon.spy();
-    const besteberegningTransform = sinon.spy();
-    const aktivePaneler = [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON,
-      faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE];
-    setInntektValues(aktivePaneler,
-      fatsettKunYtelseTransform,
-      fatsettEndretBgTransform,
-      fatsettATFLISammeOrgTransform,
-      besteberegningTransform)({});
-    expect(fatsettKunYtelseTransform).to.have.property('callCount', 0);
-    expect(fatsettEndretBgTransform).to.have.property('callCount', 0);
-    expect(fatsettATFLISammeOrgTransform).to.have.property('callCount', 1);
-    expect(besteberegningTransform).to.have.property('callCount', 0);
-  });
-
-  it('skal transform values for besteberegning om besteberegning', () => {
-    const fatsettKunYtelseTransform = sinon.spy();
-    const fatsettEndretBgTransform = sinon.spy();
-    const besteberegningTransform = sinon.spy();
-    const aktivePaneler = [faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE];
-    setInntektValues(aktivePaneler,
-      fatsettKunYtelseTransform,
-      fatsettEndretBgTransform,
-      besteberegningTransform)({});
-    expect(fatsettKunYtelseTransform).to.have.property('callCount', 0);
-    expect(fatsettEndretBgTransform).to.have.property('callCount', 0);
-    expect(besteberegningTransform).to.have.property('callCount', 1);
-  });
-
 
   it('skal transform values for nyIArbeidslivet om kun ny i arbeidslivet', () => {
     const nyIArbTransform = sinon.spy();

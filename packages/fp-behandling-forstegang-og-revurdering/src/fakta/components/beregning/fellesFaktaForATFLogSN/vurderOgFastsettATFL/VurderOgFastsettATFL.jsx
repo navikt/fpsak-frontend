@@ -190,6 +190,11 @@ VurderOgFastsettATFL.validate = (values, tilfeller, faktaOmBeregning, beregnings
   return errors;
 };
 
+const endretBGTransform = endringBGPerioder => values => ({
+  faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG],
+  ...FastsettEndretBeregningsgrunnlag.transformValues(values, endringBGPerioder),
+});
+
 const concatTilfeller = (transformed, newTransformedValues) => ({
   ...transformed,
   ...newTransformedValues,
@@ -200,15 +205,17 @@ const concatTilfeller = (transformed, newTransformedValues) => ({
 
 VurderOgFastsettATFL.transformValues = (faktaOmBeregning, beregningsgrunnlag) => (values) => {
   const tilfeller = faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode);
-  if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
-    return ({});
-  }
   const inntektVerdier = InntektFieldArray.transformValues(values[inntektFieldArrayName]);
   let transformed = { faktaOmBeregningTilfeller: [] };
+  let allInntektErFastsatt = false;
+  if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
+    allInntektErFastsatt = true;
+    transformed = endretBGTransform(faktaOmBeregning.endringBeregningsgrunnlag.endringBeregningsgrunnlagPerioder)(values);
+  }
   const fastsatteAndelsnr = [];
   // Besteberegning
-  const allInntektErFastsatt = values[besteberegningField] === true;
-  transformed = concatTilfeller(transformed, vurderBesteberegningTransform(faktaOmBeregning)(values, inntektVerdier));
+  transformed = concatTilfeller(transformed, vurderBesteberegningTransform(faktaOmBeregning)(values, allInntektErFastsatt ? null : inntektVerdier));
+  allInntektErFastsatt = allInntektErFastsatt || values[besteberegningField] === true;
   // Nyoppstartet FL
   transformed = concatTilfeller(transformed, NyoppstartetFLForm.transformValues(values, allInntektErFastsatt ? null : inntektVerdier,
     faktaOmBeregning, fastsatteAndelsnr));
