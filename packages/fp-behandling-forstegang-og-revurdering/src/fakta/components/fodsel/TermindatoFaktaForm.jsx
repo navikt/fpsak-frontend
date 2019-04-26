@@ -22,7 +22,7 @@ import {
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  getEditedStatus, getSoknad, getFamiliehendelse, getAksjonspunkter,
+  getEditedStatus, getSoknad, getFamiliehendelseGjeldende, getAksjonspunkter,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 
 import styles from './termindatoFaktaForm.less';
@@ -139,7 +139,7 @@ TermindatoFaktaForm.defaultProps = {
   isOverridden: false,
 };
 
-export const buildInitialValues = createSelector([getSoknad, getFamiliehendelse, getAksjonspunkter], (soknad, familiehendelse, aksjonspunkter) => {
+export const buildInitialValues = createSelector([getSoknad, getFamiliehendelseGjeldende, getAksjonspunkter], (soknad, familiehendelse, aksjonspunkter) => {
   const antallBarn = soknad.antallBarn ? soknad.antallBarn : NaN;
   return {
     utstedtdato: familiehendelse.utstedtdato ? familiehendelse.utstedtdato : soknad.utstedtdato,
@@ -172,9 +172,9 @@ const mapStateToProps = (state, ownProps) => {
     isUtstedtDatoEdited: getEditedStatus(state).utstedtdato,
     isForTidligTerminbekreftelse: erTerminbekreftelseUtstedtForTidlig(utstedtdato, termindato),
     isAntallBarnEdited: getEditedStatus(state).antallBarn,
-    fodselsdatoTps: getFamiliehendelse(state).fodselsdato,
-    antallBarnTps: getFamiliehendelse(state).antallBarnFodsel,
-    isOverridden: getFamiliehendelse(state).erOverstyrt,
+    fodselsdatoTps: getFamiliehendelseGjeldende(state).fodselsdato,
+    antallBarnTps: getFamiliehendelseGjeldende(state).antallBarnFodsel,
+    isOverridden: getFamiliehendelseGjeldende(state).erOverstyrt,
   };
 };
 

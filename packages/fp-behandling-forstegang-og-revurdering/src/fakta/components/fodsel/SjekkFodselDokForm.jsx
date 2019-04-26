@@ -12,8 +12,7 @@ import {
   ElementWrapper, VerticalSpacer, ArrowBox,
 } from '@fpsak-frontend/shared-components';
 import {
-  getEditedStatus, getFamiliehendelseGjeldende, getBehandlingType, getBarnFraTpsRelatertTilSoknad,
-  getPersonopplysning, getAksjonspunkter, getSoknadAntallBarn,
+  getEditedStatus, getFamiliehendelseGjeldende, getBehandlingType, getBarnFraTpsRelatertTilSoknad, getAksjonspunkter, getSoknadAntallBarn,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { behandlingFormValueSelector, behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import FodselSammenligningPanel from 'behandlingForstegangOgRevurdering/src/components/fodselSammenligning/FodselSammenligningPanel';
@@ -238,7 +237,7 @@ const transformValues = (values, antallBarnFraSoknad, antallBarnFraTps, fodselIn
 export const sjekkFodselDokForm = 'SjekkFodselDokForm';
 
 const mapStateToProps = (state, ownProps) => {
-  const fodselInfo = getPersonopplysning(state).barnFraTpsRelatertTilSoknad;
+  const fodselInfo = getFamiliehendelseGjeldende(state).avklartBarn;
   return {
     initialValues: buildInitialValues(state),
     onSubmit: values => ownProps.submitHandler(transformValues(values,

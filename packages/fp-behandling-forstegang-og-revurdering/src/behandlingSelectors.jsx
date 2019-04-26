@@ -214,6 +214,16 @@ export const getFamiliehendelseAntallBarnTermin = createSelector([getFamiliehend
 export const getFamiliehendelseTermindato = createSelector([getFamiliehendelseGjeldende], (familiehendelse = {}) => familiehendelse.termindato);
 export const getBehandlingSkjaringstidspunkt = createSelector([getFamiliehendelseGjeldende], (familiehendelse = {}) => familiehendelse.skjaringstidspunkt);
 
+// endre disse til familiehendelse
+export const getBarnFraTpsRelatertTilSoknad = createSelector(
+  [getFamiliehendelseGjeldende], (familiehendelse = {}) => (familiehendelse.avklartBarn ? familiehendelse.avklartBarn : []),
+);
+const FNR_DODFODT_PART = '00001';
+export const getAntallDodfodteBarn = createSelector(
+  [getBarnFraTpsRelatertTilSoknad], (avklartBarn = []) => avklartBarn
+    .reduce((nrOfDodfodteBarn, barn) => nrOfDodfodteBarn + (barn.fnr && barn.fnr.endsWith(FNR_DODFODT_PART) ? 1 : 0), 0),
+);
+
 // INNTEKT - ARBEID - YTELSE
 const getBehandlingInntektArbeidYtelse = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling['inntekt-arbeid-ytelse']);
 export const getInntektsmeldinger = createSelector(
@@ -299,16 +309,6 @@ export const getPersonopplysning = createSelector([getSelectedBehandling], (sele
 export const getAnnenPartPersonopplysning = createSelector([getPersonopplysning], (personopplysning = {}) => personopplysning.annenPart);
 export const getEktefellePersonopplysning = createSelector([getPersonopplysning], (personopplysning = {}) => personopplysning.ektefelle);
 
-// endre disse til familiehendelse
-export const getBarnFraTpsRelatertTilSoknad = createSelector(
-  [getPersonopplysning], (personopplysning = {}) => (personopplysning.barnFraTpsRelatertTilSoknad ? personopplysning.barnFraTpsRelatertTilSoknad : []),
-);
-const FNR_DODFODT_PART = '00001';
-export const getAntallDodfodteBarn = createSelector(
-  [getBarnFraTpsRelatertTilSoknad], (barnFraTpsRelatertTilSoknad = []) => barnFraTpsRelatertTilSoknad
-    .reduce((nrOfDodfodteBarn, barn) => nrOfDodfodteBarn + (barn.fnr && barn.fnr.endsWith(FNR_DODFODT_PART) ? 1 : 0), 0),
-);
-
 // SPRÅK
 export const getBehandlingSprak = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.sprakkode);
 export const getBehandlingLanguageCode = createSelector([getBehandlingSprak], (sprakkode = {}) => getLanguageCodeFromSprakkode(sprakkode));
@@ -351,7 +351,7 @@ export const isBehandlingStatusReadOnly = createSelector(
 );
 
 export const getEditedStatus = createSelector(
-  [getSoknad, getFamiliehendelse, getPersonopplysning],
+  [getSoknad, getFamiliehendelseGjeldende, getPersonopplysning],
   (soknad, familiehendelse, personopplysning) => (
     isFieldEdited(soknad || {}, familiehendelse || {}, personopplysning || {})
   ),
