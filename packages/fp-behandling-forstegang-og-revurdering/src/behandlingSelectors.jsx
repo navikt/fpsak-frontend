@@ -202,13 +202,17 @@ export const getAndelerMedGraderingUtenBG = createSelector(
 
 
 // FAMILIEHENDELSE
-export const getFamiliehendelse = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.familiehendelse);
+export const getFamiliehendelse = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling['familiehendelse-v2']);
+export const getFamiliehendelseGjeldende = createSelector([getFamiliehendelse], (familiehendelse = {}) => familiehendelse.gjeldende);
+export const getFamiliehendelseRegister = createSelector([getFamiliehendelse], (familiehendelse = {}) => familiehendelse.register);
+export const getFamiliehendelseOppgitt = createSelector([getFamiliehendelse], (familiehendelse = {}) => familiehendelse.oppgitt);
+
 export const getBehandlingVedtaksDatoSomSvangerskapsuke = createSelector(
-  [getFamiliehendelse], (familiehendelse = {}) => familiehendelse.vedtaksDatoSomSvangerskapsuke,
+  [getFamiliehendelseGjeldende], (familiehendelse = {}) => familiehendelse.vedtaksDatoSomSvangerskapsuke,
 );
-export const getFamiliehendelseAntallBarnTermin = createSelector([getFamiliehendelse], (familiehendelse = {}) => familiehendelse.antallBarnTermin);
-export const getFamiliehendelseTermindato = createSelector([getFamiliehendelse], (familiehendelse = {}) => familiehendelse.termindato);
-export const getBehandlingSkjaringstidspunkt = createSelector([getFamiliehendelse], (familiehendelse = {}) => familiehendelse.skjaringstidspunkt);
+export const getFamiliehendelseAntallBarnTermin = createSelector([getFamiliehendelseGjeldende], (familiehendelse = {}) => familiehendelse.antallBarnTermin);
+export const getFamiliehendelseTermindato = createSelector([getFamiliehendelseGjeldende], (familiehendelse = {}) => familiehendelse.termindato);
+export const getBehandlingSkjaringstidspunkt = createSelector([getFamiliehendelseGjeldende], (familiehendelse = {}) => familiehendelse.skjaringstidspunkt);
 
 // INNTEKT - ARBEID - YTELSE
 const getBehandlingInntektArbeidYtelse = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling['inntekt-arbeid-ytelse']);
@@ -294,6 +298,8 @@ export const getBehandlingFastsattOpptjeningActivities = createSelector(
 export const getPersonopplysning = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling['soeker-personopplysninger']);
 export const getAnnenPartPersonopplysning = createSelector([getPersonopplysning], (personopplysning = {}) => personopplysning.annenPart);
 export const getEktefellePersonopplysning = createSelector([getPersonopplysning], (personopplysning = {}) => personopplysning.ektefelle);
+
+// endre disse til familiehendelse
 export const getBarnFraTpsRelatertTilSoknad = createSelector(
   [getPersonopplysning], (personopplysning = {}) => (personopplysning.barnFraTpsRelatertTilSoknad ? personopplysning.barnFraTpsRelatertTilSoknad : []),
 );

@@ -14,7 +14,7 @@ import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
-  getSoknad, getFamiliehendelse, getPersonopplysning, getInnvilgetRelatertTilgrensendeYtelserForAnnenForelder,
+  getSoknad, getFamiliehendelseGjeldende, getPersonopplysning, getInnvilgetRelatertTilgrensendeYtelserForAnnenForelder,
   getAksjonspunkter,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
@@ -93,7 +93,7 @@ OmsorgOgForeldreansvarInfoPanelImpl.propTypes = {
 };
 
 const buildInitialValues = createSelector(
-  [getSoknad, getFamiliehendelse, getPersonopplysning, getInnvilgetRelatertTilgrensendeYtelserForAnnenForelder, getAksjonspunkter],
+  [getSoknad, getFamiliehendelseGjeldende, getPersonopplysning, getInnvilgetRelatertTilgrensendeYtelserForAnnenForelder, getAksjonspunkter],
   (soknad, familiehendelse, personopplysning, innvilgetRelatertTilgrensendeYtelserForAnnenForelder, aksjonspunkter) => {
     const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OMSORGSOVERTAKELSE
       || ap.definisjon.kode === aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR);

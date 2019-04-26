@@ -12,7 +12,7 @@ import {
   ElementWrapper, VerticalSpacer, ArrowBox,
 } from '@fpsak-frontend/shared-components';
 import {
-  getEditedStatus, getFamiliehendelse, getBehandlingType, getBarnFraTpsRelatertTilSoknad,
+  getEditedStatus, getFamiliehendelseGjeldende, getBehandlingType, getBarnFraTpsRelatertTilSoknad,
   getPersonopplysning, getAksjonspunkter, getSoknadAntallBarn,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { behandlingFormValueSelector, behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
@@ -206,7 +206,7 @@ const allaBarn = (avklarteBarn) => {
   return komplettBarn;
 };
 
-export const buildInitialValues = createSelector([getFamiliehendelse, getAksjonspunkter, getSoknadAntallBarn],
+export const buildInitialValues = createSelector([getFamiliehendelseGjeldende, getAksjonspunkter, getSoknadAntallBarn],
   (familiehendelse, aksjonspunkter, soknadAntallBarn) => ({
     dokumentasjonForeligger: familiehendelse.dokumentasjonForeligger !== null
       ? familiehendelse.dokumentasjonForeligger : undefined,
