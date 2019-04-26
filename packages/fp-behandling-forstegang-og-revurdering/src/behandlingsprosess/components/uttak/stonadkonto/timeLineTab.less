@@ -1,37 +1,43 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
 .tabs {
-  li {
+  .tab {
+    border: 1px solid @navGra20;
     border-radius: @border-radius-base;
+    margin-bottom: 15px;
     margin-right: 0.5rem;
     top: 0;
-  }
 
-  .tabInner {
-    align-items: flex-end;
-    background: none;
-    border: 1px solid transparent;
-    display: flex;
-    padding: 0.75rem 1rem 0.3rem 1rem;
-    text-align: left;
-    text-decoration: none;
-    width: 110px;
-
-    &:hover {
-      cursor: pointer;
+    &.aktiv {
+      background-color: @white;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-color: transparent;
+      height: 78px;
+      margin-bottom: 0;
+      position: relative;
     }
-  }
 
-  .aktiv {
-    background-color: @white;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    height: 78px;
-    position: relative;
-  }
+    &.error {
+      border-color: transparent;
+    }
 
-  .inaktiv {
-    border: 1px solid @navGra20;
-    margin-bottom: 15px;
+    .tabInner {
+      align-items: flex-end;
+      background: none;
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: flex;
+      padding: 0.75rem 1rem 0.3rem 1rem;
+      text-align: left;
+      text-decoration: none;
+      width: 110px;
+
+      &.error {
+        background-color: @navRodLighten80;
+        border-color: @navRod;
+        border-radius: @border-radius-base;
+      }
+    }
   }
 }
