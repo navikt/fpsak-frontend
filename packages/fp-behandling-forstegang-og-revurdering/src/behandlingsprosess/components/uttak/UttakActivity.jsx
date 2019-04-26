@@ -419,9 +419,9 @@ const calculateCorrectDays = (aktivitet, item) => {
     return 0;
   }
   if ((aktivitet.utbetalingsgrad || aktivitet.utbetalingsgrad === 0) || !aktivitet.prosentArbeid) {
-    return (aktivitet.trekkdagerDesimaler % 5);
+    return ((aktivitet.trekkdagerDesimaler % 5).toFixed(1));
   }
-  return ((aktivitet.trekkdagerDesimaler * parseFloat(1 - (aktivitet.prosentArbeid * 0.01)).toPrecision(1)) % 5);
+  return (((aktivitet.trekkdagerDesimaler * parseFloat(1 - (aktivitet.prosentArbeid * 0.01)).toPrecision(1)) % 5).toFixed(1));
 };
 
 export const initialValue = (selectedItem, kontoIkkeSatt) => {

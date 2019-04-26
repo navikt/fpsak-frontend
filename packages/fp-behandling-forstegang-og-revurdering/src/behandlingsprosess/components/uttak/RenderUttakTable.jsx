@@ -139,6 +139,10 @@ export const RenderUttakTableImpl = ({
                       bredde="XS"
                       validate={[required, hasValidDecimal, maxLength3]}
                       normalizeOnBlur={value => (parseFloat(value).toFixed(1))}
+                      parse={(value) => {
+                        const parsedValue = parseFloat(value * 10) / 10;
+                        return Number.isNaN(parsedValue) ? value : parsedValue;
+                      }}
                     />
                   </Column>
                 </div>
