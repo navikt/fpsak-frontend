@@ -22,8 +22,6 @@ const fagsak = {
   },
 };
 
-const formName = 'faktaOmBeregningForm';
-
 const behandlingFormName = 'behandling_1000051_v1';
 
 export const getBehandlingFormName = () => behandlingFormName;
@@ -52,7 +50,7 @@ kodeverk[kodeverkTyper.INNTEKTSKATEGORI] = [
 ];
 
 
-export const lagStateMedAksjonspunkterOgBeregningsgrunnlag = (aksjonspunkter, beregningsgrunnlag, values = {}, initial = {}) => {
+export const lagStateMedAksjonspunkterOgBeregningsgrunnlag = (aksjonspunkter, beregningsgrunnlag, formName = 'test', values = {}, initial = {}) => {
   const data = {
     id: 1000051,
     versjon: 1,
@@ -81,10 +79,11 @@ export const lagStateMedAksjonspunkterOgBeregningsgrunnlag = (aksjonspunkter, be
     },
     form: {},
   };
-  state.form[behandlingFormName] = {};
-  state.form[behandlingFormName][formName] = {
-    values,
-    initial,
+  state.form[behandlingFormName] = {
+    [formName]: {
+      values,
+      initial,
+    },
   };
   return state;
 };

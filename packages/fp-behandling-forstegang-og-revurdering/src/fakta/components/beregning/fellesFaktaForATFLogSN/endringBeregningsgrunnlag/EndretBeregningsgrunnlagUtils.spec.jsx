@@ -15,6 +15,7 @@ import {
   finnFrilansFieldName,
   utledArbeidsforholdFieldName,
 } from '../vurderOgFastsettATFL/forms/VurderMottarYtelseUtils';
+import { formNameVurderFaktaBeregning } from '../../BeregningFormUtils';
 
 const {
   VURDER_FAKTA_FOR_ATFL_SN,
@@ -85,7 +86,7 @@ const forventetRefusjonString = 'arbeidsgiver 2 (987654321) f.o.m. 20.01.2017 og
 
 const lagStateMedBeregningsgrunnlagOgValues = (bg, values = {}) => {
   const ap = { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN } };
-  return lagStateMedAksjonspunkterOgBeregningsgrunnlag([ap], bg, values);
+  return lagStateMedAksjonspunkterOgBeregningsgrunnlag([ap], bg, formNameVurderFaktaBeregning, values);
 };
 
 describe('<EndretBeregningsgrunnlagUtils>', () => {

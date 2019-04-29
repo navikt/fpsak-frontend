@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import { getBehandlingFormValues } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import {
@@ -10,7 +11,7 @@ import {
   transformValuesAvklarAktiviteter, erAvklartAktivitetEndret, BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME,
 } from './AvklareAktiviteterPanel';
 import VurderAktiviteterPanel from './VurderAktiviteterPanel';
-import { formName } from '../BeregningFormUtils';
+import { formNameAvklarAktiviteter } from '../BeregningFormUtils';
 
 const {
   AVKLAR_AKTIVITETER,
@@ -22,7 +23,7 @@ const lagStateMedAvklarAktitiveter = (avklarAktiviteter, values = {}, initial = 
   const faktaOmBeregning = {
     avklarAktiviteter,
   };
-  return lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, { faktaOmBeregning }, values, initial);
+  return lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, { faktaOmBeregning }, formNameAvklarAktiviteter, values, initial);
 };
 
 const aktivitet1 = {
@@ -85,6 +86,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         ],
     };
     const wrapper = shallow(<AvklareAktiviteterPanelImpl
+      {...reduxFormPropsMock}
       readOnly={false}
       isAksjonspunktClosed={false}
       avklarAktiviteter={avklarAktiviteter}
@@ -92,7 +94,6 @@ describe('<AvklareAktiviteterPanel>', () => {
       submittable
       isDirty
       submitEnabled
-      formName="form"
       helpText={[]}
       harAndreAksjonspunkterIPanel={false}
       erEndret={false}
@@ -106,6 +107,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       aktiviteterTomDatoMapping: null,
     };
     const wrapper = shallow(<AvklareAktiviteterPanelImpl
+      {...reduxFormPropsMock}
       readOnly={false}
       isAksjonspunktClosed={false}
       avklarAktiviteter={avklarAktiviteter}
@@ -113,7 +115,6 @@ describe('<AvklareAktiviteterPanel>', () => {
       submittable
       isDirty
       submitEnabled
-      formName="form"
       helpText={[]}
       harAndreAksjonspunkterIPanel={false}
       erEndret={false}
@@ -146,7 +147,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     values[idAAP] = { skalBrukes: true };
 
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values);
-    const transformed = transformValuesAvklarAktiviteter(state)(getBehandlingFormValues(formName)(state));
+    const transformed = transformValuesAvklarAktiviteter(state)(getBehandlingFormValues(formNameAvklarAktiviteter)(state));
 
     expect(transformed[0].beregningsaktivitetLagreDtoList.length).to.equal(1);
     expect(transformed[0].beregningsaktivitetLagreDtoList[0].oppdragsgiverOrg).to.equal(aktivitet1.arbeidsgiverId);
@@ -168,7 +169,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       { definisjon: { kode: AVKLAR_AKTIVITETER } },
       { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN } }];
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, values, aps);
-    const transformed = transformValuesAvklarAktiviteter(state)(getBehandlingFormValues(formName)(state));
+    const transformed = transformValuesAvklarAktiviteter(state)(getBehandlingFormValues(formNameAvklarAktiviteter)(state));
     expect(transformed).to.equal(null);
   });
 
@@ -187,7 +188,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const aps = [
       { definisjon: { kode: AVKLAR_AKTIVITETER } }];
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, values, aps);
-    const transformed = transformValuesAvklarAktiviteter(state)(getBehandlingFormValues(formName)(state));
+    const transformed = transformValuesAvklarAktiviteter(state)(getBehandlingFormValues(formNameAvklarAktiviteter)(state));
     expect(transformed[0].beregningsaktivitetLagreDtoList.length).to.equal(1);
     expect(transformed[0].beregningsaktivitetLagreDtoList[0].arbeidsgiverIdentifikator).to.equal(aktivitet3.aktørId.aktørId);
     expect(transformed[0].begrunnelse).to.equal('begrunnelse');
@@ -213,7 +214,7 @@ it('skal transform values om to aksjonspunkter og med endring', () => {
   initial[id3] = { skalBrukes: false };
   initial[idAAP] = { skalBrukes: null };
   const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, initial, aps);
-  const transformed = transformValuesAvklarAktiviteter(state)(getBehandlingFormValues(formName)(state));
+  const transformed = transformValuesAvklarAktiviteter(state)(getBehandlingFormValues(formNameAvklarAktiviteter)(state));
   expect(transformed[0].beregningsaktivitetLagreDtoList.length).to.equal(1);
   expect(transformed[0].beregningsaktivitetLagreDtoList[0].arbeidsgiverIdentifikator).to.equal(aktivitet3.aktørId.aktørId);
 });

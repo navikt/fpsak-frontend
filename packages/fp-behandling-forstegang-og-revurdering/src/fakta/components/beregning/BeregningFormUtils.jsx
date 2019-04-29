@@ -1,12 +1,23 @@
 import { createSelector } from 'reselect';
 import { getBehandlingFormValues, getBehandlingFormInitialValues, isBehandlingFormDirty } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 
-export const formName = 'faktaOmBeregningForm';
+export const formNameAvklarAktiviteter = 'avklarAktiviteterForm';
+
+export const formNameVurderFaktaBeregning = 'vurderFaktaBeregningForm';
+
+export const getFormValuesForAvklarAktiviteter = createSelector([
+  getBehandlingFormValues(formNameAvklarAktiviteter)], values => values);
+
+export const getFormInitialValuesForAvklarAktiviteter = createSelector([
+  getBehandlingFormInitialValues(formNameAvklarAktiviteter)], values => values);
+
+  export const isAvklarAktiviteterFormDirty = state => isBehandlingFormDirty(formNameAvklarAktiviteter)(state);
+
 
 export const getFormValuesForBeregning = createSelector([
-  getBehandlingFormValues(formName)], values => values);
+  getBehandlingFormValues(formNameVurderFaktaBeregning)], values => values);
 
 export const getFormInitialValuesForBeregning = createSelector([
-  getBehandlingFormInitialValues(formName)], values => values);
+  getBehandlingFormInitialValues(formNameVurderFaktaBeregning)], values => values);
 
-export const isBeregningFormDirty = state => isBehandlingFormDirty(formName)(state);
+export const isBeregningFormDirty = state => isBehandlingFormDirty(formNameVurderFaktaBeregning)(state);

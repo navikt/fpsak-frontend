@@ -10,6 +10,7 @@ import { TableRow, TableColumn } from '@fpsak-frontend/shared-components';
 import { InputField, SelectField, PeriodpickerField } from '@fpsak-frontend/form';
 import { AndelRowImpl, mapStateToProps } from './InntektFieldArrayRow';
 import ArbeidsforholdField from './ArbeidsforholdField';
+import { formNameVurderFaktaBeregning } from '../BeregningFormUtils';
 
 
 const aksjonspunkter = [
@@ -43,7 +44,7 @@ initial.fieldArrayName = [andelField];
 const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, {
  faktaOmBeregning,
 beregningsgrunnlagPeriode: [{ beregningsgrunnlagPrStatusOgAndel: [{ andelsnr: 1 }] }],
-}, initial, initial);
+}, formNameVurderFaktaBeregning, initial, initial);
 const props = mapStateToProps(state, { fields, index: 0 });
 
 
