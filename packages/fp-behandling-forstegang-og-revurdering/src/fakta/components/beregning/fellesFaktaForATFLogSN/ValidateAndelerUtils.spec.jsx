@@ -521,7 +521,6 @@ describe('<ValidateAndelerUtils>', () => {
   });
 
   it('skal gi error om total beløp for arbeidsforhold overstiger rapportert beløp', () => {
-    const stpBeregning = '2018-01-01';
     const values = [{
       andel: 'Arbeidsgiver 1',
       fastsattBelop: '10 000',
@@ -543,7 +542,7 @@ describe('<ValidateAndelerUtils>', () => {
       inntektskategori: 'FRILANSER',
     },
     ];
-    const fastsattError = validateAndeler(values, () => true, stpBeregning, () => true);
+    const fastsattError = validateAndeler(values, () => true, () => true);
     expect(fastsattError['0'].fastsattBelop[0].id).to.equal(tomErrorMessage()[0].id);
     expect(fastsattError['1'].fastsattBelop[0].id).to.equal(tomErrorMessage()[0].id);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */

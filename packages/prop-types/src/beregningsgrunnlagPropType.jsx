@@ -84,7 +84,6 @@ const beregningsgrunnlagPropType = PropTypes.shape({
       bortfaltNaturalytelse: PropTypes.number,
       erNyIArbeidslivet: PropTypes.bool,
       erTidsbegrensetArbeidsforhold: PropTypes.bool,
-      erNyoppstartetEllerSammeOrganisasjon: PropTypes.bool,
       erNyoppstartet: PropTypes.bool,
       fastsattAvSaksbehandler: PropTypes.bool,
       arbeidsgiverId: PropTypes.string,

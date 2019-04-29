@@ -72,7 +72,6 @@ const lagPeriode = (harPeriodeAarsakGraderingEllerRefusjon,
 const inntektskategoriArbeidstaker = { kode: inntektskategorier.ARBEIDSTAKER };
 const inntektskategoriUdefinert = { kode: inntektskategorier.UDEFINERT };
 const kunYtelseOgEndringTilfeller = [faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE, faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG];
-const skjaeringstidspunktBeregning = '2018-01-01';
 
 const getKodeverknavn = (kodeverk) => {
   if (kodeverk.kode === aktivitetStatus.BRUKERS_ANDEL) {
@@ -245,7 +244,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
 
 
   it('skal ikkje validere om values er udefinert', () => {
-    const errors = KunYtelseTilkommetArbeidPanel.validate(undefined, [], null, null, skjaeringstidspunktBeregning);
+    const errors = KunYtelseTilkommetArbeidPanel.validate(undefined, [], null, null);
     expect(errors).to.equal(null);
   });
 
@@ -272,7 +271,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const endringBGPerioder = [{
  fom: '2018-08-01', tom: null, harPeriodeAarsakGraderingEllerRefusjon: false, endringBeregningsgrunnlagAndeler: [],
 }];
-    const errors = KunYtelseTilkommetArbeidPanel.validate(values, [], kunYtelseUtenDP, endringBGPerioder, skjaeringstidspunktBeregning);
+    const errors = KunYtelseTilkommetArbeidPanel.validate(values, [], kunYtelseUtenDP, endringBGPerioder);
     expect(errors).to.equal(null);
   });
 
@@ -283,7 +282,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
 }];
     const errors = KunYtelseTilkommetArbeidPanel.validate(setKunYtelseFastsattBeløp(null, 'ARBEIDSTAKER'),
       kunYtelseOgEndringTilfeller,
-      kunYtelseUtenDP, endringBGPerioder, skjaeringstidspunktBeregning);
+      kunYtelseUtenDP, endringBGPerioder);
     const kunYtelseError = errors[brukersAndelFieldArrayName];
     expect(kunYtelseError.length).to.equal(1);
     expect(kunYtelseError[0].fastsattBelop[0].id).to.equal(isRequiredMessage()[0].id);
@@ -295,7 +294,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
 }];
     const errors = KunYtelseTilkommetArbeidPanel.validate(setKunYtelseFastsattBeløp('10 000', ''),
       kunYtelseOgEndringTilfeller,
-      kunYtelseUtenDP, endringBGPerioder, skjaeringstidspunktBeregning);
+      kunYtelseUtenDP, endringBGPerioder);
     const kunYtelseError = errors[brukersAndelFieldArrayName];
     expect(kunYtelseError.length).to.equal(1);
     expect(kunYtelseError[0].inntektskategori[0].id).to.equal(isRequiredMessage()[0].id);
@@ -324,8 +323,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder,
-      skjaeringstidspunktBeregning);
+      endringBGPerioder);
     assertEmptyKunYtelseError(errors);
     const endringError = errors[getFieldNameKey(0)];
     expect(endringError).to.equal(null);
@@ -353,8 +351,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder,
-      skjaeringstidspunktBeregning);
+      endringBGPerioder);
     assertEmptyKunYtelseError(errors);
     expect(errors[getFieldNameKey(0)]).to.have.length(1);
     expect(errors[getFieldNameKey(0)][0].fastsattBelop).to.have.length(1);
@@ -384,8 +381,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder,
-      skjaeringstidspunktBeregning);
+      endringBGPerioder);
     assertEmptyKunYtelseError(errors);
     expect(errors[getFieldNameKey(0)]).to.have.length(1);
     expect(errors[getFieldNameKey(0)][0].fastsattBelop).to.have.length(1);
@@ -416,8 +412,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder,
-      skjaeringstidspunktBeregning);
+      endringBGPerioder);
     assertEmptyKunYtelseError(errors);
     expect(errors[getFieldNameKey(0)]).to.have.length(1);
     expect(errors[getFieldNameKey(0)][0].refusjonskrav).to.equal(undefined);
@@ -445,8 +440,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder,
-      skjaeringstidspunktBeregning);
+      endringBGPerioder);
     assertEmptyKunYtelseError(errors);
     expect(errors[getFieldNameKey(0)]).to.have.length(1);
     expect(errors[getFieldNameKey(0)][0].refusjonskrav).to.have.length(1);
@@ -475,8 +469,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder,
-      skjaeringstidspunktBeregning);
+      endringBGPerioder);
     assertEmptyKunYtelseError(errors);
     expect(errors[getFieldNameKey(0)]).to.have.length(1);
     expect(errors[getFieldNameKey(0)][0].andel).to.have.length(1);
@@ -505,8 +498,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder,
-      skjaeringstidspunktBeregning);
+      endringBGPerioder);
     assertEmptyKunYtelseError(errors);
     expect(errors[getFieldNameKey(0)]).to.have.length(1);
     expect(errors[getFieldNameKey(0)][0].andel).to.have.length(1);
@@ -538,8 +530,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder,
-      skjaeringstidspunktBeregning);
+      endringBGPerioder);
     assertEmptyKunYtelseError(errors);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
     expect(errors[getFieldNameKey(0)]._error[0].id).to.equal(skalVereLikFordelingMessage()[0].id);
@@ -579,8 +570,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder,
-      skjaeringstidspunktBeregning);
+      endringBGPerioder);
     assertEmptyKunYtelseError(errors);
     expect(errors[getFieldNameKey(0)]).to.equal(null);
   });
@@ -617,8 +607,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder,
-      skjaeringstidspunktBeregning);
+      endringBGPerioder);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
     expect(errors[getFieldNameKey(0)]._error[0].id).to.equal(skalVereLikFordelingMessage()[0].id);
     expect(errors[getFieldNameKey(0)]._error[1].fordeling).to.equal('40 000');
@@ -641,8 +630,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder,
-      skjaeringstidspunktBeregning);
+      endringBGPerioder);
     expect(errors[getFieldNameKey(0)]).to.equal(null);
   });
 
@@ -664,8 +652,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const errors = KunYtelseTilkommetArbeidPanel.validate(values,
       kunYtelseOgEndringTilfeller,
       kunYtelseUtenDP,
-      endringBGPerioder,
-      skjaeringstidspunktBeregning);
+      endringBGPerioder);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
     expect(errors[getFieldNameKey(0)]._error[0].id).to.equal(ulikeAndelerErrorMessage()[0].id);
   });

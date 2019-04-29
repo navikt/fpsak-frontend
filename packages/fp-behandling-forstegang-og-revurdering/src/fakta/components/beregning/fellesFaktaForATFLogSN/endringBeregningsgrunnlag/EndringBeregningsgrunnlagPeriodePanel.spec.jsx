@@ -45,7 +45,19 @@ const lagArbeidstakerAndelEtterStp = (andelsnr, lagtTilAvSaksbehandler, fordelin
   refusjonskrav,
   belopFraInntektsmelding,
   refusjonskravFraInntektsmelding,
+  nyttArbeidsforhold: true,
 });
+
+const getKodeverknavn = (kodeverk) => {
+  if (kodeverk.kode === aktivitetStatuser.ARBEIDSTAKER) {
+    return 'Arbeidstaker';
+  }
+  if (kodeverk.kode === aktivitetStatuser.FRILANSER) {
+    return 'Frilanser';
+  }
+
+  return '';
+};
 
 const lagArbeidstakerAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandling,
   beregnetPrMnd, fastsattForrige, fastsattAvSaksbehandler, refusjonskrav, belopFraInntektsmelding,
@@ -148,8 +160,7 @@ describe('<EndringBeregningsgrunnlagPeriodePanel>', () => {
       ],
     };
 
-    const getKodeverknavn = () => undefined;
-    const initialValues = EndringBeregningsgrunnlagPeriodePanel.buildInitialValues(periode, false, bgPeriode, stpBeregning, faktaOmBeregning, getKodeverknavn);
+    const initialValues = EndringBeregningsgrunnlagPeriodePanel.buildInitialValues(periode, bgPeriode, stpBeregning, faktaOmBeregning, getKodeverknavn);
     expect(initialValues).to.have.length(7);
     const arbeidstakerAndelerBeforeStp = initialValues.filter(({ arbeidsperiodeFom }) => arbeidsperiodeFom !== ''
     && moment(arbeidsperiodeFom).isBefore(moment(stpBeregning)));
@@ -166,8 +177,8 @@ describe('<EndringBeregningsgrunnlagPeriodePanel>', () => {
       expect(initialValue.harPeriodeAarsakGraderingEllerRefusjon).to.equal(true);
     });
 
-    const andelerEtterStp = initialValues.filter(({ arbeidsperiodeFom }) => arbeidsperiodeFom !== ''
-    && !moment(arbeidsperiodeFom).isBefore(moment(stpBeregning)));
+
+    const andelerEtterStp = initialValues.filter(({ nyttArbeidsforhold }) => nyttArbeidsforhold);
     expect(andelerEtterStp).to.have.length(1);
     expect(andelerEtterStp[0].andel).to.equal('Virksomheten (3284788923) ...a7e2');
     expect(andelerEtterStp[0].aktivitetStatus).to.equal('AT');

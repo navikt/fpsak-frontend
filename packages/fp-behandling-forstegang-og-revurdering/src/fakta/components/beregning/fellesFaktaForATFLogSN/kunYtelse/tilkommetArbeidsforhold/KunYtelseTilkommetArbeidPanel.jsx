@@ -83,6 +83,7 @@ const buildPeriodeInitialValues = (periode, isRevurdering, getKodeverknavn) => {
         belopFraInntektsmelding: andel.belopFraInntektsmelding,
         harPeriodeAarsakGraderingEllerRefusjon: periode.harPeriodeAarsakGraderingEllerRefusjon,
         refusjonskravFraInntektsmelding: andel.refusjonskravFraInntektsmelding,
+        nyttArbeidsforhold: true,
       });
     })
   );
@@ -146,8 +147,8 @@ const skalRedigereInntekt = andel => andel.harPeriodeAarsakGraderingEllerRefusjo
 
 const skalValidereMotRapportert = () => true;
 
-const validatePeriode = (periode, sumFordelingKunYtelse, skjaeringstidspunktBeregning, getKodeverknavn) => {
-  const arrayErrors = validateAndeler(periode, skalRedigereInntekt, skjaeringstidspunktBeregning, skalValidereMotRapportert, getKodeverknavn);
+const validatePeriode = (periode, sumFordelingKunYtelse, getKodeverknavn) => {
+  const arrayErrors = validateAndeler(periode, skalRedigereInntekt, skalValidereMotRapportert, getKodeverknavn);
   if (arrayErrors != null) {
     return arrayErrors;
   }
@@ -174,7 +175,7 @@ const summerForstePeriode = (values) => {
 return verdier.reduce((sum, fastsattBelop) => (sum + finnBelop(fastsattBelop)), 0);
 };
 
-KunYtelseTilkommetArbeidPanel.validate = (values, aktivertePaneler, kunYtelse, endringBGPerioder, skjaeringstidspunktBeregning, getKodeverknavn) => {
+KunYtelseTilkommetArbeidPanel.validate = (values, aktivertePaneler, kunYtelse, endringBGPerioder, getKodeverknavn) => {
   if (!values || !harKunYtelseOgEndretBeregningsgrunnlag(aktivertePaneler)) {
     return null;
   }
@@ -186,7 +187,7 @@ KunYtelseTilkommetArbeidPanel.validate = (values, aktivertePaneler, kunYtelse, e
   : KunYtelsePanel.summerFordeling(values);
   const endringErrors = {};
   for (let i = 0; i < perioder.length; i += 1) {
-    endringErrors[getFieldNameKey(i)] = validatePeriode(values[getFieldNameKey(i)], sumFordeling, skjaeringstidspunktBeregning, getKodeverknavn);
+    endringErrors[getFieldNameKey(i)] = validatePeriode(values[getFieldNameKey(i)], sumFordeling, getKodeverknavn);
   }
   return {
     ...kunYtelseErrors,

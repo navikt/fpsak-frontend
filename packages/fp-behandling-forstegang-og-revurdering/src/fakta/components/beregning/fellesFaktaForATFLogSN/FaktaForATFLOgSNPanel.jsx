@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { createSelector, createStructuredSelector } from 'reselect';
-
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import faktaOmBeregningTilfelle,
 {
@@ -11,8 +9,8 @@ import faktaOmBeregningTilfelle,
   harFastsettATFLInntektTilfelle,
 } from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
-import { getRettigheter } from 'navAnsatt/duck';
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { createSelector, createStructuredSelector } from 'reselect';
 import {
   getAksjonspunkter,
   getBeregningsgrunnlag,
@@ -24,8 +22,6 @@ import {
   getBehandlingIsRevurdering,
   getVurderMottarYtelse,
   getVurderBesteberegning,
-  getBehandlingIsOnHold,
-  hasReadOnlyBehandling,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -73,8 +69,7 @@ export const getValidationFaktaForATFLOgSN = createSelector([mapStateToValidatio
   return ({
     ...FastsettEndretBeregningsgrunnlag.validate(values, props.endringBGPerioder, props.aktivertePaneler, props.faktaOmBeregning,
       props.beregningsgrunnlag, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
-    ...getKunYtelseValidation(values, props.kunYtelse, props.endringBGPerioder, props.aktivertePaneler,
-      props.beregningsgrunnlag.skjaeringstidspunktBeregning, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
+    ...getKunYtelseValidation(values, props.kunYtelse, props.endringBGPerioder, props.aktivertePaneler),
     ...VurderMottarYtelseForm.validate(values, props.vurderMottarYtelse),
     ...VurderBesteberegningForm.validate(values, props.aktivertePaneler),
     ...VurderOgFastsettATFL.validate(values, props.aktivertePaneler, props.faktaOmBeregning, props.beregningsgrunnlag,
@@ -284,23 +279,18 @@ export const transformValuesFaktaForATFLOgSN = createSelector(
   ),
 );
 
-export const isReadOnly = createSelector([getRettigheter, getBehandlingIsOnHold, hasReadOnlyBehandling],
-  (rettigheter, isOnHold, hasReadOnly) => !rettigheter.writeAccess.isEnabled || isOnHold || hasReadOnly);
-
 const getVurderFaktaAksjonspunkt = createSelector([getAksjonspunkter], aksjonspunkter => (aksjonspunkter
   ? aksjonspunkter.find(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN) : undefined));
 
 export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
   [getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlag,
     getKortvarigeArbeidsforhold, getVurderFaktaAksjonspunkt, getKunYtelse,
-    getFaktaOmBeregningTilfellerKoder, getBehandlingIsRevurdering, getVurderMottarYtelse, getVurderBesteberegning,
-    isReadOnly, getAlleKodeverk],
+    getFaktaOmBeregningTilfellerKoder, getBehandlingIsRevurdering, getVurderMottarYtelse, getVurderBesteberegning, getAlleKodeverk],
   (endringBGPerioder, beregningsgrunnlag, kortvarigeArbeidsforhold, vurderFaktaAP, kunYtelse,
-    tilfeller, isRevurdering, vurderMottarYtelse, vurderBesteberegning, readOnly, alleKodeverk) => () => ({
+    tilfeller, isRevurdering, vurderMottarYtelse, vurderBesteberegning, alleKodeverk) => () => ({
     ...TidsbegrensetArbeidsforholdForm.buildInitialValues(kortvarigeArbeidsforhold),
     ...NyIArbeidslivetSNForm.buildInitialValues(beregningsgrunnlag),
-    ...FastsettEndretBeregningsgrunnlag.buildInitialValues(endringBGPerioder, tilfeller, readOnly, beregningsgrunnlag,
-        getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
+    ...FastsettEndretBeregningsgrunnlag.buildInitialValues(endringBGPerioder, tilfeller, beregningsgrunnlag, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
     ...LonnsendringForm.buildInitialValues(beregningsgrunnlag),
     ...NyoppstartetFLForm.buildInitialValues(beregningsgrunnlag),
     ...buildInitialValuesKunYtelse(kunYtelse, endringBGPerioder, isRevurdering, tilfeller, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),

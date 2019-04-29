@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FieldArray } from 'redux-form';
@@ -16,7 +15,7 @@ import RenderEndringBGFieldArray from './RenderEndringBGFieldArray';
 import { createEndringHeadingForDate, renderDateHeading } from './EndretBeregningsgrunnlagUtils';
 import {
   settAndelIArbeid, setGenerellAndelsinfo, setArbeidsforholdInitialValues, settFastsattBelop, settReadOnlyBelop,
-  erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon, andelErStatusFLOgHarATISammeOrg,
+  erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon, andelErStatusFLOgHarATISammeOrg, starterPaaEllerEtterStp,
 } from '../BgFordelingUtils';
 
 import styles from './endringBeregningsgrunnlagPeriodePanel.less';
@@ -74,16 +73,17 @@ EndringBeregningsgrunnlagPeriodePanelImpl.defaultProps = {
 
 
 EndringBeregningsgrunnlagPeriodePanelImpl.validate = (values, fastsattIForstePeriode,
-  skalRedigereInntekt, skalOverstyreBg, skjaeringstidspunktBeregning, skalValidereMotRapportert, getKodeverknavn) => RenderEndringBGFieldArray
+  skalRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert, getKodeverknavn) => RenderEndringBGFieldArray
   .validate(values, fastsattIForstePeriode,
-    skalRedigereInntekt, skalOverstyreBg, skjaeringstidspunktBeregning, skalValidereMotRapportert, getKodeverknavn);
+    skalRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert, getKodeverknavn);
 
 const finnRiktigAndel = (andel, bgPeriode) => bgPeriode.beregningsgrunnlagPrStatusOgAndel.find(a => a.andelsnr === andel.andelsnr);
 
 const erArbeidstakerMedArbeidsforhold = bgAndel => (bgAndel.aktivitetStatus.kode === aktivitetStatuser.ARBEIDSTAKER && bgAndel.arbeidsforhold);
 
 const finnRegister = (andel, bgAndel, skjaeringstidspunktBeregning, faktaOmBeregning) => {
-  if (erArbeidstakerMedArbeidsforhold(bgAndel) && !moment(bgAndel.arbeidsforhold.startdato).isBefore(moment(skjaeringstidspunktBeregning))) {
+  if (erArbeidstakerMedArbeidsforhold(bgAndel)
+  && (andel.nyttArbeidsforhold || starterPaaEllerEtterStp(bgAndel, skjaeringstidspunktBeregning))) {
     return null;
   }
   if (erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon(bgAndel, faktaOmBeregning)) {
@@ -92,12 +92,17 @@ const finnRegister = (andel, bgAndel, skjaeringstidspunktBeregning, faktaOmBereg
   if (andelErStatusFLOgHarATISammeOrg(bgAndel, faktaOmBeregning)) {
     return null;
   }
-  return andel.belopFraInntektsmelding
-|| andel.belopFraInntektsmelding === 0 ? formatCurrencyNoKr(andel.belopFraInntektsmelding) : formatCurrencyNoKr(bgAndel.belopPrMndEtterAOrdningen);
+  if (andel.belopFraInntektsmelding || andel.belopFraInntektsmelding === 0) {
+    return formatCurrencyNoKr(andel.belopFraInntektsmelding);
+  }
+  if (bgAndel && (bgAndel.belopPrMndEtterAOrdningen || bgAndel.belopPrMndEtterAOrdningen === 0)) {
+    return formatCurrencyNoKr(bgAndel.belopPrMndEtterAOrdningen);
+  }
+  return bgAndel && bgAndel.belopFraMeldekortPrMnd ? formatCurrencyNoKr(bgAndel.belopFraMeldekortPrMnd) : null;
 };
 
-EndringBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (periode, readOnly, bgPeriode, skjaeringstidspunktBeregning, faktaOmBeregning,
-    getKodeverknavn) => {
+EndringBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (periode, bgPeriode, skjaeringstidspunktBeregning,
+  faktaOmBeregning, getKodeverknavn) => {
   if (!periode || !periode.endringBeregningsgrunnlagAndeler) {
     return {};
   }
@@ -113,9 +118,8 @@ EndringBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (periode, readOnl
       fordelingForrigeBehandling: andel.fordelingForrigeBehandling || andel.fordelingForrigeBehandling === 0
         ? formatCurrencyNoKr(andel.fordelingForrigeBehandling) : '',
       fastsattBelop: settFastsattBelop(andel.beregnetPrMnd, andel.fastsattForrige, andel.fastsattAvSaksbehandler),
-      readOnlyBelop: settReadOnlyBelop(readOnly, andel.beregnetPrMnd, andel.snittIBeregningsperiodenPrMnd, andel.belopFraInntektsmelding),
+      readOnlyBelop: settReadOnlyBelop(finnRegister(andel, bgAndel, skjaeringstidspunktBeregning, faktaOmBeregning), andel.belopFraInntektsmelding),
       skalRedigereInntekt: periode.harPeriodeAarsakGraderingEllerRefusjon,
-      snittIBeregningsperiodenPrMnd: andel.snittIBeregningsperiodenPrMnd,
       refusjonskrav: andel.refusjonskrav !== null && andel.refusjonskrav !== undefined ? formatCurrencyNoKr(andel.refusjonskrav) : '',
       skalKunneEndreRefusjon: periode.skalKunneEndreRefusjon && !andel.lagtTilAvSaksbehandler
       && andel.refusjonskravFraInntektsmelding ? periode.skalKunneEndreRefusjon : false,
@@ -123,6 +127,7 @@ EndringBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (periode, readOnl
       harPeriodeAarsakGraderingEllerRefusjon: periode.harPeriodeAarsakGraderingEllerRefusjon,
       refusjonskravFraInntektsmelding: andel.refusjonskravFraInntektsmelding,
       registerInntekt: andel.lagtTilAvSaksbehandler ? null : finnRegister(andel, bgAndel, skjaeringstidspunktBeregning, faktaOmBeregning),
+      nyttArbeidsforhold: andel.nyttArbeidsforhold || starterPaaEllerEtterStp(bgAndel, skjaeringstidspunktBeregning),
     });
 })
   );

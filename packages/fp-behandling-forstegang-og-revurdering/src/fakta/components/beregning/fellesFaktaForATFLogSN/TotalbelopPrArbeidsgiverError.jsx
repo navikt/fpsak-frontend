@@ -1,38 +1,39 @@
 import React from 'react';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import { FormattedMessage } from 'react-intl';
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 
-export const lagTotalInntektArbeidsforholdList = (values, skjaeringstidspunktBeregning, getKodeverknavn) => {
+export const lagTotalInntektArbeidsforholdList = (values, skalValidereMotRapportert, getKodeverknavn) => {
   const totalInntektArbeidsforholdList = [];
   values.forEach((andel) => {
-    const navn = createVisningsnavnForAktivitet(andel, getKodeverknavn);
-    if (andel.arbeidsgiverId) {
-      const arbforhold = totalInntektArbeidsforholdList.find(({ key }) => key === navn);
-      if (arbforhold !== undefined) {
-        const idx = totalInntektArbeidsforholdList.indexOf(arbforhold);
-        totalInntektArbeidsforholdList[idx].fastsattBelop += removeSpacesFromNumber(andel.fastsattBelop || '0');
-        totalInntektArbeidsforholdList[idx].registerInntekt = andel.registerInntekt && andel.registerInntekt !== ''
-        ? removeSpacesFromNumber(andel.registerInntekt) : totalInntektArbeidsforholdList[idx].registerInntekt;
-      } else {
-        totalInntektArbeidsforholdList.push({
-          key: navn,
-          fastsattBelop: removeSpacesFromNumber(andel.fastsattBelop || '0'),
-          registerInntekt: andel.registerInntekt || andel.registerInntekt === 0 ? removeSpacesFromNumber(andel.registerInntekt) : null,
-          belopFraInntektsmelding: andel.belopFraInntektsmelding,
-          beforeStp: moment(andel.arbeidsperiodeFom).isBefore(moment(skjaeringstidspunktBeregning)),
-        });
-      }
-    } else if (andel.registerInntekt !== null && andel.registerInntekt !== undefined && andel.registerInntekt !== '') {
-        totalInntektArbeidsforholdList.push({
-          key: navn,
-          fastsattBelop: removeSpacesFromNumber(andel.fastsattBelop || '0'),
-          registerInntekt: removeSpacesFromNumber(andel.registerInntekt),
-          beforeStp: true,
-        });
-      }
+    if (skalValidereMotRapportert(andel)) {
+      const navn = createVisningsnavnForAktivitet(andel, getKodeverknavn);
+      if (andel.arbeidsgiverId) {
+        const arbforhold = totalInntektArbeidsforholdList.find(({ key }) => key === navn);
+        if (arbforhold !== undefined) {
+          const idx = totalInntektArbeidsforholdList.indexOf(arbforhold);
+          totalInntektArbeidsforholdList[idx].fastsattBelop += removeSpacesFromNumber(andel.fastsattBelop || '0');
+          totalInntektArbeidsforholdList[idx].registerInntekt = andel.registerInntekt && andel.registerInntekt !== ''
+          ? removeSpacesFromNumber(andel.registerInntekt) : totalInntektArbeidsforholdList[idx].registerInntekt;
+        } else {
+          totalInntektArbeidsforholdList.push({
+            key: navn,
+            fastsattBelop: removeSpacesFromNumber(andel.fastsattBelop || '0'),
+            registerInntekt: andel.registerInntekt || andel.registerInntekt === 0 ? removeSpacesFromNumber(andel.registerInntekt) : null,
+            belopFraInntektsmelding: andel.belopFraInntektsmelding,
+            beforeStp: !andel.nyttArbeidsforhold,
+          });
+        }
+      } else if (andel.registerInntekt !== null && andel.registerInntekt !== undefined && andel.registerInntekt !== '') {
+          totalInntektArbeidsforholdList.push({
+            key: navn,
+            fastsattBelop: removeSpacesFromNumber(andel.fastsattBelop || '0'),
+            registerInntekt: removeSpacesFromNumber(andel.registerInntekt),
+            beforeStp: true,
+          });
+        }
+    }
   });
   return totalInntektArbeidsforholdList;
 };
@@ -82,8 +83,7 @@ TotalbelopPrArbeidsgiverError.propTypes = {
     belopFraInntektsmelding: PropTypes.number,
     notBeforeStp: PropTypes.bool,
   }),
-)
-  .isRequired,
+).isRequired,
 };
 
 export default TotalbelopPrArbeidsgiverError;

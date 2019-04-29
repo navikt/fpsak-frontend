@@ -149,7 +149,7 @@ describe('<BgFordelingUtils>', () => {
     const fastsattForrige = 50000;
     const belopFraInntektsmelding = 75000;
     const fastsattBelop = settFastsattBelop(beregnetPrMnd, fastsattForrige, fastsattAvSaksbehandler);
-    const readOnlyFastsattBelop = settReadOnlyBelop(true, beregnetPrMnd, undefined, belopFraInntektsmelding);
+    const readOnlyFastsattBelop = settReadOnlyBelop(undefined, belopFraInntektsmelding);
     expect(fastsattBelop).to.equal(formatCurrencyNoKr(fastsattForrige));
     expect(readOnlyFastsattBelop).to.equal(formatCurrencyNoKr(belopFraInntektsmelding));
   });
@@ -160,7 +160,7 @@ describe('<BgFordelingUtils>', () => {
     const fastsattForrige = null;
     const belopFraInntektsmelding = 75000;
     const fastsattBelop = settFastsattBelop(beregnetPrMnd, fastsattForrige, fastsattAvSaksbehandler);
-    const readOnlyFastsattBelop = settReadOnlyBelop(true, beregnetPrMnd, undefined, belopFraInntektsmelding);
+    const readOnlyFastsattBelop = settReadOnlyBelop(undefined, belopFraInntektsmelding);
     expect(fastsattBelop).to.equal('');
     expect(readOnlyFastsattBelop).to.equal(formatCurrencyNoKr(belopFraInntektsmelding));
   });
@@ -171,7 +171,7 @@ describe('<BgFordelingUtils>', () => {
     const fastsattForrige = null;
     const belopFraInntektsmelding = 75000;
     const fastsattBelop = settFastsattBelop(beregnetPrMnd, fastsattForrige, fastsattAvSaksbehandler);
-    const readOnlyFastsattBelop = settReadOnlyBelop(false, beregnetPrMnd, undefined, belopFraInntektsmelding);
+    const readOnlyFastsattBelop = settReadOnlyBelop(undefined, belopFraInntektsmelding);
     expect(fastsattBelop).to.equal('');
     expect(readOnlyFastsattBelop).to.equal(formatCurrencyNoKr(belopFraInntektsmelding));
   });
@@ -319,7 +319,6 @@ describe('<BgFordelingUtils>', () => {
     fastsattBelop: '',
     readOnlyBelop: 25000,
     skalRedigereInntekt: false,
-    snittIBeregningsperiodenPrMnd: 25000,
     refusjonskrav: '',
     skalKunneEndreRefusjon: false,
     belopFraInntektsmelding: null,
@@ -331,7 +330,6 @@ describe('<BgFordelingUtils>', () => {
     fastsattBelop: 25000,
     readOnlyBelop: 25000,
     skalRedigereInntekt: false,
-    snittIBeregningsperiodenPrMnd: null,
     refusjonskrav: '',
     skalKunneEndreRefusjon: false,
     belopFraInntektsmelding: 25000,
