@@ -192,9 +192,7 @@ const transformValues = (values, antallBarnFraSoknad, antallBarnFraTps, fodselIn
   antallBarnFodt: values.dokumentasjonForeligger
     ? getAntallBarn(values.brukAntallBarnITps, values.antallBarnFodt, antallBarnFraSoknad, antallBarnFraTps) : undefined,
   dokumentasjonForeligger: values.dokumentasjonForeligger,
-  uidentifiserteBarn: allaBarn(values.avklartBarn).length > 0 ? allaBarn(values.avklartBarn) : [{
- fodselsdato: '', isBarnDodt: false, dodsDato: '', dodsdato: null,
-}],
+  uidentifiserteBarn: allaBarn(values.avklartBarn),
   brukAntallBarnITps: fodselInfo && !!fodselInfo.length ? values.brukAntallBarnITps : false,
   ...FaktaBegrunnelseTextField.transformValues(values),
 });
