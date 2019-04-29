@@ -18,6 +18,15 @@ import FodselOgTilretteleggingInfoPanel from './fodselOgTilrettelegging/FodselOg
 import { FaktaPanel } from './FaktaPanel';
 
 describe('<FaktaPanel>', () => {
+  const ytelsefordeling = {
+    aleneOmsorgPerioder: null,
+    annenforelderHarRettDto: {},
+    endringsdato: '2019-03-22',
+    førsteUttaksdato: '2019-03-22',
+    gjeldendeDekningsgrad: 100,
+    ikkeOmsorgPerioder: null,
+  };
+
   const personopplysninger = {
     navBrukerKjonn: {
       kode: '',
@@ -114,6 +123,8 @@ describe('<FaktaPanel>', () => {
       readOnly={false}
       fagsakPerson={person}
       erOverstyrer={false}
+      ytelsefordeling={ytelsefordeling}
+      isFørstegangsbehandling
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(1);
@@ -151,6 +162,8 @@ describe('<FaktaPanel>', () => {
       readOnly={false}
       fagsakPerson={person}
       erOverstyrer={false}
+      ytelsefordeling={ytelsefordeling}
+      isFørstegangsbehandling
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -188,6 +201,8 @@ describe('<FaktaPanel>', () => {
       readOnly={false}
       fagsakPerson={person}
       erOverstyrer={false}
+      ytelsefordeling={ytelsefordeling}
+      isFørstegangsbehandling
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -225,6 +240,8 @@ describe('<FaktaPanel>', () => {
       readOnly={false}
       fagsakPerson={person}
       erOverstyrer={false}
+      ytelsefordeling={ytelsefordeling}
+      isFørstegangsbehandling
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -300,6 +317,8 @@ describe('<FaktaPanel>', () => {
       readOnly={false}
       fagsakPerson={person}
       erOverstyrer={false}
+      ytelsefordeling={ytelsefordeling}
+      isFørstegangsbehandling
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -341,6 +360,8 @@ describe('<FaktaPanel>', () => {
       readOnly={false}
       fagsakPerson={person}
       erOverstyrer={false}
+      ytelsefordeling={ytelsefordeling}
+      isFørstegangsbehandling
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -382,6 +403,8 @@ describe('<FaktaPanel>', () => {
       readOnly={false}
       fagsakPerson={person}
       erOverstyrer={false}
+      ytelsefordeling={ytelsefordeling}
+      isFørstegangsbehandling
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
