@@ -7,14 +7,14 @@ import { getKodeverknavnFraKode } from './kodeverkUtils';
 
 const injectKodeverk = getAlleKodeverkSelector => (WrappedComponent) => {
   class KodeverkWrapper extends React.Component {
-    getKodeverknavnFraKode = (kodeverkType, kode) => {
+    getKodeverknavnFraKode = (kodeverkType, kode, undertype) => {
       const { alleKodeverk } = this.props;
-      return getKodeverknavnFraKode(alleKodeverk, kodeverkType, kode);
+      return getKodeverknavnFraKode(alleKodeverk, kodeverkType, kode, undertype);
     }
 
     // TODO (TOR) Endre nøkkel i map returnert av KodeverkRestTjeneste til å bruka DISCRIMINATOR, ikkje simplename. Kan da fjerna
     // mappinga kodeverkTyper[kodeverkOjekt.kodeverk]
-    getKodeverknavn = kodeverkOjekt => this.getKodeverknavnFraKode(kodeverkTyper[kodeverkOjekt.kodeverk], kodeverkOjekt.kode)
+    getKodeverknavn = (kodeverkOjekt, undertype) => this.getKodeverknavnFraKode(kodeverkTyper[kodeverkOjekt.kodeverk], kodeverkOjekt.kode, undertype)
 
     render() {
       const newProps = {

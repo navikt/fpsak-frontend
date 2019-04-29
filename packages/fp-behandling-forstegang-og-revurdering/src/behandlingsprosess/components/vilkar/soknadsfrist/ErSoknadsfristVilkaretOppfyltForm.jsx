@@ -12,6 +12,7 @@ import { Fieldset } from 'nav-frontend-skjema';
 import { Undertekst, Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import {
@@ -141,7 +142,7 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
             {[<RadioOption key="dummy" label={<FormattedHTMLMessage id={findRadioButtonTextCode(erVilkarOk)} />} value="" />]}
           </RadioGroupField>
           {showAvslagsarsak(erVilkarOk, behandlingsresultat.avslagsarsak)
-          && <Normaltekst>{getKodeverknavn(behandlingsresultat.avslagsarsak)}</Normaltekst>
+          && <Normaltekst>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKNADFRISTVILKARET)}</Normaltekst>
           }
         </ElementWrapper>
         )

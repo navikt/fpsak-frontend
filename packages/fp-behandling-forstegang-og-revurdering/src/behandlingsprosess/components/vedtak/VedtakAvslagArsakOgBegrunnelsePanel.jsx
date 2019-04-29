@@ -27,7 +27,7 @@ export const getAvslagArsak = (vilkar, aksjonspunkter, behandlingsresultat, getK
     return <FormattedMessage id="VedtakForm.UttaksperioderIkkeGyldig" />;
   }
 
-  return `${getKodeverknavn(avslatteVilkar[0].vilkarType)}: ${getKodeverknavn(behandlingsresultat.avslagsarsak)}`;
+  return `${getKodeverknavn(avslatteVilkar[0].vilkarType)}: ${getKodeverknavn(behandlingsresultat.avslagsarsak, avslatteVilkar[0].vilkarType.kode)}`;
 };
 
 

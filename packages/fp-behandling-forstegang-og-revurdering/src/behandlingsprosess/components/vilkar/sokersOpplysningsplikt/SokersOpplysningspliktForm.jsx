@@ -8,6 +8,7 @@ import {
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import BpPanelTemplate from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/BpPanelTemplate';
 import { getBehandlingsresultat, getSoknad } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
@@ -134,7 +135,7 @@ export const SokersOpplysningspliktFormImpl = ({
             {[<RadioOption key="dummy" label={<FormattedHTMLMessage id={findRadioButtonTextCode(erVilkarOk)} />} value="" />]}
           </RadioGroupField>
           {erVilkarOk === false && behandlingsresultat.avslagsarsak
-        && <Normaltekst className={styles.radioIE}>{getKodeverknavn(behandlingsresultat.avslagsarsak)}</Normaltekst>
+        && <Normaltekst className={styles.radioIE}>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKERSOPPLYSNINGSPLIKT)}</Normaltekst>
       }
         </div>
       </ElementWrapper>
