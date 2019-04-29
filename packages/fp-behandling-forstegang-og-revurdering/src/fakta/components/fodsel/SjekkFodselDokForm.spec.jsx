@@ -29,7 +29,12 @@ describe('<SjekkFodselDokForm>', () => {
     const initialValues = buildInitialValues.resultFunc(familiehendelse, aksjonspunkter);
 
     expect(initialValues).to.eql({
-      avklartBarn: [],
+      avklartBarn: [{
+        dodsDato: '',
+        fodselsdato: '',
+        isBarnDodt: false,
+      },
+    ],
       dokumentasjonForeligger: true,
       brukAntallBarnITps: false,
       begrunnelse: 'test',
@@ -42,7 +47,12 @@ describe('<SjekkFodselDokForm>', () => {
     const initialValues = buildInitialValues.resultFunc(familiehendelse, aksjonspunkter);
 
     expect(initialValues).to.eql({
-      avklartBarn: [],
+      avklartBarn: [{
+        dodsDato: '',
+        fodselsdato: '',
+        isBarnDodt: false,
+      },
+  ],
       dokumentasjonForeligger: undefined,
       brukAntallBarnITps: undefined,
       begrunnelse: 'test',
