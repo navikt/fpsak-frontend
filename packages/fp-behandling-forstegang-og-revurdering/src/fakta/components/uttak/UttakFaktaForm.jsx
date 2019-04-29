@@ -67,7 +67,7 @@ const warningsUttakForm = (values) => {
   const { førsteUttaksdato, endringsdato } = values;
 
   // hvis endringsdato er etter førsteuttakdato
-  if (moment(endringsdato).isAfter(førsteUttaksdato)) {
+  if (endringsdato && moment(endringsdato).isAfter(førsteUttaksdato)) {
     warnings.perioder = {
       _warning: <FormattedMessage
         id="UttakInfoPanel.PeriodeMellomFørsteuttaksdatoOgEndringsdato"
