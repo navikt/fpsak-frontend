@@ -3,15 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FormSection, clearFields, formPropTypes } from 'redux-form';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { Undertekst, Element } from 'nav-frontend-typografi';
+import { FormattedMessage, FormattedHTMLMessage, injectIntl } from 'react-intl';
+import { Normaltekst, Undertekst, Element } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+
 import {
   RadioOption, RadioGroupField, TextAreaField,
 } from '@fpsak-frontend/form';
 
 import {
+  formatCurrencyNoKr,
   minLength,
   maxLength,
   hasValidText,
@@ -54,6 +56,10 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
     vilkarResultatTyper: PropTypes.arrayOf(PropTypes.shape()),
     aktsomhetTyper: PropTypes.arrayOf(PropTypes.shape()),
     sarligGrunnTyper: PropTypes.arrayOf(PropTypes.shape()),
+    reduserteBelop: PropTypes.arrayOf(PropTypes.shape({
+      erTrekk: PropTypes.bool.isRequired,
+      belop: PropTypes.number.isRequired,
+    })),
     ...formPropTypes,
   };
 
@@ -119,12 +125,24 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
       vilkarResultatTyper,
       aktsomhetTyper,
       sarligGrunnTyper,
+      reduserteBelop,
       ...formProps
     } = this.props;
     const { showModal } = this.state;
     return (
       <>
         <VerticalSpacer twentyPx />
+        {reduserteBelop.map(belop => (
+          <>
+            <Normaltekst>
+              <FormattedHTMLMessage
+                id={belop.erTrekk ? 'TilbakekrevingPeriodeForm.FeilutbetaltBelopEtterbetaling' : 'TilbakekrevingPeriodeForm.FeilutbetaltBelopTrekk'}
+                values={{ belop: formatCurrencyNoKr(belop.belop) }}
+              />
+            </Normaltekst>
+            <VerticalSpacer eigthPx />
+          </>
+        ))}
         <TilbakekrevingAktivitetTabell ytelser={selectedItemData.ytelser} />
         <VerticalSpacer twentyPx />
         <Row>
@@ -326,6 +344,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
         `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.${sarligGrunn.ANNET}`),
       erBelopetIBehold: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.erBelopetIBehold`),
       initialValues: buildInitalValues(ownProps.selectedItemData, foreldelsePerioder),
+      reduserteBelop: ownProps.selectedItemData.redusertBeloper,
       onSubmit: submitCallback,
       validate: validateForm,
       valgtVilkarResultatType,

@@ -130,7 +130,7 @@ AktsomhetFormPanel.transformValues = (info, sarligGrunnTyper) => {
 AktsomhetFormPanel.buildInitalValues = (vilkarResultatInfo) => {
   const { aktsomhet, aktsomhetInfo, begrunnelse } = vilkarResultatInfo;
   const aktsomhetData = aktsomhetInfo ? {
-    [aktsomhet.kode]: {
+    [aktsomhet.kode ? aktsomhet.kode : aktsomhet]: {
       harGrunnerTilReduksjon: aktsomhetInfo.harGrunnerTilReduksjon,
       skalDetTilleggesRenter: aktsomhetInfo.ileggRenter,
       andelSomTilbakekreves: aktsomhetInfo.andelTilbakekreves,

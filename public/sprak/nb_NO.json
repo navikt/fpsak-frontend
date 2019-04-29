@@ -2219,8 +2219,10 @@
   "TilbakekrevingPeriodeForm.TotalbelopetUnder4Rettsgebyr": "Totalbeløpet er under 4 rettsgebyr. Dersom 6.ledd skal anvendes for å frafalle tilbakekrevingen, må denne anvendes likt på alle periodene.",
   "TilbakekrevingPeriodeForm.Oppdater": "Oppdater",
   "TilbakekrevingPeriodeForm.Avbryt": "Avbryt",
-  "TilbakekrevingPeriodeForm.Vurdering":"Vurdering",
-  "TilbakekrevingPeriodeForm.MaVelgeSarligGrunn":"Du må velge minst en Særlig grunn",
+  "TilbakekrevingPeriodeForm.Vurdering": "Vurdering",
+  "TilbakekrevingPeriodeForm.MaVelgeSarligGrunn": "Du må velge minst en Særlig grunn",
+  "TilbakekrevingPeriodeForm.FeilutbetaltBelopEtterbetaling": "Feilutbetalt beløp er redusert med <b>kr. {belop},-</b> på grunn av etterbetaling innen samme periode.",
+  "TilbakekrevingPeriodeForm.FeilutbetaltBelopTrekk": "Feilutbetalt beløp er redusert med <b>kr. {belop},-</b> på grunn av trekk.",
 
   "AktsomhetSarligeGrunnerFormPanel.GrunnerTilReduksjon":"Særlige grunner som er vektlagt (4.ledd)",
 
