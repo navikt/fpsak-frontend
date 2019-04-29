@@ -238,7 +238,7 @@ const transformValues = (selectedItemData, values, sarligGrunnTyper) => {
       begrunnelse,
       fom: selectedItemData.fom,
       tom: selectedItemData.tom,
-      vilkarResultat: { kode: valgtVilkarResultatType },
+      vilkarResultat: valgtVilkarResultatType,
       vilkarResultatInfo: {
         ...godTroData,
         ...annetData,
@@ -250,7 +250,7 @@ const transformValues = (selectedItemData, values, sarligGrunnTyper) => {
 const buildInitalValues = (period, foreldelsePerioder) => {
   const { vilkarResultat, begrunnelse, vilkarResultatInfo } = period.storedData;
 
-  const vilkarResultatKode = vilkarResultat ? vilkarResultat.kode : undefined;
+  const vilkarResultatKode = vilkarResultat && vilkarResultat.kode ? vilkarResultat.kode : vilkarResultat;
   let foreldetData = { erForeldet: false };
   if (period.erForeldet) {
     const foreldelsePeriode = foreldelsePerioder.find(p => p.fom === period.fom && p.tom === period.tom);

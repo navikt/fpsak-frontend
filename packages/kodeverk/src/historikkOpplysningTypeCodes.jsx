@@ -24,6 +24,9 @@ const historikkOpplysningTypeCodes = {
   PERIODE_FOM: {
     kode: 'PERIODE_FOM',
   },
+  TILBAKEKREVING_OPPFYLT_BEGRUNNELSE: {
+    kode: 'TILBAKEKREVING_OPPFYLT_BEGRUNNELSE',
+  },
 };
 
 export default historikkOpplysningTypeCodes;

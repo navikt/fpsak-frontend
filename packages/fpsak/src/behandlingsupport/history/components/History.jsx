@@ -18,6 +18,7 @@ import HistorikkMalType8 from './HistorikkMalType8';
 import HistorikkMalType9 from './HistorikkMalType9';
 import HistorikkMalType10 from './HistorikkMalType10';
 import HistorikkMalType11 from './HistorikkMalType11';
+import HistorikkMalTypeTilbakekreving from './HistorikkMalTypeTilbakekreving';
 import PlaceholderHistorikkMal from './placeholderHistorikkMal';
 
 import styles from './history.less';
@@ -78,6 +79,8 @@ const velgHistorikkMal = (histType) => { // NOSONAR
       return HistorikkMalType10;
     case historikkinnslagType.FAKTA_OM_FEILUTBETALING:
       return HistorikkMalType11;
+    case historikkinnslagType.TILBAKEKREVING:
+      return HistorikkMalTypeTilbakekreving;
     default:
       return PlaceholderHistorikkMal;
   }

@@ -104,7 +104,7 @@ AktsomhetFormPanel.defaultProps = {
 };
 
 const formatAktsomhetData = (aktsomhet, sarligGrunnTyper) => {
-  const sarligeGrunner = sarligGrunnTyper.reduce((acc, type) => (aktsomhet[type.kode] ? acc.concat({ kode: type.kode }) : acc), []);
+  const sarligeGrunner = sarligGrunnTyper.reduce((acc, type) => (aktsomhet[type.kode] ? acc.concat(type.kode) : acc), []);
   return {
     harGrunnerTilReduksjon: aktsomhet.harGrunnerTilReduksjon,
     ileggRenter: aktsomhet.skalDetTilleggesRenter,
@@ -120,7 +120,7 @@ AktsomhetFormPanel.transformValues = (info, sarligGrunnTyper) => {
   const aktsomhet = info[info.handletUaktsomhetGrad];
   return {
     '@type': 'annet',
-    aktsomhet: { kode: info.handletUaktsomhetGrad },
+    aktsomhet: info.handletUaktsomhetGrad,
     begrunnelse: info.aktsomhetBegrunnelse,
     aktsomhetInfo: aktsomhet ? formatAktsomhetData(aktsomhet, sarligGrunnTyper) : null,
   };
@@ -137,13 +137,13 @@ AktsomhetFormPanel.buildInitalValues = (vilkarResultatInfo) => {
       belopSomSkalTilbakekreves: aktsomhetInfo.tilbakekrevesBelop,
       annetBegrunnelse: aktsomhetInfo.annetBegrunnelse,
       tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhetInfo.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
-      ...(aktsomhetInfo.sarligGrunner ? aktsomhetInfo.sarligGrunner.reduce((acc, sg) => ({ ...acc, [sg.kode]: true }), {}) : {}),
+      ...(aktsomhetInfo.sarligGrunner ? aktsomhetInfo.sarligGrunner.reduce((acc, sg) => ({ ...acc, [(sg.kode ? sg.kode : sg)]: true }), {}) : {}),
     },
   } : {};
 
   return {
     aktsomhetBegrunnelse: begrunnelse,
-    handletUaktsomhetGrad: aktsomhet.kode,
+    handletUaktsomhetGrad: aktsomhet && aktsomhet.kode ? aktsomhet.kode : aktsomhet,
     ...aktsomhetData,
   };
 };

@@ -141,9 +141,7 @@ describe('<AktsomhetFormPanel>', () => {
 
     expect(transformertData).to.eql({
       '@type': 'annet',
-      aktsomhet: {
-        kode: aktsomhet.FORSETT,
-      },
+      aktsomhet: aktsomhet.FORSETT,
       aktsomhetInfo: null,
       begrunnelse: 'test',
     });
@@ -167,13 +165,11 @@ describe('<AktsomhetFormPanel>', () => {
 
     expect(transformertData).to.eql({
       '@type': 'annet',
-      aktsomhet: {
-        kode: aktsomhet.GROVT_UAKTSOM,
-      },
+      aktsomhet: aktsomhet.GROVT_UAKTSOM,
       aktsomhetInfo: {
         harGrunnerTilReduksjon: true,
         ileggRenter: true,
-        sarligGrunner: [{ kode: sarligGrunn.HELT_ELLER_DELVIS_NAVS_FEIL }],
+        sarligGrunner: [sarligGrunn.HELT_ELLER_DELVIS_NAVS_FEIL],
         andelTilbakekreves: 70,
         tilbakekrevesBelop: 100,
         annetBegrunnelse: 'test',
