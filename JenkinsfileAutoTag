@@ -18,7 +18,14 @@ node('DOCKER2') {
       sh "docker push docker.adeo.no:5000/fpsak-frontend:latest"
    }
    stage('Deploy'){
-       build job: 'fpsak-frontend-BUILD', parameters: [string(name: 'miljø', value: 't10'), string(name: 'versjonNummer', value: tagName)], wait: true
-       addBadge icon: '/static/7d0f032c/images/48x48/completed.gif', id: '', link: '', text: "$tagName"
+      parallel {
+        stage ('Deploy to t10') {  
+          build job: 'fpsak-frontend-BUILD', parameters: [string(name: 'miljø', value: 't10'), string(name: 'versjonNummer', value: tagName)], wait: true
+          addBadge icon: '/static/7d0f032c/images/48x48/completed.gif', id: '', link: '', text: "$tagName"
+        }
+        stage ('Deploy to t4') {  
+          build job: 'fpsak-frontend-BUILD', parameters: [string(name: 'miljø', value: 't4'), string(name: 'versjonNummer', value: tagName)], wait: true
+          addBadge icon: '/static/7d0f032c/images/48x48/completed.gif', id: '', link: '', text: "$tagName"
+        }
    }
 }
