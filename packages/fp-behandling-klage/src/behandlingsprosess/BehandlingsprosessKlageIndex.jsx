@@ -19,7 +19,8 @@ import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import findBehandlingsprosessIcon from 'behandlingKlage/src/behandlingsprosess/statusIconHelper';
 import {
-  trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta, BehandlingIdentifier,
+  trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta,
+  BehandlingIdentifier, getLocationWithQueryParams,
 } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
@@ -64,6 +65,7 @@ export class BehandlingsprosessKlageIndex extends Component {
     this.setup = this.setup.bind(this);
     this.goToBehandlingspunkt = this.goToBehandlingspunkt.bind(this);
     this.goToBehandlingWithDefaultPunktAndFakta = this.goToBehandlingWithDefaultPunktAndFakta.bind(this);
+    this.goToKlageResultat = this.goToKlageResultat.bind(this);
     this.goToSearchPage = this.goToSearchPage.bind(this);
     this.submitVilkar = this.submitVilkar.bind(this);
     this.previewCallback = this.previewCallback.bind(this);
@@ -115,6 +117,11 @@ export class BehandlingsprosessKlageIndex extends Component {
   goToBehandlingWithDefaultPunktAndFakta() {
     const { push: pushLocation, location } = this.props;
     pushLocation(getLocationWithDefaultBehandlingspunktAndFakta(location));
+  }
+
+  goToKlageResultat() {
+    const { push: pushLocation, location } = this.props;
+    pushLocation(getLocationWithQueryParams(location, { punkt: 'resultat', fakta: 'default' }));
   }
 
   goToSearchPage() {
@@ -170,10 +177,14 @@ export class BehandlingsprosessKlageIndex extends Component {
 
     const skalByttTilKlageinstans = aksjonspunktModels
       .some(apValue => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP && apValue.klageVurdering === klageVurdering.STADFESTE_YTELSESVEDTAK);
+    const erKlageHjemsendt = aksjonspunktModels
+      .some(apValue => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NK && apValue.klageVurdering === klageVurdering.HJEMSENDE_UTEN_Å_OPPHEVE);
     const shouldUpdateInfo = !skalByttTilKlageinstans;
     const afterSubmit = () => {
       if (skalByttTilKlageinstans) {
         this.setShowModalKlageBehandling(true);
+      } else if (erKlageHjemsendt) {
+        this.goToKlageResultat();
       } else {
         this.goToBehandlingWithDefaultPunktAndFakta();
       }
