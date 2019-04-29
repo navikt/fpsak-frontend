@@ -216,7 +216,7 @@ describe('<UttakNyPeriode>', () => {
     />);
     wrapper.setProps({
       nyPeriode: {
-        samtidigUttak: true,
+        samtidigUttakNyPeriode: true,
       },
     });
     const input = wrapper.find(DecimalField);

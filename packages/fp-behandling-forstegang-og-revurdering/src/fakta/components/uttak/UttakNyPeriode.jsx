@@ -154,10 +154,10 @@ export const UttakNyPeriode = ({
                     />
                     <CheckboxField
                       id="samtidigUttak_nyperiode"
-                      name="samtidigUttak"
+                      name="samtidigUttakNyPeriode"
                       label={<FormattedMessage id="UttakInfoPanel.SamtidigUttak" />}
                     />
-                    {nyPeriode.samtidigUttak && (
+                    {nyPeriode.samtidigUttakNyPeriode && (
                     <FlexColumn>
                       <FlexRow>
                         <FlexColumn>
@@ -360,7 +360,7 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
     updated: false,
     bekreftet: true,
     openForm: false,
-    samtidigUttak: values.samtidigUttak,
+    samtidigUttak: values.samtidigUttakNyPeriode,
     samtidigUttaksprosent: values.samtidigUttaksprosent,
     flerbarnsdager: values.flerbarnsdager,
     erArbeidstaker: arbeidsForhold && arbeidsForhold[4] === uttakArbeidType.ORDINÆRT_ARBEID,
@@ -419,7 +419,7 @@ const mapStateToProps = (state, ownProps) => {
       arbeidstidprosent: null,
       typeUttak: null,
       flerbarnsdager: false,
-      samtidigUttak: false,
+      samtidigUttakNyPeriode: false,
       samtidigUttaksprosent: null,
     },
     nyPeriode: behandlingFormValueSelector('nyPeriodeForm')(
@@ -429,7 +429,7 @@ const mapStateToProps = (state, ownProps) => {
       'periodeType',
       'periodeOverforingArsak',
       'periodeArsak',
-      'samtidigUttak',
+      'samtidigUttakNyPeriode',
       'arbeidsForhold',
       'arbeidstidprosent',
       'typeUttak',
