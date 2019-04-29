@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { FieldArray } from 'redux-form';
 import { Undertekst } from 'nav-frontend-typografi';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { getFamiliehendelse, doesVilkarForSykdomOppfyltExist } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getFamiliehendelseGjeldende, doesVilkarForSykdomOppfyltExist } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import overforingArsakCodes from '@fpsak-frontend/kodeverk/src/overforingArsakCodes';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
@@ -213,7 +213,7 @@ const mapToStateToProps = (state, ownProps) => {
     form: formName,
     validate: values => validateSykdomOgSkadeForm(
       values,
-      getFamiliehendelse(state),
+      getFamiliehendelseGjeldende(state),
       ownProps.utsettelseArsak,
       ownProps.overforingArsak,
       vilkarForSykdomOppfyltExists,

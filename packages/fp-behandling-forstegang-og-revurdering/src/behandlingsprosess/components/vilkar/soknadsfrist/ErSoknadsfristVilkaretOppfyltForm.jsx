@@ -17,7 +17,7 @@ import {
   getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus,
 } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
 import {
-  getBehandlingsresultat, getBehandlingVilkar, getSoknad, getFamiliehendelse,
+  getBehandlingsresultat, getBehandlingVilkar, getSoknad, getFamiliehendelseGjeldende,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
@@ -191,7 +191,7 @@ const transformValues = (values, aksjonspunkter) => ({
   ...BehandlingspunktBegrunnelseTextField.transformValues(values),
 });
 
-const findDate = createSelector([getSoknad, getFamiliehendelse], (soknad, familiehendelse) => {
+const findDate = createSelector([getSoknad, getFamiliehendelseGjeldende], (soknad, familiehendelse) => {
   if (soknad.soknadType.kode === soknadType.FODSEL) {
     const soknadFodselsdato = soknad.fodselsdatoer ? Object.values(soknad.fodselsdatoer)[0] : undefined;
     const fodselsdato = familiehendelse && familiehendelse.fodselsdato ? familiehendelse.fodselsdato : soknadFodselsdato;
@@ -201,7 +201,7 @@ const findDate = createSelector([getSoknad, getFamiliehendelse], (soknad, famili
   return familiehendelse && familiehendelse.omsorgsovertakelseDato ? familiehendelse.omsorgsovertakelseDato : soknad.omsorgsovertakelseDato;
 });
 
-const findTextCode = createSelector([getSoknad, getFamiliehendelse], (soknad, familiehendelse) => {
+const findTextCode = createSelector([getSoknad, getFamiliehendelseGjeldende], (soknad, familiehendelse) => {
   if (soknad.soknadType.kode === soknadType.FODSEL) {
     const soknadFodselsdato = soknad.fodselsdatoer ? Object.values(soknad.fodselsdatoer)[0] : undefined;
     const fodselsdato = familiehendelse && familiehendelse.fodselsdato ? familiehendelse.fodselsdato : soknadFodselsdato;

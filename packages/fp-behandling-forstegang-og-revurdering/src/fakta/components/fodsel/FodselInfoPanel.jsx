@@ -9,7 +9,7 @@ import { getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/b
 import { getBehandlingVersjon } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duck';
 import { fodselsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { VerticalSpacer, ElementWrapper, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import FodselSammenligningPanel from 'behandlingForstegangOgRevurdering/src/components/fodselSammenligning/FodselSammenligningPanel';
 import TermindatoFaktaForm, { termindatoFaktaFormName } from 'behandlingForstegangOgRevurdering/src/fakta/components/fodsel/TermindatoFaktaForm';
 import SjekkFodselDokForm, { sjekkFodselDokForm } from 'behandlingForstegangOgRevurdering/src/fakta/components/fodsel/SjekkFodselDokForm';
@@ -133,10 +133,10 @@ export class FodselInfoPanelImpl extends Component {
           }
           {aksjonspunkter.length !== 0 && !readOnly
             && (
-            <ElementWrapper>
+            <>
               <VerticalSpacer twentyPx />
               <FaktaSubmitButton formNames={formNames} isSubmittable={submittable} isReadOnly={readOnly} hasOpenAksjonspunkter={hasOpenAksjonspunkter} />
-            </ElementWrapper>
+            </>
             )
           }
           {aksjonspunkter.length === 0

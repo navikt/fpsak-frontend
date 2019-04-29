@@ -202,13 +202,27 @@ export const getAndelerMedGraderingUtenBG = createSelector(
 
 
 // FAMILIEHENDELSE
-export const getFamiliehendelse = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.familiehendelse);
+export const getFamiliehendelse = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling['familiehendelse-v2']);
+export const getFamiliehendelseGjeldende = createSelector([getFamiliehendelse], (familiehendelse = {}) => familiehendelse.gjeldende);
+export const getFamiliehendelseRegister = createSelector([getFamiliehendelse], (familiehendelse = {}) => familiehendelse.register);
+export const getFamiliehendelseOppgitt = createSelector([getFamiliehendelse], (familiehendelse = {}) => familiehendelse.oppgitt);
+
 export const getBehandlingVedtaksDatoSomSvangerskapsuke = createSelector(
-  [getFamiliehendelse], (familiehendelse = {}) => familiehendelse.vedtaksDatoSomSvangerskapsuke,
+  [getFamiliehendelseGjeldende], (familiehendelse = {}) => familiehendelse.vedtaksDatoSomSvangerskapsuke,
 );
-export const getFamiliehendelseAntallBarnTermin = createSelector([getFamiliehendelse], (familiehendelse = {}) => familiehendelse.antallBarnTermin);
-export const getFamiliehendelseTermindato = createSelector([getFamiliehendelse], (familiehendelse = {}) => familiehendelse.termindato);
-export const getBehandlingSkjaringstidspunkt = createSelector([getFamiliehendelse], (familiehendelse = {}) => familiehendelse.skjaringstidspunkt);
+export const getFamiliehendelseAntallBarnTermin = createSelector([getFamiliehendelseGjeldende], (familiehendelse = {}) => familiehendelse.antallBarnTermin);
+export const getFamiliehendelseTermindato = createSelector([getFamiliehendelseGjeldende], (familiehendelse = {}) => familiehendelse.termindato);
+export const getBehandlingSkjaringstidspunkt = createSelector([getFamiliehendelseGjeldende], (familiehendelse = {}) => familiehendelse.skjaringstidspunkt);
+
+// endre disse til familiehendelse
+export const getBarnFraTpsRelatertTilSoknad = createSelector(
+  [getFamiliehendelseGjeldende], (familiehendelse = {}) => (familiehendelse.avklartBarn ? familiehendelse.avklartBarn : []),
+);
+const FNR_DODFODT_PART = '00001';
+export const getAntallDodfodteBarn = createSelector(
+  [getBarnFraTpsRelatertTilSoknad], (avklartBarn = []) => avklartBarn
+    .reduce((nrOfDodfodteBarn, barn) => nrOfDodfodteBarn + (barn.fnr && barn.fnr.endsWith(FNR_DODFODT_PART) ? 1 : 0), 0),
+);
 
 // INNTEKT - ARBEID - YTELSE
 const getBehandlingInntektArbeidYtelse = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling['inntekt-arbeid-ytelse']);
@@ -294,14 +308,6 @@ export const getBehandlingFastsattOpptjeningActivities = createSelector(
 export const getPersonopplysning = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling['soeker-personopplysninger']);
 export const getAnnenPartPersonopplysning = createSelector([getPersonopplysning], (personopplysning = {}) => personopplysning.annenPart);
 export const getEktefellePersonopplysning = createSelector([getPersonopplysning], (personopplysning = {}) => personopplysning.ektefelle);
-export const getBarnFraTpsRelatertTilSoknad = createSelector(
-  [getPersonopplysning], (personopplysning = {}) => (personopplysning.barnFraTpsRelatertTilSoknad ? personopplysning.barnFraTpsRelatertTilSoknad : []),
-);
-const FNR_DODFODT_PART = '00001';
-export const getAntallDodfodteBarn = createSelector(
-  [getBarnFraTpsRelatertTilSoknad], (barnFraTpsRelatertTilSoknad = []) => barnFraTpsRelatertTilSoknad
-    .reduce((nrOfDodfodteBarn, barn) => nrOfDodfodteBarn + (barn.fnr && barn.fnr.endsWith(FNR_DODFODT_PART) ? 1 : 0), 0),
-);
 
 // SPRÅK
 export const getBehandlingSprak = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.sprakkode);
@@ -345,7 +351,7 @@ export const isBehandlingStatusReadOnly = createSelector(
 );
 
 export const getEditedStatus = createSelector(
-  [getSoknad, getFamiliehendelse, getPersonopplysning],
+  [getSoknad, getFamiliehendelseGjeldende, getPersonopplysning],
   (soknad, familiehendelse, personopplysning) => (
     isFieldEdited(soknad || {}, familiehendelse || {}, personopplysning || {})
   ),

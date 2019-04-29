@@ -21,7 +21,7 @@ import {
   getBehandlingVersjon,
   getSoknad,
   getBehandlingYtelseFordeling,
-  getFamiliehendelse,
+  getFamiliehendelseGjeldende,
   getBehandlingIsRevurdering,
   getPersonopplysning,
   getUttaksresultatPerioder,
@@ -653,7 +653,7 @@ const mapStateToProps = (state, props) => {
   const getMedsokerKjonnKode = (viseUttakMedsoker && person && person.annenPart) ? person.annenPart.navBrukerKjonn.kode : undefined;
   // hvis ukjent annenpart og annenpart uttak, vis ukjent ikon
   const medsokerKjonnKode = viseUttakMedsoker && getMedsokerKjonnKode === undefined ? navBrukerKjonn.UDEFINERT : getMedsokerKjonnKode;
-  const familiehendelse = getFamiliehendelse(state);
+  const familiehendelse = getFamiliehendelseGjeldende(state);
   const ytelseFordeling = getBehandlingYtelseFordeling(state);
   const uttaksresultatActivity = behandlingFormValueSelector(props.formName)(state, ACTIVITY_PANEL_NAME);
   const barnFraTps = getBarnFraTpsRelatertTilSoknad(state);

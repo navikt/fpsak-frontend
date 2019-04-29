@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedHTMLMessage } from 'react-intl';
 import { connect } from 'react-redux';
 
-import { getFamiliehendelse } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getFamiliehendelseGjeldende } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TextAreaField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
@@ -54,7 +54,7 @@ const transformValues = values => ({
 });
 
 const mapStateToProps = (state, ownProps) => ({
-  initialValues: buildInitialValues(ownProps.aksjonspunkt, getFamiliehendelse(state)),
+  initialValues: buildInitialValues(ownProps.aksjonspunkt, getFamiliehendelseGjeldende(state)),
   onSubmit: values => ownProps.submitHandler(transformValues(values)),
 });
 

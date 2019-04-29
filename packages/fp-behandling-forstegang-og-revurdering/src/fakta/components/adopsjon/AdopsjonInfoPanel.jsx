@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 import { createSelector } from 'reselect';
 
-import { getSoknad, getFamiliehendelse, getAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getSoknad, getFamiliehendelseGjeldende, getAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import DokumentasjonFaktaForm from 'behandlingForstegangOgRevurdering/src/fakta/components/adopsjon/DokumentasjonFaktaForm';
 import MannAdoptererAleneFaktaForm from 'behandlingForstegangOgRevurdering/src/fakta/components/adopsjon/MannAdoptererAleneFaktaForm';
@@ -128,7 +128,7 @@ AdopsjonInfoPanelImpl.propTypes = {
   ...formPropTypes,
 };
 
-const buildInitialValues = createSelector([getSoknad, getFamiliehendelse, getAksjonspunkter], (soknad, familiehendelse, allAksjonspunkter) => {
+const buildInitialValues = createSelector([getSoknad, getFamiliehendelseGjeldende, getAksjonspunkter], (soknad, familiehendelse, allAksjonspunkter) => {
   const aksjonspunkter = allAksjonspunkter.filter(ap => adopsjonAksjonspunkter.includes(ap.definisjon.kode));
 
   let mannAdoptererAleneValues = {};

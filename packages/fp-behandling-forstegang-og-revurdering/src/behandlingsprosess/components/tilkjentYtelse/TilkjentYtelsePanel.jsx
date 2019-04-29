@@ -13,7 +13,7 @@ import {
   getPersonopplysning,
   getBehandlingResultatstruktur,
   getSoknad,
-  getFamiliehendelse,
+  getFamiliehendelseGjeldende,
   getAksjonspunkter,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
@@ -129,7 +129,7 @@ const finnTilbaketrekkAksjonspunkt = createSelector([getAksjonspunkter], (alleAk
 
 const mapStateToProps = (state) => {
   const person = getPersonopplysning(state);
-  const familiehendelse = getFamiliehendelse(state);
+  const familiehendelse = getFamiliehendelseGjeldende(state);
   const beregningsresultat = getBehandlingResultatstruktur(state);
   const soknad = getSoknad(state);
   return {
