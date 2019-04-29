@@ -3,7 +3,7 @@ const kodeverkTyper = {
   AVSLAGSARSAK: 'Avslagsårsak',
   INNVILGET_AARSAK: 'InnvilgetÅrsak',
   VENTEARSAK: 'Venteårsak',
-  BEHANDLING_ARSAK_TYPE: 'BehandlingÅrsakType',
+  BEHANDLING_AARSAK: 'BehandlingÅrsakType',
   KLAGE_AVVIST_ARSAK: 'KlageAvvistÅrsak',
   KLAGE_MEDHOLD_ARSAK: 'KlageMedholdÅrsak',
   OMSORGSOVERTAKELSE_VILKAR_TYPE: 'OmsorgsovertakelseVilkårType',

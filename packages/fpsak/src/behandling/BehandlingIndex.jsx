@@ -68,7 +68,6 @@ export class BehandlingIndex extends Component {
       id: PropTypes.number.isRequired,
       type: PropTypes.shape({
         kode: PropTypes.string.isRequired,
-        navn: PropTypes.string.isRequired,
       }).isRequired,
       avsluttet: PropTypes.string,
     })).isRequired,

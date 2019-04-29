@@ -175,7 +175,7 @@ const getBehandlingAarsaker = (state) => {
   const manuelleRevurderingsArsaker = isForeldrepengerFagsak(state)
     ? manuelleRevurderingsArsakerFP
     : manuelleRevurderingsArsakerES;
-  return getKodeverk(kodeverkTyper.BEHANDLING_ARSAK_TYPE)(state).filter(bat => manuelleRevurderingsArsaker.indexOf(bat.kode) > -1)
+  return getKodeverk(kodeverkTyper.BEHANDLING_AARSAK)(state).filter(bat => manuelleRevurderingsArsaker.indexOf(bat.kode) > -1)
     .sort((bat1, bat2) => bat2.navn.length - bat1.navn.length);
 };
 
