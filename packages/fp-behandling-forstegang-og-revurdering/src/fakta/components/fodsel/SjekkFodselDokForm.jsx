@@ -173,7 +173,7 @@ SjekkFodselDokForm.propTypes = {
 
 SjekkFodselDokForm.defaultProps = {
   dokumentasjonForeligger: undefined,
-  fodselInfo: [],
+  fodselInfo: [1],
   dokumentasjonForeliggerIsEdited: false,
   behandlingsType: {
     kode: '',
