@@ -56,6 +56,7 @@ const kodeverkTyper = {
   UTTAK_ARBEID_TYPE: 'UttakArbeidType',
   UTTAK_UTSETTELSE_TYPE: 'UttakUtsettelseType',
   PERIODE_RESULTAT_AARSAK: 'PeriodeResultatÅrsak',
+  VILKAR_TYPE: 'VilkårType',
 };
 
 export default kodeverkTyper;
