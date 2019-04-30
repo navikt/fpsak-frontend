@@ -44,7 +44,7 @@ export const resetBehandling = dispatch => Promise.all([
 ]);
 
 export const fetchBehandling = (behandlingIdentifier, allBehandlinger) => (dispatch) => {
-  dispatch(tilbakekrevingBehandlingApi.KODEVERK.makeRestApiRequest()());
+  dispatch(tilbakekrevingBehandlingApi.TILBAKE_KODEVERK.makeRestApiRequest()());
   dispatch(tilbakekrevingBehandlingApi.BEHANDLING.resetRestApi()());
   dispatch(updateBehandling(behandlingIdentifier, allBehandlinger));
 };
@@ -97,7 +97,7 @@ reducerRegistry.register(reducerName, tilbakekrevingBehandlingReducer);
 
 // Selectors (Kun de knyttet til reducer)
 export const getTilbakekrevingKodeverk = kodeverkType => createSelector(
-  [tilbakekrevingBehandlingApi.KODEVERK.getRestApiData()], (kodeverk = {}) => kodeverk[kodeverkType],
+  [tilbakekrevingBehandlingApi.TILBAKE_KODEVERK.getRestApiData()], (kodeverk = {}) => kodeverk[kodeverkType],
 );
 
 const getBehandlingContext = state => state.default[reducerName];

@@ -12,7 +12,7 @@ export const TilbakekrevingBehandlingApiKeys = {
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
   SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
   BEREGNE_BELØP: 'BEREGNE_BELØP',
-  KODEVERK: 'KODEVERK',
+  TILBAKE_KODEVERK: 'TILBAKE_KODEVERK',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -31,7 +31,7 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/api/foreldelse/belop', TilbakekrevingBehandlingApiKeys.BEREGNE_BELØP)
 
   /* /api/kodeverk */
-  .withGet('/api/kodeverk', TilbakekrevingBehandlingApiKeys.KODEVERK)
+  .withGet('/api/kodeverk', TilbakekrevingBehandlingApiKeys.TILBAKE_KODEVERK)
 
   .build();
 
