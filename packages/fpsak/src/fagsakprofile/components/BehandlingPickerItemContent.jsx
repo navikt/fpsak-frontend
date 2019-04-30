@@ -30,6 +30,7 @@ const BehandlingPickerItemContent = ({
   behandlingId,
   opprettetDato,
   avsluttetDato,
+  førsteÅrsak,
   behandlingsstatus,
 }) => (
   <BorderBox className={styles.boxPadding}>
@@ -49,15 +50,19 @@ const BehandlingPickerItemContent = ({
     </div>
     <div>
       <Row value={behandlingId}>
-        <Column xs="4">
+        <Column xs="3">
           <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingListItem.Opprettet" /></Undertekst>
           <Normaltekst><DateLabel dateString={opprettetDato} /></Normaltekst>
         </Column>
-        <Column xs="4">
+        <Column xs="3">
           <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingListItem.Avsluttet" /></Undertekst>
           {avsluttetDato && <Normaltekst><DateLabel dateString={avsluttetDato} /></Normaltekst>}
         </Column>
-        <Column xs="4">
+        <Column xs="3">
+          <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingListItem.Årsak" /></Undertekst>
+          {(førsteÅrsak.erAutomatiskRevurdering || førsteÅrsak.manueltOpprettet) && <Normaltekst>{førsteÅrsak.behandlingArsakType.navn}</Normaltekst>}
+        </Column>
+        <Column xs="3">
           <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingListItem.Behandlingsstatus" /></Undertekst>
           <Normaltekst>{behandlingsstatus}</Normaltekst>
         </Column>
@@ -76,6 +81,7 @@ BehandlingPickerItemContent.propTypes = {
   opprettetDato: PropTypes.string.isRequired,
   avsluttetDato: PropTypes.string,
   behandlingsstatus: PropTypes.string.isRequired,
+  førsteÅrsak: PropTypes.shape().isRequired,
 };
 
 BehandlingPickerItemContent.defaultProps = {
