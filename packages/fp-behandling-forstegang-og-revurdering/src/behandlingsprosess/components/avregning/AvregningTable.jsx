@@ -96,13 +96,14 @@ const AvregningTable = ({
   simuleringResultat.perioderPerMottaker.map((mottaker, mottakerIndex) => {
     const rangeOfMonths = getPeriod(ingenPerioderMedAvvik, simuleringResultat.periodeFom, mottaker);
     const nesteMåned = mottaker.nestUtbPeriodeTom;
+    const visDetaljer = showDetails.find(d => d.id === mottakerIndex);
     return (
       <div className={styles.tableWrapper} key={`tableIndex${mottakerIndex + 1}`}>
         { tableTitle(mottaker) }
         <Table
           headerTextCodes={getHeaderCodes(
             showCollapseButton(mottaker.resultatPerFagområde),
-            { toggleDetails, showDetails: showDetails[mottakerIndex] ? showDetails[mottakerIndex].show : false, mottakerIndex },
+            { toggleDetails, showDetails: (visDetaljer ? visDetaljer.show : false), mottakerIndex },
             rangeOfMonths,
             nesteMåned,
           )}
@@ -114,7 +115,7 @@ const AvregningTable = ({
             ...mottaker.resultatPerFagområde.map((fagOmråde, fagIndex) => fagOmråde.rader.filter((rad) => {
               const isFeilUtbetalt = rad.feltnavn === avregningCodes.DIFFERANSE;
               const isRowToggable = rowToggable(fagOmråde, isFeilUtbetalt);
-              return !rowIsHidden(isRowToggable, showDetails[mottakerIndex] ? showDetails[mottakerIndex].show : false);
+              return !rowIsHidden(isRowToggable, visDetaljer ? visDetaljer.show : false);
             })
               .map((rad, rowIndex) => {
                 const isFeilUtbetalt = rad.feltnavn === avregningCodes.DIFFERANSE;
