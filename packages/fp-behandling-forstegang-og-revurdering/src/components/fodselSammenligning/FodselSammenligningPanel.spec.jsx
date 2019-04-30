@@ -54,7 +54,6 @@ describe('<FodselSammenligningPanel>', () => {
     />);
 
     const tpsfodseldato = wrapper.find({ name: 'tpsFodseldato' });
-    console.debug(wrapper);
     expect(tpsfodseldato.find('Normaltekst')).to.have.length(3);
   });
 
