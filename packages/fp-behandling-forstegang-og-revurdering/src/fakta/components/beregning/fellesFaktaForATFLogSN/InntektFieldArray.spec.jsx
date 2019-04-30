@@ -12,6 +12,7 @@ import { Table } from '@fpsak-frontend/shared-components';
 import { besteberegningField } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
 import { AndelRow, SummaryRow } from './InntektFieldArrayRow';
 import InntektFieldArray, { mapStateToProps, InntektFieldArrayImpl, leggTilDagpengerOmBesteberegning } from './InntektFieldArray';
+import { formNameVurderFaktaBeregning } from '../BeregningFormUtils';
 
 const aksjonspunkter = [
   {
@@ -32,7 +33,7 @@ describe('<InntektFieldArray>', () => {
       ],
       faktaOmBeregning,
     };
-    const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, bg);
+    const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, bg, formNameVurderFaktaBeregning);
     const props = mapStateToProps(state);
     expect(props.isBeregningFormDirty).to.eql(false);
     expect(props.aktivitetStatuser.length).to.eql(13);
@@ -55,7 +56,7 @@ describe('<InntektFieldArray>', () => {
       ],
       faktaOmBeregning,
     };
-    const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, bg);
+    const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, bg, formNameVurderFaktaBeregning);
     const props = mapStateToProps(state);
     expect(props.isBeregningFormDirty).to.eql(false);
     expect(props.aktivitetStatuser.length).to.eql(13);
@@ -72,7 +73,7 @@ describe('<InntektFieldArray>', () => {
       ],
       faktaOmBeregning,
     };
-    const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, bg);
+    const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, bg, formNameVurderFaktaBeregning);
     const props = mapStateToProps(state);
     expect(props.erKunYtelse).to.eql(true);
   });
@@ -105,7 +106,7 @@ describe('<InntektFieldArray>', () => {
     ],
     faktaOmBeregning,
   };
-  const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, bg, initial, initial);
+  const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, bg, formNameVurderFaktaBeregning, initial, initial);
   const props = mapStateToProps(state);
 
   it('skal vise komponent', () => {
@@ -138,7 +139,7 @@ describe('<InntektFieldArray>', () => {
       faktaOmBeregning,
     };
     const values = { [besteberegningField]: true };
-    const newstate = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, newbg, values);
+    const newstate = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, newbg, formNameVurderFaktaBeregning, values);
     const newprops = mapStateToProps(newstate);
     const wrapper = shallowWithIntl(<InntektFieldArrayImpl
       intl={intlMock}
@@ -180,7 +181,7 @@ describe('<InntektFieldArray>', () => {
       faktaOmBeregning,
     };
     const values = { [besteberegningField]: true };
-    const newstate = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, newbg, values);
+    const newstate = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, newbg, formNameVurderFaktaBeregning, values);
     const newprops = mapStateToProps(newstate);
     const newfields = [];
     leggTilDagpengerOmBesteberegning(newfields, newprops.skalHaBesteberegning, newprops.aktivitetStatuser, newprops.dagpengeAndelLagtTilIForrige);

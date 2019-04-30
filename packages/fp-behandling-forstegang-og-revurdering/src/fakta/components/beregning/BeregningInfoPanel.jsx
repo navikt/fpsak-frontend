@@ -1,31 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
-import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import {
-  getBehandlingIsOnHold,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import VurderFaktaBeregningPanel, {
-  transformValuesVurderFaktaBeregning,
-  buildInitialValuesVurderFaktaBeregning,
-  getValidationVurderFaktaBeregning,
-} from './fellesFaktaForATFLogSN/VurderFaktaBeregningPanel';
-import AvklareAktiviteterPanel, {
-  buildInitialValuesAvklarAktiviteter,
-  transformValuesAvklarAktiviteter,
-  erAvklartAktivitetEndret,
-}
-  from './avklareAktiviteter/AvklareAktiviteterPanel';
-import { formName } from './BeregningFormUtils';
+import { getBehandlingIsOnHold } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import VurderFaktaBeregningPanel from './fellesFaktaForATFLogSN/VurderFaktaBeregningPanel';
+import AvklareAktiviteterPanel from './avklareAktiviteter/AvklareAktiviteterPanel';
 
 const {
   VURDER_FAKTA_FOR_ATFL_SN,
@@ -36,17 +19,15 @@ const faktaOmBeregningAksjonspunkter = [VURDER_FAKTA_FOR_ATFL_SN, AVKLAR_AKTIVIT
 
 const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
-const createRelevantForms = (readOnly, aksjonspunkter, submittable, isDirty, submitEnabled) => (
+const createRelevantForms = (readOnly, aksjonspunkter, submitCallback, submittable) => (
   <div>
     {hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)
       && (
         <AvklareAktiviteterPanel
           readOnly={readOnly}
-          formName={formName}
-          submittable={submittable}
-          isDirty={isDirty}
-          submitEnabled={submitEnabled}
           harAndreAksjonspunkterIPanel={hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)}
+          submitCallback={submitCallback}
+          submittable={submittable}
         />
       )
     }
@@ -54,21 +35,14 @@ const createRelevantForms = (readOnly, aksjonspunkter, submittable, isDirty, sub
     && (
       <VurderFaktaBeregningPanel
         readOnly={readOnly}
-        formName={formName}
+        submitCallback={submitCallback}
         submittable={submittable}
-        isDirty={isDirty}
       />
     )
     }
   </div>
 );
 
-export const harIkkeEndringerIAvklarMedFlereAksjonspunkter = (verdiForAvklarAktivitetErEndret, aksjonspunkter) => {
-  if (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)) {
-    return !verdiForAvklarAktivitetErEndret;
-  }
-  return true;
-};
 
 /**
  * BeregningInfoPanel
@@ -77,26 +51,7 @@ export const harIkkeEndringerIAvklarMedFlereAksjonspunkter = (verdiForAvklarAkti
  * Denne brukes også funksjonen withDefaultToggling for å håndtere automatisk åpning av panelet
  * når det finnes åpne aksjonspunkter.
  */
-export class BeregningInfoPanelImpl extends Component {
-  constructor() {
-    super();
-    this.state = {
-      submitEnabled: false,
-    };
-  }
-
-  componentDidMount() {
-    const { submitEnabled } = this.state;
-    if (!submitEnabled) {
-      this.setState({
-        submitEnabled: true,
-      });
-    }
-  }
-
-  render() {
-    const {
-      props: {
+export const BeregningInfoPanelImpl = ({
         intl,
         openInfoPanels,
         toggleInfoPanelCallback,
@@ -104,19 +59,12 @@ export class BeregningInfoPanelImpl extends Component {
         readOnly,
         aksjonspunkter,
         submittable,
-        verdiForAvklarAktivitetErEndret,
         isOnHold,
-        ...formProps
-      },
-      state: {
-        submitEnabled,
-      },
-    } = this;
-
+        submitCallback,
+    }) => {
     if (isOnHold) {
       return null;
     }
-
     return (
       <FaktaEkspandertpanel
         title={intl.formatMessage({ id: 'BeregningInfoPanel.Title' })}
@@ -126,22 +74,10 @@ export class BeregningInfoPanelImpl extends Component {
         faktaId={faktaPanelCodes.BEREGNING}
         readOnly={readOnly}
       >
-        <form onSubmit={formProps.handleSubmit}>
-          {createRelevantForms(readOnly, aksjonspunkter, submittable, formProps.dirty, submitEnabled)}
-          <React.Fragment>
-            <VerticalSpacer twentyPx />
-            <FaktaSubmitButton
-              formName={formProps.form}
-              isSubmittable={submittable && submitEnabled && harIkkeEndringerIAvklarMedFlereAksjonspunkter(verdiForAvklarAktivitetErEndret, aksjonspunkter)}
-              isReadOnly={readOnly}
-              hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-            />
-          </React.Fragment>
-        </form>
+        {createRelevantForms(readOnly, aksjonspunkter, submitCallback, submittable)}
       </FaktaEkspandertpanel>
     );
-  }
-}
+};
 
 BeregningInfoPanelImpl.propTypes = {
   intl: intlShape.isRequired,
@@ -150,60 +86,23 @@ BeregningInfoPanelImpl.propTypes = {
    */
   openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
   toggleInfoPanelCallback: PropTypes.func.isRequired,
+  submitCallback: PropTypes.func.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired).isRequired,
-  initialValues: PropTypes.shape(),
   submittable: PropTypes.bool.isRequired,
-  verdiForAvklarAktivitetErEndret: PropTypes.bool.isRequired,
   isOnHold: PropTypes.bool.isRequired,
-  ...formPropTypes,
 };
 
-BeregningInfoPanelImpl.defaultProps = {
-  initialValues: {},
-};
-
-const buildInitialValues = createSelector(
-  [buildInitialValuesVurderFaktaBeregning, buildInitialValuesAvklarAktiviteter],
-  (initialValuesVurderFakta, initialValuesAvklarAktiviteter) => ({
-    ...initialValuesAvklarAktiviteter,
-    ...initialValuesVurderFakta,
-  }),
-);
-
-const getValidate = createSelector(
-  [getValidationVurderFaktaBeregning],
-  validationForVurderFakta => values => ({
-    ...validationForVurderFakta(values),
-  }),
-);
-
-export const transformValues = createSelector(
-  [transformValuesVurderFaktaBeregning, transformValuesAvklarAktiviteter],
-  (transformVurderFakta, transformAvklarAktiviteter) => (values) => {
-    const avklareAktiviteterValues = transformAvklarAktiviteter(values);
-    if (avklareAktiviteterValues) {
-      return avklareAktiviteterValues;
-    }
-    return transformVurderFakta(values);
-  },
-);
-
-const mapStateToProps = (state, initialProps) => {
+const mapStateToProps = (state) => {
   const isOnHold = getBehandlingIsOnHold(state);
   return {
     isOnHold,
-    initialValues: buildInitialValues(state),
-    validate: getValidate(state),
-    verdiForAvklarAktivitetErEndret: erAvklartAktivitetEndret(state),
-    onSubmit: values => initialProps.submitCallback(transformValues(state)(values)),
   };
 };
 
-const BeregningInfoPanel = withDefaultToggling(faktaPanelCodes.BEREGNING, faktaOmBeregningAksjonspunkter)(connect(mapStateToProps)(behandlingForm({
-  form: formName,
-})(injectIntl(BeregningInfoPanelImpl))));
+const BeregningInfoPanel = withDefaultToggling(faktaPanelCodes.BEREGNING,
+  faktaOmBeregningAksjonspunkter)(connect(mapStateToProps)(injectIntl(BeregningInfoPanelImpl)));
 
 BeregningInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => faktaOmBeregningAksjonspunkter.includes(ap.definisjon.kode));
 

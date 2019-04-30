@@ -1,10 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'; import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import { formPropTypes } from 'redux-form';
 import { AksjonspunktHelpText, VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-
+import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
@@ -15,11 +16,12 @@ import FaktaForATFLOgSNPanel, {
   getBuildInitialValuesFaktaForATFLOgSN, getValidationFaktaForATFLOgSN,
   getHelpTextsFaktaForATFLOgSN,
 } from './FaktaForATFLOgSNPanel';
-
-import { getFormInitialValuesForBeregning } from '../BeregningFormUtils';
+import { erAvklartAktivitetEndret } from '../avklareAktiviteter/AvklareAktiviteterPanel';
+import { formNameVurderFaktaBeregning } from '../BeregningFormUtils';
 
 const {
   VURDER_FAKTA_FOR_ATFL_SN,
+  AVKLAR_AKTIVITETER,
 } = aksjonspunktCodes;
 
 const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
@@ -29,44 +31,91 @@ const findAksjonspunktMedBegrunnelse = aksjonspunkter => aksjonspunkter
 
 export const BEGRUNNELSE_FAKTA_TILFELLER_NAME = 'begrunnelseFaktaTilfeller';
 
+export const harIkkeEndringerIAvklarMedFlereAksjonspunkter = (verdiForAvklarAktivitetErEndret, aksjonspunkter) => {
+  if (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)) {
+    return !verdiForAvklarAktivitetErEndret;
+  }
+  return true;
+};
+
 /**
  * VurderFaktaBeregningPanel
  *
  * Container komponent.. Inneholder begrunnelsefelt og komponent som innholder panelene for fakta om beregning tilfeller
  */
-export const VurderFaktaBeregningPanelImpl = ({
-  readOnly,
-  isAksjonspunktClosed,
-  submittable,
-  hasBegrunnelse,
-  isDirty,
-  helpText,
-}) => (
-  <ElementWrapper>
-    <AksjonspunktHelpText isAksjonspunktOpen={!isAksjonspunktClosed}>{helpText}</AksjonspunktHelpText>
-    <VerticalSpacer twentyPx />
-    <FaktaForATFLOgSNPanel
-      readOnly={readOnly}
-      isAksjonspunktClosed={isAksjonspunktClosed}
-    />
-    <VerticalSpacer twentyPx />
-    <FaktaBegrunnelseTextField
-      name={BEGRUNNELSE_FAKTA_TILFELLER_NAME}
-      isDirty={isDirty}
-      isSubmittable={submittable}
-      isReadOnly={readOnly}
-      hasBegrunnelse={hasBegrunnelse}
-    />
-  </ElementWrapper>
+export class VurderFaktaBeregningPanelImpl extends Component {
+  constructor() {
+    super();
+    this.state = {
+      submitEnabled: false,
+    };
+  }
+
+  componentDidMount() {
+    const { submitEnabled } = this.state;
+    if (!submitEnabled) {
+      this.setState({
+        submitEnabled: true,
+      });
+    }
+  }
+
+  render() {
+    const {
+      props: {
+        verdiForAvklarAktivitetErEndret,
+        readOnly,
+        isAksjonspunktClosed,
+        submittable,
+        hasBegrunnelse,
+        helpText,
+        aksjonspunkter,
+        ...formProps
+      },
+      state: {
+        submitEnabled,
+      },
+    } = this;
+    return (
+      <ElementWrapper>
+        <form onSubmit={formProps.handleSubmit}>
+          <AksjonspunktHelpText isAksjonspunktOpen={!isAksjonspunktClosed}>{helpText}</AksjonspunktHelpText>
+          <VerticalSpacer twentyPx />
+          <FaktaForATFLOgSNPanel
+            readOnly={readOnly}
+            isAksjonspunktClosed={isAksjonspunktClosed}
+          />
+          <VerticalSpacer twentyPx />
+          <FaktaBegrunnelseTextField
+            name={BEGRUNNELSE_FAKTA_TILFELLER_NAME}
+            isDirty={formProps.dirty}
+            isSubmittable={submittable}
+            isReadOnly={readOnly}
+            hasBegrunnelse={hasBegrunnelse}
+          />
+          <React.Fragment>
+            <VerticalSpacer twentyPx />
+            <FaktaSubmitButton
+              formName={formProps.form}
+              isSubmittable={submittable && submitEnabled && harIkkeEndringerIAvklarMedFlereAksjonspunkter(verdiForAvklarAktivitetErEndret, aksjonspunkter)}
+              isReadOnly={readOnly}
+              hasOpenAksjonspunkter={!isAksjonspunktClosed}
+            />
+          </React.Fragment>
+        </form>
+      </ElementWrapper>
 );
+}
+}
 
 VurderFaktaBeregningPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
-  isDirty: PropTypes.bool.isRequired,
   hasBegrunnelse: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
   helpText: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  verdiForAvklarAktivitetErEndret: PropTypes.bool.isRequired,
+  ...formPropTypes,
 };
 
 // /// TRANSFORM VALUES METHODS ///////
@@ -118,18 +167,25 @@ export const getValidationVurderFaktaBeregning = createSelector(
 
 // // MAP STATE TO PROPS METHODS //////
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, initialProps) => {
   const alleAp = getAksjonspunkter(state);
   const relevantAp = alleAp.filter(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN);
   const isAksjonspunktClosed = relevantAp.length === 0 ? undefined : !isAksjonspunktOpen(relevantAp[0].status.kode);
-  const initialValues = getFormInitialValuesForBeregning(state);
+  const initialValues = buildInitialValuesVurderFaktaBeregning(state);
   const hasBegrunnelse = initialValues
   && !!initialValues[BEGRUNNELSE_FAKTA_TILFELLER_NAME];
   return {
-    helpText: getHelpTextsFaktaForATFLOgSN(state),
     isAksjonspunktClosed,
     hasBegrunnelse,
+    initialValues,
+    aksjonspunkter: alleAp,
+    helpText: getHelpTextsFaktaForATFLOgSN(state),
+    validate: getValidationVurderFaktaBeregning(state),
+    verdiForAvklarAktivitetErEndret: erAvklartAktivitetEndret(state),
+    onSubmit: values => initialProps.submitCallback(transformValuesVurderFaktaBeregning(state)(values)),
   };
 };
 
-export default connect(mapStateToProps)(VurderFaktaBeregningPanelImpl);
+export default connect(mapStateToProps)(behandlingForm({
+  form: formNameVurderFaktaBeregning,
+})(VurderFaktaBeregningPanelImpl));

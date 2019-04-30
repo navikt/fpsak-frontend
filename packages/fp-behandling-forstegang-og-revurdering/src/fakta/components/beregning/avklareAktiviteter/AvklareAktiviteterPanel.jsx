@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import { formPropTypes } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { VerticalSpacer, BorderBox, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
   getAksjonspunkter,
   getAvklarAktiviteter,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { getFormValuesForBeregning, getFormInitialValuesForBeregning } from '../BeregningFormUtils';
+import { getFormValuesForAvklarAktiviteter, getFormInitialValuesForAvklarAktiviteter, formNameAvklarAktiviteter } from '../BeregningFormUtils';
+
 import VurderAktiviteterPanel from './VurderAktiviteterPanel';
 
 const {
@@ -30,7 +33,7 @@ const findAksjonspunktMedBegrunnelse = aksjonspunkter => aksjonspunkter
 
 
 export const erAvklartAktivitetEndret = createSelector(
-  [getAksjonspunkter, getAvklarAktiviteter, getFormValuesForBeregning, getFormInitialValuesForBeregning],
+  [getAksjonspunkter, getAvklarAktiviteter, getFormValuesForAvklarAktiviteter, getFormInitialValuesForAvklarAktiviteter],
   (aksjonspunkter, avklarAktiviteter, values, initialValues) => {
     if (!hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)) {
       return false;
@@ -58,74 +61,109 @@ export const getHelpTextsAvklarAktiviteter = createSelector(
  *
  * Container komponent.. Inneholder panel for å avklare om aktivitet fra opptjening skal tas med i beregning
  */
-export const AvklareAktiviteterPanelImpl = ({
-  readOnly,
-  avklarAktiviteter,
-  isAksjonspunktClosed,
-  submittable,
-  hasBegrunnelse,
-  isDirty,
-  submitEnabled,
-  formName,
-  helpText,
-  harAndreAksjonspunkterIPanel,
-  erEndret,
-}) => (
-  <React.Fragment>
-    <AksjonspunktHelpText isAksjonspunktOpen={!isAksjonspunktClosed}>{helpText}</AksjonspunktHelpText>
-    <VerticalSpacer twentyPx />
-    <BorderBox>
-      {avklarAktiviteter.aktiviteterTomDatoMapping
-        && (
-        <VurderAktiviteterPanel
-          aktiviteterTomDatoMapping={avklarAktiviteter.aktiviteterTomDatoMapping}
-          readOnly={readOnly}
-          isAksjonspunktClosed={isAksjonspunktClosed}
-        />
-        )
-      }
-      <VerticalSpacer twentyPx />
-      <FaktaBegrunnelseTextField
-        name={BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME}
-        isDirty={isDirty}
-        isSubmittable={submittable}
-        isReadOnly={readOnly}
-        hasBegrunnelse={hasBegrunnelse}
-      />
-      {harAndreAksjonspunkterIPanel
+
+export class AvklareAktiviteterPanelImpl extends Component {
+  constructor() {
+    super();
+    this.state = {
+      submitEnabled: false,
+    };
+  }
+
+  componentDidMount() {
+    const { submitEnabled } = this.state;
+    if (!submitEnabled) {
+      this.setState({
+        submitEnabled: true,
+      });
+    }
+  }
+
+  render() {
+    const {
+      props: {
+        readOnly,
+        avklarAktiviteter,
+        isAksjonspunktClosed,
+        submittable,
+        hasBegrunnelse,
+        helpText,
+        harAndreAksjonspunkterIPanel,
+        erEndret,
+        ...formProps
+      },
+      state: {
+        submitEnabled,
+      },
+    } = this;
+    return (
+      <React.Fragment>
+        <form onSubmit={formProps.handleSubmit}>
+          <AksjonspunktHelpText isAksjonspunktOpen={!isAksjonspunktClosed}>{helpText}</AksjonspunktHelpText>
+          <VerticalSpacer twentyPx />
+          <BorderBox>
+            {avklarAktiviteter.aktiviteterTomDatoMapping
           && (
-          <FaktaSubmitButton
-            buttonTextId="AvklarAktivitetPanel.ButtonText"
-            formName={formName}
-            isSubmittable={submittable && submitEnabled && erEndret}
-            isReadOnly={readOnly}
-            hasOpenAksjonspunkter={!isAksjonspunktClosed}
+          <VurderAktiviteterPanel
+            aktiviteterTomDatoMapping={avklarAktiviteter.aktiviteterTomDatoMapping}
+            readOnly={readOnly}
+            isAksjonspunktClosed={isAksjonspunktClosed}
           />
-         )
-      }
-    </BorderBox>
-    {harAndreAksjonspunkterIPanel
+          )
+        }
+            <VerticalSpacer twentyPx />
+            <FaktaBegrunnelseTextField
+              name={BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME}
+              isDirty={formProps.dirty}
+              isSubmittable={submittable}
+              isReadOnly={readOnly}
+              hasBegrunnelse={hasBegrunnelse}
+            />
+            {harAndreAksjonspunkterIPanel
+            && (
+            <FaktaSubmitButton
+              buttonTextId="AvklarAktivitetPanel.ButtonText"
+              formName={formProps.form}
+              isSubmittable={submittable && submitEnabled && erEndret}
+              isReadOnly={readOnly}
+              hasOpenAksjonspunkter={!isAksjonspunktClosed}
+            />
+          )
+        }
+          </BorderBox>
+          {!harAndreAksjonspunkterIPanel
+            && (
+            <React.Fragment>
+              <VerticalSpacer twentyPx />
+              <FaktaSubmitButton
+                formName={formProps.form}
+                isSubmittable={submittable && submitEnabled && erEndret}
+                isReadOnly={readOnly}
+                hasOpenAksjonspunkter={!isAksjonspunktClosed}
+              />
+            </React.Fragment>
+          )
+        }
+        </form>
+        {harAndreAksjonspunkterIPanel
       && <VerticalSpacer twentyPx />
     }
-  </React.Fragment>
+      </React.Fragment>
 );
-
+  }
+}
 
 AvklareAktiviteterPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   avklarAktiviteter: PropTypes.shape().isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
-  isDirty: PropTypes.bool.isRequired,
   hasBegrunnelse: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
-  submitEnabled: PropTypes.bool.isRequired,
   harAndreAksjonspunkterIPanel: PropTypes.bool.isRequired,
   helpText: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  formName: PropTypes.string.isRequired,
   erEndret: PropTypes.bool.isRequired,
+  ...formPropTypes,
 };
-
-// /// TRANSFORM VALUES METHODS ///////
 
 export const transformValuesAvklarAktiviteter = createSelector(
   [getAksjonspunkter, getAvklarAktiviteter, erAvklartAktivitetEndret],
@@ -145,8 +183,6 @@ export const transformValuesAvklarAktiviteter = createSelector(
   },
 );
 
-// /// BUILD INITIAL VALUES METHODS ///////
-
 export const buildInitialValuesAvklarAktiviteter = createSelector(
   [getAksjonspunkter, getAvklarAktiviteter],
   (aksjonspunkter, avklarAktiviteter) => {
@@ -164,16 +200,13 @@ export const buildInitialValuesAvklarAktiviteter = createSelector(
   },
 );
 
-
-// // MAP STATE TO PROPS METHODS //////
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, initialProps) => {
   const avklarAktiviteter = getAvklarAktiviteter(state);
   const alleAp = getAksjonspunkter(state);
   const relevantAp = alleAp.filter(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_AKTIVITETER);
   const isAksjonspunktClosed = relevantAp.length === 0 ? undefined : !isAksjonspunktOpen(relevantAp[0].status.kode);
-  const initialValues = getFormInitialValuesForBeregning(state);
-  const values = getFormValuesForBeregning(state);
+  const initialValues = buildInitialValuesAvklarAktiviteter(state);
+  const values = getFormInitialValuesForAvklarAktiviteter(state);
   const hasBegrunnelse = initialValues
   && !!initialValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME];
   return {
@@ -181,9 +214,13 @@ const mapStateToProps = (state) => {
     isAksjonspunktClosed,
     avklarAktiviteter,
     hasBegrunnelse,
+    initialValues,
     erEndret: erAvklartAktivitetEndret(state),
     helpText: getHelpTextsAvklarAktiviteter(state),
+    onSubmit: vals => initialProps.submitCallback(transformValuesAvklarAktiviteter(state)(vals)),
   };
 };
 
-export default connect(mapStateToProps)(AvklareAktiviteterPanelImpl);
+export default connect(mapStateToProps)(behandlingForm({
+  form: formNameAvklarAktiviteter,
+})(AvklareAktiviteterPanelImpl));
