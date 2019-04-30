@@ -11,6 +11,9 @@ import HistorikkMalTypeTilbakekreving from './HistorikkMalTypeTilbakekreving';
 describe('HistorikkMalTypeTilbakekreving', () => {
   it('skal vise alle historikkelement korrekt', () => {
     const historikkinnslagDeler = [{
+      skjermlenke: {
+        kode: 'TILBAKEKREVING',
+      },
       endredeFelter: [{
         endretFeltNavn: {
           kode: historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT,
@@ -44,6 +47,7 @@ describe('HistorikkMalTypeTilbakekreving', () => {
     }];
     const wrapper = shallow(<HistorikkMalTypeTilbakekreving
       historikkinnslagDeler={historikkinnslagDeler}
+      behandlingLocation={{}}
     />);
 
     const messages = wrapper.find(FormattedHTMLMessage);

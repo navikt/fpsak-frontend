@@ -1,16 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedHTMLMessage } from 'react-intl';
+import { NavLink } from 'react-router-dom';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import historikkOpplysningTypeCodes from '@fpsak-frontend/kodeverk/src/historikkOpplysningTypeCodes';
 import historikkEndretFeltType from '@fpsak-frontend/kodeverk/src/historikkEndretFeltType';
 import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
 
+import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
+
+const scrollUp = () => {
+  if (window.innerWidth < 1305) {
+      window.scroll(0, 0);
+  }
+  return false;
+  };
+
 const HistorikkMalTypeTilbakekreving = ({
   historikkinnslagDeler,
+  behandlingLocation,
 }) => (
   <React.Fragment>
+    <Element>
+      <NavLink
+        to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
+        onClick={scrollUp}
+      >
+        {historikkinnslagDeler[0].skjermlenke.navn}
+      </NavLink>
+    </Element>
     {historikkinnslagDeler.map((historikkinnslagDel) => {
       const { opplysninger, endredeFelter } = historikkinnslagDel;
       const periodeFom = opplysninger.find(o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_FOM.kode).tilVerdi;
@@ -20,7 +40,9 @@ const HistorikkMalTypeTilbakekreving = ({
 
       return (
         <div key={periodeFom + periodeTom}>
-          <FormattedHTMLMessage id="Historikk.Template.Tilbakekreving.VurderingAvPerioden" values={{ periodeFom, periodeTom }} />
+          <Normaltekst>
+            <FormattedHTMLMessage id="Historikk.Template.Tilbakekreving.VurderingAvPerioden" values={{ periodeFom, periodeTom }} />
+          </Normaltekst>
           <VerticalSpacer eightPx />
           {endredeFelter.map((felt) => {
             const { endretFeltNavn, fraVerdi, tilVerdi } = felt;
@@ -30,10 +52,12 @@ const HistorikkMalTypeTilbakekreving = ({
 
             return (
               <React.Fragment key={navn}>
-                <FormattedHTMLMessage
-                  id={felt.fraVerdi ? 'Historikk.Template.Tilbakekreving.ChangedFromTo' : 'Historikk.Template.Tilbakekreving.FieldSetTo'}
-                  values={{ navn, fraVerdi, tilVerdi }}
-                />
+                <Normaltekst>
+                  <FormattedHTMLMessage
+                    id={felt.fraVerdi ? 'Historikk.Template.Tilbakekreving.ChangedFromTo' : 'Historikk.Template.Tilbakekreving.FieldSetTo'}
+                    values={{ navn, fraVerdi, tilVerdi }}
+                  />
+                </Normaltekst>
                 <VerticalSpacer eightPx />
                 {visBegrunnelse && begrunnelse}
                 {visBegrunnelse && <VerticalSpacer eightPx />}
@@ -49,6 +73,7 @@ const HistorikkMalTypeTilbakekreving = ({
 
 HistorikkMalTypeTilbakekreving.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
+  behandlingLocation: PropTypes.shape().isRequired,
 };
 
 export default HistorikkMalTypeTilbakekreving;
