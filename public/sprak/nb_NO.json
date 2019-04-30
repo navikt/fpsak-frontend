@@ -1029,6 +1029,8 @@
   "Avregning.SVPREF.nyttBeløp": "Svangerskapspenger nytt beløp",
   "Avregning.SVPREF.tidligereUtbetalt": "Svangerskapspenger tidligere utbetalt",
   "Avregning.SVPREF.differanse": "Svangerskapspenger avvik",
+  "Avregning.HjelpetekstForeldrepenger": "Her skal du oppgi hvorfor brukeren ikke skulle fått utbetalt ytelsen i perioden(e). Du må også oppgi hvordan feilutbetalingen ble oppdaget, hvem som oppdaget den og når den ble oppdaget eller meldt til NAV. Eksempel på tekst: «Vi mottok melding fra deg [dato]om at du hadde jobbet heltid. Du kan ikke jobbe og motta foreldrepenger samtidig. Da vi mottok meldingen fra deg, var det allerede utbetalt foreldrenger for perioden du har jobbet.",
+  "Avregning.HjelpetekstEngangsstonad": "Her skal du oppgi hvorfor brukeren ikke skulle fått utbetalt ytelsen i perioden(e). Du må også oppgi hvordan feilutbetalingen ble oppdaget, hvem som oppdaget den og når den ble oppdaget eller meldt til NAV.",
 
   "Beregningsgrunnlag.Info": "Fakta for beregningsgrunnlag",
   "Beregningsgrunnlag.Title": "Beregning",
