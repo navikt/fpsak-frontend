@@ -80,6 +80,15 @@ export class BarnPanelImpl extends Component {
                   <FormattedMessage id="BarnPanel.Age" values={{ age: calculateAgeFromDate(new Date(b.fodselsdato)).toString() }} />
                 </Element>
                 <VerticalSpacer eightPx />
+                {b.dodsdato && (
+                <Normaltekst>
+                  <FormattedMessage id="BarnPanel.DodsDato" />
+                  <Element><DateLabel dateString={b.dodsdato} /></Element>
+                  <VerticalSpacer eightPx />
+                </Normaltekst>
+)
+                    }
+
                 <Normaltekst><FormattedMessage id="BarnPanel.Address" /></Normaltekst>
                 <Element>
                   {b.adresse}
