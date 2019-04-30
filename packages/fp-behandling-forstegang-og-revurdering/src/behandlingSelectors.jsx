@@ -216,7 +216,7 @@ export const getBehandlingSkjaringstidspunkt = createSelector([getFamiliehendels
 
 // endre disse til familiehendelse
 export const getBarnFraTpsRelatertTilSoknad = createSelector(
-  [getFamiliehendelseGjeldende], (familiehendelse = {}) => (familiehendelse.avklartBarn ? familiehendelse.avklartBarn : []),
+  [getFamiliehendelseRegister], (familiehendelse = {}) => (familiehendelse ? familiehendelse.avklartBarn : []),
 );
 const FNR_DODFODT_PART = '00001';
 export const getAntallDodfodteBarn = createSelector(
