@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import beregningAktivitetPropType from './beregningAktivitetPropType';
-import { VurderAktiviteterTabell } from './VurderAktiviteterTabell';
+import VurderAktiviteterTabell from './VurderAktiviteterTabell';
 
 
 /**
@@ -43,11 +43,11 @@ VurderAktiviteterPanel.hasValueChangedFromInitial = (aktiviteterTomDatoMapping, 
   return VurderAktiviteterTabell.hasValueChangedFromInitial(aktiviteterTomDatoMapping[0].aktiviteter, values, initialValues);
 };
 
-VurderAktiviteterPanel.buildInitialValues = (aktiviteterTomDatoMapping) => {
+VurderAktiviteterPanel.buildInitialValues = (aktiviteterTomDatoMapping, getKodeverknavn) => {
   if (!aktiviteterTomDatoMapping) {
     return {};
   }
-  return VurderAktiviteterTabell.buildInitialValues(aktiviteterTomDatoMapping[0].aktiviteter);
+  return VurderAktiviteterTabell.buildInitialValues(aktiviteterTomDatoMapping[0].aktiviteter, getKodeverknavn);
 };
 
 export default VurderAktiviteterPanel;

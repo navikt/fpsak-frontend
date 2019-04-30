@@ -4,14 +4,15 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { createSelector } from 'reselect';
+import { Normaltekst } from 'nav-frontend-typografi';
 
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import { InputField } from '@fpsak-frontend/form';
-import { getBeregningsgrunnlagPerioder, getGjeldendeBeregningAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import {
   Table, TableRow, TableColumn, Image,
 } from '@fpsak-frontend/shared-components';
 import {
-  required, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, DDMMYYYY_DATE_FORMAT, createVisningsnavnForAktivitet,
+  required, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, DDMMYYYY_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -19,9 +20,14 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import hourglassImg from '@fpsak-frontend/assets/images/hourglass.svg';
 import endretUrl from '@fpsak-frontend/assets/images/endret_felt.svg';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+
+import { getBeregningsgrunnlagPerioder, getGjeldendeBeregningAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import { getBehandlingFormValues } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { Normaltekst } from 'nav-frontend-typografi';
 import NaturalytelsePanel from './NaturalytelsePanel';
+
 import styles from './FastsettInntektTidsbegrenset.less';
 
 const formName = 'BeregningForm';
@@ -114,14 +120,14 @@ const createMapValueObject = () => ({
 // Initialiserer arbeidsforholdet mappet med data som skal vises uansett hva slags data vi har.
 // Dette innebærer at første kolonne i raden skal inneholde andelsnavn og andre kolonne skal inneholde beregnetPrAar.
 // Vi antar at alle andeler ligger i alle perioder, henter derfor kun ut andeler fra den første perioden.
-const initializeMap = (perioder) => {
+const initializeMap = (perioder, getKodeverknavn) => {
   const inntektMap = createBeregnetInntektForAlleAndeler(perioder);
   const alleAndeler = findArbeidstakerAndeler(perioder[0]);
   const mapMedAndeler = {};
   alleAndeler.forEach((andel) => {
     const andelMapNavn = createArbeidsforholdMapKey(andel.arbeidsforhold);
     const mapValueMedAndelNavn = createMapValueObject();
-    mapValueMedAndelNavn.tabellInnhold = createVisningsnavnForAktivitet(andel.arbeidsforhold);
+    mapValueMedAndelNavn.tabellInnhold = createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn);
     mapValueMedAndelNavn.erTidsbegrenset = andel.erTidsbegrensetArbeidsforhold !== undefined ? andel.erTidsbegrensetArbeidsforhold : false;
     const mapValueMedBeregnetForstePeriode = createMapValueObject();
     mapValueMedBeregnetForstePeriode.erTidsbegrenset = false;
@@ -147,13 +153,13 @@ export const createInputFieldKey = (andel, periode) => {
 // Vi må også ta vare på om arbeidsforholdet er tidsbegrenset eller ikke for å kunne vise dette i GUI.
 
 export const createTableData = createSelector(
-  [getBeregningsgrunnlagPerioder, getGjeldendeBeregningAksjonspunkter],
-  (allePerioder, aksjonspunkter) => {
+  [getBeregningsgrunnlagPerioder, getGjeldendeBeregningAksjonspunkter, getAlleKodeverk],
+  (allePerioder, aksjonspunkter, alleKodeverk) => {
     const harAktueltAksjonspunkt = harAksjonspunktForFastsettBgTidsbegrensetAT(aksjonspunkter);
     // Vi er ikke interessert i perioder som oppstår grunnet naturalytelse
     const relevantePerioder = finnPerioderMedAvsluttetArbeidsforhold(allePerioder);
     const kopiAvPerioder = relevantePerioder.slice(0);
-    const arbeidsforholdPeriodeMap = initializeMap(kopiAvPerioder);
+    const arbeidsforholdPeriodeMap = initializeMap(kopiAvPerioder, getKodeverknavnFn(alleKodeverk, kodeverkTyper));
     if (!harAktueltAksjonspunkt) {
       // Vi trenger ikke vise første periode mer enn en gang når vi ikke har aksjonspunktet, da hopper vi over den her
       kopiAvPerioder.shift();

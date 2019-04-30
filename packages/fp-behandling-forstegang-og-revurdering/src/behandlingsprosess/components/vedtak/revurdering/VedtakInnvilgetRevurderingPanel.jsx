@@ -6,20 +6,23 @@ import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
 import { Row, Column } from 'nav-frontend-grid';
 
 import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
+import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import vedtakResultType from '@fpsak-frontend/kodeverk/src/vedtakResultType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import {
   getAksjonspunkter,
   getBehandlingResultatstruktur, getBehandlingSprak,
   getBehandlingsresultat,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandlingForstegangOgRevurdering/src/selectors/originalBehandlingSelectors';
-import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
 import {
   endringerIBeregningsgrunnlagGirFritekstfelt, findTilbakekrevingText,
 } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/VedtakHelper';
 import VedtakFritekstPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import vedtakResultType from '@fpsak-frontend/kodeverk/src/vedtakResultType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 const isNewBehandlingResult = (beregningResultat, originaltBeregningResultat) => {
   const vedtakResult = beregningResultat ? vedtakResultType.INNVILGET : vedtakResultType.AVSLAG;
@@ -43,10 +46,10 @@ const resultTextES = (beregningResultat, originaltBeregningResultat) => {
     : 'VedtakForm.Resultat.IngenEndring';
 };
 
-export const lagKonsekvensForYtelsenTekst = (konsekvenser) => {
+export const lagKonsekvensForYtelsenTekst = (konsekvenser, getKodeverknavn) => {
   if (!konsekvenser || konsekvenser.length < 1) {
     return '';
-  } return konsekvenser.map(k => k.navn).join(' og ');
+  } return konsekvenser.map(k => getKodeverknavn(k)).join(' og ');
 };
 
 export const VedtakInnvilgetRevurderingPanelImpl = ({
@@ -62,6 +65,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
   readOnly,
   behandlingsresultat,
   tilbakekrevingText,
+  getKodeverknavn,
 }) => (
   <ElementWrapper>
     {ytelseType === fagsakYtelseType.ENGANGSSTONAD
@@ -101,8 +105,8 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
       <div>
         <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
         <Normaltekst>
-          {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen)}
-          {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen) !== '' && tilbakekrevingText && '. '}
+          {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn)}
+          {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn) !== '' && tilbakekrevingText && '. '}
           {tilbakekrevingText && intl.formatMessage({
             id: tilbakekrevingText,
           })}
@@ -149,6 +153,7 @@ VedtakInnvilgetRevurderingPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   behandlingsresultat: PropTypes.shape().isRequired,
   tilbakekrevingText: PropTypes.string,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 VedtakInnvilgetRevurderingPanelImpl.defaultProps = {
@@ -172,4 +177,4 @@ const mapStateToProps = state => ({
   tilbakekrevingText: findTilbakekrevingText(state),
 });
 
-export default connect(mapStateToProps)(injectIntl(VedtakInnvilgetRevurderingPanelImpl));
+export default connect(mapStateToProps)(injectIntl(injectKodeverk(getAlleKodeverk)(VedtakInnvilgetRevurderingPanelImpl)));

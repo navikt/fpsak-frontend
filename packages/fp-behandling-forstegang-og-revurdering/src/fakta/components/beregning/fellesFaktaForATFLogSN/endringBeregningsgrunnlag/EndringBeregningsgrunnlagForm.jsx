@@ -94,7 +94,7 @@ export const finnFastsattIForstePeriode = (values, skalRedigereInntekt) => {
     .reduce((sum, fastsattBelop) => sum + fastsattBelop, 0);
 };
 
-EndringBeregningsgrunnlagForm.validate = (values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag) => {
+EndringBeregningsgrunnlagForm.validate = (values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag, getKodeverknavn) => {
   const errors = {};
   if (endringBGPerioder && endringBGPerioder.length > 0) {
     const skalRedigereInntekt = skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag);
@@ -104,7 +104,7 @@ EndringBeregningsgrunnlagForm.validate = (values, endringBGPerioder, faktaOmBere
     for (let i = 0; i < endringBGPerioder.length; i += 1) {
       const periode = values[getFieldNameKey(i)];
       errors[getFieldNameKey(i)] = EndringBeregningsgrunnlagPeriodePanel.validate(periode, fastsattIForstePeriode,
-         skalRedigereInntekt, skalOverstyreBg, beregningsgrunnlag.skjaeringstidspunktBeregning, skalValidereMotRapportert);
+         skalRedigereInntekt, skalOverstyreBg, beregningsgrunnlag.skjaeringstidspunktBeregning, skalValidereMotRapportert, getKodeverknavn);
     }
   }
   return errors;
@@ -112,7 +112,7 @@ EndringBeregningsgrunnlagForm.validate = (values, endringBGPerioder, faktaOmBere
 
 const finnRiktigBgPeriode = (periode, bgPerioder) => bgPerioder.find(p => p.beregningsgrunnlagPeriodeFom === periode.fom);
 
-EndringBeregningsgrunnlagForm.buildInitialValues = (endringBGPerioder, readOnly, bg) => {
+EndringBeregningsgrunnlagForm.buildInitialValues = (endringBGPerioder, readOnly, bg, getKodeverknavn) => {
   const initialValues = {};
   if (!endringBGPerioder) {
     return initialValues;
@@ -121,7 +121,7 @@ EndringBeregningsgrunnlagForm.buildInitialValues = (endringBGPerioder, readOnly,
   endringBGPerioder.forEach((periode, index) => {
     const bgPeriode = finnRiktigBgPeriode(periode, bgPerioder);
     initialValues[getFieldNameKey(index)] = EndringBeregningsgrunnlagPeriodePanel
-    .buildInitialValues(periode, readOnly, bgPeriode, bg.skjaeringstidspunktBeregning, bg.faktaOmBeregning);
+    .buildInitialValues(periode, readOnly, bgPeriode, bg.skjaeringstidspunktBeregning, bg.faktaOmBeregning, getKodeverknavn);
   });
   return initialValues;
 };

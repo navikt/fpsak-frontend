@@ -1,13 +1,14 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { formatCurrencyNoKr, createVisningsnavnForAktivitet, removeSpacesFromNumber } from '@fpsak-frontend/utils';
+import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import { FormattedMessage } from 'react-intl';
+import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 
-export const lagTotalInntektArbeidsforholdList = (values, skjaeringstidspunktBeregning) => {
+export const lagTotalInntektArbeidsforholdList = (values, skjaeringstidspunktBeregning, getKodeverknavn) => {
   const totalInntektArbeidsforholdList = [];
   values.forEach((andel) => {
-    const navn = createVisningsnavnForAktivitet(andel);
+    const navn = createVisningsnavnForAktivitet(andel, getKodeverknavn);
     if (andel.arbeidsgiverId) {
       const arbforhold = totalInntektArbeidsforholdList.find(({ key }) => key === navn);
       if (arbforhold !== undefined) {

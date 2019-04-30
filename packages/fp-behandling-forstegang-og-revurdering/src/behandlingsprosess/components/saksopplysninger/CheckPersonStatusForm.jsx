@@ -8,6 +8,7 @@ import moment from 'moment';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
 import { required, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import {
@@ -17,7 +18,7 @@ import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
@@ -125,14 +126,15 @@ const getValgtOpplysning = (avklartPersonstatus) => {
 };
 
 export const buildInitialValues = createSelector(
-  [getBehandlingHenlagt, getSelectedBehandlingspunktAksjonspunkter, getPersonopplysning],
-  (behandlingHenlagt, aksjonspunkter, personopplysning) => {
+  [getBehandlingHenlagt, getSelectedBehandlingspunktAksjonspunkter, getPersonopplysning, getAlleKodeverk],
+  (behandlingHenlagt, aksjonspunkter, personopplysning, alleKodeverk) => {
     const shouldContinueBehandling = !behandlingHenlagt;
     const { avklartPersonstatus, personstatus } = personopplysning;
     const aksjonspunkt = aksjonspunkter[0];
+    const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
     return {
       originalPersonstatusName: avklartPersonstatus && avklartPersonstatus.orginalPersonstatus
-        ? avklartPersonstatus.orginalPersonstatus.navn : personstatus.navn,
+        ? getKodeverknavn(avklartPersonstatus.orginalPersonstatus) : getKodeverknavn(personstatus),
       fortsettBehandling: isAksjonspunktOpen(aksjonspunkt.status.kode) ? undefined : shouldContinueBehandling,
       personstatus: getValgtOpplysning(avklartPersonstatus),
       ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),

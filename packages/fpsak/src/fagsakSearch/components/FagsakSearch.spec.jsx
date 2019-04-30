@@ -6,6 +6,7 @@ import sinon from 'sinon';
 import { PersonIndex } from '@fpsak-frontend/fp-felles';
 import { SearchForm } from '@fpsak-frontend/search-form';
 import FagsakSearch from './FagsakSearch';
+import FagsakList from './FagsakList';
 
 
 describe('<FagsakSearch>', () => {
@@ -45,7 +46,7 @@ describe('<FagsakSearch>', () => {
     expect(searchComp).to.have.length(1);
     expect(wrapper.find('Label')).to.have.length(0);
     expect(wrapper.find('Person')).to.have.length(0);
-    expect(wrapper.find('FagsakList')).to.have.length(0);
+    expect(wrapper.find(FagsakList)).to.have.length(0);
   });
 
   it('skal vise søkefelt og label for ingen søketreff når ingen fagsaker blir hentet', () => {
@@ -82,7 +83,7 @@ describe('<FagsakSearch>', () => {
     const personComp = wrapper.find(PersonIndex);
     expect(personComp).to.have.length(1);
 
-    const fagsakListComp = wrapper.find('FagsakList');
+    const fagsakListComp = wrapper.find(FagsakList);
     expect(fagsakListComp).to.have.length(1);
     expect(fagsakListComp.prop('fagsaker')).to.eql([fagsak, fagsak]);
     expect(fagsakListComp.prop('selectFagsakCallback')).to.eql(selectFagsakFunction);

@@ -170,20 +170,20 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
         fom: '2016-01-15',
         tom: '2016-10-15',
         dekningType: {
-          navn: 'testdekning',
+          kode: 'DEK_TYPE',
         },
         medlemskapType: {
-          navn: 'testStatus',
+          kode: 'M_STATUS',
         },
         beslutningsdato: '2016-10-16',
       }, {
         fom: '2017-01-15',
         tom: '2017-10-15',
         dekningType: {
-          navn: 'testdekning2017',
+          kode: 'DEK_TYPE2',
         },
         medlemskapType: {
-          navn: 'testStatus2017',
+          kode: 'M_STATUS2',
         },
         beslutningsdato: '2017-10-16',
       }],
@@ -203,7 +203,22 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       },
     }];
 
-    const initialValues = PerioderMedMedlemskapFaktaPanel.buildInitialValues(medlem, soknad, aksjonspunkter);
+    const getKodeverknavn = (kodeverk) => {
+      if (kodeverk.kode === 'DEK_TYPE') {
+        return 'testdekning';
+      }
+      if (kodeverk.kode === 'DEK_TYPE2') {
+        return 'testdekning2017';
+      }
+      if (kodeverk.kode === 'M_STATUS') {
+        return 'testStatus';
+      }
+      if (kodeverk.kode === 'M_STATUS2') {
+        return 'testStatus2017';
+      }
+      return '';
+    };
+    const initialValues = PerioderMedMedlemskapFaktaPanel.buildInitialValues(medlem, soknad, aksjonspunkter, getKodeverknavn);
 
     expect(initialValues).to.eql({
       periods: [{

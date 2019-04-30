@@ -5,11 +5,9 @@ const behandlingIListePropType = PropTypes.shape({
   versjon: PropTypes.number.isRequired,
   type: PropTypes.shape({
     kode: PropTypes.string.isRequired,
-    navn: PropTypes.string.isRequired,
   }).isRequired,
   status: PropTypes.shape({
     kode: PropTypes.string.isRequired,
-    navn: PropTypes.string.isRequired,
   }).isRequired,
   fagsakId: PropTypes.number.isRequired,
   opprettet: PropTypes.string.isRequired,

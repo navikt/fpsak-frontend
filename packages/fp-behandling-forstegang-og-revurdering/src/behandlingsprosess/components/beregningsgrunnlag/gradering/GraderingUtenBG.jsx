@@ -6,11 +6,13 @@ import { createSelector } from 'reselect';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
-  required, minLength, maxLength, hasValidText, createVisningsnavnForAktivitet,
+  required, minLength, maxLength, hasValidText,
 } from '@fpsak-frontend/utils';
+import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer, Image, BorderBox } from '@fpsak-frontend/shared-components';
 import behandleImageURL from '@fpsak-frontend/assets/images/advarsel.svg';
@@ -18,6 +20,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import {
   behandlingForm, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
@@ -32,21 +35,22 @@ const formName = 'graderingUtenBGForm';
 const begrunnelseFieldName = 'begrunnelse';
 const radioFieldName = 'graderingUtenBGSettPaaVent';
 
-const bestemVisning = (andel) => {
+const bestemVisning = (andel, getKodeverknavn) => {
   if (andel.arbeidsforhold && andel.aktivitetStatus && andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER) {
-    return createVisningsnavnForAktivitet(andel.arbeidsforhold);
+    return createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn);
   }
-  return andel.aktivitetStatus && andel.aktivitetStatus.navn ? andel.aktivitetStatus.navn.toLowerCase() : '';
+  const navn = getKodeverknavn(andel.aktivitetStatus);
+  return andel.aktivitetStatus && navn ? navn.toLowerCase() : '';
 };
 
-const lagArbeidsgiverString = (andelerMedGraderingUtenBG) => {
+const lagArbeidsgiverString = (andelerMedGraderingUtenBG, getKodeverknavn) => {
   if (!andelerMedGraderingUtenBG || andelerMedGraderingUtenBG.length < 1) {
     return '';
   }
   if (andelerMedGraderingUtenBG.length === 1) {
-    return bestemVisning(andelerMedGraderingUtenBG[0]);
+    return bestemVisning(andelerMedGraderingUtenBG[0], getKodeverknavn);
   }
-  const arbeidsgiverVisningsnavn = andelerMedGraderingUtenBG.map(andel => bestemVisning(andel));
+  const arbeidsgiverVisningsnavn = andelerMedGraderingUtenBG.map(andel => bestemVisning(andel, getKodeverknavn));
   const sisteNavn = arbeidsgiverVisningsnavn.splice(andelerMedGraderingUtenBG.length - 1);
   const tekst = arbeidsgiverVisningsnavn.join(', ');
   return `${tekst} og ${sisteNavn}`;
@@ -56,6 +60,7 @@ export const GraderingUtenBG = ({
   andelerMedGraderingUtenBG,
   readOnly,
   aksjonspunkt,
+  getKodeverknavn,
   ...formProps
 }) => {
   if (!aksjonspunkt || !andelerMedGraderingUtenBG || andelerMedGraderingUtenBG.length === 0) {
@@ -79,7 +84,10 @@ export const GraderingUtenBG = ({
           </Column>
           <Column xs="11">
             <Normaltekst>
-              <FormattedMessage id={aksjonspunktTekstId} values={{ arbeidsforholdTekst: lagArbeidsgiverString(andelerMedGraderingUtenBG) }} />
+              <FormattedMessage
+                id={aksjonspunktTekstId}
+                values={{ arbeidsforholdTekst: lagArbeidsgiverString(andelerMedGraderingUtenBG, getKodeverknavn) }}
+              />
             </Normaltekst>
           </Column>
         </Row>
@@ -138,6 +146,7 @@ GraderingUtenBG.propTypes = {
   andelerMedGraderingUtenBG: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   submitCallback: PropTypes.func.isRequired,
   aksjonspunkt: PropTypes.shape(),
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 GraderingUtenBG.defaultProps = {
@@ -193,4 +202,4 @@ const mapStateToProps = (state, ownProps) => ({
   initialValues: buildInitialValues(state),
 });
 
-export default connect(mapStateToProps)(behandlingForm({ form: formName })(GraderingUtenBG));
+export default connect(mapStateToProps)(behandlingForm({ form: formName })(injectKodeverk(getAlleKodeverk)(GraderingUtenBG)));

@@ -27,7 +27,7 @@ export const arbeidsforholdPropType = PropTypes.shape({
   fomDato: PropTypes.string,
   tomDato: PropTypes.string,
   kilde: PropTypes.shape({
-    navn: PropTypes.string,
+    kode: PropTypes.string.isRequired,
   }),
   mottattDatoInntektsmelding: PropTypes.string,
   stillingsprosent: PropTypes.number,
@@ -43,7 +43,7 @@ export const arbeidsforholdPropType = PropTypes.shape({
   erEndret: PropTypes.bool,
   brukMedJustertPeriode: PropTypes.bool,
   handlingType: PropTypes.shape({
-    navn: PropTypes.string,
+    kode: PropTypes.string.isRequired,
   }),
   overstyrtTom: PropTypes.string,
   lagtTilAvSaksbehandler: PropTypes.bool,

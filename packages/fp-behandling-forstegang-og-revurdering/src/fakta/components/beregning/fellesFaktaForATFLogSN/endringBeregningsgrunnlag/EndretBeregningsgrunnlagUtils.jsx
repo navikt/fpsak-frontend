@@ -1,15 +1,21 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
-import {
-  DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, createVisningsnavnForAktivitet,
-} from '@fpsak-frontend/utils';
 import { Element } from 'nav-frontend-typografi';
+import moment from 'moment';
+
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import {
+  DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT,
+} from '@fpsak-frontend/utils';
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import faktaOmBeregningTilfelle, { harFastsettATFLInntektTilfelle } from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import moment from 'moment';
+
+import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import {
   getAksjonspunkter,
   getEndringBeregningsgrunnlag,
@@ -83,9 +89,9 @@ const lagPeriodeStreng = (perioder) => {
 };
 
 
-export const createEndretArbeidsforholdString = (listOfArbeidsforhold, gjelderGradering) => {
+export const createEndretArbeidsforholdString = (listOfArbeidsforhold, gjelderGradering, getKodeverknavn) => {
   const listOfStrings = listOfArbeidsforhold.map((arbeidsforhold) => {
-    const navnOgOrgnr = createVisningsnavnForAktivitet(arbeidsforhold);
+    const navnOgOrgnr = createVisningsnavnForAktivitet(arbeidsforhold, getKodeverknavn);
     const periodeStreng = gjelderGradering
       ? lagPeriodeStreng(arbeidsforhold.perioderMedGraderingEllerRefusjon.filter(({ erGradering }) => erGradering))
       : lagPeriodeStreng(arbeidsforhold.perioderMedGraderingEllerRefusjon.filter(({ erRefusjon }) => erRefusjon));
@@ -94,10 +100,10 @@ export const createEndretArbeidsforholdString = (listOfArbeidsforhold, gjelderGr
   return byggListeSomStreng(listOfStrings);
 };
 
-export const createGraderingOrRefusjonString = (graderingArbeidsforhold, refusjonArbeidsforhold) => {
+const createGraderingOrRefusjonString = (graderingArbeidsforhold, refusjonArbeidsforhold, getKodeverknavn) => {
   const text = [];
   if (graderingArbeidsforhold.length > 0) {
-    const arbeidsforholdString = createEndretArbeidsforholdString(graderingArbeidsforhold, true);
+    const arbeidsforholdString = createEndretArbeidsforholdString(graderingArbeidsforhold, true, getKodeverknavn);
     text.push(<FormattedMessage
       key="EndringBeregningsgrunnlagGradering"
       id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.Gradering"
@@ -105,7 +111,7 @@ export const createGraderingOrRefusjonString = (graderingArbeidsforhold, refusjo
     />);
   }
   if (refusjonArbeidsforhold.length > 0) {
-    const arbeidsforholdString = createEndretArbeidsforholdString(refusjonArbeidsforhold, false);
+    const arbeidsforholdString = createEndretArbeidsforholdString(refusjonArbeidsforhold, false, getKodeverknavn);
     text.push(<FormattedMessage
       key="EndringBeregningsgrunnlagRefusjon"
       id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.Refusjon"
@@ -115,12 +121,12 @@ export const createGraderingOrRefusjonString = (graderingArbeidsforhold, refusjo
   return text;
 };
 
-export const lagHelpTextsEndringBG = (endredeArbeidsforhold) => {
+const lagHelpTextsEndringBG = (endredeArbeidsforhold, getKodeverknavn) => {
   const gradering = endredeArbeidsforhold
     .filter(({ perioderMedGraderingEllerRefusjon }) => perioderMedGraderingEllerRefusjon.map(({ erGradering }) => erGradering).includes(true));
   const refusjon = endredeArbeidsforhold
     .filter(({ perioderMedGraderingEllerRefusjon }) => perioderMedGraderingEllerRefusjon.map(({ erRefusjon }) => erRefusjon).includes(true));
-  const helpTexts = createGraderingOrRefusjonString(gradering, refusjon);
+  const helpTexts = createGraderingOrRefusjonString(gradering, refusjon, getKodeverknavn);
   if (helpTexts.length === 2) {
     return [
       <ElementWrapper>
@@ -133,10 +139,10 @@ export const lagHelpTextsEndringBG = (endredeArbeidsforhold) => {
 };
 
 export const getHelpTextsEndringBG = createSelector(
-  [getFaktaOmBeregningTilfellerKoder, getEndredeArbeidsforhold, getAksjonspunkter],
-  (aktivertePaneler, endredeArbeidsforhold, aksjonspunkter) => (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter))
+  [getFaktaOmBeregningTilfellerKoder, getEndredeArbeidsforhold, getAksjonspunkter, getAlleKodeverk],
+  (aktivertePaneler, endredeArbeidsforhold, aksjonspunkter, alleKodeverk) => (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter))
     && (skalViseHelptextForEndretBg(aktivertePaneler)
-      ? lagHelpTextsEndringBG(endredeArbeidsforhold) : []),
+      ? lagHelpTextsEndringBG(endredeArbeidsforhold, getKodeverknavnFn(alleKodeverk, kodeverkTyper)) : []),
 );
 
 
@@ -144,7 +150,7 @@ const erPeriodeOverlappende = (fom1, tom1, fom2, tom2) => ((tom2 === null || !mo
   && (tom1 === null || !moment(tom1).isBefore(moment(fom2))));
 
 
-const findGraderingOrRefusjonHeading = (state, periodeFom, periodeTom) => {
+const findGraderingOrRefusjonHeading = (state, periodeFom, periodeTom, getKodeverknavn) => {
   const endredeArbeidsforhold = getEndredeArbeidsforhold(state);
   const gradering = endredeArbeidsforhold
     .filter(arbeidsforhold => arbeidsforhold.perioderMedGraderingEllerRefusjon
@@ -152,7 +158,7 @@ const findGraderingOrRefusjonHeading = (state, periodeFom, periodeTom) => {
   const refusjon = endredeArbeidsforhold
     .filter(arbeidsforhold => arbeidsforhold.perioderMedGraderingEllerRefusjon
       .filter(({ erRefusjon, fom, tom }) => erRefusjon && erPeriodeOverlappende(fom, tom, periodeFom, periodeTom)).length > 0);
-  return createGraderingOrRefusjonString(gradering, refusjon);
+  return createGraderingOrRefusjonString(gradering, refusjon, getKodeverknavn);
 };
 
 const skalViseFastsettATFLInntektHeader = (heading, harPeriodeaarsak) => ((heading.length === 0) && !harPeriodeaarsak);
@@ -204,8 +210,8 @@ const harKunBrukersAndelIForstePeriode = (state) => {
 };
 
 
-export const createEndringHeadingForDate = (state, periodeFom, periodeTom, dateHeading, harPeriodeaarsak) => {
-  const heading = findGraderingOrRefusjonHeading(state, periodeFom, periodeTom);
+export const createEndringHeadingForDate = (state, periodeFom, periodeTom, dateHeading, harPeriodeaarsak, getKodeverknavn) => {
+  const heading = findGraderingOrRefusjonHeading(state, periodeFom, periodeTom, getKodeverknavn);
   const values = getFormValuesForBeregning(state);
   const faktaOmBeregning = getFaktaOmBeregning(state);
   return (

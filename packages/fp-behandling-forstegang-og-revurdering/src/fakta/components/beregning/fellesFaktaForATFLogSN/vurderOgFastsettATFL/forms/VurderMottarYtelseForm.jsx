@@ -2,13 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { createVisningsnavnForAktivitet, required, removeSpacesFromNumber } from '@fpsak-frontend/utils';
+
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { required, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import { getVurderMottarYtelse } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getVurderMottarYtelse } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import {
   utledArbeidsforholdFieldName, finnFrilansFieldName, skalFastsetteInntektATUtenInntektsmelding, frilansMottarYtelse, andelsnrMottarYtelseMap,
 } from './VurderMottarYtelseUtils';
@@ -29,16 +34,16 @@ export const harTilfelleSomHandtererInntekt = tilfeller => (tilfeller.some(tilfe
 
 export const mottarYtelseForArbeidMsg = () => ('BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForArbeid');
 
-const utledArbeidsforholdUtenIMRadioTekst = arbeidsforhold => (
-  <FormattedMessage id={mottarYtelseForArbeidMsg()} values={{ arbeid: createVisningsnavnForAktivitet(arbeidsforhold) }} />
+const utledArbeidsforholdUtenIMRadioTekst = (arbeidsforhold, getKodeverknavn) => (
+  <FormattedMessage id={mottarYtelseForArbeidMsg()} values={{ arbeid: createVisningsnavnForAktivitet(arbeidsforhold, getKodeverknavn) }} />
 );
 
 
-const mottarYtelseArbeidsforholdRadio = (andel, readOnly, isAksjonspunktClosed) => (
+const mottarYtelseArbeidsforholdRadio = (andel, readOnly, isAksjonspunktClosed, getKodeverknavn) => (
   <div key={utledArbeidsforholdFieldName(andel)}>
     <div>
       <Normaltekst>
-        {utledArbeidsforholdUtenIMRadioTekst(andel.arbeidsforhold)}
+        {utledArbeidsforholdUtenIMRadioTekst(andel.arbeidsforhold, getKodeverknavn)}
       </Normaltekst>
     </div>
     <VerticalSpacer eightPx />
@@ -76,6 +81,7 @@ export const VurderMottarYtelseFormImpl = ({
   erFrilans,
   arbeidsforholdUtenIM,
   tilfeller,
+  getKodeverknavn,
 }) => (
   <div>
     {erFrilans
@@ -99,7 +105,7 @@ export const VurderMottarYtelseFormImpl = ({
       )
     }
     {arbeidsforholdUtenIM.map(andel => (
-      mottarYtelseArbeidsforholdRadio(andel, readOnly, isAksjonspunktClosed)
+      mottarYtelseArbeidsforholdRadio(andel, readOnly, isAksjonspunktClosed, getKodeverknavn)
     ))}
   </div>
 );
@@ -110,25 +116,7 @@ VurderMottarYtelseFormImpl.propTypes = {
   tilfeller: PropTypes.arrayOf(PropTypes.string).isRequired,
   arbeidsforholdUtenIM: PropTypes.arrayOf(PropTypes.object).isRequired,
   erFrilans: PropTypes.bool.isRequired,
-};
-
-VurderMottarYtelseFormImpl.buildInitialValues = (vurderMottarYtelse) => {
-  const initialValues = {};
-  if (!vurderMottarYtelse) {
-    return null;
-  }
-  if (vurderMottarYtelse.erFrilans) {
-    initialValues[finnFrilansFieldName()] = vurderMottarYtelse.frilansMottarYtelse;
-  }
-
-  const ATAndelerUtenIM = vurderMottarYtelse.arbeidstakerAndelerUtenIM ? vurderMottarYtelse.arbeidstakerAndelerUtenIM : [];
-  if (ATAndelerUtenIM.length < 1) {
-    return initialValues;
-  }
-  ATAndelerUtenIM.forEach((andel) => {
-    initialValues[utledArbeidsforholdFieldName(andel)] = andel.mottarYtelse;
-  });
-  return initialValues;
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 const transformValuesArbeidstakerUtenIM = (values, inntektVerdier, faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr, faktaOmBeregningTilfeller) => {
@@ -199,7 +187,39 @@ const transformValuesMottarYtelse = (values, faktaOmBeregning, faktaOmBeregningT
   };
 };
 
-VurderMottarYtelseFormImpl.transformValues = (values, inntektVerdier, faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr) => {
+const mapStateToProps = (state) => {
+  const vurderInfo = getVurderMottarYtelse(state);
+  const erFrilans = vurderInfo && vurderInfo.erFrilans;
+  const arbeidsforholdUtenIM = vurderInfo && vurderInfo.arbeidstakerAndelerUtenIM ? vurderInfo.arbeidstakerAndelerUtenIM : [];
+  return {
+    arbeidsforholdUtenIM,
+    erFrilans,
+  };
+};
+
+const VurderMottarYtelseForm = connect(mapStateToProps)(injectKodeverk(getAlleKodeverk)(VurderMottarYtelseFormImpl));
+
+
+VurderMottarYtelseForm.buildInitialValues = (vurderMottarYtelse) => {
+  const initialValues = {};
+  if (!vurderMottarYtelse) {
+    return null;
+  }
+  if (vurderMottarYtelse.erFrilans) {
+    initialValues[finnFrilansFieldName()] = vurderMottarYtelse.frilansMottarYtelse;
+  }
+
+  const ATAndelerUtenIM = vurderMottarYtelse.arbeidstakerAndelerUtenIM ? vurderMottarYtelse.arbeidstakerAndelerUtenIM : [];
+  if (ATAndelerUtenIM.length < 1) {
+    return initialValues;
+  }
+  ATAndelerUtenIM.forEach((andel) => {
+    initialValues[utledArbeidsforholdFieldName(andel)] = andel.mottarYtelse;
+  });
+  return initialValues;
+};
+
+VurderMottarYtelseForm.transformValues = (values, inntektVerdier, faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr) => {
   const faktaOmBeregningTilfeller = [];
   if (!faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE)) {
     return {};
@@ -212,7 +232,7 @@ VurderMottarYtelseFormImpl.transformValues = (values, inntektVerdier, faktaOmBer
   });
 };
 
-VurderMottarYtelseFormImpl.validate = (values, vurderMottarYtelse) => {
+VurderMottarYtelseForm.validate = (values, vurderMottarYtelse) => {
   const errors = {};
   if (!vurderMottarYtelse) {
     return null;
@@ -227,14 +247,4 @@ VurderMottarYtelseFormImpl.validate = (values, vurderMottarYtelse) => {
   return errors;
 };
 
-const mapStateToProps = (state) => {
-  const vurderInfo = getVurderMottarYtelse(state);
-  const erFrilans = vurderInfo && vurderInfo.erFrilans;
-  const arbeidsforholdUtenIM = vurderInfo && vurderInfo.arbeidstakerAndelerUtenIM ? vurderInfo.arbeidstakerAndelerUtenIM : [];
-  return {
-    arbeidsforholdUtenIM,
-    erFrilans,
-  };
-};
-
-export default connect(mapStateToProps)(VurderMottarYtelseFormImpl);
+export default VurderMottarYtelseForm;

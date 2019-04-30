@@ -21,7 +21,7 @@ const lagArbeidstakerAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrige
     startdato: '2017-01-01',
     opphoersdato: '2018-01-01',
   },
-  aktivitetStatus: { kode: aktivitetStatus.ARBEIDSTAKER, navn: 'Arbeidstaker' },
+  aktivitetStatus: { kode: aktivitetStatus.ARBEIDSTAKER },
   inntektskategori: { kode: inntektskategorier.ARBEIDSTAKER },
   andelIArbeid,
   andelsnr,
@@ -39,7 +39,7 @@ const lagEndringBrukersAndel = (andelsnr,
   lagtTilAvSaksbehandler, fordelingForrigeBehandling,
   beregnetPrMnd, fastsattForrige, fastsattAvSaksbehandler) => ({
   arbeidsforhold: null,
-  aktivitetStatus: { kode: aktivitetStatus.BRUKERS_ANDEL, navn: 'Brukers andel' },
+  aktivitetStatus: { kode: aktivitetStatus.BRUKERS_ANDEL },
   inntektskategori: { kode: inntektskategorier.UDEFINERT },
   andelIArbeid: [0],
   andelsnr,
@@ -58,7 +58,7 @@ const lagBrukersAndel = (andelsnr, fastsattBelopPrMnd, lagtTilAvSaksbehandler, i
   fastsattBelopPrMnd,
   lagtTilAvSaksbehandler,
   inntektskategori,
-  aktivitetStatus: { kode: aktivitetStatus.BRUKERS_ANDEL, navn: 'Brukers andel' },
+  aktivitetStatus: { kode: aktivitetStatus.BRUKERS_ANDEL },
 });
 
 
@@ -73,6 +73,16 @@ const inntektskategoriArbeidstaker = { kode: inntektskategorier.ARBEIDSTAKER };
 const inntektskategoriUdefinert = { kode: inntektskategorier.UDEFINERT };
 const kunYtelseOgEndringTilfeller = [faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE, faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG];
 const skjaeringstidspunktBeregning = '2018-01-01';
+
+const getKodeverknavn = (kodeverk) => {
+  if (kodeverk.kode === aktivitetStatus.BRUKERS_ANDEL) {
+    return 'Brukers andel';
+  }
+  if (kodeverk.kode === aktivitetStatus.ARBEIDSTAKER) {
+    return 'Arbeidstaker';
+  }
+  return '';
+};
 
 describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
   it('skal ikkje vise tilkommetpanel', () => {
@@ -115,7 +125,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const perioder = [
       lagPeriode(false, false, endringAndeler2),
       lagPeriode(true, true, endringandeler1)];
-    const initialValues = KunYtelseTilkommetArbeidPanel.buildInitialValues(kunYtelse, perioder, false, kunYtelseOgEndringTilfeller);
+    const initialValues = KunYtelseTilkommetArbeidPanel.buildInitialValues(kunYtelse, perioder, false, kunYtelseOgEndringTilfeller, getKodeverknavn);
     const brukersAndelInitialValues = initialValues[`${brukersAndelFieldArrayName}`];
     expect(brukersAndelInitialValues).to.have.length(2);
     expect(brukersAndelInitialValues[0].andelsnr).to.equal(1);
@@ -182,7 +192,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     const perioder = [
       lagPeriode(false, false, endringAndeler2),
       lagPeriode(true, true, endringandeler1)];
-    const initialValues = KunYtelseTilkommetArbeidPanel.buildInitialValues(kunYtelse, perioder, true, kunYtelseOgEndringTilfeller);
+    const initialValues = KunYtelseTilkommetArbeidPanel.buildInitialValues(kunYtelse, perioder, true, kunYtelseOgEndringTilfeller, getKodeverknavn);
     const brukersAndelInitialValues = initialValues[`${brukersAndelFieldArrayName}`];
     expect(brukersAndelInitialValues).to.have.length(2);
     expect(brukersAndelInitialValues[0].andelsnr).to.equal(1);

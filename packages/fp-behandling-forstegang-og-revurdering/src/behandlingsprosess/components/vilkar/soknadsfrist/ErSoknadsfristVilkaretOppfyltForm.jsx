@@ -10,18 +10,11 @@ import Panel from 'nav-frontend-paneler';
 import { Row, Column } from 'nav-frontend-grid';
 import { Fieldset } from 'nav-frontend-skjema';
 import { Undertekst, Undertittel, Normaltekst } from 'nav-frontend-typografi';
-import { ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import moment from 'moment';
 
-import {
-  getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus,
-} from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
-import {
-  getBehandlingsresultat, getBehandlingVilkar, getSoknad, getFamiliehendelseGjeldende,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import {
-  behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
-} from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import {
   ElementWrapper, FadingPanel, VerticalSpacer, DateLabel,
 } from '@fpsak-frontend/shared-components';
@@ -31,6 +24,17 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
+
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import {
+  getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus,
+} from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
+import {
+  getBehandlingsresultat, getBehandlingVilkar, getSoknad, getFamiliehendelseGjeldende,
+} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import {
+  behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 
 import styles from './erSoknadsfristVilkaretOppfyltForm.less';
 
@@ -61,6 +65,7 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
   erVilkarOk,
   behandlingsresultat,
   hasAksjonspunkt,
+  getKodeverknavn,
   ...formProps
 }) => (
   <FadingPanel>
@@ -137,7 +142,7 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
             {[<RadioOption key="dummy" label={<FormattedHTMLMessage id={findRadioButtonTextCode(erVilkarOk)} />} value="" />]}
           </RadioGroupField>
           {showAvslagsarsak(erVilkarOk, behandlingsresultat.avslagsarsak)
-          && <Normaltekst>{behandlingsresultat.avslagsarsak.navn}</Normaltekst>
+          && <Normaltekst>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKNADFRISTVILKARET)}</Normaltekst>
           }
         </ElementWrapper>
         )
@@ -166,6 +171,7 @@ ErSoknadsfristVilkaretOppfyltFormImpl.propTypes = {
   dato: PropTypes.string,
   behandlingsresultat: PropTypes.shape(),
   hasAksjonspunkt: PropTypes.bool,
+  getKodeverknavn: PropTypes.func.isRequired,
   ...formPropTypes,
 };
 
@@ -231,7 +237,7 @@ const mapStateToProps = (state, initialProps) => {
 
 const ErSoknadsfristVilkaretOppfyltForm = connect(mapStateToProps)(injectIntl(behandlingForm({
   form: formName,
-})(ErSoknadsfristVilkaretOppfyltFormImpl)));
+})(injectKodeverk(getAlleKodeverk)(ErSoknadsfristVilkaretOppfyltFormImpl))));
 
 ErSoknadsfristVilkaretOppfyltForm.supports = apCodes => apCodes.includes(aksjonspunktCodes.SOKNADSFRISTVILKARET);
 

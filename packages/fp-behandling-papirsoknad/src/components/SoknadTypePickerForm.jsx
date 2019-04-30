@@ -171,7 +171,7 @@ const mapStateToProps = (state, ownProps) => ({
   selectedFagsakYtelseType: formValueSelector(SOKNAD_TYPE_PICKER_FORM)(state, 'fagsakYtelseType'),
   ytelseErSatt: !!getFagsakYtelseType(state).kode,
   initialValues: buildInitialValues(state),
-  fagsakYtelseTyper: getKodeverk(kodeverkTyper.FAGSAK_YTELSE_TYPE)(state),
+  fagsakYtelseTyper: getKodeverk(kodeverkTyper.FAGSAK_YTELSE)(state),
   familieHendelseTyper: getKodeverk(kodeverkTyper.FAMILIE_HENDELSE_TYPE)(state),
   foreldreTyper: getKodeverk(kodeverkTyper.FORELDRE_TYPE)(state),
   onSubmit: getSubmitFunction(ownProps.setSoknadData),

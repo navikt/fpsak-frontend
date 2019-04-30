@@ -4,33 +4,26 @@ const personopplysningPropType = PropTypes.shape({
   nummer: PropTypes.number,
   navBrukerKjonn: PropTypes.shape({
     kode: PropTypes.string.isRequired,
-    navn: PropTypes.string.isRequired,
   }).isRequired,
   statsborgerskap: PropTypes.shape({
     kode: PropTypes.string.isRequired,
-    navn: PropTypes.string.isRequired,
   }).isRequired,
   avklartPersonstatus: PropTypes.shape({
     orginalPersonstatus: PropTypes.shape({
       kode: PropTypes.string.isRequired,
-      navn: PropTypes.string.isRequired,
     }),
     overstyrtPersonstatus: PropTypes.shape({
       kode: PropTypes.string.isRequired,
-      navn: PropTypes.string.isRequired,
     }).isRequired,
   }),
   personstatus: PropTypes.shape({
     kode: PropTypes.string.isRequired,
-    navn: PropTypes.string.isRequired,
   }).isRequired,
   diskresjonskode: PropTypes.shape({
     kode: PropTypes.string.isRequired,
-    navn: PropTypes.string.isRequired,
   }).isRequired,
   sivilstand: PropTypes.shape({
     kode: PropTypes.string.isRequired,
-    navn: PropTypes.string.isRequired,
   }).isRequired,
   aktoerId: PropTypes.string.isRequired,
   navn: PropTypes.string.isRequired,
@@ -39,7 +32,6 @@ const personopplysningPropType = PropTypes.shape({
   adresser: PropTypes.arrayOf(PropTypes.shape({
     adresseType: PropTypes.shape({
       kode: PropTypes.string.isRequired,
-      navn: PropTypes.string.isRequired,
     }),
     adresselinje1: PropTypes.string,
     adresselinje2: PropTypes.string,
@@ -53,7 +45,6 @@ const personopplysningPropType = PropTypes.shape({
   fnr: PropTypes.string,
   region: PropTypes.shape({
     kode: PropTypes.string.isRequired,
-    navn: PropTypes.string.isRequired,
   }).isRequired,
   annenPart: PropTypes.shape(),
   barn: PropTypes.arrayOf(PropTypes.shape()),
@@ -62,7 +53,6 @@ const personopplysningPropType = PropTypes.shape({
   barnFraTpsRelatertTilSoknad: PropTypes.arrayOf(PropTypes.shape()),
   opplysningsKilde: PropTypes.shape({
     kode: PropTypes.string.isRequired,
-    navn: PropTypes.string.isRequired,
   }).isRequired,
 });
 

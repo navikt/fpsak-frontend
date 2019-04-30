@@ -7,9 +7,11 @@ import { Element } from 'nav-frontend-typografi';
 import historikkinnslagType from '@fpsak-frontend/kodeverk/src/historikkinnslagType';
 import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeCodes';
 import historikkOpplysningTypeCodes from '@fpsak-frontend/kodeverk/src/historikkOpplysningTypeCodes';
-
-import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+
+import { getAlleKodeverk } from 'kodeverk/duck';
+import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import {
   findEndretFeltNavn,
   findEndretFeltVerdi,
@@ -25,7 +27,7 @@ const scrollUp = () => {
 };
 
 const HistorikkMalType10 = ({
-  historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, originType, saksNr,
+  historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, originType, saksNr, getKodeverknavn,
 }) => {
   const historikkFromToValues = (endretFelt, fieldName) => {
     const fromValue = findEndretFeltVerdi(endretFelt, endretFelt.fraVerdi, intl);
@@ -122,7 +124,7 @@ const HistorikkMalType10 = ({
             to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
             onClick={scrollUp}
           >
-            {historikkinnslagDeler[0].skjermlenke.navn}
+            {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
           </NavLink>
         </Element>
         )
@@ -182,6 +184,7 @@ HistorikkMalType10.propTypes = {
   intl: intlShape.isRequired,
   originType: PropTypes.shape().isRequired,
   saksNr: PropTypes.number.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default injectIntl(HistorikkMalType10);
+export default injectIntl(injectKodeverk(getAlleKodeverk)(HistorikkMalType10));

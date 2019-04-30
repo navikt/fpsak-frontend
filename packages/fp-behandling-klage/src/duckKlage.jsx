@@ -113,6 +113,9 @@ export const getAvsluttedeBehandlinger = createSelector([getBehandlingContext], 
 export const getKodeverk = kodeverkType => createSelector(
   [getBehandlingContext], behandlingContext => behandlingContext.kodeverk[kodeverkType],
 );
+export const getAlleKlageKodeverk = createSelector(
+  [getBehandlingContext], behandlingContext => behandlingContext.kodeverk,
+);
 export const getFeatureToggles = createSelector([getBehandlingContext], behandlingContext => behandlingContext.featureToggles);
 
 export const getHasShownBehandlingPaVent = createSelector([getBehandlingContext], behandlingContext => behandlingContext.hasShownBehandlingPaVent);

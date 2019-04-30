@@ -4,16 +4,20 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
-import styles from './historikkMalType.less';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+
+import { getAlleKodeverk } from 'kodeverk/duck';
 import { findHendelseText } from './historikkUtils';
 
-const HistorikkMalType6 = ({ historikkinnslagDeler, intl }) => {
+import styles from './historikkMalType.less';
+
+const HistorikkMalType6 = ({ historikkinnslagDeler, intl, getKodeverknavn }) => {
   const { formatMessage } = intl;
 
   const formaterOpplysning = (opplysning, index) => (
     <div key={`opplysning${index}`}>
       <Normaltekst className={styles.keyValuePair}>
-        {formatMessage({ id: opplysning.opplysningType.navn })}
+        {formatMessage({ id: getKodeverknavn(opplysning.opplysningType) })}
 :
       </Normaltekst>
         &ensp;
@@ -27,7 +31,7 @@ const HistorikkMalType6 = ({ historikkinnslagDeler, intl }) => {
       {
         historikkinnslagDeler.map(del => (
           <div>
-            <Element className="snakkeboble-panel__tekst">{findHendelseText(del.hendelse)}</Element>
+            <Element className="snakkeboble-panel__tekst">{findHendelseText(del.hendelse, getKodeverknavn)}</Element>
             {del.opplysninger.map(formaterOpplysning)}
           </div>
         ))
@@ -40,6 +44,7 @@ const HistorikkMalType6 = ({ historikkinnslagDeler, intl }) => {
 HistorikkMalType6.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   intl: intlShape.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default injectIntl(HistorikkMalType6);
+export default injectIntl(injectKodeverk(getAlleKodeverk)(HistorikkMalType6));

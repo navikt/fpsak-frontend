@@ -6,7 +6,7 @@ import { RadioGroupField } from '@fpsak-frontend/form';
 import {
  Table, TableRow, TableColumn, EditedIcon,
 } from '@fpsak-frontend/shared-components';
-import VurderAktiviteterTabell, { lagAktivitetFieldId } from './VurderAktiviteterTabell';
+import VurderAktiviteterTabell, { VurderAktiviteterTabellImpl, lagAktivitetFieldId } from './VurderAktiviteterTabell';
 
 
 const aktivitet1 = {
@@ -15,7 +15,7 @@ const aktivitet1 = {
   fom: '2019-01-01',
   tom: null,
   skalBrukes: null,
-  arbeidsforholdType: { kode: 'ARBEID', navn: 'Arbeid' },
+  arbeidsforholdType: { kode: 'ARBEID' },
 };
 
 const aktivitet2 = {
@@ -25,7 +25,7 @@ const aktivitet2 = {
   fom: '2019-01-01',
   tom: '2019-02-02',
   skalBrukes: true,
-  arbeidsforholdType: { kode: 'ARBEID', navn: 'Arbeid' },
+  arbeidsforholdType: { kode: 'ARBEID' },
 };
 
 const aktivitet3 = {
@@ -36,14 +36,14 @@ const aktivitet3 = {
   fom: '2019-01-01',
   tom: '2019-02-02',
   skalBrukes: false,
-  arbeidsforholdType: { kode: 'ARBEID', navn: 'Arbeid' },
+  arbeidsforholdType: { kode: 'ARBEID' },
 };
 
 
 const aktivitetAAP = {
   arbeidsgiverNavn: null,
   arbeidsgiverId: null,
-  arbeidsforholdType: { kode: 'AAP', navn: 'Arbeidsavklaringspenger' },
+  arbeidsforholdType: { kode: 'AAP' },
   fom: '2019-01-01',
   tom: '2020-02-02',
   skalBrukes: null,
@@ -56,13 +56,24 @@ const aktiviteter = [
   aktivitetAAP,
 ];
 
+const getKodeverknavn = (kodeverk) => {
+  if (kodeverk.kode === 'ARBEID') {
+    return 'Arbeid';
+  }
+  if (kodeverk.kode === 'AAP') {
+    return 'Arbeidsavklaringspenger';
+  }
+  return '';
+};
+
 describe('<VurderAktiviteterTabell>', () => {
   it('skal vise tabell', () => {
-    const wrapper = shallow(<VurderAktiviteterTabell
+    const wrapper = shallow(<VurderAktiviteterTabellImpl
       readOnly={false}
       isAksjonspunktClosed
       aktiviteter={aktiviteter}
       skjaeringstidspunkt="2019-02-01"
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const heading = wrapper.find(FormattedMessage).first();
@@ -104,11 +115,12 @@ describe('<VurderAktiviteterTabell>', () => {
       aktivitet2,
       aktivitet3,
     ];
-    const wrapper = shallow(<VurderAktiviteterTabell
+    const wrapper = shallow(<VurderAktiviteterTabellImpl
       readOnly={false}
       isAksjonspunktClosed
       aktiviteter={utenAAP}
       skjaeringstidspunkt="2019-02-01"
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const heading = wrapper.find(FormattedMessage).first();
@@ -129,11 +141,12 @@ describe('<VurderAktiviteterTabell>', () => {
   });
 
   it('skal vise tabell med gul mann kolonne for alle rader unntatt AAP', () => {
-    const wrapper = shallow(<VurderAktiviteterTabell
+    const wrapper = shallow(<VurderAktiviteterTabellImpl
       readOnly
       isAksjonspunktClosed
       aktiviteter={aktiviteter}
       skjaeringstidspunkt="2019-02-01"
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const heading = wrapper.find(FormattedMessage).first();
@@ -201,7 +214,7 @@ describe('<VurderAktiviteterTabell>', () => {
   });
 
   it('skal bygge initial values', () => {
-    const initialValues = VurderAktiviteterTabell.buildInitialValues(aktiviteter);
+    const initialValues = VurderAktiviteterTabell.buildInitialValues(aktiviteter, getKodeverknavn);
     expect(initialValues[id1].beregningAktivitetNavn).to.equal('Arbeidsgiveren (384723894723)');
     expect(initialValues[id1].fom).to.equal('2019-01-01');
     expect(initialValues[id1].tom).to.equal(null);

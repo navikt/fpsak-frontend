@@ -4,11 +4,9 @@ const fagsakPropType = PropTypes.shape({
   saksnummer: PropTypes.number.isRequired,
   sakstype: PropTypes.shape({
     kode: PropTypes.string.isRequired,
-    navn: PropTypes.string.isRequired,
   }).isRequired,
   status: PropTypes.shape({
     kode: PropTypes.string.isRequired,
-    navn: PropTypes.string.isRequired,
   }).isRequired,
   barnFodt: PropTypes.string,
   person: PropTypes.shape({
@@ -18,7 +16,6 @@ const fagsakPropType = PropTypes.shape({
     erKvinne: PropTypes.bool.isRequired,
     personstatusType: PropTypes.shape({
       kode: PropTypes.string.isRequired,
-      navn: PropTypes.string.isRequired,
     }),
     diskresjonskode: PropTypes.string,
     dodsdato: PropTypes.string,

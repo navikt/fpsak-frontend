@@ -15,6 +15,8 @@ import {
 } from './SokersOpplysningspliktForm';
 
 describe('<SokersOpplysningspliktForm>', () => {
+  const getKodeverknavn = () => undefined;
+
   it('skal vise tabell med manglende vedlegg', () => {
     const manglendeVedlegg = [{
       dokumentType: {
@@ -56,6 +58,7 @@ describe('<SokersOpplysningspliktForm>', () => {
       inntektsmeldingerSomIkkeKommer={undefined}
       reduxFormChange={() => undefined}
       behandlingFormPrefix="form"
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const table = wrapper.find(Table);
@@ -92,6 +95,7 @@ describe('<SokersOpplysningspliktForm>', () => {
       inntektsmeldingerSomIkkeKommer={undefined}
       reduxFormChange={() => undefined}
       behandlingFormPrefix="form"
+      getKodeverknavn={getKodeverknavn}
     />);
 
     expect(wrapper.find(Table)).to.have.length(0);

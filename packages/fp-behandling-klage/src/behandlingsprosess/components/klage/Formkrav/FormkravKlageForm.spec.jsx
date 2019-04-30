@@ -9,18 +9,27 @@ describe('<FormkravKlageForm>', () => {
   const behandlinger = [{
     id: 1,
     type: {
-      kode: '',
-      navn: 'Førstegangssøknad',
+      kode: 'FS',
     },
     avsluttet: '2018-10-25T14:14:15',
   }, {
     id: 2,
     type: {
-      kode: '',
-      navn: 'Revurdering',
+      kode: 'R',
     },
     avsluttet: '2018-10-25T14:14:15',
   }];
+
+
+  const getKodeverknavn = ({ kode }) => {
+    if (kode === 'FS') {
+      return 'Førstegangssøknad';
+    }
+    if (kode === 'R') {
+      return 'Revurdering';
+    }
+    return '';
+  };
 
   it('skal vise tre options når to mulige klagbare vedtak', () => {
     const wrapper = shallowWithIntl(<FormkravKlageForm
@@ -30,6 +39,7 @@ describe('<FormkravKlageForm>', () => {
       avsluttedeBehandlinger={behandlinger}
       intl={intlMock}
       formProps={{}}
+      getKodeverknavn={getKodeverknavn}
     />);
     const vedtakSelect = wrapper.find('SelectField');
     expect(vedtakSelect).to.have.length(1);

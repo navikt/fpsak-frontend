@@ -148,7 +148,8 @@ describe('<EndringBeregningsgrunnlagPeriodePanel>', () => {
       ],
     };
 
-    const initialValues = EndringBeregningsgrunnlagPeriodePanel.buildInitialValues(periode, false, bgPeriode, stpBeregning, faktaOmBeregning);
+    const getKodeverknavn = () => undefined;
+    const initialValues = EndringBeregningsgrunnlagPeriodePanel.buildInitialValues(periode, false, bgPeriode, stpBeregning, faktaOmBeregning, getKodeverknavn);
     expect(initialValues).to.have.length(7);
     const arbeidstakerAndelerBeforeStp = initialValues.filter(({ arbeidsperiodeFom }) => arbeidsperiodeFom !== ''
     && moment(arbeidsperiodeFom).isBefore(moment(stpBeregning)));

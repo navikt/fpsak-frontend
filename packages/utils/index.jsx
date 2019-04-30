@@ -1,5 +1,3 @@
-export { default as createVisningsnavnForAktivitet } from './src/createVisningsnavnForAktivitet';
-export { default as lagVisningsNavn } from './src/lagVisningsNavn';
 export {
   range,
   flatten,

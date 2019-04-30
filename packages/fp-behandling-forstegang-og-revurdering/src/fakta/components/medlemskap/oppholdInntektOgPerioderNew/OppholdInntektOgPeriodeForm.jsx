@@ -2,13 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { connect } from 'react-redux';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import {
   BorderBox, VerticalSpacer, FlexColumn, FlexContainer, FlexRow,
 } from '@fpsak-frontend/shared-components';
+
+import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
 import InntektOgYtelserFaktaPanel from './InntektOgYtelserFaktaPanel';
 import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';
@@ -95,7 +99,7 @@ const transformValues = values => ({
   ...values,
 });
 
-const buildInitialValues = (periode, soknad, person, inntekter, medlemskapPerioder, gjeldendeFom, alleAksjonspunkter) => {
+const buildInitialValues = (periode, soknad, person, inntekter, medlemskapPerioder, gjeldendeFom, alleAksjonspunkter, alleKodeverk) => {
   const aksjonspunkter = alleAksjonspunkter
     .filter(ap => periode.aksjonspunkter.includes(ap.definisjon.kode) || ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP)
     .filter(ap => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
@@ -112,7 +116,7 @@ const buildInitialValues = (periode, soknad, person, inntekter, medlemskapPeriod
     ...periode,
     ...InntektOgYtelserFaktaPanel.buildInitialValues(person, inntekter),
     ...OppholdINorgeOgAdresserFaktaPanel.buildInitialValues(soknad, periode, aksjonspunkter),
-    ...PerioderMedMedlemskapFaktaPanel.buildInitialValues(periode, medlemskapPerioder, soknad, aksjonspunkter),
+    ...PerioderMedMedlemskapFaktaPanel.buildInitialValues(periode, medlemskapPerioder, soknad, aksjonspunkter, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
     ...FortsattMedlemskapFaktaPanel.buildInitialValues(gjeldendeFom),
     ...oppholdValues,
     ...confirmValues,
@@ -127,9 +131,10 @@ const mapStateToProps = (state, ownProps) => {
   const person = behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'person');
   const inntekter = behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'inntekter');
   const gjeldendeFom = behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'gjeldendeFom');
+  const alleKodeverk = getAlleKodeverk(state);
   return {
     initialValues: {
-      ...buildInitialValues(valgtPeriode, soknad, person, inntekter, medlemskapPerioder, gjeldendeFom, ownProps.aksjonspunkter),
+      ...buildInitialValues(valgtPeriode, soknad, person, inntekter, medlemskapPerioder, gjeldendeFom, ownProps.aksjonspunkter, alleKodeverk),
     },
     submittable: ownProps.submittable,
     form: formName,

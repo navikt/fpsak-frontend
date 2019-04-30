@@ -40,14 +40,14 @@ export const findResultatText = (resultat, intl) => {
   return intl.formatMessage({ id: fieldId });
 };
 
-export const findHendelseText = (hendelse) => {
+export const findHendelseText = (hendelse, getKodeverknavn) => {
   if (!hendelse) {
     return undefined;
   }
   if (hendelse.verdi === null) {
-    return hendelse.navn.navn;
+    return getKodeverknavn(hendelse.navn);
   }
-  return `${hendelse.navn.navn} ${hendelse.verdi}`;
+  return `${getKodeverknavn(hendelse.navn)} ${hendelse.verdi}`;
 };
 
 const convertToBoolean = verdi => (verdi === true ? 'Ja' : 'Nei');

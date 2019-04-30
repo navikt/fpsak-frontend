@@ -4,13 +4,15 @@ import { connect } from 'react-redux';
 import { clearFields, formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import {
   getBehandlingResultatstruktur, getBehandlingStatus,
   isBehandlingStatusReadOnly, getBehandlingsresultat, getBehandlingArsakTyper, getBehandlingSprak, getBehandlingVersjon,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
-import { getFagsakYtelseType, getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getFagsakYtelseType, getSelectedBehandlingId, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import { isInnvilget, isAvslag, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { getRettigheter } from 'navAnsatt/duck';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -249,7 +251,7 @@ const transformValues = values => values.aksjonspunktKoder.map(apCode => ({
   isVedtakSubmission,
 }));
 
-const createAarsakString = (revurderingAarsaker) => {
+const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
   if (revurderingAarsaker === undefined || revurderingAarsaker.length < 1) {
     return '';
   }
@@ -258,10 +260,10 @@ const createAarsakString = (revurderingAarsaker) => {
     .find(aarsak => aarsak.kode === behandlingArsakType.RE_ENDRING_FRA_BRUKER);
   const alleAndreAarsakerNavn = revurderingAarsaker
     .filter(aarsak => aarsak.kode !== behandlingArsakType.RE_ENDRING_FRA_BRUKER)
-    .map(aarsak => aarsak.navn);
+    .map(aarsak => getKodeverknavn(aarsak));
   // Dersom en av årsakene er "RE_ENDRING_FRA_BRUKER" skal alltid denne vises først
   if (endringFraBrukerAarsak !== undefined) {
-    aarsakTekstList.push(endringFraBrukerAarsak.navn);
+    aarsakTekstList.push(getKodeverknavn(endringFraBrukerAarsak));
   }
   aarsakTekstList.push(...alleAndreAarsakerNavn);
   return aarsakTekstList.join(', ');
@@ -288,7 +290,7 @@ const mapStateToProps = (state, ownProps) => ({
   ytelseType: getFagsakYtelseType(state).kode,
   sprakkode: getBehandlingSprak(state),
   aksjonspunktKoder: getSelectedBehandlingspunktAksjonspunkter(state).map(ap => ap.definisjon.kode),
-  revurderingsAarsakString: createAarsakString(getBehandlingArsakTyper(state)),
+  revurderingsAarsakString: createAarsakString(getBehandlingArsakTyper(state), getKodeverknavnFn(getAlleKodeverk(state), kodeverkTyper)),
   kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
 });
 

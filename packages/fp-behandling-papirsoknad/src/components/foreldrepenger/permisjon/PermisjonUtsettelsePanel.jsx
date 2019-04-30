@@ -92,7 +92,7 @@ PermisjonUtsettelsePanel.initialValues = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  utsettelseReasons: getKodeverk(kodeverkTyper.UTSETTELSE_ARSAK)(state),
+  utsettelseReasons: getKodeverk(kodeverkTyper.UTSETTELSE_AARSAK_TYPE)(state),
   utsettelseKvoter: getKodeverk(kodeverkTyper.UTSETTELSE_GRADERING_KVOTE)(state),
   skalUtsette: formValueSelector(ownProps.form)(state, ownProps.namePrefix).skalUtsette,
 });

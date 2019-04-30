@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
 import { HistoryIndex } from './HistoryIndex';
+import History from './components/History';
 
 describe('<HistoryIndex>', () => {
   it('skal vise historikk', () => {
@@ -13,7 +14,7 @@ describe('<HistoryIndex>', () => {
       location={{ pathname: 'test' }}
     />);
 
-    const history = wrapper.find('History');
+    const history = wrapper.find(History);
     expect(history).to.have.length(1);
   });
 });

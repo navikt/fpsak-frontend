@@ -33,7 +33,7 @@ const behandlingStatusFVED = { kode: behandlingStatusCodes.FATTER_VEDTAK };
 const stadfesteKlage = { klageVurdering: klageVurderingCodes.STADFESTE_YTELSESVEDTAK };
 
 
-describe('<ApprovalTextUtils>', () => {
+describe('<ApprovalTextUtils2>', () => {
   // Klage
   // Klage medhold
   it('skal vise korrekt tekst for aksjonspunkt 5035 medhold', () => {
@@ -195,7 +195,7 @@ describe('<ApprovalTextUtils>', () => {
       aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, undefined,
       undefined, undefined, false, undefined, 'status', undefined, arbeidforholdDtos,
     );
-    const message = getAksjonspunktText.resultFunc(true, null, null, null, null)(aksjonspunkt);
+    const message = getAksjonspunktText.resultFunc(true, null, null, [])(aksjonspunkt);
     expect(message[0].props.id).to.eql('ToTrinnsForm.OpplysningerOmSøker.Arbeidsforhold');
   });
 });

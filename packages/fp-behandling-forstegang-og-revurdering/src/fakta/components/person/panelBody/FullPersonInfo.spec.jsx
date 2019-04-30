@@ -64,28 +64,22 @@ const personopplysning = {
   fodselsdato: '2011-04-15',
   navBrukerKjonn: {
     kode: navBrukerKjonn.KVINNE,
-    navn: 'kvinne',
   },
   diskresjonskode: {
     kode: 'TEST',
-    navn: 'test',
   },
   region: {
     kode: landkoder.NORGE,
-    navn: 'Norge',
   },
   personstatus: {
     kode: personstatusType.BOSATT,
-    navn: 'Bosatt',
   },
   sivilstand: {
     kode: sivilstandType.SKILT,
-    navn: 'Skilt',
   },
   avklartPersonstatus: {
     overstyrtPersonstatus: {
       kode: personstatusType.BOSATT,
-      navn: 'Bosatt',
     },
   },
   barn: [barnIkkeITPS, barnITPS],
@@ -130,31 +124,37 @@ const personopplysning = {
 const personstatusTypes = [
   {
     kode: personstatusType.UFULLSTENDIGFNR,
-    navn: 'Ufullstendig fnr',
   },
   {
     kode: personstatusType.UTVANDRET,
-    navn: 'Utvandret',
   },
   {
     kode: personstatusType.BOSATT,
-    navn: 'Bosatt',
   },
 ];
 
 const sivilstandTypes = [
   {
     kode: sivilstandType.GIFTLEVERADSKILT,
-    navn: 'Gift, lever adskilt',
   },
   {
     kode: sivilstandType.SKILT,
-    navn: 'Skilt',
   },
 ];
 const ytelser = [{}];
 const relatertYtelseTypes = [{}];
 const relatertYtelseStatus = [{}];
+
+const getKodeverknavn = (kodeverk) => {
+  if (kodeverk.kode === navBrukerKjonn.KVINNE) {
+    return 'kvinne';
+  }
+  if (kodeverk.kode === landkoder.NORGE) {
+    return 'Norge';
+  }
+
+  return '';
+};
 
 
 describe('<FullPersonInfo>', () => {
@@ -175,6 +175,7 @@ describe('<FullPersonInfo>', () => {
         utlandSakstype=""
         isPrimaryParent
         skalKunneLeggeTilNyeArbeidsforhold={false}
+        getKodeverknavn={getKodeverknavn}
         {...reduxFormPropsMock}
       />,
     );
@@ -204,6 +205,7 @@ describe('<FullPersonInfo>', () => {
         utlandSakstype=""
         isPrimaryParent
         skalKunneLeggeTilNyeArbeidsforhold={false}
+        getKodeverknavn={getKodeverknavn}
         {...reduxFormPropsMock}
       />,
     );
@@ -227,6 +229,7 @@ describe('<FullPersonInfo>', () => {
         utlandSakstype=""
         isPrimaryParent={false}
         skalKunneLeggeTilNyeArbeidsforhold={false}
+        getKodeverknavn={getKodeverknavn}
         {...reduxFormPropsMock}
       />,
     );
@@ -250,6 +253,7 @@ describe('<FullPersonInfo>', () => {
         utlandSakstype=""
         isPrimaryParent={false}
         skalKunneLeggeTilNyeArbeidsforhold={false}
+        getKodeverknavn={getKodeverknavn}
         {...reduxFormPropsMock}
       />,
     );
@@ -272,6 +276,7 @@ describe('<FullPersonInfo>', () => {
         utlandSakstype=""
         isPrimaryParent={false}
         skalKunneLeggeTilNyeArbeidsforhold={false}
+        getKodeverknavn={getKodeverknavn}
         {...reduxFormPropsMock}
       />,
     );

@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { InputField, SelectField } from '@fpsak-frontend/form';
-import { createVisningsnavnForAktivitet } from '@fpsak-frontend/utils';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import { arbeidsforholdProptype, getUniqueListOfArbeidsforholdFields } from '../ArbeidsforholdHelper';
 
 const finnArbeidsforholdForAndel = (arbeidsforholdListe, val) => {
@@ -32,10 +36,10 @@ const fieldLabel = (index, labelId) => {
 };
 
 
-const arbeidsgiverSelectValues = arbeidsforholdList => (arbeidsforholdList
+const arbeidsgiverSelectValues = (arbeidsforholdList, getKodeverknavn) => (arbeidsforholdList
   .map(arbeidsforhold => (
     <option value={arbeidsforhold.andelsnr.toString()} key={arbeidsforhold.andelsnr}>
-      {createVisningsnavnForAktivitet(arbeidsforhold)}
+      {createVisningsnavnForAktivitet(arbeidsforhold, getKodeverknavn)}
     </option>
   )));
 
@@ -46,6 +50,7 @@ export const ArbeidsforholdFieldImpl = ({
   name,
   readOnly,
   arbeidsforholdList,
+  getKodeverknavn,
 }) => (
   <ElementWrapper>
     {(!fields.get(index).skalKunneEndreAktivitet)
@@ -63,7 +68,7 @@ export const ArbeidsforholdFieldImpl = ({
         name={name}
         bredde="l"
         label={fieldLabel(index, 'BeregningInfoPanel.EndringBG.Andel')}
-        selectValues={arbeidsgiverSelectValues(arbeidsforholdList)}
+        selectValues={arbeidsgiverSelectValues(arbeidsforholdList, getKodeverknavn)}
         readOnly={readOnly}
         onChange={event => setArbeidsforholdInfo(fields, index, arbeidsforholdList, event.target.value)}
       />
@@ -78,8 +83,8 @@ ArbeidsforholdFieldImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   arbeidsforholdList: PropTypes.arrayOf(arbeidsforholdProptype).isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
-
 
 export const mapStateToProps = (state, ownProps) => {
   const arbeidsforholdList = getUniqueListOfArbeidsforholdFields(ownProps.fields);
@@ -88,5 +93,4 @@ export const mapStateToProps = (state, ownProps) => {
   };
 };
 
-
-export default connect(mapStateToProps)(ArbeidsforholdFieldImpl);
+export default connect(mapStateToProps)(injectKodeverk(getAlleKodeverk)(ArbeidsforholdFieldImpl));

@@ -8,7 +8,7 @@ import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test
 import { TableRow } from '@fpsak-frontend/shared-components';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import TimeLineData from './TimeLineData';
+import { TimeLineData } from './TimeLineData';
 
 const startDate = '2018-01-28';
 const endDate = '2018-02-18';
@@ -58,6 +58,8 @@ const item = {
   id: 1,
 };
 
+const getKodeverknavn = () => undefined;
+
 describe('<TimeLineData>', () => {
   it('skal teste at TimeLineData viser korrekte verdier i detaljboks', () => {
     const wrapper = shallowWithIntl(<TimeLineData
@@ -66,6 +68,7 @@ describe('<TimeLineData>', () => {
       selectedItemData={item}
       callbackBackward={sinon.spy()}
       callbackForward={sinon.spy()}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const messages = wrapper.find(FormattedMessage);
@@ -87,6 +90,7 @@ describe('<TimeLineData>', () => {
       selectedItemData={item}
       callbackBackward={sinon.spy()}
       callbackForward={sinon.spy()}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const rows = wrapper.find(TableRow);

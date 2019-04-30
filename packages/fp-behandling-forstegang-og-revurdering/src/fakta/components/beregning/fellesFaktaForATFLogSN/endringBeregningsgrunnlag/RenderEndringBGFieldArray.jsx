@@ -5,9 +5,11 @@ import moment from 'moment';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
+
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import {
-  isArrayEmpty, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, createVisningsnavnForAktivitet,
+  isArrayEmpty, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber,
 } from '@fpsak-frontend/utils';
 import {
   Table, Image, TableRow, TableColumn, ElementWrapper,
@@ -15,18 +17,20 @@ import {
 import {
   InputField, DecimalField, PeriodpickerField, NavFieldGroup, SelectField,
 } from '@fpsak-frontend/form';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { kodeverkPropType, arbeidsforholdBeregningProptype } from '@fpsak-frontend/prop-types';
+import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
+import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-frontend/kodeverk/src/inntektskategorier';
+import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
+
 import {
   getEndringBeregningsgrunnlagPerioder,
   getFaktaOmBeregningTilfellerKoder,
   getBehandlingIsRevurdering,
   getBeregningsgrunnlag,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
-import { kodeverkPropType, arbeidsforholdBeregningProptype } from '@fpsak-frontend/prop-types';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
-import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-frontend/kodeverk/src/inntektskategorier';
+import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
+import { getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import 'core-js/fn/array/flat-map';
 
 import { getUniqueListOfArbeidsforhold } from '../../ArbeidsforholdHelper';
@@ -56,18 +60,18 @@ const fieldLabel = (index, labelId) => {
 };
 
 
-const arbeidsgiverSelectValues = arbeidsforholdList => (arbeidsforholdList
+const arbeidsgiverSelectValues = (arbeidsforholdList, getKodeverknavn) => (arbeidsforholdList
   .map(arbeidsforhold => (
     <option value={arbeidsforhold.andelsnr.toString()} key={arbeidsforhold.andelsnr}>
-      {createVisningsnavnForAktivitet(arbeidsforhold)}
+      {createVisningsnavnForAktivitet(arbeidsforhold, getKodeverknavn)}
     </option>
   )));
 
-const arbeidsgiverSelectValuesForKunYtelse = (arbeidsforholdList, intl) => {
+const arbeidsgiverSelectValuesForKunYtelse = (arbeidsforholdList, intl, getKodeverknavn) => {
   const nedtrekksvalgListe = arbeidsforholdList
     .map(arbeidsforhold => (
       <option value={arbeidsforhold.andelsnr.toString()} key={arbeidsforhold.andelsnr}>
-        {createVisningsnavnForAktivitet(arbeidsforhold)}
+        {createVisningsnavnForAktivitet(arbeidsforhold, getKodeverknavn)}
       </option>
     ));
   nedtrekksvalgListe.push(
@@ -383,13 +387,14 @@ export const RenderEndringBGFieldArrayImpl = ({
   harKunYtelse,
   erRevurdering,
   skjaeringstidspunktBeregning,
+  getKodeverknavn,
 }) => {
   const sumFordelingForrigeBehandling = summerFordelingForrigeBehandlingFraFields(fields);
   const sumFordeling = summerFordeling(fields);
   const sumRegister = summerRegister(fields, skjaeringstidspunktBeregning);
   const selectVals = harKunYtelse
-    ? arbeidsgiverSelectValuesForKunYtelse(arbeidsforholdList, intl)
-    : arbeidsgiverSelectValues(arbeidsforholdList);
+    ? arbeidsgiverSelectValuesForKunYtelse(arbeidsforholdList, intl, getKodeverknavn)
+    : arbeidsgiverSelectValues(arbeidsforholdList, getKodeverknavn);
   const tablerows = createAndelerTableRows(fields, isAksjonspunktClosed, readOnly, inntektskategoriKoder, periodeUtenAarsak,
     arbeidsforholdList, selectVals, erRevurdering);
   tablerows.push(createBruttoBGSummaryRow(sumFordelingForrigeBehandling, sumFordeling, sumRegister, erRevurdering));
@@ -446,9 +451,10 @@ RenderEndringBGFieldArrayImpl.propTypes = {
   harKunYtelse: PropTypes.bool.isRequired,
   erRevurdering: PropTypes.bool.isRequired,
   skjaeringstidspunktBeregning: PropTypes.string.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
-const RenderEndringBGFieldArray = injectIntl(RenderEndringBGFieldArrayImpl);
+const RenderEndringBGFieldArray = injectIntl(injectKodeverk(getAlleKodeverk)(RenderEndringBGFieldArrayImpl));
 
 const summerRegisterInntektFraValues = values => (values
   .map(({ registerInntekt }) => (registerInntekt ? removeSpacesFromNumber(registerInntekt) : 0))
@@ -456,8 +462,8 @@ const summerRegisterInntektFraValues = values => (values
 
 
 RenderEndringBGFieldArray.validate = (values, fastsattIForstePeriode, skalRedigereInntekt, skalOverstyreBg,
-  skjaeringstidspunktBeregning, skalValidereMotRapportert) => {
-  const fieldErrors = validateAndeler(values, skalRedigereInntekt, skjaeringstidspunktBeregning, skalValidereMotRapportert);
+  skjaeringstidspunktBeregning, skalValidereMotRapportert, getKodeverknavn) => {
+  const fieldErrors = validateAndeler(values, skalRedigereInntekt, skjaeringstidspunktBeregning, skalValidereMotRapportert, getKodeverknavn);
   if (fieldErrors != null) {
     return fieldErrors;
   }
@@ -468,7 +474,7 @@ RenderEndringBGFieldArray.validate = (values, fastsattIForstePeriode, skalRedige
   if (ulikeAndelerError) {
     return { _error: <FormattedMessage id={ulikeAndelerError[0].id} /> };
   }
-  const refusjonPrArbeidsforholdError = validateTotalRefusjonPrArbeidsforhold(values);
+  const refusjonPrArbeidsforholdError = validateTotalRefusjonPrArbeidsforhold(values, getKodeverknavn);
   if (refusjonPrArbeidsforholdError) {
     return { _error: <FormattedMessage id={refusjonPrArbeidsforholdError[0].id} values={refusjonPrArbeidsforholdError[1]} /> };
   }

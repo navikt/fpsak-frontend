@@ -6,16 +6,18 @@ import { Element } from 'nav-frontend-typografi';
 
 import historikkinnslagType from '@fpsak-frontend/kodeverk/src/historikkinnslagType';
 import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
-
-import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+
+import { getAlleKodeverk } from 'kodeverk/duck';
+import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import { findEndretFeltVerdi } from './historikkUtils';
 import BubbleText from './bubbleText';
 
 import styles from './historikkMalType.less';
 
 export const HistorikkMalType9 = ({
-  historikkinnslagDeler, behandlingLocation, originType, intl,
+  historikkinnslagDeler, behandlingLocation, originType, intl, getKodeverknavn,
 }) => {
   const getSplitPeriods = (endredeFelter) => {
     let text = '';
@@ -42,7 +44,7 @@ export const HistorikkMalType9 = ({
             && (
               <Element>
                 <NavLink to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}>
-                  {historikkinnslagDeler[0].skjermlenke.navn}
+                  {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
                 </NavLink>
               </Element>
             )}
@@ -78,14 +80,14 @@ export const HistorikkMalType9 = ({
                   <FormattedHTMLMessage
                     id="Historikk.Template.9.TilbakekrViderebehandling"
                     values={{
-                      felt: endretFelt.endretFeltNavn.navn,
+                      felt: getKodeverknavn(endretFelt.endretFeltNavn),
                       verdi: findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl),
                     }}
                   />
                 </div>
               ))
             )}
-            {historikkinnslagDel.begrunnelse && <BubbleText bodyText={historikkinnslagDel.begrunnelse.navn} className="snakkeboble-panel__tekst" />}
+            {historikkinnslagDel.begrunnelse && <BubbleText bodyText={getKodeverknavn(historikkinnslagDel.begrunnelse)} className="snakkeboble-panel__tekst" />}
             {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} className="snakkeboble-panel__tekst" />}
           </div>
         </div>
@@ -97,6 +99,7 @@ HistorikkMalType9.propTypes = {
   behandlingLocation: PropTypes.shape().isRequired,
   intl: intlShape.isRequired,
   originType: PropTypes.shape().isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default injectIntl(HistorikkMalType9);
+export default injectIntl(injectKodeverk(getAlleKodeverk)(HistorikkMalType9));

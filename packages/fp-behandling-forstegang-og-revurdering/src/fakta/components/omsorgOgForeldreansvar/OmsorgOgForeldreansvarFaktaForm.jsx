@@ -143,13 +143,14 @@ const OmsorgOgForeldreansvarFaktaForm = connect(state => ({
 }))(injectIntl(OmsorgOgForeldreansvarFaktaFormImpl));
 
 
-OmsorgOgForeldreansvarFaktaForm.buildInitialValues = (soknad, familiehendelse, personopplysning, innvilgetRelatertTilgrensendeYtelserForAnnenForelder) => ({
+OmsorgOgForeldreansvarFaktaForm.buildInitialValues = (soknad, familiehendelse, personopplysning,
+  innvilgetRelatertTilgrensendeYtelserForAnnenForelder, getKodeverknavn) => ({
   vilkarType: familiehendelse.vilkarType ? familiehendelse.vilkarType.kode : '',
   originalAntallBarn: soknad.antallBarn,
   ...ForeldrePanel.buildInitialValues(personopplysning),
   ...BarnPanel.buildInitialValues(personopplysning, soknad),
   ...OmsorgsovertakelseFaktaPanel.buildInitialValues(soknad, familiehendelse),
-  ...RettighetFaktaPanel.buildInitialValues(soknad, innvilgetRelatertTilgrensendeYtelserForAnnenForelder),
+  ...RettighetFaktaPanel.buildInitialValues(soknad, innvilgetRelatertTilgrensendeYtelserForAnnenForelder, getKodeverknavn),
 });
 
 OmsorgOgForeldreansvarFaktaForm.validate = ({ originalAntallBarn, antallBarn }) => {

@@ -11,6 +11,7 @@ import UttakNyPeriode from './UttakNyPeriode';
 
 const reduxFormChange = sinon.spy();
 const reduxFormReset = sinon.spy();
+const getKodeverknavn = sinon.spy();
 
 describe('<UttakPerioder>', () => {
   it('skal vise uttak UttakPerioder', () => {
@@ -35,6 +36,7 @@ describe('<UttakPerioder>', () => {
         openForms={false}
         kanOverstyre={false}
         hasRevurderingOvertyringAp={false}
+        getKodeverknavn={getKodeverknavn}
       />,
     );
 
@@ -80,6 +82,7 @@ describe('<UttakPerioder>', () => {
         openForms={false}
         kanOverstyre={false}
         hasRevurderingOvertyringAp={false}
+        getKodeverknavn={getKodeverknavn}
       />,
     );
 
@@ -120,6 +123,7 @@ describe('<UttakPerioder>', () => {
         openForms
         kanOverstyre={false}
         hasRevurderingOvertyringAp={false}
+        getKodeverknavn={getKodeverknavn}
       />,
     );
 
@@ -156,6 +160,7 @@ describe('<UttakPerioder>', () => {
         openForms
         kanOverstyre={false}
         hasRevurderingOvertyringAp={false}
+        getKodeverknavn={getKodeverknavn}
       />,
     );
 
@@ -187,6 +192,7 @@ describe('<UttakPerioder>', () => {
         openForms={false}
         kanOverstyre={false}
         hasRevurderingOvertyringAp={false}
+        getKodeverknavn={getKodeverknavn}
       />,
     );
 
@@ -220,6 +226,7 @@ describe('<UttakPerioder>', () => {
         isDirty
         behandlingPaaVent={false}
         hasRevurderingOvertyringAp={false}
+        getKodeverknavn={getKodeverknavn}
       />,
     );
 
@@ -276,6 +283,7 @@ describe('<UttakPerioder>', () => {
         openForms={false}
         kanOverstyre={false}
         hasRevurderingOvertyringAp={false}
+        getKodeverknavn={getKodeverknavn}
       />,
     );
 
@@ -308,6 +316,7 @@ describe('<UttakPerioder>', () => {
         openForms={false}
         kanOverstyre={false}
         hasRevurderingOvertyringAp={false}
+        getKodeverknavn={getKodeverknavn}
       />,
     );
 

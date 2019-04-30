@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { Image } from '@fpsak-frontend/shared-components';
-import UttakTimeLineData from './UttakTimeLineData';
+import { UttakTimeLineData } from './UttakTimeLineData';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
 import UttakActivity from './UttakActivity';
 
@@ -72,6 +72,8 @@ describe('<UttakTimeLineData>', () => {
     },
   };
 
+  const getKodeverknavn = () => undefined;
+
   it('skal rendre UttakTimeLineData, ikke deloppperiode, ikke readonly', () => {
     const wrapper = shallow(<UttakTimeLineData
       readOnly={false}
@@ -89,6 +91,7 @@ describe('<UttakTimeLineData>', () => {
       activityPanelName=""
       stonadskontoer={{}}
       harSoktOmFlerbarnsdager={false}
+      getKodeverknavn={getKodeverknavn}
     />);
     wrapper.setState({ showDelPeriodeModal: false });
     const modal = wrapper.find(DelOppPeriodeModal);
@@ -124,6 +127,7 @@ describe('<UttakTimeLineData>', () => {
       activityPanelName=""
       stonadskontoer={{}}
       harSoktOmFlerbarnsdager={false}
+      getKodeverknavn={getKodeverknavn}
     />);
     wrapper.setState({ showDelPeriodeModal: true });
     expect(wrapper.state('showDelPeriodeModal')).is.true;
@@ -154,6 +158,7 @@ describe('<UttakTimeLineData>', () => {
       activityPanelName=""
       stonadskontoer={{}}
       harSoktOmFlerbarnsdager={false}
+      getKodeverknavn={getKodeverknavn}
     />);
     wrapper.setState({ showDelPeriodeModal: false });
     const modal = wrapper.find(DelOppPeriodeModal);
@@ -186,6 +191,7 @@ describe('<UttakTimeLineData>', () => {
       activityPanelName=""
       stonadskontoer={{}}
       harSoktOmFlerbarnsdager={false}
+      getKodeverknavn={getKodeverknavn}
     />);
     const image = wrapper.find(Image);
     expect(image).to.have.length(3);
@@ -217,6 +223,7 @@ describe('<UttakTimeLineData>', () => {
       activityPanelName=""
       stonadskontoer={{}}
       harSoktOmFlerbarnsdager={false}
+      getKodeverknavn={getKodeverknavn}
     />);
     const uttakActivity = wrapper.find(UttakActivity);
     expect(uttakActivity).to.have.length(1);
@@ -248,6 +255,7 @@ describe('<UttakTimeLineData>', () => {
       activityPanelName=""
       harSoktOmFlerbarnsdager={false}
       stonadskonto={stonadskonto}
+      getKodeverknavn={getKodeverknavn}
     />);
     const uttak = wrapper.find('AksjonspunktHelpText');
     expect(uttak).has.length(1);
@@ -277,6 +285,7 @@ describe('<UttakTimeLineData>', () => {
       activityPanelName=""
       harSoktOmFlerbarnsdager={false}
       stonadskonto={stonadskontoFlerGarTom}
+      getKodeverknavn={getKodeverknavn}
     />);
     const uttak = wrapper.find('AksjonspunktHelpText');
     expect(uttak).has.length(1);

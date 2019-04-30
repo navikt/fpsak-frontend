@@ -1,13 +1,17 @@
 import React from 'react';
-import { ElementWrapper } from '@fpsak-frontend/shared-components';
-import PropTypes from 'prop-types';
-import { PersonInfo } from '@fpsak-frontend/person-info';
-import Lenkepanel from 'nav-frontend-lenkepanel';
-import { pathToFagsak } from '@fpsak-frontend/fp-felles';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import Lenkepanel from 'nav-frontend-lenkepanel';
+
+import { PersonInfo } from '@fpsak-frontend/person-info';
+import { pathToFagsak, injectKodeverk } from '@fpsak-frontend/fp-felles';
+import { ElementWrapper } from '@fpsak-frontend/shared-components';
+
+import { getAlleKodeverk } from 'kodeverk/duck';
+
 import styles from './aktoerGrid.less';
 
-export const AktoerGrid = ({ data }) => (
+export const AktoerGrid = ({ data, getKodeverknavn }) => (
   <ElementWrapper>
     <div className={styles.aktoerContainer}>
       <div className={styles.gridContainer}>
@@ -20,11 +24,11 @@ export const AktoerGrid = ({ data }) => (
               linkCreator={props => (<Link to={pathToFagsak(fagsak.saksnummer)} {...props} />)}
               key={fagsak.saksnummer}
             >
-              {fagsak.sakstype.navn}
+              {getKodeverknavn(fagsak.sakstype)}
               {' ('}
               {fagsak.saksnummer}
               {') '}
-              {fagsak.status.navn}
+              {getKodeverknavn(fagsak.status)}
             </Lenkepanel>
           )) : 'Har ingen fagsaker i fpsak'}
         </div>
@@ -35,6 +39,7 @@ export const AktoerGrid = ({ data }) => (
 
 AktoerGrid.propTypes = {
   data: PropTypes.shape().isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default AktoerGrid;
+export default injectKodeverk(getAlleKodeverk)(AktoerGrid);

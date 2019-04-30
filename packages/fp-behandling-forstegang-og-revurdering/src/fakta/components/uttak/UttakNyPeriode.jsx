@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
-import { behandlingFormValueSelector, behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
+
 import {
   PeriodpickerField, SelectField, CheckboxField, RadioGroupField, RadioOption, TextAreaField, DecimalField,
 } from '@fpsak-frontend/form';
@@ -16,22 +18,24 @@ import {
   maxValue, minLength, maxLength, hasValidText, guid,
   ISO_DATE_FORMAT,
   calcDaysAndWeeks,
-  lagVisningsNavn,
 } from '@fpsak-frontend/utils';
 import uttakArbeidType from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
-import moment from 'moment';
-import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
-import { getPersonopplysning, getFaktaArbeidsforhold } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import {
   FlexContainer, FlexRow, FlexColumn, VerticalSpacer, ArrowBox,
 } from '@fpsak-frontend/shared-components';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import uttakPeriodeType from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import overforingArsak from '@fpsak-frontend/kodeverk/src/overforingArsak';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+
+import { getPersonopplysning, getFaktaArbeidsforhold } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { behandlingFormValueSelector, behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { lagVisningsNavn } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
+import { getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+
 import styles from './uttakNyPeriode.less';
 
 const maxValue100 = maxValue(100);
@@ -61,18 +65,18 @@ const mapOverføringÅrsaker = typer => typer
 const mapUtsettelseÅrsaker = typer => typer
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
-const mapArbeidsforhold = andeler => andeler.map((andel) => {
+const mapArbeidsforhold = (andeler, getKodeverknavn) => andeler.map((andel) => {
   const { arbeidType, arbeidsgiver } = andel;
 
   let periodeArbeidsforhold = '';
   if (arbeidType && arbeidType.kode !== uttakArbeidType.ORDINÆRT_ARBEID) {
-    periodeArbeidsforhold = arbeidType.navn;
+    periodeArbeidsforhold = getKodeverknavn(arbeidType);
   } else {
     periodeArbeidsforhold = lagVisningsNavn(arbeidsgiver);
   }
 
   const identifikator = (arbeidsgiver || []).identifikator || '-';
-  const navn = (arbeidsgiver || []).navn || arbeidType.navn;
+  const navn = (arbeidsgiver || []).navn || getKodeverknavn(arbeidType);
   const fixedAktørId = (arbeidsgiver || []).aktørId || '-';
   const virksomhet = (arbeidsgiver || []).virksomhet || '-';
 
@@ -95,6 +99,7 @@ export const UttakNyPeriode = ({
   sokerKjonn,
   nyPeriodeDisabledDaysFom,
   andeler,
+  getKodeverknavn,
   ...formProps
 }) => {
   const numberOfDaysAndWeeks = calcDaysAndWeeks(nyPeriode.fom, nyPeriode.tom, ISO_DATE_FORMAT);
@@ -224,7 +229,7 @@ export const UttakNyPeriode = ({
                               bredde="xl"
                               name="arbeidsForhold"
                               validate={[requiredIfNotPristine, required]}
-                              selectValues={mapArbeidsforhold(andeler)}
+                              selectValues={mapArbeidsforhold(andeler, getKodeverknavn)}
                             />
                           </div>
                           <FlexRow>
@@ -300,6 +305,7 @@ UttakNyPeriode.propTypes = {
   nyPeriode: PropTypes.shape().isRequired,
   sokerKjonn: PropTypes.string.isRequired,
   nyPeriodeDisabledDaysFom: PropTypes.string.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 UttakNyPeriode.defaultProps = {
@@ -318,7 +324,7 @@ const getResultat = (utsettelseÅrsak, uttakPeriodeVurderingTyper) => {
 };
 
 
-const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅrsaker, uttakPeriodeVurderingTyper) => {
+const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅrsaker, uttakPeriodeVurderingTyper, getKodeverknavn) => {
   const periodeObjekt = getPeriodeData(values.periodeType, periodeTyper)[0] || null;
   const utsettelseÅrsakObjekt = getPeriodeData(values.periodeArsak, utsettelseÅrsaker)[0];
   const overføringÅrsakObjekt = getPeriodeData(values.periodeOverforingArsak, overføringÅrsaker)[0];
@@ -326,14 +332,14 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
   const utsettelseÅrsak = utsettelseÅrsakObjekt !== undefined ? {
     kode: utsettelseÅrsakObjekt.kode,
     kodeverk: utsettelseÅrsakObjekt.kodeverk,
-    navn: utsettelseÅrsakObjekt.navn,
+    navn: getKodeverknavn(utsettelseÅrsakObjekt),
   } : {
     kode: utsettelseArsakCodes.UDEFINERT,
   };
   const overføringÅrsak = overføringÅrsakObjekt !== undefined ? {
     kode: overføringÅrsakObjekt.kode,
     kodeverk: overføringÅrsakObjekt.kodeverk,
-    navn: overføringÅrsakObjekt.navn,
+    navn: getKodeverknavn(overføringÅrsakObjekt),
   } : {
     kode: overforingArsak.UDEFINERT,
   };
@@ -375,7 +381,7 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
     uttakPeriodeType: periodeObjekt ? {
       kode: periodeObjekt.kode,
       kodeverk: periodeObjekt.kodeverk,
-      navn: periodeObjekt.navn,
+      navn: getKodeverknavn(periodeObjekt),
     } : { kode: '-' },
     arbeidsgiver,
     utsettelseÅrsak,
@@ -398,7 +404,7 @@ const validateNyPeriodeForm = (values) => {
 
 const mapStateToProps = (state, ownProps) => {
   const periodeTyper = getKodeverk(kodeverkTyper.UTTAK_PERIODE_TYPE)(state) || null;
-  const utsettelseÅrsaker = getKodeverk(kodeverkTyper.UTSETTELSE_ARSAK)(state);
+  const utsettelseÅrsaker = getKodeverk(kodeverkTyper.UTSETTELSE_AARSAK_TYPE)(state);
   const overføringÅrsaker = getKodeverk(kodeverkTyper.OVERFOERING_AARSAK_TYPE)(state);
   const personopplysninger = getPersonopplysning(state);
   const andeler = getFaktaArbeidsforhold(state) || [];
@@ -436,7 +442,7 @@ const mapStateToProps = (state, ownProps) => {
     ),
 
     onSubmit: values => ownProps.newPeriodeCallback(
-      transformValues(values, periodeTyper, utsettelseÅrsaker, overføringÅrsaker, ownProps.uttakPeriodeVurderingTyper),
+      transformValues(values, periodeTyper, utsettelseÅrsaker, overføringÅrsaker, ownProps.uttakPeriodeVurderingTyper, ownProps.getKodeverknavn),
     ),
   };
 };
@@ -445,4 +451,4 @@ export default connect(mapStateToProps)(behandlingForm({
   form: 'nyPeriodeForm',
   validate: values => validateNyPeriodeForm(values),
   enableReinitialize: true,
-})(UttakNyPeriode));
+})(injectKodeverk(getAlleKodeverk)(UttakNyPeriode)));

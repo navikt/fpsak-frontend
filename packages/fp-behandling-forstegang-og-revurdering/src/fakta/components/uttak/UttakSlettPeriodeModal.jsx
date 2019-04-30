@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { TextAreaField } from '@fpsak-frontend/form';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import Modal from 'nav-frontend-modal';
+
+import { TextAreaField } from '@fpsak-frontend/form';
 import {
   minLength, maxLength, required, hasValidText, DDMMYYYY_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
@@ -15,6 +15,11 @@ import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg
 import {
   FlexColumn, FlexRow, FlexContainer, VerticalSpacer, Image,
 } from '@fpsak-frontend/shared-components';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+
+import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+
 import styles from './uttakSlettPeriodeModal.less';
 
 const minLength3 = minLength(3);
@@ -26,11 +31,12 @@ export const UttakSlettPeriodeModalImpl = ({
   cancelEvent,
   intl,
   periode,
+  getKodeverknavn,
   ...formProps
 }) => {
   const fom = moment(periode.fom).format(DDMMYYYY_DATE_FORMAT);
   const tom = moment(periode.tom).format(DDMMYYYY_DATE_FORMAT);
-  const uttakPeriodeType = periode.uttakPeriodeType !== undefined ? periode.uttakPeriodeType.navn : null;
+  const uttakPeriodeType = periode.uttakPeriodeType !== undefined ? getKodeverknavn(periode.uttakPeriodeType) : null;
   return (
     <Modal
       className={styles.modal}
@@ -102,6 +108,7 @@ UttakSlettPeriodeModalImpl.propTypes = {
   cancelEvent: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   periode: PropTypes.shape().isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 UttakSlettPeriodeModalImpl.defaultProps = {
@@ -120,4 +127,4 @@ const UttakSlettPeriodeModal = connect(mapToStateToProps)(behandlingForm({
   enableReinitialize: true,
 })(injectIntl(UttakSlettPeriodeModalImpl)));
 
-export default UttakSlettPeriodeModal;
+export default injectKodeverk(getAlleKodeverk)(UttakSlettPeriodeModal);

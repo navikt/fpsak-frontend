@@ -8,9 +8,10 @@ import { stonadskontoerPropType } from '@fpsak-frontend/prop-types';
 import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
 import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/src/uttakArbeidTypeCodes';
 import stonadskontoType from '@fpsak-frontend/kodeverk/src/stonadskontoType';
-import { DDMMYYYY_DATE_FORMAT, lagVisningsNavn } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import moment from 'moment';
 
+import { lagVisningsNavn } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import TimeLineTab from './TimeLineTab';
 import styles from './timeLineInfo.less';
 

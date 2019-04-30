@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import { SelectField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import {
   AksjonspunktHelpText, VerticalSpacer, FadingPanel,
@@ -15,7 +16,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingKlage/src/behandlingForm';
-import { getAvsluttedeBehandlinger } from 'behandlingKlage/src/duckKlage';
+import { getAlleKlageKodeverk, getAvsluttedeBehandlinger } from 'behandlingKlage/src/duckKlage';
 import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 
 // TODO komponent skal ha eiga less-fil
@@ -27,11 +28,11 @@ export const getPaKlagdVedtak = klageFormkavResultat => (
   klageFormkavResultat.paKlagdBehandlingId ? `${klageFormkavResultat.paKlagdBehandlingId}` : IKKE_PA_KLAGD_VEDTAK
 );
 
-const getKlagBareVedtak = (avsluttedeBehandlinger, intl) => {
+const getKlagBareVedtak = (avsluttedeBehandlinger, intl, getKodeverknavn) => {
   const klagBareVedtak = [<option key="formkrav" value={IKKE_PA_KLAGD_VEDTAK}>{intl.formatMessage({ id: 'Klage.Formkrav.IkkePåklagdVedtak' })}</option>];
   return klagBareVedtak.concat(avsluttedeBehandlinger.map(behandling => (
     <option key={behandling.id} value={`${behandling.id}`}>
-      {`${behandling.type.navn} ${moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)}`}
+      {`${getKodeverknavn(behandling.type)} ${moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)}`}
     </option>
   )));
 };
@@ -52,8 +53,9 @@ export const FormkravKlageForm = ({
   avsluttedeBehandlinger,
   intl,
   formProps,
+  getKodeverknavn,
 }) => {
-  const klageBareVedtakOptions = getKlagBareVedtak(avsluttedeBehandlinger, intl);
+  const klageBareVedtakOptions = getKlagBareVedtak(avsluttedeBehandlinger, intl, getKodeverknavn);
 
   return (
     <FadingPanel>
@@ -147,7 +149,6 @@ FormkravKlageForm.propTypes = {
     id: PropTypes.number.isRequired,
     type: PropTypes.shape({
       kode: PropTypes.string.isRequired,
-      navn: PropTypes.string.isRequired,
     }).isRequired,
     avsluttet: PropTypes.string,
   })).isRequired,
@@ -156,6 +157,7 @@ FormkravKlageForm.propTypes = {
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
   intl: intlShape.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 FormkravKlageForm.defaultProps = {
@@ -167,4 +169,4 @@ const mapStateToProps = state => ({
   avsluttedeBehandlinger: getAvsluttedeBehandlinger(state),
 });
 
-export default connect(mapStateToProps)(injectIntl(FormkravKlageForm));
+export default connect(mapStateToProps)(injectIntl(injectKodeverk(getAlleKlageKodeverk)(FormkravKlageForm)));

@@ -3,9 +3,15 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
-import { getBehandlingVilkar, getBehandlingSprak } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getFagsakYtelseType } from 'behandlingForstegangOgRevurdering/src/duck';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+
+import { getBehandlingVilkar, getBehandlingSprak } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getFagsakYtelseType, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import {
   endringerIBeregningsgrunnlagGirFritekstfelt,
   hasIkkeOppfyltSoknadsfristvilkar,
@@ -13,17 +19,14 @@ import {
   findTilbakekrevingText,
 } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/VedtakHelper';
 import VedtakFritekstPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
-export const getAvslagArsak = (vilkar, aksjonspunkter, behandlingsresultat) => {
+export const getAvslagArsak = (vilkar, aksjonspunkter, behandlingsresultat, getKodeverknavn) => {
   const avslatteVilkar = vilkar.filter(v => v.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);
   if (avslatteVilkar.length === 0) {
     return <FormattedMessage id="VedtakForm.UttaksperioderIkkeGyldig" />;
   }
 
-  return `${avslatteVilkar[0].vilkarType.navn}: ${behandlingsresultat.avslagsarsak.navn}`;
+  return `${getKodeverknavn(avslatteVilkar[0].vilkarType)}: ${getKodeverknavn(behandlingsresultat.avslagsarsak, avslatteVilkar[0].vilkarType.kode)}`;
 };
 
 export const VedtakAvslagPanelImpl = ({
@@ -36,6 +39,7 @@ export const VedtakAvslagPanelImpl = ({
   readOnly,
   ytelseType,
   tilbakekrevingText,
+  getKodeverknavn,
 }) => {
   const fritekstfeltForSoknadsfrist = behandlingStatusKode === behandlingStatus.BEHANDLING_UTREDES
     && hasIkkeOppfyltSoknadsfristvilkar(vilkar) && ytelseType === fagsakYtelseType.ENGANGSSTONAD;
@@ -51,12 +55,12 @@ export const VedtakAvslagPanelImpl = ({
         })}`}
       </Normaltekst>
       <VerticalSpacer sixteenPx />
-      { getAvslagArsak(vilkar, aksjonspunkter, behandlingsresultat)
+      { getAvslagArsak(vilkar, aksjonspunkter, behandlingsresultat, getKodeverknavn)
       && (
       <div>
         <Undertekst>{intl.formatMessage({ id: 'VedtakForm.ArsakTilAvslag' })}</Undertekst>
         <Normaltekst>
-          {getAvslagArsak(vilkar, aksjonspunkter, behandlingsresultat)}
+          {getAvslagArsak(vilkar, aksjonspunkter, behandlingsresultat, getKodeverknavn)}
         </Normaltekst>
         <VerticalSpacer sixteenPx />
       </div>
@@ -86,6 +90,7 @@ VedtakAvslagPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   ytelseType: PropTypes.string.isRequired,
   tilbakekrevingText: PropTypes.string,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 VedtakAvslagPanelImpl.defaultProps = {
@@ -99,4 +104,4 @@ const mapStateToProps = state => ({
   tilbakekrevingText: findTilbakekrevingText(state),
 });
 
-export default connect(mapStateToProps)(injectIntl(VedtakAvslagPanelImpl));
+export default connect(mapStateToProps)(injectIntl(injectKodeverk(getAlleKodeverk)(VedtakAvslagPanelImpl)));

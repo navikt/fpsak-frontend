@@ -8,9 +8,11 @@ import { bindActionCreators } from 'redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   VerticalSpacer, FlexContainer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import {
@@ -31,7 +33,7 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { tempUpdateStonadskontoer } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duck';
 import { getRettigheter } from 'navAnsatt/duck';
-import { getSelectedBehandlingId, getSelectedSaksnummer } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getAlleKodeverk, getSelectedBehandlingId, getSelectedSaksnummer } from 'behandlingForstegangOgRevurdering/src/duck';
 import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -88,13 +90,13 @@ const createTooltipContent = (periodeType, intl, item) => (`
    </p>
 `);
 
-const getCorrectPeriodName = (item) => {
+const getCorrectPeriodName = (item, getKodeverknavn) => {
   if (item.utsettelseType && item.utsettelseType.kode !== '-') {
     return (<FormattedMessage id="Timeline.tooltip.slutt" />);
   }
 
   if (item.aktiviteter.length > 0 && item.aktiviteter[0].stønadskontoType) {
-    return item.aktiviteter[0].stønadskontoType.navn;
+    return getKodeverknavn(item.aktiviteter[0].stønadskontoType);
   }
 
   if (item.oppholdÅrsak !== oppholdArsakType.UDEFINERT) {
@@ -105,12 +107,12 @@ const getCorrectPeriodName = (item) => {
   return '';
 };
 
-const addClassNameGroupIdToPerioder = (hovedsokerPerioder, annenForelderPerioder, hovedsoker, intl, behandlingStatusKode) => {
+const addClassNameGroupIdToPerioder = (hovedsokerPerioder, annenForelderPerioder, hovedsoker, intl, behandlingStatusKode, getKodeverknavn) => {
   const perioderMedClassName = [];
   const perioder = hovedsoker ? hovedsokerPerioder : annenForelderPerioder;
 
   perioder.forEach((item, index) => {
-    const stonadskontoType = getCorrectPeriodName(item);
+    const stonadskontoType = getCorrectPeriodName(item, getKodeverknavn);
     const opphold = item.oppholdÅrsak.kode !== oppholdArsakType.UDEFINERT;
     const status = hovedsoker ? getStatusPeriodeHoved(item) : getStatusPeriodeMed(item);
     const gradert = (item.gradertAktivitet && item.graderingInnvilget) ? 'gradert' : '';
@@ -674,11 +676,13 @@ const mapStateToProps = (state, props) => {
     }
     return uttakPerioder;
   });
+
+  const getKodeverknavn = getKodeverknavnFn(getAlleKodeverk(state), kodeverkTyper);
   const tilknyttetStortinget = !!props.aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.TILKNYTTET_STORTINGET && props.isApOpen);
   const isRevurdering = getBehandlingIsRevurdering(state);
   const behandlingStatusKode = getBehandlingStatus(state).kode;
-  const hovedsokerPerioder = addClassNameGroupIdToPerioder(uttakMedOpphold, annenForelderUttak, true, props.intl, behandlingStatusKode);
-  const annenForelderPerioder = addClassNameGroupIdToPerioder(uttakMedOpphold, annenForelderUttak, false, props.intl, behandlingStatusKode);
+  const hovedsokerPerioder = addClassNameGroupIdToPerioder(uttakMedOpphold, annenForelderUttak, true, props.intl, behandlingStatusKode, getKodeverknavn);
+  const annenForelderPerioder = addClassNameGroupIdToPerioder(uttakMedOpphold, annenForelderUttak, false, props.intl, behandlingStatusKode, getKodeverknavn);
   const uttakPerioder = hovedsokerPerioder.concat(annenForelderPerioder);
   const harSoktOmFlerbarnsdager = hovedsokerPerioder.filter(p => p.flerbarnsdager === true).length > 0;
 

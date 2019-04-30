@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import MannAdoptererAleneFaktaForm from './MannAdoptererAleneFaktaForm';
+import MannAdoptererAleneFaktaForm, { MannAdoptererAleneFaktaFormImpl } from './MannAdoptererAleneFaktaForm';
 
 describe('<MannAdoptererAleneFaktaForm>', () => {
   const model = {
@@ -14,11 +14,12 @@ describe('<MannAdoptererAleneFaktaForm>', () => {
 
   it('skal rendre form som lar NAV-ansatt velge om mann adopterer alene eller ei', () => {
     const wrapper = shallowWithIntl(
-      <MannAdoptererAleneFaktaForm.WrappedComponent
+      <MannAdoptererAleneFaktaFormImpl
         intl={intlMock}
         aksjonspunktData={model}
         readOnly={false}
         error={false}
+        getKodeverknavn={() => undefined}
       />,
     );
 

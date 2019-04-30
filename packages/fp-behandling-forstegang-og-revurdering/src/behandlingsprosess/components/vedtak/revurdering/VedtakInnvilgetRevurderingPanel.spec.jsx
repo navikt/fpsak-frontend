@@ -8,6 +8,15 @@ import { VedtakInnvilgetRevurderingPanelImpl, lagKonsekvensForYtelsenTekst } fro
 
 
 const ytelseType = fagsakYtelseType.ENGANGSSTONAD;
+const getKodeverknavn = (kodeverk) => {
+  if (kodeverk.kode === 'BEREGNING') {
+    return 'Endring i beregning';
+  }
+  if (kodeverk.kode === 'UTTAK') {
+    return 'Endring i uttak';
+  }
+  return '';
+};
 
 describe('<VedtakInnvilgetRevurderingPanel>', () => {
   it('skal rendre innvilget revurdering panel for engangsstønad ingen endring', () => {
@@ -32,6 +41,7 @@ describe('<VedtakInnvilgetRevurderingPanel>', () => {
       readOnly
       behandlingsresultat={{}}
       hasOverstyrtVurderingAp={false}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const undertekstFields = wrapper.find(Undertekst);
@@ -66,6 +76,7 @@ describe('<VedtakInnvilgetRevurderingPanel>', () => {
       readOnly
       behandlingsresultat={{}}
       hasOverstyrtVurderingAp={false}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const undertekstFields = wrapper.find(Undertekst);
@@ -86,14 +97,12 @@ describe('<VedtakInnvilgetRevurderingPanel>', () => {
     const konsekvenser = [
       {
         kode: 'BEREGNING',
-        navn: 'Endring i beregning',
       },
       {
         kode: 'UTTAK',
-        navn: 'Endring i uttak',
       },
     ];
-    const selectorData = lagKonsekvensForYtelsenTekst(konsekvenser);
+    const selectorData = lagKonsekvensForYtelsenTekst(konsekvenser, getKodeverknavn);
     expect(selectorData).to.eql('Endring i beregning og Endring i uttak');
   });
 });

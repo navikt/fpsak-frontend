@@ -4,9 +4,11 @@ import { FormattedHTMLMessage, injectIntl, intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
 
+import { getAlleKodeverk } from 'kodeverk/duck';
+import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import {
   findEndretFeltNavn,
   findEndretFeltVerdi,
@@ -18,7 +20,7 @@ import BubbleText from './bubbleText';
 import HistorikkDokumentLenke from './HistorikkDokumentLenke';
 
 const HistorikkMalType7 = ({
-  historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, saksNr,
+  historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, saksNr, getKodeverknavn,
 }) => {
   const formatChangedField = (endretFelt) => {
     const fieldName = findEndretFeltNavn(endretFelt, intl);
@@ -58,14 +60,14 @@ const HistorikkMalType7 = ({
                 <NavLink
                   to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
                 >
-                  {historikkinnslagDeler[0].skjermlenke.navn}
+                  {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
                 </NavLink>
               </Element>
             )
             }
 
             {historikkinnslagDel.hendelse
-            && <Element>{findHendelseText(historikkinnslagDel.hendelse)}</Element>
+            && <Element>{findHendelseText(historikkinnslagDel.hendelse, getKodeverknavn)}</Element>
             }
 
             {historikkinnslagDel.resultat
@@ -78,8 +80,8 @@ const HistorikkMalType7 = ({
             {historikkinnslagDel.opplysninger && historikkinnslagDel.opplysninger
               .map(opplysning => (<FormattedHTMLMessage id={findIdForOpplysningCode(opplysning)} values={{ antallBarn: opplysning.tilVerdi }} />))}
 
-            {historikkinnslagDel.aarsak && <Normaltekst>{historikkinnslagDel.aarsak.navn}</Normaltekst>}
-            {historikkinnslagDel.begrunnelse && <BubbleText bodyText={historikkinnslagDel.begrunnelse.navn} className="snakkeboble-panel__tekst" />}
+            {historikkinnslagDel.aarsak && <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak)}</Normaltekst>}
+            {historikkinnslagDel.begrunnelse && <BubbleText bodyText={(historikkinnslagDel.begrunnelse)} className="snakkeboble-panel__tekst" />}
             {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} className="snakkeboble-panel__tekst" />}
             <div>
               {dokumentLinks && dokumentLinks.map(dokumentLenke => (
@@ -102,6 +104,7 @@ HistorikkMalType7.propTypes = {
   dokumentLinks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   intl: intlShape.isRequired,
   saksNr: PropTypes.number.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default injectIntl(HistorikkMalType7);
+export default injectIntl(injectKodeverk(getAlleKodeverk)(HistorikkMalType7));

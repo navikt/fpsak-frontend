@@ -6,6 +6,9 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { fagsakPropType } from '@fpsak-frontend/prop-types';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+
+import { getAlleKodeverk } from 'kodeverk/duck';
 
 import styles from './fagsakList.less';
 
@@ -24,9 +27,10 @@ const lagFagsakSortObj = fagsak => ({
  *
  * Presentasjonskomponent. Formaterer fagsak-søkeresultatet for visning i tabell. Sortering av fagsakene blir håndtert her.
  */
-const FagsakList = ({
+export const FagsakList = ({
   fagsaker,
   selectFagsakCallback,
+  getKodeverknavn,
 }) => {
   const sortedFagsaker = fagsaker.sort((fagsak1, fagsak2) => {
     const a = lagFagsakSortObj(fagsak1);
@@ -43,8 +47,8 @@ const FagsakList = ({
       {sortedFagsaker.map(fagsak => (
         <TableRow key={fagsak.saksnummer} id={fagsak.saksnummer} model={document} onMouseDown={selectFagsakCallback} onKeyDown={selectFagsakCallback}>
           <TableColumn>{fagsak.saksnummer}</TableColumn>
-          <TableColumn>{fagsak.sakstype.navn}</TableColumn>
-          <TableColumn>{fagsak.status.navn}</TableColumn>
+          <TableColumn>{getKodeverknavn(fagsak.sakstype)}</TableColumn>
+          <TableColumn>{getKodeverknavn(fagsak.status)}</TableColumn>
           <TableColumn>{fagsak.barnFodt ? <DateLabel dateString={fagsak.barnFodt} /> : null}</TableColumn>
         </TableRow>
       ))
@@ -56,6 +60,7 @@ const FagsakList = ({
 FagsakList.propTypes = {
   fagsaker: PropTypes.arrayOf(fagsakPropType).isRequired,
   selectFagsakCallback: PropTypes.func.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default FagsakList;
+export default injectKodeverk(getAlleKodeverk)(FagsakList);

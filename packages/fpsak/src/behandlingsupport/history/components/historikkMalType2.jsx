@@ -3,7 +3,11 @@ import { injectIntl, intlShape } from 'react-intl';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
+
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
+
+import { getAlleKodeverk } from 'kodeverk/duck';
 import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import { findHendelseText, findResultatText } from './historikkUtils';
 
@@ -14,7 +18,9 @@ const scrollUp = () => {
   return false;
 };
 
-const HistorikkMalType2 = ({ historikkinnslagDeler, behandlingLocation, intl }) => (
+const HistorikkMalType2 = ({
+ historikkinnslagDeler, behandlingLocation, intl, getKodeverknavn,
+}) => (
   <div>
     {historikkinnslagDeler[0].skjermlenke
     && (
@@ -23,7 +29,7 @@ const HistorikkMalType2 = ({ historikkinnslagDeler, behandlingLocation, intl }) 
         to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
         onClick={scrollUp}
       >
-        {historikkinnslagDeler[0].skjermlenke.navn}
+        {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
       </NavLink>
     </Element>
     )
@@ -31,12 +37,12 @@ const HistorikkMalType2 = ({ historikkinnslagDeler, behandlingLocation, intl }) 
     {historikkinnslagDeler[0].resultat && historikkinnslagDeler[0].hendelse
       && (
       <Element className="snakkeboble-panel__tekst">
-        {`${findHendelseText(historikkinnslagDeler[0].hendelse)}: ${findResultatText(historikkinnslagDeler[0].resultat, intl)}`}
+        {`${findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}: ${findResultatText(historikkinnslagDeler[0].resultat, intl)}`}
       </Element>
       )
     }
     {!historikkinnslagDeler[0].resultat && historikkinnslagDeler[0].hendelse
-      && <Element className="snakkeboble-panel__tekst">{findHendelseText(historikkinnslagDeler[0].hendelse)}</Element>
+      && <Element className="snakkeboble-panel__tekst">{findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}</Element>
     }
   </div>
 );
@@ -44,10 +50,11 @@ const HistorikkMalType2 = ({ historikkinnslagDeler, behandlingLocation, intl }) 
 HistorikkMalType2.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
 };
 
-export default injectIntl(HistorikkMalType2);
+export default injectIntl(injectKodeverk(getAlleKodeverk)(HistorikkMalType2));
 
 /*
 

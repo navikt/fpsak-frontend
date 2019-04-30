@@ -102,6 +102,9 @@ const periode = {
     },
   ],
 };
+
+const getKodeverknavn = () => undefined;
+
 const perioder = [];
 describe('<GrunnlagForAarsinntektPanelAT>', () => {
   it('Skal teste tabellen får korrekt antall rader', () => {
@@ -114,6 +117,7 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
       harAksjonspunkt={false}
       aksjonspunkter={[]}
       allePerioder={perioder}
+      getKodeverknavn={getKodeverknavn}
     />);
     const rows = wrapper.find('TableRow');
     expect(rows).to.have.length(3);
@@ -129,6 +133,7 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
       allePerioder={perioder}
       alleAndeler={periode.beregningsgrunnlagPrStatusOgAndel}
       aksjonspunkter={[]}
+      getKodeverknavn={getKodeverknavn}
     />);
     const rows = wrapper.find('TableRow');
     expect(rows.find('Normaltekst').at(0).childAt(0).text()).to.equal('arbeidsgiver 1 (123) ...123');
@@ -147,6 +152,7 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
       allePerioder={perioder}
       alleAndeler={periode.beregningsgrunnlagPrStatusOgAndel}
       aksjonspunkter={[]}
+      getKodeverknavn={getKodeverknavn}
     />);
     const table = wrapper.find('Table');
     expect(table.props().headerTextCodes).to.have.length(2);
@@ -166,6 +172,7 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
       aksjonspunkter={getBehandling().aksjonspunkter}
       alleAndeler={periode.beregningsgrunnlagPrStatusOgAndel}
       allePerioder={perioder}
+      getKodeverknavn={getKodeverknavn}
     />);
     const table = wrapper.find('Table');
     expect(table.props().headerTextCodes).to.have.length(3);

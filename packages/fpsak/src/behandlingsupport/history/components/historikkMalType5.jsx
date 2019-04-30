@@ -8,8 +8,11 @@ import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-component
 import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeCodes';
 import historikkEndretFeltTypeHeadingCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeHeadingCodes';
 
-import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+
+import { getAlleKodeverk } from 'kodeverk/duck';
+import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import {
   findEndretFeltNavn,
   findEndretFeltVerdi,
@@ -88,12 +91,12 @@ const lagGjeldendeFraInnslag = (historikkinnslagDel) => {
 
 
 const HistorikkMalType5 = ({
-  historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, saksNr,
+  historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, saksNr, getKodeverknavn,
 }) => {
   const lageElementInnhold = (historikkDel) => {
     const list = [];
     if (historikkDel.hendelse) {
-      list.push(findHendelseText(historikkDel.hendelse));
+      list.push(findHendelseText(historikkDel.hendelse, getKodeverknavn));
     }
     if (historikkDel.resultat) {
       list.push(findResultatText(historikkDel.resultat, intl));
@@ -173,7 +176,7 @@ const HistorikkMalType5 = ({
               to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
               onClick={scrollUp}
             >
-              {historikkinnslagDel.skjermlenke.navn}
+              {getKodeverknavn(historikkinnslagDel.skjermlenke)}
             </NavLink>
           </Element>
         )
@@ -188,7 +191,7 @@ const HistorikkMalType5 = ({
         {lagGjeldendeFraInnslag(historikkinnslagDel)}
 
 
-        {historikkinnslagDel.soeknadsperiode && lagSoeknadsperiode(historikkinnslagDel.soeknadsperiode)}
+        {historikkinnslagDel.soeknadsperiode && lagSoeknadsperiode(historikkinnslagDel.soeknadsperiode, getKodeverknavn)}
 
         {lagTemaHeadingId(historikkinnslagDel)}
 
@@ -203,12 +206,12 @@ const HistorikkMalType5 = ({
           <FormattedHTMLMessage
             id={findIdForOpplysningCode(opplysning)}
             values={{ antallBarn: opplysning.tilVerdi }}
-            key={`${opplysning.navn}@${opplysning.tilVerdi}`}
+            key={`${getKodeverknavn(opplysning)}@${opplysning.tilVerdi}`}
           />
         ))}
 
-        {historikkinnslagDel.aarsak && <Normaltekst>{historikkinnslagDel.aarsak.navn}</Normaltekst>}
-        {historikkinnslagDel.begrunnelse && <BubbleText bodyText={historikkinnslagDel.begrunnelse.navn} className="snakkeboble-panel__tekst" />}
+        {historikkinnslagDel.aarsak && <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak)}</Normaltekst>}
+        {historikkinnslagDel.begrunnelse && <BubbleText bodyText={getKodeverknavn(historikkinnslagDel.begrunnelse)} className="snakkeboble-panel__tekst" />}
         {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} className="snakkeboble-panel__tekst" />}
         <div>
           {dokumentLinks && dokumentLinks.map(dokumentLenke => (
@@ -233,6 +236,7 @@ HistorikkMalType5.propTypes = {
   dokumentLinks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   intl: intlShape.isRequired,
   saksNr: PropTypes.number.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default injectIntl(HistorikkMalType5);
+export default injectIntl(injectKodeverk(getAlleKodeverk)(HistorikkMalType5));

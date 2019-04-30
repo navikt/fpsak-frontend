@@ -55,9 +55,9 @@ const mapStateToProps = state => ({
 
 const RettighetFaktaPanel = connect(mapStateToProps)(RettighetFaktaPanelImpl);
 
-RettighetFaktaPanel.buildInitialValues = (soknad, innvilgetRelatertTilgrensendeYtelserForAnnenForelder) => ({
+RettighetFaktaPanel.buildInitialValues = (soknad, innvilgetRelatertTilgrensendeYtelserForAnnenForelder, getKodeverknavn) => ({
   ytelser: innvilgetRelatertTilgrensendeYtelserForAnnenForelder,
-  farSokerType: soknad.farSokerType.navn,
+  farSokerType: getKodeverknavn(soknad.farSokerType),
 });
 
 export default RettighetFaktaPanel;

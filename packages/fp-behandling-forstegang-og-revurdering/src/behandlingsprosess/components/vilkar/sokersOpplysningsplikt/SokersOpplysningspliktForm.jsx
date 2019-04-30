@@ -8,12 +8,13 @@ import {
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import BpPanelTemplate from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/BpPanelTemplate';
 import { getBehandlingsresultat, getSoknad } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import { behandlingspunktCodes, injectKodeverk } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   ElementWrapper, Table, TableRow, TableColumn, VerticalSpacer,
@@ -64,6 +65,7 @@ export const SokersOpplysningspliktFormImpl = ({
   manglendeVedlegg,
   dokumentTypeIds,
   inntektsmeldingerSomIkkeKommer,
+  getKodeverknavn,
   ...formProps
 }) => (
   <BpPanelTemplate
@@ -133,7 +135,7 @@ export const SokersOpplysningspliktFormImpl = ({
             {[<RadioOption key="dummy" label={<FormattedHTMLMessage id={findRadioButtonTextCode(erVilkarOk)} />} value="" />]}
           </RadioGroupField>
           {erVilkarOk === false && behandlingsresultat.avslagsarsak
-        && <Normaltekst className={styles.radioIE}>{behandlingsresultat.avslagsarsak.navn}</Normaltekst>
+        && <Normaltekst className={styles.radioIE}>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKERSOPPLYSNINGSPLIKT)}</Normaltekst>
       }
         </div>
       </ElementWrapper>
@@ -160,6 +162,7 @@ SokersOpplysningspliktFormImpl.propTypes = {
   manglendeVedlegg: PropTypes.arrayOf(PropTypes.shape()),
   dokumentTypeIds: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   inntektsmeldingerSomIkkeKommer: PropTypes.shape(),
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 SokersOpplysningspliktFormImpl.defaultProps = {
@@ -223,7 +226,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const SokersOpplysningspliktForm = connect(mapStateToProps)(injectIntl(behandlingForm({
   form: formName,
-})(SokersOpplysningspliktFormImpl)));
+})(injectKodeverk(getAlleKodeverk)(SokersOpplysningspliktFormImpl))));
 
 SokersOpplysningspliktForm.supports = behandlingspunkt => behandlingspunkt === behandlingspunktCodes.OPPLYSNINGSPLIKT;
 

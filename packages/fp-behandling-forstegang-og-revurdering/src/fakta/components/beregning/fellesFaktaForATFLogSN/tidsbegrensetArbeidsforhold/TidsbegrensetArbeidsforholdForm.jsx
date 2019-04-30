@@ -2,12 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import moment from 'moment';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { getFaktaOmBeregning } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { required, DDMMYYYY_DATE_FORMAT, createVisningsnavnForAktivitet } from '@fpsak-frontend/utils';
+
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { required, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getFaktaOmBeregning } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import { sortArbeidsforholdList } from '../../ArbeidsforholdHelper';
 
 const kortvarigStringId = 'BeregningInfoPanel.TidsbegrensetArbFor.Arbeidsforhold';
@@ -22,19 +27,20 @@ const createArbeidsforholdRadioKey = andel => (andel && andel.arbeidsforhold
  * bruker bestemme om en liste med arbeidsforhold er tidsbegrenset eller ikke.
  */
 
-const TidsbegrensetArbeidsforholdForm = ({
+export const TidsbegrensetArbeidsforholdForm = ({
   readOnly,
   andelsliste,
   isAksjonspunktClosed,
+  getKodeverknavn,
 }) => (
   <div>
     {andelsliste.map(andel => (
-      <div key={`fastsettTidsbegrensedeForhold_${createVisningsnavnForAktivitet(andel.arbeidsforhold)}`}>
+      <div key={`fastsettTidsbegrensedeForhold_${createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn)}`}>
         <Normaltekst>
           <FormattedMessage
             id={kortvarigStringId}
             values={{
-              navn: createVisningsnavnForAktivitet(andel.arbeidsforhold),
+              navn: createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn),
               fom: moment(andel.arbeidsforhold.startdato).format(DDMMYYYY_DATE_FORMAT),
               tom: moment(andel.arbeidsforhold.opphoersdato).format(DDMMYYYY_DATE_FORMAT),
             }}
@@ -59,6 +65,7 @@ TidsbegrensetArbeidsforholdForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   andelsliste: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 TidsbegrensetArbeidsforholdForm.buildInitialValues = (andeler) => {
@@ -98,4 +105,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(TidsbegrensetArbeidsforholdForm);
+export default connect(mapStateToProps)(injectKodeverk(getAlleKodeverk)(TidsbegrensetArbeidsforholdForm));

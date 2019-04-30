@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Undertekst, Normaltekst, Element } from 'nav-frontend-typografi';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import classnames from 'classnames/bind';
+import { Undertekst, Normaltekst, Element } from 'nav-frontend-typografi';
+
 import {
   flatten, guid, dateFormat, calcDaysAndWeeks, TIDENES_ENDE,
 } from '@fpsak-frontend/utils';
@@ -10,6 +11,9 @@ import {
   FlexRow, FlexColumn, VerticalSpacer, Image,
 } from '@fpsak-frontend/shared-components';
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 
 import styles from '../uttakPeriode.less';
 
@@ -34,7 +38,7 @@ const renderAvvikContentGraderingFraSøknad = () => (
   </React.Fragment>
 );
 
-const renderAvvikContentUtsettelseFraSøknad = utsettelseArsak => (
+const renderAvvikContentUtsettelseFraSøknad = (utsettelseArsak, getKodeverknavn) => (
   <React.Fragment key={guid()}>
     <VerticalSpacer eightPx />
     <FlexRow>
@@ -46,8 +50,8 @@ const renderAvvikContentUtsettelseFraSøknad = utsettelseArsak => (
           <FormattedHTMLMessage
             id="UttakInfoPanel.IkkeOppgittUtsettelse"
             values={{
-              årsak: utsettelseArsak.navn,
-              årsakLowerCase: utsettelseArsak.navn.toLowerCase(),
+              årsak: getKodeverknavn(utsettelseArsak),
+              årsakLowerCase: getKodeverknavn(utsettelseArsak).toLowerCase(),
             }}
           />
         </Normaltekst>
@@ -56,7 +60,7 @@ const renderAvvikContentUtsettelseFraSøknad = utsettelseArsak => (
   </React.Fragment>
 );
 
-const renderAvvikContent = (periode, avvik) => {
+const renderAvvikContent = (periode, avvik, getKodeverknavn) => {
   const {
     fom, tom, arbeidsprosent,
   } = periode;
@@ -74,7 +78,7 @@ const renderAvvikContent = (periode, avvik) => {
         <FlexColumn>
           {!isGradering && (
             <Normaltekst className={classNames('avvik', { hasAvvik: isAvvikUtsettelse })}>
-              {periode.utsettelseArsak.navn}
+              {getKodeverknavn(periode.utsettelseArsak)}
 :
             </Normaltekst>
           )}
@@ -116,7 +120,7 @@ const renderAvvikContent = (periode, avvik) => {
   );
 };
 
-const renderAvvik = (innmldInfo) => {
+const renderAvvik = (innmldInfo, getKodeverknavn) => {
   const {
     isManglendeInntektsmelding, avvik, graderingPerioder, utsettelsePerioder,
   } = innmldInfo;
@@ -124,12 +128,12 @@ const renderAvvik = (innmldInfo) => {
 
   if (isManglendeInntektsmelding) {
     if (avvik.utsettelseÅrsak) {
-      return [renderAvvikContentUtsettelseFraSøknad(avvik.utsettelseÅrsak)];
+      return [renderAvvikContentUtsettelseFraSøknad(avvik.utsettelseÅrsak, getKodeverknavn)];
     }
     return [renderAvvikContentGraderingFraSøknad()];
   }
 
-  return inntektsmeldingInfoPerioder.map(periode => renderAvvikContent(periode, avvik));
+  return inntektsmeldingInfoPerioder.map(periode => renderAvvikContent(periode, avvik, getKodeverknavn));
 };
 
 const shouldRender = (inntektsmeldingInfo) => {
@@ -142,7 +146,9 @@ const shouldRender = (inntektsmeldingInfo) => {
 };
 
 export const InntektsmeldingInfo = ({
-  inntektsmeldingInfo, arbeidsgiver,
+  inntektsmeldingInfo,
+  arbeidsgiver,
+  getKodeverknavn,
 }) => {
   const shouldRenderAvvik = shouldRender(inntektsmeldingInfo);
   return (
@@ -152,7 +158,7 @@ export const InntektsmeldingInfo = ({
         <Undertekst><FormattedMessage id="UttakInfoPanel.AvvikiInntektsmelding" /></Undertekst>
         <VerticalSpacer eightPx />
         {inntektsmeldingInfo.map((innmldInfo) => {
-          const renderContent = renderAvvik(innmldInfo).filter(rc => rc);
+          const renderContent = renderAvvik(innmldInfo, getKodeverknavn).filter(rc => rc);
           const avvikArbeidforhold = innmldInfo.arbeidsgiver !== arbeidsgiver || {}.navn || innmldInfo.arbeidsgiverOrgnr !== arbeidsgiver || {}.identifikator;
           return (
             renderContent.length > 0 && (
@@ -171,13 +177,15 @@ export const InntektsmeldingInfo = ({
   );
 };
 
-InntektsmeldingInfo.defaultProps = {
-  arbeidsgiver: {},
-};
 
 InntektsmeldingInfo.propTypes = {
   inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   arbeidsgiver: PropTypes.shape(),
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default InntektsmeldingInfo;
+InntektsmeldingInfo.defaultProps = {
+  arbeidsgiver: {},
+};
+
+export default injectKodeverk(getAlleKodeverk)(InntektsmeldingInfo);

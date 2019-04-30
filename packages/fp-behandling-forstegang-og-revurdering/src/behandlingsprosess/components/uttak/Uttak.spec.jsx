@@ -2,9 +2,12 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+
 import { UttakImpl as Uttak } from './Uttak';
+import UttakTimeLineData from './UttakTimeLineData';
 
 describe('<Uttak>', () => {
   const uttakActivities = [{
@@ -131,7 +134,7 @@ describe('<Uttak>', () => {
     expect(checkBox.first().prop('name')).to.eql('manuellOverstyring');
     const uttakTimeLine = wrapper.find('UttakTimeLine');
     expect(uttakTimeLine).to.have.length(1);
-    const uttakTimeLineData = wrapper.find('UttakTimeLineData');
+    const uttakTimeLineData = wrapper.find(UttakTimeLineData);
     expect(uttakTimeLineData).to.have.length(1);
     const confirmKnapp = wrapper.find('Hovedknapp');
     expect(confirmKnapp).to.have.length(1);
@@ -171,7 +174,7 @@ describe('<Uttak>', () => {
     expect(checkBox).to.have.length(0);
     const uttakTimeLine = wrapper.find('UttakTimeLine');
     expect(uttakTimeLine).to.have.length(1);
-    const uttakTimeLineData = wrapper.find('UttakTimeLineData');
+    const uttakTimeLineData = wrapper.find(UttakTimeLineData);
     expect(uttakTimeLineData).to.have.length(1);
     const confirmKnapp = wrapper.find('Hovedknapp');
     expect(confirmKnapp).to.have.length(0);
@@ -233,7 +236,7 @@ describe('<Uttak>', () => {
     expect(formattedMessage.first().prop('id')).to.eql('Uttak.Confirm');
     const uttakTimeLine = wrapper.find('UttakTimeLine');
     expect(uttakTimeLine).to.have.length(1);
-    const uttakTimeLineData = wrapper.find('UttakTimeLineData');
+    const uttakTimeLineData = wrapper.find(UttakTimeLineData);
     expect(uttakTimeLineData).to.have.length(1);
     const confirmKnapp = wrapper.find('Hovedknapp');
     expect(confirmKnapp).to.have.length(1);
@@ -287,7 +290,7 @@ describe('<Uttak>', () => {
     wrapper.setState({ selectedItem: uttakActivities[0] });
     expect(wrapper.state('selectedItem')).to.eql(uttakActivities[0]);
 
-    const uttakTimeLineData = wrapper.find('UttakTimeLineData');
+    const uttakTimeLineData = wrapper.find(UttakTimeLineData);
     expect(uttakTimeLineData).to.have.length(1);
 
     const uttakTimeLine = wrapper.find('UttakTimeLine');

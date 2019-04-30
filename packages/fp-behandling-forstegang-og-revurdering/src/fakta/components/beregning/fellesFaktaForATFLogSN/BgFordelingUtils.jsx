@@ -6,7 +6,8 @@ import { lonnsendringField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
   import { erNyoppstartetFLField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/NyoppstartetFLForm';
-import { formatCurrencyNoKr, createVisningsnavnForAktivitet, removeSpacesFromNumber } from '@fpsak-frontend/utils';
+import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
+import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import {
   getFaktaOmBeregning,
   getBeregningsgrunnlag,
@@ -30,18 +31,18 @@ export const settAndelIArbeid = (andelerIArbeid) => {
   return `${minAndel} - ${maxAndel}`;
 };
 
-export const preutfyllInntektskategori = andel => (andel.inntektskategori
+const preutfyllInntektskategori = andel => (andel.inntektskategori
 && andel.inntektskategori.kode !== inntektskategorier.UDEFINERT ? andel.inntektskategori.kode : '');
 
 
-export const createAndelnavn = (andel) => {
+const createAndelnavn = (andel, getKodeverknavn) => {
   if (!andel.aktivitetStatus || andel.aktivitetStatus.kode === aktivitetStatus.UDEFINERT) {
     return '';
   }
   if (andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER && andel.arbeidsforhold) {
-    return createVisningsnavnForAktivitet(andel.arbeidsforhold);
+    return createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn);
   }
-  return andel.aktivitetStatus.navn;
+  return getKodeverknavn(andel.aktivitetStatus);
 };
 
 const finnFastsattPrMnd = (beregnetPrMnd,
@@ -88,8 +89,8 @@ export const setArbeidsforholdInitialValues = andel => ({
   arbeidsforholdType: andel.arbeidsforholdType,
 });
 
-export const setGenerellAndelsinfo = andel => ({
-  andel: createAndelnavn(andel),
+export const setGenerellAndelsinfo = (andel, getKodeverknavn) => ({
+  andel: createAndelnavn(andel, getKodeverknavn),
   aktivitetStatus: andel.aktivitetStatus.kode,
   andelsnr: andel.andelsnr,
   nyAndel: false,
@@ -284,8 +285,8 @@ const mapToReadOnlyBelop = (andel) => {
   return '';
 };
 
-export const mapAndelToField = andel => ({
-  ...setGenerellAndelsinfo(andel),
+export const mapAndelToField = (andel, getKodeverknavn) => ({
+  ...setGenerellAndelsinfo(andel, getKodeverknavn),
   ...setArbeidsforholdInitialValues(andel),
   skalKunneEndreAktivitet: andel.lagtTilAvSaksbehandler && andel.aktivitetStatus.kode !== aktivitetStatus.DAGPENGER,
   fastsattBelop: mapToFastsattBelop(andel),

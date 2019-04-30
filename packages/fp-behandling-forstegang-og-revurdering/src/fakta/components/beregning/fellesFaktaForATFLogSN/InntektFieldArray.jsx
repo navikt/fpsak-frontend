@@ -216,11 +216,11 @@ InntektFieldArray.validate = (values, erKunYtelse, skalRedigereInntekt) => {
 };
 
 
-InntektFieldArray.buildInitialValues = (andeler) => {
+InntektFieldArray.buildInitialValues = (andeler, getKodeverknavn) => {
   if (!andeler || andeler.length === 0) {
     return {};
   }
-  return andeler.map(mapAndelToField);
+  return andeler.map(a => mapAndelToField(a, getKodeverknavn));
 };
 
 const finnDagpengeAndelLagtTilIForrige = (bg) => {

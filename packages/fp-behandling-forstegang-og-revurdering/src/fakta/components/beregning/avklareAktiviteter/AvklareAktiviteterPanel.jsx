@@ -4,12 +4,17 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
+
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer, BorderBox, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+
 import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import {
   getAksjonspunkter,
   getAvklarAktiviteter,
@@ -184,14 +189,14 @@ export const transformValuesAvklarAktiviteter = createSelector(
 );
 
 export const buildInitialValuesAvklarAktiviteter = createSelector(
-  [getAksjonspunkter, getAvklarAktiviteter],
-  (aksjonspunkter, avklarAktiviteter) => {
+  [getAksjonspunkter, getAvklarAktiviteter, getAlleKodeverk],
+  (aksjonspunkter, avklarAktiviteter, alleKodeverk) => {
     if (!hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)) {
       return {};
     }
     let initialValues = {};
     if (avklarAktiviteter && avklarAktiviteter.aktiviteterTomDatoMapping) {
-      initialValues = VurderAktiviteterPanel.buildInitialValues(avklarAktiviteter.aktiviteterTomDatoMapping);
+      initialValues = VurderAktiviteterPanel.buildInitialValues(avklarAktiviteter.aktiviteterTomDatoMapping, getKodeverknavnFn(alleKodeverk, kodeverkTyper));
     }
     return {
       ...initialValues,

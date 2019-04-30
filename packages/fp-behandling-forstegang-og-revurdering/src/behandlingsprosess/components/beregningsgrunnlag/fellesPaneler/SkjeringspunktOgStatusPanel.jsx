@@ -2,29 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { Column, Row } from 'nav-frontend-grid';
+
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import { BorderBox, DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import {
-  getAktivitetStatuser,
-  getSkjæringstidspunktBeregning,
-  getGjeldendeDekningsgrad,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import dekningsgrad from '@fpsak-frontend/kodeverk/src/dekningsgrad';
-import { Column, Row } from 'nav-frontend-grid';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import ElementWrapper from '@fpsak-frontend/shared-components/src/ElementWrapper';
+
+import {
+  getAktivitetStatuser,
+  getSkjæringstidspunktBeregning,
+  getGjeldendeDekningsgrad,
+} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+
 import styles from './skjeringspunktOgStatusPanel.less';
 
 export const RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN = 'dekningsgrad';
 const { VURDER_DEKNINGSGRAD } = aksjonspunktCodes;
 
-const createAktivitetstatusString = (listeMedStatuser) => {
+const createAktivitetstatusString = (listeMedStatuser, getKodeverknavn) => {
   const tekstList = [];
   const listeMedKoder = listeMedStatuser.map(status => status.kode);
   if (listeMedKoder.includes(aktivitetStatus.DAGPENGER)) {
@@ -40,7 +44,7 @@ const createAktivitetstatusString = (listeMedStatuser) => {
     && status.kode !== aktivitetStatus.DAGPENGER
     && status.kode !== aktivitetStatus.MILITAER_ELLER_SIVIL);
   statuserMedEgneNavn.forEach((status) => {
-    tekstList.push(status.navn);
+    tekstList.push(getKodeverknavn(status));
   });
   let tekstString = '';
   if (tekstList.length > 2) {
@@ -115,6 +119,7 @@ export const SkjeringspunktOgStatusPanelImpl = ({
   aktivitetStatusList,
   gjeldendeAksjonspunkter,
   gjeldendeDekningsgrad,
+  getKodeverknavn,
 }) => (
   <BorderBox className={styles.setBoxHeight}>
     <Element>
@@ -135,7 +140,7 @@ export const SkjeringspunktOgStatusPanelImpl = ({
             <FormattedMessage id="Beregningsgrunnlag.Skjeringstidspunkt.Status" />
           </Undertekst>
           <Normaltekst>
-            {createAktivitetstatusString(aktivitetStatusList)}
+            {createAktivitetstatusString(aktivitetStatusList, getKodeverknavn)}
           </Normaltekst>
         </div>
       </Column>
@@ -162,6 +167,7 @@ SkjeringspunktOgStatusPanelImpl.propTypes = {
   aktivitetStatusList: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   gjeldendeAksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   gjeldendeDekningsgrad: PropTypes.number,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 SkjeringspunktOgStatusPanelImpl.defaultProps = {
@@ -179,7 +185,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const SkjeringspunktOgStatusPanel = connect(mapStateToProps)(SkjeringspunktOgStatusPanelImpl);
+const SkjeringspunktOgStatusPanel = connect(mapStateToProps)(injectKodeverk(getAlleKodeverk)(SkjeringspunktOgStatusPanelImpl));
 
 SkjeringspunktOgStatusPanel.buildInitialValues = (gjeldendeDekningsgrad, gjeldendeAksjonspunkter) => {
   const aksjonspunkt = gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_DEKNINGSGRAD);

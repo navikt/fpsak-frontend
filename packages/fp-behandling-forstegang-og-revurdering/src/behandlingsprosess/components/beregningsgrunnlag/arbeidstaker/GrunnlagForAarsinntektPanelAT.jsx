@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import { InputField } from '@fpsak-frontend/form';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
@@ -11,8 +12,10 @@ import {
   Image, VerticalSpacer, Table, TableRow, TableColumn,
 } from '@fpsak-frontend/shared-components';
 import {
-  createVisningsnavnForAktivitet, required, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber,
+  required, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber,
 } from '@fpsak-frontend/utils';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -23,13 +26,13 @@ import styles from './grunnlagForAarsinntektPanelAT.less';
 
 const formName = 'BeregningForm';
 
-const createTableRows = (relevanteAndeler, harAksjonspunkt, bruttoFastsattInntekt, readOnly, isAksjonspunktClosed) => {
+const createTableRows = (relevanteAndeler, harAksjonspunkt, bruttoFastsattInntekt, readOnly, isAksjonspunktClosed, getKodeverknavn) => {
   const beregnetAarsinntekt = relevanteAndeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
   const rows = relevanteAndeler.map((andel, index) => (
     <TableRow key={`index${index + 1}`}>
       <TableColumn>
         <Normaltekst>
-          {createVisningsnavnForAktivitet(andel.arbeidsforhold)}
+          {createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn)}
         </Normaltekst>
       </TableColumn>
       <TableColumn><Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar)}</Normaltekst></TableColumn>
@@ -101,6 +104,7 @@ export const GrunnlagForAarsinntektPanelATImpl = ({
   bruttoFastsattInntekt,
   isAksjonspunktClosed,
   isKombinasjonsstatus,
+  getKodeverknavn,
 }) => {
   const headers = ['Beregningsgrunnlag.AarsinntektPanel.Arbeidsgiver', 'Beregningsgrunnlag.AarsinntektPanel.Inntekt'];
   const relevanteAndeler = alleAndeler.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
@@ -122,7 +126,7 @@ export const GrunnlagForAarsinntektPanelATImpl = ({
       )
       }
       <Table headerTextCodes={headers} noHover classNameTable={styles.inntektTable}>
-        {createTableRows(relevanteAndeler, harAksjonspunkt, bruttoFastsattInntekt, readOnly, isAksjonspunktClosed)}
+        {createTableRows(relevanteAndeler, harAksjonspunkt, bruttoFastsattInntekt, readOnly, isAksjonspunktClosed, getKodeverknavn)}
       </Table>
 
       { perioderMedBortfaltNaturalytelse.length > 0
@@ -141,6 +145,7 @@ GrunnlagForAarsinntektPanelATImpl.propTypes = {
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   isKombinasjonsstatus: PropTypes.bool.isRequired,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 GrunnlagForAarsinntektPanelATImpl.defaultProps = {
@@ -164,7 +169,7 @@ const mapStateToProps = (state, initialProps) => {
   };
 };
 
-const GrunnlagForAarsinntektPanelAT = connect(mapStateToProps)(GrunnlagForAarsinntektPanelATImpl);
+const GrunnlagForAarsinntektPanelAT = connect(mapStateToProps)(injectKodeverk(getAlleKodeverk)(GrunnlagForAarsinntektPanelATImpl));
 
 GrunnlagForAarsinntektPanelAT.buildInitialValues = (relevanteAndeler) => {
   const initialValues = { };

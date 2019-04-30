@@ -148,7 +148,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const PerioderMedMedlemskapFaktaPanel = connect(mapStateToProps)(PerioderMedMedlemskapFaktaPanelImpl);
 
-PerioderMedMedlemskapFaktaPanel.buildInitialValues = (periode, medlemskapPerioder, soknad, aksjonspunkter) => {
+PerioderMedMedlemskapFaktaPanel.buildInitialValues = (periode, medlemskapPerioder, soknad, aksjonspunkter, getKodeverknavn) => {
   if (medlemskapPerioder === null) {
     return [];
   }
@@ -156,8 +156,8 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (periode, medlemskapPeriode
   const fixedMedlemskapPerioder = medlemskapPerioder.map(i => ({
     fom: i.fom,
     tom: i.tom,
-    dekning: i.dekningType.navn,
-    status: i.medlemskapType.navn,
+    dekning: getKodeverknavn(i.dekningType),
+    status: getKodeverknavn(i.medlemskapType),
     beslutningsdato: i.beslutningsdato,
   }))
     .sort((p1, p2) => new Date(p1.fom).getTime() - new Date(p2.fom).getTime());

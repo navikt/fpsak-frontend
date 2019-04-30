@@ -1,11 +1,15 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
+
 import { getAddresses } from '@fpsak-frontend/utils';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import { AdressePanel, BarnePanel, PersonYtelserTable } from '@fpsak-frontend/person-info';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+
+import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import { Utland } from './utland/Utland';
 
 const findPersonStatus = (personopplysning) => {
@@ -36,6 +40,7 @@ export const FullPersonInfoImpl = ({
   isPrimaryParent,
   personstatusTypes,
   sivilstandTypes,
+  getKodeverknavn,
 }) => {
   if (!personopplysning) {
     return null;
@@ -56,7 +61,7 @@ export const FullPersonInfoImpl = ({
         }
         personstatus={findPersonStatus(personopplysning)}
         sivilstandtype={personopplysning.sivilstand}
-        region={personopplysning.region ? personopplysning.region.navn : null}
+        region={personopplysning.region ? getKodeverknavn(personopplysning.region) : null}
         sprakkode={sprakkode}
         isPrimaryParent={isPrimaryParent}
         sivilstandTypes={sivilstandTypes}
@@ -94,6 +99,7 @@ FullPersonInfoImpl.propTypes = {
   isPrimaryParent: PropTypes.bool.isRequired,
   sivilstandTypes: kodeverkPropType.isRequired,
   personstatusTypes: kodeverkPropType.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 FullPersonInfoImpl.defaultProps = {
@@ -101,4 +107,4 @@ FullPersonInfoImpl.defaultProps = {
   submitCallback: undefined,
 };
 
-export default FullPersonInfoImpl;
+export default injectKodeverk(getAlleKodeverk)(FullPersonInfoImpl);

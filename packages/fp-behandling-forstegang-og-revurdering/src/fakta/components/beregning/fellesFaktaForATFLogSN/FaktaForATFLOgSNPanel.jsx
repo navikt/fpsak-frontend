@@ -2,13 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+import { createSelector, createStructuredSelector } from 'reselect';
+
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import faktaOmBeregningTilfelle,
 {
   vurderOgFastsettATFLTilfeller,
   harFastsettATFLInntektTilfelle,
 } from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import { createSelector, createStructuredSelector } from 'reselect';
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import { getRettigheter } from 'navAnsatt/duck';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import {
   getAksjonspunkter,
   getBeregningsgrunnlag,
@@ -45,7 +49,6 @@ import VurderEtterlonnSluttpakkeForm from './etterlønnSluttpakke/VurderEtterlon
 import FastsettEtterlonnSluttpakkeForm from './etterlønnSluttpakke/FastsettEtterlonnSluttpakkeForm';
 import VurderMottarYtelseForm from './vurderOgFastsettATFL/forms/VurderMottarYtelseForm';
 import VurderBesteberegningForm from './besteberegningFodendeKvinne/VurderBesteberegningForm';
-import { getFormValuesForBeregning } from '../BeregningFormUtils';
 
 
 const {
@@ -63,16 +66,19 @@ export const mapStateToValidationProps = createStructuredSelector({
   beregningsgrunnlag: getBeregningsgrunnlag,
 });
 
-export const getValidationFaktaForATFLOgSN = createSelector([mapStateToValidationProps], props => (values) => {
+export const getValidationFaktaForATFLOgSN = createSelector([mapStateToValidationProps, getAlleKodeverk], props => (values, alleKodeverk) => {
   if (!values || !props.faktaOmBeregning || !props.beregningsgrunnlag || !props.aktivertePaneler) {
     return {};
   }
   return ({
-    ...FastsettEndretBeregningsgrunnlag.validate(values, props.endringBGPerioder, props.aktivertePaneler, props.faktaOmBeregning, props.beregningsgrunnlag),
-    ...getKunYtelseValidation(values, props.kunYtelse, props.endringBGPerioder, props.aktivertePaneler, props.beregningsgrunnlag.skjaeringstidspunktBeregning),
+    ...FastsettEndretBeregningsgrunnlag.validate(values, props.endringBGPerioder, props.aktivertePaneler, props.faktaOmBeregning,
+      props.beregningsgrunnlag, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
+    ...getKunYtelseValidation(values, props.kunYtelse, props.endringBGPerioder, props.aktivertePaneler,
+      props.beregningsgrunnlag.skjaeringstidspunktBeregning, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
     ...VurderMottarYtelseForm.validate(values, props.vurderMottarYtelse),
     ...VurderBesteberegningForm.validate(values, props.aktivertePaneler),
-    ...VurderOgFastsettATFL.validate(values, props.aktivertePaneler, props.faktaOmBeregning, props.beregningsgrunnlag),
+    ...VurderOgFastsettATFL.validate(values, props.aktivertePaneler, props.faktaOmBeregning, props.beregningsgrunnlag,
+      getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
   });
 });
 
@@ -288,20 +294,21 @@ export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
   [getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlag,
     getKortvarigeArbeidsforhold, getVurderFaktaAksjonspunkt, getKunYtelse,
     getFaktaOmBeregningTilfellerKoder, getBehandlingIsRevurdering, getVurderMottarYtelse, getVurderBesteberegning,
-    isReadOnly, getFormValuesForBeregning],
+    isReadOnly, getAlleKodeverk],
   (endringBGPerioder, beregningsgrunnlag, kortvarigeArbeidsforhold, vurderFaktaAP, kunYtelse,
-    tilfeller, isRevurdering, vurderMottarYtelse, vurderBesteberegning, readOnly, values) => () => ({
+    tilfeller, isRevurdering, vurderMottarYtelse, vurderBesteberegning, readOnly, alleKodeverk) => () => ({
     ...TidsbegrensetArbeidsforholdForm.buildInitialValues(kortvarigeArbeidsforhold),
     ...NyIArbeidslivetSNForm.buildInitialValues(beregningsgrunnlag),
-    ...FastsettEndretBeregningsgrunnlag.buildInitialValues(endringBGPerioder, tilfeller, readOnly, beregningsgrunnlag),
+    ...FastsettEndretBeregningsgrunnlag.buildInitialValues(endringBGPerioder, tilfeller, readOnly, beregningsgrunnlag,
+        getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
     ...LonnsendringForm.buildInitialValues(beregningsgrunnlag),
     ...NyoppstartetFLForm.buildInitialValues(beregningsgrunnlag),
-    ...buildInitialValuesKunYtelse(kunYtelse, endringBGPerioder, isRevurdering, tilfeller),
+    ...buildInitialValuesKunYtelse(kunYtelse, endringBGPerioder, isRevurdering, tilfeller, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
     ...VurderEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag, vurderFaktaAP),
     ...FastsettEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag),
     ...VurderMottarYtelseForm.buildInitialValues(vurderMottarYtelse),
     ...VurderBesteberegningForm.buildInitialValues(vurderBesteberegning, tilfeller),
-    ...VurderOgFastsettATFL.buildInitialValues(beregningsgrunnlag, values),
+    ...VurderOgFastsettATFL.buildInitialValues(beregningsgrunnlag, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
   }),
 );
 

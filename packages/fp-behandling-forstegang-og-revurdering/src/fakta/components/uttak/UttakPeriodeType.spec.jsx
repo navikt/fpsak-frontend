@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { Image } from '@fpsak-frontend/shared-components';
-import UttakPeriodeType from './UttakPeriodeType';
+import { UttakPeriodeType } from './UttakPeriodeType';
 
 describe('<UttakPeriodeType>', () => {
   const tilDato = '2018-01-10';
@@ -25,6 +25,7 @@ describe('<UttakPeriodeType>', () => {
   const oppholdArsak = {
     kode: '-',
   };
+  const getKodeverknavn = () => undefined;
 
   it('skal vise redigere og slett periode hvis manuellOverstyring er true og readOnly er false', () => {
     const wrapper = shallow(<UttakPeriodeType
@@ -44,6 +45,7 @@ describe('<UttakPeriodeType>', () => {
       flerbarnsdager={flerbarnsdager}
       oppholdArsak={oppholdArsak}
       isFromSøknad
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const image = wrapper.find(Image);
@@ -68,6 +70,7 @@ describe('<UttakPeriodeType>', () => {
       flerbarnsdager={flerbarnsdager}
       oppholdArsak={oppholdArsak}
       isFromSøknad
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const image = wrapper.find(Image);
@@ -95,6 +98,7 @@ describe('<UttakPeriodeType>', () => {
       arbeidstidprosent={arbeidstidprosent}
       oppholdArsak={oppholdArsak}
       isFromSøknad
+      getKodeverknavn={getKodeverknavn}
     />);
 
     expect(wrapper.find('FormattedMessage').last().prop('id')).to.eql('UttakInfoPanel.Frilans');
@@ -120,6 +124,7 @@ describe('<UttakPeriodeType>', () => {
       arbeidsgiver={arbeidsgiver}
       oppholdArsak={oppholdArsak}
       isFromSøknad
+      getKodeverknavn={getKodeverknavn}
     />);
 
     expect(wrapper.find('Element').last().childAt(0).text()).to.eql(`${arbeidsgiver.navn} (${arbeidsgiver.identifikator})`);

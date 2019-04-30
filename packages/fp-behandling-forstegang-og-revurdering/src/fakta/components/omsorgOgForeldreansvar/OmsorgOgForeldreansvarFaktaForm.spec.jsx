@@ -11,6 +11,16 @@ import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';
 
 describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
+  const getKodeverknavn = (kodeverk) => {
+    if (kodeverk.kode === opplysningsKilde.SAKSBEHANDLER) {
+      return 'test';
+    }
+    if (kodeverk.kode === 'FAR_SOKER_TYPE') {
+      return 'far søker type';
+    }
+    return '';
+  };
+
   it('skal vise hjelpetekster', () => {
     const wrapper = shallowWithIntl(<OmsorgOgForeldreansvarFaktaForm.WrappedComponent
       intl={intlMock}
@@ -152,7 +162,7 @@ describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
     const soknad = {
       omsorgsovertakelseDato: '10-10-2017',
       farSokerType: {
-        navn: 'test',
+        kode: 'FAR_SOKER_TYPE',
       },
       antallBarn: 2,
       fodselsdatoer: {
@@ -179,19 +189,16 @@ describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
       }],
       opplysningsKilde: {
         kode: opplysningsKilde.SAKSBEHANDLER,
-        navn: 'test',
       },
       navBrukerKjonn: {
         kode: navBrukerKjonn.KVINNE,
-        navn: 'Kvinne',
       },
       personstatus: {
         kode: 'DØD',
-        navn: 'DØD,',
       },
     };
 
-    const initialValues = OmsorgOgForeldreansvarFaktaForm.buildInitialValues(soknad, familiehendelse, personopplysning);
+    const initialValues = OmsorgOgForeldreansvarFaktaForm.buildInitialValues(soknad, familiehendelse, personopplysning, undefined, getKodeverknavn);
     expect(initialValues).is.eql({
       omsorgsovertakelseDato: '10-10-2017',
       foreldreansvarDato: undefined,
@@ -217,7 +224,7 @@ describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
       ytelser: undefined,
       antallBarn: 2,
       vilkarType: '',
-      farSokerType: 'test',
+      farSokerType: 'far søker type',
       originalAntallBarn: 2,
     });
   });
@@ -227,7 +234,7 @@ describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
     const soknad = {
       omsorgsovertakelseDato: '10-10-2017',
       farSokerType: {
-        navn: 'test',
+        kode: 'FAR_SOKER_TYPE',
       },
       antallBarn: 2,
       soknadType: {
@@ -245,15 +252,12 @@ describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
       dodsdato: undefined,
       navBrukerKjonn: {
         kode: navBrukerKjonn.KVINNE,
-        navn: 'Kvinne',
       },
       opplysningsKilde: {
         kode: opplysningsKilde.SAKSBEHANDLER,
-        navn: 'test',
       },
       personstatus: {
         kode: 'DØD',
-        navn: 'DØD,',
       },
       barnSoktFor: [{
         aktoerId: '1',
@@ -276,7 +280,7 @@ describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
       }],
     };
 
-    const initialValues = OmsorgOgForeldreansvarFaktaForm.buildInitialValues(soknad, familiehendelse, personopplysning);
+    const initialValues = OmsorgOgForeldreansvarFaktaForm.buildInitialValues(soknad, familiehendelse, personopplysning, undefined, getKodeverknavn);
 
     expect(initialValues).is.eql({
       omsorgsovertakelseDato: '10-10-2017',
@@ -306,7 +310,7 @@ describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
       ytelser: undefined,
       antallBarn: 2,
       vilkarType: '',
-      farSokerType: 'test',
+      farSokerType: 'far søker type',
       originalAntallBarn: 2,
     });
   });

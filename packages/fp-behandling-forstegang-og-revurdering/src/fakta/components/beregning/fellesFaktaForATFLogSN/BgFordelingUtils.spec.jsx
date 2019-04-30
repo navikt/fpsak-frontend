@@ -39,7 +39,7 @@ const arbeidsgiver = {
 const arbeidstakerIkkeFastsatt = {
   lagtTilAvSaksbehandler: false,
   fastsattAvSaksbehandler: false,
-  aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER, navn: 'Arbeidstaker' },
+  aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER },
   inntektskategori: { kode: 'ARBEIDSTAKER' },
 };
 
@@ -50,6 +50,16 @@ const arbeidstakerAndel1 = {
   },
   andelsnr: 1,
   ...arbeidstakerIkkeFastsatt,
+};
+
+const getKodeverknavn = (kodeverk) => {
+  if (kodeverk.kode === aktivitetStatuser.ARBEIDSTAKER) {
+    return 'Arbeidstaker';
+  }
+  if (kodeverk.kode === aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE) {
+    return 'Selvstendig næringsdrivende';
+  }
+  return '';
 };
 
 describe('<BgFordelingUtils>', () => {
@@ -110,7 +120,7 @@ describe('<BgFordelingUtils>', () => {
     beregnetPrAar: 240000,
   };
 
-  const dagpengeField = mapAndelToField(dagpengerAndel);
+  const dagpengeField = mapAndelToField(dagpengerAndel, () => undefined);
 
 
   it('skal mappe dagpengerandel til feltverdier', () => {
@@ -188,12 +198,13 @@ describe('<BgFordelingUtils>', () => {
         arbeidsgiverId: '3284788923',
         arbeidsforholdId: '321378huda7e2',
       },
-      aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER, navn: 'Arbeidstaker' },
+      aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER },
       andelsnr: 3,
       lagtTilAvSaksbehandler: false,
       inntektskategori: { kode: 'ARBEIDSTAKER' },
     };
-    const andelsInfo = setGenerellAndelsinfo(andelValueFromState);
+
+    const andelsInfo = setGenerellAndelsinfo(andelValueFromState, getKodeverknavn);
     expect(andelsInfo.andel).to.equal('Virksomheten (3284788923) ...a7e2');
     expect(andelsInfo.aktivitetStatus).to.equal('AT');
     expect(andelsInfo.andelsnr).to.equal(3);
@@ -204,12 +215,12 @@ describe('<BgFordelingUtils>', () => {
 
   it('skal sette initial values for generell andelinfo uten arbeidsforhold', () => {
     const andelValueFromState = {
-      aktivitetStatus: { kode: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE, navn: 'Selvstendig næringsdrivende' },
+      aktivitetStatus: { kode: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE },
       andelsnr: 2,
       lagtTilAvSaksbehandler: true,
       inntektskategori: { kode: 'SN' },
     };
-    const andelsInfo = setGenerellAndelsinfo(andelValueFromState);
+    const andelsInfo = setGenerellAndelsinfo(andelValueFromState, getKodeverknavn);
     expect(andelsInfo.andel).to.equal('Selvstendig næringsdrivende');
     expect(andelsInfo.aktivitetStatus).to.equal('SN');
     expect(andelsInfo.andelsnr).to.equal(2);
@@ -220,7 +231,7 @@ describe('<BgFordelingUtils>', () => {
 
   it('skal ikkje sette arbeidsforhold initial values for andel uten arbeidsforhold', () => {
     const andelValueFromState = {
-      aktivitetStatus: { kode: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE, navn: 'Selvstendig næringsdrivende' },
+      aktivitetStatus: { kode: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE },
       andelsnr: 2,
       lagtTilAvSaksbehandler: true,
       inntektskategori: { kode: 'SN' },
@@ -352,7 +363,7 @@ describe('<BgFordelingUtils>', () => {
     const andelFieldValue = {
       ...andelValuesUtenInntektsmelding,
       harPeriodeAarsakGraderingEllerRefusjon: false,
-      ...setGenerellAndelsinfo(arbeidstakerAndel3),
+      ...setGenerellAndelsinfo(arbeidstakerAndel3, getKodeverknavn),
     };
     const vals = {
       [besteberegningField]: true,
@@ -367,7 +378,7 @@ describe('<BgFordelingUtils>', () => {
       ...andelValuesUtenInntektsmelding,
       harPeriodeAarsakGraderingEllerRefusjon: false,
       ...setArbeidsforholdInitialValues(kunstigArbeidstakerAndel),
-      ...setGenerellAndelsinfo(kunstigArbeidstakerAndel),
+      ...setGenerellAndelsinfo(kunstigArbeidstakerAndel, getKodeverknavn),
     };
     const vals = {};
     const skalRedigereInntektskategori = skalRedigereInntektskategoriForAndel(vals, beregningsgrunnlag)(andelFieldValue);
@@ -388,7 +399,7 @@ describe('<BgFordelingUtils>', () => {
     const andelFieldValue = {
       ...andelValuesUtenInntektsmelding,
       harPeriodeAarsakGraderingEllerRefusjon: false,
-      ...setGenerellAndelsinfo(arbeidstakerAndel1),
+      ...setGenerellAndelsinfo(arbeidstakerAndel1, getKodeverknavn),
     };
     faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM = [arbeidstakerAndel1];
     const skalRedigereInntekt = skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag)(andelFieldValue);
@@ -399,7 +410,7 @@ describe('<BgFordelingUtils>', () => {
     const andelFieldValue = {
       ...andelValuesMedInntektsmelding,
       harPeriodeAarsakGraderingEllerRefusjon: true,
-      ...setGenerellAndelsinfo(arbeidstakerAndel4),
+      ...setGenerellAndelsinfo(arbeidstakerAndel4, getKodeverknavn),
     };
     const skalRedigereInntekt = skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag)(andelFieldValue);
     expect(skalRedigereInntekt).to.equal(true);
@@ -409,7 +420,7 @@ describe('<BgFordelingUtils>', () => {
     const andelFieldValue = {
       ...andelValuesMedInntektsmelding,
       harPeriodeAarsakGraderingEllerRefusjon: false,
-      ...setGenerellAndelsinfo(arbeidstakerAndel4),
+      ...setGenerellAndelsinfo(arbeidstakerAndel4, getKodeverknavn),
     };
     const skalRedigereInntekt = skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag)(andelFieldValue);
     expect(skalRedigereInntekt).to.equal(false);
@@ -433,7 +444,7 @@ describe('<BgFordelingUtils>', () => {
     const andelFieldValue = {
       ...andelValuesUtenInntektsmelding,
       harPeriodeAarsakGraderingEllerRefusjon: false,
-      ...setGenerellAndelsinfo(arbeidstakerAndel4),
+      ...setGenerellAndelsinfo(arbeidstakerAndel4, getKodeverknavn),
     };
     const faktaOmBeregningCopy = { ...faktaOmBeregning };
     arbeidstakerAndel4.inntektPrMnd = 30000;
@@ -446,7 +457,7 @@ describe('<BgFordelingUtils>', () => {
     const andelFieldValue = {
       ...andelValuesMedInntektsmelding,
       harPeriodeAarsakGraderingEllerRefusjon: false,
-      ...setGenerellAndelsinfo(arbeidstakerAndel4),
+      ...setGenerellAndelsinfo(arbeidstakerAndel4, getKodeverknavn),
     };
     const faktaOmBeregningCopy = { ...faktaOmBeregning };
     arbeidstakerAndel4.inntektPrMnd = null;
@@ -459,7 +470,7 @@ describe('<BgFordelingUtils>', () => {
     const andelFieldValue = {
       ...andelValuesUtenInntektsmelding,
       harPeriodeAarsakGraderingEllerRefusjon: false,
-      ...setGenerellAndelsinfo(frilansAndel),
+      ...setGenerellAndelsinfo(frilansAndel, getKodeverknavn),
     };
     const skalRedigereInntekt = skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag)(andelFieldValue);
     expect(skalRedigereInntekt).to.equal(true);
@@ -472,7 +483,7 @@ describe('<BgFordelingUtils>', () => {
     const andelFieldValue = {
       ...andelValuesUtenInntektsmelding,
       harPeriodeAarsakGraderingEllerRefusjon: false,
-      ...setGenerellAndelsinfo(frilansAndel),
+      ...setGenerellAndelsinfo(frilansAndel, getKodeverknavn),
     };
     const skalRedigereInntekt = skalRedigereInntektForAndel(valuesLocalCopy, faktaOmBeregning, beregningsgrunnlag)(andelFieldValue);
     expect(skalRedigereInntekt).to.equal(true);
@@ -485,7 +496,7 @@ describe('<BgFordelingUtils>', () => {
     const andelFieldValue = {
       ...andelValuesUtenInntektsmelding,
       harPeriodeAarsakGraderingEllerRefusjon: false,
-      ...setGenerellAndelsinfo(frilansAndel),
+      ...setGenerellAndelsinfo(frilansAndel, getKodeverknavn),
     };
     const skalRedigereInntekt = skalRedigereInntektForAndel(valuesLocalCopy, faktaOmBeregning, beregningsgrunnlag)(andelFieldValue);
     expect(skalRedigereInntekt).to.equal(false);
@@ -498,7 +509,7 @@ describe('<BgFordelingUtils>', () => {
     const andelFieldValue = {
       ...andelValuesUtenInntektsmelding,
       harPeriodeAarsakGraderingEllerRefusjon: true,
-      ...setGenerellAndelsinfo(frilansAndel),
+      ...setGenerellAndelsinfo(frilansAndel, getKodeverknavn),
     };
     const skalRedigereInntekt = skalRedigereInntektForAndel(valuesLocalCopy, faktaOmBeregning, beregningsgrunnlag)(andelFieldValue);
     expect(skalRedigereInntekt).to.equal(true);
@@ -508,7 +519,7 @@ describe('<BgFordelingUtils>', () => {
     const andelFieldValue = {
       ...andelValuesUtenInntektsmelding,
       harPeriodeAarsakGraderingEllerRefusjon: false,
-      ...setGenerellAndelsinfo(frilansAndel),
+      ...setGenerellAndelsinfo(frilansAndel, getKodeverknavn),
     };
     faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe = [arbeidstakerAndel4];
     const skalRedigereInntekt = skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag)(andelFieldValue);

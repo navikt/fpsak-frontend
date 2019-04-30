@@ -40,6 +40,7 @@ const andel = {
 
 const fields = new MockFieldsWithContent('fieldArrayName', [andelField]);
 
+const getKodeverknavn = () => undefined;
 
 describe('<ArbeidsforholdField>', () => {
   it('skal render ArbeidsforholdField med input for eksisterende andel', () => {
@@ -49,6 +50,7 @@ describe('<ArbeidsforholdField>', () => {
       readOnly={false}
       name="andel"
       index={0}
+      getKodeverknavn={getKodeverknavn}
     />);
     expect(wrapper.find(InputField).length).to.eql(1);
   });
@@ -64,6 +66,7 @@ describe('<ArbeidsforholdField>', () => {
       readOnly={false}
       name="andel"
       index={0}
+      getKodeverknavn={getKodeverknavn}
     />);
     const select = wrapper.find(SelectField);
     expect(select.length).to.eql(1);
