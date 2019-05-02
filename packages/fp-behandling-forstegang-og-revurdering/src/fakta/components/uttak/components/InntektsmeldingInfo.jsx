@@ -136,9 +136,9 @@ const renderAvvik = (innmldInfo, getKodeverknavn) => {
   return inntektsmeldingInfoPerioder.map(periode => renderAvvikContent(periode, avvik, getKodeverknavn));
 };
 
-const shouldRender = (inntektsmeldingInfo) => {
+const shouldRender = (inntektsmeldingInfo, getKodeverknavn) => {
   const avvik = flatten(inntektsmeldingInfo.map(innmldInfo => (
-    renderAvvik(innmldInfo)
+    renderAvvik(innmldInfo, getKodeverknavn)
   )));
   const filteredAvvik = avvik.filter(av => av);
 
@@ -150,7 +150,7 @@ export const InntektsmeldingInfo = ({
   arbeidsgiver,
   getKodeverknavn,
 }) => {
-  const shouldRenderAvvik = shouldRender(inntektsmeldingInfo);
+  const shouldRenderAvvik = shouldRender(inntektsmeldingInfo, getKodeverknavn);
   return (
     <React.Fragment>
       {shouldRenderAvvik && (
