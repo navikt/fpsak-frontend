@@ -6,7 +6,7 @@ import KunYtelseTilkommetArbeidPanel from './tilkommetArbeidsforhold/KunYtelseTi
 
 const { FASTSETT_BG_KUN_YTELSE, FASTSETT_ENDRET_BEREGNINGSGRUNNLAG } = faktaOmBeregningTilfelle;
 
-const harKunYtelseOgEndretBeregningsgrunnlag = aktivertePaneler => (aktivertePaneler.length === 2
+const harKunYtelseOgEndretBeregningsgrunnlag = aktivertePaneler => (aktivertePaneler && aktivertePaneler.length === 2
   && aktivertePaneler.includes(FASTSETT_BG_KUN_YTELSE)
   && aktivertePaneler.includes(FASTSETT_ENDRET_BEREGNINGSGRUNNLAG));
 
@@ -47,9 +47,9 @@ export const transformValuesForKunYtelse = (values, kunYtelse, endringBGPerioder
   return {};
 };
 
-export const getKunYtelseValidation = (values, kunYtelse, endringBgPerioder, aktivertePaneler, skjaeringstidspunktBeregning, getKodeverknavn) => {
+export const getKunYtelseValidation = (values, kunYtelse, endringBgPerioder, aktivertePaneler, getKodeverknavn) => {
   if (harKunYtelseOgEndretBeregningsgrunnlag(aktivertePaneler)) {
-    return KunYtelseTilkommetArbeidPanel.validate(values, aktivertePaneler, kunYtelse, endringBgPerioder, skjaeringstidspunktBeregning, getKodeverknavn);
+    return KunYtelseTilkommetArbeidPanel.validate(values, aktivertePaneler, kunYtelse, endringBgPerioder, getKodeverknavn);
   }
   if (aktivertePaneler.includes(FASTSETT_BG_KUN_YTELSE)) {
     return KunYtelsePanel.validate(values, aktivertePaneler, kunYtelse);
@@ -62,7 +62,7 @@ export const buildInitialValuesKunYtelse = (kunYtelse, endringBgPerioder, isRevu
   if (harKunYtelseOgEndretBeregningsgrunnlag(tilfeller)) {
     return KunYtelseTilkommetArbeidPanel.buildInitialValues(kunYtelse, endringBgPerioder, isRevurdering, tilfeller, getKodeverknavn);
   }
-  if (tilfeller.includes(FASTSETT_BG_KUN_YTELSE)) {
+  if (tilfeller && tilfeller.includes(FASTSETT_BG_KUN_YTELSE)) {
     return KunYtelsePanel.buildInitialValues(kunYtelse, getKodeverknavn);
   }
   return {};

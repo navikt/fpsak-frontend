@@ -1,9 +1,6 @@
 import { expect } from 'chai';
 import { lagTotalInntektArbeidsforholdList } from './TotalbelopPrArbeidsgiverError';
 
-
-const stpBeregning = '2018-01-01';
-
 const arbeidsgiver1 = {
  arbeidsgiverNavn: 'Statoil AS',
 arbeidsgiverId: '123456789',
@@ -42,21 +39,25 @@ describe('<TotalbelopPrArbeidsgiverError>', () => {
  ...arbeidsgiver1,
       fastsattBelop: '10 000',
       inntektskategori: 'ARBEIDSTAKER',
+      nyttArbeidsforhold: false,
      },
      {
  ...arbeidsgiver1,
       fastsattBelop: '20 000',
       inntektskategori: 'FRILANSER',
+      nyttArbeidsforhold: false,
      },
      {
  ...arbeidsgiver2,
       fastsattBelop: '20 000',
       inntektskategori: 'ARBEIDSTAKER',
+      nyttArbeidsforhold: true,
      },
      {
  ...frilanser,
       fastsattBelop: '20 000',
       inntektskategori: 'FRILANSER',
+      nyttArbeidsforhold: false,
      },
     ];
 
@@ -67,7 +68,7 @@ describe('<TotalbelopPrArbeidsgiverError>', () => {
       return '';
     };
 
-    const inntektPrArbeidsforholdList = lagTotalInntektArbeidsforholdList(values, stpBeregning, getKodeverknavn);
+    const inntektPrArbeidsforholdList = lagTotalInntektArbeidsforholdList(values, () => true, getKodeverknavn);
     expect(inntektPrArbeidsforholdList.length).to.equal(3);
     const inntektForArbeidsgiver1 = inntektPrArbeidsforholdList.find(({ key }) => key === arbeidsgiver1Key);
     expect(inntektForArbeidsgiver1.fastsattBelop).to.equal(30000);

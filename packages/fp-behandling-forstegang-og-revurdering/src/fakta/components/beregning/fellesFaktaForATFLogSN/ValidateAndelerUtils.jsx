@@ -188,8 +188,8 @@ export const validateAndelFields = (andelFieldValues, totalInntektArbeidsforhold
 };
 
 
-export const validateAndeler = (values, skalRedigereInntekt, skjaeringstidspunktBeregning, skalValidereMotRapportert, getKodeverknavn) => {
-  const totalInntektPrArbeidsforhold = lagTotalInntektArbeidsforholdList(values, skjaeringstidspunktBeregning, getKodeverknavn);
+export const validateAndeler = (values, skalRedigereInntekt, skalValidereMotRapportert, getKodeverknavn) => {
+  const totalInntektPrArbeidsforhold = lagTotalInntektArbeidsforholdList(values, skalValidereMotRapportert, getKodeverknavn);
   const arrayErrors = values.map((andelFieldValues) => {
     if (!skalRedigereInntekt(andelFieldValues)) {
         return null;

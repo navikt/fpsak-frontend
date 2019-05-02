@@ -13,7 +13,6 @@ import {
   transformValuesFaktaForATFLOgSN,
   mapStateToValidationProps,
   transformValues,
-  isReadOnly,
 } from './FaktaForATFLOgSNPanel';
 import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm';
 import FastsettEndretBeregningsgrunnlag from './endringBeregningsgrunnlag/FastsettEndretBeregningsgrunnlag';
@@ -92,55 +91,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     expect(props.vurderMottarYtelse).to.equal('vurderMottarYtelse');
     expect(props.faktaOmBeregning).to.equal(faktaOmBeregning);
     expect(props.beregningsgrunnlag.bg).to.equal('beregningsgrunnlag');
-  });
-
-
-  it('skal gi read only når saksbehandler ikkje har redigeringsrettighet', () => {
-    const rettigheter = {
-      writeAccess: {
-        isEnabled: false,
-      },
-    };
-    const isOnHold = false;
-    const readOnlyBehandling = false;
-    const readOnly = isReadOnly.resultFunc(rettigheter, isOnHold, readOnlyBehandling);
-    expect(readOnly).to.equal(true);
-  });
-
-  it('skal ikkje gi read only når saksbehandler har redigeringsrettighet', () => {
-    const rettigheter = {
-      writeAccess: {
-        isEnabled: true,
-      },
-    };
-    const isOnHold = false;
-    const readOnlyBehandling = false;
-    const readOnly = isReadOnly.resultFunc(rettigheter, isOnHold, readOnlyBehandling);
-    expect(readOnly).to.equal(false);
-  });
-
-  it('skal gi read only når sak er satt på vent', () => {
-    const rettigheter = {
-      writeAccess: {
-        isEnabled: true,
-      },
-    };
-    const isOnHold = true;
-    const readOnlyBehandling = false;
-    const readOnly = isReadOnly.resultFunc(rettigheter, isOnHold, readOnlyBehandling);
-    expect(readOnly).to.equal(true);
-  });
-
-  it('skal gi read only når behandling er read only behandling', () => {
-    const rettigheter = {
-      writeAccess: {
-        isEnabled: true,
-      },
-    };
-    const isOnHold = false;
-    const readOnlyBehandling = true;
-    const readOnly = isReadOnly.resultFunc(rettigheter, isOnHold, readOnlyBehandling);
-    expect(readOnly).to.equal(true);
   });
 
   it('skal lage helptext', () => {
