@@ -8,7 +8,6 @@ import {
 
 const skalOverstyreBg = () => true;
 const skalValidereMotRapportert = () => true;
-const stpBeregning = '2019-01-01';
 
 const andel1 = {
   andelsnr: 1,
@@ -48,7 +47,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     const faktaOmBeregning = {};
     const beregningsgrunnlag = {};
     const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag,
-      skalOverstyreBg, stpBeregning, skalValidereMotRapportert);
+      skalOverstyreBg, skalValidereMotRapportert);
     expect(errors).to.be.empty;
   });
 
@@ -59,7 +58,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     const faktaOmBeregning = {};
     const beregningsgrunnlag = { beregningsgrunnlagPeriode: [{ beregningsgrunnlagPrStatusOgAndel: [] }] };
     const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag,
-      skalOverstyreBg, stpBeregning, skalValidereMotRapportert);
+      skalOverstyreBg, skalValidereMotRapportert);
     expect(errors[getFieldNameKey(0)]).to.not.be.empty;
   });
 
@@ -71,7 +70,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     const faktaOmBeregning = {};
     const beregningsgrunnlag = { beregningsgrunnlagPeriode: [{ beregningsgrunnlagPrStatusOgAndel: [] }] };
     const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag,
-      skalOverstyreBg, stpBeregning, skalValidereMotRapportert);
+      skalOverstyreBg, skalValidereMotRapportert);
     expect(errors[getFieldNameKey(0)]).to.not.be.empty;
     expect(errors[getFieldNameKey(1)]).to.not.be.empty;
   });

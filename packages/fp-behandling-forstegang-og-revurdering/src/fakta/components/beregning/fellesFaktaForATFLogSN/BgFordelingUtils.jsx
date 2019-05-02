@@ -1,3 +1,4 @@
+import moment from 'moment';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import organisasjonstyper from '@fpsak-frontend/kodeverk/src/organisasjonstype';
@@ -66,15 +67,12 @@ export const settFastsattBelop = (beregnet,
   return '';
 };
 
-export const settReadOnlyBelop = (readOnly, beregnetPrMnd, snittIBeregningsperiodenPrMnd, belopFraInntektsmeldingPrMnd) => {
-  if (!nullOrUndefined(snittIBeregningsperiodenPrMnd) && !readOnly) {
-    return formatCurrencyNoKr(snittIBeregningsperiodenPrMnd);
-  }
-  if (!nullOrUndefined(beregnetPrMnd)) {
-    return formatCurrencyNoKr(beregnetPrMnd);
-  }
+export const settReadOnlyBelop = (snittIBeregningsperiodenPrMnd, belopFraInntektsmeldingPrMnd) => {
   if (!nullOrUndefined(belopFraInntektsmeldingPrMnd)) {
     return formatCurrencyNoKr(belopFraInntektsmeldingPrMnd);
+  }
+  if (!nullOrUndefined(snittIBeregningsperiodenPrMnd)) {
+    return formatCurrencyNoKr(snittIBeregningsperiodenPrMnd);
   }
   return '0';
 };
@@ -107,6 +105,10 @@ export const erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon = (fie
     .arbeidstakerOgFrilanserISammeOrganisasjonListe, field);
   return andelIListe && (andelIListe.inntektPrMnd === null || andelIListe.inntektPrMnd === undefined);
 };
+
+export const starterPaaEllerEtterStp = (bgAndel,
+  skjaeringstidspunktBeregning) => (bgAndel && bgAndel.arbeidsforhold
+    && bgAndel.arbeidsforhold.startdato && !moment(bgAndel.arbeidsforhold.startdato).isBefore(moment(skjaeringstidspunktBeregning)));
 
 
 // Aktivitetstatus
