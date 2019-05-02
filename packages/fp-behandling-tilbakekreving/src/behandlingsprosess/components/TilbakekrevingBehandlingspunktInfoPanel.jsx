@@ -12,6 +12,7 @@ import {
 } from '../behandlingsprosessTilbakeSelectors';
 import ForeldelsePanel from './foreldelse/ForeldelsePanel';
 import TilbakekrevingForm from './tilbakekreving/TilbakekrevingForm';
+import TilbakekrevingVedtak from './vedtak/TilbakekrevingVedtak';
 
 import styles from './tilbakekrevingBehandlingspunktInfoPanel.less';
 
@@ -47,6 +48,13 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({
         submitCallback={submitCallback}
         readOnly={readOnly}
         isApOpen={openAksjonspunkt}
+        readOnlySubmitButton={readOnlySubmitButton}
+      />
+    )}
+    {TilbakekrevingVedtak.supports(apCodes) && (
+      <TilbakekrevingVedtak
+        submitCallback={submitCallback}
+        readOnly={readOnly}
         readOnlySubmitButton={readOnlySubmitButton}
       />
     )}
