@@ -9,7 +9,7 @@ import { Column } from 'nav-frontend-grid';
 
 import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import {
-  ElementWrapper, VerticalSpacer, ArrowBox,
+  VerticalSpacer, ArrowBox,
 } from '@fpsak-frontend/shared-components';
 import {
   getEditedStatus, getFamiliehendelseGjeldende, getBehandlingType, getBarnFraTpsRelatertTilSoknad, getAksjonspunkter, getSoknadAntallBarn,
@@ -67,7 +67,7 @@ export const SjekkFodselDokForm = ({
     createNewChildren(1);
   }
   return (
-    <ElementWrapper>
+    <>
       <FodselSammenligningPanel />
       <FaktaGruppe
         aksjonspunktCode={aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL}
@@ -157,7 +157,7 @@ export const SjekkFodselDokForm = ({
       </FaktaGruppe>
       <VerticalSpacer sixteenPx />
       <FaktaBegrunnelseTextField isDirty={dirty} isSubmittable={submittable} isReadOnly={readOnly} hasBegrunnelse={!!initialValues.begrunnelse} />
-    </ElementWrapper>
+    </>
   );
 };
 
