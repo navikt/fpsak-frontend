@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
-import { TidsbegrensetArbeidsforholdForm } from './TidsbegrensetArbeidsforholdForm';
+import { TidsbegrensetArbeidsforholdFormImpl } from './TidsbegrensetArbeidsforholdForm';
 
 const andeler = [
   {
@@ -26,7 +26,7 @@ const getKodeverknavn = () => undefined;
 
 describe('<TidsbegrensetArbeidsforholdForm>', () => {
   it('skal teste at korrekt antall radioknapper vises', () => {
-    const wrapper = shallowWithIntl(<TidsbegrensetArbeidsforholdForm
+    const wrapper = shallowWithIntl(<TidsbegrensetArbeidsforholdFormImpl
       readOnly={false}
       andelsliste={andeler}
       isAksjonspunktClosed={false}
@@ -36,7 +36,7 @@ describe('<TidsbegrensetArbeidsforholdForm>', () => {
     expect(radios).to.have.length(4);
   });
   it('skal teste at korrekte overskrifter vises', () => {
-    const wrapper = shallowWithIntl(<TidsbegrensetArbeidsforholdForm
+    const wrapper = shallowWithIntl(<TidsbegrensetArbeidsforholdFormImpl
       readOnly={false}
       andelsliste={andeler}
       isAksjonspunktClosed={false}
