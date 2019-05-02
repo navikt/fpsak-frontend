@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-
+import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import { DateLabel, Image, BorderBox } from '@fpsak-frontend/shared-components';
 import chevronUp from '@fpsak-frontend/assets/images/pil_opp.svg';
 import chevronDown from '@fpsak-frontend/assets/images/pil_ned.svg';
@@ -15,6 +15,22 @@ const renderChevron = (chevron, messageId) => (
     {altText => <Image className={styles.image} src={chevron} alt={altText} />}
   </FormattedMessage>
 );
+
+const getÅrsak = (årsak) => {
+  if (årsak.manueltOpprettet) {
+    return 'Manuell behandling';
+  }
+  switch (årsak.behandlingArsakType) {
+    case 'RE-END-INNTEKTSMELD':
+      return 'Inntektsmelding';
+    case 'RE_HENDELSE_FØDSEL':
+      return 'Fødsel';
+    case 'RE-HENDELSE-FØDSEL':
+      return 'Død';
+    default:
+      return null;
+  }
+};
 
 /**
  * BehandlingPickerItemContent
@@ -60,7 +76,7 @@ const BehandlingPickerItemContent = ({
         </Column>
         <Column xs="3">
           <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingListItem.Årsak" /></Undertekst>
-          {(førsteÅrsak.erAutomatiskRevurdering || førsteÅrsak.manueltOpprettet) && <Normaltekst>{førsteÅrsak.behandlingArsakType.navn}</Normaltekst>}
+          {(førsteÅrsak.erAutomatiskRevurdering || førsteÅrsak.manueltOpprettet) && <Normaltekst>{getÅrsak(førsteÅrsak)}</Normaltekst>}
         </Column>
         <Column xs="3">
           <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingListItem.Behandlingsstatus" /></Undertekst>
@@ -81,7 +97,11 @@ BehandlingPickerItemContent.propTypes = {
   opprettetDato: PropTypes.string.isRequired,
   avsluttetDato: PropTypes.string,
   behandlingsstatus: PropTypes.string.isRequired,
-  førsteÅrsak: PropTypes.shape().isRequired,
+  førsteÅrsak: PropTypes.shape({
+    behandlingArsakType: kodeverkObjektPropType.isRequired,
+    erAutomatiskRevurdering: PropTypes.bool.isRequired,
+    manueltOpprettet: PropTypes.bool.isRequired,
+  }).isRequired,
 };
 
 BehandlingPickerItemContent.defaultProps = {
