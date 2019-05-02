@@ -16,6 +16,8 @@ const renderChevron = (chevron, messageId) => (
   </FormattedMessage>
 );
 
+
+// TODO hente de forksjellige kodeverkene man trenger
 const getÅrsak = (årsak) => {
   if (årsak.manueltOpprettet) {
     return 'Manuell behandling';
@@ -23,10 +25,15 @@ const getÅrsak = (årsak) => {
   switch (årsak.behandlingArsakType) {
     case 'RE-END-INNTEKTSMELD':
       return 'Inntektsmelding';
-    case 'RE_HENDELSE_FØDSEL':
-      return 'Fødsel';
     case 'RE-HENDELSE-FØDSEL':
+      return 'Fødsel';
+    case 'RE-HENDELSE-DØD-F':
+    case 'RE-HENDELSE-DØD-B':
+    case 'RE-HENDELSE-DØDFØDSEL':
       return 'Død';
+    case 'RE-FRIST':
+    case 'RE-END-FRA-BRUKER':
+      return 'Søknad';
     default:
       return null;
   }
