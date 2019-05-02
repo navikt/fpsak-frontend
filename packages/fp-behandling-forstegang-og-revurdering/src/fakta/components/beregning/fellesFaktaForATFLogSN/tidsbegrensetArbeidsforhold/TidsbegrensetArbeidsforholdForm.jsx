@@ -27,7 +27,7 @@ const createArbeidsforholdRadioKey = andel => (andel && andel.arbeidsforhold
  * bruker bestemme om en liste med arbeidsforhold er tidsbegrenset eller ikke.
  */
 
-export const TidsbegrensetArbeidsforholdForm = ({
+export const TidsbegrensetArbeidsforholdFormImpl = ({
   readOnly,
   andelsliste,
   isAksjonspunktClosed,
@@ -61,12 +61,21 @@ export const TidsbegrensetArbeidsforholdForm = ({
   </div>
 );
 
-TidsbegrensetArbeidsforholdForm.propTypes = {
+TidsbegrensetArbeidsforholdFormImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   andelsliste: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = (state) => {
+  const faktaOmBeregning = getFaktaOmBeregning(state);
+  return {
+    andelsliste: sortArbeidsforholdList(faktaOmBeregning.kortvarigeArbeidsforhold),
+  };
+};
+
+const TidsbegrensetArbeidsforholdForm = connect(mapStateToProps)(injectKodeverk(getAlleKodeverk)(TidsbegrensetArbeidsforholdFormImpl));
 
 TidsbegrensetArbeidsforholdForm.buildInitialValues = (andeler) => {
   const initialValues = {};
@@ -98,11 +107,4 @@ TidsbegrensetArbeidsforholdForm.transformValues = (values, andeler) => {
   };
 };
 
-const mapStateToProps = (state) => {
-  const faktaOmBeregning = getFaktaOmBeregning(state);
-  return {
-    andelsliste: sortArbeidsforholdList(faktaOmBeregning.kortvarigeArbeidsforhold),
-  };
-};
-
-export default connect(mapStateToProps)(injectKodeverk(getAlleKodeverk)(TidsbegrensetArbeidsforholdForm));
+export default TidsbegrensetArbeidsforholdForm;
