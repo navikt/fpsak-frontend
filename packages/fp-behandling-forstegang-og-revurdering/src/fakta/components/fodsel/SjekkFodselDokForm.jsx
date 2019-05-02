@@ -74,6 +74,7 @@ export const SjekkFodselDokForm = ({
         titleCode="SjekkFodselDokForm.DokumentasjonAvFodsel"
       >
         <div className={styles.horizontalForm}>
+        xxx1
           <RadioGroupField name="dokumentasjonForeligger" validate={[required]} readOnly={readOnly} isEdited={dokumentasjonForeliggerIsEdited}>
             <RadioOption label={<FormattedMessage id="SjekkFodselDokForm.DokumentasjonForeligger" />} value />
             <RadioOption label={<FormattedMessage id="SjekkFodselDokForm.DokumentasjonForeliggerIkke" />} value={false} />
@@ -82,6 +83,7 @@ export const SjekkFodselDokForm = ({
         {fodselInfo && !!fodselInfo.length && dokumentasjonForeligger
       && (
         <div className={styles.clearfix}>
+        xxx2
           <Column xs="6">
             <ArrowBox>
               <Undertekst>{<FormattedMessage id="SjekkFodselDokForm.FastsettAntallBarn" />}</Undertekst>
@@ -104,12 +106,14 @@ export const SjekkFodselDokForm = ({
         {(!fodselInfo || !fodselInfo.length) && dokumentasjonForeligger
       && (
         <div className={styles.clearfix}>
+        xxx3
           <Column xs="12">
             <ArrowBox>
               {<FormattedMessage id="SjekkFodselDokForm.FyllInnDokumenterteOpplysninger" />}
               {!avklartBarn
               && (
               <div className={styles.fodselRow}>
+              xxx4
                 <Column xs="5" className={styles.datePickerField}>
                   <DatepickerField
                     name="fodselsdato"
@@ -235,9 +239,9 @@ const transformValues = (values, antallBarnFraSoknad, antallBarnFraTps, fodselIn
 });
 
 export const sjekkFodselDokForm = 'SjekkFodselDokForm';
-
+// fødselinfo riktig?
 const mapStateToProps = (state, ownProps) => {
-  const fodselInfo = getFamiliehendelseGjeldende(state).avklartBarn;
+  const fodselInfo = getBarnFraTpsRelatertTilSoknad(state);
   return {
     initialValues: buildInitialValues(state),
     onSubmit: values => ownProps.submitHandler(transformValues(values,
