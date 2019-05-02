@@ -20,17 +20,21 @@ return false;
 const HistorikkMalTypeForeldelse = ({
   historikkinnslagDeler,
   behandlingLocation,
-}) => (
-  <div>
-    <Element>
-      <NavLink
-        to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
-        onClick={scrollUp}
-      >
-        {historikkinnslagDeler[0].skjermlenke.navn}
-      </NavLink>
-    </Element>
-    {historikkinnslagDeler.map((historikkinnslagDel) => {
+}) => {
+  if (historikkinnslagDeler.length === 0) {
+    return null;
+  }
+  return (
+    <div>
+      <Element>
+        <NavLink
+          to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
+          onClick={scrollUp}
+        >
+          {historikkinnslagDeler[0].skjermlenke.navn}
+        </NavLink>
+      </Element>
+      {historikkinnslagDeler.map((historikkinnslagDel) => {
       const { opplysninger, endredeFelter } = historikkinnslagDel;
       const periodeFom = opplysninger.find(o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_FOM.kode).tilVerdi;
       const periodeTom = opplysninger.find(o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_TOM.kode).tilVerdi;
@@ -60,8 +64,9 @@ const HistorikkMalTypeForeldelse = ({
         </div>
       );
     })}
-  </div>
+    </div>
 );
+  };
 
 HistorikkMalTypeForeldelse.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,

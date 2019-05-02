@@ -1,5 +1,6 @@
 const historikkEndretFeltType = {
   ER_VILKARENE_TILBAKEKREVING_OPPFYLT: 'ER_VILKARENE_TILBAKEKREVING_OPPFYLT',
+  ANDEL_TILBAKEKREVES: 'ANDEL_TILBAKEKREVES',
 };
 
 export default historikkEndretFeltType;

@@ -133,7 +133,7 @@ AktsomhetFormPanel.buildInitalValues = (vilkarResultatInfo) => {
     [aktsomhet.kode ? aktsomhet.kode : aktsomhet]: {
       harGrunnerTilReduksjon: aktsomhetInfo.harGrunnerTilReduksjon,
       skalDetTilleggesRenter: aktsomhetInfo.ileggRenter,
-      andelSomTilbakekreves: aktsomhetInfo.andelTilbakekreves,
+      andelSomTilbakekreves: `${aktsomhetInfo.andelTilbakekreves}`,
       belopSomSkalTilbakekreves: aktsomhetInfo.tilbakekrevesBelop,
       annetBegrunnelse: aktsomhetInfo.annetBegrunnelse,
       tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhetInfo.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,

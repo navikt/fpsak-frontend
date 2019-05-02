@@ -21,17 +21,21 @@ const scrollUp = () => {
 const HistorikkMalTypeTilbakekreving = ({
   historikkinnslagDeler,
   behandlingLocation,
-}) => (
-  <React.Fragment>
-    <Element>
-      <NavLink
-        to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
-        onClick={scrollUp}
-      >
-        {historikkinnslagDeler[0].skjermlenke.navn}
-      </NavLink>
-    </Element>
-    {historikkinnslagDeler.map((historikkinnslagDel) => {
+}) => {
+  if (historikkinnslagDeler.length === 0) {
+    return null;
+  }
+  return (
+    <React.Fragment>
+      <Element>
+        <NavLink
+          to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
+          onClick={scrollUp}
+        >
+          {historikkinnslagDeler[0].skjermlenke.navn}
+        </NavLink>
+      </Element>
+      {historikkinnslagDeler.map((historikkinnslagDel) => {
       const { opplysninger, endredeFelter } = historikkinnslagDel;
       const periodeFom = opplysninger.find(o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_FOM.kode).tilVerdi;
       const periodeTom = opplysninger.find(o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_TOM.kode).tilVerdi;
@@ -49,13 +53,16 @@ const HistorikkMalTypeTilbakekreving = ({
             const { navn, kode } = endretFeltNavn;
 
             const visBegrunnelse = historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT === kode;
+            const visProsentverdi = historikkEndretFeltType.ANDEL_TILBAKEKREVES === kode;
+            const formatertFraVerdi = visProsentverdi && fraVerdi ? `${fraVerdi}%` : fraVerdi;
+            const formatertTilVerdi = visProsentverdi && tilVerdi ? `${tilVerdi}%` : tilVerdi;
 
             return (
               <React.Fragment key={navn}>
                 <Normaltekst>
                   <FormattedHTMLMessage
                     id={felt.fraVerdi ? 'Historikk.Template.Tilbakekreving.ChangedFromTo' : 'Historikk.Template.Tilbakekreving.FieldSetTo'}
-                    values={{ navn, fraVerdi, tilVerdi }}
+                    values={{ navn, fraVerdi: formatertFraVerdi, tilVerdi: formatertTilVerdi }}
                   />
                 </Normaltekst>
                 <VerticalSpacer eightPx />
@@ -68,8 +75,9 @@ const HistorikkMalTypeTilbakekreving = ({
         </div>
       );
     })}
-  </React.Fragment>
+    </React.Fragment>
 );
+};
 
 HistorikkMalTypeTilbakekreving.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,

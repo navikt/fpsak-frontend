@@ -107,7 +107,7 @@ describe('<AktsomhetFormPanel>', () => {
       aktsomhetInfo: {
         harGrunnerTilReduksjon: true,
         ileggRenter: true,
-        andelTilbakekreves: false,
+        andelTilbakekreves: 10,
         tilbakekrevesBelop: 100,
         annetBegrunnelse: 'test',
         tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: true,
@@ -124,7 +124,7 @@ describe('<AktsomhetFormPanel>', () => {
         [sarligGrunn.HELT_ELLER_DELVIS_NAVS_FEIL]: true,
         harGrunnerTilReduksjon: true,
         skalDetTilleggesRenter: true,
-        andelSomTilbakekreves: false,
+        andelSomTilbakekreves: '10',
         belopSomSkalTilbakekreves: 100,
         annetBegrunnelse: 'test',
         tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: true,
