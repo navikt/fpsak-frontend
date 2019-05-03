@@ -267,6 +267,7 @@ export class AvregningPanelImpl extends Component {
                                 </Column>
                                 <Column sm="2">
                                   <Image
+                                    tabIndex="0"
                                     imageSrcFunction={findQuestionImage}
                                     altCode="Avregning.HjelpetekstForeldrepenger"
                                     tooltip={createHelptextTooltip(isForeldrepenger)}
