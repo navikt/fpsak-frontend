@@ -122,7 +122,8 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         />
       )
       }
-      {/* TODO: tilpasse når denne skal vises */}
+      {FodselOgTilretteleggingInfoPanel.supports(aksjonspunkter)
+      && (
       <FodselOgTilretteleggingInfoPanel
         openInfoPanels={openInfoPanels}
         toggleInfoPanelCallback={toggleInfoPanelCallback}
@@ -130,6 +131,8 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         submitCallback={submitCallback}
         readOnly={readOnly}
       />
+      )
+      }
       {AdopsjonInfoPanel.supports(vilkarCodes, aksjonspunkter)
       && (
         <AdopsjonInfoPanel
