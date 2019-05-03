@@ -20,7 +20,8 @@ const maxLength1500 = maxLength(1500);
 
 const parseCurrencyInput = (input) => {
   const inputNoSpace = input.toString().replace(/\s/g, '');
-  return parseInt(inputNoSpace, 10);
+  const parsedValue = parseInt(inputNoSpace, 10);
+  return Number.isNaN(parsedValue) ? '' : parsedValue;
 };
 
 const BelopetMottattIGodTroFormPanel = ({
