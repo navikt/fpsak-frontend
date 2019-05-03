@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import { DateLabel, Image, BorderBox } from '@fpsak-frontend/shared-components';
 import chevronUp from '@fpsak-frontend/assets/images/pil_opp.svg';
@@ -22,7 +23,7 @@ const getÅrsak = (årsak) => {
   if (årsak.manueltOpprettet) {
     return 'Manuell behandling';
   }
-  switch (årsak.behandlingArsakType) {
+  switch (årsak.behandlingArsakType.kode) {
     case 'RE-END-INNTEKTSMELD':
       return 'Inntektsmelding';
     case 'RE-HENDELSE-FØDSEL':
@@ -33,9 +34,20 @@ const getÅrsak = (årsak) => {
       return 'Død';
     case 'RE-FRIST':
     case 'RE-END-FRA-BRUKER':
+    case 'RE-MF':
+    case 'RE-MFIP':
+    case 'RE-AVAB':
+    case 'RE-LOV':
+    case 'RE-RGLF':
+    case 'RE-FEFAKTA':
+    case 'RE-PRSSL':
+    case 'RE-REGISTEROPPL':
+    case 'RE-TILST-YT-INNVIL':
+    case 'RE-ENDR-BER-GRUN':
+    case 'RE-TILST-YT-OPPH':
       return 'Søknad';
     default:
-      return null;
+      return '';
   }
 };
 
@@ -47,7 +59,8 @@ const getÅrsak = (årsak) => {
 const BehandlingPickerItemContent = ({
   withChevronDown,
   withChevronUp,
-  behandlingType,
+  behandlingTypeNavn,
+  behandlingTypeKode,
   behandlendeEnhetId,
   behandlendeEnhetNavn,
   behandlingId,
@@ -62,7 +75,7 @@ const BehandlingPickerItemContent = ({
       {withChevronUp && renderChevron(chevronUp, 'BehandlingListItem.Close')}
       <div>
         <Element className={styles.smallMarginBottom}>
-          {behandlingType}
+          {behandlingTypeNavn}
         </Element>
         <Normaltekst className={styles.paddingBottom}>
           {behandlendeEnhetId}
@@ -83,7 +96,7 @@ const BehandlingPickerItemContent = ({
         </Column>
         <Column xs="3">
           <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingListItem.Årsak" /></Undertekst>
-          {(førsteÅrsak.erAutomatiskRevurdering || førsteÅrsak.manueltOpprettet) && <Normaltekst>{getÅrsak(førsteÅrsak)}</Normaltekst>}
+          {behandlingTypeKode === behandlingType.REVURDERING && <Normaltekst>{getÅrsak(førsteÅrsak)}</Normaltekst>}
         </Column>
         <Column xs="3">
           <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingListItem.Behandlingsstatus" /></Undertekst>
@@ -97,7 +110,8 @@ const BehandlingPickerItemContent = ({
 BehandlingPickerItemContent.propTypes = {
   withChevronDown: PropTypes.bool,
   withChevronUp: PropTypes.bool,
-  behandlingType: PropTypes.string.isRequired,
+  behandlingTypeNavn: PropTypes.string.isRequired,
+  behandlingTypeKode: PropTypes.string.isRequired,
   behandlendeEnhetId: PropTypes.string,
   behandlendeEnhetNavn: PropTypes.string,
   behandlingId: PropTypes.number.isRequired,
