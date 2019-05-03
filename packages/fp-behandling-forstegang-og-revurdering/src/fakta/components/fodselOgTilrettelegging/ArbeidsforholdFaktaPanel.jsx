@@ -32,13 +32,13 @@ export class ArbeidsforholdFaktaPanel extends Component {
     const initialValues = {
       jordmorTilretteleggingFra: selectedArbeidsforhold.tilretteleggingBehovFom,
       begrunnelse: selectedArbeidsforhold.begrunnelse,
-      kanGjennomfores: selectedArbeidsforhold.kanGjennomfores.kanGjennomfores,
-      kanGjennomforesDato: selectedArbeidsforhold.kanGjennomfores.dato,
-      kanIkkeGjennomfores: selectedArbeidsforhold.kanIkkeGjennomfores.kanIkkeGjennomfores,
-      kanIkkeGjennomforesDato: selectedArbeidsforhold.kanIkkeGjennomfores.dato,
-      redusertArbeid: selectedArbeidsforhold.redusertArbeid.redusertArbeid,
-      redusertArbeidDato: selectedArbeidsforhold.redusertArbeid.dato,
-      redusertArbeidStillingsprosent: selectedArbeidsforhold.redusertArbeid.stillingsprosent,
+      kanGjennomfores: !!selectedArbeidsforhold.helTilretteleggingFom,
+      kanGjennomforesDato: selectedArbeidsforhold.helTilretteleggingFom,
+      kanIkkeGjennomfores: !!selectedArbeidsforhold.slutteArbeidFom,
+      kanIkkeGjennomforesDato: selectedArbeidsforhold.slutteArbeidFom,
+      redusertArbeid: !!selectedArbeidsforhold.delvisTilretteleggingFom,
+      redusertArbeidDato: selectedArbeidsforhold.delvisTilretteleggingFom,
+      redusertArbeidStillingsprosent: selectedArbeidsforhold.stillingsprosent,
     };
     this.initializeArbforholdForm(initialValues);
     this.setState({ selectedArbeidsforhold });
