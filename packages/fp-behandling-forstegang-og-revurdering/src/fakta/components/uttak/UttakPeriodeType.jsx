@@ -54,12 +54,12 @@ const getUttakTypeTitle = (utsettelseArsak, overforingArsak, arbeidstidprosent, 
   return <FormattedMessage id="UttakInfoPanel.Uttak" />;
 };
 
-const getUttakPeriode = (uttakPeriodeType, oppholdArsak) => {
+const getUttakPeriode = (uttakPeriodeType, oppholdArsak, getKodeverknavn) => {
   if (oppholdArsak && oppholdArsak.kode !== oppholdArsakType.UDEFINERT) {
     return getKodeverknavn(oppholdArsak);
   }
 
-  return uttakPeriodeType;
+  return getKodeverknavn(uttakPeriodeType);
 };
 
 export const UttakPeriodeType = ({ // NOSONAR
@@ -94,7 +94,7 @@ export const UttakPeriodeType = ({ // NOSONAR
         <div>
           {isFromSøknad && <Undertekst><FormattedMessage id="UttakInfoPanel.FraSøknad" /></Undertekst>}
           <Element>{getUttakTypeTitle(utsettelseArsak, overforingArsak, arbeidstidprosent, oppholdArsak, getKodeverknavn)}</Element>
-          <Normaltekst>{getUttakPeriode(getKodeverknavn(uttakPeriodeType), oppholdArsak)}</Normaltekst>
+          <Normaltekst>{getUttakPeriode(uttakPeriodeType, oppholdArsak, getKodeverknavn)}</Normaltekst>
         </div>
         {!readOnly
           && (
