@@ -303,13 +303,12 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-const validate = (values, sarligGrunnTyper) => {
+const validate = (values, sarligGrunnTyper, selectedItemData) => {
   let errors = {};
   const vilkarResultatInfo = values[values.valgtVilkarResultatType];
   if (vilkarResultatInfo && vilkarResultatInfo.handletUaktsomhetGrad && vilkarResultatInfo.handletUaktsomhetGrad !== Aktsomhet.FORSETT) {
     const aktsomhetInfo = vilkarResultatInfo[vilkarResultatInfo.handletUaktsomhetGrad];
     if (aktsomhetInfo && !sarligGrunnTyper.some(type => aktsomhetInfo[type.kode])) {
-       // eslint-disable-next-line no-underscore-dangle
        errors = {
          [values.valgtVilkarResultatType]: {
            [vilkarResultatInfo.handletUaktsomhetGrad]: {
@@ -318,6 +317,24 @@ const validate = (values, sarligGrunnTyper) => {
           },
         };
     }
+    if (aktsomhetInfo && aktsomhetInfo.belopSomSkalTilbakekreves && aktsomhetInfo.belopSomSkalTilbakekreves > selectedItemData.feilutbetaling) {
+      errors = {
+        ...errors,
+        [values.valgtVilkarResultatType]: {
+          [vilkarResultatInfo.handletUaktsomhetGrad]: {
+            belopSomSkalTilbakekreves: [{ id: 'TilbakekrevingPeriodeForm.BelopKanIkkeVereStorreEnnFeilutbetalingen' }],
+          },
+        },
+      };
+    }
+  }
+  if (vilkarResultatInfo && vilkarResultatInfo.tilbakekrevdBelop && vilkarResultatInfo.tilbakekrevdBelop > selectedItemData.feilutbetaling) {
+    errors = {
+      ...errors,
+      [values.valgtVilkarResultatType]: {
+        tilbakekrevdBelop: [{ id: 'TilbakekrevingPeriodeForm.BelopKanIkkeVereStorreEnnFeilutbetalingen' }],
+       },
+     };
   }
 
   return errors;
@@ -328,7 +345,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const vilkarResultatTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.VILKAR_RESULTAT)(initialState);
   const aktsomhetTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.AKTSOMHET)(initialState);
   const submitCallback = values => ownProps.updateActivity(transformValues(ownProps.selectedItemData, values, sarligGrunnTyper));
-  const validateForm = values => validate(values, sarligGrunnTyper);
+  const validateForm = values => validate(values, sarligGrunnTyper, ownProps.selectedItemData);
   const foreldelsePerioder = getForeldelsePerioder(initialState).perioder;
   return (state) => {
     const valgtVilkarResultatType = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, 'valgtVilkarResultatType');
