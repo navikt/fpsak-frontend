@@ -118,13 +118,10 @@ const validateWarning = (values) => {
 const transformValues = (values, selectedArbeidsforhold) => {
   const { ...transformvalue } = selectedArbeidsforhold;
   transformvalue.tilretteleggingBehovFom = values.jordmorTilretteleggingFra;
-  transformvalue.kanGjennomfores.kanGjennomfores = values.kanGjennomfores;
-  transformvalue.kanGjennomfores.dato = values.kanGjennomforesDato;
-  transformvalue.kanIkkeGjennomfores.kanIkkeGjennomfores = values.kanIkkeGjennomfores;
-  transformvalue.kanIkkeGjennomfores.dato = values.kanIkkeGjennomforesDato;
-  transformvalue.redusertArbeid.redusertArbeid = values.redusertArbeid;
-  transformvalue.redusertArbeid.dato = values.redusertArbeidDato;
-  transformvalue.redusertArbeid.stillingsprosent = values.redusertArbeidStillingsprosent;
+  transformvalue.helTilretteleggingFom = values.kanGjennomforesDato;
+  transformvalue.slutteArbeidFom = values.kanIkkeGjennomforesDato;
+  transformvalue.delvisTilretteleggingFom = values.redusertArbeidDato;
+  transformvalue.stillingsprosent = values.redusertArbeidStillingsprosent;
   transformvalue.begrunnelse = values.begrunnelse;
   return transformvalue;
 };
@@ -132,13 +129,13 @@ const transformValues = (values, selectedArbeidsforhold) => {
 export const buildInitialValues = values => ({
   jordmorTilretteleggingFra: values.tilretteleggingBehovFom,
   begrunnelse: values.begrunnelse,
-  kanGjennomfores: values.kanGjennomfores.kanGjennomfores,
-  kanGjennomforesDato: values.kanGjennomfores.dato,
-  kanIkkeGjennomfores: values.kanIkkeGjennomfores.kanIkkeGjennomfores,
-  kanIkkeGjennomforesDato: values.kanIkkeGjennomfores.dato,
-  redusertArbeid: values.redusertArbeid.redusertArbeid,
-  redusertArbeidDato: values.redusertArbeid.dato,
-  redusertArbeidStillingsprosent: values.redusertArbeid.stillingsprosent,
+  kanGjennomfores: !!values.helTilretteleggingFom,
+  kanGjennomforesDato: values.helTilretteleggingFom,
+  kanIkkeGjennomfores: !!values.slutteArbeidFom,
+  kanIkkeGjennomforesDato: values.slutteArbeidFom,
+  redusertArbeid: !!values.delvisTilretteleggingFom,
+  redusertArbeidDato: values.delvisTilretteleggingFom,
+  redusertArbeidStillingsprosent: values.stillingsprosent,
 });
 
 const mapStateToProps = (state, ownProps) => {

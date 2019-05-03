@@ -18,9 +18,9 @@ import {
   isBehandlingFormDirty,
 } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-// import {
-//   getTilrettelegging,
-// } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+ import {
+   getTilrettelegging,
+} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import ArbeidsforholdFaktaPanel from './ArbeidsforholdFaktaPanel';
 
 import styles from './arbeidsforholdInnhold.less';
@@ -111,62 +111,12 @@ const mapStateToProps = (state, ownProps) => {
 
   // TODO: hente info fra backend når klart.  venter avklaring på om det blir checkboxer( mulighet for flere datoer),
   //  eller radiobuttons (kun 1 dato)
-  // const tilrettelegging = getTilrettelegging(state);
-  const tilrettelegging = {
-    termindato: '2019-08-01',
-    fødselsdato: null,
-    begrunnelse: '',
-    arbeidsforholdListe: [
-      {
-        tilretteleggingBehovFom: '2019-04-18',
-        arbeidsgiverNavn: 'Xansen flyttebyrå AS',
-        arbeidsgiverIdent: 1234,
-        // tilretteleggingType: 'KODE', // felt som det er nå i backend, tilpasset for kun 1 valg
-        // tiltakFom: '2019-05-30', // felt som det er nå i backend, tilpasset for kun 1 valg
-        // stillingsprosent: 50,  // felt som det er nå i backend, tilpasset for kun 1 valg
-        kanGjennomfores: {
-          kanGjennomfores: true,
-          dato: '2019-05-30',
-        },
-        kanIkkeGjennomfores: {
-          kanIkkeGjennomfores: false,
-          dato: '',
-        },
-        redusertArbeid: {
-          redusertArbeid: true,
-          dato: '2019-04-18',
-          stillingsprosent: 50,
-        },
-        begrunnelse: '',
-      },
-      {
-        tilretteleggingBehovFom: '2019-06-20',
-        arbeidsgiverNavn: 'Rema 100',
-        arbeidsgiverIdent: 432,
-        // tilretteleggingType: 'KODE',
-        // tiltakFom: ''2019-05-30'',
-        // stillingsprosent: 50,  // felt som det er nå i backend, tilpasset for kun 1 valg
-        kanGjennomfores: {
-          kanGjennomfores: false,
-          dato: '',
-        },
-        kanIkkeGjennomfores: {
-          kanIkkeGjennomfores: true,
-          dato: '2019-06-20',
-        },
-        redusertArbeid: {
-          redusertArbeid: false,
-          dato: '',
-          stillingsprosent: null,
-        },
-        begrunnelse: '',
-      }],
-  };
+  const tilrettelegging = getTilrettelegging(state);
   return {
     initialValues: {
-      termindato: tilrettelegging.termindato,
-      begrunnelse: tilrettelegging.begrunnelse,
-      arbeidsforhold: tilrettelegging.arbeidsforholdListe,
+      termindato: tilrettelegging ? tilrettelegging.termindato : '',
+      begrunnelse: tilrettelegging ? tilrettelegging.begrunnelse : '',
+      arbeidsforhold: tilrettelegging ? tilrettelegging.arbeidsforholdListe : [],
     },
     visBegrunnelse: visBegrunnelse(state),
     onSubmit: values => ownProps.submitCallback(transformValues(values)),
