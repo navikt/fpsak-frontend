@@ -62,7 +62,7 @@ export const mapStateToValidationProps = createStructuredSelector({
   beregningsgrunnlag: getBeregningsgrunnlag,
 });
 
-export const getValidationFaktaForATFLOgSN = createSelector([mapStateToValidationProps, getAlleKodeverk], props => (values, alleKodeverk) => {
+export const getValidationFaktaForATFLOgSN = createSelector([mapStateToValidationProps, getAlleKodeverk], (props, alleKodeverk) => (values) => {
   if (!values || !props.faktaOmBeregning || !props.beregningsgrunnlag || !props.aktivertePaneler) {
     return {};
   }
