@@ -5,6 +5,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import FodselOgTilretteleggingFaktaForm from './FodselOgTilretteleggingFaktaForm';
 
@@ -14,7 +15,7 @@ import FodselOgTilretteleggingFaktaForm from './FodselOgTilretteleggingFaktaForm
  */
 // TODO: Må tilpasses med riktig aksjonspunkt og ap.tekst når backend er klar
 
-const fodselTilretteleggingAksjonspunkt = ['ap'];
+const fodselTilretteleggingAksjonspunkter = ['5091'];
 
 export const FodselOgTilretteleggingInfoPanelImpl = ({
   intl,
@@ -51,6 +52,9 @@ FodselOgTilretteleggingInfoPanelImpl.propTypes = {
 
 const ConnectedComponent = injectIntl(FodselOgTilretteleggingInfoPanelImpl);
 
-const FodselOgTilretteleggingInfoPanel = withDefaultToggling(faktaPanelCodes.FODSELTILRETTELEGGING, fodselTilretteleggingAksjonspunkt)(ConnectedComponent);
+const FodselOgTilretteleggingInfoPanel = withDefaultToggling(faktaPanelCodes.FODSELTILRETTELEGGING, fodselTilretteleggingAksjonspunkter)(ConnectedComponent);
+
+FodselOgTilretteleggingInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => ap.definisjon.kode === fodselOgTilretteleggingAksjonspunkter[0]);
+
 
 export default (FodselOgTilretteleggingInfoPanel);
