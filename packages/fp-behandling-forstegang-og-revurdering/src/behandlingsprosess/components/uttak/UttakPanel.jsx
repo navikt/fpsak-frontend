@@ -268,8 +268,7 @@ const checkValidStonadKonto = (uttakPerioder, stonadskontoer) => {
 };
 
 const validateUttakPanelForm = (values) => {
-  const { uttaksresultatActivity, stonadskonto } = values;
-
+  const { uttaksresultatActivity, stonadskonto = {} } = values;
   if (uttaksresultatActivity) {
     const stonadkontoError = checkValidStonadKonto(uttaksresultatActivity, stonadskonto.stonadskontoer);
     if (stonadkontoError) {
