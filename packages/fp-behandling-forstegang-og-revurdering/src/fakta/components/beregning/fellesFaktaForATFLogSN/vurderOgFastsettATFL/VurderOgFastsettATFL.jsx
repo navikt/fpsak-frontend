@@ -1,9 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { FieldArray } from 'redux-form';
+
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import { FieldArray } from 'redux-form';
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import LonnsendringForm, { lonnsendringField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
 import NyoppstartetFLForm, { erNyoppstartetFLField }
@@ -246,14 +251,14 @@ VurderOgFastsettATFL.propTypes = {
   harKunstigArbeid: PropTypes.bool.isRequired,
 };
 
-export const skalViseInntektstabell = (tilfeller, values, faktaOmBeregning, beregningsgrunnlag) => {
+export const skalViseInntektstabell = (tilfeller, values, faktaOmBeregning, beregningsgrunnlag, getKodeverknavn) => {
   if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)) {
     return true;
   }
   if (!harVurdert(tilfeller, values, faktaOmBeregning)) {
     return false;
   }
-  return skalFastsetteInntekt(values, faktaOmBeregning, beregningsgrunnlag);
+  return skalFastsetteInntekt(values, faktaOmBeregning, beregningsgrunnlag, getKodeverknavn);
 };
 
 
@@ -262,13 +267,14 @@ const mapStateToProps = (state, initialProps) => {
   const skalFastsetteFL = skalFastsettInntektForStatus(inntektFieldArrayName, aktivitetStatus.FRILANSER)(state);
   const faktaOmBeregning = getFaktaOmBeregning(state);
   const beregningsgrunnlag = getBeregningsgrunnlag(state);
+  const getKodeverknavn = getKodeverknavnFn(getAlleKodeverk(state), kodeverkTyper);
   let manglerInntektsmelding = false;
   if (faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe && faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.length > 0) {
     manglerInntektsmelding = faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.find(forhold => !forhold.inntektPrMnd) !== undefined;
   }
   const values = getFormValuesForBeregning(state);
   return {
-    skalViseTabell: skalViseInntektstabell(initialProps.tilfeller, values, faktaOmBeregning, getBeregningsgrunnlag(state)),
+    skalViseTabell: skalViseInntektstabell(initialProps.tilfeller, values, faktaOmBeregning, getBeregningsgrunnlag(state), getKodeverknavn),
     skalHaBesteberegning: values[besteberegningField] === true,
     harKunstigArbeid: harKunstigArbeidsforhold(initialProps.tilfeller, beregningsgrunnlag),
     manglerInntektsmelding,
