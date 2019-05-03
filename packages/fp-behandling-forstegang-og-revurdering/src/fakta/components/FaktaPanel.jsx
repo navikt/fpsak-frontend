@@ -125,6 +125,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
       {FodselOgTilretteleggingInfoPanel.supports(aksjonspunkter)
       && (
       <FodselOgTilretteleggingInfoPanel
+        aksjonspunkter={aksjonspunkter}
         openInfoPanels={openInfoPanels}
         toggleInfoPanelCallback={toggleInfoPanelCallback}
         shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
