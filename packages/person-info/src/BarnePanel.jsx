@@ -65,7 +65,7 @@ const BarnePanel = ({
             {barn.dodsdato && (
             <Normaltekst>
               <FormattedMessage id="BarnPanel.DodsDato" />
-              <Element><DateLabel dateString={b.dodsdato} /></Element>
+              <Element><DateLabel dateString={barn.dodsdato} /></Element>
               <VerticalSpacer eightPx />
             </Normaltekst>
 )
