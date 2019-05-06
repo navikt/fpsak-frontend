@@ -17,10 +17,10 @@ import {
 import { behandlingFormValueSelector, behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import FodselSammenligningPanel from 'behandlingForstegangOgRevurdering/src/components/fodselSammenligning/FodselSammenligningPanel';
 import {
-  required, hasValidDate, minValue, maxValue, hasValidInteger, dateBeforeOrEqualToToday,
+  required,
 } from '@fpsak-frontend/utils';
 import {
-  RadioGroupField, RadioOption, InputField, DatepickerField,
+  RadioGroupField, RadioOption,
 } from '@fpsak-frontend/form';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
@@ -29,16 +29,15 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import avklartBarnFieldArray from './AvklartBarnFieldArray';
 import styles from './SjekkFodselDokForm.less';
 
-// TODO: Remove after PFP-574
-const minValue1 = minValue(1);
-const maxValue9 = maxValue(9);
-
 export const AVKLARTE_BARN_FORM_NAME_PREFIX = 'avklartBarn';
 
 export const avklarteBarnFieldArrayName = 'avklartBarn';
 
 const createNewChildren = (antallBarnFraSoknad) => {
   let antallBarn = antallBarnFraSoknad;
+  if (antallBarn === 0 || !antallBarn) {
+    antallBarn = 1;
+  }
   const childrenArray = [];
   while (antallBarn > 0) {
     childrenArray.push({ fodselsdato: '', isBarnDodt: false, dodsDato: '' });
@@ -62,24 +61,20 @@ export const SjekkFodselDokForm = ({
   initialValues,
   submittable,
   avklartBarn,
-}) => {
-  if (avklartBarn === []) {
-    createNewChildren(1);
-  }
-  return (
-    <ElementWrapper>
-      <FodselSammenligningPanel />
-      <FaktaGruppe
-        aksjonspunktCode={aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL}
-        titleCode="SjekkFodselDokForm.DokumentasjonAvFodsel"
-      >
-        <div className={styles.horizontalForm}>
-          <RadioGroupField name="dokumentasjonForeligger" validate={[required]} readOnly={readOnly} isEdited={dokumentasjonForeliggerIsEdited}>
-            <RadioOption label={<FormattedMessage id="SjekkFodselDokForm.DokumentasjonForeligger" />} value />
-            <RadioOption label={<FormattedMessage id="SjekkFodselDokForm.DokumentasjonForeliggerIkke" />} value={false} />
-          </RadioGroupField>
-        </div>
-        {fodselInfo && !!fodselInfo.length && dokumentasjonForeligger
+}) => (
+  <ElementWrapper>
+    <FodselSammenligningPanel />
+    <FaktaGruppe
+      aksjonspunktCode={aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL}
+      titleCode="SjekkFodselDokForm.DokumentasjonAvFodsel"
+    >
+      <div className={styles.horizontalForm}>
+        <RadioGroupField name="dokumentasjonForeligger" validate={[required]} readOnly={readOnly} isEdited={dokumentasjonForeliggerIsEdited}>
+          <RadioOption label={<FormattedMessage id="SjekkFodselDokForm.DokumentasjonForeligger" />} value />
+          <RadioOption label={<FormattedMessage id="SjekkFodselDokForm.DokumentasjonForeliggerIkke" />} value={false} />
+        </RadioGroupField>
+      </div>
+      {fodselInfo && !!fodselInfo.length && dokumentasjonForeligger
       && (
         <div className={styles.clearfix}>
           <Column xs="6">
@@ -101,61 +96,28 @@ export const SjekkFodselDokForm = ({
         </div>
       )
       }
-        {(!fodselInfo || !fodselInfo.length) && dokumentasjonForeligger
+      {(!fodselInfo || !fodselInfo.length) && dokumentasjonForeligger
       && (
         <div className={styles.clearfix}>
           <Column xs="12">
             <ArrowBox>
               {<FormattedMessage id="SjekkFodselDokForm.FyllInnDokumenterteOpplysninger" />}
-              {!avklartBarn
-              && (
-              <div className={styles.fodselRow}>
-                <Column xs="5" className={styles.datePickerField}>
-                  <DatepickerField
-                    name="fodselsdato"
-                    label={<FormattedMessage id="SjekkFodselDokForm.Fodselsdato" />}
-                    validate={[required, hasValidDate, dateBeforeOrEqualToToday]}
-                    readOnly={readOnly}
-                  />
-                </Column>
-                <Column xs="1" />
-                <Column xs="6">
-                  <InputField
-                    name="antallBarnFodt"
-                    label={<FormattedMessage id="SjekkFodselDokForm.AntallBarnFodt" />}
-                    parse={(value) => {
-                      const parsedValue = parseInt(value, 10);
-                      return Number.isNaN(parsedValue) ? value : parsedValue;
-                    }}
-                    validate={[required, hasValidInteger, minValue1, maxValue9]}
-                    readOnly={readOnly}
-                    bredde="XS"
-                    className={styles.revurderingInput}
-                  />
-                </Column>
-              </div>
-              )
-              }
-              {avklartBarn && (
-                <FieldArray
-                  name={avklarteBarnFieldArrayName}
-                  component={avklartBarnFieldArray}
-                  readOnly={readOnly}
-                  avklartBarn={avklartBarn}
-                />
-              )
-              }
+              <FieldArray
+                name={avklarteBarnFieldArrayName}
+                component={avklartBarnFieldArray}
+                readOnly={readOnly}
+                avklartBarn={avklartBarn}
+              />
             </ArrowBox>
           </Column>
         </div>
       )
       }
-      </FaktaGruppe>
-      <VerticalSpacer sixteenPx />
-      <FaktaBegrunnelseTextField isDirty={dirty} isSubmittable={submittable} isReadOnly={readOnly} hasBegrunnelse={!!initialValues.begrunnelse} />
-    </ElementWrapper>
+    </FaktaGruppe>
+    <VerticalSpacer sixteenPx />
+    <FaktaBegrunnelseTextField isDirty={dirty} isSubmittable={submittable} isReadOnly={readOnly} hasBegrunnelse={!!initialValues.begrunnelse} />
+  </ElementWrapper>
   );
-};
 
 SjekkFodselDokForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
@@ -211,7 +173,8 @@ export const buildInitialValues = createSelector([getFamiliehendelseGjeldende, g
       ? familiehendelse.dokumentasjonForeligger : undefined,
     brukAntallBarnITps: familiehendelse.brukAntallBarnFraTps !== null
       ? familiehendelse.brukAntallBarnFraTps : undefined,
-    avklartBarn: familiehendelse.avklartBarn ? addIsBarnDodt(familiehendelse.avklartBarn) : createNewChildren(soknadAntallBarn),
+    avklartBarn: (familiehendelse.avklartBarn && familiehendelse.avklartBarn.length > 0)
+    ? addIsBarnDodt(familiehendelse.avklartBarn) : createNewChildren(soknadAntallBarn || 0),
     ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL)),
   }));
 
