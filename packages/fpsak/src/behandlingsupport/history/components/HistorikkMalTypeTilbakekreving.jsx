@@ -54,8 +54,10 @@ const HistorikkMalTypeTilbakekreving = ({
 
             const visBegrunnelse = historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT === kode;
             const visProsentverdi = historikkEndretFeltType.ANDEL_TILBAKEKREVES === kode;
+            const visBelopTilbakekreves = historikkEndretFeltType.BELOEP_TILBAKEKREVES === kode;
             const formatertFraVerdi = visProsentverdi && fraVerdi ? `${fraVerdi}%` : fraVerdi;
-            const formatertTilVerdi = visProsentverdi && tilVerdi ? `${tilVerdi}%` : tilVerdi;
+            let formatertTilVerdi = visProsentverdi && tilVerdi ? `${tilVerdi}%` : tilVerdi;
+            formatertTilVerdi = visBelopTilbakekreves && !tilVerdi ? 0 : formatertTilVerdi;
 
             return (
               <React.Fragment key={navn}>

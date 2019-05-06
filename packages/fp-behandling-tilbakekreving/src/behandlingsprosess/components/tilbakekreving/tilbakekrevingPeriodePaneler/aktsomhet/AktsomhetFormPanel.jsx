@@ -103,16 +103,21 @@ AktsomhetFormPanel.defaultProps = {
   handletUaktsomhetGrad: undefined,
 };
 
+const parseAndelSomTilbakekreves = (andelSomTilbakekreves) => {
+  const parsedValue = parseInt(andelSomTilbakekreves, 10);
+  return Number.isNaN(parsedValue) ? {} : { andelTilbakekreves: parsedValue };
+};
+
 const formatAktsomhetData = (aktsomhet, sarligGrunnTyper) => {
   const sarligeGrunner = sarligGrunnTyper.reduce((acc, type) => (aktsomhet[type.kode] ? acc.concat(type.kode) : acc), []);
   return {
     harGrunnerTilReduksjon: aktsomhet.harGrunnerTilReduksjon,
     ileggRenter: aktsomhet.skalDetTilleggesRenter,
     sarligGrunner: sarligeGrunner.length > 0 ? sarligeGrunner : undefined,
-    andelTilbakekreves: aktsomhet.andelSomTilbakekreves,
     tilbakekrevesBelop: removeSpacesFromNumber(aktsomhet.belopSomSkalTilbakekreves),
     annetBegrunnelse: aktsomhet.annetBegrunnelse,
     tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhet.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
+    ...parseAndelSomTilbakekreves(aktsomhet.andelSomTilbakekreves),
   };
 };
 
