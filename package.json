@@ -27,7 +27,9 @@
     "docker:stop": "docker stop fpfront; docker rm fpfront",
     "redis:start": "docker stop redis; docker rm redis; docker run --name redis -p 6379:6379 -d redis",
     "up": "docker-compose up -d --remove-orphans --build && wait-on http://localhost:8080/fpsak/internal/health/isReady",
-    "down": "docker-compose down"
+    "down": "docker-compose down",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "workspaces": [
     "packages/*"
@@ -43,7 +45,8 @@
     "history": "^4.6.3",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "stylelint-order": "^2.1.0"
+    "stylelint-order": "^2.1.0",
+    "snyk": "^1.161.1"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
@@ -139,5 +142,6 @@
       "**/*.spec.tsx",
       "**/*.spec.ts"
     ]
-  }
+  },
+  "snyk": true
 }
