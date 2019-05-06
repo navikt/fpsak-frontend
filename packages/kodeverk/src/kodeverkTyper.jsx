@@ -29,6 +29,7 @@ const kodeverkTyper = {
   UTTAK_PERIODE_TYPE: 'UttakPeriodeType',
   REVURDERING_VARSLING_ÅRSAK: 'RevurderingVarslingÅrsak',
   UTTAK_PERIODE_VURDERING_TYPE: 'UttakPeriodeVurderingType',
+  IKKE_OPPFYLT_AARSAK: 'IkkeOppfyltÅrsak',
   UTTAK_AVSLAG_ARSAK: 'IkkeOppfyltÅrsak',
   INNTEKTSKATEGORI: 'Inntektskategori',
   BEREGNINGSGRUNNLAG_ANDELTYPER: 'BeregningsgrunnlagAndeltype',
