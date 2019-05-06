@@ -391,6 +391,7 @@ export class UttakPerioder extends PureComponent {
       hasRevurderingOvertyringAp,
       isManuellOverstyring,
       uttakPeriodeVurderingTyper,
+      getKodeverknavn,
     } = this.props;
     const {
       periodeSlett, isNyPeriodeFormOpen, inntektsmeldingInfo, showModalSlettPeriode,
@@ -488,6 +489,7 @@ export class UttakPerioder extends PureComponent {
             inntektsmeldinger={inntektsmeldinger}
             nyPeriodeDisabledDaysFom={nyPeriodeDisabledDaysFom}
             uttakPeriodeVurderingTyper={uttakPeriodeVurderingTyper}
+            getKodeverknavn={getKodeverknavn}
           />
         </div>
         )}
