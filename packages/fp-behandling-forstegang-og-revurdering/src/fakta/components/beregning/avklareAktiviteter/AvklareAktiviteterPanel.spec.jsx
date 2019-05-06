@@ -4,18 +4,20 @@ import { shallow } from 'enzyme';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { CheckboxField } from '@fpsak-frontend/form';
+import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 
 import { getBehandlingFormValues } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import {
   AvklareAktiviteterPanelImpl, buildInitialValuesAvklarAktiviteter,
-  transformValuesAvklarAktiviteter, erAvklartAktivitetEndret, BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME,
+  transformValuesAvklarAktiviteter, erAvklartAktivitetEndret, BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME, MANUELL_OVERSTYRING_FIELD,
 } from './AvklareAktiviteterPanel';
 import VurderAktiviteterPanel from './VurderAktiviteterPanel';
 import { formNameAvklarAktiviteter } from '../BeregningFormUtils';
 
 const {
   AVKLAR_AKTIVITETER,
-  VURDER_FAKTA_FOR_ATFL_SN,
+  OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
 } = aksjonspunktCodes;
 
 
@@ -85,6 +87,7 @@ describe('<AvklareAktiviteterPanel>', () => {
           { tom: '2019-02-02', aktiviteter },
         ],
     };
+    const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER } }];
     const wrapper = shallow(<AvklareAktiviteterPanelImpl
       {...reduxFormPropsMock}
       readOnly={false}
@@ -97,6 +100,9 @@ describe('<AvklareAktiviteterPanel>', () => {
       helpText={[]}
       harAndreAksjonspunkterIPanel={false}
       erEndret={false}
+      kanOverstyre={false}
+      aksjonspunkter={aksjonspunkter}
+      erOverstyrt={false}
     />);
     const vurderAktivitetPanel = wrapper.find(VurderAktiviteterPanel);
     expect(vurderAktivitetPanel).has.length(1);
@@ -106,6 +112,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: null,
     };
+    const aksjonspunkter = [];
     const wrapper = shallow(<AvklareAktiviteterPanelImpl
       {...reduxFormPropsMock}
       readOnly={false}
@@ -118,10 +125,72 @@ describe('<AvklareAktiviteterPanel>', () => {
       helpText={[]}
       harAndreAksjonspunkterIPanel={false}
       erEndret={false}
+      kanOverstyre={false}
+      aksjonspunkter={aksjonspunkter}
+      erOverstyrt={false}
     />);
     const radio = wrapper.find(VurderAktiviteterPanel);
     expect(radio).has.length(0);
   });
+
+
+  it('skal vise overstyringsknapp', () => {
+    const avklarAktiviteter = {
+      aktiviteterTomDatoMapping: [
+          { tom: '2019-02-02', aktiviteter },
+        ],
+    };
+    const aksjonspunkter = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER } }];
+
+    const wrapper = shallow(<AvklareAktiviteterPanelImpl
+      {...reduxFormPropsMock}
+      readOnly={false}
+      isAksjonspunktClosed={false}
+      avklarAktiviteter={avklarAktiviteter}
+      hasBegrunnelse={false}
+      submittable
+      isDirty
+      submitEnabled
+      helpText={[]}
+      harAndreAksjonspunkterIPanel={false}
+      erEndret={false}
+      kanOverstyre
+      aksjonspunkter={aksjonspunkter}
+      erOverstyrt={false}
+    />);
+    const checkbox = wrapper.find(CheckboxField);
+    expect(checkbox).has.length(1);
+  });
+
+
+  it('skal ikkje vise AksjonspunktHelpText ved overstyring', () => {
+    const avklarAktiviteter = {
+      aktiviteterTomDatoMapping: [
+          { tom: '2019-02-02', aktiviteter },
+        ],
+    };
+    const aksjonspunkter = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER } }];
+
+    const wrapper = shallow(<AvklareAktiviteterPanelImpl
+      {...reduxFormPropsMock}
+      readOnly={false}
+      isAksjonspunktClosed={false}
+      avklarAktiviteter={avklarAktiviteter}
+      hasBegrunnelse={false}
+      submittable
+      isDirty
+      submitEnabled
+      helpText={[]}
+      harAndreAksjonspunkterIPanel={false}
+      erEndret={false}
+      kanOverstyre
+      aksjonspunkter={aksjonspunkter}
+      erOverstyrt
+    />);
+    const helptext = wrapper.find(AksjonspunktHelpText);
+    expect(helptext).has.length(0);
+  });
+
 
   it('skal teste at initial values blir bygget', () => {
     const avklarAktiviteter = {
@@ -132,9 +201,38 @@ describe('<AvklareAktiviteterPanel>', () => {
 
     const initialValues = buildInitialValuesAvklarAktiviteter(lagStateMedAvklarAktitiveter(avklarAktiviteter));
     expect(initialValues !== null).to.equal(true);
+    expect(initialValues[MANUELL_OVERSTYRING_FIELD]).to.equal(false);
   });
 
-  it('skal transform values for avklar aktiviteter', () => {
+  it('skal teste at initial values blir bygget uten aksjonspunkt', () => {
+    const avklarAktiviteter = {
+      aktiviteterTomDatoMapping: [
+          { tom: '2019-02-02', aktiviteter },
+        ],
+    };
+    const values = {};
+    const aps = [];
+    const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, values, aps);
+    const initialValues = buildInitialValuesAvklarAktiviteter(state);
+    expect(initialValues !== null).to.equal(true);
+    expect(initialValues[MANUELL_OVERSTYRING_FIELD]).to.equal(false);
+  });
+
+  it('skal teste at initial values blir bygget med overstyrt aksjonspunkt', () => {
+    const avklarAktiviteter = {
+      aktiviteterTomDatoMapping: [
+          { tom: '2019-02-02', aktiviteter },
+        ],
+    };
+    const values = {};
+    const aps = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER } }];
+    const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, values, aps);
+    const initialValues = buildInitialValuesAvklarAktiviteter(state);
+    expect(initialValues !== null).to.equal(true);
+    expect(initialValues[MANUELL_OVERSTYRING_FIELD]).to.equal(true);
+  });
+
+  it('skal transform values for avklar aktiviteter aksjonspunkt', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
           { tom: '2019-02-02', aktiviteter },
@@ -153,8 +251,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     expect(transformed[0].beregningsaktivitetLagreDtoList[0].oppdragsgiverOrg).to.equal(aktivitet1.arbeidsgiverId);
   });
 
-
-  it('skal ikkje transform values om to aksjonspunkter og ingen endring', () => {
+  it('skal transform values om for valgt overstyring', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
           { tom: '2019-02-02', aktiviteter },
@@ -164,61 +261,17 @@ describe('<AvklareAktiviteterPanel>', () => {
     values[id1] = { skalBrukes: null };
     values[id2] = { skalBrukes: true };
     values[id3] = { skalBrukes: false };
-    values[idAAP] = { skalBrukes: null };
-    const aps = [
-      { definisjon: { kode: AVKLAR_AKTIVITETER } },
-      { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN } }];
-    const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, values, aps);
-    const transformed = transformValuesAvklarAktiviteter(state)(getBehandlingFormValues(formNameAvklarAktiviteter)(state));
-    expect(transformed).to.equal(null);
-  });
-
-  it('skal transform values om kun avklar aksjonspunkt og ingen endring', () => {
-    const avklarAktiviteter = {
-      aktiviteterTomDatoMapping: [
-          { tom: '2019-02-02', aktiviteter },
-        ],
-    };
-    const values = {};
-    values[id1] = { skalBrukes: null };
-    values[id2] = { skalBrukes: true };
-    values[id3] = { skalBrukes: false };
-    values[idAAP] = { skalBrukes: null };
+    values[idAAP] = { skalBrukes: true };
     values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'begrunnelse';
-    const aps = [
-      { definisjon: { kode: AVKLAR_AKTIVITETER } }];
+    values[MANUELL_OVERSTYRING_FIELD] = true;
+    const aps = [];
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, values, aps);
     const transformed = transformValuesAvklarAktiviteter(state)(getBehandlingFormValues(formNameAvklarAktiviteter)(state));
     expect(transformed[0].beregningsaktivitetLagreDtoList.length).to.equal(1);
     expect(transformed[0].beregningsaktivitetLagreDtoList[0].arbeidsgiverIdentifikator).to.equal(aktivitet3.aktørId.aktørId);
     expect(transformed[0].begrunnelse).to.equal('begrunnelse');
-    expect(transformed[0].kode).to.equal(AVKLAR_AKTIVITETER);
+    expect(transformed[0].kode).to.equal(OVERSTYRING_AV_BEREGNINGSAKTIVITETER);
 });
-
-it('skal transform values om to aksjonspunkter og med endring', () => {
-  const avklarAktiviteter = {
-    aktiviteterTomDatoMapping: [
-        { tom: '2019-02-02', aktiviteter },
-      ],
-  };
-  const values = {};
-  values[id1] = { skalBrukes: true };
-  values[id2] = { skalBrukes: true };
-  values[id3] = { skalBrukes: false };
-  values[idAAP] = { skalBrukes: null };
-  const aps = [
-    { definisjon: { kode: AVKLAR_AKTIVITETER } }];
-  const initial = {};
-  initial[id1] = { skalBrukes: null };
-  initial[id2] = { skalBrukes: true };
-  initial[id3] = { skalBrukes: false };
-  initial[idAAP] = { skalBrukes: null };
-  const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, initial, aps);
-  const transformed = transformValuesAvklarAktiviteter(state)(getBehandlingFormValues(formNameAvklarAktiviteter)(state));
-  expect(transformed[0].beregningsaktivitetLagreDtoList.length).to.equal(1);
-  expect(transformed[0].beregningsaktivitetLagreDtoList[0].arbeidsgiverIdentifikator).to.equal(aktivitet3.aktørId.aktørId);
-});
-
 
   it('skal returnere true for endret begrunnelse', () => {
     const avklarAktiviteter = {

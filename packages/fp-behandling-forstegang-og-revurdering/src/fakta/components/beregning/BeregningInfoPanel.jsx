@@ -13,24 +13,21 @@ import AvklareAktiviteterPanel from './avklareAktiviteter/AvklareAktiviteterPane
 const {
   VURDER_FAKTA_FOR_ATFL_SN,
   AVKLAR_AKTIVITETER,
+  OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
 } = aksjonspunktCodes;
 
-const faktaOmBeregningAksjonspunkter = [VURDER_FAKTA_FOR_ATFL_SN, AVKLAR_AKTIVITETER];
+const faktaOmBeregningAksjonspunkter = [VURDER_FAKTA_FOR_ATFL_SN, AVKLAR_AKTIVITETER, OVERSTYRING_AV_BEREGNINGSAKTIVITETER];
 
 const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
 const createRelevantForms = (readOnly, aksjonspunkter, submitCallback, submittable) => (
   <div>
-    {hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)
-      && (
-        <AvklareAktiviteterPanel
-          readOnly={readOnly}
-          harAndreAksjonspunkterIPanel={hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)}
-          submitCallback={submitCallback}
-          submittable={submittable}
-        />
-      )
-    }
+    <AvklareAktiviteterPanel
+      readOnly={readOnly}
+      harAndreAksjonspunkterIPanel={hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)}
+      submitCallback={submitCallback}
+      submittable={submittable}
+    />
     {hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)
     && (
       <VurderFaktaBeregningPanel
