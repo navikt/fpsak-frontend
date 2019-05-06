@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { createSelector } from 'reselect';
 import { EtikettInfo } from 'nav-frontend-etiketter';
 import { Row, Column } from 'nav-frontend-grid';
+import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components';
 import Panel from 'nav-frontend-paneler';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
@@ -17,6 +17,7 @@ import FodselSammenligningRevurderingPanel from './FodselSammenligningRevurderin
 
 import styles from './fodselSammenligningPanel.less';
 
+const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 /**
  * FodselSammenlingningPanel
  *
@@ -26,7 +27,6 @@ export const FodselSammenligningPanel = ({
   intl,
   behandlingsTypeKode,
   antallBarn,
-  fodselDato,
   nrOfDodfodteBarn,
 }) => (
   <div className={styles.panelWrapper}>
@@ -38,7 +38,7 @@ export const FodselSammenligningPanel = ({
         && <FodselSammenligningRevurderingPanel />
       }
     </Panel>
-    <Panel className={styles.panel}>
+    <Panel className={styles.panel} name="tpsFodseldato">
       <Row>
         <Column xs="9">
           <Element><FormattedMessage id="FodselsammenligningPanel.OpplysningerTPS" /></Element>
@@ -54,16 +54,56 @@ export const FodselSammenligningPanel = ({
         }
       </Row>
       <Row>
-        <Column xs="6"><Normaltekst><FormattedMessage id="FodselsammenligningPanel.Fodselsdato" /></Normaltekst></Column>
-        <Column xs="6"><Normaltekst><FormattedMessage id="FodselsammenligningPanel.AntallBarn" /></Normaltekst></Column>
+        <Column xs="4"><Normaltekst><FormattedMessage id="FodselsammenligningPanel.Fodselsdato" /></Normaltekst></Column>
+        <Column xs="4"><Normaltekst><FormattedMessage id="FodselsammenligningPanel.Dodsdato" /></Normaltekst></Column>
       </Row>
       <Row>
-        <Column xs="6" name="tpsFodseldato">
-          <Normaltekst>{fodselDato}</Normaltekst>
+        {antallBarn.length > 0
+        && (
+        <Table>
+          {antallBarn.map((barn) => {
+          const key = barn.fodselsdato + barn.dodsdato;
+          return (
+            <TableRow key={key} id={key}>
+              <TableColumn>
+                <Normaltekst>
+                  {formatDate(barn.fodselsdato)}
+                </Normaltekst>
+              </TableColumn>
+              <TableColumn>
+                <Normaltekst>
+                  {formatDate(barn.dodsdato)}
+                </Normaltekst>
+              </TableColumn>
+              <TableColumn>
+                {barn.dodsdato
+                && (
+                <EtikettInfo className={styles.dodMerke} typo="undertekst" title={intl.formatMessage({ id: 'FodselsammenligningPanel.Dod' })}>
+                  <FormattedMessage id="FodselsammenligningPanel.Dod" />
+                </EtikettInfo>
+)
+              }
+              </TableColumn>
+            </TableRow>
+          );
+        })
+        }
+        </Table>
+)
+      }
+        {' '}
+        {!antallBarn.length > 0
+      && (
+      <Row>
+        <Column xs="12" className={styles.noChildrenInTps}>
+          <Normaltekst>
+          -
+          </Normaltekst>
         </Column>
-        <Column xs="6" name="tpsAntallBarn">
-          <Normaltekst>{antallBarn}</Normaltekst>
-        </Column>
+      </Row>
+)
+
+      }
       </Row>
     </Panel>
   </div>
@@ -72,21 +112,16 @@ export const FodselSammenligningPanel = ({
 FodselSammenligningPanel.propTypes = {
   intl: intlShape.isRequired,
   behandlingsTypeKode: PropTypes.string.isRequired,
-  antallBarn: PropTypes.number.isRequired,
-  fodselDato: PropTypes.string.isRequired,
+  antallBarn: PropTypes.arrayOf(PropTypes.shape()),
   nrOfDodfodteBarn: PropTypes.number.isRequired,
 };
 
-const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
-
-const getFodselDate = createSelector(
-  [getBarnFraTpsRelatertTilSoknad], barnFraTpsRelatertTilSoknad => (barnFraTpsRelatertTilSoknad.length > 0
-    ? formatDate(barnFraTpsRelatertTilSoknad[0].fodselsdato) : '-'),
-);
+FodselSammenligningPanel.defaultProps = {
+  antallBarn: [],
+};
 
 const mapStateToProps = state => ({
-  antallBarn: getBarnFraTpsRelatertTilSoknad(state).length,
-  fodselDato: getFodselDate(state),
+  antallBarn: getBarnFraTpsRelatertTilSoknad(state),
   nrOfDodfodteBarn: getAntallDodfodteBarn(state),
   behandlingsTypeKode: getBehandlingType(state).kode,
 });

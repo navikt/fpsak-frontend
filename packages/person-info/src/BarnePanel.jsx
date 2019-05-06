@@ -5,9 +5,9 @@ import Panel from 'nav-frontend-paneler';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
+import { VerticalSpacer, DateLabel, Image } from '@fpsak-frontend/shared-components';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import { Image } from '@fpsak-frontend/shared-components';
 import urlMann from '@fpsak-frontend/assets/images/barn_gutt.svg';
 import urlKvinne from '@fpsak-frontend/assets/images/barn_jente.svg';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
@@ -62,6 +62,14 @@ const BarnePanel = ({
                 <FormattedMessage id="Barnepanel.Adresse1" />
               </Undertekst>
             </div>
+            {barn.dodsdato && (
+            <Normaltekst>
+              <FormattedMessage id="BarnPanel.DodsDato" />
+              <Element><DateLabel dateString={barn.dodsdato} /></Element>
+              <VerticalSpacer eightPx />
+            </Normaltekst>
+)
+            }
             {barn.adresser
             && (
             <Normaltekst>

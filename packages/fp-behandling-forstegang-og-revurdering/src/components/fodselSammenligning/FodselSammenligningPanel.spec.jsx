@@ -13,8 +13,7 @@ describe('<FodselSammenligningPanel>', () => {
     const wrapper = shallowWithIntl(<FodselSammenligningPanel
       intl={intlMock}
       behandlingsTypeKode={behandlingType.FORSTEGANGSSOKNAD}
-      antallBarn={1}
-      fodselDato="2017-05-15"
+      antallBarn={[{ fodselsdato: '2017-05-15' }]}
       nrOfDodfodteBarn={0}
     />);
 
@@ -26,8 +25,7 @@ describe('<FodselSammenligningPanel>', () => {
     const wrapper = shallowWithIntl(<FodselSammenligningPanel
       intl={intlMock}
       behandlingsTypeKode={behandlingType.REVURDERING}
-      antallBarn={1}
-      fodselDato="2017-05-15"
+      antallBarn={[{ fodselsdato: '2017-05-15' }]}
       nrOfDodfodteBarn={0}
     />);
 
@@ -39,37 +37,31 @@ describe('<FodselSammenligningPanel>', () => {
     const wrapper = shallowWithIntl(<FodselSammenligningPanel
       intl={intlMock}
       behandlingsTypeKode={behandlingType.FORSTEGANGSSOKNAD}
-      antallBarn={1}
-      fodselDato="2017-05-15"
+      antallBarn={[{ fodselsdato: '2017-05-15' }]}
       nrOfDodfodteBarn={0}
     />);
 
     const tpsfodseldato = wrapper.find({ name: 'tpsFodseldato' });
-    expect(tpsfodseldato.find('Normaltekst').first().children().text()).to.equal('2017-05-15');
-
-    const tpsantallbarn = wrapper.find({ name: 'tpsAntallBarn' });
-    expect(tpsantallbarn.find('Normaltekst').first().children().text()).to.equal('1');
+    expect(tpsfodseldato.find('Normaltekst').at(2).children().text()).to.equal('15.05.2017');
   });
 
   it('skal rendre default verdier når tpsfodsel ikke finnes', () => {
     const wrapper = shallowWithIntl(<FodselSammenligningPanel
       intl={intlMock}
       behandlingsTypeKode={behandlingType.FORSTEGANGSSOKNAD}
-      antallBarn={0}
-      fodselDato="-"
+      antallBarn={[]}
       nrOfDodfodteBarn={0}
     />);
 
     const tpsfodseldato = wrapper.find({ name: 'tpsFodseldato' });
-    expect(tpsfodseldato.find('Normaltekst')).to.have.length(1);
+    expect(tpsfodseldato.find('Normaltekst')).to.have.length(3);
   });
 
   it('skal vise etikkett når minst ett av barna er dødfødte', () => {
     const wrapper = shallowWithIntl(<FodselSammenligningPanel
       intl={intlMock}
       behandlingsTypeKode={behandlingType.FORSTEGANGSSOKNAD}
-      antallBarn={2}
-      fodselDato="2017-05-15"
+      antallBarn={[{ fodselsdato: '2017-05-15' }, { fodselsdato: '2017-05-15' }]}
       nrOfDodfodteBarn={1}
     />);
 
@@ -80,8 +72,7 @@ describe('<FodselSammenligningPanel>', () => {
     const wrapper = shallowWithIntl(<FodselSammenligningPanel
       intl={intlMock}
       behandlingsTypeKode={behandlingType.FORSTEGANGSSOKNAD}
-      antallBarn={2}
-      fodselDato="2017-05-15"
+      antallBarn={[{ fodselsdato: '2017-05-15' }, { fodselsdato: '2017-05-15' }]}
       nrOfDodfodteBarn={0}
     />);
 
