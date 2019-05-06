@@ -37,7 +37,7 @@ const getBrevKode = (klageVurdering, klageVurdertAvKa) => {
 };
 
 const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback, klageResultat) => (e) => {
-  const klageVurdertAvNK = klageResultat.klageVurdertAv === 'NK';
+  const klageVurdertAvNK = klageResultat.klageVurdertAv === 'NFP' ? 'NFP' : 'KA';
   const data = {
     fritekst: begrunnelse || '',
     mottaker: '',
