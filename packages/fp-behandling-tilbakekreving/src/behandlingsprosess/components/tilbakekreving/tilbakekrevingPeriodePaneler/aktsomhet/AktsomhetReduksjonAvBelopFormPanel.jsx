@@ -10,11 +10,20 @@ import {
 import {
   RadioOption, RadioGroupField, SelectField, InputField,
 } from '@fpsak-frontend/form';
-import { required, parseCurrencyInput, formatCurrencyNoKr } from '@fpsak-frontend/utils';
+
+import { required, formatCurrencyNoKr, minValue } from '@fpsak-frontend/utils';
 
 import aktsomhet from 'behandlingTilbakekreving/src/kodeverk/aktsomhet';
 
 import styles from './aktsomhetReduksjonAvBelopFormPanel.less';
+
+const minValue1 = minValue(1);
+
+const parseCurrencyInput = (input) => {
+  const inputNoSpace = input.toString().replace(/\s/g, '');
+  const parsedValue = parseInt(inputNoSpace, 10);
+  return Number.isNaN(parsedValue) ? '' : parsedValue;
+};
 
 const andeler = ['30', '50', '70'];
 
@@ -66,8 +75,9 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
               <InputField
                 name="belopSomSkalTilbakekreves"
                 label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.AngiBelopSomSkalTilbakekreves" />}
-                validate={[required]}
+                validate={[required, minValue1]}
                 readOnly={readOnly}
+                format={formatCurrencyNoKr}
                 parse={parseCurrencyInput}
                 bredde="S"
               />

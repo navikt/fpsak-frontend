@@ -6,7 +6,7 @@ import {
 } from 'nav-frontend-typografi';
 
 import {
- minLength, maxLength, hasValidText, required, parseCurrencyInput, removeSpacesFromNumber,
+  minValue, minLength, maxLength, hasValidText, required, removeSpacesFromNumber, formatCurrencyNoKr,
 } from '@fpsak-frontend/utils';
 import { VerticalSpacer, ArrowBox } from '@fpsak-frontend/shared-components';
 import {
@@ -17,6 +17,13 @@ import styles from './belopetMottattIGodTroFormPanel.less';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
+const minValue1 = minValue(1);
+
+const parseCurrencyInput = (input) => {
+  const inputNoSpace = input.toString().replace(/\s/g, '');
+  const parsedValue = parseInt(inputNoSpace, 10);
+  return Number.isNaN(parsedValue) ? '' : parsedValue;
+};
 
 const BelopetMottattIGodTroFormPanel = ({
   readOnly,
@@ -50,8 +57,9 @@ const BelopetMottattIGodTroFormPanel = ({
           <InputField
             name="tilbakekrevdBelop"
             label={{ id: 'BelopetMottattIGodTroFormPanel.AngiBelop' }}
-            validate={[required]}
+            validate={[required, minValue1]}
             readOnly={readOnly}
+            format={formatCurrencyNoKr}
             parse={parseCurrencyInput}
             bredde="S"
           />

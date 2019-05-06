@@ -3,15 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FormSection, clearFields, formPropTypes } from 'redux-form';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { Undertekst, Element } from 'nav-frontend-typografi';
+import { FormattedMessage, FormattedHTMLMessage, injectIntl } from 'react-intl';
+import { Normaltekst, Undertekst, Element } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+
 import {
   RadioOption, RadioGroupField, TextAreaField,
 } from '@fpsak-frontend/form';
 
 import {
+  formatCurrencyNoKr,
   minLength,
   maxLength,
   hasValidText,
@@ -54,6 +56,10 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
     vilkarResultatTyper: PropTypes.arrayOf(PropTypes.shape()),
     aktsomhetTyper: PropTypes.arrayOf(PropTypes.shape()),
     sarligGrunnTyper: PropTypes.arrayOf(PropTypes.shape()),
+    reduserteBelop: PropTypes.arrayOf(PropTypes.shape({
+      erTrekk: PropTypes.bool.isRequired,
+      belop: PropTypes.number.isRequired,
+    })),
     ...formPropTypes,
   };
 
@@ -119,12 +125,24 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
       vilkarResultatTyper,
       aktsomhetTyper,
       sarligGrunnTyper,
+      reduserteBelop,
       ...formProps
     } = this.props;
     const { showModal } = this.state;
     return (
       <>
         <VerticalSpacer twentyPx />
+        {reduserteBelop.map(belop => (
+          <>
+            <Normaltekst>
+              <FormattedHTMLMessage
+                id={belop.erTrekk ? 'TilbakekrevingPeriodeForm.FeilutbetaltBelopEtterbetaling' : 'TilbakekrevingPeriodeForm.FeilutbetaltBelopTrekk'}
+                values={{ belop: formatCurrencyNoKr(belop.belop) }}
+              />
+            </Normaltekst>
+            <VerticalSpacer eigthPx />
+          </>
+        ))}
         <TilbakekrevingAktivitetTabell ytelser={selectedItemData.ytelser} />
         <VerticalSpacer twentyPx />
         <Row>
@@ -238,7 +256,7 @@ const transformValues = (selectedItemData, values, sarligGrunnTyper) => {
       begrunnelse,
       fom: selectedItemData.fom,
       tom: selectedItemData.tom,
-      vilkarResultat: { kode: valgtVilkarResultatType },
+      vilkarResultat: valgtVilkarResultatType,
       vilkarResultatInfo: {
         ...godTroData,
         ...annetData,
@@ -250,7 +268,7 @@ const transformValues = (selectedItemData, values, sarligGrunnTyper) => {
 const buildInitalValues = (period, foreldelsePerioder) => {
   const { vilkarResultat, begrunnelse, vilkarResultatInfo } = period.storedData;
 
-  const vilkarResultatKode = vilkarResultat ? vilkarResultat.kode : undefined;
+  const vilkarResultatKode = vilkarResultat && vilkarResultat.kode ? vilkarResultat.kode : vilkarResultat;
   let foreldetData = { erForeldet: false };
   if (period.erForeldet) {
     const foreldelsePeriode = foreldelsePerioder.find(p => p.fom === period.fom && p.tom === period.tom);
@@ -285,13 +303,12 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-const validate = (values, sarligGrunnTyper) => {
+const validate = (values, sarligGrunnTyper, selectedItemData) => {
   let errors = {};
   const vilkarResultatInfo = values[values.valgtVilkarResultatType];
   if (vilkarResultatInfo && vilkarResultatInfo.handletUaktsomhetGrad && vilkarResultatInfo.handletUaktsomhetGrad !== Aktsomhet.FORSETT) {
     const aktsomhetInfo = vilkarResultatInfo[vilkarResultatInfo.handletUaktsomhetGrad];
     if (aktsomhetInfo && !sarligGrunnTyper.some(type => aktsomhetInfo[type.kode])) {
-       // eslint-disable-next-line no-underscore-dangle
        errors = {
          [values.valgtVilkarResultatType]: {
            [vilkarResultatInfo.handletUaktsomhetGrad]: {
@@ -300,6 +317,24 @@ const validate = (values, sarligGrunnTyper) => {
           },
         };
     }
+    if (aktsomhetInfo && aktsomhetInfo.belopSomSkalTilbakekreves && aktsomhetInfo.belopSomSkalTilbakekreves > selectedItemData.feilutbetaling) {
+      errors = {
+        ...errors,
+        [values.valgtVilkarResultatType]: {
+          [vilkarResultatInfo.handletUaktsomhetGrad]: {
+            belopSomSkalTilbakekreves: [{ id: 'TilbakekrevingPeriodeForm.BelopKanIkkeVereStorreEnnFeilutbetalingen' }],
+          },
+        },
+      };
+    }
+  }
+  if (vilkarResultatInfo && vilkarResultatInfo.tilbakekrevdBelop && vilkarResultatInfo.tilbakekrevdBelop > selectedItemData.feilutbetaling) {
+    errors = {
+      ...errors,
+      [values.valgtVilkarResultatType]: {
+        tilbakekrevdBelop: [{ id: 'TilbakekrevingPeriodeForm.BelopKanIkkeVereStorreEnnFeilutbetalingen' }],
+       },
+     };
   }
 
   return errors;
@@ -310,7 +345,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const vilkarResultatTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.VILKAR_RESULTAT)(initialState);
   const aktsomhetTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.AKTSOMHET)(initialState);
   const submitCallback = values => ownProps.updateActivity(transformValues(ownProps.selectedItemData, values, sarligGrunnTyper));
-  const validateForm = values => validate(values, sarligGrunnTyper);
+  const validateForm = values => validate(values, sarligGrunnTyper, ownProps.selectedItemData);
   const foreldelsePerioder = getForeldelsePerioder(initialState).perioder;
   return (state) => {
     const valgtVilkarResultatType = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, 'valgtVilkarResultatType');
@@ -326,6 +361,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
         `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.${sarligGrunn.ANNET}`),
       erBelopetIBehold: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.erBelopetIBehold`),
       initialValues: buildInitalValues(ownProps.selectedItemData, foreldelsePerioder),
+      reduserteBelop: ownProps.selectedItemData.redusertBeloper,
       onSubmit: submitCallback,
       validate: validateForm,
       valgtVilkarResultatType,

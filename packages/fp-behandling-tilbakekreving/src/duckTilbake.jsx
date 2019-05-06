@@ -1,6 +1,8 @@
 import { createSelector } from 'reselect';
 
+import { sakOperations } from '@fpsak-frontend/fp-behandling-felles';
 import { reducerRegistry, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+
 import tilbakekrevingBehandlingApi, { TilbakekrevingBehandlingApiKeys } from './data/tilbakekrevingBehandlingApi';
 
 const reducerName = 'tilbakekrevingBehandling';
@@ -27,11 +29,11 @@ const resetBehandlingContext = () => ({
 
 // TODO (TOR) Rydd opp i dette. Kan ein legge rehenting av fagsakInfo og original-behandling i resolver i staden?
 export const updateBehandling = (
-  behandlingIdentifier, behandlingerVersjonMappedById, updateFagsakInfo,
+  behandlingIdentifier, behandlingerVersjonMappedById,
 ) => dispatch => dispatch(tilbakekrevingBehandlingApi.BEHANDLING.makeRestApiRequest()(behandlingIdentifier.toJson(), { keepData: true }))
   .then((response) => {
     if (behandlingerVersjonMappedById && behandlingerVersjonMappedById[response.payload.id] !== response.payload.versjon) {
-      dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer));
+      dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer));
     }
     return Promise.resolve(response);
   });
@@ -41,19 +43,19 @@ export const resetBehandling = dispatch => Promise.all([
   dispatch(resetBehandlingContext()),
 ]);
 
-export const fetchBehandling = (behandlingIdentifier, allBehandlinger, updateFagsakInfo) => (dispatch) => {
-  dispatch(tilbakekrevingBehandlingApi.KODEVERK.makeRestApiRequest()());
+export const fetchBehandling = (behandlingIdentifier, allBehandlinger) => (dispatch) => {
+  dispatch(tilbakekrevingBehandlingApi.TILBAKE_KODEVERK.makeRestApiRequest()());
   dispatch(tilbakekrevingBehandlingApi.BEHANDLING.resetRestApi()());
-  dispatch(updateBehandling(behandlingIdentifier, allBehandlinger, updateFagsakInfo));
+  dispatch(updateBehandling(behandlingIdentifier, allBehandlinger));
 };
 
-const updateFagsakAndBehandling = (behandlingIdentifier, updateFagsakInfo) => dispatch => dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer))
+const updateFagsakAndBehandling = behandlingIdentifier => dispatch => dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer))
   .then(() => dispatch(updateBehandling(behandlingIdentifier)));
 
-export const updateOnHold = (params, behandlingIdentifier, updateFagsakInfo) => dispatch => dispatch(
+export const updateOnHold = (params, behandlingIdentifier) => dispatch => dispatch(
   tilbakekrevingBehandlingApi.UPDATE_ON_HOLD.makeRestApiRequest()(params),
 )
-  .then(() => dispatch(updateFagsakAndBehandling(behandlingIdentifier, updateFagsakInfo)));
+  .then(() => dispatch(updateFagsakAndBehandling(behandlingIdentifier)));
 
 export const resetTilbakekrevingContext = () => (dispatch) => {
   Object.values(TilbakekrevingBehandlingApiKeys)
@@ -95,7 +97,7 @@ reducerRegistry.register(reducerName, tilbakekrevingBehandlingReducer);
 
 // Selectors (Kun de knyttet til reducer)
 export const getTilbakekrevingKodeverk = kodeverkType => createSelector(
-  [tilbakekrevingBehandlingApi.KODEVERK.getRestApiData()], (kodeverk = {}) => kodeverk[kodeverkType],
+  [tilbakekrevingBehandlingApi.TILBAKE_KODEVERK.getRestApiData()], (kodeverk = {}) => kodeverk[kodeverkType],
 );
 
 const getBehandlingContext = state => state.default[reducerName];

@@ -163,6 +163,16 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.PERSON,
     punktNavn: '',
   },
+  FORELDELSE: {
+    kode: 'FORELDELSE',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: behandlingspunktCodes.FORELDELSE,
+  },
+  TILBAKEKREVING: {
+    kode: 'TILBAKEKREVING',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: behandlingspunktCodes.TILBAKEKREVING,
+  },
 };
 
 export const createLocationForHistorikkItems = (behandlingLocation, skjermlenkeCode) => {

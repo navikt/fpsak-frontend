@@ -46,6 +46,7 @@ describe('<TilbakekrevingPeriodeForm>', () => {
       vilkarResultatTyper={[]}
       aktsomhetTyper={aktsomhetTyper}
       sarligGrunnTyper={sarligGrunnTyper}
+      reduserteBelop={[]}
       {...reduxFormPropsMock}
     />);
 
