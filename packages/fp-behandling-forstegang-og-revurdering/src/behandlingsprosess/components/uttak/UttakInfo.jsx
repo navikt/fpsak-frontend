@@ -89,7 +89,7 @@ const typePeriode = (selectedItem, kontoIkkeSatt, getKodeverknavn) => {
   return returnText;
 };
 
-const isInnvilgetText = (isApOpen, selectedItemData, getKodeverknavn) => {
+const isInnvilgetText = (selectedItemData, getKodeverknavn) => {
   let returnText = '';
   if (periodeIsInnvilget(selectedItemData)) {
     returnText = (
@@ -138,7 +138,6 @@ const visGraderingIkkeInnvilget = (selectedItem, readOnly, graderingInnvilget) =
 export const UttakInfo = ({
   selectedItemData,
   kontoIkkeSatt,
-  isApOpen,
   readOnly,
   graderingInnvilget,
   erSamtidigUttak,
@@ -160,14 +159,16 @@ export const UttakInfo = ({
             </Column>
           </Row>
           <Row>
-            <Column xs="12">{stonadskonto(selectedItemData, kontoIkkeSatt, getKodeverknavn)}</Column>
+            <Column xs="12">
+              {stonadskonto(selectedItemData, kontoIkkeSatt, getKodeverknavn)}
+            </Column>
           </Row>
         </Column>
         <Column xs="5">
           {readOnly
           && (
             <div>
-              {isInnvilgetText(isApOpen, selectedItemData, getKodeverknavn)}
+              {isInnvilgetText(selectedItemData, getKodeverknavn)}
             </div>
           )
           }
@@ -333,7 +334,6 @@ UttakInfo.propTypes = {
   oppholdArsakTyper: kodeverkPropType.isRequired,
   selectedItemData: PropTypes.PropTypes.shape().isRequired,
   kontoIkkeSatt: PropTypes.bool,
-  isApOpen: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
   harSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
   graderingInnvilget: PropTypes.bool,
@@ -345,7 +345,6 @@ UttakInfo.defaultProps = {
   kontoIkkeSatt: undefined,
   graderingInnvilget: undefined,
   erSamtidigUttak: undefined,
-  isApOpen: undefined,
 };
 
 export default injectKodeverk(getAlleKodeverk)(UttakInfo);
