@@ -6,12 +6,15 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { clearFields, formPropTypes } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst, Undertittel, Normaltekst } from 'nav-frontend-typografi';
+
+import { behandlingspunktCodes, featureToggle } from '@fpsak-frontend/fp-felles';
 import {
   getSimuleringResultat, getTilbakekrevingValg, getAksjonspunkter, getBehandlingVersjon, getBehandlingSprak,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingspunktCodes, featureToggle } from '@fpsak-frontend/fp-felles';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { getSelectedBehandlingId, getFeatureToggles, getSelectedSaksnummer } from 'behandlingForstegangOgRevurdering/src/duck';
+import {
+ getSelectedBehandlingId, getFeatureToggles, getSelectedSaksnummer, isForeldrepengerFagsak,
+} from 'behandlingForstegangOgRevurdering/src/duck';
 import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import {
   VerticalSpacer, AksjonspunktHelpText, ArrowBox, Image, FadingPanel,
@@ -66,6 +69,13 @@ const tooltipContentReduksjon = (
     <FormattedMessage id="Avregning.tidspunktAvFeilutbetaling" />
   </span>
 );
+
+const createHelptextTooltip = isForeldrepenger => ({
+    header: (
+      <Normaltekst>
+        <FormattedMessage id={isForeldrepenger ? 'Avregning.HjelpetekstForeldrepenger' : 'Avregning.HjelpetekstEngangsstonad'} />
+      </Normaltekst>),
+  });
 const getApTekst = apCode => (apCode ? [<FormattedMessage id={`Avregning.AksjonspunktHelpText.${apCode}`} key="vurderFeilutbetaling" />] : []);
 const findQuestionImage = isHovering => (isHovering ? questionHoverUrl : questionNormalUrl);
 const tooltipContent = type => (type === avregningCodes.OPPFYLT ? oppfyltTooltipContent : tooltipContentReduksjon);
@@ -164,6 +174,7 @@ export class AvregningPanelImpl extends Component {
       sprakkode,
       featureVarseltekst,
       previewCallback,
+      isForeldrepenger,
       ...formProps
     } = this.props;
     const simuleringResultatOption = getSimuleringResult(simuleringResultat, feilutbetaling);
@@ -250,7 +261,19 @@ export class AvregningPanelImpl extends Component {
                             ref={this.textVarselBox}
                           >
                             <ArrowBox alignOffset={20}>
-                              <Normaltekst className={styles.bold}><FormattedMessage id="Avregning.varseltekst" /></Normaltekst>
+                              <Row>
+                                <Column sm="10">
+                                  <Normaltekst className={styles.bold}><FormattedMessage id="Avregning.varseltekst" /></Normaltekst>
+                                </Column>
+                                <Column sm="2">
+                                  <Image
+                                    tabIndex="0"
+                                    imageSrcFunction={findQuestionImage}
+                                    altCode="Avregning.HjelpetekstForeldrepenger"
+                                    tooltip={createHelptextTooltip(isForeldrepenger)}
+                                  />
+                                </Column>
+                              </Row>
                               <VerticalSpacer eightPx />
                               <TextAreaField
                                 name="varseltekst"
@@ -265,17 +288,16 @@ export class AvregningPanelImpl extends Component {
                                   title: 'Malform.Beskrivelse',
                                 }]}
                               />
-                              {!readOnly && (
-                                <a
-                                  href=""
-                                  onClick={(e) => {
-                                    this.previewMessage(e, previewCallback);
-                                  }}
-                                  className={styles.previewLink}
-                                >
-                                  <FormattedMessage id="Messages.PreviewText" />
-                                </a>
-                              )}
+                              <VerticalSpacer fourPx />
+                              <a
+                                href=""
+                                onClick={(e) => {
+                                  this.previewMessage(e, previewCallback);
+                                }}
+                                className={styles.previewLink}
+                              >
+                                <FormattedMessage id="Messages.PreviewText" />
+                              </a>
                             </ArrowBox>
                           </div>
                         )
@@ -416,6 +438,7 @@ const mapStateToProps = (state, initialProps) => ({
   behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
   featureVarseltekst: getFeatureToggles(state)[featureToggle.SIMULER_VARSELTEKST],
   saksnummer: getSelectedSaksnummer(state),
+  isForeldrepenger: isForeldrepengerFagsak(state),
   onSubmit: values => initialProps.submitCallback(transformValues(values, initialProps.apCodes[0])),
 });
 

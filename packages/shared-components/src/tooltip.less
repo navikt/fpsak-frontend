@@ -4,52 +4,79 @@
 .tooltip {
   display: inline-block;
   position: relative;
+}
 
-  .tooltiptext {
-    background-color: @navMorkGra;
-    border: 1px solid @navMorkGra;
-    border-radius: @border-radius-base;
-    bottom: 100%;
-    box-shadow: 5px 2px 10px @navMorkGra;
-    color: @white;
-    left: 50%;
-    margin-bottom: 20px;
-    margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
-    padding: 0 10px;
-    position: absolute;
-    text-align: left;
-    visibility: hidden;
-    width: 250px;
-    z-index: 104;
+.tooltiptext {
+  background-color: @navMorkGra;
+  border: 1px solid @navMorkGra;
+  border-radius: @border-radius-base;
+  box-shadow: 5px 2px 10px @navMorkGra;
+  color: white;
+  margin-bottom: 20px;
+  min-width: 200px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 10px;
+  padding-top: 10px;
+  position: absolute;
+  z-index: 101;
+}
 
-    &:before {
-      border-color: @navMorkGra transparent transparent transparent;
-      border-style: solid;
-      content: ' ';
-      filter: drop-shadow(2px 5px 8px @navMorkGra);
-      left: 42px;
-      position: absolute;
-      top: 100%; /* At the bottom of the tooltip */
-    }
+.tooltiptextLeft {
+  margin-left: 45px;
+  top: -30px;
+}
 
-    &:after {
-      border-color: @navMorkGra transparent transparent transparent;
-      border-style: solid;
-      border-width: 12px;
-      content: ' ';
-      left: 43px;
-      position: absolute;
-      top: 100%; /* At the bottom of the tooltip */
-    }
-  }
+.tooltiptextBottom {
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+}
 
-  &:hover {
-    .tooltiptext {
-      visibility: visible;
-    }
+.show {
+  visibility: visible;
+}
 
-    .hide {
-      visibility: visible;
-    }
-  }
+.hide {
+  visibility: hidden;
+}
+
+.tooltiptextLeft:before {
+  border-color: transparent @navMorkGra transparent transparent;
+  border-style: solid;
+  content: ' ';
+  filter: drop-shadow(2px 5px 8px @navMorkGra);
+  position: absolute;
+  right: 100%; /* To the left of the tooltip */
+  top: 30px;
+}
+
+.tooltiptextLeft:after {
+  border-color: transparent @navMorkGra transparent transparent;
+  border-style: solid;
+  border-width: 12px;
+  content: ' ';
+  position: absolute;
+  right: 100%; /* To the left of the tooltip */
+  top: 30px;
+}
+
+.tooltiptextBottom:before {
+  border-color: @navMorkGra transparent transparent transparent;
+  border-style: solid;
+  content: ' ';
+  filter: drop-shadow(2px 5px 8px @navMorkGra);
+  left: 42px;
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+}
+
+.tooltiptextBottom:after {
+  border-color: @navMorkGra transparent transparent transparent;
+  border-style: solid;
+  border-width: 12px;
+  content: ' ';
+  left: 43px;
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
 }
