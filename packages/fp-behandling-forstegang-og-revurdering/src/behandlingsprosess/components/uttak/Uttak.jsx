@@ -261,7 +261,6 @@ export class UttakImpl extends Component {
         if (typeof days !== 'undefined' && typeof weeks !== 'undefined') {
           const trekkdager = (weeks * 5) + parseFloat(days);
           transformAktivitet.trekkdagerDesimaler = trekkdager; // regner om uker og dager til trekkdager
-          transformAktivitet.trekkdager = null;
         }
         return transformAktivitet;
       });
@@ -664,6 +663,15 @@ const mapStateToProps = (state, props) => {
 
   const uttakMedOpphold = uttaksresultatActivity.map((uttak) => {
     const { ...uttakPerioder } = uttak;
+
+    // Setter trekkdager til null - brukes som lowkey feature-toggle - remove when everything works (06.05.19)
+    if (uttakPerioder && uttakPerioder.aktiviteter.length > 0) {
+      const aktivitetArray = uttakPerioder.aktiviteter;
+      aktivitetArray.forEach((item) => {
+        item.trekkdager = null; // eslint-disable-line no-param-reassign
+      });
+    }
+    // remove to here
     if (uttak.oppholdÅrsak.kode !== oppholdArsakType.UDEFINERT) {
       const stonadskonto = oppholdArsakMapper[uttak.oppholdÅrsak.kode];
       const oppholdInfo = {
