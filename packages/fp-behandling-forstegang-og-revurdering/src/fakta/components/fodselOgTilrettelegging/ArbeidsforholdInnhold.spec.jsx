@@ -70,13 +70,13 @@ describe('<ArbeidsforholdInnhold>', () => {
     expect(initialValues).to.eql({
       jordmorTilretteleggingFra: '2019-04-18',
       begrunnelse: '',
-      kanGjennomfores: true,
-      kanGjennomforesDato: '2019-05-30',
+      kanGjennomfores: false,
+      kanGjennomforesDato: undefined,
       kanIkkeGjennomfores: false,
-      kanIkkeGjennomforesDato: '',
-      redusertArbeid: true,
-      redusertArbeidDato: '2019-04-18',
-      redusertArbeidStillingsprosent: 50,
+      kanIkkeGjennomforesDato: undefined,
+      redusertArbeid: false,
+      redusertArbeidDato: undefined,
+      redusertArbeidStillingsprosent: undefined,
     });
   });
 });

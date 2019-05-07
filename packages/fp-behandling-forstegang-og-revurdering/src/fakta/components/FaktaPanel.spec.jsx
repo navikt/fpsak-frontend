@@ -230,7 +230,7 @@ describe('<FaktaPanel>', () => {
     expect(wrapper.find(FodselInfoPanel)).has.length(0);
   });
 
-  it('skal vise faktapanel for svangerskapspenger når en har aksjonspunkt for disse', () => {
+  it('skal vise faktapanel for svangerskapspenger og medlemskap når en har aksjonspunkt for disse', () => {
     const omsorgAksjonspunkt = {
       id: 1,
       status: {
@@ -259,9 +259,9 @@ describe('<FaktaPanel>', () => {
     />);
 
     expect(wrapper.find(FodselOgTilretteleggingInfoPanel)).has.length(1);
-    expect(wrapper.find(MedlemskapInfoPanel)).has.length(0);
+    expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
     expect(wrapper.find(OmsorgInfoPanel)).has.length(0);
-    expect(wrapper.find(OmsorgOgForeldreansvarInfoPanel)).has.length(1);
+    expect(wrapper.find(OmsorgOgForeldreansvarInfoPanel)).has.length(0);
     expect(wrapper.find(AdopsjonInfoPanel)).has.length(0);
     expect(wrapper.find(FodselInfoPanel)).has.length(0);
   });
