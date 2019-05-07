@@ -13,7 +13,7 @@ describe('<FodselOgTilretteleggingInfoPanel>', () => {
   it('skal vise ekspanderbart panel', () => {
     const wrapper = shallowWithIntl(<FodselOgTilretteleggingInfoPanelImpl
       intl={intlMock}
-      openInfoPanels={['fodselTilrettelegging']}
+      openInfoPanels={['fodseltilrettelegging']}
       toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter={false}
       readOnly

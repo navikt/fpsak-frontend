@@ -10,6 +10,7 @@ import { DatepickerField, TextAreaField } from '@fpsak-frontend/form';
 import {
   required, hasValidDate, hasValidText, maxLength,
 } from '@fpsak-frontend/utils';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import {
   behandlingForm,
@@ -22,6 +23,7 @@ import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/compo
    getTilrettelegging,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import ArbeidsforholdFaktaPanel from './ArbeidsforholdFaktaPanel';
+
 
 import styles from './arbeidsforholdInnhold.less';
 
@@ -93,10 +95,10 @@ FodselOgTilretteleggingFaktaForm.propTypes = {
   visBegrunnelse: PropTypes.bool.isRequired,
 };
 
-const transformValues = values => ({
-  kode: '',
-  values,
-});
+const transformValues = values => ([{
+  kode: aksjonspunktCodes.FODSELTILRETTELEGGING,
+...values,
+}]);
 
 const mapStateToProps = (state, ownProps) => {
   const visBegrunnelse = createSelector(
