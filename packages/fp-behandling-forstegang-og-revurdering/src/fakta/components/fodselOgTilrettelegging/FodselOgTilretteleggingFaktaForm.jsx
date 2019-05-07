@@ -98,6 +98,7 @@ FodselOgTilretteleggingFaktaForm.propTypes = {
 const transformValues = values => ([{
   kode: aksjonspunktCodes.FODSELTILRETTELEGGING,
 ...values,
+bekreftetSvpArbeidsforholdList: values.arbeidsforhold,
 }]);
 
 const mapStateToProps = (state, ownProps) => {
