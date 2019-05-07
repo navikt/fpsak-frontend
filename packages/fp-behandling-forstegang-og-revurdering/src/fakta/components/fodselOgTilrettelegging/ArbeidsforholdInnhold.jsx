@@ -118,10 +118,10 @@ const validateWarning = (values) => {
 const transformValues = (values, selectedArbeidsforhold) => {
   const { ...transformvalue } = selectedArbeidsforhold;
   transformvalue.tilretteleggingBehovFom = values.jordmorTilretteleggingFra;
-  transformvalue.helTilretteleggingFom = values.kanGjennomforesDato;
-  transformvalue.slutteArbeidFom = values.kanIkkeGjennomforesDato;
-  transformvalue.delvisTilretteleggingFom = values.redusertArbeidDato;
-  transformvalue.stillingsprosent = values.redusertArbeidStillingsprosent;
+  transformvalue.helTilretteleggingFom = values.kanGjennomfores ? values.kanGjennomforesDato : null;
+  transformvalue.slutteArbeidFom = values.kanIkkeGjennomfores ? values.kanIkkeGjennomforesDato : null;
+  transformvalue.delvisTilretteleggingFom = values.redusertArbeid ? values.redusertArbeidDato : null;
+  transformvalue.stillingsprosent = values.reduserArbeid ? values.redusertArbeidStillingsprosent : null;
   transformvalue.begrunnelse = values.begrunnelse;
   return transformvalue;
 };
