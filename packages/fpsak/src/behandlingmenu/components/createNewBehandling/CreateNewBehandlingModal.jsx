@@ -182,7 +182,6 @@ const getBehandlingAarsaker = (state) => {
 const mapStateToProps = state => ({
   behandlingTyper: getKodeverk(kodeverkTyper.BEHANDLING_TYPE)(state)
     .filter(bt => bt.kode !== bType.SOKNAD)
-    .filter(bt => bt.kode !== bType.KLAGE)
     .sort((bt1, bt2) => bt1.navn.localeCompare(bt2.navn)),
   behandlingArsakTyper: getBehandlingAarsaker(state),
   behandlingType: formValueSelector(formName)(state, 'behandlingType'),
