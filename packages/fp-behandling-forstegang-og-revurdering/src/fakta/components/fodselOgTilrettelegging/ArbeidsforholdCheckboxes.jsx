@@ -127,7 +127,8 @@ export const ArbeidsforholdCheckboxes = ({
         </div>
       )}
       {readOnly && kanGjennomfores && readOnlyInfo('ArbeidsforholdCheckboxes.Arbeidsgiver.KanGjennomfores', 'kanGjennomforesDato')}
-      {readOnly && redusertArbeid && readOnlyInfo('ArbeidsforholdCheckboxes.Arbeidsgiver.RedusertArbeid', 'redusertArbeidDato', 'redusertArbeidStillingsprosent')}
+      {readOnly && redusertArbeid
+         && readOnlyInfo('ArbeidsforholdCheckboxes.Arbeidsgiver.RedusertArbeid', 'redusertArbeidDato', 'redusertArbeidStillingsprosent')}
       {readOnly && kanIkkeGjennomfores && readOnlyInfo('ArbeidsforholdCheckboxes.Arbeidsgiver.KanIkkeGjennomfores', 'kanIkkeGjennomforesDato')}
     </Fieldset>
   );
