@@ -17,7 +17,7 @@ import HistorikkMalType7 from './HistorikkMalType7';
 import HistorikkMalType8 from './HistorikkMalType8';
 import HistorikkMalType9 from './HistorikkMalType9';
 import HistorikkMalType10 from './HistorikkMalType10';
-import HistorikkMalType11 from './HistorikkMalType11';
+import HistorikkMalTypeFeilutbetaling from './HistorikkMalTypeFeilutbetaling';
 import HistorikkMalTypeTilbakekreving from './HistorikkMalTypeTilbakekreving';
 import HistorikkMalTypeForeldelse from './HistorikkMalTypeForeldelse';
 import PlaceholderHistorikkMal from './placeholderHistorikkMal';
@@ -79,7 +79,7 @@ const velgHistorikkMal = (histType) => { // NOSONAR
     case historikkinnslagType.FASTSATT_UTTAK:
     return HistorikkMalType10;
     case historikkinnslagType.FAKTA_OM_FEILUTBETALING:
-    return HistorikkMalType11;
+    return HistorikkMalTypeFeilutbetaling;
     case historikkinnslagType.FORELDELSE:
       return HistorikkMalTypeForeldelse;
     case historikkinnslagType.TILBAKEKREVING:

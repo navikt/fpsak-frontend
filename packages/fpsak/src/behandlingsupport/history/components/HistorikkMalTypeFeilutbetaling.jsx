@@ -2,15 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
-import { Element } from 'nav-frontend-typografi';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import historikkOpplysningTypeCodes from '@fpsak-frontend/kodeverk/src/historikkOpplysningTypeCodes';
 import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeCodes';
 import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
-import { getAlleKodeverk } from 'kodeverk/duck';
 import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import BubbleText from './bubbleText';
 
@@ -42,50 +40,37 @@ const buildEndretFeltText = (endredeFelter) => {
     const årsakFraVerdi = årsakFelt.fraVerdi ? årsakFelt.fraVerdi : årsakFelt.tilVerdi;
     const fraVerdi = `${årsakFraVerdi} ${underÅrsakFraVerdi ? `(${underÅrsakFraVerdi})` : ''}`;
     const tilVerdi = `${årsakFelt.tilVerdi} ${underÅrsakTilVerdi ? `(${underÅrsakTilVerdi})` : ''}`;
-    return (
-      <FormattedHTMLMessage
-        id="Historikk.Template.11.endretFelt"
-        values={{ fraVerdi, tilVerdi }}
-      />
-    );
+    return <FormattedHTMLMessage id="Historikk.Template.Feilutbetaling.endretFelt" values={{ fraVerdi, tilVerdi }} />;
   }
   const feltVerdi = `${årsakFelt.tilVerdi} ${underÅrsakTilVerdi ? `(${underÅrsakTilVerdi})` : ''}`;
-  return (
-    <FormattedHTMLMessage
-      id="Historikk.Template.11.sattFelt"
-      values={{ feltVerdi }}
-    />
-  );
+  return <FormattedHTMLMessage id="Historikk.Template.Feilutbetaling.sattFelt" values={{ feltVerdi }} />;
 };
 
-const HistorikkMalType11 = ({
-  historikkinnslagDeler, behandlingLocation, getKodeverknavn,
+const HistorikkMalTypeFeilutbetaling = ({
+  historikkinnslagDeler,
+  behandlingLocation,
 }) => (
   <div>
-    {historikkinnslagDeler[0] && historikkinnslagDeler[0].skjermlenke
-    && (
-      <Element>
-        <NavLink
-          to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
-          onClick={scrollUp}
-        >
-          {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
-        </NavLink>
-      </Element>
-    )
-    }
+    <Element>
+      <NavLink
+        to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
+        onClick={scrollUp}
+      >
+        {historikkinnslagDeler[0].skjermlenke.navn}
+      </NavLink>
+    </Element>
     {historikkinnslagDeler.map((historikkinnslagDel, index) => (historikkinnslagDel.endredeFelter ? (
       <div key={`historikkinnslagDel${index + 1}`}>
         <FormattedHTMLMessage
-          id="Historikk.Template.11.FaktaFeilutbetalingPeriode"
+          id="Historikk.Template.Feilutbetaling.FaktaFeilutbetalingPeriode"
           values={{
             periodeFom: finnFomOpplysning(historikkinnslagDel.opplysninger),
             periodeTom: finnTomOpplysning(historikkinnslagDel.opplysninger),
           }}
         />
-        <Element>
+        <Normaltekst>
           { buildEndretFeltText(historikkinnslagDel.endredeFelter) }
-        </Element>
+        </Normaltekst>
         <VerticalSpacer eightPx />
       </div>
     ) : null))
@@ -99,10 +84,9 @@ const HistorikkMalType11 = ({
   </div>
 );
 
-HistorikkMalType11.propTypes = {
+HistorikkMalTypeFeilutbetaling.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
-  getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default injectIntl(injectKodeverk(getAlleKodeverk)(HistorikkMalType11));
+export default injectIntl(HistorikkMalTypeFeilutbetaling);
