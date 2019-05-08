@@ -203,7 +203,7 @@ export class BehandlingsprosessIndex extends Component {
   }
 
   submitVilkar(aksjonspunktModels) {
-    if (aksjonspunktModels[0] && aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === '5015') {
+    if (aksjonspunktModels[0] && aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK) {
       this.setState({
         isVedtakSubmissionFatterVedtak: true,
         isVedtakSubmissionIverksetterVedtak: false,
@@ -212,7 +212,7 @@ export class BehandlingsprosessIndex extends Component {
       });
       return false;
     }
-    if (aksjonspunktModels[0] && aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === '5016') {
+    if (aksjonspunktModels[0] && aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FATTER_VEDTAK) {
       this.setState({
         isVedtakSubmissionFatterVedtak: false,
         isVedtakSubmissionIverksetterVedtak: true,
