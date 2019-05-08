@@ -89,6 +89,12 @@ export const getFaktaArbeidsforhold = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['fakta-arbeidsforhold']
     ? selectedBehandling['fakta-arbeidsforhold'] : undefined),
 );
+
+export const getTilrettelegging = createSelector(
+  [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['svangerskapspenger-tilrettelegging']
+  ? selectedBehandling['svangerskapspenger-tilrettelegging'] : undefined),
+);
+
 export const getHaveSentVarsel = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['sendt-varsel-om-revurdering']));
 export const getTotrinnskontrollArsaker = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['totrinnskontroll-arsaker']),
