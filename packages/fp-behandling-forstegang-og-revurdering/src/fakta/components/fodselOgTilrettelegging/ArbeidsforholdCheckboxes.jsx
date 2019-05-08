@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Fieldset } from 'nav-frontend-skjema';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import {
@@ -62,6 +62,38 @@ export const ArbeidsforholdCheckboxes = ({
       </FlexContainer>
     </ArrowBox>
   );
+  const readOnlyInfo = (textId, dato, stillingsprosent) => (
+    <FlexContainer>
+      <FlexRow>
+        <FormattedMessage id={textId} />
+      </FlexRow>
+      <FlexRow>
+        <FlexColumn>
+          <DatepickerField
+            name={dato}
+            label={{ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.Dato' }}
+            validate={[required, hasValidDate]}
+            readOnly
+          />
+        </FlexColumn>
+        {stillingsprosent
+    && (
+    <FlexColumn>
+      <DecimalField
+        name={stillingsprosent}
+        label={{ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.Stillingsprosent' }}
+        validate={[required, minValue0, maxProsentValue100, hasValidDecimal]}
+        readOnly
+        bredde="XS"
+        normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+      />
+    </FlexColumn>
+
+    )
+  }
+      </FlexRow>
+    </FlexContainer>
+  );
   return (
     <Fieldset legend={intl.formatMessage({ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.Tilrettelegging' })}>
       {warning && warning.permisjonsWarning
@@ -72,24 +104,31 @@ export const ArbeidsforholdCheckboxes = ({
       </div>
       )
       }
-      <CheckboxField
-        name="kanGjennomfores"
-        label={{ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.KanGjennomfores' }}
-        readOnly={readOnly}
-      />
-      {kanGjennomfores && arrowBox('kanGjennomforesDato')}
-      <CheckboxField
-        name="redusertArbeid"
-        label={{ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.RedusertArbeid' }}
-        readOnly={readOnly}
-      />
-      {redusertArbeid && arrowBox('redusertArbeidDato', 'redusertArbeidStillingsprosent')}
-      <CheckboxField
-        name="kanIkkeGjennomfores"
-        label={{ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.KanIkkeGjennomfores' }}
-        readOnly={readOnly}
-      />
-      {kanIkkeGjennomfores && arrowBox('kanIkkeGjennomforesDato')}
+      {!readOnly && (
+        <div>
+          <CheckboxField
+            name="kanGjennomfores"
+            label={{ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.KanGjennomfores' }}
+            readOnly={readOnly}
+          />
+          {kanGjennomfores && arrowBox('kanGjennomforesDato')}
+          <CheckboxField
+            name="redusertArbeid"
+            label={{ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.RedusertArbeid' }}
+            readOnly={readOnly}
+          />
+          {redusertArbeid && arrowBox('redusertArbeidDato', 'redusertArbeidStillingsprosent')}
+          <CheckboxField
+            name="kanIkkeGjennomfores"
+            label={{ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.KanIkkeGjennomfores' }}
+            readOnly={readOnly}
+          />
+          {kanIkkeGjennomfores && arrowBox('kanIkkeGjennomforesDato')}
+        </div>
+      )}
+      {readOnly && kanGjennomfores && readOnlyInfo('ArbeidsforholdCheckboxes.Arbeidsgiver.KanGjennomfores', 'kanGjennomforesDato')}
+      {readOnly && redusertArbeid && readOnlyInfo('ArbeidsforholdCheckboxes.Arbeidsgiver.RedusertArbeid', 'redusertArbeidDato', 'redusertArbeidStillingsprosent')}
+      {readOnly && kanIkkeGjennomfores && readOnlyInfo('ArbeidsforholdCheckboxes.Arbeidsgiver.KanIkkeGjennomfores', 'kanIkkeGjennomforesDato')}
     </Fieldset>
   );
 };

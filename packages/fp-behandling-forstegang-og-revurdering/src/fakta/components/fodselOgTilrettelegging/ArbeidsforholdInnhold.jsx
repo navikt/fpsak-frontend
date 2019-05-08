@@ -140,7 +140,6 @@ export const buildInitialValues = values => ({
 
 const mapStateToProps = (state, ownProps) => {
   const { selectedArbeidsforhold } = ownProps;
-  // TODO: Tilpasse responsen fra backend
   return {
     initialValues: buildInitialValues(selectedArbeidsforhold),
     warn: values => validateWarning(values),
