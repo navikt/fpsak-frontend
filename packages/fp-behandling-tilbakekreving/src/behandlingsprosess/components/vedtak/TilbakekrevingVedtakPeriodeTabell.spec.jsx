@@ -9,23 +9,30 @@ import TilbakekrevingVedtakPeriodeTabell from './TilbakekrevingVedtakPeriodeTabe
 describe('<TilbakekrevingVedtakPeriodeTabell>', () => {
   it('skal lage tabell med to perioder og en sum-rad', () => {
     const perioder = [{
-      fomDato: '2019-10-10',
-      tomDato: '2019-12-10',
-      feilUtbetaltBelop: 15430,
-      vurdering: 'Simpel uaktsomhet',
-      andelAvBelop: 100,
-      renter: 10,
-      belopSomTilbakekreves: 15430,
+      periode: ['2019-10-10', '2019-12-10'],
+      feilutbetaltBeløp: 15430,
+      vurdering: {
+        kode: 'SIMP',
+        kodeverk: 'VURDERING',
+      },
+      andelAvBeløp: 100,
+      renterProsent: 10,
+      tilbakekrevingBeløp: 15430,
     }, {
-      fomDato: '2019-05-10',
-      tomDato: '2019-06-10',
-      feilUtbetaltBelop: 14000,
-      vurdering: 'Simpel uaktsomhet',
-      andelAvBelop: 50,
-      belopSomTilbakekreves: 7000,
+      periode: ['2019-05-10', '2019-06-10'],
+      feilutbetaltBeløp: 14000,
+      vurdering: {
+        kode: 'SIMP',
+        kodeverk: 'VURDERING',
+      },
+      andelAvBeløp: 50,
+      tilbakekrevingBeløp: 7000,
     }];
+    const getKodeverknavn = () => 'Simpel uaktsomhet';
+
     const wrapper = shallow(<TilbakekrevingVedtakPeriodeTabell
       perioder={perioder}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const rader = wrapper.find(TableRow);

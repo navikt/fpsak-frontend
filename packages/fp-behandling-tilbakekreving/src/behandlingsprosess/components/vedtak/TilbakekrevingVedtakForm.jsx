@@ -6,6 +6,7 @@ import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } fr
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import tilbakekrevingAksjonspunktCodes from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingAksjonspunktCodes';
+import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingTilbakekreving/src/behandlingsprosess/behandlingsprosessTilbakeSelectors';
 import {
   behandlingForm, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, isBehandlingFormDirty,
 } from 'behandlingTilbakekreving/src/behandlingForm';
@@ -45,7 +46,8 @@ const transformValues = values => [{
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const submitCallback = values => ownProps.submitCallback(transformValues(values));
-  const initialValues = BehandlingspunktBegrunnelseTextField.buildInitialValues([{ begrunnelse: 'test' }]);
+  const aksjonspunkt = getSelectedBehandlingspunktAksjonspunkter(initialState)[0];
+  const initialValues = BehandlingspunktBegrunnelseTextField.buildInitialValues([{ begrunnelse: aksjonspunkt.begrunnelse }]);
   return () => ({
     initialValues,
     onSubmit: submitCallback,

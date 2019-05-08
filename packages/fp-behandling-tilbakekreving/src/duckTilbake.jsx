@@ -99,6 +99,9 @@ reducerRegistry.register(reducerName, tilbakekrevingBehandlingReducer);
 export const getTilbakekrevingKodeverk = kodeverkType => createSelector(
   [tilbakekrevingBehandlingApi.TILBAKE_KODEVERK.getRestApiData()], (kodeverk = {}) => kodeverk[kodeverkType],
 );
+export const getAlleTilbakekrevingKodeverk = createSelector(
+  [tilbakekrevingBehandlingApi.TILBAKE_KODEVERK.getRestApiData()], (kodeverk = {}) => kodeverk,
+);
 
 const getBehandlingContext = state => state.default[reducerName];
 export const getSelectedBehandlingId = createSelector([getBehandlingContext], behandlingContext => behandlingContext.behandlingId);

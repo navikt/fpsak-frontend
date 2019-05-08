@@ -22,24 +22,25 @@ const headerTextCodes = [
 
 const TilbakekrevingVedtakPeriodeTabell = ({
   perioder,
+  getKodeverknavn,
 }) => {
   const rader = perioder.map(periode => (
-    <TableRow key={periode.fomDato}>
-      <TableColumn><Normaltekst><PeriodLabel dateStringFom={periode.fomDato} dateStringTom={periode.tomDato} /></Normaltekst></TableColumn>
-      <TableColumn><Normaltekst>{formatCurrencyNoKr(periode.feilUtbetaltBelop)}</Normaltekst></TableColumn>
-      <TableColumn><Normaltekst>{periode.vurdering}</Normaltekst></TableColumn>
-      <TableColumn><Normaltekst>{`${periode.andelAvBelop}%`}</Normaltekst></TableColumn>
-      <TableColumn><Normaltekst>{periode.renter ? periode.renter : ''}</Normaltekst></TableColumn>
-      <TableColumn><Normaltekst>{formatCurrencyNoKr(periode.belopSomTilbakekreves)}</Normaltekst></TableColumn>
+    <TableRow key={periode.periode[0]}>
+      <TableColumn><Normaltekst><PeriodLabel dateStringFom={periode.periode[0]} dateStringTom={periode.periode[1]} /></Normaltekst></TableColumn>
+      <TableColumn><Normaltekst>{formatCurrencyNoKr(periode.feilutbetaltBeløp)}</Normaltekst></TableColumn>
+      <TableColumn><Normaltekst>{getKodeverknavn(periode.vurdering)}</Normaltekst></TableColumn>
+      <TableColumn><Normaltekst>{periode.andelAvBeløp ? `${periode.andelAvBeløp}%` : ''}</Normaltekst></TableColumn>
+      <TableColumn><Normaltekst>{periode.renterProsent ? periode.renterProsent : ''}</Normaltekst></TableColumn>
+      <TableColumn><Normaltekst>{formatCurrencyNoKr(periode.tilbakekrevingBeløp)}</Normaltekst></TableColumn>
     </TableRow>
   )).concat(
     <TableRow key="sum">
       <TableColumn><Normaltekst><FormattedMessage id="TilbakekrevingVedtakPeriodeTabell.Sum" /></Normaltekst></TableColumn>
-      <TableColumn><Normaltekst>{formatCurrencyNoKr(perioder.reduce((sum, periode) => sum + periode.feilUtbetaltBelop, 0))}</Normaltekst></TableColumn>
+      <TableColumn><Normaltekst>{formatCurrencyNoKr(perioder.reduce((sum, periode) => sum + periode.feilutbetaltBeløp, 0))}</Normaltekst></TableColumn>
       <TableColumn />
       <TableColumn />
       <TableColumn />
-      <TableColumn><Element>{formatCurrencyNoKr(perioder.reduce((sum, periode) => sum + periode.belopSomTilbakekreves, 0))}</Element></TableColumn>
+      <TableColumn><Element>{formatCurrencyNoKr(perioder.reduce((sum, periode) => sum + periode.tilbakekrevingBeløp, 0))}</Element></TableColumn>
     </TableRow>,
   );
 
@@ -54,6 +55,7 @@ const TilbakekrevingVedtakPeriodeTabell = ({
 
 TilbakekrevingVedtakPeriodeTabell.propTypes = {
   perioder: PropTypes.arrayOf(PropTypes.shape()),
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 export default TilbakekrevingVedtakPeriodeTabell;
