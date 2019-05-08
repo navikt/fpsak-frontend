@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { createSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -18,6 +19,7 @@ import {
 } from '@fpsak-frontend/utils';
 
 import {
+  getAksjonspunkter,
   getFeilutbetalingFakta,
   getFeilutbetalingAarsaker,
   getBehandlingVersjon,
@@ -263,7 +265,8 @@ FeilutbetalingInfoPanelImpl.propTypes = {
   ...formPropTypes,
 };
 
-const buildInitalValues = (perioder, aksjonspunkter) => {
+const buildInitialValues = createSelector([getFeilutbetalingFakta, getAksjonspunkter], (feilutbetalingFakta, aksjonspunkter) => {
+  const { perioder } = feilutbetalingFakta.behandlingFakta;
   const apCode = aksjonspunkter.find(ap => ap.definisjon.kode === feilutbetalingAksjonspunkter[0]);
   return {
     begrunnelse: apCode ? apCode.begrunnelse : null,
@@ -282,7 +285,7 @@ const buildInitalValues = (perioder, aksjonspunkter) => {
         };
       }),
   };
-};
+});
 
 const transformValues = (values, aksjonspunkter, årsaker, initialPerioder) => {
   const apCode = aksjonspunkter.find(ap => ap.definisjon.kode === feilutbetalingAksjonspunkter[0]);
@@ -320,7 +323,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   return state => ({
     feilutbetaling,
     årsaker,
-    initialValues: buildInitalValues(feilutbetaling.perioder, ownProps.aksjonspunkter),
+    initialValues: buildInitialValues(state),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
     onSubmit: submitCallback,
   });
@@ -334,7 +337,6 @@ const mapDispatchToProps = dispatch => ({
 
 const feilutbetalingForm = injectIntl(behandlingForm({
   form: formName,
-  enableReinitialize: true,
 })(FeilutbetalingInfoPanelImpl));
 
 const FeilutbetalingInfoPanel = withDefaultToggling(faktaPanelCodes.FEILUTBETALING, feilutbetalingAksjonspunkter)(feilutbetalingForm);
