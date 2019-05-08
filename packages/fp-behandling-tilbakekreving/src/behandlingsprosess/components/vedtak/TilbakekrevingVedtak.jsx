@@ -72,12 +72,14 @@ TilbakekrevingVedtakImpl.propTypes = {
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
-// FIXME (TOR) Ta i bruk korrekt data fra backend
-const mapStateToProps = state => ({
-  perioder: getBeregningsresultat(state),
-  resultat: getBeregningsresultat(state)[0].vedtakResultat,
-  konsekvensAvBehandling: getBeregningsresultat(state)[0].behandlingKonsekvens,
-});
+const mapStateToProps = (state) => {
+  const beregningsresultat = getBeregningsresultat(state);
+  return {
+    perioder: beregningsresultat.beregningResultatPerioder,
+    resultat: beregningsresultat.vedtakResultat,
+    konsekvensAvBehandling: beregningsresultat.behandlingKonsekvens,
+  };
+};
 
 const TilbakekrevingVedtak = connect(mapStateToProps)(injectKodeverk(getAlleTilbakekrevingKodeverk)(TilbakekrevingVedtakImpl));
 
