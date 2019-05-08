@@ -100,6 +100,7 @@ const transformValues = values => ({
   ...values,
 });
 
+// TODO Skriv om til selector!
 const buildInitialValues = (periode, soknad, person, inntekter, medlemskapPerioder, gjeldendeFom, alleAksjonspunkter, alleKodeverk) => {
   const aksjonspunkter = alleAksjonspunkter
     .filter(ap => periode.aksjonspunkter.includes(ap.definisjon.kode) || ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP)
@@ -124,25 +125,28 @@ const buildInitialValues = (periode, soknad, person, inntekter, medlemskapPeriod
   };
 };
 
-const mapStateToProps = (state, ownProps) => {
-  const { valgtPeriode } = ownProps;
-  const formName = `OppholdInntektOgPeriodeForm-${valgtPeriode.id}`;
-  const medlemskapPerioder = behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'medlemskapPerioder');
-  const soknad = behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'soknad');
-  const person = behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'person');
-  const inntekter = behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'inntekter');
-  const gjeldendeFom = behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'gjeldendeFom');
-  const alleKodeverk = getAlleKodeverk(state);
-  return {
-    initialValues: {
-      ...buildInitialValues(valgtPeriode, soknad, person, inntekter, medlemskapPerioder, gjeldendeFom, ownProps.aksjonspunkter, alleKodeverk),
-    },
-    submittable: ownProps.submittable,
-    form: formName,
-    onSubmit: values => ownProps.updateOppholdInntektPeriode(transformValues(values)),
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.updateOppholdInntektPeriode(transformValues(values));
+  return (state) => {
+    const { valgtPeriode } = ownProps;
+    const formName = `OppholdInntektOgPeriodeForm-${valgtPeriode.id}`;
+    const medlemskapPerioder = behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'medlemskapPerioder');
+    const soknad = behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'soknad');
+    const person = behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'person');
+    const inntekter = behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'inntekter');
+    const gjeldendeFom = behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'gjeldendeFom');
+    const alleKodeverk = getAlleKodeverk(state);
+    return {
+      initialValues: {
+        ...buildInitialValues(valgtPeriode, soknad, person, inntekter, medlemskapPerioder, gjeldendeFom, ownProps.aksjonspunkter, alleKodeverk),
+      },
+      submittable: ownProps.submittable,
+      form: formName,
+      onSubmit,
+    };
   };
 };
 
-export default connect(mapStateToProps)(injectIntl(behandlingForm({
+export default connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   enableReinitialize: true,
 })(OppholdInntektOgPeriodeForm)));

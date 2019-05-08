@@ -248,29 +248,33 @@ const transformValues = (values, aksjonspunkter) => {
 
 
 const buildInitalValues = createSelector([getSoknad, getFagsakPerson, getBehandlingMedlemNew, getBehandlingRevurderingAvFortsattMedlemskapFom],
-  (soknad, person, medlem = {}, gjeldendeFom = undefined) => ({
-    soknad,
-    person,
-    gjeldendeFom,
-    medlemskapPerioder: medlem.medlemskapPerioder || [],
-    inntekter: medlem.inntekt,
-    perioder: (medlem.perioder || []).map(periode => ({
-      ...periode,
-      id: guid(),
-    })),
-  }));
+(soknad, person, medlem = {}, gjeldendeFom = undefined) => ({
+  soknad,
+  person,
+  gjeldendeFom,
+  medlemskapPerioder: medlem.medlemskapPerioder || [],
+  inntekter: medlem.inntekt,
+  perioder: (medlem.perioder || []).map(periode => ({
+    ...periode,
+    id: guid(),
+  })),
+}));
 
-const perioder = state => behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'perioder') || [];
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter));
+  const hasOpenAksjonspunkter = ownProps.aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
+  const perioder = [];
 
-const mapStateToProps = (state, initialProps) => {
-  const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state));
-  return {
-    behandlingFormPrefix,
-    initialValues: buildInitalValues(state),
-    perioder: perioder(state),
-    isRevurdering: isBehandlingRevurderingFortsattMedlemskap(state),
-    hasOpenAksjonspunkter: initialProps.aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode)),
-    onSubmit: values => initialProps.submitCallback(transformValues(values, initialProps.aksjonspunkter)),
+  return (state) => {
+    const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state));
+    return {
+      behandlingFormPrefix,
+      onSubmit,
+      hasOpenAksjonspunkter,
+      initialValues: buildInitalValues(state),
+      perioder: behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'perioder') || perioder,
+      isRevurdering: isBehandlingRevurderingFortsattMedlemskap(state),
+    };
   };
 };
 
@@ -281,7 +285,7 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(behandlingForm({
+export default connect(mapStateToPropsFactory, mapDispatchToProps)(behandlingForm({
   form: 'OppholdInntektOgPerioderForm',
   enableReinitialize: true,
 })(injectIntl(OppholdInntektOgPerioderFormNew)));

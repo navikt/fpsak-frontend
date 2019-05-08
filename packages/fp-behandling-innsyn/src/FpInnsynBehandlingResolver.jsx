@@ -8,7 +8,7 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { isBehandlingInSync } from './selectors/innsynBehandlingSelectors';
 import { fetchBehandling as fetchBehandlingActionCreator, getBehandlingIdentifier } from './duckInnsyn';
 
-export class FpTilbakeBehandlingResolver extends Component {
+export class FpInnsynBehandlingResolver extends Component {
   static propTypes = {
     behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
     fetchBehandling: PropTypes.func.isRequired,
@@ -52,4 +52,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   fetchBehandling: fetchBehandlingActionCreator,
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(FpTilbakeBehandlingResolver);
+export default connect(mapStateToProps, mapDispatchToProps)(FpInnsynBehandlingResolver);

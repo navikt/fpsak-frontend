@@ -164,15 +164,18 @@ const getfilteredCauses = createSelector(
   causes => causes.filter(cause => cause.kode !== ugunstAarsakTyper.BARN_IKKE_REGISTRERT_FOLKEREGISTER),
 );
 
-const mapStateToProps = (state, initialProps) => ({
-  ...behandlingFormValueSelector(formName)(state, 'mottaker', 'brevmalkode', 'fritekst', 'arsakskode'),
-  causes: getfilteredCauses(state),
-  initialValues: buildInitalValues(isKontrollerRevurderingAksjonspunkOpen(state), initialProps),
-  onSubmit: values => initialProps.submitCallback(transformValues(values)),
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitCallback(transformValues(values));
+  return state => ({
+    ...behandlingFormValueSelector(formName)(state, 'mottaker', 'brevmalkode', 'fritekst', 'arsakskode'),
+    causes: getfilteredCauses(state),
+    initialValues: buildInitalValues(isKontrollerRevurderingAksjonspunkOpen(state), ownProps),
+    onSubmit,
+  });
+};
 
 
-const Messages = connect(mapStateToProps)(injectIntl(behandlingForm({
+const Messages = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: formName,
 })(MessagesImpl)));
 

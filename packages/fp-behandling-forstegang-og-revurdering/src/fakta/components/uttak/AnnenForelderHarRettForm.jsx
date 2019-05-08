@@ -85,22 +85,26 @@ const transformValues = (values, aksjonspunkter) => aksjonspunkter.map(ap => ({
 
 }));
 
-const buildInitialValues = createSelector([getBehandlingYtelseFordeling],
-  (ytelseFordeling) => {
-    const annenForelderHarRett = ytelseFordeling && ytelseFordeling.annenforelderHarRettDto;
-    if (ytelseFordeling) {
-      return ({
-        annenForelderHarRett: annenForelderHarRett ? annenForelderHarRett.annenforelderHarRett : undefined,
-        begrunnelse: annenForelderHarRett ? annenForelderHarRett.begrunnelse : undefined,
-      });
-    }
+const buildInitialValues = createSelector([getBehandlingYtelseFordeling], (ytelseFordeling) => {
+  const annenForelderHarRett = ytelseFordeling && ytelseFordeling.annenforelderHarRettDto;
+  if (ytelseFordeling) {
+    return ({
+      annenForelderHarRett: annenForelderHarRett ? annenForelderHarRett.annenforelderHarRett : undefined,
+      begrunnelse: annenForelderHarRett ? annenForelderHarRett.begrunnelse : undefined,
+    });
+  }
 
-    return undefined;
-  });
-const mapStateToProps = (state, initialProps) => ({
-  initialValues: buildInitialValues(state),
-  onSubmit: values => initialProps.submitCallback(transformValues(values, initialProps.aksjonspunkter)),
+  return undefined;
 });
+
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter));
+
+  return state => ({
+    initialValues: buildInitialValues(state),
+    onSubmit,
+  });
+};
 
 AnnenForelderHarRettForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
@@ -113,7 +117,7 @@ AnnenForelderHarRettForm.defaultProps = {
   aksjonspunkter: [],
 };
 
-export default connect(mapStateToProps)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: 'AnnenForelderHarRettForm',
   enableReinitialize: true,
 })(AnnenForelderHarRettForm));

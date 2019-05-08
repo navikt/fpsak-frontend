@@ -115,15 +115,19 @@ UttakSlettPeriodeModalImpl.defaultProps = {
   showModal: false,
 };
 
-const mapToStateToProps = (state, ownProps) => {
-  const formName = `slettPeriodeForm-${ownProps.periode.id}`;
-  return {
-    form: formName,
-    onSubmit: values => ownProps.closeEvent(values),
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.closeEvent(values);
+
+  return () => {
+    const formName = `slettPeriodeForm-${ownProps.periode.id}`;
+    return {
+      form: formName,
+      onSubmit,
+    };
   };
 };
 
-const UttakSlettPeriodeModal = connect(mapToStateToProps)(behandlingForm({
+const UttakSlettPeriodeModal = connect(mapStateToPropsFactory)(behandlingForm({
   enableReinitialize: true,
 })(injectIntl(UttakSlettPeriodeModalImpl)));
 

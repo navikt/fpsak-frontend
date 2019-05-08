@@ -3,14 +3,17 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import connect from 'react-redux/es/connect/connect';
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
+import { createSelector } from 'reselect';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
+
 import {
   getMellomlagringData,
   getMellomlagringSpinner,
   getOpenAksjonspunkter,
 } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
-import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
 
 const isEqual = (lastSavedVersionValues, formValues) => {
   const formvaluesBegrunnelse = formValues.begrunnelse === '' ? null : formValues.begrunnelse;
@@ -66,19 +69,22 @@ export const TempsaveKlageButtonImpl = ({
   );
 };
 
-const getMellomLagringFormData = mellomlagringData => ({
+const getMellomLagringFormData = createSelector([getMellomlagringData], mellomlagringData => ({
   begrunnelse: mellomlagringData.begrunnelse || null,
   fritekstTilBrev: mellomlagringData.fritekstTilBrev || null,
   klageVurdering: mellomlagringData.klageVurdering || null,
   klageVurderingOmgjoer: mellomlagringData.klageVurderingOmgjoer || null,
   klageMedholdArsak: mellomlagringData.klageMedholdArsak || null,
-});
+}));
+
+const getForeslaVedtakAp = createSelector([getOpenAksjonspunkter], openAksjonspunkter => openAksjonspunkter
+  .filter(ap => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK).length === 1);
 
 const mapStateToProps = state => ({
-  lastSavedVersionValues: getMellomLagringFormData(getMellomlagringData(state)),
+  lastSavedVersionValues: getMellomLagringFormData(state),
   aksjonspunktCode: getSelectedBehandlingspunktAksjonspunkter(state)[0].definisjon.kode,
   spinner: getMellomlagringSpinner(state),
-  hasForeslaVedtakAp: getOpenAksjonspunkter(state).filter(ap => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK).length === 1,
+  hasForeslaVedtakAp: getForeslaVedtakAp(state),
 });
 
 TempsaveKlageButtonImpl.propTypes = {

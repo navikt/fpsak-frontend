@@ -511,12 +511,12 @@ UttakPerioder.propTypes = {
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   inntektsmeldinger: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
-  perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  perioder: PropTypes.arrayOf(PropTypes.shape()),
   openForms: PropTypes.bool.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormReset: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
-  slettedePerioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  slettedePerioder: PropTypes.arrayOf(PropTypes.shape()),
   initialValues: PropTypes.shape().isRequired,
   uttakPeriodeVurderingTyper: PropTypes.arrayOf(
     PropTypes.shape({
@@ -537,12 +537,14 @@ UttakPerioder.defaultProps = {
   førsteUttaksdato: undefined,
   endringsdato: undefined,
   isManuellOverstyring: false,
+  slettedePerioder: [],
+  perioder: [],
 };
 
 const getFørsteUttaksdato = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'førsteUttaksdato') || undefined;
 const getEndringsdato = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'endringsdato') || undefined;
-const slettedePerioder = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'slettedePerioder') || [];
-const perioder = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'perioder') || [];
+const slettedePerioder = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'slettedePerioder');
+const perioder = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'perioder');
 const manuellOverstyring = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'manuellOverstyring') || false;
 
 const mapStateToProps = (state) => {

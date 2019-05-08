@@ -71,17 +71,18 @@ const buildInitialValues = createSelector(
   },
 );
 
-const mapStateToProps = (state, ownProps) => {
-  const aksjonspunktCode = getSelectedBehandlingspunktAksjonspunkter(state)[0].definisjon.kode;
-  return {
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const aksjonspunktCode = getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
+  const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
+  return state => ({
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
     readOnly: ownProps.readOnly || isKlageBehandlingInKA(state),
-    onSubmit: values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]),
-  };
+    onSubmit,
+  });
 };
 
-const FormkravKlageFormNfp = connect(mapStateToProps)(behandlingForm({
+const FormkravKlageFormNfp = connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
 })(FormkravKlageFormNfpImpl));
 

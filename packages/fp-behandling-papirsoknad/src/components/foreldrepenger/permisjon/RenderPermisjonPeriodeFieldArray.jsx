@@ -266,21 +266,21 @@ RenderPermisjonPeriodeFieldArray.transformValues = values => values.map((value) 
   };
 });
 
-
-const mapStateToProps = (state, ownProps) => {
-  const values = getFormValues(ownProps.meta.form)(state);
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const values = getFormValues(ownProps.meta.form)(initialState);
   const permisjonValues = values[ownProps.namePrefix];
   let selectedPeriodeTyper = [''];
   if (typeof permisjonValues[ownProps.periodePrefix] !== 'undefined') {
     selectedPeriodeTyper = permisjonValues[ownProps.periodePrefix].map(({ periodeType }) => periodeType);
   }
+  const periodeTyper = getKodeverk(kodeverkTyper.UTTAK_PERIODE_TYPE)(initialState);
+  const morsAktivitetTyper = getKodeverk(kodeverkTyper.MORS_AKTIVITET)(initialState);
 
-  return {
+  return () => ({
     selectedPeriodeTyper,
-    periodeTyper: getKodeverk(kodeverkTyper.UTTAK_PERIODE_TYPE)(state),
-    morsAktivitetTyper: getKodeverk(kodeverkTyper.MORS_AKTIVITET)(state),
-  };
+    periodeTyper,
+    morsAktivitetTyper,
+  });
 };
 
-
-export default connect(mapStateToProps)(RenderPermisjonPeriodeFieldArray);
+export default connect(mapStateToPropsFactory)(RenderPermisjonPeriodeFieldArray);

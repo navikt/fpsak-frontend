@@ -211,27 +211,30 @@ export class BehandlingIndex extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const behandlingId = getSelectedBehandlingId(state);
-  return {
-    behandlingId,
-    saksnummer: getSelectedSaksnummer(state),
-    behandlingerVersjonMappedById: getBehandlingerVersjonMappedById(state),
-    behandlingType: getBehandlingerTypesMappedById(state)[behandlingId],
-    location: state.router.location,
-    erAktivPapirsoknad: getBehandlingerAktivPapirsoknadMappedById(state)[behandlingId],
-    featureToggles: getFeatureToggles(state),
-    hasSubmittedPaVentForm: getHasSubmittedPaVentForm(state),
-    kodeverk: getAlleKodeverk(state),
-    fagsak: {
-      fagsakStatus: getSelectedFagsakStatus(state),
-      fagsakPerson: getFagsakPerson(state),
-      fagsakYtelseType: getFagsakYtelseType(state),
-      isForeldrepengerFagsak: isForeldrepengerFagsak(state),
-    },
-    allDocuments: getAllDocuments(state),
-    avsluttedeBehandlinger: getAvsluttedeBehandlinger(state),
-    behandlingLinks: getBehandlingerLinksMappedById(state)[behandlingId],
+const mapStateToPropsFactory = (initialState) => {
+  const fagsak = {
+    fagsakStatus: getSelectedFagsakStatus(initialState),
+    fagsakPerson: getFagsakPerson(initialState),
+    fagsakYtelseType: getFagsakYtelseType(initialState),
+    isForeldrepengerFagsak: isForeldrepengerFagsak(initialState),
+  };
+  return (state) => {
+    const behandlingId = getSelectedBehandlingId(state);
+    return {
+      behandlingId,
+      saksnummer: getSelectedSaksnummer(state),
+      behandlingerVersjonMappedById: getBehandlingerVersjonMappedById(state),
+      behandlingType: getBehandlingerTypesMappedById(state)[behandlingId],
+      location: state.router.location,
+      erAktivPapirsoknad: getBehandlingerAktivPapirsoknadMappedById(state)[behandlingId],
+      featureToggles: getFeatureToggles(state),
+      hasSubmittedPaVentForm: getHasSubmittedPaVentForm(state),
+      kodeverk: getAlleKodeverk(state),
+      allDocuments: getAllDocuments(state),
+      avsluttedeBehandlinger: getAvsluttedeBehandlinger(state),
+      behandlingLinks: getBehandlingerLinksMappedById(state)[behandlingId],
+      fagsak,
+    };
   };
 };
 
@@ -246,4 +249,4 @@ export default trackRouteParam({
   paramPropType: PropTypes.number,
   storeParam: setSelectedBehandlingId,
   getParamFromStore: getSelectedBehandlingId,
-})(connect(mapStateToProps, mapDispatchToProps)(requireProps(['behandlingId'])(BehandlingIndex)));
+})(connect(mapStateToPropsFactory, mapDispatchToProps)(requireProps(['behandlingId'])(BehandlingIndex)));

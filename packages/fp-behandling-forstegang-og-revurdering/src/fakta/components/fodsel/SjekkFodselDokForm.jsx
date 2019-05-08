@@ -199,20 +199,21 @@ const transformValues = (values, antallBarnFraSoknad, antallBarnFraTps, fodselIn
 
 export const sjekkFodselDokForm = 'SjekkFodselDokForm';
 
-const mapStateToProps = (state, ownProps) => {
-  const fodselInfo = getFamiliehendelseGjeldende(state).avklartBarn;
-  return {
-    initialValues: buildInitialValues(state),
-    onSubmit: values => ownProps.submitHandler(transformValues(values,
-      getSoknadAntallBarn(state), getBarnFraTpsRelatertTilSoknad(state).length, fodselInfo)),
-    fodselInfo,
-    avklartBarn: behandlingFormValueSelector(sjekkFodselDokForm)(state, 'avklartBarn'),
-    dokumentasjonForeliggerIsEdited: getEditedStatus(state).dokumentasjonForeligger,
-    dokumentasjonForeligger: behandlingFormValueSelector(sjekkFodselDokForm)(state, 'dokumentasjonForeligger'),
-    behandlingsType: getBehandlingType(state),
-  };
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const fodselInfo = getFamiliehendelseGjeldende(initialState).avklartBarn;
+  const onSubmit = values => ownProps.submitHandler(transformValues(values,
+    getSoknadAntallBarn(initialState), getBarnFraTpsRelatertTilSoknad(initialState).length, fodselInfo));
+  return state => ({
+      onSubmit,
+      initialValues: buildInitialValues(state),
+      fodselInfo,
+      avklartBarn: behandlingFormValueSelector(sjekkFodselDokForm)(state, 'avklartBarn'),
+      dokumentasjonForeliggerIsEdited: getEditedStatus(state).dokumentasjonForeligger,
+      dokumentasjonForeligger: behandlingFormValueSelector(sjekkFodselDokForm)(state, 'dokumentasjonForeligger'),
+      behandlingsType: getBehandlingType(state),
+    });
 };
 
-export default connect(mapStateToProps)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: sjekkFodselDokForm,
 })(SjekkFodselDokForm));

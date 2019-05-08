@@ -230,18 +230,19 @@ BeregningFormImpl.defaultProps = {
   sammenligningsgrunnlag: undefined,
 };
 
-const mapStateToProps = (state, ownProps) => {
-  const { gjeldendeAksjonspunkter, relevanteStatuser } = ownProps;
-  const allePerioder = getBeregningsgrunnlagPerioder(state);
-  const alleAndelerIForstePeriode = getAlleAndelerIForstePeriode(state);
-  return {
-    onSubmit: values => ownProps.submitCallback(
-      transformValues(values, relevanteStatuser, alleAndelerIForstePeriode, gjeldendeAksjonspunkter, allePerioder),
-    ),
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const { gjeldendeAksjonspunkter, relevanteStatuser, submitCallback } = ownProps;
+  const allePerioder = getBeregningsgrunnlagPerioder(initialState);
+  const alleAndelerIForstePeriode = getAlleAndelerIForstePeriode(initialState);
+  const onSubmit = values => submitCallback(
+    transformValues(values, relevanteStatuser, alleAndelerIForstePeriode, gjeldendeAksjonspunkter, allePerioder),
+  );
+  return state => ({
+    onSubmit,
     initialValues: buildInitialValues(state),
-  };
+  });
 };
 
-const BeregningForm = connect(mapStateToProps)(behandlingForm({ form: formName })(BeregningFormImpl));
+const BeregningForm = connect(mapStateToPropsFactory)(behandlingForm({ form: formName })(BeregningFormImpl));
 
 export default BeregningForm;

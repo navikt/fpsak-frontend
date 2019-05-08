@@ -197,21 +197,23 @@ const transformValues = (values, documents) => ({
 
 const formName = 'InnsynForm';
 
-const mapStateToProps = (state, ownProps) => ({
-  documents: getFilteredReceivedDocuments(state),
-  saksNr: getSelectedSaksnummer(state),
-  vedtaksdokumenter: getBehandlingInnsynVedtaksdokumentasjon(state),
-  innsynResultatTyper: getKodeverk(kodeverkTyper.INNSYN_RESULTAT_TYPE)(state),
-  behandlingTypes: getKodeverk(kodeverkTyper.BEHANDLING_TYPE)(state),
-  isApOpen: isAksjonspunktOpen(getSelectedBehandlingspunktAksjonspunkter(state)[0].status.kode),
-  innsynResultatType: behandlingFormValueSelector(formName)(state, 'innsynResultatType'),
-  sattPaVent: behandlingFormValueSelector(formName)(state, 'sattPaVent'),
-  initialValues: buildInitialValues(state),
-  onSubmit: values => ownProps.submitCallback([transformValues(values, getAllDocuments(state))]),
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitCallback([transformValues(values, getAllDocuments(initialState))]);
+  return state => ({
+    documents: getFilteredReceivedDocuments(state),
+    saksNr: getSelectedSaksnummer(state),
+    vedtaksdokumenter: getBehandlingInnsynVedtaksdokumentasjon(state),
+    innsynResultatTyper: getKodeverk(kodeverkTyper.INNSYN_RESULTAT_TYPE)(state),
+    behandlingTypes: getKodeverk(kodeverkTyper.BEHANDLING_TYPE)(state),
+    isApOpen: isAksjonspunktOpen(getSelectedBehandlingspunktAksjonspunkter(state)[0].status.kode),
+    innsynResultatType: behandlingFormValueSelector(formName)(state, 'innsynResultatType'),
+    sattPaVent: behandlingFormValueSelector(formName)(state, 'sattPaVent'),
+    initialValues: buildInitialValues(state),
+    onSubmit,
+  });
+};
 
-
-const InnsynForm = connect(mapStateToProps)(behandlingForm({
+const InnsynForm = connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
 })(InnsynFormImpl));
 

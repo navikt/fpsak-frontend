@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -198,4 +197,4 @@ RenderUttakTableImpl.defaultProps = {
 
 const RenderUttakTable = injectIntl(RenderUttakTableImpl);
 
-export default connect()(RenderUttakTable);
+export default RenderUttakTable;

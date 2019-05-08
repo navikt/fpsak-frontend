@@ -34,6 +34,7 @@ export const MedlemskapInfoPanelImpl = ({
   openInfoPanels,
   toggleInfoPanelCallback,
   aksjonspunkter,
+  aksjonspunkterMinusAvklarStartDato,
   readOnly,
   submitCallback,
   skalBrukeNyeMedlemskap,
@@ -41,7 +42,6 @@ export const MedlemskapInfoPanelImpl = ({
 }) => {
   const avklarStartdatoAksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
   const avklarStartdatoOverstyring = aksjonspunkter.find(ap => ap.definisjon.kode === OVERSTYR_AVKLAR_STARTDATO);
-  const oppholdInntektOgPeriodeAp = aksjonspunkter.filter(ap => !avklarStartdatoAp.includes(ap.definisjon.kode));
   return (
     <FaktaEkspandertpanel
       title={intl.formatMessage({ id: 'MedlemskapInfoPanel.Medlemskap' })}
@@ -51,7 +51,7 @@ export const MedlemskapInfoPanelImpl = ({
       faktaId={faktaPanelCodes.MEDLEMSKAPSVILKARET}
       readOnly={readOnly}
     >
-      { (avklarStartdatoAksjonspunkt || (isForeldrepenger && (oppholdInntektOgPeriodeAp.length === 0 || !hasOpenAksjonspunkter)))
+      { (avklarStartdatoAksjonspunkt || (isForeldrepenger && (aksjonspunkterMinusAvklarStartDato.length === 0 || !hasOpenAksjonspunkter)))
         && (
         <StartdatoForForeldrepengerperiodenForm
           readOnly={readOnly}
@@ -68,7 +68,7 @@ export const MedlemskapInfoPanelImpl = ({
           readOnly={readOnly}
           submitCallback={submitCallback}
           submittable={submittable}
-          aksjonspunkter={aksjonspunkter.filter(ap => !avklarStartdatoAp.includes(ap.definisjon.kode))}
+          aksjonspunkter={aksjonspunkterMinusAvklarStartDato}
         />
         )
       }
@@ -78,7 +78,7 @@ export const MedlemskapInfoPanelImpl = ({
           readOnly={readOnly}
           submitCallback={submitCallback}
           submittable={submittable}
-          aksjonspunkter={aksjonspunkter.filter(ap => !avklarStartdatoAp.includes(ap.definisjon.kode))}
+          aksjonspunkter={aksjonspunkterMinusAvklarStartDato}
         />
       )
       }
@@ -96,6 +96,7 @@ MedlemskapInfoPanelImpl.propTypes = {
   openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
   toggleInfoPanelCallback: PropTypes.func.isRequired,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired).isRequired,
+  aksjonspunkterMinusAvklarStartDato: PropTypes.arrayOf(aksjonspunktPropType.isRequired).isRequired,
   readOnly: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
   skalBrukeNyeMedlemskap: PropTypes.bool,
@@ -107,15 +108,19 @@ MedlemskapInfoPanelImpl.defaultProps = {
   isForeldrepenger: true,
 };
 
-const mapStateToProps = state => ({
-  skalBrukeNyeMedlemskap: getFeatureToggles(state)[featureToggle.LØPENDE_MEDLESMKAP],
-  isForeldrepenger: isForeldrepengerFagsak(state),
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const aksjonspunkterMinusAvklarStartDato = ownProps.aksjonspunkter.filter(ap => !avklarStartdatoAp.includes(ap.definisjon.kode));
+  return state => ({
+    skalBrukeNyeMedlemskap: getFeatureToggles(state)[featureToggle.LØPENDE_MEDLESMKAP],
+    isForeldrepenger: isForeldrepengerFagsak(state),
+    aksjonspunkterMinusAvklarStartDato,
+  });
+};
 
 const medlemAksjonspunkter = [AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, AVKLAR_OM_BRUKER_ER_BOSATT, AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
   AVKLAR_OPPHOLDSRETT, AVKLAR_LOVLIG_OPPHOLD, AVKLAR_FORTSATT_MEDLEMSKAP, OVERSTYR_AVKLAR_STARTDATO];
 
-const ConnectedComponent = connect(mapStateToProps)(injectIntl(MedlemskapInfoPanelImpl));
+const ConnectedComponent = connect(mapStateToPropsFactory)(injectIntl(MedlemskapInfoPanelImpl));
 
 const MedlemskapInfoPanel = withDefaultToggling(faktaPanelCodes.MEDLEMSKAPSVILKARET, medlemAksjonspunkter)(ConnectedComponent);
 

@@ -137,23 +137,24 @@ export const transformValues = (values, aksjonspunktCode) => ({
 
 const formName = 'BehandleKlageNfpForm';
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToPropsFactory = (initialState, ownProps) => {
   const aksjonspunktCode = getSelectedBehandlingspunktAksjonspunkter(state)[0].definisjon.kode;
-  return {
+  const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
+  return state => ({
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
     formValues: behandlingFormValueSelector(formName)(state, 'klageVurdering', 'begrunnelse', 'fritekstTilBrev', 'klageMedholdArsak', 'klageVurderingOmgjoer'),
-    onSubmit: values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]),
     readOnly: isKlageBehandlingInKA(state) || ownProps.readOnly,
     sprakkode: getBehandlingSprak(state),
-  };
+    onSubmit,
+  });
 };
 
-const BehandleKlageFormNfp = connect(mapStateToProps)(behandlingForm({
+const BehandleKlageFormNfp = connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
 })(BehandleKlageFormNfpImpl));
 
 BehandleKlageFormNfp.supports = apCodes => apCodes.includes(aksjonspunktCodes.BEHANDLE_KLAGE_NFP);
 
 
-export default connect(mapStateToProps)(injectIntl(BehandleKlageFormNfp));
+export default injectIntl(BehandleKlageFormNfp);

@@ -122,13 +122,16 @@ const transformValues = (values) => {
   };
 };
 
-const mapStateToProps = (state, initialProps) => ({
-  skalKunneLeggeTilNyeArbeidsforhold: getSkalKunneLeggeTilNyeArbeidsforhold(state),
-  initialValues: buildInitialValues(state),
-  onSubmit: values => initialProps.submitCallback([transformValues(values)]),
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
+  return state => ({
+    skalKunneLeggeTilNyeArbeidsforhold: getSkalKunneLeggeTilNyeArbeidsforhold(state),
+    initialValues: buildInitialValues(state),
+    onSubmit,
+  });
+};
 
-const connectedComponent = connect(mapStateToProps)(behandlingForm({ form: formName })(ArbeidsforholdInfoPanelImpl));
+const connectedComponent = connect(mapStateToPropsFactory)(behandlingForm({ form: formName })(ArbeidsforholdInfoPanelImpl));
 const ArbeidsforholdInfoPanel = withDefaultToggling(faktaPanelCodes.ARBEIDSFORHOLD, relevanteAksjonspunkter)(connectedComponent);
 
 export default ArbeidsforholdInfoPanel;

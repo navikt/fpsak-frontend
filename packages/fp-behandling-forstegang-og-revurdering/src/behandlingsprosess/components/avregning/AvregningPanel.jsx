@@ -430,17 +430,20 @@ const buildInitialValues = createSelector(
   },
 );
 
-const mapStateToProps = (state, initialProps) => ({
-  simuleringResultat: getSimuleringResultat(state),
-  initialValues: buildInitialValues(state),
-  ...behandlingFormValueSelector(formName)(state, 'erTilbakekrevingVilkårOppfylt', 'grunnerTilReduksjon', 'videreBehandling', 'varseltekst'),
-  sprakkode: getBehandlingSprak(state),
-  behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
-  featureVarseltekst: getFeatureToggles(state)[featureToggle.SIMULER_VARSELTEKST],
-  saksnummer: getSelectedSaksnummer(state),
-  isForeldrepenger: isForeldrepengerFagsak(state),
-  onSubmit: values => initialProps.submitCallback(transformValues(values, initialProps.apCodes[0])),
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitCallback(transformValues(values, ownProps.apCodes[0]));
+  return state => ({
+    simuleringResultat: getSimuleringResultat(state),
+    initialValues: buildInitialValues(state),
+    ...behandlingFormValueSelector(formName)(state, 'erTilbakekrevingVilkårOppfylt', 'grunnerTilReduksjon', 'videreBehandling', 'varseltekst'),
+    sprakkode: getBehandlingSprak(state),
+    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+    featureVarseltekst: getFeatureToggles(state)[featureToggle.SIMULER_VARSELTEKST],
+    saksnummer: getSelectedSaksnummer(state),
+    isForeldrepenger: isForeldrepengerFagsak(state),
+    onSubmit,
+  });
+};
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
@@ -448,7 +451,7 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-const AvregningPanel = connect(mapStateToProps, mapDispatchToProps)(injectIntl(behandlingForm({
+const AvregningPanel = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
   form: formName,
   enableReinitialize: true,
 })(AvregningPanelImpl)));

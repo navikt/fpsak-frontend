@@ -134,21 +134,23 @@ const transformValues = (values, fastsattOpptjening, aksjonspunkt) => ({
   kode: aksjonspunkt.definisjon.kode,
 });
 
-const mapStateToProps = (state, initialProps) => {
-  const fastsattOpptjening = getBehandlingFastsattOpptjening(state);
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const fastsattOpptjening = getBehandlingFastsattOpptjening(initialState);
+  const onSubmit = values => ownProps.submitCallback([transformValues(values, fastsattOpptjening, ownProps.aksjonspunkter[0])]);
 
-  return {
-    aksjonspunkt: initialProps.aksjonspunkter[0],
+  return state => ({
+    aksjonspunkt: ownProps.aksjonspunkter[0],
     hasFastsattOpptjening: !!fastsattOpptjening,
     initialValues: buildInitialValues(state),
-    onSubmit: values => initialProps.submitCallback([transformValues(values, fastsattOpptjening, initialProps.aksjonspunkter[0])]),
-    dirty: !initialProps.notSubmittable && initialProps.dirty,
-  };
+    dirty: !ownProps.notSubmittable && ownProps.dirty,
+    onSubmit,
+  });
 };
+
 
 const opptjeningAksjonspunkter = [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING];
 
-const OpptjeningInfoPanel = withDefaultToggling(faktaPanelCodes.OPPTJENINGSVILKARET, opptjeningAksjonspunkter)(connect(mapStateToProps)(behandlingForm({
+const OpptjeningInfoPanel = withDefaultToggling(faktaPanelCodes.OPPTJENINGSVILKARET, opptjeningAksjonspunkter)(connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
 })(injectIntl(OpptjeningInfoPanelImpl))));
 
