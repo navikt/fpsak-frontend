@@ -121,7 +121,7 @@ const transformValues = (values, selectedArbeidsforhold) => {
   transformvalue.helTilretteleggingFom = values.kanGjennomfores ? values.kanGjennomforesDato : null;
   transformvalue.slutteArbeidFom = values.kanIkkeGjennomfores ? values.kanIkkeGjennomforesDato : null;
   transformvalue.delvisTilretteleggingFom = values.redusertArbeid ? values.redusertArbeidDato : null;
-  transformvalue.stillingsprosent = values.reduserArbeid ? values.redusertArbeidStillingsprosent : null;
+  transformvalue.stillingsprosent = values.redusertArbeid ? values.redusertArbeidStillingsprosent : null;
   transformvalue.begrunnelse = values.begrunnelse;
   return transformvalue;
 };
