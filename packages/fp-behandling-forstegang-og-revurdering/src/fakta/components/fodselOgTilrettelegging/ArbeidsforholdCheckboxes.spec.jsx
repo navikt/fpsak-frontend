@@ -96,7 +96,7 @@ describe('<ArbeidsforholdCheckboxes>', () => {
     const checkbox = wrapper.find(CheckboxField);
     expect(checkbox).has.length(3);
     const div = wrapper.find('div');
-    expect(div).has.length(1);
+    expect(div).has.length(2);
     const warning = wrapper.find(FormattedMessage);
     expect(warning).has.length(1);
   });
