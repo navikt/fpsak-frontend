@@ -71,7 +71,9 @@ BehandlingSupportIndex.propTypes = {
 };
 
 const getDefaultSupportPanel = (hasKontrollerRevurderingAp, enabledSupportPanels) => (
-  hasKontrollerRevurderingAp ? supportPanels.MESSAGES : enabledSupportPanels.find(() => true) || supportPanels.HISTORY
+    hasKontrollerRevurderingAp && enabledSupportPanels.includes(supportPanels.MESSAGES)
+    ? supportPanels.MESSAGES
+    : enabledSupportPanels.find(() => true) || supportPanels.HISTORY
 );
 
 const mapStateToProps = (state) => {
@@ -79,6 +81,7 @@ const mapStateToProps = (state) => {
   const enabledSupportPanels = getEnabledSupportPanels(state);
   const selectedSupportPanel = getSelectedSupportPanel(state);
   const hasKontrollerRevurderingAp = isKontrollerRevurderingAksjonspunkOpen(state);
+
   const defaultSupportPanel = getDefaultSupportPanel(hasKontrollerRevurderingAp, enabledSupportPanels);
   const activeSupportPanel = enabledSupportPanels.includes(selectedSupportPanel) ? selectedSupportPanel : defaultSupportPanel;
   return {
