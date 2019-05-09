@@ -25,6 +25,7 @@ export const getFagsakPerson = createSelector(getSelectedFagsak, fagsak => (fags
 export const getFagsakYtelseType = createSelector(getSelectedFagsak, fagsak => (fagsak ? fagsak.sakstype : undefined));
 
 export const isForeldrepengerFagsak = createSelector(getFagsakYtelseType, (ytelseType = {}) => (ytelseType.kode === fagsakYtelseType.FORELDREPENGER));
+export const isSvangerskapFagsak = createSelector(getFagsakYtelseType, (ytelseType = {}) => (ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER));
 
 // TODO (TOR) Endre tre funksjonane under til selectors
 export const getFetchFagsakInfoFinished = (state) => {
