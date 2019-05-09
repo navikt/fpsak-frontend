@@ -77,7 +77,8 @@ export class BehandlingsprosessIndex extends Component {
     this.submitVilkarUtenPromise = this.submitVilkarUtenPromise.bind(this);
 
     this.state = {
-      isVedtakSubmission: false,
+      isVedtakSubmissionIverksetterVedtak: false,
+      isVedtakSubmissionFatterVedtak: false,
 
     };
   }
@@ -152,7 +153,8 @@ export class BehandlingsprosessIndex extends Component {
 
   goToSearchPage() {
     this.setState({
-      isVedtakSubmission: false,
+      isVedtakSubmissionFatterVedtak: false,
+      isVedtakSubmissionIverksetterVedtak: false,
     });
     const { push: pushLocation } = this.props;
     pushLocation('/');
@@ -201,14 +203,16 @@ export class BehandlingsprosessIndex extends Component {
   }
 
   submitVilkar(aksjonspunktModels) {
-    if (aksjonspunktModels[0] && aksjonspunktModels[0].isVedtakSubmission) {
+    if (aksjonspunktModels[0] && aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode) {
       this.setState({
-        isVedtakSubmission: true,
+        isVedtakSubmissionFatterVedtak: aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK,
+        isVedtakSubmissionIverksetterVedtak: aksjonspunktModels[0].kode === aksjonspunktCodes.FATTER_VEDTAK,
       }, () => {
         this.submitVilkarUtenPromise(aksjonspunktModels);
       });
       return false;
     }
+
     const {
       resolveProsessAksjonspunkter: resolveAksjonspunkter,
       overrideProsessAksjonspunkter: overrideAksjonspunkter,
@@ -257,7 +261,7 @@ export class BehandlingsprosessIndex extends Component {
       fagsakYtelseType, behandlingIdentifier, behandlingStatus, behandlingsresultat, aksjonspunkter, behandlingType,
 
     } = this.props;
-    const { isVedtakSubmission } = this.state;
+    const { isVedtakSubmissionIverksetterVedtak, isVedtakSubmissionFatterVedtak } = this.state;
     return (
       <React.Fragment>
         <BehandlingsprosessPanel
@@ -283,13 +287,13 @@ export class BehandlingsprosessIndex extends Component {
 
         <IverksetterVedtakStatusModal
           closeEvent={this.goToSearchPage}
-          isVedtakSubmission={isVedtakSubmission}
+          isVedtakSubmission={isVedtakSubmissionIverksetterVedtak}
         />
         <FatterVedtakStatusModal
           closeEvent={this.goToSearchPage}
           selectedBehandlingId={behandlingIdentifier.behandlingId}
           fagsakYtelseType={fagsakYtelseType}
-          isVedtakSubmission={isVedtakSubmission}
+          isVedtakSubmission={isVedtakSubmissionFatterVedtak}
           behandlingStatus={behandlingStatus}
           behandlingsresultat={behandlingsresultat}
           aksjonspunkter={aksjonspunkter}
