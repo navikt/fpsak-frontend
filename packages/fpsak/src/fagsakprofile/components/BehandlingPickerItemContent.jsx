@@ -128,11 +128,13 @@ const BehandlingPickerItemContent = ({
           {avsluttetDato && <Normaltekst><DateLabel dateString={avsluttetDato} /></Normaltekst>}
         </Column>
         <Column xs="3">
-          <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingListItem.Årsak" /></Undertekst>
           {behandlingTypeKode === behandlingType.REVURDERING && (
-          <Normaltekst>
-            <FormattedMessage id={getÅrsak(førsteÅrsak)} />
-          </Normaltekst>
+          <>
+            <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingListItem.Årsak" /></Undertekst>
+            <Normaltekst>
+              <FormattedMessage id={getÅrsak(førsteÅrsak)} />
+            </Normaltekst>
+          </>
           )}
         </Column>
         <Column xs="3">
