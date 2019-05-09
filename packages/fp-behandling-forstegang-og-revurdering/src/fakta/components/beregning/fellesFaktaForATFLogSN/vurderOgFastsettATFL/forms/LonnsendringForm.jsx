@@ -72,6 +72,11 @@ LonnsendringForm.buildInitialValues = (beregningsgrunnlag) => {
   return initialValues;
 };
 
+const findLonnsendringAndeler = (inntektVerdier, fastsatteAndelsnr, faktaOmBeregning) => inntektVerdier
+.filter(field => !fastsatteAndelsnr.includes(field.andelsnr) && !fastsatteAndelsnr.includes(field.andelsnrRef))
+.filter(field => faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM
+  .find(andel => andel.andelsnr === field.andelsnr || andel.andelsnr === field.andelsnrRef));
+
 LonnsendringForm.transformValues = (values, inntektVerdier, faktaOmBeregning, fastsatteAndelsnr) => {
   if (!faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)) {
     return {};
@@ -82,10 +87,7 @@ LonnsendringForm.transformValues = (values, inntektVerdier, faktaOmBeregning, fa
       vurdertLonnsendring: { erLønnsendringIBeregningsperioden: values[lonnsendringField] },
     };
   }
-  const andelerMedLonnsendringFields = inntektVerdier
-    .filter(field => !fastsatteAndelsnr.includes(field.andelsnr) && !fastsatteAndelsnr.includes(field.andelsnrRef))
-    .filter(field => faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM
-      .find(andel => andel.andelsnr === field.andelsnr || andel.andelsnr === field.andelsnrRef));
+  const andelerMedLonnsendringFields = values[lonnsendringField] ? findLonnsendringAndeler(inntektVerdier, fastsatteAndelsnr, faktaOmBeregning) : [];
   andelerMedLonnsendringFields.forEach(field => fastsatteAndelsnr.push(field.andelsnr));
   const lonnsendringInntekt = andelerMedLonnsendringFields
     .map(field => ({
