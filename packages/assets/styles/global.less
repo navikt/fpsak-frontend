@@ -2,7 +2,7 @@
 @import './dayPicker';
 
 body {
-  background-color: #efefef;
+  background-color: @navLysGra;
   color: @navMorkGra;
   height: 100%;
   line-height: 1.42857143;
@@ -573,7 +573,7 @@ div[class^='SjekkFodselDokForm'] [class^='periodFieldArray_buttonRemove'] {
 }
 
 [class^="behandlingPicker"] .active div:first-of-type {
-  background-color: #efefef;
+  background-color: @navLysGra;
 }
 
 [class^="behandlingSupportIndex_behandlingsupportIndex"] table {
@@ -606,7 +606,5 @@ div[class^='SjekkFodselDokForm'] [class^='periodFieldArray_buttonRemove'] {
 }
 
 [class^="behandlingSupportIndex_behandlingsupportIndex"] [class^="linkRow"] {
-  background-color: #efefef !important; // stylelint-disable-line declaration-no-important
-  margin-top: -8px;
   padding-top: 12px;
 }
