@@ -39,7 +39,7 @@
     "nav-frontend-typografi": "2.0.11",
     "nav-frontend-typografi-style": "1.0.13",
     "prop-types": "^15.7.2",
-    "react": "^16.8.4",
+    "react": "^16.8.6",
     "react-collapse": "^4.0.3",
     "react-intl": "^2.8.0",
     "react-motion": "^0.5.2",

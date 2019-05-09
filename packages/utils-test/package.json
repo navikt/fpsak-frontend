@@ -7,11 +7,11 @@
   "dependencies": {
     "@commercetools/enzyme-extensions": "^4.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
-    "@fpsak-frontend/rest-api-redux": "1.0.0",
     "@fpsak-frontend/rest-api": "1.0.0",
+    "@fpsak-frontend/rest-api-redux": "1.0.0",
     "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.10.0",
-    "react": "^16.8.4",
+    "enzyme-adapter-react-16": "^1.12.1",
+    "react": "^16.8.6",
     "react-intl": "^2.8.0",
     "sinon": "^5.0.10"
   }
