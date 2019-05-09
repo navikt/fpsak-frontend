@@ -22,16 +22,36 @@ describe('<LonnsendringForm>', () => {
 
   const faktaOmBeregning = {
     faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_LONNSENDRING }],
+    arbeidsforholdMedLønnsendringUtenIM: [{ andelsnr: 1 }],
   };
 
   it('skal teste at transformValues gir korrekt output', () => {
     const values = { };
     values[lonnsendringField] = true;
     values.dummyField = 'tilfeldig verdi';
-    const transformedObject = LonnsendringForm.transformValues(values, null, faktaOmBeregning, []);
+    const inntektVerdier = [
+      { fastsattBelop: '10 000', andelsnr: 1 },
+    ];
+    const transformedObject = LonnsendringForm.transformValues(values, inntektVerdier, faktaOmBeregning, []);
     expect(transformedObject.vurdertLonnsendring.erLønnsendringIBeregningsperioden).to.equal(true);
     expect(transformedObject.vurdertLonnsendring.dummyField).to.equal(undefined);
+    expect(transformedObject.fastsattUtenInntektsmelding.andelListe.length).to.equal(1);
+    expect(transformedObject.fastsattUtenInntektsmelding.andelListe[0].andelsnr).to.equal(1);
+    expect(transformedObject.fastsattUtenInntektsmelding.andelListe[0].fastsatteVerdier.fastsattBeløp).to.equal(10000);
   });
+
+
+  it('skal ikkje submitte inntekt uten lønnsendring', () => {
+    const values = { };
+    values[lonnsendringField] = false;
+    const inntektVerdier = [
+      { fastsattBelop: '', andelsnr: 1 },
+    ];
+    const transformedObject = LonnsendringForm.transformValues(values, inntektVerdier, faktaOmBeregning, []);
+    expect(transformedObject.vurdertLonnsendring.erLønnsendringIBeregningsperioden).to.equal(false);
+    expect(transformedObject.fastsattUtenInntektsmelding.andelListe.length).to.equal(0);
+  });
+
 
   it('skal teste at buildInitialValues gir korrekt output med gyldig beregningsgrunnlag', () => {
     const gyldigBG = {
