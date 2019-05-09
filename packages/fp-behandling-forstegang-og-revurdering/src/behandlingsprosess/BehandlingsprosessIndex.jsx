@@ -203,19 +203,10 @@ export class BehandlingsprosessIndex extends Component {
   }
 
   submitVilkar(aksjonspunktModels) {
-    if (aksjonspunktModels[0] && aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK) {
+    if (aksjonspunktModels[0] && aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode) {
       this.setState({
-        isVedtakSubmissionFatterVedtak: true,
-        isVedtakSubmissionIverksetterVedtak: false,
-      }, () => {
-        this.submitVilkarUtenPromise(aksjonspunktModels);
-      });
-      return false;
-    }
-    if (aksjonspunktModels[0] && aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FATTER_VEDTAK) {
-      this.setState({
-        isVedtakSubmissionFatterVedtak: false,
-        isVedtakSubmissionIverksetterVedtak: true,
+        isVedtakSubmissionFatterVedtak: aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK,
+        isVedtakSubmissionIverksetterVedtak: aksjonspunktModels[0].kode === aksjonspunktCodes.FATTER_VEDTAK,
       }, () => {
         this.submitVilkarUtenPromise(aksjonspunktModels);
       });
