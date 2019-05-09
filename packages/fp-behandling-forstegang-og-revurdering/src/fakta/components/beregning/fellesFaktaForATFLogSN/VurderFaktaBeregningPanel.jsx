@@ -22,6 +22,7 @@ import { formNameVurderFaktaBeregning } from '../BeregningFormUtils';
 const {
   VURDER_FAKTA_FOR_ATFL_SN,
   AVKLAR_AKTIVITETER,
+  OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
 } = aksjonspunktCodes;
 
 const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
@@ -32,7 +33,8 @@ const findAksjonspunktMedBegrunnelse = aksjonspunkter => aksjonspunkter
 export const BEGRUNNELSE_FAKTA_TILFELLER_NAME = 'begrunnelseFaktaTilfeller';
 
 export const harIkkeEndringerIAvklarMedFlereAksjonspunkter = (verdiForAvklarAktivitetErEndret, aksjonspunkter) => {
-  if (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)) {
+  if (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && (hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)
+  || hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter))) {
     return !verdiForAvklarAktivitetErEndret;
   }
   return true;

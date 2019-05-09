@@ -23,6 +23,7 @@ const totrinnskontrollaksjonspunktTextCodes = {
   [aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN]: 'ToTrinnsForm.Foreldreansvar.VurderTidligereUtbetaling',
 
   [aksjonspunktCodes.AVKLAR_AKTIVITETER]: 'ToTrinnsForm.Beregning.AvklarAktiviteter',
+  [aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSAKTIVITETER]: 'ToTrinnsForm.Beregning.OverstyrtBeregningsaktiviteter',
   [aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS]: 'ToTrinnsForm.Beregning.InntektFastsatt',
   [aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE]:
     'ToTrinnsForm.Beregning.InntektFastsatt',
@@ -44,6 +45,7 @@ const totrinnskontrollaksjonspunktTextCodes = {
   [aksjonspunktCodes.AVKLAR_OPPHOLDSRETT]: 'ToTrinnsForm.Medlemskap.AvklarOppholdsrett',
   [aksjonspunktCodes.AVKLAR_PERSONSTATUS]: 'ToTrinnsForm.Medlemskap.VurderPersonStatus',
   [aksjonspunktCodes.OVERSTYR_MEDLEMSKAPSVILKAR]: 'ToTrinnsForm.Medlemskap.VilkarOverstyrt',
+  [aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO]: 'ToTrinnsForm.Medlemskap.OverstyrtStartdato',
 
   [aksjonspunktCodes.FORESLA_VEDTAK]: 'ToTrinnsForm.Vedtak.Fritekstbrev',
 

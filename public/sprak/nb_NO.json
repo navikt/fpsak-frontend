@@ -1143,8 +1143,10 @@
   "BeregningInfoPanel.NyIArbeidslivet.SelvstendigNaeringsdrivende": "Søker er selvstendig næringsdrivende. Ble søker yrkesaktiv i løpet av de siste tre årene?",
 
   "AvklarAktivitetPanel.ButtonText": "Oppdater",
+  "AvklarAktivitetPanel.OverstyrText": "Overstyr",
   "VurderAktiviteterTabell.FullAAPKombinert.Overskrift": "Søker har full AAP (200%) sammen med andre aktiviteter. Skjæringstidspunkt for beregning {skjaeringstidspunkt}",
   "VurderAktiviteterTabell.VentelonnVartpenger.Overskrift": "Søker har ventelønn eller vartpenger som siste aktivitet. Skjæringstidspunkt for beregning {skjaeringstidspunkt}",
+  "VurderAktiviteterTabell.Overstyrt.Overskrift": "Aktiviteter i beregningsgrunnlaget med skjæringstidspunkt {skjaeringstidspunkt}",
 
   "BeregningInfoPanel.Historikkinnslag.AvklarAktiviteter": "Avklar aktiviteter",
 
@@ -1206,6 +1208,8 @@
   "BeregningInfoPanel.FordelingBG.RedusertBeregningsgrunnlagSum": "Sum (redusert beregningsgrunnlag)",
   "BeregningInfoPanel.FordelingBG.Ytelse": "Ytelse",
 
+  "AvklareAktiviteter.OverstyrerAktivitetAdvarsel": "Overstyr hvilke aktiviteter og eventuelle inntektsmeldinger som skal benyttes i beregning.",
+  "AvklareAktiviteter.ManuellOverstyring": "Overstyring av beregningsaktiviteter",
   "AvklareAktiviteter.AvklarVentelonnVartpenger": "Har søker inntekt fra ventelønn eller vartpenger?",
   "AvklareAktiviteter.IkkeImplementert": "Denne funksjonaliteten er ikke implementert enda.",
   "AvklareAktiviteter.AksjonspunktHelpText.VurderAktiviteter": "Vurder hvilke aktiviteter som skal benyttes i beregning.",
@@ -1265,6 +1269,7 @@
   "ToTrinnsForm.Godkjent": "Godkjent",
   "ToTrinnsForm.LøstAksjonspunkt": "<b>Løst aksjonspunkt:</b> Kontroller endrede opplysninger og faglige vurderinger",
   "ToTrinnsForm.Beregning.AvklarAktiviteter": "Det er vurdert hvilke aktiviteter som skal benyttes i beregning.",
+  "ToTrinnsForm.Beregning.OverstyrtBeregningsaktiviteter": "Det er overstyrt hvilke aktiviteter som skal benyttes i beregning.",
   "ToTrinnsForm.Beregning.VarigEndring": "Det er fastsatt varig endret/nyoppstartet næring.",
   "ToTrinnsForm.Beregning.IkkeVarigEndring": "Det er fastsatt at det ikke er varig endring i næring.",
   "ToTrinnsForm.Beregning.InntektFastsatt": "Inntekt er skjønnsmessig fastsatt.",
@@ -1326,6 +1331,7 @@
   "ToTrinnsForm.Soknadsfrist.ManueltVurdert": "Søknadsfrist er manuelt vurdert.",
   "ToTrinnsForm.Soknadsfrist.VilkarOverstyrt": "Søknadsfristvilkåret er overstyrt.",
   "ToTrinnsForm.Medlemskap.AvklarLovligOpphold": "Det er vurdert om søker har lovlig opphold.",
+  "ToTrinnsForm.Medlemskap.OverstyrtStartdato": "Startdato er overstyrt.",
   "ToTrinnsForm.Medlemskap.AvklarOppholdsrett": "Det er vurdert om søker har oppholdsrett.",
   "ToTrinnsForm.Medlemskap.VurderPersonStatus": "Søkers personstatus er vurdert",
   "ToTrinnsForm.Medlemskap.VurderSokerBosatt": "Det er vurdert om søker er bosatt i Norge.",

@@ -193,7 +193,7 @@ export const getEndringBeregningsgrunnlagPerioder = createSelector(
   [getEndringBeregningsgrunnlag], (endringBG = {}) => (endringBG ? endringBG.endringBeregningsgrunnlagPerioder : undefined),
 );
 export const getFaktaOmBeregningTilfeller = createSelector(
-  [getFaktaOmBeregning], (faktaOmBeregning = []) => (faktaOmBeregning ? faktaOmBeregning.faktaOmBeregningTilfeller : undefined),
+  [getFaktaOmBeregning], (faktaOmBeregning = []) => (faktaOmBeregning ? faktaOmBeregning.faktaOmBeregningTilfeller : []),
 );
 export const getFaktaOmBeregningTilfellerKoder = createSelector(
   [getFaktaOmBeregningTilfeller], (tilfeller = []) => (tilfeller ? tilfeller.map(({ kode }) => kode) : undefined),

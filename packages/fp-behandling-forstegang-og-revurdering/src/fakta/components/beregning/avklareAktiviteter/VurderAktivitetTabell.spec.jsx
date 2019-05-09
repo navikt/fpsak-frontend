@@ -6,7 +6,7 @@ import { RadioGroupField } from '@fpsak-frontend/form';
 import {
  Table, TableRow, TableColumn, EditedIcon,
 } from '@fpsak-frontend/shared-components';
-import VurderAktiviteterTabell, { VurderAktiviteterTabellImpl, lagAktivitetFieldId } from './VurderAktiviteterTabell';
+import VurderAktiviteterTabell, { VurderAktiviteterTabellImpl, lagAktivitetFieldId, skalVurdereAktivitet } from './VurderAktiviteterTabell';
 
 
 const aktivitet1 = {
@@ -74,6 +74,7 @@ describe('<VurderAktiviteterTabell>', () => {
       aktiviteter={aktiviteter}
       skjaeringstidspunkt="2019-02-01"
       getKodeverknavn={getKodeverknavn}
+      erOverstyrt={false}
     />);
 
     const heading = wrapper.find(FormattedMessage).first();
@@ -121,6 +122,7 @@ describe('<VurderAktiviteterTabell>', () => {
       aktiviteter={utenAAP}
       skjaeringstidspunkt="2019-02-01"
       getKodeverknavn={getKodeverknavn}
+      erOverstyrt={false}
     />);
 
     const heading = wrapper.find(FormattedMessage).first();
@@ -147,6 +149,7 @@ describe('<VurderAktiviteterTabell>', () => {
       aktiviteter={aktiviteter}
       skjaeringstidspunkt="2019-02-01"
       getKodeverknavn={getKodeverknavn}
+      erOverstyrt={false}
     />);
 
     const heading = wrapper.find(FormattedMessage).first();
@@ -258,5 +261,25 @@ describe('<VurderAktiviteterTabell>', () => {
     expect(transformed[1].tom).to.equal('2019-02-02');
     expect(transformed[1].arbeidsgiverIdentifikator).to.equal('324234234234');
     expect(transformed[1].skalBrukes).to.equal(false);
+  });
+
+  it('skal ikkje vurdere AAP for ikkje overstyring', () => {
+    const skalVurderes = skalVurdereAktivitet(aktivitetAAP, false);
+    expect(skalVurderes).to.equal(false);
+  });
+
+  it('skal vurdere AAP for overstyring', () => {
+    const skalVurderes = skalVurdereAktivitet(aktivitetAAP, true);
+    expect(skalVurderes).to.equal(true);
+  });
+
+  it('skal vurdere annen aktivitet for overstyring', () => {
+    const skalVurderes = skalVurdereAktivitet(aktivitet1, true);
+    expect(skalVurderes).to.equal(true);
+  });
+
+  it('skal vurdere annen aktivitet for ikkje overstyring', () => {
+    const skalVurderes = skalVurdereAktivitet(aktivitet1, false);
+    expect(skalVurderes).to.equal(true);
   });
 });
