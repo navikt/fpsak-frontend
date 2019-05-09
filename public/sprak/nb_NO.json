@@ -211,7 +211,7 @@
   "FodselInfoPanel.VurderVilkarForSykdom": "Vurder om vilkår for sykdom er oppfylt",
   "FodselInfoPanel.KontrollerMotTerminbekreftelsen": "Kontroller terminbekreftelse",
   "FodselInfoPanel.KontrollerMotFodselsdokumentasjon": "Kontroller mot opplysningene fra fødselsdokumentasjonen",
-  
+
   "FodselOgTilretteleggingInfoPanel.FaktaFodselOgTilrettelegging": "Fakta om fødsel og tilrettelegging",
   "FodselOgTilretteleggingInfoPanel.Aksjonspunkt": "Kontroller opplysninger fra jordmor og arbeidsgiver",
   "FodselOgTilretteleggingFaktaForm.Termindato": "Termindato",
@@ -230,7 +230,7 @@
   "ArbeidsforholdCheckboxes.Arbeidsgiver.KanGjennomfores": "a) kan gjennomføres slik at arbeidstakeren kan fortsette med samme stilling fra og med",
   "ArbeidsforholdCheckboxes.Arbeidsgiver.RedusertArbeid": "b) kan gjennomføres slik at arbeidstakeren kan fortsette med redusert arbeidstid fra og med",
   "ArbeidsforholdCheckboxes.Arbeidsgiver.KanIkkeGjennomfores": "c) kan ikke gjennomføres og arbeidstakeren må midlertidig gå ut av sitt arbeid fra og med",
-  
+
   "FeilutbetalingInfoPanel.FaktaFeilutbetaling": "Fakta om feilutbetaling",
   "FeilutbetalingInfoPanel.Revurdering": "Revurdering",
   "FeilutbetalingInfoPanel.Feilutbetaling": "Feilutbetaling",
@@ -1606,7 +1606,7 @@
   "UttakPanel.Aksjonspunkt.5098": "Adopsjon ikke implementert, må behandles manuelt.",
   "UttakPanel.Aksjonspunkt.Generell": "Alle aksjonspunkter skal vurderes manuelt. Kontakt søker ved behov.",
   "UttakPanel.Aksjonspunkt.Behandlet": "Fastsett uttaksperioder manuelt.",
-  "UttakPanel.Overstyrt.KontrollerPaNytt": "Vurder perioder på nytt på grunn av endringer i tidligere steg.",
+  "UttakPanel.Overstyrt.KontrollerPaNytt": "Perioden var overstyrt i forrige behandling, vurder om perioden fortsatt må overstyres.",
   "UttakPanel.Overstyrt.Utfort": "Perioder er overstyrt.",
   "UttakPanel.manuellBehandlingÅrsakEnskiltArbeidsforhold" : "{arbeidsforhold} er tom for stønadsdager. Vurder å endre stønadskonto eller sette trekkdager og utbetalingsgrad til null. Kontakt søker ved behov.",
   "UttakPanel.manuellBehandlingÅrsakArbeidsforhold" : "{arbeidsforhold} er tomme for stønadsdager. Vurder å endre stønadskonto eller sette trekkdager og utbetalingsgrad til null. Kontakt søker ved behov.",
