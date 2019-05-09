@@ -93,7 +93,7 @@
     "istanbul-instrumenter-loader": "^3.0.1",
     "jsdom": "^13.2.0",
     "json-loader": "^0.5.7",
-    "lerna": "^3.4.0",
+    "lerna": "^3.13.4",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "^0.4.4",
