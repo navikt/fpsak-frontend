@@ -1,7 +1,9 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
-.linkElement() {
+.linkElement {
   background-color: @navGra20;
+  border: 2px solid transparent;
+  border-bottom: 0;
   border-radius: 4px;
   margin-right: 12px;
   padding-bottom: 6px;
@@ -19,14 +21,12 @@
   }
 
   &:focus {
-    border-left: 2px solid @navOransje;
-    border-right: 2px solid @navOransje;
-    border-top: 2px solid @navOransje;
+    border-color: @navOransje;
   }
 }
 
 .disabled {
-  .linkElement();
+  .linkElement;
 
   color: white;
 
@@ -37,7 +37,7 @@
 }
 
 .link {
-  .linkElement();
+  .linkElement;
 
   color: @navBla;
   text-decoration: none;
