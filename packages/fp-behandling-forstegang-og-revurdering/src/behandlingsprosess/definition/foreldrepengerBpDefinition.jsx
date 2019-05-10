@@ -4,6 +4,7 @@ import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import fyt from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import prt from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import { hasSimuleringOn, getStatusFromSimulering } from './simuleringStatusUtleder';
 import getVedtakStatus from './vedtakStatusUtleder';
@@ -32,8 +33,13 @@ const getStatusFromUttakresultat = ({ uttaksresultat, aksjonspunkter }) => {
   return vut.IKKE_OPPFYLT;
 };
 
-const getStatusFromResultatstruktur = ({ resultatstruktur, uttaksresultat }) => {
+const getStatusFromResultatstruktur = ({ resultatstruktur, uttaksresultat, fagsakYtelseType }) => {
   if (resultatstruktur && resultatstruktur.perioder.length > 0) {
+    // "Hack" for å vise tilkjent ytelse også i SVP fordi SVP ikke har samme uttakstruktur som FP.
+    // TODO: SVP burde ha sin egen BPDefinition
+    if (fagsakYtelseType.kode === fyt.SVANGERSKAPSPENGER) {
+      return vut.OPPFYLT;
+    }
     if (uttaksresultat && uttaksresultat.perioderSøker.length > 0) {
       const oppfylt = uttaksresultat.perioderSøker.some(p => (
         p.periodeResultatType.kode !== prt.AVSLATT

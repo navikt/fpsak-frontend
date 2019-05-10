@@ -9,10 +9,11 @@ import aksjonspunktCodes, {
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import fpsakBehandlingApi from './data/fpsakBehandlingApi';
 import isFieldEdited from './isFieldEdited';
-import { getSelectedBehandlingId, isForeldrepengerFagsak } from './duck';
+import { getSelectedBehandlingId, getFagsakYtelseType } from './duck';
 
 export const isBehandlingInSync = createSelector(
   [getSelectedBehandlingId, fpsakBehandlingApi.BEHANDLING.getRestApiData()],
@@ -66,7 +67,8 @@ export const getBehandlingYtelseFordeling = createSelector([getSelectedBehandlin
 export const getGjeldendeDekningsgrad = createSelector([getBehandlingYtelseFordeling], (ytelsesfordeling = {}) => ytelsesfordeling.gjeldendeDekningsgrad);
 export const getBehandlingToTrinnsBehandling = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.toTrinnsBehandling);
 export const getBehandlingResultatstruktur = createSelector(
-  [isForeldrepengerFagsak, getSelectedBehandling], (isForeldrepenger, selectedBehandling = {}) => (isForeldrepenger
+  [getFagsakYtelseType, getSelectedBehandling], (fagsakType, selectedBehandling = {}) => (
+    fagsakType.kode === fagsakYtelseType.FORELDREPENGER || fagsakType.kode === fagsakYtelseType.SVANGERSKAPSPENGER
     ? selectedBehandling['beregningsresultat-foreldrepenger'] : selectedBehandling['beregningsresultat-engangsstonad']),
 );
 export const getOpphoersdatoFraUttak = createSelector(
