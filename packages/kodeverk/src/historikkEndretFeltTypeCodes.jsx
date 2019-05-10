@@ -385,6 +385,22 @@ const historikkEndretFeltTypeCodes = {
     kode: 'UTLAND',
     feltId: 'HistorikkEndretFelt.Utland',
   },
+  HEL_TILRETTELEGGING_FOM: {
+    kode: 'HEL_TILRETTELEGGING_FOM',
+    verdiId: 'HistorikkEndretFelt.HelTilretteleggingFom',
+  },
+  DELVIS_TILRETTELEGGING_FOM: {
+    kode: 'DELVIS_TILRETTELEGGING_FOM',
+    verdiId: 'HistorikkEndretFelt.DelvisTilretteleggingFom',
+  },
+  STILLINGSPROSENT: {
+    kode: 'STILLINGSPROSENT',
+    verdiId: 'HistorikkEndretFelt.Stillingsprosent',
+  },
+  SLUTTE_ARBEID_FOM: {
+    kode: 'SLUTTE_ARBEID_FOM',
+    verdiId: 'HistorikkEndretFelt.SlutteArbeidFom',
+  },
 };
 
 export default historikkEndretFeltTypeCodes;
