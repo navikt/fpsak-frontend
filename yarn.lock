@@ -7158,12 +7158,12 @@ nav-frontend-skjema@1.0.64:
   resolved "https://registry.npmjs.org/nav-frontend-skjema/-/nav-frontend-skjema-1.0.64.tgz#1473d5a63e177db569ea830a69de38b1b34144b8"
   integrity sha512-HIqrZlpMmOU0XvHCDk/ZY+CIJnqSTqQ2vSivQ7ODVNL32ti1G3RJvcIw1zNZWfFeQxT8Rrx3YVAxGnadUieuJQ==
 
-nav-frontend-snakkeboble-style@0.2.18:
+nav-frontend-snakkeboble-style@^0.2.18:
   version "0.2.18"
   resolved "https://registry.npmjs.org/nav-frontend-snakkeboble-style/-/nav-frontend-snakkeboble-style-0.2.18.tgz#367319543df02d79aafb82d5e63a71b9ac4d970c"
   integrity sha512-BHTbqmKnHkO3kB4SBpJF1YSYDAGCMKT2P4GNj3xP672dgWqzYu7MBGsuGfj3eYBdfwUooh9xGKvoTbJ+92pM4g==
 
-nav-frontend-snakkeboble@1.0.27:
+nav-frontend-snakkeboble@^1.0.27:
   version "1.0.27"
   resolved "https://registry.npmjs.org/nav-frontend-snakkeboble/-/nav-frontend-snakkeboble-1.0.27.tgz#49a5a5c11974c7dfd3682795fc0e7289ae5f4773"
   integrity sha512-gsOTakE49ESdslCUab/6cMX8s2bSKrav5QEf5j5r7DjDoX6U0mKTEeB3iIHaGWlwTvZoHI9PiapJTU4R2FS32w==

@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import Snakkeboble from 'nav-frontend-snakkeboble';
 import { injectKodeverk, pathToBehandling } from '@fpsak-frontend/fp-felles';
 import historikkinnslagType from '@fpsak-frontend/kodeverk/src/historikkinnslagType';
 import { historikkinnslagPropType } from '@fpsak-frontend/prop-types';
 
 import { getAlleKodeverk } from 'kodeverk/duck';
-import Snakkeboble from './snakkeboble';
+import { Snakkeboble as sb } from './snakkeboble';
 import HistorikkMalType1 from './historikkMalType1';
 import HistorikkMalType2 from './historikkMalType2';
 import HistorikkMalType3 from './historikkMalType3';
@@ -94,6 +94,9 @@ const velgHistorikkMal = (histType) => { // NOSONAR
  *
  * Historikken for en behandling -tar emot en liste av historikkobjekt og sprider ut de i historikkbobler
  */
+const formatDate = date => (`${date.substring(8, 10)}.${date.substring(5, 7)}.${date.substring(0, 4)} - ${date.substring(11, 16)}`);
+
+
 const History = ({
   historyList,
   selectedBehandlingId,
@@ -109,13 +112,14 @@ const History = ({
       const aktorIsArbeidsgiver = item.aktoer.kode === 'ARBEIDSGIVER';
       return (
         <Snakkeboble
+          topp={`${formatDate(item.opprettetTidspunkt)} // ${getKodeverknavn(item.aktoer)} ${(aktorIsSOKER || aktorIsArbeidsgiver || aktorIsVL) ? null : item.opprettetAv}`}
+          dato={item.opprettetTidspunkt}
+          ikonClass="snakkeboble__ikon person-2"
+          pilHoyre={item.aktoer.kode !== 'SOKER' && item.aktoer.kode !== 'ARBEIDSGIVER'}
           key={`${item.opprettetTidspunkt}${index}`} // eslint-disable-line react/no-array-index-key
           historikkinnslagDeler={item.historikkinnslagDeler}
           rolle={item.aktoer.kode}
-          rolleNavn={getKodeverknavn(item.aktoer)}
-          dato={item.opprettetTidspunkt}
           kjoennKode={item.kjoenn ? item.kjoenn.kode : ''}
-          opprettetAv={(aktorIsSOKER || aktorIsArbeidsgiver || aktorIsVL) ? null : item.opprettetAv}
           histType={item.type}
           dokumentLinks={item.dokumentLinks}
           selectedBehandlingId={selectedBehandlingId}
