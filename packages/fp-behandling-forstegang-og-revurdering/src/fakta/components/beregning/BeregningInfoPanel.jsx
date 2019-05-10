@@ -99,7 +99,7 @@ const mapStateToProps = (state) => {
 };
 
 const BeregningInfoPanel = withDefaultToggling(faktaPanelCodes.BEREGNING,
-  faktaOmBeregningAksjonspunkter)(connect(mapStateToProps)(injectIntl(BeregningInfoPanelImpl)));
+  faktaOmBeregningAksjonspunkter, true)(connect(mapStateToProps)(injectIntl(BeregningInfoPanelImpl)));
 
 BeregningInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => faktaOmBeregningAksjonspunkter.includes(ap.definisjon.kode));
 

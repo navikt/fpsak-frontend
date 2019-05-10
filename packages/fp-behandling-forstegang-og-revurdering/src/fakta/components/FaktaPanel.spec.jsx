@@ -13,6 +13,7 @@ import OmsorgInfoPanel from './omsorg/OmsorgInfoPanel';
 import OmsorgOgForeldreansvarInfoPanel from './omsorgOgForeldreansvar/OmsorgOgForeldreansvarInfoPanel';
 import AdopsjonInfoPanel from './adopsjon/AdopsjonInfoPanel';
 import FodselInfoPanel from './fodsel/FodselInfoPanel';
+import BeregningInfoPanel from './beregning/BeregningInfoPanel';
 import FodselOgTilretteleggingInfoPanel from './fodselOgTilrettelegging/FodselOgTilretteleggingInfoPanel';
 import { FaktaPanel } from './FaktaPanel';
 
@@ -112,6 +113,7 @@ describe('<FaktaPanel>', () => {
       ytelsesType={ytelsestype}
       readOnly={false}
       fagsakPerson={person}
+      erOverstyrer={false}
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(1);
@@ -148,6 +150,7 @@ describe('<FaktaPanel>', () => {
       ytelsesType={ytelsestype}
       readOnly={false}
       fagsakPerson={person}
+      erOverstyrer={false}
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -184,6 +187,7 @@ describe('<FaktaPanel>', () => {
       ytelsesType={ytelsestype}
       readOnly={false}
       fagsakPerson={person}
+      erOverstyrer={false}
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -220,6 +224,7 @@ describe('<FaktaPanel>', () => {
       ytelsesType={ytelsestype}
       readOnly={false}
       fagsakPerson={person}
+      erOverstyrer={false}
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -256,6 +261,7 @@ describe('<FaktaPanel>', () => {
       ytelsesType={ytelsestype}
       readOnly={false}
       fagsakPerson={person}
+      erOverstyrer={false}
     />);
 
     expect(wrapper.find(FodselOgTilretteleggingInfoPanel)).has.length(1);
@@ -293,6 +299,7 @@ describe('<FaktaPanel>', () => {
       ytelsesType={ytelsestype}
       readOnly={false}
       fagsakPerson={person}
+      erOverstyrer={false}
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -333,6 +340,7 @@ describe('<FaktaPanel>', () => {
       ytelsesType={ytelsestype}
       readOnly={false}
       fagsakPerson={person}
+      erOverstyrer={false}
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -373,6 +381,7 @@ describe('<FaktaPanel>', () => {
       ytelsesType={ytelsestype}
       readOnly={false}
       fagsakPerson={person}
+      erOverstyrer={false}
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -381,5 +390,23 @@ describe('<FaktaPanel>', () => {
     expect(wrapper.find(OmsorgOgForeldreansvarInfoPanel)).has.length(0);
     expect(wrapper.find(AdopsjonInfoPanel)).has.length(0);
     expect(wrapper.find(FodselInfoPanel)).has.length(1);
+  });
+
+
+  it('skal vise faktapanel for beregning når man er overstyrer', () => {
+    const wrapper = shallowWithIntl(<FaktaPanel
+      aksjonspunkter={[]}
+      vilkarCodes={[]}
+      personopplysninger={personopplysninger}
+      submitCallback={sinon.spy()}
+      openInfoPanels={[]}
+      toggleInfoPanelCallback={sinon.spy()}
+      shouldOpenDefaultInfoPanels
+      ytelsesType={ytelsestype}
+      readOnly={false}
+      fagsakPerson={person}
+      erOverstyrer
+    />);
+    expect(wrapper.find(BeregningInfoPanel)).has.length(1);
   });
 });
