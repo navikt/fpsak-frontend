@@ -183,6 +183,7 @@ export class OppholdInntektOgPerioderFormNew extends Component {
         />
         )}
 
+        {valgtPeriode && (
         <OppholdInntektOgPeriodeForm
           isRevurdering={isRevurdering}
           readOnly={readOnly}
@@ -192,6 +193,7 @@ export class OppholdInntektOgPerioderFormNew extends Component {
           updateOppholdInntektPeriode={this.updateOppholdInntektPeriode}
           periodeResetCallback={this.periodeResetCallback}
         />
+        )}
 
         <VerticalSpacer twentyPx />
         <Hovedknapp
