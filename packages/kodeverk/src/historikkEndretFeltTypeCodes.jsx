@@ -387,19 +387,19 @@ const historikkEndretFeltTypeCodes = {
   },
   HEL_TILRETTELEGGING_FOM: {
     kode: 'HEL_TILRETTELEGGING_FOM',
-    verdiId: 'HistorikkEndretFelt.HelTilretteleggingFom',
+    feltId: 'HistorikkEndretFelt.HelTilretteleggingFom',
   },
   DELVIS_TILRETTELEGGING_FOM: {
     kode: 'DELVIS_TILRETTELEGGING_FOM',
-    verdiId: 'HistorikkEndretFelt.DelvisTilretteleggingFom',
+    feltId: 'HistorikkEndretFelt.DelvisTilretteleggingFom',
   },
   STILLINGSPROSENT: {
     kode: 'STILLINGSPROSENT',
-    verdiId: 'HistorikkEndretFelt.Stillingsprosent',
+    feltId: 'HistorikkEndretFelt.Stillingsprosent',
   },
   SLUTTE_ARBEID_FOM: {
     kode: 'SLUTTE_ARBEID_FOM',
-    verdiId: 'HistorikkEndretFelt.SlutteArbeidFom',
+    feltId: 'HistorikkEndretFelt.SlutteArbeidFom',
   },
 };
 
