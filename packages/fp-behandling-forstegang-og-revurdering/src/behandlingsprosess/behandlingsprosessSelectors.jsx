@@ -38,6 +38,7 @@ export const getBehandlingspunkterProps = createSelector(
       featureToggles,
       uttaksresultat,
       simuleringResultat,
+      fagsakYtelseType,
     };
 
     return fagsakYtelseType.kode === fyt.ENGANGSSTONAD
