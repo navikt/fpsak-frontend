@@ -22,6 +22,7 @@ init({
   release,
   environment,
   integrations: [new Integrations.Breadcrumbs({ console: false })],
+  // Tror buggen med breadcrumbs er fikset nå https://github.com/getsentry/sentry-javascript/releases/tag/5.1.1
 });
 
 const history = createBrowserHistory({

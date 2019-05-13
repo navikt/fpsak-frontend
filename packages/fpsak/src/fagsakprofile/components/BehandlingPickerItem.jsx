@@ -13,7 +13,9 @@ import styles from './behandlingPickerItem.less';
 
 const getContentProps = (behandling, getKodeverknavn) => ({
   behandlingId: behandling.id,
-  behandlingType: getKodeverknavn(behandling.type),
+  behandlingTypeNavn: getKodeverknavn(behandling.type),
+  behandlingTypeKode: behandling.type.kode,
+  førsteÅrsak: behandling.førsteÅrsak,
   behandlendeEnhetId: behandling.behandlendeEnhetId,
   behandlendeEnhetNavn: behandling.behandlendeEnhetNavn,
   opprettetDato: behandling.opprettet,
