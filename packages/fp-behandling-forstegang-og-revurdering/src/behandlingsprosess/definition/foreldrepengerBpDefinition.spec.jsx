@@ -7,6 +7,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import createForeldrepengerBpProps from './foreldrepengerBpDefinition';
 
 describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
@@ -247,6 +248,9 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
             kode: 'INNVILGET',
           },
         }],
+      },
+      fagsakYtelseType: {
+        kode: fagsakYtelseType.FORELDREPENGER,
       },
     };
 
