@@ -15,6 +15,7 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { requireProps } from '@fpsak-frontend/fp-felles';
+import { getBehandlingKlageVurderingResultatNK } from 'behandling/duck';
 
 import styles from './fatterVedtakStatusModal.less';
 
@@ -94,6 +95,11 @@ FatterVedtakStatusModal.defaultProps = {
   isVedtakSubmission: false,
 };
 
+export const isKlageWithKA = (klageVurderingResultatNK) => {
+  const meholdIKlageAvNK = klageVurderingResultatNK;
+  return meholdIKlageAvNK;
+};
+
 const hasOpenAksjonspunktForVedtakUtenTotrinnskontroll = (aksjonspunkter = []) => aksjonspunkter
   .some(ap => ap.definisjon.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL);
 
@@ -108,6 +114,9 @@ const getModalDescriptionTextCode = (behandlingsresultat, aksjonspunkter, ytelse
       ? 'FatterVedtakStatusModal.ModalDescriptionES'
       : 'FatterVedtakStatusModal.ModalDescriptionFP';
   }
+  if (isKlageWithKA(getBehandlingKlageVurderingResultatNK)) {
+    return 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver';
+  }
   return behType === behandlingType.KLAGE ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter' : 'FatterVedtakStatusModal.Sendt';
 };
 
@@ -117,11 +126,18 @@ const getAltImgTextCode = (aksjonspunkter, ytelseType, behType) => {
       ? 'FatterVedtakStatusModal.IkkeInnvilgetES'
       : 'FatterVedtakStatusModal.IkkeInnvilgetFP';
   }
+  if (isKlageWithKA(getBehandlingKlageVurderingResultatNK)) {
+    return 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver';
+  }
   return behType === behandlingType.KLAGE ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter' : 'FatterVedtakStatusModal.Sendt';
 };
 
-const getInfoTextCode = bType => (bType.kode === behandlingType.KLAGE
-  ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter' : 'FatterVedtakStatusModal.SendtBeslutter');
+const getInfoTextCode = (bType) => {
+  if (isKlageWithKA(getBehandlingKlageVurderingResultatNK)) {
+    return 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver';
+  }
+  return bType.kode === behandlingType.KLAGE ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter' : 'FatterVedtakStatusModal.SendtBeslutter';
+};
 
 const isStatusFatterVedtak = behandlingstatus => behandlingstatus.kode === behandlingStatus.FATTER_VEDTAK;
 

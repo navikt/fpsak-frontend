@@ -58,6 +58,7 @@ const velgHistorikkMal = (histType) => { // NOSONAR
     case historikkinnslagType.BEH_VENT:
     case historikkinnslagType.IVERKSETTELSE_VENT:
     return HistorikkMalType4;
+    case historikkinnslagType.SAK_GODKJENT:
     case historikkinnslagType.FAKTA_ENDRET:
     case historikkinnslagType.KLAGE_BEH_NK:
     case historikkinnslagType.KLAGE_BEH_NFP:

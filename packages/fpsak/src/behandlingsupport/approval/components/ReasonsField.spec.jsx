@@ -4,12 +4,12 @@ import { expect } from 'chai';
 
 import ReasonsField from './ReasonsField';
 
-
 describe('<ReasonsField>', () => {
   it('skal vise korrekt antall element', () => {
     const wrapper = shallowWithIntl(<ReasonsField.WrappedComponent
       fieldName="test"
       showOnlyBegrunnelse={false}
+      godkjentHosKA={false}
       intl={intlMock}
     />);
 

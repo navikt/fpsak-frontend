@@ -16,6 +16,7 @@ import {
 } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingKlage/src/behandlingForm';
 import VedtakKlageSubmitPanel from './VedtakKlageSubmitPanel';
+import VedtakKlageKaSubmitPanel from './VedtakKlageKaSubmitPanel';
 
 export const VEDTAK_KLAGE_FORM_NAME = 'VEDTAK_KLAGE_FORM';
 
@@ -74,13 +75,28 @@ export const VedtakKlageFormImpl = ({
           <VerticalSpacer sixteenPx />
         </div>
       ) }
-      <VedtakKlageSubmitPanel
-        begrunnelse={fritekstTilBrev}
-        klageResultat={klageVurdering}
-        previewVedtakCallback={previewVedtakCallback}
-        formProps={formProps}
-        readOnly={readOnly}
-      />
+      { klageVurdering.klageVurdertAv === 'NK'
+      && (
+        <VedtakKlageKaSubmitPanel
+          begrunnelse={fritekstTilBrev}
+          klageResultat={klageVurdering}
+          previewVedtakCallback={previewVedtakCallback}
+          formProps={formProps}
+          readOnly={readOnly}
+        />
+      )
+      }
+      { klageVurdering.klageVurdertAv === 'NFP'
+      && (
+        <VedtakKlageSubmitPanel
+          begrunnelse={fritekstTilBrev}
+          klageResultat={klageVurdering}
+          previewVedtakCallback={previewVedtakCallback}
+          formProps={formProps}
+          readOnly={readOnly}
+        />
+      )
+      }
     </ElementWrapper>
   </FadingPanel>
 );

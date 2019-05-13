@@ -37,12 +37,12 @@ const getBrevKode = (klageVurdering, klageVurdertAvKa) => {
 };
 
 const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback, klageResultat) => (e) => {
-  const klageVurdertAvNK = klageResultat.klageVurdertAv === 'NFP' ? 'NFP' : 'KA';
+  const klageVurdertAvNK = klageResultat.klageVurdertAv === 'NFP';
   const data = {
     fritekst: begrunnelse || '',
     mottaker: '',
     brevmalkode: getBrevKode(klageResultat.klageVurdering, klageVurdertAvNK),
-    klageVurdertAv: klageVurdertAvNK,
+    klageVurdertAv: klageResultat.klageVurdertAv,
     erOpphevet: klageResultat.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK,
   };
   if (formProps.valid || formProps.pristine) {

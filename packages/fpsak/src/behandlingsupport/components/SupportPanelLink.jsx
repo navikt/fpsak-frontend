@@ -7,6 +7,8 @@ import { Element } from 'nav-frontend-typografi';
 
 import SupportPanel from 'behandlingsupport/supportPanels';
 
+import { getBehandlingKlageVurderingResultatNK } from 'behandling/duck';
+import { isKlageWithKA } from '../approval/components/ApprovalTextUtils';
 import styles from './supportPanelLink.less';
 
 const classNames = classnames.bind(styles);
@@ -16,7 +18,7 @@ const messageId = {
   [SupportPanel.MESSAGES]: 'InfoPanel.Messages',
   [SupportPanel.DOCUMENTS]: 'InfoPanel.Documents',
   [SupportPanel.APPROVAL]: 'InfoPanel.Approval',
-  [SupportPanel.RETURNED]: 'InfoPanel.Returned',
+  [SupportPanel.RETURNED]: isKlageWithKA(getBehandlingKlageVurderingResultatNK) ? 'InfoPanel.Medunderskriver' : 'InfoPanel.Returned',
 };
 
 const SupportPanelLink = ({
