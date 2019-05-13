@@ -28,6 +28,13 @@ describe('<BehandlingPicker>', () => {
       rel: 'test',
       type: 'GET',
     }],
+    førsteÅrsak: {
+      behandlingArsakType: {
+        kode: '-',
+      },
+      erAutomatiskRevurdering: false,
+      manueltOpprettet: false,
+    },
   };
 
   it('skal vise forklarende tekst når det ikke finnes behandlinger', () => {

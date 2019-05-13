@@ -5,15 +5,25 @@ import { expect } from 'chai';
 import { DateLabel, BorderBox } from '@fpsak-frontend/shared-components';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 
+const førsteÅrsak = {
+    behandlingArsakType: {
+      kode: '-',
+    },
+    erAutomatiskRevurdering: false,
+    manueltOpprettet: false,
+};
+
 describe('<BehandlingPickerItemContent>', () => {
   it('skal rendre komponent', () => {
     const wrapper = shallow(<BehandlingPickerItemContent
       withChevronDown
       withChevronUp
-      behandlingType="Foreldrepenger"
+      behandlingTypeKode="BT-002"
+      behandlingTypeNavn="Foreldrepenger"
       behandlingId={1}
       opprettetDato="2018-01-01"
       behandlingsstatus="Opprettet"
+      førsteÅrsak={førsteÅrsak}
     />);
 
     expect(wrapper.find(BorderBox)).has.length(1);
@@ -24,11 +34,14 @@ describe('<BehandlingPickerItemContent>', () => {
     const wrapper = shallow(<BehandlingPickerItemContent
       withChevronDown
       withChevronUp
-      behandlingType="Foreldrepenger"
+      behandlingTypeKode="BT-002"
+      behandlingTypeNavn="Foreldrepenger"
       behandlingId={1}
       opprettetDato="2018-01-01"
       avsluttetDato="2018-05-01"
       behandlingsstatus="Opprettet"
+      førsteÅrsak={førsteÅrsak}
+
     />);
 
     const labels = wrapper.find(DateLabel);

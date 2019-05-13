@@ -28,6 +28,13 @@ describe('<BehandlingPickerItem>', () => {
       rel: 'test',
       type: 'GET',
     }],
+    førsteÅrsak: {
+      behandlingArsakType: {
+        kode: '-',
+      },
+      erAutomatiskRevurdering: false,
+      manueltOpprettet: false,
+    },
   };
 
   const getKodeverknavn = ({ kode }) => {
