@@ -36,7 +36,7 @@ const HistorikkMalTypeTilbakekreving = ({
         </NavLink>
       </Element>
       {historikkinnslagDeler.map((historikkinnslagDel) => {
-      const { opplysninger, endredeFelter } = historikkinnslagDel;
+      const { opplysninger, endredeFelter, begrunnelseFritekst } = historikkinnslagDel;
       const periodeFom = opplysninger.find(o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_FOM.kode).tilVerdi;
       const periodeTom = opplysninger.find(o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_TOM.kode).tilVerdi;
       const begrunnelse = opplysninger
@@ -48,7 +48,7 @@ const HistorikkMalTypeTilbakekreving = ({
             <FormattedHTMLMessage id="Historikk.Template.Tilbakekreving.VurderingAvPerioden" values={{ periodeFom, periodeTom }} />
           </Normaltekst>
           <VerticalSpacer eightPx />
-          {endredeFelter.map((felt) => {
+          {endredeFelter && endredeFelter.map((felt, index) => {
             const { endretFeltNavn, fraVerdi, tilVerdi } = felt;
             const { navn, kode } = endretFeltNavn;
 
@@ -58,6 +58,7 @@ const HistorikkMalTypeTilbakekreving = ({
             const formatertFraVerdi = visProsentverdi && fraVerdi ? `${fraVerdi}%` : fraVerdi;
             let formatertTilVerdi = visProsentverdi && tilVerdi ? `${tilVerdi}%` : tilVerdi;
             formatertTilVerdi = visBelopTilbakekreves && !tilVerdi ? 0 : formatertTilVerdi;
+            const visAktsomhetBegrunnelse = begrunnelseFritekst && index === endredeFelter.length - 1;
 
             return (
               <React.Fragment key={navn}>
@@ -70,9 +71,12 @@ const HistorikkMalTypeTilbakekreving = ({
                 <VerticalSpacer eightPx />
                 {visBegrunnelse && begrunnelse}
                 {visBegrunnelse && <VerticalSpacer eightPx />}
+                {visAktsomhetBegrunnelse && begrunnelseFritekst}
+                {visAktsomhetBegrunnelse && <VerticalSpacer eightPx />}
               </React.Fragment>
             );
             })}
+          {(!endredeFelter && begrunnelseFritekst) && begrunnelseFritekst}
           <VerticalSpacer eightPx />
         </div>
       );

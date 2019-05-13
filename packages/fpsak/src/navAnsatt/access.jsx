@@ -17,8 +17,9 @@ const isBehandlingAvTilbakekreving = type => (type ? type.kode === BehandlingTyp
 
 const accessibleFor = validNavAnsattPredicates => navAnsatt => validNavAnsattPredicates.some(predicate => predicate(navAnsatt));
 
-const enabledFor = (validFagsakStauses, validBehandlingStatuses) => (fagsakStatus = {}, behandlingStatus = {}) => (
-  validFagsakStauses.includes(fagsakStatus.kode) && validBehandlingStatuses.includes(behandlingStatus.kode)
+const enabledFor = (validFagsakStauses, validBehandlingStatuses) => (fagsakStatus = {}, behandlingStatus = {}, isTilbakekrevingBehandling) => (
+  (isTilbakekrevingBehandling || validFagsakStauses.includes(fagsakStatus.kode))
+  && validBehandlingStatuses.includes(behandlingStatus.kode)
 );
 
 const accessSelector = (validNavAnsattPredicates, validFagsakStatuses, validBehandlingStatuses) => (navAnsatt,
@@ -31,7 +32,7 @@ const accessSelector = (validNavAnsattPredicates, validFagsakStatuses, validBeha
   }
   const employeeHasAccess = accessibleFor(validNavAnsattPredicates)(navAnsatt);
   const isEnabled = employeeHasAccess
-    && (enabledFor(validFagsakStatuses, validBehandlingStatuses)(fagsakStatus, behandlingStatus) || isBehandlingAvTilbakekreving(type));
+    && (enabledFor(validFagsakStatuses, validBehandlingStatuses)(fagsakStatus, behandlingStatus, isBehandlingAvTilbakekreving(type)));
   return { employeeHasAccess, isEnabled };
 };
 
