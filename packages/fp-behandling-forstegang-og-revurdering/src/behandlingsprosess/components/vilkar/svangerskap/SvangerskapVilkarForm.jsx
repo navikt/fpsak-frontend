@@ -21,7 +21,7 @@ import VilkarResultPicker from 'behandlingForstegangOgRevurdering/src/behandling
  * Presentasjonskomponent.
  */
 export const SvangerskapVilkarFormImpl = ({
-  intl,
+  // intl,
   avslagsarsaker,
   lovReferanse,
   readOnly,
@@ -41,7 +41,7 @@ export const SvangerskapVilkarFormImpl = ({
     readOnlySubmitButton={readOnlySubmitButton}
     readOnly={readOnly}
     bpStatus={status}
-    // lovReferanse={lovReferanse}
+    lovReferanse={lovReferanse}
   >
     <VilkarResultPicker avslagsarsaker={avslagsarsaker} erVilkarOk={erVilkarOk} readOnly={readOnly} hasAksjonspunkt={hasAksjonspunkt} />
     {erVilkarOk === false
