@@ -81,6 +81,9 @@ export const getBehandlingVilkarsvurderingsRettsgebyr = createSelector([getSelec
 export const getBehandlingVilkarsvurdering = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling
   .vilkarvurdering);
 
+// BEREGNINGSRESULTAT
+export const getBeregningsresultat = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.beregningsresultat);
+
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 const hasBehandlingLukketStatus = createSelector(

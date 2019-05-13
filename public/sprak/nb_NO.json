@@ -2281,6 +2281,20 @@
   "BelopetMottattIGodTroFormPanel.AngiBelop": "Angi beløp som skal tilbakekreves",
   "BelopetMottattIGodTroFormPanel.IngenTilbakekreving": "Ingen tilbakekreving",
 
+  "TilbakekrevingVedtak.Resultat": "Resultat",
+  "TilbakekrevingVedtak.Konsekvens": "Konsekvens",
+
+  "TilbakekrevingVedtakPeriodeTabell.Periode": "Periode",
+  "TilbakekrevingVedtakPeriodeTabell.FeilutbetaltBelop": "Feilutbetalt beløp",
+  "TilbakekrevingVedtakPeriodeTabell.Vurdering": "Vurdering",
+  "TilbakekrevingVedtakPeriodeTabell.AndelAvBelop": "Andel av beløp",
+  "TilbakekrevingVedtakPeriodeTabell.Renter": "Renter",
+  "TilbakekrevingVedtakPeriodeTabell.BelopSomTilbakekreves": "Beløp som tilbakekreves",
+  "TilbakekrevingVedtakPeriodeTabell.Sum": "Sum",
+
+  "TilbakekrevingVedtakForm.FritekstIVedtaksbrevet": "Fritekst i vedtaksbrevet",
+  "TilbakekrevingVedtakForm.TilGodkjenning": "Til godkjenning",
+
   "IntegrationStatusPanel.ServiceDowntime": "Tredjepartstjeneste(r) har nedetid",
   "IntegrationStatusPanel.Downtime": "{system} har nedetid.",
   "IntegrationStatusPanel.DowntimeUntil": "{system} har nedetid frem til {datetime}.",
