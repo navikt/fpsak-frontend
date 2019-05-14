@@ -16,7 +16,6 @@ node('DOCKER2') {
       sh "docker build -t $dockerRegistry/fpsak-frontend:$tagName -f ./Dockerfile ./ --build-arg HTTPS_PROXY=$HTTPS_PROXY --build-arg HTTP_PROXY=$HTTP_PROXY"
       sh "docker tag $dockerRegistry/fpsak-frontend:$tagName $dockerRegistry/fpsak-frontend:latest"
       sh "docker push $dockerRegistry/fpsak-frontend:$tagName"
-      sh "docker push $dockerRegistry/fpsak-frontend:latest"
    }
    stage('Deploy'){
       build job: 'fpsak-frontend-BUILD', parameters: [string(name: 'miljø', value: 't10'), string(name: 'versjonNummer', value: tagName)], wait: true
