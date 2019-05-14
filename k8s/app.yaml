@@ -6,12 +6,12 @@ metadata:
   name: fpsak-frontend
   namespace: NAMESPACE_VAL
 spec:
-  image: docker.adeo.no:5000/fpsak-frontend:RELEASE_VERSION # Required. Docker image.
+  image: repo.adeo.no:5443/fpsak-frontend:RELEASE_VERSION # Required. Docker image.
   port: 443 # Required. The port number which is exposed by the container and should receive HTTP traffic.
   sessionAffinity: ClientIP # Sticky Session for ingress contloller to prevent 404 on rollout
   team: teamforeldrepenger # Required. Set to the team that owns this application.
   liveness: # HTTP endpoint that signals 200 OK when the application is running.
-    path: /fpsak/health/isAlive
+    path: /fpsak/health/is-alive
     initialDelay: 20
     timeout: 1
     periodSeconds: 5     # How often (in seconds) to perform the probe. Default to 10 seconds
@@ -19,7 +19,7 @@ spec:
     # nais will try failureThreshold times before giving up and restarting the Pod
     # Defaults to 3
   readiness: # HTTP endpoint that signals 200 OK when it is okay to start routing traffic to the application.
-    path: /fpsak/health/isReady
+    path: /fpsak/health/is-ready
     initialDelay: 20
     timeout: 1
   replicas: # Optional. Set min = max to disable autoscaling.
@@ -63,3 +63,5 @@ spec:
     value: REDIS_HOST_VAL
   - name: REDIS_PORT
     value: "REDIS_PORT_VAL"
+  - name: APP_URL_FPSAK
+    value: APP_URL_FPSAK_VAL

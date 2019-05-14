@@ -4,6 +4,12 @@ location  /fpsak/api/ {
     proxy_pass "${APP_URL_FPSAK}/fpsak/api/";
 }
 
+# Simple Proxy to backend
+location  /fpsak/formidling/ {
+    access_by_lua_file oidc_protected.lua;
+    # proxy_pass "http://fpformidling/fpsak/formidling/";
+}
+
 
 # Simple Proxy to backend middlertidig fix frem til bedre løsning kommer på plass.
 location  /fpsak/oppgaveredirect {

@@ -2,6 +2,7 @@
 /.idea
 /bin/
 /.tmp/
+/tmp/
 /.happypack/
 /.nyc_output/
 /.eslint_loader_cache/
@@ -12,9 +13,6 @@ cypress.env.json
 *.iml
 *.log*
 /target/
-**/cypress/videos
-**/cypress/screenshots
-**/cypress/test-data/test-identer
 /node_modules
 npm-debug.log
 lib/
@@ -26,3 +24,4 @@ lerna-debug.log
 ssh.exe.stackdump
 ssh.exe.stackdump
 .DS_Store
+tmp/
