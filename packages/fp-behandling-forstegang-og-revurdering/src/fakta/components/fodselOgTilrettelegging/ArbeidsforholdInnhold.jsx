@@ -95,24 +95,6 @@ ArbeidsforholdInnhold.propTypes = {
   cancelArbeidsforholdCallback: PropTypes.func.isRequired,
   updateArbeidsforholdCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  warning: PropTypes.shape(),
-};
-
-ArbeidsforholdInnhold.defaultProps = {
-  warning: {},
-};
-
-const validateWarning = (values) => {
-  let warnings = {};
-
-  if (!values.kanGjennomfores && !values.kanIkkeGjennomfores && !values.redusertArbeid) {
-    warnings = {
-      _warning: {
-        permisjonsWarning: <FormattedMessage id="ArbeidsforholdInnhold.TilretteleggingWarning" />,
-      },
-    };
-  }
-  return warnings;
 };
 
 const transformValues = (values, selectedArbeidsforhold) => {
@@ -142,7 +124,6 @@ const mapStateToProps = (state, ownProps) => {
   const { selectedArbeidsforhold } = ownProps;
   return {
     initialValues: buildInitialValues(selectedArbeidsforhold),
-    warn: values => validateWarning(values),
     onSubmit: values => ownProps.updateArbeidsforholdCallback(transformValues(values, selectedArbeidsforhold)),
   };
 };

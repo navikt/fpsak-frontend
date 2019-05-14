@@ -96,14 +96,6 @@ export const ArbeidsforholdCheckboxes = ({
   );
   return (
     <Fieldset legend={intl.formatMessage({ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.Tilrettelegging' })}>
-      {warning && warning.permisjonsWarning
-      && (
-      <div className="skjemaelement__feilmelding">
-        {warning.permisjonsWarning}
-        <VerticalSpacer sixteenPx />
-      </div>
-      )
-      }
       {!readOnly && (
         <div>
           <CheckboxField
@@ -140,14 +132,12 @@ ArbeidsforholdCheckboxes.propTypes = {
   kanIkkeGjennomfores: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
   intl: intlShape.isRequired,
-  warning: PropTypes.shape(),
 };
 
 ArbeidsforholdCheckboxes.defaultProps = {
   kanGjennomfores: false,
   redusertArbeid: false,
   kanIkkeGjennomfores: false,
-  warning: {},
 };
 
 const mapStateToProps = state => ({
