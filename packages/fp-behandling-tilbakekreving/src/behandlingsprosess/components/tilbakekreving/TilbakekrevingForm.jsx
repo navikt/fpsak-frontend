@@ -25,7 +25,7 @@ import {
 } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingTilbakekreving/src/duckTilbake';
 import tilbakekrevingAksjonspunktCodes from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingAksjonspunktCodes';
-import foreldelseCodes from '../../foreldelseCodes';
+import foreldelseVurderingType from 'behandlingTilbakekreving/src/kodeverk/foreldelseVurderingType';
 import BpTimelinePanel from '../felles/behandlingspunktTimelineSkjema/BpTimelinePanel';
 import { AVVIST_CLASSNAME, GODKJENT_CLASSNAME } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
 import TilbakekrevingPeriodeForm, { TILBAKEKREVING_PERIODE_FORM_NAME } from './TilbakekrevingPeriodeForm';
@@ -157,7 +157,7 @@ const leggTilTimelineData = createSelector([state => behandlingFormValueSelector
         id: index + 1,
         group: 1,
         arsak: periode.årsak.årsak,
-        foreldet: erForeldet || periode.storedData.begrunnelse ? undefined : foreldelseCodes.MANUELL_BEHANDLING,
+        foreldet: erForeldet || periode.storedData.begrunnelse ? undefined : foreldelseVurderingType.UDEFINERT,
         erForeldet,
       };
     });

@@ -10,7 +10,7 @@ const getVedtakStatus = ({ beregningsresultat }) => {
     return vilkarUtfallType.IKKE_VURDERT;
   }
   const { vedtakResultat } = beregningsresultat;
-  return vedtakResultat.kode === VedtakResultat.INGEN_TILBAKEKREVING ? vilkarUtfallType.IKKE_OPPFYLT : vilkarUtfallType.OPPFYLT;
+  return vedtakResultat.kode === VedtakResultat.INGEN_TILBAKEBETALING ? vilkarUtfallType.IKKE_OPPFYLT : vilkarUtfallType.OPPFYLT;
 };
 
 /**

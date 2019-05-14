@@ -1,15 +1,16 @@
 import moment from 'moment';
-import foreldelseCodes from '../../../foreldelseCodes';
+
+import foreldelseVurderingType from 'behandlingTilbakekreving/src/kodeverk/foreldelseVurderingType';
 
 export const GODKJENT_CLASSNAME = 'godkjentPeriode';
 export const AVVIST_CLASSNAME = 'avvistPeriode';
 
 export const getStatusPeriode = (vurderingTypeKode) => {
-  if (vurderingTypeKode === foreldelseCodes.FORELDET) {
+  if (vurderingTypeKode === foreldelseVurderingType.FORELDET) {
     return AVVIST_CLASSNAME;
   }
 
-  if (vurderingTypeKode === foreldelseCodes.MANUELL_BEHANDLING) {
+  if (vurderingTypeKode === foreldelseVurderingType.UDEFINERT) {
     return 'undefined';
   }
   return GODKJENT_CLASSNAME;

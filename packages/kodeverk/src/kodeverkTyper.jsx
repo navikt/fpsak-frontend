@@ -59,6 +59,7 @@ const kodeverkTyper = {
   PERIODE_RESULTAT_AARSAK: 'PeriodeResultatÅrsak',
   VILKAR_TYPE: 'VilkårType',
   AKTSOMHET: 'Aktsomhet',
+  VURDERING: 'AnnenVurdering',
   VEDTAK_RESULTAT: 'VedtakResultat',
 };
 

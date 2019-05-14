@@ -21,14 +21,16 @@ import {
   VerticalSpacer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
 
+import tilbakekrevingKodeverkTyper from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingKodeverkTyper';
+import { getTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckTilbake';
+import foreldelseVurderingType from 'behandlingTilbakekreving/src/kodeverk/foreldelseVurderingType';
 import { getStatusPeriode } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
 import { behandlingForm } from '../../../behandlingForm';
-import foreldelseCodes from '../../foreldelseCodes';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 
-const oldForeldetValue = foreldelseVurderingType => (foreldelseVurderingType.kode !== foreldelseCodes.MANUELL_BEHANDLING ? foreldelseVurderingType.kode : null);
+const oldForeldetValue = fvType => (fvType.kode !== foreldelseVurderingType.UDEFINERT ? fvType.kode : null);
 const checkForeldetValue = selectedItemData => (selectedItemData.foreldet ? selectedItemData.foreldet
   : oldForeldetValue(selectedItemData.foreldelseVurderingType));
 
@@ -50,6 +52,7 @@ export class ForeldelseFormImpl extends Component {
     const {
       cancelSelectedActivity,
       readOnly,
+      foreldelseVurderingTyper,
       ...formProps
     } = this.props;
 
@@ -77,18 +80,7 @@ export class ForeldelseFormImpl extends Component {
               readOnly={readOnly}
               onChange={this.resetFields}
             >
-              <RadioOption
-                label={<FormattedMessage id="Foreldelse.RadioOption.Foreldet" />}
-                value={foreldelseCodes.FORELDET}
-              />
-              <RadioOption
-                label={<FormattedMessage id="Foreldelse.RadioOption.IkkeForeldet" />}
-                value={foreldelseCodes.IKKE_FORELDET}
-              />
-              <RadioOption
-                label={<FormattedMessage id="Foreldelse.RadioOption.IkkeForeldetTilleggsfrist" />}
-                value={foreldelseCodes.TILLEGGSFRIST}
-              />
+              {foreldelseVurderingTyper.map(type => <RadioOption key={type.kode} label={type.navn} value={type.kode} />)}
             </RadioGroupField>
           </Column>
         </Row>
@@ -152,9 +144,12 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const initialValues = buildInitalValues(ownProps.selectedItemData);
   const onSubmit = values => ownProps.updateActivity(transformValues(ownProps.selectedItemData, values));
+  const foreldelseVurderingTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.FORELDELSE_VURDERING)(initialState)
+    .filter(fv => fv.kode !== foreldelseVurderingType.IKKE_VURDERT);
   return () => ({
     initialValues,
     onSubmit,
+    foreldelseVurderingTyper,
   });
 };
 

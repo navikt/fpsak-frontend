@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import foreldelseCodes from '../../../foreldelseCodes';
+
+import foreldelseVurderingType from 'behandlingTilbakekreving/src/kodeverk/foreldelseVurderingType';
 import BpTimeline from './BpTimeline';
 import BpTimelineData from './BpTimelineData';
 
@@ -31,7 +32,7 @@ export class BpTimelinePanel extends Component {
     const { selectedItem } = this.state;
 
     if (!selectedItem) {
-      const defaultSelectedElement = resultatActivity.find(period => period.foreldet === foreldelseCodes.MANUELL_BEHANDLING);
+      const defaultSelectedElement = resultatActivity.find(period => period.foreldet === foreldelseVurderingType.UDEFINERT);
       this.setState({ selectedItem: defaultSelectedElement });
     }
   }
@@ -61,7 +62,7 @@ export class BpTimelinePanel extends Component {
     const sortedActivities = otherThanUpdated.concat(verdier);
     sortedActivities.sort((a, b) => a.id - b.id);
     this.setFormField(fieldNameToStoreDetailInfo, sortedActivities);
-    const tilbakekrevingPeriod = otherThanUpdated.find(period => period.foreldet === foreldelseCodes.MANUELL_BEHANDLING);
+    const tilbakekrevingPeriod = otherThanUpdated.find(period => period.foreldet === foreldelseVurderingType.UDEFINERT);
     this.setSelectedTilbakekrevingActivity(tilbakekrevingPeriod || undefined);
   }
 
