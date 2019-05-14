@@ -9,7 +9,7 @@ import {
   DatepickerField, CheckboxField, DecimalField,
 } from '@fpsak-frontend/form';
 import {
-  ArrowBox, FlexContainer, FlexColumn, FlexRow, VerticalSpacer,
+  ArrowBox, FlexContainer, FlexColumn, FlexRow,
 } from '@fpsak-frontend/shared-components';
 
 import {
@@ -28,7 +28,6 @@ export const ArbeidsforholdCheckboxes = ({
   redusertArbeid,
   kanIkkeGjennomfores,
   readOnly,
-  warning,
   intl,
 }) => {
   const arrowBox = (dato, stillingsprosent) => (
