@@ -26,7 +26,7 @@
     "docker:start": "yarn docker:stop; yarn docker:build; docker run -d --env-file=./docker/.env --name fpfront -p 443:9000 fpfront",
     "docker:stop": "docker stop fpfront; docker rm fpfront",
     "redis:start": "docker stop redis; docker rm redis; docker run --name redis -p 6379:6379 -d redis",
-    "up": "docker-compose up -d --remove-orphans --build && wait-on http://localhost:8080/fpsak/internal/health/isReady",
+    "up": "docker-compose up -d --remove-orphans --build",
     "down": "docker-compose down"
   },
   "workspaces": [

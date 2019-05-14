@@ -1,51 +1,19 @@
 version: '3'
 services:
-  fpfront:
-    build:
-      context: .
-      dockerfile: DockerfileNext
+  frontend:
+    build: .
     ports:
       - 9090:9090
     environment:
       - APP_PORT=9090
-      - APP_URL_FPSAK=http://fpsak:8080
-      - OIDC_HOST_URL=http://host.docker.internal:8060/isso/oauth2
+      - APP_URL_FPSAK=http://host.docker.internal:8080
+      - OIDC_HOST_URL=http://host.docker.internal:8060/rest/isso/oauth2
       - OIDC_REDIRECT_URI=http://localhost:9090/fpsak/cb
       - REDIS_HOST=redis
     links:
       - redis
+    volumes:
+      - ./dist:/app/fpsak
+
   redis:
     image: redis
-  fpmock2:
-    image: repo.adeo.no:5443/fpmock2:v201903111706
-    ports:
-      - 8060:8060 # HTTP
-      - 8063:8063 # HTTPS
-      - 8636:8636 # LDAPS
-    environment:
-      - AUTHORIZE_BASE_URL=http://localhost:8060
-      - AUTOTEST_FPSAK_BASE_URL=http://fpsak:8080
-      - AUTOTEST_OAUTH2_ISSUER=https://fpmock2:8063/isso/oauth2
-      - AUTOTEST_VTP_BASE_URL=http://fpmock2:8060
-      - CUSTOM_KEYSTORE_PASSWORD=changeit
-      - CUSTOM_KEYSTORE_PATH=/app/testcerts/vtpkeystore.jks
-      - ENABLE_CUSTOM_TRUSTSTORE=true
-      - LDAP_PROVIDER_URL=ldaps://fpmock2:8636
-      - NAV_TRUSTSTORE_PASSWORD=changeit
-      - NAV_TRUSTSTORE_PATH=/app/testcerts/nav_truststore_path
-  fpsak:
-    image: repo.adeo.no:5443/fpsak-for-vtp:v201903111317
-    restart: on-failure
-    links:
-      - fpsak-oracle
-      - fpmock2
-    ports:
-      - 8080:8080
-    environment:
-      - DEFAULTDS_URL=jdbc:oracle:thin:@fpsak-oracle:1521/XE
-      - DVHDS_URL=jdbc:oracle:thin:@fpsak-oracle:1521/XE
-  fpsak-oracle:
-    image: repo.adeo.no:5443/fpsak-oracle:v201902281601
-    shm_size: 1gb
-    ports:
-      - 1521:1521

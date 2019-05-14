@@ -1,21 +1,22 @@
 node('DOCKER2') {
-    def tagName=''
+   def tagName=''
+   dockerRegistry = "repo.adeo.no:5443"
    stage('Checkout Tags') { // checkout only tags.
       checkout scm
       sh(script: 'git fetch --tags')
       tagName=sh(returnStdout: true, script: 'git describe --tags `git rev-list --tags --max-count=1`').toString().trim()
       echo "Tag to be deployed $tagName"
-      
+
       sh(script: 'git checkout $tagName')
       sh(script: 'git log --oneline -n10')
    }
    stage('Build and Push'){
       sh 'PATH=$PATH:/usr/local/lib/node/nodejs/bin:/opt/yarn-v1.12.3/bin; yarn install --ignore-scripts'
       sh 'PATH=$PATH:/usr/local/lib/node/nodejs/bin:/opt/yarn-v1.12.3/bin; yarn build'
-      sh "docker build -t docker.adeo.no:5000/fpsak-frontend:$tagName -f ./docker/Dockerfile ./ --build-arg HTTPS_PROXY=$HTTPS_PROXY --build-arg HTTP_PROXY=$HTTP_PROXY"
-      sh "docker tag docker.adeo.no:5000/fpsak-frontend:$tagName docker.adeo.no:5000/fpsak-frontend:latest"
-      sh "docker push docker.adeo.no:5000/fpsak-frontend:$tagName"
-      sh "docker push docker.adeo.no:5000/fpsak-frontend:latest"
+      sh "docker build -t $dockerRegistry/fpsak-frontend:$tagName -f ./Dockerfile ./ --build-arg HTTPS_PROXY=$HTTPS_PROXY --build-arg HTTP_PROXY=$HTTP_PROXY"
+      sh "docker tag $dockerRegistry/fpsak-frontend:$tagName $dockerRegistry/fpsak-frontend:latest"
+      sh "docker push $dockerRegistry/fpsak-frontend:$tagName"
+      sh "docker push $dockerRegistry/fpsak-frontend:latest"
    }
    stage('Deploy'){
       build job: 'fpsak-frontend-BUILD', parameters: [string(name: 'miljø', value: 't10'), string(name: 'versjonNummer', value: tagName)], wait: true
