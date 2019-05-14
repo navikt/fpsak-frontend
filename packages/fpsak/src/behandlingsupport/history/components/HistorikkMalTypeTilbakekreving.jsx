@@ -79,7 +79,9 @@ const HistorikkMalTypeTilbakekreving = ({
               </React.Fragment>
             );
             })}
-          {(!endredeFelter && begrunnelseFritekst) && begrunnelseFritekst}
+          <Normaltekst>
+            {(!endredeFelter && begrunnelseFritekst) && begrunnelseFritekst}
+          </Normaltekst>
           <VerticalSpacer eightPx />
         </div>
       );
