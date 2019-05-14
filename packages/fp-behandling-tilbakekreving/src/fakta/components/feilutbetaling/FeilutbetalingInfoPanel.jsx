@@ -273,11 +273,22 @@ const buildInitialValues = createSelector([getFeilutbetalingFakta, getAksjonspun
     perioder: perioder.sort((a, b) => moment(a.fom) - moment(b.fom))
       .map((p) => {
         const {
-          fom, tom, feilutbetalingÅrsakDto: { årsakKode }, feilutbetalingÅrsakDto: { underÅrsaker },
+          fom, tom, feilutbetalingÅrsakDto,
         } = p;
+
+        const period = { fom, tom };
+
+        if (!feilutbetalingÅrsakDto) {
+          return period;
+        }
+
+        const {
+          årsakKode,
+          underÅrsaker,
+        } = feilutbetalingÅrsakDto;
+
         return {
-          fom,
-          tom,
+          ...period,
           årsak: årsakKode,
           [årsakKode]: {
             underÅrsak: underÅrsaker[0] ? underÅrsaker[0].underÅrsakKode : null,
