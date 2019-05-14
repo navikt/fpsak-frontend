@@ -80,7 +80,7 @@ const getÅrsak = (årsak) => {
   case 'RE-REGISTEROPPL':
     return 'Behandlingspunkt.Årsak.NyeRegisteropplysninger';
   default:
-    return '';
+    return 'Behandlingspunkt.Årsak.Annet';
   }
 };
 
@@ -158,9 +158,9 @@ BehandlingPickerItemContent.propTypes = {
   behandlingTypeNavn: PropTypes.string.isRequired,
   behandlingTypeKode: PropTypes.string.isRequired,
   førsteÅrsak: PropTypes.shape({
-    behandlingArsakType: kodeverkObjektPropType.isRequired,
-    erAutomatiskRevurdering: PropTypes.bool.isRequired,
-    manueltOpprettet: PropTypes.bool.isRequired,
+    behandlingArsakType: kodeverkObjektPropType,
+    erAutomatiskRevurdering: PropTypes.bool,
+    manueltOpprettet: PropTypes.bool,
   }).isRequired,
 };
 
