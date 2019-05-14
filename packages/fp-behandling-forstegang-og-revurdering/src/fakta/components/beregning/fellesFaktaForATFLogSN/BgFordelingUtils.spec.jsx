@@ -336,6 +336,26 @@ describe('<BgFordelingUtils>', () => {
     refusjonskravFraInntektsmelding: null,
   };
 
+  it('skal kunne overstyre rapportert inntekt om andel med refusjon som overstiger inntekt og AAP i BG', () => {
+    const andelFieldValue = {
+      ...andelValuesMedInntektsmelding,
+      refusjonskravFraInntektsmelding: 30000,
+      harPeriodeAarsakGraderingEllerRefusjon: true,
+    };
+    const bg = {
+      beregningsgrunnlagPeriode: [
+        {
+ beregningsgrunnlagPrStatusOgAndel: [
+          { aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSAVKLARINGSPENGER } },
+        ],
+},
+      ],
+    };
+    const skalKunneOverstyreRapportertInntekt = skalKunneOverstigeRapportertInntekt(null, null, bg)(andelFieldValue);
+    expect(skalKunneOverstyreRapportertInntekt).to.equal(true);
+  });
+
+
   it('skal kunne overstyre rapportert inntekt om dagpenger med periodeårsak', () => {
     const andelFieldValue = {
       ...andelValuesUtenInntektsmelding,
