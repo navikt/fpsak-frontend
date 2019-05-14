@@ -58,7 +58,7 @@ const kodeverkTyper = {
   UTTAK_UTSETTELSE_TYPE: 'UttakUtsettelseType',
   PERIODE_RESULTAT_AARSAK: 'PeriodeResultatÅrsak',
   VILKAR_TYPE: 'VilkårType',
-  VURDERING: 'AnnenVurdering',
+  AKTSOMHET: 'Aktsomhet',
   VEDTAK_RESULTAT: 'VedtakResultat',
 };
 
