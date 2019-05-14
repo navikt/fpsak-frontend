@@ -53,12 +53,13 @@ const HistorikkMalTypeTilbakekreving = ({
             const { navn, kode } = endretFeltNavn;
 
             const visBelopTilbakekreves = historikkEndretFeltType.BELOEP_TILBAKEKREVES === kode;
-            if (visBelopTilbakekreves && !tilVerdi) {
+            const visProsentverdi = historikkEndretFeltType.ANDEL_TILBAKEKREVES === kode;
+            const visIleggRenter = historikkEndretFeltType.ILEGG_RENTER === kode;
+            if ((visBelopTilbakekreves || visProsentverdi || visIleggRenter) && !tilVerdi) {
               return null;
             }
 
             const visBegrunnelse = historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT === kode;
-            const visProsentverdi = historikkEndretFeltType.ANDEL_TILBAKEKREVES === kode;
             const formatertFraVerdi = visProsentverdi && fraVerdi ? `${fraVerdi}%` : fraVerdi;
             const formatertTilVerdi = visProsentverdi && tilVerdi ? `${tilVerdi}%` : tilVerdi;
             const visAktsomhetBegrunnelse = begrunnelseFritekst && index === endredeFelter.length - 1;
