@@ -22,7 +22,7 @@ describe('<FaktaPanel>', () => {
   const ytelsefordeling = {
     aleneOmsorgPerioder: null,
     annenforelderHarRettDto: {},
-    endringsdato: null,
+    endringsdato: '2019-03-22',
     førsteUttaksdato: '2019-03-22',
     gjeldendeDekningsgrad: 100,
     ikkeOmsorgPerioder: null,
@@ -125,7 +125,6 @@ describe('<FaktaPanel>', () => {
       fagsakPerson={person}
       erOverstyrer={false}
       ytelsefordeling={ytelsefordeling}
-      isFørstegangsbehandling
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(1);
@@ -165,7 +164,6 @@ describe('<FaktaPanel>', () => {
       fagsakPerson={person}
       erOverstyrer={false}
       ytelsefordeling={ytelsefordeling}
-      isFørstegangsbehandling
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -205,7 +203,6 @@ describe('<FaktaPanel>', () => {
       fagsakPerson={person}
       erOverstyrer={false}
       ytelsefordeling={ytelsefordeling}
-      isFørstegangsbehandling
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -245,7 +242,6 @@ describe('<FaktaPanel>', () => {
       fagsakPerson={person}
       erOverstyrer={false}
       ytelsefordeling={ytelsefordeling}
-      isFørstegangsbehandling
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -323,7 +319,6 @@ describe('<FaktaPanel>', () => {
       fagsakPerson={person}
       erOverstyrer={false}
       ytelsefordeling={ytelsefordeling}
-      isFørstegangsbehandling
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -367,7 +362,6 @@ describe('<FaktaPanel>', () => {
       fagsakPerson={person}
       erOverstyrer={false}
       ytelsefordeling={ytelsefordeling}
-      isFørstegangsbehandling
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -411,7 +405,6 @@ describe('<FaktaPanel>', () => {
       fagsakPerson={person}
       erOverstyrer={false}
       ytelsefordeling={ytelsefordeling}
-      isFørstegangsbehandling
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -423,7 +416,7 @@ describe('<FaktaPanel>', () => {
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });
 
-  it('skal IKKE vise faktapanel for uttak hvis revurdering er satt og endringsdato ikke er satt', () => {
+  it('skal IKKE vise faktapanel for uttak hvis endringsdato ikke er satt', () => {
     const wrapper = shallowWithIntl(<FaktaPanel
       aksjonspunkter={[]}
       vilkarCodes={[]}
@@ -435,8 +428,7 @@ describe('<FaktaPanel>', () => {
       ytelsesType={ytelsestype}
       readOnly={false}
       fagsakPerson={person}
-      ytelsefordeling={ytelsefordeling}
-      isFørstegangsbehandling={false}
+      ytelsefordeling={{ ...ytelsefordeling, endringsdato: null }}
     />);
     expect(wrapper.find(UttakInfoPanel)).has.length(0);
   });
