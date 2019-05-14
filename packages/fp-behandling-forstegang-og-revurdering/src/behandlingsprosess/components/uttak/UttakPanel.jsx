@@ -229,22 +229,7 @@ const convertToArray = uttakResult => Object.values(uttakResult)
 
 const checkFlerbarnsMaksDager = (stonadskonto) => {
   let errors = null;
-<<<<<<< HEAD
   if (stonadskonto.FLERBARNSDAGER && !stonadskonto.FLERBARNSDAGER.gyldigForbruk) {
-=======
-  let flerbarnsdager = 0;
-  const flerbarnsMaksDager = stonadskonto.FLERBARNSDAGER ? stonadskonto.FLERBARNSDAGER.maxDager : 0;
-  uttaksresultatActivity.forEach((uttak) => {
-    if (uttak.flerbarnsdager) {
-      uttak.aktiviteter.forEach((a) => {
-        flerbarnsdager += (typeof a.days !== 'undefined' && typeof a.weeks !== 'undefined')
-          ? ((a.weeks * 5) + parseFloat(a.days))
-          : a.trekkdagerDesimaler;
-      });
-    }
-  });
-  if (flerbarnsdager > flerbarnsMaksDager) {
->>>>>>> FIX: first commit2
     errors = {
       _error:
   <AlertStripe type="advarsel" className={styles.marginTop}>
