@@ -397,6 +397,7 @@ export class UttakPerioder extends PureComponent {
       periodeSlett, isNyPeriodeFormOpen, inntektsmeldingInfo, showModalSlettPeriode,
     } = this.state;
     const nyPeriodeDisabledDaysFom = førsteUttaksdato || (perioder[0] || []).fom;
+
     return (
       <React.Fragment>
         {!readOnly && (
@@ -405,10 +406,14 @@ export class UttakPerioder extends PureComponent {
             const førsteUttak = {
               value: moment(førsteUttaksdato).format(DDMMYYYY_DATE_FORMAT),
             };
+            const farSøkerFør6Uker = (perioder[0] || []).uttakPeriodeType.kode === 'FEDREKVOTE'
+            && moment((perioder[0] || []).fom).isBefore(moment(førsteUttaksdato).add(6, 'weeks'));
             return (
               <FormattedMessage
                 key={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
-                id={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
+                id={farSøkerFør6Uker
+                  ? 'UttakInfoPanel.Aksjonspunkt.FarSøkerFør6Uker'
+                  : `UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
                 values={førsteUttak}
               />
             );
