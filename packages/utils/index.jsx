@@ -107,6 +107,7 @@ export {
   isTrekkdagerMerEnnNullUtsettelse,
   isUtbetalingMerEnnNullUtsettelse,
   noMoreThanZeroIfRejectedAndNotUtsettelse,
+  hasValidOrgNumber,
 } from './src/validation/validators';
 
 export {

@@ -543,7 +543,7 @@
   "ValidationMessage.MerEn100Prosent": "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%.",
   "ValidationMessage.MerEnNullUtaksprosent" : "Uttak av foreldrepenger i denne perioden er avslått, utbetalingsgrad kan ikke være større enn 0.",
   "ValidationMessage.MerEn100ProsentOgOgyldigUtsettlse" : "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%. Søker har ikke 100% stilling, vurder om perioden kan utsettes.",
-
+  "ValidationMessage.InvalidOrganisasjonsnummer": "Ugyldig organisasjonsnummer.",
   "VilkarsresultatView.VilkarOppfylt": "Vilkåret er oppfylt",
   "VilkarsresultatView.VilkarIkkeOppfylt": "Vilkåret er ikke oppfylt",
   "VilkarsresultatView.VilkarIkkeOppfylt1": "Vilkåret er ",

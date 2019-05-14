@@ -8,7 +8,7 @@ import {
   invalidValueMessage, arrayMinLengthMessage, invalidPeriodMessage, invalidDatesInPeriodMessage, invalidPeriodRangeMessage, datesNotEqual,
   maxLengthOrFodselsnrMessage, utbetalingsgradErMerSamtidigUttaksprosentMessage, ukerOgDagerVidNullUtbetalningsgradMessage,
   arbeidsprosentMåVare100VidUtsettelseAvArbeidMessage, merEn100ProsentMessage, trekkdagerErMerEnnNullUtsettelseMessage, utbetalingMerEnnNullUtsettelseMessage,
-  merEnNullMessage, dateRangesOverlappingBetweenPeriodTypesMessage,
+  merEnNullMessage, dateRangesOverlappingBetweenPeriodTypesMessage, invalidOrgNumberMessage,
 } from './messages';
 import {
   isoDateRegex, numberRegex, integerRegex, decimalRegex, textRegex, textGyldigRegex, isEmpty, yesterday, tomorrow,
@@ -27,6 +27,8 @@ export const maxLength = length => text => (isEmpty(text) || text.toString().tri
 
 export const minValue = length => number => (number >= length ? null : minValueMessage(length));
 export const maxValue = length => number => (number <= length ? null : maxValueMessage(length));
+
+export const hasValidOrgNumber = number => (number.toString().trim().length === 9 ? null : invalidOrgNumberMessage());
 
 const hasValidNumber = text => (isEmpty(text) || numberRegex.test(text) ? null : invalidNumberMessage(text));
 const hasValidInt = text => (isEmpty(text) || integerRegex.test(text) ? null : invalidIntegerMessage(text));

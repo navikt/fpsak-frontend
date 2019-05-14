@@ -8,15 +8,16 @@ import { Column, Row } from 'nav-frontend-grid';
 import {
   RadioGroupField, RadioOption, SelectField, InputField, DatepickerField,
 } from '@fpsak-frontend/form';
-import { ArrowBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
-  required, hasValidInteger, validPeriodeFomTom, hasValidDate, dateBeforeOrEqualToToday,
+  required, hasValidInteger, validPeriodeFomTom, hasValidDate, dateBeforeOrEqualToToday, hasValidOrgNumber,
 } from '@fpsak-frontend/utils';
 import { getKodeverk } from 'papirsoknad/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 const countrySelectValues = countryCodes => countryCodes
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
+
 
 /**
  * VirksomhetIdentifikasjonPanel
@@ -34,7 +35,7 @@ export const VirksomhetIdentifikasjonPanel = ({
   const sortedCountriesByName = countryCodes.slice().sort((a, b) => a.navn.localeCompare(b.navn));
 
   return (
-    <ElementWrapper>
+    <>
       <InputField
         name="navn"
         bredde="XL"
@@ -50,26 +51,26 @@ export const VirksomhetIdentifikasjonPanel = ({
       </RadioGroupField>
       { virksomhetRegistrertINorge
       && (
-      <ElementWrapper>
+      <>
         <Row>
           <Column xs="5">
             <ArrowBox>
               <InputField
                 name="organisasjonsnummer"
                 readOnly={readOnly}
-                validate={[required, hasValidInteger]}
+                validate={[required, hasValidInteger, hasValidOrgNumber]}
                 label={<FormattedMessage id="Registrering.VirksomhetIdentifikasjonPanel.OrganizationNumber" />}
               />
             </ArrowBox>
           </Column>
         </Row>
         <VerticalSpacer sixteenPx />
-      </ElementWrapper>
+      </>
       )
     }
       { !virksomhetRegistrertINorge && virksomhetRegistrertINorge !== undefined
       && (
-        <ElementWrapper>
+        <>
           <ArrowBox alignOffset={57}>
             <Row>
               <Column xs="5">
@@ -102,10 +103,10 @@ export const VirksomhetIdentifikasjonPanel = ({
               </Column>
             </Row>
           </ArrowBox>
-        </ElementWrapper>
+        </>
       )
       }
-    </ElementWrapper>
+    </>
   );
 };
 
