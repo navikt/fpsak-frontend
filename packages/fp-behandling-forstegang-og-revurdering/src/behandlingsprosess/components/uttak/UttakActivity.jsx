@@ -408,6 +408,9 @@ const calculateCorrectWeeks = (aktivitet, item) => {
   if (item.periodeResultatType && !aktivitet.trekkdagerDesimaler && (item.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING)) {
     return 0;
   }
+  if (aktivitet.trekkdagerDesimaler && aktivitet.trekkdagerDesimaler < 0) {
+    return 0;
+  }
   if ((aktivitet.utbetalingsgrad || aktivitet.utbetalingsgrad === 0) || !aktivitet.prosentArbeid) {
     return Math.floor(aktivitet.trekkdagerDesimaler / 5);
   }
@@ -416,6 +419,9 @@ const calculateCorrectWeeks = (aktivitet, item) => {
 
 const calculateCorrectDays = (aktivitet, item) => {
   if (item.periodeResultatType && !aktivitet.trekkdagerDesimaler && (item.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING)) {
+    return 0;
+  }
+  if (aktivitet.trekkdagerDesimaler && aktivitet.trekkdagerDesimaler < 0) {
     return 0;
   }
   if ((aktivitet.utbetalingsgrad || aktivitet.utbetalingsgrad === 0) || !aktivitet.prosentArbeid) {
