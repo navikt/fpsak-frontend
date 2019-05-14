@@ -44,7 +44,7 @@ const HistorikkMalTypeForeldelse = ({
           <Normaltekst>
             <FormattedHTMLMessage id="Historikk.Template.Foreldelse.VurderingAvPerioden" values={{ periodeFom, periodeTom }} />
           </Normaltekst>
-          {endredeFelter.map((felt) => {
+          {endredeFelter && endredeFelter.map((felt) => {
             const { endretFeltNavn, fraVerdi, tilVerdi } = felt;
             const { navn } = endretFeltNavn;
 

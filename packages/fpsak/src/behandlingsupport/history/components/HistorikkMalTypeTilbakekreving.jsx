@@ -52,12 +52,15 @@ const HistorikkMalTypeTilbakekreving = ({
             const { endretFeltNavn, fraVerdi, tilVerdi } = felt;
             const { navn, kode } = endretFeltNavn;
 
+            const visBelopTilbakekreves = historikkEndretFeltType.BELOEP_TILBAKEKREVES === kode;
+            if (visBelopTilbakekreves && !tilVerdi) {
+              return null;
+            }
+
             const visBegrunnelse = historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT === kode;
             const visProsentverdi = historikkEndretFeltType.ANDEL_TILBAKEKREVES === kode;
-            const visBelopTilbakekreves = historikkEndretFeltType.BELOEP_TILBAKEKREVES === kode;
             const formatertFraVerdi = visProsentverdi && fraVerdi ? `${fraVerdi}%` : fraVerdi;
-            let formatertTilVerdi = visProsentverdi && tilVerdi ? `${tilVerdi}%` : tilVerdi;
-            formatertTilVerdi = visBelopTilbakekreves && !tilVerdi ? 0 : formatertTilVerdi;
+            const formatertTilVerdi = visProsentverdi && tilVerdi ? `${tilVerdi}%` : tilVerdi;
             const visAktsomhetBegrunnelse = begrunnelseFritekst && index === endredeFelter.length - 1;
 
             return (
