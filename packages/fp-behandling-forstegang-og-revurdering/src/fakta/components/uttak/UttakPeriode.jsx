@@ -70,6 +70,7 @@ const UttakPeriode = ({
   perioder,
   inntektsmeldingInfo,
   endringsdato,
+  farSøkerFør6Uker,
   meta,
 }) => (
   <div>
@@ -127,6 +128,7 @@ const UttakPeriode = ({
                     cancelEditPeriode={cancelEditPeriode}
                     readOnly={readOnly}
                     inntektsmeldingInfo={inntektsmeldingInfo[index]}
+                    farSøkerFør6Uker={farSøkerFør6Uker}
                   />
                 </div>
                 {perioder.length === fields.length
@@ -154,10 +156,12 @@ UttakPeriode.propTypes = {
   isNyPeriodeFormOpen: PropTypes.bool.isRequired,
   inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape())).isRequired,
   endringsdato: PropTypes.string,
+  farSøkerFør6Uker: PropTypes.bool,
 };
 
 UttakPeriode.defaultProps = {
   endringsdato: undefined,
+  farSøkerFør6Uker: false,
 };
 
 export default UttakPeriode;

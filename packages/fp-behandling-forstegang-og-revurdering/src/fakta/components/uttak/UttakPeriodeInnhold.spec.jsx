@@ -35,6 +35,7 @@ describe('<UttakPeriodeInnhold>', () => {
       fraDato={periode.fom}
       tilDato={periode.tom}
       behandlingStatusKode={behandlingStatusKode}
+      farSøkerFør6Uker={false}
     />);
 
     const verticalSpacer = wrapper.find(VerticalSpacer);
