@@ -14,12 +14,14 @@ import { BehandlingsprosessPanel } from '@fpsak-frontend/fp-behandling-felles';
 
 import findBehandlingsprosessIcon from 'behandlingTilbakekreving/src/behandlingsprosess/statusIconHelper';
 import TilbakekrevingBehandlingspunktInfoPanel from './components/TilbakekrevingBehandlingspunktInfoPanel';
+import FatterTilbakekrevingVedtakStatusModal from './components/FatterTilbakekrevingVedtakStatusModal';
 import {
   setSelectedBehandlingspunktNavn, resolveProsessAksjonspunkter, resetBehandlingspunkter, getSelectedBehandlingspunktNavn,
 } from './duckBpTilbake';
 import {
   getBehandlingVersjon, getBehandlingHenlagt,
 } from '../selectors/tilbakekrevingBehandlingSelectors';
+import tilbakekrevingAksjonspunktCodes from '../kodeverk/tilbakekrevingAksjonspunktCodes';
 import { getBehandlingIdentifier } from '../duckTilbake';
 import {
   getBehandlingspunkter, getSelectedBehandlingspunkt, getDefaultBehandlingspunkt,
@@ -40,6 +42,8 @@ const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(b
 export class BehandlingsprosessTilbakeIndex extends Component {
   constructor() {
     super();
+
+    this.state = { showFatterVedtakModal: false };
 
     this.setup = this.setup.bind(this);
     this.goToBehandlingspunkt = this.goToBehandlingspunkt.bind(this);
@@ -105,7 +109,12 @@ export class BehandlingsprosessTilbakeIndex extends Component {
 
     return resolveAksjonspunkter(behandlingIdentifier, params, true)
       .then(() => {
-        this.goToBehandlingWithDefaultPunktAndFakta();
+        const isFatterVedtakAp = aksjonspunktModels.some(ap => ap.kode === tilbakekrevingAksjonspunktCodes.FORESLA_VEDTAK);
+        if (isFatterVedtakAp) {
+          this.setState(prevState => ({ ...prevState, showFatterVedtakModal: true }));
+        } else {
+          this.goToBehandlingWithDefaultPunktAndFakta();
+        }
       });
   }
 
@@ -113,23 +122,27 @@ export class BehandlingsprosessTilbakeIndex extends Component {
     const {
       behandlingspunkter, selectedBehandlingspunkt, dispatchSubmitFailed: submitFailedDispatch, isSelectedBehandlingHenlagt,
     } = this.props;
+    const { showFatterVedtakModal } = this.state;
     return (
-      <BehandlingsprosessPanel
-        behandlingspunkter={behandlingspunkter}
-        selectedBehandlingspunkt={selectedBehandlingspunkt}
-        selectBehandlingspunktCallback={this.goToBehandlingspunkt}
-        isSelectedBehandlingHenlagt={isSelectedBehandlingHenlagt}
-        findBehandlingsprosessIcon={findBehandlingsprosessIcon}
-        getBehandlingspunkterStatus={getBehandlingspunkterStatus}
-        getBehandlingspunkterTitleCodes={getBehandlingspunkterTitleCodes}
-        getAksjonspunkterOpenStatus={getAksjonspunkterOpenStatus}
-      >
-        <TilbakekrevingBehandlingspunktInfoPanel
-          submitCallback={this.submitVilkar}
-          dispatchSubmitFailed={submitFailedDispatch}
+      <React.Fragment>
+        <BehandlingsprosessPanel
+          behandlingspunkter={behandlingspunkter}
           selectedBehandlingspunkt={selectedBehandlingspunkt}
-        />
-      </BehandlingsprosessPanel>
+          selectBehandlingspunktCallback={this.goToBehandlingspunkt}
+          isSelectedBehandlingHenlagt={isSelectedBehandlingHenlagt}
+          findBehandlingsprosessIcon={findBehandlingsprosessIcon}
+          getBehandlingspunkterStatus={getBehandlingspunkterStatus}
+          getBehandlingspunkterTitleCodes={getBehandlingspunkterTitleCodes}
+          getAksjonspunkterOpenStatus={getAksjonspunkterOpenStatus}
+        >
+          <TilbakekrevingBehandlingspunktInfoPanel
+            submitCallback={this.submitVilkar}
+            dispatchSubmitFailed={submitFailedDispatch}
+            selectedBehandlingspunkt={selectedBehandlingspunkt}
+          />
+        </BehandlingsprosessPanel>
+        <FatterTilbakekrevingVedtakStatusModal closeEvent={this.goToSearchPage} showModal={showFatterVedtakModal} />
+      </React.Fragment>
     );
   }
 }

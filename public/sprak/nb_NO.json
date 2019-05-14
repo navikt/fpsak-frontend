@@ -2322,6 +2322,10 @@
   "TilbakekrevingVedtakForm.FritekstIVedtaksbrevet": "Fritekst i vedtaksbrevet",
   "TilbakekrevingVedtakForm.TilGodkjenning": "Til godkjenning",
 
+  "FatterTilbakekrevingVedtakStatusModal.GoToSearchPage": "Du kommer nå til forsiden.",
+  "FatterTilbakekrevingVedtakStatusModal.Ok": "OK",
+  "FatterTilbakekrevingVedtakStatusModal.Sendt": "Forslag til vedtak er sendt til beslutter",
+
   "IntegrationStatusPanel.ServiceDowntime": "Tredjepartstjeneste(r) har nedetid",
   "IntegrationStatusPanel.Downtime": "{system} har nedetid.",
   "IntegrationStatusPanel.DowntimeUntil": "{system} har nedetid frem til {datetime}.",
