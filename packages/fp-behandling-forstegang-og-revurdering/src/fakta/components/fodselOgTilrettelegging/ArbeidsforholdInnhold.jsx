@@ -29,7 +29,6 @@ const maxLength1500 = maxLength(1500);
 export const ArbeidsforholdInnhold = ({
   cancelArbeidsforholdCallback,
   readOnly,
-  warning,
   ...formProps
 }) => (
   <div>
@@ -44,7 +43,7 @@ export const ArbeidsforholdInnhold = ({
           />
         </FlexColumn>
       </FlexRow>
-      <ArbeidsforholdCheckboxes readOnly={readOnly} warning={warning} />
+      <ArbeidsforholdCheckboxes readOnly={readOnly} />
       <FlexRow>
         <FlexColumn className={styles.textAreaBredde}>
           <TextAreaField
