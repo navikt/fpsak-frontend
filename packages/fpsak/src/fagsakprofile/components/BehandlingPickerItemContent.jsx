@@ -161,7 +161,7 @@ BehandlingPickerItemContent.propTypes = {
     behandlingArsakType: kodeverkObjektPropType,
     erAutomatiskRevurdering: PropTypes.bool,
     manueltOpprettet: PropTypes.bool,
-  }).isRequired,
+  }),
 };
 
 BehandlingPickerItemContent.defaultProps = {
@@ -170,6 +170,11 @@ BehandlingPickerItemContent.defaultProps = {
   avsluttetDato: null,
   behandlendeEnhetId: null,
   behandlendeEnhetNavn: null,
+  førsteÅrsak: {
+    behandlingArsakType: {
+      kode: '-',
+    },
+  },
 };
 
 export default BehandlingPickerItemContent;
