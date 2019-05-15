@@ -174,6 +174,12 @@ const manuelleRevurderingsArsakerFP = [
 const manuelleRevurderingsArsakerSVP = [
   behandlingArsakType.KLAGE_U_INNTK,
   behandlingArsakType.KLAGE_M_INNTK,
+  behandlingArsakType.RE_ENDRET_INNTEKTSMELDING,
+  behandlingArsakType.RE_ENDRING_FRA_BRUKER,
+  behandlingArsakType.FØDSEL,
+  behandlingArsakType.DØD,
+  behandlingArsakType.ANNET,
+  behandlingArsakType.INNTEKT,
 ];
 
 const getBehandlingAarsaker = (state) => {
