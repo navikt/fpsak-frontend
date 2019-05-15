@@ -4,16 +4,18 @@ import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/util
 import { FormattedMessage } from 'react-intl';
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 
-export const lagTotalInntektArbeidsforholdList = (values, skalValidereMotRapportert, getKodeverknavn) => {
+export const lagTotalInntektArbeidsforholdList = (values, skalValidereMotRapportert, skalValidereInntektMotRefusjon, getKodeverknavn) => {
   const totalInntektArbeidsforholdList = [];
   values.forEach((andel) => {
-    if (skalValidereMotRapportert(andel)) {
+    if (skalValidereMotRapportert(andel) || skalValidereInntektMotRefusjon(andel)) {
       const navn = createVisningsnavnForAktivitet(andel, getKodeverknavn);
       if (andel.arbeidsgiverId) {
         const arbforhold = totalInntektArbeidsforholdList.find(({ key }) => key === navn);
         if (arbforhold !== undefined) {
           const idx = totalInntektArbeidsforholdList.indexOf(arbforhold);
           totalInntektArbeidsforholdList[idx].fastsattBelop += removeSpacesFromNumber(andel.fastsattBelop || '0');
+          totalInntektArbeidsforholdList[idx].refusjonskrav += andel.refusjonskravFraInntektsmelding === null
+          || andel.refusjonskravFraInntektsmelding === undefined ? 0 : andel.refusjonskravFraInntektsmelding;
           totalInntektArbeidsforholdList[idx].registerInntekt = andel.registerInntekt && andel.registerInntekt !== ''
           ? removeSpacesFromNumber(andel.registerInntekt) : totalInntektArbeidsforholdList[idx].registerInntekt;
         } else {
@@ -22,6 +24,9 @@ export const lagTotalInntektArbeidsforholdList = (values, skalValidereMotRapport
             fastsattBelop: removeSpacesFromNumber(andel.fastsattBelop || '0'),
             registerInntekt: andel.registerInntekt || andel.registerInntekt === 0 ? removeSpacesFromNumber(andel.registerInntekt) : null,
             belopFraInntektsmelding: andel.belopFraInntektsmelding,
+            validerMotRefusjon: skalValidereInntektMotRefusjon(andel),
+            refusjonskrav: andel.refusjonskravFraInntektsmelding === null
+            || andel.refusjonskravFraInntektsmelding === undefined ? 0 : andel.refusjonskravFraInntektsmelding,
             beforeStp: !andel.nyttArbeidsforhold,
           });
         }
@@ -46,12 +51,22 @@ export const lagTotalInntektArbeidsforholdList = (values, skalValidereMotRapport
 const TotalbelopPrArbeidsgiverError = ({
   totalInntektPrArbeidsforhold,
 }) => {
-  const beforeStpList = totalInntektPrArbeidsforhold.filter(({ beforeStp }) => beforeStp)
+  const validerMotRefusjonList = totalInntektPrArbeidsforhold.filter(({ validerMotRefusjon }) => validerMotRefusjon)
+  .filter(({ fastsattBelop, refusjonskrav }) => fastsattBelop > refusjonskrav);
+  const beforeStpList = totalInntektPrArbeidsforhold.filter(({ beforeStp, validerMotRefusjon }) => beforeStp && !validerMotRefusjon)
   .filter(({ fastsattBelop, registerInntekt }) => fastsattBelop > registerInntekt);
-  const afterOrEqualStpList = totalInntektPrArbeidsforhold.filter(({ beforeStp }) => !beforeStp)
+  const afterOrEqualStpList = totalInntektPrArbeidsforhold.filter(({ beforeStp, validerMotRefusjon }) => !beforeStp && !validerMotRefusjon)
   .filter(({ fastsattBelop, belopFraInntektsmelding }) => fastsattBelop > belopFraInntektsmelding);
   return (
     <div>
+      {validerMotRefusjonList.map(v => (
+        <div key={v.key}>
+          <FormattedMessage
+            id="BeregningInfoPanel.EndringBG.Validation.TotalFordelingForArbeidsforholdIkkeHøyereEnnRefusjon"
+            values={{ arbeidsgiver: v.key, refusjonskrav: formatCurrencyNoKr(v.refusjonskrav) }}
+          />
+        </div>
+      ))}
       {beforeStpList.map(v => (
         <div key={v.key}>
           <FormattedMessage
@@ -59,8 +74,7 @@ const TotalbelopPrArbeidsgiverError = ({
             values={{ arbeidsgiver: v.key, inntekt: formatCurrencyNoKr(v.registerInntekt) }}
           />
         </div>
-  ))
-  }
+      ))}
       {afterOrEqualStpList.map(v => (
         <div key={v.key}>
           <FormattedMessage

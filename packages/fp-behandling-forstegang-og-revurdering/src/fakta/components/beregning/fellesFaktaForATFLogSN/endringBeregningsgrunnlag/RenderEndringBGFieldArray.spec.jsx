@@ -26,6 +26,8 @@ const getKodeverknavn = () => undefined;
 
 const kanRedigereInntekt = andel => skalRedigereInntektForAndel({}, {}, {})(andel);
 
+const skalValidereInntektMotRefujon = () => false;
+
 const skalOverstyreBg = () => true;
 
 const skalValidereMotRapportert = () => true;
@@ -333,7 +335,8 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 10000,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg,
+      skalValidereMotRapportert, skalValidereInntektMotRefujon);
     expect(errors).to.equal(null);
   });
 
@@ -352,7 +355,8 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 10000,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg,
+      skalValidereMotRapportert, skalValidereInntektMotRefujon);
     expect(errors).to.equal(null);
   });
 
@@ -370,7 +374,8 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 10000,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg,
+      skalValidereMotRapportert, skalValidereInntektMotRefujon);
     expect(errors).to.equal(null);
   });
 
@@ -388,7 +393,8 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 10000,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg,
+      skalValidereMotRapportert, skalValidereInntektMotRefujon);
     expect(errors[0].refusjonskrav).to.have.length(1);
     expect(errors[0].refusjonskrav[0].id).to.equal(isRequiredMessage()[0].id);
   });
@@ -407,7 +413,8 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: null,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg,
+      skalValidereMotRapportert, skalValidereInntektMotRefujon);
     expect(errors[0].refusjonskrav).to.have.length(1);
     expect(errors[0].refusjonskrav[0].id).to.equal(isRequiredMessage()[0].id);
   });
@@ -436,7 +443,8 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: null,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg,
+      skalValidereMotRapportert, skalValidereInntektMotRefujon);
     const expected = skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverstring);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
     expect(errors._error.props.id).to.equal(expected[0].id);
@@ -458,7 +466,8 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 0,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg,
+      skalValidereMotRapportert, skalValidereInntektMotRefujon);
     const expected = skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverstring);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
     expect(errors._error.props.id).to.equal(expected[0].id);
@@ -480,7 +489,8 @@ describe('<RenderEndringBGFieldArray>', () => {
       nyttArbeidsforhold: false,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg,
+      skalValidereMotRapportert, skalValidereInntektMotRefujon);
     expect(errors[0].fastsattBelop).to.have.length(1);
     expect(errors[0].fastsattBelop[0].id).to.equal(isRequiredMessage()[0].id);
   });
@@ -504,7 +514,8 @@ describe('<RenderEndringBGFieldArray>', () => {
       nyttArbeidsforhold: false,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg,
+      skalValidereMotRapportert, skalValidereInntektMotRefujon);
     expect(errors['0'].fastsattBelop[0].id).to.equal(' ');
   });
 
@@ -523,7 +534,8 @@ describe('<RenderEndringBGFieldArray>', () => {
       nyttArbeidsforhold: false,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values, 100001, kanRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert);
+    const errors = RenderEndringBGFieldArray.validate(values, 100001, kanRedigereInntekt, skalOverstyreBg,
+      skalValidereMotRapportert, skalValidereInntektMotRefujon);
     expect(errors).to.equal(null);
   });
 
@@ -541,7 +553,8 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 10000,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values, 100001, kanRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert);
+    const errors = RenderEndringBGFieldArray.validate(values, 100001, kanRedigereInntekt, skalOverstyreBg,
+      skalValidereMotRapportert, skalValidereInntektMotRefujon);
     expect(errors).to.equal(null);
   });
 
@@ -559,7 +572,8 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 10000,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg,
+      skalValidereMotRapportert, skalValidereInntektMotRefujon);
     expect(errors[0].inntektskategori).to.have.length(1);
     expect(errors[0].inntektskategori[0].id).to.equal(isRequiredMessage()[0].id);
   });
@@ -579,7 +593,8 @@ describe('<RenderEndringBGFieldArray>', () => {
       nyAndel: true,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, kanRedigereInntekt, skalOverstyreBg,
+      skalValidereMotRapportert, skalValidereInntektMotRefujon);
     expect(errors[0].andel).to.have.length(1);
     expect(errors[0].andel[0].id).to.equal(isRequiredMessage()[0].id);
   });
@@ -599,7 +614,8 @@ describe('<RenderEndringBGFieldArray>', () => {
       nyAndel: true,
     };
     values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values, 100000, () => false, skalOverstyreBg, skalValidereMotRapportert);
+    const errors = RenderEndringBGFieldArray.validate(values, 100000, () => false, skalOverstyreBg,
+    skalValidereMotRapportert, skalValidereInntektMotRefujon);
     expect(errors).to.equal(null);
   });
 
@@ -692,7 +708,8 @@ describe('<RenderEndringBGFieldArray>', () => {
 
     const fordelingForstePeriode = 400000;
 
-    const errors = RenderEndringBGFieldArray.validate(values, fordelingForstePeriode, kanRedigereInntekt, () => false, skalValidereMotRapportert);
+    const errors = RenderEndringBGFieldArray.validate(values, fordelingForstePeriode, kanRedigereInntekt, () => false,
+    skalValidereMotRapportert, skalValidereInntektMotRefujon);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
     expect(errors._error.props.id).to.equal(skalVereLikFordelingMessage()[0].id);
     expect(errors._error.props.values.fordeling).to.equal('50 000');
@@ -785,7 +802,8 @@ describe('<RenderEndringBGFieldArray>', () => {
     }];
 
     const fordelingForstePeriode = 400000;
-    const errors = RenderEndringBGFieldArray.validate(values, fordelingForstePeriode, kanRedigereInntekt, () => false, skalValidereMotRapportert);
+    const errors = RenderEndringBGFieldArray.validate(values, fordelingForstePeriode, kanRedigereInntekt, () => false,
+    skalValidereMotRapportert, skalValidereInntektMotRefujon);
     expect(errors).to.equal(null);
   });
 
@@ -854,7 +872,8 @@ describe('<RenderEndringBGFieldArray>', () => {
 
     const fordelingForstePeriode = 60000;
 
-    const errors = RenderEndringBGFieldArray.validate(values, fordelingForstePeriode, kanRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert);
+    const errors = RenderEndringBGFieldArray.validate(values, fordelingForstePeriode, kanRedigereInntekt, skalOverstyreBg,
+      skalValidereMotRapportert, skalValidereInntektMotRefujon);
     expect(errors).to.equal(null);
   });
 
@@ -919,7 +938,7 @@ describe('<RenderEndringBGFieldArray>', () => {
   it('skal gi error når sum av fastsatt er ulik fordeling første periode for periode med andeler uten inntektsmelding', () => {
     const fordelingForstePeriode = 30000;
     const errors = RenderEndringBGFieldArray.validate(blandetRedigerbarOgIkkeRedigerbareValues, fordelingForstePeriode,
-      kanRedigereInntektSpesifisert, skalOverstyreBg, skalValidereMotRapportert);
+      kanRedigereInntektSpesifisert, skalOverstyreBg, skalValidereMotRapportert, skalValidereInntektMotRefujon);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
     expect(errors._error.props.id).to.equal(skalVereLikFordelingMessage()[0].id);
     expect(errors._error.props.values.fordeling).to.equal('30 000');
@@ -928,7 +947,7 @@ describe('<RenderEndringBGFieldArray>', () => {
   it('skal ikkje gi error når sum av fastsatt er ulik fordeling første periode for periode med andeler uten inntektsmelding', () => {
     const fordelingForstePeriode = 40000;
     const errors = RenderEndringBGFieldArray.validate(blandetRedigerbarOgIkkeRedigerbareValues, fordelingForstePeriode,
-      kanRedigereInntektSpesifisert, skalOverstyreBg, skalValidereMotRapportert);
+      kanRedigereInntektSpesifisert, skalOverstyreBg, skalValidereMotRapportert, skalValidereInntektMotRefujon);
     expect(errors).to.equal(null);
   });
 

@@ -165,11 +165,19 @@ const erAndelKunstigArbeidsforhold = (andel, beregningsgrunnlag) => {
   return lagtTilAvBruker !== undefined;
 };
 
+export const harAAPOgRefusjonskravOverstigerInntektsmelding = (andel, beregningsgrunnlag) => {
+  if (andel.refusjonskravFraInntektsmelding && andel.refusjonskravFraInntektsmelding > andel.belopFraInntektsmelding) {
+    return beregningsgrunnlag.beregningsgrunnlagPeriode.some(periode => periode.beregningsgrunnlagPrStatusOgAndel
+      .some(a => a.aktivitetStatus.kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER));
+  }
+  return false;
+};
+
 // Kun Ytelse
 const harKunYtelse = faktaOmBeregning => faktaOmBeregning.faktaOmBeregningTilfeller
 .find(({ kode }) => kode === faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE) !== undefined;
 
-export const skalKunneOverstigeRapportertInntekt = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => {
+const skalKunneOverstigeRapportertInntektOgTotaltBeregningsgrunnlag = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => {
   if (erDagpenger(andel) && andel.harPeriodeAarsakGraderingEllerRefusjon) {
     return true;
   }
@@ -194,8 +202,18 @@ export const skalKunneOverstigeRapportertInntekt = (values, faktaOmBeregning, be
   return false;
 };
 
+export const skalKunneOverstigeRapportertInntekt = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => {
+  if (harAAPOgRefusjonskravOverstigerInntektsmelding(andel, beregningsgrunnlag)) {
+    return true;
+  }
+  if (skalKunneOverstigeRapportertInntektOgTotaltBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag)(andel)) {
+    return true;
+  }
+  return false;
+};
+
 export const skalKunneOverstyreBeregningsgrunnlag = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => {
-  if (skalKunneOverstigeRapportertInntekt(values, faktaOmBeregning, beregningsgrunnlag)(andel)) {
+  if (skalKunneOverstigeRapportertInntektOgTotaltBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag)(andel)) {
     return true;
   }
   if (erNyoppstartetFrilanser(andel, values)) {

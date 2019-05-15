@@ -21,6 +21,17 @@ belopFraInntektsmelding: null,
 
 const arbeidsgiver2Key = 'Sopra Steria AS (9987432724)';
 
+const arbeidsgiver3 = {
+  arbeidsgiverNavn: 'NAV AS',
+ arbeidsgiverId: '4364634634',
+ arbeidsperiodeFom: '2019-01-01',
+ registerInntekt: '30 000',
+ belopFraInntektsmelding: null,
+ refusjonskravFraInntektsmelding: 20000,
+ };
+
+ const arbeidsgiver3Key = 'NAV AS (4364634634)';
+
 const frilanser = {
  arbeidsgiverNavn: '',
 arbeidsgiverId: '',
@@ -54,6 +65,12 @@ describe('<TotalbelopPrArbeidsgiverError>', () => {
       nyttArbeidsforhold: true,
      },
      {
+     ...arbeidsgiver3,
+     fastsattBelop: '20 000',
+     inntektskategori: 'ARBEIDSTAKER',
+     nyttArbeidsforhold: false,
+    },
+     {
  ...frilanser,
       fastsattBelop: '20 000',
       inntektskategori: 'FRILANSER',
@@ -68,8 +85,10 @@ describe('<TotalbelopPrArbeidsgiverError>', () => {
       return '';
     };
 
-    const inntektPrArbeidsforholdList = lagTotalInntektArbeidsforholdList(values, () => true, getKodeverknavn);
-    expect(inntektPrArbeidsforholdList.length).to.equal(3);
+    const skalValidereMotRefusjon = andel => andel.arbeidsgiverId === '4364634634';
+
+    const inntektPrArbeidsforholdList = lagTotalInntektArbeidsforholdList(values, () => true, skalValidereMotRefusjon, getKodeverknavn);
+    expect(inntektPrArbeidsforholdList.length).to.equal(4);
     const inntektForArbeidsgiver1 = inntektPrArbeidsforholdList.find(({ key }) => key === arbeidsgiver1Key);
     expect(inntektForArbeidsgiver1.fastsattBelop).to.equal(30000);
     expect(inntektForArbeidsgiver1.registerInntekt).to.equal(20000);
@@ -81,6 +100,16 @@ describe('<TotalbelopPrArbeidsgiverError>', () => {
     expect(inntektForArbeidsgiver2.registerInntekt).to.equal(30000);
     expect(inntektForArbeidsgiver2.belopFraInntektsmelding).to.equal(null);
     expect(inntektForArbeidsgiver2.beforeStp).to.equal(false);
+
+
+    const inntektForArbeidsgiver3 = inntektPrArbeidsforholdList.find(({ key }) => key === arbeidsgiver3Key);
+    expect(inntektForArbeidsgiver3.fastsattBelop).to.equal(20000);
+    expect(inntektForArbeidsgiver3.registerInntekt).to.equal(30000);
+    expect(inntektForArbeidsgiver3.belopFraInntektsmelding).to.equal(null);
+    expect(inntektForArbeidsgiver3.refusjonskrav).to.equal(20000);
+    expect(inntektForArbeidsgiver3.validerMotRefusjon).to.equal(true);
+    expect(inntektForArbeidsgiver3.beforeStp).to.equal(true);
+
 
     const inntektForFrilans = inntektPrArbeidsforholdList.find(({ key }) => key === frilanserKey);
     expect(inntektForFrilans.fastsattBelop).to.equal(20000);

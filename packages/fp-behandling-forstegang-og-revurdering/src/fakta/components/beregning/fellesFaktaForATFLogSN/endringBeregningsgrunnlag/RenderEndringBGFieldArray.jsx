@@ -462,8 +462,8 @@ const summerRegisterInntektFraValues = values => (values
 
 
 RenderEndringBGFieldArray.validate = (values, fastsattIForstePeriode, skalRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert,
-  getKodeverknavn) => {
-  const fieldErrors = validateAndeler(values, skalRedigereInntekt, skalValidereMotRapportert, getKodeverknavn);
+  skalValidereInntektMotRefusjon, getKodeverknavn) => {
+  const fieldErrors = validateAndeler(values, skalRedigereInntekt, skalValidereMotRapportert, skalValidereInntektMotRefusjon, getKodeverknavn);
   if (fieldErrors != null) {
     return fieldErrors;
   }

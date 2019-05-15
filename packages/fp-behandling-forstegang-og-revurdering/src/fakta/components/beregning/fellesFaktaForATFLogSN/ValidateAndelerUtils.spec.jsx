@@ -3,9 +3,12 @@ import { isRequiredMessage } from '@fpsak-frontend/utils';
 import {
   validateUlikeAndeler, ulikeAndelerErrorMessage, validateSumFastsattBelop, skalVereLikFordelingMessage, compareAndeler,
   validateTotalRefusjonPrArbeidsforhold, skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding, validateAndeler, tomErrorMessage,
-  validateAgainstRegisterOrInntektsmelding, validateFastsattBelop,
+  validateAgainstRegisterInntektsmeldingOrRefusjon, validateFastsattBelop,
 } from './ValidateAndelerUtils';
 
+const skalValidereInntektMotRefusjon = () => false;
+
+const skalValidereMotRapportert = () => true;
 
 describe('<ValidateAndelerUtils>', () => {
   it('skal ikkje gi error når total refusjon er lavere enn inntektsmelding', () => {
@@ -542,7 +545,7 @@ describe('<ValidateAndelerUtils>', () => {
       inntektskategori: 'FRILANSER',
     },
     ];
-    const fastsattError = validateAndeler(values, () => true, () => true);
+    const fastsattError = validateAndeler(values, () => true, () => true, skalValidereInntektMotRefusjon);
     expect(fastsattError['0'].fastsattBelop[0].id).to.equal(tomErrorMessage()[0].id);
     expect(fastsattError['1'].fastsattBelop[0].id).to.equal(tomErrorMessage()[0].id);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
@@ -552,6 +555,26 @@ describe('<ValidateAndelerUtils>', () => {
     expect(fastsattError._error.props.totalInntektPrArbeidsforhold[0].registerInntekt).to.equal(10000);
     expect(fastsattError._error.props.totalInntektPrArbeidsforhold[0].belopFraInntektsmeldingen).to.equal(undefined);
     expect(fastsattError._error.props.totalInntektPrArbeidsforhold[0].beforeStp).to.equal(true);
+  });
+
+  it('skal validere mot refusjonskrav for arbeidsforhold som tilkommer før skjæringstidspunktet', () => {
+    const andelValue = {
+      andel: 'Arbeidsgiver 1',
+      arbeidsgiverNavn: 'Arbeidsgiver 1',
+      arbeidsgiverId: '2342353525',
+      arbeidsforholdId: '3r4h3uihr43',
+    };
+    const inntektList = [{
+      key: 'Arbeidsgiver 1 (2342353525) ...hr43',
+      registerInntekt: 20000,
+      fastsattBelop: 20000,
+      belopFraInntektsmelding: null,
+      beforeStp: true,
+      validerMotRefusjon: true,
+      refusjonskrav: 15000,
+    }];
+    const fastsattError = validateAgainstRegisterInntektsmeldingOrRefusjon(andelValue, inntektList, () => false);
+    expect(fastsattError[0].id).to.equal(tomErrorMessage()[0].id);
   });
 
   it('skal validere mot registerinntekt for arbeidsforhold som tilkommer før skjæringstidspunktet', () => {
@@ -568,7 +591,7 @@ describe('<ValidateAndelerUtils>', () => {
       belopFraInntektsmelding: null,
       beforeStp: true,
     }];
-    const fastsattError = validateAgainstRegisterOrInntektsmelding(andelValue, inntektList);
+    const fastsattError = validateAgainstRegisterInntektsmeldingOrRefusjon(andelValue, inntektList, skalValidereMotRapportert);
     expect(fastsattError[0].id).to.equal(tomErrorMessage()[0].id);
   });
 
@@ -586,7 +609,7 @@ describe('<ValidateAndelerUtils>', () => {
       belopFraInntektsmelding: 10000,
       beforeStp: false,
     }];
-    const fastsattError = validateAgainstRegisterOrInntektsmelding(andelValue, inntektList);
+    const fastsattError = validateAgainstRegisterInntektsmeldingOrRefusjon(andelValue, inntektList, skalValidereMotRapportert);
     expect(fastsattError[0].id).to.equal(tomErrorMessage()[0].id);
   });
 
@@ -604,7 +627,7 @@ describe('<ValidateAndelerUtils>', () => {
       belopFraInntektsmelding: 10000,
       beforeStp: false,
     }];
-    const fastsattError = validateAgainstRegisterOrInntektsmelding(andelValue, inntektList);
+    const fastsattError = validateAgainstRegisterInntektsmeldingOrRefusjon(andelValue, inntektList, skalValidereMotRapportert);
     expect(fastsattError).to.equal(null);
   });
 
@@ -624,7 +647,7 @@ describe('<ValidateAndelerUtils>', () => {
       belopFraInntektsmelding: 10000,
       beforeStp: false,
     }];
-    const fastsattError = validateFastsattBelop(andelValue, inntektList);
+    const fastsattError = validateFastsattBelop(andelValue, inntektList, skalValidereMotRapportert);
     expect(fastsattError[0].id).to.equal(isRequiredMessage()[0].id);
   });
 });

@@ -148,7 +148,7 @@ const skalRedigereInntekt = andel => andel.harPeriodeAarsakGraderingEllerRefusjo
 const skalValidereMotRapportert = () => true;
 
 const validatePeriode = (periode, sumFordelingKunYtelse, getKodeverknavn) => {
-  const arrayErrors = validateAndeler(periode, skalRedigereInntekt, skalValidereMotRapportert, getKodeverknavn);
+  const arrayErrors = validateAndeler(periode, skalRedigereInntekt, skalValidereMotRapportert, () => false, getKodeverknavn);
   if (arrayErrors != null) {
     return arrayErrors;
   }
