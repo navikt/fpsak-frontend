@@ -298,6 +298,9 @@ const buildInitialValues = createSelector([getFeilutbetalingFakta, getAksjonspun
   };
 });
 
+const getSortedFeilutbetalingArsaker = createSelector([getFeilutbetalingAarsaker], feilutbetalingArsaker => feilutbetalingArsaker
+  .sort((a1, a2) => a1.årsak.localeCompare(a2.årsak)));
+
 const transformValues = (values, aksjonspunkter, årsaker, initialPerioder) => {
   const apCode = aksjonspunkter.find(ap => ap.definisjon.kode === feilutbetalingAksjonspunkter[0]);
   const checkUnderÅrsak = underÅrsaker => (underÅrsaker[0] ? underÅrsaker[0].underÅrsakKode : null);
@@ -331,7 +334,7 @@ const transformValues = (values, aksjonspunkter, årsaker, initialPerioder) => {
 };
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const feilutbetaling = getFeilutbetalingFakta(initialState).behandlingFakta;
-  const årsaker = getFeilutbetalingAarsaker(initialState);
+  const årsaker = getSortedFeilutbetalingArsaker(initialState);
   const submitCallback = values => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter, årsaker, feilutbetaling.perioder));
   return state => ({
     feilutbetaling,
