@@ -131,7 +131,7 @@ const buildInitialValues = createSelector([getBehandlingVilkarsvurderingsperiode
   const erTotalBelopUnder4Rettsgebyr = totalbelop < (rettsgebyr * 4);
   const lagredeVilkarsvurdertePerioder = vilkarsvurdering.vilkarsVurdertePerioder;
 
-  if (!lagredeVilkarsvurdertePerioder) {
+  if (lagredeVilkarsvurdertePerioder.length === 0) {
     return {
       vilkarsVurdertePerioder: perioder.map(periode => ({
         ...periode,
