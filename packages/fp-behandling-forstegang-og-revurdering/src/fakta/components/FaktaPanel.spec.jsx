@@ -280,6 +280,7 @@ describe('<FaktaPanel>', () => {
       readOnly={false}
       fagsakPerson={person}
       erOverstyrer={false}
+      ytelsefordeling={ytelsefordeling}
     />);
 
     expect(wrapper.find(FodselOgTilretteleggingInfoPanel)).has.length(1);
@@ -428,6 +429,7 @@ describe('<FaktaPanel>', () => {
       ytelsesType={ytelsestype}
       readOnly={false}
       fagsakPerson={person}
+      erOverstyrer={false}
       ytelsefordeling={{ ...ytelsefordeling, endringsdato: null }}
     />);
     expect(wrapper.find(UttakInfoPanel)).has.length(0);
@@ -447,6 +449,7 @@ describe('<FaktaPanel>', () => {
       readOnly={false}
       fagsakPerson={person}
       erOverstyrer
+      ytelsefordeling={ytelsefordeling}
     />);
     expect(wrapper.find(BeregningInfoPanel)).has.length(1);
   });

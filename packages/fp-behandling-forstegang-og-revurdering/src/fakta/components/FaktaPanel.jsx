@@ -28,6 +28,7 @@ import BeregningInfoPanel from './beregning/BeregningInfoPanel';
 import PersonInfoPanel from './person/PersonInfoPanel';
 import PersonIndexPanel from './person/PersonIndexPanel';
 import ArbeidsforholdInfoPanel from './arbeidsforholdInfoPanel/ArbeidsforholdInfoPanel';
+import FodselOgTilretteleggingInfoPanel from './fodselOgTilrettelegging/FodselOgTilretteleggingInfoPanel';
 
 import styles from './faktaPanel.less';
 
@@ -49,6 +50,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
   ytelsesType,
   ytelsefordeling,
   fagsakPerson,
+  erOverstyrer,
 }) => (
   <React.Fragment>
     <div className={styles.personContainer}>
@@ -127,6 +129,18 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         />
       )
       }
+      {FodselOgTilretteleggingInfoPanel.supports(aksjonspunkter)
+      && (
+      <FodselOgTilretteleggingInfoPanel
+        aksjonspunkter={aksjonspunkter}
+        openInfoPanels={openInfoPanels}
+        toggleInfoPanelCallback={toggleInfoPanelCallback}
+        shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+        submitCallback={submitCallback}
+        readOnly
+      />
+      )
+      }
       {AdopsjonInfoPanel.supports(vilkarCodes, aksjonspunkter)
       && (
         <AdopsjonInfoPanel
@@ -175,7 +189,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         />
       )
       }
-      {BeregningInfoPanel.supports(aksjonspunkter)
+      {(BeregningInfoPanel.supports(aksjonspunkter) || erOverstyrer)
       && (
         <BeregningInfoPanel
           aksjonspunkter={aksjonspunkter}
@@ -184,6 +198,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
           submitCallback={submitCallback}
           readOnly={readOnly}
+          erOverstyrer={erOverstyrer}
         />
       )
       }
@@ -230,6 +245,7 @@ FaktaPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   ytelsesType: PropTypes.shape().isRequired,
   fagsakPerson: PropTypes.shape().isRequired,
+  erOverstyrer: PropTypes.bool.isRequired,
 };
 
 FaktaPanel.defaultProps = {
@@ -244,6 +260,7 @@ const mapStateToProps = state => ({
   readOnly: !getRettigheter(state).writeAccess.isEnabled || getBehandlingIsOnHold(state) || hasReadOnlyBehandling(state),
   personopplysninger: getPersonopplysning(state) || null,
   ytelsefordeling: getBehandlingYtelseFordeling(state),
+  erOverstyrer: getRettigheter(state).kanOverstyreAccess.isEnabled,
   fagsakPerson: getFagsakPerson(state),
 });
 
