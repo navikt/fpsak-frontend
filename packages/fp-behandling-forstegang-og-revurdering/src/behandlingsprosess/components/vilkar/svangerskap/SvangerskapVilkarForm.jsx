@@ -14,6 +14,9 @@ import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegan
 import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import VilkarResultPicker from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/VilkarResultPicker';
+import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
 /**
  * SvangerskapsvilkårForm
@@ -97,7 +100,7 @@ const mapStateToProps = (state, initialProps) => {
     onSubmit: values => initialProps.submitCallback([transformValues(values, aksjonspunkter)]),
     lovReferanse: getSelectedBehandlingspunktVilkar(state)[0].lovReferanse,
     hasAksjonspunkt: aksjonspunkter.length > 0,
-    avslagsarsaker: [{ kode: 'TEST1', navn: 'Test 1' }, { kode: 'TEST2', navn: 'Test 2' }], // TODO: hente avslagsårsaker
+    avslagsarsaker: getKodeverk(kodeverkTyper.AVSLAGSARSAK)(state)[vilkarType.SVANGERSKAPVILKARET],
   };
 };
 
@@ -106,6 +109,6 @@ const SvangerskapVilkarForm = connect(mapStateToProps)(injectIntl(behandlingForm
   validate,
 })(SvangerskapVilkarFormImpl)));
 
-SvangerskapVilkarForm.supports = behandlingspunkt => behandlingspunkt === behandlingspunktCodes.SVANGERSKAP;
+ SvangerskapVilkarForm.supports = behandlingspunkt => behandlingspunkt === behandlingspunktCodes.SVANGERSKAP;
 
 export default SvangerskapVilkarForm;
