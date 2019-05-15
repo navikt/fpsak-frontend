@@ -178,6 +178,11 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.FODSELTILRETTELEGGING,
     punktNavn: '',
   },
+    PUNKT_FOR_SVANGERSKAPSPENGER: {
+    kode: 'SVANGERSKAP',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: behandlingspunktCodes.SVANGERSKAP,
+  },
 };
 
 export const createLocationForHistorikkItems = (behandlingLocation, skjermlenkeCode) => {
