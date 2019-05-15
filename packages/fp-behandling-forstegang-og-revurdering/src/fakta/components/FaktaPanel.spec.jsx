@@ -12,12 +12,22 @@ import TilleggsopplysningerInfoPanel from './tilleggsopplysninger/Tilleggsopplys
 import OmsorgInfoPanel from './omsorg/OmsorgInfoPanel';
 import OmsorgOgForeldreansvarInfoPanel from './omsorgOgForeldreansvar/OmsorgOgForeldreansvarInfoPanel';
 import AdopsjonInfoPanel from './adopsjon/AdopsjonInfoPanel';
+import UttakInfoPanel from './uttak/UttakInfoPanel';
 import FodselInfoPanel from './fodsel/FodselInfoPanel';
 import BeregningInfoPanel from './beregning/BeregningInfoPanel';
 import FodselOgTilretteleggingInfoPanel from './fodselOgTilrettelegging/FodselOgTilretteleggingInfoPanel';
 import { FaktaPanel } from './FaktaPanel';
 
 describe('<FaktaPanel>', () => {
+  const ytelsefordeling = {
+    aleneOmsorgPerioder: null,
+    annenforelderHarRettDto: {},
+    endringsdato: '2019-03-22',
+    førsteUttaksdato: '2019-03-22',
+    gjeldendeDekningsgrad: 100,
+    ikkeOmsorgPerioder: null,
+  };
+
   const personopplysninger = {
     navBrukerKjonn: {
       kode: '',
@@ -114,6 +124,7 @@ describe('<FaktaPanel>', () => {
       readOnly={false}
       fagsakPerson={person}
       erOverstyrer={false}
+      ytelsefordeling={ytelsefordeling}
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(1);
@@ -122,6 +133,7 @@ describe('<FaktaPanel>', () => {
     expect(wrapper.find(OmsorgOgForeldreansvarInfoPanel)).has.length(0);
     expect(wrapper.find(AdopsjonInfoPanel)).has.length(0);
     expect(wrapper.find(FodselInfoPanel)).has.length(0);
+    expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });
 
   it('skal vise faktapanel for omsorg(aleneomsorg) og medlemskap når en har aksjonspunkt for medlemskap og aleneomsorg', () => {
@@ -151,6 +163,7 @@ describe('<FaktaPanel>', () => {
       readOnly={false}
       fagsakPerson={person}
       erOverstyrer={false}
+      ytelsefordeling={ytelsefordeling}
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -159,6 +172,7 @@ describe('<FaktaPanel>', () => {
     expect(wrapper.find(OmsorgOgForeldreansvarInfoPanel)).has.length(0);
     expect(wrapper.find(AdopsjonInfoPanel)).has.length(0);
     expect(wrapper.find(FodselInfoPanel)).has.length(0);
+    expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });
 
   it('skal vise faktapanel for omsorg(aleneomsorg) og medlemskap når aksjonspunkt for medlemskap og omsorg', () => {
@@ -188,6 +202,7 @@ describe('<FaktaPanel>', () => {
       readOnly={false}
       fagsakPerson={person}
       erOverstyrer={false}
+      ytelsefordeling={ytelsefordeling}
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -196,6 +211,7 @@ describe('<FaktaPanel>', () => {
     expect(wrapper.find(OmsorgOgForeldreansvarInfoPanel)).has.length(0);
     expect(wrapper.find(AdopsjonInfoPanel)).has.length(0);
     expect(wrapper.find(FodselInfoPanel)).has.length(0);
+    expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });
 
   it('skal vise faktapanel for omsorg og medlemskap når en har aksjonspunkt for disse', () => {
@@ -225,6 +241,7 @@ describe('<FaktaPanel>', () => {
       readOnly={false}
       fagsakPerson={person}
       erOverstyrer={false}
+      ytelsefordeling={ytelsefordeling}
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -233,6 +250,7 @@ describe('<FaktaPanel>', () => {
     expect(wrapper.find(OmsorgOgForeldreansvarInfoPanel)).has.length(1);
     expect(wrapper.find(AdopsjonInfoPanel)).has.length(0);
     expect(wrapper.find(FodselInfoPanel)).has.length(0);
+    expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });
 
   it('skal vise faktapanel for svangerskapspenger og medlemskap når en har aksjonspunkt for disse', () => {
@@ -262,6 +280,7 @@ describe('<FaktaPanel>', () => {
       readOnly={false}
       fagsakPerson={person}
       erOverstyrer={false}
+      ytelsefordeling={ytelsefordeling}
     />);
 
     expect(wrapper.find(FodselOgTilretteleggingInfoPanel)).has.length(1);
@@ -300,6 +319,7 @@ describe('<FaktaPanel>', () => {
       readOnly={false}
       fagsakPerson={person}
       erOverstyrer={false}
+      ytelsefordeling={ytelsefordeling}
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -308,6 +328,7 @@ describe('<FaktaPanel>', () => {
     expect(wrapper.find(OmsorgOgForeldreansvarInfoPanel)).has.length(1);
     expect(wrapper.find(AdopsjonInfoPanel)).has.length(0);
     expect(wrapper.find(FodselInfoPanel)).has.length(0);
+    expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });
 
   it('skal vise faktapanel for adopsjon og medlemskap når en har aksjonspunkt for disse', () => {
@@ -341,6 +362,7 @@ describe('<FaktaPanel>', () => {
       readOnly={false}
       fagsakPerson={person}
       erOverstyrer={false}
+      ytelsefordeling={ytelsefordeling}
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -349,6 +371,7 @@ describe('<FaktaPanel>', () => {
     expect(wrapper.find(OmsorgOgForeldreansvarInfoPanel)).has.length(0);
     expect(wrapper.find(AdopsjonInfoPanel)).has.length(1);
     expect(wrapper.find(FodselInfoPanel)).has.length(0);
+    expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });
 
   it('skal vise faktapanel for fødsel og medlemskap når en har aksjonspunkt for disse', () => {
@@ -382,6 +405,7 @@ describe('<FaktaPanel>', () => {
       readOnly={false}
       fagsakPerson={person}
       erOverstyrer={false}
+      ytelsefordeling={ytelsefordeling}
     />);
 
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
@@ -390,6 +414,25 @@ describe('<FaktaPanel>', () => {
     expect(wrapper.find(OmsorgOgForeldreansvarInfoPanel)).has.length(0);
     expect(wrapper.find(AdopsjonInfoPanel)).has.length(0);
     expect(wrapper.find(FodselInfoPanel)).has.length(1);
+    expect(wrapper.find(UttakInfoPanel)).has.length(1);
+  });
+
+  it('skal IKKE vise faktapanel for uttak hvis endringsdato ikke er satt', () => {
+    const wrapper = shallowWithIntl(<FaktaPanel
+      aksjonspunkter={[]}
+      vilkarCodes={[]}
+      personopplysninger={personopplysninger}
+      submitCallback={sinon.spy()}
+      openInfoPanels={[]}
+      toggleInfoPanelCallback={sinon.spy()}
+      shouldOpenDefaultInfoPanels
+      ytelsesType={ytelsestype}
+      readOnly={false}
+      fagsakPerson={person}
+      erOverstyrer={false}
+      ytelsefordeling={{ ...ytelsefordeling, endringsdato: null }}
+    />);
+    expect(wrapper.find(UttakInfoPanel)).has.length(0);
   });
 
 
@@ -406,6 +449,7 @@ describe('<FaktaPanel>', () => {
       readOnly={false}
       fagsakPerson={person}
       erOverstyrer
+      ytelsefordeling={ytelsefordeling}
     />);
     expect(wrapper.find(BeregningInfoPanel)).has.length(1);
   });

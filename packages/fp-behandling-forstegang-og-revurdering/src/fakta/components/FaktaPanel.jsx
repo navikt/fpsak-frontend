@@ -4,7 +4,12 @@ import { connect } from 'react-redux';
 
 import { getRettigheter } from 'navAnsatt/duck';
 import {
-  getBehandlingVilkarCodes, getPersonopplysning, getBehandlingIsOnHold, getAksjonspunkter, hasReadOnlyBehandling,
+  getBehandlingVilkarCodes,
+  getPersonopplysning,
+  getBehandlingIsOnHold,
+  getAksjonspunkter,
+  hasReadOnlyBehandling,
+  getBehandlingYtelseFordeling,
 }
   from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
@@ -43,6 +48,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
   shouldOpenDefaultInfoPanels,
   readOnly,
   ytelsesType,
+  ytelsefordeling,
   fagsakPerson,
   erOverstyrer,
 }) => (
@@ -208,7 +214,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         />
       )
       }
-      {UttakInfoPanel.supports(personopplysninger, ytelsesType)
+      {UttakInfoPanel.supports(personopplysninger, ytelsesType, ytelsefordeling)
       && (
         <UttakInfoPanel
           aksjonspunkter={aksjonspunkter}
@@ -228,6 +234,7 @@ FaktaPanel.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   vilkarCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   personopplysninger: PropTypes.shape(),
+  ytelsefordeling: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
   /**
    * Oversikt over hvilke faktapaneler som er åpne
@@ -250,9 +257,10 @@ const mapStateToProps = state => ({
   vilkarCodes: getBehandlingVilkarCodes(state),
   ytelsesType: getFagsakYtelseType(state),
   openInfoPanels: getOpenInfoPanels(state),
-  erOverstyrer: getRettigheter(state).kanOverstyreAccess.isEnabled,
   readOnly: !getRettigheter(state).writeAccess.isEnabled || getBehandlingIsOnHold(state) || hasReadOnlyBehandling(state),
   personopplysninger: getPersonopplysning(state) || null,
+  ytelsefordeling: getBehandlingYtelseFordeling(state),
+  erOverstyrer: getRettigheter(state).kanOverstyreAccess.isEnabled,
   fagsakPerson: getFagsakPerson(state),
 });
 
