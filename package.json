@@ -1,6 +1,6 @@
 {
   "name": "fpsak-frontend",
-  "version": "0.3.233",
+  "version": "0.3.234",
   "description": "Klient for Foreldrepenger",
   "main": "./dist/index.js",
   "author": "NAV",
@@ -45,8 +45,8 @@
     "history": "^4.9.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "stylelint-order": "^2.1.0",
-    "snyk": "^1.164.0"
+    "snyk": "^1.164.0",
+    "stylelint-order": "^2.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
