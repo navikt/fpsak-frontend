@@ -303,29 +303,31 @@ const transformValues = (values, aksjonspunkter, årsaker, initialPerioder) => {
   const checkUnderÅrsak = underÅrsaker => (underÅrsaker[0] ? underÅrsaker[0].underÅrsakKode : null);
   const checkPeriodeUnderÅrsak = periode => (periode[periode.årsak] ? periode[periode.årsak].underÅrsak : null);
   const underÅrsakNotEqual = (periode, underÅrsaker) => checkPeriodeUnderÅrsak(periode) !== checkUnderÅrsak(underÅrsaker);
-  const hendelseEndringer = values.perioder.some((periode, index) => periode.årsak !== initialPerioder[index].feilutbetalingÅrsakDto.årsakKode
-    || underÅrsakNotEqual(periode, initialPerioder[index].feilutbetalingÅrsakDto.underÅrsaker));
-  return [
-    {
-      kode: apCode.definisjon.kode,
-      begrunnelse: values.begrunnelse,
-      feilutbetalingFakta: hendelseEndringer ? values.perioder.map((periode) => {
-        const feilutbetalingÅrsak = årsaker.find(el => el.årsakKode === periode.årsak);
-        const findUnderÅrsakObjekt = underÅrsak => feilutbetalingÅrsak.underÅrsaker.find(el => el.underÅrsakKode === underÅrsak);
-        const feilutbetalingUnderÅrsak = periode[periode.årsak] ? findUnderÅrsakObjekt(periode[periode.årsak].underÅrsak) : false;
+  const hendelseEndringer = values.perioder.some((periode, index) => {
+    const feilutbetalingÅrsak = initialPerioder[index].feilutbetalingÅrsakDto;
+    return !feilutbetalingÅrsak || periode.årsak !== feilutbetalingÅrsak.årsakKode || underÅrsakNotEqual(periode, feilutbetalingÅrsak.underÅrsaker);
+  });
 
-        return {
-          fom: periode.fom,
-          tom: periode.tom,
-          årsak: {
-            årsakKode: periode.årsak,
-            årsak: feilutbetalingÅrsak.årsak,
-            kodeverk: feilutbetalingÅrsak.kodeverk,
-            underÅrsaker: feilutbetalingUnderÅrsak ? [feilutbetalingUnderÅrsak] : [],
-          },
-        };
-      }) : [],
-    }];
+  return [{
+    kode: apCode.definisjon.kode,
+    begrunnelse: values.begrunnelse,
+    feilutbetalingFakta: hendelseEndringer ? values.perioder.map((periode) => {
+      const feilutbetalingÅrsak = årsaker.find(el => el.årsakKode === periode.årsak);
+      const findUnderÅrsakObjekt = underÅrsak => feilutbetalingÅrsak.underÅrsaker.find(el => el.underÅrsakKode === underÅrsak);
+      const feilutbetalingUnderÅrsak = periode[periode.årsak] ? findUnderÅrsakObjekt(periode[periode.årsak].underÅrsak) : false;
+
+      return {
+        fom: periode.fom,
+        tom: periode.tom,
+        årsak: {
+          årsakKode: periode.årsak,
+          årsak: feilutbetalingÅrsak.årsak,
+          kodeverk: feilutbetalingÅrsak.kodeverk,
+          underÅrsaker: feilutbetalingUnderÅrsak ? [feilutbetalingUnderÅrsak] : [],
+        },
+      };
+    }) : [],
+  }];
 };
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const feilutbetaling = getFeilutbetalingFakta(initialState).behandlingFakta;
