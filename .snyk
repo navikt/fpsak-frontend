@@ -6,4 +6,8 @@ ignore:
     - copy-webpack-plugin > cacache > chownr:
         reason: None given
         expires: '2019-02-01T08:43:28.106Z'
-patch: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-AXIOS-174505:
+    - axios:
+        patched: '2019-05-15T12:55:50.680Z'
