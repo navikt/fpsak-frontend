@@ -35,66 +35,80 @@ const OMSORG_FORM_NAME_PREFIX = 'omsorg';
  * ForeldrepengerForm
  *
  * Redux-form-komponent for registrering av papirsøknad for foreldrepenger.
- *
  */
-export const ForeldrepengerForm = ({
-  handleSubmit,
-  submitting,
-  form,
-  readOnly,
-  soknadData,
-  onSubmitUfullstendigsoknad,
-  error,
-  submitFailed,
-  annenForelderInformertRequired,
-  sokerHarAleneomsorg,
-}) => (
-  <form onSubmit={handleSubmit}>
-    <MottattDatoPanel readOnly={readOnly} />
-    <OppholdINorgePanel form={form} readOnly={readOnly} soknadData={soknadData} />
-    <InntektsgivendeArbeidPanel readOnly={readOnly} />
-    <EgenVirksomhetPanel
-      readOnly={readOnly}
-      form={form}
-    />
-    <FrilansPanel readOnly={readOnly} form={form} formName={FORELDREPENGER_FORM_NAME} />
-    <AndreYtelserPanel readOnly={readOnly} form={form} />
-    <DekningsgradPanel readOnly={readOnly} />
-    {soknadData.getFamilieHendelseType() === familieHendelseType.FODSEL
-    && <TerminFodselDatoPanel readOnly={readOnly} form={form} />
-    }
-    <RettigheterPanel readOnly={readOnly} soknadData={soknadData} />
-    <FormSection name={OMSORG_FORM_NAME_PREFIX}>
-      <OmsorgOgAdopsjonPanel
-        form={form}
-        namePrefix={OMSORG_FORM_NAME_PREFIX}
-        readOnly={readOnly}
-        familieHendelseType={soknadData.getFamilieHendelseType()}
-      />
-    </FormSection>
-    <FormSection name={ANNEN_FORELDER_FORM_NAME_PREFIX}>
-      <AnnenForelderPanel
-        isForeldrepenger
-        soknadData={soknadData}
-        sokerHarAleneomsorg={sokerHarAleneomsorg}
-        namePrefix={ANNEN_FORELDER_FORM_NAME_PREFIX}
-        form={form}
-        readOnly={readOnly}
-      />
-    </FormSection>
-    <PermisjonPanel
-      soknadData={soknadData}
-      form={form}
-      readOnly={readOnly}
-      error={error}
-      submitFailed={submitFailed}
-      sokerHarAleneomsorg={sokerHarAleneomsorg}
-    />
-    <BekreftelsePanel annenForelderInformertRequired={annenForelderInformertRequired} readOnly={readOnly} />
-    <TilleggsopplysningerPanel readOnly={readOnly} />
-    <LagreSoknadForm readOnly={readOnly} onSubmitUfullstendigsoknad={onSubmitUfullstendigsoknad} form={form} submitting={submitting} />
-  </form>
-);
+export class ForeldrepengerForm extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    // Dette er gjort for å hindra rerender for testetrykk på alle underformene
+    const notRerenderIfChangedProps = ['blur', 'change', 'dirty', 'error', 'pristine', 'valuesForRegisteredFieldsOnly'];
+    const changedPropsList = Object.entries(this.props)
+      .filter(([key, val]) => nextProps[key] !== val)
+      .map(([key]) => key);
+    return changedPropsList.some(changedProp => !notRerenderIfChangedProps.includes(changedProp));
+  }
+
+  render() {
+    const {
+      handleSubmit,
+      submitting,
+      form,
+      readOnly,
+      soknadData,
+      onSubmitUfullstendigsoknad,
+      error,
+      submitFailed,
+      annenForelderInformertRequired,
+      sokerHarAleneomsorg,
+    } = this.props;
+
+    return (
+      <form onSubmit={handleSubmit}>
+        <MottattDatoPanel readOnly={readOnly} />
+        <OppholdINorgePanel form={form} readOnly={readOnly} soknadData={soknadData} />
+        <InntektsgivendeArbeidPanel readOnly={readOnly} />
+        <EgenVirksomhetPanel
+          readOnly={readOnly}
+          form={form}
+        />
+        <FrilansPanel readOnly={readOnly} form={form} formName={FORELDREPENGER_FORM_NAME} />
+        <AndreYtelserPanel readOnly={readOnly} form={form} />
+        <DekningsgradPanel readOnly={readOnly} />
+        {soknadData.getFamilieHendelseType() === familieHendelseType.FODSEL
+          && <TerminFodselDatoPanel readOnly={readOnly} form={form} />
+        }
+        <RettigheterPanel readOnly={readOnly} soknadData={soknadData} />
+        <FormSection name={OMSORG_FORM_NAME_PREFIX}>
+          <OmsorgOgAdopsjonPanel
+            form={form}
+            namePrefix={OMSORG_FORM_NAME_PREFIX}
+            readOnly={readOnly}
+            familieHendelseType={soknadData.getFamilieHendelseType()}
+          />
+        </FormSection>
+        <FormSection name={ANNEN_FORELDER_FORM_NAME_PREFIX}>
+          <AnnenForelderPanel
+            isForeldrepenger
+            soknadData={soknadData}
+            sokerHarAleneomsorg={sokerHarAleneomsorg}
+            namePrefix={ANNEN_FORELDER_FORM_NAME_PREFIX}
+            form={form}
+            readOnly={readOnly}
+          />
+        </FormSection>
+        <PermisjonPanel
+          soknadData={soknadData}
+          form={form}
+          readOnly={readOnly}
+          error={error}
+          submitFailed={submitFailed}
+          sokerHarAleneomsorg={sokerHarAleneomsorg}
+        />
+        <BekreftelsePanel annenForelderInformertRequired={annenForelderInformertRequired} readOnly={readOnly} />
+        <TilleggsopplysningerPanel readOnly={readOnly} />
+        <LagreSoknadForm readOnly={readOnly} onSubmitUfullstendigsoknad={onSubmitUfullstendigsoknad} form={form} submitting={submitting} />
+      </form>
+    );
+  }
+}
 
 ForeldrepengerForm.propTypes = {
   ...formPropTypes,

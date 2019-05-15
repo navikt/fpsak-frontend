@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { reduxForm, formPropTypes, formValueSelector } from 'redux-form';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 
 import { isEqual, omit } from '@fpsak-frontend/utils';
 import { getRegisteredFields, getFagsakPerson } from 'papirsoknad/src/duck';
@@ -36,6 +37,15 @@ export class EngangsstonadForm extends Component {
     if (!isEqual(soknadData, nextProps.soknadData)) {
       nextProps.initialize(buildInitialValues(nextProps.soknadData));
     }
+  }
+
+  shouldComponentUpdate(nextProps) {
+    // Dette er gjort for å hindra rerender for testetrykk på alle underformene
+    const notRerenderIfChangedProps = ['blur', 'change', 'dirty', 'error', 'pristine', 'valuesForRegisteredFieldsOnly'];
+    const changedPropsList = Object.entries(this.props)
+      .filter(([key, val]) => nextProps[key] !== val)
+      .map(([key]) => key);
+    return changedPropsList.some(changedProp => !notRerenderIfChangedProps.includes(changedProp));
   }
 
   render() {
@@ -103,21 +113,28 @@ const transformRootValues = (state, registeredFieldNames) => {
   return values;
 };
 
+const buildInitialValuesSelector = createSelector([(state, ownProps) => ownProps], (ownProps) => {
+  const { soknadData } = ownProps;
+  return buildInitialValues(soknadData);
+});
 
-const mapStateToProps = (state, initialProps) => {
-  const sokerPersonnummer = getFagsakPerson(state).personnummer;
-  const registeredFields = getRegisteredFields(ENGANGSSTONAD_FORM_NAME)(state);
-  const registeredFieldNames = Object.values(registeredFields).map(rf => rf.name);
-  const valuesForRegisteredFieldsOnly = registeredFieldNames.length
-    ? transformRootValues(state, registeredFieldNames)
-    : {};
-  return {
-    initialValues: buildInitialValues(initialProps.soknadData),
-    validate: getValidation(initialProps.soknadData, sokerPersonnummer),
-    valuesForRegisteredFieldsOnly,
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const sokerPersonnummer = getFagsakPerson(initialState).personnummer;
+  const validate = getValidation(ownProps.soknadData, sokerPersonnummer);
+  return (state) => {
+    const registeredFields = getRegisteredFields(ENGANGSSTONAD_FORM_NAME)(state);
+    const registeredFieldNames = Object.values(registeredFields).map(rf => rf.name);
+    const valuesForRegisteredFieldsOnly = registeredFieldNames.length
+      ? transformRootValues(state, registeredFieldNames)
+      : {};
+    return {
+      initialValues: buildInitialValuesSelector(state, ownProps),
+      validate,
+      valuesForRegisteredFieldsOnly,
+    };
   };
 };
 
-export default connect(mapStateToProps)(reduxForm({
+export default connect(mapStateToPropsFactory)(reduxForm({
   form: ENGANGSSTONAD_FORM_NAME,
 })(EngangsstonadForm));
