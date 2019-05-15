@@ -165,14 +165,22 @@ const leggTilTimelineData = createSelector([state => behandlingFormValueSelector
       const erBelopetIBehold = periode.storedData && periode.storedData.vilkarResultatInfo
         ? periode.storedData.vilkarResultatInfo.erBelopetIBehold : undefined;
       const statusClassName = erForeldet || erBelopetIBehold === false ? AVVIST_CLASSNAME : erBehandlet;
+      const newPeriode = {
+        ...periode,
+        storedData: {
+          ...periode.storedData,
+          fom: periode.fom,
+          tom: periode.tom,
+        },
+      };
 
       return {
-        ...periode,
+        ...newPeriode,
         className: statusClassName,
         id: index + 1,
         group: 1,
-        arsak: periode.årsak.årsak,
-        foreldet: erForeldet || periode.storedData.begrunnelse ? undefined : foreldelseVurderingType.UDEFINERT,
+        arsak: newPeriode.årsak.årsak,
+        foreldet: erForeldet || newPeriode.storedData.begrunnelse ? undefined : foreldelseVurderingType.UDEFINERT,
         erForeldet,
       };
     });
