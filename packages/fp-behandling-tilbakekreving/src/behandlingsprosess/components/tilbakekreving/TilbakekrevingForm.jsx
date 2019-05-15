@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { createSelector } from 'reselect';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import { bindActionCreators } from 'redux';
@@ -121,20 +122,34 @@ export const transformValues = values => [{
   vilkarsVurdertePerioder: values.vilkarsVurdertePerioder.map(periode => periode.storedData).filter(storedData => !isObjectEmpty(storedData)),
 }];
 
+const finnOriginalPeriode = (lagretPeriode, perioder) => perioder
+  .find(periode => !moment(lagretPeriode.fom).isBefore(moment(periode.fom)) && !moment(lagretPeriode.tom).isAfter(moment(periode.tom)));
+
 const buildInitialValues = createSelector([getBehandlingVilkarsvurderingsperioder, getBehandlingVilkarsvurdering, getBehandlingVilkarsvurderingsRettsgebyr],
  (perioder, vilkarsvurdering, rettsgebyr) => {
   const totalbelop = perioder.reduce((acc, periode) => acc + periode.feilutbetaling, 0);
+  const erTotalBelopUnder4Rettsgebyr = totalbelop < (rettsgebyr * 4);
   const lagredeVilkarsvurdertePerioder = vilkarsvurdering.vilkarsVurdertePerioder;
 
-  return {
-    vilkarsVurdertePerioder: perioder.map((periode) => {
-      const lagretPeriode = lagredeVilkarsvurdertePerioder.find(p => p.fom === periode.fom && p.tom === periode.tom);
-      return {
+  if (!lagredeVilkarsvurdertePerioder) {
+    return {
+      vilkarsVurdertePerioder: perioder.map(periode => ({
         ...periode,
-        storedData: lagretPeriode || {},
-        erTotalBelopUnder4Rettsgebyr: totalbelop < rettsgebyr * 4,
-      };
-    }),
+        storedData: {},
+        erTotalBelopUnder4Rettsgebyr,
+      })),
+    };
+  }
+
+  return {
+    vilkarsVurdertePerioder: lagredeVilkarsvurdertePerioder
+    .map(lagretPeriode => ({
+      ...finnOriginalPeriode(lagretPeriode, perioder),
+      fom: lagretPeriode.fom,
+      tom: lagretPeriode.tom,
+      storedData: lagretPeriode,
+      erTotalBelopUnder4Rettsgebyr,
+    })),
   };
 });
 
