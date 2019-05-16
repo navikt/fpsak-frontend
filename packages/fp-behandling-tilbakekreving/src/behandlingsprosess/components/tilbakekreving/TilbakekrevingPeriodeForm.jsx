@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
 import { FormSection, clearFields, formPropTypes } from 'redux-form';
 import { FormattedMessage, FormattedHTMLMessage, injectIntl } from 'react-intl';
@@ -265,7 +266,8 @@ const transformValues = (selectedItemData, values, sarligGrunnTyper) => {
   };
 };
 
-const buildInitalValues = (period, foreldelsePerioder) => {
+const buildInitialValues = createSelector([(state, ownProps) => ownProps], (ownProps) => {
+  const { period, foreldelsePerioder } = ownProps;
   const { vilkarResultat, begrunnelse, vilkarResultatInfo } = period.storedData;
 
   const vilkarResultatKode = vilkarResultat && vilkarResultat.kode ? vilkarResultat.kode : vilkarResultat;
@@ -295,7 +297,7 @@ const buildInitalValues = (period, foreldelsePerioder) => {
       ...annetData,
     },
   };
-};
+});
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
@@ -347,6 +349,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const submitCallback = values => ownProps.updateActivity(transformValues(ownProps.selectedItemData, values, sarligGrunnTyper));
   const validateForm = values => validate(values, sarligGrunnTyper, ownProps.selectedItemData);
   const foreldelsePerioder = getForeldelsePerioder(initialState).perioder;
+  const buildInitalValuesProps = { period: ownProps.selectedItemData, foreldelsePerioder };
   return (state) => {
     const valgtVilkarResultatType = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, 'valgtVilkarResultatType');
     const handletUaktsomhetGrad = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.handletUaktsomhetGrad`);
@@ -360,7 +363,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       erSerligGrunnAnnetValgt: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state,
         `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.${sarligGrunn.ANNET}`),
       erBelopetIBehold: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.erBelopetIBehold`),
-      initialValues: buildInitalValues(ownProps.selectedItemData, foreldelsePerioder),
+      initialValues: buildInitialValues(state, buildInitalValuesProps),
       reduserteBelop: ownProps.selectedItemData.redusertBeloper,
       onSubmit: submitCallback,
       validate: validateForm,

@@ -46,7 +46,6 @@ export class BpTimelineDataImpl extends Component {
     const {
       resultatActivity,
       activityPanelName,
-      callbackSetSelected: setSelected,
       beregnBeløp: callBeregnBeløp,
       behandlingId: selectedBehandlingId,
     } = this.props;
@@ -83,8 +82,6 @@ export class BpTimelineDataImpl extends Component {
       const sortedActivities = otherThanUpdated.concat(forstePeriodeMedBeløp, andrePeriodeMedBeløp);
       sortedActivities.sort((a, b) => a.id - b.id);
       this.setFormField(activityPanelName, sortedActivities);
-      this.hideModal();
-      setSelected(forstePeriodeMedBeløp);
       this.hideModal();
     });
   }
@@ -133,7 +130,6 @@ BpTimelineDataImpl.propTypes = {
   reduxFormChange: PropTypes.func.isRequired,
   callbackForward: PropTypes.func.isRequired,
   callbackBackward: PropTypes.func.isRequired,
-  callbackSetSelected: PropTypes.func.isRequired,
   formName: PropTypes.string.isRequired,
   activityPanelName: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
