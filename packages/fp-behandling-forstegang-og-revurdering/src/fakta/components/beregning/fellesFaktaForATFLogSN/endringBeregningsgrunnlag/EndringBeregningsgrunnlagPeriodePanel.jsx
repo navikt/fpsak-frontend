@@ -82,23 +82,26 @@ const finnRiktigAndel = (andel, bgPeriode) => bgPeriode.beregningsgrunnlagPrStat
 const erArbeidstakerMedArbeidsforhold = bgAndel => (bgAndel.aktivitetStatus.kode === aktivitetStatuser.ARBEIDSTAKER && bgAndel.arbeidsforhold);
 
 const finnRegister = (andel, bgAndel, skjaeringstidspunktBeregning, faktaOmBeregning) => {
-  if (erArbeidstakerMedArbeidsforhold(bgAndel)
-  && (andel.nyttArbeidsforhold || starterPaaEllerEtterStp(bgAndel, skjaeringstidspunktBeregning))) {
-    return null;
+  if (bgAndel) {
+    if (erArbeidstakerMedArbeidsforhold(bgAndel)
+    && (andel.nyttArbeidsforhold || starterPaaEllerEtterStp(bgAndel, skjaeringstidspunktBeregning))) {
+      return null;
+    }
+    if (erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon(bgAndel, faktaOmBeregning)) {
+      return null;
+    }
+    if (andelErStatusFLOgHarATISammeOrg(bgAndel, faktaOmBeregning)) {
+      return null;
+    }
+    if (andel.belopFraInntektsmelding || andel.belopFraInntektsmelding === 0) {
+      return formatCurrencyNoKr(andel.belopFraInntektsmelding);
+    }
+    if (bgAndel.belopPrMndEtterAOrdningen || bgAndel.belopPrMndEtterAOrdningen === 0) {
+      return formatCurrencyNoKr(bgAndel.belopPrMndEtterAOrdningen);
+    }
+    return bgAndel && bgAndel.belopFraMeldekortPrMnd ? formatCurrencyNoKr(bgAndel.belopFraMeldekortPrMnd) : null;
   }
-  if (erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon(bgAndel, faktaOmBeregning)) {
-    return null;
-  }
-  if (andelErStatusFLOgHarATISammeOrg(bgAndel, faktaOmBeregning)) {
-    return null;
-  }
-  if (andel.belopFraInntektsmelding || andel.belopFraInntektsmelding === 0) {
-    return formatCurrencyNoKr(andel.belopFraInntektsmelding);
-  }
-  if (bgAndel && (bgAndel.belopPrMndEtterAOrdningen || bgAndel.belopPrMndEtterAOrdningen === 0)) {
-    return formatCurrencyNoKr(bgAndel.belopPrMndEtterAOrdningen);
-  }
-  return bgAndel && bgAndel.belopFraMeldekortPrMnd ? formatCurrencyNoKr(bgAndel.belopFraMeldekortPrMnd) : null;
+  return null;
 };
 
 EndringBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (periode, bgPeriode, skjaeringstidspunktBeregning,
