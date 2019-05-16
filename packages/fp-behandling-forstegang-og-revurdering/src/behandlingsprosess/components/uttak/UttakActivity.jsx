@@ -437,6 +437,8 @@ export const initialValue = (selectedItem, kontoIkkeSatt) => {
       aktivitet.weeks = '';
       aktivitet.days = '';
     }
+    if (aktivitet.weeks < 0) { aktivitet.weeks = 0; }
+    if (aktivitet.days < 0) { aktivitet.days = 0; }
     return aktivitet;
   });
 };
