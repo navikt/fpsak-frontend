@@ -77,9 +77,9 @@ EndringBeregningsgrunnlagPeriodePanelImpl.defaultProps = {
 
 
 EndringBeregningsgrunnlagPeriodePanelImpl.validate = (values, fastsattIForstePeriode,
-  skalRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert, skalValidereInntektMotRefusjon, getKodeverknavn) => RenderEndringBGFieldArray
+  skalRedigereInntekt, skalKunneEndreBG, skalValidereMotRapportert, skalValidereInntektMotRefusjon, getKodeverknavn) => RenderEndringBGFieldArray
   .validate(values, fastsattIForstePeriode,
-    skalRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert, skalValidereInntektMotRefusjon, getKodeverknavn);
+    skalRedigereInntekt, skalKunneEndreBG, skalValidereMotRapportert, skalValidereInntektMotRefusjon, getKodeverknavn);
 
 const finnRiktigAndel = (andel, bgPeriode) => bgPeriode.beregningsgrunnlagPrStatusOgAndel.find(a => a.andelsnr === andel.andelsnr);
 

@@ -18,8 +18,9 @@ import { mapAndelToField, skalHaBesteberegningSelector } from './BgFordelingUtil
 import styles from './inntektFieldArray.less';
 import { validateUlikeAndeler, validateUlikeAndelerWithGroupingFunction } from './ValidateAndelerUtils';
 import { isBeregningFormDirty as isFormDirty } from '../BeregningFormUtils';
-import { AndelRow, getHeaderTextCodes, SummaryRow } from './InntektFieldArrayRow';
+import { AndelRow, getHeaderTextCodes } from './InntektFieldArrayRow';
 import AddAndelButton from './AddAndelButton';
+import SummaryRow from './SummaryRow';
 
 const dagpenger = (aktivitetStatuser, beregnetPrAar) => ({
   andel: aktivitetStatuser.filter(({ kode }) => kode === aktivitetStatus.DAGPENGER)[0].navn,
@@ -216,12 +217,11 @@ InntektFieldArray.validate = (values, erKunYtelse, skalRedigereInntekt) => {
   return null;
 };
 
-
-InntektFieldArray.buildInitialValues = (andeler, getKodeverknavn) => {
+InntektFieldArray.buildInitialValues = (andeler, getKodeverknavn, faktaOmBeregning) => {
   if (!andeler || andeler.length === 0) {
     return {};
   }
-  return andeler.map(a => mapAndelToField(a, getKodeverknavn));
+  return andeler.map(a => mapAndelToField(a, getKodeverknavn, faktaOmBeregning));
 };
 
 const finnDagpengeAndelLagtTilIForrige = (bg) => {

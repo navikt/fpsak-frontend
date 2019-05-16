@@ -19,7 +19,7 @@ import {
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import BostedFaktaView from 'behandlingForstegangOgRevurdering/src/fakta/components/omsorg/BostedFaktaView';
 import OmsorgFaktaForm from 'behandlingForstegangOgRevurdering/src/fakta/components/omsorg/OmsorgFaktaForm';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import IkkeOmsorgPeriodeField from './IkkeOmsorgPeriodeField';
 
 
@@ -27,7 +27,6 @@ const { MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG, MANUELL_KONTROLL_AV_OM_BR
 
 const OMSORG_IP = 'omsorg';
 
-const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 const getHelpTexts = (aksjonspunkter) => {
   const helpTexts = [];
   const harAleneomsorgAp = aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG);

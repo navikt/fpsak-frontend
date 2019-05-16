@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getBehandlingIsOnHold, getBeregningsgrunnlag } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import VurderFaktaBeregningPanel from './fellesFaktaForATFLogSN/VurderFaktaBeregningPanel';
 import AvklareAktiviteterPanel from './avklareAktiviteter/AvklareAktiviteterPanel';
@@ -14,11 +15,10 @@ const {
   VURDER_FAKTA_FOR_ATFL_SN,
   AVKLAR_AKTIVITETER,
   OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
+  OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
 } = aksjonspunktCodes;
 
-const faktaOmBeregningAksjonspunkter = [VURDER_FAKTA_FOR_ATFL_SN, AVKLAR_AKTIVITETER, OVERSTYRING_AV_BEREGNINGSAKTIVITETER];
-
-const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
+const faktaOmBeregningAksjonspunkter = [VURDER_FAKTA_FOR_ATFL_SN, AVKLAR_AKTIVITETER, OVERSTYRING_AV_BEREGNINGSAKTIVITETER, OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
 
 const createRelevantForms = (readOnly, aksjonspunkter, submitCallback, submittable) => (
   <div>
@@ -28,6 +28,7 @@ const createRelevantForms = (readOnly, aksjonspunkter, submitCallback, submittab
       submitCallback={submitCallback}
       submittable={submittable}
     />
+    <VerticalSpacer thirtyTwoPx />
     <VurderFaktaBeregningPanel
       readOnly={readOnly}
       submitCallback={submitCallback}

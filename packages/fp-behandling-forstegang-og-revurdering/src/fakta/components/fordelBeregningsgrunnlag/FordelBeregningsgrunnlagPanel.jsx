@@ -11,7 +11,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn, faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import { FaktaEkspandertpanel, withDefaultToggling, FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 
 import {
@@ -29,8 +29,6 @@ const {
 const FORM_NAME_FORDEL_BEREGNING = 'fordelBeregningsgrunnlagForm';
 
 const faktaOmFordelingAksjonspunkter = [FORDEL_BEREGNINGSGRUNNLAG];
-
-const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
 const findAksjonspunktMedBegrunnelse = aksjonspunkter => aksjonspunkter
   .find(ap => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG && ap.begrunnelse !== null);

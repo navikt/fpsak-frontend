@@ -88,6 +88,7 @@ const aksjonspunktCodes = {
   OVERSTYR_LØPENDE_MEDLEMSKAPSVILKAR: '6012',
   OVERSTYR_AVKLAR_FAKTA_UTTAK: '6013',
   OVERSTYRING_AV_BEREGNINGSAKTIVITETER: '6014',
+  OVERSTYRING_AV_BEREGNINGSGRUNNLAG: '6015',
   OVERSTYR_AVKLAR_STARTDATO: '6045',
   MANUELL_MARKERING_AV_UTLAND_SAKSTYPE: '6068',
   MANUELL_AVKLAR_FAKTA_UTTAK: '6070',
@@ -147,6 +148,8 @@ const beregningAksjonspunkter = [
 ];
 
 const aksjonspunktIsOfType = validAksjonspunktCodes => aksjonspunktCode => validAksjonspunktCodes.includes(aksjonspunktCode);
+
+export const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
 export const isKlageAksjonspunkt = aksjonspunktIsOfType(klageAksjonspunkter);
 export const isInnhentSaksopplysningerAksjonspunkt = aksjonspunktIsOfType(innhentSaksopplysningerAksjonspunkt);

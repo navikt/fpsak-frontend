@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { injectIntl, intlShape } from 'react-intl';
 import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import { InputField, SelectField, PeriodpickerField } from '@fpsak-frontend/form';
-import { removeSpacesFromNumber, parseCurrencyInput, formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { parseCurrencyInput } from '@fpsak-frontend/utils';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import { TableRow, TableColumn } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -15,47 +14,6 @@ import { getAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandl
 import styles from './inntektFieldArray.less';
 import ArbeidsforholdField from './ArbeidsforholdField';
 import { skalRedigereInntektSelector, skalRedigereInntektskategoriSelector } from './BgFordelingUtils';
-
-const summerFordeling = (fields) => {
-  let sum = 0;
-  fields.forEach((andelElementFieldId, index) => {
-    const field = fields.get(index);
-    const belop = field.skalRedigereInntekt ? field.fastsattBelop : field.belopReadOnly;
-    sum += belop ? parseInt(removeSpacesFromNumber(belop), 10) : 0;
-  });
-  return sum > 0 ? formatCurrencyNoKr(sum) : '';
-};
-
-export const SummaryRow = ({
- skalVisePeriode, skalViseRefusjon, fields, readOnly,
-}) => (
-  <TableRow key="bruttoBGSummaryRow">
-    <TableColumn>
-      <FormattedMessage id="BeregningInfoPanel.FordelingBG.Sum" />
-    </TableColumn>
-    {skalVisePeriode
-          && <TableColumn />
-    }
-    <TableColumn className={styles.rightAlign}>
-      <div className={styles.readOnlyContainer}>
-        <Normaltekst className={readOnly ? styles.readOnlyContent : ''}>
-          {summerFordeling(fields) || 0}
-        </Normaltekst>
-      </div>
-    </TableColumn>
-    {skalViseRefusjon
-          && <TableColumn />
-    }
-    <TableColumn />
-  </TableRow>
-);
-
-SummaryRow.propTypes = {
-  readOnly: PropTypes.bool.isRequired,
-  fields: PropTypes.shape().isRequired,
-  skalVisePeriode: PropTypes.bool.isRequired,
-  skalViseRefusjon: PropTypes.bool.isRequired,
-};
 
 
 export const getHeaderTextCodes = (skalVisePeriode, skalViseRefusjon) => {
