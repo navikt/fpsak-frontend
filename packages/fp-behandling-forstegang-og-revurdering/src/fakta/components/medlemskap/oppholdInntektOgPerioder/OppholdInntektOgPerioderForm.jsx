@@ -151,12 +151,16 @@ const transformValues = (values, aksjonspunkter, state) => {
   return aksjonspunkterMedBegrunnelse;
 };
 
-const mapStateToProps = (state, initialProps) => ({
-  hasOpenAksjonspunkter: initialProps.aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode)),
-  initialValues: buildInitialValues(state),
-  onSubmit: values => initialProps.submitCallback(transformValues(values, initialProps.aksjonspunkter, state)),
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter, initialState));
+  const hasOpenAksjonspunkter = ownProps.aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
+  return state => ({
+    initialValues: buildInitialValues(state),
+    hasOpenAksjonspunkter,
+    onSubmit,
+  });
+};
 
-export default connect(mapStateToProps)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: 'OppholdInntektOgPerioderForm',
 })(OppholdInntektOgPerioderForm));
