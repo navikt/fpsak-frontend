@@ -272,7 +272,7 @@ export class UttakPerioder extends PureComponent {
     formChange(`${behandlingFormPrefix}.UttakFaktaForm`, 'perioder', newPerioder);
   }
 
-  updatePeriode(values) {
+  async updatePeriode(values) {
     const {
       behandlingFormPrefix,
       perioder,
@@ -340,9 +340,9 @@ export class UttakPerioder extends PureComponent {
       ),
     });
 
-    const newPerioder = createNewPerioder(perioder, id, newPeriodeObject);
+    const newPerioder = await createNewPerioder(perioder, id, newPeriodeObject);
 
-    formChange(`${behandlingFormPrefix}.UttakFaktaForm`, 'perioder', newPerioder.sort((a, b) => a.fom.localeCompare(b.fom)));
+    await formChange(`${behandlingFormPrefix}.UttakFaktaForm`, 'perioder', newPerioder.sort((a, b) => a.fom.localeCompare(b.fom)));
   }
 
   isAnyFormOpen() {
