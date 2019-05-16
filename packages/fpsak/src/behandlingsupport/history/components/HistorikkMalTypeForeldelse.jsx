@@ -35,7 +35,7 @@ const HistorikkMalTypeForeldelse = ({
         </NavLink>
       </Element>
       {historikkinnslagDeler.map((historikkinnslagDel) => {
-      const { opplysninger, endredeFelter } = historikkinnslagDel;
+      const { begrunnelseFritekst, opplysninger, endredeFelter } = historikkinnslagDel;
       const periodeFom = opplysninger.find(o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_FOM.kode).tilVerdi;
       const periodeTom = opplysninger.find(o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_TOM.kode).tilVerdi;
 
@@ -44,7 +44,7 @@ const HistorikkMalTypeForeldelse = ({
           <Normaltekst>
             <FormattedHTMLMessage id="Historikk.Template.Foreldelse.VurderingAvPerioden" values={{ periodeFom, periodeTom }} />
           </Normaltekst>
-          {endredeFelter.map((felt) => {
+          {endredeFelter && endredeFelter.map((felt) => {
             const { endretFeltNavn, fraVerdi, tilVerdi } = felt;
             const { navn } = endretFeltNavn;
 
@@ -60,6 +60,10 @@ const HistorikkMalTypeForeldelse = ({
               </React.Fragment>
             );
             })}
+          <VerticalSpacer eightPx />
+          <Normaltekst>
+            {begrunnelseFritekst && begrunnelseFritekst}
+          </Normaltekst>
           <VerticalSpacer eightPx />
         </div>
       );

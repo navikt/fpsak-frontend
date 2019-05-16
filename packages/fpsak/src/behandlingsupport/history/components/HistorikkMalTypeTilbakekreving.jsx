@@ -36,7 +36,7 @@ const HistorikkMalTypeTilbakekreving = ({
         </NavLink>
       </Element>
       {historikkinnslagDeler.map((historikkinnslagDel) => {
-      const { opplysninger, endredeFelter } = historikkinnslagDel;
+      const { opplysninger, endredeFelter, begrunnelseFritekst } = historikkinnslagDel;
       const periodeFom = opplysninger.find(o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_FOM.kode).tilVerdi;
       const periodeTom = opplysninger.find(o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_TOM.kode).tilVerdi;
       const begrunnelse = opplysninger
@@ -48,16 +48,21 @@ const HistorikkMalTypeTilbakekreving = ({
             <FormattedHTMLMessage id="Historikk.Template.Tilbakekreving.VurderingAvPerioden" values={{ periodeFom, periodeTom }} />
           </Normaltekst>
           <VerticalSpacer eightPx />
-          {endredeFelter.map((felt) => {
+          {endredeFelter && endredeFelter.map((felt, index) => {
             const { endretFeltNavn, fraVerdi, tilVerdi } = felt;
             const { navn, kode } = endretFeltNavn;
 
-            const visBegrunnelse = historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT === kode;
-            const visProsentverdi = historikkEndretFeltType.ANDEL_TILBAKEKREVES === kode;
             const visBelopTilbakekreves = historikkEndretFeltType.BELOEP_TILBAKEKREVES === kode;
+            const visProsentverdi = historikkEndretFeltType.ANDEL_TILBAKEKREVES === kode;
+            const visIleggRenter = historikkEndretFeltType.ILEGG_RENTER === kode;
+            if ((visBelopTilbakekreves || visProsentverdi || visIleggRenter) && !tilVerdi) {
+              return null;
+            }
+
+            const visBegrunnelse = historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT === kode;
             const formatertFraVerdi = visProsentverdi && fraVerdi ? `${fraVerdi}%` : fraVerdi;
-            let formatertTilVerdi = visProsentverdi && tilVerdi ? `${tilVerdi}%` : tilVerdi;
-            formatertTilVerdi = visBelopTilbakekreves && !tilVerdi ? 0 : formatertTilVerdi;
+            const formatertTilVerdi = visProsentverdi && tilVerdi ? `${tilVerdi}%` : tilVerdi;
+            const visAktsomhetBegrunnelse = begrunnelseFritekst && index === endredeFelter.length - 1;
 
             return (
               <React.Fragment key={navn}>
@@ -70,9 +75,14 @@ const HistorikkMalTypeTilbakekreving = ({
                 <VerticalSpacer eightPx />
                 {visBegrunnelse && begrunnelse}
                 {visBegrunnelse && <VerticalSpacer eightPx />}
+                {visAktsomhetBegrunnelse && begrunnelseFritekst}
+                {visAktsomhetBegrunnelse && <VerticalSpacer eightPx />}
               </React.Fragment>
             );
             })}
+          <Normaltekst>
+            {(!endredeFelter && begrunnelseFritekst) && begrunnelseFritekst}
+          </Normaltekst>
           <VerticalSpacer eightPx />
         </div>
       );

@@ -45,7 +45,7 @@ describe('<TilbakekrevingVedtakPeriodeTabell>', () => {
     expect(kolonnerForPeriode1.at(1).childAt(0).childAt(0).text()).to.eql('15 430');
     expect(kolonnerForPeriode1.at(2).childAt(0).childAt(0).text()).to.eql('Simpel uaktsomhet');
     expect(kolonnerForPeriode1.at(3).childAt(0).childAt(0).text()).to.eql('100%');
-    expect(kolonnerForPeriode1.at(4).childAt(0).childAt(0).text()).to.eql('10');
+    expect(kolonnerForPeriode1.at(4).childAt(0).childAt(0).text()).to.eql('10%');
     expect(kolonnerForPeriode1.at(5).childAt(0).childAt(0).text()).to.eql('15 430');
 
     const kolonnerForPeriode2 = rader.at(1).find(TableColumn);

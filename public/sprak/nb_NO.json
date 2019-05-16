@@ -112,9 +112,6 @@
   "Foreldelse.Foreldelsesloven": "Foreldelsesloven §§ 2 og 3",
   "Foreldelse.AutomatiskVurdert": "Automatisk vurdert",
   "Foreldelse.RadioGroup.Foreldet": "Vurder om perioden er foreldet",
-  "Foreldelse.RadioOption.Foreldet": "Perioden er foreldet",
-  "Foreldelse.RadioOption.IkkeForeldet": "Perioden er ikke foreldet",
-  "Foreldelse.RadioOption.IkkeForeldetTilleggsfrist": "Perioden er ikke foreldet, regel om tilleggsfrist (10år) benyttes",
   "Foreldelse.AksjonspunktHelpText.5003": "Perioden før {dato} kan være foreldet. Del opp perioden ved behov og fastsett foreldelse",
 
   "BehandlingspunktBegrunnelseTextField.ExplanationRequired": "Vurdering",
@@ -909,9 +906,9 @@
   "Historikk.Template.10.ChangedFromToProsentUtbetalingFromNothing": "<b>{fieldName}</b> er satt til <b>{toValue}%</b>",
   "Historikk.Template.10.OverstyrtVurderingPeriode": "<b>Overstyrt vurdering</b> av perioden {periodeFom} - {periodeTom}.",
   "Historikk.Template.10.ManuellVurderingPeriode": "<b>Manuell vurdering</b> av perioden {periodeFom} - {periodeTom}.",
-  "Historikk.Template.11.FaktaFeilutbetalingPeriode": "For perioden <b>{periodeFom} - {periodeTom}</b>",
-  "Historikk.Template.11.endretFelt": "<b>Hendelse</b> er endret fra {fraVerdi} til {tilVerdi}",
-  "Historikk.Template.11.sattFelt": "<b>Hendelse</b> er satt til {feltVerdi}",
+  "Historikk.Template.Feilutbetaling.FaktaFeilutbetalingPeriode": "For perioden <b>{periodeFom} - {periodeTom}</b>",
+  "Historikk.Template.Feilutbetaling.endretFelt": "<b>Hendelse</b> er endret fra {fraVerdi} til <b>{tilVerdi}</b>",
+  "Historikk.Template.Feilutbetaling.sattFelt": "<b>Hendelse</b> er satt til <b>{feltVerdi}</b>",
   "Historikk.Template.Tilbakekreving.VurderingAvPerioden": "<b>Vurdering</b> av perioden {periodeFom}-{periodeTom}.",
   "Historikk.Template.Tilbakekreving.ChangedFromTo": "<b>{navn}</b> endret fra {fraVerdi} til <b>{tilVerdi}</b>",
   "Historikk.Template.Tilbakekreving.FieldSetTo": "<b>{navn}</b> er satt til <b>{tilVerdi}</b>.",
@@ -2189,6 +2186,9 @@
   "HistorikkResultat.BehandlingErHjemsendt": "Behandling er hjemsendt",
   "HistorikkResultat.MedholdTilUgunst": "Vedtaket er omgjort til ugunst",
   "HistorikkResultat.OverstyringFaktaUttak": "Overstyrt vurdering:",
+  "HistorikkResultat.FullTilbakebetaling": "Full tilbakebetaling",
+  "HistorikkResultat.DelvisTilbakebetaling": "Delvis tilbakebetaling",
+  "HistorikkResultat.IngenTilbakebetaling": "Ingen tilbakebetaling",
 
   "HistorikkSoeknadsperiode.Gradering": "<b>Uttak: gradering</b> <br>{navnVerdi} <br>{value}",
   "HistorikkSoeknadsperiode.UtsettelseArbeid": "<b>Utsettelse: arbeid</b> <br>{value}",
@@ -2321,6 +2321,10 @@
 
   "TilbakekrevingVedtakForm.FritekstIVedtaksbrevet": "Fritekst i vedtaksbrevet",
   "TilbakekrevingVedtakForm.TilGodkjenning": "Til godkjenning",
+
+  "FatterTilbakekrevingVedtakStatusModal.GoToSearchPage": "Du kommer nå til forsiden.",
+  "FatterTilbakekrevingVedtakStatusModal.Ok": "OK",
+  "FatterTilbakekrevingVedtakStatusModal.Sendt": "Forslag til vedtak er sendt til beslutter",
 
   "IntegrationStatusPanel.ServiceDowntime": "Tredjepartstjeneste(r) har nedetid",
   "IntegrationStatusPanel.Downtime": "{system} har nedetid.",

@@ -1,4 +1,4 @@
-// @TODO kodeverk_i_frontend
+// @TODO Hent tekstane fra kodeverk i db
 const historikkResultatTypeCodes = {
   AVSLAG: {
     kode: 'AVSLAG',
@@ -67,6 +67,18 @@ const historikkResultatTypeCodes = {
   OVERSTYRING_FAKTA_UTTAK: {
     kode: 'OVERSTYRING_FAKTA_UTTAK',
     feltId: 'HistorikkResultat.OverstyringFaktaUttak',
+  },
+  DELVIS_TILBAKEBETALING: {
+    kode: 'DELVIS_TILBAKEBETALING',
+    feltId: 'HistorikkResultat.DelvisTilbakebetaling',
+  },
+  FULL_TILBAKEBETALING: {
+    kode: 'FULL_TILBAKEBETALING',
+    feltId: 'HistorikkResultat.FullTilbakebetaling',
+  },
+  INGEN_TILBAKEBETALING: {
+    kode: 'INGEN_TILBAKEBETALING',
+    feltId: 'HistorikkResultat.IngenTilbakebetaling',
   },
 };
 

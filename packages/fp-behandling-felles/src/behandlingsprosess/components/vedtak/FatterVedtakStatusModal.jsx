@@ -125,16 +125,22 @@ const getInfoTextCode = bType => (bType.kode === behandlingType.KLAGE
 
 const isStatusFatterVedtak = behandlingstatus => behandlingstatus.kode === behandlingStatus.FATTER_VEDTAK;
 
-const mapStateToProps = (state, ownProps) => {
+// TODO (TOR) Hentar ingenting fra state - fjern connect
+const mapStateToPropsFactory = (initialState, ownProps) => {
   const isFatterVedtak = isStatusFatterVedtak(ownProps.behandlingStatus);
-  return {
-    isBehandlingStatusFatterVedtak: ownProps.behandlingStatus.kode === behandlingStatus.FATTER_VEDTAK ? true : undefined,
-    infoTextCode: isFatterVedtak ? getInfoTextCode(ownProps.behandlingType) : '',
-    altImgTextCode: isFatterVedtak ? getAltImgTextCode(ownProps.aksjonspunkter, ownProps.fagsakYtelseType, ownProps.behandlingType) : '',
-    modalDescriptionTextCode: isFatterVedtak
+  const isBehandlingStatusFatterVedtak = ownProps.behandlingStatus.kode === behandlingStatus.FATTER_VEDTAK ? true : undefined;
+  const infoTextCode = isFatterVedtak ? getInfoTextCode(ownProps.behandlingType) : '';
+  const altImgTextCode = isFatterVedtak ? getAltImgTextCode(ownProps.aksjonspunkter, ownProps.fagsakYtelseType, ownProps.behandlingType) : '';
+  const modalDescriptionTextCode = isFatterVedtak
       ? getModalDescriptionTextCode(ownProps.behandlingsresultat, ownProps.aksjonspunkter, ownProps.fagsakYtelseType, ownProps.behandlingType)
-      : 'FatterVedtakStatusModal.ModalDescription',
-  };
+      : 'FatterVedtakStatusModal.ModalDescription';
+  return () => ({
+    isBehandlingStatusFatterVedtak,
+    infoTextCode,
+    altImgTextCode,
+    modalDescriptionTextCode,
+  });
 };
 
-export default connect(mapStateToProps)(injectIntl(requireProps(['selectedBehandlingId', 'isBehandlingStatusFatterVedtak'])(FatterVedtakStatusModal)));
+
+export default connect(mapStateToPropsFactory)(injectIntl(requireProps(['selectedBehandlingId', 'isBehandlingStatusFatterVedtak'])(FatterVedtakStatusModal)));

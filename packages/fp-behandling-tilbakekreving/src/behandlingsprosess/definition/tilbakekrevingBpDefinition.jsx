@@ -1,11 +1,17 @@
 import { BehandlingspunktProperties } from '@fpsak-frontend/fp-behandling-felles';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
-import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import ac from '../../kodeverk/tilbakekrevingAksjonspunktCodes';
+import VedtakResultat from '../../kodeverk/vedtakResultat';
 
-// TODO (TOR) Kvifor trengs denne?
-export const getForeldelseStatus = ({ foreldelseResultat }) => (foreldelseResultat ? vut.OPPFYLT : vut.IKKE_VURDERT);
+const getVedtakStatus = ({ beregningsresultat }) => {
+  if (!beregningsresultat) {
+    return vilkarUtfallType.IKKE_VURDERT;
+  }
+  const { vedtakResultat } = beregningsresultat;
+  return vedtakResultat.kode === VedtakResultat.INGEN_TILBAKEBETALING ? vilkarUtfallType.IKKE_OPPFYLT : vilkarUtfallType.OPPFYLT;
+};
 
 /**
  * Rekkefølgen i listene under bestemmer behandlingspunkt-rekkefølgen i GUI.
@@ -14,14 +20,14 @@ export const getForeldelseStatus = ({ foreldelseResultat }) => (foreldelseResult
 const tilbakekrevingBuilders = [
   new BehandlingspunktProperties.Builder(bpc.FORELDELSE, 'Foreldelse')
     .withAksjonspunktCodes(ac.VURDER_FORELDELSE)
-    .withVisibilityWhen(() => true)
-    .withStatus(getForeldelseStatus),
+    .withVisibilityWhen(() => true),
   new BehandlingspunktProperties.Builder(bpc.TILBAKEKREVING, 'Tilbakekreving')
     .withAksjonspunktCodes(ac.VURDER_TILBAKEKREVING)
     .withVisibilityWhen(() => true),
   new BehandlingspunktProperties.Builder(bpc.VEDTAK, 'Vedtak')
     .withAksjonspunktCodes(ac.FORESLA_VEDTAK)
-    .withVisibilityWhen(() => true),
+    .withVisibilityWhen(() => true)
+    .withStatus(getVedtakStatus),
 ];
 
 const createTilbakekrevingBpProps = builderData => tilbakekrevingBuilders.reduce((currentEbs, eb) => {

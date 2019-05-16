@@ -37,6 +37,7 @@ const AktsomhetSarligeGrunnerFormPanel = ({
         key={sgt.kode}
         name={sgt.kode}
         label={sgt.navn}
+        readOnly={readOnly}
       />
     ))}
     {erSerligGrunnAnnetValgt && (

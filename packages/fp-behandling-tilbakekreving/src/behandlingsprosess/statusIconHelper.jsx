@@ -1,4 +1,3 @@
-
 import innvilgetHoverIkonUrl from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import avslattIkonUrl from '@fpsak-frontend/assets/images/avslaatt.svg';
 import avslattValgtIkonUrl from '@fpsak-frontend/assets/images/avslaatt_valgt.svg';

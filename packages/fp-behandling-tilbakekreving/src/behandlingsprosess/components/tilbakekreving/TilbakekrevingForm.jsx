@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { createSelector } from 'reselect';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import { bindActionCreators } from 'redux';
@@ -25,7 +26,7 @@ import {
 } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingTilbakekreving/src/duckTilbake';
 import tilbakekrevingAksjonspunktCodes from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingAksjonspunktCodes';
-import foreldelseCodes from '../../foreldelseCodes';
+import foreldelseVurderingType from 'behandlingTilbakekreving/src/kodeverk/foreldelseVurderingType';
 import BpTimelinePanel from '../felles/behandlingspunktTimelineSkjema/BpTimelinePanel';
 import { AVVIST_CLASSNAME, GODKJENT_CLASSNAME } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
 import TilbakekrevingPeriodeForm, { TILBAKEKREVING_PERIODE_FORM_NAME } from './TilbakekrevingPeriodeForm';
@@ -121,20 +122,34 @@ export const transformValues = values => [{
   vilkarsVurdertePerioder: values.vilkarsVurdertePerioder.map(periode => periode.storedData).filter(storedData => !isObjectEmpty(storedData)),
 }];
 
+const finnOriginalPeriode = (lagretPeriode, perioder) => perioder
+  .find(periode => !moment(lagretPeriode.fom).isBefore(moment(periode.fom)) && !moment(lagretPeriode.tom).isAfter(moment(periode.tom)));
+
 const buildInitialValues = createSelector([getBehandlingVilkarsvurderingsperioder, getBehandlingVilkarsvurdering, getBehandlingVilkarsvurderingsRettsgebyr],
  (perioder, vilkarsvurdering, rettsgebyr) => {
   const totalbelop = perioder.reduce((acc, periode) => acc + periode.feilutbetaling, 0);
+  const erTotalBelopUnder4Rettsgebyr = totalbelop < (rettsgebyr * 4);
   const lagredeVilkarsvurdertePerioder = vilkarsvurdering.vilkarsVurdertePerioder;
 
-  return {
-    vilkarsVurdertePerioder: perioder.map((periode) => {
-      const lagretPeriode = lagredeVilkarsvurdertePerioder.find(p => p.fom === periode.fom && p.tom === periode.tom);
-      return {
+  if (lagredeVilkarsvurdertePerioder.length === 0) {
+    return {
+      vilkarsVurdertePerioder: perioder.map(periode => ({
         ...periode,
-        storedData: lagretPeriode || {},
-        erTotalBelopUnder4Rettsgebyr: totalbelop < rettsgebyr * 4,
-      };
-    }),
+        storedData: {},
+        erTotalBelopUnder4Rettsgebyr,
+      })),
+    };
+  }
+
+  return {
+    vilkarsVurdertePerioder: lagredeVilkarsvurdertePerioder
+    .map(lagretPeriode => ({
+      ...finnOriginalPeriode(lagretPeriode, perioder),
+      fom: lagretPeriode.fom,
+      tom: lagretPeriode.tom,
+      storedData: lagretPeriode,
+      erTotalBelopUnder4Rettsgebyr,
+    })),
   };
 });
 
@@ -150,14 +165,22 @@ const leggTilTimelineData = createSelector([state => behandlingFormValueSelector
       const erBelopetIBehold = periode.storedData && periode.storedData.vilkarResultatInfo
         ? periode.storedData.vilkarResultatInfo.erBelopetIBehold : undefined;
       const statusClassName = erForeldet || erBelopetIBehold === false ? AVVIST_CLASSNAME : erBehandlet;
+      const newPeriode = {
+        ...periode,
+        storedData: {
+          ...periode.storedData,
+          fom: periode.fom,
+          tom: periode.tom,
+        },
+      };
 
       return {
-        ...periode,
+        ...newPeriode,
         className: statusClassName,
         id: index + 1,
         group: 1,
-        arsak: periode.årsak.årsak,
-        foreldet: erForeldet || periode.storedData.begrunnelse ? undefined : foreldelseCodes.MANUELL_BEHANDLING,
+        arsak: newPeriode.årsak.årsak,
+        foreldet: erForeldet || newPeriode.storedData.begrunnelse ? undefined : foreldelseVurderingType.UDEFINERT,
         erForeldet,
       };
     });
