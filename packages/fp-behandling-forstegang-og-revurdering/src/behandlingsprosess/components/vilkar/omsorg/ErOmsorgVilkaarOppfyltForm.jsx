@@ -98,18 +98,21 @@ const transformValues = (values, aksjonspunkter) => aksjonspunkter.map(ap => ({
 
 const formName = 'ErOmsorgVilkaarOppfyltForm';
 
-const mapStateToProps = (state, initialProps) => {
-  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(state);
-  return {
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(initialState);
+  const onSubmit = values => ownProps.submitCallback(transformValues(values, aksjonspunkter));
+  const avslagsarsaker = getKodeverk(kodeverkTyper.AVSLAGSARSAK)(initialState)[vilkarType.OMSORGSVILKARET];
+
+  return state => ({
     aksjonspunkter,
+    onSubmit,
+    avslagsarsaker,
     initialValues: buildInitialValues(state),
     erVilkarOk: behandlingFormValueSelector(formName)(state, 'erVilkarOk'),
-    avslagsarsaker: getKodeverk(kodeverkTyper.AVSLAGSARSAK)(state)[vilkarType.OMSORGSVILKARET],
-    onSubmit: values => initialProps.submitCallback(transformValues(values, aksjonspunkter)),
-  };
+  });
 };
 
-const ErOmsorgVilkaarOppfyltForm = connect(mapStateToProps)(behandlingForm({
+const ErOmsorgVilkaarOppfyltForm = connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
   validate,
 })(ErOmsorgVilkaarOppfyltFormImpl));

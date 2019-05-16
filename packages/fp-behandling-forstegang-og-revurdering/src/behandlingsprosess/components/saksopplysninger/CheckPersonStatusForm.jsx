@@ -156,15 +156,19 @@ const transformValues = (values, aksjonspunkter) => ({
 
 const formName = 'CheckPersonStatusForm';
 
-const mapStateToProps = (state, ownProps) => ({
-  initialValues: buildInitialValues(state),
-  ...behandlingFormValueSelector(formName)(state, 'fortsettBehandling', 'originalPersonstatusName'),
-  onSubmit: values => ownProps.submitCallback([transformValues(values, getSelectedBehandlingspunktAksjonspunkter(state))]),
-  personStatuser: getFilteredKodeverk(state),
-  gjeldeneFom: getBehandlingRevurderingAvFortsattMedlemskapFom(state),
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitCallback([transformValues(values, getSelectedBehandlingspunktAksjonspunkter(initialState))]);
+  const personStatuser = getFilteredKodeverk(initialState);
+  return state => ({
+    initialValues: buildInitialValues(state),
+    ...behandlingFormValueSelector(formName)(state, 'fortsettBehandling', 'originalPersonstatusName'),
+    gjeldeneFom: getBehandlingRevurderingAvFortsattMedlemskapFom(state),
+    personStatuser,
+    onSubmit,
+  });
+};
 
-const CheckPersonStatusForm = connect(mapStateToProps)(injectIntl(behandlingForm({
+const CheckPersonStatusForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: formName,
 })(CheckPersonStatusFormImpl)));
 

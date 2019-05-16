@@ -162,22 +162,30 @@ PersonInfoPanelImpl.defaultProps = {
   submitCallback: undefined,
 };
 
-const mapStateToProps = state => ({
-  sivilstandTypes: getKodeverk(kodeverkTyper.SIVILSTAND_TYPE)(state),
-  personstatusTypes: getKodeverk(kodeverkTyper.PERSONSTATUS_TYPE)(state),
-  personopplysninger: getPersonopplysning(state),
-  relatertTilgrensendeYtelserForSoker: getBehandlingRelatertTilgrensendeYtelserForSoker(state),
-  relatertTilgrensendeYtelserForAnnenForelder: getBehandlingRelatertTilgrensendeYtelserForAnnenForelder(state),
-  sprakkode: getBehandlingSprak(state),
-  relatertYtelseTypes: getKodeverk(kodeverkTyper.RELATERT_YTELSE_TYPE)(state),
-  relatertYtelseStatus: [
-    ...getKodeverk(kodeverkTyper.FAGSAK_STATUS)(state),
-    ...getKodeverk(kodeverkTyper.RELATERT_YTELSE_TILSTAND)(state),
-  ],
-  featureToggleUtland: getFeatureToggles(state)[featureToggle.MARKER_UTENLANDSSAK],
-});
+const mapStateToPropsFactory = (initialState) => {
+  const featureToggleUtland = getFeatureToggles(initialState)[featureToggle.MARKER_UTENLANDSSAK];
+  const sivilstandTypes = getKodeverk(kodeverkTyper.SIVILSTAND_TYPE)(initialState);
+  const personstatusTypes = getKodeverk(kodeverkTyper.PERSONSTATUS_TYPE)(initialState);
+  const relatertYtelseTypes = getKodeverk(kodeverkTyper.RELATERT_YTELSE_TYPE)(initialState);
+  const relatertYtelseStatus = [
+    ...getKodeverk(kodeverkTyper.FAGSAK_STATUS)(initialState),
+    ...getKodeverk(kodeverkTyper.RELATERT_YTELSE_TILSTAND)(initialState),
+  ];
 
-const ConnectedComponent = connect(mapStateToProps)(behandlingForm({ form: 'PersonInfoPanel' })(PersonInfoPanelImpl));
+  return state => ({
+    sivilstandTypes,
+    personstatusTypes,
+    relatertYtelseStatus,
+    relatertYtelseTypes,
+    featureToggleUtland,
+    personopplysninger: getPersonopplysning(state),
+    relatertTilgrensendeYtelserForSoker: getBehandlingRelatertTilgrensendeYtelserForSoker(state),
+    relatertTilgrensendeYtelserForAnnenForelder: getBehandlingRelatertTilgrensendeYtelserForAnnenForelder(state),
+    sprakkode: getBehandlingSprak(state),
+  });
+};
+
+const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingForm({ form: 'PersonInfoPanel' })(PersonInfoPanelImpl));
 const personAksjonspunkter = [AUTOMATISK_MARKERING_AV_UTENLANDSSAK, MANUELL_MARKERING_AV_UTLAND_SAKSTYPE];
 const PersonInfoPanel = withDefaultToggling(faktaPanelCodes.PERSON, personAksjonspunkter)(ConnectedComponent);
 PersonInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => personAksjonspunkter.includes(ap.definisjon.kode));

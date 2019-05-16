@@ -162,22 +162,25 @@ const transformValues = values => ({
 
 export const termindatoFaktaFormName = 'TermindatoFaktaForm';
 
-const mapStateToProps = (state, ownProps) => {
-  const termindato = behandlingFormValueSelector(termindatoFaktaFormName)(state, 'termindato');
-  const utstedtdato = behandlingFormValueSelector(termindatoFaktaFormName)(state, 'utstedtdato');
-  return {
-    initialValues: buildInitialValues(state),
-    onSubmit: values => ownProps.submitHandler(transformValues(values)),
-    isTerminDatoEdited: getEditedStatus(state).termindato,
-    isUtstedtDatoEdited: getEditedStatus(state).utstedtdato,
-    isForTidligTerminbekreftelse: erTerminbekreftelseUtstedtForTidlig(utstedtdato, termindato),
-    isAntallBarnEdited: getEditedStatus(state).antallBarn,
-    fodselsdatoTps: getFamiliehendelseGjeldende(state).fodselsdato,
-    antallBarnTps: getFamiliehendelseGjeldende(state).antallBarnFodsel,
-    isOverridden: getFamiliehendelseGjeldende(state).erOverstyrt,
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitHandler(transformValues(values));
+  return (state) => {
+    const termindato = behandlingFormValueSelector(termindatoFaktaFormName)(state, 'termindato');
+    const utstedtdato = behandlingFormValueSelector(termindatoFaktaFormName)(state, 'utstedtdato');
+    return {
+      onSubmit,
+      initialValues: buildInitialValues(state),
+      isTerminDatoEdited: getEditedStatus(state).termindato,
+      isUtstedtDatoEdited: getEditedStatus(state).utstedtdato,
+      isForTidligTerminbekreftelse: erTerminbekreftelseUtstedtForTidlig(utstedtdato, termindato),
+      isAntallBarnEdited: getEditedStatus(state).antallBarn,
+      fodselsdatoTps: getFamiliehendelseGjeldende(state).fodselsdato,
+      antallBarnTps: getFamiliehendelseGjeldende(state).antallBarnFodsel,
+      isOverridden: getFamiliehendelseGjeldende(state).erOverstyrt,
+    };
   };
 };
 
-export default connect(mapStateToProps)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: termindatoFaktaFormName,
 })(TermindatoFaktaForm));

@@ -88,20 +88,22 @@ const transformValues = (values, aksjonspunkter) => ({
 
 const formName = 'AdopsjonVilkarForm';
 
-const mapStateToProps = (state, initialProps) => {
-  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(state);
-  return {
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const avslagsarsaker = getKodeverk(kodeverkTyper.AVSLAGSARSAK)(initialState)[vilkarType.ADOPSJONSVILKARET];
+  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(initialState);
+  const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunkter)]);
+  return state => ({
     status: getSelectedBehandlingspunktStatus(state),
     initialValues: buildInitialValues(state),
     erVilkarOk: behandlingFormValueSelector(formName)(state, 'erVilkarOk'),
-    onSubmit: values => initialProps.submitCallback([transformValues(values, aksjonspunkter)]),
     lovReferanse: getSelectedBehandlingspunktVilkar(state)[0].lovReferanse,
     hasAksjonspunkt: aksjonspunkter.length > 0,
-    avslagsarsaker: getKodeverk(kodeverkTyper.AVSLAGSARSAK)(state)[vilkarType.ADOPSJONSVILKARET],
-  };
+    avslagsarsaker,
+    onSubmit,
+  });
 };
 
-const AdopsjonVilkarForm = connect(mapStateToProps)(behandlingForm({
+const AdopsjonVilkarForm = connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
   validate,
 })(AdopsjonVilkarFormImpl));

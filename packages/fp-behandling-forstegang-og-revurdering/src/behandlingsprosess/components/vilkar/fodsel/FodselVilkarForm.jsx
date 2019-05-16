@@ -21,10 +21,6 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 const avslagsarsakerES = ['1002', '1003', '1032'];
 
-export const getFodselVilkarAvslagsarsaker = (isFpFagsak, fodselsvilkarAvslagskoder) => (isFpFagsak
-  ? fodselsvilkarAvslagskoder.filter(arsak => !avslagsarsakerES.includes(arsak.kode))
-  : fodselsvilkarAvslagskoder);
-
 /**
  * FodselVilkarForm
  *
@@ -95,21 +91,28 @@ const transformValues = (values, aksjonspunkter) => ({
 
 const formName = 'FodselVilkarForm';
 
-const mapStateToProps = (state, initialProps) => {
-  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(state);
-  return {
+export const getFodselVilkarAvslagsarsaker = (isFpFagsak, fodselsvilkarAvslagskoder) => (isFpFagsak
+  ? fodselsvilkarAvslagskoder.filter(arsak => !avslagsarsakerES.includes(arsak.kode))
+  : fodselsvilkarAvslagskoder);
+
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(initialState);
+  const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunkter)]);
+  const avslagsarsaker = getKodeverk(kodeverkTyper.AVSLAGSARSAK)(initialState)[vilkarType.FODSELSVILKARET_MOR];
+  const filtrerteAvslagsarsaker = getFodselVilkarAvslagsarsaker(isForeldrepengerFagsak(initialState), avslagsarsaker);
+
+  return state => ({
+    onSubmit,
+    avslagsarsaker: filtrerteAvslagsarsaker,
     status: getSelectedBehandlingspunktStatus(state),
     initialValues: buildInitialValues(state),
     erVilkarOk: behandlingFormValueSelector(formName)(state, 'erVilkarOk'),
-    onSubmit: values => initialProps.submitCallback([transformValues(values, aksjonspunkter)]),
     lovReferanse: getSelectedBehandlingspunktVilkar(state)[0].lovReferanse,
     hasAksjonspunkt: aksjonspunkter.length > 0,
-    avslagsarsaker: getFodselVilkarAvslagsarsaker(isForeldrepengerFagsak(state),
-      getKodeverk(kodeverkTyper.AVSLAGSARSAK)(state)[vilkarType.FODSELSVILKARET_MOR]),
-  };
+  });
 };
 
-const FodselVilkarForm = connect(mapStateToProps)(behandlingForm({
+const FodselVilkarForm = connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
   validate,
 })(FodselVilkarFormImpl));

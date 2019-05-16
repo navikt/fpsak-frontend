@@ -123,17 +123,20 @@ const transformValues = (values, submitCallback, aksjonspunkter) => {
   return submitCallback(aksjonspunkterMedBegrunnelse);
 };
 
-const mapStateToProps = (state, initialProps) => ({
-  initialValues: buildInitialValues(state),
-  personopplysning: getPersonopplysning(state),
-  ektefellePersonopplysning: getEktefellePersonopplysning(state),
-  omsorg: behandlingFormValueSelector('OmsorgInfoPanel')(state, 'omsorg'),
-  onSubmit: values => transformValues(values, initialProps.submitCallback, initialProps.aksjonspunkter),
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => transformValues(values, ownProps.submitCallback, ownProps.aksjonspunkter);
+  return state => ({
+    initialValues: buildInitialValues(state),
+    personopplysning: getPersonopplysning(state),
+    ektefellePersonopplysning: getEktefellePersonopplysning(state),
+    omsorg: behandlingFormValueSelector('OmsorgInfoPanel')(state, 'omsorg'),
+    onSubmit,
+  });
+};
 
 const omsorgAksjonspunkter = [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG, aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG];
 
-const OmsorgInfoPanel = withDefaultToggling(OMSORG_IP, omsorgAksjonspunkter)(connect(mapStateToProps)(behandlingForm({
+const OmsorgInfoPanel = withDefaultToggling(OMSORG_IP, omsorgAksjonspunkter)(connect(mapStateToPropsFactory)(behandlingForm({
   form: 'OmsorgInfoPanel',
   validate: IkkeOmsorgPeriodeField.validate,
 })(injectIntl(OmsorgInfoPanelImpl))));

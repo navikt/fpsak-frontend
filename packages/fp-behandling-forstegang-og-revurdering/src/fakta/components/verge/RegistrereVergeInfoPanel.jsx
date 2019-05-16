@@ -105,16 +105,19 @@ const transformValues = values => ({
   ...{ begrunnelse: values.begrunnelse },
 });
 
-const mapStateToProps = (state, initialProps) => ({
-  aksjonspunkt: initialProps.aksjonspunkter[0],
-  initialValues: buildInitialValues(state),
-  vergetyper: getKodeverk(kodeverkTyper.VERGE_TYPE)(state),
-  onSubmit: values => initialProps.submitCallback([transformValues(values)]),
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
+  return state => ({
+    aksjonspunkt: ownProps.aksjonspunkter[0],
+    initialValues: buildInitialValues(state),
+    vergetyper: getKodeverk(kodeverkTyper.VERGE_TYPE)(state),
+    onSubmit,
+  });
+};
 
 const vergeAksjonspunkter = [aksjonspunktCodes.AVKLAR_VERGE];
 
-const RegistrereVergeInfoPanel = withDefaultToggling(faktaPanelCodes.VERGE, vergeAksjonspunkter)(connect(mapStateToProps)(behandlingForm({
+const RegistrereVergeInfoPanel = withDefaultToggling(faktaPanelCodes.VERGE, vergeAksjonspunkter)(connect(mapStateToPropsFactory)(behandlingForm({
   form: 'RegistrereVergeInfoPanel',
 })(injectIntl(RegistrereVergeInfoPanelImpl))));
 
