@@ -37,7 +37,7 @@ const getBrevKode = (klageVurdering, klageVurdertAvKa) => {
 };
 
 const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback, klageResultat) => (e) => {
-  const klageVurdertAvNK = klageResultat.klageVurdertAv === 'NFP';
+  const klageVurdertAvNK = klageResultat.klageVurdertAv === 'KA';
   const data = {
     fritekst: begrunnelse || '',
     mottaker: '',
@@ -53,7 +53,7 @@ const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback, klage
   e.preventDefault();
 };
 
-export const VedtakKlageSubmitPanelImpl = ({
+export const VedtakKlageKaSubmitPanelImpl = ({
   intl,
   behandlingPaaVent,
   previewVedtakCallback,
@@ -66,18 +66,31 @@ export const VedtakKlageSubmitPanelImpl = ({
 
   return (
     <Row>
-      <Column xs="6">
+      <Column xs="8">
         {!readOnly
         && (
         <Hovedknapp
           mini
           className={styles.mainButton}
           onClick={formProps.handleSubmit}
-          disabled={behandlingPaaVent || formProps.submitting}
+          disabled={behandlingPaaVent || formProps.submitting || klageResultat.godkjentAvMedunderskriver}
           spinner={formProps.submitting}
         >
-          {intl.formatMessage({ id: 'VedtakKlageForm.TilGodkjenning' })}
+          {intl.formatMessage({ id: 'VedtakKlageForm.TilGodkjenningKa' })}
         </Hovedknapp>
+        )
+        }
+        {!readOnly
+        && (
+          <Hovedknapp
+            mini
+            className={styles.mainButton}
+            onClick={formProps.handleSubmit}
+            disabled={behandlingPaaVent || formProps.submitting || !klageResultat.godkjentAvMedunderskriver}
+            spinner={formProps.submitting}
+          >
+            {intl.formatMessage({ id: 'VedtakKlageForm.FerdigstillKlageKa' })}
+          </Hovedknapp>
         )
         }
         <a
@@ -93,7 +106,7 @@ export const VedtakKlageSubmitPanelImpl = ({
   );
 };
 
-VedtakKlageSubmitPanelImpl.propTypes = {
+VedtakKlageKaSubmitPanelImpl.propTypes = {
   intl: intlShape.isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
   behandlingPaaVent: PropTypes.bool.isRequired,
@@ -103,7 +116,7 @@ VedtakKlageSubmitPanelImpl.propTypes = {
   formProps: PropTypes.shape().isRequired,
 };
 
-VedtakKlageSubmitPanelImpl.defaultProps = {
+VedtakKlageKaSubmitPanelImpl.defaultProps = {
   begrunnelse: undefined,
   klageResultat: undefined,
 };
@@ -113,4 +126,4 @@ const mapStateToProps = state => ({
   behandlingPaaVent: getBehandlingIsOnHold(state),
 });
 
-export default connect(mapStateToProps)(injectIntl(VedtakKlageSubmitPanelImpl));
+export default connect(mapStateToProps)(injectIntl(VedtakKlageKaSubmitPanelImpl));

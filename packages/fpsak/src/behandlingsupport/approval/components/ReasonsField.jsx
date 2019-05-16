@@ -25,9 +25,13 @@ const maxLength2000 = maxLength(2000);
  * <ReasonsField fieldName={fieldName} showOnlyBegrunnelse={showBegrunnelse} />
  * ```
  */
-const ReasonsField = ({ fieldName, showOnlyBegrunnelse, intl }) => (
+const ReasonsField = ({
+  fieldName, godkjentHosKA, showOnlyBegrunnelse, intl,
+}) => (
   <React.Fragment>
-    <ArrowBox alignOffset={110}>
+    <ArrowBox
+      alignOffset={godkjentHosKA ? 1 : 110}
+    >
       {!showOnlyBegrunnelse
         && (
         <FlexContainer fluid wrap>
@@ -78,6 +82,7 @@ const ReasonsField = ({ fieldName, showOnlyBegrunnelse, intl }) => (
 ReasonsField.propTypes = {
   fieldName: PropTypes.string.isRequired,
   showOnlyBegrunnelse: PropTypes.bool.isRequired,
+  godkjentHosKA: PropTypes.bool.isRequired,
   intl: intlShape.isRequired,
 };
 

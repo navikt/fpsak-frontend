@@ -34,8 +34,10 @@ export const ApprovalFieldImpl = ({
   contextIndex,
   showBegrunnelse,
   getAksjonspunktText,
+  klageKA,
 }) => {
   const fieldName = `approvals[${contextIndex}].aksjonspunkter[${approvalIndex}]`;
+  const erKlageKA = (klageKA && currentValue && currentValue.totrinnskontrollGodkjent);
   return (
     <div className={styles.approvalItemContainer}>
       {getAksjonspunktText(aksjonspunkt).map((formattedMessage, index) => (
@@ -52,8 +54,15 @@ export const ApprovalFieldImpl = ({
           <RadioOption label={{ id: 'InfoPanel.Godkjent' }} value />
           <RadioOption label={{ id: 'InfoPanel.Vurder' }} value={false} />
         </RadioGroupField>
-        {currentValue && currentValue.totrinnskontrollGodkjent === false
-        && <ReasonsField fieldName={fieldName} showOnlyBegrunnelse={showBegrunnelse} />
+        {((currentValue && currentValue.totrinnskontrollGodkjent === false) || erKlageKA)
+        && (
+        <ReasonsField
+          fieldName={fieldName}
+          godkjentHosKA={erKlageKA}
+          showOnlyBegrunnelse={(erKlageKA
+          ? currentValue.totrinnskontrollGodkjent : showBegrunnelse)}
+        />
+)
         }
       </NavFieldGroup>
     </div>
@@ -69,6 +78,7 @@ ApprovalFieldImpl.propTypes = {
   contextIndex: PropTypes.number,
   currentValue: PropTypes.shape(),
   showBegrunnelse: PropTypes.bool,
+  klageKA: PropTypes.bool,
 };
 
 ApprovalFieldImpl.defaultProps = {
@@ -76,6 +86,7 @@ ApprovalFieldImpl.defaultProps = {
   currentValue: undefined,
   approvalIndex: null,
   contextIndex: null,
+  klageKA: false,
 };
 
 const mapStateToProps = state => ({ getAksjonspunktText: getAksjonspunktTextSelector(state) });

@@ -25,9 +25,11 @@ import {
   getBehandlingType,
   getBehandlingsresultatFraOriginalBehandling,
   getResultatstrukturFraOriginalBehandling,
+ getBehandlingKlageVurderingResultatNK,
 } from 'behandling/duck';
 import { requireProps } from '@fpsak-frontend/fp-felles';
 import { getApproveFinished } from '../duck';
+
 
 import styles from './fatterVedtakApprovalModal.less';
 
@@ -106,6 +108,11 @@ FatterVedtakApprovalModal.defaultProps = {
   showModal: undefined,
 };
 
+export const isKlageWithKA = (klageVurderingResultatNK) => {
+  const meholdIKlageAvNK = klageVurderingResultatNK;
+  return meholdIKlageAvNK;
+};
+
 const isBehandlingsresultatOpphor = createSelector(
   [getBehandlingsresultat], behandlingsresultat => behandlingsresultat.type.kode === behandlingResultatType.OPPHOR,
 );
@@ -113,6 +120,9 @@ const isBehandlingsresultatOpphor = createSelector(
 const getModalDescriptionTextCode = createSelector([isBehandlingsresultatOpphor, getFagsakYtelseType, getBehandlingIsKlage],
   (isOpphor, ytelseType, isKlage) => {
     if (isKlage) {
+      if (isKlageWithKA(getBehandlingKlageVurderingResultatNK)) {
+        return 'FatterVedtakApprovalModal.ModalDescriptionKlageKA';
+      }
       return 'FatterVedtakApprovalModal.ModalDescriptionKlage';
     }
     if (isOpphor) {
@@ -156,6 +166,9 @@ const getInfoTextCode = createSelector(
     ytelseType, isOpphor,
   ) => {
     if (behandlingIsKlage) {
+      if (isKlageWithKA(getBehandlingKlageVurderingResultatNK)) {
+        return 'FatterVedtakApprovalModal.ModalDescriptionKlageKA';
+      }
       return 'FatterVedtakApprovalModal.ModalDescriptionKlage';
     }
     if (isSameResultAsOriginalBehandling(

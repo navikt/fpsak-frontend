@@ -23,6 +23,11 @@ export const isKlage = (klageVurderingResultatNFP, klageVurderingResultatNK) => 
   return meholdIKlageAvNFP || meholdIKlageAvNK;
 };
 
+export const isKlageWithKA = (klageVurderingResultatNK) => {
+  const meholdIKlageAvNK = klageVurderingResultatNK;
+  return meholdIKlageAvNK;
+};
+
 const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 
 const buildVarigEndringBeregningText = beregningDto => (beregningDto.fastsattVarigEndringNaering ? (

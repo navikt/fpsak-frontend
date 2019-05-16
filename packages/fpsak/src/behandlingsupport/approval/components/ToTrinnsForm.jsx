@@ -10,7 +10,7 @@ import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandli
 import { getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK } from 'behandling/duck';
 import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
 import ApprovalField from './ApprovalField';
-import { isKlage } from './ApprovalTextUtils';
+import { isKlage, isKlageWithKA } from './ApprovalTextUtils';
 
 import styles from './ToTrinnsForm.less';
 
@@ -60,6 +60,7 @@ export const ToTrinnsFormImpl = ({
                     currentValue={formState[contextIndex].aksjonspunkter[approvalIndex]}
                     approvalIndex={approvalIndex}
                     readOnly={readOnly}
+                    klageKA={!!isKlageWithKA(klageVurderingResultatNK)}
                   />
                 </div>
               ))}
