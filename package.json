@@ -27,9 +27,7 @@
     "docker:stop": "docker stop fpfront; docker rm fpfront",
     "redis:start": "docker stop redis; docker rm redis; docker run --name redis -p 6379:6379 -d redis",
     "up": "docker-compose up -d --remove-orphans --build",
-    "down": "docker-compose down",
-    "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "down": "docker-compose down"
   },
   "workspaces": [
     "packages/*"
@@ -45,7 +43,6 @@
     "history": "^4.9.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "snyk": "^1.164.0",
     "stylelint-order": "^2.1.0"
   },
   "devDependencies": {
@@ -142,6 +139,5 @@
       "**/*.spec.tsx",
       "**/*.spec.ts"
     ]
-  },
-  "snyk": true
+  }
 }
