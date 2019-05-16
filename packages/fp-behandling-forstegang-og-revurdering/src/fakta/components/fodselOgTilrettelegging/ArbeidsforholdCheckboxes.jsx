@@ -9,7 +9,7 @@ import {
   DatepickerField, CheckboxField, DecimalField,
 } from '@fpsak-frontend/form';
 import {
-  ArrowBox, FlexContainer, FlexColumn, FlexRow, VerticalSpacer,
+  ArrowBox, FlexContainer, FlexColumn, FlexRow,
 } from '@fpsak-frontend/shared-components';
 
 import {
@@ -28,7 +28,6 @@ export const ArbeidsforholdCheckboxes = ({
   redusertArbeid,
   kanIkkeGjennomfores,
   readOnly,
-  warning,
   intl,
 }) => {
   const arrowBox = (dato, stillingsprosent) => (
@@ -96,14 +95,6 @@ export const ArbeidsforholdCheckboxes = ({
   );
   return (
     <Fieldset legend={intl.formatMessage({ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.Tilrettelegging' })}>
-      {warning && warning.permisjonsWarning
-      && (
-      <div className="skjemaelement__feilmelding">
-        {warning.permisjonsWarning}
-        <VerticalSpacer sixteenPx />
-      </div>
-      )
-      }
       {!readOnly && (
         <div>
           <CheckboxField
@@ -140,14 +131,12 @@ ArbeidsforholdCheckboxes.propTypes = {
   kanIkkeGjennomfores: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
   intl: intlShape.isRequired,
-  warning: PropTypes.shape(),
 };
 
 ArbeidsforholdCheckboxes.defaultProps = {
   kanGjennomfores: false,
   redusertArbeid: false,
   kanIkkeGjennomfores: false,
-  warning: {},
 };
 
 const mapStateToProps = state => ({

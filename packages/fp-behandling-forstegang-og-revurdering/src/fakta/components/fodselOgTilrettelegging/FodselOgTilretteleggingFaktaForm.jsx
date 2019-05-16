@@ -111,9 +111,6 @@ const mapStateToProps = (state, ownProps) => {
     (dirty, values, initialValues = {}) => dirty && values.termindato !== initialValues.termindato,
   );
 
-
-  // TODO: hente info fra backend når klart.  venter avklaring på om det blir checkboxer( mulighet for flere datoer),
-  //  eller radiobuttons (kun 1 dato)
   const tilrettelegging = getTilrettelegging(state);
   return {
     initialValues: {

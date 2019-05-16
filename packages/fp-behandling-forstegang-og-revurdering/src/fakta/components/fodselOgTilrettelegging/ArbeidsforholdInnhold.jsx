@@ -29,7 +29,6 @@ const maxLength1500 = maxLength(1500);
 export const ArbeidsforholdInnhold = ({
   cancelArbeidsforholdCallback,
   readOnly,
-  warning,
   ...formProps
 }) => (
   <div>
@@ -44,7 +43,7 @@ export const ArbeidsforholdInnhold = ({
           />
         </FlexColumn>
       </FlexRow>
-      <ArbeidsforholdCheckboxes readOnly={readOnly} warning={warning} />
+      <ArbeidsforholdCheckboxes readOnly={readOnly} />
       <FlexRow>
         <FlexColumn className={styles.textAreaBredde}>
           <TextAreaField
@@ -95,24 +94,6 @@ ArbeidsforholdInnhold.propTypes = {
   cancelArbeidsforholdCallback: PropTypes.func.isRequired,
   updateArbeidsforholdCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  warning: PropTypes.shape(),
-};
-
-ArbeidsforholdInnhold.defaultProps = {
-  warning: {},
-};
-
-const validateWarning = (values) => {
-  let warnings = {};
-
-  if (!values.kanGjennomfores && !values.kanIkkeGjennomfores && !values.redusertArbeid) {
-    warnings = {
-      _warning: {
-        permisjonsWarning: <FormattedMessage id="ArbeidsforholdInnhold.TilretteleggingWarning" />,
-      },
-    };
-  }
-  return warnings;
 };
 
 const transformValues = (values, selectedArbeidsforhold) => {
@@ -142,7 +123,6 @@ const mapStateToProps = (state, ownProps) => {
   const { selectedArbeidsforhold } = ownProps;
   return {
     initialValues: buildInitialValues(selectedArbeidsforhold),
-    warn: values => validateWarning(values),
     onSubmit: values => ownProps.updateArbeidsforholdCallback(transformValues(values, selectedArbeidsforhold)),
   };
 };

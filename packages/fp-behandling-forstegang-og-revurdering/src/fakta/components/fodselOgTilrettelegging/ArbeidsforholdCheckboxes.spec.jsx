@@ -84,20 +84,4 @@ describe('<ArbeidsforholdCheckboxes>', () => {
     const stillingsprosent = wrapper.find(DecimalField);
     expect(stillingsprosent).has.length(1);
   });
-  it('skal vise warning når ingen checkboxer er valgt', () => {
-    const wrapper = shallowWithIntl(<ArbeidsforholdCheckboxes
-      intl={intlMock}
-      kanGjennomfores={false}
-      kanIkkeGjennomfores={false}
-      redusertArbeid={false}
-      readOnly={false}
-      warning={{ permisjonsWarning: <FormattedMessage id="ArbeidsforholdInnhold.TilretteleggingWarning" /> }}
-    />);
-    const checkbox = wrapper.find(CheckboxField);
-    expect(checkbox).has.length(3);
-    const div = wrapper.find('div');
-    expect(div).has.length(2);
-    const warning = wrapper.find(FormattedMessage);
-    expect(warning).has.length(1);
-  });
 });
