@@ -401,6 +401,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'SLUTTE_ARBEID_FOM',
     feltId: 'HistorikkEndretFelt.SlutteArbeidFom',
   },
+  SVANGERSKAPSPENGERVILKÅRET: {
+    kode: 'SVANGERSKAPSPENGERVILKÅRET',
+    feltId: 'HistorikkEndretFelt.Svangerskapsvilkaret',
+  },
 };
 
 export default historikkEndretFeltTypeCodes;

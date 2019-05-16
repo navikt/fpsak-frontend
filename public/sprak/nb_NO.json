@@ -1911,6 +1911,7 @@
   "HistorikkBegrunnelse.ReEndrinBeregningsgrunnlag": "Endring i beregningsgrunnlag",
   "HistorikkBegrunnelse.ReTilstøtendeYtelseOpphørt": "Tilstøtende ytelse opphørt",
   "HistorikkEndretFelt.Adopsjonsvilkaret": "Adopsjonsvilkåret",
+  "HistorikkEndretFelt.Svangerskapsvilkaret": "Svangerskapsvilkåret",
   "HistorikkEndretFelt.Arbeidsforhold": "Arbeidsforhold hos {value}",
   "HistorikkEndretFelt.Aktivitet": "Aktivitet {value}",
   "HistorikkEndretFelt.AktivitetPeriode": "Perioden med aktivitet {value} er",
