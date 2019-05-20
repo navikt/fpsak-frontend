@@ -46,7 +46,7 @@ describe('Behandlingsupport-reducer', () => {
   it('skal hente dokumenter og historie fra server', () => {
     const documents = [];
     mockAxios
-      .onGet(fpsakApi.ALL_DOCUMENTS_FPSAK.path)
+      .onGet(fpsakApi.ALL_DOCUMENTS.path)
       .reply(200, documents);
     const history = {};
     mockAxios

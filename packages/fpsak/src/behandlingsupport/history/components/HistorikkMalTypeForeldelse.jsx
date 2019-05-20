@@ -7,7 +7,9 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import historikkOpplysningTypeCodes from '@fpsak-frontend/kodeverk/src/historikkOpplysningTypeCodes';
 import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
+import { getAlleKodeverk } from 'kodeverk/duck';
 import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 
 const scrollUp = () => {
@@ -17,9 +19,10 @@ if (window.innerWidth < 1305) {
 return false;
 };
 
-const HistorikkMalTypeForeldelse = ({
+export const HistorikkMalTypeForeldelse = ({
   historikkinnslagDeler,
   behandlingLocation,
+  getKodeverknavn,
 }) => {
   if (historikkinnslagDeler.length === 0) {
     return null;
@@ -31,7 +34,7 @@ const HistorikkMalTypeForeldelse = ({
           to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
           onClick={scrollUp}
         >
-          {historikkinnslagDeler[0].skjermlenke.navn}
+          {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
         </NavLink>
       </Element>
       {historikkinnslagDeler.map((historikkinnslagDel) => {
@@ -46,14 +49,13 @@ const HistorikkMalTypeForeldelse = ({
           </Normaltekst>
           {endredeFelter && endredeFelter.map((felt) => {
             const { endretFeltNavn, fraVerdi, tilVerdi } = felt;
-            const { navn } = endretFeltNavn;
 
             return (
-              <React.Fragment key={navn}>
+              <React.Fragment key={endretFeltNavn.kode}>
                 <Normaltekst>
                   <FormattedHTMLMessage
                     id={felt.fraVerdi ? 'Historikk.Template.Tilbakekreving.ChangedFromTo' : 'Historikk.Template.Tilbakekreving.FieldSetTo'}
-                    values={{ navn, fraVerdi, tilVerdi }}
+                    values={{ navn: getKodeverknavn(endretFeltNavn), fraVerdi, tilVerdi }}
                   />
                 </Normaltekst>
                 <VerticalSpacer eightPx />
@@ -75,6 +77,7 @@ const HistorikkMalTypeForeldelse = ({
 HistorikkMalTypeForeldelse.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default HistorikkMalTypeForeldelse;
+export default injectKodeverk(getAlleKodeverk)(HistorikkMalTypeForeldelse);

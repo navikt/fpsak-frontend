@@ -38,7 +38,7 @@ describe('BehandlingOrchestrator', () => {
       .onGet(fpsakApi.BEHANDLINGER_FPSAK.path)
       .replyOnce(200, [{ id: 1 }]);
     mockAxios
-      .onGet(fpsakApi.ALL_DOCUMENTS_FPSAK.path)
+      .onGet(fpsakApi.ALL_DOCUMENTS.path)
       .replyOnce(200, [{ dokId: 1 }]);
     mockAxios
       .onGet(fpsakApi.HISTORY_FPSAK.path)
@@ -66,7 +66,7 @@ describe('BehandlingOrchestrator', () => {
       .onGet(fpsakApi.BEHANDLINGER_FPSAK.path)
       .replyOnce(200, [{ id: 1 }]);
     mockAxios
-      .onGet(fpsakApi.ALL_DOCUMENTS_FPSAK.path)
+      .onGet(fpsakApi.ALL_DOCUMENTS.path)
       .replyOnce(200, [{ dokId: 1 }]);
     mockAxios
       .onGet(fpsakApi.HISTORY_FPSAK.path)
@@ -95,7 +95,7 @@ describe('BehandlingOrchestrator', () => {
       .onGet(fpsakApi.BEHANDLINGER_FPSAK.path)
       .replyOnce(200, [{ id: 1 }]);
     mockAxios
-      .onGet(fpsakApi.ALL_DOCUMENTS_FPSAK.path)
+      .onGet(fpsakApi.ALL_DOCUMENTS.path)
       .replyOnce(200, [{ dokId: 1 }]);
     mockAxios
       .onGet(fpsakApi.HISTORY_FPSAK.path)
@@ -103,9 +103,6 @@ describe('BehandlingOrchestrator', () => {
     mockAxios
       .onGet(fpsakApi.BEHANDLINGER_FPTILBAKE.path)
       .replyOnce(200, [{ id: 2 }]);
-    mockAxios
-      .onGet(fpsakApi.ALL_DOCUMENTS_FPTILBAKE.path)
-      .replyOnce(200, [{ dokId: 2 }]);
     mockAxios
       .onGet(fpsakApi.HISTORY_FPTILBAKE.path)
       .replyOnce(200, [{ histId: 2 }]);
@@ -124,8 +121,6 @@ describe('BehandlingOrchestrator', () => {
       payload: [{ dokId: 1 }],
     }, {
       payload: [{ histId: 1 }],
-    }, {
-      payload: [{ dokId: 2 }],
     }, {
       payload: [{ histId: 2 }],
     }]);

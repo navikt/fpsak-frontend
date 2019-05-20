@@ -7,6 +7,7 @@ import { reducerRegistry, setRequestPollingMessage } from '@fpsak-frontend/fp-fe
 export const FpsakApiKeys = {
   LANGUAGE_FILE: 'LANGUAGE_FILE',
   KODEVERK: 'KODEVERK',
+  KODEVERK_FPTILBAKE: 'KODEVERK_FPTILBAKE',
   NAV_ANSATT: 'NAV_ANSATT',
   SEARCH_FAGSAK: 'SEARCH_FAGSAK',
   FETCH_FAGSAK: 'FETCH_FAGSAK',
@@ -16,8 +17,7 @@ export const FpsakApiKeys = {
   BEHANDLENDE_ENHETER: 'BEHANDLENDE_ENHETER',
   NEW_BEHANDLING: 'NEW_BEHANDLING',
   SAVE_TOTRINNSAKSJONSPUNKT: 'SAVE_TOTRINNSAKSJONSPUNKT',
-  ALL_DOCUMENTS_FPSAK: 'ALL_DOCUMENTS_FPSAK',
-  ALL_DOCUMENTS_FPTILBAKE: 'ALL_DOCUMENTS_FPTILBAKE',
+  ALL_DOCUMENTS: 'ALL_DOCUMENTS',
   DOCUMENT: 'DOCUMENT',
   FORHANDSVISNING_FORVED_BREV: 'FORHANDSVISNING_FORVED_BREV',
   HISTORY_FPSAK: 'HISTORY_FPSAK',
@@ -54,8 +54,7 @@ const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', FpsakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT)
 
   /* /api/dokument */
-  .withGet('/fpsak/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS_FPSAK)
-  .withGet('/fptilbake/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS_FPTILBAKE)
+  .withGet('/fpsak/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS)
   .withGet('/fpsak/api/dokument/hent-dokument', FpsakApiKeys.DOCUMENT)
 
   /* /api/historikk */
@@ -67,6 +66,7 @@ const endpoints = new RestApiConfigBuilder()
 
   /* /api/kodeverk */
   .withGet('/fpsak/api/kodeverk', FpsakApiKeys.KODEVERK)
+  .withGet('/fptilbake/api/kodeverk', FpsakApiKeys.KODEVERK_FPTILBAKE)
   .withGet('/fpsak/api/kodeverk/behandlende-enheter', FpsakApiKeys.BEHANDLENDE_ENHETER)
 
   /* /api/nav-ansatt */

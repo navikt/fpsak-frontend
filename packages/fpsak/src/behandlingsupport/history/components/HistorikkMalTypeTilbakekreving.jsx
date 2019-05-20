@@ -8,7 +8,9 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import historikkOpplysningTypeCodes from '@fpsak-frontend/kodeverk/src/historikkOpplysningTypeCodes';
 import historikkEndretFeltType from '@fpsak-frontend/kodeverk/src/historikkEndretFeltType';
 import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
+import { getAlleKodeverk } from 'kodeverk/duck';
 import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 
 const scrollUp = () => {
@@ -16,11 +18,12 @@ const scrollUp = () => {
       window.scroll(0, 0);
   }
   return false;
-  };
+};
 
-const HistorikkMalTypeTilbakekreving = ({
+export const HistorikkMalTypeTilbakekreving = ({
   historikkinnslagDeler,
   behandlingLocation,
+  getKodeverknavn,
 }) => {
   if (historikkinnslagDeler.length === 0) {
     return null;
@@ -32,7 +35,7 @@ const HistorikkMalTypeTilbakekreving = ({
           to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
           onClick={scrollUp}
         >
-          {historikkinnslagDeler[0].skjermlenke.navn}
+          {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
         </NavLink>
       </Element>
       {historikkinnslagDeler.map((historikkinnslagDel) => {
@@ -50,26 +53,25 @@ const HistorikkMalTypeTilbakekreving = ({
           <VerticalSpacer eightPx />
           {endredeFelter && endredeFelter.map((felt, index) => {
             const { endretFeltNavn, fraVerdi, tilVerdi } = felt;
-            const { navn, kode } = endretFeltNavn;
 
-            const visBelopTilbakekreves = historikkEndretFeltType.BELOEP_TILBAKEKREVES === kode;
-            const visProsentverdi = historikkEndretFeltType.ANDEL_TILBAKEKREVES === kode;
-            const visIleggRenter = historikkEndretFeltType.ILEGG_RENTER === kode;
+            const visBelopTilbakekreves = historikkEndretFeltType.BELOEP_TILBAKEKREVES === endretFeltNavn.kode;
+            const visProsentverdi = historikkEndretFeltType.ANDEL_TILBAKEKREVES === endretFeltNavn.kode;
+            const visIleggRenter = historikkEndretFeltType.ILEGG_RENTER === endretFeltNavn.kode;
             if ((visBelopTilbakekreves || visProsentverdi || visIleggRenter) && !tilVerdi) {
               return null;
             }
 
-            const visBegrunnelse = historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT === kode;
+            const visBegrunnelse = historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT === endretFeltNavn.kode;
             const formatertFraVerdi = visProsentverdi && fraVerdi ? `${fraVerdi}%` : fraVerdi;
             const formatertTilVerdi = visProsentverdi && tilVerdi ? `${tilVerdi}%` : tilVerdi;
             const visAktsomhetBegrunnelse = begrunnelseFritekst && index === endredeFelter.length - 1;
 
             return (
-              <React.Fragment key={navn}>
+              <React.Fragment key={endretFeltNavn.kode}>
                 <Normaltekst>
                   <FormattedHTMLMessage
                     id={felt.fraVerdi ? 'Historikk.Template.Tilbakekreving.ChangedFromTo' : 'Historikk.Template.Tilbakekreving.FieldSetTo'}
-                    values={{ navn, fraVerdi: formatertFraVerdi, tilVerdi: formatertTilVerdi }}
+                    values={{ navn: getKodeverknavn(endretFeltNavn), fraVerdi: formatertFraVerdi, tilVerdi: formatertTilVerdi }}
                   />
                 </Normaltekst>
                 <VerticalSpacer eightPx />
@@ -94,6 +96,7 @@ const HistorikkMalTypeTilbakekreving = ({
 HistorikkMalTypeTilbakekreving.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default HistorikkMalTypeTilbakekreving;
+export default injectKodeverk(getAlleKodeverk)(HistorikkMalTypeTilbakekreving);

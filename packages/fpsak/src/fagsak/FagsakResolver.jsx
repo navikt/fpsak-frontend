@@ -15,6 +15,8 @@ import {
 import { getBehandlingerIds } from 'behandling/selectors/behandlingerSelectors';
 import { resetFagsakSearch as resetFagsakSearchActionCreator } from 'fagsakSearch/duck';
 import { fagsakPropType } from '@fpsak-frontend/prop-types';
+
+import { fetchKodeverk as fetchKodeverkActionCreator } from '../kodeverk/duck';
 import { resetFagsakContext as resetFagsakContextActionCreator, fetchFagsakInfo as fetchFagsakInfoActionCreator } from './duck';
 import {
   getSelectedSaksnummer, getFetchFagsakInfoFinished, getFetchFagsakInfoFailed, getAllFagsakInfoResolved, getSelectedFagsak,
@@ -44,11 +46,15 @@ export class FagsakResolver extends Component {
   }
 
   resolveFagsakInfo() {
-    const { selectedSaksnummer, fetchFagsakInfo, disableTilbakekreving } = this.props;
+    const {
+      selectedSaksnummer, fetchFagsakInfo, fetchKodeverk, disableTilbakekreving,
+    } = this.props;
 
     if (disableTilbakekreving) {
       behandlingOrchestrator.disableTilbakekreving();
     }
+
+    fetchKodeverk();
     fetchFagsakInfo(selectedSaksnummer);
   }
 
@@ -88,6 +94,7 @@ FagsakResolver.propTypes = {
   resetFagsakContext: PropTypes.func.isRequired,
   resetFagsakSearch: PropTypes.func.isRequired,
   removeErrorMessage: PropTypes.func.isRequired,
+  fetchKodeverk: PropTypes.func.isRequired,
   fetchFagsakInfoPending: PropTypes.bool.isRequired,
   allFagsakInfoResolved: PropTypes.bool.isRequired,
   location: PropTypes.shape().isRequired,
@@ -115,6 +122,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   fetchFagsakInfo: fetchFagsakInfoActionCreator,
   resetFagsakContext: resetFagsakContextActionCreator,
   resetFagsakSearch: resetFagsakSearchActionCreator,
+  fetchKodeverk: fetchKodeverkActionCreator,
   removeErrorMessage: errorHandler.getRemoveErrorMessageActionCreator(),
 }, dispatch);
 

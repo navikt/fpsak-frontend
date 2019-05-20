@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
-import { getKodeverk } from 'kodeverk/duck';
+
+import { getBehandlingType } from '../../../behandling/duck';
+import { getKodeverk, getFpTilbakeKodeverk } from '../../../kodeverk/duck';
 import MenuButton from '../MenuButton';
 
 /**
@@ -98,8 +101,16 @@ PauseBehandlingMenuItem.defaultProps = {
   ventearsaker: [],
 };
 
-const mapStateToProps = state => ({
-  ventearsaker: getKodeverk(kodeverkTyper.VENTEARSAK)(state),
-});
+const mapStateToPropsFactory = (initialState) => {
+  const ventearsakerFpsak = getKodeverk(kodeverkTyper.VENTEARSAK)(initialState);
+  const ventearsakerFptilbake = getFpTilbakeKodeverk(kodeverkTyper.VENTEARSAK)(initialState);
+  return (state) => {
+    const behandlingType = getBehandlingType(state);
+    const behandlingTypeKode = behandlingType ? behandlingType.kode : undefined;
+    return {
+      ventearsaker: BehandlingType.TILBAKEKREVING === behandlingTypeKode ? ventearsakerFptilbake : ventearsakerFpsak,
+    };
+  };
+};
 
-export default connect(mapStateToProps)(PauseBehandlingMenuItem);
+export default connect(mapStateToPropsFactory)(PauseBehandlingMenuItem);

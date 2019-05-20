@@ -8,7 +8,9 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import historikkOpplysningTypeCodes from '@fpsak-frontend/kodeverk/src/historikkOpplysningTypeCodes';
 import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeCodes';
 import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
+import { getAlleKodeverk } from 'kodeverk/duck';
 import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import BubbleText from './bubbleText';
 
@@ -49,6 +51,7 @@ const buildEndretFeltText = (endredeFelter) => {
 const HistorikkMalTypeFeilutbetaling = ({
   historikkinnslagDeler,
   behandlingLocation,
+  getKodeverknavn,
 }) => (
   <div>
     <Element>
@@ -56,7 +59,7 @@ const HistorikkMalTypeFeilutbetaling = ({
         to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
         onClick={scrollUp}
       >
-        {historikkinnslagDeler[0].skjermlenke.navn}
+        {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
       </NavLink>
     </Element>
     {historikkinnslagDeler.map((historikkinnslagDel, index) => (historikkinnslagDel.endredeFelter ? (
@@ -87,6 +90,7 @@ const HistorikkMalTypeFeilutbetaling = ({
 HistorikkMalTypeFeilutbetaling.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default injectIntl(HistorikkMalTypeFeilutbetaling);
+export default injectKodeverk(getAlleKodeverk)(injectIntl(HistorikkMalTypeFeilutbetaling));

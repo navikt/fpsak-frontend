@@ -4,18 +4,22 @@ import fpsakApi from 'data/fpsakApi';
 
 import ApplicationContextPath from './ApplicationContextPath';
 
+const kodeverkRestApis = {
+  [ApplicationContextPath.FPTILBAKE]: fpsakApi.KODEVERK_FPTILBAKE,
+};
 const behandlingerRestApis = {
   [ApplicationContextPath.FPSAK]: fpsakApi.BEHANDLINGER_FPSAK,
   [ApplicationContextPath.FPTILBAKE]: fpsakApi.BEHANDLINGER_FPTILBAKE,
 };
 const documentRestApis = {
-  [ApplicationContextPath.FPSAK]: fpsakApi.ALL_DOCUMENTS_FPSAK,
-  [ApplicationContextPath.FPTILBAKE]: fpsakApi.ALL_DOCUMENTS_FPTILBAKE,
+  [ApplicationContextPath.FPSAK]: fpsakApi.ALL_DOCUMENTS,
 };
 const historyRestApis = {
   [ApplicationContextPath.FPSAK]: fpsakApi.HISTORY_FPSAK,
   [ApplicationContextPath.FPTILBAKE]: fpsakApi.HISTORY_FPTILBAKE,
 };
+
+// TODO (TOR) Refaktorer denne etter at LOS er flytta. Bør dele opp kodeverk-tjenesten til fpsak mm
 
 /**
  * BehandlingOrchestrator
@@ -50,6 +54,20 @@ class BehandlingOrchestrator {
 
     getActiveContextPaths = () => this.getEnabledContextPaths().filter(as => !this.notAvailableContextPaths.some(ds => ds === as));
 
+    fetchKodeverk = async (dispatch) => {
+      const results = [];
+      const activeContextPaths = this.getActiveContextPaths();
+      for (let i = 0; i < activeContextPaths.length; i += 1) {
+        // TODO (TOR) Enten lag feilhåndtering eller bytt til Promise.all
+        const kodeverkApi = kodeverkRestApis[activeContextPaths[i]];
+        if (kodeverkApi) {
+          // eslint-disable-next-line no-await-in-loop
+          results.push(await dispatch(kodeverkApi.makeRestApiRequest()()));
+        }
+      }
+      return Promise.resolve(results);
+    }
+
     fetchBehandlinger = async (saksnummer, dispatch) => {
       let results = [];
       const activeContextPaths = this.getActiveContextPaths();
@@ -76,8 +94,10 @@ class BehandlingOrchestrator {
       for (let i = 0; i < activeContextPaths.length; i += 1) {
         // TODO (TOR) Enten lag feilhåndtering eller bytt til Promise.all
         const documentApi = documentRestApis[activeContextPaths[i]];
-        // eslint-disable-next-line no-await-in-loop
-        results.push(await dispatch(documentApi.makeRestApiRequest()({ saksnummer }, { keepData: true })));
+        if (documentApi) {
+          // eslint-disable-next-line no-await-in-loop
+          results.push(await dispatch(documentApi.makeRestApiRequest()({ saksnummer }, { keepData: true })));
+        }
 
         const historyApi = historyRestApis[activeContextPaths[i]];
         // eslint-disable-next-line no-await-in-loop
@@ -88,18 +108,30 @@ class BehandlingOrchestrator {
 
     resetRestApis = (dispatch) => {
       this.getActiveContextPaths().forEach((contextPath) => {
-        dispatch(behandlingerRestApis[contextPath].resetRestApi()());
-        dispatch(documentRestApis[contextPath].resetRestApi()());
-        dispatch(historyRestApis[contextPath].resetRestApi()());
+        if (behandlingerRestApis[contextPath]) {
+          dispatch(behandlingerRestApis[contextPath].resetRestApi()());
+        }
+        if (documentRestApis[contextPath]) {
+          dispatch(documentRestApis[contextPath].resetRestApi()());
+        }
+        if (historyRestApis[contextPath]) {
+          dispatch(historyRestApis[contextPath].resetRestApi()());
+        }
       });
     }
 
     getRestApisFinished = (state) => {
       const finished = [];
       this.getActiveContextPaths().forEach((contextPath) => {
-        finished.push(behandlingerRestApis[contextPath].getRestApiFinished()(state));
-        finished.push(documentRestApis[contextPath].getRestApiFinished()(state));
-        finished.push(historyRestApis[contextPath].getRestApiFinished()(state));
+        if (behandlingerRestApis[contextPath]) {
+          finished.push(behandlingerRestApis[contextPath].getRestApiFinished()(state));
+        }
+        if (documentRestApis[contextPath]) {
+          finished.push(documentRestApis[contextPath].getRestApiFinished()(state));
+        }
+        if (historyRestApis[contextPath]) {
+          finished.push(historyRestApis[contextPath].getRestApiFinished()(state));
+        }
       });
       return finished;
     }
@@ -107,9 +139,15 @@ class BehandlingOrchestrator {
     getRestApisErrors = (state) => {
       const errors = [];
       this.getActiveContextPaths().forEach((contextPath) => {
-        errors.push(behandlingerRestApis[contextPath].getRestApiError()(state));
-        errors.push(documentRestApis[contextPath].getRestApiError()(state));
-        errors.push(historyRestApis[contextPath].getRestApiError()(state));
+        if (behandlingerRestApis[contextPath]) {
+          errors.push(behandlingerRestApis[contextPath].getRestApiError()(state));
+        }
+        if (documentRestApis[contextPath]) {
+          errors.push(documentRestApis[contextPath].getRestApiError()(state));
+        }
+        if (historyRestApis[contextPath]) {
+          errors.push(historyRestApis[contextPath].getRestApiError()(state));
+        }
       });
       return errors;
     }
@@ -117,9 +155,15 @@ class BehandlingOrchestrator {
     getRestApisData = (state) => {
       const data = [];
       this.getActiveContextPaths().forEach((contextPath) => {
-        data.push(behandlingerRestApis[contextPath].getRestApiData()(state));
-        data.push(documentRestApis[contextPath].getRestApiData()(state));
-        data.push(historyRestApis[contextPath].getRestApiData()(state));
+        if (behandlingerRestApis[contextPath]) {
+          data.push(behandlingerRestApis[contextPath].getRestApiData()(state));
+        }
+        if (documentRestApis[contextPath]) {
+          data.push(documentRestApis[contextPath].getRestApiData()(state));
+        }
+        if (historyRestApis[contextPath]) {
+          data.push(historyRestApis[contextPath].getRestApiData()(state));
+        }
       });
       return data;
     }
