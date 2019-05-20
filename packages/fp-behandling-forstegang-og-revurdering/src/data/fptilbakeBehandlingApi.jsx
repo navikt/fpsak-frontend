@@ -12,7 +12,7 @@ const endpoints = new RestApiConfigBuilder()
 /* /api */
 
   /* /api/brev */
-  .withPostAndOpenBlob('/api/dokument/forhandsvis', BehandlingFptilbakeApiKeys.PREVIEW_MESSAGE)
+  .withPostAndOpenBlob('/api/dokument/forhandsvis-varselbrev', BehandlingFptilbakeApiKeys.PREVIEW_MESSAGE)
   .build();
 
 const reducerName = 'dataContextSimulering';
