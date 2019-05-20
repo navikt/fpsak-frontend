@@ -37,29 +37,10 @@ const aksjonspunkter = [{
 }];
 
 describe('<VurderFaktaBeregningPanel>', () => {
-  it('skal ikkje bygge initial values', () => {
-    const initialValuesFelles = () => ({ test: 'test' });
-    const initialValues = buildInitialValuesVurderFaktaBeregning.resultFunc([avklarAktiviteterAp], initialValuesFelles);
-    expect(initialValues).to.be.empty;
-  });
-
   it('skal bygge initial values', () => {
     const initialValuesFelles = () => ({ test: 'test' });
     const initialValues = buildInitialValuesVurderFaktaBeregning.resultFunc(aksjonspunkter, initialValuesFelles);
     expect(initialValues.test).to.equal('test');
-  });
-
-  it('skal ikkje kalle buildInitialValues uten aksjonspunkt', () => {
-    const faktaOmBeregning = {
-      avklarAktiviteter: {
-        ventelonnVartpenger: {
-          inkludert: null,
-        },
-      },
-    };
-    const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag([avklarAktiviteterAp], { faktaOmBeregning });
-    const initialValues = buildInitialValuesVurderFaktaBeregning(state);
-    expect(initialValues).to.be.empty;
   });
 
   it('skal ikkje validere om man ikkje har aksjonspunkt', () => {

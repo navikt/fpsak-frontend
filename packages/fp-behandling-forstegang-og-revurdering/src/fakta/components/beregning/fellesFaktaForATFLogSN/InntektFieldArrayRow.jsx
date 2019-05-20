@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import { Undertekst } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import { InputField, SelectField, PeriodpickerField } from '@fpsak-frontend/form';
 import { removeSpacesFromNumber, parseCurrencyInput, formatCurrencyNoKr } from '@fpsak-frontend/utils';
@@ -12,7 +12,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import styles from './kunYtelse/brukersAndelFieldArray.less';
+import styles from './inntektFieldArray.less';
 import ArbeidsforholdField from './ArbeidsforholdField';
 import { skalRedigereInntektSelector, skalRedigereInntektskategoriSelector } from './BgFordelingUtils';
 
@@ -26,8 +26,9 @@ const summerFordeling = (fields) => {
   return sum > 0 ? formatCurrencyNoKr(sum) : '';
 };
 
-
-export const SummaryRow = ({ skalVisePeriode, skalViseRefusjon, fields }) => (
+export const SummaryRow = ({
+ skalVisePeriode, skalViseRefusjon, fields, readOnly,
+}) => (
   <TableRow key="bruttoBGSummaryRow">
     <TableColumn>
       <FormattedMessage id="BeregningInfoPanel.FordelingBG.Sum" />
@@ -36,9 +37,11 @@ export const SummaryRow = ({ skalVisePeriode, skalViseRefusjon, fields }) => (
           && <TableColumn />
     }
     <TableColumn className={styles.rightAlign}>
-      <Undertekst>
-        {summerFordeling(fields) || 0}
-      </Undertekst>
+      <div className={styles.readOnlyContainer}>
+        <Normaltekst className={readOnly ? styles.readOnlyContent : ''}>
+          {summerFordeling(fields) || 0}
+        </Normaltekst>
+      </div>
     </TableColumn>
     {skalViseRefusjon
           && <TableColumn />
@@ -48,6 +51,7 @@ export const SummaryRow = ({ skalVisePeriode, skalViseRefusjon, fields }) => (
 );
 
 SummaryRow.propTypes = {
+  readOnly: PropTypes.bool.isRequired,
   fields: PropTypes.shape().isRequired,
   skalVisePeriode: PropTypes.bool.isRequired,
   skalViseRefusjon: PropTypes.bool.isRequired,
@@ -132,7 +136,7 @@ export const AndelRowImpl = ({
     }
     {!skalRedigereInntekt
     && (
-    <TableColumn className={styles.rightAlignInput}>
+    <TableColumn className={styles.rightAlign}>
       <InputField
         name={`${andelElementFieldId}.belopReadOnly`}
         bredde="M"

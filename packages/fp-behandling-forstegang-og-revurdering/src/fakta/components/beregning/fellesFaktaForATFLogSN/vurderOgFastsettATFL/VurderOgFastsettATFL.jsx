@@ -5,10 +5,7 @@ import { FieldArray } from 'redux-form';
 
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import LonnsendringForm, { lonnsendringField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
 import NyoppstartetFLForm, { erNyoppstartetFLField }
@@ -120,11 +117,11 @@ const VurderOgFastsettATFL = ({
   isAksjonspunktClosed,
   tilfeller,
   manglerInntektsmelding,
-  skalViseTabell,
   skalFastsetteAT,
   skalFastsetteFL,
   skalHaBesteberegning,
   harKunstigArbeid,
+  skalViseTabell,
 }) => (
   <div>
     <InntektstabellPanel
@@ -182,7 +179,8 @@ VurderOgFastsettATFL.buildInitialValues = (beregningsgrunnlag, getKodeverknavn) 
   if (!beregningsgrunnlag) {
     return {};
   }
-  const andeler = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel;
+  const andeler = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
+  .filter(andel => andel.aktivitetStatus.kode !== aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
   return {
     [inntektFieldArrayName]: InntektFieldArray.buildInitialValues(andeler, getKodeverknavn),
   };
@@ -247,21 +245,11 @@ VurderOgFastsettATFL.propTypes = {
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   tilfeller: PropTypes.arrayOf(PropTypes.string).isRequired,
   manglerInntektsmelding: PropTypes.bool.isRequired,
-  skalViseTabell: PropTypes.bool.isRequired,
   skalFastsetteAT: PropTypes.bool.isRequired,
   skalFastsetteFL: PropTypes.bool.isRequired,
   skalHaBesteberegning: PropTypes.bool.isRequired,
   harKunstigArbeid: PropTypes.bool.isRequired,
-};
-
-export const skalViseInntektstabell = (tilfeller, values, faktaOmBeregning, beregningsgrunnlag, getKodeverknavn) => {
-  if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)) {
-    return true;
-  }
-  if (!harVurdert(tilfeller, values, faktaOmBeregning)) {
-    return false;
-  }
-  return skalFastsetteInntekt(values, faktaOmBeregning, beregningsgrunnlag, getKodeverknavn);
+  skalViseTabell: PropTypes.bool.isRequired,
 };
 
 
@@ -270,14 +258,14 @@ const mapStateToProps = (state, initialProps) => {
   const skalFastsetteFL = skalFastsettInntektForStatus(inntektFieldArrayName, aktivitetStatus.FRILANSER)(state);
   const faktaOmBeregning = getFaktaOmBeregning(state);
   const beregningsgrunnlag = getBeregningsgrunnlag(state);
-  const getKodeverknavn = getKodeverknavnFn(getAlleKodeverk(state), kodeverkTyper);
   let manglerInntektsmelding = false;
   if (faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe && faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.length > 0) {
     manglerInntektsmelding = faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.find(forhold => !forhold.inntektPrMnd) !== undefined;
   }
   const values = getFormValuesForBeregning(state);
   return {
-    skalViseTabell: skalViseInntektstabell(initialProps.tilfeller, values, faktaOmBeregning, getBeregningsgrunnlag(state), getKodeverknavn),
+    skalViseTabell: beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
+    .some(andel => andel.aktivitetStatus.kode !== aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE),
     skalHaBesteberegning: values[besteberegningField] === true,
     harKunstigArbeid: harKunstigArbeidsforhold(initialProps.tilfeller, beregningsgrunnlag),
     manglerInntektsmelding,

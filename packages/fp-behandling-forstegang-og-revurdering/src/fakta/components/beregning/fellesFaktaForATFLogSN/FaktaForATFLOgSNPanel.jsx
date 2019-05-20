@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import faktaOmBeregningTilfelle,
 {
-  vurderOgFastsettATFLTilfeller,
   harFastsettATFLInntektTilfelle,
 } from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
@@ -140,18 +139,6 @@ const getFaktaPanels = (readOnly, tilfeller, isAksjonspunktClosed) => {
       );
     }
   });
-  if (tilfeller.filter(tilfelle => vurderOgFastsettATFLTilfeller.indexOf(tilfelle) !== -1).length !== 0) {
-    faktaPanels.push(
-      <ElementWrapper key="VurderOgFastsettATFL">
-        {spacer(true)}
-        <VurderOgFastsettATFL
-          readOnly={readOnly}
-          isAksjonspunktClosed={isAksjonspunktClosed}
-          tilfeller={tilfeller}
-        />
-      </ElementWrapper>,
-    );
-  }
   // For visning av saker med tilfelle FASTSETT_ENDRET_BEREGNINGSGRUNNLAG
   // Opprettelse av FASTSETT_ENDRET_BEREGNINGSGRUNNLAG er fjernet og håndteres nå i aksjonspunkt FORDEL_BEREGNINGSGRUNNLAG
   if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)
@@ -169,6 +156,16 @@ const getFaktaPanels = (readOnly, tilfeller, isAksjonspunktClosed) => {
     );
   }
   setFaktaPanelForKunYtelse(faktaPanels, tilfeller, readOnly, isAksjonspunktClosed);
+  faktaPanels.push(
+    <ElementWrapper key="VurderOgFastsettATFL">
+      {spacer(true)}
+      <VurderOgFastsettATFL
+        readOnly={readOnly}
+        isAksjonspunktClosed={isAksjonspunktClosed}
+        tilfeller={tilfeller}
+      />
+    </ElementWrapper>,
+  );
   return faktaPanels;
 };
 

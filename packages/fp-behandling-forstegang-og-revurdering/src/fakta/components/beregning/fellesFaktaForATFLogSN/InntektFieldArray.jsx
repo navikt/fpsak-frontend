@@ -15,7 +15,7 @@ import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregn
 import { Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import { mapAndelToField, skalHaBesteberegningSelector } from './BgFordelingUtils';
-import styles from './kunYtelse/brukersAndelFieldArray.less';
+import styles from './inntektFieldArray.less';
 import { validateUlikeAndeler, validateUlikeAndelerWithGroupingFunction } from './ValidateAndelerUtils';
 import { isBeregningFormDirty as isFormDirty } from '../BeregningFormUtils';
 import { AndelRow, getHeaderTextCodes, SummaryRow } from './InntektFieldArrayRow';
@@ -80,8 +80,9 @@ const createAndelerTableRows = (fields, readOnly) => fields.map((andelElementFie
   />
 ));
 
-const createBruttoBGSummaryRow = fields => (
+const createBruttoBGSummaryRow = (fields, readOnly) => (
   <SummaryRow
+    readOnly={readOnly}
     key="summaryRow"
     skalVisePeriode={skalVisePeriode(fields)}
     skalViseRefusjon={skalViseRefusjon(fields)}
@@ -137,7 +138,7 @@ export const InntektFieldArrayImpl = ({
   skalHaBesteberegning,
 }) => {
   const tablerows = createAndelerTableRows(fields, readOnly);
-  tablerows.push(createBruttoBGSummaryRow(fields));
+  tablerows.push(createBruttoBGSummaryRow(fields, readOnly));
   leggTilDagpengerOmBesteberegning(fields, skalHaBesteberegning, aktivitetStatuser, dagpengeAndelLagtTilIForrige);
   return (
     <NavFieldGroup errorMessage={getErrorMessage(meta, intl, isBeregningFormDirty)}>
@@ -239,7 +240,7 @@ export const mapStateToProps = (state) => {
     skalHaBesteberegning,
     aktivitetStatuser,
     dagpengeAndelLagtTilIForrige: finnDagpengeAndelLagtTilIForrige(getBeregningsgrunnlag(state)),
-    erKunYtelse: tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE),
+    erKunYtelse: tilfeller && tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE),
   };
 };
 

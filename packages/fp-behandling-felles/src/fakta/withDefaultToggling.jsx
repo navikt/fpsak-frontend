@@ -10,7 +10,7 @@ const checkIfAksjonspunkterIsSolveable = aksjonspunkter => aksjonspunkter.some(a
 
 const isInactiv = aksjonspunkter => !aksjonspunkter.some(a => a.erAktivt);
 
-const withDefaultToggling = (infoPanelId, aksjonspunktCodes, skalKunneOverstyre = false) => (WrappedComponent) => {
+const withDefaultToggling = (infoPanelId, aksjonspunktCodes) => (WrappedComponent) => {
   class InfoPanel extends React.Component {
     constructor() {
       super();
@@ -36,13 +36,13 @@ const withDefaultToggling = (infoPanelId, aksjonspunktCodes, skalKunneOverstyre 
     }
 
     render() {
-      const { aksjonspunkter, readOnly, erOverstyrer } = this.props;
+      const { aksjonspunkter, readOnly } = this.props;
       const filteredAps = aksjonspunkter.filter(ap => aksjonspunktCodes.includes(ap.definisjon.kode));
       const hasOpenAksjonspunkter = isInfoPanelOpen(filteredAps);
       const canSolveAksjonspunkter = checkIfAksjonspunkterIsSolveable(filteredAps);
 
       const newProps = {
-        readOnly: readOnly || (!(skalKunneOverstyre && erOverstyrer) && isInactiv(filteredAps)),
+        readOnly: readOnly || isInactiv(filteredAps),
         submittable: !hasOpenAksjonspunkter || canSolveAksjonspunkter,
         hasOpenAksjonspunkter: hasOpenAksjonspunkter && canSolveAksjonspunkter,
         aksjonspunkter: filteredAps,
@@ -58,11 +58,9 @@ const withDefaultToggling = (infoPanelId, aksjonspunktCodes, skalKunneOverstyre 
     toggleInfoPanelCallback: PropTypes.func.isRequired,
     shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
     readOnly: PropTypes.bool.isRequired,
-    erOverstyrer: PropTypes.bool,
   };
 
   InfoPanel.defaultProps = {
-    erOverstyrer: false,
     aksjonspunkter: [],
   };
 

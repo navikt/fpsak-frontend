@@ -10,6 +10,7 @@ import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles'
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   getAksjonspunkter,
+  getBeregningsgrunnlag,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import FaktaForATFLOgSNPanel, {
   transformValuesFaktaForATFLOgSN,
@@ -81,29 +82,35 @@ export class VurderFaktaBeregningPanelImpl extends Component {
     return (
       <ElementWrapper>
         <form onSubmit={formProps.handleSubmit}>
-          <AksjonspunktHelpText isAksjonspunktOpen={!isAksjonspunktClosed}>{helpText}</AksjonspunktHelpText>
+          {hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && (
+            <AksjonspunktHelpText isAksjonspunktOpen={!isAksjonspunktClosed}>{helpText}</AksjonspunktHelpText>
+            )
+            }
           <VerticalSpacer twentyPx />
           <FaktaForATFLOgSNPanel
             readOnly={readOnly}
             isAksjonspunktClosed={isAksjonspunktClosed}
           />
           <VerticalSpacer twentyPx />
-          <FaktaBegrunnelseTextField
-            name={BEGRUNNELSE_FAKTA_TILFELLER_NAME}
-            isDirty={formProps.dirty}
-            isSubmittable={submittable}
-            isReadOnly={readOnly}
-            hasBegrunnelse={hasBegrunnelse}
-          />
-          <React.Fragment>
-            <VerticalSpacer twentyPx />
-            <FaktaSubmitButton
-              formName={formProps.form}
-              isSubmittable={submittable && submitEnabled && harIkkeEndringerIAvklarMedFlereAksjonspunkter(verdiForAvklarAktivitetErEndret, aksjonspunkter)}
-              isReadOnly={readOnly}
-              hasOpenAksjonspunkter={!isAksjonspunktClosed}
-            />
-          </React.Fragment>
+          {hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && (
+            <React.Fragment>
+              <FaktaBegrunnelseTextField
+                name={BEGRUNNELSE_FAKTA_TILFELLER_NAME}
+                isDirty={formProps.dirty}
+                isSubmittable={submittable}
+                isReadOnly={readOnly}
+                hasBegrunnelse={hasBegrunnelse}
+              />
+              <VerticalSpacer twentyPx />
+              <FaktaSubmitButton
+                formName={formProps.form}
+                isSubmittable={submittable && submitEnabled && harIkkeEndringerIAvklarMedFlereAksjonspunkter(verdiForAvklarAktivitetErEndret, aksjonspunkter)}
+                isReadOnly={readOnly}
+                hasOpenAksjonspunkter={!isAksjonspunktClosed}
+              />
+            </React.Fragment>
+            )
+            }
         </form>
       </ElementWrapper>
 );
@@ -138,19 +145,15 @@ export const transformValuesVurderFaktaBeregning = createSelector(
   },
 );
 
+
 // /// BUILD INITIAL VALUES METHODS ///////
 
 export const buildInitialValuesVurderFaktaBeregning = createSelector(
   [getAksjonspunkter, getBuildInitialValuesFaktaForATFLOgSN],
-  (aksjonspunkter, buildInitialValuesTilfeller) => {
-    if (!hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)) {
-      return {};
-    }
-    return ({
+  (aksjonspunkter, buildInitialValuesTilfeller) => ({
       ...FaktaBegrunnelseTextField.buildInitialValues(findAksjonspunktMedBegrunnelse(aksjonspunkter), BEGRUNNELSE_FAKTA_TILFELLER_NAME),
       ...buildInitialValuesTilfeller(),
-    });
-  },
+    }),
 );
 
 // / VALIDATION METHODS ///
@@ -172,7 +175,7 @@ export const getValidationVurderFaktaBeregning = createSelector(
 const mapStateToProps = (state, initialProps) => {
   const alleAp = getAksjonspunkter(state);
   const relevantAp = alleAp.filter(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN);
-  const isAksjonspunktClosed = relevantAp.length === 0 ? undefined : !isAksjonspunktOpen(relevantAp[0].status.kode);
+  const isAksjonspunktClosed = relevantAp.length === 0 ? false : !isAksjonspunktOpen(relevantAp[0].status.kode);
   const initialValues = buildInitialValuesVurderFaktaBeregning(state);
   const hasBegrunnelse = initialValues
   && !!initialValues[BEGRUNNELSE_FAKTA_TILFELLER_NAME];
@@ -181,6 +184,7 @@ const mapStateToProps = (state, initialProps) => {
     hasBegrunnelse,
     initialValues,
     aksjonspunkter: alleAp,
+    beregningsgrunnlag: getBeregningsgrunnlag(state),
     helpText: getHelpTextsFaktaForATFLOgSN(state),
     validate: getValidationVurderFaktaBeregning(state),
     verdiForAvklarAktivitetErEndret: erAvklartAktivitetEndret(state),

@@ -51,7 +51,6 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
   ytelsesType,
   ytelsefordeling,
   fagsakPerson,
-  erOverstyrer,
 }) => (
   <React.Fragment>
     <div className={styles.personContainer}>
@@ -190,8 +189,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         />
       )
       }
-      {(BeregningInfoPanel.supports(aksjonspunkter) || erOverstyrer)
-      && (
+      {
         <BeregningInfoPanel
           aksjonspunkter={aksjonspunkter}
           openInfoPanels={openInfoPanels}
@@ -199,9 +197,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
           submitCallback={submitCallback}
           readOnly={readOnly}
-          erOverstyrer={erOverstyrer}
         />
-      )
       }
       {(FordelBeregningsgrunnlagPanel.supports(aksjonspunkter))
       && (
@@ -258,7 +254,6 @@ FaktaPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   ytelsesType: PropTypes.shape().isRequired,
   fagsakPerson: PropTypes.shape().isRequired,
-  erOverstyrer: PropTypes.bool.isRequired,
 };
 
 FaktaPanel.defaultProps = {
@@ -274,7 +269,6 @@ const mapStateToProps = state => ({
   readOnly: !getRettigheter(state).writeAccess.isEnabled || getBehandlingIsOnHold(state) || hasReadOnlyBehandling(state),
   personopplysninger: getPersonopplysning(state) || null,
   ytelsefordeling: getBehandlingYtelseFordeling(state),
-  erOverstyrer: getRettigheter(state).kanOverstyreAccess.isEnabled,
   fagsakPerson: getFagsakPerson(state),
 });
 

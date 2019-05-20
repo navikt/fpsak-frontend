@@ -6,7 +6,7 @@ import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { getBehandlingIsOnHold } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBehandlingIsOnHold, getBeregningsgrunnlag } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import VurderFaktaBeregningPanel from './fellesFaktaForATFLogSN/VurderFaktaBeregningPanel';
 import AvklareAktiviteterPanel from './avklareAktiviteter/AvklareAktiviteterPanel';
 
@@ -28,15 +28,11 @@ const createRelevantForms = (readOnly, aksjonspunkter, submitCallback, submittab
       submitCallback={submitCallback}
       submittable={submittable}
     />
-    {hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)
-    && (
-      <VurderFaktaBeregningPanel
-        readOnly={readOnly}
-        submitCallback={submitCallback}
-        submittable={submittable}
-      />
-    )
-    }
+    <VurderFaktaBeregningPanel
+      readOnly={readOnly}
+      submitCallback={submitCallback}
+      submittable={submittable}
+    />
   </div>
 );
 
@@ -58,8 +54,9 @@ export const BeregningInfoPanelImpl = ({
         submittable,
         isOnHold,
         submitCallback,
+        harBeregningsgrunnlag,
     }) => {
-    if (isOnHold) {
+    if (isOnHold || !harBeregningsgrunnlag) {
       return null;
     }
     return (
@@ -89,17 +86,19 @@ BeregningInfoPanelImpl.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired).isRequired,
   submittable: PropTypes.bool.isRequired,
   isOnHold: PropTypes.bool.isRequired,
+  harBeregningsgrunnlag: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => {
   const isOnHold = getBehandlingIsOnHold(state);
   return {
+    harBeregningsgrunnlag: !!getBeregningsgrunnlag(state),
     isOnHold,
   };
 };
 
 const BeregningInfoPanel = withDefaultToggling(faktaPanelCodes.BEREGNING,
-  faktaOmBeregningAksjonspunkter, true)(connect(mapStateToProps)(injectIntl(BeregningInfoPanelImpl)));
+  faktaOmBeregningAksjonspunkter)(connect(mapStateToProps)(injectIntl(BeregningInfoPanelImpl)));
 
 BeregningInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => faktaOmBeregningAksjonspunkter.includes(ap.definisjon.kode));
 
