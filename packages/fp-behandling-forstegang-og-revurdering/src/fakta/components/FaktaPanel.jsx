@@ -137,7 +137,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         toggleInfoPanelCallback={toggleInfoPanelCallback}
         shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
         submitCallback={submitCallback}
-        readOnly
+        readOnly={readOnly}
       />
       )
       }
