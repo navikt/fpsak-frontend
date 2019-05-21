@@ -41,6 +41,12 @@ import {
 import { setSkalRedigereInntektForATFL } from '../BgFordelingUtils';
 import styles from './renderEndringBGFieldArray.less';
 
+
+// For visning av saker med tilfelle FASTSETT_ENDRET_BEREGNINGSGRUNNLAG
+// Opprettelse av FASTSETT_ENDRET_BEREGNINGSGRUNNLAG er fjernet og håndteres nå i aksjonspunkt FORDEL_BEREGNINGSGRUNNLAG
+// Migrer data til nytt aksjonspunkt før sletting
+
+
 const defaultBGFordeling = periodeUtenAarsak => ({
   nyAndel: true,
   fordelingForrigeBehandling: 0,

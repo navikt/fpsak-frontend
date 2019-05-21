@@ -1,3 +1,4 @@
+
 import { getLocationWithQueryParams, faktaPanelCodes, behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 
 const skjermlenkeCodes = {
@@ -24,6 +25,11 @@ const skjermlenkeCodes = {
   FAKTA_OM_FOEDSEL: {
     kode: 'FAKTA_OM_FOEDSEL',
     faktaNavn: faktaPanelCodes.FODSELSVILKARET,
+    punktNavn: '',
+  },
+  FAKTA_OM_FORDELING: {
+    kode: 'FAKTA_OM_FORDELING',
+    faktaNavn: faktaPanelCodes.FORDELING,
     punktNavn: '',
   },
   FAKTA_OM_MEDLEMSKAP: {
