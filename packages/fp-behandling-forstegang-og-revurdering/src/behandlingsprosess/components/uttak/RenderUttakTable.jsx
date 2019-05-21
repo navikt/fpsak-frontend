@@ -132,16 +132,13 @@ export const RenderUttakTableImpl = ({
                     {readOnly ? <span>/</span> : <span className={styles.verticalCharPlacementInTable}>/</span>}
                   </Column>
                   <Column xs="3">
-                    <InputField
+                    <DecimalField
                       name={`${uttakElementFieldId}.days`}
                       id={`${uttakElementFieldId}.days`}
                       readOnly={readOnly}
-                      bredde="XXS"
-                      validate={[required, hasValidInteger, maxLength3]}
-                      parse={(value) => {
-                        const parsedValue = parseInt(value, 10);
-                        return Number.isNaN(parsedValue) ? value : parsedValue;
-                      }}
+                      bredde="XS"
+                      validate={[required, hasValidDecimal, maxLength3]}
+                      normalizeOnBlur={value => (parseFloat(value).toFixed(1))}
                     />
                   </Column>
                 </div>

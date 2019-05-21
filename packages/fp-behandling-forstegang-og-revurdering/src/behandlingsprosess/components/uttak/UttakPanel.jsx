@@ -157,18 +157,18 @@ const getResult = (uttaksresultatActivity) => {
   uttaksresultatActivity.forEach((uttak) => {
     uttak.aktiviteter.forEach((a, index) => {
       const aktivitetDays = (typeof a.days !== 'undefined' && typeof a.weeks !== 'undefined')
-        ? ((a.weeks * 5) + a.days)
-        : a.trekkdager;
+        ? ((a.weeks * 5) + parseFloat(a.days))
+        : a.trekkdagerDesimaler;
 
       if ((`${a.stønadskontoType.kode}_${index}`) in uttakResult) {
-        const trekkdager = uttakResult[`${a.stønadskontoType.kode}_${index}`].trekkdager + aktivitetDays;
+        const trekkdagerDesimaler = uttakResult[`${a.stønadskontoType.kode}_${index}`].trekkdagerDesimaler + aktivitetDays;
         uttakResult[`${a.stønadskontoType.kode}_${index}`] = {
-          trekkdager,
+          trekkdagerDesimaler,
           konto: a.stønadskontoType.kode,
         };
       } else {
         uttakResult[`${a.stønadskontoType.kode}_${index}`] = {
-          trekkdager: aktivitetDays,
+          trekkdagerDesimaler: aktivitetDays,
           konto: a.stønadskontoType.kode,
         };
       }
@@ -181,7 +181,7 @@ const getResult = (uttaksresultatActivity) => {
 const convertToArray = uttakResult => Object.values(uttakResult)
   .map((u) => {
     const uttakElement = { ...u };
-    uttakElement.trekkdager = u.trekkdager;
+    uttakElement.trekkdagerDesimaler = u.trekkdagerDesimaler;
     uttakElement.saldo = u.saldo;
     return uttakElement;
   });
@@ -313,8 +313,9 @@ export const transformValues = (values, apCodes, aksjonspunkter) => {
     const transformAktiviteter = uta.aktiviteter.map((a) => {
       const { days, weeks, ...transformAktivitet } = a;
       if (typeof days !== 'undefined' && typeof weeks !== 'undefined') {
-        const trekkdager = (weeks * 5) + days;
-        transformAktivitet.trekkdager = trekkdager; // regner om uker og dager til trekkdager
+        const trekkdager = parseFloat((weeks * 5) + parseFloat(days)).toFixed(1);
+        transformAktivitet.trekkdagerDesimaler = trekkdager; // regner om uker og dager til trekkdager
+        transformAktivitet.trekkdager = null;
       }
       return transformAktivitet;
     });

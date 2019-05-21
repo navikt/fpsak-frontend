@@ -53,9 +53,9 @@ describe('<RenderUttakTable>', () => {
     const selectField = wrapper.find('SelectField');
     expect(selectField).to.have.length(1);
     const inputField = wrapper.find('InputField');
-    expect(inputField).to.have.length(2);
+    expect(inputField).to.have.length(1);
     const decimalField = wrapper.find('DecimalField');
-    expect(decimalField).to.have.length(1);
+    expect(decimalField).to.have.length(2);
   });
   it('render uttakstable 2 rader', () => {
     const fields = new MockFieldsWithContent('UttakFieldArray', uttakFields2);
@@ -73,8 +73,8 @@ describe('<RenderUttakTable>', () => {
     const selectField = wrapper.find('SelectField');
     expect(selectField).to.have.length(2);
     const inputField = wrapper.find('InputField');
-    expect(inputField).to.have.length(4);
+    expect(inputField).to.have.length(2);
     const decimalField = wrapper.find('DecimalField');
-    expect(decimalField).to.have.length(2);
+    expect(decimalField).to.have.length(4);
   });
 });

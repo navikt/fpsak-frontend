@@ -33,7 +33,7 @@ describe('<UttakActivity>', () => {
       kode: '-',
     },
     aktiviteter: [{
-      trekkdager: 28,
+      trekkdagerDesimaler: 28.5,
       utbetalingsgrad: 100,
       stønadskontoType: {
         kode: '',
@@ -197,7 +197,7 @@ describe('<UttakActivity>', () => {
   it('skal sette opp initial values for perioder', () => {
     const initialValues = initialValue(selectedItem);
     expect(initialValues).to.eql([{
-      days: 3,
+      days: '3.5',
       fom: '2018-01-01',
       tom: '2018-02-01',
       stønadskontoType: {
@@ -205,7 +205,7 @@ describe('<UttakActivity>', () => {
         navn: 'Mødrekvote',
         kodeverk: '',
       },
-      trekkdager: 28,
+      trekkdagerDesimaler: 28.5,
       utbetalingsgrad: 100,
       weeks: 5,
     }]);

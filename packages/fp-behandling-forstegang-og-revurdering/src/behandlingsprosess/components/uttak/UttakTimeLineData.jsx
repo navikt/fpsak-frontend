@@ -88,7 +88,7 @@ const hentApTekst = (manuellBehandlingÅrsak, stonadskonto, getKodeverknavn, akt
 };
 
 const isPeriodDefined = (period) => {
-  if (period.aktiviteter[0].trekkdager) {
+  if (period.aktiviteter[0].trekkdagerDesimaler) {
     return true;
   }
   return (!(period.periodeResultatType
@@ -157,23 +157,24 @@ export class UttakTimeLineData extends Component {
         const actualDayValue = formValues.gradertTrekkdager && !(period.days || period.weeks)
           ? faktiskaTrekkdagerGradert / totalTrekkDagerUtenGradering : totalSetDays / totalTrekkDagerUtenGradering;
         forstePeriode.aktiviteter[index].weeks = Math.trunc((newTrekkDagerForstePeriode * actualDayValue) / 5);
-        forstePeriode.aktiviteter[index].days = Math.trunc((newTrekkDagerForstePeriode * actualDayValue) % 5);
+        forstePeriode.aktiviteter[index].days = Math.round(((newTrekkDagerForstePeriode * actualDayValue) % 5) * 10) / 10;
         const forstePeriodeAntalDagar = (forstePeriode.aktiviteter[index].weeks * 5)
           + forstePeriode.aktiviteter[index].days;
         andrePeriode.aktiviteter[index].weeks = formValues.gradertTrekkdager && !(period.days || period.weeks)
           ? Math.trunc((faktiskaTrekkdagerGradert - forstePeriodeAntalDagar) / 5) : Math.trunc((totalSetDays - forstePeriodeAntalDagar) / 5);
         andrePeriode.aktiviteter[index].days = formValues.gradertTrekkdager && !(period.days || period.weeks)
-          ? Math.trunc((faktiskaTrekkdagerGradert - forstePeriodeAntalDagar) % 5) : ((totalSetDays - forstePeriodeAntalDagar) % 5);
-        forstePeriode.aktiviteter[index].trekkdager = forstePeriodeAntalDagar;
-        andrePeriode.aktiviteter[index].trekkdager = (andrePeriode.aktiviteter[index].weeks * 5)
+        ? Math.round(((faktiskaTrekkdagerGradert - forstePeriodeAntalDagar) % 5) * 10) / 10
+        : Math.round(((totalSetDays - forstePeriodeAntalDagar) % 5) * 10) / 10;
+      forstePeriode.aktiviteter[index].trekkdagerDesimaler = forstePeriodeAntalDagar;
+      andrePeriode.aktiviteter[index].trekkdagerDesimaler = (andrePeriode.aktiviteter[index].weeks * 5)
           + andrePeriode.aktiviteter[index].days;
       } else {
-        forstePeriode.aktiviteter[index].weeks = definedPeriod ? Math.trunc(newTrekkDagerForstePeriode / 5) : '';
-        forstePeriode.aktiviteter[index].days = definedPeriod ? newTrekkDagerForstePeriode % 5 : '';
-        andrePeriode.aktiviteter[index].weeks = definedPeriod ? Math.trunc(newTrekkDagerAndrePeriode / 5) : '';
-        andrePeriode.aktiviteter[index].days = definedPeriod ? newTrekkDagerAndrePeriode % 5 : '';
-        forstePeriode.aktiviteter[index].trekkdager = definedPeriod ? newTrekkDagerForstePeriode : 0;
-        andrePeriode.aktiviteter[index].trekkdager = definedPeriod ? newTrekkDagerAndrePeriode : 0;
+        const totalTrekkDager = newTrekkDagerForstePeriode + newTrekkDagerAndrePeriode;
+        const actualDayValueNoGradering = period.trekkdagerDesimaler / totalTrekkDager;
+        forstePeriode.aktiviteter[index].weeks = definedPeriod ? Math.trunc((newTrekkDagerForstePeriode * actualDayValueNoGradering) / 5) : '';
+        forstePeriode.aktiviteter[index].days = definedPeriod ? ((newTrekkDagerForstePeriode * actualDayValueNoGradering) % 5).toFixed(1) : '';
+        andrePeriode.aktiviteter[index].weeks = definedPeriod ? Math.trunc((newTrekkDagerAndrePeriode * actualDayValueNoGradering) / 5) : '';
+        andrePeriode.aktiviteter[index].days = definedPeriod ? ((newTrekkDagerAndrePeriode * actualDayValueNoGradering) % 5).toFixed(1) : '';
       }
     });
     andrePeriode.id = currentId + 1;

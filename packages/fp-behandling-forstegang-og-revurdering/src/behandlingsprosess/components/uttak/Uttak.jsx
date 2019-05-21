@@ -259,8 +259,8 @@ export class UttakImpl extends Component {
       const transformAktiviteter = uta.aktiviteter.map((a) => {
         const { days, weeks, ...transformAktivitet } = a;
         if (typeof days !== 'undefined' && typeof weeks !== 'undefined') {
-          const trekkdager = (weeks * 5) + days;
-          transformAktivitet.trekkdager = trekkdager; // regner om uker og dager til trekkdager
+          const trekkdager = (weeks * 5) + parseFloat(days);
+          transformAktivitet.trekkdagerDesimaler = trekkdager; // regner om uker og dager til trekkdager
         }
         return transformAktivitet;
       });
@@ -292,6 +292,7 @@ export class UttakImpl extends Component {
     verdier.aktiviteter = verdier.aktiviteter.map((a) => {
       const { ...aktivitet } = a;
       aktivitet.utbetalingsgrad = a.utbetalingsgrad || a.utbetalingsgrad === 0 ? parseFloat(a.utbetalingsgrad) : null;
+      aktivitet.trekkdager = null;
       return aktivitet;
     });
 
@@ -662,6 +663,15 @@ const mapStateToProps = (state, props) => {
 
   const uttakMedOpphold = uttaksresultatActivity.map((uttak) => {
     const { ...uttakPerioder } = uttak;
+
+    // Setter trekkdager til null - brukes som lowkey feature-toggle - remove when everything works (06.05.19)
+    if (uttakPerioder && uttakPerioder.aktiviteter.length > 0) {
+      const aktivitetArray = uttakPerioder.aktiviteter;
+      aktivitetArray.forEach((item) => {
+        item.trekkdager = null; // eslint-disable-line no-param-reassign
+      });
+    }
+    // remove to here
     if (uttak.oppholdÅrsak.kode !== oppholdArsakType.UDEFINERT) {
       const stonadskonto = oppholdArsakMapper[uttak.oppholdÅrsak.kode];
       const oppholdInfo = {
@@ -670,7 +680,8 @@ const mapStateToProps = (state, props) => {
           kodeverk: uttak.oppholdÅrsak.kodeverk,
           navn: uttakPeriodeNavn[stonadskonto],
         },
-        trekkdager: calcDays(moment(uttak.fom.toString()), moment(uttak.tom.toString())),
+        trekkdagerDesimaler: calcDays(moment(uttak.fom.toString()), moment(uttak.tom.toString())),
+        trekkdager: null,
       };
       uttakPerioder.aktiviteter = [oppholdInfo];
     }
