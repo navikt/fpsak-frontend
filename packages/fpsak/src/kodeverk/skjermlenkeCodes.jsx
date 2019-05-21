@@ -176,7 +176,7 @@ const skjermlenkeCodes = {
   PUNKT_FOR_SVANGERSKAPSPENGER: {
     kode: 'SVANGERSKAP',
     faktaNavn: faktaPanelCodes.FODSELTILRETTELEGGING,
-    punktNavn: behandlingspunktCodes.SVANGERSKAP,
+    punktNavn: '',
   },
 };
 
