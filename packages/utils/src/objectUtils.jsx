@@ -15,7 +15,7 @@ export const isEqualToOneOf = (value, acceptedValues) => (!acceptedValues.includ
 export const omit = (object, ...keysToOmit) => Object.keys(object)
   .filter(key => !keysToOmit.includes(key))
   .map(key => ({ [key]: object[key] }))
-  .reduce((a, b) => Object.assign(a, b));
+  .reduce((a, b) => Object.assign(a, b), {});
 
 const isNullOrUndefined = obj => obj === null || typeof obj === 'undefined';
 const isNotNullAndObject = obj => obj !== null && typeof obj === 'object' && obj.constructor;

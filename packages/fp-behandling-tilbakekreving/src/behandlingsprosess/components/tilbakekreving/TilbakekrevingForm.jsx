@@ -15,7 +15,7 @@ import {
   FadingPanel, VerticalSpacer, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
-import { isObjectEmpty } from '@fpsak-frontend/utils';
+import { omit, isObjectEmpty } from '@fpsak-frontend/utils';
 
 import {
   behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, isBehandlingFormDirty,
@@ -125,37 +125,40 @@ export const transformValues = values => [{
       fom: periode.fom,
       tom: periode.tom,
     }))
-    .filter(storedData => !isObjectEmpty(storedData)),
+    .filter(storedData => !isObjectEmpty(omit(storedData, 'fom', 'tom'))),
 }];
 
 const finnOriginalPeriode = (lagretPeriode, perioder) => perioder
   .find(periode => !moment(lagretPeriode.fom).isBefore(moment(periode.fom)) && !moment(lagretPeriode.tom).isAfter(moment(periode.tom)));
 
-const buildInitialValues = createSelector([getBehandlingVilkarsvurderingsperioder, getBehandlingVilkarsvurdering, getBehandlingVilkarsvurderingsRettsgebyr],
- (perioder, vilkarsvurdering, rettsgebyr) => {
+const erIkkeLagret = (periode, lagredePerioder) => lagredePerioder
+  .every(lagretPeriode => moment(periode.fom).isBefore(moment(lagretPeriode.fom)) || moment(periode.tom).isAfter(moment(lagretPeriode.tom)));
+
+export const buildInitialValues = createSelector([getBehandlingVilkarsvurderingsperioder, getBehandlingVilkarsvurdering,
+  getBehandlingVilkarsvurderingsRettsgebyr], (perioder, vilkarsvurdering, rettsgebyr) => {
   const totalbelop = perioder.reduce((acc, periode) => acc + periode.feilutbetaling, 0);
   const erTotalBelopUnder4Rettsgebyr = totalbelop < (rettsgebyr * 4);
   const lagredeVilkarsvurdertePerioder = vilkarsvurdering.vilkarsVurdertePerioder;
 
-  if (lagredeVilkarsvurdertePerioder.length === 0) {
-    return {
-      vilkarsVurdertePerioder: perioder.map(periode => ({
-        ...periode,
-        storedData: {},
-        erTotalBelopUnder4Rettsgebyr,
-      })),
-    };
-  }
-
-  return {
-    vilkarsVurdertePerioder: lagredeVilkarsvurdertePerioder
+  const lagredePerioder = lagredeVilkarsvurdertePerioder
     .map(lagretPeriode => ({
       ...finnOriginalPeriode(lagretPeriode, perioder),
       fom: lagretPeriode.fom,
       tom: lagretPeriode.tom,
       storedData: lagretPeriode,
       erTotalBelopUnder4Rettsgebyr,
-    })),
+    }));
+
+  const originaleUrortePerioder = perioder
+    .filter(periode => erIkkeLagret(periode, lagredePerioder))
+    .map(periode => ({
+      ...periode,
+      storedData: {},
+      erTotalBelopUnder4Rettsgebyr,
+    }));
+
+  return {
+    vilkarsVurdertePerioder: originaleUrortePerioder.concat(lagredePerioder),
   };
 });
 
