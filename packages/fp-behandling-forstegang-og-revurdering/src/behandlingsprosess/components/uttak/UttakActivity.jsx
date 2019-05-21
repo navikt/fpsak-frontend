@@ -404,6 +404,7 @@ const transformValues = (values, selectedItemData, avslagAarsakKoder, innvilgels
   return transformvalue;
 };
 
+// https://jira.adeo.no/browse/PFP-7937
 const calculateCorrectWeeks = (aktivitet, item) => {
   if (item.periodeResultatType && !aktivitet.trekkdagerDesimaler && (item.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING)) {
     return 0;
@@ -411,10 +412,7 @@ const calculateCorrectWeeks = (aktivitet, item) => {
   if (aktivitet.trekkdagerDesimaler && aktivitet.trekkdagerDesimaler < 0) {
     return 0;
   }
-  if ((aktivitet.utbetalingsgrad || aktivitet.utbetalingsgrad === 0) || !aktivitet.prosentArbeid) {
-    return Math.floor(aktivitet.trekkdagerDesimaler / 5);
-  }
-  return Math.floor((aktivitet.trekkdagerDesimaler * parseFloat(1 - (aktivitet.prosentArbeid * 0.01)).toPrecision(1)) / 5);
+    return Math.floor(aktivitet.trekkdager / 5);
 };
 
 const calculateCorrectDays = (aktivitet, item) => {
@@ -424,10 +422,7 @@ const calculateCorrectDays = (aktivitet, item) => {
   if (aktivitet.trekkdagerDesimaler && aktivitet.trekkdagerDesimaler < 0) {
     return 0;
   }
-  if ((aktivitet.utbetalingsgrad || aktivitet.utbetalingsgrad === 0) || !aktivitet.prosentArbeid) {
-    return ((aktivitet.trekkdagerDesimaler % 5).toFixed(1));
-  }
-  return (((aktivitet.trekkdagerDesimaler * parseFloat(1 - (aktivitet.prosentArbeid * 0.01)).toPrecision(1)) % 5).toFixed(1));
+  return Math.floor(aktivitet.trekkdager % 5);
 };
 
 export const initialValue = (selectedItem, kontoIkkeSatt) => {
