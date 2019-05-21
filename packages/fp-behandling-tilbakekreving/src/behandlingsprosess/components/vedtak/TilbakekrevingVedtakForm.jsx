@@ -52,14 +52,16 @@ export const TilbakekrevingVedtakFormImpl = ({
           />
         </FlexColumn>
         <FlexColumn>
-          <a
-            href=""
-            onClick={fetchPreview(fetchPreviewVedtaksbrev, behandlingIdentifier)}
-            onKeyDown={e => (e.keyCode === 13 ? fetchPreview(fetchPreviewVedtaksbrev, behandlingIdentifier)(e) : null)}
-            className={classNames(styles.buttonLink, 'lenke lenke--frittstaende')}
-          >
-            <FormattedMessage id="TilbakekrevingVedtakForm.ForhandvisBrev" />
-          </a>
+          <div className={styles.padding}>
+            <a
+              href=""
+              onClick={fetchPreview(fetchPreviewVedtaksbrev, behandlingIdentifier)}
+              onKeyDown={e => (e.keyCode === 13 ? fetchPreview(fetchPreviewVedtaksbrev, behandlingIdentifier)(e) : null)}
+              className={classNames(styles.buttonLink, 'lenke lenke--frittstaende')}
+            >
+              <FormattedMessage id="TilbakekrevingVedtakForm.ForhandvisBrev" />
+            </a>
+          </div>
         </FlexColumn>
       </FlexRow>
     </FlexContainer>
