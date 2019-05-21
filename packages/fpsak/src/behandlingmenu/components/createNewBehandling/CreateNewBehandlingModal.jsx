@@ -7,7 +7,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
-import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
+import { isForeldrepengerFagsak, isSvangerskapFagsak } from 'fagsak/fagsakSelectors';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { CheckboxField, SelectField } from '@fpsak-frontend/form';
@@ -171,10 +171,22 @@ const manuelleRevurderingsArsakerFP = [
   behandlingArsakType.KLAGE_M_INNTK,
 ];
 
+const manuelleRevurderingsArsakerSVP = [
+  behandlingArsakType.KLAGE_U_INNTK,
+  behandlingArsakType.KLAGE_M_INNTK,
+  behandlingArsakType.RE_ENDRET_INNTEKTSMELDING,
+  behandlingArsakType.RE_ENDRING_FRA_BRUKER,
+  behandlingArsakType.FØDSEL,
+  behandlingArsakType.DØD,
+  behandlingArsakType.ANNET,
+  behandlingArsakType.INNTEKT,
+];
+
 const getBehandlingAarsaker = (state) => {
-  const manuelleRevurderingsArsaker = isForeldrepengerFagsak(state)
-    ? manuelleRevurderingsArsakerFP
-    : manuelleRevurderingsArsakerES;
+  let manuelleRevurderingsArsaker = isForeldrepengerFagsak(state) ? manuelleRevurderingsArsakerFP : manuelleRevurderingsArsakerES;
+  if (isSvangerskapFagsak(state)) {
+    manuelleRevurderingsArsaker = manuelleRevurderingsArsakerSVP;
+  }
   return getKodeverk(kodeverkTyper.BEHANDLING_AARSAK)(state).filter(bat => manuelleRevurderingsArsaker.indexOf(bat.kode) > -1)
     .sort((bat1, bat2) => bat2.navn.length - bat1.navn.length);
 };
