@@ -74,6 +74,11 @@ const foreldrepengerBuilders = [
     .withVilkarTypes(vt.SOKERSOPPLYSNINGSPLIKT)
     .withAksjonspunktCodes(ac.SOKERS_OPPLYSNINGSPLIKT_OVST, ac.SOKERS_OPPLYSNINGSPLIKT_MANU)
     .withDefaultVisibilityWhenCustomFnReturnsTrue(isNotRevurderingAndManualOpplysningspliktAp),
+  new BehandlingspunktProperties.Builder(bpc.SVANGERSKAP, 'Svangerskapsvilkaret') // TODO: sette opp riktig
+    .withVilkarTypes(vt.SVANGERSKAPVILKARET)
+    .withAksjonspunktCodes(
+      ac.SVANGERSKAPSVILKARET,
+    ),
   new BehandlingspunktProperties.Builder(bpc.FOEDSEL, 'Fodselsvilkaret')
     .withVilkarTypes(vt.FODSELSVILKARET_MOR, vt.FODSELSVILKARET_FAR)
     .withAksjonspunktCodes(
