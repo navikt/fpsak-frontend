@@ -61,6 +61,7 @@ export const tempUpdateStonadskontoer = params => dispatch => dispatch(fpsakBeha
 export const fetchPreviewBrev = fpsakBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();
 export const fetchFptilbakePreviewBrev = fptilbakeBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();
 
+
 /* Reducer */
 const initialState = {
   overrideBehandlingspunkter: [],

@@ -57,6 +57,10 @@ export const updateOnHold = (params, behandlingIdentifier) => dispatch => dispat
 )
   .then(() => dispatch(updateFagsakAndBehandling(behandlingIdentifier)));
 
+export const fetchPreviewVedtaksbrev = behandlingId => dispatch => dispatch(
+  tilbakekrevingBehandlingApi.PREVIEW_VEDTAKSBREV.makeRestApiRequest()({ behandlingId }),
+);
+
 export const resetTilbakekrevingContext = () => (dispatch) => {
   Object.values(TilbakekrevingBehandlingApiKeys)
     .forEach((value) => {

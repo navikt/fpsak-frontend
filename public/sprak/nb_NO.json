@@ -2334,6 +2334,8 @@
   "FatterTilbakekrevingVedtakStatusModal.Ok": "OK",
   "FatterTilbakekrevingVedtakStatusModal.Sendt": "Forslag til vedtak er sendt til beslutter",
 
+  "TilbakekrevingVedtakForm.ForhandvisBrev": "Forhåndsvis brev",
+
   "IntegrationStatusPanel.ServiceDowntime": "Tredjepartstjeneste(r) har nedetid",
   "IntegrationStatusPanel.Downtime": "{system} har nedetid.",
   "IntegrationStatusPanel.DowntimeUntil": "{system} har nedetid frem til {datetime}.",

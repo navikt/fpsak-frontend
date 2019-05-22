@@ -13,6 +13,7 @@ export const TilbakekrevingBehandlingApiKeys = {
   SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
   BEREGNE_BELØP: 'BEREGNE_BELØP',
   TILBAKE_KODEVERK: 'TILBAKE_KODEVERK',
+  PREVIEW_VEDTAKSBREV: 'PREVIEW_VEDTAKSBREV',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -26,6 +27,7 @@ const endpoints = new RestApiConfigBuilder()
   /* /api/brev */
   .withPostAndOpenBlob('/api/brev/forhandsvis', TilbakekrevingBehandlingApiKeys.PREVIEW_MESSAGE)
   .withPost('/api/brev/bestill', TilbakekrevingBehandlingApiKeys.SUBMIT_MESSAGE)
+  .withPostAndOpenBlob('/api/dokument/forhandsvis-vedtaksbrev', TilbakekrevingBehandlingApiKeys.PREVIEW_VEDTAKSBREV)
 
   /* /api/foreldelse */
   .withPost('/api/foreldelse/belop', TilbakekrevingBehandlingApiKeys.BEREGNE_BELØP)
