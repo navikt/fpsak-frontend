@@ -14,6 +14,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
       hasOpenAksjonspunkter={false}
       readOnly
       visBegrunnelse={false}
+      fodselsdato="20.10.2019"
     />);
 
     const datepicker = wrapper.find(DatepickerField);
@@ -30,6 +31,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
       hasOpenAksjonspunkter={false}
       readOnly
       visBegrunnelse
+      fodselsdato="20.10.2019"
     />);
 
     const datepicker = wrapper.find(DatepickerField);

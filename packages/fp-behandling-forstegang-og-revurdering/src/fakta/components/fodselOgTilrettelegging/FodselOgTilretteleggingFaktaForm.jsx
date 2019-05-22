@@ -16,7 +16,7 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
  import {
-   getTilrettelegging, getSoknadFodselsdatoer,
+   getTilrettelegging,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import ArbeidsforholdFaktaPanel from './ArbeidsforholdFaktaPanel';
 
@@ -34,8 +34,8 @@ const FODSEL_TILRETTELEGGING_FORM = 'FodselOgTilretteleggingForm';
 
 export const FodselOgTilretteleggingFaktaForm = ({
   readOnly,
-  hasOpenAksjonspunkter,
   fodselsdato,
+  hasOpenAksjonspunkter,
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
@@ -50,18 +50,31 @@ export const FodselOgTilretteleggingFaktaForm = ({
           />
         </FlexColumn>
         {fodselsdato && (
-          <FlexColumn>
-            <DatepickerField
-              name="fodseldato"
-              label={{ id: 'FodselOgTilretteleggingFaktaForm.Fodselsdato' }}
-              validate={[required, hasValidDate]}
-              readOnly={readOnly}
-            />
-          </FlexColumn>
-          )}
+        <FlexColumn>
+          <DatepickerField
+            name="fodselsdato"
+            label={{ id: 'FodselOgTilretteleggingFaktaForm.Fodselsdato' }}
+            validate={[required, hasValidDate]}
+            readOnly={readOnly}
+          />
+        </FlexColumn>
+        )}
       </FlexRow>
     </FlexContainer>
     <ArbeidsforholdFaktaPanel readOnly={readOnly} formName={FODSEL_TILRETTELEGGING_FORM} />
+    <FlexContainer>
+      <FlexRow>
+        <FlexColumn className={styles.textAreaBredde}>
+          <TextAreaField
+            name="begrunnelse"
+            label={{ id: 'FodselOgTilretteleggingFaktaForm.BegrunnEndringene' }}
+            validate={[requiredIfNotPristine, maxLength1500, hasValidText]}
+            maxLength={1500}
+            readOnly={readOnly}
+          />
+        </FlexColumn>
+      </FlexRow>
+    </FlexContainer>
     <FlexContainer fluid wrap>
       <FlexRow>
         <FlexColumn>
@@ -77,30 +90,14 @@ export const FodselOgTilretteleggingFaktaForm = ({
         </FlexColumn>
       </FlexRow>
     </FlexContainer>
-    <FlexContainer>
-      <FlexRow>
-        <FlexColumn className={styles.textAreaBredde}>
-          <TextAreaField
-            name="begrunnelse"
-            label={{ id: 'FodselOgTilretteleggingFaktaForm.BegrunnEndringene' }}
-            validate={[requiredIfNotPristine, maxLength1500, hasValidText]}
-            maxLength={1500}
-            readOnly={readOnly}
-          />
-        </FlexColumn>
-      </FlexRow>
-    </FlexContainer>
+
   </form>
 );
 
 FodselOgTilretteleggingFaktaForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
-  fodselsdato: PropTypes.string,
-};
-
-FodselOgTilretteleggingFaktaForm.defaultProps = {
-  fodselsdato: '',
+  fodselsdato: PropTypes.string.isRequired,
 };
 
 const transformValues = values => ([{
@@ -111,13 +108,14 @@ bekreftetSvpArbeidsforholdList: values.arbeidsforhold,
 
 const mapStateToProps = (state, ownProps) => {
   const tilrettelegging = getTilrettelegging(state);
-  const soknadFodselsDatoer = getSoknadFodselsdatoer(state);
+  const fodselsdato = tilrettelegging ? tilrettelegging.fødselsdato : '';
   return {
+    fodselsdato,
     initialValues: {
       termindato: tilrettelegging ? tilrettelegging.termindato : '',
       begrunnelse: tilrettelegging ? tilrettelegging.begrunnelse : '',
       arbeidsforhold: tilrettelegging ? tilrettelegging.arbeidsforholdListe : [],
-      fodselsdato: soknadFodselsDatoer ? soknadFodselsDatoer[0] : '',
+      fodselsdato,
     },
     onSubmit: values => ownProps.submitCallback(transformValues(values)),
   };
