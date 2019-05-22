@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
 
 import {
   FlexContainer, FlexColumn, FlexRow, VerticalSpacer, ElementWrapper,
@@ -14,9 +13,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import {
   behandlingForm,
-  getBehandlingFormInitialValues,
-  getBehandlingFormValues,
-  isBehandlingFormDirty,
 } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
  import {
