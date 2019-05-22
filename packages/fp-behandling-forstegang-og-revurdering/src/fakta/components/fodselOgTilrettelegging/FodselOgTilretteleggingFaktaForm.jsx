@@ -16,7 +16,7 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
  import {
-   getTilrettelegging, getSoknad,
+   getTilrettelegging, getSoknadFodselsdatoer,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import ArbeidsforholdFaktaPanel from './ArbeidsforholdFaktaPanel';
 
@@ -111,13 +111,13 @@ bekreftetSvpArbeidsforholdList: values.arbeidsforhold,
 
 const mapStateToProps = (state, ownProps) => {
   const tilrettelegging = getTilrettelegging(state);
-  const soknad = getSoknad(state);
+  const soknadFodselsDatoer = getSoknadFodselsdatoer(state);
   return {
     initialValues: {
       termindato: tilrettelegging ? tilrettelegging.termindato : '',
       begrunnelse: tilrettelegging ? tilrettelegging.begrunnelse : '',
       arbeidsforhold: tilrettelegging ? tilrettelegging.arbeidsforholdListe : [],
-      fodselsdato: soknad.fodselsdatoer ? soknad.fodselsdatoer[0] : '',
+      fodselsdato: soknadFodselsDatoer ? soknadFodselsDatoer[0] : '',
     },
     onSubmit: values => ownProps.submitCallback(transformValues(values)),
   };
