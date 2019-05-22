@@ -51,12 +51,12 @@ export const FodselOgTilretteleggingFaktaForm = ({
         </FlexColumn>
         {fodelsdato && (
           <FlexColumn>
-        <DatepickerField
-            name="fodseldato"
-            label={{ id: 'FodselOgTilretteleggingFaktaForm.Termindato' }}
-            validate={[required, hasValidDate]}
-            readOnly={readOnly}
-          />
+            <DatepickerField
+              name="fodseldato"
+              label={{ id: 'FodselOgTilretteleggingFaktaForm.Termindato' }}
+              validate={[required, hasValidDate]}
+              readOnly={readOnly}
+            />
           </FlexColumn>
           )}
       </FlexRow>
@@ -78,7 +78,7 @@ export const FodselOgTilretteleggingFaktaForm = ({
       </FlexRow>
     </FlexContainer>
     <FlexContainer>
-    <FlexRow>
+      <FlexRow>
         <FlexColumn className={styles.textAreaBredde}>
           <TextAreaField
             name="begrunnelse"
@@ -89,7 +89,7 @@ export const FodselOgTilretteleggingFaktaForm = ({
           />
         </FlexColumn>
       </FlexRow>
-      </FlexContainer>
+    </FlexContainer>
   </form>
 );
 
