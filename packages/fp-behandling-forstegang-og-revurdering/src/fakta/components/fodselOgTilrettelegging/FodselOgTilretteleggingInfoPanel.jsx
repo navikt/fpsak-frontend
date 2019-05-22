@@ -35,7 +35,7 @@ export const FodselOgTilretteleggingInfoPanelImpl = ({
     <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
       {[<FormattedMessage id="FodselOgTilretteleggingInfoPanel.Aksjonspunkt" key="svangerskapspengerAp" />]}
     </AksjonspunktHelpText>
-    <FodselOgTilretteleggingFaktaForm submitCallback={submitCallback} readOnly={false} hasOpenAksjonspunkter={hasOpenAksjonspunkter} />
+    <FodselOgTilretteleggingFaktaForm submitCallback={submitCallback} readOnly={readOnly} hasOpenAksjonspunkter={hasOpenAksjonspunkter} />
   </FaktaEkspandertpanel>
 );
 
