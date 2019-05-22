@@ -422,7 +422,7 @@ const calculateCorrectDays = (aktivitet, item) => {
   if (aktivitet.trekkdagerDesimaler && aktivitet.trekkdagerDesimaler < 0) {
     return 0;
   }
-  return Math.floor(aktivitet.trekkdagerDesimaler % 5).toFixed(1);
+  return ((aktivitet.trekkdagerDesimaler % 5).toFixed(1));
 };
 
 export const initialValue = (selectedItem, kontoIkkeSatt) => {
