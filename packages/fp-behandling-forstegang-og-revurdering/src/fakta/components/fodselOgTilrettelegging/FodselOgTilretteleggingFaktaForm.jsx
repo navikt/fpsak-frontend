@@ -7,7 +7,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { DatepickerField, TextAreaField } from '@fpsak-frontend/form';
 import {
-  requiredIfNotPristine, hasValidDate, hasValidText, maxLength,
+  requiredIfNotPristine, hasValidDate, hasValidText, maxLength, required,
 } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
@@ -16,7 +16,7 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
  import {
-   getTilrettelegging,
+   getTilrettelegging, getSoknad,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import ArbeidsforholdFaktaPanel from './ArbeidsforholdFaktaPanel';
 
@@ -35,6 +35,7 @@ const FODSEL_TILRETTELEGGING_FORM = 'FodselOgTilretteleggingForm';
 export const FodselOgTilretteleggingFaktaForm = ({
   readOnly,
   hasOpenAksjonspunkter,
+  fodselsdato,
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
@@ -48,11 +49,11 @@ export const FodselOgTilretteleggingFaktaForm = ({
             readOnly={readOnly}
           />
         </FlexColumn>
-        {fodelsdato && (
+        {fodselsdato && (
           <FlexColumn>
             <DatepickerField
               name="fodseldato"
-              label={{ id: 'FodselOgTilretteleggingFaktaForm.Termindato' }}
+              label={{ id: 'FodselOgTilretteleggingFaktaForm.Fodselsdato' }}
               validate={[required, hasValidDate]}
               readOnly={readOnly}
             />
@@ -95,6 +96,11 @@ export const FodselOgTilretteleggingFaktaForm = ({
 FodselOgTilretteleggingFaktaForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
+  fodselsdato: PropTypes.string,
+};
+
+FodselOgTilretteleggingFaktaForm.defaultProps = {
+  fodselsdato: '',
 };
 
 const transformValues = values => ([{
@@ -103,14 +109,14 @@ const transformValues = values => ([{
   bekreftetSvpArbeidsforholdList: values.arbeidsforhold,
 }]);
 
-
-
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const tilrettelegging = getTilrettelegging(initialState);
+  const soknad = getSoknad(state);
   const initialValues = {
     termindato: tilrettelegging ? tilrettelegging.termindato : '',
     begrunnelse: tilrettelegging ? tilrettelegging.begrunnelse : '',
     arbeidsforhold: tilrettelegging ? tilrettelegging.arbeidsforholdListe : [],
+    fodselsdato: soknad.fodselsdatoer ? soknad.fodselsdatoer[0] : '',
   };
   const onSubmit = values => ownProps.submitCallback(transformValues(values));
 
