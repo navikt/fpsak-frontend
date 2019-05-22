@@ -52,11 +52,11 @@ const settBehandlingPaVentAccessSelector = (navAnsatt, soknad, aksjonspunkter, t
   const hasSoknad = isObject(soknad);
   const isInnhentSoknadopplysningerSteg = aksjonspunkter
     ? aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode) && ap.definisjon.kode === aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD) : false;
-  const isBehandlingAvKlageEllerInnsyn = type
-    ? type.kode === BehandlingType.KLAGE || type.kode === BehandlingType.DOKUMENTINNSYN
+  const isBehandlingAvKlageEllerInnsynEllerTilbakekreving = type
+    ? type.kode === BehandlingType.KLAGE || type.kode === BehandlingType.DOKUMENTINNSYN || type.kode === BehandlingType.TILBAKEKREVING
     : false;
 
-  if (hasSoknad || isInnhentSoknadopplysningerSteg || isBehandlingAvKlageEllerInnsyn) {
+  if (hasSoknad || isInnhentSoknadopplysningerSteg || isBehandlingAvKlageEllerInnsynEllerTilbakekreving) {
     return accessSelector([kanSaksbehandle], [fagsakStatusCode.UNDER_BEHANDLING], [behandlingStatusCode.OPPRETTET, behandlingStatusCode.BEHANDLING_UTREDES,
       behandlingStatusCode.FORESLA_VEDTAK]);
   }

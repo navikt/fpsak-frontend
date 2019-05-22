@@ -69,7 +69,7 @@ describe('Fagsak-reducer', () => {
       .onGet(fpsakApi.BEHANDLINGER_FPSAK.path)
       .replyOnce(200, behandlinger);
     mockAxios
-      .onGet(fpsakApi.ALL_DOCUMENTS_FPSAK.path)
+      .onGet(fpsakApi.ALL_DOCUMENTS.path)
       .replyOnce(200, { dokId: 1 });
     mockAxios
       .onGet(fpsakApi.HISTORY_FPSAK.path)
@@ -106,7 +106,7 @@ describe('Fagsak-reducer', () => {
       .onGet(fpsakApi.BEHANDLINGER_FPSAK.path)
       .replyOnce(200, behandlinger);
     mockAxios
-      .onGet(fpsakApi.ALL_DOCUMENTS_FPSAK.path)
+      .onGet(fpsakApi.ALL_DOCUMENTS.path)
       .replyOnce(200, { dokId: 1 });
     mockAxios
       .onGet(fpsakApi.HISTORY_FPSAK.path)
@@ -122,7 +122,7 @@ describe('Fagsak-reducer', () => {
         expect(store.getActions()).to.have.length(15);
         expect(store.getActions()[0].type).to.contain('/FETCH_FAGSAK RESET');
         expect(store.getActions()[1].type).to.contain('/BEHANDLINGER_FPSAK RESET');
-        expect(store.getActions()[2].type).to.contain('/ALL_DOCUMENTS_FPSAK RESET');
+        expect(store.getActions()[2].type).to.contain('/ALL_DOCUMENTS RESET');
         expect(store.getActions()[3].type).to.contain('/HISTORY_FPSAK RESET');
         expect(store.getActions()[4].type).to.contain('/ANNEN_PART_BEHANDLING RESET');
         expect(store.getActions()[5].type).to.contain('fpsak/api/fagsak STARTED');

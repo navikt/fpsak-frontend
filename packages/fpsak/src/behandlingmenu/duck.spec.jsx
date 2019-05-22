@@ -99,7 +99,7 @@ describe('BehandlingMenu-reducer', () => {
       .reply(200, fagsak);
 
     mockAxios
-      .onGet(fpsakApi.ALL_DOCUMENTS_FPSAK.path)
+      .onGet(fpsakApi.ALL_DOCUMENTS.path)
       .replyOnce(200, { dokId: 10 });
     mockAxios
       .onGet(fpsakApi.HISTORY_FPSAK.path)
@@ -168,7 +168,7 @@ describe('BehandlingMenu-reducer', () => {
       .onGet(fpsakApi.FETCH_FAGSAK.path)
       .replyOnce(200, fagsak);
     mockAxios
-      .onGet(fpsakApi.ALL_DOCUMENTS_FPSAK.path)
+      .onGet(fpsakApi.ALL_DOCUMENTS.path)
       .replyOnce(200, { dokId: 10 });
     mockAxios
       .onGet(fpsakApi.HISTORY_FPSAK.path)
@@ -234,7 +234,7 @@ describe('BehandlingMenu-reducer', () => {
       .onGet(fpsakApi.FETCH_FAGSAK.path)
       .replyOnce(200, fagsak);
     mockAxios
-      .onGet(fpsakApi.ALL_DOCUMENTS_FPSAK.path)
+      .onGet(fpsakApi.ALL_DOCUMENTS.path)
       .replyOnce(200, { dokId: 10 });
     mockAxios
       .onGet(fpsakApi.HISTORY_FPSAK.path)

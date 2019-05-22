@@ -23,6 +23,7 @@ const getRequiredProps = () => ({
   resetFagsakContext: sinon.spy(),
   resetFagsakSearch: sinon.spy(),
   removeErrorMessage: sinon.spy(),
+  fetchKodeverk: sinon.spy(),
   fetchFagsakInfoPending: false,
   allFagsakInfoResolved: false,
   shouldRedirectToBehandlinger: false,

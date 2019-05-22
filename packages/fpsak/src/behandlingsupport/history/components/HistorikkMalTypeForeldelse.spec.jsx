@@ -5,7 +5,7 @@ import { FormattedHTMLMessage } from 'react-intl';
 
 import historikkOpplysningTypeCodes from '@fpsak-frontend/kodeverk/src/historikkOpplysningTypeCodes';
 
-import HistorikkMalTypeForeldelse from './HistorikkMalTypeForeldelse';
+import { HistorikkMalTypeForeldelse } from './HistorikkMalTypeForeldelse';
 
 describe('HistorikkMalTypeForeldelse', () => {
   it('skal vise alle historikkelement korrekt', () => {
@@ -16,14 +16,12 @@ describe('HistorikkMalTypeForeldelse', () => {
       endredeFelter: [{
         endretFeltNavn: {
           kode: 'feltkode',
-          navn: 'testing',
         },
         fraVerdi: 'gammel verdi',
         tilVerdi: 'ny verdi',
       }, {
         endretFeltNavn: {
           kode: 'Anna feltkode',
-          navn: 'testing 2',
         },
         tilVerdi: 'ny verdi 2',
       }],
@@ -39,9 +37,21 @@ describe('HistorikkMalTypeForeldelse', () => {
         },
       }],
     }];
+
+    const getKodeverknavn = (kodeverk) => {
+      if (kodeverk.kode === 'feltkode') {
+        return 'testing';
+      }
+      if (kodeverk.kode === 'Anna feltkode') {
+        return 'testing 2';
+      }
+      return '';
+    };
+
     const wrapper = shallow(<HistorikkMalTypeForeldelse
       historikkinnslagDeler={historikkinnslagDeler}
       behandlingLocation={{}}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const messages = wrapper.find(FormattedHTMLMessage);

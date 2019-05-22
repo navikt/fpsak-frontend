@@ -6,7 +6,7 @@ import { FormattedHTMLMessage } from 'react-intl';
 import historikkOpplysningTypeCodes from '@fpsak-frontend/kodeverk/src/historikkOpplysningTypeCodes';
 import historikkEndretFeltType from '@fpsak-frontend/kodeverk/src/historikkEndretFeltType';
 
-import HistorikkMalTypeTilbakekreving from './HistorikkMalTypeTilbakekreving';
+import { HistorikkMalTypeTilbakekreving } from './HistorikkMalTypeTilbakekreving';
 
 describe('HistorikkMalTypeTilbakekreving', () => {
   it('skal vise alle historikkelement korrekt', () => {
@@ -17,14 +17,12 @@ describe('HistorikkMalTypeTilbakekreving', () => {
       endredeFelter: [{
         endretFeltNavn: {
           kode: historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT,
-          navn: 'testing',
         },
         fraVerdi: 'gammel verdi',
         tilVerdi: 'ny verdi',
       }, {
         endretFeltNavn: {
           kode: 'Anna feltkode',
-          navn: 'testing 2',
         },
         tilVerdi: 'ny verdi 2',
       }],
@@ -45,9 +43,21 @@ describe('HistorikkMalTypeTilbakekreving', () => {
         },
       }],
     }];
+
+    const getKodeverknavn = (kodeverk) => {
+      if (kodeverk.kode === historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT) {
+        return 'testing';
+      }
+      if (kodeverk.kode === 'Anna feltkode') {
+        return 'testing 2';
+      }
+      return '';
+    };
+
     const wrapper = shallow(<HistorikkMalTypeTilbakekreving
       historikkinnslagDeler={historikkinnslagDeler}
       behandlingLocation={{}}
+      getKodeverknavn={getKodeverknavn}
     />);
 
     const messages = wrapper.find(FormattedHTMLMessage);

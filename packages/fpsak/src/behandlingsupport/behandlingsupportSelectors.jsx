@@ -83,5 +83,5 @@ export const getAllHistory = createSelector(
   ),
 );
 
-export const getAllDocuments = createSelector([fpsakApi.ALL_DOCUMENTS_FPSAK.getRestApiData(), fpsakApi.ALL_DOCUMENTS_FPTILBAKE.getRestApiData()],
-  (documentsFpsak = [], documentsTilbake = []) => (documentsFpsak.concat(documentsTilbake)));
+export const getAllDocuments = createSelector([fpsakApi.ALL_DOCUMENTS.getRestApiData()],
+  (documents = []) => documents);

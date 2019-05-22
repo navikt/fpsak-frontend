@@ -44,7 +44,7 @@ describe('<fagsakSelectors>', () => {
           [FpsakApiKeys.BEHANDLINGER_FPSAK]: {
             finished: true,
           },
-          [FpsakApiKeys.ALL_DOCUMENTS_FPSAK]: {
+          [FpsakApiKeys.ALL_DOCUMENTS]: {
             finished: true,
           },
           [FpsakApiKeys.HISTORY_FPSAK]: {
@@ -67,7 +67,7 @@ describe('<fagsakSelectors>', () => {
           [FpsakApiKeys.BEHANDLINGER_FPSAK]: {
             finished: true,
           },
-          [FpsakApiKeys.ALL_DOCUMENTS_FPSAK]: {
+          [FpsakApiKeys.ALL_DOCUMENTS]: {
             finished: true,
           },
           [FpsakApiKeys.HISTORY_FPSAK]: {
@@ -90,7 +90,7 @@ describe('<fagsakSelectors>', () => {
           [FpsakApiKeys.BEHANDLINGER_FPSAK]: {
             finished: false,
           },
-          [FpsakApiKeys.ALL_DOCUMENTS_FPSAK]: {
+          [FpsakApiKeys.ALL_DOCUMENTS]: {
             finished: true,
           },
           [FpsakApiKeys.HISTORY_FPSAK]: {
@@ -113,7 +113,7 @@ describe('<fagsakSelectors>', () => {
           [FpsakApiKeys.BEHANDLINGER_FPSAK]: {
             error: undefined,
           },
-          [FpsakApiKeys.ALL_DOCUMENTS_FPSAK]: {
+          [FpsakApiKeys.ALL_DOCUMENTS]: {
             error: undefined,
           },
           [FpsakApiKeys.HISTORY_FPSAK]: {
@@ -136,7 +136,7 @@ describe('<fagsakSelectors>', () => {
           [FpsakApiKeys.BEHANDLINGER_FPSAK]: {
             error: undefined,
           },
-          [FpsakApiKeys.ALL_DOCUMENTS_FPSAK]: {
+          [FpsakApiKeys.ALL_DOCUMENTS]: {
             error: undefined,
           },
           [FpsakApiKeys.HISTORY_FPSAK]: {
@@ -159,7 +159,7 @@ describe('<fagsakSelectors>', () => {
           [FpsakApiKeys.BEHANDLINGER_FPSAK]: {
             error: { feil: true },
           },
-          [FpsakApiKeys.ALL_DOCUMENTS_FPSAK]: {
+          [FpsakApiKeys.ALL_DOCUMENTS]: {
             error: undefined,
           },
           [FpsakApiKeys.HISTORY_FPSAK]: {
@@ -182,7 +182,7 @@ describe('<fagsakSelectors>', () => {
           [FpsakApiKeys.BEHANDLINGER_FPSAK]: {
             data: {},
           },
-          [FpsakApiKeys.ALL_DOCUMENTS_FPSAK]: {
+          [FpsakApiKeys.ALL_DOCUMENTS]: {
             data: {},
           },
           [FpsakApiKeys.HISTORY_FPSAK]: {
@@ -205,7 +205,7 @@ describe('<fagsakSelectors>', () => {
           [FpsakApiKeys.BEHANDLINGER_FPSAK]: {
             data: {},
           },
-          [FpsakApiKeys.ALL_DOCUMENTS_FPSAK]: {
+          [FpsakApiKeys.ALL_DOCUMENTS]: {
             data: {},
           },
           [FpsakApiKeys.HISTORY_FPSAK]: {
@@ -228,7 +228,7 @@ describe('<fagsakSelectors>', () => {
           [FpsakApiKeys.BEHANDLINGER_FPSAK]: {
             data: undefined,
           },
-          [FpsakApiKeys.ALL_DOCUMENTS_FPSAK]: {
+          [FpsakApiKeys.ALL_DOCUMENTS]: {
             data: {},
           },
           [FpsakApiKeys.HISTORY_FPSAK]: {
