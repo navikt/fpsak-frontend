@@ -11,7 +11,7 @@ import {
   FlexContainer, FlexColumn, FlexRow,
 } from '@fpsak-frontend/shared-components';
 import {
-  required, hasValidDate, maxLength, minLength,
+  required, hasValidDate,
 } from '@fpsak-frontend/utils';
 
 import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
