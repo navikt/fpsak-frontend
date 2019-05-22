@@ -412,7 +412,7 @@ const calculateCorrectWeeks = (aktivitet, item) => {
   if (aktivitet.trekkdagerDesimaler && aktivitet.trekkdagerDesimaler < 0) {
     return 0;
   }
-    return Math.floor(aktivitet.trekkdager / 5);
+    return Math.floor(aktivitet.trekkdagerDesimaler / 5);
 };
 
 const calculateCorrectDays = (aktivitet, item) => {
@@ -422,7 +422,7 @@ const calculateCorrectDays = (aktivitet, item) => {
   if (aktivitet.trekkdagerDesimaler && aktivitet.trekkdagerDesimaler < 0) {
     return 0;
   }
-  return Math.floor(aktivitet.trekkdager % 5).toFixed(1);
+  return Math.floor(aktivitet.trekkdagerDesimaler % 5).toFixed(1);
 };
 
 export const initialValue = (selectedItem, kontoIkkeSatt) => {
