@@ -18,7 +18,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
     />);
 
     const datepicker = wrapper.find(DatepickerField);
-    expect(datepicker).has.length(1);
+    expect(datepicker).has.length(2);
     const begrunnelsefelt = wrapper.find(TextAreaField);
     expect(begrunnelsefelt).has.length(0);
     const arbforholdFaktaPanel = wrapper.find(ArbeidsforholdFaktaPanel);
@@ -35,7 +35,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
     />);
 
     const datepicker = wrapper.find(DatepickerField);
-    expect(datepicker).has.length(1);
+    expect(datepicker).has.length(2);
     const begrunnelsefelt = wrapper.find(TextAreaField);
     expect(begrunnelsefelt).has.length(1);
     const arbforholdFaktaPanel = wrapper.find(ArbeidsforholdFaktaPanel);
