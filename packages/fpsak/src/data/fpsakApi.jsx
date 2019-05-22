@@ -17,6 +17,7 @@ export const FpsakApiKeys = {
   BEHANDLENDE_ENHETER: 'BEHANDLENDE_ENHETER',
   NEW_BEHANDLING: 'NEW_BEHANDLING',
   SAVE_TOTRINNSAKSJONSPUNKT: 'SAVE_TOTRINNSAKSJONSPUNKT',
+  SAVE_TOTRINNSAKSJONSPUNKT_FPTILBAKE: 'SAVE_TOTRINNSAKSJONSPUNKT_FPTILBAKE',
   ALL_DOCUMENTS: 'ALL_DOCUMENTS',
   DOCUMENT: 'DOCUMENT',
   FORHANDSVISNING_FORVED_BREV: 'FORHANDSVISNING_FORVED_BREV',
@@ -52,6 +53,7 @@ const endpoints = new RestApiConfigBuilder()
 
   /* /api/behandling */
   .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', FpsakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT)
+  .withAsyncPost('/fptilbake/api/behandling/aksjonspunkt', FpsakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT_FPTILBAKE)
 
   /* /api/dokument */
   .withGet('/fpsak/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS)

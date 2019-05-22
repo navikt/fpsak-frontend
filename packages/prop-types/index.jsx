@@ -1,5 +1,4 @@
 export { default as aksjonspunktPropType } from './src/aksjonspunktPropType';
-export { default as approvalAksjonspunktPropType } from './src/approvalAksjonspunktPropType';
 export { default as behandlingIListePropType } from './src/behandlingIListePropType';
 export {
   arbeidsforholdPropType,

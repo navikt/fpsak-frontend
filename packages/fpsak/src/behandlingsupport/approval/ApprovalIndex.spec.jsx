@@ -242,6 +242,7 @@ describe('<ApprovalIndex>', () => {
       totrinnskontrollSkjermlenkeContext={totrinnskontrollAksjonspunkter}
       navAnsatt={navAnsatt}
       skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
+      erTilbakekreving={false}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -281,6 +282,7 @@ describe('<ApprovalIndex>', () => {
       totrinnskontrollSkjermlenkeContext={undefined}
       navAnsatt={navAnsatt}
       skjemalenkeTyper={[]}
+      erTilbakekreving={false}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -327,6 +329,7 @@ describe('<ApprovalIndex>', () => {
       navAnsatt={navAnsatt}
       totrinnskontrollReadOnlySkjermlenkeContext={totrinnskontrollAksjonspunkter}
       skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
+      erTilbakekreving={false}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -368,6 +371,7 @@ describe('<ApprovalIndex>', () => {
       navAnsatt={navAnsatt}
       totrinnskontrollSkjermlenkeContext={totrinnskontrollAksjonspunkter}
       skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
+      erTilbakekreving={false}
     />);
 
     const vedtakStatusModal = wrapper.find(FatterVedtakApprovalModal);
@@ -397,6 +401,7 @@ describe('<ApprovalIndex>', () => {
       navAnsatt={navAnsatt}
       totrinnskontrollSkjermlenkeContext={undefined}
       skjemalenkeTyper={[]}
+      erTilbakekreving={false}
     />);
 
     wrapper.unmount();
