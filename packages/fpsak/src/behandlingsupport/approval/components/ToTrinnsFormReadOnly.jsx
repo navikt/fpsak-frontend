@@ -26,8 +26,7 @@ import styles from './ToTrinnsFormReadOnly.less';
 
 /* eslint-disable react/no-array-index-key */
 const godkjendAksjonspunkt = (aksjonspunkt) => {
-  const { vurderPaNyttArsaker, arsaker } = aksjonspunkt;
-  const test = vurderPaNyttArsaker || arsaker;
+  const { vurderPaNyttArsaker } = aksjonspunkt;
   return (
     <div className={styles.approvalItem}>
       {aksjonspunkt.totrinnskontrollGodkjent
@@ -46,7 +45,7 @@ const godkjendAksjonspunkt = (aksjonspunkt) => {
         )
         : (
           <div className={styles.approvalItem}>
-            {test.map((item, index) => (
+            {vurderPaNyttArsaker.map((item, index) => (
               <div key={`${item.kode}${index}`}>
                 <span>
                   <Image
