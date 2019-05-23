@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
-import fagsakYtesleType from '@fpsak-frontend/kodeverk/src/fagsakytelseType';
+// TODO: remove this when UTTAK will be visible in SVP
+import fagsakYtType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
@@ -75,8 +76,9 @@ export class BehandlingsprosessIndex extends Component {
     this.previewVedtakCallback = this.previewVedtakCallback.bind(this);
     this.previewManueltBrevCallback = this.previewManueltBrevCallback.bind(this);
     this.previewFptilbakeCallback = this.previewFptilbakeCallback.bind(this);
-    this.submitVilkarUtenPromise = this.submitVilkarUtenPromise.bind(this);
     this.checkForSvangerskapspenger = this.checkForSvangerskapspenger.bind(this);
+    this.submitVilkarUtenPromise = this.submitVilkarUtenPromise.bind(this);
+
 
     this.state = {
       isVedtakSubmissionIverksetterVedtak: false,
@@ -103,6 +105,17 @@ export class BehandlingsprosessIndex extends Component {
     if (behandlingVersjon !== prevBehandlingVersjon) {
       resetBp();
     }
+  }
+
+  checkForSvangerskapspenger = (behandlingspunkter, fagsakType) => {
+    if (!fagsakType || (fagsakType && fagsakType.kode !== fagsakYtType.SVANGERSKAPSPENGER)) {
+      return behandlingspunkter;
+    }
+    const indexOfUttak = behandlingspunkter.indexOf('uttak');
+    if (indexOfUttak && indexOfUttak !== -1) {
+      return (behandlingspunkter.splice(indexOfUttak, 1));
+    }
+    return behandlingspunkter;
   }
 
   submitVilkarUtenPromise(aksjonspunktModels) {
@@ -202,17 +215,6 @@ export class BehandlingsprosessIndex extends Component {
       ...values,
     };
     fetchBrevPreview(data);
-  }
-
-  checkForSvangerskapspenger = (behandlingspunkter, fagsakType) => {
-    if (!fagsakType || (fagsakType && fagsakType.kode !== fagsakYtesleType.SVANGERSKAPSPENGER)) {
-      return behandlingspunkter;
-    }
-    const indexOfUttak = behandlingspunkter.indexOf('uttak');
-    if (indexOfUttak && indexOfUttak !== -1) {
-      return (behandlingspunkter.splice(indexOfUttak, 1));
-    }
-    return behandlingspunkter;
   }
 
   submitVilkar(aksjonspunktModels) {
