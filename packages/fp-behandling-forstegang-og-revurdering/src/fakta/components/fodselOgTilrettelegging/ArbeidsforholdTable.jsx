@@ -26,8 +26,8 @@ const ArbeidsforholdTable = ({
   <Table headerTextCodes={headerTextCodes}>
     {arbeidsforhold.map(a => (
       <TableRow
-        key={a.arbeidsgiverIdent}
-        id={a.arbeidsgiverIdent}
+        key={a.tilretteleggingId}
+        id={a.tilretteleggingId}
         model={a}
         onMouseDown={selectArbeidsforholdCallback}
         onKeyDown={selectArbeidsforholdCallback}
