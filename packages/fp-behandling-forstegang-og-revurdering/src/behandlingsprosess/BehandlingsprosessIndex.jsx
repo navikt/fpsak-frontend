@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
+import fagsakYtesleType from '@fpsak-frontend/kodeverk/src/fagsakytelseType';
 
 import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
@@ -75,6 +76,7 @@ export class BehandlingsprosessIndex extends Component {
     this.previewManueltBrevCallback = this.previewManueltBrevCallback.bind(this);
     this.previewFptilbakeCallback = this.previewFptilbakeCallback.bind(this);
     this.submitVilkarUtenPromise = this.submitVilkarUtenPromise.bind(this);
+    this.checkForSvangerskapspenger = this.checkForSvangerskapspenger.bind(this);
 
     this.state = {
       isVedtakSubmissionIverksetterVedtak: false,
@@ -202,6 +204,17 @@ export class BehandlingsprosessIndex extends Component {
     fetchBrevPreview(data);
   }
 
+  checkForSvangerskapspenger = (behandlingspunkter, fagsakType) => {
+    if (!fagsakType || (fagsakType && fagsakType.kode !== fagsakYtesleType.SVANGERSKAPSPENGER)) {
+      return behandlingspunkter;
+    }
+    const indexOfUttak = behandlingspunkter.indexOf('uttak');
+    if (indexOfUttak && indexOfUttak !== -1) {
+      return (behandlingspunkter.splice(indexOfUttak, 1));
+    }
+    return behandlingspunkter;
+  }
+
   submitVilkar(aksjonspunktModels) {
     if (aksjonspunktModels[0] && aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode) {
       this.setState({
@@ -265,7 +278,7 @@ export class BehandlingsprosessIndex extends Component {
     return (
       <React.Fragment>
         <BehandlingsprosessPanel
-          behandlingspunkter={behandlingspunkter}
+          behandlingspunkter={this.checkForSvangerskapspenger(behandlingspunkter, fagsakYtelseType)}
           selectedBehandlingspunkt={selectedBehandlingspunkt}
           selectBehandlingspunktCallback={this.goToBehandlingspunkt}
           isSelectedBehandlingHenlagt={isSelectedBehandlingHenlagt}
