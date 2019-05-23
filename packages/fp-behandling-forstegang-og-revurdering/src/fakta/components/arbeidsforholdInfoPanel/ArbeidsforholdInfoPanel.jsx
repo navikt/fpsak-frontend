@@ -122,15 +122,12 @@ const transformValues = (values) => {
   };
 };
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
-  return state => ({
+// TODO (TOR) Fiks rerendring av panel (PFP-7866)
+const mapStateToPropsFactory = (initialState, ownProps) => state => ({
     skalKunneLeggeTilNyeArbeidsforhold: getSkalKunneLeggeTilNyeArbeidsforhold(state),
     initialValues: buildInitialValues(state),
-    onSubmit,
+    onSubmit: values => ownProps.submitCallback([transformValues(values)]),
   });
-};
-
 const connectedComponent = connect(mapStateToPropsFactory)(behandlingForm({ form: formName })(ArbeidsforholdInfoPanelImpl));
 const ArbeidsforholdInfoPanel = withDefaultToggling(faktaPanelCodes.ARBEIDSFORHOLD, relevanteAksjonspunkter)(connectedComponent);
 

@@ -60,6 +60,10 @@ describe('<OpptjeningInfoPanel>', () => {
 
     const initialValues = buildInitialValues.resultFunc(opptjeningActivities, fastsattOpptjening);
     expect(initialValues).is.eql({
+      fastsattOpptjening: {
+        opptjeningFom: '2018-01-01',
+        opptjeningTom: '2018-10-01',
+      },
       opptjeningActivities: [{
         opptjeningFom: '2018-01-01',
         opptjeningTom: '2018-10-01',

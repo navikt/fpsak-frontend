@@ -107,6 +107,7 @@ export const buildInitialValues = createSelector(
           ...buildPeriod(oa, fastsattOpptjening.opptjeningFom, fastsattOpptjening.opptjeningTom),
           id: index + 1,
         })),
+      fastsattOpptjening,
     }),
 );
 
@@ -127,20 +128,18 @@ const transformPeriod = (activity, opptjeningsperiodeFom, opptjeningsperiodeTom)
   };
 };
 
-const transformValues = (values, fastsattOpptjening, aksjonspunkt) => ({
-  opptjeningAktivitetList: values.opptjeningActivities
-    .map(oa => transformPeriod(oa, addDay(fastsattOpptjening.opptjeningFom), addDay(fastsattOpptjening.opptjeningTom)))
-    .map(oa => omit(oa, 'id')),
-  kode: aksjonspunkt.definisjon.kode,
-});
+const transformValues = (values, aksjonspunkt) => ({
+    opptjeningAktivitetList: values.opptjeningActivities
+      .map(oa => transformPeriod(oa, addDay(values.fastsattOpptjening.opptjeningFom), addDay(values.fastsattOpptjening.opptjeningTom)))
+      .map(oa => omit(oa, 'id')),
+    kode: aksjonspunkt.definisjon.kode,
+  });
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const fastsattOpptjening = getBehandlingFastsattOpptjening(initialState);
-  const onSubmit = values => ownProps.submitCallback([transformValues(values, fastsattOpptjening, ownProps.aksjonspunkter[0])]);
-
+  const onSubmit = values => ownProps.submitCallback([transformValues(values, ownProps.aksjonspunkter[0])]);
   return state => ({
     aksjonspunkt: ownProps.aksjonspunkter[0],
-    hasFastsattOpptjening: !!fastsattOpptjening,
+    hasFastsattOpptjening: !!getBehandlingFastsattOpptjening(state),
     initialValues: buildInitialValues(state),
     dirty: !ownProps.notSubmittable && ownProps.dirty,
     onSubmit,
