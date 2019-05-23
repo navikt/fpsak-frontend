@@ -163,12 +163,15 @@ const transformValues = (values, aksjonspunkter) => {
   }));
 };
 
-const mapStateToProps = (state, initialProps) => ({
-  initialValues: buildInitialValues(state),
-  onSubmit: values => initialProps.submitCallback(transformValues(values, initialProps.aksjonspunkter)),
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter));
+  return state => ({
+    initialValues: buildInitialValues(state),
+    onSubmit,
+  });
+};
 
-const AdopsjonInfoPanel = withDefaultToggling(faktaPanelCodes.ADOPSJONSVILKARET, adopsjonAksjonspunkter)(connect(mapStateToProps)(behandlingForm({
+const AdopsjonInfoPanel = withDefaultToggling(faktaPanelCodes.ADOPSJONSVILKARET, adopsjonAksjonspunkter)(connect(mapStateToPropsFactory)(behandlingForm({
   form: 'AdopsjonInfoPanel',
 })(injectIntl(AdopsjonInfoPanelImpl))));
 

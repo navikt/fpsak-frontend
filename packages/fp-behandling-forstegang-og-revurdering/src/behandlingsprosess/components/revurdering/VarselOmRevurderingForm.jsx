@@ -243,25 +243,28 @@ export const buildInitialValues = createSelector([getSelectedBehandlingspunktAks
 
 const formName = 'VarselOmRevurderingForm';
 
-const mapStateToProps = (state, ownProps) => {
-  const aksjonspunkt = getSelectedBehandlingspunktAksjonspunkter(state)[0];
-  const erAutomatiskRevurdering = getBehandlingArsaker(state).reduce((result, current) => (result || current.erAutomatiskRevurdering), false);
-  return {
-    erAutomatiskRevurdering,
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitCallback([values]);
+  const erAutomatiskRevurdering = getBehandlingArsaker(initialState).reduce((result, current) => (result || current.erAutomatiskRevurdering), false);
+  const aksjonspunkt = getSelectedBehandlingspunktAksjonspunkter(initialState)[0];
+  const ventearsaker = getKodeverk(kodeverkTyper.VENTEARSAK)(state);
+
+  return state => ({
     initialValues: buildInitialValues(state),
     aksjonspunktStatus: aksjonspunkt.status.kode,
     aksjonspunktKode: aksjonspunkt.definisjon.kode,
     begrunnelse: aksjonspunkt.begrunnelse,
     languageCode: getBehandlingLanguageCode(state),
     ...behandlingFormValueSelector(formName)(state, 'sendVarsel', 'fritekst', 'frist', 'ventearsak'),
-    onSubmit: values => ownProps.submitCallback([values]),
     originalVentearsak: ownProps.ventearsak,
     originalFrist: ownProps.frist,
-    ventearsaker: getKodeverk(kodeverkTyper.VENTEARSAK)(state),
-  };
+    ventearsaker,
+    erAutomatiskRevurdering,
+    onSubmit,
+  });
 };
 
-const VarselOmRevurderingForm = connect(mapStateToProps)(injectIntl(behandlingForm({
+const VarselOmRevurderingForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: formName,
   enableReinitialize: true,
 })(VarselOmRevurderingFormImpl)));

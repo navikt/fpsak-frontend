@@ -137,14 +137,17 @@ const transformValues = values => ({
 
 const formName = 'BeregningsresultatEngangsstonadForm';
 
-const mapStateToProps = (state, ownProps) => ({
-  initialValues: buildInitialValues(state),
-  isReadOnly: isSelectedBehandlingspunktOverrideReadOnly(state),
-  onSubmit: values => ownProps.submitCallback([transformValues(values)]),
-  ...behandlingFormValueSelector(formName)(state, 'beregningResultat', 'isOverstyrt'),
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
+  return state => ({
+    onSubmit,
+    initialValues: buildInitialValues(state),
+    isReadOnly: isSelectedBehandlingspunktOverrideReadOnly(state),
+    ...behandlingFormValueSelector(formName)(state, 'beregningResultat', 'isOverstyrt'),
+  });
+};
 
-const BeregningsresultatEngangsstonadForm = connect(mapStateToProps)(injectIntl(behandlingForm({
+const BeregningsresultatEngangsstonadForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: formName,
 })(BeregningsresultatEngangsstonadFormImpl)));
 

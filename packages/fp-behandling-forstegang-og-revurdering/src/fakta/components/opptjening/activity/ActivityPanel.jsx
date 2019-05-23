@@ -248,16 +248,21 @@ ActivityPanel.defaultProps = {
   activityId: undefined,
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  initialValues: ownProps.activity,
-  onSubmit: values => ownProps.updateActivity(values),
-  opptjeningAktivitetTypes:
-      filterActivityType(ownProps.opptjeningAktivitetTypes, ownProps.activity.erManueltOpprettet, getKodeverk(kodeverkTyper.ARBEID_TYPE)(state)),
-  selectedActivityType: behandlingFormValueSelector(activityPanelName)(state, 'aktivitetType'),
-  opptjeningFom: behandlingFormValueSelector(activityPanelName)(state, 'opptjeningFom'),
-  opptjeningTom: behandlingFormValueSelector(activityPanelName)(state, 'opptjeningTom'),
-  activityId: behandlingFormValueSelector(activityPanelName)(state, 'id'),
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.updateActivity(values);
+  const arbeidTyper = getKodeverk(kodeverkTyper.ARBEID_TYPE)(initialState);
+  const opptjeningAktivitetTypes = filterActivityType(ownProps.opptjeningAktivitetTypes, ownProps.activity.erManueltOpprettet, arbeidTyper);
+
+  return state => ({
+    onSubmit,
+    opptjeningAktivitetTypes,
+    initialValues: ownProps.activity,
+    selectedActivityType: behandlingFormValueSelector(activityPanelName)(state, 'aktivitetType'),
+    opptjeningFom: behandlingFormValueSelector(activityPanelName)(state, 'opptjeningFom'),
+    opptjeningTom: behandlingFormValueSelector(activityPanelName)(state, 'opptjeningTom'),
+    activityId: behandlingFormValueSelector(activityPanelName)(state, 'id'),
+  });
+};
 
 const validateForm = ({ opptjeningFom, opptjeningTom }, props) => {
   const errors = {};
@@ -272,7 +277,7 @@ const validateForm = ({ opptjeningFom, opptjeningTom }, props) => {
   return errors;
 };
 
-export default connect(mapStateToProps)(injectIntl(behandlingForm({
+export default connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: activityPanelName,
   validate: validateForm,
   enableReinitialize: true,

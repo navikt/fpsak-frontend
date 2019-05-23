@@ -65,10 +65,13 @@ UtlandEndretModalImpl.defaultProps = {
   showModal: false,
 };
 
-const mapToStateToProps = (state, ownProps) => ({
-  onSubmit: values => ownProps.closeEvent(values),
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.closeEvent(values);
+  return () => ({
+    onSubmit,
+  });
+};
 
-export const UtlandEndretModal = connect(mapToStateToProps)(behandlingForm({
+export const UtlandEndretModal = connect(mapStateToPropsFactory)(behandlingForm({
   enableReinitialize: true,
 })(injectIntl(UtlandEndretModalImpl)));

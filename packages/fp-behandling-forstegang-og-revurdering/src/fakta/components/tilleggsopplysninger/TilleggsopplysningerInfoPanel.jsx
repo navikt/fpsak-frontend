@@ -62,15 +62,18 @@ const buildInitialValues = createSelector([getSoknad], soknad => ({
 
 const transformValues = values => TilleggsopplysningerFaktaForm.transformValues(values);
 
-const mapStateToProps = (state, initialProps) => ({
-  initialValues: buildInitialValues(state),
-  onSubmit: values => initialProps.submitCallback([transformValues(values)]),
-  dirty: !initialProps.notSubmittable && initialProps.dirty,
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
+  return state => ({
+    onSubmit,
+    initialValues: buildInitialValues(state),
+    dirty: !ownProps.notSubmittable && ownProps.dirty,
+  });
+};
 
 const tilleggsopplysningerAksjonspunkter = [aksjonspunktCodes.TILLEGGSOPPLYSNINGER];
 
-const ConnectedComponent = connect(mapStateToProps)(behandlingForm({
+const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingForm({
   form: 'TilleggsopplysningerInfoPanel',
 })(injectIntl(TilleggsopplysningerInfoPanelImpl)));
 const TilleggsopplysningerInfoPanel = withDefaultToggling(faktaPanelCodes.TILLEGGSOPPLYSNINGER, tilleggsopplysningerAksjonspunkter)(ConnectedComponent);

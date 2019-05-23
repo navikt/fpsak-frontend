@@ -107,19 +107,23 @@ const transformValues = (values, aksjonspunkter) => aksjonspunkter.map(ap => ({
 
 const formName = 'ErForeldreansvar2LeddVilkaarOppfyltForm';
 
-const mapStateToProps = (state, initialProps) => {
-  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(state);
-  return {
-    aksjonspunkter,
-    initialValues: buildInitialValues(state),
-    erVilkarOk: behandlingFormValueSelector(formName)(state, 'erVilkarOk'),
-    avslagsarsaker: getKodeverk(kodeverkTyper.AVSLAGSARSAK)(state)[vilkarType.FORELDREANSVARSVILKARET_2_LEDD],
-    isEngangsstonad: getFagsakYtelseType(state).kode === fagsakYtelseType.ENGANGSSTONAD,
-    onSubmit: values => initialProps.submitCallback(transformValues(values, aksjonspunkter)),
-  };
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(initialState);
+  const onSubmit = values => ownProps.submitCallback(transformValues(values, aksjonspunkter));
+  const avslagsarsaker = getKodeverk(kodeverkTyper.AVSLAGSARSAK)(initialState)[vilkarType.FORELDREANSVARSVILKARET_2_LEDD];
+  const isEngangsstonad = getFagsakYtelseType(initialState).kode === fagsakYtelseType.ENGANGSSTONAD;
+
+  return state => ({
+      initialValues: buildInitialValues(state),
+      erVilkarOk: behandlingFormValueSelector(formName)(state, 'erVilkarOk'),
+      avslagsarsaker,
+      isEngangsstonad,
+      aksjonspunkter,
+      onSubmit,
+    });
 };
 
-const ErForeldreansvar2LeddVilkaarOppfyltForm = connect(mapStateToProps)(injectIntl(behandlingForm({
+const ErForeldreansvar2LeddVilkaarOppfyltForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: formName,
   validate,
 })(ErForeldreansvar2LeddVilkaarOppfyltFormImpl)));

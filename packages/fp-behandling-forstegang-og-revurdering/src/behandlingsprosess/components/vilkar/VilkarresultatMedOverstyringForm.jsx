@@ -196,40 +196,45 @@ const getVilkar = createSelector(
   },
 );
 
-const mapStateToProps = (state, ownProps) => {
-  const behandlingspunkt = getSelectedBehandlingspunkt(state);
-  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(state);
-  const formName = `VilkarresultatForm_${behandlingspunkt}`;
-  const apCode = getApCode(behandlingspunkt, isForeldrepengerFagsak(state), getSelectedBehandlingspunktVilkar(state));
-  const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === apCode);
-  const vilkar = getVilkar(state);
-  const isSolvable = aksjonspunkt !== undefined
-    ? !(aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses) : false;
-  const formData = { ...behandlingFormValueSelector(formName)(state, 'isOverstyrt', 'erVilkarOk') };
-  const customVilkarIkkeOppfyltText = getCustomVilkarText(state, behandlingspunkt, false);
-  const customVilkarOppfyltText = getCustomVilkarText(state, behandlingspunkt, true);
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const behandlingspunkt = getSelectedBehandlingspunkt(initialState);
+  const apCode = getApCode(behandlingspunkt, isForeldrepengerFagsak(initialState), getSelectedBehandlingspunktVilkar(initialState));
+  const onSubmit = values => ownProps.submitCallback([transformValues(values, apCode)]);
+  const validateFn = values => validate(values);
 
-  return {
-    behandlingspunkt,
-    apCode,
-    customVilkarIkkeOppfyltText,
-    customVilkarOppfyltText,
-    lovReferanse: vilkar.lovReferanse,
-    isSolvable: getIsSelectedBehandlingspunktOverridden(state) || isSolvable,
-    hasAksjonspunkt: aksjonspunkt !== undefined,
-    avslagsarsaker: getRelevanteAvslagsarsaker(vilkar.vilkarType.kode, state),
-    isReadOnly: isSelectedBehandlingspunktOverrideReadOnly(state),
-    behandlingspunktTitleCode: getSelectedBehandlingspunktTitleCode(state),
-    form: formName,
-    ...formData,
-    initialValues: buildInitialValues(state),
-    onSubmit: values => ownProps.submitCallback([transformValues(values, apCode)]),
-    validate: values => validate(values),
+  return (state) => {
+    const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(state);
+    const formName = `VilkarresultatForm_${behandlingspunkt}`;
+    const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === apCode);
+    const vilkar = getVilkar(state);
+    const isSolvable = aksjonspunkt !== undefined
+      ? !(aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses) : false;
+    const formData = { ...behandlingFormValueSelector(formName)(state, 'isOverstyrt', 'erVilkarOk') };
+    const customVilkarIkkeOppfyltText = getCustomVilkarText(state, behandlingspunkt, false);
+    const customVilkarOppfyltText = getCustomVilkarText(state, behandlingspunkt, true);
+
+    return {
+      behandlingspunkt,
+      apCode,
+      customVilkarIkkeOppfyltText,
+      customVilkarOppfyltText,
+      lovReferanse: vilkar.lovReferanse,
+      isSolvable: getIsSelectedBehandlingspunktOverridden(state) || isSolvable,
+      hasAksjonspunkt: aksjonspunkt !== undefined,
+      avslagsarsaker: getRelevanteAvslagsarsaker(vilkar.vilkarType.kode, state),
+      isReadOnly: isSelectedBehandlingspunktOverrideReadOnly(state),
+      behandlingspunktTitleCode: getSelectedBehandlingspunktTitleCode(state),
+      form: formName,
+      ...formData,
+      initialValues: buildInitialValues(state),
+      validate: validateFn,
+      onSubmit,
+    };
   };
 };
 
 const form = behandlingForm({ enableReinitialize: true })(VilkarresultatMedOverstyringFormImpl);
-const VilkarresultatMedOverstyringForm = injectIntl(connect(mapStateToProps)(form));
+const VilkarresultatMedOverstyringForm = injectIntl(connect(mapStateToPropsFactory)(form));
 
 const getAllApCodes = (behandlingspunkt) => {
   const esAp = behandlingspunktToAksjonspunktEngangsstonad[behandlingspunkt];

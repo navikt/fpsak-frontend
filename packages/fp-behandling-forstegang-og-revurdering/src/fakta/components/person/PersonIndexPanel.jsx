@@ -60,14 +60,17 @@ PersonIndexPanelImpl.defaultProps = {
   person: undefined,
 };
 
-const mapStateToProps = (state, initialProps) => ({
-  onSubmit: () => initialProps.submitCallback([{
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = () => ownProps.submitCallback([{
     kode: personAksjonspunkter[0],
     begrunnelse: '',
-  }]),
-});
+  }]);
+  return () => ({
+    onSubmit,
+  });
+};
 
-const ConnectedComponent = connect(mapStateToProps)(behandlingForm({
+const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingForm({
   form: 'PersonIndexPanel',
 })(PersonIndexPanelImpl));
 

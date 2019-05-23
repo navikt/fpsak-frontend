@@ -214,17 +214,20 @@ const transformValues = values => ({
   ...BehandlingspunktBegrunnelseTextField.transformValues(values),
 });
 
-const mapStateToProps = (state, ownProps) => ({
-  hasSoknad: hasSoknad(state),
-  behandlingsresultat: getBehandlingsresultat(state),
-  dokumentTypeIds: getKodeverk(kodeverkTyper.DOKUMENT_TYPE_ID)(state),
-  manglendeVedlegg: getSortedManglendeVedlegg(state),
-  initialValues: buildInitialValues(state),
-  onSubmit: values => ownProps.submitCallback([transformValues(values)]),
-  ...behandlingFormValueSelector(formName)(state, 'hasAksjonspunkt', 'erVilkarOk', 'inntektsmeldingerSomIkkeKommer'),
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
+  return state => ({
+    onSubmit,
+    hasSoknad: hasSoknad(state),
+    behandlingsresultat: getBehandlingsresultat(state),
+    dokumentTypeIds: getKodeverk(kodeverkTyper.DOKUMENT_TYPE_ID)(state),
+    manglendeVedlegg: getSortedManglendeVedlegg(state),
+    initialValues: buildInitialValues(state),
+    ...behandlingFormValueSelector(formName)(state, 'hasAksjonspunkt', 'erVilkarOk', 'inntektsmeldingerSomIkkeKommer'),
+  });
+};
 
-const SokersOpplysningspliktForm = connect(mapStateToProps)(injectIntl(behandlingForm({
+const SokersOpplysningspliktForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: formName,
 })(injectKodeverk(getAlleKodeverk)(SokersOpplysningspliktFormImpl))));
 

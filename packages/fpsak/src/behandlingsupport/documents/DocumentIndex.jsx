@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 
 import { requireProps } from '@fpsak-frontend/fp-felles';
 import { getSelectedBehandlingId } from 'behandling/duck';
@@ -48,10 +49,11 @@ DocumentIndex.defaultProps = {
   behandlingId: undefined,
 };
 
+const getSortedDocuments = createSelector([getAllDocuments], alleDokumenter => (alleDokumenter || []).sort((a, b) => b.tidspunkt.localeCompare(a.tidspunkt)));
 
 const mapStateToProps = state => ({
   saksNr: getSelectedSaksnummer(state),
-  documents: (getAllDocuments(state) || []).sort((a, b) => b.tidspunkt.localeCompare(a.tidspunkt)),
+  documents: getSortedDocuments(state),
   behandlingId: getSelectedBehandlingId(state),
 });
 

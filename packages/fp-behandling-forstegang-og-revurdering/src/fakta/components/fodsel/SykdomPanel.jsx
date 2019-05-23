@@ -53,13 +53,16 @@ const transformValues = values => ({
   erMorForSykVedFodsel: values.erMorForSykVedFodsel,
 });
 
-const mapStateToProps = (state, ownProps) => ({
-  initialValues: buildInitialValues(ownProps.aksjonspunkt, getFamiliehendelseGjeldende(state)),
-  onSubmit: values => ownProps.submitHandler(transformValues(values)),
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitHandler(transformValues(values));
+  return state => ({
+    initialValues: buildInitialValues(ownProps.aksjonspunkt, getFamiliehendelseGjeldende(state)),
+    onSubmit,
+  });
+};
 
 export const sykdomPanelName = 'SykdomPanel';
 
-export default connect(mapStateToProps)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: sykdomPanelName,
 })(SykdomPanel));

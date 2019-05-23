@@ -264,6 +264,10 @@ export const buildInitialValues = createSelector(
   }),
 );
 
+export const getAksjonspunktKoder = createSelector(
+  [getSelectedBehandlingspunktAksjonspunkter], aksjonspunkter => aksjonspunkter.map(ap => ap.definisjon.kode),
+);
+
 const transformValues = values => values.aksjonspunktKoder.map(apCode => ({
   kode: apCode,
   begrunnelse: values.begrunnelse,
@@ -275,30 +279,32 @@ const transformValues = values => values.aksjonspunktKoder.map(apCode => ({
 
 const formName = 'VedtakForm';
 
-const mapStateToProps = (state, initialProps) => ({
-  initialValues: buildInitialValues(state),
-  isBehandlingReadOnly: isBehandlingStatusReadOnly(state),
-  onSubmit: values => initialProps.submitCallback(transformValues(values)),
-  ...behandlingFormValueSelector(formName)(
-    state,
-    'antallBarn',
-    'begrunnelse',
-    'aksjonspunktKoder',
-    'skalBrukeOverstyrendeFritekstBrev',
-    'overskrift',
-    'brødtekst',
-  ),
-  behandlingId: getSelectedBehandlingId(state),
-  behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
-  behandlingStatusKode: getBehandlingStatus(state).kode,
-  aksjonspunkter: getAksjonspunkter(state),
-  behandlingsresultat: getBehandlingsresultat(state),
-  behandlingPaaVent: getBehandlingIsOnHold(state),
-  sprakkode: getBehandlingSprak(state),
-  aksjonspunktKoder: getSelectedBehandlingspunktAksjonspunkter(state)
-    .map(ap => ap.definisjon.kode),
-  kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitCallback(transformValues(values));
+  return state => ({
+    onSubmit,
+    initialValues: buildInitialValues(state),
+    isBehandlingReadOnly: isBehandlingStatusReadOnly(state),
+    ...behandlingFormValueSelector(formName)(
+      state,
+      'antallBarn',
+      'begrunnelse',
+      'aksjonspunktKoder',
+      'skalBrukeOverstyrendeFritekstBrev',
+      'overskrift',
+      'brødtekst',
+    ),
+    behandlingId: getSelectedBehandlingId(state),
+    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+    behandlingStatusKode: getBehandlingStatus(state).kode,
+    aksjonspunkter: getAksjonspunkter(state),
+    behandlingsresultat: getBehandlingsresultat(state),
+    behandlingPaaVent: getBehandlingIsOnHold(state),
+    sprakkode: getBehandlingSprak(state),
+    aksjonspunktKoder: getAksjonspunktKoder(state),
+    kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
+  });
+};
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
@@ -307,7 +313,7 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-const VedtakForm = connect(mapStateToProps, mapDispatchToProps)(injectIntl(behandlingForm({
+const VedtakForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
   form: formName,
 })(VedtakFormImpl)));
 

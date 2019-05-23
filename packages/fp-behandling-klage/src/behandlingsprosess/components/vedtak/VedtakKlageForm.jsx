@@ -225,25 +225,30 @@ export const buildInitialValues = createSelector(
   },
 );
 
-const mapStateToProps = (state, initialProps) => ({
-  initialValues: buildInitialValues(state),
-  isAvvist: getIsAvvist(state),
-  avvistArsaker: getAvvisningsAarsaker(state),
-  isOpphevOgHjemsend: getIsOpphevOgHjemsend(state),
-  isOmgjort: getIsOmgjort(state),
-  omgjortAarsak: getOmgjortAarsak(state),
-  fritekstTilBrev: getFritekstTilBrev(state),
-  behandlingsResultatTekst: getResultatText(state),
-  klageVurdering: getKlageResultat(state),
-  behandlingsresultat: getBehandlingsresultat(state),
-  onSubmit: values => initialProps.submitCallback(transformValues(values)),
-  ...behandlingFormValueSelector(VEDTAK_KLAGE_FORM_NAME)(
-    state,
-    'begrunnelse',
-    'aksjonspunktKoder',
-  ),
-});
-const VedtakKlageForm = connect(mapStateToProps)(behandlingForm({
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitCallback(transformValues(values));
+  return state => ({
+    onSubmit,
+    initialValues: buildInitialValues(state),
+    isAvvist: getIsAvvist(state),
+    avvistArsaker: getAvvisningsAarsaker(state),
+    isOpphevOgHjemsend: getIsOpphevOgHjemsend(state),
+    isOmgjort: getIsOmgjort(state),
+    omgjortAarsak: getOmgjortAarsak(state),
+    fritekstTilBrev: getFritekstTilBrev(state),
+    behandlingsResultatTekst: getResultatText(state),
+    klageVurdering: getKlageResultat(state),
+    behandlingsresultat: getBehandlingsresultat(state),
+    ...behandlingFormValueSelector(VEDTAK_KLAGE_FORM_NAME)(
+      state,
+      'begrunnelse',
+      'aksjonspunktKoder',
+    ),
+  });
+};
+
+
+const VedtakKlageForm = connect(mapStateToPropsFactory)(behandlingForm({
   form: VEDTAK_KLAGE_FORM_NAME,
 })(injectIntl(VedtakKlageFormImpl)));
 

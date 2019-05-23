@@ -269,30 +269,36 @@ const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
   return aarsakTekstList.join(', ');
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  initialValues: buildInitialValues(state),
-  isBehandlingReadOnly: isBehandlingStatusReadOnly(state),
-  onSubmit: values => ownProps.submitCallback(transformValues(values)),
-  ...behandlingFormValueSelector(VEDTAK_REVURDERING_FORM_NAME)(
-    state,
-    'antallBarn',
-    'begrunnelse',
-    'aksjonspunktKoder',
-    'skalBrukeOverstyrendeFritekstBrev',
-    'overskrift',
-    'brødtekst',
-  ),
-  behandlingId: getSelectedBehandlingId(state),
-  behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
-  behandlingStatusKode: getBehandlingStatus(state).kode,
-  behandlingsresultat: getBehandlingsresultat(state),
-  aksjonspunkter: getSelectedBehandlingspunktAksjonspunkter(state),
-  ytelseType: getFagsakYtelseType(state).kode,
-  sprakkode: getBehandlingSprak(state),
-  aksjonspunktKoder: getSelectedBehandlingspunktAksjonspunkter(state).map(ap => ap.definisjon.kode),
-  revurderingsAarsakString: createAarsakString(getBehandlingArsakTyper(state), getKodeverknavnFn(getAlleKodeverk(state), kodeverkTyper)),
-  kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitCallback(transformValues(values));
+  const aksjonspunktKoder = getSelectedBehandlingspunktAksjonspunkter(initialState).map(ap => ap.definisjon.kode);
+  const revurderingsAarsakString = createAarsakString(getBehandlingArsakTyper(initialState), getKodeverknavnFn(getAlleKodeverk(initialState), kodeverkTyper));
+
+  return state => ({
+    onSubmit,
+    aksjonspunktKoder,
+    revurderingsAarsakString,
+    initialValues: buildInitialValues(state),
+    isBehandlingReadOnly: isBehandlingStatusReadOnly(state),
+    ...behandlingFormValueSelector(VEDTAK_REVURDERING_FORM_NAME)(
+      state,
+      'antallBarn',
+      'begrunnelse',
+      'aksjonspunktKoder',
+      'skalBrukeOverstyrendeFritekstBrev',
+      'overskrift',
+      'brødtekst',
+    ),
+    behandlingId: getSelectedBehandlingId(state),
+    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+    behandlingStatusKode: getBehandlingStatus(state).kode,
+    behandlingsresultat: getBehandlingsresultat(state),
+    aksjonspunkter: getSelectedBehandlingspunktAksjonspunkter(state),
+    ytelseType: getFagsakYtelseType(state).kode,
+    sprakkode: getBehandlingSprak(state),
+    kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
+  });
+};
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
@@ -301,7 +307,7 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-const VedtakRevurderingForm = connect(mapStateToProps, mapDispatchToProps)(injectIntl(behandlingForm({
+const VedtakRevurderingForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
   form: VEDTAK_REVURDERING_FORM_NAME,
 })(VedtakRevurderingFormImpl)));
 

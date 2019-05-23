@@ -97,32 +97,32 @@ FodselOgTilretteleggingFaktaForm.propTypes = {
 
 const transformValues = values => ([{
   kode: aksjonspunktCodes.FODSELTILRETTELEGGING,
-...values,
-bekreftetSvpArbeidsforholdList: values.arbeidsforhold,
+  ...values,
+  bekreftetSvpArbeidsforholdList: values.arbeidsforhold,
 }]);
 
-const mapStateToProps = (state, ownProps) => {
-  const visBegrunnelse = createSelector(
-    [
-      isBehandlingFormDirty(FODSEL_TILRETTELEGGING_FORM),
-      getBehandlingFormValues(FODSEL_TILRETTELEGGING_FORM),
-      getBehandlingFormInitialValues(FODSEL_TILRETTELEGGING_FORM),
-    ],
-    (dirty, values, initialValues = {}) => dirty && values.termindato !== initialValues.termindato,
-  );
+const visBegrunnelse = createSelector([isBehandlingFormDirty(FODSEL_TILRETTELEGGING_FORM), getBehandlingFormValues(FODSEL_TILRETTELEGGING_FORM),
+    getBehandlingFormInitialValues(FODSEL_TILRETTELEGGING_FORM)],
+    (dirty, values, initialValues = {}) => dirty && values.termindato !== initialValues.termindato);
 
-  const tilrettelegging = getTilrettelegging(state);
-  return {
-    initialValues: {
-      termindato: tilrettelegging ? tilrettelegging.termindato : '',
-      begrunnelse: tilrettelegging ? tilrettelegging.begrunnelse : '',
-      arbeidsforhold: tilrettelegging ? tilrettelegging.arbeidsforholdListe : [],
-    },
-    visBegrunnelse: visBegrunnelse(state),
-    onSubmit: values => ownProps.submitCallback(transformValues(values)),
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  // TODO: hente info fra backend når klart.  venter avklaring på om det blir checkboxer( mulighet for flere datoer),
+  //  eller radiobuttons (kun 1 dato)
+  const tilrettelegging = getTilrettelegging(initialState);
+  const initialValues = {
+    termindato: tilrettelegging ? tilrettelegging.termindato : '',
+    begrunnelse: tilrettelegging ? tilrettelegging.begrunnelse : '',
+    arbeidsforhold: tilrettelegging ? tilrettelegging.arbeidsforholdListe : [],
   };
+  const onSubmit = values => ownProps.submitCallback(transformValues(values));
+
+  return state => ({
+      initialValues,
+      onSubmit,
+      visBegrunnelse: visBegrunnelse(state),
+    });
 };
 
-export default connect(mapStateToProps)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: FODSEL_TILRETTELEGGING_FORM,
 })(FodselOgTilretteleggingFaktaForm));

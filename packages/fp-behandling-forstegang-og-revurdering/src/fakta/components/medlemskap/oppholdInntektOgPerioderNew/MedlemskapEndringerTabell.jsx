@@ -40,12 +40,15 @@ const MedlemskapEndringerTabellImpl = ({
   </Table>
 );
 
+const mapStateToPropsFactory = (initialState) => {
+  const perioder = (behandlingFormValueSelector('OppholdInntektOgPerioderForm')(initialState, 'perioder') || [])
+    .sort((a, b) => a.vurderingsdato.localeCompare(b.vurderingsdato));
+  return () => ({
+    perioder,
+  });
+};
 
-const MedlemskapEndringerTabell = connect(state => (
-  {
-    perioder: (behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'perioder') || [])
-      .sort((a, b) => a.vurderingsdato.localeCompare(b.vurderingsdato)),
-  }))(injectIntl(MedlemskapEndringerTabellImpl));
+const MedlemskapEndringerTabell = connect(mapStateToPropsFactory)(injectIntl(MedlemskapEndringerTabellImpl));
 
 MedlemskapEndringerTabellImpl.propTypes = {
   selectedId: PropTypes.string,

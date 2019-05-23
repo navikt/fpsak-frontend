@@ -11,18 +11,18 @@ import {
   withDefaultToggling,
 } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes, getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
-import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+
+import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import {
   getSoknad, getFamiliehendelseGjeldende, getPersonopplysning, getInnvilgetRelatertTilgrensendeYtelserForAnnenForelder,
   getAksjonspunkter,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import { getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';
-
 
 /**
  * OmsorgOgForeldreansvarInfoPanel
@@ -110,17 +110,24 @@ const transformValues = (values, aksjonspunkt) => ({
   ...{ begrunnelse: values.begrunnelse },
 });
 
-const mapStateToProps = (state, initialProps) => ({
-  erAksjonspunktForeldreansvar: initialProps.aksjonspunkter[0].definisjon.kode === aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR,
-  initialValues: buildInitialValues(state),
-  onSubmit: values => initialProps.submitCallback([transformValues(values, initialProps.aksjonspunkter[0])]),
-  vilkarTypes: getKodeverk(kodeverkTyper.OMSORGSOVERTAKELSE_VILKAR_TYPE)(state),
-  relatertYtelseTypes: getKodeverk(kodeverkTyper.RELATERT_YTELSE_TYPE)(state),
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitCallback([transformValues(values, ownProps.aksjonspunkter[0])]);
+  const erAksjonspunktForeldreansvar = ownProps.aksjonspunkter[0].definisjon.kode === aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR;
+  const vilkarTypes = getKodeverk(kodeverkTyper.OMSORGSOVERTAKELSE_VILKAR_TYPE)(initialState);
+  const relatertYtelseTypes = getKodeverk(kodeverkTyper.RELATERT_YTELSE_TYPE)(initialState);
+
+  return state => ({
+    initialValues: buildInitialValues(state),
+    vilkarTypes,
+    relatertYtelseTypes,
+    erAksjonspunktForeldreansvar,
+    onSubmit,
+  });
+};
 
 const omsorgOgForeldreansvarAksjonspunkter = [aksjonspunktCodes.OMSORGSOVERTAKELSE, aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR];
 
-const ConnectedComponent = connect(mapStateToProps)(behandlingForm({
+const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingForm({
   form: 'OmsorgOgForeldreansvarInfoPanel',
   validate: OmsorgOgForeldreansvarFaktaForm.validate,
 })(injectIntl(OmsorgOgForeldreansvarInfoPanelImpl)));

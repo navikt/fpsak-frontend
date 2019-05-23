@@ -218,24 +218,27 @@ const findTextCode = createSelector([getSoknad, getFamiliehendelseGjeldende], (s
 
 const formName = 'ErSoknadsfristVilkaretOppfyltForm';
 
-const mapStateToProps = (state, initialProps) => {
-  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(state);
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(initialState);
   const vilkarCodes = aksjonspunkter.map(a => a.vilkarType.kode);
-  return {
+  const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunkter)]);
+  const antallDagerSoknadLevertForSent = getBehandlingVilkar(initialState)
+        .find(v => vilkarCodes.includes(v.vilkarType.kode)).merknadParametere.antallDagerSoeknadLevertForSent;
+
+  return state => ({
+    onSubmit,
+    antallDagerSoknadLevertForSent,
     initialValues: buildInitialValues(state),
-    onSubmit: values => initialProps.submitCallback([transformValues(values, aksjonspunkter)]),
     behandlingsresultat: getBehandlingsresultat(state),
     soknad: getSoknad(state),
-    antallDagerSoknadLevertForSent: getBehandlingVilkar(state)
-      .find(v => vilkarCodes.includes(v.vilkarType.kode)).merknadParametere.antallDagerSoeknadLevertForSent,
     dato: findDate(state),
     textCode: findTextCode(state),
     hasAksjonspunkt: aksjonspunkter.length > 0,
     ...behandlingFormValueSelector(formName)(state, 'textCode', 'dato', 'erVilkarOk'),
-  };
+  });
 };
 
-const ErSoknadsfristVilkaretOppfyltForm = connect(mapStateToProps)(injectIntl(behandlingForm({
+const ErSoknadsfristVilkaretOppfyltForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: formName,
 })(injectKodeverk(getAlleKodeverk)(ErSoknadsfristVilkaretOppfyltFormImpl))));
 

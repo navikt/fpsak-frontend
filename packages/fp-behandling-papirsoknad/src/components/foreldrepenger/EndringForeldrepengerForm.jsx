@@ -44,21 +44,26 @@ export class EndringForeldrepengerForm extends Component {
   }
 }
 
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const validate = values => PermisjonPanel.validate(values, ownProps.soknadData);
+  const initialValues = buildInitialValues();
 
-const mapStateToProps = (state, initialProps) => {
-  const registeredFields = getRegisteredFields(ENDRING_FORELDREPENGER_FORM_NAME)(state);
-  const registeredFieldNames = Object.values(registeredFields).map(rf => rf.name);
-  const valuesForRegisteredFieldsOnly = registeredFieldNames.length
-    ? {
-      ...formValueSelector(ENDRING_FORELDREPENGER_FORM_NAME)(state, ...registeredFieldNames),
-      [TIDSROM_PERMISJON_FORM_NAME_PREFIX]: PermisjonPanel
-        .transformValues(formValueSelector(ENDRING_FORELDREPENGER_FORM_NAME)(state, ...registeredFieldNames)),
-    }
-    : {};
-  return {
-    initialValues: buildInitialValues(),
-    validate: values => PermisjonPanel.validate(values, initialProps.soknadData),
-    valuesForRegisteredFieldsOnly,
+  return (state) => {
+    const registeredFields = getRegisteredFields(ENDRING_FORELDREPENGER_FORM_NAME)(state);
+    const registeredFieldNames = Object.values(registeredFields).map(rf => rf.name);
+    const valuesForRegisteredFieldsOnly = registeredFieldNames.length
+      ? {
+        ...formValueSelector(ENDRING_FORELDREPENGER_FORM_NAME)(state, ...registeredFieldNames),
+        [TIDSROM_PERMISJON_FORM_NAME_PREFIX]: PermisjonPanel
+          .transformValues(formValueSelector(ENDRING_FORELDREPENGER_FORM_NAME)(state, ...registeredFieldNames)),
+      }
+      : {};
+
+    return {
+      initialValues,
+      valuesForRegisteredFieldsOnly,
+      validate,
+    };
   };
 };
 
@@ -76,7 +81,7 @@ EndringForeldrepengerForm.defaultProps = {
 };
 
 
-export default connect(mapStateToProps)(reduxForm({
+export default connect(mapStateToPropsFactory)(reduxForm({
   form: ENDRING_FORELDREPENGER_FORM_NAME,
   enableReinitialize: true,
 })(EndringForeldrepengerForm));

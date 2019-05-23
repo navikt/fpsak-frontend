@@ -119,15 +119,17 @@ export const buildInitialValues = values => ({
   redusertArbeidStillingsprosent: values.stillingsprosent,
 });
 
-const mapStateToProps = (state, ownProps) => {
+// TODO (TOR) Denne brukar ikkje state så her bør ein ta vekk connect
+const mapStateToPropsFactory = (initialState, ownProps) => {
   const { selectedArbeidsforhold } = ownProps;
-  return {
+  const onSubmit = values => ownProps.updateArbeidsforholdCallback(transformValues(values, selectedArbeidsforhold));
+  return () => ({
     initialValues: buildInitialValues(selectedArbeidsforhold),
-    onSubmit: values => ownProps.updateArbeidsforholdCallback(transformValues(values, selectedArbeidsforhold)),
-  };
+    onSubmit,
+  });
 };
 
-export default connect(mapStateToProps)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: 'selectedFodselOgTilretteleggingForm',
   enableReinitialize: true,
 })(ArbeidsforholdInnhold));

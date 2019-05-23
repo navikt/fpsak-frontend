@@ -191,22 +191,24 @@ const getDocumenterMedFikkInnsynVerdi = createSelector(
 
 const formName = 'InnsynVedtakForm';
 
-const mapStateToProps = (state, ownProps) => {
-  const aksjonspunkter = getAksjonspunkter(state);
-  return {
-    saksNr: getSelectedSaksnummer(state),
-    documents: getDocumenterMedFikkInnsynVerdi(state),
-    sprakkode: getBehandlingSprak(state),
-    initialValues: buildInitialValues(getBehandlingInnsynMottattDato(state), aksjonspunkter),
-    apBegrunnelse: aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_INNSYN).begrunnelse,
-    begrunnelse: behandlingFormValueSelector(formName)(state, 'begrunnelse'),
-    resultat: getBehandlingInnsynResultatType(state).kode,
-    onSubmit: values => ownProps.submitCallback([transformValues(values)]),
-
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
+  return (state) => {
+    const aksjonspunkter = getAksjonspunkter(state);
+    return {
+      saksNr: getSelectedSaksnummer(state),
+      documents: getDocumenterMedFikkInnsynVerdi(state),
+      sprakkode: getBehandlingSprak(state),
+      initialValues: buildInitialValues(getBehandlingInnsynMottattDato(state), aksjonspunkter),
+      apBegrunnelse: aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_INNSYN).begrunnelse,
+      begrunnelse: behandlingFormValueSelector(formName)(state, 'begrunnelse'),
+      resultat: getBehandlingInnsynResultatType(state).kode,
+      onSubmit,
+    };
   };
 };
 
-const InnsynVedtakForm = connect(mapStateToProps)(injectIntl(behandlingForm({
+const InnsynVedtakForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: formName,
 })(InnsynVedtakFormImpl)));
 

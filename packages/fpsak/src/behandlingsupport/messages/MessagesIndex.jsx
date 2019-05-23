@@ -158,7 +158,7 @@ MessagesIndex.propTypes = {
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
   selectedBehandlingVersjon: PropTypes.number,
   selectedBehandlingSprak: PropTypes.shape(),
-  recipients: PropTypes.arrayOf(PropTypes.string).isRequired,
+  recipients: PropTypes.arrayOf(PropTypes.string),
   templates: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string.isRequired,
     navn: PropTypes.string.isRequired,
@@ -181,10 +181,10 @@ MessagesIndex.defaultProps = {
   selectedBehandlingVersjon: undefined,
   selectedBehandlingSprak: undefined,
   ventearsaker: [],
+  recipients: ['Søker'],
 };
 
 const mapStateToProps = state => ({
-  recipients: ['Søker'],
   templates: getBrevMaler(state),
   submitFinished: isSubmitMessageFinished(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
@@ -204,5 +204,4 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(requireProps(['recipients', 'templates'], <LoadingPanel />)(MessagesIndex));
+export default connect(mapStateToProps, mapDispatchToProps)(requireProps(['templates'], <LoadingPanel />)(MessagesIndex));

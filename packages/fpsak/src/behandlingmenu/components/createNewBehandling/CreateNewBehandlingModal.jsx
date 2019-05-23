@@ -1,5 +1,6 @@
 import React from 'react';
 import { formValueSelector, reduxForm } from 'redux-form';
+import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
@@ -15,6 +16,7 @@ import { required } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+
 import { getKodeverk } from 'kodeverk/duck';
 
 import styles from './createNewBehandlingModal.less';
@@ -171,30 +173,23 @@ const manuelleRevurderingsArsakerFP = [
   behandlingArsakType.KLAGE_M_INNTK,
 ];
 
-const manuelleRevurderingsArsakerSVP = [
-  behandlingArsakType.KLAGE_U_INNTK,
-  behandlingArsakType.KLAGE_M_INNTK,
-  behandlingArsakType.RE_ENDRET_INNTEKTSMELDING,
-  behandlingArsakType.RE_ENDRING_FRA_BRUKER,
-  behandlingArsakType.FØDSEL,
-  behandlingArsakType.DØD,
-  behandlingArsakType.ANNET,
-  behandlingArsakType.INNTEKT,
-];
-
-const getBehandlingAarsaker = (state) => {
-  let manuelleRevurderingsArsaker = isForeldrepengerFagsak(state) ? manuelleRevurderingsArsakerFP : manuelleRevurderingsArsakerES;
-  if (isSvangerskapFagsak(state)) {
+export const getBehandlingAarsaker = createSelector([isForeldrepengerFagsak, isSvangerskapFagsak, getKodeverk(kodeverkTyper.BEHANDLING_AARSAK)],
+(isForeldrepenger, isSvangerskap, behandlingArsaker) => {
+  let manuelleRevurderingsArsaker = isForeldrepenger ? manuelleRevurderingsArsakerFP : manuelleRevurderingsArsakerES;
+  if (isSvangerskap) {
     manuelleRevurderingsArsaker = manuelleRevurderingsArsakerSVP;
   }
-  return getKodeverk(kodeverkTyper.BEHANDLING_AARSAK)(state).filter(bat => manuelleRevurderingsArsaker.indexOf(bat.kode) > -1)
+  return behandlingArsaker
+    .filter(bat => manuelleRevurderingsArsaker.indexOf(bat.kode) > -1)
     .sort((bat1, bat2) => bat2.navn.length - bat1.navn.length);
-};
+});
+
+const getBehandlingTyper = createSelector([getKodeverk(kodeverkTyper.BEHANDLING_TYPE)], behandlingTyper => behandlingTyper
+  .filter(bt => bt.kode !== bType.SOKNAD)
+  .sort((bt1, bt2) => bt1.navn.localeCompare(bt2.navn)));
 
 const mapStateToProps = state => ({
-  behandlingTyper: getKodeverk(kodeverkTyper.BEHANDLING_TYPE)(state)
-    .filter(bt => bt.kode !== bType.SOKNAD)
-    .sort((bt1, bt2) => bt1.navn.localeCompare(bt2.navn)),
+  behandlingTyper: getBehandlingTyper(state),
   behandlingArsakTyper: getBehandlingAarsaker(state),
   behandlingType: formValueSelector(formName)(state, 'behandlingType'),
 });

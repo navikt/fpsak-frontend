@@ -402,52 +402,56 @@ const validateNyPeriodeForm = (values) => {
   return errors;
 };
 
-const mapStateToProps = (state, ownProps) => {
-  const periodeTyper = getKodeverk(kodeverkTyper.UTTAK_PERIODE_TYPE)(state) || null;
-  const utsettelseÅrsaker = getKodeverk(kodeverkTyper.UTSETTELSE_AARSAK_TYPE)(state);
-  const overføringÅrsaker = getKodeverk(kodeverkTyper.OVERFOERING_AARSAK_TYPE)(state);
-  const personopplysninger = getPersonopplysning(state);
-  const andeler = getFaktaArbeidsforhold(state) || [];
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const { newPeriodeCallback, uttakPeriodeVurderingTyper, getKodeverknavn } = ownProps;
+  const periodeTyper = getKodeverk(kodeverkTyper.UTTAK_PERIODE_TYPE)(initialState) || null;
+  const utsettelseÅrsaker = getKodeverk(kodeverkTyper.UTSETTELSE_AARSAK_TYPE)(initialState);
+  const overføringÅrsaker = getKodeverk(kodeverkTyper.OVERFOERING_AARSAK_TYPE)(initialState);
+  const onSubmit = values => newPeriodeCallback(
+    transformValues(values, periodeTyper, utsettelseÅrsaker, overføringÅrsaker, uttakPeriodeVurderingTyper, getKodeverknavn),
+  );
 
-  return {
-    periodeTyper,
-    utsettelseÅrsaker,
-    overføringÅrsaker,
-    andeler,
-    sokerKjonn: personopplysninger.navBrukerKjonn.kode,
-    initialValues: {
-      fom: null,
-      tom: null,
-      periodeType: null,
-      periodeOverforingArsak: null,
-      periodeArsak: null,
-      arbeidsForhold: null,
-      arbeidstidprosent: null,
-      typeUttak: null,
-      flerbarnsdager: false,
-      samtidigUttakNyPeriode: false,
-      samtidigUttaksprosent: null,
-    },
-    nyPeriode: behandlingFormValueSelector('nyPeriodeForm')(
-      state,
-      'fom',
-      'tom',
-      'periodeType',
-      'periodeOverforingArsak',
-      'periodeArsak',
-      'samtidigUttakNyPeriode',
-      'arbeidsForhold',
-      'arbeidstidprosent',
-      'typeUttak',
-    ),
+  return (state) => {
+    const personopplysninger = getPersonopplysning(state);
+    const andeler = getFaktaArbeidsforhold(state) || [];
 
-    onSubmit: values => ownProps.newPeriodeCallback(
-      transformValues(values, periodeTyper, utsettelseÅrsaker, overføringÅrsaker, ownProps.uttakPeriodeVurderingTyper, ownProps.getKodeverknavn),
-    ),
+    return {
+      periodeTyper,
+      utsettelseÅrsaker,
+      overføringÅrsaker,
+      andeler,
+      sokerKjonn: personopplysninger.navBrukerKjonn.kode,
+      initialValues: {
+        fom: null,
+        tom: null,
+        periodeType: null,
+        periodeOverforingArsak: null,
+        periodeArsak: null,
+        arbeidsForhold: null,
+        arbeidstidprosent: null,
+        typeUttak: null,
+        flerbarnsdager: false,
+        samtidigUttakNyPeriode: false,
+        samtidigUttaksprosent: null,
+      },
+      nyPeriode: behandlingFormValueSelector('nyPeriodeForm')(
+        state,
+        'fom',
+        'tom',
+        'periodeType',
+        'periodeOverforingArsak',
+        'periodeArsak',
+        'samtidigUttakNyPeriode',
+        'arbeidsForhold',
+        'arbeidstidprosent',
+        'typeUttak',
+      ),
+      onSubmit,
+    };
   };
 };
 
-export default connect(mapStateToProps)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: 'nyPeriodeForm',
   validate: values => validateNyPeriodeForm(values),
   enableReinitialize: true,
