@@ -67,7 +67,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   return state => ({
     onSubmit,
     initialValues: buildInitialValues(state),
-    dirty: !initialProps.notSubmittable && initialProps.dirty,
+    dirty: !ownProps.notSubmittable && ownProps.dirty,
   });
 };
 
