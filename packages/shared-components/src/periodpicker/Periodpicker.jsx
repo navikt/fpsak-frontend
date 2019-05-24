@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Input } from 'nav-frontend-skjema';
-
 import { DateUtils } from 'react-day-picker';
 import { DDMMYYYY_DATE_FORMAT, haystack } from '@fpsak-frontend/utils';
-import ElementWrapper from '../ElementWrapper';
 import CalendarToggleButton from '../datepicker/CalendarToggleButton';
 import PeriodCalendarOverlay from './PeriodCalendarOverlay';
 
@@ -146,7 +144,7 @@ class Periodpicker extends Component {
     } = this.state;
 
     return (
-      <ElementWrapper>
+      <>
         <div className={styles.inputWrapper}>
           <Input
             className={styles.dateInput}
@@ -185,7 +183,7 @@ class Periodpicker extends Component {
         />
         )
         }
-      </ElementWrapper>
+      </>
     );
   }
 }

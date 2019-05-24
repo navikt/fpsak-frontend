@@ -87,7 +87,7 @@ class CalendarOverlay extends Component {
     }
 
     const {
-      onDayChange, className, dayPickerClassName, initialMonth,
+      onDayChange, className, dayPickerClassName, initialMonth, numberOfMonths, disabledDays,
     } = this.props;
     const selectedDay = this.parseDateValue();
     return (
@@ -107,6 +107,8 @@ class CalendarOverlay extends Component {
           onDayClick={onDayChange}
           onKeyDown={this.onKeyDown}
           initialMonth={initialMonth}
+          disabledDays={disabledDays}
+          numberOfMonths={numberOfMonths}
         />
       </div>
     );
@@ -123,6 +125,8 @@ CalendarOverlay.propTypes = {
   disabled: PropTypes.bool,
   onClose: PropTypes.func,
   initialMonth: PropTypes.instanceOf(Date),
+  numberOfMonths: PropTypes.number.isRequired,
+  disabledDays: PropTypes.shape().isRequired,
 };
 
 CalendarOverlay.defaultProps = {
