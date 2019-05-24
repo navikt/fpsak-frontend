@@ -247,7 +247,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const onSubmit = values => ownProps.submitCallback([values]);
   const erAutomatiskRevurdering = getBehandlingArsaker(initialState).reduce((result, current) => (result || current.erAutomatiskRevurdering), false);
   const aksjonspunkt = getSelectedBehandlingspunktAksjonspunkter(initialState)[0];
-  const ventearsaker = getKodeverk(kodeverkTyper.VENTEARSAK)(state);
+  const ventearsaker = getKodeverk(kodeverkTyper.VENTEARSAK)(initialState);
 
   return state => ({
     initialValues: buildInitialValues(state),
