@@ -106,35 +106,21 @@ const transformValues = values => ([{
   bekreftetSvpArbeidsforholdList: values.arbeidsforhold,
 }]);
 
-<<<<<<< HEAD
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const tilrettelegging = getTilrettelegging(initialState);
-  const soknad = getSoknad(state);
+  const fodselsdato = tilrettelegging ? tilrettelegging.fødselsdato : '';
   const initialValues = {
     termindato: tilrettelegging ? tilrettelegging.termindato : '',
     begrunnelse: tilrettelegging ? tilrettelegging.begrunnelse : '',
     arbeidsforhold: tilrettelegging ? tilrettelegging.arbeidsforholdListe : [],
-    fodselsdato: soknad.fodselsdatoer ? soknad.fodselsdatoer[0] : '',
-=======
-const mapStateToProps = (state, ownProps) => {
-  const tilrettelegging = getTilrettelegging(state);
-  const fodselsdato = tilrettelegging ? tilrettelegging.fødselsdato : '';
-  return {
     fodselsdato,
-    initialValues: {
-      termindato: tilrettelegging ? tilrettelegging.termindato : '',
-      begrunnelse: tilrettelegging ? tilrettelegging.begrunnelse : '',
-      arbeidsforhold: tilrettelegging ? tilrettelegging.arbeidsforholdListe : [],
-      fodselsdato,
-    },
-    onSubmit: values => ownProps.submitCallback(transformValues(values)),
->>>>>>> FIX: fixes
   };
   const onSubmit = values => ownProps.submitCallback(transformValues(values));
 
   return state => ({
       initialValues,
       onSubmit,
+      fodselsdato,
       visBegrunnelse: visBegrunnelse(state),
     });
 };
