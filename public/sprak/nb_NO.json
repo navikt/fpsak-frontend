@@ -1306,6 +1306,8 @@
   "SokersOpplysningspliktForm.ManglendeDokumentasjon": "Manglende dokumentasjon",
   "Totrinnskontroll.godkjent": "er godkjent",
   "Totrinnskontroll.ikkeGodkjent": "må vurderes på nytt",
+  "Totrinnskontroll.godkjentKomplett": "Er godkjent",
+  "Totrinnskontroll.ikkeGodkjentKomplett": "Må vurderes på nytt",
   "ToTrinnsForm.Godkjent": "Godkjent",
   "ToTrinnsForm.LøstAksjonspunkt": "<b>Løst aksjonspunkt:</b> Kontroller endrede opplysninger og faglige vurderinger",
   "ToTrinnsForm.Beregning.AvklarAktiviteter": "Det er vurdert hvilke aktiviteter som skal benyttes i beregning.",
