@@ -33,7 +33,6 @@ export {
 
 export {
   RETTSKILDE_URL,
-  LINK_TIL_REGNEARK,
   LINK_TIL_BESTE_BEREGNING_REGNEARK,
   SYSTEMRUTINE_URL,
 } from './src/eksterneLenker';
