@@ -173,6 +173,17 @@ const manuelleRevurderingsArsakerFP = [
   behandlingArsakType.KLAGE_M_INNTK,
 ];
 
+const manuelleRevurderingsArsakerSVP = [
+  behandlingArsakType.KLAGE_U_INNTK,
+  behandlingArsakType.KLAGE_M_INNTK,
+  behandlingArsakType.RE_ENDRET_INNTEKTSMELDING,
+  behandlingArsakType.RE_ENDRING_FRA_BRUKER,
+  behandlingArsakType.FØDSEL,
+  behandlingArsakType.DØD,
+  behandlingArsakType.ANNET,
+  behandlingArsakType.INNTEKT,
+];
+
 export const getBehandlingAarsaker = createSelector([isForeldrepengerFagsak, isSvangerskapFagsak, getKodeverk(kodeverkTyper.BEHANDLING_AARSAK)],
 (isForeldrepenger, isSvangerskap, behandlingArsaker) => {
   let manuelleRevurderingsArsaker = isForeldrepenger ? manuelleRevurderingsArsakerFP : manuelleRevurderingsArsakerES;
