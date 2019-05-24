@@ -56,7 +56,7 @@ export class ArbeidsforholdFaktaPanel extends Component {
 
   updateArbeidsforhold(values) {
     const { reduxFormChange: formChange, behandlingFormPrefix, arbeidsforhold } = this.props;
-    const otherThanUpdated = arbeidsforhold.filter(a => a.arbeidsgiverIdent !== values.arbeidsgiverIdent);
+    const otherThanUpdated = arbeidsforhold.filter(a => a.tilretteleggingId !== values.tilretteleggingId);
     const fieldValues = otherThanUpdated.concat(values).sort((a, b) => a.arbeidsgiverNavn.localeCompare(b.arbeidsgiverNavn));
     formChange(`${behandlingFormPrefix}.${'FodselOgTilretteleggingForm'}`, 'arbeidsforhold', fieldValues);
     this.setState({ selectedArbeidsforhold: undefined });
@@ -73,7 +73,7 @@ export class ArbeidsforholdFaktaPanel extends Component {
         <ArbeidsforholdTable
           arbeidsforhold={arbeidsforhold}
           selectArbeidsforholdCallback={this.setSelectedArbeidsforhold}
-          selectedArbeidsforhold={selectedArbeidsforhold ? selectedArbeidsforhold.arbeidsgiverIdent : undefined}
+          selectedArbeidsforhold={selectedArbeidsforhold ? selectedArbeidsforhold.tilretteleggingId : undefined}
         />
         {selectedArbeidsforhold
         && (

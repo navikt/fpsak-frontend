@@ -113,7 +113,7 @@ export class BehandlingsprosessIndex extends Component {
     }
     const indexOfUttak = behandlingspunkter.indexOf('uttak');
     if (indexOfUttak && indexOfUttak !== -1) {
-      return (behandlingspunkter.splice(indexOfUttak, 1));
+      behandlingspunkter.splice(indexOfUttak, 1);
     }
     return behandlingspunkter;
   }

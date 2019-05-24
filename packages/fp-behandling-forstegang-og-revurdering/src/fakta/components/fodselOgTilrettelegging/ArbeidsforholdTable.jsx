@@ -7,6 +7,7 @@ import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import {
   Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
+import style from './arbeidsforholdTable.less';
 
 /**
  * Svangerskapspenger
@@ -31,7 +32,8 @@ const ArbeidsforholdTable = ({
         model={a}
         onMouseDown={selectArbeidsforholdCallback}
         onKeyDown={selectArbeidsforholdCallback}
-        isSelected={a.arbeidsgiverIdent === selectedArbeidsforhold}
+        isSelected={a.tilretteleggingId === selectedArbeidsforhold}
+        className={a.tilretteleggingId === selectedArbeidsforhold ? style.selectedArbeidsforhold : null}
       >
         <TableColumn>
           <Normaltekst>

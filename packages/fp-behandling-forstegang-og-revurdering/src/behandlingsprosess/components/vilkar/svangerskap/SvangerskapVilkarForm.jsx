@@ -26,12 +26,10 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 export const SvangerskapVilkarFormImpl = ({
   // intl,
   avslagsarsaker,
-  lovReferanse,
   readOnly,
   readOnlySubmitButton,
   erVilkarOk,
   hasAksjonspunkt,
-  status,
   isAksjonspunktOpen,
   ...formProps
 }) => (
@@ -43,8 +41,6 @@ export const SvangerskapVilkarFormImpl = ({
     formProps={formProps}
     readOnlySubmitButton={readOnlySubmitButton}
     readOnly={readOnly}
-    bpStatus={status}
-    lovReferanse={lovReferanse}
   >
     <VilkarResultPicker avslagsarsaker={avslagsarsaker} erVilkarOk={erVilkarOk} readOnly={readOnly} hasAksjonspunkt={hasAksjonspunkt} />
     {erVilkarOk === false
