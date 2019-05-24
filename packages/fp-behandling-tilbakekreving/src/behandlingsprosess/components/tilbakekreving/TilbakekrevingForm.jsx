@@ -132,7 +132,10 @@ const finnOriginalPeriode = (lagretPeriode, perioder) => perioder
   .find(periode => !moment(lagretPeriode.fom).isBefore(moment(periode.fom)) && !moment(lagretPeriode.tom).isAfter(moment(periode.tom)));
 
 const erIkkeLagret = (periode, lagredePerioder) => lagredePerioder
-  .every(lagretPeriode => moment(periode.fom).isBefore(moment(lagretPeriode.fom)) || moment(periode.tom).isAfter(moment(lagretPeriode.tom)));
+  .every((lagretPeriode) => {
+    const isOverlapping = moment(periode.fom).isSameOrBefore(moment(lagretPeriode.tom)) && moment(lagretPeriode.fom).isSameOrBefore(moment(periode.tom));
+    return !isOverlapping;
+  });
 
 export const buildInitialValues = createSelector([getBehandlingVilkarsvurderingsperioder, getBehandlingVilkarsvurdering,
   getBehandlingVilkarsvurderingsRettsgebyr], (perioder, vilkarsvurdering, rettsgebyr) => {
