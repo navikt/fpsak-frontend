@@ -262,7 +262,7 @@
   "FeilutbetalingInfoPanel.PeriodeMedFeilutbetaling": "Periode med feilutbetaling",
   "FeilutbetalingInfoPanel.FeilutbetaltBeløp": "Feilutbetalt beløp totalt",
   "FeilutbetalingInfoPanel.TidligereVarsel": "Tidligere sendt varsel om tilbakekreving",
-  "FeilutbetalingInfoPanel.TidligereVarseltBeløp": "Tidligere varselt beløp",
+  "FeilutbetalingInfoPanel.TidligereVarseltBeløp": "Tidligere varslet beløp",
   "FeilutbetalingInfoPanel.Period": "Period",
   "FeilutbetalingInfoPanel.Hendelse": "Hendelse",
   "FeilutbetalingInfoPanel.Beløp": "Feilutbetalt beløp",
@@ -2280,7 +2280,7 @@
 
   "FeilutbetalingInfoPanel.Aksjonspunkt": "Kontroller at korrekt hendelse er satt",
 
-  "TilbakekrevingForm.AksjonspunktHjelpetekst": "Fastsett tilbakekreving etter §22-1. Del opp perioden ved behov for ulik vurdering",
+  "TilbakekrevingForm.AksjonspunktHjelpetekst": "Fastsett tilbakekreving etter §22-15. Del opp perioden ved behov for ulik vurdering",
 
   "TilbakekrevingPeriodeForm.VilkarForTilbakekreving": "Vilkårene for tilbakekreving",
   "TilbakekrevingPeriodeForm.oppfylt": "Er vilkårene for tilbakekreving oppfylt?",
