@@ -271,7 +271,7 @@ FeilutbetalingInfoPanelImpl.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   årsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   merknaderFraBeslutter: PropTypes.shape({
-    notAccepted: PropTypes.bool.isRequired,
+    notAccepted: PropTypes.bool,
   }).isRequired,
   ...formPropTypes,
 };
