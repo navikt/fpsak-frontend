@@ -97,7 +97,11 @@ export const FodselOgTilretteleggingFaktaForm = ({
 FodselOgTilretteleggingFaktaForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
-  fodselsdato: PropTypes.string.isRequired,
+  fodselsdato: PropTypes.string,
+};
+
+FodselOgTilretteleggingFaktaForm.defaultProps = {
+  fodselsdato: '',
 };
 
 const transformValues = values => ([{
@@ -117,11 +121,10 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   };
   const onSubmit = values => ownProps.submitCallback(transformValues(values));
 
-  return state => ({
+  return ({
       initialValues,
       onSubmit,
       fodselsdato,
-      visBegrunnelse: visBegrunnelse(state),
     });
 };
 
