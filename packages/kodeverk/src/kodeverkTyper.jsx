@@ -28,6 +28,7 @@ const kodeverkTyper = {
   OPPTJENING_AKTIVITET_TYPE: 'OpptjeningAktivitetType',
   UTTAK_PERIODE_TYPE: 'UttakPeriodeType',
   REVURDERING_VARSLING_ÅRSAK: 'RevurderingVarslingÅrsak',
+  MANUELL_BEHANDLING_AARSAK: 'ManuellBehandlingÅrsak',
   UTTAK_PERIODE_VURDERING_TYPE: 'UttakPeriodeVurderingType',
   IKKE_OPPFYLT_AARSAK: 'IkkeOppfyltÅrsak',
   UTTAK_AVSLAG_ARSAK: 'IkkeOppfyltÅrsak',
