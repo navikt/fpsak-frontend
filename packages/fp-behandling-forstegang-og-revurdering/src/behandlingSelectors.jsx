@@ -47,6 +47,8 @@ export const erManueltOpprettet = createSelector([getBehandlingArsaker], (behand
   .some(ba => ba.manueltOpprettet === true));
 export const erArsakTypeHendelseFodsel = createSelector([getBehandlingArsakTyper], (behandlingArsakTyper = []) => behandlingArsakTyper
   .some(bt => bt.kode === 'RE-HENDELSE-FØDSEL'));
+export const erArsakTypeBehandlingEtterKlage = createSelector([getBehandlingArsakTyper], (behandlingArsakTyper = []) => behandlingArsakTyper
+  .some(bt => bt.kode === behandlingArsakType.ETTER_KLAGE || bt.kode === behandlingArsakType.KLAGE_U_INNTK || bt.kode === behandlingArsakType.KLAGE_M_INNTK));
 
 export const getBehandlingIsManuellRevurdering = createSelector(
   [getBehandlingIsRevurdering, erManueltOpprettet, erArsakTypeHendelseFodsel],

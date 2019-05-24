@@ -61,6 +61,7 @@ describe('<VedtakForm>', () => {
       isBehandlingReadOnly
       skalBrukeOverstyrendeFritekstBrev={false}
       sprakkode={sprakkode}
+      erBehandlingEtterKlage={false}
       initialValues={initialValues}
     />);
 
@@ -117,6 +118,7 @@ describe('<VedtakForm>', () => {
       isBehandlingReadOnly
       sprakkode={sprakkode}
       skalBrukeOverstyrendeFritekstBrev
+      erBehandlingEtterKlage={false}
     />);
     const label = wrapper.find('Element');
     expect(label).to.have.length(0);
@@ -168,6 +170,7 @@ describe('<VedtakForm>', () => {
       sprakkode={sprakkode}
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
+      erBehandlingEtterKlage={false}
     />);
 
     expect(wrapper.find(VedtakAvslagPanel)).to.have.length(1);
@@ -220,6 +223,7 @@ describe('<VedtakForm>', () => {
       kanOverstyre
       sprakkode={sprakkode}
       skalBrukeOverstyrendeFritekstBrev={false}
+      erBehandlingEtterKlage={false}
       initialValues={initialValues}
     />);
 
@@ -270,6 +274,7 @@ describe('<VedtakForm>', () => {
       sprakkode={sprakkode}
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
+      erBehandlingEtterKlage={false}
     />);
 
     const hovedknapp = wrapper.find('Hovedknapp');
@@ -322,6 +327,7 @@ describe('<VedtakForm>', () => {
       sprakkode={sprakkode}
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
+      erBehandlingEtterKlage={false}
     />);
 
     const hovedknapp = wrapper.find('Hovedknapp');
@@ -377,6 +383,7 @@ describe('<VedtakForm>', () => {
       sprakkode={sprakkode}
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
+      erBehandlingEtterKlage={false}
     />);
 
     const hovedknapp = wrapper.find('Hovedknapp');
@@ -430,6 +437,7 @@ describe('<VedtakForm>', () => {
       sprakkode={sprakkode}
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
+      erBehandlingEtterKlage={false}
     />);
 
     const hovedknapp = wrapper.find('Hovedknapp');
@@ -474,6 +482,7 @@ describe('<VedtakForm>', () => {
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
       previewVedtakCallback={forhandsvisVedtaksbrevFunc}
+      erBehandlingEtterKlage={false}
       previewManueltBrevCallback={forhandsvisVedtaksbrevFunc}
       aksjonspunktKoder={aksjonspunktKoder}
       readOnly={false}
@@ -533,6 +542,7 @@ describe('<VedtakForm>', () => {
       sprakkode={sprakkode}
       skalBrukeOverstyrendeFritekstBrev
       initialValues={initialValues}
+      erBehandlingEtterKlage={false}
     />);
 
     const hovedknapp = wrapper.find('Hovedknapp');
@@ -694,6 +704,7 @@ describe('<VedtakForm>', () => {
       kanOverstyre
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
+      erBehandlingEtterKlage={false}
     />);
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
     expect(overstyringsKnapp).to.have.length(1);
@@ -718,6 +729,7 @@ describe('<VedtakForm>', () => {
       kanOverstyre
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
+      erBehandlingEtterKlage={false}
     />);
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
     expect(overstyringsKnapp).to.have.length(1);
@@ -741,6 +753,7 @@ describe('<VedtakForm>', () => {
       isBehandlingReadOnly
       sprakkode={sprakkode}
       kanOverstyre={false}
+      erBehandlingEtterKlage={false}
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
     />);

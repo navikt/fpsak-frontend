@@ -8,6 +8,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
 import { getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK } from 'behandling/duck';
+import { erArsakTypeBehandlingEtterKlage } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
 import ApprovalField from './ApprovalField';
 import { isKlage, isKlageWithKA } from './ApprovalTextUtils';
@@ -35,6 +36,7 @@ export const ToTrinnsFormImpl = ({
   klageVurderingResultatNFP,
   klageVurderingResultatNK,
   readOnly,
+  erBehandlingEtterKlage,
   totrinnskontrollContext,
   ...formProps
 }) => {
@@ -85,7 +87,7 @@ export const ToTrinnsFormImpl = ({
         >
           <FormattedMessage id="InfoPanel.SendTilbake" />
         </Hovedknapp>
-        {!isKlage(klageVurderingResultatNFP, klageVurderingResultatNK)
+        {!isKlage(klageVurderingResultatNFP, klageVurderingResultatNK) && !erBehandlingEtterKlage
         && (
         <button
           type="button"
@@ -108,6 +110,7 @@ ToTrinnsFormImpl.propTypes = {
   forhandsvisVedtaksbrev: PropTypes.func.isRequired,
   klageVurderingResultatNFP: PropTypes.shape(),
   klageVurderingResultatNK: PropTypes.shape(),
+  erBehandlingEtterKlage: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
 };
 
@@ -140,6 +143,7 @@ const mapStateToProps = state => ({
   formState: behandlingFormValueSelector(formName)(state, 'approvals'),
   klageVurderingResultatNFP: getBehandlingKlageVurderingResultatNFP(state),
   klageVurderingResultatNK: getBehandlingKlageVurderingResultatNK(state),
+  erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(state),
 });
 const ToTrinnsForm = behandlingForm({ form: formName, validate })(connect(mapStateToProps)(ToTrinnsFormImpl));
 
