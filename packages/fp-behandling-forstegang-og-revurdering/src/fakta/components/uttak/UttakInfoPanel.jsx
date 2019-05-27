@@ -110,7 +110,7 @@ const ConnectedComponent = injectIntl(UttakInfoPanelImpl);
 
 const UttakInfoPanel = withDefaultToggling(faktaPanelCodes.UTTAK, uttakAksjonspunkter)(ConnectedComponent);
 
-UttakInfoPanel.supports = (personopplysninger, ytelsesType, ytelsefordeling) => personopplysninger !== null
+UttakInfoPanel.supports = (personopplysninger, ytelsesType, ytelsefordeling = {}) => personopplysninger !== null
     && personopplysninger !== undefined
     && ytelsesType.kode === fagsakYtelseType.FORELDREPENGER
     && ytelsefordeling.endringsdato;

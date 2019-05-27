@@ -247,7 +247,7 @@ FaktaPanel.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   vilkarCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   personopplysninger: PropTypes.shape(),
-  ytelsefordeling: PropTypes.shape().isRequired,
+  ytelsefordeling: PropTypes.shape(),
   submitCallback: PropTypes.func.isRequired,
   /**
    * Oversikt over hvilke faktapaneler som er åpne
@@ -263,6 +263,7 @@ FaktaPanel.propTypes = {
 
 FaktaPanel.defaultProps = {
   personopplysninger: undefined,
+  ytelsefordeling: undefined,
 };
 
 const mapStateToProps = state => ({
