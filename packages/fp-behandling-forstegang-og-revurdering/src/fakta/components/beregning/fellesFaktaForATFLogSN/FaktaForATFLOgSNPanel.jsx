@@ -152,6 +152,8 @@ const getFaktaPanels = (readOnly, tilfeller, isAksjonspunktClosed) => {
       </ElementWrapper>,
     );
   }
+  // For visning av saker med tilfelle FASTSETT_ENDRET_BEREGNINGSGRUNNLAG
+  // Opprettelse av FASTSETT_ENDRET_BEREGNINGSGRUNNLAG er fjernet og håndteres nå i aksjonspunkt FORDEL_BEREGNINGSGRUNNLAG
   if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)
   && !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE)
   && !harFastsettATFLInntektTilfelle(tilfeller)) {

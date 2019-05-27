@@ -7,7 +7,7 @@ import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import {
   isArrayEmpty, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber,
 } from '@fpsak-frontend/utils';
@@ -25,7 +25,6 @@ import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 
 import {
   getEndringBeregningsgrunnlagPerioder,
-  getFaktaOmBeregningTilfellerKoder,
   getBehandlingIsRevurdering,
   getBeregningsgrunnlag,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
@@ -33,18 +32,12 @@ import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurderin
 import { getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import 'core-js/fn/array/flat-map';
 
-import { getUniqueListOfArbeidsforhold } from '../../ArbeidsforholdHelper';
+import { getUniqueListOfArbeidsforhold } from '../ArbeidsforholdHelper';
 import {
-  validateAndeler, validateSumFastsattBelop, validateUlikeAndeler,
-  validateTotalRefusjonPrArbeidsforhold,
+  validateAndeler, validateUlikeAndeler,
+  validateTotalRefusjonPrArbeidsforhold, validateSumFastsattBelop,
 } from '../ValidateAndelerUtils';
-import { setSkalRedigereInntektForATFL } from '../BgFordelingUtils';
 import styles from './renderEndringBGFieldArray.less';
-
-
-// For visning av saker med tilfelle FASTSETT_ENDRET_BEREGNINGSGRUNNLAG
-// Opprettelse av FASTSETT_ENDRET_BEREGNINGSGRUNNLAG er fjernet og håndteres nå i aksjonspunkt FORDEL_BEREGNINGSGRUNNLAG
-// Migrer data til nytt aksjonspunkt før sletting
 
 
 const defaultBGFordeling = periodeUtenAarsak => ({
@@ -111,7 +104,7 @@ const summerFordeling = (fields) => {
   let index = 0;
   for (index; index < fields.length; index += 1) {
     const field = fields.get(index);
-    if (field.skalRedigereInntekt) {
+    if (field.harPeriodeAarsakGraderingEllerRefusjon) {
       sum += field.fastsattBelop ? Number(removeSpacesFromNumber(field.fastsattBelop)) : 0;
     } else {
       sum += field.readOnlyBelop ? Number(removeSpacesFromNumber(field.readOnlyBelop)) : 0;
@@ -209,8 +202,8 @@ const arbeidsforholdReadOnlyOrSelect = (fields, index, elementFieldId, selectVal
   </ElementWrapper>
 );
 
-export const lagBelopKolonne = (andelElementFieldId, readOnly, skalRedigereInntekt, isAksjonspunktClosed) => {
-  if (!readOnly && !skalRedigereInntekt) {
+export const lagBelopKolonne = (andelElementFieldId, readOnly, periodeUtenAarsak, isAksjonspunktClosed) => {
+  if (!readOnly && periodeUtenAarsak) {
     return (
       <TableColumn>
         <InputField
@@ -218,7 +211,7 @@ export const lagBelopKolonne = (andelElementFieldId, readOnly, skalRedigereInnte
           bredde="S"
           parse={parseCurrencyInput}
           readOnly
-          isEdited={isAksjonspunktClosed && skalRedigereInntekt}
+          isEdited={false}
         />
       </TableColumn>
     );
@@ -230,7 +223,7 @@ export const lagBelopKolonne = (andelElementFieldId, readOnly, skalRedigereInnte
         bredde="XS"
         parse={parseCurrencyInput}
         readOnly={readOnly}
-        isEdited={isAksjonspunktClosed && skalRedigereInntekt}
+        isEdited={isAksjonspunktClosed && !periodeUtenAarsak}
       />
     </TableColumn>
   );
@@ -300,7 +293,7 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
           parse={parseCurrencyInput}
         />
       </TableColumn>
-      {lagBelopKolonne(andelElementFieldId, readOnly, fields.get(index).skalRedigereInntekt, isAksjonspunktClosed)}
+      {lagBelopKolonne(andelElementFieldId, readOnly, periodeUtenAarsak, isAksjonspunktClosed)}
       <TableColumn className={(readOnly || periodeUtenAarsak) ? styles.shortLeftAligned : undefined}>
         <SelectField
           label=""
@@ -462,14 +455,9 @@ RenderEndringBGFieldArrayImpl.propTypes = {
 
 const RenderEndringBGFieldArray = injectIntl(injectKodeverk(getAlleKodeverk)(RenderEndringBGFieldArrayImpl));
 
-const summerRegisterInntektFraValues = values => (values
-  .map(({ registerInntekt }) => (registerInntekt ? removeSpacesFromNumber(registerInntekt) : 0))
-  .reduce((sum, fordeling) => sum + fordeling, 0));
-
-
-RenderEndringBGFieldArray.validate = (values, fastsattIForstePeriode, skalRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert,
+RenderEndringBGFieldArray.validate = (values, sumIPeriode, skalValidereMotRapportert,
   skalValidereInntektMotRefusjon, getKodeverknavn) => {
-  const fieldErrors = validateAndeler(values, skalRedigereInntekt, skalValidereMotRapportert, skalValidereInntektMotRefusjon, getKodeverknavn);
+  const fieldErrors = validateAndeler(values, skalValidereMotRapportert, skalValidereInntektMotRefusjon, getKodeverknavn);
   if (fieldErrors != null) {
     return fieldErrors;
   }
@@ -484,40 +472,27 @@ RenderEndringBGFieldArray.validate = (values, fastsattIForstePeriode, skalRedige
   if (refusjonPrArbeidsforholdError) {
     return { _error: <FormattedMessage id={refusjonPrArbeidsforholdError[0].id} values={refusjonPrArbeidsforholdError[1]} /> };
   }
-  const kanRedigereInntekt = values.some(andel => skalRedigereInntekt(andel));
-  if (!kanRedigereInntekt) {
-    return null;
-  }
-  if (values.some(andel => skalOverstyreBg(andel))) {
-    if (fastsattIForstePeriode !== undefined && fastsattIForstePeriode !== null) {
-      const fastsattBelopError = validateSumFastsattBelop(values, fastsattIForstePeriode, skalRedigereInntekt);
-      if (fastsattBelopError) {
-        return { _error: <FormattedMessage id={fastsattBelopError[0].id} values={fastsattBelopError[1]} /> };
-      }
+  if (sumIPeriode !== undefined && sumIPeriode !== null && values.some(andel => andel.harPeriodeAarsakGraderingEllerRefusjon === true)) {
+    const fastsattBelopError = validateSumFastsattBelop(values, sumIPeriode);
+    if (fastsattBelopError) {
+      return { _error: <FormattedMessage id={fastsattBelopError[0].id} values={fastsattBelopError[1]} /> };
     }
-    return null;
-  }
-  const sumRegister = summerRegisterInntektFraValues(values);
-  let fastsattBelopError = null;
-  fastsattBelopError = validateSumFastsattBelop(values, sumRegister, skalRedigereInntekt);
-  if (fastsattBelopError) {
-    return { _error: <FormattedMessage id={fastsattBelopError[0].id} values={fastsattBelopError[1]} /> };
   }
   return null;
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   const erRevurdering = getBehandlingIsRevurdering(state);
-  const tilfeller = getFaktaOmBeregningTilfellerKoder(state);
-  const arbeidsforholdList = getUniqueListOfArbeidsforhold(getEndringBeregningsgrunnlagPerioder(state)
-    ? getEndringBeregningsgrunnlagPerioder(state).flatMap(p => p.endringBeregningsgrunnlagAndeler) : undefined);
-  setSkalRedigereInntektForATFL(state, ownProps.fields);
+  const endringPerioder = getEndringBeregningsgrunnlagPerioder(state);
+  const arbeidsforholdList = getUniqueListOfArbeidsforhold(endringPerioder.length > 0
+    ? endringPerioder.flatMap(p => p.endringBeregningsgrunnlagAndeler) : undefined);
+  const bg = getBeregningsgrunnlag(state);
   return {
     erRevurdering,
     arbeidsforholdList,
-    skjaeringstidspunktBeregning: getBeregningsgrunnlag(state).skjaeringstidspunktBeregning,
+    skjaeringstidspunktBeregning: bg.skjaeringstidspunktBeregning,
     inntektskategoriKoder: getKodeverk(kodeverkTyper.INNTEKTSKATEGORI)(state),
-    harKunYtelse: tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE),
+    harKunYtelse: bg.aktivitetStatus.some(status => status.kode === aktivitetStatuser.KUN_YTELSE),
   };
 };
 

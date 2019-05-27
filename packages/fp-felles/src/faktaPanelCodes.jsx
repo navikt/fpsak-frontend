@@ -3,6 +3,7 @@ const faktaPanelCodes = {
   ADOPSJONSVILKARET: 'adopsjonsvilkaaret',
   ARBEIDSFORHOLD: 'arbeidsforhold',
   BEREGNING: 'beregning',
+  FORDELING: 'fordeling',
   DEFAULT: 'default',
   FODSELSVILKARET: 'foedselsvilkaaret',
   FODSELTILRETTELEGGING: 'fodseltilrettelegging',

@@ -18,11 +18,14 @@ const endringBGFieldArrayNamePrefix = 'endringBGPeriode';
 
 export const getFieldNameKey = index => (endringBGFieldArrayNamePrefix + index);
 
+// For visning av saker med tilfelle FASTSETT_ENDRET_BEREGNINGSGRUNNLAG
+// Opprettelse av FASTSETT_ENDRET_BEREGNINGSGRUNNLAG er fjernet og håndteres nå i aksjonspunkt FORDEL_BEREGNINGSGRUNNLAG
+// Migrer data til nytt aksjonspunkt før sletting
 
 /**
  * EndringBeregningsgrunnlagForm
  *
- * Container komponent.. Behandling av aksjonspunktet for fasetting av nytt/endret beregningsgrunnlag.
+ * Container komponent.. Visning av tilfelle FASTSETT_ENDRET_BEREGNINGSGRUNNLAG
  */
 
 export class EndringBeregningsgrunnlagForm extends Component {

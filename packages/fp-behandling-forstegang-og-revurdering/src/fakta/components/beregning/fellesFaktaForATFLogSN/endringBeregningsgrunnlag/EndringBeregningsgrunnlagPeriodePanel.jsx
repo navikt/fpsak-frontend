@@ -23,6 +23,10 @@ import styles from './endringBeregningsgrunnlagPeriodePanel.less';
 
 const classNames = classnames.bind(styles);
 
+// For visning av saker med tilfelle FASTSETT_ENDRET_BEREGNINGSGRUNNLAG
+// Opprettelse av FASTSETT_ENDRET_BEREGNINGSGRUNNLAG er fjernet og håndteres nå i aksjonspunkt FORDEL_BEREGNINGSGRUNNLAG
+// Migrer data til nytt aksjonspunkt før sletting
+
 
 /**
  * EndringBeregningsgrunnlagPeriodePanel

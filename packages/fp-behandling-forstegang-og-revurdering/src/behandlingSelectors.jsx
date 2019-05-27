@@ -166,6 +166,9 @@ export const getBeregningsgrunnlagLedetekster = createSelector([getBeregningsgru
 export const getFaktaOmBeregning = createSelector(
   [getBeregningsgrunnlag], (beregningsgrunnlag = {}) => (beregningsgrunnlag ? beregningsgrunnlag.faktaOmBeregning : undefined),
 );
+export const getFaktaOmFordeling = createSelector(
+  [getBeregningsgrunnlag], (beregningsgrunnlag = {}) => (beregningsgrunnlag ? beregningsgrunnlag.faktaOmFordeling : undefined),
+);
 
 export const getBehandlingGjelderBesteberegning = createSelector(
   [getFaktaOmBeregning], (faktaOmBeregning = {}) => (faktaOmBeregning && faktaOmBeregning.faktaOmBeregningTilfeller
@@ -189,10 +192,20 @@ export const getSkjæringstidspunktBeregning = createSelector(
   [getBeregningsgrunnlag], (beregningsgrunnlag = {}) => (beregningsgrunnlag ? beregningsgrunnlag.skjaeringstidspunktBeregning : undefined),
 );
 export const getEndringBeregningsgrunnlag = createSelector(
-  [getFaktaOmBeregning], (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.endringBeregningsgrunnlag : undefined),
-);
+  [getFaktaOmBeregning, getFaktaOmFordeling], (faktaOmBeregning = {},
+    faktaOmFordeling = {}) => {
+      if (faktaOmBeregning && faktaOmBeregning.endringBeregningsgrunnlag) {
+        return faktaOmBeregning.endringBeregningsgrunnlag;
+      }
+      if (faktaOmFordeling && faktaOmFordeling.endringBeregningsgrunnlag) {
+        return faktaOmFordeling.endringBeregningsgrunnlag;
+      }
+      return undefined;
+    },
+  );
+
 export const getEndringBeregningsgrunnlagPerioder = createSelector(
-  [getEndringBeregningsgrunnlag], (endringBG = {}) => (endringBG ? endringBG.endringBeregningsgrunnlagPerioder : undefined),
+  [getEndringBeregningsgrunnlag], (endringBG = {}) => (endringBG ? endringBG.endringBeregningsgrunnlagPerioder : []),
 );
 export const getFaktaOmBeregningTilfeller = createSelector(
   [getFaktaOmBeregning], (faktaOmBeregning = []) => (faktaOmBeregning ? faktaOmBeregning.faktaOmBeregningTilfeller : []),

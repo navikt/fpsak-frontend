@@ -1279,6 +1279,9 @@
 
   "BeregningInfoPanel.EtterlønnSluttpakke.HarSøkerInntekt": "Har søker etterlønn eller sluttpakke?",
   "BeregningInfoPanel.EtterlønnSluttpakke.Månedsinntekt": "Månedsinntekt",
+
+  "FordelBeregningsgrunnlag.Title": "Fakta om fordeling",
+  
   "VilkarResultPicker.SelectArsak": "Velg årsak",
   "VilkarResultPicker.Arsak": "Angi avslagsårsak",
   "VilkarResultPicker.VilkarOppfylt": "Vilkåret er oppfylt",

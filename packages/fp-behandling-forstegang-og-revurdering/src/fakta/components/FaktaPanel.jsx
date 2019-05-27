@@ -29,6 +29,7 @@ import PersonInfoPanel from './person/PersonInfoPanel';
 import PersonIndexPanel from './person/PersonIndexPanel';
 import ArbeidsforholdInfoPanel from './arbeidsforholdInfoPanel/ArbeidsforholdInfoPanel';
 import FodselOgTilretteleggingInfoPanel from './fodselOgTilrettelegging/FodselOgTilretteleggingInfoPanel';
+import FordelBeregningsgrunnlagPanel from './fordelBeregningsgrunnlag/FordelBeregningsgrunnlagPanel';
 
 import styles from './faktaPanel.less';
 
@@ -199,6 +200,18 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           submitCallback={submitCallback}
           readOnly={readOnly}
           erOverstyrer={erOverstyrer}
+        />
+      )
+      }
+      {(FordelBeregningsgrunnlagPanel.supports(aksjonspunkter))
+      && (
+        <FordelBeregningsgrunnlagPanel
+          aksjonspunkter={aksjonspunkter}
+          openInfoPanels={openInfoPanels}
+          toggleInfoPanelCallback={toggleInfoPanelCallback}
+          shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+          submitCallback={submitCallback}
+          readOnly={readOnly}
         />
       )
       }

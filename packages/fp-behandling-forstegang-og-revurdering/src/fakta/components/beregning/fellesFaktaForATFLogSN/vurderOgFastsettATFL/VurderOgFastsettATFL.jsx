@@ -86,6 +86,9 @@ export const findInstruksjonForFastsetting = (skalHaBesteberegning, skalFastsett
 
 const finnInntektstabell = (tilfeller, readOnly, isAksjonspunktClosed) => {
   if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
+    // For visning av saker med tilfelle FASTSETT_ENDRET_BEREGNINGSGRUNNLAG
+    // Opprettelse av FASTSETT_ENDRET_BEREGNINGSGRUNNLAG er fjernet og håndteres nå i aksjonspunkt FORDEL_BEREGNINGSGRUNNLAG
+    // Migrer data til nytt aksjonspunkt før sletting
     return (
       <FastsettEndretBeregningsgrunnlag
         readOnly={readOnly}
