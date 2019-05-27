@@ -191,7 +191,7 @@ const mapToStateToProps = (state, ownProps) => {
   const saksebehandlersBegrunnelse = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.saksebehandlersBegrunnelse`);
   const oppholdArsak = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.oppholdÅrsak`);
   // skal vise inntektsmeldinginfo for søknader mottatt før 4.juni og hvis 5070. https://jira.adeo.no/browse/PFP-7559
-  const skalViseInntektmeldingInfo = moment(getSoknad(state).mottattDato).isBefore('2019-06-04');
+  const skalViseInntektmeldingInfo = false; // moment(getSoknad(state).mottattDato).isBefore('2019-06-04');
   let initialResultatValue = initialResultat ? initialResultat.kode : undefined;
   if (oppholdArsak && oppholdArsak.kode !== oppholdArsakType.UDEFINERT && !begrunnelse) {
     initialResultatValue = undefined;
