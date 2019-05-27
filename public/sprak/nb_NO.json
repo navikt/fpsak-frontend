@@ -1281,7 +1281,7 @@
   "BeregningInfoPanel.EtterlønnSluttpakke.Månedsinntekt": "Månedsinntekt",
 
   "FordelBeregningsgrunnlag.Title": "Fakta om fordeling",
-  
+
   "VilkarResultPicker.SelectArsak": "Velg årsak",
   "VilkarResultPicker.Arsak": "Angi avslagsårsak",
   "VilkarResultPicker.VilkarOppfylt": "Vilkåret er oppfylt",
@@ -1994,6 +1994,7 @@
   "HistorikkEndretFelt.AktivitetskravSykdomIkkeDok": "Aktivitetskrav – sykdom/skade ikke dokumentert",
   "HistorikkEndretFelt.AktivitetskravArbeidUtdanningIkkeDok": "Aktivitetskrav – arbeid i kombinasjon med utdanning ikke dokumentert",
   "HistorikkEndretFelt.AktivitetskravUtdanningIkkeDok": "Aktivitetskrav – utdanning ikke dokumentert",
+  "HistorikkEndretFelt.IkkeRettTilKvoteFordiMorIkkeHarRettForeldrepenger": "Ikke rett til kvote fordi mor ikke har rett til foreldrepenger",
   "HistorikkEndretFelt.AktivitetskravArbeidIkkeDok": "Aktivitetskrav- arbeid ikke dokumentert",
   "HistorikkEndretFelt.AvslagOverforingKvoteSykdomIkkeDok": "Avslag overføring av kvote pga. sykdom/skade/innleggelse er ikke dokumentert",
   "HistorikkEndretFelt.AvslagOverforingIkkeAleneomsorg": "Avslag overføring - har ikke aleneomsorg for barnet",
