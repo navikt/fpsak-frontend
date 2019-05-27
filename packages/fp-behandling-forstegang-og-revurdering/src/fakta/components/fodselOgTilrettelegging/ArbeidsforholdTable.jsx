@@ -51,7 +51,7 @@ const ArbeidsforholdTable = ({
 );
 ArbeidsforholdTable.propTypes = {
   arbeidsforhold: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  selectedArbeidsforhold: PropTypes.string,
+  selectedArbeidsforhold: PropTypes.number,
   selectArbeidsforholdCallback: PropTypes.func.isRequired,
 };
 
