@@ -72,14 +72,14 @@ const buildInitialValues = createSelector(
 );
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-
   const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
-  return state => {
+  return (state) => {
     const aksjonspunktCode = getSelectedBehandlingspunktAksjonspunkter(state)[0].definisjon.kode;
     return {
-    aksjonspunktCode,
-    initialValues: buildInitialValues(state),
-    onSubmit,
+      aksjonspunktCode,
+      initialValues: buildInitialValues(state),
+      onSubmit,
+    };
   };
 };
 
