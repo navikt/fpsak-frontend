@@ -32,7 +32,7 @@ export const DelOppPeriodeModalImpl = ({
   intl,
   ...formProps
 }) => {
-  const numberOfDaysAndWeeks = calcDaysAndWeeks(førstePeriodeTom, periodeData.tom, ISO_DATE_FORMAT);
+  const numberOfDaysAndWeeks = calcDaysAndWeeks(periodeData.fom, førstePeriodeTom, ISO_DATE_FORMAT);
   return (
     <Modal
       isOpen={showModal}
