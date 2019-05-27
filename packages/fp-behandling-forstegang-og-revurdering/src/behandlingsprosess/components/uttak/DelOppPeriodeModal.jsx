@@ -3,17 +3,23 @@ import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import Modal from 'nav-frontend-modal';
 import {
-  DDMMYYYY_DATE_FORMAT, hasValidDate, required, dateAfterOrEqual, dateBeforeOrEqual,
+  DDMMYYYY_DATE_FORMAT,
+  hasValidDate, required,
+  dateAfterOrEqual,
+  dateBeforeOrEqual,
+  ISO_DATE_FORMAT,
+  calcDaysAndWeeks,
 } from '@fpsak-frontend/utils';
-
+import {
+  FlexContainer, FlexRow, FlexColumn,
+} from '@fpsak-frontend/shared-components';
+import { behandlingFormValueSelector, behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import { DatepickerField } from '@fpsak-frontend/form';
-import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import { uttaksresultatAktivitetPropType } from '@fpsak-frontend/prop-types';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import moment from 'moment/moment';
 
 import styles from './delOppPeriodeModal.less';
@@ -22,61 +28,95 @@ export const DelOppPeriodeModalImpl = ({
   periodeData,
   showModal,
   cancelEvent,
+  førstePeriodeTom,
   intl,
   ...formProps
-}) => (
-  <Modal
-    isOpen={showModal}
-    contentLabel={intl.formatMessage({ id: 'DelOppPeriodeModalImpl.ModalDescription' })}
-    onRequestClose={cancelEvent}
-    closeButton={false}
-    className={styles.modal}
-    shouldCloseOnOverlayClick={false}
-    ariaHideApp={false}
-  >
-    <Element className={styles.marginTop}>
-      <FormattedMessage id="DelOppPeriodeModalImpl.DelOppPerioden" />
-    </Element>
-    <div className={styles.marginTop}>
-      <Undertekst><FormattedMessage id="DelOppPeriodeModalImpl.Periode" /></Undertekst>
-      <Normaltekst>
-        {moment(periodeData.fom.toString()).format(DDMMYYYY_DATE_FORMAT)}
-        {' '}
+}) => {
+  const numberOfDaysAndWeeks = calcDaysAndWeeks(periodeData.fom, førstePeriodeTom, ISO_DATE_FORMAT);
+  return (
+    <Modal
+      isOpen={showModal}
+      contentLabel={intl.formatMessage({ id: 'DelOppPeriodeModalImpl.ModalDescription' })}
+      onRequestClose={cancelEvent}
+      closeButton={false}
+      className={styles.modal}
+      shouldCloseOnOverlayClick={false}
+      ariaHideApp={false}
+    >
+      <FlexContainer fluid wrap>
+        <FlexRow wrap>
+          <FlexColumn>
+            <Element className={styles.marginTop}>
+              <FormattedMessage id="DelOppPeriodeModalImpl.DelOppPerioden" />
+            </Element>
+          </FlexColumn>
+        </FlexRow>
+        <FlexRow wrap className={styles.marginTop}>
+          <FlexColumn>
+            <Undertekst><FormattedMessage id="DelOppPeriodeModalImpl.Periode" /></Undertekst>
+            <Normaltekst>
+              {moment(periodeData.fom.toString()).format(DDMMYYYY_DATE_FORMAT)}
+              {' '}
 -
-        {moment(periodeData.tom.toString()).format(DDMMYYYY_DATE_FORMAT)}
-      </Normaltekst>
-    </div>
-    <div className={styles.marginTop}>
-      <Undertekst><FormattedMessage id="DelOppPeriodeModalImpl.AngiTomDato" /></Undertekst>
-      <DatepickerField
-        name="ForstePeriodeTomDato"
-        className={styles.datePicker}
-        validate={[required, hasValidDate]}
-      />
-    </div>
-    <Row className={styles.marginTop}>
-      <Column>
-        <Hovedknapp
-          mini
-          htmlType="button"
-          className={styles.button}
-          onClick={formProps.handleSubmit}
-          disabled={formProps.pristine}
-        >
-          <FormattedMessage id="DelOppPeriodeModalImpl.Ok" />
-        </Hovedknapp>
-        <Knapp
-          htmlType="button"
-          mini
-          onClick={cancelEvent}
-          className={styles.cancelButton}
-        >
-          <FormattedMessage id="DelOppPeriodeModalImpl.Avbryt" />
-        </Knapp>
-      </Column>
-    </Row>
-  </Modal>
+              {' '}
+              {moment(periodeData.tom.toString()).format(DDMMYYYY_DATE_FORMAT)}
+            </Normaltekst>
+          </FlexColumn>
+        </FlexRow>
+        <FlexRow wrap className={styles.marginTop}>
+          <FlexColumn>
+            <Undertekst><FormattedMessage id="DelOppPeriodeModalImpl.AngiTomDato" /></Undertekst>
+            <FlexRow alignItemsToBaseline>
+              <FlexColumn>
+                <DatepickerField
+                  name="ForstePeriodeTomDato"
+                  className={styles.datePicker}
+                  validate={[required, hasValidDate]}
+                  initialMonth={new Date(periodeData.fom)}
+                  numberOfMonths={2}
+                  disabledDays={{ before: moment(periodeData.fom).toDate(), after: moment(periodeData.tom).toDate() }}
+                />
+              </FlexColumn>
+              {førstePeriodeTom && (
+              <FlexColumn>
+                <FormattedMessage
+                  id={numberOfDaysAndWeeks.id.toString()}
+                  values={{
+              weeks: numberOfDaysAndWeeks.weeks.toString(),
+              days: numberOfDaysAndWeeks.days.toString(),
+            }}
+                />
+
+              </FlexColumn>
+        )}
+            </FlexRow>
+          </FlexColumn>
+        </FlexRow>
+        <FlexRow wrap className={styles.marginTop}>
+          <FlexColumn>
+            <Hovedknapp
+              mini
+              htmlType="button"
+              className={styles.button}
+              onClick={formProps.handleSubmit}
+              disabled={formProps.pristine}
+            >
+              <FormattedMessage id="DelOppPeriodeModalImpl.Ok" />
+            </Hovedknapp>
+            <Knapp
+              htmlType="button"
+              mini
+              onClick={cancelEvent}
+              className={styles.cancelButton}
+            >
+              <FormattedMessage id="DelOppPeriodeModalImpl.Avbryt" />
+            </Knapp>
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
+    </Modal>
 );
+};
 
 DelOppPeriodeModalImpl.propTypes = {
   periodeData: uttaksresultatAktivitetPropType.isRequired,
@@ -119,6 +159,10 @@ const transformValues = (values, periodeData) => {
 };
 
 const mapStateToProps = (state, ownProps) => ({
+  førstePeriodeTom: behandlingFormValueSelector('DelOppPeriode')(
+    state,
+    'ForstePeriodeTomDato',
+  ),
   validate: values => validateForm(values, ownProps.periodeData),
   onSubmit: values => ownProps.splitPeriod(transformValues(values, ownProps.periodeData)),
 });

@@ -17,6 +17,28 @@
   z-index: 1010;
 }
 
+.calendarWrapper {
+  background: @white;
+  border: 1px solid @grayIcon;
+  border-radius: @border-radius-base;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 302px;
+
+  &.calendarWrapper--2 {
+    width: 610px;
+  }
+
+  &.calendarWrapper--3 {
+    width: 915px;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
 .DayPicker {
   display: flex;
   flex-wrap: wrap;

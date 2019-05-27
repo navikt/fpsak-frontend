@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Input } from 'nav-frontend-skjema';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import ElementWrapper from '../ElementWrapper';
+import classnames from 'classnames/bind';
 import CalendarOverlay from './CalendarOverlay';
 import CalendarToggleButton from './CalendarToggleButton';
-
 import styles from './datepicker.less';
+
+const classNames = classnames.bind(styles);
 
 class Datepicker extends Component {
   constructor() {
@@ -76,14 +77,23 @@ class Datepicker extends Component {
 
   render() {
     const {
-      label, placeholder, onChange, onBlur, value, feil, disabled,
+      label,
+      placeholder,
+      onChange,
+      onBlur,
+      value,
+      feil,
+      disabled,
+      disabledDays,
+      initialMonth,
+      numberOfMonths,
     } = this.props;
     const {
       inputOffsetTop, inputOffsetWidth, showCalendar,
     } = this.state;
 
     return (
-      <ElementWrapper>
+      <>
         <div className={styles.inputWrapper}>
           <Input
             className={styles.dateInput}
@@ -105,10 +115,10 @@ class Datepicker extends Component {
             toggleShowCalendar={this.toggleShowCalendar}
             buttonRef={this.handleButtonRef}
             disabled={disabled}
+
           />
         </div>
-        {showCalendar
-        && (
+        {showCalendar && (
         <CalendarOverlay
           disabled={disabled}
           value={value}
@@ -116,11 +126,13 @@ class Datepicker extends Component {
           onClose={this.hideCalendar}
           elementIsCalendarButton={this.elementIsCalendarButton}
           className={styles.calendarRoot}
-          dayPickerClassName={styles.calendarWrapper}
+          dayPickerClassName={classNames(`calendarWrapper calendarWrapper--${numberOfMonths}`)}
+          disabledDays={disabledDays}
+          numberOfMonths={numberOfMonths}
+          initialMonth={initialMonth}
         />
-        )
-        }
-      </ElementWrapper>
+        )}
+      </>
     );
   }
 }
@@ -133,6 +145,9 @@ Datepicker.propTypes = {
   value: PropTypes.string,
   feil: PropTypes.shape({ feilmelding: PropTypes.string }),
   disabled: PropTypes.bool,
+  initialMonth: PropTypes.instanceOf(Date),
+  numberOfMonths: PropTypes.number,
+  disabledDays: PropTypes.shape(),
 };
 
 Datepicker.defaultProps = {
@@ -141,6 +156,9 @@ Datepicker.defaultProps = {
   value: '',
   feil: null,
   disabled: false,
+  initialMonth: null,
+  numberOfMonths: 1,
+  disabledDays: {},
 };
 
 export default Datepicker;
