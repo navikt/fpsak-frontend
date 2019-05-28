@@ -401,6 +401,7 @@ describe('<ApprovalIndex>', () => {
       navAnsatt={navAnsatt}
       totrinnskontrollSkjermlenkeContext={undefined}
       skjemalenkeTyper={[]}
+      erTilbakekreving={false}
     />);
 
     wrapper.unmount();
