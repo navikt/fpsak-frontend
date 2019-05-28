@@ -156,7 +156,7 @@ Datepicker.defaultProps = {
   value: '',
   feil: null,
   disabled: false,
-  initialMonth: null,
+  initialMonth: new Date(),
   numberOfMonths: 1,
   disabledDays: {},
 };
