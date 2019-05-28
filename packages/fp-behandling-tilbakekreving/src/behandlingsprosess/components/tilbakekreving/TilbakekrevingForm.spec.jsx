@@ -26,6 +26,9 @@ describe('<TilbakekrevingForm>', () => {
       antallPerioderMedAksjonspunkt={2}
       isDetailFormOpen
       handleSubmit={() => undefined}
+      merknaderFraBeslutter={{
+        notAccepted: false,
+      }}
     />);
 
     expect(wrapper.find(TilbakekrevingPeriodeForm)).to.have.length(1);
@@ -46,6 +49,9 @@ describe('<TilbakekrevingForm>', () => {
       antallPerioderMedAksjonspunkt={2}
       isDetailFormOpen
       handleSubmit={() => undefined}
+      merknaderFraBeslutter={{
+        notAccepted: false,
+      }}
     />);
 
     expect(wrapper.find(TilbakekrevingPeriodeForm)).to.have.length(0);
@@ -68,6 +74,9 @@ describe('<TilbakekrevingForm>', () => {
       isDetailFormOpen
       handleSubmit={() => undefined}
       error="TilbakekrevingPeriodeForm.TotalbelopetUnder4Rettsgebyr"
+      merknaderFraBeslutter={{
+        notAccepted: false,
+      }}
     />);
 
     expect(wrapper.find(AlertStripe)).to.have.length(1);
@@ -168,8 +177,8 @@ describe('<TilbakekrevingForm>', () => {
           erBelopetIBehold: true,
           tilbakekrevesBelop: 3434,
         },
-       },
-       erTotalBelopUnder4Rettsgebyr: false,
+      },
+      erTotalBelopUnder4Rettsgebyr: false,
     });
   });
 
@@ -261,8 +270,8 @@ describe('<TilbakekrevingForm>', () => {
           erBelopetIBehold: true,
           tilbakekrevesBelop: 2312,
         },
-       },
-       erTotalBelopUnder4Rettsgebyr: false,
+      },
+      erTotalBelopUnder4Rettsgebyr: false,
     });
     expect(resultat.vilkarsVurdertePerioder[1]).to.eql({
       feilutbetaling: 32000,
@@ -287,8 +296,8 @@ describe('<TilbakekrevingForm>', () => {
           erBelopetIBehold: true,
           tilbakekrevesBelop: 3434,
         },
-       },
-       erTotalBelopUnder4Rettsgebyr: false,
+      },
+      erTotalBelopUnder4Rettsgebyr: false,
     });
   });
 

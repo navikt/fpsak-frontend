@@ -69,14 +69,14 @@ describe('<ApprovalIndex>', () => {
   const getTotrinnsaksjonspunkterFoedsel = () => ({
     skjermlenkeType: 'FAKTA_OM_FOEDSEL',
     totrinnskontrollAksjonspunkter: [createAksjonspunkt(aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL),
-      createAksjonspunkt(aksjonspunktCodes.TERMINBEKREFTELSE),
-      createAksjonspunkt(aksjonspunktCodes.AUTO_VENT_PÅ_FODSELREGISTRERING)],
+    createAksjonspunkt(aksjonspunktCodes.TERMINBEKREFTELSE),
+    createAksjonspunkt(aksjonspunktCodes.AUTO_VENT_PÅ_FODSELREGISTRERING)],
   });
 
   const getTotrinnsaksjonspunkterOmsorg = () => ({
     skjermlenkeType: 'FAKTA_FOR_OMSORG',
     totrinnskontrollAksjonspunkter: [createAksjonspunkt(aksjonspunktCodes.OMSORGSOVERTAKELSE),
-      createAksjonspunkt(aksjonspunktCodes.MANUELL_VURDERING_AV_OMSORGSVILKARET)],
+    createAksjonspunkt(aksjonspunktCodes.MANUELL_VURDERING_AV_OMSORGSVILKARET)],
   });
 
   const getTotrinnsaksjonspunkterForeldreansvar = () => ({
@@ -92,17 +92,17 @@ describe('<ApprovalIndex>', () => {
   const getTotrinnsaksjonspunkterAdopsjon = () => ({
     skjermlenkeType: 'PUNKT_FOR_ADOPSJON',
     totrinnskontrollAksjonspunkter: [createAksjonspunkt(aksjonspunktCodes.ADOPSJONSDOKUMENTAJON),
-      createAksjonspunkt(aksjonspunktCodes.OM_ADOPSJON_GJELDER_EKTEFELLES_BARN),
-      createAksjonspunkt(aksjonspunktCodes.OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE)],
+    createAksjonspunkt(aksjonspunktCodes.OM_ADOPSJON_GJELDER_EKTEFELLES_BARN),
+    createAksjonspunkt(aksjonspunktCodes.OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE)],
   });
 
   const getTotrinnsaksjonspunkterMedlemskap = () => ({
     skjermlenkeType: 'FAKTA_OM_MEDLEMSKAP',
     totrinnskontrollAksjonspunkter: [createAksjonspunkt(aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD),
-      createAksjonspunkt(aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT),
-      createAksjonspunkt(aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE),
-      createAksjonspunkt(aksjonspunktCodes.AVKLAR_OPPHOLDSRETT),
-      createAksjonspunkt(aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN)],
+    createAksjonspunkt(aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT),
+    createAksjonspunkt(aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE),
+    createAksjonspunkt(aksjonspunktCodes.AVKLAR_OPPHOLDSRETT),
+    createAksjonspunkt(aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN)],
   });
 
 
@@ -115,9 +115,9 @@ describe('<ApprovalIndex>', () => {
     skjermlenkeType: 'BEREGNING_FORELDREPENGER',
     totrinnskontrollAksjonspunkter:
       [createAksjonspunkt(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS),
-        createAksjonspunkt(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE),
-        createAksjonspunkt(aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE),
-        createAksjonspunkt(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD)],
+      createAksjonspunkt(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE),
+      createAksjonspunkt(aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE),
+      createAksjonspunkt(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD)],
   });
 
   const getAksjonspunktFaktaOmBeregning = () => ({
@@ -242,6 +242,7 @@ describe('<ApprovalIndex>', () => {
       totrinnskontrollSkjermlenkeContext={totrinnskontrollAksjonspunkter}
       navAnsatt={navAnsatt}
       skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
+      erTilbakekreving={false}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -281,6 +282,7 @@ describe('<ApprovalIndex>', () => {
       totrinnskontrollSkjermlenkeContext={undefined}
       navAnsatt={navAnsatt}
       skjemalenkeTyper={[]}
+      erTilbakekreving={false}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -327,6 +329,7 @@ describe('<ApprovalIndex>', () => {
       navAnsatt={navAnsatt}
       totrinnskontrollReadOnlySkjermlenkeContext={totrinnskontrollAksjonspunkter}
       skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
+      erTilbakekreving={false}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -368,6 +371,7 @@ describe('<ApprovalIndex>', () => {
       navAnsatt={navAnsatt}
       totrinnskontrollSkjermlenkeContext={totrinnskontrollAksjonspunkter}
       skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
+      erTilbakekreving={false}
     />);
 
     const vedtakStatusModal = wrapper.find(FatterVedtakApprovalModal);

@@ -10,7 +10,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
+import { FaktaGruppe, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import {
   FadingPanel, VerticalSpacer, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
@@ -23,6 +23,7 @@ import {
 } from 'behandlingTilbakekreving/src/behandlingForm';
 import {
   getBehandlingVersjon, getBehandlingVilkarsvurderingsperioder, getBehandlingVilkarsvurderingsRettsgebyr, getBehandlingVilkarsvurdering,
+  getMerknaderFraBeslutter,
 } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingTilbakekreving/src/duckTilbake';
 import tilbakekrevingAksjonspunktCodes from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingAksjonspunktCodes';
@@ -46,59 +47,66 @@ export const TilbakekrevingFormImpl = ({
   reduxFormInitialize: formInitialize,
   antallPerioderMedAksjonspunkt,
   isDetailFormOpen,
+  merknaderFraBeslutter,
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
     <FadingPanel>
-      <Undertittel>
-        <FormattedMessage id="Behandlingspunkt.Tilbakekreving" />
-      </Undertittel>
-      <VerticalSpacer twentyPx />
-      <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
-        {[<FormattedMessage key="AksjonspunktHjelpetekst" id="TilbakekrevingForm.AksjonspunktHjelpetekst" />] }
-      </AksjonspunktHelpText>
-      <VerticalSpacer twentyPx />
-      {perioderFormatertForTimeline && (
-        <BpTimelinePanel
-          hovedsokerKjonnKode={kjonn}
-          resultatActivity={perioderFormatertForTimeline}
-          behandlingFormPrefix={behandlingFormPrefix}
-          reduxFormChange={formChange}
-          reduxFormInitialize={formInitialize}
-          formName={TILBAKEKREVING_FORM_NAME}
-          detailPanelForm={TILBAKEKREVING_PERIODE_FORM_NAME}
-          fieldNameToStoreDetailInfo="vilkarsVurdertePerioder"
-          isTilbakekreving
-          readOnly={readOnly}
-        >
-          <TilbakekrevingPeriodeForm
+      <FaktaGruppe
+        aksjonspunktCode={tilbakekrevingAksjonspunktCodes.VURDER_TILBAKEKREVING}
+        merknaderFraBeslutter={merknaderFraBeslutter}
+        withoutBorder
+      >
+        <Undertittel>
+          <FormattedMessage id="Behandlingspunkt.Tilbakekreving" />
+        </Undertittel>
+        <VerticalSpacer twentyPx />
+        <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
+          {[<FormattedMessage key="AksjonspunktHjelpetekst" id="TilbakekrevingForm.AksjonspunktHjelpetekst" />]}
+        </AksjonspunktHelpText>
+        <VerticalSpacer twentyPx />
+        {perioderFormatertForTimeline && (
+          <BpTimelinePanel
+            hovedsokerKjonnKode={kjonn}
+            resultatActivity={perioderFormatertForTimeline}
             behandlingFormPrefix={behandlingFormPrefix}
-            antallPerioderMedAksjonspunkt={antallPerioderMedAksjonspunkt}
+            reduxFormChange={formChange}
+            reduxFormInitialize={formInitialize}
             formName={TILBAKEKREVING_FORM_NAME}
+            detailPanelForm={TILBAKEKREVING_PERIODE_FORM_NAME}
+            fieldNameToStoreDetailInfo="vilkarsVurdertePerioder"
+            isTilbakekreving
             readOnly={readOnly}
-          />
-        </BpTimelinePanel>
-      )}
-      <VerticalSpacer twentyPx />
-      {formProps.error && (
-        <>
-          <AlertStripe type="feil">
-            <FormattedMessage id={formProps.error} />
-          </AlertStripe>
-          <VerticalSpacer twentyPx />
-        </>
-      )}
-      <BehandlingspunktSubmitButton
-        formName={TILBAKEKREVING_FORM_NAME}
-        isReadOnly={readOnly}
-        isSubmittable={!readOnlySubmitButton && !isDetailFormOpen}
-        isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-        isBehandlingFormDirty={isBehandlingFormDirty}
-        hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-      />
+          >
+            <TilbakekrevingPeriodeForm
+              behandlingFormPrefix={behandlingFormPrefix}
+              antallPerioderMedAksjonspunkt={antallPerioderMedAksjonspunkt}
+              formName={TILBAKEKREVING_FORM_NAME}
+              readOnly={readOnly}
+            />
+          </BpTimelinePanel>
+        )}
+        <VerticalSpacer twentyPx />
+        {formProps.error && (
+          <>
+            <AlertStripe type="feil">
+              <FormattedMessage id={formProps.error} />
+            </AlertStripe>
+            <VerticalSpacer twentyPx />
+          </>
+        )}
+        <BehandlingspunktSubmitButton
+          formName={TILBAKEKREVING_FORM_NAME}
+          isReadOnly={readOnly}
+          isSubmittable={!readOnlySubmitButton && !isDetailFormOpen}
+          isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+          isBehandlingFormDirty={isBehandlingFormDirty}
+          hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+        />
+      </FaktaGruppe>
     </FadingPanel>
   </form>
-);
+  );
 
 TilbakekrevingFormImpl.propTypes = {
   perioderFormatertForTimeline: PropTypes.arrayOf(PropTypes.shape()),
@@ -111,6 +119,9 @@ TilbakekrevingFormImpl.propTypes = {
   reduxFormInitialize: PropTypes.func.isRequired,
   isDetailFormOpen: PropTypes.bool.isRequired,
   antallPerioderMedAksjonspunkt: PropTypes.number.isRequired,
+  merknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool.isRequired,
+  }).isRequired,
 };
 
 TilbakekrevingFormImpl.defaultProps = {
@@ -139,31 +150,31 @@ const erIkkeLagret = (periode, lagredePerioder) => lagredePerioder
 
 export const buildInitialValues = createSelector([getBehandlingVilkarsvurderingsperioder, getBehandlingVilkarsvurdering,
   getBehandlingVilkarsvurderingsRettsgebyr], (perioder, vilkarsvurdering, rettsgebyr) => {
-  const totalbelop = perioder.reduce((acc, periode) => acc + periode.feilutbetaling, 0);
-  const erTotalBelopUnder4Rettsgebyr = totalbelop < (rettsgebyr * 4);
-  const lagredeVilkarsvurdertePerioder = vilkarsvurdering.vilkarsVurdertePerioder;
+    const totalbelop = perioder.reduce((acc, periode) => acc + periode.feilutbetaling, 0);
+    const erTotalBelopUnder4Rettsgebyr = totalbelop < (rettsgebyr * 4);
+    const lagredeVilkarsvurdertePerioder = vilkarsvurdering.vilkarsVurdertePerioder;
 
-  const lagredePerioder = lagredeVilkarsvurdertePerioder
-    .map(lagretPeriode => ({
-      ...finnOriginalPeriode(lagretPeriode, perioder),
-      fom: lagretPeriode.fom,
-      tom: lagretPeriode.tom,
-      storedData: lagretPeriode,
-      erTotalBelopUnder4Rettsgebyr,
-    }));
+    const lagredePerioder = lagredeVilkarsvurdertePerioder
+      .map(lagretPeriode => ({
+        ...finnOriginalPeriode(lagretPeriode, perioder),
+        fom: lagretPeriode.fom,
+        tom: lagretPeriode.tom,
+        storedData: lagretPeriode,
+        erTotalBelopUnder4Rettsgebyr,
+      }));
 
-  const originaleUrortePerioder = perioder
-    .filter(periode => erIkkeLagret(periode, lagredePerioder))
-    .map(periode => ({
-      ...periode,
-      storedData: {},
-      erTotalBelopUnder4Rettsgebyr,
-    }));
+    const originaleUrortePerioder = perioder
+      .filter(periode => erIkkeLagret(periode, lagredePerioder))
+      .map(periode => ({
+        ...periode,
+        storedData: {},
+        erTotalBelopUnder4Rettsgebyr,
+      }));
 
-  return {
-    vilkarsVurdertePerioder: originaleUrortePerioder.concat(lagredePerioder),
-  };
-});
+    return {
+      vilkarsVurdertePerioder: originaleUrortePerioder.concat(lagredePerioder),
+    };
+  });
 
 const leggTilTimelineData = createSelector([state => behandlingFormValueSelector(TILBAKEKREVING_FORM_NAME)(state, 'vilkarsVurdertePerioder')],
   (perioder) => {
@@ -187,7 +198,7 @@ const leggTilTimelineData = createSelector([state => behandlingFormValueSelector
         erForeldet,
       };
     });
-});
+  });
 
 const getAntallPerioderMedAksjonspunkt = createSelector([state => behandlingFormValueSelector(TILBAKEKREVING_FORM_NAME)(state, 'vilkarsVurdertePerioder')],
   (perioder = []) => perioder.reduce((sum, periode) => (periode.erForeldet ? sum + 1 : sum), 0));
@@ -205,6 +216,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       isDetailFormOpen: periodFormValues !== undefined && !isObjectEmpty(periodFormValues),
       readOnly: ownProps.readOnly || periodFormValues.erForeldet === true,
       antallPerioderMedAksjonspunkt: getAntallPerioderMedAksjonspunkt(state),
+      merknaderFraBeslutter: getMerknaderFraBeslutter(tilbakekrevingAksjonspunktCodes.VURDER_TILBAKEKREVING)(state),
     };
   };
 };

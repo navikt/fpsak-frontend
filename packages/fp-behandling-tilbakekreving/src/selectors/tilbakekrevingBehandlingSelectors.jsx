@@ -85,11 +85,22 @@ export const getBehandlingVilkarsvurdering = createSelector([getSelectedBehandli
 // BEREGNINGSRESULTAT
 export const getBeregningsresultat = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.beregningsresultat);
 
+export const getBehandlingToTrinnsBehandling = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.toTrinnsBehandling);
+export const getTotrinnskontrollArsaker = createSelector(
+  [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['totrinnskontroll-arsaker']),
+);
+export const getTotrinnskontrollArsakerUtenUdefinert = createSelector(
+  [getTotrinnskontrollArsaker], (aarsaker = []) => (aarsaker.filter(aarsak => aarsak.skjermlenkeType !== '-')),
+);
+export const getTotrinnskontrollArsakerReadOnly = createSelector(
+  [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['totrinnskontroll-arsaker-readOnly']),
+);
+
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 const hasBehandlingLukketStatus = createSelector(
   [getBehandlingStatus], (status = {}) => status.kode === behandlingStatus.AVSLUTTET || status.kode === behandlingStatus.IVERKSETTER_VEDTAK
-|| status.kode === behandlingStatus.FATTER_VEDTAK,
+    || status.kode === behandlingStatus.FATTER_VEDTAK,
 );
 
 export const isBehandlingStatusReadOnly = createSelector(
