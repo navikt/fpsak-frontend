@@ -17,6 +17,8 @@ import {
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
  import {
    getTilrettelegging,
+
+  getAksjonspunkter,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import ArbeidsforholdFaktaPanel from './ArbeidsforholdFaktaPanel';
 
@@ -29,6 +31,9 @@ import styles from './arbeidsforholdInnhold.less';
  */
 
 const maxLength1500 = maxLength(1500);
+
+
+const getAksjonspunkt = aksjonspunkter => aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.FODSELTILRETTELEGGING)[0].begrunnelse;
 
 const FODSEL_TILRETTELEGGING_FORM = 'FodselOgTilretteleggingForm';
 
@@ -111,13 +116,14 @@ const transformValues = values => ([{
 }]);
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
+  const aksjonspunkter = getAksjonspunkter(initialState);
   const tilrettelegging = getTilrettelegging(initialState);
   const fodselsdato = tilrettelegging ? tilrettelegging.fødselsdato : '';
   const initialValues = {
     termindato: tilrettelegging ? tilrettelegging.termindato : '',
-    begrunnelse: tilrettelegging ? tilrettelegging.begrunnelse : '',
     arbeidsforhold: tilrettelegging ? tilrettelegging.arbeidsforholdListe : [],
     fodselsdato,
+    begrunnelse: getAksjonspunkt(aksjonspunkter),
   };
   const onSubmit = values => ownProps.submitCallback(transformValues(values));
 
