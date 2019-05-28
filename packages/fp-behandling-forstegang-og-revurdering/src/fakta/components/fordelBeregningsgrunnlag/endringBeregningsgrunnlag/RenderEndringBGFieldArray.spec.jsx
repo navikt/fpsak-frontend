@@ -23,9 +23,7 @@ const inntektskategorier = [
 
 const getKodeverknavn = () => undefined;
 
-const skalValidereInntektMotRefujon = () => false;
-
-const skalValidereMotRapportert = () => true;
+const skalValidereMotBeregningsgrunnlagPrAar = () => true;
 
 const skjaeringstidspunktBeregning = '2018-01-01';
 
@@ -153,7 +151,7 @@ describe('<RenderEndringBGFieldArray>', () => {
   });
 
 
-  it('skal vise rapportert inntekt om alle andeler som tilkommer før stp har register opplysning tilgjengelig', () => {
+  it('skal vise beregningsgrunnlagPrAar', () => {
     const andelMedRapportertInntekt = {
       nyAndel: false,
       fordelingForrigeBehandling: 0,
@@ -162,7 +160,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 0,
       belopFraInntektsmelding: null,
       harPeriodeAarsakGraderingEllerRefusjon: true,
-      registerInntekt: '10 000',
+      beregningsgrunnlagPrAar: '10 000',
       arbeidsperiodeFom: '2016-01-01',
     };
     const andelMedRapportertInntekt2 = {
@@ -173,7 +171,7 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 0,
       belopFraInntektsmelding: null,
       harPeriodeAarsakGraderingEllerRefusjon: true,
-      registerInntekt: '20 000',
+      beregningsgrunnlagPrAar: '20 000',
       arbeidsperiodeFom: '2016-01-01',
     };
     const fields2 = new MockFieldsWithContent('endringPeriode1', [andelMedRapportertInntekt, andelMedRapportertInntekt2]);
@@ -197,9 +195,8 @@ describe('<RenderEndringBGFieldArray>', () => {
     expect(elements.first().props().children).to.equal('30 000');
   });
 
-
-  it('skal vise rapportert inntekt om andel tilkommer etter stp', () => {
-    const andelMedRapportertInntekt = {
+  it('skal vise sum av beregningsgrunnlagPrAar', () => {
+    const andelMedBeregningsgrunnlagPrAar = {
       nyAndel: false,
       fordelingForrigeBehandling: 0,
       fastsattBelop: '0',
@@ -207,10 +204,10 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 0,
       belopFraInntektsmelding: null,
       harPeriodeAarsakGraderingEllerRefusjon: true,
-      registerInntekt: '10 000',
+      beregningsgrunnlagPrAar: '10 000',
       arbeidsperiodeFom: '2016-01-01',
     };
-    const andelMedRapportertInntekt2 = {
+    const andelMedBeregningsgrunnlagPrAar2 = {
       nyAndel: false,
       fordelingForrigeBehandling: 0,
       fastsattBelop: '0',
@@ -218,70 +215,11 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 0,
       belopFraInntektsmelding: null,
       harPeriodeAarsakGraderingEllerRefusjon: true,
-      registerInntekt: '20 000',
-      arbeidsperiodeFom: '2016-01-01',
-    };
-
-    const andelUtenRapportertInntektTilkommerEtter = {
-      nyAndel: false,
-      fordelingForrigeBehandling: 0,
-      fastsattBelop: '0',
-      lagtTilAvSaksbehandler: true,
-      refusjonskravFraInntektsmelding: 0,
-      belopFraInntektsmelding: null,
-      harPeriodeAarsakGraderingEllerRefusjon: true,
-      registerInntekt: '',
-      arbeidsperiodeFom: '2018-02-01',
-    };
-
-    const fields2 = new MockFieldsWithContent('endringPeriode1', [andelMedRapportertInntekt,
-      andelMedRapportertInntekt2, andelUtenRapportertInntektTilkommerEtter]);
-    const wrapper = shallowWithIntl(<RenderEndringBGFieldArrayImpl
-      fields={fields2}
-      intl={intlMock}
-      meta={{}}
-      inntektskategoriKoder={inntektskategorier}
-      arbeidsforholdList={arbeidsforholdList}
-      readOnly={false}
-      isAksjonspunktClosed={false}
-      harKunYtelse={false}
-      periodeUtenAarsak={false}
-      erRevurdering={false}
-      skjaeringstidspunktBeregning={skjaeringstidspunktBeregning}
-      getKodeverknavn={getKodeverknavn}
-    />);
-
-    const rows = wrapper.find(TableRow);
-    const elements = rows.find(Element);
-    expect(elements.first().props().children).to.equal('30 000');
-  });
-
-
-  it('skal vise rapportert inntekt om det er lagt til ein ny andel uten rapportert inntekt', () => {
-    const andelMedRapportertInntekt = {
-      nyAndel: false,
-      fordelingForrigeBehandling: 0,
-      fastsattBelop: '0',
-      lagtTilAvSaksbehandler: true,
-      refusjonskravFraInntektsmelding: 0,
-      belopFraInntektsmelding: null,
-      harPeriodeAarsakGraderingEllerRefusjon: true,
-      registerInntekt: '10 000',
-      arbeidsperiodeFom: '2016-01-01',
-    };
-    const andelMedRapportertInntekt2 = {
-      nyAndel: false,
-      fordelingForrigeBehandling: 0,
-      fastsattBelop: '0',
-      lagtTilAvSaksbehandler: true,
-      refusjonskravFraInntektsmelding: 0,
-      belopFraInntektsmelding: null,
-      harPeriodeAarsakGraderingEllerRefusjon: true,
-      registerInntekt: '20 000',
+      beregningsgrunnlagPrAar: '20 000',
       arbeidsperiodeFom: '2016-01-01',
     };
 
-    const andelUtenRapportertInntektTilkommerEtter = {
+    const andelUtenBeregningsgrunnlagPrAar = {
       nyAndel: true,
       fordelingForrigeBehandling: 0,
       fastsattBelop: '0',
@@ -289,12 +227,12 @@ describe('<RenderEndringBGFieldArray>', () => {
       refusjonskravFraInntektsmelding: 0,
       belopFraInntektsmelding: null,
       harPeriodeAarsakGraderingEllerRefusjon: true,
-      registerInntekt: '',
+      beregningsgrunnlagPrAar: '',
       arbeidsperiodeFom: '2016-01-01',
     };
 
-    const fields2 = new MockFieldsWithContent('endringPeriode1', [andelMedRapportertInntekt,
-      andelMedRapportertInntekt2, andelUtenRapportertInntektTilkommerEtter]);
+    const fields2 = new MockFieldsWithContent('endringPeriode1', [andelMedBeregningsgrunnlagPrAar,
+      andelMedBeregningsgrunnlagPrAar2, andelUtenBeregningsgrunnlagPrAar]);
     const wrapper = shallowWithIntl(<RenderEndringBGFieldArrayImpl
       fields={fields2}
       intl={intlMock}
@@ -331,7 +269,7 @@ describe('<RenderEndringBGFieldArray>', () => {
     };
     values.push(andel1);
     const errors = RenderEndringBGFieldArray.validate(values, 100000,
-      skalValidereMotRapportert, skalValidereInntektMotRefujon);
+      skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
     expect(errors).to.equal(null);
   });
 
@@ -351,7 +289,7 @@ describe('<RenderEndringBGFieldArray>', () => {
     };
     values.push(andel1);
     const errors = RenderEndringBGFieldArray.validate(values, 100000,
-      skalValidereMotRapportert, skalValidereInntektMotRefujon);
+      skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
     expect(errors).to.equal(null);
   });
 
@@ -370,7 +308,7 @@ describe('<RenderEndringBGFieldArray>', () => {
     };
     values.push(andel1);
     const errors = RenderEndringBGFieldArray.validate(values, 100000,
-      skalValidereMotRapportert, skalValidereInntektMotRefujon);
+      skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
     expect(errors).to.equal(null);
   });
 
@@ -389,7 +327,7 @@ describe('<RenderEndringBGFieldArray>', () => {
     };
     values.push(andel1);
     const errors = RenderEndringBGFieldArray.validate(values, 100000,
-      skalValidereMotRapportert, skalValidereInntektMotRefujon);
+      skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
     expect(errors[0].refusjonskrav).to.have.length(1);
     expect(errors[0].refusjonskrav[0].id).to.equal(isRequiredMessage()[0].id);
   });
@@ -409,7 +347,7 @@ describe('<RenderEndringBGFieldArray>', () => {
     };
     values.push(andel1);
     const errors = RenderEndringBGFieldArray.validate(values, 100000,
-      skalValidereMotRapportert, skalValidereInntektMotRefujon);
+      skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
     expect(errors[0].refusjonskrav).to.have.length(1);
     expect(errors[0].refusjonskrav[0].id).to.equal(isRequiredMessage()[0].id);
   });
@@ -439,7 +377,7 @@ describe('<RenderEndringBGFieldArray>', () => {
     };
     values.push(andel1);
     const errors = RenderEndringBGFieldArray.validate(values, 100000,
-      skalValidereMotRapportert, skalValidereInntektMotRefujon);
+      skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
     const expected = skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverstring);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
     expect(errors._error.props.id).to.equal(expected[0].id);
@@ -462,7 +400,7 @@ describe('<RenderEndringBGFieldArray>', () => {
     };
     values.push(andel1);
     const errors = RenderEndringBGFieldArray.validate(values, 100000,
-      skalValidereMotRapportert, skalValidereInntektMotRefujon);
+      skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
     const expected = skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverstring);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
     expect(errors._error.props.id).to.equal(expected[0].id);
@@ -485,72 +423,9 @@ describe('<RenderEndringBGFieldArray>', () => {
     };
     values.push(andel1);
     const errors = RenderEndringBGFieldArray.validate(values, 100000,
-      skalValidereMotRapportert, skalValidereInntektMotRefujon);
+      skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
     expect(errors[0].fastsattBelop).to.have.length(1);
     expect(errors[0].fastsattBelop[0].id).to.equal(isRequiredMessage()[0].id);
-  });
-
-  it('skal returnerer errors for fastsattbeløp når oppgitt høgare enn beløp frå inntektsmelding', () => {
-    const values = [];
-    const andel1 = {
-      arbeidsgiverNavn: 'Visningsnavn for virksomhet',
-      arbeidsgiverId: '231423424',
-      arbeidsforholdId: null,
-      refusjonskrav: '10 000',
-      fastsattBelop: '100 001',
-      belopFraInntektsmelding: 100000,
-      skalKunneEndreRefusjon: true,
-      aktivitetstatus: 'ARBEIDSTAKER',
-      andel: 'Visningsnavn for virksomhet',
-      harPeriodeAarsakGraderingEllerRefusjon: true,
-      inntektskategori: 'ARBEIDSTAKER',
-      refusjonskravFraInntektsmelding: 10000,
-      registerInntekt: '10 000',
-      nyttArbeidsforhold: false,
-    };
-    values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values, 100000,
-      skalValidereMotRapportert, skalValidereInntektMotRefujon);
-    expect(errors['0'].fastsattBelop[0].id).to.equal(' ');
-  });
-
-  it('skal ikkje returnerer errors for fastsattbeløp når oppgitt og det ikkje er mottatt inntektsmelding', () => {
-    const values = [];
-    const andel1 = {
-      refusjonskrav: '10 000',
-      fastsattBelop: '100 001',
-      belopFraInntektsmelding: null,
-      skalKunneEndreRefusjon: true,
-      aktivitetstatus: 'ARBEIDSTAKER',
-      andel: 'Visningsnavn for virksomhet',
-      harPeriodeAarsakGraderingEllerRefusjon: true,
-      inntektskategori: 'ARBEIDSTAKER',
-      refusjonskravFraInntektsmelding: 10000,
-      nyttArbeidsforhold: false,
-    };
-    values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values, 100001,
-      skalValidereMotRapportert, skalValidereInntektMotRefujon);
-    expect(errors).to.equal(null);
-  });
-
-  it('skal ikkje returnerer errors for fastsattbeløp når oppgitt og det ikkje er mottatt inntektsmelding', () => {
-    const values = [];
-    const andel1 = {
-      refusjonskrav: '10 000',
-      fastsattBelop: '100 001',
-      belopFraInntektsmelding: null,
-      skalKunneEndreRefusjon: true,
-      aktivitetstatus: 'ARBEIDSTAKER',
-      andel: 'Visningsnavn for virksomhet',
-      harPeriodeAarsakGraderingEllerRefusjon: true,
-      inntektskategori: 'ARBEIDSTAKER',
-      refusjonskravFraInntektsmelding: 10000,
-    };
-    values.push(andel1);
-    const errors = RenderEndringBGFieldArray.validate(values, 100001,
-      skalValidereMotRapportert, skalValidereInntektMotRefujon);
-    expect(errors).to.equal(null);
   });
 
   it('skal gi error om inntektkategori ikkje er oppgitt', () => {
@@ -568,7 +443,7 @@ describe('<RenderEndringBGFieldArray>', () => {
     };
     values.push(andel1);
     const errors = RenderEndringBGFieldArray.validate(values, 100000,
-      skalValidereMotRapportert, skalValidereInntektMotRefujon);
+      skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
     expect(errors[0].inntektskategori).to.have.length(1);
     expect(errors[0].inntektskategori[0].id).to.equal(isRequiredMessage()[0].id);
   });
@@ -589,7 +464,7 @@ describe('<RenderEndringBGFieldArray>', () => {
     };
     values.push(andel1);
     const errors = RenderEndringBGFieldArray.validate(values, 100000,
-      skalValidereMotRapportert, skalValidereInntektMotRefujon);
+      skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
     expect(errors[0].andel).to.have.length(1);
     expect(errors[0].andel[0].id).to.equal(isRequiredMessage()[0].id);
   });
@@ -610,7 +485,7 @@ describe('<RenderEndringBGFieldArray>', () => {
     };
     values.push(andel1);
     const errors = RenderEndringBGFieldArray.validate(values, 100000,
-    skalValidereMotRapportert, skalValidereInntektMotRefujon);
+    skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
     expect(errors).to.equal(null);
   });
 

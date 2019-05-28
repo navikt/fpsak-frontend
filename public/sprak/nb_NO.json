@@ -1276,6 +1276,9 @@
   "BeregningInfoPanel.EndringBG.Validation.TotalFordelingForArbeidsforholdIkkeHøyereEnnRapportertInntekt": "Totalbeløp for {arbeidsgiver} kan ikke være høyere enn rapportert inntekt ({inntekt}).",
   "BeregningInfoPanel.EndringBG.Validation.TotalFordelingForArbeidsforholdIkkeHøyereEnnBeløpetFraInntektsmeldingen": "Totalbeløp for {arbeidsgiver} kan ikke være høyere enn beløpet fra inntektsmeldingen ({inntekt}).",
   "BeregningInfoPanel.EndringBG.Validation.TotalFordelingForArbeidsforholdIkkeHøyereEnnRefusjon": "Totalbeløp for {arbeidsgiver} kan ikke være høyere enn refusjonskrav fra inntektsmeldingen ({refusjonskrav}).",
+  "BeregningInfoPanel.EndringBG.Validation.TotalFordelingForArbeidsforholdIkkeHøyereEnnBeregningsgrunnlag": "Totalbeløp for {arbeidsgiver} kan ikke være høyere enn inntekt ({inntekt}).",
+  "BeregningInfoPanel.EndringBG.Validation.TotalFordelingForAAPOgArbeidsforholdIkkeHøyereEnnBeregningsgrunnlag": "Totalbeløp for Arbeidsavklaringspenger og {arbeidsgiver} kan ikke være høyere enn inntekt ({inntekt}).",
+  "BeregningInfoPanel.EndringBG.Inntekt": "Inntekt",
 
   "BeregningInfoPanel.EtterlønnSluttpakke.HarSøkerInntekt": "Har søker etterlønn eller sluttpakke?",
   "BeregningInfoPanel.EtterlønnSluttpakke.Månedsinntekt": "Månedsinntekt",

@@ -5,7 +5,7 @@ import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import EndringBeregningsgrunnlagPeriodePanel from './EndringBeregningsgrunnlagPeriodePanel';
 import {
- skalKunneOverstigeRapportertInntekt, harAAPOgRefusjonskravOverstigerInntektsmelding,
+  skalValidereMotBeregningsgrunnlag,
 } from '../BgFordelingUtils';
 
 import styles from './endringBeregningsgrunnlagForm.less';
@@ -89,13 +89,12 @@ export const finnSumIPeriode = (bgPerioder, fom) => {
 EndringBeregningsgrunnlagForm.validate = (values, endringBGPerioder, beregningsgrunnlag, getKodeverknavn) => {
   const errors = {};
   if (endringBGPerioder && endringBGPerioder.length > 0) {
-    const skalValidereMotRapportert = andel => !skalKunneOverstigeRapportertInntekt(beregningsgrunnlag)(andel);
-    const skalValidereInntektMotRefusjon = andel => harAAPOgRefusjonskravOverstigerInntektsmelding(andel, beregningsgrunnlag);
+    const skalValidereMotBeregningsgrunnlagPrAar = andel => skalValidereMotBeregningsgrunnlag(beregningsgrunnlag)(andel);
     for (let i = 0; i < endringBGPerioder.length; i += 1) {
       const sumIPeriode = finnSumIPeriode(beregningsgrunnlag.beregningsgrunnlagPeriode, endringBGPerioder[i].fom);
       const periode = values[getFieldNameKey(i)];
       errors[getFieldNameKey(i)] = EndringBeregningsgrunnlagPeriodePanel.validate(periode, sumIPeriode,
-        skalValidereMotRapportert, skalValidereInntektMotRefusjon, getKodeverknavn);
+        skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
     }
   }
   return errors;

@@ -30,6 +30,7 @@ export const getUniqueListOfArbeidsforhold = (andeler) => {
     if (andel.arbeidsforhold !== null && !arbeidsforholdEksistererIListen(andel.arbeidsforhold, arbeidsgiverList)) {
       const arbeidsforholdObject = {
         andelsnr: andel.andelsnr,
+        nyttArbeidsforhold: andel.nyttArbeidsforhold,
         ...andel.arbeidsforhold,
       };
       arbeidsgiverList.push(arbeidsforholdObject);

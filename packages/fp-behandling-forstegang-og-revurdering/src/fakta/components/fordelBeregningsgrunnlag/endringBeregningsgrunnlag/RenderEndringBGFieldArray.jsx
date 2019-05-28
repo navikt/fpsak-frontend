@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import moment from 'moment';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
@@ -39,6 +38,7 @@ import {
 } from '../ValidateAndelerUtils';
 import styles from './renderEndringBGFieldArray.less';
 
+const ENTER_KEY_CODE = 13;
 
 const defaultBGFordeling = periodeUtenAarsak => ({
   nyAndel: true,
@@ -113,22 +113,14 @@ const summerFordeling = (fields) => {
   return sum > 0 ? formatCurrencyNoKr(sum) : '';
 };
 
-const startBeforeStp = (field,
-  skjaeringstidspunktBeregning) => (field.arbeidsperiodeFom === ''
-  || !field.arbeidsperiodeFom
-  || moment(field.arbeidsperiodeFom).isBefore(skjaeringstidspunktBeregning));
-
-const summerRegister = (fields, skjaeringstidspunktBeregning) => {
+const summerBeregningsgrunnlagPrAar = (fields) => {
   let sum = 0;
   let index = 0;
   for (index; index < fields.length; index += 1) {
     const field = fields.get(index);
-    if (field.registerInntekt) {
-      sum += field.registerInntekt ? Number(removeSpacesFromNumber(field.registerInntekt)) : 0;
-    } else if (field.nyAndel === false
-      && (startBeforeStp(field, skjaeringstidspunktBeregning))) {
-        return '';
-      }
+    if (field.beregningsgrunnlagPrAar) {
+      sum += field.beregningsgrunnlagPrAar ? Number(removeSpacesFromNumber(field.beregningsgrunnlagPrAar)) : 0;
+    }
   }
   return sum > 0 ? formatCurrencyNoKr(sum) : '';
 };
@@ -141,9 +133,9 @@ const renderMessage = (intl, error) => (error[0] && error[0].id ? intl.formatMes
 const getErrorMessage = (meta, intl) => (meta.error
 && meta.submitFailed ? renderMessage(intl, meta.error) : null);
 
-const onKeyDown = (fields, periode) => ({ keyCode }) => {
-  if (keyCode === 13) {
-    fields.push(defaultBGFordeling(periode));
+const onKeyDown = (fields, periodeUtenAarsak) => ({ keyCode }) => {
+  if (keyCode === ENTER_KEY_CODE) {
+    fields.push(defaultBGFordeling(periodeUtenAarsak));
   }
 };
 
@@ -173,6 +165,7 @@ const setArbeidsforholdInfo = (fields, index, arbeidsforholdList, val) => {
     field.arbeidsperiodeTom = arbeidsforhold.opphoersdato;
     field.andelsnrRef = arbeidsforhold.andelsnr;
     field.aktivitetStatus = finnAktivitetStatus(fields, val);
+    field.nyttArbeidsforhold = arbeidsforhold.nyttArbeidsforhold;
   }
 };
 
@@ -287,7 +280,7 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
       </TableColumn>
       <TableColumn>
         <InputField
-          name={`${andelElementFieldId}.registerInntekt`}
+          name={`${andelElementFieldId}.beregningsgrunnlagPrAar`}
           bredde="S"
           readOnly
           parse={parseCurrencyInput}
@@ -321,7 +314,7 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
     </TableRow>
   ))
 );
-const createBruttoBGSummaryRow = (sumFordelingForrigeBehandling, sumFordeling, sumRegister, erRevurdering) => (
+const createBruttoBGSummaryRow = (sumFordelingForrigeBehandling, sumFordeling, sumBeregningsgrunnlagPrAar, erRevurdering) => (
   <TableRow key="bruttoBGSummaryRow">
     <TableColumn>
       <FormattedMessage id="BeregningInfoPanel.EndringBG.Sum" />
@@ -340,7 +333,7 @@ const createBruttoBGSummaryRow = (sumFordelingForrigeBehandling, sumFordeling, s
     <TableColumn />
     <TableColumn>
       <Element>
-        {sumRegister}
+        {sumBeregningsgrunnlagPrAar}
       </Element>
     </TableColumn>
     <TableColumn>
@@ -362,7 +355,7 @@ const getHeaderTextCodes = (erRevurdering) => {
   }
   headerCodes.push('BeregningInfoPanel.EndringBG.AndelIArbeid');
   headerCodes.push('BeregningInfoPanel.EndringBG.Refusjonskrav');
-  headerCodes.push('BeregningInfoPanel.EndringBG.RapportertInntekt');
+  headerCodes.push('BeregningInfoPanel.EndringBG.Inntekt');
   headerCodes.push('BeregningInfoPanel.EndringBG.Fordeling');
   headerCodes.push('BeregningInfoPanel.EndringBG.Inntektskategori');
   return headerCodes;
@@ -385,18 +378,17 @@ export const RenderEndringBGFieldArrayImpl = ({
   isAksjonspunktClosed,
   harKunYtelse,
   erRevurdering,
-  skjaeringstidspunktBeregning,
   getKodeverknavn,
 }) => {
   const sumFordelingForrigeBehandling = summerFordelingForrigeBehandlingFraFields(fields);
   const sumFordeling = summerFordeling(fields);
-  const sumRegister = summerRegister(fields, skjaeringstidspunktBeregning);
+  const sumBeregningsgrunnlagPrAar = summerBeregningsgrunnlagPrAar(fields);
   const selectVals = harKunYtelse
     ? arbeidsgiverSelectValuesForKunYtelse(arbeidsforholdList, intl, getKodeverknavn)
     : arbeidsgiverSelectValues(arbeidsforholdList, getKodeverknavn);
   const tablerows = createAndelerTableRows(fields, isAksjonspunktClosed, readOnly, inntektskategoriKoder, periodeUtenAarsak,
     arbeidsforholdList, selectVals, erRevurdering);
-  tablerows.push(createBruttoBGSummaryRow(sumFordelingForrigeBehandling, sumFordeling, sumRegister, erRevurdering));
+  tablerows.push(createBruttoBGSummaryRow(sumFordelingForrigeBehandling, sumFordeling, sumBeregningsgrunnlagPrAar, erRevurdering));
   const error = getErrorMessage(meta, intl);
   return (
     <NavFieldGroup errorMessage={error} className={styles.dividerTop}>
@@ -449,15 +441,13 @@ RenderEndringBGFieldArrayImpl.propTypes = {
   periodeUtenAarsak: PropTypes.bool.isRequired,
   harKunYtelse: PropTypes.bool.isRequired,
   erRevurdering: PropTypes.bool.isRequired,
-  skjaeringstidspunktBeregning: PropTypes.string.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
 const RenderEndringBGFieldArray = injectIntl(injectKodeverk(getAlleKodeverk)(RenderEndringBGFieldArrayImpl));
 
-RenderEndringBGFieldArray.validate = (values, sumIPeriode, skalValidereMotRapportert,
-  skalValidereInntektMotRefusjon, getKodeverknavn) => {
-  const fieldErrors = validateAndeler(values, skalValidereMotRapportert, skalValidereInntektMotRefusjon, getKodeverknavn);
+RenderEndringBGFieldArray.validate = (values, sumIPeriode, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn) => {
+  const fieldErrors = validateAndeler(values, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
   if (fieldErrors != null) {
     return fieldErrors;
   }
@@ -490,7 +480,6 @@ const mapStateToProps = (state) => {
   return {
     erRevurdering,
     arbeidsforholdList,
-    skjaeringstidspunktBeregning: bg.skjaeringstidspunktBeregning,
     inntektskategoriKoder: getKodeverk(kodeverkTyper.INNTEKTSKATEGORI)(state),
     harKunYtelse: bg.aktivitetStatus.some(status => status.kode === aktivitetStatuser.KUN_YTELSE),
   };
