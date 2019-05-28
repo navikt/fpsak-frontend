@@ -106,8 +106,6 @@ const visBegrunnelse = createSelector([isBehandlingFormDirty(FODSEL_TILRETTELEGG
     (dirty, values, initialValues = {}) => dirty && values.termindato !== initialValues.termindato);
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  // TODO: hente info fra backend når klart.  venter avklaring på om det blir checkboxer( mulighet for flere datoer),
-  //  eller radiobuttons (kun 1 dato)
   const tilrettelegging = getTilrettelegging(initialState);
   const initialValues = {
     termindato: tilrettelegging ? tilrettelegging.termindato : '',

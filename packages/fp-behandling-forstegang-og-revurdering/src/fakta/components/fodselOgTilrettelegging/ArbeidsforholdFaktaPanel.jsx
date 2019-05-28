@@ -99,7 +99,7 @@ ArbeidsforholdFaktaPanel.propTypes = {
 
 const mapStateToProps = (state, props) => {
   const arbeidsforhold = behandlingFormValueSelector(props.formName)(state, 'arbeidsforhold');
-//  arbeidsforhold.sort((a, b) => a.arbeidsgiverNavn.localeCompare(b.arbeidsgiverNavn));
+  arbeidsforhold.sort((a, b) => a.arbeidsgiverNavn.localeCompare(b.arbeidsgiverNavn));
   return {
     arbeidsforhold,
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
