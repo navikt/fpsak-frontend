@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { formPropTypes, FieldArray } from 'redux-form';
 import { createSelector } from 'reselect';
-import { Undertekst } from 'nav-frontend-typografi';
 import { Column } from 'nav-frontend-grid';
 
 import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
@@ -12,7 +11,7 @@ import {
   ElementWrapper, VerticalSpacer, ArrowBox,
 } from '@fpsak-frontend/shared-components';
 import {
-  getEditedStatus, getFamiliehendelseGjeldende, getBehandlingType, getBarnFraTpsRelatertTilSoknad, getAksjonspunkter, getSoknadAntallBarn,
+  getEditedStatus, getFamiliehendelseGjeldende, getBarnFraTpsRelatertTilSoknad, getAksjonspunkter, getSoknadAntallBarn,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { behandlingFormValueSelector, behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import FodselSammenligningPanel from 'behandlingForstegangOgRevurdering/src/components/fodselSammenligning/FodselSammenligningPanel';
@@ -22,7 +21,6 @@ import {
 import {
   RadioGroupField, RadioOption,
 } from '@fpsak-frontend/form';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
@@ -54,9 +52,7 @@ const createNewChildren = (antallBarnFraSoknad) => {
 export const SjekkFodselDokForm = ({
   readOnly,
   dokumentasjonForeliggerIsEdited,
-  fodselInfo,
   dokumentasjonForeligger,
-  behandlingsType,
   dirty,
   initialValues,
   submittable,
@@ -74,29 +70,8 @@ export const SjekkFodselDokForm = ({
           <RadioOption label={<FormattedMessage id="SjekkFodselDokForm.DokumentasjonForeliggerIkke" />} value={false} />
         </RadioGroupField>
       </div>
-      {fodselInfo && !!fodselInfo.length && dokumentasjonForeligger
-      && (
-        <div className={styles.clearfix}>
-          <Column xs="6">
-            <ArrowBox>
-              <Undertekst>{<FormattedMessage id="SjekkFodselDokForm.FastsettAntallBarn" />}</Undertekst>
-              <div className={styles.horizontalForm}>
-                <RadioGroupField name="brukAntallBarnITps" validate={[required]} readOnly={readOnly}>
-                  <RadioOption
-                    label={behandlingsType.kode !== behandlingType.REVURDERING
-                      ? <FormattedMessage id="SjekkFodselDokForm.BrukAntallISoknad" />
-                      : <FormattedMessage id="SjekkFodselDokForm.BrukAntallIYtelsesvedtaket" />}
-                    value={false}
-                  />
-                  <RadioOption label={<FormattedMessage id="SjekkFodselDokForm.BrukAntallITPS" />} value />
-                </RadioGroupField>
-              </div>
-            </ArrowBox>
-          </Column>
-        </div>
-      )
-      }
-      {(!fodselInfo || !fodselInfo.length) && dokumentasjonForeligger
+
+      {dokumentasjonForeligger
       && (
         <div className={styles.clearfix}>
           <Column xs="12">
@@ -122,11 +97,6 @@ export const SjekkFodselDokForm = ({
 SjekkFodselDokForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   dokumentasjonForeligger: PropTypes.bool,
-  fodselInfo: PropTypes.arrayOf(PropTypes.shape()),
-  behandlingsType: PropTypes.shape({
-    kode: PropTypes.string,
-    navn: PropTypes.string,
-  }),
   avklartBarn: PropTypes.arrayOf(PropTypes.shape()),
   dokumentasjonForeliggerIsEdited: PropTypes.bool,
   submittable: PropTypes.bool.isRequired,
@@ -135,12 +105,7 @@ SjekkFodselDokForm.propTypes = {
 
 SjekkFodselDokForm.defaultProps = {
   dokumentasjonForeligger: undefined,
-  fodselInfo: [],
   dokumentasjonForeliggerIsEdited: false,
-  behandlingsType: {
-    kode: '',
-    navn: '',
-  },
   avklartBarn: [],
 };
 
@@ -210,7 +175,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       avklartBarn: behandlingFormValueSelector(sjekkFodselDokForm)(state, 'avklartBarn'),
       dokumentasjonForeliggerIsEdited: getEditedStatus(state).dokumentasjonForeligger,
       dokumentasjonForeligger: behandlingFormValueSelector(sjekkFodselDokForm)(state, 'dokumentasjonForeligger'),
-      behandlingsType: getBehandlingType(state),
     });
 };
 
