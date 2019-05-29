@@ -18,8 +18,6 @@ node('DOCKER2') {
       sh "docker push $dockerRegistry/fpsak-frontend:$tagName"
    }
    stage('Deploy'){
-      build job: 'fpsak-frontend-BUILD', parameters: [string(name: 'miljø', value: 't10'), string(name: 'versjonNummer', value: tagName)], wait: true
-      addBadge icon: '/static/7d0f032c/images/48x48/completed.gif', id: '', link: '', text: "$tagName"
       build job: 'fpsak-frontend-BUILD', parameters: [string(name: 'miljø', value: 't4'), string(name: 'versjonNummer', value: tagName)], wait: true
       addBadge icon: '/static/7d0f032c/images/48x48/completed.gif', id: '', link: '', text: "$tagName"
    }
