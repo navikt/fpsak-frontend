@@ -94,33 +94,48 @@ EndringBeregningsgrunnlagPeriodePanel.defaultProps = {
   tom: null,
 };
 
-
 EndringBeregningsgrunnlagPeriodePanel.validate = (values, sumIPeriode, skalValidereMotRapportert,
-  skalValidereInntektMotRefusjon, getKodeverknavn) => RenderEndringBGFieldArray
-  .validate(values, sumIPeriode, skalValidereMotRapportert, skalValidereInntektMotRefusjon, getKodeverknavn);
+  getKodeverknavn) => RenderEndringBGFieldArray
+  .validate(values, sumIPeriode, skalValidereMotRapportert, getKodeverknavn);
 
 const finnRiktigAndel = (andel, bgPeriode) => bgPeriode.beregningsgrunnlagPrStatusOgAndel.find(a => a.andelsnr === andel.andelsnr);
 
 const erArbeidstakerMedArbeidsforhold = bgAndel => (bgAndel.aktivitetStatus.kode === aktivitetStatuser.ARBEIDSTAKER && bgAndel.arbeidsforhold);
 
-const finnRegister = (andel, bgAndel, skjaeringstidspunktBeregning, faktaOmFordeling) => {
-  if (erArbeidstakerMedArbeidsforhold(bgAndel)
-  && (andel.nyttArbeidsforhold || starterPaaEllerEtterStp(bgAndel, skjaeringstidspunktBeregning))) {
+const finnBelopFraRegister = (andel, bgAndel, skjaeringstidspunktBeregning, faktaOmFordeling) => {
+  if (bgAndel) {
+    if (erArbeidstakerMedArbeidsforhold(bgAndel)
+    && (andel.nyttArbeidsforhold || starterPaaEllerEtterStp(bgAndel, skjaeringstidspunktBeregning))) {
+      return null;
+    }
+    if (erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon(bgAndel, faktaOmFordeling)) {
+      return null;
+    }
+    if (andelErStatusFLOgHarATISammeOrg(bgAndel, faktaOmFordeling)) {
+      return null;
+    }
+    if (andel.belopFraInntektsmeldingPrAar || andel.belopFraInntektsmeldingPrAar === 0) {
+      return formatCurrencyNoKr(andel.belopFraInntektsmeldingPrAar);
+    }
+    if (bgAndel && (bgAndel.belopPrAarEtterAOrdningen || bgAndel.belopPrAarEtterAOrdningen === 0)) {
+      return formatCurrencyNoKr(bgAndel.belopPrAarEtterAOrdningen);
+    }
+    return bgAndel && bgAndel.belopFraMeldekortPrAar ? formatCurrencyNoKr(bgAndel.belopFraMeldekortPrAar) : null;
+  }
+  return null;
+};
+
+const finnBeregningsgrunnlagPrAar = (bgAndel) => {
+  if (!bgAndel) {
     return null;
   }
-  if (erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon(bgAndel, faktaOmFordeling)) {
-    return null;
+  if (bgAndel.overstyrtPrAar) {
+    return formatCurrencyNoKr(bgAndel.overstyrtPrAar);
   }
-  if (andelErStatusFLOgHarATISammeOrg(bgAndel, faktaOmFordeling)) {
-    return null;
+  if (bgAndel.beregnetPrAar) {
+    return formatCurrencyNoKr(bgAndel.beregnetPrAar);
   }
-  if (andel.belopFraInntektsmeldingPrAar || andel.belopFraInntektsmeldingPrAar === 0) {
-    return formatCurrencyNoKr(andel.belopFraInntektsmeldingPrAar);
-  }
-  if (bgAndel && (bgAndel.belopPrAarEtterAOrdningen || bgAndel.belopPrAarEtterAOrdningen === 0)) {
-    return formatCurrencyNoKr(bgAndel.belopPrAarEtterAOrdningen);
-  }
-  return bgAndel && bgAndel.belopFraMeldekortPrAar ? formatCurrencyNoKr(bgAndel.belopFraMeldekortPrAar) : null;
+  return null;
 };
 
 EndringBeregningsgrunnlagPeriodePanel.buildInitialValues = (periode, bgPeriode, skjaeringstidspunktBeregning,
@@ -132,23 +147,24 @@ EndringBeregningsgrunnlagPeriodePanel.buildInitialValues = (periode, bgPeriode, 
     periode.endringBeregningsgrunnlagAndeler
     .filter(({ aktivitetStatus }) => aktivitetStatus.kode !== aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE)
     .map((andel) => {
-      const bgAndel = andel.lagtTilAvSaksbehandler ? undefined : finnRiktigAndel(andel, bgPeriode);
+      const bgAndel = finnRiktigAndel(andel, bgPeriode);
       return ({
       ...setGenerellAndelsinfo(andel, harKunYtelse, getKodeverknavn),
       ...setArbeidsforholdInitialValues(andel),
       andelIArbeid: settAndelIArbeid(andel.andelIArbeid),
       fordelingForrigeBehandling: andel.fordelingForrigeBehandlingPrAar || andel.fordelingForrigeBehandlingPrAar === 0
         ? formatCurrencyNoKr(andel.fordelingForrigeBehandlingPrAar) : '',
-      fastsattBelop: settFastsattBelop(andel.beregnetPrAar, andel.fastsattForrigePrAar, andel.fastsattAvSaksbehandler),
-      readOnlyBelop: settReadOnlyBelop(finnRegister(andel, bgAndel, skjaeringstidspunktBeregning, faktaOmFordeling), andel.belopFraInntektsmeldingPrAar),
+      fastsattBelop: settFastsattBelop(andel.fordeltPrAar, andel.fastsattForrigePrAar),
+      readOnlyBelop: settReadOnlyBelop(finnBelopFraRegister(andel, bgAndel,
+        skjaeringstidspunktBeregning, faktaOmFordeling), andel.belopFraInntektsmeldingPrAar),
       refusjonskrav: andel.refusjonskravPrAar !== null && andel.refusjonskravPrAar !== undefined ? formatCurrencyNoKr(andel.refusjonskravPrAar) : '',
       skalKunneEndreRefusjon: periode.skalKunneEndreRefusjon && !andel.lagtTilAvSaksbehandler
       && andel.refusjonskravFraInntektsmeldingPrAar ? periode.skalKunneEndreRefusjon : false,
       belopFraInntektsmelding: andel.belopFraInntektsmeldingPrAar,
       harPeriodeAarsakGraderingEllerRefusjon: periode.harPeriodeAarsakGraderingEllerRefusjon,
       refusjonskravFraInntektsmelding: andel.refusjonskravFraInntektsmeldingPrAar,
-      registerInntekt: andel.lagtTilAvSaksbehandler ? null : finnRegister(andel, bgAndel, skjaeringstidspunktBeregning, faktaOmFordeling),
       nyttArbeidsforhold: andel.nyttArbeidsforhold || starterPaaEllerEtterStp(bgAndel, skjaeringstidspunktBeregning),
+      beregningsgrunnlagPrAar: finnBeregningsgrunnlagPrAar(bgAndel),
     });
 })
   );

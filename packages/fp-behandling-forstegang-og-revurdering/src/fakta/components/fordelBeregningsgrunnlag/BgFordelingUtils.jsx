@@ -35,18 +35,18 @@ const createAndelnavn = (andel, harKunYtelse, getKodeverknavn) => {
   return getKodeverknavn(andel.aktivitetStatus);
 };
 
-const finnFastsattPrAar = (beregnetPrAar,
-  fastsattForrigePrAar, fastsattAvSaksbehandler) => {
-  if (!nullOrUndefined(beregnetPrAar) && fastsattAvSaksbehandler) {
-    return beregnetPrAar;
+const finnFastsattPrAar = (fordeltPrAar,
+  fastsattForrigePrAar) => {
+  if (!nullOrUndefined(fordeltPrAar)) {
+    return fordeltPrAar;
   }
   return nullOrUndefined(fastsattForrigePrAar) ? null : fastsattForrigePrAar;
 };
 
-export const settFastsattBelop = (beregnetPrAar,
-  fastsattForrigePrAar, fastsattAvSaksbehandler) => {
-  const fastsatt = finnFastsattPrAar(beregnetPrAar,
-    fastsattForrigePrAar, fastsattAvSaksbehandler);
+export const settFastsattBelop = (fordeltPrAar,
+  fastsattForrigePrAar) => {
+  const fastsatt = finnFastsattPrAar(fordeltPrAar,
+    fastsattForrigePrAar);
   if (fastsatt !== null) {
     return formatCurrencyNoKr(fastsatt);
   }
@@ -102,7 +102,15 @@ export const starterPaaEllerEtterStp = (bgAndel,
   skjaeringstidspunktBeregning) => (bgAndel && bgAndel.arbeidsforhold
     && bgAndel.arbeidsforhold.startdato && !moment(bgAndel.arbeidsforhold.startdato).isBefore(moment(skjaeringstidspunktBeregning)));
 
-export const harAAPOgRefusjonskravOverstigerInntektsmelding = (andel, beregningsgrunnlag) => {
+const skalFlytteBeregningsgrunnlagFraAAP = (andel, andeler) => {
+  if (andel.refusjonskravFraInntektsmelding && andel.refusjonskravFraInntektsmelding > andel.belopFraInntektsmelding) {
+    return andeler
+      .some(a => a.aktivitetStatus === aktivitetStatus.ARBEIDSAVKLARINGSPENGER);
+  }
+  return false;
+};
+
+const harAAPOgRefusjonskravOverstigerInntektsmelding = (andel, beregningsgrunnlag) => {
   if (andel.refusjonskravFraInntektsmelding && andel.refusjonskravFraInntektsmelding > andel.belopFraInntektsmelding) {
     return beregningsgrunnlag.beregningsgrunnlagPeriode.some(periode => periode.beregningsgrunnlagPrStatusOgAndel
       .some(a => a.aktivitetStatus.kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER));
@@ -110,11 +118,26 @@ export const harAAPOgRefusjonskravOverstigerInntektsmelding = (andel, beregnings
   return false;
 };
 
-export const skalKunneOverstigeRapportertInntekt = beregningsgrunnlag => (andel) => {
-  if (harAAPOgRefusjonskravOverstigerInntektsmelding(andel, beregningsgrunnlag)) {
-    return true;
+const erAAPOgSkalFlytteTilArbeidsgiverSomRefunderer = (andel, andeler) => {
+  if (andel.aktivitetStatus !== aktivitetStatus.ARBEIDSAVKLARINGSPENGER) {
+    return false;
   }
-  return false;
+  return andeler.some((a) => {
+    const bgPrAar = a.beregningsgrunnlagPrAar ? a.beregningsgrunnlagPrAar : 0;
+    return a.refusjonskravFraInntektsmelding && a.refusjonskravFraInntektsmelding > bgPrAar;
+  });
+};
+
+export const erAAPEllerArbeidsgiverOgSkalFlytteMellomAAPOgArbeidsgiver = (andel, andeler) => (
+  skalFlytteBeregningsgrunnlagFraAAP(andel, andeler) || erAAPOgSkalFlytteTilArbeidsgiverSomRefunderer(andel, andeler)
+);
+
+
+export const skalValidereMotBeregningsgrunnlag = beregningsgrunnlag => (andel) => {
+  if (harAAPOgRefusjonskravOverstigerInntektsmelding(andel, beregningsgrunnlag)) {
+    return false;
+  }
+  return !andel.nyttArbeidsforhold;
 };
 
 export const mapToBelop = (andel) => {

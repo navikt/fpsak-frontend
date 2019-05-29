@@ -6,7 +6,7 @@ import {
   transformPerioder,
 } from './EndringBeregningsgrunnlagForm';
 
-const skalValidereMotRapportert = () => true;
+const getKodeverknavn = () => ({});
 
 const andel1 = {
   andelsnr: 1,
@@ -41,9 +41,8 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
   it('skal ikkje validere om det ikkje finnes perioder', () => {
     const values = {};
     const endringBGPerioder = [];
-    const faktaOmBeregning = {};
     const beregningsgrunnlag = {};
-    const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, faktaOmBeregning, beregningsgrunnlag, skalValidereMotRapportert);
+    const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, beregningsgrunnlag, getKodeverknavn);
     expect(errors).to.be.empty;
   });
 
@@ -57,7 +56,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
       beregningsgrunnlagPrStatusOgAndel: [],
 }],
 };
-    const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, beregningsgrunnlag, skalValidereMotRapportert);
+    const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, beregningsgrunnlag, getKodeverknavn);
     expect(errors[getFieldNameKey(0)]).to.not.be.empty;
   });
 
@@ -76,7 +75,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
   beregningsgrunnlagPrStatusOgAndel: [],
 }],
 };
-    const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, beregningsgrunnlag, skalValidereMotRapportert);
+    const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, beregningsgrunnlag, getKodeverknavn);
     expect(errors[getFieldNameKey(0)]).to.not.be.empty;
     expect(errors[getFieldNameKey(1)]).to.not.be.empty;
   });
