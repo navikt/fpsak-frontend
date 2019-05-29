@@ -35,8 +35,8 @@ import {
   getResolveProsessAksjonspunkterSuccess,
 } from './duckBpKlage';
 import {
-  getBehandlingspunkter, getSelectedBehandlingspunkt, getDefaultBehandlingspunkt,
-  getBehandlingspunkterStatus, getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus,
+  getBehandlingspunkter, getDefaultBehandlingspunkt,
+  getBehandlingspunkterStatus, getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus, getSelectedAnkeBehandlingspunkt,
 }
   from './behandlingsprosessKlageSelectors';
 import BehandlingspunktAnkeInfoPanel from './components/BehandlingspunktAnkeInfoPanel';
@@ -285,8 +285,8 @@ const mapStateToProps = state => ({
   aksjonspunkter: getAksjonspunkter(state),
   behandlingspunkter: getBehandlingspunkter(state),
   defaultBehandlingspunkt: getDefaultBehandlingspunkt(state),
-  // selectedBehandlingspunkt: getSelectedBehandlingspunkt(state),
-  selectedBehandlingspunkt: 'default',
+  selectedBehandlingspunkt: getSelectedAnkeBehandlingspunkt(state),
+  // selectedBehandlingspunkt: 'default',
   behandlingType: getBehandlingType(state),
   location: state.router.location,
   resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),

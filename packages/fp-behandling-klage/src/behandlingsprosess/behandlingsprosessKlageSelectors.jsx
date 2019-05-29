@@ -96,6 +96,8 @@ export const getSelectedBehandlingspunkt = createSelector(
     : selectableBps.find(bp => bp === selectedBpNavn)),
 );
 
+export const getSelectedAnkeBehandlingspunkt = () => 'default';
+
 export const getIsSelectedBehandlingspunktOverridden = createSelector(
   [getSelectedBehandlingspunkt, getOverrideBehandlingspunkter],
   (selectedBehandlingspunkt, overriddenBehandlingspunkter = []) => overriddenBehandlingspunkter.includes(selectedBehandlingspunkt),

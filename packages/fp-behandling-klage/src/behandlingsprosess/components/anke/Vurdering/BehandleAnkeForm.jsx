@@ -5,21 +5,28 @@ import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import PropTypes from 'prop-types';
 import { Row, Column } from 'nav-frontend-grid';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
-import { VerticalSpacer, AksjonspunktHelpText, FadingPanel } from '@fpsak-frontend/shared-components';
+import {
+ VerticalSpacer, AksjonspunktHelpText, FadingPanel, ArrowBox,
+} from '@fpsak-frontend/shared-components';
 
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
+// import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
 import { getBehandlingKlageVurderingResultatNK, getBehandlingSprak } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingKlage/src/behandlingForm';
+import {
+  CheckboxField,
+  RadioGroupField, RadioOption, SelectField, TextAreaField,
+} from '@fpsak-frontend/form';
+import { required } from '@fpsak-frontend/utils';
+import klageVurderingOmgjoerType from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
+import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import PreviewKlageLink from '../../klage/Klagevurdering/SharedUtills/PreviewKlageLink';
-import TempsaveKlageButton from '../../klage/Klagevurdering/SharedUtills/TempsaveKlageButton';
-import KlageVurderingRadioOptionsKa from '../../klage/Klagevurdering/KA/KlageVurderingRadioOptionsKa';
 import FritekstBrevTextField from '../../klage/Klagevurdering/SharedUtills/FritekstKlageBrevTextField';
 import styles from '../../klage/Klagevurdering/SharedUtills/behandleKlageForm.less';
 
@@ -28,10 +35,10 @@ import styles from '../../klage/Klagevurdering/SharedUtills/behandleKlageForm.le
  *
  * Presentasjonskomponent. Setter opp aksjonspunktet for behandling av klage (KA).
  */
-export const BehandleAnkeFormImpl = ({
+const BehandleAnkeFormImpl = ({
   readOnly,
   handleSubmit,
-  saveKlage,
+  // saveKlage,
   previewCallback,
   readOnlySubmitButton,
   aksjonspunktCode,
@@ -42,18 +49,83 @@ export const BehandleAnkeFormImpl = ({
 }) => (
   <form onSubmit={handleSubmit}>
     <FadingPanel>
-      <Undertittel>{intl.formatMessage({ id: 'Klage.ResolveKlage.Title' })}</Undertittel>
+      <Undertittel>{intl.formatMessage({ id: 'Ankebehandling.Title' })}</Undertittel>
       <VerticalSpacer fourPx />
       <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
-        {[<FormattedMessage id="Klage.ResolveKlage.HelpText" key={aksjonspunktCode} />]}
+        {[<FormattedMessage id="Ankebehandling.HelpText" key={aksjonspunktCode} />]}
       </AksjonspunktHelpText>
       <VerticalSpacer sixteenPx />
-      <KlageVurderingRadioOptionsKa
-        readOnly={readOnly}
-        klageVurdering={formValues.klageVurdering}
-        aksjonspunktCode={aksjonspunktCode}
-        intl={intl}
-      />
+
+      <Row>
+        <Column xs="7">
+          <SelectField
+            readOnly={readOnly}
+            name="klageMedholdArsak"
+            selectValues={[]}
+            className={readOnly ? styles.selectReadOnly : null}
+            label={intl.formatMessage({ id: 'Vedtaket som er anket' })}
+            validate={[required]}
+            bredde="xl"
+          />
+        </Column>
+      </Row>
+
+      <Row>
+        <Column xs="4">
+          <Normaltekst><FormattedMessage id="Ankebehandling.Resultat" /></Normaltekst>
+          <RadioGroupField
+            name="ankeResultat"
+            validate={[required]}
+            direction="vertical"
+            readOnly={readOnly}
+          >
+            <RadioOption value={ankeVurdering.STADFESTE_YTELSESVEDTAK} label={{ id: 'Ankebehandling.Resultat.Stadfest' }} />
+            <RadioOption value={ankeVurdering.AVVIS_ANKE} label={{ id: 'Ankebehandling.Resultat.Avvis' }} />
+          </RadioGroupField>
+        </Column>
+        <Column xs="4">
+          <RadioGroupField
+            name="ankeResultat"
+            validate={[required]}
+            readOnly={readOnly}
+            className={readOnly ? styles.selectReadOnly : null}
+            direction="vertical"
+          >
+            <RadioOption value={ankeVurdering.OMGJOER_VEDTAK} label={{ id: 'Ankebehandling.Resultat.Omgjør' }} />
+            <RadioOption value={ankeVurdering.OPPHEV_OG_HJEMSEND} label={{ id: 'Ankebehandling.Resultat.OpphevHjemsend' }} />
+          </RadioGroupField>
+        </Column>
+      </Row>
+
+      <Row>
+        <Column xs="7">
+          <ArrowBox>
+            <Normaltekst><FormattedMessage id="Ankebehandling.Avvisning" /></Normaltekst>
+            <CheckboxField name="ikkePart" label={<FormattedMessage id="Ankebehandling.Avvisning.IkkePart" />} />
+            <CheckboxField name="ikkeKonkret" label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeKonkret" />} />
+            <CheckboxField name="ikkeFrist" label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeFrist" />} />
+            <CheckboxField name="ikkeSignert" label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeSignert" />} />
+            <Normaltekst><FormattedMessage id="Ankebehandling.Realitetsbehandles" /></Normaltekst>
+            <RadioGroupField
+              name="realitetsbehandles"
+              validate={[required]}
+              readOnly={readOnly}
+              className={readOnly ? styles.selectReadOnly : null}
+              direction="horisontal"
+            >
+              <RadioOption value={klageVurderingOmgjoerType.UGUNST_MEDHOLD_I_KLAGE} label={{ id: 'Ankebehandling.Realitetsbehandles.Ja' }} />
+              <RadioOption value={klageVurderingOmgjoerType.DELVIS_MEDHOLD_I_KLAGE} label={{ id: 'Ankebehandling.Realitetsbehandles.Nei' }} />
+            </RadioGroupField>
+          </ArrowBox>
+        </Column>
+      </Row>
+
+      <Row>
+        <Column xs="7">
+          <TextAreaField label="Begrunnelse" name="begrunnelse" />
+        </Column>
+      </Row>
+
       <div className={styles.confirmVilkarForm}>
         <VerticalSpacer sixteenPx />
         <FritekstBrevTextField
@@ -130,7 +202,7 @@ export const transformValues = (values, aksjonspunktCode) => ({
   kode: aksjonspunktCode,
 });
 
-const formName = 'BehandleKlageKaForm';
+const formName = 'BehandleAnkeForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   // const aksjonspunktCode = getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames/bind';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+// import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import {
   getBehandlingspunktAksjonspunkterCodes,
   hasBehandlingspunktAtLeastOneOpenAksjonspunkt,
@@ -25,25 +25,23 @@ const classNames = classnames.bind(styles);
  * brukt til å velge panel. Finnes det ikke aksjonspunkter blir enten beregning, vedtak eller vilkårsresultatet vist.
  */
 export const BehandlingspunktAnkeInfoPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel lesbart
-  selectedBehandlingspunkt,
+  // selectedBehandlingspunkt,
   saveTempKlage,
   submitCallback,
   previewCallback,
-  previewCallbackKlage,
+  // previewCallbackKlage,
   openAksjonspunkt,
   readOnly,
   isApSolvable,
-  apCodes,
+  // apCodes,
   readOnlySubmitButton,
   notAcceptedByBeslutter,
 }) => (
   <div className={classNames('behandlingsPunkt', { notAcceptedByBeslutter, statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
-    <div>
-      Anke
-    </div>
     <BehandleKlageForm
       submitCallback={submitCallback}
       readOnly={readOnly}
+      saveKlage={saveTempKlage}
       previewCallback={previewCallback}
       readOnlySubmitButton={readOnlySubmitButton}
     />
@@ -52,15 +50,15 @@ export const BehandlingspunktAnkeInfoPanel = ({ // NOSONAR Kompleksitet er høg,
 
 BehandlingspunktAnkeInfoPanel.propTypes = {
   saveTempKlage: PropTypes.func.isRequired,
-  selectedBehandlingspunkt: PropTypes.string.isRequired,
+  // selectedBehandlingspunkt: PropTypes.string.isRequired,
   submitCallback: PropTypes.func.isRequired,
   openAksjonspunkt: PropTypes.bool.isRequired,
   previewCallback: PropTypes.func.isRequired,
-  previewCallbackKlage: PropTypes.func.isRequired,
+  // previewCallbackKlage: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   isApSolvable: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  // apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   notAcceptedByBeslutter: PropTypes.bool,
 };
 
