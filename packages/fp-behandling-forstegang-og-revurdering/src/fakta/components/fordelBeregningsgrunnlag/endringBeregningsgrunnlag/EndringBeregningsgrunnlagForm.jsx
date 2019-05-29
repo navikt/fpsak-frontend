@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
+import moment from 'moment';
 import EndringBeregningsgrunnlagPeriodePanel from './EndringBeregningsgrunnlagPeriodePanel';
 import {
   skalValidereMotBeregningsgrunnlag,
@@ -15,6 +17,48 @@ const ElementWrapper = ({ children }) => children;
 const endringBGFieldArrayNamePrefix = 'endringBGPeriode';
 
 export const getFieldNameKey = index => (endringBGFieldArrayNamePrefix + index);
+
+const harPeriodeSomKanKombineresMedForrige = (periode, bgPerioder, endretPeriode, periodeList) => {
+  const forrigeEndringPeriode = periodeList[periodeList.length - 1];
+  if (endretPeriode.harPeriodeAarsakGraderingEllerRefusjon !== forrigeEndringPeriode.harPeriodeAarsakGraderingEllerRefusjon) {
+    return false;
+  }
+  if (periode.periodeAarsaker.includes(periodeAarsak.ENDRING_I_REFUSJONSKRAV)
+  || periode.periodeAarsaker.includes(periodeAarsak.REFUSJON_OPPHOERER)
+  || periode.periodeAarsaker.includes(periodeAarsak.GRADERING)) {
+    return false;
+  }
+  if (periode.periodeAarsaker.includes(periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET)) {
+    const periodeIndex = bgPerioder.indexOf(periode);
+    const forrigePeriode = bgPerioder[periodeIndex - 1];
+    return forrigePeriode.bruttoPrAar === periode.bruttoPrAar;
+  }
+  return true;
+};
+
+const oppdaterTomDatoForSistePeriode = (liste, periode) => {
+  const forrigePeriode = liste.pop();
+  forrigePeriode.tom = periode.tom;
+  liste.push(forrigePeriode);
+};
+
+const sjekkOmPeriodeSkalLeggesTil = bgPerioder => (aggregatedPeriodList, periode) => {
+  if (aggregatedPeriodList.length === 0) {
+    aggregatedPeriodList.push({ ...periode });
+    return aggregatedPeriodList;
+  }
+  const matchendeBgPeriode = bgPerioder.find(p => p.beregningsgrunnlagPeriodeFom === periode.fom);
+  if (matchendeBgPeriode) {
+    if (harPeriodeSomKanKombineresMedForrige(matchendeBgPeriode, bgPerioder, periode, aggregatedPeriodList)) {
+      oppdaterTomDatoForSistePeriode(aggregatedPeriodList, periode);
+      return aggregatedPeriodList;
+    }
+    aggregatedPeriodList.push({ ...periode });
+  }
+  return aggregatedPeriodList;
+};
+
+export const slaaSammenPerioder = (perioder, bgPerioder) => perioder.reduce(sjekkOmPeriodeSkalLeggesTil(bgPerioder), []);
 
 
 /**
@@ -47,11 +91,12 @@ export class EndringBeregningsgrunnlagForm extends Component {
       readOnly,
       perioder,
       isAksjonspunktClosed,
+      bgPerioder,
     } = this.props;
     const { openPanels } = this.state;
     return (
       <BorderBox className={styles.lessPadding}>
-        {perioder.map((periode, index) => (
+        {slaaSammenPerioder(perioder, bgPerioder).map((periode, index) => (
           <ElementWrapper key={endringBGFieldArrayNamePrefix + periode.fom}>
             <VerticalSpacer eightPx />
             <EndringBeregningsgrunnlagPeriodePanel
@@ -77,13 +122,12 @@ EndringBeregningsgrunnlagForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
+  bgPerioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 export const finnSumIPeriode = (bgPerioder, fom) => {
   const periode = bgPerioder.find(p => p.beregningsgrunnlagPeriodeFom === fom);
-  return periode.beregningsgrunnlagPrStatusOgAndel
-  .map(andel => andel.beregnetPrAar)
-  .reduce((sum, beregnetPrAar) => (beregnetPrAar === null ? sum : sum + beregnetPrAar), 0);
+  return periode.bruttoPrAar;
 };
 
 EndringBeregningsgrunnlagForm.validate = (values, endringBGPerioder, beregningsgrunnlag, getKodeverknavn) => {
@@ -140,25 +184,32 @@ export const mapAndel = aktivitet => ({
   fastsatteVerdier: mapTilFastsatteVerdier(aktivitet),
 });
 
-export const lagPeriodeForSubmit = (values, index, endringBGPerioder) => ({
-  andeler: values[getFieldNameKey(index)].map(mapAndel),
-  fom: endringBGPerioder[index].fom,
-  tom: endringBGPerioder[index].tom,
-});
+const inkludererPeriode = periode => p => moment(p.fom).isSameOrAfter(moment(periode.fom))
+&& (periode.tom === null || moment(p.tom).isSameOrBefore(moment(periode.tom)));
 
-export const transformPerioder = (endringBGPerioder, values) => {
+export const lagPerioderForSubmit = (values, index, kombinertPeriode, endringBGPerioder) => endringBGPerioder
+  .filter(inkludererPeriode(kombinertPeriode))
+  .map(p => ({
+    andeler: values[getFieldNameKey(index)].map(mapAndel),
+    fom: p.fom,
+    tom: p.tom,
+  }));
+
+export const transformPerioder = (endringBGPerioder, values, bgPerioder) => {
   const endringBeregningsgrunnlagPerioder = [];
-  for (let index = 0; index < endringBGPerioder.length; index += 1) {
-    const { harPeriodeAarsakGraderingEllerRefusjon } = endringBGPerioder[index];
+  const kombinertePerioder = slaaSammenPerioder(endringBGPerioder, bgPerioder);
+  for (let index = 0; index < kombinertePerioder.length; index += 1) {
+    const { harPeriodeAarsakGraderingEllerRefusjon } = kombinertePerioder[index];
     if (harPeriodeAarsakGraderingEllerRefusjon) {
-      endringBeregningsgrunnlagPerioder.push(lagPeriodeForSubmit(values, index, endringBGPerioder));
+      lagPerioderForSubmit(values, index, kombinertePerioder[index], endringBGPerioder)
+      .forEach(p => endringBeregningsgrunnlagPerioder.push(p));
     }
   }
   return endringBeregningsgrunnlagPerioder;
 };
 
-EndringBeregningsgrunnlagForm.transformValues = (values, endringBGPerioder) => ({
-    endretBeregningsgrunnlagPerioder: transformPerioder(endringBGPerioder, values),
+EndringBeregningsgrunnlagForm.transformValues = (values, endringBGPerioder, bgPerioder) => ({
+    endretBeregningsgrunnlagPerioder: transformPerioder(endringBGPerioder, values, bgPerioder),
 });
 
 export default EndringBeregningsgrunnlagForm;
