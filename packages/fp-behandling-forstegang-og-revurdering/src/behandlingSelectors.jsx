@@ -9,6 +9,7 @@ import aksjonspunktCodes, {
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import fpsakBehandlingApi from './data/fpsakBehandlingApi';
@@ -48,7 +49,8 @@ export const erManueltOpprettet = createSelector([getBehandlingArsaker], (behand
 export const erArsakTypeHendelseFodsel = createSelector([getBehandlingArsakTyper], (behandlingArsakTyper = []) => behandlingArsakTyper
   .some(bt => bt.kode === 'RE-HENDELSE-FØDSEL'));
 export const erArsakTypeBehandlingEtterKlage = createSelector([getBehandlingArsakTyper], (behandlingArsakTyper = []) => behandlingArsakTyper
-  .some(bt => bt.kode === behandlingArsakType.ETTER_KLAGE || bt.kode === behandlingArsakType.KLAGE_U_INNTK || bt.kode === behandlingArsakType.KLAGE_M_INNTK));
+  .some(bt => bt.kode === klageBehandlingArsakType.ETTER_KLAGE || bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK
+    || bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK));
 
 export const getBehandlingIsManuellRevurdering = createSelector(
   [getBehandlingIsRevurdering, erManueltOpprettet, erArsakTypeHendelseFodsel],
