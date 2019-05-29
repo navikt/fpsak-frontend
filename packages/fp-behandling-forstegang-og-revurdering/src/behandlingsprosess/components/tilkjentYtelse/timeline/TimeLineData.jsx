@@ -37,7 +37,17 @@ const createVisningNavnForUttakArbeidstaker = (andel, getKodeverknavn) => {
   return createVisningsnavnForAktivitet(andelsObjekt, getKodeverknavn);
 };
 
-const tableHeaderTextCodes = [
+const tableHeaderTextCodes = (isFagsakSVP = 'false') => {
+  if (isFagsakSVP) {
+    return ([
+      'TilkjentYtelse.PeriodeData.Andel',
+      'TilkjentYtelse.PeriodeData.Utbetalingsgrad',
+      'TilkjentYtelse.PeriodeData.Refusjon',
+      'TilkjentYtelse.PeriodeData.TilSoker',
+      'TilkjentYtelse.PeriodeData.SisteUtbDato',
+    ]);
+  }
+return ([
   'TilkjentYtelse.PeriodeData.Andel',
   'TilkjentYtelse.PeriodeData.KontoType',
   'TilkjentYtelse.PeriodeData.Gradering',
@@ -45,7 +55,8 @@ const tableHeaderTextCodes = [
   'TilkjentYtelse.PeriodeData.Refusjon',
   'TilkjentYtelse.PeriodeData.TilSoker',
   'TilkjentYtelse.PeriodeData.SisteUtbDato',
-];
+]);
+};
 
 const findAndelsnavn = (andel, getKodeverknavn) => {
   switch (andel.aktivitetStatus.kode) {
@@ -97,6 +108,7 @@ export const TimeLineData = ({
   callbackForward,
   callbackBackward,
   getKodeverknavn,
+  isSoknadSvangerskapspenger,
 }) => {
   const numberOfDaysAndWeeks = calcDaysAndWeeks(selectedItemStartDate, selectedItemEndDate);
 
@@ -172,12 +184,16 @@ export const TimeLineData = ({
           <VerticalSpacer eightPx />
           {selectedItemData.andeler.length !== 0
           && (
-          <Table headerTextCodes={tableHeaderTextCodes}>
+          <Table headerTextCodes={tableHeaderTextCodes(isSoknadSvangerskapspenger)}>
             {selectedItemData.andeler.map((andel, index) => (
               <TableRow key={`index${index + 1}`}>
                 <TableColumn>{findAndelsnavn(andel, getKodeverknavn)}</TableColumn>
+                {!isSoknadSvangerskapspenger && (
                 <TableColumn><Normaltekst>{uttakPeriodeNavn[andel.uttak.stonadskontoType]}</Normaltekst></TableColumn>
+                )}
+                {!isSoknadSvangerskapspenger && (
                 <TableColumn><Normaltekst>{getGradering(andel)}</Normaltekst></TableColumn>
+                )}
                 <TableColumn><Normaltekst>{andel.utbetalingsgrad}</Normaltekst></TableColumn>
                 <TableColumn>
                   <Normaltekst>
@@ -209,6 +225,7 @@ TimeLineData.propTypes = {
   callbackForward: PropTypes.func.isRequired,
   callbackBackward: PropTypes.func.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  isSoknadSvangerskapspenger: PropTypes.bool.isRequired,
 };
 
 TimeLineData.defaultProps = {
