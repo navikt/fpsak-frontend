@@ -5,7 +5,7 @@ pipeline {
         }
     }
     parameters {
-        string(defaultValue: "t10", description: 'Miljø*', name: 'miljø')
+        string(defaultValue: "t4", description: 'Miljø*', name: 'miljø')
         string(defaultValue: '', description: 'Versjon Nummer*', name: 'versjonNummer')
     }
     stages {
