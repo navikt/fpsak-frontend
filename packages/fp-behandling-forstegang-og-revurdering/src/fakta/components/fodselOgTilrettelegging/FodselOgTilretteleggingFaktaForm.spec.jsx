@@ -14,7 +14,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
       hasOpenAksjonspunkter={false}
       readOnly
       visBegrunnelse={false}
-      fodselsdato=""
+      fødselsdato=""
     />);
 
     const datepicker = wrapper.find(DatepickerField);
@@ -30,7 +30,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
     const wrapper = shallowWithIntl(<FodselOgTilretteleggingFaktaForm
       hasOpenAksjonspunkter={false}
       readOnly
-      fodselsdato="20.10.2019"
+      fødselsdato="20.10.2019"
     />);
 
     const datepicker = wrapper.find(DatepickerField);

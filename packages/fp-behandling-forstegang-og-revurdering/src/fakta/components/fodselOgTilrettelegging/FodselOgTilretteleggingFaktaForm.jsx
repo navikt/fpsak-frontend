@@ -39,7 +39,7 @@ const FODSEL_TILRETTELEGGING_FORM = 'FodselOgTilretteleggingForm';
 
 export const FodselOgTilretteleggingFaktaForm = ({
   readOnly,
-  fodselsdato,
+  fødselsdato,
   hasOpenAksjonspunkter,
   ...formProps
 }) => (
@@ -54,10 +54,10 @@ export const FodselOgTilretteleggingFaktaForm = ({
             readOnly={readOnly}
           />
         </FlexColumn>
-        {fodselsdato && (
+        {fødselsdato && (
         <FlexColumn>
           <DatepickerField
-            name="fodselsdato"
+            name="fødselsdato"
             label={{ id: 'FodselOgTilretteleggingFaktaForm.Fodselsdato' }}
             validate={[required, hasValidDate]}
             readOnly={readOnly}
@@ -102,11 +102,11 @@ export const FodselOgTilretteleggingFaktaForm = ({
 FodselOgTilretteleggingFaktaForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
-  fodselsdato: PropTypes.string,
+  fødselsdato: PropTypes.string,
 };
 
 FodselOgTilretteleggingFaktaForm.defaultProps = {
-  fodselsdato: '',
+  fødselsdato: '',
 };
 
 const transformValues = values => ([{
@@ -118,11 +118,11 @@ const transformValues = values => ([{
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const aksjonspunkter = getAksjonspunkter(initialState);
   const tilrettelegging = getTilrettelegging(initialState);
-  const fodselsdato = tilrettelegging ? tilrettelegging.fødselsdato : '';
+  const fødselsdato = tilrettelegging ? tilrettelegging.fødselsdato : '';
   const initialValues = {
     termindato: tilrettelegging ? tilrettelegging.termindato : '',
     arbeidsforhold: tilrettelegging ? tilrettelegging.arbeidsforholdListe : [],
-    fodselsdato,
+    fødselsdato,
     begrunnelse: getAksjonspunkt(aksjonspunkter),
   };
   const onSubmit = values => ownProps.submitCallback(transformValues(values));
@@ -130,7 +130,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   return ({
       initialValues,
       onSubmit,
-      fodselsdato,
+      fødselsdato,
     });
 };
 
