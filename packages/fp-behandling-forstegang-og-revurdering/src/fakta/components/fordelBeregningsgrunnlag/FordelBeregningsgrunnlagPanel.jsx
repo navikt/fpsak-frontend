@@ -16,7 +16,7 @@ import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/compo
 
 import {
  getBehandlingIsOnHold, getEndringBeregningsgrunnlagPerioder,
-  getBeregningsgrunnlag, getAksjonspunkter,
+  getBeregningsgrunnlag, getAksjonspunkter, getBeregningsgrunnlagPerioder,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import FastsettEndretBeregningsgrunnlag from './endringBeregningsgrunnlag/FastsettEndretBeregningsgrunnlag';
 import FordelingHelpText from './FordelingHelpText';
@@ -139,15 +139,15 @@ FordelBeregningsgrunnlagPanelImpl.propTypes = {
 };
 
 export const transformValuesFordelBeregning = createSelector(
-  [getAksjonspunkter, getEndringBeregningsgrunnlagPerioder],
-  (aksjonspunkter, endringBGPerioder) => (values) => {
+  [getAksjonspunkter, getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlagPerioder],
+  (aksjonspunkter, endringBGPerioder, bgPerioder) => (values) => {
     if (hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)) {
       const faktaBeregningValues = values;
       const beg = faktaBeregningValues[BEGRUNNELSE_FORDELING_NAME];
       return [{
         kode: FORDEL_BEREGNINGSGRUNNLAG,
         begrunnelse: beg === undefined ? null : beg,
-        ...FastsettEndretBeregningsgrunnlag.transformValues(values, endringBGPerioder),
+        ...FastsettEndretBeregningsgrunnlag.transformValues(values, endringBGPerioder, bgPerioder),
       }];
     }
     return {};
