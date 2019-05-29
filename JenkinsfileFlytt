@@ -7,7 +7,7 @@ pipeline {
         }
     }
     parameters {
-        string(defaultValue: "t10", description: 'Fra Miljø*', name: 'fra')
+        string(defaultValue: "t4", description: 'Fra Miljø*', name: 'fra')
         string(defaultValue: '', description: 'Til Miljø*', name: 'til')
     }
     stages {
