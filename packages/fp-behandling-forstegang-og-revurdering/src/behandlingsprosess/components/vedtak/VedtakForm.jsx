@@ -12,6 +12,7 @@ import {
   getAksjonspunkter, getBehandlingResultatstruktur,
   isBehandlingStatusReadOnly, getBehandlingIsOnHold, getBehandlingStatus,
   getBehandlingsresultat, getBehandlingVersjon, getBehandlingSprak,
+  erArsakTypeBehandlingEtterKlage,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { bindActionCreators } from 'redux';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
@@ -125,6 +126,7 @@ export class VedtakFormImpl extends Component {
       kanOverstyre,
       isEngangsstonad,
       sprakkode,
+      erBehandlingEtterKlage,
       skalBrukeOverstyrendeFritekstBrev,
       initialValues,
       ...formProps
@@ -210,7 +212,7 @@ export class VedtakFormImpl extends Component {
                   <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
                 )
                 }
-                {!skalBrukeOverstyrendeFritekstBrev && skalViseLink
+                {!skalBrukeOverstyrendeFritekstBrev && skalViseLink && !erBehandlingEtterKlage
                 && (
                   <ForhaandsvisningsKnapp previewFunction={previewDefaultBrev} />
                 )
@@ -239,6 +241,7 @@ VedtakFormImpl.propTypes = {
   kanOverstyre: PropTypes.bool,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool,
   sprakkode: PropTypes.shape().isRequired,
+  erBehandlingEtterKlage: PropTypes.bool.isRequired,
   ...formPropTypes,
 };
 
@@ -302,6 +305,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     behandlingPaaVent: getBehandlingIsOnHold(state),
     sprakkode: getBehandlingSprak(state),
     aksjonspunktKoder: getAksjonspunktKoder(state),
+    erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(state),
     kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
   });
 };

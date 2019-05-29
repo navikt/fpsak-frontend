@@ -6,7 +6,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { connect } from 'react-redux';
 import {
   getBehandlingResultatstruktur, getHaveSentVarsel,
-  getAksjonspunkter, getBehandlingStatus,
+  getAksjonspunkter, getBehandlingStatus, erArsakTypeBehandlingEtterKlage,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandlingForstegangOgRevurdering/src/selectors/originalBehandlingSelectors';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -78,6 +78,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   skalBrukeOverstyrendeFritekstBrev,
   ytelseType,
   readOnly,
+  erBehandlingEtterKlage,
   submitKnappTextId,
 }) => {
   const behandlingIkkeAktiv = (behandlingStatusCode.BEHANDLING_UTREDES !== behandlingStatusKode);
@@ -108,6 +109,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
                  }
       {ytelseType === fagsakYtelseType.ENGANGSSTONAD
                  && skalViseESBrev(beregningResultat, originaltBeregningResultat, haveSentVarsel) && !skalBrukeOverstyrendeFritekstBrev
+                && !erBehandlingEtterKlage
         && (
         <ForhaandsvisningsKnapp previewFunction={previewBrev} />
         )
@@ -117,7 +119,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
         <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
       )
       }
-      {ytelseType === fagsakYtelseType.FORELDREPENGER && !skalBrukeOverstyrendeFritekstBrev
+      {ytelseType === fagsakYtelseType.FORELDREPENGER && !skalBrukeOverstyrendeFritekstBrev && !erBehandlingEtterKlage
         && (
         <ForhaandsvisningsKnapp previewFunction={previewBrev} />
         )
@@ -136,6 +138,7 @@ VedtakRevurderingSubmitPanelImpl.propTypes = {
   originaltBeregningResultat: PropTypes.shape(),
   haveSentVarsel: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
+  erBehandlingEtterKlage: PropTypes.bool.isRequired,
   formProps: PropTypes.shape().isRequired,
   ytelseType: PropTypes.string.isRequired,
   submitKnappTextId: PropTypes.string.isRequired,
@@ -156,6 +159,7 @@ const mapStateToProps = state => ({
   originaltBeregningResultat: getResultatstrukturFraOriginalBehandling(state),
   haveSentVarsel: getHaveSentVarsel(state),
   behandlingStatusKode: getBehandlingStatus(state).kode,
+  erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(state),
 });
 
 export default connect(mapStateToProps)(injectIntl(VedtakRevurderingSubmitPanelImpl));
