@@ -52,8 +52,7 @@ export const FodselOgTilretteleggingFaktaForm = ({
             readOnly={readOnly}
           />
         </FlexColumn>
-      </FlexRow>
-      {fødselsdato && (
+        {fødselsdato && (
         <FlexColumn>
           <DatepickerField
             name="fødselsdato"
@@ -63,6 +62,7 @@ export const FodselOgTilretteleggingFaktaForm = ({
           />
         </FlexColumn>
         )}
+      </FlexRow>
     </FlexContainer>
     <ArbeidsforholdFaktaPanel readOnly={readOnly} formName={FODSEL_TILRETTELEGGING_FORM} />
     <FlexContainer>
