@@ -38,7 +38,6 @@ const getAksjonspunkt = aksjonspunkter => aksjonspunkter.filter(ap => ap.definis
 export const FodselOgTilretteleggingFaktaForm = ({
   readOnly,
   hasOpenAksjonspunkter,
-  visBegrunnelse,
   fødselsdato,
   ...formProps
 }) => (
@@ -113,10 +112,6 @@ const transformValues = values => ([{
   bekreftetSvpArbeidsforholdList: values.arbeidsforhold,
 }]);
 
-const visBegrunnelse = createSelector([isBehandlingFormDirty(FODSEL_TILRETTELEGGING_FORM), getBehandlingFormValues(FODSEL_TILRETTELEGGING_FORM),
-    getBehandlingFormInitialValues(FODSEL_TILRETTELEGGING_FORM)],
-    (dirty, values, initialValues = {}) => dirty && values.termindato !== initialValues.termindato);
-
     const mapStateToPropsFactory = (initialState, ownProps) => {
       const aksjonspunkter = getAksjonspunkter(initialState);
       const tilrettelegging = getTilrettelegging(initialState);
@@ -127,9 +122,9 @@ const visBegrunnelse = createSelector([isBehandlingFormDirty(FODSEL_TILRETTELEGG
         fødselsdato,
         begrunnelse: getAksjonspunkt(aksjonspunkter),
       };
-  const onSubmit = values => ownProps.submitCallback(transformValues(values));
+ const onSubmit = values => ownProps.submitCallback(transformValues(values));
 
-  return state => ({
+  return ({
       initialValues,
       onSubmit,
       fødselsdato,
