@@ -9,31 +9,31 @@ import { FodselOgTilretteleggingFaktaForm } from './FodselOgTilretteleggingFakta
 import ArbeidsforholdFaktaPanel from './ArbeidsforholdFaktaPanel';
 
 describe('<FodselOgTilretteleggingFaktaForm>', () => {
-  it('skal vise faktaform uten begrunnelsefelt', () => {
+  it('skal vise faktaform med begrunnelsefelt og fodseldato', () => {
     const wrapper = shallowWithIntl(<FodselOgTilretteleggingFaktaForm
       hasOpenAksjonspunkter={false}
       readOnly
-      visBegrunnelse={false}
+      fødselsdato=""
     />);
 
     const datepicker = wrapper.find(DatepickerField);
     expect(datepicker).has.length(1);
     const begrunnelsefelt = wrapper.find(TextAreaField);
-    expect(begrunnelsefelt).has.length(0);
+    expect(begrunnelsefelt).has.length(1);
     const arbforholdFaktaPanel = wrapper.find(ArbeidsforholdFaktaPanel);
     expect(arbforholdFaktaPanel).has.length(1);
     const submitButton = wrapper.find(FaktaSubmitButton);
     expect(submitButton).has.length(1);
   });
-  it('skal vise faktaform uten begrunnelsefelt', () => {
+  it('skal vise faktaform med fødelsedato', () => {
     const wrapper = shallowWithIntl(<FodselOgTilretteleggingFaktaForm
       hasOpenAksjonspunkter={false}
       readOnly
-      visBegrunnelse
+      fødselsdato="20.10.2019"
     />);
 
     const datepicker = wrapper.find(DatepickerField);
-    expect(datepicker).has.length(1);
+    expect(datepicker).has.length(2);
     const begrunnelsefelt = wrapper.find(TextAreaField);
     expect(begrunnelsefelt).has.length(1);
     const arbforholdFaktaPanel = wrapper.find(ArbeidsforholdFaktaPanel);

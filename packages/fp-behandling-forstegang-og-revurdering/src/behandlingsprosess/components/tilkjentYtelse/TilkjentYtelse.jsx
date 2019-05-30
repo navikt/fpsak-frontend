@@ -234,6 +234,7 @@ export class TilkjentYtelse extends Component {
         hovedsokerKjonnKode,
         medsokerKjonnKode,
         intl,
+        isSoknadSvangerskapspenger,
       },
       selectHandler,
       state: { selectedItem },
@@ -287,6 +288,7 @@ export class TilkjentYtelse extends Component {
           selectedItemData={selectedItem}
           callbackForward={nextPeriod}
           callbackBackward={prevPeriod}
+          isSoknadSvangerskapspenger={isSoknadSvangerskapspenger}
         />
         )
         }
@@ -303,6 +305,7 @@ TilkjentYtelse.propTypes = {
   hovedsokerKjonnKode: PropTypes.string.isRequired,
   medsokerKjonnKode: PropTypes.string,
   intl: intlShape.isRequired,
+  isSoknadSvangerskapspenger: PropTypes.bool.isRequired,
 };
 
 TilkjentYtelse.defaultProps = {
