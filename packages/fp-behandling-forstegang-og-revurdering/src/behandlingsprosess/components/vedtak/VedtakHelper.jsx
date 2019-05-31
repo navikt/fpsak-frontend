@@ -38,6 +38,10 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType
     return 'VedtakForm.VilkarStatusInnvilgetEngangsstonad';
   }
 
+  if (ytelseType === fagsakYtelseType.SVANGERSKAPSPENGER) {
+    return 'VedtakForm.SvangerskapspengerInnvilget';
+  }
+
   return 'VedtakForm.VilkarStatusInnvilgetForeldrepenger';
 };
 
@@ -51,6 +55,10 @@ export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) =
 
   if (ytelseType === fagsakYtelseType.ENGANGSSTONAD) {
     return 'VedtakForm.EngangsstonadIkkeInnvilget';
+  }
+
+  if (ytelseType === fagsakYtelseType.SVANGERSKAPSPENGER) {
+    return 'VedtakForm.SvangerskapspengerIkkeInnvilget';
   }
 
   return 'VedtakForm.ForeldrepengerIkkeInnvilget';
