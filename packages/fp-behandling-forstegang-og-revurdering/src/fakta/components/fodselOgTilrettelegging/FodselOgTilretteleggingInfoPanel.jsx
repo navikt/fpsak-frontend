@@ -13,8 +13,6 @@ import FodselOgTilretteleggingFaktaForm from './FodselOgTilretteleggingFaktaForm
  * Svangerskapspenger
  * Fakta om Fødsel og tilrettelegging
  */
-// TODO: Må tilpasses med riktig aksjonspunkt og ap.tekst når backend er klar
-
 
 export const FodselOgTilretteleggingInfoPanelImpl = ({
   intl,
