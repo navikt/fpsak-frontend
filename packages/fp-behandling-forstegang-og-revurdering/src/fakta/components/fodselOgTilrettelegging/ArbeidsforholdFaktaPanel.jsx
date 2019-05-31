@@ -31,7 +31,6 @@ export class ArbeidsforholdFaktaPanel extends Component {
   setSelectedArbeidsforhold(event, id, selectedArbeidsforhold) {
     const initialValues = {
       jordmorTilretteleggingFra: selectedArbeidsforhold.tilretteleggingBehovFom,
-      begrunnelse: selectedArbeidsforhold.begrunnelse,
       kanGjennomfores: !!selectedArbeidsforhold.helTilretteleggingFom,
       kanGjennomforesDato: selectedArbeidsforhold.helTilretteleggingFom,
       kanIkkeGjennomfores: !!selectedArbeidsforhold.slutteArbeidFom,

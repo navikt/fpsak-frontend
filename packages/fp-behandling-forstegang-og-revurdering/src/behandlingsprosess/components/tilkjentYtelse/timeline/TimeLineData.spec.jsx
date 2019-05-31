@@ -69,6 +69,7 @@ describe('<TimeLineData>', () => {
       callbackBackward={sinon.spy()}
       callbackForward={sinon.spy()}
       getKodeverknavn={getKodeverknavn}
+      isSoknadSvangerskapspenger={false}
     />);
 
     const messages = wrapper.find(FormattedMessage);
@@ -91,6 +92,7 @@ describe('<TimeLineData>', () => {
       callbackBackward={sinon.spy()}
       callbackForward={sinon.spy()}
       getKodeverknavn={getKodeverknavn}
+      isSoknadSvangerskapspenger={false}
     />);
 
     const rows = wrapper.find(TableRow);

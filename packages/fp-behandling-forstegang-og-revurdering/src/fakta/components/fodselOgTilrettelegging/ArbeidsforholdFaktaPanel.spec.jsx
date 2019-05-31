@@ -17,7 +17,7 @@ describe('<ArbeidsforholdFaktaPanel>', () => {
     arbeidsforholdListe: [{
       tilretteleggingBehovFom: '2019-04-18',
       arbeidsgiverNavn: 'Xansen flyttebyrå AS',
-      arbeidsgiverIdent: 1234,
+      arbeidsgiverIdent: '1234',
       kanGjennomfores: {
         kanGjennomfores: true,
         dato: '2019-05-30',
@@ -35,7 +35,7 @@ describe('<ArbeidsforholdFaktaPanel>', () => {
     }, {
       tilretteleggingBehovFom: '2019-06-20',
       arbeidsgiverNavn: 'Rema 100',
-      arbeidsgiverIdent: 98754,
+      arbeidsgiverIdent: '98754',
       kanGjennomfores: {
         kanGjennomfores: false,
         dato: '',

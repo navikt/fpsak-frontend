@@ -5,26 +5,22 @@ import { FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import {
-  DatepickerField, TextAreaField,
+  DatepickerField,
 } from '@fpsak-frontend/form';
 import {
   FlexContainer, FlexColumn, FlexRow,
 } from '@fpsak-frontend/shared-components';
 import {
-  required, hasValidDate, maxLength, minLength, hasValidText,
+  required, hasValidDate,
 } from '@fpsak-frontend/utils';
 
 import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import ArbeidsforholdCheckboxes from './ArbeidsforholdCheckboxes';
-import styles from './arbeidsforholdInnhold.less';
 
 /**
  * Svangerskapspenger
  * Vise info pr arbforhold fra søknad og kunne endre feltene.
  */
-
-const minLength3 = minLength(3);
-const maxLength1500 = maxLength(1500);
 
 export const ArbeidsforholdInnhold = ({
   cancelArbeidsforholdCallback,
@@ -44,22 +40,6 @@ export const ArbeidsforholdInnhold = ({
         </FlexColumn>
       </FlexRow>
       <ArbeidsforholdCheckboxes readOnly={readOnly} />
-      <FlexRow>
-        <FlexColumn className={styles.textAreaBredde}>
-          <TextAreaField
-            name="begrunnelse"
-            label={{ id: 'ArbeidsforholdInnhold.BegrunnEndringene' }}
-            readOnly={readOnly}
-            validate={[
-              minLength3,
-              maxLength1500,
-              hasValidText,
-              required,
-            ]}
-            maxLength={1500}
-          />
-        </FlexColumn>
-      </FlexRow>
     </FlexContainer>
     {!readOnly
     && (

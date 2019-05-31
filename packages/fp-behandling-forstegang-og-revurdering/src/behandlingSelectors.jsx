@@ -70,6 +70,8 @@ export const getBehandlingUttaksperiodegrense = createSelector(
 export const getBehandlingYtelseFordeling = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.ytelsefordeling);
 export const getGjeldendeDekningsgrad = createSelector([getBehandlingYtelseFordeling], (ytelsesfordeling = {}) => ytelsesfordeling.gjeldendeDekningsgrad);
 export const getBehandlingToTrinnsBehandling = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.toTrinnsBehandling);
+export const getIsFagsakTypeSVP = createSelector([getFagsakYtelseType], (fagsakType = {}) => (
+  fagsakType ? fagsakType.kode === fagsakYtelseType.SVANGERSKAPSPENGER : false));
 export const getBehandlingResultatstruktur = createSelector(
   [getFagsakYtelseType, getSelectedBehandling], (fagsakType, selectedBehandling = {}) => (
     fagsakType.kode === fagsakYtelseType.FORELDREPENGER || fagsakType.kode === fagsakYtelseType.SVANGERSKAPSPENGER

@@ -4,7 +4,7 @@ import sinon from 'sinon';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import {
-  DatepickerField, TextAreaField,
+  DatepickerField,
 } from '@fpsak-frontend/form';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
@@ -41,8 +41,6 @@ describe('<ArbeidsforholdInnhold>', () => {
     expect(datepicker).has.length(1);
     const arbforholdCheckboxes = wrapper.find(ArbeidsforholdCheckboxes);
     expect(arbforholdCheckboxes).has.length(1);
-    const textarea = wrapper.find(TextAreaField);
-    expect(textarea).has.length(1);
     const oppdaterKnapp = wrapper.find(Hovedknapp);
     expect(oppdaterKnapp).has.length(0);
     const avbrytKnapp = wrapper.find(Knapp);
@@ -58,8 +56,6 @@ describe('<ArbeidsforholdInnhold>', () => {
     expect(datepicker).has.length(1);
     const arbforholdCheckboxes = wrapper.find(ArbeidsforholdCheckboxes);
     expect(arbforholdCheckboxes).has.length(1);
-    const textarea = wrapper.find(TextAreaField);
-    expect(textarea).has.length(1);
     const oppdaterKnapp = wrapper.find(Hovedknapp);
     expect(oppdaterKnapp).has.length(1);
     const avbrytKnapp = wrapper.find(Knapp);

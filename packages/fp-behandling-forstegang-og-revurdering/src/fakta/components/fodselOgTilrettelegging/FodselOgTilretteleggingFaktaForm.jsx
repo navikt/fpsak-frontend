@@ -1,26 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
 
 import {
   FlexContainer, FlexColumn, FlexRow, VerticalSpacer, ElementWrapper,
 } from '@fpsak-frontend/shared-components';
 import { DatepickerField, TextAreaField } from '@fpsak-frontend/form';
 import {
-  required, hasValidDate, hasValidText, maxLength,
+  required, hasValidDate, hasValidText, maxLength, requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import {
   behandlingForm,
-  getBehandlingFormInitialValues,
-  getBehandlingFormValues,
-  isBehandlingFormDirty,
 } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
  import {
    getTilrettelegging,
+   getAksjonspunkter,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import ArbeidsforholdFaktaPanel from './ArbeidsforholdFaktaPanel';
 
@@ -29,16 +26,19 @@ import styles from './arbeidsforholdInnhold.less';
 
 /**
  * Svangerskapspenger
+ * Presentasjonskomponent - viser tillrettlegging før svangerskapspenger
  */
 
 const maxLength1500 = maxLength(1500);
 
 const FODSEL_TILRETTELEGGING_FORM = 'FodselOgTilretteleggingForm';
 
+const getAksjonspunkt = aksjonspunkter => aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.FODSELTILRETTELEGGING)[0].begrunnelse;
+
 export const FodselOgTilretteleggingFaktaForm = ({
   readOnly,
   hasOpenAksjonspunkter,
-  visBegrunnelse,
+  fødselsdato,
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
@@ -52,30 +52,37 @@ export const FodselOgTilretteleggingFaktaForm = ({
             readOnly={readOnly}
           />
         </FlexColumn>
+        {fødselsdato && (
+        <FlexColumn>
+          <DatepickerField
+            name="fødselsdato"
+            label={{ id: 'FodselOgTilretteleggingFaktaForm.Fodselsdato' }}
+            validate={[required, hasValidDate]}
+            readOnly={readOnly}
+          />
+        </FlexColumn>
+        )}
       </FlexRow>
-      {visBegrunnelse
-      && (
+    </FlexContainer>
+    <ArbeidsforholdFaktaPanel readOnly={readOnly} formName={FODSEL_TILRETTELEGGING_FORM} />
+    <FlexContainer>
       <FlexRow>
         <FlexColumn className={styles.textAreaBredde}>
           <TextAreaField
             name="begrunnelse"
             label={{ id: 'FodselOgTilretteleggingFaktaForm.BegrunnEndringene' }}
-            validate={[required, maxLength1500, hasValidText]}
+            validate={[requiredIfNotPristine, maxLength1500, hasValidText]}
             maxLength={1500}
             readOnly={readOnly}
           />
         </FlexColumn>
       </FlexRow>
-      )
-    }
     </FlexContainer>
-    <ArbeidsforholdFaktaPanel readOnly={readOnly} formName={FODSEL_TILRETTELEGGING_FORM} />
     <FlexContainer fluid wrap>
       <FlexRow>
         <FlexColumn>
           <ElementWrapper>
             <VerticalSpacer twentyPx />
-
             <FaktaSubmitButton
               formName={formProps.form}
               isSubmittable={!readOnly}
@@ -92,7 +99,11 @@ export const FodselOgTilretteleggingFaktaForm = ({
 FodselOgTilretteleggingFaktaForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
-  visBegrunnelse: PropTypes.bool.isRequired,
+  fødselsdato: PropTypes.string,
+};
+
+FodselOgTilretteleggingFaktaForm.defaultProps = {
+  fødselsdato: '',
 };
 
 const transformValues = values => ([{
@@ -101,23 +112,22 @@ const transformValues = values => ([{
   bekreftetSvpArbeidsforholdList: values.arbeidsforhold,
 }]);
 
-const visBegrunnelse = createSelector([isBehandlingFormDirty(FODSEL_TILRETTELEGGING_FORM), getBehandlingFormValues(FODSEL_TILRETTELEGGING_FORM),
-    getBehandlingFormInitialValues(FODSEL_TILRETTELEGGING_FORM)],
-    (dirty, values, initialValues = {}) => dirty && values.termindato !== initialValues.termindato);
+    const mapStateToPropsFactory = (initialState, ownProps) => {
+      const aksjonspunkter = getAksjonspunkter(initialState);
+      const tilrettelegging = getTilrettelegging(initialState);
+      const fødselsdato = tilrettelegging ? tilrettelegging.fødselsdato : '';
+      const initialValues = {
+        termindato: tilrettelegging ? tilrettelegging.termindato : '',
+        arbeidsforhold: tilrettelegging ? tilrettelegging.arbeidsforholdListe : [],
+        fødselsdato,
+        begrunnelse: getAksjonspunkt(aksjonspunkter),
+      };
+ const onSubmit = values => ownProps.submitCallback(transformValues(values));
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const tilrettelegging = getTilrettelegging(initialState);
-  const initialValues = {
-    termindato: tilrettelegging ? tilrettelegging.termindato : '',
-    begrunnelse: tilrettelegging ? tilrettelegging.begrunnelse : '',
-    arbeidsforhold: tilrettelegging ? tilrettelegging.arbeidsforholdListe : [],
-  };
-  const onSubmit = values => ownProps.submitCallback(transformValues(values));
-
-  return state => ({
+  return ({
       initialValues,
       onSubmit,
-      visBegrunnelse: visBegrunnelse(state),
+      fødselsdato,
     });
 };
 

@@ -15,6 +15,7 @@ import {
   getSoknad,
   getFamiliehendelseGjeldende,
   getAksjonspunkter,
+  getIsFagsakTypeSVP,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
@@ -47,6 +48,7 @@ export const TilkjentYtelsePanelImpl = ({
   readOnly,
   submitCallback,
   readOnlySubmitButton,
+  isSoknadSvangerskapspenger,
 }) => (
   <FadingPanel>
     <Undertittel>
@@ -61,6 +63,7 @@ export const TilkjentYtelsePanelImpl = ({
         familiehendelseDate={familiehendelseDato}
         hovedsokerKjonnKode={hovedsokerKjonn}
         medsokerKjonnKode={medsokerKjonn}
+        isSoknadSvangerskapspenger={isSoknadSvangerskapspenger}
       />
       )
       }
@@ -87,6 +90,7 @@ TilkjentYtelsePanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
+  isSoknadSvangerskapspenger: PropTypes.bool.isRequired,
 };
 
 TilkjentYtelsePanelImpl.defaultProps = {
@@ -132,10 +136,12 @@ const mapStateToProps = (state) => {
   const familiehendelse = getFamiliehendelseGjeldende(state);
   const beregningsresultat = getBehandlingResultatstruktur(state);
   const soknad = getSoknad(state);
+  const isSVP = getIsFagsakTypeSVP(state);
   return {
     hovedsokerKjonn: person ? person.navBrukerKjonn.kode : undefined,
     medsokerKjonn: person.annenPart ? person.annenPart.navBrukerKjonn.kode : undefined,
     soknadDato: soknad.mottattDato,
+    isSoknadSvangerskapspenger: isSVP,
     familiehendelseDato: getCurrentFamiliehendelseDato(
       soknad.soknadType.kode,
       getFamiliehendelsedatoFraSoknad(soknad),

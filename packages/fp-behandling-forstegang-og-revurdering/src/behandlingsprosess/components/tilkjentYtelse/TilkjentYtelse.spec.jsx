@@ -34,6 +34,7 @@ describe('<TilkjentYtelse>', () => {
       familiehendelseDate={new Date('2018-05-10')}
       hovedsokerKjonnKode="K"
       intl={intlMock}
+      isSoknadSvangerskapspenger={false}
     />);
     expect(wrapper.find(TimeLineSokerEnsamSoker)).to.have.length(1);
     expect(wrapper.find(TimeLineSokerEnsamSoker).props().hovedsokerKjonnKode).to.equal('K');
