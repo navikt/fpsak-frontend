@@ -81,7 +81,9 @@ export const renderPeriode = (
         />
       );
     case utsettelseArsakCodes.UDEFINERT:
-      if (overforingArsak.kode === overforingArsakCodes.SYKDOM_ANNEN_FORELDER) {
+      if (overforingArsak.kode === overforingArsakCodes.SYKDOM_ANNEN_FORELDER
+        || overforingArsak.kode === overforingArsakCodes.IKKE_RETT_ANNEN_FORELDER
+        || overforingArsak.kode === overforingArsakCodes.ALENEOMSORG) {
         return (
           <SykdomOgSkadePeriode
             fieldId={fieldId}
