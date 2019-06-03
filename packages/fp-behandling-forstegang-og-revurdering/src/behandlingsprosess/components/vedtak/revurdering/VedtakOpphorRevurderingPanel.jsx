@@ -4,6 +4,7 @@ import moment from 'moment';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import {
   getOpphoersdatoFraUttak, getAksjonspunkter, getBehandlingSprak,
@@ -30,7 +31,8 @@ export const VedtakOpphorRevurderingPanelImpl = ({
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
     <Normaltekst>
       <FormattedMessage
-        id="VedtakForm.RevurderingFP.ForeldrepengerOpphoerer"
+        id={ytelseType === fagsakYtelseType.SVANGERSKAPSPENGER ? 'VedtakForm.RevurderingSVP.SvangerskapspengerOpphoerer'
+        : 'VedtakForm.RevurderingFP.ForeldrepengerOpphoerer'}
         values={{ dato: moment(opphoersdato).format(DDMMYYYY_DATE_FORMAT) }}
       />
     </Normaltekst>
