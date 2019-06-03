@@ -50,8 +50,16 @@ DocumentIndex.defaultProps = {
 };
 
 const getSortedDocuments = createSelector([getAllDocuments], alleDokumenter => (alleDokumenter || [])
-.filter(dokument => dokument.tidspunkt !== null)
-.sort((a, b) => b.tidspunkt.localeCompare(a.tidspunkt)));
+.sort((a, b) => {
+  if (!a.tidspunkt) {
+    return +1;
+  }
+
+  if (!b.tidspunkt) {
+    return -1;
+  }
+  return b.tidspunkt.localeCompare(a.tidspunkt);
+}));
 
 const mapStateToProps = state => ({
   saksNr: getSelectedSaksnummer(state),
