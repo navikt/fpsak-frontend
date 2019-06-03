@@ -49,7 +49,9 @@ DocumentIndex.defaultProps = {
   behandlingId: undefined,
 };
 
-const getSortedDocuments = createSelector([getAllDocuments], alleDokumenter => (alleDokumenter || []).sort((a, b) => b.tidspunkt.localeCompare(a.tidspunkt)));
+const getSortedDocuments = createSelector([getAllDocuments], alleDokumenter => (alleDokumenter || [])
+.filter(dokument => dokument.tidspunkt !== null)
+.sort((a, b) => b.tidspunkt.localeCompare(a.tidspunkt)));
 
 const mapStateToProps = state => ({
   saksNr: getSelectedSaksnummer(state),
