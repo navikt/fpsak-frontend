@@ -23,6 +23,8 @@ import styles from './periodeTyper.less';
 const minLength3 = minLength(3);
 const maxLength4000 = maxLength(4000);
 
+// TODO slå sammen ForeldreAnsvarPeriode, SykdomOgSkadePeriode og InnleggelsePeriode
+
 export const SykdomOgSkadePeriode = ({
   resultat,
   fraDato,

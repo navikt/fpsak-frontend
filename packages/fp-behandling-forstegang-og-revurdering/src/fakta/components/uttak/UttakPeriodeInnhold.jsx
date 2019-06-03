@@ -8,6 +8,7 @@ import overforingArsakCodes from '@fpsak-frontend/kodeverk/src/overforingArsakCo
 import FerieOgArbeidsPeriode from './perioder/FerieOgArbeidsPeriode';
 import SykdomOgSkadePeriode from './perioder/SykdomOgSkadePeriode';
 import InnleggelsePeriode from './perioder/InnleggelsePeriode';
+import { ForeldreAnsvarPeriode } from './perioder/ForeldreAnsvarPeriode';
 
 import styles from './uttakPeriodeInnhold.less';
 
@@ -81,11 +82,28 @@ export const renderPeriode = (
         />
       );
     case utsettelseArsakCodes.UDEFINERT:
-      if (overforingArsak.kode === overforingArsakCodes.SYKDOM_ANNEN_FORELDER
-        || overforingArsak.kode === overforingArsakCodes.IKKE_RETT_ANNEN_FORELDER
-        || overforingArsak.kode === overforingArsakCodes.ALENEOMSORG) {
+      if (overforingArsak.kode === overforingArsakCodes.SYKDOM_ANNEN_FORELDER) {
         return (
           <SykdomOgSkadePeriode
+            fieldId={fieldId}
+            id={id}
+            updatePeriode={updatePeriode}
+            cancelEditPeriode={cancelEditPeriode}
+            readOnly={readOnly}
+            fraDato={fraDato}
+            tilDato={tilDato}
+            utsettelseArsak={utsettelseArsak}
+            overforingArsak={overforingArsak}
+            bekreftet={bekreftet}
+            behandlingStatusKode={behandlingStatusKode}
+          />
+        );
+      }
+
+      if (overforingArsak.kode === overforingArsakCodes.IKKE_RETT_ANNEN_FORELDER
+        || overforingArsak.kode === overforingArsakCodes.ALENEOMSORG) {
+        return (
+          <ForeldreAnsvarPeriode
             fieldId={fieldId}
             id={id}
             updatePeriode={updatePeriode}
