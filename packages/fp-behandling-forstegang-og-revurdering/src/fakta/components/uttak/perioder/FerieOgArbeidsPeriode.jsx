@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
+// import moment from 'moment';
 import oppholdArsakType from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
@@ -14,6 +15,7 @@ import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/for
 import {
   required, maxLength, minLength, hasValidPeriod, hasValidText,
 } from '@fpsak-frontend/utils';
+// import { getSoknad } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import InntektsmeldingInfo from '../components/InntektsmeldingInfo';
 import EndreSoknadsperiode from '../components/EndreSoknadsperiode';
 import PerioderKnapper from './PerioderKnapper';
@@ -37,6 +39,7 @@ export const FerieOgArbeidsPeriode = ({
   skalViseResultat,
   førsteUttaksdato,
   originalResultat,
+  skalViseInntektmeldingInfo,
   oppholdArsak,
   ...formProps
 }) => {
@@ -108,6 +111,7 @@ export const FerieOgArbeidsPeriode = ({
               />
             </div>
           </FlexColumn>
+          {skalViseInntektmeldingInfo && (
           <FlexColumn className={styles.fieldColumn}>
             <InntektsmeldingInfo
               inntektsmeldingInfo={inntektsmeldingInfo}
@@ -115,6 +119,7 @@ export const FerieOgArbeidsPeriode = ({
               arbeidsgiver={arbeidsgiver}
             />
           </FlexColumn>
+          )}
         </FlexRow>
       </FlexContainer>
       <PerioderKnapper
@@ -151,6 +156,7 @@ FerieOgArbeidsPeriode.propTypes = {
   behandlingStatusKode: PropTypes.string,
   førsteUttaksdato: PropTypes.string,
   originalResultat: PropTypes.shape().isRequired,
+  skalViseInntektmeldingInfo: PropTypes.bool.isRequired,
 };
 
 FerieOgArbeidsPeriode.defaultProps = {
@@ -184,6 +190,8 @@ const mapToStateToProps = (state, ownProps) => {
   const begrunnelse = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.begrunnelse`);
   const saksebehandlersBegrunnelse = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.saksebehandlersBegrunnelse`);
   const oppholdArsak = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.oppholdÅrsak`);
+  // skal vise inntektsmeldinginfo for søknader mottatt før 4.juni og hvis 5070. https://jira.adeo.no/browse/PFP-7559
+  const skalViseInntektmeldingInfo = false; // moment(getSoknad(state).mottattDato).isBefore('2019-06-04');
   let initialResultatValue = initialResultat ? initialResultat.kode : undefined;
   if (oppholdArsak && oppholdArsak.kode !== oppholdArsakType.UDEFINERT && !begrunnelse) {
     initialResultatValue = undefined;
@@ -199,6 +207,7 @@ const mapToStateToProps = (state, ownProps) => {
     oppholdArsak,
     førsteUttaksdato,
     originalResultat,
+    skalViseInntektmeldingInfo,
     initialValues: {
       begrunnelse: begrunnelse || saksebehandlersBegrunnelse,
       id: ownProps.id,
