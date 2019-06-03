@@ -165,6 +165,9 @@ const getInfoTextCode = createSelector(
     behandlingtype, behandlingsresultat, beregningResultat, orginaltBehandlingsresultat, originaltBeregningResultat, behandlingIsKlage,
     ytelseType, isOpphor,
   ) => {
+    if (behandlingtype.kode === BehandlingType.TILBAKEKREVING) {
+      return 'FatterVedtakApprovalModal.Tilbakekreving';
+    }
     if (behandlingIsKlage) {
       if (isKlageWithKA(getBehandlingKlageVurderingResultatNK)) {
         return 'FatterVedtakApprovalModal.ModalDescriptionKlageKA';

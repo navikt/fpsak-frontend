@@ -22,7 +22,6 @@ const vedtakAksjonspunkter = [tilbakekrevingAksjonspunktCodes.FORESLA_VEDTAK];
 export const TilbakekrevingVedtakImpl = ({
   submitCallback,
   readOnly,
-  readOnlySubmitButton,
   resultat,
   konsekvensAvBehandling,
   perioder,
@@ -57,7 +56,6 @@ export const TilbakekrevingVedtakImpl = ({
     <TilbakekrevingVedtakForm
       submitCallback={submitCallback}
       readOnly={readOnly}
-      readOnlySubmitButton={readOnlySubmitButton}
     />
   </FadingPanel>
 );
@@ -65,7 +63,6 @@ export const TilbakekrevingVedtakImpl = ({
 TilbakekrevingVedtakImpl.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  readOnlySubmitButton: PropTypes.bool.isRequired,
   resultat: kodeverkObjektPropType.isRequired,
   konsekvensAvBehandling: PropTypes.string.isRequired,
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,

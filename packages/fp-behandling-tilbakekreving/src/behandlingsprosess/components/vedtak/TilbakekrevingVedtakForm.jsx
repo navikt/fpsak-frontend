@@ -29,7 +29,6 @@ const fetchPreview = (fetchPreviewVedtaksbrev, behandlingIdentifier) => (e) => {
 
 export const TilbakekrevingVedtakFormImpl = ({
   readOnly,
-  readOnlySubmitButton,
   fetchPreviewVedtaksbrev,
   behandlingIdentifier,
   ...formProps
@@ -45,7 +44,7 @@ export const TilbakekrevingVedtakFormImpl = ({
             textCode="TilbakekrevingVedtakForm.TilGodkjenning"
             formName={formName}
             isReadOnly={readOnly}
-            isSubmittable={!readOnlySubmitButton}
+            isSubmittable
             isBehandlingFormSubmitting={isBehandlingFormSubmitting}
             isBehandlingFormDirty={isBehandlingFormDirty}
             hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
@@ -70,7 +69,6 @@ export const TilbakekrevingVedtakFormImpl = ({
 
 TilbakekrevingVedtakFormImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  readOnlySubmitButton: PropTypes.bool.isRequired,
   fetchPreviewVedtaksbrev: PropTypes.func.isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
 };
