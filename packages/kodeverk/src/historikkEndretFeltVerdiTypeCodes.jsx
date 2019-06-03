@@ -813,6 +813,46 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'BOSATT_UTLAND',
     verdiId: 'HistorikkEndretFeltVerdiType.BosattUtland',
   },
+  SØKER_ER_I_PERMISJON: {
+    kode: 'SØKER_ER_I_PERMISJON',
+    verdiId: 'HistorikkEndretFeltVerdiType.SøkerErIPermisjon',
+  },
+  SØKER_ER_IKKE_I_PERMISJON: {
+    kode: 'SØKER_ER_I_PERMISJON',
+    verdiId: 'HistorikkEndretFeltVerdiType.SøkerErIkkeIPermisjon',
+  },
+  BRUK_MED_OVERSTYRTE_PERIODER: {
+    kode: 'BRUK_MED_OVERSTYRTE_PERIODER',
+    verdiId: 'HistorikkEndretFeltVerdiType.BrukMedOverstyrtePerioder',
+  },
+  INNTEKT_IKKE_MED_I_BG: {
+    kode: 'INNTEKT_IKKE_MED_I_BG',
+    verdiId: 'HistorikkEndretFeltVerdiType.InntektIkkeMedTilBeregningsgrunnlag',
+  },
+  LAGT_TIL_AV_SAKSBEHANDLER: {
+    kode: 'LAGT_TIL_AV_SAKSBEHANDLER',
+    verdiId: 'HistorikkEndretFeltVerdiType.LagtTilAvSaksbehandler',
+  },
+  BENYTT_A_INNTEKT_I_BG: {
+    kode: 'BENYTT_A_INNTEKT_I_BG',
+    verdiId: 'HistorikkEndretFeltVerdiType.BenyttAInntektIBeregningsgrunnlag',
+  },
+  MANGLENDE_OPPLYSNINGER: {
+    kode: 'MANGLENDE_OPPLYSNINGER',
+    verdiId: 'HistorikkEndretFeltVerdiType.ManglendeOpplysninger',
+  },
+  SLÅTT_SAMMEN_MED_ANNET: {
+    kode: 'SLÅTT_SAMMEN_MED_ANNET',
+    verdiId: 'HistorikkEndretFeltVerdiType.SlåttSammenMedAnnet',
+  },
+  NYTT_ARBEIDSFORHOLD: {
+    kode: 'NYTT_ARBEIDSFORHOLD',
+    verdiId: 'HistorikkEndretFeltVerdiType.NyttArbeidsforhold',
+  },
+  IKKE_BRUK: {
+    kode: 'IKKE_BRUK',
+    verdiId: 'HistorikkEndretFeltVerdiType.IkkeBruk',
+  },
 };
 
 export default historikkEndretFeltVerdiTypeCodes;
