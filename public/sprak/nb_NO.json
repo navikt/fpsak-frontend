@@ -2390,6 +2390,10 @@
 
   "TilbakekrevingVedtak.Resultat": "Resultat",
   "TilbakekrevingVedtak.Konsekvens": "Konsekvens av behandling",
+  "TilbakekrevingVedtak.Vedtaksbrev": "Vedtaksbrev",
+
+  "TilbakekrevingVedtakUtdypendeTekstPanel.LeggTilUtdypendeTekst": "Legg til utdypende tekst",
+  "TilbakekrevingVedtakUtdypendeTekstPanel.UtdypendeTekst": "Utdypende tekst",
 
   "TilbakekrevingVedtakPeriodeTabell.Periode": "Periode",
   "TilbakekrevingVedtakPeriodeTabell.FeilutbetaltBelop": "Feilutbetalt beløp",
