@@ -28,6 +28,7 @@ describe('<BeregningInfoPanel>', () => {
       readOnly
       submitCallback={sinon.spy()}
       isOnHold
+      harBeregningsgrunnlag
     />);
     const panel = wrapper.find(FaktaEkspandertpanel);
     expect(panel).has.length(0);
@@ -44,6 +45,7 @@ describe('<BeregningInfoPanel>', () => {
       readOnly
       submitCallback={sinon.spy()}
       isOnHold={false}
+      harBeregningsgrunnlag
     />);
     const panel = wrapper.find(FaktaEkspandertpanel);
     expect(panel).has.length(1);
@@ -78,6 +80,8 @@ describe('<BeregningInfoPanel>', () => {
       readOnly
       submitCallback={sinon.spy()}
       isOnHold={false}
+      harBeregningsgrunnlag
+
     />);
     const panel = wrapper.find(VurderFaktaBeregningPanel);
     expect(panel).has.length(1);
@@ -109,6 +113,8 @@ describe('<BeregningInfoPanel>', () => {
       readOnly
       submitCallback={sinon.spy()}
       isOnHold={false}
+      harBeregningsgrunnlag
+
     />);
     const panel = wrapper.find(AvklareAktiviteterPanel);
     expect(panel).has.length(1);

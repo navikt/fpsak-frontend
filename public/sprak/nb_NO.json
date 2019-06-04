@@ -1254,7 +1254,7 @@
   "BeregningInfoPanel.AksjonspunktHelpText.VurderAktiviteter": "Vurder hvilke aktiviteter som skal benyttes i beregning.",
 
   "BeregningInfoPanel.KunstigArbeidsforhold.FastsettKunstigArbeidsforhold": "Det finnes ikke registerdata for arbeidsforholdet og det er ikke mottatt inntektsmelding. Fastsett månedsinntekt for arbeidsforholdet",
-
+  "BeregningInfoPanel.FaktaBeregningPeriodePanel.Inntektsgrunnlag": "Inntekter som danner grunnlag for beregningsgrunnlaget",
   "KunYtelsePanel.Overskrift": "Søker har ytelse som eneste inntekt. Fastsett månedsbeløp for fordeling av beregningsgrunnlaget.",
   "KunYtelsePanel.YtelseSomEnesteInntekt": "Søker har ytelse som eneste inntekt. ",
   "KunYtelsePanel.HarBesteberegning": "Søker har ytelse som eneste inntekt. Skal denne fordeles etter besteberegning?",

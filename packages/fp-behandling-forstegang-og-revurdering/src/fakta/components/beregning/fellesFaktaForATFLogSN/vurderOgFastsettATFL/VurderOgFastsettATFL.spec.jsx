@@ -6,7 +6,7 @@ import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import { getFieldNameKey } from '../endringBeregningsgrunnlag/EndringBeregningsgrunnlagForm';
 import { utledArbeidsforholdFieldName } from './forms/VurderMottarYtelseUtils';
-import VurderOgFastsettATFL, { inntektFieldArrayName, skalViseInntektstabell } from './VurderOgFastsettATFL';
+import VurderOgFastsettATFL, { inntektFieldArrayName } from './VurderOgFastsettATFL';
 import VurderBesteberegningForm, { besteberegningField } from '../besteberegningFodendeKvinne/VurderBesteberegningForm';
 import LonnsendringForm, { lonnsendringField } from './forms/LonnsendringForm';
 import NyoppstartetFLForm, { erNyoppstartetFLField } from './forms/NyoppstartetFLForm';
@@ -59,45 +59,6 @@ const lagAndelValues = (andelsnr, fastsattBelop, inntektskategori, aktivitetStat
 });
 
 describe('<VurderOgFastsettATFL>', () => {
-  it('skal vise tabell om tilfelle FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING', () => {
-    const values = {};
-    const tilfeller = [VURDER_MOTTAR_YTELSE, FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING];
-    const faktaOmBeregning = lagFaktaOmBeregning(tilfeller,
-      {}, undefined, undefined, { arbeidstakerAndelerUtenIM: { andelsnr: 1 } });
-    const skalVise = skalViseInntektstabell(tilfeller, values, faktaOmBeregning, {});
-    expect(skalVise).to.equal(true);
-  });
-
-  it('skal vise tabell om alt er vurdert og det er refusjon/gradering aksjonspunkt', () => {
-    const values = {};
-    values.mottarYtelseField1 = false;
-    const tilfeller = [VURDER_MOTTAR_YTELSE, FASTSETT_ENDRET_BEREGNINGSGRUNNLAG];
-    const faktaOmBeregning = lagFaktaOmBeregning(tilfeller,
-      {}, undefined, undefined, { arbeidstakerAndelerUtenIM: { andelsnr: 1 } });
-    const skalVise = skalViseInntektstabell(tilfeller, values, faktaOmBeregning, {});
-    expect(skalVise).to.equal(true);
-  });
-
-  it('skal ikkje vise tabell om det er refusjon/gradering og bestebergning er vurdert til true', () => {
-    const values = {};
-    values[besteberegningField] = true;
-    const tilfeller = [VURDER_BESTEBEREGNING, FASTSETT_ENDRET_BEREGNINGSGRUNNLAG];
-    const faktaOmBeregning = lagFaktaOmBeregning(tilfeller,
-      { }, undefined, undefined);
-    const skalVise = skalViseInntektstabell(tilfeller, values, faktaOmBeregning, {});
-    expect(skalVise).to.equal(false);
-  });
-
-  it('skal vise tabell om det er refusjon/gradering og bestebergning er vurdert til false', () => {
-    const values = {};
-    values[besteberegningField] = false;
-    const tilfeller = [VURDER_BESTEBEREGNING, FASTSETT_ENDRET_BEREGNINGSGRUNNLAG];
-    const faktaOmBeregning = lagFaktaOmBeregning(tilfeller,
-      { }, undefined, undefined);
-    const skalVise = skalViseInntektstabell(tilfeller, values, faktaOmBeregning, {});
-    expect(skalVise).to.equal(true);
-  });
-
   it('skal transform values for endret bg i kombinasjon med vurder mottar ytelse', () => {
     const values = {};
     values[getFieldNameKey(1)] = [

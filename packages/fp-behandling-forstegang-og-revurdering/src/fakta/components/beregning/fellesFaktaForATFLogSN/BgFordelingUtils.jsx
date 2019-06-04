@@ -134,7 +134,8 @@ export const skalHaBesteberegningSelector = createSelector([getFormValuesForBere
 
 // Lonnsendring
 
-const harLonnsendringUtenInntektsmelding = (values, field, faktaOmBeregning) => listeInneholderAndel(faktaOmBeregning
+const harLonnsendringUtenInntektsmelding = (values, field, faktaOmBeregning) => faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM
+&& listeInneholderAndel(faktaOmBeregning
   .arbeidsforholdMedLønnsendringUtenIM, field) && values[lonnsendringField];
 
 const erATUtenInntektsmeldingMedLonnsendring = (field, values, faktaOmBeregning) => erArbeidstaker(field)
@@ -174,7 +175,7 @@ export const harAAPOgRefusjonskravOverstigerInntektsmelding = (andel, beregnings
 };
 
 // Kun Ytelse
-const harKunYtelse = faktaOmBeregning => faktaOmBeregning.faktaOmBeregningTilfeller
+const harKunYtelse = faktaOmBeregning => faktaOmBeregning.faktaOmBeregningTilfeller && faktaOmBeregning.faktaOmBeregningTilfeller
 .find(({ kode }) => kode === faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE) !== undefined;
 
 const skalKunneOverstigeRapportertInntektOgTotaltBeregningsgrunnlag = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => {

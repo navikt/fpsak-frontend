@@ -1,0 +1,113 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+@removeBtnSize: 17px;
+
+.buttonRemove {
+  background: @white url('@fpsak-frontend/assets/images/remove.svg') no-repeat;
+  background-size: 100% 100%;
+  border: 0;
+  cursor: pointer;
+  display: inline-block;
+  height: @removeBtnSize;
+  margin-top: 3px;
+  padding: 0;
+  vertical-align: top;
+  width: @removeBtnSize;
+}
+
+.rightAlign {
+  text-align: right;
+}
+
+.rightAlignInput > div > input {
+  margin-right: 0;
+  text-align: right;
+}
+
+.rightAlignInput > div > p {
+  text-align: right;
+  width: 140px;
+}
+
+.inntektTable {
+  border-bottom: 0;
+  margin-bottom: 8px;
+}
+
+.inntektTable > thead > tr > td:first-child {
+  padding-left: 0;
+  text-align: left;
+}
+
+.inntektTable > tbody > tr > td:nth-child(2) {
+  max-width: 50px;
+}
+
+.inntektTable > thead > tr > td:nth-child(2) {
+  text-align: left;
+}
+
+.inntektTable > thead > tr > td:last-child {
+  text-align: right;
+}
+
+.inntektTable > thead > tr > td {
+  text-align: right;
+}
+
+.inntektTable > tbody > tr > td {
+  vertical-align: middle;
+}
+
+.inntektTable > tbody > tr > td:first-child {
+  padding-left: 0;
+  text-align: left;
+}
+
+.inntektTable > tbody > tr > td:last-child {
+  text-align: right;
+}
+
+.inntektTable > tbody > tr > td:not(:first-child) > div {
+  margin-bottom: 8px;
+}
+
+.inntektTable > tbody > tr > td:not(:first-child) > div > div > input {
+  text-align: right;
+}
+
+.inntektTable > tbody > tr:last-child {
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+.inntektTable > tbody > tr:last-child > td {
+  border-top: 0;
+}
+
+.buttonRow {
+  margin-top: 0;
+}
+
+.addPeriode,
+.customLink,
+.removeButton {
+  cursor: pointer;
+}
+
+.addCircleIcon,
+.imageText {
+  display: inline-block;
+  margin-right: 1ex;
+  vertical-align: text-bottom;
+}
+
+.readOnlyContainer {
+  display: inline-block;
+
+  .readOnlyContent {
+    margin-bottom: 16px;
+    padding-bottom: 0.45rem;
+    white-space: pre-wrap;
+  }
+}
