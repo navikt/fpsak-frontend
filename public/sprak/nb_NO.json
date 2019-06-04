@@ -968,6 +968,7 @@
   "VedtakForm.UttaksperioderIkkeGyldig" : "Søker har ikke noen gyldig uttaksperiode",
   "VedtakForm.RevurderingFP.Aarsak": "Årsak til revurdering",
   "VedtakForm.RevurderingFP.ForeldrepengerOpphoerer": "Foreldrepenger opphører f.o.m. {dato}",
+  "VedtakForm.RevurderingSVP.SvangerskapspengerOpphoerer": "Svangerskapspenger opphører f.o.m. {dato}",
   "VedtakForm.ManuellOverstyring": "Overstyr automatisk brev",
   "VedtakForm.Brev": "Manuelt brev",
   "VedtakForm.Overskrift": "Overskrift",
