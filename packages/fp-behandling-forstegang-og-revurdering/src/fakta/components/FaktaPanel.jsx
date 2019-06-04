@@ -51,6 +51,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
   ytelsesType,
   ytelsefordeling,
   fagsakPerson,
+  erOverstyrer,
 }) => (
   <React.Fragment>
     <div className={styles.personContainer}>
@@ -189,16 +190,15 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         />
       )
       }
-      {
-        <BeregningInfoPanel
-          aksjonspunkter={aksjonspunkter}
-          openInfoPanels={openInfoPanels}
-          toggleInfoPanelCallback={toggleInfoPanelCallback}
-          shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-          submitCallback={submitCallback}
-          readOnly={readOnly}
-        />
-      }
+      <BeregningInfoPanel
+        aksjonspunkter={aksjonspunkter}
+        openInfoPanels={openInfoPanels}
+        toggleInfoPanelCallback={toggleInfoPanelCallback}
+        shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+        erOverstyrer={erOverstyrer}
+      />
       {(FordelBeregningsgrunnlagPanel.supports(aksjonspunkter))
       && (
         <FordelBeregningsgrunnlagPanel
@@ -254,6 +254,7 @@ FaktaPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   ytelsesType: PropTypes.shape().isRequired,
   fagsakPerson: PropTypes.shape().isRequired,
+  erOverstyrer: PropTypes.bool.isRequired,
 };
 
 FaktaPanel.defaultProps = {
@@ -261,15 +262,19 @@ FaktaPanel.defaultProps = {
   ytelsefordeling: undefined,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => {
+  const rettigheter = getRettigheter(state);
+  return {
   aksjonspunkter: getAksjonspunkter(state),
   vilkarCodes: getBehandlingVilkarCodes(state),
   ytelsesType: getFagsakYtelseType(state),
   openInfoPanels: getOpenInfoPanels(state),
-  readOnly: !getRettigheter(state).writeAccess.isEnabled || getBehandlingIsOnHold(state) || hasReadOnlyBehandling(state),
+  readOnly: !rettigheter.writeAccess.isEnabled || getBehandlingIsOnHold(state) || hasReadOnlyBehandling(state),
   personopplysninger: getPersonopplysning(state) || null,
   ytelsefordeling: getBehandlingYtelseFordeling(state),
+  erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
   fagsakPerson: getFagsakPerson(state),
-});
+};
+};
 
 export default connect(mapStateToProps)(FaktaPanel);
