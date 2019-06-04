@@ -41,6 +41,9 @@ const mockProps = {
   openInfoPanels: ['feilutbetaling'],
   submitCallback: sinon.spy(),
   årsaker: [],
+  merknaderFraBeslutter: {
+    notAccepted: false,
+  },
 };
 
 describe('<FeilutbetalingInfoPanel>', () => {

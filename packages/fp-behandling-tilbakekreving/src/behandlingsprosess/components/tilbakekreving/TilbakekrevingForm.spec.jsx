@@ -26,6 +26,9 @@ describe('<TilbakekrevingForm>', () => {
       antallPerioderMedAksjonspunkt={2}
       isDetailFormOpen
       handleSubmit={() => undefined}
+      merknaderFraBeslutter={{
+        notAccepted: false,
+      }}
     />);
 
     expect(wrapper.find(TilbakekrevingPeriodeForm)).to.have.length(1);
@@ -46,6 +49,9 @@ describe('<TilbakekrevingForm>', () => {
       antallPerioderMedAksjonspunkt={2}
       isDetailFormOpen
       handleSubmit={() => undefined}
+      merknaderFraBeslutter={{
+        notAccepted: false,
+      }}
     />);
 
     expect(wrapper.find(TilbakekrevingPeriodeForm)).to.have.length(0);
@@ -67,6 +73,9 @@ describe('<TilbakekrevingForm>', () => {
       antallPerioderMedAksjonspunkt={2}
       isDetailFormOpen
       handleSubmit={() => undefined}
+      merknaderFraBeslutter={{
+        notAccepted: false,
+      }}
       error="TilbakekrevingPeriodeForm.TotalbelopetUnder4Rettsgebyr"
     />);
 

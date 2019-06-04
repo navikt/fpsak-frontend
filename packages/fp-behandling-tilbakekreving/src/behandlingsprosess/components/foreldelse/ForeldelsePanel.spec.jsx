@@ -27,6 +27,9 @@ const mockProps = {
   foreldeseSyncErrors: {},
   readOnly: false,
   readOnlySubmitButton: false,
+  merknaderFraBeslutter: {
+    notAccepted: false,
+  },
 };
 
 describe('<ForeldelsePanel>', () => {

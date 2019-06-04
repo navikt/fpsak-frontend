@@ -11,7 +11,7 @@ import { Element, Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { TextAreaField } from '@fpsak-frontend/form';
-import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
+import { FaktaEkspandertpanel, withDefaultToggling, FaktaGruppe } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import {
@@ -23,6 +23,7 @@ import {
   getFeilutbetalingFakta,
   getFeilutbetalingAarsaker,
   getBehandlingVersjon,
+  getMerknaderFraBeslutter,
 } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { getSelectedBehandlingId } from 'behandlingTilbakekreving/src/duckTilbake';
 import { behandlingForm, getBehandlingFormPrefix } from 'behandlingTilbakekreving/src/behandlingForm';
@@ -61,6 +62,7 @@ export class FeilutbetalingInfoPanelImpl extends Component {
       feilutbetaling,
       årsaker,
       readOnly,
+      merknaderFraBeslutter,
       ...formProps
     } = this.props;
 
@@ -143,13 +145,19 @@ export class FeilutbetalingInfoPanelImpl extends Component {
               </Row>
               <Row className={styles.smallMarginTop}>
                 <Column xs="11">
-                  <FeilutbetalingPerioderTable
-                    perioder={feilutbetaling.perioder}
-                    formName={formName}
-                    årsaker={årsaker}
-                    readOnly={readOnly}
-                    resetFields={this.resetFields}
-                  />
+                  <FaktaGruppe
+                    aksjonspunktCode={tilbakekrevingAksjonspunktCodes.AVKLAR_FAKTA_FOR_FEILUTBETALING}
+                    merknaderFraBeslutter={merknaderFraBeslutter}
+                    withoutBorder
+                  >
+                    <FeilutbetalingPerioderTable
+                      perioder={feilutbetaling.perioder}
+                      formName={formName}
+                      årsaker={årsaker}
+                      readOnly={readOnly}
+                      resetFields={this.resetFields}
+                    />
+                  </FaktaGruppe>
                 </Column>
               </Row>
             </Column>
@@ -262,6 +270,9 @@ FeilutbetalingInfoPanelImpl.propTypes = {
   feilutbetaling: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
   årsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  merknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool,
+  }).isRequired,
   ...formPropTypes,
 };
 
@@ -341,6 +352,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     årsaker,
     initialValues: buildInitialValues(state),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+    merknaderFraBeslutter: getMerknaderFraBeslutter(tilbakekrevingAksjonspunktCodes.AVKLAR_FAKTA_FOR_FEILUTBETALING)(state),
     onSubmit: submitCallback,
   });
 };

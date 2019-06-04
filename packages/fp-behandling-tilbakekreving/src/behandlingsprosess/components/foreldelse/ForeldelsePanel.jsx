@@ -7,7 +7,7 @@ import moment from 'moment';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingspunktSubmitButton, FaktaGruppe } from '@fpsak-frontend/fp-behandling-felles';
 import {
   FadingPanel, VerticalSpacer, FlexRow, FlexColumn, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
@@ -19,7 +19,9 @@ import {
   behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, isBehandlingFormDirty,
   hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingTilbakekreving/src/behandlingForm';
-import { getBehandlingVersjon, getForeldelsePerioder } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+import {
+  getBehandlingVersjon, getForeldelsePerioder, getMerknaderFraBeslutter,
+} from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingTilbakekreving/src/duckTilbake';
 import { addClassNameGroupIdToPerioder } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
 import BpTimelinePanel from '../felles/behandlingspunktTimelineSkjema/BpTimelinePanel';
@@ -49,65 +51,72 @@ export const ForeldelsePanelImpl = ({
   apCodes,
   readOnlySubmitButton,
   readOnly,
+  merknaderFraBeslutter,
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
     <FadingPanel>
-      <Undertittel>
-        <FormattedMessage id="Behandlingspunkt.Foreldelse" />
-      </Undertittel>
-      <VerticalSpacer twentyPx />
-      {!apCodes[0] && (
-        <div className={styles.bold}>
-          <FlexRow>
-            <FlexColumn>
-              <FormattedMessage id="Foreldelse.Foreldelsesloven" />
-            </FlexColumn>
-          </FlexRow>
-          <VerticalSpacer eightPx />
-          <FlexRow>
-            <FlexColumn>
-              <FormattedMessage id="Foreldelse.AutomatiskVurdert" />
-            </FlexColumn>
-          </FlexRow>
-        </div>
-      )
-      }
-      {foreldelsesresultatActivity && apCodes[0] && (
-        <>
-          <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
-            { getApTekst(apCodes[0]) }
-          </AksjonspunktHelpText>
-          <VerticalSpacer twentyPx />
-          <BpTimelinePanel
-            hovedsokerKjonnKode={kjonn}
-            resultatActivity={foreldelsesresultatActivity}
-            detailPanelForm={ACTIVITY_PANEL_NAME}
-            fieldNameToStoreDetailInfo={ACTIVITY_PANEL_NAME}
-            behandlingFormPrefix={behandlingFormPrefix}
-            reduxFormChange={formChange}
-            reduxFormInitialize={formInitialize}
-            formName={formName}
-          >
-            <ForeldelseForm
+      <FaktaGruppe
+        aksjonspunktCode={tilbakekrevingAksjonspunktCodes.VURDER_FORELDELSE}
+        merknaderFraBeslutter={merknaderFraBeslutter}
+        withoutBorder
+      >
+        <Undertittel>
+          <FormattedMessage id="Behandlingspunkt.Foreldelse" />
+        </Undertittel>
+        <VerticalSpacer twentyPx />
+        {!apCodes[0] && (
+          <div className={styles.bold}>
+            <FlexRow>
+              <FlexColumn>
+                <FormattedMessage id="Foreldelse.Foreldelsesloven" />
+              </FlexColumn>
+            </FlexRow>
+            <VerticalSpacer eightPx />
+            <FlexRow>
+              <FlexColumn>
+                <FormattedMessage id="Foreldelse.AutomatiskVurdert" />
+              </FlexColumn>
+            </FlexRow>
+          </div>
+        )
+        }
+        {foreldelsesresultatActivity && apCodes[0] && (
+          <>
+            <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
+              { getApTekst(apCodes[0]) }
+            </AksjonspunktHelpText>
+            <VerticalSpacer twentyPx />
+            <BpTimelinePanel
+              hovedsokerKjonnKode={kjonn}
+              resultatActivity={foreldelsesresultatActivity}
+              detailPanelForm={ACTIVITY_PANEL_NAME}
+              fieldNameToStoreDetailInfo={ACTIVITY_PANEL_NAME}
               behandlingFormPrefix={behandlingFormPrefix}
+              reduxFormChange={formChange}
+              reduxFormInitialize={formInitialize}
               formName={formName}
-              activityPanelName={ACTIVITY_PANEL_NAME}
-              readOnly={readOnly}
+            >
+              <ForeldelseForm
+                behandlingFormPrefix={behandlingFormPrefix}
+                formName={formName}
+                activityPanelName={ACTIVITY_PANEL_NAME}
+                readOnly={readOnly}
+              />
+            </BpTimelinePanel>
+            <VerticalSpacer twentyPx />
+            <BehandlingspunktSubmitButton
+              formName={formName}
+              isReadOnly={readOnly}
+              isSubmittable={!readOnlySubmitButton}
+              isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+              isBehandlingFormDirty={isBehandlingFormDirty}
+              hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
             />
-          </BpTimelinePanel>
-          <VerticalSpacer twentyPx />
-          <BehandlingspunktSubmitButton
-            formName={formName}
-            isReadOnly={readOnly}
-            isSubmittable={!readOnlySubmitButton}
-            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-            isBehandlingFormDirty={isBehandlingFormDirty}
-            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-          />
-        </>
-      )
-      }
+          </>
+        )
+        }
+      </FaktaGruppe>
     </FadingPanel>
   </form>
 );
@@ -122,6 +131,9 @@ ForeldelsePanelImpl.propTypes = {
   apCodes: PropTypes.arrayOf(PropTypes.string),
   readOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
+  merknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool.isRequired,
+  }).isRequired,
 };
 
 ForeldelsePanelImpl.defaultProps = {
@@ -153,6 +165,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     foreldelsesresultatActivity: behandlingFormValueSelector(formName)(state, ACTIVITY_PANEL_NAME),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
     kjonn: getFagsakPerson(state).erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN,
+    merknaderFraBeslutter: getMerknaderFraBeslutter(tilbakekrevingAksjonspunktCodes.VURDER_FORELDELSE)(state),
     onSubmit: submitCallback,
   });
 };

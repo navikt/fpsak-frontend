@@ -5,8 +5,8 @@ import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { BehandlingInfoHolder } from '@fpsak-frontend/fp-behandling-felles';
 import {
   getBehandlingSprak, getBehandlingVersjon, getAksjonspunkter, getBehandlingAnsvarligSaksbehandler, getBehandlingStatus,
-  getBehandlingsresultat, getBehandlingType, getBehandlingHasSoknad,
-  getBehandlingIsOnHold, getBehandlingBehandlendeEnhetId,
+  getBehandlingToTrinnsBehandling, getTotrinnskontrollArsakerUtenUdefinert, getTotrinnskontrollArsakerReadOnly, getTotrinnskontrollArsaker,
+  getBehandlingsresultat, getBehandlingType, getBehandlingHasSoknad, getBehandlingIsOnHold, getBehandlingBehandlendeEnhetId,
   getBehandlingBehandlendeEnhetNavn, getSoknad,
 } from './selectors/tilbakekrevingBehandlingSelectors';
 
@@ -16,6 +16,7 @@ export class FpTilbakeBehandlingInfoSetter extends Component {
   setBehandlingInfo = () => {
     const {
       setBehandlingInfoHolder, behandlingSprak, behandlingVersjon, aksjonspunkter, behandlingAnsvarligSaksbehandler, behandlingStatus,
+      behandlingToTrinnsBehandling, totrinnskontrollArsakerUtenUdefinert, totrinnskontrollArsakerReadOnly, totrinnskontrollArsaker,
       behandlingsresultat, behandlingType, behandlingHasSoknad, behandlingIsOnHold, behandlingBehandlendeEnhetId,
       behandlingBehandlendeEnhetNavn, soknad,
     } = this.props;
@@ -26,6 +27,10 @@ export class FpTilbakeBehandlingInfoSetter extends Component {
       .withAksjonspunkter(aksjonspunkter)
       .withBehandlingAnsvarligSaksbehandler(behandlingAnsvarligSaksbehandler)
       .withBehandlingStatus(behandlingStatus)
+      .withBehandlingToTrinnsBehandling(behandlingToTrinnsBehandling)
+      .withTotrinnskontrollArsakerUtenUdefinert(totrinnskontrollArsakerUtenUdefinert)
+      .withTotrinnskontrollArsakerReadOnly(totrinnskontrollArsakerReadOnly)
+      .withTotrinnskontrollArsaker(totrinnskontrollArsaker)
       .withBehandlingsresultat(behandlingsresultat)
       .withBehandlingType(behandlingType)
       .withBehandlingHasSoknad(behandlingHasSoknad)
@@ -57,6 +62,10 @@ FpTilbakeBehandlingInfoSetter.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired),
   behandlingAnsvarligSaksbehandler: PropTypes.string,
   behandlingStatus: PropTypes.shape().isRequired,
+  behandlingToTrinnsBehandling: PropTypes.bool.isRequired,
+  totrinnskontrollArsakerUtenUdefinert: PropTypes.arrayOf(PropTypes.shape()),
+  totrinnskontrollArsakerReadOnly: PropTypes.arrayOf(PropTypes.shape()),
+  totrinnskontrollArsaker: PropTypes.arrayOf(PropTypes.shape()),
   behandlingsresultat: PropTypes.shape(),
   behandlingType: PropTypes.shape().isRequired,
   behandlingHasSoknad: PropTypes.bool.isRequired,
@@ -83,6 +92,10 @@ const mapStateToProps = state => ({
   aksjonspunkter: getAksjonspunkter(state),
   behandlingAnsvarligSaksbehandler: getBehandlingAnsvarligSaksbehandler(state),
   behandlingStatus: getBehandlingStatus(state),
+  behandlingToTrinnsBehandling: getBehandlingToTrinnsBehandling(state),
+  totrinnskontrollArsakerUtenUdefinert: getTotrinnskontrollArsakerUtenUdefinert(state),
+  totrinnskontrollArsakerReadOnly: getTotrinnskontrollArsakerReadOnly(state),
+  totrinnskontrollArsaker: getTotrinnskontrollArsaker(state),
   behandlingsresultat: getBehandlingsresultat(state),
   behandlingType: getBehandlingType(state),
   behandlingHasSoknad: getBehandlingHasSoknad(state),

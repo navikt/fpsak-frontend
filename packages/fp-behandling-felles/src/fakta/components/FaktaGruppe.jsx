@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 
@@ -27,47 +26,41 @@ Wrapper.propTypes = {
  * Presentasjonskomponent. Grupperingsboks til bruk i faktapaneler, med eller uten ramme. Man kan også spesifisere hvilket aksjonspunkt
  * gruppen hører til, slik at gruppen får rød ramme hvis beslutter har lagt inn merknader.
  */
-const FaktaGruppeImpl = ({
-  error,
+const FaktaGruppe = ({
+  merknaderFraBeslutter,
   titleCode,
   children,
   withoutBorder,
   className,
-}) => (
-  <Wrapper withoutBorder={withoutBorder} error={error} className={className}>
-    {titleCode
-    && (
-    <div>
-      <Element><FormattedMessage id={titleCode} /></Element>
-      <VerticalSpacer twentyPx />
-    </div>
-    )
-    }
-    {children}
-  </Wrapper>
-);
-
-FaktaGruppeImpl.propTypes = {
-  ...Wrapper.propTypes,
-  titleCode: PropTypes.string.isRequired,
+}) => {
+  const error = !!(merknaderFraBeslutter && merknaderFraBeslutter.notAccepted);
+  return (
+    <Wrapper withoutBorder={withoutBorder && !error} error={error} className={className}>
+      {titleCode
+      && (
+      <div>
+        <Element><FormattedMessage id={titleCode} /></Element>
+        <VerticalSpacer twentyPx />
+      </div>
+      )
+      }
+      {children}
+    </Wrapper>
+  );
 };
 
-const mapStateToProps = (state, props) => ({
-  error: !!(props.merknaderFraBeslutter && props.merknaderFraBeslutter.notAccepted),
-});
-
-const FaktaGruppe = connect(mapStateToProps)(FaktaGruppeImpl);
-
 FaktaGruppe.propTypes = {
+  merknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool,
+  }).isRequired,
+  children: PropTypes.node.isRequired,
   titleCode: PropTypes.string,
-  children: PropTypes.node,
   withoutBorder: PropTypes.bool,
   className: PropTypes.string,
 };
 
 FaktaGruppe.defaultProps = {
   titleCode: '',
-  children: null,
   withoutBorder: false,
   className: '',
 };

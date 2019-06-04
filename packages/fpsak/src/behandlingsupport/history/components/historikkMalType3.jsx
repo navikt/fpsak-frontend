@@ -13,7 +13,6 @@ import { getAlleKodeverk } from 'kodeverk/duck';
 import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import { findHendelseText } from './historikkUtils';
 
-
 const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.TERMINBEKREFTELSE]: 'TermindatoFaktaForm.ApplicationInformation',
   [aksjonspunktCodes.ADOPSJONSDOKUMENTAJON]: 'DokumentasjonFaktaForm.ApplicationInformation',
@@ -88,7 +87,6 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.FORESLA_VEDTAK]: 'Vedtak.Fritekstbrev',
   [aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO]: 'UttakInfoPanel.FaktaUttak.ForsteUttakDato',
   [aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT]: 'UttakInfoPanel.FaktaUttak.VurderAnnenForelder',
-  [aksjonspunktCodes.AVKLAR_AKTIVITETER]: 'BeregningInfoPanel.Historikkinnslag.AvklarAktiviteter',
 };
 
 const scrollUp = () => {
@@ -98,76 +96,67 @@ const scrollUp = () => {
   return false;
 };
 
-
-const HistorikkMalType3 = ({
-  historikkinnslagDeler, behandlingLocation, intl, getKodeverknavn,
-}) => {
+const formaterAksjonspunkt = (aksjonspunkt, intl) => {
+  const aksjonspktText = aksjonspunktCodesToTextCode[aksjonspunkt.aksjonspunktKode];
   const { formatMessage } = intl;
 
-  const formaterAksjonspunkt = (aksjonspunkt) => {
-    const aksjonspktText = aksjonspunktCodesToTextCode[aksjonspunkt.aksjonspunktKode] || aksjonspunkt.aksjonspunktKode;
-
-    if (aksjonspunkt.godkjent) {
-      return (
-        <Normaltekst>
-          {formatMessage({ id: aksjonspktText })}
-          {' '}
-          {formatMessage({ id: 'Totrinnskontroll.godkjent' })}
-        </Normaltekst>
-      );
-    }
+  if (aksjonspunkt.godkjent) {
     return (
-      <span>
-        <Element>
-          {formatMessage({ id: aksjonspktText })}
-          {' '}
-          {formatMessage({ id: 'Totrinnskontroll.ikkeGodkjent' })}
-        </Element>
-        <Normaltekst>{aksjonspunkt.aksjonspunktBegrunnelse}</Normaltekst>
-      </span>
+      <Normaltekst>
+        {aksjonspktText && `${formatMessage({ id: aksjonspktText })} ${formatMessage({ id: 'Totrinnskontroll.godkjent' })}`}
+        {!aksjonspktText && formatMessage({ id: 'Totrinnskontroll.godkjentKomplett' })}
+      </Normaltekst>
     );
-  };
-
-  const mapAksjonspunkt = (aksjonspunkt, index) => (
-    <div key={`aksjonspunkt${index + 1}`}>
-      {formaterAksjonspunkt(aksjonspunkt)}
-      <VerticalSpacer fourPx />
-    </div>
+  }
+  return (
+    <span>
+      <Element>
+        {aksjonspktText && `${formatMessage({ id: aksjonspktText })} ${formatMessage({ id: 'Totrinnskontroll.ikkeGodkjent' })}`}
+        {!aksjonspktText && formatMessage({ id: 'Totrinnskontroll.ikkeGodkjentKomplett' })}
+      </Element>
+      <Normaltekst>{aksjonspunkt.aksjonspunktBegrunnelse}</Normaltekst>
+    </span>
   );
+};
 
-  const mapTotrinnsvurdering = (historikkinnslagDel, index) => (
-    <div key={`totrinnsvurdering${index + 1}`}>
-      {historikkinnslagDel.hendelse
-          && (
+const HistorikkMalType3 = ({
+  historikkinnslagDeler,
+  behandlingLocation,
+  intl,
+  getKodeverknavn,
+}) => (
+  <div>
+    {historikkinnslagDeler && historikkinnslagDeler.map((historikkinnslagDel, index) => (
+      <div key={`totrinnsvurdering${index + 1}`}>
+        {historikkinnslagDel.hendelse && (
           <div>
             <Element>{findHendelseText(historikkinnslagDel.hendelse, getKodeverknavn)}</Element>
             <VerticalSpacer fourPx />
           </div>
-          )
+        )}
+        {historikkinnslagDel.skjermlenke
+           ? (
+             <Element>
+               <NavLink
+                 to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
+                 onClick={scrollUp}
+               >
+                 {getKodeverknavn(historikkinnslagDel.skjermlenke)}
+               </NavLink>
+             </Element>
+           )
+           : null
         }
-      {historikkinnslagDel.skjermlenke
-        ? (
-          <Element>
-            <NavLink
-              to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
-              onClick={scrollUp}
-            >
-              {getKodeverknavn(historikkinnslagDel.skjermlenke)}
-            </NavLink>
-          </Element>
-        )
-        : null
-        }
-      {historikkinnslagDel.aksjonspunkter && historikkinnslagDel.aksjonspunkter.map((aksjonspunkt, i) => mapAksjonspunkt(aksjonspunkt, i))}
-    </div>
-  );
-
-  return (
-    <div>
-      {historikkinnslagDeler && historikkinnslagDeler.map((historikkinnslagDel, i) => mapTotrinnsvurdering(historikkinnslagDel, i))}
-    </div>
-  );
-};
+        {historikkinnslagDel.aksjonspunkter && historikkinnslagDel.aksjonspunkter.map(aksjonspunkt => (
+          <div key={aksjonspunkt.aksjonspunktKode}>
+            {formaterAksjonspunkt(aksjonspunkt, intl)}
+            <VerticalSpacer fourPx />
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+ );
 
 HistorikkMalType3.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,

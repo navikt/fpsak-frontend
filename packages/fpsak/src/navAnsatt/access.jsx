@@ -89,8 +89,8 @@ const opprettRevurderingAccessSelector = (selectedFagsak) => {
   );
 };
 
-export const opprettRevurderingAccess = (navAnsatt, fagsakStatus, behandlingStatus, selectedFagsak) => (
-  opprettRevurderingAccessSelector(selectedFagsak)(navAnsatt, fagsakStatus, behandlingStatus)
+export const opprettRevurderingAccess = (navAnsatt, fagsakStatus, behandlingStatus, selectedFagsak, type) => (
+  opprettRevurderingAccessSelector(selectedFagsak)(navAnsatt, fagsakStatus, behandlingStatus, type)
 );
 
 export const opprettNyForstegangsBehandlingAccess = accessSelector(
@@ -127,7 +127,7 @@ const opneBehandlingForEndringerAccessSelector = (behandlingType, selectedFagsak
 
 export const opneBehandlingForEndringerAccess = (behandlingType,
   navAnsatt, fagsakStatus, behandlingStatus, selectedFagsak) => (
-  opneBehandlingForEndringerAccessSelector(behandlingType, selectedFagsak)(navAnsatt, fagsakStatus, behandlingStatus)
+  opneBehandlingForEndringerAccessSelector(behandlingType, selectedFagsak)(navAnsatt, fagsakStatus, behandlingStatus, behandlingType)
 );
 
 const godkjenningsFaneAccessSelector = (navAnsatt, ansvarligSaksbehandler) => {
@@ -168,11 +168,11 @@ const sendMeldingAccessSelector = (navAnsatt) => {
 };
 
 export const godkjenningsFaneAccess = (
-  navAnsatt, fagsakStatus, behandlingStatus, ansvarligSaksbehandler,
-) => godkjenningsFaneAccessSelector(navAnsatt, ansvarligSaksbehandler)(navAnsatt, fagsakStatus, behandlingStatus);
+  navAnsatt, fagsakStatus, behandlingStatus, ansvarligSaksbehandler, type,
+) => godkjenningsFaneAccessSelector(navAnsatt, ansvarligSaksbehandler)(navAnsatt, fagsakStatus, behandlingStatus, type);
 
-export const sendMeldingAccess = (navAnsatt, fagsakStatus, behandlingStatus) => sendMeldingAccessSelector(navAnsatt)(
-  navAnsatt, fagsakStatus, behandlingStatus,
+export const sendMeldingAccess = (navAnsatt, fagsakStatus, behandlingStatus, type) => sendMeldingAccessSelector(navAnsatt)(
+  navAnsatt, fagsakStatus, behandlingStatus, type,
 );
 
 export const allAccessRights = (navAnsatt, fagsakStatus, behandlingStatus,
@@ -181,13 +181,13 @@ export const allAccessRights = (navAnsatt, fagsakStatus, behandlingStatus,
   henleggBehandlingAccess: henleggBehandlingAccess(navAnsatt, fagsakStatus, behandlingStatus, type),
   settBehandlingPaVentAccess: settBehandlingPaVentAccess(navAnsatt, fagsakStatus, behandlingStatus, soknad, aksjonspunkter, type),
   byttBehandlendeEnhetAccess: byttBehandlendeEnhetAccess(navAnsatt, fagsakStatus, behandlingStatus, type),
-  fraBeslutterFaneAccess: fraBeslutterFaneAccess(navAnsatt, fagsakStatus, behandlingStatus),
-  opprettRevurderingAccess: opprettRevurderingAccess(navAnsatt, fagsakStatus, behandlingStatus, selectedFagsak),
-  opprettNyForstegangsBehandlingAccess: opprettNyForstegangsBehandlingAccess(navAnsatt, fagsakStatus, behandlingStatus),
+  fraBeslutterFaneAccess: fraBeslutterFaneAccess(navAnsatt, fagsakStatus, behandlingStatus, type),
+  opprettRevurderingAccess: opprettRevurderingAccess(navAnsatt, fagsakStatus, behandlingStatus, selectedFagsak, type),
+  opprettNyForstegangsBehandlingAccess: opprettNyForstegangsBehandlingAccess(navAnsatt, fagsakStatus, behandlingStatus, type),
   gjenopptaBehandlingAccess: gjenopptaBehandlingAccess(navAnsatt, fagsakStatus, behandlingStatus, type),
   opneBehandlingForEndringerAccess: opneBehandlingForEndringerAccess(type, navAnsatt, fagsakStatus, behandlingStatus, selectedFagsak),
-  godkjenningsFaneAccess: godkjenningsFaneAccess(navAnsatt, fagsakStatus, behandlingStatus, ansvarligSaksbehandler),
-  kanOverstyreAccess: kanOverstyreAccess(navAnsatt, fagsakStatus, behandlingStatus),
-  sendMeldingAccess: sendMeldingAccess(navAnsatt, fagsakStatus, behandlingStatus),
+  godkjenningsFaneAccess: godkjenningsFaneAccess(navAnsatt, fagsakStatus, behandlingStatus, ansvarligSaksbehandler, type),
+  kanOverstyreAccess: kanOverstyreAccess(navAnsatt, fagsakStatus, behandlingStatus, type),
+  sendMeldingAccess: sendMeldingAccess(navAnsatt, fagsakStatus, behandlingStatus, type),
   ikkeVisOpprettNyBehandling: sjekkOmSkalTilInfotrygdAccess(selectedFagsak),
 });

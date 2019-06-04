@@ -55,7 +55,6 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({
       <TilbakekrevingVedtak
         submitCallback={submitCallback}
         readOnly={readOnly}
-        readOnlySubmitButton={readOnlySubmitButton}
       />
     )}
   </div>
