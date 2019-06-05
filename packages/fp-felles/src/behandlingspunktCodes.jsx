@@ -28,6 +28,9 @@ const behandlingspunktCodes = {
   SIMULERING: 'simulering',
   SVANGERSKAP: 'svangerskap',
   KLAGE_RESULTAT: 'resultat',
+  ANKEBEHANDLING: 'ankebehandling',
+  ANKE_MERKNADER: 'ankeMerknader',
+  ANKE_RESULTAT: 'ankeResultat',
 };
 
 export default behandlingspunktCodes;

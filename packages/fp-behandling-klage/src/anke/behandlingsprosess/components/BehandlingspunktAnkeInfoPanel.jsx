@@ -13,8 +13,8 @@ import {
 } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
 
 
-import styles from './behandlingspunktKlageInfoPanel.less';
-import BehandleKlageForm from './anke/Vurdering/BehandleAnkeForm';
+import styles from '../../../behandlingsprosess/components/behandlingspunktKlageInfoPanel.less';
+import BehandleKlageForm from './BehandleAnkeForm';
 
 const classNames = classnames.bind(styles);
 

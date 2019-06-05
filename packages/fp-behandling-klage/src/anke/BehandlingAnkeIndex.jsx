@@ -10,20 +10,20 @@ import {
   BehandlingGrid, sakOperations,
 } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingErPaVentModal, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-import FpKlageBehandlingInfoSetter from './FpKlageBehandlingInfoSetter';
-import FpKlageBehandlingResolver from './FpKlageBehandlingResolver';
+import FpKlageBehandlingInfoSetter from '../FpKlageBehandlingInfoSetter';
+import FpKlageBehandlingResolver from '../FpKlageBehandlingResolver';
 import BehandlingsprosessAnkeIndex from './behandlingsprosess/BehandlingsprosessAnkeIndex';
-import FaktaKlageIndex from './fakta/FaktaKlageIndex';
+import FaktaKlageIndex from '../fakta/FaktaKlageIndex';
 import {
   getBehandlingVersjon, getBehandlingOnHoldDate, getBehandlingVenteArsakKode, getBehandlingIsOnHold,
   hasBehandlingManualPaVent,
-} from './selectors/klageBehandlingSelectors';
+} from '../selectors/klageBehandlingSelectors';
 import {
   setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier,
   getHasShownBehandlingPaVent, resetBehandlingFpsakContext, getKodeverk,
-} from './duckKlage';
-import { getBehandlingFormPrefix } from './behandlingForm';
-import fpKlageBehandlingUpdater from './FpKlageBehandlingUpdater';
+} from '../duckKlage';
+import { getBehandlingFormPrefix } from '../behandlingForm';
+import fpKlageBehandlingUpdater from '../FpKlageBehandlingUpdater';
 
 /**
  * BehandlingAnkeIndex

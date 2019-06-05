@@ -16,12 +16,12 @@ import { BehandlingsprosessPanel, FatterVedtakStatusModal, IverksetterVedtakStat
 import KlageBehandlingModal from 'behandlingKlage/src/behandlingsprosess/components/klage/KlageBehandlingModal';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import findBehandlingsprosessIcon from 'behandlingKlage/src/behandlingsprosess/statusIconHelper';
 import {
   trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta,
   BehandlingIdentifier, getLocationWithQueryParams,
 } from '@fpsak-frontend/fp-felles';
 import { getResolveFaktaAksjonspunkterSuccess } from 'behandlingKlage/src/fakta/duckFaktaKlage';
+import BehandlingspunktAnkeInfoPanel from './components/BehandlingspunktAnkeInfoPanel';
 import {
   setSelectedBehandlingspunktNavn,
   resolveProsessAksjonspunkter,
@@ -33,13 +33,17 @@ import {
   resolveKlageTemp,
   saveKlage,
   getResolveProsessAksjonspunkterSuccess,
-} from './duckBpKlage';
+} from '../../behandlingsprosess/duckBpKlage';
+import duck from '../duckAnke';
 import {
-  getBehandlingspunkter, getDefaultBehandlingspunkt,
-  getBehandlingspunkterStatus, getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus, getSelectedAnkeBehandlingspunkt,
+  getBehandlingspunkterTitleCodes,
+  getBehandlingspunkterStatus,
+  getAksjonspunkterOpenStatus,
+  getBehandlingspunkter,
+  getSelectedBehandlingspunkt, getDefaultBehandlingspunkt,
 }
-  from './behandlingsprosessKlageSelectors';
-import BehandlingspunktAnkeInfoPanel from './components/BehandlingspunktAnkeInfoPanel';
+  from '../selectors/BehandlingsprosessAnkeSelectors';
+import findAnkeIcon from './findAnkeIcon';
 
 const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
 
@@ -47,16 +51,14 @@ const hasOverstyringAp = aksjonspunkter => (
   aksjonspunkter.some(ap => ap.aksjonspunktType.kode === aksjonspunktType.OVERSTYRING || ap.aksjonspunktType.kode === aksjonspunktType.SAKSBEHANDLEROVERSTYRING)
 );
 
-// TODO (TOR) Refaktorer: veldig mykje av dette er felles med andre behandlingstypar. Flytt ut i hooks?
-
 /**
- * BehandlingsprosessKlageIndex
+ * BehandlingsprosessAnkeIndex
  *
  * Container komponent. Har ansvar for behandlingsprosess. Denne bruker valgt
  * fagsak og behandling for å generere opp korrekte behandlingspunkter og tilhørende aksjonspunkter.
  * Er også ansvarlig for alle serverkall. Dvs. henting av data og lagrefunksjonalitet.
  */
-export class BehandlingsprosessKlageIndex extends Component {
+export class BehandlingsprosessAnkeIndex extends Component {
   constructor() {
     super();
 
@@ -209,7 +211,7 @@ export class BehandlingsprosessKlageIndex extends Component {
           selectedBehandlingspunkt={selectedBehandlingspunkt}
           selectBehandlingspunktCallback={this.goToBehandlingspunkt}
           isSelectedBehandlingHenlagt={isSelectedBehandlingHenlagt}
-          findBehandlingsprosessIcon={findBehandlingsprosessIcon}
+          findBehandlingsprosessIcon={findAnkeIcon}
           getBehandlingspunkterStatus={getBehandlingspunkterStatus}
           getBehandlingspunkterTitleCodes={getBehandlingspunkterTitleCodes}
           getAksjonspunkterOpenStatus={getAksjonspunkterOpenStatus}
@@ -247,7 +249,7 @@ export class BehandlingsprosessKlageIndex extends Component {
   }
 }
 
-BehandlingsprosessKlageIndex.propTypes = {
+BehandlingsprosessAnkeIndex.propTypes = {
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
   saveKlage: PropTypes.func.isRequired,
   resolveKlageTemp: PropTypes.func.isRequired,
@@ -271,7 +273,7 @@ BehandlingsprosessKlageIndex.propTypes = {
   behandlingsresultat: PropTypes.shape(),
 };
 
-BehandlingsprosessKlageIndex.defaultProps = {
+BehandlingsprosessAnkeIndex.defaultProps = {
   behandlingspunkter: undefined,
   selectedBehandlingspunkt: undefined,
   behandlingsresultat: undefined,
@@ -285,8 +287,8 @@ const mapStateToProps = state => ({
   aksjonspunkter: getAksjonspunkter(state),
   behandlingspunkter: getBehandlingspunkter(state),
   defaultBehandlingspunkt: getDefaultBehandlingspunkt(state),
-  selectedBehandlingspunkt: getSelectedAnkeBehandlingspunkt(state),
-  // selectedBehandlingspunkt: 'default',
+  // selectedBehandlingspunkt: getSelectedAnkeBehandlingspunkt(state),
+  selectedBehandlingspunkt: 'ankebehandling',
   behandlingType: getBehandlingType(state),
   location: state.router.location,
   resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
@@ -308,7 +310,7 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-const withPropsCheck = requireProps(['behandlingIdentifier', 'behandlingspunkter'], <LoadingPanel />)(BehandlingsprosessKlageIndex);
+const withPropsCheck = requireProps(['behandlingIdentifier', 'behandlingspunkter'], <LoadingPanel />)(BehandlingsprosessAnkeIndex);
 export default trackRouteParam({
   paramName: 'punkt',
   paramPropType: PropTypes.string,

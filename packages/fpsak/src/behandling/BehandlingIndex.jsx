@@ -20,7 +20,7 @@ import {
 } from 'fagsak/fagsakSelectors';
 import { getFeatureToggles } from 'app/duck';
 import { reduxRestApi } from 'data/fpsakApi';
-import BehandlingAnkeIndex from '@fpsak-frontend/fp-behandling-klage/src/BehandlingAnkeIndex';
+import BehandlingAnkeIndex from '@fpsak-frontend/fp-behandling-klage/src/anke/BehandlingAnkeIndex';
 import {
   setSelectedBehandlingId, getSelectedBehandlingId, setBehandlingInfoHolder, resetBehandlingContext as resetBehandlingContextActionCreator,
 } from './duck';

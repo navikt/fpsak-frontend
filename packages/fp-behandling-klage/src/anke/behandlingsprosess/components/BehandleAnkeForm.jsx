@@ -11,29 +11,28 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import {
- VerticalSpacer, AksjonspunktHelpText, FadingPanel, ArrowBox,
+VerticalSpacer, AksjonspunktHelpText, FadingPanel, ArrowBox,
 } from '@fpsak-frontend/shared-components';
-
-// import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
 import { getBehandlingKlageVurderingResultatNK, getBehandlingSprak } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingKlage/src/behandlingForm';
 import {
-  CheckboxField,
-  RadioGroupField, RadioOption, SelectField, TextAreaField,
+ CheckboxField, RadioGroupField, RadioOption, SelectField, TextAreaField,
 } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 import klageVurderingOmgjoerType from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
 import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
-import PreviewKlageLink from '../../klage/Klagevurdering/SharedUtills/PreviewKlageLink';
-import FritekstBrevTextField from '../../klage/Klagevurdering/SharedUtills/FritekstKlageBrevTextField';
-import styles from '../../klage/Klagevurdering/SharedUtills/behandleKlageForm.less';
+// import { getSelectedAnkeBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
+import PreviewKlageLink from '../../../behandlingsprosess/components/klage/Klagevurdering/SharedUtills/PreviewKlageLink';
+import FritekstBrevTextField from '../../../behandlingsprosess/components/klage/Klagevurdering/SharedUtills/FritekstKlageBrevTextField';
+import styles from '../../../behandlingsprosess/components/klage/Klagevurdering/SharedUtills/behandleKlageForm.less';
+import { getSelectedAnkeBehandlingspunktAksjonspunkter } from '../../../behandlingsprosess/behandlingsprosessKlageSelectors';
 
 /**
  * BehandleklageformNfp
  *
- * Presentasjonskomponent. Setter opp aksjonspunktet for behandling av klage (KA).
+ * Presentasjonskomponent. Setter opp aksjonspunktet for behandling.
  */
 const BehandleAnkeFormImpl = ({
   readOnly,
@@ -60,10 +59,10 @@ const BehandleAnkeFormImpl = ({
         <Column xs="7">
           <SelectField
             readOnly={readOnly}
-            name="klageMedholdArsak"
+            name="ankeVedtak"
             selectValues={[]}
             className={readOnly ? styles.selectReadOnly : null}
-            label={intl.formatMessage({ id: 'Vedtaket som er anket' })}
+            label={intl.formatMessage({ id: 'Ankebehandling.Resultat.Vedtak' })}
             validate={[required]}
             bredde="xl"
           />
@@ -205,23 +204,26 @@ export const transformValues = (values, aksjonspunktCode) => ({
 const formName = 'BehandleAnkeForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  // const aksjonspunktCode = getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
+  // const aksjonspunktCode = getSelectedAnkeBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
   const aksjonspunktCode = '7003';
   const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
   return state => ({
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
-    formValues: behandlingFormValueSelector(formName)(state, 'begrunnelse', 'fritekstTilBrev', 'klageVurdering', 'klageVurderingOmgjoer', 'klageMedholdArsak'),
+    formValues: behandlingFormValueSelector(formName)(state,
+      'ankeVedtak', 'ankeResultat',
+      'ikkePart', 'ikkeKonkret', 'ikkeFrist', 'ikkeSignert', 'realitetsbehandles',
+      'begrunnelse', 'fritekstTilBrev'),
     sprakkode: getBehandlingSprak(state),
     onSubmit,
   });
 };
 
-const BehandleKlageForm = connect(mapStateToPropsFactory)(behandlingForm({
+const BehandleAnkeForm = connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
 })(BehandleAnkeFormImpl));
 
-BehandleKlageForm.supports = apCodes => apCodes.includes(aksjonspunktCodes.BEHANDLE_KLAGE_NK);
+BehandleAnkeForm.supports = apCodes => apCodes.includes(aksjonspunktCodes.BEHANDLE_KLAGE_NK);
 
 
-export default injectIntl(BehandleKlageForm);
+export default injectIntl(BehandleAnkeForm);

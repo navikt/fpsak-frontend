@@ -16,6 +16,7 @@ import createEngangsstonadBpProps from './definition/engangsstonadKlageBpDefinit
 import createForeldrepengerBpProps from './definition/foreldrepengerKlageBpDefinition';
 import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from './duckBpKlage';
 import { getFagsakYtelseType } from '../duckKlage';
+import createForeldrepengerAnkeBpDefinition from '../anke/behandlingsprosess/definition/createForeldrepengerAnkeBpDefinition';
 
 // TODO (TOR) Refaktorer: veldig mykje av dette er felles med andre behandlingstypar.
 
@@ -96,7 +97,6 @@ export const getSelectedBehandlingspunkt = createSelector(
     : selectableBps.find(bp => bp === selectedBpNavn)),
 );
 
-export const getSelectedAnkeBehandlingspunkt = () => 'default';
 
 export const getIsSelectedBehandlingspunktOverridden = createSelector(
   [getSelectedBehandlingspunkt, getOverrideBehandlingspunkter],
@@ -183,4 +183,81 @@ export const getBehandlingspunktAksjonspunkterCodes = createSelector(
 export const isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt = createSelector(
   [getSelectedBehandlingspunktStatus, isBehandlingspunktAksjonspunkterSolvable],
   (status, isApSolvable = []) => !isApSolvable || vilkarUtfallType.OPPFYLT === status,
+);
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Kun eksportert for test. Ikke bruk andre steder!
+export const getAnkeBehandlingspunkterProps = createSelector(
+  [getFagsakYtelseType, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat],
+  (fagsakYtelseType, behandlingType, vilkar = [], aksjonspunkter, behandlingsresultat) => {
+    if (!behandlingType) {
+      return undefined;
+    }
+
+    const builderData = {
+      behandlingType,
+      vilkar,
+      aksjonspunkter,
+      behandlingsresultat,
+    };
+
+    // return fagsakYtelseType.kode === fyt.ENGANGSSTONAD
+    //   ? createEngangsstonadBpProps(builderData) : createForeldrepengerBpProps(builderData);
+    return createForeldrepengerAnkeBpDefinition(builderData);
+  },
+);
+
+export const getAnkeBehandlingspunkter = createSelector([getAnkeBehandlingspunkterProps], (bpProps = []) => bpProps.map(p => p.code));
+
+export const getAnkeBehandlingspunkterStatus = createSelector(
+  [getAnkeBehandlingspunkterProps], bpProps => arrayToObject(bpProps, bpProp => bpProp.code, bpProp => bpProp.status),
+);
+
+export const getAnkeBehandlingspunkterTitleCodes = createSelector(
+  [getAnkeBehandlingspunkterProps], bpProps => arrayToObject(bpProps, bpProp => bpProp.code, bpProp => bpProp.titleCode),
+);
+
+const getAnkeBehandlingspunktAksjonspunkterNames = createSelector(
+  [getAnkeBehandlingspunkterProps], bpProps => arrayToObject(bpProps, bpProp => bpProp.code, bpProp => bpProp.apCodes),
+);
+
+const getAnkeBehandlingspunkterVilkar = createSelector(
+  [getAnkeBehandlingspunkterProps], bpProps => arrayToObject(bpProps, bpProp => bpProp.code, bpProp => bpProp.vilkarene),
+);
+
+export const getDefaultAnkeBehandlingspunkt = createSelector(
+  [getVedtakBehandlingspunkt, getBehandlingspunkterWithOpenAksjonspunkter],
+  (vedtakBehandlingspunkt, bpsWithOpenAps = []) => bpsWithOpenAps[0] || vedtakBehandlingspunkt,
+);
+
+export const getSelectedAnkeBehandlingspunkt = createSelector(
+  [getSelectableBehandlingspunkter, getDefaultAnkeBehandlingspunkt, getSelectedBehandlingspunktNavn],
+  (selectableBps = [], defaultBehandlingspunkt = null, selectedBpNavn = null) => (selectedBpNavn === DEFAULT_BEHANDLINGSPROSESS
+    ? selectableBps.find(bp => bp === defaultBehandlingspunkt)
+    : selectableBps.find(bp => bp === selectedBpNavn)),
+);
+
+export const getAnkeBehandlingspunktAksjonspunkter = createSelector(
+  [getAksjonspunkter, getAnkeBehandlingspunktAksjonspunkterNames],
+  (aksjonspunkter = [], behandlingspunktAksjonspunkterNames = {}) => {
+    const valueFunction = bp => behandlingspunktAksjonspunkterNames[bp]
+      .map(apCode => aksjonspunkter.find(ap => ap.definisjon.kode === apCode))
+      .filter(ap => ap);
+    return arrayToObject(Object.keys(behandlingspunktAksjonspunkterNames), bp => bp, valueFunction);
+  },
+);
+
+export const getAnkeAksjonspunkterOpenStatus = createSelector(
+  [getAnkeBehandlingspunktAksjonspunkter, getOverrideBehandlingspunkter],
+  (behandlingspunktAksjonspunkter, overriddenBehandlingspunkter) => arrayToObject(
+    Object.keys(behandlingspunktAksjonspunkter), key => key,
+    key => (overriddenBehandlingspunkter.includes(key) ? true : findApStatus(behandlingspunktAksjonspunkter[key])),
+  ),
+);
+
+export const getSelectedAnkeBehandlingspunktAksjonspunkter = createSelector(
+  [getSelectedAnkeBehandlingspunkt, getAnkeBehandlingspunktAksjonspunkter],
+  (selectedBehandlingspunkt, behandlingspunktAksjonspunkter = {}) => (behandlingspunktAksjonspunkter[selectedBehandlingspunkt]
+    ? behandlingspunktAksjonspunkter[selectedBehandlingspunkt] : []),
 );
