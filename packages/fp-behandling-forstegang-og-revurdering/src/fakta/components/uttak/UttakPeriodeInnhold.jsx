@@ -8,7 +8,7 @@ import overforingArsakCodes from '@fpsak-frontend/kodeverk/src/overforingArsakCo
 import FerieOgArbeidsPeriode from './perioder/FerieOgArbeidsPeriode';
 import SykdomOgSkadePeriode from './perioder/SykdomOgSkadePeriode';
 import InnleggelsePeriode from './perioder/InnleggelsePeriode';
-import { ForeldreAnsvarPeriode } from './perioder/ForeldreAnsvarPeriode';
+import ForeldreAnsvarPeriode from './perioder/ForeldreAnsvarPeriode';
 
 import styles from './uttakPeriodeInnhold.less';
 
@@ -108,11 +108,10 @@ export const renderPeriode = (
             id={id}
             updatePeriode={updatePeriode}
             cancelEditPeriode={cancelEditPeriode}
+            overforingArsak={overforingArsak}
             readOnly={readOnly}
             fraDato={fraDato}
             tilDato={tilDato}
-            utsettelseArsak={utsettelseArsak}
-            overforingArsak={overforingArsak}
             bekreftet={bekreftet}
             behandlingStatusKode={behandlingStatusKode}
           />

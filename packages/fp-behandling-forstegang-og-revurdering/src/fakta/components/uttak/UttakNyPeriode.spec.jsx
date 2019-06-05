@@ -39,6 +39,16 @@ const overføringÅrsaker = [{
     navn: 'Den andre foreldren er pga sykdom avhengig av hjelp for å ta seg av barnet/barna',
     kodeverk: 'OVERFOERING_AARSAK_TYPE',
   },
+  2: {
+    kode: 'IKKE_RETT_ANNEN_FORELDER',
+    navn: 'Den andre foreldren har ikke rett',
+    kodeverk: 'OVERFOERING_AARSAK_TYPE',
+  },
+  3: {
+    kode: 'ALENEOMSORG',
+    navn: 'Søker har aleneomsorg',
+    kodeverk: 'OVERFOERING_AARSAK_TYPE',
+  },
 }];
 
 const nyPeriode = {

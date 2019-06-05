@@ -176,7 +176,7 @@ ForeldreAnsvarPeriode.defaultProps = {
   behandlingStatusKode: undefined,
 };
 
-const validateInnleggelseForm = (values) => {
+const validateForeldreAnsvarForm = (values) => {
   const errors = {};
   errors.dokumentertePerioder = [];
   if (values.dokumentertePerioder) {
@@ -193,7 +193,7 @@ const validateInnleggelseForm = (values) => {
 };
 
 const mapToStateToProps = (state, ownProps) => {
-  const formName = `innleggelseForm-${ownProps.id}`;
+  const formName = `foreldreAnsvarForm-${ownProps.id}`;
   const resultat = behandlingFormValueSelector(formName)(state, 'resultat');
   const initialResultat = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.resultat`);
   const begrunnelse = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.begrunnelse`);
@@ -224,6 +224,6 @@ const mapToStateToProps = (state, ownProps) => {
 export default connect(mapToStateToProps)(
   behandlingForm({
     enableReinitialize: true,
-    validate: values => validateInnleggelseForm(values),
+    validate: values => validateForeldreAnsvarForm(values),
   })(ForeldreAnsvarPeriode),
 );
