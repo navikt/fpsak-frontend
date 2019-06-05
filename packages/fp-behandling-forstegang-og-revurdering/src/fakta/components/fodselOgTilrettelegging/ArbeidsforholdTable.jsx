@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Normaltekst } from 'nav-frontend-typografi';
+import { FormattedMessage } from 'react-intl';
 
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import {
@@ -17,6 +18,7 @@ import style from './arbeidsforholdTable.less';
 const headerTextCodes = [
   'ArbeidsforholdTable.Arbeidsforhold',
   'ArbeidsforholdTable.TilretteleggingFra',
+  'ArbeidsforholdTable.Revurdering',
 ];
 
 const ArbeidsforholdTable = ({
@@ -51,6 +53,11 @@ const ArbeidsforholdTable = ({
         </TableColumn>
         <TableColumn>
           <Normaltekst>{moment(a.tilretteleggingBehovFom).format(DDMMYYYY_DATE_FORMAT)}</Normaltekst>
+        </TableColumn>
+        <TableColumn>
+          <FormattedMessage
+            id={a.kopiertFraTidligereBehandling ? 'ArbeidsforholdTable.Ja' : 'ArbeidsforholdTable.Nei'}
+          />
         </TableColumn>
       </TableRow>
     ))}
