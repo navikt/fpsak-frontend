@@ -355,7 +355,7 @@ const getHeaderTextCodes = (erRevurdering) => {
   }
   headerCodes.push('BeregningInfoPanel.EndringBG.AndelIArbeid');
   headerCodes.push('BeregningInfoPanel.EndringBG.Refusjonskrav');
-  headerCodes.push('BeregningInfoPanel.EndringBG.Inntekt');
+  headerCodes.push('BeregningInfoPanel.EndringBG.Beregningsgrunnlag');
   headerCodes.push('BeregningInfoPanel.EndringBG.Fordeling');
   headerCodes.push('BeregningInfoPanel.EndringBG.Inntektskategori');
   return headerCodes;
