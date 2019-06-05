@@ -8,7 +8,7 @@ import { TextAreaField } from '@fpsak-frontend/form';
 import { TilbakekrevingVedtakUtdypendeTekstPanel, feltnavn } from './TilbakekrevingVedtakUtdypendeTekstPanel';
 
 describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
-  it('skal vise lenke for å skrive inn tekst når felt ikke har verdi', () => {
+  it('skal vise lenke for å skrive inn tekst når felt ikke har verdi og en ikke er i readonly-modus', () => {
     const wrapper = shallowWithIntl(<TilbakekrevingVedtakUtdypendeTekstPanel
       intl={intlMock}
       isEmpty
@@ -17,6 +17,30 @@ describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
     />);
 
     expect(wrapper.find(Image)).to.have.length(1);
+    expect(wrapper.find(TextAreaField)).to.have.length(0);
+  });
+
+  it('skal vise textarea når en har trykket på lenke', () => {
+    const wrapper = shallowWithIntl(<TilbakekrevingVedtakUtdypendeTekstPanel
+      intl={intlMock}
+      isEmpty={false}
+      type={feltnavn.OPPSUMMERING}
+      readOnly={false}
+    />);
+
+    expect(wrapper.find(Image)).to.have.length(0);
+    expect(wrapper.find(TextAreaField)).to.have.length(1);
+  });
+
+  it('skal ikke vise lenke eller textarea når verdi ikke finnes og en er i readonly-modus', () => {
+    const wrapper = shallowWithIntl(<TilbakekrevingVedtakUtdypendeTekstPanel
+      intl={intlMock}
+      isEmpty
+      type={feltnavn.OPPSUMMERING}
+      readOnly
+    />);
+
+    expect(wrapper.find(Image)).to.have.length(0);
     expect(wrapper.find(TextAreaField)).to.have.length(0);
   });
 });

@@ -116,6 +116,9 @@
     "webpack-dev-server": "^3.3.1",
     "webpack-merge": "^4.2.1"
   },
+  "resolutions": {
+    "react-test-renderer": "^16.8.6"
+  },
   "nyc": {
     "require": [
       "@babel/register",
