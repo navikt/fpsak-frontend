@@ -100,13 +100,13 @@ export const ForeldreAnsvarPeriode = ({
             <RadioOption
               label={{
                 id:
-                  'UttakInfoPanel.InnleggelsenErDokumentertAngiAvklartPeriode',
+                  'UttakInfoPanel.ForeldreansvarErDokumentertAngiAvklartPeriode',
               }}
               value={uttakPeriodeVurdering.PERIODE_OK}
               style={inlineStyle.radioOption}
             />
             <RadioOption
-              label={{ id: 'UttakInfoPanel.InnleggelsenErIkkeDokumentert' }}
+              label={{ id: 'UttakInfoPanel.ForeldreansvarErIkkeDokumentert' }}
               value={uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES}
             />
           </RadioGroupField>
