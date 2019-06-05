@@ -56,7 +56,7 @@ const ArbeidsforholdTable = ({
         </TableColumn>
         <TableColumn>
           <FormattedMessage
-            id={a.kopiertFraTidligereBehandling ? 'ArbeidsforholdTable.Ja' : 'ArbeidsforholdTable.Nei'}
+            id={a.kopiertFraTidligereBehandling ? 'ArbeidsforholdTable.Nei' : 'ArbeidsforholdTable.Ja'}
           />
         </TableColumn>
       </TableRow>
