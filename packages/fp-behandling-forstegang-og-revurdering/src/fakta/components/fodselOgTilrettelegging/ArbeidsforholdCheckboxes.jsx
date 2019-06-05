@@ -3,14 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Fieldset } from 'nav-frontend-skjema';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import AlertStripe from 'nav-frontend-alertstriper';
+import {
+ VerticalSpacer,
+  ArrowBox, FlexContainer, FlexColumn, FlexRow,
+} from '@fpsak-frontend/shared-components';
 
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import {
   DatepickerField, CheckboxField, DecimalField,
 } from '@fpsak-frontend/form';
-import {
-  ArrowBox, FlexContainer, FlexColumn, FlexRow,
-} from '@fpsak-frontend/shared-components';
+
 
 import {
   required, hasValidDate, hasValidDecimal, minValue, maxValue,
@@ -28,6 +31,7 @@ export const ArbeidsforholdCheckboxes = ({
   redusertArbeid,
   kanIkkeGjennomfores,
   readOnly,
+  warning,
   intl,
 }) => {
   const arrowBox = (dato, stillingsprosent) => (
@@ -95,6 +99,15 @@ export const ArbeidsforholdCheckboxes = ({
   );
   return (
     <Fieldset legend={intl.formatMessage({ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.Tilrettelegging' })}>
+      {warning && warning.permisjonsWarning
+      && (
+      <AlertStripe type="feil">
+        <FormattedMessage
+          id="ArbeidsforholdInnhold.TilretteleggingWarning"
+        />
+      </AlertStripe>
+      )}
+      <VerticalSpacer eightPx />
       {!readOnly && (
         <div>
           <CheckboxField
@@ -131,12 +144,14 @@ ArbeidsforholdCheckboxes.propTypes = {
   kanIkkeGjennomfores: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
   intl: intlShape.isRequired,
+  warning: PropTypes.shape(),
 };
 
 ArbeidsforholdCheckboxes.defaultProps = {
   kanGjennomfores: false,
   redusertArbeid: false,
   kanIkkeGjennomfores: false,
+  warning: {},
 };
 
 const mapStateToProps = state => ({
