@@ -401,6 +401,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'SLUTTE_ARBEID_FOM',
     feltId: 'HistorikkEndretFelt.SlutteArbeidFom',
   },
+  TILRETTELEGGING_BEHOV_FOM: {
+    kode: 'TILRETTELEGGING_BEHOV_FOM',
+    feltId: 'HistorikEndretFelt.TilrettelseBehovFom',
+  },
 };
 
 export default historikkEndretFeltTypeCodes;
