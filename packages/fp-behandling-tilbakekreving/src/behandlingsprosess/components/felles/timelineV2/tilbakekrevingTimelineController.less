@@ -1,0 +1,156 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.timelineControlContatiner {
+  border-bottom: 1px solid lightgrey;
+  border-left: 1px solid lightgrey;
+  height: 141px;
+  margin-bottom: 20px;
+  margin-left: -17px;
+  position: relative;
+}
+
+.upperTimeLine {
+  margin-top: 16px;
+
+  &:after {
+    border-bottom: 1px solid lightgrey;
+    content: '';
+    position: absolute;
+    top: 56px;
+    width: 100%;
+  }
+}
+
+.scrollButtonContainer {
+  float: right;
+  margin-bottom: 8px;
+  margin-right: 4px;
+  margin-top: 8px;
+}
+
+.controlButtonsContainer {
+  float: right;
+}
+
+.timeLineButton {
+  background-color: @white;
+  border: 0 solid;
+  height: 26px;
+  margin: 4px;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding: 0;
+  width: 26px;
+
+  &:focus {
+    box-shadow: 0 0 0 3px @orangeFocus;
+    outline: none;
+  }
+}
+
+.timeLineButtonInverted {
+  background-color: @white;
+  border: 0 solid;
+  height: 26px;
+  margin: 4px;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding: 0;
+  transform: rotate(180deg);
+  width: 26px;
+
+  &:focus {
+    box-shadow: 0 0 0 3px @orangeFocus;
+    outline: none;
+  }
+}
+
+.timeLineButton img:last-child {
+  display: none;
+}
+
+.timeLineButton:hover img:first-child {
+  display: none;
+}
+
+.timeLineButton:hover img:last-child {
+  display: inline-block;
+}
+
+.timeLineButton:active img:last-child {
+  display: inline-block;
+}
+
+.buttonSpacing {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.popUnder {
+  margin-right: 20px;
+  position: relative;
+}
+
+.popUnderContent {
+  background-color: @white;
+  border: 1px solid lightgrey;
+  left: -40px;
+  min-width: 260px;
+  padding: 12px;
+  position: absolute;
+  top: 54px;
+  transform: translate(0, 10px);
+  visibility: hidden;
+  width: auto;
+
+  &:before {
+    border-color: transparent transparent lightgrey;
+    border-style: solid;
+    border-width: 0 19px 9px 19px;
+    content: '';
+    left: 37px;
+    position: absolute;
+    top: -9px;
+    transition-duration: 0.3s;
+    transition-property: transform;
+    z-index: -1;
+  }
+
+  &:after {
+    border-color: transparent transparent @white;
+    border-style: solid;
+    border-width: 0 19px 9px 19px;
+    content: '';
+    left: 37px;
+    position: absolute;
+    top: -8px;
+    transition-duration: 0.3s;
+    transition-property: transform;
+    z-index: -1;
+  }
+}
+
+.popUnder:hover .popUnderContent {
+  opacity: 1;
+  transform: translate(0, -20px);
+  transition: all 0.5s;
+  visibility: visible;
+  z-index: 10;
+}
+
+// IE11 and Edge-specific css
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .upperTimeLine {
+    &:after {
+      top: 58px;
+    }
+  }
+}
+
+@supports (-ms-ime-align: auto) {
+  .timelineSokerContatiner {
+    &:after {
+      top: 58px;
+    }
+  }
+}

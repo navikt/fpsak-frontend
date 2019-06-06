@@ -6,16 +6,21 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 
 import VilkarResultat from 'behandlingTilbakekreving/src/kodeverk/vilkarResultat';
-import BpTimelinePanel from '../felles/behandlingspunktTimelineSkjema/BpTimelinePanel';
+import TilbakekrevingTimelinePanel from '../felles/timelineV2/TilbakekrevingTimelinePanel';
 import { TilbakekrevingFormImpl, buildInitialValues } from './TilbakekrevingForm';
 import TilbakekrevingPeriodeForm from './TilbakekrevingPeriodeForm';
 
 describe('<TilbakekrevingForm>', () => {
   it('skal vise tidslinje når en har perioder', () => {
     const perioder = [{
+      fom: '2019-01-01',
+      tom: '2019-01-10',
+      isAksjonspunktOpen: false,
+      isGodkjent: false,
     }];
     const wrapper = shallow(<TilbakekrevingFormImpl
-      perioderFormatertForTimeline={perioder}
+      perioderFormatertForDetailForm={perioder}
+      tidsserieForTimeline={perioder}
       behandlingFormPrefix="behandling_V1"
       isApOpen
       kjonn={navBrukerKjonn.KVINNE}
@@ -31,14 +36,17 @@ describe('<TilbakekrevingForm>', () => {
       }}
     />);
 
+    wrapper.setState({ valgtPeriode: perioder[0] });
+
     expect(wrapper.find(TilbakekrevingPeriodeForm)).to.have.length(1);
-    expect(wrapper.find(BpTimelinePanel)).to.have.length(1);
+    expect(wrapper.find(TilbakekrevingTimelinePanel)).to.have.length(1);
   });
 
   it('skal ikke vise tidslinje når en har perioder', () => {
     const perioder = undefined;
     const wrapper = shallow(<TilbakekrevingFormImpl
-      perioderFormatertForTimeline={perioder}
+      perioderFormatertForDetailForm={perioder}
+      tidsserieForTimeline={perioder}
       behandlingFormPrefix="behandling_V1"
       isApOpen
       kjonn={navBrukerKjonn.KVINNE}
@@ -55,14 +63,15 @@ describe('<TilbakekrevingForm>', () => {
     />);
 
     expect(wrapper.find(TilbakekrevingPeriodeForm)).to.have.length(0);
-    expect(wrapper.find(BpTimelinePanel)).to.have.length(0);
+    expect(wrapper.find(TilbakekrevingTimelinePanel)).to.have.length(0);
     expect(wrapper.find(AlertStripe)).to.have.length(0);
   });
 
   it('skal vise feilmelding når en har dette', () => {
     const perioder = undefined;
     const wrapper = shallow(<TilbakekrevingFormImpl
-      perioderFormatertForTimeline={perioder}
+      perioderFormatertForDetailForm={perioder}
+      tidsserieForTimeline={perioder}
       behandlingFormPrefix="behandling_V1"
       isApOpen
       kjonn={navBrukerKjonn.KVINNE}

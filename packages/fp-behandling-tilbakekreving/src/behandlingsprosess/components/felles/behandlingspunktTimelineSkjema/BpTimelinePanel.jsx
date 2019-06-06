@@ -125,7 +125,6 @@ export class BpTimelinePanel extends Component {
       formName,
       fieldNameToStoreDetailInfo,
       hovedsokerKjonnKode,
-      isTilbakekreving,
       readOnly,
     } = this.props;
     const { selectedItem } = this.state;
@@ -144,7 +143,6 @@ export class BpTimelinePanel extends Component {
           selectPeriodCallback={this.selectHandler}
           openPeriodInfo={this.openPeriodInfo}
           hovedsokerKjonnKode={hovedsokerKjonnKode}
-          isTilbakekreving={isTilbakekreving}
         />
         {selectedItem && (
           <BpTimelineData
@@ -180,12 +178,10 @@ BpTimelinePanel.propTypes = {
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
-  isTilbakekreving: PropTypes.bool,
   readOnly: PropTypes.bool,
 };
 
 BpTimelinePanel.defaultProps = {
-  isTilbakekreving: false,
   readOnly: false,
 };
 

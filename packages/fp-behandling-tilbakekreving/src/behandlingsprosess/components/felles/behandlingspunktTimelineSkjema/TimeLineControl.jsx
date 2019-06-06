@@ -47,7 +47,6 @@ const TimeLineControl = ({
   zoomOutCallback,
   openPeriodInfo,
   selectedPeriod,
-  isTilbakekreving,
 }) => (
   <div className={styles.scrollButtonContainer}>
     <span className={styles.popUnder}>
@@ -64,14 +63,14 @@ const TimeLineControl = ({
           imageSrcFunction={oppfyltImage}
           altCode="Timeline.OppfyltPeriode"
         />
-        <FormattedMessage id={isTilbakekreving ? 'Timeline.BelopTilbakereves' : 'Timeline.OppfyltPeriode'} />
+        <FormattedMessage id="Timeline.OppfyltPeriode" />
         <VerticalSpacer eightPx />
         <Image
           className={styles.timeLineButton}
           imageSrcFunction={ikkeOppfyltImage}
           altCode="Timeline.IkkeOppfyltPeriode"
         />
-        <FormattedMessage id={isTilbakekreving ? 'Timeline.IngenTilbakekreving' : 'Timeline.IkkeOppfyltPeriode'} />
+        <FormattedMessage id="Timeline.IkkeOppfyltPeriode" />
         <VerticalSpacer eightPx />
         <Image
           className={styles.timeLineButton}
@@ -149,7 +148,6 @@ TimeLineControl.propTypes = {
   zoomOutCallback: PropTypes.func.isRequired,
   openPeriodInfo: PropTypes.func.isRequired,
   selectedPeriod: PropTypes.shape(),
-  isTilbakekreving: PropTypes.bool.isRequired,
 };
 
 
