@@ -25,6 +25,7 @@ import ArbeidsforholdCheckboxes from './ArbeidsforholdCheckboxes';
 export const ArbeidsforholdInnhold = ({
   cancelArbeidsforholdCallback,
   readOnly,
+  warning,
   ...formProps
 }) => (
   <div>
@@ -39,7 +40,7 @@ export const ArbeidsforholdInnhold = ({
           />
         </FlexColumn>
       </FlexRow>
-      <ArbeidsforholdCheckboxes readOnly={readOnly} />
+      <ArbeidsforholdCheckboxes readOnly={readOnly} warning={warning} />
     </FlexContainer>
     {!readOnly
     && (
@@ -50,6 +51,7 @@ export const ArbeidsforholdInnhold = ({
             htmlType="button"
             mini
             onClick={formProps.handleSubmit}
+            disabled={Object.keys(warning).length}
           >
             <FormattedMessage id="ArbeidsforholdFaktaPanel.Oppdater" />
           </Hovedknapp>
@@ -74,6 +76,29 @@ ArbeidsforholdInnhold.propTypes = {
   cancelArbeidsforholdCallback: PropTypes.func.isRequired,
   updateArbeidsforholdCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  warning: PropTypes.shape(),
+};
+
+ArbeidsforholdInnhold.defaultProps = {
+  warning: {},
+};
+
+const validateWarning = (values) => {
+  const {
+ redusertArbeidDato, kanGjennomforesDato, kanIkkeGjennomforesDato, redusertArbeid, kanGjennomfores, kanIkkeGjennomfores,
+} = values;
+  let warnings = {};
+
+  if ((redusertArbeid && kanGjennomfores && redusertArbeidDato && redusertArbeidDato === kanGjennomforesDato)
+  || (kanIkkeGjennomfores && kanGjennomfores && kanIkkeGjennomforesDato && kanIkkeGjennomforesDato === kanGjennomforesDato)
+  || (kanIkkeGjennomfores && redusertArbeid && redusertArbeidDato && kanIkkeGjennomforesDato === redusertArbeidDato)) {
+    warnings = {
+      _warning: {
+        permisjonsWarning: <FormattedMessage id="ArbeidsforholdInnhold.TilretteleggingWarning" />,
+      },
+    };
+  }
+  return warnings;
 };
 
 const transformValues = (values, selectedArbeidsforhold) => {
@@ -105,6 +130,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const onSubmit = values => ownProps.updateArbeidsforholdCallback(transformValues(values, selectedArbeidsforhold));
   return () => ({
     initialValues: buildInitialValues(selectedArbeidsforhold),
+    warn: values => validateWarning(values),
     onSubmit,
   });
 };

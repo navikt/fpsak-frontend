@@ -251,6 +251,7 @@
   "ArbeidsforholdTable.Nei": "Nei",
   "ArbeidsforholdInnhold.Jordmor.TilretteleggingFra": "Jordmor oppgir at tilrettelegging er nødvendig fra og med",
   "ArbeidsforholdInnhold.BegrunnEndringene": "Begrunn endringene",
+  "ArbeidsforholdInnhold.TilretteleggingWarning": "For et av arbeidsforholdene er datoene fra arbeidsgiver motstridende. Avklar dette før du kan gå videre i saken.",
   "ArbeidsforholdCheckboxes.Arbeidsgiver.Tilrettelegging": "Arbeidsgiver oppgir at nødvendig tilrettelegging",
   "ArbeidsforholdCheckboxes.Arbeidsgiver.Dato": "Dato",
   "ArbeidsforholdCheckboxes.Arbeidsgiver.Stillingsprosent": "Stillingsprosent",
