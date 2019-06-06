@@ -52,6 +52,8 @@ const gyldigeUttakperioder = [
 const gyldigeOverføringÅrsaker = [
   overforingArsak.INSTITUSJONSOPPHOLD_ANNEN_FORELDER,
   overforingArsak.SYKDOM_ANNEN_FORELDER,
+  overforingArsak.IKKE_RETT_ANNEN_FORELDER,
+  overforingArsak.ALENEOMSORG,
 ];
 
 const mapPeriodeTyper = typer => typer

@@ -1757,6 +1757,8 @@
   "UttakInfoPanel.SykdomSkadenDokumentertAngiAvklartPeriode": "Sykdommen/skaden er dokumentert, angi periode",
   "UttakInfoPanel.SykdomSkadenIkkeDokumentert": "Sykdommen/skaden er ikke dokumentert",
   "UttakInfoPanel.InnleggelsenErDokumentertAngiAvklartPeriode": "Innleggelsen er dokumentert, angi avklart periode",
+  "UttakInfoPanel.ForeldreansvarErIkkeDokumentert": "Overføringen er ikke dokumentert",
+  "UttakInfoPanel.ForeldreansvarErDokumentertAngiAvklartPeriode": "Overføringen er dokumentert, angi avklart periode",
   "UttakInfoPanel.InnleggelsenErIkkeDokumentert": "Innleggelsen er ikke dokumentert",
   "UttakInfoPanel.PeriodeKanIkkeAvklares": "Perioden kan ikke avklares",
   "UttakInfoPanel.VelgPeriodeFraInntektsmeldingen": "Velg periode fra inntektsmeldingen",
