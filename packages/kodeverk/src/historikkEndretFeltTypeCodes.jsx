@@ -403,7 +403,11 @@ const historikkEndretFeltTypeCodes = {
   },
   TILRETTELEGGING_BEHOV_FOM: {
     kode: 'TILRETTELEGGING_BEHOV_FOM',
-    feltId: 'HistorikEndretFelt.TilrettelseBehovFom',
+    feltId: 'HistorikkEndretFelt.TilrettelseBehovFom',
+  },
+  SVANGERSKAPSPENGERVILKÅRET: {
+    kode: 'SVANGERSKAPSPENGERVILKÅRET',
+    feltId: 'HistorikkEndretFelt.Svangerskapsvilkåret',
   },
 };
 
