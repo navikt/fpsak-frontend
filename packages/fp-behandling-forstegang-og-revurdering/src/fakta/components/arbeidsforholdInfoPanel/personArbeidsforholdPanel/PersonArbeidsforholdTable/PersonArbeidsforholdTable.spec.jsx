@@ -154,7 +154,22 @@ describe('<PersonArbeidsforholdTable>', () => {
     expect(element).has.length(1);
   });
 
-  it('skal viste riktig utledet navn når lagt til av saksbehandler', () => {
+  it('skal vise stillingsprosent selv når den er 0', () => {
+    const endretArbeidsforhold = {
+      ...arbeidsforhold,
+      stillingsprosent: 0,
+    };
+    const wrapper = shallow(<PersonArbeidsforholdTable
+      alleArbeidsforhold={[endretArbeidsforhold]}
+      selectedId={undefined}
+      selectArbeidsforholdCallback={sinon.spy()}
+      fagsystemer={fagsystemer}
+    />);
+    const tableRow = wrapper.find(TableRow);
+    expect(tableRow.props().model.stillingsprosent).to.eql(0);
+  });
+
+  it('skal vise riktig utledet navn når lagt til av saksbehandler', () => {
     const endretArbeidsforhold = {
       ...arbeidsforhold,
       lagtTilAvSaksbehandler: true,

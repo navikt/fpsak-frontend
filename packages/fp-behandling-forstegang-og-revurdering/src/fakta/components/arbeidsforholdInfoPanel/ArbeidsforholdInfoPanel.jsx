@@ -116,7 +116,7 @@ const transformValues = (values) => {
       'erEndret',
       'replaceOptions',
       'originalFomDato',
-      'brukUendretArbeidsforhold',
+      'arbeidsforholdHandlingField',
       'aktivtArbeidsforholdHandlingField')),
     kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
   };

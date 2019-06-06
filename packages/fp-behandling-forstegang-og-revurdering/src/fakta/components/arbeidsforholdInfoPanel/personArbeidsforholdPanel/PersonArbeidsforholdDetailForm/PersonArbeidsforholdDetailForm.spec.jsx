@@ -5,6 +5,7 @@ import sinon from 'sinon';
 import { TextAreaField } from '@fpsak-frontend/form';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import arbeidsforholdHandling from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandling';
 import PersonNyttEllerErstattArbeidsforholdPanel from './PersonNyttEllerErstattArbeidsforholdPanel';
 import { PersonArbeidsforholdDetailForm } from './PersonArbeidsforholdDetailForm';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
@@ -33,7 +34,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       cancelArbeidsforhold={sinon.spy()}
-      skalBrukeUendretForhold
+      arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
       isErstattArbeidsforhold
       hasReceivedInntektsmelding
       harErstattetEttEllerFlere
@@ -54,7 +55,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       cancelArbeidsforhold={sinon.spy()}
-      skalBrukeUendretForhold
+      arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
       isErstattArbeidsforhold
       hasReceivedInntektsmelding
       harErstattetEttEllerFlere={false}
@@ -76,7 +77,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       cancelArbeidsforhold={sinon.spy()}
-      skalBrukeUendretForhold={false}
+      arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
       isErstattArbeidsforhold
       hasReceivedInntektsmelding
       harErstattetEttEllerFlere
@@ -98,7 +99,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       cancelArbeidsforhold={sinon.spy()}
-      skalBrukeUendretForhold
+      arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
       isErstattArbeidsforhold
       hasReceivedInntektsmelding
       harErstattetEttEllerFlere
@@ -120,7 +121,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       cancelArbeidsforhold={sinon.spy()}
-      skalBrukeUendretForhold
+      arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
       isErstattArbeidsforhold
       hasReceivedInntektsmelding
       harErstattetEttEllerFlere
@@ -142,7 +143,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       cancelArbeidsforhold={sinon.spy()}
-      skalBrukeUendretForhold={false}
+      arbeidsforholdHandlingVerdi={arbeidsforholdHandling.FJERN_ARBEIDSFORHOLD}
       isErstattArbeidsforhold
       hasReceivedInntektsmelding
       harErstattetEttEllerFlere
@@ -164,7 +165,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       cancelArbeidsforhold={sinon.spy()}
-      skalBrukeUendretForhold
+      arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
       isErstattArbeidsforhold
       hasReceivedInntektsmelding
       harErstattetEttEllerFlere={false}
@@ -185,7 +186,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       cancelArbeidsforhold={sinon.spy()}
-      skalBrukeUendretForhold
+      arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
       isErstattArbeidsforhold
       hasReceivedInntektsmelding={false}
       harErstattetEttEllerFlere
@@ -207,7 +208,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       cancelArbeidsforhold={sinon.spy()}
-      skalBrukeUendretForhold
+      arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
       isErstattArbeidsforhold
       hasReceivedInntektsmelding={false}
       harErstattetEttEllerFlere
@@ -223,5 +224,27 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
     />);
     const radiogroup = wrapper.find(LeggTilArbeidsforholdFelter);
     expect(radiogroup).has.length(0);
+  });
+  it('skal ikke vise tekst for å erstatte alle tidligere arbeidsforhold eller NyttEllerErstattPanel når handlingen er undefined', () => {
+    const wrapper = shallowWithIntl(<PersonArbeidsforholdDetailForm
+      {...reduxFormPropsMock}
+      intl={intlMock}
+      cancelArbeidsforhold={sinon.spy()}
+      arbeidsforholdHandlingVerdi={undefined}
+      isErstattArbeidsforhold
+      hasReceivedInntektsmelding={false}
+      harErstattetEttEllerFlere
+      readOnly={false}
+      vurderOmSkalErstattes={false}
+      aktivtArbeidsforholdTillatUtenIM
+      arbeidsforhold={arbeidsforhold}
+      skalKunneLeggeTilNyeArbeidsforhold={false}
+      initialValues={{
+        begrunnelse: '',
+        replaceOptions: [],
+      }}
+    />);
+    expect(wrapper.find('[id="PersonArbeidsforholdDetailForm.ErstatteTidligereArbeidsforhod"]')).has.length(0);
+    expect(wrapper.find(PersonNyttEllerErstattArbeidsforholdPanel)).has.length(0);
   });
 });

@@ -46,7 +46,7 @@ const PersonArbeidsforholdTable = ({
   return (
     <Table headerTextCodes={headerTextCodes}>
       {alleArbeidsforhold && alleArbeidsforhold.map((a) => {
-        const stillingsprosent = a.stillingsprosent ? `${parseFloat(a.stillingsprosent).toFixed(2)} %` : '';
+        const stillingsprosent = a.stillingsprosent !== undefined && a.stillingsprosent !== null ? `${parseFloat(a.stillingsprosent).toFixed(2)} %` : '';
         const navn = utledNavn(a);
         return (
           <TableRow

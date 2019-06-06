@@ -1,9 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import { FormattedHTMLMessage } from 'react-intl';
 
-import PersonAksjonspunktText from './PersonAksjonspunktText';
+import { PersonAksjonspunktTextImpl } from './PersonAksjonspunktText';
 
 describe('<PersonAksjonspunktText>', () => {
   const arbeidsforholdTemplate = {
@@ -14,64 +13,75 @@ describe('<PersonAksjonspunktText>', () => {
     fomDato: '2018-10-10',
     tilVurdering: true,
     lagtTilAvSaksbehandler: false,
+    permisjoner: [],
   };
 
+  const fnGetKodeverknavn = () => 'navn';
+
   it('skal ikke vise hjelpetekst når en ikke har arbeidsforhold', () => {
-    const wrapper = shallow(<PersonAksjonspunktText
+    const wrapper = shallow(<PersonAksjonspunktTextImpl
       arbeidsforhold={undefined}
+      getKodeverknavn={fnGetKodeverknavn}
     />);
-    expect(wrapper.html()).is.null;
+    expect(wrapper.find('FormattedHTMLMessage')).to.have.length(0);
   });
 
   it('skal ikke vise hjelpetekst når arbeidsforholdet ikke skal vurderes', () => {
-    const wrapper = shallow(<PersonAksjonspunktText
+    const wrapper = shallow(<PersonAksjonspunktTextImpl
       arbeidsforhold={{
         ...arbeidsforholdTemplate,
         tilVurdering: false,
       }}
+      getKodeverknavn={() => ''}
     />);
-    expect(wrapper.html()).is.null;
+    expect(wrapper.find('FormattedHTMLMessage')).to.have.length(0);
   });
 
   it('skal vise hjelpetekst når det ikke er mottatt inntekstmelding for arbeidsforholdet', () => {
-    const wrapper = shallow(<PersonAksjonspunktText
+    const wrapper = shallow(<PersonAksjonspunktTextImpl
       arbeidsforhold={{
         ...arbeidsforholdTemplate,
         mottattDatoInntektsmelding: undefined,
       }}
+      getKodeverknavn={fnGetKodeverknavn}
     />);
-    expect(wrapper.find(FormattedHTMLMessage).prop('id')).is.eql('PersonAksjonspunktText.AvklarManglendeInntektsmelding');
+    const component = wrapper.find('FormattedHTMLMessage');
+    expect(component.props().id).to.eql('PersonAksjonspunktText.AvklarManglendeInntektsmelding');
   });
 
   it('skal vise hjelpetekst når en kan erstatte gamle arbeidsforhold eller markere arbeidsforholdet som nytt', () => {
     // Dette er arbeidsforhold med samme orgnr og arbeidsforholdId som det som blir editert.
     const gamleArbeidsforhold = [{ id: 2 }];
 
-    const wrapper = shallow(<PersonAksjonspunktText
+    const wrapper = shallow(<PersonAksjonspunktTextImpl
       arbeidsforhold={{
         ...arbeidsforholdTemplate,
         mottattDatoInntektsmelding: '2018-01-01',
         replaceOptions: gamleArbeidsforhold,
       }}
+      getKodeverknavn={fnGetKodeverknavn}
     />);
-    expect(wrapper.find(FormattedHTMLMessage).prop('id')).is.eql('PersonAksjonspunktText.AvklarErstatteTidligere');
+    const component = wrapper.find('FormattedHTMLMessage');
+    expect(component.props().id).to.eql('PersonAksjonspunktText.AvklarErstatteTidligere');
   });
 
   it('skal vise hjelpetekst når flagget harErstattetEttEllerFlere er satt', () => {
-    const wrapper = shallow(<PersonAksjonspunktText
+    const wrapper = shallow(<PersonAksjonspunktTextImpl
       arbeidsforhold={{
         ...arbeidsforholdTemplate,
         mottattDatoInntektsmelding: '2018-01-01',
         replaceOptions: [],
         harErstattetEttEllerFlere: true,
       }}
+      getKodeverknavn={fnGetKodeverknavn}
     />);
-    expect(wrapper.find(FormattedHTMLMessage).prop('id')).is.eql('PersonAksjonspunktText.AvklarErstatteAlle');
+    const component = wrapper.find('FormattedHTMLMessage');
+    expect(component.props().id).to.eql('PersonAksjonspunktText.AvklarErstatteAlle');
   });
 
   it('skal vise hjelpetekst når flagget ikkeRegistrertIAaRegister er satt', () => {
     const gamleArbeidsforhold = [{}];
-    const wrapper = shallow(<PersonAksjonspunktText
+    const wrapper = shallow(<PersonAksjonspunktTextImpl
       arbeidsforhold={{
         ...arbeidsforholdTemplate,
         mottattDatoInntektsmelding: '2018-01-01',
@@ -79,13 +89,15 @@ describe('<PersonAksjonspunktText>', () => {
         harErstattetEttEllerFlere: false,
         ikkeRegistrertIAaRegister: true,
       }}
+      getKodeverknavn={fnGetKodeverknavn}
     />);
-    expect(wrapper.find(FormattedHTMLMessage).prop('id')).is.eql('PersonAksjonspunktText.AvklarIkkeRegistrertIAa');
+    const component = wrapper.find('FormattedHTMLMessage');
+    expect(component.props().id).to.eql('PersonAksjonspunktText.AvklarIkkeRegistrertIAa');
   });
 
   it('skal ikke vise hjelpetekst når inntektsmelding er mottatt og det ikke er gamle arbeidsforhold og flagg ikke er satt', () => {
     const gamleArbeidsforhold = [{}];
-    const wrapper = shallow(<PersonAksjonspunktText
+    const wrapper = shallow(<PersonAksjonspunktTextImpl
       arbeidsforhold={{
         ...arbeidsforholdTemplate,
         mottattDatoInntektsmelding: '2018-01-01',
@@ -93,13 +105,15 @@ describe('<PersonAksjonspunktText>', () => {
         harErstattetEttEllerFlere: false,
         ikkeRegistrertIAaRegister: false,
       }}
+      getKodeverknavn={fnGetKodeverknavn}
     />);
-    expect(wrapper.html()).is.null;
+    const component = wrapper.find('FormattedHTMLMessage');
+    expect(component).to.be.empty;
   });
 
-  it('skal hjelpetekst for å legge til arbeidsforhold', () => {
+  it('skal vise hjelpetekst for å legge til arbeidsforhold', () => {
     const gamleArbeidsforhold = [{}];
-    const wrapper = shallow(<PersonAksjonspunktText
+    const wrapper = shallow(<PersonAksjonspunktTextImpl
       arbeidsforhold={{
         ...arbeidsforholdTemplate,
         lagtTilAvSaksbehandler: true,
@@ -108,7 +122,75 @@ describe('<PersonAksjonspunktText>', () => {
         harErstattetEttEllerFlere: false,
         ikkeRegistrertIAaRegister: true,
       }}
+      getKodeverknavn={fnGetKodeverknavn}
     />);
-    expect(wrapper.find(FormattedHTMLMessage).prop('id')).is.eql('PersonAksjonspunktText.LeggTilArbeidsforhold');
+    const component = wrapper.find('FormattedHTMLMessage');
+    expect(component.props().id).to.eql('PersonAksjonspunktText.LeggTilArbeidsforhold');
+  });
+
+  it('skal vise hjelpetekst for arbeidsforhold med en permisjon og ikke mottat IM', () => {
+    const wrapper = shallow(<PersonAksjonspunktTextImpl
+      arbeidsforhold={{
+        ...arbeidsforholdTemplate,
+        mottattDatoInntektsmelding: undefined,
+        permisjoner: [
+          {
+            permisjonFom: '2018-10-10',
+            permisjonTom: undefined,
+            permisjonsprosent: 100,
+            permisjonsÅrsak: 'aarsak',
+          },
+        ],
+      }}
+      getKodeverknavn={fnGetKodeverknavn}
+    />);
+    const component = wrapper.find('FormattedHTMLMessage');
+    expect(component.props().id).to.eql('PersonAksjonspunktText.SokerHarPermisjonOgIkkeMottattIM');
+  });
+
+  it('skal vise hjelpetekst for arbeidsforhold med en permisjon og mottat IM', () => {
+    const wrapper = shallow(<PersonAksjonspunktTextImpl
+      arbeidsforhold={{
+        ...arbeidsforholdTemplate,
+        mottattDatoInntektsmelding: '2019-01-01',
+        permisjoner: [
+          {
+            permisjonFom: '2018-10-10',
+            permisjonTom: undefined,
+            permisjonsprosent: 100,
+            permisjonsÅrsak: 'aarsak',
+          },
+        ],
+      }}
+      getKodeverknavn={fnGetKodeverknavn}
+    />);
+    const component = wrapper.find('FormattedHTMLMessage');
+    expect(component.props().id).to.eql('PersonAksjonspunktText.SokerHarPermisjonOgMottattIM');
+  });
+
+  it('skal vise hjelpetekst for arbeidsforhold med flere permisjoner', () => {
+    const wrapper = shallow(<PersonAksjonspunktTextImpl
+      arbeidsforhold={{
+        ...arbeidsforholdTemplate,
+        mottattDatoInntektsmelding: '2019-01-01',
+        permisjoner: [
+          {
+            permisjonFom: '2015-01-01',
+            permisjonTom: '2016-01-01',
+            permisjonsprosent: 100,
+            permisjonsÅrsak: 'aarsak',
+          },
+          {
+            permisjonFom: '2018-10-10',
+            permisjonTom: undefined,
+            permisjonsprosent: 100,
+            permisjonsÅrsak: 'aarsak',
+          },
+        ],
+      }}
+      getKodeverknavn={fnGetKodeverknavn}
+    />);
+    const component = wrapper.find('FormattedHTMLMessage');
+    expect(component.props().id).to.eql('PersonAksjonspunktText.SokerHarFlerePermisjoner');
   });
 });

@@ -11,6 +11,7 @@ import ArrowBox from '@fpsak-frontend/shared-components/src/ArrowBox';
 import { FormattedMessage } from 'react-intl';
 import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import aktivtArbeidsforholdHandling from '@fpsak-frontend/kodeverk/src/aktivtArbeidsforholdHandling';
+import arbeidsforholdHandling from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandling';
 
 // ----------------------------------------------------------------------------------
 // VARIABLES
@@ -23,19 +24,16 @@ const AA_REGISTERET = 'aa-registeret';
 // METHODS
 // ----------------------------------------------------------------------------------
 
-const arbeidsforholdTomDatoPickerErrorMsg = dato => ([
-  { id: 'PersonArbeidsforholdDetailForm.DateNotAfterOrEqual' },
-  { dato },
-]);
+const arbeidsforholdTomDatoPickerErrorMsg = dato => ([{ id: 'PersonArbeidsforholdDetailForm.DateNotAfterOrEqual' }, { dato }]);
 
 const isKildeAaRegisteret = arbeidsforhold => arbeidsforhold.kilde && arbeidsforhold.kilde.navn.toLowerCase() === AA_REGISTERET;
 
-const skalDisableArbeidsforholdIkkeAktivt = (arbeidsforhold) => {
+const skalDisableOverstyrTom = (arbeidsforhold) => {
   const erTomDatoLikEllerEtterSkjaeringstidspunkt = moment(arbeidsforhold.tomDato).isSameOrAfter(arbeidsforhold.skjaeringstidspunkt);
   return erTomDatoLikEllerEtterSkjaeringstidspunkt && !arbeidsforhold.brukMedJustertPeriode;
 };
 
-const skalKunneOverstyreArbeidsforholdTomDato = (hasReceivedInntekstmelding, arbeidsforhold) => (isKildeAaRegisteret(arbeidsforhold)
+const kanSetteOverstyrtTom = (hasReceivedInntekstmelding, arbeidsforhold) => (isKildeAaRegisteret(arbeidsforhold)
   && !hasReceivedInntekstmelding)
   || arbeidsforhold.brukMedJustertPeriode;
 
@@ -46,8 +44,65 @@ const skalViseInntektIkkeMedTilBeregningsgrunnlagetValgmulighet = (arbeidsforhol
   return fomDatoFoerStp && tomDatoIkkeSattEllerEtterStp && !hasReceivedInntektsmelding;
 };
 
+const erFlerePermisjoner = arbeidsforhold => arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 1;
+
+const utledRadioOptionForArbeidsforholdSomIkkeErAktive = (arbeidsforhold, hasReceivedInntektsmelding, arbeidsforholdHandlingVerdi, formName, readOnly) => {
+  if (arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 0) {
+    return (
+      <RadioOption
+        label={{ id: 'PersonArbeidsforholdDetailForm.SokerErIPermisjon' }}
+        value={arbeidsforholdHandling.SOKER_ER_I_PERMISJON}
+        disabled={erFlerePermisjoner(arbeidsforhold)}
+      />
+    );
+  }
+  if (kanSetteOverstyrtTom(hasReceivedInntektsmelding, arbeidsforhold)) {
+    return (
+      <RadioOption
+        label={{ id: 'PersonArbeidsforholdDetailForm.ArbeidsforholdetErIkkeAktivt' }}
+        value={arbeidsforholdHandling.OVERSTYR_TOM}
+        disabled={skalDisableOverstyrTom(arbeidsforhold)}
+        manualHideChildren
+      >
+        <BehandlingFormFieldCleaner formName={formName} fieldNames={['overstyrtTom']}>
+          { arbeidsforholdHandlingVerdi === arbeidsforholdHandling.OVERSTYR_TOM && (
+            <ArrowBox>
+              <DatepickerField
+                name="overstyrtTom"
+                label={<FormattedMessage id="PersonArbeidsforholdDetailForm.ArbeidsforholdetAktivTomDato" />}
+                validate={[required, hasValidDate, dateAfterOrEqual(arbeidsforhold.fomDato, arbeidsforholdTomDatoPickerErrorMsg)]}
+                readOnly={readOnly}
+              />
+            </ArrowBox>
+          )}
+        </BehandlingFormFieldCleaner>
+      </RadioOption>
+    );
+  }
+  return (
+    <RadioOption
+      label={{ id: 'PersonArbeidsforholdDetailForm.FjernArbeidsforholdet' }}
+      value={arbeidsforholdHandling.FJERN_ARBEIDSFORHOLD}
+      disabled={isKildeAaRegisteret(arbeidsforhold) || arbeidsforhold.lagtTilAvSaksbehandler === true}
+    />
+  );
+};
+
+const utledAktivtArbeidsforholdLabel = arbeidsforhold => (arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 0
+  ? 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivtOgHarPermisjonMenSoekerErIkkePermisjon'
+  : 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt');
+
+const skalViseRadioOptionsForAktivtArbeidsforholdHandlinger = (hasReceivedInntektsmelding, arbeidsforholdHandlingVerdi) => {
+  if (arbeidsforholdHandlingVerdi !== arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD) {
+    return false;
+  }
+  return hasReceivedInntektsmelding === false;
+};
+
 /**
  * Component: ArbeidsforholdRadioknapper
+ * Ansvarlig for å håndtere visning av RadioKnapper for arbeidsforhold
+ * som står i aksjonspunktet 5080 i fakta om arbeidsforhold.
  */
 const ArbeidsforholdRadioknapper = ({
   readOnly,
@@ -55,21 +110,21 @@ const ArbeidsforholdRadioknapper = ({
   hasReceivedInntektsmelding,
   arbeidsforhold,
   aktivtArbeidsforholdTillatUtenIM,
-  skalBrukeUendretForhold,
+  arbeidsforholdHandlingVerdi,
 }) => (
   <RadioGroupField
-    name="brukUendretArbeidsforhold"
+    name="arbeidsforholdHandlingField"
     validate={[required]}
     direction="vertical"
     readOnly={readOnly}
   >
     <RadioOption
-      label={{ id: 'PersonArbeidsforholdDetailForm.ArbeidsforhoildErAktivt' }}
-      value
+      label={{ id: utledAktivtArbeidsforholdLabel(arbeidsforhold) }}
+      value={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
       manualHideChildren
     >
       <BehandlingFormFieldCleaner formName={formName} fieldNames={['aktivtArbeidsforholdHandlingField']}>
-        {skalBrukeUendretForhold && !hasReceivedInntektsmelding && (
+        { skalViseRadioOptionsForAktivtArbeidsforholdHandlinger(hasReceivedInntektsmelding, arbeidsforholdHandlingVerdi) && (
           <Row>
             <Column xs="1" />
             <Column xs="11">
@@ -92,8 +147,8 @@ const ArbeidsforholdRadioknapper = ({
                   />
                 )}
                 <RadioOption
-                  label={{ id: 'PersonArbeidsforholdDetailForm.FortsettBehandling' }}
-                  value={aktivtArbeidsforholdHandling.FORTSETT_BEHANDLING}
+                  label={{ id: 'PersonArbeidsforholdDetailForm.BenyttAInntektIBeregningsgrunnlag' }}
+                  value={aktivtArbeidsforholdHandling.BENYTT_A_INNTEKT_I_BG}
                   disabled={!aktivtArbeidsforholdTillatUtenIM}
                 />
               </RadioGroupField>
@@ -102,33 +157,12 @@ const ArbeidsforholdRadioknapper = ({
         )}
       </BehandlingFormFieldCleaner>
     </RadioOption>
-    { skalKunneOverstyreArbeidsforholdTomDato(hasReceivedInntektsmelding, arbeidsforhold) && (
-      <RadioOption
-        label={{ id: 'PersonArbeidsforholdDetailForm.ArbeidsforholdetErIkkeAktivt' }}
-        value={false}
-        disabled={skalDisableArbeidsforholdIkkeAktivt(arbeidsforhold)}
-        manualHideChildren
-      >
-        <BehandlingFormFieldCleaner formName={formName} fieldNames={['overstyrtTom']}>
-          { skalBrukeUendretForhold === false && (
-            <ArrowBox>
-              <DatepickerField
-                name="overstyrtTom"
-                label={<FormattedMessage id="PersonArbeidsforholdDetailForm.ArbeidsforholdetAktivTomDato" />}
-                validate={[required, hasValidDate, dateAfterOrEqual(arbeidsforhold.fomDato, arbeidsforholdTomDatoPickerErrorMsg)]}
-                readOnly={readOnly}
-              />
-            </ArrowBox>
-          )}
-        </BehandlingFormFieldCleaner>
-      </RadioOption>
-    )}
-    { !skalKunneOverstyreArbeidsforholdTomDato(hasReceivedInntektsmelding, arbeidsforhold) && (
-      <RadioOption
-        label={{ id: 'PersonArbeidsforholdDetailForm.ArbeidsforholdIkkeRelevant' }}
-        value={false}
-        disabled={isKildeAaRegisteret(arbeidsforhold) || arbeidsforhold.lagtTilAvSaksbehandler === true}
-      />
+    { utledRadioOptionForArbeidsforholdSomIkkeErAktive(
+        arbeidsforhold,
+        hasReceivedInntektsmelding,
+        arbeidsforholdHandlingVerdi,
+        formName,
+        readOnly,
     )}
   </RadioGroupField>
 );
@@ -139,11 +173,11 @@ ArbeidsforholdRadioknapper.propTypes = {
   hasReceivedInntektsmelding: PropTypes.bool.isRequired,
   arbeidsforhold: arbeidsforholdPropType.isRequired,
   aktivtArbeidsforholdTillatUtenIM: PropTypes.bool.isRequired,
-  skalBrukeUendretForhold: PropTypes.bool,
+  arbeidsforholdHandlingVerdi: PropTypes.string,
 };
 
 ArbeidsforholdRadioknapper.defaultProps = {
-  skalBrukeUendretForhold: undefined,
+  arbeidsforholdHandlingVerdi: undefined,
 };
 
 export default ArbeidsforholdRadioknapper;
