@@ -110,9 +110,13 @@ const getModalDescriptionTextCode = (behandlingsresultat, aksjonspunkter, ytelse
     return 'FatterVedtakStatusModal.ModalDescriptionFPOpphort';
   }
   if (hasOpenAksjonspunktForVedtakUtenTotrinnskontroll(aksjonspunkter)) {
-    return ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
-      ? 'FatterVedtakStatusModal.ModalDescriptionES'
-      : 'FatterVedtakStatusModal.ModalDescriptionFP';
+    if (ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD) {
+      return 'FatterVedtakStatusModal.ModalDescriptionES';
+    }
+    if (ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER) {
+      return 'FatterVedtakStatusModal.ModalDescriptionSVP';
+    }
+    return 'FatterVedtakStatusModal.ModalDescriptionFP';
   }
   if (isKlageWithKA(getBehandlingKlageVurderingResultatNK)) {
     return 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver';
@@ -122,9 +126,13 @@ const getModalDescriptionTextCode = (behandlingsresultat, aksjonspunkter, ytelse
 
 const getAltImgTextCode = (aksjonspunkter, ytelseType, behType) => {
   if (hasOpenAksjonspunktForVedtakUtenTotrinnskontroll(aksjonspunkter)) {
-    return ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
-      ? 'FatterVedtakStatusModal.IkkeInnvilgetES'
-      : 'FatterVedtakStatusModal.IkkeInnvilgetFP';
+    if (ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD) {
+      return 'FatterVedtakStatusModal.IkkeInnvilgetES';
+    }
+    if (ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER) {
+      return 'FatterVedtakStatusModal.IkkeInnvilgetSVP';
+    }
+    return 'FatterVedtakStatusModal.IkkeInnvilgetFP';
   }
   if (isKlageWithKA(getBehandlingKlageVurderingResultatNK)) {
     return 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver';
