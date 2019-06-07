@@ -1754,6 +1754,7 @@
   "UttakInfoPanel.Aksjonspunkt.6070": "Saksbehandler initierer kontroll av søknadsperiodene",
   "UttakInfoPanel.Aksjonspunkt.5086": "Vurder om den andre forelderen har rett til foreldrepenger. Slå opp i relevant fagsystem for å finne informasjon om inntekt.\nDersom den andre forelderen har rett må du endre til riktige kvoter i alle søknadsperiodene.",
   "UttakInfoPanel.Aksjonspunkt.6013": "Perioder er overstyrt.",
+  "UttakInfoPanel.Aksjonspunkt.FarSøkerFør6Uker": "Far/medmor søker fedrekvote før 7. uke etter fødsel. Vurder om far/medmor har gyldig grunn for uttak av fedrekvote i denne perioden. Kontakt søker ved behov.",
   "UttakInfoPanel.TilpassSoknadsperiode": "Tilpass søknadsperiode til inntektsmeldingen",
   "UttakInfoPanel.SykdomSkadenDokumentertAngiAvklartPeriode": "Sykdommen/skaden er dokumentert, angi periode",
   "UttakInfoPanel.SykdomSkadenIkkeDokumentert": "Sykdommen/skaden er ikke dokumentert",

@@ -272,7 +272,7 @@ export class UttakPerioder extends PureComponent {
     formChange(`${behandlingFormPrefix}.UttakFaktaForm`, 'perioder', newPerioder);
   }
 
-  updatePeriode(values) {
+  async updatePeriode(values) {
     const {
       behandlingFormPrefix,
       perioder,
@@ -340,9 +340,9 @@ export class UttakPerioder extends PureComponent {
       ),
     });
 
-    const newPerioder = createNewPerioder(perioder, id, newPeriodeObject);
+    const newPerioder = await createNewPerioder(perioder, id, newPeriodeObject);
 
-    formChange(`${behandlingFormPrefix}.UttakFaktaForm`, 'perioder', newPerioder.sort((a, b) => a.fom.localeCompare(b.fom)));
+    await formChange(`${behandlingFormPrefix}.UttakFaktaForm`, 'perioder', newPerioder.sort((a, b) => a.fom.localeCompare(b.fom)));
   }
 
   isAnyFormOpen() {
@@ -397,6 +397,8 @@ export class UttakPerioder extends PureComponent {
       periodeSlett, isNyPeriodeFormOpen, inntektsmeldingInfo, showModalSlettPeriode,
     } = this.state;
     const nyPeriodeDisabledDaysFom = førsteUttaksdato || (perioder[0] || []).fom;
+    const farSøkerFør6Uker = (perioder[0] || []).uttakPeriodeType && perioder[0].uttakPeriodeType.kode === 'FEDREKVOTE'
+            && moment((perioder[0] || []).fom).isBefore(moment(førsteUttaksdato).add(6, 'weeks'));
     return (
       <React.Fragment>
         {!readOnly && (
@@ -405,10 +407,13 @@ export class UttakPerioder extends PureComponent {
             const førsteUttak = {
               value: moment(førsteUttaksdato).format(DDMMYYYY_DATE_FORMAT),
             };
+
             return (
               <FormattedMessage
                 key={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
-                id={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
+                id={farSøkerFør6Uker
+                  ? 'UttakInfoPanel.Aksjonspunkt.FarSøkerFør6Uker'
+                  : `UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
                 values={førsteUttak}
               />
             );
@@ -451,8 +456,8 @@ export class UttakPerioder extends PureComponent {
           perioder={perioder}
           readOnly={readOnly && !isManuellOverstyring}
           inntektsmeldingInfo={inntektsmeldingInfo}
-          endringsdato={endringsdato
-          }
+          endringsdato={endringsdato}
+          farSøkerFør6Uker={farSøkerFør6Uker}
         />
         <VerticalSpacer twentyPx />
         <FlexContainer fluid wrap>

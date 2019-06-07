@@ -170,7 +170,7 @@ export const UttakNyPeriode = ({
                         <FlexColumn>
                           <DecimalField
                             className={styles.fieldHorizontal}
-                            name="samtidigUttaksprosent"
+                            name="samtidigUttaksprosentNyPeriode"
                             bredde="XS"
                             label={{ id: 'UttakInfoPanel.SamtidigUttakProsentandel' }}
                             validate={[required, maxValue100, hasValidDecimal]}
@@ -369,7 +369,7 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
     bekreftet: true,
     openForm: false,
     samtidigUttak: values.samtidigUttakNyPeriode,
-    samtidigUttaksprosent: values.samtidigUttaksprosent,
+    samtidigUttaksprosent: values.samtidigUttaksprosentNyPeriode,
     flerbarnsdager: values.flerbarnsdager,
     erArbeidstaker: arbeidsForhold && arbeidsForhold[4] === uttakArbeidType.ORDINÆRT_ARBEID,
     erFrilanser: arbeidsForhold && arbeidsForhold[4] === uttakArbeidType.FRILANS,
@@ -434,7 +434,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
         typeUttak: null,
         flerbarnsdager: false,
         samtidigUttakNyPeriode: false,
-        samtidigUttaksprosent: null,
+        samtidigUttaksprosentNyPeriode: null,
       },
       nyPeriode: behandlingFormValueSelector('nyPeriodeForm')(
         state,

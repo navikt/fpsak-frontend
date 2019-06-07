@@ -28,6 +28,7 @@ export const renderPeriode = (
   uttakPeriodeType,
   arbeidsgiver,
   behandlingStatusKode,
+  farSøkerFør6Uker,
 ) => {
   switch (utsettelseArsak.kode) {
     case utsettelseArsakCodes.ARBEID:
@@ -82,7 +83,7 @@ export const renderPeriode = (
         />
       );
     case utsettelseArsakCodes.UDEFINERT:
-      if (overforingArsak.kode === overforingArsakCodes.SYKDOM_ANNEN_FORELDER) {
+      if (overforingArsak.kode === overforingArsakCodes.SYKDOM_ANNEN_FORELDER || farSøkerFør6Uker) {
         return (
           <SykdomOgSkadePeriode
             fieldId={fieldId}
@@ -173,6 +174,8 @@ export const UttakPeriodeInnhold = ({
   openForm,
   uttakPeriodeType,
   arbeidsgiver,
+  behandlingStatusKode,
+  farSøkerFør6Uker,
 }) => {
   const editable = !(!readOnly && openForm);
 
@@ -194,6 +197,8 @@ export const UttakPeriodeInnhold = ({
         bekreftet,
         uttakPeriodeType,
         arbeidsgiver,
+        behandlingStatusKode,
+        farSøkerFør6Uker,
       )}
     </div>
   );
@@ -215,6 +220,8 @@ UttakPeriodeInnhold.propTypes = {
   openForm: PropTypes.bool.isRequired,
   uttakPeriodeType: PropTypes.shape().isRequired,
   arbeidsgiver: PropTypes.shape(),
+  farSøkerFør6Uker: PropTypes.bool.isRequired,
+  behandlingStatusKode: PropTypes.string.isRequired,
 };
 
 UttakPeriodeInnhold.defaultProps = {

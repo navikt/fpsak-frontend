@@ -227,7 +227,7 @@ const convertToArray = uttakResult => Object.values(uttakResult)
     return errors;
   };
 
-const checkFlerbarnsMaksDager = (stonadskonto) => {
+const checkFlerbarnsMaksDager = (stonadskonto = {}) => {
   let errors = null;
   if (stonadskonto.FLERBARNSDAGER && !stonadskonto.FLERBARNSDAGER.gyldigForbruk) {
     errors = {
