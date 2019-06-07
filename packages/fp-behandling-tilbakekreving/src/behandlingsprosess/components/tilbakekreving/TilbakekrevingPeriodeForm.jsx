@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
 import { FormSection, clearFields, formPropTypes } from 'redux-form';
 import { FormattedMessage, FormattedHTMLMessage, injectIntl } from 'react-intl';
@@ -24,7 +23,6 @@ import {
   VerticalSpacer, FlexRow, FlexColumn, AdvarselModal,
 } from '@fpsak-frontend/shared-components';
 
-import { getForeldelsePerioder } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingTilbakekreving/src/behandlingForm';
 import sarligGrunn from 'behandlingTilbakekreving/src/kodeverk/sarligGrunn';
 import Aktsomhet from 'behandlingTilbakekreving/src/kodeverk/aktsomhet';
@@ -135,13 +133,14 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
       setNestePeriode,
       setForrigePeriode,
       oppdaterSplittedePerioder,
+      data,
       ...formProps
     } = this.props;
     const { showModal } = this.state;
     return (
       <div className={styles.container}>
         <TilbakekrevingTimelineData
-          periode={period}
+          periode={data}
           callbackForward={setNestePeriode}
           callbackBackward={setForrigePeriode}
           oppdaterSplittedePerioder={oppdaterSplittedePerioder}
@@ -159,7 +158,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
             <VerticalSpacer eigthPx />
           </>
         ))}
-        <TilbakekrevingAktivitetTabell ytelser={period.ytelser} />
+        <TilbakekrevingAktivitetTabell ytelser={data.ytelser} />
         <VerticalSpacer twentyPx />
         <Row>
           <Column md={period.erForeldet ? '12' : '6'}>
@@ -222,9 +221,9 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
                         erSerligGrunnAnnetValgt={erSerligGrunnAnnetValgt}
                         aktsomhetTyper={aktsomhetTyper}
                         sarligGrunnTyper={sarligGrunnTyper}
-                        antallYtelser={period.ytelser.length}
-                        feilutbetalingBelop={period.feilutbetaling}
-                        erTotalBelopUnder4Rettsgebyr={period.erTotalBelopUnder4Rettsgebyr}
+                        antallYtelser={data.ytelser.length}
+                        feilutbetalingBelop={data.feilutbetaling}
+                        erTotalBelopUnder4Rettsgebyr={data.erTotalBelopUnder4Rettsgebyr}
                       />
                     )}
                   </FormSection>
@@ -259,7 +258,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
   }
 }
 
-const transformValues = (period, values, sarligGrunnTyper) => {
+/* const transformValues = (period, values, sarligGrunnTyper) => {
   const { valgtVilkarResultatType, begrunnelse } = values;
   const info = values[valgtVilkarResultatType];
 
@@ -279,40 +278,7 @@ const transformValues = (period, values, sarligGrunnTyper) => {
       },
     },
   };
-};
-
-const buildInitialValues = createSelector([(state, ownProps) => ownProps], (ownProps) => {
-  const { period, foreldelsePerioder } = ownProps;
-  const { vilkarResultat, begrunnelse, vilkarResultatInfo } = period.storedData;
-
-  const vilkarResultatKode = vilkarResultat && vilkarResultat.kode ? vilkarResultat.kode : vilkarResultat;
-  let foreldetData = { erForeldet: false };
-  if (period.erForeldet) {
-    const foreldelsePeriode = foreldelsePerioder.find(p => p.fom === period.fom && p.tom === period.tom);
-    foreldetData = {
-      erForeldet: period.erForeldet,
-      periodenErForeldet: true,
-      foreldetBegrunnelse: foreldelsePeriode.begrunnelse,
-    };
-  }
-
-  const initialValues = {
-    valgtVilkarResultatType: vilkarResultatKode,
-    begrunnelse,
-    ...foreldetData,
-  };
-
-  const godTroData = vilkarResultatKode === VilkarResultat.GOD_TRO ? BelopetMottattIGodTroFormPanel.buildIntialValues(vilkarResultatInfo) : {};
-  const annetData = vilkarResultatKode !== undefined && vilkarResultatKode !== VilkarResultat.GOD_TRO
-    ? AktsomhetFormPanel.buildInitalValues(vilkarResultatInfo) : {};
-  return {
-    ...initialValues,
-    [initialValues.valgtVilkarResultatType]: {
-      ...godTroData,
-      ...annetData,
-    },
-  };
-});
+}; */
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
@@ -361,11 +327,9 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const sarligGrunnTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.SARLIG_GRUNN)(initialState);
   const vilkarResultatTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.VILKAR_RESULTAT)(initialState);
   const aktsomhetTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.AKTSOMHET)(initialState);
-  const submitCallback = values => ownProps.oppdaterPeriode(transformValues(ownProps.period, values, sarligGrunnTyper));
+  const submitCallback = values => ownProps.oppdaterPeriode(values);
   const validateForm = values => validate(values, sarligGrunnTyper, ownProps.period);
-  const foreldelsePerioder = getForeldelsePerioder(initialState).perioder;
-  const buildInitalValuesProps = { period: ownProps.period, foreldelsePerioder };
-  return (state) => {
+  return (state, oProps) => {
     const valgtVilkarResultatType = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, 'valgtVilkarResultatType');
     const handletUaktsomhetGrad = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.handletUaktsomhetGrad`);
     return {
@@ -378,8 +342,8 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       erSerligGrunnAnnetValgt: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state,
         `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.${sarligGrunn.ANNET}`),
       erBelopetIBehold: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.erBelopetIBehold`),
-      initialValues: buildInitialValues(state, buildInitalValuesProps),
-      reduserteBelop: ownProps.period.redusertBeloper,
+      initialValues: oProps.period,
+      reduserteBelop: ownProps.data.redusertBeloper,
       onSubmit: submitCallback,
       validate: validateForm,
       valgtVilkarResultatType,
@@ -396,5 +360,37 @@ const TilbakekrevingPeriodeForm = connect(mapStateToPropsFactory, mapDispatchToP
   enableReinitialize: true,
   keepDirtyOnReinitialize: false,
 })(TilbakekrevingPeriodeFormImpl)));
+
+TilbakekrevingPeriodeForm.buildInitialValues = (period, foreldelsePerioder) => {
+  const { vilkarResultat, begrunnelse, vilkarResultatInfo } = period.storedData;
+
+  const vilkarResultatKode = vilkarResultat && vilkarResultat.kode ? vilkarResultat.kode : vilkarResultat;
+  let foreldetData = { erForeldet: false };
+  if (period.erForeldet) {
+    const foreldelsePeriode = foreldelsePerioder.find(p => p.fom === period.fom && p.tom === period.tom);
+    foreldetData = {
+      erForeldet: period.erForeldet,
+      periodenErForeldet: true,
+      foreldetBegrunnelse: foreldelsePeriode.begrunnelse,
+    };
+  }
+
+  const initialValues = {
+    valgtVilkarResultatType: vilkarResultatKode,
+    begrunnelse,
+    ...foreldetData,
+  };
+
+  const godTroData = vilkarResultatKode === VilkarResultat.GOD_TRO ? BelopetMottattIGodTroFormPanel.buildIntialValues(vilkarResultatInfo) : {};
+  const annetData = vilkarResultatKode !== undefined && vilkarResultatKode !== VilkarResultat.GOD_TRO
+    ? AktsomhetFormPanel.buildInitalValues(vilkarResultatInfo) : {};
+  return {
+    ...initialValues,
+    [initialValues.valgtVilkarResultatType]: {
+      ...godTroData,
+      ...annetData,
+    },
+  };
+};
 
 export default TilbakekrevingPeriodeForm;
