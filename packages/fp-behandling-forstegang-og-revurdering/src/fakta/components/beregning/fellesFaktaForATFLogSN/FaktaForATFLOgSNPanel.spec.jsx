@@ -15,7 +15,6 @@ import {
   transformValues,
 } from './FaktaForATFLOgSNPanel';
 import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm';
-import FastsettEndretBeregningsgrunnlag from './endringBeregningsgrunnlag/FastsettEndretBeregningsgrunnlag';
 import NyIArbeidslivetSNForm from './nyIArbeidslivet/NyIArbeidslivetSNForm';
 import { lonnsendringField } from './vurderOgFastsettATFL/forms/LonnsendringForm';
 import { erNyoppstartetFLField } from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
@@ -155,78 +154,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     />);
     const vurderATFL = wrapper.find(VurderOgFastsettATFL);
     expect(vurderATFL).to.have.length(1);
-  });
-
-  it('skal vise FastsettEndretBeregningsgrunnlag', () => {
-    const aktivertePaneler = [faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG];
-    const wrapper = shallow(<FaktaForATFLOgSNPanelImpl
-      readOnly={false}
-      aktivePaneler={aktivertePaneler}
-      isAksjonspunktClosed={false}
-      showTableCallback={showTableCallback}
-    />);
-    const endretBeregninsgrunnlag = wrapper.find(FastsettEndretBeregningsgrunnlag);
-    expect(endretBeregninsgrunnlag).to.have.length(1);
-  });
-
-  it('skal ikkje vise FastsettEndretBeregningsgrunnlag om man har fastsett bg kun ytelse', () => {
-    const aktivertePaneler = [faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG, faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE];
-    const wrapper = shallow(<FaktaForATFLOgSNPanelImpl
-      readOnly={false}
-      aktivePaneler={aktivertePaneler}
-      isAksjonspunktClosed={false}
-      showTableCallback={showTableCallback}
-    />);
-    const endretBeregninsgrunnlag = wrapper.find(FastsettEndretBeregningsgrunnlag);
-    expect(endretBeregninsgrunnlag).to.have.length(0);
-  });
-
-  it('skal ikkje vise FastsettEndretBeregningsgrunnlag om man har nyoppstartet frilans', () => {
-    const aktivertePaneler = [faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG, faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
-    const wrapper = shallow(<FaktaForATFLOgSNPanelImpl
-      readOnly={false}
-      aktivePaneler={aktivertePaneler}
-      isAksjonspunktClosed={false}
-      showTableCallback={showTableCallback}
-    />);
-    const endretBeregninsgrunnlag = wrapper.find(FastsettEndretBeregningsgrunnlag);
-    expect(endretBeregninsgrunnlag).to.have.length(0);
-  });
-
-  it('skal ikkje vise FastsettEndretBeregningsgrunnlag om man har vurder lønnsendring', () => {
-    const aktivertePaneler = [faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG, faktaOmBeregningTilfelle.VURDER_LONNSENDRING];
-    const wrapper = shallow(<FaktaForATFLOgSNPanelImpl
-      readOnly={false}
-      aktivePaneler={aktivertePaneler}
-      isAksjonspunktClosed={false}
-      showTableCallback={showTableCallback}
-    />);
-    const endretBeregninsgrunnlag = wrapper.find(FastsettEndretBeregningsgrunnlag);
-    expect(endretBeregninsgrunnlag).to.have.length(0);
-  });
-
-  it('skal ikkje vise FastsettEndretBeregningsgrunnlag om man har vurder mottar ytelse', () => {
-    const aktivertePaneler = [faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG, faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE];
-    const wrapper = shallow(<FaktaForATFLOgSNPanelImpl
-      readOnly={false}
-      aktivePaneler={aktivertePaneler}
-      isAksjonspunktClosed={false}
-      showTableCallback={showTableCallback}
-    />);
-    const endretBeregninsgrunnlag = wrapper.find(FastsettEndretBeregningsgrunnlag);
-    expect(endretBeregninsgrunnlag).to.have.length(0);
-  });
-
-  it('skal ikkje vise FastsettEndretBeregningsgrunnlag om man har ATFL i samme org', () => {
-    const aktivertePaneler = [faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG, faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON];
-    const wrapper = shallow(<FaktaForATFLOgSNPanelImpl
-      readOnly={false}
-      aktivePaneler={aktivertePaneler}
-      isAksjonspunktClosed={false}
-      showTableCallback={showTableCallback}
-    />);
-    const endretBeregninsgrunnlag = wrapper.find(FastsettEndretBeregningsgrunnlag);
-    expect(endretBeregninsgrunnlag).to.have.length(0);
   });
 
   it('skal kunne transform values for kun besteberegning', () => {
