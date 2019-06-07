@@ -265,7 +265,8 @@ const mapStateToProps = (state, initialProps) => {
   const values = getFormValuesForBeregning(state);
   return {
     skalViseTabell: beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
-    .some(andel => andel.aktivitetStatus.kode !== aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE),
+    .some(andel => andel.aktivitetStatus.kode !== aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE)
+    && !initialProps.tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE),
     skalHaBesteberegning: values[besteberegningField] === true,
     harKunstigArbeid: harKunstigArbeidsforhold(initialProps.tilfeller, beregningsgrunnlag),
     manglerInntektsmelding,

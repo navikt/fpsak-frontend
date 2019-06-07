@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import faktaOmBeregningTilfelle,
-{
-  harFastsettATFLInntektTilfelle,
-} from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import { createSelector, createStructuredSelector } from 'reselect';
@@ -139,22 +136,6 @@ const getFaktaPanels = (readOnly, tilfeller, isAksjonspunktClosed) => {
       );
     }
   });
-  // For visning av saker med tilfelle FASTSETT_ENDRET_BEREGNINGSGRUNNLAG
-  // Opprettelse av FASTSETT_ENDRET_BEREGNINGSGRUNNLAG er fjernet og håndteres nå i aksjonspunkt FORDEL_BEREGNINGSGRUNNLAG
-  if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)
-  && !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE)
-  && !harFastsettATFLInntektTilfelle(tilfeller)) {
-    hasShownPanel = true;
-    faktaPanels.push(
-      <ElementWrapper key={faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG}>
-        {spacer(hasShownPanel)}
-        <FastsettEndretBeregningsgrunnlag
-          readOnly={readOnly}
-          isAksjonspunktClosed={isAksjonspunktClosed}
-        />
-      </ElementWrapper>,
-    );
-  }
   setFaktaPanelForKunYtelse(faktaPanels, tilfeller, readOnly, isAksjonspunktClosed);
   faktaPanels.push(
     <ElementWrapper key="VurderOgFastsettATFL">
