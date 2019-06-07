@@ -55,7 +55,6 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
     setForrigePeriode: PropTypes.func.isRequired,
     readOnly: PropTypes.bool.isRequired,
     erBelopetIBehold: PropTypes.bool,
-    formName: PropTypes.string.isRequired,
     tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: PropTypes.bool,
     oppdaterPeriode: PropTypes.func.isRequired,
     oppdaterSplittedePerioder: PropTypes.func.isRequired,
@@ -395,6 +394,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 const TilbakekrevingPeriodeForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
   form: TILBAKEKREVING_PERIODE_FORM_NAME,
   enableReinitialize: true,
+  keepDirtyOnReinitialize: false,
 })(TilbakekrevingPeriodeFormImpl)));
 
 export default TilbakekrevingPeriodeForm;
