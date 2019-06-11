@@ -258,28 +258,6 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
   }
 }
 
-/* const transformValues = (period, values, sarligGrunnTyper) => {
-  const { valgtVilkarResultatType, begrunnelse } = values;
-  const info = values[valgtVilkarResultatType];
-
-  const godTroData = valgtVilkarResultatType === VilkarResultat.GOD_TRO ? BelopetMottattIGodTroFormPanel.transformValues(info) : {};
-  const annetData = valgtVilkarResultatType !== VilkarResultat.GOD_TRO ? AktsomhetFormPanel.transformValues(info, sarligGrunnTyper) : {};
-
-  return {
-    ...period,
-    storedData: {
-      begrunnelse,
-      fom: period.fom,
-      tom: period.tom,
-      vilkarResultat: valgtVilkarResultatType,
-      vilkarResultatInfo: {
-        ...godTroData,
-        ...annetData,
-      },
-    },
-  };
-}; */
-
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
     clearFields,
@@ -387,6 +365,25 @@ TilbakekrevingPeriodeForm.buildInitialValues = (period, foreldelsePerioder) => {
   return {
     ...initialValues,
     [initialValues.valgtVilkarResultatType]: {
+      ...godTroData,
+      ...annetData,
+    },
+  };
+};
+
+TilbakekrevingPeriodeForm.transformValues = (values, sarligGrunnTyper) => {
+  const { valgtVilkarResultatType, begrunnelse } = values;
+  const info = values[valgtVilkarResultatType];
+
+  const godTroData = valgtVilkarResultatType === VilkarResultat.GOD_TRO ? BelopetMottattIGodTroFormPanel.transformValues(info) : {};
+  const annetData = valgtVilkarResultatType !== VilkarResultat.GOD_TRO ? AktsomhetFormPanel.transformValues(info, sarligGrunnTyper) : {};
+
+  return {
+    begrunnelse,
+    fom: values.fom,
+    tom: values.tom,
+    vilkarResultat: valgtVilkarResultatType,
+    vilkarResultatInfo: {
       ...godTroData,
       ...annetData,
     },
