@@ -46,7 +46,6 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
   state = { showModal: false };
 
   static propTypes = {
-    periode: PropTypes.shape({}).isRequired,
     behandlingFormPrefix: PropTypes.string.isRequired,
     skjulPeriode: PropTypes.func.isRequired,
     setNestePeriode: PropTypes.func.isRequired,
@@ -122,7 +121,6 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
       handletUaktsomhetGrad,
       harGrunnerTilReduksjon,
       skjulPeriode,
-      periode,
       readOnly,
       erBelopetIBehold,
       erSerligGrunnAnnetValgt,
@@ -161,14 +159,14 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
         <TilbakekrevingAktivitetTabell ytelser={data.ytelser} />
         <VerticalSpacer twentyPx />
         <Row>
-          <Column md={periode.erForeldet ? '12' : '6'}>
+          <Column md={data.erForeldet ? '12' : '6'}>
             <Row>
-              {periode.erForeldet && (
+              {data.erForeldet && (
                 <Column md="12">
                   <ForeldetFormPanel />
                 </Column>
               )}
-              {!periode.erForeldet && (
+              {!data.erForeldet && (
                 <Column md="10">
                   <Element>
                     <FormattedMessage id="TilbakekrevingPeriodeForm.VilkarForTilbakekreving" />
@@ -343,10 +341,11 @@ TilbakekrevingPeriodeForm.buildInitialValues = (periode, foreldelsePerioder) => 
 
   const vilkarResultatKode = vilkarResultat && vilkarResultat.kode ? vilkarResultat.kode : vilkarResultat;
   let foreldetData = { erForeldet: false };
-  if (periode.erForeldet) {
-    const foreldelsePeriode = foreldelsePerioder.find(p => p.fom === periode.fom && p.tom === periode.tom);
+  const erForeldet = periode.erForeldet ? periode.erForeldet : periode.foreldet;
+  if (erForeldet) {
+    const foreldelsePeriode = foreldelsePerioder.perioder.find(p => p.fom === periode.fom && p.tom === periode.tom);
     foreldetData = {
-      erForeldet: periode.erForeldet,
+      erForeldet,
       periodenErForeldet: true,
       foreldetBegrunnelse: foreldelsePeriode.begrunnelse,
     };
