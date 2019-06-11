@@ -38,6 +38,7 @@ const behandlingspunktToAksjonspunktEngangsstonad = {
   [behandlingspunktCodes.ADOPSJON]: aksjonspunktCode.OVERSTYR_ADOPSJONSVILKAR,
   [behandlingspunktCodes.MEDLEMSKAP]: aksjonspunktCode.OVERSTYR_MEDLEMSKAPSVILKAR,
   [behandlingspunktCodes.SOEKNADSFRIST]: aksjonspunktCode.OVERSTYR_SOKNADSFRISTVILKAR,
+  [behandlingspunktCodes.OPPTJENING]: aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET,
 };
 const behandlingspunktToAksjonspunktForeldrepenger = {
   [behandlingspunktCodes.FOEDSEL]: {
