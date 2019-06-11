@@ -59,7 +59,7 @@ const mapStateToProps = (state, ownProps) => {
   const formNames = fNames.map(f => (f.includes('.') ? f.substr(f.lastIndexOf('.') + 1) : f));
   return {
     isSubmitting: formNames.some(formName => ownProps.isBehandlingFormSubmitting(formName)(state)),
-    isDirty: ownProps.isDirty ? ownProps.isDirty : formNames.some(formName => ownProps.isBehandlingFormDirty(formName)(state)),
+    isDirty: ownProps.isDirty !== undefined ? ownProps.isDirty : formNames.some(formName => ownProps.isBehandlingFormDirty(formName)(state)),
     hasEmptyRequiredFields: formNames.some(formName => ownProps.hasBehandlingFormErrorsOfType(formName, isRequiredMessage())(state)),
   };
 };

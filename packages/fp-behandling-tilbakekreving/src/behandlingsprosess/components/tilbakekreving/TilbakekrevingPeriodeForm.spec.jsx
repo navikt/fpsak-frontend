@@ -34,7 +34,8 @@ describe('<TilbakekrevingPeriodeForm>', () => {
       ytelser: [],
     };
     const wrapper = shallow(<TilbakekrevingPeriodeFormImpl
-      period={periode}
+      periode={periode}
+      data={periode}
       behandlingFormPrefix="behandling_V1"
       skjulPeriode={() => undefined}
       readOnly={false}

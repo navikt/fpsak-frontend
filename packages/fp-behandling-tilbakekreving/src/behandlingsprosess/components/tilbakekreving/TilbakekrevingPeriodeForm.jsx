@@ -46,7 +46,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
   state = { showModal: false };
 
   static propTypes = {
-    period: PropTypes.shape({}).isRequired,
+    periode: PropTypes.shape({}).isRequired,
     behandlingFormPrefix: PropTypes.string.isRequired,
     skjulPeriode: PropTypes.func.isRequired,
     setNestePeriode: PropTypes.func.isRequired,
@@ -122,7 +122,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
       handletUaktsomhetGrad,
       harGrunnerTilReduksjon,
       skjulPeriode,
-      period,
+      periode,
       readOnly,
       erBelopetIBehold,
       erSerligGrunnAnnetValgt,
@@ -161,14 +161,14 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
         <TilbakekrevingAktivitetTabell ytelser={data.ytelser} />
         <VerticalSpacer twentyPx />
         <Row>
-          <Column md={period.erForeldet ? '12' : '6'}>
+          <Column md={periode.erForeldet ? '12' : '6'}>
             <Row>
-              {period.erForeldet && (
+              {periode.erForeldet && (
                 <Column md="12">
                   <ForeldetFormPanel />
                 </Column>
               )}
-              {!period.erForeldet && (
+              {!periode.erForeldet && (
                 <Column md="10">
                   <Element>
                     <FormattedMessage id="TilbakekrevingPeriodeForm.VilkarForTilbakekreving" />
@@ -306,7 +306,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const vilkarResultatTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.VILKAR_RESULTAT)(initialState);
   const aktsomhetTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.AKTSOMHET)(initialState);
   const submitCallback = values => ownProps.oppdaterPeriode(values);
-  const validateForm = values => validate(values, sarligGrunnTyper, ownProps.period);
+  const validateForm = values => validate(values, sarligGrunnTyper, ownProps.periode);
   return (state, oProps) => {
     const valgtVilkarResultatType = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, 'valgtVilkarResultatType');
     const handletUaktsomhetGrad = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.handletUaktsomhetGrad`);
@@ -320,7 +320,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       erSerligGrunnAnnetValgt: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state,
         `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.${sarligGrunn.ANNET}`),
       erBelopetIBehold: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.erBelopetIBehold`),
-      initialValues: oProps.period,
+      initialValues: oProps.periode,
       reduserteBelop: ownProps.data.redusertBeloper,
       onSubmit: submitCallback,
       validate: validateForm,
@@ -336,18 +336,17 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 const TilbakekrevingPeriodeForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
   form: TILBAKEKREVING_PERIODE_FORM_NAME,
   enableReinitialize: true,
-  keepDirtyOnReinitialize: false,
 })(TilbakekrevingPeriodeFormImpl)));
 
-TilbakekrevingPeriodeForm.buildInitialValues = (period, foreldelsePerioder) => {
-  const { vilkarResultat, begrunnelse, vilkarResultatInfo } = period.storedData;
+TilbakekrevingPeriodeForm.buildInitialValues = (periode, foreldelsePerioder) => {
+  const { vilkarResultat, begrunnelse, vilkarResultatInfo } = periode;
 
   const vilkarResultatKode = vilkarResultat && vilkarResultat.kode ? vilkarResultat.kode : vilkarResultat;
   let foreldetData = { erForeldet: false };
-  if (period.erForeldet) {
-    const foreldelsePeriode = foreldelsePerioder.find(p => p.fom === period.fom && p.tom === period.tom);
+  if (periode.erForeldet) {
+    const foreldelsePeriode = foreldelsePerioder.find(p => p.fom === periode.fom && p.tom === periode.tom);
     foreldetData = {
-      erForeldet: period.erForeldet,
+      erForeldet: periode.erForeldet,
       periodenErForeldet: true,
       foreldetBegrunnelse: foreldelsePeriode.begrunnelse,
     };
