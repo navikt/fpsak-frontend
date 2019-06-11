@@ -8,20 +8,20 @@ import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/pr
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import {
   getAksjonspunkter, getBehandlingVersjon, getBehandlingType, getBehandlingStatus, getBehandlingsresultat, getBehandlingHenlagt,
-} from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
+} from 'behandlingKlage/src/anke/selectors/ankeBehandlingSelectors';
 import {
   getBehandlingIdentifier, getFagsakYtelseType,
-} from 'behandlingKlage/src/duckKlage';
+} from 'behandlingKlage/src/anke/duckAnke';
 import { BehandlingsprosessPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
 import KlageBehandlingModal from 'behandlingKlage/src/behandlingsprosess/components/klage/KlageBehandlingModal';
+import BehandlingspunktAnkeInfoPanel from 'behandlingKlage/src/anke/behandlingsprosess/components/BehandlingspunktAnkeInfoPanel';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta,
   BehandlingIdentifier, getLocationWithQueryParams,
 } from '@fpsak-frontend/fp-felles';
-import { getResolveFaktaAksjonspunkterSuccess } from 'behandlingKlage/src/fakta/duckFaktaKlage';
-import BehandlingspunktAnkeInfoPanel from './components/BehandlingspunktAnkeInfoPanel';
+import { getResolveFaktaAksjonspunkterSuccess } from 'behandlingKlage/src/anke/fakta/duckFaktaAnke';
 import {
   setSelectedBehandlingspunktNavn,
   resolveProsessAksjonspunkter,
@@ -33,16 +33,12 @@ import {
   resolveKlageTemp,
   saveKlage,
   getResolveProsessAksjonspunkterSuccess,
-} from '../../behandlingsprosess/duckBpKlage';
-import duck from '../duckAnke';
+} from './duckBpAnke';
 import {
-  getBehandlingspunkterTitleCodes,
-  getBehandlingspunkterStatus,
-  getAksjonspunkterOpenStatus,
-  getBehandlingspunkter,
-  getSelectedBehandlingspunkt, getDefaultBehandlingspunkt,
+  getBehandlingspunkter, getSelectedBehandlingspunkt, getDefaultBehandlingspunkt,
+  getBehandlingspunkterStatus, getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus,
 }
-  from '../selectors/BehandlingsprosessAnkeSelectors';
+  from './BehandlingsprosessAnkeSelectors';
 import findAnkeIcon from './findAnkeIcon';
 
 const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
@@ -287,8 +283,7 @@ const mapStateToProps = state => ({
   aksjonspunkter: getAksjonspunkter(state),
   behandlingspunkter: getBehandlingspunkter(state),
   defaultBehandlingspunkt: getDefaultBehandlingspunkt(state),
-  // selectedBehandlingspunkt: getSelectedAnkeBehandlingspunkt(state),
-  selectedBehandlingspunkt: 'ankebehandling',
+  selectedBehandlingspunkt: getSelectedBehandlingspunkt(state),
   behandlingType: getBehandlingType(state),
   location: state.router.location,
   resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),

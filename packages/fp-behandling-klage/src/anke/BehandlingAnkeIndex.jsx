@@ -10,20 +10,20 @@ import {
   BehandlingGrid, sakOperations,
 } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingErPaVentModal, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-import FpKlageBehandlingInfoSetter from '../FpKlageBehandlingInfoSetter';
-import FpKlageBehandlingResolver from '../FpKlageBehandlingResolver';
+import FpAnkeBehandlingInfoSetter from './FpAnkeBehandlingInfoSetter';
+import FpAnkeBehandlingResolver from './FpAnkeBehandlingResolver';
 import BehandlingsprosessAnkeIndex from './behandlingsprosess/BehandlingsprosessAnkeIndex';
-import FaktaKlageIndex from '../fakta/FaktaKlageIndex';
+import FaktaAnkeIndex from './fakta/FaktaAnkeIndex';
 import {
   getBehandlingVersjon, getBehandlingOnHoldDate, getBehandlingVenteArsakKode, getBehandlingIsOnHold,
   hasBehandlingManualPaVent,
-} from '../selectors/klageBehandlingSelectors';
+} from './selectors/ankeBehandlingSelectors';
 import {
   setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier,
   getHasShownBehandlingPaVent, resetBehandlingFpsakContext, getKodeverk,
-} from '../duckKlage';
+} from './duckAnke';
 import { getBehandlingFormPrefix } from '../behandlingForm';
-import fpKlageBehandlingUpdater from '../FpKlageBehandlingUpdater';
+import fpAnkeBehandlingUpdater from './FpAnkeBehandlingUpdater';
 
 /**
  * BehandlingAnkeIndex
@@ -49,7 +49,7 @@ export class BehandlingAnkeIndex extends Component {
       behandlingId, fagsakSaksnummer: saksnummer, featureToggles, kodeverk, fagsak, avsluttedeBehandlinger,
     });
 
-    behandlingUpdater.setUpdater(fpKlageBehandlingUpdater);
+    behandlingUpdater.setUpdater(fpAnkeBehandlingUpdater);
     sakOperations.withUpdateFagsakInfo(appContextUpdater.updateFagsakInfo);
   }
 
@@ -95,13 +95,12 @@ export class BehandlingAnkeIndex extends Component {
     if (!behandlingIdentifier || behandlingIdentifier.behandlingId !== behandlingId) {
       return <LoadingPanel />;
     }
-
     return (
-      <FpKlageBehandlingResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
-        <FpKlageBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
+      <FpAnkeBehandlingResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
+        <FpAnkeBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
         <BehandlingGrid
           behandlingsprosessContent={<BehandlingsprosessAnkeIndex />}
-          faktaContent={<FaktaKlageIndex />}
+          faktaContent={<FaktaAnkeIndex />}
         />
         {!hasSubmittedPaVentForm
           && (
@@ -117,7 +116,7 @@ export class BehandlingAnkeIndex extends Component {
           />
           )
         }
-      </FpKlageBehandlingResolver>
+      </FpAnkeBehandlingResolver>
     );
   }
 }

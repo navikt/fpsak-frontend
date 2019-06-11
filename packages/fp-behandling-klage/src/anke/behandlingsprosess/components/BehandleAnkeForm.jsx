@@ -8,36 +8,44 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import {
 VerticalSpacer, AksjonspunktHelpText, FadingPanel, ArrowBox,
 } from '@fpsak-frontend/shared-components';
-import { getBehandlingKlageVurderingResultatNK, getBehandlingSprak } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
+import { getBehandlingKlageVurderingResultatNK, getBehandlingSprak } from 'behandlingKlage/src/anke/selectors/ankeBehandlingSelectors';
 import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
-} from 'behandlingKlage/src/behandlingForm';
+} from 'behandlingKlage/src/anke/behandlingForm';
 import {
  CheckboxField, RadioGroupField, RadioOption, SelectField, TextAreaField,
 } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-import klageVurderingOmgjoerType from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
-import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
-// import { getSelectedAnkeBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
+import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
+
 import PreviewKlageLink from '../../../behandlingsprosess/components/klage/Klagevurdering/SharedUtills/PreviewKlageLink';
 import FritekstBrevTextField from '../../../behandlingsprosess/components/klage/Klagevurdering/SharedUtills/FritekstKlageBrevTextField';
-import styles from '../../../behandlingsprosess/components/klage/Klagevurdering/SharedUtills/behandleKlageForm.less';
-import { getSelectedAnkeBehandlingspunktAksjonspunkter } from '../../../behandlingsprosess/behandlingsprosessKlageSelectors';
+import styles from './behandleAnkeForm.less';
+import { getSelectedBehandlingspunktAksjonspunkter } from '../BehandlingsprosessAnkeSelectors';
+import TempsaveKlageButton from '../../../behandlingsprosess/components/klage/Klagevurdering/SharedUtills/TempsaveKlageButton';
+
+
+const mapSelectValues = () => {
+  const liste = [
+    {
+      navn: 'Første', kode: 'A',
+    },
+  ];
+  return liste.map(mo => <option key={mo.kode} value={mo.kode}>{mo.navn}</option>);
+};
 
 /**
- * BehandleklageformNfp
- *
  * Presentasjonskomponent. Setter opp aksjonspunktet for behandling.
  */
 const BehandleAnkeFormImpl = ({
   readOnly,
   handleSubmit,
-  // saveKlage,
+  saveKlage,
   previewCallback,
   readOnlySubmitButton,
   aksjonspunktCode,
@@ -54,13 +62,12 @@ const BehandleAnkeFormImpl = ({
         {[<FormattedMessage id="Ankebehandling.HelpText" key={aksjonspunktCode} />]}
       </AksjonspunktHelpText>
       <VerticalSpacer sixteenPx />
-
       <Row>
         <Column xs="7">
           <SelectField
             readOnly={readOnly}
             name="ankeVedtak"
-            selectValues={[]}
+            selectValues={mapSelectValues()}
             className={readOnly ? styles.selectReadOnly : null}
             label={intl.formatMessage({ id: 'Ankebehandling.Resultat.Vedtak' })}
             validate={[required]}
@@ -68,12 +75,11 @@ const BehandleAnkeFormImpl = ({
           />
         </Column>
       </Row>
-
+      <Normaltekst><FormattedMessage id="Ankebehandling.Resultat" /></Normaltekst>
       <Row>
         <Column xs="4">
-          <Normaltekst><FormattedMessage id="Ankebehandling.Resultat" /></Normaltekst>
           <RadioGroupField
-            name="ankeResultat"
+            name="ankeVurdering"
             validate={[required]}
             direction="vertical"
             readOnly={readOnly}
@@ -84,7 +90,7 @@ const BehandleAnkeFormImpl = ({
         </Column>
         <Column xs="4">
           <RadioGroupField
-            name="ankeResultat"
+            name="ankeVurdering"
             validate={[required]}
             readOnly={readOnly}
             className={readOnly ? styles.selectReadOnly : null}
@@ -95,7 +101,8 @@ const BehandleAnkeFormImpl = ({
           </RadioGroupField>
         </Column>
       </Row>
-
+      {ankeVurdering.AVVIS_ANKE === formValues.ankeVurdering
+      && (
       <Row>
         <Column xs="7">
           <ArrowBox>
@@ -112,12 +119,13 @@ const BehandleAnkeFormImpl = ({
               className={readOnly ? styles.selectReadOnly : null}
               direction="horisontal"
             >
-              <RadioOption value={klageVurderingOmgjoerType.UGUNST_MEDHOLD_I_KLAGE} label={{ id: 'Ankebehandling.Realitetsbehandles.Ja' }} />
-              <RadioOption value={klageVurderingOmgjoerType.DELVIS_MEDHOLD_I_KLAGE} label={{ id: 'Ankebehandling.Realitetsbehandles.Nei' }} />
+              <RadioOption value={ankeVurderingOmgjoer.UGUNST_MEDHOLD_I_KLAGE} label={{ id: 'Ankebehandling.Realitetsbehandles.Ja' }} />
+              <RadioOption value={ankeVurderingOmgjoer.DELVIS_MEDHOLD_I_KLAGE} label={{ id: 'Ankebehandling.Realitetsbehandles.Nei' }} />
             </RadioGroupField>
           </ArrowBox>
         </Column>
       </Row>
+      )}
 
       <Row>
         <Column xs="7">
@@ -136,18 +144,19 @@ const BehandleAnkeFormImpl = ({
           <Column xs="8">
             <BehandlingspunktSubmitButton
               formName={formProps.form}
-              isReadOnly={readOnly}
-              isSubmittable={!readOnlySubmitButton}
+              isReadOnly={false}
+              isSubmittable={ankeVurdering.AVVIS_ANKE === formValues.ankeVurdering}
+              hasEmptyRequiredFields={false}
               isBehandlingFormSubmitting={isBehandlingFormSubmitting}
               isBehandlingFormDirty={isBehandlingFormDirty}
               hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
             />
-            {!readOnly && formValues.klageVurdering && formValues.fritekstTilBrev && (formValues.fritekstTilBrev.length > 2)
+            {!readOnly && formValues.ankeVurdering && formValues.fritekstTilBrev && (formValues.fritekstTilBrev.length > 2)
             && (
               <PreviewKlageLink
                 previewCallback={previewCallback}
                 fritekstTilBrev={formValues.fritekstTilBrev}
-                klageVurdering={formValues.klageVurdering}
+                klageVurdering={formValues.ankeVurdering}
                 aksjonspunktCode={aksjonspunktCode}
               />
             )
@@ -183,35 +192,35 @@ BehandleAnkeFormImpl.defaultProps = {
 };
 
 export const buildInitialValues = createSelector([getBehandlingKlageVurderingResultatNK], klageVurderingResultat => ({
-  klageMedholdArsak: klageVurderingResultat ? klageVurderingResultat.klageMedholdArsak : null,
-  klageVurderingOmgjoer: klageVurderingResultat ? klageVurderingResultat.klageVurderingOmgjoer : null,
-  klageVurdering: klageVurderingResultat ? klageVurderingResultat.klageVurdering : null,
+  ankeVurdering: klageVurderingResultat ? klageVurderingResultat.ankeVurdering : null,
   begrunnelse: klageVurderingResultat ? klageVurderingResultat.begrunnelse : null,
   fritekstTilBrev: klageVurderingResultat ? klageVurderingResultat.fritekstTilBrev : null,
 }));
 
 
 export const transformValues = (values, aksjonspunktCode) => ({
-  klageMedholdArsak: (values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE
-    || values.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK) ? values.klageMedholdArsak : null,
-  klageVurderingOmgjoer: values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ? values.klageVurderingOmgjoer : null,
-  klageVurdering: values.klageVurdering,
-  fritekstTilBrev: values.fritekstTilBrev,
+  ankeVedtak: values.ankeVedtak,
+  ankeVurdering: values.ankeVurdering,
+  ikkePart: values.ikkePart,
+  ikkeKonkret: values.ikkeKonkret,
+  ikkeFrist: values.ikkeFrist,
+  ikkeSignert: values.ikkeSignert,
+  realitetsbehandles: values.realitetsbehandles,
   begrunnelse: values.begrunnelse,
+  fritekstTilBrev: values.fritekstTilBrev,
   kode: aksjonspunktCode,
 });
 
 const formName = 'BehandleAnkeForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  // const aksjonspunktCode = getSelectedAnkeBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
-  const aksjonspunktCode = '7003';
+  const aksjonspunktCode = getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
   const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
   return state => ({
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
     formValues: behandlingFormValueSelector(formName)(state,
-      'ankeVedtak', 'ankeResultat',
+      'ankeVedtak', 'ankeVurdering',
       'ikkePart', 'ikkeKonkret', 'ikkeFrist', 'ikkeSignert', 'realitetsbehandles',
       'begrunnelse', 'fritekstTilBrev'),
     sprakkode: getBehandlingSprak(state),
@@ -223,7 +232,7 @@ const BehandleAnkeForm = connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
 })(BehandleAnkeFormImpl));
 
-BehandleAnkeForm.supports = apCodes => apCodes.includes(aksjonspunktCodes.BEHANDLE_KLAGE_NK);
+BehandleAnkeForm.supports = apCodes => apCodes.includes(aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE);
 
 
 export default injectIntl(BehandleAnkeForm);

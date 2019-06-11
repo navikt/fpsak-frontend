@@ -10,10 +10,10 @@ import { DEFAULT_BEHANDLINGSPROSESS, behandlingspunktCodes } from '@fpsak-fronte
 import {
   getBehandlingIsOnHold, getAllMerknaderFraBeslutter, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat,
   hasReadOnlyBehandling, isBehandlingStatusReadOnly,
-} from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
-import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from '../../behandlingsprosess/duckBpKlage';
-import { getFagsakYtelseType } from '../../duckKlage';
-import createForeldrepengerAnkeBpDefinition from '../behandlingsprosess/definition/createForeldrepengerAnkeBpDefinition';
+} from 'behandlingKlage/src/anke/selectors/ankeBehandlingSelectors';
+import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from './duckBpAnke';
+import { getFagsakYtelseType } from '../duckAnke';
+import createForeldrepengerAnkeBpDefinition from './definition/createForeldrepengerAnkeBpDefinition';
 
 
 // Kun eksportert for test. Ikke bruk andre steder!
