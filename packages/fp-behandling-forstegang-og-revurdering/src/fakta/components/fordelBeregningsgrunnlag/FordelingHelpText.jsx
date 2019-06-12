@@ -9,7 +9,7 @@ import {
   DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
@@ -22,8 +22,6 @@ import {
 const {
   FORDEL_BEREGNINGSGRUNNLAG,
 } = aksjonspunktCodes;
-
-const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
 const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 

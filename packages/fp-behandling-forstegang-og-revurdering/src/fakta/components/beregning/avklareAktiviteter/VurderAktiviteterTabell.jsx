@@ -36,9 +36,9 @@ export const lagAktivitetFieldId = (aktivitet) => {
   return aktivitet.arbeidsforholdType.kode + aktivitet.fom;
 };
 
-export const skalVurdereAktivitet = (aktivitet, skalOverstyre) => {
-  if (skalOverstyre) {
-    return true;
+export const skalVurdereAktivitet = (aktivitet, skalOverstyre, harAksjonspunkt) => {
+  if (!skalOverstyre && !harAksjonspunkt) {
+    return false;
   }
   if (aktivitet.arbeidsforholdType && aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.AAP) {
     return false;
@@ -46,7 +46,7 @@ export const skalVurdereAktivitet = (aktivitet, skalOverstyre) => {
   return true;
 };
 
-const lagTableRow = (readOnly, isAksjonspunktClosed, aktivitet, getKodeverknavn, erOverstyrt) => (
+const lagTableRow = (readOnly, isAksjonspunktClosed, aktivitet, getKodeverknavn, erOverstyrt, harAksjonspunkt) => (
   <TableRow key={lagAktivitetFieldId(aktivitet)}>
     <TableColumn>
       <Normaltekst>
@@ -61,7 +61,7 @@ const lagTableRow = (readOnly, isAksjonspunktClosed, aktivitet, getKodeverknavn,
     <TableColumn className={styles.radioMiddle}>
       <RadioGroupField
         name={`${lagAktivitetFieldId(aktivitet)}.skalBrukes`}
-        readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt)}
+        readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt)}
         validate={[required]}
       >
         {[<RadioOption key={`${lagAktivitetFieldId(aktivitet)}.bruk`} value />]}
@@ -70,7 +70,7 @@ const lagTableRow = (readOnly, isAksjonspunktClosed, aktivitet, getKodeverknavn,
     <TableColumn className={styles.radioMiddle}>
       <RadioGroupField
         name={`${lagAktivitetFieldId(aktivitet)}.skalBrukes`}
-        readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt)}
+        readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt)}
         validate={[required]}
       >
         {[<RadioOption key={`${lagAktivitetFieldId(aktivitet)}.ikkeBruk`} value={false} />]}
@@ -79,7 +79,7 @@ const lagTableRow = (readOnly, isAksjonspunktClosed, aktivitet, getKodeverknavn,
     {isAksjonspunktClosed && readOnly
       && (
       <TableColumn>
-        {skalVurdereAktivitet(aktivitet, erOverstyrt)
+        {skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt)
           && <EditedIcon />
         }
       </TableColumn>
@@ -96,12 +96,35 @@ const getHeaderTextCodes = () => ([
   ]
 );
 
-const finnHeading = (aktiviteter, erOverstyrt) => {
+const finnHeading = (aktiviteter, erOverstyrt, skjaeringstidspunkt) => {
   if (erOverstyrt) {
-    return 'VurderAktiviteterTabell.Overstyrt.Overskrift';
+    return (
+      <FormattedMessage
+        id="VurderAktiviteterTabell.Overstyrt.Overskrift"
+        values={{ skjaeringstidspunkt: moment(skjaeringstidspunkt).format(DDMMYYYY_DATE_FORMAT) }}
+      />
+);
   }
   const harAAP = aktiviteter.some(aktivitet => aktivitet.arbeidsforholdType && aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.AAP);
-  return harAAP ? 'VurderAktiviteterTabell.FullAAPKombinert.Overskrift' : 'VurderAktiviteterTabell.VentelonnVartpenger.Overskrift';
+  const harVentelonnVartpenger = aktiviteter.some(aktivitet => aktivitet.arbeidsforholdType
+    && aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.VENTELØNN_VARTPENGER);
+  if (harAAP) {
+    return (
+      <FormattedMessage
+        id="VurderAktiviteterTabell.FullAAPKombinert.Overskrift"
+        values={{ skjaeringstidspunkt: moment(skjaeringstidspunkt).format(DDMMYYYY_DATE_FORMAT) }}
+      />
+);
+  }
+  if (harVentelonnVartpenger) {
+    return (
+      <FormattedMessage
+        id="VurderAktiviteterTabell.VentelonnVartpenger.Overskrift"
+        values={{ skjaeringstidspunkt: moment(skjaeringstidspunkt).format(DDMMYYYY_DATE_FORMAT) }}
+      />
+);
+  }
+  return null;
 };
 
 /**
@@ -116,17 +139,15 @@ export const VurderAktiviteterTabellImpl = ({
   skjaeringstidspunkt,
   getKodeverknavn,
   erOverstyrt,
+  harAksjonspunkt,
 }) => (
   <React.Fragment>
     <Element>
-      <FormattedMessage
-        id={finnHeading(aktiviteter, erOverstyrt)}
-        values={{ skjaeringstidspunkt: moment(skjaeringstidspunkt).format(DDMMYYYY_DATE_FORMAT) }}
-      />
+      {finnHeading(aktiviteter, erOverstyrt, skjaeringstidspunkt)}
     </Element>
     <Table headerTextCodes={getHeaderTextCodes()} noHover>
       {aktiviteter.map(aktivitet => (
-        lagTableRow(readOnly, isAksjonspunktClosed, aktivitet, getKodeverknavn, erOverstyrt)
+        lagTableRow(readOnly, isAksjonspunktClosed, aktivitet, getKodeverknavn, erOverstyrt, harAksjonspunkt)
       ))
       }
     </Table>
@@ -140,6 +161,7 @@ VurderAktiviteterTabellImpl.propTypes = {
   skjaeringstidspunkt: PropTypes.string.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
   erOverstyrt: PropTypes.bool.isRequired,
+  harAksjonspunkt: PropTypes.bool.isRequired,
 };
 
 const VurderAktiviteterTabell = injectKodeverk(getAlleKodeverk)(VurderAktiviteterTabellImpl);
@@ -168,20 +190,27 @@ VurderAktiviteterTabell.hasValueChangedFromInitial = (aktiviteter, values, initi
   return changedAktiviteter !== undefined;
 };
 
-const mapToInitialValues = (aktivitet, getKodeverknavn, erOverstyrt) => ({
+const skalBrukesPretufylling = (aktivitet, erOverstyrt, harAksjonspunkt) => {
+  if (skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt)) {
+    return aktivitet.skalBrukes;
+  }
+  return aktivitet.skalBrukes === true || aktivitet.skalBrukes === null || aktivitet.skalBrukes === undefined;
+};
+
+const mapToInitialValues = (aktivitet, getKodeverknavn, erOverstyrt, harAksjonspunkt) => ({
     beregningAktivitetNavn: createVisningsnavnForAktivitet(aktivitet, getKodeverknavn),
     fom: aktivitet.fom,
     tom: aktivitet.tom,
-    skalBrukes: skalVurdereAktivitet(aktivitet, erOverstyrt) ? aktivitet.skalBrukes : true,
+    skalBrukes: skalBrukesPretufylling(aktivitet, erOverstyrt, harAksjonspunkt),
   });
 
-VurderAktiviteterTabell.buildInitialValues = (aktiviteter, getKodeverknavn, erOverstyrt) => {
+VurderAktiviteterTabell.buildInitialValues = (aktiviteter, getKodeverknavn, erOverstyrt, harAksjonspunkt) => {
   if (!aktiviteter) {
     return {};
   }
   const initialValues = {};
   aktiviteter.forEach((aktivitet) => {
-    initialValues[lagAktivitetFieldId(aktivitet)] = mapToInitialValues(aktivitet, getKodeverknavn, erOverstyrt);
+    initialValues[lagAktivitetFieldId(aktivitet)] = mapToInitialValues(aktivitet, getKodeverknavn, erOverstyrt, harAksjonspunkt);
   });
   return initialValues;
 };

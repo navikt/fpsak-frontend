@@ -467,7 +467,7 @@ const summerRegisterInntektFraValues = values => (values
   .reduce((sum, fordeling) => sum + fordeling, 0));
 
 
-RenderEndringBGFieldArray.validate = (values, fastsattIForstePeriode, skalRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert,
+RenderEndringBGFieldArray.validate = (values, fastsattIForstePeriode, skalRedigereInntekt, skalKunneEndreBG, skalValidereMotRapportert,
   skalValidereInntektMotRefusjon, getKodeverknavn) => {
   const fieldErrors = validateAndeler(values, skalRedigereInntekt, skalValidereMotRapportert, skalValidereInntektMotRefusjon, getKodeverknavn);
   if (fieldErrors != null) {
@@ -488,7 +488,7 @@ RenderEndringBGFieldArray.validate = (values, fastsattIForstePeriode, skalRedige
   if (!kanRedigereInntekt) {
     return null;
   }
-  if (values.some(andel => skalOverstyreBg(andel))) {
+  if (values.some(andel => skalKunneEndreBG(andel))) {
     if (fastsattIForstePeriode !== undefined && fastsattIForstePeriode !== null) {
       const fastsattBelopError = validateSumFastsattBelop(values, fastsattIForstePeriode, skalRedigereInntekt);
       if (fastsattBelopError) {

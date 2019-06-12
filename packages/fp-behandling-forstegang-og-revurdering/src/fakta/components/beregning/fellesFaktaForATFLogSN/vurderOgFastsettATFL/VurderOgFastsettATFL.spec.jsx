@@ -89,7 +89,7 @@ describe('<VurderOgFastsettATFL>', () => {
       ],
     };
     const faktaOmBeregning = lagFaktaOmBeregning(tilfeller, {}, undefined, undefined, vurderMottarYtelse, endringBeregningsgrunnlag);
-    const transformed = VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag)(values);
+    const transformed = VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag)(values).fakta;
     const periode = transformed.fastsettEndringBeregningsgrunnlag.endretBeregningsgrunnlagPerioder[0].andeler;
     expect(periode[0].fastsatteVerdier.fastsattBeløp).to.equal(10000);
     expect(periode[0].fastsatteVerdier.refusjon).to.equal(null);
@@ -113,16 +113,16 @@ describe('<VurderOgFastsettATFL>', () => {
     const beregningsgrunnlag = lagBeregningsgrunnlag(andeler);
     const faktaOmBeregning = lagFaktaOmBeregning([VURDER_BESTEBEREGNING], {}, undefined, undefined);
     const transformed = VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag)(values);
-    expect(transformed.besteberegningAndeler.besteberegningAndelListe.length).to.equal(2);
-    expect(transformed.besteberegningAndeler.besteberegningAndelListe[0].andelsnr).to.equal(1);
-    expect(transformed.besteberegningAndeler.besteberegningAndelListe[0].fastsatteVerdier.fastsattBeløp).to.equal(10000);
-    expect(transformed.besteberegningAndeler.besteberegningAndelListe[0].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
-    expect(transformed.besteberegningAndeler.besteberegningAndelListe[1].andelsnr).to.equal(undefined);
-    expect(transformed.besteberegningAndeler.besteberegningAndelListe[1].lagtTilAvSaksbehandler).to.equal(true);
-    expect(transformed.besteberegningAndeler.besteberegningAndelListe[1].nyAndel).to.equal(true);
-    expect(transformed.besteberegningAndeler.besteberegningAndelListe[1].fastsatteVerdier.inntektskategori).to.equal('DAGPENGER');
-    expect(transformed.besteberegningAndeler.besteberegningAndelListe[1].aktivitetStatus).to.equal('DP');
-    expect(transformed.besteberegningAndeler.besteberegningAndelListe[1].fastsatteVerdier.fastsattBeløp).to.equal(20000);
+    expect(transformed.fakta.besteberegningAndeler.besteberegningAndelListe.length).to.equal(2);
+    expect(transformed.fakta.besteberegningAndeler.besteberegningAndelListe[0].andelsnr).to.equal(1);
+    expect(transformed.fakta.besteberegningAndeler.besteberegningAndelListe[0].fastsatteVerdier.fastsattBeløp).to.equal(10000);
+    expect(transformed.fakta.besteberegningAndeler.besteberegningAndelListe[0].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
+    expect(transformed.fakta.besteberegningAndeler.besteberegningAndelListe[1].andelsnr).to.equal(undefined);
+    expect(transformed.fakta.besteberegningAndeler.besteberegningAndelListe[1].lagtTilAvSaksbehandler).to.equal(true);
+    expect(transformed.fakta.besteberegningAndeler.besteberegningAndelListe[1].nyAndel).to.equal(true);
+    expect(transformed.fakta.besteberegningAndeler.besteberegningAndelListe[1].fastsatteVerdier.inntektskategori).to.equal('DAGPENGER');
+    expect(transformed.fakta.besteberegningAndeler.besteberegningAndelListe[1].aktivitetStatus).to.equal('DP');
+    expect(transformed.fakta.besteberegningAndeler.besteberegningAndelListe[1].fastsatteVerdier.fastsattBeløp).to.equal(20000);
   });
 
 
@@ -145,8 +145,8 @@ describe('<VurderOgFastsettATFL>', () => {
     const faktaOmBeregning = lagFaktaOmBeregning([VURDER_BESTEBEREGNING,
       VURDER_NYOPPSTARTET_FL, VURDER_LONNSENDRING], {}, [andelMedLonnsendring], undefined);
     const transformed = VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag)(values);
-    expect(transformed.besteberegningAndeler.besteberegningAndelListe.length).to.equal(3);
-    expect(transformed.faktaOmBeregningTilfeller.length).to.equal(4);
+    expect(transformed.fakta.besteberegningAndeler.besteberegningAndelListe.length).to.equal(3);
+    expect(transformed.fakta.faktaOmBeregningTilfeller.length).to.equal(4);
   });
 
 
@@ -170,7 +170,7 @@ describe('<VurderOgFastsettATFL>', () => {
     const beregningsgrunnlag = lagBeregningsgrunnlag(andeler);
     const faktaOmBeregning = lagFaktaOmBeregning([VURDER_LONNSENDRING,
       VURDER_NYOPPSTARTET_FL], {}, [andelMedLonnsendring], undefined);
-    const transformed = VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag)(values);
+    const transformed = VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag)(values).fakta;
     expect(transformed.fastsattUtenInntektsmelding.andelListe.length).to.equal(1);
     expect(transformed.fastsattUtenInntektsmelding.andelListe[0].andelsnr).to.equal(1);
     expect(transformed.fastsattUtenInntektsmelding.andelListe[0].fastsatteVerdier.fastsattBeløp).to.equal(10000);

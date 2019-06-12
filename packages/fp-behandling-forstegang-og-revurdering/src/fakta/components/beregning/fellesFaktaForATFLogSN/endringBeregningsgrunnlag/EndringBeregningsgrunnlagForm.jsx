@@ -6,7 +6,7 @@ import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregning
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import EndringBeregningsgrunnlagPeriodePanel from './EndringBeregningsgrunnlagPeriodePanel';
 import {
- mapToBelop, skalRedigereInntektForAndel, skalKunneOverstyreBeregningsgrunnlag,
+ mapToBelop, skalRedigereInntektForAndel, skalKunneEndreTotaltBeregningsgrunnlag,
  skalKunneOverstigeRapportertInntekt, harAAPOgRefusjonskravOverstigerInntektsmelding,
 } from '../BgFordelingUtils';
 
@@ -102,14 +102,14 @@ EndringBeregningsgrunnlagForm.validate = (values, endringBGPerioder, faktaOmBere
   const errors = {};
   if (endringBGPerioder && endringBGPerioder.length > 0) {
     const skalRedigereInntekt = skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag);
-    const skalOverstyreBg = skalKunneOverstyreBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag);
+    const skalKunneEndreBG = skalKunneEndreTotaltBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag);
     const skalValidereMotRapportert = andel => !skalKunneOverstigeRapportertInntekt(values, faktaOmBeregning, beregningsgrunnlag)(andel);
     const skalValidereInntektMotRefusjon = andel => harAAPOgRefusjonskravOverstigerInntektsmelding(andel, beregningsgrunnlag);
     const fastsattIForstePeriode = finnFastsattIForstePeriode(values, skalRedigereInntekt);
     for (let i = 0; i < endringBGPerioder.length; i += 1) {
       const periode = values[getFieldNameKey(i)];
       errors[getFieldNameKey(i)] = EndringBeregningsgrunnlagPeriodePanel.validate(periode, fastsattIForstePeriode,
-         skalRedigereInntekt, skalOverstyreBg, skalValidereMotRapportert, skalValidereInntektMotRefusjon, getKodeverknavn);
+         skalRedigereInntekt, skalKunneEndreBG, skalValidereMotRapportert, skalValidereInntektMotRefusjon, getKodeverknavn);
     }
   }
   return errors;

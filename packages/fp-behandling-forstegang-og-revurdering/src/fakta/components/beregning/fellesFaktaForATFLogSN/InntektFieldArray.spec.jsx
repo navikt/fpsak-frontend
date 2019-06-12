@@ -10,7 +10,8 @@ import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '@fpsak-frontend/u
 import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { Table } from '@fpsak-frontend/shared-components';
 import { besteberegningField } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
-import { AndelRow, SummaryRow } from './InntektFieldArrayRow';
+import { AndelRow } from './InntektFieldArrayRow';
+import SummaryRow from './SummaryRow';
 import InntektFieldArray, { mapStateToProps, InntektFieldArrayImpl, leggTilDagpengerOmBesteberegning } from './InntektFieldArray';
 import { formNameVurderFaktaBeregning } from '../BeregningFormUtils';
 
@@ -271,7 +272,7 @@ describe('<InntektFieldArray>', () => {
   const getKodeverknavn = () => undefined;
 
   it('skal ikkje bygge initial values om ingen andeler', () => {
-    const iv = InntektFieldArray.buildInitialValues([], getKodeverknavn);
+    const iv = InntektFieldArray.buildInitialValues([], getKodeverknavn, {});
     expect(iv).to.be.empty;
   });
 
@@ -282,7 +283,7 @@ describe('<InntektFieldArray>', () => {
       inntektskategori: { kode: 'DAGPENGER' },
       lagtTilAvSaksbehandler: true,
     };
-    const iv = InntektFieldArray.buildInitialValues([andel], getKodeverknavn);
+    const iv = InntektFieldArray.buildInitialValues([andel], getKodeverknavn, {});
     expect(iv.length).to.equal(1);
     expect(iv[0].skalKunneEndreAktivitet).to.equal(false);
   });

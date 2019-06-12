@@ -17,6 +17,7 @@ import { createSelector } from 'reselect';
 import { andelsnrMottarYtelseMap, frilansMottarYtelse, skalFastsetteInntektATUtenInntektsmelding } from './vurderOgFastsettATFL/forms/VurderMottarYtelseUtils';
 import { getFormValuesForBeregning } from '../BeregningFormUtils';
 import { besteberegningField } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
+import { MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD } from './InntektstabellPanel';
 
 const nullOrUndefined = value => value === null || value === undefined;
 
@@ -175,7 +176,7 @@ export const harAAPOgRefusjonskravOverstigerInntektsmelding = (andel, beregnings
 };
 
 // Kun Ytelse
-const harKunYtelse = faktaOmBeregning => faktaOmBeregning.faktaOmBeregningTilfeller && faktaOmBeregning.faktaOmBeregningTilfeller
+const harKunYtelse = faktaOmBeregning => !!faktaOmBeregning.faktaOmBeregningTilfeller && faktaOmBeregning.faktaOmBeregningTilfeller
 .find(({ kode }) => kode === faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE) !== undefined;
 
 const skalKunneOverstigeRapportertInntektOgTotaltBeregningsgrunnlag = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => {
@@ -213,7 +214,7 @@ export const skalKunneOverstigeRapportertInntekt = (values, faktaOmBeregning, be
   return false;
 };
 
-export const skalKunneOverstyreBeregningsgrunnlag = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => {
+export const skalKunneEndreTotaltBeregningsgrunnlag = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => {
   if (skalKunneOverstigeRapportertInntektOgTotaltBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag)(andel)) {
     return true;
   }
@@ -223,15 +224,22 @@ export const skalKunneOverstyreBeregningsgrunnlag = (values, faktaOmBeregning, b
   return false;
 };
 
+// Overstyring
+
+export const erOverstyring = values => values && values[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD] === true;
+
+export const erOverstyringAvBeregningsgrunnlagSelector = createSelector([
+  getFormValuesForBeregning], erOverstyring);
+
 
 // Skal redigere inntekt
 
-export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregningsgrunnlag) => andel => andel.harPeriodeAarsakGraderingEllerRefusjon === true
-|| skalKunneOverstyreBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag)(andel)
+export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregningsgrunnlag) => andel => erOverstyring(values)
+|| andel.harPeriodeAarsakGraderingEllerRefusjon === true
+|| skalKunneEndreTotaltBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag)(andel)
 || harKunYtelse(faktaOmBeregning);
 
 export const skalRedigereInntektSelector = createSelector([getFormValuesForBeregning, getFaktaOmBeregning, getBeregningsgrunnlag], skalRedigereInntektForAndel);
-
 
 export const setSkalRedigereInntektForATFL = (state, fields) => {
   const values = getFormValuesForBeregning(state);
@@ -296,22 +304,28 @@ const mapToFastsattBelop = (andel) => {
   return '';
 };
 
-const mapToReadOnlyBelop = (andel) => {
-  if (andel.arbeidsforhold && (andel.arbeidsforhold.belopFraInntektsmeldingPrMnd || andel.arbeidsforhold.belopFraInntektsmeldingPrMnd === 0)) {
-    return formatCurrencyNoKr(andel.arbeidsforhold.belopFraInntektsmeldingPrMnd);
-  }
-  if (andel.belopPrMndEtterAOrdningen || andel.belopPrMndEtterAOrdningen === 0) {
-    return formatCurrencyNoKr(andel.belopPrMndEtterAOrdningen);
-  }
-  return '';
+const mapToReadOnlyBelop = (bgAndel, faktaOmBeregning) => {
+    if (erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon(bgAndel, faktaOmBeregning)) {
+      return '';
+    }
+    if (andelErStatusFLOgHarATISammeOrg(bgAndel, faktaOmBeregning)) {
+      return '';
+    }
+    if (bgAndel.arbeidsforhold && (bgAndel.arbeidsforhold.belopFraInntektsmeldingPrMnd || bgAndel.arbeidsforhold.belopFraInntektsmeldingPrMnd === 0)) {
+      return formatCurrencyNoKr(bgAndel.arbeidsforhold.belopFraInntektsmeldingPrMnd);
+    }
+    if (bgAndel.belopPrMndEtterAOrdningen || bgAndel.belopPrMndEtterAOrdningen === 0) {
+      return formatCurrencyNoKr(bgAndel.belopPrMndEtterAOrdningen);
+    }
+    return bgAndel.belopFraMeldekortPrMnd ? formatCurrencyNoKr(bgAndel.belopFraMeldekortPrMnd) : '';
 };
 
-export const mapAndelToField = (andel, getKodeverknavn) => ({
+export const mapAndelToField = (andel, getKodeverknavn, faktaOmBeregning) => ({
   ...setGenerellAndelsinfo(andel, getKodeverknavn),
   ...setArbeidsforholdInitialValues(andel),
   skalKunneEndreAktivitet: andel.lagtTilAvSaksbehandler && andel.aktivitetStatus.kode !== aktivitetStatus.DAGPENGER,
   fastsattBelop: mapToFastsattBelop(andel),
-  belopReadOnly: mapToReadOnlyBelop(andel),
+  belopReadOnly: mapToReadOnlyBelop(andel, faktaOmBeregning),
   refusjonskrav: andel.arbeidsforhold && andel.arbeidsforhold.refusjonPrAar !== null
   && andel.arbeidsforhold.refusjonPrAar !== undefined ? formatCurrencyNoKr(andel.arbeidsforhold.refusjonPrAar / 12) : '',
 });

@@ -18,7 +18,9 @@ import { transformValuesKunstigArbeidsforhold, harKunstigArbeidsforhold } from '
 import VurderMottarYtelseForm from './forms/VurderMottarYtelseForm';
 import FastsettEndretBeregningsgrunnlag from '../endringBeregningsgrunnlag/FastsettEndretBeregningsgrunnlag';
 import { getFormValuesForBeregning } from '../../BeregningFormUtils';
-import { skalRedigereInntektForAndel, mapAndelToField, skalFastsettInntektForStatus } from '../BgFordelingUtils';
+import {
+ skalRedigereInntektForAndel, mapAndelToField, skalFastsettInntektForStatus, erOverstyring,
+} from '../BgFordelingUtils';
 import VurderBesteberegningForm, { besteberegningField, vurderBesteberegningTransform } from '../besteberegningFodendeKvinne/VurderBesteberegningForm';
 import InntektFieldArray from '../InntektFieldArray';
 
@@ -56,7 +58,7 @@ const skalFastsetteInntekt = (values, faktaOmBeregning, beregningsgrunnlag, getK
   }
   return beregningsgrunnlag.beregningsgrunnlagPeriode[0]
     .beregningsgrunnlagPrStatusOgAndel
-    .map(andel => mapAndelToField(andel, getKodeverknavn))
+    .map(andel => mapAndelToField(andel, getKodeverknavn, faktaOmBeregning))
     .find(skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag)) !== undefined;
 };
 
@@ -129,6 +131,7 @@ const VurderOgFastsettATFL = ({
       tabell={finnInntektstabell(tilfeller, readOnly, isAksjonspunktClosed)}
       skalViseTabell={skalViseTabell}
       hjelpeTekstId={findInstruksjonForFastsetting(skalHaBesteberegning, skalFastsetteFL, skalFastsetteAT, harKunstigArbeid)}
+      readOnly={readOnly}
     >
       <ATFLSammeOrgTekst
         tilfeller={tilfeller}
@@ -175,14 +178,15 @@ const VurderOgFastsettATFL = ({
   </div>
 );
 
-VurderOgFastsettATFL.buildInitialValues = (beregningsgrunnlag, getKodeverknavn) => {
+VurderOgFastsettATFL.buildInitialValues = (beregningsgrunnlag, getKodeverknavn, aksjonspunkter, faktaOmBeregning) => {
   if (!beregningsgrunnlag) {
     return {};
   }
   const andeler = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
   .filter(andel => andel.aktivitetStatus.kode !== aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
   return {
-    [inntektFieldArrayName]: InntektFieldArray.buildInitialValues(andeler, getKodeverknavn),
+    [inntektFieldArrayName]: InntektFieldArray.buildInitialValues(andeler, getKodeverknavn, faktaOmBeregning),
+    ...InntektstabellPanel.buildInitialValues(aksjonspunkter),
   };
 };
 
@@ -209,35 +213,66 @@ const concatTilfeller = (transformed, newTransformedValues) => ({
 });
 
 
-VurderOgFastsettATFL.transformValues = (faktaOmBeregning, beregningsgrunnlag) => (values) => {
-  const tilfeller = faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode);
-  const inntektVerdier = InntektFieldArray.transformValues(values[inntektFieldArrayName]);
-  let transformed = { faktaOmBeregningTilfeller: [] };
-  let allInntektErFastsatt = false;
-  if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
-    allInntektErFastsatt = true;
-    transformed = endretBGTransform(faktaOmBeregning.endringBeregningsgrunnlag.endringBeregningsgrunnlagPerioder)(values);
+const transformValuesForOverstyring = (values, transformed, inntektVerdier, fastsatteAndelsnr) => {
+  if (erOverstyring(values)) {
+    const overstyrteAndeler = inntektVerdier.filter(andel => !fastsatteAndelsnr.includes(andel.andelsnr))
+      .map(verdi => ({
+        andelsnr: verdi.andelsnr,
+        nyAndel: verdi.nyAndel,
+        lagtTilAvSaksbehandler: verdi.lagtTilAvSaksbehandler,
+        fastsatteVerdier: {
+          fastsattBeløp: verdi.fastsattBelop,
+          inntektskategori: verdi.inntektskategori,
+        },
+      }));
+      return {
+        fakta: transformed,
+        overstyrteAndeler,
+      };
   }
-  const fastsatteAndelsnr = [];
-  // Besteberegning
-  transformed = concatTilfeller(transformed, vurderBesteberegningTransform(faktaOmBeregning)(values, allInntektErFastsatt ? null : inntektVerdier));
-  allInntektErFastsatt = allInntektErFastsatt || values[besteberegningField] === true;
-  // Nyoppstartet FL
-  transformed = concatTilfeller(transformed, NyoppstartetFLForm.transformValues(values, allInntektErFastsatt ? null : inntektVerdier,
-    faktaOmBeregning, fastsatteAndelsnr));
-  // Lønnsendring FL
-  transformed = concatTilfeller(transformed,
-    LonnsendringForm.transformValues(values, allInntektErFastsatt ? null : inntektVerdier, faktaOmBeregning, fastsatteAndelsnr));
-  // Mottar ytelse
-  transformed = concatTilfeller(transformed, VurderMottarYtelseForm.transformValues(values, allInntektErFastsatt ? null : inntektVerdier,
-    faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr));
-  // ATFL i samme org
-  transformed = concatTilfeller(transformed, transformValuesForATFLISammeOrg(allInntektErFastsatt ? null : inntektVerdier,
-    faktaOmBeregning, fastsatteAndelsnr));
-  // Kunstig arbeidsforhold
-  transformed = concatTilfeller(transformed, transformValuesKunstigArbeidsforhold(allInntektErFastsatt ? null : inntektVerdier,
-    faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr));
+  return {
+    fakta: transformed,
+  };
+};
+
+const transformValuesForAksjonspunkt = (values, inntektVerdier, fastsatteAndelsnr, faktaOmBeregning, beregningsgrunnlag) => {
+  let allInntektErFastsatt = false;
+  const tilfeller = faktaOmBeregning.faktaOmBeregningTilfeller
+  ? faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode) : [];
+  let transformed = { faktaOmBeregningTilfeller: [] };
+  if (tilfeller.length > 0) {
+    if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
+      allInntektErFastsatt = true;
+      transformed = endretBGTransform(faktaOmBeregning.endringBeregningsgrunnlag.endringBeregningsgrunnlagPerioder)(values);
+    }
+    // Besteberegning
+    transformed = concatTilfeller(transformed, vurderBesteberegningTransform(faktaOmBeregning)(values, allInntektErFastsatt ? null : inntektVerdier));
+    allInntektErFastsatt = allInntektErFastsatt || values[besteberegningField] === true;
+    // Nyoppstartet FL
+    transformed = concatTilfeller(transformed, NyoppstartetFLForm.transformValues(values, allInntektErFastsatt ? null : inntektVerdier,
+      faktaOmBeregning, fastsatteAndelsnr));
+    // Lønnsendring FL
+    transformed = concatTilfeller(transformed,
+      LonnsendringForm.transformValues(values, allInntektErFastsatt ? null : inntektVerdier, faktaOmBeregning, fastsatteAndelsnr));
+    // Mottar ytelse
+    transformed = concatTilfeller(transformed, VurderMottarYtelseForm.transformValues(values, allInntektErFastsatt ? null : inntektVerdier,
+      faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr));
+    // ATFL i samme org
+    transformed = concatTilfeller(transformed, transformValuesForATFLISammeOrg(allInntektErFastsatt ? null : inntektVerdier,
+      faktaOmBeregning, fastsatteAndelsnr));
+    // Kunstig arbeidsforhold
+    transformed = concatTilfeller(transformed, transformValuesKunstigArbeidsforhold(allInntektErFastsatt ? null : inntektVerdier,
+      faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr));
+  }
   return transformed;
+};
+
+
+VurderOgFastsettATFL.transformValues = (faktaOmBeregning, beregningsgrunnlag) => (values) => {
+  const inntektVerdier = InntektFieldArray.transformValues(values[inntektFieldArrayName]);
+  const fastsatteAndelsnr = [];
+  const transformed = transformValuesForAksjonspunkt(values, inntektVerdier, fastsatteAndelsnr, faktaOmBeregning, beregningsgrunnlag);
+  return transformValuesForOverstyring(values, transformed, inntektVerdier, fastsatteAndelsnr);
 };
 
 VurderOgFastsettATFL.propTypes = {

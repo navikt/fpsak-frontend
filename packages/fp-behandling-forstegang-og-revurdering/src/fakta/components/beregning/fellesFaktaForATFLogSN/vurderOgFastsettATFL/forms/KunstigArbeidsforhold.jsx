@@ -30,9 +30,9 @@ export const transformValuesKunstigArbeidsforhold = (inntektVerdier, faktaOmBere
   }));
   if (fastsattInntekt.length > 0) {
     return ({
-      faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING],
-      fastsattUtenInntektsmelding: { andelListe: fastsattInntekt },
-    });
+        faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING],
+        fastsattUtenInntektsmelding: { andelListe: fastsattInntekt },
+      });
   }
   return {};
 };

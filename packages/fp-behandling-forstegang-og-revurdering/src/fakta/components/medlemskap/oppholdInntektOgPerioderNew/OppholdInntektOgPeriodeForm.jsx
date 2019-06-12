@@ -26,6 +26,7 @@ const {
 
 const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap === aksjonspunktCode);
 
+
 export const OppholdInntektOgPeriodeForm = ({
   valgtPeriode,
   readOnly,

@@ -23,7 +23,7 @@ const parseFaktaParam = (openInfoPanels = '') => openInfoPanels.split(',').filte
 const paramsAreEqual = (a = [], b = []) => ((a.length === b.length) && a.every((param, index) => param === b[index]));
 
 const overstyringAp = [ac.OVERSTYR_AVKLAR_FAKTA_UTTAK, ac.OVERSTYR_AVKLAR_STARTDATO, ac.MANUELL_MARKERING_AV_UTLAND_SAKSTYPE,
-  ac.MANUELL_AVKLAR_FAKTA_UTTAK, ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER];
+  ac.MANUELL_AVKLAR_FAKTA_UTTAK, ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER, ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
 
 /**
  * FaktaIndex

@@ -19,7 +19,7 @@ import {
   getVurderMottarYtelse,
   getVurderBesteberegning,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm';
 import NyoppstartetFLForm from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
@@ -47,8 +47,6 @@ const {
   VURDER_FAKTA_FOR_ATFL_SN,
 } = aksjonspunktCodes;
 
-const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
-
 export const mapStateToValidationProps = createStructuredSelector({
   aktivertePaneler: getFaktaOmBeregningTilfellerKoder,
   endringBGPerioder: getEndringBeregningsgrunnlagPerioder,
@@ -58,7 +56,7 @@ export const mapStateToValidationProps = createStructuredSelector({
   beregningsgrunnlag: getBeregningsgrunnlag,
 });
 
-export const getValidationFaktaForATFLOgSN = createSelector([mapStateToValidationProps, getAlleKodeverk], (props, alleKodeverk) => (values) => {
+export const getValidationFaktaForATFLOgSN = createSelector([mapStateToValidationProps, getAlleKodeverk], (props, alleKodeverk) => (values, erOverstyring) => {
   if (!values || !props.faktaOmBeregning || !props.beregningsgrunnlag || !props.aktivertePaneler) {
     return {};
   }
@@ -69,7 +67,7 @@ export const getValidationFaktaForATFLOgSN = createSelector([mapStateToValidatio
     ...VurderMottarYtelseForm.validate(values, props.vurderMottarYtelse),
     ...VurderBesteberegningForm.validate(values, props.aktivertePaneler),
     ...VurderOgFastsettATFL.validate(values, props.aktivertePaneler, props.faktaOmBeregning, props.beregningsgrunnlag,
-      getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
+      getKodeverknavnFn(alleKodeverk, kodeverkTyper), erOverstyring),
   });
 });
 
@@ -223,23 +221,26 @@ export const transformValues = (
 };
 
 export const setInntektValues = (aktivePaneler, fatsettKunYtelseTransform,
-  vurderOgFastsettATFLTransform) => (values) => {
+  vurderOgFastsettATFLTransform, erOverstyrt) => (values) => {
   if (aktivePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE)) {
-    return fatsettKunYtelseTransform(values);
+    return { fakta: fatsettKunYtelseTransform(values) };
   }
-  return { ...vurderOgFastsettATFLTransform(values) };
+  return { ...vurderOgFastsettATFLTransform(values, erOverstyrt) };
 };
 
-const setValuesForVurderFakta = (aktivePaneler, values, endringBGPerioder, kortvarigeArbeidsforhold, faktaOmBeregning, beregningsgrunnlag) => {
+const setValuesForVurderFakta = (aktivePaneler, values, endringBGPerioder, kortvarigeArbeidsforhold, faktaOmBeregning, beregningsgrunnlag, erOverstyrt) => {
   const vurderFaktaValues = setInntektValues(
     aktivePaneler,
     kunYtelseTransform(faktaOmBeregning, endringBGPerioder, aktivePaneler),
-    VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag),
+    VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag), erOverstyrt,
   )(values);
-  return transformValues(aktivePaneler,
-    nyIArbeidslivetTransform,
-    kortvarigeArbeidsforholdTransform(kortvarigeArbeidsforhold),
-    etterlonnSluttpakkeTransform(aktivePaneler))(vurderFaktaValues, values);
+  return ({
+    fakta: transformValues(aktivePaneler,
+      nyIArbeidslivetTransform,
+      kortvarigeArbeidsforholdTransform(kortvarigeArbeidsforhold),
+      etterlonnSluttpakkeTransform(aktivePaneler))(vurderFaktaValues.fakta, values),
+    overstyrteAndeler: vurderFaktaValues.overstyrteAndeler,
+  });
 };
 
 
@@ -253,9 +254,9 @@ export const transformValuesFaktaForATFLOgSN = createSelector(
     endringBGPerioder,
     kortvarigeArbeidsforhold,
     faktaOmBeregning,
-    beregningsgrunnlag) => values => (
+    beregningsgrunnlag) => (values, erOverstyrt) => (
     setValuesForVurderFakta(aktivePaneler, values, endringBGPerioder, kortvarigeArbeidsforhold,
-      faktaOmBeregning, beregningsgrunnlag)
+      faktaOmBeregning, beregningsgrunnlag, erOverstyrt)
   ),
 );
 
@@ -265,9 +266,10 @@ const getVurderFaktaAksjonspunkt = createSelector([getAksjonspunkter], aksjonspu
 export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
   [getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlag,
     getKortvarigeArbeidsforhold, getVurderFaktaAksjonspunkt, getKunYtelse,
-    getFaktaOmBeregningTilfellerKoder, getBehandlingIsRevurdering, getVurderMottarYtelse, getVurderBesteberegning, getAlleKodeverk],
+    getFaktaOmBeregningTilfellerKoder, getBehandlingIsRevurdering,
+    getVurderMottarYtelse, getVurderBesteberegning, getAlleKodeverk, getAksjonspunkter],
   (endringBGPerioder, beregningsgrunnlag, kortvarigeArbeidsforhold, vurderFaktaAP, kunYtelse,
-    tilfeller, isRevurdering, vurderMottarYtelse, vurderBesteberegning, alleKodeverk) => () => ({
+    tilfeller, isRevurdering, vurderMottarYtelse, vurderBesteberegning, alleKodeverk, aksjonspunkter) => () => ({
     ...TidsbegrensetArbeidsforholdForm.buildInitialValues(kortvarigeArbeidsforhold),
     ...NyIArbeidslivetSNForm.buildInitialValues(beregningsgrunnlag),
     ...FastsettEndretBeregningsgrunnlag.buildInitialValues(endringBGPerioder, tilfeller, beregningsgrunnlag, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
@@ -278,7 +280,8 @@ export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
     ...FastsettEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag),
     ...VurderMottarYtelseForm.buildInitialValues(vurderMottarYtelse),
     ...VurderBesteberegningForm.buildInitialValues(vurderBesteberegning, tilfeller),
-    ...VurderOgFastsettATFL.buildInitialValues(beregningsgrunnlag, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
+    ...VurderOgFastsettATFL.buildInitialValues(beregningsgrunnlag, getKodeverknavnFn(alleKodeverk, kodeverkTyper),
+    aksjonspunkter, beregningsgrunnlag.faktaOmBeregning),
   }),
 );
 

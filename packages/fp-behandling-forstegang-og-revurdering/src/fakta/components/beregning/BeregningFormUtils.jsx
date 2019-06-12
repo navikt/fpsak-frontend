@@ -5,6 +5,8 @@ export const formNameAvklarAktiviteter = 'avklarAktiviteterForm';
 
 export const formNameVurderFaktaBeregning = 'vurderFaktaBeregningForm';
 
+export const MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD = 'manuellOverstyringRapportertInntekt';
+
 export const getFormValuesForAvklarAktiviteter = createSelector([
   getBehandlingFormValues(formNameAvklarAktiviteter)], values => values);
 

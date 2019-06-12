@@ -23,6 +23,8 @@ import {
 } from './BgFordelingUtils';
 import { utledArbeidsforholdFieldName, finnFrilansFieldName }
   from './vurderOgFastsettATFL/forms/VurderMottarYtelseUtils';
+  import { MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD }
+  from './InntektstabellPanel';
 import { besteberegningField } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
 
 const lagAndelValues = (andelsnr, fastsattBelop, inntektskategori, aktivitetStatus, lagtTilAvSaksbehandler = false, nyAndel = false) => ({
@@ -120,7 +122,7 @@ describe('<BgFordelingUtils>', () => {
     beregnetPrAar: 240000,
   };
 
-  const dagpengeField = mapAndelToField(dagpengerAndel, () => undefined);
+  const dagpengeField = mapAndelToField(dagpengerAndel, () => undefined, {});
 
 
   it('skal mappe dagpengerandel til feltverdier', () => {
@@ -133,6 +135,104 @@ describe('<BgFordelingUtils>', () => {
     expect(dagpengeField.fastsattBelop).to.equal('20 000');
     expect(dagpengeField.belopReadOnly).to.equal('');
     expect(dagpengeField.refusjonskrav).to.equal('');
+  });
+
+
+  it('skal mappe AAP-andel til feltverdier', () => {
+    const AAPAndel = {
+      aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSAVKLARINGSPENGER, navn: 'Arbeidsavklaringspenger' },
+      andelsnr: 1,
+      lagtTilAvSaksbehandler: false,
+      inntektskategori: { kode: 'AAP' },
+      fastsattAvSaksbehandler: false,
+      beregnetPrAar: null,
+      belopFraMeldekortPrMnd: 10000,
+    };
+    const aapField = mapAndelToField(AAPAndel, () => undefined, {});
+    expect(aapField.aktivitetStatus).to.equal('AAP');
+    expect(aapField.andelsnr).to.equal(1);
+    expect(aapField.nyAndel).to.equal(false);
+    expect(aapField.lagtTilAvSaksbehandler).to.equal(false);
+    expect(aapField.skalKunneEndreAktivitet).to.equal(false);
+    expect(aapField.inntektskategori).to.equal('AAP');
+    expect(aapField.fastsattBelop).to.equal('');
+    expect(aapField.belopReadOnly).to.equal('10 000');
+    expect(aapField.refusjonskrav).to.equal('');
+  });
+
+
+  it('skal mappe AT uten inntektsmelding med FL i samme org til feltverdier', () => {
+    const faktaOmBeregning = {
+      arbeidstakerOgFrilanserISammeOrganisasjonListe: [{ andelsnr: 1, inntektPrMnd: null }],
+    };
+    const ATAndel = {
+      aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER, navn: 'Arbeidstaker' },
+      andelsnr: 1,
+      lagtTilAvSaksbehandler: false,
+      inntektskategori: { kode: 'AT' },
+      fastsattAvSaksbehandler: false,
+      beregnetPrAar: null,
+      belopFraMeldekortPrMnd: null,
+    };
+    const atField = mapAndelToField(ATAndel, () => undefined, faktaOmBeregning);
+    expect(atField.aktivitetStatus).to.equal('AT');
+    expect(atField.andelsnr).to.equal(1);
+    expect(atField.nyAndel).to.equal(false);
+    expect(atField.lagtTilAvSaksbehandler).to.equal(false);
+    expect(atField.skalKunneEndreAktivitet).to.equal(false);
+    expect(atField.inntektskategori).to.equal('AT');
+    expect(atField.fastsattBelop).to.equal('');
+    expect(atField.belopReadOnly).to.equal('');
+    expect(atField.refusjonskrav).to.equal('');
+  });
+
+  it('skal mappe FL med AT i samme org til feltverdier', () => {
+    const faktaOmBeregning = {
+      arbeidstakerOgFrilanserISammeOrganisasjonListe: [{ andelsnr: 2, inntektPrMnd: null }],
+    };
+    const ATAndel = {
+      aktivitetStatus: { kode: aktivitetStatuser.FRILANSER, navn: 'Frilanser' },
+      andelsnr: 1,
+      lagtTilAvSaksbehandler: false,
+      inntektskategori: { kode: 'FL' },
+      fastsattAvSaksbehandler: false,
+      beregnetPrAar: null,
+      belopFraMeldekortPrMnd: null,
+    };
+    const atField = mapAndelToField(ATAndel, () => undefined, faktaOmBeregning);
+    expect(atField.aktivitetStatus).to.equal('FL');
+    expect(atField.andelsnr).to.equal(1);
+    expect(atField.nyAndel).to.equal(false);
+    expect(atField.lagtTilAvSaksbehandler).to.equal(false);
+    expect(atField.skalKunneEndreAktivitet).to.equal(false);
+    expect(atField.inntektskategori).to.equal('FL');
+    expect(atField.fastsattBelop).to.equal('');
+    expect(atField.belopReadOnly).to.equal('');
+    expect(atField.refusjonskrav).to.equal('');
+  });
+
+  it('skal mappe AT med inntektsmelding til feltverdier', () => {
+    const faktaOmBeregning = {};
+    const ATAndel = {
+      aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER, navn: 'Arbeidstaker' },
+      andelsnr: 1,
+      lagtTilAvSaksbehandler: false,
+      inntektskategori: { kode: 'AT' },
+      fastsattAvSaksbehandler: false,
+      beregnetPrAar: null,
+      belopFraMeldekortPrMnd: null,
+      arbeidsforhold: { belopFraInntektsmeldingPrMnd: 20000 },
+    };
+    const atField = mapAndelToField(ATAndel, () => undefined, faktaOmBeregning);
+    expect(atField.aktivitetStatus).to.equal('AT');
+    expect(atField.andelsnr).to.equal(1);
+    expect(atField.nyAndel).to.equal(false);
+    expect(atField.lagtTilAvSaksbehandler).to.equal(false);
+    expect(atField.skalKunneEndreAktivitet).to.equal(false);
+    expect(atField.inntektskategori).to.equal('AT');
+    expect(atField.fastsattBelop).to.equal('');
+    expect(atField.belopReadOnly).to.equal('20 000');
+    expect(atField.refusjonskrav).to.equal('');
   });
 
   it('skal sette riktig fastsatt beløp for andel i periode med gradering eller refusjon og fastsatt beregnetPrÅr', () => {
@@ -401,6 +501,18 @@ describe('<BgFordelingUtils>', () => {
     const vals = {};
     const skalRedigereInntektskategori = skalRedigereInntektskategoriForAndel(vals, beregningsgrunnlag)(andelFieldValue);
     expect(skalRedigereInntektskategori).to.equal(true);
+  });
+
+  it('skal redigere inntekt ved overstyring', () => {
+    const andelFieldValue = {
+      ...andelValuesMedInntektsmelding,
+      harPeriodeAarsakGraderingEllerRefusjon: false,
+      ...setGenerellAndelsinfo(arbeidstakerAndel4, getKodeverknavn),
+    };
+    const copyValues = { ...values };
+    copyValues[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD] = true;
+    const skalRedigereInntekt = skalRedigereInntektForAndel(copyValues, faktaOmBeregning, beregningsgrunnlag)(andelFieldValue);
+    expect(skalRedigereInntekt).to.equal(true);
   });
 
   it('skal redigere inntekt for arbeidstakerandel som mottar ytelse', () => {

@@ -9,7 +9,7 @@ import {
   DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import faktaOmBeregningTilfelle, { harFastsettATFLInntektTilfelle } from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -29,8 +29,6 @@ import { getFormValuesForBeregning } from '../../BeregningFormUtils';
 const {
   VURDER_FAKTA_FOR_ATFL_SN,
 } = aksjonspunktCodes;
-
-const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
 const tilfellerSomStøtterEndringBG = [faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG,
   faktaOmBeregningTilfelle.VURDER_SN_NY_I_ARBEIDSLIVET,

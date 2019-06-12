@@ -5,8 +5,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { CheckboxField } from '@fpsak-frontend/form';
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
-
+import { AksjonspunktHelpText, BorderBox } from '@fpsak-frontend/shared-components';
+import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { getBehandlingFormValues } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import {
   AvklareAktiviteterPanelImpl, buildInitialValuesAvklarAktiviteter,
@@ -18,6 +18,7 @@ import { formNameAvklarAktiviteter } from '../BeregningFormUtils';
 const {
   AVKLAR_AKTIVITETER,
   OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
+  VURDER_FAKTA_FOR_ATFL_SN,
 } = aksjonspunktCodes;
 
 
@@ -103,6 +104,10 @@ describe('<AvklareAktiviteterPanel>', () => {
       kanOverstyre={false}
       aksjonspunkter={aksjonspunkter}
       erOverstyrt={false}
+      erBgOverstyrt={false}
+      behandlingFormPrefix="test"
+      alleKodeverk={{}}
+      reduxFormInitialize={() => {}}
     />);
     const vurderAktivitetPanel = wrapper.find(VurderAktiviteterPanel);
     expect(vurderAktivitetPanel).has.length(1);
@@ -128,6 +133,10 @@ describe('<AvklareAktiviteterPanel>', () => {
       kanOverstyre={false}
       aksjonspunkter={aksjonspunkter}
       erOverstyrt={false}
+      erBgOverstyrt={false}
+      behandlingFormPrefix="test"
+      alleKodeverk={{}}
+      reduxFormInitialize={() => {}}
     />);
     const radio = wrapper.find(VurderAktiviteterPanel);
     expect(radio).has.length(0);
@@ -157,6 +166,10 @@ describe('<AvklareAktiviteterPanel>', () => {
       kanOverstyre
       aksjonspunkter={aksjonspunkter}
       erOverstyrt={false}
+      erBgOverstyrt={false}
+      behandlingFormPrefix="test"
+      alleKodeverk={{}}
+      reduxFormInitialize={() => {}}
     />);
     const checkbox = wrapper.find(CheckboxField);
     expect(checkbox).has.length(1);
@@ -186,9 +199,118 @@ describe('<AvklareAktiviteterPanel>', () => {
       kanOverstyre
       aksjonspunkter={aksjonspunkter}
       erOverstyrt
+      erBgOverstyrt={false}
+      behandlingFormPrefix="test"
+      alleKodeverk={{}}
+      reduxFormInitialize={() => {}}
     />);
     const helptext = wrapper.find(AksjonspunktHelpText);
     expect(helptext).has.length(0);
+  });
+
+
+  it('skal vise knapp inne i borderbox når man har andre aksjonspunkt i beregning', () => {
+    const avklarAktiviteter = {
+      aktiviteterTomDatoMapping: [
+          { tom: '2019-02-02', aktiviteter },
+        ],
+    };
+    const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER } }, { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN } }];
+
+    const wrapper = shallow(<AvklareAktiviteterPanelImpl
+      {...reduxFormPropsMock}
+      readOnly={false}
+      isAksjonspunktClosed={false}
+      avklarAktiviteter={avklarAktiviteter}
+      hasBegrunnelse={false}
+      submittable
+      isDirty
+      submitEnabled
+      helpText={[]}
+      harAndreAksjonspunkterIPanel
+      erEndret={false}
+      kanOverstyre
+      aksjonspunkter={aksjonspunkter}
+      erOverstyrt={false}
+      erBgOverstyrt={false}
+      behandlingFormPrefix="test"
+      alleKodeverk={{}}
+      reduxFormInitialize={() => {}}
+    />);
+    const borderBox = wrapper.find(BorderBox);
+    expect(borderBox).has.length(1);
+    const submitBtn = borderBox.find(FaktaSubmitButton);
+    expect(submitBtn).has.length(1);
+  });
+
+
+  it('skal vise knapp inne i borderbox når man skal overstyre beregningsgrunnlag', () => {
+    const avklarAktiviteter = {
+      aktiviteterTomDatoMapping: [
+          { tom: '2019-02-02', aktiviteter },
+        ],
+    };
+    const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER } }];
+
+    const wrapper = shallow(<AvklareAktiviteterPanelImpl
+      {...reduxFormPropsMock}
+      readOnly={false}
+      isAksjonspunktClosed={false}
+      avklarAktiviteter={avklarAktiviteter}
+      hasBegrunnelse={false}
+      submittable
+      isDirty
+      submitEnabled
+      helpText={[]}
+      harAndreAksjonspunkterIPanel={false}
+      erEndret={false}
+      kanOverstyre
+      aksjonspunkter={aksjonspunkter}
+      erOverstyrt={false}
+      erBgOverstyrt
+      behandlingFormPrefix="test"
+      alleKodeverk={{}}
+      reduxFormInitialize={() => {}}
+    />);
+    const borderBox = wrapper.find(BorderBox);
+    expect(borderBox).has.length(1);
+    const submitBtn = borderBox.find(FaktaSubmitButton);
+    expect(submitBtn).has.length(1);
+  });
+
+
+  it('skal vise knapp inne i borderbox når man skal overstyre aktiviteter i beregningsgrunnlaget', () => {
+    const avklarAktiviteter = {
+      aktiviteterTomDatoMapping: [
+          { tom: '2019-02-02', aktiviteter },
+        ],
+    };
+    const aksjonspunkter = [];
+
+    const wrapper = shallow(<AvklareAktiviteterPanelImpl
+      {...reduxFormPropsMock}
+      readOnly={false}
+      isAksjonspunktClosed={false}
+      avklarAktiviteter={avklarAktiviteter}
+      hasBegrunnelse={false}
+      submittable
+      isDirty
+      submitEnabled
+      helpText={[]}
+      harAndreAksjonspunkterIPanel={false}
+      erEndret={false}
+      kanOverstyre
+      aksjonspunkter={aksjonspunkter}
+      erOverstyrt
+      erBgOverstyrt={false}
+      behandlingFormPrefix="test"
+      alleKodeverk={{}}
+      reduxFormInitialize={() => {}}
+    />);
+    const borderBox = wrapper.find(BorderBox);
+    expect(borderBox).has.length(1);
+    const submitBtn = borderBox.find(FaktaSubmitButton);
+    expect(submitBtn).has.length(1);
   });
 
 

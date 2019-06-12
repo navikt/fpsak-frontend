@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { VerticalSpacer, AksjonspunktHelpText, ElementWrapper } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   getBehandlingMedlem, getPersonopplysning,
   getSoknad, getAksjonspunkter, getBehandlingRevurderingAvFortsattMedlemskapFom,
@@ -30,7 +30,6 @@ const {
   AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE, AVKLAR_OPPHOLDSRETT, AVKLAR_LOVLIG_OPPHOLD, AVKLAR_FORTSATT_MEDLEMSKAP,
 } = aksjonspunktCodes;
 
-const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 const shouldSubmitAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode && ap.erAktivt);
 
 const getHelpTexts = (aksjonspunkter) => {

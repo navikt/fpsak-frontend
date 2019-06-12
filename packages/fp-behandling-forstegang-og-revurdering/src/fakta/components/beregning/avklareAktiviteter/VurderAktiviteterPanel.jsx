@@ -14,6 +14,7 @@ export const VurderAktiviteterPanel = ({
   isAksjonspunktClosed,
   aktiviteterTomDatoMapping,
   erOverstyrt,
+  harAksjonspunkt,
 }) => (
   <VurderAktiviteterTabell
     readOnly={readOnly}
@@ -21,6 +22,7 @@ export const VurderAktiviteterPanel = ({
     aktiviteter={aktiviteterTomDatoMapping[0].aktiviteter}
     skjaeringstidspunkt={aktiviteterTomDatoMapping[0].tom}
     erOverstyrt={erOverstyrt}
+    harAksjonspunkt={harAksjonspunkt}
   />
 );
 
@@ -28,6 +30,7 @@ VurderAktiviteterPanel.propTypes = {
   erOverstyrt: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
+  harAksjonspunkt: PropTypes.bool.isRequired,
   aktiviteterTomDatoMapping: PropTypes.arrayOf(PropTypes.shape({
     tom: PropTypes.string,
     aktiviteter: PropTypes.arrayOf(beregningAktivitetPropType),
@@ -46,11 +49,11 @@ VurderAktiviteterPanel.hasValueChangedFromInitial = (aktiviteterTomDatoMapping, 
   return VurderAktiviteterTabell.hasValueChangedFromInitial(aktiviteterTomDatoMapping[0].aktiviteter, values, initialValues);
 };
 
-VurderAktiviteterPanel.buildInitialValues = (aktiviteterTomDatoMapping, getKodeverknavn, erOverstyrt) => {
+VurderAktiviteterPanel.buildInitialValues = (aktiviteterTomDatoMapping, getKodeverknavn, erOverstyrt, harAksjonspunkt) => {
   if (!aktiviteterTomDatoMapping || aktiviteterTomDatoMapping.length === 0) {
     return {};
   }
-  return VurderAktiviteterTabell.buildInitialValues(aktiviteterTomDatoMapping[0].aktiviteter, getKodeverknavn, erOverstyrt);
+  return VurderAktiviteterTabell.buildInitialValues(aktiviteterTomDatoMapping[0].aktiviteter, getKodeverknavn, erOverstyrt, harAksjonspunkt);
 };
 
 export default VurderAktiviteterPanel;

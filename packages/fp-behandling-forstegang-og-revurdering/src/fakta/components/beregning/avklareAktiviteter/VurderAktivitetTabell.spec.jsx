@@ -49,6 +49,15 @@ const aktivitetAAP = {
   skalBrukes: null,
 };
 
+const aktivitetVentelonnVartpenger = {
+  arbeidsgiverNavn: null,
+  arbeidsgiverId: null,
+  arbeidsforholdType: { kode: 'VENTELØNN_VARTPENGER' },
+  fom: '2019-01-01',
+  tom: '2020-02-02',
+  skalBrukes: null,
+};
+
 const aktiviteter = [
   aktivitet1,
   aktivitet2,
@@ -75,6 +84,7 @@ describe('<VurderAktiviteterTabell>', () => {
       skjaeringstidspunkt="2019-02-01"
       getKodeverknavn={getKodeverknavn}
       erOverstyrt={false}
+      harAksjonspunkt
     />);
 
     const heading = wrapper.find(FormattedMessage).first();
@@ -114,7 +124,7 @@ describe('<VurderAktiviteterTabell>', () => {
     const utenAAP = [
       aktivitet1,
       aktivitet2,
-      aktivitet3,
+      aktivitetVentelonnVartpenger,
     ];
     const wrapper = shallow(<VurderAktiviteterTabellImpl
       readOnly={false}
@@ -123,6 +133,7 @@ describe('<VurderAktiviteterTabell>', () => {
       skjaeringstidspunkt="2019-02-01"
       getKodeverknavn={getKodeverknavn}
       erOverstyrt={false}
+      harAksjonspunkt
     />);
 
     const heading = wrapper.find(FormattedMessage).first();
@@ -150,6 +161,7 @@ describe('<VurderAktiviteterTabell>', () => {
       skjaeringstidspunkt="2019-02-01"
       getKodeverknavn={getKodeverknavn}
       erOverstyrt={false}
+      harAksjonspunkt
     />);
 
     const heading = wrapper.find(FormattedMessage).first();
@@ -217,7 +229,7 @@ describe('<VurderAktiviteterTabell>', () => {
   });
 
   it('skal bygge initial values', () => {
-    const initialValues = VurderAktiviteterTabell.buildInitialValues(aktiviteter, getKodeverknavn);
+    const initialValues = VurderAktiviteterTabell.buildInitialValues(aktiviteter, getKodeverknavn, false, true);
     expect(initialValues[id1].beregningAktivitetNavn).to.equal('Arbeidsgiveren (384723894723)');
     expect(initialValues[id1].fom).to.equal('2019-01-01');
     expect(initialValues[id1].tom).to.equal(null);
@@ -239,6 +251,28 @@ describe('<VurderAktiviteterTabell>', () => {
     expect(initialValues[idAAP].skalBrukes).to.equal(true);
   });
 
+  it('skal bygge initial values for overstyrer', () => {
+    const initialValues = VurderAktiviteterTabell.buildInitialValues(aktiviteter, getKodeverknavn, false, false);
+    expect(initialValues[id1].beregningAktivitetNavn).to.equal('Arbeidsgiveren (384723894723)');
+    expect(initialValues[id1].fom).to.equal('2019-01-01');
+    expect(initialValues[id1].tom).to.equal(null);
+    expect(initialValues[id1].skalBrukes).to.equal(true);
+
+    expect(initialValues[id2].beregningAktivitetNavn).to.equal('Arbeidsgiveren2 (334534623342) ...f34f');
+    expect(initialValues[id2].fom).to.equal('2019-01-01');
+    expect(initialValues[id2].tom).to.equal('2019-02-02');
+    expect(initialValues[id2].skalBrukes).to.equal(true);
+
+    expect(initialValues[id3].beregningAktivitetNavn).to.equal('Arbeidsgiveren3 (1960-01-01) ...f34f');
+    expect(initialValues[id3].fom).to.equal('2019-01-01');
+    expect(initialValues[id3].tom).to.equal('2019-02-02');
+    expect(initialValues[id3].skalBrukes).to.equal(false);
+
+    expect(initialValues[idAAP].beregningAktivitetNavn).to.equal('Arbeidsavklaringspenger');
+    expect(initialValues[idAAP].fom).to.equal('2019-01-01');
+    expect(initialValues[idAAP].tom).to.equal('2020-02-02');
+    expect(initialValues[idAAP].skalBrukes).to.equal(true);
+  });
 
   it('skal transform values', () => {
     const values = {};
@@ -264,22 +298,22 @@ describe('<VurderAktiviteterTabell>', () => {
   });
 
   it('skal ikkje vurdere AAP for ikkje overstyring', () => {
-    const skalVurderes = skalVurdereAktivitet(aktivitetAAP, false);
+    const skalVurderes = skalVurdereAktivitet(aktivitetAAP, false, true);
     expect(skalVurderes).to.equal(false);
   });
 
-  it('skal vurdere AAP for overstyring', () => {
-    const skalVurderes = skalVurdereAktivitet(aktivitetAAP, true);
-    expect(skalVurderes).to.equal(true);
-  });
-
   it('skal vurdere annen aktivitet for overstyring', () => {
-    const skalVurderes = skalVurdereAktivitet(aktivitet1, true);
+    const skalVurderes = skalVurdereAktivitet(aktivitet1, true, true);
     expect(skalVurderes).to.equal(true);
   });
 
   it('skal vurdere annen aktivitet for ikkje overstyring', () => {
-    const skalVurderes = skalVurdereAktivitet(aktivitet1, false);
+    const skalVurderes = skalVurdereAktivitet(aktivitet1, false, true);
     expect(skalVurderes).to.equal(true);
+  });
+
+  it('skal ikkje vurdere annen aktivitet for ikkje overstyring uten aksjonspunkt', () => {
+    const skalVurderes = skalVurdereAktivitet(aktivitet1, false, false);
+    expect(skalVurderes).to.equal(false);
   });
 });
