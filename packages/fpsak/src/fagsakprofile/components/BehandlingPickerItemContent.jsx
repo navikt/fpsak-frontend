@@ -71,6 +71,8 @@ const getÅrsak = (årsak) => {
     return 'Opplysninger annen ytelse';
   case 'RE-HENDELSE-FØDSEL':
     return 'Behandlingspunkt.Årsak.Fødsel';
+    case 'RE-FØDSEL':
+        return 'Behandlingspunkt.Årsak.Fødsel';
   case 'RE-HENDELSE-DØD-F':
     return 'Behandlingspunkt.Årsak.SøkerDød';
   case 'RE-HENDELSE-DØD-B':
