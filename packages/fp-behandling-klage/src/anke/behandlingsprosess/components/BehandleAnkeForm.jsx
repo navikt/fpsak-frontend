@@ -22,6 +22,8 @@ import {
 } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 
+import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
+import ankeOmgjorArsak from '@fpsak-frontend/kodeverk/src/ankeOmgjorArsak';
 import PreviewKlageLink from '../../../behandlingsprosess/components/klage/Klagevurdering/SharedUtills/PreviewKlageLink';
 import FritekstBrevTextField from '../../../behandlingsprosess/components/klage/Klagevurdering/SharedUtills/FritekstKlageBrevTextField';
 import styles from './behandleAnkeForm.less';
@@ -32,20 +34,30 @@ import TempsaveKlageButton from '../../../behandlingsprosess/components/klage/Kl
 const mapSelectValues = () => {
   const liste = [
     {
-      navn: 'BehandlingA', kode: 'behandlingA',
+      navn: 'BehandlingA', kode: '999953',
     },
     {
-      navn: 'BehandlingB', kode: 'behandlingB',
+      navn: 'BehandlingB', kode: '999952',
     },
   ];
   return liste.map(mo => <option key={mo.kode} value={mo.kode}>{mo.navn}</option>);
 };
 
+const omgjorArsakValues = [
+  { kode: ankeOmgjorArsak.PROSESSUELL_FEIL, navn: 'Ankebehandling.OmgjoeringArsak.ProsessuellFeil' },
+  { kode: ankeOmgjorArsak.ULIK_VURDERING, navn: 'Ankebehandling.OmgjoeringArsak.UlikVurdering' },
+  { kode: ankeOmgjorArsak.ULIK_REGELVERKSTOLKNING, navn: 'Ankebehandling.OmgjoeringArsak.UlikRegelverkstolkning' },
+  { kode: ankeOmgjorArsak.NYE_OPPLYSNINGER, navn: 'Ankebehandling.OmgjoeringArsak.NyeOpplysninger' },
+];
+
 const canSubmit = (formValues) => {
-  if (ankeVurdering.AVVIS_ANKE === formValues.ankeVurdering && !formValues.realitetsbehandles) {
+  if (ankeVurdering.AVVIS_ANKE === formValues.ankeVurdering && !formValues.erSubsidiartRealitetsbehandles) {
     return false;
   }
-  return formValues.ankeVurdering != null && formValues.ankeVedtak != null;
+  if (ankeVurdering.OMGJOER_VEDTAK === formValues.ankeVurdering && (!formValues.ankeOmgjoerArsak || !formValues.ankeVurderingOmgjoer)) {
+    return false;
+  }
+  return formValues.ankeVurdering != null && formValues.vedtak != null;
 };
 
 const canPreview = formValues => formValues.ankeVurdering != null && formValues.fritekstTilBrev && (formValues.fritekstTilBrev.length > 2);
@@ -77,7 +89,7 @@ const BehandleAnkeFormImpl = ({
         <Column xs="7">
           <SelectField
             readOnly={readOnly}
-            name="ankeVedtak"
+            name="vedtak"
             selectValues={mapSelectValues()}
             className={readOnly ? styles.selectReadOnly : null}
             label={intl.formatMessage({ id: 'Ankebehandling.Resultat.Vedtak' })}
@@ -96,7 +108,7 @@ const BehandleAnkeFormImpl = ({
             readOnly={readOnly}
           >
             <RadioOption value={ankeVurdering.STADFESTE_YTELSESVEDTAK} label={{ id: 'Ankebehandling.Resultat.Stadfest' }} />
-            <RadioOption value={ankeVurdering.AVVIS_ANKE} label={{ id: 'Ankebehandling.Resultat.Avvis' }} />
+            <RadioOption value={ankeVurdering.OMGJOER_VEDTAK} label={{ id: 'Ankebehandling.Resultat.Omgjør' }} />
           </RadioGroupField>
         </Column>
         <Column xs="4">
@@ -107,35 +119,64 @@ const BehandleAnkeFormImpl = ({
             className={readOnly ? styles.selectReadOnly : null}
             direction="vertical"
           >
-            <RadioOption value={ankeVurdering.OMGJOER_VEDTAK} label={{ id: 'Ankebehandling.Resultat.Omgjør' }} />
             <RadioOption value={ankeVurdering.OPPHEV_OG_HJEMSEND} label={{ id: 'Ankebehandling.Resultat.OpphevHjemsend' }} />
+            <RadioOption value={ankeVurdering.AVVIS_ANKE} label={{ id: 'Ankebehandling.Resultat.Avvis' }} />
           </RadioGroupField>
         </Column>
       </Row>
       {ankeVurdering.AVVIS_ANKE === formValues.ankeVurdering
       && (
-      <Row>
-        <Column xs="7">
-          <ArrowBox>
-            <Normaltekst><FormattedMessage id="Ankebehandling.Avvisning" /></Normaltekst>
-            <CheckboxField name="ikkePart" label={<FormattedMessage id="Ankebehandling.Avvisning.IkkePart" />} />
-            <CheckboxField name="ikkeKonkret" label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeKonkret" />} />
-            <CheckboxField name="ikkeFrist" label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeFrist" />} />
-            <CheckboxField name="ikkeSignert" label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeSignert" />} />
-            <Normaltekst><FormattedMessage id="Ankebehandling.Realitetsbehandles" /></Normaltekst>
-            <RadioGroupField
-              name="realitetsbehandles"
-              validate={[required]}
-              readOnly={readOnly}
-              className={readOnly ? styles.selectReadOnly : null}
-              direction="horisontal"
-            >
-              <RadioOption name="realitetsbehandles" value="ja" label={{ id: 'Ankebehandling.Realitetsbehandles.Ja' }} />
-              <RadioOption name="realitetsbehandles" value="nei" label={{ id: 'Ankebehandling.Realitetsbehandles.Nei' }} />
-            </RadioGroupField>
-          </ArrowBox>
-        </Column>
-      </Row>
+        <Row>
+          <Column xs="7">
+            <ArrowBox>
+              <Normaltekst><FormattedMessage id="Ankebehandling.Avvisning" /></Normaltekst>
+              <CheckboxField name="ikkePart" label={<FormattedMessage id="Ankebehandling.Avvisning.IkkePart" />} />
+              <CheckboxField name="ikkeKonkret" label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeKonkret" />} />
+              <CheckboxField name="ikkeFrist" label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeFrist" />} />
+              <CheckboxField name="ikkeSignert" label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeSignert" />} />
+              <Normaltekst><FormattedMessage id="Ankebehandling.Realitetsbehandles" /></Normaltekst>
+              <RadioGroupField
+                name="erSubsidiartRealitetsbehandles"
+                validate={[required]}
+                readOnly={readOnly}
+                className={readOnly ? styles.selectReadOnly : null}
+                direction="horisontal"
+              >
+                <RadioOption value="ja" label={{ id: 'Ankebehandling.Realitetsbehandles.Ja' }} />
+                <RadioOption value="nei" label={{ id: 'Ankebehandling.Realitetsbehandles.Nei' }} />
+              </RadioGroupField>
+            </ArrowBox>
+          </Column>
+        </Row>
+      )}
+      {ankeVurdering.OMGJOER_VEDTAK === formValues.ankeVurdering
+      && (
+        <Row>
+          <Column xs="7">
+            <ArrowBox>
+              <SelectField
+                readOnly={readOnly}
+                name="ankeOmgjoerArsak"
+                selectValues={omgjorArsakValues.map(arsak => <option key={arsak.kode} value={arsak.kode}>{intl.formatMessage({ id: arsak.navn })}</option>)}
+                className={readOnly ? styles.selectReadOnly : null}
+                label={intl.formatMessage({ id: 'Ankebehandling.OmgjoeringArsak' })}
+                validate={[required]}
+                bredde="xl"
+              />
+              <RadioGroupField
+                name="ankeVurderingOmgjoer"
+                validate={[required]}
+                readOnly={readOnly}
+                className={readOnly ? styles.selectReadOnly : null}
+                direction="horisontal"
+              >
+                <RadioOption name="a1" value={ankeVurderingOmgjoer.ANKE_TIL_GUNST} label={{ id: 'Ankebehandling.VurderingOmgjoer.Gunst' }} />
+                <RadioOption name="a2" value={ankeVurderingOmgjoer.ANKE_TIL_UGUNST} label={{ id: 'Ankebehandling.VurderingOmgjoer.Ugunst' }} />
+                <RadioOption name="a3" value={ankeVurderingOmgjoer.ANKE_DELVIS_OMGJOERING_TIL_GUNST} label={{ id: 'Ankebehandling.VurderingOmgjoer.Delvis' }} />
+              </RadioGroupField>
+            </ArrowBox>
+          </Column>
+        </Row>
       )}
 
       <Row>
@@ -203,28 +244,38 @@ BehandleAnkeFormImpl.defaultProps = {
 };
 
 export const buildInitialValues = createSelector([getBehandlingKlageVurderingResultatNK], klageVurderingResultat => ({
-  ankeVedtak: klageVurderingResultat ? klageVurderingResultat.ankeVedtak : null,
+  vedtak: klageVurderingResultat ? klageVurderingResultat.vedtak : null,
   ankeVurdering: klageVurderingResultat ? klageVurderingResultat.ankeVurdering : null,
   begrunnelse: klageVurderingResultat ? klageVurderingResultat.begrunnelse : null,
   fritekstTilBrev: klageVurderingResultat ? klageVurderingResultat.fritekstTilBrev : null,
+  vedtaksdatoAnketBehandling: klageVurderingResultat ? klageVurderingResultat.vedtaksdatoAnketBehandling : null,
+  erGodkjentAvMedunderskriver: klageVurderingResultat ? klageVurderingResultat.erGodkjentAvMedunderskriver : false,
   ikkePart: klageVurderingResultat ? klageVurderingResultat.ikkePart : false,
   ikkeKonkret: klageVurderingResultat ? klageVurderingResultat.ikkeKonkret : false,
   ikkeFrist: klageVurderingResultat ? klageVurderingResultat.ikkeFrist : false,
   ikkeSignert: klageVurderingResultat ? klageVurderingResultat.ikkeSignert : false,
-  realitetsbehandles: klageVurderingResultat ? klageVurderingResultat.realitetsbehandles : null,
+  erSubsidiartRealitetsbehandles: klageVurderingResultat ? klageVurderingResultat.erSubsidiartRealitetsbehandles : false,
+  ankeAvvistArsak: klageVurderingResultat ? klageVurderingResultat.ankeAvvistArsak : null,
+  ankeOmgjoerArsak: klageVurderingResultat ? klageVurderingResultat.ankeOmgjoerArsak : null,
+  ankeVurderingOmgjoer: klageVurderingResultat ? klageVurderingResultat.ankeVurderingOmgjoer : null,
 }));
 
 
 export const transformValues = (values, aksjonspunktCode) => ({
-  ankeVedtak: values.ankeVedtak,
+  vedtak: values.vedtak,
   ankeVurdering: values.ankeVurdering,
+  begrunnelse: values.begrunnelse,
+  fritekstTilBrev: values.fritekstTilBrev,
+  vedtaksdatoAnketBehandling: values.vedtaksdatoAnketBehandling,
+  erGodkjentAvMedunderskriver: values.erGodkjentAvMedunderskriver,
   ikkePart: values.ikkePart,
   ikkeKonkret: values.ikkeKonkret,
   ikkeFrist: values.ikkeFrist,
   ikkeSignert: values.ikkeSignert,
-  realitetsbehandles: values.realitetsbehandles,
-  begrunnelse: values.begrunnelse,
-  fritekstTilBrev: values.fritekstTilBrev,
+  erSubsidiartRealitetsbehandles: values.erSubsidiartRealitetsbehandles,
+  ankeAvvistArsak: values.ankeAvvistArsak,
+  ankeOmgjoerArsak: values.ankeOmgjoerArsak,
+  ankeVurderingOmgjoer: values.ankeVurderingOmgjoer,
   kode: aksjonspunktCode,
 });
 
@@ -237,9 +288,14 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
     formValues: behandlingFormValueSelector(formName)(state,
-      'ankeVedtak', 'ankeVurdering',
-      'ikkePart', 'ikkeKonkret', 'ikkeFrist', 'ikkeSignert', 'realitetsbehandles',
-      'begrunnelse', 'fritekstTilBrev'),
+      'vedtak', 'ankeVurdering',
+      'begrunnelse', 'fritekstTilBrev',
+      'vedtaksdatoAnketBehandling',
+      'erGodkjentAvMedunderskriver',
+      'ikkePart', 'ikkeKonkret', 'ikkeFrist', 'ikkeSignert', 'erSubsidiartRealitetsbehandles',
+      'ankeAvvistArsak',
+      'ankeOmgjoerArsak',
+      'ankeVurderingOmgjoer'),
     sprakkode: getBehandlingSprak(state),
     onSubmit,
   });
