@@ -26,6 +26,8 @@ import {
 } from '@fpsak-frontend/form';
 import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
 import ankeOmgjorArsak from '@fpsak-frontend/kodeverk/src/ankeOmgjorArsak';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { getBehandlinger } from 'behandling/selectors/behandlingerSelectors';
 import PreviewKlageLink from '../../../behandlingsprosess/components/klage/Klagevurdering/SharedUtills/PreviewKlageLink';
 import FritekstBrevTextField from '../../../behandlingsprosess/components/klage/Klagevurdering/SharedUtills/FritekstKlageBrevTextField';
@@ -49,9 +51,34 @@ const canSubmit = (formValues) => {
   return formValues.ankeVurdering != null && formValues.vedtak != null;
 };
 
+const formatBehandlingType = (kode) => {
+  switch (kode) {
+    case behandlingType.ENDRINGSSOKNAD: return 'Endringssøknad';
+    case behandlingType.FORSTEGANGSSOKNAD: return 'Førstegangssøknad';
+    case behandlingType.KLAGE: return 'Klage';
+    case behandlingType.ANKE: return 'Anke';
+    case behandlingType.REVURDERING: return 'Revurdering';
+    case behandlingType.SOKNAD: return 'Søknad';
+    case behandlingType.DOKUMENTINNSYN: return 'Dokumentinnsyn';
+    case behandlingType.TILBAKEKREVING: return 'Tilbakekreving';
+    default: return null;
+  }
+};
+
+const formatBehandlingStatus = (status) => {
+  switch (status) {
+    case behandlingStatus.OPPRETTET: return 'Opprettet';
+    case behandlingStatus.BEHANDLING_UTREDES: return 'Behandling utredes';
+    case behandlingStatus.AVSLUTTET: return 'Avsluttet';
+    case behandlingStatus.IVERKSETTER_VEDTAK: return 'Iverksetter vedtak';
+    case behandlingStatus.FATTER_VEDTAK: return 'Fatter vedtak';
+    default: return null;
+  }
+};
+
 const canPreview = formValues => formValues.ankeVurdering != null && formValues.fritekstTilBrev && (formValues.fritekstTilBrev.length > 2);
 const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
-const formatBehandling = behandling => `${formatDate(behandling.opprettet)}. ${behandling.type.kode} ${behandling.status.kode}`;
+const formatBehandling = b => `${formatDate(b.opprettet)} - ${formatBehandlingType(b.type.kode)} - ${formatBehandlingStatus(b.status.kode)}`;
 
 /**
  * Presentasjonskomponent. Setter opp aksjonspunktet for behandling.
