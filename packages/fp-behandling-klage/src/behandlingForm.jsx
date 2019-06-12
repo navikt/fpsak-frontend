@@ -93,15 +93,14 @@ export const hasBehandlingFormErrorsOfType = (formName, errorMsg) => createSelec
   [getBehandlingFormRegisteredFields(formName), getBehandlingFormSyncErrors(formName)],
   (registeredFields = {}, errors = {}) => {
     const shownFieldIds = Object.keys(registeredFields).filter(rf => registeredFields[rf].count > 0);
-    console.log('hasBehandlingFormErrorsOfType', formName, errorMsg);
-    return false;
-    // return shownFieldIds.some((id) => {
-    //   const idParts = id.split(/[.|\[|\]]/).filter(parts => parts && parts !== ''); // eslint-disable-line no-useless-escape
-    //   return Object.keys(errors)
-    //     .some((errorKey) => {
-    //       const value = traverseAndFindValue({ [errorKey]: errors[errorKey] }, idParts);
-    //       return Array.isArray(value) ? value.some(eo => eo && eo.id === errorMsg[0].id) : false;
-    //     });
-    // });
+
+    return shownFieldIds.some((id) => {
+      const idParts = id.split(/[.|\[|\]]/).filter(parts => parts && parts !== ''); // eslint-disable-line no-useless-escape
+      return Object.keys(errors)
+        .some((errorKey) => {
+          const value = traverseAndFindValue({ [errorKey]: errors[errorKey] }, idParts);
+          return Array.isArray(value) ? value.some(eo => eo && eo.id === errorMsg[0].id) : false;
+        });
+    });
   },
 );

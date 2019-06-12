@@ -170,6 +170,7 @@ export class BehandlingsprosessAnkeIndex extends Component {
     }));
 
     const apCodes = aksjonspunktModels.map(ap => ap.kode);
+    const shouldUpdateInfo = false;
     const afterSubmit = () => {
         this.goToBehandlingWithDefaultPunktAndFakta();
     };

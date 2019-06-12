@@ -21,7 +21,6 @@ import {
  CheckboxField, RadioGroupField, RadioOption, SelectField, TextAreaField,
 } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
 
 import PreviewKlageLink from '../../../behandlingsprosess/components/klage/Klagevurdering/SharedUtills/PreviewKlageLink';
 import FritekstBrevTextField from '../../../behandlingsprosess/components/klage/Klagevurdering/SharedUtills/FritekstKlageBrevTextField';
@@ -33,11 +32,23 @@ import TempsaveKlageButton from '../../../behandlingsprosess/components/klage/Kl
 const mapSelectValues = () => {
   const liste = [
     {
-      navn: 'Første', kode: 'A',
+      navn: 'BehandlingA', kode: 'behandlingA',
+    },
+    {
+      navn: 'BehandlingB', kode: 'behandlingB',
     },
   ];
   return liste.map(mo => <option key={mo.kode} value={mo.kode}>{mo.navn}</option>);
 };
+
+const canSubmit = (formValues) => {
+  if (ankeVurdering.AVVIS_ANKE === formValues.ankeVurdering && !formValues.realitetsbehandles) {
+    return false;
+  }
+  return formValues.ankeVurdering != null && formValues.ankeVedtak != null;
+};
+
+const canPreview = formValues => formValues.ankeVurdering != null && formValues.fritekstTilBrev && (formValues.fritekstTilBrev.length > 2);
 
 /**
  * Presentasjonskomponent. Setter opp aksjonspunktet for behandling.
@@ -119,8 +130,8 @@ const BehandleAnkeFormImpl = ({
               className={readOnly ? styles.selectReadOnly : null}
               direction="horisontal"
             >
-              <RadioOption value={ankeVurderingOmgjoer.UGUNST_MEDHOLD_I_KLAGE} label={{ id: 'Ankebehandling.Realitetsbehandles.Ja' }} />
-              <RadioOption value={ankeVurderingOmgjoer.DELVIS_MEDHOLD_I_KLAGE} label={{ id: 'Ankebehandling.Realitetsbehandles.Nei' }} />
+              <RadioOption name="realitetsbehandles" value="ja" label={{ id: 'Ankebehandling.Realitetsbehandles.Ja' }} />
+              <RadioOption name="realitetsbehandles" value="nei" label={{ id: 'Ankebehandling.Realitetsbehandles.Nei' }} />
             </RadioGroupField>
           </ArrowBox>
         </Column>
@@ -144,14 +155,14 @@ const BehandleAnkeFormImpl = ({
           <Column xs="8">
             <BehandlingspunktSubmitButton
               formName={formProps.form}
-              isReadOnly={false}
-              isSubmittable={ankeVurdering.AVVIS_ANKE === formValues.ankeVurdering}
+              isReadOnly={readOnly}
+              isSubmittable={canSubmit(formValues)}
               hasEmptyRequiredFields={false}
               isBehandlingFormSubmitting={isBehandlingFormSubmitting}
               isBehandlingFormDirty={isBehandlingFormDirty}
               hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
             />
-            {!readOnly && formValues.ankeVurdering && formValues.fritekstTilBrev && (formValues.fritekstTilBrev.length > 2)
+            {canPreview(formValues)
             && (
               <PreviewKlageLink
                 previewCallback={previewCallback}
@@ -192,9 +203,15 @@ BehandleAnkeFormImpl.defaultProps = {
 };
 
 export const buildInitialValues = createSelector([getBehandlingKlageVurderingResultatNK], klageVurderingResultat => ({
+  ankeVedtak: klageVurderingResultat ? klageVurderingResultat.ankeVedtak : null,
   ankeVurdering: klageVurderingResultat ? klageVurderingResultat.ankeVurdering : null,
   begrunnelse: klageVurderingResultat ? klageVurderingResultat.begrunnelse : null,
   fritekstTilBrev: klageVurderingResultat ? klageVurderingResultat.fritekstTilBrev : null,
+  ikkePart: klageVurderingResultat ? klageVurderingResultat.ikkePart : null,
+  ikkeKonkret: klageVurderingResultat ? klageVurderingResultat.ikkeKonkret : null,
+  ikkeFrist: klageVurderingResultat ? klageVurderingResultat.ikkeFrist : null,
+  ikkeSignert: klageVurderingResultat ? klageVurderingResultat.ikkeSignert : null,
+  realitetsbehandles: klageVurderingResultat ? klageVurderingResultat.realitetsbehandles : null,
 }));
 
 
