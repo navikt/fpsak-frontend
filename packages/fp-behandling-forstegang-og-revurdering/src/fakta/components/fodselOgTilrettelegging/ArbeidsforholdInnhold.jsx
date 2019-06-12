@@ -31,18 +31,22 @@ export const ArbeidsforholdInnhold = ({
   <div>
     <FlexContainer>
       <FlexRow>
-        <DatepickerField
-          name="jordmorTilretteleggingFra"
-          label={{ id: 'ArbeidsforholdInnhold.Jordmor.TilretteleggingFra' }}
-          validate={[required, hasValidDate]}
-          readOnly={readOnly}
-        />
+        <FlexColumn>
+          <DatepickerField
+            name="jordmorTilretteleggingFra"
+            label={{ id: 'ArbeidsforholdInnhold.Jordmor.TilretteleggingFra' }}
+            validate={[required, hasValidDate]}
+            readOnly={readOnly}
+          />
+        </FlexColumn>
       </FlexRow>
     </FlexContainer>
     <FlexContainer>
-      <FlexRow>
-        <ArbeidsforholdCheckboxes readOnly={readOnly} warning={warning} />
-      </FlexRow>
+      <FlexColumn>
+        <FlexRow>
+          <ArbeidsforholdCheckboxes readOnly={readOnly} warning={warning} />
+        </FlexRow>
+      </FlexColumn>
     </FlexContainer>
     {!readOnly
     && (
