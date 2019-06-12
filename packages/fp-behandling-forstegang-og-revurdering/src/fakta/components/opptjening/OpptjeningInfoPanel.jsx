@@ -5,8 +5,9 @@ import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import moment from 'moment';
-
-import { getBehandlingFastsattOpptjening, getBehandlingOpptjeningActivities } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import {
+  getBehandlingFastsattOpptjening, getBehandlingOpptjeningActivities, getAksjonspunkter,
+} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
@@ -96,8 +97,8 @@ const buildPeriod = (activity, opptjeningsperiodeFom, opptjeningsperiodeTom) => 
 };
 
 export const buildInitialValues = createSelector(
-  [getBehandlingOpptjeningActivities, getBehandlingFastsattOpptjening],
-  (opptjeningActivities, fastsattOpptjening) => fastsattOpptjening
+  [getBehandlingOpptjeningActivities, getBehandlingFastsattOpptjening, getAksjonspunkter],
+  (opptjeningActivities, fastsattOpptjening, aksjonspunkter) => fastsattOpptjening
     && ({
       opptjeningActivities: opptjeningActivities
         .filter(oa => moment(fastsattOpptjening.opptjeningFom).isBefore(addDay(oa.opptjeningTom)))
@@ -107,6 +108,7 @@ export const buildInitialValues = createSelector(
           ...buildPeriod(oa, fastsattOpptjening.opptjeningFom, fastsattOpptjening.opptjeningTom),
           id: index + 1,
         })),
+        aksjonspunkt: aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) || null,
       fastsattOpptjening,
     }),
 );
@@ -128,23 +130,23 @@ const transformPeriod = (activity, opptjeningsperiodeFom, opptjeningsperiodeTom)
   };
 };
 
-const transformValues = (values, aksjonspunkt) => ({
+const transformValues = values => ({
     opptjeningAktivitetList: values.opptjeningActivities
       .map(oa => transformPeriod(oa, addDay(values.fastsattOpptjening.opptjeningFom), addDay(values.fastsattOpptjening.opptjeningTom)))
       .map(oa => omit(oa, 'id')),
-    kode: aksjonspunkt.definisjon.kode,
+    kode: values.aksjonspunkt[0].definisjon.kode,
   });
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback([transformValues(values, ownProps.aksjonspunkter[0])]);
-  return state => ({
-    aksjonspunkt: ownProps.aksjonspunkter[0],
-    hasFastsattOpptjening: !!getBehandlingFastsattOpptjening(state),
-    initialValues: buildInitialValues(state),
-    dirty: !ownProps.notSubmittable && ownProps.dirty,
-    onSubmit,
-  });
-};
+  const mapStateToPropsFactory = (initialState, { submitCallback }) => {
+    const onSubmit = values => submitCallback([transformValues(values)]);
+    return (state, ownProps) => ({
+      aksjonspunkt: ownProps.aksjonspunkter[0],
+      hasFastsattOpptjening: !!getBehandlingFastsattOpptjening(state),
+      initialValues: buildInitialValues(state, aksjonspunktCodes),
+      dirty: !ownProps.notSubmittable && ownProps.dirty,
+      onSubmit,
+    });
+  };
 
 
 const opptjeningAksjonspunkter = [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING];
