@@ -53,7 +53,7 @@ const emptyFeltverdiOmFinnes = (periode) => {
       },
     };
   }
-  if (handletUaktsomhetGrad.belopSomSkalTilbakekreves) {
+  if (handletUaktsomhetGrad && handletUaktsomhetGrad.belopSomSkalTilbakekreves) {
     return {
       ...periode,
       [periode.valgtVilkarResultatType]: {
@@ -289,7 +289,9 @@ TilbakekrevingFormImpl.propTypes = {
 
 export const transformValues = (values, sarligGrunnTyper) => [{
   kode: tilbakekrevingAksjonspunktCodes.VURDER_TILBAKEKREVING,
-  vilkarsVurdertePerioder: values.vilkarsVurdertePerioder.map(p => TilbakekrevingPeriodeForm.transformValues(p, sarligGrunnTyper)),
+  vilkarsVurdertePerioder: values.vilkarsVurdertePerioder
+    .filter(p => !p.erForeldet)
+    .map(p => TilbakekrevingPeriodeForm.transformValues(p, sarligGrunnTyper)),
 }];
 
 const finnOriginalPeriode = (lagretPeriode, perioder) => perioder
@@ -311,7 +313,8 @@ export const slaSammenOriginaleOgLagredePeriode = createSelector([getBehandlingV
   const lagredePerioder = lagredeVilkarsvurdertePerioder
     .map(lagretPeriode => ({
       ...finnOriginalPeriode(lagretPeriode, perioder),
-      ...lagretPeriode,
+      ...omit(lagretPeriode, 'feilutbetalingBelop'),
+      feilutbetaling: lagretPeriode.feilutbetalingBelop,
       erTotalBelopUnder4Rettsgebyr,
     }));
 
@@ -334,7 +337,7 @@ export const buildInitialValues = createSelector([slaSammenOriginaleOgLagredePer
       fom: p.fom,
       tom: p.tom,
     })).sort(sortPeriods),
-    }));
+  }));
 
 const settOppPeriodeDataForDetailForm = createSelector([slaSammenOriginaleOgLagredePeriode,
   state => behandlingFormValueSelector(TILBAKEKREVING_FORM_NAME)(state, 'vilkarsVurdertePerioder')], (perioder, perioderFormState) => {

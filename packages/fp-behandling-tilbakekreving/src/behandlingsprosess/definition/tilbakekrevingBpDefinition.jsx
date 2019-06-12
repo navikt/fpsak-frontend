@@ -3,14 +3,14 @@ import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import ac from '../../kodeverk/tilbakekrevingAksjonspunktCodes';
-import VedtakResultat from '../../kodeverk/vedtakResultat';
+import VedtakResultatType from '../../kodeverk/vedtakResultatType';
 
 const getVedtakStatus = ({ beregningsresultat }) => {
   if (!beregningsresultat) {
     return vilkarUtfallType.IKKE_VURDERT;
   }
-  const { vedtakResultat } = beregningsresultat;
-  return vedtakResultat.kode === VedtakResultat.INGEN_TILBAKEBETALING ? vilkarUtfallType.IKKE_OPPFYLT : vilkarUtfallType.OPPFYLT;
+  const { vedtakResultatType } = beregningsresultat;
+  return vedtakResultatType.kode === VedtakResultatType.INGEN_TILBAKEBETALING ? vilkarUtfallType.IKKE_OPPFYLT : vilkarUtfallType.OPPFYLT;
 };
 
 /**

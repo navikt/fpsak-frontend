@@ -61,7 +61,7 @@ const kodeverkTyper = {
   VILKAR_TYPE: 'VilkårType',
   AKTSOMHET: 'Aktsomhet',
   VURDERING: 'AnnenVurdering',
-  VEDTAK_RESULTAT: 'VedtakResultat',
+  VEDTAK_RESULTAT_TYPE: 'VedtakResultatType',
   PERMISJONSBESKRIVELSE_TYPE: 'PermisjonsbeskrivelseType',
   VURDER_ARBEIDSFORHOLD_HISTORIKKINNSLAG: 'VurderArbeidsforholdHistorikkinnslag',
 };

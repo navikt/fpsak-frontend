@@ -131,6 +131,7 @@ describe('<TilbakekrevingForm>', () => {
     }];
     const lagredePerioder = {
       vilkarsVurdertePerioder: [{
+        feilutbetalingBelop: 19000,
         begrunnelse: '3434',
         fom: '2016-05-02',
         tom: '2016-05-26',
@@ -220,6 +221,7 @@ describe('<TilbakekrevingForm>', () => {
         begrunnelse: '3434',
         fom: '2016-03-16',
         tom: '2016-04-03',
+        feilutbetalingBelop: 10000,
         vilkarResultat: {
           kode: VilkarResultat.GOD_TRO,
           kodeverk: 'VILKAAR_RESULTAT',
@@ -234,6 +236,7 @@ describe('<TilbakekrevingForm>', () => {
         begrunnelse: 'test',
         fom: '2016-04-04',
         tom: '2016-05-26',
+        feilutbetalingBelop: 22000,
         vilkarResultat: {
           kode: VilkarResultat.GOD_TRO,
           kodeverk: 'VILKAAR_RESULTAT',
@@ -252,7 +255,7 @@ describe('<TilbakekrevingForm>', () => {
 
     expect(resultat.perioder).to.have.length(2);
     expect(resultat.perioder[0]).to.eql({
-      feilutbetaling: 32000,
+      feilutbetaling: 10000,
       fom: '2016-03-16',
       tom: '2016-04-03',
       foreldet: false,
@@ -274,7 +277,7 @@ describe('<TilbakekrevingForm>', () => {
        erTotalBelopUnder4Rettsgebyr: false,
     });
     expect(resultat.perioder[1]).to.eql({
-      feilutbetaling: 32000,
+      feilutbetaling: 22000,
       fom: '2016-04-04',
       tom: '2016-05-26',
       foreldet: false,

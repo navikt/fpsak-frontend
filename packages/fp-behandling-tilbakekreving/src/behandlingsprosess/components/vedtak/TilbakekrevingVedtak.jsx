@@ -73,7 +73,7 @@ const mapStateToProps = (state) => {
   const beregningsresultat = getBeregningsresultat(state);
   return {
     perioder: beregningsresultat.beregningResultatPerioder,
-    resultat: beregningsresultat.vedtakResultat,
+    resultat: beregningsresultat.vedtakResultatType,
     konsekvensAvBehandling: beregningsresultat.behandlingKonsekvens,
   };
 };
