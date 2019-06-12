@@ -5,6 +5,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import ac from '../../kodeverk/tilbakekrevingAksjonspunktCodes';
 import VedtakResultatType from '../../kodeverk/vedtakResultatType';
 
+export const getForeldelseStatus = ({ foreldelseResultat }) => (foreldelseResultat ? vilkarUtfallType.OPPFYLT : vilkarUtfallType.IKKE_VURDERT);
 const getVedtakStatus = ({ beregningsresultat }) => {
   if (!beregningsresultat) {
     return vilkarUtfallType.IKKE_VURDERT;
@@ -20,7 +21,8 @@ const getVedtakStatus = ({ beregningsresultat }) => {
 const tilbakekrevingBuilders = [
   new BehandlingspunktProperties.Builder(bpc.FORELDELSE, 'Foreldelse')
     .withAksjonspunktCodes(ac.VURDER_FORELDELSE)
-    .withVisibilityWhen(() => true),
+    .withVisibilityWhen(() => true)
+    .withStatus(getForeldelseStatus),
   new BehandlingspunktProperties.Builder(bpc.TILBAKEKREVING, 'Tilbakekreving')
     .withAksjonspunktCodes(ac.VURDER_TILBAKEKREVING)
     .withVisibilityWhen(() => true),
