@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -11,6 +12,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import {
+  ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT, required,
+} from '@fpsak-frontend/utils';
+import {
 VerticalSpacer, AksjonspunktHelpText, FadingPanel, ArrowBox,
 } from '@fpsak-frontend/shared-components';
 import { getBehandlingKlageVurderingResultatNK, getBehandlingSprak } from 'behandlingKlage/src/anke/selectors/ankeBehandlingSelectors';
@@ -20,28 +24,13 @@ import {
 import {
  CheckboxField, RadioGroupField, RadioOption, SelectField, TextAreaField,
 } from '@fpsak-frontend/form';
-import { required } from '@fpsak-frontend/utils';
-
 import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
 import ankeOmgjorArsak from '@fpsak-frontend/kodeverk/src/ankeOmgjorArsak';
+import { getBehandlinger } from 'behandling/selectors/behandlingerSelectors';
 import PreviewKlageLink from '../../../behandlingsprosess/components/klage/Klagevurdering/SharedUtills/PreviewKlageLink';
 import FritekstBrevTextField from '../../../behandlingsprosess/components/klage/Klagevurdering/SharedUtills/FritekstKlageBrevTextField';
 import styles from './behandleAnkeForm.less';
 import { getSelectedBehandlingspunktAksjonspunkter } from '../BehandlingsprosessAnkeSelectors';
-import TempsaveKlageButton from '../../../behandlingsprosess/components/klage/Klagevurdering/SharedUtills/TempsaveKlageButton';
-
-
-const mapSelectValues = () => {
-  const liste = [
-    {
-      navn: 'BehandlingA', kode: '999953',
-    },
-    {
-      navn: 'BehandlingB', kode: '999952',
-    },
-  ];
-  return liste.map(mo => <option key={mo.kode} value={mo.kode}>{mo.navn}</option>);
-};
 
 const omgjorArsakValues = [
   { kode: ankeOmgjorArsak.PROSESSUELL_FEIL, navn: 'Ankebehandling.OmgjoeringArsak.ProsessuellFeil' },
@@ -61,6 +50,8 @@ const canSubmit = (formValues) => {
 };
 
 const canPreview = formValues => formValues.ankeVurdering != null && formValues.fritekstTilBrev && (formValues.fritekstTilBrev.length > 2);
+const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
+const formatBehandling = behandling => `${formatDate(behandling.opprettet)}. ${behandling.type.kode} ${behandling.status.kode}`;
 
 /**
  * Presentasjonskomponent. Setter opp aksjonspunktet for behandling.
@@ -74,6 +65,7 @@ const BehandleAnkeFormImpl = ({
   aksjonspunktCode,
   sprakkode,
   formValues,
+  behandlinger,
   intl,
   ...formProps
 }) => (
@@ -90,7 +82,7 @@ const BehandleAnkeFormImpl = ({
           <SelectField
             readOnly={readOnly}
             name="vedtak"
-            selectValues={mapSelectValues()}
+            selectValues={behandlinger.map(behandling => <option key={behandling.id} value={behandling.id}>{formatBehandling(behandling)}</option>)}
             className={readOnly ? styles.selectReadOnly : null}
             label={intl.formatMessage({ id: 'Ankebehandling.Resultat.Vedtak' })}
             validate={[required]}
@@ -214,13 +206,6 @@ const BehandleAnkeFormImpl = ({
             )
             }
           </Column>
-          <Column xs="2">
-            {/* <TempsaveKlageButton */}
-            {/*  formValues={formValues} */}
-            {/*  saveKlage={saveKlage} */}
-            {/*  readOnly={readOnly} */}
-            {/* /> */}
-          </Column>
         </Row>
       </div>
     </FadingPanel>
@@ -234,6 +219,7 @@ BehandleAnkeFormImpl.propTypes = {
   formValues: PropTypes.shape(),
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
+  behandlinger: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   ...formPropTypes,
 };
 
@@ -297,6 +283,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       'ankeOmgjoerArsak',
       'ankeVurderingOmgjoer'),
     sprakkode: getBehandlingSprak(state),
+    behandlinger: getBehandlinger(state),
     onSubmit,
   });
 };
