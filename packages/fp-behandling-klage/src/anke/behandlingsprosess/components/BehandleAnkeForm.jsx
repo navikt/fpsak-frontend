@@ -79,6 +79,7 @@ const formatBehandlingStatus = (status) => {
 const canPreview = formValues => formValues.ankeVurdering != null && formValues.fritekstTilBrev && (formValues.fritekstTilBrev.length > 2);
 const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 const formatBehandling = b => `${formatDate(b.opprettet)} - ${formatBehandlingType(b.type.kode)} - ${formatBehandlingStatus(b.status.kode)}`;
+const formatId = b => `${b}`;
 
 /**
  * Presentasjonskomponent. Setter opp aksjonspunktet for behandling.
@@ -109,7 +110,7 @@ const BehandleAnkeFormImpl = ({
           <SelectField
             readOnly={readOnly}
             name="vedtak"
-            selectValues={behandlinger.map(behandling => <option key={behandling.id} value={behandling.id}>{formatBehandling(behandling)}</option>)}
+            selectValues={behandlinger.map(b => <option key={formatId(b.id)} value={formatId(b.id)}>{formatBehandling(b)}</option>)}
             className={readOnly ? styles.selectReadOnly : null}
             label={intl.formatMessage({ id: 'Ankebehandling.Resultat.Vedtak' })}
             validate={[required]}
