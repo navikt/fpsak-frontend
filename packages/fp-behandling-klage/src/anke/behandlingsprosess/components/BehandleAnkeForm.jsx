@@ -51,10 +51,10 @@ const omgjorArsakValues = [
 ];
 
 const canSubmit = (formValues) => {
-  if (ankeVurdering.AVVIS_ANKE === formValues.ankeVurdering && !formValues.erSubsidiartRealitetsbehandles) {
+  if (ankeVurdering.ANKE_AVVIS === formValues.ankeVurdering && !formValues.erSubsidiartRealitetsbehandles) {
     return false;
   }
-  if (ankeVurdering.OMGJOER_VEDTAK === formValues.ankeVurdering && (!formValues.ankeOmgjoerArsak || !formValues.ankeVurderingOmgjoer)) {
+  if (ankeVurdering.ANKE_OMGJOER === formValues.ankeVurdering && (!formValues.ankeOmgjoerArsak || !formValues.ankeVurderingOmgjoer)) {
     return false;
   }
   return formValues.ankeVurdering != null && formValues.vedtak != null;
@@ -107,8 +107,8 @@ const BehandleAnkeFormImpl = ({
             direction="vertical"
             readOnly={readOnly}
           >
-            <RadioOption value={ankeVurdering.STADFESTE_YTELSESVEDTAK} label={{ id: 'Ankebehandling.Resultat.Stadfest' }} />
-            <RadioOption value={ankeVurdering.OMGJOER_VEDTAK} label={{ id: 'Ankebehandling.Resultat.Omgjør' }} />
+            <RadioOption value={ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK} label={{ id: 'Ankebehandling.Resultat.Stadfest' }} />
+            <RadioOption value={ankeVurdering.ANKE_OMGJOER} label={{ id: 'Ankebehandling.Resultat.Omgjør' }} />
           </RadioGroupField>
         </Column>
         <Column xs="4">
@@ -119,12 +119,12 @@ const BehandleAnkeFormImpl = ({
             className={readOnly ? styles.selectReadOnly : null}
             direction="vertical"
           >
-            <RadioOption value={ankeVurdering.OPPHEV_OG_HJEMSEND} label={{ id: 'Ankebehandling.Resultat.OpphevHjemsend' }} />
-            <RadioOption value={ankeVurdering.AVVIS_ANKE} label={{ id: 'Ankebehandling.Resultat.Avvis' }} />
+            <RadioOption value={ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE} label={{ id: 'Ankebehandling.Resultat.OpphevHjemsend' }} />
+            <RadioOption value={ankeVurdering.ANKE_AVVIS} label={{ id: 'Ankebehandling.Resultat.Avvis' }} />
           </RadioGroupField>
         </Column>
       </Row>
-      {ankeVurdering.AVVIS_ANKE === formValues.ankeVurdering
+      {ankeVurdering.ANKE_AVVIS === formValues.ankeVurdering
       && (
         <Row>
           <Column xs="7">
@@ -149,7 +149,7 @@ const BehandleAnkeFormImpl = ({
           </Column>
         </Row>
       )}
-      {ankeVurdering.OMGJOER_VEDTAK === formValues.ankeVurdering
+      {ankeVurdering.ANKE_OMGJOER === formValues.ankeVurdering
       && (
         <Row>
           <Column xs="7">
