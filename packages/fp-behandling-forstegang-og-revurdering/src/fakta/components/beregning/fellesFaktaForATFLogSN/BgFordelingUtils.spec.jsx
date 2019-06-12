@@ -8,7 +8,6 @@ import { lonnsendringField }
 import { erNyoppstartetFLField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import {
   setArbeidsforholdInitialValues,
   setGenerellAndelsinfo,
@@ -69,10 +68,10 @@ describe('<BgFordelingUtils>', () => {
   it('skal returnere true for fastsetting av FL-inntekt når FL-inntekt skal fastsettes', () => {
     const fieldArrayName = 'test';
     const values = {};
-    values[fieldArrayName] = new MockFieldsWithContent(fieldArrayName, [
+    values[fieldArrayName] = [
       lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
       lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
-    ]);
+    ];
     const skalFastsetteInntektMock = andel => (andel.aktivitetStatus === aktivitetStatuser.FRILANSER);
     const skalFastsetteFL = skalFastsettInntektForStatus(fieldArrayName, aktivitetStatuser.FRILANSER).resultFunc(values, skalFastsetteInntektMock);
     expect(skalFastsetteFL).to.equal(true);
@@ -81,10 +80,10 @@ describe('<BgFordelingUtils>', () => {
   it('skal returnere false for fastsetting av FL-inntekt når FL-inntekt ikkje skal fastsettes', () => {
     const fieldArrayName = 'test';
     const values = {};
-    values[fieldArrayName] = new MockFieldsWithContent(fieldArrayName, [
+    values[fieldArrayName] = [
       lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
       lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
-    ]);
+    ];
     const skalFastsetteInntektMock = andel => (andel.aktivitetStatus !== aktivitetStatuser.FRILANSER);
     const skalFastsetteFL = skalFastsettInntektForStatus(fieldArrayName, aktivitetStatuser.FRILANSER).resultFunc(values, skalFastsetteInntektMock);
     expect(skalFastsetteFL).to.equal(false);
@@ -93,10 +92,10 @@ describe('<BgFordelingUtils>', () => {
   it('skal returnere true for fastsetting av AT-inntekt når AT-inntekt skal fastsettes', () => {
     const fieldArrayName = 'test';
     const values = {};
-    values[fieldArrayName] = new MockFieldsWithContent(fieldArrayName, [
+    values[fieldArrayName] = [
       lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
       lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
-    ]);
+    ];
     const skalFastsetteInntektMock = andel => (andel.aktivitetStatus === aktivitetStatuser.ARBEIDSTAKER);
     const skalFastsetteFL = skalFastsettInntektForStatus(fieldArrayName, aktivitetStatuser.ARBEIDSTAKER).resultFunc(values, skalFastsetteInntektMock);
     expect(skalFastsetteFL).to.equal(true);
@@ -105,10 +104,10 @@ describe('<BgFordelingUtils>', () => {
   it('skal returnere false for fastsetting av FL-inntekt når FL-inntekt ikkje skal fastsettes', () => {
     const fieldArrayName = 'test';
     const values = {};
-    values[fieldArrayName] = new MockFieldsWithContent(fieldArrayName, [
+    values[fieldArrayName] = [
       lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
       lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
-    ]);
+    ];
     const skalFastsetteInntektMock = andel => (andel.aktivitetStatus !== aktivitetStatuser.ARBEIDSTAKER);
     const skalFastsetteFL = skalFastsettInntektForStatus(fieldArrayName, aktivitetStatuser.ARBEIDSTAKER).resultFunc(values, skalFastsetteInntektMock);
     expect(skalFastsetteFL).to.equal(false);

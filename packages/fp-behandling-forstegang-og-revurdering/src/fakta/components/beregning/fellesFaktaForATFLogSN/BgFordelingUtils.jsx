@@ -261,12 +261,7 @@ export const skalFastsettInntektForStatus = (inntektFieldArrayName, status) => c
   if (!fields) {
     return false;
   }
-  for (let i = 0; i < fields.length; i += 1) {
-    if (fields.get(i).aktivitetStatus === status && skalFastsette(fields.get(i))) {
-      return true;
-    }
-  }
-  return false;
+  return fields.filter(field => field.aktivitetStatus === status).map(skalFastsette).includes(true);
 });
 
 
