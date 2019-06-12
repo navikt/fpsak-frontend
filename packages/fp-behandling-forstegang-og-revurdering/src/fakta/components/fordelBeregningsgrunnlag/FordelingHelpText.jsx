@@ -92,6 +92,13 @@ const createGraderingOrRefusjonString = (graderingArbeidsforhold, refusjonArbeid
       values={{ arbeidsforhold: arbeidsforholdString }}
     />);
   }
+  if (text.length < 1) {
+    return text;
+  }
+  text.push(<FormattedMessage
+    key="EndringBeregningsgrunnlagRefusjon"
+    id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.FastsetÅrsbeløp"
+  />);
   return text;
 };
 

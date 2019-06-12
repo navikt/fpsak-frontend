@@ -1176,6 +1176,7 @@
   "BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning": "Vurder fakta for beregningen",
   "BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.Refusjon": "Nytt refusjonskrav hos {arbeidsforhold}. ",
   "BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.Gradering": "Søkt gradering hos {arbeidsforhold}. ",
+  "BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.FastsetÅrsbeløp": "Fastsett årsbeløp",
   "BeregningInfoPanel.TidsbegrensetArbFor.Arbeidsforhold": "Er arbeidsforholdet i {navn} med varighet {fom} - {tom} tidsbegrenset?",
   "BeregningInfoPanel.FormAlternativ.Ja": "Ja",
   "BeregningInfoPanel.FormAlternativ.Nei": "Nei",
@@ -1289,6 +1290,7 @@
   "BeregningInfoPanel.EndringBG.Validation.TotalFordelingForArbeidsforholdIkkeHøyereEnnBeregningsgrunnlag": "Totalbeløp for {arbeidsgiver} kan ikke være høyere enn inntekt ({inntekt}).",
   "BeregningInfoPanel.EndringBG.Validation.TotalFordelingForAAPOgArbeidsforholdIkkeHøyereEnnBeregningsgrunnlag": "Totalbeløp for Arbeidsavklaringspenger og {arbeidsgiver} kan ikke være høyere enn inntekt ({inntekt}).",
   "BeregningInfoPanel.EndringBG.Inntekt": "Inntekt",
+  "BeregningInfoPanel.EndringBG.Beregningsgrunnlag": "Beregningsgrunnlag",
 
   "BeregningInfoPanel.EtterlønnSluttpakke.HarSøkerInntekt": "Har søker etterlønn eller sluttpakke?",
   "BeregningInfoPanel.EtterlønnSluttpakke.Månedsinntekt": "Månedsinntekt",
