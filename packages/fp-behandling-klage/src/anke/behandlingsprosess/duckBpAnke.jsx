@@ -67,7 +67,7 @@ export const overrideProsessAksjonspunkter = (behandlingIdentifier, params, shou
 
 export const fetchPreviewBrev = ankeBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();
 
-export const fetchPreviewKlageBrev = ankeBehandlingApi.PREVIEW_MESSAGE_ANKE.makeRestApiRequest();
+export const fetchPreviewAnkeBrev = ankeBehandlingApi.PREVIEW_MESSAGE_ANKE.makeRestApiRequest();
 
 /* Reducer */
 const initialState = {

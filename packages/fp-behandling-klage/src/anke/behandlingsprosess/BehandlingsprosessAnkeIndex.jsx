@@ -29,7 +29,7 @@ import {
   resetBehandlingspunkter,
   fetchPreviewBrev as fetchPreview,
   getSelectedBehandlingspunktNavn,
-  fetchPreviewKlageBrev,
+  fetchPreviewAnkeBrev,
   resolveKlageTemp,
   saveKlage,
   getResolveProsessAksjonspunkterSuccess,
@@ -65,7 +65,6 @@ export class BehandlingsprosessAnkeIndex extends Component {
     this.goToSearchPage = this.goToSearchPage.bind(this);
     this.submitVilkar = this.submitVilkar.bind(this);
     this.previewCallback = this.previewCallback.bind(this);
-    this.previewCallbackKlage = this.previewCallbackKlage.bind(this);
     this.setShowModalKlageBehandling = this.setShowModalKlageBehandling.bind(this);
     this.saveKlageText = this.saveKlageText.bind(this);
 
@@ -125,24 +124,13 @@ export class BehandlingsprosessAnkeIndex extends Component {
     pushLocation('/');
   }
 
-  previewCallbackKlage(data) {
-    const { behandlingIdentifier, fetchPreviewKlageBrev: fetchBrevPreview } = this.props;
+  previewCallback(data) {
+    const { behandlingIdentifier, fetchPreview: fetchBrevPreview } = this.props;
     const brevData = {
       ...data,
       behandlingId: behandlingIdentifier.behandlingId,
     };
     fetchBrevPreview(brevData);
-  }
-
-  previewCallback(mottaker, brevmalkode, fritekst) {
-    const { behandlingIdentifier, fetchPreview: fetchBrevPreview } = this.props;
-    const data = {
-      behandlingId: behandlingIdentifier.behandlingId,
-      fritekst: fritekst || '',
-      mottaker,
-      brevmalkode,
-    };
-    fetchBrevPreview(data);
   }
 
   saveKlageText(aksjonspunktModel, shouldReopenAp) {
@@ -217,7 +205,7 @@ export class BehandlingsprosessAnkeIndex extends Component {
             submitCallback={this.submitVilkar}
             previewCallback={this.previewCallback}
             saveTempKlage={this.saveKlageText}
-            previewCallbackKlage={this.previewCallbackKlage}
+            previewCallbackKlage={this.previewCallback}
             selectedBehandlingspunkt={selectedBehandlingspunkt}
           />
         </BehandlingsprosessPanel>
@@ -261,7 +249,6 @@ BehandlingsprosessAnkeIndex.propTypes = {
   resolveProsessAksjonspunkter: PropTypes.func.isRequired,
   overrideProsessAksjonspunkter: PropTypes.func.isRequired,
   fetchPreview: PropTypes.func.isRequired,
-  fetchPreviewKlageBrev: PropTypes.func.isRequired,
   fagsakYtelseType: kodeverkObjektPropType.isRequired,
   behandlingStatus: kodeverkObjektPropType.isRequired,
   behandlingType: kodeverkObjektPropType.isRequired,
@@ -296,8 +283,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
     push,
-    fetchPreview,
-    fetchPreviewKlageBrev,
+    fetchPreview: fetchPreviewAnkeBrev,
     resolveProsessAksjonspunkter,
     overrideProsessAksjonspunkter,
     resetBehandlingspunkter,

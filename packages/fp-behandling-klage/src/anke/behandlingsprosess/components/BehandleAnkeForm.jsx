@@ -207,10 +207,10 @@ export const buildInitialValues = createSelector([getBehandlingKlageVurderingRes
   ankeVurdering: klageVurderingResultat ? klageVurderingResultat.ankeVurdering : null,
   begrunnelse: klageVurderingResultat ? klageVurderingResultat.begrunnelse : null,
   fritekstTilBrev: klageVurderingResultat ? klageVurderingResultat.fritekstTilBrev : null,
-  ikkePart: klageVurderingResultat ? klageVurderingResultat.ikkePart : null,
-  ikkeKonkret: klageVurderingResultat ? klageVurderingResultat.ikkeKonkret : null,
-  ikkeFrist: klageVurderingResultat ? klageVurderingResultat.ikkeFrist : null,
-  ikkeSignert: klageVurderingResultat ? klageVurderingResultat.ikkeSignert : null,
+  ikkePart: klageVurderingResultat ? klageVurderingResultat.ikkePart : false,
+  ikkeKonkret: klageVurderingResultat ? klageVurderingResultat.ikkeKonkret : false,
+  ikkeFrist: klageVurderingResultat ? klageVurderingResultat.ikkeFrist : false,
+  ikkeSignert: klageVurderingResultat ? klageVurderingResultat.ikkeSignert : false,
   realitetsbehandles: klageVurderingResultat ? klageVurderingResultat.realitetsbehandles : null,
 }));
 
