@@ -40,7 +40,13 @@ export const ArbeidsforholdInnhold = ({
           />
         </FlexColumn>
       </FlexRow>
-      <ArbeidsforholdCheckboxes readOnly={readOnly} warning={warning} />
+    </FlexContainer>
+    <FlexContainer>
+      <FlexColumn>
+        <FlexRow>
+          <ArbeidsforholdCheckboxes readOnly={readOnly} warning={warning} />
+        </FlexRow>
+      </FlexColumn>
     </FlexContainer>
     {!readOnly
     && (
