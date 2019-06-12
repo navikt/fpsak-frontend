@@ -184,6 +184,9 @@ VurderOgFastsettATFL.buildInitialValues = (beregningsgrunnlag, getKodeverknavn, 
   }
   const andeler = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
   .filter(andel => andel.aktivitetStatus.kode !== aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+  if (andeler.length === 0) {
+    return {};
+  }
   return {
     [inntektFieldArrayName]: InntektFieldArray.buildInitialValues(andeler, getKodeverknavn, faktaOmBeregning),
     ...InntektstabellPanel.buildInitialValues(aksjonspunkter),
