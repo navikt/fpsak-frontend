@@ -4,21 +4,22 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import { getAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { InputField, NavFieldGroup, SelectField } from '@fpsak-frontend/form';
 import {
   isArrayEmpty, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, required,
 } from '@fpsak-frontend/utils';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import { createSelector } from 'reselect';
 import {
   Image, Table, TableRow, TableColumn, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { getAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import styles from './brukersAndelFieldArray.less';
 import { validateUlikeAndelerWithGroupingFunction } from '../ValidateAndelerUtils';
 import { isBeregningFormDirty as isFormDirty } from '../../BeregningFormUtils';
@@ -80,7 +81,7 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
         <SelectField
           label=""
           name={`${andelElementFieldId}.inntektskategori`}
-          bredde="L"
+          bredde="l"
           selectValues={inntektskategoriSelectValues(inntektskategoriKoder)}
           value={fields.get(index).inntektskategori}
           readOnly={readOnly}
@@ -227,21 +228,26 @@ BrukersAndelFieldArray.validate = (values) => {
   return null;
 };
 
-const sorterKodeverkAlfabetisk = kodeverkListe => kodeverkListe.slice().sort((a, b) => a.navn.localeCompare(b.navn));
+export const getInntektskategorierAlfabetiskSortert = createSelector(
+  [getKodeverk(kodeverkTyper.INNTEKTSKATEGORI)],
+  kodeverkListe => kodeverkListe.slice().sort((a, b) => a.navn.localeCompare(b.navn)),
+);
 
+export const isBeregningAksjonspunktClosed = createSelector(
+  [getAksjonspunkter], (alleAp) => {
+    const relevantAp = alleAp.filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN);
+    return relevantAp.length === 0 ? false : relevantAp.some(ap => !isAksjonspunktOpen(ap.status.kode));
+  },
+);
 
 const mapStateToProps = (state) => {
   const isBeregningFormDirty = isFormDirty(state);
   const aktivitetStatuser = getKodeverk(kodeverkTyper.AKTIVITET_STATUS)(state);
-  const alleAp = getAksjonspunkter(state);
-  const relevantAp = alleAp
-    .filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN);
-  const isAksjonspunktClosed = relevantAp.length === 0 ? undefined : !isAksjonspunktOpen(relevantAp[0].status.kode);
   return {
     isBeregningFormDirty,
-    isAksjonspunktClosed,
     aktivitetStatuser,
-    inntektskategoriKoder: sorterKodeverkAlfabetisk(getKodeverk(kodeverkTyper.INNTEKTSKATEGORI)(state)),
+    isAksjonspunktClosed: isBeregningAksjonspunktClosed(state),
+    inntektskategoriKoder: getInntektskategorierAlfabetiskSortert(state),
   };
 };
 

@@ -60,12 +60,14 @@ FastsettEndretBeregningsgrunnlagImpl.propTypes = {
   skalHaEndretInformasjonIHeader: PropTypes.bool.isRequired,
 };
 
+const emptyArray = [];
+
 const mapStateToProps = (state) => {
   const tilfeller = getFaktaOmBeregningTilfellerKoder(state);
   const perioder = getEndringBeregningsgrunnlagPerioder(state);
   return ({
     skalHaEndretInformasjonIHeader: !skalViseHelptextForEndretBg(tilfeller),
-    perioder: perioder || [],
+    perioder: perioder || emptyArray,
   });
 };
 

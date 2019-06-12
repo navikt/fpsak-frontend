@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import {
   createArbeidsperiodeString,
-  getUniqueListOfArbeidsforhold,
+  getUniqueListOfArbeidsforholdFromAndeler,
   sortArbeidsforholdList,
 } from './ArbeidsforholdHelper';
 
@@ -61,7 +61,7 @@ describe('<ArbeidsforholdHelper>', () => {
   });
 
   it('skal hente unik liste av arbeidsforhold', () => {
-    const unikListe = getUniqueListOfArbeidsforhold(andeler);
+    const unikListe = getUniqueListOfArbeidsforholdFromAndeler(andeler);
     expect(unikListe).has.length(4);
   });
 

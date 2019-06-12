@@ -4,17 +4,9 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { InputField, SelectField } from '@fpsak-frontend/form';
-import { getUniqueListOfArbeidsforhold } from '../ArbeidsforholdHelper';
+import { getUniqueListOfArbeidsforholdFromAndeler } from '../ArbeidsforholdHelper';
 import { ArbeidsforholdFieldImpl } from './ArbeidsforholdField';
 
-const andelField = {
-  nyAndel: false,
-  andel: 'Sopra Steria AS (233647823)',
-  andelsnr: 1,
-  fastsattBelop: '0',
-  lagtTilAvSaksbehandler: false,
-  inntektskategori: 'ARBEIDSTAKER',
-};
 
 const arbeidsforhold1 = {
   arbeidsgiverNavn: 'Sopra Steria AS',
@@ -24,6 +16,16 @@ const arbeidsforhold1 = {
   arbeidsforholdId: null,
   arbeidsforholdType: '',
   aktørId: null,
+};
+
+const andelField = {
+  nyAndel: false,
+  andel: 'Sopra Steria AS (233647823)',
+  andelsnr: 1,
+  fastsattBelop: '0',
+  lagtTilAvSaksbehandler: false,
+  inntektskategori: 'ARBEIDSTAKER',
+  ...arbeidsforhold1,
 };
 
 
@@ -46,7 +48,7 @@ describe('<ArbeidsforholdField>', () => {
   it('skal render ArbeidsforholdField med input for eksisterende andel', () => {
     const wrapper = shallow(<ArbeidsforholdFieldImpl
       fields={fields}
-      arbeidsforholdList={getUniqueListOfArbeidsforhold([andel])}
+      arbeidsforholdList={getUniqueListOfArbeidsforholdFromAndeler([andel])}
       readOnly={false}
       name="andel"
       index={0}
@@ -62,7 +64,7 @@ describe('<ArbeidsforholdField>', () => {
 
     const wrapper = shallow(<ArbeidsforholdFieldImpl
       fields={fields2}
-      arbeidsforholdList={getUniqueListOfArbeidsforhold([andel])}
+      arbeidsforholdList={getUniqueListOfArbeidsforholdFromAndeler([andel])}
       readOnly={false}
       name="andel"
       index={0}

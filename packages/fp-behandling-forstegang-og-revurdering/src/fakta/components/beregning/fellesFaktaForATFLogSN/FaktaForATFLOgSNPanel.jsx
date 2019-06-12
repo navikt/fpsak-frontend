@@ -286,8 +286,10 @@ export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
 );
 
 
+const emptyArray = [];
+
 const mapStateToProps = (state) => {
-  const aktivePaneler = getFaktaOmBeregningTilfellerKoder(state) ? getFaktaOmBeregningTilfellerKoder(state) : [];
+  const aktivePaneler = getFaktaOmBeregningTilfellerKoder(state) ? getFaktaOmBeregningTilfellerKoder(state) : emptyArray;
   return {
     aktivePaneler,
   };

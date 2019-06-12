@@ -2,18 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import { InputField, SelectField, PeriodpickerField } from '@fpsak-frontend/form';
 import { parseCurrencyInput } from '@fpsak-frontend/utils';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import { TableRow, TableColumn } from '@fpsak-frontend/shared-components';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { createSelector } from 'reselect';
 import styles from './inntektFieldArray.less';
 import ArbeidsforholdField from './ArbeidsforholdField';
-import { skalRedigereInntektSelector, skalRedigereInntektskategoriSelector } from './BgFordelingUtils';
+import { getSkalRedigereInntekt, getSkalRedigereInntektskategori } from './BgFordelingUtils';
 
 
 export const getHeaderTextCodes = (skalVisePeriode, skalViseRefusjon) => {
@@ -57,17 +58,20 @@ export const AndelRowImpl = ({
   readOnly,
   isAksjonspunktClosed,
   removeAndel,
-}) => (
-  <TableRow>
-    <TableColumn>
-      <ArbeidsforholdField
-        fields={fields}
-        index={index}
-        name={`${andelElementFieldId}.andel`}
-        readOnly={readOnly}
-      />
-    </TableColumn>
-    {skalVisePeriode
+}) => {
+  const field = fields.get(index);
+  field.skalRedigereInntekt = skalRedigereInntekt;
+  return (
+    <TableRow>
+      <TableColumn>
+        <ArbeidsforholdField
+          fields={fields}
+          index={index}
+          name={`${andelElementFieldId}.andel`}
+          readOnly={readOnly}
+        />
+      </TableColumn>
+      {skalVisePeriode
       && (
       <TableColumn>
         <PeriodpickerField
@@ -79,7 +83,7 @@ export const AndelRowImpl = ({
       </TableColumn>
       )
     }
-    {skalRedigereInntekt
+      {skalRedigereInntekt
     && (
     <TableColumn className={styles.rightAlignInput}>
       <InputField
@@ -92,7 +96,7 @@ export const AndelRowImpl = ({
     </TableColumn>
     )
     }
-    {!skalRedigereInntekt
+      {!skalRedigereInntekt
     && (
     <TableColumn className={styles.rightAlign}>
       <InputField
@@ -104,7 +108,7 @@ export const AndelRowImpl = ({
     </TableColumn>
     )
     }
-    {skalViseRefusjon
+      {skalViseRefusjon
           && (
           <TableColumn className={styles.rightAlign}>
             <InputField
@@ -116,19 +120,19 @@ export const AndelRowImpl = ({
           </TableColumn>
           )
     }
-    <TableColumn className={styles.rightAlign}>
-      <SelectField
-        label=""
-        name={`${andelElementFieldId}.inntektskategori`}
-        bredde="l"
-        selectValues={inntektskategoriSelectValues(inntektskategoriKoder)}
-        value={fields.get(index).inntektskategori}
-        readOnly={readOnly || !skalRedigereInntektskategori}
-        isEdited={isAksjonspunktClosed && skalRedigereInntektskategori}
-      />
-    </TableColumn>
-    <TableColumn>
-      {skalViseSletteknapp
+      <TableColumn className={styles.rightAlign}>
+        <SelectField
+          label=""
+          name={`${andelElementFieldId}.inntektskategori`}
+          bredde="l"
+          selectValues={inntektskategoriSelectValues(inntektskategoriKoder)}
+          value={fields.get(index).inntektskategori}
+          readOnly={readOnly || !skalRedigereInntektskategori}
+          isEdited={isAksjonspunktClosed && skalRedigereInntektskategori}
+        />
+      </TableColumn>
+      <TableColumn>
+        {skalViseSletteknapp
     && (
       <button
         className={styles.buttonRemove}
@@ -138,10 +142,10 @@ export const AndelRowImpl = ({
       />
     )
     }
-    </TableColumn>
-  </TableRow>
+      </TableColumn>
+    </TableRow>
 );
-
+};
 
 AndelRowImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
@@ -159,24 +163,30 @@ AndelRowImpl.propTypes = {
   index: PropTypes.number.isRequired,
 };
 
+export const getIsAksjonspunktClosed = createSelector(
+  [getAksjonspunkter], (alleAp) => {
+    const relevantAp = alleAp.filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN
+      || ap.definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG);
+    return relevantAp.length === 0 ? false : relevantAp.some(ap => !isAksjonspunktOpen(ap.status.kode));
+  },
+);
 
-const sorterKodeverkAlfabetisk = kodeverkListe => kodeverkListe.slice().sort((a, b) => a.navn.localeCompare(b.navn));
+export const getInntektskategorierAlfabetiskSortert = createSelector(
+  [getKodeverk(kodeverkTyper.INNTEKTSKATEGORI)],
+  kodeverkListe => kodeverkListe.slice().sort((a, b) => a.navn.localeCompare(b.navn)),
+);
 
 
 export const mapStateToProps = (state, ownProps) => {
-  const alleAp = getAksjonspunkter(state);
-  const relevantAp = alleAp
-    .filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN);
-  const isAksjonspunktClosed = relevantAp.length === 0 ? undefined : !isAksjonspunktOpen(relevantAp[0].status.kode);
   const field = ownProps.fields.get(ownProps.index);
-  const skalRedigereInntekt = skalRedigereInntektSelector(state)(field);
-  const skalRedigereInntektskategori = skalRedigereInntektskategoriSelector(state)(field);
-  field.skalRedigereInntekt = skalRedigereInntekt;
+  const isAksjonspunktClosed = getIsAksjonspunktClosed(state);
+  const skalRedigereInntekt = getSkalRedigereInntekt(state)(field);
+  const skalRedigereInntektskategori = getSkalRedigereInntektskategori(state)(field);
   return {
     skalRedigereInntekt,
     skalRedigereInntektskategori,
     isAksjonspunktClosed,
-    inntektskategoriKoder: sorterKodeverkAlfabetisk(getKodeverk(kodeverkTyper.INNTEKTSKATEGORI)(state)),
+    inntektskategoriKoder: getInntektskategorierAlfabetiskSortert(state),
   };
 };
 

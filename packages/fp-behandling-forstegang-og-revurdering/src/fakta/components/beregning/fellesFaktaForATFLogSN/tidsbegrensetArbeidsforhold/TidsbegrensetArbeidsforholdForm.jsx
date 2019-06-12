@@ -11,9 +11,8 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
-import { getFaktaOmBeregning } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
-import { sortArbeidsforholdList } from '../../ArbeidsforholdHelper';
+import { getSortedKortvarigeArbeidsforholdList } from '../../ArbeidsforholdHelper';
 
 const kortvarigStringId = 'BeregningInfoPanel.TidsbegrensetArbFor.Arbeidsforhold';
 
@@ -68,14 +67,14 @@ TidsbegrensetArbeidsforholdFormImpl.propTypes = {
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  const faktaOmBeregning = getFaktaOmBeregning(state);
-  return {
-    andelsliste: sortArbeidsforholdList(faktaOmBeregning.kortvarigeArbeidsforhold),
-  };
+const mapStateToPropsFactory = (initialState) => {
+  const andelsliste = getSortedKortvarigeArbeidsforholdList(initialState);
+  return () => ({
+    andelsliste,
+  });
 };
 
-const TidsbegrensetArbeidsforholdForm = connect(mapStateToProps)(injectKodeverk(getAlleKodeverk)(TidsbegrensetArbeidsforholdFormImpl));
+const TidsbegrensetArbeidsforholdForm = connect(mapStateToPropsFactory)(injectKodeverk(getAlleKodeverk)(TidsbegrensetArbeidsforholdFormImpl));
 
 TidsbegrensetArbeidsforholdForm.buildInitialValues = (andeler) => {
   const initialValues = {};

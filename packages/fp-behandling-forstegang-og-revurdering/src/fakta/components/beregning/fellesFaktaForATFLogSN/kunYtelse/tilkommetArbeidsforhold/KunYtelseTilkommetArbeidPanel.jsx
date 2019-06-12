@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { createSelector } from 'reselect';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { isArrayEmpty, formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import { getKunYtelse, getEndringBeregningsgrunnlagPerioder } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
@@ -23,7 +24,6 @@ const harKunYtelseOgEndretBeregningsgrunnlag = aktivertePaneler => (aktivertePan
  *
  * Presentasjonskomponent. Behandling av aksjonspunktet for fastsetting av bg for kun ytelse.
  */
-
 export const KunYtelseTilkommetArbeidPanel = ({
   readOnly,
   skalSjekkeBesteberegning,
@@ -105,6 +105,8 @@ const harAndreStatuserEnnBrukersAndelIForstePeriode = endringBGPerioder => (endr
 
 const finnPerioder = endringBGPerioder => (harAndreStatuserEnnBrukersAndelIForstePeriode(endringBGPerioder) ? endringBGPerioder
 : endringBGPerioder.slice(1, endringBGPerioder.length));
+
+const getPerioder = createSelector([getEndringBeregningsgrunnlagPerioder], finnPerioder);
 
 KunYtelseTilkommetArbeidPanel.buildInitialValues = (kunYtelse, endringBGPerioder, isRevurdering, aktivertePaneler, getKodeverknavn) => {
   if (!harKunYtelseOgEndretBeregningsgrunnlag(aktivertePaneler)) {
@@ -200,7 +202,7 @@ const mapStateToProps = (state) => {
   const perioder = getEndringBeregningsgrunnlagPerioder(state);
   return {
     skalSjekkeBesteberegning: kunYtelse.fodendeKvinneMedDP,
-    perioder: finnPerioder(perioder),
+    perioder: getPerioder(state),
     harKunBrukersAndelIForstePeriode: !harAndreStatuserEnnBrukersAndelIForstePeriode(perioder),
     skalViseTilkommetTabell: !kunYtelse.fodendeKvinneMedDP
     || getFormValuesForBeregning(state)[besteberegningField] !== undefined,
