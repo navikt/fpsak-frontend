@@ -19,8 +19,6 @@ const findPersonStatus = (personopplysning) => {
   return personopplysning.personstatus ? personopplysning.personstatus : undefined;
 };
 
-export const getBarnFraTPS = (barneListe = []) => barneListe.filter(barn => barn.opplysningsKilde.kode === opplysningsKilde.TPS);
-
 /**
  *
  * FullPersonInfo
@@ -41,13 +39,12 @@ export const FullPersonInfoImpl = ({
   personstatusTypes,
   sivilstandTypes,
   getKodeverknavn,
+  regBarn,
 }) => {
   if (!personopplysning) {
     return null;
   }
   const adresseListe = getAddresses(personopplysning.adresser);
-  const barnFraTPS = getBarnFraTPS(personopplysning.barn);
-  const harBarnITPSSjekk = barnFraTPS.length !== 0;
   return (
     <div>
       <AdressePanel
@@ -72,8 +69,8 @@ export const FullPersonInfoImpl = ({
           submitCallback={submitCallback}
         />
       </AdressePanel>
-      { harBarnITPSSjekk && (
-        <BarnePanel barneListe={barnFraTPS} />
+      { regBarn && regBarn.length > 0 && (
+        <BarnePanel barneListe={regBarn} />
       )}
       {ytelser && ytelser.length > 0 && (
         <FaktaGruppe titleCode="PersonYtelserTable.Ytelser">
@@ -94,6 +91,7 @@ FullPersonInfoImpl.propTypes = {
   ytelser: PropTypes.arrayOf(PropTypes.shape({})),
   relatertYtelseTypes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   relatertYtelseStatus: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  regBarn: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   submitCallback: PropTypes.func,
   utlandSakstype: PropTypes.string.isRequired,
   isPrimaryParent: PropTypes.bool.isRequired,
