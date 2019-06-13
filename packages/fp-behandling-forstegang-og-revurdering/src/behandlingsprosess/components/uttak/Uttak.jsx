@@ -633,7 +633,10 @@ const determineMottatDato = (soknadsDato, mottatDato) => {
   return soknadsDato;
 };
 
-const fodselTerminDato = (soknad) => {
+const fodselTerminDato = (soknad, familiehendelse) => {
+  if (familiehendelse && familiehendelse.avklartBarn && familiehendelse.avklartBarn.length > 0) {
+    return familiehendelse.avklartBarn[0].fodselsdato;
+  }
   if (soknad.fodselsdatoer && Object.keys(soknad.fodselsdatoer).length > 0) {
     return Object.values(soknad.fodselsdatoer)[0];
   }
@@ -702,7 +705,7 @@ const mapStateToProps = (state, props) => {
     saksnummer: getSelectedSaksnummer(state),
     behandlingId: getSelectedBehandlingId(state),
     soknadDate: determineMottatDato(periodeGrenseMottatDato, soknad.mottattDato),
-    familiehendelseDate: fodselTerminDato(soknad),
+    familiehendelseDate: fodselTerminDato(soknad, familiehendelse),
     endringsdato: ytelseFordeling.endringsdato ? ytelseFordeling.endringsdato : undefined,
     dekningsgrad: soknad.dekningsgrad ? soknad.dekningsgrad : undefined,
     stonadskonto: behandlingFormValueSelector(props.formName)(state, STONADSKONTOER_TEMP),
