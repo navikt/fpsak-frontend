@@ -3,7 +3,6 @@ import { PropTypes } from 'prop-types';
 
 import { getAddresses } from '@fpsak-frontend/utils';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import { AdressePanel, BarnePanel, PersonYtelserTable } from '@fpsak-frontend/person-info';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
