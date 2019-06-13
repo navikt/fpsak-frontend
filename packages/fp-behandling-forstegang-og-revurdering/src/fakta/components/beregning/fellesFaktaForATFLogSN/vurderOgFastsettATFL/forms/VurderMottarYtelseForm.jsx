@@ -189,17 +189,17 @@ const transformValuesMottarYtelse = (values, faktaOmBeregning, faktaOmBeregningT
 
 const emptyArray = [];
 
-const mapStateToPropsFactory = (initialState) => {
-  const vurderInfo = getVurderMottarYtelse(initialState);
+const mapStateToProps = (state) => {
+  const vurderInfo = getVurderMottarYtelse(state);
   const erFrilans = vurderInfo && vurderInfo.erFrilans;
   const arbeidsforholdUtenIM = vurderInfo && vurderInfo.arbeidstakerAndelerUtenIM ? vurderInfo.arbeidstakerAndelerUtenIM : emptyArray;
-  return () => ({
+  return ({
     arbeidsforholdUtenIM,
     erFrilans,
   });
 };
 
-const VurderMottarYtelseForm = connect(mapStateToPropsFactory)(injectKodeverk(getAlleKodeverk)(VurderMottarYtelseFormImpl));
+const VurderMottarYtelseForm = connect(mapStateToProps)(injectKodeverk(getAlleKodeverk)(VurderMottarYtelseFormImpl));
 
 
 VurderMottarYtelseForm.buildInitialValues = (vurderMottarYtelse) => {
