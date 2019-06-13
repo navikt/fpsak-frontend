@@ -198,13 +198,15 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const andelerMedGraderingUtenBG = getAndelerMedGraderingUtenBG(initialState);
   const aksjonspunkt = getAksjonspunkter(initialState).find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG);
   const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
-  const initialValues = buildInitialValues(initialState);
-  return () => ({
+  return (state) => {
+    const initialValues = buildInitialValues(state);
+    return ({
     andelerMedGraderingUtenBG,
     aksjonspunkt,
     onSubmit,
     initialValues,
-  });
+    });
+};
 };
 
 

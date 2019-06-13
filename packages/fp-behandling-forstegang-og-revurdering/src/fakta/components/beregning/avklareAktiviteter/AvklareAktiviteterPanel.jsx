@@ -299,16 +299,16 @@ const getIsAksjonspunktClosed = createSelector([getAksjonspunkter],
 const mapStateToPropsFactory = (initialState, initialProps) => {
   const avklarAktiviteter = getAvklarAktiviteter(initialState);
   const aksjonspunkter = getAksjonspunkter(initialState);
-  const isAksjonspunktClosed = getIsAksjonspunktClosed(initialState);
-  const initialValues = buildInitialValuesAvklarAktiviteter(initialState);
-  const hasBegrunnelse = initialValues && !!initialValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME];
   const kanOverstyre = getSkalKunneOverstyre(initialState);
   const helpText = getHelpTextsAvklarAktiviteter(initialState);
   const onSubmit = vals => initialProps.submitCallback(transformValuesAvklarAktiviteter(initialState)(vals));
-  const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(initialState), getBehandlingVersjon(initialState));
   const alleKodeverk = getAlleKodeverk(initialState);
   return (state) => {
     const values = getFormValuesForAvklarAktiviteter(state);
+    const initialValues = buildInitialValuesAvklarAktiviteter(state);
+      const hasBegrunnelse = initialValues && !!initialValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME];
+    const isAksjonspunktClosed = getIsAksjonspunktClosed(state);
+    const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state));
     return ({
       isAksjonspunktClosed,
       avklarAktiviteter,

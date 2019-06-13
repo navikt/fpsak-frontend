@@ -185,15 +185,16 @@ export const getIsAksjonspunktClosed = createSelector(
 );
 
 const mapStateToPropsFactory = (initialState, initialProps) => {
-  const isAksjonspunktClosed = getIsAksjonspunktClosed(initialState);
   const aksjonspunkter = getAksjonspunkter(initialState);
   const onSubmit = values => initialProps.submitCallback(transformValuesVurderFaktaBeregning(initialState)(values));
-  const beregningsgrunnlag = getBeregningsgrunnlag(initialState);
   const helpText = getHelpTextsFaktaForATFLOgSN(initialState);
   const validate = getValidationVurderFaktaBeregning(initialState);
-  const initialValues = buildInitialValuesVurderFaktaBeregning(initialState);
-  const hasBegrunnelse = initialValues && !!initialValues[BEGRUNNELSE_FAKTA_TILFELLER_NAME];
-  return state => ({
+  return (state) => {
+    const initialValues = buildInitialValuesVurderFaktaBeregning(state);
+    const hasBegrunnelse = initialValues && !!initialValues[BEGRUNNELSE_FAKTA_TILFELLER_NAME];
+    const beregningsgrunnlag = getBeregningsgrunnlag(state);
+    const isAksjonspunktClosed = getIsAksjonspunktClosed(state);
+    return ({
     hasBegrunnelse,
     initialValues,
     isAksjonspunktClosed,
@@ -205,6 +206,7 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
     verdiForAvklarAktivitetErEndret: erAvklartAktivitetEndret(state),
     erOverstyrt: erOverstyringAvBeregningsgrunnlag(state),
   });
+};
 };
 
 export default connect(mapStateToPropsFactory)(behandlingForm({
