@@ -432,7 +432,7 @@ export class UttakPerioder extends PureComponent {
                 && (
                 <FlexColumn className="justifyItemsToFlexEnd">
                   <CheckboxField
-                    name="manuellOverstyring"
+                    name="faktaUttakManuellOverstyring"
                     label={{ id: 'UttakInfoPanel.ManuellOverstyring' }}
                     readOnly={!readOnly || hasRevurderingOvertyringAp || !kanOverstyre}
                     onClick={() => this.manuellOverstyringResetCallback()}
@@ -550,11 +550,10 @@ const getFørsteUttaksdato = state => behandlingFormValueSelector('UttakFaktaFor
 const getEndringsdato = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'endringsdato') || undefined;
 const slettedePerioder = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'slettedePerioder');
 const perioder = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'perioder');
-const manuellOverstyring = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'manuellOverstyring') || false;
+const manuellOverstyring = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'faktaUttakManuellOverstyring') || false;
 
 const mapStateToProps = (state) => {
   const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state));
-
   return {
     behandlingFormPrefix,
     isManuellOverstyring: manuellOverstyring(state),

@@ -125,7 +125,7 @@ describe('<UttakFaktaForm>', () => {
   it('skal sende 6013 hvis ingen andre aksjonspunkter og manuelloverstyrt', () => {
     const values = {
       perioder: [],
-      manuellOverstyring: true,
+      faktaUttakManuellOverstyring: true,
     };
 
     const transformedValues = transformValues(values, {}, []);
@@ -135,7 +135,7 @@ describe('<UttakFaktaForm>', () => {
   it('skal sende 6013 hvis 6013 er OPPR og ikke 5070', () => {
     const values = {
       perioder: [],
-      manuellOverstyring: false,
+      faktaUttakManuellOverstyring: false,
     };
 
     const transformedValues = transformValues(values, {}, [ap6013]);

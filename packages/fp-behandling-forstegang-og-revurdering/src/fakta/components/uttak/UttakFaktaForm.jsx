@@ -81,7 +81,7 @@ const warningsUttakForm = (values) => {
 const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOSONAR må ha disse sjekkene
   const errors = {};
 
-  if (sjekkOmfaktaOmUttakAksjonspunkt(aksjonspunkter) || values.manuellOverstyring) {
+  if (sjekkOmfaktaOmUttakAksjonspunkt(aksjonspunkter) || values.faktaUttakManuellOverstyring) {
     // const originalStartDato = (originalPerioder[0] || []).fom;
     const nyStartDato = (values.perioder[0] || []).fom;
     const { førsteUttaksdato } = values;
@@ -163,7 +163,7 @@ export const transformValues = (values, initialValues, aksjonspunkter) => { // N
 
   const apCodes = aksjonspunktUtenOverstyr.length
     ? aksjonspunktUtenOverstyr.map(ap => ap.definisjon.kode)
-    : [manueltEllerOverstyring(values.manuellOverstyring, erManuellOverstyrApErOpprettet)];
+    : [manueltEllerOverstyring(values.faktaUttakManuellOverstyring, erManuellOverstyrApErOpprettet)];
   return apCodes.map(ap => ({
     kode: ap,
     bekreftedePerioder: values.perioder.map((periode) => {
