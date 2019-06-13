@@ -128,8 +128,13 @@ const getModalDescriptionTextCode = createSelector([isBehandlingsresultatOpphor,
     if (isOpphor) {
       return 'FatterVedtakApprovalModal.ModalDescriptionOpphort';
     }
-    return ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
-      ? 'FatterVedtakApprovalModal.ModalDescriptionESApproval' : 'FatterVedtakApprovalModal.ModalDescriptionFPApproval';
+    if (ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD) {
+      return 'FatterVedtakApprovalModal.ModalDescriptionESApproval';
+    }
+    if (ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER) {
+      return 'FatterVedtakApprovalModal.ModalDescriptionSVPApproval';
+    }
+    return 'FatterVedtakApprovalModal.ModalDescriptionFPApproval';
   });
 
 const getAltImgTextCode = createSelector(
@@ -181,13 +186,24 @@ const getInfoTextCode = createSelector(
       return 'FatterVedtakApprovalModal.UendretUtfall';
     }
     if (behandlingsresultat.type.kode === behandlingResultatType.AVSLATT) {
-      return ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD ? 'FatterVedtakApprovalModal.IkkeInnvilgetES' : 'FatterVedtakApprovalModal.IkkeInnvilgetFP';
+      if (ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD) {
+        return 'FatterVedtakApprovalModal.IkkeInnvilgetES';
+      }
+      if (ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER) {
+        return 'FatterVedtakApprovalModal.IkkeInnvilgetSVP';
+      }
+      return 'FatterVedtakApprovalModal.IkkeInnvilgetFP';
     }
     if (isOpphor) {
       return 'FatterVedtakApprovalModal.OpphortForeldrepenger';
     }
-    return ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
-      ? 'FatterVedtakApprovalModal.InnvilgetEngangsstonad' : 'FatterVedtakApprovalModal.InnvilgetForeldrepenger';
+    if (ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD) {
+      return 'FatterVedtakApprovalModal.InnvilgetEngangsstonad';
+    }
+    if (ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER) {
+      return 'FatterVedtakApprovalModal.InnvilgetSvangerskapspenger';
+    }
+    return 'FatterVedtakApprovalModal.InnvilgetForeldrepenger';
   },
 );
 

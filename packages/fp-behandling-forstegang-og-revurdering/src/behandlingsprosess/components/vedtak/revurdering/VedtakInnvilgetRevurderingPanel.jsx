@@ -100,7 +100,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
     </div>
     )
     }
-    {ytelseType === fagsakYtelseType.FORELDREPENGER
+    {(ytelseType === fagsakYtelseType.FORELDREPENGER || ytelseType === fagsakYtelseType.SVANGERSKAPSPENGER)
       && (
       <div>
         <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
