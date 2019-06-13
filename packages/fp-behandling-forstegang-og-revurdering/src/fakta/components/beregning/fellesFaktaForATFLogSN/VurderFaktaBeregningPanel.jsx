@@ -25,6 +25,7 @@ const {
   VURDER_FAKTA_FOR_ATFL_SN,
   AVKLAR_AKTIVITETER,
   OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
+  OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
 } = aksjonspunktCodes;
 
 const findAksjonspunktMedBegrunnelse = (aksjonspunkter) => {
@@ -88,7 +89,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
     } = this;
     return (
       <ElementWrapper>
-        {!hasOpenAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) && (
+        {!(hasOpenAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) || hasOpenAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter)) && (
         <form onSubmit={formProps.handleSubmit}>
           {hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && (
             <AksjonspunktHelpText isAksjonspunktOpen={!isAksjonspunktClosed}>{helpText}</AksjonspunktHelpText>

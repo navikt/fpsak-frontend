@@ -94,6 +94,12 @@ const buildInitialValues = (aksjonspunkter, avklarAktiviteter, alleKodeverk) => 
   };
 };
 
+const hasOpenAksjonspunkt = (kode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === kode && isAksjonspunktOpen(ap.status.kode));
+
+const hasOpenAvklarAksjonspunkter = aksjonspunkter => hasOpenAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)
+|| hasOpenAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter);
+
+
 /**
  * AvklareAktiviteterPanel
  *
@@ -150,7 +156,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
       return null;
     }
 
-    const skalViseSubmitknappInneforBorderBox = harAndreAksjonspunkterIPanel || erOverstyrt || erBgOverstyrt;
+    const skalViseSubmitknappInneforBorderBox = (harAndreAksjonspunkterIPanel || erOverstyrt || erBgOverstyrt) && !hasOpenAvklarAksjonspunkter(aksjonspunkter);
 
     return (
       <React.Fragment>
