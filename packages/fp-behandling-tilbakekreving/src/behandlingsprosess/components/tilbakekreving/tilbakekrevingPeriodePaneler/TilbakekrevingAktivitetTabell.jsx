@@ -20,18 +20,22 @@ const TilbakekrevingAktivitetTabell = ({
   if (ytelser.length === 0) {
     return null;
   }
+  let counter = 0;
   return (
     <Table headerTextCodes={headerTextCodes} noHover classNameTable={styles.feilutbetalingTable}>
-      {ytelser.map(y => (
-        <TableRow key={y.aktivitet + y.belop}>
-          <TableColumn>
-            <Normaltekst>{y.aktivitet}</Normaltekst>
-          </TableColumn>
-          <TableColumn>
-            <Normaltekst>{formatCurrencyNoKr(y.belop)}</Normaltekst>
-          </TableColumn>
-        </TableRow>
-      ))}
+      {ytelser.map((y) => {
+        counter += 1;
+        return (
+          <TableRow key={y.aktivitet + y.belop + counter}>
+            <TableColumn>
+              <Normaltekst>{y.aktivitet}</Normaltekst>
+            </TableColumn>
+            <TableColumn>
+              <Normaltekst>{formatCurrencyNoKr(y.belop)}</Normaltekst>
+            </TableColumn>
+          </TableRow>
+      );
+    })}
     </Table>
   );
     };

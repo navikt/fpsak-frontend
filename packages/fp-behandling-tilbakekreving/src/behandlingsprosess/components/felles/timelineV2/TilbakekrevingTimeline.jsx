@@ -3,10 +3,22 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
 import { Column, Row } from 'nav-frontend-grid';
+
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import TimeLineControl from './TimeLineControl';
-import TimeLineSokerEnsamSoker from './TimeLineSokerEnsamSoker';
-import styles from './bpTimeline.less';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import { Image } from '@fpsak-frontend/shared-components';
+
+import urlMann from '@fpsak-frontend/assets/images/mann.svg';
+import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
+
+import TilbakekrevingTimelineController from './TilbakekrevingTimelineController';
+
+import styles from './tilbakekrevingTimeline.less';
+
+export const GODKJENT_CLASSNAME = 'godkjentPeriode';
+export const AVVIST_CLASSNAME = 'avvistPeriode';
+
+const isKvinne = kode => kode === navBrukerKjonn.KVINNE;
 
 const getOptions = tilbakekrevingPeriod => ({
   height: '104px',
@@ -76,7 +88,7 @@ const formatGroups = (periodItems = []) => {
  * Presentationskomponent. Masserer data og populerer felten samt formatterar tidslinjen for tilbakekreving
  */
 
-class BpTimeline extends Component {
+class TilbakekrevingTimeline extends Component {
   constructor() {
     super();
 
@@ -135,27 +147,43 @@ class BpTimeline extends Component {
 
   render() {
     const {
+      perioder,
       selectedPeriod,
       selectPeriodCallback,
-      openPeriodInfo,
-      hovedsokerKjonnKode,
-      tilbakekrevingPerioder,
+      toggleDetaljevindu,
+      HjelpetekstKomponent,
+      kjonn,
     } = this.props;
-    const groups = formatGroups(tilbakekrevingPerioder);
-    const items = formatItems(tilbakekrevingPerioder);
+
+    const newPerioder = perioder.map((periode) => {
+      const className = periode.isGodkjent ? GODKJENT_CLASSNAME : AVVIST_CLASSNAME;
+      return {
+        ...periode,
+        className: periode.isAksjonspunktOpen ? 'undefined' : className,
+        group: 1,
+      };
+    });
+
+    const groups = formatGroups(newPerioder);
+    const items = formatItems(newPerioder);
     return (
       <div className={styles.timelineContainer}>
         <Row>
           <Column xs="1" className={styles.sokerContainer}>
-            <TimeLineSokerEnsamSoker
-              hovedsokerKjonnKode={hovedsokerKjonnKode}
-            />
+            <Row>
+              <Image
+                className={styles.iconMedsoker}
+                src={isKvinne(kjonn) ? urlKvinne : urlMann}
+                altCode="Person.ImageText"
+                titleCode={isKvinne(kjonn) ? 'Person.Woman' : 'Person.Man'}
+              />
+            </Row>
           </Column>
           <Column xs="11">
             <div className={styles.timeLineWrapper}>
               <div className="uttakTimeline">
                 <Timeline
-                  options={getOptions(tilbakekrevingPerioder.sort(sortByDate)[0])}
+                  options={getOptions(newPerioder.sort(sortByDate)[0])}
                   items={items}
                   groups={groups}
                   selectHandler={selectPeriodCallback}
@@ -168,14 +196,16 @@ class BpTimeline extends Component {
         </Row>
         <Row>
           <Column xs="12">
-            <TimeLineControl
+            <TilbakekrevingTimelineController
               goBackwardCallback={this.goBackward}
               goForwardCallback={this.goForward}
               zoomInCallback={this.zoomIn}
               zoomOutCallback={this.zoomOut}
-              openPeriodInfo={openPeriodInfo}
+              openPeriodInfo={toggleDetaljevindu}
               selectedPeriod={selectedPeriod}
-            />
+            >
+              <HjelpetekstKomponent />
+            </TilbakekrevingTimelineController>
           </Column>
         </Row>
       </div>
@@ -183,16 +213,27 @@ class BpTimeline extends Component {
   }
 }
 
-BpTimeline.propTypes = {
-  selectedPeriod: PropTypes.shape(),
-  tilbakekrevingPerioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+TilbakekrevingTimeline.propTypes = {
+  perioder: PropTypes.arrayOf(PropTypes.shape({
+    fom: PropTypes.string.isRequired,
+    tom: PropTypes.string.isRequired,
+    isAksjonspunktOpen: PropTypes.bool.isRequired,
+    isGodkjent: PropTypes.bool.isRequired,
+  })).isRequired,
+  toggleDetaljevindu: PropTypes.func.isRequired,
+  selectedPeriod: PropTypes.shape({
+    fom: PropTypes.string.isRequired,
+    tom: PropTypes.string.isRequired,
+    isAksjonspunktOpen: PropTypes.bool.isRequired,
+    isGodkjent: PropTypes.bool.isRequired,
+  }),
   selectPeriodCallback: PropTypes.func.isRequired,
-  openPeriodInfo: PropTypes.func.isRequired,
-  hovedsokerKjonnKode: PropTypes.string.isRequired,
+  HjelpetekstKomponent: PropTypes.func.isRequired,
+  kjonn: PropTypes.string.isRequired,
 };
 
-BpTimeline.defaultProps = {
+TilbakekrevingTimeline.defaultProps = {
   selectedPeriod: undefined,
 };
 
-export default BpTimeline;
+export default TilbakekrevingTimeline;

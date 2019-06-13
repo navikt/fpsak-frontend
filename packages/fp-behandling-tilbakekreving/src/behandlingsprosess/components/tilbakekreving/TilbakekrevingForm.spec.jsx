@@ -6,16 +6,21 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 
 import VilkarResultat from 'behandlingTilbakekreving/src/kodeverk/vilkarResultat';
-import BpTimelinePanel from '../felles/behandlingspunktTimelineSkjema/BpTimelinePanel';
-import { TilbakekrevingFormImpl, buildInitialValues } from './TilbakekrevingForm';
+import TilbakekrevingTimelinePanel from '../felles/timelineV2/TilbakekrevingTimelinePanel';
+import { TilbakekrevingFormImpl, slaSammenOriginaleOgLagredePeriode } from './TilbakekrevingForm';
 import TilbakekrevingPeriodeForm from './TilbakekrevingPeriodeForm';
 
 describe('<TilbakekrevingForm>', () => {
   it('skal vise tidslinje når en har perioder', () => {
     const perioder = [{
+      fom: '2019-01-01',
+      tom: '2019-01-10',
+      isAksjonspunktOpen: false,
+      isGodkjent: false,
     }];
     const wrapper = shallow(<TilbakekrevingFormImpl
-      perioderFormatertForTimeline={perioder}
+      vilkarsVurdertePerioder={perioder}
+      dataForDetailForm={perioder}
       behandlingFormPrefix="behandling_V1"
       isApOpen
       kjonn={navBrukerKjonn.KVINNE}
@@ -31,14 +36,17 @@ describe('<TilbakekrevingForm>', () => {
       }}
     />);
 
+    wrapper.setState({ valgtPeriode: perioder[0] });
+
     expect(wrapper.find(TilbakekrevingPeriodeForm)).to.have.length(1);
-    expect(wrapper.find(BpTimelinePanel)).to.have.length(1);
+    expect(wrapper.find(TilbakekrevingTimelinePanel)).to.have.length(1);
   });
 
   it('skal ikke vise tidslinje når en har perioder', () => {
     const perioder = undefined;
     const wrapper = shallow(<TilbakekrevingFormImpl
-      perioderFormatertForTimeline={perioder}
+      vilkarsVurdertePerioder={perioder}
+      dataForDetailForm={perioder}
       behandlingFormPrefix="behandling_V1"
       isApOpen
       kjonn={navBrukerKjonn.KVINNE}
@@ -55,14 +63,15 @@ describe('<TilbakekrevingForm>', () => {
     />);
 
     expect(wrapper.find(TilbakekrevingPeriodeForm)).to.have.length(0);
-    expect(wrapper.find(BpTimelinePanel)).to.have.length(0);
+    expect(wrapper.find(TilbakekrevingTimelinePanel)).to.have.length(0);
     expect(wrapper.find(AlertStripe)).to.have.length(0);
   });
 
   it('skal vise feilmelding når en har dette', () => {
     const perioder = undefined;
     const wrapper = shallow(<TilbakekrevingFormImpl
-      perioderFormatertForTimeline={perioder}
+      vilkarsVurdertePerioder={perioder}
+      dataForDetailForm={perioder}
       behandlingFormPrefix="behandling_V1"
       isApOpen
       kjonn={navBrukerKjonn.KVINNE}
@@ -122,6 +131,7 @@ describe('<TilbakekrevingForm>', () => {
     }];
     const lagredePerioder = {
       vilkarsVurdertePerioder: [{
+        feilutbetalingBelop: 19000,
         begrunnelse: '3434',
         fom: '2016-05-02',
         tom: '2016-05-26',
@@ -139,10 +149,10 @@ describe('<TilbakekrevingForm>', () => {
     };
     const rettsgebyr = 1000;
 
-    const resultat = buildInitialValues.resultFunc(originalePerioder, lagredePerioder, rettsgebyr);
+    const resultat = slaSammenOriginaleOgLagredePeriode.resultFunc(originalePerioder, lagredePerioder, rettsgebyr);
 
-    expect(resultat.vilkarsVurdertePerioder).to.have.length(2);
-    expect(resultat.vilkarsVurdertePerioder[0]).to.eql({
+    expect(resultat.perioder).to.have.length(2);
+    expect(resultat.perioder[0]).to.eql({
       feilutbetaling: 32000,
       fom: '2016-03-16',
       tom: '2016-05-01',
@@ -151,10 +161,9 @@ describe('<TilbakekrevingForm>', () => {
       redusertBeloper: [],
       ytelser,
       årsak: arsak,
-      storedData: {},
       erTotalBelopUnder4Rettsgebyr: false,
     });
-    expect(resultat.vilkarsVurdertePerioder[1]).to.eql({
+    expect(resultat.perioder[1]).to.eql({
       feilutbetaling: 19000,
       fom: '2016-05-02',
       tom: '2016-05-26',
@@ -163,21 +172,17 @@ describe('<TilbakekrevingForm>', () => {
       redusertBeloper: [],
       ytelser,
       årsak: arsak,
-      storedData: {
-        begrunnelse: '3434',
-        fom: '2016-05-02',
-        tom: '2016-05-26',
-        vilkarResultat: {
-          kode: VilkarResultat.GOD_TRO,
-          kodeverk: 'VILKAAR_RESULTAT',
-          navn: 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
-        },
-        vilkarResultatInfo: {
-          begrunnelse: '34344',
-          erBelopetIBehold: true,
-          tilbakekrevesBelop: 3434,
-        },
-       },
+      begrunnelse: '3434',
+      vilkarResultat: {
+        kode: VilkarResultat.GOD_TRO,
+        kodeverk: 'VILKAAR_RESULTAT',
+        navn: 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
+      },
+      vilkarResultatInfo: {
+        begrunnelse: '34344',
+        erBelopetIBehold: true,
+        tilbakekrevesBelop: 3434,
+      },
        erTotalBelopUnder4Rettsgebyr: false,
     });
   });
@@ -216,6 +221,7 @@ describe('<TilbakekrevingForm>', () => {
         begrunnelse: '3434',
         fom: '2016-03-16',
         tom: '2016-04-03',
+        feilutbetalingBelop: 10000,
         vilkarResultat: {
           kode: VilkarResultat.GOD_TRO,
           kodeverk: 'VILKAAR_RESULTAT',
@@ -230,6 +236,7 @@ describe('<TilbakekrevingForm>', () => {
         begrunnelse: 'test',
         fom: '2016-04-04',
         tom: '2016-05-26',
+        feilutbetalingBelop: 22000,
         vilkarResultat: {
           kode: VilkarResultat.GOD_TRO,
           kodeverk: 'VILKAAR_RESULTAT',
@@ -244,11 +251,11 @@ describe('<TilbakekrevingForm>', () => {
     };
     const rettsgebyr = 1000;
 
-    const resultat = buildInitialValues.resultFunc(originalePerioder, lagredePerioder, rettsgebyr);
+    const resultat = slaSammenOriginaleOgLagredePeriode.resultFunc(originalePerioder, lagredePerioder, rettsgebyr);
 
-    expect(resultat.vilkarsVurdertePerioder).to.have.length(2);
-    expect(resultat.vilkarsVurdertePerioder[0]).to.eql({
-      feilutbetaling: 32000,
+    expect(resultat.perioder).to.have.length(2);
+    expect(resultat.perioder[0]).to.eql({
+      feilutbetaling: 10000,
       fom: '2016-03-16',
       tom: '2016-04-03',
       foreldet: false,
@@ -256,25 +263,21 @@ describe('<TilbakekrevingForm>', () => {
       redusertBeloper: [],
       ytelser,
       årsak: arsak,
-      storedData: {
-        begrunnelse: '3434',
-        fom: '2016-03-16',
-        tom: '2016-04-03',
-        vilkarResultat: {
-          kode: VilkarResultat.GOD_TRO,
-          kodeverk: 'VILKAAR_RESULTAT',
-          navn: 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
-        },
-        vilkarResultatInfo: {
-          begrunnelse: '34344',
-          erBelopetIBehold: true,
-          tilbakekrevesBelop: 2312,
-        },
-       },
+      begrunnelse: '3434',
+      vilkarResultat: {
+        kode: VilkarResultat.GOD_TRO,
+        kodeverk: 'VILKAAR_RESULTAT',
+        navn: 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
+      },
+      vilkarResultatInfo: {
+        begrunnelse: '34344',
+        erBelopetIBehold: true,
+        tilbakekrevesBelop: 2312,
+      },
        erTotalBelopUnder4Rettsgebyr: false,
     });
-    expect(resultat.vilkarsVurdertePerioder[1]).to.eql({
-      feilutbetaling: 32000,
+    expect(resultat.perioder[1]).to.eql({
+      feilutbetaling: 22000,
       fom: '2016-04-04',
       tom: '2016-05-26',
       foreldet: false,
@@ -282,21 +285,17 @@ describe('<TilbakekrevingForm>', () => {
       redusertBeloper: [],
       ytelser,
       årsak: arsak,
-      storedData: {
-        begrunnelse: 'test',
-        fom: '2016-04-04',
-        tom: '2016-05-26',
-        vilkarResultat: {
-          kode: VilkarResultat.GOD_TRO,
-          kodeverk: 'VILKAAR_RESULTAT',
-          navn: 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
-        },
-        vilkarResultatInfo: {
-          begrunnelse: '34344',
-          erBelopetIBehold: true,
-          tilbakekrevesBelop: 3434,
-        },
-       },
+      begrunnelse: 'test',
+      vilkarResultat: {
+        kode: VilkarResultat.GOD_TRO,
+        kodeverk: 'VILKAAR_RESULTAT',
+        navn: 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
+      },
+      vilkarResultatInfo: {
+        begrunnelse: '34344',
+        erBelopetIBehold: true,
+        tilbakekrevesBelop: 3434,
+      },
        erTotalBelopUnder4Rettsgebyr: false,
     });
   });

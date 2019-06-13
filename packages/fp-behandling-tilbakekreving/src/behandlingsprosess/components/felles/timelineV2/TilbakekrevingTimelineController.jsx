@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, FormattedMessage } from 'react-intl';
 import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
 import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
 import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
@@ -14,14 +13,12 @@ import zoomInImageFilledUrl from '@fpsak-frontend/assets/images/zoom_in_filled.s
 import arrowDownImageUrl from '@fpsak-frontend/assets/images/arrow_down.svg';
 import arrowDownFilledImageUrl from '@fpsak-frontend/assets/images/arrow_down_filled.svg';
 
-import ikkeOppfyltUrl from '@fpsak-frontend/assets/images/ikke_oppfylt.svg';
-import oppfyltUrl from '@fpsak-frontend/assets/images/oppfylt.svg';
 import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
 import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
-import uavklartUrl from '@fpsak-frontend/assets/images/uavklart.svg';
 
-import { VerticalSpacer, Image } from '@fpsak-frontend/shared-components';
-import styles from './timeLineControl.less';
+import { Image } from '@fpsak-frontend/shared-components';
+
+import styles from './tilbakekrevingTimelineController.less';
 
 const findArrowLeftImg = isHovering => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
 const findArrowRightImg = isHovering => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
@@ -29,24 +26,22 @@ const findZoomInImg = isHovering => (isHovering ? zoomInImageFilledUrl : zoomInI
 const findZoomOutImg = isHovering => (isHovering ? zoomOutImageFilledUrl : zoomOutImageUrl);
 const findOpenPeriodImage = isHovering => (isHovering ? arrowDownFilledImageUrl : arrowDownImageUrl);
 const findQuestionImage = isHovering => (isHovering ? questionHoverUrl : questionNormalUrl);
-const oppfyltImage = () => (oppfyltUrl);
-const ikkeOppfyltImage = () => (ikkeOppfyltUrl);
-const uavklartImage = () => (uavklartUrl);
 
 /*
- * Timeline controller
+ * TilbakekrevingTimelineController
  *
  * Holds the controls for the timeline (zoom, traversing left/right and opening the data area)
  *
  * ```
  */
-const TimeLineControl = ({
+const TilbakekrevingTimelineController = ({
   goBackwardCallback,
   goForwardCallback,
   zoomInCallback,
   zoomOutCallback,
   openPeriodInfo,
   selectedPeriod,
+  children,
 }) => (
   <div className={styles.scrollButtonContainer}>
     <span className={styles.popUnder}>
@@ -58,26 +53,7 @@ const TimeLineControl = ({
         />
       </span>
       <div className={styles.popUnderContent}>
-        <Image
-          className={styles.timeLineButton}
-          imageSrcFunction={oppfyltImage}
-          altCode="Timeline.OppfyltPeriode"
-        />
-        <FormattedMessage id="Timeline.OppfyltPeriode" />
-        <VerticalSpacer eightPx />
-        <Image
-          className={styles.timeLineButton}
-          imageSrcFunction={ikkeOppfyltImage}
-          altCode="Timeline.IkkeOppfyltPeriode"
-        />
-        <FormattedMessage id="Timeline.IkkeOppfyltPeriode" />
-        <VerticalSpacer eightPx />
-        <Image
-          className={styles.timeLineButton}
-          imageSrcFunction={uavklartImage}
-          altCode="Timeline.IkkeAvklartPeriode"
-        />
-        <FormattedMessage id="Timeline.IkkeAvklartPeriode" />
+        {children}
       </div>
     </span>
     {!selectedPeriod
@@ -141,19 +117,18 @@ const TimeLineControl = ({
   </div>
 );
 
-TimeLineControl.propTypes = {
+TilbakekrevingTimelineController.propTypes = {
   goBackwardCallback: PropTypes.func.isRequired,
   goForwardCallback: PropTypes.func.isRequired,
   zoomInCallback: PropTypes.func.isRequired,
   zoomOutCallback: PropTypes.func.isRequired,
   openPeriodInfo: PropTypes.func.isRequired,
   selectedPeriod: PropTypes.shape(),
+  children: PropTypes.node.isRequired,
 };
 
-
-TimeLineControl.defaultProps = {
+TilbakekrevingTimelineController.defaultProps = {
   selectedPeriod: undefined,
 };
 
-
-export default injectIntl(TimeLineControl);
+export default TilbakekrevingTimelineController;

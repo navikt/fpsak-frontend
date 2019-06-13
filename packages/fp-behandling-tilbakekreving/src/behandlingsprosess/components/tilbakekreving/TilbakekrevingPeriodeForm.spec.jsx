@@ -34,14 +34,18 @@ describe('<TilbakekrevingPeriodeForm>', () => {
       ytelser: [],
     };
     const wrapper = shallow(<TilbakekrevingPeriodeFormImpl
-      selectedItemData={periode}
+      periode={periode}
+      data={periode}
       behandlingFormPrefix="behandling_V1"
-      cancelSelectedActivity={() => undefined}
+      skjulPeriode={() => undefined}
       readOnly={false}
       erBelopetIBehold
       formName="testForm"
       tilbakekrevSelvOmBeloepErUnder4Rettsgebyr
-      updateActivity={() => undefined}
+      oppdaterPeriode={() => undefined}
+      oppdaterSplittedePerioder={() => undefined}
+      setNestePeriode={() => undefined}
+      setForrigePeriode={() => undefined}
       antallPerioderMedAksjonspunkt={2}
       vilkarResultatTyper={[]}
       aktsomhetTyper={aktsomhetTyper}

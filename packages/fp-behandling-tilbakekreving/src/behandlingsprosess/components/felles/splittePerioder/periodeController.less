@@ -1,0 +1,45 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.timeLineButton {
+  background-color: @white;
+  border: 0 solid;
+  height: 26px;
+  margin-left: 8px;
+  width: 26px;
+
+  &:focus {
+    box-shadow: 0 0 0 3px @orangeFocus;
+    outline: none;
+  }
+}
+
+.timeLineButton img:last-child {
+  display: none;
+}
+
+.timeLineButton:hover img:first-child {
+  display: none;
+}
+
+.timeLineButton:hover img:last-child {
+  display: inline-block;
+}
+
+.timeLineButton:active img:last-child {
+  display: inline-block;
+}
+
+.splitPeriodImage {
+  cursor: pointer;
+  margin-left: 12px;
+  margin-right: 4px;
+  padding-bottom: 4px;
+}
+
+.splitPeriodPosition {
+  margin-left: -30px;
+}
+
+.navigationPosition {
+  float: right;
+}

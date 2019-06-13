@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
 import { FormSection, clearFields, formPropTypes } from 'redux-form';
 import { FormattedMessage, FormattedHTMLMessage, injectIntl } from 'react-intl';
@@ -24,7 +23,6 @@ import {
   VerticalSpacer, FlexRow, FlexColumn, AdvarselModal,
 } from '@fpsak-frontend/shared-components';
 
-import { getForeldelsePerioder } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingTilbakekreving/src/behandlingForm';
 import sarligGrunn from 'behandlingTilbakekreving/src/kodeverk/sarligGrunn';
 import Aktsomhet from 'behandlingTilbakekreving/src/kodeverk/aktsomhet';
@@ -35,6 +33,9 @@ import TilbakekrevingAktivitetTabell from './tilbakekrevingPeriodePaneler/Tilbak
 import ForeldetFormPanel from './tilbakekrevingPeriodePaneler/ForeldetFormPanel';
 import BelopetMottattIGodTroFormPanel from './tilbakekrevingPeriodePaneler/godTro/BelopetMottattIGodTroFormPanel';
 import AktsomhetFormPanel from './tilbakekrevingPeriodePaneler/aktsomhet/AktsomhetFormPanel';
+import TilbakekrevingTimelineData from '../felles/splittePerioder/TilbakekrevingTimelineData';
+
+import styles from './tilbakekrevingPeriodeForm.less';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
@@ -45,14 +46,15 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
   state = { showModal: false };
 
   static propTypes = {
-    selectedItemData: PropTypes.shape({}).isRequired,
     behandlingFormPrefix: PropTypes.string.isRequired,
-    cancelSelectedActivity: PropTypes.func.isRequired,
+    skjulPeriode: PropTypes.func.isRequired,
+    setNestePeriode: PropTypes.func.isRequired,
+    setForrigePeriode: PropTypes.func.isRequired,
     readOnly: PropTypes.bool.isRequired,
     erBelopetIBehold: PropTypes.bool,
-    formName: PropTypes.string.isRequired,
     tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: PropTypes.bool,
-    updateActivity: PropTypes.func.isRequired,
+    oppdaterPeriode: PropTypes.func.isRequired,
+    oppdaterSplittedePerioder: PropTypes.func.isRequired,
     antallPerioderMedAksjonspunkt: PropTypes.number.isRequired,
     vilkarResultatTyper: PropTypes.arrayOf(PropTypes.shape()),
     aktsomhetTyper: PropTypes.arrayOf(PropTypes.shape()),
@@ -90,13 +92,13 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
   saveOrToggleModal = () => {
     const { showModal } = this.state;
     const {
-      selectedItemData,
+      period,
       tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
       antallPerioderMedAksjonspunkt,
       ...formProps
     } = this.props;
 
-    if (antallPerioderMedAksjonspunkt > 1 && selectedItemData.erTotalBelopUnder4Rettsgebyr && tilbakekrevSelvOmBeloepErUnder4Rettsgebyr === false) {
+    if (antallPerioderMedAksjonspunkt > 1 && period.erTotalBelopUnder4Rettsgebyr && tilbakekrevSelvOmBeloepErUnder4Rettsgebyr === false) {
       this.setState(state => ({ ...state, showModal: !showModal }));
     } else {
       formProps.handleSubmit();
@@ -118,8 +120,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
       valgtVilkarResultatType,
       handletUaktsomhetGrad,
       harGrunnerTilReduksjon,
-      cancelSelectedActivity,
-      selectedItemData,
+      skjulPeriode,
       readOnly,
       erBelopetIBehold,
       erSerligGrunnAnnetValgt,
@@ -127,11 +128,22 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
       aktsomhetTyper,
       sarligGrunnTyper,
       reduserteBelop,
+      setNestePeriode,
+      setForrigePeriode,
+      oppdaterSplittedePerioder,
+      data,
       ...formProps
     } = this.props;
     const { showModal } = this.state;
     return (
-      <>
+      <div className={styles.container}>
+        <TilbakekrevingTimelineData
+          periode={data}
+          callbackForward={setNestePeriode}
+          callbackBackward={setForrigePeriode}
+          oppdaterSplittedePerioder={oppdaterSplittedePerioder}
+          readOnly={readOnly}
+        />
         <VerticalSpacer twentyPx />
         {reduserteBelop.map(belop => (
           <>
@@ -144,17 +156,17 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
             <VerticalSpacer eigthPx />
           </>
         ))}
-        <TilbakekrevingAktivitetTabell ytelser={selectedItemData.ytelser} />
+        <TilbakekrevingAktivitetTabell ytelser={data.ytelser} />
         <VerticalSpacer twentyPx />
         <Row>
-          <Column md={selectedItemData.erForeldet ? '12' : '6'}>
+          <Column md={data.erForeldet ? '12' : '6'}>
             <Row>
-              {selectedItemData.erForeldet && (
+              {data.erForeldet && (
                 <Column md="12">
                   <ForeldetFormPanel />
                 </Column>
               )}
-              {!selectedItemData.erForeldet && (
+              {!data.erForeldet && (
                 <Column md="10">
                   <Element>
                     <FormattedMessage id="TilbakekrevingPeriodeForm.VilkarForTilbakekreving" />
@@ -207,9 +219,9 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
                         erSerligGrunnAnnetValgt={erSerligGrunnAnnetValgt}
                         aktsomhetTyper={aktsomhetTyper}
                         sarligGrunnTyper={sarligGrunnTyper}
-                        antallYtelser={selectedItemData.ytelser.length}
-                        feilutbetalingBelop={selectedItemData.feilutbetaling}
-                        erTotalBelopUnder4Rettsgebyr={selectedItemData.erTotalBelopUnder4Rettsgebyr}
+                        antallYtelser={data.ytelser.length}
+                        feilutbetalingBelop={data.feilutbetaling}
+                        erTotalBelopUnder4Rettsgebyr={data.erTotalBelopUnder4Rettsgebyr}
                       />
                     )}
                   </FormSection>
@@ -231,7 +243,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
             </Hovedknapp>
           </FlexColumn>
           <FlexColumn>
-            <Knapp mini htmlType="button" onClick={cancelSelectedActivity}>
+            <Knapp mini htmlType="button" onClick={skjulPeriode}>
               <FormattedMessage id="TilbakekrevingPeriodeForm.Avbryt" />
             </Knapp>
           </FlexColumn>
@@ -239,43 +251,101 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
         { showModal
           && <AdvarselModal textCode="TilbakekrevingPeriodeForm.TotalbelopetUnder4Rettsgebyr" showModal submit={this.saveForm} />
         }
-      </>
+      </div>
     );
   }
 }
 
-const transformValues = (selectedItemData, values, sarligGrunnTyper) => {
-  const { valgtVilkarResultatType, begrunnelse } = values;
-  const info = values[valgtVilkarResultatType];
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators({
+    clearFields,
+  }, dispatch),
+});
 
-  const godTroData = valgtVilkarResultatType === VilkarResultat.GOD_TRO ? BelopetMottattIGodTroFormPanel.transformValues(info) : {};
-  const annetData = valgtVilkarResultatType !== VilkarResultat.GOD_TRO ? AktsomhetFormPanel.transformValues(info, sarligGrunnTyper) : {};
+const validate = (values, sarligGrunnTyper, periode) => {
+  let errors = {};
+  const vilkarResultatInfo = values[values.valgtVilkarResultatType];
+  if (vilkarResultatInfo && vilkarResultatInfo.handletUaktsomhetGrad && vilkarResultatInfo.handletUaktsomhetGrad !== Aktsomhet.FORSETT) {
+    const aktsomhetInfo = vilkarResultatInfo[vilkarResultatInfo.handletUaktsomhetGrad];
+    if (aktsomhetInfo && !sarligGrunnTyper.some(type => aktsomhetInfo[type.kode])) {
+       errors = {
+         [values.valgtVilkarResultatType]: {
+           [vilkarResultatInfo.handletUaktsomhetGrad]: {
+             [sarligGrunn.ANNET]: [{ id: 'TilbakekrevingPeriodeForm.MaVelgeSarligGrunn' }],
+           },
+          },
+        };
+    }
+    if (aktsomhetInfo && aktsomhetInfo.belopSomSkalTilbakekreves && aktsomhetInfo.belopSomSkalTilbakekreves > periode.feilutbetaling) {
+      errors = {
+        ...errors,
+        [values.valgtVilkarResultatType]: {
+          [vilkarResultatInfo.handletUaktsomhetGrad]: {
+            belopSomSkalTilbakekreves: [{ id: 'TilbakekrevingPeriodeForm.BelopKanIkkeVereStorreEnnFeilutbetalingen' }],
+          },
+        },
+      };
+    }
+  }
+  if (vilkarResultatInfo && vilkarResultatInfo.tilbakekrevdBelop && vilkarResultatInfo.tilbakekrevdBelop > periode.feilutbetaling) {
+    errors = {
+      ...errors,
+      [values.valgtVilkarResultatType]: {
+        tilbakekrevdBelop: [{ id: 'TilbakekrevingPeriodeForm.BelopKanIkkeVereStorreEnnFeilutbetalingen' }],
+       },
+     };
+  }
 
-  return {
-    ...selectedItemData,
-    storedData: {
-      begrunnelse,
-      fom: selectedItemData.fom,
-      tom: selectedItemData.tom,
-      vilkarResultat: valgtVilkarResultatType,
-      vilkarResultatInfo: {
-        ...godTroData,
-        ...annetData,
-      },
-    },
+  return errors;
+};
+
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const sarligGrunnTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.SARLIG_GRUNN)(initialState);
+  const vilkarResultatTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.VILKAR_RESULTAT)(initialState);
+  const aktsomhetTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.AKTSOMHET)(initialState);
+  const submitCallback = values => ownProps.oppdaterPeriode(values);
+  const validateForm = values => validate(values, sarligGrunnTyper, ownProps.periode);
+  return (state, oProps) => {
+    const valgtVilkarResultatType = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, 'valgtVilkarResultatType');
+    const handletUaktsomhetGrad = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.handletUaktsomhetGrad`);
+    return {
+      harGrunnerTilReduksjon: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(
+        state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.harGrunnerTilReduksjon`,
+      ),
+      tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(
+        state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr`,
+      ),
+      erSerligGrunnAnnetValgt: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state,
+        `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.${sarligGrunn.ANNET}`),
+      erBelopetIBehold: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.erBelopetIBehold`),
+      initialValues: oProps.periode,
+      reduserteBelop: ownProps.data.redusertBeloper,
+      onSubmit: submitCallback,
+      validate: validateForm,
+      valgtVilkarResultatType,
+      handletUaktsomhetGrad,
+      vilkarResultatTyper,
+      aktsomhetTyper,
+      sarligGrunnTyper,
+    };
   };
 };
 
-const buildInitialValues = createSelector([(state, ownProps) => ownProps], (ownProps) => {
-  const { period, foreldelsePerioder } = ownProps;
-  const { vilkarResultat, begrunnelse, vilkarResultatInfo } = period.storedData;
+const TilbakekrevingPeriodeForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
+  form: TILBAKEKREVING_PERIODE_FORM_NAME,
+  enableReinitialize: true,
+})(TilbakekrevingPeriodeFormImpl)));
+
+TilbakekrevingPeriodeForm.buildInitialValues = (periode, foreldelsePerioder) => {
+  const { vilkarResultat, begrunnelse, vilkarResultatInfo } = periode;
 
   const vilkarResultatKode = vilkarResultat && vilkarResultat.kode ? vilkarResultat.kode : vilkarResultat;
   let foreldetData = { erForeldet: false };
-  if (period.erForeldet) {
-    const foreldelsePeriode = foreldelsePerioder.find(p => p.fom === period.fom && p.tom === period.tom);
+  const erForeldet = periode.erForeldet ? periode.erForeldet : periode.foreldet;
+  if (erForeldet) {
+    const foreldelsePeriode = foreldelsePerioder.perioder.find(p => p.fom === periode.fom && p.tom === periode.tom);
     foreldetData = {
-      erForeldet: period.erForeldet,
+      erForeldet,
       periodenErForeldet: true,
       foreldetBegrunnelse: foreldelsePeriode.begrunnelse,
     };
@@ -297,88 +367,25 @@ const buildInitialValues = createSelector([(state, ownProps) => ownProps], (ownP
       ...annetData,
     },
   };
-});
-
-const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators({
-    clearFields,
-  }, dispatch),
-});
-
-const validate = (values, sarligGrunnTyper, selectedItemData) => {
-  let errors = {};
-  const vilkarResultatInfo = values[values.valgtVilkarResultatType];
-  if (vilkarResultatInfo && vilkarResultatInfo.handletUaktsomhetGrad && vilkarResultatInfo.handletUaktsomhetGrad !== Aktsomhet.FORSETT) {
-    const aktsomhetInfo = vilkarResultatInfo[vilkarResultatInfo.handletUaktsomhetGrad];
-    if (aktsomhetInfo && !sarligGrunnTyper.some(type => aktsomhetInfo[type.kode])) {
-       errors = {
-         [values.valgtVilkarResultatType]: {
-           [vilkarResultatInfo.handletUaktsomhetGrad]: {
-             [sarligGrunn.ANNET]: [{ id: 'TilbakekrevingPeriodeForm.MaVelgeSarligGrunn' }],
-           },
-          },
-        };
-    }
-    if (aktsomhetInfo && aktsomhetInfo.belopSomSkalTilbakekreves && aktsomhetInfo.belopSomSkalTilbakekreves > selectedItemData.feilutbetaling) {
-      errors = {
-        ...errors,
-        [values.valgtVilkarResultatType]: {
-          [vilkarResultatInfo.handletUaktsomhetGrad]: {
-            belopSomSkalTilbakekreves: [{ id: 'TilbakekrevingPeriodeForm.BelopKanIkkeVereStorreEnnFeilutbetalingen' }],
-          },
-        },
-      };
-    }
-  }
-  if (vilkarResultatInfo && vilkarResultatInfo.tilbakekrevdBelop && vilkarResultatInfo.tilbakekrevdBelop > selectedItemData.feilutbetaling) {
-    errors = {
-      ...errors,
-      [values.valgtVilkarResultatType]: {
-        tilbakekrevdBelop: [{ id: 'TilbakekrevingPeriodeForm.BelopKanIkkeVereStorreEnnFeilutbetalingen' }],
-       },
-     };
-  }
-
-  return errors;
 };
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const sarligGrunnTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.SARLIG_GRUNN)(initialState);
-  const vilkarResultatTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.VILKAR_RESULTAT)(initialState);
-  const aktsomhetTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.AKTSOMHET)(initialState);
-  const submitCallback = values => ownProps.updateActivity(transformValues(ownProps.selectedItemData, values, sarligGrunnTyper));
-  const validateForm = values => validate(values, sarligGrunnTyper, ownProps.selectedItemData);
-  const foreldelsePerioder = getForeldelsePerioder(initialState).perioder;
-  const buildInitalValuesProps = { period: ownProps.selectedItemData, foreldelsePerioder };
-  return (state) => {
-    const valgtVilkarResultatType = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, 'valgtVilkarResultatType');
-    const handletUaktsomhetGrad = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.handletUaktsomhetGrad`);
-    return {
-      harGrunnerTilReduksjon: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(
-        state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.harGrunnerTilReduksjon`,
-      ),
-      tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(
-        state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr`,
-      ),
-      erSerligGrunnAnnetValgt: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state,
-        `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.${sarligGrunn.ANNET}`),
-      erBelopetIBehold: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.erBelopetIBehold`),
-      initialValues: buildInitialValues(state, buildInitalValuesProps),
-      reduserteBelop: ownProps.selectedItemData.redusertBeloper,
-      onSubmit: submitCallback,
-      validate: validateForm,
-      valgtVilkarResultatType,
-      handletUaktsomhetGrad,
-      vilkarResultatTyper,
-      aktsomhetTyper,
-      sarligGrunnTyper,
-    };
+TilbakekrevingPeriodeForm.transformValues = (values, sarligGrunnTyper) => {
+  const { valgtVilkarResultatType, begrunnelse } = values;
+  const info = values[valgtVilkarResultatType];
+
+  const godTroData = valgtVilkarResultatType === VilkarResultat.GOD_TRO ? BelopetMottattIGodTroFormPanel.transformValues(info) : {};
+  const annetData = valgtVilkarResultatType !== VilkarResultat.GOD_TRO ? AktsomhetFormPanel.transformValues(info, sarligGrunnTyper) : {};
+
+  return {
+    begrunnelse,
+    fom: values.fom,
+    tom: values.tom,
+    vilkarResultat: valgtVilkarResultatType,
+    vilkarResultatInfo: {
+      ...godTroData,
+      ...annetData,
+    },
   };
 };
-
-const TilbakekrevingPeriodeForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
-  form: TILBAKEKREVING_PERIODE_FORM_NAME,
-  enableReinitialize: true,
-})(TilbakekrevingPeriodeFormImpl)));
 
 export default TilbakekrevingPeriodeForm;
