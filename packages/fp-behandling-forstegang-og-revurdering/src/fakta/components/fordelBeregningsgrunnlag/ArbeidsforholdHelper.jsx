@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
-
-export const sortArbeidsforholdList = (arbeidsforhold) => {
-  const copy = arbeidsforhold.slice(0);
-  copy.sort((a, b) => new Date(a.arbeidsforhold.startdato) - new Date(b.arbeidsforhold.startdato));
-  return copy;
-};
+import { createSelector } from 'reselect';
+import {
+  getEndringBeregningsgrunnlagPerioder,
+} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 
 export const createArbeidsperiodeString = (arbeidsforhold) => {
   if (arbeidsforhold.opphoersdato) {
@@ -20,8 +18,7 @@ const arbeidsforholdEksistererIListen = (arbeidsforhold, arbeidsgiverList) => {
   return arbeidsgiverList.map(({ arbeidsforholdId }) => (arbeidsforholdId)).includes(arbeidsforhold.arbeidsforholdId);
 };
 
-
-export const getUniqueListOfArbeidsforhold = (andeler) => {
+export const getUniqueListOfArbeidsforholdFromAndeler = (andeler) => {
   const arbeidsgiverList = [];
   if (andeler === undefined) {
     return arbeidsgiverList;
@@ -38,6 +35,12 @@ export const getUniqueListOfArbeidsforhold = (andeler) => {
   });
   return arbeidsgiverList;
 };
+
+const emptyList = [];
+
+export const getUniqueListOfArbeidsforhold = createSelector([getEndringBeregningsgrunnlagPerioder],
+  endringPerioder => getUniqueListOfArbeidsforholdFromAndeler(endringPerioder.length > 0
+  ? endringPerioder.flatMap(p => p.endringBeregningsgrunnlagAndeler) : emptyList));
 
 export const getUniqueListOfArbeidsforholdFields = (fields) => {
   const arbeidsgiverList = [];

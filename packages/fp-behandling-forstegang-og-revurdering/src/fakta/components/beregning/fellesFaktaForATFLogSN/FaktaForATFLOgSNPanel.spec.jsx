@@ -21,7 +21,7 @@ import { erNyoppstartetFLField } from './vurderOgFastsettATFL/forms/Nyoppstartet
 import {
   besteberegningField,
 } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
-import VurderOgFastsettATFL, { inntektFieldArrayName } from './vurderOgFastsettATFL/VurderOgFastsettATFL';
+import VurderOgFastsettATFL, { INNTEKT_FIELD_ARRAY_NAME } from './vurderOgFastsettATFL/VurderOgFastsettATFL';
 
 const {
   VURDER_FAKTA_FOR_ATFL_SN,
@@ -167,7 +167,7 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     };
     const values = {};
     values[besteberegningField] = true;
-    values[inntektFieldArrayName] = [
+    values[INNTEKT_FIELD_ARRAY_NAME] = [
       {
         fastsattBelop: '10 000', inntektskategori: 'ARBEIDSTAKER', andelsnr: andel1.andelsnr, skalRedigereInntekt: true,
       },
@@ -250,7 +250,7 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     const values = {};
     values[lonnsendringField] = true;
     values[erNyoppstartetFLField] = true;
-    values[inntektFieldArrayName] = [
+    values[INNTEKT_FIELD_ARRAY_NAME] = [
       {
         fastsattBelop: '10 000', inntektskategori: 'ARBEIDSTAKER', andelsnr: forholdMedLonnsendringUtenIM.andelsnr, skalRedigereInntekt: true,
       },

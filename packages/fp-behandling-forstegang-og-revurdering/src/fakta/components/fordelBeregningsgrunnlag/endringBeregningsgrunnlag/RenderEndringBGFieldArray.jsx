@@ -23,9 +23,8 @@ import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-fronte
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 
 import {
-  getEndringBeregningsgrunnlagPerioder,
-  getBehandlingIsRevurdering,
   getBeregningsgrunnlag,
+  getBehandlingIsRevurdering,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import { getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
@@ -471,18 +470,18 @@ RenderEndringBGFieldArray.validate = (values, sumIPeriode, skalValidereMotBeregn
   return null;
 };
 
-const mapStateToProps = (state) => {
-  const erRevurdering = getBehandlingIsRevurdering(state);
-  const endringPerioder = getEndringBeregningsgrunnlagPerioder(state);
-  const arbeidsforholdList = getUniqueListOfArbeidsforhold(endringPerioder.length > 0
-    ? endringPerioder.flatMap(p => p.endringBeregningsgrunnlagAndeler) : undefined);
-  const bg = getBeregningsgrunnlag(state);
-  return {
+const mapStateToPropsFactory = (initialState) => {
+  const erRevurdering = getBehandlingIsRevurdering(initialState);
+  const arbeidsforholdList = getUniqueListOfArbeidsforhold(initialState);
+  const inntektskategoriKoder = getKodeverk(kodeverkTyper.INNTEKTSKATEGORI)(initialState);
+  const harKunYtelse = getBeregningsgrunnlag(initialState).aktivitetStatus
+  .some(status => status.kode === aktivitetStatuser.KUN_YTELSE);
+  return () => ({
     erRevurdering,
     arbeidsforholdList,
-    inntektskategoriKoder: getKodeverk(kodeverkTyper.INNTEKTSKATEGORI)(state),
-    harKunYtelse: bg.aktivitetStatus.some(status => status.kode === aktivitetStatuser.KUN_YTELSE),
-  };
+    inntektskategoriKoder,
+    harKunYtelse,
+  });
 };
 
-export default connect(mapStateToProps)(RenderEndringBGFieldArray);
+export default connect(mapStateToPropsFactory)(RenderEndringBGFieldArray);

@@ -228,7 +228,7 @@ export const skalKunneEndreTotaltBeregningsgrunnlag = (values, faktaOmBeregning,
 
 export const erOverstyring = values => values && values[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD] === true;
 
-export const erOverstyringAvBeregningsgrunnlagSelector = createSelector([
+export const erOverstyringAvBeregningsgrunnlag = createSelector([
   getFormValuesForBeregning], erOverstyring);
 
 
@@ -239,7 +239,7 @@ export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregnings
 || skalKunneEndreTotaltBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag)(andel)
 || harKunYtelse(faktaOmBeregning);
 
-export const skalRedigereInntektSelector = createSelector([getFormValuesForBeregning, getFaktaOmBeregning, getBeregningsgrunnlag], skalRedigereInntektForAndel);
+export const getSkalRedigereInntekt = createSelector([getFormValuesForBeregning, getFaktaOmBeregning, getBeregningsgrunnlag], skalRedigereInntektForAndel);
 
 export const setSkalRedigereInntektForATFL = (state, fields) => {
   const values = getFormValuesForBeregning(state);
@@ -252,17 +252,6 @@ export const setSkalRedigereInntektForATFL = (state, fields) => {
     field.skalRedigereInntekt = skalRedigere(field);
   }
 };
-
-export const skalFastsettInntektForStatus = (inntektFieldArrayName, status) => createSelector([
-  getFormValuesForBeregning,
-  skalRedigereInntektSelector],
-(values, skalFastsette) => {
-  const fields = values[inntektFieldArrayName];
-  if (!fields) {
-    return false;
-  }
-  return fields.filter(field => field.aktivitetStatus === status).map(skalFastsette).includes(true);
-});
 
 
 // Skal redigere inntektskategori
@@ -277,7 +266,7 @@ export const skalRedigereInntektskategoriForAndel = (values, beregningsgrunnlag)
   return andel.harPeriodeAarsakGraderingEllerRefusjon === true;
 };
 
-export const skalRedigereInntektskategoriSelector = createSelector([getFormValuesForBeregning, getBeregningsgrunnlag], skalRedigereInntektskategoriForAndel);
+export const getSkalRedigereInntektskategori = createSelector([getFormValuesForBeregning, getBeregningsgrunnlag], skalRedigereInntektskategoriForAndel);
 
 export const mapToBelop = skalRedigereInntekt => (andel) => {
   const { fastsattBelop, readOnlyBelop } = andel;

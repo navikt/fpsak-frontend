@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { InputField, SelectField } from '@fpsak-frontend/form';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
-
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
-import { arbeidsforholdProptype, getUniqueListOfArbeidsforholdFields } from '../ArbeidsforholdHelper';
+import { getUniqueListOfArbeidsforholdFields } from '../ArbeidsforholdHelper';
 
 const finnArbeidsforholdForAndel = (arbeidsforholdListe, val) => {
   const andelsnr = Number(val);
@@ -49,11 +46,12 @@ export const ArbeidsforholdFieldImpl = ({
   index,
   name,
   readOnly,
-  arbeidsforholdList,
   getKodeverknavn,
-}) => (
-  <ElementWrapper>
-    {(!fields.get(index).skalKunneEndreAktivitet)
+}) => {
+  const arbeidsforholdList = getUniqueListOfArbeidsforholdFields(fields);
+  return (
+    <ElementWrapper>
+      {(!fields.get(index).skalKunneEndreAktivitet)
       && (
       <InputField
         name={name}
@@ -62,7 +60,7 @@ export const ArbeidsforholdFieldImpl = ({
       />
       )
       }
-    {fields.get(index).skalKunneEndreAktivitet
+      {fields.get(index).skalKunneEndreAktivitet
       && (
       <SelectField
         name={name}
@@ -74,23 +72,16 @@ export const ArbeidsforholdFieldImpl = ({
       />
       )
       }
-  </ElementWrapper>
+    </ElementWrapper>
 );
+};
 
 ArbeidsforholdFieldImpl.propTypes = {
   fields: PropTypes.shape().isRequired,
   index: PropTypes.number.isRequired,
   readOnly: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
-  arbeidsforholdList: PropTypes.arrayOf(arbeidsforholdProptype).isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export const mapStateToProps = (state, ownProps) => {
-  const arbeidsforholdList = getUniqueListOfArbeidsforholdFields(ownProps.fields);
-  return {
-    arbeidsforholdList,
-  };
-};
-
-export default connect(mapStateToProps)(injectKodeverk(getAlleKodeverk)(ArbeidsforholdFieldImpl));
+export default injectKodeverk(getAlleKodeverk)(ArbeidsforholdFieldImpl);

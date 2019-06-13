@@ -2,15 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FieldArray } from 'redux-form';
-
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-
+import { createSelector } from 'reselect';
 import LonnsendringForm, { lonnsendringField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
 import NyoppstartetFLForm, { erNyoppstartetFLField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/NyoppstartetFLForm';
-import { getFaktaOmBeregning, getBeregningsgrunnlag } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getFaktaOmBeregning, getBeregningsgrunnlag, getFaktaOmBeregningTilfellerKoder } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { harVurdertMottarYtelse } from './forms/VurderMottarYtelseUtils';
 import InntektstabellPanel from '../InntektstabellPanel';
 import { ATFLSammeOrgTekst, transformValuesForATFLISammeOrg } from './forms/ATFLSammeOrg';
@@ -19,13 +18,13 @@ import VurderMottarYtelseForm from './forms/VurderMottarYtelseForm';
 import FastsettEndretBeregningsgrunnlag from '../endringBeregningsgrunnlag/FastsettEndretBeregningsgrunnlag';
 import { getFormValuesForBeregning } from '../../BeregningFormUtils';
 import {
- skalRedigereInntektForAndel, mapAndelToField, skalFastsettInntektForStatus, erOverstyring,
+ skalRedigereInntektForAndel, mapAndelToField, erOverstyring, getSkalRedigereInntekt,
 } from '../BgFordelingUtils';
 import VurderBesteberegningForm, { besteberegningField, vurderBesteberegningTransform } from '../besteberegningFodendeKvinne/VurderBesteberegningForm';
 import InntektFieldArray from '../InntektFieldArray';
 
 
-export const inntektFieldArrayName = 'inntektFieldArray';
+export const INNTEKT_FIELD_ARRAY_NAME = 'inntektFieldArray';
 
 
 const lonnsendringErVurdertEllerIkkjeTilstede = (tilfeller, values) => (
@@ -97,7 +96,7 @@ const finnInntektstabell = (tilfeller, readOnly, isAksjonspunktClosed) => {
   }
   return (
     <FieldArray
-      name={inntektFieldArrayName}
+      name={INNTEKT_FIELD_ARRAY_NAME}
       component={InntektFieldArray}
       readOnly={readOnly}
       skalKunneLeggeTilAndel={false}
@@ -188,7 +187,7 @@ VurderOgFastsettATFL.buildInitialValues = (beregningsgrunnlag, getKodeverknavn, 
     return {};
   }
   return {
-    [inntektFieldArrayName]: InntektFieldArray.buildInitialValues(andeler, getKodeverknavn, faktaOmBeregning),
+    [INNTEKT_FIELD_ARRAY_NAME]: InntektFieldArray.buildInitialValues(andeler, getKodeverknavn, faktaOmBeregning),
     ...InntektstabellPanel.buildInitialValues(aksjonspunkter),
   };
 };
@@ -197,7 +196,7 @@ VurderOgFastsettATFL.buildInitialValues = (beregningsgrunnlag, getKodeverknavn, 
 VurderOgFastsettATFL.validate = (values, tilfeller, faktaOmBeregning, beregningsgrunnlag, getKodeverknavn) => {
   const errors = {};
   if (harVurdert(tilfeller, values, faktaOmBeregning) && skalFastsetteInntekt(values, faktaOmBeregning, beregningsgrunnlag, getKodeverknavn)) {
-    errors[inntektFieldArrayName] = InntektFieldArray.validate(values[inntektFieldArrayName], false,
+    errors[INNTEKT_FIELD_ARRAY_NAME] = InntektFieldArray.validate(values[INNTEKT_FIELD_ARRAY_NAME], false,
       skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag));
   }
   return errors;
@@ -272,7 +271,7 @@ const transformValuesForAksjonspunkt = (values, inntektVerdier, fastsatteAndelsn
 
 
 VurderOgFastsettATFL.transformValues = (faktaOmBeregning, beregningsgrunnlag) => (values) => {
-  const inntektVerdier = InntektFieldArray.transformValues(values[inntektFieldArrayName]);
+  const inntektVerdier = InntektFieldArray.transformValues(values[INNTEKT_FIELD_ARRAY_NAME]);
   const fastsatteAndelsnr = [];
   const transformed = transformValuesForAksjonspunkt(values, inntektVerdier, fastsatteAndelsnr, faktaOmBeregning, beregningsgrunnlag);
   return transformValuesForOverstyring(values, transformed, inntektVerdier, fastsatteAndelsnr);
@@ -290,27 +289,53 @@ VurderOgFastsettATFL.propTypes = {
   skalViseTabell: PropTypes.bool.isRequired,
 };
 
-
-const mapStateToProps = (state, initialProps) => {
-  const skalFastsetteAT = skalFastsettInntektForStatus(inntektFieldArrayName, aktivitetStatus.ARBEIDSTAKER)(state);
-  const skalFastsetteFL = skalFastsettInntektForStatus(inntektFieldArrayName, aktivitetStatus.FRILANSER)(state);
-  const faktaOmBeregning = getFaktaOmBeregning(state);
-  const beregningsgrunnlag = getBeregningsgrunnlag(state);
-  let manglerInntektsmelding = false;
-  if (faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe && faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.length > 0) {
-    manglerInntektsmelding = faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.find(forhold => !forhold.inntektPrMnd) !== undefined;
+export const skalFastsettInntektForArbeidstaker = createSelector([
+  getFormValuesForBeregning,
+  getSkalRedigereInntekt],
+(values, skalFastsette) => {
+  const fields = values[INNTEKT_FIELD_ARRAY_NAME];
+  if (!fields) {
+    return false;
   }
-  const values = getFormValuesForBeregning(state);
-  return {
-    skalViseTabell: beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
+  return fields.filter(field => field.aktivitetStatus === aktivitetStatus.ARBEIDSTAKER).map(skalFastsette).includes(true);
+});
+
+export const skalFastsettInntektForFrilans = createSelector([
+  getFormValuesForBeregning,
+  getSkalRedigereInntekt],
+(values, skalFastsette) => {
+  const fields = values[INNTEKT_FIELD_ARRAY_NAME];
+  if (!fields) {
+    return false;
+  }
+  return fields.filter(field => field.aktivitetStatus === aktivitetStatus.FRILANSER).map(skalFastsette).includes(true);
+});
+
+const getManglerInntektsmelding = createSelector([getFaktaOmBeregning],
+  (faktaOmBeregning) => {
+  if (faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe && faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.length > 0) {
+    return faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.find(forhold => !forhold.inntektPrMnd) !== undefined;
+  }
+  return false;
+});
+
+const getSkalViseTabell = createSelector([getFaktaOmBeregningTilfellerKoder, getBeregningsgrunnlag],
+  (tilfeller, beregningsgrunnlag) => beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
     .some(andel => andel.aktivitetStatus.kode !== aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE)
-    && !initialProps.tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE),
-    skalHaBesteberegning: values[besteberegningField] === true,
-    harKunstigArbeid: harKunstigArbeidsforhold(initialProps.tilfeller, beregningsgrunnlag),
+    && !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE));
+
+const mapStateToPropsFactory = (initialState, initialProps) => {
+  const harKunstigArbeid = harKunstigArbeidsforhold(initialProps.tilfeller, getBeregningsgrunnlag(initialState));
+  const skalViseTabell = getSkalViseTabell(initialState);
+  const manglerInntektsmelding = getManglerInntektsmelding(initialState);
+  return state => ({
+    skalFastsetteAT: skalFastsettInntektForArbeidstaker(state),
+    skalFastsetteFL: skalFastsettInntektForFrilans(state),
+    skalHaBesteberegning: getFormValuesForBeregning(state)[besteberegningField] === true,
     manglerInntektsmelding,
-    skalFastsetteAT,
-    skalFastsetteFL,
-  };
+    skalViseTabell,
+    harKunstigArbeid,
+  });
 };
 
-export default connect(mapStateToProps)(VurderOgFastsettATFL);
+export default connect(mapStateToPropsFactory)(VurderOgFastsettATFL);

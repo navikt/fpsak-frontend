@@ -28,7 +28,7 @@ import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/compo
 
 
 import { getFormValuesForAvklarAktiviteter, getFormInitialValuesForAvklarAktiviteter, formNameAvklarAktiviteter } from '../BeregningFormUtils';
-import { erOverstyringAvBeregningsgrunnlagSelector } from '../fellesFaktaForATFLogSN/BgFordelingUtils';
+import { erOverstyringAvBeregningsgrunnlag } from '../fellesFaktaForATFLogSN/BgFordelingUtils';
 
 import VurderAktiviteterPanel from './VurderAktiviteterPanel';
 import styles from './avklareAktiviteterPanel.less';
@@ -288,32 +288,43 @@ const skalKunneOverstyre = (rettigheter, aksjonspunkter) => rettigheter.kanOvers
 
 const getSkalKunneOverstyre = createSelector([getRettigheter, getAksjonspunkter], skalKunneOverstyre);
 
-const mapStateToProps = (state, initialProps) => {
-  const avklarAktiviteter = getAvklarAktiviteter(state);
-  const alleAp = getAksjonspunkter(state);
+const getIsAksjonspunktClosed = createSelector([getAksjonspunkter],
+(alleAp) => {
   const relevantOpenAps = alleAp.filter(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_AKTIVITETER
     || ap.definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSAKTIVITETER)
     .filter(ap => isAksjonspunktOpen(ap.status.kode));
-  const isAksjonspunktClosed = relevantOpenAps.length === 0;
-  const initialValues = buildInitialValuesAvklarAktiviteter(state);
-  const values = getFormValuesForAvklarAktiviteter(state);
-  const hasBegrunnelse = initialValues
-  && !!initialValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME];
-  return {
-    values,
-    isAksjonspunktClosed,
-    avklarAktiviteter,
-    hasBegrunnelse,
-    initialValues,
-    kanOverstyre: getSkalKunneOverstyre(state),
-    erOverstyrt: values && values[MANUELL_OVERSTYRING_FIELD],
-    aksjonspunkter: alleAp,
-    helpText: getHelpTextsAvklarAktiviteter(state),
-    onSubmit: vals => initialProps.submitCallback(transformValuesAvklarAktiviteter(state)(vals)),
-    erBgOverstyrt: erOverstyringAvBeregningsgrunnlagSelector(state),
-    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
-    alleKodeverk: getAlleKodeverk(state),
-  };
+  return relevantOpenAps.length === 0;
+});
+
+const mapStateToPropsFactory = (initialState, initialProps) => {
+  const avklarAktiviteter = getAvklarAktiviteter(initialState);
+  const aksjonspunkter = getAksjonspunkter(initialState);
+  const isAksjonspunktClosed = getIsAksjonspunktClosed(initialState);
+  const initialValues = buildInitialValuesAvklarAktiviteter(initialState);
+  const hasBegrunnelse = initialValues && !!initialValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME];
+  const kanOverstyre = getSkalKunneOverstyre(initialState);
+  const helpText = getHelpTextsAvklarAktiviteter(initialState);
+  const onSubmit = vals => initialProps.submitCallback(transformValuesAvklarAktiviteter(initialState)(vals));
+  const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(initialState), getBehandlingVersjon(initialState));
+  const alleKodeverk = getAlleKodeverk(initialState);
+  return (state) => {
+    const values = getFormValuesForAvklarAktiviteter(state);
+    return ({
+      isAksjonspunktClosed,
+      avklarAktiviteter,
+      hasBegrunnelse,
+      initialValues,
+      aksjonspunkter,
+      kanOverstyre,
+      values,
+      helpText,
+      onSubmit,
+      behandlingFormPrefix,
+      alleKodeverk,
+      erOverstyrt: values && values[MANUELL_OVERSTYRING_FIELD],
+      erBgOverstyrt: erOverstyringAvBeregningsgrunnlag(state),
+  });
+};
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -322,6 +333,6 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(behandlingForm({
+export default connect(mapStateToPropsFactory, mapDispatchToProps)(behandlingForm({
   form: formNameAvklarAktiviteter,
 })(AvklareAktiviteterPanelImpl));

@@ -98,9 +98,12 @@ const getSkalKunneOverstyre = createSelector([getRettigheter, getAksjonspunkter,
   && !aksjonspunkter.some(ap => ap.definisjon.kode === AVKLAR_AKTIVITETER && isAksjonspunktOpen(ap.status.kode))
   && toggles[featureToggle.OVERSTYR_BEREGNINGSGRUNNLAG]);
 
-const mapStateToProps = state => ({
+const mapStateToPropsFactory = (initialState) => {
+  const aksjonspunkter = getAksjonspunkter(initialState);
+  return state => ({
     kanOverstyre: getSkalKunneOverstyre(state),
-    aksjonspunkter: getAksjonspunkter(state),
-});
+    aksjonspunkter,
+  });
+};
 
-export default connect(mapStateToProps)(InntektstabellPanelImpl);
+export default connect(mapStateToPropsFactory)(InntektstabellPanelImpl);

@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import organisasjonstyper from '@fpsak-frontend/kodeverk/src/organisasjonstype';
 import { lonnsendringField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
@@ -17,19 +16,14 @@ import {
   settReadOnlyBelop,
   mapToBelop,
   mapAndelToField,
-  skalFastsettInntektForStatus,
   skalRedigereInntektskategoriForAndel,
   skalKunneOverstigeRapportertInntekt,
 } from './BgFordelingUtils';
 import { utledArbeidsforholdFieldName, finnFrilansFieldName }
   from './vurderOgFastsettATFL/forms/VurderMottarYtelseUtils';
-  import { MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD }
+import { MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD }
   from './InntektstabellPanel';
 import { besteberegningField } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
-
-const lagAndelValues = (andelsnr, fastsattBelop, inntektskategori, aktivitetStatus, lagtTilAvSaksbehandler = false, nyAndel = false) => ({
-  nyAndel, andelsnr, fastsattBelop, inntektskategori, aktivitetStatus, lagtTilAvSaksbehandler, skalRedigereInntekt: true,
-});
 
 const arbeidsgiver = {
   arbeidsgiverNavn: 'Virksomheten',
@@ -65,54 +59,6 @@ const getKodeverknavn = (kodeverk) => {
 };
 
 describe('<BgFordelingUtils>', () => {
-  it('skal returnere true for fastsetting av FL-inntekt når FL-inntekt skal fastsettes', () => {
-    const fieldArrayName = 'test';
-    const values = {};
-    values[fieldArrayName] = [
-      lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
-      lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
-    ];
-    const skalFastsetteInntektMock = andel => (andel.aktivitetStatus === aktivitetStatuser.FRILANSER);
-    const skalFastsetteFL = skalFastsettInntektForStatus(fieldArrayName, aktivitetStatuser.FRILANSER).resultFunc(values, skalFastsetteInntektMock);
-    expect(skalFastsetteFL).to.equal(true);
-  });
-
-  it('skal returnere false for fastsetting av FL-inntekt når FL-inntekt ikkje skal fastsettes', () => {
-    const fieldArrayName = 'test';
-    const values = {};
-    values[fieldArrayName] = [
-      lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
-      lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
-    ];
-    const skalFastsetteInntektMock = andel => (andel.aktivitetStatus !== aktivitetStatuser.FRILANSER);
-    const skalFastsetteFL = skalFastsettInntektForStatus(fieldArrayName, aktivitetStatuser.FRILANSER).resultFunc(values, skalFastsetteInntektMock);
-    expect(skalFastsetteFL).to.equal(false);
-  });
-
-  it('skal returnere true for fastsetting av AT-inntekt når AT-inntekt skal fastsettes', () => {
-    const fieldArrayName = 'test';
-    const values = {};
-    values[fieldArrayName] = [
-      lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
-      lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
-    ];
-    const skalFastsetteInntektMock = andel => (andel.aktivitetStatus === aktivitetStatuser.ARBEIDSTAKER);
-    const skalFastsetteFL = skalFastsettInntektForStatus(fieldArrayName, aktivitetStatuser.ARBEIDSTAKER).resultFunc(values, skalFastsetteInntektMock);
-    expect(skalFastsetteFL).to.equal(true);
-  });
-
-  it('skal returnere false for fastsetting av FL-inntekt når FL-inntekt ikkje skal fastsettes', () => {
-    const fieldArrayName = 'test';
-    const values = {};
-    values[fieldArrayName] = [
-      lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
-      lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
-    ];
-    const skalFastsetteInntektMock = andel => (andel.aktivitetStatus !== aktivitetStatuser.ARBEIDSTAKER);
-    const skalFastsetteFL = skalFastsettInntektForStatus(fieldArrayName, aktivitetStatuser.ARBEIDSTAKER).resultFunc(values, skalFastsetteInntektMock);
-    expect(skalFastsetteFL).to.equal(false);
-  });
-
   const dagpengerAndel = {
     aktivitetStatus: { kode: aktivitetStatuser.DAGPENGER, navn: 'Dagpenger' },
     andelsnr: 1,

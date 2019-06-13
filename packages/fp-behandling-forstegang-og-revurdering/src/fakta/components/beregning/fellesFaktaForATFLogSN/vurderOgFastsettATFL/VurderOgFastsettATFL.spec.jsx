@@ -6,7 +6,11 @@ import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import { getFieldNameKey } from '../endringBeregningsgrunnlag/EndringBeregningsgrunnlagForm';
 import { utledArbeidsforholdFieldName } from './forms/VurderMottarYtelseUtils';
-import VurderOgFastsettATFL, { inntektFieldArrayName } from './VurderOgFastsettATFL';
+import VurderOgFastsettATFL, {
+  INNTEKT_FIELD_ARRAY_NAME,
+  skalFastsettInntektForArbeidstaker,
+  skalFastsettInntektForFrilans,
+} from './VurderOgFastsettATFL';
 import VurderBesteberegningForm, { besteberegningField } from '../besteberegningFodendeKvinne/VurderBesteberegningForm';
 import LonnsendringForm, { lonnsendringField } from './forms/LonnsendringForm';
 import NyoppstartetFLForm, { erNyoppstartetFLField } from './forms/NyoppstartetFLForm';
@@ -22,6 +26,7 @@ const {
   FASTSETT_MAANEDSINNTEKT_FL,
   FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING,
 } = faktaOmBeregningTilfelle;
+
 
 const lagBeregningsgrunnlag = andeler => ({
   beregningsgrunnlagPeriode: [
@@ -105,7 +110,7 @@ describe('<VurderOgFastsettATFL>', () => {
   it('skal transform values om besteberegning', () => {
     const values = {};
     values[besteberegningField] = true;
-    values[inntektFieldArrayName] = [
+    values[INNTEKT_FIELD_ARRAY_NAME] = [
       lagAndelValues(1, '10 000', inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
       lagAndelValues(undefined, '20 000', inntektskategorier.DAGPENGER, aktivitetStatuser.DAGPENGER, true, true),
     ];
@@ -131,7 +136,7 @@ describe('<VurderOgFastsettATFL>', () => {
     values[besteberegningField] = true;
     values[lonnsendringField] = true;
     values[erNyoppstartetFLField] = true;
-    values[inntektFieldArrayName] = [
+    values[INNTEKT_FIELD_ARRAY_NAME] = [
       lagAndelValues(1, '10 000', inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
       lagAndelValues(2, '30 000', inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
       lagAndelValues(undefined, '20 000', inntektskategorier.DAGPENGER, aktivitetStatuser.DAGPENGER, true, true),
@@ -154,7 +159,7 @@ describe('<VurderOgFastsettATFL>', () => {
     const values = {};
     values[lonnsendringField] = true;
     values[erNyoppstartetFLField] = true;
-    values[inntektFieldArrayName] = [
+    values[INNTEKT_FIELD_ARRAY_NAME] = [
       lagAndelValues(1, '10 000', inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
       lagAndelValues(2, '30 000', inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
       lagAndelValues(undefined, '20 000', inntektskategorier.DAGPENGER, aktivitetStatuser.DAGPENGER, true, true),
@@ -210,5 +215,49 @@ describe('<VurderOgFastsettATFL>', () => {
 
     const vurderMottarYtelseForm = inntektstabellPanel.find(VurderMottarYtelseForm);
     expect(vurderMottarYtelseForm.length).to.equal(1);
+  });
+
+  it('skal returnere true for fastsetting av FL-inntekt når FL-inntekt skal fastsettes', () => {
+    const values = {};
+    values[INNTEKT_FIELD_ARRAY_NAME] = [
+      lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
+      lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
+    ];
+    const skalFastsetteInntektMock = andel => (andel.aktivitetStatus === aktivitetStatuser.FRILANSER);
+    const skalFastsetteFL = skalFastsettInntektForFrilans.resultFunc(values, skalFastsetteInntektMock);
+    expect(skalFastsetteFL).to.equal(true);
+  });
+
+  it('skal returnere false for fastsetting av FL-inntekt når FL-inntekt ikkje skal fastsettes', () => {
+    const values = {};
+    values[INNTEKT_FIELD_ARRAY_NAME] = [
+      lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
+      lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
+    ];
+    const skalFastsetteInntektMock = andel => (andel.aktivitetStatus !== aktivitetStatuser.FRILANSER);
+    const skalFastsetteFL = skalFastsettInntektForFrilans.resultFunc(values, skalFastsetteInntektMock);
+    expect(skalFastsetteFL).to.equal(false);
+  });
+
+  it('skal returnere true for fastsetting av AT-inntekt når AT-inntekt skal fastsettes', () => {
+    const values = {};
+    values[INNTEKT_FIELD_ARRAY_NAME] = [
+      lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
+      lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
+    ];
+    const skalFastsetteInntektMock = andel => (andel.aktivitetStatus === aktivitetStatuser.ARBEIDSTAKER);
+    const skalFastsetteAT = skalFastsettInntektForArbeidstaker.resultFunc(values, skalFastsetteInntektMock);
+    expect(skalFastsetteAT).to.equal(true);
+  });
+
+  it('skal returnere false for fastsetting av AT-inntekt når AT-inntekt ikkje skal fastsettes', () => {
+    const values = {};
+    values[INNTEKT_FIELD_ARRAY_NAME] = [
+      lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
+      lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
+    ];
+    const skalFastsetteInntektMock = andel => (andel.aktivitetStatus !== aktivitetStatuser.ARBEIDSTAKER);
+    const skalFastsetteAT = skalFastsettInntektForArbeidstaker.resultFunc(values, skalFastsetteInntektMock);
+    expect(skalFastsetteAT).to.equal(false);
   });
 });

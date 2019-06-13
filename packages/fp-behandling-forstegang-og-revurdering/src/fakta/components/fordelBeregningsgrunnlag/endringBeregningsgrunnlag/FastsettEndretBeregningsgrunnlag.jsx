@@ -37,11 +37,13 @@ FastsettEndretBeregningsgrunnlagImpl.propTypes = {
   bgPerioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
+const emptyArray = [];
+
 const mapStateToProps = (state) => {
   const perioder = getEndringBeregningsgrunnlagPerioder(state);
   const bgPerioder = getBeregningsgrunnlag(state).beregningsgrunnlagPeriode;
   return ({
-    perioder: perioder || [],
+    perioder: perioder || emptyArray,
     bgPerioder,
   });
 };

@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { TableRow, TableColumn } from '@fpsak-frontend/shared-components';
 import { removeSpacesFromNumber, formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import { skalRedigereInntektSelector } from './BgFordelingUtils';
+import { getSkalRedigereInntekt } from './BgFordelingUtils';
 
 import styles from './inntektFieldArray.less';
 
@@ -16,7 +16,7 @@ const summerFordeling = (fields, skalRedigereInntekt) => {
     const belop = skalRedigereInntekt(field) ? field.fastsattBelop : field.belopReadOnly;
     sum += belop ? parseInt(removeSpacesFromNumber(belop), 10) : 0;
   });
-  return sum > 0 ? formatCurrencyNoKr(sum) : '';
+  return sum > 0 ? formatCurrencyNoKr(sum) : 0;
 };
 
 const SummaryRow = ({
@@ -47,11 +47,11 @@ SummaryRow.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   skalVisePeriode: PropTypes.bool.isRequired,
   skalViseRefusjon: PropTypes.bool.isRequired,
-  sumFordeling: PropTypes.number.isRequired,
+  sumFordeling: PropTypes.string.isRequired,
 };
 
 export const mapStateToProps = (state, ownProps) => {
-  const sumFordeling = summerFordeling(ownProps.fields, skalRedigereInntektSelector(state)) || 0;
+  const sumFordeling = summerFordeling(ownProps.fields, getSkalRedigereInntekt(state)) || 0;
   return {
     sumFordeling,
   };

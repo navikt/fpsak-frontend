@@ -24,7 +24,6 @@ import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-fronte
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 
 import {
-  getEndringBeregningsgrunnlagPerioder,
   getFaktaOmBeregningTilfellerKoder,
   getBehandlingIsRevurdering,
   getBeregningsgrunnlag,
@@ -509,8 +508,7 @@ RenderEndringBGFieldArray.validate = (values, fastsattIForstePeriode, skalRedige
 const mapStateToProps = (state, ownProps) => {
   const erRevurdering = getBehandlingIsRevurdering(state);
   const tilfeller = getFaktaOmBeregningTilfellerKoder(state);
-  const arbeidsforholdList = getUniqueListOfArbeidsforhold(getEndringBeregningsgrunnlagPerioder(state)
-    ? getEndringBeregningsgrunnlagPerioder(state).flatMap(p => p.endringBeregningsgrunnlagAndeler) : undefined);
+  const arbeidsforholdList = getUniqueListOfArbeidsforhold(state);
   setSkalRedigereInntektForATFL(state, ownProps.fields);
   return {
     erRevurdering,
