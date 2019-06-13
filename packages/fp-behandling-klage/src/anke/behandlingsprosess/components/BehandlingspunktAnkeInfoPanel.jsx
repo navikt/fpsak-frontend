@@ -15,6 +15,8 @@ import {
 
 import styles from './behandlingspunktAnkeInfoPanel.less';
 import BehandleAnkeForm from './BehandleAnkeForm';
+import BehandleMerknaderForm from './BehandleMerknaderForm';
+import BehandleResultatForm from './BehandleResultatForm';
 
 const classNames = classnames.bind(styles);
 
@@ -41,6 +43,30 @@ export const BehandlingspunktAnkeInfoPanel = ({ // NOSONAR Kompleksitet er høg,
     {behandlingspunktCodes.ANKEBEHANDLING === selectedBehandlingspunkt
     && (
       <BehandleAnkeForm
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+        saveKlage={saveTempKlage}
+        previewCallback={previewCallback}
+        previewVedtakCallback={previewCallbackKlage}
+        readOnlySubmitButton={readOnlySubmitButton}
+      />
+    )
+    }
+    {behandlingspunktCodes.ANKE_MERKNADER === selectedBehandlingspunkt
+    && (
+      <BehandleMerknaderForm
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+        saveKlage={saveTempKlage}
+        previewCallback={previewCallback}
+        previewVedtakCallback={previewCallbackKlage}
+        readOnlySubmitButton={readOnlySubmitButton}
+      />
+        )
+        }
+    {behandlingspunktCodes.ANKE_RESULTAT === selectedBehandlingspunkt
+    && (
+      <BehandleResultatForm
         submitCallback={submitCallback}
         readOnly={readOnly}
         saveKlage={saveTempKlage}

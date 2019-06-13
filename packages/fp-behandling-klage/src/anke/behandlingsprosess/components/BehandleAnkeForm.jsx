@@ -29,7 +29,7 @@ import ankeOmgjorArsak from '@fpsak-frontend/kodeverk/src/ankeOmgjorArsak';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { getBehandlinger } from 'behandling/selectors/behandlingerSelectors';
-import PreviewKlageLink from '../../../behandlingsprosess/components/klage/Klagevurdering/SharedUtills/PreviewKlageLink';
+import PreviewAnkeLink from './PreviewAnkeLink';
 import FritekstBrevTextField from '../../../behandlingsprosess/components/klage/Klagevurdering/SharedUtills/FritekstKlageBrevTextField';
 import styles from './behandleAnkeForm.less';
 import { getSelectedBehandlingspunktAksjonspunkter } from '../BehandlingsprosessAnkeSelectors';
@@ -225,7 +225,7 @@ const BehandleAnkeFormImpl = ({
             />
             {canPreview(formValues)
             && (
-              <PreviewKlageLink
+              <PreviewAnkeLink
                 previewCallback={previewCallback}
                 fritekstTilBrev={formValues.fritekstTilBrev}
                 klageVurdering={formValues.ankeVurdering}
@@ -268,7 +268,7 @@ export const buildInitialValues = createSelector([getBehandlingKlageVurderingRes
   ikkeKonkret: klageVurderingResultat ? klageVurderingResultat.ikkeKonkret : false,
   ikkeFrist: klageVurderingResultat ? klageVurderingResultat.ikkeFrist : false,
   ikkeSignert: klageVurderingResultat ? klageVurderingResultat.ikkeSignert : false,
-  erSubsidiartRealitetsbehandles: klageVurderingResultat ? klageVurderingResultat.erSubsidiartRealitetsbehandles : false,
+  erSubsidiartRealitetsbehandles: klageVurderingResultat ? klageVurderingResultat.erSubsidiartRealitetsbehandles : null,
   ankeAvvistArsak: klageVurderingResultat ? klageVurderingResultat.ankeAvvistArsak : null,
   ankeOmgjoerArsak: klageVurderingResultat ? klageVurderingResultat.ankeOmgjoerArsak : null,
   ankeVurderingOmgjoer: klageVurderingResultat ? klageVurderingResultat.ankeVurderingOmgjoer : null,
