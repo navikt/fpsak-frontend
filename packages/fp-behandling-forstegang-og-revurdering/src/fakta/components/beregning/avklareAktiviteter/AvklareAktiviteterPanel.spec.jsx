@@ -149,7 +149,7 @@ describe('<AvklareAktiviteterPanel>', () => {
           { tom: '2019-02-02', aktiviteter },
         ],
     };
-    const aksjonspunkter = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER } }];
+    const aksjonspunkter = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER }, status: { kode: 'OPPR' } }];
 
     const wrapper = shallow(<AvklareAktiviteterPanelImpl
       {...reduxFormPropsMock}
@@ -182,7 +182,7 @@ describe('<AvklareAktiviteterPanel>', () => {
           { tom: '2019-02-02', aktiviteter },
         ],
     };
-    const aksjonspunkter = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER } }];
+    const aksjonspunkter = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER }, status: { kode: 'OPPR' } }];
 
     const wrapper = shallow(<AvklareAktiviteterPanelImpl
       {...reduxFormPropsMock}
@@ -215,7 +215,8 @@ describe('<AvklareAktiviteterPanel>', () => {
           { tom: '2019-02-02', aktiviteter },
         ],
     };
-    const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER } }, { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN } }];
+    const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'UTFO' } },
+    { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN }, status: { kode: 'OPPR' } }];
 
     const wrapper = shallow(<AvklareAktiviteterPanelImpl
       {...reduxFormPropsMock}
@@ -250,8 +251,7 @@ describe('<AvklareAktiviteterPanel>', () => {
           { tom: '2019-02-02', aktiviteter },
         ],
     };
-    const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER } }];
-
+    const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'UTFO' } }];
     const wrapper = shallow(<AvklareAktiviteterPanelImpl
       {...reduxFormPropsMock}
       readOnly={false}
@@ -313,6 +313,73 @@ describe('<AvklareAktiviteterPanel>', () => {
     expect(submitBtn).has.length(1);
   });
 
+
+  it('skal ikkje vise knapp inne i borderbox når man har åpent aksjonspunkt i avklar aktiviteter', () => {
+    const avklarAktiviteter = {
+      aktiviteterTomDatoMapping: [
+          { tom: '2019-02-02', aktiviteter },
+        ],
+    };
+    const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'OPPR' } }];
+    const wrapper = shallow(<AvklareAktiviteterPanelImpl
+      {...reduxFormPropsMock}
+      readOnly={false}
+      isAksjonspunktClosed={false}
+      avklarAktiviteter={avklarAktiviteter}
+      hasBegrunnelse={false}
+      submittable
+      isDirty
+      submitEnabled
+      helpText={[]}
+      harAndreAksjonspunkterIPanel={false}
+      erEndret={false}
+      kanOverstyre
+      aksjonspunkter={aksjonspunkter}
+      erOverstyrt
+      erBgOverstyrt={false}
+      behandlingFormPrefix="test"
+      alleKodeverk={{}}
+      reduxFormInitialize={() => {}}
+    />);
+    const borderBox = wrapper.find(BorderBox);
+    expect(borderBox).has.length(1);
+    const submitBtn = borderBox.find(FaktaSubmitButton);
+    expect(submitBtn).has.length(0);
+  });
+
+
+  it('skal ikkje vise knapp inne i borderbox når man har åpent overstyr aksjonspunkt for aktiviteter', () => {
+    const avklarAktiviteter = {
+      aktiviteterTomDatoMapping: [
+          { tom: '2019-02-02', aktiviteter },
+        ],
+    };
+    const aksjonspunkter = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER }, status: { kode: 'OPPR' } }];
+    const wrapper = shallow(<AvklareAktiviteterPanelImpl
+      {...reduxFormPropsMock}
+      readOnly={false}
+      isAksjonspunktClosed={false}
+      avklarAktiviteter={avklarAktiviteter}
+      hasBegrunnelse={false}
+      submittable
+      isDirty
+      submitEnabled
+      helpText={[]}
+      harAndreAksjonspunkterIPanel={false}
+      erEndret={false}
+      kanOverstyre
+      aksjonspunkter={aksjonspunkter}
+      erOverstyrt
+      erBgOverstyrt={false}
+      behandlingFormPrefix="test"
+      alleKodeverk={{}}
+      reduxFormInitialize={() => {}}
+    />);
+    const borderBox = wrapper.find(BorderBox);
+    expect(borderBox).has.length(1);
+    const submitBtn = borderBox.find(FaktaSubmitButton);
+    expect(submitBtn).has.length(0);
+  });
 
   it('skal teste at initial values blir bygget', () => {
     const avklarAktiviteter = {
