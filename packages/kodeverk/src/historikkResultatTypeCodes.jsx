@@ -48,6 +48,10 @@ const historikkResultatTypeCodes = {
     kode: 'VEDTAK_I_KLAGEBEHANDLING',
     feltId: 'HistorikkResultat.VedtakKlagebehandling',
   },
+  VEDTAK_I_ANKEBEHANDLING: {
+    kode: 'VEDTAK_I_ANKEBEHANDLING',
+    feltId: 'HistorikkResultat.VedtakAnkebehandling',
+  },
   VEDTAK_I_INNSYNBEHANDLING: {
     kode: 'VEDTAK_I_INNSYNBEHANDLING',
     feltId: 'HistorikkResultat.VedtakInnsynbehandling',

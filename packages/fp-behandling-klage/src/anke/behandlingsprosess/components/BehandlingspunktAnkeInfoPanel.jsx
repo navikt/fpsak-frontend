@@ -62,8 +62,8 @@ export const BehandlingspunktAnkeInfoPanel = ({ // NOSONAR Kompleksitet er høg,
         previewVedtakCallback={previewCallbackKlage}
         readOnlySubmitButton={readOnlySubmitButton}
       />
-        )
-        }
+    )
+    }
     {behandlingspunktCodes.ANKE_RESULTAT === selectedBehandlingspunkt
     && (
       <BehandleResultatForm

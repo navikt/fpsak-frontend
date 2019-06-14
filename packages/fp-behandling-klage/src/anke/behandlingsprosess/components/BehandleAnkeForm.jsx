@@ -201,7 +201,7 @@ const BehandleAnkeFormImpl = ({
 
       <Row>
         <Column xs="7">
-          <TextAreaField label="Begrunnelse" name="begrunnelse" />
+          <TextAreaField label="Begrunnelse" name="begrunnelse" readOnly={readOnly} />
         </Column>
       </Row>
 

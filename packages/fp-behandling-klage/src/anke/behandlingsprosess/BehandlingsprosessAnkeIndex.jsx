@@ -13,7 +13,6 @@ import {
   getBehandlingIdentifier, getFagsakYtelseType,
 } from 'behandlingKlage/src/anke/duckAnke';
 import { BehandlingsprosessPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
-import KlageBehandlingModal from 'behandlingKlage/src/behandlingsprosess/components/klage/KlageBehandlingModal';
 import BehandlingspunktAnkeInfoPanel from 'behandlingKlage/src/anke/behandlingsprosess/components/BehandlingspunktAnkeInfoPanel';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
@@ -22,6 +21,7 @@ import {
   BehandlingIdentifier, getLocationWithQueryParams,
 } from '@fpsak-frontend/fp-felles';
 import { getResolveFaktaAksjonspunkterSuccess } from 'behandlingKlage/src/anke/fakta/duckFaktaAnke';
+import AnkeBehandlingModal from './components/AnkeBehandlingModal';
 import {
   setSelectedBehandlingspunktNavn,
   resolveProsessAksjonspunkter,
@@ -160,7 +160,8 @@ export class BehandlingsprosessAnkeIndex extends Component {
     const apCodes = aksjonspunktModels.map(ap => ap.kode);
     const shouldUpdateInfo = false;
     const afterSubmit = () => {
-        this.goToBehandlingWithDefaultPunktAndFakta();
+      this.setShowModalKlageBehandling(true);
+        this.goToSearchPage();
     };
 
     const aktuelleAksjonspunkter = aksjonspunkter.filter(ap => apCodes.includes(ap.definisjon.kode));
@@ -228,7 +229,7 @@ export class BehandlingsprosessAnkeIndex extends Component {
           aksjonspunkter={aksjonspunkter}
           behandlingType={behandlingType}
         />
-        <KlageBehandlingModal showModal={showModalKlageBehandling} closeEvent={this.goToSearchPage} />
+        <AnkeBehandlingModal showModal={showModalKlageBehandling} closeEvent={this.goToSearchPage} />
       </React.Fragment>
     );
   }
