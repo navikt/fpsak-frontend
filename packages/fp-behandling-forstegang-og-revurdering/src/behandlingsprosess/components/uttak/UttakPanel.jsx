@@ -207,23 +207,26 @@ const convertToArray = uttakResult => Object.values(uttakResult)
     let errors = null;
     const uttakResult = getResult(uttaksresultatActivity);
     const uttakResultArray = convertToArray(uttakResult);
-    uttakResultArray.forEach((value) => {
-      const gjeldeneStønadskonto = getGjeldeneStønadskonto(value.konto, stonadskonto.stonadskontoer);
-      if (gjeldeneStønadskonto && !gjeldeneStønadskonto.gyldigForbruk) {
-        errors = {
-          _error:
-  <AlertStripe type="advarsel" className={styles.marginTop}>
-    <FormattedMessage
-      id="ValidationMessage.NegativeSaldo"
-      values={{
-          periode: uttakPeriodeNavn[value.konto],
-          days: gjeldeneStønadskonto.saldo * -1,
-        }}
-    />
-  </AlertStripe>,
-        };
-      }
-    });
+    uttakResultArray
+      .filter(res => !(res.konto === stonadskontoType.UDEFINERT && res.trekkdagerDesimaler === 0))
+      .forEach((value) => {
+        const gjeldeneStønadskonto = getGjeldeneStønadskonto(value.konto, stonadskonto.stonadskontoer);
+        if (gjeldeneStønadskonto && !gjeldeneStønadskonto.gyldigForbruk) {
+          errors = {
+            _error: (
+              <AlertStripe type="advarsel" className={styles.marginTop}>
+                <FormattedMessage
+                  id="ValidationMessage.NegativeSaldo"
+                  values={{
+                      periode: uttakPeriodeNavn[value.konto],
+                      days: gjeldeneStønadskonto.saldo * -1,
+                    }}
+                />
+              </AlertStripe>
+            ),
+          };
+        }
+      });
     return errors;
   };
 
