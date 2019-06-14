@@ -95,7 +95,7 @@ describe('<VurderOgFastsettATFL>', () => {
     };
     const faktaOmBeregning = lagFaktaOmBeregning(tilfeller, {}, undefined, undefined, vurderMottarYtelse, endringBeregningsgrunnlag);
     const transformed = VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag)(values).fakta;
-    const periode = transformed.fastsettEndringBeregningsgrunnlag.endretBeregningsgrunnlagPerioder[0].andeler;
+    const periode = transformed.fastsettEndringBeregningsgrunnlag.beregningsgrunnlagPerioder[0].andeler;
     expect(periode[0].fastsatteVerdier.fastsattBeløp).to.equal(10000);
     expect(periode[0].fastsatteVerdier.refusjon).to.equal(null);
     expect(periode[0].fastsatteVerdier.inntektskategori).to.equal(inntektskategorier.ARBEIDSTAKER);
