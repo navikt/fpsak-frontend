@@ -8,7 +8,6 @@ import { calcDays } from '@fpsak-frontend/utils';
 import {
   Image, EditedIcon, ElementWrapper, AksjonspunktHelpText, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
 import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
 import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
@@ -87,12 +86,17 @@ const hentApTekst = (manuellBehandlingÅrsak, stonadskonto, getKodeverknavn, akt
   return texts;
 };
 
-const isPeriodDefined = (period) => {
-  if (period.aktiviteter[0].trekkdagerDesimaler) {
-    return true;
-  }
-  return (!(period.periodeResultatType
-  && period.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING));
+export const kalkulerTrekkdager = (aktivitet, samtidigUttak, samtidigUttaksprosent, virkedager) => {
+  let uttaksgrad = aktivitet.gradering ? (100 - aktivitet.prosentArbeid) / 100 : 1;
+  uttaksgrad = samtidigUttak ? samtidigUttaksprosent / 100 : uttaksgrad;
+
+  const trekkdager = uttaksgrad * virkedager;
+
+  return {
+    weeks: Math.trunc(trekkdager / 5),
+    days: (trekkdager % 5).toFixed(1),
+    trekkdagerDesimaler: trekkdager,
+  };
 };
 
 export class UttakTimeLineData extends Component {
@@ -129,67 +133,45 @@ export class UttakTimeLineData extends Component {
 
   splitPeriod(formValues) {
     const { uttaksresultatActivity, activityPanelName, callbackSetSelected: setSelected } = this.props;
-    const otherThanUpdated = uttaksresultatActivity.filter(o => o.id !== formValues.periodeId);
-    const periodToUpdate = uttaksresultatActivity.filter(o => o.id === formValues.periodeId);
-    const forstePeriode = JSON.parse(JSON.stringify(...periodToUpdate));
-    const andrePeriode = JSON.parse(JSON.stringify(...periodToUpdate));
-    const newTrekkDagerForstePeriode = calcDays(formValues.forstePeriode.fom, formValues.forstePeriode.tom);
-    const newTrekkDagerAndrePeriode = calcDays(formValues.andrePeriode.fom, formValues.andrePeriode.tom);
-    const currentId = formValues.periodeId;
-    const definedPeriod = isPeriodDefined(periodToUpdate[0]);
-    if (!periodToUpdate[0].begrunnelse) {
-      forstePeriode.begrunnelse = ' ';
-      andrePeriode.begrunnelse = ' ';
-    }
-    forstePeriode.fom = formValues.forstePeriode.fom;
-    forstePeriode.tom = formValues.forstePeriode.tom;
-    forstePeriode.hovedsoker = formValues.hovedsoker;
-    andrePeriode.hovedsoker = formValues.hovedsoker;
-    andrePeriode.fom = formValues.andrePeriode.fom;
-    andrePeriode.tom = formValues.andrePeriode.tom;
-    periodToUpdate[0].aktiviteter.forEach((period, index) => {
-      if (period.days || period.weeks || (formValues.gradertTrekkdager && period.utbetalingsgrad < 100 && period.prosentArbeid && period.prosentArbeid > 0)) {
-        const periodUtbetalningsgrad = !period.utbetalingsgrad ? (formValues.gradertTrekkdager * (1 - formValues.gradertProsentandelArbeid * 0.01))
-          : formValues.gradertTrekkdager;
-        const totalTrekkDagerUtenGradering = newTrekkDagerForstePeriode + newTrekkDagerAndrePeriode;
-        const totalSetDays = (period.days || period.weeks) ? (period.weeks * 5) + period.days : totalTrekkDagerUtenGradering;
-        const faktiskaTrekkdagerGradert = formValues.gradertTrekkdager ? periodUtbetalningsgrad : totalTrekkDagerUtenGradering;
-        const actualDayValue = formValues.gradertTrekkdager && !(period.days || period.weeks)
-          ? faktiskaTrekkdagerGradert / totalTrekkDagerUtenGradering : totalSetDays / totalTrekkDagerUtenGradering;
-        forstePeriode.aktiviteter[index].weeks = Math.trunc((newTrekkDagerForstePeriode * actualDayValue) / 5);
-        forstePeriode.aktiviteter[index].days = Math.round(((newTrekkDagerForstePeriode * actualDayValue) % 5) * 10) / 10;
-        const forstePeriodeAntalDagar = (forstePeriode.aktiviteter[index].weeks * 5)
-          + forstePeriode.aktiviteter[index].days;
-        andrePeriode.aktiviteter[index].weeks = formValues.gradertTrekkdager && !(period.days || period.weeks)
-          ? Math.trunc((faktiskaTrekkdagerGradert - forstePeriodeAntalDagar) / 5) : Math.trunc((totalSetDays - forstePeriodeAntalDagar) / 5);
-        andrePeriode.aktiviteter[index].days = formValues.gradertTrekkdager && !(period.days || period.weeks)
-        ? Math.round(((faktiskaTrekkdagerGradert - forstePeriodeAntalDagar) % 5) * 10) / 10
-        : Math.round(((totalSetDays - forstePeriodeAntalDagar) % 5) * 10) / 10;
-      forstePeriode.aktiviteter[index].trekkdagerDesimaler = forstePeriodeAntalDagar;
-      andrePeriode.aktiviteter[index].trekkdagerDesimaler = (andrePeriode.aktiviteter[index].weeks * 5)
-          + andrePeriode.aktiviteter[index].days;
-      } else {
-        const totalTrekkDager = newTrekkDagerForstePeriode + newTrekkDagerAndrePeriode;
-        const actualDayValueNoGradering = period.trekkdagerDesimaler / totalTrekkDager;
-        forstePeriode.aktiviteter[index].weeks = definedPeriod ? Math.trunc((newTrekkDagerForstePeriode * actualDayValueNoGradering) / 5) : '';
-        forstePeriode.aktiviteter[index].days = definedPeriod ? ((newTrekkDagerForstePeriode * actualDayValueNoGradering) % 5).toFixed(1) : '';
-        andrePeriode.aktiviteter[index].weeks = definedPeriod ? Math.trunc((newTrekkDagerAndrePeriode * actualDayValueNoGradering) / 5) : '';
-        andrePeriode.aktiviteter[index].days = definedPeriod ? ((newTrekkDagerAndrePeriode * actualDayValueNoGradering) % 5).toFixed(1) : '';
-      }
-    });
-    andrePeriode.id = currentId + 1;
-    otherThanUpdated.map((periode) => {
-      const periodeCopy = periode;
-      if (periode.id > currentId) {
-        periodeCopy.id += 1;
-      }
-      return periodeCopy;
-    });
-    const sortedActivities = otherThanUpdated.concat(forstePeriode, andrePeriode);
-    sortedActivities.sort((a, b) => a.id - b.id);
-    this.setFormField(activityPanelName, sortedActivities);
+    const {
+      periodeId, forstePeriode, andrePeriode, hovedsoker,
+    } = formValues;
+
+    const periodeSomSkalSplittes = uttaksresultatActivity.find(o => o.id === periodeId);
+    const alleAndrePerioder = uttaksresultatActivity.filter(o => o.id !== periodeId);
+
+    const virkedagerForPeriode1 = calcDays(forstePeriode.fom, forstePeriode.tom);
+    const virkedagerForPeriode2 = calcDays(andrePeriode.fom, andrePeriode.tom);
+
+    const { samtidigUttak, samtidigUttaksprosent } = periodeSomSkalSplittes;
+    const oppdaterteAktiviteterPeriode1 = periodeSomSkalSplittes.aktiviteter
+      .map(aktivitet => ({ ...aktivitet, ...kalkulerTrekkdager(aktivitet, samtidigUttak, samtidigUttaksprosent, virkedagerForPeriode1) }));
+    const oppdaterteAktiviteterPeriode2 = periodeSomSkalSplittes.aktiviteter
+      .map(aktivitet => ({ ...aktivitet, ...kalkulerTrekkdager(aktivitet, samtidigUttak, samtidigUttaksprosent, virkedagerForPeriode2) }));
+
+    const nyPeriode1 = {
+      ...periodeSomSkalSplittes,
+      fom: forstePeriode.fom,
+      tom: forstePeriode.tom,
+      begrunnelse: periodeSomSkalSplittes.begrunnelse ? periodeSomSkalSplittes.begrunnelse : ' ',
+      aktiviteter: oppdaterteAktiviteterPeriode1,
+      hovedsoker,
+    };
+    const nyPeriode2 = {
+      ...periodeSomSkalSplittes,
+      fom: andrePeriode.fom,
+      tom: andrePeriode.tom,
+      begrunnelse: periodeSomSkalSplittes.begrunnelse ? periodeSomSkalSplittes.begrunnelse : ' ',
+      aktiviteter: oppdaterteAktiviteterPeriode2,
+      hovedsoker,
+    };
+
+    const sorterteAktiviteter = alleAndrePerioder.concat(nyPeriode1, nyPeriode2);
+    sorterteAktiviteter.sort((a, b) => a.id - b.id);
+
+    this.setFormField(activityPanelName, sorterteAktiviteter);
     this.hideModal();
-    setSelected(forstePeriode);
+    setSelected(nyPeriode1);
   }
 
   render() {

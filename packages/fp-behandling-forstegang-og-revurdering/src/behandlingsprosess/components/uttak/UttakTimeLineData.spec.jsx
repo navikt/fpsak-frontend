@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { Image } from '@fpsak-frontend/shared-components';
-import { UttakTimeLineData } from './UttakTimeLineData';
+import { UttakTimeLineData, kalkulerTrekkdager } from './UttakTimeLineData';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
 import UttakActivity from './UttakActivity';
 
@@ -292,5 +292,59 @@ describe('<UttakTimeLineData>', () => {
     const formattedMessage = uttak.find('FormattedMessage');
     expect(formattedMessage.prop('id')).to.eql('UttakPanel.manuellBehandlingÅrsakArbeidsforhold');
     expect(formattedMessage).has.length(1);
+  });
+
+  it('skal sette trekkdagene lik virkedagene for periode som ikke har gradering eller samtidig uttak', () => {
+    const aktivitet = {
+      gradering: false,
+      prosentArbeid: undefined,
+    };
+    const virkedager = 8;
+    const samtidigUttak = false;
+    const samtidigUttaksprosent = undefined;
+
+    const trekkdagerForAktivitet = kalkulerTrekkdager(aktivitet, samtidigUttak, samtidigUttaksprosent, virkedager);
+
+    expect(trekkdagerForAktivitet).is.eql({
+      weeks: 1,
+      days: '3.0',
+      trekkdagerDesimaler: 8,
+    });
+  });
+
+  it('skal sette trekkdagene lik virkedagene * (100 - prosentArbeid) når en har gradering', () => {
+    const aktivitet = {
+      gradering: true,
+      prosentArbeid: 40,
+    };
+    const virkedager = 8;
+    const samtidigUttak = false;
+    const samtidigUttaksprosent = undefined;
+
+    const trekkdagerForAktivitet = kalkulerTrekkdager(aktivitet, samtidigUttak, samtidigUttaksprosent, virkedager);
+
+    expect(trekkdagerForAktivitet).is.eql({
+      weeks: 0,
+      days: '4.8',
+      trekkdagerDesimaler: 4.8,
+    });
+  });
+
+  it('skal sette trekkdagene lik virkedagene * (samtidigUttaksprosent / 100) når en har samtidig uttak', () => {
+    const aktivitet = {
+      gradering: false,
+      prosentArbeid: undefined,
+    };
+    const virkedager = 8;
+    const samtidigUttak = true;
+    const samtidigUttaksprosent = 50;
+
+    const trekkdagerForAktivitet = kalkulerTrekkdager(aktivitet, samtidigUttak, samtidigUttaksprosent, virkedager);
+
+    expect(trekkdagerForAktivitet).is.eql({
+      weeks: 0,
+      days: '4.0',
+      trekkdagerDesimaler: 4,
+    });
   });
 });

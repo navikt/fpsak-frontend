@@ -356,25 +356,9 @@ export class UttakPerioder extends PureComponent {
   }
 
   disableButtons() {
-    const {
-      readOnly, openForms, isManuellOverstyring,
-    } = this.props;
+    const { readOnly, openForms } = this.props;
     const { isNyPeriodeFormOpen } = this.state;
-
-
-    if (openForms || isNyPeriodeFormOpen) {
-      return true;
-    }
-
-    if (isManuellOverstyring) {
-      return false;
-    }
-
-    if (readOnly) {
-      return true;
-    }
-
-    return false;
+    return openForms || isNyPeriodeFormOpen || readOnly;
   }
 
   render() {
