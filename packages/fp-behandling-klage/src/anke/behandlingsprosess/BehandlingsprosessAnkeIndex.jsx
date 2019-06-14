@@ -21,6 +21,8 @@ import {
   BehandlingIdentifier, getLocationWithQueryParams,
 } from '@fpsak-frontend/fp-felles';
 import { getResolveFaktaAksjonspunkterSuccess } from 'behandlingKlage/src/anke/fakta/duckFaktaAnke';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import AnkeBehandlingModal from './components/AnkeBehandlingModal';
 import {
   setSelectedBehandlingspunktNavn,
@@ -158,10 +160,20 @@ export class BehandlingsprosessAnkeIndex extends Component {
     }));
 
     const apCodes = aksjonspunktModels.map(ap => ap.kode);
-    const shouldUpdateInfo = false;
+
+    const skalByttTilKlageinstans = aksjonspunktModels
+      .some(apValue => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP && apValue.klageVurdering === klageVurdering.STADFESTE_YTELSESVEDTAK);
+    const erKlageHjemsendt = aksjonspunktModels
+      .some(apValue => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NK && apValue.klageVurdering === klageVurdering.HJEMSENDE_UTEN_Å_OPPHEVE);
+    const shouldUpdateInfo = !skalByttTilKlageinstans;
     const afterSubmit = () => {
-      this.setShowModalKlageBehandling(true);
-        this.goToSearchPage();
+      if (skalByttTilKlageinstans) {
+        this.setShowModalKlageBehandling(true);
+      } else if (erKlageHjemsendt) {
+        this.goToKlageResultat();
+      } else {
+        this.goToBehandlingWithDefaultPunktAndFakta();
+      }
     };
 
     const aktuelleAksjonspunkter = aksjonspunkter.filter(ap => apCodes.includes(ap.definisjon.kode));

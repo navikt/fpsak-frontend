@@ -33,6 +33,7 @@ import PreviewAnkeLink from './PreviewAnkeLink';
 import FritekstBrevTextField from '../../../behandlingsprosess/components/klage/Klagevurdering/SharedUtills/FritekstKlageBrevTextField';
 import styles from './behandleAnkeForm.less';
 import { getSelectedBehandlingspunktAksjonspunkter } from '../BehandlingsprosessAnkeSelectors';
+import TempsaveKlageButton from './TempsaveKlageButton';
 
 const omgjorArsakValues = [
   { kode: ankeOmgjorArsak.PROSESSUELL_FEIL, navn: 'Ankebehandling.OmgjoeringArsak.ProsessuellFeil' },
@@ -162,8 +163,8 @@ const BehandleAnkeFormImpl = ({
                 className={readOnly ? styles.selectReadOnly : null}
                 direction="horisontal"
               >
-                <RadioOption value="ja" label={{ id: 'Ankebehandling.Realitetsbehandles.Ja' }} />
-                <RadioOption value="nei" label={{ id: 'Ankebehandling.Realitetsbehandles.Nei' }} />
+                <RadioOption value="true" label={{ id: 'Ankebehandling.Realitetsbehandles.Ja' }} />
+                <RadioOption value="false" label={{ id: 'Ankebehandling.Realitetsbehandles.Nei' }} />
               </RadioGroupField>
             </ArrowBox>
           </Column>
@@ -233,6 +234,13 @@ const BehandleAnkeFormImpl = ({
               />
             )
             }
+          </Column>
+          <Column xs="2">
+            <TempsaveKlageButton
+              formValues={formValues}
+              saveKlage={saveKlage}
+              readOnly={readOnly}
+            />
           </Column>
         </Row>
       </div>

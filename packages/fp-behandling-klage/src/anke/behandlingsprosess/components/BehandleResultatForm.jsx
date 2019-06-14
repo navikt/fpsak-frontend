@@ -11,7 +11,7 @@ import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingKlage/src/anke/behandlingForm';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
-import styles from './behandleAnkeForm.less';
+import { getBehandlinger } from 'behandling/selectors/behandlingerSelectors';
 import { getSelectedBehandlingspunktAksjonspunkter } from '../BehandlingsprosessAnkeSelectors';
 import { buildInitialValues, transformValues } from './BehandleAnkeForm';
 import PreviewAnkeLink from './PreviewAnkeLink';
@@ -34,7 +34,7 @@ const AnkeResultatForm = ({
 }) => (
   <form onSubmit={handleSubmit}>
     <FadingPanel>
-      <Undertittel>{intl.formatMessage({ id: 'Ankebehandling.Resultat.Title' })}</Undertittel>
+      <Undertittel><FormattedMessage id="Ankebehandling.Resultat.Title" /></Undertittel>
       <VerticalSpacer fourPx />
       <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
         {[<FormattedMessage id="Ankebehandling.Resultat.HelpText" key={aksjonspunktCode} />]}
@@ -86,7 +86,7 @@ AnkeResultatForm.defaultProps = {
 };
 
 
-const ankeMerknaderFormName = 'ankeMerknaderForm';
+const formName = 'ankeMerknaderForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const aksjonspunktCode = getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
@@ -97,12 +97,13 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     formValues: behandlingFormValueSelector(formName)(state,
       'kommentar',
       'merknader'),
+    behandlinger: getBehandlinger(state),
     onSubmit,
   });
 };
 
 const BehandleResultatForm = connect(mapStateToPropsFactory)(behandlingForm({
-  form: ankeMerknaderFormName,
+  form: formName,
 })(AnkeResultatForm));
 
 export default BehandleResultatForm;
