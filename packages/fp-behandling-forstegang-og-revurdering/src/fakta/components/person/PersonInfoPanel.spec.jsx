@@ -90,6 +90,7 @@ describe('<PersonInfoPanel>', () => {
         toggleInfoPanelCallback={sinon.spy()}
         hasOpenAksjonspunkter
         sprakkode={{}}
+        barnFraTps={[]}
         readOnly={false}
         isBekreftButtonReadOnly
         relatertYtelseTypes={relatertYtelseTypes}
@@ -118,6 +119,7 @@ describe('<PersonInfoPanel>', () => {
         toggleInfoPanelCallback={sinon.spy()}
         hasOpenAksjonspunkter
         sprakkode={{}}
+        barnFraTps={[]}
         readOnly={false}
         isBekreftButtonReadOnly
         relatertYtelseTypes={relatertYtelseTypes}
@@ -146,6 +148,7 @@ describe('<PersonInfoPanel>', () => {
         toggleInfoPanelCallback={sinon.spy()}
         hasOpenAksjonspunkter
         sprakkode={{}}
+        barnFraTps={[]}
         readOnly={false}
         isBekreftButtonReadOnly
         relatertYtelseTypes={relatertYtelseTypes}
@@ -198,6 +201,7 @@ describe('<PersonInfoPanel>', () => {
         toggleInfoPanelCallback={sinon.spy()}
         hasOpenAksjonspunkter
         sprakkode={{}}
+        barnFraTps={[]}
         readOnly={false}
         isBekreftButtonReadOnly
         relatertYtelseTypes={relatertYtelseTypes}
@@ -242,6 +246,7 @@ describe('<PersonInfoPanel>', () => {
         toggleInfoPanelCallback={sinon.spy()}
         hasOpenAksjonspunkter
         sprakkode={{}}
+        barnFraTps={[]}
         readOnly={false}
         isBekreftButtonReadOnly
         relatertYtelseTypes={relatertYtelseTypes}
@@ -269,6 +274,7 @@ describe('<PersonInfoPanel>', () => {
         toggleInfoPanelCallback={toggleInfoPanelCallback}
         hasOpenAksjonspunkter
         sprakkode={{}}
+        barnFraTps={[]}
         readOnly={false}
         isBekreftButtonReadOnly
         relatertYtelseTypes={relatertYtelseTypes}
@@ -304,6 +310,7 @@ describe('<PersonInfoPanel>', () => {
         toggleInfoPanelCallback={toggleInfoPanelCallback}
         hasOpenAksjonspunkter
         sprakkode={{}}
+        barnFraTps={[]}
         readOnly={false}
         isBekreftButtonReadOnly
         relatertYtelseTypes={relatertYtelseTypes}
@@ -338,6 +345,7 @@ describe('<PersonInfoPanel>', () => {
         toggleInfoPanelCallback={toggleInfoPanelCallback}
         hasOpenAksjonspunkter
         sprakkode={{}}
+        barnFraTps={[]}
         readOnly={false}
         isBekreftButtonReadOnly
         relatertYtelseTypes={relatertYtelseTypes}

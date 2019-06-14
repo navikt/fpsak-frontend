@@ -41,16 +41,19 @@ const BarnePanel = ({
       {barneListe.map((barn, index) => (
         <Column xs="6" className={styles.kolonneMedRom} key={`${barn.navn}${index + 1}`}>
           <Column xs="1">
+            {barn.navBrukerKjonn && (
             <Image
               className={styles.icon}
               src={erKvinne(barn.navBrukerKjonn.kode) ? urlKvinne : urlMann}
               altCode="Person.ImageText"
               titleCode={erKvinne(barn.navBrukerKjonn.kode) ? 'Person.Girl' : 'Person.Boy'}
             />
+            )}
           </Column>
           <Column xs="11">
             <Element>
-              {barn.navn}
+              {barn.navn ? barn.navn : `Barn ${index + 1}`}
+              ,
               {' '}
               <FormattedMessage id="Person.Age" values={{ age: getAgeFromDate(barn.fodselsdato) }} />
               {barn.dodsdato
