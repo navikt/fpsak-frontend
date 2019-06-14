@@ -53,16 +53,6 @@ export const settFastsattBelop = (fordeltPrAar,
   return '';
 };
 
-export const settReadOnlyBelop = (snittIBeregningsperiodenPrAar, belopFraInntektsmeldingPrAar) => {
-  if (!nullOrUndefined(belopFraInntektsmeldingPrAar)) {
-    return formatCurrencyNoKr(belopFraInntektsmeldingPrAar);
-  }
-  if (!nullOrUndefined(snittIBeregningsperiodenPrAar)) {
-    return formatCurrencyNoKr(snittIBeregningsperiodenPrAar);
-  }
-  return '0';
-};
-
 export const setArbeidsforholdInitialValues = andel => ({
   arbeidsgiverNavn: andel.arbeidsforhold && andel.arbeidsforhold.arbeidsgiverNavn !== 0 ? andel.arbeidsforhold.arbeidsgiverNavn : '',
   arbeidsgiverId: andel.arbeidsforhold && andel.arbeidsforhold.arbeidsgiverId !== 0 ? andel.arbeidsforhold.arbeidsgiverId : '',
@@ -81,22 +71,6 @@ export const setGenerellAndelsinfo = (andel, harKunYtelse, getKodeverknavn) => (
   lagtTilAvSaksbehandler: andel.lagtTilAvSaksbehandler === true,
   inntektskategori: finnnInntektskategorikode(andel),
 });
-
-
-const listeInneholderAndel = (liste, field) => (liste ? liste.find(element => element.andelsnr === field.andelsnr
-|| element.andelsnr === field.andelsnrRef) : undefined);
-
-export const erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon = (field, faktaOmBeregning) => {
-  const andelIListe = listeInneholderAndel(faktaOmBeregning
-    .arbeidstakerOgFrilanserISammeOrganisasjonListe, field);
-  return andelIListe && (andelIListe.inntektPrMnd === null || andelIListe.inntektPrMnd === undefined);
-};
-
-const erFrilanser = field => (field.aktivitetStatus && (field.aktivitetStatus === aktivitetStatus.FRILANSER
-  || field.aktivitetStatus.kode === aktivitetStatus.FRILANSER));
-
-export const andelErStatusFLOgHarATISammeOrg = (field, faktaOmBeregning) => faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe
-&& erFrilanser(field);
 
 export const starterPaaEllerEtterStp = (bgAndel,
   skjaeringstidspunktBeregning) => (bgAndel && bgAndel.arbeidsforhold
@@ -131,7 +105,6 @@ const erAAPOgSkalFlytteTilArbeidsgiverSomRefunderer = (andel, andeler) => {
 export const erAAPEllerArbeidsgiverOgSkalFlytteMellomAAPOgArbeidsgiver = (andel, andeler) => (
   skalFlytteBeregningsgrunnlagFraAAP(andel, andeler) || erAAPOgSkalFlytteTilArbeidsgiverSomRefunderer(andel, andeler)
 );
-
 
 export const skalValidereMotBeregningsgrunnlag = beregningsgrunnlag => (andel) => {
   if (harAAPOgRefusjonskravOverstigerInntektsmelding(andel, beregningsgrunnlag)) {

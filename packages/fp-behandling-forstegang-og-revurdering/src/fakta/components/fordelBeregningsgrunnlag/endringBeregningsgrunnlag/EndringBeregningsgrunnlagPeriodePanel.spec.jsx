@@ -55,7 +55,9 @@ const getKodeverknavn = (kodeverk) => {
   if (kodeverk.kode === aktivitetStatuser.FRILANSER) {
     return 'Frilanser';
   }
-
+  if (kodeverk.kode === aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE) {
+    return 'Selvstendig næringsdrivende';
+  }
   return '';
 };
 
@@ -137,6 +139,7 @@ aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER },
 belopPrAarEtterAOrdningen: 100,
 arbeidsforhold,
  beregnetPrAar: 10000,
+ bruttoPrAar: 10000,
 },
         {
  andelsnr: 2,
@@ -145,6 +148,7 @@ belopPrAarEtterAOrdningen: 100,
 arbeidsforhold,
  beregnetPrAar: 10000,
 overstyrtPrAar: 20000,
+bruttoPrAar: 20000,
 },
         {
  andelsnr: 3,
@@ -153,6 +157,7 @@ belopPrAarEtterAOrdningen: 100,
 arbeidsforhold,
  beregnetPrAar: 10000,
 overstyrtPrAar: 30000,
+bruttoPrAar: 30000,
 },
         {
  andelsnr: 4,
@@ -161,6 +166,7 @@ belopPrAarEtterAOrdningen: 1000,
 arbeidsforhold,
  beregnetPrAar: 1000,
 overstyrtPrAar: null,
+bruttoPrAar: 1000,
 },
         {
  andelsnr: 5,
@@ -169,9 +175,14 @@ belopPrAarEtterAOrdningen: 1000,
 arbeidsforhold: arbeidsforholdEtterStp,
  beregnetPrAar: null,
 overstyrtPrAar: null,
+bruttoPrAar: null,
 },
         {
- andelsnr: 6, aktivitetStatus: { kode: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE }, beregnetPrAar: 10000, overstyrtPrAar: null,
+ andelsnr: 6,
+aktivitetStatus: { kode: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE },
+beregnetPrAar: 10000,
+overstyrtPrAar: null,
+ bruttoPrAar: 10000,
 },
         {
  andelsnr: 7,
@@ -180,21 +191,17 @@ arbeidsforhold: arbeidsforhold2,
 belopPrAarEtterAOrdningen: 40000,
  beregnetPrAar: 1000,
 overstyrtPrAar: null,
+bruttoPrAar: 1000,
 },
         { andelsnr: 8, aktivitetStatus: { kode: aktivitetStatuser.FRILANSER }, belopPrAarEtterAOrdningen: null },
       ],
     };
 
-    const faktaOmBeregning = {
-      arbeidstakerOgFrilanserISammeOrganisasjonListe: [
-        { andelsnr: 7, inntektPrMnd: null },
-      ],
-    };
-
-    const initialValues = EndringBeregningsgrunnlagPeriodePanel.buildInitialValues(periode, bgPeriode, stpBeregning, faktaOmBeregning, false, getKodeverknavn);
-    expect(initialValues).to.have.length(7);
+    const initialValues = EndringBeregningsgrunnlagPeriodePanel.buildInitialValues(periode, bgPeriode, stpBeregning, false, getKodeverknavn);
+    expect(initialValues).to.have.length(8);
     const arbeidstakerAndelerBeforeStp = initialValues.filter(({ arbeidsperiodeFom }) => arbeidsperiodeFom !== ''
-    && moment(arbeidsperiodeFom).isBefore(moment(stpBeregning)));
+    && moment(arbeidsperiodeFom).isBefore(moment(stpBeregning)))
+    .filter(({ aktivitetStatus }) => aktivitetStatus === 'AT');
     expect(arbeidstakerAndelerBeforeStp).to.have.length(5);
     arbeidstakerAndelerBeforeStp.forEach((initialValue) => {
       expect(initialValue.andel).to.equal('Virksomheten (3284788923) ...a7e2');
@@ -207,6 +214,15 @@ overstyrtPrAar: null,
       expect(initialValue.arbeidsperiodeTom).to.equal('2018-01-01');
       expect(initialValue.harPeriodeAarsakGraderingEllerRefusjon).to.equal(true);
     });
+    const SNAndel = initialValues.filter(({ aktivitetStatus }) => aktivitetStatus === 'SN');
+    expect(SNAndel).to.have.length(1);
+    expect(SNAndel[0].andel).to.equal('Selvstendig næringsdrivende');
+    expect(SNAndel[0].aktivitetStatus).to.equal('SN');
+    expect(SNAndel[0].nyAndel).to.equal(false);
+    expect(SNAndel[0].lagtTilAvSaksbehandler).to.equal(false);
+    expect(SNAndel[0].inntektskategori).to.equal('SN');
+    expect(SNAndel[0].harPeriodeAarsakGraderingEllerRefusjon).to.equal(true);
+
     const andelerEtterStp = initialValues.filter(({ nyttArbeidsforhold }) => nyttArbeidsforhold);
 
     expect(andelerEtterStp).to.have.length(1);
@@ -224,6 +240,7 @@ overstyrtPrAar: null,
     expect(initialValues[0].andelIArbeid).to.equal('0 - 20');
     expect(initialValues[0].fordelingForrigeBehandling).to.equal('10 000');
     expect(initialValues[0].fastsattBelop).to.equal('');
+    expect(initialValues[0].readOnlyBelop).to.equal('10 000');
     expect(initialValues[0].refusjonskrav).to.equal('10 000');
     expect(initialValues[0].belopFraInntektsmelding).to.equal(10000);
     expect(initialValues[0].refusjonskravFraInntektsmelding).to.equal(10000);
@@ -234,6 +251,7 @@ overstyrtPrAar: null,
     expect(initialValues[1].andelIArbeid).to.equal('0.00');
     expect(initialValues[1].fordelingForrigeBehandling).to.equal('20 000');
     expect(initialValues[1].fastsattBelop).to.equal('10 000');
+    expect(initialValues[1].readOnlyBelop).to.equal('20 000');
     expect(initialValues[1].refusjonskrav).to.equal('10 000');
     expect(initialValues[1].belopFraInntektsmelding).to.equal(20000);
     expect(initialValues[1].refusjonskravFraInntektsmelding).to.equal(10000);
@@ -244,6 +262,7 @@ overstyrtPrAar: null,
     expect(initialValues[2].andelIArbeid).to.equal('0 - 80');
     expect(initialValues[2].fordelingForrigeBehandling).to.equal('30 000');
     expect(initialValues[2].fastsattBelop).to.equal('30 000');
+    expect(initialValues[2].readOnlyBelop).to.equal('30 000');
     expect(initialValues[2].refusjonskrav).to.equal('0');
     expect(initialValues[2].belopFraInntektsmelding).to.equal(30000);
     expect(initialValues[2].refusjonskravFraInntektsmelding).to.equal(0);
@@ -254,6 +273,7 @@ overstyrtPrAar: null,
     expect(initialValues[3].andelIArbeid).to.equal('0 - 20');
     expect(initialValues[3].fordelingForrigeBehandling).to.equal('');
     expect(initialValues[3].fastsattBelop).to.equal('');
+    expect(initialValues[3].readOnlyBelop).to.equal('1 000');
     expect(initialValues[3].refusjonskrav).to.equal('0');
     expect(initialValues[3].belopFraInntektsmelding).to.equal(null);
     expect(initialValues[3].refusjonskravFraInntektsmelding).to.equal(null);
@@ -264,30 +284,44 @@ overstyrtPrAar: null,
     expect(initialValues[4].andelIArbeid).to.equal('0.00');
     expect(initialValues[4].fordelingForrigeBehandling).to.equal('20 000');
     expect(initialValues[4].fastsattBelop).to.equal('10 000');
+    expect(initialValues[4].readOnlyBelop).to.equal(null);
     expect(initialValues[4].refusjonskrav).to.equal('10 000');
     expect(initialValues[4].belopFraInntektsmelding).to.equal(20000);
     expect(initialValues[4].refusjonskravFraInntektsmelding).to.equal(10000);
     expect(initialValues[4].skalKunneEndreRefusjon).to.equal(true);
     expect(initialValues[4].beregningsgrunnlagPrAar).to.equal(null);
 
-    expect(initialValues[5].andelsnr).to.equal(7);
+    expect(initialValues[5].andelsnr).to.equal(6);
     expect(initialValues[5].andelIArbeid).to.equal('0.00');
     expect(initialValues[5].fordelingForrigeBehandling).to.equal('');
-    expect(initialValues[5].fastsattBelop).to.equal('');
+    expect(initialValues[5].fastsattBelop).to.equal('10 000');
+    expect(initialValues[5].readOnlyBelop).to.equal('10 000');
     expect(initialValues[5].refusjonskrav).to.equal('');
     expect(initialValues[5].belopFraInntektsmelding).to.equal(null);
     expect(initialValues[5].refusjonskravFraInntektsmelding).to.equal(null);
     expect(initialValues[5].skalKunneEndreRefusjon).to.equal(false);
-    expect(initialValues[5].beregningsgrunnlagPrAar).to.equal('1 000');
+    expect(initialValues[5].beregningsgrunnlagPrAar).to.equal('10 000');
 
-    expect(initialValues[6].andelsnr).to.equal(8);
+    expect(initialValues[6].andelsnr).to.equal(7);
     expect(initialValues[6].andelIArbeid).to.equal('0.00');
     expect(initialValues[6].fordelingForrigeBehandling).to.equal('');
     expect(initialValues[6].fastsattBelop).to.equal('');
+    expect(initialValues[6].readOnlyBelop).to.equal('1 000');
     expect(initialValues[6].refusjonskrav).to.equal('');
     expect(initialValues[6].belopFraInntektsmelding).to.equal(null);
     expect(initialValues[6].refusjonskravFraInntektsmelding).to.equal(null);
     expect(initialValues[6].skalKunneEndreRefusjon).to.equal(false);
-    expect(initialValues[6].beregningsgrunnlagPrAar).to.equal(null);
+    expect(initialValues[6].beregningsgrunnlagPrAar).to.equal('1 000');
+
+    expect(initialValues[7].andelsnr).to.equal(8);
+    expect(initialValues[7].andelIArbeid).to.equal('0.00');
+    expect(initialValues[7].fordelingForrigeBehandling).to.equal('');
+    expect(initialValues[7].fastsattBelop).to.equal('');
+    expect(initialValues[7].readOnlyBelop).to.equal(null);
+    expect(initialValues[7].refusjonskrav).to.equal('');
+    expect(initialValues[7].belopFraInntektsmelding).to.equal(null);
+    expect(initialValues[7].refusjonskravFraInntektsmelding).to.equal(null);
+    expect(initialValues[7].skalKunneEndreRefusjon).to.equal(false);
+    expect(initialValues[7].beregningsgrunnlagPrAar).to.equal(null);
   });
 });
