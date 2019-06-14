@@ -10,13 +10,9 @@ import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import classnames from 'classnames/bind';
 import { EkspanderbartpanelPure } from 'nav-frontend-ekspanderbartpanel';
-import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-
-
 import RenderEndringBGFieldArray from './RenderEndringBGFieldArray';
 import {
-  settAndelIArbeid, setGenerellAndelsinfo, setArbeidsforholdInitialValues, settFastsattBelop, settReadOnlyBelop,
-  erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon, andelErStatusFLOgHarATISammeOrg, starterPaaEllerEtterStp,
+  settAndelIArbeid, setGenerellAndelsinfo, setArbeidsforholdInitialValues, settFastsattBelop, starterPaaEllerEtterStp,
 } from '../BgFordelingUtils';
 
 import styles from './endringBeregningsgrunnlagPeriodePanel.less';
@@ -100,52 +96,22 @@ EndringBeregningsgrunnlagPeriodePanel.validate = (values, sumIPeriode, skalValid
 
 const finnRiktigAndel = (andel, bgPeriode) => bgPeriode.beregningsgrunnlagPrStatusOgAndel.find(a => a.andelsnr === andel.andelsnr);
 
-const erArbeidstakerMedArbeidsforhold = bgAndel => (bgAndel.aktivitetStatus.kode === aktivitetStatuser.ARBEIDSTAKER && bgAndel.arbeidsforhold);
-
-const finnBelopFraRegister = (andel, bgAndel, skjaeringstidspunktBeregning, faktaOmFordeling) => {
-  if (bgAndel) {
-    if (erArbeidstakerMedArbeidsforhold(bgAndel)
-    && (andel.nyttArbeidsforhold || starterPaaEllerEtterStp(bgAndel, skjaeringstidspunktBeregning))) {
-      return null;
-    }
-    if (erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon(bgAndel, faktaOmFordeling)) {
-      return null;
-    }
-    if (andelErStatusFLOgHarATISammeOrg(bgAndel, faktaOmFordeling)) {
-      return null;
-    }
-    if (andel.belopFraInntektsmeldingPrAar || andel.belopFraInntektsmeldingPrAar === 0) {
-      return formatCurrencyNoKr(andel.belopFraInntektsmeldingPrAar);
-    }
-    if (bgAndel && (bgAndel.belopPrAarEtterAOrdningen || bgAndel.belopPrAarEtterAOrdningen === 0)) {
-      return formatCurrencyNoKr(bgAndel.belopPrAarEtterAOrdningen);
-    }
-    return bgAndel && bgAndel.belopFraMeldekortPrAar ? formatCurrencyNoKr(bgAndel.belopFraMeldekortPrAar) : null;
-  }
-  return null;
-};
-
 const finnBeregningsgrunnlagPrAar = (bgAndel) => {
   if (!bgAndel) {
     return null;
   }
-  if (bgAndel.overstyrtPrAar) {
-    return formatCurrencyNoKr(bgAndel.overstyrtPrAar);
-  }
-  if (bgAndel.beregnetPrAar) {
-    return formatCurrencyNoKr(bgAndel.beregnetPrAar);
+  if (bgAndel.bruttoPrAar) {
+    return formatCurrencyNoKr(bgAndel.bruttoPrAar);
   }
   return null;
 };
 
-EndringBeregningsgrunnlagPeriodePanel.buildInitialValues = (periode, bgPeriode, skjaeringstidspunktBeregning,
-  faktaOmFordeling, harKunYtelse, getKodeverknavn) => {
+EndringBeregningsgrunnlagPeriodePanel.buildInitialValues = (periode, bgPeriode, skjaeringstidspunktBeregning, harKunYtelse, getKodeverknavn) => {
   if (!periode || !periode.endringBeregningsgrunnlagAndeler) {
     return {};
   }
   return (
     periode.endringBeregningsgrunnlagAndeler
-    .filter(({ aktivitetStatus }) => aktivitetStatus.kode !== aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE)
     .map((andel) => {
       const bgAndel = finnRiktigAndel(andel, bgPeriode);
       return ({
@@ -155,8 +121,7 @@ EndringBeregningsgrunnlagPeriodePanel.buildInitialValues = (periode, bgPeriode, 
       fordelingForrigeBehandling: andel.fordelingForrigeBehandlingPrAar || andel.fordelingForrigeBehandlingPrAar === 0
         ? formatCurrencyNoKr(andel.fordelingForrigeBehandlingPrAar) : '',
       fastsattBelop: settFastsattBelop(andel.fordeltPrAar, andel.fastsattForrigePrAar),
-      readOnlyBelop: settReadOnlyBelop(finnBelopFraRegister(andel, bgAndel,
-        skjaeringstidspunktBeregning, faktaOmFordeling), andel.belopFraInntektsmeldingPrAar),
+      readOnlyBelop: finnBeregningsgrunnlagPrAar(bgAndel),
       refusjonskrav: andel.refusjonskravPrAar !== null && andel.refusjonskravPrAar !== undefined ? formatCurrencyNoKr(andel.refusjonskravPrAar) : '',
       skalKunneEndreRefusjon: periode.skalKunneEndreRefusjon && !andel.lagtTilAvSaksbehandler
       && andel.refusjonskravFraInntektsmeldingPrAar ? periode.skalKunneEndreRefusjon : false,

@@ -156,7 +156,7 @@ EndringBeregningsgrunnlagForm.buildInitialValues = (endringBGPerioder, bg, getKo
   endringBGPerioder.forEach((periode, index) => {
     const bgPeriode = finnRiktigBgPeriode(periode, bgPerioder);
     initialValues[getFieldNameKey(index)] = EndringBeregningsgrunnlagPeriodePanel
-    .buildInitialValues(periode, bgPeriode, bg.skjaeringstidspunktBeregning, bg.faktaOmBeregning, harKunYtelse, getKodeverknavn);
+    .buildInitialValues(periode, bgPeriode, bg.skjaeringstidspunktBeregning, harKunYtelse, getKodeverknavn);
   });
   return initialValues;
 };
