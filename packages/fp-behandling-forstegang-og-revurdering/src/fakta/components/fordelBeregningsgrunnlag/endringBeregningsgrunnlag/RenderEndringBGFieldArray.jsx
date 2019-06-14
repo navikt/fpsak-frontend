@@ -472,15 +472,13 @@ RenderEndringBGFieldArray.validate = (values, sumIPeriode, skalValidereMotBeregn
 
 const mapStateToPropsFactory = (initialState) => {
   const erRevurdering = getBehandlingIsRevurdering(initialState);
-  const arbeidsforholdList = getUniqueListOfArbeidsforhold(initialState);
   const inntektskategoriKoder = getKodeverk(kodeverkTyper.INNTEKTSKATEGORI)(initialState);
-  const harKunYtelse = getBeregningsgrunnlag(initialState).aktivitetStatus
-  .some(status => status.kode === aktivitetStatuser.KUN_YTELSE);
-  return () => ({
+  return state => ({
     erRevurdering,
-    arbeidsforholdList,
     inntektskategoriKoder,
-    harKunYtelse,
+    arbeidsforholdList: getUniqueListOfArbeidsforhold(state),
+    harKunYtelse: getBeregningsgrunnlag(state).aktivitetStatus
+    .some(status => status.kode === aktivitetStatuser.KUN_YTELSE),
   });
 };
 

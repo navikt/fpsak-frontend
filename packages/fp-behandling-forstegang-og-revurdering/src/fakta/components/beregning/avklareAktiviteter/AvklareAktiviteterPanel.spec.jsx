@@ -7,10 +7,9 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { CheckboxField } from '@fpsak-frontend/form';
 import { AksjonspunktHelpText, BorderBox } from '@fpsak-frontend/shared-components';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-import { getBehandlingFormValues } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import {
   AvklareAktiviteterPanelImpl, buildInitialValuesAvklarAktiviteter,
-  transformValuesAvklarAktiviteter, erAvklartAktivitetEndret, BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME, MANUELL_OVERSTYRING_FIELD,
+  transformValues, erAvklartAktivitetEndret, BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME, MANUELL_OVERSTYRING_FIELD,
 } from './AvklareAktiviteterPanel';
 import VurderAktiviteterPanel from './VurderAktiviteterPanel';
 import { formNameAvklarAktiviteter } from '../BeregningFormUtils';
@@ -22,7 +21,9 @@ const {
 } = aksjonspunktCodes;
 
 
-const lagStateMedAvklarAktitiveter = (avklarAktiviteter, values = {}, initial = {}, aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER } }]) => {
+const apsAvklarAktiviteter = [{ definisjon: { kode: AVKLAR_AKTIVITETER } }];
+
+const lagStateMedAvklarAktitiveter = (avklarAktiviteter, values = {}, initial = {}, aksjonspunkter = apsAvklarAktiviteter) => {
   const faktaOmBeregning = {
     avklarAktiviteter,
   };
@@ -427,15 +428,15 @@ describe('<AvklareAktiviteterPanel>', () => {
           { tom: '2019-02-02', aktiviteter },
         ],
     };
-    const values = {};
+    const values = {
+      avklarAktiviteter,
+      aksjonspunkter: apsAvklarAktiviteter,
+    };
     values[id1] = { skalBrukes: false };
     values[id2] = { skalBrukes: true };
     values[id3] = { skalBrukes: true };
     values[idAAP] = { skalBrukes: true };
-
-    const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values);
-    const transformed = transformValuesAvklarAktiviteter(state)(getBehandlingFormValues(formNameAvklarAktiviteter)(state));
-
+    const transformed = transformValues(values);
     expect(transformed[0].beregningsaktivitetLagreDtoList.length).to.equal(1);
     expect(transformed[0].beregningsaktivitetLagreDtoList[0].oppdragsgiverOrg).to.equal(aktivitet1.arbeidsgiverId);
   });
@@ -446,16 +447,18 @@ describe('<AvklareAktiviteterPanel>', () => {
           { tom: '2019-02-02', aktiviteter },
         ],
     };
-    const values = {};
+    const aps = [];
+    const values = {
+      avklarAktiviteter,
+      aksjonspunkter: aps,
+    };
     values[id1] = { skalBrukes: null };
     values[id2] = { skalBrukes: true };
     values[id3] = { skalBrukes: false };
     values[idAAP] = { skalBrukes: true };
     values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'begrunnelse';
     values[MANUELL_OVERSTYRING_FIELD] = true;
-    const aps = [];
-    const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, values, aps);
-    const transformed = transformValuesAvklarAktiviteter(state)(getBehandlingFormValues(formNameAvklarAktiviteter)(state));
+    const transformed = transformValues(values);
     expect(transformed[0].beregningsaktivitetLagreDtoList.length).to.equal(1);
     expect(transformed[0].beregningsaktivitetLagreDtoList[0].arbeidsgiverIdentifikator).to.equal(aktivitet3.aktørId.aktørId);
     expect(transformed[0].begrunnelse).to.equal('begrunnelse');

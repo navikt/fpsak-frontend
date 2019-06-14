@@ -138,35 +138,33 @@ VurderFaktaBeregningPanelImpl.propTypes = {
   ...formPropTypes,
 };
 
-
-export const transformValuesVurderFaktaBeregning = createSelector(
-  [getAksjonspunkter, transformValuesFaktaForATFLOgSN],
-  (aksjonspunkter, transformFaktaATFL) => (values) => {
-    if (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) || erOverstyring(values)) {
-      const faktaBeregningValues = values;
-      const beg = faktaBeregningValues[BEGRUNNELSE_FAKTA_TILFELLER_NAME];
-      return [{
-        kode: erOverstyring(values) ? OVERSTYRING_AV_BEREGNINGSGRUNNLAG : VURDER_FAKTA_FOR_ATFL_SN,
-        begrunnelse: beg === undefined ? null : beg,
-        ...transformFaktaATFL(faktaBeregningValues, erOverstyring(values)),
-      }];
-    }
-    return {};
-  },
-);
-
+export const transformValuesVurderFaktaBeregning = (values) => {
+  const { aksjonspunkter } = values;
+  if (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) || erOverstyring(values)) {
+    const faktaBeregningValues = values;
+    const beg = faktaBeregningValues[BEGRUNNELSE_FAKTA_TILFELLER_NAME];
+    return [{
+      kode: erOverstyring(values) ? OVERSTYRING_AV_BEREGNINGSGRUNNLAG : VURDER_FAKTA_FOR_ATFL_SN,
+      begrunnelse: beg === undefined ? null : beg,
+      ...transformValuesFaktaForATFLOgSN(faktaBeregningValues, erOverstyring(values)),
+    }];
+  }
+  return {};
+};
 
 export const buildInitialValuesVurderFaktaBeregning = createSelector(
   [getAksjonspunkter, getBuildInitialValuesFaktaForATFLOgSN],
   (aksjonspunkter, buildInitialValuesTilfeller) => ({
+    aksjonspunkter,
       ...FaktaBegrunnelseTextField.buildInitialValues(findAksjonspunktMedBegrunnelse(aksjonspunkter), BEGRUNNELSE_FAKTA_TILFELLER_NAME),
       ...buildInitialValuesTilfeller(),
     }),
 );
 
 export const getValidationVurderFaktaBeregning = createSelector(
-  [getAksjonspunkter, getValidationFaktaForATFLOgSN],
-  (aksjonspunkter, validationForVurderFakta) => (values) => {
+  [getValidationFaktaForATFLOgSN],
+  validationForVurderFakta => (values) => {
+    const { aksjonspunkter } = values;
     if (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && values) {
       return {
         ...validationForVurderFakta(values),
@@ -185,26 +183,21 @@ export const getIsAksjonspunktClosed = createSelector(
 );
 
 const mapStateToPropsFactory = (initialState, initialProps) => {
-  const aksjonspunkter = getAksjonspunkter(initialState);
   const onSubmit = values => initialProps.submitCallback(transformValuesVurderFaktaBeregning(initialState)(values));
-  const helpText = getHelpTextsFaktaForATFLOgSN(initialState);
   const validate = getValidationVurderFaktaBeregning(initialState);
   return (state) => {
     const initialValues = buildInitialValuesVurderFaktaBeregning(state);
-    const hasBegrunnelse = initialValues && !!initialValues[BEGRUNNELSE_FAKTA_TILFELLER_NAME];
-    const beregningsgrunnlag = getBeregningsgrunnlag(state);
-    const isAksjonspunktClosed = getIsAksjonspunktClosed(state);
     return ({
-    hasBegrunnelse,
     initialValues,
-    isAksjonspunktClosed,
-    aksjonspunkter,
-    onSubmit,
-    beregningsgrunnlag,
-    helpText,
     validate,
+    onSubmit,
+    isAksjonspunktClosed: getIsAksjonspunktClosed(state),
+    aksjonspunkter: getAksjonspunkter(state),
+    beregningsgrunnlag: getBeregningsgrunnlag(state),
+    helpText: getHelpTextsFaktaForATFLOgSN(state),
     verdiForAvklarAktivitetErEndret: erAvklartAktivitetEndret(state),
     erOverstyrt: erOverstyringAvBeregningsgrunnlag(state),
+    hasBegrunnelse: initialValues && !!initialValues[BEGRUNNELSE_FAKTA_TILFELLER_NAME],
   });
 };
 };
