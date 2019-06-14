@@ -226,7 +226,7 @@ export const skalKunneEndreTotaltBeregningsgrunnlag = (values, faktaOmBeregning,
 
 // Overstyring
 
-export const erOverstyring = values => values && values[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD] === true;
+export const erOverstyring = values => !!values && values[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD] === true;
 
 export const erOverstyringAvBeregningsgrunnlag = createSelector([
   getFormValuesForBeregning], erOverstyring);

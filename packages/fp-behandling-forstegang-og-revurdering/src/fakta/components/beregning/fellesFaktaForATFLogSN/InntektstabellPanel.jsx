@@ -19,7 +19,6 @@ import styles from './InntektstabellPanel.less';
 
 export const MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD = 'manuellOverstyringRapportertInntekt';
 
-
 const {
   OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
   AVKLAR_AKTIVITETER,
@@ -72,7 +71,6 @@ export const InntektstabellPanelImpl = ({
   </ElementWrapper>
 );
 
-
 InntektstabellPanelImpl.propTypes = {
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]).isRequired,
   tabell: PropTypes.node.isRequired,
@@ -92,18 +90,14 @@ InntektstabellPanelImpl.defaultProps = {
   skalViseTabell: true,
 };
 
-
 const getSkalKunneOverstyre = createSelector([getRettigheter, getAksjonspunkter, getFeatureToggles],
   (rettigheter, aksjonspunkter, toggles) => rettigheter.kanOverstyreAccess.isEnabled
   && !aksjonspunkter.some(ap => ap.definisjon.kode === AVKLAR_AKTIVITETER && isAksjonspunktOpen(ap.status.kode))
   && toggles[featureToggle.OVERSTYR_BEREGNINGSGRUNNLAG]);
 
-const mapStateToPropsFactory = (initialState) => {
-  const aksjonspunkter = getAksjonspunkter(initialState);
-  return state => ({
+const mapStateToProps = state => ({
     kanOverstyre: getSkalKunneOverstyre(state),
-    aksjonspunkter,
-  });
-};
+    aksjonspunkter: getAksjonspunkter(state),
+});
 
-export default connect(mapStateToPropsFactory)(InntektstabellPanelImpl);
+export default connect(mapStateToProps)(InntektstabellPanelImpl);

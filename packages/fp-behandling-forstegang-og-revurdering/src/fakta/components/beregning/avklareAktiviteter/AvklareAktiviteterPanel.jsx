@@ -89,6 +89,8 @@ const buildInitialValues = (aksjonspunkter, avklarAktiviteter, alleKodeverk) => 
   const begrunnelse = erOverstyrt ? overstyrAksjonspunktMedBegrunnelse : aksjonspunktMedBegrunnelse;
   return {
     [MANUELL_OVERSTYRING_FIELD]: erOverstyrt,
+    aksjonspunkter,
+    avklarAktiviteter,
     ...initialValues,
     ...FaktaBegrunnelseTextField.buildInitialValues(begrunnelse, BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME),
   };
@@ -261,12 +263,14 @@ AvklareAktiviteterPanelImpl.propTypes = {
   behandlingFormPrefix: PropTypes.string.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
+  erOverstyrt: PropTypes.bool.isRequired,
   ...formPropTypes,
 };
 
 const skalKunneLoseAksjonspunkt = (skalOverstyre, aksjonspunkter) => skalOverstyre || hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter);
 
-const transformValues = (aksjonspunkter, avklarAktiviteter) => (values) => {
+export const transformValues = (values) => {
+  const { aksjonspunkter, avklarAktiviteter } = values;
   const skalOverstyre = values[MANUELL_OVERSTYRING_FIELD];
   if (skalKunneLoseAksjonspunkt(skalOverstyre, aksjonspunkter)) {
     const vurderAktiviteterTransformed = VurderAktiviteterPanel.transformValues(values, avklarAktiviteter.aktiviteterTomDatoMapping);
@@ -280,7 +284,6 @@ const transformValues = (aksjonspunkter, avklarAktiviteter) => (values) => {
   return null;
 };
 
-export const transformValuesAvklarAktiviteter = createSelector([getAksjonspunkter, getAvklarAktiviteter], transformValues);
 
 export const buildInitialValuesAvklarAktiviteter = createSelector([getAksjonspunkter, getAvklarAktiviteter, getAlleKodeverk], buildInitialValues);
 
@@ -297,31 +300,24 @@ const getIsAksjonspunktClosed = createSelector([getAksjonspunkter],
 });
 
 const mapStateToPropsFactory = (initialState, initialProps) => {
-  const avklarAktiviteter = getAvklarAktiviteter(initialState);
-  const aksjonspunkter = getAksjonspunkter(initialState);
-  const kanOverstyre = getSkalKunneOverstyre(initialState);
-  const helpText = getHelpTextsAvklarAktiviteter(initialState);
-  const onSubmit = vals => initialProps.submitCallback(transformValuesAvklarAktiviteter(initialState)(vals));
+  const onSubmit = vals => initialProps.submitCallback(transformValues(vals));
   const alleKodeverk = getAlleKodeverk(initialState);
   return (state) => {
     const values = getFormValuesForAvklarAktiviteter(state);
     const initialValues = buildInitialValuesAvklarAktiviteter(state);
-      const hasBegrunnelse = initialValues && !!initialValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME];
-    const isAksjonspunktClosed = getIsAksjonspunktClosed(state);
-    const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state));
     return ({
-      isAksjonspunktClosed,
-      avklarAktiviteter,
-      hasBegrunnelse,
       initialValues,
-      aksjonspunkter,
-      kanOverstyre,
       values,
-      helpText,
       onSubmit,
-      behandlingFormPrefix,
       alleKodeverk,
-      erOverstyrt: values && values[MANUELL_OVERSTYRING_FIELD],
+      aksjonspunkter: getAksjonspunkter(state),
+      kanOverstyre: getSkalKunneOverstyre(state),
+      helpText: getHelpTextsAvklarAktiviteter(state),
+      behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+      isAksjonspunktClosed: getIsAksjonspunktClosed(state),
+      avklarAktiviteter: getAvklarAktiviteter(state),
+      hasBegrunnelse: initialValues && !!initialValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME],
+      erOverstyrt: !!values && values[MANUELL_OVERSTYRING_FIELD],
       erBgOverstyrt: erOverstyringAvBeregningsgrunnlag(state),
   });
 };

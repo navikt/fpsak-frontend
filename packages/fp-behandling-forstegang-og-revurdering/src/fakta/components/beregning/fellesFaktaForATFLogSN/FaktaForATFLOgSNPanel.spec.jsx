@@ -4,14 +4,11 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ApiStateBuilder } from '@fpsak-frontend/utils-test/src/data-test-helper';
-import fpsakBehandlingApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import {
   FaktaForATFLOgSNPanelImpl,
   getHelpTextsFaktaForATFLOgSN,
   transformValuesFaktaForATFLOgSN,
-  mapStateToValidationProps,
   transformValues,
 } from './FaktaForATFLOgSNPanel';
 import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm';
@@ -52,46 +49,6 @@ const lagBeregningsgrunnlag = andeler => ({
 
 
 describe('<FaktaForATFLOgSNPanel>', () => {
-  it('skal teste at state props blir mappet til validering', () => {
-    const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG }],
-      endringBeregningsgrunnlag: {
-        endringBeregningsgrunnlagPerioder: [
-          { fom: '01.01.2018', tom: '01.01.2019' },
-        ],
-      },
-      kunYtelse: 'KunYtelse',
-      vurderMottarYtelse: 'vurderMottarYtelse',
-    };
-    const data = {
-      id: 1000051,
-      beregningsgrunnlag: {
-        faktaOmBeregning,
-        bg: 'beregningsgrunnlag',
-      },
-    };
-    const dataState = new ApiStateBuilder()
-      .withData(fpsakBehandlingApi.BEHANDLING.name, data, 'dataContextForstegangOgRevurderingBehandling')
-      .build();
-    const state = {
-      default: {
-        ...dataState.default,
-        forstegangOgRevurderingBehandling: {
-          behandlingId: 1000051,
-        },
-      },
-    };
-    const props = mapStateToValidationProps(state);
-    expect(props.aktivertePaneler.length).to.equal(1);
-    expect(props.aktivertePaneler[0]).to.equal(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG);
-    expect(props.endringBGPerioder.length).to.equal(1);
-    expect(props.endringBGPerioder[0].fom).to.equal('01.01.2018');
-    expect(props.kunYtelse).to.equal('KunYtelse');
-    expect(props.vurderMottarYtelse).to.equal('vurderMottarYtelse');
-    expect(props.faktaOmBeregning).to.equal(faktaOmBeregning);
-    expect(props.beregningsgrunnlag.bg).to.equal('beregningsgrunnlag');
-  });
-
   it('skal lage helptext', () => {
     const aktivertePaneler = [faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD, faktaOmBeregningTilfelle.VURDER_SN_NY_I_ARBEIDSLIVET,
       faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL,
@@ -165,7 +122,20 @@ describe('<FaktaForATFLOgSNPanel>', () => {
       besteberegningAndeler: [andel1, andel2],
       vurderBesteberegning: { andeler: [andel1, andel2] },
     };
-    const values = {};
+    const beregningsgrunnlag = {
+      beregninsgrunnlagPeriode: [
+        {
+          beregningsgrunnlagPrStatusOgAndel: [andel1, andel2],
+        },
+      ],
+    };
+    const values = {
+      tilfeller: aktivePaneler,
+      endringBGPerioder: [],
+      vurderMottarYtelse: undefined,
+      faktaOmBeregning,
+      beregningsgrunnlag,
+    };
     values[besteberegningField] = true;
     values[INNTEKT_FIELD_ARRAY_NAME] = [
       {
@@ -175,14 +145,7 @@ describe('<FaktaForATFLOgSNPanel>', () => {
         fastsattBelop: '20 000', inntektskategori: 'SELVSTENDIG_NÆRINGSDRIVENDE', andelsnr: andel2.andelsnr, skalRedigereInntekt: true,
       },
     ];
-    const beregningsgrunnlag = {
-      beregninsgrunnlagPeriode: [
-        {
-          beregningsgrunnlagPrStatusOgAndel: [andel1, andel2],
-        },
-      ],
-    };
-    const transformedValues = transformValuesFaktaForATFLOgSN.resultFunc(aktivePaneler, [], undefined, faktaOmBeregning, beregningsgrunnlag)(values);
+    const transformedValues = transformValuesFaktaForATFLOgSN(values);
     expect(transformedValues.fakta.faktaOmBeregningTilfeller).to.have.length(2);
     expect(transformedValues.fakta.faktaOmBeregningTilfeller[1]).is.eql(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE);
     expect(transformedValues.fakta.faktaOmBeregningTilfeller[0]).is.eql(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING);
@@ -247,7 +210,14 @@ describe('<FaktaForATFLOgSNPanel>', () => {
       arbeidstakerOgFrilanserISammeOrganisasjonListe: [forholdMedAtOgFl],
       frilansAndel,
     };
-    const values = {};
+    const beregningsgrunnlag = lagBeregningsgrunnlag([forholdMedLonnsendringUtenIM, frilansAndel]);
+    const values = {
+      tilfeller: aktivePaneler,
+      endringBGPerioder: [],
+      vurderMottarYtelse: undefined,
+      faktaOmBeregning,
+      beregningsgrunnlag,
+    };
     values[lonnsendringField] = true;
     values[erNyoppstartetFLField] = true;
     values[INNTEKT_FIELD_ARRAY_NAME] = [
@@ -262,8 +232,7 @@ describe('<FaktaForATFLOgSNPanel>', () => {
         skalRedigereInntekt: true,
       },
     ];
-    const beregningsgrunnlag = lagBeregningsgrunnlag([forholdMedLonnsendringUtenIM, frilansAndel]);
-    const transformedValues = transformValuesFaktaForATFLOgSN.resultFunc(aktivePaneler, [], undefined, faktaOmBeregning, beregningsgrunnlag)(values);
+    const transformedValues = transformValuesFaktaForATFLOgSN(values);
     expect(transformedValues.fakta.faktaOmBeregningTilfeller).to.have.length(4);
     expect(transformedValues.fakta.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)).is.eql(true);
     expect(transformedValues.fakta.faktaOmBeregningTilfeller

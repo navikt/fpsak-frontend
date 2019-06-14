@@ -324,18 +324,13 @@ const getSkalViseTabell = createSelector([getFaktaOmBeregningTilfellerKoder, get
     .some(andel => andel.aktivitetStatus.kode !== aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE)
     && !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE));
 
-const mapStateToPropsFactory = (initialState, initialProps) => {
-  const harKunstigArbeid = harKunstigArbeidsforhold(initialProps.tilfeller, getBeregningsgrunnlag(initialState));
-  const skalViseTabell = getSkalViseTabell(initialState);
-  const manglerInntektsmelding = getManglerInntektsmelding(initialState);
-  return state => ({
+const mapStateToProps = (state, ownProps) => ({
     skalFastsetteAT: skalFastsettInntektForArbeidstaker(state),
     skalFastsetteFL: skalFastsettInntektForFrilans(state),
     skalHaBesteberegning: getFormValuesForBeregning(state)[besteberegningField] === true,
-    manglerInntektsmelding,
-    skalViseTabell,
-    harKunstigArbeid,
-  });
-};
+    manglerInntektsmelding: getManglerInntektsmelding(state),
+    skalViseTabell: getSkalViseTabell(state),
+    harKunstigArbeid: harKunstigArbeidsforhold(ownProps.tilfeller, getBeregningsgrunnlag(state)),
+});
 
-export default connect(mapStateToPropsFactory)(VurderOgFastsettATFL);
+export default connect(mapStateToProps)(VurderOgFastsettATFL);

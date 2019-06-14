@@ -47,26 +47,28 @@ const {
   VURDER_FAKTA_FOR_ATFL_SN,
 } = aksjonspunktCodes;
 
-export const mapStateToValidationProps = createStructuredSelector({
-  aktivertePaneler: getFaktaOmBeregningTilfellerKoder,
-  endringBGPerioder: getEndringBeregningsgrunnlagPerioder,
-  kunYtelse: getKunYtelse,
-  vurderMottarYtelse: getVurderMottarYtelse,
-  faktaOmBeregning: getFaktaOmBeregning,
-  beregningsgrunnlag: getBeregningsgrunnlag,
-});
-
-export const getValidationFaktaForATFLOgSN = createSelector([mapStateToValidationProps, getAlleKodeverk], (props, alleKodeverk) => (values, erOverstyring) => {
-  if (!values || !props.faktaOmBeregning || !props.beregningsgrunnlag || !props.aktivertePaneler) {
+export const getValidationFaktaForATFLOgSN = createSelector([getAlleKodeverk], alleKodeverk => (values, erOverstyring) => {
+  if (!values) {
+    return {};
+  }
+  const {
+    faktaOmBeregning,
+    beregningsgrunnlag,
+    tilfeller,
+    endringBGPerioder,
+    kunYtelse,
+    vurderMottarYtelse,
+} = values;
+  if (!faktaOmBeregning || !beregningsgrunnlag || !tilfeller) {
     return {};
   }
   return ({
-    ...FastsettEndretBeregningsgrunnlag.validate(values, props.endringBGPerioder, props.aktivertePaneler, props.faktaOmBeregning,
-      props.beregningsgrunnlag, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
-    ...getKunYtelseValidation(values, props.kunYtelse, props.endringBGPerioder, props.aktivertePaneler),
-    ...VurderMottarYtelseForm.validate(values, props.vurderMottarYtelse),
-    ...VurderBesteberegningForm.validate(values, props.aktivertePaneler),
-    ...VurderOgFastsettATFL.validate(values, props.aktivertePaneler, props.faktaOmBeregning, props.beregningsgrunnlag,
+    ...FastsettEndretBeregningsgrunnlag.validate(values, endringBGPerioder, tilfeller, faktaOmBeregning,
+      beregningsgrunnlag, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
+    ...getKunYtelseValidation(values, kunYtelse, endringBGPerioder, tilfeller),
+    ...VurderMottarYtelseForm.validate(values, vurderMottarYtelse),
+    ...VurderBesteberegningForm.validate(values, tilfeller),
+    ...VurderOgFastsettATFL.validate(values, tilfeller, faktaOmBeregning, beregningsgrunnlag,
       getKodeverknavnFn(alleKodeverk, kodeverkTyper), erOverstyring),
   });
 });
@@ -92,7 +94,6 @@ const spacer = (hasShownPanel) => {
   }
   return {};
 };
-
 
 const getFaktaPanels = (readOnly, tilfeller, isAksjonspunktClosed) => {
   const faktaPanels = [];
@@ -163,7 +164,6 @@ export const FaktaForATFLOgSNPanelImpl = ({
   </div>
 );
 
-
 FaktaForATFLOgSNPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   aktivePaneler: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -197,7 +197,6 @@ const etterlonnSluttpakkeTransform = aktivePaneler => (vurderFaktaValues, values
     ...VurderEtterlonnSluttpakkeForm.transformValues(values),
   };
 };
-
 
 export const transformValues = (
   aktivePaneler,
@@ -243,48 +242,65 @@ const setValuesForVurderFakta = (aktivePaneler, values, endringBGPerioder, kortv
   });
 };
 
-
-export const transformValuesFaktaForATFLOgSN = createSelector(
-  [getFaktaOmBeregningTilfellerKoder,
-    getEndringBeregningsgrunnlagPerioder,
-    getKortvarigeArbeidsforhold,
-    getFaktaOmBeregning,
-    getBeregningsgrunnlag],
-  (aktivePaneler,
-    endringBGPerioder,
-    kortvarigeArbeidsforhold,
-    faktaOmBeregning,
-    beregningsgrunnlag) => (values, erOverstyrt) => (
-    setValuesForVurderFakta(aktivePaneler, values, endringBGPerioder, kortvarigeArbeidsforhold,
-      faktaOmBeregning, beregningsgrunnlag, erOverstyrt)
-  ),
-);
+export const transformValuesFaktaForATFLOgSN = (values, erOverstyrt) => {
+  const {
+      tilfeller,
+      endringBGPerioder,
+      kortvarigeArbeidsforhold,
+      faktaOmBeregning,
+      beregningsgrunnlag,
+    } = values;
+   return setValuesForVurderFakta(tilfeller, values, endringBGPerioder, kortvarigeArbeidsforhold,
+    faktaOmBeregning, beregningsgrunnlag, erOverstyrt);
+};
 
 const getVurderFaktaAksjonspunkt = createSelector([getAksjonspunkter], aksjonspunkter => (aksjonspunkter
   ? aksjonspunkter.find(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN) : undefined));
 
+const buildInitialValuesForTilfeller = props => ({
+  ...TidsbegrensetArbeidsforholdForm.buildInitialValues(props.kortvarigeArbeidsforhold),
+  ...NyIArbeidslivetSNForm.buildInitialValues(props.beregningsgrunnlag),
+  ...FastsettEndretBeregningsgrunnlag.buildInitialValues(props.endringBGPerioder, props.tilfeller,
+     props.beregningsgrunnlag, getKodeverknavnFn(props.alleKodeverk, kodeverkTyper)),
+  ...LonnsendringForm.buildInitialValues(props.beregningsgrunnlag),
+  ...NyoppstartetFLForm.buildInitialValues(props.beregningsgrunnlag),
+  ...buildInitialValuesKunYtelse(props.kunYtelse, props.endringBGPerioder, props.isRevurdering, props.tilfeller,
+    getKodeverknavnFn(props.alleKodeverk, kodeverkTyper)),
+  ...VurderEtterlonnSluttpakkeForm.buildInitialValues(props.beregningsgrunnlag, props.vurderFaktaAP),
+  ...FastsettEtterlonnSluttpakkeForm.buildInitialValues(props.beregningsgrunnlag),
+  ...VurderMottarYtelseForm.buildInitialValues(props.vurderMottarYtelse),
+  ...VurderBesteberegningForm.buildInitialValues(props.vurderBesteberegning, props.tilfeller),
+  ...VurderOgFastsettATFL.buildInitialValues(props.beregningsgrunnlag, getKodeverknavnFn(props.alleKodeverk, kodeverkTyper),
+    props.aksjonspunkter, props.faktaOmBeregning),
+});
+
+const mapStateToBuildInitialValuesProps = createStructuredSelector({
+  endringBGPerioder: getEndringBeregningsgrunnlagPerioder,
+  beregningsgrunnlag: getBeregningsgrunnlag,
+  kortvarigeArbeidsforhold: getKortvarigeArbeidsforhold,
+  vurderFaktaAP: getVurderFaktaAksjonspunkt,
+  kunYtelse: getKunYtelse,
+  tilfeller: getFaktaOmBeregningTilfellerKoder,
+  isRevurdering: getBehandlingIsRevurdering,
+  vurderMottarYtelse: getVurderMottarYtelse,
+  vurderBesteberegning: getVurderBesteberegning,
+  alleKodeverk: getAlleKodeverk,
+  aksjonspunkter: getAksjonspunkter,
+  faktaOmBeregning: getFaktaOmBeregning,
+});
+
 export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
-  [getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlag,
-    getKortvarigeArbeidsforhold, getVurderFaktaAksjonspunkt, getKunYtelse,
-    getFaktaOmBeregningTilfellerKoder, getBehandlingIsRevurdering,
-    getVurderMottarYtelse, getVurderBesteberegning, getAlleKodeverk, getAksjonspunkter],
-  (endringBGPerioder, beregningsgrunnlag, kortvarigeArbeidsforhold, vurderFaktaAP, kunYtelse,
-    tilfeller, isRevurdering, vurderMottarYtelse, vurderBesteberegning, alleKodeverk, aksjonspunkter) => () => ({
-    ...TidsbegrensetArbeidsforholdForm.buildInitialValues(kortvarigeArbeidsforhold),
-    ...NyIArbeidslivetSNForm.buildInitialValues(beregningsgrunnlag),
-    ...FastsettEndretBeregningsgrunnlag.buildInitialValues(endringBGPerioder, tilfeller, beregningsgrunnlag, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
-    ...LonnsendringForm.buildInitialValues(beregningsgrunnlag),
-    ...NyoppstartetFLForm.buildInitialValues(beregningsgrunnlag),
-    ...buildInitialValuesKunYtelse(kunYtelse, endringBGPerioder, isRevurdering, tilfeller, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
-    ...VurderEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag, vurderFaktaAP),
-    ...FastsettEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag),
-    ...VurderMottarYtelseForm.buildInitialValues(vurderMottarYtelse),
-    ...VurderBesteberegningForm.buildInitialValues(vurderBesteberegning, tilfeller),
-    ...VurderOgFastsettATFL.buildInitialValues(beregningsgrunnlag, getKodeverknavnFn(alleKodeverk, kodeverkTyper),
-    aksjonspunkter, beregningsgrunnlag.faktaOmBeregning),
+  [mapStateToBuildInitialValuesProps], props => () => ({
+      tilfeller: props.tilfeller,
+      endringBGPerioder: props.endringBGPerioder,
+      kortvarigeArbeidsforhold: props.kortvarigeArbeidsforhold,
+      faktaOmBeregning: props.faktaOmBeregning,
+      beregningsgrunnlag: props.beregningsgrunnlag,
+      vurderMottarYtelse: props.vurderMottarYtelse,
+      kunYtelse: props.kunYtelse,
+    ...buildInitialValuesForTilfeller(props),
   }),
 );
-
 
 const emptyArray = [];
 
