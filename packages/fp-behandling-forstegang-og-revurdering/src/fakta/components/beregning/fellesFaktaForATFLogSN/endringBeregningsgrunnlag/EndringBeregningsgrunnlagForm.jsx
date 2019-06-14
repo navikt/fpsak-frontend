@@ -193,7 +193,7 @@ export const transformPerioder = (endringBGPerioder, values, harKunYtelse, skalH
 
 EndringBeregningsgrunnlagForm.transformValues = (values, endringBGPerioder, harKunYtelse, skalHaBesteberegning) => ({
   fastsettEndringBeregningsgrunnlag: {
-    endretBeregningsgrunnlagPerioder: transformPerioder(endringBGPerioder, values, harKunYtelse, skalHaBesteberegning),
+    beregningsgrunnlagPerioder: transformPerioder(endringBGPerioder, values, harKunYtelse, skalHaBesteberegning),
   },
 });
 
