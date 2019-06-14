@@ -17,6 +17,7 @@ export const stonadskontoType = {
   UDEFINERT: '-',
 };
 
+// TODO Kva er dette? Kodeverk-navn skal hentast fra databasen!
 export const uttakPeriodeNavn = {
   MØDREKVOTE: 'Mødrekvote',
   FEDREKVOTE: 'Fedrekvote',
