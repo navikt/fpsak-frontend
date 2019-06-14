@@ -14,6 +14,7 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import PropTypes from 'prop-types';
+import { getFormValuesForBeregning } from '../BeregningFormUtils';
 
 import styles from './InntektstabellPanel.less';
 
@@ -37,12 +38,13 @@ export const InntektstabellPanelImpl = ({
   kanOverstyre,
   readOnly,
   aksjonspunkter,
+  erOverstyrt,
 }) => (
   <ElementWrapper>
     {children}
     <div className={styles.fadeinTabell}>
       <VerticalSpacer sixteenPx />
-      {kanOverstyre
+      {(kanOverstyre || erOverstyrt)
           && (
           <div className={styles.rightAligned}>
             <CheckboxField
@@ -79,6 +81,7 @@ InntektstabellPanelImpl.propTypes = {
   kanOverstyre: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  erOverstyrt: PropTypes.bool.isRequired,
 };
 
 InntektstabellPanelImpl.buildInitialValues = aksjonspunkter => ({
@@ -96,6 +99,7 @@ const getSkalKunneOverstyre = createSelector([getRettigheter, getAksjonspunkter,
   && toggles[featureToggle.OVERSTYR_BEREGNINGSGRUNNLAG]);
 
 const mapStateToProps = state => ({
+    erOverstyrt: getFormValuesForBeregning(state)[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD],
     kanOverstyre: getSkalKunneOverstyre(state),
     aksjonspunkter: getAksjonspunkter(state),
 });

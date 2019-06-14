@@ -163,7 +163,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
     return (
       <React.Fragment>
         <form onSubmit={formProps.handleSubmit}>
-          {kanOverstyre
+          {(kanOverstyre || erOverstyrt)
           && (
             <div className={styles.rightAligned}>
               <CheckboxField

@@ -14,6 +14,8 @@ import AvklareAktiviteterPanel from './avklareAktiviteter/AvklareAktiviteterPane
 const {
   AVKLAR_AKTIVITETER,
   VURDER_FAKTA_FOR_ATFL_SN,
+  OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
+  OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
 } = aksjonspunktCodes;
 
 describe('<BeregningInfoPanel>', () => {
@@ -29,6 +31,7 @@ describe('<BeregningInfoPanel>', () => {
       submitCallback={sinon.spy()}
       isOnHold
       harBeregningsgrunnlag
+      erOverstyrer={false}
     />);
     const panel = wrapper.find(FaktaEkspandertpanel);
     expect(panel).has.length(0);
@@ -46,6 +49,7 @@ describe('<BeregningInfoPanel>', () => {
       submitCallback={sinon.spy()}
       isOnHold={false}
       harBeregningsgrunnlag
+      erOverstyrer={false}
     />);
     const panel = wrapper.find(FaktaEkspandertpanel);
     expect(panel).has.length(1);
@@ -81,10 +85,78 @@ describe('<BeregningInfoPanel>', () => {
       submitCallback={sinon.spy()}
       isOnHold={false}
       harBeregningsgrunnlag
-
+      erOverstyrer={false}
     />);
     const panel = wrapper.find(VurderFaktaBeregningPanel);
     expect(panel).has.length(1);
+  });
+
+  it('skal vise VurderFaktaBeregning panel med readonly for vanlig saksbehandler uten overstyrerrolle med overstyringsaksjonspunkt', () => {
+    const overstyringAP = {
+      id: 1,
+      definisjon: {
+        kode: OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
+        navn: 'ap1',
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+        navn: 's1',
+      },
+      toTrinnsBehandling: true,
+      toTrinnsBehandlingGodkjent: false,
+      kanLoses: true,
+      erAktivt: true,
+    };
+    const wrapper = shallowWithIntl(<BeregningInfoPanelImpl
+      intl={intlMock}
+      aksjonspunkter={[overstyringAP]}
+      openInfoPanels={['beregning']}
+      toggleInfoPanelCallback={sinon.spy()}
+      hasOpenAksjonspunkter
+      submittable
+      readOnly={false}
+      submitCallback={sinon.spy()}
+      isOnHold={false}
+      harBeregningsgrunnlag
+      erOverstyrer={false}
+    />);
+    const panel = wrapper.find(VurderFaktaBeregningPanel);
+    expect(panel).has.length(1);
+    expect(panel.prop('readOnly')).to.equal(true);
+  });
+
+  it('skal vise AvklareAktiviteterPanel panel med readonly for vanlig saksbehandler uten overstyrerrolle med overstyringsaksjonspunkt', () => {
+    const overstyringAP = {
+      id: 1,
+      definisjon: {
+        kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
+        navn: 'ap1',
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+        navn: 's1',
+      },
+      toTrinnsBehandling: true,
+      toTrinnsBehandlingGodkjent: false,
+      kanLoses: true,
+      erAktivt: true,
+    };
+    const wrapper = shallowWithIntl(<BeregningInfoPanelImpl
+      intl={intlMock}
+      aksjonspunkter={[overstyringAP]}
+      openInfoPanels={['beregning']}
+      toggleInfoPanelCallback={sinon.spy()}
+      hasOpenAksjonspunkter
+      submittable
+      readOnly={false}
+      submitCallback={sinon.spy()}
+      isOnHold={false}
+      harBeregningsgrunnlag
+      erOverstyrer={false}
+    />);
+    const panel = wrapper.find(AvklareAktiviteterPanel);
+    expect(panel).has.length(1);
+    expect(panel.prop('readOnly')).to.equal(true);
   });
 
   it('skal vise AvklareAktiviteterPanel panel', () => {
@@ -114,7 +186,7 @@ describe('<BeregningInfoPanel>', () => {
       submitCallback={sinon.spy()}
       isOnHold={false}
       harBeregningsgrunnlag
-
+      erOverstyrer={false}
     />);
     const panel = wrapper.find(AvklareAktiviteterPanel);
     expect(panel).has.length(1);
