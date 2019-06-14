@@ -14,6 +14,7 @@ export const stonadskontoType = {
   FELLESPERIODE: 'FELLESPERIODE',
   FORELDREPENGER_FØR_FØDSEL: 'FORELDREPENGER_FØR_FØDSEL',
   FORELDREPENGER: 'FORELDREPENGER',
+  UDEFINERT: '-',
 };
 
 export const uttakPeriodeNavn = {
