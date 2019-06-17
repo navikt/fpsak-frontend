@@ -1,8 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
+import { injectIntl, FormattedMessage } from 'react-intl';
+import { FieldArray, formPropTypes } from 'redux-form';
 import { Row, Column } from 'nav-frontend-grid';
 import AlertStripe from 'nav-frontend-alertstriper';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Undertekst } from 'nav-frontend-typografi';
+
 import {
   RadioGroupField, RadioOption, TextAreaField, SelectField,
 } from '@fpsak-frontend/form';
@@ -20,22 +26,19 @@ import {
   isTrekkdagerMerEnnNullUtsettelse,
   isUtbetalingMerEnnNullUtsettelse,
 } from '@fpsak-frontend/utils';
-import { injectIntl, FormattedMessage } from 'react-intl';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { getSkjaeringstidspunktForeldrepenger } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
-import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
-import { FieldArray, formPropTypes } from 'redux-form';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
-import { Undertekst } from 'nav-frontend-typografi';
+import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
+import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import {
   ArrowBox, ElementWrapper, VerticalSpacer, FlexContainer, FlexColumn, FlexRow,
 } from '@fpsak-frontend/shared-components';
+
+import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { getSkjaeringstidspunktForeldrepenger } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import RenderUttakTable from './RenderUttakTable';
 import UttakInfo from './UttakInfo';
 
@@ -444,20 +447,12 @@ export const initialValue = (selectedItem, kontoIkkeSatt) => {
   });
 };
 
-const mapStateToProps = (state, ownProps) => {
-  const selectedItem = ownProps.selectedItemData;
-  const avslagAarsaker = getKodeverk(kodeverkTyper.UTTAK_AVSLAG_ARSAK)(state);
-  const innvilgelseAarsaker = getKodeverk(kodeverkTyper.INNVILGET_AARSAK)(state);
-  const graderingAvslagAarsakKoder = getKodeverk(kodeverkTyper.GRADERING_AVSLAG_AARSAK)(state);
-  const utsettelseAarsak = getKodeverk(kodeverkTyper.UTSETTELSE_AARSAK_TYPE)(state);
-  const kontoIkkeSatt = !selectedItem.periodeType
+const buildInitialValues = createSelector(
+  [(state, props) => props.selectedItemData],
+  (selectedItem) => {
+    const kontoIkkeSatt = !selectedItem.periodeType
     && (selectedItem.aktiviteter[0].stønadskontoType.kode === '-');
-
-  return {
-    kontoIkkeSatt,
-    graderingAvslagAarsakKoder,
-    utsettelseAarsak,
-    initialValues: {
+    return {
       UttakFieldArray: initialValue(selectedItem, kontoIkkeSatt),
       erOppfylt: erPeriodeOppfylt(selectedItem, kontoIkkeSatt),
       begrunnelse: selectedItem.begrunnelse,
@@ -470,23 +465,47 @@ const mapStateToProps = (state, ownProps) => {
       graderingAvslagAarsak: selectedItem.graderingAvslagÅrsak ? selectedItem.graderingAvslagÅrsak.kode : '-',
       oppholdArsak: selectedItem.oppholdÅrsak.kode,
       utsettelseType: selectedItem.utsettelseType,
-    },
-    erOppfylt: behandlingFormValueSelector(uttakActivityForm)(state, 'erOppfylt'),
+    };
+  },
+);
+
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const avslagAarsaker = getKodeverk(kodeverkTyper.UTTAK_AVSLAG_ARSAK)(initialState);
+  const innvilgelseAarsaker = getKodeverk(kodeverkTyper.INNVILGET_AARSAK)(initialState);
+  const graderingAvslagAarsakKoder = getKodeverk(kodeverkTyper.GRADERING_AVSLAG_AARSAK)(initialState);
+  const utsettelseAarsak = getKodeverk(kodeverkTyper.UTSETTELSE_AARSAK_TYPE)(initialState);
+  const periodeTyper = getKodeverk(kodeverkTyper.UTTAK_PERIODE_TYPE)(initialState);
+  const oppholdArsakTyper = getKodeverk(kodeverkTyper.OPPHOLD_ARSAK)(initialState);
+
+  const selectedItem = ownProps.selectedItemData;
+  const kontoIkkeSatt = !selectedItem.periodeType
+    && (selectedItem.aktiviteter[0].stønadskontoType.kode === '-');
+
+  const validate = values => validateUttakActivity(values);
+  const warn = values => warningUttakActivity(values);
+  const onSubmit = values => ownProps.updateActivity(transformValues(values, selectedItem, avslagAarsaker, innvilgelseAarsaker, graderingAvslagAarsakKoder));
+
+  return state => ({
+    validate,
+    warn,
+    onSubmit,
+    kontoIkkeSatt,
+    periodeTyper,
+    oppholdArsakTyper,
+    graderingAvslagAarsakKoder,
+    utsettelseAarsak,
+    initialValues: buildInitialValues(state, ownProps),
     avslagAarsakKoder: avslagAarsaker,
     innvilgelseAarsakKoder: innvilgelseAarsaker,
+    erOppfylt: behandlingFormValueSelector(uttakActivityForm)(state, 'erOppfylt'),
     graderingInnvilget: behandlingFormValueSelector(uttakActivityForm)(state, 'graderingInnvilget'),
     erSamtidigUttak: behandlingFormValueSelector(uttakActivityForm)(state, 'samtidigUttak'),
     samtidigUttaksprosent: behandlingFormValueSelector(uttakActivityForm)(state, 'samtidigUttaksprosent'),
-    periodeTyper: getKodeverk(kodeverkTyper.UTTAK_PERIODE_TYPE)(state),
-    oppholdArsakTyper: getKodeverk(kodeverkTyper.OPPHOLD_ARSAK)(state),
     starttidspunktForeldrepenger: getSkjaeringstidspunktForeldrepenger(state),
-    validate: values => validateUttakActivity(values),
-    warn: values => warningUttakActivity(values),
-    onSubmit: values => ownProps.updateActivity(transformValues(values, selectedItem, avslagAarsaker, innvilgelseAarsaker, graderingAvslagAarsakKoder)),
-  };
+  });
 };
 
-export default connect(mapStateToProps)(injectIntl(behandlingForm({
+export default connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: uttakActivityForm,
   enableReinitialize: true,
 })(UttakActivity)));
