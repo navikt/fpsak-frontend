@@ -11,6 +11,29 @@ import BeregningTable from './beregningsresultatPanel/BeregningsresultatTable';
 import BeregningForm from './beregningForm/BeregningForm';
 import GraderingUtenBG from './gradering/GraderingUtenBG';
 
+const lagBeregningsgrunnlag = (ferdigstilt) => {
+  const beregningsgrunnlag = {
+    halvG: 30000,
+    ledetekstBrutto: 'Brutto tekst',
+    ledetekstAvkortet: 'Avkortet tekst',
+    ledetekstRedusert: 'Redusert tekst',
+    skjaeringstidspunktBeregning: '12.12.2017',
+    aktivitetStatus: [{
+      aktivitetStatus: {
+        kode: aktivitetStatus.ARBEIDSTAKER,
+        navn: 'Arbeidstaker',
+        kodeverk: 'test',
+      },
+    }],
+    beregningsgrunnlagPeriode: [
+      {
+        dagsats: ferdigstilt ? 1500 : undefined,
+      },
+    ],
+  };
+  return beregningsgrunnlag;
+};
+
 const beregningsgrunnlag = {
   halvG: 30000,
   ledetekstBrutto: 'Brutto tekst',
@@ -56,7 +79,7 @@ describe('<BeregningFP>', () => {
     const wrapper = shallow(<BeregningFPImpl
       readOnly={false}
       submitCallback={sinon.spy}
-      berGr={beregningsgrunnlag}
+      berGr={lagBeregningsgrunnlag(true)}
       beregnetAarsinntekt={100000}
       sammenligningsgrunnlag={100000}
       beregnetAvvikPromille={50}
@@ -80,6 +103,24 @@ describe('<BeregningFP>', () => {
     expect(beregningForm.props().submitCallback).to.have.equal(sinon.spy);
     expect(beregningForm.props().avvikProsent).to.equal(5);
   });
+  it('skal teste at BeregningTable ikke vises dersom det ikke er dagsats på periodene', () => {
+    const wrapper = shallow(<BeregningFPImpl
+      readOnly={false}
+      submitCallback={sinon.spy}
+      berGr={lagBeregningsgrunnlag(false)}
+      beregnetAarsinntekt={100000}
+      sammenligningsgrunnlag={100000}
+      beregnetAvvikPromille={50}
+      gjeldendeVilkar={vilkar}
+      gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+      relevanteStatuser={relevanteStatuser}
+      readOnlySubmitButton
+      sokerHarGraderingPaaAndelUtenBG={false}
+    />);
+    const beregningTable = wrapper.find(BeregningTable);
+    expect(beregningTable).to.be.lengthOf(0);
+  });
+
   it('skal teste at BeregningForm får korrekte props fra BeregningFP med beregnetAvvikPromille lik NULL', () => {
     const wrapper = shallow(<BeregningFPImpl
       readOnly={false}

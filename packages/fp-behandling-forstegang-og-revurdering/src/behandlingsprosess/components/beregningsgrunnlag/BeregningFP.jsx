@@ -50,6 +50,17 @@ const visningForManglendeBG = () => (
   </FadingPanel>
 );
 
+const dagsatsErSatt = (beregningsperioder) => {
+  if (!beregningsperioder) {
+    return false;
+  }
+  return beregningsperioder.some(p => p.dagsats !== undefined && p.dagsats !== null);
+};
+
+const vilkarErVurdert = vilkar => vilkar && vilkar.vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT;
+
+const beregningErFastsatt = (vilkar, beregningsperioder) => dagsatsErSatt(beregningsperioder) && vilkarErVurdert(vilkar);
+
 /**
  * BeregningFP
  *
@@ -88,7 +99,7 @@ export const BeregningFPImpl = ({
         submitCallback={submitCallback}
         readOnlySubmitButton={readOnlySubmitButton}
       />
-      { gjeldendeVilkar && gjeldendeVilkar.vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT
+      { beregningErFastsatt(gjeldendeVilkar, berGr.beregningsgrunnlagPeriode)
         && (
           <BeregningsresultatTable
             halvGVerdi={berGr.halvG}
