@@ -404,6 +404,8 @@ const validateNyPeriodeForm = (values) => {
   return errors;
 };
 
+const emptyAndelerArray = [];
+
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const { newPeriodeCallback, uttakPeriodeVurderingTyper, getKodeverknavn } = ownProps;
   const periodeTyper = getKodeverk(kodeverkTyper.UTTAK_PERIODE_TYPE)(initialState) || null;
@@ -415,7 +417,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 
   return (state) => {
     const personopplysninger = getPersonopplysning(state);
-    const andeler = getFaktaArbeidsforhold(state) || [];
+    const andeler = getFaktaArbeidsforhold(state) || emptyAndelerArray;
 
     return {
       periodeTyper,
