@@ -183,7 +183,7 @@ export const getIsAksjonspunktClosed = createSelector(
 );
 
 const mapStateToPropsFactory = (initialState, initialProps) => {
-  const onSubmit = values => initialProps.submitCallback(transformValuesVurderFaktaBeregning(initialState)(values));
+  const onSubmit = values => initialProps.submitCallback(transformValuesVurderFaktaBeregning(values));
   const validate = getValidationVurderFaktaBeregning(initialState);
   return (state) => {
     const initialValues = buildInitialValuesVurderFaktaBeregning(state);
