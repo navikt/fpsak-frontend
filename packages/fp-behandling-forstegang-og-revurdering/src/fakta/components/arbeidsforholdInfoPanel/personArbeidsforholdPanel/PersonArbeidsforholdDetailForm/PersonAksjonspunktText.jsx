@@ -5,13 +5,15 @@ import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-com
 import { getAlleKodeverk } from 'kodeverk/duck';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import PropTypes from 'prop-types';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import moment from 'moment';
 
 const utledPermisjonValues = (permisjon, getKodeverknavn) => {
   const kodeverknavn = getKodeverknavn(permisjon.type);
   const permisjonType = kodeverknavn !== undefined && kodeverknavn !== null ? kodeverknavn.toLowerCase() : '';
   return {
-    permisjonFom: permisjon.permisjonFom,
-    permisjonTom: permisjon.permisjonTom,
+    permisjonFom: moment(permisjon.permisjonFom).format(DDMMYYYY_DATE_FORMAT),
+    permisjonTom: permisjon.permisjonTom ? moment(permisjon.permisjonTom).format(DDMMYYYY_DATE_FORMAT) : '',
     permisjonsprosent: permisjon.permisjonsprosent,
     permisjonType,
   };
