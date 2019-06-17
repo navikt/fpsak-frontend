@@ -188,17 +188,18 @@ UtlandImpl.defaultProps = {
   utlandSakstype: utlandSakstypeKode.NASJONAL,
 };
 
-const mapStateToProps = (state, ownProps) => {
-  const selectedRadioOption = behandlingFormValueSelector('PersonInfoPanel')(state, 'utlandSakstype');
-  return {
-    utlandSakstype: selectedRadioOption,
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const onSubmit = values => initialOwnProps.submitCallback([{
+    kode: MANUELL_MARKERING_AV_UTLAND_SAKSTYPE,
+    begrunnelse: values.utlandSakstype,
+    ...values,
+  }]);
+
+  return state => ({
+    utlandSakstype: behandlingFormValueSelector('PersonInfoPanel')(state, 'utlandSakstype'),
     readOnly: getBehandlingIsOnHold(state) || hasReadOnlyBehandling(state),
-    onSubmit: values => ownProps.submitCallback([{
-      kode: MANUELL_MARKERING_AV_UTLAND_SAKSTYPE,
-      begrunnelse: selectedRadioOption,
-      ...values,
-    }]),
-  };
+    onSubmit,
+  });
 };
 
-export const Utland = connect(mapStateToProps)(UtlandImpl);
+export const Utland = connect(mapStateToPropsFactory)(UtlandImpl);
