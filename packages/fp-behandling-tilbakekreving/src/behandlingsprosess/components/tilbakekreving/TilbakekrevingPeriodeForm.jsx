@@ -92,13 +92,13 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
   saveOrToggleModal = () => {
     const { showModal } = this.state;
     const {
-      period,
+      data,
       tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
       antallPerioderMedAksjonspunkt,
       ...formProps
     } = this.props;
 
-    if (antallPerioderMedAksjonspunkt > 1 && period.erTotalBelopUnder4Rettsgebyr && tilbakekrevSelvOmBeloepErUnder4Rettsgebyr === false) {
+    if (antallPerioderMedAksjonspunkt > 1 && data.erTotalBelopUnder4Rettsgebyr && tilbakekrevSelvOmBeloepErUnder4Rettsgebyr === false) {
       this.setState(state => ({ ...state, showModal: !showModal }));
     } else {
       formProps.handleSubmit();

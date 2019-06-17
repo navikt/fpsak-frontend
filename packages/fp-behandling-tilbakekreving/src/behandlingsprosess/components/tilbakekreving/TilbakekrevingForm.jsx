@@ -258,8 +258,8 @@ export class TilbakekrevingFormImpl extends Component {
             <BehandlingspunktSubmitButton
               formName={TILBAKEKREVING_FORM_NAME}
               isReadOnly={readOnly}
-              isDirty={isApOpen && valgtPeriode ? false : undefined}
-              isSubmittable={!isApOpen && !valgtPeriode && !readOnlySubmitButton}
+              isDirty={(isApOpen && valgtPeriode) || formProps.error ? false : undefined}
+              isSubmittable={!isApOpen && !valgtPeriode && !readOnlySubmitButton && !formProps.error}
               isBehandlingFormSubmitting={isBehandlingFormSubmitting}
               isBehandlingFormDirty={isBehandlingFormDirty}
               hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
@@ -364,7 +364,7 @@ const settOppPeriodeDataForDetailForm = createSelector([slaSammenOriginaleOgLagr
 });
 
 const getAntallPerioderMedAksjonspunkt = createSelector([state => behandlingFormValueSelector(TILBAKEKREVING_FORM_NAME)(state, 'vilkarsVurdertePerioder')],
-  (perioder = []) => perioder.reduce((sum, periode) => (periode.erForeldet ? sum + 1 : sum), 0));
+  (perioder = []) => perioder.reduce((sum, periode) => (!periode.erForeldet ? sum + 1 : sum), 0));
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const sarligGrunnTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.SARLIG_GRUNN)(initialState);
@@ -395,14 +395,16 @@ const mapDispatchToProps = dispatch => ({
 const validateForm = (values) => {
   const errors = {};
   const perioder = values.vilkarsVurdertePerioder;
-  const antallPerioderMedAksjonspunkt = perioder.reduce((sum, periode) => (periode.erForeldet ? sum + 1 : sum), 0);
+  const antallPerioderMedAksjonspunkt = perioder.reduce((sum, periode) => (!periode.erForeldet ? sum + 1 : sum), 0);
   if (antallPerioderMedAksjonspunkt < 2) {
     return errors;
   }
 
   const antallValgt = perioder.reduce((sum, periode) => {
-    const { vilkarResultatInfo } = periode;
-    const info = vilkarResultatInfo ? vilkarResultatInfo.aktsomhetInfo : undefined;
+    const { valgtVilkarResultatType } = periode;
+    const vilkarResultatInfo = periode[valgtVilkarResultatType];
+    const { handletUaktsomhetGrad } = vilkarResultatInfo;
+    const info = vilkarResultatInfo[handletUaktsomhetGrad];
     if (info) {
       return info.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr === false ? sum + 1 : sum;
     }
