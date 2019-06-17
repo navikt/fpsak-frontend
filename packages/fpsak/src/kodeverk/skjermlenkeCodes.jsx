@@ -88,6 +88,11 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.DEFAULT,
     punktNavn: behandlingspunktCodes.FORMKRAV_KLAGE_NAV_KLAGEINSTANS,
   },
+  ANKE_VURDERING: {
+    kode: 'ANKE_VURDERING',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: behandlingspunktCodes.ANKEBEHANDLING,
+  },
   KONTROLL_AV_SAKSOPPLYSNINGER: {
     kode: 'KONTROLL_AV_SAKSOPPLYSNINGER',
     faktaNavn: faktaPanelCodes.DEFAULT,
