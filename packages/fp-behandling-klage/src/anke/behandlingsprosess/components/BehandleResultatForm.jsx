@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
-import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Undertittel } from 'nav-frontend-typografi';
+import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 
@@ -16,8 +17,30 @@ import { getSelectedBehandlingspunktAksjonspunkter } from '../Behandlingsprosess
 import { buildInitialValues, transformValues } from './BehandleAnkeForm';
 import PreviewAnkeLink from './PreviewAnkeLink';
 
+
 const canPreview = formValues => (true);
 const canSubmit = formValues => (true);
+
+const isVedtakUtenToTrinn = apCodes => apCodes.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL); // 5018
+const isMedUnderskriver = apCodes => apCodes.includes(aksjonspunktCodes.FORESLA_VEDTAK); // 5015
+const isFatterVedtak = apCodes => apCodes.includes(aksjonspunktCodes.FATTER_VEDTAK); // 5016
+
+const getInnstilling = (formValues) => {
+  console.log('getInnstilling: ', formValues);
+  if (formValues === 'a') {
+    return 'Ankebehandling.Resultat.Innstilling.Stadfest';
+  }
+  if (formValues === 'b') {
+    return 'Ankebehandling.Resultat.Innstilling.Omgjores';
+  }
+  if (formValues === 'c') {
+    return 'Ankebehandling.Resultat.Innstilling.Oppheves';
+  }
+  if (formValues === 'd') {
+    return 'Ankebehandling.Resultat.Innstilling.Avvises';
+  }
+  return 'Ankebehandling.Resultat.Innstilling.Udefinert';
+};
 
 const AnkeResultatForm = ({
   readOnly,
@@ -36,22 +59,37 @@ const AnkeResultatForm = ({
     <FadingPanel>
       <Undertittel><FormattedMessage id="Ankebehandling.Resultat.Title" /></Undertittel>
       <VerticalSpacer fourPx />
-      <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
-        {[<FormattedMessage id="Ankebehandling.Resultat.HelpText" key={aksjonspunktCode} />]}
-      </AksjonspunktHelpText>
-
+      <Row>
+        <Column xs="12">
+          <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling" /></Undertekst>
+          <Undertekst><FormattedMessage id={getInnstilling(formValues)} /></Undertekst>
+        </Column>
+      </Row>
       <VerticalSpacer sixteenPx />
       <Row>
-        <Column xs="8">
+        <Column xs="12">
           <BehandlingspunktSubmitButton
             formName={formProps.form}
-            isReadOnly={readOnly}
-            isSubmittable={canSubmit(formValues)}
+            isReadOnly={false}
+            isSubmittable={canSubmit(formValues) && isMedUnderskriver(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
             hasEmptyRequiredFields={false}
             isBehandlingFormSubmitting={isBehandlingFormSubmitting}
             isBehandlingFormDirty={isBehandlingFormDirty}
             hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+            textCode="Ankebehandling.Resultat.SendTilMedunderskriver"
           />
+          <span>&nbsp;</span>
+          <BehandlingspunktSubmitButton
+            formName={formProps.form}
+            isReadOnly={false}
+            isSubmittable={canSubmit(formValues) && isVedtakUtenToTrinn(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
+            hasEmptyRequiredFields={false}
+            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+            isBehandlingFormDirty={isBehandlingFormDirty}
+            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+            textCode="Ankebehandling.Resultat.FerdigstillAnke"
+          />
+          <span>&nbsp;</span>
           {canPreview(formValues)
           && (
             <PreviewAnkeLink
