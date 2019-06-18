@@ -82,20 +82,11 @@ export const hasBehandlingManualPaVent = createSelector(
 
 
 // KLAGEVURDERING
-export const getBehandlingKlageVurdering = createSelector(
+export const getBehandlingAnkeVurdering = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['anke-vurdering'] ? selectedBehandling['anke-vurdering'] : undefined),
 );
-export const getBehandlingKlageVurderingResultatNFP = createSelector(
-  [getBehandlingKlageVurdering], (klageVurdering = {}) => klageVurdering.klageVurderingResultatNFP,
-);
-export const getBehandlingKlageVurderingResultatNK = createSelector(
-  [getBehandlingKlageVurdering], (klageVurdering = {}) => klageVurdering.klageVurderingResultatNK,
-);
-export const getBehandlingKlageFormkravResultatNFP = createSelector(
-  [getBehandlingKlageVurdering], (klageVurdering = {}) => klageVurdering.klageFormkravResultatNFP,
-);
-export const getBehandlingKlageFormkravResultatKA = createSelector(
-  [getBehandlingKlageVurdering], (klageVurdering = {}) => klageVurdering.klageFormkravResultatKA,
+export const getBehandlingAnkeVurderingResultat = createSelector(
+  [getBehandlingAnkeVurdering], (ankeVurdering = {}) => ankeVurdering.ankeVurderingResultat,
 );
 
 // SPRÅK

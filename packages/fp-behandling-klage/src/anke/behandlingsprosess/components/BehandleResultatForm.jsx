@@ -26,7 +26,7 @@ const isMedUnderskriver = apCodes => apCodes.includes(aksjonspunktCodes.FORESLA_
 const isFatterVedtak = apCodes => apCodes.includes(aksjonspunktCodes.FATTER_VEDTAK); // 5016
 
 const getInnstilling = (formValues) => {
-  console.log('getInnstilling: ', formValues);
+  // TODO Skrive ut innstilling
   if (formValues === 'a') {
     return 'Ankebehandling.Resultat.Innstilling.Stadfest';
   }

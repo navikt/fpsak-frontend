@@ -109,11 +109,6 @@ const klageAksjonspunkter = [
   aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA,
 ];
 
-const ankeAksjonspunkter = [
-  aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE_MERKNADER,
-  aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE,
-];
-
 const uttakAksjonspunkter = [
   aksjonspunktCodes.AVKLAR_UTTAK,
   aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK,

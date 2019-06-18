@@ -4,14 +4,6 @@ import {
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import { reducerRegistry, setRequestPollingMessage } from '@fpsak-frontend/fp-felles';
 
-/*
- * /behandling/anke
- * /oppdater-med-paaanket-behandling
- * /mellomlagre-anke
- * /mellomlagre-gjennapne-anke
- * /mottatt-ankedokument
- *
- */
 export const AnkeBehandlingApiKeys = {
   BEHANDLING: 'BEHANDLING',
   UPDATE_ON_HOLD: 'UPDATE_ON_HOLD',

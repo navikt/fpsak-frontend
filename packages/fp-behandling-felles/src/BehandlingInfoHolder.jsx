@@ -37,6 +37,8 @@ class BehandlingInfoHolder {
 
     behandlingKlageVurderingResultatNK;
 
+    behandlingAnkeVurderingResultat;
+
     behandlingHasSoknad;
 
     behandlingIsInnsyn = false;
@@ -146,6 +148,11 @@ class BehandlingInfoHolder {
 
     withBehandlingKlageVurderingResultatNK = (behandlingKlageVurderingResultatNK) => {
       this.behandlingKlageVurderingResultatNK = behandlingKlageVurderingResultatNK;
+      return this;
+    }
+
+    withBehandlingAnkeVurderingResultat = (behandlingAnkeVurderingResultat) => {
+      this.behandlingAnkeVurderingResultat = behandlingAnkeVurderingResultat;
       return this;
     }
 

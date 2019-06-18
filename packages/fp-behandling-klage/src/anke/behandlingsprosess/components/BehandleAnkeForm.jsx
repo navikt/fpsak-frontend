@@ -17,7 +17,7 @@ import {
 import {
 VerticalSpacer, AksjonspunktHelpText, FadingPanel, ArrowBox,
 } from '@fpsak-frontend/shared-components';
-import { getBehandlingKlageVurderingResultatNK, getBehandlingSprak } from 'behandlingKlage/src/anke/selectors/ankeBehandlingSelectors';
+import { getBehandlingAnkeVurderingResultat, getBehandlingSprak } from 'behandlingKlage/src/anke/selectors/ankeBehandlingSelectors';
 import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingKlage/src/anke/behandlingForm';
@@ -43,7 +43,7 @@ const omgjorArsakValues = [
 ];
 
 const canSubmit = (formValues) => {
-  if (ankeVurdering.ANKE_AVVIS === formValues.ankeVurdering && !formValues.erSubsidiartRealitetsbehandles) {
+  if (ankeVurdering.ANKE_AVVIST === formValues.ankeVurdering && !formValues.erSubsidiartRealitetsbehandles) {
     return false;
   }
   if (ankeVurdering.ANKE_OMGJOER === formValues.ankeVurdering && (!formValues.ankeOmgjoerArsak || !formValues.ankeVurderingOmgjoer)) {
@@ -82,6 +82,26 @@ const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY
 const formatBehandling = b => `${formatDate(b.opprettet)} - ${formatBehandlingType(b.type.kode)} - ${formatBehandlingStatus(b.status.kode)}`;
 const formatId = b => `${b}`;
 
+const leggTilUkjent = (behandlinger = []) => {
+  const arr = [].concat(behandlinger);
+  arr.unshift({
+    id: 0,
+    opprettet: null,
+    type: {
+    },
+    status: {
+    },
+  });
+  return arr;
+};
+
+const buildOption = (b) => {
+  if (b.opprettet == null) {
+    return (<option key={formatId(b.id)} value={formatId(b.id)}>Ikke påanket et vedtak</option>);
+  }
+  return (<option key={formatId(b.id)} value={formatId(b.id)}>{formatBehandling(b)}</option>);
+};
+
 /**
  * Presentasjonskomponent. Setter opp aksjonspunktet for behandling.
  */
@@ -111,7 +131,7 @@ const BehandleAnkeFormImpl = ({
           <SelectField
             readOnly={readOnly}
             name="vedtak"
-            selectValues={behandlinger.map(b => <option key={formatId(b.id)} value={formatId(b.id)}>{formatBehandling(b)}</option>)}
+            selectValues={leggTilUkjent(behandlinger).map(b => buildOption(b))}
             className={readOnly ? styles.selectReadOnly : null}
             label={intl.formatMessage({ id: 'Ankebehandling.Resultat.Vedtak' })}
             validate={[required]}
@@ -141,11 +161,11 @@ const BehandleAnkeFormImpl = ({
             direction="vertical"
           >
             <RadioOption value={ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE} label={{ id: 'Ankebehandling.Resultat.OpphevHjemsend' }} />
-            <RadioOption value={ankeVurdering.ANKE_AVVIS} label={{ id: 'Ankebehandling.Resultat.Avvis' }} />
+            <RadioOption value={ankeVurdering.ANKE_AVVIST} label={{ id: 'Ankebehandling.Resultat.Avvis' }} />
           </RadioGroupField>
         </Column>
       </Row>
-      {ankeVurdering.ANKE_AVVIS === formValues.ankeVurdering
+      {ankeVurdering.ANKE_AVVIST === formValues.ankeVurdering
       && (
         <Row>
           <Column xs="7">
@@ -255,7 +275,16 @@ BehandleAnkeFormImpl.propTypes = {
   formValues: PropTypes.shape(),
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
-  behandlinger: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  behandlinger: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    opprettet: PropTypes.string,
+    type: PropTypes.shape({
+      kode: PropTypes.string,
+    }),
+    status: PropTypes.shape({
+      kode: PropTypes.string,
+    }),
+  })).isRequired,
   ...formPropTypes,
 };
 
@@ -265,26 +294,27 @@ BehandleAnkeFormImpl.defaultProps = {
   readOnlySubmitButton: true,
 };
 
-export const buildInitialValues = createSelector([getBehandlingKlageVurderingResultatNK], klageVurderingResultat => ({
-  vedtak: klageVurderingResultat ? klageVurderingResultat.vedtak : null,
-  ankeVurdering: klageVurderingResultat ? klageVurderingResultat.ankeVurdering : null,
-  begrunnelse: klageVurderingResultat ? klageVurderingResultat.begrunnelse : null,
-  fritekstTilBrev: klageVurderingResultat ? klageVurderingResultat.fritekstTilBrev : null,
-  vedtaksdatoAnketBehandling: klageVurderingResultat ? klageVurderingResultat.vedtaksdatoAnketBehandling : null,
-  erGodkjentAvMedunderskriver: klageVurderingResultat ? klageVurderingResultat.erGodkjentAvMedunderskriver : false,
-  ikkePart: klageVurderingResultat ? klageVurderingResultat.ikkePart : false,
-  ikkeKonkret: klageVurderingResultat ? klageVurderingResultat.ikkeKonkret : false,
-  ikkeFrist: klageVurderingResultat ? klageVurderingResultat.ikkeFrist : false,
-  ikkeSignert: klageVurderingResultat ? klageVurderingResultat.ikkeSignert : false,
-  erSubsidiartRealitetsbehandles: klageVurderingResultat ? klageVurderingResultat.erSubsidiartRealitetsbehandles : null,
-  ankeAvvistArsak: klageVurderingResultat ? klageVurderingResultat.ankeAvvistArsak : null,
-  ankeOmgjoerArsak: klageVurderingResultat ? klageVurderingResultat.ankeOmgjoerArsak : null,
-  ankeVurderingOmgjoer: klageVurderingResultat ? klageVurderingResultat.ankeVurderingOmgjoer : null,
+export const buildInitialValues = createSelector([getBehandlingAnkeVurderingResultat], ankeVurderingResultat => ({
+  vedtak: ankeVurderingResultat ? ankeVurderingResultat.vedtak : null,
+  ankeVurdering: ankeVurderingResultat ? ankeVurderingResultat.ankeVurdering : null,
+  begrunnelse: ankeVurderingResultat ? ankeVurderingResultat.begrunnelse : null,
+  fritekstTilBrev: ankeVurderingResultat ? ankeVurderingResultat.fritekstTilBrev : null,
+  vedtaksdatoAnketBehandling: ankeVurderingResultat ? ankeVurderingResultat.vedtaksdatoAnketBehandling : null,
+  erGodkjentAvMedunderskriver: ankeVurderingResultat ? ankeVurderingResultat.erGodkjentAvMedunderskriver : false,
+  ikkePart: ankeVurderingResultat ? ankeVurderingResultat.ikkePart : false,
+  ikkeKonkret: ankeVurderingResultat ? ankeVurderingResultat.ikkeKonkret : false,
+  ikkeFrist: ankeVurderingResultat ? ankeVurderingResultat.ikkeFrist : false,
+  ikkeSignert: ankeVurderingResultat ? ankeVurderingResultat.ikkeSignert : false,
+  erSubsidiartRealitetsbehandles: ankeVurderingResultat ? ankeVurderingResultat.erSubsidiartRealitetsbehandles : null,
+  ankeAvvistArsak: ankeVurderingResultat ? ankeVurderingResultat.ankeAvvistArsak : null,
+  ankeOmgjoerArsak: ankeVurderingResultat ? ankeVurderingResultat.ankeOmgjoerArsak : null,
+  ankeVurderingOmgjoer: ankeVurderingResultat ? ankeVurderingResultat.ankeVurderingOmgjoer : null,
+  gjelderVedtak: ankeVurderingResultat ? ankeVurderingResultat.gjelderVedtak : null,
 }));
 
 
 export const transformValues = (values, aksjonspunktCode) => ({
-  vedtak: values.vedtak,
+  vedtak: values.vedtak === '0' ? undefined : values.vedtak,
   ankeVurdering: values.ankeVurdering,
   begrunnelse: values.begrunnelse,
   fritekstTilBrev: values.fritekstTilBrev,
@@ -298,6 +328,7 @@ export const transformValues = (values, aksjonspunktCode) => ({
   ankeAvvistArsak: values.ankeAvvistArsak,
   ankeOmgjoerArsak: values.ankeOmgjoerArsak,
   ankeVurderingOmgjoer: values.ankeVurderingOmgjoer,
+  gjelderVedtak: values.vedtak !== '0',
   kode: aksjonspunktCode,
 });
 
@@ -317,7 +348,8 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       'ikkePart', 'ikkeKonkret', 'ikkeFrist', 'ikkeSignert', 'erSubsidiartRealitetsbehandles',
       'ankeAvvistArsak',
       'ankeOmgjoerArsak',
-      'ankeVurderingOmgjoer'),
+      'ankeVurderingOmgjoer',
+      'gjelderVedtak'),
     sprakkode: getBehandlingSprak(state),
     behandlinger: getBehandlinger(state),
     onSubmit,
