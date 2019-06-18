@@ -355,7 +355,7 @@ const historikkEndretFeltTypeCodes = {
   },
   ANKE_RESULTAT: {
     kode: 'PA_ANKET_BEHANDLINGID',
-    feltId: 'HistorikkEndretFelt.PaKlagdBehandlingId',
+    feltId: 'HistorikkEndretFelt.PaAnketBehandlingId',
   },
   ANKE_OMGJØR_ÅRSAK: {
     kode: 'ANKE_OMGJØR_ÅRSAK',
