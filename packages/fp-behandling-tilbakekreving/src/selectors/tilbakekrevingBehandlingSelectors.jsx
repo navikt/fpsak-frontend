@@ -96,6 +96,9 @@ export const getTotrinnskontrollArsakerReadOnly = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['totrinnskontroll-arsaker-readOnly']),
 );
 
+// VEDTAK
+export const getVedtaksbrevAvsnitt = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.vedtaksbrev.avsnittsliste);
+
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 const hasBehandlingLukketStatus = createSelector(

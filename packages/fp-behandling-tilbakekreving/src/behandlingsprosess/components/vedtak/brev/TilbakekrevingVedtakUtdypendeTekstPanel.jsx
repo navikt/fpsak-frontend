@@ -18,13 +18,6 @@ import styles from './tilbakekrevingVedtakUtdypendeTekstPanel.less';
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 
-export const feltnavn = {
-  OPPSUMMERING: 'oppsummering',
-  BRODTEKST1: 'brodtekst1',
-  BRODTEKST2: 'brodtekst2',
-  BRODTEKST3: 'brodtekst3',
-};
-
 export const TilbakekrevingVedtakUtdypendeTekstPanel = ({
   intl,
   isEmpty,

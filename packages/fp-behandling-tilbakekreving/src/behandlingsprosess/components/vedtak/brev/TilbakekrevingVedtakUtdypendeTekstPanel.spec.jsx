@@ -5,14 +5,14 @@ import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-e
 import { Image } from '@fpsak-frontend/shared-components';
 import { TextAreaField } from '@fpsak-frontend/form';
 
-import { TilbakekrevingVedtakUtdypendeTekstPanel, feltnavn } from './TilbakekrevingVedtakUtdypendeTekstPanel';
+import { TilbakekrevingVedtakUtdypendeTekstPanel } from './TilbakekrevingVedtakUtdypendeTekstPanel';
 
 describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
   it('skal vise lenke for å skrive inn tekst når felt ikke har verdi og en ikke er i readonly-modus', () => {
     const wrapper = shallowWithIntl(<TilbakekrevingVedtakUtdypendeTekstPanel
       intl={intlMock}
       isEmpty
-      type={feltnavn.OPPSUMMERING}
+      type="OPPSUMMERING"
       readOnly={false}
     />);
 
@@ -24,7 +24,7 @@ describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
     const wrapper = shallowWithIntl(<TilbakekrevingVedtakUtdypendeTekstPanel
       intl={intlMock}
       isEmpty={false}
-      type={feltnavn.OPPSUMMERING}
+      type="OPPSUMMERING"
       readOnly={false}
     />);
 
@@ -36,7 +36,7 @@ describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
     const wrapper = shallowWithIntl(<TilbakekrevingVedtakUtdypendeTekstPanel
       intl={intlMock}
       isEmpty
-      type={feltnavn.OPPSUMMERING}
+      type="OPPSUMMERING"
       readOnly
     />);
 

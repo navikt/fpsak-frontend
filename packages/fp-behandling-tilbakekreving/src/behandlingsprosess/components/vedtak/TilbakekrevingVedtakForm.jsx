@@ -14,17 +14,36 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import tilbakekrevingAksjonspunktCodes from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingAksjonspunktCodes';
 import {
-  behandlingForm, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, isBehandlingFormDirty,
+  behandlingForm, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, isBehandlingFormDirty, getBehandlingFormValues,
 } from 'behandlingTilbakekreving/src/behandlingForm';
+import vedtaksbrevAvsnittPropType from 'behandlingTilbakekreving/src/proptypes/vedtaksbrevAvsnittPropType';
 import { fetchPreviewVedtaksbrev as fetchPreviewVedtaksbrevActionCreator, getBehandlingIdentifier } from 'behandlingTilbakekreving/src/duckTilbake';
+import { getVedtaksbrevAvsnitt } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';
 
 import styles from './tilbakekrevingVedtakForm.less';
 
 const formName = 'TilbakekrevingVedtakForm';
 
-const fetchPreview = (fetchPreviewVedtaksbrev, behandlingIdentifier) => (e) => {
-  fetchPreviewVedtaksbrev(behandlingIdentifier.behandlingId);
+const formatVedtakData = (values) => {
+  const perioder = omit(values, 'OPPSUMMERING');
+  return {
+    oppsummeringstekst: values.OPPSUMMERING,
+    perioderMedTekst: Object.keys(perioder).map(key => ({
+      fom: key.split('_')[0],
+      tom: key.split('_')[1],
+      faktaAvsnitt: perioder[key].FAKTA,
+      vilkaarAvsnitt: perioder[key].VILKÅR,
+      saerligeGrunnerAvsnitt: perioder[key].SÆRLIGEGRUNNER,
+    })),
+  };
+};
+
+const fetchPreview = (fetchPreviewVedtaksbrev, behandlingIdentifier, formVerdier) => (e) => {
+  fetchPreviewVedtaksbrev({
+    behandlingId: behandlingIdentifier.behandlingId,
+    ...formatVedtakData(formVerdier),
+  });
   e.preventDefault();
 };
 
@@ -32,12 +51,13 @@ export const TilbakekrevingVedtakFormImpl = ({
   readOnly,
   fetchPreviewVedtaksbrev,
   behandlingIdentifier,
-  vedtaksbrevData,
+  vedtaksbrevAvsnitt,
+  formVerdier,
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
     <VerticalSpacer twentyPx />
-    <TilbakekrevingEditerVedtaksbrevPanel vedtaksbrevData={vedtaksbrevData} formName={formName} readOnly={readOnly} />
+    <TilbakekrevingEditerVedtaksbrevPanel vedtaksbrevAvsnitt={vedtaksbrevAvsnitt} formName={formName} readOnly={readOnly} />
     <VerticalSpacer twentyPx />
     <FlexContainer fluid>
       <FlexRow>
@@ -56,8 +76,8 @@ export const TilbakekrevingVedtakFormImpl = ({
           <div className={styles.padding}>
             <a
               href=""
-              onClick={fetchPreview(fetchPreviewVedtaksbrev, behandlingIdentifier)}
-              onKeyDown={e => (e.keyCode === 13 ? fetchPreview(fetchPreviewVedtaksbrev, behandlingIdentifier)(e) : null)}
+              onClick={fetchPreview(fetchPreviewVedtaksbrev, behandlingIdentifier, formVerdier)}
+              onKeyDown={e => (e.keyCode === 13 ? fetchPreview(fetchPreviewVedtaksbrev, behandlingIdentifier, formVerdier)(e) : null)}
               className={classNames(styles.buttonLink, 'lenke lenke--frittstaende')}
             >
               <FormattedMessage id="TilbakekrevingVedtakForm.ForhandvisBrev" />
@@ -73,80 +93,24 @@ TilbakekrevingVedtakFormImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   fetchPreviewVedtaksbrev: PropTypes.func.isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
-  vedtaksbrevData: PropTypes.shape().isRequired,
+  vedtaksbrevAvsnitt: PropTypes.arrayOf(vedtaksbrevAvsnittPropType).isRequired,
+  formVerdier: PropTypes.shape().isRequired,
 };
 
-const transformValues = (values) => {
-  const perioder = omit(values, 'oppsummering');
-  return [{
+const transformValues = values => [{
     kode: tilbakekrevingAksjonspunktCodes.FORESLA_VEDTAK,
-    oppsummering: values.oppsummering,
-    perioder: Object.keys(perioder).map(key => ({
-      fom: key,
-      ...omit(perioder[key], key),
-    })),
+    ...formatVedtakData(values),
   }];
-};
 
-// FIXME (TOR) hent vedtaksbrevdata fra rest-tjeneste
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const submitCallback = values => ownProps.submitCallback(transformValues(values));
+  const vedtaksbrevAvsnitt = getVedtaksbrevAvsnitt(initialState);
   return state => ({
-    initialValues: TilbakekrevingEditerVedtaksbrevPanel.buildInitialValues(),
+    initialValues: TilbakekrevingEditerVedtaksbrevPanel.buildInitialValues(vedtaksbrevAvsnitt),
     onSubmit: submitCallback,
     behandlingIdentifier: getBehandlingIdentifier(state),
-    vedtaksbrevData: {
-      oppsummering: {
-        overskrift: 'Du må betale tilbake foreldrepenger',
-        brodtekst: 'Vi sendte deg et varsel 3. mars 2019 hvor vi fortalte at du hadde fått utbetalt 15 000 kroner for mye. Du må betale 10 000 kroner tilbake.',
-        fritekst: undefined,
-      },
-      perioder: [{
-        fom: '10-04-2019',
-        tom: '14-04-2019',
-        overskrift: 'Perioden fra og med 10. april 2019 til og med 14. april 2019',
-        brodtekst1: 'Både du og den andre forelderen har fått foreldrepenger for samme periode fordi du var innlagt i helseinstitusjon. '
-          + 'Du kan ikke overføre kvoten din til den andre forelderen og i tillegg få utbetal foreldrepenger for samme periode. Du har '
-          + 'derfor fått 2500 kroner for mye utbetalt i denne perioden.',
-        fritekst1: undefined,
-        underoverskrift: 'Hvordan vi har kommet fram til beløpet du må betale tilbake',
-        brodtekst2: 'Du har ikke fått rett informasjon fra NAV, og vi mener at du ikke kunne forstå at beløpet du fikk utbetalt var feil.',
-        fritekst2: undefined,
-        brodtekst3: 'Vi har ikke opplysninger om at det er noe igjen av det feilutbetalte beløpet. Derfor må du ikke betale tilbake beløpet '
-          + 'for denne perioden',
-        fritekst3: undefined,
-      }, {
-        fom: '15-04-2019',
-        tom: '20-04-2019',
-        overskrift: 'Perioden fra og med 15. april 2019 til og med 20. april 2019',
-        brodtekst1: 'Både du og den andre forelderen har fått foreldrepenger for samme periode fordi du var innlagt i helseinstitusjon. '
-          + 'Du kan ikke overføre kvoten din til den andre forelderen og i tillegg få utbetal foreldrepenger for samme periode. Du har '
-          + 'derfor fått 2500 kroner for mye utbetalt i denne perioden.',
-        fritekst1: undefined,
-        underoverskrift: 'Hvordan vi har kommet fram til beløpet du må betale tilbake',
-        brodtekst2: 'Du har ikke fått rett informasjon fra NAV, og vi mener at du ikke kunne forstå at beløpet du fikk utbetalt var feil.',
-        fritekst2: undefined,
-        brodtekst3: 'Vi har ikke opplysninger om at det er noe igjen av det feilutbetalte beløpet. Derfor må du ikke betale tilbake '
-          + 'beløpet for denne perioden',
-        fritekst3: undefined,
-      }],
-      ekstraInformasjon: {
-        overskrift: 'Hvordan betale tilbake pengene du skylder',
-        brodtekst: 'Vi har overført beløpet du skylder til NAV Innkreving, som vil sende deg et krav om å betale tilbake det feilutbetalte beløpet.'
-          + ' Har du spørsmål om dette, kan du kontakte NAV Innkreving (tlf eller modia)?',
-        skattOverskrift: 'Skatt - kommer senere',
-        klageOverskrift: 'Du har rett til å klage',
-        klageBrodtekst1: 'Du kan klage innen 12 uker fra den datoen du mottok vedtaket. Du finner skjema og informasjon på nav.no/klage.',
-        klageBrodtekst2: 'Du må betale tilbake, selv om du klager på dette vedtaket. (Lovhjemmel?) Vi vil betale tilbake pengene du har betalt inn, '
-          + 'om du får vedtak om at du ikke trengte å betale tilbake hele eller deler av beløpet du skyldte.',
-        innsynOverskrift: 'Du har rett til innsyn',
-        innsynBrodtekst: 'På nav.no/dittnav kan du se dokumentene i saken din.',
-        sporsmalOverskrift: 'Har du spørsmål?',
-        sporsmalBrodtekst: 'Du finner nyttig informasjon på nav.no/familie. Du kan også kontakte oss på telefon 55555555',
-        hilsenBrodtekst: 'Med vennlig hilsen',
-        hilsenNavn: 'navn på enhet',
-      },
-    },
+    formVerdier: getBehandlingFormValues(formName)(state) || {},
+    vedtaksbrevAvsnitt,
   });
 };
 
