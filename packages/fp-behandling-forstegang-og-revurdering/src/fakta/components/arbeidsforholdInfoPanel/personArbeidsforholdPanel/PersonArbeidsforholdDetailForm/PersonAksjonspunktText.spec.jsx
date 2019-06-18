@@ -135,7 +135,7 @@ describe('<PersonAksjonspunktText>', () => {
         mottattDatoInntektsmelding: undefined,
         permisjoner: [
           {
-            permisjonFom: '2018-10-10',
+            permisjonFom: '2018-10-01',
             permisjonTom: undefined,
             permisjonsprosent: 100,
             permisjonsÅrsak: 'aarsak',
@@ -146,6 +146,8 @@ describe('<PersonAksjonspunktText>', () => {
     />);
     const component = wrapper.find('FormattedHTMLMessage');
     expect(component.props().id).to.eql('PersonAksjonspunktText.SokerHarPermisjonOgIkkeMottattIM');
+    expect(component.props().values.permisjonFom).to.eql('01.10.2018');
+    expect(component.props().values.permisjonTom).to.eql('');
   });
 
   it('skal vise hjelpetekst for arbeidsforhold med en permisjon og mottat IM', () => {
@@ -155,7 +157,7 @@ describe('<PersonAksjonspunktText>', () => {
         mottattDatoInntektsmelding: '2019-01-01',
         permisjoner: [
           {
-            permisjonFom: '2018-10-10',
+            permisjonFom: '2018-10-01',
             permisjonTom: undefined,
             permisjonsprosent: 100,
             permisjonsÅrsak: 'aarsak',
@@ -166,6 +168,8 @@ describe('<PersonAksjonspunktText>', () => {
     />);
     const component = wrapper.find('FormattedHTMLMessage');
     expect(component.props().id).to.eql('PersonAksjonspunktText.SokerHarPermisjonOgMottattIM');
+    expect(component.props().values.permisjonFom).to.eql('01.10.2018');
+    expect(component.props().values.permisjonTom).to.eql('');
   });
 
   it('skal vise hjelpetekst for arbeidsforhold med flere permisjoner', () => {
@@ -192,5 +196,6 @@ describe('<PersonAksjonspunktText>', () => {
     />);
     const component = wrapper.find('FormattedHTMLMessage');
     expect(component.props().id).to.eql('PersonAksjonspunktText.SokerHarFlerePermisjoner');
+    expect(component.props().values).to.empty;
   });
 });
