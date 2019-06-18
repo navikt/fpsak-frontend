@@ -2,20 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+
 import editUtlandIcon from '@fpsak-frontend/assets/images/endre.svg';
 import editUtlandDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { RadioOption, RadioGroupField } from '@fpsak-frontend/form';
+import { omit, required } from '@fpsak-frontend/utils';
 import {
   ElementWrapper, FlexContainer, FlexColumn, FlexRow, Image,
 } from '@fpsak-frontend/shared-components';
-import { required } from '@fpsak-frontend/utils';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import { getBehandlingIsOnHold, hasReadOnlyBehandling } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import utlandSakstypeKode from './utlandSakstypeKode';
 import { UtlandEndretModal } from './UtlandEndretModal';
 
@@ -71,6 +71,7 @@ export class UtlandImpl extends Component {
     const { currentUtlandStatus } = this.state;
     if (selectedRadioOption !== currentUtlandStatus) {
       values.gammelVerdi = currentUtlandStatus;
+      values.nyVerdi = selectedRadioOption;
       this.setState({
         currentUtlandStatus: selectedRadioOption,
         showModalUtlandEndret: true,
@@ -191,8 +192,8 @@ UtlandImpl.defaultProps = {
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values => initialOwnProps.submitCallback([{
     kode: MANUELL_MARKERING_AV_UTLAND_SAKSTYPE,
-    begrunnelse: values.utlandSakstype,
-    ...values,
+    begrunnelse: values.nyVerdi,
+    ...omit(values, 'nyVerdi'),
   }]);
 
   return state => ({
