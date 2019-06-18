@@ -53,6 +53,12 @@ const vilkar = {
     kode: vilkarUtfallType.OPPFYLT,
   },
 };
+const vilkarAvslått = {
+  vilkarStatus: {
+    kode: vilkarUtfallType.IKKE_OPPFYLT,
+  },
+};
+
 const gjeldendeAksjonspunkter = [{
   id: 55,
   erAktivt: true,
@@ -120,6 +126,24 @@ describe('<BeregningFP>', () => {
     const beregningTable = wrapper.find(BeregningTable);
     expect(beregningTable).to.be.lengthOf(0);
   });
+  it('skal teste at BeregningTable vises dersom det ikke er dagsats på periodene men vilkåret er avslått', () => {
+    const wrapper = shallow(<BeregningFPImpl
+      readOnly={false}
+      submitCallback={sinon.spy}
+      berGr={lagBeregningsgrunnlag(false)}
+      beregnetAarsinntekt={100000}
+      sammenligningsgrunnlag={100000}
+      beregnetAvvikPromille={50}
+      gjeldendeVilkar={vilkarAvslått}
+      gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+      relevanteStatuser={relevanteStatuser}
+      readOnlySubmitButton
+      sokerHarGraderingPaaAndelUtenBG={false}
+    />);
+    const beregningTable = wrapper.find(BeregningTable);
+    expect(beregningTable).to.be.lengthOf(1);
+  });
+
 
   it('skal teste at BeregningForm får korrekte props fra BeregningFP med beregnetAvvikPromille lik NULL', () => {
     const wrapper = shallow(<BeregningFPImpl

@@ -57,9 +57,9 @@ const dagsatsErSatt = (beregningsperioder) => {
   return beregningsperioder.some(p => p.dagsats !== undefined && p.dagsats !== null);
 };
 
-const vilkarErVurdert = vilkar => vilkar && vilkar.vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT;
+const vilkarErAvslaatt = vilkar => vilkar && vilkar.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT;
 
-const beregningErFastsatt = (vilkar, beregningsperioder) => dagsatsErSatt(beregningsperioder) && vilkarErVurdert(vilkar);
+const beregningErFastsatt = (vilkar, beregningsperioder) => dagsatsErSatt(beregningsperioder) || vilkarErAvslaatt(vilkar);
 
 /**
  * BeregningFP
