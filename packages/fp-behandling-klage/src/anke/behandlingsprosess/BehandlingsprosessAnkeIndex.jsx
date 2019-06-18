@@ -22,14 +22,12 @@ import {
 } from '@fpsak-frontend/fp-felles';
 import { getResolveFaktaAksjonspunkterSuccess } from 'behandlingKlage/src/anke/fakta/duckFaktaAnke';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import AnkeBehandlingModal from './components/AnkeBehandlingModal';
 import {
   setSelectedBehandlingspunktNavn,
   resolveProsessAksjonspunkter,
   overrideProsessAksjonspunkter,
   resetBehandlingspunkter,
-  fetchPreviewBrev as fetchPreview,
   getSelectedBehandlingspunktNavn,
   fetchPreviewAnkeBrev,
   resolveKlageTemp,
@@ -161,13 +159,15 @@ export class BehandlingsprosessAnkeIndex extends Component {
 
     const apCodes = aksjonspunktModels.map(ap => ap.kode);
 
-    const skalByttTilKlageinstans = aksjonspunktModels
-      .some(apValue => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP && apValue.klageVurdering === klageVurdering.STADFESTE_YTELSESVEDTAK);
+    const skalTilMedunderskriver = aksjonspunktModels
+      .some(apValue => apValue.kode === aksjonspunktCodes.FORESLA_VEDTAK);
+    const skalFerdigstilles = aksjonspunktModels
+      .some(apValue => apValue.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL);
     const erKlageHjemsendt = aksjonspunktModels
-      .some(apValue => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NK && apValue.klageVurdering === klageVurdering.HJEMSENDE_UTEN_Å_OPPHEVE);
-    const shouldUpdateInfo = !skalByttTilKlageinstans;
+      .some(apValue => apValue.kode === aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE);
+    const shouldUpdateInfo = !skalTilMedunderskriver;
     const afterSubmit = () => {
-      if (skalByttTilKlageinstans) {
+      if (skalTilMedunderskriver || skalFerdigstilles) {
         this.setShowModalKlageBehandling(true);
       } else if (erKlageHjemsendt) {
         this.goToKlageResultat();
