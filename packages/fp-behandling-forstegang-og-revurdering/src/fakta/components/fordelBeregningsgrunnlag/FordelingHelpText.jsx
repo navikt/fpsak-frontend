@@ -80,7 +80,7 @@ export const createEndretArbeidsforholdString = (listOfArbeidsforhold, mTextCase
     if (mTextCase === textCase.PERMISJON) {
       return {
         navnOgOrgnr,
-        dato: arbeidsforhold.permisjon.permisjonTom,
+        dato: formatDate(arbeidsforhold.permisjon.permisjonTom),
       };
     }
     return null;
