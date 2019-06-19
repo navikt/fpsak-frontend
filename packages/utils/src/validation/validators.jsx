@@ -8,7 +8,7 @@ import {
   invalidValueMessage, arrayMinLengthMessage, invalidPeriodMessage, invalidDatesInPeriodMessage, invalidPeriodRangeMessage, datesNotEqual,
   maxLengthOrFodselsnrMessage, utbetalingsgradErMerSamtidigUttaksprosentMessage, ukerOgDagerVidNullUtbetalningsgradMessage,
   arbeidsprosentMåVare100VidUtsettelseAvArbeidMessage, merEn100ProsentMessage, trekkdagerErMerEnnNullUtsettelseMessage, utbetalingMerEnnNullUtsettelseMessage,
-  merEnNullMessage, dateRangesOverlappingBetweenPeriodTypesMessage, invalidOrgNumberMessage,
+  dateRangesOverlappingBetweenPeriodTypesMessage, invalidOrgNumberMessage,
 } from './messages';
 import {
   isoDateRegex, numberRegex, integerRegex, decimalRegex, textRegex, textGyldigRegex, isEmpty, yesterday, tomorrow,
@@ -97,8 +97,6 @@ const validateDate = (dateAsText, date, earliestDate, latestDate) => {
   }
   return error;
 };
-
-export const noMoreThanZeroIfRejectedAndNotUtsettelse = value => (parseFloat(value) > 0 ? merEnNullMessage() : null);
 
 export const hasValidPeriodIncludingOtherErrors = (values, otherErrors = [{}], options = {}) => {
   const today = moment().format(ISO_DATE_FORMAT);
