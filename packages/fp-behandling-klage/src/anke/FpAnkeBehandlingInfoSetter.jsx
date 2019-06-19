@@ -37,7 +37,7 @@ export class FpSakBehandlingInfoSetter extends Component {
       .withTotrinnskontrollArsakerUtenUdefinert(totrinnskontrollArsakerUtenUdefinert)
       .withTotrinnskontrollArsakerReadOnly(totrinnskontrollArsakerReadOnly)
       .withTotrinnskontrollArsaker(totrinnskontrollArsaker)
-      .withBehandlingIsKlage(true)
+      .withBehandlingIsKlage(false)
       .withBehandlingsresultat(behandlingsresultat)
       .withBehandlingType(behandlingType)
       .withBehandlingAnkeVurderingResultat(behandlingAnkeVurderingResultat)
@@ -84,7 +84,6 @@ FpSakBehandlingInfoSetter.propTypes = {
   totrinnskontrollArsakerUtenUdefinert: PropTypes.arrayOf(PropTypes.shape()),
   totrinnskontrollArsakerReadOnly: PropTypes.arrayOf(PropTypes.shape()),
   totrinnskontrollArsaker: PropTypes.arrayOf(PropTypes.shape()),
-  behandlingAnkeVurdering: PropTypes.shape(),
   behandlingsresultat: PropTypes.shape(),
   behandlingType: PropTypes.shape().isRequired,
   behandlingAnkeVurderingResultat: PropTypes.shape(),
@@ -108,7 +107,6 @@ FpSakBehandlingInfoSetter.defaultProps = {
   totrinnskontrollArsakerReadOnly: undefined,
   totrinnskontrollArsaker: [],
   behandlingsresultat: undefined,
-  behandlingAnkeVurdering: undefined,
   behandlingAnkeVurderingResultat: undefined,
   brevMaler: undefined,
   behandlingIsQueued: false,

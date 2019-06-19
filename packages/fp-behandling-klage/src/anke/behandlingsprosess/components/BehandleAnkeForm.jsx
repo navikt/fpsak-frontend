@@ -43,7 +43,7 @@ const omgjorArsakValues = [
 ];
 
 const canSubmit = (formValues) => {
-  if (ankeVurdering.ANKE_AVVIST === formValues.ankeVurdering && !formValues.erSubsidiartRealitetsbehandles) {
+  if (ankeVurdering.ANKE_AVVIS === formValues.ankeVurdering && !formValues.erSubsidiartRealitetsbehandles) {
     return false;
   }
   if (ankeVurdering.ANKE_OMGJOER === formValues.ankeVurdering && (!formValues.ankeOmgjoerArsak || !formValues.ankeVurderingOmgjoer)) {
@@ -161,20 +161,20 @@ const BehandleAnkeFormImpl = ({
             direction="vertical"
           >
             <RadioOption value={ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE} label={{ id: 'Ankebehandling.Resultat.OpphevHjemsend' }} />
-            <RadioOption value={ankeVurdering.ANKE_AVVIST} label={{ id: 'Ankebehandling.Resultat.Avvis' }} />
+            <RadioOption value={ankeVurdering.ANKE_AVVIS} label={{ id: 'Ankebehandling.Resultat.Avvis' }} />
           </RadioGroupField>
         </Column>
       </Row>
-      {ankeVurdering.ANKE_AVVIST === formValues.ankeVurdering
+      {ankeVurdering.ANKE_AVVIS === formValues.ankeVurdering
       && (
         <Row>
           <Column xs="7">
             <ArrowBox>
               <Normaltekst><FormattedMessage id="Ankebehandling.Avvisning" /></Normaltekst>
-              <CheckboxField name="ikkePart" label={<FormattedMessage id="Ankebehandling.Avvisning.IkkePart" />} />
-              <CheckboxField name="ikkeKonkret" label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeKonkret" />} />
-              <CheckboxField name="ikkeFrist" label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeFrist" />} />
-              <CheckboxField name="ikkeSignert" label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeSignert" />} />
+              <CheckboxField name="erAnkerIkkePart" label={<FormattedMessage id="Ankebehandling.Avvisning.IkkePart" />} />
+              <CheckboxField name="erIkkeKonkret" label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeKonkret" />} />
+              <CheckboxField name="erFristIkkeOverholdt" label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeFrist" />} />
+              <CheckboxField name="erIkkeSignert" label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeSignert" />} />
               <Normaltekst><FormattedMessage id="Ankebehandling.Realitetsbehandles" /></Normaltekst>
               <RadioGroupField
                 name="erSubsidiartRealitetsbehandles"
@@ -301,10 +301,10 @@ export const buildInitialValues = createSelector([getBehandlingAnkeVurderingResu
   fritekstTilBrev: ankeVurderingResultat ? ankeVurderingResultat.fritekstTilBrev : null,
   vedtaksdatoAnketBehandling: ankeVurderingResultat ? ankeVurderingResultat.vedtaksdatoAnketBehandling : null,
   erGodkjentAvMedunderskriver: ankeVurderingResultat ? ankeVurderingResultat.erGodkjentAvMedunderskriver : false,
-  ikkePart: ankeVurderingResultat ? ankeVurderingResultat.ikkePart : false,
-  ikkeKonkret: ankeVurderingResultat ? ankeVurderingResultat.ikkeKonkret : false,
-  ikkeFrist: ankeVurderingResultat ? ankeVurderingResultat.ikkeFrist : false,
-  ikkeSignert: ankeVurderingResultat ? ankeVurderingResultat.ikkeSignert : false,
+  erAnkerIkkePart: ankeVurderingResultat ? ankeVurderingResultat.erAnkerIkkePart : false,
+  erIkkeKonkret: ankeVurderingResultat ? ankeVurderingResultat.erIkkeKonkret : false,
+  erFristIkkeOverholdt: ankeVurderingResultat ? ankeVurderingResultat.erFristIkkeOverholdt : false,
+  erIkkeSignert: ankeVurderingResultat ? ankeVurderingResultat.erIkkeSignert : false,
   erSubsidiartRealitetsbehandles: ankeVurderingResultat ? ankeVurderingResultat.erSubsidiartRealitetsbehandles : null,
   ankeAvvistArsak: ankeVurderingResultat ? ankeVurderingResultat.ankeAvvistArsak : null,
   ankeOmgjoerArsak: ankeVurderingResultat ? ankeVurderingResultat.ankeOmgjoerArsak : null,
@@ -320,10 +320,10 @@ export const transformValues = (values, aksjonspunktCode) => ({
   fritekstTilBrev: values.fritekstTilBrev,
   vedtaksdatoAnketBehandling: values.vedtaksdatoAnketBehandling,
   erGodkjentAvMedunderskriver: values.erGodkjentAvMedunderskriver,
-  ikkePart: values.ikkePart,
-  ikkeKonkret: values.ikkeKonkret,
-  ikkeFrist: values.ikkeFrist,
-  ikkeSignert: values.ikkeSignert,
+  erAnkerIkkePart: values.erAnkerIkkePart,
+  erIkkeKonkret: values.erIkkeKonkret,
+  erFristIkkeOverholdt: values.erFristIkkeOverholdt,
+  erIkkeSignert: values.erIkkeSignert,
   erSubsidiartRealitetsbehandles: values.erSubsidiartRealitetsbehandles,
   ankeAvvistArsak: values.ankeAvvistArsak,
   ankeOmgjoerArsak: values.ankeOmgjoerArsak,
@@ -345,7 +345,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       'begrunnelse', 'fritekstTilBrev',
       'vedtaksdatoAnketBehandling',
       'erGodkjentAvMedunderskriver',
-      'ikkePart', 'ikkeKonkret', 'ikkeFrist', 'ikkeSignert', 'erSubsidiartRealitetsbehandles',
+      'erAnkerIkkePart', 'erIkkeKonkret', 'erFristIkkeOverholdt', 'erIkkeSignert', 'erSubsidiartRealitetsbehandles',
       'ankeAvvistArsak',
       'ankeOmgjoerArsak',
       'ankeVurderingOmgjoer',
