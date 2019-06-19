@@ -214,7 +214,7 @@ const buildInitialValues = createSelector([
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const formName = `foreldreAnsvarForm-${initialOwnProps.id}`;
-  const onSubmit = values => ownProps.updatePeriode(values);
+  const onSubmit = values => initialOwnProps.updatePeriode(values);
 
   return (state, ownProps) => ({
       onSubmit,

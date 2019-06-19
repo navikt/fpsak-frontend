@@ -13,6 +13,7 @@ import {
   RadioGroupField, RadioOption, TextAreaField, SelectField,
 } from '@fpsak-frontend/form';
 import {
+  omit,
   minLength,
   maxLength,
   requiredIfNotPristine,
@@ -366,9 +367,9 @@ const validateUttakActivity = (values) => {
   return errors;
 };
 
-const transformValues = (values, selectedItemData, avslagAarsakKoder, innvilgelseAarsakKoder, graderingAvslagAarsakKoder) => {
-  const { ...transformvalue } = selectedItemData;
-  const { ...nyeVerdier } = values;
+const transformValues = (values, avslagAarsakKoder, innvilgelseAarsakKoder, graderingAvslagAarsakKoder) => {
+  const { ...transformvalue } = values.selectedItem;
+  const { ...nyeVerdier } = omit(values, 'selectedItem');
   const [avslagAarsakObject] = avslagAarsakKoder.filter(a => a.kode === values.avslagAarsak);
   const [innvilgelseAarsakObject] = innvilgelseAarsakKoder.filter(a => a.kode === values.innvilgelseAarsak);
   const [graderingAvslagAarsakObject] = graderingAvslagAarsakKoder.filter(a => a.kode === values.graderingAvslagAarsak);
@@ -465,11 +466,12 @@ const buildInitialValues = createSelector(
       graderingAvslagAarsak: selectedItem.graderingAvslagÅrsak ? selectedItem.graderingAvslagÅrsak.kode : '-',
       oppholdArsak: selectedItem.oppholdÅrsak.kode,
       utsettelseType: selectedItem.utsettelseType,
+      selectedItem,
     };
   },
 );
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const avslagAarsaker = getKodeverk(kodeverkTyper.UTTAK_AVSLAG_ARSAK)(initialState);
   const innvilgelseAarsaker = getKodeverk(kodeverkTyper.INNVILGET_AARSAK)(initialState);
   const graderingAvslagAarsakKoder = getKodeverk(kodeverkTyper.GRADERING_AVSLAG_AARSAK)(initialState);
@@ -477,19 +479,15 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const periodeTyper = getKodeverk(kodeverkTyper.UTTAK_PERIODE_TYPE)(initialState);
   const oppholdArsakTyper = getKodeverk(kodeverkTyper.OPPHOLD_ARSAK)(initialState);
 
-  const selectedItem = ownProps.selectedItemData;
-  const kontoIkkeSatt = !selectedItem.periodeType
-    && (selectedItem.aktiviteter[0].stønadskontoType.kode === '-');
-
   const validate = values => validateUttakActivity(values);
   const warn = values => warningUttakActivity(values);
-  const onSubmit = values => ownProps.updateActivity(transformValues(values, selectedItem, avslagAarsaker, innvilgelseAarsaker, graderingAvslagAarsakKoder));
+  const onSubmit = values => initialOwnProps.updateActivity(transformValues(values, avslagAarsaker, innvilgelseAarsaker, graderingAvslagAarsakKoder));
 
-  return state => ({
+  return (state, ownProps) => ({
     validate,
     warn,
     onSubmit,
-    kontoIkkeSatt,
+    kontoIkkeSatt: !ownProps.selectedItemData.periodeType && (ownProps.selectedItemData.aktiviteter[0].stønadskontoType.kode === '-'),
     periodeTyper,
     oppholdArsakTyper,
     graderingAvslagAarsakKoder,

@@ -696,16 +696,16 @@ const addClassNameGroupIdToPerioder = (hovedsokerPerioder, uttakResultatPerioder
   };
 
 const addClassNameGroupIdToPerioderHovedsoker = createSelector(
-  [lagUttakMedOpphold, getUttaksresultatPerioder, (state, props) => props, getBehandlingStatus, getAlleKodeverk],
-  (hovedsokerPerioder, uttakResultatPerioder, ownProps, bStatus, alleKodeverk) => addClassNameGroupIdToPerioder(
-    hovedsokerPerioder, uttakResultatPerioder, ownProps.intl, bStatus, alleKodeverk, true,
+  [lagUttakMedOpphold, getUttaksresultatPerioder, (state, props) => props.intl, getBehandlingStatus, getAlleKodeverk],
+  (hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk) => addClassNameGroupIdToPerioder(
+    hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk, true,
 ),
 );
 
 const addClassNameGroupIdToPerioderAnnenForelder = createSelector(
-  [lagUttakMedOpphold, getUttaksresultatPerioder, (state, props) => props, getBehandlingStatus, getAlleKodeverk],
-  (hovedsokerPerioder, uttakResultatPerioder, ownProps, bStatus, alleKodeverk) => addClassNameGroupIdToPerioder(
-    hovedsokerPerioder, uttakResultatPerioder, ownProps.intl, bStatus, alleKodeverk, false,
+  [lagUttakMedOpphold, getUttaksresultatPerioder, (state, props) => props.intl, getBehandlingStatus, getAlleKodeverk],
+  (hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk) => addClassNameGroupIdToPerioder(
+    hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk, false,
 ),
 );
 
