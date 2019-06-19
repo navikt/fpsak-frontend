@@ -20,6 +20,7 @@ describe('<InntektstabellPanel>', () => {
         kanOverstyre={false}
         aksjonspunkter={[]}
         readOnly={false}
+        erOverstyrt={false}
       >
         <span>test1</span>
         <span>test2</span>
@@ -46,6 +47,26 @@ describe('<InntektstabellPanel>', () => {
         kanOverstyre
         aksjonspunkter={[]}
         readOnly={false}
+        erOverstyrt={false}
+      >
+        <span>test1</span>
+        <span>test2</span>
+      </InntektstabellPanelImpl>,
+    );
+    const checkbox = wrapper.find(CheckboxField);
+    expect(checkbox).has.length(1);
+  });
+
+  it('skal vise checkbox for overstyring for saksbehandler når overstyrt', () => {
+    const wrapper = shallow(
+      <InntektstabellPanelImpl
+        key="inntektstabell"
+        hjelpeTekstId="hjelpetekst"
+        tabell={<span> tabell </span>}
+        kanOverstyre={false}
+        aksjonspunkter={[]}
+        readOnly={false}
+        erOverstyrt
       >
         <span>test1</span>
         <span>test2</span>
@@ -64,6 +85,7 @@ describe('<InntektstabellPanel>', () => {
         kanOverstyre
         aksjonspunkter={[{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSGRUNNLAG } }]}
         readOnly={false}
+        erOverstyrt={false}
       >
         <span>test1</span>
         <span>test2</span>
