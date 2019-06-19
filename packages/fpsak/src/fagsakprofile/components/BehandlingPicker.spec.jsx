@@ -35,6 +35,7 @@ describe('<BehandlingPicker>', () => {
       erAutomatiskRevurdering: false,
       manueltOpprettet: false,
     },
+    gjeldendeVedtak: false,
   };
 
   it('skal vise forklarende tekst når det ikke finnes behandlinger', () => {

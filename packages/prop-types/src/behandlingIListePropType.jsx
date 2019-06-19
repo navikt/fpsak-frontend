@@ -22,6 +22,7 @@ const behandlingIListePropType = PropTypes.shape({
     requestPayload: PropTypes.any,
     type: PropTypes.string.isRequired,
   })).isRequired,
+  gjeldendeVedtak: PropTypes.bool.isRequired,
 });
 
 export default behandlingIListePropType;
