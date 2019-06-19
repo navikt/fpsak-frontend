@@ -37,7 +37,7 @@ const AnkeMerknader = ({
 }) => (
   <form onSubmit={handleSubmit}>
     <FadingPanel>
-      <Undertittel>{intl.formatMessage({ id: 'Ankebehandling.Merknad.Title' })}</Undertittel>
+      <Undertittel><FormattedMessage id="Ankebehandling.Merknad.Title" /></Undertittel>
       <VerticalSpacer fourPx />
       <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
         {[<FormattedMessage id="Ankebehandling.Merknad.HelpText" key={aksjonspunktCode} />]}

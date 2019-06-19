@@ -35,7 +35,7 @@ export const updateBehandling = (behandlingIdentifier, behandlingerVersjonMapped
     return Promise.resolve(response);
   });
 
-export const hentAnke = params => dispatch => (
+export const hentAnkeVurdering = params => dispatch => (
   dispatch(ankeBehandlingApi.ANKE_VURDERING.makeRestApiRequest()(params))
 );
 
@@ -47,7 +47,7 @@ export const resetBehandling = dispatch => Promise.all([
 export const fetchBehandling = (behandlingIdentifier, behandlingerVersjonMappedById) => (dispatch) => {
   dispatch(ankeBehandlingApi.BEHANDLING.resetRestApi()());
   dispatch(updateBehandling(behandlingIdentifier, behandlingerVersjonMappedById));
-  dispatch(hentAnke({ behandlingId: behandlingIdentifier.$$behandlingId }));
+  dispatch(hentAnkeVurdering({ behandlingId: behandlingIdentifier.$$behandlingId }));
 };
 
 const updateFagsakAndBehandling = behandlingIdentifier => dispatch => dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer))
@@ -74,7 +74,7 @@ const initialState = {
   fagsak: {},
   hasShownBehandlingPaVent: false,
   avsluttedeBehandlinger: [],
-  behandlingform: {},
+  ankevurdering: {},
 };
 
 export const fpsakBehandlingReducer = (state = initialState, action = {}) => { // NOSONAR Switch brukes som standard i reducers
@@ -100,6 +100,7 @@ reducerRegistry.register(reducerName, fpsakBehandlingReducer);
 
 // Selectors (Kun de knyttet til reducer)
 const getBehandlingContext = state => state.default[reducerName];
+const getDataContext = state => state.default.dataContextAnkeBehandling;
 export const getSelectedBehandlingId = createSelector([getBehandlingContext], behandlingContext => behandlingContext.behandlingId);
 export const getSelectedSaksnummer = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsakSaksnummer);
 export const getBehandlingIdentifier = createSelector(
@@ -107,6 +108,7 @@ export const getBehandlingIdentifier = createSelector(
   (behandlingId, saksnummer) => (behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined
   ),
 );
+export const getAnkevurderingForm = createSelector([getDataContext], dataContext => dataContext.ANKE_VURDERING.data.ankeVurderingResultat);
 
 export const getFagsakStatus = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.fagsakStatus);
 export const getFagsakPerson = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.fagsakPerson);

@@ -11,14 +11,12 @@ const hasNonDefaultBehandlingspunkt = (builderData, bpLength) => bpLength > 0;
 const foreldrepengerBuilders = [
   new BehandlingspunktProperties.Builder(bpc.ANKEBEHANDLING, 'Ankebehandling')
     .withAksjonspunktCodes(ac.MANUELL_VURDERING_AV_ANKE),
-
-  new BehandlingspunktProperties.Builder(bpc.ANKE_MERKNADER, 'AnkeMerknader')
-    .withAksjonspunktCodes(ac.MANUELL_VURDERING_AV_ANKE_MERKNADER, ac.AUTO_VENT_ANKE_MERKNADER_FRA_BRUKER),
-
   new BehandlingspunktProperties.Builder(bpc.ANKE_RESULTAT, 'AnkeResultat')
     .withAksjonspunktCodes(
       ac.FORESLA_VEDTAK, ac.FATTER_VEDTAK, ac.FORESLA_VEDTAK_MANUELT, ac.VEDTAK_UTEN_TOTRINNSKONTROLL,
-    )
+    ),
+  new BehandlingspunktProperties.Builder(bpc.ANKE_MERKNADER, 'AnkeMerknader')
+    .withAksjonspunktCodes(ac.MANUELL_VURDERING_AV_ANKE_MERKNADER, ac.AUTO_VENT_ANKE_MERKNADER_FRA_BRUKER)
     .withVisibilityWhen(hasNonDefaultBehandlingspunkt),
     // .withStatus(getAnkeVedtakStatus),
 ];

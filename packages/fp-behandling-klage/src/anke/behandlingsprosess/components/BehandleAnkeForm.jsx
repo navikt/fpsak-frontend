@@ -17,7 +17,7 @@ import {
 import {
 VerticalSpacer, AksjonspunktHelpText, FadingPanel, ArrowBox,
 } from '@fpsak-frontend/shared-components';
-import { getBehandlingAnkeVurderingResultat, getBehandlingSprak } from 'behandlingKlage/src/anke/selectors/ankeBehandlingSelectors';
+import { getBehandlingSprak } from 'behandlingKlage/src/anke/selectors/ankeBehandlingSelectors';
 import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingKlage/src/anke/behandlingForm';
@@ -34,6 +34,7 @@ import FritekstBrevTextField from '../../../behandlingsprosess/components/klage/
 import styles from './behandleAnkeForm.less';
 import { getSelectedBehandlingspunktAksjonspunkter } from '../BehandlingsprosessAnkeSelectors';
 import TempsaveKlageButton from './TempsaveKlageButton';
+import { getAnkevurderingForm } from '../../duckAnke';
 
 const omgjorArsakValues = [
   { kode: ankeOmgjorArsak.PROSESSUELL_FEIL, navn: 'Ankebehandling.OmgjoeringArsak.ProsessuellFeil' },
@@ -294,7 +295,7 @@ BehandleAnkeFormImpl.defaultProps = {
   readOnlySubmitButton: true,
 };
 
-export const buildInitialValues = createSelector([getBehandlingAnkeVurderingResultat], resultat => ({
+export const buildInitialValues = createSelector([getAnkevurderingForm], resultat => ({
   vedtak: resultat ? resultat.vedtak : null,
   ankeVurdering: resultat ? resultat.ankeVurdering : null,
   begrunnelse: resultat ? resultat.begrunnelse : null,

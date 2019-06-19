@@ -12,10 +12,12 @@ import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingKlage/src/anke/behandlingForm';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
-import { getBehandlinger } from 'behandling/selectors/behandlingerSelectors';
+import { createSelector } from 'reselect';
+import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import { getSelectedBehandlingspunktAksjonspunkter } from '../BehandlingsprosessAnkeSelectors';
-import { buildInitialValues, transformValues } from './BehandleAnkeForm';
+import { transformValues } from './BehandleAnkeForm';
 import PreviewAnkeLink from './PreviewAnkeLink';
+import { getAnkevurderingForm } from '../../duckAnke';
 
 
 const canPreview = formValues => (true);
@@ -25,18 +27,17 @@ const isVedtakUtenToTrinn = apCodes => apCodes.includes(aksjonspunktCodes.VEDTAK
 const isMedUnderskriver = apCodes => apCodes.includes(aksjonspunktCodes.FORESLA_VEDTAK); // 5015
 const isFatterVedtak = apCodes => apCodes.includes(aksjonspunktCodes.FATTER_VEDTAK); // 5016
 
-const getInnstilling = (formValues) => {
-  // TODO Skrive ut innstilling
-  if (formValues === 'a') {
+const getInnstilling = (innstilling) => {
+  if (innstilling === ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK) {
     return 'Ankebehandling.Resultat.Innstilling.Stadfest';
   }
-  if (formValues === 'b') {
+  if (innstilling === ankeVurdering.ANKE_OMGJOER) {
     return 'Ankebehandling.Resultat.Innstilling.Omgjores';
   }
-  if (formValues === 'c') {
+  if (innstilling === ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE) {
     return 'Ankebehandling.Resultat.Innstilling.Oppheves';
   }
-  if (formValues === 'd') {
+  if (innstilling === ankeVurdering.ANKE_AVVIS) {
     return 'Ankebehandling.Resultat.Innstilling.Avvises';
   }
   return 'Ankebehandling.Resultat.Innstilling.Udefinert';
@@ -51,7 +52,6 @@ const AnkeResultatForm = ({
   aksjonspunktCode,
   sprakkode,
   formValues,
-  behandlinger,
   intl,
   ...formProps
 }) => (
@@ -62,7 +62,7 @@ const AnkeResultatForm = ({
       <Row>
         <Column xs="12">
           <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling" /></Undertekst>
-          <Undertekst><FormattedMessage id={getInnstilling(formValues)} /></Undertekst>
+          <Undertekst><FormattedMessage id={getInnstilling(formValues.ankeVurdering)} /></Undertekst>
         </Column>
       </Row>
       <VerticalSpacer sixteenPx />
@@ -113,7 +113,6 @@ AnkeResultatForm.propTypes = {
   formValues: PropTypes.shape(),
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
-  behandlinger: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   ...formPropTypes,
 };
 
@@ -124,7 +123,11 @@ AnkeResultatForm.defaultProps = {
 };
 
 
-const formName = 'ankeMerknaderForm';
+const formName = 'ankeResultatForm';
+
+const buildInitialValues = createSelector([getAnkevurderingForm], resultat => ({
+  ankeVurdering: resultat ? resultat.ankeVurdering : null,
+}));
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const aksjonspunktCode = getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
@@ -133,9 +136,8 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
     formValues: behandlingFormValueSelector(formName)(state,
-      'kommentar',
-      'merknader'),
-    behandlinger: getBehandlinger(state),
+      'vedtak', 'ankeVurdering',
+      'gjelderVedtak'),
     onSubmit,
   });
 };
