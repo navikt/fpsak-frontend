@@ -116,7 +116,7 @@ export class BehandlingsprosessAnkeIndex extends Component {
 
   goToKlageResultat() {
     const { push: pushLocation, location } = this.props;
-    pushLocation(getLocationWithQueryParams(location, { punkt: 'resultat', fakta: 'default' }));
+    pushLocation(getLocationWithQueryParams(location, { punkt: 'default', fakta: 'default' }));
   }
 
   goToSearchPage() {

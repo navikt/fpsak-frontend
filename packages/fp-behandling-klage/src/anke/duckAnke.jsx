@@ -35,6 +35,10 @@ export const updateBehandling = (behandlingIdentifier, behandlingerVersjonMapped
     return Promise.resolve(response);
   });
 
+export const hentAnke = params => dispatch => (
+  dispatch(ankeBehandlingApi.ANKE_VURDERING.makeRestApiRequest()(params))
+);
+
 export const resetBehandling = dispatch => Promise.all([
   dispatch(ankeBehandlingApi.BEHANDLING.resetRestApi()()),
   dispatch(resetBehandlingContext()),
@@ -43,6 +47,7 @@ export const resetBehandling = dispatch => Promise.all([
 export const fetchBehandling = (behandlingIdentifier, behandlingerVersjonMappedById) => (dispatch) => {
   dispatch(ankeBehandlingApi.BEHANDLING.resetRestApi()());
   dispatch(updateBehandling(behandlingIdentifier, behandlingerVersjonMappedById));
+  dispatch(hentAnke({ behandlingId: behandlingIdentifier.$$behandlingId }));
 };
 
 const updateFagsakAndBehandling = behandlingIdentifier => dispatch => dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer))
@@ -69,6 +74,7 @@ const initialState = {
   fagsak: {},
   hasShownBehandlingPaVent: false,
   avsluttedeBehandlinger: [],
+  behandlingform: {},
 };
 
 export const fpsakBehandlingReducer = (state = initialState, action = {}) => { // NOSONAR Switch brukes som standard i reducers

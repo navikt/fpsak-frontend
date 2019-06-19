@@ -81,7 +81,7 @@ export const hasBehandlingManualPaVent = createSelector(
 );
 
 
-// KLAGEVURDERING
+// ANKEVURDERING
 export const getBehandlingAnkeVurdering = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['anke-vurdering'] ? selectedBehandling['anke-vurdering'] : undefined),
 );

@@ -7,18 +7,16 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import {
- RadioGroupField, RadioOption, SelectField, TextAreaField,
+ RadioGroupField, RadioOption, TextAreaField,
 } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 
 import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingKlage/src/anke/behandlingForm';
-import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
-import styles from './behandleAnkeForm.less';
 import { getSelectedBehandlingspunktAksjonspunkter } from '../BehandlingsprosessAnkeSelectors';
-import { buildInitialValues, transformValues } from './BehandleAnkeForm';
+import { buildInitialValues } from './BehandleAnkeForm';
 import PreviewAnkeLink from './PreviewAnkeLink';
 
 const canPreview = formValues => (true);
@@ -48,7 +46,7 @@ const AnkeMerknader = ({
       <Row>
         <Column xs="7">
           <RadioGroupField
-            name="merknader"
+            name="erMerknaderMottatt"
             validate={[required]}
             direction="horisontal"
             readOnly={readOnly}
@@ -112,15 +110,20 @@ AnkeMerknader.defaultProps = {
 
 const ankeMerknaderFormName = 'ankeMerknaderForm';
 
+const transformValues = values => ({
+  erMerknaderMottatt: values.erMerknaderMottatt,
+  merknadKommentar: values.merknadKommentar,
+});
+
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const aksjonspunktCode = getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
-  const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
+  const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
   return state => ({
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
-    formValues: behandlingFormValueSelector(formName)(state,
-      'kommentar',
-      'merknader'),
+    formValues: behandlingFormValueSelector(ankeMerknaderFormName)(state,
+      'erMerknaderMottatt',
+      'merknadKommentar'),
     onSubmit,
   });
 };

@@ -40,6 +40,7 @@ export const BehandlingspunktAnkeInfoPanel = ({ // NOSONAR Kompleksitet er høg,
   notAcceptedByBeslutter,
 }) => (
   <div className={classNames('behandlingsPunkt', { notAcceptedByBeslutter, statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
+    <h1>{apCodes}</h1>
     {behandlingspunktCodes.ANKEBEHANDLING === selectedBehandlingspunkt
     && (
       <BehandleAnkeForm

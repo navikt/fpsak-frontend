@@ -13,7 +13,7 @@ const foreldrepengerBuilders = [
     .withAksjonspunktCodes(ac.MANUELL_VURDERING_AV_ANKE),
 
   new BehandlingspunktProperties.Builder(bpc.ANKE_MERKNADER, 'AnkeMerknader')
-    .withAksjonspunktCodes(ac.MANUELL_VURDERING_AV_ANKE_MERKNADER),
+    .withAksjonspunktCodes(ac.MANUELL_VURDERING_AV_ANKE_MERKNADER, ac.AUTO_VENT_ANKE_MERKNADER_FRA_BRUKER),
 
   new BehandlingspunktProperties.Builder(bpc.ANKE_RESULTAT, 'AnkeResultat')
     .withAksjonspunktCodes(

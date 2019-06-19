@@ -14,6 +14,7 @@ export const AnkeBehandlingApiKeys = {
   PREVIEW_MESSAGE_ANKE: 'PREVIEW_MESSAGE_ANKE',
   SAVE_ANKE_VURDERING: 'SAVE_ANKE_VURDERING',
   SAVE_REOPEN_ANKE_VURDERING: 'SAVE_REOPEN_ANKE_VURDERING',
+  ANKE_VURDERING: 'ANKE_VURDERING',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -30,6 +31,8 @@ const endpoints = new RestApiConfigBuilder()
   /* /api/anke */
   .withAsyncPost('/api/behandling/anke/mellomlagre-anke', AnkeBehandlingApiKeys.SAVE_ANKE_VURDERING)
   .withAsyncPost('/api/behandling/anke/mellomlagre-gjennapne-anke', AnkeBehandlingApiKeys.SAVE_REOPEN_ANKE_VURDERING)
+
+  .withGet('/api/behandling/anke/anke-vurdering', AnkeBehandlingApiKeys.ANKE_VURDERING)
 
   /* /api/brev */
   .withPostAndOpenBlob('/api/brev/forhandsvis', AnkeBehandlingApiKeys.PREVIEW_MESSAGE)

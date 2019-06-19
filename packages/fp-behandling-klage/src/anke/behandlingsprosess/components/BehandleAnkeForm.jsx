@@ -120,7 +120,7 @@ const BehandleAnkeFormImpl = ({
 }) => (
   <form onSubmit={handleSubmit}>
     <FadingPanel>
-      <Undertittel>{intl.formatMessage({ id: 'Ankebehandling.Title' })}</Undertittel>
+      <Undertittel><FormattedMessage id="Ankebehandling.Title" /></Undertittel>
       <VerticalSpacer fourPx />
       <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
         {[<FormattedMessage id="Ankebehandling.HelpText" key={aksjonspunktCode} />]}
@@ -294,29 +294,29 @@ BehandleAnkeFormImpl.defaultProps = {
   readOnlySubmitButton: true,
 };
 
-export const buildInitialValues = createSelector([getBehandlingAnkeVurderingResultat], ankeVurderingResultat => ({
-  vedtak: ankeVurderingResultat ? ankeVurderingResultat.vedtak : null,
-  ankeVurdering: ankeVurderingResultat ? ankeVurderingResultat.ankeVurdering : null,
-  begrunnelse: ankeVurderingResultat ? ankeVurderingResultat.begrunnelse : null,
-  fritekstTilBrev: ankeVurderingResultat ? ankeVurderingResultat.fritekstTilBrev : null,
-  vedtaksdatoAnketBehandling: ankeVurderingResultat ? ankeVurderingResultat.vedtaksdatoAnketBehandling : null,
-  erGodkjentAvMedunderskriver: ankeVurderingResultat ? ankeVurderingResultat.erGodkjentAvMedunderskriver : false,
-  erAnkerIkkePart: ankeVurderingResultat ? ankeVurderingResultat.erAnkerIkkePart : false,
-  erIkkeKonkret: ankeVurderingResultat ? ankeVurderingResultat.erIkkeKonkret : false,
-  erFristIkkeOverholdt: ankeVurderingResultat ? ankeVurderingResultat.erFristIkkeOverholdt : false,
-  erIkkeSignert: ankeVurderingResultat ? ankeVurderingResultat.erIkkeSignert : false,
-  erSubsidiartRealitetsbehandles: ankeVurderingResultat ? ankeVurderingResultat.erSubsidiartRealitetsbehandles : null,
-  ankeAvvistArsak: ankeVurderingResultat ? ankeVurderingResultat.ankeAvvistArsak : null,
-  ankeOmgjoerArsak: ankeVurderingResultat ? ankeVurderingResultat.ankeOmgjoerArsak : null,
-  ankeVurderingOmgjoer: ankeVurderingResultat ? ankeVurderingResultat.ankeVurderingOmgjoer : null,
-  gjelderVedtak: ankeVurderingResultat ? ankeVurderingResultat.gjelderVedtak : null,
+export const buildInitialValues = createSelector([getBehandlingAnkeVurderingResultat], resultat => ({
+  vedtak: resultat ? resultat.vedtak : null,
+  ankeVurdering: resultat ? resultat.ankeVurdering : null,
+  begrunnelse: resultat ? resultat.begrunnelse : null,
+  fritekstTilBrev: resultat ? resultat.fritekstTilBrev : null,
+  vedtaksdatoAnketBehandling: resultat ? resultat.vedtaksdatoAnketBehandling : null,
+  erGodkjentAvMedunderskriver: resultat ? resultat.erGodkjentAvMedunderskriver : false,
+  erAnkerIkkePart: resultat ? resultat.erAnkerIkkePart : false,
+  erIkkeKonkret: resultat ? resultat.erIkkeKonkret : false,
+  erFristIkkeOverholdt: resultat ? resultat.erFristIkkeOverholdt : false,
+  erIkkeSignert: resultat ? resultat.erIkkeSignert : false,
+  erSubsidiartRealitetsbehandles: resultat ? resultat.erSubsidiartRealitetsbehandles : null,
+  ankeAvvistArsak: resultat ? resultat.ankeAvvistArsak : null,
+  ankeOmgjoerArsak: resultat ? resultat.ankeOmgjoerArsak : null,
+  ankeVurderingOmgjoer: resultat ? resultat.ankeVurderingOmgjoer : null,
+  gjelderVedtak: resultat ? resultat.gjelderVedtak : null,
 }));
 
 
 export const transformValues = (values, aksjonspunktCode) => ({
   vedtak: values.vedtak === '0' ? undefined : values.vedtak,
   ankeVurdering: values.ankeVurdering,
-  begrunnelse: values.begrunnelse,
+  merknadKommentar: values.begrunnelse,
   fritekstTilBrev: values.fritekstTilBrev,
   vedtaksdatoAnketBehandling: values.vedtaksdatoAnketBehandling,
   erGodkjentAvMedunderskriver: values.erGodkjentAvMedunderskriver,

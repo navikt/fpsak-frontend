@@ -29,8 +29,8 @@ const behandlingspunktCodes = {
   SVANGERSKAP: 'svangerskap',
   KLAGE_RESULTAT: 'resultat',
   ANKEBEHANDLING: 'ankebehandling',
-  ANKE_MERKNADER: 'ankeMerknader',
-  ANKE_RESULTAT: 'ankeResultat',
+  ANKE_MERKNADER: 'ankemerknader',
+  ANKE_RESULTAT: 'ankeresultat',
 };
 
 export default behandlingspunktCodes;
