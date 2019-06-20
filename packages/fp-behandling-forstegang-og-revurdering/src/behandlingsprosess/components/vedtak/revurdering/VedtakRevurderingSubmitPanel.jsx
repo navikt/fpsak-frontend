@@ -56,7 +56,8 @@ const harTilkjentYtelseEndretSeg = (revResultat, orgResultat) => {
 const skalViseESBrev = (revResultat, orgResultat, erSendtVarsel) => {
   if (harTilkjentYtelseEndretSeg(revResultat, orgResultat)) {
     return true;
-  } return erSendtVarsel;
+  }
+  return erSendtVarsel;
 };
 
 export const getSubmitKnappTekst = createSelector(
@@ -88,8 +89,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   return (
     <div>
       <div className={styles.margin} />
-      {!readOnly
-      && (
+      {!readOnly && (
         <Hovedknapp
           mini
           className={styles.mainButton}
@@ -99,31 +99,23 @@ export const VedtakRevurderingSubmitPanelImpl = ({
         >
           {intl.formatMessage({ id: skalBrukeOverstyrendeFritekstBrev ? 'VedtakForm.TilGodkjenning' : submitKnappTextId })}
         </Hovedknapp>
-      )
-      }
+      )}
       {ytelseType === fagsakYtelseType.ENGANGSSTONAD
-           && skalViseESBrev(beregningResultat, originaltBeregningResultat, haveSentVarsel) && skalBrukeOverstyrendeFritekstBrev
-                   && (
-                   <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
-                   )
-                 }
+          && skalViseESBrev(beregningResultat, originaltBeregningResultat, haveSentVarsel) && skalBrukeOverstyrendeFritekstBrev && (
+          <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
+      )}
       {ytelseType === fagsakYtelseType.ENGANGSSTONAD
-                 && skalViseESBrev(beregningResultat, originaltBeregningResultat, haveSentVarsel) && !skalBrukeOverstyrendeFritekstBrev
-                && !erBehandlingEtterKlage
-        && (
-        <ForhaandsvisningsKnapp previewFunction={previewBrev} />
-        )
-      }
-      {ytelseType === fagsakYtelseType.FORELDREPENGER && skalBrukeOverstyrendeFritekstBrev
-      && (
+          && skalViseESBrev(beregningResultat, originaltBeregningResultat, haveSentVarsel) && !skalBrukeOverstyrendeFritekstBrev
+          && !erBehandlingEtterKlage && (
+          <ForhaandsvisningsKnapp previewFunction={previewBrev} />
+      )}
+      {(ytelseType === fagsakYtelseType.FORELDREPENGER || ytelseType === fagsakYtelseType.SVANGERSKAPSPENGER) && skalBrukeOverstyrendeFritekstBrev && (
         <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
-      )
-      }
-      {ytelseType === fagsakYtelseType.FORELDREPENGER && !skalBrukeOverstyrendeFritekstBrev && !erBehandlingEtterKlage
-        && (
-        <ForhaandsvisningsKnapp previewFunction={previewBrev} />
-        )
-      }
+      )}
+      {(ytelseType === fagsakYtelseType.FORELDREPENGER || ytelseType === fagsakYtelseType.SVANGERSKAPSPENGER)
+          && !skalBrukeOverstyrendeFritekstBrev && !erBehandlingEtterKlage && (
+          <ForhaandsvisningsKnapp previewFunction={previewBrev} />
+      )}
     </div>
   );
 };
