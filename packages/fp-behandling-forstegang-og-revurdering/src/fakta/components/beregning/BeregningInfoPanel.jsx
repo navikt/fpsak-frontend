@@ -96,19 +96,14 @@ BeregningInfoPanelImpl.propTypes = {
   erOverstyrer: PropTypes.bool.isRequired,
 };
 
-const mapStateToPropsFactory = (initialState) => {
-  const isOnHold = getBehandlingIsOnHold(initialState);
-  const erOverstyrer = erOverstyrerSelector(initialState);
-  const harBeregningsgrunnlag = !!getBeregningsgrunnlag(initialState);
-  return () => ({
-    erOverstyrer,
-    harBeregningsgrunnlag,
-    isOnHold,
-  });
-};
+const mapStateToProps = state => ({
+  erOverstyrer: erOverstyrerSelector(state),
+  harBeregningsgrunnlag: !!getBeregningsgrunnlag(state),
+  isOnHold: getBehandlingIsOnHold(state),
+});
 
 const BeregningInfoPanel = withDefaultToggling(faktaPanelCodes.BEREGNING,
-  faktaOmBeregningAksjonspunkter, true)(connect(mapStateToPropsFactory)(injectIntl(BeregningInfoPanelImpl)));
+  faktaOmBeregningAksjonspunkter, true)(connect(mapStateToProps)(injectIntl(BeregningInfoPanelImpl)));
 
 BeregningInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => faktaOmBeregningAksjonspunkter.includes(ap.definisjon.kode));
 
