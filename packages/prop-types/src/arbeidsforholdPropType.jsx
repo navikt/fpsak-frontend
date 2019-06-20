@@ -44,7 +44,6 @@ export const arbeidsforholdPropType = PropTypes.shape({
   brukMedJustertPeriode: PropTypes.bool,
   overstyrtTom: PropTypes.string,
   lagtTilAvSaksbehandler: PropTypes.bool,
-  inntektIkkeMedTilBeregningsgrunnlaget: PropTypes.bool, // TODO : Fjern denne når back-end er inne (PFP-7972)
   inntektMedTilBeregningsgrunnlag: PropTypes.bool,
   skjaeringstidspunkt: PropTypes.string,
   begrunnelse: PropTypes.string,

@@ -100,9 +100,6 @@ const utledAktivtArbeidsforholdHandling = (arbeidsforhold, arbeidsforholdHandlin
     if (arbeidsforhold.inntektMedTilBeregningsgrunnlag === false) {
       return aktivtArbeidsforholdHandling.INNTEKT_IKKE_MED_I_BG;
     }
-    if (arbeidsforhold.inntektIkkeMedTilBeregningsgrunnlaget === true) {
-      return aktivtArbeidsforholdHandling.INNTEKT_IKKE_MED_I_BG;
-    }
     if (arbeidsforhold.fortsettBehandlingUtenInntektsmelding === true) {
       return aktivtArbeidsforholdHandling.BENYTT_A_INNTEKT_I_BG;
     }
@@ -210,9 +207,6 @@ export class PersonArbeidsforholdPanelImpl extends Component {
 
     const brukArbeidsforholdet = values.arbeidsforholdHandlingField !== arbeidsforholdHandling.FJERN_ARBEIDSFORHOLD;
 
-    // TODO : Fjern denne når mulig pga. inntektMedTilBeregningsgrunnlag erstatter den (PFP-7972)
-    const inntektIkkeMedTilBeregningsgrunnlaget = values.aktivtArbeidsforholdHandlingField === aktivtArbeidsforholdHandling.INNTEKT_IKKE_MED_I_BG;
-
     let fortsettBehandlingUtenInntektsmelding;
     if (values.mottattDatoInntektsmelding === undefined || values.mottattDatoInntektsmelding === null) {
       fortsettBehandlingUtenInntektsmelding = (values.arbeidsforholdHandlingField === arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD
@@ -234,7 +228,6 @@ export class PersonArbeidsforholdPanelImpl extends Component {
       brukMedJustertPeriode,
       brukArbeidsforholdet,
       fortsettBehandlingUtenInntektsmelding,
-      inntektIkkeMedTilBeregningsgrunnlaget,
       inntektMedTilBeregningsgrunnlag,
       brukPermisjon,
     };
@@ -296,7 +289,6 @@ export class PersonArbeidsforholdPanelImpl extends Component {
       erEndret: undefined,
       brukMedJustertPeriode: false,
       lagtTilAvSaksbehandler: true,
-      inntektIkkeMedTilBeregningsgrunnlaget: false,
       inntektMedTilBeregningsgrunnlag: true,
       arbeidsforholdHandlingField: arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD,
       aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.BENYTT_A_INNTEKT_I_BG,

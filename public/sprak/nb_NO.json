@@ -2279,7 +2279,7 @@
   "PersonArbeidsforholdDetailForm.ArbeidsforholdStartdato": "Startdato",
   "PersonArbeidsforholdDetailForm.ArbeidsforholdSluttdato": "Sluttdato",
   "PersonArbeidsforholdDetailForm.Stillingsprosent": "Stillingsprosent",
-  "PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt": "Arbeidsforholdet er aktivt og skal benyttes i behandlingen. Nødvendig inntektesmelding er ikke mottatt",
+  "PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt": "Arbeidsforholdet er aktivt og skal benyttes i behandlingen. Nødvendig inntektesmelding er ikke mottatt.",
   "PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivtOgHarPermisjonMenSoekerErIkkePermisjon": "Søker er ikke i permisjon. Arbeidsforholdet er aktivt og skal benyttes i behandlingen.",
   "PersonArbeidsforholdDetailForm.FjernArbeidsforholdet": "Fjern arbeidsforholdet for denne behandlingen",
   "PersonArbeidsforholdDetailForm.ArbeidsforholdetErIkkeAktivt": "Arbeidsforholdet er ikke aktivt. Inntektsmelding er ikke nødvendig.",
