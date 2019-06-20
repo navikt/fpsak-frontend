@@ -208,13 +208,14 @@ RenderGraderingPeriodeFieldArray.propTypes = {
   arbeidskategoriTyper: kodeverkPropType.isRequired,
 };
 
+const arrayMedTomtElement = [{}];
+
 const mapStateToProps = (state, ownProps) => {
   const values = getFormValues(ownProps.meta.form)(state);
-  const graderingValues = values ? values[ownProps.namePrefix][ownProps.graderingPrefix] : [{}];
+  const graderingValues = values ? values[ownProps.namePrefix][ownProps.graderingPrefix] : arrayMedTomtElement;
   return {
     graderingValues,
   };
 };
-
 
 export default connect(mapStateToProps)(RenderGraderingPeriodeFieldArray);

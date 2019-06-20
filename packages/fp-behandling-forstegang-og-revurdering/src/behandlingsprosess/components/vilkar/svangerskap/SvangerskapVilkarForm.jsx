@@ -87,20 +87,21 @@ const transformValues = (values, aksjonspunkter) => ({
 
 const formName = 'SvangerskapVilkarForm';
 
-const mapStateToProps = (state, initialProps) => {
-  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(state);
-  return {
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(initialState);
+  const onSubmit = values => initialOwnProps.submitCallback([transformValues(values, aksjonspunkter)]);
+  return state => ({
     status: getSelectedBehandlingspunktStatus(state),
     initialValues: buildInitialValues(state),
     erVilkarOk: behandlingFormValueSelector(formName)(state, 'erVilkarOk'),
-    onSubmit: values => initialProps.submitCallback([transformValues(values, aksjonspunkter)]),
     lovReferanse: getSelectedBehandlingspunktVilkar(state)[0].lovReferanse,
     hasAksjonspunkt: aksjonspunkter.length > 0,
     avslagsarsaker: getKodeverk(kodeverkTyper.AVSLAGSARSAK)(state)[vilkarType.SVANGERSKAPVILKARET],
-  };
+    onSubmit,
+  });
 };
 
-const SvangerskapVilkarForm = connect(mapStateToProps)(injectIntl(behandlingForm({
+const SvangerskapVilkarForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: formName,
   validate,
 })(SvangerskapVilkarFormImpl)));

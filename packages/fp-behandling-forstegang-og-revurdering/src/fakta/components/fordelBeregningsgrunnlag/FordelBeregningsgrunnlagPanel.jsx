@@ -176,40 +176,43 @@ export const getValidationFordelBeregning = createSelector([mapStateToValidation
       return {
         ...FastsettEndretBeregningsgrunnlag.validate(values, props.endringBGPerioder,
           props.beregningsgrunnlag, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
-};
+      };
     }
     return null;
   });
 
 
-const mapStateToProps = (state, initialProps) => {
-  const isOnHold = getBehandlingIsOnHold(state);
-  const alleAp = getAksjonspunkter(state);
-  const relevantAp = alleAp.find(ap => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG);
-  const isAksjonspunktClosed = !isAksjonspunktOpen(relevantAp.status.kode);
-  const initialValues = buildInitialValuesFordelBeregning(state);
-  const hasBegrunnelse = initialValues
-  && !!initialValues[BEGRUNNELSE_FORDELING_NAME];
-  return {
-    isOnHold,
-    isAksjonspunktClosed,
-    hasBegrunnelse,
-    initialValues,
-    aksjonspunkter: alleAp,
-    validate: getValidationFordelBeregning(state),
-    onSubmit: values => initialProps.submitCallback(transformValuesFordelBeregning(state)(values)),
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const onSubmit = values => initialOwnProps.submitCallback(transformValuesFordelBeregning(initialState)(values));
+  return (state) => {
+    const isOnHold = getBehandlingIsOnHold(state);
+    const alleAp = getAksjonspunkter(state);
+    const relevantAp = alleAp.find(ap => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG);
+    const isAksjonspunktClosed = !isAksjonspunktOpen(relevantAp.status.kode);
+    const initialValues = buildInitialValuesFordelBeregning(state);
+    const hasBegrunnelse = initialValues && !!initialValues[BEGRUNNELSE_FORDELING_NAME];
+    return {
+      isOnHold,
+      isAksjonspunktClosed,
+      hasBegrunnelse,
+      initialValues,
+      aksjonspunkter: alleAp,
+      validate: getValidationFordelBeregning(state),
+      onSubmit,
+    };
   };
 };
 
+
 const FordelBeregningsgrunnlagPanel = withDefaultToggling(faktaPanelCodes.FORDELING,
   faktaOmFordelingAksjonspunkter)(
-    connect(mapStateToProps)(
+    connect(mapStateToPropsFactory)(
       behandlingForm({ form: FORM_NAME_FORDEL_BEREGNING })(
           injectIntl(FordelBeregningsgrunnlagPanelImpl),
           ),
-),
-);
+    ),
+  );
 
-  FordelBeregningsgrunnlagPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => faktaOmFordelingAksjonspunkter.includes(ap.definisjon.kode));
+FordelBeregningsgrunnlagPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => faktaOmFordelingAksjonspunkter.includes(ap.definisjon.kode));
 
 export default FordelBeregningsgrunnlagPanel;

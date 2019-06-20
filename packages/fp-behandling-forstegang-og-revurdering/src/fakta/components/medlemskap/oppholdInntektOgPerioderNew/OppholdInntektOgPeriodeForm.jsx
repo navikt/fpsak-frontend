@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { createSelector } from 'reselect';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
@@ -101,11 +102,20 @@ const transformValues = values => ({
   ...values,
 });
 
-// TODO Skriv om til selector!
-const buildInitialValues = (periode, soknad, person, inntekter, medlemskapPerioder, gjeldendeFom, alleAksjonspunkter, alleKodeverk) => {
+const buildInitialValues = createSelector([
+  (state, ownProps) => ownProps.valgtPeriode,
+  (state, ownProps) => ownProps.aksjonspunkter,
+  state => behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'soknad'),
+  state => behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'person'),
+  state => behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'inntekter'),
+  state => behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'medlemskapPerioder'),
+  state => behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'gjeldendeFom'),
+  getAlleKodeverk,
+],
+    (valgtPeriode, alleAksjonspunkter, soknad, person, inntekter, medlemskapPerioder, gjeldendeFom, alleKodeverk) => {
   const aksjonspunkter = alleAksjonspunkter
-    .filter(ap => periode.aksjonspunkter.includes(ap.definisjon.kode) || ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP)
-    .filter(ap => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
+      .filter(ap => periode.aksjonspunkter.includes(ap.definisjon.kode) || ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP)
+      .filter(ap => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
   let oppholdValues = {};
   let confirmValues = {};
   if (hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, periode.aksjonspunkter) || hasAksjonspunkt(AVKLAR_LOVLIG_OPPHOLD, periode.aksjonspunkter)) {
@@ -114,35 +124,27 @@ const buildInitialValues = (periode, soknad, person, inntekter, medlemskapPeriod
   if (periode.aksjonspunkter.length > 0) {
     confirmValues = FaktaBegrunnelseTextField.buildInitialValues([periode]);
   }
-
+  const kodeverkFn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return {
     ...periode,
     ...InntektOgYtelserFaktaPanel.buildInitialValues(person, inntekter),
     ...OppholdINorgeOgAdresserFaktaPanel.buildInitialValues(soknad, periode, aksjonspunkter),
-    ...PerioderMedMedlemskapFaktaPanel.buildInitialValues(periode, medlemskapPerioder, soknad, aksjonspunkter, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
+    ...PerioderMedMedlemskapFaktaPanel.buildInitialValues(periode, medlemskapPerioder, soknad, aksjonspunkter, kodeverkFn),
     ...FortsattMedlemskapFaktaPanel.buildInitialValues(gjeldendeFom),
     ...oppholdValues,
     ...confirmValues,
   };
-};
+});
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.updateOppholdInntektPeriode(transformValues(values));
-  return (state) => {
-    const { valgtPeriode } = ownProps;
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const onSubmit = values => initialOwnProps.updateOppholdInntektPeriode(transformValues(values));
+  return (state, ownProps) => {
+    const { valgtPeriode, submittable } = ownProps;
     const formName = `OppholdInntektOgPeriodeForm-${valgtPeriode.id}`;
-    const medlemskapPerioder = behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'medlemskapPerioder');
-    const soknad = behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'soknad');
-    const person = behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'person');
-    const inntekter = behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'inntekter');
-    const gjeldendeFom = behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'gjeldendeFom');
-    const alleKodeverk = getAlleKodeverk(state);
     return {
-      initialValues: {
-        ...buildInitialValues(valgtPeriode, soknad, person, inntekter, medlemskapPerioder, gjeldendeFom, ownProps.aksjonspunkter, alleKodeverk),
-      },
-      submittable: ownProps.submittable,
+      initialValues: buildInitialValues(state, ownProps),
       form: formName,
+      submittable,
       onSubmit,
     };
   };
