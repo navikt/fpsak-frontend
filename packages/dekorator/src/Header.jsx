@@ -28,6 +28,7 @@ const Header = ({
   navAnsattName,
   removeErrorMessage,
   queryStrings,
+  showDetailedErrorMessages,
 }) => (
   <header className={styles.container}>
     <FlexContainer>
@@ -81,7 +82,7 @@ const Header = ({
         </FlexColumn>
       </FlexRow>
     </FlexContainer>
-    <ErrorMessagePanel queryStrings={queryStrings} removeErrorMessage={removeErrorMessage} />
+    <ErrorMessagePanel queryStrings={queryStrings} removeErrorMessage={removeErrorMessage} showDetailedErrorMessages={showDetailedErrorMessages} />
   </header>
 );
 
@@ -89,6 +90,7 @@ Header.propTypes = {
   queryStrings: PropTypes.shape().isRequired,
   navAnsattName: PropTypes.string.isRequired,
   removeErrorMessage: PropTypes.func.isRequired,
+  showDetailedErrorMessages: PropTypes.bool.isRequired,
 };
 
 export default Header;

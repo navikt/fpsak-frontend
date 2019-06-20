@@ -1,12 +1,14 @@
 import React, { Fragment } from 'react';
 import { FormattedHTMLMessage } from 'react-intl';
+import PropTypes from 'prop-types';
+import moment from 'moment';
+
 import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
-import { getAlleKodeverk } from 'kodeverk/duck';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
-import PropTypes from 'prop-types';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import moment from 'moment';
+
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 
 const utledPermisjonValues = (permisjon, getKodeverknavn) => {
   const kodeverknavn = getKodeverknavn(permisjon.type);
