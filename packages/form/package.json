@@ -9,7 +9,6 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "classnames": "^2.2.6",
-    "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",
     "moment": "^2.24.0",
     "nav-frontend-core": "4.0.9",
