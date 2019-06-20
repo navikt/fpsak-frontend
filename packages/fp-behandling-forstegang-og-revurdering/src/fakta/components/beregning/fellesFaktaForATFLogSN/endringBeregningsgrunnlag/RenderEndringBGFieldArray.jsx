@@ -30,7 +30,7 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import { getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
-import 'core-js/fn/array/flat-map';
+import 'core-js/features/array/flat-map';
 
 import { getUniqueListOfArbeidsforhold } from '../../ArbeidsforholdHelper';
 import {
