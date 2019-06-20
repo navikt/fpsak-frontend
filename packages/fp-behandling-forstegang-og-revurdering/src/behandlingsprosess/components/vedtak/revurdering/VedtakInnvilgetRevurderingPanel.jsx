@@ -137,43 +137,6 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
       </div>
       )
     }
-    {ytelseType === fagsakYtelseType.SVANGERSKAPSPENGER
-      && (
-      <div>
-        <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
-        <Normaltekst>
-          {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn)}
-          {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn) !== '' && tilbakekrevingText && '. '}
-          {tilbakekrevingText && intl.formatMessage({
-            id: tilbakekrevingText,
-          })}
-        </Normaltekst>
-        <VerticalSpacer sixteenPx />
-        <Row>
-          <Column xs="4">
-            <Undertekst>{intl.formatMessage({ id: 'VedtakForm.RevurderingFP.Aarsak' })}</Undertekst>
-            {revurderingsAarsakString !== undefined
-            && (
-            <Normaltekst>
-              {revurderingsAarsakString}
-            </Normaltekst>
-            )
-            }
-          </Column>
-        </Row>
-        {endringerIBeregningsgrunnlagGirFritekstfelt(aksjonspunkter, ytelseType)
-        && (
-        <VedtakFritekstPanel
-          readOnly={readOnly}
-          sprakkode={sprakKode}
-          behandlingsresultat={behandlingsresultat}
-          labelTextCode="VedtakForm.Fritekst.Beregningsgrunnlag"
-        />
-        )
-        }
-      </div>
-      )
-    }
   </ElementWrapper>
 );
 
