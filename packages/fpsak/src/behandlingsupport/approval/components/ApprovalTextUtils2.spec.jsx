@@ -195,7 +195,8 @@ describe('<ApprovalTextUtils2>', () => {
       aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, undefined,
       undefined, undefined, false, undefined, 'status', undefined, arbeidforholdDtos,
     );
-    const message = getAksjonspunktText.resultFunc(true, null, null, [])(aksjonspunkt);
-    expect(message[0].props.id).to.eql('ToTrinnsForm.OpplysningerOmSøker.Arbeidsforhold');
+    const messages = getAksjonspunktText.resultFunc(true, null, null, [])(aksjonspunkt);
+    expect(messages[0].props.children[0].props.id).to.eql('ToTrinnsForm.OpplysningerOmSøker.Arbeidsforhold');
+    expect(messages[0].props.children[1][0].key).to.eql('ToTrinnsForm.FaktaOmArbeidsforhold.Melding');
   });
 });
