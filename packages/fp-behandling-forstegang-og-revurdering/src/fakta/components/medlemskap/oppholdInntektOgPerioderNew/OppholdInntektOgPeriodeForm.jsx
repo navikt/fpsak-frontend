@@ -114,22 +114,22 @@ const buildInitialValues = createSelector([
 ],
     (valgtPeriode, alleAksjonspunkter, soknad, person, inntekter, medlemskapPerioder, gjeldendeFom, alleKodeverk) => {
   const aksjonspunkter = alleAksjonspunkter
-      .filter(ap => periode.aksjonspunkter.includes(ap.definisjon.kode) || ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP)
+      .filter(ap => valgtPeriode.aksjonspunkter.includes(ap.definisjon.kode) || ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP)
       .filter(ap => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
   let oppholdValues = {};
   let confirmValues = {};
-  if (hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, periode.aksjonspunkter) || hasAksjonspunkt(AVKLAR_LOVLIG_OPPHOLD, periode.aksjonspunkter)) {
-    oppholdValues = StatusForBorgerFaktaPanel.buildInitialValues(periode, aksjonspunkter);
+  if (hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, valgtPeriode.aksjonspunkter) || hasAksjonspunkt(AVKLAR_LOVLIG_OPPHOLD, valgtPeriode.aksjonspunkter)) {
+    oppholdValues = StatusForBorgerFaktaPanel.buildInitialValues(valgtPeriode, aksjonspunkter);
   }
-  if (periode.aksjonspunkter.length > 0) {
-    confirmValues = FaktaBegrunnelseTextField.buildInitialValues([periode]);
+  if (valgtPeriode.aksjonspunkter.length > 0) {
+    confirmValues = FaktaBegrunnelseTextField.buildInitialValues([valgtPeriode]);
   }
   const kodeverkFn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return {
-    ...periode,
+    ...valgtPeriode,
     ...InntektOgYtelserFaktaPanel.buildInitialValues(person, inntekter),
-    ...OppholdINorgeOgAdresserFaktaPanel.buildInitialValues(soknad, periode, aksjonspunkter),
-    ...PerioderMedMedlemskapFaktaPanel.buildInitialValues(periode, medlemskapPerioder, soknad, aksjonspunkter, kodeverkFn),
+    ...OppholdINorgeOgAdresserFaktaPanel.buildInitialValues(soknad, valgtPeriode, aksjonspunkter),
+    ...PerioderMedMedlemskapFaktaPanel.buildInitialValues(valgtPeriode, medlemskapPerioder, soknad, aksjonspunkter, kodeverkFn),
     ...FortsattMedlemskapFaktaPanel.buildInitialValues(gjeldendeFom),
     ...oppholdValues,
     ...confirmValues,
