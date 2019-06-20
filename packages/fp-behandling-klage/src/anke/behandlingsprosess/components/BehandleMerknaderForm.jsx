@@ -31,7 +31,6 @@ const AnkeMerknader = ({
   aksjonspunktCode,
   sprakkode,
   formValues,
-  behandlinger,
   intl,
   ...formProps
 }) => (
@@ -60,7 +59,7 @@ const AnkeMerknader = ({
       <VerticalSpacer sixteenPx />
       <Row>
         <Column xs="7">
-          <TextAreaField label="Kommentar til merknader" name="kommentar" />
+          <TextAreaField label="Kommentar til merknader" name="merknadKommentar" />
         </Column>
       </Row>
       <Row>
@@ -97,7 +96,6 @@ AnkeMerknader.propTypes = {
   formValues: PropTypes.shape(),
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
-  behandlinger: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   ...formPropTypes,
 };
 
@@ -107,10 +105,9 @@ AnkeMerknader.defaultProps = {
   readOnlySubmitButton: true,
 };
 
-
 const ankeMerknaderFormName = 'ankeMerknaderForm';
 
-const transformValues = values => ({
+const transformValues = (values, aksjonspunktCode) => ({
   erMerknaderMottatt: values.erMerknaderMottatt,
   merknadKommentar: values.merknadKommentar,
 });
@@ -122,8 +119,19 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
     formValues: behandlingFormValueSelector(ankeMerknaderFormName)(state,
+      'vedtak',
+      'ankeVurdering',
+      'begrunnelse',
       'erMerknaderMottatt',
-      'merknadKommentar'),
+      'merknadKommentar',
+      'fritekstTilBrev',
+      'vedtaksdatoAnketBehandling',
+      'erGodkjentAvMedunderskriver',
+      'erAnkerIkkePart', 'erIkkeKonkret', 'erFristIkkeOverholdt', 'erIkkeSignert', 'erSubsidiartRealitetsbehandles',
+      'ankeAvvistArsak',
+      'ankeOmgjoerArsak',
+      'ankeVurderingOmgjoer',
+      'gjelderVedtak'),
     onSubmit,
   });
 };

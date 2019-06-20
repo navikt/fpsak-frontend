@@ -17,6 +17,7 @@ import styles from './behandlingspunktAnkeInfoPanel.less';
 import BehandleAnkeForm from './BehandleAnkeForm';
 import BehandleMerknaderForm from './BehandleMerknaderForm';
 import BehandleResultatForm from './BehandleResultatForm';
+import { getResultat } from '../../duckAnke';
 
 const classNames = classnames.bind(styles);
 
@@ -38,6 +39,7 @@ export const BehandlingspunktAnkeInfoPanel = ({ // NOSONAR Kompleksitet er høg,
   apCodes,
   readOnlySubmitButton,
   notAcceptedByBeslutter,
+  innstilling,
 }) => (
   <div className={classNames('behandlingsPunkt', { notAcceptedByBeslutter, statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
     <h1>{apCodes}</h1>
@@ -50,6 +52,7 @@ export const BehandlingspunktAnkeInfoPanel = ({ // NOSONAR Kompleksitet er høg,
         previewCallback={previewCallback}
         previewVedtakCallback={previewCallbackKlage}
         readOnlySubmitButton={readOnlySubmitButton}
+        innstilling={innstilling}
       />
     )
     }
@@ -70,6 +73,7 @@ export const BehandlingspunktAnkeInfoPanel = ({ // NOSONAR Kompleksitet er høg,
       <BehandleResultatForm
         submitCallback={submitCallback}
         readOnly={readOnly}
+        ankevurderingresultat={innstilling}
         saveKlage={saveTempKlage}
         previewCallback={previewCallback}
         previewVedtakCallback={previewCallbackKlage}
@@ -92,6 +96,7 @@ BehandlingspunktAnkeInfoPanel.propTypes = {
   readOnlySubmitButton: PropTypes.bool.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   notAcceptedByBeslutter: PropTypes.bool,
+  innstilling: PropTypes.shape({}).isRequired,
 };
 
 BehandlingspunktAnkeInfoPanel.defaultProps = {

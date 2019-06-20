@@ -25,6 +25,10 @@ const resetBehandlingContext = () => ({
   type: RESET_FPSAK_BEHANDLING,
 });
 
+export const hentAnkeVurdering = params => dispatch => (
+  dispatch(ankeBehandlingApi.ANKE_VURDERING.makeRestApiRequest()(params, { keepData: true }))
+);
+
 // TODO (TOR) Rydd opp i dette. Kan ein legge rehenting av fagsakInfo og original-behandling i resolver i staden?
 export const updateBehandling = (behandlingIdentifier, behandlingerVersjonMappedById) => dispatch => dispatch(ankeBehandlingApi
   .BEHANDLING.makeRestApiRequest()(behandlingIdentifier.toJson(), { keepData: true }))
@@ -35,10 +39,6 @@ export const updateBehandling = (behandlingIdentifier, behandlingerVersjonMapped
     return Promise.resolve(response);
   });
 
-export const hentAnkeVurdering = params => dispatch => (
-  dispatch(ankeBehandlingApi.ANKE_VURDERING.makeRestApiRequest()(params))
-);
-
 export const resetBehandling = dispatch => Promise.all([
   dispatch(ankeBehandlingApi.BEHANDLING.resetRestApi()()),
   dispatch(resetBehandlingContext()),
@@ -47,7 +47,7 @@ export const resetBehandling = dispatch => Promise.all([
 export const fetchBehandling = (behandlingIdentifier, behandlingerVersjonMappedById) => (dispatch) => {
   dispatch(ankeBehandlingApi.BEHANDLING.resetRestApi()());
   dispatch(updateBehandling(behandlingIdentifier, behandlingerVersjonMappedById));
-  dispatch(hentAnkeVurdering({ behandlingId: behandlingIdentifier.$$behandlingId }));
+  dispatch(hentAnkeVurdering({ behandlingId: behandlingIdentifier.$$behandlingId }, { keepData: true }));
 };
 
 const updateFagsakAndBehandling = behandlingIdentifier => dispatch => dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer))
@@ -108,7 +108,17 @@ export const getBehandlingIdentifier = createSelector(
   (behandlingId, saksnummer) => (behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined
   ),
 );
-export const getAnkevurderingForm = createSelector([getDataContext], dataContext => dataContext.ANKE_VURDERING.data.ankeVurderingResultat);
+// eslint-disable-next-line max-len
+export const getAnkevurderingForm = createSelector([getDataContext], ctx => (ctx.ANKE_VURDERING.data ? ctx.ANKE_VURDERING.data.ankeVurderingResultat : {}));
+
+const finnResultat = (ctx) => {
+  if (ctx.ANKE_VURDERING.data && ctx.ANKE_VURDERING.data.ankeVurderingResultat) {
+    return ctx.ANKE_VURDERING.data.ankeVurderingResultat;
+  }
+  return {};
+};
+
+export const getResultat = createSelector([getDataContext], ctx => finnResultat(ctx));
 
 export const getFagsakStatus = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.fagsakStatus);
 export const getFagsakPerson = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.fagsakPerson);

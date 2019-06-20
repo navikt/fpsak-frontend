@@ -34,7 +34,7 @@ import FritekstBrevTextField from '../../../behandlingsprosess/components/klage/
 import styles from './behandleAnkeForm.less';
 import { getSelectedBehandlingspunktAksjonspunkter } from '../BehandlingsprosessAnkeSelectors';
 import TempsaveKlageButton from './TempsaveKlageButton';
-import { getAnkevurderingForm } from '../../duckAnke';
+import { getResultat } from '../../duckAnke';
 
 const omgjorArsakValues = [
   { kode: ankeOmgjorArsak.PROSESSUELL_FEIL, navn: 'Ankebehandling.OmgjoeringArsak.ProsessuellFeil' },
@@ -295,7 +295,7 @@ BehandleAnkeFormImpl.defaultProps = {
   readOnlySubmitButton: true,
 };
 
-export const buildInitialValues = createSelector([getAnkevurderingForm], resultat => ({
+export const buildInitialValues = createSelector([getResultat], resultat => ({
   vedtak: resultat ? resultat.vedtak : null,
   ankeVurdering: resultat ? resultat.ankeVurdering : null,
   begrunnelse: resultat ? resultat.begrunnelse : null,
@@ -317,7 +317,9 @@ export const buildInitialValues = createSelector([getAnkevurderingForm], resulta
 export const transformValues = (values, aksjonspunktCode) => ({
   vedtak: values.vedtak === '0' ? undefined : values.vedtak,
   ankeVurdering: values.ankeVurdering,
-  merknadKommentar: values.begrunnelse,
+  begrunnelse: values.begrunnelse,
+  erMerknaderMottatt: values.erMerknaderMottatt,
+  merknadKommentar: values.merknadKommentar,
   fritekstTilBrev: values.fritekstTilBrev,
   vedtaksdatoAnketBehandling: values.vedtaksdatoAnketBehandling,
   erGodkjentAvMedunderskriver: values.erGodkjentAvMedunderskriver,
@@ -342,8 +344,12 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
     formValues: behandlingFormValueSelector(formName)(state,
-      'vedtak', 'ankeVurdering',
-      'begrunnelse', 'fritekstTilBrev',
+      'vedtak',
+      'ankeVurdering',
+      'begrunnelse',
+      'erMerknaderMottatt',
+      'merknadKommentar',
+      'fritekstTilBrev',
       'vedtaksdatoAnketBehandling',
       'erGodkjentAvMedunderskriver',
       'erAnkerIkkePart', 'erIkkeKonkret', 'erFristIkkeOverholdt', 'erIkkeSignert', 'erSubsidiartRealitetsbehandles',

@@ -8,9 +8,12 @@ import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/pr
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import {
   getAksjonspunkter, getBehandlingVersjon, getBehandlingType, getBehandlingStatus, getBehandlingsresultat, getBehandlingHenlagt,
+getBehandlingAnkeVurderingResultat,
 } from 'behandlingKlage/src/anke/selectors/ankeBehandlingSelectors';
 import {
   getBehandlingIdentifier, getFagsakYtelseType,
+hentAnkeVurdering, getResultat,
+getAnkevurderingForm,
 } from 'behandlingKlage/src/anke/duckAnke';
 import { BehandlingsprosessPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
 import BehandlingspunktAnkeInfoPanel from 'behandlingKlage/src/anke/behandlingsprosess/components/BehandlingspunktAnkeInfoPanel';
@@ -166,7 +169,10 @@ export class BehandlingsprosessAnkeIndex extends Component {
     const erKlageHjemsendt = aksjonspunktModels
       .some(apValue => apValue.kode === aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE);
     const shouldUpdateInfo = !skalTilMedunderskriver;
+    const behandlingId = behandlingIdentifier.$$behandlingId;
     const afterSubmit = () => {
+      const { fetchAnkevurdering } = this.props;
+      fetchAnkevurdering({ behandlingId });
       if (skalTilMedunderskriver || skalFerdigstilles) {
         this.setShowModalKlageBehandling(true);
       } else if (erKlageHjemsendt) {
@@ -198,7 +204,7 @@ export class BehandlingsprosessAnkeIndex extends Component {
 
   render() {
     const {
-      behandlingspunkter, selectedBehandlingspunkt, isSelectedBehandlingHenlagt, fagsakYtelseType, behandlingIdentifier,
+      behandlingspunkter, selectedBehandlingspunkt, isSelectedBehandlingHenlagt, fagsakYtelseType, behandlingIdentifier, innstilling,
       resolveProsessAksjonspunkterSuccess, resolveFaktaAksjonspunkterSuccess, behandlingStatus, behandlingsresultat, aksjonspunkter, behandlingType,
     } = this.props;
     const { showModalKlageBehandling } = this.state;
@@ -220,6 +226,7 @@ export class BehandlingsprosessAnkeIndex extends Component {
             saveTempKlage={this.saveKlageText}
             previewCallbackKlage={this.previewCallback}
             selectedBehandlingspunkt={selectedBehandlingspunkt}
+            innstilling={innstilling}
           />
         </BehandlingsprosessPanel>
 
@@ -262,12 +269,14 @@ BehandlingsprosessAnkeIndex.propTypes = {
   resolveProsessAksjonspunkter: PropTypes.func.isRequired,
   overrideProsessAksjonspunkter: PropTypes.func.isRequired,
   fetchPreview: PropTypes.func.isRequired,
+  fetchAnkevurdering: PropTypes.func.isRequired,
   fagsakYtelseType: kodeverkObjektPropType.isRequired,
   behandlingStatus: kodeverkObjektPropType.isRequired,
   behandlingType: kodeverkObjektPropType.isRequired,
   resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
   resolveFaktaAksjonspunkterSuccess: PropTypes.bool.isRequired,
   behandlingsresultat: PropTypes.shape(),
+  innstilling: PropTypes.shape({}).isRequired,
 };
 
 BehandlingsprosessAnkeIndex.defaultProps = {
@@ -291,12 +300,14 @@ const mapStateToProps = state => ({
   behandlingStatus: getBehandlingStatus(state),
   behandlingsresultat: getBehandlingsresultat(state),
   resolveFaktaAksjonspunkterSuccess: getResolveFaktaAksjonspunkterSuccess(state),
+  innstilling: getResultat(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
     push,
     fetchPreview: fetchPreviewAnkeBrev,
+    fetchAnkevurdering: hentAnkeVurdering,
     resolveProsessAksjonspunkter,
     overrideProsessAksjonspunkter,
     resetBehandlingspunkter,

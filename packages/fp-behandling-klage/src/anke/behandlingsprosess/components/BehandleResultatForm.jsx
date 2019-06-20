@@ -12,13 +12,11 @@ import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingKlage/src/anke/behandlingForm';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
-import { createSelector } from 'reselect';
 import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import { getSelectedBehandlingspunktAksjonspunkter } from '../BehandlingsprosessAnkeSelectors';
-import { transformValues } from './BehandleAnkeForm';
+import { buildInitialValues, transformValues } from './BehandleAnkeForm';
 import PreviewAnkeLink from './PreviewAnkeLink';
 import { getAnkevurderingForm } from '../../duckAnke';
-
 
 const canPreview = formValues => (true);
 const canSubmit = formValues => (true);
@@ -53,6 +51,7 @@ const AnkeResultatForm = ({
   sprakkode,
   formValues,
   intl,
+  ankevurderingresultat,
   ...formProps
 }) => (
   <form onSubmit={handleSubmit}>
@@ -62,7 +61,7 @@ const AnkeResultatForm = ({
       <Row>
         <Column xs="12">
           <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling" /></Undertekst>
-          <Undertekst><FormattedMessage id={getInnstilling(formValues.ankeVurdering)} /></Undertekst>
+          <Undertekst><FormattedMessage id={getInnstilling(ankevurderingresultat.ankeVurdering)} /></Undertekst>
         </Column>
       </Row>
       <VerticalSpacer sixteenPx />
@@ -113,6 +112,7 @@ AnkeResultatForm.propTypes = {
   formValues: PropTypes.shape(),
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
+  ankevurderingresultat: PropTypes.shape(),
   ...formPropTypes,
 };
 
@@ -125,10 +125,6 @@ AnkeResultatForm.defaultProps = {
 
 const formName = 'ankeResultatForm';
 
-const buildInitialValues = createSelector([getAnkevurderingForm], resultat => ({
-  ankeVurdering: resultat ? resultat.ankeVurdering : null,
-}));
-
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const aksjonspunktCode = getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
   const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
@@ -136,7 +132,18 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
     formValues: behandlingFormValueSelector(formName)(state,
-      'vedtak', 'ankeVurdering',
+      'vedtak',
+      'ankeVurdering',
+      'begrunnelse',
+      'erMerknaderMottatt',
+      'merknadKommentar',
+      'fritekstTilBrev',
+      'vedtaksdatoAnketBehandling',
+      'erGodkjentAvMedunderskriver',
+      'erAnkerIkkePart', 'erIkkeKonkret', 'erFristIkkeOverholdt', 'erIkkeSignert', 'erSubsidiartRealitetsbehandles',
+      'ankeAvvistArsak',
+      'ankeOmgjoerArsak',
+      'ankeVurderingOmgjoer',
       'gjelderVedtak'),
     onSubmit,
   });
