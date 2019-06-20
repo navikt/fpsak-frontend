@@ -106,7 +106,6 @@ export {
   isutbetalingPlusArbeidsprosentMerEn100,
   isTrekkdagerMerEnnNullUtsettelse,
   isUtbetalingMerEnnNullUtsettelse,
-  noMoreThanZeroIfRejectedAndNotUtsettelse,
   hasValidOrgNumber,
 } from './src/validation/validators';
 

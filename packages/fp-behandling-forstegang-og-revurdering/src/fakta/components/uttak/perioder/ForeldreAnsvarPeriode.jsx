@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 import { FieldArray } from 'redux-form';
-import { Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
+import { Undertekst } from 'nav-frontend-typografi';
+
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import {
   FlexContainer,
@@ -26,8 +27,11 @@ import {
   hasValidPeriod,
   hasValidText,
 } from '@fpsak-frontend/utils';
+
+import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import PerioderKnapper from './PerioderKnapper';
 import DokumentertePerioderPeriodePicker from './DokumentertePerioderPeriodePicker';
+
 import styles from './periodeTyper.less';
 
 const minLength3 = minLength(3);
@@ -192,36 +196,40 @@ const validateForeldreAnsvarForm = (values) => {
   return errors;
 };
 
-const mapToStateToProps = (state, ownProps) => {
-  const formName = `foreldreAnsvarForm-${ownProps.id}`;
-  const resultat = behandlingFormValueSelector(formName)(state, 'resultat');
-  const initialResultat = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.resultat`);
-  const begrunnelse = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.begrunnelse`);
-  const initialDokumentertePerioder = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.dokumentertePerioder`);
-  const dokumentertePerioder = behandlingFormValueSelector(formName)(state, 'dokumentertePerioder');
-  const formSyncErrors = getBehandlingFormSyncErrors(formName)(state);
+const buildInitialValues = createSelector([
+  (state, ownProps) => behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.begrunnelse`),
+  (state, ownProps) => behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.resultat`),
+  (state, ownProps) => behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.dokumentertePerioder`),
+  (state, ownProps) => ownProps.id],
+  (begrunnelse, initialResultat, initialDokumentertePerioder, id) => ({
+    begrunnelse,
+    id,
+    resultat: initialResultat ? initialResultat.kode : undefined,
+    dokumentertePerioder:
+      initialDokumentertePerioder !== undefined
+        ? initialDokumentertePerioder
+        : [],
+  }));
 
-  return {
-    formSyncErrors,
-    dokumentertePerioder,
-    resultat,
-    initialValues: {
-      begrunnelse,
-      id: ownProps.id,
-      resultat: initialResultat ? initialResultat.kode : undefined,
-      dokumentertePerioder:
-        initialDokumentertePerioder !== undefined
-          ? initialDokumentertePerioder
-          : [],
-    },
-    updated: behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.updated`),
-    bekreftet: behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.bekreftet`),
-    form: formName,
-    onSubmit: values => ownProps.updatePeriode(values),
-  };
+
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const formName = `foreldreAnsvarForm-${initialOwnProps.id}`;
+  const onSubmit = values => initialOwnProps.updatePeriode(values);
+
+  return (state, ownProps) => ({
+      onSubmit,
+      formSyncErrors: getBehandlingFormSyncErrors(formName)(state),
+      dokumentertePerioder: behandlingFormValueSelector(formName)(state, 'dokumentertePerioder'),
+      resultat: behandlingFormValueSelector(formName)(state, 'resultat'),
+      initialValues: buildInitialValues(state, ownProps),
+      updated: behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.updated`),
+      bekreftet: behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.bekreftet`),
+      form: formName,
+    });
 };
 
-export default connect(mapToStateToProps)(
+
+export default connect(mapStateToPropsFactory)(
   behandlingForm({
     enableReinitialize: true,
     validate: values => validateForeldreAnsvarForm(values),

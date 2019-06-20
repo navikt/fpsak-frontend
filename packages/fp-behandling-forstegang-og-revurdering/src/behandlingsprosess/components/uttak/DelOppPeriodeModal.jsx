@@ -158,16 +158,17 @@ const transformValues = (values, periodeData) => {
   };
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  førstePeriodeTom: behandlingFormValueSelector('DelOppPeriode')(
-    state,
-    'ForstePeriodeTomDato',
-  ),
-  validate: values => validateForm(values, ownProps.periodeData),
-  onSubmit: values => ownProps.splitPeriod(transformValues(values, ownProps.periodeData)),
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const validate = values => validateForm(values, ownProps.periodeData);
+  const onSubmit = values => ownProps.splitPeriod(transformValues(values, ownProps.periodeData));
+  return state => ({
+    førstePeriodeTom: behandlingFormValueSelector('DelOppPeriode')(state, 'ForstePeriodeTomDato'),
+    validate,
+    onSubmit,
+  });
+};
 
-const DelOppPeriodeModal = connect(mapStateToProps)(behandlingForm({
+const DelOppPeriodeModal = connect(mapStateToPropsFactory)(behandlingForm({
   form: 'DelOppPeriode',
 })(DelOppPeriodeModalImpl));
 

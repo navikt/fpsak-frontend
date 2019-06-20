@@ -336,23 +336,26 @@ export const transformValues = (values, apCodes, aksjonspunkter) => {
   }));
 };
 
-const mapStateToProps = (state, ownProps) => {
-  const uttaksresultat = getUttaksresultatPerioder(state);
-  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(state);
-  const stonadskonto = getStonadskontoer(state);
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const uttaksresultat = getUttaksresultatPerioder(initialState);
+  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(initialState);
+  const stonadskonto = getStonadskontoer(initialState);
 
-  return {
+  const validate = values => validateUttakPanelForm(values);
+  const onSubmit = values => ownProps.submitCallback(transformValues(values, ownProps.apCodes, aksjonspunkter));
+
+  return state => ({
+    validate,
+    onSubmit,
     uttaksresultat,
     aksjonspunkter,
     stonadskonto,
     initialValues: buildInitialValues(state),
     manuellOverstyring: behandlingFormValueSelector(formName)(state, 'manuellOverstyring'),
-    validate: values => validateUttakPanelForm(values),
-    onSubmit: values => ownProps.submitCallback(transformValues(values, ownProps.apCodes, aksjonspunkter)),
-  };
+  });
 };
 
-const UttakPanel = connect(mapStateToProps)(injectIntl(behandlingForm({
+const UttakPanel = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: formName,
   enableReinitialize: false,
 })(UttakPanelImpl)));

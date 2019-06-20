@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FieldArray } from 'redux-form';
+import { createSelector } from 'reselect';
+import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
+
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { getFamiliehendelseGjeldende, doesVilkarForSykdomOppfyltExist } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import overforingArsakCodes from '@fpsak-frontend/kodeverk/src/overforingArsakCodes';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import {
@@ -15,9 +16,12 @@ import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/for
 import {
   required, maxLength, minLength, hasValidPeriod, hasValidText,
 } from '@fpsak-frontend/utils';
-import { FormattedMessage } from 'react-intl';
+
+import { getFamiliehendelseGjeldende, doesVilkarForSykdomOppfyltExist } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import PerioderKnapper from './PerioderKnapper';
 import DokumentertePerioderPeriodePicker from './DokumentertePerioderPeriodePicker';
+
 import styles from './periodeTyper.less';
 
 const minLength3 = minLength(3);
@@ -190,40 +194,40 @@ const validateSykdomOgSkadeForm = (
   return errors;
 };
 
-const mapToStateToProps = (state, ownProps) => {
-  const formName = `sykdomOgSkadeForm-${ownProps.id}`;
-  const resultat = behandlingFormValueSelector(formName)(state, 'resultat');
-  const initialResultat = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.resultat`);
-  const begrunnelse = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.begrunnelse`);
-  const initialDokumentertePerioder = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.dokumentertePerioder`);
-  const dokumentertePerioder = behandlingFormValueSelector(formName)(state, 'dokumentertePerioder');
-  const formSyncErrors = getBehandlingFormSyncErrors(formName)(state);
-  const vilkarForSykdomOppfyltExists = doesVilkarForSykdomOppfyltExist(state);
+const buildInitialValues = createSelector([
+  (state, ownProps) => behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.begrunnelse`),
+  (state, ownProps) => behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.resultat`),
+  (state, ownProps) => behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.dokumentertePerioder`),
+  (state, ownProps) => ownProps.id],
+  (begrunnelse, initialResultat, initialDokumentertePerioder, id) => ({
+    begrunnelse,
+    id,
+    resultat: initialResultat ? initialResultat.kode : undefined,
+    dokumentertePerioder: initialDokumentertePerioder !== undefined ? initialDokumentertePerioder : [],
+  }));
 
-  return {
-    formSyncErrors,
-    dokumentertePerioder,
-    resultat,
-    initialValues: {
-      begrunnelse,
-      id: ownProps.id,
-      resultat: initialResultat ? initialResultat.kode : undefined,
-      dokumentertePerioder: initialDokumentertePerioder !== undefined ? initialDokumentertePerioder : [],
-    },
+
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const formName = `sykdomOgSkadeForm-${initialOwnProps.id}`;
+  const familiehendelse = getFamiliehendelseGjeldende(initialState);
+  const vilkarForSykdomExists = doesVilkarForSykdomOppfyltExist(initialState);
+  const validate = values => validateSykdomOgSkadeForm(values, familiehendelse, initialOwnProps.utsettelseArsak,
+    initialOwnProps.overforingArsak, vilkarForSykdomExists);
+  const onSubmit = values => initialOwnProps.updatePeriode((values));
+
+  return (state, ownProps) => ({
+    onSubmit,
+    validate,
+    formSyncErrors: getBehandlingFormSyncErrors(formName)(state),
+    dokumentertePerioder: behandlingFormValueSelector(formName)(state, 'dokumentertePerioder'),
+    resultat: behandlingFormValueSelector(formName)(state, 'resultat'),
+    initialValues: buildInitialValues(state, ownProps),
     updated: behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.updated`),
     bekreftet: behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.bekreftet`),
     form: formName,
-    validate: values => validateSykdomOgSkadeForm(
-      values,
-      getFamiliehendelseGjeldende(state),
-      ownProps.utsettelseArsak,
-      ownProps.overforingArsak,
-      vilkarForSykdomOppfyltExists,
-    ),
-    onSubmit: values => ownProps.updatePeriode((values)),
-  };
+  });
 };
 
-export default connect(mapToStateToProps)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   enableReinitialize: true,
 })(SykdomOgSkadePeriode));

@@ -196,25 +196,31 @@ export const transformValues = (values, initialValues, aksjonspunkter) => { // N
   }));
 };
 
-const mapStateToProps = (state, initialProps) => {
-  const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state));
-  const initialValues = buildInitialValues(state);
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const orginalePerioder = getUttakPerioder(initialState);
+  const initialValues = buildInitialValues(initialState);
 
-  const orginalePerioder = getUttakPerioder(state);
-  const hasRevurderingOvertyringAp = !!initialProps.aksjonspunkter.includes(
-    ap => ap.definisjon.kode === aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK,
-  );
-  return {
-    initialValues,
-    behandlingFormPrefix,
-    hasRevurderingOvertyringAp,
-    validate: values => validateUttakForm(values, orginalePerioder, initialProps.aksjonspunkter),
-    warn: values => warningsUttakForm(values),
-    onSubmit: values => initialProps.submitCallback(transformValues(values, initialValues, initialProps.aksjonspunkter)),
+  const validate = values => validateUttakForm(values, orginalePerioder, initialOwnProps.aksjonspunkter);
+  const warn = values => warningsUttakForm(values);
+  const onSubmit = values => initialOwnProps.submitCallback(transformValues(values, initialValues, initialOwnProps.aksjonspunkter));
+
+  return (state) => {
+    const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state));
+    const hasRevurderingOvertyringAp = !!initialOwnProps.aksjonspunkter.includes(
+      ap => ap.definisjon.kode === aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK,
+    );
+    return {
+      initialValues,
+      behandlingFormPrefix,
+      hasRevurderingOvertyringAp,
+      validate,
+      warn,
+      onSubmit,
+    };
   };
 };
 
-export default connect(mapStateToProps)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: 'UttakFaktaForm',
   enableReinitialize: true,
 })(UttakFaktaForm));

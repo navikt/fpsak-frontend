@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
+import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp } from 'nav-frontend-knapper';
+
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -13,12 +16,17 @@ import {
   VerticalSpacer, FlexContainer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import {
   calcDays, ISO_DATE_FORMAT, DDMMYY_DATE_FORMAT, calcDaysAndWeeks,
 } from '@fpsak-frontend/utils';
 import { CheckboxField } from '@fpsak-frontend/form';
+import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
+import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
+import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
+
+import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import {
   getBehandlingVersjon,
   getSoknad,
@@ -34,15 +42,11 @@ import {
 import { tempUpdateStonadskontoer } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duck';
 import { getRettigheter } from 'navAnsatt/duck';
 import { getAlleKodeverk, getSelectedBehandlingId, getSelectedSaksnummer } from 'behandlingForstegangOgRevurdering/src/duck';
-import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
-import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
-import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import TimeLineInfo from './stonadkonto/TimeLineInfo';
 import UttakTimeLineData from './UttakTimeLineData';
 import UttakTimeLine from './UttakTimeLine';
 import UttakMedsokerReadOnly from './UttakMedsokerReadOnly';
+
 import styles from './uttak.less';
 
 const ACTIVITY_PANEL_NAME = 'uttaksresultatActivity';
@@ -105,30 +109,6 @@ const getCorrectPeriodName = (item, getKodeverknavn) => {
   }
 
   return '';
-};
-
-const addClassNameGroupIdToPerioder = (hovedsokerPerioder, annenForelderPerioder, hovedsoker, intl, behandlingStatusKode, getKodeverknavn) => {
-  const perioderMedClassName = [];
-  const perioder = hovedsoker ? hovedsokerPerioder : annenForelderPerioder;
-
-  perioder.forEach((item, index) => {
-    const stonadskontoType = getCorrectPeriodName(item, getKodeverknavn);
-    const opphold = item.oppholdÅrsak.kode !== oppholdArsakType.UDEFINERT;
-    const status = hovedsoker ? getStatusPeriodeHoved(item) : getStatusPeriodeMed(item);
-    const gradert = (item.gradertAktivitet && item.graderingInnvilget) ? 'gradert' : '';
-    const copyOfItem = Object.assign({}, item);
-    const isEndret = item.begrunnelse
-    && behandlingStatusKode === behandlingStatus.FATTER_VEDTAK ? endretClassnavn : '';
-    const oppholdStatus = status === 'undefined' ? 'opphold-manuell' : 'opphold';
-    copyOfItem.id = index + 1 + (hovedsoker ? 0 : hovedsokerPerioder.length);
-    copyOfItem.tomMoment = moment(item.tom).add(1, 'days');
-    copyOfItem.className = opphold ? oppholdStatus : `${status} ${isEndret} ${gradert}`;
-    copyOfItem.hovedsoker = hovedsoker;
-    copyOfItem.group = annenForelderPerioder.length > 0 && hovedsoker ? 2 : 1;
-    copyOfItem.title = createTooltipContent(stonadskontoType, intl, item);
-    perioderMedClassName.push(copyOfItem);
-  });
-  return perioderMedClassName;
 };
 
 const fodselsdato = (soknadsType, endredFodselsDato, familiehendelseDate, omsorgsOvertagelseDato) => {
@@ -633,21 +613,106 @@ const determineMottatDato = (soknadsDato, mottatDato) => {
   return soknadsDato;
 };
 
-const fodselTerminDato = (soknad, familiehendelse) => {
-  if (familiehendelse && familiehendelse.avklartBarn && familiehendelse.avklartBarn.length > 0) {
-    return familiehendelse.avklartBarn[0].fodselsdato;
-  }
-  if (soknad.fodselsdatoer && Object.keys(soknad.fodselsdatoer).length > 0) {
-    return Object.values(soknad.fodselsdatoer)[0];
-  }
-  if (soknad.termindato) {
-    return soknad.termindato;
-  }
-  if (soknad.adopsjonFodelsedatoer && Object.keys(soknad.adopsjonFodelsedatoer).length > 0) {
-    return Object.values(soknad.adopsjonFodelsedatoer)[0];
-  }
-  return undefined;
-};
+const lagUttakMedOpphold = createSelector(
+  [(state, props) => behandlingFormValueSelector(props.formName)(state, ACTIVITY_PANEL_NAME)],
+    uttaksresultatActivity => uttaksresultatActivity.map((uttak) => {
+      const { ...uttakPerioder } = uttak;
+
+      // Setter trekkdager til null - brukes som lowkey feature-toggle - remove when everything works (06.05.19)
+      if (uttakPerioder && uttakPerioder.aktiviteter.length > 0) {
+        const aktivitetArray = uttakPerioder.aktiviteter;
+        aktivitetArray.forEach((item) => {
+          item.trekkdager = null; // eslint-disable-line no-param-reassign
+        });
+      }
+      // remove to here
+      if (uttak.oppholdÅrsak.kode !== oppholdArsakType.UDEFINERT) {
+        const stonadskonto = oppholdArsakMapper[uttak.oppholdÅrsak.kode];
+        const oppholdInfo = {
+          stønadskontoType: {
+            kode: stonadskonto,
+            kodeverk: uttak.oppholdÅrsak.kodeverk,
+            navn: uttakPeriodeNavn[stonadskonto],
+          },
+          trekkdagerDesimaler: calcDays(moment(uttak.fom.toString()), moment(uttak.tom.toString())),
+          trekkdager: null,
+        };
+        uttakPerioder.aktiviteter = [oppholdInfo];
+      }
+      return uttakPerioder;
+    }),
+);
+
+const lagUttaksresultatActivity = createSelector(
+  [lagUttakMedOpphold, (state, props) => props], (uttakMedOpphold, props) => {
+    const tilknyttetStortinget = !!props.aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.TILKNYTTET_STORTINGET && props.isApOpen);
+    return uttakMedOpphold.map(periode => ({ tilknyttetStortinget, ...periode }));
+  },
+);
+
+const getFodselTerminDato = createSelector(
+  [getSoknad, getFamiliehendelseGjeldende], (soknad, familiehendelse) => {
+    if (familiehendelse && familiehendelse.avklartBarn && familiehendelse.avklartBarn.length > 0) {
+      return familiehendelse.avklartBarn[0].fodselsdato;
+    }
+    if (soknad.fodselsdatoer && Object.keys(soknad.fodselsdatoer).length > 0) {
+      return Object.values(soknad.fodselsdatoer)[0];
+    }
+    if (soknad.termindato) {
+      return soknad.termindato;
+    }
+    if (soknad.adopsjonFodelsedatoer && Object.keys(soknad.adopsjonFodelsedatoer).length > 0) {
+      return Object.values(soknad.adopsjonFodelsedatoer)[0];
+    }
+    return undefined;
+  },
+);
+
+const addClassNameGroupIdToPerioder = (hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk, hovedsoker) => {
+    const behandlingStatusKode = bStatus.kode;
+    const annenForelderPerioder = uttakResultatPerioder.perioderAnnenpart;
+    const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+    const perioderMedClassName = [];
+    const perioder = hovedsoker ? hovedsokerPerioder : annenForelderPerioder;
+
+    perioder.forEach((item, index) => {
+      const stonadskontoType = getCorrectPeriodName(item, getKodeverknavn);
+      const opphold = item.oppholdÅrsak.kode !== oppholdArsakType.UDEFINERT;
+      const status = hovedsoker ? getStatusPeriodeHoved(item) : getStatusPeriodeMed(item);
+      const gradert = (item.gradertAktivitet && item.graderingInnvilget) ? 'gradert' : '';
+      const copyOfItem = Object.assign({}, item);
+      const isEndret = item.begrunnelse
+      && behandlingStatusKode === behandlingStatus.FATTER_VEDTAK ? endretClassnavn : '';
+      const oppholdStatus = status === 'undefined' ? 'opphold-manuell' : 'opphold';
+      copyOfItem.id = index + 1 + (hovedsoker ? 0 : hovedsokerPerioder.length);
+      copyOfItem.tomMoment = moment(item.tom).add(1, 'days');
+      copyOfItem.className = opphold ? oppholdStatus : `${status} ${isEndret} ${gradert}`;
+      copyOfItem.hovedsoker = hovedsoker;
+      copyOfItem.group = annenForelderPerioder.length > 0 && hovedsoker ? 2 : 1;
+      copyOfItem.title = createTooltipContent(stonadskontoType, intl, item);
+      perioderMedClassName.push(copyOfItem);
+    });
+    return perioderMedClassName;
+  };
+
+const addClassNameGroupIdToPerioderHovedsoker = createSelector(
+  [lagUttakMedOpphold, getUttaksresultatPerioder, (state, props) => props.intl, getBehandlingStatus, getAlleKodeverk],
+  (hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk) => addClassNameGroupIdToPerioder(
+    hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk, true,
+),
+);
+
+const addClassNameGroupIdToPerioderAnnenForelder = createSelector(
+  [lagUttakMedOpphold, getUttaksresultatPerioder, (state, props) => props.intl, getBehandlingStatus, getAlleKodeverk],
+  (hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk) => addClassNameGroupIdToPerioder(
+    hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk, false,
+),
+);
+
+const slaSammenHovedsokerOgAnnenForelder = createSelector(
+  [addClassNameGroupIdToPerioderHovedsoker, addClassNameGroupIdToPerioderAnnenForelder],
+  (hovedsokerPerioder, annenForelderPerioder) => hovedsokerPerioder.concat(annenForelderPerioder),
+);
 
 const mapStateToProps = (state, props) => {
   const soknad = getSoknad(state);
@@ -661,60 +726,33 @@ const mapStateToProps = (state, props) => {
   const medsokerKjonnKode = viseUttakMedsoker && getMedsokerKjonnKode === undefined ? navBrukerKjonn.UDEFINERT : getMedsokerKjonnKode;
   const familiehendelse = getFamiliehendelseGjeldende(state);
   const ytelseFordeling = getBehandlingYtelseFordeling(state);
-  const uttaksresultatActivity = behandlingFormValueSelector(props.formName)(state, ACTIVITY_PANEL_NAME);
   const barnFraTps = getBarnFraTpsRelatertTilSoknad(state);
 
-  const uttakMedOpphold = uttaksresultatActivity.map((uttak) => {
-    const { ...uttakPerioder } = uttak;
-
-    // Setter trekkdager til null - brukes som lowkey feature-toggle - remove when everything works (06.05.19)
-    if (uttakPerioder && uttakPerioder.aktiviteter.length > 0) {
-      const aktivitetArray = uttakPerioder.aktiviteter;
-      aktivitetArray.forEach((item) => {
-        item.trekkdager = null; // eslint-disable-line no-param-reassign
-      });
-    }
-    // remove to here
-    if (uttak.oppholdÅrsak.kode !== oppholdArsakType.UDEFINERT) {
-      const stonadskonto = oppholdArsakMapper[uttak.oppholdÅrsak.kode];
-      const oppholdInfo = {
-        stønadskontoType: {
-          kode: stonadskonto,
-          kodeverk: uttak.oppholdÅrsak.kodeverk,
-          navn: uttakPeriodeNavn[stonadskonto],
-        },
-        trekkdagerDesimaler: calcDays(moment(uttak.fom.toString()), moment(uttak.tom.toString())),
-        trekkdager: null,
-      };
-      uttakPerioder.aktiviteter = [oppholdInfo];
-    }
-    return uttakPerioder;
-  });
-
-  const getKodeverknavn = getKodeverknavnFn(getAlleKodeverk(state), kodeverkTyper);
-  const tilknyttetStortinget = !!props.aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.TILKNYTTET_STORTINGET && props.isApOpen);
   const isRevurdering = getBehandlingIsRevurdering(state);
-  const behandlingStatusKode = getBehandlingStatus(state).kode;
-  const hovedsokerPerioder = addClassNameGroupIdToPerioder(uttakMedOpphold, annenForelderUttak, true, props.intl, behandlingStatusKode, getKodeverknavn);
-  const annenForelderPerioder = addClassNameGroupIdToPerioder(uttakMedOpphold, annenForelderUttak, false, props.intl, behandlingStatusKode, getKodeverknavn);
-  const uttakPerioder = hovedsokerPerioder.concat(annenForelderPerioder);
-  const harSoktOmFlerbarnsdager = hovedsokerPerioder.filter(p => p.flerbarnsdager === true).length > 0;
 
+  const uttaksresultatActivity = lagUttaksresultatActivity(state, props);
+  const familiehendelseDate = getFodselTerminDato(state);
+
+  const hovedsokerPerioder = addClassNameGroupIdToPerioderHovedsoker(state, props);
+  const annenForelderPerioder = addClassNameGroupIdToPerioderAnnenForelder(state, props);
+  const uttakPerioder = slaSammenHovedsokerOgAnnenForelder(state, props);
+  const harSoktOmFlerbarnsdager = hovedsokerPerioder.filter(p => p.flerbarnsdager === true).length > 0;
   const annenForelderSoktOmFlerbarnsdager = annenForelderPerioder.filter(p => p.flerbarnsdager === true).length > 0;
+
   return {
     saksnummer: getSelectedSaksnummer(state),
     behandlingId: getSelectedBehandlingId(state),
     soknadDate: determineMottatDato(periodeGrenseMottatDato, soknad.mottattDato),
-    familiehendelseDate: fodselTerminDato(soknad, familiehendelse),
     endringsdato: ytelseFordeling.endringsdato ? ytelseFordeling.endringsdato : undefined,
     dekningsgrad: soknad.dekningsgrad ? soknad.dekningsgrad : undefined,
     stonadskonto: behandlingFormValueSelector(props.formName)(state, STONADSKONTOER_TEMP),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
-    uttaksresultatActivity: uttakMedOpphold.map(periode => ({ tilknyttetStortinget, ...periode })),
     kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
     soknadsType: soknad.soknadType.kode,
     omsorgsovertakelseDato: soknad.omsorgsovertakelseDato,
     endredFodselsDato: familiehendelse.fodselsdato,
+    uttaksresultatActivity,
+    familiehendelseDate,
     hovedsokerKjonnKode,
     medsokerKjonnKode,
     isRevurdering,
