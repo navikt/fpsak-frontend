@@ -6728,9 +6728,9 @@ nav-frontend-alertstriper-style@2.0.2:
   version "2.0.2"
   resolved "https://registry.npmjs.org/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-2.0.2.tgz#6109083967f814dccb97e900018741480426623c"
 
-nav-frontend-alertstriper@3.0.2:
-  version "3.0.2"
-  resolved "https://registry.npmjs.org/nav-frontend-alertstriper/-/nav-frontend-alertstriper-3.0.2.tgz#4e446cab550516fc496ea167865e4163e1f8b933"
+nav-frontend-alertstriper@3.0.3:
+  version "3.0.3"
+  resolved "https://registry.npmjs.org/nav-frontend-alertstriper/-/nav-frontend-alertstriper-3.0.3.tgz#d7019716c39dd3504caef3688aefd6b04c80d664"
 
 nav-frontend-chevron-style@0.3.4:
   version "0.3.4"
@@ -6748,17 +6748,17 @@ nav-frontend-ekspanderbartpanel-style@0.3.20:
   version "0.3.20"
   resolved "https://registry.npmjs.org/nav-frontend-ekspanderbartpanel-style/-/nav-frontend-ekspanderbartpanel-style-0.3.20.tgz#385fe32741a391ae6dbf2659956e5d08e02afbb9"
 
-nav-frontend-ekspanderbartpanel@1.0.27:
-  version "1.0.27"
-  resolved "https://registry.npmjs.org/nav-frontend-ekspanderbartpanel/-/nav-frontend-ekspanderbartpanel-1.0.27.tgz#0f8ce5e91f0bda89b7b1fb413f442bf693edf159"
+nav-frontend-ekspanderbartpanel@1.0.28:
+  version "1.0.28"
+  resolved "https://registry.npmjs.org/nav-frontend-ekspanderbartpanel/-/nav-frontend-ekspanderbartpanel-1.0.28.tgz#91fa5fc8cd9042faf74903c04e642a7c6b8ebf0b"
 
 nav-frontend-etiketter-style@0.3.17:
   version "0.3.17"
   resolved "https://registry.npmjs.org/nav-frontend-etiketter-style/-/nav-frontend-etiketter-style-0.3.17.tgz#44c0dffe3dbd1f1175b0337760426f7e41684b49"
 
-nav-frontend-etiketter@1.0.22:
-  version "1.0.22"
-  resolved "https://registry.npmjs.org/nav-frontend-etiketter/-/nav-frontend-etiketter-1.0.22.tgz#36c89974a373d126c296443f8b6346e2b453ba07"
+nav-frontend-etiketter@1.0.23:
+  version "1.0.23"
+  resolved "https://registry.npmjs.org/nav-frontend-etiketter/-/nav-frontend-etiketter-1.0.23.tgz#cbcbf5fb300e333ae74dab4ae851307711553bd7"
 
 nav-frontend-grid-style@0.2.18:
   version "0.2.18"
@@ -6776,13 +6776,13 @@ nav-frontend-js-utils@1.0.7:
   version "1.0.7"
   resolved "https://registry.npmjs.org/nav-frontend-js-utils/-/nav-frontend-js-utils-1.0.7.tgz#07ba8117561c1d7552041380e20e8d88e86afd55"
 
-nav-frontend-knapper-style@0.3.25:
-  version "0.3.25"
-  resolved "https://registry.npmjs.org/nav-frontend-knapper-style/-/nav-frontend-knapper-style-0.3.25.tgz#3738632f8df929b78cdf9edf4dfa1df8bc0ac775"
+nav-frontend-knapper-style@0.3.26:
+  version "0.3.26"
+  resolved "https://registry.npmjs.org/nav-frontend-knapper-style/-/nav-frontend-knapper-style-0.3.26.tgz#734f97052812af2f1c8460f334b4dd63fd414f0b"
 
-nav-frontend-knapper@1.0.29:
-  version "1.0.29"
-  resolved "https://registry.npmjs.org/nav-frontend-knapper/-/nav-frontend-knapper-1.0.29.tgz#f8e609470325f47db6a5fbf4c9dc43ce45c38863"
+nav-frontend-knapper@1.0.30:
+  version "1.0.30"
+  resolved "https://registry.npmjs.org/nav-frontend-knapper/-/nav-frontend-knapper-1.0.30.tgz#aef99f5120fc1f2388ad5c98bc6d23ab62241c3d"
 
 nav-frontend-lenkepanel-style@^0.3.25:
   version "0.3.25"
@@ -6816,25 +6816,25 @@ nav-frontend-paneler-style@0.3.15:
   version "0.3.15"
   resolved "https://registry.npmjs.org/nav-frontend-paneler-style/-/nav-frontend-paneler-style-0.3.15.tgz#b9dee564e601c1d149fa4e3ba19e97aa3f9454c4"
 
-nav-frontend-paneler@1.0.16:
-  version "1.0.16"
-  resolved "https://registry.npmjs.org/nav-frontend-paneler/-/nav-frontend-paneler-1.0.16.tgz#6b88d348fd0111805573d043b8f39db7a95d3050"
+nav-frontend-paneler@1.0.17:
+  version "1.0.17"
+  resolved "https://registry.npmjs.org/nav-frontend-paneler/-/nav-frontend-paneler-1.0.17.tgz#7f3d4de752633428e13f5b1eec6ef761262e941a"
 
 nav-frontend-skjema-style@1.0.40:
   version "1.0.40"
   resolved "https://registry.npmjs.org/nav-frontend-skjema-style/-/nav-frontend-skjema-style-1.0.40.tgz#fd9dc74eaf5881bdbddfe8e2ec0cba424f48c4dc"
 
-nav-frontend-skjema@1.0.64:
-  version "1.0.64"
-  resolved "https://registry.npmjs.org/nav-frontend-skjema/-/nav-frontend-skjema-1.0.64.tgz#1473d5a63e177db569ea830a69de38b1b34144b8"
+nav-frontend-skjema@1.0.67:
+  version "1.0.67"
+  resolved "https://registry.npmjs.org/nav-frontend-skjema/-/nav-frontend-skjema-1.0.67.tgz#6af322e271b84c1b3df0feb9c84f4710133e2bde"
 
-nav-frontend-snakkeboble-style@0.2.18:
-  version "0.2.18"
-  resolved "https://registry.npmjs.org/nav-frontend-snakkeboble-style/-/nav-frontend-snakkeboble-style-0.2.18.tgz#367319543df02d79aafb82d5e63a71b9ac4d970c"
+nav-frontend-snakkeboble-style@0.2.19:
+  version "0.2.19"
+  resolved "https://registry.npmjs.org/nav-frontend-snakkeboble-style/-/nav-frontend-snakkeboble-style-0.2.19.tgz#0bcf9f6388ffdee6f07ecb64e5ed2c60f4334396"
 
-nav-frontend-snakkeboble@1.0.27:
-  version "1.0.27"
-  resolved "https://registry.npmjs.org/nav-frontend-snakkeboble/-/nav-frontend-snakkeboble-1.0.27.tgz#49a5a5c11974c7dfd3682795fc0e7289ae5f4773"
+nav-frontend-snakkeboble@1.0.29:
+  version "1.0.29"
+  resolved "https://registry.npmjs.org/nav-frontend-snakkeboble/-/nav-frontend-snakkeboble-1.0.29.tgz#cb5ecd4103243b47ab1193edce6b17ec96148b5b"
 
 nav-frontend-spinner-style@0.2.5:
   version "0.2.5"
@@ -6850,9 +6850,9 @@ nav-frontend-typografi-style@1.0.13:
   dependencies:
     nav-frontend-core "^4.0.9"
 
-nav-frontend-typografi@2.0.11:
-  version "2.0.11"
-  resolved "https://registry.npmjs.org/nav-frontend-typografi/-/nav-frontend-typografi-2.0.11.tgz#af85d8f0e8b4314bd16cfe021ee9932e054fd2ae"
+nav-frontend-typografi@2.0.12:
+  version "2.0.12"
+  resolved "https://registry.npmjs.org/nav-frontend-typografi/-/nav-frontend-typografi-2.0.12.tgz#0a947e19f50c5a96552aef6944d0415f03039a16"
 
 nearley@^2.7.10:
   version "2.16.0"
