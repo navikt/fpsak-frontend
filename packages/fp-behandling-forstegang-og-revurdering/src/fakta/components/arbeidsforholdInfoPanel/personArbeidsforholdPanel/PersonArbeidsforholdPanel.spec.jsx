@@ -28,7 +28,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
     mottattDatoInntektsmelding: undefined,
     erNyttArbeidsforhold: undefined,
     erstatterArbeidsforholdId: undefined,
-    inntektIkkeMedTilBeregningsgrunnlaget: undefined,
     inntektMedTilBeregningsgrunnlag: undefined,
     brukPermisjon: undefined,
     permisjoner: undefined,
@@ -222,7 +221,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fortsettBehandlingUtenInntektsmelding: false,
       brukMedJustertPeriode: false,
       brukPermisjon: undefined,
-      inntektIkkeMedTilBeregningsgrunnlaget: false,
       inntektMedTilBeregningsgrunnlag: undefined,
     }]);
     expect(wrapper.state().selectedArbeidsforhold).is.undefined;
@@ -284,7 +282,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       brukMedJustertPeriode: false,
       fortsettBehandlingUtenInntektsmelding: undefined,
       brukPermisjon: undefined,
-      inntektIkkeMedTilBeregningsgrunnlaget: false,
       inntektMedTilBeregningsgrunnlag: undefined,
     }]);
 
@@ -475,7 +472,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       brukArbeidsforholdet: false,
       fortsettBehandlingUtenInntektsmelding: false,
       brukMedJustertPeriode: false,
-      inntektIkkeMedTilBeregningsgrunnlaget: false,
       brukPermisjon: undefined,
       inntektMedTilBeregningsgrunnlag: undefined,
     }]);
@@ -519,7 +515,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fortsettBehandlingUtenInntektsmelding: true,
       brukMedJustertPeriode: false,
       brukPermisjon: undefined,
-      inntektIkkeMedTilBeregningsgrunnlaget: false,
       inntektMedTilBeregningsgrunnlag: undefined,
     }]);
 
@@ -560,7 +555,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       ...editedArbeidsforhold,
       erEndret: true,
       fortsettBehandlingUtenInntektsmelding: false,
-      inntektIkkeMedTilBeregningsgrunnlaget: false,
       brukMedJustertPeriode: false,
       brukPermisjon: undefined,
       inntektMedTilBeregningsgrunnlag: undefined,
@@ -604,7 +598,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       ...editedArbeidsforhold,
       erEndret: true,
       fortsettBehandlingUtenInntektsmelding: true,
-      inntektIkkeMedTilBeregningsgrunnlaget: false,
       brukMedJustertPeriode: true,
       brukPermisjon: undefined,
       inntektMedTilBeregningsgrunnlag: undefined,
@@ -734,7 +727,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fortsettBehandlingUtenInntektsmelding: true,
       brukMedJustertPeriode: false,
       brukPermisjon: true,
-      inntektIkkeMedTilBeregningsgrunnlaget: false,
       inntektMedTilBeregningsgrunnlag: undefined,
     }]);
   });
@@ -787,7 +779,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fortsettBehandlingUtenInntektsmelding: true,
       brukMedJustertPeriode: false,
       brukPermisjon: false,
-      inntektIkkeMedTilBeregningsgrunnlaget: false,
       inntektMedTilBeregningsgrunnlag: undefined,
     }]);
   });
@@ -827,7 +818,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fortsettBehandlingUtenInntektsmelding: true,
       brukMedJustertPeriode: false,
       brukPermisjon: undefined,
-      inntektIkkeMedTilBeregningsgrunnlaget: true,
       inntektMedTilBeregningsgrunnlag: false,
     }]);
   });
@@ -947,7 +937,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
     const newArbeidsforhold = {
       ...arbeidsforhold,
       brukMedJustertPeriode: false,
-      inntektIkkeMedTilBeregningsgrunnlaget: true,
       inntektMedTilBeregningsgrunnlag: false,
     };
     const initialValues = PersonArbeidsforholdPanel.buildInitialValues([newArbeidsforhold]);
