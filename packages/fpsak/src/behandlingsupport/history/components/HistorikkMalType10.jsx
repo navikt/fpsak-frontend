@@ -69,7 +69,7 @@ const HistorikkMalType10 = ({
     const fieldName = findEndretFeltNavn(endretFelt, intl);
     if (endretFelt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.UTTAK_TREKKDAGER.kode) {
       const fromValueWeeks = Math.floor(endretFelt.fraVerdi / 5);
-      const fromValueDays = endretFelt.fraVerdi % 5;
+      const fromValueDays = (endretFelt.fraVerdi % 1 === 0) ? endretFelt.fraVerdi % 5 : (endretFelt.fraVerdi % 5).toFixed(1);
       const toValueWeeks = Math.floor(endretFelt.tilVerdi / 5);
       const toValueDays = (endretFelt.tilVerdi % 1 === 0) ? endretFelt.tilVerdi % 5 : (endretFelt.tilVerdi % 5).toFixed(1);
 
