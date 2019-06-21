@@ -103,6 +103,11 @@ const buildOption = (b) => {
   return (<option key={formatId(b.id)} value={formatId(b.id)}>{formatBehandling(b)}</option>);
 };
 
+const SKAL_REALITETSBEHANDLES = {
+  JA: true,
+  NEI: false,
+};
+
 /**
  * Presentasjonskomponent. Setter opp aksjonspunktet for behandling.
  */
@@ -184,8 +189,8 @@ const BehandleAnkeFormImpl = ({
                 className={readOnly ? styles.selectReadOnly : null}
                 direction="horisontal"
               >
-                <RadioOption value="true" label={{ id: 'Ankebehandling.Realitetsbehandles.Ja' }} />
-                <RadioOption value="false" label={{ id: 'Ankebehandling.Realitetsbehandles.Nei' }} />
+                <RadioOption value={SKAL_REALITETSBEHANDLES.JA} label={{ id: 'Ankebehandling.Realitetsbehandles.Ja' }} />
+                <RadioOption value={SKAL_REALITETSBEHANDLES.NEI} label={{ id: 'Ankebehandling.Realitetsbehandles.Nei' }} />
               </RadioGroupField>
             </ArrowBox>
           </Column>

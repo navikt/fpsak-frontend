@@ -108,17 +108,8 @@ export const getBehandlingIdentifier = createSelector(
   (behandlingId, saksnummer) => (behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined
   ),
 );
-// eslint-disable-next-line max-len
-export const getAnkevurderingForm = createSelector([getDataContext], ctx => (ctx.ANKE_VURDERING.data ? ctx.ANKE_VURDERING.data.ankeVurderingResultat : {}));
 
-const finnResultat = (ctx) => {
-  if (ctx.ANKE_VURDERING.data && ctx.ANKE_VURDERING.data.ankeVurderingResultat) {
-    return ctx.ANKE_VURDERING.data.ankeVurderingResultat;
-  }
-  return {};
-};
-
-export const getResultat = createSelector([getDataContext], ctx => finnResultat(ctx));
+export const getResultat = createSelector([getDataContext], ctx => ctx.ANKE_VURDERING.data.ankeVurderingResultat);
 
 export const getFagsakStatus = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.fagsakStatus);
 export const getFagsakPerson = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.fagsakPerson);

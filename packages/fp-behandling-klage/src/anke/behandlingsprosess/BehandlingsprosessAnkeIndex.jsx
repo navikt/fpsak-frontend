@@ -8,12 +8,10 @@ import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/pr
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import {
   getAksjonspunkter, getBehandlingVersjon, getBehandlingType, getBehandlingStatus, getBehandlingsresultat, getBehandlingHenlagt,
-getBehandlingAnkeVurderingResultat,
 } from 'behandlingKlage/src/anke/selectors/ankeBehandlingSelectors';
 import {
   getBehandlingIdentifier, getFagsakYtelseType,
 hentAnkeVurdering, getResultat,
-getAnkevurderingForm,
 } from 'behandlingKlage/src/anke/duckAnke';
 import { BehandlingsprosessPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
 import BehandlingspunktAnkeInfoPanel from 'behandlingKlage/src/anke/behandlingsprosess/components/BehandlingspunktAnkeInfoPanel';
@@ -276,13 +274,14 @@ BehandlingsprosessAnkeIndex.propTypes = {
   resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
   resolveFaktaAksjonspunkterSuccess: PropTypes.bool.isRequired,
   behandlingsresultat: PropTypes.shape(),
-  innstilling: PropTypes.shape({}).isRequired,
+  innstilling: PropTypes.shape({}),
 };
 
 BehandlingsprosessAnkeIndex.defaultProps = {
   behandlingspunkter: undefined,
   selectedBehandlingspunkt: undefined,
   behandlingsresultat: undefined,
+  innstilling: {},
 };
 
 const mapStateToProps = state => ({

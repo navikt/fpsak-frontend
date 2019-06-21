@@ -13,32 +13,87 @@ import {
 } from 'behandlingKlage/src/anke/behandlingForm';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
+import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
 import { getSelectedBehandlingspunktAksjonspunkter } from '../BehandlingsprosessAnkeSelectors';
 import { buildInitialValues, transformValues } from './BehandleAnkeForm';
 import PreviewAnkeLink from './PreviewAnkeLink';
-import { getAnkevurderingForm } from '../../duckAnke';
-
-const canPreview = formValues => (true);
-const canSubmit = formValues => (true);
 
 const isVedtakUtenToTrinn = apCodes => apCodes.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL); // 5018
 const isMedUnderskriver = apCodes => apCodes.includes(aksjonspunktCodes.FORESLA_VEDTAK); // 5015
 const isFatterVedtak = apCodes => apCodes.includes(aksjonspunktCodes.FATTER_VEDTAK); // 5016
 
-const getInnstilling = (innstilling) => {
-  if (innstilling === ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK) {
-    return 'Ankebehandling.Resultat.Innstilling.Stadfest';
+const ResultatEnkel = resultat => (
+  <div>
+    <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Stadfest" /></Undertekst>
+    <VerticalSpacer sixteenPx />
+    <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Begrunnelse" /></Undertekst>
+    <Undertekst>{resultat.ankevurderingresultat.begrunnelse}</Undertekst>
+  </div>
+);
+
+const ResultatAvvise = resultat => (
+  <React.Fragment>
+    <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Avvises" /></Undertekst>
+    <VerticalSpacer sixteenPx />
+    <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Arsak" /></Undertekst>
+    <ul>
+      {resultat.ankevurderingresultat.erAnkerIkkePart
+      && (<li><FormattedMessage id="Ankebehandling.Avvisning.IkkePart" /></li>)
+      }
+      {resultat.ankevurderingresultat.erIkkeKonkret
+      && (<li><FormattedMessage id="Ankebehandling.Avvisning.IkkeKonkret" /></li>)
+      }
+      {resultat.ankevurderingresultat.erFristIkkeOverholdt
+      && (<li><FormattedMessage id="Ankebehandling.Avvisning.IkkeFrist" /></li>)
+      }
+      {resultat.ankevurderingresultat.erIkkeSignert
+      && (<li><FormattedMessage id="Ankebehandling.Avvisning.IkkeSignert" /></li>)
+      }
+    </ul>
+    <Undertekst>
+      <FormattedMessage id="Ankebehandling.Realitetsbehandles" />
+      <FormattedMessage id={resultat.ankevurderingresultat.erSubsidiartRealitetsbehandles
+        ? 'Ankebehandling.Realitetsbehandles.Ja' : 'Ankebehandling.Realitetsbehandles.Nei'}
+      />
+    </Undertekst>
+    <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Begrunnelse" /></Undertekst>
+    <Undertekst>{resultat.ankevurderingresultat.begrunnelse}</Undertekst>
+  </React.Fragment>
+);
+
+const hentSprakKode = (ankeOmgjoerArsak) => {
+  switch (ankeOmgjoerArsak) {
+    case ankeVurderingOmgjoer.ANKE_TIL_UGUNST: return 'Ankebehandling.Resultat.Innstilling.Omgjores.TilUgunst';
+    case ankeVurderingOmgjoer.ANKE_TIL_GUNST: return 'Ankebehandling.Resultat.Innstilling.Omgjores.TilGunst';
+    case ankeVurderingOmgjoer.ANKE_DELVIS_OMGJOERING_TIL_GUNST: return 'Ankebehandling.Resultat.Innstilling.Omgjores.Delvis';
+    default: return 'Tull';
   }
-  if (innstilling === ankeVurdering.ANKE_OMGJOER) {
-    return 'Ankebehandling.Resultat.Innstilling.Omgjores';
+};
+
+const ResultatOmgjores = resultat => (
+  <React.Fragment>
+    <Undertekst><FormattedMessage id={hentSprakKode(resultat.ankevurderingresultat.ankeVurderingOmgjoer)} /></Undertekst>
+    <VerticalSpacer sixteenPx />
+    <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Arsak" /></Undertekst>
+    <Undertekst>{resultat.ankevurderingresultat.ankeOmgjoerArsakNavn}</Undertekst>
+    <VerticalSpacer sixteenPx />
+    <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Begrunnelse" /></Undertekst>
+    <Undertekst>{resultat.ankevurderingresultat.begrunnelse}</Undertekst>
+  </React.Fragment>
+);
+
+const AnkeResultat = (resultat) => {
+  if (!resultat) {
+    return null;
   }
-  if (innstilling === ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE) {
-    return 'Ankebehandling.Resultat.Innstilling.Oppheves';
+  const { ankevurderingresultat } = resultat;
+  switch (ankevurderingresultat.ankeVurdering) {
+    case ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK: return (<ResultatEnkel ankevurderingresultat={ankevurderingresultat} />);
+    case ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE: return (<ResultatEnkel ankevurderingresultat={ankevurderingresultat} />);
+    case ankeVurdering.ANKE_OMGJOER: return (<ResultatOmgjores ankevurderingresultat={ankevurderingresultat} />);
+    case ankeVurdering.ANKE_AVVIS: return (<ResultatAvvise ankevurderingresultat={ankevurderingresultat} />);
+    default: return <div>???</div>;
   }
-  if (innstilling === ankeVurdering.ANKE_AVVIS) {
-    return 'Ankebehandling.Resultat.Innstilling.Avvises';
-  }
-  return 'Ankebehandling.Resultat.Innstilling.Udefinert';
 };
 
 const AnkeResultatForm = ({
@@ -61,7 +116,7 @@ const AnkeResultatForm = ({
       <Row>
         <Column xs="12">
           <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling" /></Undertekst>
-          <Undertekst><FormattedMessage id={getInnstilling(ankevurderingresultat.ankeVurdering)} /></Undertekst>
+          <AnkeResultat ankevurderingresultat={ankevurderingresultat} />
         </Column>
       </Row>
       <VerticalSpacer sixteenPx />
@@ -70,7 +125,7 @@ const AnkeResultatForm = ({
           <BehandlingspunktSubmitButton
             formName={formProps.form}
             isReadOnly={false}
-            isSubmittable={canSubmit(formValues) && isMedUnderskriver(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
+            isSubmittable={isMedUnderskriver(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
             hasEmptyRequiredFields={false}
             isBehandlingFormSubmitting={isBehandlingFormSubmitting}
             isBehandlingFormDirty={isBehandlingFormDirty}
@@ -81,7 +136,7 @@ const AnkeResultatForm = ({
           <BehandlingspunktSubmitButton
             formName={formProps.form}
             isReadOnly={false}
-            isSubmittable={canSubmit(formValues) && isVedtakUtenToTrinn(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
+            isSubmittable={isVedtakUtenToTrinn(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
             hasEmptyRequiredFields={false}
             isBehandlingFormSubmitting={isBehandlingFormSubmitting}
             isBehandlingFormDirty={isBehandlingFormDirty}
@@ -89,16 +144,12 @@ const AnkeResultatForm = ({
             textCode="Ankebehandling.Resultat.FerdigstillAnke"
           />
           <span>&nbsp;</span>
-          {canPreview(formValues)
-          && (
-            <PreviewAnkeLink
-              previewCallback={previewCallback}
-              fritekstTilBrev={formValues.fritekstTilBrev}
-              klageVurdering={formValues.ankeVurdering}
-              aksjonspunktCode={aksjonspunktCode}
-            />
-          )
-          }
+          <PreviewAnkeLink
+            previewCallback={previewCallback}
+            fritekstTilBrev={formValues.fritekstTilBrev}
+            klageVurdering={formValues.ankeVurdering}
+            aksjonspunktCode={aksjonspunktCode}
+          />
         </Column>
       </Row>
     </FadingPanel>
@@ -120,6 +171,7 @@ AnkeResultatForm.defaultProps = {
   formValues: {},
   readOnly: true,
   readOnlySubmitButton: true,
+  ankevurderingresultat: {},
 };
 
 

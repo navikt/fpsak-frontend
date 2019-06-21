@@ -11,13 +11,10 @@ import {
   isSelectedBehandlingspunktReadOnly,
   getNotAcceptedByBeslutter,
 } from 'behandlingKlage/src/anke/behandlingsprosess/BehandlingsprosessAnkeSelectors';
-
-
 import styles from './behandlingspunktAnkeInfoPanel.less';
 import BehandleAnkeForm from './BehandleAnkeForm';
 import BehandleMerknaderForm from './BehandleMerknaderForm';
 import BehandleResultatForm from './BehandleResultatForm';
-import { getResultat } from '../../duckAnke';
 
 const classNames = classnames.bind(styles);
 
@@ -42,7 +39,6 @@ export const BehandlingspunktAnkeInfoPanel = ({ // NOSONAR Kompleksitet er høg,
   innstilling,
 }) => (
   <div className={classNames('behandlingsPunkt', { notAcceptedByBeslutter, statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
-    <h1>{apCodes}</h1>
     {behandlingspunktCodes.ANKEBEHANDLING === selectedBehandlingspunkt
     && (
       <BehandleAnkeForm
@@ -96,11 +92,12 @@ BehandlingspunktAnkeInfoPanel.propTypes = {
   readOnlySubmitButton: PropTypes.bool.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   notAcceptedByBeslutter: PropTypes.bool,
-  innstilling: PropTypes.shape({}).isRequired,
+  innstilling: PropTypes.shape({}),
 };
 
 BehandlingspunktAnkeInfoPanel.defaultProps = {
   notAcceptedByBeslutter: false,
+  innstilling: {},
 };
 
 const mapStateToProps = state => ({

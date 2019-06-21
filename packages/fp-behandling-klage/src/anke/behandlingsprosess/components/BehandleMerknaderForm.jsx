@@ -59,7 +59,7 @@ const AnkeMerknader = ({
       <VerticalSpacer sixteenPx />
       <Row>
         <Column xs="7">
-          <TextAreaField label="Kommentar til merknader" name="merknadKommentar" />
+          <TextAreaField readOnly={readOnly} readOnlyHideEmpty={false} label="Kommentar til merknader" name="merknadKommentar" />
         </Column>
       </Row>
       <Row>
