@@ -19,7 +19,6 @@ import {
 import {
   getBehandlingIdentifier, getFagsakYtelseType,
 } from 'behandlingForstegangOgRevurdering/src/duck';
-import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import BehandlingspunktInfoPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/BehandlingspunktInfoPanel';
 import IverksetterVedtakStatusModal from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/IverksetterVedtakStatusModal';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
@@ -36,6 +35,7 @@ import {
   fetchPreviewBrev as fetchPreview,
   fetchFptilbakePreviewBrev as fetchFptilbakePreview,
   getSelectedBehandlingspunktNavn,
+  fetchVedtaksbrevPreview,
 } from './duck';
 import {
   getBehandlingspunkter, getSelectedBehandlingspunkt, getDefaultBehandlingspunkt,

@@ -10,7 +10,6 @@ import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import {
   getBehandlingIdentifier, getFagsakYtelseType,
 } from 'behandlingInnsyn/src/duckInnsyn';
-import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import findBehandlingsprosessIcon from 'behandlingInnsyn/src/behandlingsprosess/statusIconHelper';
 import { BehandlingsprosessPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
 import BehandlingspunktInnsynInfoPanel from 'behandlingInnsyn/src/behandlingsprosess/components/BehandlingspunktInnsynInfoPanel';
@@ -231,7 +230,6 @@ const mapDispatchToProps = dispatch => ({
     push,
     fetchPreview,
     resolveProsessAksjonspunkter,
-    fetchVedtaksbrevPreview,
     resetBehandlingspunkter,
     dispatchSubmitFailed,
   }, dispatch),

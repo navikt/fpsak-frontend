@@ -1,7 +1,8 @@
 import fpsakApi from 'data/fpsakApi';
 import { getTotrinnskontrollArsaker } from 'behandling/duck';
 
-/* Action creators */
+export const fetchApprovalVedtaksbrevPreview = data => dispatch => dispatch(fpsakApi.FORHANDSVISNING_FORVED_BREV.makeRestApiRequest()(data));
+
 export const approve = (erTilbakekreving, params) => dispatch => (erTilbakekreving
     ? dispatch(fpsakApi.SAVE_TOTRINNSAKSJONSPUNKT_FPTILBAKE.makeRestApiRequest()(params))
     : dispatch(fpsakApi.SAVE_TOTRINNSAKSJONSPUNKT.makeRestApiRequest()(params)));

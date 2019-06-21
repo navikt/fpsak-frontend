@@ -11,20 +11,9 @@ export const reducerName = 'fagsak';
 
 /* Action types */
 const actionType = name => `${reducerName}/${name}`;
-export const PREVIEW_RECEIVED = actionType('PREVIEW_RECEIVED');
 export const SELECT_FAGSAK = actionType('SELECT_FAGSAK');
 export const RESET_FAGSAKER = actionType('RESET_FAGSAKER');
 export const SET_SELECTED_SAKSNUMMER = actionType('SET_SELECTED_SAKSNUMMER');
-
-/* Action creators */
-// TODO (hb) move to data/duck
-export const previewReceived = pdf => ({
-  type: PREVIEW_RECEIVED,
-  data: pdf,
-});
-
-export const fetchVedtaksbrevPreview = data => dispatch => dispatch(fpsakApi.FORHANDSVISNING_FORVED_BREV.makeRestApiRequest()(data))
-  .then(response => dispatch(previewReceived(response.data)));
 
 export const updateBehandlinger = saksnummer => dispatch => (behandlingOrchestrator.fetchBehandlinger(saksnummer, dispatch));
 
@@ -76,21 +65,8 @@ const initialState = {
   selectedSaksnummer: null,
 };
 
-const openPreview = (data) => {
-  if (data) {
-    if (window.navigator.msSaveOrOpenBlob) {
-      window.navigator.msSaveOrOpenBlob(data);
-    } else {
-      window.open(URL.createObjectURL(data));
-    }
-  }
-};
-
 export const fagsakReducer = (state = initialState, action = {}) => { // NOSONAR Switch brukes som standard i reducers
   switch (action.type) { // NOSONAR Switch brukes som standard i reducers
-    case PREVIEW_RECEIVED:
-      openPreview(action.data);
-      return state;
     case SET_SELECTED_SAKSNUMMER:
       return {
         selectedSaksnummer: action.data,
