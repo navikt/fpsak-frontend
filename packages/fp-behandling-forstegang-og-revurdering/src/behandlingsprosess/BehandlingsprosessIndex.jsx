@@ -10,7 +10,7 @@ import fagsakYtType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { BehandlingsprosessPanel, FatterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
-
+import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
 import findBehandlingsprosessIcon from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/statusIconHelper';
 import {
@@ -304,16 +304,18 @@ export class BehandlingsprosessIndex extends Component {
           closeEvent={this.goToSearchPage}
           isVedtakSubmission={isVedtakSubmissionIverksetterVedtak}
         />
-        <FatterVedtakStatusModal
-          closeEvent={this.goToSearchPage}
-          selectedBehandlingId={behandlingIdentifier.behandlingId}
-          fagsakYtelseType={fagsakYtelseType}
-          isVedtakSubmission={isVedtakSubmissionFatterVedtak}
-          behandlingStatus={behandlingStatus}
-          behandlingsresultat={behandlingsresultat}
-          aksjonspunkter={aksjonspunkter}
-          behandlingType={behandlingType}
-        />
+        {behandlingStatus.kode === BehandlingStatus.FATTER_VEDTAK && (
+          <FatterVedtakStatusModal
+            closeEvent={this.goToSearchPage}
+            selectedBehandlingId={behandlingIdentifier.behandlingId}
+            fagsakYtelseType={fagsakYtelseType}
+            isVedtakSubmission={isVedtakSubmissionFatterVedtak}
+            behandlingStatus={behandlingStatus}
+            behandlingsresultat={behandlingsresultat}
+            aksjonspunkter={aksjonspunkter}
+            behandlingType={behandlingType}
+          />
+        )}
       </React.Fragment>
     );
   }

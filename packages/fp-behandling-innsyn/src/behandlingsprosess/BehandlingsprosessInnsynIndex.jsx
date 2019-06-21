@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 
+import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import {
@@ -167,16 +168,18 @@ export class BehandlingsprosessInnsynIndex extends Component {
           resolveFaktaAksjonspunkterSuccess={resolveFaktaAksjonspunkterSuccess}
           resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
         />
-        <FatterVedtakStatusModal
-          closeEvent={this.goToSearchPage}
-          selectedBehandlingId={behandlingIdentifier.behandlingId}
-          fagsakYtelseType={fagsakYtelseType}
-          isVedtakSubmission={resolveProsessAksjonspunkterSuccess}
-          behandlingStatus={behandlingStatus}
-          behandlingsresultat={behandlingsresultat}
-          aksjonspunkter={aksjonspunkter}
-          behandlingType={behandlingType}
-        />
+        {behandlingStatus.kode === BehandlingStatus.FATTER_VEDTAK && (
+          <FatterVedtakStatusModal
+            closeEvent={this.goToSearchPage}
+            selectedBehandlingId={behandlingIdentifier.behandlingId}
+            fagsakYtelseType={fagsakYtelseType}
+            isVedtakSubmission={resolveProsessAksjonspunkterSuccess}
+            behandlingStatus={behandlingStatus}
+            behandlingsresultat={behandlingsresultat}
+            aksjonspunkter={aksjonspunkter}
+            behandlingType={behandlingType}
+          />
+        )}
       </React.Fragment>
     );
   }

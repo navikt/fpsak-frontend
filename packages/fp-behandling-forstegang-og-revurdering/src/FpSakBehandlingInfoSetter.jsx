@@ -7,10 +7,9 @@ import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import {
   isKontrollerRevurderingAksjonspunkOpen, getBehandlingSprak, getBehandlingVersjon, getBrevMaler, getAksjonspunkter,
   getBehandlingAnsvarligSaksbehandler, getBehandlingStatus, getBehandlingToTrinnsBehandling, getTotrinnskontrollArsakerUtenUdefinert,
-  getTotrinnskontrollArsakerReadOnly, getTotrinnskontrollArsaker, getBehandlingKlageVurdering, getBehandlingResultatstruktur,
-  getBehandlingsresultat, getBehandlingType, getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK, getBehandlingHasSoknad,
-  getBehandlingIsOnHold, isBehandlingInInnhentSoknadsopplysningerSteg, getBehandlingIsQueued, getBehandlingBehandlendeEnhetId,
-  getBehandlingBehandlendeEnhetNavn, getSoknad,
+  getTotrinnskontrollArsakerReadOnly, getTotrinnskontrollArsaker, getBehandlingsresultat, getBehandlingType,
+  getBehandlingHasSoknad, getBehandlingIsOnHold, isBehandlingInInnhentSoknadsopplysningerSteg, getBehandlingIsQueued,
+  getBehandlingBehandlendeEnhetId, getBehandlingBehandlendeEnhetNavn, getSoknad, getBehandlingResultatstruktur,
 } from './behandlingSelectors';
 import { getBehandlingsresultatFraOriginalBehandling, getResultatstrukturFraOriginalBehandling } from './selectors/originalBehandlingSelectors';
 
@@ -21,10 +20,10 @@ export class FpSakBehandlingInfoSetter extends Component {
     const {
       setBehandlingInfoHolder, isKontrollerRevurderingApOpen, behandlingSprak, behandlingVersjon, brevMaler, aksjonspunkter,
       behandlingAnsvarligSaksbehandler, behandlingStatus, behandlingToTrinnsBehandling, totrinnskontrollArsakerUtenUdefinert,
-      totrinnskontrollArsakerReadOnly, totrinnskontrollArsaker, behandlingKlageVurdering, behandlingResultatstruktur,
-      behandlingsresultat, behandlingType, behandlingKlageVurderingResultatNFP, behandlingKlageVurderingResultatNK, behandlingHasSoknad,
-      behandlingIsOnHold, isBehandlingInInnhentSoknadsinfoSteg, behandlingIsQueued, behandlingBehandlendeEnhetId,
-      behandlingBehandlendeEnhetNavn, soknad, behandlingsresultatFraOriginalBehandling, resultatstrukturFraOriginalBehandling,
+      totrinnskontrollArsakerReadOnly, totrinnskontrollArsaker, behandlingResultatstruktur, behandlingsresultat,
+      behandlingType, behandlingHasSoknad, behandlingIsOnHold, isBehandlingInInnhentSoknadsinfoSteg, behandlingIsQueued,
+      behandlingBehandlendeEnhetId, behandlingBehandlendeEnhetNavn, soknad, behandlingsresultatFraOriginalBehandling,
+      resultatstrukturFraOriginalBehandling,
     } = this.props;
 
     setBehandlingInfoHolder(new BehandlingInfoHolder()
@@ -39,12 +38,9 @@ export class FpSakBehandlingInfoSetter extends Component {
       .withTotrinnskontrollArsakerUtenUdefinert(totrinnskontrollArsakerUtenUdefinert)
       .withTotrinnskontrollArsakerReadOnly(totrinnskontrollArsakerReadOnly)
       .withTotrinnskontrollArsaker(totrinnskontrollArsaker)
-      .withBehandlingKlageVurdering(behandlingKlageVurdering)
       .withBehandlingResultatstruktur(behandlingResultatstruktur)
       .withBehandlingsresultat(behandlingsresultat)
       .withBehandlingType(behandlingType)
-      .withBehandlingKlageVurderingResultatNFP(behandlingKlageVurderingResultatNFP)
-      .withBehandlingKlageVurderingResultatNK(behandlingKlageVurderingResultatNK)
       .withBehandlingHasSoknad(behandlingHasSoknad)
       .withBehandlingIsOnHold(behandlingIsOnHold)
       .withIsBehandlingInInnhentSoknadsopplysningerSteg(isBehandlingInInnhentSoknadsinfoSteg)
@@ -88,12 +84,9 @@ FpSakBehandlingInfoSetter.propTypes = {
   totrinnskontrollArsakerUtenUdefinert: PropTypes.arrayOf(PropTypes.shape()),
   totrinnskontrollArsakerReadOnly: PropTypes.arrayOf(PropTypes.shape()),
   totrinnskontrollArsaker: PropTypes.arrayOf(PropTypes.shape()),
-  behandlingKlageVurdering: PropTypes.shape(),
   behandlingResultatstruktur: PropTypes.shape(),
   behandlingsresultat: PropTypes.shape(),
   behandlingType: PropTypes.shape().isRequired,
-  behandlingKlageVurderingResultatNFP: PropTypes.shape(),
-  behandlingKlageVurderingResultatNK: PropTypes.shape(),
   behandlingHasSoknad: PropTypes.bool.isRequired,
   behandlingIsOnHold: PropTypes.bool.isRequired,
   isBehandlingInInnhentSoknadsinfoSteg: PropTypes.bool.isRequired,
@@ -115,9 +108,6 @@ FpSakBehandlingInfoSetter.defaultProps = {
   totrinnskontrollArsaker: [],
   behandlingResultatstruktur: undefined,
   behandlingsresultat: undefined,
-  behandlingKlageVurdering: undefined,
-  behandlingKlageVurderingResultatNFP: undefined,
-  behandlingKlageVurderingResultatNK: undefined,
   brevMaler: undefined,
   behandlingIsQueued: false,
   behandlingBehandlendeEnhetId: undefined,
@@ -139,12 +129,9 @@ const mapStateToProps = state => ({
   totrinnskontrollArsakerUtenUdefinert: getTotrinnskontrollArsakerUtenUdefinert(state),
   totrinnskontrollArsakerReadOnly: getTotrinnskontrollArsakerReadOnly(state),
   totrinnskontrollArsaker: getTotrinnskontrollArsaker(state),
-  behandlingKlageVurdering: getBehandlingKlageVurdering(state),
   behandlingResultatstruktur: getBehandlingResultatstruktur(state),
   behandlingsresultat: getBehandlingsresultat(state),
   behandlingType: getBehandlingType(state),
-  behandlingKlageVurderingResultatNFP: getBehandlingKlageVurderingResultatNFP(state),
-  behandlingKlageVurderingResultatNK: getBehandlingKlageVurderingResultatNK(state),
   behandlingHasSoknad: getBehandlingHasSoknad(state),
   behandlingIsOnHold: getBehandlingIsOnHold(state),
   isBehandlingInInnhentSoknadsinfoSteg: isBehandlingInInnhentSoknadsopplysningerSteg(state),
