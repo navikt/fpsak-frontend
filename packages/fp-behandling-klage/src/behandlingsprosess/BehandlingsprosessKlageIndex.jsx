@@ -4,26 +4,28 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
+import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
-import {
-  getAksjonspunkter, getBehandlingVersjon, getBehandlingType, getBehandlingStatus, getBehandlingsresultat, getBehandlingHenlagt,
-} from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
-import {
-  getBehandlingIdentifier, getFagsakYtelseType,
-} from 'behandlingKlage/src/duckKlage';
-import { BehandlingsprosessPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
-import KlageBehandlingModal from 'behandlingKlage/src/behandlingsprosess/components/klage/KlageBehandlingModal';
-import BehandlingspunktKlageInfoPanel from 'behandlingKlage/src/behandlingsprosess/components/BehandlingspunktKlageInfoPanel';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import findBehandlingsprosessIcon from 'behandlingKlage/src/behandlingsprosess/statusIconHelper';
 import {
   trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta,
   BehandlingIdentifier, getLocationWithQueryParams,
 } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import { BehandlingsprosessPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
+
+import {
+ getBehandlingKlageVurderingResultatNK,
+  getAksjonspunkter, getBehandlingVersjon, getBehandlingType, getBehandlingStatus, getBehandlingsresultat, getBehandlingHenlagt,
+} from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
+
+import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingKlage/src/duckKlage';
+import KlageBehandlingModal from 'behandlingKlage/src/behandlingsprosess/components/klage/KlageBehandlingModal';
+import BehandlingspunktKlageInfoPanel from 'behandlingKlage/src/behandlingsprosess/components/BehandlingspunktKlageInfoPanel';
+import findBehandlingsprosessIcon from 'behandlingKlage/src/behandlingsprosess/statusIconHelper';
 import { getResolveFaktaAksjonspunkterSuccess } from 'behandlingKlage/src/fakta/duckFaktaKlage';
 import {
   setSelectedBehandlingspunktNavn,
@@ -212,7 +214,7 @@ export class BehandlingsprosessKlageIndex extends Component {
 
   render() {
     const {
-      behandlingspunkter, selectedBehandlingspunkt, isSelectedBehandlingHenlagt, fagsakYtelseType, behandlingIdentifier,
+      behandlingspunkter, selectedBehandlingspunkt, isSelectedBehandlingHenlagt, fagsakYtelseType, behandlingIdentifier, isKlageWithKA,
       resolveProsessAksjonspunkterSuccess, resolveFaktaAksjonspunkterSuccess, behandlingStatus, behandlingsresultat, aksjonspunkter, behandlingType,
     } = this.props;
     const { showModalKlageBehandling } = this.state;
@@ -245,16 +247,19 @@ export class BehandlingsprosessKlageIndex extends Component {
           resolveFaktaAksjonspunkterSuccess={resolveFaktaAksjonspunkterSuccess}
           resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
         />
-        <FatterVedtakStatusModal
-          closeEvent={this.goToSearchPage}
-          selectedBehandlingId={behandlingIdentifier.behandlingId}
-          fagsakYtelseType={fagsakYtelseType}
-          isVedtakSubmission={resolveProsessAksjonspunkterSuccess}
-          behandlingStatus={behandlingStatus}
-          behandlingsresultat={behandlingsresultat}
-          aksjonspunkter={aksjonspunkter}
-          behandlingType={behandlingType}
-        />
+        {behandlingStatus.kode === BehandlingStatus.FATTER_VEDTAK && (
+          <FatterVedtakStatusModal
+            closeEvent={this.goToSearchPage}
+            selectedBehandlingId={behandlingIdentifier.behandlingId}
+            fagsakYtelseType={fagsakYtelseType}
+            isVedtakSubmission={resolveProsessAksjonspunkterSuccess}
+            behandlingStatus={behandlingStatus}
+            behandlingsresultat={behandlingsresultat}
+            aksjonspunkter={aksjonspunkter}
+            behandlingType={behandlingType}
+            isKlageWithKA={isKlageWithKA}
+          />
+        )}
         <KlageBehandlingModal showModal={showModalKlageBehandling} closeEvent={this.goToSearchPage} />
       </React.Fragment>
     );
@@ -282,6 +287,7 @@ BehandlingsprosessKlageIndex.propTypes = {
   behandlingType: kodeverkObjektPropType.isRequired,
   resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
   resolveFaktaAksjonspunkterSuccess: PropTypes.bool.isRequired,
+  isKlageWithKA: PropTypes.bool.isRequired,
   behandlingsresultat: PropTypes.shape(),
 };
 
@@ -306,6 +312,7 @@ const mapStateToProps = state => ({
   behandlingStatus: getBehandlingStatus(state),
   behandlingsresultat: getBehandlingsresultat(state),
   resolveFaktaAksjonspunkterSuccess: getResolveFaktaAksjonspunkterSuccess(state),
+  isKlageWithKA: getBehandlingKlageVurderingResultatNK(state),
 });
 
 const mapDispatchToProps = dispatch => ({

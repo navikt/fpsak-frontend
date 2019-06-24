@@ -7,7 +7,7 @@ import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
 import fpsakApi, { FpsakApiKeys, reduxRestApi } from 'data/fpsakApi';
 import {
   RESET_FAGSAKER, fagsakReducer, setSelectedSaksnummer, resetFagsakContext, doNotResetWhitelist, updateFagsakInfo,
-  fetchVedtaksbrevPreview, updateBehandlinger, fetchFagsakInfo,
+  updateBehandlinger, fetchFagsakInfo,
 }
   from './duck';
 
@@ -135,36 +135,6 @@ describe('Fagsak-reducer', () => {
         expect(store.getActions()[12].type).to.contain('fpsak/api/dokument/hent-dokumentliste FINISHED');
         expect(store.getActions()[13].type).to.contain('fpsak/api/historikk STARTED');
         expect(store.getActions()[14].type).to.contain('fpsak/api/historikk FINISHED');
-      });
-  });
-
-  // TODO (TOR) Fiks denne
-  xit('skal hente og vise brev', () => {
-    const brevResponse = {
-      data: { blob: 'test' },
-    };
-    mockAxios
-      .onPost(fpsakApi.FORHANDSVISNING_FORVED_BREV.path)
-      .reply(200, brevResponse);
-
-    const store = mockStore();
-
-    const behandlingId = 1;
-
-    return store.dispatch(fetchVedtaksbrevPreview({ behandlingId }))
-      .then(() => {
-        expect(store.getActions()).to.have.length(3);
-        const [forhandsvisVedtakStartedAction, forhandsvisVedtakErrorAction, previewReceivedAction] = store.getActions();
-
-        expect(forhandsvisVedtakStartedAction.type).to.contain('/fpsak/api/dokumentbestiller/forhandsvis-vedtaksbrev STARTED');
-        expect(forhandsvisVedtakStartedAction.payload.params).is.eql({ behandlingId });
-        expect(forhandsvisVedtakStartedAction.meta).is.eql({ options: { } });
-
-        // Feilmelding fordi restMethod.openPreview feilar. Har ikkje mocka ut window.open og URL.createObjectURL
-        expect(forhandsvisVedtakErrorAction.type).to.contain('/fpsak/api/dokumentbestiller/forhandsvis-vedtaksbrev ERROR');
-        expect(forhandsvisVedtakErrorAction.payload).is.eql('URL is not defined');
-
-        expect(previewReceivedAction.type).to.contain('fagsak/PREVIEW_RECEIVED');
       });
   });
 

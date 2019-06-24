@@ -10,6 +10,7 @@ describe('<Header>', () => {
       navAnsattName="Per"
       removeErrorMessage={() => undefined}
       queryStrings={{}}
+      showDetailedErrorMessages={false}
     />);
     const lastDiv = wrapper.find('span').last();
     expect(lastDiv.text()).to.eq('Per');

@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
-import { getFeatureToggles } from 'app/duck';
+
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes, featureToggle } from '@fpsak-frontend/fp-felles';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
+import { getKodeverk, getFeatureToggles } from 'behandlingForstegangOgRevurdering/src/duck';
 import {
   getBehandlingRelatertTilgrensendeYtelserForAnnenForelder,
   getBehandlingRelatertTilgrensendeYtelserForSoker,
@@ -15,8 +18,6 @@ import {
   getPersonopplysning,
   getBarnFraTpsRelatertTilSoknad,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import FullPersonInfo from './panelBody/FullPersonInfo';

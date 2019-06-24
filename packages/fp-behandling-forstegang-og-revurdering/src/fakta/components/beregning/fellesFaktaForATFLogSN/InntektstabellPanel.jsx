@@ -1,17 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import { createSelector } from 'reselect';
 import { Element } from 'nav-frontend-typografi';
+
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { CheckboxField } from '@fpsak-frontend/form';
-import { createSelector } from 'reselect';
-import { getRettigheter } from 'navAnsatt/duck';
-import { getFeatureToggles } from 'app/duck';
 import { featureToggle } from '@fpsak-frontend/fp-felles';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import {
-  getAksjonspunkter,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+
+import { getRettigheter } from 'navAnsatt/duck';
+import { getFeatureToggles } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import PropTypes from 'prop-types';
 import { getFormValuesForBeregning } from '../BeregningFormUtils';

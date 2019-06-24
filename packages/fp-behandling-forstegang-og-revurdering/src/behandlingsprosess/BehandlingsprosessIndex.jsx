@@ -10,7 +10,7 @@ import fagsakYtType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { BehandlingsprosessPanel, FatterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
-
+import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
 import findBehandlingsprosessIcon from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/statusIconHelper';
 import {
@@ -19,7 +19,6 @@ import {
 import {
   getBehandlingIdentifier, getFagsakYtelseType,
 } from 'behandlingForstegangOgRevurdering/src/duck';
-import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import BehandlingspunktInfoPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/BehandlingspunktInfoPanel';
 import IverksetterVedtakStatusModal from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/IverksetterVedtakStatusModal';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
@@ -36,6 +35,7 @@ import {
   fetchPreviewBrev as fetchPreview,
   fetchFptilbakePreviewBrev as fetchFptilbakePreview,
   getSelectedBehandlingspunktNavn,
+  fetchVedtaksbrevPreview,
 } from './duck';
 import {
   getBehandlingspunkter, getSelectedBehandlingspunkt, getDefaultBehandlingspunkt,
@@ -304,16 +304,18 @@ export class BehandlingsprosessIndex extends Component {
           closeEvent={this.goToSearchPage}
           isVedtakSubmission={isVedtakSubmissionIverksetterVedtak}
         />
-        <FatterVedtakStatusModal
-          closeEvent={this.goToSearchPage}
-          selectedBehandlingId={behandlingIdentifier.behandlingId}
-          fagsakYtelseType={fagsakYtelseType}
-          isVedtakSubmission={isVedtakSubmissionFatterVedtak}
-          behandlingStatus={behandlingStatus}
-          behandlingsresultat={behandlingsresultat}
-          aksjonspunkter={aksjonspunkter}
-          behandlingType={behandlingType}
-        />
+        {behandlingStatus.kode === BehandlingStatus.FATTER_VEDTAK && (
+          <FatterVedtakStatusModal
+            closeEvent={this.goToSearchPage}
+            selectedBehandlingId={behandlingIdentifier.behandlingId}
+            fagsakYtelseType={fagsakYtelseType}
+            isVedtakSubmission={isVedtakSubmissionFatterVedtak}
+            behandlingStatus={behandlingStatus}
+            behandlingsresultat={behandlingsresultat}
+            aksjonspunkter={aksjonspunkter}
+            behandlingType={behandlingType}
+          />
+        )}
       </React.Fragment>
     );
   }

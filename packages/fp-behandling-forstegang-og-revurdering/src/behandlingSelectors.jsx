@@ -274,24 +274,6 @@ export const getSkalKunneLeggeTilNyeArbeidsforhold = createSelector(
   [getBehandlingInntektArbeidYtelse], (inntektArbeidYtelse = {}) => inntektArbeidYtelse.skalKunneLeggeTilNyeArbeidsforhold,
 );
 
-
-// KLAGEVURDERING
-export const getBehandlingKlageVurdering = createSelector(
-  [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['klage-vurdering'] ? selectedBehandling['klage-vurdering'] : undefined),
-);
-export const getBehandlingKlageVurderingResultatNFP = createSelector(
-  [getBehandlingKlageVurdering], (klageVurdering = {}) => klageVurdering.klageVurderingResultatNFP,
-);
-export const getBehandlingKlageVurderingResultatNK = createSelector(
-  [getBehandlingKlageVurdering], (klageVurdering = {}) => klageVurdering.klageVurderingResultatNK,
-);
-export const getBehandlingKlageFormkravResultatNFP = createSelector(
-  [getBehandlingKlageVurdering], (klageVurdering = {}) => klageVurdering.klageFormkravResultatNFP,
-);
-export const getBehandlingKlageFormkravResultatKA = createSelector(
-  [getBehandlingKlageVurdering], (klageVurdering = {}) => klageVurdering.klageFormkravResultatKA,
-);
-
 // MEDLEM
 export const getBehandlingMedlemNew = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling['soeker-medlemskap-v2']);
 // TODO petter remove when feature toggle is removed

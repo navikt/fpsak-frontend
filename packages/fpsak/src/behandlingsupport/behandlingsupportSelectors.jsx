@@ -1,28 +1,21 @@
 import { createSelector } from 'reselect';
 import moment from 'moment';
+
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+
 import fpsakApi from 'data/fpsakApi';
 import {
   getBehandlingStatus,
   getTotrinnskontrollArsakerReadOnly,
   getBehandlingIsOnHold,
 } from 'behandling/duck';
-import { getSelectedSaksnummer as getPapirsoknadSelectedSaksnummer } from '@fpsak-frontend/fp-behandling-papirsoknad/src/duck';
-import { getSelectedSaksnummer } from '@fpsak-frontend/fp-behandling-forstegang-og-revurdering/src/duck';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { getSelectedSaksnummer } from 'fagsak/duck';
 import { getRettigheter } from 'navAnsatt/duck';
 import SupportPanel from './supportPanels';
 
 
-const getSendMessageIsRelevant = createSelector(
-  [
-    getSelectedSaksnummer,
-    getPapirsoknadSelectedSaksnummer,
-    getBehandlingIsOnHold,
-  ],
-  (fagsakSaksnummerPapir, fagsakSaksnummer, isOnHold) => (
-    (fagsakSaksnummerPapir || fagsakSaksnummer) && !isOnHold
-  ),
-);
+const getSendMessageIsRelevant = createSelector([getSelectedSaksnummer, getBehandlingIsOnHold],
+  (fagsakSaksnummer, isOnHold) => (fagsakSaksnummer && !isOnHold));
 
 const getReturnedIsRelevant = createSelector(
   [getTotrinnskontrollArsakerReadOnly, getBehandlingStatus],

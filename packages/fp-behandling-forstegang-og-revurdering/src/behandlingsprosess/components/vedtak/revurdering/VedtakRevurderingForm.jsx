@@ -3,27 +3,30 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { clearFields, formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
+import { bindActionCreators } from 'redux';
+import { injectIntl, intlShape } from 'react-intl';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import { isInnvilget, isAvslag, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+
 import {
   getBehandlingResultatstruktur, getBehandlingStatus,
   isBehandlingStatusReadOnly, getBehandlingsresultat, getBehandlingArsakTyper, getBehandlingSprak, getBehandlingVersjon,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
-import { getFagsakYtelseType, getSelectedBehandlingId, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
-import { isInnvilget, isAvslag, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import {
+ getFagsakYtelseType, getSelectedBehandlingId, getAlleKodeverk,
+} from 'behandlingForstegangOgRevurdering/src/duck';
+import { fetchVedtaksbrevPreview } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duck';
 import { getRettigheter } from 'navAnsatt/duck';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import FritekstBrevPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/FritekstBrevPanel';
-import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import { fetchVedtaksbrevPreview } from 'fagsak/duck';
-import { bindActionCreators } from 'redux';
-import { injectIntl, intlShape } from 'react-intl';
 import VedtakOverstyrendeKnapp from '../VedtakOverstyrendeKnapp';
 import VedtakAksjonspunktPanel from '../VedtakAksjonspunktPanel';
 import VedtakRevurderingSubmitPanel from './VedtakRevurderingSubmitPanel';

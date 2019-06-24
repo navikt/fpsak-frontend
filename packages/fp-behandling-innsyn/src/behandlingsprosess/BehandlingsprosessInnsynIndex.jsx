@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 
+import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import {
   getBehandlingIdentifier, getFagsakYtelseType,
 } from 'behandlingInnsyn/src/duckInnsyn';
-import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import findBehandlingsprosessIcon from 'behandlingInnsyn/src/behandlingsprosess/statusIconHelper';
 import { BehandlingsprosessPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
 import BehandlingspunktInnsynInfoPanel from 'behandlingInnsyn/src/behandlingsprosess/components/BehandlingspunktInnsynInfoPanel';
@@ -168,16 +168,18 @@ export class BehandlingsprosessInnsynIndex extends Component {
           resolveFaktaAksjonspunkterSuccess={resolveFaktaAksjonspunkterSuccess}
           resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
         />
-        <FatterVedtakStatusModal
-          closeEvent={this.goToSearchPage}
-          selectedBehandlingId={behandlingIdentifier.behandlingId}
-          fagsakYtelseType={fagsakYtelseType}
-          isVedtakSubmission={resolveProsessAksjonspunkterSuccess}
-          behandlingStatus={behandlingStatus}
-          behandlingsresultat={behandlingsresultat}
-          aksjonspunkter={aksjonspunkter}
-          behandlingType={behandlingType}
-        />
+        {behandlingStatus.kode === BehandlingStatus.FATTER_VEDTAK && (
+          <FatterVedtakStatusModal
+            closeEvent={this.goToSearchPage}
+            selectedBehandlingId={behandlingIdentifier.behandlingId}
+            fagsakYtelseType={fagsakYtelseType}
+            isVedtakSubmission={resolveProsessAksjonspunkterSuccess}
+            behandlingStatus={behandlingStatus}
+            behandlingsresultat={behandlingsresultat}
+            aksjonspunkter={aksjonspunkter}
+            behandlingType={behandlingType}
+          />
+        )}
       </React.Fragment>
     );
   }
@@ -231,7 +233,6 @@ const mapDispatchToProps = dispatch => ({
     push,
     fetchPreview,
     resolveProsessAksjonspunkter,
-    fetchVedtaksbrevPreview,
     resetBehandlingspunkter,
     dispatchSubmitFailed,
   }, dispatch),

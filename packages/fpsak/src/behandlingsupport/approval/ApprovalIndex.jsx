@@ -20,13 +20,12 @@ import {
   getBehandlingVersjon, getBehandlingAnsvarligSaksbehandler, getTotrinnskontrollArsakerUtenUdefinert,
   getBehandlingStatus, getBehandlingToTrinnsBehandling, getTotrinnskontrollArsakerReadOnly, getBehandlingIdentifier, getBehandlingType,
 } from 'behandling/duck';
-import { fetchVedtaksbrevPreview } from 'fagsak/duck';
 import { getNavAnsatt } from 'navAnsatt/duck';
 import { getKodeverk, getFpTilbakeKodeverk } from 'kodeverk/duck';
 import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';
 import ToTrinnsForm from './components/ToTrinnsForm';
 import ToTrinnsFormReadOnly from './components/ToTrinnsFormReadOnly';
-import { approve, resetApproval } from './duck';
+import { approve, resetApproval, fetchApprovalVedtaksbrevPreview } from './duck';
 
 import styles from './ApprovalIndex.less';
 
@@ -162,7 +161,7 @@ export class ApprovalIndexImpl extends Component {
   }
 
   forhandsvisVedtaksbrev() {
-    const { fetchVedtaksbrevPreview: fetchPreview, behandlingIdentifier } = this.props;
+    const { fetchApprovalVedtaksbrevPreview: fetchPreview, behandlingIdentifier } = this.props;
     fetchPreview({ behandlingId: behandlingIdentifier.behandlingId });
   }
 
@@ -240,7 +239,7 @@ ApprovalIndexImpl.propTypes = {
   totrinnskontrollSkjermlenkeContext: PropTypes.arrayOf(PropTypes.shape()),
   totrinnskontrollReadOnlySkjermlenkeContext: PropTypes.arrayOf(PropTypes.shape()),
   approve: PropTypes.func.isRequired,
-  fetchVedtaksbrevPreview: PropTypes.func.isRequired,
+  fetchApprovalVedtaksbrevPreview: PropTypes.func.isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
   selectedBehandlingVersjon: PropTypes.number.isRequired,
   ansvarligSaksbehandler: PropTypes.string,
@@ -288,7 +287,7 @@ const mapDispatchToProps = dispatch => ({
     push,
     approve,
     resetApproval,
-    fetchVedtaksbrevPreview,
+    fetchApprovalVedtaksbrevPreview,
   }, dispatch),
 });
 

@@ -1,24 +1,72 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 
+import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { Image } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { requireProps } from '@fpsak-frontend/fp-felles';
-import { getBehandlingKlageVurderingResultatNK } from 'behandling/duck';
 
 import styles from './fatterVedtakStatusModal.less';
 
+
+const hasOpenAksjonspunktForVedtakUtenTotrinnskontroll = (aksjonspunkter = []) => aksjonspunkter
+  .some(ap => ap.definisjon.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL);
+
+const isBehandlingsresultatOpphor = behandlingsresultat => behandlingsresultat.type.kode === behandlingResultatType.OPPHOR;
+
+const getModalDescriptionTextCode = (behandlingsresultat, aksjonspunkter, ytelseType, behType, isKlageWithKA) => {
+  if (isBehandlingsresultatOpphor(behandlingsresultat)) {
+    return 'FatterVedtakStatusModal.ModalDescriptionFPOpphort';
+  }
+  if (hasOpenAksjonspunktForVedtakUtenTotrinnskontroll(aksjonspunkter)) {
+    if (ytelseType.kode === FagsakYtelseType.ENGANGSSTONAD) {
+      return 'FatterVedtakStatusModal.ModalDescriptionES';
+    }
+    if (ytelseType.kode === FagsakYtelseType.SVANGERSKAPSPENGER) {
+      return 'FatterVedtakStatusModal.ModalDescriptionSVP';
+    }
+    return 'FatterVedtakStatusModal.ModalDescriptionFP';
+  }
+  if (isKlageWithKA) {
+    return 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver';
+  }
+  return behType === BehandlingType.KLAGE ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter' : 'FatterVedtakStatusModal.Sendt';
+};
+
+const getAltImgTextCode = (aksjonspunkter, ytelseType, behType, isKlageWithKA) => {
+  if (hasOpenAksjonspunktForVedtakUtenTotrinnskontroll(aksjonspunkter)) {
+    if (ytelseType.kode === FagsakYtelseType.ENGANGSSTONAD) {
+      return 'FatterVedtakStatusModal.IkkeInnvilgetES';
+    }
+    if (ytelseType.kode === FagsakYtelseType.SVANGERSKAPSPENGER) {
+      return 'FatterVedtakStatusModal.IkkeInnvilgetSVP';
+    }
+    return 'FatterVedtakStatusModal.IkkeInnvilgetFP';
+  }
+  if (isKlageWithKA) {
+    return 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver';
+  }
+  return behType === BehandlingType.KLAGE ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter' : 'FatterVedtakStatusModal.Sendt';
+};
+
+const getInfoTextCode = (bType, isKlageWithKA) => {
+  if (isKlageWithKA) {
+    return 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver';
+  }
+  return bType.kode === BehandlingType.KLAGE ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter' : 'FatterVedtakStatusModal.SendtBeslutter';
+};
+
+const isStatusFatterVedtak = behandlingstatus => behandlingstatus.kode === BehandlingStatus.FATTER_VEDTAK;
 /**
  * FatterVedtakStatusModal
  *
@@ -34,13 +82,21 @@ export class FatterVedtakStatusModal extends Component {
 
   render() {
     const {
-      intl, showModal, closeEvent, infoTextCode, altImgTextCode, isVedtakSubmission, modalDescriptionTextCode,
+      intl, showModal, closeEvent, isVedtakSubmission, behandlingStatus, behandlingType, isKlageWithKA, aksjonspunkter, fagsakYtelseType,
+      behandlingsresultat,
     } = this.props;
     if (showModal !== undefined) {
       this.showModal = showModal;
     } else if (!this.showModal) {
       this.showModal = isVedtakSubmission;
     }
+
+    const isFatterVedtak = isStatusFatterVedtak(behandlingStatus);
+    const infoTextCode = isFatterVedtak ? getInfoTextCode(behandlingType, isKlageWithKA) : '';
+    const altImgTextCode = isFatterVedtak ? getAltImgTextCode(aksjonspunkter, fagsakYtelseType, behandlingType, isKlageWithKA) : '';
+    const modalDescriptionTextCode = isFatterVedtak
+        ? getModalDescriptionTextCode(behandlingsresultat, aksjonspunkter, fagsakYtelseType, behandlingType, isKlageWithKA)
+        : 'FatterVedtakStatusModal.ModalDescription';
 
     return (
       <Modal
@@ -82,89 +138,22 @@ export class FatterVedtakStatusModal extends Component {
 
 FatterVedtakStatusModal.propTypes = {
   closeEvent: PropTypes.func.isRequired,
-  infoTextCode: PropTypes.string.isRequired,
-  altImgTextCode: PropTypes.string.isRequired,
-  modalDescriptionTextCode: PropTypes.string.isRequired,
   isVedtakSubmission: PropTypes.bool,
   intl: intlShape.isRequired,
   showModal: PropTypes.bool,
+  isKlageWithKA: PropTypes.bool,
+  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
+  fagsakYtelseType: kodeverkObjektPropType.isRequired,
+  behandlingStatus: kodeverkObjektPropType.isRequired,
+  behandlingType: kodeverkObjektPropType.isRequired,
+  behandlingsresultat: PropTypes.shape(),
 };
 
 FatterVedtakStatusModal.defaultProps = {
   showModal: undefined,
   isVedtakSubmission: false,
+  isKlageWithKA: false,
+  behandlingsresultat: undefined,
 };
 
-export const isKlageWithKA = (klageVurderingResultatNK) => {
-  const meholdIKlageAvNK = klageVurderingResultatNK;
-  return meholdIKlageAvNK;
-};
-
-const hasOpenAksjonspunktForVedtakUtenTotrinnskontroll = (aksjonspunkter = []) => aksjonspunkter
-  .some(ap => ap.definisjon.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL);
-
-const isBehandlingsresultatOpphor = behandlingsresultat => behandlingsresultat.type.kode === behandlingResultatType.OPPHOR;
-
-const getModalDescriptionTextCode = (behandlingsresultat, aksjonspunkter, ytelseType, behType) => {
-  if (isBehandlingsresultatOpphor(behandlingsresultat)) {
-    return 'FatterVedtakStatusModal.ModalDescriptionFPOpphort';
-  }
-  if (hasOpenAksjonspunktForVedtakUtenTotrinnskontroll(aksjonspunkter)) {
-    if (ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD) {
-      return 'FatterVedtakStatusModal.ModalDescriptionES';
-    }
-    if (ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER) {
-      return 'FatterVedtakStatusModal.ModalDescriptionSVP';
-    }
-    return 'FatterVedtakStatusModal.ModalDescriptionFP';
-  }
-  if (isKlageWithKA(getBehandlingKlageVurderingResultatNK)) {
-    return 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver';
-  }
-  return behType === behandlingType.KLAGE ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter' : 'FatterVedtakStatusModal.Sendt';
-};
-
-const getAltImgTextCode = (aksjonspunkter, ytelseType, behType) => {
-  if (hasOpenAksjonspunktForVedtakUtenTotrinnskontroll(aksjonspunkter)) {
-    if (ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD) {
-      return 'FatterVedtakStatusModal.IkkeInnvilgetES';
-    }
-    if (ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER) {
-      return 'FatterVedtakStatusModal.IkkeInnvilgetSVP';
-    }
-    return 'FatterVedtakStatusModal.IkkeInnvilgetFP';
-  }
-  if (isKlageWithKA(getBehandlingKlageVurderingResultatNK)) {
-    return 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver';
-  }
-  return behType === behandlingType.KLAGE ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter' : 'FatterVedtakStatusModal.Sendt';
-};
-
-const getInfoTextCode = (bType) => {
-  if (isKlageWithKA(getBehandlingKlageVurderingResultatNK)) {
-    return 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver';
-  }
-  return bType.kode === behandlingType.KLAGE ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter' : 'FatterVedtakStatusModal.SendtBeslutter';
-};
-
-const isStatusFatterVedtak = behandlingstatus => behandlingstatus.kode === behandlingStatus.FATTER_VEDTAK;
-
-// TODO (TOR) Hentar ingenting fra state - fjern connect
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const isFatterVedtak = isStatusFatterVedtak(ownProps.behandlingStatus);
-  const isBehandlingStatusFatterVedtak = ownProps.behandlingStatus.kode === behandlingStatus.FATTER_VEDTAK ? true : undefined;
-  const infoTextCode = isFatterVedtak ? getInfoTextCode(ownProps.behandlingType) : '';
-  const altImgTextCode = isFatterVedtak ? getAltImgTextCode(ownProps.aksjonspunkter, ownProps.fagsakYtelseType, ownProps.behandlingType) : '';
-  const modalDescriptionTextCode = isFatterVedtak
-      ? getModalDescriptionTextCode(ownProps.behandlingsresultat, ownProps.aksjonspunkter, ownProps.fagsakYtelseType, ownProps.behandlingType)
-      : 'FatterVedtakStatusModal.ModalDescription';
-  return () => ({
-    isBehandlingStatusFatterVedtak,
-    infoTextCode,
-    altImgTextCode,
-    modalDescriptionTextCode,
-  });
-};
-
-
-export default connect(mapStateToPropsFactory)(injectIntl(requireProps(['selectedBehandlingId', 'isBehandlingStatusFatterVedtak'])(FatterVedtakStatusModal)));
+export default injectIntl(requireProps(['selectedBehandlingId'])(FatterVedtakStatusModal));

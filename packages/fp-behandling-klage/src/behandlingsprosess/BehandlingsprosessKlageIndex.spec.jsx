@@ -74,6 +74,7 @@ describe('<BehandlingsprosessKlageIndex>', () => {
         kode: 'test',
         navn: 'test',
       }}
+      isKlageWithKA
     />);
 
     const panel = wrapper.find(BehandlingspunktKlageInfoPanel);
@@ -178,6 +179,7 @@ describe('<BehandlingsprosessKlageIndex>', () => {
         kode: 'test',
         navn: 'test',
       }}
+      isKlageWithKA
     />);
 
     const panel = wrapper.find(BehandlingspunktKlageInfoPanel);

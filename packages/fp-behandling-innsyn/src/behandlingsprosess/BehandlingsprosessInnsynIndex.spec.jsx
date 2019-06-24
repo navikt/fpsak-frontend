@@ -48,7 +48,6 @@ describe('<BehandlingsprosessInnsynIndex>', () => {
       push={sinon.spy()}
       resolveProsessAksjonspunkter={stub}
       fetchPreview={sinon.spy()}
-      fetchVedtaksbrevPreview={sinon.spy()}
       dispatchSubmitFailed={sinon.spy()}
       haveSentVarsel
       behandlingType={{
@@ -148,7 +147,6 @@ describe('<BehandlingsprosessInnsynIndex>', () => {
       push={sinon.spy()}
       resolveProsessAksjonspunkter={stub}
       fetchPreview={sinon.spy()}
-      fetchVedtaksbrevPreview={sinon.spy()}
       dispatchSubmitFailed={sinon.spy()}
       haveSentVarsel
       behandlingType={{

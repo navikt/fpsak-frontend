@@ -10,7 +10,6 @@ import Lukknapp from 'nav-frontend-lukknapp';
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 
-import { getShowDetailedErrorMessages } from 'app/duck';
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
 
 import styles from './errorMessagePanel.less';
@@ -140,7 +139,6 @@ export const getErrorMessageList = createSelector([(state, ownProps) => ownProps
 
 const mapStateToProps = (state, ownProps) => ({
   errorMessages: getErrorMessageList(state, ownProps),
-  showDetailedErrorMessages: getShowDetailedErrorMessages(state),
 });
 
 export default injectIntl(connect(mapStateToProps)(ErrorMessagePanel));

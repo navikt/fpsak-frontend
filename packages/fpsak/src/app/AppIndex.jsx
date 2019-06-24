@@ -5,11 +5,13 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 import { captureException, withScope, configureScope } from '@sentry/browser';
+
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import { parseQueryString } from '@fpsak-frontend/utils';
 import { Header } from '@fpsak-frontend/dekorator';
+
 import AppConfigResolver from './AppConfigResolver';
-import { getFunksjonellTid, getNavAnsattName } from './duck';
+import { getFunksjonellTid, getNavAnsattName, getShowDetailedErrorMessages } from './duck';
 import LanguageProvider from './LanguageProvider';
 import Home from './components/Home';
 
@@ -34,6 +36,7 @@ class AppIndex extends Component {
     location: PropTypes.shape({
       search: PropTypes.string,
     }).isRequired,
+    showDetailedErrorMessages: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -77,7 +80,7 @@ class AppIndex extends Component {
 
   render() {
     const {
-      location, crashMessage, errorMessagesLength, navAnsattName, funksjonellTid, removeErrorMessage: removeErrorMsg,
+      location, crashMessage, errorMessagesLength, navAnsattName, funksjonellTid, removeErrorMessage: removeErrorMsg, showDetailedErrorMessages,
     } = this.props;
 
     // todo sjekke om dette er beste stedet å sette dette for sentry
@@ -95,6 +98,7 @@ class AppIndex extends Component {
             navAnsattName={navAnsattName}
             removeErrorMessage={removeErrorMsg}
             funksjonellTid={funksjonellTid}
+            showDetailedErrorMessages={showDetailedErrorMessages}
           />
           {!crashMessage && (
             <Home nrOfErrorMessages={queryStrings.errorcode || queryStrings.errormessage ? 1 : errorMessagesLength} />
@@ -111,6 +115,7 @@ const mapStateToProps = state => ({
   crashMessage: errorHandler.getCrashMessage(state),
   navAnsattName: getNavAnsattName(state),
   funksjonellTid: getFunksjonellTid(state),
+  showDetailedErrorMessages: getShowDetailedErrorMessages(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

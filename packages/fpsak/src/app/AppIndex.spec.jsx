@@ -15,6 +15,7 @@ describe('<AppIndex>', () => {
       showCrashMessage={sinon.spy()}
       removeErrorMessage={sinon.spy()}
       location={{ search: undefined }}
+      showDetailedErrorMessages={false}
     />);
 
     const headerComp = wrapper.find('Header');
@@ -34,6 +35,7 @@ describe('<AppIndex>', () => {
       removeErrorMessage={sinon.spy()}
       errorMessagesLength={1}
       location={{ search: undefined }}
+      showDetailedErrorMessages={false}
     />);
 
     const headerComp = wrapper.find('Header');
@@ -57,6 +59,7 @@ describe('<AppIndex>', () => {
       showCrashMessage={sinon.spy()}
       errorMessagesLength={1}
       location={location}
+      showDetailedErrorMessages={false}
     />);
 
     const headerComp = wrapper.find('Header');
