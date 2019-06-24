@@ -13,6 +13,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getBehandlingKlageVurdering, getBehandlingStatus } from 'behandling/duck';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import { getKodeverk } from 'kodeverk/duck';
+import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 import totrinnskontrollaksjonspunktTextCodes from '../totrinnskontrollaksjonspunktTextCodes';
 import vurderFaktaOmBeregningTotrinnText from '../VurderFaktaBeregningTotrinnText';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
@@ -40,26 +41,47 @@ const buildVarigEndringBeregningText = beregningDto => (beregningDto.fastsattVar
   />
 ));
 
-const getNavn = (arbeidsforholdHandlingType, arbeidsforholdHandlingTyper) => {
-  const type = arbeidsforholdHandlingTyper.find(t => t.kode === arbeidsforholdHandlingType.kode);
-  return type ? type.navn : '';
+export const getFaktaOmArbeidsforholdMessages = (arbeidforholdDto, arbeidsforholdHandlingTyper) => {
+  const formattedMessages = [];
+  const { kode } = arbeidforholdDto.arbeidsforholdHandlingType;
+  if (arbeidforholdDto.brukPermisjon === true) {
+    formattedMessages.push(<FormattedHTMLMessage id="ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIPermisjon" />);
+    return formattedMessages;
+  }
+  if (arbeidforholdDto.brukPermisjon === false) {
+    formattedMessages.push(<FormattedHTMLMessage id="ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIkkeIPermisjon" />);
+    if (kode === arbeidsforholdHandlingType.BRUK) {
+      return formattedMessages;
+    }
+  }
+  const type = arbeidsforholdHandlingTyper.find(t => t.kode === kode);
+  const melding = type !== undefined && type !== null ? type.navn : '';
+  formattedMessages.push(<FormattedHTMLMessage id="ToTrinnsForm.FaktaOmArbeidsforhold.Melding" values={{ melding }} />);
+  return formattedMessages;
 };
 
-const buildArbeidsforholdText = (aksjonspunkt, arbeidsforholdHandlingTyper) => aksjonspunkt.arbeidforholdDtos.map(
-  arbeidforholdDto => (
-    <FormattedHTMLMessage
-      id="ToTrinnsForm.OpplysningerOmSøker.Arbeidsforhold"
-      values={
-        {
+const buildArbeidsforholdText = (aksjonspunkt, arbeidsforholdHandlingTyper) => aksjonspunkt.arbeidforholdDtos.map((arbeidforholdDto) => {
+  const formattedMessages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
+  return (
+    <React.Fragment>
+      <FormattedHTMLMessage
+        id="ToTrinnsForm.OpplysningerOmSøker.Arbeidsforhold"
+        values={{
           orgnavn: arbeidforholdDto.navn,
           orgnummer: arbeidforholdDto.organisasjonsnummer,
           arbeidsforholdId: arbeidforholdDto.arbeidsforholdId ? `...${arbeidforholdDto.arbeidsforholdId.slice(-4)}` : '',
-          melding: getNavn(arbeidforholdDto.arbeidsforholdHandlingType, arbeidsforholdHandlingTyper),
-        }
-      }
-    />
-  ),
-);
+        }}
+      />
+      { formattedMessages.map(formattedMessage => (
+        <React.Fragment key={formattedMessage.props.id}>
+          {' '}
+          {formattedMessage}
+          {' '}
+        </React.Fragment>
+      ))}
+    </React.Fragment>
+  );
+});
 
 const buildUttakText = aksjonspunkt => aksjonspunkt.uttakPerioder.map((uttakperiode) => {
   const fom = formatDate(uttakperiode.fom);

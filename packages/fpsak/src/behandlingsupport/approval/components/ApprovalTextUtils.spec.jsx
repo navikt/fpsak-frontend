@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import getAksjonspunktText from './ApprovalTextUtils';
+import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
+import getAksjonspunktText, { getFaktaOmArbeidsforholdMessages } from './ApprovalTextUtils';
 
 const lagAksjonspunkt = (
   aksjonspunktKode, opptjeningAktiviteter, beregningDto,
@@ -17,6 +18,15 @@ const lagAksjonspunkt = (
   uttakPerioder,
   arbeidforholdDtos,
 });
+
+const arbeidsforholdHandlingTyper = [
+  { kode: 'BRUK', navn: 'aaa' },
+  { kode: 'NYTT_ARBEIDSFORHOLD', navn: 'bbb' },
+  { kode: 'BRUK_UTEN_INNTEKTSMELDING', navn: 'ccc' },
+  { kode: 'IKKE_BRUK', navn: 'ddd' },
+  { kode: 'SLÅTT_SAMMEN_MED_ANNET', navn: 'eee' },
+  { kode: 'LAGT_TIL_AV_SAKSBEHANDLER', navn: 'fff' },
+];
 
 describe('<ApprovalTextUtils>', () => {
   it('skal vise korrekt tekst for aksjonspunkt 5004', () => {
@@ -471,5 +481,34 @@ describe('<ApprovalTextUtils>', () => {
     );
     const message = getAksjonspunktText.resultFunc(true, null, null, null, null)(aksjonspunkt);
     expect(message[0].props.id).to.eql('ToTrinnsForm.AvklarUttak.PeriodeAvklart');
+  });
+  it('skal vise korrekt tekst for aksjonspunkt 5080 når søker er i permisjon, skal kun vise tekst om permisjon', () => {
+    const arbeidforholdDto = {
+      arbeidsforholdHandlingType: { kode: arbeidsforholdHandlingType.BRUK },
+      brukPermisjon: true,
+    };
+    const messages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
+    expect(messages).to.be.length(1);
+    expect(messages[0].props.id).to.eql('ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIPermisjon');
+  });
+  it('skal vise korrekt tekst for aksjonspunkt 5080 når søker ikke er i permisjon, skal ikke vise tekst for bruk', () => {
+    const arbeidforholdDto = {
+      arbeidsforholdHandlingType: { kode: arbeidsforholdHandlingType.BRUK },
+      brukPermisjon: false,
+    };
+    const messages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
+    expect(messages).to.be.length(1);
+    expect(messages[0].props.id).to.eql('ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIkkeIPermisjon');
+  });
+  it('skal vise korrekt tekst for aksjonspunkt 5080 når søker ikke er i permisjon sammen med en annen handling som ikke er bruk', () => {
+    const arbeidforholdDto = {
+      arbeidsforholdHandlingType: { kode: arbeidsforholdHandlingType.BRUK_UTEN_INNTEKTSMELDING },
+      brukPermisjon: false,
+    };
+    const messages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
+    expect(messages).to.be.length(2);
+    expect(messages[0].props.id).to.eql('ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIkkeIPermisjon');
+    expect(messages[1].props.id).to.eql('ToTrinnsForm.FaktaOmArbeidsforhold.Melding');
+    expect(messages[1].props.values.melding).to.eql('ccc');
   });
 });
