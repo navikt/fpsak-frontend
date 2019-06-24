@@ -13,7 +13,6 @@ import {
   getBehandlingRelatertTilgrensendeYtelserForSoker,
   getBehandlingSprak,
   getPersonopplysning,
-  getBarnFraTpsRelatertTilSoknad,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -34,6 +33,19 @@ const getUtlandSakstype = (aksjonspunkter) => {
     return aksjonspunkter.find(ap => ap.definisjon.kode === MANUELL_MARKERING_AV_UTLAND_SAKSTYPE).begrunnelse;
   }
   return utlandSakstypeKode.NASJONAL;
+};
+
+const getBarnlist = (personopplysninger) => {
+  const { barn, barnSoktFor } = personopplysninger;
+  const barnSoktForMedTag = [];
+  if (barnSoktFor) {
+    barnSoktFor.forEach((soktBarn) => {
+      barnSoktForMedTag.push(soktBarn);
+      barnSoktForMedTag[barnSoktForMedTag.length - 1].soktForBarn = true;
+    });
+    return (barn.concat(barnSoktForMedTag));
+  }
+  return barn;
 };
 
 /**
@@ -98,7 +110,6 @@ export class PersonInfoPanelImpl extends Component {
       submitCallback,
       aksjonspunkter,
       featureToggleUtland,
-      barnFraTps,
       ...formProps
     } = this.props;
     const { selected } = this.state;
@@ -129,7 +140,7 @@ export class PersonInfoPanelImpl extends Component {
             submitCallback={submitCallback}
             sivilstandTypes={sivilstandTypes}
             personstatusTypes={personstatusTypes}
-            regBarn={barnFraTps}
+            regBarn={getBarnlist(personopplysninger) || null}
             featureToggleUtland={featureToggleUtland || true}
           />
           <VerticalSpacer eightPx />
@@ -153,7 +164,6 @@ PersonInfoPanelImpl.propTypes = {
   submitCallback: PropTypes.func,
   relatertYtelseTypes: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   relatertYtelseStatus: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  barnFraTps: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   ...formPropTypes,
 };
@@ -181,7 +191,6 @@ const mapStateToPropsFactory = (initialState) => {
     relatertYtelseTypes,
     featureToggleUtland,
     personopplysninger: getPersonopplysning(state),
-    barnFraTps: getBarnFraTpsRelatertTilSoknad(state),
     relatertTilgrensendeYtelserForSoker: getBehandlingRelatertTilgrensendeYtelserForSoker(state),
     relatertTilgrensendeYtelserForAnnenForelder: getBehandlingRelatertTilgrensendeYtelserForAnnenForelder(state),
     sprakkode: getBehandlingSprak(state),

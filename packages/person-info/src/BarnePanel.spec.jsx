@@ -8,19 +8,19 @@ import BarnePanel from './BarnePanel';
 describe('<BarnePanel>', () => {
   const barn1 = {
     navn: 'barn test 1',
-    fodselsDato: '2010-11-12',
+    fodselsdato: '2010-11-12',
     fodselsnummer: '189309 81748',
     navBrukerKjonn: { kode: navBrukerKjonn.KVINNE },
   };
   const barn2 = {
     navn: 'barn test 2',
-    fodselsDato: '2010-11-12',
+    fodselsdato: '2010-11-12',
     fodselsnummer: '252143 98661',
     navBrukerKjonn: { kode: navBrukerKjonn.MANN },
   };
   const barn3 = {
     navn: 'barn test 3',
-    fodselsDato: '2010-11-12',
+    fodselsdato: '2010-11-12',
     fodselsnummer: '252143 98661',
     navBrukerKjonn: { kode: navBrukerKjonn.MANN },
   };

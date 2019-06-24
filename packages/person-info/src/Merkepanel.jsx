@@ -20,6 +20,7 @@ import styles from './merkepanel.less';
  */
 const MerkePanel = ({
   erDod,
+  erDodFodt,
   erNAVAnsatt,
   erVerge,
   diskresjonskode,
@@ -34,6 +35,14 @@ const MerkePanel = ({
       && (
       <EtikettInfo className={styles.dodMerke} title={formatMessage({ id: 'MerkePanel.DodTittel' })}>
         <FormattedMessage id="MerkePanel.Dod" />
+      </EtikettInfo>
+      )
+      }
+
+      {erDodFodt
+      && (
+      <EtikettInfo className={styles.dodMerke} title={formatMessage({ id: 'MerkePanel.DodTittel' })}>
+        <FormattedMessage id="MerkePanel.DodFodt" />
       </EtikettInfo>
       )
       }
@@ -76,6 +85,7 @@ const MerkePanel = ({
 
 MerkePanel.propTypes = {
   erDod: PropTypes.bool,
+  erDodFodt: PropTypes.bool,
   erNAVAnsatt: PropTypes.bool,
   erVerge: PropTypes.bool,
   diskresjonskode: PropTypes.string,
@@ -86,6 +96,7 @@ MerkePanel.defaultProps = {
   diskresjonskode: '',
   erNAVAnsatt: false,
   erDod: false,
+  erDodFodt: false,
   erVerge: false,
 };
 
