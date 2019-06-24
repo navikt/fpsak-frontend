@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import classnames from 'classnames/bind';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import {
-  getBehandlingspunktAksjonspunkterCodes,
   hasBehandlingspunktAtLeastOneOpenAksjonspunkt,
   isBehandlingspunktAksjonspunkterSolvable,
   isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt,
@@ -33,7 +32,6 @@ export const BehandlingspunktAnkeInfoPanel = ({ // NOSONAR Kompleksitet er høg,
   openAksjonspunkt,
   readOnly,
   isApSolvable,
-  apCodes,
   readOnlySubmitButton,
   notAcceptedByBeslutter,
   innstilling,
@@ -90,7 +88,6 @@ BehandlingspunktAnkeInfoPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isApSolvable: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   notAcceptedByBeslutter: PropTypes.bool,
   innstilling: PropTypes.shape({}),
 };
@@ -104,7 +101,6 @@ const mapStateToProps = state => ({
   openAksjonspunkt: hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
   readOnly: isSelectedBehandlingspunktReadOnly(state),
   isApSolvable: isBehandlingspunktAksjonspunkterSolvable(state),
-  apCodes: getBehandlingspunktAksjonspunkterCodes(state),
   readOnlySubmitButton: isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
   notAcceptedByBeslutter: getNotAcceptedByBeslutter(state),
 });

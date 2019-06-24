@@ -16,7 +16,6 @@ import createEngangsstonadBpProps from './definition/engangsstonadKlageBpDefinit
 import createForeldrepengerBpProps from './definition/foreldrepengerKlageBpDefinition';
 import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from './duckBpKlage';
 import { getFagsakYtelseType } from '../duckKlage';
-import createForeldrepengerAnkeBpDefinition from '../anke/behandlingsprosess/definition/createForeldrepengerAnkeBpDefinition';
 
 // TODO (TOR) Refaktorer: veldig mykje av dette er felles med andre behandlingstypar.
 

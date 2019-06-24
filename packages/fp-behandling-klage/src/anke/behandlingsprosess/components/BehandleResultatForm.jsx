@@ -97,15 +97,10 @@ const AnkeResultat = (resultat) => {
 };
 
 const AnkeResultatForm = ({
-  readOnly,
   handleSubmit,
-  saveKlage,
   previewCallback,
-  readOnlySubmitButton,
   aksjonspunktCode,
-  sprakkode,
   formValues,
-  intl,
   ankevurderingresultat,
   ...formProps
 }) => (

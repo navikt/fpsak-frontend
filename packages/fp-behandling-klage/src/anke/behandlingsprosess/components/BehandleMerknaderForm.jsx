@@ -19,19 +19,12 @@ import { getSelectedBehandlingspunktAksjonspunkter } from '../Behandlingsprosess
 import { buildInitialValues } from './BehandleAnkeForm';
 import PreviewAnkeLink from './PreviewAnkeLink';
 
-const canPreview = formValues => (true);
-const canSubmit = formValues => (true);
-
 const AnkeMerknader = ({
   readOnly,
   handleSubmit,
-  saveKlage,
   previewCallback,
   readOnlySubmitButton,
   aksjonspunktCode,
-  sprakkode,
-  formValues,
-  intl,
   ...formProps
 }) => (
   <form onSubmit={handleSubmit}>
@@ -67,22 +60,17 @@ const AnkeMerknader = ({
           <BehandlingspunktSubmitButton
             formName={formProps.form}
             isReadOnly={readOnly}
-            isSubmittable={canSubmit(formValues)}
             hasEmptyRequiredFields={false}
             isBehandlingFormSubmitting={isBehandlingFormSubmitting}
             isBehandlingFormDirty={isBehandlingFormDirty}
             hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
           />
-          {canPreview(formValues)
-          && (
-            <PreviewAnkeLink
-              previewCallback={previewCallback}
-              fritekstTilBrev={formValues.fritekstTilBrev}
-              klageVurdering={formValues.ankeVurdering}
-              aksjonspunktCode={aksjonspunktCode}
-            />
-          )
-          }
+          <PreviewAnkeLink
+            previewCallback={previewCallback}
+            fritekstTilBrev={formValues.fritekstTilBrev}
+            klageVurdering={formValues.ankeVurdering}
+            aksjonspunktCode={aksjonspunktCode}
+          />
         </Column>
       </Row>
     </FadingPanel>
@@ -107,7 +95,7 @@ AnkeMerknader.defaultProps = {
 
 const ankeMerknaderFormName = 'ankeMerknaderForm';
 
-const transformValues = (values, aksjonspunktCode) => ({
+const transformValues = values => ({
   erMerknaderMottatt: values.erMerknaderMottatt,
   merknadKommentar: values.merknadKommentar,
 });
