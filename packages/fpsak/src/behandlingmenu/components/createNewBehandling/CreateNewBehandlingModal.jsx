@@ -8,7 +8,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
-import { isForeldrepengerFagsak, isSvangerskapFagsak } from 'fagsak/fagsakSelectors';
+
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { CheckboxField, SelectField } from '@fpsak-frontend/form';
@@ -16,8 +16,11 @@ import { required } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+import { featureToggle } from '@fpsak-frontend/fp-felles';
 
-import { getKodeverk } from 'kodeverk/duck';
+import { getFeatureToggles } from 'app/duck';
+import { isForeldrepengerFagsak, isSvangerskapFagsak } from 'fagsak/fagsakSelectors';
+import { getFpTilbakeKodeverk, getKodeverk } from 'kodeverk/duck';
 
 import styles from './createNewBehandlingModal.less';
 
@@ -43,6 +46,7 @@ const createOptions = (bt, hasEnabledCreateNewBehandling, hasEnabledCreateRevurd
       </option>
     );
 };
+
 /**
  * CreateNewBehandlingModal
  *
@@ -195,9 +199,12 @@ export const getBehandlingAarsaker = createSelector([isForeldrepengerFagsak, isS
     .sort((bat1, bat2) => bat2.navn.length - bat1.navn.length);
 });
 
-const getBehandlingTyper = createSelector([getKodeverk(kodeverkTyper.BEHANDLING_TYPE)], behandlingTyper => behandlingTyper
-  .filter(bt => bt.kode !== bType.SOKNAD)
-  .sort((bt1, bt2) => bt1.navn.localeCompare(bt2.navn)));
+const getBehandlingTyper = createSelector([getKodeverk(kodeverkTyper.BEHANDLING_TYPE), getFpTilbakeKodeverk(kodeverkTyper.BEHANDLING_TYPE),
+  state => getFeatureToggles(state)[featureToggle.AKTIVER_TILBAKEKREVINGBEHANDLING]],
+    (behandlingTyper, tilbakekrevingBehandlingTyper = [], isTilbakekrevingAktiv = false) => {
+      const alleTyper = isTilbakekrevingAktiv ? behandlingTyper.concat(tilbakekrevingBehandlingTyper) : behandlingTyper;
+      return alleTyper.filter(bt => bt.kode !== bType.SOKNAD).sort((bt1, bt2) => bt1.navn.localeCompare(bt2.navn));
+});
 
 const mapStateToProps = state => ({
   behandlingTyper: getBehandlingTyper(state),

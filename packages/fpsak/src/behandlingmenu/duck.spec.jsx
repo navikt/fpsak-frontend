@@ -92,7 +92,7 @@ describe('BehandlingMenu-reducer', () => {
       location: 'status-url',
     };
     mockAxios
-      .onPut(fpsakApi.NEW_BEHANDLING.path)
+      .onPut(fpsakApi.NEW_BEHANDLING_FPSAK.path)
       .reply(202, data, headers);
     mockAxios
       .onGet(headers.location)
@@ -162,7 +162,7 @@ describe('BehandlingMenu-reducer', () => {
     behandlingUpdater.setUpdater(updater);
 
     mockAxios
-      .onPut(fpsakApi.NEW_BEHANDLING.path)
+      .onPut(fpsakApi.NEW_BEHANDLING_FPSAK.path)
       .reply(200, behandling);
     mockAxios
       .onGet(fpsakApi.FETCH_FAGSAK.path)

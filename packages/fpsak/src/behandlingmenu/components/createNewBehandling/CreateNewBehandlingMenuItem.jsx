@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+
 import CreateNewBehandlingModal from './CreateNewBehandlingModal';
 import MenuButton from '../MenuButton';
+
+const TILBAKEKREVING_BEHANDLINGSTYPER = [behandlingType.TILBAKEKREVING || behandlingType.REVURDERING_TILBAKEKREVING];
 
 /**
  * CreateNewBehandlingMenuItem
@@ -30,7 +34,8 @@ class CreateNewBehandlingMenuItem extends Component {
       saksnummer: saksnummer.toString(),
       ...formValues,
     };
-    submitNyForstegangsBehandling(push, saksnummer, data);
+    const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.includes(formValues.behandlingType);
+    submitNyForstegangsBehandling(push, saksnummer, isTilbakekreving, data);
     this.hideModal();
   }
 

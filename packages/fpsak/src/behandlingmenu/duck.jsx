@@ -32,10 +32,10 @@ export const resetBehandlingMenuData = () => ({
 
 export const shelveBehandling = params => dispatch => dispatch(fpsakApi.HENLEGG_BEHANDLING.makeRestApiRequest()(params));
 
-export const createNewForstegangsbehandling = (push, saksnummer, params) => dispatch => behandlingUpdater.resetBehandling(dispatch)
-  .then(() => dispatch(fpsakApi.NEW_BEHANDLING.makeRestApiRequest()(params)))
+export const createNewForstegangsbehandling = (push, saksnummer, isTilbakekreving, params) => dispatch => behandlingUpdater.resetBehandling(dispatch)
+  .then(() => dispatch((isTilbakekreving ? fpsakApi.NEW_BEHANDLING_FPTILBAKE : fpsakApi.NEW_BEHANDLING_FPSAK).makeRestApiRequest()(params)))
   .then((response) => {
-    if (response.payload.saksnummer) { // NEW_BEHANDLING har returnert fagsak
+    if (response.payload.saksnummer) { // NEW_BEHANDLING_FPSAK har returnert fagsak
       return dispatch(updateBehandlingsupportInfo(saksnummer))
         .then(() => dispatch(fpsakApi.FETCH_FAGSAK.setDataRestApi()(response.payload, { saksnummer }, { keepData: true })))
         .then(() => dispatch(updateBehandlinger(saksnummer)))
@@ -45,7 +45,7 @@ export const createNewForstegangsbehandling = (push, saksnummer, params) => disp
           return Promise.resolve(behandlingerResponse);
         });
     }
-    // NEW_BEHANDLING har returnert behandling
+    // NEW_BEHANDLING_FPSAK har returnert behandling
     return dispatch(updateFagsakInfo(saksnummer))
       .then(() => behandlingUpdater.setBehandlingResult(dispatch, response.payload,
         { behandlingId: response.payload.id, saksnummer }, { keepData: true }))

@@ -15,7 +15,8 @@ export const FpsakApiKeys = {
   BEHANDLINGER_FPTILBAKE: 'BEHANDLINGER_FPTILBAKE',
   ANNEN_PART_BEHANDLING: 'ANNEN_PART_BEHANDLING',
   BEHANDLENDE_ENHETER: 'BEHANDLENDE_ENHETER',
-  NEW_BEHANDLING: 'NEW_BEHANDLING',
+  NEW_BEHANDLING_FPSAK: 'NEW_BEHANDLING_FPSAK',
+  NEW_BEHANDLING_FPTILBAKE: 'NEW_BEHANDLING_FPTILBAKE',
   SAVE_TOTRINNSAKSJONSPUNKT: 'SAVE_TOTRINNSAKSJONSPUNKT',
   SAVE_TOTRINNSAKSJONSPUNKT_FPTILBAKE: 'SAVE_TOTRINNSAKSJONSPUNKT_FPTILBAKE',
   ALL_DOCUMENTS: 'ALL_DOCUMENTS',
@@ -43,7 +44,8 @@ const endpoints = new RestApiConfigBuilder()
   /* /api/behandlinger */
   .withGet('/fpsak/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPSAK, { fetchLinkDataAutomatically: false })
   .withGet('/fptilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE, { fetchLinkDataAutomatically: false })
-  .withAsyncPut('/fpsak/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING)
+  .withAsyncPut('/fpsak/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING_FPSAK)
+  .withAsyncPost('/fptilbake/api/behandlinger/opprett', FpsakApiKeys.NEW_BEHANDLING_FPTILBAKE)
   .withGet('/fpsak/api/behandlinger/annen-part-behandling', FpsakApiKeys.ANNEN_PART_BEHANDLING)
   .withInjectedPath('bytt-behandlende-enhet', FpsakApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withInjectedPath('opne-for-endringer', FpsakApiKeys.OPEN_BEHANDLING_FOR_CHANGES)
