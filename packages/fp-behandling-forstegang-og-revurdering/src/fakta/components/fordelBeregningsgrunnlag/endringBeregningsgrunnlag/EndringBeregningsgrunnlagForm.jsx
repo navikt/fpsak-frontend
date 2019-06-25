@@ -23,9 +23,9 @@ const harPeriodeSomKanKombineresMedForrige = (periode, bgPerioder, endretPeriode
   if (endretPeriode.harPeriodeAarsakGraderingEllerRefusjon !== forrigeEndringPeriode.harPeriodeAarsakGraderingEllerRefusjon) {
     return false;
   }
-  if (periode.periodeAarsaker.includes(periodeAarsak.ENDRING_I_REFUSJONSKRAV)
-  || periode.periodeAarsaker.includes(periodeAarsak.REFUSJON_OPPHOERER)
-  || periode.periodeAarsaker.includes(periodeAarsak.GRADERING)) {
+  if (periode.periodeAarsaker.map(({ kode }) => kode).includes(periodeAarsak.ENDRING_I_REFUSJONSKRAV)
+  || periode.periodeAarsaker.map(({ kode }) => kode).includes(periodeAarsak.REFUSJON_OPPHOERER)
+  || periode.periodeAarsaker.map(({ kode }) => kode).includes(periodeAarsak.GRADERING)) {
     return false;
   }
   if (periode.periodeAarsaker.includes(periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET)) {
