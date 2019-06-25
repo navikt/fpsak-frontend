@@ -100,8 +100,11 @@ const finnBeregningsgrunnlagPrAar = (bgAndel) => {
   if (!bgAndel) {
     return null;
   }
-  if (bgAndel.bruttoPrAar) {
-    return formatCurrencyNoKr(bgAndel.bruttoPrAar);
+  if (bgAndel.overstyrtPrAar) {
+    return formatCurrencyNoKr(bgAndel.overstyrtPrAar);
+  }
+  if (bgAndel.beregnetPrAar) {
+    return formatCurrencyNoKr(bgAndel.beregnetPrAar);
   }
   return null;
 };
