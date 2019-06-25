@@ -41,7 +41,6 @@ export const FullPersonInfoImpl = ({
   personstatusTypes,
   sivilstandTypes,
   getKodeverknavn,
-  regBarn,
 }) => {
   if (!personopplysning) {
     return null;
@@ -95,7 +94,6 @@ FullPersonInfoImpl.propTypes = {
   ytelser: PropTypes.arrayOf(PropTypes.shape({})),
   relatertYtelseTypes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   relatertYtelseStatus: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  regBarn: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   submitCallback: PropTypes.func,
   utlandSakstype: PropTypes.string.isRequired,
   isPrimaryParent: PropTypes.bool.isRequired,
