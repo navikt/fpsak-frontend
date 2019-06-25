@@ -9,10 +9,49 @@ import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
+import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import { AdressePanel, BarnePanel, PersonYtelserTable } from '@fpsak-frontend/person-info';
 import { FullPersonInfoImpl } from './FullPersonInfo';
 
+const barnITPS = {
+  navn: 'Barn 1',
+  navBrukerKjonn: {
+    kode: navBrukerKjonn.KVINNE,
+  },
+  fnr: '01011712345',
+  opplysningsKilde: {
+    kode: opplysningsKilde.TPS,
+  },
+  fodselsdato: '2017-01-01',
+  adresser: [
+    {
+      adresseType: {
+        kode: opplysningAdresseType.BOSTEDSADRESSE,
+      },
+      adresselinje1: 'barneveien 5',
+    },
+  ],
+};
+const barnIkkeITPS = {
+  navn: 'Barn 2',
+  navBrukerKjonn: {
+    kode: navBrukerKjonn.MANN,
+  },
+  fnr: '01011712347',
+  opplysningsKilde: {
+    kode: opplysningsKilde.SAKSBEHANDLER,
+  },
+  fodselsdato: '2017-01-02',
+  adresser: [
+    {
+      adresseType: {
+        kode: opplysningAdresseType.BOSTEDSADRESSE,
+      },
+      adresselinje1: 'borte 5',
+    },
+  ],
+};
 
 const sprakkode = {
   kode: 'BM',
@@ -42,8 +81,7 @@ const personopplysning = {
       kode: personstatusType.BOSATT,
     },
   },
-  regBarn: [],
-  barn: [],
+  barn: [barnIkkeITPS, barnITPS],
   adresser: [
     {
       adresseType: {
@@ -133,7 +171,6 @@ describe('<FullPersonInfo>', () => {
         submitCallback={sinon.spy()}
         readOnly={false}
         hasAksjonspunkter={false}
-        regBarn={[]}
         utlandSakstype=""
         isPrimaryParent
         skalKunneLeggeTilNyeArbeidsforhold={false}
@@ -157,7 +194,6 @@ describe('<FullPersonInfo>', () => {
         sprakkode={sprakkode}
         personopplysning={personopplysning}
         ytelser={ytelser}
-        regBarn={[{ fodselsdato: '2017-01-01' }]}
         relatertYtelseTypes={relatertYtelseTypes}
         relatertYtelseStatus={relatertYtelseStatus}
         personstatusTypes={personstatusTypes}
@@ -173,7 +209,7 @@ describe('<FullPersonInfo>', () => {
       />,
     );
     const barnepanel = wrapper.find(BarnePanel);
-    expect(barnepanel.props().barneListe[0]).to.deep.equal({ fodselsdato: '2017-01-01' });
+    expect(barnepanel.props().barneListe[0]).to.equal(barnITPS);
   });
 
   it('Skal ikke vise hjelpetekst for aksjonspunkt når en har aksjonspunkt og annen part er valgt', () => {
@@ -188,7 +224,6 @@ describe('<FullPersonInfo>', () => {
         sivilstandTypes={sivilstandTypes}
         hasOpenAksjonspunkter
         readOnly={false}
-        regBarn={[]}
         hasAksjonspunkter
         utlandSakstype=""
         isPrimaryParent={false}
@@ -213,7 +248,6 @@ describe('<FullPersonInfo>', () => {
         sivilstandTypes={sivilstandTypes}
         hasOpenAksjonspunkter
         readOnly={false}
-        regBarn={[]}
         hasAksjonspunkter
         utlandSakstype=""
         isPrimaryParent={false}
@@ -237,7 +271,6 @@ describe('<FullPersonInfo>', () => {
         sivilstandTypes={sivilstandTypes}
         hasOpenAksjonspunkter
         readOnly={false}
-        regBarn={[]}
         hasAksjonspunkter
         utlandSakstype=""
         isPrimaryParent={false}
