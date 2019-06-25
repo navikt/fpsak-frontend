@@ -16,7 +16,6 @@ import {
   getBehandlingRelatertTilgrensendeYtelserForSoker,
   getBehandlingSprak,
   getPersonopplysning,
-  getBarnFraTpsRelatertTilSoknad,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
@@ -99,10 +98,10 @@ export class PersonInfoPanelImpl extends Component {
       submitCallback,
       aksjonspunkter,
       featureToggleUtland,
-      barnFraTps,
       ...formProps
     } = this.props;
     const { selected } = this.state;
+    const { barn } = personopplysninger.barn;
     const isPrimaryParent = personopplysninger === selected;
     return (
       <EkspanderbartPersonPanel
@@ -130,7 +129,7 @@ export class PersonInfoPanelImpl extends Component {
             submitCallback={submitCallback}
             sivilstandTypes={sivilstandTypes}
             personstatusTypes={personstatusTypes}
-            regBarn={barnFraTps}
+            regBarn={barn}
             featureToggleUtland={featureToggleUtland || true}
           />
           <VerticalSpacer eightPx />
@@ -154,7 +153,6 @@ PersonInfoPanelImpl.propTypes = {
   submitCallback: PropTypes.func,
   relatertYtelseTypes: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   relatertYtelseStatus: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  barnFraTps: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   ...formPropTypes,
 };
@@ -182,7 +180,6 @@ const mapStateToPropsFactory = (initialState) => {
     relatertYtelseTypes,
     featureToggleUtland,
     personopplysninger: getPersonopplysning(state),
-    barnFraTps: getBarnFraTpsRelatertTilSoknad(state),
     relatertTilgrensendeYtelserForSoker: getBehandlingRelatertTilgrensendeYtelserForSoker(state),
     relatertTilgrensendeYtelserForAnnenForelder: getBehandlingRelatertTilgrensendeYtelserForAnnenForelder(state),
     sprakkode: getBehandlingSprak(state),

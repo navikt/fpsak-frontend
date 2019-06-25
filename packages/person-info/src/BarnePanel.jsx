@@ -51,15 +51,19 @@ const BarnePanel = ({
             )}
           </Column>
           <Column xs="11">
+            {barn.soktForBarn && (<Element><FormattedMessage id="Barnepanel.BarnFraSoknad" /></Element>)}
             <Element>
               {barn.navn ? barn.navn : `Barn ${index + 1}`}
               ,
               {' '}
               <FormattedMessage id="Person.Age" values={{ age: getAgeFromDate(barn.fodselsdato) }} />
-              {barn.dodsdato
+              {barn.dodsdato && !(barn.dodsdato === barn.fodselsdato)
               && <div className={styles.erDod}><MerkePanel erDod /></div>}
+              {barn.dodsdato && barn.dodsdato === barn.fodselsdato && (
+                <div className={styles.erDod}><MerkePanel erDodFodt /></div>
+              )}
             </Element>
-            <Undertekst>{barn.fnr}</Undertekst>
+            <Undertekst>{barn.fnr || <DateLabel dateString={barn.fodselsdato} />}</Undertekst>
             <div className={styles.undertekstMedRom}>
               <Undertekst>
                 <FormattedMessage id="Barnepanel.Adresse1" />
