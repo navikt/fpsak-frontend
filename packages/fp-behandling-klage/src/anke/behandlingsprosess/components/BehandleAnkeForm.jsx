@@ -86,7 +86,7 @@ const formatId = b => `${b}`;
 const leggTilUkjent = (behandlinger = []) => {
   const arr = [].concat(behandlinger);
   arr.unshift({
-    id: 0,
+    id: '0',
     opprettet: null,
     type: {
     },
@@ -201,15 +201,6 @@ const BehandleAnkeFormImpl = ({
         <Row>
           <Column xs="7">
             <ArrowBox>
-              <SelectField
-                readOnly={readOnly}
-                name="ankeOmgjoerArsak"
-                selectValues={omgjorArsakValues.map(arsak => <option key={arsak.kode} value={arsak.kode}>{intl.formatMessage({ id: arsak.navn })}</option>)}
-                className={readOnly ? styles.selectReadOnly : null}
-                label={intl.formatMessage({ id: 'Ankebehandling.OmgjoeringArsak' })}
-                validate={[required]}
-                bredde="xl"
-              />
               <RadioGroupField
                 name="ankeVurderingOmgjoer"
                 validate={[required]}
@@ -221,6 +212,15 @@ const BehandleAnkeFormImpl = ({
                 <RadioOption name="a2" value={ankeVurderingOmgjoer.ANKE_TIL_UGUNST} label={{ id: 'Ankebehandling.VurderingOmgjoer.Ugunst' }} />
                 <RadioOption name="a3" value={ankeVurderingOmgjoer.ANKE_DELVIS_OMGJOERING_TIL_GUNST} label={{ id: 'Ankebehandling.VurderingOmgjoer.Delvis' }} />
               </RadioGroupField>
+              <SelectField
+                readOnly={readOnly}
+                name="ankeOmgjoerArsak"
+                selectValues={omgjorArsakValues.map(arsak => <option key={arsak.kode} value={arsak.kode}>{intl.formatMessage({ id: arsak.navn })}</option>)}
+                className={readOnly ? styles.selectReadOnly : null}
+                label={intl.formatMessage({ id: 'Ankebehandling.OmgjoeringArsak' })}
+                validate={[required]}
+                bredde="xl"
+              />
             </ArrowBox>
           </Column>
         </Row>
@@ -301,7 +301,7 @@ BehandleAnkeFormImpl.defaultProps = {
 };
 
 export const buildInitialValues = createSelector([getResultat], resultat => ({
-  vedtak: resultat ? resultat.vedtak : null,
+  vedtak: resultat ? formatId(resultat.paAnketBehandlingId) : null,
   ankeVurdering: resultat ? resultat.ankeVurdering : null,
   begrunnelse: resultat ? resultat.begrunnelse : null,
   fritekstTilBrev: resultat ? resultat.fritekstTilBrev : null,

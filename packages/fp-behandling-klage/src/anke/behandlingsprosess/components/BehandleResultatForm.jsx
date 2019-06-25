@@ -83,7 +83,7 @@ const ResultatOmgjores = resultat => (
 );
 
 const AnkeResultat = (resultat) => {
-  if (!resultat) {
+  if (!resultat || !resultat.ankevurderingresultat) {
     return null;
   }
   const { ankevurderingresultat } = resultat;
