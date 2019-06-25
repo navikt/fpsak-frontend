@@ -387,7 +387,7 @@ const transformValues = (values, avslagAarsakKoder, innvilgelseAarsakKoder, grad
   transformvalue.begrunnelse = values.begrunnelse;
   transformvalue.flerbarnsdager = values.flerbarnsdager;
   transformvalue.samtidigUttak = values.samtidigUttak;
-  transformvalue.samtidigUttaksprosent = values.samtidigUttaksprosent;
+  transformvalue.samtidigUttaksprosent = values.samtidigUttaksprosent !== 'NaN' ? values.samtidigUttaksprosent : null;
   transformvalue.erOppfylt = values.erOppfylt;
   transformvalue.graderingInnvilget = values.erOppfylt ? values.graderingInnvilget : false;
   transformvalue.oppholdÅrsak.kode = values.oppholdArsak;
