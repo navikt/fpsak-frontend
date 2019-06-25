@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -7,21 +6,19 @@ import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 
 import { Row, Column } from 'nav-frontend-grid';
-import { Normaltekst } from 'nav-frontend-typografi';
-import AlertStripe from 'nav-frontend-alertstriper';
 
 import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import {
   RadioGroupField, RadioOption,
- DatepickerField, InputField,
+ DatepickerField,
 } from '@fpsak-frontend/form';
 import {
-  DateLabel, VerticalSpacer, ElementWrapper, ArrowBox,
+  VerticalSpacer, ElementWrapper, ArrowBox,
 } from '@fpsak-frontend/shared-components';
 
 import {
-  required, hasValidDate, minValue, maxValue, hasValidInteger,
+  required, hasValidDate,
 } from '@fpsak-frontend/utils';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -45,7 +42,6 @@ export const PrematurukerDokForm = ({
   isDokumentasjonForeliggerEdited,
   dirty,
   initialValues,
-  isOverridden,
   submittable,
 }) => (
   <ElementWrapper>
@@ -87,17 +83,15 @@ export const PrematurukerDokForm = ({
 
 PrematurukerDokForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  dokumentasjonForeligger: PropTypes.bool.isRequired,
+  dokumentasjonForeligger: PropTypes.bool,
   isDokumentasjonForeliggerEdited: PropTypes.bool,
   isTerminDatoEdited: PropTypes.bool,
-  isOverridden: PropTypes.bool,
   submittable: PropTypes.bool.isRequired,
   ...formPropTypes,
 };
 
 PrematurukerDokForm.defaultProps = {
   isTerminDatoEdited: false,
-  isOverridden: false,
   isDokumentasjonForeliggerEdited: false,
 };
 
@@ -119,18 +113,14 @@ const transformValues = values => ({
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const onSubmit = values => ownProps.submitHandler(transformValues(values));
 
-  return (state) => {
-    const termindato = behandlingFormValueSelector(prematurukerDokFormName)(state, 'termindato');
-
-    return {
+  return state => ({
       onSubmit,
       initialValues: buildInitialValues(state),
       isTerminDatoEdited: getEditedStatus(state).termindato,
       isDokumentasjonForeliggerEdited: getEditedStatus(state).dokumentasjonForeligger,
       isOverridden: getFamiliehendelseGjeldende(state).erOverstyrt,
       dokumentasjonForeligger: behandlingFormValueSelector(prematurukerDokFormName)(state, 'dokumentasjonForeligger'),
-    };
-  };
+  });
 };
 
 export default connect(mapStateToPropsFactory)(behandlingForm({
