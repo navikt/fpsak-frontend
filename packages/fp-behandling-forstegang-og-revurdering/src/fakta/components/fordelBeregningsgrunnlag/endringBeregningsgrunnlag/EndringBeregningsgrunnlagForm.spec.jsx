@@ -221,7 +221,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
       beregningsgrunnlagPeriodeFom: '02-02-2019',
       beregningsgrunnlagPeriodeTom: null,
       bruttoPrAar: 120000,
-      periodeAarsaker: [periodeAarsak.GRADERING],
+      periodeAarsaker: [{ kode: periodeAarsak.GRADERING }],
     }];
     const nyePerioder = slaaSammenPerioder(perioder, bgPerioder);
     expect(nyePerioder.length).to.equal(2);
@@ -310,7 +310,7 @@ beregningsgrunnlagPeriodeTom: '2018-06-01',
     {
       beregningsgrunnlagPeriodeFom: '2018-06-02',
 beregningsgrunnlagPeriodeTom: null,
-      periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
+      periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
     }];
     const endringBGPerioder = [
       { fom: '2018-01-01', tom: '2018-06-01', harPeriodeAarsakGraderingEllerRefusjon: false },
@@ -347,17 +347,17 @@ beregningsgrunnlagPeriodeTom: null,
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '2018-01-01',
 beregningsgrunnlagPeriodeTom: '2018-06-01',
-      periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
+      periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
     },
     {
       beregningsgrunnlagPeriodeFom: '2018-06-02',
 beregningsgrunnlagPeriodeTom: '2018-10-01',
-      periodeAarsaker: [periodeAarsak.NATURALYTELSE_TILKOMMER],
+      periodeAarsaker: [{ kode: periodeAarsak.NATURALYTELSE_TILKOMMER }],
     },
     {
       beregningsgrunnlagPeriodeFom: '2018-10-02',
 beregningsgrunnlagPeriodeTom: null,
-      periodeAarsaker: [periodeAarsak.REFUSJON_OPPHOERER],
+      periodeAarsaker: [{ kode: periodeAarsak.REFUSJON_OPPHOERER }],
     }];
     const endringBGPerioder = [
       { fom: '2018-01-01', tom: '2018-06-01', harPeriodeAarsakGraderingEllerRefusjon: true },
@@ -422,12 +422,12 @@ beregningsgrunnlagPeriodeTom: '2018-06-01',
     {
       beregningsgrunnlagPeriodeFom: '2018-06-02',
 beregningsgrunnlagPeriodeTom: '2018-10-01',
-      periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
+      periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
     },
     {
       beregningsgrunnlagPeriodeFom: '2018-10-02',
 beregningsgrunnlagPeriodeTom: null,
-      periodeAarsaker: [periodeAarsak.NATURALYTELSE_TILKOMMER],
+      periodeAarsaker: [{ kode: periodeAarsak.NATURALYTELSE_TILKOMMER }],
     }];
     const endringBGPerioder = [
       { fom: '2018-01-01', tom: '2018-06-01', harPeriodeAarsakGraderingEllerRefusjon: false },
@@ -493,17 +493,17 @@ beregningsgrunnlagPeriodeTom: '2018-06-01',
     {
       beregningsgrunnlagPeriodeFom: '2018-06-02',
 beregningsgrunnlagPeriodeTom: '2018-10-01',
-      periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
+      periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
     },
     {
       beregningsgrunnlagPeriodeFom: '2018-10-02',
 beregningsgrunnlagPeriodeTom: '2018-11-01',
-      periodeAarsaker: [periodeAarsak.NATURALYTELSE_TILKOMMER],
+      periodeAarsaker: [{ kode: periodeAarsak.NATURALYTELSE_TILKOMMER }],
     },
     {
       beregningsgrunnlagPeriodeFom: '2018-11-02',
 beregningsgrunnlagPeriodeTom: null,
-      periodeAarsaker: [periodeAarsak.REFUSJON_OPPHOERER],
+      periodeAarsaker: [{ kode: periodeAarsak.REFUSJON_OPPHOERER }],
     }];
     const endringBGPerioder = [
       { fom: '2018-01-01', tom: '2018-06-01', harPeriodeAarsakGraderingEllerRefusjon: false },
