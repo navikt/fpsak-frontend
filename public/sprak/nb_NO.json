@@ -235,6 +235,7 @@
   "FodselInfoPanel.VurderVilkarForSykdom": "Vurder om vilkår for sykdom er oppfylt",
   "FodselInfoPanel.KontrollerMotTerminbekreftelsen": "Kontroller terminbekreftelse",
   "FodselInfoPanel.KontrollerMotFodselsdokumentasjon": "Kontroller mot opplysningene fra fødselsdokumentasjonen",
+  "FodselInfoPanel.KontrollerTermindatoTidligFødsel": "Kontroller mot opplysningene fra termindokumentasjon",
 
   "FodselOgTilretteleggingInfoPanel.FaktaFodselOgTilrettelegging": "Fakta om fødsel og tilrettelegging",
   "FodselOgTilretteleggingInfoPanel.Aksjonspunkt": "Kontroller opplysninger fra jordmor og arbeidsgiver",
@@ -468,6 +469,11 @@
   "TermindatoFaktaForm.FodselsdatoTps": "Fødselsdato",
   "TermindatoFaktaForm.AntallBarnTps": "Antall barn",
   "TermindatoFaktaForm.AdvarselForTidligUtstedtdato": "Terminbekreftelsen utstedt før 22. svangerskapsuke. Kontakt søker for en nyere terminbekreftelse og sett saken på vent. Fortsett dersom ny bekreftelse ikke skal hentes inn. Behandlingen vil avslås på grunn av manglende dokumentasjon",
+  "PrematurukerDokForm.ApplicationInformation": "Opplysninger om termin oppgitt i søknaden",
+  "PrematurukerDokForm.Termindato": "Termindato",
+  "PrematurukerDokForm.DokumentasjonForeligger": "Dokumentasjon foreligger",
+  "PrematurukerDokForm.DokumentasjonForeliggerIkke": "Dokumentasjon foreligger ikke",
+  "PrematurukerDokForm.FyllInnDokumenterteOpplysninger": "Fyll inn dokumenterte opplysninger",
 
   "TilleggsopplysningerInfoPanel.Tilleggsopplysninger": "Tilleggsopplysninger",
   "OpptjeningInfoPanel.KontrollerFaktaForOpptjening": "Fakta om opptjening",

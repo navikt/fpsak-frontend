@@ -15,6 +15,7 @@ import { findHendelseText } from './historikkUtils';
 
 const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.TERMINBEKREFTELSE]: 'TermindatoFaktaForm.ApplicationInformation',
+  [aksjonspunktCodes.VURDER_TERMIN_VED_TIDLIG_FØDSEL]: 'PrematurukerDokForm.ApplicationInformation',
   [aksjonspunktCodes.ADOPSJONSDOKUMENTAJON]: 'DokumentasjonFaktaForm.ApplicationInformation',
   [aksjonspunktCodes.OM_ADOPSJON_GJELDER_EKTEFELLES_BARN]: 'EktefelleFaktaForm.ApplicationInformation',
   [aksjonspunktCodes.OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE]: 'MannAdoptererAleneFaktaForm.ApplicationInformation',

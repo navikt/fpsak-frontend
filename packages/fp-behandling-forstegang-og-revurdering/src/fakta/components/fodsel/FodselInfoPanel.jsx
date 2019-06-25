@@ -12,6 +12,7 @@ import { fodselsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import FodselSammenligningPanel from 'behandlingForstegangOgRevurdering/src/components/fodselSammenligning/FodselSammenligningPanel';
 import TermindatoFaktaForm, { termindatoFaktaFormName } from 'behandlingForstegangOgRevurdering/src/fakta/components/fodsel/TermindatoFaktaForm';
+import PrematurukerDokForm, { prematurukerDokFormName } from 'behandlingForstegangOgRevurdering/src/fakta/components/fodsel/PrematurukerDokForm';
 import SjekkFodselDokForm, { sjekkFodselDokForm } from 'behandlingForstegangOgRevurdering/src/fakta/components/fodsel/SjekkFodselDokForm';
 import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
@@ -19,25 +20,33 @@ import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src
 import SykdomPanel, { sykdomPanelName } from './SykdomPanel';
 
 const {
-  TERMINBEKREFTELSE, SJEKK_MANGLENDE_FODSEL, VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT,
+  TERMINBEKREFTELSE, SJEKK_MANGLENDE_FODSEL, VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT, VURDER_TERMIN_VED_TIDLIG_FØDSEL,
 } = aksjonspunktCodes;
-const fodselAksjonspunkter = [TERMINBEKREFTELSE, SJEKK_MANGLENDE_FODSEL, VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT];
+const fodselAksjonspunkter = [TERMINBEKREFTELSE, SJEKK_MANGLENDE_FODSEL, VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT, VURDER_TERMIN_VED_TIDLIG_FØDSEL];
 
 const getHelpTexts = (aksjonspunkter) => {
   const helpTexts = [];
+
   if (hasAksjonspunkt(VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT, aksjonspunkter)) {
     helpTexts.push(<FormattedMessage key="VurderVilkarForSykdom" id="FodselInfoPanel.VurderVilkarForSykdom" />);
   }
+
   if (hasAksjonspunkt(TERMINBEKREFTELSE, aksjonspunkter)) {
     helpTexts.push(<FormattedMessage key="KontrollerMotTerminbekreftelsen" id="FodselInfoPanel.KontrollerMotTerminbekreftelsen" />);
   }
+
   if (hasAksjonspunkt(SJEKK_MANGLENDE_FODSEL, aksjonspunkter)) {
     helpTexts.push(<FormattedMessage key="KontrollerMotFodselsdokumentasjon" id="FodselInfoPanel.KontrollerMotFodselsdokumentasjon" />);
   }
+
+  if (hasAksjonspunkt(VURDER_TERMIN_VED_TIDLIG_FØDSEL, aksjonspunkter)) {
+    helpTexts.push(<FormattedMessage key="KontrollerMotFodselsdokumentasjon" id="FodselInfoPanel.KontrollerTermindatoTidligFødsel" />);
+  }
+
   return helpTexts;
 };
 
-const formNames = [sykdomPanelName, termindatoFaktaFormName, sjekkFodselDokForm];
+const formNames = [sykdomPanelName, termindatoFaktaFormName, sjekkFodselDokForm, prematurukerDokFormName];
 
 /**
  * FodselInfoPanel
@@ -112,6 +121,16 @@ export class FodselInfoPanelImpl extends Component {
           {hasAksjonspunkt(TERMINBEKREFTELSE, aksjonspunkter)
             && (
             <TermindatoFaktaForm
+              readOnly={readOnly}
+              submittable={submittable}
+              isAksjonspunktOpen={hasOpenAksjonspunkter}
+              submitHandler={this.submitHandler}
+            />
+            )
+          }
+          {hasAksjonspunkt(VURDER_TERMIN_VED_TIDLIG_FØDSEL, aksjonspunkter)
+            && (
+            <PrematurukerDokForm
               readOnly={readOnly}
               submittable={submittable}
               isAksjonspunktOpen={hasOpenAksjonspunkter}
