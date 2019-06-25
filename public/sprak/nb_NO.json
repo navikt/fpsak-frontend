@@ -242,16 +242,19 @@
   "FodselOgTilretteleggingFaktaForm.Fodselsdato": "Fødselsdato",
   "FodselOgTilretteleggingFaktaForm.BegrunnEndringene": "Begrunn endringene",
   "ArbeidsforholdFaktaPanel.Faktagruppe": "Arbeidsforhold som det er søkt for",
-  "ArbeidsforholdFaktaPanel.Oppdater": "Oppdater",
+  "ArbeidsforholdFaktaPanel.Oppdater": "Oppdater arbeidsforhold",
   "ArbeidsforholdFaktaPanel.Avbryt": "Avbryt",
   "ArbeidsforholdTable.Arbeidsforhold": "Arbeidsforhold",
   "ArbeidsforholdTable.TilretteleggingFra": "Trenger tilrettelegging fra",
   "ArbeidsforholdTable.Revurdering": "Nye opplysninger",
   "ArbeidsforholdTable.Ja": "Ja",
   "ArbeidsforholdTable.Nei": "Nei",
+  
   "ArbeidsforholdInnhold.Jordmor.TilretteleggingFra": "Jordmor oppgir at tilrettelegging er nødvendig fra og med",
   "ArbeidsforholdInnhold.BegrunnEndringene": "Begrunn endringene",
   "ArbeidsforholdInnhold.TilretteleggingWarning": "For et av arbeidsforholdene er datoene fra arbeidsgiver motstridende. Avklar dette før du kan gå videre i saken.",
+  "ArbeidsforholdInnhold.LeggTilPeriode": "Legg til periode",
+
   "ArbeidsforholdCheckboxes.Arbeidsgiver.Tilrettelegging": "Arbeidsgiver oppgir at nødvendig tilrettelegging",
   "ArbeidsforholdCheckboxes.Arbeidsgiver.Dato": "Dato",
   "ArbeidsforholdCheckboxes.Arbeidsgiver.Stillingsprosent": "Stillingsprosent",
@@ -2390,11 +2393,18 @@
   "TilbakekrevingVedtakForm.FritekstIVedtaksbrevet": "Fritekst i vedtaksbrevet",
   "TilbakekrevingVedtakForm.TilGodkjenning": "Til godkjenning",
 
+  "TilretteleggingTable.NodvendigTilrettelegging": "Arbeidsgiver oppgir at nødvendig tilrettelegging",
+  "TilretteleggingTable.Dato": "Dato",
+  "TilretteleggingTable.Stillingsprosent": "Stillingsprosent",
+
   "FatterTilbakekrevingVedtakStatusModal.GoToSearchPage": "Du kommer nå til forsiden.",
   "FatterTilbakekrevingVedtakStatusModal.Ok": "OK",
   "FatterTilbakekrevingVedtakStatusModal.Sendt": "Forslag til vedtak er sendt til beslutter",
 
   "TilbakekrevingVedtakForm.ForhandvisBrev": "Forhåndsvis brev",
+
+  "TilretteleggingDetailForm.Oppdater": "Oppdater tilrettelegging",
+  "TilretteleggingDetailForm.Avbryt": "Avbryt",
 
   "IntegrationStatusPanel.ServiceDowntime": "Tredjepartstjeneste(r) har nedetid",
   "IntegrationStatusPanel.Downtime": "{system} har nedetid.",

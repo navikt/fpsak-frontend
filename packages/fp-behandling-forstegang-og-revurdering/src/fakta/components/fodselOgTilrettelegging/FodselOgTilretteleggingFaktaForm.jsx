@@ -11,23 +11,12 @@ import {
 } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import {
-  behandlingForm,
-} from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
- import {
-   getTilrettelegging,
-   getAksjonspunkter,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import ArbeidsforholdFaktaPanel from './ArbeidsforholdFaktaPanel';
+import { getTilrettelegging, getAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import ArbeidsforholdFaktaPanel from './arbeidsforhold/ArbeidsforholdFaktaPanel';
 
-
-import styles from './arbeidsforholdInnhold.less';
-
-/**
- * Svangerskapspenger
- * Presentasjonskomponent - viser tillrettlegging før svangerskapspenger
- */
+import styles from './fodselOgTilretteleggingFaktaForm.less';
 
 const maxLength1500 = maxLength(1500);
 
@@ -35,6 +24,10 @@ const FODSEL_TILRETTELEGGING_FORM = 'FodselOgTilretteleggingForm';
 
 const getAksjonspunkt = aksjonspunkter => aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.FODSELTILRETTELEGGING)[0].begrunnelse;
 
+/**
+ * Svangerskapspenger
+ * Presentasjonskomponent - viser tillrettlegging før svangerskapspenger
+ */
 export const FodselOgTilretteleggingFaktaForm = ({
   readOnly,
   hasOpenAksjonspunkter,
@@ -112,23 +105,31 @@ const transformValues = values => ([{
   bekreftetSvpArbeidsforholdList: values.arbeidsforhold,
 }]);
 
-    const mapStateToPropsFactory = (initialState, ownProps) => {
-      const aksjonspunkter = getAksjonspunkter(initialState);
-      const tilrettelegging = getTilrettelegging(initialState);
-      const fødselsdato = tilrettelegging ? tilrettelegging.fødselsdato : '';
-      const initialValues = {
-        termindato: tilrettelegging ? tilrettelegging.termindato : '',
-        arbeidsforhold: tilrettelegging ? tilrettelegging.arbeidsforholdListe : [],
-        fødselsdato,
-        begrunnelse: getAksjonspunkt(aksjonspunkter),
-      };
- const onSubmit = values => ownProps.submitCallback(transformValues(values));
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const aksjonspunkter = getAksjonspunkter(initialState);
+  const tilrettelegging = getTilrettelegging(initialState);
+  const fødselsdato = tilrettelegging ? tilrettelegging.fødselsdato : '';
+  const initialValues = {
+    termindato: tilrettelegging ? tilrettelegging.termindato : '',
+    arbeidsforhold: tilrettelegging ? tilrettelegging.arbeidsforholdListe.map(a => ({
+      ...a,
+      tilrettelegginger: [{
+        id: 1,
+        fom: '2019-10-10',
+        type: 'redusertArbeid',
+        stillingsprosent: 10,
+      }],
+    })) : [],
+    fødselsdato,
+    begrunnelse: getAksjonspunkt(aksjonspunkter),
+  };
+  const onSubmit = values => ownProps.submitCallback(transformValues(values));
 
   return ({
-      initialValues,
-      onSubmit,
-      fødselsdato,
-    });
+    initialValues,
+    onSubmit,
+    fødselsdato,
+  });
 };
 
 export default connect(mapStateToPropsFactory)(behandlingForm({
