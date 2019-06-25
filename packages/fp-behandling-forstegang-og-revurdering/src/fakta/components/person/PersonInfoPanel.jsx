@@ -35,19 +35,6 @@ const getUtlandSakstype = (aksjonspunkter) => {
   return utlandSakstypeKode.NASJONAL;
 };
 
-const getBarnlist = (personopplysninger) => {
-  const { barn, barnSoktFor } = personopplysninger;
-  const barnSoktForMedTag = [];
-  if (barnSoktFor) {
-    barnSoktFor.forEach((soktBarn) => {
-      barnSoktForMedTag.push(soktBarn);
-      barnSoktForMedTag[barnSoktForMedTag.length - 1].soktForBarn = true;
-    });
-    return (barn.concat(barnSoktForMedTag));
-  }
-  return barn;
-};
-
 /**
  * PersonInfoPanel
  *
@@ -113,6 +100,7 @@ export class PersonInfoPanelImpl extends Component {
       ...formProps
     } = this.props;
     const { selected } = this.state;
+    const { barn } = personopplysninger.barn;
     const isPrimaryParent = personopplysninger === selected;
     return (
       <EkspanderbartPersonPanel
@@ -140,7 +128,7 @@ export class PersonInfoPanelImpl extends Component {
             submitCallback={submitCallback}
             sivilstandTypes={sivilstandTypes}
             personstatusTypes={personstatusTypes}
-            regBarn={getBarnlist(personopplysninger) || null}
+            regBarn={barn}
             featureToggleUtland={featureToggleUtland || true}
           />
           <VerticalSpacer eightPx />

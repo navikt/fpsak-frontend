@@ -23,6 +23,9 @@ describe('<PersonInfoPanel>', () => {
       kode: navBrukerKjonn.KVINNE,
       navn: 'kvinne',
     },
+    barn: [
+      { fodselsdato: '2019-05-01' },
+    ],
     diskresjonskode: {
       kode: 'TEST',
       navn: 'test',
