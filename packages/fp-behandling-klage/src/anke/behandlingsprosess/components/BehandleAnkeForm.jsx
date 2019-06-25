@@ -78,15 +78,22 @@ const formatBehandlingStatus = (status) => {
   }
 };
 
+const IKKE_PAA_ANKET_BEHANDLING_ID = '0';
+
 const canPreview = formValues => formValues.ankeVurdering != null && formValues.fritekstTilBrev && (formValues.fritekstTilBrev.length > 2);
 const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 const formatBehandling = b => `${formatDate(b.opprettet)} - ${formatBehandlingType(b.type.kode)} - ${formatBehandlingStatus(b.status.kode)}`;
-const formatId = b => `${b}`;
+const formatId = (b) => {
+  if (b === null) {
+    return IKKE_PAA_ANKET_BEHANDLING_ID;
+  }
+  return `${b}`;
+};
 
 const leggTilUkjent = (behandlinger = []) => {
   const arr = [].concat(behandlinger);
   arr.unshift({
-    id: '0',
+    id: IKKE_PAA_ANKET_BEHANDLING_ID,
     opprettet: null,
     type: {
     },
@@ -97,7 +104,7 @@ const leggTilUkjent = (behandlinger = []) => {
 };
 
 const buildOption = (b) => {
-  if (b.opprettet == null) {
+  if (b.id === IKKE_PAA_ANKET_BEHANDLING_ID) {
     return (<option key={formatId(b.id)} value={formatId(b.id)}>Ikke påanket et vedtak</option>);
   }
   return (<option key={formatId(b.id)} value={formatId(b.id)}>{formatBehandling(b)}</option>);
@@ -320,7 +327,7 @@ export const buildInitialValues = createSelector([getResultat], resultat => ({
 
 
 export const transformValues = (values, aksjonspunktCode) => ({
-  vedtak: values.vedtak === '0' ? undefined : values.vedtak,
+  vedtak: values.vedtak === '0' ? null : values.vedtak,
   ankeVurdering: values.ankeVurdering,
   begrunnelse: values.begrunnelse,
   erMerknaderMottatt: values.erMerknaderMottatt,
