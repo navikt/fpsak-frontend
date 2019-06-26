@@ -4,7 +4,7 @@ import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-
+import beregningsgrunnlagTilstand from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagTilstand';
 import { Undertittel, Normaltekst, Element } from 'nav-frontend-typografi';
 import { getBeregningsgrunnlagLedetekster, getBeregningsgrunnlagPerioder } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import {
@@ -54,7 +54,8 @@ const periodeHarAarsakSomTilsierVisning = (aarsaker) => {
     periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET, periodeAarsak.NATURALYTELSE_TILKOMMER];
   return aarsaker.filter(aarsak => aarsakerSomTilsierMuligEndringIDagsats.indexOf(aarsak.kode) !== -1).length > 0;
 };
-const createBeregningTableData = createSelector([getBeregningsgrunnlagPerioder, getBeregningsgrunnlagLedetekster], ((allePerioder, ledetekster) => {
+const createBeregningTableData = createSelector([getBeregningsgrunnlagPerioder(beregningsgrunnlagTilstand.FASTSATT),
+  getBeregningsgrunnlagLedetekster], ((allePerioder, ledetekster) => {
   const headers = [<FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TomString" />];
   const bruttoRad = [ledetekster.ledetekstBrutto];
   const avkortetRad = [ledetekster.ledetekstAvkortet];

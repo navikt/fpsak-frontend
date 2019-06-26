@@ -11,7 +11,7 @@ import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/util
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import {
   getFaktaOmBeregning,
-  getBeregningsgrunnlag,
+  getAktivtBeregningsgrunnlag,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { createSelector } from 'reselect';
 import { andelsnrMottarYtelseMap, frilansMottarYtelse, skalFastsetteInntektATUtenInntektsmelding } from './vurderOgFastsettATFL/forms/VurderMottarYtelseUtils';
@@ -239,11 +239,12 @@ export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregnings
 || skalKunneEndreTotaltBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag)(andel)
 || harKunYtelse(faktaOmBeregning);
 
-export const getSkalRedigereInntekt = createSelector([getFormValuesForBeregning, getFaktaOmBeregning, getBeregningsgrunnlag], skalRedigereInntektForAndel);
+export const getSkalRedigereInntekt = createSelector([getFormValuesForBeregning, getFaktaOmBeregning,
+  getAktivtBeregningsgrunnlag], skalRedigereInntektForAndel);
 
 export const setSkalRedigereInntektForATFL = (state, fields) => {
   const values = getFormValuesForBeregning(state);
-  const beregningsgrunnlag = getBeregningsgrunnlag(state);
+  const beregningsgrunnlag = getAktivtBeregningsgrunnlag(state);
   const faktaOmBeregning = getFaktaOmBeregning(state);
   let index = 0;
   const skalRedigere = skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag);
@@ -266,7 +267,7 @@ export const skalRedigereInntektskategoriForAndel = (values, beregningsgrunnlag)
   return andel.harPeriodeAarsakGraderingEllerRefusjon === true;
 };
 
-export const getSkalRedigereInntektskategori = createSelector([getFormValuesForBeregning, getBeregningsgrunnlag], skalRedigereInntektskategoriForAndel);
+export const getSkalRedigereInntektskategori = createSelector([getFormValuesForBeregning, getAktivtBeregningsgrunnlag], skalRedigereInntektskategoriForAndel);
 
 export const mapToBelop = skalRedigereInntekt => (andel) => {
   const { fastsattBelop, readOnlyBelop } = andel;

@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
-import { getFaktaOmBeregningTilfellerKoder, getBeregningsgrunnlag } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import {
+ getFaktaOmBeregningTilfellerKoder,
+ getBeregningsgrunnlagForTilstand,
+} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { NavFieldGroup } from '@fpsak-frontend/form';
 import {
   isArrayEmpty, removeSpacesFromNumber, required, formatCurrencyNoKr,
@@ -12,15 +15,17 @@ import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier'
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import beregningsgrunnlagTilstand from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagTilstand';
 import { Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import { mapAndelToField, skalHaBesteberegningSelector } from './BgFordelingUtils';
-import styles from './inntektFieldArray.less';
+  import styles from './inntektFieldArray.less';
 import { validateUlikeAndeler, validateUlikeAndelerWithGroupingFunction } from './ValidateAndelerUtils';
 import { isBeregningFormDirty as isFormDirty } from '../BeregningFormUtils';
 import { AndelRow, getHeaderTextCodes } from './InntektFieldArrayRow';
 import AddAndelButton from './AddAndelButton';
 import SummaryRow from './SummaryRow';
+
 
 const dagpenger = (aktivitetStatuser, beregnetPrAar) => ({
   andel: aktivitetStatuser.filter(({ kode }) => kode === aktivitetStatus.DAGPENGER)[0].navn,
@@ -224,8 +229,9 @@ InntektFieldArray.buildInitialValues = (andeler, getKodeverknavn, faktaOmBeregni
   return andeler.map(a => mapAndelToField(a, getKodeverknavn, faktaOmBeregning));
 };
 
-const finnDagpengeAndelLagtTilIForrige = (bg) => {
-  const andelerLagtTil = bg.beregningsgrunnlagPeriode[0].andelerLagtTilManueltIForrige;
+const finnDagpengeAndelLagtTilIForrige = (bgFraForrige) => {
+  const andelerLagtTil = bgFraForrige.beregningsgrunnlagPeriode[0]
+  .beregningsgrunnlagPrStatusOgAndel.filter(({ lagtTilAvSaksbehandler }) => lagtTilAvSaksbehandler);
   return andelerLagtTil
     ? andelerLagtTil.find(andel => andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER) : undefined;
 };
@@ -239,7 +245,7 @@ export const mapStateToProps = (state) => {
     isBeregningFormDirty,
     skalHaBesteberegning,
     aktivitetStatuser,
-    dagpengeAndelLagtTilIForrige: finnDagpengeAndelLagtTilIForrige(getBeregningsgrunnlag(state)),
+    dagpengeAndelLagtTilIForrige: finnDagpengeAndelLagtTilIForrige(getBeregningsgrunnlagForTilstand(beregningsgrunnlagTilstand.KOFAKBER_UT)(state)),
     erKunYtelse: tilfeller && tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE),
   };
 };

@@ -9,7 +9,7 @@ import LonnsendringForm, { lonnsendringField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
 import NyoppstartetFLForm, { erNyoppstartetFLField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/NyoppstartetFLForm';
-import { getFaktaOmBeregning, getBeregningsgrunnlag, getFaktaOmBeregningTilfellerKoder } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getFaktaOmBeregning, getAktivtBeregningsgrunnlag, getFaktaOmBeregningTilfellerKoder } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { harVurdertMottarYtelse } from './forms/VurderMottarYtelseUtils';
 import InntektstabellPanel from '../InntektstabellPanel';
 import { ATFLSammeOrgTekst, transformValuesForATFLISammeOrg } from './forms/ATFLSammeOrg';
@@ -319,7 +319,7 @@ const getManglerInntektsmelding = createSelector([getFaktaOmBeregning],
   return false;
 });
 
-const getSkalViseTabell = createSelector([getFaktaOmBeregningTilfellerKoder, getBeregningsgrunnlag],
+const getSkalViseTabell = createSelector([getFaktaOmBeregningTilfellerKoder, getAktivtBeregningsgrunnlag],
   (tilfeller, beregningsgrunnlag) => beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
     .some(andel => andel.aktivitetStatus.kode !== aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE)
     && !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE));
@@ -330,7 +330,7 @@ const mapStateToProps = (state, ownProps) => ({
     skalHaBesteberegning: getFormValuesForBeregning(state)[besteberegningField] === true,
     manglerInntektsmelding: getManglerInntektsmelding(state),
     skalViseTabell: getSkalViseTabell(state),
-    harKunstigArbeid: harKunstigArbeidsforhold(ownProps.tilfeller, getBeregningsgrunnlag(state)),
+    harKunstigArbeid: harKunstigArbeidsforhold(ownProps.tilfeller, getAktivtBeregningsgrunnlag(state)),
 });
 
 export default connect(mapStateToProps)(VurderOgFastsettATFL);

@@ -9,7 +9,7 @@ import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import { createSelector, createStructuredSelector } from 'reselect';
 import {
   getAksjonspunkter,
-  getBeregningsgrunnlag,
+  getBeregningsgrunnlagForTilstand,
   getEndringBeregningsgrunnlagPerioder,
   getFaktaOmBeregning,
   getFaktaOmBeregningTilfellerKoder,
@@ -21,6 +21,7 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import beregningsgrunnlagTilstand from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagTilstand';
 import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm';
 import NyoppstartetFLForm from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import {
@@ -276,7 +277,7 @@ const buildInitialValuesForTilfeller = props => ({
 
 const mapStateToBuildInitialValuesProps = createStructuredSelector({
   endringBGPerioder: getEndringBeregningsgrunnlagPerioder,
-  beregningsgrunnlag: getBeregningsgrunnlag,
+  beregningsgrunnlag: getBeregningsgrunnlagForTilstand(beregningsgrunnlagTilstand.KOFAKBER_UT),
   kortvarigeArbeidsforhold: getKortvarigeArbeidsforhold,
   vurderFaktaAP: getVurderFaktaAksjonspunkt,
   kunYtelse: getKunYtelse,

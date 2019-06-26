@@ -12,7 +12,7 @@ import {
   getAktivitetStatuser,
   getAlleAndelerIForstePeriode,
   getBehandlingGjelderBesteberegning,
-  getBeregningsgrunnlag,
+  getBeregningsgrunnlagForTilstand,
   getGjeldendeBeregningAksjonspunkter,
   getBeregningGraderingAksjonspunkt,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
@@ -27,6 +27,7 @@ import aktivitetStatus, {
   isStatusTilstotendeYtelse,
 } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import beregningsgrunnlagTilstand from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagTilstand';
 import BeregningsresultatTable from './beregningsresultatPanel/BeregningsresultatTable';
 import BeregningForm from './beregningForm/BeregningForm';
 import GraderingUtenBG from './gradering/GraderingUtenBG';
@@ -158,7 +159,8 @@ const bestemGjeldendeStatuser = createSelector([getAktivitetStatuser], aktivitet
 }) : null));
 
 const getBeregnetAarsinntekt = createSelector(
-  [getBeregningsgrunnlag, bestemGjeldendeStatuser, getAlleAndelerIForstePeriode, getBehandlingGjelderBesteberegning],
+  [getBeregningsgrunnlagForTilstand(beregningsgrunnlagTilstand.FORDELT_INN), bestemGjeldendeStatuser,
+    getAlleAndelerIForstePeriode, getBehandlingGjelderBesteberegning],
   (beregningsgrunnlag, relevanteStatuser, alleAndelerIForstePeriode, gjelderBesteberegning) => {
     if (!beregningsgrunnlag || !relevanteStatuser) {
       return {};
@@ -178,7 +180,7 @@ const getBeregnetAarsinntekt = createSelector(
 );
 
 const buildProps = createSelector(
-  [getBeregningsgrunnlag, getSelectedBehandlingspunktVilkar, bestemGjeldendeStatuser,
+  [getBeregningsgrunnlagForTilstand(beregningsgrunnlagTilstand.FORDELT_INN), getSelectedBehandlingspunktVilkar, bestemGjeldendeStatuser,
     getGjeldendeBeregningAksjonspunkter, getBeregnetAarsinntekt, getBeregningGraderingAksjonspunkt],
   (berGr, gjeldendeVilkar, relevanteStatuser, gjeldendeAksjonspunkter, beregnetAarsinntekt, graderingAP) => {
     if (!berGr || !relevanteStatuser) {

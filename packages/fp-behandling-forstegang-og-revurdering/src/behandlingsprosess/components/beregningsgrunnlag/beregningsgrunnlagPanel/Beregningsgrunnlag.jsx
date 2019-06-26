@@ -9,6 +9,7 @@ import {
   getBehandlingGjelderBesteberegning,
   getBeregningsgrunnlagPerioder,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import beregningsgrunnlagTilstand from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagTilstand';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -300,7 +301,7 @@ BeregningsgrunnlagImpl.defaultProps = {
 
 const mapStateToProps = (state) => {
   const alleAndelerIForstePeriode = getAlleAndelerIForstePeriode(state);
-  const allePerioder = getBeregningsgrunnlagPerioder(state);
+  const allePerioder = getBeregningsgrunnlagPerioder(beregningsgrunnlagTilstand.FORDELT_INN)(state);
   const gjelderBesteberegning = getBehandlingGjelderBesteberegning(state);
   return {
     gjelderBesteberegning,

@@ -17,6 +17,7 @@ import {
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import beregningsgrunnlagTilstand from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagTilstand';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import hourglassImg from '@fpsak-frontend/assets/images/hourglass.svg';
 import endretUrl from '@fpsak-frontend/assets/images/endret_felt.svg';
@@ -64,7 +65,7 @@ const finnPerioderMedAvsluttetArbeidsforhold = (allePerioder) => {
 
 // Lager en liste med FormattedMessages som skal brukes som overskrifter i tabellen
 export const getTableHeaderData = createSelector(
-  [getBeregningsgrunnlagPerioder, getGjeldendeBeregningAksjonspunkter],
+  [getBeregningsgrunnlagPerioder(beregningsgrunnlagTilstand.FORDELT_INN), getGjeldendeBeregningAksjonspunkter],
   (allePerioder, gjeldendeAksjonspunkter) => {
     const relevantePerioder = finnPerioderMedAvsluttetArbeidsforhold(allePerioder);
     const headers = [];
@@ -153,7 +154,7 @@ export const createInputFieldKey = (andel, periode) => {
 // Vi må også ta vare på om arbeidsforholdet er tidsbegrenset eller ikke for å kunne vise dette i GUI.
 
 export const createTableData = createSelector(
-  [getBeregningsgrunnlagPerioder, getGjeldendeBeregningAksjonspunkter, getAlleKodeverk],
+  [getBeregningsgrunnlagPerioder(beregningsgrunnlagTilstand.FORDELT_INN), getGjeldendeBeregningAksjonspunkter, getAlleKodeverk],
   (allePerioder, aksjonspunkter, alleKodeverk) => {
     const harAktueltAksjonspunkt = harAksjonspunktForFastsettBgTidsbegrensetAT(aksjonspunkter);
     // Vi er ikke interessert i perioder som oppstår grunnet naturalytelse
@@ -365,7 +366,7 @@ const getOppsummertBruttoInntektMedAP = (allePerioder, formValues) => {
 };
 
 export const getOppsummertBruttoInntektForTidsbegrensedePerioder = createSelector(
-  [getBeregningsgrunnlagPerioder, getGjeldendeBeregningAksjonspunkter, getBehandlingFormValues(formName)],
+  [getBeregningsgrunnlagPerioder(beregningsgrunnlagTilstand.FORDELT_INN), getGjeldendeBeregningAksjonspunkter, getBehandlingFormValues(formName)],
   (allePerioder, gjeldendeAksjonspunkter, formValues) => {
     if (!harAksjonspunktForFastsettBgTidsbegrensetAT(gjeldendeAksjonspunkter)) {
       return getOppsummertBruttoInntektUtenAP(allePerioder);
@@ -383,7 +384,7 @@ export const getIsAksjonspunktClosed = createSelector(
 );
 
 const mapStateToProps = (state) => {
-  const allePerioder = getBeregningsgrunnlagPerioder(state);
+  const allePerioder = getBeregningsgrunnlagPerioder(beregningsgrunnlagTilstand.FORDELT_INN)(state);
   return {
     tableData: createTableData(state),
     bruttoPrPeriodeList: getOppsummertBruttoInntektForTidsbegrensedePerioder(state),

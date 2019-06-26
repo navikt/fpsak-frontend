@@ -8,10 +8,7 @@ import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandling
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import {
-  getAksjonspunkter,
-  getBeregningsgrunnlag,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import FaktaForATFLOgSNPanel, {
   transformValuesFaktaForATFLOgSN,
   getBuildInitialValuesFaktaForATFLOgSN, getValidationFaktaForATFLOgSN,
@@ -193,7 +190,6 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
     onSubmit,
     isAksjonspunktClosed: getIsAksjonspunktClosed(state),
     aksjonspunkter: getAksjonspunkter(state),
-    beregningsgrunnlag: getBeregningsgrunnlag(state),
     helpText: getHelpTextsFaktaForATFLOgSN(state),
     verdiForAvklarAktivitetErEndret: erAvklartAktivitetEndret(state),
     erOverstyrt: erOverstyringAvBeregningsgrunnlag(state),

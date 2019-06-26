@@ -9,6 +9,7 @@ import aksjonspunktCodes, {
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import beregningsgrunnlagTilstand from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagTilstand';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
@@ -143,6 +144,23 @@ export const doesVilkarForSykdomOppfyltExist = createSelector(
 export const getBeregningsgrunnlag = createSelector(
   [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling.beregningsgrunnlag ? selectedBehandling.beregningsgrunnlag : undefined),
 );
+export const getAktivtBeregningsgrunnlag = createSelector(
+  [getBeregningsgrunnlag], (beregningsgrunnlag = {}) => (beregningsgrunnlag.aktivtBeregningsgrunnlag ? beregningsgrunnlag.aktivtBeregningsgrunnlag : undefined),
+);
+export const getBeregningsgrunnlagForTilstandOppdatertMedRefusjonOgGradering = createSelector(
+  [getBeregningsgrunnlag], (beregningsgrunnlag = {}) => (beregningsgrunnlag
+    && beregningsgrunnlag.beregningsgrunnlagForTilstand
+    ? beregningsgrunnlag.beregningsgrunnlagForTilstand[beregningsgrunnlagTilstand.OPPDATERT_MED_REFUSJON_OG_GRADERING] : beregningsgrunnlag),
+);
+
+const finnBeregningsgrunnlagForTilstandEllerAktivt = (tilstand, beregningsgrunnlag) => (tilstand && beregningsgrunnlag.beregningsgrunnlagForTilstand[tilstand]
+? beregningsgrunnlag.beregningsgrunnlagForTilstand[tilstand] : beregningsgrunnlag.aktivtBeregningsgrunnlag);
+
+export const getBeregningsgrunnlagForTilstand = tilstand => createSelector(
+  [getBeregningsgrunnlag], (beregningsgrunnlag = {}) => (beregningsgrunnlag
+    && beregningsgrunnlag.beregningsgrunnlagForTilstand
+    ? finnBeregningsgrunnlagForTilstandEllerAktivt(tilstand, beregningsgrunnlag) : beregningsgrunnlag),
+);
 export const getGjeldendeBeregningAksjonspunkter = createSelector(
   [getAksjonspunkter], aksjonspunkter => aksjonspunkter.filter(ap => isBeregningAksjonspunkt(ap.definisjon.kode)),
 );
@@ -157,13 +175,14 @@ export const getAktivitetStatuser = createSelector(
     && beregningsgrunnlag.aktivitetStatus ? beregningsgrunnlag.aktivitetStatus : undefined),
 );
 export const getAlleAndelerIForstePeriode = createSelector(
-  [getBeregningsgrunnlag], (beregningsgrunnlag = {}) => (beregningsgrunnlag.beregningsgrunnlagPeriode
+  [getAktivtBeregningsgrunnlag], (beregningsgrunnlag = {}) => (beregningsgrunnlag.beregningsgrunnlagPeriode
     && beregningsgrunnlag.beregningsgrunnlagPeriode.length > 0
     ? beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
     : []),
 );
 
-export const getBeregningsgrunnlagPerioder = createSelector([getBeregningsgrunnlag], (beregningsgrunnlag = {}) => beregningsgrunnlag.beregningsgrunnlagPeriode);
+export const getBeregningsgrunnlagPerioder = tilstand => createSelector([getBeregningsgrunnlagForTilstand(tilstand)],
+(beregningsgrunnlag = {}) => beregningsgrunnlag.beregningsgrunnlagPeriode);
 export const getBeregningsgrunnlagLedetekster = createSelector([getBeregningsgrunnlag], (beregningsgrunnlag = {}) => ({
   ledetekstBrutto: beregningsgrunnlag.ledetekstBrutto,
   ledetekstAvkortet: beregningsgrunnlag.ledetekstAvkortet,

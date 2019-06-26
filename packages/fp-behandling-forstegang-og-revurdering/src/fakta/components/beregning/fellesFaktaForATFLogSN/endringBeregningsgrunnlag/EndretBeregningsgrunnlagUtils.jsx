@@ -21,7 +21,7 @@ import {
   getEndringBeregningsgrunnlag,
   getFaktaOmBeregningTilfellerKoder,
   getFaktaOmBeregning,
-  getBeregningsgrunnlag,
+  getAktivtBeregningsgrunnlag,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { skalFastsetteForATUavhengigAvATFLSammeOrg, skalFastsetteForFLUavhengigAvATFLSammeOrg } from '../BgFordelingUtils';
 import { getFormValuesForBeregning } from '../../BeregningFormUtils';
@@ -202,7 +202,7 @@ const harKunYtelse = faktaOmBeregning => faktaOmBeregning.faktaOmBeregningTilfel
 .find(({ kode }) => kode === faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE) !== undefined;
 
 const harKunBrukersAndelIForstePeriode = (state) => {
-  const bg = getBeregningsgrunnlag(state);
+  const bg = getAktivtBeregningsgrunnlag(state);
   const forstePeriode = bg.beregningsgrunnlagPeriode[0];
   return forstePeriode.beregningsgrunnlagPrStatusOgAndel.find(andel => andel.aktivitetStatus.kode !== aktivitetStatuser.BRUKERS_ANDEL) === undefined;
 };

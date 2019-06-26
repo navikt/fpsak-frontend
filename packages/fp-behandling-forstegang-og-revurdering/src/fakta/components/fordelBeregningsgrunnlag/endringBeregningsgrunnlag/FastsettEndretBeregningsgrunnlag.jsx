@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlag } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import beregningsgrunnlagTilstand from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagTilstand';
+import { getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlagForTilstand }
+from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import EndringBeregningsgrunnlagForm from './EndringBeregningsgrunnlagForm';
 
 export const FastsettEndretBeregningsgrunnlagImpl = ({
@@ -41,7 +43,7 @@ const emptyArray = [];
 
 const mapStateToProps = (state) => {
   const perioder = getEndringBeregningsgrunnlagPerioder(state);
-  const bgPerioder = getBeregningsgrunnlag(state).beregningsgrunnlagPeriode;
+  const bgPerioder = getBeregningsgrunnlagForTilstand(beregningsgrunnlagTilstand.OPPDATERT_MED_REFUSJON_OG_GRADERING)(state).beregningsgrunnlagPeriode;
   return ({
     perioder: perioder || emptyArray,
     bgPerioder,

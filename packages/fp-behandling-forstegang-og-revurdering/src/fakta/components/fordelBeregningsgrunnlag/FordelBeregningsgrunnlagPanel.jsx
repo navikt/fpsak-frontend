@@ -12,11 +12,11 @@ import { getKodeverknavnFn, faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import { FaktaEkspandertpanel, withDefaultToggling, FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import beregningsgrunnlagTilstand from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagTilstand';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-
 import {
  getBehandlingIsOnHold, getEndringBeregningsgrunnlagPerioder,
-  getBeregningsgrunnlag, getAksjonspunkter, getBeregningsgrunnlagPerioder,
+ getBeregningsgrunnlagForTilstand, getAksjonspunkter,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import FastsettEndretBeregningsgrunnlag from './endringBeregningsgrunnlag/FastsettEndretBeregningsgrunnlag';
 import FordelingHelpText from './FordelingHelpText';
@@ -137,15 +137,15 @@ FordelBeregningsgrunnlagPanelImpl.propTypes = {
 };
 
 export const transformValuesFordelBeregning = createSelector(
-  [getAksjonspunkter, getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlagPerioder],
-  (aksjonspunkter, endringBGPerioder, bgPerioder) => (values) => {
+  [getAksjonspunkter, getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlagForTilstand(beregningsgrunnlagTilstand.OPPDATERT_MED_REFUSJON_OG_GRADERING)],
+  (aksjonspunkter, endringBGPerioder, bg) => (values) => {
     if (hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)) {
       const faktaBeregningValues = values;
       const beg = faktaBeregningValues[BEGRUNNELSE_FORDELING_NAME];
       return [{
         kode: FORDEL_BEREGNINGSGRUNNLAG,
         begrunnelse: beg === undefined ? null : beg,
-        ...FastsettEndretBeregningsgrunnlag.transformValues(values, endringBGPerioder, bgPerioder),
+        ...FastsettEndretBeregningsgrunnlag.transformValues(values, endringBGPerioder, bg.beregningsgrunnlagPeriode),
       }];
     }
     return {};
@@ -153,7 +153,8 @@ export const transformValuesFordelBeregning = createSelector(
 );
 
 export const buildInitialValuesFordelBeregning = createSelector(
-  [getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlag, getAlleKodeverk, getAksjonspunkter],
+  [getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlagForTilstand(beregningsgrunnlagTilstand.OPPDATERT_MED_REFUSJON_OG_GRADERING),
+    getAlleKodeverk, getAksjonspunkter],
   (endringBGPerioder, beregningsgrunnlag, alleKodeverk, aksjonspunkter) => {
     if (!hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)) {
       return {};
@@ -167,7 +168,7 @@ export const buildInitialValuesFordelBeregning = createSelector(
 
 export const mapStateToValidationProps = createStructuredSelector({
   endringBGPerioder: getEndringBeregningsgrunnlagPerioder,
-  beregningsgrunnlag: getBeregningsgrunnlag,
+  beregningsgrunnlag: getBeregningsgrunnlagForTilstand(beregningsgrunnlagTilstand.OPPDATERT_MED_REFUSJON_OG_GRADERING),
 });
 
 export const getValidationFordelBeregning = createSelector([mapStateToValidationProps, getAlleKodeverk, getAksjonspunkter],

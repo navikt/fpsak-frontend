@@ -222,7 +222,12 @@ describe('<EndretBeregningsgrunnlagUtils>', () => {
     const beregningsgrunnlagPrStatusOgAndel = [
       { aktivitetStatus: { kode: 'AT' } },
     ];
-    const state = lagStateMedBeregningsgrunnlagOgValues({ faktaOmBeregning, beregningsgrunnlagPeriode: [{ beregningsgrunnlagPrStatusOgAndel }] });
+    const state = lagStateMedBeregningsgrunnlagOgValues({
+      faktaOmBeregning,
+      aktivtBeregningsgrunnlag: {
+        beregningsgrunnlagPeriode: [{ beregningsgrunnlagPrStatusOgAndel }],
+      },
+    });
     const dateHeading = <div id="DateHeading" />;
     const endringHeading = createEndringHeadingForDate(state, periodeFom, periodeTom, dateHeading, true);
     expect(endringHeading.props.children.length).to.equal(3);

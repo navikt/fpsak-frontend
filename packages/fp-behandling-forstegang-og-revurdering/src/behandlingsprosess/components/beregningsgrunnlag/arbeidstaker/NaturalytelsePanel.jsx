@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
 import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components';
+import beregningsgrunnlagTilstand from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagTilstand';
 import moment from 'moment';
 import { createSelector } from 'reselect';
 import { getBeregningsgrunnlagPerioder } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
@@ -59,7 +60,7 @@ const fillMapWithMissingPeriodes = (arbeidsforholdMap, antallPerioderMedFrafaltY
 const findAllePerioderMedBortfaltNaturalytelse = allePerioder => allePerioder
   .filter(periode => periode.periodeAarsaker.map(({ kode }) => kode).includes(periodeAarsak.NATURALYTELSE_BORTFALT));
 
-export const createNaturalytelseTableData = createSelector([getBeregningsgrunnlagPerioder], (allePerioder = {}) => {
+export const createNaturalytelseTableData = createSelector([getBeregningsgrunnlagPerioder(beregningsgrunnlagTilstand.FORDELT_INN)], (allePerioder = {}) => {
   const relevantePerioder = findAllePerioderMedBortfaltNaturalytelse(allePerioder);
   if (relevantePerioder.length === 0 || !relevantePerioder) {
     return undefined;

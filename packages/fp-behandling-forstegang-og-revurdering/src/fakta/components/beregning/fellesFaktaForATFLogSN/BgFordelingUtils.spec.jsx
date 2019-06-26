@@ -339,9 +339,10 @@ describe('<BgFordelingUtils>', () => {
   };
 
   const beregningsgrunnlag = {
-    beregningsgrunnlagPeriode: [{
-      beregningsgrunnlagPrStatusOgAndel: [arbeidstakerAndel1, arbeidstakerAndel3, frilansAndel, arbeidstakerAndel4, kunstigArbeidstakerAndel],
-    },
+    beregningsgrunnlagPeriode: [
+      {
+        beregningsgrunnlagPrStatusOgAndel: [arbeidstakerAndel1, arbeidstakerAndel3, frilansAndel, arbeidstakerAndel4, kunstigArbeidstakerAndel],
+      },
     ],
   };
 

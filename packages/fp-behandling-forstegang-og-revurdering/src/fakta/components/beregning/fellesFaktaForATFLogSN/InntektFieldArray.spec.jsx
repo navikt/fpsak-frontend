@@ -29,9 +29,9 @@ describe('<InntektFieldArray>', () => {
       faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING }],
     };
     const bg = {
-      beregningsgrunnlagPeriode: [
-        {},
-      ],
+      aktivtBeregningsgrunnlag: {
+        beregningsgrunnlagPeriode: [{}],
+      },
       faktaOmBeregning,
     };
     const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, bg, formNameVurderFaktaBeregning);
@@ -42,36 +42,14 @@ describe('<InntektFieldArray>', () => {
   });
 
 
-  it('skal med dagpengeandel lagt til tidligere', () => {
-    const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING }],
-    };
-    const dagpengeAndel = { aktivitetStatus: { kode: aktivitetStatuser.DAGPENGER }, beregnetPrAar: 120000 };
-    const bg = {
-      beregningsgrunnlagPeriode: [
-        {
-          andelerLagtTilManueltIForrige: [
-            dagpengeAndel,
-          ],
-        },
-      ],
-      faktaOmBeregning,
-    };
-    const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, bg, formNameVurderFaktaBeregning);
-    const props = mapStateToProps(state);
-    expect(props.isBeregningFormDirty).to.eql(false);
-    expect(props.aktivitetStatuser.length).to.eql(13);
-    expect(props.dagpengeAndelLagtTilIForrige).to.eql(dagpengeAndel);
-  });
-
   it('skal mappe state til props for kun ytelse', () => {
     const faktaOmBeregning = {
       faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE }],
     };
     const bg = {
-      beregningsgrunnlagPeriode: [
-        {},
-      ],
+      aktivtBeregningsgrunnlag: {
+        beregningsgrunnlagPeriode: [{}],
+      },
       faktaOmBeregning,
     };
     const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, bg, formNameVurderFaktaBeregning);
@@ -102,9 +80,9 @@ describe('<InntektFieldArray>', () => {
   initial.fieldArrayName = [andelField];
   initial[besteberegningField] = true;
   const bg = {
-    beregningsgrunnlagPeriode: [
-      {},
-    ],
+    aktivtBeregningsgrunnlag: {
+      beregningsgrunnlagPeriode: [{}],
+    },
     faktaOmBeregning,
   };
   const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, bg, formNameVurderFaktaBeregning, initial, initial);
@@ -128,15 +106,10 @@ describe('<InntektFieldArray>', () => {
 
 
   it('skal legge til dagpengeandel', () => {
-    const dagpengeAndel = { aktivitetStatus: { kode: aktivitetStatuser.DAGPENGER }, beregnetPrAar: 120000 };
     const newbg = {
-      beregningsgrunnlagPeriode: [
-        {
-          andelerLagtTilManueltIForrige: [
-            dagpengeAndel,
-          ],
-        },
-      ],
+      aktivtBeregningsgrunnlag: {
+        beregningsgrunnlagPeriode: [{}],
+      },
       faktaOmBeregning,
     };
     const values = { [besteberegningField]: true };
@@ -169,16 +142,11 @@ describe('<InntektFieldArray>', () => {
     expect(newfields.length).to.equal(1);
   });
 
-  it('skal legge til dagpengeandel med fastsatt belop', () => {
-    const dagpengeAndel = { aktivitetStatus: { kode: aktivitetStatuser.DAGPENGER }, beregnetPrAar: 120000 };
+  it('skal legge til dagpengeandel uten fastsatt belop', () => {
     const newbg = {
-      beregningsgrunnlagPeriode: [
-        {
-          andelerLagtTilManueltIForrige: [
-            dagpengeAndel,
-          ],
-        },
-      ],
+      aktivtBeregningsgrunnlag: {
+        beregningsgrunnlagPeriode: [{}],
+      },
       faktaOmBeregning,
     };
     const values = { [besteberegningField]: true };
@@ -187,9 +155,8 @@ describe('<InntektFieldArray>', () => {
     const newfields = [];
     leggTilDagpengerOmBesteberegning(newfields, newprops.skalHaBesteberegning, newprops.aktivitetStatuser, newprops.dagpengeAndelLagtTilIForrige);
     expect(newfields.length).to.equal(1);
-    expect(newfields[0].fastsattBelop).to.equal('10 000');
+    expect(newfields[0].fastsattBelop).to.equal('');
   });
-
 
   it('skal validere eksisterende andeler uten errors', () => {
     const skalRedigereInntekt = () => true;

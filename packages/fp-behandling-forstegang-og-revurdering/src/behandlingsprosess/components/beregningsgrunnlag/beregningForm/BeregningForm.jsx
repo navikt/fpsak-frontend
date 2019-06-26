@@ -11,7 +11,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Undertittel } from 'nav-frontend-typografi';
 import { VerticalSpacer, ElementWrapper, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
+import beregningsgrunnlagTilstand from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagTilstand';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import {
   getAlleAndelerIForstePeriode,
@@ -111,9 +111,9 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent) => {
 };
 
 const buildInitialValues = createSelector(
-  [getAlleAndelerIForstePeriode, getSelectedBehandlingspunktAksjonspunkter, getGjeldendeBeregningAksjonspunkter,
-    getBeregningsgrunnlagPerioder, getGjeldendeDekningsgrad],
-  (alleAndelerIForstePeriode, aksjonspunkter, gjeldendeAksjonspunkter, allePerioder, gjeldendeDekningsgrad) => {
+  [getAlleAndelerIForstePeriode, getGjeldendeBeregningAksjonspunkter,
+    getBeregningsgrunnlagPerioder(beregningsgrunnlagTilstand.FORDELT_INN), getGjeldendeDekningsgrad],
+  (alleAndelerIForstePeriode, gjeldendeAksjonspunkter, allePerioder, gjeldendeDekningsgrad) => {
     const arbeidstakerAndeler = alleAndelerIForstePeriode.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
     const frilanserAndeler = alleAndelerIForstePeriode.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
     const selvstendigNaeringAndeler = alleAndelerIForstePeriode.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
@@ -232,7 +232,7 @@ BeregningFormImpl.defaultProps = {
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const { gjeldendeAksjonspunkter, relevanteStatuser, submitCallback } = ownProps;
-  const allePerioder = getBeregningsgrunnlagPerioder(initialState);
+  const allePerioder = getBeregningsgrunnlagPerioder(beregningsgrunnlagTilstand.FORDELT_INN)(initialState);
   const alleAndelerIForstePeriode = getAlleAndelerIForstePeriode(initialState);
   const onSubmit = values => submitCallback(
     transformValues(values, relevanteStatuser, alleAndelerIForstePeriode, gjeldendeAksjonspunkter, allePerioder),
