@@ -6740,11 +6740,11 @@ nav-frontend-core@4.0.9, nav-frontend-core@^4.0.9:
   version "4.0.9"
   resolved "https://registry.npmjs.org/nav-frontend-core/-/nav-frontend-core-4.0.9.tgz#27a49de6f434f64989785938cfa809915d101fd9"
 
-nav-frontend-ekspanderbartpanel-style@0.3.20:
+nav-frontend-ekspanderbartpanel-style@^0.3.20:
   version "0.3.20"
   resolved "https://registry.npmjs.org/nav-frontend-ekspanderbartpanel-style/-/nav-frontend-ekspanderbartpanel-style-0.3.20.tgz#385fe32741a391ae6dbf2659956e5d08e02afbb9"
 
-nav-frontend-ekspanderbartpanel@1.0.28:
+nav-frontend-ekspanderbartpanel@^1.0.28:
   version "1.0.28"
   resolved "https://registry.npmjs.org/nav-frontend-ekspanderbartpanel/-/nav-frontend-ekspanderbartpanel-1.0.28.tgz#91fa5fc8cd9042faf74903c04e642a7c6b8ebf0b"
 
