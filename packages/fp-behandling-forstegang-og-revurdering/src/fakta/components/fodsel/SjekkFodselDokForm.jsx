@@ -31,14 +31,14 @@ export const AVKLARTE_BARN_FORM_NAME_PREFIX = 'avklartBarn';
 
 export const avklarteBarnFieldArrayName = 'avklartBarn';
 
-const createNewChildren = (antallBarnFraSoknad) => {
+export const createNewChildren = (antallBarnFraSoknad) => {
   let antallBarn = antallBarnFraSoknad;
   if (antallBarn === 0 || !antallBarn) {
     antallBarn = 1;
   }
   const childrenArray = [];
   while (antallBarn > 0) {
-    childrenArray.push({ fodselsdato: '', isBarnDodt: false, dodsDato: '' });
+    childrenArray.push({ fodselsdato: '', isBarnDodt: false, dodsdato: '' });
     antallBarn -= 1;
   }
   return childrenArray;
@@ -110,7 +110,7 @@ SjekkFodselDokForm.defaultProps = {
 };
 
 
-const addIsBarnDodt = (avklarteBarn) => {
+export const addIsBarnDodt = (avklarteBarn) => {
   const avklarteBarnMedDodFlagg = [];
   avklarteBarn.forEach((barn, index) => {
     avklarteBarnMedDodFlagg.push(barn);
@@ -121,7 +121,7 @@ const addIsBarnDodt = (avklarteBarn) => {
   return avklarteBarnMedDodFlagg;
 };
 
-const allaBarn = (avklarteBarn) => {
+export const alleBarn = (avklarteBarn) => {
   const komplettBarn = [];
   avklarteBarn.forEach((barn, index) => {
     komplettBarn.push(barn);
@@ -157,7 +157,7 @@ const transformValues = (values, antallBarnFraSoknad, antallBarnFraTps, fodselIn
   antallBarnFodt: values.dokumentasjonForeligger
     ? getAntallBarn(values.brukAntallBarnITps, values.antallBarnFodt, antallBarnFraSoknad, antallBarnFraTps) : undefined,
   dokumentasjonForeligger: values.dokumentasjonForeligger,
-  uidentifiserteBarn: allaBarn(values.avklartBarn),
+  uidentifiserteBarn: alleBarn(values.avklartBarn),
   brukAntallBarnITps: fodselInfo && !!fodselInfo.length ? values.brukAntallBarnITps : false,
   ...FaktaBegrunnelseTextField.transformValues(values),
 });

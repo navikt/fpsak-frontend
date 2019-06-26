@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { formPropTypes } from 'redux-form';
+import { formPropTypes, FieldArray } from 'redux-form';
 import { createSelector } from 'reselect';
 
 import { Row, Column } from 'nav-frontend-grid';
@@ -11,24 +11,31 @@ import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles'
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import {
   RadioGroupField, RadioOption,
- DatepickerField,
+ DatepickerField, InputField,
 } from '@fpsak-frontend/form';
 import {
   VerticalSpacer, ElementWrapper, ArrowBox,
 } from '@fpsak-frontend/shared-components';
 
 import {
-  required, hasValidDate,
+  required, hasValidDate, minValue, maxValue, hasValidInteger,
 } from '@fpsak-frontend/utils';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
+import FodselSammenligningPanel from 'behandlingForstegangOgRevurdering/src/components/fodselSammenligning/FodselSammenligningPanel';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  getEditedStatus, getSoknad, getFamiliehendelseGjeldende, getAksjonspunkter,
+  getEditedStatus, getSoknad, getFamiliehendelseGjeldende, getAksjonspunkter, getSoknadAntallBarn,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import {
+ alleBarn, addIsBarnDodt, createNewChildren, avklarteBarnFieldArrayName,
+} from './SjekkFodselDokForm';
+import avklartBarnFieldArray from './AvklartBarnFieldArray';
 
 import styles from './prematurukerDokForm.less';
 
 export const prematurukerDokFormName = 'PrematurukerDokForm';
+const minValue1 = minValue(1);
+const maxValue9 = maxValue(9);
 
 /**
  * PrematurukerDokForm
@@ -40,11 +47,14 @@ export const PrematurukerDokForm = ({
   isTerminDatoEdited,
   dokumentasjonForeligger,
   isDokumentasjonForeliggerEdited,
+  isAntallBarnEdited,
+  avklartBarn,
   dirty,
   initialValues,
   submittable,
 }) => (
   <ElementWrapper>
+    <FodselSammenligningPanel />
     <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.VURDER_TERMIN_VED_TIDLIG_FØDSEL} titleCode="PrematurukerDokForm.ApplicationInformation">
       <Row>
         <Column xs="12">
@@ -61,13 +71,37 @@ export const PrematurukerDokForm = ({
               <Column xs="12">
                 <ArrowBox>
                   {<FormattedMessage id="PrematurukerDokForm.FyllInnDokumenterteOpplysninger" />}
-                  <DatepickerField
-                    name="termindato"
-                    label={{ id: `${prematurukerDokFormName}.Termindato` }}
-                    validate={[required, hasValidDate]}
-                    readOnly={readOnly}
-                    isEdited={isTerminDatoEdited}
-                  />
+                  <div className={styles.horizontalForm}>
+                    <DatepickerField
+                      name="termindato"
+                      label={{ id: `${prematurukerDokFormName}.Termindato` }}
+                      validate={[required, hasValidDate]}
+                      readOnly={readOnly}
+                      isEdited={isTerminDatoEdited}
+                    />
+                    <div className={styles.marginLeft}>
+                      <InputField
+                        name="antallBarn"
+                        label={{ id: 'PrematurukerDokForm.AntallBarn' }}
+                        parse={(value) => {
+                          const parsedValue = parseInt(value, 10);
+                          return Number.isNaN(parsedValue) ? value : parsedValue;
+                        }}
+                        validate={[required, hasValidInteger, minValue1, maxValue9]}
+                        bredde="XS"
+                        readOnly={readOnly}
+                        isEdited={isAntallBarnEdited}
+                      />
+                    </div>
+                    <div className={styles.marginLeft}>
+                      <FieldArray
+                        name={avklarteBarnFieldArrayName}
+                        component={avklartBarnFieldArray}
+                        readOnly={readOnly}
+                        avklartBarn={avklartBarn}
+                      />
+                    </div>
+                  </div>
                 </ArrowBox>
               </Column>
             </div>
@@ -85,7 +119,9 @@ PrematurukerDokForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   dokumentasjonForeligger: PropTypes.bool,
   isDokumentasjonForeliggerEdited: PropTypes.bool,
+  isAntallBarnEdited: PropTypes.bool,
   isTerminDatoEdited: PropTypes.bool,
+  avklartBarn: PropTypes.arrayOf(PropTypes.shape()),
   submittable: PropTypes.bool.isRequired,
   ...formPropTypes,
 };
@@ -93,19 +129,32 @@ PrematurukerDokForm.propTypes = {
 PrematurukerDokForm.defaultProps = {
   isTerminDatoEdited: false,
   isDokumentasjonForeliggerEdited: false,
+  isAntallBarnEdited: false,
+  avklartBarn: [],
 };
 
-export const buildInitialValues = createSelector([getSoknad, getFamiliehendelseGjeldende, getAksjonspunkter], (soknad, familiehendelse, aksjonspunkter) => ({
-    termindato: familiehendelse.termindato ? familiehendelse.termindato : soknad.termindato,
-    dokumentasjonForeligger: familiehendelse.dokumentasjonForeligger !== null
-      ? familiehendelse.dokumentasjonForeligger : undefined,
-    ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_TERMIN_VED_TIDLIG_FØDSEL)),
-  }));
+export const buildInitialValues = createSelector([getSoknad, getFamiliehendelseGjeldende, getAksjonspunkter, getSoknadAntallBarn],
+  (soknad, familiehendelse, aksjonspunkter, soknadAntallBarn) => {
+    const antallBarn = soknad.antallBarn ? soknad.antallBarn : NaN;
+
+    return {
+      termindato: familiehendelse.termindato ? familiehendelse.termindato : soknad.termindato,
+      antallBarn: familiehendelse.antallBarnTermin ? familiehendelse.antallBarnTermin : antallBarn,
+      avklartBarn: (familiehendelse.avklartBarn && familiehendelse.avklartBarn.length > 0)
+        ? addIsBarnDodt(familiehendelse.avklartBarn) : createNewChildren(soknadAntallBarn || 0),
+      dokumentasjonForeligger: familiehendelse.dokumentasjonForeligger !== null
+        ? familiehendelse.dokumentasjonForeligger : undefined,
+      ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_TERMIN_VED_TIDLIG_FØDSEL)),
+    };
+});
 
 const transformValues = values => ({
   kode: aksjonspunktCodes.VURDER_TERMIN_VED_TIDLIG_FØDSEL,
   dokumentasjonForeligger: values.dokumentasjonForeligger,
   termindato: values.termindato,
+  antallBarn: values.antallBarn,
+  dødsdato: values.dødsdato,
+  uidentifiserteBarn: alleBarn(values.avklartBarn),
   ...FaktaBegrunnelseTextField.transformValues(values),
 });
 
@@ -119,7 +168,9 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       isTerminDatoEdited: getEditedStatus(state).termindato,
       isDokumentasjonForeliggerEdited: getEditedStatus(state).dokumentasjonForeligger,
       isOverridden: getFamiliehendelseGjeldende(state).erOverstyrt,
+      avklartBarn: behandlingFormValueSelector(prematurukerDokFormName)(state, 'avklartBarn'),
       dokumentasjonForeligger: behandlingFormValueSelector(prematurukerDokFormName)(state, 'dokumentasjonForeligger'),
+      isAntallBarnEdited: getEditedStatus(state).antallBarn,
   });
 };
 

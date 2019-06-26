@@ -14,7 +14,7 @@ import styles from './avklartBarnFieldArray.less';
 export const defaultAntallBarn = {
   fodselsdato: '',
   isBarnDodt: false,
-  dodsDato: '',
+  dodsdato: '',
 };
 
 export const AvklartBarnFieldArray = ({
