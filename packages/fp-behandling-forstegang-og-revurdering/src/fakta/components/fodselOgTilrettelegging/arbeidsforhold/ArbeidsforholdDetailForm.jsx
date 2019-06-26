@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Knapp } from 'nav-frontend-knapper';
 
 import { DatepickerField } from '@fpsak-frontend/form';
 import {
- FlexContainer, FlexColumn, FlexRow,
+ FlexContainer, FlexColumn, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { required, hasValidDate } from '@fpsak-frontend/utils';
 
+import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import TilretteleggingFaktaPanel from './tilrettelegging/TilretteleggingFaktaPanel';
 
@@ -25,6 +26,7 @@ export const ArbeidsforholdDetailForm = ({
   cancelArbeidsforholdCallback,
   readOnly,
   warning,
+  submittable,
   ...formProps
 }) => {
   const [valgtTilrettelegging, settValgtTilrettelegging] = useState();
@@ -46,26 +48,29 @@ export const ArbeidsforholdDetailForm = ({
             settValgtTilrettelegging={settValgtTilrettelegging}
             parentFormName={ARBEIDSFORHOLD_DETAIL_FORM_NAME}
             readOnly={readOnly}
+            submittable={submittable}
           />
+          <VerticalSpacer sixteenPx />
         </FlexColumn>
       </FlexRow>
-      {!readOnly && !valgtTilrettelegging && (
+      {!readOnly && (
         <FlexRow>
           <FlexColumn>
-            <Hovedknapp
-              htmlType="button"
-              mini
+            <FaktaSubmitButton
+              formName={ARBEIDSFORHOLD_DETAIL_FORM_NAME}
+              isSubmittable={submittable && !valgtTilrettelegging && Object.keys(warning).length === 0}
+              isReadOnly={readOnly}
+              hasOpenAksjonspunkter={false}
               onClick={formProps.handleSubmit}
-              disabled={Object.keys(warning).length > 0}
-            >
-              <FormattedMessage id="ArbeidsforholdFaktaPanel.Oppdater" />
-            </Hovedknapp>
+              buttonTextId="ArbeidsforholdFaktaPanel.Oppdater"
+            />
           </FlexColumn>
           <FlexColumn>
             <Knapp
               htmlType="button"
               mini
               onClick={cancelArbeidsforholdCallback}
+              disabled={valgtTilrettelegging}
             >
               <FormattedMessage id="ArbeidsforholdFaktaPanel.Avbryt" />
             </Knapp>
@@ -81,6 +86,7 @@ ArbeidsforholdDetailForm.propTypes = {
   updateArbeidsforholdCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   warning: PropTypes.shape(),
+  submittable: PropTypes.bool.isRequired,
 };
 
 ArbeidsforholdDetailForm.defaultProps = {

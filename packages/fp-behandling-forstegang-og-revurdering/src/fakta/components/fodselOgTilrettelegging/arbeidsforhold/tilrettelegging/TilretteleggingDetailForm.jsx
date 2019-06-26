@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Fieldset } from 'nav-frontend-skjema';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Knapp } from 'nav-frontend-knapper';
 
 import { required } from '@fpsak-frontend/utils';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
@@ -12,6 +12,7 @@ import {
  VerticalSpacer, ArrowBox, FlexContainer, FlexColumn, FlexRow,
 } from '@fpsak-frontend/shared-components';
 
+import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import TilretteleggingsvalgPanel from './TilretteleggingsvalgPanel';
 
@@ -27,6 +28,7 @@ export const TilretteleggingDetailForm = ({
   readOnly,
   warning,
   cancelTilrettelegging,
+  submittable,
   ...formProps
 }) => (
   <Fieldset legend={intl.formatMessage({ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.Tilrettelegging' })}>
@@ -57,13 +59,14 @@ export const TilretteleggingDetailForm = ({
       <FlexContainer>
         <FlexRow>
           <FlexColumn>
-            <Hovedknapp
-              htmlType="button"
-              mini
+            <FaktaSubmitButton
+              formName={TILRETTELEGGING_DETAIL_FORM_NAME}
+              isSubmittable={submittable}
+              isReadOnly={readOnly}
+              hasOpenAksjonspunkter={false}
               onClick={formProps.handleSubmit}
-            >
-              <FormattedMessage id="TilretteleggingDetailForm.Oppdater" />
-            </Hovedknapp>
+              buttonTextId="TilretteleggingDetailForm.Oppdater"
+            />
           </FlexColumn>
           <FlexColumn>
             <Knapp
@@ -85,6 +88,7 @@ TilretteleggingDetailForm.propTypes = {
   cancelTilrettelegging: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   warning: PropTypes.shape(),
+  submittable: PropTypes.bool.isRequired,
 };
 
 TilretteleggingDetailForm.defaultProps = {

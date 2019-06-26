@@ -32,6 +32,7 @@ export const FodselOgTilretteleggingFaktaForm = ({
   readOnly,
   hasOpenAksjonspunkter,
   fødselsdato,
+  submittable,
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
@@ -57,7 +58,7 @@ export const FodselOgTilretteleggingFaktaForm = ({
         )}
       </FlexRow>
     </FlexContainer>
-    <ArbeidsforholdFaktaPanel readOnly={readOnly} formName={FODSEL_TILRETTELEGGING_FORM} />
+    <ArbeidsforholdFaktaPanel readOnly={readOnly} formName={FODSEL_TILRETTELEGGING_FORM} submittable={submittable} />
     <FlexContainer>
       <FlexRow>
         <FlexColumn className={styles.textAreaBredde}>
@@ -77,8 +78,8 @@ export const FodselOgTilretteleggingFaktaForm = ({
           <ElementWrapper>
             <VerticalSpacer twentyPx />
             <FaktaSubmitButton
-              formName={formProps.form}
-              isSubmittable={!readOnly}
+              formName={FODSEL_TILRETTELEGGING_FORM}
+              isSubmittable={submittable}
               isReadOnly={readOnly}
               hasOpenAksjonspunkter={hasOpenAksjonspunkter}
             />
@@ -93,6 +94,7 @@ FodselOgTilretteleggingFaktaForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   fødselsdato: PropTypes.string,
+  submittable: PropTypes.bool.isRequired,
 };
 
 FodselOgTilretteleggingFaktaForm.defaultProps = {

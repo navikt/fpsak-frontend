@@ -21,6 +21,7 @@ export const FodselOgTilretteleggingInfoPanelImpl = ({
   readOnly,
   hasOpenAksjonspunkter,
   submitCallback,
+  submittable,
 }) => (
   <FaktaEkspandertpanel
     title={intl.formatMessage({ id: 'FodselOgTilretteleggingInfoPanel.FaktaFodselOgTilrettelegging' })}
@@ -33,7 +34,12 @@ export const FodselOgTilretteleggingInfoPanelImpl = ({
     <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
       {[<FormattedMessage id="FodselOgTilretteleggingInfoPanel.Aksjonspunkt" key="svangerskapspengerAp" />]}
     </AksjonspunktHelpText>
-    <FodselOgTilretteleggingFaktaForm submitCallback={submitCallback} readOnly={readOnly} hasOpenAksjonspunkter={hasOpenAksjonspunkter} />
+    <FodselOgTilretteleggingFaktaForm
+      submitCallback={submitCallback}
+      readOnly={readOnly}
+      hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+      submittable={submittable}
+    />
   </FaktaEkspandertpanel>
 );
 
@@ -44,6 +50,7 @@ FodselOgTilretteleggingInfoPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
+  submittable: PropTypes.bool.isRequired,
 };
 
 const fodselOgTilretteleggingAksjonspunkt = [aksjonspunktCodes.FODSELTILRETTELEGGING];

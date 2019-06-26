@@ -7,6 +7,8 @@ import { bindActionCreators } from 'redux';
 import { Knapp } from 'nav-frontend-knapper';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+
+import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duck';
 import {
@@ -35,7 +37,7 @@ export class TilretteleggingFaktaPanel extends Component {
     settValgtTilrettelegging(selectedTilrettelegging);
   }
 
-  setSelectedTilrettelegging = (event, id, selectedTilrettelegging) => {
+  setSelectedTilrettelegging = (selectedTilrettelegging) => {
     this.initializeTilretteleggingForm(selectedTilrettelegging);
     this.setSelected(selectedTilrettelegging);
   }
@@ -69,19 +71,30 @@ export class TilretteleggingFaktaPanel extends Component {
     });
   }
 
+  slettTilrettelegging = (selectedTilrettelegging) => {
+    const {
+      reduxFormChange: formChange, behandlingFormPrefix, tilrettelegginger, parentFormName,
+    } = this.props;
+    const otherThanDeleted = tilrettelegginger.filter(a => a.id !== selectedTilrettelegging.id);
+    formChange(`${behandlingFormPrefix}.${parentFormName}`, 'tilrettelegginger', otherThanDeleted);
+    this.setSelected(undefined);
+  }
+
   render() {
     const {
       tilrettelegginger,
       readOnly,
+      submittable,
     } = this.props;
     const { selectedTilrettelegging } = this.state;
 
     return (
-      <>
+      <FaktaGruppe>
         <TilretteleggingTable
           tilrettelegginger={tilrettelegginger}
           settValgtTilrettelegging={this.setSelectedTilrettelegging}
           valgtTilrettelegging={selectedTilrettelegging}
+          slettTilrettelegging={this.slettTilrettelegging}
         />
         {selectedTilrettelegging && (
           <TilretteleggingDetailForm
@@ -89,6 +102,7 @@ export class TilretteleggingFaktaPanel extends Component {
             valgtTilrettelegging={selectedTilrettelegging}
             updateTilrettelegging={this.updateTilrettelegging}
             cancelTilrettelegging={this.cancelTilrettelegging}
+            submittable={submittable}
           />
         )}
         {!selectedTilrettelegging && (
@@ -100,8 +114,8 @@ export class TilretteleggingFaktaPanel extends Component {
             <FormattedMessage id="ArbeidsforholdInnhold.LeggTilPeriode" />
           </Knapp>
         )}
-        <VerticalSpacer twentyPx />
-      </>
+        <VerticalSpacer fourPx />
+      </FaktaGruppe>
     );
   }
 }
@@ -114,10 +128,13 @@ TilretteleggingFaktaPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   parentFormName: PropTypes.string.isRequired,
   settValgtTilrettelegging: PropTypes.func.isRequired,
+  submittable: PropTypes.bool.isRequired,
 };
 
+const EMPTY_ARRAY = [];
+
 const mapStateToProps = (state, ownProps) => {
-  const tilrettelegginger = behandlingFormValueSelector(ownProps.parentFormName)(state, 'tilrettelegginger');
+  const tilrettelegginger = behandlingFormValueSelector(ownProps.parentFormName)(state, 'tilrettelegginger') || EMPTY_ARRAY;
   tilrettelegginger.sort((a, b) => a.fom.localeCompare(b.fom));
   return {
     tilrettelegginger,

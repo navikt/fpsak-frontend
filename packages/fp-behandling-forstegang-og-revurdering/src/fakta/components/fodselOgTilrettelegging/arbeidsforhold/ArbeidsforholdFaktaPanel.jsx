@@ -67,6 +67,7 @@ export class ArbeidsforholdFaktaPanel extends Component {
     const {
       arbeidsforhold,
       readOnly,
+      submittable,
     } = this.props;
     const { selectedArbeidsforhold } = this.state;
     return (
@@ -84,6 +85,7 @@ export class ArbeidsforholdFaktaPanel extends Component {
           cancelArbeidsforholdCallback={this.cancelArbeidsforhold}
           updateArbeidsforholdCallback={this.updateArbeidsforhold}
           leggTilPeriode={this.updateArbeidsforhold}
+          submittable={submittable}
         />
         )
       }
@@ -98,6 +100,7 @@ ArbeidsforholdFaktaPanel.propTypes = {
   reduxFormInitialize: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   formName: PropTypes.string.isRequired,
+  submittable: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, props) => {
