@@ -115,6 +115,18 @@
   "Foreldelse.RadioGroup.Foreldet": "Vurder om perioden er foreldet",
   "Foreldelse.AksjonspunktHelpText.5003": "Perioden før {dato} kan være foreldet. Del opp perioden ved behov og fastsett foreldelse",
 
+  "Risikopanel.Tittel": "Faresignaler",
+  "Risikopanel.Tittel.IngenFaresignaler": "Ingen faresignaler oppdaget",
+  "Risikopanel.Tittel.Faresignaler": "Faresignaler oppdaget",
+  "Risikopanel.Tittel.ManglerKlassifisering": "Faresignaler",
+  "Risikopanel.Panel.Tittel": "Vurder om faresignalene påvirker behandlingen",
+  "Risikopanel.Panel.Medlemskap": "Medlemskap",
+  "Risikopanel.Panel.ArbeidsforholdInntekt": "Arbeidsforhold og inntekt",
+  "Risikopanel.Form.Resultat": "Resultat av vurderingen",
+  "Risikopanel.Form.Innvirkning": "Faresignalene hadde innvirkning på behandlingen",
+  "Risikopanel.Form.IngenInnvirkning": "Faresignalene hadde ingen innvirkning på behandlingen",
+  "Risikopanel.Form.Bekreft": "Bekreft og fortsett",
+
   "BehandlingspunktBegrunnelseTextField.ExplanationRequired": "Vurdering",
   "BehandlingspunktBegrunnelseTextField.ExplanationRequiredReadOnly": "Begrunnelse",
   "ConfirmInformationVilkarReadOnly.Reasoning": "Begrunnelse",
