@@ -5,25 +5,45 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 
-import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
+import { omit } from '@fpsak-frontend/utils';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import {
   VerticalSpacer, FlexContainer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import tilbakekrevingAksjonspunktCodes from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingAksjonspunktCodes';
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingTilbakekreving/src/behandlingsprosess/behandlingsprosessTilbakeSelectors';
 import {
-  behandlingForm, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, isBehandlingFormDirty,
+  behandlingForm, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, isBehandlingFormDirty, getBehandlingFormValues,
 } from 'behandlingTilbakekreving/src/behandlingForm';
+import vedtaksbrevAvsnittPropType from 'behandlingTilbakekreving/src/proptypes/vedtaksbrevAvsnittPropType';
 import { fetchPreviewVedtaksbrev as fetchPreviewVedtaksbrevActionCreator, getBehandlingIdentifier } from 'behandlingTilbakekreving/src/duckTilbake';
+import { getVedtaksbrevAvsnitt } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';
 
 import styles from './tilbakekrevingVedtakForm.less';
 
 const formName = 'TilbakekrevingVedtakForm';
 
-const fetchPreview = (fetchPreviewVedtaksbrev, behandlingIdentifier) => (e) => {
-  fetchPreviewVedtaksbrev(behandlingIdentifier.behandlingId);
+const formatVedtakData = (values) => {
+  const perioder = omit(values, 'OPPSUMMERING');
+  return {
+    oppsummeringstekst: values.OPPSUMMERING,
+    perioderMedTekst: Object.keys(perioder).map(key => ({
+      fom: key.split('_')[0],
+      tom: key.split('_')[1],
+      faktaAvsnitt: perioder[key].FAKTA,
+      vilkaarAvsnitt: perioder[key].VILKÅR,
+      saerligeGrunnerAvsnitt: perioder[key].SÆRLIGEGRUNNER,
+    })),
+  };
+};
+
+const fetchPreview = (fetchPreviewVedtaksbrev, behandlingIdentifier, formVerdier) => (e) => {
+  fetchPreviewVedtaksbrev({
+    behandlingId: behandlingIdentifier.behandlingId,
+    ...formatVedtakData(formVerdier),
+  });
   e.preventDefault();
 };
 
@@ -31,11 +51,13 @@ export const TilbakekrevingVedtakFormImpl = ({
   readOnly,
   fetchPreviewVedtaksbrev,
   behandlingIdentifier,
+  vedtaksbrevAvsnitt,
+  formVerdier,
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
     <VerticalSpacer twentyPx />
-    <BehandlingspunktBegrunnelseTextField readOnly={readOnly} textCode="TilbakekrevingVedtakForm.FritekstIVedtaksbrevet" />
+    <TilbakekrevingEditerVedtaksbrevPanel vedtaksbrevAvsnitt={vedtaksbrevAvsnitt} formName={formName} readOnly={readOnly} />
     <VerticalSpacer twentyPx />
     <FlexContainer fluid>
       <FlexRow>
@@ -54,8 +76,8 @@ export const TilbakekrevingVedtakFormImpl = ({
           <div className={styles.padding}>
             <a
               href=""
-              onClick={fetchPreview(fetchPreviewVedtaksbrev, behandlingIdentifier)}
-              onKeyDown={e => (e.keyCode === 13 ? fetchPreview(fetchPreviewVedtaksbrev, behandlingIdentifier)(e) : null)}
+              onClick={fetchPreview(fetchPreviewVedtaksbrev, behandlingIdentifier, formVerdier)}
+              onKeyDown={e => (e.keyCode === 13 ? fetchPreview(fetchPreviewVedtaksbrev, behandlingIdentifier, formVerdier)(e) : null)}
               className={classNames(styles.buttonLink, 'lenke lenke--frittstaende')}
             >
               <FormattedMessage id="TilbakekrevingVedtakForm.ForhandvisBrev" />
@@ -71,21 +93,24 @@ TilbakekrevingVedtakFormImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   fetchPreviewVedtaksbrev: PropTypes.func.isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
+  vedtaksbrevAvsnitt: PropTypes.arrayOf(vedtaksbrevAvsnittPropType).isRequired,
+  formVerdier: PropTypes.shape().isRequired,
 };
 
 const transformValues = values => [{
-  kode: tilbakekrevingAksjonspunktCodes.FORESLA_VEDTAK,
-  ...values,
-}];
+    kode: tilbakekrevingAksjonspunktCodes.FORESLA_VEDTAK,
+    ...formatVedtakData(values),
+  }];
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const submitCallback = values => ownProps.submitCallback(transformValues(values));
-  const aksjonspunkt = getSelectedBehandlingspunktAksjonspunkter(initialState)[0];
-  const initialValues = BehandlingspunktBegrunnelseTextField.buildInitialValues([{ begrunnelse: aksjonspunkt.begrunnelse }]);
+  const vedtaksbrevAvsnitt = getVedtaksbrevAvsnitt(initialState);
   return state => ({
-    initialValues,
+    initialValues: TilbakekrevingEditerVedtaksbrevPanel.buildInitialValues(vedtaksbrevAvsnitt),
     onSubmit: submitCallback,
     behandlingIdentifier: getBehandlingIdentifier(state),
+    formVerdier: getBehandlingFormValues(formName)(state) || {},
+    vedtaksbrevAvsnitt,
   });
 };
 
