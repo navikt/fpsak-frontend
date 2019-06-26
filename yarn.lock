@@ -6130,10 +6130,6 @@ lodash.clonedeep@^4.5.0:
   version "4.5.0"
   resolved "https://registry.npmjs.org/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
 
-lodash.debounce@^4.0.8:
-  version "4.0.8"
-  resolved "https://registry.npmjs.org/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
-
 lodash.escape@^4.0.1:
   version "4.0.1"
   resolved "https://registry.npmjs.org/lodash.escape/-/lodash.escape-4.0.1.tgz#c9044690c21e04294beaa517712fded1fa88de98"
@@ -6744,11 +6740,11 @@ nav-frontend-core@4.0.9, nav-frontend-core@^4.0.9:
   version "4.0.9"
   resolved "https://registry.npmjs.org/nav-frontend-core/-/nav-frontend-core-4.0.9.tgz#27a49de6f434f64989785938cfa809915d101fd9"
 
-nav-frontend-ekspanderbartpanel-style@0.3.20:
+nav-frontend-ekspanderbartpanel-style@^0.3.20:
   version "0.3.20"
   resolved "https://registry.npmjs.org/nav-frontend-ekspanderbartpanel-style/-/nav-frontend-ekspanderbartpanel-style-0.3.20.tgz#385fe32741a391ae6dbf2659956e5d08e02afbb9"
 
-nav-frontend-ekspanderbartpanel@1.0.28:
+nav-frontend-ekspanderbartpanel@^1.0.28:
   version "1.0.28"
   resolved "https://registry.npmjs.org/nav-frontend-ekspanderbartpanel/-/nav-frontend-ekspanderbartpanel-1.0.28.tgz#91fa5fc8cd9042faf74903c04e642a7c6b8ebf0b"
 
