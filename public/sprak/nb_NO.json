@@ -1567,7 +1567,7 @@
   "Ankebehandling.Resultat.Innstilling.Begrunnelse": "Begrunnelse",
   "Ankebehandling.Resultat.Innstilling.Arsak": "Årsak",
   "Ankebehandling.TempSaveButton": "Lagre",
-  "AnkeVurderingModal.VedtakOversendt": "Innstilling er sendt.",
+  "AnkeVurderingModal.VedtakOversendt": "Behandlingen er sendt til medunderskriver.",
   "AnkeVurderingModal.ModalDescription": "Vedtaket er stadfestet. Du kommer nå til forsiden",
   "AnkeVurderingModal.GoToSearchPage": "Du kommer nå til forsiden.",
   "AnkeVurderingModal.Ok": "OK",

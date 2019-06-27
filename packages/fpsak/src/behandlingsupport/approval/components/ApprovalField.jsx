@@ -38,6 +38,9 @@ export const ApprovalFieldImpl = ({
 }) => {
   const fieldName = `approvals[${contextIndex}].aksjonspunkter[${approvalIndex}]`;
   const erKlageKA = (klageKA && currentValue && currentValue.totrinnskontrollGodkjent);
+  const erAnke = aksjonspunkt.aksjonspunktKode === '5093' && currentValue.totrinnskontrollGodkjent === true;
+  const showOnlyBegrunnelse = erAnke || erKlageKA ? currentValue.totrinnskontrollGodkjent : showBegrunnelse;
+  const showReasons = (erAnke || ((currentValue && currentValue.totrinnskontrollGodkjent === false) || erKlageKA));
   return (
     <div className={styles.approvalItemContainer}>
       {getAksjonspunktText(aksjonspunkt).map((formattedMessage, index) => (
@@ -54,15 +57,14 @@ export const ApprovalFieldImpl = ({
           <RadioOption label={{ id: 'InfoPanel.Godkjent' }} value />
           <RadioOption label={{ id: 'InfoPanel.Vurder' }} value={false} />
         </RadioGroupField>
-        {((currentValue && currentValue.totrinnskontrollGodkjent === false) || erKlageKA)
+        {showReasons
         && (
         <ReasonsField
           fieldName={fieldName}
           godkjentHosKA={erKlageKA}
-          showOnlyBegrunnelse={(erKlageKA
-          ? currentValue.totrinnskontrollGodkjent : showBegrunnelse)}
+          showOnlyBegrunnelse={showOnlyBegrunnelse}
         />
-)
+        )
         }
       </NavFieldGroup>
     </div>

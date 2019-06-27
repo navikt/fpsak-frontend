@@ -109,7 +109,9 @@ export const getBehandlingIdentifier = createSelector(
   ),
 );
 
-export const getResultat = createSelector([getDataContext], ctx => ctx.ANKE_VURDERING.data.ankeVurderingResultat);
+const getAnkeVurderingResultat = ctx => (ctx.ANKE_VURDERING.data ? ctx.ANKE_VURDERING.data.ankeVurderingResultat : null);
+
+export const getResultat = createSelector([getDataContext], ctx => getAnkeVurderingResultat(ctx));
 
 export const getFagsakStatus = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.fagsakStatus);
 export const getFagsakPerson = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.fagsakPerson);
