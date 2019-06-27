@@ -73,7 +73,6 @@ export const VilkarPanels = ({
       />
       )
     }
-    {/* TODO: styre når dette vises */}
 
     {SvangerskapVilkarForm.supports(behandlingspunkt)
       && (
