@@ -25,6 +25,7 @@ const AnkeMerknader = ({
   previewCallback,
   readOnlySubmitButton,
   aksjonspunktCode,
+  formValues,
   ...formProps
 }) => (
   <form onSubmit={handleSubmit}>
@@ -37,6 +38,7 @@ const AnkeMerknader = ({
       <VerticalSpacer sixteenPx />
       <Row>
         <Column xs="7">
+          <FormattedMessage id="Ankebehandling.Merknad.Merknader" />
           <RadioGroupField
             name="erMerknaderMottatt"
             validate={[required]}
@@ -52,7 +54,7 @@ const AnkeMerknader = ({
       <VerticalSpacer sixteenPx />
       <Row>
         <Column xs="7">
-          <TextAreaField readOnly={readOnly} readOnlyHideEmpty={false} label="Kommentar til merknader" name="merknadKommentar" />
+          <TextAreaField readOnly={readOnly} readOnlyHideEmpty={false} label={{ id: 'Ankebehandling.Merknad.Merknader.Kommentarer' }} name="merknadKommentar" />
         </Column>
       </Row>
       <Row>
@@ -60,6 +62,7 @@ const AnkeMerknader = ({
           <BehandlingspunktSubmitButton
             formName={formProps.form}
             isReadOnly={readOnly}
+            isSubmittable={!readOnly}
             hasEmptyRequiredFields={false}
             isBehandlingFormSubmitting={isBehandlingFormSubmitting}
             isBehandlingFormDirty={isBehandlingFormDirty}
@@ -95,14 +98,15 @@ AnkeMerknader.defaultProps = {
 
 const ankeMerknaderFormName = 'ankeMerknaderForm';
 
-const transformValues = values => ({
-  erMerknaderMottatt: values.erMerknaderMottatt,
+const transformValues = (values, aksjonspunktCode) => ({
+  erMerknaderMottatt: values.erMerknaderMottatt === 'ja',
   merknadKommentar: values.merknadKommentar,
+  kode: aksjonspunktCode,
 });
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const aksjonspunktCode = getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
-  const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
+  const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
   return state => ({
     aksjonspunktCode,
     initialValues: buildInitialValues(state),

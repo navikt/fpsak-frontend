@@ -35,7 +35,7 @@ const transformValues = (values, aksjonspunktCode) => ({
   kode: aksjonspunktCode,
 });
 
-export const TempsaveKlageButtonImpl = ({
+export const TempsaveAnkeButtonImpl = ({
   lastSavedVersionValues,
   formValues,
   saveKlage,
@@ -61,7 +61,7 @@ export const TempsaveKlageButtonImpl = ({
           spinner={spinner}
           onClick={(event) => { tempSave(event); }}
         >
-          <FormattedMessage id="Klage.ResolveKlage.TempSaveButton" />
+          <FormattedMessage id="Ankebehandling.TempSaveButton" />
         </Hovedknapp>
       )
       }
@@ -87,7 +87,7 @@ const mapStateToProps = state => ({
   hasForeslaVedtakAp: getForeslaVedtakAp(state),
 });
 
-TempsaveKlageButtonImpl.propTypes = {
+TempsaveAnkeButtonImpl.propTypes = {
   lastSavedVersionValues: PropTypes.shape().isRequired,
   aksjonspunktCode: PropTypes.string.isRequired,
   formValues: PropTypes.shape().isRequired,
@@ -97,11 +97,11 @@ TempsaveKlageButtonImpl.propTypes = {
   readOnly: PropTypes.bool,
 };
 
-TempsaveKlageButtonImpl.defaultProps = {
+TempsaveAnkeButtonImpl.defaultProps = {
   hasForeslaVedtakAp: false,
   spinner: false,
   readOnly: false,
 };
 
 
-export default connect(mapStateToProps)(TempsaveKlageButtonImpl);
+export default connect(mapStateToProps)(TempsaveAnkeButtonImpl);

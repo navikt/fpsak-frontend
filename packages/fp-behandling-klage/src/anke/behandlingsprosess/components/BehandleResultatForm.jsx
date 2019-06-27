@@ -70,6 +70,7 @@ const hentSprakKode = (ankeOmgjoerArsak) => {
   }
 };
 
+
 const ResultatOmgjores = resultat => (
   <React.Fragment>
     <Undertekst><FormattedMessage id={hentSprakKode(resultat.ankevurderingresultat.ankeVurderingOmgjoer)} /></Undertekst>
@@ -102,6 +103,7 @@ const AnkeResultatForm = ({
   aksjonspunktCode,
   formValues,
   ankevurderingresultat,
+  readOnly,
   ...formProps
 }) => (
   <form onSubmit={handleSubmit}>
@@ -119,8 +121,8 @@ const AnkeResultatForm = ({
         <Column xs="12">
           <BehandlingspunktSubmitButton
             formName={formProps.form}
-            isReadOnly={false}
-            isSubmittable={isMedUnderskriver(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
+            isReadOnly={readOnly}
+            isSubmittable={!readOnly && isMedUnderskriver(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
             hasEmptyRequiredFields={false}
             isBehandlingFormSubmitting={isBehandlingFormSubmitting}
             isBehandlingFormDirty={isBehandlingFormDirty}
@@ -130,8 +132,8 @@ const AnkeResultatForm = ({
           <span>&nbsp;</span>
           <BehandlingspunktSubmitButton
             formName={formProps.form}
-            isReadOnly={false}
-            isSubmittable={isVedtakUtenToTrinn(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
+            isReadOnly={readOnly}
+            isSubmittable={!readOnly && isVedtakUtenToTrinn(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
             hasEmptyRequiredFields={false}
             isBehandlingFormSubmitting={isBehandlingFormSubmitting}
             isBehandlingFormDirty={isBehandlingFormDirty}

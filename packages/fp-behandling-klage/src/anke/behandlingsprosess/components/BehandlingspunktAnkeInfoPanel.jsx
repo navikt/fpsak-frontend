@@ -17,6 +17,15 @@ import BehandleResultatForm from './BehandleResultatForm';
 
 const classNames = classnames.bind(styles);
 
+const stuff = (openAksjonspunkt, readOnly, isApSolvable, notAcceptedByBeslutter, selectedBehandlingspunkt) => {
+  console.log('openAksjonspunkt:', openAksjonspunkt);
+  console.log('readOnly:', readOnly);
+  console.log('isApSolvable:', isApSolvable);
+  console.log('notAcceptedByBeslutter:', notAcceptedByBeslutter);
+  console.log('selectedBehandlingspunkt:', selectedBehandlingspunkt);
+  return '';
+};
+
 /*
  * BehandlingspunktAnkeInfoPanel
  *
@@ -37,6 +46,7 @@ export const BehandlingspunktAnkeInfoPanel = ({ // NOSONAR Kompleksitet er høg,
   innstilling,
 }) => (
   <div className={classNames('behandlingsPunkt', { notAcceptedByBeslutter, statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
+    <div>{stuff(openAksjonspunkt, readOnly, isApSolvable, notAcceptedByBeslutter, selectedBehandlingspunkt)}</div>
     {behandlingspunktCodes.ANKEBEHANDLING === selectedBehandlingspunkt
     && (
       <BehandleAnkeForm

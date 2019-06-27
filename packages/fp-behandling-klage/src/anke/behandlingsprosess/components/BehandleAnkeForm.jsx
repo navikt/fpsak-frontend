@@ -33,7 +33,7 @@ import PreviewAnkeLink from './PreviewAnkeLink';
 import FritekstBrevTextField from '../../../behandlingsprosess/components/klage/Klagevurdering/SharedUtills/FritekstKlageBrevTextField';
 import styles from './behandleAnkeForm.less';
 import { getSelectedBehandlingspunktAksjonspunkter } from '../BehandlingsprosessAnkeSelectors';
-import TempsaveKlageButton from './TempsaveKlageButton';
+import TempsaveKlageButton from './TempsaveAnkeButton';
 import { getResultat } from '../../duckAnke';
 
 const omgjorArsakValues = [
@@ -80,7 +80,7 @@ const formatBehandlingStatus = (status) => {
 
 const IKKE_PAA_ANKET_BEHANDLING_ID = '0';
 
-const canPreview = formValues => formValues.ankeVurdering != null && formValues.fritekstTilBrev && (formValues.fritekstTilBrev.length > 2);
+const canPreview = (begrunnelse, fritekstTilBrev) => (begrunnelse && begrunnelse.length > 0) && (fritekstTilBrev && fritekstTilBrev.length > 0);
 const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 const formatBehandling = b => `${formatDate(b.opprettet)} - ${formatBehandlingType(b.type.kode)} - ${formatBehandlingStatus(b.status.kode)}`;
 const formatId = (b) => {
@@ -101,6 +101,11 @@ const leggTilUkjent = (behandlinger = []) => {
     },
   });
   return arr;
+};
+
+const filtrerKlager = (behandlinger = []) => {
+  console.log('filtrerKlager', behandlinger);
+  return behandlinger;
 };
 
 const buildOption = (b) => {
@@ -144,7 +149,7 @@ const BehandleAnkeFormImpl = ({
           <SelectField
             readOnly={readOnly}
             name="vedtak"
-            selectValues={leggTilUkjent(behandlinger).map(b => buildOption(b))}
+            selectValues={leggTilUkjent(filtrerKlager(behandlinger)).map(b => buildOption(b))}
             className={readOnly ? styles.selectReadOnly : null}
             label={intl.formatMessage({ id: 'Ankebehandling.Resultat.Vedtak' })}
             validate={[required]}
@@ -251,22 +256,19 @@ const BehandleAnkeFormImpl = ({
             <BehandlingspunktSubmitButton
               formName={formProps.form}
               isReadOnly={readOnly}
-              isSubmittable={canSubmit(formValues)}
+              isSubmittable={!readOnly}
               hasEmptyRequiredFields={false}
               isBehandlingFormSubmitting={isBehandlingFormSubmitting}
               isBehandlingFormDirty={isBehandlingFormDirty}
               hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
             />
-            {canPreview(formValues)
-            && (
-              <PreviewAnkeLink
-                previewCallback={previewCallback}
-                fritekstTilBrev={formValues.fritekstTilBrev}
-                klageVurdering={formValues.ankeVurdering}
-                aksjonspunktCode={aksjonspunktCode}
-              />
-            )
-            }
+            <PreviewAnkeLink
+              readOnly={!canPreview(formValues.begrunnelse, formValues.fritekstTilBrev)}
+              previewCallback={previewCallback}
+              fritekstTilBrev={formValues.fritekstTilBrev}
+              klageVurdering={formValues.ankeVurdering}
+              aksjonspunktCode={aksjonspunktCode}
+            />
           </Column>
           <Column xs="2">
             <TempsaveKlageButton

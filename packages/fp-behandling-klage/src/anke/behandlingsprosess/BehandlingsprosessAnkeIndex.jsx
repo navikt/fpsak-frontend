@@ -180,17 +180,6 @@ export class BehandlingsprosessAnkeIndex extends Component {
       }
     };
 
-    const aktuelleAksjonspunkter = aksjonspunkter.filter(ap => apCodes.includes(ap.definisjon.kode));
-    if (aktuelleAksjonspunkter.length === 0 || hasOverstyringAp(aktuelleAksjonspunkter)) {
-      const params = {
-        ...behandlingIdentifier.toJson(),
-        behandlingVersjon,
-        overstyrteAksjonspunktDtoer: models,
-      };
-      return overrideAksjonspunkter(behandlingIdentifier, params, shouldUpdateInfo)
-        .then(afterSubmit);
-    }
-
     const params = {
       ...behandlingIdentifier.toJson(),
       behandlingVersjon,

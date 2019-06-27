@@ -39,11 +39,21 @@ const PreviewAnkeLink = ({
   fritekstTilBrev,
   klageVurdering,
   aksjonspunktCode,
+  readOnly,
 }) => {
   const previewMessage = (e) => {
     previewCallback(getBrevData(klageVurdering, aksjonspunktCode, fritekstTilBrev));
     e.preventDefault();
   };
+  if (readOnly) {
+    return (
+      <span
+        className={classNames(styles.previewLinkDisabled)}
+      >
+        <FormattedMessage id="VedtakForm.ForhandvisBrev" />
+      </span>
+    );
+  }
   return (
     <a
       href=""
@@ -61,11 +71,13 @@ PreviewAnkeLink.propTypes = {
   aksjonspunktCode: PropTypes.string.isRequired,
   fritekstTilBrev: PropTypes.string,
   klageVurdering: PropTypes.string,
+  readOnly: PropTypes.bool,
 };
 
 PreviewAnkeLink.defaultProps = {
   klageVurdering: null,
   fritekstTilBrev: null,
+  readOnly: false,
 };
 
 export default PreviewAnkeLink;
