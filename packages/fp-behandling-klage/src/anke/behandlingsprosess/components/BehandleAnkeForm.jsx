@@ -115,6 +115,8 @@ const SKAL_REALITETSBEHANDLES = {
   NEI: false,
 };
 
+const filtrerKlage = behandlinger => behandlinger.filter(b => b.type.kode === behandlingType.KLAGE);
+
 /**
  * Presentasjonskomponent. Setter opp aksjonspunktet for behandling.
  */
@@ -144,7 +146,7 @@ const BehandleAnkeFormImpl = ({
           <SelectField
             readOnly={readOnly}
             name="vedtak"
-            selectValues={leggTilUkjent(behandlinger).map(b => buildOption(b))}
+            selectValues={leggTilUkjent(filtrerKlage(behandlinger)).map(b => buildOption(b))}
             className={readOnly ? styles.selectReadOnly : null}
             label={intl.formatMessage({ id: 'Ankebehandling.Resultat.Vedtak' })}
             validate={[required]}
