@@ -44,9 +44,6 @@ import findAnkeIcon from './findAnkeIcon';
 
 const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
 
-const hasOverstyringAp = aksjonspunkter => (
-  aksjonspunkter.some(ap => ap.aksjonspunktType.kode === aksjonspunktType.OVERSTYRING || ap.aksjonspunktType.kode === aksjonspunktType.SAKSBEHANDLEROVERSTYRING)
-);
 
 /**
  * BehandlingsprosessAnkeIndex
@@ -150,15 +147,12 @@ export class BehandlingsprosessAnkeIndex extends Component {
   submitVilkar(aksjonspunktModels) {
     const {
       resolveProsessAksjonspunkter: resolveAksjonspunkter,
-      overrideProsessAksjonspunkter: overrideAksjonspunkter,
-      behandlingIdentifier, behandlingVersjon, aksjonspunkter,
+      behandlingIdentifier, behandlingVersjon,
     } = this.props;
     const models = aksjonspunktModels.map(ap => ({
       '@type': ap.kode,
       ...ap,
     }));
-
-    const apCodes = aksjonspunktModels.map(ap => ap.kode);
 
     const skalTilMedunderskriver = aksjonspunktModels
       .some(apValue => apValue.kode === aksjonspunktCodes.FORESLA_VEDTAK);
