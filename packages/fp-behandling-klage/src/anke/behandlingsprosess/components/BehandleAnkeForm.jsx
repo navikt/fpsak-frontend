@@ -103,11 +103,6 @@ const leggTilUkjent = (behandlinger = []) => {
   return arr;
 };
 
-const filtrerKlager = (behandlinger = []) => {
-  console.log('filtrerKlager', behandlinger);
-  return behandlinger;
-};
-
 const buildOption = (b) => {
   if (b.id === IKKE_PAA_ANKET_BEHANDLING_ID) {
     return (<option key={formatId(b.id)} value={formatId(b.id)}>Ikke påanket et vedtak</option>);
@@ -149,7 +144,7 @@ const BehandleAnkeFormImpl = ({
           <SelectField
             readOnly={readOnly}
             name="vedtak"
-            selectValues={leggTilUkjent(filtrerKlager(behandlinger)).map(b => buildOption(b))}
+            selectValues={leggTilUkjent(behandlinger).map(b => buildOption(b))}
             className={readOnly ? styles.selectReadOnly : null}
             label={intl.formatMessage({ id: 'Ankebehandling.Resultat.Vedtak' })}
             validate={[required]}
@@ -256,7 +251,7 @@ const BehandleAnkeFormImpl = ({
             <BehandlingspunktSubmitButton
               formName={formProps.form}
               isReadOnly={readOnly}
-              isSubmittable={!readOnly}
+              isSubmittable={!readOnly && canSubmit(formValues)}
               hasEmptyRequiredFields={false}
               isBehandlingFormSubmitting={isBehandlingFormSubmitting}
               isBehandlingFormDirty={isBehandlingFormDirty}

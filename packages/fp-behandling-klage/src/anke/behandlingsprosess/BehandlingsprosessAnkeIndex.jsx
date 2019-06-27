@@ -15,7 +15,6 @@ hentAnkeVurdering, getResultat,
 } from 'behandlingKlage/src/anke/duckAnke';
 import { BehandlingsprosessPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
 import BehandlingspunktAnkeInfoPanel from 'behandlingKlage/src/anke/behandlingsprosess/components/BehandlingspunktAnkeInfoPanel';
-import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta,
@@ -248,7 +247,6 @@ BehandlingsprosessAnkeIndex.propTypes = {
   location: PropTypes.shape().isRequired,
   push: PropTypes.func.isRequired,
   resolveProsessAksjonspunkter: PropTypes.func.isRequired,
-  overrideProsessAksjonspunkter: PropTypes.func.isRequired,
   fetchPreview: PropTypes.func.isRequired,
   fetchAnkevurdering: PropTypes.func.isRequired,
   fagsakYtelseType: kodeverkObjektPropType.isRequired,
