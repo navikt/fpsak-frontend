@@ -7,7 +7,9 @@ import PropTypes from 'prop-types';
 import RenderInntektsgivendeArbeidFieldArray from './RenderInntektsgivendeArbeidFieldArray';
 import RenderInntektsgivendeArbeidAmbassadeFieldArray from './RenderInntektsgivendeArbeidAmbassadeFieldArray';
 
-// TODO: (aa) remove once new FE is in place or
+// TODO: (aa) Ambassadepersonell - den här hamnade på backburner men jobben var reden gjort - ta bort raden nedan og tillsvarande kode
+// för att få tilbake FE för ambassadpersonell
+
 const localFeature = false;
 
 const inntektsgivendeArbeidFieldArrayName = 'arbeidsforhold';
