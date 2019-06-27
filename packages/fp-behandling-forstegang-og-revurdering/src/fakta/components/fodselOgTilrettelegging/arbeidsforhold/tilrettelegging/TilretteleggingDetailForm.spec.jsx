@@ -1,87 +1,91 @@
 import React from 'react';
 import { expect } from 'chai';
-import { FormattedMessage } from 'react-intl';
+import { Knapp } from 'nav-frontend-knapper';
 
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
-import {
-  DatepickerField, CheckboxField, DecimalField,
-} from '@fpsak-frontend/form';
-import { ArrowBox } from '@fpsak-frontend/shared-components';
-import { TilretteleggingDetailForm } from './TilretteleggingDetailForm';
+import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
+
+import { TilretteleggingDetailFormImpl } from './TilretteleggingDetailForm';
 
 describe('<TilretteleggingDetailForm>', () => {
-  it('skal vise checkboxer når ingen valgt', () => {
-    const wrapper = shallowWithIntl(<TilretteleggingDetailForm
+  it('skal vise knapper for oppdater og avbryt når en ikke er i readonly-modus og en har datoer', () => {
+    const wrapper = shallowWithIntl(<TilretteleggingDetailFormImpl
       intl={intlMock}
-      kanGjennomfores={false}
-      kanIkkeGjennomfores={false}
-      redusertArbeid={false}
       readOnly={false}
+      cancelTilrettelegging={() => undefined}
+      submittable
+      harIngenTilretteleggingDatoer={false}
+      initialValues={{
+        fom: undefined,
+      }}
     />);
-    const checkbox = wrapper.find(CheckboxField);
-    expect(checkbox).has.length(3);
-    expect(checkbox.first().prop('name')).to.eql('kanGjennomfores');
-    expect(checkbox.at(1).prop('name')).to.eql('redusertArbeid');
-    expect(checkbox.at(2).prop('name')).to.eql('kanIkkeGjennomfores');
-    const arrowBox = wrapper.find(ArrowBox);
-    expect(arrowBox).has.length(0);
-    const datepicker = wrapper.find(DatepickerField);
-    expect(datepicker).has.length(0);
-    const stillingsprosent = wrapper.find(DecimalField);
-    expect(stillingsprosent).has.length(0);
+
+    expect(wrapper.find(FaktaSubmitButton)).has.length(1);
+    expect(wrapper.find(Knapp)).has.length(1);
   });
-  it('skal vise checkboxer når ingen kan gjennomfores er valgt', () => {
-    const wrapper = shallowWithIntl(<TilretteleggingDetailForm
+
+  it('skal ikke vise knapper når en er i readonly-modus', () => {
+    const wrapper = shallowWithIntl(<TilretteleggingDetailFormImpl
       intl={intlMock}
-      kanGjennomfores
-      kanIkkeGjennomfores={false}
-      redusertArbeid={false}
-      readOnly={false}
+      readOnly
+      cancelTilrettelegging={() => undefined}
+      submittable
+      harIngenTilretteleggingDatoer={false}
+      initialValues={{
+        fom: undefined,
+      }}
     />);
-    const checkbox = wrapper.find(CheckboxField);
-    expect(checkbox).has.length(3);
-    const arrowBox = wrapper.find(ArrowBox);
-    expect(arrowBox).has.length(1);
-    const datepicker = wrapper.find(DatepickerField);
-    expect(datepicker).has.length(1);
-    const stillingsprosent = wrapper.find(DecimalField);
-    expect(stillingsprosent).has.length(0);
-    const warning = wrapper.find(FormattedMessage);
-    expect(warning).has.length(0);
+
+    expect(wrapper.find(FaktaSubmitButton)).has.length(0);
+    expect(wrapper.find(Knapp)).has.length(0);
   });
-  it('skal vise checkboxer når ingen kan gjennomfores og redusert arbeid er valgt', () => {
-    const wrapper = shallowWithIntl(<TilretteleggingDetailForm
+
+  it('skal ikke vise avbryt-knapp når en ikke har datoer', () => {
+    const wrapper = shallowWithIntl(<TilretteleggingDetailFormImpl
       intl={intlMock}
-      kanGjennomfores
-      kanIkkeGjennomfores={false}
-      redusertArbeid
       readOnly={false}
+      cancelTilrettelegging={() => undefined}
+      submittable
+      harIngenTilretteleggingDatoer
+      initialValues={{
+        fom: undefined,
+      }}
     />);
-    const checkbox = wrapper.find(CheckboxField);
-    expect(checkbox).has.length(3);
-    const arrowBox = wrapper.find(ArrowBox);
-    expect(arrowBox).has.length(2);
-    const datepicker = wrapper.find(DatepickerField);
-    expect(datepicker).has.length(2);
-    const stillingsprosent = wrapper.find(DecimalField);
-    expect(stillingsprosent).has.length(1);
+
+    expect(wrapper.find(FaktaSubmitButton)).has.length(1);
+    expect(wrapper.find(Knapp)).has.length(0);
   });
-  it('skal vise checkboxer når alle tre valgt', () => {
-    const wrapper = shallowWithIntl(<TilretteleggingDetailForm
+
+  it('skal vise knapp med tekst Legg-til når en ikke editerer eksisterende periode', () => {
+    const wrapper = shallowWithIntl(<TilretteleggingDetailFormImpl
       intl={intlMock}
-      kanGjennomfores
-      kanIkkeGjennomfores
-      redusertArbeid
       readOnly={false}
+      cancelTilrettelegging={() => undefined}
+      submittable
+      harIngenTilretteleggingDatoer
+      initialValues={{
+        fom: undefined,
+      }}
     />);
-    const checkbox = wrapper.find(CheckboxField);
-    expect(checkbox).has.length(3);
-    const arrowBox = wrapper.find(ArrowBox);
-    expect(arrowBox).has.length(3);
-    const datepicker = wrapper.find(DatepickerField);
-    expect(datepicker).has.length(3);
-    const stillingsprosent = wrapper.find(DecimalField);
-    expect(stillingsprosent).has.length(1);
+
+    const button = wrapper.find(FaktaSubmitButton);
+    expect(button.prop('buttonTextId')).is.eql('TilretteleggingDetailForm.LeggTil');
+  });
+
+  it('skal vise knapp med tekst Endre når en editerer eksisterende periode', () => {
+    const wrapper = shallowWithIntl(<TilretteleggingDetailFormImpl
+      intl={intlMock}
+      readOnly={false}
+      cancelTilrettelegging={() => undefined}
+      submittable
+      harIngenTilretteleggingDatoer={false}
+      initialValues={{
+        fom: '2019-02-02',
+      }}
+    />);
+
+    const button = wrapper.find(FaktaSubmitButton);
+    expect(button.prop('buttonTextId')).is.eql('TilretteleggingDetailForm.Endre');
   });
 });

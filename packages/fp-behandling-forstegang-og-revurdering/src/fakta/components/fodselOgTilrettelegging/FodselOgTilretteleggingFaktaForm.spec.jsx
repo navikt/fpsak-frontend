@@ -6,7 +6,7 @@ import { DatepickerField, TextAreaField } from '@fpsak-frontend/form';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 
 import { FodselOgTilretteleggingFaktaForm } from './FodselOgTilretteleggingFaktaForm';
-import ArbeidsforholdFaktaPanel from './ArbeidsforholdFaktaPanel';
+import ArbeidsforholdFaktaPanel from './arbeidsforhold/ArbeidsforholdFaktaPanel';
 
 describe('<FodselOgTilretteleggingFaktaForm>', () => {
   it('skal vise faktaform med begrunnelsefelt og fodseldato', () => {
@@ -14,6 +14,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
       hasOpenAksjonspunkter={false}
       readOnly
       fødselsdato=""
+      submittable
     />);
 
     const datepicker = wrapper.find(DatepickerField);
@@ -30,6 +31,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
       hasOpenAksjonspunkter={false}
       readOnly
       fødselsdato="20.10.2019"
+      submittable
     />);
 
     const datepicker = wrapper.find(DatepickerField);
