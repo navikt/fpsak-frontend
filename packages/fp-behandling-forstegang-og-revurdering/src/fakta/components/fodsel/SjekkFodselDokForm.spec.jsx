@@ -30,7 +30,7 @@ describe('<SjekkFodselDokForm>', () => {
 
     expect(initialValues).to.eql({
       avklartBarn: [{
-        dodsDato: '',
+        dodsdato: '',
         fodselsdato: '',
         isBarnDodt: false,
       },
@@ -48,7 +48,7 @@ describe('<SjekkFodselDokForm>', () => {
 
     expect(initialValues).to.eql({
       avklartBarn: [{
-        dodsDato: '',
+        dodsdato: '',
         fodselsdato: '',
         isBarnDodt: false,
       },
