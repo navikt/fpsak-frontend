@@ -18,7 +18,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 
 import {
-  required, hasValidDate, minValue, maxValue, hasValidInteger,
+  required, hasValidDate,
 } from '@fpsak-frontend/utils';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import FodselSammenligningPanel from 'behandlingForstegangOgRevurdering/src/components/fodselSammenligning/FodselSammenligningPanel';
@@ -34,8 +34,6 @@ import avklartBarnFieldArray from './AvklartBarnFieldArray';
 import styles from './prematurukerDokForm.less';
 
 export const prematurukerDokFormName = 'PrematurukerDokForm';
-const minValue1 = minValue(1);
-const maxValue9 = maxValue(9);
 
 /**
  * PrematurukerDokForm
@@ -47,7 +45,6 @@ export const PrematurukerDokForm = ({
   isTerminDatoEdited,
   dokumentasjonForeligger,
   isDokumentasjonForeliggerEdited,
-  isAntallBarnEdited,
   avklartBarn,
   dirty,
   initialValues,
@@ -80,20 +77,6 @@ export const PrematurukerDokForm = ({
                       isEdited={isTerminDatoEdited}
                     />
                     <div className={styles.marginLeft}>
-                      <InputField
-                        name="antallBarn"
-                        label={{ id: 'PrematurukerDokForm.AntallBarn' }}
-                        parse={(value) => {
-                          const parsedValue = parseInt(value, 10);
-                          return Number.isNaN(parsedValue) ? value : parsedValue;
-                        }}
-                        validate={[required, hasValidInteger, minValue1, maxValue9]}
-                        bredde="XS"
-                        readOnly={readOnly}
-                        isEdited={isAntallBarnEdited}
-                      />
-                    </div>
-                    <div className={styles.marginLeft}>
                       <FieldArray
                         name={avklarteBarnFieldArrayName}
                         component={avklartBarnFieldArray}
@@ -119,7 +102,6 @@ PrematurukerDokForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   dokumentasjonForeligger: PropTypes.bool,
   isDokumentasjonForeliggerEdited: PropTypes.bool,
-  isAntallBarnEdited: PropTypes.bool,
   isTerminDatoEdited: PropTypes.bool,
   avklartBarn: PropTypes.arrayOf(PropTypes.shape()),
   submittable: PropTypes.bool.isRequired,
@@ -139,7 +121,6 @@ export const buildInitialValues = createSelector([getSoknad, getFamiliehendelseG
 
     return {
       termindato: familiehendelse.termindato ? familiehendelse.termindato : soknad.termindato,
-      antallBarn: familiehendelse.antallBarnTermin ? familiehendelse.antallBarnTermin : antallBarn,
       avklartBarn: (familiehendelse.avklartBarn && familiehendelse.avklartBarn.length > 0)
         ? addIsBarnDodt(familiehendelse.avklartBarn) : createNewChildren(soknadAntallBarn || 0),
       dokumentasjonForeligger: familiehendelse.dokumentasjonForeligger !== null
@@ -152,7 +133,6 @@ const transformValues = values => ({
   kode: aksjonspunktCodes.VURDER_TERMIN_VED_TIDLIG_FØDSEL,
   dokumentasjonForeligger: values.dokumentasjonForeligger,
   termindato: values.termindato,
-  antallBarn: values.antallBarn,
   dødsdato: values.dødsdato,
   uidentifiserteBarn: alleBarn(values.avklartBarn),
   ...FaktaBegrunnelseTextField.transformValues(values),
@@ -170,7 +150,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       isOverridden: getFamiliehendelseGjeldende(state).erOverstyrt,
       avklartBarn: behandlingFormValueSelector(prematurukerDokFormName)(state, 'avklartBarn'),
       dokumentasjonForeligger: behandlingFormValueSelector(prematurukerDokFormName)(state, 'dokumentasjonForeligger'),
-      isAntallBarnEdited: getEditedStatus(state).antallBarn,
   });
 };
 
