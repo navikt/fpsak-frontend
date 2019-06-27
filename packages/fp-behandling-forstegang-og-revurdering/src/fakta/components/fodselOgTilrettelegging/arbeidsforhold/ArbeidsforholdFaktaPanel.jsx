@@ -26,6 +26,7 @@ export class ArbeidsforholdFaktaPanel extends Component {
     this.setSelectedArbeidsforhold = this.setSelectedArbeidsforhold.bind(this);
     this.cancelArbeidsforhold = this.cancelArbeidsforhold.bind(this);
     this.updateArbeidsforhold = this.updateArbeidsforhold.bind(this);
+    this.toggleArbeidsforhold = this.toggleArbeidsforhold.bind(this);
   }
 
   setSelectedArbeidsforhold(event, id, selectedArbeidsforhold) {
@@ -40,7 +41,13 @@ export class ArbeidsforholdFaktaPanel extends Component {
       redusertArbeidStillingsprosent: selectedArbeidsforhold.stillingsprosent,
     };
     this.initializeArbforholdForm(initialValues);
+    this.toggleArbeidsforhold(selectedArbeidsforhold);
+  }
+
+  toggleArbeidsforhold(selectedArbeidsforhold) {
+    const { settErArbeidsforholdValgt } = this.props;
     this.setState({ selectedArbeidsforhold });
+    settErArbeidsforholdValgt(!!selectedArbeidsforhold);
   }
 
   initializeArbforholdForm(selectedArbeidsforhold) {
@@ -50,7 +57,7 @@ export class ArbeidsforholdFaktaPanel extends Component {
 
   cancelArbeidsforhold() {
     this.initializeArbforholdForm({});
-    this.setState({ selectedArbeidsforhold: undefined });
+    this.toggleArbeidsforhold();
   }
 
   updateArbeidsforhold(values) {
@@ -60,7 +67,7 @@ export class ArbeidsforholdFaktaPanel extends Component {
     const otherThanUpdated = arbeidsforhold.filter(a => a.tilretteleggingId !== values.tilretteleggingId);
     const fieldValues = otherThanUpdated.concat(values).sort((a, b) => a.arbeidsgiverNavn.localeCompare(b.arbeidsgiverNavn));
     formChange(`${behandlingFormPrefix}.${formName}`, 'arbeidsforhold', fieldValues);
-    this.setState({ selectedArbeidsforhold: undefined });
+    this.toggleArbeidsforhold();
   }
 
   render() {
@@ -93,6 +100,7 @@ export class ArbeidsforholdFaktaPanel extends Component {
     );
   }
 }
+
 ArbeidsforholdFaktaPanel.propTypes = {
   arbeidsforhold: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
@@ -101,6 +109,7 @@ ArbeidsforholdFaktaPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   formName: PropTypes.string.isRequired,
   submittable: PropTypes.bool.isRequired,
+  settErArbeidsforholdValgt: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, props) => {

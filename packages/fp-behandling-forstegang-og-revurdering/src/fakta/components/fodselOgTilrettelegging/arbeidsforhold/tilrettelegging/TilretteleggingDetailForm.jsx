@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import moment from 'moment';
 import { Fieldset } from 'nav-frontend-skjema';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Knapp } from 'nav-frontend-knapper';
@@ -11,6 +11,7 @@ import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import {
  VerticalSpacer, ArrowBox, FlexContainer, FlexColumn, FlexRow,
 } from '@fpsak-frontend/shared-components';
+import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
 
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
@@ -23,12 +24,13 @@ export const TILRETTELEGGING_DETAIL_FORM_NAME = 'TilretteleggingDetailForm';
  *
  * Svangerskapspenger
  */
-export const TilretteleggingDetailForm = ({
+export const TilretteleggingDetailFormImpl = ({
   intl,
   readOnly,
   warning,
   cancelTilrettelegging,
   submittable,
+  harIngenTilretteleggingDatoer,
   ...formProps
 }) => (
   <Fieldset legend={intl.formatMessage({ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.Tilrettelegging' })}>
@@ -38,18 +40,18 @@ export const TilretteleggingDetailForm = ({
       </AlertStripe>
     )}
     <VerticalSpacer eightPx />
-    <RadioGroupField name="type" validate={[required]} readOnly={readOnly} direction="vertical">
-      <RadioOption label={{ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.KanGjennomfores' }} value="kanGjennomfores">
+    <RadioGroupField name="type.kode" validate={[required]} readOnly={readOnly} direction="vertical">
+      <RadioOption label={{ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.KanGjennomfores' }} value={tilretteleggingType.HEL_TILRETTELEGGING}>
         <ArrowBox>
           <TilretteleggingsvalgPanel readOnly={readOnly} />
         </ArrowBox>
       </RadioOption>
-      <RadioOption label={{ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.RedusertArbeid' }} value="redusertArbeid">
+      <RadioOption label={{ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.RedusertArbeid' }} value={tilretteleggingType.DELVIS_TILRETTELEGGING}>
         <ArrowBox>
           <TilretteleggingsvalgPanel harStillingsprosent readOnly={readOnly} />
         </ArrowBox>
       </RadioOption>
-      <RadioOption label={{ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.KanIkkeGjennomfores' }} value="kanIkkeGjennomfores">
+      <RadioOption label={{ id: 'ArbeidsforholdCheckboxes.Arbeidsgiver.KanIkkeGjennomfores' }} value={tilretteleggingType.INGEN_TILRETTELEGGING}>
         <ArrowBox>
           <TilretteleggingsvalgPanel readOnly={readOnly} />
         </ArrowBox>
@@ -65,49 +67,55 @@ export const TilretteleggingDetailForm = ({
               isReadOnly={readOnly}
               hasOpenAksjonspunkter={false}
               onClick={formProps.handleSubmit}
-              buttonTextId="TilretteleggingDetailForm.Oppdater"
+              buttonTextId={formProps.initialValues.fom === undefined || harIngenTilretteleggingDatoer
+                ? 'TilretteleggingDetailForm.LeggTil' : 'TilretteleggingDetailForm.Endre'}
             />
           </FlexColumn>
-          <FlexColumn>
-            <Knapp
-              htmlType="button"
-              mini
-              onClick={cancelTilrettelegging}
-            >
-              <FormattedMessage id="TilretteleggingDetailForm.Avbryt" />
-            </Knapp>
-          </FlexColumn>
+          {!harIngenTilretteleggingDatoer && (
+            <FlexColumn>
+              <Knapp
+                htmlType="button"
+                mini
+                onClick={cancelTilrettelegging}
+              >
+                <FormattedMessage id="TilretteleggingDetailForm.Avbryt" />
+              </Knapp>
+            </FlexColumn>
+          )}
         </FlexRow>
       </FlexContainer>
       )}
   </Fieldset>
 );
 
-TilretteleggingDetailForm.propTypes = {
+TilretteleggingDetailFormImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   cancelTilrettelegging: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   warning: PropTypes.shape(),
   submittable: PropTypes.bool.isRequired,
+  harIngenTilretteleggingDatoer: PropTypes.bool.isRequired,
 };
 
-TilretteleggingDetailForm.defaultProps = {
+TilretteleggingDetailFormImpl.defaultProps = {
   warning: {},
 };
 
-// TODO (TOR) Denne brukar ikkje state så her bør ein ta vekk connect
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const { valgtTilrettelegging } = ownProps;
-  const onSubmit = values => ownProps.updateTilrettelegging(values);
-  return () => ({
-    onSubmit,
-    initialValues: {
-      ...valgtTilrettelegging,
-    },
-  });
-};
-
-export default connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
+const TilretteleggingDetailForm = injectIntl(behandlingForm({
   form: TILRETTELEGGING_DETAIL_FORM_NAME,
   enableReinitialize: true,
-})(TilretteleggingDetailForm)));
+})(TilretteleggingDetailFormImpl));
+
+TilretteleggingDetailForm.validate = (values, tilretteleggingDatoer, jordmorTilretteleggingFraDato) => {
+  const errors = {};
+  if (tilretteleggingDatoer.filter(td => td.id !== values.id).some(td => td.fom === values.fom)) {
+    errors.fom = [{ id: 'TilretteleggingDetailForm.DatoFinnes' }];
+  }
+  if (moment(values.fom).isBefore(jordmorTilretteleggingFraDato)) {
+    errors.fom = [{ id: 'TilretteleggingDetailForm.TidligereEnnOppgittAvJordmor' }];
+  }
+
+  return errors;
+};
+
+export default TilretteleggingDetailForm;

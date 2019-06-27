@@ -242,7 +242,7 @@
   "FodselOgTilretteleggingFaktaForm.Fodselsdato": "Fødselsdato",
   "FodselOgTilretteleggingFaktaForm.BegrunnEndringene": "Begrunn endringene",
   "ArbeidsforholdFaktaPanel.Faktagruppe": "Arbeidsforhold som det er søkt for",
-  "ArbeidsforholdFaktaPanel.Oppdater": "Oppdater arbeidsforhold",
+  "ArbeidsforholdFaktaPanel.Oppdater": "Oppdater",
   "ArbeidsforholdFaktaPanel.Avbryt": "Avbryt",
   "ArbeidsforholdTable.Arbeidsforhold": "Arbeidsforhold",
   "ArbeidsforholdTable.TilretteleggingFra": "Trenger tilrettelegging fra",
@@ -2392,7 +2392,8 @@
 
   "TilbakekrevingVedtakForm.FritekstIVedtaksbrevet": "Fritekst i vedtaksbrevet",
   "TilbakekrevingVedtakForm.TilGodkjenning": "Til godkjenning",
-
+  
+  "TilretteleggingTable.IngenTilretteleggingDatoer": "Ingen tilretteleggingsdatoer er spesifisert",
   "TilretteleggingTable.NodvendigTilrettelegging": "Arbeidsgiver oppgir at nødvendig tilrettelegging",
   "TilretteleggingTable.Dato": "Dato",
   "TilretteleggingTable.Stillingsprosent": "Stillingsprosent",
@@ -2403,8 +2404,12 @@
 
   "TilbakekrevingVedtakForm.ForhandvisBrev": "Forhåndsvis brev",
 
-  "TilretteleggingDetailForm.Oppdater": "Oppdater tilrettelegging",
+  "TilretteleggingDetailForm.Endre": "Endre",
+  "TilretteleggingDetailForm.LeggTil": "Legg til",
   "TilretteleggingDetailForm.Avbryt": "Avbryt",
+  "TilretteleggingDetailForm.DatoFinnes": "Dato brukes i annen tilrettelegging",
+  "TilretteleggingDetailForm.TidligereEnnOppgittAvJordmor": "Dato kan ikke være før dato oppgitt av jordmor",
+  "TilretteleggingDetailForm.SenereEnnTilrettelegging": "Dato kan ikke være etter tilretteleggingsdato",
 
   "IntegrationStatusPanel.ServiceDowntime": "Tredjepartstjeneste(r) har nedetid",
   "IntegrationStatusPanel.Downtime": "{system} har nedetid.",

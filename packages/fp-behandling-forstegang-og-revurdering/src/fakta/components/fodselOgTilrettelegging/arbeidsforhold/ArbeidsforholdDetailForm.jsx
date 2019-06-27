@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Knapp } from 'nav-frontend-knapper';
 
+import { omit, required, hasValidDate } from '@fpsak-frontend/utils';
 import { DatepickerField } from '@fpsak-frontend/form';
 import {
  FlexContainer, FlexColumn, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { required, hasValidDate } from '@fpsak-frontend/utils';
 
+
+import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import TilretteleggingFaktaPanel from './tilrettelegging/TilretteleggingFaktaPanel';
 
 export const ARBEIDSFORHOLD_DETAIL_FORM_NAME = 'selectedFodselOgTilretteleggingForm';
@@ -27,6 +29,7 @@ export const ArbeidsforholdDetailForm = ({
   readOnly,
   warning,
   submittable,
+  jordmorTilretteleggingFraDato,
   ...formProps
 }) => {
   const [valgtTilrettelegging, settValgtTilrettelegging] = useState();
@@ -49,16 +52,17 @@ export const ArbeidsforholdDetailForm = ({
             parentFormName={ARBEIDSFORHOLD_DETAIL_FORM_NAME}
             readOnly={readOnly}
             submittable={submittable}
+            jordmorTilretteleggingFraDato={jordmorTilretteleggingFraDato}
           />
           <VerticalSpacer sixteenPx />
         </FlexColumn>
       </FlexRow>
-      {!readOnly && (
+      {!readOnly && !valgtTilrettelegging && (
         <FlexRow>
           <FlexColumn>
             <FaktaSubmitButton
               formName={ARBEIDSFORHOLD_DETAIL_FORM_NAME}
-              isSubmittable={submittable && !valgtTilrettelegging && Object.keys(warning).length === 0}
+              isSubmittable={submittable && Object.keys(warning).length === 0}
               isReadOnly={readOnly}
               hasOpenAksjonspunkter={false}
               onClick={formProps.handleSubmit}
@@ -70,7 +74,6 @@ export const ArbeidsforholdDetailForm = ({
               htmlType="button"
               mini
               onClick={cancelArbeidsforholdCallback}
-              disabled={valgtTilrettelegging}
             >
               <FormattedMessage id="ArbeidsforholdFaktaPanel.Avbryt" />
             </Knapp>
@@ -87,6 +90,7 @@ ArbeidsforholdDetailForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   warning: PropTypes.shape(),
   submittable: PropTypes.bool.isRequired,
+  jordmorTilretteleggingFraDato: PropTypes.string.isRequired,
 };
 
 ArbeidsforholdDetailForm.defaultProps = {
@@ -111,6 +115,14 @@ const validateWarning = (values) => {
   return warnings;
 };
 
+const validateErrors = (values) => {
+  const errors = {};
+  if (values.tilretteleggingDatoer && values.tilretteleggingDatoer.some(td => moment(td.fom).isBefore(values.jordmorTilretteleggingFra))) {
+    errors.jordmorTilretteleggingFra = [{ id: 'TilretteleggingDetailForm.SenereEnnTilrettelegging' }];
+  }
+  return errors;
+};
+
 const transformValues = (values, selectedArbeidsforhold) => {
   const { ...transformvalue } = selectedArbeidsforhold;
   transformvalue.tilretteleggingBehovFom = values.jordmorTilretteleggingFra;
@@ -119,7 +131,7 @@ const transformValues = (values, selectedArbeidsforhold) => {
   transformvalue.delvisTilretteleggingFom = values.redusertArbeid ? values.redusertArbeidDato : null;
   transformvalue.stillingsprosent = values.redusertArbeid ? values.redusertArbeidStillingsprosent : null;
   transformvalue.begrunnelse = values.begrunnelse;
-  transformvalue.tilrettelegginger = values.tilrettelegginger;
+  transformvalue.tilretteleggingDatoer = values.tilretteleggingDatoer.map(t => omit(t, 'id'));
   return transformvalue;
 };
 
@@ -133,17 +145,22 @@ export const buildInitialValues = values => ({
   redusertArbeid: !!values.delvisTilretteleggingFom,
   redusertArbeidDato: values.delvisTilretteleggingFom,
   redusertArbeidStillingsprosent: values.stillingsprosent,
-  tilrettelegginger: values.tilrettelegginger,
+  tilretteleggingDatoer: values.tilretteleggingDatoer.map((t, index) => ({
+    ...t,
+    id: index,
+  })),
 });
 
-// TODO (TOR) Denne brukar ikkje state så her bør ein ta vekk connect
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const { selectedArbeidsforhold } = ownProps;
   const onSubmit = values => ownProps.updateArbeidsforholdCallback(transformValues(values, selectedArbeidsforhold));
   const warn = values => validateWarning(values);
-  return () => ({
+  const validate = values => validateErrors(values);
+  return state => ({
     initialValues: buildInitialValues(selectedArbeidsforhold),
+    jordmorTilretteleggingFraDato: behandlingFormValueSelector(ARBEIDSFORHOLD_DETAIL_FORM_NAME)(state, 'jordmorTilretteleggingFra'),
     warn,
+    validate,
     onSubmit,
   });
 };

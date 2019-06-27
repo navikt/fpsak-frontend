@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -34,61 +34,69 @@ export const FodselOgTilretteleggingFaktaForm = ({
   fødselsdato,
   submittable,
   ...formProps
-}) => (
-  <form onSubmit={formProps.handleSubmit}>
-    <FlexContainer fluid wrap>
-      <FlexRow>
-        <FlexColumn>
-          <DatepickerField
-            name="termindato"
-            label={{ id: 'FodselOgTilretteleggingFaktaForm.Termindato' }}
-            validate={[required, hasValidDate]}
-            readOnly={readOnly}
-          />
-        </FlexColumn>
-        {fødselsdato && (
-        <FlexColumn>
-          <DatepickerField
-            name="fødselsdato"
-            label={{ id: 'FodselOgTilretteleggingFaktaForm.Fodselsdato' }}
-            validate={[required, hasValidDate]}
-            readOnly={readOnly}
-          />
-        </FlexColumn>
-        )}
-      </FlexRow>
-    </FlexContainer>
-    <ArbeidsforholdFaktaPanel readOnly={readOnly} formName={FODSEL_TILRETTELEGGING_FORM} submittable={submittable} />
-    <FlexContainer>
-      <FlexRow>
-        <FlexColumn className={styles.textAreaBredde}>
-          <TextAreaField
-            name="begrunnelse"
-            label={{ id: 'FodselOgTilretteleggingFaktaForm.BegrunnEndringene' }}
-            validate={[requiredIfNotPristine, maxLength1500, hasValidText]}
-            maxLength={1500}
-            readOnly={readOnly}
-          />
-        </FlexColumn>
-      </FlexRow>
-    </FlexContainer>
-    <FlexContainer fluid wrap>
-      <FlexRow>
-        <FlexColumn>
-          <ElementWrapper>
-            <VerticalSpacer twentyPx />
-            <FaktaSubmitButton
-              formName={FODSEL_TILRETTELEGGING_FORM}
-              isSubmittable={submittable}
-              isReadOnly={readOnly}
-              hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+}) => {
+  const [erArbeidsforholdValgt, settErArbeidsforholdValgt] = useState(false);
+  return (
+    <form onSubmit={formProps.handleSubmit}>
+      <FlexContainer fluid wrap>
+        <FlexRow>
+          <FlexColumn>
+            <DatepickerField
+              name="termindato"
+              label={{ id: 'FodselOgTilretteleggingFaktaForm.Termindato' }}
+              validate={[required, hasValidDate]}
+              readOnly={readOnly}
             />
-          </ElementWrapper>
-        </FlexColumn>
-      </FlexRow>
-    </FlexContainer>
-  </form>
-);
+          </FlexColumn>
+          {fødselsdato && (
+          <FlexColumn>
+            <DatepickerField
+              name="fødselsdato"
+              label={{ id: 'FodselOgTilretteleggingFaktaForm.Fodselsdato' }}
+              validate={[required, hasValidDate]}
+              readOnly={readOnly}
+            />
+          </FlexColumn>
+          )}
+        </FlexRow>
+      </FlexContainer>
+      <ArbeidsforholdFaktaPanel
+        readOnly={readOnly}
+        formName={FODSEL_TILRETTELEGGING_FORM}
+        submittable={submittable}
+        settErArbeidsforholdValgt={settErArbeidsforholdValgt}
+      />
+      <FlexContainer>
+        <FlexRow>
+          <FlexColumn className={styles.textAreaBredde}>
+            <TextAreaField
+              name="begrunnelse"
+              label={{ id: 'FodselOgTilretteleggingFaktaForm.BegrunnEndringene' }}
+              validate={[requiredIfNotPristine, maxLength1500, hasValidText]}
+              maxLength={1500}
+              readOnly={readOnly}
+            />
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
+      <FlexContainer fluid wrap>
+        <FlexRow>
+          <FlexColumn>
+            <ElementWrapper>
+              <VerticalSpacer twentyPx />
+              <FaktaSubmitButton
+                formName={FODSEL_TILRETTELEGGING_FORM}
+                isSubmittable={submittable && !erArbeidsforholdValgt}
+                isReadOnly={readOnly}
+                hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+              />
+            </ElementWrapper>
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
+    </form>
+  );
+};
 
 FodselOgTilretteleggingFaktaForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
@@ -113,15 +121,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const fødselsdato = tilrettelegging ? tilrettelegging.fødselsdato : '';
   const initialValues = {
     termindato: tilrettelegging ? tilrettelegging.termindato : '',
-    arbeidsforhold: tilrettelegging ? tilrettelegging.arbeidsforholdListe.map(a => ({
-      ...a,
-      tilrettelegginger: [{
-        id: 1,
-        fom: '2019-10-10',
-        type: 'redusertArbeid',
-        stillingsprosent: 10,
-      }],
-    })) : [],
+    arbeidsforhold: tilrettelegging ? tilrettelegging.arbeidsforholdListe : [],
     fødselsdato,
     begrunnelse: getAksjonspunkt(aksjonspunkter),
   };

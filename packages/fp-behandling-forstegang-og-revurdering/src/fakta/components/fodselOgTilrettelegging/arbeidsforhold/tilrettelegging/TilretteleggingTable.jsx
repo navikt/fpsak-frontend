@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Element } from 'nav-frontend-typografi';
 
+import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
 import removeIcon from '@fpsak-frontend/assets/images/remove.svg';
 import {
- Table, TableColumn, TableRow, DateLabel, Image,
+ Table, TableColumn, TableRow, DateLabel, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 
 import styles from './tilretteleggingTable.less';
@@ -18,10 +19,10 @@ const headerTextCodes = [
 ];
 
 const getTextCode = (type) => {
-  if (type === 'kanGjennomfores') {
+  if (type.kode === tilretteleggingType.HEL_TILRETTELEGGING) {
     return 'ArbeidsforholdCheckboxes.Arbeidsgiver.KanGjennomfores';
   }
-  return type === 'redusertArbeid'
+  return type.kode === tilretteleggingType.DELVIS_TILRETTELEGGING
     ? 'ArbeidsforholdCheckboxes.Arbeidsgiver.RedusertArbeid'
     : 'ArbeidsforholdCheckboxes.Arbeidsgiver.KanIkkeGjennomfores';
 };
@@ -42,21 +43,25 @@ class TilretteleggingTable extends Component {
     settValgtTilrettelegging(selectedTilrettelegging);
   }
 
-
   render() {
     const {
-      tilrettelegginger,
+      tilretteleggingDatoer,
       valgtTilrettelegging,
       slettTilrettelegging,
     } = this.props;
 
-    if (tilrettelegginger.length === 0) {
-      return null;
+    if (tilretteleggingDatoer.length === 0) {
+        return (
+          <>
+            <Element><FormattedMessage id="TilretteleggingTable.IngenTilretteleggingDatoer" /></Element>
+            <VerticalSpacer eightPx />
+          </>
+        );
     }
 
     return (
       <Table headerTextCodes={headerTextCodes}>
-        {tilrettelegginger.map(t => (
+        {tilretteleggingDatoer.map(t => (
           <TableRow
             key={t.fom}
             model={t}
@@ -71,7 +76,7 @@ class TilretteleggingTable extends Component {
               <Normaltekst><DateLabel dateString={t.fom} /></Normaltekst>
             </TableColumn>
             <TableColumn>
-              <Normaltekst>{`${t.stillingsprosent}%`}</Normaltekst>
+              <Normaltekst>{t.stillingsprosent ? `${t.stillingsprosent}%` : ''}</Normaltekst>
             </TableColumn>
             <TableColumn>
               <div ref={(node) => { this.nodes.push(node); }}>
@@ -92,7 +97,7 @@ class TilretteleggingTable extends Component {
 }
 
 TilretteleggingTable.propTypes = {
-  tilrettelegginger: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  tilretteleggingDatoer: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   settValgtTilrettelegging: PropTypes.func.isRequired,
   slettTilrettelegging: PropTypes.func.isRequired,
   valgtTilrettelegging: PropTypes.shape(),
