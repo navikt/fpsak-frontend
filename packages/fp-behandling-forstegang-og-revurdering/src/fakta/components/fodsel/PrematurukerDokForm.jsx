@@ -11,7 +11,7 @@ import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles'
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import {
   RadioGroupField, RadioOption,
- DatepickerField, InputField,
+ DatepickerField,
 } from '@fpsak-frontend/form';
 import {
   VerticalSpacer, ElementWrapper, ArrowBox,
@@ -111,23 +111,18 @@ PrematurukerDokForm.propTypes = {
 PrematurukerDokForm.defaultProps = {
   isTerminDatoEdited: false,
   isDokumentasjonForeliggerEdited: false,
-  isAntallBarnEdited: false,
   avklartBarn: [],
 };
 
 export const buildInitialValues = createSelector([getSoknad, getFamiliehendelseGjeldende, getAksjonspunkter, getSoknadAntallBarn],
-  (soknad, familiehendelse, aksjonspunkter, soknadAntallBarn) => {
-    const antallBarn = soknad.antallBarn ? soknad.antallBarn : NaN;
-
-    return {
+  (soknad, familiehendelse, aksjonspunkter, soknadAntallBarn) => ({
       termindato: familiehendelse.termindato ? familiehendelse.termindato : soknad.termindato,
       avklartBarn: (familiehendelse.avklartBarn && familiehendelse.avklartBarn.length > 0)
         ? addIsBarnDodt(familiehendelse.avklartBarn) : createNewChildren(soknadAntallBarn || 0),
       dokumentasjonForeligger: familiehendelse.dokumentasjonForeligger !== null
         ? familiehendelse.dokumentasjonForeligger : undefined,
       ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_TERMIN_VED_TIDLIG_FØDSEL)),
-    };
-});
+    }));
 
 const transformValues = values => ({
   kode: aksjonspunktCodes.VURDER_TERMIN_VED_TIDLIG_FØDSEL,
