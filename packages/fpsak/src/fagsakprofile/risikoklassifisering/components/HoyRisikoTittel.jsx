@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import risikoIkon from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
+import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 import HoyRisikoPanel from './HoyRisikoPanel';
 import TittelMedDivider from './TittelMedDivider';
@@ -14,6 +15,9 @@ import styles from './hoyRisikoTittel.less';
  */
 const HoyRisikoTittel = ({
   risikoklassifisering,
+  aksjonspunkt,
+  readOnly,
+  submitCallback,
 }) => (
   <EkspanderbartpanelBase
     className={styles.hoyRisikoPanelTittel}
@@ -27,11 +31,21 @@ const HoyRisikoTittel = ({
   >
     <HoyRisikoPanel
       risikoklassifisering={risikoklassifisering}
+      aksjonspunkt={aksjonspunkt}
+      readOnly={readOnly}
+      submitCallback={submitCallback}
     />
   </EkspanderbartpanelBase>
 );
 HoyRisikoTittel.propTypes = {
   risikoklassifisering: PropTypes.shape().isRequired,
+  aksjonspunkt: aksjonspunktPropType,
+  readOnly: PropTypes.bool.isRequired,
+  submitCallback: PropTypes.func.isRequired,
+};
+
+HoyRisikoTittel.defaultProps = {
+  aksjonspunkt: undefined,
 };
 
 export default HoyRisikoTittel;

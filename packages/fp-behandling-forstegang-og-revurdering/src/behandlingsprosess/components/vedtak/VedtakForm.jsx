@@ -25,6 +25,8 @@ import FritekstBrevPanel from 'behandlingForstegangOgRevurdering/src/behandlings
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import classNames from 'classnames';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
 import VedtakAksjonspunktPanel from './VedtakAksjonspunktPanel';
@@ -135,6 +137,8 @@ export class VedtakFormImpl extends Component {
     const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(formProps);
     const previewOverstyrtBrev = getPreviewManueltBrevCallback(formProps, finnesAllerede, true, previewManueltBrevCallback);
     const previewDefaultBrev = getPreviewManueltBrevCallback(formProps, false, false, previewManueltBrevCallback);
+    const faresignalAksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FARESIGNALER);
+    const faresignalerIkkeAvklart = faresignalAksjonspunkt ? faresignalAksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET : false;
     const skalViseLink = (behandlingsresultat.avslagsarsak === null)
       || (behandlingsresultat.avslagsarsak && behandlingsresultat.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER);
     const visOverstyringKnapp = kanOverstyre || readOnly;
@@ -200,7 +204,7 @@ export class VedtakFormImpl extends Component {
                     mini
                     className={styles.mainButton}
                     onClick={formProps.handleSubmit}
-                    disabled={behandlingPaaVent || formProps.submitting}
+                    disabled={behandlingPaaVent || formProps.submitting || faresignalerIkkeAvklart}
                     spinner={formProps.submitting}
                   >
                     {intl.formatMessage({ id: 'VedtakForm.TilGodkjenning' })}

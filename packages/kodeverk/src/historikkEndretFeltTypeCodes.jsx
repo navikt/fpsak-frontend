@@ -441,6 +441,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'SVANGERSKAPSPENGERVILKÅRET',
     feltId: 'HistorikkEndretFelt.Svangerskapsvilkåret',
   },
+  FARESIGNALER: {
+    kode: 'FARESIGNALER',
+    feltId: 'HistorikkEndretFelt.Faresignaler',
+  },
 };
 
 export default historikkEndretFeltTypeCodes;

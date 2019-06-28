@@ -32,7 +32,11 @@ export const FpsakApiKeys = {
   HENLEGG_BEHANDLING: 'HENLEGG_BEHANDLING',
   RESUME_BEHANDLING: 'RESUME_BEHANDLING',
   BEHANDLING_ON_HOLD: 'BEHANDLING_ON_HOLD',
+  KONTROLLRESULTAT: 'KONTROLLRESULTAT',
+  SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
+  BEHANDLING: 'BEHANDLING',
 };
+
 
 const endpoints = new RestApiConfigBuilder()
 
@@ -42,6 +46,7 @@ const endpoints = new RestApiConfigBuilder()
 
   /* /api/behandlinger */
   .withGet('/fpsak/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPSAK, { fetchLinkDataAutomatically: false })
+  .withAsyncPost('/api/behandlinger', FpsakApiKeys.BEHANDLING)
   .withGet('/fptilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE, { fetchLinkDataAutomatically: false })
   .withAsyncPut('/fpsak/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING, { fetchLinkDataAutomatically: false })
   .withGet('/fpsak/api/behandlinger/annen-part-behandling', FpsakApiKeys.ANNEN_PART_BEHANDLING)
@@ -54,6 +59,8 @@ const endpoints = new RestApiConfigBuilder()
   /* /api/behandling */
   .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', FpsakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT)
   .withAsyncPost('/fptilbake/api/behandling/aksjonspunkt', FpsakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT_FPTILBAKE)
+  .withGet('/fpsak/api/behandling/kontrollresultat/resultat', FpsakApiKeys.KONTROLLRESULTAT)
+  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', FpsakApiKeys.SAVE_AKSJONSPUNKT)
 
   /* /api/dokument */
   .withGet('/fpsak/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS)
