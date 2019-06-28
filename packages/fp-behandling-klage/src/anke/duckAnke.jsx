@@ -47,7 +47,7 @@ export const resetBehandling = dispatch => Promise.all([
 export const fetchBehandling = (behandlingIdentifier, behandlingerVersjonMappedById) => (dispatch) => {
   dispatch(ankeBehandlingApi.BEHANDLING.resetRestApi()());
   dispatch(updateBehandling(behandlingIdentifier, behandlingerVersjonMappedById));
-  dispatch(hentAnkeVurdering({ behandlingId: behandlingIdentifier.$$behandlingId }, { keepData: true }));
+  dispatch(hentAnkeVurdering({ behandlingId: behandlingIdentifier.$$behandlingId }));
 };
 
 const updateFagsakAndBehandling = behandlingIdentifier => dispatch => dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer))
