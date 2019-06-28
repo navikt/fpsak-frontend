@@ -135,7 +135,7 @@ export class BehandlingIndex extends Component {
       );
     }
 
-    if (behandlingType === BehandlingType.TILBAKEKREVING) {
+    if (behandlingType === BehandlingType.TILBAKEKREVING || behandlingType === BehandlingType.REVURDERING_TILBAKEKREVING) {
       return (
         <BehandlingTilbakekrevingIndex
           key={behandlingId}
