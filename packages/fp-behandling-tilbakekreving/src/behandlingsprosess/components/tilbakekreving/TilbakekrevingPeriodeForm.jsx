@@ -276,12 +276,12 @@ const validate = (values, sarligGrunnTyper, data) => {
           },
         };
     }
-    if (aktsomhetInfo && aktsomhetInfo.belopSomSkalTilbakekreves && aktsomhetInfo.belopSomSkalTilbakekreves > data.feilutbetaling) {
+    if (aktsomhetInfo && aktsomhetInfo.belopSomSkalTilbakekreves && aktsomhetInfo.belopSomSkalTilbakekreves >= data.feilutbetaling) {
       errors = {
         ...errors,
         [values.valgtVilkarResultatType]: {
           [vilkarResultatInfo.handletUaktsomhetGrad]: {
-            belopSomSkalTilbakekreves: [{ id: 'TilbakekrevingPeriodeForm.BelopKanIkkeVereStorreEnnFeilutbetalingen' }],
+            belopSomSkalTilbakekreves: [{ id: 'TilbakekrevingPeriodeForm.BelopMaVereMindreEnnFeilutbetalingen' }],
           },
         },
       };
