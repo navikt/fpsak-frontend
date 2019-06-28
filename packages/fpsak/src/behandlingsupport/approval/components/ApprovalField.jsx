@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { getAksjonspunktTextSelector } from './ApprovalTextUtils';
 import ReasonsField from './ReasonsField';
 import styles from './ApprovalField.less';
@@ -38,7 +39,7 @@ export const ApprovalFieldImpl = ({
 }) => {
   const fieldName = `approvals[${contextIndex}].aksjonspunkter[${approvalIndex}]`;
   const erKlageKA = (klageKA && currentValue && currentValue.totrinnskontrollGodkjent);
-  const erAnke = aksjonspunkt.aksjonspunktKode === '5093' && currentValue.totrinnskontrollGodkjent === true;
+  const erAnke = aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE && currentValue.totrinnskontrollGodkjent === true;
   const showOnlyBegrunnelse = erAnke || erKlageKA ? currentValue.totrinnskontrollGodkjent : showBegrunnelse;
   const showReasons = (erAnke || ((currentValue && currentValue.totrinnskontrollGodkjent === false) || erKlageKA));
   return (
