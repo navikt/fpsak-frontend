@@ -67,7 +67,7 @@ export const TilretteleggingDetailFormImpl = ({
               isReadOnly={readOnly}
               hasOpenAksjonspunkter={false}
               onClick={formProps.handleSubmit}
-              buttonTextId={formProps.initialValues.fom === undefined || harIngenTilretteleggingDatoer
+              buttonTextId={formProps.initialValues === undefined || formProps.initialValues.fom === undefined || harIngenTilretteleggingDatoer
                 ? 'TilretteleggingDetailForm.LeggTil' : 'TilretteleggingDetailForm.Endre'}
             />
           </FlexColumn>
