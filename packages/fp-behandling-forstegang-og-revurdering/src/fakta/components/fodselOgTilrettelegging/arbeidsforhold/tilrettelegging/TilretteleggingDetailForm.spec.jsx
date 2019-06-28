@@ -6,7 +6,7 @@ import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-e
 
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 
-import { TilretteleggingDetailFormImpl } from './TilretteleggingDetailForm';
+import TilretteleggingDetailForm, { TilretteleggingDetailFormImpl } from './TilretteleggingDetailForm';
 
 describe('<TilretteleggingDetailForm>', () => {
   it('skal vise knapper for oppdater og avbryt når en ikke er i readonly-modus og en har datoer', () => {
@@ -87,5 +87,57 @@ describe('<TilretteleggingDetailForm>', () => {
 
     const button = wrapper.find(FaktaSubmitButton);
     expect(button.prop('buttonTextId')).is.eql('TilretteleggingDetailForm.Endre');
+  });
+
+  it('skal vise feilmelding når tilretteleggingsdato finnes fra før', () => {
+    const values = {
+      id: 1,
+      fom: '2019-01-01',
+    };
+    const tilretteleggingDatoer = [{
+      id: 2,
+      fom: '2019-01-01',
+    }];
+    const jordmorTilretteleggingFraDato = '2019-01-01';
+
+    const errors = TilretteleggingDetailForm.validate(values, tilretteleggingDatoer, jordmorTilretteleggingFraDato);
+
+    expect(errors).is.eql({
+      fom: [{ id: 'TilretteleggingDetailForm.DatoFinnes' }],
+    });
+  });
+
+  it('skal ikke vise feilmelding når tilretteleggingsdato ikke finnes fra før', () => {
+    const values = {
+      id: 1,
+      fom: '2019-01-01',
+    };
+    const tilretteleggingDatoer = [{
+      id: 1,
+      fom: '2019-01-01',
+    }];
+    const jordmorTilretteleggingFraDato = '2019-01-01';
+
+    const errors = TilretteleggingDetailForm.validate(values, tilretteleggingDatoer, jordmorTilretteleggingFraDato);
+
+    expect(errors).is.eql({});
+  });
+
+  it('skal vise feilmelding når dato er før dato satt av jordmor', () => {
+    const values = {
+      id: 1,
+      fom: '2019-01-01',
+    };
+    const tilretteleggingDatoer = [{
+      id: 1,
+      fom: '2019-01-01',
+    }];
+    const jordmorTilretteleggingFraDato = '2019-02-01';
+
+    const errors = TilretteleggingDetailForm.validate(values, tilretteleggingDatoer, jordmorTilretteleggingFraDato);
+
+    expect(errors).is.eql({
+      fom: [{ id: 'TilretteleggingDetailForm.TidligereEnnOppgittAvJordmor' }],
+    });
   });
 });
