@@ -18,8 +18,8 @@ import createForeldrepengerAnkeBpDefinition from './definition/createForeldrepen
 
 // Kun eksportert for test. Ikke bruk andre steder!
 export const getBehandlingspunkterProps = createSelector(
-  [getFagsakYtelseType, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat],
-  (fagsakYtelseType, behandlingType, vilkar = [], aksjonspunkter, behandlingsresultat) => {
+  [getFagsakYtelseType, getBehandlingType, getAksjonspunkter, getBehandlingsresultat, getBehandlingVilkar],
+  (fagsakYtelseType, behandlingType, aksjonspunkter, behandlingsresultat, vilkar = []) => {
     if (!behandlingType) {
       return undefined;
     }
