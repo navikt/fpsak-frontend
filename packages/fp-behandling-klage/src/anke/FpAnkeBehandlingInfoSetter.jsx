@@ -40,7 +40,6 @@ export class FpSakBehandlingInfoSetter extends Component {
       .withBehandlingIsKlage(false)
       .withBehandlingsresultat(behandlingsresultat)
       .withBehandlingType(behandlingType)
-      .withBehandlingAnkeVurderingResultat(behandlingAnkeVurderingResultat)
       .withBehandlingHasSoknad(behandlingHasSoknad)
       .withBehandlingIsOnHold(behandlingIsOnHold)
       .withIsBehandlingInInnhentSoknadsopplysningerSteg(isBehandlingInInnhentSoknadsinfoSteg)
