@@ -103,9 +103,9 @@ const leggTilUkjent = (behandlinger = []) => {
   return arr;
 };
 
-const buildOption = (b) => {
+const buildOption = (b, intl) => {
   if (b.id === IKKE_PAA_ANKET_BEHANDLING_ID) {
-    return (<option key={formatId(b.id)} value={formatId(b.id)}>Ikke påanket et vedtak</option>);
+    return (<option key={formatId(b.id)} value={formatId(b.id)}>{intl.formatMessage({ id: 'Ankebehandling.Resultat.IkkePaaAnketVedtak' })}</option>);
   }
   return (<option key={formatId(b.id)} value={formatId(b.id)}>{formatBehandling(b)}</option>);
 };
@@ -115,7 +115,7 @@ const SKAL_REALITETSBEHANDLES = {
   NEI: false,
 };
 
-const filtrerKlage = behandlinger => behandlinger.filter(b => b.type.kode === behandlingType.KLAGE);
+const filtrerKlage = (behandlinger = []) => behandlinger.filter(b => b.type.kode === behandlingType.KLAGE);
 
 /**
  * Presentasjonskomponent. Setter opp aksjonspunktet for behandling.
@@ -146,7 +146,7 @@ const BehandleAnkeFormImpl = ({
           <SelectField
             readOnly={readOnly}
             name="vedtak"
-            selectValues={leggTilUkjent(filtrerKlage(behandlinger)).map(b => buildOption(b))}
+            selectValues={leggTilUkjent(filtrerKlage(behandlinger)).map(b => buildOption(b, intl))}
             className={readOnly ? styles.selectReadOnly : null}
             label={intl.formatMessage({ id: 'Ankebehandling.Resultat.Vedtak' })}
             validate={[required]}

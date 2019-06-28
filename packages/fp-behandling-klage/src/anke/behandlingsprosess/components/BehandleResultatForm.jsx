@@ -33,7 +33,14 @@ const ResultatEnkel = resultat => (
 
 const ResultatAvvise = resultat => (
   <React.Fragment>
-    <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Avvises" /></Undertekst>
+    <Undertekst>
+      {resultat.ankevurderingresultat.paAnketBehandlingId != null
+      && (<FormattedMessage id="Ankebehandling.Resultat.Innstilling.Avvises" />)
+      }
+      {resultat.ankevurderingresultat.paAnketBehandlingId == null
+      && (<FormattedMessage id="Ankebehandling.Resultat.Innstilling.AvvisesUten" />)
+      }
+    </Undertekst>
     <VerticalSpacer sixteenPx />
     <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Arsak" /></Undertekst>
     <ul>
@@ -87,6 +94,7 @@ const AnkeResultat = (resultat) => {
   if (!resultat || !resultat.ankevurderingresultat) {
     return null;
   }
+  console.log('ankeResultat', resultat);
   const { ankevurderingresultat } = resultat;
   switch (ankevurderingresultat.ankeVurdering) {
     case ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK: return (<ResultatEnkel ankevurderingresultat={ankevurderingresultat} />);
