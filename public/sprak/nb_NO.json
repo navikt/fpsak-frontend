@@ -250,7 +250,7 @@
   "ArbeidsforholdTable.Ja": "Ja",
   "ArbeidsforholdTable.Nei": "Nei",
   
-  "ArbeidsforholdInnhold.Jordmor.TilretteleggingFra": "Jordmor oppgir at tilrettelegging er nødvendig fra og med",
+  "ArbeidsforholdInnhold.Jordmor.TilretteleggingFra": "Jordmor/lege oppgir at tilrettelegging er nødvendig fra og med",
   "ArbeidsforholdInnhold.BegrunnEndringene": "Begrunn endringene",
   "ArbeidsforholdInnhold.TilretteleggingWarning": "For et av arbeidsforholdene er datoene fra arbeidsgiver motstridende. Avklar dette før du kan gå videre i saken.",
   "ArbeidsforholdInnhold.LeggTilPeriode": "Legg til periode",
@@ -2408,7 +2408,7 @@
   "TilretteleggingDetailForm.LeggTil": "Legg til",
   "TilretteleggingDetailForm.Avbryt": "Avbryt",
   "TilretteleggingDetailForm.DatoFinnes": "Dato brukes i annen tilrettelegging",
-  "TilretteleggingDetailForm.TidligereEnnOppgittAvJordmor": "Dato kan ikke være før dato oppgitt av jordmor",
+  "TilretteleggingDetailForm.TidligereEnnOppgittAvJordmor": "Dato kan ikke være før dato oppgitt av jordmor/lege",
   "TilretteleggingDetailForm.SenereEnnTilrettelegging": "Dato kan ikke være etter tilretteleggingsdato",
 
   "IntegrationStatusPanel.ServiceDowntime": "Tredjepartstjeneste(r) har nedetid",

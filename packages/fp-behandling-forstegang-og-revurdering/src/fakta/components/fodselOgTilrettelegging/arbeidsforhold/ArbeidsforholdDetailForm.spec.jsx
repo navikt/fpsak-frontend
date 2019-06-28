@@ -40,6 +40,7 @@ describe('<ArbeidsforholdDetailForm>', () => {
       updateArbeidsforholdCallback={sinon.spy()}
       submittable
       jordmorTilretteleggingFraDato="2019-04-04"
+      tilretteleggingDatoer={[]}
     />);
 
     expect(wrapper.find(DatepickerField)).has.length(1);
@@ -54,6 +55,7 @@ describe('<ArbeidsforholdDetailForm>', () => {
       updateArbeidsforholdCallback={sinon.spy()}
       submittable
       jordmorTilretteleggingFraDato="2019-04-04"
+      tilretteleggingDatoer={[]}
     />);
 
     expect(wrapper.find(DatepickerField)).has.length(1);

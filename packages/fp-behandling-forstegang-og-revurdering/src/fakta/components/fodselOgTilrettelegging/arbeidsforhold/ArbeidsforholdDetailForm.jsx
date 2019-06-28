@@ -30,6 +30,7 @@ export const ArbeidsforholdDetailForm = ({
   warning,
   submittable,
   jordmorTilretteleggingFraDato,
+  tilretteleggingDatoer,
   ...formProps
 }) => {
   const [valgtTilrettelegging, settValgtTilrettelegging] = useState();
@@ -57,7 +58,7 @@ export const ArbeidsforholdDetailForm = ({
           <VerticalSpacer sixteenPx />
         </FlexColumn>
       </FlexRow>
-      {!readOnly && !valgtTilrettelegging && (
+      {(!readOnly && (!valgtTilrettelegging || tilretteleggingDatoer.length === 0)) && (
         <FlexRow>
           <FlexColumn>
             <FaktaSubmitButton
@@ -91,6 +92,7 @@ ArbeidsforholdDetailForm.propTypes = {
   warning: PropTypes.shape(),
   submittable: PropTypes.bool.isRequired,
   jordmorTilretteleggingFraDato: PropTypes.string.isRequired,
+  tilretteleggingDatoer: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 ArbeidsforholdDetailForm.defaultProps = {
@@ -151,6 +153,8 @@ export const buildInitialValues = values => ({
   })),
 });
 
+const EMPTY_ARRAY = [];
+
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const { selectedArbeidsforhold } = ownProps;
   const onSubmit = values => ownProps.updateArbeidsforholdCallback(transformValues(values, selectedArbeidsforhold));
@@ -159,6 +163,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   return state => ({
     initialValues: buildInitialValues(selectedArbeidsforhold),
     jordmorTilretteleggingFraDato: behandlingFormValueSelector(ARBEIDSFORHOLD_DETAIL_FORM_NAME)(state, 'jordmorTilretteleggingFra'),
+    tilretteleggingDatoer: behandlingFormValueSelector(ARBEIDSFORHOLD_DETAIL_FORM_NAME)(state, 'tilretteleggingDatoer') || EMPTY_ARRAY,
     warn,
     validate,
     onSubmit,
