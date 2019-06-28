@@ -1,0 +1,7 @@
+const ankeVurderingOmgjoer = {
+  ANKE_DELVIS_OMGJOERING_TIL_GUNST: 'ANKE_DELVIS_OMGJOERING_TIL_GUNST',
+  ANKE_TIL_GUNST: 'ANKE_TIL_GUNST',
+  ANKE_TIL_UGUNST: 'ANKE_TIL_UGUNST',
+};
+
+export default ankeVurderingOmgjoer;

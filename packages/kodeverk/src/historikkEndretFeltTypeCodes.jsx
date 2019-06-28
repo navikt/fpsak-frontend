@@ -353,6 +353,38 @@ const historikkEndretFeltTypeCodes = {
     kode: 'ER_KLAGER_PART',
     feltId: 'HistorikkEndretFelt.PaKlagdBehandlingId',
   },
+  ANKE_RESULTAT: {
+    kode: 'PA_ANKET_BEHANDLINGID',
+    feltId: 'HistorikkEndretFelt.PaAnketBehandlingId',
+  },
+  ANKE_OMGJØR_ÅRSAK: {
+    kode: 'ANKE_OMGJØR_ÅRSAK',
+    feltId: 'HistorikkEndretFelt.AnkeOmgjoerAarsak',
+  },
+  ANKE_AVVIST_ÅRSAK: {
+    kode: 'ANKE_AVVIST_ÅRSAK',
+    feltId: 'HistorikkEndretFelt.AnkeAvvistAarsak',
+  },
+  ER_ANKER_PART: {
+    kode: 'ER_ANKER_PART',
+    feltId: 'HistorikkEndretFelt.ErAnkerPart',
+  },
+  ER_ANKE_KONKRET: {
+    kode: 'ER_ANKE_KONKRET',
+    feltId: 'HistorikkEndretFelt.ErAnkeKonkret',
+  },
+  ER_ANKEFRIST_OVERHOLDT: {
+    kode: 'ER_ANKEFRIST_OVERHOLDT',
+    feltId: 'HistorikkEndretFelt.ErAnkefristOverholdt',
+  },
+  ER_ANKEN_SIGNERT: {
+    kode: 'ER_ANKEN_SIGNERT',
+    feltId: 'HistorikkEndretFelt.ErAnkenSignert',
+  },
+  PA_ANKET_BEHANDLINGID: {
+    kode: 'PA_ANKET_BEHANDLINGID',
+    feltId: 'HistorikkEndretFelt.PaKlagdBehandlingId',
+  },
   VURDER_ETTERLØNN_SLUTTPAKKE: {
     kode: 'VURDER_ETTERLØNN_SLUTTPAKKE',
     feltId: 'HistorikkEndretFelt.VurderEtterlønnSluttpakke',

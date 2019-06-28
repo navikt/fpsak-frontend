@@ -20,6 +20,7 @@ import {
 } from 'fagsak/fagsakSelectors';
 import { getFeatureToggles } from 'app/duck';
 import { reduxRestApi } from 'data/fpsakApi';
+import BehandlingAnkeIndex from '@fpsak-frontend/fp-behandling-klage/src/anke/BehandlingAnkeIndex';
 import {
   setSelectedBehandlingId, getSelectedBehandlingId, setBehandlingInfoHolder, resetBehandlingContext as resetBehandlingContextActionCreator,
 } from './duck';
@@ -174,6 +175,27 @@ export class BehandlingIndex extends Component {
     if (behandlingType === BehandlingType.KLAGE) {
       return (
         <BehandlingKlageIndex
+          key={behandlingId}
+          saksnummer={saksnummer}
+          behandlingId={behandlingId}
+          behandlingerVersjonMappedById={behandlingerVersjonMappedById}
+          location={location}
+          setBehandlingInfoHolder={setHolder}
+          behandlingUpdater={behandlingUpdater}
+          appContextUpdater={appContextUpdater}
+          featureToggles={featureToggles}
+          hasSubmittedPaVentForm={hasSubmittedPaVentForm}
+          allDocuments={allDocuments}
+          kodeverk={kodeverk}
+          fagsak={fagsak}
+          avsluttedeBehandlinger={avsluttedeBehandlinger}
+        />
+      );
+    }
+
+    if (behandlingType === BehandlingType.ANKE) {
+      return (
+        <BehandlingAnkeIndex
           key={behandlingId}
           saksnummer={saksnummer}
           behandlingId={behandlingId}

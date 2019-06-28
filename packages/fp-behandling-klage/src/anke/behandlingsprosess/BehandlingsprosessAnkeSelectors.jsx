@@ -4,25 +4,22 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { arrayToObject } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import fyt from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import { getRettigheter } from 'navAnsatt/duck';
 import { DEFAULT_BEHANDLINGSPROSESS, behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import {
   getBehandlingIsOnHold, getAllMerknaderFraBeslutter, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat,
   hasReadOnlyBehandling, isBehandlingStatusReadOnly,
-} from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
-import createEngangsstonadBpProps from './definition/engangsstonadKlageBpDefinition';
-import createForeldrepengerBpProps from './definition/foreldrepengerKlageBpDefinition';
-import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from './duckBpKlage';
-import { getFagsakYtelseType } from '../duckKlage';
+} from 'behandlingKlage/src/anke/selectors/ankeBehandlingSelectors';
+import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from './duckBpAnke';
+import { getFagsakYtelseType } from '../duckAnke';
+import createForeldrepengerAnkeBpDefinition from './definition/createForeldrepengerAnkeBpDefinition';
 
-// TODO (TOR) Refaktorer: veldig mykje av dette er felles med andre behandlingstypar.
 
 // Kun eksportert for test. Ikke bruk andre steder!
 export const getBehandlingspunkterProps = createSelector(
-  [getFagsakYtelseType, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat],
-  (fagsakYtelseType, behandlingType, vilkar = [], aksjonspunkter, behandlingsresultat) => {
+  [getFagsakYtelseType, getBehandlingType, getAksjonspunkter, getBehandlingsresultat, getBehandlingVilkar],
+  (fagsakYtelseType, behandlingType, aksjonspunkter, behandlingsresultat, vilkar = []) => {
     if (!behandlingType) {
       return undefined;
     }
@@ -34,8 +31,7 @@ export const getBehandlingspunkterProps = createSelector(
       behandlingsresultat,
     };
 
-    return fagsakYtelseType.kode === fyt.ENGANGSSTONAD
-      ? createEngangsstonadBpProps(builderData) : createForeldrepengerBpProps(builderData);
+    return createForeldrepengerAnkeBpDefinition(builderData);
   },
 );
 

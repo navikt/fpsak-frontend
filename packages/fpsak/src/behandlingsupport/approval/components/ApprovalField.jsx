@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { getAksjonspunktTextSelector } from './ApprovalTextUtils';
 import ReasonsField from './ReasonsField';
 import styles from './ApprovalField.less';
@@ -38,6 +39,9 @@ export const ApprovalFieldImpl = ({
 }) => {
   const fieldName = `approvals[${contextIndex}].aksjonspunkter[${approvalIndex}]`;
   const erKlageKA = (klageKA && currentValue && currentValue.totrinnskontrollGodkjent);
+  const erAnke = aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE && currentValue.totrinnskontrollGodkjent === true;
+  const showOnlyBegrunnelse = erAnke || erKlageKA ? currentValue.totrinnskontrollGodkjent : showBegrunnelse;
+  const showReasons = (erAnke || ((currentValue && currentValue.totrinnskontrollGodkjent === false) || erKlageKA));
   return (
     <div className={styles.approvalItemContainer}>
       {getAksjonspunktText(aksjonspunkt).map((formattedMessage, index) => (
@@ -54,15 +58,14 @@ export const ApprovalFieldImpl = ({
           <RadioOption label={{ id: 'InfoPanel.Godkjent' }} value />
           <RadioOption label={{ id: 'InfoPanel.Vurder' }} value={false} />
         </RadioGroupField>
-        {((currentValue && currentValue.totrinnskontrollGodkjent === false) || erKlageKA)
+        {showReasons
         && (
         <ReasonsField
           fieldName={fieldName}
           godkjentHosKA={erKlageKA}
-          showOnlyBegrunnelse={(erKlageKA
-          ? currentValue.totrinnskontrollGodkjent : showBegrunnelse)}
+          showOnlyBegrunnelse={showOnlyBegrunnelse}
         />
-)
+        )
         }
       </NavFieldGroup>
     </div>
