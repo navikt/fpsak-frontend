@@ -94,7 +94,6 @@ const AnkeResultat = (resultat) => {
   if (!resultat || !resultat.ankevurderingresultat) {
     return null;
   }
-  console.log('ankeResultat', resultat);
   const { ankevurderingresultat } = resultat;
   switch (ankevurderingresultat.ankeVurdering) {
     case ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK: return (<ResultatEnkel ankevurderingresultat={ankevurderingresultat} />);
