@@ -6,12 +6,13 @@ import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test
 import {
   DatepickerField,
 } from '@fpsak-frontend/form';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Knapp } from 'nav-frontend-knapper';
 
-import ArbeidsforholdCheckboxes from './ArbeidsforholdCheckboxes';
-import { ArbeidsforholdInnhold, buildInitialValues } from './ArbeidsforholdInnhold';
+import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
+import TilretteleggingFaktaPanel from './tilrettelegging/TilretteleggingFaktaPanel';
+import { ArbeidsforholdDetailForm, buildInitialValues } from './ArbeidsforholdDetailForm';
 
-describe('<ArbeidsforholdInnhold>', () => {
+describe('<ArbeidsforholdDetailForm>', () => {
   const selectedArbeidsforhold = {
     tilretteleggingBehovFom: '2019-04-18',
     arbeidsgiverNavn: 'Xansen flyttebyrå AS',
@@ -30,36 +31,37 @@ describe('<ArbeidsforholdInnhold>', () => {
       stillingsprosent: 50,
     },
     begrunnelse: '',
+    tilretteleggingDatoer: [],
   };
   it('skal vise faktaform med liste av arbeidsforhold readonly', () => {
-    const wrapper = shallowWithIntl(<ArbeidsforholdInnhold
+    const wrapper = shallowWithIntl(<ArbeidsforholdDetailForm
       readOnly
       cancelArbeidsforholdCallback={sinon.spy()}
       updateArbeidsforholdCallback={sinon.spy()}
+      submittable
+      jordmorTilretteleggingFraDato="2019-04-04"
+      tilretteleggingDatoer={[]}
     />);
-    const datepicker = wrapper.find(DatepickerField);
-    expect(datepicker).has.length(1);
-    const arbforholdCheckboxes = wrapper.find(ArbeidsforholdCheckboxes);
-    expect(arbforholdCheckboxes).has.length(1);
-    const oppdaterKnapp = wrapper.find(Hovedknapp);
-    expect(oppdaterKnapp).has.length(0);
-    const avbrytKnapp = wrapper.find(Knapp);
-    expect(avbrytKnapp).has.length(0);
+
+    expect(wrapper.find(DatepickerField)).has.length(1);
+    expect(wrapper.find(TilretteleggingFaktaPanel)).has.length(1);
+    expect(wrapper.find(FaktaSubmitButton)).has.length(0);
+    expect(wrapper.find(Knapp)).has.length(0);
   });
   it('skal vise faktaform med liste av arbeidsforhold ikke readonly', () => {
-    const wrapper = shallowWithIntl(<ArbeidsforholdInnhold
+    const wrapper = shallowWithIntl(<ArbeidsforholdDetailForm
       readOnly={false}
       cancelArbeidsforholdCallback={sinon.spy()}
       updateArbeidsforholdCallback={sinon.spy()}
+      submittable
+      jordmorTilretteleggingFraDato="2019-04-04"
+      tilretteleggingDatoer={[]}
     />);
-    const datepicker = wrapper.find(DatepickerField);
-    expect(datepicker).has.length(1);
-    const arbforholdCheckboxes = wrapper.find(ArbeidsforholdCheckboxes);
-    expect(arbforholdCheckboxes).has.length(1);
-    const oppdaterKnapp = wrapper.find(Hovedknapp);
-    expect(oppdaterKnapp).has.length(1);
-    const avbrytKnapp = wrapper.find(Knapp);
-    expect(avbrytKnapp).has.length(1);
+
+    expect(wrapper.find(DatepickerField)).has.length(1);
+    expect(wrapper.find(TilretteleggingFaktaPanel)).has.length(1);
+    expect(wrapper.find(FaktaSubmitButton)).has.length(1);
+    expect(wrapper.find(Knapp)).has.length(1);
   });
   it('skal sette opp initial values', () => {
     const initialValues = buildInitialValues(selectedArbeidsforhold);
@@ -73,6 +75,7 @@ describe('<ArbeidsforholdInnhold>', () => {
       redusertArbeid: false,
       redusertArbeidDato: undefined,
       redusertArbeidStillingsprosent: undefined,
+      tilretteleggingDatoer: [],
     });
   });
 });

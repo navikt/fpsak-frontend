@@ -11,7 +11,7 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import ArbeidsforholdTable from './ArbeidsforholdTable';
-import ArbeidsforholdInnhold from './ArbeidsforholdInnhold';
+import ArbeidsforholdDetailForm, { ARBEIDSFORHOLD_DETAIL_FORM_NAME } from './ArbeidsforholdDetailForm';
 
 /**
  * Svangerskapspenger
@@ -26,6 +26,7 @@ export class ArbeidsforholdFaktaPanel extends Component {
     this.setSelectedArbeidsforhold = this.setSelectedArbeidsforhold.bind(this);
     this.cancelArbeidsforhold = this.cancelArbeidsforhold.bind(this);
     this.updateArbeidsforhold = this.updateArbeidsforhold.bind(this);
+    this.toggleArbeidsforhold = this.toggleArbeidsforhold.bind(this);
   }
 
   setSelectedArbeidsforhold(event, id, selectedArbeidsforhold) {
@@ -40,31 +41,40 @@ export class ArbeidsforholdFaktaPanel extends Component {
       redusertArbeidStillingsprosent: selectedArbeidsforhold.stillingsprosent,
     };
     this.initializeArbforholdForm(initialValues);
+    this.toggleArbeidsforhold(selectedArbeidsforhold);
+  }
+
+  toggleArbeidsforhold(selectedArbeidsforhold) {
+    const { settErArbeidsforholdValgt } = this.props;
     this.setState({ selectedArbeidsforhold });
+    settErArbeidsforholdValgt(!!selectedArbeidsforhold);
   }
 
   initializeArbforholdForm(selectedArbeidsforhold) {
     const { reduxFormInitialize: formInitialize, behandlingFormPrefix } = this.props;
-    formInitialize(`${behandlingFormPrefix}.${'selectedFodselOgTilretteleggingForm'}`, selectedArbeidsforhold);
+    formInitialize(`${behandlingFormPrefix}.${ARBEIDSFORHOLD_DETAIL_FORM_NAME}`, selectedArbeidsforhold);
   }
 
   cancelArbeidsforhold() {
     this.initializeArbforholdForm({});
-    this.setState({ selectedArbeidsforhold: undefined });
+    this.toggleArbeidsforhold();
   }
 
   updateArbeidsforhold(values) {
-    const { reduxFormChange: formChange, behandlingFormPrefix, arbeidsforhold } = this.props;
+    const {
+      reduxFormChange: formChange, behandlingFormPrefix, arbeidsforhold, formName,
+    } = this.props;
     const otherThanUpdated = arbeidsforhold.filter(a => a.tilretteleggingId !== values.tilretteleggingId);
     const fieldValues = otherThanUpdated.concat(values).sort((a, b) => a.arbeidsgiverNavn.localeCompare(b.arbeidsgiverNavn));
-    formChange(`${behandlingFormPrefix}.${'FodselOgTilretteleggingForm'}`, 'arbeidsforhold', fieldValues);
-    this.setState({ selectedArbeidsforhold: undefined });
+    formChange(`${behandlingFormPrefix}.${formName}`, 'arbeidsforhold', fieldValues);
+    this.toggleArbeidsforhold();
   }
 
   render() {
     const {
       arbeidsforhold,
       readOnly,
+      submittable,
     } = this.props;
     const { selectedArbeidsforhold } = this.state;
     return (
@@ -76,11 +86,13 @@ export class ArbeidsforholdFaktaPanel extends Component {
         />
         {selectedArbeidsforhold
         && (
-        <ArbeidsforholdInnhold
+        <ArbeidsforholdDetailForm
           readOnly={readOnly}
           selectedArbeidsforhold={selectedArbeidsforhold}
           cancelArbeidsforholdCallback={this.cancelArbeidsforhold}
           updateArbeidsforholdCallback={this.updateArbeidsforhold}
+          leggTilPeriode={this.updateArbeidsforhold}
+          submittable={submittable}
         />
         )
       }
@@ -88,12 +100,16 @@ export class ArbeidsforholdFaktaPanel extends Component {
     );
   }
 }
+
 ArbeidsforholdFaktaPanel.propTypes = {
   arbeidsforhold: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  formName: PropTypes.string.isRequired,
+  submittable: PropTypes.bool.isRequired,
+  settErArbeidsforholdValgt: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, props) => {

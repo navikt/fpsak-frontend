@@ -7,7 +7,7 @@ import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/
 
 import { ArbeidsforholdFaktaPanel } from './ArbeidsforholdFaktaPanel';
 import ArbeidsforholdTable from './ArbeidsforholdTable';
-import ArbeidsforholdInnhold from './ArbeidsforholdInnhold';
+import ArbeidsforholdDetailForm from './ArbeidsforholdDetailForm';
 
 describe('<ArbeidsforholdFaktaPanel>', () => {
   const tilrettelegging = {
@@ -59,13 +59,16 @@ describe('<ArbeidsforholdFaktaPanel>', () => {
       behandlingFormPrefix=""
       reduxFormChange={sinon.spy()}
       reduxFormInitialize={sinon.spy()}
+      formName="testForm"
+      submittable
+      settErArbeidsforholdValgt={sinon.spy()}
     />);
     const faktaGruppe = wrapper.find(FaktaGruppe);
     expect(faktaGruppe).has.length(1);
     expect(faktaGruppe.prop('titleCode')).to.eql('ArbeidsforholdFaktaPanel.Faktagruppe');
     const arbforholdTable = wrapper.find(ArbeidsforholdTable);
     expect(arbforholdTable).has.length(1);
-    const arbforholdInnhold = wrapper.find(ArbeidsforholdInnhold);
+    const arbforholdInnhold = wrapper.find(ArbeidsforholdDetailForm);
     expect(arbforholdInnhold).has.length(0);
   });
   it('skal vise ArbeidsforholdInnhold for arbforholdet som er valgt', () => {
@@ -75,6 +78,9 @@ describe('<ArbeidsforholdFaktaPanel>', () => {
       behandlingFormPrefix=""
       reduxFormChange={sinon.spy()}
       reduxFormInitialize={sinon.spy()}
+      formName="testForm"
+      submittable
+      settErArbeidsforholdValgt={sinon.spy()}
     />);
     wrapper.setState({ selectedArbeidsforhold: tilrettelegging.arbeidsforholdListe[0] });
     const faktaGruppe = wrapper.find(FaktaGruppe);
@@ -82,7 +88,7 @@ describe('<ArbeidsforholdFaktaPanel>', () => {
     expect(faktaGruppe.prop('titleCode')).to.eql('ArbeidsforholdFaktaPanel.Faktagruppe');
     const arbforholdTable = wrapper.find(ArbeidsforholdTable);
     expect(arbforholdTable).has.length(1);
-    const arbforholdInnhold = wrapper.find(ArbeidsforholdInnhold);
+    const arbforholdInnhold = wrapper.find(ArbeidsforholdDetailForm);
     expect(arbforholdInnhold).has.length(1);
   });
 });

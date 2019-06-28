@@ -18,6 +18,7 @@ describe('<FodselOgTilretteleggingInfoPanel>', () => {
       hasOpenAksjonspunkter={false}
       readOnly
       submitCallback={sinon.spy()}
+      submittable
     />);
 
     const faktaEkspandertpanel = wrapper.find(FaktaEkspandertpanel);

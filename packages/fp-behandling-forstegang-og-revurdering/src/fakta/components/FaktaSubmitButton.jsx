@@ -30,6 +30,7 @@ export const FaktaSubmitButton = ({
   hasEmptyRequiredFields,
   hasOpenAksjonspunkter,
   buttonTextId,
+  onClick,
 }) => (
   <ElementWrapper>
     {!isReadOnly
@@ -38,7 +39,8 @@ export const FaktaSubmitButton = ({
         mini
         spinner={isSubmitting}
         disabled={isDisabled(isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields, hasOpenAksjonspunkter)}
-        onClick={ariaCheck}
+        onClick={onClick || ariaCheck}
+        htmlType={onClick ? 'button' : 'submit'}
       >
         <FormattedMessage id={buttonTextId} />
       </Hovedknapp>
@@ -55,10 +57,12 @@ FaktaSubmitButton.propTypes = {
   isDirty: PropTypes.bool.isRequired,
   hasEmptyRequiredFields: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
+  onClick: PropTypes.func,
 };
 
 FaktaSubmitButton.defaultProps = {
   buttonTextId: 'SubmitButton.ConfirmInformation',
+  onClick: undefined,
 };
 
 const mapStateToProps = (state, ownProps) => {
