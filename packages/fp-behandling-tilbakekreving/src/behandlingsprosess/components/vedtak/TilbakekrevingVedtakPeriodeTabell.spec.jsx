@@ -9,7 +9,10 @@ import TilbakekrevingVedtakPeriodeTabell from './TilbakekrevingVedtakPeriodeTabe
 describe('<TilbakekrevingVedtakPeriodeTabell>', () => {
   it('skal lage tabell med to perioder og en sum-rad', () => {
     const perioder = [{
-      periode: ['2019-10-10', '2019-12-10'],
+      periode: {
+        fom: '2019-10-10',
+        tom: '2019-12-10',
+      },
       feilutbetaltBeløp: 15430,
       vurdering: {
         kode: 'SIMP',
@@ -19,7 +22,10 @@ describe('<TilbakekrevingVedtakPeriodeTabell>', () => {
       renterProsent: 10,
       tilbakekrevingBeløp: 15430,
     }, {
-      periode: ['2019-05-10', '2019-06-10'],
+      periode: {
+        fom: '2019-05-10',
+        tom: '2019-06-10',
+      },
       feilutbetaltBeløp: 14000,
       vurdering: {
         kode: 'SIMP',

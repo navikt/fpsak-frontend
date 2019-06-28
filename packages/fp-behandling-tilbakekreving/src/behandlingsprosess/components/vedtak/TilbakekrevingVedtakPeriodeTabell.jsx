@@ -25,8 +25,8 @@ const TilbakekrevingVedtakPeriodeTabell = ({
   getKodeverknavn,
 }) => {
   const rader = perioder.map(periode => (
-    <TableRow key={periode.periode[0]}>
-      <TableColumn><Normaltekst><PeriodLabel dateStringFom={periode.periode[0]} dateStringTom={periode.periode[1]} /></Normaltekst></TableColumn>
+    <TableRow key={periode.periode.fom}>
+      <TableColumn><Normaltekst><PeriodLabel dateStringFom={periode.periode.fom} dateStringTom={periode.periode.tom} /></Normaltekst></TableColumn>
       <TableColumn><Normaltekst>{formatCurrencyNoKr(periode.feilutbetaltBeløp)}</Normaltekst></TableColumn>
       <TableColumn><Normaltekst>{getKodeverknavn(periode.vurdering)}</Normaltekst></TableColumn>
       <TableColumn><Normaltekst>{periode.andelAvBeløp ? `${periode.andelAvBeløp}%` : ''}</Normaltekst></TableColumn>
