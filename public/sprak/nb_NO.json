@@ -2428,6 +2428,7 @@
   "TilbakekrevingPeriodeForm.Vurdering": "Vurdering",
   "TilbakekrevingPeriodeForm.MaVelgeSarligGrunn": "Du må velge minst en Særlig grunn",
   "TilbakekrevingPeriodeForm.BelopKanIkkeVereStorreEnnFeilutbetalingen": "Beløp kan ikke være større enn feilutbetalingen",
+  "TilbakekrevingPeriodeForm.BelopMaVereMindreEnnFeilutbetalingen": "Beløp må være mindre enn feilutbetalingen",
   "TilbakekrevingPeriodeForm.FeilutbetaltBelopEtterbetaling": "Feilutbetalt beløp er redusert med <b>kr. {belop},-</b> på grunn av etterbetaling innen samme periode.",
   "TilbakekrevingPeriodeForm.FeilutbetaltBelopTrekk": "Feilutbetalt beløp er redusert med <b>kr. {belop},-</b> på grunn av trekk.",
   "TilbakekrevingPeriodeForm.Aktsomhet": "Aktsomhet",

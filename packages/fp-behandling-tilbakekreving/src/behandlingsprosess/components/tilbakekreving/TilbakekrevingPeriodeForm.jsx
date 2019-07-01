@@ -277,7 +277,7 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-const validate = (values, sarligGrunnTyper, periode) => {
+const validate = (values, sarligGrunnTyper, data) => {
   let errors = {};
   const vilkarResultatInfo = values[values.valgtVilkarResultatType];
   if (vilkarResultatInfo && vilkarResultatInfo.handletUaktsomhetGrad && vilkarResultatInfo.handletUaktsomhetGrad !== Aktsomhet.FORSETT) {
@@ -291,18 +291,18 @@ const validate = (values, sarligGrunnTyper, periode) => {
           },
         };
     }
-    if (aktsomhetInfo && aktsomhetInfo.belopSomSkalTilbakekreves && aktsomhetInfo.belopSomSkalTilbakekreves > periode.feilutbetaling) {
+    if (aktsomhetInfo && aktsomhetInfo.belopSomSkalTilbakekreves && aktsomhetInfo.belopSomSkalTilbakekreves >= data.feilutbetaling) {
       errors = {
         ...errors,
         [values.valgtVilkarResultatType]: {
           [vilkarResultatInfo.handletUaktsomhetGrad]: {
-            belopSomSkalTilbakekreves: [{ id: 'TilbakekrevingPeriodeForm.BelopKanIkkeVereStorreEnnFeilutbetalingen' }],
+            belopSomSkalTilbakekreves: [{ id: 'TilbakekrevingPeriodeForm.BelopMaVereMindreEnnFeilutbetalingen' }],
           },
         },
       };
     }
   }
-  if (vilkarResultatInfo && vilkarResultatInfo.tilbakekrevdBelop && vilkarResultatInfo.tilbakekrevdBelop > periode.feilutbetaling) {
+  if (vilkarResultatInfo && vilkarResultatInfo.tilbakekrevdBelop && vilkarResultatInfo.tilbakekrevdBelop > data.feilutbetaling) {
     errors = {
       ...errors,
       [values.valgtVilkarResultatType]: {
@@ -319,7 +319,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const vilkarResultatTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.VILKAR_RESULTAT)(initialState);
   const aktsomhetTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.AKTSOMHET)(initialState);
   const submitCallback = values => ownProps.oppdaterPeriode(values);
-  const validateForm = values => validate(values, sarligGrunnTyper, ownProps.periode);
+  const validateForm = values => validate(values, sarligGrunnTyper, ownProps.data);
   return (state, oProps) => {
     const valgtVilkarResultatType = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, 'valgtVilkarResultatType');
     const handletUaktsomhetGrad = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.handletUaktsomhetGrad`);
