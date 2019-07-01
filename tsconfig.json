@@ -28,6 +28,7 @@
 			"behandlingTilbakekreving/*": ["fp-behandling-tilbakekreving/src/*"],
 			"behandlingInnsyn/*": ["fp-behandling-innsyn/src/*"],
 			"behandlingKlage/*": ["fp-behandling-klage/src/*"],
+			"behandlingAnke/*": ["fp-behandling-anke/src/*"],
 			"papirsoknad/*": ["fp-behandling-papirsoknad/src/*"],
 		  }
 	},

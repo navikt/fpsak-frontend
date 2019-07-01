@@ -27,6 +27,7 @@ const config = {
       behandlingTilbakekreving: path.join(PACKAGES_DIR, 'fp-behandling-tilbakekreving'),
       behandlingInnsyn: path.join(PACKAGES_DIR, 'fp-behandling-innsyn'),
       behandlingKlage: path.join(PACKAGES_DIR, 'fp-behandling-klage'),
+      behandlingAnke: path.join(PACKAGES_DIR, 'fp-behandling-anke'),
       papirsoknad: path.join(PACKAGES_DIR, 'fp-behandling-papirsoknad'),
     },
     extensions: ['.json', '.js', '.jsx', '.ts', '.tsx'],

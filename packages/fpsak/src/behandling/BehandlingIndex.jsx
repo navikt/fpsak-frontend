@@ -10,6 +10,7 @@ import BehandlingKlageIndex from '@fpsak-frontend/fp-behandling-klage';
 import BehandlingForstegangOgRevurderingIndex from '@fpsak-frontend/fp-behandling-forstegang-og-revurdering';
 import { trackRouteParam, requireProps } from '@fpsak-frontend/fp-felles';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import BehandlingAnkeIndex from '@fpsak-frontend/fp-behandling-anke';
 
 import { getAlleKodeverk } from 'kodeverk/duck';
 import { getAllDocuments } from 'behandlingsupport/behandlingsupportSelectors';
@@ -20,7 +21,6 @@ import {
 } from 'fagsak/fagsakSelectors';
 import { getFeatureToggles } from 'app/duck';
 import { reduxRestApi } from 'data/fpsakApi';
-import BehandlingAnkeIndex from '@fpsak-frontend/fp-behandling-klage/src/anke/BehandlingAnkeIndex';
 import {
   setSelectedBehandlingId, getSelectedBehandlingId, setBehandlingInfoHolder, resetBehandlingContext as resetBehandlingContextActionCreator,
 } from './duck';

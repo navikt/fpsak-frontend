@@ -2490,6 +2490,8 @@
   "TilretteleggingDetailForm.TidligereEnnOppgittAvJordmor": "Dato kan ikke være før dato oppgitt av jordmor/lege",
   "TilretteleggingDetailForm.SenereEnnTilrettelegging": "Dato kan ikke være etter tilretteleggingsdato",
 
+  "FritekstAnkeBrevTextField": "Fritekst til brev",
+
   "IntegrationStatusPanel.ServiceDowntime": "Tredjepartstjeneste(r) har nedetid",
   "IntegrationStatusPanel.Downtime": "{system} har nedetid.",
   "IntegrationStatusPanel.DowntimeUntil": "{system} har nedetid frem til {datetime}.",
