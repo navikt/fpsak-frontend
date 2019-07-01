@@ -2430,6 +2430,8 @@
   "TilbakekrevingPeriodeForm.BelopKanIkkeVereStorreEnnFeilutbetalingen": "Beløp kan ikke være større enn feilutbetalingen",
   "TilbakekrevingPeriodeForm.FeilutbetaltBelopEtterbetaling": "Feilutbetalt beløp er redusert med <b>kr. {belop},-</b> på grunn av etterbetaling innen samme periode.",
   "TilbakekrevingPeriodeForm.FeilutbetaltBelopTrekk": "Feilutbetalt beløp er redusert med <b>kr. {belop},-</b> på grunn av trekk.",
+  "TilbakekrevingPeriodeForm.Aktsomhet": "Aktsomhet",
+  "TilbakekrevingPeriodeForm.BelopetMottattIGodTro": "Beløpet mottatt i god tro",
 
   "AktsomhetSarligeGrunnerFormPanel.GrunnerTilReduksjon":"Særlige grunner som er vektlagt (4.ledd)",
 
@@ -2442,11 +2444,8 @@
 
   "AdvarselModal.Ok": "OK",
 
-  "AktsomhetFormPanel.Aktsomhet": "Aktsomhet",
-  "AktsomhetFormPanel.Vurdering": "Vurdering",
   "AktsomhetFormPanel.HandletUaktsomhetGrad": "I hvilken grad har mottaker handlet uaktsomt?",
 
-  "BelopetMottattIGodTroFormPanel.BelopetMottattIGodTro": "Beløpet mottatt i god tro",
   "BelopetMottattIGodTroFormPanel.Vurdering": "Vurdering",
   "BelopetMottattIGodTroFormPanel.BelopetIBehold": "Er beløpet i behold?",
   "BelopetMottattIGodTroFormPanel.Ja": "Ja",
