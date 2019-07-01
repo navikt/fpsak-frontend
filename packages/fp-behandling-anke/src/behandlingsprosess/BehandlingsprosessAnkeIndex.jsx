@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
-import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
-import { BehandlingsprosessPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingsprosessPanel, IverksetterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta,
@@ -15,7 +15,7 @@ import {
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import {
-  getAksjonspunkter, getBehandlingVersjon, getBehandlingType, getBehandlingStatus, getBehandlingsresultat, getBehandlingHenlagt,
+  getBehandlingVersjon, getBehandlingStatus, getBehandlingsresultat, getBehandlingHenlagt,
   getBehandlingAnkeVurderingResultat,
 } from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
 import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingAnke/src/duckAnke';
@@ -178,8 +178,8 @@ export class BehandlingsprosessAnkeIndex extends Component {
 
   render() {
     const {
-      behandlingspunkter, selectedBehandlingspunkt, isSelectedBehandlingHenlagt, fagsakYtelseType, behandlingIdentifier, innstilling,
-      resolveProsessAksjonspunkterSuccess, resolveFaktaAksjonspunkterSuccess, behandlingStatus, behandlingsresultat, aksjonspunkter, behandlingType,
+      behandlingspunkter, selectedBehandlingspunkt, isSelectedBehandlingHenlagt, fagsakYtelseType, innstilling,
+      resolveProsessAksjonspunkterSuccess, resolveFaktaAksjonspunkterSuccess, behandlingStatus, behandlingsresultat,
     } = this.props;
     const { showModalAnkeBehandling } = this.state;
     return (
@@ -212,16 +212,6 @@ export class BehandlingsprosessAnkeIndex extends Component {
           resolveFaktaAksjonspunkterSuccess={resolveFaktaAksjonspunkterSuccess}
           resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
         />
-        <FatterVedtakStatusModal
-          closeEvent={this.goToSearchPage}
-          selectedBehandlingId={behandlingIdentifier.behandlingId}
-          fagsakYtelseType={fagsakYtelseType}
-          isVedtakSubmission={resolveProsessAksjonspunkterSuccess}
-          behandlingStatus={behandlingStatus}
-          behandlingsresultat={behandlingsresultat}
-          aksjonspunkter={aksjonspunkter}
-          behandlingType={behandlingType}
-        />
         <AnkeBehandlingModal showModal={showModalAnkeBehandling} closeEvent={this.goToSearchPage} />
       </React.Fragment>
     );
@@ -233,7 +223,6 @@ BehandlingsprosessAnkeIndex.propTypes = {
   saveAnke: PropTypes.func.isRequired,
   resolveAnkeTemp: PropTypes.func.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   behandlingspunkter: PropTypes.arrayOf(PropTypes.string),
   selectedBehandlingspunkt: PropTypes.string,
   resetBehandlingspunkter: PropTypes.func.isRequired,
@@ -244,7 +233,6 @@ BehandlingsprosessAnkeIndex.propTypes = {
   fetchPreview: PropTypes.func.isRequired,
   fagsakYtelseType: kodeverkObjektPropType.isRequired,
   behandlingStatus: kodeverkObjektPropType.isRequired,
-  behandlingType: kodeverkObjektPropType.isRequired,
   resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
   resolveFaktaAksjonspunkterSuccess: PropTypes.bool.isRequired,
   behandlingsresultat: PropTypes.shape(),
@@ -263,11 +251,9 @@ const mapStateToProps = state => ({
   isSelectedBehandlingHenlagt: getBehandlingHenlagt(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: getBehandlingVersjon(state),
-  aksjonspunkter: getAksjonspunkter(state),
   behandlingspunkter: getBehandlingspunkter(state),
   defaultBehandlingspunkt: getDefaultBehandlingspunkt(state),
   selectedBehandlingspunkt: getSelectedBehandlingspunkt(state),
-  behandlingType: getBehandlingType(state),
   location: state.router.location,
   resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
   behandlingStatus: getBehandlingStatus(state),
