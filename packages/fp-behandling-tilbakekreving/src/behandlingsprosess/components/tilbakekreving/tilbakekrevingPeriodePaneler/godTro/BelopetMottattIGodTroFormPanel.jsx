@@ -1,22 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import {
- Undertekst, Element, Normaltekst,
-} from 'nav-frontend-typografi';
+import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 
 import {
-  minValue, minLength, maxLength, hasValidText, required, removeSpacesFromNumber, formatCurrencyNoKr,
+  minValue, required, removeSpacesFromNumber, formatCurrencyNoKr,
 } from '@fpsak-frontend/utils';
 import { VerticalSpacer, ArrowBox } from '@fpsak-frontend/shared-components';
 import {
- RadioOption, RadioGroupField, TextAreaField, InputField,
+ RadioOption, RadioGroupField, InputField,
 } from '@fpsak-frontend/form';
 
 import styles from './belopetMottattIGodTroFormPanel.less';
 
-const minLength3 = minLength(3);
-const maxLength1500 = maxLength(1500);
 const minValue1 = minValue(1);
 
 const parseCurrencyInput = (input) => {
@@ -30,17 +26,6 @@ const BelopetMottattIGodTroFormPanel = ({
   erBelopetIBehold,
 }) => (
   <>
-    <Element>
-      <FormattedMessage id="BelopetMottattIGodTroFormPanel.BelopetMottattIGodTro" />
-    </Element>
-    <VerticalSpacer eightPx />
-    <TextAreaField
-      name="godTroBegrunnelse"
-      label={{ id: 'BelopetMottattIGodTroFormPanel.Vurdering' }}
-      validate={[required, minLength3, maxLength1500, hasValidText]}
-      maxLength={1500}
-      readOnly={readOnly}
-    />
     <Undertekst><FormattedMessage id="BelopetMottattIGodTroFormPanel.BelopetIBehold" /></Undertekst>
     <VerticalSpacer eightPx />
     <RadioGroupField
@@ -85,15 +70,14 @@ BelopetMottattIGodTroFormPanel.defaultProps = {
   erBelopetIBehold: undefined,
 };
 
-BelopetMottattIGodTroFormPanel.transformValues = info => ({
+BelopetMottattIGodTroFormPanel.transformValues = (info, vurderingBegrunnelse) => ({
   '@type': 'godTro',
-  begrunnelse: info.godTroBegrunnelse,
+  begrunnelse: vurderingBegrunnelse,
   erBelopetIBehold: info.erBelopetIBehold,
   tilbakekrevesBelop: info.erBelopetIBehold ? removeSpacesFromNumber(info.tilbakekrevdBelop) : undefined,
 });
 
 BelopetMottattIGodTroFormPanel.buildIntialValues = info => ({
-  godTroBegrunnelse: info.begrunnelse,
   erBelopetIBehold: info.erBelopetIBehold,
   tilbakekrevdBelop: info.tilbakekrevesBelop,
 });

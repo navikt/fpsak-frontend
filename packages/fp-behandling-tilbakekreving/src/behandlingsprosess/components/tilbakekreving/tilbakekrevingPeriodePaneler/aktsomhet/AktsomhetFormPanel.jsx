@@ -3,18 +3,13 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { FormSection } from 'redux-form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Undertekst, Element } from 'nav-frontend-typografi';
+import { Undertekst } from 'nav-frontend-typografi';
 
-import {
- required, minLength, maxLength, hasValidText, removeSpacesFromNumber,
-} from '@fpsak-frontend/utils';
-import { TextAreaField, RadioOption, RadioGroupField } from '@fpsak-frontend/form';
+import { required, removeSpacesFromNumber } from '@fpsak-frontend/utils';
+import { RadioOption, RadioGroupField } from '@fpsak-frontend/form';
 
 import Aktsomhet from 'behandlingTilbakekreving/src/kodeverk/aktsomhet';
 import AktsomhetGradFormPanel from './AktsomhetGradFormPanel';
-
-const minLength3 = minLength(3);
-const maxLength1500 = maxLength(1500);
 
 const uaktsomhetCodes = [
   Aktsomhet.GROVT_UAKTSOM,
@@ -36,17 +31,6 @@ const AktsomhetFormPanel = ({
   erTotalBelopUnder4Rettsgebyr,
 }) => (
   <>
-    <Element>
-      <FormattedMessage id="AktsomhetFormPanel.Aktsomhet" />
-    </Element>
-    <VerticalSpacer eightPx />
-    <TextAreaField
-      name="aktsomhetBegrunnelse"
-      label={{ id: 'AktsomhetFormPanel.Vurdering' }}
-      validate={[required, minLength3, maxLength1500, hasValidText]}
-      maxLength={1500}
-      readOnly={readOnly}
-    />
     <Undertekst>
       <FormattedMessage id="AktsomhetFormPanel.HandletUaktsomhetGrad" />
     </Undertekst>
@@ -121,19 +105,19 @@ const formatAktsomhetData = (aktsomhet, sarligGrunnTyper) => {
   };
 };
 
-AktsomhetFormPanel.transformValues = (info, sarligGrunnTyper) => {
+AktsomhetFormPanel.transformValues = (info, sarligGrunnTyper, vurderingBegrunnelse) => {
   const aktsomhet = info[info.handletUaktsomhetGrad];
   return {
     '@type': 'annet',
     aktsomhet: info.handletUaktsomhetGrad,
-    begrunnelse: info.aktsomhetBegrunnelse,
+    begrunnelse: vurderingBegrunnelse,
     aktsomhetInfo: aktsomhet ? formatAktsomhetData(aktsomhet, sarligGrunnTyper) : null,
   };
 };
 
 
 AktsomhetFormPanel.buildInitalValues = (vilkarResultatInfo) => {
-  const { aktsomhet, aktsomhetInfo, begrunnelse } = vilkarResultatInfo;
+  const { aktsomhet, aktsomhetInfo } = vilkarResultatInfo;
   const aktsomhetData = aktsomhetInfo ? {
     [aktsomhet.kode ? aktsomhet.kode : aktsomhet]: {
       harGrunnerTilReduksjon: aktsomhetInfo.harGrunnerTilReduksjon,
@@ -147,7 +131,6 @@ AktsomhetFormPanel.buildInitalValues = (vilkarResultatInfo) => {
   } : {};
 
   return {
-    aktsomhetBegrunnelse: begrunnelse,
     handletUaktsomhetGrad: aktsomhet && aktsomhet.kode ? aktsomhet.kode : aktsomhet,
     ...aktsomhetData,
   };

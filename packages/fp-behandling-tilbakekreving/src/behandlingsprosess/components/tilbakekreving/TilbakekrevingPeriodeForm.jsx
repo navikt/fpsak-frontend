@@ -205,26 +205,41 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
             <Row>
               <Column md="10">
                 {valgtVilkarResultatType && (
-                  <FormSection name={valgtVilkarResultatType}>
-                    {valgtVilkarResultatType === VilkarResultat.GOD_TRO && (
-                      <BelopetMottattIGodTroFormPanel readOnly={readOnly} erBelopetIBehold={erBelopetIBehold} />
-                    )}
-                    {valgtVilkarResultatType !== VilkarResultat.GOD_TRO && (
-                      <AktsomhetFormPanel
-                        harGrunnerTilReduksjon={harGrunnerTilReduksjon}
-                        readOnly={readOnly}
-                        handletUaktsomhetGrad={handletUaktsomhetGrad}
-                        resetFields={this.resetFields}
-                        resetAnnetTextField={this.resetAnnetTextField}
-                        erSerligGrunnAnnetValgt={erSerligGrunnAnnetValgt}
-                        aktsomhetTyper={aktsomhetTyper}
-                        sarligGrunnTyper={sarligGrunnTyper}
-                        antallYtelser={data.ytelser.length}
-                        feilutbetalingBelop={data.feilutbetaling}
-                        erTotalBelopUnder4Rettsgebyr={data.erTotalBelopUnder4Rettsgebyr}
+                  <>
+                    <Element>
+                      <FormattedMessage id={valgtVilkarResultatType === VilkarResultat.GOD_TRO
+                        ? 'TilbakekrevingPeriodeForm.BelopetMottattIGodTro' : 'TilbakekrevingPeriodeForm.Aktsomhet'}
                       />
-                    )}
-                  </FormSection>
+                    </Element>
+                    <VerticalSpacer eightPx />
+                    <TextAreaField
+                      name="vurderingBegrunnelse"
+                      label={{ id: 'TilbakekrevingPeriodeForm.Vurdering' }}
+                      validate={[required, minLength3, maxLength1500, hasValidText]}
+                      maxLength={1500}
+                      readOnly={readOnly}
+                    />
+                    <FormSection name={valgtVilkarResultatType}>
+                      {valgtVilkarResultatType === VilkarResultat.GOD_TRO && (
+                        <BelopetMottattIGodTroFormPanel readOnly={readOnly} erBelopetIBehold={erBelopetIBehold} />
+                      )}
+                      {valgtVilkarResultatType !== VilkarResultat.GOD_TRO && (
+                        <AktsomhetFormPanel
+                          harGrunnerTilReduksjon={harGrunnerTilReduksjon}
+                          readOnly={readOnly}
+                          handletUaktsomhetGrad={handletUaktsomhetGrad}
+                          resetFields={this.resetFields}
+                          resetAnnetTextField={this.resetAnnetTextField}
+                          erSerligGrunnAnnetValgt={erSerligGrunnAnnetValgt}
+                          aktsomhetTyper={aktsomhetTyper}
+                          sarligGrunnTyper={sarligGrunnTyper}
+                          antallYtelser={data.ytelser.length}
+                          feilutbetalingBelop={data.feilutbetaling}
+                          erTotalBelopUnder4Rettsgebyr={data.erTotalBelopUnder4Rettsgebyr}
+                        />
+                      )}
+                    </FormSection>
+                  </>
                 )}
               </Column>
             </Row>
@@ -362,6 +377,7 @@ TilbakekrevingPeriodeForm.buildInitialValues = (periode, foreldelsePerioder) => 
     ? AktsomhetFormPanel.buildInitalValues(vilkarResultatInfo) : {};
   return {
     ...initialValues,
+    vurderingBegrunnelse: vilkarResultatInfo.begrunnelse,
     [initialValues.valgtVilkarResultatType]: {
       ...godTroData,
       ...annetData,
@@ -370,11 +386,11 @@ TilbakekrevingPeriodeForm.buildInitialValues = (periode, foreldelsePerioder) => 
 };
 
 TilbakekrevingPeriodeForm.transformValues = (values, sarligGrunnTyper) => {
-  const { valgtVilkarResultatType, begrunnelse } = values;
+  const { valgtVilkarResultatType, begrunnelse, vurderingBegrunnelse } = values;
   const info = values[valgtVilkarResultatType];
 
-  const godTroData = valgtVilkarResultatType === VilkarResultat.GOD_TRO ? BelopetMottattIGodTroFormPanel.transformValues(info) : {};
-  const annetData = valgtVilkarResultatType !== VilkarResultat.GOD_TRO ? AktsomhetFormPanel.transformValues(info, sarligGrunnTyper) : {};
+  const godTroData = valgtVilkarResultatType === VilkarResultat.GOD_TRO ? BelopetMottattIGodTroFormPanel.transformValues(info, vurderingBegrunnelse) : {};
+  const annetData = valgtVilkarResultatType !== VilkarResultat.GOD_TRO ? AktsomhetFormPanel.transformValues(info, sarligGrunnTyper, vurderingBegrunnelse) : {};
 
   return {
     begrunnelse,

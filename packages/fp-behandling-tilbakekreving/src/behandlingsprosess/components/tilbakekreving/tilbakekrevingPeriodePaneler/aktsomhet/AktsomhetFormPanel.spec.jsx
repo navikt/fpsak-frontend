@@ -95,7 +95,6 @@ describe('<AktsomhetFormPanel>', () => {
     const initialValues = AktsomhetFormPanel.buildInitalValues(vilkarResultatInfo);
 
     expect(initialValues).to.eql({
-      aktsomhetBegrunnelse: 'test',
       handletUaktsomhetGrad: aktsomhet.FORSETT,
     });
   });
@@ -117,7 +116,6 @@ describe('<AktsomhetFormPanel>', () => {
     const initialValues = AktsomhetFormPanel.buildInitalValues(vilkarResultatInfo);
 
     expect(initialValues).to.eql({
-      aktsomhetBegrunnelse: 'test',
       handletUaktsomhetGrad: aktsomhet.GROVT_UAKTSOM,
       [aktsomhet.GROVT_UAKTSOM]: {
         [sarligGrunn.GRAD_AV_UAKTSOMHET]: true,
@@ -137,7 +135,8 @@ describe('<AktsomhetFormPanel>', () => {
       handletUaktsomhetGrad: aktsomhet.FORSETT,
       aktsomhetBegrunnelse: 'test',
     };
-    const transformertData = AktsomhetFormPanel.transformValues(info, sarligGrunnTyper);
+    const vurderingBegrunnelse = 'test';
+    const transformertData = AktsomhetFormPanel.transformValues(info, sarligGrunnTyper, vurderingBegrunnelse);
 
     expect(transformertData).to.eql({
       '@type': 'annet',
@@ -161,7 +160,8 @@ describe('<AktsomhetFormPanel>', () => {
         tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: true,
       },
     };
-    const transformertData = AktsomhetFormPanel.transformValues(info, sarligGrunnTyper);
+    const vurderingBegrunnelse = 'test';
+    const transformertData = AktsomhetFormPanel.transformValues(info, sarligGrunnTyper, vurderingBegrunnelse);
 
     expect(transformertData).to.eql({
       '@type': 'annet',
