@@ -28,6 +28,7 @@ export const getLocationWithQueryParams = (location, queryParams) => ({ ...locat
 export const getSupportPanelLocationCreator = location => supportPanel => getLocationWithQueryParams(location, { stotte: supportPanel });
 export const getBehandlingspunktLocation = location => behandlingspunkt => getLocationWithQueryParams(location, { punkt: behandlingspunkt });
 export const getFaktaLocation = location => fakta => getLocationWithQueryParams(location, { fakta });
+export const getRiskPanelLocationCreator = location => isRiskPanelOpen => getLocationWithQueryParams(location, { risiko: isRiskPanelOpen });
 
 export const DEFAULT_FAKTA = 'default';
 export const DEFAULT_BEHANDLINGSPROSESS = 'default';

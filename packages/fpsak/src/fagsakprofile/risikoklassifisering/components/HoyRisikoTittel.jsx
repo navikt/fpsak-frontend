@@ -18,15 +18,19 @@ const HoyRisikoTittel = ({
   aksjonspunkt,
   readOnly,
   submitCallback,
+  isRiskPanelOpen,
+  toggleRiskPanel,
 }) => (
   <EkspanderbartpanelBase
     className={styles.hoyRisikoPanelTittel}
+    apen={isRiskPanelOpen}
+    onClick={toggleRiskPanel}
     heading={(
       <TittelMedDivider
         imageSrc={risikoIkon}
         tittel="Risikopanel.Tittel.Faresignaler"
       />
-      )}
+    )}
     border
   >
     <HoyRisikoPanel
@@ -42,6 +46,8 @@ HoyRisikoTittel.propTypes = {
   aksjonspunkt: aksjonspunktPropType,
   readOnly: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
+  isRiskPanelOpen: PropTypes.bool.isRequired,
+  toggleRiskPanel: PropTypes.func.isRequired,
 };
 
 HoyRisikoTittel.defaultProps = {

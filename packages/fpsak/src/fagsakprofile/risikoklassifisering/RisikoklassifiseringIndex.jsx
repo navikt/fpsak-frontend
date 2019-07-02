@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 import { createSelector } from 'reselect';
 
+import { trackRouteParam, getRiskPanelLocationCreator } from '@fpsak-frontend/fp-felles';
 import {
  getAksjonspunkter, getBehandlingIdentifier, getBehandlingVersjon, getBehandlingAnsvarligSaksbehandler,
 } from 'behandling/duck';
@@ -15,7 +17,9 @@ import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-ty
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fpsakApi from '../../data/fpsakApi';
-import { getKontrollresultat, resolveAksjonspunkter } from './duck';
+import {
+ getKontrollresultat, resolveAksjonspunkter, setRiskPanelOpen, isRiskPanelOpen,
+} from './duck';
 import IngenRisikoPanel from './components/IngenRisikoPanel';
 import ManglendeKlassifiseringPanel from './components/ManglendeKlassifiseringPanel';
 import HoyRisikoTittel from './components/HoyRisikoTittel';
@@ -40,21 +44,12 @@ const getRisikoaksjonspunkt = createSelector([getAksjonspunkter], aksjonspunkter
  */
 
 export class RisikoklassifiseringIndexImpl extends Component {
-  constructor() {
-    super();
-    this.finnKontrollresultat = this.finnKontrollresultat.bind(this);
-    this.submitAksjonspunkter = this.submitAksjonspunkter.bind(this);
-  }
-
-  componentDidMount() {
+  componentDidMount = () => {
     this.finnKontrollresultat();
   }
 
-  finnKontrollresultat() {
-    const {
-      behandlingIdentifier,
-      getKontrollresultat: hentResultat,
-    } = this.props;
+  finnKontrollresultat = () => {
+    const { behandlingIdentifier, getKontrollresultat: hentResultat } = this.props;
 
     const params = {
       ...behandlingIdentifier.toJson(),
@@ -63,7 +58,7 @@ export class RisikoklassifiseringIndexImpl extends Component {
     hentResultat(params);
   }
 
-  submitAksjonspunkter(aksjonspunkter) {
+  submitAksjonspunkter = (aksjonspunkter) => {
     const {
       behandlingIdentifier,
       behandlingVersjon,
@@ -86,6 +81,14 @@ export class RisikoklassifiseringIndexImpl extends Component {
     );
   }
 
+  toggleRiskPanel = () => {
+    const {
+      push: pushLocation, location, isPanelOpen, setRiskPanelOpen: setOpen,
+    } = this.props;
+    pushLocation(getRiskPanelLocationCreator(location)(!isPanelOpen));
+    // TODO (TOR) Dette trur eg ikkje skal vera naudsynt. Bør automatisk synce url til store
+    setOpen(!isPanelOpen);
+  }
 
   render() {
     const {
@@ -94,6 +97,7 @@ export class RisikoklassifiseringIndexImpl extends Component {
     harHentetKontrollresultat,
     navAnsatt,
     ansvarligSaksbehandler,
+    isPanelOpen,
   } = this.props;
   const { brukernavn, kanSaksbehandle } = navAnsatt;
   const readOnly = brukernavn !== ansvarligSaksbehandler || !kanSaksbehandle; // TODO Er denne passende?
@@ -112,6 +116,8 @@ export class RisikoklassifiseringIndexImpl extends Component {
         aksjonspunkt={aksjonspunkt}
         readOnly={readOnly}
         submitCallback={this.submitAksjonspunkter}
+        isRiskPanelOpen={isPanelOpen}
+        toggleRiskPanel={this.toggleRiskPanel}
       />
     );
   }
@@ -131,6 +137,10 @@ RisikoklassifiseringIndexImpl.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
   navAnsatt: navAnsattPropType.isRequired,
   ansvarligSaksbehandler: PropTypes.string,
+  push: PropTypes.func.isRequired,
+  location: PropTypes.shape().isRequired,
+  isPanelOpen: PropTypes.bool.isRequired,
+  setRiskPanelOpen: PropTypes.func.isRequired,
 };
 
 RisikoklassifiseringIndexImpl.defaultProps = {
@@ -140,23 +150,32 @@ RisikoklassifiseringIndexImpl.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-    harHentetKontrollresultat: fpsakApi.KONTROLLRESULTAT.getRestApiFinished()(state),
-    behandlingIdentifier: getBehandlingIdentifier(state),
-    behandlingVersjon: getBehandlingVersjon(state),
-    aksjonspunkt: getRisikoaksjonspunkt(state),
-    risikoklassifisering: fpsakApi.KONTROLLRESULTAT.getRestApiData()(state),
-    navAnsatt: getNavAnsatt(state),
-    ansvarligSaksbehandler: getBehandlingAnsvarligSaksbehandler(state),
-  });
+  location: state.router.location,
+  harHentetKontrollresultat: fpsakApi.KONTROLLRESULTAT.getRestApiFinished()(state),
+  behandlingIdentifier: getBehandlingIdentifier(state),
+  behandlingVersjon: getBehandlingVersjon(state),
+  aksjonspunkt: getRisikoaksjonspunkt(state),
+  risikoklassifisering: fpsakApi.KONTROLLRESULTAT.getRestApiData()(state),
+  navAnsatt: getNavAnsatt(state),
+  ansvarligSaksbehandler: getBehandlingAnsvarligSaksbehandler(state),
+  isPanelOpen: isRiskPanelOpen(state),
+});
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
+    push,
     getKontrollresultat,
     dispatchSubmitFailed,
     resolveAksjonspunkter,
+    setRiskPanelOpen,
   }, dispatch),
 });
 
-const RisikoklassifiseringIndex = connect(mapStateToProps, mapDispatchToProps)(RisikoklassifiseringIndexImpl);
-
-export default RisikoklassifiseringIndex;
+export default trackRouteParam({
+  paramName: 'risiko',
+  parse: isOpen => isOpen === 'true',
+  paramPropType: PropTypes.bool,
+  storeParam: setRiskPanelOpen,
+  getParamFromStore: isRiskPanelOpen,
+  isQueryParam: true,
+})(connect(mapStateToProps, mapDispatchToProps)(RisikoklassifiseringIndexImpl));

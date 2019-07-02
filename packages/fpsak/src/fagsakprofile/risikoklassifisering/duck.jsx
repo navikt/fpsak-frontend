@@ -1,19 +1,27 @@
 import { sakOperations } from '@fpsak-frontend/fp-behandling-felles';
+import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 
 import fpsakApi from '../../data/fpsakApi';
 
-export const getKontrollresultat = params => dispatch => dispatch(fpsakApi.KONTROLLRESULTAT.makeRestApiRequest()(params));
-
 const reducerName = 'kontrollresultat';
 
+/* Action types */
 const actionType = name => `${reducerName}/${name}`;
-
 export const RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_STARTED = actionType('RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_STARTED');
 export const RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_SUCCESS = actionType('RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_SUCCESS');
+const SET_RISK_PANEL_OPEN = actionType('SET_RISK_PANEL_OPEN');
+
+/* Action creators */
+export const setRiskPanelOpen = isOpen => ({
+  type: SET_RISK_PANEL_OPEN,
+  data: isOpen,
+});
 
 const resolveFaktaAksjonspunkterStarted = () => ({
   type: RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_STARTED, // Bedre navn for denne?
 });
+
+export const getKontrollresultat = params => dispatch => dispatch(fpsakApi.KONTROLLRESULTAT.makeRestApiRequest()(params));
 
 const resolveFaktaAksjonspunkterSuccess = (response, behandlingIdentifier) => (dispatch) => {
   dispatch({
@@ -32,7 +40,7 @@ export const resolveAksjonspunkter = (params, behandlingIdentifier) => (dispatch
 /* Reducer */
 // Hvor mye trengs egentlig her?
 const initialState = {
-  openInfoPanels: [],
+  isRiskPanelOpen: false,
   resolveKontrollresultatAksjonspunkerStarted: false,
   resolveKontrollresultatAksjonspunkterSuccess: false,
 };
@@ -51,7 +59,19 @@ export const kontrollresultatReducer = (state = initialState, action = {}) => {
           resolveKontrollresultatAksjonspunkerStarted: false,
           resolveKontrollresultatAksjonspunkterSuccess: true,
         };
+      case SET_RISK_PANEL_OPEN: {
+        return {
+          ...state,
+          isRiskPanelOpen: action.data,
+        };
+      }
       default:
         return state;
   }
 };
+
+reducerRegistry.register(reducerName, kontrollresultatReducer);
+
+// Selectors (Kun tilknyttet reducer)
+const getKontrollresultatContext = state => state.default[reducerName];
+export const isRiskPanelOpen = state => getKontrollresultatContext(state).isRiskPanelOpen;
