@@ -9,7 +9,7 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import fpsakApi, { reduxRestApi } from 'data/fpsakApi';
 import behandlingUpdater from 'behandling/BehandlingUpdater';
 import {
-  behandlingMenuReducer, setHasSubmittedPaVentForm, createNewForstegangsbehandling, openBehandlingForChanges,
+  behandlingMenuReducer, setHasSubmittedPaVentForm, createNewBehandling, openBehandlingForChanges,
   resetBehandlingMenuData,
 } from './duck';
 
@@ -113,8 +113,9 @@ describe('BehandlingMenu-reducer', () => {
 
     const push = sinon.spy();
     const params = { behandlingType: 'revurdering' };
+    const isTilbakekreving = false;
 
-    return store.dispatch(createNewForstegangsbehandling(push, fagsak.saksnummer, params))
+    return store.dispatch(createNewBehandling(push, fagsak.saksnummer, isTilbakekreving, params))
       .then(() => {
         expect(store.getActions()).to.have.length(13);
         const [requestStartedAction, requestStatusStartedAction, requestStatusFinishedAction, requestFinishedAction] = store.getActions();
@@ -185,7 +186,7 @@ describe('BehandlingMenu-reducer', () => {
     const push = sinon.spy();
     const params = { behandlingType: 'revurdering' };
 
-    return store.dispatch(createNewForstegangsbehandling(push, 1, params))
+    return store.dispatch(createNewBehandling(push, 1, params))
       .then(() => {
         expect(store.getActions()).to.have.length(15);
         const [requestStartedAction, requestFinishedAction] = store.getActions();

@@ -29,13 +29,13 @@ class CreateNewBehandlingMenuItem extends Component {
   }
 
   submit(formValues) {
-    const { saksnummer, submitNyForstegangsBehandling, push } = this.props;
+    const { saksnummer, submitNyBehandling, push } = this.props;
     const data = {
       saksnummer: saksnummer.toString(),
       ...formValues,
     };
     const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.includes(formValues.behandlingType);
-    submitNyForstegangsBehandling(push, saksnummer, isTilbakekreving, data);
+    submitNyBehandling(push, saksnummer, isTilbakekreving, data);
     this.hideModal();
   }
 
@@ -76,7 +76,7 @@ class CreateNewBehandlingMenuItem extends Component {
 CreateNewBehandlingMenuItem.propTypes = {
   saksnummer: PropTypes.number.isRequired,
   push: PropTypes.func.isRequired,
-  submitNyForstegangsBehandling: PropTypes.func.isRequired,
+  submitNyBehandling: PropTypes.func.isRequired,
   opprettNyForstegangsBehandlingEnabled: PropTypes.bool,
   opprettRevurderingEnabled: PropTypes.bool,
   ikkeVisOpprettNyBehandling: PropTypes.bool,

@@ -32,7 +32,7 @@ export const resetBehandlingMenuData = () => ({
 
 export const shelveBehandling = params => dispatch => dispatch(fpsakApi.HENLEGG_BEHANDLING.makeRestApiRequest()(params));
 
-export const createNewForstegangsbehandling = (push, saksnummer, isTilbakekreving, params) => dispatch => behandlingUpdater.resetBehandling(dispatch)
+export const createNewBehandling = (push, saksnummer, isTilbakekreving, params) => dispatch => behandlingUpdater.resetBehandling(dispatch)
   .then(() => dispatch((isTilbakekreving ? fpsakApi.NEW_BEHANDLING_FPTILBAKE : fpsakApi.NEW_BEHANDLING_FPSAK).makeRestApiRequest()(params)))
   .then((response) => {
     if (response.payload.saksnummer) { // NEW_BEHANDLING_FPSAK har returnert fagsak
