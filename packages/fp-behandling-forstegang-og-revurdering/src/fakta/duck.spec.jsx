@@ -2,18 +2,18 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
+
+import { getFaktaRedux } from '@fpsak-frontend/fp-behandling-felles';
 import { withoutRestActions } from '@fpsak-frontend/utils-test/src/data-test-helper';
-
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-import fpsakBehandlingApi, { reduxRestApi } from '../data/fpsakBehandlingApi';
 
-import {
-  setOpenInfoPanels, faktaReducer, resolveFaktaAksjonspunkter, RESOLVE_FAKTA_AKSJONSPUNKTER_STARTED, RESOLVE_FAKTA_AKSJONSPUNKTER_SUCCESS,
-}
-  from './duck';
+import fpsakBehandlingApi, { reduxRestApi } from '../data/fpsakBehandlingApi';
+import { resolveFaktaAksjonspunkter } from './duck';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
+
+const faktaRedux = getFaktaRedux('forstegangOgRevurderingFakta');
 
 describe('Fakta-reducer', () => {
   let mockAxios;
@@ -28,35 +28,6 @@ describe('Fakta-reducer', () => {
 
   after(() => {
     mockAxios.restore();
-  });
-
-  it('skal sette åpne infopanel', () => {
-    const medlempanel = 'medlempanel';
-    const adopsjonpanel = 'adopsjon';
-
-    const action1 = setOpenInfoPanels([medlempanel]);
-    const result1 = faktaReducer(undefined, action1);
-    expect(result1).to.eql({
-      openInfoPanels: [medlempanel],
-      resolveFaktaAksjonspunkterStarted: false,
-      resolveFaktaAksjonspunkterSuccess: false,
-    });
-
-    const action2 = setOpenInfoPanels([medlempanel, adopsjonpanel]);
-    const result2 = faktaReducer(result1, action2);
-    expect(result2).to.eql({
-      openInfoPanels: [medlempanel, adopsjonpanel],
-      resolveFaktaAksjonspunkterStarted: false,
-      resolveFaktaAksjonspunkterSuccess: false,
-    });
-  });
-
-  it('skal returnere initial state', () => {
-    expect(faktaReducer(undefined, {})).to.eql({
-      openInfoPanels: [],
-      resolveFaktaAksjonspunkterStarted: false,
-      resolveFaktaAksjonspunkterSuccess: false,
-    });
   });
 
   it('skal avklare aksjonspunkter', () => {
@@ -82,18 +53,18 @@ describe('Fakta-reducer', () => {
         const actions = withoutRestActions(store.getActions());
         expect(actions).to.have.length(3);
         const [resolveFaktaStartedAction, pollingMessageAction, resolveFaktaSuccessAction] = actions;
-        expect(resolveFaktaStartedAction).to.have.property('type', RESOLVE_FAKTA_AKSJONSPUNKTER_STARTED);
+        expect(resolveFaktaStartedAction).to.have.property('type', faktaRedux.actionTypes.RESOLVE_FAKTA_AKSJONSPUNKTER_STARTED);
         expect(pollingMessageAction).to.have.property('type', 'pollingMessage/SET_REQUEST_POLLING_MESSAGE');
-        expect(resolveFaktaSuccessAction).to.have.property('type', RESOLVE_FAKTA_AKSJONSPUNKTER_SUCCESS);
+        expect(resolveFaktaSuccessAction).to.have.property('type', faktaRedux.actionTypes.RESOLVE_FAKTA_AKSJONSPUNKTER_SUCCESS);
 
-        const stateAfterFetchStarted = faktaReducer(undefined, resolveFaktaStartedAction);
+        const stateAfterFetchStarted = faktaRedux.reducer(undefined, resolveFaktaStartedAction);
         expect(stateAfterFetchStarted).to.eql({
           openInfoPanels: [],
           resolveFaktaAksjonspunkterStarted: true,
           resolveFaktaAksjonspunkterSuccess: false,
         });
 
-        const stateAfterFetchFinished = faktaReducer(undefined, resolveFaktaSuccessAction);
+        const stateAfterFetchFinished = faktaRedux.reducer(undefined, resolveFaktaSuccessAction);
         expect(stateAfterFetchFinished).to.eql({
           openInfoPanels: [],
           resolveFaktaAksjonspunkterStarted: false,

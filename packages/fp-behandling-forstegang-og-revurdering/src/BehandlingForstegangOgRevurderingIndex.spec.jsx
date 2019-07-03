@@ -5,6 +5,7 @@ import sinon from 'sinon';
 
 import { BehandlingGrid } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingIdentifier, BehandlingErPaVentModal } from '@fpsak-frontend/fp-felles';
+
 import { BehandlingForstegangOgRevurderingIndex } from './BehandlingForstegangOgRevurderingIndex';
 
 describe('BehandlingForstegangOgRevurderingIndex', () => {
