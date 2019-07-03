@@ -26,7 +26,6 @@ import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingKlage/sr
 import KlageBehandlingModal from 'behandlingKlage/src/behandlingsprosess/components/klage/KlageBehandlingModal';
 import BehandlingspunktKlageInfoPanel from 'behandlingKlage/src/behandlingsprosess/components/BehandlingspunktKlageInfoPanel';
 import findBehandlingsprosessIcon from 'behandlingKlage/src/behandlingsprosess/statusIconHelper';
-import { getResolveFaktaAksjonspunkterSuccess } from 'behandlingKlage/src/fakta/duckFaktaKlage';
 import {
   setSelectedBehandlingspunktNavn,
   resolveProsessAksjonspunkter,
@@ -215,7 +214,7 @@ export class BehandlingsprosessKlageIndex extends Component {
   render() {
     const {
       behandlingspunkter, selectedBehandlingspunkt, isSelectedBehandlingHenlagt, fagsakYtelseType, behandlingIdentifier, isKlageWithKA,
-      resolveProsessAksjonspunkterSuccess, resolveFaktaAksjonspunkterSuccess, behandlingStatus, behandlingsresultat, aksjonspunkter, behandlingType,
+      resolveProsessAksjonspunkterSuccess, behandlingStatus, behandlingsresultat, aksjonspunkter, behandlingType,
     } = this.props;
     const { showModalKlageBehandling } = this.state;
     return (
@@ -244,7 +243,7 @@ export class BehandlingsprosessKlageIndex extends Component {
           behandlingsresultat={behandlingsresultat}
           behandlingStatusKode={behandlingStatus.kode}
           fagsakYtelseType={fagsakYtelseType}
-          resolveFaktaAksjonspunkterSuccess={resolveFaktaAksjonspunkterSuccess}
+          resolveFaktaAksjonspunkterSuccess
           resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
         />
         {behandlingStatus.kode === BehandlingStatus.FATTER_VEDTAK && (
@@ -286,7 +285,6 @@ BehandlingsprosessKlageIndex.propTypes = {
   behandlingStatus: kodeverkObjektPropType.isRequired,
   behandlingType: kodeverkObjektPropType.isRequired,
   resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
-  resolveFaktaAksjonspunkterSuccess: PropTypes.bool.isRequired,
   isKlageWithKA: PropTypes.bool.isRequired,
   behandlingsresultat: PropTypes.shape(),
 };
@@ -311,7 +309,6 @@ const mapStateToProps = state => ({
   resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
   behandlingStatus: getBehandlingStatus(state),
   behandlingsresultat: getBehandlingsresultat(state),
-  resolveFaktaAksjonspunkterSuccess: getResolveFaktaAksjonspunkterSuccess(state),
   isKlageWithKA: getBehandlingKlageVurderingResultatNK(state),
 });
 

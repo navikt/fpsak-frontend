@@ -2,8 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { withFaktaIndex } from '@fpsak-frontend/fp-behandling-felles';
 import { PersonIndex } from '@fpsak-frontend/fp-felles';
+
 import { getFagsakPerson } from 'behandlingInnsyn/src/duckInnsyn';
+import { setOpenInfoPanels, getOpenInfoPanels } from '../duckFaktaInnsyn';
 
 import styles from './faktaInnsynPanel.less';
 
@@ -16,11 +19,9 @@ import styles from './faktaInnsynPanel.less';
 export const FaktaInnsynPanel = ({
   fagsakPerson,
 }) => (
-  <>
-    <div className={styles.personContainer}>
-      <PersonIndex medPanel person={fagsakPerson} />
-    </div>
-  </>
+  <div className={styles.personContainer}>
+    <PersonIndex medPanel person={fagsakPerson} />
+  </div>
 );
 
 FaktaInnsynPanel.propTypes = {
@@ -31,4 +32,4 @@ const mapStateToProps = state => ({
   fagsakPerson: getFagsakPerson(state),
 });
 
-export default connect(mapStateToProps)(FaktaInnsynPanel);
+export default withFaktaIndex(setOpenInfoPanels, getOpenInfoPanels)(connect(mapStateToProps)(FaktaInnsynPanel));

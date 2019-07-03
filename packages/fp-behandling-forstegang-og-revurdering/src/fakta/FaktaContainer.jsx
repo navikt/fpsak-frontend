@@ -30,12 +30,11 @@ FaktaContainer.propTypes = {
   faktaIndexProps: PropTypes.instanceOf(FaktaIndexProps).isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   faktaIndexProps: new FaktaIndexProps(
     getBehandlingIdentifier(state),
     getBehandlingVersjon(state),
     getOpenInfoPanels(state),
-    ownProps.shouldOpenDefaultInfoPanels,
     resetFakta,
     resolveFaktaAksjonspunkter,
     resolveFaktaOverstyrAksjonspunkter,

@@ -25,7 +25,6 @@ describe('<HOC: withFaktaIndex>', () => {
 
   it('skal godkjenne aksjonspunkt', () => {
     const openInfoPanels = ['fakta1', 'fakta2'];
-    const shouldOpenDefaultInfoPanels = true;
     let apParameters = {};
     const resolveAp = (params, bId) => () => {
       apParameters = { params, bId };
@@ -33,7 +32,7 @@ describe('<HOC: withFaktaIndex>', () => {
     };
     const resolveOverrideAp = sinon.spy();
     const faktaIndexProps = new FaktaIndexProps(
-      behandlingIdentifier, 1, openInfoPanels, shouldOpenDefaultInfoPanels, sinon.spy(), resolveAp, resolveOverrideAp,
+      behandlingIdentifier, 1, openInfoPanels, sinon.spy(), resolveAp, resolveOverrideAp,
     );
 
     const wrapper = shallow(
@@ -76,7 +75,6 @@ describe('<HOC: withFaktaIndex>', () => {
 
   it('skal godkjenne overstyringsaksjonspunkt', () => {
     const openInfoPanels = ['fakta1', 'fakta2'];
-    const shouldOpenDefaultInfoPanels = true;
     const resolveAp = sinon.spy();
     let apParameters = {};
     const resolveOverrideAp = (params, bId) => () => {
@@ -84,7 +82,7 @@ describe('<HOC: withFaktaIndex>', () => {
       return Promise.resolve();
     };
     const faktaIndexProps = new FaktaIndexProps(
-      behandlingIdentifier, 1, openInfoPanels, shouldOpenDefaultInfoPanels, sinon.spy(), resolveAp, resolveOverrideAp,
+      behandlingIdentifier, 1, openInfoPanels, sinon.spy(), resolveAp, resolveOverrideAp,
     );
 
     const wrapper = shallow(

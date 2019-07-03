@@ -18,7 +18,6 @@ const foreldrepengerBuilders = [
   new BehandlingspunktProperties.Builder(bpc.ANKE_MERKNADER, 'AnkeMerknader')
     .withAksjonspunktCodes(ac.MANUELL_VURDERING_AV_ANKE_MERKNADER, ac.AUTO_VENT_ANKE_MERKNADER_FRA_BRUKER)
     .withVisibilityWhen(hasNonDefaultBehandlingspunkt),
-    // .withStatus(getAnkeVedtakStatus),
 ];
 
 const createForeldrepengerAnkeBpDefinition = builderData => foreldrepengerBuilders.reduce((currentFbs, fb) => {

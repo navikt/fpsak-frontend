@@ -12,7 +12,7 @@ import { BehandlingErPaVentModal, BehandlingIdentifier } from '@fpsak-frontend/f
 import FpAnkeBehandlingInfoSetter from './FpAnkeBehandlingInfoSetter';
 import FpAnkeBehandlingResolver from './FpAnkeBehandlingResolver';
 import BehandlingsprosessAnkeIndex from './behandlingsprosess/BehandlingsprosessAnkeIndex';
-import FaktaAnkeIndex from './fakta/FaktaAnkeIndex';
+import FaktaAnkeContainer from './fakta/FaktaAnkeContainer';
 import {
   getBehandlingVersjon, getBehandlingOnHoldDate, getBehandlingVenteArsakKode, getBehandlingIsOnHold, hasBehandlingManualPaVent,
 } from './selectors/ankeBehandlingSelectors';
@@ -98,7 +98,7 @@ export class BehandlingAnkeIndex extends Component {
         <FpAnkeBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
         <BehandlingGrid
           behandlingsprosessContent={<BehandlingsprosessAnkeIndex />}
-          faktaContent={<FaktaAnkeIndex />}
+          faktaContent={<FaktaAnkeContainer />}
         />
         {!hasSubmittedPaVentForm
           && (

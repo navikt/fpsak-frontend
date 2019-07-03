@@ -19,7 +19,6 @@ import {
   getBehandlingAnkeVurderingResultat,
 } from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
 import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingAnke/src/duckAnke';
-import { getResolveFaktaAksjonspunkterSuccess } from 'behandlingAnke/src/fakta/duckFaktaAnke';
 import BehandlingspunktAnkeInfoPanel from './components/BehandlingspunktAnkeInfoPanel';
 import AnkeBehandlingModal from './components/AnkeBehandlingModal';
 import {
@@ -179,7 +178,7 @@ export class BehandlingsprosessAnkeIndex extends Component {
   render() {
     const {
       behandlingspunkter, selectedBehandlingspunkt, isSelectedBehandlingHenlagt, fagsakYtelseType, innstilling,
-      resolveProsessAksjonspunkterSuccess, resolveFaktaAksjonspunkterSuccess, behandlingStatus, behandlingsresultat,
+      resolveProsessAksjonspunkterSuccess, behandlingStatus, behandlingsresultat,
     } = this.props;
     const { showModalAnkeBehandling } = this.state;
     return (
@@ -209,7 +208,7 @@ export class BehandlingsprosessAnkeIndex extends Component {
           behandlingsresultat={behandlingsresultat}
           behandlingStatusKode={behandlingStatus.kode}
           fagsakYtelseType={fagsakYtelseType}
-          resolveFaktaAksjonspunkterSuccess={resolveFaktaAksjonspunkterSuccess}
+          resolveFaktaAksjonspunkterSuccess
           resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
         />
         <AnkeBehandlingModal showModal={showModalAnkeBehandling} closeEvent={this.goToSearchPage} />
@@ -234,7 +233,6 @@ BehandlingsprosessAnkeIndex.propTypes = {
   fagsakYtelseType: kodeverkObjektPropType.isRequired,
   behandlingStatus: kodeverkObjektPropType.isRequired,
   resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
-  resolveFaktaAksjonspunkterSuccess: PropTypes.bool.isRequired,
   behandlingsresultat: PropTypes.shape(),
   innstilling: PropTypes.shape({}),
 };
@@ -258,7 +256,6 @@ const mapStateToProps = state => ({
   resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
   behandlingStatus: getBehandlingStatus(state),
   behandlingsresultat: getBehandlingsresultat(state),
-  resolveFaktaAksjonspunkterSuccess: getResolveFaktaAksjonspunkterSuccess(state),
   innstilling: getBehandlingAnkeVurderingResultat(state),
 });
 

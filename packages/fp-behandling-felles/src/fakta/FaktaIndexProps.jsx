@@ -1,10 +1,8 @@
 class FaktaIndexProps {
-  constructor(behandlingIdentifier, behandlingVersjon, openInfoPanels, shouldOpenDefaultInfoPanels, resetFakta, resolveFaktaAksjonspunkter,
-      resolveFaktaOverstyrAksjonspunkter) {
+  constructor(behandlingIdentifier, behandlingVersjon, openInfoPanels, resetFakta, resolveFaktaAksjonspunkter, resolveFaktaOverstyrAksjonspunkter) {
     this.$$behandlingIdentifier = behandlingIdentifier;
     this.$$behandlingVersjon = behandlingVersjon;
     this.$$openInfoPanels = openInfoPanels;
-    this.$$shouldOpenDefaultInfoPanels = shouldOpenDefaultInfoPanels;
     this.$$resetFakta = resetFakta;
     this.$$resolveFaktaAksjonspunkter = resolveFaktaAksjonspunkter;
     this.$$resolveFaktaOverstyrAksjonspunkter = resolveFaktaOverstyrAksjonspunkter;
@@ -20,10 +18,6 @@ class FaktaIndexProps {
 
   get openInfoPanels() {
     return this.$$openInfoPanels;
-  }
-
-  get shouldOpenDefaultInfoPanels() {
-    return this.$$shouldOpenDefaultInfoPanels;
   }
 
   get resetFakta() {

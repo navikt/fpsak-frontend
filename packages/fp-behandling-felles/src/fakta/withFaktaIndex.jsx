@@ -109,14 +109,16 @@ const withFaktaIndex = (setOpenInfoPanels, getOpenInfoPanels) => (WrappedCompone
     openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
     location: PropTypes.shape().isRequired,
     push: PropTypes.func.isRequired,
-    resolveFaktaAksjonspunkter: PropTypes.func.isRequired,
-    resolveFaktaOverstyrAksjonspunkter: PropTypes.func.isRequired,
+    resolveFaktaAksjonspunkter: PropTypes.func,
+    resolveFaktaOverstyrAksjonspunkter: PropTypes.func,
     shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
     overstyringApCodes: PropTypes.arrayOf(PropTypes.string),
   };
 
   FaktaIndex.defaultProps = {
     overstyringApCodes: [],
+    resolveFaktaAksjonspunkter: undefined,
+    resolveFaktaOverstyrAksjonspunkter: undefined,
   };
 
   const mapStateToProps = (state, ownProps) => ({
