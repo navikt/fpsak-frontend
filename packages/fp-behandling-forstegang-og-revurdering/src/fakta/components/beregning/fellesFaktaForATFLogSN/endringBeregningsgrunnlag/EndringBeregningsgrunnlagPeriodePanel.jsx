@@ -115,7 +115,6 @@ EndringBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (periode, bgPerio
   }
   return (
     periode.endringBeregningsgrunnlagAndeler
-    .filter(({ aktivitetStatus }) => aktivitetStatus.kode !== aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE)
     .map((andel) => {
       const bgAndel = andel.lagtTilAvSaksbehandler ? undefined : finnRiktigAndel(andel, bgPeriode);
       return ({
