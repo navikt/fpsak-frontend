@@ -58,7 +58,11 @@ const PersonArbeidsforholdTable = ({
             isApLeftBorder={a.tilVurdering}
           >
             <TableColumn><Normaltekst>{decodeHtmlEntity(navn)}</Normaltekst></TableColumn>
-            <TableColumn><Normaltekst><PeriodLabel dateStringFom={a.fomDato} dateStringTom={a.tomDato} /></Normaltekst></TableColumn>
+            <TableColumn>
+              <Normaltekst>
+                <PeriodLabel dateStringFom={a.fomDato} dateStringTom={a.overstyrtTom ? a.overstyrtTom : a.tomDato} />
+              </Normaltekst>
+            </TableColumn>
             <TableColumn><Normaltekst>{a.kilde.navn}</Normaltekst></TableColumn>
             <TableColumn><Normaltekst>{stillingsprosent}</Normaltekst></TableColumn>
             <TableColumn>

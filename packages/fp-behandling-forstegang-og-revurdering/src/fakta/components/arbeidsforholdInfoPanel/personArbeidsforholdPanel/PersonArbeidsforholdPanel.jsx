@@ -143,13 +143,20 @@ const utledArbeidsforholdHandling = (arbeidsforhold) => {
   return undefined;
 };
 
+const finnOverstyrtTom = (arbeidsforhold) => {
+  if (arbeidsforhold.overstyrtTom) {
+    return arbeidsforhold.overstyrtTom;
+  }
+  return arbeidsforhold.brukMedJustertPeriode ? arbeidsforhold.tomDato : undefined;
+};
+
 const leggTilValuesForRendering = arbeidsforholdList => arbeidsforholdList.map((arbeidsforhold) => {
   const arbeidsforholdHandlingField = utledArbeidsforholdHandling(arbeidsforhold);
   const aktivtArbeidsforholdHandlingField = utledAktivtArbeidsforholdHandling(arbeidsforhold, arbeidsforholdHandlingField);
   return {
     ...arbeidsforhold,
     originalFomDato: arbeidsforhold.fomDato,
-    overstyrtTom: arbeidsforhold.brukMedJustertPeriode ? arbeidsforhold.tomDato : undefined,
+    overstyrtTom: finnOverstyrtTom(arbeidsforhold), // TODO : Fjern dette når back-end er på plass
     arbeidsforholdHandlingField,
     aktivtArbeidsforholdHandlingField,
   };
@@ -287,6 +294,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
       tilVurdering: true,
       vurderOmSkalErstattes: undefined,
       erEndret: undefined,
+      overstyrtTom: undefined,
       brukMedJustertPeriode: false,
       lagtTilAvSaksbehandler: true,
       inntektMedTilBeregningsgrunnlag: true,
