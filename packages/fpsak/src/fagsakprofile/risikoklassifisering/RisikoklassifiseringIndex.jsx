@@ -4,25 +4,25 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
-import { createSelector } from 'reselect';
 
 import { trackRouteParam, getRiskPanelLocationCreator } from '@fpsak-frontend/fp-felles';
 import {
- getAksjonspunkter, getBehandlingIdentifier, getBehandlingVersjon, getBehandlingAnsvarligSaksbehandler,
+ getBehandlingIdentifier, getBehandlingVersjon,
 } from 'behandling/duck';
-import { getNavAnsatt } from 'navAnsatt/duck';
+
 
 import kontrollresultatKode from '@fpsak-frontend/kodeverk/src/kontrollresultatKode';
-import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
+import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fpsakApi from '../../data/fpsakApi';
 import {
- getKontrollresultat, resolveAksjonspunkter, setRiskPanelOpen, isRiskPanelOpen,
+  hentKontrollresultat, resolveAksjonspunkter, setRiskPanelOpen, isRiskPanelOpen,
 } from './duck';
 import IngenRisikoPanel from './components/IngenRisikoPanel';
 import ManglendeKlassifiseringPanel from './components/ManglendeKlassifiseringPanel';
 import HoyRisikoTittel from './components/HoyRisikoTittel';
+import { getRisikoaksjonspunkt, getReadOnly, getKontrollresultat } from './kontrollresultatSelectors';
 
 const harResultatkode = (risikoklassifisering, resultatkode) => {
   if (!risikoklassifisering || !risikoklassifisering.kontrollresultat) {
@@ -31,11 +31,7 @@ const harResultatkode = (risikoklassifisering, resultatkode) => {
   return risikoklassifisering.kontrollresultat.kode === resultatkode;
 };
 
-const getRisikoaksjonspunkt = createSelector([getAksjonspunkter], aksjonspunkter => (aksjonspunkter
-  ? aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FARESIGNALER)
-  : undefined));
-
-/**
+  /**
  * RisikoklassifiseringIndex
  *
  * Container komponent. Har ansvar for å vise risikoklassifisering for valgt behandling
@@ -46,17 +42,43 @@ const getRisikoaksjonspunkt = createSelector([getAksjonspunkter], aksjonspunkter
 export class RisikoklassifiseringIndexImpl extends Component {
   componentDidMount = () => {
     this.finnKontrollresultat();
+    this.apnePanelVedAksjonspunkt();
+  }
+
+  componentDidUpdate = (prevProps) => {
+    this.apnePanelVedAksjonspunkt();
+    this.updateVedNyVersjon(prevProps.behandlingVersjon);
   }
 
   finnKontrollresultat = () => {
-    const { behandlingIdentifier, getKontrollresultat: hentResultat } = this.props;
+    const { behandlingIdentifier, hentKontrollresultat: hentResultat } = this.props;
 
+    if (behandlingIdentifier) {
+      const params = {
+        ...behandlingIdentifier.toJson(),
+      };
+      hentResultat(params);
+    }
+  }
+
+updateVedNyVersjon = (prevBehandlingversjon) => {
+  const { behandlingVersjon, behandlingIdentifier, hentKontrollresultat: hentResultat } = this.props;
+  if (behandlingIdentifier && behandlingVersjon !== prevBehandlingversjon) {
     const params = {
       ...behandlingIdentifier.toJson(),
     };
-
     hentResultat(params);
   }
+}
+
+  apnePanelVedAksjonspunkt = () => {
+    const { aksjonspunkt, isPanelOpen } = this.props;
+    if (aksjonspunkt && aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET) {
+      if (!isPanelOpen) {
+        this.toggleRiskPanel();
+    }
+  }
+}
 
   submitAksjonspunkter = (aksjonspunkter) => {
     const {
@@ -95,12 +117,9 @@ export class RisikoklassifiseringIndexImpl extends Component {
     aksjonspunkt,
     risikoklassifisering,
     harHentetKontrollresultat,
-    navAnsatt,
-    ansvarligSaksbehandler,
     isPanelOpen,
-  } = this.props;
-  const { brukernavn, kanSaksbehandle } = navAnsatt;
-  const readOnly = brukernavn !== ansvarligSaksbehandler || !kanSaksbehandle; // TODO Er denne passende?
+    readOnly,
+    } = this.props;
   if (!harHentetKontrollresultat) {
     return <ManglendeKlassifiseringPanel />;
   }
@@ -128,25 +147,25 @@ export class RisikoklassifiseringIndexImpl extends Component {
 }
 
 RisikoklassifiseringIndexImpl.propTypes = {
-  risikoklassifisering: PropTypes.shape(),
-  aksjonspunkt: aksjonspunktPropType,
-  getKontrollresultat: PropTypes.func.isRequired,
+  hentKontrollresultat: PropTypes.func.isRequired,
   resolveAksjonspunkter: PropTypes.func.isRequired,
   harHentetKontrollresultat: PropTypes.bool.isRequired,
-  behandlingIdentifier: PropTypes.shape().isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-  navAnsatt: navAnsattPropType.isRequired,
-  ansvarligSaksbehandler: PropTypes.string,
   push: PropTypes.func.isRequired,
   location: PropTypes.shape().isRequired,
   isPanelOpen: PropTypes.bool.isRequired,
   setRiskPanelOpen: PropTypes.func.isRequired,
+  readOnly: PropTypes.bool.isRequired,
+  behandlingIdentifier: PropTypes.shape(),
+  behandlingVersjon: PropTypes.number,
+  risikoklassifisering: PropTypes.shape(),
+  aksjonspunkt: aksjonspunktPropType,
 };
 
 RisikoklassifiseringIndexImpl.defaultProps = {
   risikoklassifisering: undefined,
   aksjonspunkt: undefined,
-  ansvarligSaksbehandler: undefined,
+  behandlingVersjon: undefined,
+  behandlingIdentifier: undefined,
 };
 
 const mapStateToProps = state => ({
@@ -155,16 +174,15 @@ const mapStateToProps = state => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: getBehandlingVersjon(state),
   aksjonspunkt: getRisikoaksjonspunkt(state),
-  risikoklassifisering: fpsakApi.KONTROLLRESULTAT.getRestApiData()(state),
-  navAnsatt: getNavAnsatt(state),
-  ansvarligSaksbehandler: getBehandlingAnsvarligSaksbehandler(state),
+  risikoklassifisering: getKontrollresultat(state),
   isPanelOpen: isRiskPanelOpen(state),
+  readOnly: getReadOnly(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
     push,
-    getKontrollresultat,
+    hentKontrollresultat,
     dispatchSubmitFailed,
     resolveAksjonspunkter,
     setRiskPanelOpen,

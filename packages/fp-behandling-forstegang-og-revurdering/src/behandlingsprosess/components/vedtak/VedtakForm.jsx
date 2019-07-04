@@ -94,6 +94,14 @@ const getPreviewAutomatiskBrevCallback = formProps => (e) => {
   e.preventDefault();
 };
 
+const faresginalerTrengerAvklaring = (aksjonspunkter) => {
+  if (!aksjonspunkter) {
+    return false;
+  }
+  const faresignalAksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FARESIGNALER);
+  return faresignalAksjonspunkt ? faresignalAksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET : false;
+};
+
 export class VedtakFormImpl extends Component {
   constructor(props) {
     super(props);
@@ -137,8 +145,6 @@ export class VedtakFormImpl extends Component {
     const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(formProps);
     const previewOverstyrtBrev = getPreviewManueltBrevCallback(formProps, finnesAllerede, true, previewManueltBrevCallback);
     const previewDefaultBrev = getPreviewManueltBrevCallback(formProps, false, false, previewManueltBrevCallback);
-    const faresignalAksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FARESIGNALER);
-    const faresignalerIkkeAvklart = faresignalAksjonspunkt ? faresignalAksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET : false;
     const skalViseLink = (behandlingsresultat.avslagsarsak === null)
       || (behandlingsresultat.avslagsarsak && behandlingsresultat.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER);
     const visOverstyringKnapp = kanOverstyre || readOnly;
@@ -204,7 +210,7 @@ export class VedtakFormImpl extends Component {
                     mini
                     className={styles.mainButton}
                     onClick={formProps.handleSubmit}
-                    disabled={behandlingPaaVent || formProps.submitting || faresignalerIkkeAvklart}
+                    disabled={behandlingPaaVent || formProps.submitting || faresginalerTrengerAvklaring(aksjonspunkter)}
                     spinner={formProps.submitting}
                   >
                     {intl.formatMessage({ id: 'VedtakForm.TilGodkjenning' })}

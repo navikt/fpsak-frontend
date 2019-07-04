@@ -37,8 +37,7 @@ const HoyRisikoPanel = ({
         submitCallback={submitCallback}
         risikoklassifisering={risikoklassifisering}
       />
-)
-    }
+  )}
   </Panel>
 );
 

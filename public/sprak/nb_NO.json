@@ -1438,6 +1438,7 @@
   "ToTrinnsForm.Uttak.Stortinget": "Søker er stortingsrepresentant/administrativt ansatt i Stortinget. Uttak er kontrollert.",
   "ToTrinnsForm.Uttak.Overstyrt": "Uttaksperioder er overstyrt.",
   "ToTrinnsForm.TilkjentYtelse.Tilbaketrekk": "Det er vurdert om det skal utføres tilbakekreving fra søker.",
+  "ToTrinnsForm.Faresignaler.Vurder": "Det er vurdert om faresignalene påvirket behandlingen",
 
   "ToTrinnsForm.Klage.OmgjortTilGunst": "Omgjort til gunst",
   "ToTrinnsForm.Klage.StadfesteYtelsesVedtak": "Stadfest ytelsesvedtak",

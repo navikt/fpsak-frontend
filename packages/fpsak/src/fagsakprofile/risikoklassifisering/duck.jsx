@@ -7,8 +7,8 @@ const reducerName = 'kontrollresultat';
 
 /* Action types */
 const actionType = name => `${reducerName}/${name}`;
-export const RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_STARTED = actionType('RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_STARTED');
-export const RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_SUCCESS = actionType('RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_SUCCESS');
+const RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_STARTED = actionType('RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_STARTED');
+const RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_SUCCESS = actionType('RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_SUCCESS');
 const SET_RISK_PANEL_OPEN = actionType('SET_RISK_PANEL_OPEN');
 
 /* Action creators */
@@ -17,13 +17,13 @@ export const setRiskPanelOpen = isOpen => ({
   data: isOpen,
 });
 
-const resolveFaktaAksjonspunkterStarted = () => ({
+const resolveAksjonspunktStarted = () => ({
   type: RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_STARTED, // Bedre navn for denne?
 });
 
-export const getKontrollresultat = params => dispatch => dispatch(fpsakApi.KONTROLLRESULTAT.makeRestApiRequest()(params));
+export const hentKontrollresultat = params => dispatch => dispatch(fpsakApi.KONTROLLRESULTAT.makeRestApiRequest()(params));
 
-const resolveFaktaAksjonspunkterSuccess = (response, behandlingIdentifier) => (dispatch) => {
+const resolveAksjonspunktSuccess = (response, behandlingIdentifier) => (dispatch) => {
   dispatch({
     type: RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_SUCCESS,
   });
@@ -32,13 +32,12 @@ const resolveFaktaAksjonspunkterSuccess = (response, behandlingIdentifier) => (d
 };
 
 export const resolveAksjonspunkter = (params, behandlingIdentifier) => (dispatch) => {
-  dispatch(resolveFaktaAksjonspunkterStarted());
+  dispatch(resolveAksjonspunktStarted());
   return dispatch(fpsakApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params))
-    .then(response => dispatch(resolveFaktaAksjonspunkterSuccess(response, behandlingIdentifier)));
+    .then(response => dispatch(resolveAksjonspunktSuccess(response, behandlingIdentifier)));
 };
 
 /* Reducer */
-// Hvor mye trengs egentlig her?
 const initialState = {
   isRiskPanelOpen: false,
   resolveKontrollresultatAksjonspunkerStarted: false,

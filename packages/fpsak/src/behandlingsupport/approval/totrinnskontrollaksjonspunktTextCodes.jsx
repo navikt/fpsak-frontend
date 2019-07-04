@@ -67,6 +67,9 @@ const totrinnskontrollaksjonspunktTextCodes = {
   [aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK]: 'ToTrinnsForm.Uttak.Overstyrt',
 
   [aksjonspunktCodes.VURDER_TILBAKETREKK]: 'ToTrinnsForm.TilkjentYtelse.Tilbaketrekk',
+
+  [aksjonspunktCodes.VURDER_FARESIGNALER]: 'ToTrinnsForm.Faresignaler.Vurder',
+
 };
 
 export default totrinnskontrollaksjonspunktTextCodes;

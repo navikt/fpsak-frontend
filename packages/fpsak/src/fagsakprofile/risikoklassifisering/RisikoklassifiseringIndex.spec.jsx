@@ -27,6 +27,11 @@ describe('<RisikoklassifiseringIndex>', () => {
       location={{}}
       isRiskPanelOpen
       setRiskPanelOpen={sinon.spy()}
+      getKontrollresultat={sinon.spy()}
+      resolveAksjonspunkter={sinon.spy()}
+      isPanelOpen={false}
+      readOnly
+      harHentetKontrollresultat
     />);
     expect(wrapper.find(ManglendeKlassifiseringPanel)).has.length(1);
     expect(wrapper.find(IngenRisikoPanel)).has.length(0);
@@ -40,6 +45,11 @@ describe('<RisikoklassifiseringIndex>', () => {
       location={{}}
       isRiskPanelOpen
       setRiskPanelOpen={sinon.spy()}
+      getKontrollresultat={sinon.spy()}
+      resolveAksjonspunkter={sinon.spy()}
+      isPanelOpen={false}
+      readOnly
+      harHentetKontrollresultat
     />);
     expect(wrapper.find(ManglendeKlassifiseringPanel)).has.length(1);
     expect(wrapper.find(IngenRisikoPanel)).has.length(0);
@@ -53,6 +63,11 @@ describe('<RisikoklassifiseringIndex>', () => {
       location={{}}
       isRiskPanelOpen
       setRiskPanelOpen={sinon.spy()}
+      getKontrollresultat={sinon.spy()}
+      resolveAksjonspunkter={sinon.spy()}
+      isPanelOpen={false}
+      readOnly
+      harHentetKontrollresultat
     />);
     expect(wrapper.find(ManglendeKlassifiseringPanel)).has.length(0);
     expect(wrapper.find(IngenRisikoPanel)).has.length(1);
@@ -66,6 +81,11 @@ describe('<RisikoklassifiseringIndex>', () => {
       location={{}}
       isRiskPanelOpen
       setRiskPanelOpen={sinon.spy()}
+      getKontrollresultat={sinon.spy()}
+      resolveAksjonspunkter={sinon.spy()}
+      isPanelOpen={false}
+      readOnly
+      harHentetKontrollresultat
     />);
     expect(wrapper.find(ManglendeKlassifiseringPanel)).has.length(0);
     expect(wrapper.find(IngenRisikoPanel)).has.length(0);

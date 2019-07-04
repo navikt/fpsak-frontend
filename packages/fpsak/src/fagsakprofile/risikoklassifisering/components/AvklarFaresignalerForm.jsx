@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 
 import { Normaltekst } from 'nav-frontend-typografi';
 import { behandlingForm } from 'behandling/behandlingForm';
@@ -18,21 +19,23 @@ import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import faresignalVurdering from '@fpsak-frontend/kodeverk/src/faresignalVurdering';
+
+import { getRisikoaksjonspunkt, getKontrollresultat } from '../kontrollresultatSelectors';
 import styles from './avklarFaresignalerForm.less';
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);
 
 const formName = 'avklarFaresignalerForm';
-const begrunnelseFieldName = 'begrunnelse';
-const radioFieldName = 'avklarFaresignalerRadio';
+export const begrunnelseFieldName = 'begrunnelse';
+export const radioFieldName = 'avklarFaresignalerRadio';
 
 /**
  * IngenRisikoPanel
  *
  * Presentasjonskomponent. Statisk visning av panel som tilsier ingen faresignaler funnet i behandlingen.
  */
-const AvklarFaresignalerForm = ({
+export const AvklarFaresignalerForm = ({
   readOnly,
   aksjonspunkt,
   ...formProps
@@ -67,11 +70,11 @@ const AvklarFaresignalerForm = ({
           >
             <RadioOption
               label={<FormattedMessage id="Risikopanel.Form.Innvirkning" />}
-              value={faresignalVurdering.INNVIRKNING}
+              value
             />
             <RadioOption
               label={<FormattedMessage id="Risikopanel.Form.IngenInnvirkning" />}
-              value={faresignalVurdering.INGEN_INNVIRKNING}
+              value={false}
             />
           </RadioGroupField>
         </FlexColumn>
@@ -93,31 +96,32 @@ const AvklarFaresignalerForm = ({
 );
 AvklarFaresignalerForm.propTypes = {
   aksjonspunkt: aksjonspunktPropType,
-  risikoklassifisering: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
-  submitCallback: PropTypes.func.isRequired,
 };
 
-const buildInitialValues = (ownProps) => {
-  const { aksjonspunkt, risikoklassifisering } = ownProps;
+export const buildInitialValues = createSelector([getKontrollresultat, getRisikoaksjonspunkt], (risikoklassifisering, aksjonspunkt) => {
   if (aksjonspunkt && aksjonspunkt.begrunnelse && risikoklassifisering && risikoklassifisering.faresignalVurdering) {
     return {
-      begrunnelse: aksjonspunkt.begrunnelse,
-      avklarFaresignalerRadio: risikoklassifisering.faresignalVurdering.kode,
+      [begrunnelseFieldName]: aksjonspunkt.begrunnelse,
+      [radioFieldName]: risikoklassifisering.faresignalVurdering.kode === faresignalVurdering.INNVIRKNING,
     };
   }
   return undefined;
-};
+});
 
 const transformValues = values => ({
   kode: aksjonspunktCodes.VURDER_FARESIGNALER,
-  harInnvirketBehandlingen: values[radioFieldName] === faresignalVurdering.INNVIRKNING,
+  harInnvirketBehandlingen: values[radioFieldName],
   begrunnelse: values[begrunnelseFieldName],
 });
 
-const mapStateToProps = (state, ownProps) => ({
-  initialValues: buildInitialValues(ownProps),
-  onSubmit: values => ownProps.submitCallback([transformValues(values)]),
-});
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
+  const initialValues = buildInitialValues(initialState);
+  return () => ({
+    initialValues,
+    onSubmit,
+  });
+};
 
-export default connect(mapStateToProps)(behandlingForm({ form: formName })(AvklarFaresignalerForm));
+export default connect(mapStateToPropsFactory)(behandlingForm({ form: formName })(AvklarFaresignalerForm));
