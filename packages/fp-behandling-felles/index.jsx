@@ -4,6 +4,8 @@ export { default as FatterVedtakStatusModal } from './src/behandlingsprosess/com
 export { default as IverksetterVedtakStatusModal } from './src/behandlingsprosess/components/vedtak/IverksetterVedtakStatusModal';
 export { default as BehandlingspunktSubmitButton } from './src/behandlingsprosess/components/BehandlingspunktSubmitButton';
 export { default as BehandlingspunktProperties } from './src/behandlingsprosess/definition/behandlingspunktBuilder';
+export { default as withBehandlingsprosessIndex } from './src/behandlingsprosess/withBehandlingsprosessIndex';
+export { default as BehandlingsprosessIndexProps } from './src/behandlingsprosess/BehandlingsprosessIndexProps';
 export { default as BehandlingInfoHolder } from './src/BehandlingInfoHolder';
 export { default as sakOperations } from './src/SakOperations';
 export { default as BehandlingGrid } from './src/components/BehandlingGrid';
@@ -14,3 +16,4 @@ export { default as FaktaGruppe } from './src/fakta/components/FaktaGruppe';
 export { default as FaktaEkspandertpanel } from './src/fakta/components/FaktaEkspandertpanel';
 export { default as withDefaultToggling } from './src/fakta/withDefaultToggling';
 export { default as getFaktaRedux } from './src/fakta/faktaCommonDuck';
+export { default as findStatusIcon } from './src/behandlingsprosess/statusIconHelper';

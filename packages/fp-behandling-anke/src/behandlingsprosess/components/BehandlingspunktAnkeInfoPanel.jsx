@@ -12,6 +12,7 @@ import {
   isSelectedBehandlingspunktReadOnly,
   getNotAcceptedByBeslutter,
 } from 'behandlingAnke/src/behandlingsprosess/BehandlingsprosessAnkeSelectors';
+import { getBehandlingAnkeVurderingResultat } from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
 import styles from './behandlingspunktAnkeInfoPanel.less';
 import BehandleAnkeForm from './ankebehandling/BehandleAnkeForm';
 import BehandleMerknaderForm from './merknader/BehandleMerknaderForm';
@@ -105,6 +106,7 @@ const mapStateToProps = state => ({
   isApSolvable: isBehandlingspunktAksjonspunkterSolvable(state),
   readOnlySubmitButton: isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
   notAcceptedByBeslutter: getNotAcceptedByBeslutter(state),
+  innstilling: getBehandlingAnkeVurderingResultat(state),
 });
 
 export default connect(mapStateToProps)(BehandlingspunktAnkeInfoPanel);
