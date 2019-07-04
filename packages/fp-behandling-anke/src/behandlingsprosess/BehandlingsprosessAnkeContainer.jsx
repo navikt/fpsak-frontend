@@ -11,10 +11,7 @@ import {
 import {
   resolveProsessAksjonspunkter, resetBehandlingspunkter, fetchPreviewAnkeBrev, getResolveProsessAksjonspunkterSuccess,
 } from './duckBpAnke';
-import {
-  getBehandlingspunkter, getSelectedBehandlingspunkt, getDefaultBehandlingspunkt, getBehandlingspunkterStatus, getBehandlingspunkterTitleCodes,
-  getAksjonspunkterOpenStatus,
-} from './BehandlingsprosessAnkeSelectors';
+import behandlingspunktAnkeSelectors from './selectors/BehandlingsprosessAnkeSelectors';
 import BehandlingsprosessAnkeIndex from './BehandlingsprosessAnkeIndex';
 
 /**
@@ -38,15 +35,15 @@ const mapStateToProps = state => ({
     getBehandlingHenlagt(state),
     getBehandlingIdentifier(state),
     getBehandlingVersjon(state),
-    getBehandlingspunkter(state),
-    getDefaultBehandlingspunkt(state),
-    getSelectedBehandlingspunkt(state),
+    behandlingspunktAnkeSelectors.getBehandlingspunkter(state),
+    behandlingspunktAnkeSelectors.getDefaultBehandlingspunkt(state),
+    behandlingspunktAnkeSelectors.getSelectedBehandlingspunkt(state),
     getResolveProsessAksjonspunkterSuccess(state),
     getBehandlingStatus(state),
     getBehandlingsresultat(state),
-    getBehandlingspunkterStatus,
-    getBehandlingspunkterTitleCodes,
-    getAksjonspunkterOpenStatus,
+    behandlingspunktAnkeSelectors.getBehandlingspunkterStatus,
+    behandlingspunktAnkeSelectors.getBehandlingspunkterTitleCodes,
+    behandlingspunktAnkeSelectors.getAksjonspunkterOpenStatus,
     fetchPreviewAnkeBrev,
     resolveProsessAksjonspunkter,
     resetBehandlingspunkter,

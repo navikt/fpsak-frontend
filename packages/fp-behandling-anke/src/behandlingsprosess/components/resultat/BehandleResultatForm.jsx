@@ -16,7 +16,7 @@ import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgj
 import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingAnke/src/behandlingForm';
-import { getSelectedBehandlingspunktAksjonspunkter } from '../../BehandlingsprosessAnkeSelectors';
+import behandlingspunktAnkeSelectors from 'behandlingAnke/src/behandlingsprosess/selectors/BehandlingsprosessAnkeSelectors';
 import { getBehandlingAnkeVurderingResultat } from '../../../selectors/ankeBehandlingSelectors';
 import PreviewAnkeLink from '../felles/PreviewAnkeLink';
 
@@ -226,7 +226,7 @@ const buildInitialValues = createSelector([getBehandlingAnkeVurderingResultat], 
 const formName = 'ankeResultatForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunktCode = getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
+  const aksjonspunktCode = behandlingspunktAnkeSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
   const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
   return state => ({
     aksjonspunktCode,

@@ -6,6 +6,7 @@ export { default as BehandlingspunktSubmitButton } from './src/behandlingsproses
 export { default as BehandlingspunktProperties } from './src/behandlingsprosess/definition/behandlingspunktBuilder';
 export { default as withBehandlingsprosessIndex } from './src/behandlingsprosess/withBehandlingsprosessIndex';
 export { default as BehandlingsprosessIndexProps } from './src/behandlingsprosess/BehandlingsprosessIndexProps';
+export { default as getBehandlingsprosessRedux } from './src/behandlingsprosess/behandlingsprosessCommonDuck';
 export { default as BehandlingInfoHolder } from './src/BehandlingInfoHolder';
 export { default as sakOperations } from './src/SakOperations';
 export { default as BehandlingGrid } from './src/components/BehandlingGrid';
@@ -17,3 +18,4 @@ export { default as FaktaEkspandertpanel } from './src/fakta/components/FaktaEks
 export { default as withDefaultToggling } from './src/fakta/withDefaultToggling';
 export { default as getFaktaRedux } from './src/fakta/faktaCommonDuck';
 export { default as findStatusIcon } from './src/behandlingsprosess/statusIconHelper';
+export { default as getCommonBehandlingsprosessSelectors } from './src/behandlingsprosess/selectors/behandlingsprosessSelectors';

@@ -14,10 +14,10 @@ import {
 import { required } from '@fpsak-frontend/utils';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 
+import behandlingspunktAnkeSelectors from 'behandlingAnke/src/behandlingsprosess/selectors/BehandlingsprosessAnkeSelectors';
 import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingAnke/src/behandlingForm';
-import { getSelectedBehandlingspunktAksjonspunkter } from '../../BehandlingsprosessAnkeSelectors';
 import PreviewAnkeLink from '../felles/PreviewAnkeLink';
 import { getBehandlingAnkeVurderingResultat } from '../../../selectors/ankeBehandlingSelectors';
 
@@ -114,7 +114,7 @@ const buildInitialValues = createSelector([getBehandlingAnkeVurderingResultat], 
 }));
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunktCode = getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
+  const aksjonspunktCode = behandlingspunktAnkeSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
   const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
   return state => ({
     aksjonspunktCode,

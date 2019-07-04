@@ -13,7 +13,8 @@ import {
   getMellomlagringSpinner,
   getOpenAksjonspunkter,
 } from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
-import { getSelectedBehandlingspunktAksjonspunkter } from '../../BehandlingsprosessAnkeSelectors';
+import behandlingspunktAnkeSelectors from '../../selectors/BehandlingsprosessAnkeSelectors';
+
 
 const isEqual = (lastSavedVersionValues, formValues) => {
   const formvaluesBegrunnelse = formValues.begrunnelse === '' ? null : formValues.begrunnelse;
@@ -82,7 +83,7 @@ const getForeslaVedtakAp = createSelector([getOpenAksjonspunkter], openAksjonspu
 
 const mapStateToProps = state => ({
   lastSavedVersionValues: getMellomLagringFormData(state),
-  aksjonspunktCode: getSelectedBehandlingspunktAksjonspunkter(state)[0].definisjon.kode,
+  aksjonspunktCode: behandlingspunktAnkeSelectors.getSelectedBehandlingspunktAksjonspunkter(state)[0].definisjon.kode,
   spinner: getMellomlagringSpinner(state),
   hasForeslaVedtakAp: getForeslaVedtakAp(state),
 });

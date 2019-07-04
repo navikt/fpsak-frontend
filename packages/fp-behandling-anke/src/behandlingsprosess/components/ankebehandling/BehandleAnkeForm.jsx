@@ -32,7 +32,7 @@ import {
 import { getBehandlinger } from 'behandling/selectors/behandlingerSelectors';
 import PreviewAnkeLink from '../felles/PreviewAnkeLink';
 import FritekstBrevTextField from './FritekstAnkeBrevTextField';
-import { getSelectedBehandlingspunktAksjonspunkter } from '../../BehandlingsprosessAnkeSelectors';
+import behandlingspunktAnkeSelectors from '../../selectors/BehandlingsprosessAnkeSelectors';
 import TempsaveAnkeButton from './TempsaveAnkeButton';
 
 import styles from './behandleAnkeForm.less';
@@ -353,7 +353,7 @@ export const transformValues = (values, aksjonspunktCode) => ({
 const formName = 'BehandleAnkeForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunktCode = getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
+  const aksjonspunktCode = behandlingspunktAnkeSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
   const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
   return state => ({
     aksjonspunktCode,
