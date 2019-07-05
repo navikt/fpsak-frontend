@@ -21,6 +21,7 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { getFeatureToggles } from 'app/duck';
 import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm';
 import NyoppstartetFLForm from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import {
@@ -41,7 +42,6 @@ import VurderEtterlonnSluttpakkeForm from './etterlønnSluttpakke/VurderEtterlon
 import FastsettEtterlonnSluttpakkeForm from './etterlønnSluttpakke/FastsettEtterlonnSluttpakkeForm';
 import VurderMottarYtelseForm from './vurderOgFastsettATFL/forms/VurderMottarYtelseForm';
 import VurderBesteberegningForm from './besteberegningFodendeKvinne/VurderBesteberegningForm';
-
 
 const {
   VURDER_FAKTA_FOR_ATFL_SN,
@@ -261,7 +261,7 @@ const buildInitialValuesForTilfeller = props => ({
   ...TidsbegrensetArbeidsforholdForm.buildInitialValues(props.kortvarigeArbeidsforhold),
   ...NyIArbeidslivetSNForm.buildInitialValues(props.beregningsgrunnlag),
   ...FastsettEndretBeregningsgrunnlag.buildInitialValues(props.endringBGPerioder, props.tilfeller,
-     props.beregningsgrunnlag, getKodeverknavnFn(props.alleKodeverk, kodeverkTyper)),
+     props.beregningsgrunnlag, getKodeverknavnFn(props.alleKodeverk, kodeverkTyper), props.featureToggles),
   ...LonnsendringForm.buildInitialValues(props.beregningsgrunnlag),
   ...NyoppstartetFLForm.buildInitialValues(props.beregningsgrunnlag),
   ...buildInitialValuesKunYtelse(props.kunYtelse, props.endringBGPerioder, props.isRevurdering, props.tilfeller,
@@ -287,6 +287,7 @@ const mapStateToBuildInitialValuesProps = createStructuredSelector({
   alleKodeverk: getAlleKodeverk,
   aksjonspunkter: getAksjonspunkter,
   faktaOmBeregning: getFaktaOmBeregning,
+  featureToggles: getFeatureToggles,
 });
 
 export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(

@@ -9,8 +9,8 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import featureToggle from '@fpsak-frontend/fp-felles/src/featureToggle';
 import RenderEndringBGFieldArray from './RenderEndringBGFieldArray';
 import { createEndringHeadingForDate, renderDateHeading } from './EndretBeregningsgrunnlagUtils';
 import {
@@ -109,34 +109,36 @@ const finnRegister = (andel, bgAndel, skjaeringstidspunktBeregning, faktaOmBereg
 };
 
 EndringBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (periode, bgPeriode, skjaeringstidspunktBeregning,
-  faktaOmBeregning, getKodeverknavn) => {
+  faktaOmBeregning, getKodeverknavn, featureToggles) => {
   if (!periode || !periode.endringBeregningsgrunnlagAndeler) {
     return {};
   }
+  let andeler = periode.endringBeregningsgrunnlagAndeler;
+  if (!featureToggles[featureToggle.GRADERING_SNFL]) {
+    andeler = andeler.filter(({ aktivitetStatus }) => aktivitetStatus.kode !== aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE);
+  }
   return (
-    periode.endringBeregningsgrunnlagAndeler
-    .filter(({ aktivitetStatus }) => aktivitetStatus.kode !== aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE)
-    .map((andel) => {
+    andeler.map((andel) => {
       const bgAndel = andel.lagtTilAvSaksbehandler ? undefined : finnRiktigAndel(andel, bgPeriode);
       return ({
-      ...setGenerellAndelsinfo(andel, getKodeverknavn),
-      ...setArbeidsforholdInitialValues(andel),
-      andelIArbeid: settAndelIArbeid(andel.andelIArbeid),
-      fordelingForrigeBehandling: andel.fordelingForrigeBehandling || andel.fordelingForrigeBehandling === 0
-        ? formatCurrencyNoKr(andel.fordelingForrigeBehandling) : '',
-      fastsattBelop: settFastsattBelop(andel.beregnetPrMnd, andel.fastsattForrige, andel.fastsattAvSaksbehandler),
-      readOnlyBelop: settReadOnlyBelop(finnRegister(andel, bgAndel, skjaeringstidspunktBeregning, faktaOmBeregning), andel.belopFraInntektsmelding),
-      skalRedigereInntekt: periode.harPeriodeAarsakGraderingEllerRefusjon,
-      refusjonskrav: andel.refusjonskrav !== null && andel.refusjonskrav !== undefined ? formatCurrencyNoKr(andel.refusjonskrav) : '',
-      skalKunneEndreRefusjon: periode.skalKunneEndreRefusjon && !andel.lagtTilAvSaksbehandler
-      && andel.refusjonskravFraInntektsmelding ? periode.skalKunneEndreRefusjon : false,
-      belopFraInntektsmelding: andel.belopFraInntektsmelding,
-      harPeriodeAarsakGraderingEllerRefusjon: periode.harPeriodeAarsakGraderingEllerRefusjon,
-      refusjonskravFraInntektsmelding: andel.refusjonskravFraInntektsmelding,
-      registerInntekt: andel.lagtTilAvSaksbehandler ? null : finnRegister(andel, bgAndel, skjaeringstidspunktBeregning, faktaOmBeregning),
-      nyttArbeidsforhold: andel.nyttArbeidsforhold || starterPaaEllerEtterStp(bgAndel, skjaeringstidspunktBeregning),
-    });
-})
+        ...setGenerellAndelsinfo(andel, getKodeverknavn),
+        ...setArbeidsforholdInitialValues(andel),
+        andelIArbeid: settAndelIArbeid(andel.andelIArbeid),
+        fordelingForrigeBehandling: andel.fordelingForrigeBehandling || andel.fordelingForrigeBehandling === 0
+          ? formatCurrencyNoKr(andel.fordelingForrigeBehandling) : '',
+        fastsattBelop: settFastsattBelop(andel.beregnetPrMnd, andel.fastsattForrige, andel.fastsattAvSaksbehandler),
+        readOnlyBelop: settReadOnlyBelop(finnRegister(andel, bgAndel, skjaeringstidspunktBeregning, faktaOmBeregning), andel.belopFraInntektsmelding),
+        skalRedigereInntekt: periode.harPeriodeAarsakGraderingEllerRefusjon,
+        refusjonskrav: andel.refusjonskrav !== null && andel.refusjonskrav !== undefined ? formatCurrencyNoKr(andel.refusjonskrav) : '',
+        skalKunneEndreRefusjon: periode.skalKunneEndreRefusjon && !andel.lagtTilAvSaksbehandler
+        && andel.refusjonskravFraInntektsmelding ? periode.skalKunneEndreRefusjon : false,
+        belopFraInntektsmelding: andel.belopFraInntektsmelding,
+        harPeriodeAarsakGraderingEllerRefusjon: periode.harPeriodeAarsakGraderingEllerRefusjon,
+        refusjonskravFraInntektsmelding: andel.refusjonskravFraInntektsmelding,
+        registerInntekt: andel.lagtTilAvSaksbehandler ? null : finnRegister(andel, bgAndel, skjaeringstidspunktBeregning, faktaOmBeregning),
+        nyttArbeidsforhold: andel.nyttArbeidsforhold || starterPaaEllerEtterStp(bgAndel, skjaeringstidspunktBeregning),
+      });
+    })
   );
 };
 
