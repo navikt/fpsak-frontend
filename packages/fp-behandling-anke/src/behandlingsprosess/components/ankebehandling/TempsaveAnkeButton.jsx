@@ -13,7 +13,7 @@ import {
   getMellomlagringSpinner,
   getOpenAksjonspunkter,
 } from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
-import behandlingspunktAnkeSelectors from '../../selectors/BehandlingsprosessAnkeSelectors';
+import behandlingspunktAnkeSelectors from '../../selectors/behandlingsprosessAnkeSelectors';
 
 
 const isEqual = (lastSavedVersionValues, formValues) => {

@@ -32,7 +32,7 @@ import {
 import { getBehandlinger } from 'behandling/selectors/behandlingerSelectors';
 import PreviewAnkeLink from '../felles/PreviewAnkeLink';
 import FritekstBrevTextField from './FritekstAnkeBrevTextField';
-import behandlingspunktAnkeSelectors from '../../selectors/BehandlingsprosessAnkeSelectors';
+import behandlingspunktAnkeSelectors from '../../selectors/behandlingsprosessAnkeSelectors';
 import TempsaveAnkeButton from './TempsaveAnkeButton';
 
 import styles from './behandleAnkeForm.less';

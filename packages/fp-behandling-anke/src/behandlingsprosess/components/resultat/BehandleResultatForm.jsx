@@ -16,7 +16,7 @@ import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgj
 import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingAnke/src/behandlingForm';
-import behandlingspunktAnkeSelectors from 'behandlingAnke/src/behandlingsprosess/selectors/BehandlingsprosessAnkeSelectors';
+import behandlingspunktAnkeSelectors from 'behandlingAnke/src/behandlingsprosess/selectors/behandlingsprosessAnkeSelectors';
 import { getBehandlingAnkeVurderingResultat } from '../../../selectors/ankeBehandlingSelectors';
 import PreviewAnkeLink from '../felles/PreviewAnkeLink';
 

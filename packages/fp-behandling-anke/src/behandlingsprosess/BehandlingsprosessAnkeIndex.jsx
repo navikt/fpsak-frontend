@@ -20,7 +20,7 @@ import BehandlingspunktAnkeInfoPanel from './components/BehandlingspunktAnkeInfo
  *
  * Har ansvar for faktadelen av hovedvinduet når behandlingstypen er Anke.
  */
-class BehandlingsprosessAnkeIndex extends Component {
+export class BehandlingsprosessAnkeIndex extends Component {
   constructor(props) {
     super(props);
     this.state = {

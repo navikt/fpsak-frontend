@@ -5,7 +5,7 @@ import classnames from 'classnames/bind';
 
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 
-import behandlingspunktAnkeSelectors from 'behandlingAnke/src/behandlingsprosess/selectors/BehandlingsprosessAnkeSelectors';
+import behandlingspunktAnkeSelectors from 'behandlingAnke/src/behandlingsprosess/selectors/behandlingsprosessAnkeSelectors';
 import { getBehandlingAnkeVurderingResultat } from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
 import styles from './behandlingspunktAnkeInfoPanel.less';
 import BehandleAnkeForm from './ankebehandling/BehandleAnkeForm';

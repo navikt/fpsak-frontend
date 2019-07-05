@@ -11,7 +11,8 @@ import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from '
 import { getFagsakYtelseType } from '../../duckAnke';
 import createForeldrepengerAnkeBpDefinition from '../definition/createForeldrepengerAnkeBpDefinition';
 
-const getBehandlingspunkterProps = createSelector(
+// Kun eksport for test. Ikke bruk direkte!!
+export const getBehandlingspunkterProps = createSelector(
   [getFagsakYtelseType, getBehandlingType, getAksjonspunkter, getBehandlingsresultat, getBehandlingVilkar],
   (fagsakYtelseType, behandlingType, aksjonspunkter, behandlingsresultat, vilkar = []) => {
     if (!behandlingType) {

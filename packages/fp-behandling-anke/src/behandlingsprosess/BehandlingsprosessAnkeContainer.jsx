@@ -12,7 +12,7 @@ import {
 import {
   resolveProsessAksjonspunkter, resetBehandlingspunkter, fetchPreviewAnkeBrev, getResolveProsessAksjonspunkterSuccess,
 } from './duckBpAnke';
-import behandlingspunktAnkeSelectors from './selectors/BehandlingsprosessAnkeSelectors';
+import behandlingspunktAnkeSelectors from './selectors/behandlingsprosessAnkeSelectors';
 import BehandlingsprosessAnkeIndex from './BehandlingsprosessAnkeIndex';
 
 /**
