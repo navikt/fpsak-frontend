@@ -230,6 +230,7 @@ export class BehandlingMenu extends Component {
               <CreateNewBehandlingMenuItem
                 toggleBehandlingsmeny={this.toggleBehandlingMenu}
                 saksnummer={saksnummer}
+                behandlingIdentifier={behandlingIdentifier}
                 push={push}
                 submitNyForstegangsBehandling={createNewForstegangsbehandling}
                 opprettNyForstegangsBehandlingEnabled={this.hasEnabledNewBehandling()}

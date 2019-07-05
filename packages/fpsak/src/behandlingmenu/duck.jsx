@@ -32,7 +32,10 @@ export const resetBehandlingMenuData = () => ({
 
 export const shelveBehandling = params => dispatch => dispatch(fpsakApi.HENLEGG_BEHANDLING.makeRestApiRequest()(params));
 
-export const createNewForstegangsbehandling = (push, saksnummer, params) => dispatch => behandlingUpdater.resetBehandling(dispatch)
+// TODO (TOR) Refaktorer denne! Og burde heller kalla dispatch(resetBehandlingContext()) enn behandlingUpdater.resetBehandling(dispatch) (ta vekk if/else)
+export const createNewForstegangsbehandling = (push, saksnummer, erBehandlingValgt, params) => (dispatch) => {
+  const resetOrNothing = erBehandlingValgt ? behandlingUpdater.resetBehandling(dispatch) : Promise.resolve();
+  return resetOrNothing
   .then(() => dispatch(fpsakApi.NEW_BEHANDLING.makeRestApiRequest()(params)))
   .then((response) => {
     if (response.payload.saksnummer) { // NEW_BEHANDLING har returnert fagsak
@@ -47,13 +50,12 @@ export const createNewForstegangsbehandling = (push, saksnummer, params) => disp
     }
     // NEW_BEHANDLING har returnert behandling
     return dispatch(updateFagsakInfo(saksnummer))
-      .then(() => behandlingUpdater.setBehandlingResult(dispatch, response.payload,
-        { behandlingId: response.payload.id, saksnummer }, { keepData: true }))
       .then(() => {
         push(getLocationWithDefaultBehandlingspunktAndFakta({ pathname: pathToBehandling(saksnummer, response.payload.id) }));
         return Promise.resolve(response.payload);
       });
   });
+};
 
 const updateFagsakAndBehandlingInfo = behandlingIdentifier => dispatch => dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer))
   .then(() => behandlingUpdater.updateBehandling(dispatch, behandlingIdentifier));
