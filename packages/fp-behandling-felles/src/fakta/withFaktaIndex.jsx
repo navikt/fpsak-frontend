@@ -122,27 +122,16 @@ const withFaktaIndex = (setOpenInfoPanels, getOpenInfoPanels) => (WrappedCompone
   };
 
   const mapStateToProps = (state, ownProps) => ({
-    location: state.router.location,
-    behandlingIdentifier: ownProps.faktaIndexProps.behandlingIdentifier,
-    behandlingVersjon: ownProps.faktaIndexProps.behandlingVersjon,
-    openInfoPanels: ownProps.faktaIndexProps.openInfoPanels,
-    shouldOpenDefaultInfoPanels: ownProps.faktaIndexProps.shouldOpenDefaultInfoPanels,
+    shouldOpenDefaultInfoPanels: ownProps.openInfoPanels.length === 1 && ownProps.openInfoPanels.includes(DEFAULT_FAKTA),
   });
 
   const mapDispatchToProps = (dispatch, ownProps) => ({
     ...bindActionCreators({
       push,
-      resetFakta: ownProps.faktaIndexProps.resetFakta,
-      resolveFaktaAksjonspunkter: ownProps.faktaIndexProps.resolveFaktaAksjonspunkter,
-      resolveFaktaOverstyrAksjonspunkter: ownProps.faktaIndexProps.resolveFaktaOverstyrAksjonspunkter,
+      resetFakta: ownProps.resetFakta,
+      resolveFaktaAksjonspunkter: ownProps.resolveFaktaAksjonspunkter,
+      resolveFaktaOverstyrAksjonspunkter: ownProps.resolveFaktaOverstyrAksjonspunkter,
     }, dispatch),
-  });
-
-  const mergeProps = (stateProps, dispatchProps, ownProps) => ({
-    ...ownProps,
-    ...stateProps,
-    ...dispatchProps,
-    shouldOpenDefaultInfoPanels: stateProps.openInfoPanels.length === 1 && stateProps.openInfoPanels.includes(DEFAULT_FAKTA),
   });
 
   const TrackRouteParamFaktaIndex = trackRouteParam({
@@ -153,7 +142,7 @@ const withFaktaIndex = (setOpenInfoPanels, getOpenInfoPanels) => (WrappedCompone
     getParamFromStore: getOpenInfoPanels,
     isQueryParam: true,
     paramsAreEqual,
-  })(connect(mapStateToProps, mapDispatchToProps, mergeProps)(requireProps(['behandlingIdentifier'])(FaktaIndex)));
+  })(connect(mapStateToProps, mapDispatchToProps)(requireProps(['behandlingIdentifier'])(FaktaIndex)));
 
   return TrackRouteParamFaktaIndex;
 };

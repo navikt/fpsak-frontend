@@ -8,7 +8,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
-import FaktaIndexProps from './FaktaIndexProps';
 import withFaktaIndex from './withFaktaIndex';
 
 const middlewares = [thunk];
@@ -30,16 +29,17 @@ describe('<HOC: withFaktaIndex>', () => {
       apParameters = { params, bId };
       return Promise.resolve();
     };
-    const resolveOverrideAp = sinon.spy();
-    const faktaIndexProps = new FaktaIndexProps(
-      behandlingIdentifier, 1, openInfoPanels, sinon.spy(), resolveAp, resolveOverrideAp,
-    );
 
     const wrapper = shallow(
       <Router>
         <FaktaComp
           store={mockStore({ router: { location: { path: 'test' } } })}
-          faktaIndexProps={faktaIndexProps}
+          behandlingIdentifier={behandlingIdentifier}
+          behandlingVersjon={1}
+          openInfoPanels={openInfoPanels}
+          resolveFaktaAksjonspunkter={resolveAp}
+          resolveFaktaOverstyrAksjonspunkter={sinon.spy()}
+          resetFakta={sinon.spy()}
           push={sinon.spy()}
         />
       </Router>,
@@ -69,27 +69,26 @@ describe('<HOC: withFaktaIndex>', () => {
       }],
       saksnummer: '1',
     });
-
-    expect(resolveOverrideAp.called).is.false;
   });
 
   it('skal godkjenne overstyringsaksjonspunkt', () => {
     const openInfoPanels = ['fakta1', 'fakta2'];
-    const resolveAp = sinon.spy();
     let apParameters = {};
     const resolveOverrideAp = (params, bId) => () => {
       apParameters = { params, bId };
       return Promise.resolve();
     };
-    const faktaIndexProps = new FaktaIndexProps(
-      behandlingIdentifier, 1, openInfoPanels, sinon.spy(), resolveAp, resolveOverrideAp,
-    );
 
     const wrapper = shallow(
       <Router>
         <FaktaComp
           store={mockStore({ router: { location: { path: 'test' } } })}
-          faktaIndexProps={faktaIndexProps}
+          behandlingIdentifier={behandlingIdentifier}
+          behandlingVersjon={1}
+          openInfoPanels={openInfoPanels}
+          resolveFaktaAksjonspunkter={sinon.spy()}
+          resolveFaktaOverstyrAksjonspunkter={resolveOverrideAp}
+          resetFakta={sinon.spy()}
           push={sinon.spy()}
           overstyringApCodes={['1234']}
         />
@@ -120,7 +119,5 @@ describe('<HOC: withFaktaIndex>', () => {
       }],
       saksnummer: '1',
     });
-
-    expect(resolveAp.called).is.false;
   });
 });

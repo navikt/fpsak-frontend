@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { FaktaIndexProps } from '@fpsak-frontend/fp-behandling-felles';
 
 import { getBehandlingVersjon } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { getBehandlingIdentifier } from 'behandlingForstegangOgRevurdering/src/duck';
@@ -20,25 +20,28 @@ const overstyringApCodes = [ac.OVERSTYR_AVKLAR_FAKTA_UTTAK, ac.OVERSTYR_AVKLAR_S
  *
  * Har ansvar for faktadelen av hovedvinduet.
  */
-export const FaktaContainer = ({
-  faktaIndexProps,
-}) => (
-  <FaktaPanel faktaIndexProps={faktaIndexProps} overstyringApCodes={overstyringApCodes} />
+export const FaktaContainer = props => (
+  <FaktaPanel {...props} overstyringApCodes={overstyringApCodes} />
 );
 
 FaktaContainer.propTypes = {
-  faktaIndexProps: PropTypes.instanceOf(FaktaIndexProps).isRequired,
+  location: PropTypes.shape().isRequired,
+  behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
+  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  resetFakta: PropTypes.func.isRequired,
+  resolveFaktaAksjonspunkter: PropTypes.func.isRequired,
+  resolveFaktaOverstyrAksjonspunkter: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  faktaIndexProps: new FaktaIndexProps(
-    getBehandlingIdentifier(state),
-    getBehandlingVersjon(state),
-    getOpenInfoPanels(state),
-    resetFakta,
-    resolveFaktaAksjonspunkter,
-    resolveFaktaOverstyrAksjonspunkter,
-  ),
+  location: state.router.location,
+  behandlingIdentifier: getBehandlingIdentifier(state),
+  behandlingVersjon: getBehandlingVersjon(state),
+  openInfoPanels: getOpenInfoPanels(state),
+  resetFakta,
+  resolveFaktaAksjonspunkter,
+  resolveFaktaOverstyrAksjonspunkter,
 });
 
 export default connect(mapStateToProps)(FaktaContainer);
