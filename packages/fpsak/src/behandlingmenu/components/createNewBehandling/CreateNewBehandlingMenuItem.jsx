@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
+import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+
 import CreateNewBehandlingModal from './CreateNewBehandlingModal';
 import MenuButton from '../MenuButton';
 
@@ -25,12 +27,14 @@ class CreateNewBehandlingMenuItem extends Component {
   }
 
   submit(formValues) {
-    const { saksnummer, submitNyForstegangsBehandling, push } = this.props;
+    const {
+      saksnummer, behandlingIdentifier, submitNyForstegangsBehandling, push,
+    } = this.props;
     const data = {
       saksnummer: saksnummer.toString(),
       ...formValues,
     };
-    submitNyForstegangsBehandling(push, saksnummer, data);
+    submitNyForstegangsBehandling(push, saksnummer, behandlingIdentifier !== undefined, data);
     this.hideModal();
   }
 
@@ -70,6 +74,7 @@ class CreateNewBehandlingMenuItem extends Component {
 
 CreateNewBehandlingMenuItem.propTypes = {
   saksnummer: PropTypes.number.isRequired,
+  behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
   push: PropTypes.func.isRequired,
   submitNyForstegangsBehandling: PropTypes.func.isRequired,
   opprettNyForstegangsBehandlingEnabled: PropTypes.bool,

@@ -377,7 +377,7 @@ TilbakekrevingPeriodeForm.buildInitialValues = (periode, foreldelsePerioder) => 
     ? AktsomhetFormPanel.buildInitalValues(vilkarResultatInfo) : {};
   return {
     ...initialValues,
-    vurderingBegrunnelse: vilkarResultatInfo.begrunnelse,
+    vurderingBegrunnelse: vilkarResultatInfo ? vilkarResultatInfo.begrunnelse : undefined,
     [initialValues.valgtVilkarResultatType]: {
       ...godTroData,
       ...annetData,

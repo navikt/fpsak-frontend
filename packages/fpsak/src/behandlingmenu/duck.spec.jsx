@@ -114,7 +114,7 @@ describe('BehandlingMenu-reducer', () => {
     const push = sinon.spy();
     const params = { behandlingType: 'revurdering' };
 
-    return store.dispatch(createNewForstegangsbehandling(push, fagsak.saksnummer, params))
+    return store.dispatch(createNewForstegangsbehandling(push, fagsak.saksnummer, true, params))
       .then(() => {
         expect(store.getActions()).to.have.length(13);
         const [requestStartedAction, requestStatusStartedAction, requestStatusFinishedAction, requestFinishedAction] = store.getActions();
@@ -185,7 +185,7 @@ describe('BehandlingMenu-reducer', () => {
     const push = sinon.spy();
     const params = { behandlingType: 'revurdering' };
 
-    return store.dispatch(createNewForstegangsbehandling(push, 1, params))
+    return store.dispatch(createNewForstegangsbehandling(push, 1, true, params))
       .then(() => {
         expect(store.getActions()).to.have.length(15);
         const [requestStartedAction, requestFinishedAction] = store.getActions();
