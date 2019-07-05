@@ -5,7 +5,6 @@ export { default as IverksetterVedtakStatusModal } from './src/behandlingsproses
 export { default as BehandlingspunktSubmitButton } from './src/behandlingsprosess/components/BehandlingspunktSubmitButton';
 export { default as BehandlingspunktProperties } from './src/behandlingsprosess/definition/behandlingspunktBuilder';
 export { default as withBehandlingsprosessIndex } from './src/behandlingsprosess/withBehandlingsprosessIndex';
-export { default as BehandlingsprosessIndexProps } from './src/behandlingsprosess/BehandlingsprosessIndexProps';
 export { default as getBehandlingsprosessRedux } from './src/behandlingsprosess/behandlingsprosessCommonDuck';
 export { default as BehandlingInfoHolder } from './src/BehandlingInfoHolder';
 export { default as sakOperations } from './src/SakOperations';

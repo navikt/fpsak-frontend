@@ -162,29 +162,12 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
     behandlingsresultat: undefined,
   };
 
-  const mapStateToProps = (state, ownProps) => ({
-    location: state.router.location,
-    fagsakYtelseType: ownProps.behandlingsprosessIndexProps.fagsakYtelseType,
-    isSelectedBehandlingHenlagt: ownProps.behandlingsprosessIndexProps.isSelectedBehandlingHenlagt,
-    behandlingIdentifier: ownProps.behandlingsprosessIndexProps.behandlingIdentifier,
-    behandlingVersjon: ownProps.behandlingsprosessIndexProps.behandlingVersjon,
-    behandlingspunkter: ownProps.behandlingsprosessIndexProps.behandlingspunkter,
-    defaultBehandlingspunkt: ownProps.behandlingsprosessIndexProps.defaultBehandlingspunkt,
-    selectedBehandlingspunkt: ownProps.behandlingsprosessIndexProps.selectedBehandlingspunkt,
-    resolveProsessAksjonspunkterSuccess: ownProps.behandlingsprosessIndexProps.resolveProsessAksjonspunkterSuccess,
-    behandlingStatus: ownProps.behandlingsprosessIndexProps.behandlingStatus,
-    behandlingsresultat: ownProps.behandlingsprosessIndexProps.behandlingsresultat,
-    getBehandlingspunkterStatus: ownProps.behandlingsprosessIndexProps.getBehandlingspunkterStatus,
-    getBehandlingspunkterTitleCodes: ownProps.behandlingsprosessIndexProps.getBehandlingspunkterTitleCodes,
-    getAksjonspunkterOpenStatus: ownProps.behandlingsprosessIndexProps.getAksjonspunkterOpenStatus,
-  });
-
   const mapDispatchToProps = (dispatch, ownProps) => ({
     ...bindActionCreators({
       push,
-      fetchPreview: ownProps.behandlingsprosessIndexProps.fetchPreviewBrev,
-      resolveProsessAksjonspunkter: ownProps.behandlingsprosessIndexProps.resolveProsessAksjonspunkter,
-      resetBehandlingspunkter: ownProps.behandlingsprosessIndexProps.resetBehandlingspunkter,
+      fetchPreview: ownProps.fetchPreviewBrev,
+      resolveProsessAksjonspunkter: ownProps.resolveProsessAksjonspunkter,
+      resetBehandlingspunkter: ownProps.resetBehandlingspunkter,
     }, dispatch),
   });
 
@@ -195,7 +178,7 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
     storeParam: setSelectedBehandlingspunktNavn,
     getParamFromStore: getSelectedBehandlingspunktNavn,
     isQueryParam: true,
-  })(connect(mapStateToProps, mapDispatchToProps)(withPropsCheck));
+  })(connect(() => ({}), mapDispatchToProps)(withPropsCheck));
 
   return TrackRouteParamBehandlingsprosessIndex;
 };
