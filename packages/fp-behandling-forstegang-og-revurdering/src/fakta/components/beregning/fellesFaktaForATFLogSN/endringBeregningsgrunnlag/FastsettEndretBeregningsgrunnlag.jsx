@@ -31,9 +31,8 @@ export const buildValues = (tilfeller, build) => {
 };
 
 
-FastsettEndretBeregningsgrunnlagImpl.buildInitialValues = (endringBGPerioder, tilfeller, bg, getKodeverknavn) => {
-  const build = () => EndringBeregningsgrunnlagForm
-    .buildInitialValues(endringBGPerioder, bg, getKodeverknavn);
+FastsettEndretBeregningsgrunnlagImpl.buildInitialValues = (endringBGPerioder, tilfeller, bg, getKodeverknavn, featureToggles) => {
+  const build = () => EndringBeregningsgrunnlagForm.buildInitialValues(endringBGPerioder, bg, getKodeverknavn, featureToggles);
   return buildValues(tilfeller, build);
 };
 

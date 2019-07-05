@@ -157,7 +157,7 @@ export const buildInitialValuesVurderFaktaBeregning = createSelector(
   (aksjonspunkter, buildInitialValuesTilfeller) => ({
     aksjonspunkter,
       ...FaktaBegrunnelseTextField.buildInitialValues(findAksjonspunktMedBegrunnelse(aksjonspunkter), BEGRUNNELSE_FAKTA_TILFELLER_NAME),
-      ...buildInitialValuesTilfeller(),
+    ...buildInitialValuesTilfeller(),
     }),
 );
 

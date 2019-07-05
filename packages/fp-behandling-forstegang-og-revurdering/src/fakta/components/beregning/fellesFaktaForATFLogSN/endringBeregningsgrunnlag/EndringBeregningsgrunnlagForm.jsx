@@ -117,7 +117,7 @@ EndringBeregningsgrunnlagForm.validate = (values, endringBGPerioder, faktaOmBere
 
 const finnRiktigBgPeriode = (periode, bgPerioder) => bgPerioder.find(p => p.beregningsgrunnlagPeriodeFom === periode.fom);
 
-EndringBeregningsgrunnlagForm.buildInitialValues = (endringBGPerioder, bg, getKodeverknavn) => {
+EndringBeregningsgrunnlagForm.buildInitialValues = (endringBGPerioder, bg, getKodeverknavn, featureToggles) => {
   const initialValues = {};
   if (!endringBGPerioder) {
     return initialValues;
@@ -125,8 +125,8 @@ EndringBeregningsgrunnlagForm.buildInitialValues = (endringBGPerioder, bg, getKo
   const bgPerioder = bg.beregningsgrunnlagPeriode;
   endringBGPerioder.forEach((periode, index) => {
     const bgPeriode = finnRiktigBgPeriode(periode, bgPerioder);
-    initialValues[getFieldNameKey(index)] = EndringBeregningsgrunnlagPeriodePanel
-    .buildInitialValues(periode, bgPeriode, bg.skjaeringstidspunktBeregning, bg.faktaOmBeregning, getKodeverknavn);
+    initialValues[getFieldNameKey(index)] = EndringBeregningsgrunnlagPeriodePanel.buildInitialValues(periode, bgPeriode,
+      bg.skjaeringstidspunktBeregning, bg.faktaOmBeregning, getKodeverknavn, featureToggles);
   });
   return initialValues;
 };
