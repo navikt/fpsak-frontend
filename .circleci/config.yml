@@ -1,0 +1,171 @@
+version: 2.1
+
+executors:
+  docker-publisher:
+    docker:
+      - image: circleci/buildpack-deps:stretch
+  nais-deployer:
+    docker:
+      - image: navikt/deployment-cli:latest
+
+jobs:
+  verify:
+    executor: docker-publisher
+    working_directory: ~/repo
+    steps:
+      - run:
+          name: Creating Github Apps Installation Token
+          command: |
+            git clone https://github.com/navikt/github-apps-support.git
+            export PATH=`pwd`/github-apps-support/bin:$PATH
+            echo $GITHUB_PRIVATE_KEY | base64 --decode > ./github.key.pem
+            GITHUB_TOKEN=$(generate-installation-token.sh `generate-jwt.sh ./github.key.pem $GITHUB_APP_ID`)
+            echo "export GITHUB_TOKEN=$GITHUB_TOKEN" >> $BASH_ENV
+            source $BASH_ENV
+            echo -e "machine api.github.com login x-access-token password $GITHUB_TOKEN" >> .netrc
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./.netrc
+            - ./github.key.pem
+
+  build:
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Unpack variables
+          command: cp /tmp/workspace/.netrc ~/.netrc
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Run yarn install
+          command: yarn install --ignore-scripts --no-progress --frozen-lockfile
+      - run:
+          name: Run linting and tests
+          command: yarn less:lint && yarn test
+      - run:
+          name: Build
+          command: yarn build
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: Determin release version
+          command: |
+            export GIT_COMMIT_HASH=$(git log -n 1 --pretty=format:'%h')
+            export GIT_COMMIT_DATE=$(git log -1 --pretty='%ad' --date=format:'%Y%m%d%H%M%S')
+            export VERSION=1.0_${GIT_COMMIT_DATE}_${GIT_COMMIT_HASH}
+            echo $VERSION > ./VERSION.txt
+            echo "export VERSION=$VERSION" >> $BASH_ENV
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./VERSION.txt
+            - ./Dockerfile
+            - ./dist
+            - ./k8s
+
+  build-docker:
+    executor: docker-publisher
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Unpack workspace
+          command: |
+            cp /tmp/workspace/Dockerfile ./Dockerfile
+            cp -r /tmp/workspace/dist ./dist
+            cp -r /tmp/workspace/k8s ./k8s
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Build Docker image
+          command: |
+            export VERSION=$(cat /tmp/workspace/VERSION.txt)
+            docker build -t $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$VERSION .
+      - run:
+          name: Archive Docker image
+          command: |
+            export VERSION=$(cat /tmp/workspace/VERSION.txt)
+            docker save -o image.tar $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$VERSION
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./image.tar
+
+  publish-docker:
+    executor: docker-publisher
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Load archived Docker image
+          command: docker load -i /tmp/workspace/image.tar
+      - run:
+          name: Publish Docker Image to Github Package registry
+          command: |
+            export VERSION=$(cat /tmp/workspace/VERSION.txt)
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_LOGIN" --password-stdin
+            docker tag $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$VERSION $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:latest
+            docker push $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+
+  deploy:
+    executor: nais-deployer
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Create NAIS Github deployment to T4
+          command: |
+            export VERSION=$(cat /tmp/workspace/VERSION.txt)
+            deployment-cli deploy create \
+            --cluster=dev-fss \
+            --repository=$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME \
+            --appid=${GITHUB_APP_ID} \
+            --team=teamforeldrepenger \
+            --version=${VERSION} \
+            --key=/tmp/workspace/github.key.pem \
+            --vars=/tmp/workspace/k8s/application.t4.variabler.json \
+            --resource=/tmp/workspace/k8s/app.yaml
+
+workflows:
+  version: 2
+  test-and-deploy-pipeline:
+    jobs:
+      - verify:
+          context: familie-ci
+      - build:
+          context: familie-ci
+          requires:
+            - verify
+      - build-docker:
+          context: familie-ci
+          requires:
+            - build
+      - publish-docker:
+          context: NAIS deployment
+          requires:
+            - build-docker
+          filters:
+            branches:
+              only: master
+      - deploy:
+          context: familie-ci
+          requires:
+            - publish-docker
+          filters:
+            branches:
+              only: master

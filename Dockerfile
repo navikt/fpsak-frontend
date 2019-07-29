@@ -9,8 +9,6 @@ ENV APP_DIR="/app" \
 
 #FPSAK spesifkk
 COPY dist /app/fpsak/
-
-#FPSAK spesifkk
 COPY k8s/proxy.nginx      /nginx/proxy.nginx
 
 EXPOSE 9000 443

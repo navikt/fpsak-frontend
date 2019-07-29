@@ -4,9 +4,9 @@ metadata:
   labels:
     team: teamforeldrepenger
   name: fpsak-frontend
-  namespace: NAMESPACE_VAL
+  namespace: {{namespace}}
 spec:
-  image: repo.adeo.no:5443/fpsak-frontend:RELEASE_VERSION # Required. Docker image.
+  image: navikt/fpsak-frontend:{{version}} # Required. Docker image.
   port: 443 # Required. The port number which is exposed by the container and should receive HTTP traffic.
   sessionAffinity: ClientIP # Sticky Session for ingress contloller to prevent 404 on rollout
   team: teamforeldrepenger # Required. Set to the team that owns this application.
@@ -43,26 +43,20 @@ spec:
       cpu: 200m
       memory: 32Mi
   ingresses: # Optional. List of ingress URLs that will route HTTP traffic to the application.
-  - "INGRESS_URL"
+    - "{{ingress_url}}"
   logformat: accesslog # Optional. The format of the logs from the container if the logs should be handled differently than plain text or json
   logtransform: dns_loglevel # Optional. The transformation of the logs, if they should be handled differently than plain text or json
   webproxy: false # Optional. Expose web proxy configuration to the application using the HTTP_PROXY, HTTPS_PROXY and NO_PROXY environment variables.
   vault:
     enabled: true # Optional. If set to true fetch secrets from Secret Service and inject into the pods. todo link to doc.
   env:
-  - name: APP_VERSION
-    value: RELEASE_VERSION
-  - name: APP_NAME
-    value: fpsak-frontend
-  - name: APP_ENVIRONMENT
-    value: MILJO_VAL
-  - name: OIDC_HOST_URL
-    value: OIDC_HOST_URL_VAL # see value from properties file
-  - name: OIDC_AGENTNAME
-    value: OIDC_AGENTNAME_VAL
-  - name: REDIS_HOST
-    value: REDIS_HOST_VAL
-  - name: REDIS_PORT
-    value: "REDIS_PORT_VAL"
-  - name: APP_URL_FPSAK
-    value: APP_URL_FPSAK_VAL
+    - name: APP_VERSION
+      value: {{version}}
+    - name: APP_NAME
+      value: fpsak-frontend
+    - name: REDIS_HOST
+      value: "fpsak-redis.default.svc.nais.local"
+    - name: REDIS_PORT
+      value: "80"
+    - name: APP_URL_FPSAK
+      value: "http://fpsak"
