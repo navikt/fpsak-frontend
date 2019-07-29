@@ -114,12 +114,30 @@ jobs:
           name: Load archived Docker image
           command: docker load -i /tmp/workspace/image.tar
       - run:
-          name: Publish Docker Image to Github Package registry
+          name: Publish Docker Image to Dockerhub
           command: |
             export VERSION=$(cat /tmp/workspace/VERSION.txt)
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_LOGIN" --password-stdin
             docker tag $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$VERSION $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:latest
             docker push $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+
+  publish-github:
+    executor: docker-publisher
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Load archived Docker image
+          command: docker load -i /tmp/workspace/image.tar
+      - run:
+          name: Publish Docker Image to Github Package registry
+          command: |
+            export VERSION=$(cat /tmp/workspace/VERSION.txt)
+            echo "$GITHUB_PASSWORD" | docker login docker.pkg.github.com -u "$GITHUB_USERNAME" --password-stdin
+            docker tag $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$VERSION docker.pkg.github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME:$VERSION
+            docker push docker.pkg.github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME:$VERSION
 
   deploy:
     executor: nais-deployer
@@ -162,10 +180,18 @@ workflows:
           filters:
             branches:
               only: master
+      - publish-github:
+          context: familie-ci
+          requires:
+            - build-docker
+          filters:
+            branches:
+              only: master
       - deploy:
           context: familie-ci
           requires:
             - publish-docker
+            - publish-github
           filters:
             branches:
               only: master
