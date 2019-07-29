@@ -124,7 +124,7 @@ export const tomErrorMessage = () => (
 
 export const likFordeling = (
   value, fordeling,
-) => ((value !== fordeling) ? skalVereLikFordelingMessage(formatCurrencyNoKr(fordeling)) : null);
+) => ((value !== Math.round(fordeling)) ? skalVereLikFordelingMessage(formatCurrencyNoKr(Math.round(fordeling))) : null);
 
 export const validateRefusjonsbelop = (refusjonskrav, skalKunneEndreRefusjon) => {
   let refusjonskravError;
