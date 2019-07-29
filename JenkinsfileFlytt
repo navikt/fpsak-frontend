@@ -28,7 +28,7 @@ pipeline {
                         String msgColor = "#077040"
                         sh "k config use-context ${naisContext}"
                         version = sh(
-                            script: "k get pods -n${naisNamespace} -l app=fpsak-frontend -o jsonpath='{.items[*].spec.containers[*].image}' | awk '{print $1;}' | rev | cut -d: -f1 | rev",
+                            script: "k get pods -n\${naisNamespace} -l app=fpsak-frontend -o jsonpath='{.items[*].spec.containers[*].image}' | awk '{print \$1;}' | rev | cut -d: -f1 | rev",
                             returnStdout: true
                         )
 
