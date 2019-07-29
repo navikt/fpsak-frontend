@@ -15,24 +15,31 @@ pipeline {
             steps {
                 script {
                     dir ('k8s') {
-
+                        def naisNamespace
+                        def naisContext
+                        def version
+                        if (miljø == "p") {
+                            naisNamespace = "default"
+                            naisContext = "prod-fss"
+                        } else {
+                            naisNamespace = miljø
+                            naisContext = "preprod-fss"
+                        }
                         String msgColor = "#077040"
-                        def version = getDeployetVersion("fpsak-frontend", fra)
+                        sh "k config use-context ${naisContext}"
+                        version = sh(
+                            script: "k get pods -n${naisNamespace} -l app=fpsak-frontend -o jsonpath='{.items[*].spec.containers[*].image}' | awk '{print $1;}' | rev | cut -d: -f1 | rev",
+                            returnStdout: true
+                        )
 
                         def props = readProperties  interpolate: true, file: "application.${til}.variabler.properties"
-                        def value = "s/RELEASE_VERSION/${version}/g"
-                        props.each{ k,v -> value=value+";s%$k%$v%g" }
-                        sh "k config use-context $props.CONTEXT_NAME"
-                        sh "sed \'$value\' app.yaml | k apply -f -"
+                        def value = "s/{{version}}/${version}/g"
+                        props.each{ k,v -> value=value+";s%{{$k}}%$v%g" }
 
-                        def naisNamespace = til
-                        if (til == "p") {
-                            naisNamespace = "default"
-                        }
+                        sh "sed \'$value\' app.yaml | k apply -f -"
                         slackInfo("Deploy av *fpsak-frontend*:" + version + " til *" + til + '*')
                         def exitCode=sh returnStatus: true, script: "k rollout status -n${naisNamespace} deployment/fpsak-frontend"
                         echo "exit code is $exitCode"
-
 
                         if(exitCode == 0) {
                             def veraPayload = "{\"environment\": \"${til}\",\"application\": \"fpsak-frontend\",\"version\": \"${version}\",\"deployedBy\": \"Jenkins\"}"
@@ -46,7 +53,7 @@ pipeline {
                             ])
                             slackInfo(msgColor, "_Deploy av fpsak-frontend:$version til $til var suksessfult._")
                         } else {
-                           
+
                             slackError("Dette gjelder ${artifactId} til: ${miljo}")
                             throw error
                         }
