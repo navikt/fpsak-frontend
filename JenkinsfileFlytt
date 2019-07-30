@@ -33,8 +33,8 @@ pipeline {
                         )
 
                         def props = readProperties  interpolate: true, file: "application.${til}.variabler.properties"
-                        def value = "s/version/${version}/g"
-                        //def value = "s/{{version}}/${version}/g"
+                        
+                        def value = "s/{{version}}/${version}/g"
                         props.each{ k,v -> value=value+";s%{{$k}}%$v%g" }
 
                         sh "sed \'$value\' app.yaml | k apply -f -"
