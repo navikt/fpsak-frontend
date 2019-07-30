@@ -16,8 +16,15 @@ pipeline {
                 script {
                     dir ('k8s') {
                         def naisNamespace
-                        def naisContext
                         def version
+                        
+                        def naisContext = (fra == "p") ? 'prod-fss' : 'preprod-fss'
+                        sh "k config use-context ${naisContext}"
+                        version = sh(
+                           script: "k get pods -n\${fra} -l app=fpsak-frontend -o jsonpath='{.items[*].spec.containers[*].image}' | awk '{print \$1;}' | rev | cut -d: -f1 | rev",
+                           returnStdout: true
+                        ).trim()
+                        
                         if (til == "p") {
                             naisNamespace = "default"
                             naisContext = "prod-fss"
@@ -27,10 +34,7 @@ pipeline {
                         }
                         String msgColor = "#077040"
                         sh "k config use-context ${naisContext}"
-                        version = sh(
-                            script: "k get pods -n\${fra} -l app=fpsak-frontend -o jsonpath='{.items[*].spec.containers[*].image}' | awk '{print \$1;}' | rev | cut -d: -f1 | rev",
-                            returnStdout: true
-                        ).trim()
+
 
                         def props = readProperties  interpolate: true, file: "application.${til}.variabler.properties"
                         
