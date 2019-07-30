@@ -30,7 +30,7 @@ pipeline {
                         version = sh(
                             script: "k get pods -n\${fra} -l app=fpsak-frontend -o jsonpath='{.items[*].spec.containers[*].image}' | awk '{print \$1;}' | rev | cut -d: -f1 | rev",
                             returnStdout: true
-                        )
+                        ).trim()
 
                         def props = readProperties  interpolate: true, file: "application.${til}.variabler.properties"
                         
