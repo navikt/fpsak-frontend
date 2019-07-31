@@ -44,7 +44,6 @@ export const resetBehandling = dispatch => Promise.all([
 ]);
 
 export const fetchBehandling = (behandlingIdentifier, allBehandlinger) => (dispatch) => {
-  dispatch(tilbakekrevingBehandlingApi.TILBAKE_KODEVERK.makeRestApiRequest()());
   dispatch(tilbakekrevingBehandlingApi.BEHANDLING.resetRestApi()());
   dispatch(updateBehandling(behandlingIdentifier, allBehandlinger));
 };
@@ -100,13 +99,6 @@ export const tilbakekrevingBehandlingReducer = (state = initialState, action = {
 reducerRegistry.register(reducerName, tilbakekrevingBehandlingReducer);
 
 // Selectors (Kun de knyttet til reducer)
-export const getTilbakekrevingKodeverk = kodeverkType => createSelector(
-  [tilbakekrevingBehandlingApi.TILBAKE_KODEVERK.getRestApiData()], (kodeverk = {}) => kodeverk[kodeverkType],
-);
-export const getAlleTilbakekrevingKodeverk = createSelector(
-  [tilbakekrevingBehandlingApi.TILBAKE_KODEVERK.getRestApiData()], (kodeverk = {}) => kodeverk,
-);
-
 const getBehandlingContext = state => state.default[reducerName];
 export const getSelectedBehandlingId = createSelector([getBehandlingContext], behandlingContext => behandlingContext.behandlingId);
 export const getSelectedSaksnummer = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsakSaksnummer);
@@ -122,3 +114,10 @@ export const getFagsakYtelseType = createSelector([getBehandlingContext], behand
 export const isForeldrepengerFagsak = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.isForeldrepengerFagsak);
 
 export const getHasShownBehandlingPaVent = createSelector([getBehandlingContext], behandlingContext => behandlingContext.hasShownBehandlingPaVent);
+
+export const getTilbakekrevingKodeverk = kodeverkType => createSelector(
+  [tilbakekrevingBehandlingApi.TILBAKE_KODEVERK.getRestApiData()], (kodeverk = {}) => kodeverk[kodeverkType],
+);
+export const getAlleTilbakekrevingKodeverk = createSelector(
+  [tilbakekrevingBehandlingApi.TILBAKE_KODEVERK.getRestApiData()], (kodeverk = {}) => kodeverk,
+);
