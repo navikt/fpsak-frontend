@@ -42,6 +42,7 @@ import VurderEtterlonnSluttpakkeForm from './etterlønnSluttpakke/VurderEtterlon
 import FastsettEtterlonnSluttpakkeForm from './etterlønnSluttpakke/FastsettEtterlonnSluttpakkeForm';
 import VurderMottarYtelseForm from './vurderOgFastsettATFL/forms/VurderMottarYtelseForm';
 import VurderBesteberegningForm from './besteberegningFodendeKvinne/VurderBesteberegningForm';
+import { getFormValuesForBeregning } from '../BeregningFormUtils';
 
 const {
   VURDER_FAKTA_FOR_ATFL_SN,
@@ -257,7 +258,7 @@ export const transformValuesFaktaForATFLOgSN = (values, erOverstyrt) => {
 const getVurderFaktaAksjonspunkt = createSelector([getAksjonspunkter], aksjonspunkter => (aksjonspunkter
   ? aksjonspunkter.find(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN) : undefined));
 
-const buildInitialValuesForTilfeller = props => ({
+const buildInitialValuesForTilfeller = (props, values) => ({
   ...TidsbegrensetArbeidsforholdForm.buildInitialValues(props.kortvarigeArbeidsforhold),
   ...NyIArbeidslivetSNForm.buildInitialValues(props.beregningsgrunnlag),
   ...FastsettEndretBeregningsgrunnlag.buildInitialValues(props.endringBGPerioder, props.tilfeller,
@@ -271,7 +272,7 @@ const buildInitialValuesForTilfeller = props => ({
   ...VurderMottarYtelseForm.buildInitialValues(props.vurderMottarYtelse),
   ...VurderBesteberegningForm.buildInitialValues(props.vurderBesteberegning, props.tilfeller),
   ...VurderOgFastsettATFL.buildInitialValues(props.beregningsgrunnlag, getKodeverknavnFn(props.alleKodeverk, kodeverkTyper),
-    props.aksjonspunkter, props.faktaOmBeregning),
+    props.aksjonspunkter, props.faktaOmBeregning, values),
 });
 
 const mapStateToBuildInitialValuesProps = createStructuredSelector({
@@ -291,7 +292,7 @@ const mapStateToBuildInitialValuesProps = createStructuredSelector({
 });
 
 export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
-  [mapStateToBuildInitialValuesProps], props => () => ({
+  [mapStateToBuildInitialValuesProps, getFormValuesForBeregning], (props, values) => () => ({
       tilfeller: props.tilfeller,
       endringBGPerioder: props.endringBGPerioder,
       kortvarigeArbeidsforhold: props.kortvarigeArbeidsforhold,
@@ -299,7 +300,7 @@ export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
       beregningsgrunnlag: props.beregningsgrunnlag,
       vurderMottarYtelse: props.vurderMottarYtelse,
       kunYtelse: props.kunYtelse,
-    ...buildInitialValuesForTilfeller(props),
+    ...buildInitialValuesForTilfeller(props, values),
   }),
 );
 

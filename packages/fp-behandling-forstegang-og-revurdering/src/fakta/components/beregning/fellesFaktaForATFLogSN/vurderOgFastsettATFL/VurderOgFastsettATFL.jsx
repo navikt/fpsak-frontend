@@ -177,12 +177,13 @@ const VurderOgFastsettATFL = ({
   </div>
 );
 
-VurderOgFastsettATFL.buildInitialValues = (beregningsgrunnlag, getKodeverknavn, aksjonspunkter, faktaOmBeregning) => {
+VurderOgFastsettATFL.buildInitialValues = (beregningsgrunnlag, getKodeverknavn, aksjonspunkter, faktaOmBeregning, values) => {
   if (!beregningsgrunnlag) {
     return {};
   }
   const andeler = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
-  .filter(andel => andel.aktivitetStatus.kode !== aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+  .filter(a => a.aktivitetStatus.kode !== aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE
+    || skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag));
   if (andeler.length === 0) {
     return {};
   }
@@ -311,6 +312,18 @@ export const skalFastsettInntektForFrilans = createSelector([
   return fields.filter(field => field.aktivitetStatus === aktivitetStatus.FRILANSER).map(skalFastsette).includes(true);
 });
 
+export const skalFastsetteInntektForSN = createSelector([
+  getFormValuesForBeregning,
+  getSkalRedigereInntekt],
+(values, skalFastsette) => {
+  const fields = values[INNTEKT_FIELD_ARRAY_NAME];
+  if (!fields) {
+    return false;
+  }
+  return fields.filter(field => field.aktivitetStatus === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE).map(skalFastsette).includes(true);
+});
+
+
 const getManglerInntektsmelding = createSelector([getFaktaOmBeregning],
   (faktaOmBeregning) => {
   if (faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe && faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.length > 0) {
@@ -319,10 +332,14 @@ const getManglerInntektsmelding = createSelector([getFaktaOmBeregning],
   return false;
 });
 
-const getSkalViseTabell = createSelector([getFaktaOmBeregningTilfellerKoder, getBeregningsgrunnlag],
-  (tilfeller, beregningsgrunnlag) => beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
-    .some(andel => andel.aktivitetStatus.kode !== aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE)
-    && !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE));
+const getSkalViseTabell = createSelector([getFaktaOmBeregningTilfellerKoder, getBeregningsgrunnlag, skalFastsetteInntektForSN],
+  (tilfeller, beregningsgrunnlag, skalFastsetteSN) => {
+    if (beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
+      .some(andel => andel.aktivitetStatus.kode !== aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE)) {
+          return !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE);
+      }
+        return skalFastsetteSN;
+  });
 
 const mapStateToProps = (state, ownProps) => ({
     skalFastsetteAT: skalFastsettInntektForArbeidstaker(state),
