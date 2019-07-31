@@ -25,7 +25,8 @@ const harPeriodeSomKanKombineresMedForrige = (periode, bgPerioder, endretPeriode
   }
   if (periode.periodeAarsaker.map(({ kode }) => kode).includes(periodeAarsak.ENDRING_I_REFUSJONSKRAV)
   || periode.periodeAarsaker.map(({ kode }) => kode).includes(periodeAarsak.REFUSJON_OPPHOERER)
-  || periode.periodeAarsaker.map(({ kode }) => kode).includes(periodeAarsak.GRADERING)) {
+  || periode.periodeAarsaker.map(({ kode }) => kode).includes(periodeAarsak.GRADERING)
+  || periode.periodeAarsaker.map(({ kode }) => kode).includes(periodeAarsak.GRADERING_OPPHOERER)) {
     return false;
   }
   if (periode.periodeAarsaker.includes(periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET)) {

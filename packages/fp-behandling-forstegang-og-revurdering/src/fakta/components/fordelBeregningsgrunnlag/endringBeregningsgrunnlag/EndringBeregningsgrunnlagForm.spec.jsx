@@ -150,6 +150,33 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     expect(nyePerioder[1].tom).to.equal(null);
   });
 
+  it('skal returnere liste med to perioder om andre periode har opphør av gradering', () => {
+    const perioder = [{
+      fom: '01-01-2019', tom: '01-02-2019', endringBeregningsgrunnlagAndeler: [{ andelsnr: 1 }], harPeriodeAarsakGraderingEllerRefusjon: true,
+    },
+    {
+      fom: '02-02-2019', tom: null, endringBeregningsgrunnlagAndeler: [{ andelsnr: 1 }], harPeriodeAarsakGraderingEllerRefusjon: false,
+    }];
+    const bgPerioder = [{
+      beregningsgrunnlagPeriodeFom: '01-01-2019',
+      beregningsgrunnlagPeriodeTom: '01-02-2019',
+      bruttoPrAar: 120000,
+      periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
+    },
+    {
+      beregningsgrunnlagPeriodeFom: '02-02-2019',
+      beregningsgrunnlagPeriodeTom: null,
+      bruttoPrAar: 120000,
+      periodeAarsaker: [periodeAarsak.GRADERING_OPPHOERER],
+    }];
+    const nyePerioder = slaaSammenPerioder(perioder, bgPerioder);
+    expect(nyePerioder.length).to.equal(2);
+    expect(nyePerioder[0].fom).to.equal('01-01-2019');
+    expect(nyePerioder[0].tom).to.equal('01-02-2019');
+    expect(nyePerioder[1].fom).to.equal('02-02-2019');
+    expect(nyePerioder[1].tom).to.equal(null);
+  });
+
   it('skal returnere liste med to perioder om andre periode har opphør av refusjon', () => {
     const perioder = [{
       fom: '01-01-2019', tom: '01-02-2019', endringBeregningsgrunnlagAndeler: [{ andelsnr: 1 }], harPeriodeAarsakGraderingEllerRefusjon: true,
