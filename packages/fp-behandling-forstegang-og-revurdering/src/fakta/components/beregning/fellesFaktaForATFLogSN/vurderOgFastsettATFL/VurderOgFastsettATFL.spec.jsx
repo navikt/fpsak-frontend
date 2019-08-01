@@ -7,10 +7,12 @@ import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier'
 import { getFieldNameKey } from '../endringBeregningsgrunnlag/EndringBeregningsgrunnlagForm';
 import { utledArbeidsforholdFieldName } from './forms/VurderMottarYtelseUtils';
 import VurderOgFastsettATFL, {
-  INNTEKT_FIELD_ARRAY_NAME,
   skalFastsettInntektForArbeidstaker,
   skalFastsettInntektForFrilans,
 } from './VurderOgFastsettATFL';
+import {
+  INNTEKT_FIELD_ARRAY_NAME,
+} from '../BgFordelingUtils';
 import VurderBesteberegningForm, { besteberegningField } from '../besteberegningFodendeKvinne/VurderBesteberegningForm';
 import LonnsendringForm, { lonnsendringField } from './forms/LonnsendringForm';
 import NyoppstartetFLForm, { erNyoppstartetFLField } from './forms/NyoppstartetFLForm';

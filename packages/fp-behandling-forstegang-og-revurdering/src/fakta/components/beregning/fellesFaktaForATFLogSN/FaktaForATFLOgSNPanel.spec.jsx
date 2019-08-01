@@ -18,7 +18,8 @@ import { erNyoppstartetFLField } from './vurderOgFastsettATFL/forms/Nyoppstartet
 import {
   besteberegningField,
 } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
-import VurderOgFastsettATFL, { INNTEKT_FIELD_ARRAY_NAME } from './vurderOgFastsettATFL/VurderOgFastsettATFL';
+import VurderOgFastsettATFL from './vurderOgFastsettATFL/VurderOgFastsettATFL';
+import { INNTEKT_FIELD_ARRAY_NAME } from './BgFordelingUtils';
 
 const {
   VURDER_FAKTA_FOR_ATFL_SN,

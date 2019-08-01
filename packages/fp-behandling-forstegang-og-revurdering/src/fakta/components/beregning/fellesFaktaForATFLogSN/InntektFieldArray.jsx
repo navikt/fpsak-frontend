@@ -14,13 +14,16 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-import { mapAndelToField, skalHaBesteberegningSelector } from './BgFordelingUtils';
+import {
+ mapAndelToField, skalHaBesteberegningSelector, skalFastsetteInntektForSN,
+} from './BgFordelingUtils';
 import styles from './inntektFieldArray.less';
 import { validateUlikeAndeler, validateUlikeAndelerWithGroupingFunction } from './ValidateAndelerUtils';
 import { isBeregningFormDirty as isFormDirty } from '../BeregningFormUtils';
 import { AndelRow, getHeaderTextCodes } from './InntektFieldArrayRow';
 import AddAndelButton from './AddAndelButton';
 import SummaryRow from './SummaryRow';
+
 
 const dagpenger = (aktivitetStatuser, beregnetPrAar) => ({
   andel: aktivitetStatuser.filter(({ kode }) => kode === aktivitetStatus.DAGPENGER)[0].navn,
@@ -31,7 +34,6 @@ const dagpenger = (aktivitetStatuser, beregnetPrAar) => ({
   skalKunneEndreAktivitet: false,
   lagtTilAvSaksbehandler: true,
 });
-
 
 const isDirty = (meta, isBeregningFormDirty) => (meta.dirty || isBeregningFormDirty);
 
@@ -230,11 +232,31 @@ const finnDagpengeAndelLagtTilIForrige = (bg) => {
     ? andelerLagtTil.find(andel => andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER) : undefined;
 };
 
-export const mapStateToProps = (state) => {
+const finnSNIndex = (fields) => {
+  let snIndex = -1;
+  fields.forEach((id, index) => {
+    const field = fields.get(index);
+    if (field.aktivitetStatus === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE) {
+      snIndex = index;
+    }
+  });
+  return snIndex;
+};
+
+export const mapStateToProps = (state, props) => {
   const tilfeller = getFaktaOmBeregningTilfellerKoder(state);
   const isBeregningFormDirty = isFormDirty(state);
   const aktivitetStatuser = getKodeverk(kodeverkTyper.AKTIVITET_STATUS)(state);
   const skalHaBesteberegning = skalHaBesteberegningSelector(state) === true;
+  const skalFastsetteSN = skalFastsetteInntektForSN(state);
+  const snIndex = finnSNIndex(props.fields);
+
+  if (!skalFastsetteSN) {
+    if (snIndex !== -1) {
+      props.fields.remove(snIndex);
+    }
+  }
+
   return {
     isBeregningFormDirty,
     skalHaBesteberegning,
