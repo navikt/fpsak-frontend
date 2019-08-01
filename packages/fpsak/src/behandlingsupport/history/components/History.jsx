@@ -111,7 +111,7 @@ const History = ({
       const aktorIsArbeidsgiver = item.aktoer.kode === 'ARBEIDSGIVER';
       return (
         <Snakkeboble
-          key={`${item.opprettetTidspunkt}${index}`} // eslint-disable-line react/no-array-index-key
+          key={`${item.opprettetTidspunkt}${index}` /* eslint-disable-line react/no-array-index-key */}
           historikkinnslagDeler={item.historikkinnslagDeler}
           rolle={item.aktoer.kode}
           rolleNavn={getKodeverknavn(item.aktoer)}

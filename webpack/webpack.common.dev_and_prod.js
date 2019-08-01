@@ -16,10 +16,9 @@ const PACKAGES_DIR = path.join(__dirname, '../packages');
 const LANG_DIR = path.join(__dirname, '../public/sprak/');
 const CSS_DIR = path.join(PACKAGES_DIR, 'assets/styles');
 const IMAGE_DIR = path.join(PACKAGES_DIR, 'assets/images');
-const APP_DIR = path.join(PACKAGES_DIR, 'fpsak/src');
 
 const isDevelopment = JSON.stringify(process.env.NODE_ENV) === '"development"';
-
+const babelConfig = require('../babel.config')();
 const PUBLIC_PATH = isDevelopment ? 'fpsak/public/' : '';
 
 const config = {
@@ -39,10 +38,23 @@ const config = {
         include: [PACKAGES_DIR],
       }, {
         test: /\.(jsx?|js?|tsx?|ts?)$/,
-        loader: 'babel-loader',
-        options: {
-          cacheDirectory: true,
-        },
+        use: [
+          { loader: 'cache-loader' },
+          {
+            loader: 'thread-loader',
+            options: {
+              workers: process.env.CIRCLE_NODE_TOTAL || require('os')
+                .cpus() - 1,
+              workerParallelJobs: 50,
+            },
+          },
+          {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true,
+            },
+          },
+        ],
         include: PACKAGES_DIR,
       }, {
         test: /\.(less|css)?$/,

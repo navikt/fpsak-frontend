@@ -8,23 +8,21 @@ const ESLINT_CONFIG_DIR = path.resolve(__dirname, '../eslint/eslintrc.test.watch
 const config = {
   mode: 'development',
   module: {
-    rules: [{
-  	  test: /\.(tsx?|ts?|jsx?)$/,
-  	  enforce: 'pre',
-  	  loader: 'eslint-loader',
-  	  options: {
-        failOnWarning: false,
-        failOnError: false,
-        configFile: ESLINT_CONFIG_DIR,
-        fix: true,
-        cache: true,
-  	  },
-      include: [PACKAGES_DIR],
-    }, {
-  	  test: /\.(tsx?|ts?|jsx?)$/,
-  	  use: ['happypack/loader'],
-      include: [PACKAGES_DIR],
-    }],
+    rules: [
+      {
+        test: /\.(tsx?|ts?|jsx?)$/,
+        enforce: 'pre',
+        loader: 'eslint-loader',
+        options: {
+          failOnWarning: false,
+          failOnError: false,
+          configFile: ESLINT_CONFIG_DIR,
+          fix: true,
+          cache: true,
+        },
+        include: [PACKAGES_DIR],
+      },
+    ],
   },
 };
 

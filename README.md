@@ -21,6 +21,14 @@ yarn build
 * gjøre form pakken tilgjengelig med final-form og redux-form
 * Legge inn readme for pakkene!
 
+
+## Workspaces
+* Common dev dependencies skal kun ligge på roten. ref 
+https://medium.com/@jsilvax/a-workflow-guide-for-lerna-with-yarn-workspaces-60f97481149d
+>If you have common dev dependencies, it’s better to specify them in the workspace root package.json. 
+>For instance, this can be dependencies like Jest, Husky, Storybook, Eslint, Prettier, etc.
+
+
 ### Licenses and attribution
 *For updated information, always see LICENSE first!*
 

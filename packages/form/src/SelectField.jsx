@@ -7,8 +7,9 @@ import renderNavField from './renderNavField';
 import { labelPropType } from './Label';
 import ReadOnlyField from './ReadOnlyField';
 
-// eslint-disable-next-line react/prop-types
+/* eslint-disable-next-line react/prop-types */
 const renderReadOnly = () => ({ input, selectValues, ...otherProps }) => {
+  /* eslint-disable-next-line react/prop-types */
   const option = selectValues.map(sv => sv.props).find(o => o.value === input.value);
   const value = option ? option.children : undefined;
   return <ReadOnlyField input={{ value }} {...otherProps} />;

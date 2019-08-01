@@ -1,9 +1,6 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 const merge = require('webpack-merge');
-const PACKAGE = require('./../package.json');
-const VERSION = PACKAGE.version;
 
 const commonDevAndProd = require('./webpack.common.dev_and_prod.js');
 

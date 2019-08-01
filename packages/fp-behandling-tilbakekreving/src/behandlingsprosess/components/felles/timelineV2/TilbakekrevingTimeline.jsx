@@ -27,8 +27,10 @@ const getOptions = tilbakekrevingPeriod => ({
   zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
   zoomable: true,
   moveable: true,
-  min: moment(tilbakekrevingPeriod.fom).subtract(4, 'weeks'),
-  max: moment(tilbakekrevingPeriod.fom).add(4, 'years'),
+  min: moment(tilbakekrevingPeriod.fom)
+    .subtract(4, 'weeks'),
+  max: moment(tilbakekrevingPeriod.fom)
+    .add(4, 'years'),
   margin: {
     item: 14,
   },
@@ -43,7 +45,8 @@ const getOptions = tilbakekrevingPeriod => ({
   moment,
 });
 
-const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT).toDate();
+const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT)
+  .toDate();
 
 function sortByDate(a, b) {
   if (a.fom < b.fom) {
@@ -58,7 +61,8 @@ function sortByDate(a, b) {
 const parseDates = item => ({
   ...item,
   start: parseDateString(item.fom),
-  end: parseDateString(moment(item.tom).add(1, 'days')),
+  end: parseDateString(moment(item.tom)
+    .add(1, 'days')),
 });
 
 const formatItems = (periodItems = []) => {
@@ -82,6 +86,7 @@ const formatGroups = (periodItems = []) => {
     content: '',
   }));
 };
+
 /**
  * TilbakekrevingTimeLine
  *
@@ -187,7 +192,7 @@ class TilbakekrevingTimeline extends Component {
                   items={items}
                   groups={groups}
                   selectHandler={selectPeriodCallback}
-                  ref={el => (this.timelineRef = el)} // eslint-disable-line no-return-assign
+                  ref={el => (this.timelineRef = el /* eslint no-return-assign: 2 */)}
                   selection={[selectedPeriod ? selectedPeriod.id : null]}
                 />
               </div>
@@ -222,6 +227,7 @@ TilbakekrevingTimeline.propTypes = {
   })).isRequired,
   toggleDetaljevindu: PropTypes.func.isRequired,
   selectedPeriod: PropTypes.shape({
+    id: PropTypes.string,
     fom: PropTypes.string.isRequired,
     tom: PropTypes.string.isRequired,
     isAksjonspunktOpen: PropTypes.bool.isRequired,

@@ -2,14 +2,15 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import moment from 'moment';
 
 import { BehandlingGrid } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingIdentifier, BehandlingErPaVentModal } from '@fpsak-frontend/fp-felles';
 import { BehandlingForstegangOgRevurderingIndex } from './BehandlingForstegangOgRevurderingIndex';
 
 describe('BehandlingForstegangOgRevurderingIndex', () => {
-  const timestamp = moment.now();
+  // eslint-disable-next-line no-console
+  // console.log(global.Date.now());
+  // process.exit(1);
   let sandbox;
   let clock;
 
@@ -37,7 +38,11 @@ describe('BehandlingForstegangOgRevurderingIndex', () => {
 
   before(() => {
     sandbox = sinon.createSandbox();
-    clock = sinon.useFakeTimers(timestamp);
+    clock = sandbox.useFakeTimers({
+      now: 1483228800000,
+      global,
+      toFake: ['Date', 'setTimeout'],
+    });
   });
 
   after(() => {
@@ -70,10 +75,17 @@ describe('BehandlingForstegangOgRevurderingIndex', () => {
     />);
 
     const grid = wrapper.find(BehandlingGrid);
-    expect(grid.prop('behandlingsprosessContent').type.displayName).to.contain('BehandlingsprosessIndex');
-    expect(grid.prop('faktaContent').type.displayName).to.contain('FaktaIndex');
+    expect(grid.prop('behandlingsprosessContent').type.displayName)
+      .to
+      .contain('BehandlingsprosessIndex');
+    expect(grid.prop('faktaContent').type.displayName)
+      .to
+      .contain('FaktaIndex');
 
-    expect(grid.find(BehandlingErPaVentModal)).to.have.length(0);
+    expect(grid.find(BehandlingErPaVentModal))
+      .to
+      .have
+      .length(0);
   });
 
   it('skal kunne vise modal så lenge en ikke allerede har satt på vent', () => {
@@ -102,7 +114,10 @@ describe('BehandlingForstegangOgRevurderingIndex', () => {
     />);
 
     const modal = wrapper.find(BehandlingErPaVentModal);
-    expect(modal).to.have.length(1);
+    expect(modal)
+      .to
+      .have
+      .length(1);
     expect(modal.prop('showModal')).is.true;
   });
 
@@ -138,10 +153,16 @@ describe('BehandlingForstegangOgRevurderingIndex', () => {
 
     clock.tick(1100);
 
-    expect(destroyForms.getCalls()).has.length(1);
+    expect(destroyForms.getCalls())
+      .has
+      .length(1);
     const { args } = destroyForms.getCalls()[0];
-    expect(args).has.length(1);
-    expect(args[0]).is.eql('behandling_1_v2');
+    expect(args)
+      .has
+      .length(1);
+    expect(args[0])
+      .is
+      .eql('behandling_1_v2');
   });
 
   it('skal ikke renske opp former når behandlingsversjonen ikke er endret', () => {
@@ -176,7 +197,9 @@ describe('BehandlingForstegangOgRevurderingIndex', () => {
 
     clock.tick(1100);
 
-    expect(destroyForms.getCalls()).has.length(0);
+    expect(destroyForms.getCalls())
+      .has
+      .length(0);
   });
 
   it('skal renske opp former når komponent blir unmounta', () => {
@@ -211,9 +234,15 @@ describe('BehandlingForstegangOgRevurderingIndex', () => {
 
     clock.tick(1100);
 
-    expect(destroyForms.getCalls()).has.length(1);
+    expect(destroyForms.getCalls())
+      .has
+      .length(1);
     const { args } = destroyForms.getCalls()[0];
-    expect(args).has.length(1);
-    expect(args[0]).is.eql('behandling_1_v2');
+    expect(args)
+      .has
+      .length(1);
+    expect(args[0])
+      .is
+      .eql('behandling_1_v2');
   });
 });

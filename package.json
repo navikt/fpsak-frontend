@@ -1,6 +1,5 @@
 {
   "name": "fpsak-frontend",
-  "version": "0.3.363",
   "description": "Klient for Foreldrepenger",
   "main": "./dist/index.js",
   "author": "NAV",
@@ -11,23 +10,21 @@
     "url": "git+https://github.com/navikt/fpsak-frontend.git"
   },
   "scripts": {
-    "test": "mochapack --webpack-config webpack/webpack.test.js \"packages/**/*.spec.*\"",
+    "test": "mochapack --colors --webpack-config webpack/webpack.test.js \"packages/**/*.spec.*\"",
     "test:watch": "mochapack --watch --webpack-config webpack/webpack.test.watch.js \"packages/**/*.spec.*\"",
     "test:coverage": "nyc mochapack --webpack-config webpack/webpack.test.coverage.js \"packages/**/*.spec.*\"",
     "dev": "cross-env NODE_ENV=development node webpack/webpack.dev.server.js --config webpack/webpack.dev.js",
     "build": "cross-env NODE_ENV=production webpack --no-progress --colors --config webpack/webpack.prod.js",
-    "postinstall": "yarn run build && yarn test && yarn run less:lint",
+    "postinstall": "yarn test && yarn less:lint",
     "lerna": "lerna",
     "lerna:publish": "(lerna updated && lerna publish --cd-version patch --yes -m \"publish [ci skip]\") || echo \"Ingen endringer avslutter OK\"",
     "less:lint": "stylelint \"packages/**/*.less\"",
     "ts-check": "tsc --pretty",
     "doc": "react-asciidoc-generator ./packages/ -o ../../docs/generated/react.adoc --handlebar-template src/docs/asciidoc-template.handlebars",
-    "docker:build": "docker build . -t fpfront -f ./docker/Dockerfile --build-arg HTTP_PROXY=$HTTP_PROXY --build-arg HTTPS_PROXY=$HTTP_PROXY",
-    "docker:start": "yarn docker:stop; yarn docker:build; docker run -d --env-file=./docker/.env --name fpfront -p 443:9000 fpfront",
-    "docker:stop": "docker stop fpfront; docker rm fpfront",
-    "redis:start": "docker stop redis; docker rm redis; docker run --name redis -p 6379:6379 -d redis",
     "up": "docker-compose up -d --remove-orphans --build",
-    "down": "docker-compose down"
+    "down": "docker-compose down",
+    "lint": "./node_modules/.bin/eslint packages/**/*.jsx",
+    "remove-node-modules": "find . -name \"node_modules\" -exec rm -rf '{}' +"
   },
   "workspaces": [
     "packages/*"
@@ -36,24 +33,23 @@
     "@babel/polyfill": "^7.4.4",
     "@babel/runtime": "^7.4.4",
     "axios": "^0.19.0",
-    "circular-dependency-plugin": "^5.0.2",
-    "copy-webpack-plugin": "^5.0.3",
     "core-js": "^3.1.4",
     "dotenv": "^8.0.0",
     "history": "^4.9.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "stylelint-order": "^3.0.0"
+    "react-modal": "3.9.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.5",
+    "@babel/core": "^7.5.5",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
-    "@babel/register": "^7.4.4",
+    "@babel/register": "^7.5.5",
     "@commercetools/enzyme-extensions": "^5.0.0",
+    "@istanbuljs/nyc-config-babel": "^2.1.1",
     "@types/chai": "^4.1.7",
     "@types/classnames": "^2.2.8",
     "@types/enzyme": "^3.9.3",
@@ -68,26 +64,28 @@
     "@types/react-redux": "^7.1.0",
     "@types/react-router-dom": "^4.3.4",
     "@types/sinon": "^7.0.13",
-    "@typescript-eslint/eslint-plugin": "^1.10.2",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.10.2",
     "axios-mock-adapter": "^1.16.0",
     "babel-eslint": "^10.0.2",
     "babel-loader": "^8.0.6",
+    "babel-plugin-istanbul": "^5.2.0",
+    "cache-loader": "^4.1.0",
     "chai": "^4.2.0",
+    "circular-dependency-plugin": "^5.0.2",
+    "copy-webpack-plugin": "^5.0.3",
     "cross-env": "^5.2.0",
     "css-loader": "^1.0.1",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-import": "^0.13.0",
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb": "^17.1.1",
     "eslint-import-resolver-webpack": "^0.11.1",
     "eslint-loader": "^2.1.2",
-    "eslint-plugin-import": "^2.17.2",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.13.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.2",
     "file-loader": "^4.0.0",
-    "happypack": "^5.0.1",
     "html-webpack-plugin": "^3.2.0",
     "ignore-styles": "^5.0.1",
     "istanbul-instrumenter-loader": "^3.0.1",
@@ -97,22 +95,23 @@
     "less": "^3.8.1",
     "less-loader": "^5.0.0",
     "mini-css-extract-plugin": "^0.7.0",
-    "mocha": "^6.1.4",
-    "mochapack": "^1.1.1",
+    "mocha": "^6.2.0",
+    "mochapack": "^1.1.2",
     "null-loader": "^3.0.0",
     "nyc": "^14.1.1",
-    "optimize-css-assets-webpack-plugin": "^4.0.3",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "react-test-renderer": "^16.8.6",
     "redux-mock-store": "^1.5.3",
-    "sinon": "^5.0.10",
-    "sinon-chai": "^3.2.0",
+    "sinon": "^7.3.2",
+    "sinon-chai": "^3.3.0",
     "style-loader": "^0.23.1",
     "stylelint": "^10.1.0",
+    "stylelint-order": "^3.0.0",
+    "thread-loader": "^2.1.2",
     "typescript": "^3.4.5",
     "uglifyjs-webpack-plugin": "^2.1.0",
-    "wait-on": "^3.2.0",
-    "webpack": "^4.35.0",
-    "webpack-cli": "^3.3.5",
+    "webpack": "^4.38.0",
+    "webpack-cli": "^3.3.6",
     "webpack-dev-server": "^3.3.1",
     "webpack-merge": "^4.2.1"
   },
@@ -120,6 +119,8 @@
     "react-test-renderer": "^16.8.6"
   },
   "nyc": {
+    "cache": false,
+    "check-coverage": true,
     "require": [
       "@babel/register",
       "./setup/setup.jsx"
@@ -129,7 +130,7 @@
     "reporter": [
       "text",
       "lcov",
-      "html"
+      "text-summary"
     ],
     "extension": [
       ".jsx",
@@ -138,9 +139,9 @@
       ".es6"
     ],
     "exclude": [
-      "**/*.spec.jsx",
-      "**/*.spec.tsx",
-      "**/*.spec.ts"
+      "packages/**/*.spec.jsx",
+      "packages/**/*.spec.tsx",
+      "packages/**/*.spec.ts"
     ]
   }
 }

@@ -183,7 +183,7 @@ class UttakTimeLine extends Component {
                   groups={groups}
                   customTimes={customTimes}
                   selectHandler={selectPeriodCallback}
-                  ref={el => (this.timelineRef = el)} // eslint-disable-line no-return-assign
+                  ref={el => (this.timelineRef = el /* eslint-disable-line no-return-assign */)}
                   selection={[selectedPeriod ? selectedPeriod.id : null]}
                 />
               </div>

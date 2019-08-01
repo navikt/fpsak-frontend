@@ -10,21 +10,30 @@ import styles from './opptjeningTimeLine.less';
 
 // Desse må alltid vare med for rett skala av tidslinjen då den alltid skall vare 10 månader fra skjæringstidpunkten
 const standardItems = (opptjeningFomDato, opptjeningTomDato) => {
-  const items = [{
-    id: 1000,
-    start: moment(opptjeningFomDato).subtract(1, 'months').startOf('month'),
-    end: moment(opptjeningFomDato).subtract(1, 'months').startOf('month'),
-    content: '',
-    group: 1,
-    className: styles.hiddenpast,
-  }, {
-    id: 1001,
-    start: moment(opptjeningTomDato).add(1, 'months').endOf('month'),
-    end: moment(opptjeningTomDato).add(1, 'months').endOf('month'),
-    content: '',
-    group: 1,
-    className: styles.hiddenpast,
-  },
+  const items = [
+    {
+      id: 1000,
+      start: moment(opptjeningFomDato)
+        .subtract(1, 'months')
+        .startOf('month'),
+      end: moment(opptjeningFomDato)
+        .subtract(1, 'months')
+        .startOf('month'),
+      content: '',
+      group: 1,
+      className: styles.hiddenpast,
+    }, {
+      id: 1001,
+      start: moment(opptjeningTomDato)
+        .add(1, 'months')
+        .endOf('month'),
+      end: moment(opptjeningTomDato)
+        .add(1, 'months')
+        .endOf('month'),
+      content: '',
+      group: 1,
+      className: styles.hiddenpast,
+    },
   ];
   return items;
 };
@@ -45,7 +54,7 @@ const createItems = (opptjeningPeriods, groups, opptjeningFomDato, opptjeningTom
     start: moment(ap.opptjeningFom),
     end: moment(ap.opptjeningTom),
     group: groups.find(g => g.aktivitetTypeKode === ap.aktivitetType.kode
-       && g.arbeidsforholdRef === ap.arbeidsforholdRef && g.oppdragsgiverOrg === ap.oppdragsgiverOrg).id,
+      && g.arbeidsforholdRef === ap.arbeidsforholdRef && g.oppdragsgiverOrg === ap.oppdragsgiverOrg).id,
     className: classNameGenerator(ap),
     content: '',
     data: ap,
@@ -74,8 +83,10 @@ const options = (opptjeningFomDato, opptjeningTomDato) => {
     width: '100%',
     zoomable: false,
     moveable: false,
-    min: moment(opptjeningFomDato).startOf('month'),
-    max: moment(opptjeningTomDato).endOf('month'),
+    min: moment(opptjeningFomDato)
+      .startOf('month'),
+    max: moment(opptjeningTomDato)
+      .endOf('month'),
     margin: {
       item: 10,
     },
@@ -112,7 +123,10 @@ class OpptjeningTimeLine extends Component {
     } = this.props;
     const groups = createGroups(opptjeningPeriods, opptjeningAktivitetTypes);
     const items = createItems(opptjeningPeriods, groups, opptjeningFomDato, opptjeningTomDato);
-    this.setState({ groups, items });
+    this.setState({
+      groups,
+      items,
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -120,7 +134,10 @@ class OpptjeningTimeLine extends Component {
     if (!isEqual(opptjeningPeriods, nextProps.opptjeningPeriods)) {
       const groups = createGroups(nextProps.opptjeningPeriods, nextProps.opptjeningAktivitetTypes);
       const items = createItems(nextProps.opptjeningPeriods, groups, nextProps.opptjeningFomDato, nextProps.opptjeningTomDato);
-      this.setState({ groups, items });
+      this.setState({
+        groups,
+        items,
+      });
     }
   }
 
@@ -141,8 +158,10 @@ class OpptjeningTimeLine extends Component {
         <Row>
           <Column xs="12">
             <DateContainer
-              opptjeningFomDato={moment(opptjeningFomDato).format(DDMMYYYY_DATE_FORMAT)}
-              opptjeningTomDato={moment(opptjeningTomDato).format(DDMMYYYY_DATE_FORMAT)}
+              opptjeningFomDato={moment(opptjeningFomDato)
+                .format(DDMMYYYY_DATE_FORMAT)}
+              opptjeningTomDato={moment(opptjeningTomDato)
+                .format(DDMMYYYY_DATE_FORMAT)}
             />
             <div className={styles.timelineContainer}>
               <div className={styles.timeLineWrapper}>
@@ -152,7 +171,7 @@ class OpptjeningTimeLine extends Component {
                     items={items}
                     customTimes={{ currentDate: new Date(opptjeningTomDato) }}
                     selectHandler={this.selectHandler}
-                    ref={el => (this.timelineRef = el)} // eslint-disable-line no-return-assign
+                    ref={el => (this.timelineRef = el /* eslint-disable-line no-return-assign */)}
                     groups={groups}
                     selection={[selectedPeriod ? selectedPeriod.id : undefined]}
                   />

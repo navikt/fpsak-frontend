@@ -22,26 +22,24 @@ const findPersonStatus = (personopplysning) => {
 export const getBarnFraTPS = (barneListe = []) => barneListe.filter(barn => barn.opplysningsKilde.kode === opplysningsKilde.TPS);
 
 /**
- *
  * FullPersonInfo
  *
  * Presentasjonskomponent. Tar inn et personopplysningsobjekt som brukes til å populere adressepanelet og barnepanelet med data som blir vist
  * når NAV-ansatt utvider nedtrekksfanen med personopplysninger.
- *
  */
 export const FullPersonInfoImpl = ({
-  sprakkode,
-  personopplysning,
-  ytelser,
-  relatertYtelseTypes,
-  relatertYtelseStatus,
-  utlandSakstype,
-  submitCallback,
-  isPrimaryParent,
-  personstatusTypes,
-  sivilstandTypes,
-  getKodeverknavn,
-}) => {
+                                     sprakkode,
+                                     personopplysning,
+                                     ytelser,
+                                     relatertYtelseTypes,
+                                     relatertYtelseStatus,
+                                     utlandSakstype,
+                                     submitCallback,
+                                     isPrimaryParent,
+                                     personstatusTypes,
+                                     sivilstandTypes,
+                                     getKodeverknavn,
+                                   }) => {
   if (!personopplysning) {
     return null;
   }
@@ -72,7 +70,7 @@ export const FullPersonInfoImpl = ({
           submitCallback={submitCallback}
         />
       </AdressePanel>
-      { harBarnITPSSjekk && (
+      {harBarnITPSSjekk && (
         <BarnePanel barneListe={barnFraTPS} />
       )}
       {ytelser && ytelser.length > 0 && (
@@ -90,7 +88,12 @@ export const FullPersonInfoImpl = ({
 
 FullPersonInfoImpl.propTypes = {
   sprakkode: PropTypes.shape().isRequired,
-  personopplysning: PropTypes.shape({}).isRequired,
+  personopplysning: PropTypes.shape({
+    adresser: PropTypes.arrayOf(PropTypes.shape({})),
+    barn: PropTypes.arrayOf(PropTypes.shape({})),
+    sivilstand: PropTypes.shape({}),
+    region: PropTypes.shape({}),
+  }).isRequired,
   ytelser: PropTypes.arrayOf(PropTypes.shape({})),
   relatertYtelseTypes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   relatertYtelseStatus: PropTypes.arrayOf(PropTypes.shape()).isRequired,
@@ -100,6 +103,7 @@ FullPersonInfoImpl.propTypes = {
   sivilstandTypes: kodeverkPropType.isRequired,
   personstatusTypes: kodeverkPropType.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+
 };
 
 FullPersonInfoImpl.defaultProps = {

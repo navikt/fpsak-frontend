@@ -37,9 +37,6 @@
     "react-redux": "^5.1.1"
   },
   "devDependencies": {
-    "@fpsak-frontend/utils-test": "1.0.0",
-    "chai": "^4.2.0",
-    "enzyme": "^3.10.0",
-    "sinon": "^5.0.10"
+    "@fpsak-frontend/utils-test": "1.0.0"
   }
 }
