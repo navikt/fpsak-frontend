@@ -45,6 +45,7 @@ const renderNavField = (WrappedNavFieldComponent) => {
     input: PropTypes.shape(fieldInputPropTypes).isRequired,
     meta: PropTypes.shape({
       ...fieldMetaPropTypes,
+      submitFailed: PropTypes.bool,
       error: PropTypes.any,
     }).isRequired,
     intl: intlShape.isRequired,

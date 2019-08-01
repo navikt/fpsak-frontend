@@ -13,23 +13,28 @@ import TimeLineData from './TimeLineData';
 
 // Desse må alltid vare med for rett skala av tidslinjen
 const standardItems = (opptjeningFomDate, opptjeningTomDate) => {
-  const items = [{
-    id: 1000,
-    start: moment(opptjeningFomDate).startOf('month'),
-    end: moment(opptjeningFomDate).startOf('month'),
-    content: '',
-    group: 1,
-    className: styles.hiddenpast,
+  const items = [
+    {
+      id: 1000,
+      start: moment(opptjeningFomDate)
+        .startOf('month'),
+      end: moment(opptjeningFomDate)
+        .startOf('month'),
+      content: '',
+      group: 1,
+      className: styles.hiddenpast,
 
-  }, {
-    id: 1001,
-    start: moment(opptjeningTomDate).endOf('month'),
-    end: moment(opptjeningTomDate).endOf('month'),
-    content: '',
-    group: 1,
-    className: styles.hiddenpast,
+    }, {
+      id: 1001,
+      start: moment(opptjeningTomDate)
+        .endOf('month'),
+      end: moment(opptjeningTomDate)
+        .endOf('month'),
+      content: '',
+      group: 1,
+      className: styles.hiddenpast,
 
-  },
+    },
   ];
   return items;
 };
@@ -61,8 +66,10 @@ const options = (opptjeningFomDate, opptjeningTomDate) => {
     width: '100%',
     zoomable: false,
     moveable: false,
-    min: moment(opptjeningFomDate).startOf('month'),
-    max: moment(opptjeningTomDate).endOf('month'),
+    min: moment(opptjeningFomDate)
+      .startOf('month'),
+    max: moment(opptjeningTomDate)
+      .endOf('month'),
     margin: {
       item: 10,
     },
@@ -156,8 +163,10 @@ class OpptjeningTimeLineLight extends Component {
           <Row>
             <Column xs="12">
               <DateContainer
-                opptjeningFomDate={moment(opptjeningFomDate, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT)}
-                opptjeningTomDate={moment(opptjeningTomDate, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT)}
+                opptjeningFomDate={moment(opptjeningFomDate, ISO_DATE_FORMAT)
+                  .format(DDMMYYYY_DATE_FORMAT)}
+                opptjeningTomDate={moment(opptjeningTomDate, ISO_DATE_FORMAT)
+                  .format(DDMMYYYY_DATE_FORMAT)}
               />
               <div className={styles.timelineContainer}>
                 <div className={styles.timeLineWrapper}>
@@ -167,7 +176,7 @@ class OpptjeningTimeLineLight extends Component {
                       items={items}
                       customTimes={{ currentDate: new Date(opptjeningTomDate) }}
                       selectHandler={this.selectHandler}
-                      ref={el => (this.timelineRef = el)} // eslint-disable-line no-return-assign
+                      ref={el => (this.timelineRef = el /* eslint-disable-line no-return-assign */)}
                       selection={[selectedPeriod ? selectedPeriod.id : undefined]}
                     />
                   </div>
@@ -176,11 +185,11 @@ class OpptjeningTimeLineLight extends Component {
                   />
                   {selectedPeriod
                   && (
-                  <TimeLineData
-                    selectedPeriod={selectedPeriod}
-                    selectNextPeriod={this.selectNextPeriod}
-                    selectPrevPeriod={this.selectPrevPeriod}
-                  />
+                    <TimeLineData
+                      selectedPeriod={selectedPeriod}
+                      selectNextPeriod={this.selectNextPeriod}
+                      selectPrevPeriod={this.selectPrevPeriod}
+                    />
                   )
                   }
                 </div>

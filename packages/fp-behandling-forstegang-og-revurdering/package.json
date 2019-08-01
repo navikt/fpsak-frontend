@@ -31,6 +31,7 @@
     "nav-frontend-etiketter-style": "0.3.17",
     "nav-frontend-grid": "1.0.21",
     "nav-frontend-grid-style": "0.2.18",
+    "nav-frontend-ikoner-assets": "^1.0.1",
     "nav-frontend-knapper": "1.0.30",
     "nav-frontend-knapper-style": "0.3.26",
     "nav-frontend-modal": "1.0.28",
@@ -49,19 +50,13 @@
     "react-redux": "^5.1.1",
     "react-router-dom": "^4.3.1",
     "react-visjs-timeline": "^1.5.0",
-    "redux": "^4.0.1",
+    "redux": "^4.0.4",
     "redux-form": "^7.4.2",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "vis": "^4.21.0"
   },
   "devDependencies": {
-    "@fpsak-frontend/utils-test": "1.0.0",
-    "axios-mock-adapter": "^1.16.0",
-    "chai": "^4.2.0",
-    "enzyme": "^3.10.0",
-    "redux-mock-store": "^1.5.3",
-    "sinon": "^5.0.10",
-    "sinon-chai": "^3.2.0"
+    "@fpsak-frontend/utils-test": "1.0.0"
   }
 }

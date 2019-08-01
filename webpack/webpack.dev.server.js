@@ -1,9 +1,9 @@
 'use strict';
 require('dotenv')
   .config();
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var config = require('./webpack.dev');
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
+const config = require('./webpack.dev');
 const vtpLogin = require('./login/vtp');
 
 if (process.argv.includes('--no-fix')) {
@@ -11,7 +11,7 @@ if (process.argv.includes('--no-fix')) {
   config.module.rules.find(rules => rules.loader === 'eslint-loader').options.fix = false;
 }
 
-var options = {
+const options = {
   contentBase: [
     'packages',
   ],
@@ -52,7 +52,7 @@ var options = {
   },
 };
 
-var wds = new WebpackDevServer(webpack(config), options);
+const wds = new WebpackDevServer(webpack(config), options);
 
 wds.listen(9000, 'localhost', function (err) {
   if (err) {

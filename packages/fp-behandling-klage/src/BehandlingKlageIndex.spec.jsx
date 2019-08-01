@@ -2,14 +2,12 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import moment from 'moment';
 
 import { BehandlingGrid } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingIdentifier, BehandlingErPaVentModal } from '@fpsak-frontend/fp-felles';
 import { BehandlingKlageIndex } from './BehandlingKlageIndex';
 
 describe('BehandlingKlageIndex', () => {
-  const timestamp = moment.now();
   let sandbox;
   let clock;
 
@@ -35,12 +33,16 @@ describe('BehandlingKlageIndex', () => {
     isForeldrepengerFagsak: true,
   };
 
-  before(() => {
+  beforeEach(() => {
     sandbox = sinon.createSandbox();
-    clock = sinon.useFakeTimers(timestamp);
+    clock = sandbox.useFakeTimers({
+      now: 1483228800000,
+      global,
+      toFake: ['Date', 'setTimeout'],
+    });
   });
 
-  after(() => {
+  afterEach(() => {
     sandbox.restore();
     clock.restore();
   });
@@ -71,10 +73,17 @@ describe('BehandlingKlageIndex', () => {
     />);
 
     const grid = wrapper.find(BehandlingGrid);
-    expect(grid.prop('behandlingsprosessContent').type.displayName).to.contain('BehandlingsprosessKlageIndex');
-    expect(grid.prop('faktaContent').type.displayName).to.contain('FaktaKlageIndex');
+    expect(grid.prop('behandlingsprosessContent').type.displayName)
+      .to
+      .contain('BehandlingsprosessKlageIndex');
+    expect(grid.prop('faktaContent').type.displayName)
+      .to
+      .contain('FaktaKlageIndex');
 
-    expect(grid.find(BehandlingErPaVentModal)).to.have.length(0);
+    expect(grid.find(BehandlingErPaVentModal))
+      .to
+      .have
+      .length(0);
   });
 
   it('skal kunne vise modal så lenge en ikke allerede har satt på vent', () => {
@@ -104,7 +113,10 @@ describe('BehandlingKlageIndex', () => {
     />);
 
     const modal = wrapper.find(BehandlingErPaVentModal);
-    expect(modal).to.have.length(1);
+    expect(modal)
+      .to
+      .have
+      .length(1);
     expect(modal.prop('showModal')).is.true;
   });
 
@@ -141,10 +153,16 @@ describe('BehandlingKlageIndex', () => {
 
     clock.tick(1100);
 
-    expect(destroyForms.getCalls()).has.length(1);
+    expect(destroyForms.getCalls())
+      .has
+      .length(1);
     const { args } = destroyForms.getCalls()[0];
-    expect(args).has.length(1);
-    expect(args[0]).is.eql('behandling_1_v2');
+    expect(args)
+      .has
+      .length(1);
+    expect(args[0])
+      .is
+      .eql('behandling_1_v2');
   });
 
   it('skal ikke renske opp former når behandlingsversjonen ikke er endret', () => {
@@ -180,7 +198,9 @@ describe('BehandlingKlageIndex', () => {
 
     clock.tick(1100);
 
-    expect(destroyForms.getCalls()).has.length(0);
+    expect(destroyForms.getCalls())
+      .has
+      .length(0);
   });
 
   it('skal renske opp former når komponent blir unmounta', () => {
@@ -216,9 +236,15 @@ describe('BehandlingKlageIndex', () => {
 
     clock.tick(1100);
 
-    expect(destroyForms.getCalls()).has.length(1);
+    expect(destroyForms.getCalls())
+      .has
+      .length(1);
     const { args } = destroyForms.getCalls()[0];
-    expect(args).has.length(1);
-    expect(args[0]).is.eql('behandling_1_v2');
+    expect(args)
+      .has
+      .length(1);
+    expect(args[0])
+      .is
+      .eql('behandling_1_v2');
   });
 });

@@ -14,7 +14,8 @@ import TimeLineControl from './timeline/TimeLineControl';
 
 import styles from './tilkjentYtelse.less';
 
-const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT).toDate();
+const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT)
+  .toDate();
 
 const getOptions = () => ({
   moment,
@@ -46,21 +47,23 @@ const getStatusForPeriode = (periode) => {
 
 const createTooltipContent = (periodeType, intl, item) => (`
   <p>
-    ${moment(item.fom).format(DDMMYY_DATE_FORMAT)} - ${moment(item.tom).format(DDMMYY_DATE_FORMAT)}
+    ${moment(item.fom)
+  .format(DDMMYY_DATE_FORMAT)} - ${moment(item.tom)
+  .format(DDMMYY_DATE_FORMAT)}
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
      ${intl.formatMessage({ id: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).id },
-    {
-      weeks: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).weeks,
-      days: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).days,
-    })}
+  {
+    weeks: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).weeks,
+    days: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).days,
+  })}
     </br>
     ${item.utsettelseType && item.utsettelseType.kode !== '-'
-    ? intl.formatMessage({ id: 'Timeline.tooltip.utsettelsePeriode' }) : periodeType}
+  ? intl.formatMessage({ id: 'Timeline.tooltip.utsettelsePeriode' }) : periodeType}
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     ${intl.formatMessage({ id: 'Timeline.tooltip.dagsats' },
-    {
-      dagsats: item.dagsats,
-    })}
+  {
+    dagsats: item.dagsats,
+  })}
    </p>
 `);
 
@@ -92,7 +95,8 @@ const addClassNameGroupIdToPerioder = (perioder, intl) => {
     copyOfItem.className = status;
     copyOfItem.group = 1;
     copyOfItem.start = parseDateString(item.fom);
-    copyOfItem.end = moment(item.tom).add(1, 'days');
+    copyOfItem.end = moment(item.tom)
+      .add(1, 'days');
     copyOfItem.title = createTooltipContent(findKorrektLabelForKvote(item.andeler[0].uttak.stonadskontoType), intl, item);
     perioderMedClassName.push(copyOfItem);
   });
@@ -102,7 +106,8 @@ const addClassNameGroupIdToPerioder = (perioder, intl) => {
 const getCustomTimes = (soknadDate, familiehendelseDate, lastPeriod) => ({
   soknad: parseDateString(soknadDate),
   fodsel: parseDateString(familiehendelseDate),
-  lastDateInSoknad: lastPeriod ? parseDateString(lastPeriod.tom) : parseDateString(moment().toDate()),
+  lastDateInSoknad: lastPeriod ? parseDateString(lastPeriod.tom) : parseDateString(moment()
+    .toDate()),
 });
 
 /**
@@ -263,7 +268,7 @@ export class TilkjentYtelse extends Component {
                 groups={groups}
                 customTimes={customTimes}
                 selectHandler={selectHandler}
-                ref={el => (this.timelineRef = el)} // eslint-disable-line no-return-assign
+                ref={el => (this.timelineRef = el /* eslint-disable-line no-return-assign */)}
                 selection={[selectedItem ? selectedItem.id : null]}
               />
             </div>
@@ -282,14 +287,14 @@ export class TilkjentYtelse extends Component {
         </Row>
         {selectedItem
         && (
-        <TimeLineData
-          selectedItemStartDate={selectedItem.fom.toString()}
-          selectedItemEndDate={selectedItem.tom.toString()}
-          selectedItemData={selectedItem}
-          callbackForward={nextPeriod}
-          callbackBackward={prevPeriod}
-          isSoknadSvangerskapspenger={isSoknadSvangerskapspenger}
-        />
+          <TimeLineData
+            selectedItemStartDate={selectedItem.fom.toString()}
+            selectedItemEndDate={selectedItem.tom.toString()}
+            selectedItemData={selectedItem}
+            callbackForward={nextPeriod}
+            callbackBackward={prevPeriod}
+            isSoknadSvangerskapspenger={isSoknadSvangerskapspenger}
+          />
         )
         }
       </div>

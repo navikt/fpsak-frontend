@@ -51,7 +51,6 @@ describe('<OmsorgFaktaForm>', () => {
     const formattedMessage = wrapper.find(FormattedHTMLMessage);
     expect(formattedMessage).to.have.length(1);
     expect(formattedMessage.first().prop('id')).to.eql('OmsorgFaktaForm.OppgittAleneomsorg');
-    // expect(faktagruppe.first().prop('aksjonspunktCode')).to.eql(aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG);
   });
 
   it('skal vise tekst for omsorg', () => {

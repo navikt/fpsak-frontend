@@ -82,7 +82,7 @@ class BehandlingspunktProperties {
       }
 
       // Internal use only
-      $$findStatus(bpVilkar, bpAksjonspunkter) { // eslint-disable-line class-methods-use-this
+      $$findStatus(bpVilkar, bpAksjonspunkter) { /* eslint-disable-line class-methods-use-this */
         if (bpVilkar.length > 0) {
           const vilkarStatusCodes = bpVilkar.map(v => v.vilkarStatus.kode);
           if (vilkarStatusCodes.some(vsc => vsc === vut.IKKE_VURDERT)) {

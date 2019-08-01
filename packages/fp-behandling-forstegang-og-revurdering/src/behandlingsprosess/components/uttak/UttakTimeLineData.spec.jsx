@@ -232,7 +232,6 @@ describe('<UttakTimeLineData>', () => {
     expect(uttakActivity.first().prop('selectedItemData')).to.eql(selectedItem);
     expect(uttakActivity.first().prop('readOnly')).to.eql(false);
     expect(uttakActivity.first().prop('isApOpen')).to.eql(true);
-    // expect(uttakActivity.first().prop('stonadskontoer')).to.eql({});
   });
 
   it('skal rendre uttakpanel med aksjonspunkt og korrekt tekst om man går tom för en aktivitets dager', () => {

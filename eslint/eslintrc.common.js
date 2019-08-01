@@ -2,9 +2,7 @@ const OFF = 0;
 const ON = 1;
 const ERROR = 2;
 
-
 const config = {
-
   env: {
     es6: true,
     browser: true,
@@ -12,7 +10,7 @@ const config = {
   },
 
   globals: {
-    VERSION: ON,
+    VERSION: 'off',
   },
 
   parser: '@typescript-eslint/parser',
@@ -43,7 +41,7 @@ const config = {
 
     // TODO (TOR) Ignorert inntil videre grunnet kost/nytte
     'jsx-a11y/anchor-is-valid': OFF,
-    
+
     '@typescript-eslint/no-unused-vars': ERROR,
     '@typescript-eslint/indent': OFF,
 
@@ -52,6 +50,14 @@ const config = {
     '@typescript-eslint/explicit-function-return-type': OFF,
     '@typescript-eslint/no-explicit-any': OFF,
   },
-};
 
+  overrides: [
+    {
+      files: ['*.spec.jsx'],
+      rules: {
+        'no-unused-expressions': 'off',
+      },
+    },
+  ],
+};
 module.exports = config;
