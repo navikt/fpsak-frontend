@@ -47,7 +47,7 @@ pipeline {
                         echo "exit code is $exitCode"
                         
                         if(exitCode == 0) {
-                            /*
+                            
                             def veraPayload = "{\"environment\": \"${til}\",\"application\": \"fpsak-frontend\",\"version\": \"${version}\",\"deployedBy\": \"Jenkins\"}"
                             def response = httpRequest([
                                     url                   : "https://vera.adeo.no/api/v1/deploylog",
@@ -57,7 +57,7 @@ pipeline {
                                     requestBody           : veraPayload,
                                     ignoreSslErrors       : true
                             ])
-                            */
+                            
                             slackInfo(msgColor, "_Deploy av fpsak-frontend:$version til $til var suksessfult._")
                         } else {
 
