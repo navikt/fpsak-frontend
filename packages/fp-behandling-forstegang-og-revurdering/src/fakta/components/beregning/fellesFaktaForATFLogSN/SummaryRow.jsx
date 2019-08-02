@@ -47,7 +47,7 @@ SummaryRow.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   skalVisePeriode: PropTypes.bool.isRequired,
   skalViseRefusjon: PropTypes.bool.isRequired,
-  sumFordeling: PropTypes.string.isRequired,
+  sumFordeling: PropTypes.number.isRequired,
 };
 
 export const mapStateToProps = (state, ownProps) => {
