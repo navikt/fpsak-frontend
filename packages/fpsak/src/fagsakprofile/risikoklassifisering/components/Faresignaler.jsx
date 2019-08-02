@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Element } from 'nav-frontend-typografi';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import {
   FlexContainer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
@@ -24,7 +25,9 @@ const Faresignaler = ({
                 <Element><FormattedMessage id="Risikopanel.Panel.Medlemskap" /></Element>
                 <ul>
                   {risikoklassifisering.medlFaresignaler.faresignaler.map(faresignal => (
-                    <li key={faresignal}>{faresignal}</li>
+                    <li key={faresignal}>
+                      <Normaltekst>{decodeHtmlEntity(faresignal)}</Normaltekst>
+                    </li>
                   ))}
                 </ul>
               </FlexColumn>
@@ -40,7 +43,9 @@ const Faresignaler = ({
                 <Element><FormattedMessage id="Risikopanel.Panel.ArbeidsforholdInntekt" /></Element>
                 <ul>
                   {risikoklassifisering.iayFaresignaler.faresignaler.map(faresignal => (
-                    <li key={faresignal}>{faresignal}</li>
+                    <li key={faresignal}>
+                      <Normaltekst>{decodeHtmlEntity(faresignal)}</Normaltekst>
+                    </li>
                   ))}
                 </ul>
               </FlexColumn>
