@@ -66,6 +66,7 @@ describe('<BgFordelingUtils>', () => {
     inntektskategori: { kode: 'DAGPENGER' },
     fastsattAvSaksbehandler: true,
     beregnetPrAar: 240000,
+    belopFraMeldekortPrMnd: 0,
   };
 
   const dagpengeField = mapAndelToField(dagpengerAndel, () => undefined, {});
@@ -79,7 +80,7 @@ describe('<BgFordelingUtils>', () => {
     expect(dagpengeField.skalKunneEndreAktivitet).to.equal(false);
     expect(dagpengeField.inntektskategori).to.equal('DAGPENGER');
     expect(dagpengeField.fastsattBelop).to.equal('20 000');
-    expect(dagpengeField.belopReadOnly).to.equal('');
+    expect(dagpengeField.belopReadOnly).to.equal('0');
     expect(dagpengeField.refusjonskrav).to.equal('');
   });
 

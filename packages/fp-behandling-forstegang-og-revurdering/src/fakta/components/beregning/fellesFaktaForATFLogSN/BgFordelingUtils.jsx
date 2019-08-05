@@ -306,7 +306,7 @@ const mapToReadOnlyBelop = (bgAndel, faktaOmBeregning) => {
     if (bgAndel.belopPrMndEtterAOrdningen || bgAndel.belopPrMndEtterAOrdningen === 0) {
       return formatCurrencyNoKr(bgAndel.belopPrMndEtterAOrdningen);
     }
-    return bgAndel.belopFraMeldekortPrMnd ? formatCurrencyNoKr(bgAndel.belopFraMeldekortPrMnd) : '';
+    return bgAndel.belopFraMeldekortPrMnd || bgAndel.belopFraMeldekortPrMnd === 0 ? formatCurrencyNoKr(bgAndel.belopFraMeldekortPrMnd) : '';
 };
 
 export const mapAndelToField = (andel, getKodeverknavn, faktaOmBeregning) => ({
