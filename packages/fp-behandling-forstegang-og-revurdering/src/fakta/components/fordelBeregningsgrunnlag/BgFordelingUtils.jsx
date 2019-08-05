@@ -106,8 +106,14 @@ export const erAAPEllerArbeidsgiverOgSkalFlytteMellomAAPOgArbeidsgiver = (andel,
   skalFlytteBeregningsgrunnlagFraAAP(andel, andeler) || erAAPOgSkalFlytteTilArbeidsgiverSomRefunderer(andel, andeler)
 );
 
+const erSNEllerFL = andel => andel.aktivitetStatus === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE
+|| andel.aktivitetStatus === aktivitetStatus.FRILANSER;
+
 export const skalValidereMotBeregningsgrunnlag = beregningsgrunnlag => (andel) => {
   if (harAAPOgRefusjonskravOverstigerInntektsmelding(andel, beregningsgrunnlag)) {
+    return false;
+  }
+  if (erSNEllerFL(andel)) {
     return false;
   }
   return !andel.nyttArbeidsforhold;
