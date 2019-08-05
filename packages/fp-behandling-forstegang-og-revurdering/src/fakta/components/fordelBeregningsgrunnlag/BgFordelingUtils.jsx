@@ -6,6 +6,8 @@ import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurderin
 
 const nullOrUndefined = value => value === null || value === undefined;
 
+export const GRADERING_RANGE_DENOMINATOR = ' - ';
+
 export const settAndelIArbeid = (andelerIArbeid) => {
   if (andelerIArbeid.length === 0) {
     return '';
@@ -15,7 +17,7 @@ export const settAndelIArbeid = (andelerIArbeid) => {
   }
   const minAndel = Math.min(...andelerIArbeid);
   const maxAndel = Math.max(...andelerIArbeid);
-  return `${minAndel} - ${maxAndel}`;
+  return `${minAndel}${GRADERING_RANGE_DENOMINATOR}${maxAndel}`;
 };
 
 const finnnInntektskategorikode = andel => (andel.inntektskategori

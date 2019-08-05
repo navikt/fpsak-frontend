@@ -1323,6 +1323,8 @@
   "BeregningInfoPanel.EtterlønnSluttpakke.Månedsinntekt": "Månedsinntekt",
 
   "FordelBeregningsgrunnlag.Title": "Fakta om fordeling",
+  "FordelBeregningsgrunnlag.Validation.KanIkkeHaNullIBeregningsgrunnlag": "Fastsatt beløp for gradert andel må være høyere enn 0.",
+
 
   "VilkarResultPicker.SelectArsak": "Velg årsak",
   "VilkarResultPicker.Arsak": "Angi avslagsårsak",
