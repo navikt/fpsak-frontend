@@ -5,7 +5,7 @@ import {
   required, formatCurrencyNoKr, removeSpacesFromNumber,
 } from '@fpsak-frontend/utils';
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
-import { mapToBelop, erAAPEllerArbeidsgiverOgSkalFlytteMellomAAPOgArbeidsgiver } from './BgFordelingUtils';
+import { mapToBelop, erAAPEllerArbeidsgiverOgSkalFlytteMellomAAPOgArbeidsgiver, GRADERING_RANGE_DENOMINATOR } from './BgFordelingUtils';
 import TotalbelopPrArbeidsgiverError, { lagTotalInntektArbeidsforholdList } from './TotalbelopPrArbeidsgiverError';
 
 export const compareAndeler = (andel1, andel2) => {
@@ -111,12 +111,15 @@ export const validateTotalRefusjonPrArbeidsforhold = (andelList, getKodeverknavn
 };
 
 const skalIkkjeVereHogareEnn = (
-  value, registerInntekt, errorMessage,
+    value, registerInntekt, errorMessage,
 ) => ((value > Math.round(registerInntekt)) ? errorMessage() : undefined);
 
 export const skalVereLikFordelingMessage = fordeling => (
   [{ id: 'BeregningInfoPanel.EndringBG.Validation.LikFordeling' },
     { fordeling }]);
+
+export const kanIkkjeHaNullBeregningsgrunnlagError = () => (
+  [{ id: 'FordelBeregningsgrunnlag.Validation.KanIkkeHaNullIBeregningsgrunnlag' }]);
 
 export const tomErrorMessage = () => (
   [{ id: ' ' }]);
@@ -132,6 +135,24 @@ export const validateRefusjonsbelop = (refusjonskrav, skalKunneEndreRefusjon) =>
     refusjonskravError = required(refusjonskrav);
   }
   return refusjonskravError;
+};
+
+const validateFordelingForGradertAndel = (andel) => {
+  if (!andel.andelIArbeid) {
+    return null;
+  }
+  if (!Number.isNaN(Number(andel.andelIArbeid))) {
+    const arbeidsprosent = Number(andel.andelIArbeid);
+    if (arbeidsprosent > 0 && Number(andel.fastsattBelop) === 0) {
+      return kanIkkjeHaNullBeregningsgrunnlagError();
+    }
+  }
+  const arbeidsprosenter = andel.andelIArbeid.split(GRADERING_RANGE_DENOMINATOR);
+  const arbeidsprosenterOverNull = arbeidsprosenter.filter(val => val > 0);
+  if (arbeidsprosenterOverNull.length > 0 && Number(andel.fastsattBelop) === 0) {
+    return kanIkkjeHaNullBeregningsgrunnlagError();
+  }
+  return null;
 };
 
 export const validateFastsattBelopEqualOrBelowBeregningsgrunnlagPrAar = (fastsattBelop, beregningsgrunnlagPrAar) => {
@@ -150,7 +171,7 @@ export const validateFastsattBelopEqualOrBelowRefusjon = (fastsattBelop, refusjo
   return null;
 };
 
-export const validateAgainstRegisterInntektsmeldingOrRefusjon = (andelFieldValues, totalInntektArbeidsforholdList,
+export const validateAgainstBeregningsgrunnlag = (andelFieldValues, totalInntektArbeidsforholdList,
   skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn) => {
   const arbeidsforholdBelopValues = totalInntektArbeidsforholdList
     .find(({ key }) => key === createVisningsnavnForAktivitet(andelFieldValues, getKodeverknavn));
@@ -159,21 +180,23 @@ export const validateAgainstRegisterInntektsmeldingOrRefusjon = (andelFieldValue
     if (skalValidereMotBeregningsgrunnlagPrAar(andelFieldValues)) {
         return validateFastsattBelopEqualOrBelowBeregningsgrunnlagPrAar(arbeidsforholdTotalFastsatt, arbeidsforholdBelopValues.beregningsgrunnlagPrAar);
     }
-    const skalValidereMotRefusjon = arbeidsforholdBelopValues.validerMotRefusjon;
-    if (skalValidereMotRefusjon) {
-      const arbeidsforholdRefusjon = arbeidsforholdBelopValues.refusjonskrav;
-      return validateFastsattBelopEqualOrBelowRefusjon(arbeidsforholdTotalFastsatt, arbeidsforholdRefusjon);
-    }
   }
   return null;
 };
 
 export const validateFastsattBelop = (andelFieldValues, totalInntektArbeidsforholdList, skalValidereMotBeregningsgrunnlagPrAar,
   getKodeverknavn) => {
-  const fastsattBelopError = required(andelFieldValues.fastsattBelop);
+  let fastsattBelopError = required(andelFieldValues.fastsattBelop);
   if (!fastsattBelopError) {
-    return validateAgainstRegisterInntektsmeldingOrRefusjon(andelFieldValues, totalInntektArbeidsforholdList, skalValidereMotBeregningsgrunnlagPrAar,
-      getKodeverknavn);
+    fastsattBelopError = validateAgainstBeregningsgrunnlag(
+      andelFieldValues,
+      totalInntektArbeidsforholdList,
+      skalValidereMotBeregningsgrunnlagPrAar,
+      getKodeverknavn,
+);
+  }
+  if (!fastsattBelopError) {
+    fastsattBelopError = validateFordelingForGradertAndel(andelFieldValues);
   }
   return fastsattBelopError;
 };
