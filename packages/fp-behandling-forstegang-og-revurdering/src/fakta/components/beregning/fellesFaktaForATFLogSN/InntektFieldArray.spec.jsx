@@ -126,6 +126,57 @@ describe('<InntektFieldArray>', () => {
     expect(summaryRow.length).to.eql(1);
   });
 
+  it('skal ikkje vise SN om den ikkje skal redigeres', () => {
+    const SNandel = {
+      nyAndel: false,
+      andel: 'Selvstendig næringsdrivende',
+      andelsnr: 2,
+      fastsattBelop: null,
+      lagtTilAvSaksbehandler: false,
+      aktivitetStatus: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE,
+    };
+    const newFields = new MockFieldsWithContent('fieldArrayName', [andelField, SNandel]);
+    const wrapper = shallowWithIntl(<InntektFieldArrayImpl
+      intl={intlMock}
+      fields={newFields}
+      meta={{}}
+      readOnly={false}
+      skalFastsetteSN={false}
+      {...props}
+    />);
+    const table = wrapper.find(Table);
+    expect(table.length).to.eql(1);
+    const andelRows = table.find(AndelRow);
+    expect(andelRows.length).to.eql(1);
+    const summaryRow = table.find(SummaryRow);
+    expect(summaryRow.length).to.eql(1);
+  });
+
+  it('skal vise SN om den skal redigeres', () => {
+    const SNandel = {
+      nyAndel: false,
+      andel: 'Selvstendig næringsdrivende',
+      andelsnr: 2,
+      fastsattBelop: null,
+      lagtTilAvSaksbehandler: false,
+      aktivitetStatus: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE,
+    };
+    const newFields = new MockFieldsWithContent('fieldArrayName', [andelField, SNandel]);
+    const wrapper = shallowWithIntl(<InntektFieldArrayImpl
+      intl={intlMock}
+      fields={newFields}
+      meta={{}}
+      readOnly={false}
+      {...props}
+      skalFastsetteSN
+    />);
+    const table = wrapper.find(Table);
+    expect(table.length).to.eql(1);
+    const andelRows = table.find(AndelRow);
+    expect(andelRows.length).to.eql(2);
+    const summaryRow = table.find(SummaryRow);
+    expect(summaryRow.length).to.eql(1);
+  });
 
   it('skal legge til dagpengeandel', () => {
     const dagpengeAndel = { aktivitetStatus: { kode: aktivitetStatuser.DAGPENGER }, beregnetPrAar: 120000 };
