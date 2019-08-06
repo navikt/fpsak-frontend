@@ -14,13 +14,16 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-import { mapAndelToField, skalHaBesteberegningSelector } from './BgFordelingUtils';
+import {
+ mapAndelToField, skalHaBesteberegningSelector, skalFastsetteInntektForSN,
+} from './BgFordelingUtils';
 import styles from './inntektFieldArray.less';
 import { validateUlikeAndeler, validateUlikeAndelerWithGroupingFunction } from './ValidateAndelerUtils';
 import { isBeregningFormDirty as isFormDirty } from '../BeregningFormUtils';
 import { AndelRow, getHeaderTextCodes } from './InntektFieldArrayRow';
 import AddAndelButton from './AddAndelButton';
 import SummaryRow from './SummaryRow';
+
 
 const dagpenger = (aktivitetStatuser, beregnetPrAar) => ({
   andel: aktivitetStatuser.filter(({ kode }) => kode === aktivitetStatus.DAGPENGER)[0].navn,
@@ -31,7 +34,6 @@ const dagpenger = (aktivitetStatuser, beregnetPrAar) => ({
   skalKunneEndreAktivitet: false,
   lagtTilAvSaksbehandler: true,
 });
-
 
 const isDirty = (meta, isBeregningFormDirty) => (meta.dirty || isBeregningFormDirty);
 
@@ -67,19 +69,30 @@ const removeAndel = (fields, index) => () => {
   fields.remove(index);
 };
 
-const createAndelerTableRows = (fields, readOnly) => fields.map((andelElementFieldId, index) => (
-  <AndelRow
-    key={andelElementFieldId}
-    fields={fields}
-    skalVisePeriode={skalVisePeriode(fields)}
-    skalViseRefusjon={skalViseRefusjon(fields)}
-    skalViseSletteknapp={skalViseSletteknapp(index, fields, readOnly)}
-    andelElementFieldId={andelElementFieldId}
-    readOnly={readOnly}
-    removeAndel={removeAndel(fields, index)}
-    index={index}
-  />
-));
+const skalViseRad = (field, skalFastsetteSN) => field.aktivitetStatus !== aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE || skalFastsetteSN;
+
+const createAndelerTableRows = (fields, readOnly, skalFastsetteSN) => {
+  const rows = [];
+  fields.forEach((andelElementFieldId, index) => {
+    const field = fields.get(index);
+    if (skalViseRad(field, skalFastsetteSN)) {
+      rows.push(
+        <AndelRow
+          key={andelElementFieldId}
+          fields={fields}
+          skalVisePeriode={skalVisePeriode(fields)}
+          skalViseRefusjon={skalViseRefusjon(fields)}
+          skalViseSletteknapp={skalViseSletteknapp(index, fields, readOnly)}
+          andelElementFieldId={andelElementFieldId}
+          readOnly={readOnly}
+          removeAndel={removeAndel(fields, index)}
+          index={index}
+        />,
+      );
+    }
+  });
+  return rows;
+};
 
 const createBruttoBGSummaryRow = (fields, readOnly) => (
   <SummaryRow
@@ -137,8 +150,9 @@ export const InntektFieldArrayImpl = ({
   aktivitetStatuser,
   dagpengeAndelLagtTilIForrige,
   skalHaBesteberegning,
+  skalFastsetteSN,
 }) => {
-  const tablerows = createAndelerTableRows(fields, readOnly);
+  const tablerows = createAndelerTableRows(fields, readOnly, skalFastsetteSN);
   tablerows.push(createBruttoBGSummaryRow(fields, readOnly));
   leggTilDagpengerOmBesteberegning(fields, skalHaBesteberegning, aktivitetStatuser, dagpengeAndelLagtTilIForrige);
   return (
@@ -170,6 +184,7 @@ InntektFieldArrayImpl.propTypes = {
   aktivitetStatuser: PropTypes.arrayOf(kodeverkObjektPropType).isRequired,
   skalHaBesteberegning: PropTypes.bool.isRequired,
   dagpengeAndelLagtTilIForrige: PropTypes.shape(),
+  skalFastsetteSN: PropTypes.bool.isRequired,
 };
 
 InntektFieldArrayImpl.defaultProps = {
@@ -235,7 +250,9 @@ export const mapStateToProps = (state) => {
   const isBeregningFormDirty = isFormDirty(state);
   const aktivitetStatuser = getKodeverk(kodeverkTyper.AKTIVITET_STATUS)(state);
   const skalHaBesteberegning = skalHaBesteberegningSelector(state) === true;
+  const skalFastsetteSN = skalFastsetteInntektForSN(state);
   return {
+    skalFastsetteSN,
     isBeregningFormDirty,
     skalHaBesteberegning,
     aktivitetStatuser,

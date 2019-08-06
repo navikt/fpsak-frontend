@@ -19,6 +19,8 @@ import { getFormValuesForBeregning } from '../BeregningFormUtils';
 import { besteberegningField } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
 import { MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD } from './InntektstabellPanel';
 
+export const INNTEKT_FIELD_ARRAY_NAME = 'inntektFieldArray';
+
 const nullOrUndefined = value => value === null || value === undefined;
 
 export const settAndelIArbeid = (andelerIArbeid) => {
@@ -231,15 +233,24 @@ export const erOverstyring = values => !!values && values[MANUELL_OVERSTYRING_BE
 export const erOverstyringAvBeregningsgrunnlag = createSelector([
   getFormValuesForBeregning], erOverstyring);
 
-
-// Skal redigere inntekt
-
-export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregningsgrunnlag) => andel => erOverstyring(values)
+  export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregningsgrunnlag) => andel => erOverstyring(values)
 || andel.harPeriodeAarsakGraderingEllerRefusjon === true
 || skalKunneEndreTotaltBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag)(andel)
 || harKunYtelse(faktaOmBeregning);
 
 export const getSkalRedigereInntekt = createSelector([getFormValuesForBeregning, getFaktaOmBeregning, getBeregningsgrunnlag], skalRedigereInntektForAndel);
+
+// Skal redigere inntekt
+export const skalFastsetteInntektForSN = createSelector([
+    getFormValuesForBeregning,
+    getSkalRedigereInntekt],
+  (values, skalFastsette) => {
+    const fields = values[INNTEKT_FIELD_ARRAY_NAME];
+    if (!fields) {
+      return false;
+    }
+    return fields.filter(field => field.aktivitetStatus === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE).map(skalFastsette).includes(true);
+  });
 
 export const setSkalRedigereInntektForATFL = (state, fields) => {
   const values = getFormValuesForBeregning(state);
@@ -252,7 +263,6 @@ export const setSkalRedigereInntektForATFL = (state, fields) => {
     field.skalRedigereInntekt = skalRedigere(field);
   }
 };
-
 
 // Skal redigere inntektskategori
 
