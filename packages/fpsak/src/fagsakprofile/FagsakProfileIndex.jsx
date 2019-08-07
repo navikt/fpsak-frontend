@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 
 import { getSelectedSaksnummer, getFagsakYtelseType, getSelectedFagsakStatus } from 'fagsak/fagsakSelectors';
 import { getBehandlinger, getNoExistingBehandlinger } from 'behandling/selectors/behandlingerSelectors';
@@ -11,12 +12,25 @@ import { requireProps } from '@fpsak-frontend/fp-felles';
 import { Panel } from 'nav-frontend-paneler';
 
 import { behandlingIListePropType } from '@fpsak-frontend/prop-types';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import {
   getShowAllBehandlinger, toggleShowAllBehandlinger, resetFagsakProfile, getAnnenPartBehandling,
 } from './duck';
 import FagsakProfile from './components/FagsakProfile';
 import RisikoklassifiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';
 import styles from './fagsakProfileIndex.less';
+
+export const getSkalViseRisikoklassifisering = createSelector(
+  [getSelectedBehandlingId, getBehandlinger],
+  (selectedBehandlingId, behandlinger = []) => {
+    if (!selectedBehandlingId || behandlinger.length < 1) {
+      return false;
+    }
+    const selectedBehandling = behandlinger.find(beh => beh.id === selectedBehandlingId);
+    return selectedBehandling && selectedBehandling.type ? selectedBehandling.type.kode === behandlingType.FORSTEGANGSSOKNAD : false;
+  },
+);
+
 
 export class FagsakProfileIndex extends Component {
   componentDidMount() {
@@ -34,7 +48,7 @@ export class FagsakProfileIndex extends Component {
   render() {
     const {
       sakstype, toggleShowAll, showAll, selectedBehandlingId, behandlinger,
-      noExistingBehandlinger, fagsakStatus, annenPartLink, saksnummer,
+      noExistingBehandlinger, fagsakStatus, annenPartLink, saksnummer, skalViseRisikoklassifisering,
     } = this.props;
     return (
       <Panel className={styles.panelPadding}>
@@ -49,7 +63,7 @@ export class FagsakProfileIndex extends Component {
           showAll={showAll}
           toggleShowAll={toggleShowAll}
         />
-        {!!selectedBehandlingId
+        {skalViseRisikoklassifisering
           && <RisikoklassifiseringIndex />
         }
 
@@ -69,6 +83,7 @@ FagsakProfileIndex.propTypes = {
   showAll: PropTypes.bool.isRequired,
   toggleShowAll: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
+  skalViseRisikoklassifisering: PropTypes.bool.isRequired,
   annenPartLink: PropTypes.shape(),
 };
 
@@ -89,6 +104,7 @@ const mapStateToProps = (state) => {
     behandlinger: getBehandlinger(state),
     noExistingBehandlinger: getNoExistingBehandlinger(state),
     showAll: getShowAllBehandlinger(state),
+    skalViseRisikoklassifisering: getSkalViseRisikoklassifisering(state),
   };
 };
 
