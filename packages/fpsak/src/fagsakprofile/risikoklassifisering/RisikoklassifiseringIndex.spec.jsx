@@ -27,7 +27,7 @@ describe('<RisikoklassifiseringIndex>', () => {
       location={{}}
       isRiskPanelOpen
       setRiskPanelOpen={sinon.spy()}
-      getKontrollresultat={sinon.spy()}
+      hentKontrollresultat={sinon.spy()}
       resolveAksjonspunkter={sinon.spy()}
       isPanelOpen={false}
       readOnly
@@ -45,7 +45,7 @@ describe('<RisikoklassifiseringIndex>', () => {
       location={{}}
       isRiskPanelOpen
       setRiskPanelOpen={sinon.spy()}
-      getKontrollresultat={sinon.spy()}
+      hentKontrollresultat={sinon.spy()}
       resolveAksjonspunkter={sinon.spy()}
       isPanelOpen={false}
       readOnly
@@ -63,7 +63,7 @@ describe('<RisikoklassifiseringIndex>', () => {
       location={{}}
       isRiskPanelOpen
       setRiskPanelOpen={sinon.spy()}
-      getKontrollresultat={sinon.spy()}
+      hentKontrollresultat={sinon.spy()}
       resolveAksjonspunkter={sinon.spy()}
       isPanelOpen={false}
       readOnly
@@ -81,7 +81,7 @@ describe('<RisikoklassifiseringIndex>', () => {
       location={{}}
       isRiskPanelOpen
       setRiskPanelOpen={sinon.spy()}
-      getKontrollresultat={sinon.spy()}
+      hentKontrollresultat={sinon.spy()}
       resolveAksjonspunkter={sinon.spy()}
       isPanelOpen={false}
       readOnly
