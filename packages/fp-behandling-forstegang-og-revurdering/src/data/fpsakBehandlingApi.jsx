@@ -13,6 +13,7 @@ export const BehandlingFpsakApiKeys = {
   SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
   STONADSKONTOER_GITT_UTTAKSPERIODER: 'STONADSKONTOER_GITT_UTTAKSPERIODER',
   FORHANDSVISNING_FORVED_BREV: 'FORHANDSVISNING_FORVED_BREV',
+  REDIGERBARE_ANDELER: 'REDIGERBARE_ANDELER',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -24,6 +25,8 @@ const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/api/behandling/aksjonspunkt', BehandlingFpsakApiKeys.SAVE_AKSJONSPUNKT)
   .withAsyncPost('/api/behandling/aksjonspunkt/overstyr', BehandlingFpsakApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT)
   .withPost('/api/behandling/uttak/stonadskontoerGittUttaksperioder', BehandlingFpsakApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER)
+  .withPost('/api/behandling/beregningsgrunnlag/redigerbare-andeler', BehandlingFpsakApiKeys.REDIGERBARE_ANDELER)
+
 
   /* /api/dokumentbestiller */
   .withPostAndOpenBlob('/api/dokumentbestiller/forhandsvis-vedtaksbrev', BehandlingFpsakApiKeys.FORHANDSVISNING_FORVED_BREV)

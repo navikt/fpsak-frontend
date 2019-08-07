@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { FieldArray } from 'redux-form';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { createSelector } from 'reselect';
+import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duck';
 import LonnsendringForm, { lonnsendringField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
 import NyoppstartetFLForm, { erNyoppstartetFLField }
@@ -22,6 +24,7 @@ import {
 } from '../BgFordelingUtils';
 import VurderBesteberegningForm, { besteberegningField, vurderBesteberegningTransform } from '../besteberegningFodendeKvinne/VurderBesteberegningForm';
 import InntektFieldArray from '../InntektFieldArray';
+import fpsakBehandlingApi from '../../../../../data/fpsakBehandlingApi';
 
 
 const lonnsendringErVurdertEllerIkkjeTilstede = (tilfeller, values) => (
@@ -101,6 +104,9 @@ const finnInntektstabell = (tilfeller, readOnly, isAksjonspunktClosed) => {
   );
 };
 
+const hentRes = params => dispatch => dispatch(fpsakBehandlingApi.REDIGERBARE_ANDELER.makeRestApiRequest()(params));
+
+
 /**
  * VurderOgFastsettATFL
  *
@@ -110,17 +116,34 @@ const finnInntektstabell = (tilfeller, readOnly, isAksjonspunktClosed) => {
  * tilfeller før h*n kan fastsette inntekt.
  */
 
-const VurderOgFastsettATFL = ({
-  readOnly,
-  isAksjonspunktClosed,
-  tilfeller,
-  manglerInntektsmelding,
-  skalFastsetteAT,
-  skalFastsetteFL,
-  skalHaBesteberegning,
-  harKunstigArbeid,
-  skalViseTabell,
-}) => (
+class VurderOgFastsettATFL extends Component {
+  componentDidUpdate(prevProps) {
+    const { hentRes: getResultat, behandlingId, skalHaBesteberegning } = this.props;
+    const skalHaBesteberegningPrev = prevProps.skalHaBesteberegning;
+    if (skalHaBesteberegning !== skalHaBesteberegningPrev) {
+      // TODO Legg inn overstyring og andre parametere som settes i radioknapper
+      getResultat({
+        behandlingId: String(behandlingId),
+        skalHaBesteberegning,
+        erOverstyrt: false,
+      });
+    }
+  }
+
+  render() {
+    const {
+    readOnly,
+    isAksjonspunktClosed,
+    tilfeller,
+    manglerInntektsmelding,
+    skalFastsetteAT,
+    skalFastsetteFL,
+    skalHaBesteberegning,
+    harKunstigArbeid,
+    skalViseTabell,
+  } = this.props;
+
+return (
   <div>
     <InntektstabellPanel
       key="inntektstabell"
@@ -173,6 +196,8 @@ const VurderOgFastsettATFL = ({
     </InntektstabellPanel>
   </div>
 );
+    }
+  }
 
 VurderOgFastsettATFL.buildInitialValues = (beregningsgrunnlag, getKodeverknavn, aksjonspunkter, faktaOmBeregning) => {
   if (!beregningsgrunnlag) {
@@ -283,6 +308,8 @@ VurderOgFastsettATFL.propTypes = {
   skalHaBesteberegning: PropTypes.bool.isRequired,
   harKunstigArbeid: PropTypes.bool.isRequired,
   skalViseTabell: PropTypes.bool.isRequired,
+  hentRes: PropTypes.func.isRequired,
+  behandlingId: PropTypes.number.isRequired,
 };
 
 export const skalFastsettInntektForArbeidstaker = createSelector([
@@ -331,7 +358,13 @@ const mapStateToProps = (state, ownProps) => ({
     skalHaBesteberegning: getFormValuesForBeregning(state)[besteberegningField] === true,
     manglerInntektsmelding: getManglerInntektsmelding(state),
     skalViseTabell: getSkalViseTabell(state),
+    behandlingId: getSelectedBehandlingId(state),
     harKunstigArbeid: harKunstigArbeidsforhold(ownProps.tilfeller, getBeregningsgrunnlag(state)),
 });
 
-export default connect(mapStateToProps)(VurderOgFastsettATFL);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  hentRes,
+}, dispatch);
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(VurderOgFastsettATFL);

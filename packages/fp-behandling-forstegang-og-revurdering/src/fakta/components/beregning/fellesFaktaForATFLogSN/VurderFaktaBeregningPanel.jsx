@@ -1,4 +1,5 @@
-import React, { Component } from 'react'; import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
@@ -70,6 +71,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
     }
   }
 
+
   render() {
     const {
       props: {
@@ -135,6 +137,7 @@ VurderFaktaBeregningPanelImpl.propTypes = {
   helpText: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   verdiForAvklarAktivitetErEndret: PropTypes.bool.isRequired,
   erOverstyrt: PropTypes.bool.isRequired,
+  behandlingId: PropTypes.number.isRequired,
   ...formPropTypes,
 };
 
@@ -181,6 +184,7 @@ export const getIsAksjonspunktClosed = createSelector(
     return relevantAp.length === 0 ? false : relevantAp.some(ap => !isAksjonspunktOpen(ap.status.kode));
   },
 );
+
 
 const mapStateToPropsFactory = (initialState, initialProps) => {
   const onSubmit = values => initialProps.submitCallback(transformValuesVurderFaktaBeregning(values));

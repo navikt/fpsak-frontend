@@ -18,6 +18,8 @@ import { andelsnrMottarYtelseMap, frilansMottarYtelse, skalFastsetteInntektATUte
 import { getFormValuesForBeregning } from '../BeregningFormUtils';
 import { besteberegningField } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
 import { MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD } from './InntektstabellPanel';
+import fpsakBehandlingApi from '../../../../data/fpsakBehandlingApi';
+
 
 export const INNTEKT_FIELD_ARRAY_NAME = 'inntektFieldArray';
 
@@ -233,14 +235,32 @@ export const erOverstyring = values => !!values && values[MANUELL_OVERSTYRING_BE
 export const erOverstyringAvBeregningsgrunnlag = createSelector([
   getFormValuesForBeregning], erOverstyring);
 
+
+// Skal redigere inntekt
+
+export const getRedigerbareAndeler = createSelector(
+  [fpsakBehandlingApi.REDIGERBARE_ANDELER.getRestApiData()], (andeler = []) => andeler,
+);
+
   export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregningsgrunnlag) => andel => erOverstyring(values)
 || andel.harPeriodeAarsakGraderingEllerRefusjon === true
 || skalKunneEndreTotaltBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag)(andel)
 || harKunYtelse(faktaOmBeregning);
 
-export const getSkalRedigereInntekt = createSelector([getFormValuesForBeregning, getFaktaOmBeregning, getBeregningsgrunnlag], skalRedigereInntektForAndel);
+export const skalRedigereInntektForAndel2 = redigerbareAndeler => (andel) => {
+  const andeler = redigerbareAndeler;
+  if (andeler.some(({ andelsnr, skalRedigeres }) => andel.andelsnr === andelsnr && skalRedigeres)) {
+    return true;
+  }
+  return false;
+};
 
-// Skal redigere inntekt
+export const getSkalRedigereInntekt = createSelector([getRedigerbareAndeler], skalRedigereInntektForAndel2);
+
+
+// export const getSkalRedigereInntekt = createSelector([getFormValuesForBeregning, getFaktaOmBeregning, getBeregningsgrunnlag], skalRedigereInntektForAndel);
+
+
 export const skalFastsetteInntektForSN = createSelector([
     getFormValuesForBeregning,
     getSkalRedigereInntekt],
