@@ -20,6 +20,7 @@ export {
   getFaktaLocation,
   getBehandlingspunktLocation,
   getSupportPanelLocationCreator,
+  getRiskPanelLocationCreator,
   getLocationWithQueryParams,
   fagsakPath,
   aktoerPath,

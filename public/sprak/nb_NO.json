@@ -264,7 +264,7 @@
   "ArbeidsforholdTable.Revurdering": "Nye opplysninger",
   "ArbeidsforholdTable.Ja": "Ja",
   "ArbeidsforholdTable.Nei": "Nei",
-  
+
   "ArbeidsforholdInnhold.Jordmor.TilretteleggingFra": "Jordmor/lege oppgir at tilrettelegging er nødvendig fra og med",
   "ArbeidsforholdInnhold.BegrunnEndringene": "Begrunn endringene",
   "ArbeidsforholdInnhold.TilretteleggingWarning": "For et av arbeidsforholdene er datoene fra arbeidsgiver motstridende. Avklar dette før du kan gå videre i saken.",
@@ -1440,6 +1440,7 @@
   "ToTrinnsForm.Uttak.Stortinget": "Søker er stortingsrepresentant/administrativt ansatt i Stortinget. Uttak er kontrollert.",
   "ToTrinnsForm.Uttak.Overstyrt": "Uttaksperioder er overstyrt.",
   "ToTrinnsForm.TilkjentYtelse.Tilbaketrekk": "Det er vurdert om det skal utføres tilbakekreving fra søker.",
+  "ToTrinnsForm.Faresignaler.Vurder": "Det er vurdert om faresignalene påvirket behandlingen",
 
   "ToTrinnsForm.Klage.OmgjortTilGunst": "Omgjort til gunst",
   "ToTrinnsForm.Klage.StadfesteYtelsesVedtak": "Stadfest ytelsesvedtak",
@@ -2174,6 +2175,8 @@
   "HistorikkEndretFelt.ErAnkeKonkret": "Er anke konkret",
   "HistorikkEndretFelt.ErAnkefristOverholdt": "Er ankefrist overholdt",
   "HistorikkEndretFelt.ErAnkenSignert": "Er anken signer",
+  "HistorikkEndretFelt.Faresignaler": "Resultat",
+
   "HistorikkEndretFeltVerdiType.AdoptererAlene": "adopterer alene",
   "HistorikkEndretFeltVerdiType.AdoptererIkkeAlene": "adopterer ikke alene",
   "HistorikkEndretFeltVerdiType.Aleneomsorg": "Søker har aleneomsorg for barnet",
@@ -2303,6 +2306,8 @@
   "HistorikkEndretFeltVerdiType.SlåttSammenMedAnnet": "Arbeidsforholdet er slått sammen med annet",
   "HistorikkEndretFeltVerdiType.NyttArbeidsforhold": "Arbeidsforholdet er ansett som nytt",
   "HistorikkEndretFeltVerdiType.IkkeBruk": "Ikke bruk",
+  "HistorikkEndretFeltVerdiType.Innvirkning": "Faresignalene hadde innvirkning på behandlingen",
+  "HistorikkEndretFeltVerdiType.IngenInnvirkning": "Faresignalene hadde ingen innvirkning på behandlingen",
 
   "HistorikkEndretFeltHeading.FordelingForNyAndel": "<b>Det er lagt til ny aktivitet:</b> <br><b>{value}</b>: Fordeling for ",
   "HistorikkEndretFeltHeading.FordelingForAndel": "Fordeling for <b>{value}</b>:",
@@ -2473,7 +2478,7 @@
 
   "TilbakekrevingVedtakForm.FritekstIVedtaksbrevet": "Fritekst i vedtaksbrevet",
   "TilbakekrevingVedtakForm.TilGodkjenning": "Til godkjenning",
-  
+
   "TilretteleggingTable.IngenTilretteleggingDatoer": "Ingen tilretteleggingsdatoer er spesifisert",
   "TilretteleggingTable.NodvendigTilrettelegging": "Arbeidsgiver oppgir at nødvendig tilrettelegging",
   "TilretteleggingTable.Dato": "Dato",

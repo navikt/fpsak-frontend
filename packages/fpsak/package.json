@@ -10,6 +10,7 @@
     "@fpsak-frontend/error-api-redux": "1.0.0",
     "@fpsak-frontend/form": "1.0.0",
     "@fpsak-frontend/fp-behandling-anke": "1.0.0",
+    "@fpsak-frontend/fp-behandling-felles": "1.0.0",
     "@fpsak-frontend/fp-behandling-forstegang-og-revurdering": "1.0.0",
     "@fpsak-frontend/fp-behandling-innsyn": "1.0.0",
     "@fpsak-frontend/fp-behandling-klage": "1.0.0",

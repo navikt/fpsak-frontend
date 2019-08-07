@@ -17,7 +17,7 @@ const Faresignaler = ({
   risikoklassifisering,
 }) => (
   <FlexContainer>
-    {risikoklassifisering.medlFaresignaler
+    {risikoklassifisering.medlFaresignaler && risikoklassifisering.medlFaresignaler.faresignaler
           && (
           <div>
             <FlexRow>
@@ -35,7 +35,7 @@ const Faresignaler = ({
           </div>
           )
       }
-    {risikoklassifisering.iayFaresignaler
+    {risikoklassifisering.iayFaresignaler && risikoklassifisering.iayFaresignaler.faresignaler
           && (
           <div>
             <FlexRow>

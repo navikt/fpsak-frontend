@@ -853,6 +853,15 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'IKKE_BRUK',
     verdiId: 'HistorikkEndretFeltVerdiType.IkkeBruk',
   },
+  INNVIRKNING: {
+    kode: 'INNVIRKNING',
+    verdiId: 'HistorikkEndretFeltVerdiType.Innvirkning',
+  },
+  INGEN_INNVIRKNING: {
+    kode: 'INGEN_INNVIRKNING',
+    verdiId: 'HistorikkEndretFeltVerdiType.IngenInnvirkning',
+  },
+
 };
 
 export default historikkEndretFeltVerdiTypeCodes;

@@ -25,6 +25,8 @@ import FritekstBrevPanel from 'behandlingForstegangOgRevurdering/src/behandlings
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import classNames from 'classnames';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
 import VedtakAksjonspunktPanel from './VedtakAksjonspunktPanel';
@@ -90,6 +92,14 @@ const getPreviewAutomatiskBrevCallback = formProps => (e) => {
   };
   formProps.fetchVedtaksbrevPreview(formValues);
   e.preventDefault();
+};
+
+const faresginalerTrengerAvklaring = (aksjonspunkter) => {
+  if (!aksjonspunkter) {
+    return false;
+  }
+  const faresignalAksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FARESIGNALER);
+  return faresignalAksjonspunkt ? faresignalAksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET : false;
 };
 
 export class VedtakFormImpl extends Component {
@@ -200,7 +210,7 @@ export class VedtakFormImpl extends Component {
                     mini
                     className={styles.mainButton}
                     onClick={formProps.handleSubmit}
-                    disabled={behandlingPaaVent || formProps.submitting}
+                    disabled={behandlingPaaVent || formProps.submitting || faresginalerTrengerAvklaring(aksjonspunkter)}
                     spinner={formProps.submitting}
                   >
                     {intl.formatMessage({ id: 'VedtakForm.TilGodkjenning' })}

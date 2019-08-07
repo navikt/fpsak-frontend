@@ -61,7 +61,7 @@ describe('<FagsakProfileIndex>', () => {
       reset={resetCallback}
       harRisikoklassifisering={false}
     />);
-    expect(wrapper.find(RisikoklassfiseringIndex)).has.length(0);
+    expect(wrapper.find(RisikoklassfiseringIndex)).has.length(1);
     wrapper.unmount();
 
     expect(resetCallback.getCalls()).has.length(1);

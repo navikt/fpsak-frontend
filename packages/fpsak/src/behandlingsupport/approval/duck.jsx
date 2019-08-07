@@ -5,15 +5,15 @@ export const fetchApprovalVedtaksbrevPreview = data => dispatch => dispatch(fpsa
 
 export const approve = (erTilbakekreving, params) => dispatch => (erTilbakekreving
     ? dispatch(fpsakApi.SAVE_TOTRINNSAKSJONSPUNKT_FPTILBAKE.makeRestApiRequest()(params))
-    : dispatch(fpsakApi.SAVE_TOTRINNSAKSJONSPUNKT.makeRestApiRequest()(params)));
+    : dispatch(fpsakApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params)));
 
 export const resetApproval = erTilbakekreving => dispatch => (erTilbakekreving
   ? dispatch(fpsakApi.SAVE_TOTRINNSAKSJONSPUNKT_FPTILBAKE.resetRestApi())
-  : dispatch(fpsakApi.SAVE_TOTRINNSAKSJONSPUNKT.resetRestApi()));
+  : dispatch(fpsakApi.SAVE_AKSJONSPUNKT.resetRestApi()));
 
 
 /* Selectors */
-export const getApproveFinished = fpsakApi.SAVE_TOTRINNSAKSJONSPUNKT.getRestApiFinished();
+export const getApproveFinished = fpsakApi.SAVE_AKSJONSPUNKT.getRestApiFinished();
 export const getApproveFinishedTilbakekreving = fpsakApi.SAVE_TOTRINNSAKSJONSPUNKT_FPTILBAKE.getRestApiFinished();
 
 const onlyUnique = (value, index, self) => self.indexOf(value) === index;
