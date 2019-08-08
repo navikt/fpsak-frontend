@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+
+import tilbakekrevingBehandlingApi from './data/tilbakekrevingBehandlingApi';
 import { isBehandlingInSync } from './selectors/tilbakekrevingBehandlingSelectors';
 import { fetchBehandling as fetchBehandlingActionCreator, getBehandlingIdentifier } from './duckTilbake';
 
@@ -14,6 +16,7 @@ export class FpTilbakeBehandlingResolver extends Component {
     fetchBehandling: PropTypes.func.isRequired,
     behandlingerVersjonMappedById: PropTypes.shape().isRequired,
     isInSync: PropTypes.bool.isRequired,
+    fetchKodeverk: PropTypes.func.isRequired,
     children: PropTypes.node.isRequired,
   };
 
@@ -28,9 +31,11 @@ export class FpTilbakeBehandlingResolver extends Component {
 
   resolveBehandlingInfo = () => {
     const {
-      isInSync, fetchBehandling, behandlingerVersjonMappedById, behandlingIdentifier,
+      isInSync, fetchBehandling, behandlingerVersjonMappedById, behandlingIdentifier, fetchKodeverk,
     } = this.props;
+
     if (!isInSync) {
+      fetchKodeverk();
       fetchBehandling(behandlingIdentifier, behandlingerVersjonMappedById);
     }
   }
@@ -43,13 +48,20 @@ export class FpTilbakeBehandlingResolver extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  behandlingIdentifier: getBehandlingIdentifier(state),
-  isInSync: isBehandlingInSync(state),
-});
+const mapStateToProps = (state) => {
+  const blockers = [
+    tilbakekrevingBehandlingApi.TILBAKE_KODEVERK.getRestApiFinished()(state),
+  ];
+
+  return {
+    behandlingIdentifier: getBehandlingIdentifier(state),
+    isInSync: isBehandlingInSync(state) && blockers.every(finished => finished),
+  };
+};
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   fetchBehandling: fetchBehandlingActionCreator,
+  fetchKodeverk: tilbakekrevingBehandlingApi.TILBAKE_KODEVERK.makeRestApiRequest(),
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(FpTilbakeBehandlingResolver);
