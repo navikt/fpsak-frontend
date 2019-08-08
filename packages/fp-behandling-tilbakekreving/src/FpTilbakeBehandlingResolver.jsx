@@ -33,6 +33,7 @@ export class FpTilbakeBehandlingResolver extends Component {
     const {
       isInSync, fetchBehandling, behandlingerVersjonMappedById, behandlingIdentifier, fetchKodeverk,
     } = this.props;
+
     if (!isInSync) {
       fetchKodeverk();
       fetchBehandling(behandlingIdentifier, behandlingerVersjonMappedById);
