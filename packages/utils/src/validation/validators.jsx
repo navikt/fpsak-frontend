@@ -54,6 +54,12 @@ export const dateAfterOrEqual = (earliest, customErrorMessageFunction = undefine
     ? null
     : getErrorMessage(earliest, customErrorMessageFunction)
 );
+export const dateIsBefore = (dateToCheckAgainst, errorMessageFunction) => inputDate => (
+  (isEmpty(inputDate) || moment(inputDate).isBefore(moment(dateToCheckAgainst).startOf('day')))
+    ? null
+    : errorMessageFunction(moment(dateToCheckAgainst).format(DDMMYYYY_DATE_FORMAT))
+);
+
 export const dateRangesNotOverlapping = ranges => (dateRangesAreSequential(ranges) ? null : dateRangesOverlappingMessage());
 export const dateRangesNotOverlappingCrossTypes = ranges => (dateRangesAreSequential(ranges) ? null : dateRangesOverlappingBetweenPeriodTypesMessage());
 

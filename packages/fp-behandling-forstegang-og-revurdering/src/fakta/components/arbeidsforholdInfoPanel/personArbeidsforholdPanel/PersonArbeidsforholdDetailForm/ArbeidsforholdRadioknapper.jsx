@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import BehandlingFormFieldCleaner from 'behandlingForstegangOgRevurdering/src/BehandlingFormFieldCleaner';
-import { dateAfterOrEqual, hasValidDate, required } from '@fpsak-frontend/utils';
+import {
+ dateAfterOrEqual, hasValidDate, required, dateIsBefore,
+} from '@fpsak-frontend/utils';
 import DatepickerField from '@fpsak-frontend/form/src/DatepickerField';
 import moment from 'moment';
 import RadioGroupField from '@fpsak-frontend/form/src/RadioGroupField';
@@ -25,6 +27,7 @@ const AA_REGISTERET = 'aa-registeret';
 // ----------------------------------------------------------------------------------
 
 const arbeidsforholdTomDatoPickerErrorMsg = dato => ([{ id: 'PersonArbeidsforholdDetailForm.DateNotAfterOrEqual' }, { dato }]);
+const dateMustBeBeforeSkjaeringstidspunkt = dato => ([{ id: 'PersonArbeidsforholdDetailForm.DateNotBeforeSkjaeringstidspunkt' }, { dato }]);
 
 const isKildeAaRegisteret = arbeidsforhold => arbeidsforhold.kilde && arbeidsforhold.kilde.navn.toLowerCase() === AA_REGISTERET;
 
@@ -70,7 +73,12 @@ const utledRadioOptionForArbeidsforholdSomIkkeErAktive = (arbeidsforhold, hasRec
               <DatepickerField
                 name="overstyrtTom"
                 label={<FormattedMessage id="PersonArbeidsforholdDetailForm.ArbeidsforholdetAktivTomDato" />}
-                validate={[required, hasValidDate, dateAfterOrEqual(arbeidsforhold.fomDato, arbeidsforholdTomDatoPickerErrorMsg)]}
+                validate={[
+                  required,
+                  hasValidDate,
+                  dateAfterOrEqual(arbeidsforhold.fomDato, arbeidsforholdTomDatoPickerErrorMsg),
+                  dateIsBefore(arbeidsforhold.skjaeringstidspunkt, dateMustBeBeforeSkjaeringstidspunkt),
+                ]}
                 readOnly={readOnly}
               />
             </ArrowBox>
