@@ -88,6 +88,7 @@ export {
   dateRangesNotOverlapping,
   dateRangesNotOverlappingCrossTypes,
   dateAfterOrEqual,
+  dateIsBefore,
   dateBeforeOrEqual,
   hasValidDate,
   hasValidSaksnummerOrFodselsnummerFormat,
