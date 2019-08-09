@@ -39,10 +39,10 @@ export class BehandlingAnkeIndex extends Component {
   componentDidMount() {
     const {
       setBehandlingInfo: setInfo, saksnummer, behandlingId, behandlingUpdater, appContextUpdater,
-      featureToggles, kodeverk, fagsak, avsluttedeBehandlinger,
+      featureToggles, kodeverk, fagsak,
     } = this.props;
     setInfo({
-      behandlingId, fagsakSaksnummer: saksnummer, featureToggles, kodeverk, fagsak, avsluttedeBehandlinger,
+      behandlingId, fagsakSaksnummer: saksnummer, featureToggles, kodeverk, fagsak,
     });
 
     behandlingUpdater.setUpdater(fpAnkeBehandlingUpdater);
@@ -156,13 +156,6 @@ BehandlingAnkeIndex.propTypes = {
     navn: PropTypes.string,
   })),
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
-  avsluttedeBehandlinger: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    type: PropTypes.shape({
-      kode: PropTypes.string.isRequired,
-    }).isRequired,
-    avsluttet: PropTypes.string,
-  })).isRequired,
   isInSync: PropTypes.bool.isRequired,
   fetchBehandling: PropTypes.func.isRequired,
 };

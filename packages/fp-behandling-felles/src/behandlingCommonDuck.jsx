@@ -61,7 +61,7 @@ const getBehandlingReducer = (initialState, actionTypes) => (state = initialStat
   }
 };
 
-const getBehandlingRedux = (reducerName, behandlingApi, behandlingApiKeys, additionalInitalState) => {
+const getBehandlingRedux = (reducerName, behandlingApi, behandlingApiKeys, additionalInitalState = {}) => {
   const actionType = name => `${reducerName}/${name}`;
   const actionTypes = {
     SET_BEHANDLING_INFO: actionType('SET_BEHANDLING_INFO'),
