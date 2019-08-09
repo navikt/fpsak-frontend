@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel, Undertekst, Normaltekst } from 'nav-frontend-typografi';
-import { Row, Column } from 'nav-frontend-grid';
 
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import {
@@ -23,7 +22,6 @@ export const TilbakekrevingVedtakImpl = ({
   submitCallback,
   readOnly,
   resultat,
-  konsekvensAvBehandling,
   perioder,
   getKodeverknavn,
 }) => (
@@ -32,24 +30,12 @@ export const TilbakekrevingVedtakImpl = ({
       <FormattedMessage id="Behandlingspunkt.Vedtak" />
     </Undertittel>
     <VerticalSpacer twentyPx />
-    <Row>
-      <Column xs="2">
-        <Undertekst>
-          <FormattedMessage id="TilbakekrevingVedtak.Resultat" />
-        </Undertekst>
-        <Normaltekst>
-          {getKodeverknavn(resultat)}
-        </Normaltekst>
-      </Column>
-      <Column xs="3">
-        <Undertekst>
-          <FormattedMessage id="TilbakekrevingVedtak.Konsekvens" />
-        </Undertekst>
-        <Normaltekst>
-          {konsekvensAvBehandling}
-        </Normaltekst>
-      </Column>
-    </Row>
+    <Undertekst>
+      <FormattedMessage id="TilbakekrevingVedtak.Resultat" />
+    </Undertekst>
+    <Normaltekst>
+      {getKodeverknavn(resultat)}
+    </Normaltekst>
     <VerticalSpacer sixteenPx />
     <TilbakekrevingVedtakPeriodeTabell perioder={perioder} getKodeverknavn={getKodeverknavn} />
     <VerticalSpacer sixteenPx />
@@ -64,7 +50,6 @@ TilbakekrevingVedtakImpl.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   resultat: kodeverkObjektPropType.isRequired,
-  konsekvensAvBehandling: PropTypes.string.isRequired,
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
 };
@@ -74,7 +59,6 @@ const mapStateToProps = (state) => {
   return {
     perioder: beregningsresultat.beregningResultatPerioder,
     resultat: beregningsresultat.vedtakResultatType,
-    konsekvensAvBehandling: beregningsresultat.behandlingKonsekvens,
   };
 };
 
