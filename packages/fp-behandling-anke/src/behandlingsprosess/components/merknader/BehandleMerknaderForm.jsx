@@ -16,8 +16,8 @@ import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-fell
 
 import behandlingspunktAnkeSelectors from 'behandlingAnke/src/behandlingsprosess/selectors/behandlingsprosessAnkeSelectors';
 import {
-  behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
-} from 'behandlingAnke/src/behandlingForm';
+  behandlingFormAnke, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingAnke/src/behandlingFormAnke';
 import PreviewAnkeLink from '../felles/PreviewAnkeLink';
 import behandlingSelectors from '../../../selectors/ankeBehandlingSelectors';
 
@@ -123,7 +123,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const BehandleMerknaderForm = connect(mapStateToPropsFactory)(behandlingForm({
+const BehandleMerknaderForm = connect(mapStateToPropsFactory)(behandlingFormAnke({
   form: ankeMerknaderFormName,
 })(AnkeMerknader));
 

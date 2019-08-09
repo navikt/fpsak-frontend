@@ -14,8 +14,8 @@ import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
 
 import {
-  behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
-} from 'behandlingAnke/src/behandlingForm';
+  behandlingFormAnke, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingAnke/src/behandlingFormAnke';
 import behandlingspunktAnkeSelectors from 'behandlingAnke/src/behandlingsprosess/selectors/behandlingsprosessAnkeSelectors';
 import behandlingSelectors from '../../../selectors/ankeBehandlingSelectors';
 import PreviewAnkeLink from '../felles/PreviewAnkeLink';
@@ -236,7 +236,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const BehandleResultatForm = connect(mapStateToPropsFactory)(behandlingForm({
+const BehandleResultatForm = connect(mapStateToPropsFactory)(behandlingFormAnke({
   form: formName,
 })(AnkeResultatForm));
 

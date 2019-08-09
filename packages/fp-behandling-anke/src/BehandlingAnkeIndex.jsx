@@ -6,7 +6,9 @@ import { destroy } from 'redux-form';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { BehandlingGrid, sakOperations, CommonBehandlingResolver } from '@fpsak-frontend/fp-behandling-felles';
+import {
+ BehandlingGrid, sakOperations, CommonBehandlingResolver, getBehandlingFormPrefix,
+} from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingErPaVentModal, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import FpAnkeBehandlingInfoSetter from './FpAnkeBehandlingInfoSetter';
@@ -17,7 +19,6 @@ import {
   setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier,
   getHasShownBehandlingPaVent, resetBehandlingFpsakContext, getKodeverk, fetchBehandling as fetchBehandlingActionCreator,
 } from './duckBehandlingAnke';
-import { getBehandlingFormPrefix } from './behandlingForm';
 import fpAnkeBehandlingUpdater from './FpAnkeBehandlingUpdater';
 
 /**

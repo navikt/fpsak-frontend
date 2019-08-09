@@ -27,8 +27,8 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
 import behandlingSelectors from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
 import {
-  behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
-} from 'behandlingAnke/src/behandlingForm';
+  behandlingFormAnke, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingAnke/src/behandlingFormAnke';
 import { getBehandlinger } from 'behandling/selectors/behandlingerSelectors';
 import PreviewAnkeLink from '../felles/PreviewAnkeLink';
 import FritekstBrevTextField from './FritekstAnkeBrevTextField';
@@ -372,7 +372,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const BehandleAnkeForm = connect(mapStateToPropsFactory)(behandlingForm({
+const BehandleAnkeForm = connect(mapStateToPropsFactory)(behandlingFormAnke({
   form: formName,
 })(BehandleAnkeFormImpl));
 
