@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import behandlingSelectors from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
-import { getBehandlingIdentifier } from 'behandlingAnke/src/duckAnke';
+import { getBehandlingIdentifier } from 'behandlingAnke/src/duckBehandlingAnke';
 import { getOpenInfoPanels, resetFakta } from './duckFaktaAnke';
 import FaktaAnkePanel from './components/FaktaAnkePanel';
 

@@ -16,7 +16,7 @@ import FaktaAnkeContainer from './fakta/FaktaAnkeContainer';
 import {
   setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier,
   getHasShownBehandlingPaVent, resetBehandlingFpsakContext, getKodeverk, fetchBehandling as fetchBehandlingActionCreator,
-} from './duckAnke';
+} from './duckBehandlingAnke';
 import { getBehandlingFormPrefix } from './behandlingForm';
 import fpAnkeBehandlingUpdater from './FpAnkeBehandlingUpdater';
 

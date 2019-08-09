@@ -5,7 +5,7 @@ import { getCommonBehandlingsprosessSelectors } from '@fpsak-frontend/fp-behandl
 import { getRettigheter } from 'navAnsatt/duck';
 import behandlingSelectors from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
 import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from '../duckBpAnke';
-import { getFagsakYtelseType } from '../../duckAnke';
+import { getFagsakYtelseType } from '../../duckBehandlingAnke';
 import createForeldrepengerAnkeBpDefinition from '../definition/createForeldrepengerAnkeBpDefinition';
 
 // Kun eksport for test. Ikke bruk direkte!!

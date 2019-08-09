@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
-import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingAnke/src/duckAnke';
+import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingAnke/src/duckBehandlingAnke';
 import behandlingSelectors from '../selectors/ankeBehandlingSelectors';
 import {
   resolveProsessAksjonspunkter, resetBehandlingspunkter, fetchPreviewAnkeBrev, getResolveProsessAksjonspunkterSuccess,

@@ -7,7 +7,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { withBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
-import { getBehandlingIdentifier } from 'behandlingAnke/src/duckAnke';
+import { getBehandlingIdentifier } from 'behandlingAnke/src/duckBehandlingAnke';
 import {
  setSelectedBehandlingspunktNavn, getSelectedBehandlingspunktNavn, resolveAnkeTemp, saveAnke,
 } from './duckBpAnke';

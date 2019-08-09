@@ -4,7 +4,7 @@ import { omit } from '@fpsak-frontend/utils';
 import { getCommonBehandlingSelectors } from '@fpsak-frontend/fp-behandling-felles';
 
 import ankeBehandlingApi from '../data/ankeBehandlingApi';
-import { getSelectedBehandlingId } from '../duckAnke';
+import { getSelectedBehandlingId } from '../duckBehandlingAnke';
 
 const commonBehandlingAnkeSelectors = getCommonBehandlingSelectors(getSelectedBehandlingId, ankeBehandlingApi);
 

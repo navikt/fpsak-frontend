@@ -15,6 +15,7 @@ export { default as FaktaGruppe } from './src/fakta/components/FaktaGruppe';
 export { default as FaktaEkspandertpanel } from './src/fakta/components/FaktaEkspandertpanel';
 export { default as withDefaultToggling } from './src/fakta/withDefaultToggling';
 export { default as getFaktaRedux } from './src/fakta/faktaCommonDuck';
+export { default as getBehandlingRedux } from './src/behandlingCommonDuck';
 export { default as findStatusIcon } from './src/behandlingsprosess/statusIconHelper';
 export { default as getCommonBehandlingsprosessSelectors } from './src/behandlingsprosess/selectors/behandlingsprosessSelectors';
 export { default as getCommonBehandlingSelectors } from './src/selectors/commonBehandlingSelectors';
