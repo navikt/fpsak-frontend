@@ -21,3 +21,4 @@ export { default as getCommonBehandlingsprosessSelectors } from './src/behandlin
 export { default as getCommonBehandlingSelectors } from './src/selectors/commonBehandlingSelectors';
 export { default as CommonBehandlingResolver } from './src/CommonBehandlingResolver';
 export { getBehandlingForm, getBehandlingFormSelectors, getBehandlingFormPrefix } from './src/behandlingForm';
+export { default as withBehandlingIndex } from './src/withBehandlingIndex';
